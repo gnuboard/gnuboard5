@@ -287,6 +287,7 @@ CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_cert_hp` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcb_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcp_cd` varchar(255) NOT NULL DEFAULT '',
+  `cf_cert_limit` int(11) NOT NULL DEFAULT '0',
   `cf_googl_shorturl_apikey` varchar(255) NOT NULL DEFAULT '',
   `cf_facebook_appid` varchar(255) NOT NULL,
   `cf_facebook_secret` varchar(255) NOT NULL,
@@ -313,6 +314,24 @@ CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_8` varchar(255) NOT NULL DEFAULT '',
   `cf_9` varchar(255) NOT NULL DEFAULT '',
   `cf_10` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g4s_cert_history`
+--
+
+CREATE TABLE IF NOT EXISTS `g4s_cert_history` (
+  `cr_id` int(11) NOT NULL auto_increment,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `cr_company` varchar(255) NOT NULL DEFAULT '',
+  `cr_method` varchar(255) NOT NULL DEFAULT '',
+  `cr_ip` varchar(255) NOT NULL DEFAULT '',
+  `cr_date` date NOT NULL DEFAULT '0000-00-00',
+  `cr_time` time NOT NULL DEFAULT '00:00:00',
+  PRIMARY KEY (`cr_id`),
+  KEY `mb_id` (`mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

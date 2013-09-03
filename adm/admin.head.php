@@ -70,13 +70,13 @@ function imageview(id, w, h)
     <div id="hd_wrap">
         <h1><?php echo $config['cf_title'] ?></h1>
 
-        <div id="logo"><a href="<?php echo G4_ADMIN_URL ?>"><img src="<?php echo G4_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자 처음으로"></a></div>
+        <div id="logo"><a href="<?php echo G4_ADMIN_URL ?>"><img src="<?php echo G4_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자"></a></div>
 
         <ul id="tnb">
-            <li><a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>" id="tnb_modify"><span>관리자정보</span></a></li>
-            <li><a href="<?php echo G4_ADMIN_URL ?>/config_form.php" id="tnb_chome_cf"><span>환경설정</span></a></li>
-            <li><a href="<?php echo G4_URL ?>/" id="tnb_chome"><span>홈페이지</span></a></li>
-            <li><a href="<?php echo G4_BBS_URL ?>/logout.php" id="tnb_logout"><span>로그아웃</span></a></li>
+            <li><a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">관리자정보</a></li>
+            <li><a href="<?php echo G4_ADMIN_URL ?>/config_form.php">환경설정</a></li>
+            <li><a href="<?php echo G4_URL ?>/">홈페이지</a></li>
+            <li><a href="<?php echo G4_BBS_URL ?>/logout.php">로그아웃</a></li>
         </ul>
 
         <nav id="gnb">
@@ -111,26 +111,11 @@ function imageview(id, w, h)
 
 <div id="wrapper">
 
-    <ul id="qnb">
-        <li>
-            <a href="<?php echo G4_ADMIN_URL ?>/member_list.php">
-                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_mb.jpg" alt="" width="40" height="40">
-                회원
-            </a>
-        </li>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL ?>/board_list.php">
-                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_board.jpg" alt="" width="40" height="40">
-                게시판
-            </a>
-        </li>
-        <li>
-            <a href="<?php echo G4_ADMIN_URL ?>/visit_list.php">
-                <img src="<?php echo G4_ADMIN_URL ?>/img/qnb_log.jpg" alt="" width="40" height="40">
-                접속자
-            </a>
-        </li>
-    </ul>
+    <!-- <ul id="qnb">
+        <li><a href="<?php echo G4_ADMIN_URL ?>/member_list.php">회원</a></li>
+        <li><a href="<?php echo G4_ADMIN_URL ?>/board_list.php">게시판</a></li>
+        <li><a href="<?php echo G4_ADMIN_URL ?>/visit_list.php">접속자</a></li>
+    </ul> -->
 
     <div id="container">
         <div id="text_size">

@@ -3,6 +3,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <script src="<?php echo G4_JS_URL ?>/jquery.register_form.js"></script>
+<?php if($config['cf_cert_use'] && ($config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
+<script src="<?php echo G4_JS_URL ?>/certify.js"></script>
+<?php } ?>
 
 <form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
 <input type="hidden" name="w" value="<?php echo $w ?>">
@@ -263,45 +266,42 @@ $(function() {
     $("#reg_zip_find").css("display", "inline-block");
     $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
 
-    <?php if($config['cf_cert_use']) { ?>
-
-    <?php if($config['cf_cert_ipin'] == 'kcb') { ?>
-    // KCB 아이핀인증
+    <?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
+    // 아이핀인증
     $("#win_ipin_cert").click(function() {
         if(!cert_confirm())
             return false;
 
         var url = "<?php echo G4_OKNAME_URL; ?>/ipin1.php";
-        var popupWindow = window.open( url, "kcbPop", "left=200, top=100, status=0, width=450, height=550" );
-        popupWindow.focus();
+        certify_win_open('kcb-ipin', url);
         return;
     });
-    <?php } ?>
 
-    <?php if($config['cf_cert_hp'] == 'kcb') { ?>
-    // KCB 휴대폰인증
+    <?php } ?>
+    <?php if($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
+    // 휴대폰인증
     $("#win_hp_cert").click(function() {
         if(!cert_confirm())
             return false;
 
-        var url = "<?php echo G4_OKNAME_URL; ?>/hpcert1.php";
-        var popupWindow = window.open( url, "auth_popup", "left=200, top=100, width=430, height=590, scrollbar=yes" );
-        popupWindow.focus();
+        <?php
+        switch($config['cf_cert_hp']) {
+            case 'kcb':
+                $cert_url = G4_OKNAME_URL.'/hpcert1.php';
+                $cert_type = 'kcb-hp';
+                break;
+            case 'kcp':
+                $cert_url = G4_KCPCERT_URL.'/kcpcert_form.php';
+                $cert_type = 'kcp-hp';
+                break;
+            default:
+                break;
+        }
+        ?>
+
+        certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>");
         return;
     });
-    <?php } ?>
-
-    <?php if($config['cf_cert_hp'] == 'kcp') { ?>
-    // KCP 휴대폰인증
-    $("#win_hp_cert").click(function() {
-        if(!cert_confirm())
-            return false;
-
-        auth_type_check($("#reg_mb_name").val());
-        return false;
-    });
-    <?php } ?>
-
     <?php } ?>
 });
 
@@ -322,7 +322,7 @@ function cert_confirm()
             return true;
     }
 
-    if(confirm("이미 "+type+" 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
+    if(confirm("이미 "+type+"으로 본인확인을 완료하셨습니다.\n\n이전 인증을 취소하고 다시 인증하시겠습니까?"))
         return true;
     else
         return false;
