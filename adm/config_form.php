@@ -30,11 +30,6 @@ if(!isset($config['cf_gcaptcha_mp3'])) {
                     ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
 
-if(!isset($config['cf_gcaptcha_mp3'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
-}
-
 if(!isset($config['cf_editor'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_editor` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
@@ -45,18 +40,6 @@ if(!isset($config['cf_googl_shorturl_apikey'])) {
                     ADD `cf_googl_shorturl_apikey` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
 }
 
-if(!isset($config['cf_kcpcert_site_cd'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_site_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", true);
-}
-
-if(!isset($config['cf_kcpcert_use'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' AFTER `cf_memo_send_point` ", true);
-}
-
-sql_query(" ALTER TABLE `{$g4['config_table']}` CHANGE `cf_kcpcert_use` `cf_kcpcert_use` ENUM('','test','service') NOT NULL DEFAULT '' ", false);
-
 if(!isset($config['cf_mobile_pages'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", true);
@@ -65,7 +48,7 @@ if(!isset($config['cf_mobile_pages'])) {
 
 if(!isset($config['cf_facebook_appid'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
-                    ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_kcpcert_use`,
+                    ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_googl_shorturl_apikey`,
                     ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_appid`,
                     ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
                     ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key`,
@@ -104,6 +87,19 @@ if(!sql_query(" DESC {$g4['autosave_table']} ", false)) {
 if(!isset($config['cf_admin_email'])) {
     sql_query(" ALTER TABLE `{$g4['config_table']}`
                     ADD `cf_admin_email` VARCHAR(255) NOT NULL AFTER `cf_admin` ", true);
+}
+
+if(!isset($config['cf_cert_use'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_editor`,
+                    ADD `cf_cert_ipin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_use`,
+                    ADD `cf_cert_hp` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_ipin`,
+                    ADD `cf_cert_kcb_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_hp`,
+                    ADD `cf_cert_kcp_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kcb_cd` ", true);
+    sql_query(" ALTER TABLE `{$g4['member_table']}`
+                    CHANGE `mb_hp_certify` `mb_certify` VARCHAR(20) NOT NULL DEFAULT '' ", true);
+    sql_query(" update {$g4['member_table']} set mb_certify = 'hp' where mb_certify = '1' ");
+    sql_query(" update {$g4['member_table']} set mb_certify = '' where mb_certify = '0' ");
 }
 
 $g4['title'] = '환경설정';
@@ -590,8 +586,8 @@ $pg_anchor = '<ul class="anchor">
     <?php echo $pg_anchor ?>
     <p>
         회원가입 시 본인확인 수단을 설정합니다.<br>
-        실명과 휴대폰 번호 그리고 본인확인 당시에 성인인지의 여부만을 저장하며 생일, 성별 등의 정보는 저장하지 않습니다.<br>
-        게시판의 경우 본인확인 또는 성인여부를 따져 게시물을 조회할 수 권한을 줄 수 있습니다.
+        실명과 휴대폰 번호 그리고 본인확인 당시에 성인인지의 여부를 저장합니다.<br>
+        게시판의 경우 본인확인 또는 성인여부를 따져 게시물 조회 및 쓰기 권한을 줄 수 있습니다.
     </p>
 
     <table class="frm_tbl">
@@ -601,22 +597,48 @@ $pg_anchor = '<ul class="anchor">
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="cf_kcpcert_use">휴대폰 본인확인</label></th>
+        <th scope="row"><label for="cf_cert_use">본인확인</label></th>
         <td>
-            <?php echo help('KCP 사이트코드가 없으면 테스트만 가능합니다.') ?>
-            <select name="cf_kcpcert_use" id="cf_kcpcert_use">
-                <?php echo option_selected("",        $config['cf_kcpcert_use'], "사용안함"); ?>
-                <?php echo option_selected("test",    $config['cf_kcpcert_use'], "테스트"); ?>
-                <?php echo option_selected("service", $config['cf_kcpcert_use'], "실서비스"); ?>
+            <select name="cf_cert_use" id="cf_cert_use">
+                <?php echo option_selected("0", $config['cf_cert_use'], "사용안함"); ?>
+                <?php echo option_selected("1", $config['cf_cert_use'], "테스트"); ?>
+                <?php echo option_selected("2", $config['cf_cert_use'], "실서비스"); ?>
             </select>
         </td>
     </tr>
     <tr>
-        <th scope="row" class="cf_cert_kcp"><label for="cf_kcpcert_site_cd">KCP 사이트코드</label></th>
-        <td colspan="3" class="cf_cert_kcp">
+        <th scope="row" class="cf_cert_service"><label for="cf_cert_ipin">아이핀 본인확인</label></th>
+        <td class="cf_cert_service">
+            <select name="cf_cert_ipin" id="cf_cert_ipin">
+                <?php echo option_selected("",    $config['cf_cert_ipin'], "사용안함"); ?>
+                <?php echo option_selected("kcb", $config['cf_cert_ipin'], "코리아크레딧뷰로(KCB) 아이핀"); ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" class="cf_cert_service"><label for="cf_cert_hp">휴대폰 본인확인</label></th>
+        <td class="cf_cert_service">
+            <select name="cf_cert_hp" id="cf_cert_hp">
+                <?php echo option_selected("",    $config['cf_cert_hp'], "사용안함"); ?>
+                <?php echo option_selected("kcb", $config['cf_cert_hp'], "코리아크레딧뷰로(KCB) 휴대폰 본인확인"); ?>
+                <?php echo option_selected("kcp", $config['cf_cert_hp'], "한국사이버결제(KCP) 휴대폰 본인확인"); ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" class="cf_cert_service"><label for="cf_cert_kcb_cd">코리아크레딧뷰로<br>KCB 회원사ID</label></th>
+        <td class="cf_cert_service">
+            <?php echo help('KCB 회원사ID를 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, KCB와 계약체결 후 회원사ID를 발급 받으실 수 있습니다.<br>이용하시려는 서비스에 대한 계약을 아이핀, 휴대폰 본인확인 각각 체결해주셔야 합니다.<br>아이핀 본인확인 테스트의 경우에는 KCB 회원사ID가 필요 없으나,<br>휴대폰 본인확인 테스트의 경우 KCB 에서 따로 발급 받으셔야 합니다.') ?>
+            <input type="text" name="cf_cert_kcb_cd" value="<?php echo $config['cf_cert_kcb_cd'] ?>" id="cf_cert_kcb_cd" class="frm_input" size="20"> <a href="http://sir.co.kr/main/provider/b_ipin.php" target="_blank" class="btn_frmline">KCB 아이핀 서비스 신청페이지</a>
+            <a href="http://sir.co.kr/main/provider/b_cert.php" target="_blank" class="btn_frmline">KCB 휴대폰 본인확인 서비스 신청페이지</a>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_cd">한국사이버결제<br>KCP 사이트코드</label></th>
+        <td class="cf_cert_service">
             <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
             <span class="sitecode">SM</span>
-            <input type="text" name="cf_kcpcert_site_cd" value="<?php echo $config['cf_kcpcert_site_cd'] ?>" id="cf_kcpcert_site_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">본인확인 서비스 신청페이지</a>
+            <input type="text" name="cf_cert_kcp_cd" value="<?php echo $config['cf_cert_kcp_cd'] ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/provider/p_cert.php" target="_blank" class="btn_frmline">KCP 휴대폰 본인확인 서비스 신청페이지</a>
         </td>
     </tr>
     </tbody>
@@ -884,16 +906,19 @@ $pg_anchor = '<ul class="anchor">
 
 <script>
 $(function(){
-    <?php if($config['cf_kcpcert_use'] != 'service') { ?>
-    $(".cf_cert_kcp").addClass("cf_cert_kcp_hide");
-    <?php } ?>
-    $("#cf_kcpcert_use").change(function(){
-        var cf_cert_kcp_sel = $("#cf_kcpcert_use option:selected").val();
-        if (cf_cert_kcp_sel == "service")
-        {
-            $(".cf_cert_kcp").removeClass("cf_cert_kcp_hide");
-        } else {
-            $(".cf_cert_kcp").addClass("cf_cert_kcp_hide");
+    <?php
+    if(!$config['cf_cert_use'])
+        echo '$(".cf_cert_service").addClass("cf_cert_hide");';
+    ?>
+    $("#cf_cert_use").change(function(){
+        var cf_cert_sel = $("#cf_cert_use option:selected").val();
+        switch(cf_cert_sel) {
+            case "0":
+                $(".cf_cert_service").addClass("cf_cert_hide");
+                break;
+            default:
+                $(".cf_cert_service").removeClass("cf_cert_hide");
+                break;
         }
     });
 });

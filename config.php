@@ -48,6 +48,7 @@ define('G4_SKIN_DIR',       'skin');
 define('G4_GCAPTCHA_DIR',   'gcaptcha');
 define('G4_EDITOR_DIR',     'editor');
 define('G4_MOBILE_DIR',     'mobile');
+define('G4_OKNAME_DIR',     'okname');
 
 define('G4_KCPCERT_DIR',    'kcpcert');
 
@@ -58,7 +59,6 @@ define('G4_SYNDI_DIR',      'syndi');
 if (G4_DOMAIN) {
     define('G4_URL', G4_DOMAIN);
 } else {
-
     if (isset($g4_path['url']))
         define('G4_URL', $g4_path['url']);
     else
@@ -81,6 +81,7 @@ define('G4_SKIN_URL',       G4_URL.'/'.G4_SKIN_DIR);
 define('G4_PLUGIN_URL',     G4_URL.'/'.G4_PLUGIN_DIR);
 define('G4_GCAPTCHA_URL',   G4_PLUGIN_URL.'/'.G4_GCAPTCHA_DIR);
 define('G4_EDITOR_URL',     G4_PLUGIN_URL.'/'.G4_EDITOR_DIR);
+define('G4_OKNAME_URL',     G4_PLUGIN_URL.'/'.G4_OKNAME_DIR);
 define('G4_KCPCERT_URL',    G4_PLUGIN_URL.'/'.G4_KCPCERT_DIR);
 define('G4_SNS_URL',        G4_PLUGIN_URL.'/'.G4_SNS_DIR);
 define('G4_SYNDI_URL',      G4_PLUGIN_URL.'/'.G4_SYNDI_DIR);
@@ -96,6 +97,7 @@ define('G4_PLUGIN_PATH',    G4_PATH.'/'.G4_PLUGIN_DIR);
 define('G4_SKIN_PATH',      G4_PATH.'/'.G4_SKIN_DIR);
 define('G4_GCAPTCHA_PATH',  G4_PLUGIN_PATH.'/'.G4_GCAPTCHA_DIR);
 define('G4_EDITOR_PATH',    G4_PLUGIN_PATH.'/'.G4_EDITOR_DIR);
+define('G4_OKNAME_PATH',    G4_PLUGIN_PATH.'/'.G4_OKNAME_DIR);
 
 define('G4_KCPCERT_PATH',   G4_PLUGIN_PATH.'/'.G4_KCPCERT_DIR);
 
@@ -129,14 +131,14 @@ define('G4_HANGUL',         16); // 한글
 define('G4_SPACE',          32); // 공백
 define('G4_SPECIAL',        64); // 특수문자
 
-// 퍼미션 
+// 퍼미션
 define('G4_DIR_PERMISSION',  0755); // 디렉토리 생성시 퍼미션
 define('G4_FILE_PERMISSION', 0644); // 파일 생성시 퍼미션
 
 // 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
 define('G4_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|skt|nokia|blackberry|android|sony');
 
-// SMTP 
+// SMTP
 // lib/mailer.lib.php 에서 사용
 define('G4_SMTP', '127.0.0.1');
 

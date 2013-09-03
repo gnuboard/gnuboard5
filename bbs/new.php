@@ -18,7 +18,7 @@ if ($view == "w")
 else if ($view == "c")
     $sql_common .= " and a.wr_id <> a.wr_parent ";
 
-$mb_id = isset($_GET['mb_id']) ? $_GET['mb_id'] : "";
+$mb_id = isset($_GET['mb_id']) ? strip_tags($_GET['mb_id']) : "";
 if ($mb_id) {
     $sql_common .= " and a.mb_id = '{$mb_id}' ";
 }

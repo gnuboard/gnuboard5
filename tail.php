@@ -44,7 +44,7 @@ if(!G4_IS_MOBILE) {
             if($key == 'device')
                 continue;
 
-            $href .= $sep.$key.'='.$val;
+            $href .= $sep.$key.'='.strip_tags($val);
             $sep = '&amp;';
             $seq++;
         }

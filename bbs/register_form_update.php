@@ -76,7 +76,7 @@ if ($w == '' || $w == 'u') {
         if ($msg = exist_mb_id($mb_id))     alert($msg);
 
         if ($config['cf_use_recommend'] && $mb_recommend) {
-            if (!exist_mb_id($mb_recommend))    
+            if (!exist_mb_id($mb_recommend))
                 alert("추천인이 존재하지 않습니다.");
         }
 
@@ -142,32 +142,43 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
 }
 
 //===============================================================
-//  휴대폰 본인확인
+//  본인확인
 //---------------------------------------------------------------
-$sql_hp_certify = "";
-$md5_cert_no = get_session("ss_kcpcert_no");
-if ($config['cf_kcpcert_use'] && $md5_cert_no) {
-    // 해시값이 같은 경우에만 휴대폰 본인확인 값을 저장한다.
-    if (get_session("ss_kcpcert_hash") == md5($mb_hp.$mb_name.$md5_cert_no)) {
-        $sql_hp_certify .= " , mb_hp = '{$mb_hp}' ";
-        $sql_hp_certify .= " , mb_hp_certify  = '{$_SESSION['ss_kcpcert_hp_certify']}' ";
-        $sql_hp_certify .= " , mb_adult = '{$_SESSION['ss_kcpcert_adult']}' ";
-        $sql_hp_certify .= " , mb_birth = '{$_SESSION['ss_kcpcert_birth']}' ";
-        $sql_hp_certify .= " , mb_sex = '{$_SESSION['ss_kcpcert_sex']}' ";
+$mb_hp = hyphen_hp_number($mb_hp);
+if($_SESSION['ss_cert_type'] != 'hp' && $mb_hp) {
+    // 휴대폰번호 중복체크
+    $sql = " select mb_id from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$mb_hp}' ";
+    $row = sql_fetch($sql);
+    if ($row['mb_id']) {
+        alert("이미 가입되어 있는 휴대폰번호 입니다.\\n회원아이디 : ".$row['mb_id']);
+    }
+}
+
+$sql_certify = '';
+$md5_cert_no = $_SESSION['ss_cert_no'];
+$cert_type = $_SESSION['ss_cert_type'];
+if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
+    // 해시값이 같은 경우에만 본인확인 값을 저장한다.
+    if ($_SESSION['ss_cert_hash'] == md5($mb_name.$cert_type.$_SESSION['ss_cert_birth'].$md5_cert_no)) {
+        $sql_certify .= " , mb_hp = '{$mb_hp}' ";
+        $sql_certify .= " , mb_certify  = '{$cert_type}' ";
+        $sql_certify .= " , mb_adult = '{$_SESSION['ss_cert_adult']}' ";
+        $sql_certify .= " , mb_birth = '{$_SESSION['ss_cert_birth']}' ";
+        $sql_certify .= " , mb_sex = '{$_SESSION['ss_cert_sex']}' ";
     } else {
-        $sql_hp_certify .= " , mb_hp = '' ";
-        $sql_hp_certify .= " , mb_hp_certify  = 0 ";
-        $sql_hp_certify .= " , mb_adult = 0 ";
-        $sql_hp_certify .= " , mb_birth = '' ";
-        $sql_hp_certify .= " , mb_sex = '' ";
+        $sql_certify .= " , mb_hp = '{$mb_hp}' ";
+        $sql_certify .= " , mb_certify  = '' ";
+        $sql_certify .= " , mb_adult = 0 ";
+        $sql_certify .= " , mb_birth = '' ";
+        $sql_certify .= " , mb_sex = '' ";
     }
 } else {
     if (get_session("ss_reg_mb_name") != $mb_name || get_session("ss_reg_mb_hp") != $mb_hp) {
-        $sql_hp_certify .= " , mb_hp = '{$mb_hp}' ";
-        $sql_hp_certify .= " , mb_hp_certify = 0 ";
-        $sql_hp_certify .= " , mb_adult = 0 ";
-        $sql_hp_certify .= " , mb_birth = '' ";
-        $sql_hp_certify .= " , mb_sex = '' ";
+        $sql_certify .= " , mb_hp = '{$mb_hp}' ";
+        $sql_certify .= " , mb_certify = '' ";
+        $sql_certify .= " , mb_adult = 0 ";
+        $sql_certify .= " , mb_birth = '' ";
+        $sql_certify .= " , mb_sex = '' ";
     }
 }
 //===============================================================
@@ -208,8 +219,8 @@ if ($w == '') {
                      mb_7 = '{$mb_7}',
                      mb_8 = '{$mb_8}',
                      mb_9 = '{$mb_9}',
-                     mb_10 = '{$mb_10}' 
-                     {$sql_hp_certify} ";
+                     mb_10 = '{$mb_10}'
+                     {$sql_certify} ";
 
     // 이메일 인증을 사용하지 않는다면 이메일 인증시간을 바로 넣는다
     if (!$config['cf_use_email_certify'])
@@ -314,7 +325,7 @@ if ($w == '') {
                     {$sql_nick_date}
                     {$sql_open_date}
                     {$sql_email_certify}
-                    {$sql_hp_certify}
+                    {$sql_certify}
               where mb_id = '$mb_id' ";
     sql_query($sql);
 }
@@ -340,10 +351,11 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
 // 사용자 코드 실행
 @include_once ($member_skin_path.'/register_form_update.tail.skin.php');
 
-unset($_SESSION['ss_kcpcert_no']);
-unset($_SESSION['ss_kcpcert_hash']);
-unset($_SESSION['ss_kcpcert_hp_certify']);
-unset($_SESSION['ss_kcpcert_adult']);
+unset($_SESSION['ss_cert_type']);
+unset($_SESSION['ss_cert_no']);
+unset($_SESSION['ss_cert_hash']);
+unset($_SESSION['ss_cert_birth']);
+unset($_SESSION['ss_cert_adult']);
 
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';

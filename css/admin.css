@@ -591,7 +591,7 @@ td {padding:8px 5px 6px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9
 .txt_expired {color:#ccc}
 
 /* 환경설정 */
-.cf_cert_kcp_hide {display:none}
+.cf_cert_hide {display:none}
 
 /* 관리권한설정 */
 #add_admin fieldset {margin-top:20px}
