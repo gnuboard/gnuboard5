@@ -59,7 +59,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                 <option value="2"<?php echo get_selected('2', $cp['cp_method']); ?>>주문금액할인</option>
                 <option value="3"<?php echo get_selected('3', $cp['cp_method']); ?>>배송비할인</option>
            </select>
-           <button type="button" id="cp_method_btn" class="btn_frmline">변경</button>
         </td>
     </tr>
     <tr id="tr_cp_target">
@@ -100,7 +99,6 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                 <option value="0"<?php echo get_selected('0', $cp['cp_type']); ?>>정액할인(원)</option>
                 <option value="1"<?php echo get_selected('1', $cp['cp_type']); ?>>정률할인(%)</option>
            </select>
-           <button type="button" id="cp_type_btn" class="btn_frmline">변경</button>
         </td>
     </tr>
     <tr>
@@ -152,17 +150,6 @@ $(function() {
     $("#tr_cp_maximum").hide();
     $("#tr_cp_trunc").hide();
     <?php } ?>
-    $("#cp_method_btn").click(function() {
-        var cp_method = $("#cp_method").val();
-        change_method(cp_method);
-    });
-
-    $("#cp_type_btn").click(function() {
-        var cp_type = $("#cp_type").val();
-        change_type(cp_type);
-    });
-
-    /** select 변경때 반영하려면 주석 제거
     $("#cp_method").change(function() {
         var cp_method = $(this).val();
         change_method(cp_method);
@@ -172,7 +159,6 @@ $(function() {
         var cp_type = $(this).val();
         change_type(cp_type);
     });
-    */
 
     $("#sch_target").click(function() {
         var cp_method = $("#cp_method").val();
