@@ -611,7 +611,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="cf_cert_service">
             <select name="cf_cert_ipin" id="cf_cert_ipin">
                 <?php echo option_selected("",    $config['cf_cert_ipin'], "사용안함"); ?>
-                <?php echo option_selected("kcb", $config['cf_cert_ipin'], "KCB 아이핀"); ?>
+                <?php echo option_selected("kcb", $config['cf_cert_ipin'], "코리아크레딧뷰로(KCB) 아이핀"); ?>
             </select>
         </td>
     </tr>
@@ -620,25 +620,25 @@ $pg_anchor = '<ul class="anchor">
         <td class="cf_cert_service">
             <select name="cf_cert_hp" id="cf_cert_hp">
                 <?php echo option_selected("",    $config['cf_cert_hp'], "사용안함"); ?>
-                <?php echo option_selected("kcb", $config['cf_cert_hp'], "KCB OKNAME 휴대폰본인확인"); ?>
-                <?php echo option_selected("kcp", $config['cf_cert_hp'], "KCP 휴대폰본인확인"); ?>
+                <?php echo option_selected("kcb", $config['cf_cert_hp'], "코리아크레딧뷰로(KCB) 휴대폰 본인확인"); ?>
+                <?php echo option_selected("kcp", $config['cf_cert_hp'], "한국사이버결제(KCP) 휴대폰 본인확인"); ?>
             </select>
         </td>
     </tr>
     <tr>
-        <th scope="row" class="cf_cert_service"><label for="cf_cert_kcb_cd">KCB 회원사ID</label></th>
+        <th scope="row" class="cf_cert_service"><label for="cf_cert_kcb_cd">코리아크레딧뷰로<br>KCB 회원사ID</label></th>
         <td class="cf_cert_service">
-            <?php echo help('KCB 회원사ID를 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, KCB와 계약체결 후 회원사ID를 발급 받으실 수 있습니다.<br>이용하시려는 서비스에 대한 계약을 각각 체결해주셔야 합니다.<br>KCB 휴대폰본인확인 서비스는 테스트일 경우에도 회원사ID가 필요합니다.') ?>
-            <input type="text" name="cf_cert_kcb_cd" value="<?php echo $config['cf_cert_kcb_cd'] ?>" id="cf_cert_kcb_cd" class="frm_input" size="20"> <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">아이핀 이용계약서</a>
-            <a href="http://sir.co.kr/main/g4s/kcpcert.html" target="_blank" class="btn_frmline">본인확인서비스 이용계약서</a>
+            <?php echo help('KCB 회원사ID를 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, KCB와 계약체결 후 회원사ID를 발급 받으실 수 있습니다.<br>이용하시려는 서비스에 대한 계약을 아이핀, 휴대폰 본인확인 각각 체결해주셔야 합니다.<br>아이핀 본인확인 테스트의 경우에는 KCB 회원사ID가 필요 없으나,<br>휴대폰 본인확인 테스트의 경우 KCB 에서 따로 발급 받으셔야 합니다.') ?>
+            <input type="text" name="cf_cert_kcb_cd" value="<?php echo $config['cf_cert_kcb_cd'] ?>" id="cf_cert_kcb_cd" class="frm_input" size="20"> <a href="http://sir.co.kr/main/provider/kcbipin.php" target="_blank" class="btn_frmline">KCB 아이핀 서비스 신청페이지</a>
+            <a href="http://sir.co.kr/main/provider/kcbcert.php" target="_blank" class="btn_frmline">KCB 휴대폰 본인확인 서비스 신청페이지</a>
         </td>
     </tr>
     <tr>
-        <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_cd">KCP 사이트코드</label></th>
+        <th scope="row" class="cf_cert_service"><label for="cf_cert_kcp_cd">한국사이버결제<br>KCP 사이트코드</label></th>
         <td class="cf_cert_service">
             <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
             <span class="sitecode">SM</span>
-            <input type="text" name="cf_cert_kcp_cd" value="<?php echo $config['cf_cert_kcp_cd'] ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/g4s/kcpcert.php" target="_blank" class="btn_frmline">본인확인 서비스 신청페이지</a>
+            <input type="text" name="cf_cert_kcp_cd" value="<?php echo $config['cf_cert_kcp_cd'] ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/g4s/kcpcert.php" target="_blank" class="btn_frmline">KCP 휴대폰 본인확인 서비스 신청페이지</a>
         </td>
     </tr>
     </tbody>
