@@ -252,7 +252,6 @@ include_once('./admin.head.php');
         <td colspan="3">
             <?php if ($mb['mb_email_certify'] == '0000-00-00 00:00:00') { ?>
             <?php echo help('회원님이 메일을 수신할 수 없는 경우 등에 직접 인증처리를 하실 수 있습니다.') ?>
-            <?php echo $mb['mb_email_certify'] ?>
             <input type="checkbox" id="passive_certify" name="passive_certify">
             <label>수동인증</label>
             <?php } else { ?>
