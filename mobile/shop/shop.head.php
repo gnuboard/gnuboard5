@@ -47,6 +47,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
         <?php } ?>
         <li><a href="<?php echo G4_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
         <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php">장바구니</a></li>
+        <li><a href="<?php echo G4_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
         <li><a href="<?php echo G4_URL; ?>/">커뮤니티</a></li>
     </ul>
 

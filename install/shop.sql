@@ -616,6 +616,35 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shop_personalpay`
+--
+
+DROP TABLE IF EXISTS `shop_personalpay`;
+CREATE TABLE IF NOT EXISTS `shop_personalpay` (
+  `pp_id` BIGINT(20) unsigned NOT NULL,
+  `od_id` BIGINT(20) unsigned NOT NULL,  
+  `pp_name` VARCHAR(255) NOT NULL DEFAULT '',
+  `pp_content` TEXT NOT NULL,
+  `pp_use` TINYINT(4) NOT NULL DEFAULT '0',
+  `pp_amount` INT(11) NOT NULL DEFAULT '0',
+  `pp_tno` VARCHAR(255) NOT NULL DEFAULT '',
+  `pp_app_no` VARCHAR(20) NOT NULL DEFAULT '',
+  `pp_receipt_amount` INT(11) NOT NULL DEFAULT '0',
+  `pp_settle_case` VARCHAR(255) NOT NULL DEFAULT '',
+  `pp_bank_account` VARCHAR(255) NOT NULL DEFAULT '',
+  `pp_deposit_name` VARCHAR(255) NOT NULL DEFAULT '',
+  `pp_receipt_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `pp_receipt_ip` VARCHAR(255) NOT NULL DEFAULT '',
+  `pp_shop_memo` TEXT NOT NULL,
+  `pp_ip` VARCHAR(255) NOT NULL DEFAULT '',
+  `pp_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`pp_id`),
+  KEY `od_id` (`od_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `shop_request`
 --
 

@@ -34,6 +34,11 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 <form name="fcouponform" action="./couponformupdate.php" method="post" onsubmit="return form_check(this);">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="cp_id" value="<?php echo $cp_id; ?>">
+<input type="hidden" name="sst" value="<?php echo $sst; ?>">
+<input type="hidden" name="sod" value="<?php echo $sod; ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+<input type="hidden" name="stx" value="<?php echo $stx; ?>">
+<input type="hidden" name="page" value="<?php echo $page;?>">
 
 <section class="cbox">
     <h2><?php echo $html_title; ?></h2>

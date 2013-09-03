@@ -8,6 +8,7 @@ $menu['menu400'] = array (
     array('400410', '주문개별내역', G4_ADMIN_URL.'/shop_admin/orderstatuslist.php', 'scf_order_by', 1),
     array('400420', '주문통합내역', G4_ADMIN_URL.'/shop_admin/orderlist2.php', 'scf_order_all', 1),
     array('400430', '취소교환반품내역', G4_ADMIN_URL.'/shop_admin/orderrequestlist.php', 'scf_request', 1),
+    array('400440', '개인결제관리', G4_ADMIN_URL.'/shop_admin/personalpaylist.php', 'scf_personalpay', 1),
     array('400200', '분류관리', G4_ADMIN_URL.'/shop_admin/categorylist.php', 'scf_cate'),
     array('400300', '상품관리', G4_ADMIN_URL.'/shop_admin/itemlist.php', 'scf_item'),
     array('400660', '상품문의', G4_ADMIN_URL.'/shop_admin/itemqalist.php', 'scf_item_qna'),

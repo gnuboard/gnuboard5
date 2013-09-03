@@ -416,6 +416,31 @@ if(!sql_query(" select it_mobile_name from {$g4['shop_item_table']} limit 1 ", f
                     ADD `it_mobile_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_name` ", true);
 }
 
+// 개인결제 테이블추가
+if(!sql_query(" select pp_id from {$g4['shop_personalpay_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_personalpay_table']}` (
+                  `pp_id` BIGINT(20) unsigned NOT NULL,
+                  `od_id` BIGINT(20) unsigned NOT NULL,
+                  `pp_name` VARCHAR(255) NOT NULL DEFAULT '',
+                  `pp_content` TEXT NOT NULL,
+                  `pp_use` TINYINT(4) NOT NULL DEFAULT '0',
+                  `pp_amount` INT(11) NOT NULL DEFAULT '0',
+                  `pp_tno` varchar(255) NOT NULL DEFAULT '',
+                  `pp_app_no` varchar(20) NOT NULL DEFAULT '',
+                  `pp_receipt_amount` INT(11) NOT NULL DEFAULT '0',
+                  `pp_settle_case` VARCHAR(255) NOT NULL DEFAULT '',
+                  `pp_bank_account` VARCHAR(255) NOT NULL DEFAULT '',
+                  `pp_deposit_name` VARCHAR(255) NOT NULL DEFAULT '',
+                  `pp_receipt_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  `pp_receipt_ip` VARCHAR(255) NOT NULL DEFAULT '',
+                  `pp_shop_memo` TEXT NOT NULL,
+                  `pp_ip` VARCHAR(255) NOT NULL DEFAULT '',
+                  `pp_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  PRIMARY KEY (`pp_id`),
+                  KEY `od_id` (`od_id`)
+                )", true);
+}
+
 // od_app_no 필드 추가
 if(!sql_query(" select od_app_no from {$g4['shop_order_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`

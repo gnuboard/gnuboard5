@@ -326,7 +326,7 @@ else if ($od_settle_case == "가상계좌")
     $bankname           = iconv("cp949", "utf8", $bankname);
     $depositor          = iconv("cp949", "utf8", $depositor);
     $od_bank_account    = $bankname.' '.$account.' '.$depositor;
-    $od_deposit_name    = $od_name;
+    $od_deposit_name    = $depositor;
     $pg_amount          = $amount;
 }
 else if ($od_settle_case == "휴대폰")

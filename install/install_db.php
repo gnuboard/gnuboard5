@@ -492,6 +492,7 @@ if($shop_install) {
     fwrite($f, "\$g4['shop_coupon_table'] = SHOP_TABLE_PREFIX.'coupon'; // 쿠폰정보 테이블\n");
     fwrite($f, "\$g4['shop_sendcost_table'] = SHOP_TABLE_PREFIX.'sendcost'; // 추가배송비 테이블\n");
     fwrite($f, "\$g4['shop_request_table'] = SHOP_TABLE_PREFIX.'request'; // 주문 취소, 교환, 반품 요청테이블\n");
+    fwrite($f, "\$g4['shop_personalpay_table'] = SHOP_TABLE_PREFIX.'personalpay'; // 개인결제 정보 테이블\n");
     fwrite($f, "?>");
 }
 

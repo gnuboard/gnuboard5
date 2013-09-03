@@ -761,6 +761,9 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 
     <div class="btn_confirm">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
+        <?php if($amount['미수'] > 0) { ?>
+        <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
+        <?php } ?>
     </div>
     </form>
 </section>
@@ -958,6 +961,13 @@ $(function() {
             $chk.attr("checked", true);
         else
             $chk.attr("checked", false);
+    });
+
+    // 개인결제추가
+    $("#personalpay_add").on("click", function() {
+        var href = this.href;
+        window.open(href, "personalpaywin", "left=100, top=100, width=700, height=650, scrollbars=yes");
+        return false;
     });
 });
 
