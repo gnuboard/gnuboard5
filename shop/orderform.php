@@ -671,6 +671,50 @@ function get_intall_file()
 
         <table class="frm_tbl">
         <tbody>
+        <?php
+        if($is_member) {
+            // 배송지 이력
+            $addr_list = '';
+            $sep = chr(30);
+            // 기본배송지
+            $sql = " select *
+                        from {$g4['shop_order_address_table']}
+                        where mb_id = '{$member['mb_id']}'
+                          and ad_default = '1' ";
+            $row = sql_fetch($sql);
+            if($row['ad_id']) {
+                $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
+                $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_def">'.PHP_EOL;
+                $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
+            }
+
+            // 최근배송지
+            $sql = " select *
+                        from {$g4['shop_order_address_table']}
+                        where mb_id = '{$member['mb_id']}'
+                        order by ad_id desc
+                        limit 2 ";
+            $result = sql_query($sql);
+            for($i=0; $row=sql_fetch_array($result); $i++) {
+                $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
+                $val2 = '<label for="ad_sel_addr_'.($i+1).'">최근배송지('.($row['ad_subject'] ? $row['ad_subject'] : $row['ad_name']).')</label>';
+                $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_'.($i+1).'"> '.PHP_EOL.$val2.PHP_EOL;
+            }
+
+            $addr_list .= '<input type="radio" name="ad_sel_addr" value="new" id="od_sel_addr_new">'.PHP_EOL;
+            $addr_list .= '<label for="od_sel_addr_new">신규배송지</label>'.PHP_EOL;
+        ?>
+        <tr>
+            <th scope="row">배송지선택</th>
+            <td><?php echo $addr_list; ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="ad_subject">배송지명</label></th>
+            <td><input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20"></td>
+        </tr>
+        <?php
+        }
+        ?>
         <tr>
             <th scope="row"><label for="od_b_name">이름</label></th>
             <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"></td>
@@ -693,6 +737,12 @@ function get_intall_file()
                 <label for="od_b_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
                 <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="2" maxlength="3">
                 <span id="od_winb_zip" style="display:block"></span>
+                <?php if($addr_list) { ?>
+                <input type="checkbox" name="add_address" id="add_address" value="1">
+                <label for="add_address">배송지목록에 추가</label>
+                <input type="checkbox" name="ad_default" id="ad_default" value="1">
+                <label for="ad_default">기본배송지로 설정</label>
+                <?php } ?>
                 <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
                 <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="50">
                 <label for="od_b_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
@@ -1185,6 +1235,39 @@ $(function() {
 
     $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp").bind("click", function() {
         $("#settle_bank").hide();
+    });
+
+    // 배송지선택
+    $("input[name=ad_sel_addr]").on("click", function() {
+        var addr = $(this).val().split(String.fromCharCode(30));
+
+        if(addr[0] == "new") {
+            for(i=0; i<8; i++) {
+                addr[i] = "";
+            }
+        }
+
+        var f = document.forderform;
+        f.od_b_name.value   = addr[0];
+        f.od_b_tel.value    = addr[1];
+        f.od_b_hp.value     = addr[2];
+        f.od_b_zip1.value   = addr[3];
+        f.od_b_zip2.value   = addr[4];
+        f.od_b_addr1.value  = addr[5];
+        f.od_b_addr2.value  = addr[6];
+        f.ad_subject.value  = addr[7];
+
+        var zip1 = addr[3].replace(/[^0-9]/g, "");
+        var zip2 = addr[4].replace(/[^0-9]/g, "");
+
+        if(zip1 != "" && zip2 != "") {
+            var code = String(zip1) + String(zip2);
+
+            if(zipcode != code) {
+                zipcode = code;
+                calculate_sendcost(code);
+            }
+        }
     });
 });
 

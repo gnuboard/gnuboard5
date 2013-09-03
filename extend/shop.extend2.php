@@ -446,4 +446,24 @@ if(!sql_query(" select od_app_no from {$g4['shop_order_table']} limit 1 ", false
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
                     ADD `od_app_no` varchar(20) NOT NULL DEFAULT '' AFTER `od_tno` ", true);
 }
+
+// 배송지이력 테이블추가
+if(!sql_query(" DESCRIBE `{$g4['shop_order_address_table']}` ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_order_address_table']}` (
+                  `ad_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `mb_id` varchar(255) NOT NULL DEFAULT '',
+                  `ad_subject` varchar(255) NOT NULL DEFAULT '',
+                  `ad_default` tinyint(4) NOT NULL DEFAULT '0',
+                  `ad_name` varchar(255) NOT NULL DEFAULT '',
+                  `ad_tel` varchar(255) NOT NULL DEFAULT '',
+                  `ad_hp` varchar(255) NOT NULL DEFAULT '',
+                  `ad_zip1` char(3) NOT NULL DEFAULT '',
+                  `ad_zip2` char(3) NOT NULL DEFAULT '',
+                  `ad_addr1` varchar(255) NOT NULL DEFAULT '',
+                  `ad_addr2` varchar(255) NOT NULL DEFAULT '',
+                  `ad_hash` varchar(255) NOT NULL DEFAULT '',
+                  PRIMARY KEY (`ad_id`),
+                  KEY `mb_id` (`mb_id`)
+                )", true);
+}
 ?>

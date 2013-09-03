@@ -458,7 +458,7 @@ DROP TABLE IF EXISTS `shop_item_use`;
 CREATE TABLE IF NOT EXISTS `shop_item_use` (
   `is_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(20) NOT NULL DEFAULT '0',
-  `mb_id` varchar(20) NOT NULL DEFAULT '',
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
   `is_name` varchar(255) NOT NULL DEFAULT '',
   `is_password` varchar(255) NOT NULL DEFAULT '',
   `is_score` tinyint(4) NOT NULL DEFAULT '0',
@@ -481,7 +481,7 @@ DROP TABLE IF EXISTS `shop_item_qa`;
 CREATE TABLE IF NOT EXISTS `shop_item_qa` (
   `iq_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(20) NOT NULL DEFAULT '',
-  `mb_id` varchar(20) NOT NULL DEFAULT '',
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
   `iq_name` varchar(255) NOT NULL DEFAULT '',
   `iq_password` varchar(255) NOT NULL DEFAULT '',
   `iq_subject` varchar(255) NOT NULL DEFAULT '',
@@ -553,7 +553,7 @@ CREATE TABLE IF NOT EXISTS `shop_onlinecalc` (
 DROP TABLE IF EXISTS `shop_order`;
 CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_id` bigint(20) unsigned NOT NULL,
-  `mb_id` varchar(20) NOT NULL DEFAULT '',
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
   `od_pwd` varchar(255) NOT NULL DEFAULT '',
   `od_name` varchar(20) NOT NULL DEFAULT '',
   `od_email` varchar(100) NOT NULL DEFAULT '',
@@ -616,6 +616,29 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `shop_order_address`
+--
+
+CREATE TABLE IF NOT EXISTS `shop_order_address` (
+  `ad_id` int(11) NOT NULL AUTO_INCREMENT,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `ad_subject` varchar(255) NOT NULL DEFAULT '',
+  `ad_default` tinyint(4) NOT NULL DEFAULT '0',
+  `ad_name` varchar(255) NOT NULL DEFAULT '',
+  `ad_tel` varchar(255) NOT NULL DEFAULT '',
+  `ad_hp` varchar(255) NOT NULL DEFAULT '',
+  `ad_zip1` char(3) NOT NULL DEFAULT '',
+  `ad_zip2` char(3) NOT NULL DEFAULT '',
+  `ad_addr1` varchar(255) NOT NULL DEFAULT '',
+  `ad_addr2` varchar(255) NOT NULL DEFAULT '',
+  `ad_hash` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ad_id`),
+  KEY `mb_id` (`mb_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `shop_personalpay`
 --
 
@@ -655,7 +678,7 @@ CREATE TABLE IF NOT EXISTS `shop_request` (
   `rq_parent` INT(11) NOT NULL DEFAULT '0',
   `od_id` BIGINT(20) unsigned NOT NULL,
   `ct_id` VARCHAR(255) NOT NULL DEFAULT '',
-  `mb_id` VARCHAR(20) NOT NULL DEFAULT '',
+  `mb_id` VARCHAR(255) NOT NULL DEFAULT '',
   `rq_content` TEXT NOT NULL,  
   `rq_status` TINYINT(4) NOT NULL DEFAULT '0',
   `rq_item` TEXT NOT NULL,
@@ -697,7 +720,7 @@ CREATE TABLE IF NOT EXISTS `shop_sendcost` (
 DROP TABLE IF EXISTS `shop_wish`;
 CREATE TABLE IF NOT EXISTS `shop_wish` (
   `wi_id` int(11) NOT NULL AUTO_INCREMENT,
-  `mb_id` varchar(20) NOT NULL DEFAULT '',
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
   `it_id` varchar(20) NOT NULL DEFAULT '0',
   `wi_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `wi_ip` varchar(25) NOT NULL DEFAULT '',
