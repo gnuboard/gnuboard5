@@ -436,7 +436,7 @@ function get_intall_file()
 
     <div id="display_pay_button" class="btn_confirm" style="display:none">
         <input type="submit" value="결제하기" class="btn_submit">
-        <a href="javascript:history.go(-1);" class="btn01">취소</a>
+        <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
     </div>
 
 </form>

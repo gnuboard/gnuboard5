@@ -22,7 +22,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 ?>
     <li class="sct_li<?php echo $sct_last; ?>" style="width:<?php echo $img_width; ?>px">
         <a href="<?php echo $href; ?>" class="sct_a">
-            <span class="sct_img">개인결제 이미지</span>
+            <span class="sct_img"><img src="<?php echo G4_SHOP_SKIN_URL; ?>/img/personal.jpg" alt=""></span>
             <b><?php echo get_text($row['pp_name']).'님 개인결제'; ?></b>
             <span class="sct_cost"><?php echo display_price($row['pp_amount']); ?></span>
         </a>

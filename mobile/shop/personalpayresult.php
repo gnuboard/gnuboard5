@@ -18,7 +18,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 
     <p>개인결제번호 <strong><?php echo $pp_id; ?></strong></p>
 
-    <div id="sod_fin_view">
+    <section id="sod_fin_view">
         <h2>결제 정보</h2>
         <?php
         $misu = true;
@@ -145,7 +145,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             </tbody>
             </table>
         </section>
-    </div>
+    </section>
 
     <section id="sod_fin_tot">
         <h2>결제합계</h2>

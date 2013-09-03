@@ -16,8 +16,8 @@ if(!$row['pp_id'])
 
 <form name="fpersonalpaycopy" method="post" action="./personalpaycopyupdate.php" onsubmit="return form_check(this);">
 <input type="hidden" name="pp_id" value="<?php echo $pp_id; ?>">
-<div class="cbox">
-    <h1>개인결제 복사</h1>
+<div class="new_win">
+    <h1 id="new_win_title">개인결제 복사</h1>
 
     <table class="frm_tbl">
     <tbody>
