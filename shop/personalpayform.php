@@ -174,6 +174,15 @@ function get_intall_file()
         /* = -------------------------------------------------------------------------- = */
         /* =   결제에 필요한 주문 정보를 입력 및 설정합니다.                            = */
         /* = -------------------------------------------------------------------------- = */
+
+    // 에스크로 상품정보
+    if($default['de_escrow_use']) {
+        $good_info .= "seq=1".chr(31);
+        $good_info .= "ordr_numb={$pp_id}_".sprintf("%04d", 1).chr(31);
+        $good_info .= "good_name=".addslashes($pp['pp_name'].'님 개인결제').chr(31);
+        $good_info .= "good_cntx=1".chr(31);
+        $good_info .= "good_amtx=".$pp['pp_amount'].chr(31);
+    }
     ?>
         <!-- PLUGIN 설정 정보입니다(변경 불가) -->
         <input type="hidden" name="module_type"     value="01">
@@ -229,7 +238,7 @@ function get_intall_file()
         <input type="hidden" name="bask_cntx" value="1">
 
         <!-- 장바구니 상품 상세 정보 (자바 스크립트 샘플(create_goodInfo()) 참고) -->
-        <input type="hidden" name="good_info" value="<?php echo $pp['pp_name'].'님 개인결제'; ?>">
+        <input type="hidden" name="good_info" value="<?php echo $good_info; ?>">
 
     <?php
         /* = -------------------------------------------------------------------------- = */
