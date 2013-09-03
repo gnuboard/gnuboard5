@@ -48,297 +48,297 @@ if(openwin != null) {
     <p>주문번호 <strong><?php echo $od_id; ?></strong></p>
 
     <section id="sod_fin_list">
-    <form name="forderrequest" method="post" action="./orderrequestupdate.php" onsubmit="return frequest_check(this);">
-    <input type="hidden" name="od_id" value="<?php echo $od['od_id']; ?>">
-    <input type="hidden" name="rq_type" value="">
-        <h2>주문하신 상품</h2>
-        <span class="sound_only">상품 상태 설명</span>
-        <dl id="sod_fin_legend">
-            <dt>주문</dt>
-            <dd>주문이 접수되었습니다.</dd>
-            <dt>준비</dt>
-            <dd>상품 준비 중입니다.</dd>
-            <dt>배송</dt>
-            <dd>상품 배송 중입니다.</dd>
-            <dt>완료</dt>
-            <dd>상품 배송이 완료되었습니다.</dd>
-        </dl>
-        <?php
-        $od_count1 = $od_count2 = 0;
-        $idx = 0;
-
-        $sql = " select it_id, it_name
-                    from {$g4['shop_cart_table']}
-                    where od_id = '$od_id'
-                    group by it_id
-                    order by ct_id ";
-        $result = sql_query($sql);
-        ?>
-        <ul id="sod_ul">
+        <form name="forderrequest" method="post" action="./orderrequestupdate.php" onsubmit="return frequest_check(this);">
+        <input type="hidden" name="od_id" value="<?php echo $od['od_id']; ?>">
+        <input type="hidden" name="rq_type" value="">
+            <h2>주문하신 상품</h2>
+            <span class="sound_only">상품 상태 설명</span>
+            <dl id="sod_fin_legend">
+                <dt>주문</dt>
+                <dd>주문이 접수되었습니다.</dd>
+                <dt>준비</dt>
+                <dd>상품 준비 중입니다.</dd>
+                <dt>배송</dt>
+                <dd>상품 배송 중입니다.</dd>
+                <dt>완료</dt>
+                <dd>상품 배송이 완료되었습니다.</dd>
+            </dl>
             <?php
-            for($i=0; $row=sql_fetch_array($result); $i++) {
-                $image = get_it_image($row['it_id'], 70, 70);
+            $od_count1 = $od_count2 = 0;
+            $idx = 0;
+
+            $sql = " select it_id, it_name
+                        from {$g4['shop_cart_table']}
+                        where od_id = '$od_id'
+                        group by it_id
+                        order by ct_id ";
+            $result = sql_query($sql);
             ?>
-            <li>
-                <p>
-                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo $row['it_name']; ?></a>
-                </p>
-
-                <table class="basic_tbl">
-                <thead>
-                <tr>
-                    <th scope="col">선택</th>
-                    <th scope="col">옵션항목</th>
-                    <th scope="col">수량</th>
-                    <th scope="col">판매가</th>
-                    <th scope="col">소계</th>
-                    <th scope="col">포인트</th>
-                    <th scope="col">상태</th>
-                </tr>
-                </thead>
-                <tbody>
+            <ul id="sod_ul">
                 <?php
-                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, cp_amount, io_type, io_price
-                            from {$g4['shop_cart_table']}
-                            where od_id = '$od_id'
-                              and it_id = '{$row['it_id']}'
-                            order by io_type asc, ct_id asc ";
-                $res = sql_query($sql);
-                $ct_list = array();
-
-                for($k=0; $opt=sql_fetch_array($res); $k++) {
-                    if($opt['io_type'])
-                        $opt_price = $opt['io_price'];
-                    else
-                        $opt_price = $opt['ct_price'] + $opt['io_price'];
-
-                    $sell_amount = $opt_price * $opt['ct_qty'];
-                    $point = $opt['ct_point'] * $opt['ct_qty'];
-
-                    $disabled = '';
-                    if($opt['ct_status'] == '취소' || $opt['ct_status'] == '반품' || $opt['ct_status'] == '품절')
-                        $disabled = ' disabled="disabled"';
-
-                    $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
-                    $ct_list[$opt['ct_id']]['option'] = $opt['ct_option'];
+                for($i=0; $row=sql_fetch_array($result); $i++) {
+                    $image = get_it_image($row['it_id'], 70, 70);
                 ?>
-                <tr>
-                    <td class="td_chk">
-                        <input type="hidden" name="ct_id[<?php echo $idx; ?>]" value="<?php echo $opt['ct_id']; ?>">
-                        <label for="chk_ct_id_<?php echo $idx; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
-                        <input type="checkbox" name="chk_ct_id[<?php echo $idx; ?>]" value="1" id="chk_ct_id_<?php echo $idx; ?>"<?php echo $disabled; ?>>
-                    </td>
-                    <td><?php echo $opt['ct_option']; ?></td>
-                    <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
-                    <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
-                    <td class="td_num"><?php echo number_format($sell_amount); ?></td>
-                    <td class="td_num"><?php echo number_format($point); ?></td>
-                    <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
-                </tr>
-                <?php
-                    if ($opt['ct_status'] == '취소' || $opt['ct_status'] == '반품' || $opt['ct_status'] == '품절') {
-                        $tot_cancel_amount += $sell_amount;
-                    }
-                    else {
-                        $tot_point       += $point;
-                        $tot_sell_amount += $sell_amount;
-                    }
+                <li>
+                    <p>
+                        <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo $row['it_name']; ?></a>
+                    </p>
 
-                    // 전체 상품의 상태가 주문인지 비교할 때 사용
-                    $od_count1++;
-                    if($opt['ct_status'] == '주문')
-                        $od_count2++;
-
-                    $idx++;
-                    $tot_cp_amount += $opt['cp_amount'];
-                }
-                ?>
-                </tbody>
-                </table>
-            </li>
-            <?php
-            }
-
-            $send_cost = $od['od_send_cost'];
-            $send_cost2 = $od['od_send_cost2'];
-            $send_coupon = $od['od_send_coupon'];
-            ?>
-        </ul>
-
-        <div id="request_form">
-            <div>
-                <label for="rq_content">요청내용</label>
-                <input type="text" name="rq_content" value="" id="rq_content" required class="required frm_input">
-                <input type="submit" value="확인" class="btn_frmline">
-                <button type="button" id="request_close" class="btn_cancel">닫기</button>
-            </div>
-        </div>
-
-        <div id="sod_req_btn">
-            <button type="button" class="req_button btn_frmline">취소요청</button>
-            <button type="button" class="req_button btn_frmline">교환요청</button>
-            <button type="button" class="req_button btn_frmline">반품요청</button>
-        </div>
-
-        <?php
-        // 요청내역
-        $rq_sql = " select * from {$g4['shop_request_table']} where od_id = '$od_id' and rq_parent = '0' order by rq_id ";
-        $rq_res = sql_query($rq_sql);
-        $rq_cnt = mysql_num_rows($rq_res);
-
-        if($rq_cnt)
-        {
-        ?>
-        <section id="sod_req_log">
-            <h3>요청내역</h3>
-            <ul>
-                <?php
-                for($j=0; $rq_row=sql_fetch_array($rq_res); $j++) {
-                    switch($rq_row['rq_type']) {
-                        case 0:
-                            $rq_type = '취소';
-                            break;
-                        case 1:
-                            $rq_type = '교환';
-                            break;
-                        case 2:
-                            $rq_type = '반품';
-                            break;
-                        default:
-                            $rq_type = '';
-                            break;
-                    }
-
-                    $item = explode(',', $rq_row['ct_id']);
-                    $item_count = count($item);
-                    $rq_ct_id = $item[0];
-                    $rq_subject = $ct_list[$rq_ct_id]['name'].' '.$ct_list[$rq_ct_id]['option'];
-                    if($item_count > 1)
-                        $rq_subject .= '외 '.($item_count - 1).'건';
-                    $rq_subject .= ' <span>'.$rq_type.'요청</span>';
-                ?>
-                <li class="sod_req_log_view">
                     <table class="basic_tbl">
-                    <caption><?php echo $rq_subject; ?></caption>
                     <thead>
                     <tr>
-                        <th>구분</th>
-                        <th>상품명</th>
-                        <th>옵션항목</th>
-                        <th>요청일</th>
-                        <th>처리일</th>
+                        <th scope="col">선택</th>
+                        <th scope="col">옵션항목</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">판매가</th>
+                        <th scope="col">소계</th>
+                        <th scope="col">포인트</th>
+                        <th scope="col">상태</th>
                     </tr>
                     </thead>
                     <tbody>
                     <?php
-                    for($k=0; $k<$item_count; $k++) {
-                        $ct_idx = $item[$k];
-                        $it_name = $ct_list[$ct_idx]['name'];
-                        $ct_option = $ct_list[$ct_idx]['option'];
+                    $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, cp_amount, io_type, io_price
+                                from {$g4['shop_cart_table']}
+                                where od_id = '$od_id'
+                                  and it_id = '{$row['it_id']}'
+                                order by io_type asc, ct_id asc ";
+                    $res = sql_query($sql);
+                    $ct_list = array();
 
-                        $sql = " select rq_time
-                                    from {$g4['shop_request_table']}
-                                    where rq_parent = '{$rq_row['rq_id']}' and rq_status <> '0'
-                                    order by rq_id desc
-                                    limit 1 ";
-                        $tmp = sql_fetch($sql);
-                        $done_date = substr($tmp['rq_time'], 2, 8);
+                    for($k=0; $opt=sql_fetch_array($res); $k++) {
+                        if($opt['io_type'])
+                            $opt_price = $opt['io_price'];
+                        else
+                            $opt_price = $opt['ct_price'] + $opt['io_price'];
+
+                        $sell_amount = $opt_price * $opt['ct_qty'];
+                        $point = $opt['ct_point'] * $opt['ct_qty'];
+
+                        $disabled = '';
+                        if($opt['ct_status'] == '취소' || $opt['ct_status'] == '반품' || $opt['ct_status'] == '품절')
+                            $disabled = ' disabled="disabled"';
+
+                        $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
+                        $ct_list[$opt['ct_id']]['option'] = $opt['ct_option'];
                     ?>
                     <tr>
-                        <td class="td_smallstat"><?php echo $rq_type; ?></td>
-                        <td class="sod_req_it"><?php echo $it_name; ?></td>
-                        <td><?php echo $ct_option; ?></td>
-                        <td class="td_date"><?php echo substr($rq_row['rq_time'], 2, 8); ?></td>
-                        <td class="td_date"><?php echo $done_date; ?></td>
+                        <td class="td_chk">
+                            <input type="hidden" name="ct_id[<?php echo $idx; ?>]" value="<?php echo $opt['ct_id']; ?>">
+                            <label for="chk_ct_id_<?php echo $idx; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
+                            <input type="checkbox" name="chk_ct_id[<?php echo $idx; ?>]" value="1" id="chk_ct_id_<?php echo $idx; ?>"<?php echo $disabled; ?>>
+                        </td>
+                        <td><?php echo $opt['ct_option']; ?></td>
+                        <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
+                        <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
+                        <td class="td_num"><?php echo number_format($sell_amount); ?></td>
+                        <td class="td_num"><?php echo number_format($point); ?></td>
+                        <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
                     </tr>
                     <?php
+                        if ($opt['ct_status'] == '취소' || $opt['ct_status'] == '반품' || $opt['ct_status'] == '품절') {
+                            $tot_cancel_amount += $sell_amount;
+                        }
+                        else {
+                            $tot_point       += $point;
+                            $tot_sell_amount += $sell_amount;
+                        }
+
+                        // 전체 상품의 상태가 주문인지 비교할 때 사용
+                        $od_count1++;
+                        if($opt['ct_status'] == '주문')
+                            $od_count2++;
+
+                        $idx++;
+                        $tot_cp_amount += $opt['cp_amount'];
                     }
                     ?>
                     </tbody>
                     </table>
-                    <p>
-                        <strong>요청내용</strong>
-                        <?php echo conv_content($rq_row['rq_content'], 0); ?>
-                        <?php if($rq_row['rq_status'] == 0) { ?>
-                        <button type="button" id="rq_id_<?php echo $rq_row['rq_id']; ?>" class="request_cancel"><?php echo $rq_type; ?>요청 취소</button>
-                        <?php } ?>
-                    </p>
                 </li>
                 <?php
                 }
+
+                $send_cost = $od['od_send_cost'];
+                $send_cost2 = $od['od_send_cost2'];
+                $send_coupon = $od['od_send_coupon'];
                 ?>
             </ul>
 
-            <script>
-            $(function() {
-                $(".request_cancel").click(function() {
-                    if(!confirm("요청을 취소하시겠습니까?"))
-                        return false;
+            <div id="request_form">
+                <div>
+                    <label for="rq_content">요청내용</label>
+                    <input type="text" name="rq_content" value="" id="rq_content" required class="required frm_input">
+                    <input type="submit" value="확인" class="btn_frmline">
+                    <button type="button" id="request_close" class="btn_cancel">닫기</button>
+                </div>
+            </div>
 
-                    var rq_id = $(this).attr("id").replace("rq_id_", "");
-                    $.post(
-                        "./orderrequestcancel.php",
-                        { rq_id: rq_id, od_id: "<?php echo $od['od_id']; ?>" },
-                        function(data) {
-                            if(data != "")
-                                alert(data);
-                            else {
-                                alert("고객님의 요청이 취소되었습니다.");
-                                document.location.reload();
-                            }
+            <div id="sod_req_btn">
+                <button type="button" class="req_button btn_frmline">취소요청</button>
+                <button type="button" class="req_button btn_frmline">교환요청</button>
+                <button type="button" class="req_button btn_frmline">반품요청</button>
+            </div>
+
+            <?php
+            // 요청내역
+            $rq_sql = " select * from {$g4['shop_request_table']} where od_id = '$od_id' and rq_parent = '0' order by rq_id ";
+            $rq_res = sql_query($rq_sql);
+            $rq_cnt = mysql_num_rows($rq_res);
+
+            if($rq_cnt)
+            {
+            ?>
+            <section id="sod_req_log">
+                <h3>요청내역</h3>
+                <ul>
+                    <?php
+                    for($j=0; $rq_row=sql_fetch_array($rq_res); $j++) {
+                        switch($rq_row['rq_type']) {
+                            case 0:
+                                $rq_type = '취소';
+                                break;
+                            case 1:
+                                $rq_type = '교환';
+                                break;
+                            case 2:
+                                $rq_type = '반품';
+                                break;
+                            default:
+                                $rq_type = '';
+                                break;
                         }
-                    );
+
+                        $item = explode(',', $rq_row['ct_id']);
+                        $item_count = count($item);
+                        $rq_ct_id = $item[0];
+                        $rq_subject = $ct_list[$rq_ct_id]['name'].' '.$ct_list[$rq_ct_id]['option'];
+                        if($item_count > 1)
+                            $rq_subject .= '외 '.($item_count - 1).'건';
+                        $rq_subject .= ' <span>'.$rq_type.'요청</span>';
+                    ?>
+                    <li class="sod_req_log_view">
+                        <table class="basic_tbl">
+                        <caption><?php echo $rq_subject; ?></caption>
+                        <thead>
+                        <tr>
+                            <th>구분</th>
+                            <th>상품명</th>
+                            <th>옵션항목</th>
+                            <th>요청일</th>
+                            <th>처리일</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php
+                        for($k=0; $k<$item_count; $k++) {
+                            $ct_idx = $item[$k];
+                            $it_name = $ct_list[$ct_idx]['name'];
+                            $ct_option = $ct_list[$ct_idx]['option'];
+
+                            $sql = " select rq_time
+                                        from {$g4['shop_request_table']}
+                                        where rq_parent = '{$rq_row['rq_id']}' and rq_status <> '0'
+                                        order by rq_id desc
+                                        limit 1 ";
+                            $tmp = sql_fetch($sql);
+                            $done_date = substr($tmp['rq_time'], 2, 8);
+                        ?>
+                        <tr>
+                            <td class="td_smallstat"><?php echo $rq_type; ?></td>
+                            <td class="sod_req_it"><?php echo $it_name; ?></td>
+                            <td><?php echo $ct_option; ?></td>
+                            <td class="td_date"><?php echo substr($rq_row['rq_time'], 2, 8); ?></td>
+                            <td class="td_date"><?php echo $done_date; ?></td>
+                        </tr>
+                        <?php
+                        }
+                        ?>
+                        </tbody>
+                        </table>
+                        <p>
+                            <strong>요청내용</strong>
+                            <?php echo conv_content($rq_row['rq_content'], 0); ?>
+                            <?php if($rq_row['rq_status'] == 0) { ?>
+                            <button type="button" id="rq_id_<?php echo $rq_row['rq_id']; ?>" class="request_cancel"><?php echo $rq_type; ?>요청 취소</button>
+                            <?php } ?>
+                        </p>
+                    </li>
+                    <?php
+                    }
+                    ?>
+                </ul>
+
+                <script>
+                $(function() {
+                    $(".request_cancel").click(function() {
+                        if(!confirm("요청을 취소하시겠습니까?"))
+                            return false;
+
+                        var rq_id = $(this).attr("id").replace("rq_id_", "");
+                        $.post(
+                            "./orderrequestcancel.php",
+                            { rq_id: rq_id, od_id: "<?php echo $od['od_id']; ?>" },
+                            function(data) {
+                                if(data != "")
+                                    alert(data);
+                                else {
+                                    alert("고객님의 요청이 취소되었습니다.");
+                                    document.location.reload();
+                                }
+                            }
+                        );
+                    });
                 });
-            });
-            </script>
-        </section>
-        <?php
-        }
-        ?>
+                </script>
+            </section>
+            <?php
+            }
+            ?>
 
-        <?php
-        // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
-        $od_coupon = $od['od_coupon'];
-        $tot_amount = $tot_sell_amount + $send_cost + $send_cost2 - $tot_cp_amount - $od_coupon - $send_coupon;
-        ?>
+            <?php
+            // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
+            $od_coupon = $od['od_coupon'];
+            $tot_amount = $tot_sell_amount + $send_cost + $send_cost2 - $tot_cp_amount - $od_coupon - $send_coupon;
+            ?>
 
-        <dl id="sod_bsk_tot">
-            <dt class="sod_bsk_dvr">주문총액</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($tot_sell_amount); ?> 원</strong></dd>
+            <dl id="sod_bsk_tot">
+                <dt class="sod_bsk_dvr">주문총액</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($tot_sell_amount); ?> 원</strong></dd>
 
-            <?php if($tot_cp_amount > 0) { ?>
-            <dt class="sod_bsk_dvr">상품할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($tot_cp_amount); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if($tot_cp_amount > 0) { ?>
+                <dt class="sod_bsk_dvr">상품할인</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($tot_cp_amount); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if($od_coupon > 0) { ?>
-            <dt class="sod_bsk_dvr">결제할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od_coupon); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if($od_coupon > 0) { ?>
+                <dt class="sod_bsk_dvr">결제할인</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($od_coupon); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if ($send_cost > 0) { ?>
-            <dt class="sod_bsk_dvr">배송비</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if ($send_cost > 0) { ?>
+                <dt class="sod_bsk_dvr">배송비</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if($send_coupon > 0) { ?>
-            <dt class="sod_bsk_dvr">배송비할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_coupon); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if($send_coupon > 0) { ?>
+                <dt class="sod_bsk_dvr">배송비할인</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_coupon); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if ($send_cost2 > 0) { ?>
-            <dt class="sod_bsk_dvr">추가배송비</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost2); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if ($send_cost2 > 0) { ?>
+                <dt class="sod_bsk_dvr">추가배송비</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost2); ?> 원</strong></dd>
+                <?php } ?>
 
-            <dt class="sod_bsk_cnt">총계</dt>
-            <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_amount); ?> 원</strong></dd>
+                <dt class="sod_bsk_cnt">총계</dt>
+                <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_amount); ?> 원</strong></dd>
 
-            <dt class="sod_bsk_point">포인트</dt>
-            <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
-        </dl>
+                <dt class="sod_bsk_point">포인트</dt>
+                <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+            </dl>
 
-    </form>
+        </form>
     </section>
 
     <div id="sod_fin_view">

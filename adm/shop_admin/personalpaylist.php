@@ -95,7 +95,7 @@ $colspan = 8;
     <input type="hidden" name="page" value="<?php echo $page; ?>">
     <input type="hidden" name="token" value="<?php echo $token; ?>">
 
-    <table class="tbl_pt_list">
+    <table>
     <thead>
     <tr>
         <th scope="col">
@@ -128,12 +128,12 @@ $colspan = 8;
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">
         </td>
         <td class="spp_list_name"><?php echo $row['pp_name']; ?></td>
-        <td class="spp_list_id"><?php echo $od_id; ?></td>
-        <td><?php echo number_format($row['pp_amount']); ?></td>
-        <td class="td_name"><?php echo number_format($row['pp_receipt_amount']); ?></td>
-        <td class="td_name"><?php echo number_format($row['pp_amount'] - $row['pp_receipt_amount']); ?></td>
-        <td class="td_time"><?php echo $row['pp_settle_case']; ?></td>
-        <td><?php echo is_null_time($row['pp_receipt_time']) ? '' : substr($row['pp_receipt_time'], 2, 8); ?></td>
+        <td class="td_odrnum3 spp_list_id"><?php echo $od_id; ?></td>
+        <td class="td_bignum"><?php echo number_format($row['pp_amount']); ?></td>
+        <td class="td_bignum"><?php echo number_format($row['pp_receipt_amount']); ?></td>
+        <td class="td_bignum"><?php echo number_format($row['pp_amount'] - $row['pp_receipt_amount']); ?></td>
+        <td class="td_payby"><?php echo $row['pp_settle_case']; ?></td>
+        <td class="td_date"><?php echo is_null_time($row['pp_receipt_time']) ? '' : substr($row['pp_receipt_time'], 2, 8); ?></td>
         <td class="td_boolean"><?php echo $row['pp_use'] ? '예' : '아니오'; ?></td>
         <td class="td_smallmng">
             <a href="./personalpayform.php?w=u&amp;pp_id=<?php echo $row['pp_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['pp_id']; ?> </span>수정</a>

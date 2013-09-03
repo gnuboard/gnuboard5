@@ -66,12 +66,12 @@ set_session('ss_personalpay_hash', $hash_data);
     <!-- 배송소요기간 -->
     <input type="hidden" name="deli_term" value="03">
     <!-- 기타 파라메터 추가 부분 - Start - -->
-    <input type="hidden" name="param_opt_1"	 value="<?php echo $param_opt_1; ?>"/>
-    <input type="hidden" name="param_opt_2"	 value="<?php echo $param_opt_2; ?>"/>
-    <input type="hidden" name="param_opt_3"	 value="<?php echo $param_opt_3; ?>"/>
+    <input type="hidden" name="param_opt_1"  value="<?php echo $param_opt_1; ?>"/>
+    <input type="hidden" name="param_opt_2"  value="<?php echo $param_opt_2; ?>"/>
+    <input type="hidden" name="param_opt_3"  value="<?php echo $param_opt_3; ?>"/>
     <!-- 기타 파라메터 추가 부분 - End - -->
     <!-- 화면 크기조정 부분 - Start - -->
-    <input type="hidden" name="tablet_size"	 value="<?php echo $tablet_size; ?>"/>
+    <input type="hidden" name="tablet_size"  value="<?php echo $tablet_size; ?>"/>
     <!-- 화면 크기조정 부분 - End - -->
     <!--
         사용 카드 설정
@@ -196,9 +196,9 @@ set_session('ss_personalpay_hash', $hash_data);
     <input type="hidden" name="rcvr_zipx"      value="">      <!-- 수취인 우편번호    -->
     <input type="hidden" name="rcvr_add1"      value="">      <!-- 수취인 주소        -->
     <input type="hidden" name="rcvr_add2"      value="">      <!-- 수취인 상세 주소   -->
-	<input type="hidden" name="param_opt_1"	   value="">
-	<input type="hidden" name="param_opt_2"	   value="">
-	<input type="hidden" name="param_opt_3"	   value="">
+    <input type="hidden" name="param_opt_1"    value="">
+    <input type="hidden" name="param_opt_2"    value="">
+    <input type="hidden" name="param_opt_3"    value="">
 
     <p id="show_progress" style="display:none;">반드시 결제하기 버튼을 클릭 하셔야만 결제가 진행됩니다.</p>
 

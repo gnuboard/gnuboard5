@@ -13,7 +13,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     $list_file = G4_MSHOP_SKIN_PATH.'/personalpay.skin.php';
     if (file_exists($list_file)) {
 
-		$list_mod   = 10;
+        $list_mod   = 10;
         $img_width  = 230;
         $img_height = 230;
 
@@ -51,7 +51,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 
     if ($i==0)
     {
-        echo '<div><p class="sct_noitem">등록된 개인결제가 없습니다.</p></div>';
+        echo '<p class="sct_noitem">등록된 개인결제가 없습니다.</p>';
     }
     ?>
 

@@ -885,7 +885,7 @@ $pg_anchor .='<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
         </tr>
         <tr>
             <th scope="row"><label for="od_b_hp"><span class="sound_only">받으시는 분 </span>핸드폰</label></th>
-            <td><input type="text" name="od_b_hp" value="<?php echo $od['od_b_hp']; ?>" id=-"od_b_hp" class="frm_input required"></td>
+            <td><input type="text" name="od_b_hp" value="<?php echo $od['od_b_hp']; ?>" id="od_b_hp" class="frm_input required"></td>
         </tr>
         <tr>
             <th scope="row"><span class="sound_only">받으시는 분 </span>주소</th>

@@ -19,7 +19,9 @@ else
     $pp['pp_use'] = 1;
 }
 
-if($popup == 'yes') {
+$wrp_tag_st = '';
+$wrp_tag_end = '';
+if($popup == 'yes') { // 팝업창일 때
     include_once(G4_PATH.'/head.sub.php');
     $pp['od_id'] = $od_id;
     $sql = " select od_id, od_name, (od_temp_amount - od_receipt_amount) as misu
@@ -34,9 +36,14 @@ if($popup == 'yes') {
 
     if($od['misu'] > 0)
         $pp['pp_amount'] = $od['misu'];
+    $wrp_tag_st = '<div class="new_win">'.PHP_EOL.'<h1 id="new_win_title">'.$html_title.'</h1>';
+    $wrp_tag_end = '</div>';
 }
-else
+else { // 현재페이지일 때
     include_once (G4_ADMIN_PATH.'/admin.head.php');
+    $wrp_tag_st = '<section class="cbox">'.PHP_EOL.'<h2>'.$html_title.'</h2>';
+    $wrp_tag_end = '</section>';
+}
 ?>
 <form name="fpersonalpayform" action="./personalpayformupdate.php" method="post" onsubmit="return form_check(this);">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
@@ -48,8 +55,7 @@ else
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="popup" value="<?php echo $popup; ?>">
 
-<section class="cbox">
-    <h2><?php echo $html_title; ?></h2>
+<?php echo $wrp_tag_st; ?>
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
@@ -126,7 +132,7 @@ else
         <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return del_confirm();">삭제</a>
         <?php } ?>
     </div>
-</section>
+<?php echo $wrp_tag_end; ?>
 </form>
 
 <script>
