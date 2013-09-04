@@ -410,6 +410,9 @@ html.no-overflowscrolling #it_coupon_frm {height:auto;max-height:10000px !import
 
 #sod_frm_orderer {margin:1.8em 0 3.6em}
 
+#sod_frm_addr div {position:relative} /* 갤탭 position */
+#sod_frm_addr div div {position:absolute;top:-25px;left:185px;letter-spacing:-0.1em}
+
 #sod_frm_same {margin:0 0 1em}
 
 #sod_frm #od_memo {height:7em}
