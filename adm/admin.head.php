@@ -70,7 +70,7 @@ function imageview(id, w, h)
     <div id="hd_wrap">
         <h1><?php echo $config['cf_title'] ?></h1>
 
-        <div id="logo"><a href="<?php echo G4_ADMIN_URL ?>"><img src="<?php echo G4_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자 처음으로"></a></div>
+        <div id="logo"><a href="<?php echo G4_ADMIN_URL ?>"><img src="<?php echo G4_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자"></a></div>
 
         <ul id="tnb">
             <li><a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">관리자정보</a></li>
@@ -114,7 +114,6 @@ function imageview(id, w, h)
 </header>
 
 <div id="wrapper">
-
     <div id="container">
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'default');">기본</button>

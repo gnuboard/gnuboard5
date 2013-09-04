@@ -1,5 +1,8 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+include_once('./_common.php');
+
+// 금일 인증시도 회수 체크
+certify_count_check($member['mb_id'], 'hp');
 
 // kcp 휴대폰인증파일
 include_once(G4_KCPCERT_PATH.'/kcpcert_config.php');
@@ -48,36 +51,5 @@ if(!$ordr_idxx)
 </form>
 
 <script>
-// 인증창 호출 함수
-function auth_type_check(user_name)
-{
-    var auth_form = document.form_auth;
-    //auth_form.user_name.value = encodeURIComponent(user_name);
-
-    if( auth_form.ordr_idxx.value == "" )
-    {
-        alert( "주문번호는 필수 입니다." );
-
-        return false;
-    }
-    else
-    {
-        if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) == false ) // 스마트폰이 아닌경우
-        {
-            var return_gubun;
-            var width  = 410;
-            var height = 500;
-
-            var leftpos = screen.width  / 2 - ( width  / 2 );
-            var toppos  = screen.height / 2 - ( height / 2 );
-
-            var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
-            var position = ",left=" + leftpos + ", top="    + toppos;
-            var AUTH_POP = window.open('','auth_popup', winopts + position);
-        }
-
-
-        auth_form.submit();
-    }
-}
+document.form_auth.submit();
 </script>

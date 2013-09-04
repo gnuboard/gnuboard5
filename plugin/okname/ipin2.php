@@ -23,6 +23,9 @@ $cmd = "$exe $keypath $memid $EndPointURL $cpubkey $csig $encdata $logpath $opti
 // 실행
 exec($cmd, $out, $ret);
 
+// 인증내역기록
+@insert_cert_history($member['mb_id'], 'kcb', 'ipin');
+
 if($ret != 0) {
     if($ret <=200)
         $resultCd=sprintf("B%03d", $ret);

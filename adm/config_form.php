@@ -95,11 +95,23 @@ if(!isset($config['cf_cert_use'])) {
                     ADD `cf_cert_ipin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_use`,
                     ADD `cf_cert_hp` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_ipin`,
                     ADD `cf_cert_kcb_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_hp`,
-                    ADD `cf_cert_kcp_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kcb_cd` ", true);
+                    ADD `cf_cert_kcp_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kcb_cd`,
+                    ADD `cf_cert_limit` INT(11) NOT NULL DEFAULT '0' AFTER `cf_cert_kcp_cd` ", true);
     sql_query(" ALTER TABLE `{$g4['member_table']}`
                     CHANGE `mb_hp_certify` `mb_certify` VARCHAR(20) NOT NULL DEFAULT '' ", true);
     sql_query(" update {$g4['member_table']} set mb_certify = 'hp' where mb_certify = '1' ");
     sql_query(" update {$g4['member_table']} set mb_certify = '' where mb_certify = '0' ");
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['cert_history_table']}` (
+                  `cr_id` int(11) NOT NULL auto_increment,
+                  `mb_id` varchar(255) NOT NULL DEFAULT '',
+                  `cr_company` varchar(255) NOT NULL DEFAULT '',
+                  `cr_method` varchar(255) NOT NULL DEFAULT '',
+                  `cr_ip` varchar(255) NOT NULL DEFAULT '',
+                  `cr_date` date NOT NULL DEFAULT '0000-00-00',
+                  `cr_time` time NOT NULL DEFAULT '00:00:00',
+                  PRIMARY KEY (`cr_id`),
+                  KEY `mb_id` (`mb_id`)
+                )", true);
 }
 
 $g4['title'] = '환경설정';
@@ -639,6 +651,13 @@ $pg_anchor = '<ul class="anchor">
             <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
             <span class="sitecode">SM</span>
             <input type="text" name="cf_cert_kcp_cd" value="<?php echo $config['cf_cert_kcp_cd'] ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/provider/p_cert.php" target="_blank" class="btn_frmline">KCP 휴대폰 본인확인 서비스 신청페이지</a>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row" class="cf_cert_service"><label for="cf_cert_limit">본인확인 이용제한</label></th>
+        <td class="cf_cert_service">
+            <?php echo help('하루동안 아이핀과 휴대폰 본인확인 인증 이용회수를 제한할 수 있습니다.<br>회수제한은 실서비스에서 아이핀과 휴대폰 본인확인 인증에 개별 적용됩니다.<br>0 으로 설정하시면 회수제한이 적용되지 않습니다.'); ?>
+            <input type="text" name="cf_cert_limit" value="<?php echo $config['cf_cert_limit']; ?>" id="cf_cert_limit" class="frm_input" size="3"> 회
         </td>
     </tr>
     </tbody>
