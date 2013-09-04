@@ -587,6 +587,9 @@ ob_end_clean();
         </table>
 
         <?php
+        if (!$default['de_card_point'])
+            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
+
         $multi_settle == 0;
         $checked = '';
 
@@ -635,6 +638,26 @@ ob_end_clean();
             $checked = '';
         }
 
+        $temp_point = 0;
+        // 회원이면서 포인트사용이면
+        if ($is_member && $config['cf_use_point'])
+        {
+            // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
+            if ($member['mb_point'] >= $default['de_point_settle'])
+            {
+                $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
+                $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+
+                $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
+                if ($temp_point > $member_point)
+                    $temp_point = $member_point;
+
+                echo '<div><input type="hidden" name="max_temp_point" value="'.$temp_point.'">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
+                echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
+                $multi_settle++;
+            }
+        }
+
         if ($default['de_bank_use']) {
             // 은행계좌를 배열로 만든후
             $str = explode("\n", trim($default['de_bank_account']));
@@ -657,40 +680,14 @@ ob_end_clean();
             echo '<div id="settle_bank" style="display:none">';
             echo '<label for="od_bank_account" class="sound_only">입금할 계좌</label>';
             echo $bank_account;
-            echo '<label for="od_deposit_name" class="sound_only">입금자명</label>';
+            echo '<br><label for="od_deposit_name">입금자명</label>';
             echo '<input type="text" name="od_deposit_name" id="od_deposit_name" class="frm_input" size="10" maxlength="20">';
             echo '</div>';
         }
 
         if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
         echo '</fieldset>';
-
         }
-
-        $temp_point = 0;
-        // 회원이면서 포인트사용이면
-        if ($is_member && $config['cf_use_point'])
-        {
-            // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
-            if ($member['mb_point'] >= $default['de_point_settle'])
-            {
-                $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
-                $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
-
-                $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
-                if ($temp_point > $member_point)
-                    $temp_point = $member_point;
-
-                echo '<div><input type="hidden" name="max_temp_point" value="'.$temp_point.'">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" size="10">점 (100점 단위로 입력하세요.)</div>';
-                echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>(주문금액 '.$default['de_point_per'].'%) 내에서 결제가 가능합니다.</div>';
-                $multi_settle++;
-            }
-        }
-        ?>
-
-        <?php
-        if (!$default['de_card_point'])
-            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
 
         if ($multi_settle == 0)
             echo '<p>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</p>';

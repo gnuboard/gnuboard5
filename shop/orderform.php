@@ -927,7 +927,7 @@ function get_intall_file()
             echo '<div id="settle_bank" style="display:none">';
             echo '<label for="od_bank_account" class="sound_only">입금할 계좌</label>';
             echo $bank_account;
-            echo '<label for="od_deposit_name" class="sound_only">입금자명</label>';
+            echo '<br><label for="od_deposit_name">입금자명</label>';
             echo '<input type="text" name="od_deposit_name" id="od_deposit_name" class="frm_input" size="10" maxlength="20">';
             echo '</div>';
         }
