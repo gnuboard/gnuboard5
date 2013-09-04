@@ -465,4 +465,13 @@ if(!sql_query(" DESCRIBE `{$g4['shop_order_address_table']}` ", false)) {
                   KEY `mb_id` (`mb_id`)
                 )", true);
 }
+
+// 포인트 설정필드 변경
+if(!sql_query(" select de_settle_min_point from {$g4['shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+                    CHANGE `de_point_settle` `de_settle_min_point` int(11) NOT NULL DEFAULT '0',
+                    ADD `de_settle_max_point` int(11) NOT NULL DEFAULT '0' AFTER `de_settle_min_point`,
+                    ADD `de_settle_point_unit` int(11) NOT NULL DEFAULT '0' AFTER `de_settle_max_point`,
+                    DROP `de_point_per` ", true);
+}
 ?>

@@ -470,13 +470,6 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_card_max_amount">카드결제최소금액</label></th>
-        <td>
-            <?php echo help("신용카드는 경우 1000원 미만은 결제가 불가능합니다.\n카드결제최소금액을 1000원 이상으로 설정하십시오."); ?>
-            <input type="text" name="de_card_max_amount" value="<?php echo $default['de_card_max_amount']; ?>"  id="de_card_max_amount" class="frm_input" size="10"> 원
-        </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="de_taxsave_use">현금영수증<br>발급사용</label></th>
         <td>
             <?php echo help("관리자는 설정에 관계없이 <a href=\"".G4_ADMIN_URL."/shop_admin/orderlist.php\">주문내역</a> &gt; 수정에서 발급이 가능합니다.\n현금영수증 발급 취소는 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.", 50); ?>
@@ -494,19 +487,28 @@ $pg_anchor = '<ul class="anchor">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_point_settle">포인트결제 비율</label></th>
+        <th scope="row"><label for="de_settle_min_point">결제 최소포인트</label></th>
         <td>
             <?php echo help("회원의 포인트가 설정값 이상일 경우만 주문시 결제에 사용할 수 있습니다.\n포인트 사용을 하지 않는 경우에는 의미가 없습니다."); ?>
-            <input type="text" name="de_point_settle" value="<?php echo $default['de_point_settle']; ?>" id="de_point_settle" class="frm_input" size="10"> 점
+            <input type="text" name="de_settle_min_point" value="<?php echo $default['de_settle_min_point']; ?>" id="de_settle_min_point" class="frm_input" size="10"> 점
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="de_point_per">포인트결제 %</label></th>
+        <th scope="row"><label for="de_settle_max_point">최대 결제포인트</label></th>
         <td>
-            <?php echo help("회원 보유 포인트가 결제액보다 많을 경우, 결제액에서 포인트로 결제 가능한 비율을 설정합니다."); ?>
-            <select id="de_point_per" name="de_point_per">
-            <?php for ($i=100; $i>0; $i=$i-5) echo '<option value="'.$i.'" '.get_selected($default['de_point_per'], $i).'>'.$i.'</option>'.PHP_EOL; ?>
-            </select>%
+            <?php echo help("주문 결제시 최대로 사용할 수 있는 포인트를 설정합니다.\n포인트 사용을 하지 않는 경우에는 의미가 없습니다."); ?>
+            <input type="text" name="de_settle_max_point" value="<?php echo $default['de_settle_max_point']; ?>" id="de_settle_max_point" class="frm_input" size="10"> 점
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="de_settle_point_unit">결제 포인트단위</label></th>
+        <td>
+            <?php echo help("주문 결제시 사용되는 포인트의 절사 단위를 설정합니다."); ?>
+            <select id="de_settle_point_unit" name="de_settle_point_unit">
+                <option value="100" <?php echo get_selected($default['de_settle_point_unit'], 100); ?>>100</option>
+                <option value="10"  <?php echo get_selected($default['de_settle_point_unit'],  10); ?>>10</option>
+                <option value="1"   <?php echo get_selected($default['de_settle_point_unit'],   1); ?>>1</option>
+            </select> 점
         </td>
     </tr>
     <tr>
