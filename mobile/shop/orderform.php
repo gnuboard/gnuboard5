@@ -472,7 +472,7 @@ ob_end_clean();
             <th scope="row">배송지선택</th>
             <td>
                 <?php echo $addr_list; ?>
-                <a href="<?php echo G4_SHOP_URL; ?>/orderaddress.php" id="order_address">배송지목록</a>
+                <a href="<?php echo G4_SHOP_URL; ?>/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>
             </td>
         </tr>
         <tr>

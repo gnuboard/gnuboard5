@@ -708,7 +708,7 @@ function get_intall_file()
             <th scope="row">배송지선택</th>
             <td>
                 <?php echo $addr_list; ?>
-                <a href="<?php echo G4_SHOP_URL; ?>/orderaddress.php" id="order_address">배송지목록</a>
+                <a href="<?php echo G4_SHOP_URL; ?>/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>
             </td>
         </tr>
         <tr>
@@ -733,7 +733,7 @@ function get_intall_file()
         <?php $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2'; ?>
         <tr>
             <th scope="row">주소</th>
-            <td>
+            <td id="sod_frm_addr">
                 <label for="od_b_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
                 <input type="text" name="od_b_zip1" id="od_b_zip1" required class="frm_input required" size="2" maxlength="3">
                 -
@@ -741,10 +741,14 @@ function get_intall_file()
                 <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="2" maxlength="3">
                 <span id="od_winb_zip" style="display:block"></span>
                 <?php if($addr_list) { ?>
-                <input type="checkbox" name="add_address" id="add_address" value="1">
-                <label for="add_address">배송지목록에 추가</label>
-                <input type="checkbox" name="ad_default" id="ad_default" value="1">
-                <label for="ad_default">기본배송지로 설정</label>
+                <div>
+                    <div>
+                        <input type="checkbox" name="add_address" id="add_address" value="1">
+                        <label for="add_address">배송지목록에 추가</label>
+                        <input type="checkbox" name="ad_default" id="ad_default" value="1">
+                        <label for="ad_default">기본배송지로 설정</label>
+                    </div>
+                </div>
                 <?php } ?>
                 <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
                 <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="50">
