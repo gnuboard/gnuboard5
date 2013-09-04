@@ -706,7 +706,10 @@ function get_intall_file()
         ?>
         <tr>
             <th scope="row">배송지선택</th>
-            <td><?php echo $addr_list; ?></td>
+            <td>
+                <?php echo $addr_list; ?>
+                <a href="<?php echo G4_SHOP_URL; ?>/orderaddress.php" id="order_address">배송지목록</a>
+            </td>
         </tr>
         <tr>
             <th scope="row"><label for="ad_subject">배송지명</label></th>
@@ -1268,6 +1271,13 @@ $(function() {
                 calculate_sendcost(code);
             }
         }
+    });
+
+    // 배송지목록
+    $("#order_address").on("click", function() {
+        var url = this.href;
+        window.open(url, "win_address", "left=100,top=100,width=650,height=500,scrollbars=1");
+        return false;
     });
 });
 
