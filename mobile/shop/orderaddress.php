@@ -5,15 +5,17 @@ $g4['title'] = '배송지 목록';
 include_once(G4_PATH.'/head.sub.php');
 ?>
 
-<div>
-    <table>
+<div class="new_win">
+    <h1 id="new_win_title"><?php echo $g4['title']; ?></h1>
+
+    <table class="basic_tbl">
     <thead>
     <tr>
-        <td>배송지명</th>
-        <td>이름</td>
-        <td>전화번호</td>
-        <td>주소</td>
-        <td>관리</td>
+        <th scope="col">배송지명</th>
+        <th scope="col">이름</th>
+        <th scope="col">전화번호</th>
+        <th scope="col">주소</th>
+        <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
@@ -23,11 +25,11 @@ include_once(G4_PATH.'/head.sub.php');
         $addr = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
     ?>
     <tr>
-        <td><?php echo $row['ad_subject']; ?></td>
-        <td><?php echo $row['ad_name']; ?></td>
-        <td><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
+        <td class="td_name"><?php echo $row['ad_subject']; ?></td>
+        <td class="td_smallname"><?php echo $row['ad_name']; ?></td>
+        <td class="td_bignum"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
         <td><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></td>
-        <td>
+        <td class="td_mng">
             <input type="hidden" value="<?php echo $addr; ?>">
             <button type="button" class="sel_address">선택</button>
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" class="del_address">삭제</a>
