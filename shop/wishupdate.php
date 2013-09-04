@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 if (!$is_member)
-    alert('회원 전용 서비스 입니다.', G4_BBS_URL.'/login.php?url='.urlencode($_SERVER['PHP_SELF'].'?it_id='.$it_id));
+    alert('회원 전용 서비스 입니다.', G4_BBS_URL.'/login.php?url='.urlencode($url));
 
 if ($w == "d")
 {
@@ -12,14 +12,11 @@ if ($w == "d")
                 and mb_id = '{$member['mb_id']}' ";
     sql_query($sql);
 }
-else if ($w == "alldelete")
-{
-    $sql = " delete from {$g4['shop_wish_table']}
-              where mb_id = '{$member['mb_id']}' ";
-    sql_query($sql);
-}
 else
 {
+    if(is_array($it_id))
+        $it_id = $_POST['it_id'][0];
+
     $sql_common = " set mb_id = '{$member['mb_id']}',
                         it_id = '$it_id',
                         wi_time = '".G4_TIME_YMDHIS."',
