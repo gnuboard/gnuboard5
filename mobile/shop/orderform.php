@@ -499,17 +499,19 @@ ob_end_clean();
             <th scope="row">주소</th>
             <td id="sod_frm_addr">
                 <label for="od_b_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_zip1" id="od_b_zip1" required class="frm_input required" size="2" maxlength="3">
+                <input type="text" name="od_b_zip1" id="od_b_zip1" required class="frm_input required" size="3" maxlength="3">
                 -
                 <label for="od_b_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="2" maxlength="3">
+                <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="3" maxlength="3">
                 <span id="od_winb_zip" style="display:block"></span>
                 <?php if($addr_list) { ?>
                 <div>
-                    <input type="checkbox" name="add_address" id="add_address" value="1">
-                    <label for="add_address">배송지목록에 추가</label>
-                    <input type="checkbox" name="ad_default" id="ad_default" value="1">
-                    <label for="ad_default">기본배송지로 설정</label>
+                    <div>
+                        <input type="checkbox" name="add_address" id="add_address" value="1">
+                        <label for="add_address">배송지목록에 추가</label>
+                        <input type="checkbox" name="ad_default" id="ad_default" value="1">
+                        <label for="ad_default">기본배송지로 설정</label>
+                    </div>
                 </div>
                 <?php } ?>
                 <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
