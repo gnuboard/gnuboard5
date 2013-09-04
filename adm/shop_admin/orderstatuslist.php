@@ -105,9 +105,9 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="a.od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+        <option value="a.od_id" <?php echo get_selected($sel_field, 'a.od_id'); ?>>주문번호</option>
         <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
-        <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
+        <option value="a.mb_id" <?php echo get_selected($sel_field, 'a.mb_id'); ?>>회원 ID</option>
         <option value="od_deposit_name" <?php echo get_selected($sel_field, 'od_deposit_name'); ?>>입금자</option>
         <option value="c.it_id" <?php echo get_selected($sel_field, 'c,it_id'); ?>>상품코드</option>
         <option value="c.ca_id" <?php echo get_selected($sel_field, 'c.ca_id'); ?>>분류코드</option>
@@ -130,7 +130,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <li><a href="<?php echo title_sort("a.od_id")."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></th>
         <li><a href="<?php echo title_sort("it_name")."&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></th>
-        <li><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("a.mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("ct_price")."&amp;$qstr1"; ?>">판매가<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("ct_qty")."&amp;$qstr1"; ?>">수량<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("ct_sub_amount")."&amp;$qstr1"; ?>">소계<span class="sound_only"> 순 정렬</span></a></li>
@@ -177,7 +177,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <td class="td_odrnum2">
             <?php echo $od_mobile; ?>
-            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_id&amp;search=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a><br>
+            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=a.od_id&amp;search=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a><br>
             <?php echo $lines[$i]['od_time']; ?>
         </td>
         <td class="td_it_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($lines[$i]['it_id'], 50, 50); ?><?php echo $it_name; ?></a><br><?php echo $lines[$i]['ct_option']; ?></td>
@@ -185,7 +185,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>"><?php echo cut_str($lines[$i]['od_name'],10,""); ?></a>
             <?php if ($lines[$i]['od_deposit_name'] != "") echo '<br>'.$lines[$i]['od_deposit_name']?>
         </td>
-        <td class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>"><?php echo $lines[$i]['mb_id']; ?></a></td>
+        <td class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=a.mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>"><?php echo $lines[$i]['mb_id']; ?></a></td>
         <td><?php echo number_format($lines[$i]['ct_price']); ?></td>
         <td><?php echo $lines[$i]['ct_qty']; ?></td>
         <td><?php echo number_format($lines[$i]['ct_sub_amount']); ?></td>
