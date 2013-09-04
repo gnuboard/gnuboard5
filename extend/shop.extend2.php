@@ -461,7 +461,6 @@ if(!sql_query(" DESCRIBE `{$g4['shop_order_address_table']}` ", false)) {
                   `ad_zip2` char(3) NOT NULL DEFAULT '',
                   `ad_addr1` varchar(255) NOT NULL DEFAULT '',
                   `ad_addr2` varchar(255) NOT NULL DEFAULT '',
-                  `ad_hash` varchar(255) NOT NULL DEFAULT '',
                   PRIMARY KEY (`ad_id`),
                   KEY `mb_id` (`mb_id`)
                 )", true);

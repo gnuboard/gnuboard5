@@ -592,11 +592,18 @@ if (get_session('ss_direct'))
 
 // 배송지처리
 if($is_member && ($add_address || $ad_default)) {
-    $ad_hash = md5($od_b_zip1.$od_b_zip2.$od_b_addr1.$od_b_addr2);
+    $ad_zip1 = $od_b_zip1;
+    $ad_zip2 = $od_b_zip2;
+    $ad_addr1 = $od_b_addr1;
+    $ad_addr2 = $od_b_addr2;
+
     $sql = " select ad_id
                 from {$g4['shop_order_address_table']}
                 where mb_id = '{$member['mb_id']}'
-                  and ad_hash = '$ad_hash' ";
+                  and ad_zip1 = '$ad_zip1'
+                  and ad_zip2 = '$ad_zip2'
+                  and ad_addr1 = '$ad_addr1'
+                  and ad_addr2 = '$ad_addr2' ";
     $row = sql_fetch($sql);
 
     if($ad_default) {
@@ -606,9 +613,14 @@ if($is_member && ($add_address || $ad_default)) {
         sql_query($sql);
     }
 
-    if($row['ad_id'] && $ad_default) {
+    if($row['ad_id']) {
         $sql = " update {$g4['shop_order_address_table']}
-                    set ad_default = '$ad_default' ";
+                    set ad_zip1     = '$ad_zip1',
+                        ad_zip2     = '$ad_zip2',
+                        ad_addr1    = '$ad_addr1',
+                        ad_addr2    = '$ad_addr2' ";
+        if($ad_default)
+            $sql .= " , ad_default = '$ad_default' ";
         if($ad_subject)
             $sql .= " , ad_subject = '$ad_subject' ";
         $sql .= " where ad_id = '{$row['ad_id']}'
@@ -627,8 +639,7 @@ if($is_member && ($add_address || $ad_default)) {
                         ad_zip1     = '$od_b_zip1',
                         ad_zip2     = '$od_b_zip2',
                         ad_addr1    = '$od_b_addr1',
-                        ad_addr2    = '$od_b_addr2',
-                        ad_hash     = '$ad_hash' ";
+                        ad_addr2    = '$od_b_addr2' ";
         sql_query($sql);
     }
 }
