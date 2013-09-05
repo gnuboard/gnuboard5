@@ -99,6 +99,7 @@
 #pw_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
 /* 폼메일 */
+#formmail #subject {width:386px}
 #formmail textarea {height:100px}
 
 /* 자기소개 */
