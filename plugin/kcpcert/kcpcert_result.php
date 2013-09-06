@@ -1,5 +1,6 @@
 <?php
-include_once('./kcpcert_config.php');
+include_once('./_common.php');
+include_once(G4_KCPCERT_PATH.'/kcpcert_config.php');
 
 $site_cd       = "";
 $ordr_idxx     = "";
@@ -87,6 +88,9 @@ include_once(G4_PATH.'/head.sub.php');
 
 if( $cert_enc_use == "Y" )
 {
+    // 인증내역기록
+    @insert_cert_history($member['mb_id'], 'kcp', 'hp');
+
     if( $res_cd == "0000" )
     {
         // dn_hash 검증
@@ -175,7 +179,7 @@ $(function() {
     var $opener = window.opener;
 
     // 인증정보
-    $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>");
+    $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>").attr("readonly", true);
     $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
     alert("본인의 휴대폰번호로 확인 되었습니다.");
     window.close();

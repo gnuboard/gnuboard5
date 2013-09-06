@@ -1,5 +1,9 @@
 <?php
 include_once('./_common.php');
+
+// 금일 인증시도 회수 체크
+certify_count_check($member['mb_id'], 'ipin');
+
 include_once('./ipin.config.php');
 
 $option = "C";// Option

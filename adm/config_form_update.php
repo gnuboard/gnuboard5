@@ -113,6 +113,7 @@ $sql = " update {$g4['config_table']}
                 cf_cert_hp = '{$_POST['cf_cert_hp']}',
                 cf_cert_kcb_cd = '{$_POST['cf_cert_kcb_cd']}',
                 cf_cert_kcp_cd = '{$_POST['cf_cert_kcp_cd']}',
+                cf_cert_limit = '{$_POST['cf_cert_limit']}',
                 cf_googl_shorturl_apikey = '{$_POST['cf_googl_shorturl_apikey']}',
                 cf_facebook_appid = '{$_POST['cf_facebook_appid']}',
                 cf_facebook_secret = '{$_POST['cf_facebook_secret']}',
