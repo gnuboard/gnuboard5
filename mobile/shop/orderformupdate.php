@@ -270,20 +270,21 @@ if($send_cost2 !== $i_send_cost2)
     die("Error...");
 
 // 결제포인트가 상이함
-$tot_amount = $tot_sell_amount + $send_cost;
 // 회원이면서 포인트사용이면
 $temp_point = 0;
 if ($is_member && $config['cf_use_point'])
 {
-    // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
-    if ($member['mb_point'] >= $default['de_point_settle'])
-    {
-        $temp_point = $tot_amount * ($default['de_point_per'] / 100); // 포인트 결제 % 적용
-        $temp_point = (int)((int)($temp_point / 100) * 100); // 100점 단위
+    if($member['mb_point'] >= $default['de_settle_min_point']) {
+        $temp_point = (int)$default['de_settle_max_point'];
 
-        $member_point = (int)((int)($member['mb_point'] / 100) * 100); // 100점 단위
-        if ($temp_point > $member_point)
-            $temp_point = $member_point;
+        if($temp_point > (int)$tot_od_amount)
+            $temp_point = (int)$tot_od_amount;
+
+        if($temp_point > (int)$member['mb_point'])
+            $temp_point = (int)$member['mb_point'];
+
+        $point_unit = (int)$default['de_settle_point_unit'];
+        $temp_point = (int)((int)($temp_point / $point_unit) * $point_unit);
     }
 }
 
