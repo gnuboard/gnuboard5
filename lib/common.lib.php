@@ -2370,4 +2370,13 @@ function certify_count_check($mb_id, $type)
     if((int)$row['cnt'] >= (int)$config['cf_cert_limit'])
         alert_close('오늘 '.$cert.' 본인확인을 '.$row['cnt'].'회 이용하셔서 더 이상 이용할 수 없습니다.');
 }
+
+// die 함수를 utf-8 환경에서 사용할 때 한글깨짐방지
+function die_utf8($msg)
+{
+    if(!trim($msg))
+        return;
+
+    die('<html><head><head><meta charset="utf-8"></head>'.$msg.'</html>');
+}
 ?>

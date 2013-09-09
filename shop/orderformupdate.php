@@ -445,7 +445,11 @@ if(!$result) {
         include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
     }
 
-    die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
+    // 관리자에게 오류 알림 메일발송
+    $error = 'order';
+    include G4_SHOP_PATH.'/ordererrormail.php';
+
+    die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>KCP를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
 // 장바구니 쇼핑에서 주문으로
@@ -469,11 +473,14 @@ if(!$result) {
         include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
     }
 
-    echo "<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}";
+    // 관리자에게 오류 알림 메일발송
+    $error = 'status';
+    include G4_SHOP_PATH.'/ordererrormail.php';
 
     // 주문삭제
     sql_query(" delete from {$g4['shop_order_table']} where od_id = '$od_id' ");
-    exit;
+
+    die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>KCP를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
 // 회원이면서 포인트를 사용했다면 테이블에 사용을 추가
