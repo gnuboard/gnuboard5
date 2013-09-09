@@ -54,6 +54,7 @@ define('G4_KCPCERT_DIR',    'kcpcert');
 
 define('G4_SNS_DIR',        'sns');
 define('G4_SYNDI_DIR',      'syndi');
+define('G4_PHPMAILER_DIR',  'PHPMailer_v2.0.4');
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G4_DOMAIN) {
@@ -95,6 +96,7 @@ define('G4_EXTEND_PATH',    G4_PATH.'/'.G4_EXTEND_DIR);
 define('G4_LIB_PATH',       G4_PATH.'/'.G4_LIB_DIR);
 define('G4_PLUGIN_PATH',    G4_PATH.'/'.G4_PLUGIN_DIR);
 define('G4_SKIN_PATH',      G4_PATH.'/'.G4_SKIN_DIR);
+define('G4_MOBILE_PATH',    G4_PATH.'/'.G4_MOBILE_DIR);
 define('G4_GCAPTCHA_PATH',  G4_PLUGIN_PATH.'/'.G4_GCAPTCHA_DIR);
 define('G4_EDITOR_PATH',    G4_PLUGIN_PATH.'/'.G4_EDITOR_DIR);
 define('G4_OKNAME_PATH',    G4_PLUGIN_PATH.'/'.G4_OKNAME_DIR);
@@ -103,7 +105,7 @@ define('G4_KCPCERT_PATH',   G4_PLUGIN_PATH.'/'.G4_KCPCERT_DIR);
 
 define('G4_SNS_PATH',       G4_PLUGIN_PATH.'/'.G4_SNS_DIR);
 define('G4_SYNDI_PATH',     G4_PLUGIN_PATH.'/'.G4_SYNDI_DIR);
-define('G4_MOBILE_PATH',    G4_PATH.'/'.G4_MOBILE_DIR);
+define('G4_PHPMAILER_PATH', G4_PLUGIN_PATH.'/'.G4_PHPMAILER_DIR);
 //==============================================================================
 
 

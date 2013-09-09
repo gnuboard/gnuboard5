@@ -51,7 +51,7 @@ include_once(G4_PATH.'/head.sub.php');
     <tr>
         <td class="td_name"><?php echo $row['ad_subject']; ?></td>
         <td class="td_smallname"><?php echo $row['ad_name']; ?></td>
-        <td class="td_num"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
+        <td class="td_bignum"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
         <td><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></td>
         <td class="td_mng">
             <input type="hidden" value="<?php echo $addr; ?>">

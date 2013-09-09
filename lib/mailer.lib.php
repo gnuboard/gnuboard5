@@ -1,6 +1,64 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+include_once(G4_PHPMAILER_PATH.'/class.phpmailer.php');
+
+// 메일 보내기 (파일 여러개 첨부 가능)
+// type : text=0, html=1, text+html=2
+function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="") 
+{ 
+    global $config; 
+    global $g4; 
+
+    // 메일발송 사용을 하지 않는다면 
+    if (!$config['cf_email_use']) return; 
+
+    if ($type != 1) 
+        $content = nl2br($content); 
+
+    $mail = new PHPMailer(); // defaults to using php "mail()"
+    if (defined('G4_SMTP')) {
+        $mail->IsSMTP(); // telling the class to use SMTP
+        $mail->Host = G4_SMTP; // SMTP server
+    }
+    $mail->From = $fmail;
+    $mail->FromName = $fname;
+    $mail->Subject = $subject;
+    $mail->AltBody = ""; // optional, comment out and test
+    $mail->MsgHTML($content);
+    $mail->AddAddress($to);
+    if ($cc) 
+        $mail->AddCC($cc);
+    if ($bcc) 
+        $mail->AddBCC($bcc);
+    //print_r2($file); exit;
+    if ($file != "") { 
+        foreach ($file as $f) { 
+            $mail->AddAttachment($f['path'], $f['name']);
+        }
+    }
+    return $mail->Send();
+}
+
+// 파일을 첨부함
+function attach_file($filename, $tmp_name)
+{
+    // 서버에 업로드 되는 파일은 확장자를 주지 않는다. (보안 취약점)
+    $dest_file = G4_DATA_PATH.'/tmp/'.str_replace('/', '_', $tmp_name);
+    move_uploaded_file($tmp_name, $dest_file);
+    /*
+    $fp = fopen($tmp_name, "r");
+    $tmpfile = array(
+        "name" => $filename,
+        "tmp_name" => $tmp_name,
+        "data" => fread($fp, filesize($tmp_name)));
+    fclose($fp);
+    */
+    $tmpfile = array("name" => $filename, "path" => $dest_file);
+    return $tmpfile;
+}
+
+/*
 // 메일 보내기 (파일 여러개 첨부 가능)
 // type : text=0, html=1, text+html=2
 function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="") 
@@ -78,24 +136,11 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
 }
 
 // 파일 첨부시
-/*
 $fp = fopen(__FILE__, "r");
 $file[] = array(
     "name"=>basename(__FILE__),
     "data"=>fread($fp, filesize(__FILE__)));
 fclose($fp);
-*/
-
-// 파일을 첨부함
-function attach_file($filename, $file)
-{
-    $fp = fopen($file, "r");
-    $tmpfile = array(
-        "name" => $filename,
-        "data" => fread($fp, filesize($file)));
-    fclose($fp);
-    return $tmpfile;
-}
 
 // 메일 유효성 검사
 // core PHP Programming 책 참고
@@ -360,4 +405,5 @@ function get_boundary_msg() {
   $three = strtoupper(substr(strrev($uniqchr),0,8));
   return "----=_NextPart_000_000${one}_${two}.${three}";
 }
+*/
 ?>

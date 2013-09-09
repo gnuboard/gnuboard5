@@ -47,11 +47,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <td><textarea name="content" id="content" required class="required"></textarea></td>
     </tr>
     <tr>
-        <th scope="row"><label for="file1">첨부 1</label></th>
-        <td><input type="file" name="file1"  id="file1"  class="frm_input"></td>
+        <th scope="row"><label for="file1">첨부 파일 1</label></th>
+        <td>
+            <input type="file" name="file1"  id="file1"  class="frm_input">
+            첨부 파일은 누락될 수 있으므로 메일을 보낸 후 파일이 첨부 되었는지 반드시 확인해 주시기 바랍니다.
+        </td>
     </tr>
     <tr>
-        <th scope="row"><label for="file2">첨부 2</label></th>
+        <th scope="row"><label for="file2">첨부 파일 2</label></th>
         <td><input type="file" name="file2" id="file2" class="frm_input"></td>
     </tr>
     <tr>
@@ -63,7 +66,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <div class="btn_win">
         <p>
-           작성하신 메일을 발송하시려면 <strong>메일발송</strong> 버튼을, 작성을 취소하고 창을 닫으시려면 <strong>창닫기</strong> 버튼을 누르세요.
+           작성하신 메일을 발송하시려면 <strong>메일발송</strong> 버튼을,<br>
+           작성을 취소하고 창을 닫으시려면 <strong>창닫기</strong> 버튼을 누르세요.
         </p>
         <input type="submit" value="메일발송" id="btn_submit" class="btn_submit">
         <button type="button" onclick="window.close();">창닫기</button>
