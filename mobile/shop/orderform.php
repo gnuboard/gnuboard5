@@ -1239,7 +1239,7 @@ function kcp_approval()
         return false;
 
     // pg 결제 금액에서 포인트 금액 차감
-    if(settle_method != "무통장" && temp_point > 0) {
+    if(settle_method != "무통장") {
         var od_amount = parseInt(pf.od_amount.value);
         var send_cost = parseInt(pf.od_send_cost.value);
         var send_cost2 = parseInt(pf.od_send_cost2.value);
