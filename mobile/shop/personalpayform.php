@@ -7,7 +7,7 @@ $pp = sql_fetch($sql);
 if(!$pp['pp_id'])
     alert('개인결제 정보가 존재하지 않습니다.');
 
-if($pp['pp_receipt_amount'] > 0)
+if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.');
 
 $g4['title'] = $pp['pp_name'].'님 개인결제';

@@ -25,7 +25,7 @@ include_once('./_head.php');
 
         $sql_common = " from {$g4['shop_personalpay_table']}
                         where pp_use = '1'
-                          and pp_receipt_amount = '0' ";
+                          and pp_tno = '' ";
 
         // 총몇개 = 한줄에 몇개 * 몇줄
         $items = $list_mod * $list_row;
