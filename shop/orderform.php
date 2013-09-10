@@ -1558,11 +1558,7 @@ function forderform_check(f)
             }
 
             // pg 결제 금액에서 포인트 금액 차감
-            if(settle_method != "무통장" && temp_point > 0) {
-                var od_amount = parseInt(f.od_amount.value);
-                var send_cost = parseInt(f.od_send_cost.value);
-                var send_cost2 = parseInt(f.od_send_cost2.value);
-                var send_coupon = parseInt(f.od_send_coupon.value);
+            if(settle_method != "무통장") {
                 f.good_mny.value = od_amount + send_cost + send_cost2 - send_coupon - temp_point;
             }
         }
