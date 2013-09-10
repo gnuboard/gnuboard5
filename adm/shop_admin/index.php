@@ -32,15 +32,10 @@ $pg_anchor = '<ul class="anchor">
     <tbody>
     <?php
     // 미수금이 없고 운송장번호가 없는 자료를 구함
-    $sql = " select a.od_id,
-                    a.*, "._MISU_QUERY_."
-               from {$g4['shop_order_table']} a
-               left join {$g4['shop_cart_table']} b on (b.od_id=a.od_id)
-              group by a.od_id
-              /*having misu <= 0 and a.od_invoice = '' and ordercancel = 0*/
-              /*having orderamount - receiptamount = 0 and a.od_invoice = ''*/
-              having misu <= 0 and a.od_invoice = ''
-              order by a.od_id desc
+    $sql = " select *, "._MISU_QUERY_."
+               from {$g4['shop_order_table']}
+              having misu <= 0 and od_invoice = ''
+              order by od_id desc
               limit $max_limit ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -64,7 +59,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_odrnum2"><?php echo $row['od_id']; ?></td>
         <td class="td_name"><?php echo $name; ?></td>
-        <td class="td_bignum"><?php echo display_price($row['receiptamount']); ?></td>
+        <td class="td_bignum"><?php echo display_price($row['od_receipt_amount']); ?></td>
         <td class="td_payby"><?php echo $settle_method; ?></td>
         <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
     </tr>
@@ -97,14 +92,10 @@ $pg_anchor = '<ul class="anchor">
     <tbody>
     <?php
     // 미수금이 있고 송장번호가 없는 자료를 구함
-    $sql = " select a.od_id,
-                    a.*, "._MISU_QUERY_."
-               from {$g4['shop_order_table']} a
-               left join {$g4['shop_cart_table']} b on (b.od_id=a.od_id)
-              group by a.od_id
-              /* having receiptamount <= 0 */
+    $sql = " select *, "._MISU_QUERY_."
+               from {$g4['shop_order_table']}
               having misu > 0
-              order by a.od_id desc
+              order by od_id desc
               limit $max_limit ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)

@@ -27,21 +27,9 @@ if (G4_HTTPS_DOMAIN) {
 // 테이블 a 는 주문서 ($g4[shop_order_table])
 // 테이블 b 는 장바구니 ($g4[shop_cart_table])
 define(_MISU_QUERY_, "
-    count(distinct a.od_id) as ordercount, /* 주문서건수 */
-    count(b.ct_id) as itemcount, /* 상품건수 */
-    (SUM(IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty))  + a.od_send_cost + a.od_send_cost2) as orderamount, /* 주문합계 */
-    (SUM(b.cp_amount) + a.od_coupon) as couponamount, /* 쿠폰합계*/
-    (SUM(IF(b.ct_status = '취소' OR b.ct_status = '반품' OR b.ct_status = '품절', (IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty)), 0))) as ordercancel, /* 주문취소 */
-    (a.od_receipt_amount + a.od_receipt_point) as receiptamount, /* 입금합계 */
-    (a.od_refund_amount + a.od_cancel_card) as receiptcancel, /* 입금취소 */
-    (
-        (SUM(IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty))  + a.od_send_cost + a.od_send_cost2 - a.od_send_coupon) -
-        (SUM(IF(b.ct_status = '취소' OR b.ct_status = '반품' OR b.ct_status = '품절', (IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty)), 0))) -
-        a.od_dc_amount -
-        (a.od_receipt_amount + a.od_receipt_point) +
-        (a.od_refund_amount + a.od_cancel_card) -
-        (SUM(b.cp_amount) + a.od_coupon)
-    ) as misu /* 미수금 = 주문합계 - 주문취소 - DC - 입금합계 + 입금취소 - 쿠폰합계 */");
+    ( od_cart_amount + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon - od_receipt_amount - od_cancel_amount ) as misu,
+    ( od_cart_coupon + od_coupon + od_send_coupon ) as couponamount
+    ");
 //------------------------------------------------------------------------------
 // 쇼핑몰 상수 모음 끝
 //------------------------------------------------------------------------------
@@ -58,6 +46,13 @@ define('G4_SHOP_SKIN_PATH',  G4_PATH.'/'.G4_SKIN_DIR.'/shop/'.$default['de_shop_
 define('G4_SHOP_SKIN_URL',   G4_URL .'/'.G4_SKIN_DIR.'/shop/'.$default['de_shop_skin']);
 define('G4_MSHOP_SKIN_PATH', G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin']);
 define('G4_MSHOP_SKIN_URL',  G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin']);
+
+// 주문상태 상수
+define('G4_OD_STATUS_ORDER'     , '입금확인중');
+define('G4_OD_STATUS_SETTLE'    , '결제완료');
+define('G4_OD_STATUS_READY'     , '배송준비중');
+define('G4_OD_STATUS_DELIVERY'  , '배송중');
+define('G4_OD_STATUS_FINISH'    , '배송완료');
 
 //==============================================================================
 // 쇼핑몰 필수 실행코드 모음 끝

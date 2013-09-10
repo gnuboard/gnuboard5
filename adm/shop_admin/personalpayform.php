@@ -24,7 +24,7 @@ $wrp_tag_end = '';
 if($popup == 'yes') { // 팝업창일 때
     include_once(G4_PATH.'/head.sub.php');
     $pp['od_id'] = $od_id;
-    $sql = " select od_id, od_name, (od_temp_amount - od_receipt_amount) as misu
+    $sql = " select od_id, od_name, (od_cart_amount + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon - od_receipt_amount - od_cancel_amount) as misu
                 from {$g4['shop_order_table']}
                 where od_id = '$od_id' ";
     $od = sql_fetch($sql);

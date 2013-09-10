@@ -61,10 +61,12 @@ $i_temp_point = (int)$_POST['od_temp_point'];
 
 
 // 주문금액이 상이함
-$sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as od_amount
+$sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as od_amount,
+              COUNT(distinct it_id) as cart_count
             from {$g4['shop_cart_table']} where od_id = '$tmp_cart_id' and ct_select = '1' ";
 $row = sql_fetch($sql);
 $tot_ct_amount = $row['od_amount'];
+$cart_count = $row['cart_count'];
 
 // 쿠폰금액계산
 $tot_cp_amount = 0;
@@ -292,15 +294,13 @@ $i_amount = $i_amount + $i_send_cost + $i_send_cost2 - $i_temp_point - $i_send_c
 
 if ($od_settle_case == "무통장")
 {
-    $od_temp_amount     = $i_amount;
     $od_receipt_point   = $i_temp_point;
     $od_receipt_amount  = 0;
+    $od_status          = G4_OD_STATUS_ORDER;
 }
 else if ($od_settle_case == "계좌이체")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
-
-    $od_temp_amount     = $i_amount;
 
     $od_tno             = $tno;
     $od_receipt_amount  = $amount;
@@ -311,14 +311,13 @@ else if ($od_settle_case == "계좌이체")
     $bank_name          = iconv("cp949", "utf8", $bank_name);
     $od_bank_account    = $bank_name;
     $pg_amount          = $amount;
+    $od_status          = G4_OD_STATUS_SETTLE;
 }
 else if ($od_settle_case == "가상계좌")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
-    $od_temp_amount     = $i_amount;
     $od_receipt_point   = $i_temp_point;
-
     $od_tno             = $tno;
     $od_receipt_amount  = 0;
     $bankname           = iconv("cp949", "utf8", $bankname);
@@ -326,12 +325,11 @@ else if ($od_settle_case == "가상계좌")
     $od_bank_account    = $bankname.' '.$account.' '.$depositor;
     $od_deposit_name    = $depositor;
     $pg_amount          = $amount;
+    $od_status          = G4_OD_STATUS_ORDER;
 }
 else if ($od_settle_case == "휴대폰")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
-
-    $od_temp_amount     = $i_amount;
 
     $od_tno             = $tno;
     $od_receipt_amount  = $amount;
@@ -339,12 +337,11 @@ else if ($od_settle_case == "휴대폰")
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $od_bank_account    = $commid.' '.$mobile_no;
     $pg_amount          = $amount;
+    $od_status          = G4_OD_STATUS_SETTLE;
 }
 else if ($od_settle_case == "신용카드")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
-
-    $od_temp_amount     = $i_amount;
 
     $od_tno             = $tno;
     $od_app_no          = $app_no;
@@ -354,6 +351,7 @@ else if ($od_settle_case == "신용카드")
     $card_name          = iconv("cp949", "utf8", $card_name);
     $od_bank_account    = $card_name;
     $pg_amount          = $amount;
+    $od_status          = G4_OD_STATUS_SETTLE;
 }
 else
 {
@@ -383,8 +381,8 @@ if($escw_yn == 'Y')
     $od_escrow = 1;
 
 // 복합과세 금액
-$od_tax_mny = round($od_temp_amount / 1.1);
-$od_vat_mny = $od_temp_amount - $od_tax_mny;
+$od_tax_mny = round($i_amount / 1.1);
+$od_vat_mny = $i_amount - $od_tax_mny;
 $od_free_mny = 0;
 if($default['de_tax_flag_use']) {
     $od_tax_mny = (int)$_POST['comm_tax_mny'];
@@ -414,11 +412,13 @@ $sql = " insert {$g4['shop_order_table']}
                 od_b_addr2        = '$od_b_addr2',
                 od_deposit_name   = '$od_deposit_name',
                 od_memo           = '$od_memo',
+                od_cart_count     = '$cart_count',
+                od_cart_amount    = '$tot_ct_amount',
+                od_cart_coupon    = '$tot_it_cp_amount',
                 od_send_cost      = '$od_send_cost',
                 od_send_coupon    = '$tot_sc_cp_amount',
                 od_send_cost2     = '$od_send_cost2',
                 od_coupon         = '$tot_od_cp_amount',
-                od_temp_amount    = '$od_temp_amount',
                 od_receipt_amount = '$od_receipt_amount',
                 od_receipt_point  = '$od_receipt_point',
                 od_bank_account   = '$od_bank_account',
@@ -430,6 +430,7 @@ $sql = " insert {$g4['shop_order_table']}
                 od_tax_mny        = '$od_tax_mny',
                 od_vat_mny        = '$od_vat_mny',
                 od_free_mny       = '$od_free_mny',
+                od_status         = '$od_status',
                 od_shop_memo      = '',
                 od_hope_date      = '$od_hope_date',
                 od_time           = '".G4_TIME_YMDHIS."',

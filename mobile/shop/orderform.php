@@ -1367,7 +1367,10 @@ function payment_check(f)
 {
     var temp_point = 0;
     var max_point = 0;
-    var tot_sell_amount = parseInt($("input[name=od_amount]").val());
+    var od_amount = parseInt(f.od_amount.value);
+    var send_cost = parseInt(f.od_send_cost.value);
+    var send_cost2 = parseInt(f.od_send_cost2.value);
+    var send_coupon = parseInt(f.od_send_coupon.value);
 
     if (typeof(f.max_temp_point) != "undefined")
         var max_point  = parseInt(f.max_temp_point.value);
@@ -1384,7 +1387,7 @@ function payment_check(f)
                 return false;
             }
 
-            if (temp_point > tot_sell_amount) {
+            if (temp_point > od_amount) {
                 alert("상품 주문금액(배송비 제외) 보다 많이 포인트결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
@@ -1409,6 +1412,8 @@ function payment_check(f)
             }
         }
     }
+
+    var tot_amount = od_amount + send_cost + send_cost2 - send_coupon - temp_point;
 
     if (document.getElementById("od_settle_iche")) {
         if (document.getElementById("od_settle_iche").checked) {

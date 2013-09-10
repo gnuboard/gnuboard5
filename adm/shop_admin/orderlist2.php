@@ -21,16 +21,15 @@ if ($search != "")
         $page = 1;
 }
 
-if ($sel_field == "")  $sel_field = "a.od_id";
-if ($sort1 == "") $sort1 = "a.od_id";
+if ($sel_field == "")  $sel_field = "od_id";
+if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['shop_order_table']} a
-                left join {$g4['shop_cart_table']} b on (a.od_id=b.od_id)
+$sql_common = " from {$g4['shop_order_table']}
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
-$row = sql_fetch("select count(od_id) as cnt from {$g4['shop_order_table']} $sql_search ");
+$row = sql_fetch("select count(od_id) as cnt " . $sql_common);
 $total_count = $row['cnt'];
 
 $rows = $config['cf_page_rows'];
@@ -38,23 +37,12 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select a.*, "._MISU_QUERY_."
+$sql  = " select *, "._MISU_QUERY_."
            $sql_common
-           group by a.od_id
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql);
 
-$lines = array();
-$tot_itemcnt       = 0;
-$tot_orderamount   = 0;
-$tot_ordercancel   = 0;
-$tot_dc_amount     = 0;
-$tot_receiptamount = 0;
-$tot_receiptcancel = 0;
-$tot_misuamount    = 0;
-
-//$qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search";
 $qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
@@ -78,7 +66,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="a.od_id" <?php echo get_selected($sel_field, 'a.od_id'); ?>>주문번호</option>
+        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
         <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
         <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
         <option value="od_b_name" <?php echo get_selected($sel_field, 'od_b_name'); ?>>받는분</option>
@@ -101,14 +89,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </div>
 
     <ul class="sort_odr">
-        <li><a href="<?php echo title_sort("a.od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("itemcount", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("orderamount", 1)."&amp;$qstr1"; ?>">주문합계<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("ordercancel", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_dc_amount", 1)."&amp;$qstr1"; ?>">DC<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("receiptamount")."&amp;$qstr1"; ?>">입금합계<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("receiptcancel", 1)."&amp;$qstr1"; ?>">입금취소<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_cart_count", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_cart_amount", 1)."&amp;$qstr1"; ?>">주문합계<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_cancel_amount", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_receipt_amount")."&amp;$qstr1"; ?>">입금합계<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("misu", 1)."&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
     </ul>
 
@@ -136,12 +122,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             if($row['od_mobile'])
                 $od_mobile = '(M)';
 
-            $tot_itemcount     += $row['itemcount'];
-            $tot_orderamount   += $row['orderamount'];
-            $tot_ordercancel   += $row['ordercancel'];
-            $tot_dc_amount     += $row['od_dc_amount'];
-            $tot_receiptamount += $row['receiptamount'];
-            $tot_receiptcancel += $row['receiptcancel'];
+            $tot_itemcount     += $row['od_cart_count'];
+            $tot_orderamount   += $row['od_cart_amount'];
+            $tot_ordercancel   += $row['od_cancel_amount'];
+            $tot_receiptamount += $row['od_receipt_amount'];
             $tot_couponamount  += $row['couponamount'];
             $tot_misu          += $row['misu'];
 
@@ -159,7 +143,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 <dt>주문일시</dt>
                 <dd><?php echo date('y년 m월 d일 H시 i분 s초', strtotime($row['od_time'])); ?></dd>
                 <dt>건수</dt>
-                <dd><?php echo $row['itemcount']; ?>건</dd>
+                <dd><?php echo $row['od_cart_count']; ?>건</dd>
             </dl>
 
             <dl class="sodr_person">
@@ -177,19 +161,15 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
             <dl class="sodr_pay">
                 <dt class="sodr_pay_1">주문합계</dt>
-                <dd class="sodr_pay_1"><?php echo number_format($row['orderamount']); ?></dd>
+                <dd class="sodr_pay_1"><?php echo number_format($row['od_cart_amount']); ?></dd>
                 <dt class="sodr_pay_1">결제수단</dt>
                 <dd class="sodr_pay_1"><?php echo $s_receipt_way; ?></dd>
-                <dt class="sodr_pay_1">DC</dt>
-                <dd class="sodr_pay_1"><?php echo number_format($row['od_dc_amount']); ?></dd>
                 <dt class="sodr_pay_1">입금합계</dt>
-                <dd class="sodr_pay_1"><?php echo number_format($row['receiptamount']); ?></dd>
+                <dd class="sodr_pay_1"><?php echo number_format($row['od_receipt_amount']); ?></dd>
                 <dt>쿠폰사용</dt>
                 <dd><?php echo number_format($row['couponamount']); ?></dd>
                 <dt>주문취소</dt>
-                <dd><?php echo number_format($row['ordercancel']); ?></dd>
-                <dt>입금취소</dt>
-                <dd><?php echo number_format($row['receiptcancel']); ?></dd>
+                <dd><?php echo number_format($row['od_cancel_amount']); ?></dd>
                 <dt>미수금</dt>
                 <dd><?php echo number_format($row['misu']); ?></dd>
             </dl>
@@ -292,9 +272,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <th scope="col">주문액</th>
         <th scope="col">쿠폰</th>
         <th scope="col">취소</th>
-        <th scope="col">DC</th>
         <th scope="col">입금완료</th>
-        <th scope="col">입금취소</th>
         <th scope="col">미수금</th>
     </tr>
     </thead>
@@ -304,9 +282,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?php echo number_format($tot_orderamount); ?></td>
         <td><?php echo number_format($tot_couponamount); ?></td>
         <td><?php echo number_format($tot_ordercancel); ?></td>
-        <td><?php echo number_format($tot_dc_amount); ?></td>
         <td><?php echo number_format($tot_receiptamount); ?></td>
-        <td><?php echo number_format($tot_receiptcancel); ?></td>
         <td><?php echo number_format($tot_misu); ?></td>
     </tr>
     </tbody>

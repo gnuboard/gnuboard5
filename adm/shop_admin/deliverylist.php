@@ -33,13 +33,12 @@ if ($sel_ca_id != "") {
 
 if ($sel_field == "")  $sel_field = "od_id";
 
-$sql_common = " from {$g4['shop_order_table']} a
-                left join {$g4['shop_cart_table']} b on (a.od_id=b.od_id)
+$sql_common = " from {$g4['shop_order_table']}
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
 if ($chk_misu) {
-    $sql  = " select a.od_id, a.*, "._MISU_QUERY_." $sql_common group by od_id having  misu <= 0 ";
+    $sql  = " select *, "._MISU_QUERY_." $sql_common having misu <= 0 ";
     $result = sql_query($sql);
     $total_count = mysql_num_rows($result);
 }
@@ -90,7 +89,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field">
-        <option value="a.od_id" <?php echo get_selected($sel_field, 'a.od_id'); ?>>주문번호</option>
+        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
         <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
         <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
     </select>
@@ -112,8 +111,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <ul class="sort_odr">
         <li><a href="<?php echo title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_name") . "&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("orderamount",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("receiptamount",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_cart_amount",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_receipt_amount",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("misu",1) . "&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_hope_date",1) . "&amp;$qstr1"; ?>">희망배송일<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시<span class="sound_only"> 순 정렬</span></a></li>
@@ -144,14 +143,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </thead>
     <tbody>
     <?php
-    $sql  = " select a.od_id,
-                     a.*, "._MISU_QUERY_."
-              $sql_common
-              group by a.od_id ";
+    $sql  = " select *, "._MISU_QUERY_."
+              $sql_common ";
     if ($chk_misu)
         $sql .= " having  misu <= 0 ";
-    $sql .= "  order by $sort1 $sort2/* 김선용 심각한 트래픽으로 미사용, a.od_invoice asc*/
-              limit $from_record, $config[cf_page_rows] ";
+    $sql .= "  order by $sort1 $sort2
+              limit $from_record, {$config['cf_page_rows']} ";
     $result = sql_query($sql);
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
@@ -176,8 +173,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>
         </td>
         <td class="td_name"><?php echo $row['od_name']; ?></td>
-        <td><?php echo display_price($row['orderamount']); ?></td>
-        <td><?php echo display_price($row['receiptamount']); ?></td>
+        <td><?php echo display_price($row['od_cart_amount']); ?></td>
+        <td><?php echo display_price($row['od_receipt_amount']); ?></td>
         <td><?php echo display_price($row['misu']); ?></td>
         <td><?php echo $hope_date; ?></td>
         <td><input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="20" maxlength="19"></td>
@@ -195,11 +192,6 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         </td>
     </tr>
     <?php
-        if ($row['dl_id']) {
-            //echo "<script> document.fdeliverylistupate.elements('dl_id[$i]').value = '$row[dl_id]'; </script>";
-            // FF 3.0 에서 위의 코드는 에러를 발생함 (080626 수정)
-            echo "<script> document.fdeliverylistupate.elements['dl_id[$i]'].value = '{$row['dl_id']}'; </script>";
-        }
     }
     if ($i == 0)
         echo '<tr><td colspan="20" class="empty_table">자료가 한건도 없습니다.</td></tr>';

@@ -474,4 +474,14 @@ if(!sql_query(" select de_settle_min_point from {$g4['shop_default_table']} ", f
                     ADD `de_settle_point_unit` int(11) NOT NULL DEFAULT '0' AFTER `de_settle_max_point`,
                     DROP `de_point_per` ", true);
 }
+
+// 주문 금액 등의 필드 추가
+if(!sql_query(" select od_cart_count from {$g4['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_cart_count` int(11) NOT NULL DEFAULT '0' AFTER `od_memo`,
+                    ADD `od_cart_amount` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_count`,
+                    ADD `od_cart_coupon` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_amount`,
+                    ADD `od_cancel_amount` int(11) NOt NULL DEFAULT '0' AFTER `od_receipt_amount`,
+                    ADD `od_status` varchar(255) NOT NULL DEFAULT '' AFTER `od_mod_history` ", true);
+}
 ?>

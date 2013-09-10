@@ -13,9 +13,6 @@ if ($search != "")
 {
     if ($sel_field != "")
     {
-        if($sel_field == 'mb_id')
-            $sel_field = 'a.'.$sel_field;
-
         $sql_search .= " $where $sel_field like '%$search%' ";
         $where = " and ";
     }
@@ -24,20 +21,14 @@ if ($search != "")
         $page = 1;
 }
 
-if ($sel_field == "")  $sel_field = "a.od_id";
-if ($sort1 == "") $sort1 = "a.od_id";
+if ($sel_field == "")  $sel_field = "od_id";
+if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['shop_order_table']} a
-                left join {$g4['shop_cart_table']} b on (a.od_id=b.od_id)
+$sql_common = " from {$g4['shop_order_table']}
                 $sql_search ";
 
-// 김선용 200805 : 조인 사용으로 전체카운트가 일정레코드 이상일 때 지연시간 문제가 심각하므로 변경
-/*
-$result = sql_query(" select DISTINCT od_id ".$sql_common);
-$total_count = mysql_num_rows($result);
-*/
-$sql = " select count(distinct a.od_id) as cnt " . $sql_common;
+$sql = " select count(od_id) as cnt " . $sql_common;
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
@@ -46,37 +37,12 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select a.*, "._MISU_QUERY_."
+$sql  = " select *, "._MISU_QUERY_."
            $sql_common
-           group by a.od_id
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql, false);
 
-$lines = array();
-$tot_itemcnt       = 0;
-$tot_orderamount   = 0;
-$tot_ordercancel   = 0;
-$tot_dc_amount     = 0;
-$tot_receiptamount = 0;
-$tot_receiptcancel = 0;
-$tot_misuamount    = 0;
-for ($i=0; $row=mysql_fetch_array($result); $i++)
-{
-    $lines[$i] = $row;
-
-    $tot_itemcount     += $row['itemcount'];
-    $tot_orderamount   += $row['orderamount'];
-    $tot_ordercancel   += $row['ordercancel'];
-    $tot_dc_amount     += $row['od_dc_amount'];
-    $tot_receiptamount += $row['receiptamount'];
-    $tot_receiptcancel += $row['receiptcancel'];
-    $tot_misu          += $row['misu'];
-}
-
-//$qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search";
-// 김선용 200805 : sel_ca_id - 쓰레기 코드
-//$qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr1 = "sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
@@ -103,7 +69,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field" id="sel_field">
-        <option value="a.od_id" <?php echo get_selected($sel_field, 'a.od_id'); ?>>주문번호</option>
+        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
         <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
         <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
         <option value="od_tel" <?php echo get_selected($sel_field, 'od_tel'); ?>>주문자전화</option>
@@ -133,12 +99,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("itemcount", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("orderamount", 1)."&amp;$qstr1"; ?>">주문합계<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("ordercancel", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_dc_amount", 1)."&amp;$qstr1"; ?>">DC<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("receiptamount")."&amp;$qstr1"; ?>">입금합계<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("receiptcancel", 1)."&amp;$qstr1"; ?>">입금취소<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_cart_count", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_cart_amount", 1)."&amp;$qstr1"; ?>">주문합계<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_cancel_amount", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_receipt_amount")."&amp;$qstr1"; ?>">입금합계<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("misu", 1)."&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
     </ul>
 
@@ -149,37 +113,23 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <th scope="col">주문자<br>회원ID</th>
         <th scope="col">건수</th>
         <th scope="col">주문합계</th>
-        <th scope="col">주문취소</th>
-        <th scope="col">DC</th>
         <th scope="col">입금합계</th>
-        <th scope="col">입금취소</th>
+        <th scope="col">주문취소</th>
+        <th scope="col">쿠폰</th>
         <th scope="col">미수금</th>
         <th scope="col">결제수단</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
-    <tfoot>
-    <tr class="orderlist">
-        <th scope="row" colspan="2">합 계</td>
-        <td><?php echo (int)$tot_itemcount; ?>건</td>
-        <td><?php echo number_format($tot_orderamount); ?></td>
-        <td><?php echo number_format($tot_ordercancel); ?></td>
-        <td><?php echo number_format($tot_dc_amount); ?></td>
-        <td><?php echo number_format($tot_receiptamount); ?></td>
-        <td><?php echo number_format($tot_receiptcancel); ?></td>
-        <td><?php echo number_format($tot_misu); ?></td>
-        <td colspan="2"></td>
-    </tr>
-    </tfoot>
     <tbody>
     <?php
-    for ($i=0; $i<count($lines[$i]); $i++)
+    for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 결제 수단
         $s_receipt_way = $s_br = "";
-        if ($lines[$i]['od_settle_case'])
+        if ($row['od_settle_case'])
         {
-            $s_receipt_way = $lines[$i]['od_settle_case'];
+            $s_receipt_way = $row['od_settle_case'];
             $s_br = '<br />';
         }
         else
@@ -188,61 +138,77 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $s_br = '<br />';
         }
 
-        if ($lines[$i]['od_receipt_point'] > 0)
+        if ($row['od_receipt_point'] > 0)
             $s_receipt_way .= $s_br."포인트";
 
-        $mb_nick = get_sideview($lines[$i]['mb_id'], $lines[$i]['od_name'], $lines[$i]['od_email'], '');
+        $mb_nick = get_sideview($row['mb_id'], $row['od_name'], $row['od_email'], '');
 
         $od_cnt = 0;
-        if ($lines[$i]['mb_id'])
+        if ($row['mb_id'])
         {
-            $sql2 = " select count(*) as cnt from {$g4['shop_order_table']} where mb_id = '{$lines[$i]['mb_id']}' ";
+            $sql2 = " select count(*) as cnt from {$g4['shop_order_table']} where mb_id = '{$row['mb_id']}' ";
             $row2 = sql_fetch($sql2);
             $od_cnt = $row2['cnt'];
         }
 
         // 주문device
         $od_mobile = '';
-        if($lines[$i]['od_mobile'])
+        if($row['od_mobile'])
             $od_mobile = '(M)';
 
-        $uid = md5($lines[$i]['od_id'].$lines[$i]['od_time'].$lines[$i]['od_ip']);
+        $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
     ?>
     <tr class="orderlist">
         <td class="td_odrnum2">
             <?php echo $od_mobile; ?>
-            <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;uid=<?php echo $uid; ?>">
-                <?php echo $lines[$i]['od_id']; ?><br>
-                <span class="sound_only">주문일시 </span><?php echo $lines[$i]['od_time']; ?>
+            <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>">
+                <?php echo $row['od_id']; ?><br>
+                <span class="sound_only">주문일시 </span><?php echo $row['od_time']; ?>
             </a>
         </td>
-        <!-- <td align=center><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=$sort1&amp;sort2=$sort2&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>'><span title="<?php echo $od_deposit_name; ?>"><?php echo cut_str($lines[$i]['od_name'],8,""); ?></span></a></td> -->
         <td class="td_name">
             <?php echo $mb_nick; ?><br>
-            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>">
-                <?php echo $lines[$i]['mb_id']; ?>
+            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>">
+                <?php echo $row['mb_id']; ?>
             </a>
         </td>
-        <td class="td_sodr_cnt"><b><?php echo $lines[$i]['itemcount']; ?></b>건<?php if($od_cnt) { ?><br>누적 <?php echo $od_cnt; ?>건<?php } ?></td>
-        <td class="td_sodr_sum"><?php echo number_format($lines[$i]['orderamount']); ?></td>
-        <td><?php echo number_format($lines[$i]['ordercancel']); ?></td>
-        <td><?php echo number_format($lines[$i]['od_dc_amount']); ?></td>
-        <td class="td_sodr_sum"><?php echo number_format($lines[$i]['receiptamount']); ?></td>
-        <td><?php echo number_format($lines[$i]['receiptcancel']); ?></td>
-        <td class="td_sodr_nonpay"><?php echo number_format($lines[$i]['misu']); ?></td>
+        <td class="td_sodr_cnt"><b><?php echo $row['od_cart_count']; ?></b>건<?php if($od_cnt) { ?><br>누적 <?php echo $od_cnt; ?>건<?php } ?></td>
+        <td class="td_sodr_sum"><?php echo number_format($row['od_cart_amount']); ?></td>
+        <td><?php echo number_format($row['od_receipt_amount']); ?></td>
+        <td><?php echo number_format($row['od_cancel_amount']); ?></td>
+        <td class="td_sodr_sum"><?php echo number_format($row['couponamount']); ?></td>
+        <td class="td_sodr_nonpay"><?php echo number_format($row['misu']); ?></td>
         <td><?php echo $s_receipt_way; ?></td>
         <td class="td_mng">
-            <a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>수정</a>
-            <a href="./orderdelete.php?od_id=<?php echo $lines[$i]['od_id']; ?>&amp;mb_id=<?php echo $lines[$i]['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo $lines[$i]['od_id']; ?> </span>삭제</a>
+            <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['od_id']; ?> </span>수정</a>
+            <a href="./orderdelete.php?od_id=<?php echo $row['od_id']; ?>&amp;mb_id=<?php echo $row['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo $row['od_id']; ?> </span>삭제</a>
         </td>
     </tr>
     <?php
+        $tot_itemcount     += $row['od_cart_count'];
+        $tot_orderamount   += $row['od_cart_amount'];
+        $tot_ordercancel   += $row['od_cancel_amount'];
+        $tot_receiptamount += $row['od_receipt_amount'];
+        $tot_couponamount  += $row['couponamount'];
+        $tot_misu          += $row['misu'];
     }
     mysql_free_result($result);
     if ($i == 0)
-        echo '<tr><td colspan="11" class="empty_table">자료가 없습니다.</td></tr>';
+        echo '<tr><td colspan="10" class="empty_table">자료가 없습니다.</td></tr>';
     ?>
     </tbody>
+    <tfoot>
+    <tr class="orderlist">
+        <th scope="row" colspan="2">합 계</td>
+        <td><?php echo (int)$tot_itemcount; ?>건</td>
+        <td><?php echo number_format($tot_orderamount); ?></td>
+        <td><?php echo number_format($tot_receiptamount); ?></td>
+        <td><?php echo number_format($tot_ordercancel); ?></td>
+        <td><?php echo number_format($tot_couponamount); ?></td>
+        <td><?php echo number_format($tot_misu); ?></td>
+        <td colspan="2"></td>
+    </tr>
+    </tfoot>
     </table>
 </section>
 
