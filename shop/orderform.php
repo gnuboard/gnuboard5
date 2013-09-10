@@ -1239,8 +1239,8 @@ $(function() {
         calculate_sendcost(code);
     });
 
-    $("#od_settle_bank").bind("click", function() {
-        $("[name=od_deposit_name]").val( $("[name=od_b_name]").val() );
+    $("#od_settle_bank").on("click", function() {
+        $("[name=od_deposit_name]").val( $("[name=od_name]").val() );
         $("#settle_bank").show();
     });
 
