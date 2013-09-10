@@ -7,26 +7,52 @@ auth_check($auth[$sub_menu], "r");
 $g4['title'] = '주문내역';
 include_once (G4_ADMIN_PATH.'/admin.head.php');
 
-$where = " where ";
+$where = array();
+
 $sql_search = "";
-if ($search != "")
-{
-    if ($sel_field != "")
-    {
-        $sql_search .= " $where $sel_field like '%$search%' ";
-        $where = " and ";
+if ($search != "") {
+    if ($sel_field != "") {
+        $where[] = " $sel_field like '%$search%' ";
     }
 
-    if ($save_search != $search)
+    if ($save_search != $search) {
         $page = 1;
+    }
+}
+
+if ($od_status) {
+    $where[] = " od_status = '$od_status' ";
+    switch ($od_status) {
+        case G4_OD_STATUS_ORDER :       // 입금확인중
+            $sort1 = "od_id";
+            $sort2 = "desc";
+            break;
+        case G4_OD_STATUS_SETTLE :      // 결제완료
+            $sort1 = "od_receipt_time";
+            $sort2 = "desc";
+            break;
+        case G4_OD_STATUS_READY :       // 배송준비중
+            $sort1 = "od_receipt_time";
+            $sort2 = "desc";
+            break;
+        case G4_OD_STATUS_DELIVERY :    // 배송중
+            $sort1 = "od_invoice_time";
+            $sort2 = "desc";
+            break;
+
+
+    }
+}
+
+if ($where) {
+    $sql_search = ' where '.implode(' and ', $where);
 }
 
 if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['shop_order_table']}
-                $sql_search ";
+$sql_common = " from {$g4['shop_order_table']} $sql_search ";
 
 $sql = " select count(od_id) as cnt " . $sql_common;
 $row = sql_fetch($sql);
@@ -37,10 +63,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select *, "._MISU_QUERY_."
-           $sql_common
-           order by $sort1 $sort2
-           limit $from_record, $rows ";
+$sql  = " select *, "._MISU_QUERY_." $sql_common order by $sort1 $sort2 limit $from_record, $rows ";
 $result = sql_query($sql, false);
 
 $qstr1 = "sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
@@ -104,6 +127,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <li><a href="<?php echo title_sort("od_cancel_amount", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_receipt_amount")."&amp;$qstr1"; ?>">입금합계<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("misu", 1)."&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
+    </ul>
+
+    주문상태 : 
+    <ul id="sort_sodr" class="sort_odr">
+        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G4_OD_STATUS_ORDER; ?>"><?php echo G4_OD_STATUS_ORDER; ?></a></li>
+        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G4_OD_STATUS_SETTLE; ?>"><?php echo G4_OD_STATUS_SETTLE; ?></a></li>
     </ul>
 
     <table id="sodr_list">
