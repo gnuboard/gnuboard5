@@ -1527,6 +1527,7 @@ function get_sendcost($price, $cart_id, $selected=1)
                     from {$g4['shop_cart_table']}
                     where od_id = '$cart_id'
                       and ct_send_cost = '0'
+                      and ct_status IN ( '쇼핑', '주문', '준비', '배송', '완료' )
                       and ct_select = '$selected' ";
 
         $result = sql_query($sql);
