@@ -1,5 +1,5 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 /*
 리스트의 상품이 순차적으로 위에서 내려옴

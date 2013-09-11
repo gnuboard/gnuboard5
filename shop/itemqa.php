@@ -8,8 +8,6 @@ if (G4_IS_MOBILE) {
 
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
-//$it_id = $_REQUEST['it_id'];
-
 $itemqa_list = "./itemqalist.php";
 $itemqa_form = "./itemqaform.php?it_id=".$it_id;
 $itemqa_formupdate = "./itemqaformupdate.php?it_id=".$it_id;
@@ -162,7 +160,7 @@ echo itemqa_page($config['cf_write_pages'], $page, $total_page, "./itemqa.php?it
 <script>
 $(function(){
     $(".itemqa_form").click(function(){
-        window.open(this.href, "itemqa_form", "width=800,height=500,scrollbars=1");
+        window.open(this.href, "itemqa_form", "width=800,height=600,scrollbars=1");
         return false;
     });
 

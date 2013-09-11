@@ -1,5 +1,5 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 /*
 상품리스트가 일정 시간마다 좌로 롤링되는 스킨

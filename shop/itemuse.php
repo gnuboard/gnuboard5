@@ -8,8 +8,6 @@ if (G4_IS_MOBILE) {
 
 include_once(G4_LIB_PATH.'/thumbnail.lib.php');
 
-//$it_id = $_REQUEST['it_id'];
-
 $itemuse_list = "./itemuselist.php";
 $itemuse_form = "./itemuseform.php?it_id=".$it_id;
 $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
@@ -20,14 +18,6 @@ $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
     <h3>등록된 사용후기</h3>
 
     <?php
-    /*
-        여분필드 용도
-        wr_1 : 상품코드
-        wr_2 : 상품명
-        wr_3 : 평점 1~5
-        wr_4 : 관리자확인
-    */
-    //$sql_common = " from `{$g4['write_prefix']}itemuse` where wr_is_comment = 0 and wr_1 = '{$it['it_id']}' and wr_4 = '1' ";
     $sql_common = " from `{$g4['shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 
     // 테이블의 전체 레코드수만 얻음
@@ -49,7 +39,6 @@ $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
         $is_star    = get_star($row['is_score']);
         $is_name    = get_text($row['is_name']);
         $is_subject = conv_subject($row['is_subject'],50,"…");
-        //$is_content = ($row['wr_content']);
         $is_content = get_view_thumbnail($row['is_content'], 300);
         $is_time    = substr($row['is_time'], 2, 8);
         $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
@@ -144,7 +133,7 @@ echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?
 <script>
 $(function(){
     $(".itemuse_form").click(function(){
-        window.open(this.href, "itemuse_form", "width=800,height=500,scrollbars=1");
+        window.open(this.href, "itemuse_form", "width=800,height=700,scrollbars=1");
         return false;
     });
 
