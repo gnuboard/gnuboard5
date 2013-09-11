@@ -75,11 +75,6 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
         }
 
-        // 개별배송비 계산
-        if($default['de_send_cost_case'] == '개별' && !$row['ct_send_cost']) {
-            $it_send_cost += get_item_sendcost($row['it_id'], $sum['price'], $sum['qty']);
-        }
-
         $point      = $sum['point'];
         $sell_price = $sum['price'];
     ?>
@@ -108,23 +103,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
     } else {
         // 배송비 계산
-        if ($default['de_send_cost_case'] == '없음')
-            $send_cost = 0;
-        else if($default['de_send_cost_case'] == '상한') {
-            // 배송비 상한 : 여러단계의 배송비 적용 가능
-            $send_cost_limit = explode(";", $default['de_send_cost_limit']);
-            $send_cost_list  = explode(";", $default['de_send_cost_list']);
-            $send_cost = 0;
-            for ($k=0; $k<count($send_cost_limit); $k++) {
-                // 총판매금액이 배송비 상한가 보다 작다면
-                if ($tot_sell_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
-                    $send_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
-                    break;
-                }
-            }
-        } else {
-            $send_cost = $it_send_cost;
-        }
+        $send_cost = get_sendcost($tot_sell_price, $s_cart_id, 0);
     }
     ?>
     </tbody>

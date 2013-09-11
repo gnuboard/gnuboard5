@@ -182,42 +182,7 @@ if ((int)($row['od_price'] - $tot_cp_price) !== $i_price) {
 }
 
 // 배송비가 상이함
-$tot_sell_price = $row['od_price'];
-// 배송비 계산
-if ($default['de_send_cost_case'] == '없음') {
-    $send_cost = 0;
-} else if($default['de_send_cost_case'] == '상한') {
-    // 배송비 상한 : 여러단계의 배송비 적용 가능
-    $send_cost_limit = explode(";", $default['de_send_cost_limit']);
-    $send_cost_list  = explode(";", $default['de_send_cost_list']);
-    $send_cost = 0;
-    for ($k=0; $k<count($send_cost_limit); $k++) {
-        // 총판매금액이 배송비 상한가 보다 작다면
-        if ($tot_sell_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
-            $send_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
-            break;
-        }
-    }
-} else { // 개별배송비
-    $send_cost = 0;
-    $sql = " select distinct it_id
-                from {$g4['shop_cart_table']}
-                where od_id = '$tmp_cart_id'
-                  and ct_select = '1'
-                  and ct_send_cost = '0' ";
-    $result = sql_query($sql);
-    for($i=0; $sc=sql_fetch_array($result); $i++) {
-        // 합계
-        $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-                        SUM(ct_qty) as qty
-                    from {$g4['shop_cart_table']}
-                    where it_id = '{$sc['it_id']}'
-                      and od_id = '$tmp_cart_id' ";
-        $sum = sql_fetch($sql);
-
-        $send_cost += get_item_sendcost($sc['it_id'], $sum['price'], $sum['qty']);
-    }
-}
+$send_cost = get_sendcost($row['od_price'], $tmp_cart_id);
 
 $tot_sc_cp_price = 0;
 if($is_member && $send_cost > 0) {
