@@ -149,7 +149,6 @@ function pg_anchor($anc_id) {
             </ul>
 <?php } ?>
 
-<script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
 <script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
 
 <?php
