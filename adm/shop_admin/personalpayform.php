@@ -24,7 +24,7 @@ $wrp_tag_end = '';
 if($popup == 'yes') { // 팝업창일 때
     include_once(G4_PATH.'/head.sub.php');
     $pp['od_id'] = $od_id;
-    $sql = " select od_id, od_name, (od_cart_amount + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon - od_receipt_amount - od_cancel_amount) as misu
+    $sql = " select od_id, od_name, od_misu
                 from {$g4['shop_order_table']}
                 where od_id = '$od_id' ";
     $od = sql_fetch($sql);
@@ -34,8 +34,8 @@ if($popup == 'yes') { // 팝업창일 때
 
     $pp['pp_name'] = $od['od_name'];
 
-    if($od['misu'] > 0)
-        $pp['pp_amount'] = $od['misu'];
+    if($od['od_misu'] > 0)
+        $pp['pp_price'] = $od['od_misu'];
     $wrp_tag_st = '<div class="new_win">'.PHP_EOL.'<h1 id="new_win_title">'.$html_title.'</h1>';
     $wrp_tag_end = '</div>';
 }
@@ -67,8 +67,8 @@ else { // 현재페이지일 때
         <td><input type="text" name="pp_name" value="<?php echo $pp['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
     </tr>
     <tr>
-        <th scope="row"><label for="pp_amount">주문금액</label></th>
-        <td><input type="text" name="pp_amount" value="<?php echo $pp['pp_amount']; ?>" id="pp_amount" required class="required frm_input" size="15"> 원</td>
+        <th scope="row"><label for="pp_price">주문금액</label></th>
+        <td><input type="text" name="pp_price" value="<?php echo $pp['pp_price']; ?>" id="pp_price" required class="required frm_input" size="15"> 원</td>
     </tr>
     <tr>
         <th scope="row"><label for="od_id">주문번호</label></th>
@@ -80,8 +80,8 @@ else { // 현재페이지일 때
     </tr>
     <?php if($popup != 'yes') { ?>
     <tr>
-        <th scope="row"><label for="pp_receipt_amount">결제금액</label></th>
-        <td><input type="text" name="pp_receipt_amount" value="<?php echo $pp['pp_receipt_amount'] ? $pp['pp_receipt_amount'] : ''; ?>" id="pp_receipt_amount" class="frm_input" size="15"> 원</td>
+        <th scope="row"><label for="pp_receipt_price">결제금액</label></th>
+        <td><input type="text" name="pp_receipt_price" value="<?php echo $pp['pp_receipt_price'] ? $pp['pp_receipt_price'] : ''; ?>" id="pp_receipt_price" class="frm_input" size="15"> 원</td>
     </tr>
     <tr>
         <th scope="row"><label for="pp_settle_case">결제방법</label></th>
@@ -138,7 +138,7 @@ else { // 현재페이지일 때
 <script>
 function form_check(f)
 {
-    if(f.pp_amount.value.replace(/[0-9]/g, "").length > 0) {
+    if(f.pp_price.value.replace(/[0-9]/g, "").length > 0) {
         alert("주문금액은 숫자만 입력해 주십시오");
         return false;
     }

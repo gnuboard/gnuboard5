@@ -24,7 +24,7 @@ $ct = sql_fetch($sql);
 
 $uid = md5($od['od_id'].$od['od_time'].$od['od_ip']);
 
-if($ct['od_count1'] != $ct['od_count2'] || ($od['od_settle_case'] == '가상계좌' && $od['od_receipt_amount'] > 0)) {
+if($od['od_status'] != G4_OD_STATUS_ORDER && $od['od_status'] != G4_OD_STATUS_SETTLE) {
     alert("취소할 수 있는 주문이 아닙니다.", G4_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
 }
 
@@ -64,7 +64,9 @@ sql_query(" update {$g4['shop_cart_table']} set ct_status = '취소' where od_id
 
 // 주문 취소
 $cancel_memo = addslashes($cancel_memo);
-sql_query(" update {$g4['shop_order_table']} set od_send_cost = '0', od_send_cost2 = '0', od_receipt_amount = '0', od_receipt_point = '0', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - ".G4_TIME_YMDHIS." (취소이유 : {$cancel_memo})\") where od_id = '$od_id' ");
+$cancel_price = $od['od_misu'];
+
+sql_query(" update {$g4['shop_order_table']} set od_send_cost = '0', od_send_cost2 = '0', od_receipt_price = '0', od_receipt_point = '0', od_misu = '0', od_cancel_price = '$cancel_price', od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - ".G4_TIME_YMDHIS." (취소이유 : {$cancel_memo})\") where od_id = '$od_id' ");
 
 // 주문취소 회원의 포인트를 되돌려 줌
 if ($od['od_receipt_point'] > 0)

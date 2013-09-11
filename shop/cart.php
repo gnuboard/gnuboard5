@@ -44,8 +44,7 @@ include_once('./_head.php');
     <tbody>
     <?php
     $tot_point = 0;
-    $tot_sell_amount = 0;
-    $tot_cancel_amount = 0;
+    $tot_sell_price = 0;
 
     // $s_cart_id 로 현재 장바구니 자료 쿼리
     $sql = " select a.ct_id,
@@ -102,8 +101,8 @@ include_once('./_head.php');
             $it_send_cost += get_item_sendcost($row['it_id'], $sum['price'], $sum['qty']);
         }
 
-        $point       = $sum['point'];
-        $sell_amount = $sum['price'];
+        $point      = $sum['point'];
+        $sell_price = $sum['price'];
     ?>
 
     <tr>
@@ -115,7 +114,7 @@ include_once('./_head.php');
         </td>
         <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
         <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
-        <td class="td_bignum"><span id="sell_amount_<?php echo $i; ?>"><?php echo number_format($sell_amount); ?></span></td>
+        <td class="td_bignum"><span id="sell_price_<?php echo $i; ?>"><?php echo number_format($sell_price); ?></span></td>
         <td class="td_bignum"><?php echo number_format($point); ?></td>
         <td class="td_chk">
             <label for="ct_chk_<?php echo $i; ?>" class="sound_only">상품</label>
@@ -124,13 +123,8 @@ include_once('./_head.php');
     </tr>
 
     <?php
-        if ($row['ct_status'] == '취소' || $row['ct_status'] == '반품' || $row['ct_status'] == '품절') {
-            $tot_cancel_amount += $sell_amount;
-        }
-        else {
-            $tot_point       += $point;
-            $tot_sell_amount += $sell_amount;
-        }
+        $tot_point      += $point;
+        $tot_sell_price += $sell_price;
     } // for 끝
 
     if ($i == 0) {
@@ -146,7 +140,7 @@ include_once('./_head.php');
             $send_cost = 0;
             for ($k=0; $k<count($send_cost_limit); $k++) {
                 // 총판매금액이 배송비 상한가 보다 작다면
-                if ($tot_sell_amount < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
+                if ($tot_sell_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
                     $send_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
                     break;
                 }
@@ -160,8 +154,8 @@ include_once('./_head.php');
     </table>
 
     <?php
-    $tot_amount = $tot_sell_amount + $send_cost; // 총계 = 주문상품금액합계 + 배송비
-    if ($tot_amount > 0 || $send_cost > 0) {
+    $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비
+    if ($tot_price > 0 || $send_cost > 0) {
     ?>
     <dl id="sod_bsk_tot">
         <?php if ($send_cost > 0) { // 배송비가 0 보다 크다면 (있다면) ?>
@@ -170,11 +164,11 @@ include_once('./_head.php');
         <?php } ?>
 
         <?php
-        if ($tot_amount > 0) {
+        if ($tot_price > 0) {
         ?>
 
         <dt class="sod_bsk_cnt">총계</dt>
-        <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_amount); ?> 원 <?php echo number_format($tot_point); ?> 점</strong></dd>
+        <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원 <?php echo number_format($tot_point); ?> 점</strong></dd>
         <?php } ?>
 
     </dl>

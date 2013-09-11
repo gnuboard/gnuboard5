@@ -62,7 +62,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">승인금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $card_list['od_receipt_amount']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo $card_list['od_receipt_price']; ?></td>
         </tr>
         </tbody>
         </table>
@@ -83,7 +83,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">입금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo $bank_list['od_receipt_amount']; ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo $bank_list['od_receipt_price']; ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">입금자명</th>

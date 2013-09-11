@@ -4,7 +4,7 @@ include_once('./_common.php');
 if($is_guest)
     exit;
 
-$amount = $_POST['amount'];
+$price = $_POST['price'];
 
 // 쿠폰정보
 $sql = " select *
@@ -14,7 +14,7 @@ $sql = " select *
               and cp_start <= '".G4_TIME_YMD."'
               and cp_end >= '".G4_TIME_YMD."'
               and cp_used = '0'
-              and cp_minimum <= '$amount' ";
+              and cp_minimum <= '$price' ";
 $result = sql_query($sql);
 $count = mysql_num_rows($result);
 ?>
@@ -36,9 +36,9 @@ $count = mysql_num_rows($result);
     for($i=0; $row=sql_fetch_array($result); $i++) {
         $dc = 0;
         if($row['cp_type']) {
-            $dc = floor(($amount * ($row['cp_amount'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
+            $dc = floor(($price * ($row['cp_price'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
         } else {
-            $dc = $row['cp_amount'];
+            $dc = $row['cp_price'];
         }
 
         if($row['cp_maximum'] && $dc > $row['cp_maximum'])
@@ -47,7 +47,7 @@ $count = mysql_num_rows($result);
     <tr>
         <td>
             <input type="hidden" name="o_cp_id[]" value="<?php echo $row['cp_id']; ?>">
-            <input type="hidden" name="o_cp_amt[]" value="<?php echo $dc; ?>">
+            <input type="hidden" name="o_cp_prc[]" value="<?php echo $dc; ?>">
             <input type="hidden" name="o_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
             <?php echo get_text($row['cp_subject']); ?>
         </td>

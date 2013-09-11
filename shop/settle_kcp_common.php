@@ -147,7 +147,7 @@ if(!$default['de_card_test']) {
         if($row['pp_id']) {
             // 개인결제 UPDATE
             $sql = " update {$g4['shop_personalpay_table']}
-                        set pp_receipt_amount   = '$ipgm_mnyx',
+                        set pp_receipt_price    = '$ipgm_mnyx',
                             pp_receipt_time     = '$tx_tm'
                         where pp_id = '$order_no'
                           and pp_tno = '$tno' ";
@@ -157,7 +157,7 @@ if(!$default['de_card_test']) {
                 // 주문서 UPDATE
                 $receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $tx_tm);
                 $sql = " update {$g4['shop_order_table']}
-                            set od_receipt_amount = od_receipt_amount + '$ipgm_mnyx',
+                            set od_receipt_price = od_receipt_price + '$ipgm_mnyx',
                                 od_receipt_time = '$tx_tm',
                                 od_status = '".G4_OD_STATUS_SETTLE."',
                                 od_shop_memo = concat(od_shop_memo, \"\\n개인결제 ".$row['pp_id']." 로 결제완료 - ".$receipt_time."\")
@@ -167,7 +167,7 @@ if(!$default['de_card_test']) {
         } else {
             // 주문서 UPDATE
             $sql = " update {$g4['shop_order_table']}
-                        set od_receipt_amount = '$ipgm_mnyx',
+                        set od_receipt_price = '$ipgm_mnyx',
                             od_receipt_time = '$tx_tm',
                             od_status = '".G4_OD_STATUS_SETTLE."'
                       where od_id = '$order_no'

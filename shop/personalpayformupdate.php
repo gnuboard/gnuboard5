@@ -16,7 +16,7 @@ $pp = sql_fetch($sql);
 if(!$pp['pp_id'])
     alert('개인결제 정보가 존재하지 않습니다.');
 
-if($pp['pp_receipt_amount'] > 0)
+if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.');
 
 $hash_data = md5($_POST['pp_id'].$_POST['good_mny'].$pp['pp_time']);
@@ -29,45 +29,45 @@ if ($pp_settle_case == "계좌이체")
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $pp_tno             = $tno;
-    $pp_receipt_amount  = $amount;
+    $pp_receipt_price   = $amount;
     $pp_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $pp_deposit_name    = $pp_name;
     $bank_name          = iconv("cp949", "utf8", $bank_name);
     $pp_bank_account    = $bank_name;
-    $pg_amount          = $amount;
+    $pg_price           = $amount;
 }
 else if ($pp_settle_case == "가상계좌")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $pp_tno             = $tno;
-    $pp_receipt_amount  = 0;
+    $pp_receipt_price   = 0;
     $bankname           = iconv("cp949", "utf8", $bankname);
     $depositor          = iconv("cp949", "utf8", $depositor);
     $pp_bank_account    = $bankname.' '.$account.' '.$depositor;
     $pp_deposit_name    = $depositor;
-    $pg_amount          = $amount;
+    $pg_price           = $amount;
 }
 else if ($pp_settle_case == "휴대폰")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $pp_tno             = $tno;
-    $pp_receipt_amount  = $amount;
+    $pp_receipt_price   = $amount;
     $pp_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $pp_bank_account    = $commid.' '.$mobile_no;
-    $pg_amount          = $amount;
+    $pg_price           = $amount;
 }
 else if ($pp_settle_case == "신용카드")
 {
     include G4_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
     $pp_tno             = $tno;
-    $pp_receipt_amount  = $amount;
+    $pp_receipt_price   = $amount;
     $pp_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $card_name          = iconv("cp949", "utf8", $card_name);
     $pp_bank_account    = $card_name;
-    $pg_amount          = $amount;
+    $pg_price           = $amount;
 }
 else
 {
@@ -75,7 +75,7 @@ else
 }
 
 // 주문금액과 결제금액이 일치하는지 체크
-if((int)$pp['pp_amount'] !== (int)$pg_amount) {
+if((int)$pp['pp_price'] !== (int)$pg_price) {
     $cancel_msg = '결제금액 불일치';
     include G4_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
 
@@ -86,7 +86,7 @@ if((int)$pp['pp_amount'] !== (int)$pg_amount) {
 $sql = " update {$g4['shop_personalpay_table']}
             set pp_tno              = '$pp_tno',
                 pp_app_no           = '$app_no',
-                pp_receipt_amount   = '$pp_receipt_amount',
+                pp_receipt_price    = '$pp_receipt_price',
                 pp_settle_case      = '$pp_settle_case',
                 pp_bank_account     = '$pp_bank_account',
                 pp_deposit_name     = '$pp_deposit_name',
@@ -106,13 +106,13 @@ if(!$result) {
 }
 
 // 주문번호가 있으면 결제정보 반영
-if($pp_receipt_amount > 0 && $pp['pp_id'] && $pp['od_id']) {
+if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
     $od_escrow = 0;
     if($escw_yn == 'Y')
         $od_escrow = 1;
 
     $sql = " update {$g4['shop_order_table']}
-                set od_receipt_amount   = od_receipt_amount + '$pp_receipt_amount',
+                set od_receipt_price    = od_receipt_price + '$pp_receipt_price',
                     od_receipt_time     = '$pp_receipt_time',
                     od_tno              = '$pp_tno',
                     od_app_no           = '$app_no',

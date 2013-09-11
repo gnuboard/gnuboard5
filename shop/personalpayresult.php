@@ -36,22 +36,22 @@ if(openwin != null) {
         <?php
         $misu = true;
 
-        if ($pp['pp_amount'] == $pp['pp_receipt_amount']) {
+        if ($pp['pp_price'] == $pp['pp_receipt_price']) {
             $wanbul = " (완불)";
             $misu = false; // 미수금 없음
         }
         else
         {
-            $wanbul = display_price($pp['pp_receipt_amount']);
+            $wanbul = display_price($pp['pp_receipt_price']);
         }
 
-        $misu_amount = $pp['pp_amount'] - $pp['pp_receipt_amount'];
+        $misu_price = $pp['pp_price'] - $pp['pp_receipt_price'];
 
         // 결제정보처리
-        if($pp['pp_receipt_amount'] > 0)
-            $pp_receipt_amount = display_price($pp['pp_receipt_amount']);
+        if($pp['pp_receipt_price'] > 0)
+            $pp_receipt_price = display_price($pp['pp_receipt_price']);
         else
-            $pp_receipt_amount = '아직 입금되지 않았거나 입금정보를 입력하지 못하였습니다.';
+            $pp_receipt_price = '아직 입금되지 않았거나 입금정보를 입력하지 못하였습니다.';
 
         $app_no_subj = '';
         $disp_bank = true;
@@ -91,14 +91,14 @@ if(openwin != null) {
                 <th scope="row">결제방식</th>
                 <td><?php echo $pp['pp_settle_case']; ?></td>
             </tr>
-            <?php if($pp_receipt_amount > 0) { ?>
+            <?php if($pp_receipt_price) { ?>
             <tr>
                 <th scope="row">결제금액</th>
-                <td><?php echo $pp_receipt_amount; ?></td>
+                <td><?php echo $pp_receipt_price; ?></td>
             </tr>
             <tr>
                 <th scope="row">결제일시</th>
-                <td><?php echo $pp['pp_receipt_time']; ?></td>
+                <td><?php echo is_null_time($pp['pp_receipt_time']) ? $pp['pp_receipt_time'] : ''; ?></td>
             </tr>
             <?php
             }
@@ -166,13 +166,13 @@ if(openwin != null) {
         <ul>
             <li>
                 총 주문액
-                <strong><?php echo display_price($pp['pp_amount']); ?></strong>
+                <strong><?php echo display_price($pp['pp_price']); ?></strong>
             </li>
             <?php
-            if ($misu_amount > 0) {
+            if ($misu_price > 0) {
             echo '<li>';
             echo '미결제액'.PHP_EOL;
-            echo '<strong>'.display_price($misu_amount).'</strong>';
+            echo '<strong>'.display_price($misu_price).'</strong>';
             echo '</li>';
             }
             ?>

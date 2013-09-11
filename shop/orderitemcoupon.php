@@ -57,9 +57,9 @@ $count = mysql_num_rows($result);
     for($i=0; $row=sql_fetch_array($result); $i++) {
         $dc = 0;
         if($row['cp_type']) {
-            $dc = floor(($item_price * ($row['cp_amount'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
+            $dc = floor(($item_price * ($row['cp_price'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
         } else {
-            $dc = $row['cp_amount'];
+            $dc = $row['cp_price'];
         }
 
         if($row['cp_maximum'] && $dc > $row['cp_maximum'])
@@ -68,7 +68,7 @@ $count = mysql_num_rows($result);
     <tr>
         <td>
             <input type="hidden" name="f_cp_id[]" value="<?php echo $row['cp_id']; ?>">
-            <input type="hidden" name="f_cp_amt[]" value="<?php echo $dc; ?>">
+            <input type="hidden" name="f_cp_prc[]" value="<?php echo $dc; ?>">
             <input type="hidden" name="f_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
             <?php echo get_text($row['cp_subject']); ?>
         </td>

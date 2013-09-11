@@ -21,13 +21,12 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 </thead>
 <tbody>
 <?php
-$sql = " select a.od_id,
-                a.*, "._MISU_QUERY_."
-           from {$g4['shop_order_table']} a
-           left join {$g4['shop_cart_table']} b on (a.od_id=b.od_id)
-          where a.mb_id = '{$member['mb_id']}'
-          group by a.od_id
-          order by a.od_id desc
+$sql = " select *,
+            (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
+           from {$g4['shop_order_table']}
+          where mb_id = '{$member['mb_id']}'
+          group by od_id
+          order by od_id desc
           $limit ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -41,11 +40,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a>
     </td>
     <td><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
-    <td class="td_num"><?php echo $row['itemcount']; ?></td>
-    <td class="td_bignum"><?php echo display_price($row['orderamount']); ?></td>
-    <td class="td_bignum"><?php echo display_price($row['couponamount']); ?></td>
-    <td class="td_bignum"><?php echo display_price($row['receiptamount']); ?></td>
-    <td class="td_bignum"><?php echo display_price($row['misu']); ?></td>
+    <td class="td_num"><?php echo $row['od_cart_count']; ?></td>
+    <td class="td_bignum"><?php echo display_price($row['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></td>
+    <td class="td_bignum"><?php echo display_price($row['couponprice']); ?></td>
+    <td class="td_bignum"><?php echo display_price($row['od_receipt_price']); ?></td>
+    <td class="td_bignum"><?php echo display_price($row['od_misu']); ?></td>
 </tr>
 
 <?php

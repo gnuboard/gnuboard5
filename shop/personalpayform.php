@@ -6,7 +6,7 @@ if (G4_IS_MOBILE) {
     return;
 }
 
-$sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_amount > 0 ";
+$sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
 $pp = sql_fetch($sql);
 
 if(!$pp['pp_id'])
@@ -24,7 +24,7 @@ if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
 }
 
 // 개인결제 체크를 위한 hash
-$hash_data = md5($pp['pp_id'].$pp['pp_amount'].$pp['pp_time']);
+$hash_data = md5($pp['pp_id'].$pp['pp_price'].$pp['pp_time']);
 set_session('ss_personalpay_id', $pp['pp_id']);
 set_session('ss_personalpay_hash', $hash_data);
 ?>
@@ -143,7 +143,7 @@ function get_intall_file()
         <input type="hidden" name="pay_method"  value="">
         <input type="hidden" name="ordr_idxx"   value="<?php echo $pp['pp_id']; ?>">
         <input type="hidden" name="good_name"   value="<?php echo $pp['pp_name'].'님 개인결제'; ?>">
-        <input type="hidden" name="good_mny"    value="<?php echo $pp['pp_amount']; ?>">
+        <input type="hidden" name="good_mny"    value="<?php echo $pp['pp_price']; ?>">
         <input type="hidden" name="buyr_name"   value="">
         <input type="hidden" name="buyr_mail"   value="">
         <input type="hidden" name="buyr_tel1"   value="">
@@ -181,7 +181,7 @@ function get_intall_file()
         $good_info .= "ordr_numb={$pp_id}_".sprintf("%04d", 1).chr(31);
         $good_info .= "good_name=".addslashes($pp['pp_name'].'님 개인결제').chr(31);
         $good_info .= "good_cntx=1".chr(31);
-        $good_info .= "good_amtx=".$pp['pp_amount'].chr(31);
+        $good_info .= "good_amtx=".$pp['pp_price'].chr(31);
     }
     ?>
         <!-- PLUGIN 설정 정보입니다(변경 불가) -->
@@ -353,7 +353,7 @@ function get_intall_file()
         <tbody>
         <tr>
             <th>결제금액</th>
-            <td><?php echo display_price($pp['pp_amount']); ?></td>
+            <td><?php echo display_price($pp['pp_price']); ?></td>
         </tr>
         <tr>
             <th scope="row"><label for="pp_name">이름</label></th>
@@ -510,11 +510,11 @@ function fpersonalpayform_check(f)
         return false;
     }
 
-    var tot_amount = <?php echo (int)$pp['pp_amount']; ?>;
+    var tot_price = <?php echo (int)$pp['pp_price']; ?>;
 
     if (document.getElementById("pp_settle_iche")) {
         if (document.getElementById("pp_settle_iche").checked) {
-            if (tot_amount < 150) {
+            if (tot_price < 150) {
                 alert("계좌이체는 150원 이상 결제가 가능합니다.");
                 return false;
             }
@@ -523,7 +523,7 @@ function fpersonalpayform_check(f)
 
     if (document.getElementById("pp_settle_card")) {
         if (document.getElementById("pp_settle_card").checked) {
-            if (tot_amount < 1000) {
+            if (tot_price < 1000) {
                 alert("신용카드는 1000원 이상 결제가 가능합니다.");
                 return false;
             }
@@ -532,7 +532,7 @@ function fpersonalpayform_check(f)
 
     if (document.getElementById("pp_settle_hp")) {
         if (document.getElementById("pp_settle_hp").checked) {
-            if (tot_amount < 350) {
+            if (tot_price < 350) {
                 alert("휴대폰은 350원 이상 결제가 가능합니다.");
                 return false;
             }

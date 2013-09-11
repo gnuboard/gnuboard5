@@ -107,9 +107,9 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="cp_amount"><?php echo $cp['cp_type'] ? '할인비율' : '할인금액'; ?></label></th>
+        <th scope="row"><label for="cp_price"><?php echo $cp['cp_type'] ? '할인비율' : '할인금액'; ?></label></th>
         <td>
-            <input type="text" name="cp_amount" value="<?php echo stripslashes($cp['cp_amount']); ?>" id="cp_amount" required class="frm_input required"> <span id="cp_amount_unit"><?php echo $cp['cp_type'] ? '%' : '원'; ?></span>
+            <input type="text" name="cp_price" value="<?php echo stripslashes($cp['cp_price']); ?>" id="cp_price" required class="frm_input required"> <span id="cp_price_unit"><?php echo $cp['cp_type'] ? '%' : '원'; ?></span>
         </td>
     </tr>
     <tr id="tr_cp_trunc">
@@ -212,13 +212,13 @@ function change_method(cp_method)
 function change_type(cp_type)
 {
     if(cp_type == "0") {
-        $("#cp_amount_unit").text("원");
-        $("#cp_amount_unit").closest("tr").find("label").text("할인금액");
+        $("#cp_price_unit").text("원");
+        $("#cp_price_unit").closest("tr").find("label").text("할인금액");
         $("#tr_cp_maximum").hide();
         $("#tr_cp_trunc").hide();
     } else {
-        $("#cp_amount_unit").text("%");
-        $("#cp_amount_unit").closest("tr").find("label").text("할인비율");
+        $("#cp_price_unit").text("%");
+        $("#cp_price_unit").closest("tr").find("label").text("할인비율");
         $("#tr_cp_maximum").show();
         $("#tr_cp_trunc").show();
     }
@@ -228,14 +228,14 @@ function form_check(f)
 {
     var sel_type = f.cp_type;
     var cp_type = sel_type.options[sel_type.selectedIndex].value;
-    var cp_amount = f.cp_amount.value;
+    var cp_price = f.cp_price.value;
 
     if(!f.chk_all_mb.checked && f.mb_id.value == "") {
         alert("회원아이디를 입력해 주십시오.");
         return false;
     }
 
-    if(isNaN(cp_amount)) {
+    if(isNaN(cp_price)) {
         if(cp_type == "1")
             alert("할인비율을 숫자로 입력해 주십시오.");
         else
@@ -244,9 +244,9 @@ function form_check(f)
         return false;
     }
 
-    cp_amount = parseInt(cp_amount);
+    cp_price = parseInt(cp_price);
 
-    if(cp_type == "1" && (cp_amount < 1 || cp_amount > 99)) {
+    if(cp_type == "1" && (cp_price < 1 || cp_price > 99)) {
         alert("할인비율을 1과 99 사이의 숫자로 입력해 주십시오.");
         return false;
     }

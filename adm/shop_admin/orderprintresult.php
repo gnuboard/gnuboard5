@@ -210,7 +210,7 @@ if (mysql_num_rows($result) == 0)
 
     <?php
     $mod = 10;
-    $tot_total_amount = 0;
+    $tot_total_price = 0;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $sql1 = " select * from {$g4['shop_order_table']} where od_id = '{$row['od_id']}' ";
@@ -281,15 +281,15 @@ if (mysql_num_rows($result) == 0)
         $sql2 .= "  order by it_id, io_type, ct_id ";
 
         $res2 = sql_query($sql2);
-        $cnt = $sub_tot_qty = $sub_tot_amount = 0;
+        $cnt = $sub_tot_qty = $sub_tot_price = 0;
         while ($row2 = sql_fetch_array($res2))
         {
             if($row2['io_type'])
-                $row2_tot_amount = $row2['io_price'] * $row2['ct_qty'];
+                $row2_tot_price = $row2['io_price'] * $row2['ct_qty'];
             else
-                $row2_tot_amount = ($row2['ct_price'] + $row2['io_price']) * $row2['ct_qty'];
+                $row2_tot_price = ($row2['ct_price'] + $row2['io_price']) * $row2['ct_qty'];
             $sub_tot_qty += $row2['ct_qty'];
-            $sub_tot_amount += $row2_tot_amount;
+            $sub_tot_price += $row2_tot_price;
 
             $it_name = stripslashes($row2['it_name']);
             $it_name = "$it_name ({$row2['ct_option']})";
@@ -307,7 +307,7 @@ if (mysql_num_rows($result) == 0)
             <td><?php echo $it_name; ?></td>
             <td class="td_bignum"><?php echo number_format($row2['ct_price']); ?></td>
             <td class="td_smallnum"><?php echo $fontqty1; ?><?php echo number_format($row2['ct_qty']); ?><?php echo $fontqty2; ?></td>
-            <td class="td_bignum"><?php echo number_format($row2_tot_amount); ?></td>
+            <td class="td_bignum"><?php echo number_format($row2_tot_price); ?></td>
             <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
         </tr>
         <?php $cnt++; } ?>
@@ -316,14 +316,14 @@ if (mysql_num_rows($result) == 0)
         <tr>
             <th scope="row" colspan="2">합계</th>
             <td><?php echo number_format($sub_tot_qty); ?></td>
-            <td><?php echo number_format($sub_tot_amount); ?></td>
+            <td><?php echo number_format($sub_tot_price); ?></td>
             <td></td>
         </tr>
         </tfoot>
         </table>
         <?php
         $tot_tot_qty    += $sub_tot_qty;
-        $tot_tot_amount += $sub_tot_amount;
+        $tot_tot_price  += $sub_tot_price;
 
         if ($od_memo) $od_memo = "<p><strong>비고</strong> $od_memo</p>";
         if ($od_shop_memo) $od_shop_memo = "<p><strong>상점메모</strong> $od_shop_memo</p>";
@@ -341,7 +341,7 @@ if (mysql_num_rows($result) == 0)
         <span>
             전체
             <strong><?php echo number_format($tot_tot_qty); ?></strong>개
-            <strong><?php echo number_format($tot_tot_amount); ?></strong>원
+            <strong><?php echo number_format($tot_tot_price); ?></strong>원
         </span>
         &lt;출력 끝&gt;
     </div>

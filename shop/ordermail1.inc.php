@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 unset($list);
 
-$ttotal_amount = 0;
+$ttotal_price = 0;
 $ttotal_point = 0;
 
 //==============================================================================
@@ -61,19 +61,19 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['it_origin']     = $row['it_origin'];
     $list[$i]['it_opt']        = $options;
     $list[$i]['ct_price']      = $row['ct_price'];
-    $list[$i]['stotal_amount'] = $sum['price'];
+    $list[$i]['stotal_price']  = $sum['price'];
     $list[$i]['stotal_point']  = $sum['point'];
 
-    $ttotal_amount += $list[$i]['stotal_amount'];
+    $ttotal_price  += $list[$i]['stotal_price'];
     $ttotal_point  += $list[$i]['stotal_point'];
 }
 //------------------------------------------------------------------------------
 
 // 배송비가 있다면 총계에 더한다
 if ($od_send_cost)
-    $ttotal_amount += $od_send_cost;
+    $ttotal_price += $od_send_cost;
 
 // 추가배송비가 있다면 총계에 더한다
 if ($od_send_cost2)
-    $ttotal_amount += $od_send_cost2;
+    $ttotal_price += $od_send_cost2;
 ?>

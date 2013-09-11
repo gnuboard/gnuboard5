@@ -23,7 +23,7 @@ if($w == 'd') {
     $sc_name = trim($_POST['sc_name']);
     $sc_zip1 = preg_replace('/[^0-9]/', '', $_POST['sc_zip1']);
     $sc_zip2 = preg_replace('/[^0-9]/', '', $_POST['sc_zip2']);
-    $sc_amount = preg_replace('/[^0-9]/', '', $_POST['sc_amount']);
+    $sc_price = preg_replace('/[^0-9]/', '', $_POST['sc_price']);
 
     if(!$sc_name)
         alert('지역명을 입력해 주십시오.');
@@ -31,13 +31,13 @@ if($w == 'd') {
         alert('우편번호 시작을 입력해 주십시오.');
     if(!$sc_zip2)
         alert('우편번호 끝을 입력해 주십시오.');
-    if(!$sc_amount)
+    if(!$sc_price)
         alert('추가배송비를 입력해 주십시오.');
 
     $sql = " insert into {$g4['shop_sendcost_table']}
-                  ( sc_name, sc_zip1, sc_zip2, sc_amount )
+                  ( sc_name, sc_zip1, sc_zip2, sc_price )
                 values
-                  ( '$sc_name', '$sc_zip1', '$sc_zip2', '$sc_amount' ) ";
+                  ( '$sc_name', '$sc_zip1', '$sc_zip2', '$sc_price' ) ";
     sql_query($sql);
 }
 

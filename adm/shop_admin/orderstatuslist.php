@@ -53,7 +53,7 @@ $sql  = " select a.od_id,
                  b.ct_price,
                  b.ct_point,
                  b.ct_option,
-                 (IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty)) as ct_sub_amount,
+                 (IF(b.io_type = 1, b.io_price * b.ct_qty, (b.ct_price + b.io_price) * b.ct_qty)) as ct_sub_price,
                  (b.ct_qty * b.ct_point)  as ct_sub_point,
                  b.it_id,
                  b.it_name
@@ -61,17 +61,6 @@ $sql  = " select a.od_id,
            order by $sort1 $sort2
            limit $from_record, $rows ";
 $result = sql_query($sql);
-
-$lines = array();
-for ($i=0; $row=sql_fetch_array($result); $i++)
-{
-    $lines[$i] = $row;
-
-    $tot_amount += $row['ct_price'];
-    $tot_qty    += $row['ct_qty'];
-    $tot_sub_amount += $row['ct_sub_amount'];
-    $tot_sub_point  += $row['ct_sub_point'];
-}
 
 $qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr  = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
@@ -133,7 +122,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <li><a href="<?php echo title_sort("a.mb_id")."&amp;$qstr1"; ?>">회원ID<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("ct_price")."&amp;$qstr1"; ?>">판매가<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("ct_qty")."&amp;$qstr1"; ?>">수량<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("ct_sub_amount")."&amp;$qstr1"; ?>">소계<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("ct_sub_price")."&amp;$qstr1"; ?>">소계<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("ct_sub_point")."&amp;$qstr1"; ?>">포인트<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("ct_status")."&amp;$qstr1"; ?>">상태<span class="sound_only"> 순 정렬</span></a></li>
     </ul>
@@ -153,52 +142,56 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <th scope="col">수정</th>
     </tr>
     </thead>
-    <tfoot>
-    <tr>
-        <th scope="row" colspan="4">합 계</td>
-        <td><?php echo number_format($tot_amount); ?></td>
-        <td><?php echo number_format($tot_qty); ?></td>
-        <td><?php echo number_format($tot_sub_amount); ?></td>
-        <td><?php echo number_format($tot_sub_point); ?></td>
-        <td colspan="2"></td>
-    </tr>
-    </tfoot>
     <tbody>
     <?php
-    for ($i=0; $i<count($lines); $i++) {
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
 
-        $href = $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=c.it_id&amp;search='.$lines[$i]['it_id'];
-        $it_name = '<a href="'.$href.'">'.cut_str($lines[$i]['it_name'],35).'</a><br>';
+        $href = $_SERVER['PHP_SELF'].'?sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_field=c.it_id&amp;search='.$row['it_id'];
+        $it_name = '<a href="'.$href.'">'.cut_str($row['it_name'],35).'</a><br>';
 
         $od_mobile = '';
-        if($lines[$i]['od_mobile'])
+        if($row['od_mobile'])
             $od_mobile = '(M)';
     ?>
     <tr>
         <td class="td_odrnum2">
             <?php echo $od_mobile; ?>
-            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=a.od_id&amp;search=<?php echo $lines[$i]['od_id']; ?>"><?php echo $lines[$i]['od_id']; ?></a><br>
-            <?php echo $lines[$i]['od_time']; ?>
+            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=a.od_id&amp;search=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a><br>
+            <?php echo $row['od_time']; ?>
         </td>
-        <td class="td_it_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($lines[$i]['it_id'], 50, 50); ?><?php echo $it_name; ?></a><br><?php echo $lines[$i]['ct_option']; ?></td>
+        <td class="td_it_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo $it_name; ?></a><br>옵션:<?php echo $row['ct_option']; ?></td>
         <td class="td_name">
-            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $lines[$i]['od_name']; ?>"><?php echo cut_str($lines[$i]['od_name'],10,""); ?></a>
-            <?php if ($lines[$i]['od_deposit_name'] != "") echo '<br>'.$lines[$i]['od_deposit_name']?>
+            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_name&amp;search=<?php echo $row['od_name']; ?>"><?php echo cut_str($row['od_name'],10,""); ?></a>
+            <?php if ($row['od_deposit_name'] != "") echo '<br>'.$row['od_deposit_name']?>
         </td>
-        <td class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=a.mb_id&amp;search=<?php echo $lines[$i]['mb_id']; ?>"><?php echo $lines[$i]['mb_id']; ?></a></td>
-        <td><?php echo number_format($lines[$i]['ct_price']); ?></td>
-        <td><?php echo $lines[$i]['ct_qty']; ?></td>
-        <td><?php echo number_format($lines[$i]['ct_sub_amount']); ?></td>
-        <td><?php echo number_format($lines[$i]['ct_sub_point']); ?></td>
-        <td><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=ct_status&amp;search=<?php echo $lines[$i]['ct_status']; ?>"><?php echo $lines[$i]['ct_status']; ?></a></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $lines[$i]['od_id']; ?>">주문수정</a></td>
+        <td class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=a.mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a></td>
+        <td><?php echo number_format($row['ct_price']); ?></td>
+        <td><?php echo $row['ct_qty']; ?></td>
+        <td><?php echo number_format($row['ct_sub_price']); ?></td>
+        <td><?php echo number_format($row['ct_sub_point']); ?></td>
+        <td><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=ct_status&amp;search=<?php echo $row['ct_status']; ?>"><?php echo $row['ct_status']; ?></a></td>
+        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">주문수정</a></td>
     </tr>
     <?php
+        $tot_price  += $row['ct_price'];
+        $tot_qty    += $row['ct_qty'];
+        $tot_sub_price += $row['ct_sub_price'];
+        $tot_sub_point += $row['ct_sub_point'];
     }
 
     if ($i == 0) echo '<tr><td colspan="11" class="empty_table">자료가 한건도 없습니다.</td></tr>';
     ?>
     </tbody>
+    <tfoot>
+    <tr>
+        <th scope="row" colspan="4">합 계</td>
+        <td><?php echo number_format($tot_price); ?></td>
+        <td><?php echo number_format($tot_qty); ?></td>
+        <td><?php echo number_format($tot_sub_price); ?></td>
+        <td><?php echo number_format($tot_sub_point); ?></td>
+        <td colspan="2"></td>
+    </tr>
+    </tfoot>
     </table>
 
 </section>

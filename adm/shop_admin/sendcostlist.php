@@ -64,7 +64,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
         <td><?php echo $row['sc_name']; ?></td>
         <td class="td_bigpostal"><?php echo preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip1']).' ~ '.preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip2']); ?></td>
-        <td class="td_sendcost_add"><?php echo number_format($row['sc_amount']); ?></td>
+        <td class="td_sendcost_add"><?php echo number_format($row['sc_price']); ?></td>
     </tr>
     <?php
     }
@@ -115,8 +115,8 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="sc_amount">추가배송비<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="sc_amount" id="sc_amount" size="8" required class="required frm_input"> 원</td>
+        <th scope="row"><label for="sc_price">추가배송비<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" name="sc_price" id="sc_price" size="8" required class="required frm_input"> 원</td>
     </tr>
     </tbody>
     </table>

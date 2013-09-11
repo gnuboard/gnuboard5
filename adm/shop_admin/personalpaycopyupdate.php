@@ -8,9 +8,9 @@ $_POST = array_map('trim', $_POST);
 
 if(!$_POST['pp_name'])
     alert('이름을 입력해 주십시오.');
-if(!$_POST['pp_amount'])
+if(!$_POST['pp_price'])
     alert('주문금액을 입력해 주십시오.');
-if(preg_match('/[^0-9]/', $_POST['pp_amount']))
+if(preg_match('/[^0-9]/', $_POST['pp_price']))
     alert('주문금액은 숫자만 입력해 주십시오.');
 
 if($_POST['od_id']) {
@@ -34,7 +34,7 @@ $sql = " insert into {$g4['shop_personalpay_table']}
                 pp_name         = '{$_POST['pp_name']}',
                 pp_content      = '{$row['pp_content']}',
                 pp_use          = '{$row['pp_use']}',
-                pp_amount       = '{$_POST['pp_amount']}',
+                pp_price        = '{$_POST['pp_price']}',
                 pp_ip           = '{$_SERVER['REMOTE_ADDR']}',
                 pp_time         = '".G4_TIME_YMDHIS."' ";
 sql_query($sql);

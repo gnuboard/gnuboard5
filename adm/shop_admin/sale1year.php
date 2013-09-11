@@ -13,8 +13,8 @@ function print_line($save)
     <tr>
         <td><a href="./sale1month.php?fr_month=<?php echo $save['od_date']; ?>01&amp;to_month=<?php echo $save['od_date']; ?>12"><?php echo $save['od_date']; ?></a></td>
         <td><?php echo number_format($save['ordercount']); ?></td>
-        <td><?php echo number_format($save['orderamount']); ?></td>
-        <td><?php echo number_format($save['ordercancel'] + $save['dc']); ?></td>
+        <td><?php echo number_format($save['orderprice']); ?></td>
+        <td><?php echo number_format($save['ordercoupon']); ?></td>
         <td><?php echo number_format($save['receiptbank']); ?></td>
         <td><?php echo number_format($save['receiptcard']); ?></td>
         <td><?php echo number_format($save['receiptpoint']); ?></td>
@@ -28,11 +28,11 @@ $sql = " select od_id,
                 SUBSTRING(od_time,1,4) as od_date,
                 od_send_cost,
                 od_settle_case,
-                od_receipt_amount,
+                od_receipt_price,
                 od_receipt_point,
-                od_cart_amount,
-                od_cancel_amount,
-                (od_cart_amount + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon - od_receipt_amount - od_cancel_amount) as misu,
+                od_cart_price,
+                od_cancel_price,
+                od_misu,
                 (od_cart_coupon + od_coupon + od_send_coupon) as couponamount
            from {$g4['shop_order_table']}
           where SUBSTRING(od_time,1,4) between '$fr_year' and '$to_year'
@@ -73,26 +73,26 @@ $result = sql_query($sql);
         }
 
         $save['ordercount']++;
-        $save['orderamount']   += $row['od_cart_amount'];
-        $save['ordercancel']   += $row['od_cancel_amount'];
+        $save['orderprice']    += $row['od_cart_price'];
+        $save['ordercancel']   += $row['od_cancel_price'];
         $save['ordercoupon']   += $row['couponamount'];
         if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
-            $save['receiptbank']   += $row['od_receipt_amount'];
+            $save['receiptbank']   += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')
-            $save['receiptcard']   += $row['od_receipt_amount'];
+            $save['receiptcard']   += $row['od_receipt_price'];
         $save['receiptpoint']  += $row['od_receipt_point'];
-        $save['misu']          += $row['misu'];
+        $save['misu']          += $row['od_misu'];
 
         $tot['ordercount']++;
-        $tot['orderamount']   += $row['od_cart_amount'];
-        $tot['ordercancel']   += $row1['od_cancel_amount'];
+        $tot['orderprice']    += $row['od_cart_price'];
+        $tot['ordercancel']   += $row1['od_cancel_price'];
         $tot['ordercoupon']   += $row['couponamount'];
         if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
-            $tot['receiptbank']   += $row['od_receipt_amount'];
+            $tot['receiptbank']   += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')
-            $tot['receiptcard']   += $row['od_receipt_amount'];
+            $tot['receiptcard']   += $row['od_receipt_price'];
         $tot['receiptpoint']  += $row['od_receipt_point'];
-        $tot['misu']          += $row['misu'];
+        $tot['misu']          += $row['od_misu'];
     }
 
     if ($i == 0) {
@@ -106,7 +106,7 @@ $result = sql_query($sql);
     <tr>
         <td>합 계</td>
         <td><?php echo number_format($tot['ordercount']); ?></td>
-        <td><?php echo number_format($tot['orderamount']); ?></td>
+        <td><?php echo number_format($tot['orderprice']); ?></td>
         <td><?php echo number_format($tot['ordercoupon']); ?></td>
         <td><?php echo number_format($tot['receiptbank']); ?></td>
         <td><?php echo number_format($tot['receiptcard']); ?></td>

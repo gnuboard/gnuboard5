@@ -50,7 +50,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">소계</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_price($list[$i]['stotal_amount']); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($list[$i]['stotal_price']); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">포인트</th>
@@ -74,7 +74,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
 
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">주문합계</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_price($ttotal_amount); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($ttotal_price); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">포인트합계</th>
@@ -97,17 +97,17 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <?php } ?>
 
-        <?php if ($od_receipt_amount > 0 && $od_settle_case == '신용카드') { ?>
+        <?php if ($od_receipt_price > 0 && $od_settle_case == '신용카드') { ?>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">신용카드 입금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_receipt_amount); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_receipt_price); ?></td>
         </tr>
         <?php } ?>
 
-        <?php if ($od_receipt_amount > 0 && $od_settle_case == '계좌이체') { ?>
+        <?php if ($od_receipt_price > 0 && $od_settle_case == '계좌이체') { ?>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>"><?php echo $od_settle_case; ?> 입금액</th>
-            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_receipt_amount); ?></td>
+            <td style="<?php echo $td_st; ?>"><?php echo display_price($od_receipt_price); ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">계좌번호</th>
@@ -119,7 +119,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </tr>
         <?php } ?>
 
-        <?php if (!$od_receipt_point && !$od_receipt_amount) { ?>
+        <?php if (!$od_receipt_point && !$od_receipt_price) { ?>
         <tr>
             <td colspan="2" style="<?php echo $empty_st; ?>">결제정보가 없습니다.</td>
         </tr>

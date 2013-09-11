@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_amount > 0 ";
+$sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
 $pp = sql_fetch($sql);
 
 if(!$pp['pp_id'])
@@ -23,7 +23,7 @@ $ipgm_date = date("Ymd", (G4_SERVER_TIME + 86400 * 5));
 $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
 
 // 개인결제 체크를 위한 hash
-$hash_data = md5($pp['pp_id'].$pp['pp_amount'].$pp['pp_time']);
+$hash_data = md5($pp['pp_id'].$pp['pp_price'].$pp['pp_time']);
 set_session('ss_personalpay_id', $pp['pp_id']);
 set_session('ss_personalpay_hash', $hash_data);
 
@@ -33,7 +33,7 @@ if($default['de_escrow_use']) {
     $good_info .= "ordr_numb={$pp_id}_".sprintf("%04d", 1).chr(31);
     $good_info .= "good_name=".addslashes($pp['pp_name'].'님 개인결제').chr(31);
     $good_info .= "good_cntx=1".chr(31);
-    $good_info .= "good_amtx=".$pp['pp_amount'].chr(31);
+    $good_info .= "good_amtx=".$pp['pp_price'].chr(31);
 }
 ?>
 
@@ -43,7 +43,7 @@ if($default['de_escrow_use']) {
 
     <form name="sm_form" method="POST" action="<?php echo G4_MSHOP_URL; ?>/kcp/personalpay_approval_form.php">
     <input type="hidden" name="good_name"     value="<?php echo $pp['pp_name'].'님 개인결제'; ?>">
-    <input type="hidden" name="good_mny"      value="<?php echo $pp['pp_amount']; ?>" >
+    <input type="hidden" name="good_mny"      value="<?php echo $pp['pp_price']; ?>" >
     <input type="hidden" name="buyr_name"     value="">
     <input type="hidden" name="buyr_tel1"     value="">
     <input type="hidden" name="buyr_tel2"     value="">
@@ -111,7 +111,7 @@ if($default['de_escrow_use']) {
         <tbody>
         <tr>
             <th>결제금액</th>
-            <td><?php echo display_price($pp['pp_amount']); ?></td>
+            <td><?php echo display_price($pp['pp_price']); ?></td>
         </tr>
         <tr>
             <th scope="row"><label for="pp_name">이름</label></th>
@@ -346,11 +346,11 @@ function payfield_check(f)
 // 결제체크
 function payment_check(f)
 {
-    var tot_amount = <?php echo (int)$pp['pp_amount']; ?>;
+    var tot_price = <?php echo (int)$pp['pp_price']; ?>;
 
     if (document.getElementById("pp_settle_iche")) {
         if (document.getElementById("pp_settle_iche").checked) {
-            if (tot_amount < 150) {
+            if (tot_price < 150) {
                 alert("계좌이체는 150원 이상 결제가 가능합니다.");
                 return false;
             }
@@ -359,7 +359,7 @@ function payment_check(f)
 
     if (document.getElementById("pp_settle_card")) {
         if (document.getElementById("pp_settle_card").checked) {
-            if (tot_amount < 1000) {
+            if (tot_price < 1000) {
                 alert("신용카드는 1000원 이상 결제가 가능합니다.");
                 return false;
             }
@@ -368,7 +368,7 @@ function payment_check(f)
 
     if (document.getElementById("pp_settle_hp")) {
         if (document.getElementById("pp_settle_hp").checked) {
-            if (tot_amount < 350) {
+            if (tot_price < 350) {
                 alert("휴대폰은 350원 이상 결제가 가능합니다.");
                 return false;
             }

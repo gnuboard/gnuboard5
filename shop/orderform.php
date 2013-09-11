@@ -142,7 +142,7 @@ function get_intall_file()
     <tbody>
     <?php
     $tot_point = 0;
-    $tot_sell_amount = 0;
+    $tot_sell_price = 0;
 
     $goods = $goods_it_id = "";
     $goods_count = -1;
@@ -232,8 +232,8 @@ function get_intall_file()
             }
         }
 
-        $point       = $sum['point'];
-        $sell_amount = $sum['price'];
+        $point      = $sum['point'];
+        $sell_price = $sum['price'];
 
         // 쿠폰
         if($is_member) {
@@ -245,7 +245,7 @@ function get_intall_file()
                           and cp_used = '0'
                           and cp_start <= '".G4_TIME_YMD."'
                           and cp_end >= '".G4_TIME_YMD."'
-                          and cp_minimum <= '$sell_amount'
+                          and cp_minimum <= '$sell_price'
                           and (
                                 ( cp_method = '0' and cp_target = '{$row['it_id']}' )
                                 OR
@@ -263,9 +263,9 @@ function get_intall_file()
         <td>
             <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
             <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-            <input type="hidden" name="it_amount[<?php echo $i; ?>]" value="<?php echo $sell_amount; ?>">
+            <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo $sell_price; ?>">
             <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
-            <input type="hidden" name="cp_amount[<?php echo $i; ?>]" value="0">
+            <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
             <?php if($default['de_tax_flag_use']) { ?>
             <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
             <?php } ?>
@@ -274,13 +274,13 @@ function get_intall_file()
         <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
         <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
         <td class="td_smallmng"><?php echo $cp_button; ?></td>
-        <td class="td_bignum"><span class="ct_sell_amount"><?php echo number_format($sell_amount); ?></span></td>
+        <td class="td_bignum"><span class="ct_sell_price"><?php echo number_format($sell_price); ?></span></td>
         <td class="td_bignum"><?php echo number_format($point); ?></td>
     </tr>
 
     <?php
-        $tot_point       += $point;
-        $tot_sell_amount += $sell_amount;
+        $tot_point      += $point;
+        $tot_sell_price += $sell_price;
     } // for 끝
 
     if ($i == 0) {
@@ -297,7 +297,7 @@ function get_intall_file()
             $send_cost = 0;
             for ($k=0; $k<count($send_cost_limit); $k++) {
                 // 총판매금액이 배송비 상한가 보다 작다면
-                if ($tot_sell_amount < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
+                if ($tot_sell_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
                     $send_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
                     break;
                 }
@@ -322,23 +322,23 @@ function get_intall_file()
     <!-- 주문상품 합계 시작 { -->
     <dl id="sod_bsk_tot">
         <dt class="sod_bsk_sell">주문</dt>
-        <dd class="sod_bsk_sell"><strong><?php echo number_format($tot_sell_amount); ?> 원</strong></dd>
+        <dd class="sod_bsk_sell"><strong><?php echo number_format($tot_sell_price); ?> 원</strong></dd>
         <dt class="sod_bsk_coupon">쿠폰할인</dt>
         <dd class="sod_bsk_coupon"><strong id="ct_tot_coupon">0 원</strong></dd>
         <dt class="sod_bsk_dvr">배송비</dt>
         <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
         <dt class="sod_bsk_cnt">총계</dt>
         <dd class="sod_bsk_cnt">
-            <?php $tot_amount = $tot_sell_amount + $send_cost; // 총계 = 주문상품금액합계 + 배송비 ?>
-            <strong id="ct_tot_amount"><?php echo number_format($tot_amount); ?> 원</strong>
+            <?php $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비 ?>
+            <strong id="ct_tot_price"><?php echo number_format($tot_price); ?> 원</strong>
         </dd>
         <dt class="sod_bsk_point">포인트</dt>
         <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
     </dl>
     <!-- } 주문상품 합계 끝 -->
 
-    <input type="hidden" name="od_amount"    value="<?php echo $tot_sell_amount; ?>">
-    <input type="hidden" name="org_od_amount"    value="<?php echo $tot_sell_amount; ?>">
+    <input type="hidden" name="od_price"    value="<?php echo $tot_sell_price; ?>">
+    <input type="hidden" name="org_od_price"    value="<?php echo $tot_sell_price; ?>">
     <input type="hidden" name="od_send_cost" value="<?php echo $send_cost; ?>">
     <input type="hidden" name="od_send_cost2" value="0">
     <input type="hidden" name="item_coupon" value="0">
@@ -368,7 +368,7 @@ function get_intall_file()
         <input type="hidden" name="pay_method"  value="">
         <input type="hidden" name="ordr_idxx"   value="<?php echo $od_id; ?>">
         <input type="hidden" name="good_name"   value="<?php echo $goods; ?>">
-        <input type="hidden" name="good_mny"    value="<?php echo $tot_amount; ?>">
+        <input type="hidden" name="good_mny"    value="<?php echo $tot_price; ?>">
         <input type="hidden" name="buyr_name"   value="">
         <input type="hidden" name="buyr_mail"   value="">
         <input type="hidden" name="buyr_tel1"   value="">
@@ -825,7 +825,7 @@ function get_intall_file()
         <?php } ?>
         <tr>
             <th>총 주문금액</th>
-            <td><span id="od_tot_amount"><?php echo number_format($tot_amount); ?></span>원</td>
+            <td><span id="od_tot_price"><?php echo number_format($tot_price); ?></span>원</td>
         </tr>
         <tr>
             <th>추가배송비</th>
@@ -895,8 +895,8 @@ function get_intall_file()
             {
                 $temp_point = (int)$default['de_settle_max_point'];
 
-                if($temp_point > (int)$tot_sell_amount)
-                    $temp_point = (int)$tot_sell_amount;
+                if($temp_point > (int)$tot_sell_price)
+                    $temp_point = (int)$tot_sell_price;
 
                 if($temp_point > (int)$member['mb_point'])
                     $temp_point = (int)$member['mb_point'];
@@ -1042,12 +1042,12 @@ $(function() {
     $(".cp_apply").live("click", function() {
         var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='f_cp_id[]']").val();
-        var amount = $el.find("input[name='f_cp_amt[]']").val();
+        var price = $el.find("input[name='f_cp_prc[]']").val();
         var subj = $el.find("input[name='f_cp_subj[]']").val();
-        var sell_amount;
+        var sell_price;
 
-        if(parseInt(amount) == 0) {
-            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+        if(parseInt(price) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+price+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
                 return false;
             }
         }
@@ -1077,18 +1077,18 @@ $(function() {
             }
         }
 
-        var $s_el = $cp_row_el.find(".ct_sell_amount");;
-        sell_amount = parseInt($cp_row_el.find("input[name^=it_amount]").val());
-        sell_amount = sell_amount - parseInt(amount);
-        if(sell_amount < 0) {
+        var $s_el = $cp_row_el.find(".ct_sell_price");;
+        sell_price = parseInt($cp_row_el.find("input[name^=it_price]").val());
+        sell_price = sell_price - parseInt(price);
+        if(sell_price < 0) {
             alert("쿠폰할인금액이 상품 주문금액보다 크므로 쿠폰을 적용할 수 없습니다.");
             return false;
         }
-        $s_el.text(number_format(String(sell_amount)));
+        $s_el.text(number_format(String(sell_price)));
         $cp_row_el.find("input[name^=cp_id]").val(cp_id);
-        $cp_row_el.find("input[name^=cp_amount]").val(amount);
+        $cp_row_el.find("input[name^=cp_price]").val(price);
 
-        calculate_total_amount();
+        calculate_total_price();
         $("#it_coupon_frm").remove();
         $cp_btn_el.text("변경").focus();
         if(!$cp_row_el.find(".it_coupon_cancel").size())
@@ -1102,7 +1102,7 @@ $(function() {
 
     $(".it_coupon_cancel").live("click", function() {
         coupon_cancel($(this).closest("tr"));
-        calculate_total_amount();
+        calculate_total_price();
         $("#it_coupon_frm").remove();
         $(this).closest("tr").find(".it_coupon_btn").text("적용").focus();
         $(this).remove();
@@ -1111,10 +1111,10 @@ $(function() {
     $("#od_coupon_btn").click(function() {
         $("#od_coupon_frm").remove();
         var $this = $(this);
-        var amount = parseInt($("input[name=org_od_amount]").val());
+        var price = parseInt($("input[name=org_od_price]").val());
         $.post(
             "./ordercoupon.php",
-            { amount: amount },
+            { price: price },
             function(data) {
                 $this.after(data);
             }
@@ -1124,19 +1124,19 @@ $(function() {
     $(".od_cp_apply").live("click", function() {
         var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='o_cp_id[]']").val();
-        var amount = parseInt($el.find("input[name='o_cp_amt[]']").val());
+        var price = parseInt($el.find("input[name='o_cp_prc[]']").val());
         var subj = $el.find("input[name='o_cp_subj[]']").val();
         var send_cost = $("input[name=od_send_cost]").val();
         var item_coupon = parseInt($("input[name=item_coupon]").val());
-        var od_amount = parseInt($("input[name=org_od_amount]").val()) - item_coupon;
+        var od_price = parseInt($("input[name=org_od_price]").val()) - item_coupon;
 
-        if(amount == 0) {
-            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+        if(price == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+price+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
                 return false;
             }
         }
 
-        if(od_amount - amount <= 0) {
+        if(od_price - price <= 0) {
             alert("쿠폰할인금액이 주문금액보다 크므로 쿠폰을 적용할 수 없습니다.");
             return false;
         }
@@ -1145,10 +1145,10 @@ $(function() {
         $("#sc_coupon_btn").text("쿠폰적용");
         $("#sc_coupon_cancel").remove();
 
-        $("input[name=od_amount]").val(od_amount - amount);
+        $("input[name=od_price]").val(od_price - price);
         $("input[name=od_cp_id]").val(cp_id);
-        $("input[name=od_coupon]").val(amount);
-        calculate_order_amount();
+        $("input[name=od_coupon]").val(price);
+        calculate_order_price();
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("쿠폰변경").focus();
         if(!$("#od_coupon_cancel").size())
@@ -1161,13 +1161,13 @@ $(function() {
     });
 
     $("#od_coupon_cancel").live("click", function() {
-        var org_amount = $("input[name=org_od_amount]").val();
+        var org_price = $("input[name=org_od_price]").val();
         var item_coupon = parseInt($("input[name=item_coupon]").val());
-        $("input[name=od_amount]").val(org_amount - item_coupon);
+        $("input[name=od_price]").val(org_price - item_coupon);
         $("input[name=sc_cp_id]").val("");
         $("input[name=od_coupon]").val(0);
         $("input[name=od_send_coupon]").val(0);
-        calculate_order_amount();
+        calculate_order_price();
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("쿠폰적용").focus();
         $(this).remove();
@@ -1178,11 +1178,11 @@ $(function() {
     $("#sc_coupon_btn").click(function() {
         $("#sc_coupon_frm").remove();
         var $this = $(this);
-        var amount = parseInt($("input[name=od_amount]").val());
+        var price = parseInt($("input[name=od_price]").val());
         var send_cost = parseInt($("input[name=od_send_cost]").val());
         $.post(
             "./ordersendcostcoupon.php",
-            { amount: amount, send_cost: send_cost },
+            { price: price, send_cost: send_cost },
             function(data) {
                 $this.after(data);
             }
@@ -1192,19 +1192,19 @@ $(function() {
     $(".sc_cp_apply").live("click", function() {
         var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='s_cp_id[]']").val();
-        var amount = parseInt($el.find("input[name='s_cp_amt[]']").val());
+        var price = parseInt($el.find("input[name='s_cp_prc[]']").val());
         var subj = $el.find("input[name='s_cp_subj[]']").val();
         var send_cost = parseInt($("input[name=od_send_cost]").val());
 
-        if(parseInt(amount) == 0) {
-            if(!confirm(subj+"쿠폰의 할인 금액은 "+amount+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
+        if(parseInt(price) == 0) {
+            if(!confirm(subj+"쿠폰의 할인 금액은 "+price+"원입니다.\n쿠폰을 적용하시겠습니까?")) {
                 return false;
             }
         }
 
         $("input[name=sc_cp_id]").val(cp_id);
-        $("input[name=od_send_coupon]").val(amount);
-        calculate_order_amount();
+        $("input[name=od_send_coupon]").val(price);
+        calculate_order_price();
         $("#sc_coupon_frm").remove();
         $("#sc_coupon_btn").text("쿠폰변경").focus();
         if(!$("#sc_coupon_cancel").size())
@@ -1218,7 +1218,7 @@ $(function() {
 
     $("#sc_coupon_cancel").live("click", function() {
         $("input[name=od_send_coupon]").val(0);
-        calculate_order_amount();
+        calculate_order_price();
         $("#sc_coupon_frm").remove();
         $("#sc_coupon_btn").text("쿠폰적용").focus();
         $(this).remove();
@@ -1291,39 +1291,39 @@ $(function() {
 
 function coupon_cancel($el)
 {
-    var $dup_sell_el = $el.find(".ct_sell_amount");
-    var $dup_amount_el = $el.find("input[name^=cp_amount]");
-    var org_sell_amount = $el.find("input[name^=it_amount]").val();
+    var $dup_sell_el = $el.find(".ct_sell_price");
+    var $dup_price_el = $el.find("input[name^=cp_price]");
+    var org_sell_price = $el.find("input[name^=it_price]").val();
 
-    $dup_sell_el.text(number_format(String(org_sell_amount)));
-    $dup_amount_el.val(0);
+    $dup_sell_el.text(number_format(String(org_sell_price)));
+    $dup_price_el.val(0);
     $el.find("input[name^=cp_id]").val("");
 }
 
-function calculate_total_amount()
+function calculate_total_price()
 {
-    var $it_amt = $("input[name^=it_amount]");
-    var $cp_amt = $("input[name^=cp_amount]");
-    var tot_sell_amount = sell_amount = tot_cp_amount = 0;
-    var it_amount, cp_amount, it_notax;
+    var $it_prc = $("input[name^=it_price]");
+    var $cp_prc = $("input[name^=cp_price]");
+    var tot_sell_price = sell_price = tot_cp_price = 0;
+    var it_price, cp_price, it_notax;
     var tot_mny = comm_tax_mny = comm_vat_mny = comm_free_mny = tax_mny = vat_mny = 0;
     var send_cost = parseInt($("input[name=od_send_cost]").val());
 
-    $it_amt.each(function(index) {
-        it_amount = parseInt($(this).val());
-        cp_amount = parseInt($cp_amt.eq(index).val());
-        sell_amount += it_amount;
-        tot_cp_amount += cp_amount;
+    $it_prc.each(function(index) {
+        it_price = parseInt($(this).val());
+        cp_price = parseInt($cp_prc.eq(index).val());
+        sell_price += it_price;
+        tot_cp_price += cp_price;
     });
 
-    tot_sell_amount = sell_amount - tot_cp_amount + send_cost;
+    tot_sell_price = sell_price - tot_cp_price + send_cost;
 
-    $("#ct_tot_coupon").text(number_format(String(tot_cp_amount))+" 원");
-    $("#ct_tot_amount").text(number_format(String(tot_sell_amount))+" 원");
+    $("#ct_tot_coupon").text(number_format(String(tot_cp_price))+" 원");
+    $("#ct_tot_price").text(number_format(String(tot_sell_price))+" 원");
 
-    $("input[name=good_mny]").val(tot_sell_amount);
-    $("input[name=od_amount]").val(sell_amount - tot_cp_amount);
-    $("input[name=item_coupon]").val(tot_cp_amount);
+    $("input[name=good_mny]").val(tot_sell_price);
+    $("input[name=od_price]").val(sell_price - tot_cp_price);
+    $("input[name=item_coupon]").val(tot_cp_price);
     $("input[name=od_coupon]").val(0);
     $("input[name=od_send_coupon]").val(0);
     <?php if($oc_cnt > 0) { ?>
@@ -1344,19 +1344,19 @@ function calculate_total_amount()
     <?php if($temp_point > 0 && $is_member) { ?>
     calculate_temp_point();
     <?php } ?>
-    calculate_order_amount();
+    calculate_order_price();
 }
 
-function calculate_order_amount()
+function calculate_order_price()
 {
-    var sell_amount = parseInt($("input[name=od_amount]").val());
+    var sell_price = parseInt($("input[name=od_price]").val());
     var send_cost = parseInt($("input[name=od_send_cost]").val());
     var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
     var send_coupon = parseInt($("input[name=od_send_coupon").val());
-    var tot_amount = sell_amount + send_cost + send_cost2 - send_coupon;
+    var tot_price = sell_price + send_cost + send_cost2 - send_coupon;
 
-    $("input[name=good_mny]").val(tot_amount);
-    $("#od_tot_amount").text(number_format(String(tot_amount)));
+    $("input[name=good_mny]").val(tot_price);
+    $("#od_tot_price").text(number_format(String(tot_price)));
     <?php if($temp_point > 0 && $is_member) { ?>
     calculate_temp_point();
     <?php } ?>
@@ -1364,14 +1364,14 @@ function calculate_order_amount()
 
 function calculate_temp_point()
 {
-    var sell_amount = parseInt($("input[name=od_amount]").val());
+    var sell_price = parseInt($("input[name=od_price]").val());
     var mb_point = parseInt(<?php echo $member['mb_point']; ?>);
     var max_point = parseInt(<?php echo $default['de_settle_max_point']; ?>);
     var point_unit = parseInt(<?php echo $default['de_settle_point_unit']; ?>);
     var temp_point = max_point;
 
-    if(temp_point > sell_amount)
-        temp_point = sell_amount;
+    if(temp_point > sell_price)
+        temp_point = sell_price;
 
     if(temp_point > mb_point)
         temp_point = mb_point;
@@ -1391,17 +1391,17 @@ function calculate_sendcost(code)
             $("input[name=od_send_cost2]").val(data);
             $("#od_send_cost2").text(number_format(String(data)));
 
-            calculate_order_amount();
+            calculate_order_price();
         }
     );
 }
 
 function calculate_tax()
 {
-    var $it_amt = $("input[name^=it_amount]");
-    var $cp_amt = $("input[name^=cp_amount]");
-    var sell_amount = tot_cp_amount = 0;
-    var it_amount, cp_amount, it_notax;
+    var $it_prc = $("input[name^=it_price]");
+    var $cp_prc = $("input[name^=cp_price]");
+    var sell_price = tot_cp_price = 0;
+    var it_price, cp_price, it_notax;
     var tot_mny = comm_free_mny = tax_mny = vat_mny = 0;
     var send_cost = parseInt($("input[name=od_send_cost]").val());
     var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
@@ -1409,16 +1409,16 @@ function calculate_tax()
     var send_coupon = parseInt($("input[name=od_send_coupon]").val());
     var temp_point = 0;
 
-    $it_amt.each(function(index) {
-        it_amount = parseInt($(this).val());
-        cp_amount = parseInt($cp_amt.eq(index).val());
-        sell_amount += it_amount;
-        tot_cp_amount += cp_amount;
+    $it_prc.each(function(index) {
+        it_price = parseInt($(this).val());
+        cp_price = parseInt($cp_prc.eq(index).val());
+        sell_price += it_price;
+        tot_cp_price += cp_price;
         it_notax = $("input[name^=it_notax]").eq(index).val();
         if(it_notax == "1") {
-            comm_free_mny += (it_amount - cp_amount);
+            comm_free_mny += (it_price - cp_price);
         } else {
-            tot_mny += (it_amount - cp_amount);
+            tot_mny += (it_price - cp_price);
         }
     });
 
@@ -1511,7 +1511,7 @@ function forderform_check(f)
         return false;
     }
 
-    var od_amount = parseInt(f.od_amount.value);
+    var od_price = parseInt(f.od_price.value);
     var send_cost = parseInt(f.od_send_cost.value);
     var send_cost2 = parseInt(f.od_send_cost2.value);
     var send_coupon = parseInt(f.od_send_coupon.value);
@@ -1533,7 +1533,7 @@ function forderform_check(f)
                 return false;
             }
 
-            if (temp_point > od_amount) {
+            if (temp_point > od_price) {
                 alert("상품 주문금액(배송비 제외) 보다 많이 포인트결제할 수 없습니다.");
                 f.od_temp_point.select();
                 return false;
@@ -1559,16 +1559,16 @@ function forderform_check(f)
 
             // pg 결제 금액에서 포인트 금액 차감
             if(settle_method != "무통장") {
-                f.good_mny.value = od_amount + send_cost + send_cost2 - send_coupon - temp_point;
+                f.good_mny.value = od_price + send_cost + send_cost2 - send_coupon - temp_point;
             }
         }
     }
 
-    var tot_amount = od_amount + send_cost + send_cost2 - send_coupon - temp_point;
+    var tot_price = od_price + send_cost + send_cost2 - send_coupon - temp_point;
 
     if (document.getElementById("od_settle_iche")) {
         if (document.getElementById("od_settle_iche").checked) {
-            if (tot_amount - temp_point < 150) {
+            if (tot_price - temp_point < 150) {
                 alert("계좌이체는 150원 이상 결제가 가능합니다.");
                 return false;
             }
@@ -1577,7 +1577,7 @@ function forderform_check(f)
 
     if (document.getElementById("od_settle_card")) {
         if (document.getElementById("od_settle_card").checked) {
-            if (tot_amount - temp_point < 1000) {
+            if (tot_price - temp_point < 1000) {
                 alert("신용카드는 1000원 이상 결제가 가능합니다.");
                 return false;
             }
@@ -1586,7 +1586,7 @@ function forderform_check(f)
 
     if (document.getElementById("od_settle_hp")) {
         if (document.getElementById("od_settle_hp").checked) {
-            if (tot_amount - temp_point < 350) {
+            if (tot_price - temp_point < 350) {
                 alert("휴대폰은 350원 이상 결제가 가능합니다.");
                 return false;
             }

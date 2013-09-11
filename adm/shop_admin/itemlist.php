@@ -158,7 +158,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <thead>
     <tr>
         <th scope="col" rowspan="2">
-            <label for="chkall" class="sound_only">게시판 전체</label>
+            <label for="chkall" class="sound_only">상품 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
         <th scope="col" rowspan="2">상품코드</th>

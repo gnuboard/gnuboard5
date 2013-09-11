@@ -20,9 +20,9 @@ if($w == 'd') {
 
     if(!$_POST['pp_name'])
         alert('이름을 입력해 주십시오.');
-    if(!$_POST['pp_amount'])
+    if(!$_POST['pp_price'])
         alert('주문금액을 입력해 주십시오.');
-    if(preg_match('/[^0-9]/', $_POST['pp_amount']))
+    if(preg_match('/[^0-9]/', $_POST['pp_price']))
         alert('주문금액은 숫자만 입력해 주십시오.');
 
     if($_POST['od_id']) {
@@ -33,10 +33,10 @@ if($w == 'd') {
     }
 
     $sql_common = " pp_name             = '{$_POST['pp_name']}',
-                    pp_amount           = '{$_POST['pp_amount']}',
+                    pp_price            = '{$_POST['pp_price']}',
                     od_id               = '{$_POST['od_id']}',
                     pp_content          = '{$_POST['pp_content']}',
-                    pp_receipt_amount   = '{$_POST['pp_receipt_amount']}',
+                    pp_receipt_price    = '{$_POST['pp_receipt_price']}',
                     pp_settle_case      = '{$_POST['pp_settle_case']}',
                     pp_receipt_time     = '{$_POST['pp_receipt_time']}',
                     pp_shop_memo        = '{$_POST['pp_shop_memo']}',

@@ -8,11 +8,11 @@ $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); /
 if ($default['de_sms_use']) {
     if ($od_sms_ipgum_check)
     {
-        if ($od_bank_account && $od_receipt_amount && $od_deposit_name)
+        if ($od_bank_account && $od_receipt_price && $od_deposit_name)
         {
             $sms_contents = $default['de_sms_cont4'];
             $sms_contents = preg_replace("/{이름}/", $od_name, $sms_contents);
-            $sms_contents = preg_replace("/{입금액}/", number_format($od_receipt_amount), $sms_contents);
+            $sms_contents = preg_replace("/{입금액}/", number_format($od_receipt_price), $sms_contents);
             $sms_contents = preg_replace("/{주문번호}/", $od_id, $sms_contents);
             $sms_contents = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_contents);
 

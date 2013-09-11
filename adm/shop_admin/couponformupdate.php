@@ -27,14 +27,14 @@ if($_POST['cp_start'] > $_POST['cp_end'])
 if($_POST['cp_end'] < G4_TIME_YMD)
     alert('종료일은 오늘('.G4_TIME_YMD.')이후로 입력해 주십시오.');
 
-if(!$_POST['cp_amount']) {
+if(!$_POST['cp_price']) {
     if($_POST['cp_type'])
         alert('할인비율을 입력해 주십시오.');
     else
         alert('할인금액을 입력해 주십시오.');
 }
 
-if($_POST['cp_type'] && ($_POST['cp_amount'] < 1 || $_POST['cp_amount'] > 99))
+if($_POST['cp_type'] && ($_POST['cp_price'] < 1 || $_POST['cp_price'] > 99))
     alert('할인비율을은 1과 99사이 값으로 입력해 주십시오.');
 
 if($_POST['cp_method'] == 0) {
@@ -94,9 +94,9 @@ if($w == '') {
         } while(1);
 
         $sql = " INSERT INTO {$g4['shop_coupon_table']}
-                    ( cp_id, cp_subject, cp_method, cp_target, mb_id, cp_start, cp_end, cp_type, cp_amount, cp_trunc, cp_minimum, cp_maximum, cp_used, cp_datetime )
+                    ( cp_id, cp_subject, cp_method, cp_target, mb_id, cp_start, cp_end, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum, cp_used, cp_datetime )
                 VALUES
-                    ( '$cp_id', '$cp_subject', '$cp_method', '$cp_target', '$mb_id', '$cp_start', '$cp_end', '$cp_type', '$cp_amount', '$cp_trunc', '$cp_minimum', '$cp_maximum', '$cp_used', '".G4_TIME_YMDHIS."' ) ";
+                    ( '$cp_id', '$cp_subject', '$cp_method', '$cp_target', '$mb_id', '$cp_start', '$cp_end', '$cp_type', '$cp_price', '$cp_trunc', '$cp_minimum', '$cp_maximum', '$cp_used', '".G4_TIME_YMDHIS."' ) ";
 
         sql_query($sql);
     }
@@ -115,7 +115,7 @@ if($w == '') {
                     cp_start    = '$cp_start',
                     cp_end      = '$cp_end',
                     cp_type     = '$cp_type',
-                    cp_amount   = '$cp_amount',
+                    cp_price    = '$cp_price',
                     cp_trunc    = '$cp_trunc',
                     cp_maximum  = '$cp_maximum',
                     cp_minimum  = '$cp_minimum'

@@ -7,7 +7,7 @@ if ($is_guest)
 $g4['title'] = $member['mb_nick'].' 님의 쿠폰 내역';
 include_once(G4_PATH.'/head.sub.php');
 
-$sql = " select cp_id, cp_subject, cp_method, cp_target, cp_start, cp_end, cp_type, cp_amount
+$sql = " select cp_id, cp_subject, cp_method, cp_target, cp_start, cp_end, cp_type, cp_price
             from {$g4['shop_coupon_table']}
             where mb_id = '{$member['mb_id']}'
               and cp_used = '0'
@@ -52,14 +52,14 @@ if(!$count)
         }
 
         if($row['cp_type'])
-            $cp_amount = $row['cp_amount'].'%';
+            $cp_price = $row['cp_price'].'%';
         else
-            $cp_amount = number_format($row['cp_amount']).'원';
+            $cp_price = number_format($row['cp_price']).'원';
     ?>
     <tr>
         <td><?php echo $row['cp_subject']; ?></td>
         <td><?php echo $cp_target; ?></td>
-        <td class="td_bignum"><?php echo $cp_amount; ?></td>
+        <td class="td_bignum"><?php echo $cp_price; ?></td>
         <td class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
     </tr>
     <?php

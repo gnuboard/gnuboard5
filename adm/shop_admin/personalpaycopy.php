@@ -30,8 +30,8 @@ if(!$row['pp_id'])
         <td><input type="text" name="od_id" value="<?php echo $row['od_id']; ?>" id="od_id" class="frm_input"></td>
     </tr>
     <tr>
-        <th scope="row"><label for="pp_amount">주문금액</label></th>
-        <td><input type="text" name="pp_amount" value="" id="pp_amount" required class="required frm_input" size="20"> 원</td>
+        <th scope="row"><label for="pp_price">주문금액</label></th>
+        <td><input type="text" name="pp_price" value="" id="pp_price" required class="required frm_input" size="20"> 원</td>
     </tr>
     </tbody>
     </table>
@@ -48,7 +48,7 @@ if(!$row['pp_id'])
 // <![CDATA[
 function form_check(f)
 {
-    if(f.pp_amount.value.replace(/[0-9]/g, "").length > 0) {
+    if(f.pp_price.value.replace(/[0-9]/g, "").length > 0) {
         alert("주문금액은 숫자만 입력해 주십시오");
         return false;
     }

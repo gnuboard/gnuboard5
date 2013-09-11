@@ -1510,7 +1510,7 @@ function get_item_sendcost($it_id, $price, $qty)
     if($default['de_send_cost_case'] != '개별')
         return 0;
 
-    $sql = " select it_id, it_sc_type, it_sc_method, it_sc_amount, it_sc_minimum, it_sc_qty
+    $sql = " select it_id, it_sc_type, it_sc_method, it_sc_price, it_sc_minimum, it_sc_qty
                 from {$g4['shop_item_table']}
                 where it_id = '$it_id' ";
     $it = sql_fetch($sql);
@@ -1522,21 +1522,41 @@ function get_item_sendcost($it_id, $price, $qty)
             if($price >= $it['it_sc_minimum'])
                 $sendcost = 0;
             else
-                $sendcost = $it['it_sc_amount'];
+                $sendcost = $it['it_sc_price'];
         } else if($it['it_sc_type'] == 2) { // 유료배송
-            $sendcost = $it['it_sc_amount'];
+            $sendcost = $it['it_sc_price'];
         } else { // 수량별 부과
             if(!$it['it_sc_qty'])
                 $it['it_sc_qty'] = 1;
 
             $q = ceil((int)$qty / (int)$it['it_sc_qty']);
-            $sendcost = (int)$it['it_sc_amount'] * $q;
+            $sendcost = (int)$it['it_sc_price'] * $q;
         }
     } else {
         $sendcost = 0;
     }
 
     return $sendcost;
+}
+
+// 주문 미수금
+function get_order_misu($od_id)
+{
+    if(!$od_id)
+        return 0;
+
+    global $g4;
+
+    $sql = " select od_id,
+                  ( od_cart_price + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon - od_receipt_price - od_receipt_point ) as misu
+                from {$g4['shop_order_table']}
+                where od_id = '$od_id' ";
+    $od = sql_fetch($sql);
+
+    if(!$od['od_id'])
+        return 0;
+
+    return $od['misu'];
 }
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝

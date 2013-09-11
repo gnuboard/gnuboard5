@@ -41,7 +41,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <dd>상품 배송이 완료되었습니다.</dd>
         </dl>
         <?php
-        $sql = " select it_id, it_name, cp_amount
+        $sql = " select it_id, it_name, cp_price
                     from {$g4['shop_cart_table']}
                     where od_id = '$od_id'
                     group by it_id
@@ -85,7 +85,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                     else
                         $opt_price = $opt['ct_price'] + $opt['io_price'];
 
-                    $sell_amount = $opt_price * $opt['ct_qty'];
+                    $sell_price = $opt_price * $opt['ct_qty'];
                     $point = $opt['ct_point'] * $opt['ct_qty'];
 
                     $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
@@ -95,7 +95,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                     <td><?php echo $opt['ct_option']; ?></td>
                     <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
                     <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
-                    <td class="td_num"><?php echo number_format($sell_amount); ?></td>
+                    <td class="td_num"><?php echo number_format($sell_price); ?></td>
                     <td class="td_num"><?php echo number_format($point); ?></td>
                     <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
                 </tr>
@@ -113,12 +113,12 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 
         <?php
         // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
-        $tot_amount = $od['od_cart_amount'] + $od['od_send_cost'] + $od['od_send_cost2'] - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon'];
+        $tot_price = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2'] - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon'];
         ?>
 
         <dl id="sod_bsk_tot">
             <dt class="sod_bsk_dvr">주문총액</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_amount']); ?> 원</strong></dd>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_price']); ?> 원</strong></dd>
 
             <?php if($od['od_cart_coupon'] > 0) { ?>
             <dt class="sod_bsk_dvr">상품할인</dt>
@@ -146,7 +146,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <?php } ?>
 
             <dt class="sod_bsk_cnt">총계</dt>
-            <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_amount); ?> 원</strong></dd>
+            <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원</strong></dd>
 
             <dt class="sod_bsk_point">포인트</dt>
             <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
@@ -157,30 +157,28 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <div id="sod_fin_view">
         <h2>결제/배송 정보</h2>
         <?php
-        $receipt_amount = $od['od_receipt_amount']
-                        + $od['od_receipt_point']
-                        - $od['od_cancel_amount'];
+        $receipt_price = $od['od_receipt_price']
+                       + $od['od_receipt_point'];
+        $cancel_price = $od['od_cancel_price'];
 
         $misu = true;
 
-        if ($tot_amount - $tot_cancel_amount == $receipt_amount) {
+        if ($tot_price - $cancel_price == $receipt_price) {
             $wanbul = " (완불)";
             $misu = false; // 미수금 없음
         }
         else
         {
-            $wanbul = display_price($receipt_amount);
+            $wanbul = display_price($receipt_price);
         }
 
-        // 120615 : 취소된 값을 두번 빼주는 결과가 되어 코드 수정 (군포돼지님)
-        //$misu_amount = $tot_amount - $tot_cancel_amount - $receipt_amount - $od[od_dc_amount];
-        $misu_amount = $tot_amount - $receipt_amount - $od['od_dc_amount'];
+        $misu_price = $tot_price - $receipt_price - $cancel_price;
 
         // 결제정보처리
-        if($od['od_receipt_amount'] > 0)
-            $od_receipt_amount = display_price($od['od_receipt_amount']);
+        if($od['od_receipt_price'] > 0)
+            $od_receipt_price = display_price($od['od_receipt_price']);
         else
-            $od_receipt_amount = '아직 입금되지 않았거나 입금정보를 입력하지 못하였습니다.';
+            $od_receipt_price = '아직 입금되지 않았거나 입금정보를 입력하지 못하였습니다.';
 
         $app_no_subj = '';
         $disp_bank = true;
@@ -225,10 +223,10 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             </tr>
             <tr>
                 <th scope="row">결제금액</th>
-                <td><?php echo $od_receipt_amount; ?></td>
+                <td><?php echo $od_receipt_price; ?></td>
             </tr>
             <?php
-            if($od['od_receipt_amount'] > 0)
+            if($od['od_receipt_price'] > 0)
             {
             ?>
             <tr>
@@ -301,12 +299,12 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <?php
             }
 
-            if ($od['od_cancel_amount'] > 0)
+            if ($od['od_cancel_price'] > 0)
             {
             ?>
             <tr>
                 <th scope="row">취소/환불 금액</th>
-                <td><?php echo display_price($od['od_cancel_amount']); ?></td>
+                <td><?php echo display_price($od['od_cancel_price']); ?></td>
             </tr>
             <?php
             }
@@ -314,7 +312,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             // 현금영수증 발급을 사용하는 경우에만
             if ($default['de_taxsave_use'] && $default['de_card_pg'] == 'kcp') {
                 // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-                if ($misu_amount == 0 && $od['od_receipt_amount'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
+                if ($misu_price == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
             ?>
             <tr>
                 <th scope="row">현금영수증</th>
@@ -477,19 +475,13 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <ul>
             <li>
                 총 구매액
-                <strong><?php echo display_price($tot_amount); ?></strong>
+                <strong><?php echo display_price($tot_price); ?></strong>
             </li>
             <?php
-            if ($od['od_dc_amount'] > 0) {
-            echo '<li>';
-            echo '할인액'.PHP_EOL;
-            echo '<strong>'.display_price($od['od_dc_amount']).'</strong>';
-            echo '</li>';
-            }
-            if ($misu_amount > 0) {
+            if ($misu_price > 0) {
             echo '<li>';
             echo '미결제액'.PHP_EOL;
-            echo '<strong>'.display_price($misu_amount).'</strong>';
+            echo '<strong>'.display_price($misu_price).'</strong>';
             echo '</li>';
             }
             ?>
@@ -504,8 +496,8 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <h2>주문취소</h2>
         <?php
         // 취소한 내역이 없다면
-        if ($tot_cancel_amount == 0) {
-            if (!$rq_cnt && $od_count1 == $od_count2 && ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_amount'] == 0)) {
+        if ($cancel_price == 0) {
+            if ($od['od_settle_case'] != '가상계좌' || $od['od_receipt_price'] == 0) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
@@ -523,7 +515,6 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <?php
             }
         } else {
-            $misu_amount = $misu_amount - $send_cost;
         ?>
         <p>주문 취소, 반품, 품절된 내역이 있습니다.</p>
         <?php } ?>

@@ -38,7 +38,7 @@ $sql_common = " from {$g4['shop_order_table']}
 
 // 테이블의 전체 레코드수만 얻음
 if ($chk_misu) {
-    $sql  = " select *, "._MISU_QUERY_." $sql_common having misu <= 0 ";
+    $sql  = " select * $sql_common where od_misu <= 0 ";
     $result = sql_query($sql);
     $total_count = mysql_num_rows($result);
 }
@@ -85,7 +85,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </span>
 
     <label for="chk_misu">미수금없음</label>
-    <input type="checkbox" name="chk_misu" value="1" id="chk_misu" <?php echo $chk_misu?"checked='checked'":""; ?> />
+    <input type="checkbox" name="chk_misu" value="1" id="chk_misu" <?php echo $chk_misu?'checked="checked"':''; ?> />
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field">
@@ -103,17 +103,17 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 <section class="cbox">
     <h2>배송내역</h2>
     <ul>
-        <li>주문액은 취소, 반품, 품절, DC가 포함된 금액이 아닙니다.</li>
-        <li>입금액은 환불, 승인취소가 포함된 금액이 아닙니다.</li>
+        <li>주문액은 취소, 반품, 품절이 포함된 금액이 아닙니다.</li>
+        <li>입금액은 환불/취소가 포함된 금액이 아닙니다.</li>
         <li>배송일시, 배송회사는 입력의 편의성을 위하여 기본값으로 설정되어 있습니다. 운송장번호만 없는것이 미배송 주문자료입니다.</li>
     </ul>
 
     <ul class="sort_odr">
         <li><a href="<?php echo title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_name") . "&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_cart_amount",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_receipt_amount",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("misu",1) . "&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_cart_price",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_receipt_price",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></li>
+        <li><a href="<?php echo title_sort("od_misu",1) . "&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_hope_date",1) . "&amp;$qstr1"; ?>">희망배송일<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시<span class="sound_only"> 순 정렬</span></a></li>
         <li><a href="<?php echo title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호<span class="sound_only"> 순 정렬</span></a></li>
@@ -143,10 +143,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </thead>
     <tbody>
     <?php
-    $sql  = " select *, "._MISU_QUERY_."
+    $sql  = " select *
               $sql_common ";
     if ($chk_misu)
-        $sql .= " having  misu <= 0 ";
+        $sql .= " where  od_misu <= 0 ";
     $sql .= "  order by $sort1 $sort2
               limit $from_record, {$config['cf_page_rows']} ";
     $result = sql_query($sql);
@@ -173,9 +173,9 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>
         </td>
         <td class="td_name"><?php echo $row['od_name']; ?></td>
-        <td><?php echo display_price($row['od_cart_amount']); ?></td>
-        <td><?php echo display_price($row['od_receipt_amount']); ?></td>
-        <td><?php echo display_price($row['misu']); ?></td>
+        <td><?php echo display_price($row['od_cart_price']); ?></td>
+        <td><?php echo display_price($row['od_receipt_price']); ?></td>
+        <td><?php echo display_price($row['od_misu']); ?></td>
         <td><?php echo $hope_date; ?></td>
         <td><input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="20" maxlength="19"></td>
         <td>

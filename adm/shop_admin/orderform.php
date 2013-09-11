@@ -86,7 +86,7 @@ if ($default['de_card_test']) {
 // 상품목록
 $sql = " select it_id,
                 it_name,
-                cp_amount,
+                cp_price,
                 ct_notax
            from {$g4['shop_cart_table']}
           where od_id = '{$od['od_id']}'
@@ -108,7 +108,7 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_sodr_list" class="cbox">
     <h2>주문상품 목록</h2>
     <?php echo $pg_anchor; ?>
-    <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($od['od_cart_amount'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></strong>원</p>
+    <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></strong>원</p>
     <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $od['od_hope_date']; ?> (<?php echo get_yoil($od['od_hope_date']); ?>) 입니다.</p><?php } ?>
     <?php if($od['od_mobile']) { ?>
     <p>모바일 쇼핑몰의 주문입니다.</p>
@@ -161,7 +161,7 @@ $pg_anchor = '<ul class="anchor">
             <tbody>
             <?php
             // 상품의 옵션정보
-            $sql = " select ct_id, it_id, ct_price, ct_qty, ct_option, ct_status, cp_amount, ct_stock_use, ct_point_use, ct_send_cost, io_type, io_price
+            $sql = " select ct_id, it_id, ct_price, ct_qty, ct_option, ct_status, cp_price, ct_stock_use, ct_point_use, ct_send_cost, io_type, io_price
                         from {$g4['shop_cart_table']}
                         where od_id = '{$od['od_id']}'
                           and it_id = '{$row['it_id']}'
@@ -174,7 +174,7 @@ $pg_anchor = '<ul class="anchor">
                 else
                     $opt_price = $opt['ct_price'] + $opt['io_price'];
 
-                $ct_amount['소계'] = $opt_price * $opt['ct_qty'];
+                $ct_price['소계'] = $opt_price * $opt['ct_qty'];
                 $ct_point['소계'] = $opt['ct_point'] * $opt['ct_qty'];
             ?>
             <tr>
@@ -190,7 +190,7 @@ $pg_anchor = '<ul class="anchor">
                     <input type="text" name="ct_qty[<?php echo $chk_cnt; ?>]" id="ct_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_qty']; ?>" required class="frm_input required" size="5">
                 </td>
                 <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
-                <td class="td_num"><?php echo number_format($ct_amount['소계']); ?></td>
+                <td class="td_num"><?php echo number_format($ct_price['소계']); ?></td>
                 <td class="td_bignum"><?php echo number_format($ct_point['소계']); ?></td>
                 <td class="td_sendcost_by"><?php echo $opt['ct_send_cost'] ? '착불' : '선불'; ?></td>
                 <td class="td_smallmng"><?php echo get_yn($opt['ct_point_use']); ?></td>
@@ -239,16 +239,16 @@ $pg_anchor = '<ul class="anchor">
 
     <?php
     // 주문금액 = 상품구입금액 + 배송비 + 추가배송비
-    $amount['주문'] = $od['od_cart_amount'] + $od['od_send_cost'] + $od['od_send_cost2'];
+    $amount['주문'] = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2'];
 
     // 입금액 = 결제금액 + 포인트
-    $amount['입금'] = $od['od_receipt_amount'] + $od['od_receipt_point'];
+    $amount['입금'] = $od['od_receipt_price'] + $od['od_receipt_point'];
 
     // 쿠폰금액
     $amount['쿠폰'] = $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'];
 
     // 취소금액
-    $amount['취소'] = $od['od_cancel_amount'];
+    $amount['취소'] = $od['od_cancel_price'];
 
     // 미수금 = 주문금액 - 취소금액 - 입금금액 - 쿠폰금액
     $amount['미수'] = $amount['주문'] - $amount['입금'] - $amount['쿠폰'];
@@ -322,7 +322,7 @@ $pg_anchor = '<ul class="anchor">
         <?php } ?>
         <tr>
             <th scope="row"><?php echo $od['od_settle_case']; ?> 입금액</th>
-            <td><?php echo display_price($od['od_receipt_amount']); ?></td>
+            <td><?php echo display_price($od['od_receipt_price']); ?></td>
         </tr>
         <tr>
             <th scope="row">입금자</th>
@@ -345,7 +345,7 @@ $pg_anchor = '<ul class="anchor">
             </tr>
         <tr>
             <th scope="row"><?php echo $od['od_settle_case']; ?> 결제액</th>
-            <td><?php echo display_price($od['od_receipt_amount']); ?></td>
+            <td><?php echo display_price($od['od_receipt_price']); ?></td>
         </tr>
         <tr>
             <th scope="row">결제 확인일시</th>
@@ -362,7 +362,7 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row" class="sodr_sppay">신용카드 입금액</th>
             <td>
                 <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") {?>0원
-                <?php } else { ?><?php echo display_price($od['od_receipt_amount']); ?>
+                <?php } else { ?><?php echo display_price($od['od_receipt_price']); ?>
                 <?php } ?>
             </td>
         </tr>
@@ -395,7 +395,7 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <tr>
             <th scope="row">취소/환불액</th>
-            <td><?php echo display_price($od['od_cancel_amount']); ?></td>
+            <td><?php echo display_price($od['od_cancel_price']); ?></td>
         </tr>
         <?php
         $sql = " select dl_company, dl_url, dl_tel from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ";
@@ -422,7 +422,7 @@ $pg_anchor = '<ul class="anchor">
         <?php } ?>
         <tr>
             <th scope="row">배송일시</th>
-            <td><?php echo $od['od_invoice_time']; ?></td>
+            <td><?php echo is_null_time($od['od_invoice_time']) ? $od['od_invoice_time'] : ''; ?></td>
         </tr>
         <tr>
             <th scope="row"><label for="od_send_cost">배송비</label></th>
@@ -445,7 +445,7 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <?php
         if ($amount['미수'] == 0) {
-            if ($od['od_receipt_amount'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
+            if ($od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
         ?>
         <tr>
             <th scope="row">현금영수증</th>
@@ -506,9 +506,9 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <?php } ?>
         <tr>
-            <th scope="row"><label for="od_receipt_amount"><?php echo $od['od_settle_case']; ?> 입금액</label></th>
+            <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 입금액</label></th>
             <td>
-                <input type="text" name="od_receipt_amount" value="<?php echo $od['od_receipt_amount']; ?>" id="od_receipt_amount" class="frm_input" size="10"> 원
+                <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input" size="10"> 원
                 <?php
                 if ($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌') {
                     $pg_url = $g4['shop_cardpg'][$default['de_card_pg']];
@@ -544,9 +544,9 @@ $pg_anchor = '<ul class="anchor">
             <td><?php echo $od['od_bank_account']; ?></td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_receipt_amount"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
+            <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
             <td>
-                <input type="text" name="od_receipt_amount" value="<?php echo $od['od_receipt_amount']; ?>" id="od_receipt_amount" class="frm_input"> 원
+                <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input"> 원
                 <?php $pg_url = $g4['shop_cardpg'][$default['de_card_pg']];?>
                 <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
             </td>
@@ -563,9 +563,9 @@ $pg_anchor = '<ul class="anchor">
 
         <?php if ($od['od_settle_case'] == '신용카드') { ?>
         <tr>
-            <th scope="row" class="sodr_sppay"><label for="od_receipt_amount">신용카드 결제액</label></th>
+            <th scope="row" class="sodr_sppay"><label for="od_receipt_price">신용카드 결제액</label></th>
             <td>
-                <input type="text" name="od_receipt_amount" value="<?php echo $od['od_receipt_amount']; ?>" id="od_receipt_amount" class="frm_input" size="10"> 원
+                <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input" size="10"> 원
                 <?php $card_url = $g4['shop_cardpg'][$default['de_card_pg']]; ?>
                 <a href="<?php echo $card_url; ?>" target="_blank">결제대행사</a>
             </td>
@@ -585,9 +585,9 @@ $pg_anchor = '<ul class="anchor">
             <td><input type="text" name="od_receipt_point" value="<?php echo $od['od_receipt_point']; ?>" id="od_receipt_point" class="frm_input" size="10"> 점</td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_cancel_amount">취소/환불 금액</label></th>
+            <th scope="row"><label for="od_cancel_price">취소/환불 금액</label></th>
             <td>
-                <input type="text" name="od_cancel_amount" value="<?php echo $od['od_cancel_amount']; ?>" class="frm_input" size="10"> 원
+                <input type="text" name="od_cancel_price" value="<?php echo $od['od_cancel_price']; ?>" class="frm_input" size="10"> 원
             </td>
         </tr>
         <tr>

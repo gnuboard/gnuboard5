@@ -424,10 +424,10 @@ if(!sql_query(" select pp_id from {$g4['shop_personalpay_table']} limit 1 ", fal
                   `pp_name` VARCHAR(255) NOT NULL DEFAULT '',
                   `pp_content` TEXT NOT NULL,
                   `pp_use` TINYINT(4) NOT NULL DEFAULT '0',
-                  `pp_amount` INT(11) NOT NULL DEFAULT '0',
+                  `pp_price` INT(11) NOT NULL DEFAULT '0',
                   `pp_tno` varchar(255) NOT NULL DEFAULT '',
                   `pp_app_no` varchar(20) NOT NULL DEFAULT '',
-                  `pp_receipt_amount` INT(11) NOT NULL DEFAULT '0',
+                  `pp_receipt_price` INT(11) NOT NULL DEFAULT '0',
                   `pp_settle_case` VARCHAR(255) NOT NULL DEFAULT '',
                   `pp_bank_account` VARCHAR(255) NOT NULL DEFAULT '',
                   `pp_deposit_name` VARCHAR(255) NOT NULL DEFAULT '',
@@ -479,9 +479,38 @@ if(!sql_query(" select de_settle_min_point from {$g4['shop_default_table']} ", f
 if(!sql_query(" select od_cart_count from {$g4['shop_order_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
                     ADD `od_cart_count` int(11) NOT NULL DEFAULT '0' AFTER `od_memo`,
-                    ADD `od_cart_amount` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_count`,
+                    ADD `od_cart_price` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_count`,
                     ADD `od_cart_coupon` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_amount`,
-                    ADD `od_cancel_amount` int(11) NOt NULL DEFAULT '0' AFTER `od_receipt_amount`,
+                    ADD `od_cancel_price` int(11) NOt NULL DEFAULT '0' AFTER `od_receipt_amount`,
                     ADD `od_status` varchar(255) NOT NULL DEFAULT '' AFTER `od_mod_history` ", true);
+}
+
+// order amount 필드명 수정
+if(sql_query(" select od_cart_amount from {$g4['shop_order_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    CHANGE `od_cart_amount` `od_cart_price` int(11) NOT NULL DEFAULT '0',
+                    CHANGE `od_receipt_amount` `od_receipt_price` int(11) NOT NULL DEFAULT '0',
+                    CHANGE `od_cancel_amount` `od_cancel_price` int(11) NOT NULL DEFAULT '0' ", true);
+}
+
+// amount 필드명 수정
+if(sql_query(" select cp_amount from {$g4['shop_cart_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_personalpay_table']}`
+                    CHANGE `pp_amount` `pp_price` int(11) NOT NULL DEFAULT '0',
+                    CHANGE `pp_receipt_amount` `pp_receipt_price` int(11) NOT NULL DEFAULT '0' ", true);
+    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+                    CHANGE `cp_amount` `cp_price` int(11) NOT NULL DEFAULT '0' ", true);
+    sql_query(" ALTER TABLE `{$g4['shop_coupon_table']}`
+                    CHANGE `cp_amount` `cp_price` int(11) NOT NULL DEFAULT '0' ", true);
+    sql_query(" ALTER TABLE `{$g4['shop_sendcost_table']}`
+                    CHANGE `sc_amount` `sc_price` int(11) NOT NULL DEFAULT '0' ", true);
+    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+                    CHANGE `it_sc_amount` `it_sc_price` int(11) NOT NULL DEFAULT '0' ", true);
+}
+
+// 미수 필드 추가
+if(!sql_query(" select od_misu from {$g4['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_misu` int(11) NOT NULL DEFAULT '0' AFTER `od_coupon` ", true);
 }
 ?>

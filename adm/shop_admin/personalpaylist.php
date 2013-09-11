@@ -129,9 +129,9 @@ $colspan = 8;
         </td>
         <td class="spp_list_name"><?php echo $row['pp_name']; ?></td>
         <td class="td_odrnum3 spp_list_id"><?php echo $od_id; ?></td>
-        <td class="td_bignum"><?php echo number_format($row['pp_amount']); ?></td>
-        <td class="td_bignum"><?php echo number_format($row['pp_receipt_amount']); ?></td>
-        <td class="td_bignum"><?php echo number_format($row['pp_amount'] - $row['pp_receipt_amount']); ?></td>
+        <td class="td_bignum"><?php echo number_format($row['pp_price']); ?></td>
+        <td class="td_bignum"><?php echo number_format($row['pp_receipt_price']); ?></td>
+        <td class="td_bignum"><?php echo number_format($row['pp_price'] - $row['pp_receipt_price']); ?></td>
         <td class="td_payby"><?php echo $row['pp_settle_case']; ?></td>
         <td class="td_date"><?php echo is_null_time($row['pp_receipt_time']) ? '' : substr($row['pp_receipt_time'], 2, 8); ?></td>
         <td class="td_boolean"><?php echo $row['pp_use'] ? '예' : '아니오'; ?></td>

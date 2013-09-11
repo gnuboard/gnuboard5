@@ -898,10 +898,10 @@ $(function(){
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="it_sc_amount">기본배송비</label></th>
+            <th scope="row"><label for="it_sc_price">기본배송비</label></th>
             <td>
                 <?php echo help("무료배송 이외의 설정에 적용되는 배송비 금액입니다."); ?>
-                <input type="text" name="it_sc_amount" value="<?php echo $it['it_sc_amount']; ?>" id="it_sc_amount" class="frm_input" size="8"> 원
+                <input type="text" name="it_sc_price" value="<?php echo $it['it_sc_price']; ?>" id="it_sc_price" class="frm_input" size="8"> 원
             </td>
         </tr>
         <tr id="sc_con_minimum">
@@ -1426,7 +1426,7 @@ function fitemformcheck(f)
     }
 
     if(f.it_sc_type.value != "0") {
-        if(!f.it_sc_amount.value || f.it_sc_amount.value == "0") {
+        if(!f.it_sc_price.value || f.it_sc_price.value == "0") {
             alert("기본배송비를 입력해 주십시오.");
             return false;
         }
