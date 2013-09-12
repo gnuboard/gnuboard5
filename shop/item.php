@@ -79,7 +79,7 @@ else
 // 분류 위치
 // HOME > 1단계 > 2단계 ... > 6단계 분류
 $ca_id = $it['ca_id'];
-include G4_SHOP_PATH.'/navigation1.inc.php';
+include G4_SHOP_PATH.'/navigation.inc.php';
 
 // 이 분류에 속한 하위분류 출력
 include G4_SHOP_PATH.'/listcategory.inc.php';
