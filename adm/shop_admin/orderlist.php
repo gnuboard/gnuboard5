@@ -63,7 +63,8 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select *
+$sql  = " select *,
+            (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
            $sql_common
            order by $sort1 $sort2
            limit $from_record, $rows ";
@@ -132,7 +133,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <li><a href="<?php echo title_sort("od_misu", 1)."&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
     </ul>
 
-    주문상태 : 
+    주문상태 :
     <ul id="sort_sodr" class="sort_odr">
         <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G4_OD_STATUS_ORDER; ?>"><?php echo G4_OD_STATUS_ORDER; ?></a></li>
         <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G4_OD_STATUS_SETTLE; ?>"><?php echo G4_OD_STATUS_SETTLE; ?></a></li>
@@ -205,10 +206,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             </a>
         </td>
         <td class="td_sodr_cnt"><b><?php echo $row['od_cart_count']; ?></b>건<?php if($od_cnt) { ?><br>누적 <?php echo $od_cnt; ?>건<?php } ?></td>
-        <td class="td_sodr_sum"><?php echo number_format($row['od_cart_price']); ?></td>
+        <td class="td_sodr_sum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td><?php echo number_format($row['od_receipt_price']); ?></td>
         <td><?php echo number_format($row['od_cancel_price']); ?></td>
-        <td class="td_sodr_sum"><?php echo number_format($row['couponamount']); ?></td>
+        <td class="td_sodr_sum"><?php echo number_format($row['couponprice']); ?></td>
         <td class="td_sodr_nonpay"><?php echo number_format($row['od_misu']); ?></td>
         <td><?php echo $s_receipt_way; ?></td>
         <td class="td_mng">
@@ -221,7 +222,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         $tot_orderprice    += $row['od_cart_price'];
         $tot_ordercancel   += $row['od_cancel_price'];
         $tot_receiptprice  += $row['od_receipt_price'];
-        $tot_couponamount  += $row['couponamount'];
+        $tot_couponprice   += $row['couponprice'];
         $tot_misu          += $row['od_misu'];
     }
     mysql_free_result($result);
@@ -236,7 +237,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <td><?php echo number_format($tot_orderprice); ?></td>
         <td><?php echo number_format($tot_receiptprice); ?></td>
         <td><?php echo number_format($tot_ordercancel); ?></td>
-        <td><?php echo number_format($tot_couponamount); ?></td>
+        <td><?php echo number_format($tot_couponprice); ?></td>
         <td><?php echo number_format($tot_misu); ?></td>
         <td colspan="2"></td>
     </tr>

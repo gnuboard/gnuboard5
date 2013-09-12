@@ -18,7 +18,8 @@ $sql = " select od_id,
                 od_receipt_point,
                 od_cancel_price,
                 od_misu,
-                (od_cart_coupon + od_coupon + od_send_coupon) as couponamount
+                (od_cart_price + od_send_cost + od_send_cost2) as orderprice,
+                (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
            from {$g4['shop_order_table']}
           where SUBSTRING(od_time,1,10) = '$date'
           order by od_id desc ";
@@ -63,8 +64,8 @@ $result = sql_query($sql);
         <tr>
             <td class="td_odrnum2"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
             <td class="td_name"><?php echo $href; ?><?php echo $row['od_name']; ?></a></td>
-            <td class="td_num"><?php echo number_format($row['od_cart_price']); ?></td>
-            <td class="td_num"><?php echo number_format($row['couponamount']); ?></td>
+            <td class="td_num"><?php echo number_format($row['orderprice']); ?></td>
+            <td class="td_num"><?php echo number_format($row['couponprice']); ?></td>
             <td class="td_num"><?php echo number_format($receipt_bank); ?></td>
             <td class="td_num"><?php echo number_format($receipt_card); ?></td>
             <td class="td_num"><?php echo number_format($row['od_receipt_point']); ?></td>
@@ -72,9 +73,9 @@ $result = sql_query($sql);
             <td class="td_num"><?php echo number_format($row['od_misu']); ?></td>
         </tr>
     <?php
-        $tot['orderprice']    += $row['od_cart_price'];
-        $tot['ordercancel']   += $row1['od_cancel_price'];
-        $tot['coupon']        += $row['couponamount'] ;
+        $tot['orderprice']    += $row['orderprice'];
+        $tot['ordercancel']   += $row['od_cancel_price'];
+        $tot['coupon']        += $row['couponprice'] ;
         if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
             $tot['receipt_bank']  += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')

@@ -41,7 +41,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     </td>
     <td><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
     <td class="td_num"><?php echo $row['od_cart_count']; ?></td>
-    <td class="td_bignum"><?php echo display_price($row['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></td>
+    <td class="td_bignum"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
     <td class="td_bignum"><?php echo display_price($row['couponprice']); ?></td>
     <td class="td_bignum"><?php echo display_price($row['od_receipt_price']); ?></td>
     <td class="td_bignum"><?php echo display_price($row['od_misu']); ?></td>

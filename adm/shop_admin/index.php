@@ -119,7 +119,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_odrnum2"><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
         <td class="td_name"><?php echo $name; ?></td>
-        <td class="td_bignum"><?php echo display_price($row['orderamount']); ?></td>
+        <td class="td_bignum"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td class="td_payby"><?php echo $settle_method; ?></td>
         <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
     </tr>
@@ -131,7 +131,7 @@ $pg_anchor = '<ul class="anchor">
     </table>
 
     <div class="btn_ft">
-        <a href="./orderlist.php?sort1=receiptamount&amp;sort2=asc">미입금 주문내역 더보기</a>
+        <a href="./orderlist.php?sort1=od_receipt_price&amp;sort2=asc">미입금 주문내역 더보기</a>
     </div>
 </section>
 
