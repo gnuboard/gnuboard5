@@ -50,62 +50,48 @@ if($_POST['cp_method'] == 0) {
 }
 
 if($w == '') {
-    $arr_mb_id = array();
-
     if($_POST['chk_all_mb']) {
-        $sql = " select mb_id from {$g4['member_table']} where mb_id <> '{$config['cf_admin']}' and mb_leave_date = '' and mb_intercept_date = '' ";
-        $result = sql_query($sql);
-        for($i=0; $row=sql_fetch_array($result); $i++) {
-            $arr_mb_id[] = $row['mb_id'];
-        }
-
-        if($i == 0)
-            alert('관리자를 제외한 쿠폰 발급 가능 회원이 없습니다.');
+        $mb_id = '전체회원';
     } else {
-        if($_POST['mb_id'] == $config['cf_admin'])
-            alert('관리자를 제외한 회원의 아이디를 입력해 주십시오.');
-
-        $sql2 = " select mb_id from {$g4['member_table']} where mb_id = '{$_POST['mb_id']}' and mb_leave_date = '' and mb_intercept_date = '' ";
-        $row2 = sql_fetch($sql2);
-        if(!$row2['mb_id'])
+        $sql = " select mb_id from {$g4['member_table']} where mb_id = '{$_POST['mb_id']}' and mb_leave_date = '' and mb_intercept_date = '' ";
+        $row = sql_fetch($sql);
+        if(!$row['mb_id'])
             alert('입력하신 회원아이디는 존재하지 않거나 탈퇴 또는 차단된 회원아이디입니다.');
 
-        $arr_mb_id[] = $_POST['mb_id'];
+        $mb_id = $_POST['mb_id'];
     }
 
-    $mb_id_count = count($arr_mb_id);
+    $j = 0;
+    do {
+        $cp_id = get_coupon_id();
 
-    for($i=0; $i<$mb_id_count; $i++) {
-        $mb_id = $arr_mb_id[$i];
+        $sql3 = " select count(*) as cnt from {$g4['shop_coupon_table']} where cp_id = '$cp_id' ";
+        $row3 = sql_fetch($sql3);
 
-        $j = 0;
-        do {
-            $cp_id = get_coupon_id();
+        if(!$row3['cnt'])
+            break;
+        else {
+            if($j > 20)
+                die('Coupon ID Error');
+        }
+    } while(1);
 
-            $sql3 = " select count(*) as cnt from {$g4['shop_coupon_table']} where cp_id = '$cp_id' ";
-            $row3 = sql_fetch($sql3);
+    $sql = " INSERT INTO {$g4['shop_coupon_table']}
+                ( cp_id, cp_subject, cp_method, cp_target, mb_id, cp_start, cp_end, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum, cp_used, cp_datetime )
+            VALUES
+                ( '$cp_id', '$cp_subject', '$cp_method', '$cp_target', '$mb_id', '$cp_start', '$cp_end', '$cp_type', '$cp_price', '$cp_trunc', '$cp_minimum', '$cp_maximum', '$cp_used', '".G4_TIME_YMDHIS."' ) ";
 
-            if(!$row3['cnt'])
-                break;
-            else {
-                if($j > 20)
-                    die('Coupon ID Error');
-            }
-        } while(1);
-
-        $sql = " INSERT INTO {$g4['shop_coupon_table']}
-                    ( cp_id, cp_subject, cp_method, cp_target, mb_id, cp_start, cp_end, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum, cp_used, cp_datetime )
-                VALUES
-                    ( '$cp_id', '$cp_subject', '$cp_method', '$cp_target', '$mb_id', '$cp_start', '$cp_end', '$cp_type', '$cp_price', '$cp_trunc', '$cp_minimum', '$cp_maximum', '$cp_used', '".G4_TIME_YMDHIS."' ) ";
-
-        sql_query($sql);
-    }
+    sql_query($sql);
 } else if($w == 'u') {
     $sql = " select * from {$g4['shop_coupon_table']} where cp_id = '$cp_id' ";
     $cp = sql_fetch($sql);
 
     if(!$cp['cp_id'])
         alert('쿠폰정보가 존해하지 않습니다.', './couponlist.php');
+
+    if($_POST['chk_all_mb']) {
+        $mb_id = '전체회원';
+    }
 
     $sql = " update {$g4['shop_coupon_table']}
                 set cp_subject  = '$cp_subject',

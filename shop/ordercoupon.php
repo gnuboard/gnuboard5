@@ -9,11 +9,10 @@ $price = $_POST['price'];
 // 쿠폰정보
 $sql = " select *
             from {$g4['shop_coupon_table']}
-            where mb_id = '{$member['mb_id']}'
+            where mb_id IN ( '{$member['mb_id']}', '전체회원' )
               and cp_method = '2'
               and cp_start <= '".G4_TIME_YMD."'
               and cp_end >= '".G4_TIME_YMD."'
-              and cp_used = '0'
               and cp_minimum <= '$price' ";
 $result = sql_query($sql);
 $count = mysql_num_rows($result);
@@ -34,6 +33,10 @@ $count = mysql_num_rows($result);
     <tbody>
     <?php
     for($i=0; $row=sql_fetch_array($result); $i++) {
+        // 사용한 쿠폰인지 체크
+        if(is_used_coupon($member['mb_id'], $row['cp_id']))
+            continue;
+
         $dc = 0;
         if($row['cp_type']) {
             $dc = floor(($price * ($row['cp_price'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];

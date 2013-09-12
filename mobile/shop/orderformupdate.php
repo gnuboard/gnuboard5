@@ -86,13 +86,16 @@ if($is_member) {
         $sql = " select cp_id, cp_method, cp_target, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g4['shop_coupon_table']}
                     where cp_id = '$cid'
-                      and mb_id = '{$member['mb_id']}'
+                      and mb_id IN ( '{$member['mb_id']}', '전체회원' )
                       and cp_start <= '".G4_TIME_YMD."'
                       and cp_end >= '".G4_TIME_YMD."'
-                      and cp_used = '0'
                       and cp_method IN ( 0, 1 ) ";
         $cp = sql_fetch($sql);
         if(!$cp['cp_id'])
+            continue;
+
+        // 사용한 쿠폰인지
+        if(is_used_coupon($member['mb_id'], $cp['cp_id']))
             continue;
 
         // 분류할인인지
@@ -155,8 +158,11 @@ if($is_member) {
                       and cp_method = '2' ";
         $cp = sql_fetch($sql);
 
+        // 사용한 쿠폰인지
+        $cp_used = is_used_coupon($member['mb_id'], $cp['cp_id']);
+
         $dc = 0;
-        if($cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_price)) {
+        if(!$cp_used && $cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_price)) {
             if($cp['cp_type']) {
                 $dc = floor(($tot_od_price * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
             } else {
@@ -198,8 +204,11 @@ if($is_member && $send_cost > 0) {
                       and cp_method = '3' ";
         $cp = sql_fetch($sql);
 
+        // 사용한 쿠폰인지
+        $cp_used = is_used_coupon($member['mb_id'], $cp['cp_id']);
+
         $dc = 0;
-        if($cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_price)) {
+        if(!$cp_used && $cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_price)) {
             if($cp['cp_type']) {
                 $dc = floor(($send_cost * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
             } else {
@@ -473,13 +482,14 @@ if($is_member) {
     for($i=0; $i<$it_cp_cnt; $i++) {
         $cid = $_POST['cp_id'][$i];
         $cp_it_id = $_POST['it_id'][$i];
-        $sql = " update {$g4['shop_coupon_table']}
-                    set od_id = '$od_id',
-                        cp_used = '1',
-                        cp_used_time = '".G4_TIME_YMDHIS."'
-                    where cp_id = '$cid'
-                      and mb_id = '{$member['mb_id']}'
-                      and cp_method IN ( 0, 1 ) ";
+        $cp_prc = (int)$arr_it_cp_prc[$cp_it_id];
+
+        $sql = " insert into {$g4['shop_coupon_log_table']}
+                    set cp_id       = '$cid',
+                        mb_id       = '{$member['mb_id']}',
+                        od_id       = '$od_id',
+                        cp_price    = '$cp_prc',
+                        cl_datetime = '".G4_TIME_YMDHIS."' ";
         sql_query($sql);
 
         // 쿠폰사용금액 cart에 기록
@@ -495,24 +505,22 @@ if($is_member) {
     }
 
     if($_POST['od_cp_id']) {
-        $sql = " update {$g4['shop_coupon_table']}
-                    set od_id = '$od_id',
-                        cp_used = '1',
-                        cp_used_time = '".G4_TIME_YMDHIS."'
-                    where cp_id = '{$_POST['od_cp_id']}'
-                      and mb_id = '{$member['mb_id']}'
-                      and cp_method = '2' ";
+        $sql = " insert into {$g4['shop_coupon_log_table']}
+                    set cp_id       = '{$_POST['od_cp_id']}',
+                        mb_id       = '{$member['mb_id']}',
+                        od_id       = '$od_id',
+                        cp_price    = '$tot_od_cp_price',
+                        cl_datetime = '".G4_TIME_YMDHIS."' ";
         sql_query($sql);
     }
 
     if($_POST['sc_cp_id']) {
-        $sql = " update {$g4['shop_coupon_table']}
-                    set od_id = '$od_id',
-                        cp_used = '1',
-                        cp_used_time = '".G4_TIME_YMDHIS."'
-                    where cp_id = '{$_POST['sc_cp_id']}'
-                      and mb_id = '{$member['mb_id']}'
-                      and cp_method = '3' ";
+        $sql = " insert into {$g4['shop_coupon_log_table']}
+                    set cp_id       = '{$_POST['sc_cp_id']}',
+                        mb_id       = '{$member['mb_id']}',
+                        od_id       = '$od_id',
+                        cp_price    = '$tot_sc_cp_price',
+                        cl_datetime = '".G4_TIME_YMDHIS."' ";
         sql_query($sql);
     }
 }
