@@ -810,6 +810,10 @@ function get_intall_file()
                 <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
             </td>
         </tr>
+        <tr>
+            <th scope="row">결제할인금액</th>
+            <td><span id="od_cp_price">0</span>원</td>
+        </tr>
         <?php } ?>
         <?php if($sc_cnt > 0) { ?>
         <tr>
@@ -818,6 +822,10 @@ function get_intall_file()
                 <input type="hidden" name="sc_cp_id" value="">
                 <button type="button" id="sc_coupon_btn" class="btn_frmline">쿠폰적용</button>
             </td>
+        </tr>
+        <tr>
+            <th scope="row">배송비할인금액</th>
+            <td><span id="sc_cp_price">0</span>원</td>
         </tr>
         <?php } ?>
         <tr>
@@ -1145,6 +1153,9 @@ $(function() {
         $("input[name=od_price]").val(od_price - price);
         $("input[name=od_cp_id]").val(cp_id);
         $("input[name=od_coupon]").val(price);
+        $("input[name=od_send_coupon]").val(0);
+        $("#od_cp_price").text(number_format(String(price)));
+        $("#sc_cp_price").text(0);
         calculate_order_price();
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("쿠폰변경").focus();
@@ -1164,6 +1175,8 @@ $(function() {
         $("input[name=sc_cp_id]").val("");
         $("input[name=od_coupon]").val(0);
         $("input[name=od_send_coupon]").val(0);
+        $("#od_cp_price").text(0);
+        $("#sc_cp_price").text(0);
         calculate_order_price();
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("쿠폰적용").focus();
@@ -1201,6 +1214,7 @@ $(function() {
 
         $("input[name=sc_cp_id]").val(cp_id);
         $("input[name=od_send_coupon]").val(price);
+        $("#sc_cp_price").text(number_format(String(price)));
         calculate_order_price();
         $("#sc_coupon_frm").remove();
         $("#sc_coupon_btn").text("쿠폰변경").focus();
@@ -1215,6 +1229,7 @@ $(function() {
 
     $("#sc_coupon_cancel").live("click", function() {
         $("input[name=od_send_coupon]").val(0);
+        $("#sc_cp_price").text(0);
         calculate_order_price();
         $("#sc_coupon_frm").remove();
         $("#sc_coupon_btn").text("쿠폰적용").focus();
