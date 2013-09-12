@@ -261,7 +261,6 @@ $sql_common = " ca_id               = '$ca_id',
                 ca_id3              = '$ca_id3',
                 it_name             = '$it_name',
                 it_mobile_name      = '$it_mobile_name',
-                it_gallery          = '$it_gallery',
                 it_maker            = '$it_maker',
                 it_origin           = '$it_origin',
                 it_brand            = '$it_brand',
@@ -421,7 +420,6 @@ if($supply_count) {
 
 // 동일 분류내 상품 동일 옵션 적용
 $ca_fields = '';
-if(is_checked('chk_ca_it_gallery'))             $ca_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_ca_it_order'))               $ca_fields .= " , it_order = '$it_order' ";
 if(is_checked('chk_ca_it_type'))                $ca_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
 if(is_checked('chk_ca_it_maker'))               $ca_fields .= " , it_maker = '$it_maker' ";
@@ -439,7 +437,6 @@ if(is_checked('chk_ca_it_point'))               $ca_fields .= " , it_point = '$i
 if(is_checked('chk_ca_it_point_type'))          $ca_fields .= " , it_point_type = '$it_point_type' ";
 if(is_checked('chk_ca_it_stock_qty'))           $ca_fields .= " , it_stock_qty = '$it_stock_qty' ";
 if(is_checked('chk_ca_it_sendcost'))            $ca_fields .= " , it_sc_type = '$it_sc_type', it_sc_method = '$it_sc_method', it_sc_price = '$it_sc_price', it_sc_minimum = '$it_sc_minimum', it_sc_qty = '$it_sc_qty' ";
-if(is_checked('chk_ca_it_gallery'))             $ca_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_ca_it_head_html'))           $ca_fields .= " , it_head_html = '$it_head_html' ";
 if(is_checked('chk_ca_it_tail_html'))           $ca_fields .= " , it_tail_html = '$it_tail_html' ";
 if(is_checked('chk_ca_it_mobile_head_html'))    $ca_fields .= " , it_mobile_head_html = '$it_mobile_head_html' ";
@@ -455,7 +452,6 @@ if($ca_fields) {
 
 // 모든 상품 동일 옵션 적용
 $all_fields = '';
-if(is_checked('chk_all_it_gallery'))             $all_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_all_it_order'))               $all_fields .= " , it_order = '$it_order' ";
 if(is_checked('chk_all_it_type'))                $all_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
 if(is_checked('chk_all_it_maker'))               $all_fields .= " , it_maker = '$it_maker' ";
@@ -473,7 +469,6 @@ if(is_checked('chk_all_it_point'))               $all_fields .= " , it_point = '
 if(is_checked('chk_all_it_point_type'))          $all_fields .= " , it_point_type = '$it_point_type' ";
 if(is_checked('chk_all_it_stock_qty'))           $all_fields .= " , it_stock_qty = '$it_stock_qty' ";
 if(is_checked('chk_all_it_sendcost'))            $all_fields .= " , it_sc_type = '$it_sc_type', it_sc_method = '$it_sc_method', it_sc_price = '$it_sc_price', it_sc_minimum = '$it_sc_minimum', it_sc_qty = '$it_sc_qty' ";
-if(is_checked('chk_all_it_gallery'))             $all_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_all_it_head_html'))           $all_fields .= " , it_head_html = '$it_head_html' ";
 if(is_checked('chk_all_it_tail_html'))           $all_fields .= " , it_tail_html = '$it_tail_html' ";
 if(is_checked('chk_all_it_mobile_head_html'))    $all_fields .= " , it_mobile_head_html = '$it_mobile_head_html' ";

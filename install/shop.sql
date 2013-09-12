@@ -387,7 +387,6 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
   `ca_id3` varchar(255) NOT NULL DEFAULT '',
   `it_name` varchar(255) NOT NULL DEFAULT '',
   `it_mobile_name` varchar(255) NOT NULL DEFAULT '',
-  `it_gallery` tinyint(4) NOT NULL DEFAULT '0',
   `it_maker` varchar(255) NOT NULL DEFAULT '',
   `it_origin` varchar(255) NOT NULL DEFAULT '',
   `it_brand` varchar(255) NOT NULL DEFAULT '',

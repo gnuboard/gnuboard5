@@ -180,8 +180,6 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-
-        $gallery = $row['it_gallery'] ? 'Y' : '';
     ?>
     <tr>
         <td rowspan="2">

@@ -1324,7 +1324,7 @@ function relation_item($it_id, $width, $height, $rows=3)
     if(!$it_id)
         return $str;
 
-    $sql = " select b.it_id, b.it_name, b.it_price, b.it_tel_inq, b.it_gallery from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id ) where a.it_id = '$it_id' order by ir_no asc limit 0, $rows ";
+    $sql = " select b.it_id, b.it_name, b.it_price, b.it_tel_inq from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on ( a.it_id2 = b.it_id ) where a.it_id = '$it_id' order by ir_no asc limit 0, $rows ";
     $result = sql_query($sql);
 
     for($i=0; $row=sql_fetch_array($result); $i++) {
@@ -1334,12 +1334,9 @@ function relation_item($it_id, $width, $height, $rows=3)
         }
 
         $it_name = get_text($row['it_name']); // 상품명
-        $it_price = ''; // 상품가격
-        if(!$row['it_gallery']) {
-            $it_price = get_price($row);
-            if(!$row['it_tel_inq'])
-                $it_price = display_price($it_price);
-        }
+        $it_price = get_price($row); // 상품가격
+        if(!$row['it_tel_inq'])
+            $it_price = display_price($it_price);
 
         $img = get_it_image($row['it_id'], $width, $height);
 
@@ -1355,30 +1352,6 @@ function relation_item($it_id, $width, $height, $rows=3)
 // 상품이미지에 유형 아이콘 출력
 function item_icon($it)
 {
-    /*
-    $icon = '';
-
-    if($it['it_gallery']) // sold out
-        $icon .= '<img src="'.G4_URL.'/img/shop/icon_soldout.gif" alt="품절" class="sct_icon_soldout">';
-
-    if($it['it_type1'])
-        $icon .= '<img src="'.G4_URL.'/img/shop/icon_new.gif" alt="최신상품" class="sct_icon_new">';
-
-    if($it['it_type2'])
-        $icon .= '<img src="'.G4_URL.'/img/shop/icon_hit.gif" alt="히트상품" class="sct_icon_hit">';
-
-    if($it['it_type3'])
-        $icon .= '<img src="'.G4_URL.'/img/shop/icon_rec.gif" alt="추천상품" class="sct_icon_rec">';
-
-    if($it['it_type4'])
-        $icon .= '<img src="'.G4_URL.'/img/shop/icon_best.gif" alt="인기상품" class="sct_icon_best">';
-
-    if($it['it_type5'])
-        $icon .= '<img src="'.G4_URL.'/img/shop/icon_discount.gif" alt="할인상품" class="sct_icon_discount">';
-
-    return $icon;
-    */
-
     $icon = '<span class="sit_icon">';
     // 품절
     $stock = get_it_stock_qty($it['it_id']);

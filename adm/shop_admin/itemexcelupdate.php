@@ -73,7 +73,7 @@ if($_FILES['excelfile']['tmp_name']) {
     $comma = '';
 
     $sql = " INSERT INTO {$g4['shop_item_table']}
-                  ( it_id, ca_id, ca_id2, ca_id3, it_name, it_gallery, it_maker, it_origin, it_brand, it_model, it_type1, it_type2, it_type3, it_type4, it_type5, it_basic, it_explan, it_mobile_explan, it_explan_html, it_cust_price, it_price, it_point, it_sell_email, it_use, it_stock_qty, it_time, it_ip, it_order, it_tel_inq, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10 )
+                  ( it_id, ca_id, ca_id2, ca_id3, it_name, it_maker, it_origin, it_brand, it_model, it_type1, it_type2, it_type3, it_type4, it_type5, it_basic, it_explan, it_mobile_explan, it_explan_html, it_cust_price, it_price, it_point, it_sell_email, it_use, it_stock_qty, it_time, it_ip, it_order, it_tel_inq, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10 )
                 VALUES ";
 
     for ($i = 3; $i <= $data->sheets[0]['numRows']; $i++) {
@@ -84,7 +84,6 @@ if($_FILES['excelfile']['tmp_name']) {
         $ca_id2             = addslashes($data->sheets[0]['cells'][$i][3]);
         $ca_id3             = addslashes($data->sheets[0]['cells'][$i][4]);
         $it_name            = addslashes($data->sheets[0]['cells'][$i][5]);
-        $it_gallery         = addslashes($data->sheets[0]['cells'][$i][6]);
         $it_maker           = addslashes($data->sheets[0]['cells'][$i][7]);
         $it_origin          = addslashes($data->sheets[0]['cells'][$i][8]);
         $it_brand           = addslashes($data->sheets[0]['cells'][$i][9]);
@@ -141,7 +140,7 @@ if($_FILES['excelfile']['tmp_name']) {
             continue;
         }
 
-        $sql .= $comma." ( '$it_id', '$ca_id', '$ca_id2', '$ca_id3', '$it_name', '$it_gallery', '$it_maker', '$it_origin', '$it_brand', '$it_model', '$it_type1', '$it_type2', '$it_type3', '$it_type4', '$it_type5', '$it_basic', '$it_explan', '$it_mobile_explan', '1', '$it_cust_price', '$it_price', '$it_point', '$it_sell_email', '$it_use', '$it_stock_qty', '".G4_TIME_YMDHIS."', '".$_SERVER['REMOTE_ADDR']."', '$it_order', '$it_tel_inq', '$it_img1', '$it_img2', '$it_img3', '$it_img4', '$it_img5', '$it_img6', '$it_img7', '$it_img8', '$it_img9', '$it_img10' ) ";
+        $sql .= $comma." ( '$it_id', '$ca_id', '$ca_id2', '$ca_id3', '$it_name', '$it_maker', '$it_origin', '$it_brand', '$it_model', '$it_type1', '$it_type2', '$it_type3', '$it_type4', '$it_type5', '$it_basic', '$it_explan', '$it_mobile_explan', '1', '$it_cust_price', '$it_price', '$it_point', '$it_sell_email', '$it_use', '$it_stock_qty', '".G4_TIME_YMDHIS."', '".$_SERVER['REMOTE_ADDR']."', '$it_order', '$it_tel_inq', '$it_img1', '$it_img2', '$it_img3', '$it_img4', '$it_img5', '$it_img6', '$it_img7', '$it_img8', '$it_img9', '$it_img10' ) ";
 
         $comma = ' , ';
         $succ_count++;
