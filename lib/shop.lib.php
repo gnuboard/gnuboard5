@@ -1603,6 +1603,22 @@ function get_order_misu($od_id)
 
     return $od['misu'];
 }
+
+// 쿠폰 사용체크
+function is_used_coupon($mb_id, $cp_id)
+{
+    global $g4;
+
+    $used = false;
+
+    $sql = " select count(*) as cnt from {$g4['shop_coupon_log_table']} where mb_id = '$mb_id' and cp_id = '$cp_id' ";
+    $row = sql_fetch($sql);
+
+    if($row['cnt'])
+        $used = true;
+
+    return $used;
+}
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝
 //==============================================================================

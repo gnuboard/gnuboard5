@@ -145,11 +145,11 @@ ob_start();
         // 쿠폰
         if($is_member) {
             $cp_button = '';
+            $cp_count = 0;
 
-            $sql = " select count(*) as cnt
+            $sql = " select cp_id
                         from {$g4['shop_coupon_table']}
-                        where mb_id = '{$member['mb_id']}'
-                          and cp_used = '0'
+                        where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                           and cp_start <= '".G4_TIME_YMD."'
                           and cp_end >= '".G4_TIME_YMD."'
                           and cp_minimum <= '$sell_price'
@@ -158,9 +158,16 @@ ob_start();
                                 OR
                                 ( cp_method = '1' and ( cp_target IN ( '{$row['ca_id']}', '{$row['ca_id2']}', '{$row['ca_id3']}' ) ) )
                               ) ";
-            $cp = sql_fetch($sql);
+            $res = sql_query($sql);
 
-            if($cp['cnt'])
+            for($k=0; $cp=sql_fetch_array($res); $k++) {
+                if(is_used_coupon($member['mb_id'], $cp['cp_id']))
+                    continue;
+
+                $cp_count++;
+            }
+
+            if($cp_count)
                 $cp_button = '<button type="button" class="it_coupon_btn btn_frmline">적용</button>';
         }
     ?>
@@ -514,29 +521,40 @@ ob_end_clean();
     </section>
 
     <?php
+    $oc_cnt = $sc_cnt = 0;
     if($is_member) {
         // 주문쿠폰
-        $sql = " select count(*) as cnt
+        $sql = " select cp_id
                     from {$g4['shop_coupon_table']}
-                    where mb_id = '{$member['mb_id']}'
+                    where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                       and cp_method = '2'
                       and cp_start <= '".G4_TIM_YMD."'
-                      and cp_end >= '".G4_TIME_YMD."'
-                      and cp_used = '0' ";
-        $row = sql_fetch($sql);
-        $oc_cnt = $row['cnt'];
+                      and cp_end >= '".G4_TIME_YMD."' ";
+        $res = sql_query($sql);
+
+        for($k=0; $cp=sql_fetch_array($res); $k++) {
+            if(is_used_coupon($member['mb_id'], $cp['cp_id']))
+                continue;
+
+            $oc_cnt++;
+        }
 
         if($send_cost > 0) {
             // 배송비쿠폰
-            $sql = " select count(*) as cnt
+            $sql = " select cp_id
                         from {$g4['shop_coupon_table']}
-                        where mb_id = '{$member['mb_id']}'
+                        where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                           and cp_method = '3'
                           and cp_start <= '".G4_TIM_YMD."'
-                          and cp_end >= '".G4_TIME_YMD."'
-                          and cp_used = '0' ";
-            $row = sql_fetch($sql);
-            $sc_cnt = $row['cnt'];
+                          and cp_end >= '".G4_TIME_YMD."' ";
+            $res = sql_query($sql);
+
+            for($k=0; $cp=sql_fetch_array($res); $k++) {
+                if(is_used_coupon($member['mb_id'], $cp['cp_id']))
+                    continue;
+
+                $sc_cnt++;
+            }
         }
     }
     ?>

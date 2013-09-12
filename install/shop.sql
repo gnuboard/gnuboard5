@@ -128,12 +128,28 @@ CREATE TABLE IF NOT EXISTS `shop_coupon` (
   `cp_minimum` INT(11) NOT NULL DEFAULT '0',
   `cp_maximum` INT(11) NOT NULL DEFAULT '0',
   `od_id` bigint(20) unsigned NOT NULL,
-  `cp_used` TINYINT(4) NOT NULL DEFAULT '0',
-  `cp_used_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   `cp_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`cp_no`),
   UNIQUE KEY `cp_id` (`cp_id`),
   KEY `mb_id` (`mb_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shop_coupon_log`
+--
+
+CREATE TABLE IF NOT EXISTS `shop_coupon_log` (
+  `cl_id` int(11) NOT NULL AUTO_INCREMENT,
+  `cp_id` varchar(255) NOT NULL DEFAULT '',
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `od_id` bigint(20) NOT NULL,
+  `cp_price` int(11) NOT NULL DEFAULT '0',
+  `cl_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`cl_id`),
+  KEY `mb_id` (`mb_id`),
+  KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

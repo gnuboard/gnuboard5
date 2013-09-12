@@ -6,11 +6,6 @@ auth_check($auth[$sub_menu], "r");
 
 $token = get_token();
 
-// 사용하지 않고 사용종료일이 초과된 쿠폰삭제
-$end_date = date('Y-m-d', (G4_SERVER_TIME - (86400 * 7)));
-$sql = " delete from {$g4['shop_coupon_table']} where cp_used = '0' and cp_end < '$end_date' ";
-sql_query($sql);
-
 $sql_common = " from {$g4['shop_coupon_table']} ";
 
 $sql_search = " where (1) ";
@@ -109,20 +104,13 @@ $colspan = 8;
         <th scope="col">적용대상</th>
         <th scope="col">회원아이디</a></th>
         <th scope="col">사용기한</a></th>
-        <th scope="col">사용</th>
+        <th scope="col">사용회수</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        if ($i==0 || ($row2['mb_id'] != $row['mb_id'])) {
-            $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
-            $row2 = sql_fetch($sql2);
-        }
-
-        $mb_nick = get_sideview($row['mb_id'], $row2['mb_nick'], $row2['mb_email'], $row2['mb_homepage']);
-
         switch($row['cp_method']) {
             case '0':
                 $sql3 = " select it_name from {$g4['shop_item_table']} where it_id = '{$row['cp_target']}' ";
@@ -144,6 +132,11 @@ $colspan = 8;
 
         $link1 = '<a href="./orderform.php?od_id='.$row['od_id'].'">';
         $link2 = '</a>';
+
+        // 쿠폰사용회수
+        $sql = " select count(*) as cnt from {$g4['shop_coupon_log_table']} where cp_id = '{$row['cp_id']}' ";
+        $tmp = sql_fetch($sql);
+        $used_count = $tmp['cnt'];
     ?>
 
     <tr>
@@ -156,7 +149,7 @@ $colspan = 8;
         <td><?php echo $cp_target; ?></td>
         <td class="td_name sv_use"><div><?php echo $row['mb_id']; ?></div></td>
         <td class="td_time"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
-        <td class="td_boolean"><?php echo $row['cp_used'] ? '예' : '아니오'; ?></td>
+        <td class="td_boolean"><?php echo number_format($used_count); ?></td>
         <td class="td_smallmng">
             <a href="./couponform.php?w=u&amp;cp_id=<?php echo $row['cp_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['cp_id']; ?> </span>수정</a>
         </td>

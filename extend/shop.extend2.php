@@ -513,4 +513,25 @@ if(!sql_query(" select od_misu from {$g4['shop_order_table']} limit 1 ", false))
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
                     ADD `od_misu` int(11) NOT NULL DEFAULT '0' AFTER `od_coupon` ", true);
 }
+
+// 쿠폰 history 테이블추가
+if(!isset($g4['shop_coupon_log_table']))
+    die_utf8('dbconfig.php 파일에 $g4[\'shop_coupon_log_table\']    = SHOP_TABLE_PREFIX.\'coupon_log\';            // 쿠폰정보 테이블 추가해주세요.');
+if(!sql_query(" DESCRIBE `{$g4['shop_coupon_log_table']}` ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_coupon_log_table']}` (
+                  `cl_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `cp_id` varchar(255) NOT NULL DEFAULT '',
+                  `mb_id` varchar(255) NOT NULL DEFAULT '',
+                  `od_id` bigint(20) NOT NULL,
+                  `cp_price` int(11) NOT NULL DEFAULT '0',
+                  `cl_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  PRIMARY KEY (`cl_id`),
+                  KEY `mb_id` (`mb_id`),
+                  KEY `od_id` (`od_id`)
+                )", true);
+    sql_query(" ALTER TABLE `{$g4['shop_coupon_table']}`
+                    DROP `od_id`,
+                    DROP `cp_used_time`,
+                    DROP `cp_used` ", true);
+}
 ?>
