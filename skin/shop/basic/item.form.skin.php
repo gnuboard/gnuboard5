@@ -2,7 +2,7 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<form name="fitem" action="<?php echo $action_url; ?>" method="post">
+<form name="fitem" method="post" action="<?php echo $action_url; ?>" onsubmit="return fitem_submit(this);">
 <input type="hidden" name="it_id[]" value="<?php echo $it_id; ?>">
 <input type="hidden" name="sw_direct">
 <input type="hidden" name="url">
@@ -65,15 +65,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </p>
         <?php if ($star_score) { ?>
         <div id="sit_star_sns">
-            <?php
-            $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
-            $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$it['it_id'];
-            ?>
             고객선호도 <span>별<?php echo $star_score?>개</span>
             <img src="<?php echo G4_SHOP_URL; ?>/img/s_star<?php echo $star_score?>.png" alt="" class="sit_star">
-            <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb2.png'); ?>
-            <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt2.png'); ?>
-            <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo2.png'); ?>
+            <?php echo $sns_share_links; ?>
         </div>
         <?php } ?>
         <table class="sit_ov_tbl">
@@ -119,7 +113,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </tr>
 
         <?php } else { // 전화문의가 아닐 경우?>
-        <?php if ($it['it_cust_price']) { // 1.00.03?>
+        <?php if ($it['it_cust_price']) { ?>
         <tr>
             <th scope="row">시중가격</th>
             <td><?php echo display_price($it['it_cust_price']); ?></td>
@@ -258,6 +252,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <ul id="sit_ov_btn">
             <?php if (!$it['it_tel_inq'] && !$it['it_gallery']) { ?>
+            <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
+            <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
             <li><a href="javascript:fitemcheck(document.fitem, 'direct_buy');" id="sit_btn_buy">바로구매</a></li>
             <li><a href="javascript:fitemcheck(document.fitem, 'cart_update');" id="sit_btn_cart">장바구니</a></li>
             <?php } ?>
@@ -313,34 +309,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 
 <script>
-function click_item(id)
-{
-    <?php
-    echo "var str = 'item_explan,item_use,item_qa";
-    if ($default['de_baesong_content']) echo ",item_baesong";
-    if ($default['de_change_content']) echo ",item_change";
-    echo ",item_relation';";
-    ?>
-
-    var s = str.split(',');
-
-    for (i=0; i<s.length; i++)
-    {
-        if (id=='*')
-            document.getElementById(s[i]).style.display = 'block';
-        else
-            document.getElementById(s[i]).style.display = 'none';
-    }
-
-    if (id!='*')
-        document.getElementById(id).style.display = 'block';
-}
-
-
 $(function(){
+    // 상품이미지 첫번째 링크
     $("#sit_pvi_big a:first").addClass("visible");
 
-    // 이미지 미리보기
+    // 상품이미지 미리보기 (썸네일에 마우스 오버시)
     $("#sit_pvi .img_thumb").bind("mouseover focus", function(){
         var idx = $("#sit_pvi .img_thumb").index($(this));
         $("#sit_pvi_big a.visible").removeClass("visible");
@@ -360,26 +333,24 @@ $(function(){
 });
 
 
-// 바로구매 또는 장바구니 담기
-function fitemcheck(f, act)
+// 바로구매, 장바구니 폼 전송
+function fitem_submit(f)
 {
-    // 판매가격이 0 보다 작다면
-    if (document.getElementById("it_price").value < 0)
-    {
-        alert("전화로 문의해 주시면 감사하겠습니다.");
-        return;
-    }
-
-    if($(".sit_opt_list").size() < 1)
-    {
-        alert("상품의 선택옵션을 선택해 주십시오.");
-        return;
-    }
-
-    if (act == "direct_buy") {
-        f.sw_direct.value = 1;
-    } else {
+    if (document.pressed == "장바구니") {
         f.sw_direct.value = 0;
+    } else { // 바로구매
+        f.sw_direct.value = 1;
+    }
+
+    // 판매가격이 0 보다 작다면
+    if (document.getElementById("it_price").value < 0) {
+        alert("전화로 문의해 주시면 감사하겠습니다.");
+        return false;
+    }
+
+    if($(".sit_opt_list").size() < 1) {
+        alert("상품의 선택옵션을 선택해 주십시오.");
+        return false;
     }
 
     var val, result = true;
@@ -405,10 +376,11 @@ function fitemcheck(f, act)
         }
     });
 
-    if(!result)
-        return;
+    if(!result) {
+        return false;
+    }
 
-    f.submit();
+    return true;
 }
 </script>
 

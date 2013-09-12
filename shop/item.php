@@ -154,6 +154,14 @@ $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
 // 추가 옵션
 $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
 
+// 소셜 관련
+$sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
+$sns_url  = G4_SHOP_URL.'/item.php?it_id='.$it['it_id'];
+$sns_share_links .= get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb2.png').' ';
+$sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt2.png').' ';
+$sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo2.png');
+
+// 보안서버경로
 if (G4_HTTPS_DOMAIN)
     $action_url = G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR.'/cartupdate.php';
 else

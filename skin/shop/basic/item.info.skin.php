@@ -1,8 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-?>
 
-<?php
 function pg_anchor($anc_id) {
     global $default;
     global $item_use_count, $item_qa_count, $item_relation_count;
