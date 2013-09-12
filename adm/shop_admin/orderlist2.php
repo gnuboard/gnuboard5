@@ -37,7 +37,8 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql  = " select *
+$sql  = " select *,
+            (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
            $sql_common
            order by $sort1 $sort2
            limit $from_record, $rows ";
@@ -126,7 +127,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $tot_orderprice    += $row['od_cart_price'];
             $tot_ordercancel   += $row['od_cancel_price'];
             $tot_receiptprice  += $row['od_receipt_price'];
-            $tot_couponamount  += $row['couponamount'];
+            $tot_couponprice   += $row['couponprice'];
             $tot_misu          += $row['misu'];
 
             $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
@@ -161,13 +162,13 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
             <dl class="sodr_pay">
                 <dt class="sodr_pay_1">주문합계</dt>
-                <dd class="sodr_pay_1"><?php echo number_format($row['od_cart_price']); ?></dd>
+                <dd class="sodr_pay_1"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></dd>
                 <dt class="sodr_pay_1">결제수단</dt>
                 <dd class="sodr_pay_1"><?php echo $s_receipt_way; ?></dd>
                 <dt class="sodr_pay_1">입금합계</dt>
                 <dd class="sodr_pay_1"><?php echo number_format($row['od_receipt_price']); ?></dd>
                 <dt>쿠폰사용</dt>
-                <dd><?php echo number_format($row['couponamount']); ?></dd>
+                <dd><?php echo number_format($row['couponprice']); ?></dd>
                 <dt>주문취소</dt>
                 <dd><?php echo number_format($row['od_cancel_price']); ?></dd>
                 <dt>미수금</dt>
@@ -279,10 +280,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <tbody>
     <tr>
         <td><?php echo (int)$tot_itemcount; ?>건</td>
-        <td><?php echo number_format($tot_orderamount); ?></td>
-        <td><?php echo number_format($tot_couponamount); ?></td>
+        <td><?php echo number_format($tot_orderprice); ?></td>
+        <td><?php echo number_format($tot_couponprice); ?></td>
         <td><?php echo number_format($tot_ordercancel); ?></td>
-        <td><?php echo number_format($tot_receiptamount); ?></td>
+        <td><?php echo number_format($tot_receiptprice); ?></td>
         <td><?php echo number_format($tot_misu); ?></td>
     </tr>
     </tbody>

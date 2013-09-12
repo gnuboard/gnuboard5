@@ -158,6 +158,78 @@ for ($i=0; $i<$cnt; $i++)
     sql_query($sql);
 }
 
+// 주문정보
+$sql = " select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
+$od = sql_fetch($sql);
+
+// 주문 합계
+$sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                SUM(cp_price) as coupon
+            from {$g4['shop_cart_table']}
+            where od_id = '$od_id'
+              and ct_status IN ( '주문', '준비', '배송', '완료' ) ";
+$sum = sql_fetch($sql);
+$cart_price = $sum['price'];
+$cart_coupon = $sum['coupon'];
+
+// 주문할인 쿠폰
+$sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
+            from {$g4['shop_coupon_table']}
+            where od_id = '$od_id'
+              and cp_method = '2' ";
+$cp = sql_fetch($sql);
+
+if($cp['cp_id']) {
+    $dc = 0;
+    $tot_od_price = $cart_price - $cart_coupon;
+
+    if($cp['cp_id'] && ($cp['cp_minimum'] <= $tot_od_price)) {
+        if($cp['cp_type']) {
+            $dc = floor(($tot_od_price * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+        } else {
+            $dc = $cp['cp_price'];
+        }
+
+        if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+            $dc = $cp['cp_maximum'];
+
+        if($tot_od_price < $dc)
+            $dc = $tot_od_price;
+    }
+}
+
+// 배송비
+$send_cost = get_sendcost($cart_price, $od_id);
+
+// 취소 합계
+$sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+              SUM(cp_price) as coupon
+            from {$g4['shop_cart_table']}
+            where od_id = '$od_id'
+              and ct_status IN ( '취소', '반품', '품절' ) ";
+$sum = sql_fetch($sql);
+$cancel_price = $sum['price'];
+$cancel_coupon = $sum['coupon'];
+
+// 배송비가 배송비 쿠폰보다 작다면 쿠폰금액으로 설정
+if($send_cost < $od['od_send_coupon'])
+    $send_cost = $od['od_send_coupon'];
+
+// 미수
+$od_misu = $od['od_cart_price'] + $send_cost + $od['od_send_cost2']
+            - ($od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'])
+            - ($od['od_receipt_price'] + $od['od_receipt_point'])
+            + $cancel_coupon
+            + ($od['od_coupon'] - $dc);
+
+// 주문정보 반영
+$sql = " update {$g4['shop_order_table']}
+            set od_cancel_price = '$cancel_price',
+                od_send_cost    = '$send_cost',
+                od_misu         = '$od_misu'
+            where od_id = '$od_id' ";
+sql_query($sql);
+
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 $url = "./orderform.php?od_id=$od_id&amp;$qstr";

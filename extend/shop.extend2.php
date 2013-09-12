@@ -480,8 +480,8 @@ if(!sql_query(" select od_cart_count from {$g4['shop_order_table']} limit 1 ", f
     sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
                     ADD `od_cart_count` int(11) NOT NULL DEFAULT '0' AFTER `od_memo`,
                     ADD `od_cart_price` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_count`,
-                    ADD `od_cart_coupon` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_amount`,
-                    ADD `od_cancel_price` int(11) NOt NULL DEFAULT '0' AFTER `od_receipt_amount`,
+                    ADD `od_cart_coupon` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_price`,
+                    ADD `od_cancel_price` int(11) NOt NULL DEFAULT '0' AFTER `od_receipt_price`,
                     ADD `od_status` varchar(255) NOT NULL DEFAULT '' AFTER `od_mod_history` ", true);
 }
 

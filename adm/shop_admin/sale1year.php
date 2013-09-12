@@ -18,7 +18,7 @@ function print_line($save)
         <td><?php echo number_format($save['receiptbank']); ?></td>
         <td><?php echo number_format($save['receiptcard']); ?></td>
         <td><?php echo number_format($save['receiptpoint']); ?></td>
-        <td><?php echo number_format($save['receiptcancel']); ?></td>
+        <td><?php echo number_format($save['ordercancel']); ?></td>
         <td><?php echo number_format($save['misu']); ?></td>
     </tr>
     <?php
@@ -33,7 +33,8 @@ $sql = " select od_id,
                 od_cart_price,
                 od_cancel_price,
                 od_misu,
-                (od_cart_coupon + od_coupon + od_send_coupon) as couponamount
+                (od_cart_price + od_send_cost + od_send_cost2) as orderprice,
+                (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
            from {$g4['shop_order_table']}
           where SUBSTRING(od_time,1,4) between '$fr_year' and '$to_year'
           order by od_time desc ";
@@ -73,9 +74,9 @@ $result = sql_query($sql);
         }
 
         $save['ordercount']++;
-        $save['orderprice']    += $row['od_cart_price'];
+        $save['orderprice']    += $row['orderprice'];
         $save['ordercancel']   += $row['od_cancel_price'];
-        $save['ordercoupon']   += $row['couponamount'];
+        $save['ordercoupon']   += $row['couponprice'];
         if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
             $save['receiptbank']   += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')
@@ -84,9 +85,9 @@ $result = sql_query($sql);
         $save['misu']          += $row['od_misu'];
 
         $tot['ordercount']++;
-        $tot['orderprice']    += $row['od_cart_price'];
-        $tot['ordercancel']   += $row1['od_cancel_price'];
-        $tot['ordercoupon']   += $row['couponamount'];
+        $tot['orderprice']    += $row['orderprice'];
+        $tot['ordercancel']   += $row['od_cancel_price'];
+        $tot['ordercoupon']   += $row['couponprice'];
         if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
             $tot['receiptbank']   += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')

@@ -10,15 +10,10 @@ include_once(G4_PATH.'/head.sub.php');
 $sql = " select cp_id, cp_subject, cp_method, cp_target, cp_start, cp_end, cp_type, cp_price
             from {$g4['shop_coupon_table']}
             where mb_id = '{$member['mb_id']}'
-              and cp_used = '0'
               and cp_start <= '".G4_TIME_YMD."'
               and cp_end >= '".G4_TIME_YMD."'
             order by cp_no ";
 $result = sql_query($sql);
-
-$count = @mysql_num_rows($result);
-if(!$count)
-    alert_close('보유하신 쿠폰이 없습니다.');
 ?>
 
 <!-- 쿠폰 내역 시작 { -->
@@ -36,7 +31,11 @@ if(!$count)
     </thead>
     <tbody>
     <?php
+    $cp_count = 0;
     for($i=0; $row=sql_fetch_array($result); $i++) {
+        if(is_used_coupon($member['mb_id'], $row['cp_id']))
+            continue;
+
         if($row['cp_method'] == 1) {
             $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['cp_target']}' ";
             $ca = sql_fetch($sql);
@@ -55,6 +54,8 @@ if(!$count)
             $cp_price = $row['cp_price'].'%';
         else
             $cp_price = number_format($row['cp_price']).'원';
+
+        $cp_count++;
     ?>
     <tr>
         <td><?php echo $row['cp_subject']; ?></td>
@@ -64,6 +65,9 @@ if(!$count)
     </tr>
     <?php
     }
+
+    if(!$cp_count)
+        echo '<tr><td colspan="4" class="empty_table">사용할 수 있는 쿠폰이 없습니다.</td></tr>';
     ?>
     </tbody>
     </table>
