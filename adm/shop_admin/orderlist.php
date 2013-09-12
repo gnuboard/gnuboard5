@@ -63,15 +63,11 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-<<<<<<< HEAD
 $sql  = " select *
            $sql_common
            order by $sort1 $sort2
            limit $from_record, $rows ";
-=======
-$sql  = " select *, "._MISU_QUERY_." $sql_common order by $sort1 $sort2 limit $from_record, $rows ";
->>>>>>> itemskin
-$result = sql_query($sql, false);
+$result = sql_query($sql);
 
 $qstr1 = "sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
