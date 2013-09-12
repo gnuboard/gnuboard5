@@ -151,10 +151,9 @@ if($is_member) {
         $sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g4['shop_coupon_table']}
                     where cp_id = '{$_POST['od_cp_id']}'
-                      and mb_id = '{$member['mb_id']}'
+                      and mb_id IN ( '{$member['mb_id']}', '전체회원' )
                       and cp_start <= '".G4_TIME_YMD."'
                       and cp_end >= '".G4_TIME_YMD."'
-                      and cp_used = '0'
                       and cp_method = '2' ";
         $cp = sql_fetch($sql);
 
@@ -197,10 +196,9 @@ if($is_member && $send_cost > 0) {
         $sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g4['shop_coupon_table']}
                     where cp_id = '{$_POST['sc_cp_id']}'
-                      and mb_id = '{$member['mb_id']}'
+                      and mb_id IN ( '{$member['mb_id']}', '전체회원' )
                       and cp_start <= '".G4_TIME_YMD."'
                       and cp_end >= '".G4_TIME_YMD."'
-                      and cp_used = '0'
                       and cp_method = '3' ";
         $cp = sql_fetch($sql);
 

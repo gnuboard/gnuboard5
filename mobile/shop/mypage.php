@@ -8,13 +8,18 @@ $g4['title'] = '마이페이지';
 include_once(G4_MSHOP_PATH.'/_head.php');
 
 // 쿠폰
-$sql = " select count(*) as cnt
+$cp_count = 0;
+$sql = " select cp_id
             from {$g4['shop_coupon_table']}
             where mb_id = '{$member['mb_id']}'
-              and cp_used = '0'
               and cp_start <= '".G4_TIME_YMD."'
               and cp_end >= '".G4_TIME_YMD."' ";
-$cp = sql_fetch($sql);
+$res = sql_query($sql);
+
+for($k=0; $cp=sql_fetch_array($res); $k++) {
+    if(!is_used_coupon($member['mb_id'], $cp['cp_id']))
+        $cp_count++;
+}
 ?>
 
 <div id="smb_my">
@@ -26,7 +31,7 @@ $cp = sql_fetch($sql);
             <dt>보유포인트</dt>
             <dd><a href="<?php echo G4_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></dd>
             <dt>보유쿠폰</dt>
-            <dd><a href="<?php echo G4_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp['cnt']); ?></a></dd>
+            <dd><a href="<?php echo G4_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp_count); ?></a></dd>
             <dt>연락처</dt>
             <dd><?php echo ($member['mb_tel'] ? $member['mb_tel'] : '미등록'); ?></dd>
             <dt>E-Mail</dt>

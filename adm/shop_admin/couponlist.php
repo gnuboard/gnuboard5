@@ -81,7 +81,6 @@ $colspan = 8;
     <ul class="sort_odr">
         <li><?php echo subject_sort_link('mb_id') ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
         <li><?php echo subject_sort_link('cp_end') ?>사용기한<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('cp_used') ?>사용<span class="sound_only"> 순 정렬</span></a></li>
     </ul>
 
     <form name="fcouponlist" id="fcouponlist" method="post" action="./couponlist_delete.php" onsubmit="return fcouponlist_submit(this);">
