@@ -77,9 +77,9 @@ if($w == '') {
     } while(1);
 
     $sql = " INSERT INTO {$g4['shop_coupon_table']}
-                ( cp_id, cp_subject, cp_method, cp_target, mb_id, cp_start, cp_end, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum, cp_used, cp_datetime )
+                ( cp_id, cp_subject, cp_method, cp_target, mb_id, cp_start, cp_end, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum, cp_datetime )
             VALUES
-                ( '$cp_id', '$cp_subject', '$cp_method', '$cp_target', '$mb_id', '$cp_start', '$cp_end', '$cp_type', '$cp_price', '$cp_trunc', '$cp_minimum', '$cp_maximum', '$cp_used', '".G4_TIME_YMDHIS."' ) ";
+                ( '$cp_id', '$cp_subject', '$cp_method', '$cp_target', '$mb_id', '$cp_start', '$cp_end', '$cp_type', '$cp_price', '$cp_trunc', '$cp_minimum', '$cp_maximum', '".G4_TIME_YMDHIS."' ) ";
 
     sql_query($sql);
 } else if($w == 'u') {
