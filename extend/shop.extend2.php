@@ -514,7 +514,7 @@ if(!sql_query(" select od_misu from {$g4['shop_order_table']} limit 1 ", false))
                     ADD `od_misu` int(11) NOT NULL DEFAULT '0' AFTER `od_coupon` ", true);
 }
 
-// 쿠폰 history 테이블추가
+// 쿠폰로그 테이블추가
 if(!isset($g4['shop_coupon_log_table']))
     die_utf8('dbconfig.php 파일에 $g4[\'shop_coupon_log_table\']    = SHOP_TABLE_PREFIX.\'coupon_log\';            // 쿠폰정보 테이블 추가해주세요.');
 if(!sql_query(" DESCRIBE `{$g4['shop_coupon_log_table']}` ", false)) {
@@ -533,5 +533,11 @@ if(!sql_query(" DESCRIBE `{$g4['shop_coupon_log_table']}` ", false)) {
                     DROP `od_id`,
                     DROP `cp_used_time`,
                     DROP `cp_used` ", true);
+}
+
+// 환불필드 추가
+if(!sql_query(" select od_refund_price from {$g4['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+                    ADD `od_refund_price` int(11) NOT NULL DEFAULT '0' AFTER `od_receipt_point` ", true);
 }
 ?>

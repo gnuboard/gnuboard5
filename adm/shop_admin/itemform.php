@@ -307,6 +307,194 @@ $pg_anchor ='<ul class="anchor">
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="it_tel_inq">전화문의</label></th>
+        <td>
+            <?php echo help("상품 금액 대신 전화문의로 표시됩니다."); ?>
+            <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <?php echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_tel_inq" value="1" id="chk_ca_it_tel_inq">
+            <label for="chk_ca_it_tel_inq">분류적용</label>
+            <input type="checkbox" name="chk_all_it_tel_inq" value="1" id="chk_all_it_tel_inq">
+            <label for="chk_all_it_tel_inq">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_use">판매가능</label></th>
+        <td>
+            <?php echo help("잠시 판매를 중단하거나 재고가 없을 경우에 체크를 해제해 놓으면 출력되지 않으며, 주문도 받지 않습니다."); ?>
+            <input type="checkbox" name="it_use" value="1" id="it_use" <?php echo ($it['it_use']) ? "checked" : ""; ?>> 예
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_use" value="1" id="chk_ca_it_use">
+            <label for="chk_ca_it_use">분류적용</label>
+            <input type="checkbox" name="chk_all_it_use" value="1" id="chk_all_it_use">
+            <label for="chk_all_it_use">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_basic">기본설명</label></th>
+        <td>
+            <?php echo help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다. HTML 입력도 가능합니다."); ?>
+            <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="80">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
+            <label for="chk_ca_it_basic">분류적용</label>
+            <input type="checkbox" name="chk_all_it_basic" value="1" id="chk_all_it_basic">
+            <label for="chk_all_it_basic">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">상품설명</th>
+        <td colspan="2"> <?php echo editor_html('it_explan', $it['it_explan']); ?></td>
+    </tr>
+    <tr>
+        <th scope="row">모바일 상품설명</th>
+        <td colspan="2"> <?php echo editor_html('it_mobile_explan', $it['it_mobile_explan']); ?></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
+        <td>
+            <?php echo help("운영자와 실제 판매자가 다른 경우 실제 판매자의 e-mail을 입력하면, 상품 주문 시점을 기준으로 실제 판매자에게도 주문서를 발송합니다."); ?>
+            <input type="text" name="it_sell_email" value="<?php echo $it['it_sell_email']; ?>" id="it_sell_email" class="frm_input" size="40">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_sell_email" value="1" id="chk_ca_it_sell_email">
+            <label for="chk_ca_it_sell_email">분류적용</label>
+            <input type="checkbox" name="chk_all_it_sell_email" value="1" id="chk_all_it_sell_email">
+            <label for="chk_all_it_sell_email">전체적용</label>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</section>
+
+<section id="anc_sitfrm_compact" class="cbox">
+    <h2>상품요약정보</h2>
+    <?php echo $pg_anchor; ?>
+    <p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
+
+    <div id="sit_compact">
+        <?php echo help("상품군을 선택하면 자동으로 항목이 변환됩니다."); ?>
+        <select id="it_info_gubun" name="it_info_gubun">
+            <option value="">상품군을 선택하세요.</option>
+            <?php
+            if(!$it['it_info_gubun']) $it['it_info_gubun'] = 'wear';
+            foreach($item_info as $key=>$value) {
+                $opt_value = $key;
+                $opt_text  = $value['title'];
+                echo '<option value="'.$opt_value.'" '.get_selected($opt_value, $it['it_info_gubun']).'>'.$opt_text.'</option>'.PHP_EOL;
+            }
+            ?>
+        </select>
+    </div>
+    <div id="sit_compact_fields"><?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
+</section>
+
+<script>
+$(function(){
+    $("#it_info_gubun").live("change", function() {
+        var gubun = $(this).val();
+        $.post(
+            "<?php echo G4_ADMIN_URL; ?>/shop_admin/iteminfo.php",
+            { it_id: "<?php echo $it['it_id']; ?>", gubun: gubun },
+            function(data) {
+                $("#sit_compact_fields").empty().html(data);
+            }
+        );
+    });
+});
+</script>
+
+<section id="anc_sitfrm_cost" class="cbox">
+    <h2>가격 및 재고</h2>
+    <?php echo $pg_anchor; ?>
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="it_price">판매가격</label></th>
+        <td>
+            <input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_price" value="1" id="chk_ca_it_price">
+            <label for="chk_ca_it_price">분류적용</label>
+            <input type="checkbox" name="chk_all_it_price" value="1" id="chk_all_it_price">
+            <label for="chk_all_it_price">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_cust_price">시중가격</label></th>
+        <td>
+            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+            <input type="text" name="it_cust_price" value="<?php echo $it['it_cust_price']; ?>" id="it_cust_price" class="frm_input" size="8"> 원
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_cust_price" value="1" id="chk_ca_it_cust_price">
+            <label for="chk_ca_it_cust_price">분류적용</label>
+            <input type="checkbox" name="chk_all_it_cust_price" value="1" id="chk_all_it_cust_price">
+            <label for="chk_all_it_cust_price">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_point_type">포인트 유형</label></th>
+        <td>
+            <?php echo help("포인트 유형을 설정할 수 있습니다. 비율로 설정했을 경우 판매가격의 %비율로 포인트가 지급됩니다."); ?>
+            <select name="it_point_type" id="it_point_type">
+                <option value="0"<?php echo get_selected('0', $it['it_point_type']); ?>>금액</option>
+                <option value="1"<?php echo get_selected('1', $it['it_point_type']); ?>>비율</option>
+            </select>
+            <script>
+            $(function() {
+                $("#it_point_type").change(function() {
+                    if($(this).val() == "1")
+                        $("#it_point_unit").text("%");
+                    else
+                        $("#it_point_unit").text("점");
+                });
+            });
+            </script>
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_point_type" value="1" id="chk_ca_it_point_type">
+            <label for="chk_ca_it_point_type">분류적용</label>
+            <input type="checkbox" name="chk_all_it_point_type" value="1" id="chk_all_it_point_type">
+            <label for="chk_all_it_point_type">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_point">포인트</label></th>
+        <td>
+            <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n게시판의 포인트 기능과는 별개로 동작합니다."); ?>
+            <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> <span id="it_point_unit"><?php if($it['it_point_type']) echo '%'; else echo '점'; ?></span>
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_point" value="1" id="chk_ca_it_point">
+            <label for="chk_ca_it_point">분류적용</label>
+            <input type="checkbox" name="chk_all_it_point" value="1" id="chk_all_it_point">
+            <label for="chk_all_it_point">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_stock_qty">재고수량</label></th>
+        <td>
+            <?php echo help("<b>주문관리에서 상품별 상태 변경에 따라 자동으로 재고를 가감합니다.</b> 재고는 규격/색상별이 아닌, 상품별로만 관리됩니다."); ?>
+            <input type="text" name="it_stock_qty" value="<?php echo $it['it_stock_qty']; ?>" id="it_stock_qty" class="frm_input" size="8"> 개
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_stock_qty" value="1" id="chk_ca_it_stock_qty">
+            <label for="chk_ca_it_stock_qty">분류적용</label>
+            <input type="checkbox" name="chk_all_it_stock_qty" value="1" id="chk_all_it_stock_qty">
+            <label for="chk_all_it_stock_qty">전체적용</label>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="it_notax">상품과세 유형</label></th>
         <td>
             <?php echo help("상품의 과세유형(과세, 비과세)을 설정합니다."); ?>
@@ -650,194 +838,6 @@ $pg_anchor ='<ul class="anchor">
                 });
             }
             </script>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_basic">기본설명</label></th>
-        <td>
-            <?php echo help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다. HTML 입력도 가능합니다."); ?>
-            <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="80">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
-            <label for="chk_ca_it_basic">분류적용</label>
-            <input type="checkbox" name="chk_all_it_basic" value="1" id="chk_all_it_basic">
-            <label for="chk_all_it_basic">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">상품설명</th>
-        <td colspan="2"> <?php echo editor_html('it_explan', $it['it_explan']); ?></td>
-    </tr>
-    <tr>
-        <th scope="row">모바일 상품설명</th>
-        <td colspan="2"> <?php echo editor_html('it_mobile_explan', $it['it_mobile_explan']); ?></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
-        <td>
-            <?php echo help("운영자와 실제 판매자가 다른 경우 실제 판매자의 e-mail을 입력하면, 상품 주문 시점을 기준으로 실제 판매자에게도 주문서를 발송합니다."); ?>
-            <input type="text" name="it_sell_email" value="<?php echo $it['it_sell_email']; ?>" id="it_sell_email" class="frm_input" size="40">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_sell_email" value="1" id="chk_ca_it_sell_email">
-            <label for="chk_ca_it_sell_email">분류적용</label>
-            <input type="checkbox" name="chk_all_it_sell_email" value="1" id="chk_all_it_sell_email">
-            <label for="chk_all_it_sell_email">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_tel_inq">전화문의</label></th>
-        <td>
-            <?php echo help("상품 금액 대신 전화문의로 표시됩니다."); ?>
-            <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <?php echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_tel_inq" value="1" id="chk_ca_it_tel_inq">
-            <label for="chk_ca_it_tel_inq">분류적용</label>
-            <input type="checkbox" name="chk_all_it_tel_inq" value="1" id="chk_all_it_tel_inq">
-            <label for="chk_all_it_tel_inq">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_use">판매가능</label></th>
-        <td>
-            <?php echo help("잠시 판매를 중단하거나 재고가 없을 경우에 체크를 해제해 놓으면 출력되지 않으며, 주문도 받지 않습니다."); ?>
-            <input type="checkbox" name="it_use" value="1" id="it_use" <?php echo ($it['it_use']) ? "checked" : ""; ?>> 예
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_use" value="1" id="chk_ca_it_use">
-            <label for="chk_ca_it_use">분류적용</label>
-            <input type="checkbox" name="chk_all_it_use" value="1" id="chk_all_it_use">
-            <label for="chk_all_it_use">전체적용</label>
-        </td>
-    </tr>
-    </tbody>
-    </table>
-</section>
-
-<section id="anc_sitfrm_compact" class="cbox">
-    <h2>상품요약정보</h2>
-    <?php echo $pg_anchor; ?>
-    <p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
-
-    <div id="sit_compact">
-        <?php echo help("상품군을 선택하면 자동으로 항목이 변환됩니다."); ?>
-        <select id="it_info_gubun" name="it_info_gubun">
-            <option value="">상품군을 선택하세요.</option>
-            <?php
-            if(!$it['it_info_gubun']) $it['it_info_gubun'] = 'wear';
-            foreach($item_info as $key=>$value) {
-                $opt_value = $key;
-                $opt_text  = $value['title'];
-                echo '<option value="'.$opt_value.'" '.get_selected($opt_value, $it['it_info_gubun']).'>'.$opt_text.'</option>'.PHP_EOL;
-            }
-            ?>
-        </select>
-    </div>
-    <div id="sit_compact_fields"><?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
-</section>
-
-<script>
-$(function(){
-    $("#it_info_gubun").live("change", function() {
-        var gubun = $(this).val();
-        $.post(
-            "<?php echo G4_ADMIN_URL; ?>/shop_admin/iteminfo.php",
-            { it_id: "<?php echo $it['it_id']; ?>", gubun: gubun },
-            function(data) {
-                $("#sit_compact_fields").empty().html(data);
-            }
-        );
-    });
-});
-</script>
-
-<section id="anc_sitfrm_cost" class="cbox">
-    <h2>가격 및 재고</h2>
-    <?php echo $pg_anchor; ?>
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row"><label for="it_price">판매가격</label></th>
-        <td>
-            <input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_price" value="1" id="chk_ca_it_price">
-            <label for="chk_ca_it_price">분류적용</label>
-            <input type="checkbox" name="chk_all_it_price" value="1" id="chk_all_it_price">
-            <label for="chk_all_it_price">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_cust_price">시중가격</label></th>
-        <td>
-            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
-            <input type="text" name="it_cust_price" value="<?php echo $it['it_cust_price']; ?>" id="it_cust_price" class="frm_input" size="8"> 원
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_cust_price" value="1" id="chk_ca_it_cust_price">
-            <label for="chk_ca_it_cust_price">분류적용</label>
-            <input type="checkbox" name="chk_all_it_cust_price" value="1" id="chk_all_it_cust_price">
-            <label for="chk_all_it_cust_price">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_point_type">포인트 유형</label></th>
-        <td>
-            <?php echo help("포인트 유형을 설정할 수 있습니다. 비율로 설정했을 경우 판매가격의 %비율로 포인트가 지급됩니다."); ?>
-            <select name="it_point_type" id="it_point_type">
-                <option value="0"<?php echo get_selected('0', $it['it_point_type']); ?>>금액</option>
-                <option value="1"<?php echo get_selected('1', $it['it_point_type']); ?>>비율</option>
-            </select>
-            <script>
-            $(function() {
-                $("#it_point_type").change(function() {
-                    if($(this).val() == "1")
-                        $("#it_point_unit").text("%");
-                    else
-                        $("#it_point_unit").text("점");
-                });
-            });
-            </script>
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_point_type" value="1" id="chk_ca_it_point_type">
-            <label for="chk_ca_it_point_type">분류적용</label>
-            <input type="checkbox" name="chk_all_it_point_type" value="1" id="chk_all_it_point_type">
-            <label for="chk_all_it_point_type">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_point">포인트</label></th>
-        <td>
-            <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n게시판의 포인트 기능과는 별개로 동작합니다."); ?>
-            <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> <span id="it_point_unit"><?php if($it['it_point_type']) echo '%'; else echo '점'; ?></span>
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_point" value="1" id="chk_ca_it_point">
-            <label for="chk_ca_it_point">분류적용</label>
-            <input type="checkbox" name="chk_all_it_point" value="1" id="chk_all_it_point">
-            <label for="chk_all_it_point">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_stock_qty">재고수량</label></th>
-        <td>
-            <?php echo help("<b>주문관리에서 상품별 상태 변경에 따라 자동으로 재고를 가감합니다.</b> 재고는 규격/색상별이 아닌, 상품별로만 관리됩니다."); ?>
-            <input type="text" name="it_stock_qty" value="<?php echo $it['it_stock_qty']; ?>" id="it_stock_qty" class="frm_input" size="8"> 개
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_stock_qty" value="1" id="chk_ca_it_stock_qty">
-            <label for="chk_ca_it_stock_qty">분류적용</label>
-            <input type="checkbox" name="chk_all_it_stock_qty" value="1" id="chk_all_it_stock_qty">
-            <label for="chk_all_it_stock_qty">전체적용</label>
         </td>
     </tr>
     </tbody>
