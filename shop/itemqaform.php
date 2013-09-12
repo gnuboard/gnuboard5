@@ -57,7 +57,7 @@ include_once(G4_PATH.'/head.sub.php');
     </tr>
     <tr>
         <th scope="row"><label for="iq_question">질문</label></th>
-        <td><?php echo editor_html('iq_question', $qa['iq_question']); ?></td>
+        <td><?php echo editor_html('iq_question', get_text($qa['iq_question'])); ?></td>
     </tr>
     </tbody>
     </table>
