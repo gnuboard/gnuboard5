@@ -251,7 +251,7 @@ $pg_anchor = '<ul class="anchor">
     $amount['취소'] = $od['od_cancel_price'];
 
     // 미수금 = 주문금액 - 취소금액 - 입금금액 - 쿠폰금액
-    $amount['미수'] = $amount['주문'] - $amount['입금'] - $amount['쿠폰'];
+    //$amount['미수'] = $amount['주문'] - $amount['입금'] - $amount['쿠폰'];
 
     // 결제방법
     $s_receipt_way = $od['od_settle_case'];
@@ -260,7 +260,7 @@ $pg_anchor = '<ul class="anchor">
         $s_receipt_way .= "+포인트";
     ?>
 
-    <strong class="sodr_nonpay">미수금 <?php echo display_price($amount['미수']); ?></strong>
+    <strong class="sodr_nonpay">미수금 <?php echo display_price($od['od_misu']); ?></strong>
 
     <table>
     <thead>
@@ -394,8 +394,8 @@ $pg_anchor = '<ul class="anchor">
             <td><?php echo display_point($od['od_receipt_point']); ?></td>
         </tr>
         <tr>
-            <th scope="row">취소/환불액</th>
-            <td><?php echo display_price($od['od_cancel_price']); ?></td>
+            <th scope="row">결제취소/환불액</th>
+            <td><?php echo display_price($od['od_refund_price']); ?></td>
         </tr>
         <?php
         $sql = " select dl_company, dl_url, dl_tel from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ";
@@ -585,9 +585,9 @@ $pg_anchor = '<ul class="anchor">
             <td><input type="text" name="od_receipt_point" value="<?php echo $od['od_receipt_point']; ?>" id="od_receipt_point" class="frm_input" size="10"> 점</td>
         </tr>
         <tr>
-            <th scope="row"><label for="od_cancel_price">취소/환불 금액</label></th>
+            <th scope="row"><label for="od_refund_price">결제취소/환불 금액</label></th>
             <td>
-                <input type="text" name="od_cancel_price" value="<?php echo $od['od_cancel_price']; ?>" class="frm_input" size="10"> 원
+                <input type="text" name="od_refund_price" value="<?php echo $od['od_refund_price']; ?>" class="frm_input" size="10"> 원
             </td>
         </tr>
         <tr>
@@ -640,7 +640,7 @@ $pg_anchor = '<ul class="anchor">
 
     <div class="btn_confirm">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
-        <?php if($amount['미수'] > 0) { ?>
+        <?php if($od['od_misu'] > 0) { ?>
         <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
         <?php } ?>
     </div>

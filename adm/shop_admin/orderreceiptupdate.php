@@ -6,11 +6,22 @@ include_once(G4_LIB_PATH.'/icode.sms.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
+$sql = " select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
+$od = sql_fetch($sql);
+
+if(!$od['od_id'])
+    alert('주문자료가 존재하지 않습니다.');
+
 if ($od_receipt_time)
 {
     if (check_datetime($od_receipt_time) == false)
         alert('결제일시 오류입니다.');
 }
+
+// 미수
+$od_misu = ( $od['od_cart_price'] + $od_send_cost + $od_send_cost2 )
+           - ( $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'] )
+           - ( $od_receipt_price + $od_receipt_point - $od_refund_price );
 
 $sql = " update {$g4['shop_order_table']}
             set od_deposit_name    = '$od_deposit_name',
@@ -18,15 +29,14 @@ $sql = " update {$g4['shop_order_table']}
                 od_receipt_time    = '$od_receipt_time',
                 od_receipt_price   = '$od_receipt_price',
                 od_receipt_point   = '$od_receipt_point',
-                od_cancel_price    = '$od_cancel_price',
+                od_refund_price    = '$od_refund_price',
+                od_misu            = '$od_misu',
                 dl_id              = '$dl_id',
                 od_invoice         = '$od_invoice',
-                od_invoice_time    = '$od_invoice_time' ";
-if (isset($od_send_cost))
-    $sql .= " , od_send_cost = '$od_send_cost' ";
-if (isset($od_send_cost2))
-    $sql .= " , od_send_cost2 = '$od_send_cost2' ";
-$sql .= " where od_id = '$od_id' ";
+                od_invoice_time    = '$od_invoice_time',
+                od_send_cost       = '$od_send_cost',
+                od_send_cost2      = '$od_send_cost2'
+            where od_id = '$od_id' ";
 sql_query($sql);
 
 

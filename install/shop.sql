@@ -597,6 +597,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_receipt_price` int(11) NOT NULL DEFAULT '0',
   `od_cancel_price` int(11) NOT NULL DEFAULT '0',
   `od_receipt_point` int(11) NOT NULL DEFAULT '0',
+  `od_refund_price` int(11) NOT NULL DEFAULT '0',
   `od_bank_account` varchar(255) NOT NULL DEFAULT '',
   `od_receipt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `od_coupon` int(11) NOT NULL DEFAULT '0',
