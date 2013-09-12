@@ -51,7 +51,7 @@ if ($is_admin)
 
     <?php
     $nav_ca_id = $ca_id;
-    include G4_SHOP_PATH.'/navigation1.inc.php';
+    include G4_SHOP_PATH.'/navigation.inc.php';
 
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_head_html']).'</div>';

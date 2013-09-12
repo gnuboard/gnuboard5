@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if ($ca_id)
 {
-    $str = $bar = "";
+    $navigation = $bar = "";
     $len = strlen($ca_id) / 2;
     for ($i=1; $i<=$len; $i++)
     {
@@ -20,16 +20,16 @@ if ($ca_id)
             $sct_bg = 'sct_bg';
         else $sct_bg = '';
 
-        $str .= $bar.'<a href="./list.php?ca_id='.$code.'" class="'.$sct_here.' '.$sct_bg.'">'.$row['ca_name'].'</a>';
+        $navigation .= $bar.'<a href="./list.php?ca_id='.$code.'" class="'.$sct_here.' '.$sct_bg.'">'.$row['ca_name'].'</a>';
     }
 }
 else
-    $str = $g4['title'];
+    $navigation = $g4['title'];
 
-//if ($it_id) $str .= " > $it[it_name]";
+//if ($it_id) $navigation .= " > $it[it_name]";
 ?>
 
 <div id="sct_location">
     <a href='<?php echo G4_SHOP_URL; ?>/' class="sct_bg">Home</a>
-    <?php echo $str; ?>
+    <?php echo $navigation; ?>
 </div>
