@@ -220,19 +220,6 @@ $pg_anchor ='<ul class="anchor">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="it_gallery">전시용 상품</label></th>
-        <td>
-           <?php echo help("이 항목을 체크하면 상품을 전시만 하고, 판매하지 않습니다."); ?>
-            <input type="checkbox" name="it_gallery" value="1" id="it_gallery" <?php echo ($it['it_gallery'] ? "checked" : ""); ?>>
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_gallery" value="1" id="chk_ca_it_gallery">
-            <label for="chk_ca_it_gallery">분류적용</label>
-            <input type="checkbox" name="chk_all_it_gallery" value="1" id="chk_all_it_gallery">
-            <label for="chk_all_it_gallery">전체적용</label>
-        </td>
-    </tr>
-    <tr>
         <th scope="row"><label for="it_order">출력순서</label></th>
         <td>
             <?php echo help("숫자가 작을 수록 상위에 출력됩니다. 음수 입력도 가능하며 입력 가능 범위는 -2147483648 부터 2147483647 까지입니다.\n<b>입력하지 않으면 자동으로 출력됩니다.</b>"); ?>

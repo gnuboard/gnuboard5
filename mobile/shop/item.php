@@ -288,7 +288,6 @@ else
             </tr>
             <?php } ?>
 
-            <?php if (!$it['it_gallery']) { // 갤러리 형식이라면 가격, 구매하기 출력하지 않음 ?>
             <?php if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
 
             <tr>
@@ -426,17 +425,14 @@ else
 
             <div id="sit_tot_price"></div>
 
-            <?php } // 갤러리가 아닐 경우 끝 ?>
-
             <ul id="sit_ov_btn">
-                <?php if (!$it['it_tel_inq'] && !$it['it_gallery']) { ?>
+                <?php if (!$it['it_tel_inq']) { ?>
                 <li><a href="javascript:fitemcheck(document.fitem, 'direct_buy');" id="sit_btn_buy">바로구매</a></li>
                 <li><a href="javascript:fitemcheck(document.fitem, 'cart_update');" id="sit_btn_cart">장바구니</a></li>
                 <?php } ?>
-                <?php if (!$it['it_gallery']) { ?>
+
                 <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
                 <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
-                <?php } ?>
             </ul>
 
             <script>
