@@ -482,13 +482,15 @@ if($is_member) {
         $cp_it_id = $_POST['it_id'][$i];
         $cp_prc = (int)$arr_it_cp_prc[$cp_it_id];
 
-        $sql = " insert into {$g4['shop_coupon_log_table']}
-                    set cp_id       = '$cid',
-                        mb_id       = '{$member['mb_id']}',
-                        od_id       = '$od_id',
-                        cp_price    = '$cp_prc',
-                        cl_datetime = '".G4_TIME_YMDHIS."' ";
-        sql_query($sql);
+        if(trim($cid)) {
+            $sql = " insert into {$g4['shop_coupon_log_table']}
+                        set cp_id       = '$cid',
+                            mb_id       = '{$member['mb_id']}',
+                            od_id       = '$od_id',
+                            cp_price    = '$cp_prc',
+                            cl_datetime = '".G4_TIME_YMDHIS."' ";
+            sql_query($sql);
+        }
 
         // 쿠폰사용금액 cart에 기록
         $cp_prc = (int)$arr_it_cp_prc[$cp_it_id];

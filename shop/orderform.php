@@ -1340,6 +1340,7 @@ function calculate_total_price()
     $("input[name=od_send_coupon]").val(0);
     <?php if($oc_cnt > 0) { ?>
     $("input[name=od_cp_id]").val("");
+    $("#od_cp_price").text(0);
     if($("#od_coupon_cancel").size()) {
         $("#od_coupon_btn").text("쿠폰적용");
         $("#od_coupon_cancel").remove();
@@ -1347,6 +1348,7 @@ function calculate_total_price()
     <?php } ?>
     <?php if($sc_cnt > 0) { ?>
     $("input[name=sc_cp_id]").val("");
+    $("#sc_cp_price").text(0);
     if($("#sc_coupon_cancel").size()) {
         $("#sc_coupon_btn").text("쿠폰적용");
         $("#sc_coupon_cancel").remove();
@@ -1364,7 +1366,7 @@ function calculate_order_price()
     var sell_price = parseInt($("input[name=od_price]").val());
     var send_cost = parseInt($("input[name=od_send_cost]").val());
     var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
-    var send_coupon = parseInt($("input[name=od_send_coupon").val());
+    var send_coupon = parseInt($("input[name=od_send_coupon]").val());
     var tot_price = sell_price + send_cost + send_cost2 - send_coupon;
 
     $("input[name=good_mny]").val(tot_price);
