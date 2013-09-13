@@ -1,5 +1,5 @@
-.htaccess
-data
+/.htaccess
+data/
 test
 config.php
 sirgle

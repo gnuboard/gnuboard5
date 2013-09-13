@@ -57,7 +57,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 $g5['title'] = '게시판그룹설정';
 include_once('./admin.head.php');
 
-$colspan = 8;
+$colspan = 11;
 ?>
 
 <form id="fsearch" name="fsearch" method="get">
