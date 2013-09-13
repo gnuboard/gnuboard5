@@ -68,7 +68,7 @@ if($g5_install || !$result) {
 }
 
 // 쇼핑몰 테이블 생성 -----------------------------
-if($shop_install) {
+if($g5_shop_install) {
     $file = implode('', file('./gnuboard5shop.sql'));
 
     $file = preg_replace('/^--.*$/m', '', $file);
@@ -171,7 +171,7 @@ if($g5_install || !$result) {
     @mysql_query($sql);
 }
 
-if($shop_install) {
+if($g5_shop_install) {
     // 이미지 사이즈
     $simg_width = 130;
     $simg_height = 130;
@@ -407,7 +407,7 @@ for ($i=0; $i<count($dir_arr); $i++) {
     @chmod($dir_arr[$i], G5_DIR_PERMISSION);
 }
 
-if($shop_install) {
+if($g5_shop_install) {
     $dir_arr = array (
         $data_path.'/banner',
         $data_path.'/category',
@@ -468,7 +468,7 @@ fwrite($f, "\$g5['autosave_table'] = G5_TABLE_PREFIX.'autosave'; // 게시글 �
 fwrite($f, "\$g5['cert_history_table'] = G5_TABLE_PREFIX.'cert_history'; // 인증내역 테이블\n");
 fwrite($f, "?>");
 
-if($shop_install) {
+if($g5_shop_install) {
     fwrite($f, "\n\n<?php\n");
     fwrite($f, "define('G5_USE_SHOP', true);\n\n");
     fwrite($f, "define('G5_SHOP_TABLE_PREFIX', '{$g5_shop_prefix}');\n\n");
@@ -516,7 +516,7 @@ EOD;
 fwrite($f, $str);
 fclose($f);
 
-if($shop_install) {
+if($g5_shop_install) {
     @copy('./logo_img', $data_path.'/common/logo_img');
     @copy('./mobile_logo_img', $data_path.'/common/mobile_logo_img');
     @copy('./main_img', $data_path.'/common/main_img');
