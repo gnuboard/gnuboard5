@@ -72,7 +72,7 @@ if($_FILES['excelfile']['tmp_name']) {
     $succ_count = 0;
     $comma = '';
 
-    $sql = " INSERT INTO {$g5['shop_item_table']}
+    $sql = " INSERT INTO {$g5['g5_shop_item_table']}
                   ( it_id, ca_id, ca_id2, ca_id3, it_name, it_maker, it_origin, it_brand, it_model, it_type1, it_type2, it_type3, it_type4, it_type5, it_basic, it_explan, it_mobile_explan, it_explan_html, it_cust_price, it_price, it_point, it_sell_email, it_use, it_stock_qty, it_time, it_ip, it_order, it_tel_inq, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10 )
                 VALUES ";
 
@@ -121,7 +121,7 @@ if($_FILES['excelfile']['tmp_name']) {
         }
 
         // it_id 중복체크
-        $sql2 = " select count(*) as cnt from {$g5['shop_item_table']} where it_id = '$it_id' ";
+        $sql2 = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
         $row2 = sql_fetch($sql2);
         if($row2['cnt']) {
             $fail_it_id[] = $it_id;
@@ -132,7 +132,7 @@ if($_FILES['excelfile']['tmp_name']) {
         }
 
         // 기본분류체크
-        $sql2 = " select count(*) as cnt from {$g5['shop_category_table']} where ca_id = '$ca_id' ";
+        $sql2 = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
         $row2 = sql_fetch($sql2);
         if(!$row2['cnt']) {
             $fail_it_id[] = $it_id;

@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g5['title'] = '배너관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g5['shop_banner_table']} ";
+$sql_common = " from {$g5['g5_shop_banner_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -46,7 +46,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g5['shop_banner_table']}
+    $sql = " select * from {$g5['g5_shop_banner_table']}
           order by bn_order, bn_id desc
           limit $from_record, $rows  ";
     $result = sql_query($sql);

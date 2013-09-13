@@ -25,7 +25,7 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g5['shop_order_table']}
+$sql_common = " from {$g5['g5_shop_order_table']}
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -177,7 +177,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <?php
             // 상품개별출력
             $sql2 = " select it_id, it_name
-                        from {$g5['shop_cart_table']}
+                        from {$g5['g5_shop_cart_table']}
                         where od_id = '{$row['od_id']}'
                         group by it_id
                         order by ct_id asc ";
@@ -208,7 +208,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <?php
                 // 옵션항목
                 $sql3 = " select *
-                            from {$g5['shop_cart_table']}
+                            from {$g5['g5_shop_cart_table']}
                             where od_id = '{$row['od_id']}'
                               and it_id = '{$row2['it_id']}'
                             order by io_type asc, ct_id asc ";

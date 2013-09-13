@@ -9,10 +9,10 @@ auth_check($auth[$sub_menu], "d");
 if ($od_id)
 {
     // 장바구니 삭제
-    sql_query(" delete from {$g5['shop_cart_table']} where od_id = '$od_id' ");
+    sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ");
 
     // 주문서 삭제
-    sql_query(" delete from {$g5['shop_order_table']} where od_id = '$od_id' ");
+    sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 }
 
 if ($return_url)

@@ -14,13 +14,13 @@ if(preg_match('/[^0-9]/', $_POST['pp_price']))
     alert('주문금액은 숫자만 입력해 주십시오.');
 
 if($_POST['od_id']) {
-    $sql = " select od_id from {$g5['shop_order_table']} where od_id = '{$_POST['od_id']}' ";
+    $sql = " select od_id from {$g5['g5_shop_order_table']} where od_id = '{$_POST['od_id']}' ";
     $od = sql_fetch($sql);
     if(!$od['od_id'])
         alert('입력하신 주문번호는 존재하지 않습니다.');
 }
 
-$sql = " select * from {$g5['shop_personalpay_table']} where pp_id = '$pp_id' ";
+$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
 $row = sql_fetch($sql);
 
 if(!$row['pp_id'])
@@ -28,7 +28,7 @@ if(!$row['pp_id'])
 
 $new_pp_id = get_uniqid();
 
-$sql = " insert into {$g5['shop_personalpay_table']}
+$sql = " insert into {$g5['g5_shop_personalpay_table']}
             set pp_id           = '$new_pp_id',
                 od_id           = '{$_POST['od_id']}',
                 pp_name         = '{$_POST['pp_name']}',

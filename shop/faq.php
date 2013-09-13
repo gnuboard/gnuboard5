@@ -4,7 +4,7 @@ include_once('./_common.php');
 if (!$fm_id) $fm_id = 1;
 
 // FAQ MASTER
-$sql = " select * from {$g5['shop_faq_master_table']} where fm_id = '$fm_id' ";
+$sql = " select * from {$g5['g5_shop_faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 if (!$fm['fm_id'])
     alert('등록된 내용이 없습니다.');
@@ -30,7 +30,7 @@ echo '<div id="sfaq_hhtml">'.stripslashes($fm['fm_head_html']).'</div>';
 
 <div id="sfaq_wrap" class="sfaq_<?php echo $fm_id; ?>">
     <?php // FAQ 목차
-    $sql = " select * from {$g5['shop_faq_table']}
+    $sql = " select * from {$g5['g5_shop_faq_table']}
               where fm_id = '$fm_id'
               order by fa_order , fa_id ";
     $result = sql_query($sql);

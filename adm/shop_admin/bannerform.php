@@ -10,7 +10,7 @@ $g5['title'] = $html_title.'관리';
 if ($w=="u")
 {
     $html_title .= ' 수정';
-    $sql = " select * from {$g5['shop_banner_table']} where bn_id = '$bn_id' ";
+    $sql = " select * from {$g5['g5_shop_banner_table']} where bn_id = '$bn_id' ";
     $bn = sql_fetch($sql);
 }
 else

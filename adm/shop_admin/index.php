@@ -33,7 +33,7 @@ $pg_anchor = '<ul class="anchor">
     <?php
     // 미수금이 없고 운송장번호가 없는 자료를 구함
     $sql = " select *
-               from {$g5['shop_order_table']}
+               from {$g5['g5_shop_order_table']}
               where od_receipt_price > 0 and od_misu <= 0 and od_invoice = ''
               order by od_id desc
               limit $max_limit ";
@@ -93,7 +93,7 @@ $pg_anchor = '<ul class="anchor">
     <?php
     // 미수금이 있고 송장번호가 없는 자료를 구함
     $sql = " select *
-               from {$g5['shop_order_table']}
+               from {$g5['g5_shop_order_table']}
               where od_misu > 0
               order by od_id desc
               limit $max_limit ";
@@ -192,7 +192,7 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g5['shop_item_qa_table']}
+    $sql = " select * from {$g5['g5_shop_item_qa_table']}
               where iq_answer = ''
               order by iq_id desc
               limit $max_limit ";

@@ -62,26 +62,26 @@ else if($default['de_send_cost_case'] == '상한')
     $delivery = (int)$tmp[0];
 }
 
-$sql =" select * from {$g5['shop_item_table']} where it_use = '1' order by ca_id";
+$sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    $row2 = sql_fetch(" select ca_name from {$g5['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
+    $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
     $ca_name1 = $row2['ca_name'];
 
     if (strlen($row['ca_id']) >= 4) {
-        $row2 = sql_fetch(" select ca_name from {$g5['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
         $ca_name2 = $row2['ca_name'];
     }
 
     if (strlen($row['ca_id']) >= 6) {
-        $row2 = sql_fetch(" select ca_name from {$g5['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,6)."' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '".substr($row['ca_id'],0,6)."' ");
         $ca_name3 = $row2['ca_name'];
     }
 
     if (strlen($row['ca_id']) >= 8) {
-        $row2 = sql_fetch(" select ca_name from {$g5['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,8)."' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '".substr($row['ca_id'],0,8)."' ");
         $ca_name4 = $row2['ca_name'];
     }
 

@@ -13,7 +13,7 @@ if (!function_exists("itemdelete")) {
         global $g5, $is_admin;
 
         $sql = " select it_explan, it_mobile_explan, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
-                    from {$g5['shop_item_table']} where it_id = '$it_id' ";
+                    from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
         $it = sql_fetch($sql);
 
         // 상품 이미지 삭제
@@ -41,23 +41,23 @@ if (!function_exists("itemdelete")) {
         @unlink(G5_DATA_PATH."/item/$it_id"."_t");
 
         // 장바구니 삭제
-        $sql = " delete from {$g5['shop_cart_table']} where it_id = '$it_id' ";
+        $sql = " delete from {$g5['g5_shop_cart_table']} where it_id = '$it_id' ";
         sql_query($sql);
 
         // 이벤트삭제
-        $sql = " delete from {$g5['shop_event_item_table']} where it_id = '$it_id' ";
+        $sql = " delete from {$g5['g5_shop_event_item_table']} where it_id = '$it_id' ";
         sql_query($sql);
 
         // 사용후기삭제
-        $sql = " delete from {$g5['shop_item_use_table']} where it_id = '$it_id' ";
+        $sql = " delete from {$g5['g5_shop_item_use_table']} where it_id = '$it_id' ";
         sql_query($sql);
 
         // 상품문의삭제
-        $sql = " delete from {$g5['shop_item_qa_table']} where it_id = '$it_id' ";
+        $sql = " delete from {$g5['g5_shop_item_qa_table']} where it_id = '$it_id' ";
         sql_query($sql);
 
         // 관련상품삭제
-        $sql = " delete from {$g5['shop_item_relation_table']} where it_id = '$it_id' or it_id2 = '$it_id' ";
+        $sql = " delete from {$g5['g5_shop_item_relation_table']} where it_id = '$it_id' or it_id2 = '$it_id' ";
         sql_query($sql);
 
 
@@ -97,7 +97,7 @@ if (!function_exists("itemdelete")) {
 
 
         // 상품 삭제
-        $sql = " delete from {$g5['shop_item_table']} where it_id = '$it_id' ";
+        $sql = " delete from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
         sql_query($sql);
     }
 }

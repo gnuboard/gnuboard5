@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], "r");
 
 $token = get_token();
 
-$sql_common = " from {$g5['shop_sendcost_table']} ";
+$sql_common = " from {$g5['g5_shop_sendcost_table']} ";
 
 $sql_search = " where (1) ";
 $sql_order = " order by sc_id desc ";

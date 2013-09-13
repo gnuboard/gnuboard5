@@ -14,17 +14,17 @@ $t_it_id = preg_replace("/[A-Za-z0-9\-_]/", "", $new_it_id);
 if($t_it_id)
     alert("상품코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.");
 
-$row = sql_fetch(" select count(*) as cnt from {$g5['shop_item_table']} where it_id = '$new_it_id' ");
+$row = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$new_it_id' ");
 if ($row['cnt'])
     alert('이미 존재하는 상품코드 입니다.');
 
-$sql = " select * from {$g5['shop_item_table']} where it_id = '$it_id' limit 1 ";
+$sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' limit 1 ";
 $cp = sql_fetch($sql);
 
 
 // 상품테이블의 필드가 추가되어도 수정하지 않도록 필드명을 추출하여 insert 퀴리를 생성한다. (상품코드만 새로운것으로 대체)
 $sql_common = "";
-$fields = mysql_list_fields(G5_MYSQL_DB, $g5['shop_item_table']);
+$fields = mysql_list_fields(G5_MYSQL_DB, $g5['g5_shop_item_table']);
 $columns = mysql_num_fields($fields);
 for ($i = 0; $i < $columns; $i++) {
   $fld = mysql_field_name($fields, $i);
@@ -33,15 +33,15 @@ for ($i = 0; $i < $columns; $i++) {
   }
 }
 
-$sql = " insert {$g5['shop_item_table']}
+$sql = " insert {$g5['g5_shop_item_table']}
 			set it_id = '$new_it_id'
                 $sql_common ";
 sql_query($sql);
 
 // 선택/추가 옵션 copy
-$opt_sql = " insert ignore into {$g5['shop_item_option_table']} ( io_id, io_type, it_id, io_price, io_stock_qty, io_noti_qty, io_use )
+$opt_sql = " insert ignore into {$g5['g5_shop_item_option_table']} ( io_id, io_type, it_id, io_price, io_stock_qty, io_noti_qty, io_use )
                 select io_id, io_type, '$new_it_id', io_price, io_stock_qty, io_noti_qty, io_use
-                    from {$g5['shop_item_option_table']}
+                    from {$g5['g5_shop_item_option_table']}
                     where it_id = '$it_id'
                     order by io_no asc ";
 sql_query($opt_sql);
@@ -69,7 +69,7 @@ if($cp['it_explan']) {
         }
     }
 
-    $sql = " update {$g5['shop_item_table']} set it_explan = '{$cp['it_explan']}' where it_id = '$new_it_id' ";
+    $sql = " update {$g5['g5_shop_item_table']} set it_explan = '{$cp['it_explan']}' where it_id = '$new_it_id' ";
     sql_query($sql);
 }
 
@@ -95,7 +95,7 @@ if($cp['it_mobile_explan']) {
         }
     }
 
-    $sql = " update {$g5['shop_item_table']} set it_mobile_explan = '{$cp['it_mobile_explan']}' where it_id = '$new_it_id' ";
+    $sql = " update {$g5['g5_shop_item_table']} set it_mobile_explan = '{$cp['it_mobile_explan']}' where it_id = '$new_it_id' ";
     sql_query($sql);
 }
 
@@ -153,7 +153,7 @@ for($i=1; $i<=10; $i++) {
     $comma = ',';
 }
 
-$sql = " update {$g5['shop_item_table']}
+$sql = " update {$g5['g5_shop_item_table']}
             set $sql_img
             where it_id = '$new_it_id' ";
 sql_query($sql);

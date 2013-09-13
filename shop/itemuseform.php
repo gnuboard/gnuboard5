@@ -22,7 +22,7 @@ if (!$is_member) {
 if ($w == "") {
     $is_score = 10;
 } else if ($w == "u") {
-    $use = sql_fetch(" select * from {$g5['shop_item_use_table']} where is_id = '$is_id' ");
+    $use = sql_fetch(" select * from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' ");
     if (!$use) {
         alert_close("사용후기 정보가 없습니다.");
     }

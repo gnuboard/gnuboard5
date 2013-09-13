@@ -17,7 +17,7 @@ if ($_POST['act_button'] == "선택수정") {
         // 실제 번호를 넘김
         $k = $_POST['chk'][$i];
 
-        $sql = "update {$g5['shop_item_table']}
+        $sql = "update {$g5['g5_shop_item_table']}
                    set ca_id          = '{$_POST['ca_id'][$k]}',
                        it_name        = '{$_POST['it_name'][$k]}',
                        it_mobile_name = '{$_POST['it_mobile_name'][$k]}',

@@ -6,7 +6,7 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-$sql = " select * from {$g5['shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
+$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
 $pp = sql_fetch($sql);
 
 if(!$pp['pp_id'])

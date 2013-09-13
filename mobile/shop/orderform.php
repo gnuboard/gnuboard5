@@ -70,7 +70,7 @@ ob_start();
                     b.ca_id2,
                     b.ca_id3,
                     b.it_notax
-               from {$g5['shop_cart_table']} a left join {$g5['shop_item_table']} b on ( a.it_id = b.it_id )
+               from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
               where a.od_id = '$s_cart_id'
                 and a.ct_select = '1' ";
     if($default['de_cart_keep_term']) {
@@ -95,7 +95,7 @@ ob_start();
         $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                         SUM(ct_point * ct_qty) as point,
                         SUM(ct_qty) as qty
-                    from {$g5['shop_cart_table']}
+                    from {$g5['g5_shop_cart_table']}
                     where it_id = '{$row['it_id']}'
                       and od_id = '$s_cart_id' ";
         $sum = sql_fetch($sql);
@@ -148,7 +148,7 @@ ob_start();
             $cp_count = 0;
 
             $sql = " select cp_id
-                        from {$g5['shop_coupon_table']}
+                        from {$g5['g5_shop_coupon_table']}
                         where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                           and cp_start <= '".G5_TIME_YMD."'
                           and cp_end >= '".G5_TIME_YMD."'
@@ -428,7 +428,7 @@ ob_end_clean();
             $sep = chr(30);
             // 기본배송지
             $sql = " select *
-                        from {$g5['shop_order_address_table']}
+                        from {$g5['g5_shop_order_address_table']}
                         where mb_id = '{$member['mb_id']}'
                           and ad_default = '1' ";
             $row = sql_fetch($sql);
@@ -440,7 +440,7 @@ ob_end_clean();
 
             // 최근배송지
             $sql = " select *
-                        from {$g5['shop_order_address_table']}
+                        from {$g5['g5_shop_order_address_table']}
                         where mb_id = '{$member['mb_id']}'
                         order by ad_id desc
                         limit 2 ";
@@ -525,7 +525,7 @@ ob_end_clean();
     if($is_member) {
         // 주문쿠폰
         $sql = " select cp_id
-                    from {$g5['shop_coupon_table']}
+                    from {$g5['g5_shop_coupon_table']}
                     where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                       and cp_method = '2'
                       and cp_start <= '".G5_TIM_YMD."'
@@ -542,7 +542,7 @@ ob_end_clean();
         if($send_cost > 0) {
             // 배송비쿠폰
             $sql = " select cp_id
-                        from {$g5['shop_coupon_table']}
+                        from {$g5['g5_shop_coupon_table']}
                         where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                           and cp_method = '3'
                           and cp_start <= '".G5_TIM_YMD."'

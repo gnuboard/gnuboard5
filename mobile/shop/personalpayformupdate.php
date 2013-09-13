@@ -15,7 +15,7 @@ if($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == 
 
 // 개인결제 정보
 $pp_check = false;
-$sql = " select * from {$g5['shop_personalpay_table']} where pp_id = '{$_POST['pp_id']}' and pp_use = '1' ";
+$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['pp_id']}' and pp_use = '1' ";
 $pp = sql_fetch($sql);
 if(!$pp['pp_id'])
     alert('개인결제 정보가 존재하지 않습니다.');
@@ -91,7 +91,7 @@ else
     $od_pwd = sql_password($_POST['od_pwd']);
 
 // 결제정보 입력
-$sql = " update {$g5['shop_personalpay_table']}
+$sql = " update {$g5['g5_shop_personalpay_table']}
             set pp_tno              = '$pp_tno',
                 pp_app_no           = '$app_no',
                 pp_receipt_price    = '$pp_receipt_price',
@@ -119,7 +119,7 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
     if($escw_yn == 'Y')
         $od_escrow = 1;
 
-    $sql = " update {$g5['shop_order_table']}
+    $sql = " update {$g5['g5_shop_order_table']}
                 set od_receipt_price    = od_receipt_price + '$pp_receipt_price',
                     od_receipt_time     = '$pp_receipt_time',
                     od_tno              = '$pp_tno',

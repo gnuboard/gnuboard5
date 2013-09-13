@@ -40,7 +40,7 @@ define(_MISU_QUERY_, "
 //==============================================================================
 
 // 쇼핑몰 설정값 배열변수
-$default = sql_fetch(" select * from {$g5['shop_default_table']} ");
+$default = sql_fetch(" select * from {$g5['g5_shop_default_table']} ");
 
 define('G5_SHOP_SKIN_PATH',  G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_skin']);
 define('G5_SHOP_SKIN_URL',   G5_URL .'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_skin']);

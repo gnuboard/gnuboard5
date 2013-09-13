@@ -6,7 +6,7 @@ include_once(G5_EDITOR_LIB);
 auth_check($auth[$sub_menu], "w");
 
 $sql = " select *
-           from {$g5['shop_item_qa_table']} a
+           from {$g5['g5_shop_item_qa_table']} a
            left join {$g5['member_table']} b on (a.mb_id = b.mb_id)
           where iq_id = '$iq_id' ";
 $iq = sql_fetch($sql);

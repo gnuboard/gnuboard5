@@ -38,12 +38,12 @@ if($_POST['cp_type'] && ($_POST['cp_price'] < 1 || $_POST['cp_price'] > 99))
     alert('할인비율을은 1과 99사이 값으로 입력해 주십시오.');
 
 if($_POST['cp_method'] == 0) {
-    $sql = " select count(*) as cnt from {$g5['shop_item_table']} where it_id = '$cp_target' ";
+    $sql = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$cp_target' ";
     $row = sql_fetch($sql);
     if(!$row['cnt'])
         alert('입력하신 상품코드는 존재하지 않는 상품코드입니다.');
 } else if($_POST['cp_method'] == 1) {
-    $sql = " select count(*) as cnt from {$g5['shop_category_table']} where ca_id = '$cp_target' ";
+    $sql = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$cp_target' ";
     $row = sql_fetch($sql);
     if(!$row['cnt'])
         alert('입력하신 분류코드는 존재하지 않는 분류코드입니다.');
@@ -65,7 +65,7 @@ if($w == '') {
     do {
         $cp_id = get_coupon_id();
 
-        $sql3 = " select count(*) as cnt from {$g5['shop_coupon_table']} where cp_id = '$cp_id' ";
+        $sql3 = " select count(*) as cnt from {$g5['g5_shop_coupon_table']} where cp_id = '$cp_id' ";
         $row3 = sql_fetch($sql3);
 
         if(!$row3['cnt'])
@@ -76,14 +76,14 @@ if($w == '') {
         }
     } while(1);
 
-    $sql = " INSERT INTO {$g5['shop_coupon_table']}
+    $sql = " INSERT INTO {$g5['g5_shop_coupon_table']}
                 ( cp_id, cp_subject, cp_method, cp_target, mb_id, cp_start, cp_end, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum, cp_datetime )
             VALUES
                 ( '$cp_id', '$cp_subject', '$cp_method', '$cp_target', '$mb_id', '$cp_start', '$cp_end', '$cp_type', '$cp_price', '$cp_trunc', '$cp_minimum', '$cp_maximum', '".G5_TIME_YMDHIS."' ) ";
 
     sql_query($sql);
 } else if($w == 'u') {
-    $sql = " select * from {$g5['shop_coupon_table']} where cp_id = '$cp_id' ";
+    $sql = " select * from {$g5['g5_shop_coupon_table']} where cp_id = '$cp_id' ";
     $cp = sql_fetch($sql);
 
     if(!$cp['cp_id'])
@@ -93,7 +93,7 @@ if($w == '') {
         $mb_id = '전체회원';
     }
 
-    $sql = " update {$g5['shop_coupon_table']}
+    $sql = " update {$g5['g5_shop_coupon_table']}
                 set cp_subject  = '$cp_subject',
                     cp_method   = '$cp_method',
                     cp_target   = '$cp_target',

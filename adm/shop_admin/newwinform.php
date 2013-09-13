@@ -9,7 +9,7 @@ $html_title = "팝업레이어";
 if ($w == "u")
 {
     $html_title .= " 수정";
-    $sql = " select * from {$g5['shop_new_win_table']} where nw_id = '$nw_id' ";
+    $sql = " select * from {$g5['g5_shop_new_win_table']} where nw_id = '$nw_id' ";
     $nw = sql_fetch($sql);
     if (!$nw['nw_id']) alert("등록된 자료가 없습니다.");
 }

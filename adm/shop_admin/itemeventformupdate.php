@@ -33,14 +33,14 @@ if ($w == "")
 {
     $ev_id = G5_SERVER_TIME;
 
-    $sql = " insert {$g5['shop_event_table']}
+    $sql = " insert {$g5['g5_shop_event_table']}
                     $sql_common
                   , ev_id = '$ev_id' ";
     sql_query($sql);
 }
 else if ($w == "u")
 {
-    $sql = " update {$g5['shop_event_table']}
+    $sql = " update {$g5['g5_shop_event_table']}
                 $sql_common
               where ev_id = '$ev_id' ";
     sql_query($sql);
@@ -52,10 +52,10 @@ else if ($w == "d")
     @unlink(G5_DATA_PATH."/event/{$ev_id}_t");
 
     // 이벤트상품삭제
-    $sql = " delete from {$g5['shop_event_item_table']} where ev_id = '$ev_id' ";
+    $sql = " delete from {$g5['g5_shop_event_item_table']} where ev_id = '$ev_id' ";
     sql_query($sql);
 
-    $sql = " delete from {$g5['shop_event_table']} where ev_id = '$ev_id' ";
+    $sql = " delete from {$g5['g5_shop_event_table']} where ev_id = '$ev_id' ";
     sql_query($sql);
 }
 
@@ -66,7 +66,7 @@ if ($w == "" || $w == "u")
     if ($_FILES['ev_timg']['name']) upload_file($_FILES['ev_timg']['tmp_name'], $ev_id."_t", G5_DATA_PATH."/event");
 
     // 등록된 이벤트 상품 먼저 삭제
-    $sql = " delete from {$g5['shop_event_item_table']} where ev_id = '$ev_id' ";
+    $sql = " delete from {$g5['g5_shop_event_item_table']} where ev_id = '$ev_id' ";
     sql_query($sql);
 
     // 이벤트 상품등록
@@ -76,7 +76,7 @@ if ($w == "" || $w == "u")
     for($i=0; $i<$count; $i++) {
         $it_id = $item[$i];
         if($it_id) {
-            $sql = " insert into {$g5['shop_event_item_table']}
+            $sql = " insert into {$g5['g5_shop_event_item_table']}
                         set ev_id = '$ev_id',
                             it_id = '$it_id' ";
             sql_query($sql);

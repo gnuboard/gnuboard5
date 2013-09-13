@@ -11,9 +11,9 @@ else
 
 $qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
 
-if ($w == "u") 
+if ($w == "u")
 {
-    $sql = "update {$g5['shop_item_qa_table']}
+    $sql = "update {$g5['g5_shop_item_qa_table']}
                set iq_subject = '$iq_subject',
                    iq_question = '$iq_question',
                    iq_answer = '$iq_answer'
@@ -21,7 +21,7 @@ if ($w == "u")
     sql_query($sql);
 
     goto_url("./itemqaform.php?w=$w&amp;iq_id=$iq_id&amp;$qstr");
-} 
+}
 else {
     alert();
 }

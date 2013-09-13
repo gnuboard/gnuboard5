@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g5['title'] = '팝업레이어 관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g5['shop_new_win_table']} ";
+$sql_common = " from {$g5['g5_shop_new_win_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;

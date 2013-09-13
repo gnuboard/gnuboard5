@@ -9,7 +9,7 @@ $g5['title'] = '개인결제 관리';
 if ($w == 'u') {
     $html_title = '개인결제 수정';
 
-    $sql = " select * from {$g5['shop_personalpay_table']} where pp_id = '$pp_id' ";
+    $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
     $pp = sql_fetch($sql);
     if (!$pp['pp_id']) alert('등록된 자료가 없습니다.');
 }
@@ -25,7 +25,7 @@ if($popup == 'yes') { // 팝업창일 때
     include_once(G5_PATH.'/head.sub.php');
     $pp['od_id'] = $od_id;
     $sql = " select od_id, od_name, od_misu
-                from {$g5['shop_order_table']}
+                from {$g5['g5_shop_order_table']}
                 where od_id = '$od_id' ";
     $od = sql_fetch($sql);
 

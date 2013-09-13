@@ -6,7 +6,7 @@ set_cart_id($sw_direct);
 
 $s_cart_id = get_session('ss_cart_id');
 // 선택필드 초기화
-$sql = " update {$g5['shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
+$sql = " update {$g5['g5_shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
 sql_query($sql);
 
 $cart_action_url = G5_SHOP_URL.'/cartupdate.php';
@@ -58,7 +58,7 @@ include_once('./_head.php');
                     b.ca_id,
                     b.ca_id2,
                     b.ca_id3
-               from {$g5['shop_cart_table']} a left join {$g5['shop_item_table']} b on ( a.it_id = b.it_id )
+               from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
               where a.od_id = '$s_cart_id' ";
     if($default['de_cart_keep_term']) {
         $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
@@ -76,7 +76,7 @@ include_once('./_head.php');
         $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                         SUM(ct_point * ct_qty) as point,
                         SUM(ct_qty) as qty
-                    from {$g5['shop_cart_table']}
+                    from {$g5['g5_shop_cart_table']}
                     where it_id = '{$row['it_id']}'
                       and od_id = '$s_cart_id' ";
         $sum = sql_fetch($sql);

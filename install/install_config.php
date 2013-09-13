@@ -60,7 +60,7 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
         <th scope="row"><label for="">쇼핑몰TABLE명 접두사</label></th>
         <td>
             <span>가능한 변경하지 마십시오.</span>
-            <input name="shop_prefix" type="text" value="shop_" id="shop_prefix">
+            <input name="g5_shop_prefix" type="text" value="g5_shop_" id="g5_shop_prefix">
         </td>
     </tr>
     <tr>
@@ -72,7 +72,7 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
     <tr>
         <th scope="row"><label for="">쇼핑몰설치</label></th>
         <td>
-            <input name="shop_install" type="checkbox" value="1" id="shop_install">설치
+            <input name="g5_shop_install" type="checkbox" value="1" id="g5_shop_install">설치
         </td>
     </tr>
     </tbody>

@@ -7,7 +7,7 @@ $gubun = $_POST['gubun'] ? $_POST['gubun'] : 'wear';
 if($it['it_id'])
     $it_id = $it['it_id'];
 else {
-    $sql = " select it_id, it_info_gubun, it_info_value from {$g5['shop_item_table']} where it_id = '$it_id' ";
+    $sql = " select it_id, it_info_gubun, it_info_value from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 }
 

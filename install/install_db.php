@@ -18,13 +18,13 @@ $mysql_user  = $_POST['mysql_user'];
 $mysql_pass  = $_POST['mysql_pass'];
 $mysql_db    = $_POST['mysql_db'];
 $table_prefix= $_POST['table_prefix'];
-$g5_install  = $_POST['g5_install'];
-$shop_prefix = $_POST['shop_prefix'];
-$shop_install= $_POST['shop_install'];
 $admin_id    = $_POST['admin_id'];
 $admin_pass  = $_POST['admin_pass'];
 $admin_name  = $_POST['admin_name'];
 $admin_email = $_POST['admin_email'];
+$g5_install  = $_POST['g5_install'];
+$g5_shop_prefix = $_POST['g5_shop_prefix'];
+$g5_shop_install= $_POST['g5_shop_install'];
 
 @mysql_query('set names utf8');
 $dblink = @mysql_connect($mysql_host, $mysql_user, $mysql_pass);
@@ -69,10 +69,10 @@ if($g5_install || !$result) {
 
 // 쇼핑몰 테이블 생성 -----------------------------
 if($shop_install) {
-    $file = implode('', file('./shop.sql'));
+    $file = implode('', file('./gnuboard5shop.sql'));
 
     $file = preg_replace('/^--.*$/m', '', $file);
-    $file = preg_replace('/`shop_([^`]+`)/', '`'.$shop_prefix.'$1', $file);
+    $file = preg_replace('/`g5_shop_([^`]+`)/', '`'.$g5_shop_prefix.'$1', $file);
     $f = explode(';', $file);
     for ($i=0; $i<count($f); $i++) {
         if (trim($f[$i]) == '') continue;
@@ -179,18 +179,18 @@ if($shop_install) {
     $mimg_height = 230;
 
     // 내용관리 생성
-    @mysql_query(" insert into `{$shop_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
-    @mysql_query(" insert into `{$shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 취급방침', co_content= '<p align=center><b>개인정보 취급방침에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
-    @mysql_query(" insert into `{$shop_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 취급방침', co_content= '<p align=center><b>개인정보 취급방침에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
 
     // 온라인견적
-    @mysql_query(" insert into `{$shop_prefix}onlinecalc` set oc_id = '1', oc_subject = '온라인견적' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$g5_shop_prefix}onlinecalc` set oc_id = '1', oc_subject = '온라인견적' ") or die(mysql_error() . "<p>" . $sql);
 
     // FAQ Master
-    @mysql_query(" insert into `{$shop_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$g5_shop_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ") or die(mysql_error() . "<p>" . $sql);
 
     // default 설정 (쇼핑몰 설정)
-    $sql = " insert into `{$shop_prefix}default`
+    $sql = " insert into `{$g5_shop_prefix}default`
                 set de_admin_company_name = '회사명',
                     de_admin_company_saupja_no = '123-45-67890',
                     de_admin_company_owner = '대표자명',
@@ -471,30 +471,30 @@ fwrite($f, "?>");
 if($shop_install) {
     fwrite($f, "\n\n<?php\n");
     fwrite($f, "define('G5_USE_SHOP', true);\n\n");
-    fwrite($f, "define('SHOP_TABLE_PREFIX', '{$shop_prefix}');\n\n");
-    fwrite($f, "\$g5['shop_default_table'] = SHOP_TABLE_PREFIX.'default'; // 쇼핑몰설정 테이블\n");
-    fwrite($f, "\$g5['shop_banner_table'] = SHOP_TABLE_PREFIX.'banner'; // 배너 테이블\n");
-    fwrite($f, "\$g5['shop_cart_table'] = SHOP_TABLE_PREFIX.'cart'; // 장바구니 테이블\n");
-    fwrite($f, "\$g5['shop_category_table'] = SHOP_TABLE_PREFIX.'category'; // 상품분류 테이블\n");
-    fwrite($f, "\$g5['shop_content_table'] = SHOP_TABLE_PREFIX.'content'; // 내용(컨텐츠)정보 테이블\n");
-    fwrite($f, "\$g5['shop_delivery_table'] = SHOP_TABLE_PREFIX.'delivery'; // 배송정보 테이블\n");
-    fwrite($f, "\$g5['shop_event_table'] = SHOP_TABLE_PREFIX.'event'; // 이벤트 테이블\n");
-    fwrite($f, "\$g5['shop_event_item_table'] = SHOP_TABLE_PREFIX.'event_item'; // 상품, 이벤트 연결 테이블\n");
-    fwrite($f, "\$g5['shop_faq_table'] = SHOP_TABLE_PREFIX.'faq'; // 자주하시는 질문 테이블\n");
-    fwrite($f, "\$g5['shop_faq_master_table'] = SHOP_TABLE_PREFIX.'faq_master'; // 자주하시는 질문 마스터 테이블\n");
-    fwrite($f, "\$g5['shop_item_table'] = SHOP_TABLE_PREFIX.'item'; // 상품 테이블\n");
-    fwrite($f, "\$g5['shop_item_option_table'] = SHOP_TABLE_PREFIX.'item_option'; // 상품옵션 테이블\n");
-    fwrite($f, "\$g5['shop_item_use_table'] = SHOP_TABLE_PREFIX.'item_use'; // 상품 사용후기 테이블\n");
-    fwrite($f, "\$g5['shop_item_qa_table'] = SHOP_TABLE_PREFIX.'item_qa'; // 상품 질문답변 테이블\n");
-    fwrite($f, "\$g5['shop_item_relation_table'] = SHOP_TABLE_PREFIX.'item_relation'; // 관련 상품 테이블\n");
-    fwrite($f, "\$g5['shop_new_win_table'] = SHOP_TABLE_PREFIX.'new_win'; // 새창 테이블\n");
-    fwrite($f, "\$g5['shop_onlinecalc_table'] = SHOP_TABLE_PREFIX.'onlinecalc'; // 온라인견적 테이블\n");
-    fwrite($f, "\$g5['shop_order_table'] = SHOP_TABLE_PREFIX.'order'; // 주문서 테이블\n");
-    fwrite($f, "\$g5['shop_wish_table'] = SHOP_TABLE_PREFIX.'wish'; // 보관함(위시리스트) 테이블\n");
-    fwrite($f, "\$g5['shop_coupon_table'] = SHOP_TABLE_PREFIX.'coupon'; // 쿠폰정보 테이블\n");
-    fwrite($f, "\$g5['shop_sendcost_table'] = SHOP_TABLE_PREFIX.'sendcost'; // 추가배송비 테이블\n");
-    fwrite($f, "\$g5['shop_personalpay_table'] = SHOP_TABLE_PREFIX.'personalpay'; // 개인결제 정보 테이블\n");
-    fwrite($f, "\$g5['shop_order_address_table'] = SHOP_TABLE_PREFIX.'order_address'; // 배송지이력 정보 테이블\n");
+    fwrite($f, "define('G5_SHOP_TABLE_PREFIX', '{$g5_shop_prefix}');\n\n");
+    fwrite($f, "\$g5['g5_shop_default_table'] = G5_SHOP_TABLE_PREFIX.'default'; // 쇼핑몰설정 테이블\n");
+    fwrite($f, "\$g5['g5_shop_banner_table'] = G5_SHOP_TABLE_PREFIX.'banner'; // 배너 테이블\n");
+    fwrite($f, "\$g5['g5_shop_cart_table'] = G5_SHOP_TABLE_PREFIX.'cart'; // 장바구니 테이블\n");
+    fwrite($f, "\$g5['g5_shop_category_table'] = G5_SHOP_TABLE_PREFIX.'category'; // 상품분류 테이블\n");
+    fwrite($f, "\$g5['g5_shop_content_table'] = G5_SHOP_TABLE_PREFIX.'content'; // 내용(컨텐츠)정보 테이블\n");
+    fwrite($f, "\$g5['g5_shop_delivery_table'] = G5_SHOP_TABLE_PREFIX.'delivery'; // 배송정보 테이블\n");
+    fwrite($f, "\$g5['g5_shop_event_table'] = G5_SHOP_TABLE_PREFIX.'event'; // 이벤트 테이블\n");
+    fwrite($f, "\$g5['g5_shop_event_item_table'] = G5_SHOP_TABLE_PREFIX.'event_item'; // 상품, 이벤트 연결 테이블\n");
+    fwrite($f, "\$g5['g5_shop_faq_table'] = G5_SHOP_TABLE_PREFIX.'faq'; // 자주하시는 질문 테이블\n");
+    fwrite($f, "\$g5['g5_shop_faq_master_table'] = G5_SHOP_TABLE_PREFIX.'faq_master'; // 자주하시는 질문 마스터 테이블\n");
+    fwrite($f, "\$g5['g5_shop_item_table'] = G5_SHOP_TABLE_PREFIX.'item'; // 상품 테이블\n");
+    fwrite($f, "\$g5['g5_shop_item_option_table'] = G5_SHOP_TABLE_PREFIX.'item_option'; // 상품옵션 테이블\n");
+    fwrite($f, "\$g5['g5_shop_item_use_table'] = G5_SHOP_TABLE_PREFIX.'item_use'; // 상품 사용후기 테이블\n");
+    fwrite($f, "\$g5['g5_shop_item_qa_table'] = G5_SHOP_TABLE_PREFIX.'item_qa'; // 상품 질문답변 테이블\n");
+    fwrite($f, "\$g5['g5_shop_item_relation_table'] = G5_SHOP_TABLE_PREFIX.'item_relation'; // 관련 상품 테이블\n");
+    fwrite($f, "\$g5['g5_shop_new_win_table'] = G5_SHOP_TABLE_PREFIX.'new_win'; // 새창 테이블\n");
+    fwrite($f, "\$g5['g5_shop_onlinecalc_table'] = G5_SHOP_TABLE_PREFIX.'onlinecalc'; // 온라인견적 테이블\n");
+    fwrite($f, "\$g5['g5_shop_order_table'] = G5_SHOP_TABLE_PREFIX.'order'; // 주문서 테이블\n");
+    fwrite($f, "\$g5['g5_shop_wish_table'] = G5_SHOP_TABLE_PREFIX.'wish'; // 보관함(위시리스트) 테이블\n");
+    fwrite($f, "\$g5['g5_shop_coupon_table'] = G5_SHOP_TABLE_PREFIX.'coupon'; // 쿠폰정보 테이블\n");
+    fwrite($f, "\$g5['g5_shop_sendcost_table'] = G5_SHOP_TABLE_PREFIX.'sendcost'; // 추가배송비 테이블\n");
+    fwrite($f, "\$g5['g5_shop_personalpay_table'] = G5_SHOP_TABLE_PREFIX.'personalpay'; // 개인결제 정보 테이블\n");
+    fwrite($f, "\$g5['g5_shop_order_address_table'] = G5_SHOP_TABLE_PREFIX.'order_address'; // 배송지이력 정보 테이블\n");
     fwrite($f, "?>");
 }
 

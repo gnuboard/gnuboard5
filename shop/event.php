@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$sql = " select * from {$g5['shop_event_table']}
+$sql = " select * from {$g5['g5_shop_event_table']}
           where ev_id = '$ev_id'
             and ev_use = 1 ";
 $ev = sql_fetch($sql);

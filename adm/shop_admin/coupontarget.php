@@ -22,14 +22,14 @@ $g5['title'] = $html_title.'검색';
 include_once(G5_PATH.'/head.sub.php');
 
 if($_GET['sch_target'] == 1) {
-    $sql_common = " from {$g5['shop_category_table']} ";
+    $sql_common = " from {$g5['g5_shop_category_table']} ";
     $sql_where = " where ca_use = '1' ";
     if($_GET['sch_word'])
         $sql_where .= " and ca_name like '%$sch_word%' ";
     $sql_select = " select ca_id as t_id, ca_name as t_name ";
     $sql_order = " order by ca_name ";
 } else {
-    $sql_common = " from {$g5['shop_item_table']} ";
+    $sql_common = " from {$g5['g5_shop_item_table']} ";
     $sql_where = " where it_use = '1' ";
     if($GET['sch_word'])
         $sql_where .= " and it_name like '%$sch_word%' ";

@@ -37,7 +37,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                     a.ct_status,
                     a.ct_send_cost,
                     b.ca_id
-               from {$g5['shop_cart_table']} a left join {$g5['shop_item_table']} b on ( a.it_id = b.it_id )
+               from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
               where a.od_id = '$s_cart_id' ";
     if($default['de_cart_keep_term']) {
         $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
@@ -55,7 +55,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                         SUM(ct_point * ct_qty) as point,
                         SUM(ct_qty) as qty
-                    from {$g5['shop_cart_table']}
+                    from {$g5['g5_shop_cart_table']}
                     where it_id = '{$row['it_id']}'
                       and od_id = '$s_cart_id' ";
         $sum = sql_fetch($sql);

@@ -18,20 +18,20 @@ if ($w == "" || $w == "u") {
 
 $url = "./item.php?it_id=$it_id&amp;_=".get_token()."#sit_use";
 
-if ($w == "") 
+if ($w == "")
 {
     /*
-    $sql = " select max(is_id) as max_is_id from {$g5['shop_item_use_table']} ";
+    $sql = " select max(is_id) as max_is_id from {$g5['g5_shop_item_use_table']} ";
     $row = sql_fetch($sql);
     $max_is_id = $row['max_is_id'];
 
-    $sql = " select max(is_id) as max_is_id from {$g5['shop_item_use_table']} where it_id = '$it_id' and mb_id = '{$member['mb_id']}' ";
+    $sql = " select max(is_id) as max_is_id from {$g5['g5_shop_item_use_table']} where it_id = '$it_id' and mb_id = '{$member['mb_id']}' ";
     $row = sql_fetch($sql);
     if ($row['max_is_id'] && $row['max_is_id'] == $max_is_id)
         alert("같은 상품에 대하여 계속해서 평가하실 수 없습니다.");
     */
 
-    $sql = "insert {$g5['shop_item_use_table']}
+    $sql = "insert {$g5['g5_shop_item_use_table']}
                set it_id = '$it_id',
                    mb_id = '{$member['mb_id']}',
                    is_score = '$is_score',
@@ -50,15 +50,15 @@ if ($w == "")
     }  else {
         alert_opener("사용후기가 등록 되었습니다.", $url);
     }
-} 
-else if ($w == "u") 
+}
+else if ($w == "u")
 {
-    $sql = " select is_password from {$g5['shop_item_use_table']} where is_id = '$is_id' ";
+    $sql = " select is_password from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' ";
     $row = sql_fetch($sql);
     if ($row['is_password'] != $is_password)
         alert("패스워드가 틀리므로 수정하실 수 없습니다.");
 
-    $sql = " update {$g5['shop_item_use_table']}
+    $sql = " update {$g5['g5_shop_item_use_table']}
                 set is_subject = '$is_subject',
                     is_content = '$is_content',
                     is_score = '$is_score'
@@ -67,19 +67,19 @@ else if ($w == "u")
 
     alert_opener("사용후기가 수정 되었습니다.", $url);
 }
-else if ($w == "d") 
+else if ($w == "d")
 {
-    if (!$is_admin) 
+    if (!$is_admin)
     {
-        $sql = " select count(*) as cnt from {$g5['shop_item_use_table']} where mb_id = '{$member['mb_id']}' and is_id = '$is_id' ";
+        $sql = " select count(*) as cnt from {$g5['g5_shop_item_use_table']} where mb_id = '{$member['mb_id']}' and is_id = '$is_id' ";
         $row = sql_fetch($sql);
         if (!$row['cnt'])
             alert("자신의 사용후기만 삭제하실 수 있습니다.");
     }
 
-    $sql = " delete from {$g5['shop_item_use_table']} where is_id = '$is_id' and md5(concat(is_id,is_time,is_ip)) = '{$hash}' ";
+    $sql = " delete from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' and md5(concat(is_id,is_time,is_ip)) = '{$hash}' ";
     sql_query($sql);
 
     alert("사용후기를 삭제 하였습니다.", $url);
-} 
+}
 ?>

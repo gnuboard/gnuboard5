@@ -15,7 +15,7 @@ include_once('./_head.php');
 // 쿠폰
 $cp_count = 0;
 $sql = " select cp_id
-            from {$g5['shop_coupon_table']}
+            from {$g5['g5_shop_coupon_table']}
             where mb_id = '{$member['mb_id']}'
               and cp_start <= '".G5_TIME_YMD."'
               and cp_end >= '".G5_TIME_YMD."' ";
@@ -94,8 +94,8 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
         <tbody>
         <?php
         $sql = " select *
-                   from {$g5['shop_wish_table']} a,
-                        {$g5['shop_item_table']} b
+                   from {$g5['g5_shop_wish_table']} a,
+                        {$g5['g5_shop_item_table']} b
                   where a.mb_id = '{$member['mb_id']}'
                     and a.it_id  = b.it_id
                   order by a.wi_id desc

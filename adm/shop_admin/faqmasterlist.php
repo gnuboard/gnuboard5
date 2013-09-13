@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g5['title'] = 'FAQ관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g5['shop_faq_master_table']} ";
+$sql_common = " from {$g5['g5_shop_faq_master_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -52,7 +52,7 @@ $result = sql_query($sql);
     </thead>
     <tbody>
     <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
-        $sql1 = " select COUNT(*) as cnt from {$g5['shop_faq_table']} where fm_id = '{$row['fm_id']}' ";
+        $sql1 = " select COUNT(*) as cnt from {$g5['g5_shop_faq_table']} where fm_id = '{$row['fm_id']}' ";
         $row1 = sql_fetch($sql1);
         $cnt = $row1['cnt'];
     ?>

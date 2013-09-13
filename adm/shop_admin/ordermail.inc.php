@@ -7,7 +7,7 @@ if (!defined("_ORDERMAIL_")) exit;
 // 주문자님께 메일발송 체크를 했다면
 if ($od_send_mail)
 {
-    $od = sql_fetch(" select * from {$g5['shop_order_table']} where od_id = '$od_id' ");
+    $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 
     $addmemo = nl2br(stripslashes($addmemo));
 
@@ -18,7 +18,7 @@ if ($od_send_mail)
     unset($delivery_list);
 
     $sql = " select *
-               from {$g5['shop_cart_table']}
+               from {$g5['g5_shop_cart_table']}
               where od_id = '{$od['od_id']}'
               order by ct_id ";
     $result = sql_query($sql);
@@ -72,7 +72,7 @@ if ($od_send_mail)
     // 배송정보
     $is_delivery = false;
     if ((int)$od[dl_id] > 0) {
-        $dl = sql_fetch(" select * from {$g5['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+        $dl = sql_fetch(" select * from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
         $delivery_list['dl_url']          = $dl['dl_url'];
         if (strpos($delivery_list['dl_url'], "=")) $delivery_list['dl_url'] .= $od['od_invoice'];
@@ -105,7 +105,7 @@ if ($od_send_mail)
             $od_shop_memo .= ", 송장번호";
         */
 
-        sql_query(" update {$g5['shop_order_table']} set od_shop_memo = '$od_shop_memo' where od_id = '$od_id' ");
+        sql_query(" update {$g5['g5_shop_order_table']} set od_shop_memo = '$od_shop_memo' where od_id = '$od_id' ");
 
         $admin = get_admin('super');
 

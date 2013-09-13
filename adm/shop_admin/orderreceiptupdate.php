@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/icode.sms.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$sql = " select * from {$g5['shop_order_table']} where od_id = '$od_id' ";
+$sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 
 if(!$od['od_id'])
@@ -23,7 +23,7 @@ $od_misu = ( $od['od_cart_price'] + $od_send_cost + $od_send_cost2 )
            - ( $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'] )
            - ( $od_receipt_price + $od_receipt_point - $od_refund_price );
 
-$sql = " update {$g5['shop_order_table']}
+$sql = " update {$g5['g5_shop_order_table']}
             set od_deposit_name    = '$od_deposit_name',
                 od_bank_account    = '$od_bank_account',
                 od_receipt_time    = '$od_receipt_time',
@@ -57,7 +57,7 @@ if($_POST['od_tno'] && $_POST['od_escrow'] == 1) {
     $arr_numb = array();
 
     // 배송회사정보
-    $sql = " select dl_company from {$g5['shop_delivery_table']} where dl_id = '$dl_id' ";
+    $sql = " select dl_company from {$g5['g5_shop_delivery_table']} where dl_id = '$dl_id' ";
     $row = sql_fetch($sql);
 
     $arr_tno[0] = $_POST['od_tno'];

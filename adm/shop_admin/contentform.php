@@ -6,7 +6,7 @@ include_once(G5_EDITOR_LIB);
 auth_check($auth[$sub_menu], "w");
 
 // 상단, 하단 파일경로 필드 추가
-$sql = " ALTER TABLE `{$g5['shop_content_table']}`  ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
+$sql = " ALTER TABLE `{$g5['g5_shop_content_table']}`  ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
                                                 ADD `co_include_tail` VARCHAR( 255 ) NOT NULL ";
 sql_query($sql, false);
 
@@ -18,7 +18,7 @@ if ($w == "u")
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from {$g5['shop_content_table']} where co_id = '$co_id' ";
+    $sql = " select * from {$g5['g5_shop_content_table']} where co_id = '$co_id' ";
     $co = sql_fetch($sql);
     if (!$co['co_id'])
         alert('등록된 자료가 없습니다.');

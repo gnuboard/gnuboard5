@@ -17,7 +17,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         $img_width  = 230;
         $img_height = 230;
 
-        $sql_common = " from {$g5['shop_personalpay_table']}
+        $sql_common = " from {$g5['g5_shop_personalpay_table']}
                         where pp_use = '1'
                           and pp_tno = '' ";
 

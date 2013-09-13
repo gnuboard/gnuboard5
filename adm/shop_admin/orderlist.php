@@ -52,7 +52,7 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g5['shop_order_table']} $sql_search ";
+$sql_common = " from {$g5['g5_shop_order_table']} $sql_search ";
 
 $sql = " select count(od_id) as cnt " . $sql_common;
 $row = sql_fetch($sql);
@@ -179,7 +179,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         $od_cnt = 0;
         if ($row['mb_id'])
         {
-            $sql2 = " select count(*) as cnt from {$g5['shop_order_table']} where mb_id = '{$row['mb_id']}' ";
+            $sql2 = " select count(*) as cnt from {$g5['g5_shop_order_table']} where mb_id = '{$row['mb_id']}' ";
             $row2 = sql_fetch($sql2);
             $od_cnt = $row2['cnt'];
         }

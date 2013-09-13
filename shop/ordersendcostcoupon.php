@@ -9,7 +9,7 @@ $send_cost = $_POST['send_cost'];
 
 // 쿠폰정보
 $sql = " select *
-            from {$g5['shop_coupon_table']}
+            from {$g5['g5_shop_coupon_table']}
             where mb_id IN ( '{$member['mb_id']}', '전체회원' )
               and cp_method = '3'
               and cp_start <= '".G5_TIME_YMD."'

@@ -6,7 +6,7 @@ if (preg_match("/[^0-9a-z]/i", $ca_id)) {
     die("{\"error\":\"분류코드는 영문자 숫자 만 입력 가능합니다.\"}");
 }
 
-$sql = " select ca_name from {$g5['shop_category_table']} where ca_id = '{$ca_id}' ";
+$sql = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '{$ca_id}' ";
 $row = sql_fetch($sql);
 if ($row['ca_name']) {
     $ca_name = addslashes($row['ca_name']);

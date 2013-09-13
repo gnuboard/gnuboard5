@@ -8,7 +8,7 @@ $g5['title'] = $member['mb_nick'].' 님의 쿠폰 내역';
 include_once(G5_PATH.'/head.sub.php');
 
 $sql = " select cp_id, cp_subject, cp_method, cp_target, cp_start, cp_end, cp_type, cp_price
-            from {$g5['shop_coupon_table']}
+            from {$g5['g5_shop_coupon_table']}
             where mb_id = '{$member['mb_id']}'
               and cp_start <= '".G5_TIME_YMD."'
               and cp_end >= '".G5_TIME_YMD."'
@@ -37,7 +37,7 @@ $result = sql_query($sql);
             continue;
 
         if($row['cp_method'] == 1) {
-            $sql = " select ca_name from {$g5['shop_category_table']} where ca_id = '{$row['cp_target']}' ";
+            $sql = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '{$row['cp_target']}' ";
             $ca = sql_fetch($sql);
             $cp_target = $ca['ca_name'].'의 상품할인';
         } else if($row['cp_method'] == 2) {
@@ -45,7 +45,7 @@ $result = sql_query($sql);
         } else if($row['cp_method'] == 3) {
             $cp_target = '배송비 할인';
         } else {
-            $sql = " select it_name from {$g5['shop_item_table']} where it_id = '{$row['cp_target']}' ";
+            $sql = " select it_name from {$g5['g5_shop_item_table']} where it_id = '{$row['cp_target']}' ";
             $it = sql_fetch($sql);
             $cp_target = $it['it_name'].' 상품할인';
         }

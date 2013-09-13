@@ -13,7 +13,7 @@ if($ca) {
     $sql_where = " where length(ca_id) = '2' ";
 }
 
-$sql = " select ca_id, ca_name from {$g5['shop_category_table']}
+$sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']}
           $sql_where
             and ca_use = '1'
           order by ca_id ";

@@ -5,7 +5,7 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
-$sql = " select * from {$g5['shop_faq_master_table']} where fm_id = '$fm_id' ";
+$sql = " select * from {$g5['g5_shop_faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
 $html_title = 'FAQ '.$fm['fm_subject'];;
@@ -16,7 +16,7 @@ if ($w == "u")
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from {$g5['shop_faq_table']} where fa_id = '$fa_id' ";
+    $sql = " select * from {$g5['g5_shop_faq_table']} where fa_id = '$fa_id' ";
     $fa = sql_fetch($sql);
     if (!$fa['fa_id']) alert("등록된 자료가 없습니다.");
 

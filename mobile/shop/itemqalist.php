@@ -8,7 +8,7 @@ $stx = escape_trim($_REQUEST['stx']);
 $g5['title'] = '상품문의';
 include_once(G5_MSHOP_PATH.'/_head.php');
 
-$sql_common = " from `{$g5['shop_item_qa_table']}` a join `{$g5['shop_item_table']}` b on (a.it_id=b.it_id) ";
+$sql_common = " from `{$g5['g5_shop_item_qa_table']}` a join `{$g5['g5_shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where (1) ";
 
 if(!$sfl)

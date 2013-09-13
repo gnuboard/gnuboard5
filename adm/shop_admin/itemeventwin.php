@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$sql = " select ev_subject from {$g5['shop_event_table']} where ev_id = '$ev_id' ";
+$sql = " select ev_subject from {$g5['g5_shop_event_table']} where ev_id = '$ev_id' ";
 $ev = sql_fetch($sql);
 
 $g5['title'] = $ev['ev_subject'].' 이벤트상품';
@@ -23,8 +23,8 @@ include_once(G5_PATH.'/head.sub.php');
     </thead>
     <tbody>
     <?php
-    $sql = " select b.it_id, b.it_name, b.it_use from {$g5['shop_event_item_table']} a
-               left join {$g5['shop_item_table']} b on (a.it_id=b.it_id)
+    $sql = " select b.it_id, b.it_name, b.it_use from {$g5['g5_shop_event_item_table']} a
+               left join {$g5['g5_shop_item_table']} b on (a.it_id=b.it_id)
               where a.ev_id = '$ev_id'
               order by b.it_id desc ";
     $result = sql_query($sql);

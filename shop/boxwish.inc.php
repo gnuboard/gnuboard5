@@ -8,7 +8,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <ul>
     <?php
-    $hsql  = " select a.it_id, b.it_name from {$g5['shop_wish_table']} a, {$g5['shop_item_table']} b ";
+    $hsql  = " select a.it_id, b.it_name from {$g5['g5_shop_wish_table']} a, {$g5['g5_shop_item_table']} b ";
     $hsql .= " where a.mb_id = '{$member['mb_id']}' and a.it_id  = b.it_id order by a.wi_id desc ";
     $hresult = sql_query($hsql);
     for ($i=0; $row=sql_fetch_array($hresult); $i++)

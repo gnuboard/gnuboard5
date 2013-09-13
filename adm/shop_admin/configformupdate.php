@@ -22,7 +22,7 @@ $de_kcp_mid = substr($_POST['de_kcp_mid'],0,3);
 //
 // 영카트 default
 //
-$sql = " update {$g5['shop_default_table']}
+$sql = " update {$g5['g5_shop_default_table']}
             set de_admin_company_owner      = '$de_admin_company_owner',
                 de_admin_company_name       = '$de_admin_company_name',
                 de_admin_company_saupja_no  = '$de_admin_company_saupja_no',

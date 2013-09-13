@@ -16,14 +16,14 @@ if (!$exists) {
     $len4 = $tmp_ca_id_len + 4;
 
     // 차차기 분류의 건수를 얻음
-    $sql = " select count(*) as cnt from {$g5['shop_category_table']}
+    $sql = " select count(*) as cnt from {$g5['g5_shop_category_table']}
               where ca_id like '$tmp_ca_id%'
                 and ca_use = '1'
                 and length(ca_id) = $len4 ";
     $row = sql_fetch($sql);
     $cnt = $row['cnt'];
 
-    $sql = " select ca_id, ca_name from {$g5['shop_category_table']}
+    $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']}
               where ca_id like '$tmp_ca_id%'
                 and ca_use = '1'
                 and length(ca_id) = $len2 order by ca_id ";
@@ -36,7 +36,7 @@ if (!$exists) {
         $str .= '<li>';
         if ($cnt) {
             $str .= '<a href="./list.php?ca_id='.$row['ca_id'].'" class="sct_ct_parent '.$sct_ct_here.'">'.$row['ca_name'].'</a>';
-            $sql2 = " select ca_id, ca_name from {$g5['shop_category_table']}
+            $sql2 = " select ca_id, ca_name from {$g5['g5_shop_category_table']}
                        where ca_id like '{$row['ca_id']}%'
                          and ca_use = '1'
                          and length(ca_id) = $len4 order by ca_id ";

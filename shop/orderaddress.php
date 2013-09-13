@@ -5,13 +5,13 @@ if(!$is_member)
     alert_close('회원이시라면 회원로그인 후 이용해 주십시오.');
 
 if($w == 'd') {
-    $sql = " delete from {$g5['shop_order_address_table']} where mb_id = '{$member['mb_id']}' and ad_id = '$ad_id' ";
+    $sql = " delete from {$g5['g5_shop_order_address_table']} where mb_id = '{$member['mb_id']}' and ad_id = '$ad_id' ";
     sql_query($sql);
     goto_url($_SERVER['PHP_SELF']);
 }
 
 $sql = " select *
-            from {$g5['shop_order_address_table']}
+            from {$g5['g5_shop_order_address_table']}
             where mb_id = '{$member['mb_id']}'
             order by ad_default, ad_id desc ";
 $result = sql_query($sql);

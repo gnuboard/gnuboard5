@@ -11,7 +11,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 // 배송회사리스트 ---------------------------------------------
 $delivery_options = '<option value="">선택하세요</option>'.PHP_EOL;
-$sql = " select * from {$g5['shop_delivery_table']} order by dl_order ";
+$sql = " select * from {$g5['g5_shop_delivery_table']} order by dl_order ";
 $result = sql_query($sql);
 for($i=0; $row=sql_fetch_array($result); $i++) {
     $delivery_options .= '<option value="'.$row['dl_id'].'">'.$row['dl_company'].'</option>'.PHP_EOL;
@@ -33,7 +33,7 @@ if ($sel_ca_id != "") {
 
 if ($sel_field == "")  $sel_field = "od_id";
 
-$sql_common = " from {$g5['shop_order_table']}
+$sql_common = " from {$g5['g5_shop_order_table']}
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -43,7 +43,7 @@ if ($chk_misu) {
     $total_count = mysql_num_rows($result);
 }
 else {
-    $row = sql_fetch("select count(od_id) as cnt from {$g5['shop_order_table']} $sql_search ");
+    $row = sql_fetch("select count(od_id) as cnt from {$g5['g5_shop_order_table']} $sql_search ");
     $total_count = $row['cnt'];
 }
 

@@ -8,10 +8,10 @@ $g5['title'] = 'FAQ 상세관리';
 if ($fm_subject) $g5['title'] .= ' : '.$fm_subject;
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql = " select * from {$g5['shop_faq_master_table']} where fm_id = '$fm_id' ";
+$sql = " select * from {$g5['g5_shop_faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
-$sql_common = " from {$g5['shop_faq_table']} where fm_id = '$fm_id' ";
+$sql_common = " from {$g5['g5_shop_faq_table']} where fm_id = '$fm_id' ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -49,7 +49,7 @@ $result = sql_query($sql);
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $row1 = sql_fetch(" select COUNT(*) as cnt from {$g5['shop_faq_table']} where fm_id = '{$row['fm_id']}' ");
+        $row1 = sql_fetch(" select COUNT(*) as cnt from {$g5['g5_shop_faq_table']} where fm_id = '{$row['fm_id']}' ");
         $cnt = $row1[cnt];
 
         $s_mod = icon("수정", "");

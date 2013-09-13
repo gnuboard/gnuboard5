@@ -71,7 +71,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     <select name="sel_ca_id" id="sel_ca_id">
         <option value=''>전체분류</option>
         <?php
-        $sql1 = " select ca_id, ca_name from {$g5['shop_category_table']} order by ca_id ";
+        $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
             $len = strlen($row1['ca_id']) / 2 - 1;
@@ -140,12 +140,12 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         $href = G5_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
         // 선택옵션이 있을 경우 주문대기 수량 계산하지 않음
-        $sql2 = " select count(*) as cnt from {$g5['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' ";
+        $sql2 = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' ";
         $row2 = sql_fetch($sql2);
 
         if(!$row2['cnt']) {
             $sql1 = " select SUM(ct_qty) as sum_qty
-                        from {$g5['shop_cart_table']}
+                        from {$g5['g5_shop_cart_table']}
                        where it_id = '{$row['it_id']}'
                          and ct_stock_use = '0'
                          and ct_status in ('주문', '준비') ";

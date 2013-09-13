@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g5['title'] = '이벤트관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g5['shop_event_table']} ";
+$sql_common = " from {$g5['g5_shop_event_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -42,7 +42,7 @@ $result = sql_query($sql);
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
 
         $href = "";
-        $sql = " select count(ev_id) as cnt from {$g5['shop_event_item_table']} where ev_id = '{$row['ev_id']}' ";
+        $sql = " select count(ev_id) as cnt from {$g5['g5_shop_event_item_table']} where ev_id = '{$row['ev_id']}' ";
         $ev = sql_fetch($sql);
         if ($ev['cnt']) {
             $href = '<a href="javascript:;" onclick="itemeventwin('.$row['ev_id'].');">';

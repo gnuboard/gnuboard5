@@ -141,12 +141,12 @@ if(!$default['de_card_test']) {
     /* = -------------------------------------------------------------------------- = */
     if ( $tx_cd == "TX00" )
     {
-        $sql = " select pp_id, od_id from {$g5['shop_personalpay_table']} where pp_id = '$order_no' and pp_tno = '$tno' ";
+        $sql = " select pp_id, od_id from {$g5['g5_shop_personalpay_table']} where pp_id = '$order_no' and pp_tno = '$tno' ";
         $row = sql_fetch($sql);
 
         if($row['pp_id']) {
             // 개인결제 UPDATE
-            $sql = " update {$g5['shop_personalpay_table']}
+            $sql = " update {$g5['g5_shop_personalpay_table']}
                         set pp_receipt_price    = '$ipgm_mnyx',
                             pp_receipt_time     = '$tx_tm'
                         where pp_id = '$order_no'
@@ -156,7 +156,7 @@ if(!$default['de_card_test']) {
             if($row['od_id']) {
                 // 주문서 UPDATE
                 $receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $tx_tm);
-                $sql = " update {$g5['shop_order_table']}
+                $sql = " update {$g5['g5_shop_order_table']}
                             set od_receipt_price = od_receipt_price + '$ipgm_mnyx',
                                 od_receipt_time = '$tx_tm',
                                 od_status = '".G5_OD_STATUS_SETTLE."',
@@ -166,7 +166,7 @@ if(!$default['de_card_test']) {
             }
         } else {
             // 주문서 UPDATE
-            $sql = " update {$g5['shop_order_table']}
+            $sql = " update {$g5['g5_shop_order_table']}
                         set od_receipt_price = '$ipgm_mnyx',
                             od_receipt_time = '$tx_tm',
                             od_status = '".G5_OD_STATUS_SETTLE."'

@@ -6,8 +6,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
-$sql_common = " from {$g5['shop_item_table']} a,
-                     {$g5['shop_category_table']} b
+$sql_common = " from {$g5['g5_shop_item_table']} a,
+                     {$g5['g5_shop_category_table']} b
                where a.ca_id=b.ca_id
                  and a.it_use = 1
                  and b.ca_use = 1
@@ -86,7 +86,7 @@ $total_count = $row['cnt'];
     {
         global $g5, $search_str , $default , $image_rate , $cart_dir;
 
-        $sql = " select ca_name from {$g5['shop_category_table']} where ca_id = '{$save['ca_id']}' ";
+        $sql = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '{$save['ca_id']}' ";
         $row = sql_fetch($sql);
         $ca_name = $row['ca_name'];
 
@@ -113,7 +113,7 @@ $total_count = $row['cnt'];
                             it_type3,
                             it_type4,
                             it_type5
-                       from {$g5['shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
+                       from {$g5['g5_shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
             $row = sql_fetch($sql);
 
             $image = get_it_image($row['it_id'], (int)($default['de_simg_width']), (int)($default['de_simg_height']), true);

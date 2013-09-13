@@ -16,7 +16,7 @@ $sql_common = " fa_subject = '$fa_subject',
 
 if ($w == "")
 {
-    $sql = " insert {$g5['shop_faq_table']}
+    $sql = " insert {$g5['g5_shop_faq_table']}
                 set fm_id ='$fm_id',
                     $sql_common ";
     sql_query($sql);
@@ -25,14 +25,14 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    $sql = " update {$g5['shop_faq_table']}
+    $sql = " update {$g5['g5_shop_faq_table']}
                 set $sql_common
               where fa_id = '$fa_id' ";
     sql_query($sql);
 }
 else if ($w == "d")
 {
-	$sql = " delete from {$g5['shop_faq_table']} where fa_id = '$fa_id' ";
+	$sql = " delete from {$g5['g5_shop_faq_table']} where fa_id = '$fa_id' ";
     sql_query($sql);
 }
 

@@ -23,7 +23,7 @@ $url = "./item.php?it_id=$it_id&amp;_=".get_token()."#sit_qa";
 
 if ($w == "")
 {
-    $sql = "insert {$g5['shop_item_qa_table']}
+    $sql = "insert {$g5['g5_shop_item_qa_table']}
                set it_id = '$it_id',
                    mb_id = '{$member['mb_id']}',
                    iq_name  = '$iq_name',
@@ -38,15 +38,15 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    if (!$is_amdin) 
+    if (!$is_amdin)
     {
-        $sql = " select count(*) as cnt from {$g5['shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
+        $sql = " select count(*) as cnt from {$g5['g5_shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
         $row = sql_fetch($sql);
         if (!$row['cnt'])
             alert("자신의 상품문의만 수정하실 수 있습니다.");
     }
 
-    $sql = " update {$g5['shop_item_qa_table']}
+    $sql = " update {$g5['g5_shop_item_qa_table']}
                 set iq_subject = '$iq_subject',
                     iq_question = '$iq_question'
               where iq_id = '$iq_id' ";
@@ -56,9 +56,9 @@ else if ($w == "u")
 }
 else if ($w == "d")
 {
-    if (!$is_admin) 
+    if (!$is_admin)
     {
-        $sql = " select iq_answer from {$g5['shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
+        $sql = " select iq_answer from {$g5['g5_shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
         $row = sql_fetch($sql);
         if (!$row)
             alert("자신의 상품문의만 삭제하실 수 있습니다.");
@@ -67,8 +67,8 @@ else if ($w == "d")
             alert("답변이 있는 상품문의는 삭제하실 수 없습니다.");
     }
 
-    //$sql = " delete from {$g5['shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
-    $sql = " delete from {$g5['shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
+    //$sql = " delete from {$g5['g5_shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
+    $sql = " delete from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
     sql_query($sql);
 
     alert("상품문의가 삭제 되었습니다.", $url);

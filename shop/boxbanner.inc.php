@@ -1,6 +1,6 @@
 <?php
 // 배너 출력
-$sql = " select * from {$g5['shop_banner_table']} where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time and bn_position = '$position' order by bn_order, bn_id desc ";
+$sql = " select * from {$g5['g5_shop_banner_table']} where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time and bn_position = '$position' order by bn_order, bn_id desc ";
 $result = sql_query($sql);
 ?>
 

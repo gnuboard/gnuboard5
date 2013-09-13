@@ -7,7 +7,7 @@ if (G5_IS_MOBILE) {
 }
 
 $sql = " select *
-           from {$g5['shop_category_table']}
+           from {$g5['g5_shop_category_table']}
           where ca_id = '$ca_id'
             and ca_use = '1'  ";
 $ca = sql_fetch($sql);

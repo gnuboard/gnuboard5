@@ -7,7 +7,7 @@ if (!$is_member)
 if ($w == "d")
 {
     $wi_id = trim($_GET['wi_id']);
-    $sql = " delete from {$g5['shop_wish_table']}
+    $sql = " delete from {$g5['g5_shop_wish_table']}
               where wi_id = '$wi_id'
                 and mb_id = '{$member['mb_id']}' ";
     sql_query($sql);
@@ -22,15 +22,15 @@ else
                         wi_time = '".G5_TIME_YMDHIS."',
                         wi_ip = '$REMOTE_ADDR' ";
 
-    $sql = " select wi_id from {$g5['shop_wish_table']}
+    $sql = " select wi_id from {$g5['g5_shop_wish_table']}
               where mb_id = '{$member['mb_id']}' and it_id = '$it_id' ";
     $row = sql_fetch($sql);
     if ($row['wi_id']) { // 이미 있다면 삭제함
-        $sql = " delete from {$g5['shop_wish_table']} where wi_id = '{$row['wi_id']}' ";
+        $sql = " delete from {$g5['g5_shop_wish_table']} where wi_id = '{$row['wi_id']}' ";
         sql_query($sql);
     }
 
-    $sql = " insert {$g5['shop_wish_table']}
+    $sql = " insert {$g5['g5_shop_wish_table']}
                 set mb_id = '{$member['mb_id']}',
                     it_id = '$it_id',
                     wi_time = '".G5_TIME_YMDHIS."',

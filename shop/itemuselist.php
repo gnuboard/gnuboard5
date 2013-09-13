@@ -14,7 +14,7 @@ $stx = escape_trim($_REQUEST['stx']);
 $g5['title'] = '사용후기';
 include_once('./_head.php');
 
-$sql_common = " from `{$g5['shop_item_use_table']}` a join `{$g5['shop_item_table']}` b on (a.it_id=b.it_id) ";
+$sql_common = " from `{$g5['g5_shop_item_use_table']}` a join `{$g5['g5_shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where a.is_confirm = '1' ";
 
 if(!$sfl)
@@ -95,7 +95,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         $is_content = get_view_thumbnail($row['is_content'], 500);
         $small_image = $row['it_id'];
 
-        $row2 = sql_fetch(" select it_name from {$g5['shop_item_table']} where it_id = '{$row['it_id']}' ");
+        $row2 = sql_fetch(" select it_name from {$g5['g5_shop_item_table']} where it_id = '{$row['it_id']}' ");
         $it_href = G5_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
         if ($i == 0) echo '<ol>';

@@ -5,11 +5,11 @@ $it_id = $_GET['it_id'];
 $io_id = $_GET['opt'];
 
 // 상품정보
-$sql = " select * from {$g5['shop_item_table']} where it_id = '$it_id' ";
+$sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 
 // 상품옵션체크
-$sql = " select count(*) as cnt from {$g5['shop_item_option_table']} where it_id = '$it_id' and io_type = '0' and io_use = '1' ";
+$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' and io_type = '0' and io_use = '1' ";
 $cnt = sql_fetch($sql);
 
 if(($io_id && !$cnt['cnt']) || (!$io_id && $cnt['cnt']))
@@ -17,7 +17,7 @@ if(($io_id && !$cnt['cnt']) || (!$io_id && $cnt['cnt']))
 
 // 옵션정보
 if($io_id && $it['it_option_subject']) {
-    $sql = " select * from {$g5['shop_item_option_table']} where it_id = '$it_id' and io_id = '$io_id' ";
+    $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' and io_id = '$io_id' ";
     $opt = sql_fetch($sql);
 
     $subj = explode(',', $it['it_option_subject']);

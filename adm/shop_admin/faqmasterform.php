@@ -13,7 +13,7 @@ if ($w == "u")
     $html_title .= ' 수정';
     $readonly = ' readonly';
 
-    $sql = " select * from {$g5['shop_faq_master_table']} where fm_id = '$fm_id' ";
+    $sql = " select * from {$g5['g5_shop_faq_master_table']} where fm_id = '$fm_id' ";
     $fm = sql_fetch($sql);
     if (!$fm['fm_id']) alert('등록된 자료가 없습니다.');
 }

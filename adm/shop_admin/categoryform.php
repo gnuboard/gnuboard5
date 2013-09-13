@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "w");
 
 $category_path = G5_DATA_PATH."/category";
 
-$sql_common = " from {$g5['shop_category_table']} ";
+$sql_common = " from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
     $sql_common .= " where ca_mb_id = '{$member['mb_id']}' ";
 
@@ -22,7 +22,7 @@ if ($w == "")
 
     $len2 = $len + 1;
 
-    $sql = " select MAX(SUBSTRING(ca_id,$len2,2)) as max_subid from {$g5['shop_category_table']}
+    $sql = " select MAX(SUBSTRING(ca_id,$len2,2)) as max_subid from {$g5['g5_shop_category_table']}
               where SUBSTRING(ca_id,1,$len) = '$ca_id' ";
     $row = sql_fetch($sql);
 
@@ -42,7 +42,7 @@ if ($w == "")
 
     if ($ca_id) // 2단계이상 분류
     {
-        $sql = " select * from {$g5['shop_category_table']} where ca_id = '$ca_id' ";
+        $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
         $ca = sql_fetch($sql);
         $html_title = $ca['ca_name'] . " 하위분류추가";
         $ca['ca_name'] = "";
@@ -66,7 +66,7 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    $sql = " select * from {$g5['shop_category_table']} where ca_id = '$ca_id' ";
+    $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
     $ca = sql_fetch($sql);
     if (!$ca['ca_id'])
         alert("자료가 없습니다.");
@@ -76,7 +76,7 @@ else if ($w == "u")
 }
 
 if (!isset($ca['ca_mobile_skin'])) {
-    sql_query(" ALTER TABLE `{$g5['shop_category_table']}`
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
                     ADD `ca_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ca_skin`,
                     ADD `ca_mobile_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `ca_list_row`,
                     ADD `ca_mobile_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_width`,
@@ -86,10 +86,10 @@ if (!isset($ca['ca_mobile_skin'])) {
 }
 
 // 인증사용필드추가
-$sql = " select ca_hp_cert_use from {$g5['shop_category_table']} limit 1 ";
+$sql = " select ca_hp_cert_use from {$g5['g5_shop_category_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g5['shop_category_table']}`
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
                     ADD `ca_hp_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ca_mb_id`,
                     ADD `ca_adult_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ca_hp_cert_use` ", false);
 }

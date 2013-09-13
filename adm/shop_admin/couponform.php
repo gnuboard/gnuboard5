@@ -9,7 +9,7 @@ $g5['title'] = '쿠폰관리';
 if ($w == 'u') {
     $html_title = '쿠폰 수정';
 
-    $sql = " select * from {$g5['shop_coupon_table']} where cp_id = '$cp_id' ";
+    $sql = " select * from {$g5['g5_shop_coupon_table']} where cp_id = '$cp_id' ";
     $cp = sql_fetch($sql);
     if (!$cp['cp_id']) alert('등록된 자료가 없습니다.');
 }
