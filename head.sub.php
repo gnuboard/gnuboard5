@@ -56,18 +56,18 @@ echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge">';
 <![endif]-->
 <script>
 // 자바스크립트에서 사용하는 전역변수 선언
-var g4_url       = "<?php echo G5_URL ?>";
-var g4_bbs_url   = "<?php echo G5_BBS_URL ?>";
-var g4_is_member = "<?php echo isset($is_member)?$is_member:''; ?>";
-var g4_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
-var g4_is_mobile = "<?php echo G5_IS_MOBILE ?>";
-var g4_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
-var g4_sca       = "<?php echo isset($sca)?$sca:''; ?>";
-var g4_editor    = "<?php echo isset($config['cf_editor'])?$config['cf_editor']:''; ?>";
-var g4_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
+var g5_url       = "<?php echo G5_URL ?>";
+var g5_bbs_url   = "<?php echo G5_BBS_URL ?>";
+var g5_is_member = "<?php echo isset($is_member)?$is_member:''; ?>";
+var g5_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
+var g5_is_mobile = "<?php echo G5_IS_MOBILE ?>";
+var g5_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
+var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
+var g5_editor    = "<?php echo isset($config['cf_editor'])?$config['cf_editor']:''; ?>";
+var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
 <?php
 if ($is_admin) {
-    echo 'var g4_admin_url = "'.G5_ADMIN_URL.'";'.PHP_EOL;
+    echo 'var g5_admin_url = "'.G5_ADMIN_URL.'";'.PHP_EOL;
 }
 ?>
 </script>
@@ -81,7 +81,7 @@ if ($is_admin) {
 <script src="<?php echo G5_JS_URL ?>/wrest.js"></script>
 <?php
 if(G5_IS_MOBILE) {
-    echo '<script> set_cookie("device_width", screen.width, 6, g4_cookie_domain); </script>'.PHP_EOL;
+    echo '<script> set_cookie("device_width", screen.width, 6, g5_cookie_domain); </script>'.PHP_EOL;
     echo '<script src="'.G5_JS_URL.'/modernizr.custom.70111.js"></script>'.PHP_EOL; // overflow scroll 감지
 }
 //if(!defined('G5_IS_ADMIN'))
