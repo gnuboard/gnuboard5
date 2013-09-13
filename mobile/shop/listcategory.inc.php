@@ -14,7 +14,6 @@ $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']}
 $result = sql_query($sql);
 while ($row=sql_fetch_array($result)) {
 
-    //$row2 = sql_fetch(" select count(*) as cnt from $g5[shop_category_table] where ca_id like '$row[ca_id]%' ");
     $row2 = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1'  ");
 
     $str .= '<li><a href="./list.php?ca_id='.$row['ca_id'].'">'.$row['ca_name'].' ('.$row2['cnt'].')</a></li>';

@@ -94,7 +94,7 @@ $total_count = $row['cnt'];
          $ca_temp = "";
          if(strlen($save['ca_id']) > 2) // 중분류 이하일 경우
          {
-            $sql2 = " select ca_name from $g5[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
+            $sql2 = " select ca_name from {$g5['g5_shop_category_table']} where ca_id='".substr($save['ca_id'],0,2)."' ";
             $row2 = sql_fetch($sql2);
             $ca_temp = '<a href="'.G5_SHOP_URL.'/list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> ';
          }

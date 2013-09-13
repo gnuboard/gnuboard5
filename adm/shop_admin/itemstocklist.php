@@ -22,7 +22,7 @@ if ($sel_field == "")  $sel_field = "it_name";
 if ($sort1 == "") $sort1 = "it_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = "  from $g5[shop_item_table] ";
+$sql_common = "  from {$g5['g5_shop_item_table']} ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음

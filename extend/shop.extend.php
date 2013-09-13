@@ -24,8 +24,8 @@ if (G5_HTTPS_DOMAIN) {
 }
 
 // 미수금에 대한 QUERY 문
-// 테이블 a 는 주문서 ($g5[shop_order_table])
-// 테이블 b 는 장바구니 ($g5[shop_cart_table])
+// 테이블 a 는 주문서 ($g5['g5_shop_order_table'])
+// 테이블 b 는 장바구니 ($g5['g5_shop_cart_table'])
 define(_MISU_QUERY_, "
     ( od_cart_amount + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon - od_receipt_amount - od_cancel_amount ) as misu,
     ( od_cart_coupon + od_coupon + od_send_coupon ) as couponamount

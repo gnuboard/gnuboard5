@@ -149,7 +149,7 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g5[shop_item_use_table]}
+    $sql = " select * from {$g5['g5_shop_item_use_table']}
               where is_confirm = 0
               order by is_id desc
               limit $max_limit ";

@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $g5['title'] = '배송일괄처리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-//sql_query(" update $g5[shop_cart_table] set ct_status = '완료' where ct_status = '배송' ");
+//sql_query(" update {$g5['g5_shop_cart_table']} set ct_status = '완료' where ct_status = '배송' ");
 
 // 배송회사리스트 ---------------------------------------------
 $delivery_options = '<option value="">선택하세요</option>'.PHP_EOL;
