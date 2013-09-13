@@ -1,14 +1,14 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/thumb.lib.php');
+include_once(G5_LIB_PATH.'/thumb.lib.php');
 
 $sfl = escape_trim($_REQUEST['sfl']);
 $stx = escape_trim($_REQUEST['stx']);
 
-$g4['title'] = '사용후기';
-include_once(G4_MSHOP_PATH.'/_head.php');
+$g5['title'] = '사용후기';
+include_once(G5_MSHOP_PATH.'/_head.php');
 
-$sql_common = " from `{$g4['shop_item_use_table']}` a join `{$g4['shop_item_table']}` b on (a.it_id=b.it_id) ";
+$sql_common = " from `{$g5['shop_item_use_table']}` a join `{$g5['shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where a.is_confirm = '1' ";
 
 if(!$sfl)
@@ -90,8 +90,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         $is_content = get_view_thumbnail($row['is_content'], 500);
         $small_image = $row['it_id'];
 
-        $row2 = sql_fetch(" select it_name from {$g4['shop_item_table']} where it_id = '{$row['it_id']}' ");
-        $it_href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
+        $row2 = sql_fetch(" select it_name from {$g5['shop_item_table']} where it_id = '{$row['it_id']}' ");
+        $it_href = G5_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
         if ($i == 0) echo '<ol>';
     ?>
@@ -113,7 +113,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
                 <dt>작성일</dt>
                 <dd><?php echo substr($row['is_time'],0,10); ?></dd>
                 <dt>평가점수</dt>
-                <dd><img src="<?php echo G4_URL; ?>/img/shop/s_star<?php echo $star; ?>.png" alt="별<?php echo $star; ?>개"></dd>
+                <dd><img src="<?php echo G5_URL; ?>/img/shop/s_star<?php echo $star; ?>.png" alt="별<?php echo $star; ?>개"></dd>
             </dl>
 
             <div id="sps_con_<?php echo $i; ?>" style="display:none;">
@@ -150,5 +150,5 @@ $(function(){
 <!-- } 전체 상품 사용후기 목록 끝 -->
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 $sql = " select *
-           from {$g4['shop_category_table']}
+           from {$g5['shop_category_table']}
           where ca_id = '$ca_id'
             and ca_use = '1'  ";
 $ca = sql_fetch($sql);
@@ -27,22 +27,22 @@ if(!$is_admin) {
     }
 }
 
-$g4['title'] = $ca['ca_name'].' 상품리스트';
+$g5['title'] = $ca['ca_name'].' 상품리스트';
 
-include_once(G4_MSHOP_PATH.'/_head.php');
+include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 스킨을 지정했다면 지정한 스킨을 사용함 (스킨의 다양화)
 //if ($skin) $ca[ca_skin] = $skin;
 
 if ($is_admin)
-    echo '<div class="sct_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
+    echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
 ?>
 
 <div id="sct">
 
     <?php
     $nav_ca_id = $ca_id;
-    include G4_MSHOP_PATH.'/navigation1.inc.php';
+    include G5_MSHOP_PATH.'/navigation1.inc.php';
 
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_mobile_head_html']).'</div>';
@@ -54,12 +54,12 @@ if ($is_admin)
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
     // 리스트 유형별로 출력
-    $list_file = G4_MSHOP_SKIN_PATH.'/'.$ca['ca_mobile_skin'];
+    $list_file = G5_MSHOP_SKIN_PATH.'/'.$ca['ca_mobile_skin'];
     if (file_exists($list_file)) {
-        include G4_MSHOP_PATH.'/list.sort.php';
+        include G5_MSHOP_PATH.'/list.sort.php';
 
         // 상품 보기 타입 변경 버튼
-        include G4_SHOP_PATH.'/list.sub.php';
+        include G5_SHOP_PATH.'/list.sub.php';
 
         // 총몇개
         $items = $ca['ca_mobile_list_mod'];
@@ -104,7 +104,7 @@ if ($is_admin)
 
     <?php
     // 상품 보기 타입 변경 처리 스크립트
-    include G4_SHOP_PATH.'/list.sub2.php';
+    include G5_SHOP_PATH.'/list.sub2.php';
 
     $qstr1 .= 'ca_id='.$ca_id;
     if($skin)
@@ -120,7 +120,7 @@ if ($is_admin)
 </div>
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 
 echo "\n<!-- {$ca['ca_mobile_skin']} -->\n";
 ?>

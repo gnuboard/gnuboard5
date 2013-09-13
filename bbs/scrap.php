@@ -4,12 +4,12 @@ include_once('./_common.php');
 if (!$is_member)
     alert_close('회원만 조회하실 수 있습니다.');
 
-$g4['title'] = $member['mb_nick'].'님의 스크랩';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = $member['mb_nick'].'님의 스크랩';
+include_once(G5_PATH.'/head.sub.php');
 
 $list = array();
 
-$sql_common = " from {$g4['scrap_table']} where mb_id = '{$member['mb_id']}' ";
+$sql_common = " from {$g5['scrap_table']} where mb_id = '{$member['mb_id']}' ";
 $sql_order = " order by ms_id desc ";
 
 $sql = " select count(*) as cnt $sql_common ";
@@ -36,12 +36,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $num = $total_count - ($page - 1) * $rows - $i;
 
     // 게시판 제목
-    $sql2 = " select bo_subject from {$g4['board_table']} where bo_table = '{$row['bo_table']}' ";
+    $sql2 = " select bo_subject from {$g5['board_table']} where bo_table = '{$row['bo_table']}' ";
     $row2 = sql_fetch($sql2);
     if (!$row2['bo_subject']) $row2['bo_subject'] = '[게시판 없음]';
 
     // 게시물 제목
-    $tmp_write_table = $g4['write_prefix'] . $row['bo_table'];
+    $tmp_write_table = $g5['write_prefix'] . $row['bo_table'];
     $sql3 = " select wr_subject from $tmp_write_table where wr_id = '{$row['wr_id']}' ";
     $row3 = sql_fetch($sql3, FALSE);
     $subject = get_text(cut_str($row3['wr_subject'], 100));
@@ -58,5 +58,5 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 include_once($member_skin_path.'/scrap.skin.php');
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = "$fr_year ~ $to_year 연간 매출현황"; /*레이블 중복 인식과 페이지와의 연결 때문에 year로 바꿈 김혜련 2013-04-04*/
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = "$fr_year ~ $to_year 연간 매출현황"; /*레이블 중복 인식과 페이지와의 연결 때문에 year로 바꿈 김혜련 2013-04-04*/
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)
 {
@@ -35,7 +35,7 @@ $sql = " select od_id,
                 od_misu,
                 (od_cart_price + od_send_cost + od_send_cost2) as orderprice,
                 (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
-           from {$g4['shop_order_table']}
+           from {$g5['shop_order_table']}
           where SUBSTRING(od_time,1,4) between '$fr_year' and '$to_year'
           order by od_time desc ";
 $result = sql_query($sql);
@@ -120,5 +120,5 @@ $result = sql_query($sql);
 </section>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

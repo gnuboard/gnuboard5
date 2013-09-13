@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '패스워드 입력';
+$g5['title'] = '패스워드 입력';
 
 switch ($w) {
     case 'u' :
@@ -30,7 +30,7 @@ switch ($w) {
         alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 
 //if ($board['bo_include_head']) { @include ($board['bo_include_head']); }
 //if ($board['bo_content_head']) { echo stripslashes($board['bo_content_head']); }
@@ -42,12 +42,12 @@ $sql = " select wr_subject from {$write_table}
                       and wr_is_comment = 0 ";
 $row = sql_fetch($sql);
 
-$g4['title'] = $row['wr_subject'];
+$g5['title'] = $row['wr_subject'];
 
 include_once($member_skin_path.'/password.skin.php');
 
 //if ($board['bo_content_tail']) { echo stripslashes($board['bo_content_tail']); }
 //if ($board['bo_include_tail']) { @include ($board['bo_include_tail']); }
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

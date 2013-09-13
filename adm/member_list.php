@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$sql_common = " from {$g4['member_table']} ";
+$sql_common = " from {$g5['member_table']} ";
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -60,7 +60,7 @@ $listall = "";
 if (isset($sfl) || isset($stx)) // 검색일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
-$g4['title'] = '회원관리';
+$g5['title'] = '회원관리';
 include_once('./admin.head.php');
 
 $sql = " select * {$sql_common} {$sql_search} {$sql_order} limit {$from_record}, {$rows} ";
@@ -163,7 +163,7 @@ $colspan = 15;
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 접근가능한 그룹수
-        $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
+        $sql2 = " select count(*) as cnt from {$g5['group_member_table']} where mb_id = '{$row['mb_id']}' ";
         $row2 = sql_fetch($sql2);
         $group = '';
         if ($row2['cnt'])
@@ -178,8 +178,8 @@ $colspan = 15;
         }
         $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">그룹</a>';
 
-        $leave_date = $row['mb_leave_date'] ? $row['mb_leave_date'] : date('Ymd', G4_SERVER_TIME);
-        $intercept_date = $row['mb_intercept_date'] ? $row['mb_intercept_date'] : date('Ymd', G4_SERVER_TIME);
+        $leave_date = $row['mb_leave_date'] ? $row['mb_leave_date'] : date('Ymd', G5_SERVER_TIME);
+        $intercept_date = $row['mb_intercept_date'] ? $row['mb_intercept_date'] : date('Ymd', G5_SERVER_TIME);
 
         $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
@@ -282,7 +282,7 @@ $colspan = 15;
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page='); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page='); ?>
 
 <script>
 function fmemberlist_submit(f)

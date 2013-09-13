@@ -1,18 +1,18 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/search.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/search.php');
     return;
 }
 
-$g4['title'] = "상품 검색 결과";
+$g5['title'] = "상품 검색 결과";
 include_once('./_head.php');
 
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
-$sql_common = " from {$g4['shop_item_table']} a,
-                     {$g4['shop_category_table']} b
+$sql_common = " from {$g5['shop_item_table']} a,
+                     {$g5['shop_category_table']} b
                where a.ca_id=b.ca_id
                  and a.it_use = 1
                  and b.ca_use = 1
@@ -58,9 +58,9 @@ $total_count = $row['cnt'];
     if ($total_count > 0) {
         if (trim($search_str)) {
             // 인기검색어
-            $sql = " insert into {$g4['popular_table']}
+            $sql = " insert into {$g5['popular_table']}
                         set pp_word = '$search_str',
-                            pp_date = '".G4_TIME_YMD."',
+                            pp_date = '".G5_TIME_YMD."',
                             pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
             sql_query($sql, FALSE);
         }
@@ -90,16 +90,16 @@ $total_count = $row['cnt'];
 
     function write_search_save($save)
     {
-        global $g4, $search_str , $default , $image_rate , $cart_dir;
+        global $g5, $search_str , $default , $image_rate , $cart_dir;
 
-        $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$save['ca_id']}' ";
+        $sql = " select ca_name from {$g5['shop_category_table']} where ca_id = '{$save['ca_id']}' ";
         $row = sql_fetch($sql);
 
         // 김선용 2006.12 : 중복 하위분류명이 많으므로 대분류 포함하여 출력
          $ca_temp = "";
          if(strlen($save['ca_id']) > 2) // 중분류 이하일 경우
          {
-             $sql2 = " select ca_name from $g4[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
+             $sql2 = " select ca_name from $g5[shop_category_table] where ca_id='".substr($save['ca_id'],0,2)."' ";
             $row2 = sql_fetch($sql2);
             $ca_temp = '<a href="./list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> &gt; ';
          }
@@ -128,7 +128,7 @@ $total_count = $row['cnt'];
                         it_type3,
                         it_type4,
                         it_type5
-                   from {$g4['shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
+                   from {$g5['shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
         $row = sql_fetch($sql);
 
         $image = get_it_image($row['it_id'], (int)($default['de_simg_width']), (int)($default['de_simg_height']), true);

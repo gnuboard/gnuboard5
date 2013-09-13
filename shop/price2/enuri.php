@@ -48,7 +48,7 @@ include_once('./_common.php');
 // 페이지당 행수
 $page_rows = 1000;
 
-$sql = " select count(*) as cnt from {$g4['shop_item_table']} where it_use = '1' and ca_id LIKE '$ca_id%'";
+$sql = " select count(*) as cnt from {$g5['shop_item_table']} where it_use = '1' and ca_id LIKE '$ca_id%'";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 ?>
@@ -95,7 +95,7 @@ if ($page == "") $page = 1;
 $from_record = ($page - 1) * $page_rows;
 
 $caid = addslashes($ca_id);
-$sql = " select * from {$g4['shop_item_table']}
+$sql = " select * from {$g5['shop_item_table']}
           where it_use = '1'
           and ca_id LIKE '$caid%'
           order by ca_id
@@ -116,13 +116,13 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     $img_url = get_it_imageurl($row['it_id']);
 
     // 상품별옵션
-    $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
+    $sql = " select * from {$g5['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
     $opt_count = @mysql_num_rows($result2);
 
     if(!$opt_count) {
         $it_name = $row['it_name'];
-        $buy_url = G4_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
+        $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
         if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
             $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
         if($delivery)
@@ -162,7 +162,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
                 $it_name .= $sep.$subj[$j].':'.$opt[$j];
                 $sep = ' ';
             }
-            $buy_url = G4_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
+            $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
             $it_price = $row['it_price'] + $row2['io_price'];
             if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
                 $delivery = get_item_sendcost($row['it_id'], ($row['it_price'] + $row2['io_price']), 1);

@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_KCPCERT_PATH.'/kcpcert_config.php');
+include_once(G5_KCPCERT_PATH.'/kcpcert_config.php');
 
 $site_cd       = "";
 $ordr_idxx     = "";
@@ -81,8 +81,8 @@ $ct_cert = new C_CT_CLI;
 $ct_cert->mf_clear();
 
 
-$g4['title'] = '휴대폰인증 결과';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '휴대폰인증 결과';
+include_once(G5_PATH.'/head.sub.php');
 
 // 결과 처리
 
@@ -135,7 +135,7 @@ if( $cert_enc_use == "Y" )
 
         $phone_no = hyphen_hp_number($phone_no);
 
-        $sql = " select mb_id from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
+        $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
         $row = sql_fetch($sql);
         if ($row['mb_id']) {
             alert_close("이미 가입되어 있는 휴대폰번호 입니다.\\n회원아이디 : ".$row['mb_id']);
@@ -147,7 +147,7 @@ if( $cert_enc_use == "Y" )
         $hash_data   = md5($user_name.$cert_type.$birth_day.$md5_cert_no);
 
         // 성인인증결과
-        $adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
+        $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
         $adult = ((int)$birth_day <= (int)$adult_day) ? 1 : 0;
 
         set_session("ss_cert_type",    $cert_type);
@@ -187,5 +187,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

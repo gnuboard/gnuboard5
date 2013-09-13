@@ -4,13 +4,13 @@ include_once('./_common.php');
 if ($is_guest) 
     alert_close('회원만 이용하실 수 있습니다.');
 
-$g4['title'] = '내 쪽지함';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '내 쪽지함';
+include_once(G5_PATH.'/head.sub.php');
 
 // 설정일이 지난 메모 삭제
-$sql = " delete from {$g4['memo_table']}
+$sql = " delete from {$g5['memo_table']}
             where me_recv_mb_id = '{$member['mb_id']}'
-            and me_send_datetime < '".date("Y-m-d H:i:s", G4_SERVER_TIME - (86400 * $config['cf_memo_del']))."' ";
+            and me_send_datetime < '".date("Y-m-d H:i:s", G5_SERVER_TIME - (86400 * $config['cf_memo_del']))."' ";
 sql_query($sql);
 
 if (!$kind) $kind = 'recv';
@@ -22,7 +22,7 @@ else if ($kind == 'send')
 else
     alert(''.$kind .'값을 넘겨주세요.');
 
-$sql = " select count(*) as cnt from {$g4['memo_table']} where me_{$kind}_mb_id = '{$member['mb_id']}' ";
+$sql = " select count(*) as cnt from {$g5['memo_table']} where me_{$kind}_mb_id = '{$member['mb_id']}' ";
 $row = sql_fetch($sql);
 $total_count = number_format($row['cnt']);
 
@@ -42,8 +42,8 @@ else
 $list = array();
 
 $sql = " select a.*, b.mb_id, b.mb_nick, b.mb_email, b.mb_homepage
-            from {$g4['memo_table']} a
-            left join {$g4['member_table']} b on (a.me_{$unkind}_mb_id = b.mb_id)
+            from {$g5['memo_table']} a
+            left join {$g5['member_table']} b on (a.me_{$unkind}_mb_id = b.mb_id)
             where a.me_{$kind}_mb_id = '{$member['mb_id']}'
             order by a.me_id desc ";
 $result = sql_query($sql);
@@ -76,5 +76,5 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 include_once($member_skin_path.'/memo.skin.php');
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

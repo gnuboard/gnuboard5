@@ -4,14 +4,14 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '배송일괄처리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '배송일괄처리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-//sql_query(" update $g4[shop_cart_table] set ct_status = '완료' where ct_status = '배송' ");
+//sql_query(" update $g5[shop_cart_table] set ct_status = '완료' where ct_status = '배송' ");
 
 // 배송회사리스트 ---------------------------------------------
 $delivery_options = '<option value="">선택하세요</option>'.PHP_EOL;
-$sql = " select * from {$g4['shop_delivery_table']} order by dl_order ";
+$sql = " select * from {$g5['shop_delivery_table']} order by dl_order ";
 $result = sql_query($sql);
 for($i=0; $row=sql_fetch_array($result); $i++) {
     $delivery_options .= '<option value="'.$row['dl_id'].'">'.$row['dl_company'].'</option>'.PHP_EOL;
@@ -33,7 +33,7 @@ if ($sel_ca_id != "") {
 
 if ($sel_field == "")  $sel_field = "od_id";
 
-$sql_common = " from {$g4['shop_order_table']}
+$sql_common = " from {$g5['shop_order_table']}
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -43,7 +43,7 @@ if ($chk_misu) {
     $total_count = mysql_num_rows($result);
 }
 else {
-    $row = sql_fetch("select count(od_id) as cnt from {$g4['shop_order_table']} $sql_search ");
+    $row = sql_fetch("select count(od_id) as cnt from {$g5['shop_order_table']} $sql_search ");
     $total_count = $row['cnt'];
 }
 
@@ -152,11 +152,11 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     $result = sql_query($sql);
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
-        $invoice_time = G4_TIME_YMDHIS;
+        $invoice_time = G5_TIME_YMDHIS;
         if (!is_null_time($row['od_invoice_time']))
             $invoice_time = $row['od_invoice_time'];
 
-        $sql1 = " select * from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
+        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
         $row1 = sql_fetch($sql1);
         $name = get_sideview($row['mb_id'], $row['mb_name'], $row['mb_email'], $row['mb_homepage']);
 
@@ -216,8 +216,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

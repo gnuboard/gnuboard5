@@ -4,20 +4,20 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$g4['title'] = '쿠폰관리';
+$g5['title'] = '쿠폰관리';
 
 if ($w == 'u') {
     $html_title = '쿠폰 수정';
 
-    $sql = " select * from {$g4['shop_coupon_table']} where cp_id = '$cp_id' ";
+    $sql = " select * from {$g5['shop_coupon_table']} where cp_id = '$cp_id' ";
     $cp = sql_fetch($sql);
     if (!$cp['cp_id']) alert('등록된 자료가 없습니다.');
 }
 else
 {
     $html_title = '쿠폰 입력';
-    $cp['cp_start'] = G4_TIME_YMD;
-    $cp['cp_end'] = date('Y-m-d', (G4_SERVER_TIME + 86400 * 7));
+    $cp['cp_start'] = G5_TIME_YMD;
+    $cp['cp_end'] = date('Y-m-d', (G5_SERVER_TIME + 86400 * 7));
 }
 
 if($cp['cp_method'] == 1) {
@@ -28,7 +28,7 @@ if($cp['cp_method'] == 1) {
     $cp_target_btn = '상품검색';
 }
 
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="fcouponform" action="./couponformupdate.php" method="post" onsubmit="return form_check(this);">
@@ -256,5 +256,5 @@ function form_check(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

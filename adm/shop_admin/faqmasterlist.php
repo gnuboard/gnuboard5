@@ -4,10 +4,10 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = 'FAQ관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = 'FAQ관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g4['shop_faq_master_table']} ";
+$sql_common = " from {$g5['shop_faq_master_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -52,7 +52,7 @@ $result = sql_query($sql);
     </thead>
     <tbody>
     <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
-        $sql1 = " select COUNT(*) as cnt from {$g4['shop_faq_table']} where fm_id = '{$row['fm_id']}' ";
+        $sql1 = " select COUNT(*) as cnt from {$g5['shop_faq_table']} where fm_id = '{$row['fm_id']}' ";
         $row1 = sql_fetch($sql1);
         $cnt = $row1['cnt'];
     ?>
@@ -61,7 +61,7 @@ $result = sql_query($sql);
         <td><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>"><?php echo stripslashes($row['fm_subject']); ?></a></td>
         <td class="td_num"><?php echo $cnt; ?></td>
         <td class="td_mng">
-            <a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a>
+            <a href="<?php echo G5_SHOP_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a>
             <a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>수정</a>
             <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>삭제</a>
         </td>
@@ -77,8 +77,8 @@ $result = sql_query($sql);
     </table>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

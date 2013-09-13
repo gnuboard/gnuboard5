@@ -13,7 +13,7 @@ function specialchars_replace($str, $len=0) {
     return $str;
 }
 
-$sql = " select gr_id, bo_subject, bo_page_rows, bo_read_level, bo_use_rss_view from {$g4['board_table']} where bo_table = '$bo_table' ";
+$sql = " select gr_id, bo_subject, bo_page_rows, bo_read_level, bo_use_rss_view from {$g5['board_table']} where bo_table = '$bo_table' ";
 $row = sql_fetch($sql);
 $subj2 = specialchars_replace($row['bo_subject'], 255);
 $lines = $row['bo_page_rows'];
@@ -34,7 +34,7 @@ header('Content-type: text/xml');
 header('Cache-Control: no-cache, must-revalidate');
 header('Pragma: no-cache');
 
-$sql = " select gr_subject from {$g4['group_table']} where gr_id = '{$row['gr_id']}' ";
+$sql = " select gr_subject from {$g5['group_table']} where gr_id = '{$row['gr_id']}' ";
 $row = sql_fetch($sql);
 $subj1 = specialchars_replace($row['gr_subject'], 255);
 
@@ -43,13 +43,13 @@ echo '<?phpxml version="1.0" encoding="utf-8" ?>'."\n";
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
 <title><?php echo specialchars_replace($config['cf_title'].' &gt; '.$subj1.' &gt; '.$subj2) ?></title>
-<link><?php echo specialchars_replace(G4_BBS_URL.'/board.php?bo_table='.$bo_table) ?></link>
+<link><?php echo specialchars_replace(G5_BBS_URL.'/board.php?bo_table='.$bo_table) ?></link>
 <description>테스트 버전 0.2 (2004-04-26)</description>
 <language>ko</language>
 
 <?php
 $sql = " select wr_id, wr_subject, wr_content, wr_name, wr_datetime, wr_option
-            from {$g4['write_prefix']}$bo_table
+            from {$g5['write_prefix']}$bo_table
             where wr_is_comment = 0
             and wr_option not like '%secret%'
             order by wr_num, wr_reply limit 0, $lines ";
@@ -65,7 +65,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 <item>
 <title><?php echo specialchars_replace($row['wr_subject']) ?></title>
-<link><?php echo specialchars_replace(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_id']) ?></link>
+<link><?php echo specialchars_replace(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_id']) ?></link>
 <description><![CDATA[<?php echo $file ?><?php echo conv_content($row['wr_content'], $html) ?>]]></description>
 <dc:creator><?php echo specialchars_replace($row['wr_name']) ?></dc:creator>
 <?php

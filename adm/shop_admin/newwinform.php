@@ -1,7 +1,7 @@
 <?php
 $sub_menu = '500510';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
@@ -9,7 +9,7 @@ $html_title = "팝업레이어";
 if ($w == "u")
 {
     $html_title .= " 수정";
-    $sql = " select * from {$g4['shop_new_win_table']} where nw_id = '$nw_id' ";
+    $sql = " select * from {$g5['shop_new_win_table']} where nw_id = '$nw_id' ";
     $nw = sql_fetch($sql);
     if (!$nw['nw_id']) alert("등록된 자료가 없습니다.");
 }
@@ -24,8 +24,8 @@ else
     $nw['nw_content_html'] = 2;
 }
 
-$g4['title'] = $html_title;
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = $html_title;
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="frmnewwin" action="./newwinformupdate.php" onsubmit="return frmnewwin_check(this);" method="post">
@@ -53,7 +53,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="text" name="nw_begin_time" value="<?php echo $nw['nw_begin_time']; ?>" id="nw_begin_time" required class="frm_input required" size="21" maxlength="19">
             <label for="nw_begin_chk">시작일시를 오늘로</label>
-            <input type="checkbox" name="nw_begin_chk" value="<?php echo date("Y-m-d 00:00:00", G4_SERVER_TIME); ?>" id="nw_begin_chk" onclick="if (this.checked == true) this.form.nw_begin_time.value=this.form.nw_begin_chk.value; else this.form.nw_begin_time.value = this.form.nw_begin_time.defaultValue;">
+            <input type="checkbox" name="nw_begin_chk" value="<?php echo date("Y-m-d 00:00:00", G5_SERVER_TIME); ?>" id="nw_begin_chk" onclick="if (this.checked == true) this.form.nw_begin_time.value=this.form.nw_begin_chk.value; else this.form.nw_begin_time.value = this.form.nw_begin_time.defaultValue;">
         </td>
     </tr>
     <tr>
@@ -61,7 +61,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="text" name="nw_end_time" value="<?php echo $nw['nw_end_time']; ?>" id="nw_end_time" required class="frm_input required" size="21" maxlength="19">
             <label for="nw_end_chk">종료일시를 오늘로부터 7일 후로</label>
-            <input type="checkbox" name="nw_end_chk" value="<?php echo date("Y-m-d 23:59:59", G4_SERVER_TIME+(60*60*24*7)); ?>" id="nw_end_chk" onclick="if (this.checked == true) this.form.nw_end_time.value=this.form.nw_end_chk.value; else this.form.nw_end_time.value = this.form.nw_end_time.defaultValue;">
+            <input type="checkbox" name="nw_end_chk" value="<?php echo date("Y-m-d 23:59:59", G5_SERVER_TIME+(60*60*24*7)); ?>" id="nw_end_chk" onclick="if (this.checked == true) this.form.nw_end_time.value=this.form.nw_end_chk.value; else this.form.nw_end_time.value = this.form.nw_end_time.defaultValue;">
         </td>
     </tr>
     <tr>
@@ -128,5 +128,5 @@ function frmnewwin_check(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

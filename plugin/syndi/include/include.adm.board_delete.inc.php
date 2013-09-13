@@ -22,7 +22,7 @@ $oPing->setId(SyndicationHandler::getTag('site'));
 $oPing->setType('channel');
 
 // delete log
-$_sql = "delete from {$g4['syndi_log_table']} where  bbs_id='%s'";
+$_sql = "delete from {$g5['syndi_log_table']} where  bbs_id='%s'";
 sql_query(sprintf($_sql, $tmp_bo_table));
 	
 $oPing->request();

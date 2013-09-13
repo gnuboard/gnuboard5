@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], 'r');
 
 $token = get_token();
 
-$sql_common = " from {$g4['point_table']} ";
+$sql_common = " from {$g5['point_table']} ";
 
 $sql_search = " where (1) ";
 
@@ -56,7 +56,7 @@ $mb = array();
 if ($sfl == 'mb_id' && $stx)
     $mb = get_member($stx);
 
-$g4['title'] = '포인트관리';
+$g5['title'] = '포인트관리';
 include_once ('./admin.head.php');
 
 $colspan = 9;
@@ -92,7 +92,7 @@ function point_clear()
         if (isset($mb['mb_id']) && $mb['mb_id']) {
             echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
         } else {
-            $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g4['point_table']} ");
+            $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g5['point_table']} ");
             echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
         }
         ?>
@@ -147,7 +147,7 @@ function point_clear()
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($i==0 || ($row2['mb_id'] != $row['mb_id'])) {
-            $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
             $row2 = sql_fetch($sql2);
         }
 
@@ -155,7 +155,7 @@ function point_clear()
 
         $link1 = $link2 = '';
         if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table']) {
-            $link1 = '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
+            $link1 = '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
             $link2 = '</a>';
         }
 
@@ -201,7 +201,7 @@ function point_clear()
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <section id="point_mng" class="cbox">
     <h2>개별회원 포인트 증감 설정</h2>

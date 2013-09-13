@@ -24,18 +24,18 @@ if ($file = $_POST['bo_include_tail']) {
     }
 }
 
-$board_path = G4_DATA_PATH.'/file/'.$bo_table;
+$board_path = G5_DATA_PATH.'/file/'.$bo_table;
 
 // 게시판 디렉토리 생성
-@mkdir($board_path, G4_DIR_PERMISSION);
-@chmod($board_path, G4_DIR_PERMISSION);
+@mkdir($board_path, G5_DIR_PERMISSION);
+@chmod($board_path, G5_DIR_PERMISSION);
 
 // 디렉토리에 있는 파일의 목록을 보이지 않게 한다.
 $file = $board_path . '/index.php';
 $f = @fopen($file, 'w');
 @fwrite($f, '');
 @fclose($f);
-@chmod($file, G4_FILE_PERMISSION);
+@chmod($file, G5_FILE_PERMISSION);
 
 // 분류에 & 나 = 는 사용이 불가하므로 2바이트로 바꾼다.
 $src_char = array('&', '=');
@@ -137,11 +137,11 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
 
 if ($w == '') {
 
-    $row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where bo_table = '{$bo_table}' ");
+    $row = sql_fetch(" select count(*) as cnt from {$g5['board_table']} where bo_table = '{$bo_table}' ");
     if ($row['cnt'])
         alert($bo_table.' 은(는) 이미 존재하는 TABLE 입니다.');
 
-    $sql = " insert into {$g4['board_table']}
+    $sql = " insert into {$g5['board_table']}
                 set bo_table = '{$bo_table}',
                     bo_count_write = '0',
                     bo_count_comment = '0',
@@ -152,7 +152,7 @@ if ($w == '') {
     $file = file('./sql_write.sql');
     $sql = implode($file, "\n");
 
-    $create_table = $g4['write_prefix'] . $bo_table;
+    $create_table = $g5['write_prefix'] . $bo_table;
 
     // sql_board.sql 파일의 테이블명을 변환
     $source = array('/__TABLE_NAME__/', '/;/');
@@ -163,12 +163,12 @@ if ($w == '') {
 } else if ($w == 'u') {
 
     // 게시판의 글 수
-    $sql = " select count(*) as cnt from {$g4['write_prefix']}{$bo_table} where wr_is_comment = 0 ";
+    $sql = " select count(*) as cnt from {$g5['write_prefix']}{$bo_table} where wr_is_comment = 0 ";
     $row = sql_fetch($sql);
     $bo_count_write = $row['cnt'];
 
     // 게시판의 코멘트 수
-    $sql = " select count(*) as cnt from {$g4['write_prefix']}{$bo_table} where wr_is_comment = 1 ";
+    $sql = " select count(*) as cnt from {$g5['write_prefix']}{$bo_table} where wr_is_comment = 1 ";
     $row = sql_fetch($sql);
     $bo_count_comment = $row['cnt'];
 
@@ -179,17 +179,17 @@ if ($w == '') {
     */
     if (isset($_POST['proc_count'])) {
         // 원글을 얻습니다.
-        //$sql = " select wr_id from {$g4['write_prefix']}{$bo_table} where wr_is_comment = 0 ";
-        $sql = " select a.wr_id, (count(b.wr_parent) - 1) as cnt from {$g4['write_prefix']}{$bo_table} a, {$g4['write_prefix']}{$bo_table} b where a.wr_id=b.wr_parent and a.wr_is_comment=0 group by a.wr_id ";
+        //$sql = " select wr_id from {$g5['write_prefix']}{$bo_table} where wr_is_comment = 0 ";
+        $sql = " select a.wr_id, (count(b.wr_parent) - 1) as cnt from {$g5['write_prefix']}{$bo_table} a, {$g5['write_prefix']}{$bo_table} b where a.wr_id=b.wr_parent and a.wr_is_comment=0 group by a.wr_id ";
         $result = sql_query($sql);
         for ($i=0; $row=sql_fetch_array($result); $i++) {
             /*
             // 코멘트수를 얻습니다.
-            $sql2 = " select count(*) as cnt from {$g4['write_prefix']}$bo_table where wr_parent = '{$row['wr_id']}' and wr_is_comment = 1 ";
+            $sql2 = " select count(*) as cnt from {$g5['write_prefix']}$bo_table where wr_parent = '{$row['wr_id']}' and wr_is_comment = 1 ";
             $row2 = sql_fetch($sql2);
             */
 
-            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_comment = '{$row['cnt']}' where wr_id = '{$row['wr_id']}' ");
+            sql_query(" update {$g5['write_prefix']}{$bo_table} set wr_comment = '{$row['cnt']}' where wr_id = '{$row['wr_id']}' ");
         }
     }
 
@@ -200,7 +200,7 @@ if ($w == '') {
         $tmp_array = explode("\n", $board['bo_notice']);
         for ($i=0; $i<count($tmp_array); $i++) {
             $tmp_wr_id = trim($tmp_array[$i]);
-            $row = sql_fetch(" select count(*) as cnt from {$g4['write_prefix']}{$bo_table} where wr_id = '{$tmp_wr_id}' ");
+            $row = sql_fetch(" select count(*) as cnt from {$g5['write_prefix']}{$bo_table} where wr_id = '{$tmp_wr_id}' ");
             if ($row['cnt'])
             {
                 $bo_notice .= $lf . $tmp_wr_id;
@@ -209,7 +209,7 @@ if ($w == '') {
         }
     }
 
-    $sql = " update {$g4['board_table']}
+    $sql = " update {$g5['board_table']}
                 set bo_notice = '{$bo_notice}',
                     bo_count_write = '{$bo_count_write}',
                     bo_count_comment = '{$bo_count_comment}',
@@ -301,7 +301,7 @@ for ($i=1; $i<=10; $i++) {
 }
 
 if ($grp_fields) {
-    sql_query(" update {$g4['board_table']} set bo_table = bo_table {$grp_fields} where gr_id = '$gr_id' ");
+    sql_query(" update {$g5['board_table']} set bo_table = bo_table {$grp_fields} where gr_id = '$gr_id' ");
 }
 
 
@@ -386,13 +386,13 @@ for ($i=1; $i<=10; $i++) {
 }
 
 if ($all_fields) {
-    sql_query(" update {$g4['board_table']} set bo_table = bo_table {$all_fields} ");
+    sql_query(" update {$g5['board_table']} set bo_table = bo_table {$all_fields} ");
 }
 
 delete_cache_latest($bo_table);
 
 // syndication ping
-include G4_SYNDI_PATH.'/include/include.adm.board_form_update.php';
+include G5_SYNDI_PATH.'/include/include.adm.board_form_update.php';
 
 goto_url("./board_form.php?w=u&bo_table={$bo_table}&amp;{$qstr}");
 ?>

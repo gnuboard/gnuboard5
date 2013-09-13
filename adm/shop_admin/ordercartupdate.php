@@ -43,7 +43,7 @@ for ($i=0; $i<$cnt; $i++)
     $k = $_POST['ct_chk'][$i];
     $ct_id = $_POST['ct_id'][$k];
 
-    $sql = " select * from {$g4['shop_cart_table']}
+    $sql = " select * from {$g5['shop_cart_table']}
               where od_id = '$od_id'
                 and ct_id  = '$ct_id' ";
     $ct = sql_fetch($sql);
@@ -58,13 +58,13 @@ for ($i=0; $i<$cnt; $i++)
         // 재고에 차이 반영.
         if($ct['ct_stock_use']) {
             if($ct['io_id']) {
-                $sql = " update {$g4['shop_item_option_table']}
+                $sql = " update {$g5['shop_item_option_table']}
                             set io_stock_qty = io_stock_qty + '$diff_qty'
                             where it_id = '{$ct['it_id']}'
                               and io_id = '{$ct['io_id']}'
                               and io_type = '{$ct['io_type']}' ";
             } else {
-                $sql = " update {$g4['shop_item_table']}
+                $sql = " update {$g5['shop_item_table']}
                             set it_stock_qty = it_stock_qty + '$diff_qty'
                             where it_id = '{$ct['it_id']}' ";
             }
@@ -73,12 +73,12 @@ for ($i=0; $i<$cnt; $i++)
         }
 
         // 수량변경
-        $sql = " update {$g4['shop_cart_table']}
+        $sql = " update {$g5['shop_cart_table']}
                     set ct_qty = '$ct_qty'
                     where ct_id = '$ct_id'
                       and od_id = '$od_id' ";
         sql_query($sql);
-        $mod_history .= G4_TIME_YMDHIS.' '.$ct['ct_option'].' 수량변경 '.$ct['ct_qty'].' -> '.$ct_qty."\n";
+        $mod_history .= G5_TIME_YMDHIS.' '.$ct['ct_option'].' 수량변경 '.$ct['ct_qty'].' -> '.$ct_qty."\n";
     }
 
     // 재고를 이미 사용했다면 (재고에서 이미 뺐다면)
@@ -90,13 +90,13 @@ for ($i=0; $i<$cnt; $i++)
             $stock_use = 0;
             // 재고에 다시 더한다.
             if($ct['io_id']) {
-                $sql = " update {$g4['shop_item_option_table']}
+                $sql = " update {$g5['shop_item_option_table']}
                             set io_stock_qty = io_stock_qty + '{$ct['ct_qty']}'
                             where it_id = '{$ct['it_id']}'
                               and io_id = '{$ct['io_id']}'
                               and io_type = '{$ct['io_type']}' ";
             } else {
-                $sql = " update {$g4['shop_item_table']}
+                $sql = " update {$g5['shop_item_table']}
                             set it_stock_qty = it_stock_qty + '{$ct['ct_qty']}'
                             where it_id = '{$ct['it_id']}' ";
             }
@@ -112,13 +112,13 @@ for ($i=0; $i<$cnt; $i++)
             $stock_use = 1;
             // 재고에서 뺀다.
             if($ct['io_id']) {
-                $sql = " update {$g4['shop_item_option_table']}
+                $sql = " update {$g5['shop_item_option_table']}
                             set io_stock_qty = io_stock_qty - '{$ct['ct_qty']}'
                             where it_id = '{$ct['it_id']}'
                               and io_id = '{$ct['io_id']}'
                               and io_type = '{$ct['io_type']}' ";
             } else {
-                $sql = " update {$g4['shop_item_table']}
+                $sql = " update {$g5['shop_item_table']}
                             set it_stock_qty = it_stock_qty - '{$ct['ct_qty']}'
                             where it_id = '{$ct['it_id']}' ";
             }
@@ -129,7 +129,7 @@ for ($i=0; $i<$cnt; $i++)
         else if ($ct_status == '품절') {
             $stock_use = 1;
             // 재고에서 뺀다.
-            $sql =" update {$g4['shop_item_table']} set it_stock_qty = 0 where it_id = '{$ct['it_id']}' ";
+            $sql =" update {$g5['shop_item_table']} set it_stock_qty = 0 where it_id = '{$ct['it_id']}' ";
             sql_query($sql);
         } */
     }
@@ -148,7 +148,7 @@ for ($i=0; $i<$cnt; $i++)
     // 히스토리에 남길때는 작업|시간|IP|그리고 나머지 자료
     $ct_history="\n$ct_status|$now|$REMOTE_ADDR";
 
-    $sql = " update {$g4['shop_cart_table']}
+    $sql = " update {$g5['shop_cart_table']}
                 set ct_point_use  = '$point_use',
                     ct_stock_use  = '$stock_use',
                     ct_status     = '$ct_status',
@@ -159,14 +159,14 @@ for ($i=0; $i<$cnt; $i++)
 }
 
 // 주문정보
-$sql = " select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
+$sql = " select * from {$g5['shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 
 // 주문 합계
 $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                 SUM(cp_price) as coupon,
                 COUNT(distinct it_id) as cnt
-            from {$g4['shop_cart_table']}
+            from {$g5['shop_cart_table']}
             where od_id = '$od_id'
               and ct_status IN ( '주문', '준비', '배송', '완료' ) ";
 $sum = sql_fetch($sql);
@@ -182,7 +182,7 @@ $tot_od_cp_price = $tot_sc_cp_price = 0;
 if($od['mb_id']) {
     // 주문할인 쿠폰
     $sql = " select a.cp_id, a.cp_type, a.cp_price, a.cp_trunc, a.cp_minimum, a.cp_maximum
-                from {$g4['shop_coupon_table']} a right join {$g4['shop_coupon_log_table']} b on ( a.cp_id = b.cp_id )
+                from {$g5['shop_coupon_table']} a right join {$g5['shop_coupon_log_table']} b on ( a.cp_id = b.cp_id )
                 where b.od_id = '$od_id'
                   and b.mb_id = '{$od['mb_id']}'
                   and a.cp_method = '2' ";
@@ -213,7 +213,7 @@ if($od['mb_id']) {
 
     // 배송쿠폰 할인
     $sql = " select a.cp_id, a.cp_type, a.cp_price, a.cp_trunc, a.cp_minimum, a.cp_maximum
-                from {$g4['shop_coupon_table']} a right join {$g4['shop_coupon_log_table']} b on ( a.cp_id = b.cp_id )
+                from {$g5['shop_coupon_table']} a right join {$g5['shop_coupon_log_table']} b on ( a.cp_id = b.cp_id )
                 where b.od_id = '$od_id'
                   and b.mb_id = '{$od['mb_id']}'
                   and a.cp_method = '3' ";
@@ -241,7 +241,7 @@ if($od['mb_id']) {
 
 // 취소 합계
 $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price
-            from {$g4['shop_cart_table']}
+            from {$g5['shop_cart_table']}
             where od_id = '$od_id'
               and ct_status IN ( '취소', '반품', '품절' ) ";
 $sum = sql_fetch($sql);
@@ -253,7 +253,7 @@ $od_misu = ( $cart_price + $send_cost + $od['od_send_cost2'] )
            - ( $od['od_receipt_price'] + $od['od_receipt_point'] - $od['od_refund_price'] );
 
 // 주문정보 반영
-$sql = " update {$g4['shop_order_table']}
+$sql = " update {$g5['shop_order_table']}
             set od_cart_price   = '$cart_price',
                 od_cart_coupon  = '$cart_coupon',
                 od_coupon       = '$tot_od_cp_price',
@@ -270,14 +270,14 @@ $url = "./orderform.php?od_id=$od_id&amp;$qstr";
 
 // 수량변경 히스토리 기록
 if($mod_history) {
-    $sql = " update {$g4['shop_order_table']}
+    $sql = " update {$g5['shop_order_table']}
                 set od_mod_history = CONCAT(od_mod_history,'$mod_history')
                 where od_id = '$od_id' ";
     sql_query($sql);
 }
 
 // 1.06.06
-$od = sql_fetch(" select od_receipt_point from {$g4['shop_order_table']} where od_id = '$od_id' ");
+$od = sql_fetch(" select od_receipt_point from {$g5['shop_order_table']} where od_id = '$od_id' ");
 if ($od['od_receipt_point'])
     alert("포인트로 결제한 주문은,\\n\\n주문상태 변경으로 인해 포인트의 가감이 발생하는 경우\\n\\n회원관리 > 포인트관리에서 수작업으로 포인트를 맞추어 주셔야 합니다.\\n\\n만약, 미수금이 발생하는 경우에는 DC에 금액을 음수로 입력하시면 해결됩니다.", $url);
 else

@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], "r");
 
 $token = get_token();
 
-$sql_common = " from {$g4['shop_sendcost_table']} ";
+$sql_common = " from {$g5['shop_sendcost_table']} ";
 
 $sql_search = " where (1) ";
 $sql_order = " order by sc_id desc ";
@@ -30,8 +30,8 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$g4['title'] = '추가배송비관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '추가배송비관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <section id="scp_list" class="cbox">
@@ -82,7 +82,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <section id="sendcost_postal" class="cbox">
     <h2>추가배송비 등록</h2>
@@ -157,5 +157,5 @@ function fsendcost_submit(f)
 </script>
 
 <?php
-include_once(G4_ADMIN_PATH.'/admin.tail.php');
+include_once(G5_ADMIN_PATH.'/admin.tail.php');
 ?>

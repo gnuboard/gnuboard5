@@ -17,13 +17,13 @@ if ($url) {
     }
 
     if($url == 'shop')
-        $link = G4_SHOP_URL;
+        $link = G5_SHOP_URL;
     else
         $link = $url;
 } else if ($bo_table) {
-    $link = G4_BBS_URL.'/board.php?bo_table='.$bo_table;
+    $link = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
 } else {
-    $link = G4_URL;
+    $link = G5_URL;
 }
 
 goto_url($link);

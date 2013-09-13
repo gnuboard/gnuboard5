@@ -1,14 +1,14 @@
 <?php
 $sub_menu = '400650';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
 $sql = " select *
-           from {$g4['shop_item_use_table']} a
-           left join {$g4['member_table']} b on (a.mb_id = b.mb_id)
-           left join {$g4['shop_item_table']} c on (a.it_id = c.it_id)
+           from {$g5['shop_item_use_table']} a
+           left join {$g5['member_table']} b on (a.mb_id = b.mb_id)
+           left join {$g5['shop_item_table']} c on (a.it_id = c.it_id)
           where is_id = '$is_id' ";
 $is = sql_fetch($sql);
 if (!$is['is_id'])
@@ -20,8 +20,8 @@ $name = get_sideview($is['mb_id'], get_text($is['is_name']), $is['mb_email'], $i
 $is_confirm_yes  =  $is['is_confirm'] ? 'checked="checked"' : '';
 $is_confirm_no   = !$is['is_confirm'] ? 'checked="checked"' : '';
 
-$g4['title'] = '사용후기';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '사용후기';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 ?>
@@ -43,7 +43,7 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     <tbody>
     <tr>
         <th scope="row">상품명</th>
-        <td><a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $is['it_id']; ?>"><?php echo $is['it_name']; ?></a></td>
+        <td><a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $is['it_id']; ?>"><?php echo $is['it_name']; ?></a></td>
     </tr>
     <tr>
         <th scope="row">이름</th>
@@ -91,5 +91,5 @@ function fitemuseform_submit(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -4,12 +4,12 @@ include_once('./_common.php');
 if ($is_guest)
     alert_close('회원만 조회하실 수 있습니다.');
 
-$g4['title'] = $member['mb_nick'].' 님의 포인트 내역';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = $member['mb_nick'].' 님의 포인트 내역';
+include_once(G5_PATH.'/head.sub.php');
 
 $list = array();
 
-$sql_common = " from {$g4['point_table']} where mb_id = '".mysql_escape_string($member['mb_id'])."' ";
+$sql_common = " from {$g5['point_table']} where mb_id = '".mysql_escape_string($member['mb_id'])."' ";
 $sql_order = " order by po_id desc ";
 
 $sql = " select count(*) as cnt {$sql_common} ";
@@ -23,7 +23,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
 <div id="point" class="new_win">
-    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
 
     <table class="basic_tbl">
     <caption>포인트 사용내역 목록</caption>
@@ -98,11 +98,11 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     </table>
 
 
-    <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page='); ?>
+    <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page='); ?>
 
     <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
 </div>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

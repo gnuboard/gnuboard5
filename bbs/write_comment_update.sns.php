@@ -12,7 +12,7 @@ set_cookie('ck_me2day_checked'  , false, 86400*31);
 //----------------------------------------------------------------------------
 $wr_facebook_user = "";
 if ($_POST['facebook_checked']) {
-    include_once(G4_SNS_PATH."/facebook/src/facebook.php");
+    include_once(G5_SNS_PATH."/facebook/src/facebook.php");
 
     $facebook = new Facebook(array(
         'appId'  => $config['cf_facebook_appid'],
@@ -23,7 +23,7 @@ if ($_POST['facebook_checked']) {
 
     if ($user) {
         try {
-            $link = G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr['wr_parent'].'&#c_'.$comment_id;
+            $link = G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr['wr_parent'].'&#c_'.$comment_id;
             $attachment = array(
                 'message'       => stripslashes($wr_content),
                 'name'          => $wr_subject,
@@ -50,8 +50,8 @@ if ($_POST['facebook_checked']) {
 //----------------------------------------------------------------------------
 $wr_twitter_user = "";
 if ($_POST['twitter_checked']) {
-    include_once(G4_SNS_PATH."/twitter/twitteroauth/twitteroauth.php");
-    include_once(G4_SNS_PATH."/twitter/twitterconfig.php");
+    include_once(G5_SNS_PATH."/twitter/twitteroauth/twitteroauth.php");
+    include_once(G5_SNS_PATH."/twitter/twitterconfig.php");
     
     if ( !(empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) ) {
         $post = googl_short_url($comment_url).' '.$wr_content;

@@ -26,19 +26,19 @@ if ($w == "" || $w == "u")
 {
     if ($ca_mb_id)
     {
-        $sql = " select mb_id from {$g4['member_table']} where mb_id = '$ca_mb_id' ";
+        $sql = " select mb_id from {$g5['member_table']} where mb_id = '$ca_mb_id' ";
         $row = sql_fetch($sql);
         if (!$row['mb_id'])
             alert("\'$ca_mb_id\' 은(는) 존재하는 회원아이디가 아닙니다.");
     }
 }
 
-$g4['category_path'] = G4_DATA_PATH."/category";
-@mkdir($g4['category_path'], G4_DIR_PERMISSION);
-@chmod($g4['category_path'], G4_DIR_PERMISSION);
+$g5['category_path'] = G5_DATA_PATH."/category";
+@mkdir($g5['category_path'], G5_DIR_PERMISSION);
+@chmod($g5['category_path'], G5_DIR_PERMISSION);
 
-if ($ca_image1_del) @unlink("{$g4['category_path']}/{$ca_id}_1");
-if ($ca_image0_del) @unlink("{$g4['category_path']}/{$ca_id}_0");
+if ($ca_image1_del) @unlink("{$g5['category_path']}/{$ca_id}_1");
+if ($ca_image0_del) @unlink("{$g5['category_path']}/{$ca_id}_0");
 
 $sql_common = " ca_skin                 = '$ca_skin',
                 ca_mobile_skin          = '$ca_mobile_skin',
@@ -72,7 +72,7 @@ if ($w == "")
     // 소문자로 변환
     $ca_id = strtolower($ca_id);
 
-    $sql = " insert {$g4['shop_category_table']}
+    $sql = " insert {$g5['shop_category_table']}
                 set ca_id   = '$ca_id',
                     ca_name = '$ca_name',
                     $sql_common ";
@@ -80,7 +80,7 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    $sql = " update {$g4['shop_category_table']}
+    $sql = " update {$g5['shop_category_table']}
                 set ca_name = '$ca_name',
                     $sql_common
               where ca_id = '$ca_id' ";
@@ -89,7 +89,7 @@ else if ($w == "u")
     // 하위분류를 똑같은 설정으로 반영
     if ($sub_category) {
         $len = strlen($ca_id);
-        $sql = " update {$g4['shop_category_table']}
+        $sql = " update {$g5['shop_category_table']}
                     set $sql_common
                   where SUBSTRING(ca_id,1,$len) = '$ca_id' ";
         if ($is_admin != 'super')
@@ -102,7 +102,7 @@ else if ($w == "d")
     // 분류의 길이
     $len = strlen($ca_id);
 
-    $sql = " select COUNT(*) as cnt from {$g4['shop_category_table']}
+    $sql = " select COUNT(*) as cnt from {$g5['shop_category_table']}
               where SUBSTRING(ca_id,1,$len) = '$ca_id'
                 and ca_id <> '$ca_id' ";
     $row = sql_fetch($sql);
@@ -110,7 +110,7 @@ else if ($w == "d")
         alert("이 분류에 속한 하위 분류가 있으므로 삭제 할 수 없습니다.\\n\\n하위분류를 우선 삭제하여 주십시오.");
 
     $str = $comma = "";
-    $sql = " select it_id from {$g4['shop_item_table']} where ca_id = '$ca_id' ";
+    $sql = " select it_id from {$g5['shop_item_table']} where ca_id = '$ca_id' ";
     $result = sql_query($sql);
     $i=0;
     while ($row = mysql_fetch_array($result))
@@ -125,11 +125,11 @@ else if ($w == "d")
         alert("이 분류와 관련된 상품이 총 {$i} 건 존재하므로 상품을 삭제한 후 분류를 삭제하여 주십시오.\\n\\n$str");
 
     // 상, 하단 이미지 삭제
-    @unlink("{$g4['category_path']}/$ca_id"."_h");
-    @unlink("{$g4['category_path']}/$ca_id"."_t");
+    @unlink("{$g5['category_path']}/$ca_id"."_h");
+    @unlink("{$g5['category_path']}/$ca_id"."_t");
 
     // 분류 삭제
-    $sql = " delete from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
+    $sql = " delete from {$g5['shop_category_table']} where ca_id = '$ca_id' ";
     sql_query($sql);
 }
 

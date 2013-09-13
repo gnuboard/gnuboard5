@@ -3,10 +3,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 function editor_html($id, $content, $is_dhtml_editor=true)
 {
-    global $g4, $config;
+    global $g5, $config;
     static $js = true;
 
-    $editor_url = G4_EDITOR_URL.'/'.$config['cf_editor'];
+    $editor_url = G5_EDITOR_URL.'/'.$config['cf_editor'];
 
     $html = "";
     $html .= "<span class=\"sound_only\">웹에디터 시작</span>";

@@ -1,19 +1,19 @@
 <?php
 $sub_menu = '500410';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
 $html_title = 'FAQ';
-$g4['title'] = $html_title.' 관리';
+$g5['title'] = $html_title.' 관리';
 
 if ($w == "u")
 {
     $html_title .= ' 수정';
     $readonly = ' readonly';
 
-    $sql = " select * from {$g4['shop_faq_master_table']} where fm_id = '$fm_id' ";
+    $sql = " select * from {$g5['shop_faq_master_table']} where fm_id = '$fm_id' ";
     $fm = sql_fetch($sql);
     if (!$fm['fm_id']) alert('등록된 자료가 없습니다.');
 }
@@ -22,7 +22,7 @@ else
     $html_title .= ' 입력';
 }
 
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="frmfaqmasterform" action="./faqmasterformupdate.php" onsubmit="return frmfaqmasterform_check(this);" method="post" enctype="MULTIPART/FORM-DATA">
@@ -42,7 +42,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="text" value="<?php echo get_text($fm['fm_subject']); ?>" name="fm_subject" id="fm_subject" required class="frm_input required"  size="70">
             <?php if ($w == 'u') { ?>
-            <a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">보기</a>
+            <a href="<?php echo G5_SHOP_URL; ?>/faq.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">보기</a>
             <a href="./faqlist.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">상세보기</a>
             <?php } ?>
         </td>
@@ -52,7 +52,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="file" name="fm_himg" id="fm_himg">
             <?php
-            $himg = G4_DATA_PATH.'/faq/'.$fm['fm_id'].'_h';
+            $himg = G5_DATA_PATH.'/faq/'.$fm['fm_id'].'_h';
             if (file_exists($himg)) {
                 $size = @getimagesize($himg);
                 if($size[0] && $size[0] > 750)
@@ -61,7 +61,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     $width = $size[0];
 
                 echo '<input type="checkbox" name="fm_himg_del" value="1" id="fm_himg_del"> <label for="fm_himg_del">삭제</label>';
-                $himg_str = '<img src="'.G4_DATA_URL.'/faq/'.$fm['fm_id'].'_h" width="'.$width.'" alt="">';
+                $himg_str = '<img src="'.G5_DATA_URL.'/faq/'.$fm['fm_id'].'_h" width="'.$width.'" alt="">';
             }
             if ($himg_str) {
                 echo '<div class="banner_or_img">';
@@ -76,7 +76,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="file" name="fm_timg" id="fm_timg">
             <?php
-            $timg = G4_DATA_PATH.'/faq/'.$fm['fm_id'].'_t';
+            $timg = G5_DATA_PATH.'/faq/'.$fm['fm_id'].'_t';
             if (file_exists($timg)) {
                 $size = @getimagesize($timg);
                 if($size[0] && $size[0] > 750)
@@ -85,7 +85,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     $width = $size[0];
 
                 echo '<input type="checkbox" name="fm_timg_del" value="1" id="fm_timg_del"><label for="fm_timg_del">삭제</label>';
-                $timg_str = '<img src="'.G4_DATA_URL.'/faq/'.$fm['fm_id'].'_t" width="'.$width.'" alt="">';
+                $timg_str = '<img src="'.G5_DATA_URL.'/faq/'.$fm['fm_id'].'_t" width="'.$width.'" alt="">';
             }
             if ($timg_str) {
                 echo '<div class="banner_or_img">';
@@ -129,5 +129,5 @@ function frmfaqmasterform_check(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

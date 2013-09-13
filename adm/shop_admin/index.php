@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 $max_limit = 7; // 몇행 출력할 것인지?
 
-$g4['title'] = ' 쇼핑몰관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = ' 쇼핑몰관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sidx_rdy">입금완료미배송내역</a></li>
@@ -33,14 +33,14 @@ $pg_anchor = '<ul class="anchor">
     <?php
     // 미수금이 없고 운송장번호가 없는 자료를 구함
     $sql = " select *
-               from {$g4['shop_order_table']}
+               from {$g5['shop_order_table']}
               where od_receipt_price > 0 and od_misu <= 0 and od_invoice = ''
               order by od_id desc
               limit $max_limit ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $sql1 = " select * from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
+        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
         $row1 = sql_fetch($sql1);
 
         $name = get_sideview($row['mb_id'], get_text($row['od_name']), $row1['mb_email'], $row1['mb_homepage']);
@@ -93,14 +93,14 @@ $pg_anchor = '<ul class="anchor">
     <?php
     // 미수금이 있고 송장번호가 없는 자료를 구함
     $sql = " select *
-               from {$g4['shop_order_table']}
+               from {$g5['shop_order_table']}
               where od_misu > 0
               order by od_id desc
               limit $max_limit ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $sql1 = " select * from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
+        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
         $row1 = sql_fetch($sql1);
 
         $name = get_sideview($row['mb_id'], get_text($row['od_name']), $row1['mb_email'], $row1['mb_homepage']);
@@ -149,14 +149,14 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g4[shop_item_use_table]}
+    $sql = " select * from {$g5[shop_item_use_table]}
               where is_confirm = 0
               order by is_id desc
               limit $max_limit ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $sql1 = " select * from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
+        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
         $row1 = sql_fetch($sql1);
 
         $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
@@ -192,14 +192,14 @@ $pg_anchor = '<ul class="anchor">
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g4['shop_item_qa_table']}
+    $sql = " select * from {$g5['shop_item_qa_table']}
               where iq_answer = ''
               order by iq_id desc
               limit $max_limit ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $sql1 = " select * from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
+        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
         $row1 = sql_fetch($sql1);
 
         $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
@@ -224,5 +224,5 @@ $pg_anchor = '<ul class="anchor">
 </section>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

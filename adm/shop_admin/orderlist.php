@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '주문내역';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '주문내역';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $where = array();
 
@@ -23,19 +23,19 @@ if ($search != "") {
 if ($od_status) {
     $where[] = " od_status = '$od_status' ";
     switch ($od_status) {
-        case G4_OD_STATUS_ORDER :       // 입금확인중
+        case G5_OD_STATUS_ORDER :       // 입금확인중
             $sort1 = "od_id";
             $sort2 = "desc";
             break;
-        case G4_OD_STATUS_SETTLE :      // 결제완료
+        case G5_OD_STATUS_SETTLE :      // 결제완료
             $sort1 = "od_receipt_time";
             $sort2 = "desc";
             break;
-        case G4_OD_STATUS_READY :       // 배송준비중
+        case G5_OD_STATUS_READY :       // 배송준비중
             $sort1 = "od_receipt_time";
             $sort2 = "desc";
             break;
-        case G4_OD_STATUS_DELIVERY :    // 배송중
+        case G5_OD_STATUS_DELIVERY :    // 배송중
             $sort1 = "od_invoice_time";
             $sort2 = "desc";
             break;
@@ -52,7 +52,7 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['shop_order_table']} $sql_search ";
+$sql_common = " from {$g5['shop_order_table']} $sql_search ";
 
 $sql = " select count(od_id) as cnt " . $sql_common;
 $row = sql_fetch($sql);
@@ -135,8 +135,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     주문상태 :
     <ul id="sort_sodr" class="sort_odr">
-        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G4_OD_STATUS_ORDER; ?>"><?php echo G4_OD_STATUS_ORDER; ?></a></li>
-        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G4_OD_STATUS_SETTLE; ?>"><?php echo G4_OD_STATUS_SETTLE; ?></a></li>
+        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G5_OD_STATUS_ORDER; ?>"><?php echo G5_OD_STATUS_ORDER; ?></a></li>
+        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G5_OD_STATUS_SETTLE; ?>"><?php echo G5_OD_STATUS_SETTLE; ?></a></li>
     </ul>
 
     <table id="sodr_list">
@@ -179,7 +179,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         $od_cnt = 0;
         if ($row['mb_id'])
         {
-            $sql2 = " select count(*) as cnt from {$g4['shop_order_table']} where mb_id = '{$row['mb_id']}' ";
+            $sql2 = " select count(*) as cnt from {$g5['shop_order_table']} where mb_id = '{$row['mb_id']}' ";
             $row2 = sql_fetch($sql2);
             $od_cnt = $row2['cnt'];
         }
@@ -194,7 +194,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <tr class="orderlist">
         <td class="td_odrnum2">
             <?php echo $od_mobile; ?>
-            <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>">
+            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>">
                 <?php echo $row['od_id']; ?><br>
                 <span class="sound_only">주문일시 </span><?php echo $row['od_time']; ?>
             </a>
@@ -245,8 +245,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </table>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

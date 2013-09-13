@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g4['title'] = '시간별 접속자집계';
+$g5['title'] = '시간별 접속자집계';
 include_once('./visit.sub.php');
 
 $colspan = 4;
@@ -12,7 +12,7 @@ $colspan = 4;
 $max = 0;
 $sum_count = 0;
 $sql = " select SUBSTRING(vi_time,1,2) as vi_hour, count(vi_id) as cnt
-            from {$g4['visit_table']}
+            from {$g5['visit_table']}
             where vi_date between '{$fr_date}' and '{$to_date}'
             group by vi_hour
             order by vi_hour ";

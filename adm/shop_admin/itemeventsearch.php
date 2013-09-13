@@ -8,7 +8,7 @@ if(!trim($_POST['ca_id']))
     die("");
 
 $sql = " select it_id, it_name
-           from {$g4['shop_item_table']}
+           from {$g5['shop_item_table']}
           where ( ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%' )
           order by ca_id, it_name ";
 $result = sql_query($sql);
@@ -16,7 +16,7 @@ $result = sql_query($sql);
 $list = '';
 for($i=0;$row=sql_fetch_array($result);$i++) {
     if($w == 'u') {
-        $sql2 = " select count(*) as cnt from {$g4['shop_event_item_table']} where ev_id = '$ev_id' and it_id = '{$row['it_id']}' ";
+        $sql2 = " select count(*) as cnt from {$g5['shop_event_item_table']} where ev_id = '$ev_id' and it_id = '{$row['it_id']}' ";
         $row2 = sql_fetch($sql2);
         if ($row2['cnt'])
             continue;

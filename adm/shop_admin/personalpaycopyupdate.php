@@ -14,13 +14,13 @@ if(preg_match('/[^0-9]/', $_POST['pp_price']))
     alert('주문금액은 숫자만 입력해 주십시오.');
 
 if($_POST['od_id']) {
-    $sql = " select od_id from {$g4['shop_order_table']} where od_id = '{$_POST['od_id']}' ";
+    $sql = " select od_id from {$g5['shop_order_table']} where od_id = '{$_POST['od_id']}' ";
     $od = sql_fetch($sql);
     if(!$od['od_id'])
         alert('입력하신 주문번호는 존재하지 않습니다.');
 }
 
-$sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' ";
+$sql = " select * from {$g5['shop_personalpay_table']} where pp_id = '$pp_id' ";
 $row = sql_fetch($sql);
 
 if(!$row['pp_id'])
@@ -28,7 +28,7 @@ if(!$row['pp_id'])
 
 $new_pp_id = get_uniqid();
 
-$sql = " insert into {$g4['shop_personalpay_table']}
+$sql = " insert into {$g5['shop_personalpay_table']}
             set pp_id           = '$new_pp_id',
                 od_id           = '{$_POST['od_id']}',
                 pp_name         = '{$_POST['pp_name']}',
@@ -36,11 +36,11 @@ $sql = " insert into {$g4['shop_personalpay_table']}
                 pp_use          = '{$row['pp_use']}',
                 pp_price        = '{$_POST['pp_price']}',
                 pp_ip           = '{$_SERVER['REMOTE_ADDR']}',
-                pp_time         = '".G4_TIME_YMDHIS."' ";
+                pp_time         = '".G5_TIME_YMDHIS."' ";
 sql_query($sql);
 
-$g4['title'] = '개인결제 복사';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '개인결제 복사';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <script>
@@ -50,5 +50,5 @@ self.close();
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -18,7 +18,7 @@ for ($i=0; $i<$count; $i++)
     $k = $_POST['chk'][$i];
 
     // 포인트 내역정보
-    $sql = " select * from {$g4['point_table']} where po_id = '{$_POST['po_id'][$k]}' ";
+    $sql = " select * from {$g5['point_table']} where po_id = '{$_POST['po_id'][$k]}' ";
     $row = sql_fetch($sql);
 
     if(!$row['po_id'])
@@ -39,11 +39,11 @@ for ($i=0; $i<$count; $i++)
     }
 
     // 포인트 내역삭제
-    $sql = " delete from {$g4['point_table']} where po_id = '{$_POST['po_id'][$k]}' ";
+    $sql = " delete from {$g5['point_table']} where po_id = '{$_POST['po_id'][$k]}' ";
     sql_query($sql);
 
     // po_mb_point에 반영
-    $sql = " update {$g4['point_table']}
+    $sql = " update {$g5['point_table']}
                 set po_mb_point = po_mb_point - '{$row['po_point']}'
                 where mb_id = '{$_POST['mb_id'][$k]}'
                   and po_id > '{$_POST['po_id'][$k]}' ";
@@ -51,7 +51,7 @@ for ($i=0; $i<$count; $i++)
 
     // 포인트 UPDATE
     $sum_point = get_point_sum($_POST['mb_id'][$k]);
-    $sql= " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '{$_POST['mb_id'][$k]}' ";
+    $sql= " update {$g5['member_table']} set mb_point = '$sum_point' where mb_id = '{$_POST['mb_id'][$k]}' ";
     sql_query($sql);
 }
 

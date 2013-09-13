@@ -4,12 +4,12 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '상품관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '상품관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 // 분류
 $ca_list  = '<option value="">선택</option>'.PHP_EOL;
-$sql = " select * from {$g4['shop_category_table']} ";
+$sql = " select * from {$g5['shop_category_table']} ";
 if ($is_admin != 'super')
     $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
 $sql .= " order by ca_id ";
@@ -42,8 +42,8 @@ if ($sca != "") {
 
 if ($sfl == "")  $sfl = "it_name";
 
-$sql_common = " from {$g4['shop_item_table']} a ,
-                     {$g4['shop_category_table']} b
+$sql_common = " from {$g5['shop_item_table']} a ,
+                     {$g5['shop_category_table']} b
                where (a.ca_id = b.ca_id";
 if ($is_admin != 'super')
     $sql_common .= " and b.ca_mb_id = '{$member['mb_id']}'";
@@ -98,7 +98,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <select name="sca" id="sca">
         <option value="">전체분류</option>
         <?php
-        $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
+        $sql1 = " select ca_id, ca_name from {$g5['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=sql_fetch_array($result1); $i++) {
             $len = strlen($row1['ca_id']) / 2 - 1;
@@ -179,7 +179,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
-        $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
     ?>
     <tr>
         <td rowspan="2">
@@ -237,7 +237,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
 function fitemlist_submit(f)
@@ -273,5 +273,5 @@ function excelform(url)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

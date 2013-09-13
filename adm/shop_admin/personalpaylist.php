@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], "r");
 
 $token = get_token();
 
-$sql_common = " from {$g4['shop_personalpay_table']} ";
+$sql_common = " from {$g5['shop_personalpay_table']} ";
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -50,8 +50,8 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$g4['title'] = '개인결제 관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '개인결제 관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $colspan = 8;
 ?>
@@ -157,7 +157,7 @@ $colspan = 8;
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
 $(function() {
@@ -186,5 +186,5 @@ function fpersonalpaylist_submit(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

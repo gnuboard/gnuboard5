@@ -12,7 +12,7 @@ if(!count($_POST['chk_bo_table']))
     alert('게시물을 '.$act.'할 게시판을 한개 이상 선택해 주십시오.', $url);
 
 // 원본 파일 디렉토리
-$src_dir = G4_DATA_PATH.'/file/'.$bo_table;
+$src_dir = G5_DATA_PATH.'/file/'.$bo_table;
 
 $save = array();
 $save_count_write = 0;
@@ -27,10 +27,10 @@ while ($row = sql_fetch_array($result))
     for ($i=0; $i<count($_POST['chk_bo_table']); $i++)
     {
         $move_bo_table = $_POST['chk_bo_table'][$i];
-        $move_write_table = $g4['write_prefix'] . $move_bo_table;
+        $move_write_table = $g5['write_prefix'] . $move_bo_table;
 
-        $src_dir = G4_DATA_PATH.'/file/'.$bo_table; // 원본 디렉토리
-        $dst_dir = G4_DATA_PATH.'/file/'.$move_bo_table; // 복사본 디렉토리
+        $src_dir = G5_DATA_PATH.'/file/'.$bo_table; // 원본 디렉토리
+        $dst_dir = G5_DATA_PATH.'/file/'.$move_bo_table; // 복사본 디렉토리
 
         $count_write = 0;
         $count_comment = 0;
@@ -43,7 +43,7 @@ while ($row = sql_fetch_array($result))
         {
             $nick = cut_str($member['mb_nick'], $config['cf_cut_name']);
             if (!$row2['wr_is_comment'] && $config['cf_use_copy_log'])
-                $row2['wr_content'] .= "\n".'<div class="content_'.$sw.'">[이 게시물은 '.$nick.'님에 의해 '.G4_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]</div>';
+                $row2['wr_content'] .= "\n".'<div class="content_'.$sw.'">[이 게시물은 '.$nick.'님에 의해 '.G5_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]</div>';
 
             $sql = " insert into $move_write_table
                         set wr_num = '$next_wr_num',
@@ -90,7 +90,7 @@ while ($row = sql_fetch_array($result))
             {
                 $save_parent = $insert_id;
 
-                $sql3 = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' order by bf_no ";
+                $sql3 = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' order by bf_no ";
                 $result3 = sql_query($sql3);
                 for ($k=0; $row3 = sql_fetch_array($result3); $k++)
                 {
@@ -98,10 +98,10 @@ while ($row = sql_fetch_array($result))
                     {
                         // 원본파일을 복사하고 퍼미션을 변경
                         @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$row3['bf_file']);
-                        @chmod($dst_dir/$row3['bf_file'], G4_FILE_PERMISSION);
+                        @chmod($dst_dir/$row3['bf_file'], G5_FILE_PERMISSION);
                     }
 
-                    $sql = " insert into {$g4['board_file_table']}
+                    $sql = " insert into {$g5['board_file_table']}
                                 set bo_table = '$move_bo_table',
                                      wr_id = '$insert_id',
                                      bf_no = '{$row3['bf_no']}',
@@ -125,10 +125,10 @@ while ($row = sql_fetch_array($result))
                 if ($sw == 'move' && $i == 0)
                 {
                     // 스크랩 이동
-                    sql_query(" update {$g4['scrap_table']} set bo_table = '$move_bo_table', wr_id = '$save_parent' where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' ");
+                    sql_query(" update {$g5['scrap_table']} set bo_table = '$move_bo_table', wr_id = '$save_parent' where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' ");
 
                     // 최신글 이동
-                    sql_query(" update {$g4['board_new_table']} set bo_table = '$move_bo_table', wr_id = '$save_parent', wr_parent = '$save_parent' where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' ");
+                    sql_query(" update {$g5['board_new_table']} set bo_table = '$move_bo_table', wr_id = '$save_parent', wr_parent = '$save_parent' where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' ");
                 }
             }
             else
@@ -138,7 +138,7 @@ while ($row = sql_fetch_array($result))
                 if ($sw == 'move')
                 {
                     // 최신글 이동
-                    sql_query(" update {$g4['board_new_table']} set bo_table = '$move_bo_table', wr_id = '$insert_id', wr_parent = '$save_parent' where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' ");
+                    sql_query(" update {$g5['board_new_table']} set bo_table = '$move_bo_table', wr_id = '$insert_id', wr_parent = '$save_parent' where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' ");
                 }
             }
 
@@ -150,8 +150,8 @@ while ($row = sql_fetch_array($result))
             $cnt++;
         }
 
-        sql_query(" update {$g4['board_table']} set bo_count_write = bo_count_write + '$count_write' where bo_table = '$move_bo_table' ");
-        sql_query(" update {$g4['board_table']} set bo_count_comment = bo_count_comment + '$count_comment' where bo_table = '$move_bo_table' ");
+        sql_query(" update {$g5['board_table']} set bo_count_write = bo_count_write + '$count_write' where bo_table = '$move_bo_table' ");
+        sql_query(" update {$g5['board_table']} set bo_count_comment = bo_count_comment + '$count_comment' where bo_table = '$move_bo_table' ");
 
         delete_cache_latest($move_bo_table);
     }
@@ -170,14 +170,14 @@ if ($sw == 'move')
             @unlink($save[$i]['bf_file'][$k]);
 
         sql_query(" delete from $write_table where wr_parent = '{$save[$i]['wr_id']}' ");
-        sql_query(" delete from {$g4['board_new_table']} where bo_table = '$bo_table' and wr_id = '{$save[$i]['wr_id']}' ");
-        sql_query(" delete from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$save[$i]['wr_id']}' ");
+        sql_query(" delete from {$g5['board_new_table']} where bo_table = '$bo_table' and wr_id = '{$save[$i]['wr_id']}' ");
+        sql_query(" delete from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$save[$i]['wr_id']}' ");
     }
-    sql_query(" update {$g4['board_table']} set bo_count_write = bo_count_write - '$save_count_write', bo_count_comment = bo_count_comment - '$save_count_comment' where bo_table = '$bo_table' ");
+    sql_query(" update {$g5['board_table']} set bo_count_write = bo_count_write - '$save_count_write', bo_count_comment = bo_count_comment - '$save_count_comment' where bo_table = '$bo_table' ");
 }
 
 // syndication ping
-include G4_SYNDI_PATH.'/include/include.bbs.move_update.php';
+include G5_SYNDI_PATH.'/include/include.bbs.move_update.php';
 
 $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.';
 $opener_href = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;'.$qstr;

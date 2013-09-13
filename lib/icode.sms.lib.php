@@ -60,7 +60,7 @@ class SMS {
 	}
 
 	function Add($dest, $callBack, $Caller, $msg, $rsvTime="") {
-        global $g4;
+        global $g5;
 
 		// 내용 검사 1
 		$Error = CheckCommonType($dest, $rsvTime);
@@ -70,7 +70,7 @@ class SMS {
 		if ( preg_match("/[^0-9]/i",$callBack) ) return "회신 전화번호가 잘못되었습니다";
 
         // 아이코드에서는 문자에 utf-8 인코딩 형식을 아직 지원하지 않는다.
-        if (strtolower($g4['charset'])=='utf-8') {
+        if (strtolower($g5['charset'])=='utf-8') {
             if (function_exists("iconv")) {
                 $msg = iconv("utf-8", "euc-kr", $msg);
             }

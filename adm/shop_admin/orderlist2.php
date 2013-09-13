@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '주문통합내역';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '주문통합내역';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $where = " where ";
 $sql_search = "";
@@ -25,7 +25,7 @@ if ($sel_field == "")  $sel_field = "od_id";
 if ($sort1 == "") $sort1 = "od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['shop_order_table']}
+$sql_common = " from {$g5['shop_order_table']}
                 $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -138,7 +138,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 <dd>
                     <strong>
                         <?php echo $od_mobile; ?>
-                        <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a>
+                        <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a>
                     </strong>
                 </dd>
                 <dt>주문일시</dt>
@@ -177,14 +177,14 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <?php
             // 상품개별출력
             $sql2 = " select it_id, it_name
-                        from {$g4['shop_cart_table']}
+                        from {$g5['shop_cart_table']}
                         where od_id = '{$row['od_id']}'
                         group by it_id
                         order by ct_id asc ";
             $result2 = sql_query($sql2);
 
             for ($k=0;$row2=sql_fetch_array($result2);$k++) { // for 자식 시작
-                $href = G4_SHOP_URL.'/item.php?it_id='.$row2['it_id'];
+                $href = G5_SHOP_URL.'/item.php?it_id='.$row2['it_id'];
             ?>
 
             <div class="sodr_itname">
@@ -208,7 +208,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <?php
                 // 옵션항목
                 $sql3 = " select *
-                            from {$g4['shop_cart_table']}
+                            from {$g5['shop_cart_table']}
                             where od_id = '{$row['od_id']}'
                               and it_id = '{$row2['it_id']}'
                             order by io_type asc, ct_id asc ";
@@ -290,8 +290,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </table>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

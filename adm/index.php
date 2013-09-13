@@ -1,14 +1,14 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '관리자메인';
+$g5['title'] = '관리자메인';
 include_once ('./admin.head.php');
 
 $new_member_rows = 5;
 $new_point_rows = 5;
 $new_write_rows = 5;
 
-$sql_common = " from {$g4['member_table']} ";
+$sql_common = " from {$g5['member_table']} ";
 
 $sql_search = " where (1) ";
 
@@ -66,7 +66,7 @@ $colspan = 12;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 접근가능한 그룹수
-        $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
+        $sql2 = " select count(*) as cnt from {$g5['group_member_table']} where mb_id = '{$row['mb_id']}' ";
         $row2 = sql_fetch($sql2);
         $group = "";
         if ($row2['cnt'])
@@ -84,8 +84,8 @@ $colspan = 12;
         }
         $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">그룹</a>';
 
-        $leave_date = $row['mb_leave_date'] ? $row['mb_leave_date'] : date("Ymd", G4_SERVER_TIME);
-        $intercept_date = $row['mb_intercept_date'] ? $row['mb_intercept_date'] : date("Ymd", G4_SERVER_TIME);
+        $leave_date = $row['mb_leave_date'] ? $row['mb_leave_date'] : date("Ymd", G5_SERVER_TIME);
+        $intercept_date = $row['mb_intercept_date'] ? $row['mb_intercept_date'] : date("Ymd", G5_SERVER_TIME);
 
         $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
@@ -123,7 +123,7 @@ $colspan = 12;
 </section>
 
 <?php
-$sql_common = " from {$g4['board_new_table']} a, {$g4['board_table']} b, {$g4['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id ";
+$sql_common = " from {$g5['board_new_table']} a, {$g5['board_table']} b, {$g5['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id ";
 
 if ($gr_id)
     $sql_common .= " and b.gr_id = '$gr_id' ";
@@ -162,7 +162,7 @@ $colspan = 5;
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $tmp_write_table = $g4['write_prefix'] . $row['bo_table'];
+        $tmp_write_table = $g5['write_prefix'] . $row['bo_table'];
 
         if ($row['wr_id'] == $row['wr_parent']) // 원글
         {
@@ -174,7 +174,7 @@ $colspan = 5;
             // 당일인 경우 시간으로 표시함
             $datetime = substr($row2['wr_datetime'],0,10);
             $datetime2 = $row2['wr_datetime'];
-            if ($datetime == G4_TIME_YMD)
+            if ($datetime == G5_TIME_YMD)
                 $datetime2 = substr($datetime2,11,5);
             else
                 $datetime2 = substr($datetime2,5,5);
@@ -191,7 +191,7 @@ $colspan = 5;
             // 당일인 경우 시간으로 표시함
             $datetime = substr($row3['wr_datetime'],0,10);
             $datetime2 = $row3['wr_datetime'];
-            if ($datetime == G4_TIME_YMD)
+            if ($datetime == G5_TIME_YMD)
                 $datetime2 = substr($datetime2,11,5);
             else
                 $datetime2 = substr($datetime2,5,5);
@@ -199,9 +199,9 @@ $colspan = 5;
     ?>
 
     <tr>
-        <td class="td_category"><a href="<?php echo G4_BBS_URL ?>/new.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo cut_str($row['gr_subject'],10) ?></a></td>
-        <td class="td_category"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>"><?php echo cut_str($row['bo_subject'],20) ?></a></td>
-        <td><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>&amp;wr_id=<?php echo $row2['wr_id'] ?><?php echo $comment_link ?>"><?php echo $comment ?><?php echo conv_subject($row2['wr_subject'], 100) ?></a></td>
+        <td class="td_category"><a href="<?php echo G5_BBS_URL ?>/new.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo cut_str($row['gr_subject'],10) ?></a></td>
+        <td class="td_category"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>"><?php echo cut_str($row['bo_subject'],20) ?></a></td>
+        <td><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>&amp;wr_id=<?php echo $row2['wr_id'] ?><?php echo $comment_link ?>"><?php echo $comment ?><?php echo conv_subject($row2['wr_subject'], 100) ?></a></td>
         <td class="td_mbname"><div><?php echo $name ?></div></td>
         <td class="td_time"><?php echo $datetime ?></td>
     </tr>
@@ -215,12 +215,12 @@ $colspan = 5;
     </table>
 
     <div class="btn_ft">
-        <a href="<?php echo G4_BBS_URL ?>/new.php">최근게시물 더보기</a>
+        <a href="<?php echo G5_BBS_URL ?>/new.php">최근게시물 더보기</a>
     </div>
 </section>
 
 <?php
-$sql_common = " from {$g4['point_table']} ";
+$sql_common = " from {$g5['point_table']} ";
 $sql_search = " where (1) ";
 $sql_order = " order by po_id desc ";
 
@@ -257,7 +257,7 @@ $colspan = 7;
     {
         if ($row2['mb_id'] != $row['mb_id'])
         {
-            $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g4['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $sql2 = " select mb_id, mb_name, mb_nick, mb_email, mb_homepage, mb_point from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
             $row2 = sql_fetch($sql2);
         }
 
@@ -266,7 +266,7 @@ $colspan = 7;
         $link1 = $link2 = "";
         if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table'])
         {
-            $link1 = '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
+            $link1 = '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
             $link2 = '</a>';
         }
     ?>

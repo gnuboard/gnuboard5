@@ -11,8 +11,8 @@ if ($kind == 'recv')
     $t = '받은';
     $unkind = 'send';
 
-    $sql = " update {$g4['memo_table']}
-                set me_read_datetime = '".G4_TIME_YMDHIS."'
+    $sql = " update {$g5['memo_table']}
+                set me_read_datetime = '".G5_TIME_YMDHIS."'
                 where me_id = '$me_id'
                 and me_recv_mb_id = '{$member['mb_id']}'
                 and me_read_datetime = '0000-00-00 00:00:00' ";
@@ -28,16 +28,16 @@ else
     alert($kind.' 값을 넘겨주세요.');
 }
 
-$g4['title'] = $t.' 쪽지 보기';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = $t.' 쪽지 보기';
+include_once(G5_PATH.'/head.sub.php');
 
-$sql = " select * from {$g4['memo_table']}
+$sql = " select * from {$g5['memo_table']}
             where me_id = '$me_id'
             and me_{$kind}_mb_id = '{$member['mb_id']}' ";
 $memo = sql_fetch($sql);
 
 // 이전 쪽지
-$sql = " select * from {$g4['memo_table']}
+$sql = " select * from {$g5['memo_table']}
             where me_id > '{$me_id}'
             and me_{$kind}_mb_id = '{$member['mb_id']}'
             order by me_id asc
@@ -51,7 +51,7 @@ else
 
 
 // 다음 쪽지
-$sql = " select * from {$g4[memo_table]}
+$sql = " select * from {$g5[memo_table]}
             where me_id < '{$me_id}'
             and me_{$kind}_mb_id = '{$member[mb_id]}'
             order by me_id desc
@@ -67,5 +67,5 @@ $mb = get_member($memo['me_'.$unkind.'_mb_id']);
 
 include_once($member_skin_path.'/memo_view.skin.php');
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -1,8 +1,8 @@
 <?php
 $sub_menu = '400300';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
-include_once(G4_LIB_PATH.'/iteminfo.lib.php');
+include_once(G5_EDITOR_LIB);
+include_once(G5_LIB_PATH.'/iteminfo.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -19,7 +19,7 @@ if ($w == "")
     $it['ca_id3'] = get_cookie("ck_ca_id3");
     if (!$it['ca_id'])
     {
-        $sql = " select ca_id from {$g4['shop_category_table']} order by ca_id limit 1 ";
+        $sql = " select ca_id from {$g5['shop_category_table']} order by ca_id limit 1 ";
         $row = sql_fetch($sql);
         if (!$row['ca_id'])
             alert("등록된 분류가 없습니다. 우선 분류를 등록하여 주십시오.");
@@ -36,7 +36,7 @@ else if ($w == "u")
 
     if ($is_admin != 'super')
     {
-        $sql = " select it_id from {$g4['shop_item_table']} a, {$g4['shop_category_table']} b
+        $sql = " select it_id from {$g5['shop_item_table']} a, {$g5['shop_category_table']} b
                   where a.it_id = '$it_id'
                     and a.ca_id = b.ca_id
                     and b.ca_mb_id = '{$member['mb_id']}' ";
@@ -45,13 +45,13 @@ else if ($w == "u")
             alert("\'{$member['mb_id']}\' 님께서 수정 할 권한이 없는 상품입니다.");
     }
 
-    $sql = " select * from {$g4['shop_item_table']} where it_id = '$it_id' ";
+    $sql = " select * from {$g5['shop_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
     if (!$ca_id)
         $ca_id = $it['ca_id'];
 
-    $sql = " select * from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
+    $sql = " select * from {$g5['shop_category_table']} where ca_id = '$ca_id' ";
     $ca = sql_fetch($sql);
 }
 else
@@ -68,13 +68,13 @@ if (!$it['it_explan_html'])
 //$qstr = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
 $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
 
-$g4['title'] = $html_title;
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = $html_title;
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 // 분류리스트
 $category_select = '';
 $script = '';
-$sql = " select * from {$g4['shop_category_table']} ";
+$sql = " select * from {$g5['shop_category_table']} ";
 if ($is_admin != 'super')
     $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
 $sql .= " order by ca_id ";
@@ -200,9 +200,9 @@ $pg_anchor ='<ul class="anchor">
             <?php } else { ?>
                 <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
                 <span class="frm_ca_id"><?php echo $it['it_id']; ?></span>
-                <a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $it_id; ?>" class="btn_frmline">상품확인</a>
-                <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemuselist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">사용후기</a>
-                <a href="<?php echo G4_ADMIN_URL; ?>/shop_admin/itemqalist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">상품문의</a>
+                <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $it_id; ?>" class="btn_frmline">상품확인</a>
+                <a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/itemuselist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">사용후기</a>
+                <a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/itemqalist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">상품문의</a>
             <?php } ?>
         </td>
     </tr>
@@ -237,15 +237,15 @@ $pg_anchor ='<ul class="anchor">
         <td>
             <?php echo help("메인화면에 유형별로 출력할때 사용합니다.\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다."); ?>
             <input type="checkbox" name="it_type1" value="1" <?php echo ($it['it_type1'] ? "checked" : ""); ?> id="it_type1">
-            <label for="it_type1">히트 <img src="<?php echo G4_SHOP_URL; ?>/img/icon_hit2.gif" alt=""></label>
+            <label for="it_type1">히트 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_hit2.gif" alt=""></label>
             <input type="checkbox" name="it_type2" value="1" <?php echo ($it['it_type2'] ? "checked" : ""); ?> id="it_type2">
-            <label for="it_type2">추천 <img src="<?php echo G4_SHOP_URL; ?>/img/icon_rec2.gif" alt=""></label>
+            <label for="it_type2">추천 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_rec2.gif" alt=""></label>
             <input type="checkbox" name="it_type3" value="1" <?php echo ($it['it_type3'] ? "checked" : ""); ?> id="it_type3">
-            <label for="it_type3">신상품 <img src="<?php echo G4_SHOP_URL; ?>/img/icon_new2.gif" alt=""></label>
+            <label for="it_type3">신상품 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_new2.gif" alt=""></label>
             <input type="checkbox" name="it_type4" value="1" <?php echo ($it['it_type4'] ? "checked" : ""); ?> id="it_type4">
-            <label for="it_type4">인기 <img src="<?php echo G4_SHOP_URL; ?>/img/icon_best2.gif" alt=""></label>
+            <label for="it_type4">인기 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_best2.gif" alt=""></label>
             <input type="checkbox" name="it_type5" value="1" <?php echo ($it['it_type5'] ? "checked" : ""); ?> id="it_type5">
-            <label for="it_type5">할인 <img src="<?php echo G4_SHOP_URL; ?>/img/icon_discount2.gif" alt=""></label>
+            <label for="it_type5">할인 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_discount2.gif" alt=""></label>
         </td>
         <td class="group_setting">
             <input type="checkbox" name="chk_ca_it_type" value="1" id="chk_ca_it_type">
@@ -389,7 +389,7 @@ $pg_anchor ='<ul class="anchor">
             ?>
         </select>
     </div>
-    <div id="sit_compact_fields"><?php include_once(G4_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
+    <div id="sit_compact_fields"><?php include_once(G5_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
 </section>
 
 <script>
@@ -397,7 +397,7 @@ $(function(){
     $("#it_info_gubun").live("change", function() {
         var gubun = $(this).val();
         $.post(
-            "<?php echo G4_ADMIN_URL; ?>/shop_admin/iteminfo.php",
+            "<?php echo G5_ADMIN_URL; ?>/shop_admin/iteminfo.php",
             { it_id: "<?php echo $it['it_id']; ?>", gubun: gubun },
             function(data) {
                 $("#sit_compact_fields").empty().html(data);
@@ -560,7 +560,7 @@ $(function(){
                     <button type="button" id="option_table_create" class="btn_frmline">옵션목록생성</button>
                 </div>
             </div>
-            <div id="sit_option_frm"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemoption.php'); ?></div>
+            <div id="sit_option_frm"><?php include_once(G5_ADMIN_PATH.'/shop_admin/itemoption.php'); ?></div>
 
             <script>
             $(function() {
@@ -609,7 +609,7 @@ $(function(){
                     }
 
                     $.post(
-                        "<?php echo G4_ADMIN_URL; ?>/shop_admin/itemoption.php",
+                        "<?php echo G5_ADMIN_URL; ?>/shop_admin/itemoption.php",
                         { opt1_subject: opt1_subject, opt2_subject: opt2_subject, opt3_subject: opt3_subject, opt1: opt1, opt2: opt2, opt3: opt3 },
                         function(data) {
                             $option_table.empty().html(data);
@@ -698,7 +698,7 @@ $(function(){
                     <button type="button" id="supply_table_create">옵션목록생성</button>
                 </div>
             </div>
-            <div id="sit_option_addfrm"><?php include_once(G4_ADMIN_PATH.'/shop_admin/itemsupply.php'); ?></div>
+            <div id="sit_option_addfrm"><?php include_once(G5_ADMIN_PATH.'/shop_admin/itemsupply.php'); ?></div>
 
             <script>
             $(function() {
@@ -780,7 +780,7 @@ $(function(){
                     }
 
                     $.post(
-                        "<?php echo G4_ADMIN_URL; ?>/shop_admin/itemsupply.php",
+                        "<?php echo G5_ADMIN_URL; ?>/shop_admin/itemsupply.php",
                         { 'subject[]': subject, 'supply[]': supply },
                         function(data) {
                             $supply_table.empty().html(data);
@@ -957,7 +957,7 @@ $(function(){
         <td>
             <input type="file" name="it_img<?php echo $i; ?>" id="it_img<?php echo $i; ?>">
             <?php
-            $it_img = G4_DATA_PATH.'/item/'.$it['it_img'.$i];
+            $it_img = G5_DATA_PATH.'/item/'.$it['it_img'.$i];
             if(is_file($it_img) && $it['it_img'.$i]) {
                 $size = @getimagesize($it_img);
                 $thumb = get_it_thumbnail($it['it_img'.$i], 25, 25);
@@ -966,7 +966,7 @@ $(function(){
             <input type="checkbox" name="it_img<?php echo $i; ?>_del" id="it_img<?php echo $i; ?>_del" value="1">
             <span class="sit_wimg_limg<?php echo $i; ?>"><?php echo $thumb; ?></span>
             <div id="limg<?php echo $i; ?>" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/item/<?php echo $it['it_img'.$i]; ?>" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
+                <img src="<?php echo G5_DATA_URL; ?>/item/<?php echo $it['it_img'.$i]; ?>" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
             <script>
@@ -1002,7 +1002,7 @@ $(function(){
             <select id="sch_relation">
                 <option value=''>분류별 상품</option>
                 <?php
-                    $sql = " select * from {$g4['shop_category_table']} ";
+                    $sql = " select * from {$g5['shop_category_table']} ";
                     if ($is_admin != 'super')
                         $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
                     $sql .= " order by ca_id ";
@@ -1092,8 +1092,8 @@ $(function(){
             <?php
             $str = array();
             $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
-                       from {$g4['shop_item_relation_table']} a
-                       left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id)
+                       from {$g5['shop_item_relation_table']} a
+                       left join {$g5['shop_item_table']} b on (a.it_id2=b.it_id)
                       where a.it_id = '$it_id'
                       order by ir_no asc ";
             $result = sql_query($sql);
@@ -1133,7 +1133,7 @@ $(function(){
         <h3>등록된 전체이벤트 목록</h3>
         <div id="event_list" class="srel_list srel_noneimg">
             <?php
-            $sql = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
+            $sql = " select ev_id, ev_subject from {$g5['shop_event_table']} order by ev_id desc ";
             $result = sql_query($sql);
             for ($g=0; $row=sql_fetch_array($result); $g++) {
                 if($g == 0)
@@ -1205,8 +1205,8 @@ $(function(){
             $str = "";
             $comma = "";
             $sql = " select b.ev_id, b.ev_subject
-                       from {$g4['shop_event_item_table']} a
-                       left join {$g4['shop_event_table']} b on (a.ev_id=b.ev_id)
+                       from {$g5['shop_event_item_table']} a
+                       left join {$g5['shop_event_table']} b on (a.ev_id=b.ev_id)
                       where a.it_id = '$it_id'
                       order by b.ev_id desc ";
             $result = sql_query($sql);
@@ -1490,5 +1490,5 @@ categorychange(document.fitemform);
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

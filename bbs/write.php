@@ -1,17 +1,17 @@
 <?php
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_EDITOR_LIB);
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 set_session('ss_bo_table', $_REQUEST['bo_table']);
 set_session('ss_wr_id', $_REQUEST['wr_id']);
 
 if (!$board['bo_table']) {
-    alert('존재하지 않는 게시판입니다.', G4_URL);
+    alert('존재하지 않는 게시판입니다.', G5_URL);
 }
 
 if (!$bo_table) {
-    alert("bo_table 값이 넘어오지 않았습니다.\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", G4_URL);
+    alert("bo_table 값이 넘어오지 않았습니다.\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", G5_URL);
 }
 
 check_device($board['bo_device']);
@@ -30,13 +30,13 @@ if ($w == 'u' || $w == 'r') {
             $$vvar = $write['wr_'.$i];
         }
     } else {
-        alert("글이 존재하지 않습니다.\\n삭제되었거나 이동된 경우입니다.", G4_URL);
+        alert("글이 존재하지 않습니다.\\n삭제되었거나 이동된 경우입니다.", G5_URL);
     }
 }
 
 if ($w == '') {
     if ($wr_id) {
-        alert('글쓰기에는 \$wr_id 값을 사용하지 않습니다.', G4_BBS_URL.'/board.php?bo_table='.$bo_table);
+        alert('글쓰기에는 \$wr_id 값을 사용하지 않습니다.', G5_BBS_URL.'/board.php?bo_table='.$bo_table);
     }
 
     if ($member['mb_level'] < $board['bo_write_level']) {
@@ -175,7 +175,7 @@ if (!empty($group['gr_use_access'])) {
         ; // 통과
     } else {
         // 그룹접근
-        $sql = " select gr_id from {$g4['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
+        $sql = " select gr_id from {$g5['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
         if (!$row['gr_id'])
             alert('접근 권한이 없으므로 글쓰기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.');
@@ -190,19 +190,19 @@ if ($config['cf_cert_use'] && !$is_admin) {
     }
 
     if ($board['bo_use_cert'] == 'cert' && !$member['mb_certify']) {
-        alert('이 게시판은 본인확인 하신 회원님만 글쓰기가 가능합니다.\\n\\n회원정보 수정에서 본인확인을 해주시기 바랍니다.', G4_URL);
+        alert('이 게시판은 본인확인 하신 회원님만 글쓰기가 가능합니다.\\n\\n회원정보 수정에서 본인확인을 해주시기 바랍니다.', G5_URL);
     }
 
     if ($board['bo_use_cert'] == 'adult' && !$member['mb_adult']) {
-        alert('이 게시판은 본인확인으로 성인인증 된 회원님만 글쓰기가 가능합니다.\\n\\n성인인데 글쓰기가 안된다면 회원정보 수정에서 본인확인을 다시 해주시기 바랍니다.', G4_URL);
+        alert('이 게시판은 본인확인으로 성인인증 된 회원님만 글쓰기가 가능합니다.\\n\\n성인인데 글쓰기가 안된다면 회원정보 수정에서 본인확인을 다시 해주시기 바랍니다.', G5_URL);
     }
 
     if ($board['bo_use_cert'] == 'hp-cert' && $member['mb_certify'] != 'hp') {
-        alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 휴대폰 본인확인을 해주시기 바랍니다.', G4_URL);
+        alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 휴대폰 본인확인을 해주시기 바랍니다.', G5_URL);
     }
 
     if ($board['bo_use_cert'] == 'hp-adult' && (!$member['mb_adult'] || $member['mb_certify'] != 'hp')) {
-        alert('이 게시판은 휴대폰 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을 다시 해주시기 바랍니다.', G4_URL);
+        alert('이 게시판은 휴대폰 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을 다시 해주시기 바랍니다.', G5_URL);
     }
 }
 
@@ -217,7 +217,7 @@ else
     $write_max = (int)$board['bo_write_max'];
 }
 
-$g4['title'] = $board['bo_subject']." ".$title_msg;
+$g5['title'] = $board['bo_subject']." ".$title_msg;
 
 $is_notice = false;
 $notice_checked = '';
@@ -322,7 +322,7 @@ if ($w == '') {
     $email = $write['wr_email'];
     $homepage = get_text($write['wr_homepage']);
 
-    for ($i=1; $i<=G4_LINK_COUNT; $i++) {
+    for ($i=1; $i<=G5_LINK_COUNT; $i++) {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
         $link[$i] = $write['wr_link'.$i];
     }
@@ -348,7 +348,7 @@ if ($w == '') {
 
     $password_required = "required";
 
-    for ($i=1; $i<=G4_LINK_COUNT; $i++) {
+    for ($i=1; $i<=G5_LINK_COUNT; $i++) {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
     }
 }
@@ -391,7 +391,7 @@ if ($is_guest) {
 
 $is_dhtml_editor = false;
 // 모바일에서는 DHTML 에디터 사용불가
-if ($config['cf_editor'] && !G4_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
+if ($config['cf_editor'] && !G5_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
     $is_dhtml_editor = true;
 }
 $editor_html = editor_html('wr_content', $content, $is_dhtml_editor);
@@ -402,16 +402,16 @@ $editor_js .= chk_editor_js('wr_content', $is_dhtml_editor);
 // 임시 저장된 글 갯수
 $autosave_count = autosave_count($member['mb_id']);
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 @include_once ($board_skin_path.'/write.head.skin.php');
 include_once('./board_head.php');
 
-$action_url = https_url(G4_BBS_DIR)."/write_update.php";
+$action_url = https_url(G5_BBS_DIR)."/write_update.php";
 
 echo '<!-- skin : '.$board_skin_path.' -->';
 include_once ($board_skin_path.'/write.skin.php');
 
 include_once('./board_tail.php');
 @include_once ($board_skin_path.'/write.tail.skin.php');
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

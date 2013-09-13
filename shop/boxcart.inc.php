@@ -8,7 +8,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <ul>
     <?php
-    $hsql  = " select it_id, it_name from {$g4['shop_cart_table']} ";
+    $hsql  = " select it_id, it_name from {$g5['shop_cart_table']} ";
     $hsql .= " where od_id = '".get_session('ss_cart_id')."' group by it_id ";
     $hresult = sql_query($hsql);
     for ($i=0; $row=sql_fetch_array($hresult); $i++)
@@ -17,7 +17,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         $it_name = get_text($row['it_name']);
         // 이미지로 할 경우
         //$it_name = get_it_image($row['it_id'], 50, 50, true);
-        echo '<a href="'.G4_SHOP_URL.'/cart.php">'.$it_name.'</a>';
+        echo '<a href="'.G5_SHOP_URL.'/cart.php">'.$it_name.'</a>';
         echo '</li>';
     }
 

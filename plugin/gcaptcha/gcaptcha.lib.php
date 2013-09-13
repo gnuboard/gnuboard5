@@ -79,7 +79,7 @@ class gcaptcha
 
     function run()
     {
-        global $g4;
+        global $g5;
 
         // The text to draw
         $captcha_key = $this->get_captcha_key();
@@ -100,7 +100,7 @@ class gcaptcha
 
         // Replace path by your own font path
         $fonts = Array();
-        foreach (glob(G4_GCAPTCHA_PATH.'/fonts/*.ttf') as $filename) {
+        foreach (glob(G5_GCAPTCHA_PATH.'/fonts/*.ttf') as $filename) {
             $fonts[] = $filename;
         }
         $font = $fonts[mt_rand(0, count($fonts)-1)];
@@ -122,7 +122,7 @@ class gcaptcha
 
         $this->captcha_filename = $this->get_captcha_filename();
 
-        imagejpeg($im, G4_DATA_PATH.'/cache/'.$this->captcha_filename.'.jpg');
+        imagejpeg($im, G5_DATA_PATH.'/cache/'.$this->captcha_filename.'.jpg');
         imagedestroy($im);
 
         $this->make_mp3($this->captcha_filename);
@@ -135,16 +135,16 @@ class gcaptcha
 
     function make_mp3($captcha_filename)
     {
-        global $g4, $config;
+        global $g5, $config;
 
         $number = (string)$_SESSION['ss_captcha_key'];
         $mp3s = array();
         for($i=0;$i<strlen($number);$i++){
-            $file = G4_GCAPTCHA_PATH.'/mp3/'.$config['cf_gcaptcha_mp3'].'/'.$number[$i].'.mp3';
+            $file = G5_GCAPTCHA_PATH.'/mp3/'.$config['cf_gcaptcha_mp3'].'/'.$number[$i].'.mp3';
             $mp3s[] = $file;
         }
 
-        $mp3_filepath = G4_DATA_PATH.'/cache/'.$captcha_filename.'.mp3';
+        $mp3_filepath = G5_DATA_PATH.'/cache/'.$captcha_filename.'.mp3';
 
         $contents = '';
         foreach ($mp3s as $mp3) {
@@ -170,22 +170,22 @@ $gcaptcha->run();
 // 캡챠이미지는 한개만 사용 가능함.
 function captcha_html($class='captcha')
 {
-    global $g4, $gcaptcha;
+    global $g5, $gcaptcha;
 
     $obj = new gcaptcha();
     $obj->run();
 
     $rand = rand();
-    $jpg_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
-    $mp3_file_url = G4_DATA_URL.'/cache/'.$obj->captcha_filename.'.mp3';
+    $jpg_file_url = G5_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
+    $mp3_file_url = G5_DATA_URL.'/cache/'.$obj->captcha_filename.'.mp3';
 
-    $html .= "\n".'<script>var g4_gcaptcha_url = "'.G4_GCAPTCHA_URL.'";</script>';
-    $html .= "\n".'<script src="'.G4_GCAPTCHA_URL.'/gcaptcha.js"></script>';
+    $html .= "\n".'<script>var g4_gcaptcha_url = "'.G5_GCAPTCHA_URL.'";</script>';
+    $html .= "\n".'<script src="'.G5_GCAPTCHA_URL.'/gcaptcha.js"></script>';
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">자동등록방지</legend>';
-    if (G4_IS_MOBILE) $html .= '<audio src="'.$mp3_file_url.'?_='.$rand.'" controls></audio>';
+    if (G5_IS_MOBILE) $html .= '<audio src="'.$mp3_file_url.'?_='.$rand.'" controls></audio>';
     $html .= '<img src="'.$jpg_file_url.'?_='.$rand.'" alt="자동등록방지 숫자">';
-    if (!G4_IS_MOBILE) $html .= '<a href="'.$mp3_file_url.'?_='.$rand.'" id="captcha_mp3" target="_blank"><img src="'.G4_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
+    if (!G5_IS_MOBILE) $html .= '<a href="'.$mp3_file_url.'?_='.$rand.'" id="captcha_mp3" target="_blank"><img src="'.G5_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
     $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box frm_input" size="6" maxlength="6" required title="자동등록방지 숫자 입력">';
     $html .= '<p class="sound_only">자동등록방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';

@@ -1,20 +1,20 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-if (!defined('G4_USE_SHOP') || !G4_USE_SHOP) return;
+if (!defined('G5_USE_SHOP') || !G5_USE_SHOP) return;
 
 /*
 // uniqid 테이블이 없을 경우 생성
-if(!sql_query(" select uq_id from {$g4['uniqid_table']} limit 1 ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
+if(!sql_query(" select uq_id from {$g5['uniqid_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['uniqid_table']}` (
                   `uq_id` bigint(20) unsigned NOT NULL,
                   PRIMARY KEY (`uq_id`)
                 ) ", false);
 }
 
 // 상품옵션 테이블 생성
-if(!sql_query(" select io_id from {$g4['shop_item_option_table']} limit 1 ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_item_option_table']}` (
+if(!sql_query(" select io_id from {$g5['shop_item_option_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['shop_item_option_table']}` (
                     `io_no` INT(11) NOT NULL AUTO_INCREMENT,
                     `io_id` VARCHAR(255) NOT NULL DEFAULT '',
                     `io_type` TINYINT(4) NOT NULL DEFAULT '0',
@@ -27,48 +27,48 @@ if(!sql_query(" select io_id from {$g4['shop_item_option_table']} limit 1 ", fal
                     KEY `io_id` (`io_id`),
                     KEY `it_id` (`it_id`)
                 ) ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     ADD `it_option_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
                     ADD `it_supply_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_option` ", false);
 }
 
 // uq_id 필드추가
-$sql = " select uq_id from {$g4['shop_cart_table']} limit 1 ";
+$sql = " select uq_id from {$g5['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}` DROP INDEX index1", false);
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `ct_id` ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}` ADD `uq_id` BIGINT(20) unsigned NOT NULL AFTER `od_id` ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}` MODIFY COLUMN od_id BIGINT(20) unsigned NOT NULL ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}` ADD INDEX uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}` ADD UNIQUE uq_id (uq_id) ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}` DROP INDEX index1", false);
 }
 
 // 가격필드명변경
-$sql = " select it_price from {$g4['shop_item_table']} limit 1 ";
+$sql = " select it_price from {$g5['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     CHANGE `it_amount` `it_price` INT(11) NOT NULL DEFAULT '0',
                     CHANGE `it_cust_amount` `it_cust_price` INT(11) NOT NULL DEFAULT '0' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     CHANGE `ct_amount` `ct_price` INT(11) NOT NULL DEFAULT '0',
                     ADD `it_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_id` ", false);
 }
 
 // od_mobile 추가
-$sql = " select od_mobile from {$g4['shop_order_table']} limit 1 ";
+$sql = " select od_mobile from {$g5['shop_order_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_mobile` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_time` ", false);
 }
 
 // ct_option 추가
-$sql = " select ct_option from {$g4['shop_cart_table']} limit 1 ";
+$sql = " select ct_option from {$g5['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     ADD `ct_option` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ct_stock_use`,
                     ADD `io_id` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ct_qty`,
                     ADD `io_type` TINYINT(4) NOT NULL DEFAULT '0' AFTER `io_id`,
@@ -76,28 +76,28 @@ if(!$result) {
 }
 
 // it_brand 추가
-$sql = " select it_brand from {$g4['shop_item_table']} limit 1 ";
+$sql = " select it_brand from {$g5['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     ADD `it_brand` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_origin`,
                     ADD `it_model` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_brand` ", false);
 }
 
 // sms_cont5 필드추가
-$sql = " select de_sms_cont5 from {$g4['shop_default_table']} ";
+$sql = " select de_sms_cont5 from {$g5['shop_default_table']} ";
 $result = sql_query($sql, false);
 if (!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_default_table']}`
                     ADD `de_sms_cont5` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_sms_cont4`,
                     ADD `de_sms_use5` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_sms_use4` ", false);
 }
 
 // 모바일 상품유형 필드 추가
-$sql = " select de_mobile_type1_list_use from {$g4['shop_default_table']} ";
+$sql = " select de_mobile_type1_list_use from {$g5['shop_default_table']} ";
 $result = sql_query($sql, false);
 if (!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_default_table']}`
                     ADD `de_mobile_type1_list_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_type5_img_height`,
                     ADD `de_mobile_type1_list_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_mobile_type1_list_use`,
                     ADD `de_mobile_type1_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `de_mobile_type1_list_skin`,
@@ -127,32 +127,32 @@ if (!$result) {
 }
 
 // it_id type 수정
-$sql = " SHOW COLUMNS FROM `{$g4['shop_item_table']}` WHERE field = 'it_id' ";
+$sql = " SHOW COLUMNS FROM `{$g5['shop_item_table']}` WHERE field = 'it_id' ";
 $row = sql_fetch($sql);
 if(intval(preg_replace("/[^0-9]/", "", $row['Type'])) != 20) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_qa_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_use_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}` MODIFY COLUMN it_id2 VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_event_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_wish_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_item_qa_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_item_use_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_item_relation_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_item_relation_table']}` MODIFY COLUMN it_id2 VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_event_item_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
+    sql_query(" ALTER TABLE `{$g5['shop_wish_table']}` MODIFY COLUMN it_id VARCHAR(20) NOT NULL DEFAULT '' ", false);
 }
 
 // 상품요약정보 필드추가
-$sql = " select it_info_gubun from {$g4['shop_item_table']} limit 1 ";
+$sql = " select it_info_gubun from {$g5['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}` ADD `it_info_gubun` VARCHAR(50) NOT NULL DEFAULT '' AFTER `it_tel_inq`,
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}` ADD `it_info_gubun` VARCHAR(50) NOT NULL DEFAULT '' AFTER `it_tel_inq`,
                     ADD `it_info_value` TEXT NOT NULL AFTER `it_info_gubun` ", false);
 }
 
 // 상품이미지 필드추가
-$sql = " select it_img1 from {$g4['shop_item_table']} limit 1 ";
+$sql = " select it_img1 from {$g5['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     ADD `it_img1` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_info_value`,
                     ADD `it_img2` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img1`,
                     ADD `it_img3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_img2`,
@@ -166,44 +166,44 @@ if(!$result) {
 }
 
 // 관련상품 정렬을 위한 ir_no 필드 추가
-$sql = " select ir_no from {$g4['shop_item_relation_table']} limit 1 ";
+$sql = " select ir_no from {$g5['shop_item_relation_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_relation_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_relation_table']}`
                     ADD `ir_no` INT(11) NOT NULL DEFAULT '0' AFTER `it_id2` ", false);
 }
 
 if (!isset($it['it_mobile_explan'])) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     ADD `it_mobile_explan` TEXT NOT NULL AFTER `it_explan`,
                     ADD `it_mobile_head_html` TEXT NOT NULL AFTER `it_tail_html`,
                     ADD `it_mobile_tail_html` TEXT NOT NULL AFTER `it_mobile_head_html` ", false);
 }
 
 // de_guest_cart_use 필드추가
-$sql = " select de_guest_cart_use from {$g4['shop_default_table']} ";
+$sql = " select de_guest_cart_use from {$g5['shop_default_table']} ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     ADD `mb_id` VARCHAR(255) NOT NULL DEFAULT '' AFTER `uq_id` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_default_table']}`
                     ADD `de_cart_keep_term` INT(11) NOT NULL DEFAULT '0' AFTER `de_code_dup_use`,
                     ADD `de_guest_cart_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_cart_keep_term` ", false);
 }
 
 // 포인트타입 필드 추가
-$sql = " select it_point_type from {$g4['shop_item_table']} limit 1 ";
+$sql = " select it_point_type from {$g5['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     ADD `it_point_type` TINYINT(4) NOT NULL DEFAULT '0' AFTER `it_point` ", false);
 }
 
 // 쿠폰테이블
-$sql = " DESCRIBE `{$g4['shop_coupon_table']}` ";
+$sql = " DESCRIBE `{$g5['shop_coupon_table']}` ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_coupon_table']}` (
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['shop_coupon_table']}` (
                   `cp_no` INT(11) NOT NULL AUTO_INCREMENT,
                   `cp_id` VARCHAR(255) NOT NULL DEFAULT '',
                   `cp_subject` VARCHAR(255) NOT NULL DEFAULT '',
@@ -226,38 +226,38 @@ if(!$result) {
 }
 
 // 쿠폰관련필드 추가
-$sql = " select cp_amount from {$g4['shop_cart_table']} limit 1 ";
+$sql = " select cp_amount from {$g5['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     ADD `cp_amount` INT(11) NOT NULL DEFAULT '0' AFTER `ct_point` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_coupon` INT(11) NOT NULL DEFAULT '0' AFTER `od_dc_amount`,
                     ADD `od_send_coupon` INT(11) NOT NULL DEFAULT '0' AFTER `od_send_cost` ", false);
 }
 
 // 쿠폰사용정보필드추가
-$sql = " select od_id from {$g4['shop_coupon_table']} limit 1 ";
+$sql = " select od_id from {$g5['shop_coupon_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_coupon_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_coupon_table']}`
                     ADD `od_id` BIGINT(20) UNSIGNED NOT NULL AFTER `cp_maximum`,
                     ADD `cp_used_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `cp_used` ", false);
 }
 
 // 장바구니 선택필드추가
-$sql = " select ct_select from {$g4['shop_cart_table']} limit 1 ";
+$sql = " select ct_select from {$g5['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     ADD `ct_select` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ct_direct` ", true);
 }
 
 // 개별배송비 필드 추가
-$sql = " select it_sc_type from {$g4['shop_item_table']} limit 1 ";
+$sql = " select it_sc_type from {$g5['shop_item_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     ADD `it_sc_type` TINYINT(4) NOT NULL DEFAULT '0' AFTER `it_stock_qty`,
                     ADD `it_sc_method` TINYINT(4) NOT NULL DEFAULT '0' AFTER `it_sc_type`,
                     ADD `it_sc_amount` INT(11) NOT NULL DEFAULT '0' AFTER `it_sc_method`,
@@ -266,28 +266,28 @@ if(!$result) {
 }
 
 // 장바구니 배송비필드 추가
-$sql = " select ct_send_cost from {$g4['shop_cart_table']} limit 1 ";
+$sql = " select ct_send_cost from {$g5['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     ADD `ct_send_cost` TINYINT(11) NOT NULL DEFAULT '0' AFTER `io_price` ", false);
 }
 
 // 결제필드 변경
-$sql = " select od_temp_amount from {$g4['shop_order_table']} limit 1 ";
+$sql = " select od_temp_amount from {$g5['shop_order_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_temp_amount` INT(11) NOT NULL DEFAULT '0' AFTER `od_send_coupon`,
                     ADD `od_receipt_amount` INT(11) NOT NULL DEFAULT '0' AFTER `od_temp_point`,
                     ADD `od_receipt_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `od_bank_account` ", false);
 }
 
 // 추가배송비 테이블
-$sql = " select sc_id from {$g4['shop_sendcost_table']} limit 1 ";
+$sql = " select sc_id from {$g5['shop_sendcost_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_sendcost_table']}` (
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['shop_sendcost_table']}` (
                   `sc_id` INT(11) NOT NULL AUTO_INCREMENT,
                   `sc_name` VARCHAR(255) NOT NULL DEFAULT '',
                   `sc_zip1` VARCHAR(10) NOT NULL DEFAULT '',
@@ -300,35 +300,35 @@ if(!$result) {
 }
 
 // od_send_cost2 추가
-$sql = " select od_send_cost2 from {$g4['shop_order_table']} limit 1 ";
+$sql = " select od_send_cost2 from {$g5['shop_order_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_send_cost2` INT(11) NOT NULL DEFAULT '0' AFTER `od_send_coupon` ", false);
 }
 
 // 복합과세 필드 추가
-$sql = " select de_tax_flag_use from {$g4['shop_default_table']} ";
+$sql = " select de_tax_flag_use from {$g5['shop_default_table']} ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_default_table']}`
                     ADD `de_tax_flag_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `de_escrow_use` ", false);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     ADD `it_notax` TINYINT(4) NOT NULL DEFAULT '0' AFTER `it_point_type` ", false);
 }
 
 // 에스크로필드 추가
-$sql = " select od_tno from {$g4['shop_order_table']} limit 1 ";
+$sql = " select od_tno from {$g5['shop_order_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_tno` VARCHAR(255) NOT NULL DEFAULT '' AFTER `od_settle_case`,
                     ADD `od_escrow` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_tno` ", true);
 }
 
 // shop_request 테이블이 없을 경우 생성
-if(!sql_query(" select rq_id from {$g4['shop_request_table']} limit 1 ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_request_table']}` (
+if(!sql_query(" select rq_id from {$g5['shop_request_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['shop_request_table']}` (
                   `rq_id` INT(11) NOT NULL AUTO_INCREMENT,
                   `rq_type` TINYINT(4) NOT NULL DEFAULT '0',
                   `rq_parent` INT(11) NOT NULL DEFAULT '0',
@@ -351,38 +351,38 @@ if(!sql_query(" select rq_id from {$g4['shop_request_table']} limit 1 ", false))
 }
 
 // 수량변경 history 기록
-if(!sql_query(" select od_mod_history from {$g4['shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+if(!sql_query(" select od_mod_history from {$g5['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_mod_history` TEXT NOT NULL AFTER `od_shop_memo` ", true);
 }
 
 // 주문정보에 복합결제 필드추가
-if(!sql_query(" select od_tax_flag from {$g4['shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+if(!sql_query(" select od_tax_flag from {$g5['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_tax_flag` TINYINT(4) NOT NULL DEFAULT '0' AFTER `od_escrow` ", true);
 }
 */
 
 /*
 // notax 필드추가
-$sql = " select ct_notax from {$g4['shop_cart_table']} limit 1 ";
+$sql = " select ct_notax from {$g5['shop_cart_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     ADD `ct_notax` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ct_qty` ", true);
 }
 */
 
 // 쇼핑몰 스킨 필드 추가
 if (!isset($default['de_shop_skin'])) {
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_default_table']}`
                     ADD `de_shop_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_admin_info_email`,
                     ADD `de_shop_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_shop_skin` ", false);
 }
 
 // 모바일 상품유형 필드 수정
-if (!sql_query(" select de_mobile_type1_list_mod from {$g4['shop_default_table']} ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+if (!sql_query(" select de_mobile_type1_list_mod from {$g5['shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_default_table']}`
                     CHANGE `de_mobile_type1_list_row` `de_mobile_type1_list_mod` INT(11) NOT NULL DEFAULT '0',
                     CHANGE `de_mobile_type2_list_row` `de_mobile_type2_list_mod` INT(11) NOT NULL DEFAULT '0',
                     CHANGE `de_mobile_type3_list_row` `de_mobile_type3_list_mod` INT(11) NOT NULL DEFAULT '0',
@@ -391,34 +391,34 @@ if (!sql_query(" select de_mobile_type1_list_mod from {$g4['shop_default_table']
 }
 
 // 분류 모바일 필드명 수정
-if(!sql_query(" select ca_mobile_list_mod from {$g4['shop_category_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_category_table']}`
+if(!sql_query(" select ca_mobile_list_mod from {$g5['shop_category_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_category_table']}`
                     CHANGE `ca_mobile_list_row` `ca_mobile_list_mod` INT(11) NOT NULL DEFAULT '0' ", true);
 }
 
 // 과세, 비과세 금액 필드 추가
-if(!sql_query(" select od_tax_mny from {$g4['shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+if(!sql_query(" select od_tax_mny from {$g5['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_tax_mny` INT(11) NOT NULL DEFAULT '0' AFTER `od_tax_flag`,
                     ADD `od_vat_mny` INT(11) NOT NULL DEFAULT '0' AFTER `od_tax_mny`,
                     ADD `od_free_mny` INT(11) NOT NULL DEFAULT '0' AFTER `od_vat_mny` ", true);
 }
 
 // cart uq_id를 od_id로 변경
-if(!sql_query(" select od_id from {$g4['shop_cart_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+if(!sql_query(" select od_id from {$g5['shop_cart_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     CHANGE `uq_id` `od_id` BIGINT(2) UNSIGNED NOT NULL ", true);
 }
 
 // it_mobile_name 필드추가
-if(!sql_query(" select it_mobile_name from {$g4['shop_item_table']} limit 1 ", false)) {
-    sql_query( " ALTER TABLE `{$g4['shop_item_table']}`
+if(!sql_query(" select it_mobile_name from {$g5['shop_item_table']} limit 1 ", false)) {
+    sql_query( " ALTER TABLE `{$g5['shop_item_table']}`
                     ADD `it_mobile_name` VARCHAR(255) NOT NULL DEFAULT '' AFTER `it_name` ", true);
 }
 
 // 개인결제 테이블추가
-if(!sql_query(" select pp_id from {$g4['shop_personalpay_table']} limit 1 ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_personalpay_table']}` (
+if(!sql_query(" select pp_id from {$g5['shop_personalpay_table']} limit 1 ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['shop_personalpay_table']}` (
                   `pp_id` BIGINT(20) unsigned NOT NULL,
                   `od_id` BIGINT(20) unsigned NOT NULL,
                   `pp_name` VARCHAR(255) NOT NULL DEFAULT '',
@@ -442,14 +442,14 @@ if(!sql_query(" select pp_id from {$g4['shop_personalpay_table']} limit 1 ", fal
 }
 
 // od_app_no 필드 추가
-if(!sql_query(" select od_app_no from {$g4['shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+if(!sql_query(" select od_app_no from {$g5['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_app_no` varchar(20) NOT NULL DEFAULT '' AFTER `od_tno` ", true);
 }
 
 // 배송지이력 테이블추가
-if(!sql_query(" DESCRIBE `{$g4['shop_order_address_table']}` ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_order_address_table']}` (
+if(!sql_query(" DESCRIBE `{$g5['shop_order_address_table']}` ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['shop_order_address_table']}` (
                   `ad_id` int(11) NOT NULL AUTO_INCREMENT,
                   `mb_id` varchar(255) NOT NULL DEFAULT '',
                   `ad_subject` varchar(255) NOT NULL DEFAULT '',
@@ -467,8 +467,8 @@ if(!sql_query(" DESCRIBE `{$g4['shop_order_address_table']}` ", false)) {
 }
 
 // 포인트 설정필드 변경
-if(!sql_query(" select de_settle_min_point from {$g4['shop_default_table']} ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_default_table']}`
+if(!sql_query(" select de_settle_min_point from {$g5['shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_default_table']}`
                     CHANGE `de_point_settle` `de_settle_min_point` int(11) NOT NULL DEFAULT '0',
                     ADD `de_settle_max_point` int(11) NOT NULL DEFAULT '0' AFTER `de_settle_min_point`,
                     ADD `de_settle_point_unit` int(11) NOT NULL DEFAULT '0' AFTER `de_settle_max_point`,
@@ -476,8 +476,8 @@ if(!sql_query(" select de_settle_min_point from {$g4['shop_default_table']} ", f
 }
 
 // 주문 금액 등의 필드 추가
-if(!sql_query(" select od_cart_count from {$g4['shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+if(!sql_query(" select od_cart_count from {$g5['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_cart_count` int(11) NOT NULL DEFAULT '0' AFTER `od_memo`,
                     ADD `od_cart_price` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_count`,
                     ADD `od_cart_coupon` int(11) NOT NULL DEFAULT '0' AFTER `od_cart_price`,
@@ -486,39 +486,39 @@ if(!sql_query(" select od_cart_count from {$g4['shop_order_table']} limit 1 ", f
 }
 
 // order amount 필드명 수정
-if(sql_query(" select od_cart_amount from {$g4['shop_order_table']} limit 1", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+if(sql_query(" select od_cart_amount from {$g5['shop_order_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     CHANGE `od_cart_amount` `od_cart_price` int(11) NOT NULL DEFAULT '0',
                     CHANGE `od_receipt_amount` `od_receipt_price` int(11) NOT NULL DEFAULT '0',
                     CHANGE `od_cancel_amount` `od_cancel_price` int(11) NOT NULL DEFAULT '0' ", true);
 }
 
 // amount 필드명 수정
-if(sql_query(" select cp_amount from {$g4['shop_cart_table']} limit 1", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_personalpay_table']}`
+if(sql_query(" select cp_amount from {$g5['shop_cart_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_personalpay_table']}`
                     CHANGE `pp_amount` `pp_price` int(11) NOT NULL DEFAULT '0',
                     CHANGE `pp_receipt_amount` `pp_receipt_price` int(11) NOT NULL DEFAULT '0' ", true);
-    sql_query(" ALTER TABLE `{$g4['shop_cart_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_cart_table']}`
                     CHANGE `cp_amount` `cp_price` int(11) NOT NULL DEFAULT '0' ", true);
-    sql_query(" ALTER TABLE `{$g4['shop_coupon_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_coupon_table']}`
                     CHANGE `cp_amount` `cp_price` int(11) NOT NULL DEFAULT '0' ", true);
-    sql_query(" ALTER TABLE `{$g4['shop_sendcost_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_sendcost_table']}`
                     CHANGE `sc_amount` `sc_price` int(11) NOT NULL DEFAULT '0' ", true);
-    sql_query(" ALTER TABLE `{$g4['shop_item_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_item_table']}`
                     CHANGE `it_sc_amount` `it_sc_price` int(11) NOT NULL DEFAULT '0' ", true);
 }
 
 // 미수 필드 추가
-if(!sql_query(" select od_misu from {$g4['shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+if(!sql_query(" select od_misu from {$g5['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_misu` int(11) NOT NULL DEFAULT '0' AFTER `od_coupon` ", true);
 }
 
 // 쿠폰로그 테이블추가
-if(!isset($g4['shop_coupon_log_table']))
-    die_utf8('dbconfig.php 파일에 $g4[\'shop_coupon_log_table\']    = SHOP_TABLE_PREFIX.\'coupon_log\';            // 쿠폰정보 테이블 추가해주세요.');
-if(!sql_query(" DESCRIBE `{$g4['shop_coupon_log_table']}` ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['shop_coupon_log_table']}` (
+if(!isset($g5['shop_coupon_log_table']))
+    die_utf8('dbconfig.php 파일에 $g5[\'shop_coupon_log_table\']    = SHOP_TABLE_PREFIX.\'coupon_log\';            // 쿠폰정보 테이블 추가해주세요.');
+if(!sql_query(" DESCRIBE `{$g5['shop_coupon_log_table']}` ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['shop_coupon_log_table']}` (
                   `cl_id` int(11) NOT NULL AUTO_INCREMENT,
                   `cp_id` varchar(255) NOT NULL DEFAULT '',
                   `mb_id` varchar(255) NOT NULL DEFAULT '',
@@ -529,15 +529,15 @@ if(!sql_query(" DESCRIBE `{$g4['shop_coupon_log_table']}` ", false)) {
                   KEY `mb_id` (`mb_id`),
                   KEY `od_id` (`od_id`)
                 )", true);
-    sql_query(" ALTER TABLE `{$g4['shop_coupon_table']}`
+    sql_query(" ALTER TABLE `{$g5['shop_coupon_table']}`
                     DROP `od_id`,
                     DROP `cp_used_time`,
                     DROP `cp_used` ", true);
 }
 
 // 환불필드 추가
-if(!sql_query(" select od_refund_price from {$g4['shop_order_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE `{$g4['shop_order_table']}`
+if(!sql_query(" select od_refund_price from {$g5['shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['shop_order_table']}`
                     ADD `od_refund_price` int(11) NOT NULL DEFAULT '0' AFTER `od_receipt_point` ", true);
 }
 ?>

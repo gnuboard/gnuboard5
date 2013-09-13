@@ -15,11 +15,11 @@ $admin = get_admin("super");
 
 <div id="ft">
     <div>
-        <a href="<?php echo G4_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="처음으로"></a>
+        <a href="<?php echo G5_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="처음으로"></a>
         <ul>
-            <li><a href="<?php echo G4_SHOP_URL; ?>/content.php?co_id=company">회사소개</a></li>
-            <li><a href="<?php echo G4_SHOP_URL; ?>/content.php?co_id=provision">서비스이용약관</a></li>
-            <li><a href="<?php echo G4_SHOP_URL; ?>/content.php?co_id=privacy">개인정보 취급방침</a></li>
+            <li><a href="<?php echo G5_SHOP_URL; ?>/content.php?co_id=company">회사소개</a></li>
+            <li><a href="<?php echo G5_SHOP_URL; ?>/content.php?co_id=provision">서비스이용약관</a></li>
+            <li><a href="<?php echo G5_SHOP_URL; ?>/content.php?co_id=privacy">개인정보 취급방침</a></li>
         </ul>
         <p>
             <span><?php echo $default['de_admin_company_addr']; ?></span>
@@ -42,9 +42,9 @@ $sec = get_microtime() - $begin_time;
 $file = $_SERVER['PHP_SELF'];
 ?>
 
-<script src="<?php echo G4_JS_URL; ?>/sns.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/sns.js"></script>
 <!-- } 하단 끝 -->
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

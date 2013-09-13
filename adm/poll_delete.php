@@ -16,10 +16,10 @@ if(!$count)
 for($i=0; $i<$count; $i++) {
     $po_id = $_POST['chk'][$i];
 
-    $sql = " delete from {$g4['poll_table']} where po_id = '$po_id' ";
+    $sql = " delete from {$g5['poll_table']} where po_id = '$po_id' ";
     sql_query($sql);
 
-    $sql = " delete from {$g4['poll_etc_table']} where po_id = '$po_id' ";
+    $sql = " delete from {$g5['poll_etc_table']} where po_id = '$po_id' ";
     sql_query($sql);
 }
 

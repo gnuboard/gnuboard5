@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-include_once(G4_LIB_PATH.'/register.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_LIB_PATH.'/register.lib.php');
 
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));
@@ -17,18 +17,18 @@ if ($w == "") {
     // 경고창이 뜨는것을 막기위해 아래의 코드로 대체
     // alert("이미 로그인중이므로 회원 가입 하실 수 없습니다.", "./");
     if ($is_member) {
-        goto_url(G4_URL);
+        goto_url(G5_URL);
     }
 
     // 리퍼러 체크
     referer_check();
 
     if (!isset($_POST['agree']) || !$_POST['agree']) {
-        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G4_BBS_URL.'/register.php');
+        alert('회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
     }
 
     if (!isset($_POST['agree2']) || !$_POST['agree2']) {
-        alert('개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G4_BBS_URL.'/register.php');
+        alert('개인정보수집이용안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
     }
 
     $member['mb_birth'] = '';
@@ -44,15 +44,15 @@ if ($w == "") {
         $member['mb_name']  = $_POST['mb_name'];
     }
 
-    $g4['title'] = '회원 가입';
+    $g5['title'] = '회원 가입';
 
 } else if ($w == 'u') {
 
     if ($is_admin)
-        alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', G4_URL);
+        alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', G5_URL);
 
     if (!$member[mb_id])
-        alert('로그인 후 이용하여 주십시오.', G4_URL);
+        alert('로그인 후 이용하여 주십시오.', G5_URL);
 
     if ($member[mb_id] != $mb_id)
         alert('로그인된 회원과 넘어온 정보가 서로 다릅니다.');
@@ -76,7 +76,7 @@ if ($w == "") {
             alert('패스워드가 틀립니다.');
     }
 
-    $g4['title'] = '회원 정보 수정';
+    $g5['title'] = '회원 정보 수정';
 
     set_session("ss_reg_mb_name", $member['mb_name']);
     set_session("ss_reg_mb_hp", $member['mb_hp']);
@@ -110,11 +110,11 @@ if ($w == "") {
 include_once('./_head.php');
 
 // 회원아이콘 경로
-$mb_icon_path = G4_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
-$mb_icon_url  = G4_DATA_URL.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
+$mb_icon_path = G5_DATA_PATH.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
+$mb_icon_url  = G5_DATA_URL.'/member/'.substr($member['mb_id'],0,2).'/'.$member['mb_id'].'.gif';
 
-$register_action_url = G4_HTTPS_BBS_URL.'/register_form_update.php';
-$req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400)));
+$register_action_url = G5_HTTPS_BBS_URL.'/register_form_update.php';
+$req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400)));
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
 

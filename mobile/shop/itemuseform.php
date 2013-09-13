@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 // 사용후기의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
 $is_content_max_length = 10000;
@@ -16,7 +16,7 @@ if (!$is_member) {
 if ($w == "") {
     $is_score = 10;
 } else if ($w == "u") {
-    $use = sql_fetch(" select * from {$g4['shop_item_use_table']} where is_id = '$is_id' ");
+    $use = sql_fetch(" select * from {$g5['shop_item_use_table']} where is_id = '$is_id' ");
     if (!$use) {
         alert_close("사용후기 정보가 없습니다.");
     }
@@ -29,7 +29,7 @@ if ($w == "") {
     }
 }
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <!-- 사용후기 쓰기 시작 { -->
@@ -62,27 +62,27 @@ include_once(G4_PATH.'/head.sub.php');
                 <li>
                     <input type="radio" name="is_score" value="10" id="is_score10" <?php echo ($is_score==10)?'checked="checked"':''; ?>>
                     <label for="is_score10">매우만족</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star5.png">
+                    <img src="<?php echo G5_URL; ?>/img/shop/s_star5.png">
                 </li>
                 <li>
                     <input type="radio" name="is_score" value="8" id="is_score8" <?php echo ($is_score==8)?'checked="checked"':''; ?>>
                     <label for="is_score8">만족</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star4.png">
+                    <img src="<?php echo G5_URL; ?>/img/shop/s_star4.png">
                 </li>
                 <li>
                     <input type="radio" name="is_score" value="6" id="is_score6" <?php echo ($is_score==6)?'checked="checked"':''; ?>>
                     <label for="is_score6">보통</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star3.png">
+                    <img src="<?php echo G5_URL; ?>/img/shop/s_star3.png">
                 </li>
                 <li>
                     <input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
                     <label for="is_score4">불만</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star2.png">
+                    <img src="<?php echo G5_URL; ?>/img/shop/s_star2.png">
                 </li>
                 <li>
                     <input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
                     <label for="is_score2">매우불만</label>
-                    <img src="<?php echo G4_URL; ?>/img/shop/s_star1.png">
+                    <img src="<?php echo G5_URL; ?>/img/shop/s_star1.png">
                 </li>
             </ul>
         </td>
@@ -129,5 +129,5 @@ function fitemuse_submit(f)
 <!-- } 사용후기 쓰기 끝 -->
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

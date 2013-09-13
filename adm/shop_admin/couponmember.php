@@ -6,10 +6,10 @@ auth_check($auth[$sub_menu], "w");
 
 $html_title = '회원검색';
 
-$g4['title'] = $html_title;
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = $html_title;
+include_once(G5_PATH.'/head.sub.php');
 
-$sql_common = " from {$g4['member_table']} ";
+$sql_common = " from {$g5['member_table']} ";
 $sql_where = " where mb_id <> '{$config['cf_admin']}' and mb_leave_date = '' and mb_intercept_date ='' ";
 
 if($_GET['mb_name'])
@@ -72,7 +72,7 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
     </table>
     </form>
 
-    <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
+    <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
 
     <div class="btn_confirm">
         <button type="button" onclick="window.close();">닫기</button>
@@ -90,5 +90,5 @@ function sel_member_id(id)
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

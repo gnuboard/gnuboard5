@@ -17,7 +17,7 @@ if ($default['de_sms_use']) {
 
     if ($w == "" && $default['de_sms_use1'] && $receive_number)
     {
-        include_once(G4_LIB_PATH.'/icode.sms.lib.php');
+        include_once(G5_LIB_PATH.'/icode.sms.lib.php');
 
         $SMS = new SMS; // SMS 연결
         $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);

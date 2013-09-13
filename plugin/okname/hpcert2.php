@@ -35,7 +35,7 @@ $WEBSIGNATURE = trim($_POST['WEBSIGNATURE']);
 // ########################################################################
 // # 암호화키 파일 설정 (절대경로) - 파일은 주어진 파일명으로 자동 생성 됨
 // ########################################################################
-$keypath = G4_OKNAME_PATH.'/key/safecert_'.$idcfMbrComCd.'.key';
+$keypath = G5_OKNAME_PATH.'/key/safecert_'.$idcfMbrComCd.'.key';
 
 $cpubkey = $WEBPUBKEY;    //server publickey
 $csig = $WEBSIGNATURE;    //server signature
@@ -94,7 +94,7 @@ $mb_birth = $field[8];
 
 // 휴대폰번호 중복체크
 $phone_no = hyphen_hp_number($req_num);
-$sql = " select mb_id from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
+$sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
 $row = sql_fetch($sql);
 if ($row['mb_id']) {
     alert_close("이미 가입되어 있는 휴대폰번호 입니다.\\n회원아이디 : ".$row['mb_id']);
@@ -106,7 +106,7 @@ $md5_cert_no = md5($req_num);
 $hash_data   = md5($mb_name.$cert_type.$mb_birth.$md5_cert_no);
 
 // 성인인증결과
-$adult_day = date("Ymd", strtotime("-19 years", G4_SERVER_TIME));
+$adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
 $adult = ((int)$mb_birth <= (int)$adult_day) ? 1 : 0;
 
 set_session('ss_cert_type',    $cert_type);
@@ -116,8 +116,8 @@ set_session('ss_cert_adult',   $adult);
 set_session('ss_cert_birth',   $mb_birth);
 set_session('ss_cert_sex',     ($field[9] == 1 ? 'M' : 'F'));
 
-$g4['title'] = 'KCB 휴대폰 본인확인';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = 'KCB 휴대폰 본인확인';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <script>
@@ -133,5 +133,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

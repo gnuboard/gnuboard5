@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/mailer.lib.php');
+include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 if (!$is_member)
     alert_close('회원만 메일을 발송할 수 있습니다.');
@@ -9,9 +9,9 @@ if (!$is_member)
 //if (substr_count($to_email, "@") > 3) alert("최대 3명까지만 메일을 발송할 수 있습니다.");
 if (substr_count($to_email, "@") > 1) alert('메일 주소는 하나씩만 입력해 주십시오.');
 
-if ($_SESSION["ss_recommend_datetime"] >= (G4_SERVER_TIME - 120))
+if ($_SESSION["ss_recommend_datetime"] >= (G5_SERVER_TIME - 120))
     alert("너무 빠른 시간내에 메일을 연속해서 보낼 수 없습니다.");
-set_session("ss_recommend_datetime", G4_SERVER_TIME);
+set_session("ss_recommend_datetime", G5_SERVER_TIME);
 
 $recommendmail_count = (int)get_session('ss_recommendmail_count') + 1;
 if ($recommendmail_count > 3)
@@ -28,7 +28,7 @@ if ($_POST["token"] && get_session("ss_token") == $_POST["token"]) {
 }
 
 // 상품
-$sql = " select * from {$g4['shop_item_table']} where it_id = '$it_id' ";
+$sql = " select * from {$g5['shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 if (!$it['it_id'])
     alert("등록된 상품이 아닙니다.");
@@ -43,7 +43,7 @@ $it_name = $it['it_name'];
 $it_mimg = get_it_image($it_id, $default['de_mimg_width'], $default['de_mimg_height']);
 
 ob_start();
-include G4_SHOP_PATH.'/mail/itemrecommend.mail.php';
+include G5_SHOP_PATH.'/mail/itemrecommend.mail.php';
 $content = ob_get_contents();
 ob_end_clean();
 

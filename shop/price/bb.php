@@ -4,13 +4,13 @@
 */
 function it_image($img)
 {
-    global $g4;
+    global $g5;
 
-    $tmp = G4_DATA_PATH.'/item/'.$img;
+    $tmp = G5_DATA_PATH.'/item/'.$img;
     if (file_exists($tmp) && $img) {
-        $str = G4_DATA_URL.'/item/'.$img;
+        $str = G5_DATA_URL.'/item/'.$img;
     } else {
-        $str = G4_SHOP_URL.'/img/no_image.gif';
+        $str = G5_SHOP_URL.'/img/no_image.gif';
     }
     return $str;
 }
@@ -28,7 +28,7 @@ include_once('./_common.php');
 <?php
 // <p>상품번호^대분류^중분류^소분류^제조사^모델명^상품Url^이미지Url^가격
 $str = "";
-$sql = " select * from {$g4['shop_item_table']}
+$sql = " select * from {$g5['shop_item_table']}
           where it_use = '1'
           order by ca_id ";
 $result = sql_query($sql);
@@ -36,20 +36,20 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
 {
     $image = get_it_imageurl($row['it_id']);
 
-    $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
+    $row2 = sql_fetch(" select ca_name from {$g5['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
 
     if (strlen($row['ca_id']) >= 4)
-        $row3 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
+        $row3 = sql_fetch(" select ca_name from {$g5['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
 
     if (strlen($row['ca_id']) >= 6)
-        $row4 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,6)."' ");
+        $row4 = sql_fetch(" select ca_name from {$g5['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,6)."' ");
 
     // 재고검사해서 없으면 상품가격을 0 으로 설정
     $stock = get_it_stock_qty($row['it_id']);
     if ($stock <= 0)
         $row['it_price'] = 0;
 
-    $str .= "<p>{$row['it_id']}^{$row2['ca_name']}^{$row3['ca_name']}^{$row4['ca_name']}^{$row['it_maker']}^{$row['it_name']}^".G4_SHOP_URL."/item.php?it_id={$row['it_id']}^$image^{$row['it_price']}";
+    $str .= "<p>{$row['it_id']}^{$row2['ca_name']}^{$row3['ca_name']}^{$row4['ca_name']}^{$row['it_maker']}^{$row['it_name']}^".G5_SHOP_URL."/item.php?it_id={$row['it_id']}^$image^{$row['it_price']}";
     $str .= "\n";
 }
 

@@ -25,7 +25,7 @@ function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
 // 모바일 스킨디렉토리를 SELECT 형식으로 얻음
 function get_mobile_skin_select($skin_gubun, $id, $name, $selected='', $event='')
 {
-    $skins = get_skin_dir($skin_gubun, G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+    $skins = get_skin_dir($skin_gubun, G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
     $str = "<select id=\"$id\" name=\"$name\" $event>\n";
     for ($i=0; $i<count($skins); $i++) {
         if ($i == 0) $str .= "<option value=\"\">선택</option>";
@@ -37,9 +37,9 @@ function get_mobile_skin_select($skin_gubun, $id, $name, $selected='', $event=''
 
 
 // 스킨경로를 얻는다
-function get_skin_dir($skin, $skin_path=G4_SKIN_PATH)
+function get_skin_dir($skin, $skin_path=G5_SKIN_PATH)
 {
-    global $g4;
+    global $g5;
 
     $result_array = array();
 
@@ -61,18 +61,18 @@ function get_skin_dir($skin, $skin_path=G4_SKIN_PATH)
 function member_delete($mb_id)
 {
     global $config;
-    global $g4;
+    global $g5;
 
-    $sql = " select mb_name, mb_nick, mb_ip, mb_recommend, mb_memo, mb_level from {$g4['member_table']} where mb_id= '".$mb_id."' ";
+    $sql = " select mb_name, mb_nick, mb_ip, mb_recommend, mb_memo, mb_level from {$g5['member_table']} where mb_id= '".$mb_id."' ";
     $mb = sql_fetch($sql);
     if ($mb['mb_recommend']) {
-        $row = sql_fetch(" select count(*) as cnt from {$g4['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
+        $row = sql_fetch(" select count(*) as cnt from {$g5['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
         if ($row['cnt'])
             insert_point($mb['mb_recommend'], $config['cf_recommend_point'] * (-1), $mb_id.'님의 회원자료 삭제로 인한 추천인 포인트 반환', "@member", $mb['mb_recommend'], $mb_id.' 추천인 삭제');
     }
 
     // 회원자료는 정보만 없앤 후 아이디는 보관하여 다른 사람이 사용하지 못하도록 함 : 061025
-    $sql = " update {$g4['member_table']} set mb_jumin = '', mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_password_q = '', mb_password_a = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G4_SERVER_TIME)." 삭제함\n{$mb['mb_memo']}', mb_leave_date = '".date('Ymd', G4_SERVER_TIME)."' where mb_id = '{$mb_id}' ";
+    $sql = " update {$g5['member_table']} set mb_jumin = '', mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_password_q = '', mb_password_a = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G5_SERVER_TIME)." 삭제함\n{$mb['mb_memo']}', mb_leave_date = '".date('Ymd', G5_SERVER_TIME)."' where mb_id = '{$mb_id}' ";
     sql_query($sql);
 }
 
@@ -80,7 +80,7 @@ function member_delete($mb_id)
 // 회원권한을 SELECT 형식으로 얻음
 function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $event="")
 {
-    global $g4;
+    global $g5;
 
     $str = "\n<select id=\"{$name}\" name=\"{$name}\"";
     if ($event) $str .= " $event";
@@ -99,9 +99,9 @@ function get_member_level_select($name, $start_id=0, $end_id=10, $selected="", $
 // 회원아이디를 SELECT 형식으로 얻음
 function get_member_id_select($name, $level, $selected="", $event="")
 {
-    global $g4;
+    global $g5;
 
-    $sql = " select mb_id from {$g4['member_table']} where mb_level >= '{$level}' ";
+    $sql = " select mb_id from {$g5['member_table']} where mb_level >= '{$level}' ";
     $result = sql_query($sql);
     $str = '<select id="'.$name.'" name="'.$name.'" '.$event.'><option value="">선택안함</option>';
     for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -142,10 +142,10 @@ function auth_check($auth, $attr)
 // 작업아이콘 출력
 function icon($act, $link='', $target='_parent')
 {
-    global $g4;
+    global $g5;
 
     $img = array('입력'=>'insert', '추가'=>'insert', '생성'=>'insert', '수정'=>'modify', '삭제'=>'delete', '이동'=>'move', '그룹'=>'move', '보기'=>'view', '미리보기'=>'view', '복사'=>'copy');
-    $icon = '<img src="'.G4_ADMIN_PATH.'/img/icon_'.$img[$act].'.gif" title="'.$act.'">';
+    $icon = '<img src="'.G5_ADMIN_PATH.'/img/icon_'.$img[$act].'.gif" title="'.$act.'">';
     if ($link)
         $s = '<a href="'.$link.'">'.$icon.'</a>';
     else
@@ -159,7 +159,7 @@ function icon($act, $link='', $target='_parent')
 function rm_rf($file)
 {
     if (file_exists($file)) {
-        @chmod($file, G4_FILE_PERMISSION);
+        @chmod($file, G5_FILE_PERMISSION);
         if (is_dir($file)) {
             $handle = opendir($file);
             while($filename = readdir($handle)) {
@@ -176,7 +176,7 @@ function rm_rf($file)
 // 입력 폼 안내문
 function help($help="")
 {
-    global $g4;
+    global $g5;
 
     $str  = '<span class="adm_field_explain">'.str_replace("\n", "<br>", $help).'</span>';
 
@@ -208,13 +208,13 @@ function order_select($fld, $sel='')
 // 접근 권한 검사
 if (!$member['mb_id'])
 {
-    //alert('로그인 하십시오.', '$g4['bbs_path']/login.php?url=' . urlencode('$_SERVER['PHP_SELF']?w=$w&mb_id=$mb_id'));
-    alert('로그인 하십시오.', G4_BBS_URL.'/login.php?url=' . urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']));
+    //alert('로그인 하십시오.', '$g5['bbs_path']/login.php?url=' . urlencode('$_SERVER['PHP_SELF']?w=$w&mb_id=$mb_id'));
+    alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode($_SERVER['PHP_SELF'].'?'.$_SERVER['QUERY_STRING']));
 }
 else if ($is_admin != 'super')
 {
     $auth = array();
-    $sql = " select au_menu, au_auth from {$g4['auth_table']} where mb_id = '{$member['mb_id']}' ";
+    $sql = " select au_menu, au_auth from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
     $result = sql_query($sql);
     for($i=0; $row=sql_fetch_array($result); $i++)
     {
@@ -223,7 +223,7 @@ else if ($is_admin != 'super')
 
     if (!$i)
     {
-        alert('최고관리자 또는 관리권한이 있는 회원만 접근 가능합니다.', G4_URL);
+        alert('최고관리자 또는 관리권한이 있는 회원만 접근 가능합니다.', G5_URL);
     }
 }
 
@@ -233,9 +233,9 @@ if (get_session('ss_mb_key') !== $admin_key) {
 
     session_destroy();
 
-    include_once(G4_LIB_PATH.'/mailer.lib.php');
+    include_once(G5_LIB_PATH.'/mailer.lib.php');
     // 메일 알림
-    mailer($member['mb_nick'], $member['mb_email'], $member['mb_email'], 'XSS 공격 알림', $_SERVER['REMOTE_ADDR'].' 아이피로 XSS 공격이 있었습니다.\n\n관리자 권한을 탈취하려는 접근이므로 주의하시기 바랍니다.\n\n해당 아이피는 차단하시고 의심되는 게시물이 있는지 확인하시기 바랍니다.\n\n'.G4_URL, 0);
+    mailer($member['mb_nick'], $member['mb_email'], $member['mb_email'], 'XSS 공격 알림', $_SERVER['REMOTE_ADDR'].' 아이피로 XSS 공격이 있었습니다.\n\n관리자 권한을 탈취하려는 접근이므로 주의하시기 바랍니다.\n\n해당 아이피는 차단하시고 의심되는 게시물이 있는지 확인하시기 바랍니다.\n\n'.G5_URL, 0);
 
     alert_close('정상적으로 로그인하여 접근하시기 바랍니다.');
 }
@@ -246,13 +246,13 @@ if (get_session('ss_mb_key') !== $admin_key) {
 unset($auth_menu);
 unset($menu);
 unset($amenu);
-$tmp = dir(G4_ADMIN_PATH);
+$tmp = dir(G5_ADMIN_PATH);
 while ($entry = $tmp->read()) {
     if (!preg_match('/^admin.menu([0-9]{3}).*\.php$/', $entry, $m))
         continue;  // 파일명이 menu 으로 시작하지 않으면 무시한다.
 
     $amenu[$m[1]] = $entry;
-    include_once(G4_ADMIN_PATH.'/'.$entry);
+    include_once(G5_ADMIN_PATH.'/'.$entry);
 }
 @ksort($amenu);
 

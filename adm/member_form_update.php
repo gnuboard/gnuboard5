@@ -1,7 +1,7 @@
 <?php
 $sub_menu = "200100";
 include_once("./_common.php");
-include_once(G4_LIB_PATH."/register.lib.php");
+include_once(G5_LIB_PATH."/register.lib.php");
 
 if ($w == 'u')
     check_demo();
@@ -75,7 +75,7 @@ if ($w == '')
     if ($mb['mb_email'] == $mb_email)
         alert('이미 존재하는 E-mail 입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n별명 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
 
-    sql_query(" insert into {$g4['member_table']} set mb_id = '{$mb_id}', mb_password = '".sql_password($mb_password)."', mb_datetime = '".G4_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G4_TIME_YMDHIS."', {$sql_common} ");
+    sql_query(" insert into {$g5['member_table']} set mb_id = '{$mb_id}', mb_password = '".sql_password($mb_password)."', mb_datetime = '".G5_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G5_TIME_YMDHIS."', {$sql_common} ");
 }
 else if ($w == 'u')
 {
@@ -90,7 +90,7 @@ else if ($w == 'u')
         alert($mb['mb_id'].' : 로그인 중인 관리자 레벨은 수정 할 수 없습니다.');
 
     // 이메일중복체크
-    $sql = " select count(*) as cnt from {$g4['member_table']} where mb_email = '{$_POST['mb_email']}' and mb_id <> '$mb_id' ";
+    $sql = " select count(*) as cnt from {$g5['member_table']} where mb_email = '{$_POST['mb_email']}' and mb_id <> '$mb_id' ";
     $row = sql_fetch($sql);
     if($row['cnt'])
         alert('다른 회원이 사용 중인 이메일입니다.');
@@ -99,7 +99,7 @@ else if ($w == 'u')
 
     // 회원 아이콘 삭제
     if ($del_mb_icon)
-        @unlink(G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif');
+        @unlink(G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif');
 
     // 아이콘 업로드
     if (is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {
@@ -108,13 +108,13 @@ else if ($w == 'u')
         }
 
         if (preg_match("/(\.gif)$/i", $_FILES['mb_icon']['name'])) {
-            @mkdir(G4_DATA_PATH.'/member/'.$mb_dir, G4_DIR_PERMISSION);
-            @chmod(G4_DATA_PATH.'/member/'.$mb_dir, G4_DIR_PERMISSION);
+            @mkdir(G5_DATA_PATH.'/member/'.$mb_dir, G5_DIR_PERMISSION);
+            @chmod(G5_DATA_PATH.'/member/'.$mb_dir, G5_DIR_PERMISSION);
 
-            $dest_path = G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
+            $dest_path = G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
 
             move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
-            chmod($dest_path, G4_FILE_PERMISSION);
+            chmod($dest_path, G5_FILE_PERMISSION);
 
             if (file_exists($dest_path)) {
                 $size = getimagesize($dest_path);
@@ -132,11 +132,11 @@ else if ($w == 'u')
         $sql_password = "";
 
     if ($passive_certify)
-        $sql_certify = " , mb_email_certify = '".G4_TIME_YMDHIS."' ";
+        $sql_certify = " , mb_email_certify = '".G5_TIME_YMDHIS."' ";
     else
         $sql_certify = "";
 
-    $sql = " update {$g4['member_table']}
+    $sql = " update {$g5['member_table']}
                 set {$sql_common}
                      {$sql_password}
                      {$sql_certify}

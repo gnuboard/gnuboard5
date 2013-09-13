@@ -18,18 +18,18 @@ if($_GET['sch_target'] == 1) {
     $t_desc2 = '상품이';
 }
 
-$g4['title'] = $html_title.'검색';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = $html_title.'검색';
+include_once(G5_PATH.'/head.sub.php');
 
 if($_GET['sch_target'] == 1) {
-    $sql_common = " from {$g4['shop_category_table']} ";
+    $sql_common = " from {$g5['shop_category_table']} ";
     $sql_where = " where ca_use = '1' ";
     if($_GET['sch_word'])
         $sql_where .= " and ca_name like '%$sch_word%' ";
     $sql_select = " select ca_id as t_id, ca_name as t_name ";
     $sql_order = " order by ca_name ";
 } else {
-    $sql_common = " from {$g4['shop_item_table']} ";
+    $sql_common = " from {$g5['shop_item_table']} ";
     $sql_where = " where it_use = '1' ";
     if($GET['sch_word'])
         $sql_where .= " and it_name like '%$sch_word%' ";
@@ -97,7 +97,7 @@ $qstr1 = 'sch_target='.$_GET['sch_target'].'&amp;sch_word='.$_GET['sch_word'];
     </table>
     </form>
 
-    <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
+    <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
 
     <div class="btn_confirm">
         <button type="button" onclick="window.close();">닫기</button>
@@ -115,5 +115,5 @@ function sel_target_id(id)
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -1,12 +1,12 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/personalpay.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/personalpay.php');
     return;
 }
 
-$g4['title'] = '개인결제 리스트';
+$g5['title'] = '개인결제 리스트';
 include_once('./_head.php');
 ?>
 
@@ -15,7 +15,7 @@ include_once('./_head.php');
 
     <?php
     // 리스트 유형별로 출력
-    $list_file = G4_SHOP_SKIN_PATH.'/personalpay.skin.php';
+    $list_file = G5_SHOP_SKIN_PATH.'/personalpay.skin.php';
     if (file_exists($list_file)) {
 
         $list_mod   = 3;
@@ -23,7 +23,7 @@ include_once('./_head.php');
         $img_width  = 230;
         $img_height = 230;
 
-        $sql_common = " from {$g4['shop_personalpay_table']}
+        $sql_common = " from {$g5['shop_personalpay_table']}
                         where pp_use = '1'
                           and pp_tno = '' ";
 

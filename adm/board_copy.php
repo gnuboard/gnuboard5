@@ -4,9 +4,9 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], 'w');
 
-$g4['title'] = '게시판 복사';
+$g5['title'] = '게시판 복사';
 $administrator = 1;
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div class="new_win">
@@ -66,5 +66,5 @@ function fboardcopy_check(f)
 
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

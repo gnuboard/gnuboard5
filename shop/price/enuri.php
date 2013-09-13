@@ -48,7 +48,7 @@ include_once('./_common.php');
 // 페이지당 행수
 $page_rows = 1000;
 
-$sql = " select count(*) as cnt from {$g4['shop_item_table']} where it_use = '1' and ca_id LIKE '$ca_id%'";
+$sql = " select count(*) as cnt from {$g5['shop_item_table']} where it_use = '1' and ca_id LIKE '$ca_id%'";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 ?>
@@ -95,7 +95,7 @@ if ($page == "") $page = 1;
 $from_record = ($page - 1) * $page_rows;
 
 $caid = addslashes($ca_id);
-$sql = " select * from {$g4['shop_item_table']}
+$sql = " select * from {$g5['shop_item_table']}
           where it_use = '1'
           and ca_id LIKE '$caid%'
           order by ca_id
@@ -135,7 +135,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++)
     echo '
 	<tr bgcolor="white">
 		<td align="center">'.$num.'</td>
-		<td><a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">'.$row['it_name'].'</a></td>
+		<td><a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">'.$row['it_name'].'</a></td>
 		<td align="center">'.number_format($row['it_price']).'</td>
 		<td align="center">'.$stock.'</td>
 		<td align="center">'.$send_cost.'</td>

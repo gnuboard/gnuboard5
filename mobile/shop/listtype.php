@@ -2,15 +2,15 @@
 include_once('./_common.php');
 
 $type = $_REQUEST['type'];
-if ($type == 1)      $g4['title'] = '히트상품';
-else if ($type == 2) $g4['title'] = '추천상품';
-else if ($type == 3) $g4['title'] = '최신상품';
-else if ($type == 4) $g4['title'] = '인기상품';
-else if ($type == 5) $g4['title'] = '할인상품';
+if ($type == 1)      $g5['title'] = '히트상품';
+else if ($type == 2) $g5['title'] = '추천상품';
+else if ($type == 3) $g5['title'] = '최신상품';
+else if ($type == 4) $g5['title'] = '인기상품';
+else if ($type == 5) $g5['title'] = '할인상품';
 else
     alert('상품유형이 아닙니다.');
 
-include_once(G4_MSHOP_PATH.'/_head.php');
+include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 한페이지에 출력하는 이미지수 = $list_mod * $list_row
 $list_mod   = 3;    // 한줄에 이미지 몇개씩 출력?
@@ -26,13 +26,13 @@ $order_by = ' it_order, it_id desc ';
 if ($sort != '')
     $order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
 
-$error = '<img src="'.G4_SHOP_URL.'/img/no_item.gif">';
+$error = '<img src="'.G5_SHOP_URL.'/img/no_item.gif">';
 
 if (!$skin)
     $skin = "list.10.skin.php";
 
 // 리스트 유형별로 출력
-$list_file = G4_SHOP_SKIN_PATH.'/'.$skin;
+$list_file = G5_SHOP_SKIN_PATH.'/'.$skin;
 if (file_exists($list_file)) {
     // 총몇개 = 한줄에 몇개 * 몇줄
     $items = $list_mod * $list_row;
@@ -77,5 +77,5 @@ echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['PHP_
 ?>
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

@@ -7,7 +7,7 @@ if($is_guest)
 // 상품정보
 $it_id = $_POST['it_id'];
 $sw_direct = $_POST['sw_direct'];
-$sql = " select it_id, ca_id, ca_id2, ca_id3 from {$g4['shop_item_table']} where it_id = '$it_id' ";
+$sql = " select it_id, ca_id, ca_id2, ca_id3 from {$g5['shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 
 // 상품 총 금액
@@ -17,7 +17,7 @@ else
     $cart_id = get_session('ss_cart_id');
 
 $sql = " select SUM( IF(io_type = '1', io_price * ct_qty, (ct_price + io_price) * ct_qty)) as sum_price
-            from {$g4['shop_cart_table']}
+            from {$g5['shop_cart_table']}
             where od_id = '$cart_id'
               and it_id = '$it_id' ";
 $ct = sql_fetch($sql);
@@ -25,10 +25,10 @@ $item_price = $ct['sum_price'];
 
 // 쿠폰정보
 $sql = " select *
-            from {$g4['shop_coupon_table']}
+            from {$g5['shop_coupon_table']}
             where mb_id IN ( '{$member['mb_id']}', '전체회원' )
-              and cp_start <= '".G4_TIME_YMD."'
-              and cp_end >= '".G4_TIME_YMD."'
+              and cp_start <= '".G5_TIME_YMD."'
+              and cp_end >= '".G5_TIME_YMD."'
               and cp_minimum <= '$item_price'
               and (
                     ( cp_method = '0' and cp_target = '{$it['it_id']}' )

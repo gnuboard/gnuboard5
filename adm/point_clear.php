@@ -10,7 +10,7 @@ if (!$ok)
 if ($is_admin != 'super')
     alert('포인트 정리는 최고관리자만 가능합니다.');
 
-$g4['title'] = '포인트 정리';
+$g5['title'] = '포인트 정리';
 include_once('./admin.head.php');
 echo '<span id="ct"></span>';
 include_once('./admin.tail.php');
@@ -22,11 +22,11 @@ flush();
 $max_count = 50;
 
 // 테이블 락을 걸고
-$sql = " LOCK TABLES {$g4['member_table']} WRITE, {$g4['point_table']} WRITE ";
+$sql = " LOCK TABLES {$g5['member_table']} WRITE, {$g5['point_table']} WRITE ";
 sql_query($sql);
 
 $sql = " select mb_id, count(po_point) as cnt
-            from {$g4['point_table']}
+            from {$g5['point_table']}
             group by mb_id
             having cnt > {$max_count}+1
             order by cnt ";
@@ -36,7 +36,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $count = 0;
     $total = 0;
     $sql2 = " select po_id, po_point
-                  from {$g4['point_table']}
+                  from {$g5['point_table']}
                   where mb_id = '{$row['mb_id']}'
                   order by po_id desc
                   limit {$max_count}, {$row['cnt']} ";
@@ -46,10 +46,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $count++;
         $total += $row2['po_point'];
 
-        sql_query(" delete from {$g4['point_table']} where po_id = '{$row2['po_id']}' ");
+        sql_query(" delete from {$g5['point_table']} where po_id = '{$row2['po_id']}' ");
     }
 
-    insert_point($row['mb_id'], $total, '포인트 {$count}건 정리', '@clear', $row['mb_id'], G4_TIME_YMD."-".uniqid(""));
+    insert_point($row['mb_id'], $total, '포인트 {$count}건 정리', '@clear', $row['mb_id'], G5_TIME_YMD."-".uniqid(""));
 
     $str = $row['mb_id']."님 포인트 내역 ".number_format($count)."건 ".number_format($total)."점 정리<br>";
     echo '<script>document.getElementById(\'ct\').innerHTML += \''.$str.'\';</script>'."\n";

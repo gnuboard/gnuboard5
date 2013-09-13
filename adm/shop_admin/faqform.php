@@ -1,22 +1,22 @@
 <?php
 $sub_menu = '500410';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
-$sql = " select * from {$g4['shop_faq_master_table']} where fm_id = '$fm_id' ";
+$sql = " select * from {$g5['shop_faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
 $html_title = 'FAQ '.$fm['fm_subject'];;
-$g4['title'] = $html_title.' 관리';
+$g5['title'] = $html_title.' 관리';
 
 if ($w == "u")
 {
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from {$g4['shop_faq_table']} where fa_id = '$fa_id' ";
+    $sql = " select * from {$g5['shop_faq_table']} where fa_id = '$fa_id' ";
     $fa = sql_fetch($sql);
     if (!$fa['fa_id']) alert("등록된 자료가 없습니다.");
 
@@ -26,7 +26,7 @@ if ($w == "u")
 else
     $html_title .= ' 항목 입력';
 
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="frmfaqform" action="./faqformupdate.php" onsubmit="return frmfaqform_check(this);" method="post">
@@ -47,7 +47,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <?php echo help('숫자가 작을수록 FAQ 페이지에서 먼저 출력됩니다.'); ?>
             <input type="text" name="fa_order" value="<?php echo $fa['fa_order']; ?>" id="fa_order" class="frm_input" maxlength="10" size="10">
-            <?php if ($w == 'u') { ?><a href="<?php echo G4_SHOP_URL; ?>/faq.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">내용보기</a><?php } ?>
+            <?php if ($w == 'u') { ?><a href="<?php echo G5_SHOP_URL; ?>/faq.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">내용보기</a><?php } ?>
         </td>
     </tr>
     <tr>
@@ -95,5 +95,5 @@ function frmfaqform_check(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

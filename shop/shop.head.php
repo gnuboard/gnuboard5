@@ -1,37 +1,37 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-include_once(G4_PATH.'/head.sub.php');
-include_once(G4_LIB_PATH.'/outlogin.lib.php');
-include_once(G4_LIB_PATH.'/poll.lib.php');
-include_once(G4_LIB_PATH.'/visit.lib.php');
-include_once(G4_LIB_PATH.'/connect.lib.php');
-include_once(G4_LIB_PATH.'/popular.lib.php');
+include_once(G5_PATH.'/head.sub.php');
+include_once(G5_LIB_PATH.'/outlogin.lib.php');
+include_once(G5_LIB_PATH.'/poll.lib.php');
+include_once(G5_LIB_PATH.'/visit.lib.php');
+include_once(G5_LIB_PATH.'/connect.lib.php');
+include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
 <!-- 상단 시작 { -->
 <div id="hd">
-    <h1 id="hd_h1"><?php echo $g4['title'] ?></h1>
+    <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
     <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
     <div id="hd_pop">
         <h2>팝업레이어 알림</h2>
-        <?php include G4_SHOP_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
+        <?php include G5_SHOP_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
     </div>
     <?php } ?>
 
     <aside id="hd_nb">
         <h2>쇼핑몰 퀵메뉴</h2>
         <ul>
-            <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php"><img src="<?php echo G4_SHOP_URL; ?>/img/hd_nb_cart.gif" alt="장바구니"></a></li>
-            <li><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G4_SHOP_URL; ?>/img/hd_nb_wish.gif" alt="위시리스트"></a></li>
-            <li id="hd_nb_last"><a href="<?php echo G4_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G4_SHOP_URL; ?>/img/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
+            <li><a href="<?php echo G5_SHOP_URL; ?>/cart.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_cart.gif" alt="장바구니"></a></li>
+            <li><a href="<?php echo G5_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_wish.gif" alt="위시리스트"></a></li>
+            <li id="hd_nb_last"><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
         </ul>
     </aside>
 
-    <div id="logo"><a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="쇼핑몰 처음으로"></a></div>
+    <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="쇼핑몰 처음으로"></a></div>
 
     <aside id="hd_aside">
         <h2>편의메뉴</h2>
@@ -59,10 +59,10 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 <script>
                 function search_submit(f) {
                     if (f.search_flag.value == '상품') {
-                        f.action = '<?php echo G4_SHOP_URL; ?>/search.php';
+                        f.action = '<?php echo G5_SHOP_URL; ?>/search.php';
                     } else {
                         f.stx.value = f.search_str.value;
-                        f.action = '<?php echo G4_BBS_URL; ?>/search.php';
+                        f.action = '<?php echo G5_BBS_URL; ?>/search.php';
                     }
                 }
                 </script>
@@ -72,17 +72,17 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
                 <h3>회원메뉴 및 FAQ</h3>
                 <ul>
                     <?php if ($is_member) { ?>
-                    <li><a href="<?php echo G4_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
-                    <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
+                    <li><a href="<?php echo G5_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
+                    <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
                     <?php } else { ?>
-                    <li><a href="<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
-                    <li><a href="<?php echo G4_BBS_URL; ?>/register.php">회원가입</a></li>
+                    <li><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
+                    <li><a href="<?php echo G5_BBS_URL; ?>/register.php">회원가입</a></li>
                     <?php } ?>
-                    <li><a href="<?php echo G4_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
-                    <li><a href="<?php echo G4_SHOP_URL; ?>/faq.php">FAQ</a></li>
-                    <li><a href="<?php echo G4_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
-                    <li><a href="<?php echo G4_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
-                    <li><a href="<?php echo G4_URL; ?>/">커뮤니티</a></li>
+                    <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
+                    <li><a href="<?php echo G5_SHOP_URL; ?>/faq.php">FAQ</a></li>
+                    <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
+                    <li><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
+                    <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
                 </ul>
             </section>
         </div>
@@ -93,21 +93,21 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 <div id="wrapper">
 
     <aside id="stv">
-        <?php include(G4_SHOP_PATH.'/boxtodayview.inc.php'); ?>
+        <?php include(G5_SHOP_PATH.'/boxtodayview.inc.php'); ?>
     </aside>
 
     <div id="aside">
         <?php echo outlogin('shop_basic'); // 아웃로그인 ?>
 
-        <?php include_once(G4_SHOP_PATH.'/boxcategory.inc.php'); // 상품분류 ?>
+        <?php include_once(G5_SHOP_PATH.'/boxcategory.inc.php'); // 상품분류 ?>
 
-        <?php include_once(G4_SHOP_PATH.'/boxcart.inc.php'); // 장바구니 ?>
+        <?php include_once(G5_SHOP_PATH.'/boxcart.inc.php'); // 장바구니 ?>
 
-        <?php include_once(G4_SHOP_PATH.'/boxwish.inc.php'); // 위시리스트 ?>
+        <?php include_once(G5_SHOP_PATH.'/boxwish.inc.php'); // 위시리스트 ?>
 
-        <?php include_once(G4_SHOP_PATH.'/boxevent.inc.php'); // 이벤트 ?>
+        <?php include_once(G5_SHOP_PATH.'/boxevent.inc.php'); // 이벤트 ?>
 
-        <?php include_once(G4_SHOP_PATH.'/boxcommunity.inc.php'); // 커뮤니티 ?>
+        <?php include_once(G5_SHOP_PATH.'/boxcommunity.inc.php'); // 커뮤니티 ?>
 
         <!-- 쇼핑몰 배너 시작 { -->
         <aside id="sbn_aside">
@@ -120,7 +120,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <!-- 콘텐츠 시작 { -->
     <div id="container">
-        <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g4['title'] ?></div><?php } ?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><div id="wrapper_title"><?php echo $g5['title'] ?></div><?php } ?>
         <!-- 글자크기 조정 display:none 되어 있음 시작 { -->
         <div id="text_size">
             <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>

@@ -30,7 +30,7 @@ if($_POST['js'] == "on") {
         print_result($error, $count);
     }
 
-    $row = sql_fetch(" select count(*) as cnt from {$g4['write_prefix']}{$bo_table} ", FALSE);
+    $row = sql_fetch(" select count(*) as cnt from {$g5['write_prefix']}{$bo_table} ", FALSE);
     if (!$row['cnt']) {
         $error = '존재하는 게시판이 아닙니다.';
         print_result($error, $count);
@@ -53,7 +53,7 @@ if($_POST['js'] == "on") {
             print_result($error, $count);
         }
 
-        $sql = " select bg_flag from {$g4['board_good_table']}
+        $sql = " select bg_flag from {$g5['board_good_table']}
                     where bo_table = '{$bo_table}'
                     and wr_id = '{$wr_id}'
                     and mb_id = '{$member['mb_id']}'
@@ -72,11 +72,11 @@ if($_POST['js'] == "on") {
         else
         {
             // 추천(찬성), 비추천(반대) 카운트 증가
-            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_{$good} = wr_{$good} + 1 where wr_id = '{$wr_id}' ");
+            sql_query(" update {$g5['write_prefix']}{$bo_table} set wr_{$good} = wr_{$good} + 1 where wr_id = '{$wr_id}' ");
             // 내역 생성
-            sql_query(" insert {$g4['board_good_table']} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member['mb_id']}', bg_flag = '{$good}', bg_datetime = '".G4_TIME_YMDHIS."' ");
+            sql_query(" insert {$g5['board_good_table']} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member['mb_id']}', bg_flag = '{$good}', bg_datetime = '".G5_TIME_YMDHIS."' ");
 
-            $sql = " select wr_{$good} as count from {$g4['write_prefix']}{$bo_table} where wr_id = '$wr_id' ";
+            $sql = " select wr_{$good} as count from {$g5['write_prefix']}{$bo_table} where wr_id = '$wr_id' ";
             $row = sql_fetch($sql);
 
             $count = $row['count'];
@@ -85,7 +85,7 @@ if($_POST['js'] == "on") {
         }
     }
 } else {
-    include_once(G4_PATH.'/head.sub.php');
+    include_once(G5_PATH.'/head.sub.php');
 
     if (!$is_member)
     {
@@ -101,7 +101,7 @@ if($_POST['js'] == "on") {
     if (!get_session($ss_name))
         alert('해당 게시물에서만 추천 또는 비추천 하실 수 있습니다.');
 
-    $row = sql_fetch(" select count(*) as cnt from {$g4['write_prefix']}{$bo_table} ", FALSE);
+    $row = sql_fetch(" select count(*) as cnt from {$g5['write_prefix']}{$bo_table} ", FALSE);
     if (!$row['cnt'])
         alert('존재하는 게시판이 아닙니다.');
 
@@ -116,7 +116,7 @@ if($_POST['js'] == "on") {
         if (!$board['bo_use_nogood'] && $good == 'nogood')
             alert('이 게시판은 비추천 기능을 사용하지 않습니다.');
 
-        $sql = " select bg_flag from {$g4['board_good_table']}
+        $sql = " select bg_flag from {$g5['board_good_table']}
                     where bo_table = '{$bo_table}'
                     and wr_id = '{$wr_id}'
                     and mb_id = '{$member['mb_id']}'
@@ -134,9 +134,9 @@ if($_POST['js'] == "on") {
         else
         {
             // 추천(찬성), 비추천(반대) 카운트 증가
-            sql_query(" update {$g4['write_prefix']}{$bo_table} set wr_{$good} = wr_{$good} + 1 where wr_id = '{$wr_id}' ");
+            sql_query(" update {$g5['write_prefix']}{$bo_table} set wr_{$good} = wr_{$good} + 1 where wr_id = '{$wr_id}' ");
             // 내역 생성
-            sql_query(" insert {$g4['board_good_table']} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member['mb_id']}', bg_flag = '{$good}', bg_datetime = '".G4_TIME_YMDHIS."' ");
+            sql_query(" insert {$g5['board_good_table']} set bo_table = '{$bo_table}', wr_id = '{$wr_id}', mb_id = '{$member['mb_id']}', bg_flag = '{$good}', bg_datetime = '".G5_TIME_YMDHIS."' ");
 
             if ($good == 'good')
                 $status = '추천';

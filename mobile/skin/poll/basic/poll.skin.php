@@ -4,13 +4,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $poll_skin_url ?>/style.css">
 
-<form name="fpoll" action="<?php echo G4_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
+<form name="fpoll" action="<?php echo G5_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
 <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
 <input type="hidden" name="skin_dir" value="<?php echo $skin_dir ?>">
 <aside id="poll">
     <header>
         <h2>설문조사</h2>
-        <?php if ($is_admin == "super") { ?><a href="<?php echo G4_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin">설문조사 관리</a><?php } ?>
+        <?php if ($is_admin == "super") { ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin">설문조사 관리</a><?php } ?>
         <p><?php echo $po['po_subject'] ?></p>
     </header>
     <ul>
@@ -20,7 +20,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </ul>
     <footer>
         <input type="submit" value="투표하기">
-        <a href="<?php echo G4_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir" ?>" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
+        <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir" ?>" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
     </footer>
 </aside>
 </form>

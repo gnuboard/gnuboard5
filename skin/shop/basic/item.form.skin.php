@@ -26,12 +26,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 $thumbnails[] = $thumb;
                 $big_img_count++;
 
-                echo '<a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image" target="_blank">'.$img.'</a>';
+                echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image" target="_blank">'.$img.'</a>';
             }
         }
 
         if($big_img_count == 0) {
-            echo '<img src="'.G4_SHOP_URL.'/img/no_image.gif" alt="">';
+            echo '<img src="'.G5_SHOP_URL.'/img/no_image.gif" alt="">';
         }
         ?>
         </div>
@@ -66,7 +66,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php if ($star_score) { ?>
         <div id="sit_star_sns">
             고객선호도 <span>별<?php echo $star_score?>개</span>
-            <img src="<?php echo G4_SHOP_URL; ?>/img/s_star<?php echo $star_score?>.png" alt="" class="sit_star">
+            <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $star_score?>.png" alt="" class="sit_star">
             <?php echo $sns_share_links; ?>
         </div>
         <?php } ?>
@@ -271,8 +271,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         // 상품보관
         function item_wish(f, it_id)
         {
-            f.url.value = "<?php echo G4_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
-            f.action = "<?php echo G4_SHOP_URL; ?>/wishupdate.php";
+            f.url.value = "<?php echo G5_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
+            f.action = "<?php echo G5_SHOP_URL; ?>/wishupdate.php";
             f.submit();
         }
 
@@ -282,7 +282,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             if (!g4_is_member)
             {
                 if (confirm("회원만 추천하실 수 있습니다."))
-                    document.location.href = "<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo urlencode(G4_SHOP_URL."/item.php?it_id=$it_id"); ?>";
+                    document.location.href = "<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo urlencode(G5_SHOP_URL."/item.php?it_id=$it_id"); ?>";
             }
             else
             {

@@ -7,7 +7,7 @@ if (!defined("_ORDERMAIL_")) exit;
 // 주문자님께 메일발송 체크를 했다면
 if ($od_send_mail)
 {
-    $od = sql_fetch(" select * from {$g4['shop_order_table']} where od_id = '$od_id' ");
+    $od = sql_fetch(" select * from {$g5['shop_order_table']} where od_id = '$od_id' ");
 
     $addmemo = nl2br(stripslashes($addmemo));
 
@@ -18,7 +18,7 @@ if ($od_send_mail)
     unset($delivery_list);
 
     $sql = " select *
-               from {$g4['shop_cart_table']}
+               from {$g5['shop_cart_table']}
               where od_id = '{$od['od_id']}'
               order by ct_id ";
     $result = sql_query($sql);
@@ -72,7 +72,7 @@ if ($od_send_mail)
     // 배송정보
     $is_delivery = false;
     if ((int)$od[dl_id] > 0) {
-        $dl = sql_fetch(" select * from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+        $dl = sql_fetch(" select * from {$g5['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
         $delivery_list['dl_url']          = $dl['dl_url'];
         if (strpos($delivery_list['dl_url'], "=")) $delivery_list['dl_url'] .= $od['od_invoice'];
@@ -88,7 +88,7 @@ if ($od_send_mail)
     if ($is_receipt || $is_delivery)
     {
         ob_start();
-        include G4_SHOP_PATH.'/mail/ordermail.mail.php';
+        include G5_SHOP_PATH.'/mail/ordermail.mail.php';
         $content = ob_get_contents();
         ob_end_clean();
 
@@ -96,7 +96,7 @@ if ($od_send_mail)
         $email = $od['od_email'];
 
         // 메일 보낸 내역 상점메모에 update
-        $od_shop_memo = G4_TIME_YMDHIS.' - 결제/배송내역 메일발송\n' . $od['od_shop_memo'];
+        $od_shop_memo = G5_TIME_YMDHIS.' - 결제/배송내역 메일발송\n' . $od['od_shop_memo'];
         /* 1.00.06
         ** 주석처리 - 처리하지 않음
         if ($receipt_check)
@@ -105,7 +105,7 @@ if ($od_send_mail)
             $od_shop_memo .= ", 송장번호";
         */
 
-        sql_query(" update {$g4['shop_order_table']} set od_shop_memo = '$od_shop_memo' where od_id = '$od_id' ");
+        sql_query(" update {$g5['shop_order_table']} set od_shop_memo = '$od_shop_memo' where od_id = '$od_id' ");
 
         $admin = get_admin('super');
 

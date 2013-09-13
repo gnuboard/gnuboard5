@@ -1,14 +1,14 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/thumb.lib.php');
+include_once(G5_LIB_PATH.'/thumb.lib.php');
 
 $sfl = escape_trim($_REQUEST['sfl']);
 $stx = escape_trim($_REQUEST['stx']);
 
-$g4['title'] = '상품문의';
-include_once(G4_MSHOP_PATH.'/_head.php');
+$g5['title'] = '상품문의';
+include_once(G5_MSHOP_PATH.'/_head.php');
 
-$sql_common = " from `{$g4['shop_item_qa_table']}` a join `{$g4['shop_item_table']}` b on (a.it_id=b.it_id) ";
+$sql_common = " from `{$g5['shop_item_qa_table']}` a join `{$g5['shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where (1) ";
 
 if(!$sfl)
@@ -89,7 +89,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
         $small_image = $row['it_id'];
 
-        $it_href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $it_href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
         $iq_question = get_view_thumbnail($row['iq_question'], 500);
 
@@ -170,5 +170,5 @@ $(function(){
 <!-- } 전체 상품 사용후기 목록 끝 -->
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

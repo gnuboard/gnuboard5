@@ -10,7 +10,7 @@ if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
 if (!isset($config['cf_include_index'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_include_index` VARCHAR(255) NOT NULL AFTER `cf_admin`,
                     ADD `cf_include_head` VARCHAR(255) NOT NULL AFTER `cf_include_index`,
                     ADD `cf_include_tail` VARCHAR(255) NOT NULL AFTER `cf_include_head`,
@@ -18,7 +18,7 @@ if (!isset($config['cf_include_index'])) {
 }
 
 if (!isset($config['cf_mobile_new_skin'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_mobile_new_skin` VARCHAR(255) NOT NULL AFTER `cf_memo_send_point`,
                     ADD `cf_mobile_search_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_new_skin`,
                     ADD `cf_mobile_connect_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_search_skin`,
@@ -26,28 +26,28 @@ if (!isset($config['cf_mobile_new_skin'])) {
 }
 
 if(!isset($config['cf_gcaptcha_mp3'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
 
 if(!isset($config['cf_editor'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_editor` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
 }
 
 if(!isset($config['cf_googl_shorturl_apikey'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_googl_shorturl_apikey` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
 }
 
 if(!isset($config['cf_mobile_pages'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_mobile_pages` INT(11) NOT NULL DEFAULT '0' AFTER `cf_write_pages` ", true);
-    sql_query(" UPDATE `{$g4['config_table']}` SET cf_mobile_pages = '5' ", true);
+    sql_query(" UPDATE `{$g5['config_table']}` SET cf_mobile_pages = '5' ", true);
 }
 
 if(!isset($config['cf_facebook_appid'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_googl_shorturl_apikey`,
                     ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_appid`,
                     ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
@@ -56,21 +56,21 @@ if(!isset($config['cf_facebook_appid'])) {
 }
 
 // uniqid 테이블이 없을 경우 생성
-if(!sql_query(" DESC {$g4['uniqid_table']} ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['uniqid_table']}` (
+if(!sql_query(" DESC {$g5['uniqid_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['uniqid_table']}` (
                   `uq_id` bigint(20) unsigned NOT NULL,
                   `uq_ip` varchar(255) NOT NULL,
                   PRIMARY KEY (`uq_id`)
                 ) ", false);
 }
 
-if(!sql_query(" SELECT uq_ip from {$g4['uniqid_table']} limit 1 ", false)) {
-    sql_query(" ALTER TABLE {$g4['uniqid_table']} ADD `uq_ip` VARCHAR(255) NOT NULL ");
+if(!sql_query(" SELECT uq_ip from {$g5['uniqid_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE {$g5['uniqid_table']} ADD `uq_ip` VARCHAR(255) NOT NULL ");
 }
 
 // 임시저장 테이블이 없을 경우 생성
-if(!sql_query(" DESC {$g4['autosave_table']} ", false)) {
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['autosave_table']}` (
+if(!sql_query(" DESC {$g5['autosave_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['autosave_table']}` (
                   `as_id` int(11) NOT NULL AUTO_INCREMENT,
                   `mb_id` varchar(20) NOT NULL,
                   `as_uid` bigint(20) unsigned NOT NULL,
@@ -84,23 +84,23 @@ if(!sql_query(" DESC {$g4['autosave_table']} ", false)) {
 }
 
 if(!isset($config['cf_admin_email'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_admin_email` VARCHAR(255) NOT NULL AFTER `cf_admin` ", true);
 }
 
 if(!isset($config['cf_cert_use'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_editor`,
                     ADD `cf_cert_ipin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_use`,
                     ADD `cf_cert_hp` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_ipin`,
                     ADD `cf_cert_kcb_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_hp`,
                     ADD `cf_cert_kcp_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kcb_cd`,
                     ADD `cf_cert_limit` INT(11) NOT NULL DEFAULT '0' AFTER `cf_cert_kcp_cd` ", true);
-    sql_query(" ALTER TABLE `{$g4['member_table']}`
+    sql_query(" ALTER TABLE `{$g5['member_table']}`
                     CHANGE `mb_hp_certify` `mb_certify` VARCHAR(20) NOT NULL DEFAULT '' ", true);
-    sql_query(" update {$g4['member_table']} set mb_certify = 'hp' where mb_certify = '1' ");
-    sql_query(" update {$g4['member_table']} set mb_certify = '' where mb_certify = '0' ");
-    sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['cert_history_table']}` (
+    sql_query(" update {$g5['member_table']} set mb_certify = 'hp' where mb_certify = '1' ");
+    sql_query(" update {$g5['member_table']} set mb_certify = '' where mb_certify = '0' ");
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['cert_history_table']}` (
                   `cr_id` int(11) NOT NULL auto_increment,
                   `mb_id` varchar(255) NOT NULL DEFAULT '',
                   `cr_company` varchar(255) NOT NULL DEFAULT '',
@@ -114,11 +114,11 @@ if(!isset($config['cf_cert_use'])) {
 }
 
 if(!isset($config['cf_analytics'])) {
-    sql_query(" ALTER TABLE `{$g4['config_table']}`
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_analytics` TEXT NOT NULL AFTER `cf_intercept_ip` ", true);
 }
 
-$g4['title'] = '환경설정';
+$g5['title'] = '환경설정';
 include_once ('./admin.head.php');
 
 $pg_anchor = '<ul class="anchor">
@@ -261,7 +261,7 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <select name="cf_mobile_new_skin" id="cf_mobile_new_skin" required class="required">
             <?php
-            $arr = get_skin_dir('new', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            $arr = get_skin_dir('new', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_new_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
@@ -287,7 +287,7 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <select name="cf_mobile_search_skin" id="cf_mobile_search_skin" required class="required">
             <?php
-            $arr = get_skin_dir('search', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            $arr = get_skin_dir('search', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_search_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
@@ -313,7 +313,7 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <select name="cf_mobile_connect_skin" id="cf_mobile_connect_skin" required class="required">
             <?php
-            $arr = get_skin_dir('connect', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            $arr = get_skin_dir('connect', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
@@ -325,10 +325,10 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="cf_editor">에디터 선택</label></th>
         <td colspan="3">
-            <?php echo help(G4_EDITOR_URL.' 밑의 DHTML 에디터 폴더를 선택합니다.') ?>
+            <?php echo help(G5_EDITOR_URL.' 밑의 DHTML 에디터 폴더를 선택합니다.') ?>
             <select name="cf_editor" id="cf_editor">
             <?php
-            $arr = get_skin_dir('', G4_EDITOR_PATH);
+            $arr = get_skin_dir('', G5_EDITOR_PATH);
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">사용안함</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_editor'], $arr[$i]).">".$arr[$i]."</option>\n";
@@ -340,10 +340,10 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="cf_gcaptcha_mp3">음성캡챠 선택<strong class="sound_only">필수</strong></label></th>
         <td colspan="3">
-            <?php echo help(G4_GCAPTCHA_URL.'/mp3 밑의 음성 폴더를 선택합니다.') ?>
+            <?php echo help(G5_GCAPTCHA_URL.'/mp3 밑의 음성 폴더를 선택합니다.') ?>
             <select name="cf_gcaptcha_mp3" id="cf_gcaptcha_mp3" required class="required">
             <?php
-            $arr = get_skin_dir('mp3', G4_GCAPTCHA_PATH);
+            $arr = get_skin_dir('mp3', G5_GCAPTCHA_PATH);
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_gcaptcha_mp3'], $arr[$i]).">".$arr[$i]."</option>\n";
@@ -494,7 +494,7 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <select name="cf_mobile_member_skin" id="cf_mobile_member_skin" required class="required">
             <?php
-            $arr = get_skin_dir('member', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            $arr = get_skin_dir('member', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_mobile_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";

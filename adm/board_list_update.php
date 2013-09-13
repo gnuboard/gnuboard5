@@ -18,7 +18,7 @@ if ($_POST['act_button'] == "선택수정") {
         $k = $_POST['chk'][$i];
 
         if ($is_admin != 'super') {
-            $sql = " select count(*) as cnt from {$g4['board_table']} a, {$g4['group_table']} b
+            $sql = " select count(*) as cnt from {$g5['board_table']} a, {$g5['group_table']} b
                       where a.gr_id = '{$_POST['gr_id'][$k]}'
                         and a.gr_id = b.gr_id
                         and b.gr_admin = '{$member['mb_id']}' ";
@@ -27,7 +27,7 @@ if ($_POST['act_button'] == "선택수정") {
                 alert('최고관리자가 아닌 경우 다른 관리자의 게시판('.$board_table[$k].')은 수정이 불가합니다.');
         }
 
-        $sql = " update {$g4['board_table']}
+        $sql = " update {$g5['board_table']}
                     set gr_id               = '{$_POST['gr_id'][$k]}',
                         bo_subject          = '{$_POST['bo_subject'][$k]}',
                         bo_device           = '{$_POST['bo_device'][$k]}',

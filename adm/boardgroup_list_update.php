@@ -19,7 +19,7 @@ for ($i=0; $i<$count; $i++)
     $gr_id = $_POST['group_id'][$k];
     
     if($_POST['act_button'] == '선택수정') {
-        $sql = " update {$g4['group_table']}
+        $sql = " update {$g5['group_table']}
                     set gr_subject    = '{$_POST['gr_subject'][$k]}',
                         gr_device     = '{$_POST['gr_device'][$k]}',
                         gr_admin      = '{$_POST['gr_admin'][$k]}',
@@ -31,15 +31,15 @@ for ($i=0; $i<$count; $i++)
             $sql .= " and gr_admin    = '{$_POST['gr_admin'][$k]}' ";
         sql_query($sql);
     } else if($_POST['act_button'] == '선택삭제') {
-        $row = sql_fetch(" select count(*) as cnt from {$g4['board_table']} where gr_id = '$gr_id' ");
+        $row = sql_fetch(" select count(*) as cnt from {$g5['board_table']} where gr_id = '$gr_id' ");
         if ($row['cnt'])
             alert("이 그룹에 속한 게시판이 존재하여 게시판 그룹을 삭제할 수 없습니다.\\n\\n이 그룹에 속한 게시판을 먼저 삭제하여 주십시오.", './board_list.php?sfl=gr_id&amp;stx='.$gr_id);
 
         // 그룹 삭제
-        sql_query(" delete from {$g4['group_table']} where gr_id = '$gr_id' ");
+        sql_query(" delete from {$g5['group_table']} where gr_id = '$gr_id' ");
 
         // 그룹접근 회원 삭제
-        sql_query(" delete from {$g4['group_member_table']} where gr_id = '$gr_id' ");
+        sql_query(" delete from {$g5['group_member_table']} where gr_id = '$gr_id' ");
     }
 }
 

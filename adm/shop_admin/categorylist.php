@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '분류관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '분류관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $where = " where ";
 $sql_search = "";
@@ -18,7 +18,7 @@ if ($stx != "") {
         $page = 1;
 }
 
-$sql_common = " from {$g4['shop_category_table']} ";
+$sql_common = " from {$g5['shop_category_table']} ";
 if ($is_admin != 'super')
     $sql_common .= " $where ca_mb_id = '{$member['mb_id']}' ";
 $sql_common .= $sql_search;
@@ -135,7 +135,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             $class = 'class="cate_list_lbl"'; // 2단 이상 분류의 label 에 스타일 부여 - 지운아빠 2013-04-02
             // 상위단계의 분류명
             $p_ca_id = substr($row['ca_id'], 0, $level*2);
-            $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '$p_ca_id' ";
+            $sql = " select ca_name from {$g5['shop_category_table']} where ca_id = '$p_ca_id' ";
             $temp = sql_fetch($sql);
             $p_ca_name = $temp['ca_name'].'의하위';
         } else {
@@ -153,7 +153,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             $s_del = '<a href="./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'" onclick="return delete_confirm();"><span class="sound_only">'.get_text($row['ca_name']).' </span>삭제</a> ';
 
         // 해당 분류에 속한 상품의 갯수
-        $sql1 = " select COUNT(*) as cnt from {$g4['shop_item_table']}
+        $sql1 = " select COUNT(*) as cnt from {$g5['shop_item_table']}
                       where ca_id = '{$row['ca_id']}'
                       or ca_id2 = '{$row['ca_id']}'
                       or ca_id3 = '{$row['ca_id']}' ";
@@ -162,13 +162,13 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     <tr>
         <td class="td_code" rowspan="2">
             <input type="hidden" name="ca_id[<?php echo $i; ?>]" value="<?php echo $row['ca_id']; ?>">
-            <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $row['ca_id']; ?>"><?php echo $row['ca_id']; ?></a>
+            <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $row['ca_id']; ?>"><?php echo $row['ca_id']; ?></a>
         </td>
         <td class="td_scate" rowspan="2"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required" size="<?php echo $s_level_input_size; ?>"></td>
         <td class="td_scate_admin">
             <label for="ca_skin<?php echo $i; ?>" class="sound_only">출력스킨</label>
             <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
-                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
             </select>
         </td>
         <td class="td_output">
@@ -240,10 +240,10 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 
     </form>
 
-    <?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+    <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 </section>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

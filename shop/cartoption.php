@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 $it_id = $_POST['it_id'];
 
-$sql = " select it_id, it_option_subject, it_supply_subject, it_price, it_point, it_point_type from {$g4['shop_item_table']} where it_id = '$it_id' and it_use = '1' ";
+$sql = " select it_id, it_option_subject, it_supply_subject, it_price, it_point, it_point_type from {$g5['shop_item_table']} where it_id = '$it_id' and it_use = '1' ";
 $it = sql_fetch($sql);
 $it_point = get_item_point($it);
 
@@ -12,11 +12,11 @@ if(!$it['it_id'])
 
 // 장바구니 자료
 $cart_id = get_session('ss_cart_id');
-$sql = " select * from {$g4['shop_cart_table']} where od_id = '$cart_id' and it_id = '$it_id' order by io_type asc, ct_id asc ";
+$sql = " select * from {$g5['shop_cart_table']} where od_id = '$cart_id' and it_id = '$it_id' order by io_type asc, ct_id asc ";
 $result = sql_query($sql);
 
 // 판매가격
-$sql2 = " select ct_price, it_name, ct_send_cost from {$g4['shop_cart_table']} where od_id = '$cart_id' and it_id = '$it_id' order by ct_id asc limit 1 ";
+$sql2 = " select ct_price, it_name, ct_send_cost from {$g5['shop_cart_table']} where od_id = '$cart_id' and it_id = '$it_id' order by ct_id asc limit 1 ";
 $row2 = sql_fetch($sql2);
 
 if(!mysql_num_rows($result))
@@ -24,7 +24,7 @@ if(!mysql_num_rows($result))
 ?>
 
 <!-- 장바구니 옵션 시작 { -->
-<form name="foption" method="post" action="<?php echo G4_SHOP_URL; ?>/cartupdate.php" onsubmit="return formcheck(this);">
+<form name="foption" method="post" action="<?php echo G5_SHOP_URL; ?>/cartupdate.php" onsubmit="return formcheck(this);">
 <input type="hidden" name="act" value="optionmod">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
 <input type="hidden" id="it_price" value="<?php echo $row2['ct_price']; ?>">

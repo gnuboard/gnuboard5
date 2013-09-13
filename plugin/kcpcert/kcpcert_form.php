@@ -5,7 +5,7 @@ include_once('./_common.php');
 certify_count_check($member['mb_id'], 'hp');
 
 // kcp 휴대폰인증파일
-include_once(G4_KCPCERT_PATH.'/kcpcert_config.php');
+include_once(G5_KCPCERT_PATH.'/kcpcert_config.php');
 
 $ordr_idxx = get_session('ss_uniqid');
 if(!$ordr_idxx)
@@ -30,7 +30,7 @@ if(!$ordr_idxx)
 <!-- 사이트코드 -->
 <input type="hidden" name="site_cd"      value="<?php echo $site_cd; ?>" />
 <!-- Ret_URL : 인증결과 리턴 페이지 ( 가맹점 URL 로 설정해 주셔야 합니다. ) -->
-<input type="hidden" name="Ret_URL"      value="<?php echo G4_KCPCERT_URL; ?>/kcpcert_result.php" />
+<input type="hidden" name="Ret_URL"      value="<?php echo G5_KCPCERT_URL; ?>/kcpcert_result.php" />
 <!-- cert_otp_use 필수 ( 메뉴얼 참고)
      Y : 실명 확인 + OTP 점유 확인 , N : 실명 확인 only
 -->

@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-include_once(G4_LIB_PATH.'/register.lib.php');
-include_once(G4_LIB_PATH.'/mailer.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_LIB_PATH.'/register.lib.php');
+include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 // 리퍼러 체크
 referer_check();
@@ -12,7 +12,7 @@ if (!($w == '' || $w == 'u')) {
 }
 
 if ($w == 'u' && $is_admin == 'super') {
-    if (file_exists(G4_PATH.'/DEMO'))
+    if (file_exists(G5_PATH.'/DEMO'))
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
@@ -86,7 +86,7 @@ if ($w == '' || $w == 'u') {
     } else {
         // 자바스크립트로 정보변경이 가능한 버그 수정
         // 별명수정일이 지나지 않았다면
-        if ($member['mb_nick_date'] > date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400)))
+        if ($member['mb_nick_date'] > date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400)))
             $mb_nick = $member['mb_nick'];
         // 회원정보의 메일을 이전 메일로 옮기고 아래에서 비교함
         $old_email = $member['mb_email'];
@@ -99,7 +99,7 @@ if ($w == '' || $w == 'u') {
 // 사용자 코드 실행
 @include_once($member_skin_path.'/register_form_update.head.skin.php');
 
-$mb_dir = G4_DATA_PATH.'/member/'.substr($mb_id,0,2);
+$mb_dir = G5_DATA_PATH.'/member/'.substr($mb_id,0,2);
 
 // 아이콘 삭제
 if (isset($_POST['del_mb_icon'])) {
@@ -114,11 +114,11 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
     if (preg_match("/(\.gif)$/i", $_FILES['mb_icon']['name'])) {
         // 아이콘 용량이 설정값보다 이하만 업로드 가능
         if ($_FILES['mb_icon']['size'] <= $config['cf_member_icon_size']) {
-            @mkdir($mb_dir, G4_DIR_PERMISSION);
-            @chmod($mb_dir, G4_DIR_PERMISSION);
+            @mkdir($mb_dir, G5_DIR_PERMISSION);
+            @chmod($mb_dir, G5_DIR_PERMISSION);
             $dest_path = $mb_dir.'/'.$mb_id.'.gif';
             move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
-            chmod($dest_path, G4_FILE_PERMISSION);
+            chmod($dest_path, G5_FILE_PERMISSION);
             if (file_exists($dest_path)) {
                 //=================================================================\
                 // 090714
@@ -147,7 +147,7 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
 $mb_hp = hyphen_hp_number($mb_hp);
 if($_SESSION['ss_cert_type'] != 'hp' && $mb_hp) {
     // 휴대폰번호 중복체크
-    $sql = " select mb_id from {$g4['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$mb_hp}' ";
+    $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$mb_hp}' ";
     $row = sql_fetch($sql);
     if ($row['mb_id']) {
         alert("이미 가입되어 있는 휴대폰번호 입니다.\\n회원아이디 : ".$row['mb_id']);
@@ -185,12 +185,12 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
 
 if ($w == '') {
 
-    $sql = " insert into {$g4['member_table']}
+    $sql = " insert into {$g5['member_table']}
                 set mb_id = '{$mb_id}',
                      mb_password = '".sql_password($mb_password)."',
                      mb_name = '{$mb_name}',
                      mb_nick = '{$mb_nick}',
-                     mb_nick_date = '".G4_TIME_YMD."',
+                     mb_nick_date = '".G5_TIME_YMD."',
                      mb_email = '{$mb_email}',
                      mb_homepage = '{$mb_homepage}',
                      mb_tel = '{$mb_tel}',
@@ -200,8 +200,8 @@ if ($w == '') {
                      mb_addr2 = '{$mb_addr2}',
                      mb_signature = '{$mb_signature}',
                      mb_profile = '{$mb_profile}',
-                     mb_today_login = '".G4_TIME_YMDHIS."',
-                     mb_datetime = '".G4_TIME_YMDHIS."',
+                     mb_today_login = '".G5_TIME_YMDHIS."',
+                     mb_datetime = '".G5_TIME_YMDHIS."',
                      mb_ip = '{$_SERVER['REMOTE_ADDR']}',
                      mb_level = '{$config['cf_register_level']}',
                      mb_recommend = '{$mb_recommend}',
@@ -209,7 +209,7 @@ if ($w == '') {
                      mb_mailling = '{$mb_mailling}',
                      mb_sms = '{$mb_sms}',
                      mb_open = '{$mb_open}',
-                     mb_open_date = '".G4_TIME_YMD."',
+                     mb_open_date = '".G5_TIME_YMD."',
                      mb_1 = '{$mb_1}',
                      mb_2 = '{$mb_2}',
                      mb_3 = '{$mb_3}',
@@ -224,7 +224,7 @@ if ($w == '') {
 
     // 이메일 인증을 사용하지 않는다면 이메일 인증시간을 바로 넣는다
     if (!$config['cf_use_email_certify'])
-        $sql .= " , mb_email_certify = '".G4_TIME_YMDHIS."' ";
+        $sql .= " , mb_email_certify = '".G5_TIME_YMDHIS."' ";
     sql_query($sql);
 
     // 회원가입 포인트 부여
@@ -238,8 +238,8 @@ if ($w == '') {
     if ($config['cf_email_mb_member']) {
         $subject = '['.$config['cf_title'].'] 회원가입을 축하드립니다.';
 
-        $mb_md5 = md5($mb_id.$mb_email.G4_TIME_YMDHIS);
-        $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        $mb_md5 = md5($mb_id.$mb_email.G5_TIME_YMDHIS);
+        $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
         ob_start();
         include_once ('./register_form_update_mail1.php');
@@ -285,18 +285,18 @@ if ($w == '') {
 
     $sql_nick_date = "";
     if ($mb_nick_default != $mb_nick)
-        $sql_nick_date =  " , mb_nick_date = '".G4_TIME_YMD."' ";
+        $sql_nick_date =  " , mb_nick_date = '".G5_TIME_YMD."' ";
 
     $sql_open_date = "";
     if ($mb_open_default != $mb_open)
-        $sql_open_date =  " , mb_open_date = '".G4_TIME_YMD."' ";
+        $sql_open_date =  " , mb_open_date = '".G5_TIME_YMD."' ";
 
     // 이전 메일주소와 수정한 메일주소가 틀리다면 인증을 다시 해야하므로 값을 삭제
     $sql_email_certify = '';
     if ($old_email != $mb_email && $config['cf_use_email_certify'])
         $sql_email_certify = " , mb_email_certify = '' ";
 
-    $sql = " update {$g4['member_table']}
+    $sql = " update {$g5['member_table']}
                 set mb_nick = '{$mb_nick}',
                     mb_mailling = '{$mb_mailling}',
                     mb_sms = '{$mb_sms}',
@@ -335,9 +335,9 @@ if ($w == '') {
 if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
-    $mb_datetime = $member['mb_datetime'] ? $member['mb_datetime'] : G4_TIME_YMDHIS;
+    $mb_datetime = $member['mb_datetime'] ? $member['mb_datetime'] : G5_TIME_YMDHIS;
     $mb_md5 = md5($mb_id.$mb_email.$mb_datetime);
-    $certify_href = G4_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+    $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
     ob_start();
     include_once ('./register_form_update_mail3.php');
@@ -361,16 +361,16 @@ if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
 
 if ($w == "") {
-    goto_url(G4_HTTP_BBS_URL.'/register_result.php');
+    goto_url(G5_HTTP_BBS_URL.'/register_result.php');
 } else if ($w == 'u') {
-    $row  = sql_fetch(" select mb_password from {$g4['member_table']} where mb_id = '{$member['mb_id']}' ");
+    $row  = sql_fetch(" select mb_password from {$g5['member_table']} where mb_id = '{$member['mb_id']}' ");
     $tmp_password = $row['mb_password'];
 
     if ($old_email != $mb_email && $config['cf_use_email_certify']) {
         set_session("ss_mb_id", "");
-        alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', G4_URL);
+        alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', G5_URL);
     } else {
-        alert('회원 정보가 수정 되었습니다.', G4_URL);
+        alert('회원 정보가 수정 되었습니다.', G5_URL);
     }
 }
 ?>

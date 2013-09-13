@@ -4,12 +4,12 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$g4['title'] = '엑셀파일로 상품 일괄 등록';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '엑셀파일로 상품 일괄 등록';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div class="new_win">
-    <h1><?php echo $g4['title']; ?></h1>
+    <h1><?php echo $g5['title']; ?></h1>
 
     <p class="new_win_desc">
         엑셀파일을 이용하여 상품을 일괄등록할 수 있습니다.<br>
@@ -19,7 +19,7 @@ include_once(G4_PATH.'/head.sub.php');
     </p>
 
     <p class="new_win_desc">
-        <a href="<?php echo G4_URL; ?>/<?php echo G4_LIB_DIR; ?>/Excel/itemexcel.xls">상품일괄등록용 엑셀파일 다운로드</a>
+        <a href="<?php echo G5_URL; ?>/<?php echo G5_LIB_DIR; ?>/Excel/itemexcel.xls">상품일괄등록용 엑셀파일 다운로드</a>
     </p>
 
     <form name="fitemexcel" method="post" action="./itemexcelupdate.php" enctype="MULTIPART/FORM-DATA" autocomplete="off">
@@ -39,5 +39,5 @@ include_once(G4_PATH.'/head.sub.php');
 </div>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

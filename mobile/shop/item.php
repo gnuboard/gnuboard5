@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/iteminfo.lib.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_LIB_PATH.'/iteminfo.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 $captcha_html = captcha_html();
 
@@ -17,8 +17,8 @@ set_session('ss_norobot_key', $norobot_key);
 $sql = " select a.*,
                 b.ca_name,
                 b.ca_use
-           from {$g4['shop_item_table']} a,
-                {$g4['shop_category_table']} b
+           from {$g5['shop_item_table']} a,
+                {$g5['shop_category_table']} b
           where a.it_id = '$it_id'
             and a.ca_id = b.ca_id ";
 $it = sql_fetch($sql);
@@ -31,7 +31,7 @@ if (!($it['ca_use'] && $it['it_use'])) {
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
 $sql = " select ca_include_head, ca_include_tail, ca_hp_cert_use, ca_adult_cert_use
-           from {$g4['shop_category_table']}
+           from {$g5['shop_category_table']}
           where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
 
@@ -75,27 +75,27 @@ if (!$saved) {
 
 // 조회수 증가
 if ($_COOKIE['ck_it_id'] != $it_id) {
-    sql_query(" update {$g4['shop_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
+    sql_query(" update {$g5['shop_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
     set_cookie("ck_it_id", $it_id, time() + 3600); // 1시간동안 저장
 }
 
-$g4['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
+$g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
-include_once(G4_MSHOP_PATH.'/_head.php');
+include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 분류 위치
 // HOME > 1단계 > 2단계 ... > 6단계 분류
 $ca_id = $it['ca_id'];
-include G4_MSHOP_PATH.'/navigation1.inc.php';
+include G5_MSHOP_PATH.'/navigation1.inc.php';
 
 if ($is_admin)
-    echo '<div class="sit_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
+    echo '<div class="sit_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
 
 // 상단 HTML
 echo '<div id="sit_hhtml">'.stripslashes($it['it_mobile_head_html']).'</div>';
 
 // 이전 상품보기
-$sql = " select it_id, it_name from {$g4['shop_item_table']}
+$sql = " select it_id, it_name from {$g5['shop_item_table']}
           where it_id > '$it_id'
             and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
             and it_use = '1'
@@ -104,7 +104,7 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $prev_title = '이전상품보기 '.$row['it_name'];
-    $prev_href = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
+    $prev_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
     $prev_href = '</a>';
 } else {
     $prev_title = '';
@@ -113,7 +113,7 @@ if ($row['it_id']) {
 }
 
 // 다음 상품보기
-$sql = " select it_id, it_name from {$g4['shop_item_table']}
+$sql = " select it_id, it_name from {$g5['shop_item_table']}
           where it_id < '$it_id'
             and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
             and it_use = '1'
@@ -122,7 +122,7 @@ $sql = " select it_id, it_name from {$g4['shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $next_title = '다음 상품 '.$row['it_name'];
-    $next_href = '<a href="'.G4_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
+    $next_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
     $next_href2 = '</a>';
 } else {
     $next_title = '';
@@ -131,32 +131,32 @@ if ($row['it_id']) {
 }
 
 // 관리자가 확인한 사용후기의 갯수를 얻음
-$sql = " select count(*) as cnt from `{$g4['shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+$sql = " select count(*) as cnt from `{$g5['shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 $row = sql_fetch($sql);
 $item_use_count = $row['cnt'];
 
 // 상품문의의 갯수를 얻음
-$sql = " select count(*) as cnt from `{$g4['shop_item_qa_table']}` where it_id = '{$it_id}' ";
+$sql = " select count(*) as cnt from `{$g5['shop_item_qa_table']}` where it_id = '{$it_id}' ";
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 
 // 관련상품의 갯수를 얻음
 $sql = " select count(*) as cnt
-           from {$g4['shop_item_relation_table']} a
-           left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
+           from {$g5['shop_item_relation_table']} a
+           left join {$g5['shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
           where a.it_id = '{$it['it_id']}' ";
 $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
 ?>
 
-<script src="<?php echo G4_JS_URL; ?>/md5.js"></script>
-<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/md5.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/shop.js"></script>
 
 <?php
-if (G4_HTTPS_DOMAIN)
-    $action_url = G4_HTTPS_DOMAIN.'/'.G4_SHOP_DIR.'/cartupdate.php';
+if (G5_HTTPS_DOMAIN)
+    $action_url = G5_HTTPS_DOMAIN.'/'.G5_SHOP_DIR.'/cartupdate.php';
 else
-    $action_url = G4_SHOP_URL.'/cartupdate.php';
+    $action_url = G5_SHOP_URL.'/cartupdate.php';
 ?>
 
 <div id="sit">
@@ -185,7 +185,7 @@ else
                     continue;
 
                 echo '<li>';
-                echo '<a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image slide_img" target="_blank">'.$thumb.'</a>';
+                echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image slide_img" target="_blank">'.$thumb.'</a>';
                 echo '</li>';
 
                 $thumb_count++;
@@ -245,13 +245,13 @@ else
             <div id="sit_star_sns">
                 <?php
                 $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
-                $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$it['it_id'];
+                $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$it['it_id'];
                 ?>
                 고객선호도 <span>별<?php echo $score?>개</span>
-                <img src="<?php echo G4_SHOP_URL; ?>/img/s_star<?php echo $score?>.png" alt="" class="sit_star">
-                <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb2.png'); ?>
-                <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt2.png'); ?>
-                <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo2.png'); ?>
+                <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $score?>.png" alt="" class="sit_star">
+                <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_fb2.png'); ?>
+                <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_twt2.png'); ?>
+                <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_goo2.png'); ?>
             </div>
             <?php } ?>
             <table class="sit_ov_tbl">
@@ -439,8 +439,8 @@ else
             // 상품보관
             function item_wish(f, it_id)
             {
-                f.url.value = "<?php echo G4_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
-                f.action = "<?php echo G4_SHOP_URL; ?>/wishupdate.php";
+                f.url.value = "<?php echo G5_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
+                f.action = "<?php echo G5_SHOP_URL; ?>/wishupdate.php";
                 f.submit();
             }
 
@@ -450,11 +450,11 @@ else
                 if (!g4_is_member)
                 {
                     if (confirm("회원만 추천하실 수 있습니다."))
-                        document.location.href = "<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo urlencode(G4_SHOP_URL."/item.php?it_id=$it_id"); ?>";
+                        document.location.href = "<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo urlencode(G5_SHOP_URL."/item.php?it_id=$it_id"); ?>";
                 }
                 else
                 {
-                    url = "<?php echo G4_SHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
+                    url = "<?php echo G5_SHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
                     opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
                     popup_window(url, "itemrecommend", opt);
                 }
@@ -600,7 +600,7 @@ else
 
         <div class="sct_wrap">
             <?php
-            $sql = " select b.* from {$g4['shop_item_relation_table']} a left join {$g4['shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
+            $sql = " select b.* from {$g5['shop_item_relation_table']} a left join {$g5['shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
 
             $list = new item_list("list.10.skin.php", $default['de_rel_list_mod'], 1, $default['de_rel_img_width'], $default['de_rel_img_height']);
             $list->set_mobile(true);
@@ -754,5 +754,5 @@ else
 // 하단 HTML
 echo stripslashes($it['it_mobile_tail_html']);
 
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

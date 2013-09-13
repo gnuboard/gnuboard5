@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
+$sql = " select * from {$g5['shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
 $pp = sql_fetch($sql);
 
 if(!$pp['pp_id'])
@@ -10,16 +10,16 @@ if(!$pp['pp_id'])
 if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.');
 
-$g4['title'] = $pp['pp_name'].'님 개인결제';
-include_once(G4_MSHOP_PATH.'/_head.php');
+$g5['title'] = $pp['pp_name'].'님 개인결제';
+include_once(G5_MSHOP_PATH.'/_head.php');
 
-$action_url = G4_HTTPS_MSHOP_URL.'/personalpayformupdate.php';
+$action_url = G5_HTTPS_MSHOP_URL.'/personalpayformupdate.php';
 if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
     include './settle_'.$default['de_card_pg'].'.inc.php';
 }
 
 // 결제등록 요청시 사용할 입금마감일
-$ipgm_date = date("Ymd", (G4_SERVER_TIME + 86400 * 5));
+$ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
 $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
 
 // 개인결제 체크를 위한 hash
@@ -39,9 +39,9 @@ if($default['de_escrow_use']) {
 
 <div id="sod_approval_frm">
     <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
-    <script src="<?php echo G4_MSHOP_URL; ?>/kcp/approval_key.js"></script>
+    <script src="<?php echo G5_MSHOP_URL; ?>/kcp/approval_key.js"></script>
 
-    <form name="sm_form" method="POST" action="<?php echo G4_MSHOP_URL; ?>/kcp/personalpay_approval_form.php">
+    <form name="sm_form" method="POST" action="<?php echo G5_MSHOP_URL; ?>/kcp/personalpay_approval_form.php">
     <input type="hidden" name="good_name"     value="<?php echo $pp['pp_name'].'님 개인결제'; ?>">
     <input type="hidden" name="good_mny"      value="<?php echo $pp['pp_price']; ?>" >
     <input type="hidden" name="buyr_name"     value="">
@@ -225,7 +225,7 @@ if($default['de_escrow_use']) {
         <input type="hidden" name="site_cd" value="SR<?php echo $default['de_kcp_mid']; ?>">
         <table border="0" cellspacing="0" cellpadding="0">
         <tr>
-            <td align='center'><img src="<?php echo G4_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
+            <td align='center'><img src="<?php echo G5_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
         </tr>
         <tr>
             <td style='line-height:150%;'>
@@ -380,5 +380,5 @@ function payment_check(f)
 </script>
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

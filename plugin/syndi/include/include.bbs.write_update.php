@@ -34,7 +34,7 @@ if($wr['wr_id'] || $wr_id)
 	$oPing->setType('article');
 
 	// if deleted 
-	$_sql = "delete from {$g4['syndi_log_table']} where content_id='%s' and bbs_id='%s'";
+	$_sql = "delete from {$g5['syndi_log_table']} where content_id='%s' and bbs_id='%s'";
 	sql_query(sprintf($_sql, $wr_id ? $wr_id : $wr[wr_id], $board['bo_table']));
 		
 	$oPing->request();

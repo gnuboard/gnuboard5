@@ -1,10 +1,10 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/latest.lib.php');
-$g4['title'] = $group['gr_subject'];
+include_once(G5_LIB_PATH.'/latest.lib.php');
+$g5['title'] = $group['gr_subject'];
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MOBILE_PATH.'/group.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MOBILE_PATH.'/group.php');
     return;
 }
 
@@ -18,7 +18,7 @@ include_once('./_head.php');
 <!-- 메인화면 최신글 시작 -->
 <?php
 //  최신글
-$sql = " select bo_table, bo_subject from {$g4[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' and bo_device <> 'mobile' order by bo_order ";
+$sql = " select bo_table, bo_subject from {$g5[board_table]} where gr_id = '{$gr_id}' and bo_list_level <= '{$member[mb_level]}' and bo_device <> 'mobile' order by bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $lt_style = "";

@@ -1,24 +1,24 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/mypage.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/mypage.php');
     return;
 }
 
 if (!$is_member)
-    goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/mypage.php"));
+    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL."/mypage.php"));
 
-$g4['title'] = $member['mb_name'].'님 마이페이지';
+$g5['title'] = $member['mb_name'].'님 마이페이지';
 include_once('./_head.php');
 
 // 쿠폰
 $cp_count = 0;
 $sql = " select cp_id
-            from {$g4['shop_coupon_table']}
+            from {$g5['shop_coupon_table']}
             where mb_id = '{$member['mb_id']}'
-              and cp_start <= '".G4_TIME_YMD."'
-              and cp_end >= '".G4_TIME_YMD."' ";
+              and cp_start <= '".G5_TIME_YMD."'
+              and cp_end >= '".G5_TIME_YMD."' ";
 $res = sql_query($sql);
 
 for($k=0; $cp=sql_fetch_array($res); $k++) {
@@ -36,18 +36,18 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 
         <div id="smb_my_act">
             <ul>
-                <?php if ($is_admin == 'super') { ?><li><a href="<?php echo G4_ADMIN_URL; ?>/" class="btn_admin">관리자</a></li><?php } ?>
-                <li><a href="<?php echo G4_BBS_URL; ?>/memo.php" target="_blank" class="win_memo btn01">쪽지함</a></li>
-                <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=register_form.php" class="btn01">회원정보수정</a></li>
-                <li><a href="<?php echo G4_BBS_URL; ?>/member_confirm.php?url=member_leave.php" onclick="return member_leave();" class="btn02">회원탈퇴</a></li>
+                <?php if ($is_admin == 'super') { ?><li><a href="<?php echo G5_ADMIN_URL; ?>/" class="btn_admin">관리자</a></li><?php } ?>
+                <li><a href="<?php echo G5_BBS_URL; ?>/memo.php" target="_blank" class="win_memo btn01">쪽지함</a></li>
+                <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php" class="btn01">회원정보수정</a></li>
+                <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=member_leave.php" onclick="return member_leave();" class="btn02">회원탈퇴</a></li>
             </ul>
         </div>
 
         <dl>
             <dt>보유포인트</dt>
-            <dd><a href="<?php echo G4_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></dd>
+            <dd><a href="<?php echo G5_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></dd>
             <dt>보유쿠폰</dt>
-            <dd><a href="<?php echo G4_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp_count); ?></a></dd>
+            <dd><a href="<?php echo G5_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp_count); ?></a></dd>
             <dt>연락처</dt>
             <dd><?php echo ($member['mb_tel'] ? $member['mb_tel'] : '미등록'); ?></dd>
             <dt>E-Mail</dt>
@@ -70,7 +70,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
         define("_ORDERINQUIRY_", true);
 
         $limit = " limit 0, 5 ";
-        include G4_SHOP_PATH.'/orderinquiry.sub.php';
+        include G5_SHOP_PATH.'/orderinquiry.sub.php';
         ?>
 
         <div id="smb_my_more">
@@ -94,8 +94,8 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
         <tbody>
         <?php
         $sql = " select *
-                   from {$g4['shop_wish_table']} a,
-                        {$g4['shop_item_table']} b
+                   from {$g5['shop_wish_table']} a,
+                        {$g5['shop_item_table']} b
                   where a.mb_id = '{$member['mb_id']}'
                     and a.it_id  = b.it_id
                   order by a.wi_id desc

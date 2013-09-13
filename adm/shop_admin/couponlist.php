@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], "r");
 
 $token = get_token();
 
-$sql_common = " from {$g4['shop_coupon_table']} ";
+$sql_common = " from {$g5['shop_coupon_table']} ";
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -47,8 +47,8 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$g4['title'] = '쿠폰관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '쿠폰관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $colspan = 8;
 ?>
@@ -112,12 +112,12 @@ $colspan = 8;
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         switch($row['cp_method']) {
             case '0':
-                $sql3 = " select it_name from {$g4['shop_item_table']} where it_id = '{$row['cp_target']}' ";
+                $sql3 = " select it_name from {$g5['shop_item_table']} where it_id = '{$row['cp_target']}' ";
                 $row3 = sql_fetch($sql3);
                 $cp_target = get_text($row3['it_name']);
                 break;
             case '1':
-                $sql3 = " select ca_name from {$g4['shop_category_table']} where ca_id = '{$row['cp_target']}' ";
+                $sql3 = " select ca_name from {$g5['shop_category_table']} where ca_id = '{$row['cp_target']}' ";
                 $row3 = sql_fetch($sql3);
                 $cp_target = get_text($row3['ca_name']);
                 break;
@@ -133,7 +133,7 @@ $colspan = 8;
         $link2 = '</a>';
 
         // 쿠폰사용회수
-        $sql = " select count(*) as cnt from {$g4['shop_coupon_log_table']} where cp_id = '{$row['cp_id']}' ";
+        $sql = " select count(*) as cnt from {$g5['shop_coupon_log_table']} where cp_id = '{$row['cp_id']}' ";
         $tmp = sql_fetch($sql);
         $used_count = $tmp['cnt'];
     ?>
@@ -170,7 +170,7 @@ $colspan = 8;
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
 function fcouponlist_submit(f)
@@ -191,5 +191,5 @@ function fcouponlist_submit(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

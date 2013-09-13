@@ -25,13 +25,13 @@ else {
 }
 
 $g_conf_site_cd = $default['de_kcp_mid'];
-$g_conf_home_dir  = G4_SHOP_PATH.'/kcp';
+$g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
 $g_conf_key_dir   = '';
 $g_conf_log_dir   = '';
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
 {
-    $g_conf_key_dir   = G4_SHOP_PATH.'/kcp/bin/pub.key';
-    $g_conf_log_dir   = G4_SHOP_PATH.'/kcp/log';
+    $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
+    $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
 }
 
 if (preg_match("/^T000/", $g_conf_site_cd) || $default['de_card_test']) {
@@ -47,7 +47,7 @@ else {
 $g_conf_log_level = "3";
 $g_conf_gw_port   = "8090";
 
-include_once(G4_SHOP_PATH.'/kcp/pp_ax_hub_lib.php');
+include_once(G5_SHOP_PATH.'/kcp/pp_ax_hub_lib.php');
 
 $req_tx         = 'mod_escrow';
 $mod_type       = 'STE1';

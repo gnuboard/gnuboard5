@@ -45,19 +45,19 @@ else
 
 if ($w == '') {
 
-    $sql = " select count(*) as cnt from {$g4['group_table']} where gr_id = '{$_POST['gr_id']}' ";
+    $sql = " select count(*) as cnt from {$g5['group_table']} where gr_id = '{$_POST['gr_id']}' ";
     $row = sql_fetch($sql);
     if ($row['cnt'])
         alert('이미 존재하는 그룹 ID 입니다.');
 
-    $sql = " insert into {$g4['group_table']}
+    $sql = " insert into {$g5['group_table']}
                 set gr_id = '{$_POST['gr_id']}',
                      {$sql_common} ";
     sql_query($sql);
 
 } else if ($w == "u") {
 
-    $sql = " update {$g4['group_table']}
+    $sql = " update {$g5['group_table']}
                 set {$sql_common}
                 where gr_id = '{$_POST['gr_id']}' ";
     sql_query($sql);
@@ -67,7 +67,7 @@ if ($w == '') {
 }
 
 // syndication ping
-include G4_SYNDI_PATH.'/include/include.adm.boardgroup_form_update.php';
+include G5_SYNDI_PATH.'/include/include.adm.boardgroup_form_update.php';
 
 goto_url('./boardgroup_form.php?w=u&amp;gr_id='.$gr_id.'&amp;'.$qstr);
 ?>

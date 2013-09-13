@@ -1,9 +1,9 @@
 <?php
 include './_common.php';
-include G4_LIB_PATH.'/etc.lib.php';
+include G5_LIB_PATH.'/etc.lib.php';
 
 // 현금영수증 필드생성
-$sql = " ALTER TABLE `{$g4['shop_order_table']}` ADD `od_cash_no` VARCHAR( 255 ) NOT NULL ,
+$sql = " ALTER TABLE `{$g5['shop_order_table']}` ADD `od_cash_no` VARCHAR( 255 ) NOT NULL ,
                                             ADD `od_cash_receipt_no` VARCHAR( 255 ) NOT NULL ,
                                             ADD `od_cash_app_time` VARCHAR( 255 ) NOT NULL ,
                                             ADD `od_cash_reg_stat` VARCHAR( 255 ) NOT NULL ,
@@ -13,16 +13,16 @@ $sql = " ALTER TABLE `{$g4['shop_order_table']}` ADD `od_cash_no` VARCHAR( 255 )
 sql_query($sql, false);
 
 // 현금영수증 사용, 미사용 구분
-$sql = " ALTER TABLE `{$g4['shop_order_table']}` ADD `od_cash` TINYINT NOT NULL ";
+$sql = " ALTER TABLE `{$g5['shop_order_table']}` ADD `od_cash` TINYINT NOT NULL ";
 sql_query($sql, false);
 
-$sql = " select count(*) as cnt from {$g4['shop_order_table']} where od_id = '{$_POST['ordr_idxx']}' and od_cash = 1 ";
+$sql = " select count(*) as cnt from {$g5['shop_order_table']} where od_id = '{$_POST['ordr_idxx']}' and od_cash = 1 ";
 $row = sql_fetch($sql);
 if ($row['cnt']) {
     alert('이미 등록된 현금영수증 입니다.');
 }
 
-    //write_log("$g4[path]/data/log/cash.log", $_POST);
+    //write_log("$g5[path]/data/log/cash.log", $_POST);
 
     /* ============================================================================== */
     /* =   PAGE : 등록/변경 처리 PAGE                                               = */
@@ -34,12 +34,12 @@ if ($row['cnt']) {
     /* ============================================================================== */
     /* = 라이브러리 및 사이트 정보 include                                          = */
     /* = -------------------------------------------------------------------------- = */
-    require G4_SHOP_PATH.'/kcp/pp_cli_hub_lib.php';
+    require G5_SHOP_PATH.'/kcp/pp_cli_hub_lib.php';
 
     /* ============================================================================== */
     /* =   01. KCP 지불 서버 정보 설정                                              = */
     /* = -------------------------------------------------------------------------- = */
-    $g_conf_home_dir  = G4_SHOP_PATH.'/kcp'; // ※ 쇼핑몰 모듈 설치 절대 경로 bin전까지
+    $g_conf_home_dir  = G5_SHOP_PATH.'/kcp'; // ※ 쇼핑몰 모듈 설치 절대 경로 bin전까지
     $g_conf_log_level = "3";
 
     if ($default['de_card_test']) {
@@ -241,7 +241,7 @@ if ($row['cnt']) {
     /* = -------------------------------------------------------------------------- = */
                 $bSucc = "";             // DB 작업 실패일 경우 "false" 로 세팅
 
-                $sql = " update {$g4['shop_order_table']}
+                $sql = " update {$g5['shop_order_table']}
                             set od_cash_no = '$cash_no',
                                 od_cash_receipt_no = '$receipt_no',
                                 od_cash_app_time = '$app_time',

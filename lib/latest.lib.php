@@ -4,27 +4,27 @@ if (!defined('_GNUBOARD_')) exit;
 // 최신글 추출
 function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
 {
-    global $g4;
+    global $g5;
     static $css = array();
 
     if (!$skin_dir) $skin_dir = 'basic';
 
-    if(G4_IS_MOBILE) {
-        $latest_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/latest/'.$skin_dir;
-        $latest_skin_url  = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/latest/'.$skin_dir;
+    if(G5_IS_MOBILE) {
+        $latest_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/latest/'.$skin_dir;
+        $latest_skin_url  = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/latest/'.$skin_dir;
     } else {
-        $latest_skin_path = G4_SKIN_PATH.'/latest/'.$skin_dir;
-        $latest_skin_url  = G4_SKIN_URL.'/latest/'.$skin_dir;
+        $latest_skin_path = G5_SKIN_PATH.'/latest/'.$skin_dir;
+        $latest_skin_url  = G5_SKIN_URL.'/latest/'.$skin_dir;
     }
 
-    $cache_file = G4_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
-    if (!G4_USE_CACHE || !file_exists($cache_file)) {
+    $cache_file = G5_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
+    if (!G5_USE_CACHE || !file_exists($cache_file)) {
         $list = array();
 
-        $sql = " select * from {$g4['board_table']} where bo_table = '{$bo_table}' ";
+        $sql = " select * from {$g5['board_table']} where bo_table = '{$bo_table}' ";
         $board = sql_fetch($sql);
 
-        $tmp_write_table = $g4['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
+        $tmp_write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
         $sql = " select * from {$tmp_write_table} where wr_is_comment = 0 order by wr_num limit 0, {$rows} ";
         $result = sql_query($sql);
         for ($i=0; $row = sql_fetch_array($result); $i++) {

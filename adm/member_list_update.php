@@ -31,7 +31,7 @@ if ($_POST['act_button'] == "선택수정") {
             else
                 $mb_adult = 0;
 
-            $sql = " update {$g4['member_table']}
+            $sql = " update {$g5['member_table']}
                         set mb_level = '{$_POST['mb_level'][$k]}',
                             mb_intercept_date = '{$_POST['mb_intercept_date'][$k]}',
                             mb_mailling = '{$_POST['mb_mailling'][$k]}',

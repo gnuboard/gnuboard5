@@ -9,8 +9,8 @@ if (!$gr['gr_id']) {
     alert('존재하지 않는 그룹입니다.');
 }
 
-$sql_common = " from {$g4['group_member_table']} a
-                         left outer join {$g4['member_table']} b on (a.mb_id = b.mb_id) ";
+$sql_common = " from {$g5['group_member_table']} a
+                         left outer join {$g5['member_table']} b on (a.mb_id = b.mb_id) ";
 
 $sql_search = " where gr_id = '{$gr_id}' ";
 // 회원아이디로 검색되지 않던 오류를 수정
@@ -49,7 +49,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$g4['title'] = $gr['gr_subject'].' 그룹 접근가능회원';
+$g5['title'] = $gr['gr_subject'].' 그룹 접근가능회원';
 include_once('./admin.head.php');
 
 $colspan = 7;
@@ -109,7 +109,7 @@ $colspan = 7;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 접근가능한 그룹수
-        $sql2 = " select count(*) as cnt from {$g4['group_member_table']} where mb_id = '{$row['mb_id']}' ";
+        $sql2 = " select count(*) as cnt from {$g5['group_member_table']} where mb_id = '{$row['mb_id']}' ";
         $row2 = sql_fetch($sql2);
         $group = "";
         if ($row2['cnt'])
@@ -148,7 +148,7 @@ $colspan = 7;
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;gr_id=$gr_id&page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;gr_id=$gr_id&page="); ?>
 
 <script>
 function fboardgroupmember_submit(f)

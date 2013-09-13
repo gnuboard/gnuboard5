@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '상품판매순위';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '상품판매순위';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 if (!$to_date) $to_date = date("Ymd", time());
 
@@ -23,7 +23,7 @@ $sql  = " select a.it_id,
                  SUM(IF(ct_status = '반품',ct_qty, 0)) as ct_status_7,
                  SUM(IF(ct_status = '품절',ct_qty, 0)) as ct_status_8,
                  SUM(ct_qty) as ct_status_sum
-            from {$g4['shop_cart_table']} a, {$g4['shop_item_table']} b ";
+            from {$g5['shop_cart_table']} a, {$g5['shop_item_table']} b ";
 $sql .= " where a.it_id = b.it_id ";
 if ($fr_date && $to_date)
 {
@@ -77,7 +77,7 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     <select name="sel_ca_id" id="sel_ca_id">
         <option value=''>전체분류</option>
         <?php
-        $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
+        $sql1 = " select ca_id, ca_name from {$g5['shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
             $len = strlen($row1['ca_id']) / 2 - 1;
@@ -139,7 +139,7 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
-        $href = G4_SHOP_URL."/item.php?it_id={$row['it_id']}";
+        $href = G5_SHOP_URL."/item.php?it_id={$row['it_id']}";
 
         $num = $rank + $i + 1;
 
@@ -169,9 +169,9 @@ if ($fr_date || $to_date) // 검색렬일 때만 처음 버튼을 보여줌
     </table>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&amp;page="); ?>
 
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

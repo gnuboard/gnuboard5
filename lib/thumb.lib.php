@@ -17,7 +17,7 @@ class g4_thumb {
     var $green = 0xff;
     var $blue = 0xff;
     var $quality = 100;
-    var $permission = G4_FILE_PERMISSION;
+    var $permission = G5_FILE_PERMISSION;
 
     function g4_thumb($path, $width) {
         $this->set_path($path);
@@ -27,8 +27,8 @@ class g4_thumb {
     // 경로
     function set_path($path) {
         $this->path = $path;
-        @mkdir($path, G4_DIR_PERMISSION);
-        @chmod($path, G4_DIR_PERMISSION);
+        @mkdir($path, G5_DIR_PERMISSION);
+        @chmod($path, G5_DIR_PERMISSION);
     }
 
     function set_width($width) {

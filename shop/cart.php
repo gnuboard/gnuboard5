@@ -6,22 +6,22 @@ set_cart_id($sw_direct);
 
 $s_cart_id = get_session('ss_cart_id');
 // 선택필드 초기화
-$sql = " update {$g4['shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
+$sql = " update {$g5['shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
 sql_query($sql);
 
-$cart_action_url = G4_SHOP_URL.'/cartupdate.php';
+$cart_action_url = G5_SHOP_URL.'/cartupdate.php';
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/cart.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/cart.php');
     return;
 }
 
-$g4['title'] = '장바구니';
+$g5['title'] = '장바구니';
 include_once('./_head.php');
 ?>
 
 <!-- 장바구니 시작 { -->
-<script src="<?php echo G4_JS_URL; ?>/shop.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/shop.js"></script>
 
 <div id="sod_bsk">
 
@@ -58,10 +58,10 @@ include_once('./_head.php');
                     b.ca_id,
                     b.ca_id2,
                     b.ca_id3
-               from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
+               from {$g5['shop_cart_table']} a left join {$g5['shop_item_table']} b on ( a.it_id = b.it_id )
               where a.od_id = '$s_cart_id' ";
     if($default['de_cart_keep_term']) {
-        $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+        $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
         $sql .= " and a.ct_time > '$ctime' ";
     }
     $sql .= " group by a.it_id ";
@@ -76,7 +76,7 @@ include_once('./_head.php');
         $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                         SUM(ct_point * ct_qty) as point,
                         SUM(ct_qty) as qty
-                    from {$g4['shop_cart_table']}
+                    from {$g5['shop_cart_table']}
                     where it_id = '{$row['it_id']}'
                       and od_id = '$s_cart_id' ";
         $sum = sql_fetch($sql);
@@ -155,13 +155,13 @@ include_once('./_head.php');
 
     <div id="sod_bsk_act">
         <?php if ($i == 0) { ?>
-        <a href="<?php echo G4_SHOP_URL; ?>/" class="btn01">쇼핑 계속하기</a>
+        <a href="<?php echo G5_SHOP_URL; ?>/" class="btn01">쇼핑 계속하기</a>
         <?php } else { ?>
         <input type="hidden" name="url" value="./orderform.php">
         <input type="hidden" name="records" value="<?php echo $i; ?>">
         <input type="hidden" name="act" value="">
         <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
-        <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
+        <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
         <button type="button" onclick="return form_check('buy');" class="btn02">주문하기</button>
         <button type="button" onclick="return form_check('seldelete');" class="btn01">선택삭제</button>
         <button type="button" onclick="return form_check('alldelete');" class="btn01">비우기</button>

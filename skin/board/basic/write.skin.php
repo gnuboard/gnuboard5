@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<h2 id="wrapper_title"><?php echo $g4['title'] ?></h2>
+<h2 id="wrapper_title"><?php echo $g5['title'] ?></h2>
 
 <!-- 게시물 작성/수정 시작 { -->
 <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
@@ -107,7 +107,7 @@ echo $option_hidden;
         <div id="autosave_wrapper">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50" maxlength="255">
             <?php if ($is_member) { // 임시 저장된 글 기능 ?>
-            <script src="<?php echo G4_JS_URL; ?>/autosave.js"></script>
+            <script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
             <button type="button" id="btn_autosave" class="btn_frmline">임시 저장된 글 (<span id="autosave_count"><?php echo $autosave_count; ?></span>)</button>
             <div id="autosave_pop">
                 <strong>임시 저장된 글 목록</strong>
@@ -135,7 +135,7 @@ echo $option_hidden;
     </td>
 </tr>
 
-<?php for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
+<?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?php echo $i ?>">링크 #<?php echo $i ?></label></th>
     <td><input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input" size="50"></td>

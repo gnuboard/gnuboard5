@@ -39,7 +39,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </p>
 
     <div class="btn_confirm">
-        <a href="<?php echo G4_URL; ?>/" class="btn02">메인으로</a>
+        <a href="<?php echo G5_URL; ?>/" class="btn02">메인으로</a>
     </div>
 
 </div>

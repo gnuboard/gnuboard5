@@ -1,18 +1,18 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '이미지 크게보기';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '이미지 크게보기';
+include_once(G5_PATH.'/head.sub.php');
 
 $filename = $_GET['fn'];
 $bo_table = $_GET['bo_table'];
 
 if(strpos($filename, 'data/editor')) {
     $editor_file = strstr($filename, 'editor');
-    $filepath = G4_DATA_PATH.'/'.$editor_file;
+    $filepath = G5_DATA_PATH.'/'.$editor_file;
 } else {
     $editor_file = '';
-    $filepath = G4_DATA_PATH.'/file/'.$bo_table.'/'.$filename;
+    $filepath = G5_DATA_PATH.'/file/'.$bo_table.'/'.$filename;
 }
 
 if(is_file($filepath)) {
@@ -24,9 +24,9 @@ if(is_file($filepath)) {
     $height = $size[1];
 
     if($editor_file)
-        $fileurl = G4_DATA_URL.'/'.$editor_file;
+        $fileurl = G5_DATA_URL.'/'.$editor_file;
     else
-        $fileurl = G4_DATA_URL.'/file/'.$bo_table.'/'.$filename;
+        $fileurl = G5_DATA_URL.'/file/'.$bo_table.'/'.$filename;
 
     $img = '<img src="'.$fileurl.'" alt="" width="'.$width.'" height="'.$height.'" class="draggable" style="position:relative;top:0;left:0;cursor:move;">';
 } else {
@@ -103,5 +103,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

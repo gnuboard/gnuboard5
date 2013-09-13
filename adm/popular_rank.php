@@ -1,16 +1,16 @@
 <?php
 $sub_menu = "300400";
 include_once('./_common.php');
-include_once(G4_PLUGIN_PATH.'/jquery-ui/datepicker.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-if (empty($fr_date)) $fr_date = G4_TIME_YMD;
-if (empty($to_date)) $to_date = G4_TIME_YMD;
+if (empty($fr_date)) $fr_date = G5_TIME_YMD;
+if (empty($to_date)) $to_date = G5_TIME_YMD;
 
 $qstr = "fr_date={$fr_date}{&amp;to_date}={$to_date}";
 
-$sql_common = " from {$g4['popular_table']} a ";
+$sql_common = " from {$g5['popular_table']} a ";
 $sql_search = " where trim(pp_word) <> '' and pp_date between '{$fr_date}' and '{$to_date}' ";
 $sql_group = " group by pp_word ";
 $sql_order = " order by cnt desc ";
@@ -31,7 +31,7 @@ $listall = '';
 if (!empty($_GET['fr_date']) || !empty($_GET['to_date']))
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
-$g4['title'] = '인기검색어순위';
+$g5['title'] = '인기검색어순위';
 include_once('./admin.head.php');
 
 $colspan = 3;
@@ -102,7 +102,7 @@ $(function(){
 </section>
 
 <?php
-echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
+echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
 
 <?php

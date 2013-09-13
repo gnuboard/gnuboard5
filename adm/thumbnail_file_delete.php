@@ -3,9 +3,9 @@ $sub_menu = '100920';
 include_once('./_common.php');
 
 if ($is_admin != 'super')
-    alert('최고관리자만 접근 가능합니다.', G4_URL);
+    alert('최고관리자만 접근 가능합니다.', G5_URL);
 
-$g4['title'] = '썸네일 일괄삭제';
+$g5['title'] = '썸네일 일괄삭제';
 include_once('./admin.head.php');
 ?>
 
@@ -18,12 +18,12 @@ include_once('./admin.head.php');
     $dl = array('file', 'editor');
 
     foreach($dl as $val) {
-        if($handle = opendir(G4_DATA_PATH.'/'.$val)) {
+        if($handle = opendir(G5_DATA_PATH.'/'.$val)) {
             while(false !== ($entry = readdir($handle))) {
                 if($entry == '.' || $entry == '..')
                     continue;
 
-                $path = G4_DATA_PATH.'/'.$val.'/'.$entry;
+                $path = G5_DATA_PATH.'/'.$val.'/'.$entry;
 
                 if(is_dir($path))
                     $directory[] = $path;

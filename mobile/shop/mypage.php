@@ -2,18 +2,18 @@
 include_once('./_common.php');
 
 if (!$is_member)
-    goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/mypage.php"));
+    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL."/mypage.php"));
 
-$g4['title'] = '마이페이지';
-include_once(G4_MSHOP_PATH.'/_head.php');
+$g5['title'] = '마이페이지';
+include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 쿠폰
 $cp_count = 0;
 $sql = " select cp_id
-            from {$g4['shop_coupon_table']}
+            from {$g5['shop_coupon_table']}
             where mb_id = '{$member['mb_id']}'
-              and cp_start <= '".G4_TIME_YMD."'
-              and cp_end >= '".G4_TIME_YMD."' ";
+              and cp_start <= '".G5_TIME_YMD."'
+              and cp_end >= '".G5_TIME_YMD."' ";
 $res = sql_query($sql);
 
 for($k=0; $cp=sql_fetch_array($res); $k++) {
@@ -29,9 +29,9 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 
         <dl>
             <dt>보유포인트</dt>
-            <dd><a href="<?php echo G4_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></dd>
+            <dd><a href="<?php echo G5_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></dd>
             <dt>보유쿠폰</dt>
-            <dd><a href="<?php echo G4_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp_count); ?></a></dd>
+            <dd><a href="<?php echo G5_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp_count); ?></a></dd>
             <dt>연락처</dt>
             <dd><?php echo ($member['mb_tel'] ? $member['mb_tel'] : '미등록'); ?></dd>
             <dt>E-Mail</dt>
@@ -46,18 +46,18 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     </section>
 
     <section id="smb_my_od">
-        <h2><a href="<?php echo G4_SHOP_URL; ?>/orderinquiry.php">최근 주문내역</a></h2>
+        <h2><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php">최근 주문내역</a></h2>
         <?php
         // 최근 주문내역
         define("_ORDERINQUIRY_", true);
 
         $limit = " limit 0, 5 ";
-        include G4_MSHOP_PATH.'/orderinquiry.sub.php';
+        include G5_MSHOP_PATH.'/orderinquiry.sub.php';
         ?>
     </section>
 
     <section id="smb_my_wish">
-        <h2><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php">최근 위시리스트</a></h2>
+        <h2><a href="<?php echo G5_SHOP_URL; ?>/wishlist.php">최근 위시리스트</a></h2>
 
         <table class="basic_tbl">
         <thead>
@@ -70,8 +70,8 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
         <tbody>
         <?php
         $sql = " select *
-                   from {$g4['shop_wish_table']} a,
-                        {$g4['shop_item_table']} b
+                   from {$g5['shop_wish_table']} a,
+                        {$g5['shop_item_table']} b
                   where a.mb_id = '{$member['mb_id']}'
                     and a.it_id  = b.it_id
                   order by a.wi_id desc
@@ -116,5 +116,5 @@ function member_leave()
 </script>
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<h1 id="wrapper_title"><?php echo $g4['title'] ?></h1>
+<h1 id="wrapper_title"><?php echo $g5['title'] ?></h1>
 
 <form name="fwrite" id="fwrite" action="<?php echo $action_url ?>" onsubmit="return fwrite_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off" style="width:<?php echo $width; ?>">
 <input type="hidden" name="w" value="<?php echo $w ?>">
@@ -119,7 +119,7 @@ echo $option_hidden;
     </td>
 </tr>
 
-<?php for ($i=1; $is_link && $i<=G4_LINK_COUNT; $i++) { ?>
+<?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
 <tr>
     <th scope="row"><label for="wr_link<?php echo $i ?>">링크 #<?php echo $i ?></label></th>
     <td><input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input" size="50"></td>

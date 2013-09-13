@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 $begin_time = get_microtime();
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 
 function print_menu1($key, $no)
 {
@@ -16,7 +16,7 @@ function print_menu1($key, $no)
 
 function print_menu2($key, $no)
 {
-    global $menu, $auth_menu, $is_admin, $auth, $g4;
+    global $menu, $auth_menu, $is_admin, $auth, $g5;
 
     $str .= "<ul class=\"gnb_2dul\">";
     for($i=1; $i<count($menu[$key]); $i++)
@@ -70,17 +70,17 @@ function imageview(id, w, h)
     <div id="hd_wrap">
         <h1><?php echo $config['cf_title'] ?></h1>
 
-        <div id="logo"><a href="<?php echo G4_ADMIN_URL ?>"><img src="<?php echo G4_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자"></a></div>
+        <div id="logo"><a href="<?php echo G5_ADMIN_URL ?>"><img src="<?php echo G5_ADMIN_URL ?>/img/logo.jpg" alt="<?php echo $config['cf_title'] ?> 관리자"></a></div>
 
         <ul id="tnb">
-            <li><a href="<?php echo G4_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">관리자정보</a></li>
-            <li><a href="<?php echo G4_ADMIN_URL ?>/config_form.php">기본환경</a></li>
-            <li><a href="<?php echo G4_URL ?>/">커뮤니티</a></li>
-            <?php if(defined('G4_USE_SHOP')) { ?>
-            <li><a href="<?php echo G4_ADMIN_URL ?>/shop_admin/configform.php">쇼핑몰환경</a></li>
-            <li><a href="<?php echo G4_SHOP_URL ?>/">쇼핑몰</a></li>
+            <li><a href="<?php echo G5_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">관리자정보</a></li>
+            <li><a href="<?php echo G5_ADMIN_URL ?>/config_form.php">기본환경</a></li>
+            <li><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
+            <?php if(defined('G5_USE_SHOP')) { ?>
+            <li><a href="<?php echo G5_ADMIN_URL ?>/shop_admin/configform.php">쇼핑몰환경</a></li>
+            <li><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
             <?php } ?>
-            <li><a href="<?php echo G4_BBS_URL ?>/logout.php">로그아웃</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
         </ul>
 
         <nav id="gnb">
@@ -120,4 +120,4 @@ function imageview(id, w, h)
             <button class="no_text_resize" onclick="font_resize('container', 'large');">크게</button>
             <button class="no_text_resize" onclick="font_resize('container', 'larger');">더크게</button>
         </div>
-        <h1><?php echo $g4['title'] ?></h1>
+        <h1><?php echo $g5['title'] ?></h1>

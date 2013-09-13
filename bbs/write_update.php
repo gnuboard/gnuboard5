@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
-$g4['title'] = '게시글 저장';
+$g5['title'] = '게시글 저장';
 
 $msg = array();
 
@@ -164,19 +164,19 @@ if ($is_guest && !chk_captcha()) {
 
 if ($w == '' || $w == 'r') {
     if (isset($_SESSION['ss_datetime'])) {
-        if ($_SESSION['ss_datetime'] >= (G4_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
+        if ($_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
             alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
     }
 
-    set_session("ss_datetime", G4_SERVER_TIME);
+    set_session("ss_datetime", G5_SERVER_TIME);
 }
 
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
     alert('제목을 입력하여 주십시오.');
 
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
-@mkdir(G4_DATA_PATH.'/file/'.$bo_table, G4_DIR_PERMISSION);
-@chmod(G4_DATA_PATH.'/file/'.$bo_table, G4_DIR_PERMISSION);
+@mkdir(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
+@chmod(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
 
 $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
 
@@ -196,8 +196,8 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
     if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
         $upload[$i]['del_check'] = true;
 
-        $row = sql_fetch(" select bf_file from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-        @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+        $row = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+        @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
         // 썸네일삭제
         if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
             delete_board_thumbnail($bo_table, $row['bf_file']);
@@ -249,8 +249,8 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         // 4.00.11 - 글답변에서 파일 업로드시 원글의 파일이 삭제되는 오류를 수정
         if ($w == 'u') {
             // 존재하는 파일이 있다면 삭제합니다.
-            $row = sql_fetch(" select bf_file from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-            @unlink(G4_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+            $row = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
+            @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
             // 이미지파일이면 썸네일삭제
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
                 delete_board_thumbnail($bo_table, $row['bf_file']);
@@ -270,13 +270,13 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         // 첨부파일 첨부시 첨부파일명에 공백이 포함되어 있으면 일부 PC에서 보이지 않거나 다운로드 되지 않는 현상이 있습니다. (길상여의 님 090925)
         $upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.str_replace('%', '', urlencode(str_replace(' ', '_', $filename)));
 
-        $dest_file = G4_DATA_PATH.'/file/'.$bo_table.'/'.$upload[$i]['file'];
+        $dest_file = G5_DATA_PATH.'/file/'.$bo_table.'/'.$upload[$i]['file'];
 
         // 업로드가 안된다면 에러메세지 출력하고 죽어버립니다.
         $error_code = move_uploaded_file($tmp_file, $dest_file) or die($_FILES['bf_file']['error'][$i]);
 
         // 올라간 파일의 퍼미션을 변경합니다.
-        chmod($dest_file, G4_FILE_PERMISSION);
+        chmod($dest_file, G5_FILE_PERMISSION);
     }
 }
 
@@ -330,8 +330,8 @@ if ($w == '' || $w == 'r') {
                      wr_name = '$wr_name',
                      wr_email = '$wr_email',
                      wr_homepage = '$wr_homepage',
-                     wr_datetime = '".G4_TIME_YMDHIS."',
-                     wr_last = '".G4_TIME_YMDHIS."',
+                     wr_datetime = '".G5_TIME_YMDHIS."',
+                     wr_last = '".G5_TIME_YMDHIS."',
                      wr_ip = '{$_SERVER['REMOTE_ADDR']}',
                      wr_1 = '$wr_1',
                      wr_2 = '$wr_2',
@@ -351,16 +351,16 @@ if ($w == '' || $w == 'r') {
     sql_query(" update $write_table set wr_parent = '$wr_id' where wr_id = '$wr_id' ");
 
     // 새글 INSERT
-    sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '{$bo_table}', '{$wr_id}', '{$wr_id}', '".G4_TIME_YMDHIS."', '{$member['mb_id']}' ) ");
+    sql_query(" insert into {$g5['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '{$bo_table}', '{$wr_id}', '{$wr_id}', '".G5_TIME_YMDHIS."', '{$member['mb_id']}' ) ");
 
     // 게시글 1 증가
-    sql_query("update {$g4['board_table']} set bo_count_write = bo_count_write + 1 where bo_table = '{$bo_table}'");
+    sql_query("update {$g5['board_table']} set bo_count_write = bo_count_write + 1 where bo_table = '{$bo_table}'");
 
     // 쓰기 포인트 부여
     if ($w == '') {
         if ($notice) {
             $bo_notice = $wr_id.",".$board['bo_notice'];
-            sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
+            sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
         }
 
         insert_point($member['mb_id'], $board['bo_write_point'], "{$board['bo_subject']} {$wr_id} 글쓰기", $bo_table, $wr_id, '쓰기');
@@ -459,7 +459,7 @@ if ($w == '' || $w == 'r') {
         //if (!preg_match("/[^0-9]{0,1}{$wr_id}[\r]{0,1}/",$board['bo_notice']))
         if (!in_array((int)$wr_id, $notice_array)) {
             $bo_notice = $wr_id . ',' . $board['bo_notice'];
-            sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
+            sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
         }
     } else {
         $bo_notice = '';
@@ -468,16 +468,16 @@ if ($w == '' || $w == 'r') {
                 $bo_notice .= $notice_array[$i] . ',';
         $bo_notice = trim($bo_notice);
         //$bo_notice = preg_replace("/^".$wr_id."[\n]?$/m", "", $board['bo_notice']);
-        sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
+        sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
     }
     */
 
     $bo_notice = board_notice($board['bo_notice'], $wr_id, $notice);
-    sql_query(" update {$g4['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
+    sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
 }
 
 // syndication ping
-include G4_SYNDI_PATH.'/include/include.bbs.write_update.php';
+include G5_SYNDI_PATH.'/include/include.bbs.write_update.php';
 
 //------------------------------------------------------------------------------
 // 가변 파일 업로드
@@ -488,14 +488,14 @@ for ($i=0; $i<count($upload); $i++)
         $upload[$i]['source'] = addslashes($upload[$i]['source']);
     }
 
-    $row = sql_fetch(" select count(*) as cnt from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+    $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
     if ($row['cnt'])
     {
         // 삭제에 체크가 있거나 파일이 있다면 업데이트를 합니다.
         // 그렇지 않다면 내용만 업데이트 합니다.
         if ($upload[$i]['del_check'] || $upload[$i]['file'])
         {
-            $sql = " update {$g4['board_file_table']}
+            $sql = " update {$g5['board_file_table']}
                         set bf_source = '{$upload[$i]['source']}',
                              bf_file = '{$upload[$i]['file']}',
                              bf_content = '{$bf_content[$i]}',
@@ -503,7 +503,7 @@ for ($i=0; $i<count($upload); $i++)
                              bf_width = '{$upload[$i]['image']['0']}',
                              bf_height = '{$upload[$i]['image']['1']}',
                              bf_type = '{$upload[$i]['image']['2']}',
-                             bf_datetime = '".G4_TIME_YMDHIS."'
+                             bf_datetime = '".G5_TIME_YMDHIS."'
                       where bo_table = '{$bo_table}'
                                 and wr_id = '{$wr_id}'
                                 and bf_no = '{$i}' ";
@@ -511,7 +511,7 @@ for ($i=0; $i<count($upload); $i++)
         }
         else
         {
-            $sql = " update {$g4['board_file_table']}
+            $sql = " update {$g5['board_file_table']}
                         set bf_content = '{$bf_content[$i]}'
                         where bo_table = '{$bo_table}'
                                   and wr_id = '{$wr_id}'
@@ -521,7 +521,7 @@ for ($i=0; $i<count($upload); $i++)
     }
     else
     {
-        $sql = " insert into {$g4['board_file_table']}
+        $sql = " insert into {$g5['board_file_table']}
                     set bo_table = '{$bo_table}',
                          wr_id = '{$wr_id}',
                          bf_no = '{$i}',
@@ -533,31 +533,31 @@ for ($i=0; $i<count($upload); $i++)
                          bf_width = '{$upload[$i]['image']['0']}',
                          bf_height = '{$upload[$i]['image']['1']}',
                          bf_type = '{$upload[$i]['image']['2']}',
-                         bf_datetime = '".G4_TIME_YMDHIS."' ";
+                         bf_datetime = '".G5_TIME_YMDHIS."' ";
         sql_query($sql);
     }
 }
 
 // 업로드된 파일 내용에서 가장 큰 번호를 얻어 거꾸로 확인해 가면서
 // 파일 정보가 없다면 테이블의 내용을 삭제합니다.
-$row = sql_fetch(" select max(bf_no) as max_bf_no from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+$row = sql_fetch(" select max(bf_no) as max_bf_no from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
 for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
 {
-    $row2 = sql_fetch(" select bf_file from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+    $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 
     // 정보가 있다면 빠집니다.
     if ($row2['bf_file']) break;
 
     // 그렇지 않다면 정보를 삭제합니다.
-    sql_query(" delete from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+    sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 }
 
 // 파일의 갯수를 게시물에 업데이트 한다.
-$row = sql_fetch(" select count(*) as cnt from {$g4['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
+$row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
 sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
 
 // 자동저장된 레코드를 삭제한다.
-sql_query(" delete from {$g4['autosave_table']} where as_uid = '{$uid}' ");
+sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 //------------------------------------------------------------------------------
 
 // 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 패스워드를 묻지 않기 위함
@@ -587,9 +587,9 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
     $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
 
-    $link_url = G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr;
+    $link_url = G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr;
 
-    include_once(G4_LIB_PATH.'/mailer.lib.php');
+    include_once(G5_LIB_PATH.'/mailer.lib.php');
 
     ob_start();
     include_once ('./write_update_mail.php');
@@ -635,7 +635,7 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 delete_cache_latest($bo_table);
 
 if ($file_upload_msg)
-    alert($file_upload_msg, G4_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
+    alert($file_upload_msg, G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr);
 else
-    goto_url(G4_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
+    goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
 ?>

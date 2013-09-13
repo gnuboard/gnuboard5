@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 <!-- <p>실행시간 : <?php echo get_microtime() - $begin_time; ?> -->
 
-<script src="<?php echo G4_ADMIN_URL ?>/admin.js"></script>
+<script src="<?php echo G5_ADMIN_URL ?>/admin.js"></script>
 <script>
 $(function(){
     var hide_menu = false;
@@ -126,5 +126,5 @@ function menu_rearrange(el)
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 
 if (!$is_member)
 {
@@ -10,7 +10,7 @@ if (!$is_member)
     exit;
 }
 
-$sql = " select count(*) as cnt from {$g4['scrap_table']}
+$sql = " select count(*) as cnt from {$g5['scrap_table']}
             where mb_id = '{$member['mb_id']}'
             and bo_table = '$bo_table'
             and wr_id = '$wr_id' ";
@@ -64,7 +64,7 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
                          wr_name = '$wr_name',
                          wr_email = '$wr_email',
                          wr_homepage = '$wr_homepage',
-                         wr_datetime = '".G4_TIME_YMDHIS."',
+                         wr_datetime = '".G5_TIME_YMDHIS."',
                          wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql);
 
@@ -74,17 +74,17 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
         sql_query(" update $write_table set wr_comment = wr_comment + 1 where wr_id = '$wr_id' ");
 
         // 새글 INSERT
-        sql_query(" insert into {$g4['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '".G4_TIME_YMDHIS."', '{$member['mb_id']}' ) ");
+        sql_query(" insert into {$g5['board_new_table']} ( bo_table, wr_id, wr_parent, bn_datetime, mb_id ) values ( '$bo_table', '$comment_id', '$wr_id', '".G5_TIME_YMDHIS."', '{$member['mb_id']}' ) ");
 
         // 코멘트 1 증가
-        sql_query(" update {$g4['board_table']}  set bo_count_comment = bo_count_comment + 1 where bo_table = '$bo_table' ");
+        sql_query(" update {$g5['board_table']}  set bo_count_comment = bo_count_comment + 1 where bo_table = '$bo_table' ");
 
         // 포인트 부여
         insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 코멘트쓰기", $bo_table, $comment_id, '코멘트');
     }
 }
 
-$sql = " insert into {$g4['scrap_table']} ( mb_id, bo_table, wr_id, ms_datetime ) values ( '{$member['mb_id']}', '$bo_table', '$wr_id', '".G4_TIME_YMDHIS."' ) ";
+$sql = " insert into {$g5['scrap_table']} ( mb_id, bo_table, wr_id, ms_datetime ) values ( '{$member['mb_id']}', '$bo_table', '$wr_id', '".G5_TIME_YMDHIS."' ) ";
 sql_query($sql);
 
 delete_cache_latest($bo_table);

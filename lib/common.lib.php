@@ -122,9 +122,9 @@ function get_session($session_name)
 // 쿠키변수 생성
 function set_cookie($cookie_name, $value, $expire)
 {
-    global $g4;
+    global $g5;
 
-    setcookie(md5($cookie_name), base64_encode($value), G4_SERVER_TIME + $expire, '/', G4_COOKIE_DOMAIN);
+    setcookie(md5($cookie_name), base64_encode($value), G5_SERVER_TIME + $expire, '/', G5_COOKIE_DOMAIN);
 }
 
 
@@ -142,16 +142,16 @@ function get_cookie($cookie_name)
 // 경고메세지를 경고창으로
 function alert($msg='', $url='', $error=true, $post=false)
 {
-    global $g4, $config, $member;
+    global $g5, $config, $member;
     global $is_admin;
 
     if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
 
     $header = '';
-    if (isset($g4['title'])) {
-        $header = $g4['title'];
+    if (isset($g5['title'])) {
+        $header = $g5['title'];
     }
-    include_once(G4_BBS_PATH.'/alert.php');
+    include_once(G5_BBS_PATH.'/alert.php');
     exit;
 }
 
@@ -159,13 +159,13 @@ function alert($msg='', $url='', $error=true, $post=false)
 // 경고메세지 출력후 창을 닫음
 function alert_close($msg, $error=true)
 {
-    global $g4;
+    global $g5;
 
     $header = '';
-    if (isset($g4['title'])) {
-        $header = $g4['title'];
+    if (isset($g5['title'])) {
+        $header = $g5['title'];
     }
-    include_once(G4_BBS_PATH.'/alert_close.php');
+    include_once(G5_BBS_PATH.'/alert_close.php');
     exit;
 }
 
@@ -173,13 +173,13 @@ function alert_close($msg, $error=true)
 // 경고메세지 출력후 창을 닫음
 function alert_login($msg, $url)
 {
-    global $g4;
+    global $g5;
 
     $header = '';
-    if (isset($g4['title'])) {
-        $header = $g4['title'];
+    if (isset($g5['title'])) {
+        $header = $g5['title'];
     }
-    include_once(G4_BBS_PATH.'/alert_login.php');
+    include_once(G5_BBS_PATH.'/alert_login.php');
     exit;
 }
 
@@ -187,7 +187,7 @@ function alert_login($msg, $url)
 // confirm 창
 function confirm($msg, $url1='', $url2='', $url3='')
 {
-    global $g4;
+    global $g5;
 
     if (!$msg) {
         $msg = '올바른 방법으로 이용해 주십시오.';
@@ -204,10 +204,10 @@ function confirm($msg, $url1='', $url2='', $url3='')
     $msg = str_replace("\\n", "<br>", $msg);
 
     $header = '';
-    if (isset($g4['title'])) {
-        $header = $g4['title'];
+    if (isset($g5['title'])) {
+        $header = $g5['title'];
     }
-    include_once(G4_BBS_PATH.'/confirm.php');
+    include_once(G5_BBS_PATH.'/confirm.php');
     exit;
 }
 
@@ -215,7 +215,7 @@ function confirm($msg, $url1='', $url2='', $url3='')
 // way.co.kr 의 wayboard 참고
 function url_auto_link($str)
 {
-    global $g4;
+    global $g5;
     global $config;
 
     // 속도 향상 031011
@@ -272,18 +272,18 @@ function get_filesize($size)
 // 게시글에 첨부된 파일을 얻는다. (배열로 반환)
 function get_file($bo_table, $wr_id)
 {
-    global $g4, $qstr;
+    global $g5, $qstr;
 
     $file['count'] = 0;
-    $sql = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
+    $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
     $result = sql_query($sql);
     while ($row = sql_fetch_array($result))
     {
         $no = $row['bf_no'];
-        $file[$no]['href'] = G4_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
+        $file[$no]['href'] = G5_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
         $file[$no]['download'] = $row['bf_download'];
         // 4.00.11 - 파일 path 추가
-        $file[$no]['path'] = G4_DATA_URL.'/file/'.$bo_table;
+        $file[$no]['path'] = G5_DATA_URL.'/file/'.$bo_table;
         $file[$no]['size'] = get_filesize($row['bf_filesize']);
         $file[$no]['datetime'] = $row['bf_datetime'];
         $file[$no]['source'] = addslashes($row['bf_source']);
@@ -305,9 +305,9 @@ function get_file($bo_table, $wr_id)
 // 게시글 리스트에 쓰일 1개의 파일 정보를 얻는다.
 function get_list_file($bo_table, $wr_id)
 {
-    global $g4;
+    global $g5;
 
-    $sql = " select * from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
+    $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
     $row = sql_fetch($sql);
 
     return $row;
@@ -339,7 +339,7 @@ function get_dirsize($dir)
 // 게시물 정보($write_row)를 출력하기 위하여 $list로 가공된 정보를 복사 및 가공
 function get_list($write_row, $board, $skin_url, $subject_len=40)
 {
-    global $g4, $config;
+    global $g5, $config;
     global $qstr, $page;
 
     //$t = get_microtime();
@@ -374,14 +374,14 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     // 당일인 경우 시간으로 표시함
     $list['datetime'] = substr($list['wr_datetime'],0,10);
     $list['datetime2'] = $list['wr_datetime'];
-    if ($list['datetime'] == G4_TIME_YMD)
+    if ($list['datetime'] == G5_TIME_YMD)
         $list['datetime2'] = substr($list['datetime2'],11,5);
     else
         $list['datetime2'] = substr($list['datetime2'],5,5);
     // 4.1
     $list['last'] = substr($list['wr_last'],0,10);
     $list['last2'] = $list['wr_last'];
-    if ($list['last'] == G4_TIME_YMD)
+    if ($list['last'] == G5_TIME_YMD)
         $list['last2'] = substr($list['last2'],11,5);
     else
         $list['last2'] = substr($list['last2'],5,5);
@@ -407,13 +407,13 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['icon_link'] = '<img src="'.$skin_url.'/img/icon_link.gif" alt="관련링크">';
 
     // 분류명 링크
-    $list['ca_name_href'] = G4_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
+    $list['ca_name_href'] = G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
 
-    $list['href'] = G4_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
+    $list['href'] = G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
     $list['comment_href'] = $list['href'];
 
     $list['icon_new'] = '';
-    if ($list['wr_datetime'] >= date("Y-m-d H:i:s", G4_SERVER_TIME - ($board['bo_new'] * 3600)))
+    if ($list['wr_datetime'] >= date("Y-m-d H:i:s", G5_SERVER_TIME - ($board['bo_new'] * 3600)))
         $list['icon_new'] = '<img src="'.$skin_url.'/img/icon_new.gif" alt="새글">';
 
     $list['icon_hot'] = '';
@@ -425,9 +425,9 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['icon_secret'] = '<img src="'.$skin_url.'/img/icon_secret.gif" alt="비밀글">';
 
     // 링크
-    for ($i=1; $i<=G4_LINK_COUNT; $i++) {
+    for ($i=1; $i<=G5_LINK_COUNT; $i++) {
         $list['link'][$i] = set_http(get_text($list["wr_link{$i}"]));
-        $list['link_href'][$i] = G4_BBS_URL.'/link.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].'&amp;no='.$i.$qstr;
+        $list['link_href'][$i] = G5_BBS_URL.'/link.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].'&amp;no='.$i.$qstr;
         $list['link_hit'][$i] = (int)$list["wr_link{$i}_hit"];
     }
 
@@ -548,7 +548,7 @@ function conv_content($content, $html)
 // Open  : HTML Purifier is open-source and highly customizable
 function html_purifier($html)
 {
-    $f = file(G4_PLUGIN_PATH.'/htmlpurifier/safeiframe.txt');
+    $f = file(G5_PLUGIN_PATH.'/htmlpurifier/safeiframe.txt');
     $domains = array();
     foreach($f as $domain){
         // 첫행이 # 이면 주석 처리
@@ -562,10 +562,10 @@ function html_purifier($html)
     array_push($domains, $_SERVER['HTTP_HOST'].'/');
     $safeiframe = implode('|', $domains);
 
-    include_once(G4_PLUGIN_PATH.'/htmlpurifier/HTMLPurifier.standalone.php');
+    include_once(G5_PLUGIN_PATH.'/htmlpurifier/HTMLPurifier.standalone.php');
     $config = HTMLPurifier_Config::createDefault();
     // data/cache 디렉토리에 CSS, HTML, URI 디렉토리 등을 만든다.
-    $config->set('Cache.SerializerPath', G4_DATA_PATH.'/cache');
+    $config->set('Cache.SerializerPath', G5_DATA_PATH.'/cache');
     $config->set('HTML.SafeEmbed', true);
     $config->set('HTML.SafeObject', true);
     $config->set('HTML.SafeIframe', true);
@@ -579,7 +579,7 @@ function html_purifier($html)
 // 검색 구문을 얻는다.
 function get_sql_search($search_ca_name, $search_field, $search_text, $search_operator='and')
 {
-    global $g4;
+    global $g5;
 
     $str = "";
     if ($search_ca_name)
@@ -621,7 +621,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         if ($search_str == "") continue;
 
         // 인기검색어
-        $sql = " insert into {$g4['popular_table']} set pp_word = '$search_str', pp_date = '".G4_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $sql = " insert into {$g5['popular_table']} set pp_word = '$search_str', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql, FALSE);
 
         $str .= $op1;
@@ -696,18 +696,18 @@ function get_next_num($table)
 // 그룹 설정 테이블에서 하나의 행을 읽음
 function get_group($gr_id)
 {
-    global $g4;
+    global $g5;
 
-    return sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
+    return sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
 }
 
 
 // 회원 정보를 얻는다.
 function get_member($mb_id, $fields='*')
 {
-    global $g4;
+    global $g5;
 
-    return sql_fetch(" select $fields from {$g4['member_table']} where mb_id = TRIM('$mb_id') ");
+    return sql_fetch(" select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ");
 }
 
 
@@ -759,21 +759,21 @@ function subject_sort_link($col, $query_string='', $flag='asc')
 function get_admin($admin='super', $fields='*')
 {
     global $config, $group, $board;
-    global $g4;
+    global $g5;
 
     $is = false;
     if ($admin == 'board') {
-        $mb = sql_fetch("select {$fields} from {$g4['member_table']} where mb_id in ('{$board['bo_admin']}') limit 1 ");
+        $mb = sql_fetch("select {$fields} from {$g5['member_table']} where mb_id in ('{$board['bo_admin']}') limit 1 ");
         $is = true;
     }
 
     if (($is && !$mb['mb_id']) || $admin == 'group') {
-        $mb = sql_fetch("select {$fields} from {$g4['member_table']} where mb_id in ('{$group['gr_admin']}') limit 1 ");
+        $mb = sql_fetch("select {$fields} from {$g5['member_table']} where mb_id in ('{$group['gr_admin']}') limit 1 ");
         $is = true;
     }
 
     if (($is && !$mb['mb_id']) || $admin == 'super') {
-        $mb = sql_fetch("select {$fields} from {$g4['member_table']} where mb_id in ('{$config['cf_admin']}') limit 1 ");
+        $mb = sql_fetch("select {$fields} from {$g5['member_table']} where mb_id in ('{$config['cf_admin']}') limit 1 ");
     }
 
     return $mb;
@@ -798,7 +798,7 @@ function is_admin($mb_id)
 // 4.00 에서는 카테고리 테이블을 없애고 보드테이블에 있는 내용으로 대체
 function get_category_option($bo_table='', $ca_name='')
 {
-    global $g4, $board, $is_admin;
+    global $g5, $board, $is_admin;
 
     $categories = explode("|", $board['bo_category_list'].($is_admin?"|공지":"")); // 구분자가 , 로 되어 있음
     $str = "";
@@ -820,11 +820,11 @@ function get_category_option($bo_table='', $ca_name='')
 // 게시판 그룹을 SELECT 형식으로 얻음
 function get_group_select($name, $selected='', $event='')
 {
-    global $g4, $is_admin, $member;
+    global $g5, $is_admin, $member;
 
-    $sql = " select gr_id, gr_subject from {$g4['group_table']} a ";
+    $sql = " select gr_id, gr_subject from {$g5['group_table']} a ";
     if ($is_admin == "group") {
-        $sql .= " left join {$g4['member_table']} b on (b.mb_id = a.gr_admin)
+        $sql .= " left join {$g5['member_table']} b on (b.mb_id = a.gr_admin)
                   where b.mb_id = '{$member['mb_id']}' ";
     }
     $sql .= " order by a.gr_id ";
@@ -870,7 +870,7 @@ function get_yn_select($name, $selected='1', $event='')
 function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $rel_action='', $expire=0)
 {
     global $config;
-    global $g4;
+    global $g5;
     global $is_admin;
 
     // 포인트 사용을 하지 않는다면 return
@@ -881,7 +881,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 
     // 회원아이디가 없다면 업데이트 할 필요 없음
     if ($mb_id == '') { return 0; }
-    $mb = sql_fetch(" select mb_id from {$g4['member_table']} where mb_id = '$mb_id' ");
+    $mb = sql_fetch(" select mb_id from {$g5['member_table']} where mb_id = '$mb_id' ");
     if (!$mb['mb_id']) { return 0; }
 
     // 회원포인트
@@ -890,7 +890,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     // 이미 등록된 내역이라면 건너뜀
     if ($rel_table || $rel_id || $rel_action)
     {
-        $sql = " select count(*) as cnt from {$g4['point_table']}
+        $sql = " select count(*) as cnt from {$g5['point_table']}
                   where mb_id = '$mb_id'
                     and po_rel_table = '$rel_table'
                     and po_rel_id = '$rel_id'
@@ -904,21 +904,21 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     $po_expire_date = '9999-12-31';
     if($config['cf_point_term'] > 0) {
         if($expire > 0)
-            $po_expire_date = date('Y-m-d', strtotime('+'.($expire - 1).' days', G4_SERVER_TIME));
+            $po_expire_date = date('Y-m-d', strtotime('+'.($expire - 1).' days', G5_SERVER_TIME));
         else
-            $po_expire_date = date('Y-m-d', strtotime('+'.($config['cf_point_term'] - 1).' days', G4_SERVER_TIME));
+            $po_expire_date = date('Y-m-d', strtotime('+'.($config['cf_point_term'] - 1).' days', G5_SERVER_TIME));
     }
 
     $po_expired = 0;
     if($point < 0) {
         $po_expired = 1;
-        $po_expire_date = G4_TIME_YMD;
+        $po_expire_date = G5_TIME_YMD;
     }
     $po_mb_point = $mb_point + $point;
 
-    $sql = " insert into {$g4['point_table']}
+    $sql = " insert into {$g5['point_table']}
                 set mb_id = '$mb_id',
-                    po_datetime = '".G4_TIME_YMDHIS."',
+                    po_datetime = '".G5_TIME_YMDHIS."',
                     po_content = '".addslashes($content)."',
                     po_point = '$point',
                     po_use_point = '0',
@@ -936,7 +936,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
     }
 
     // 포인트 UPDATE
-    $sql = " update {$g4['member_table']} set mb_point = '$po_mb_point' where mb_id = '$mb_id' ";
+    $sql = " update {$g5['member_table']} set mb_point = '$po_mb_point' where mb_id = '$mb_id' ";
     sql_query($sql);
 
     return 1;
@@ -945,7 +945,7 @@ function insert_point($mb_id, $point, $content='', $rel_table='', $rel_id='', $r
 // 사용포인트 입력
 function insert_use_point($mb_id, $point, $po_id='')
 {
-    global $g4, $config;
+    global $g5, $config;
 
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date asc, po_id asc ";
@@ -954,7 +954,7 @@ function insert_use_point($mb_id, $point, $po_id='')
 
     $point1 = abs($point);
     $sql = " select po_id, po_point, po_use_point
-                from {$g4['point_table']}
+                from {$g5['point_table']}
                 where mb_id = '$mb_id'
                   and po_id <> '$po_id'
                   and po_expired = '0'
@@ -966,14 +966,14 @@ function insert_use_point($mb_id, $point, $po_id='')
         $point3 = $row['po_use_point'];
 
         if(($point2 - $point3) > $point1) {
-            $sql = " update {$g4['point_table']}
+            $sql = " update {$g5['point_table']}
                         set po_use_point = po_use_point + '$point1'
                         where po_id = '{$row['po_id']}' ";
             sql_query($sql);
             break;
         } else {
             $point4 = $point2 - $point3;
-            $sql = " update {$g4['point_table']}
+            $sql = " update {$g5['point_table']}
                         set po_use_point = po_use_point + '$point4',
                             po_expired = '100'
                         where po_id = '{$row['po_id']}' ";
@@ -986,7 +986,7 @@ function insert_use_point($mb_id, $point, $po_id='')
 // 사용포인트 삭제
 function delete_use_point($mb_id, $point)
 {
-    global $g4, $config;
+    global $g5, $config;
 
     if($config['cf_point_term'])
         $sql_order = " order by po_expire_date desc, po_id desc ";
@@ -995,7 +995,7 @@ function delete_use_point($mb_id, $point)
 
     $point1 = abs($point);
     $sql = " select po_id, po_use_point, po_expired, po_expire_date
-                from {$g4['point_table']}
+                from {$g5['point_table']}
                 where mb_id = '$mb_id'
                   and po_expired <> '1'
                   and po_use_point > 0
@@ -1005,18 +1005,18 @@ function delete_use_point($mb_id, $point)
         $point2 = $row['po_use_point'];
 
         $po_expired = $row['po_expired'];
-        if($row['po_expired'] == 100 && ($row['po_expire_date'] == '9999-12-31' || $row['po_expire_date'] >= G4_TIME_YMD))
+        if($row['po_expired'] == 100 && ($row['po_expire_date'] == '9999-12-31' || $row['po_expire_date'] >= G5_TIME_YMD))
             $po_expired = 0;
 
         if($point2 > $point1) {
-            $sql = " update {$g4['point_table']}
+            $sql = " update {$g5['point_table']}
                         set po_use_point = po_use_point - '$point1',
                             po_expired = '$po_expired'
                         where po_id = '{$row['po_id']}' ";
             sql_query($sql);
             break;
         } else {
-            $sql = " update {$g4['point_table']}
+            $sql = " update {$g5['point_table']}
                         set po_use_point = '0',
                             po_expired = '$po_expired'
                         where po_id = '{$row['po_id']}' ";
@@ -1030,11 +1030,11 @@ function delete_use_point($mb_id, $point)
 // 소멸포인트 삭제
 function delete_expire_point($mb_id, $point)
 {
-    global $g4, $config;
+    global $g5, $config;
 
     $point1 = abs($point);
     $sql = " select po_id, po_use_point, po_expired, po_expire_date
-                from {$g4['point_table']}
+                from {$g5['point_table']}
                 where mb_id = '$mb_id'
                   and po_expired = '1'
                   and po_point >= 0
@@ -1046,10 +1046,10 @@ function delete_expire_point($mb_id, $point)
         $po_expired = '0';
         $po_expire_date = '9999-12-31';
         if($config['cf_point_term'] > 0)
-            $po_expire_date = date('Y-m-d', strtotime('+'.($config['cf_point_term'] - 1).' days', G4_SERVER_TIME));
+            $po_expire_date = date('Y-m-d', strtotime('+'.($config['cf_point_term'] - 1).' days', G5_SERVER_TIME));
 
         if($point2 > $point1) {
-            $sql = " update {$g4['point_table']}
+            $sql = " update {$g5['point_table']}
                         set po_use_point = po_use_point - '$point1',
                             po_expired = '$po_expired',
                             po_expire_date = '$po_expire_date'
@@ -1057,7 +1057,7 @@ function delete_expire_point($mb_id, $point)
             sql_query($sql);
             break;
         } else {
-            $sql = " update {$g4['point_table']}
+            $sql = " update {$g5['point_table']}
                         set po_use_point = '0',
                             po_expired = '$po_expired',
                             po_expire_date = '$po_expire_date'
@@ -1072,7 +1072,7 @@ function delete_expire_point($mb_id, $point)
 // 포인트 내역 합계
 function get_point_sum($mb_id)
 {
-    global $g4, $config;
+    global $g5, $config;
 
     if($config['cf_point_term'] > 0) {
         // 소멸포인트가 있으면 내역 추가
@@ -1085,12 +1085,12 @@ function get_point_sum($mb_id)
             $rel_action = 'expire'.'-'.uniqid('');
             $point = $expire_point * (-1);
             $po_mb_point = $mb['mb_point'] + $point;
-            $po_expire_date = G4_TIME_YMD;
+            $po_expire_date = G5_TIME_YMD;
             $po_expired = 1;
 
-            $sql = " insert into {$g4['point_table']}
+            $sql = " insert into {$g5['point_table']}
                         set mb_id = '$mb_id',
-                            po_datetime = '".G4_TIME_YMDHIS."',
+                            po_datetime = '".G5_TIME_YMDHIS."',
                             po_content = '".addslashes($content)."',
                             po_point = '$point',
                             po_use_point = '0',
@@ -1109,18 +1109,18 @@ function get_point_sum($mb_id)
         }
 
         // 유효기간이 있을 때 기간이 지난 포인트 expired 체크
-        $sql = " update {$g4['point_table']}
+        $sql = " update {$g5['point_table']}
                     set po_expired = '1'
                     where mb_id = '$mb_id'
                       and po_expired <> '1'
                       and po_expire_date <> '9999-12-31'
-                      and po_expire_date < '".G4_TIME_YMD."' ";
+                      and po_expire_date < '".G5_TIME_YMD."' ";
         sql_query($sql);
     }
 
     // 포인트합
     $sql = " select sum(po_point) as sum_po_point
-                from {$g4['point_table']}
+                from {$g5['point_table']}
                 where mb_id = '$mb_id' ";
     $row = sql_fetch($sql);
 
@@ -1130,17 +1130,17 @@ function get_point_sum($mb_id)
 // 소멸 포인트
 function get_expire_point($mb_id)
 {
-    global $g4, $config;
+    global $g5, $config;
 
     if($config['cf_point_term'] == 0)
         return 0;
 
     $sql = " select sum(po_point - po_use_point) as sum_point
-                from {$g4['point_table']}
+                from {$g5['point_table']}
                 where mb_id = '$mb_id'
                   and po_expired = '0'
                   and po_expire_date <> '9999-12-31'
-                  and po_expire_date < '".G4_TIME_YMD."' ";
+                  and po_expire_date < '".G5_TIME_YMD."' ";
     $row = sql_fetch($sql);
 
     return $row['sum_point'];
@@ -1149,13 +1149,13 @@ function get_expire_point($mb_id)
 // 포인트 삭제
 function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
 {
-    global $g4;
+    global $g5;
 
     $result = false;
     if ($rel_table || $rel_id || $rel_action)
     {
         // 포인트 내역정보
-        $sql = " select * from {$g4['point_table']}
+        $sql = " select * from {$g5['point_table']}
                     where mb_id = '$mb_id'
                       and po_rel_table = '$rel_table'
                       and po_rel_id = '$rel_id'
@@ -1173,14 +1173,14 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
             }
         }
 
-        $result = sql_query(" delete from {$g4['point_table']}
+        $result = sql_query(" delete from {$g5['point_table']}
                      where mb_id = '$mb_id'
                        and po_rel_table = '$rel_table'
                        and po_rel_id = '$rel_id'
                        and po_rel_action = '$rel_action' ", false);
 
         // po_mb_point에 반영
-        $sql = " update {$g4['point_table']}
+        $sql = " update {$g5['point_table']}
                     set po_mb_point = po_mb_point - '{$row['po_point']}'
                     where mb_id = '$mb_id'
                       and po_id > '{$row['po_id']}' ";
@@ -1190,7 +1190,7 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
         $sum_point = get_point_sum($mb_id);
 
         // 포인트 UPDATE
-        $sql = " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '$mb_id' ";
+        $sql = " update {$g5['member_table']} set mb_point = '$sum_point' where mb_id = '$mb_id' ";
         $result = sql_query($sql);
     }
 
@@ -1201,7 +1201,7 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
 function get_sideview($mb_id, $name='', $email='', $homepage='')
 {
     global $config;
-    global $g4;
+    global $g5;
     global $bo_table, $sca, $is_admin;
 
     $email = base64_encode($email);
@@ -1214,17 +1214,17 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $tmp_name = "";
     if ($mb_id) {
-        //$tmp_name = "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
-        $tmp_name = '<a href="'.G4_BBS_URL.'/profile.php?mb_id='.$mb_id.'" class="sv_member" title="'.$name.' 자기소개" target="_blank" onclick="return false;">';
+        //$tmp_name = "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
+        $tmp_name = '<a href="'.G5_BBS_URL.'/profile.php?mb_id='.$mb_id.'" class="sv_member" title="'.$name.' 자기소개" target="_blank" onclick="return false;">';
 
         if ($config['cf_use_member_icon']) {
             $mb_dir = substr($mb_id,0,2);
-            $icon_file = G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
+            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
 
             if (file_exists($icon_file)) {
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
-                $icon_file_url = G4_DATA_URL.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
+                $icon_file_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
                 $tmp_name .= '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt="">';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
@@ -1242,7 +1242,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         if(!$bo_table)
             return $name;
 
-        $tmp_name = '<a href="'.G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.$sca.'&amp;sfl=wr_name,1&amp;stx='.$name.'" title="'.$name.' 이름으로 검색" class="sv_guest" onclick="return false;">'.$name.'</a>';
+        $tmp_name = '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.$sca.'&amp;sfl=wr_name,1&amp;stx='.$name.'" title="'.$name.' 이름으로 검색" class="sv_guest" onclick="return false;">'.$name.'</a>';
         $title_mb_id = '[비회원]';
     }
 
@@ -1253,27 +1253,27 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $str = "<span class=\"sv_wrap\">\n";
     $str .= $tmp_name."\n";
 
-    if(!G4_IS_MOBILE) {
+    if(!G5_IS_MOBILE) {
         $str2 = "<span class=\"sv\">\n";
         if($mb_id)
-            $str2 .= "<a href=\"".G4_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
+            $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
         if($email)
-            $str2 .= "<a href=\"".G4_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
+            $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
         if($homepage)
             $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
         if($mb_id)
-            $str2 .= "<a href=\"".G4_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
+            $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
         if($bo_table) {
             if($mb_id)
-                $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
+                $str2 .= "<a href=\"".G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
             else
-                $str2 .= "<a href=\"".G4_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\">이름으로 검색</a>\n";
+                $str2 .= "<a href=\"".G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\">이름으로 검색</a>\n";
         }
         if($mb_id)
-            $str2 .= "<a href=\"".G4_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
+            $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
         if($is_admin == "super" && $mb_id) {
-            $str2 .= "<a href=\"".G4_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
-            $str2 .= "<a href=\"".G4_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
+            $str2 .= "<a href=\"".G5_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
+            $str2 .= "<a href=\"".G5_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
         }
         $str2 .= "</span>\n";
         $str .= $str2;
@@ -1290,7 +1290,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 function view_file_link($file, $width, $height, $content='')
 {
     global $config, $board;
-    global $g4;
+    global $g5;
     static $ids;
 
     if (!$file) return;
@@ -1312,8 +1312,8 @@ function view_file_link($file, $width, $height, $content='')
         $attr = '';
 
     if (preg_match("/\.({$config['cf_image_extension']})$/i", $file)) {
-        $img = '<a href="'.G4_BBS_URL.'/view_image.php?bo_table='.$board['bo_table'].'&amp;fn='.urlencode($file).'" target="_blank" class="view_image">';
-        $img .= '<img src="'.G4_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'">';
+        $img = '<a href="'.G5_BBS_URL.'/view_image.php?bo_table='.$board['bo_table'].'&amp;fn='.urlencode($file).'" target="_blank" class="view_image">';
+        $img .= '<img src="'.G5_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'">';
         $img .= '</a>';
 
         return $img;
@@ -1428,7 +1428,7 @@ function html_symbol($str)
 // DB 연결
 function sql_connect($host, $user, $pass)
 {
-    global $g4;
+    global $g5;
 
     return @mysql_connect($host, $user, $pass);
 }
@@ -1437,7 +1437,7 @@ function sql_connect($host, $user, $pass)
 // DB 선택
 function sql_select_db($db, $connect)
 {
-    global $g4;
+    global $g5;
 
     return @mysql_select_db($db, $connect);
 }
@@ -1493,7 +1493,7 @@ function sql_password($value)
 // PHPMyAdmin 참고
 function get_table_define($table, $crlf="\n")
 {
-    global $g4;
+    global $g5;
 
     // For MySQL < 3.23.20
     $schema_create .= 'CREATE TABLE ' . $table . ' (' . $crlf;
@@ -1571,10 +1571,10 @@ function referer_check($url='')
 {
     /*
     // 제대로 체크를 하지 못하여 주석 처리함
-    global $g4;
+    global $g5;
 
     if (!$url)
-        $url = G4_URL;
+        $url = G5_URL;
 
     if (!preg_match("/^http['s']?:\/\/".$_SERVER['HTTP_HOST']."/", $_SERVER['HTTP_REFERER']))
         alert("제대로 된 접근이 아닌것 같습니다.", $url);
@@ -1599,11 +1599,11 @@ function get_yoil($date, $full=0)
 // 날짜를 select 박스 형식으로 얻는다
 function date_select($date, $name='')
 {
-    global $g4;
+    global $g5;
 
     $s = '';
     if (substr($date, 0, 4) == "0000") {
-        $date = G4_TIME_YMDHIS;
+        $date = G5_TIME_YMDHIS;
     }
     preg_match("/([0-9]{4})-([0-9]{2})-([0-9]{2})/", $date, $m);
 
@@ -1691,8 +1691,8 @@ function time_select($time, $name="")
 // DEMO 라는 파일이 있으면 데모 화면으로 인식함
 function check_demo()
 {
-    global $g4;
-    if (file_exists($g4['path'].'/DEMO'))
+    global $g5;
+    if (file_exists($g5['path'].'/DEMO'))
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
@@ -1700,7 +1700,7 @@ function check_demo()
 // 문자열이 한글, 영문, 숫자, 특수문자로 구성되어 있는지 검사
 function check_string($str, $options)
 {
-    global $g4;
+    global $g5;
 
     $s = '';
     for($i=0;$i<strlen($str);$i++) {
@@ -1709,37 +1709,37 @@ function check_string($str, $options)
 
         // 한글
         if ($oc >= 0xA0 && $oc <= 0xFF) {
-            if ($options & G4_HANGUL) {
+            if ($options & G5_HANGUL) {
                 $s .= $c . $str[$i+1] . $str[$i+2];
             }
             $i+=2;
         }
         // 숫자
         else if ($oc >= 0x30 && $oc <= 0x39) {
-            if ($options & G4_NUMERIC) {
+            if ($options & G5_NUMERIC) {
                 $s .= $c;
             }
         }
         // 영대문자
         else if ($oc >= 0x41 && $oc <= 0x5A) {
-            if (($options & G4_ALPHABETIC) || ($options & G4_ALPHAUPPER)) {
+            if (($options & G5_ALPHABETIC) || ($options & G5_ALPHAUPPER)) {
                 $s .= $c;
             }
         }
         // 영소문자
         else if ($oc >= 0x61 && $oc <= 0x7A) {
-            if (($options & G4_ALPHABETIC) || ($options & G4_ALPHALOWER)) {
+            if (($options & G5_ALPHABETIC) || ($options & G5_ALPHALOWER)) {
                 $s .= $c;
             }
         }
         // 공백
         else if ($oc == 0x20) {
-            if ($options & G4_SPACE) {
+            if ($options & G5_SPACE) {
                 $s .= $c;
             }
         }
         else {
-            if ($options & G4_SPECIAL) {
+            if ($options & G5_SPECIAL) {
                 $s .= $c;
             }
         }
@@ -1754,7 +1754,7 @@ function check_string($str, $options)
 // 출력시 깨지는 현상이 발생하므로 마지막 완전하지 않은 글자(1byte)를 하나 없앰
 function cut_hangul_last($hangul)
 {
-    global $g4;
+    global $g5;
 
     // 한글이 반쪽나면 ?로 표시되는 현상을 막음
     $cnt = 0;
@@ -1921,7 +1921,7 @@ function get_selected($field, $value)
 
 function is_mobile()
 {
-    return preg_match('/'.G4_MOBILE_AGENT.'/i', $_SERVER['HTTP_USER_AGENT']);
+    return preg_match('/'.G5_MOBILE_AGENT.'/i', $_SERVER['HTTP_USER_AGENT']);
 }
 
 
@@ -1943,14 +1943,14 @@ function is_mobile()
 // 기존의 get_unique_id() 함수를 사용하지 않고 get_uniqid() 를 사용한다.
 function get_uniqid()
 {
-    global $g4;
+    global $g5;
 
-    sql_query(" LOCK TABLE {$g4['uniqid_table']} WRITE ");
+    sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
         $key = date('YmdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
 
-        $result = sql_query(" insert into {$g4['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
+        $result = sql_query(" insert into {$g5['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
         if ($result) break; // 쿼리가 정상이면 빠진다.
 
         // insert 하지 못했으면 일정시간 쉰다음 다시 유일키를 만든다.
@@ -1983,10 +1983,10 @@ function check_device($device)
 
     if ($is_admin) return;
 
-    if ($device=='pc' && G4_IS_MOBILE) {
-        alert('PC 전용 게시판입니다.', G4_URL);
-    } else if ($device=='mobile' && !G4_IS_MOBILE) {
-        alert('모바일 전용 게시판입니다.', G4_URL);
+    if ($device=='pc' && G5_IS_MOBILE) {
+        alert('PC 전용 게시판입니다.', G5_URL);
+    } else if ($device=='mobile' && !G5_IS_MOBILE) {
+        alert('모바일 전용 게시판입니다.', G5_URL);
     }
 }
 
@@ -1994,7 +1994,7 @@ function check_device($device)
 // 게시판 최신글 캐시 파일 삭제
 function delete_cache_latest($bo_table)
 {
-    $files = glob(G4_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
+    $files = glob(G5_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
     if (is_array($files)) {
         foreach ($files as $filename)
             unlink($filename);
@@ -2008,7 +2008,7 @@ function delete_board_thumbnail($bo_table, $file)
         return;
 
     $fn = preg_replace("/\.[^\.]+$/i", "", basename($file));
-    $files = glob(G4_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*');
+    $files = glob(G5_DATA_PATH.'/file/'.$bo_table.'/thumb-'.$fn.'*');
     if (is_array($files)) {
         foreach ($files as $filename)
             unlink($filename);
@@ -2067,7 +2067,7 @@ function get_skin_stylesheet($skin_path, $dir='')
     if($dir)
         $skin_path .= '/'.$dir;
 
-    $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
+    $skin_url = G5_URL.str_replace("\\", "/", str_replace(G5_PATH, "", $skin_path));
 
     if(is_dir($skin_path)) {
         if($dh = opendir($skin_path)) {
@@ -2101,7 +2101,7 @@ function get_skin_stylesheet($skin_path, $dir='')
     $skin_path .= $dir ? '/'.$dir : '';
 
     $str = '';
-    $skin_url = G4_URL.str_replace('\\', '/', str_replace(G4_PATH, '', $skin_path));
+    $skin_url = G5_URL.str_replace('\\', '/', str_replace(G5_PATH, '', $skin_path));
 
     foreach (glob($skin_path.'/*.css') as $filepath) {
         $file = str_replace($skin_path, '', $filepath);
@@ -2123,7 +2123,7 @@ function get_skin_javascript($skin_path, $dir='')
     if($dir)
         $skin_path .= '/'.$dir;
 
-    $skin_url = G4_URL.str_replace("\\", "/", str_replace(G4_PATH, "", $skin_path));
+    $skin_url = G5_URL.str_replace("\\", "/", str_replace(G5_PATH, "", $skin_path));
 
     if(is_dir($skin_path)) {
         if($dh = opendir($skin_path)) {
@@ -2171,25 +2171,25 @@ if (!function_exists('file_put_contents')) {
 // HTML 마지막 처리
 function html_end()
 {
-    global $config, $g4, $member;
+    global $config, $g5, $member;
 
     // 현재접속자 처리
-    $tmp_sql = " select count(*) as cnt from {$g4['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+    $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
     $tmp_row = sql_fetch($tmp_sql);
 
     if ($tmp_row['cnt']) {
-        $tmp_sql = " update {$g4['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G4_TIME_YMDHIS."', lo_location = '{$g4['lo_location']}', lo_url = '{$g4['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($tmp_sql, FALSE);
     } else {
-        $tmp_sql = " insert into {$g4['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G4_TIME_YMDHIS."', '{$g4['lo_location']}',  '{$g4['lo_url']}' ) ";
+        $tmp_sql = " insert into {$g5['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$g5['lo_location']}',  '{$g5['lo_url']}' ) ";
         sql_query($tmp_sql, FALSE);
 
         // 시간이 지난 접속은 삭제한다
-        sql_query(" delete from {$g4['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", G4_SERVER_TIME - (60 * $config['cf_login_minutes']))."' ");
+        sql_query(" delete from {$g5['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", G5_SERVER_TIME - (60 * $config['cf_login_minutes']))."' ");
 
         // 부담(overhead)이 있다면 테이블 최적화
-        //$row = sql_fetch(" SHOW TABLE STATUS FROM `$mysql_db` LIKE '$g4['login_table']' ");
-        //if ($row['Data_free'] > 0) sql_query(" OPTIMIZE TABLE $g4['login_table'] ");
+        //$row = sql_fetch(" SHOW TABLE STATUS FROM `$mysql_db` LIKE '$g5['login_table']' ");
+        //if ($row['Data_free'] > 0) sql_query(" OPTIMIZE TABLE $g5['login_table'] ");
     }
 
     // 버퍼의 내용에서 body 태그 중간의 외부 css 파일을 CAPTURE 하여 head 태그로 이동시켜준다.
@@ -2224,7 +2224,7 @@ function hyphen_hp_number($hp)
 // 로그인 후 이동할 URL
 function login_url($url='')
 {
-    if (!$url) $url = G4_URL;
+    if (!$url) $url = G5_URL;
     //$p = parse_url($url);
     //return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
     return $url;
@@ -2235,16 +2235,16 @@ function login_url($url='')
 function https_url($dir, $https=true)
 {
     if ($https) {
-        if (G4_HTTPS_DOMAIN) {
-            $url = G4_HTTPS_DOMAIN.'/'.$dir;
+        if (G5_HTTPS_DOMAIN) {
+            $url = G5_HTTPS_DOMAIN.'/'.$dir;
         } else {
-            $url = G4_URL.'/'.$dir;
+            $url = G5_URL.'/'.$dir;
         }
     } else {
-        if (G4_DOMAIN) {
-            $url = G4_DOMAIN.'/'.$dir;
+        if (G5_DOMAIN) {
+            $url = G5_DOMAIN.'/'.$dir;
         } else {
-            $url = G4_URL.'/'.$dir;
+            $url = G5_URL.'/'.$dir;
         }
     }
 
@@ -2308,10 +2308,10 @@ function googl_short_url($longUrl)
 // 임시 저장된 글 갯수
 function autosave_count($mb_id)
 {
-    global $g4;
+    global $g5;
 
     if ($mb_id) {
-        $row = sql_fetch(" select count(*) as cnt from {$g4['autosave_table']} where mb_id = '$mb_id' ");
+        $row = sql_fetch(" select count(*) as cnt from {$g5['autosave_table']} where mb_id = '$mb_id' ");
         return (int)$row['cnt'];
     } else {
         return 0;
@@ -2321,22 +2321,22 @@ function autosave_count($mb_id)
 // 본인확인내역 기록
 function insert_cert_history($mb_id, $company, $method)
 {
-    global $g4;
+    global $g5;
 
-    $sql = " insert into {$g4['cert_history_table']}
+    $sql = " insert into {$g5['cert_history_table']}
                 set mb_id = '$mb_id',
                     cr_company = '$company',
                     cr_method = '$method',
                     cr_ip = '{$_SERVER['REMOTE_ADDR']}',
-                    cr_date = '".G4_TIME_YMD."',
-                    cr_time = '".G4_TIME_HIS."' ";
+                    cr_date = '".G5_TIME_YMD."',
+                    cr_time = '".G5_TIME_HIS."' ";
     sql_query($sql);
 }
 
 // 인증시도회수 체크
 function certify_count_check($mb_id, $type)
 {
-    global $g4, $config;
+    global $g5, $config;
 
     if($config['cf_cert_use'] != 2)
         return;
@@ -2344,7 +2344,7 @@ function certify_count_check($mb_id, $type)
     if($config['cf_cert_limit'] == 0)
         return;
 
-    $sql = " select count(*) as cnt from {$g4['cert_history_table']} ";
+    $sql = " select count(*) as cnt from {$g5['cert_history_table']} ";
 
     if($mb_id) {
         $sql .= " where mb_id = '$mb_id' ";
@@ -2352,7 +2352,7 @@ function certify_count_check($mb_id, $type)
         $sql .= " where cr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
     }
 
-    $sql .= " and cr_method = '".$type."' and cr_date = '".G4_TIME_YMD."' ";
+    $sql .= " and cr_method = '".$type."' and cr_date = '".G5_TIME_YMD."' ";
 
     $row = sql_fetch($sql);
 

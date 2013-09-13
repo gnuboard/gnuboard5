@@ -4,11 +4,11 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$sql_common = " from {$g4['board_table']} a ";
+$sql_common = " from {$g5['board_table']} a ";
 $sql_search = " where (1) ";
 
 if ($is_admin != "super") {
-    $sql_common .= " , {$g4['group_table']} b ";
+    $sql_common .= " , {$g5['group_table']} b ";
     $sql_search .= " and (a.gr_id = b.gr_id and b.gr_admin = '{$member['mb_id']}') ";
 }
 
@@ -50,7 +50,7 @@ $listall = '';
 if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
-$g4['title'] = '게시판관리';
+$g5['title'] = '게시판관리';
 include_once('./admin.head.php');
 
 $colspan = 15;
@@ -148,7 +148,7 @@ $colspan = 15;
         </td>
         <td class="td_boid">
             <input type="hidden" name="board_table[<?php echo $i ?>]" value="<?php echo $row['bo_table'] ?>">
-            <a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>"><?php echo $row['bo_table'] ?></a>
+            <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>"><?php echo $row['bo_table'] ?></a>
         </td>
         <td>
             <?php echo get_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']); ?>
@@ -192,7 +192,7 @@ $colspan = 15;
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page='); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page='); ?>
 
 <script>
 function fboardlist_submit(f)

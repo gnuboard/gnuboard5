@@ -25,7 +25,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
 
         <p style="<?php echo $cont_st; ?>">
             <strong>주문번호 <?php echo $od_id; ?></strong><br>
-            본 메일은 <?php echo G4_TIME_YMDHIS; ?> (<?php echo get_yoil(G4_TIME_YMDHIS); ?>)을 기준으로 작성되었습니다.
+            본 메일은 <?php echo G5_TIME_YMDHIS; ?> (<?php echo get_yoil(G5_TIME_YMDHIS); ?>)을 기준으로 작성되었습니다.
         </p>
 
         <table style="<?php echo $cont_st; ?>">
@@ -37,7 +37,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <tbody>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">상품명</th>
-            <td style="<?php echo $td_st; ?>"><a href="<?php echo G4_SHOP_URL.'/item.php?it_id='.$list[$i]['it_id']; ?>" target="_blank" style="text-decoration:none"><span style="display:inline-block;vertical-align:middle"><?php echo $list[$i]['it_simg']; ?></span> <?php echo $list[$i]['it_name']; ?></a></td>
+            <td style="<?php echo $td_st; ?>"><a href="<?php echo G5_SHOP_URL.'/item.php?it_id='.$list[$i]['it_id']; ?>" target="_blank" style="text-decoration:none"><span style="display:inline-block;vertical-align:middle"><?php echo $list[$i]['it_simg']; ?></span> <?php echo $list[$i]['it_name']; ?></a></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">선택옵션 </th>
@@ -116,7 +116,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
 
         <p style="<?php echo $cont_st; ?>">이 주문과 관련된 내용은 <b><?php echo  $default['de_admin_company_tel']; ?></b>로 연락주시기 바랍니다.</p>
 
-        <a href="<?php echo G4_SHOP_URL.'/'; ?>" target="_blank" style="<?php echo $ft_a_st; ?>"><?php echo $config['cf_title']; ?></a>
+        <a href="<?php echo G5_SHOP_URL.'/'; ?>" target="_blank" style="<?php echo $ft_a_st; ?>"><?php echo $config['cf_title']; ?></a>
 
 </body>
 </html>

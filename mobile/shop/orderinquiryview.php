@@ -7,20 +7,20 @@ set_session("ss_token", $token);
 
 if (!$is_member) {
     if (get_session('ss_orderview_uid') != $_GET['uid'])
-        alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.", G4_SHOP_URL);
+        alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.", G5_SHOP_URL);
 }
 
-$sql = "select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
+$sql = "select * from {$g5['shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 if (!$od['od_id'] || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
-    alert("조회하실 주문서가 없습니다.", G4_SHOP_URL);
+    alert("조회하실 주문서가 없습니다.", G5_SHOP_URL);
 }
 
 // 결제방법
 $settle_case = $od['od_settle_case'];
 
-$g4['title'] = '주문상세내역';
-include_once(G4_MSHOP_PATH.'/_head.php');
+$g5['title'] = '주문상세내역';
+include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
 <div id="sod_fin">
@@ -42,7 +42,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         </dl>
         <?php
         $sql = " select it_id, it_name, cp_price
-                    from {$g4['shop_cart_table']}
+                    from {$g5['shop_cart_table']}
                     where od_id = '$od_id'
                     group by it_id
                     order by ct_id ";
@@ -72,7 +72,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                 <tbody>
                 <?php
                 $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
-                            from {$g4['shop_cart_table']}
+                            from {$g5['shop_cart_table']}
                             where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
                             order by io_type asc, ct_id asc ";
@@ -327,7 +327,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
                 else
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
+                    <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
                 <?php } ?>
                 </td>
             </tr>
@@ -427,7 +427,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <tbody>
             <?php
             // 배송회사 정보
-            $dl = sql_fetch(" select * from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+            $dl = sql_fetch(" select * from {$g5['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
             if ($od['od_invoice'] || !$od['misu'])
             {
@@ -502,7 +502,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
         <div id="sod_fin_cancelfrm">
-            <form method="post" action="<?php echo G4_SHOP_URL; ?>/orderinquirycancel.php" onsubmit="return fcancel_check(this);">
+            <form method="post" action="<?php echo G5_SHOP_URL; ?>/orderinquirycancel.php" onsubmit="return fcancel_check(this);">
             <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
@@ -531,7 +531,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>" size="80"><br />
     <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
     <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>" size="80"><br />
-    <input type="text" name="noti_url" value="<?php echo G4_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
+    <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
     <input type="submit" value="입금통보 테스트">
     </form>
     </fieldset>
@@ -556,5 +556,5 @@ function fcancel_check(f)
 </script>
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

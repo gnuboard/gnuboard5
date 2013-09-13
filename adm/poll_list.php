@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], 'r');
 
 $token = get_token();
 
-$sql_common = " from {$g4['poll_table']} ";
+$sql_common = " from {$g5['poll_table']} ";
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -48,7 +48,7 @@ $listall = '';
 if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
-$g4['title'] = '투표관리';
+$g5['title'] = '투표관리';
 include_once('./admin.head.php');
 
 $colspan = 6;
@@ -99,7 +99,7 @@ $colspan = 6;
     <tbody>
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $sql2 = " select sum(po_cnt1+po_cnt2+po_cnt3+po_cnt4+po_cnt5+po_cnt6+po_cnt7+po_cnt8+po_cnt9) as sum_po_cnt from {$g4['poll_table']} where po_id = '{$row['po_id']}' ";
+        $sql2 = " select sum(po_cnt1+po_cnt2+po_cnt3+po_cnt4+po_cnt5+po_cnt6+po_cnt7+po_cnt8+po_cnt9) as sum_po_cnt from {$g5['poll_table']} where po_id = '{$row['po_id']}' ";
         $row2 = sql_fetch($sql2);
         $po_etc = ($row['po_etc']) ? "사용" : "미사용";
 
@@ -134,7 +134,7 @@ $colspan = 6;
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
 $(function() {

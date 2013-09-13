@@ -2,9 +2,9 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<script src="<?php echo G4_JS_URL ?>/jquery.register_form.js"></script>
+<script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
 <?php if($config['cf_cert_use'] && ($config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
-<script src="<?php echo G4_JS_URL ?>/certify.js"></script>
+<script src="<?php echo G5_JS_URL ?>/certify.js"></script>
 <?php } ?>
 
 <form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
@@ -14,7 +14,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="agree2" value="<?php echo $agree2 ?>">
 <input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
 <?php if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php } ?>
-<?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G4_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
+<?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
 <input type="hidden" name="mb_nick_default" value="<?php echo $member['mb_nick'] ?>">
 <input type="hidden" name="mb_nick" value="<?php echo $member['mb_nick'] ?>">
 <?php } ?>
@@ -145,7 +145,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <input type="text" name="mb_addr2" value="<?php echo $member['mb_addr2'] ?>" id="reg_mb_addr2" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50">
         <script>
         // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-        $('<a href="<?php echo G4_BBS_URL ?>/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#reg_win_zip');
+        $('<a href="<?php echo G5_BBS_URL ?>/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#reg_win_zip');
         $("#reg_win_zip").css("display", "inline");
         $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr('readonly', 'readonly');
         </script>
@@ -205,7 +205,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </tr>
 <?php } ?>
 
-<?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G4_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
+<?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
 <tr>
     <th scope="row"><label for="reg_mb_open">정보공개</label></th>
     <td>
@@ -222,7 +222,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <th scope="row">정보공개</th>
     <td>
         <span class="frm_info">
-            정보공개는 수정후 <?php echo (int)$config['cf_open_modify'] ?>일 이내, <?php echo date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:G4_SERVER_TIME+$config['cf_open_modify']*86400); ?> 까지는 변경이 안됩니다.<br>
+            정보공개는 수정후 <?php echo (int)$config['cf_open_modify'] ?>일 이내, <?php echo date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:G5_SERVER_TIME+$config['cf_open_modify']*86400); ?> 까지는 변경이 안됩니다.<br>
             이렇게 하는 이유는 잦은 정보공개 수정으로 인하여 쪽지를 보낸 후 받지 않는 경우를 막기 위해서 입니다.
         </span>
         <input type="hidden" name="mb_open" value="<?php echo $member['mb_open'] ?>">
@@ -248,7 +248,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         작성하신 내용을 제출하시려면 <strong><?php echo $w==''?'회원가입':'정보수정'; ?></strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>취소</strong> 링크를 누르세요.
     </p>
     <input type="submit" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" id="btn_submit" class="btn_submit" accesskey="s">
-    <a href="<?php echo $g4['path'] ?>/" class="btn_cancel">취소</a>
+    <a href="<?php echo $g5['path'] ?>/" class="btn_cancel">취소</a>
 </div>
 </form>
 
@@ -257,7 +257,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 if ($config['cf_cert_use']) {
     // KCP 휴대폰인증 form
     if($config['cf_cert_hp'] == 'kcp')
-        include_once(G4_KCPCERT_PATH.'/kcpcert_form.php');
+        include_once(G5_KCPCERT_PATH.'/kcpcert_form.php');
 }
 ?>
 
@@ -272,7 +272,7 @@ $(function() {
         if(!cert_confirm())
             return false;
 
-        var url = "<?php echo G4_OKNAME_URL; ?>/ipin1.php";
+        var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php";
         certify_win_open('kcb-ipin', url);
         return;
     });
@@ -287,11 +287,11 @@ $(function() {
         <?php
         switch($config['cf_cert_hp']) {
             case 'kcb':
-                $cert_url = G4_OKNAME_URL.'/hpcert1.php';
+                $cert_url = G5_OKNAME_URL.'/hpcert1.php';
                 $cert_type = 'kcb-hp';
                 break;
             case 'kcp':
-                $cert_url = G4_KCPCERT_URL.'/kcpcert_form.php';
+                $cert_url = G5_KCPCERT_URL.'/kcpcert_form.php';
                 $cert_type = 'kcp-hp';
                 break;
             default:

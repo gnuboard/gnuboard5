@@ -10,14 +10,14 @@ include_once('./key_dir_check.php');
 // 실행모듈
 if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
     if(PHP_INT_MAX == 2147483647) // 32-bit
-        $exe = G4_OKNAME_PATH.'/bin/okname';
+        $exe = G5_OKNAME_PATH.'/bin/okname';
     else
-        $exe = G4_OKNAME_PATH.'/bin/okname_x64';
+        $exe = G5_OKNAME_PATH.'/bin/okname_x64';
 } else {
     if(PHP_INT_MAX == 2147483647) // 32-bit
-        $exe = G4_OKNAME_PATH.'/bin/okname.exe';
+        $exe = G5_OKNAME_PATH.'/bin/okname.exe';
     else
-        $exe = G4_OKNAME_PATH.'/bin/oknamex64.exe';
+        $exe = G5_OKNAME_PATH.'/bin/oknamex64.exe';
 }
 
 if($config['cf_cert_use'] == 2) {
@@ -35,10 +35,10 @@ if($config['cf_cert_use'] == 2) {
 }
 
 $idpCode   = 'V';
-$returnUrl = G4_OKNAME_URL.'/ipin2.php';    // 아이핀 인증을 마치고 돌아올 페이지 주소
-$keypath = G4_OKNAME_PATH.'/key/okname.key';    // 키파일이 생성될 위치. 웹서버에 해당파일을 생성할 권한 필요.
+$returnUrl = G5_OKNAME_URL.'/ipin2.php';    // 아이핀 인증을 마치고 돌아올 페이지 주소
+$keypath = G5_OKNAME_PATH.'/key/okname.key';    // 키파일이 생성될 위치. 웹서버에 해당파일을 생성할 권한 필요.
 $memid = $cpCode;   // 회원사코드
 $reserved1 = '0';   //reserved1
 $reserved2 = '0';   //reserved2
-$logpath = G4_OKNAME_PATH.'/log';   // 로그파일을 남기는 경우 로그파일이 생성될 경로 option에 'L'이 포함된 경우에만 생성
+$logpath = G5_OKNAME_PATH.'/log';   // 로그파일을 남기는 경우 로그파일이 생성될 경로 option에 'L'이 포함된 경우에만 생성
 ?>

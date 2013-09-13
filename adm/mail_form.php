@@ -1,7 +1,7 @@
 <?php
 $sub_menu = "200300";
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], 'r');
 
@@ -13,7 +13,7 @@ if ($w == 'u') {
     $html_title .= '수정';
     $readonly = ' readonly';
 
-    $sql = " select * from {$g4['mail_table']} where ma_id = '{$ma_id}' ";
+    $sql = " select * from {$g5['mail_table']} where ma_id = '{$ma_id}' ";
     $ma = sql_fetch($sql);
     if (!$ma['ma_id'])
         alert('등록된 자료가 없습니다.');
@@ -21,7 +21,7 @@ if ($w == 'u') {
     $html_title .= '입력';
 }
 
-$g4['title'] = $html_title;
+$g5['title'] = $html_title;
 include_once('./admin.head.php');
 ?>
 

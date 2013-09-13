@@ -2,10 +2,10 @@
 include_once('./_common.php');
 
 if (!$is_member)
-    goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL.'/mypage.php'));
+    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL.'/mypage.php'));
 
-$g4['title'] = "보관함";
-include_once(G4_MSHOP_PATH.'/_head.php');
+$g5['title'] = "보관함";
+include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
 <div id="sod_ws">
@@ -27,14 +27,14 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <tbody>
     <?php
     $sql = " select a.wi_id, a.wi_time, b.*
-               from {$g4['shop_wish_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
+               from {$g5['shop_wish_table']} a left join {$g5['shop_item_table']} b on ( a.it_id = b.it_id )
               where a.mb_id = '{$member['mb_id']}'
               order by a.wi_id desc ";
     $result = sql_query($sql);
     for ($i=0; $row = mysql_fetch_array($result); $i++) {
 
         $out_cd = '';
-        $sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
+        $sql = " select count(*) as cnt from {$g5['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
         $tmp = sql_fetch($sql);
         if($tmp['cnt'])
             $out_cd = 'no';
@@ -50,7 +50,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <tr>
         <td class="sod_ws_img"><?php echo $image; ?></td>
         <td>
-            <a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
+            <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
             <small>보관일시 <?php echo $row['wi_time']; ?></small>
         </td>
         <td class="td_chk">
@@ -70,7 +70,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
             <input type="hidden" name="io_value[<?php echo $row['it_id']; ?>][0]" value="<?php echo $row['it_name']; ?>">
             <input type="hidden"   name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
         </td>
-        <td class="td_smallmng"><a href="<?php echo G4_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
+        <td class="td_smallmng"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
     </tr>
     <?php
     }
@@ -136,5 +136,5 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 </script>
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

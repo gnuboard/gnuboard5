@@ -4,10 +4,10 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '배송업체관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '배송업체관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g4['shop_delivery_table']} ";
+$sql_common = " from {$g5['shop_delivery_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -61,5 +61,5 @@ $result = sql_query($sql);
 </section>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

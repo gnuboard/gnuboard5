@@ -6,7 +6,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <!-- <?php echo $bo_subject; ?> 최신글 시작 { -->
 <div class="lt">
-    <strong class="lt_title"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject; ?></a></strong>
+    <strong class="lt_title"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject; ?></a></strong>
     <ul>
     <?php for ($i=0; $i<count($list); $i++) {  ?>
         <li>
@@ -38,6 +38,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <li>게시물이 없습니다.</li>
     <?php }  ?>
     </ul>
-    <div class="lt_more"><a href="<?php echo G4_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
+    <div class="lt_more"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><span class="sound_only"><?php echo $bo_subject ?></span>더보기</a></div>
 </div>
 <!-- } <?php echo $bo_subject; ?> 최신글 끝 -->

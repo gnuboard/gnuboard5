@@ -1,11 +1,11 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-include_once(G4_LIB_PATH.'/thumbnail.lib.php');
+include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $g4['title'] ?></h1><?php } ?>
+<?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $g5['title'] ?></h1><?php } ?>
 
 <div class="ad72890">
     <script type="text/javascript"><!--

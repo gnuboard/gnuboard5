@@ -23,7 +23,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 <?php
 $sql = " select *,
             (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
-           from {$g4['shop_order_table']}
+           from {$g5['shop_order_table']}
           where mb_id = '{$member['mb_id']}'
           group by od_id
           order by od_id desc
@@ -37,7 +37,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 <tr>
     <td>
         <input type="hidden" name="ct_id[<?php echo $i; ?>]" value="<?php echo $row['ct_id']; ?>">
-        <a href="<?php echo G4_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a>
+        <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a>
     </td>
     <td><?php echo substr($row['od_time'],0,16); ?> (<?php echo get_yoil($row['od_time']); ?>)</td>
     <td class="td_num"><?php echo $row['od_cart_count']; ?></td>

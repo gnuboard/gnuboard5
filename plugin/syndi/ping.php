@@ -15,10 +15,10 @@ $syndi_path = dirname(__FILE__);
 
 include $syndi_path . '/config/site.config.php';
 
-$sql = " select bo_table from " . $g4['board_table'] . " b, ". $g4['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id order by b.gr_id, b.bo_table limit 1 ";
+$sql = " select bo_table from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id order by b.gr_id, b.bo_table limit 1 ";
 $channel = sql_fetch($sql);
 
-$sql = " select wr_id from {$g4['write_prefix']}{$channel['bo_table']} where wr_is_comment = 0 order by wr_num, wr_reply desc limit 1 ";
+$sql = " select wr_id from {$g5['write_prefix']}{$channel['bo_table']} where wr_is_comment = 0 order by wr_num, wr_reply desc limit 1 ";
 $article = sql_fetch($sql);
 ?>
 
@@ -47,14 +47,14 @@ a:focus, a:hover {background:#333;color:#fff;text-decoration:none}
 <ul>
     <li><a href="http://dev.naver.com/openapi/apis/function/syndication">Syndication API</a></li>
     <li><a href="http://syndication.openapi.naver.com/status/?site=<?php echo $syndi_tag_domain; ?>" class="left_line">Naver Syndication 연결확인</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=site" class="bg">사이트 정보</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=channel" class="bg left_line">특정 채널 정보</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=channel" class="bg">채널 목록</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=article" class="left_line">사이트의 모든 문서 목록</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=article">특정 채널의 문서 목록</a></li>
-    <li><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:article:<?php echo $channel['bo_table']; ?>-<?php echo $article['wr_id']; ?>&type=article" class="left_line">특정 문서 정보</a></li>
-    <li class="no_bottom_line"><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=deleted" class="bg">사이트의 모든 삭제문서 목록</a></li>
-    <li class="no_bottom_line"><a href="<?php echo G4_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=deleted" class="bg left_line">특정 채널의 삭제 문서 목록</a></li>
+    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=site" class="bg">사이트 정보</a></li>
+    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=channel" class="bg left_line">특정 채널 정보</a></li>
+    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=channel" class="bg">채널 목록</a></li>
+    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=article" class="left_line">사이트의 모든 문서 목록</a></li>
+    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=article">특정 채널의 문서 목록</a></li>
+    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:article:<?php echo $channel['bo_table']; ?>-<?php echo $article['wr_id']; ?>&type=article" class="left_line">특정 문서 정보</a></li>
+    <li class="no_bottom_line"><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=deleted" class="bg">사이트의 모든 삭제문서 목록</a></li>
+    <li class="no_bottom_line"><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=deleted" class="bg left_line">특정 채널의 삭제 문서 목록</a></li>
 </ul>
 
 </body>
