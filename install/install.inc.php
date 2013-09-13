@@ -1,0 +1,97 @@
+<?php
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+$data_path = '../'.G5_DATA_DIR;
+
+if (!$title) $title = G5_VERSION." 설치";
+?>
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title><?php echo $title ?></title>
+<style>
+body {margin:0;padding:0;background:#f7f7f7}
+h1 {margin:50px auto 30px;width:540px;font-size:1.4em}
+h2 {font-size:1.2em}
+p {line-height:1.5em}
+table {width:100%;border:0;border-collapse:collapse;border-spacing:0;font-size:0.895em}
+caption {padding:0 0 20px;font-weight:bold;text-align:left}
+th,td {padding:5px;border:0;border-top:1px solid #ddd;border-bottom:1px solid #ddd}
+th {text-align:left}
+td span {display:block;margin:0 0 5px;color:#666;font-size:0.9em}
+
+#wrapper {margin:0 auto 20px;padding:20px;width:500px;border:1px solid #eee;background:#fff}
+
+#idx_license {padding:10px;width:480px;height:300px;border:1px solid #ccc;background:#000;color:#fff}
+#idx_agree {padding:0 20px 20px;font-weight:bold;text-align:center}
+
+#btn_confirm {text-align:center}
+
+.outside {margin:0 auto;padding:20px 0;width:542px}
+.st_strong {color:#ff3061;font-weight:normal}
+</style>
+</head>
+<body>
+
+<h1><?php echo $title ?></h1>
+
+<div id="wrapper">
+
+<?php
+// 파일이 존재한다면 설치할 수 없다.
+$dbconfig_file = $data_path.'/'.G5_DBCONFIG_FILE;
+if (file_exists($dbconfig_file)) {
+?>
+    <p>프로그램이 이미 설치되어 있습니다.<br />새로 설치하시려면 다음 파일을 삭제 하신 후 새로고침 하십시오.</p>
+    <ul>
+        <li><?php echo $dbconfig_file ?></li>
+    </ul>
+<?php
+    exit;
+}
+?>
+
+<?php
+$exists_data_dir = true;
+// data 디렉토리가 있는가?
+if (!is_dir($data_path))
+{
+?>
+    <p>루트 디렉토리에 아래로 <?php echo G5_DATA_DIR ?> 디렉토리를 생성하여 주십시오.<br />
+    (common.php 파일이 있는곳이 루트 디렉토리 입니다.)<br /><br />
+    $> mkdir <?php echo G5_DATA_DIR ?><br /><br />
+    윈도우의 경우 data 폴더를 하나 생성해 주시기 바랍니다.<br /><br />
+    위 명령 실행후 브라우저를 새로고침 하십시오.</p>
+<?php
+    $exists_data_dir = false;
+}
+?>
+
+<?php
+$write_data_dir = true;
+// data 디렉토리에 파일 생성 가능한지 검사.
+if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+    $sapi_type = php_sapi_name(); 
+    if (substr($sapi_type, 0, 3) == 'cgi') { 
+        if (!(is_readable($data_path) && is_executable($data_path)))
+        {
+        ?>
+            <p><?php echo G5_DATA_DIR ?> 디렉토리의 퍼미션을 705로 변경하여 주십시오.<br /><br />
+            $> chmod 705 <?php echo G5_DATA_DIR ?> 또는 chmod uo+rx <?php echo G5_DATA_DIR ?><br /><br />
+            위 명령 실행후 브라우저를 새로고침 하십시오.</p>
+        <?php
+            $write_data_dir = false;
+        }
+    } else {
+        if (!(is_readable($data_path) && is_writeable($data_path) && is_executable($data_path)))
+        {
+        ?>
+            <p><?php echo G5_DATA_DIR ?> 디렉토리의 퍼미션을 707로 변경하여 주십시오.<br /><br />
+            $> chmod 707 <?php echo G5_DATA_DIR ?> 또는 chmod uo+rwx <?php echo G5_DATA_DIR ?><br /><br />
+            위 명령 실행후 브라우저를 새로고침 하십시오.</p>
+        <?php
+            $write_data_dir = false;
+        }
+    }
+}
+?>

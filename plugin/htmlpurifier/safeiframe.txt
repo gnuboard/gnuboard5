@@ -1,0 +1,6 @@
+# iframe 허용 도메인을 한줄에 하나씩만 적으세요.
+# 도메인 뒤에 가급적 / 를 붙여주세요.
+www.youtube(?:-nocookie)?.com/
+serviceapi.rmcnmv.naver.com/
+videofarm.daum.net/
+player.vimeo.com/
