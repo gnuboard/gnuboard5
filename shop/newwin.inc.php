@@ -36,7 +36,7 @@ $(function() {
         var ck_name = id[1];
         var exp_time = parseInt(id[2]);
         $("#"+id[1]).css("display", "none");
-        set_cookie(ck_name, 1, exp_time, g4_cookie_domain);
+        set_cookie(ck_name, 1, exp_time, g5_cookie_domain);
     });
     $('.hd_pops_close').click(function() {
         var idb = $(this).attr('class').split(' ');

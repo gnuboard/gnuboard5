@@ -5,7 +5,7 @@ include_once(G5_PATH.'/head.sub.php');
 
 <script>
 alert("<?php echo $msg; ?>");
-document.location=g4_bbs_url+"/login.php?url=<?php echo $url; ?>";
+document.location=g5_bbs_url+"/login.php?url=<?php echo $url; ?>";
 </script>
 
 <?php
