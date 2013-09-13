@@ -52,6 +52,7 @@ $sql = " update {$g4['config_table']}
                 cf_filter = '{$_POST['cf_filter']}',
                 cf_possible_ip = '".trim($_POST['cf_possible_ip'])."',
                 cf_intercept_ip = '".trim($_POST['cf_intercept_ip'])."',
+                cf_analytics = '{$_POST['cf_analytics']}',
                 cf_member_skin = '{$_POST['cf_member_skin']}',
                 cf_use_homepage = '{$_POST['cf_use_homepage']}',
                 cf_req_homepage = '{$_POST['cf_req_homepage']}',

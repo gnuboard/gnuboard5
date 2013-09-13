@@ -57,6 +57,10 @@ if(!G4_IS_MOBILE) {
 <a href="<?php echo $href; ?>" id="device_change">모바일 버전으로 보기</a>
 <?php
 }
+
+if ($config['cf_analytics']) {
+    echo $config['cf_analytics'];
+}
 ?>
 
 <!-- } 하단 끝 -->

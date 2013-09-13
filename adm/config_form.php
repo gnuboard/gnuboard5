@@ -68,7 +68,6 @@ if(!sql_query(" SELECT uq_ip from {$g4['uniqid_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE {$g4['uniqid_table']} ADD `uq_ip` VARCHAR(255) NOT NULL ");
 }
 
-
 // 임시저장 테이블이 없을 경우 생성
 if(!sql_query(" DESC {$g4['autosave_table']} ", false)) {
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g4['autosave_table']}` (
@@ -112,6 +111,11 @@ if(!isset($config['cf_cert_use'])) {
                   PRIMARY KEY (`cr_id`),
                   KEY `mb_id` (`mb_id`)
                 )", true);
+}
+
+if(!isset($config['cf_analytics'])) {
+    sql_query(" ALTER TABLE `{$g4['config_table']}`
+                    ADD `cf_analytics` TEXT NOT NULL AFTER `cf_intercept_ip` ", true);
 }
 
 $g4['title'] = '환경설정';
@@ -372,6 +376,13 @@ $pg_anchor = '<ul class="anchor">
         <td>
             <?php echo help('입력된 IP의 컴퓨터는 접근할 수 없음.<br>123.123.+ 도 입력 가능. (엔터로 구분)') ?>
             <textarea name="cf_intercept_ip" id="cf_intercept_ip"><?php echo $config['cf_intercept_ip'] ?> </textarea>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="cf_analytics">방문자분석 스크립트</label></th>
+        <td colspan="3">
+            <?php echo help('방문자분석 스크립트 코드를 입력합니다. 예) 구글 애널리스틱'); ?>
+            <textarea name="cf_analytics" id="cf_analytics"><?php echo $config['cf_analytics']; ?> </textarea>
         </td>
     </tr>
     </tbody>

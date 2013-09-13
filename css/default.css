@@ -22,7 +22,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
-#logo {padding:17px 0}
+#logo {padding:26px 0}
 
 /* 전체 검색 */
 #sch_all {position:absolute;top:22px;left:170px;margin:0;padding:0;border:1px solid #555}
