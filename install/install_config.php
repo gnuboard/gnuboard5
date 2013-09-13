@@ -64,7 +64,7 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">그누보드4s 재설치</label></th>
+        <th scope="row"><label for=""><?php echo G5_VERSION; ?> 재설치</label></th>
         <td>
             <input name="g5_install" type="checkbox" value="1" id="g5_install">재설치
         </td>
@@ -115,7 +115,7 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
 </div>
 
 <p class="outside">
-    <strong class="st_strong">주의! 이미 <?php echo G5_VERSION ?>가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
+    <strong class="st_strong">주의! 이미 <?php echo G5_VERSION; ?>가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
     주의사항을 이해하고, 새로 설치하시려면 다음을 눌러 설치를 계속하십시오.
 </p>
 
