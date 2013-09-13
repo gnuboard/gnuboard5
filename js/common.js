@@ -426,7 +426,7 @@ function font_resize(id, act)
         }
     });
 
-    set_cookie("ck_font_resize_act", act, 1, g4_cookie_domain);
+    set_cookie("ck_font_resize_act", act, 1, g5_cookie_domain);
 }
 
 

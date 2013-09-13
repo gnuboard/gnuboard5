@@ -2,7 +2,9 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $data_path = '../'.G5_DATA_DIR;
 
-if (!$title) $title = "그누보드4s 설치";
+
+if (!$title) $title = G5_VERSION." 설치";
+
 ?>
 <!doctype html>
 <html lang="ko">
@@ -71,8 +73,8 @@ if (!is_dir($data_path))
 $write_data_dir = true;
 // data 디렉토리에 파일 생성 가능한지 검사.
 if (strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
-    $sapi_type = php_sapi_name(); 
-    if (substr($sapi_type, 0, 3) == 'cgi') { 
+    $sapi_type = php_sapi_name();
+    if (substr($sapi_type, 0, 3) == 'cgi') {
         if (!(is_readable($data_path) && is_executable($data_path)))
         {
         ?>

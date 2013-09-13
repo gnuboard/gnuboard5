@@ -53,7 +53,7 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
 $g5['title'] = '게시판관리';
 include_once('./admin.head.php');
 
-$colspan = 15;
+$colspan = 16;
 ?>
 
 <form name="fsearch" id="fsearch" method="get">
@@ -172,7 +172,7 @@ $colspan = 15;
                 <option value="mobile"<?php echo get_selected($row['bo_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
-        <td class="td_smallmng"><?php echo $one_update ?> <?php echo $one_copy ?></td>
+        <td><?php echo $one_update ?> <?php echo $one_copy ?></td>
     </tr>
     <?php
     }

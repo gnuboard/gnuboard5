@@ -25,7 +25,7 @@ if ($config['cf_include_tail']) {
 <div id="ft">
     <?php echo popular('basic'); // 인기검색어  ?>
     <?php echo visit('basic'); // 방문자수  ?>
-    <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_catch.jpg" alt="gnuboard4 second edition"></div>
+    <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_catch.jpg" alt="<?php echo G5_VERSION ?>"></div>
     <div id="ft_copy">
         <p>
             Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.<br>

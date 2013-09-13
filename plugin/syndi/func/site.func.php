@@ -1,8 +1,8 @@
 <?php
 /**
- * @file syndi.config.gnuboard4_utf8.php
+ * @file plugin/syndi/func/site.func.php
  * @author sol (ngleader@gmail.com)
- * @brief syndication client functions for gnuboard4 utf-8
+ * @brief syndication client functions for gnuboard5
  * 
  * Syndi_getSiteInfo	: 사이트 정보
  * Syndi_getChannelList	: 사이트의 게시판

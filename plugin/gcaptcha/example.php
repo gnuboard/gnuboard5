@@ -13,7 +13,7 @@ include_once("./_common.php");
 <script>
 function change_captcha()
 {
-    document.getElementById('captcha').setAttribute('src', g4_path+'/plugin/captcha/run.php?t='+(new Date).getTime());
+    document.getElementById('captcha').setAttribute('src', g5_path+'/plugin/captcha/run.php?t='+(new Date).getTime());
 }
 
 function form_submit(f)

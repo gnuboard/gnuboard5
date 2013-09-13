@@ -15,7 +15,7 @@ $content = $se['ma_content'] . "<hr size=0><p><span style='font-size:9pt; font-f
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>그누보드 메일발송 테스트</title>
+<title><?php echo G5_VERSION ?> 메일발송 테스트</title>
 </head>
 
 <body>

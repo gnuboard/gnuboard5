@@ -3,7 +3,7 @@
  * @file include.bbs.move_update.php
  * @author sol (ngleader@gmail.com)
  * @brief 글 등록/수정시 Syndication Ping
- *        gnuboard4/bbs/move_update.php 파일에 추가
+ *        gnuboard5/bbs/move_update.php 파일에 추가
  *        include '../syndi/include/include.bbs.move_update.php';
  */
 if(!defined('_GNUBOARD_')) return;

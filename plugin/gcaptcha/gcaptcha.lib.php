@@ -179,7 +179,7 @@ function captcha_html($class='captcha')
     $jpg_file_url = G5_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
     $mp3_file_url = G5_DATA_URL.'/cache/'.$obj->captcha_filename.'.mp3';
 
-    $html .= "\n".'<script>var g4_gcaptcha_url = "'.G5_GCAPTCHA_URL.'";</script>';
+    $html .= "\n".'<script>var g5_gcaptcha_url = "'.G5_GCAPTCHA_URL.'";</script>';
     $html .= "\n".'<script src="'.G5_GCAPTCHA_URL.'/gcaptcha.js"></script>';
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">자동등록방지</legend>';

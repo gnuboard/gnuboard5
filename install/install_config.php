@@ -6,8 +6,8 @@ header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
-$title = "그누보드4s 설치 3단계 중 2단계 설정";
 include_once ('../config.php');
+$title = G5_VERSION." 설치 3단계 중 2단계 설정";
 include_once ('./install.inc.php');
 
 if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
@@ -115,7 +115,7 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
 </div>
 
 <p class="outside">
-    <strong class="st_strong">주의! 이미 그누보드4s가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
+    <strong class="st_strong">주의! 이미 <?php echo G5_VERSION ?>가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
     주의사항을 이해하고, 새로 설치하시려면 다음을 눌러 설치를 계속하십시오.
 </p>
 

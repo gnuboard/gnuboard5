@@ -4,6 +4,8 @@
     상수 선언
 ********************/
 
+define('G5_VERSION', '그누보드5');
+
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
 
@@ -11,7 +13,6 @@ if (PHP_VERSION >= '5.1.0') {
     //if (function_exists("date_default_timezone_set")) date_default_timezone_set("Asia/Seoul");
     date_default_timezone_set("Asia/Seoul");
 }
-
 
 /********************
     경로 상수
@@ -22,7 +23,7 @@ if (PHP_VERSION >= '5.1.0') {
 회원가입, 글쓰기에 사용되는 https 로 시작되는 주소를 말합니다.
 포트가 있다면 도메인 뒤에 :443 과 같이 입력하세요.
 보안서버주소가 없다면 공란으로 두시면 되며 보안서버주소 뒤에 / 는 붙이지 않습니다.
-입력예) https://www.domain.com:443/gnuboard4s
+입력예) https://www.domain.com:443/gnuboard5
 */
 define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');

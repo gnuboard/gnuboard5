@@ -3,7 +3,7 @@
  * @file include.adm.board_form_update.php
  * @author sol (ngleader@gmail.com)
  * @brief 게시판 삭제시 Syndication Ping
- *        gnuboard4/adm/board_form_update.php 파일에 추가
+ *        gnuboard5/adm/board_form_update.php 파일에 추가
  *        include '../syndi/include/include.adm.board_form_update.php';
  */
 if(!defined('_GNUBOARD_')) return;

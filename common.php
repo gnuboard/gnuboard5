@@ -64,7 +64,7 @@ $group  = array();
 $g5     = array();
 
 
-function g4_path()
+function g5_path()
 {
     $result['path'] = str_replace('\\', '/', dirname(__FILE__));
     $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $_SERVER['SCRIPT_NAME']);
@@ -77,7 +77,7 @@ function g4_path()
     return $result;
 }
 
-$g5_path = g4_path();
+$g5_path = g5_path();
 
 include_once($g5_path['path'].'/config.php');   // 설정 파일
 
@@ -103,7 +103,7 @@ if (file_exists($dbconfig_file)) {
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>오류! 그누보드4s 설치하기</title>
+<title>오류! <?php echo G5_VERSION ?> 설치하기</title>
 <style>
 body {background:#f7f7f2}
 h1 {margin:50px auto 30px;width:540px;color:#ff3061;font-size:1.4em}
@@ -120,7 +120,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
             <li><strong><?php echo G5_DATA_DIR.'/'.G5_DBCONFIG_FILE ?></strong></li>
         </ul>
         <p>프로그램 설치 후 실행하시기 바랍니다.</p>
-        <a href="<?php echo G5_URL; ?>/install/">그누보드4s 설치하기</a>
+        <a href="<?php echo G5_URL; ?>/install/"><?php echo G5_VERSION ?> 설치하기</a>
     </div>
 </body>
 </html>

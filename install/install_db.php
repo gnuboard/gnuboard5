@@ -7,8 +7,8 @@ header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
-$title = "그누보드4s 설치 3단계 중 3단계 설치 완료";
 include_once ('../config.php');
+$title = G5_VERSION." 설치 3단계 중 3단계 설치 완료";
 include_once ('./install.inc.php');
 
 //print_r($_POST); exit;
@@ -18,7 +18,7 @@ $mysql_user  = $_POST['mysql_user'];
 $mysql_pass  = $_POST['mysql_pass'];
 $mysql_db    = $_POST['mysql_db'];
 $table_prefix= $_POST['table_prefix'];
-$g5s_install = $_POST['g5_install'];
+$g5_install  = $_POST['g5_install'];
 $shop_prefix = $_POST['shop_prefix'];
 $shop_install= $_POST['shop_install'];
 $admin_id    = $_POST['admin_id'];
@@ -45,17 +45,17 @@ if (!$select_db) {
 }
 ?>
 
-<h2>그누보드4s 설치가 시작되었습니다.</h2>
+<h2><?php echo G5_VERSION ?> 설치가 시작되었습니다.</h2>
 
 <ol>
 <?php
 $sql = " desc {$table_prefix}config";
 $result = @mysql_query($sql);
 
-// 그누보드4s 재설치에 체크하였거나 그누보드4s가 설치되어 있지 않다면
-if($g5s_install || !$result) {
+// 그누보드5 재설치에 체크하였거나 그누보드5가 설치되어 있지 않다면
+if($g5_install || !$result) {
     // 테이블 생성 ------------------------------------
-    $file = implode('', file('./gnuboard4s.sql'));
+    $file = implode('', file('./gnuboard5.sql'));
     eval("\$file = \"$file\";");
 
     $file = preg_replace('/^--.*$/m', '', $file);
@@ -92,9 +92,9 @@ $download_point = 0;
 
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
-if($g5s_install || !$result) {
+if($g5_install || !$result) {
     $sql = " insert into `{$table_prefix}config`
-                set cf_title = '그누보드4s',
+                set cf_title = '".G5_VERSION."',
                     cf_admin = '$admin_id',
                     cf_use_point = '1',
                     cf_use_norobot = '1',
@@ -525,7 +525,7 @@ if($shop_install) {
 ?>
 </ol>
 
-<p class="st_strong">축하합니다. 그누보드4s 설치가 완료되었습니다.</p>
+<p class="st_strong">축하합니다. <?php echo G5_VERSION ?> 설치가 완료되었습니다.</p>
 
 <h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
 

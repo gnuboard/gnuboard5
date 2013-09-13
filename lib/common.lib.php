@@ -169,21 +169,6 @@ function alert_close($msg, $error=true)
     exit;
 }
 
-
-// 경고메세지 출력후 창을 닫음
-function alert_login($msg, $url)
-{
-    global $g5;
-
-    $header = '';
-    if (isset($g5['title'])) {
-        $header = $g5['title'];
-    }
-    include_once(G5_BBS_PATH.'/alert_login.php');
-    exit;
-}
-
-
 // confirm 창
 function confirm($msg, $url1='', $url2='', $url3='')
 {
@@ -1915,7 +1900,7 @@ function abs_ip2long($ip='')
 
 function get_selected($field, $value)
 {
-    return ($field==$value) ? ' selected' : '';
+    return ($field==$value) ? ' selected="selected"' : '';
 }
 
 
@@ -1948,7 +1933,7 @@ function get_uniqid()
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
-        $key = date('YmdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
+        $key = date('ymdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
 
         $result = sql_query(" insert into {$g5['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
         if ($result) break; // 쿼리가 정상이면 빠진다.
@@ -2225,8 +2210,11 @@ function hyphen_hp_number($hp)
 function login_url($url='')
 {
     if (!$url) $url = G5_URL;
-    //$p = parse_url($url);
-    //return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
+    /*
+    $p = parse_url($url);
+    echo urlencode($_SERVER['REQUEST_URI']);
+    return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
+    */
     return $url;
 }
 
@@ -2369,14 +2357,5 @@ function certify_count_check($mb_id, $type)
 
     if((int)$row['cnt'] >= (int)$config['cf_cert_limit'])
         alert_close('오늘 '.$cert.' 본인확인을 '.$row['cnt'].'회 이용하셔서 더 이상 이용할 수 없습니다.');
-}
-
-// die 함수를 utf-8 환경에서 사용할 때 한글깨짐방지
-function die_utf8($msg)
-{
-    if(!trim($msg))
-        return;
-
-    die('<html><head><head><meta charset="utf-8"></head>'.$msg.'</html>');
 }
 ?>

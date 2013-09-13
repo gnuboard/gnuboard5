@@ -123,7 +123,6 @@ if ($w == '') {
     $board['bo_include_head'] = '_head.php';
     $board['bo_include_tail'] = '_tail.php';
     $board['bo_show_menu'] = true;
-    $board['bo_use_cert'] = 'none';
 
 } else if ($w == 'u') {
 

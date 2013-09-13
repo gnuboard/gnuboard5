@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit;
 // 방문자수 출력
 function visit($skin_dir='basic')
 {
-    global $config, $g5, $is_admin;
+    global $config, $g5;
 
     // visit 배열변수에
     // $visit[1] = 오늘

@@ -15,7 +15,7 @@ function editor_html($id, $content, $is_dhtml_editor=true)
 
     if ($js) {
         $html .= "\n".'<script src="'.$editor_url.'/ckeditor.js"></script>';
-        $html .= "\n".'<script>var g4_editor_url = "'.$editor_url.'";</script>';
+        $html .= "\n".'<script>var g5_editor_url = "'.$editor_url.'";</script>';
         $html .= "\n".'<script src="'.$editor_url.'/config.js"></script>';
         $html .= "\n<script>";
         $html .= '
