@@ -516,7 +516,7 @@ if(!sql_query(" select od_misu from {$g5['g5_shop_order_table']} limit 1 ", fals
 
 // 쿠폰로그 테이블추가
 if(!isset($g5['g5_shop_coupon_log_table']))
-    die_utf8('dbconfig.php 파일에 $g5[\'shop_coupon_log_table\']    = G5_SHOP_TABLE_PREFIX.\'coupon_log\';            // 쿠폰정보 테이블 추가해주세요.');
+    die_utf8('dbconfig.php 파일에 $g5[\'g5_shop_coupon_log_table\']    = G5_SHOP_TABLE_PREFIX.\'coupon_log\';            // 쿠폰사용정보 테이블 추가해주세요.');
 if(!sql_query(" DESCRIBE `{$g5['g5_shop_coupon_log_table']}` ", false)) {
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_coupon_log_table']}` (
                   `cl_id` int(11) NOT NULL AUTO_INCREMENT,
