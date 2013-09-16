@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS `g5_board` (
   `bo_table` varchar(20) NOT NULL DEFAULT '',
   `gr_id` varchar(255) NOT NULL DEFAULT '',
   `bo_subject` varchar(255) NOT NULL DEFAULT '',
+  `bo_mobile_subject` varchar(255) NOT NULL DEFAULT '',
   `bo_device` enum('both','pc','mobile') NOT NULL DEFAULT 'both',
   `bo_admin` varchar(255) NOT NULL DEFAULT '',
   `bo_list_level` tinyint(4) NOT NULL DEFAULT '0',
