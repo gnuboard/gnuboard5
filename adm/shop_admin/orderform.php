@@ -857,7 +857,7 @@ $(function() {
     // 부분취소창
     $("#orderpartcancel").on("click", function() {
         var href = this.href;
-        window.open(href, "partcancelwin", "left=100, top=100, width=600, height=400, scrollbars=yes");
+        window.open(href, "partcancelwin", "left=100, top=100, width=600, height=350, scrollbars=yes");
         return false;
     });
 });
