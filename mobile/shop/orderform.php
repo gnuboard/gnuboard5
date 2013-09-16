@@ -571,14 +571,14 @@ ob_end_clean();
         <tbody>
         <?php if($oc_cnt > 0) { ?>
         <tr>
-            <th scope="row">결제할인쿠폰</th>
+            <th scope="row">주문할인쿠폰</th>
             <td>
                 <input type="hidden" name="od_cp_id" value="">
                 <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
             </td>
         </tr>
         <tr>
-            <th scope="row">결제할인금액</th>
+            <th scope="row">주문할인금액</th>
             <td><span id="od_cp_price">0</span>원</td>
         </tr>
         <?php } ?>
