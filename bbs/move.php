@@ -12,8 +12,8 @@ else
 if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
     alert_close("게시판 관리자 이상 접근이 가능합니다.");
 
-$g4['title'] = '게시물 ' . $act;
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '게시물 ' . $act;
+include_once(G5_PATH.'/head.sub.php');
 
 $wr_id_list = '';
 if ($wr_id)
@@ -26,9 +26,9 @@ else {
     }
 }
 
-//$sql = " select * from {$g4['board_table']} a, {$g4['group_table']} b where a.gr_id = b.gr_id and bo_table <> '$bo_table' ";
+//$sql = " select * from {$g5['board_table']} a, {$g5['group_table']} b where a.gr_id = b.gr_id and bo_table <> '$bo_table' ";
 // 원본 게시판을 선택 할 수 있도록 함.
-$sql = " select * from {$g4['board_table']} a, {$g4['group_table']} b where a.gr_id = b.gr_id ";
+$sql = " select * from {$g5['board_table']} a, {$g5['group_table']} b where a.gr_id = b.gr_id ";
 if ($is_admin == 'group')
     $sql .= " and b.gr_admin = '{$member['mb_id']}' ";
 else if ($is_admin == 'board')
@@ -42,7 +42,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <div id="copymove" class="new_win">
-    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
 
     <form name="fboardmoveall" method="post" action="./move_update.php" onsubmit="return fboardmoveall_submit(this);">
     <input type="hidden" name="sw" value="<?php echo $sw ?>">
@@ -152,5 +152,5 @@ function fboardmoveall_submit(f)
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -34,7 +34,7 @@ if($act == "buy")
         $ct_chk = $_POST['ct_chk'][$i];
         if($ct_chk) {
             $it_id = $_POST['it_id'][$i];
-            $sql = " update {$g4['shop_cart_table']}
+            $sql = " update {$g5['g5_shop_cart_table']}
                         set ct_select = '1'
                         where it_id = '$it_id' and od_id = '$tmp_cart_id' ";
             sql_query($sql);
@@ -42,13 +42,13 @@ if($act == "buy")
     }
 
     if ($is_member) // 회원인 경우
-        goto_url(G4_SHOP_URL.'/orderform.php');
+        goto_url(G5_SHOP_URL.'/orderform.php');
     else
-        goto_url(G4_BBS_URL.'/login.php?url='.urlencode(G4_SHOP_URL.'/orderform.php'));
+        goto_url(G5_BBS_URL.'/login.php?url='.urlencode(G5_SHOP_URL.'/orderform.php'));
 }
 else if ($act == "alldelete") // 모두 삭제이면
 {
-    $sql = " delete from {$g4['shop_cart_table']}
+    $sql = " delete from {$g5['g5_shop_cart_table']}
               where od_id = '$tmp_cart_id' ";
     sql_query($sql);
 }
@@ -62,7 +62,7 @@ else if ($act == "seldelete") // 선택삭제
         $ct_chk = $_POST['ct_chk'][$i];
         if($ct_chk) {
             $it_id = $_POST['it_id'][$i];
-            $sql = " delete from {$g4['shop_cart_table']} where it_id = '$it_id' and od_id = '$tmp_cart_id' ";
+            $sql = " delete from {$g5['g5_shop_cart_table']} where it_id = '$it_id' and od_id = '$tmp_cart_id' ";
             sql_query($sql);
         }
     }
@@ -91,14 +91,14 @@ else // 장바구니에 담기
         }
 
         // 상품정보
-        $sql = " select * from {$g4['shop_item_table']} where it_id = '$it_id' ";
+        $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
         $it = sql_fetch($sql);
         if(!$it['it_id'])
             alert('상품정보가 존재하지 않습니다.');
 
         // 옵션정보를 얻어서 배열에 저장
         $opt_list = array();
-        $sql = " select * from {$g4['shop_item_option_table']} where it_id = '$it_id' order by io_no asc ";
+        $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' order by io_no asc ";
         $result = sql_query($sql);
         $lst_count = 0;
         for($k=0; $row=sql_fetch_array($result); $k++) {
@@ -123,7 +123,7 @@ else // 장바구니에 담기
             $io_type = $_POST['io_type'][$it_id][$k];
             $io_value = $_POST['io_value'][$it_id][$k];
 
-            $sql = " select SUM(ct_qty) as cnt from {$g4['shop_cart_table']}
+            $sql = " select SUM(ct_qty) as cnt from {$g5['g5_shop_cart_table']}
                       where it_id = '$it_id'
                         and od_id = '$tmp_cart_id'
                         and io_id = '$io_id' ";
@@ -146,11 +146,11 @@ else // 장바구니에 담기
 
         // 바로구매에 있던 장바구니 자료를 지운다.
         if($i == 0)
-            sql_query(" delete from {$g4['shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
+            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
 
         // 옵션수정일 때 기존 장바구니 자료를 먼저 삭제
         if($act == 'optionmod')
-            sql_query(" delete from {$g4['shop_cart_table']} where od_id = '$tmp_cart_id' and it_id = '$it_id' ");
+            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and it_id = '$it_id' ");
 
         // 장바구니에 Insert
         // 바로구매일 경우 장바구니가 체크된것으로 강제 설정
@@ -161,7 +161,7 @@ else // 장바구니에 담기
 
         // 장바구니에 Insert
         $comma = '';
-        $sql = " INSERT INTO {$g4['shop_cart_table']}
+        $sql = " INSERT INTO {$g5['g5_shop_cart_table']}
                         ( od_id, mb_id, it_id, it_name, ct_status, ct_price, ct_point, ct_point_use, ct_stock_use, ct_option, ct_qty, ct_notax, io_id, io_type, io_price, ct_time, ct_ip, ct_send_cost, ct_direct, ct_select )
                     VALUES ";
 
@@ -183,21 +183,21 @@ else // 장바구니에 담기
 
             // 동일옵션의 상품이 있으면 수량 더함
             $sql2 = " select ct_id
-                        from {$g4['shop_cart_table']}
+                        from {$g5['g5_shop_cart_table']}
                         where od_id = '$tmp_cart_id'
                           and it_id = '$it_id'
                           and io_id = '$io_id'
                           and ct_status = '쇼핑' ";
             $row2 = sql_fetch($sql2);
             if($row2['ct_id']) {
-                $sql3 = " update {$g4['shop_cart_table']}
+                $sql3 = " update {$g5['g5_shop_cart_table']}
                             set ct_qty = ct_qty + '$ct_qty'
                             where ct_id = '{$row2['ct_id']}' ";
                 sql_query($sql3);
                 continue;
             }
 
-            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G4_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
+            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '{$it['it_name']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G5_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
             $comma = ' , ';
             $ct_count++;
         }
@@ -212,15 +212,15 @@ if ($sw_direct)
 {
     if ($is_member)
     {
-    	goto_url(G4_SHOP_URL."/orderform.php?sw_direct=$sw_direct");
+    	goto_url(G5_SHOP_URL."/orderform.php?sw_direct=$sw_direct");
     }
     else
     {
-    	goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL."/orderform.php?sw_direct=$sw_direct"));
+    	goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL."/orderform.php?sw_direct=$sw_direct"));
     }
 }
 else
 {
-    goto_url(G4_SHOP_URL.'/cart.php');
+    goto_url(G5_SHOP_URL.'/cart.php');
 }
 ?>

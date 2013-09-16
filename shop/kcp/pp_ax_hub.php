@@ -15,13 +15,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     /* =   환경 설정                                                                = */
     /* = -------------------------------------------------------------------------- = */
 
-    $g_conf_home_dir  = G4_SHOP_PATH.'/kcp';
+    $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
     $g_conf_key_dir   = '';
     $g_conf_log_dir   = '';
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
     {
-        $g_conf_key_dir   = G4_SHOP_PATH.'/kcp/bin/pub.key';
-        $g_conf_log_dir   = G4_SHOP_PATH.'/kcp/log';
+        $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
+        $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
     }
 
     $g_conf_site_cd = $_POST['site_cd'];

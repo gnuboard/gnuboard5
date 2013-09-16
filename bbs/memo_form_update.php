@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 if ($is_guest)
     alert('회원만 이용하실 수 있습니다.');
@@ -15,7 +15,7 @@ $msg = '';
 $error_list  = array();
 $member_list = array();
 for ($i=0; $i<count($recv_list); $i++) {
-    $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g4['member_table']} where mb_id = '{$recv_list[$i]}' ");
+    $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list[$i]}' ");
     if ($row) {
         if ($is_admin || ($row['mb_open'] && (!$row['mb_leave_date'] || !$row['mb_intercept_date']))) {
             $member_list['id'][]   = $row['mb_id'];
@@ -53,18 +53,18 @@ if (!$is_admin) {
 }
 
 for ($i=0; $i<count($member_list['id']); $i++) {
-    $tmp_row = sql_fetch(" select max(me_id) as max_me_id from {$g4['memo_table']} ");
+    $tmp_row = sql_fetch(" select max(me_id) as max_me_id from {$g5['memo_table']} ");
     $me_id = $tmp_row['max_me_id'] + 1;
 
     $recv_mb_id   = $member_list['id'][$i];
     $recv_mb_nick = get_text($member_list['nick'][$i]);
 
     // 쪽지 INSERT
-    $sql = " insert into {$g4['memo_table']} ( me_id, me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo ) values ( '$me_id', '$recv_mb_id', '{$member['mb_id']}', '".G4_TIME_YMDHIS."', '{$_POST['me_memo']}' ) ";
+    $sql = " insert into {$g5['memo_table']} ( me_id, me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo ) values ( '$me_id', '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}' ) ";
     sql_query($sql);
 
     // 실시간 쪽지 알림 기능
-    $sql = " update {$g4['member_table']} set mb_memo_call = '{$member['mb_id']}' where mb_id = '$recv_mb_id' ";
+    $sql = " update {$g5['member_table']} set mb_memo_call = '{$member['mb_id']}' where mb_id = '$recv_mb_id' ";
     sql_query($sql);
 
     if (!$is_admin) {
@@ -74,8 +74,8 @@ for ($i=0; $i<count($member_list['id']); $i++) {
 
 if ($member_list) {
     $str_nick_list = implode(',', $member_list['nick']);
-    alert($str_nick_list." 님께 쪽지를 전달하였습니다.", G4_HTTP_BBS_URL."/memo.php?kind=send", false);
+    alert($str_nick_list." 님께 쪽지를 전달하였습니다.", G5_HTTP_BBS_URL."/memo.php?kind=send", false);
 } else {
-    alert("회원아이디 오류 같습니다.", G4_HTTP_BBS_URL."/memo_form.php", false);
+    alert("회원아이디 오류 같습니다.", G5_HTTP_BBS_URL."/memo_form.php", false);
 }
 ?>

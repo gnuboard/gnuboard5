@@ -27,7 +27,7 @@ h2 {font-size:1.2em}
 #hd h1, #hd h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrap {z-index:11;position:relative;margin:0 auto;width:1000px}
 #logo {position:relative;height:70px}
-#logo img {position:absolute;top:13px;left:0}
+#logo img {position:absolute;top:19px;left:0}
 
 #tnb {z-index:2;position:absolute;top:20px;right:0;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}

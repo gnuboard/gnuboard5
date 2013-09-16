@@ -12,7 +12,7 @@ function only_number($n)
 if($_FILES['excelfile']['tmp_name']) {
     $file = $_FILES['excelfile']['tmp_name'];
 
-    include_once(G4_LIB_PATH.'/Excel/reader.php');
+    include_once(G5_LIB_PATH.'/Excel/reader.php');
 
     $data = new Spreadsheet_Excel_Reader();
 
@@ -72,8 +72,8 @@ if($_FILES['excelfile']['tmp_name']) {
     $succ_count = 0;
     $comma = '';
 
-    $sql = " INSERT INTO {$g4['shop_item_table']}
-                  ( it_id, ca_id, ca_id2, ca_id3, it_name, it_gallery, it_maker, it_origin, it_brand, it_model, it_type1, it_type2, it_type3, it_type4, it_type5, it_basic, it_explan, it_mobile_explan, it_explan_html, it_cust_price, it_price, it_point, it_sell_email, it_use, it_stock_qty, it_time, it_ip, it_order, it_tel_inq, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10 )
+    $sql = " INSERT INTO {$g5['g5_shop_item_table']}
+                  ( it_id, ca_id, ca_id2, ca_id3, it_name, it_maker, it_origin, it_brand, it_model, it_type1, it_type2, it_type3, it_type4, it_type5, it_basic, it_explan, it_mobile_explan, it_explan_html, it_cust_price, it_price, it_point, it_sell_email, it_use, it_stock_qty, it_time, it_ip, it_order, it_tel_inq, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10 )
                 VALUES ";
 
     for ($i = 3; $i <= $data->sheets[0]['numRows']; $i++) {
@@ -84,7 +84,6 @@ if($_FILES['excelfile']['tmp_name']) {
         $ca_id2             = addslashes($data->sheets[0]['cells'][$i][3]);
         $ca_id3             = addslashes($data->sheets[0]['cells'][$i][4]);
         $it_name            = addslashes($data->sheets[0]['cells'][$i][5]);
-        $it_gallery         = addslashes($data->sheets[0]['cells'][$i][6]);
         $it_maker           = addslashes($data->sheets[0]['cells'][$i][7]);
         $it_origin          = addslashes($data->sheets[0]['cells'][$i][8]);
         $it_brand           = addslashes($data->sheets[0]['cells'][$i][9]);
@@ -122,7 +121,7 @@ if($_FILES['excelfile']['tmp_name']) {
         }
 
         // it_id 중복체크
-        $sql2 = " select count(*) as cnt from {$g4['shop_item_table']} where it_id = '$it_id' ";
+        $sql2 = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
         $row2 = sql_fetch($sql2);
         if($row2['cnt']) {
             $fail_it_id[] = $it_id;
@@ -133,7 +132,7 @@ if($_FILES['excelfile']['tmp_name']) {
         }
 
         // 기본분류체크
-        $sql2 = " select count(*) as cnt from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
+        $sql2 = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
         $row2 = sql_fetch($sql2);
         if(!$row2['cnt']) {
             $fail_it_id[] = $it_id;
@@ -141,7 +140,7 @@ if($_FILES['excelfile']['tmp_name']) {
             continue;
         }
 
-        $sql .= $comma." ( '$it_id', '$ca_id', '$ca_id2', '$ca_id3', '$it_name', '$it_gallery', '$it_maker', '$it_origin', '$it_brand', '$it_model', '$it_type1', '$it_type2', '$it_type3', '$it_type4', '$it_type5', '$it_basic', '$it_explan', '$it_mobile_explan', '1', '$it_cust_price', '$it_price', '$it_point', '$it_sell_email', '$it_use', '$it_stock_qty', '".G4_TIME_YMDHIS."', '".$_SERVER['REMOTE_ADDR']."', '$it_order', '$it_tel_inq', '$it_img1', '$it_img2', '$it_img3', '$it_img4', '$it_img5', '$it_img6', '$it_img7', '$it_img8', '$it_img9', '$it_img10' ) ";
+        $sql .= $comma." ( '$it_id', '$ca_id', '$ca_id2', '$ca_id3', '$it_name', '$it_maker', '$it_origin', '$it_brand', '$it_model', '$it_type1', '$it_type2', '$it_type3', '$it_type4', '$it_type5', '$it_basic', '$it_explan', '$it_mobile_explan', '1', '$it_cust_price', '$it_price', '$it_point', '$it_sell_email', '$it_use', '$it_stock_qty', '".G5_TIME_YMDHIS."', '".$_SERVER['REMOTE_ADDR']."', '$it_order', '$it_tel_inq', '$it_img1', '$it_img2', '$it_img3', '$it_img4', '$it_img5', '$it_img6', '$it_img7', '$it_img8', '$it_img9', '$it_img10' ) ";
 
         $comma = ' , ';
         $succ_count++;
@@ -151,12 +150,12 @@ if($_FILES['excelfile']['tmp_name']) {
         sql_query($sql);
 }
 
-$g4['title'] = '상품 엑셀일괄등록 결과';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '상품 엑셀일괄등록 결과';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div class="new_win">
-    <h1><?php echo $g4['title']; ?></h1>
+    <h1><?php echo $g5['title']; ?></h1>
 
     <p class="new_win_desc">상품등록을 완료했습니다.</p>
 
@@ -186,5 +185,5 @@ include_once(G4_PATH.'/head.sub.php');
 </div>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

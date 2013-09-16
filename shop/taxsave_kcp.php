@@ -1,10 +1,10 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '주문번호 '.$od_id.' 현금영수증 발행';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '주문번호 '.$od_id.' 현금영수증 발행';
+include_once(G5_PATH.'/head.sub.php');
 
-$od = sql_fetch(" select * from {$g4['shop_order_table']} where od_id = '$od_id' ");
+$od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 if (!$od)
     die('<p id="scash_empty">주문서가 존재하지 않습니다.</p>');
 
@@ -132,7 +132,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 <body>
 
 <div id="scash" class="new_win">
-    <h1><?php echo $g4['title']; ?></h1>
+    <h1><?php echo $g5['title']; ?></h1>
 
     <section>
         <h2>주문정보</h2>
@@ -170,7 +170,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
     <section>
         <h2>현금영수증 발급 정보</h2>
 
-        <form name="cash_form" action="<?php echo G4_SHOP_URL; ?>/kcp/pp_cli_hub.php" method="post">
+        <form name="cash_form" action="<?php echo G5_SHOP_URL; ?>/kcp/pp_cli_hub.php" method="post">
         <input type="hidden" name="corp_type" value="0"> <!-- 사업자 구분 - 0:직접판매 , 1:입점몰판매 -->
         <input type="hidden" name="ordr_idxx">
         <input type="hidden" name="good_name" value="<?php echo addslashes($goods_name); ?>">
@@ -250,5 +250,5 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 </div>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

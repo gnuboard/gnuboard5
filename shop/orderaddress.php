@@ -5,13 +5,13 @@ if(!$is_member)
     alert_close('회원이시라면 회원로그인 후 이용해 주십시오.');
 
 if($w == 'd') {
-    $sql = " delete from {$g4['shop_order_address_table']} where mb_id = '{$member['mb_id']}' and ad_id = '$ad_id' ";
+    $sql = " delete from {$g5['g5_shop_order_address_table']} where mb_id = '{$member['mb_id']}' and ad_id = '$ad_id' ";
     sql_query($sql);
     goto_url($_SERVER['PHP_SELF']);
 }
 
 $sql = " select *
-            from {$g4['shop_order_address_table']}
+            from {$g5['g5_shop_order_address_table']}
             where mb_id = '{$member['mb_id']}'
             order by ad_default, ad_id desc ";
 $result = sql_query($sql);
@@ -19,13 +19,13 @@ $result = sql_query($sql);
 if(!mysql_num_rows($result))
     alert_close('배송지 목록 자료가 없습니다.');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/orderaddress.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/orderaddress.php');
     return;
 }
 
-$g4['title'] = '배송지 목록';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '배송지 목록';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div id="sod_addr_list" class="new_win">
@@ -103,5 +103,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

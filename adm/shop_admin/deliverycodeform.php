@@ -5,13 +5,13 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], "w");
 
 $html_title = '배송업체';
-$g4['title'] = $html_title;
+$g5['title'] = $html_title;
 
 if ($w == "u") {
     $html_title .= ' 수정';
     $readonly = ' readonly';
 
-    $sql = " select * from {$g4['shop_delivery_table']} where dl_id = '$dl_id' ";
+    $sql = " select * from {$g5['g5_shop_delivery_table']} where dl_id = '$dl_id' ";
     $dl = sql_fetch($sql);
     if (!$dl['dl_id']) alert('등록된 자료가 없습니다.');
 }
@@ -21,7 +21,7 @@ else
     $dl['dl_url'] = "http://";
 }
 
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="fdeliverycodeform" action="./deliverycodeformupdate.php" method="post">
@@ -73,5 +73,5 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
 </form>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

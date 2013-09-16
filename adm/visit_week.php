@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g4['title'] = '요일별 접속자집계';
+$g5['title'] = '요일별 접속자집계';
 include_once('./visit.sub.php');
 
 $colspan = 4;
@@ -12,7 +12,7 @@ $weekday = array ('월', '화', '수', '목', '금', '토', '일');
 
 $sum_count = 0;
 $sql = " select WEEKDAY(vs_date) as weekday_date, SUM(vs_count) as cnt
-            from {$g4['visit_sum_table']}
+            from {$g5['visit_sum_table']}
             where vs_date between '{$fr_date}' and '{$to_date}'
             group by weekday_date
             order by weekday_date ";

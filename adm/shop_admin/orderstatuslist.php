@@ -4,9 +4,9 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '주문개별내역';
-if ($sel_field == 'ct_status') $g4['title'] .= ' ('.$search.')';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '주문개별내역';
+if ($sel_field == 'ct_status') $g5['title'] .= ' ('.$search.')';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $where = " where ";
 $sql_search = "";
@@ -27,9 +27,9 @@ if ($sel_field == "")  $sel_field = "a.od_id";
 if ($sort1 == "") $sort1 = "a.od_id";
 if ($sort2 == "") $sort2 = "desc";
 
-$sql_common = " from {$g4['shop_order_table']} a
-                          left join {$g4['shop_cart_table']} b on (a.od_id = b.od_id)
-                          left join {$g4['shop_item_table']} c on (b.it_id = c.it_id)
+$sql_common = " from {$g5['g5_shop_order_table']} a
+                          left join {$g5['g5_shop_cart_table']} b on (a.od_id = b.od_id)
+                          left join {$g5['g5_shop_item_table']} c on (b.it_id = c.it_id)
                           $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
@@ -109,7 +109,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 </form>
 
 <section class="cbox">
-    <h2><?php echo $g4['title']; ?> 목록</h2>
+    <h2><?php echo $g5['title']; ?> 목록</h2>
 
     <div class="btn_add sort_with">
         <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
@@ -196,8 +196,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

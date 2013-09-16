@@ -10,13 +10,13 @@ if ($w == '' || $w == 'u')
 else if ($w == 'd')
     auth_check($auth[$sub_menu], "d");
 
-@mkdir(G4_DATA_PATH."/item", G4_DIR_PERMISSION);
-@chmod(G4_DATA_PATH."/item", G4_DIR_PERMISSION);
+@mkdir(G5_DATA_PATH."/item", G5_DIR_PERMISSION);
+@chmod(G5_DATA_PATH."/item", G5_DIR_PERMISSION);
 
 // 파일정보
 if($w == "u") {
     $sql = " select it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
-                from {$g4['shop_item_table']}
+                from {$g5['g5_shop_item_table']}
                 where it_id = '$it_id' ";
     $file = sql_fetch($sql);
 
@@ -32,7 +32,7 @@ if($w == "u") {
     $it_img10   = $file['it_img10'];
 }
 
-$it_img_dir = G4_DATA_PATH.'/item';
+$it_img_dir = G5_DATA_PATH.'/item';
 
 // 파일삭제
 if ($it_img1_del) {
@@ -193,16 +193,16 @@ if ($w == "" || $w == "u")
 
 
 // 관련상품을 우선 삭제함
-sql_query(" delete from {$g4['shop_item_relation_table']} where it_id = '$it_id' ");
+sql_query(" delete from {$g5['g5_shop_item_relation_table']} where it_id = '$it_id' ");
 
 // 관련상품의 반대도 삭제
-sql_query(" delete from {$g4['shop_item_relation_table']} where it_id2 = '$it_id' ");
+sql_query(" delete from {$g5['g5_shop_item_relation_table']} where it_id2 = '$it_id' ");
 
 // 이벤트상품을 우선 삭제함
-sql_query(" delete from {$g4['shop_event_item_table']} where it_id = '$it_id' ");
+sql_query(" delete from {$g5['g5_shop_event_item_table']} where it_id = '$it_id' ");
 
 // 선택옵션
-sql_query(" delete from {$g4['shop_item_option_table']} where io_type = '0' and it_id = '$it_id' "); // 기존선택옵션삭제
+sql_query(" delete from {$g5['g5_shop_item_option_table']} where io_type = '0' and it_id = '$it_id' "); // 기존선택옵션삭제
 
 $option_count = count($_POST['opt_id']);
 if($option_count) {
@@ -228,7 +228,7 @@ if($option_count) {
 }
 
 // 추가옵션
-sql_query(" delete from {$g4['shop_item_option_table']} where io_type = '1' and it_id = '$it_id' "); // 기존추가옵션삭제
+sql_query(" delete from {$g5['g5_shop_item_option_table']} where io_type = '1' and it_id = '$it_id' "); // 기존추가옵션삭제
 
 $supply_count = count($_POST['spl_id']);
 if($supply_count) {
@@ -261,7 +261,6 @@ $sql_common = " ca_id               = '$ca_id',
                 ca_id3              = '$ca_id3',
                 it_name             = '$it_name',
                 it_mobile_name      = '$it_mobile_name',
-                it_gallery          = '$it_gallery',
                 it_maker            = '$it_maker',
                 it_origin           = '$it_origin',
                 it_brand            = '$it_brand',
@@ -294,7 +293,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_tail_html        = '$it_tail_html',
                 it_mobile_head_html = '$it_mobile_head_html',
                 it_mobile_tail_html = '$it_mobile_tail_html',
-                it_time             = '".G4_TIME_YMDHIS."',
+                it_time             = '".G5_TIME_YMDHIS."',
                 it_ip               = '{$_SERVER['REMOTE_ADDR']}',
                 it_order            = '$it_order',
                 it_tel_inq          = '$it_tel_inq',
@@ -324,14 +323,14 @@ if ($w == "")
     if($t_it_id)
         alert('상품 코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.');
 
-    $sql = " insert {$g4['shop_item_table']}
+    $sql = " insert {$g5['g5_shop_item_table']}
                 set it_id = '$it_id',
 					$sql_common	";
     sql_query($sql);
 }
 else if ($w == "u")
 {
-    $sql = " update {$g4['shop_item_table']}
+    $sql = " update {$g5['g5_shop_item_table']}
                 set $sql_common
               where it_id = '$it_id' ";
     sql_query($sql);
@@ -341,7 +340,7 @@ else if ($w == "d")
 {
     if ($is_admin != 'super')
     {
-        $sql = " select it_id from {$g4['shop_item_table']} a, {$g4['shop_category_table']} b
+        $sql = " select it_id from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b
                   where a.it_id = '$it_id'
                     and a.ca_id = b.ca_id
                     and b.ca_mb_id = '{$member['mb_id']}' ";
@@ -362,14 +361,14 @@ if ($w == "" || $w == "u")
     {
         if (trim($it_id2[$i]))
         {
-            $sql = " insert into {$g4['shop_item_relation_table']}
+            $sql = " insert into {$g5['g5_shop_item_relation_table']}
                         set it_id  = '$it_id',
                             it_id2 = '$it_id2[$i]',
                             ir_no = '$i' ";
             sql_query($sql, false);
 
             // 관련상품의 반대로도 등록
-            $sql = " insert into {$g4['shop_item_relation_table']}
+            $sql = " insert into {$g5['g5_shop_item_relation_table']}
                         set it_id  = '$it_id2[$i]',
                             it_id2 = '$it_id',
                             ir_no = '$i' ";
@@ -383,7 +382,7 @@ if ($w == "" || $w == "u")
     {
         if (trim($ev_id[$i]))
         {
-            $sql = " insert into {$g4['shop_event_item_table']}
+            $sql = " insert into {$g5['g5_shop_event_item_table']}
                         set ev_id = '$ev_id[$i]',
                             it_id = '$it_id' ";
             sql_query($sql, false);
@@ -394,7 +393,7 @@ if ($w == "" || $w == "u")
 // 선택옵션등록
 if($option_count) {
     $comma = '';
-    $sql = " INSERT INTO {$g4['shop_item_option_table']}
+    $sql = " INSERT INTO {$g5['g5_shop_item_option_table']}
                     ( `io_id`, `io_type`, `it_id`, `io_price`, `io_stock_qty`, `io_noti_qty`, `io_use` )
                 VALUES ";
     for($i=0; $i<$option_count; $i++) {
@@ -408,7 +407,7 @@ if($option_count) {
 // 추가옵션등록
 if($supply_count) {
     $comma = '';
-    $sql = " INSERT INTO {$g4['shop_item_option_table']}
+    $sql = " INSERT INTO {$g5['g5_shop_item_option_table']}
                     ( `io_id`, `io_type`, `it_id`, `io_price`, `io_stock_qty`, `io_noti_qty`, `io_use` )
                 VALUES ";
     for($i=0; $i<$supply_count; $i++) {
@@ -421,7 +420,6 @@ if($supply_count) {
 
 // 동일 분류내 상품 동일 옵션 적용
 $ca_fields = '';
-if(is_checked('chk_ca_it_gallery'))             $ca_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_ca_it_order'))               $ca_fields .= " , it_order = '$it_order' ";
 if(is_checked('chk_ca_it_type'))                $ca_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
 if(is_checked('chk_ca_it_maker'))               $ca_fields .= " , it_maker = '$it_maker' ";
@@ -439,23 +437,21 @@ if(is_checked('chk_ca_it_point'))               $ca_fields .= " , it_point = '$i
 if(is_checked('chk_ca_it_point_type'))          $ca_fields .= " , it_point_type = '$it_point_type' ";
 if(is_checked('chk_ca_it_stock_qty'))           $ca_fields .= " , it_stock_qty = '$it_stock_qty' ";
 if(is_checked('chk_ca_it_sendcost'))            $ca_fields .= " , it_sc_type = '$it_sc_type', it_sc_method = '$it_sc_method', it_sc_price = '$it_sc_price', it_sc_minimum = '$it_sc_minimum', it_sc_qty = '$it_sc_qty' ";
-if(is_checked('chk_ca_it_gallery'))             $ca_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_ca_it_head_html'))           $ca_fields .= " , it_head_html = '$it_head_html' ";
 if(is_checked('chk_ca_it_tail_html'))           $ca_fields .= " , it_tail_html = '$it_tail_html' ";
 if(is_checked('chk_ca_it_mobile_head_html'))    $ca_fields .= " , it_mobile_head_html = '$it_mobile_head_html' ";
 if(is_checked('chk_ca_it_mobile_tail_html'))    $ca_fields .= " , it_mobile_tail_html = '$it_mobile_tail_html' ";
 
 if($ca_fields) {
-    sql_query(" update {$g4['shop_item_table']} set it_name = it_name {$ca_fields} where ca_id = '$ca_id' ");
+    sql_query(" update {$g5['g5_shop_item_table']} set it_name = it_name {$ca_fields} where ca_id = '$ca_id' ");
     if($ca_id2)
-        sql_query(" update {$g4['shop_item_table']} set it_name = it_name {$ca_fields} where ca_id2 = '$ca_id2' ");
+        sql_query(" update {$g5['g5_shop_item_table']} set it_name = it_name {$ca_fields} where ca_id2 = '$ca_id2' ");
     if($ca_id3)
-        sql_query(" update {$g4['shop_item_table']} set it_name = it_name {$ca_fields} where ca_id3 = '$ca_id3' ");
+        sql_query(" update {$g5['g5_shop_item_table']} set it_name = it_name {$ca_fields} where ca_id3 = '$ca_id3' ");
 }
 
 // 모든 상품 동일 옵션 적용
 $all_fields = '';
-if(is_checked('chk_all_it_gallery'))             $all_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_all_it_order'))               $all_fields .= " , it_order = '$it_order' ";
 if(is_checked('chk_all_it_type'))                $all_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
 if(is_checked('chk_all_it_maker'))               $all_fields .= " , it_maker = '$it_maker' ";
@@ -473,14 +469,13 @@ if(is_checked('chk_all_it_point'))               $all_fields .= " , it_point = '
 if(is_checked('chk_all_it_point_type'))          $all_fields .= " , it_point_type = '$it_point_type' ";
 if(is_checked('chk_all_it_stock_qty'))           $all_fields .= " , it_stock_qty = '$it_stock_qty' ";
 if(is_checked('chk_all_it_sendcost'))            $all_fields .= " , it_sc_type = '$it_sc_type', it_sc_method = '$it_sc_method', it_sc_price = '$it_sc_price', it_sc_minimum = '$it_sc_minimum', it_sc_qty = '$it_sc_qty' ";
-if(is_checked('chk_all_it_gallery'))             $all_fields .= " , it_gallery = '$it_gallery' ";
 if(is_checked('chk_all_it_head_html'))           $all_fields .= " , it_head_html = '$it_head_html' ";
 if(is_checked('chk_all_it_tail_html'))           $all_fields .= " , it_tail_html = '$it_tail_html' ";
 if(is_checked('chk_all_it_mobile_head_html'))    $all_fields .= " , it_mobile_head_html = '$it_mobile_head_html' ";
 if(is_checked('chk_all_it_mobile_tail_html'))    $all_fields .= " , it_mobile_tail_html = '$it_mobile_tail_html' ";
 
 if($all_fields) {
-    sql_query(" update {$g4['shop_item_table']} set it_name = it_name {$all_fields} ");
+    sql_query(" update {$g5['g5_shop_item_table']} set it_name = it_name {$all_fields} ");
 }
 
 $qstr = "$qstr&amp;sca=$sca&amp;page=$page";

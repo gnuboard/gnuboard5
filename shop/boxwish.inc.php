@@ -8,7 +8,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <ul>
     <?php
-    $hsql  = " select a.it_id, b.it_name from {$g4['shop_wish_table']} a, {$g4['shop_item_table']} b ";
+    $hsql  = " select a.it_id, b.it_name from {$g5['g5_shop_wish_table']} a, {$g5['g5_shop_item_table']} b ";
     $hsql .= " where a.mb_id = '{$member['mb_id']}' and a.it_id  = b.it_id order by a.wi_id desc ";
     $hresult = sql_query($hsql);
     for ($i=0; $row=sql_fetch_array($hresult); $i++)
@@ -17,7 +17,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         $it_name = get_text($row['it_name']);
         // 이미지로 할 경우
         //$it_name = get_it_image($row[it_id], 50, 50, true);
-        echo '<a href="'.G4_SHOP_URL.'/wishlist.php">'.$it_name.'</a>';
+        echo '<a href="'.G5_SHOP_URL.'/wishlist.php">'.$it_name.'</a>';
         echo '</li>';
     }
 

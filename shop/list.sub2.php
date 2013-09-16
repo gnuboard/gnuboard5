@@ -55,7 +55,7 @@ $.fn.listType = function(type)
         $("button.sct_lst_list span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
     }
 
-    set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", type, 1, g4_cookie_domain);
+    set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", type, 1, g5_cookie_domain);
 }
 
 // 리스트 타입 쿠키가 있을 경우 바로 적용

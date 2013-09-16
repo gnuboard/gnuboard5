@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo G4_MSHOP_SKIN_URL; ?>/style.css">
+<link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
 
 <!-- 상품진열 10 시작 { -->
 <?php
@@ -59,9 +59,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($this->view_sns) {
         echo "<div class=\"sct_sns\">";
-        echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb.png');
-        echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt.png');
-        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo.png');
+        echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_fb.png');
+        echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_twt.png');
+        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_goo.png');
         echo "</div>\n";
     }
 

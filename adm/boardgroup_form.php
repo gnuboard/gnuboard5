@@ -14,21 +14,21 @@ if ($w == '') {
     $html_title .= ' 생성';
 } else if ($w == 'u') {
     $gr_id_attr = 'readonly';
-    $gr = sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
+    $gr = sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
     $html_title .= ' 수정';
 }
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
 if (!isset($group['gr_device'])) {
-    sql_query(" ALTER TABLE `{$g4['group_table']}` ADD `gr_device` ENUM('both','pc','mobile') NOT NULL DEFAULT 'both' AFTER `gr_subject` ", false);
+    sql_query(" ALTER TABLE `{$g5['group_table']}` ADD `gr_device` ENUM('both','pc','mobile') NOT NULL DEFAULT 'both' AFTER `gr_subject` ", false);
 }
 
 if (!isset($group['gr_show_menu'])) {
-    sql_query(" ALTER TABLE `{$g4['group_table']}`  ADD `gr_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `gr_use_access`,  ADD `gr_order` INT NOT NULL DEFAULT '0' AFTER `gr_show_menu` ", false);
+    sql_query(" ALTER TABLE `{$g5['group_table']}`  ADD `gr_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `gr_use_access`,  ADD `gr_order` INT NOT NULL DEFAULT '0' AFTER `gr_show_menu` ", false);
 }
 
-$g4['title'] = $html_title;
+$g5['title'] = $html_title;
 include_once('./admin.head.php');
 ?>
 
@@ -58,7 +58,7 @@ include_once('./admin.head.php');
             if ($w=='')
                 echo '영문자, 숫자, _ 만 가능 (공백없이)';
             else 
-                echo '<a href="'.G4_BBS_URL.'/group.php?gr_id='.$group['gr_id'].'" class="btn_frmline">게시판그룹 바로가기</a>';
+                echo '<a href="'.G5_BBS_URL.'/group.php?gr_id='.$group['gr_id'].'" class="btn_frmline">게시판그룹 바로가기</a>';
             ?>
         </td>
     </tr>
@@ -107,7 +107,7 @@ include_once('./admin.head.php');
         <td>
             <?php
             // 접근회원수
-            $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$gr_id}' ";
+            $sql1 = " select count(*) as cnt from {$g5['group_member_table']} where gr_id = '{$gr_id}' ";
             $row1 = sql_fetch($sql1);
             echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1['cnt'].'</a>';
             ?>

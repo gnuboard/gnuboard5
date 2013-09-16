@@ -3,9 +3,9 @@ $sub_menu = "100800";
 include_once("./_common.php");
 
 if ($is_admin != "super")
-    alert("최고관리자만 접근 가능합니다.", G4_URL);
+    alert("최고관리자만 접근 가능합니다.", G5_URL);
 
-$g4['title'] = "세션파일 일괄삭제";
+$g5['title'] = "세션파일 일괄삭제";
 include_once("./admin.head.php");
 ?>
 
@@ -19,7 +19,7 @@ include_once("./admin.head.php");
 
     $list_tag_st = "";
     $list_tag_end = "";
-    if (!$dir=@opendir(G4_DATA_PATH.'/session')) {
+    if (!$dir=@opendir(G5_DATA_PATH.'/session')) {
       echo "<p>세션 디렉토리를 열지못했습니다.</p>";
     } else {
         $list_tag_st = "<ul>\n<li>완료됨</li>\n";
@@ -33,7 +33,7 @@ include_once("./admin.head.php");
         if (!strstr($file,'sess_')) continue;
         if (strpos($file,'sess_')!=0) continue;
 
-        $session_file = G4_DATA_PATH.'/session/'.$file;
+        $session_file = G5_DATA_PATH.'/session/'.$file;
 
         if (!$atime=@fileatime($session_file)) {
             continue;

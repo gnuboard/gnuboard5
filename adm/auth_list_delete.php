@@ -19,7 +19,7 @@ for ($i=0; $i<$count; $i++)
     // 실제 번호를 넘김
     $k = $chk[$i];
 
-    $sql = " delete from {$g4['auth_table']} where mb_id = '{$_POST['mb_id'][$k]}' and au_menu = '{$_POST['au_menu'][$k]}' ";
+    $sql = " delete from {$g5['auth_table']} where mb_id = '{$_POST['mb_id'][$k]}' and au_menu = '{$_POST['au_menu'][$k]}' ";
     sql_query($sql);
 }
 

@@ -6,8 +6,8 @@ header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
-$title = "그누보드4s 설치 3단계 중 2단계 설정";
 include_once ('../config.php');
+$title = G5_VERSION." 설치 3단계 중 2단계 설정";
 include_once ('./install.inc.php');
 
 if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
@@ -53,26 +53,26 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
         <th scope="row"><label for="">TABLE명 접두사</label></th>
         <td>
             <span>가능한 변경하지 마십시오.</span>
-            <input name="table_prefix" type="text" value="g4s_" id="table_prefix">
+            <input name="table_prefix" type="text" value="g5_" id="table_prefix">
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="">쇼핑몰TABLE명 접두사</label></th>
         <td>
             <span>가능한 변경하지 마십시오.</span>
-            <input name="shop_prefix" type="text" value="shop_" id="shop_prefix">
+            <input name="g5_shop_prefix" type="text" value="g5_shop_" id="g5_shop_prefix">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">그누보드4s 재설치</label></th>
+        <th scope="row"><label for=""><?php echo G5_VERSION; ?> 재설치</label></th>
         <td>
-            <input name="g4s_install" type="checkbox" value="1" id="g4s_install">재설치
+            <input name="g5_install" type="checkbox" value="1" id="g5_install">재설치
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="">쇼핑몰설치</label></th>
         <td>
-            <input name="shop_install" type="checkbox" value="1" id="shop_install">설치
+            <input name="g5_shop_install" type="checkbox" value="1" id="g5_shop_install">설치
         </td>
     </tr>
     </tbody>
@@ -115,7 +115,7 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
 </div>
 
 <p class="outside">
-    <strong class="st_strong">주의! 이미 그누보드4s가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
+    <strong class="st_strong">주의! 이미 <?php echo G5_VERSION; ?>가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
     주의사항을 이해하고, 새로 설치하시려면 다음을 눌러 설치를 계속하십시오.
 </p>
 

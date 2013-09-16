@@ -4,10 +4,10 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '이벤트관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '이벤트관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g4['shop_event_table']} ";
+$sql_common = " from {$g5['g5_shop_event_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -42,7 +42,7 @@ $result = sql_query($sql);
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
 
         $href = "";
-        $sql = " select count(ev_id) as cnt from {$g4['shop_event_item_table']} where ev_id = '{$row['ev_id']}' ";
+        $sql = " select count(ev_id) as cnt from {$g5['g5_shop_event_item_table']} where ev_id = '{$row['ev_id']}' ";
         $ev = sql_fetch($sql);
         if ($ev['cnt']) {
             $href = '<a href="javascript:;" onclick="itemeventwin('.$row['ev_id'].');">';
@@ -58,7 +58,7 @@ $result = sql_query($sql);
         <td class="td_num"><?php echo $href; ?><?php echo $ev['cnt']; ?><?php echo $href_close; ?></td>
         <td class="td_smallmng"><?php echo $row['ev_use'] ? '<span class="txt_true">예</span>' : '<span class="txt_false">아니오</span>'; ?></td>
         <td class="td_mng">
-            <a href="<?php echo G4_SHOP_URL; ?>/event.php?ev_id=<?php echo $row['ev_id']; ?>">보기</a>
+            <a href="<?php echo G5_SHOP_URL; ?>/event.php?ev_id=<?php echo $row['ev_id']; ?>">보기</a>
             <a href="./itemeventform.php?w=u&amp;ev_id=<?php echo $row['ev_id']; ?>">수정</a>
             <a href="./itemeventformupdate.php?w=d&amp;ev_id=<?php echo $row['ev_id']; ?>" onclick="return delete_confirm();">삭제</a>
         </td>
@@ -85,5 +85,5 @@ function itemeventwin(ev_id)
 
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

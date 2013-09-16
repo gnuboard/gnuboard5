@@ -4,12 +4,12 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$g4['title'] = '개인결제 관리';
+$g5['title'] = '개인결제 관리';
 
 if ($w == 'u') {
     $html_title = '개인결제 수정';
 
-    $sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' ";
+    $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
     $pp = sql_fetch($sql);
     if (!$pp['pp_id']) alert('등록된 자료가 없습니다.');
 }
@@ -22,10 +22,10 @@ else
 $wrp_tag_st = '';
 $wrp_tag_end = '';
 if($popup == 'yes') { // 팝업창일 때
-    include_once(G4_PATH.'/head.sub.php');
+    include_once(G5_PATH.'/head.sub.php');
     $pp['od_id'] = $od_id;
     $sql = " select od_id, od_name, od_misu
-                from {$g4['shop_order_table']}
+                from {$g5['g5_shop_order_table']}
                 where od_id = '$od_id' ";
     $od = sql_fetch($sql);
 
@@ -40,7 +40,7 @@ if($popup == 'yes') { // 팝업창일 때
     $wrp_tag_end = '</div>';
 }
 else { // 현재페이지일 때
-    include_once (G4_ADMIN_PATH.'/admin.head.php');
+    include_once (G5_ADMIN_PATH.'/admin.head.php');
     $wrp_tag_st = '<section class="cbox">'.PHP_EOL.'<h2>'.$html_title.'</h2>';
     $wrp_tag_end = '</section>';
 }
@@ -100,7 +100,7 @@ else { // 현재페이지일 때
         <th scope="row"><label for="pp_receipt_time">결제일시</label></th>
         <td>
             <label for="pp_receipt_chk">현재 시간으로 설정</label>
-            <input type="checkbox" name="pp_receipt_chk" id="pp_receipt_chk" value="<?php echo date("Y-m-d H:i:s", G4_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.pp_receipt_time.value=this.form.pp_receipt_chk.value; else this.form.pp_receipt_time.value = this.form.pp_receipt_time.defaultValue;"><br>
+            <input type="checkbox" name="pp_receipt_chk" id="pp_receipt_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.pp_receipt_time.value=this.form.pp_receipt_chk.value; else this.form.pp_receipt_time.value = this.form.pp_receipt_time.defaultValue;"><br>
             <input type="text" name="pp_receipt_time" value="<?php echo is_null_time($pp['pp_receipt_time']) ? "" : $pp['pp_receipt_time']; ?>" id="pp_receipt_time" class="frm_input" maxlength="19">
         </td>
     </tr>
@@ -154,7 +154,7 @@ function del_confirm()
 
 <?php
 if($popup == 'yes')
-    include_once(G4_PATH.'/tail.sub.php');
+    include_once(G5_PATH.'/tail.sub.php');
 else
-    include_once (G4_ADMIN_PATH.'/admin.tail.php');
+    include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

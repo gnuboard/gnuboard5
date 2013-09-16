@@ -16,7 +16,7 @@ if(!$count)
 for($i=0; $i<$count; $i++) {
     $ma_id = $_POST['chk'][$i];
 
-    $sql = " delete from {$g4['mail_table']} where ma_id = '$ma_id' ";
+    $sql = " delete from {$g5['mail_table']} where ma_id = '$ma_id' ";
     sql_query($sql);
 }
 

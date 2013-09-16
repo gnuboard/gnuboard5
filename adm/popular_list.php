@@ -9,11 +9,11 @@ if (isset($_POST['chk']) && is_array($_POST['chk'])) {
     for ($i=0; $i<count($_POST['chk']); $i++) {
         $pp_id = $_POST['chk'][$i];
 
-        sql_query(" delete from {$g4['popular_table']} where pp_id = '$pp_id' ", true);
+        sql_query(" delete from {$g5['popular_table']} where pp_id = '$pp_id' ", true);
     }
 }
 
-$sql_common = " from {$g4['popular_table']} a ";
+$sql_common = " from {$g5['popular_table']} a ";
 $sql_search = " where (1) ";
 
 if ($stx) {
@@ -60,7 +60,7 @@ $result = sql_query($sql);
 if (isset($stx))
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
-$g4['title'] = '인기검색어관리';
+$g5['title'] = '인기검색어관리';
 include_once('./admin.head.php');
 
 $colspan = 4;
@@ -142,7 +142,7 @@ var list_delete_php = 'popular_list.php';
     </form>
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
 $(function() {

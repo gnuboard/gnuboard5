@@ -4,15 +4,15 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$sql = " select ev_subject from {$g4['shop_event_table']} where ev_id = '$ev_id' ";
+$sql = " select ev_subject from {$g5['g5_shop_event_table']} where ev_id = '$ev_id' ";
 $ev = sql_fetch($sql);
 
-$g4['title'] = $ev['ev_subject'].' 이벤트상품';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = $ev['ev_subject'].' 이벤트상품';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div class="cbox">
-    <h1><?php echo $g4['title']; ?></h1>
+    <h1><?php echo $g5['title']; ?></h1>
     <table>
     <thead>
     <tr>
@@ -23,14 +23,14 @@ include_once(G4_PATH.'/head.sub.php');
     </thead>
     <tbody>
     <?php
-    $sql = " select b.it_id, b.it_name, b.it_use from {$g4['shop_event_item_table']} a
-               left join {$g4['shop_item_table']} b on (a.it_id=b.it_id)
+    $sql = " select b.it_id, b.it_name, b.it_use from {$g5['g5_shop_event_item_table']} a
+               left join {$g5['g5_shop_item_table']} b on (a.it_id=b.it_id)
               where a.ev_id = '$ev_id'
               order by b.it_id desc ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
     ?>
     <tr>
         <td>
@@ -57,5 +57,5 @@ include_once(G4_PATH.'/head.sub.php');
 </div>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -1,26 +1,26 @@
 <?php
 $sub_menu = '400660';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
 $sql = " select *
-           from {$g4['shop_item_qa_table']} a
-           left join {$g4['member_table']} b on (a.mb_id = b.mb_id)
+           from {$g5['g5_shop_item_qa_table']} a
+           left join {$g5['member_table']} b on (a.mb_id = b.mb_id)
           where iq_id = '$iq_id' ";
 $iq = sql_fetch($sql);
 if (!$iq['iq_id']) alert('등록된 자료가 없습니다.');
 
 $name = get_sideview($is['mb_id'], $iq['iq_name'], $is['mb_email'], $is['mb_homepage']);
 
-$g4['title'] = '상품문의';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '상품문의';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 ?>
 
-<?php//=subtitle($g4['title'])?>
+<?php//=subtitle($g5['title'])?>
 
 <form name="fitemqaform" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqaform_submit(this);">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
@@ -85,5 +85,5 @@ function fitemqaform_submit(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

@@ -43,17 +43,17 @@ $returnMsg = 'x';                                   // 리턴메시지 (고정�
 // 실행모듈
 if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
     if(PHP_INT_MAX == 2147483647) // 32-bit
-        $exe = G4_OKNAME_PATH.'/bin/okname';
+        $exe = G5_OKNAME_PATH.'/bin/okname';
     else
-        $exe = G4_OKNAME_PATH.'/bin/okname_x64';
+        $exe = G5_OKNAME_PATH.'/bin/okname_x64';
 } else {
     if(PHP_INT_MAX == 2147483647) // 32-bit
-        $exe = G4_OKNAME_PATH.'/bin/okname.exe';
+        $exe = G5_OKNAME_PATH.'/bin/okname.exe';
     else
-        $exe = G4_OKNAME_PATH.'/bin/oknamex64.exe';
+        $exe = G5_OKNAME_PATH.'/bin/oknamex64.exe';
 }
 
-$logPath = G4_OKNAME_PATH.'/log';                   // 로그파일을 남기는 경우 로그파일이 생성될 경로 option에 'L'이 포함된 경우에만 생성
+$logPath = G5_OKNAME_PATH.'/log';                   // 로그파일을 남기는 경우 로그파일이 생성될 경로 option에 'L'이 포함된 경우에만 생성
 $targetId = '';                                     // 타겟ID (팝업오픈 스크립트의 window.name 과 동일하게 설정
 
 if($config['cf_cert_use'] == 2) {
@@ -71,5 +71,5 @@ if($config['cf_cert_use'] == 2) {
 // ########################################################################
 // # 리턴 URL 설정
 // ########################################################################
-$returnUrl = G4_OKNAME_URL.'/hpcert2.php';          // 본인인증 완료후 리턴될 URL (도메인 포함 full path)
+$returnUrl = G5_OKNAME_URL.'/hpcert2.php';          // 본인인증 완료후 리턴될 URL (도메인 포함 full path)
 ?>

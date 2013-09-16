@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '주문내역출력';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '주문내역출력';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <section class="cbox">
@@ -106,5 +106,5 @@ function forderprintcheck(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

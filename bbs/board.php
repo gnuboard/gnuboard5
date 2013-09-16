@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 if (!$board['bo_table']) {
-   alert('존재하지 않는 게시판입니다.', G4_URL);
+   alert('존재하지 않는 게시판입니다.', G5_URL);
 }
 
 check_device($board['bo_device']);
@@ -28,7 +28,7 @@ if (isset($wr_id) && $wr_id) {
     if (isset($group['gr_use_access']) && $group['gr_use_access']) {
         if ($is_guest) {
             $msg = "비회원은 이 게시판에 접근할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.";
-            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
+            alert($msg, './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
         }
 
         // 그룹관리자 이상이라면 통과
@@ -36,10 +36,10 @@ if (isset($wr_id) && $wr_id) {
             ;
         } else {
             // 그룹접근
-            $sql = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
+            $sql = " select count(*) as cnt from {$g5['group_member_table']} where gr_id = '{$board['gr_id']}' and mb_id = '{$member['mb_id']}' ";
             $row = sql_fetch($sql);
             if (!$row['cnt']) {
-                alert("접근 권한이 없으므로 글읽기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.", G4_URL);
+                alert("접근 권한이 없으므로 글읽기가 불가합니다.\\n\\n궁금하신 사항은 관리자에게 문의 바랍니다.", G5_URL);
             }
         }
     }
@@ -47,32 +47,32 @@ if (isset($wr_id) && $wr_id) {
     // 로그인된 회원의 권한이 설정된 읽기 권한보다 작다면
     if ($member['mb_level'] < $board['bo_read_level']) {
         if ($is_member)
-            alert('글을 읽을 권한이 없습니다.', G4_URL);
+            alert('글을 읽을 권한이 없습니다.', G5_URL);
         else
-            alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
+            alert('글을 읽을 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
     }
 
     // 본인확인을 사용한다면
     if ($config['cf_cert_use'] && !$is_admin) {
         // 인증된 회원만 가능
         if ($board['bo_use_cert'] != '' && $is_guest) {
-            alert('이 게시판은 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
+            alert('이 게시판은 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr));
         }
 
         if ($board['bo_use_cert'] == 'cert' && !$member['mb_certify']) {
-            alert('이 게시판은 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 본인확인을 해주시기 바랍니다.', G4_URL);
+            alert('이 게시판은 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 본인확인을 해주시기 바랍니다.', G5_URL);
         }
 
         if ($board['bo_use_cert'] == 'adult' && !$member['mb_adult']) {
-            alert('이 게시판은 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 본인확인을 다시 해주시기 바랍니다.', G4_URL);
+            alert('이 게시판은 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 본인확인을 다시 해주시기 바랍니다.', G5_URL);
         }
 
         if ($board['bo_use_cert'] == 'hp-cert' && $member['mb_certify'] != 'hp') {
-            alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 휴대폰 본인확인을 해주시기 바랍니다.', G4_URL);
+            alert('이 게시판은 휴대폰 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원정보 수정에서 휴대폰 본인확인을 해주시기 바랍니다.', G5_URL);
         }
 
         if ($board['bo_use_cert'] == 'hp-adult' && (!$member['mb_adult'] || $member['mb_certify'] != 'hp')) {
-            alert('이 게시판은 휴대폰 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을 다시 해주시기 바랍니다.', G4_URL);
+            alert('이 게시판은 휴대폰 본인확인으로 성인인증 된 회원님만 글읽기가 가능합니다.\\n\\n현재 성인인데 글읽기가 안된다면 회원정보 수정에서 휴대폰 본인확인을 다시 해주시기 바랍니다.', G5_URL);
         }
     }
 
@@ -136,21 +136,21 @@ if (isset($wr_id) && $wr_id) {
         set_session($ss_name, TRUE);
     }
 
-    $g4['title'] = strip_tags(conv_subject($write['wr_subject'], 255))." > ".$board['bo_subject'];
+    $g5['title'] = strip_tags(conv_subject($write['wr_subject'], 255))." > ".$board['bo_subject'];
 } else {
     if ($member['mb_level'] < $board['bo_list_level']) {
         if ($member['mb_id'])
-            alert('목록을 볼 권한이 없습니다.', G4_URL);
+            alert('목록을 볼 권한이 없습니다.', G5_URL);
         else
-            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.($qstr?'&amp;':'')));
+            alert('목록을 볼 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.($qstr?'&amp;':'')));
     }
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
 
-    $g4['title'] = $board['bo_subject']." ".$page." 페이지";
+    $g5['title'] = $board['bo_subject']." ".$page." 페이지";
 }
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 
 $width = $board['bo_table_width'];
 if ($width <= 100)
@@ -196,7 +196,7 @@ if ($board['bo_use_nogood'])
 $admin_href = "";
 // 최고관리자 또는 그룹관리자라면
 if ($member['mb_id'] && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id']))
-    $admin_href = G4_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
+    $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
 include_once('./board_head.php');
 
@@ -214,5 +214,5 @@ include_once('./board_tail.php');
 
 echo "\n<!-- 사용스킨 : {$board_skin_url} -->\n";
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <script>
@@ -21,11 +21,11 @@ if(confirm("<?php echo $memo_msg; ?>")) {
     <?php echo str_replace("\\n", "<br>", $memo_msg); ?>
 </p>
 
-<a href="<?php echo $g4['bbs_path']; ?>/memo.php" target="_blank">확인</a>
-<a href="<?php echo $G4_PATH; ?>">취소</a><br><br>
+<a href="<?php echo $g5['bbs_path']; ?>/memo.php" target="_blank">확인</a>
+<a href="<?php echo $G5_PATH; ?>">취소</a><br><br>
 </article>
 </noscript>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

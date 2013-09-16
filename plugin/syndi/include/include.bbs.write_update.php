@@ -3,7 +3,7 @@
  * @file include.bbs.write_update.php
  * @author sol (ngleader@gmail.com)
  * @brief 글 등록/수정시 Syndication Ping
- *        gnuboard4/bbs/write_update.php 파일에 추가
+ *        gnuboard5/bbs/write_update.php 파일에 추가
  *        include '../syndi/include/include.bbs.write_update.php';
  */
 if(!defined('_GNUBOARD_')) return;
@@ -34,7 +34,7 @@ if($wr['wr_id'] || $wr_id)
 	$oPing->setType('article');
 
 	// if deleted 
-	$_sql = "delete from {$g4['syndi_log_table']} where content_id='%s' and bbs_id='%s'";
+	$_sql = "delete from {$g5['syndi_log_table']} where content_id='%s' and bbs_id='%s'";
 	sql_query(sprintf($_sql, $wr_id ? $wr_id : $wr[wr_id], $board['bo_table']));
 		
 	$oPing->request();

@@ -1,6 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 $captcha_html = "";
 if ($is_guest && $board['bo_comment_level'] < 2) {
@@ -114,7 +114,7 @@ else
 include_once($board_skin_path.'/view_comment.skin.php');
 
 if (!$member['mb_id']) // 비회원일 경우에만
-    echo '<script src="'.G4_JS_URL.'/md5.js"></script>'."\n";
+    echo '<script src="'.G5_JS_URL.'/md5.js"></script>'."\n";
 
 @include_once($board_skin_path.'/view_comment.tail.skin.php');
 ?>

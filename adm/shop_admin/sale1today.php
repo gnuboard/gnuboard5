@@ -6,8 +6,8 @@ auth_check($auth[$sub_menu], "r");
 
 $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $date);
 
-$g4['title'] = "$date 일 매출현황";
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = "$date 일 매출현황";
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $sql = " select od_id,
                 mb_id,
@@ -20,7 +20,7 @@ $sql = " select od_id,
                 od_misu,
                 (od_cart_price + od_send_cost + od_send_cost2) as orderprice,
                 (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
-           from {$g4['shop_order_table']}
+           from {$g5['g5_shop_order_table']}
           where SUBSTRING(od_time,1,10) = '$date'
           order by od_id desc ";
 $result = sql_query($sql);
@@ -105,5 +105,5 @@ $result = sql_query($sql);
 </section>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

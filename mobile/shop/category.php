@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '카테고리';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '카테고리';
+include_once(G5_PATH.'/head.sub.php');
 
 $ca = $_GET['ca'];
 
@@ -13,7 +13,7 @@ if($ca) {
     $sql_where = " where length(ca_id) = '2' ";
 }
 
-$sql = " select ca_id, ca_name from {$g4['shop_category_table']}
+$sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']}
           $sql_where
             and ca_use = '1'
           order by ca_id ";
@@ -43,8 +43,8 @@ $result = sql_query($sql);
         if($i == 0)
             echo '<nav id="sct_win_nav"><h2>카테고리 목록</h2><ul>';
 
-        $ca_href = G4_SHOP_URL.'/category.php?ca='.$row['ca_id'];
-        $list_href = G4_SHOP_URL.'/list.php?ca_id='.$row['ca_id'];
+        $ca_href = G5_SHOP_URL.'/category.php?ca='.$row['ca_id'];
+        $list_href = G5_SHOP_URL.'/list.php?ca_id='.$row['ca_id'];
     ?>
         <li>
             <a href="<?php echo $ca_href; ?>" class="sct_ct_view"><?php echo $row['ca_name']; ?></a>
@@ -79,5 +79,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

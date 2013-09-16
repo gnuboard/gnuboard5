@@ -8,17 +8,17 @@ if (!$is_member)
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
 
-$sql = " select it_name from {$g4['shop_item_table']} where it_id='$it_id' ";
+$sql = " select it_name from {$g5['g5_shop_item_table']} where it_id='$it_id' ";
 $it = sql_fetch($sql);
 if (!$it['it_name'])
     alert_close("등록된 상품이 아닙니다.");
 
-$g4['title'] =  $it['it_name'].' - 추천하기';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] =  $it['it_name'].' - 추천하기';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div id="sit_rec_new" class="new_win">
-    <h1><?php echo $g4['title']; ?></h1>
+    <h1><?php echo $g5['title']; ?></h1>
 
     <div class="cbox">
         <form name="fitemrecommend" method="post" action="./itemrecommendmail.php" autocomplete="off" onsubmit="return fitemrecommend_check(this);">
@@ -62,5 +62,5 @@ function fitemrecommend_check(f)
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -7,7 +7,7 @@ if ($is_admin != 'super')
 
 $token = get_token();
 
-$sql_common = " from {$g4['auth_table']} a left join {$g4['member_table']} b on (a.mb_id=b.mb_id) ";
+$sql_common = " from {$g5['auth_table']} a left join {$g5['member_table']} b on (a.mb_id=b.mb_id) ";
 
 $sql_search = " where (1) ";
 if ($stx) {
@@ -49,7 +49,7 @@ $listall = '';
 if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌 : 지운아빠 2012-10-31
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
 
-$g4['title'] = "관리권한설정";
+$g5['title'] = "관리권한설정";
 include_once('./admin.head.php');
 
 $colspan = 5;
@@ -107,7 +107,7 @@ $colspan = 5;
         // 메뉴번호가 바뀌는 경우에 현재 없는 저장된 메뉴는 삭제함
         if (!isset($auth_menu[$row['au_menu']]))
         {
-            sql_query(" delete from {$g4['auth_table']} where au_menu = '{$row['au_menu']}' ");
+            sql_query(" delete from {$g5['auth_table']} where au_menu = '{$row['au_menu']}' ");
             continue;
         }
 
@@ -142,7 +142,7 @@ $colspan = 5;
     </div>
 
     <?php
-    $pagelist = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
+    $pagelist = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
     echo $pagelist;
     ?>
 

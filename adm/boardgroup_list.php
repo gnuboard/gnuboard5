@@ -10,10 +10,10 @@ if (!isset($group['gr_device'])) {
     // pc : pc 전용 사용
     // mobile : mobile 전용 사용
     // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g4['board_group_table']}` ADD  `gr_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
+    sql_query(" ALTER TABLE  `{$g5['board_group_table']}` ADD  `gr_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
 }
 
-$sql_common = " from {$g4['group_table']} ";
+$sql_common = " from {$g5['group_table']} ";
 
 $sql_search = " where (1) ";
 if ($is_admin != 'super')
@@ -54,10 +54,10 @@ $listall = '';
 if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
     $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>';
 
-$g4['title'] = '게시판그룹설정';
+$g5['title'] = '게시판그룹설정';
 include_once('./admin.head.php');
 
-$colspan = 8;
+$colspan = 11;
 ?>
 
 <form id="fsearch" name="fsearch" method="get">
@@ -130,11 +130,11 @@ $colspan = 8;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 접근회원수
-        $sql1 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$row['gr_id']}' ";
+        $sql1 = " select count(*) as cnt from {$g5['group_member_table']} where gr_id = '{$row['gr_id']}' ";
         $row1 = sql_fetch($sql1);
 
         // 게시판수
-        $sql2 = " select count(*) as cnt from {$g4['board_table']} where gr_id = '{$row['gr_id']}' ";
+        $sql2 = " select count(*) as cnt from {$g5['board_table']} where gr_id = '{$row['gr_id']}' ";
         $row2 = sql_fetch($sql2);
 
         $s_upd = '<a href="./boardgroup_form.php?'.$qstr.'&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
@@ -146,7 +146,7 @@ $colspan = 8;
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['gr_subject'] ?> 그룹</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
-        <td class="td_grid"><a href="<?php echo G4_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
+        <td class="td_grid"><a href="<?php echo G5_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
         <td>
             <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" title="그룹제목 수정" class="frm_input">
         </td>
@@ -190,7 +190,7 @@ $colspan = 8;
 </section>
 
 <?php
-$pagelist = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
+$pagelist = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
 echo $pagelist;
 ?>
 

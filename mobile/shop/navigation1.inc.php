@@ -9,7 +9,7 @@ if ($ca_id)
     {
         $code = substr($ca_id,0,$i*2);
 
-        $sql = " select ca_name from {$g4['shop_category_table']} where ca_id = '$code' ";
+        $sql = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$code' ";
         $row = sql_fetch($sql);
 
         $sct_here = '';
@@ -24,12 +24,12 @@ if ($ca_id)
     }
 }
 else
-    $str = $g4['title'];
+    $str = $g5['title'];
 
 //if ($it_id) $str .= " > $it[it_name]";
 ?>
 
 <div id="sct_location">
-    <a href='<?php echo G4_SHOP_URL; ?>/' class="sct_bg">Home</a>
+    <a href='<?php echo G5_SHOP_URL; ?>/' class="sct_bg">Home</a>
     <?php echo $str; ?>
 </div>

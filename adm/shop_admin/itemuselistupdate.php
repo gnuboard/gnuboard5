@@ -17,7 +17,7 @@ if ($_POST['act_button'] == "선택수정") {
         // 실제 번호를 넘김
         $k = $_POST['chk'][$i];
 
-        $sql = "update {$g4['shop_item_use_table']}
+        $sql = "update {$g5['g5_shop_item_use_table']}
                    set is_confirm = '{$_POST['is_confirm'][$k]}'
                  where is_id      = '{$_POST['is_id'][$k]}' ";
         sql_query($sql);
@@ -30,7 +30,7 @@ if ($_POST['act_button'] == "선택수정") {
         // 실제 번호를 넘김
         $k = $_POST['chk'][$i];
 
-        $sql = "delete from {$g4['shop_item_use_table']} where is_id = '{$_POST['is_id'][$k]}' ";
+        $sql = "delete from {$g5['g5_shop_item_use_table']} where is_id = '{$_POST['is_id'][$k]}' ";
         sql_query($sql);
     }
 }

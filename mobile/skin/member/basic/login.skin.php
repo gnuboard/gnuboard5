@@ -5,30 +5,29 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="mb_login">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1><?php echo $g5['title'] ?></h1>
 
     <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post">
     <input type="hidden" name="url" value='<?php echo $login_url ?>'>
 
-    <fieldset id="mb_login_fs">
-        <legend>회원로그인</legend>
-        <label for="login_id" class="login_id sound_only">회원아이디<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="mb_id" id="login_id" placeholder="회원아이디" required class="frm_input required" size="20" maxLength="20">
-        <label for="login_pw" class="login_pw sound_only">패스워드<strong class="sound_only"> 필수</strong></label>
-        <input type="password" name="mb_password" id="login_pw" placeholder="패스워드" required class="frm_input required" size="20" maxLength="20">
+    <fieldset>
+        <label for="login_id" class="sound_only">아이디<strong class="sound_only"> 필수</strong></label>
+        <input type="text" name="mb_id" id="login_id" placeholder="아이디(필수)" required class="frm_input required" maxLength="20">
+        <label for="login_pw" class="sound_only">패스워드<strong class="sound_only"> 필수</strong></label>
+        <input type="password" name="mb_password" id="login_pw" placeholder="패스워드(필수)" required class="frm_input required" maxLength="20">
         <input type="submit" value="로그인" class="btn_submit">
         <input type="checkbox" name="auto_login" id="login_auto_login">
         <label for="login_auto_login">자동로그인</label>
     </fieldset>
 
-    <section id="mb_login_info">
+    <section>
         <h2>회원로그인 안내</h2>
         <p>
             회원아이디 및 패스워드가 기억 안나실 때는 아이디/패스워드 찾기를 이용하십시오.<br>
             아직 회원이 아니시라면 회원으로 가입 후 이용해 주십시오.
         </p>
         <div>
-            <a href="<?php echo G4_BBS_URL ?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
+            <a href="<?php echo G5_BBS_URL ?>/password_lost.php" target="win_password_lost" id="login_password_lost" class="btn02">아이디 패스워드 찾기</a>
             <a href="./register.php" class="btn01">회원 가입</a>
         </div>
     </section>
@@ -103,7 +102,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <?php // 쇼핑몰 사용시 여기까지 반드시 복사해 넣으세요 ?>
 
     <div class="btn_confirm">
-        <a href="<?php echo G4_URL ?>/">메인으로 돌아가기</a>
+        <a href="<?php echo G5_URL ?>/">메인으로 돌아가기</a>
     </div>
 
 </div>

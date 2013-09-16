@@ -11,24 +11,24 @@ else {
 }
 
 if (get_cart_count($tmp_cart_id) == 0)
-    alert('장바구니가 비어 있습니다.', G4_SHOP_URL.'/cart.php');
+    alert('장바구니가 비어 있습니다.', G5_SHOP_URL.'/cart.php');
 
-$g4['title'] = '주문서 작성';
+$g5['title'] = '주문서 작성';
 
-include_once(G4_MSHOP_PATH.'/_head.php');
+include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 새로운 주문번호 생성
 $od_id = get_uniqid();
 set_session('ss_order_id', $od_id);
 
 $s_cart_id = $tmp_cart_id;
-$order_action_url = G4_HTTPS_MSHOP_URL.'/orderformupdate.php';
+$order_action_url = G5_HTTPS_MSHOP_URL.'/orderformupdate.php';
 if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
     include './settle_'.$default['de_card_pg'].'.inc.php';
 }
 
 // 결제등록 요청시 사용할 입금마감일
-$ipgm_date = date("Ymd", (G4_SERVER_TIME + 86400 * 5));
+$ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
 $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
 ?>
 
@@ -70,11 +70,11 @@ ob_start();
                     b.ca_id2,
                     b.ca_id3,
                     b.it_notax
-               from {$g4['shop_cart_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
+               from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
               where a.od_id = '$s_cart_id'
                 and a.ct_select = '1' ";
     if($default['de_cart_keep_term']) {
-        $ctime = date('Y-m-d H:i:s', G4_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+        $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
         $sql .= " and a.ct_time > '$ctime' ";
     }
     $sql .= " group by a.it_id ";
@@ -83,6 +83,7 @@ ob_start();
 
     $good_info = '';
     $it_send_cost = 0;
+    $it_cp_count = 0;
 
     $comm_tax_mny = 0; // 과세금액
     $comm_vat_mny = 0; // 부가세
@@ -95,7 +96,7 @@ ob_start();
         $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
                         SUM(ct_point * ct_qty) as point,
                         SUM(ct_qty) as qty
-                    from {$g4['shop_cart_table']}
+                    from {$g5['g5_shop_cart_table']}
                     where it_id = '{$row['it_id']}'
                       and od_id = '$s_cart_id' ";
         $sum = sql_fetch($sql);
@@ -148,10 +149,10 @@ ob_start();
             $cp_count = 0;
 
             $sql = " select cp_id
-                        from {$g4['shop_coupon_table']}
+                        from {$g5['g5_shop_coupon_table']}
                         where mb_id IN ( '{$member['mb_id']}', '전체회원' )
-                          and cp_start <= '".G4_TIME_YMD."'
-                          and cp_end >= '".G4_TIME_YMD."'
+                          and cp_start <= '".G5_TIME_YMD."'
+                          and cp_end >= '".G5_TIME_YMD."'
                           and cp_minimum <= '$sell_price'
                           and (
                                 ( cp_method = '0' and cp_target = '{$row['it_id']}' )
@@ -167,8 +168,10 @@ ob_start();
                 $cp_count++;
             }
 
-            if($cp_count)
+            if($cp_count) {
                 $cp_button = '<button type="button" class="it_coupon_btn btn_frmline">적용</button>';
+                $it_cp_count++;
+            }
         }
     ?>
 
@@ -199,7 +202,7 @@ ob_start();
 
     if ($i == 0) {
         //echo '<tr><td colspan="'.$colspan.'" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
-        alert('장바구니가 비어 있습니다.', G4_SHOP_URL.'/cart.php');
+        alert('장바구니가 비어 있습니다.', G5_SHOP_URL.'/cart.php');
     } else {
         // 배송비 계산
         $send_cost = get_sendcost($tot_sell_price, $s_cart_id);
@@ -219,8 +222,10 @@ ob_start();
     <dl id="sod_bsk_tot">
         <dt class="sod_bsk_sell">주문</dt>
         <dd class="sod_bsk_sell"><strong><?php echo number_format($tot_sell_price); ?> 원</strong></dd>
+        <?php if($it_cp_count > 0) { ?>
         <dt class="sod_bsk_coupon">쿠폰</dt>
         <dd class="sod_bsk_coupon"><strong id="ct_tot_coupon">0 원</strong></dd>
+        <?php } ?>
         <dt class="sod_bsk_dvr">배송비</dt>
         <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
         <dt class="sod_bsk_cnt">총계</dt>
@@ -238,9 +243,9 @@ ob_end_clean();
 ?>
 
     <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
-    <script src="<?php echo G4_MSHOP_URL; ?>/kcp/approval_key.js"></script>
+    <script src="<?php echo G5_MSHOP_URL; ?>/kcp/approval_key.js"></script>
 
-    <form name="sm_form" method="POST" action="<?php echo G4_MSHOP_URL; ?>/kcp/order_approval_form.php">
+    <form name="sm_form" method="POST" action="<?php echo G5_MSHOP_URL; ?>/kcp/order_approval_form.php">
     <input type="hidden" name="good_name"     value="<?php echo $goods; ?>">
     <input type="hidden" name="good_mny"      value="<?php echo $tot_price ?>" >
     <input type="hidden" name="buyr_name"     value="">
@@ -363,7 +368,7 @@ ob_end_clean();
             <th scope="row"><label for="od_hp">핸드폰</label></th>
             <td><input type="text" name="od_hp" value="<?php echo $member['mb_hp']; ?>" id="od_hp" class="frm_input" maxlength="20"></td>
         </tr>
-        <?php $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2'; ?>
+        <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2'; ?>
         <tr>
             <th scope="row">주소</th>
             <td>
@@ -428,7 +433,7 @@ ob_end_clean();
             $sep = chr(30);
             // 기본배송지
             $sql = " select *
-                        from {$g4['shop_order_address_table']}
+                        from {$g5['g5_shop_order_address_table']}
                         where mb_id = '{$member['mb_id']}'
                           and ad_default = '1' ";
             $row = sql_fetch($sql);
@@ -440,7 +445,7 @@ ob_end_clean();
 
             // 최근배송지
             $sql = " select *
-                        from {$g4['shop_order_address_table']}
+                        from {$g5['g5_shop_order_address_table']}
                         where mb_id = '{$member['mb_id']}'
                         order by ad_id desc
                         limit 2 ";
@@ -458,7 +463,7 @@ ob_end_clean();
             <th scope="row">배송지선택</th>
             <td>
                 <?php echo $addr_list; ?>
-                <a href="<?php echo G4_SHOP_URL; ?>/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>
+                <a href="<?php echo G5_SHOP_URL; ?>/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>
             </td>
         </tr>
         <tr>
@@ -480,7 +485,7 @@ ob_end_clean();
             <th scope="row"><label for="od_b_hp">핸드폰</label></th>
             <td><input type="text" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20"></td>
         </tr>
-        <?php $zip_href = G4_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2'; ?>
+        <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2'; ?>
         <tr>
             <th scope="row">주소</th>
             <td id="sod_frm_addr">
@@ -525,11 +530,11 @@ ob_end_clean();
     if($is_member) {
         // 주문쿠폰
         $sql = " select cp_id
-                    from {$g4['shop_coupon_table']}
+                    from {$g5['g5_shop_coupon_table']}
                     where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                       and cp_method = '2'
-                      and cp_start <= '".G4_TIM_YMD."'
-                      and cp_end >= '".G4_TIME_YMD."' ";
+                      and cp_start <= '".G5_TIM_YMD."'
+                      and cp_end >= '".G5_TIME_YMD."' ";
         $res = sql_query($sql);
 
         for($k=0; $cp=sql_fetch_array($res); $k++) {
@@ -542,11 +547,11 @@ ob_end_clean();
         if($send_cost > 0) {
             // 배송비쿠폰
             $sql = " select cp_id
-                        from {$g4['shop_coupon_table']}
+                        from {$g5['g5_shop_coupon_table']}
                         where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                           and cp_method = '3'
-                          and cp_start <= '".G4_TIM_YMD."'
-                          and cp_end >= '".G4_TIME_YMD."' ";
+                          and cp_start <= '".G5_TIM_YMD."'
+                          and cp_end >= '".G5_TIME_YMD."' ";
             $res = sql_query($sql);
 
             for($k=0; $cp=sql_fetch_array($res); $k++) {
@@ -566,11 +571,15 @@ ob_end_clean();
         <tbody>
         <?php if($oc_cnt > 0) { ?>
         <tr>
-            <th scope="row">결제할인쿠폰</th>
+            <th scope="row">주문할인쿠폰</th>
             <td>
                 <input type="hidden" name="od_cp_id" value="">
                 <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
             </td>
+        </tr>
+        <tr>
+            <th scope="row">주문할인금액</th>
+            <td><span id="od_cp_price">0</span>원</td>
         </tr>
         <?php } ?>
         <?php if($sc_cnt > 0) { ?>
@@ -580,6 +589,10 @@ ob_end_clean();
                 <input type="hidden" name="sc_cp_id" value="">
                 <button type="button" id="sc_coupon_btn" class="btn_frmline">쿠폰적용</button>
             </td>
+        </tr>
+        <tr>
+            <th scope="row">배송비할인금액</th>
+            <td><span id="sc_cp_price">0</span>원</td>
         </tr>
         <?php } ?>
         <tr>
@@ -751,7 +764,7 @@ ob_end_clean();
         <input type="hidden" name="site_cd" value="SR<?php echo $default['de_kcp_mid']; ?>">
         <table border="0" cellspacing="0" cellpadding="0">
         <tr>
-            <td align='center'><img src="<?php echo G4_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
+            <td align='center'><img src="<?php echo G5_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
         </tr>
         <tr>
             <td style='line-height:150%;'>
@@ -924,6 +937,9 @@ $(function() {
         $("input[name=od_price]").val(od_price - price);
         $("input[name=od_cp_id]").val(cp_id);
         $("input[name=od_coupon]").val(price);
+        $("input[name=od_send_coupon]").val(0);
+        $("#od_cp_price").text(number_format(String(price)));
+        $("#sc_cp_price").text(0);
         calculate_order_price();
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("쿠폰변경").focus();
@@ -943,6 +959,8 @@ $(function() {
         $("input[name=sc_cp_id]").val("");
         $("input[name=od_coupon]").val(0);
         $("input[name=od_send_coupon]").val(0);
+        $("#od_cp_price").text(0);
+        $("#sc_cp_price").text(0);
         calculate_order_price();
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("쿠폰적용").focus();
@@ -980,6 +998,7 @@ $(function() {
 
         $("input[name=sc_cp_id]").val(cp_id);
         $("input[name=od_send_coupon]").val(price);
+        $("#sc_cp_price").text(number_format(String(price)));
         calculate_order_price();
         $("#sc_coupon_frm").remove();
         $("#sc_coupon_btn").text("쿠폰변경").focus();
@@ -994,6 +1013,7 @@ $(function() {
 
     $("#sc_coupon_cancel").live("click", function() {
         $("input[name=od_send_coupon]").val(0);
+        $("#sc_cp_price").text(0);
         calculate_order_price();
         $("#sc_coupon_frm").remove();
         $("#sc_coupon_btn").text("쿠폰적용").focus();
@@ -1108,6 +1128,7 @@ function calculate_total_price()
     $("input[name=od_send_coupon]").val(0);
     <?php if($oc_cnt > 0) { ?>
     $("input[name=od_cp_id]").val("");
+    $("#od_cp_price").text(0);
     if($("#od_coupon_cancel").size()) {
         $("#od_coupon_btn").text("쿠폰적용");
         $("#od_coupon_cancel").remove();
@@ -1115,6 +1136,7 @@ function calculate_total_price()
     <?php } ?>
     <?php if($sc_cnt > 0) { ?>
     $("input[name=sc_cp_id]").val("");
+    $("#sc_cp_price").text(0);
     if($("#sc_coupon_cancel").size()) {
         $("#sc_coupon_btn").text("쿠폰적용");
         $("#sc_coupon_cancel").remove();
@@ -1132,7 +1154,7 @@ function calculate_order_price()
     var sell_price = parseInt($("input[name=od_price]").val());
     var send_cost = parseInt($("input[name=od_send_cost]").val());
     var send_cost2 = parseInt($("input[name=od_send_cost2]").val());
-    var send_coupon = parseInt($("input[name=od_send_coupon").val());
+    var send_coupon = parseInt($("input[name=od_send_coupon]").val());
     var tot_price = sell_price + send_cost + send_cost2 - send_coupon;
 
     $("form[name=sm_form] input[name=good_mny]").val(tot_price);
@@ -1468,5 +1490,5 @@ $(function(){
 </script>
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

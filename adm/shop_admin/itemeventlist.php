@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '이벤트일괄처리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '이벤트일괄처리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $where = " where ";
 $sql_search = "";
@@ -24,8 +24,8 @@ if ($sel_field == "")  {
     $sel_field = "it_name";
 }
 
-$sql_common = " from {$g4['shop_item_table']} a
-                left join {$g4['shop_event_item_table']} b on (a.it_id=b.it_id and b.ev_id='$ev_id') ";
+$sql_common = " from {$g5['g5_shop_item_table']} a
+                left join {$g5['g5_shop_event_item_table']} b on (a.it_id=b.it_id and b.ev_id='$ev_id') ";
 $sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
@@ -79,7 +79,7 @@ if (isset($ev_set)) {
         <?php
         // 이벤트 옵션처리
         $event_option = "<option value=''>이벤트를 선택하세요</option>";
-        $sql1 = " select ev_id, ev_subject from {$g4['shop_event_table']} order by ev_id desc ";
+        $sql1 = " select ev_id, ev_subject from {$g5['g5_shop_event_table']} order by ev_id desc ";
         $result1 = sql_query($sql1);
         while ($row1=mysql_fetch_array($result1))
             $event_option .= '<option value="'.$row1['ev_id'].'`'.$row1['ev_subject'].'" '.get_selected($ev_set, $row1['ev_id'].'`'.$row1['ev_subject']).' >'.conv_subject($row1['ev_subject'], 20,"…").'</option>';
@@ -103,7 +103,7 @@ if (isset($ev_set)) {
     <select name="sel_ca_id" id="sel_ca_id">
         <option value=''>전체분류</option>
         <?php
-        $sql1 = " select ca_id, ca_name from {$g4['shop_category_table']} order by ca_id ";
+        $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
         $result1 = sql_query($sql1);
         for ($i=0; $row1=mysql_fetch_array($result1); $i++)
         {
@@ -159,9 +159,9 @@ if (isset($ev_set)) {
     </thead>
     <tbody>
     <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
-        $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
-        $sql = " select ev_id from {$g4['shop_event_item_table']}
+        $sql = " select ev_id from {$g5['g5_shop_event_item_table']}
                   where it_id = '{$row['it_id']}'
                     and ev_id = '$ev_id' ";
         $ev = sql_fetch($sql);
@@ -203,7 +203,7 @@ if (isset($ev_set)) {
 
 </section>
 
-<?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
 function fitemeventlistupdatecheck(f)
@@ -220,5 +220,5 @@ function fitemeventlistupdatecheck(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

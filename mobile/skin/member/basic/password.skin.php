@@ -2,15 +2,15 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $delete_str = "";
 if ($w == 'x') $delete_str = "댓";
-if ($w == 'u') $g4['title'] = $delete_str."글 수정";
-else if ($w == 'd' || $w == 'x') $g4['title'] = $delete_str."글 삭제";
-else $g4['title'] = $g4['title'];
+if ($w == 'u') $g5['title'] = $delete_str."글 수정";
+else if ($w == 'd' || $w == 'x') $g5['title'] = $delete_str."글 삭제";
+else $g5['title'] = $g5['title'];
 ?>
 
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="pw_confirm">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1><?php echo $g5['title'] ?></h1>
     <p>
         <?php if ($w == 'u') { ?>
         <strong>작성자만 글을 수정할 수 있습니다.</strong>

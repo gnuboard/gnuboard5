@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g4['title'] = '월별 접속자집계';
+$g5['title'] = '월별 접속자집계';
 include_once('./visit.sub.php');
 
 $colspan = 4;
@@ -12,7 +12,7 @@ $colspan = 4;
 $max = 0;
 $sum_count = 0;
 $sql = " select SUBSTRING(vs_date,1,7) as vs_month, SUM(vs_count) as cnt
-            from {$g4['visit_sum_table']}
+            from {$g5['visit_sum_table']}
             where vs_date between '{$fr_date}' and '{$to_date}'
             group by vs_month
             order by vs_month desc ";

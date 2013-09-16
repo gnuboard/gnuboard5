@@ -8,13 +8,13 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], "r");
 
-$g4[title] = "버전확인";
+$g5[title] = "버전확인";
 
 include_once("./admin.head.php");
-include_once("$g4[path]/lib/mailer.lib.php");
+include_once("$g5[path]/lib/mailer.lib.php");
 
 echo "현재버전 : <b>";
-$args = "head -1 ".$g4[path]."/HISTORY";
+$args = "head -1 ".$g5[path]."/HISTORY";
 system($args);
 echo "</b>";
 ?>
@@ -22,7 +22,7 @@ echo "</b>";
 <table width=100% border="0" align="left" cellpadding="0" cellspacing="0">
 <tr>
     <td>
-        <textarea name="textarea" style='width:100%; line-height:150%; padding:10px;' rows="25" class=tx readonly><?php echo implode("", file(G4_PATH.'/HISTORY'));?></textarea>
+        <textarea name="textarea" style='width:100%; line-height:150%; padding:10px;' rows="25" class=tx readonly><?php echo implode("", file(G5_PATH.'/HISTORY'));?></textarea>
     </td>
 </tr>
 </table>

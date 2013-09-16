@@ -9,11 +9,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <ul>
 
     <?php
-    $hsql = " select bo_table, bo_subject from {$g4['board_table']} order by gr_id, bo_table ";
+    $hsql = " select bo_table, bo_subject from {$g5['board_table']} order by gr_id, bo_table ";
     $hresult = sql_query($hsql);
     for ($i=0; $row=sql_fetch_array($hresult); $i++)
     {
-        echo '<li><a href="'.G4_BBS_URL.'/board.php?bo_table='.$row['bo_table'].'">'.$row['bo_subject'].'</a></li>'.PHP_EOL;
+        echo '<li><a href="'.G5_BBS_URL.'/board.php?bo_table='.$row['bo_table'].'">'.$row['bo_subject'].'</a></li>'.PHP_EOL;
     }
 
     if ($i==0)

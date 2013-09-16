@@ -1,13 +1,13 @@
 <?php
 include_once("../../../common.php");
 
-$ym = date('ym', G4_SERVER_TIME);
+$ym = date('ym', G5_SERVER_TIME);
 
-$data_dir = G4_DATA_PATH.'/editor/'.$ym;
-$data_url = G4_DATA_URL.'/editor/'.$ym;
+$data_dir = G5_DATA_PATH.'/editor/'.$ym;
+$data_url = G5_DATA_URL.'/editor/'.$ym;
 
-@mkdir($data_dir, G4_DIR_PERMISSION);
-@chmod($data_dir, G4_DIR_PERMISSION);
+@mkdir($data_dir, G5_DIR_PERMISSION);
+@chmod($data_dir, G5_DIR_PERMISSION);
  
 // 업로드 DIALOG 에서 전송된 값
 $funcNum = $_GET['CKEditorFuncNum'] ;

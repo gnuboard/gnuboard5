@@ -1,15 +1,15 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/wishlist.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/wishlist.php');
     return;
 }
 
 if (!$is_member)
-    goto_url(G4_BBS_URL."/login.php?url=".urlencode(G4_SHOP_URL.'/mypage.php'));
+    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL.'/mypage.php'));
 
-$g4['title'] = "위시리스트";
+$g5['title'] = "위시리스트";
 include_once('./_head.php');
 ?>
 
@@ -33,13 +33,13 @@ include_once('./_head.php');
     </thead>
     <tbody>
     <?php
-    $sql  = " select a.wi_id, a.wi_time, b.* from {$g4['shop_wish_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id ) ";
+    $sql  = " select a.wi_id, a.wi_time, b.* from {$g5['g5_shop_wish_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id ) ";
     $sql .= " where a.mb_id = '{$member['mb_id']}' order by a.wi_id desc ";
     $result = sql_query($sql);
     for ($i=0; $row = mysql_fetch_array($result); $i++) {
 
         $out_cd = '';
-        $sql = " select count(*) as cnt from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
+        $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
         $tmp = sql_fetch($sql);
         if($tmp['cnt'])
             $out_cd = 'no';

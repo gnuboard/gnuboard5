@@ -11,7 +11,7 @@ $admin = get_admin("super");
 
 <footer id="footer">
     <h1><?php echo $config['cf_title']; ?> 정보</h1>
-    <a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="처음으로"></a>
+    <a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="처음으로"></a>
     <p>
         <span><?php echo $default['de_admin_company_addr']; ?></span>
         <span><b>대표</b> <?php echo $default['de_admin_company_owner']; ?></span><br>
@@ -31,8 +31,8 @@ $sec = get_microtime() - $begin_time;
 $file = $_SERVER['PHP_SELF'];
 ?>
 
-<script src="<?php echo G4_JS_URL; ?>/sns.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/sns.js"></script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

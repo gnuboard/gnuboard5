@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 
 if ($is_guest) {
     $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
@@ -31,7 +31,7 @@ HEREDOC;
 if ($write['wr_is_comment'])
     alert_close('코멘트는 스크랩 할 수 없습니다.');
 
-$sql = " select count(*) as cnt from {$g4['scrap_table']}
+$sql = " select count(*) as cnt from {$g5['scrap_table']}
             where mb_id = '{$member['mb_id']}'
             and bo_table = '$bo_table'
             and wr_id = '$wr_id' ";
@@ -55,5 +55,5 @@ HEREDOC;
 
 include_once($member_skin_path.'/scrap_popin.skin.php');
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

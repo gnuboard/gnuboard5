@@ -1,12 +1,12 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/personalpayform.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/personalpayform.php');
     return;
 }
 
-$sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
+$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
 $pp = sql_fetch($sql);
 
 if(!$pp['pp_id'])
@@ -15,10 +15,10 @@ if(!$pp['pp_id'])
 if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.');
 
-$g4['title'] = $pp['pp_name'].'님 개인결제';
+$g5['title'] = $pp['pp_name'].'님 개인결제';
 include_once('./_head.php');
 
-$action_url = G4_HTTPS_SHOP_URL.'/personalpayformupdate.php';
+$action_url = G5_HTTPS_SHOP_URL.'/personalpayformupdate.php';
 if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
     include './settle_'.$default['de_card_pg'].'.inc.php';
 }
@@ -449,7 +449,7 @@ function get_intall_file()
     <input type="hidden" name="site_cd" value="SR<?php echo $default['de_kcp_mid']; ?>">
     <table border="0" cellspacing="0" cellpadding="0">
     <tr>
-        <td align='center'><img src="<?php echo G4_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
+        <td align='center'><img src="<?php echo G5_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
     </tr>
     <tr>
         <td style='line-height:150%;'>

@@ -1,11 +1,11 @@
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_auth`
+-- Table structure for table `g5_auth`
 --
 
-DROP TABLE IF EXISTS `g4s_auth`;
-CREATE TABLE IF NOT EXISTS `g4s_auth` (
+DROP TABLE IF EXISTS `g5_auth`;
+CREATE TABLE IF NOT EXISTS `g5_auth` (
   `mb_id` varchar(255) NOT NULL default '',
   `au_menu` varchar(20) NOT NULL default '',
   `au_auth` set('r','w','d') NOT NULL default '',
@@ -15,14 +15,15 @@ CREATE TABLE IF NOT EXISTS `g4s_auth` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_board`
+-- Table structure for table `g5_board`
 --
 
-DROP TABLE IF EXISTS `g4s_board`;
-CREATE TABLE IF NOT EXISTS `g4s_board` (
+DROP TABLE IF EXISTS `g5_board`;
+CREATE TABLE IF NOT EXISTS `g5_board` (
   `bo_table` varchar(20) NOT NULL DEFAULT '',
   `gr_id` varchar(255) NOT NULL DEFAULT '',
   `bo_subject` varchar(255) NOT NULL DEFAULT '',
+  `bo_mobile_subject` varchar(255) NOT NULL DEFAULT '',
   `bo_device` enum('both','pc','mobile') NOT NULL DEFAULT 'both',
   `bo_admin` varchar(255) NOT NULL DEFAULT '',
   `bo_list_level` tinyint(4) NOT NULL DEFAULT '0',
@@ -126,11 +127,11 @@ CREATE TABLE IF NOT EXISTS `g4s_board` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_board_file`
+-- Table structure for table `g5_board_file`
 --
 
-DROP TABLE IF EXISTS `g4s_board_file`;
-CREATE TABLE IF NOT EXISTS `g4s_board_file` (
+DROP TABLE IF EXISTS `g5_board_file`;
+CREATE TABLE IF NOT EXISTS `g5_board_file` (
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` int(11) NOT NULL default '0',
   `bf_no` int(11) NOT NULL default '0',
@@ -149,11 +150,11 @@ CREATE TABLE IF NOT EXISTS `g4s_board_file` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_board_good`
+-- Table structure for table `g5_board_good`
 --
 
-DROP TABLE IF EXISTS `g4s_board_good`;
-CREATE TABLE IF NOT EXISTS `g4s_board_good` (
+DROP TABLE IF EXISTS `g5_board_good`;
+CREATE TABLE IF NOT EXISTS `g5_board_good` (
   `bg_id` int(11) NOT NULL auto_increment,
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` int(11) NOT NULL default '0',
@@ -167,11 +168,11 @@ CREATE TABLE IF NOT EXISTS `g4s_board_good` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_board_new`
+-- Table structure for table `g5_board_new`
 --
 
-DROP TABLE IF EXISTS `g4s_board_new`;
-CREATE TABLE IF NOT EXISTS `g4s_board_new` (
+DROP TABLE IF EXISTS `g5_board_new`;
+CREATE TABLE IF NOT EXISTS `g5_board_new` (
   `bn_id` int(11) NOT NULL auto_increment,
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` int(11) NOT NULL default '0',
@@ -185,11 +186,11 @@ CREATE TABLE IF NOT EXISTS `g4s_board_new` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_config`
+-- Table structure for table `g5_config`
 --
 
-DROP TABLE IF EXISTS `g4s_config`;
-CREATE TABLE IF NOT EXISTS `g4s_config` (
+DROP TABLE IF EXISTS `g5_config`;
+CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_title` varchar(255) NOT NULL DEFAULT '',
   `cf_admin` varchar(255) NOT NULL DEFAULT '',
   `cf_admin_email` varchar(255) NOT NULL DEFAULT '',
@@ -223,6 +224,7 @@ CREATE TABLE IF NOT EXISTS `g4s_config` (
   `cf_filter` text NOT NULL,
   `cf_possible_ip` text NOT NULL,
   `cf_intercept_ip` text NOT NULL,
+  `cf_analytics` text NOT NULL,
   `cf_register_skin` varchar(255) NOT NULL DEFAULT 'basic',
   `cf_member_skin` varchar(255) NOT NULL DEFAULT '',
   `cf_use_homepage` tinyint(4) NOT NULL DEFAULT '0',
@@ -319,10 +321,10 @@ CREATE TABLE IF NOT EXISTS `g4s_config` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_cert_history`
+-- Table structure for table `g5_cert_history`
 --
 
-CREATE TABLE IF NOT EXISTS `g4s_cert_history` (
+CREATE TABLE IF NOT EXISTS `g5_cert_history` (
   `cr_id` int(11) NOT NULL auto_increment,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
   `cr_company` varchar(255) NOT NULL DEFAULT '',
@@ -337,11 +339,11 @@ CREATE TABLE IF NOT EXISTS `g4s_cert_history` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_group`
+-- Table structure for table `g5_group`
 --
 
-DROP TABLE IF EXISTS `g4s_group`;
-CREATE TABLE IF NOT EXISTS `g4s_group` (
+DROP TABLE IF EXISTS `g5_group`;
+CREATE TABLE IF NOT EXISTS `g5_group` (
   `gr_id` varchar(10) NOT NULL default '',
   `gr_subject` varchar(255) NOT NULL default '',
   `gr_device` ENUM('both','pc','mobile') NOT NULL DEFAULT 'both',
@@ -375,11 +377,11 @@ CREATE TABLE IF NOT EXISTS `g4s_group` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_group_member`
+-- Table structure for table `g5_group_member`
 --
 
-DROP TABLE IF EXISTS `g4s_group_member`;
-CREATE TABLE IF NOT EXISTS `g4s_group_member` (
+DROP TABLE IF EXISTS `g5_group_member`;
+CREATE TABLE IF NOT EXISTS `g5_group_member` (
   `gm_id` int(11) NOT NULL auto_increment,
   `gr_id` varchar(255) NOT NULL default '',
   `mb_id` varchar(255) NOT NULL default '',
@@ -392,11 +394,11 @@ CREATE TABLE IF NOT EXISTS `g4s_group_member` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_login`
+-- Table structure for table `g5_login`
 --
 
-DROP TABLE IF EXISTS `g4s_login`;
-CREATE TABLE IF NOT EXISTS `g4s_login` (
+DROP TABLE IF EXISTS `g5_login`;
+CREATE TABLE IF NOT EXISTS `g5_login` (
   `lo_ip` varchar(255) NOT NULL default '',
   `mb_id` varchar(255) NOT NULL default '',
   `lo_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -408,11 +410,11 @@ CREATE TABLE IF NOT EXISTS `g4s_login` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_mail`
+-- Table structure for table `g5_mail`
 --
 
-DROP TABLE IF EXISTS `g4s_mail`;
-CREATE TABLE IF NOT EXISTS `g4s_mail` (
+DROP TABLE IF EXISTS `g5_mail`;
+CREATE TABLE IF NOT EXISTS `g5_mail` (
   `ma_id` int(11) NOT NULL auto_increment,
   `ma_subject` varchar(255) NOT NULL default '',
   `ma_content` mediumtext NOT NULL,
@@ -425,11 +427,11 @@ CREATE TABLE IF NOT EXISTS `g4s_mail` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_member`
+-- Table structure for table `g5_member`
 --
 
-DROP TABLE IF EXISTS `g4s_member`;
-CREATE TABLE IF NOT EXISTS `g4s_member` (
+DROP TABLE IF EXISTS `g5_member`;
+CREATE TABLE IF NOT EXISTS `g5_member` (
   `mb_no` int(11) NOT NULL auto_increment,
   `mb_id` varchar(255) NOT NULL default '',
   `mb_password` varchar(255) NOT NULL default '',
@@ -489,11 +491,11 @@ CREATE TABLE IF NOT EXISTS `g4s_member` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_memo`
+-- Table structure for table `g5_memo`
 --
 
-DROP TABLE IF EXISTS `g4s_memo`;
-CREATE TABLE IF NOT EXISTS `g4s_memo` (
+DROP TABLE IF EXISTS `g5_memo`;
+CREATE TABLE IF NOT EXISTS `g5_memo` (
   `me_id` int(11) NOT NULL default '0',
   `me_recv_mb_id` varchar(255) NOT NULL default '',
   `me_send_mb_id` varchar(255) NOT NULL default '',
@@ -506,11 +508,11 @@ CREATE TABLE IF NOT EXISTS `g4s_memo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_point`
+-- Table structure for table `g5_point`
 --
 
-DROP TABLE IF EXISTS `g4s_point`;
-CREATE TABLE IF NOT EXISTS `g4s_point` (
+DROP TABLE IF EXISTS `g5_point`;
+CREATE TABLE IF NOT EXISTS `g5_point` (
   `po_id` int(11) NOT NULL auto_increment,
   `mb_id` varchar(20) NOT NULL default '',
   `po_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -531,11 +533,11 @@ CREATE TABLE IF NOT EXISTS `g4s_point` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_poll`
+-- Table structure for table `g5_poll`
 --
 
-DROP TABLE IF EXISTS `g4s_poll`;
-CREATE TABLE IF NOT EXISTS `g4s_poll` (
+DROP TABLE IF EXISTS `g5_poll`;
+CREATE TABLE IF NOT EXISTS `g5_poll` (
   `po_id` int(11) NOT NULL auto_increment,
   `po_subject` varchar(255) NOT NULL default '',
   `po_poll1` varchar(255) NOT NULL default '',
@@ -568,11 +570,11 @@ CREATE TABLE IF NOT EXISTS `g4s_poll` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_poll_etc`
+-- Table structure for table `g5_poll_etc`
 --
 
-DROP TABLE IF EXISTS `g4s_poll_etc`;
-CREATE TABLE IF NOT EXISTS `g4s_poll_etc` (
+DROP TABLE IF EXISTS `g5_poll_etc`;
+CREATE TABLE IF NOT EXISTS `g5_poll_etc` (
   `pc_id` int(11) NOT NULL default '0',
   `po_id` int(11) NOT NULL default '0',
   `mb_id` varchar(255) NOT NULL default '',
@@ -585,11 +587,11 @@ CREATE TABLE IF NOT EXISTS `g4s_poll_etc` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_popular`
+-- Table structure for table `g5_popular`
 --
 
-DROP TABLE IF EXISTS `g4s_popular`;
-CREATE TABLE IF NOT EXISTS `g4s_popular` (
+DROP TABLE IF EXISTS `g5_popular`;
+CREATE TABLE IF NOT EXISTS `g5_popular` (
   `pp_id` int(11) NOT NULL auto_increment,
   `pp_word` varchar(50) NOT NULL default '',
   `pp_date` date NOT NULL default '0000-00-00',
@@ -601,11 +603,11 @@ CREATE TABLE IF NOT EXISTS `g4s_popular` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_scrap`
+-- Table structure for table `g5_scrap`
 --
 
-DROP TABLE IF EXISTS `g4s_scrap`;
-CREATE TABLE IF NOT EXISTS `g4s_scrap` (
+DROP TABLE IF EXISTS `g5_scrap`;
+CREATE TABLE IF NOT EXISTS `g5_scrap` (
   `ms_id` int(11) NOT NULL auto_increment,
   `mb_id` varchar(255) NOT NULL default '',
   `bo_table` varchar(20) NOT NULL default '',
@@ -618,11 +620,11 @@ CREATE TABLE IF NOT EXISTS `g4s_scrap` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_visit`
+-- Table structure for table `g5_visit`
 --
 
-DROP TABLE IF EXISTS `g4s_visit`;
-CREATE TABLE IF NOT EXISTS `g4s_visit` (
+DROP TABLE IF EXISTS `g5_visit`;
+CREATE TABLE IF NOT EXISTS `g5_visit` (
   `vi_id` int(11) NOT NULL default '0',
   `vi_ip` varchar(255) NOT NULL default '',
   `vi_date` date NOT NULL default '0000-00-00',
@@ -637,11 +639,11 @@ CREATE TABLE IF NOT EXISTS `g4s_visit` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_visit_sum`
+-- Table structure for table `g5_visit_sum`
 --
 
-DROP TABLE IF EXISTS `g4s_visit_sum`;
-CREATE TABLE IF NOT EXISTS `g4s_visit_sum` (
+DROP TABLE IF EXISTS `g5_visit_sum`;
+CREATE TABLE IF NOT EXISTS `g5_visit_sum` (
   `vs_date` date NOT NULL default '0000-00-00',
   `vs_count` int(11) NOT NULL default '0',
   PRIMARY KEY  (`vs_date`),
@@ -651,11 +653,11 @@ CREATE TABLE IF NOT EXISTS `g4s_visit_sum` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_unique`
+-- Table structure for table `g5_unique`
 --
 
-DROP TABLE IF EXISTS `g4s_uniqid`;
-CREATE TABLE IF NOT EXISTS `g4s_uniqid` (
+DROP TABLE IF EXISTS `g5_uniqid`;
+CREATE TABLE IF NOT EXISTS `g5_uniqid` (
   `uq_id` bigint(20) unsigned NOT NULL,
   `uq_ip` varchar(255) NOT NULL,
   PRIMARY KEY (`uq_id`)
@@ -664,11 +666,11 @@ CREATE TABLE IF NOT EXISTS `g4s_uniqid` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_syndi_log`
+-- Table structure for table `g5_syndi_log`
 --
 
-DROP TABLE IF EXISTS `g4s_syndi_log`;
-CREATE TABLE IF NOT EXISTS `g4s_syndi_log` (
+DROP TABLE IF EXISTS `g5_syndi_log`;
+CREATE TABLE IF NOT EXISTS `g5_syndi_log` (
   `content_id` int(11) NOT NULL, 
   `bbs_id` varchar(50) NOT NULL, 
   `title` text NOT NULL,
@@ -680,11 +682,11 @@ CREATE TABLE IF NOT EXISTS `g4s_syndi_log` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g4s_autosave`
+-- Table structure for table `g5_autosave`
 --
 
-DROP TABLE IF EXISTS `g4s_autosave`;
-CREATE TABLE IF NOT EXISTS `g4s_autosave` (
+DROP TABLE IF EXISTS `g5_autosave`;
+CREATE TABLE IF NOT EXISTS `g5_autosave` (
   `as_id` int(11) NOT NULL AUTO_INCREMENT,
   `mb_id` varchar(20) NOT NULL,
   `as_uid` bigint(20) unsigned NOT NULL,

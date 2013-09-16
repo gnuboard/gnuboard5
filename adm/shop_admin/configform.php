@@ -1,7 +1,7 @@
 <?php
 $sub_menu = '400100';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "r");
 
@@ -59,8 +59,8 @@ if ($default['de_icode_id'] && $default['de_icode_pw']) {
     );
 }
 
-$g4['title'] = '쇼핑몰설정';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '쇼핑몰설정';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_scf_info">사업자정보</a></li>
@@ -177,7 +177,7 @@ $pg_anchor = '<ul class="anchor">
         <td colspan="3">
             <select name="de_shop_mobile_skin" id="de_shop_mobile_skin" required class="required">
             <?php
-            $arr = get_skin_dir('shop', G4_MOBILE_PATH.'/'.G4_SKIN_DIR);
+            $arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
             for ($i=0; $i<count($arr); $i++) {
                 if ($i == 0) echo "<option value=\"\">선택</option>";
                 echo "<option value=\"".$arr[$i]."\"".get_selected($default['de_shop_mobile_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
@@ -210,7 +210,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type1_list_use" value="1" id="de_type1_list_use" <?php echo $default['de_type1_list_use']?"checked":""; ?>>
             <label for="de_type1_list_skin">스킨</label>
             <select name="de_type1_list_skin" id="de_type1_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $default['de_type1_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type1_list_skin']); ?>
             </select>
             <label for="de_type1_list_row">출력할 줄 수</label>
             <input type="text" name="de_type1_list_row" value="<?php echo $default['de_type1_list_row']; ?>" id="de_type1_list_row" class="frm_input" size="3">
@@ -229,7 +229,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type2_list_use" value="1" id="de_type2_list_use" <?php echo $default['de_type2_list_use']?"checked":""; ?>>
             <label for="de_type2_list_skin">스킨</label>
             <select name="de_type2_list_skin" id="de_type2_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $default['de_type2_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type2_list_skin']); ?>
             </select>
             <label for="de_type2_list_row">출력할 줄 수</label>
             <input type="text" name="de_type2_list_row" value="<?php echo $default['de_type2_list_row']; ?>" id="de_type2_list_row" class="frm_input" size="3">
@@ -248,7 +248,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type3_list_use" value="1" id="de_type3_list_use" <?php echo $default['de_type3_list_use']?"checked":""; ?>>
             <label for="de_type3_list_skin">스킨</label>
             <select name="de_type3_list_skin" id="de_type3_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $default['de_type3_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type3_list_skin']); ?>
             </select>
             <label for="de_type3_list_row">출력할 줄 수</label>
             <input type="text" name="de_type3_list_row" value="<?php echo $default['de_type3_list_row']; ?>" id="de_type3_list_row" class="frm_input" size="3">
@@ -267,7 +267,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type4_list_use" value="1" id="de_type4_list_use" <?php echo $default['de_type4_list_use']?"checked":""; ?>>
             <label for="de_type4_list_skin">스킨</label>
             <select name="de_type4_list_skin" id="de_type4_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $default['de_type4_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type4_list_skin']); ?>
             </select>
             <label for="de_type4_list_row">출력할 줄 수</label>
             <input type="text" name="de_type4_list_row" value="<?php echo $default['de_type4_list_row']; ?>" id="de_type4_list_row" class="frm_input" size="3">
@@ -286,7 +286,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_type5_list_use" value="1" id="de_type5_list_use" <?php echo $default['de_type5_list_use']?"checked":""; ?>>
             <label for="de_type5_list_skin">스킨</label>
             <select name="de_type5_list_skin" id="de_type5_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $default['de_type5_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type5_list_skin']); ?>
             </select>
             <label for="de_type5_list_row">출력할 줄 수</label>
             <input type="text" name="de_type5_list_row" value="<?php echo $default['de_type5_list_row']; ?>" id="de_type5_list_row" class="frm_input" size="3">
@@ -322,7 +322,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_mobile_type1_list_use" value="1" id="de_mobile_type1_list_use" <?php echo $default['de_mobile_type1_list_use']?"checked":""; ?>>
             <label for="de_mobile_type1_list_skin">스킨</label>
             <select name="de_mobile_type1_list_skin" id="de_mobile_type1_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_MSHOP_SKIN_PATH, $default['de_mobile_type1_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type1_list_skin']); ?>
             </select>
             <label for="de_mobile_type1_list_mod">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type1_list_mod" value="<?php echo $default['de_mobile_type1_list_mod']; ?>" id="de_mobile_type1_list_mod" class="frm_input" size="3">
@@ -338,7 +338,7 @@ $pg_anchor = '<ul class="anchor">
             <label for="de_mobile_type2_list_use">출력</label> <input type="checkbox" name="de_mobile_type2_list_use" value="1" id="de_mobile_type2_list_use" <?php echo $default['de_mobile_type2_list_use']?"checked":""; ?>>
             <label for="de_mobile_type2_list_skin">스킨 </label>
             <select name="de_mobile_type2_list_skin" id="de_mobile_type2_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_MSHOP_SKIN_PATH, $default['de_mobile_type2_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type2_list_skin']); ?>
             </select>
             <label for="de_mobile_type2_list_mod">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type2_list_mod" value="<?php echo $default['de_mobile_type2_list_mod']; ?>" id="de_mobile_type2_list_mod" class="frm_input" size="3">
@@ -355,7 +355,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_mobile_type3_list_use" value="1" id="de_mobile_type3_list_use" <?php echo $default['de_mobile_type3_list_use']?"checked":""; ?>>
             <label for="de_mobile_type3_list_skin">스킨</label>
             <select name="de_mobile_type3_list_skin" id="de_mobile_type3_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_MSHOP_SKIN_PATH, $default['de_mobile_type3_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type3_list_skin']); ?>
             </select>
             <label for="de_mobile_type3_list_mod">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type3_list_mod" value="<?php echo $default['de_mobile_type3_list_mod']; ?>" id="de_mobile_type3_list_mod" class="frm_input" size="3">
@@ -372,7 +372,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_mobile_type4_list_use" value="1" id="de_mobile_type4_list_use" <?php echo $default['de_mobile_type4_list_use']?"checked":""; ?>>
             <label for="de_mobile_type4_list_skin">스킨</label>
             <select name="de_mobile_type4_list_skin" id="de_mobile_type4_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_MSHOP_SKIN_PATH, $default['de_mobile_type4_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type4_list_skin']); ?>
             </select>
             <label for="de_mobile_type4_list_mod">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type4_list_mod" value="<?php echo $default['de_mobile_type4_list_mod']; ?>" id="de_mobile_type4_list_mod" class="frm_input" size="3">
@@ -389,7 +389,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="de_mobile_type5_list_use" value="1" id="de_mobile_type5_list_use" <?php echo $default['de_mobile_type5_list_use']?"checked":""; ?>>
             <label for="de_mobile_type5_list_skin">스킨</label>
             <select id="de_mobile_type5_list_skin" name="de_mobile_type5_list_skin">
-                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G4_MSHOP_SKIN_PATH, $default['de_mobile_type5_list_skin']); ?>
+                <?php echo get_list_skin_options("^main.[^\.]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type5_list_skin']); ?>
             </select>
             <label for="de_mobile_type5_list_mod">출력할 이미지 수</label>
             <input type="text" name="de_mobile_type5_list_mod" value="<?php echo $default['de_mobile_type5_list_mod']; ?>" id="de_mobile_type5_list_mod" class="frm_input" size="3">
@@ -472,7 +472,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="de_taxsave_use">현금영수증<br>발급사용</label></th>
         <td>
-            <?php echo help("관리자는 설정에 관계없이 <a href=\"".G4_ADMIN_URL."/shop_admin/orderlist.php\">주문내역</a> &gt; 수정에서 발급이 가능합니다.\n현금영수증 발급 취소는 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.", 50); ?>
+            <?php echo help("관리자는 설정에 관계없이 <a href=\"".G5_ADMIN_URL."/shop_admin/orderlist.php\">주문내역</a> &gt; 수정에서 발급이 가능합니다.\n현금영수증 발급 취소는 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.", 50); ?>
             <select id="de_taxsave_use" name="de_taxsave_use">
                 <option value="0" <?php echo get_selected($default['de_taxsave_use'], 0); ?>>사용안함</option>
                 <option value="1" <?php echo get_selected($default['de_taxsave_use'], 1); ?>>사용</option>
@@ -482,7 +482,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="cf_use_point">포인트 사용</label></th>
         <td>
-            <?php echo help("<a href=\"".G4_ADMIN_URL."/config_form.php#frm_board\" target=\"_blank\">환경설정 &gt; 기본환경설정</a>과 동일한 설정입니다."); ?>
+            <?php echo help("<a href=\"".G5_ADMIN_URL."/config_form.php#frm_board\" target=\"_blank\">환경설정 &gt; 기본환경설정</a>과 동일한 설정입니다."); ?>
             <input type="checkbox" name="cf_use_point" value="1" id="cf_use_point"<?php echo $config['cf_use_point']?' checked':''; ?>> 사용
         </td>
     </tr>
@@ -602,7 +602,7 @@ $pg_anchor = '<ul class="anchor">
         <th scope="row">공통 URL</th>
         <td>
             <?php echo help("가상계좌 사용시 다음 주소를 <strong>KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
-            <?php echo G4_SHOP_URL; ?>/settle_kcp_common.php
+            <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php
         </td>
     </tr>
     </tbody>
@@ -683,7 +683,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row">관련상품출력</th>
         <td>
-            <?php echo help(G4_SHOP_DIR.'/item.php 에서 스킨설정에서 설정된 스킨의 list.10.skin.php 를 include 하여 출력합니다.'); ?>
+            <?php echo help(G5_SHOP_DIR.'/item.php 에서 스킨설정에서 설정된 스킨의 list.10.skin.php 를 include 하여 출력합니다.'); ?>
             <label for="de_rel_list_mod">1줄당 이미지 수</label>
             <input type="text" name="de_rel_list_mod" value="<?php echo $default['de_rel_list_mod']; ?>" id="de_rel_list_mod" class="frm_input" size="3">
             <label for="de_rel_img_width">이미지폭</label>
@@ -720,7 +720,7 @@ $pg_anchor = '<ul class="anchor">
             <?php echo help("쇼핑몰 로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
             <input type="file" name="logo_img" id="logo_img">
             <?php
-            $logo_img = G4_DATA_PATH."/common/logo_img";
+            $logo_img = G5_DATA_PATH."/common/logo_img";
             if (file_exists($logo_img))
             {
                 $size = getimagesize($logo_img);
@@ -729,7 +729,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="logo_img_del" value="1" id="logo_img_del">
             <span class="scf_img_logoimg"></span>
             <div id="logoimg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/common/logo_img" alt="">
+                <img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
             <script>
@@ -744,7 +744,7 @@ $pg_anchor = '<ul class="anchor">
             <?php echo help("쇼핑몰 메인이미지를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
             <input type="file" name="main_img">
             <?php
-            $main_img = G4_DATA_PATH."/common/main_img";
+            $main_img = G5_DATA_PATH."/common/main_img";
             if (file_exists($main_img))
             {
                 $size = getimagesize($main_img);
@@ -753,7 +753,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="main_img_del" value="1" id="main_img_del">
             <span class="scf_img_mainimg"></span>
             <div id="mainimg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/common/main_img" alt="">
+                <img src="<?php echo G5_DATA_URL; ?>/common/main_img" alt="">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
             <script>
@@ -768,7 +768,7 @@ $pg_anchor = '<ul class="anchor">
             <?php echo help("모바일 쇼핑몰 로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
             <input type="file" name="mobile_logo_img" id="mobile_logo_img">
             <?php
-            $mobile_logo_img = G4_DATA_PATH."/common/mobile_logo_img";
+            $mobile_logo_img = G5_DATA_PATH."/common/mobile_logo_img";
             if (file_exists($mobile_logo_img))
             {
                 $size = getimagesize($mobile_logo_img);
@@ -777,7 +777,7 @@ $pg_anchor = '<ul class="anchor">
             <input type="checkbox" name="mobile_logo_img_del" value="1" id="mobile_logo_img_del">
             <span class="scf_img_mobilelogoimg"></span>
             <div id="mobilelogoimg" class="banner_or_img">
-                <img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="">
+                <img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="">
                 <button type="button" class="sit_wimg_close">닫기</button>
             </div>
             <script>
@@ -830,11 +830,11 @@ $pg_anchor = '<ul class="anchor">
     </tr>
     <tr>
         <th scope="row">MYSQL USER</th>
-        <td><?php echo G4_MYSQL_USER; ?></td>
+        <td><?php echo G5_MYSQL_USER; ?></td>
     </tr>
     <tr>
         <th scope="row">MYSQL DB</th>
-        <td><?php echo G4_MYSQL_DB; ?></td>
+        <td><?php echo G5_MYSQL_DB; ?></td>
     </tr>
     <tr>
         <th scope="row">서버 IP</th>
@@ -1090,5 +1090,5 @@ $(function() {
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

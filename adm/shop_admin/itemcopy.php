@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '상품 복사';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '상품 복사';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <form name="fitemcopy">
@@ -46,5 +46,5 @@ function _copy(link)
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

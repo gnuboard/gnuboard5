@@ -21,7 +21,7 @@
     /* =   테스트 및 실결제 연동시 site_conf_inc.php파일을 수정하시기 바랍니다.     = */
     /* = -------------------------------------------------------------------------- = */
 
-     include G4_MSHOP_PATH.'/settle_kcp.inc.php';       // 환경설정 파일 include
+     include G5_MSHOP_PATH.'/settle_kcp.inc.php';       // 환경설정 파일 include
 ?>
 <?php
     /* = -------------------------------------------------------------------------- = */
@@ -124,7 +124,7 @@
 	.COMMENT { font-family:"굴림","굴림체"; font-size:9pt; line-height:160% }
 </style>
 <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
-<script src="<?php echo G4_MSHOP_URL; ?>/kcp/approval_key.js"></script>
+<script src="<?php echo G5_MSHOP_URL; ?>/kcp/approval_key.js"></script>
 
 
 <script language="javascript">
@@ -254,7 +254,7 @@
 <input type="hidden" name="approval_key" id="approval">
 <!-- 리턴 URL (kcp와 통신후 결제를 요청할 수 있는 암호화 데이터를 전송 받을 가맹점의 주문페이지 URL) -->
 <!-- 반드시 가맹점 주문페이지의 URL을 입력 해주시기 바랍니다. -->
-<input type="hidden" name="Ret_URL"      value="<?php echo G4_MSHOP_URL; ?>/kcp/order_approval_form.php">
+<input type="hidden" name="Ret_URL"      value="<?php echo G5_MSHOP_URL; ?>/kcp/order_approval_form.php">
 <!-- 인증시 필요한 파라미터(변경불가)-->
 <input type="hidden" name="ActionResult" value="<?php echo $ActionResult; ?>">
 <!-- 에스크로 사용유무 에스크로 사용 업체(가상계좌만 해당)는 Y로 세팅 해주시기 바랍니다.-->

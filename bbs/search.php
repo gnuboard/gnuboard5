@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '전체검색 결과';
+$g5['title'] = '전체검색 결과';
 include_once('./_head.php');
 
 $search_table = Array();
@@ -19,9 +19,9 @@ if ($stx) {
     $srows = isset($_GET['srows']) ? $_GET['srows'] : 10;
     if (!$srows) $srows = 10; // 한페이지에 출력하는 검색 행수
 
-    $g4_search['tables'] = Array();
-    $g4_search['read_level'] = Array();
-    $sql = " select gr_id, bo_table, bo_read_level from {$g4['board_table']} where bo_use_search = 1 and bo_list_level <= '{$member['mb_level']}' ";
+    $g5_search['tables'] = Array();
+    $g5_search['read_level'] = Array();
+    $sql = " select gr_id, bo_table, bo_read_level from {$g5['board_table']} where bo_use_search = 1 and bo_list_level <= '{$member['mb_level']}' ";
     if ($gr_id)
         $sql .= " and gr_id = '{$gr_id}' ";
     $onetable = isset($onetable) ? $onetable : "";
@@ -34,7 +34,7 @@ if ($stx) {
         if ($is_admin != 'super')
         {
             // 그룹접근 사용에 대한 검색 차단
-            $sql2 = " select gr_use_access, gr_admin from {$g4['group_table']} where gr_id = '{$row['gr_id']}' ";
+            $sql2 = " select gr_use_access, gr_admin from {$g5['group_table']} where gr_id = '{$row['gr_id']}' ";
             $row2 = sql_fetch($sql2);
             // 그룹접근을 사용한다면
             if ($row2['gr_use_access']) {
@@ -42,15 +42,15 @@ if ($stx) {
                 if ($row2['gr_admin'] && $row2['gr_admin'] == $member['mb_id']) {
                     ;
                 } else {
-                    $sql3 = " select count(*) as cnt from {$g4['group_member_table']} where gr_id = '{$row['gr_id']}' and mb_id = '{$member['mb_id']}' and mb_id <> '' ";
+                    $sql3 = " select count(*) as cnt from {$g5['group_member_table']} where gr_id = '{$row['gr_id']}' and mb_id = '{$member['mb_id']}' and mb_id <> '' ";
                     $row3 = sql_fetch($sql3);
                     if (!$row3['cnt'])
                         continue;
                 }
             }
         }
-        $g4_search['tables'][] = $row['bo_table'];
-        $g4_search['read_level'][] = $row['bo_read_level'];
+        $g5_search['tables'][] = $row['bo_table'];
+        $g5_search['read_level'][] = $row['bo_read_level'];
     }
 
     $search_query = 'sfl='.urlencode($sfl).'&amp;stx='.urlencode($stx).'&amp;sop='.$sop;
@@ -101,7 +101,7 @@ if ($stx) {
         $op1 = " {$sop} ";
 
         // 인기검색어
-        $sql = " insert into {$g4['popular_table']} set pp_word = '{$search_str}', pp_date = '".G4_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $sql = " insert into {$g5['popular_table']} set pp_word = '{$search_str}', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql, FALSE);
     }
     $str .= ")";
@@ -114,8 +114,8 @@ if ($stx) {
     $time1 = get_microtime();
 
     $total_count = 0;
-    for ($i=0; $i<count($g4_search['tables']); $i++) {
-        $tmp_write_table   = $g4['write_prefix'] . $g4_search['tables'][$i];
+    for ($i=0; $i<count($g5_search['tables']); $i++) {
+        $tmp_write_table   = $g5['write_prefix'] . $g5_search['tables'][$i];
 
         $sql = " select wr_id from {$tmp_write_table} where {$sql_search} ";
         $result = sql_query($sql, false);
@@ -124,17 +124,17 @@ if ($stx) {
         $total_count += $row['cnt'];
         if ($row['cnt']) {
             $board_count++;
-            $search_table[] = $g4_search['tables'][$i];
-            $read_level[]   = $g4_search['read_level'][$i];
+            $search_table[] = $g5_search['tables'][$i];
+            $read_level[]   = $g5_search['read_level'][$i];
             $search_table_count[] = $total_count;
 
-            $sql2 = " select bo_subject from {$g4['board_table']} where bo_table = '{$g4_search['tables'][$i]}' ";
+            $sql2 = " select bo_subject from {$g5['board_table']} where bo_table = '{$g5_search['tables'][$i]}' ";
             $row2 = sql_fetch($sql2);
             $sch_class = "";
             $sch_all = "";
-            if ($onetable == $g4_search['tables'][$i]) $sch_class = "class=sch_on";
+            if ($onetable == $g5_search['tables'][$i]) $sch_class = "class=sch_on";
             else $sch_all = "class=sch_on";
-            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g4_search['tables'][$i].'" '.$sch_class.'><strong>'.$row2['bo_subject'].'</strong><span class="cnt_cmt">'.$row['cnt'].'</span></a></li>';
+            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g5_search['tables'][$i].'" '.$sch_class.'><strong>'.$row2['bo_subject'].'</strong><span class="cnt_cmt">'.$row['cnt'].'</span></a></li>';
         }
     }
 
@@ -156,11 +156,11 @@ if ($stx) {
 
     $k=0;
     for ($idx=$table_index; $idx<count($search_table); $idx++) {
-        $sql = " select bo_subject from {$g4[board_table]} where bo_table = '{$search_table[$idx]}' ";
+        $sql = " select bo_subject from {$g5[board_table]} where bo_table = '{$search_table[$idx]}' ";
         $row = sql_fetch($sql);
         $bo_subject[$idx] = $row['bo_subject'];
 
-        $tmp_write_table = $g4['write_prefix'] . $search_table[$idx];
+        $tmp_write_table = $g5['write_prefix'] . $search_table[$idx];
 
         $sql = " select * from {$tmp_write_table} where {$sql_search} order by wr_id desc limit {$from_record}, {$rows} ";
         $result = sql_query($sql);
@@ -211,11 +211,11 @@ if ($stx) {
         $from_record = 0;
     }
 
-    $write_pages = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;srows='.$srows.'&amp;onetable='.$onetable.'&amp;page=');
+    $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;srows='.$srows.'&amp;onetable='.$onetable.'&amp;page=');
 }
 
 $group_select = '<label for="gr_id" class="sound_only">게시판 그룹선택</label><select name="gr_id" id="gr_id" class="select"><option value="">전체 분류';
-$sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_id ";
+$sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
     $group_select .= "<option value=\"".$row['gr_id']."\"".get_selected($_GET['gr_id'], $row['gr_id']).">".$row['gr_subject']."</option>";

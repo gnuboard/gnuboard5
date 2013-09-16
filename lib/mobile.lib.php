@@ -33,7 +33,7 @@ function mobile_create_thumb($srcImg, $width, $thumb)
     imagecopy($target, $source, 0, 0, 0, 0, $size[0], $size[1]);
 
     imagejpeg($target, $thumb, 100);
-    chmod($thumb, G4_FILE_PERMISSION); // 추후 삭제를 위하여 파일모드 변경
+    chmod($thumb, G5_FILE_PERMISSION); // 추후 삭제를 위하여 파일모드 변경
 
     return $thumb;
 }
@@ -42,7 +42,7 @@ function mobile_create_thumb($srcImg, $width, $thumb)
 function mobile_thumb($matches)
 {
     global $is_admin;
-    global $g4, $bo_table, $wr_id;
+    global $g5, $bo_table, $wr_id;
 
     $width = 300; // (소스이미지 width pixel)
 
@@ -60,10 +60,10 @@ function mobile_thumb($matches)
             $src = preg_replace("/^\.\.\//", "http://m.sir.co.kr/", $src);
             $absolute = preg_replace("/^http\:\/\/(www\.)?sir\.co\.kr\/(.*)$/", "/home/sir/$2", $src);
 
-            $thumb_dir = G4_DATA_PATH.'/thumb/'.$bo_table;
+            $thumb_dir = G5_DATA_PATH.'/thumb/'.$bo_table;
             if (!is_dir($thumb_dir)) {
-                @mkdir($thumb_dir, G4_DIR_PERMISSION);
-                @chmod($thumb_dir, G4_DIR_PERMISSION);
+                @mkdir($thumb_dir, G5_DIR_PERMISSION);
+                @chmod($thumb_dir, G5_DIR_PERMISSION);
             }
 
             $result = true;
@@ -105,7 +105,7 @@ function mobile_thumb($matches)
 
                 // 유일한 파일명을 만든다.
                 $src_md5 = md5($src.$width);
-                $thumb = G4_DATA_PATH.'/thumb/'.$bo_table.'-'.$wr_id.'-'.$src_md5;
+                $thumb = G5_DATA_PATH.'/thumb/'.$bo_table.'-'.$wr_id.'-'.$src_md5;
 
                 if (!file_exists($thumb)) {
                     $result = mobile_create_thumb($src, $width, $thumb);

@@ -1,13 +1,13 @@
 <?php
 $sub_menu = '400200';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
-$category_path = G4_DATA_PATH."/category";
+$category_path = G5_DATA_PATH."/category";
 
-$sql_common = " from {$g4['shop_category_table']} ";
+$sql_common = " from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
     $sql_common .= " where ca_mb_id = '{$member['mb_id']}' ";
 
@@ -22,7 +22,7 @@ if ($w == "")
 
     $len2 = $len + 1;
 
-    $sql = " select MAX(SUBSTRING(ca_id,$len2,2)) as max_subid from {$g4['shop_category_table']}
+    $sql = " select MAX(SUBSTRING(ca_id,$len2,2)) as max_subid from {$g5['g5_shop_category_table']}
               where SUBSTRING(ca_id,1,$len) = '$ca_id' ";
     $row = sql_fetch($sql);
 
@@ -42,7 +42,7 @@ if ($w == "")
 
     if ($ca_id) // 2단계이상 분류
     {
-        $sql = " select * from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
+        $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
         $ca = sql_fetch($sql);
         $html_title = $ca['ca_name'] . " 하위분류추가";
         $ca['ca_name'] = "";
@@ -66,7 +66,7 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    $sql = " select * from {$g4['shop_category_table']} where ca_id = '$ca_id' ";
+    $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
     $ca = sql_fetch($sql);
     if (!$ca['ca_id'])
         alert("자료가 없습니다.");
@@ -76,7 +76,7 @@ else if ($w == "u")
 }
 
 if (!isset($ca['ca_mobile_skin'])) {
-    sql_query(" ALTER TABLE `{$g4['shop_category_table']}`
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
                     ADD `ca_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ca_skin`,
                     ADD `ca_mobile_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `ca_list_row`,
                     ADD `ca_mobile_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_width`,
@@ -86,18 +86,18 @@ if (!isset($ca['ca_mobile_skin'])) {
 }
 
 // 인증사용필드추가
-$sql = " select ca_hp_cert_use from {$g4['shop_category_table']} limit 1 ";
+$sql = " select ca_hp_cert_use from {$g5['g5_shop_category_table']} limit 1 ";
 $result = sql_query($sql, false);
 if(!$result) {
-    sql_query(" ALTER TABLE `{$g4['shop_category_table']}`
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
                     ADD `ca_hp_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ca_mb_id`,
                     ADD `ca_adult_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ca_hp_cert_use` ", false);
 }
 
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 
-$g4['title'] = $html_title;
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = $html_title;
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_scatefrm_basic">필수입력</a></li>
@@ -135,7 +135,7 @@ $pg_anchor .= '</ul>';
         <?php } else { ?>
             <input type="hidden" name="ca_id" value="<?php echo $ca['ca_id']; ?>">
             <span class="frm_ca_id"><?php echo $ca['ca_id']; ?></span>
-            <a href="<?php echo G4_SHOP_URL; ?>/list.php?ca_id=<?php echo $ca_id; ?>" class="btn_frmline">미리보기</a>
+            <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $ca_id; ?>" class="btn_frmline">미리보기</a>
             <a href="./categoryform.php?ca_id=<?php echo $ca_id; ?>&amp;<?php echo $qstr; ?>" class="btn_frmline">하위분류 추가</a>
             <a href="./itemlist.php?sca=<?php echo $ca['ca_id']; ?>" class="btn_frmline">상품리스트</a>
         <?php } ?>
@@ -177,32 +177,32 @@ $pg_anchor .= '</ul>';
     <tr>
         <th scope="row"><label for="ca_skin">출력스킨</label></th>
         <td>
-            <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G4_PATH.'/', '', G4_SHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
+            <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_SHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
             <select id="ca_skin" name="ca_skin">
-                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $ca['ca_skin']); ?>
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $ca['ca_skin']); ?>
             </select>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
         <td>
-            <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G4_PATH.'/', '', G4_MSHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
+            <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_MSHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
             <select id="ca_mobile_skin" name="ca_mobile_skin">
-                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_MSHOP_SKIN_PATH, $ca['ca_mobile_skin']); ?>
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_MSHOP_SKIN_PATH, $ca['ca_mobile_skin']); ?>
             </select>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ca_img_width">출력이미지 폭</label></th>
         <td>
-            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 넓이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 넓이가 기본값으로 설정됩니다.\n".G5_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
             <input type="text" name="ca_img_width" value="<?php echo $ca['ca_img_width']; ?>" id="ca_img_width" required class="required frm_input" size="5" > 픽셀
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ca_img_height">출력이미지 높이</label></th>
         <td>
-            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 높이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 높이가 기본값으로 설정됩니다.\n".G5_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
             <input type="text" name="ca_img_height"  value="<?php echo $ca['ca_img_height']; ?>" id="ca_img_height" required class="required frm_input" size="5" > 픽셀
         </td>
     </tr>
@@ -223,14 +223,14 @@ $pg_anchor .= '</ul>';
     <tr>
         <th scope="row"><label for="ca_mobile_img_width">모바일 출력이미지 폭</label></th>
         <td>
-            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 넓이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 넓이가 기본값으로 설정됩니다.\n".G5_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
             <input type="text" name="ca_mobile_img_width" value="<?php echo $ca['ca_mobile_img_width']; ?>" id="ca_mobile_img_width" required class="required frm_input" size="5" > 픽셀
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="ca_mobile_img_height">모바일 출력이미지 높이</label></th>
         <td>
-            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 높이가 기본값으로 설정됩니다.\n".G4_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
+            <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 높이가 기본값으로 설정됩니다.\n".G5_SHOP_URL."/list.php에서 출력되는 이미지의 높이입니다."); ?>
             <input type="text" name="ca_mobile_img_height"  value="<?php echo $ca['ca_mobile_img_height']; ?>" id="ca_mobile_img_height" required class="required frm_input" size="5" > 픽셀
         </td>
     </tr>
@@ -423,5 +423,5 @@ function fcategoryformcheck(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

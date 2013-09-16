@@ -1,17 +1,17 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/listtype.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/listtype.php');
     return;
 }
 
 $type = $_REQUEST['type'];
-if ($type == 1)      $g4['title'] = '히트상품';
-else if ($type == 2) $g4['title'] = '추천상품';
-else if ($type == 3) $g4['title'] = '최신상품';
-else if ($type == 4) $g4['title'] = '인기상품';
-else if ($type == 5) $g4['title'] = '할인상품';
+if ($type == 1)      $g5['title'] = '히트상품';
+else if ($type == 2) $g5['title'] = '추천상품';
+else if ($type == 3) $g5['title'] = '최신상품';
+else if ($type == 4) $g5['title'] = '인기상품';
+else if ($type == 5) $g5['title'] = '할인상품';
 else
     alert('상품유형이 아닙니다.');
 
@@ -31,13 +31,13 @@ $order_by = ' it_order, it_id desc ';
 if ($sort != '')
     $order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
 
-$error = '<img src="'.G4_SHOP_URL.'/img/no_item.gif">';
+$error = '<img src="'.G5_SHOP_URL.'/img/no_item.gif">';
 
 if (!$skin)
     $skin = "list.10.skin.php";
 
 // 리스트 유형별로 출력
-$list_file = G4_SHOP_SKIN_PATH.'/'.$skin;
+$list_file = G5_SHOP_SKIN_PATH.'/'.$skin;
 if (file_exists($list_file)) {
     // 총몇개 = 한줄에 몇개 * 몇줄
     $items = $list_mod * $list_row;

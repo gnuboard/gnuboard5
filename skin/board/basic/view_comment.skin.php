@@ -39,7 +39,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
             <?php
-            include(G4_SNS_PATH.'/view_comment_list.sns.skin.php');
+            include(G5_SNS_PATH.'/view_comment_list.sns.skin.php');
             ?>
         </header>
 
@@ -124,7 +124,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
     </tr>
     <?php } ?>
     <?php 
-    include(G4_SNS_PATH."/view_comment_write.sns.skin.php");
+    include(G5_SNS_PATH."/view_comment_write.sns.skin.php");
     ?>
     <tr>
         <th scope="row">내용</th>
@@ -179,7 +179,7 @@ function fviewcomment_submit(f)
     var subject = "";
     var content = "";
     $.ajax({
-        url: g4_bbs_url+"/ajax.filter.php",
+        url: g5_bbs_url+"/ajax.filter.php",
         type: "POST",
         data: {
             "subject": "",

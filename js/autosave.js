@@ -7,15 +7,15 @@ var save_wr_content = null;
 
 function autosave() {
     $("form#fwrite").each(function() {
-        if (g4_editor=="ckeditor4" && typeof(CKEDITOR.instances.wr_content)!="undefined") {
+        if (g5_editor=="ckeditor4" && typeof(CKEDITOR.instances.wr_content)!="undefined") {
             this.wr_content.value = CKEDITOR.instances.wr_content.getData();
-        } else if (g4_editor=="cheditor5" && typeof(ed_wr_content)!="undefined") {
+        } else if (g5_editor=="cheditor5" && typeof(ed_wr_content)!="undefined") {
             this.wr_content.value = ed_wr_content.outputBodyHTML();
         }
         // 변수에 저장해 놓은 값과 다를 경우에만 임시 저장함
         if (save_wr_subject != this.wr_subject.value || save_wr_content != this.wr_content.value) {
             $.ajax({
-                url: g4_bbs_url+"/ajax.autosave.php",
+                url: g5_bbs_url+"/ajax.autosave.php",
                 data: {
                     "uid" : this.uid.value,
                     "subject": this.wr_subject.value,
@@ -36,14 +36,14 @@ function autosave() {
 
 $(function(){
 
-    if (g4_is_member) {
+    if (g5_is_member) {
         setInterval(autosave, AUTOSAVE_INTERVAL * 1000);
     }
 
     // 임시저장된 글목록을 가져옴
     $("#btn_autosave").click(function(){
         if ($("#autosave_pop").is(":hidden")) {
-            $.get(g4_bbs_url+"/ajax.autosavelist.php", function(data){
+            $.get(g5_bbs_url+"/ajax.autosavelist.php", function(data){
                 //alert(data);
                 //console.log( "Data: " + data);
                 $("#autosave_pop ul").empty();
@@ -71,13 +71,13 @@ $(function(){
         var as_id = $.data(document.body, "autosave_id"+i);
         var as_uid = $.data(document.body, "autosave_uid"+i);
         $("#fwrite input[name='uid']").val(as_uid);
-        $.get(g4_bbs_url+"/ajax.autosaveload.php", {"as_id":as_id}, function(data){
+        $.get(g5_bbs_url+"/ajax.autosaveload.php", {"as_id":as_id}, function(data){
             var subject = $(data).find("item").find("subject").text();
             var content = $(data).find("item").find("content").text();
             $("#wr_subject").val(subject);
-            if (g4_editor=="ckeditor4" && typeof(CKEDITOR.instances.wr_content)!="undefined") {
+            if (g5_editor=="ckeditor4" && typeof(CKEDITOR.instances.wr_content)!="undefined") {
                 CKEDITOR.instances.wr_content.setData(content);
-            } else if (g4_editor=="cheditor5" && typeof(ed_wr_content)!="undefined") {
+            } else if (g5_editor=="cheditor5" && typeof(ed_wr_content)!="undefined") {
                 ed_wr_content.putContents(content);
             } else {
                 $("#fwrite #wr_content").val(content);
@@ -89,7 +89,7 @@ $(function(){
     $(".autosave_del").live("click", function(){
         var i = $(this).parents("li").index();
         var as_id = $.data(document.body, "autosave_id"+i);
-        $.get(g4_bbs_url+"/ajax.autosavedel.php", {"as_id":as_id}, function(data){ 
+        $.get(g5_bbs_url+"/ajax.autosavedel.php", {"as_id":as_id}, function(data){ 
             if (data == -1) {
                 alert("임시 저장된글을 삭제중에 오류가 발생하였습니다.");
             } else {

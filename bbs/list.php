@@ -6,7 +6,7 @@ $is_category = false;
 $category_option = '';
 if ($board['bo_use_category']) {
     $is_category = true;
-    $category_href = G4_BBS_URL.'/board.php?bo_table='.$bo_table;
+    $category_href = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
 
     $category_option .= '<li><a href="'.$category_href.'"';
     if ($sca=='')
@@ -54,7 +54,7 @@ if ($sca || $stx) {
     $total_count = $board['bo_count_write'];
 }
 
-if(G4_IS_MOBILE) {
+if(G5_IS_MOBILE) {
     $page_rows = $board['bo_mobile_page_rows'];
 } else {
     $page_rows = $board['bo_page_rows'];
@@ -105,7 +105,7 @@ if ($sca || $stx) {
 $result = sql_query($sql);
 
 // 년도 2자리
-$today2 = G4_TIME_YMD;
+$today2 = G5_TIME_YMD;
 
 $list = array();
 $i = 0;
@@ -119,7 +119,7 @@ if (!$sca && !$stx) {
 
         if (!$row['wr_id']) continue;
 
-        $list[$i] = get_list($row, $board, $board_skin_url, G4_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
+        $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         $list[$i]['is_notice'] = true;
 
         $i++;
@@ -134,7 +134,7 @@ while ($row = sql_fetch_array($result))
     if ($sca || $stx)
         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
 
-    $list[$i] = get_list($row, $board, $board_skin_url, G4_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
+    $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
     if (strstr($sfl, 'subject')) {
         $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
     }
@@ -145,7 +145,7 @@ while ($row = sql_fetch_array($result))
     $k++;
 }
 
-$write_pages = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './board.php?bo_table='.$bo_table.$qstr.'&amp;page=');
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './board.php?bo_table='.$bo_table.$qstr.'&amp;page=');
 
 $list_href = '';
 $prev_part_href = '';

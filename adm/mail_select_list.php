@@ -8,7 +8,7 @@ $token = get_token();
 
 $ma_last_option = "";
 
-$sql_common = " from {$g4['member_table']} ";
+$sql_common = " from {$g5['member_table']} ";
 $sql_where = " where (1) ";
 
 // 회원ID ..에서 ..까지
@@ -30,7 +30,7 @@ $sql_where .= " and mb_level between '{$mb_level_from}' and '{$mb_level_to}' ";
 if ($gr_id) {
     $group_member = "";
     $comma = "";
-    $sql2 = " select mb_id from {$g4['group_member_table']} where gr_id = '{$gr_id}' order by mb_id ";
+    $sql2 = " select mb_id from {$g5['group_member_table']} where gr_id = '{$gr_id}' order by mb_id ";
     $result2 = sql_query($sql2);
     for ($k=0; $row2=sql_fetch_array($result2); $k++) {
         $group_member .= "{$comma}'{$row2['mb_id']}'";
@@ -62,9 +62,9 @@ $ma_last_option .= "||mb_level_from={$mb_level_from}";
 $ma_last_option .= "||mb_level_to={$mb_level_to}";
 $ma_last_option .= "||gr_id={$gr_id}";
 
-sql_query(" update {$g4['mail_table']} set ma_last_option = '{$ma_last_option}' where ma_id = '{$ma_id}' ");
+sql_query(" update {$g5['mail_table']} set ma_last_option = '{$ma_last_option}' where ma_id = '{$ma_id}' ");
 
-$g4['title'] = "메일발송 대상 회원";
+$g5['title'] = "메일발송 대상 회원";
 include_once('./admin.head.php');
 ?>
 
@@ -106,7 +106,7 @@ include_once('./admin.head.php');
     <?php } ?>
     </tbody>
     </table>
-    <textarea name="ma_list" style="display:none"><?php echo $ma_list; ?></textarea>
+    <textarea name="ma_list" style="display:none"><?=$ma_list?></textarea>
 </div>
 
 <div class="btn_confirm">

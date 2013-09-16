@@ -6,7 +6,7 @@ function chk_captcha()
     var captcha_result = false;
     $.ajax({
         type: "POST",
-        url: g4_gcaptcha_url+"/get.php",
+        url: g5_gcaptcha_url+"/get.php",
         data: { 
             "captcha_key": captcha_key.value 
         },
@@ -26,7 +26,7 @@ function chk_captcha()
 
 $(function() {
     $("#captcha").click(function(e) {
-        this.setAttribute("src", g4_url+"/plugin/gcaptcha/run.php?t="+(new Date).getTime());
+        this.setAttribute("src", g5_url+"/plugin/gcaptcha/run.php?t="+(new Date).getTime());
         var keycode = (e.keyCode ? e.keyCode : e.which);
         // 첫 실행에서는 포커스를 주지 않음
         if (typeof(keycode) != "undefined") {

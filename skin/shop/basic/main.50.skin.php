@@ -6,7 +6,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 */
 ?>
 
-<link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
+<link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
 
 <!-- 이전 재생 정지 다음 버튼 시작 { -->
 <ul id="btn_smt_<?php echo $this->type; ?>" class="sctrl">
@@ -72,9 +72,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($this->view_sns) {
         echo "<div class=\"sct_sns\">";
-        echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb.png');
-        echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt.png');
-        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo.png');
+        echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_fb.png');
+        echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_twt.png');
+        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_goo.png');
         echo "</div>\n";
     }
 

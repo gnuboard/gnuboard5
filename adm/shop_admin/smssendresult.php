@@ -5,7 +5,7 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], "r");
 
 // 로그를 남김
-$fp = fopen(G4_DATA_PATH.'/log/sms.log', "a+");
+$fp = fopen(G5_DATA_PATH.'/log/sms.log', "a+");
 $msg  = "$now|{$_SERVER['REMOTE_ADDR']}|return_value=$return_value|success_value=$success_value|fail_value=$fail_value|";
 $msg .= "error_code=$error_code|error_msg=$error_msg|unique_num=$unique_num|";
 $msg .= "process_type=$process_type|usrdata1=$usrdata1|usrdata2=$usrdata2|usrdata3=$usrdata3\n";

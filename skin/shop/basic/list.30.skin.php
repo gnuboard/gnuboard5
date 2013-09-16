@@ -2,12 +2,12 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo G4_SHOP_SKIN_URL; ?>/style.css">
+<link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
 
 <!-- 상품진열 30 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
-    $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
     if ($list_mod >= 2) { // 1줄 이미지 : 2개 이상
         if ($i%$list_mod == 0) $sct_last = ' sct_last'; // 줄 마지막
         else if ($i%$list_mod == 1) $sct_last = ' sct_clear'; // 줄 첫번째
@@ -62,9 +62,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($this->view_sns) {
         echo "<div class=\"sct_sns\">";
-        echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_fb.png');
-        echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_twt.png');
-        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_SHOP_URL.'/img/sns_goo.png');
+        echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_fb.png');
+        echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_twt.png');
+        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_goo.png');
         echo "</div>\n";
     }
 

@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="mb_confirm">
-    <h1><?php echo $g4['title'] ?></h1>
+    <h1><?php echo $g5['title'] ?></h1>
 
     <p>
         <strong>패스워드를 한번 더 입력해주세요.</strong>
@@ -26,7 +26,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </form>
 
     <div class="btn_confirm">
-        <a href="<?php echo G4_URL ?>">메인으로 돌아가기</a>
+        <a href="<?php echo G5_URL ?>">메인으로 돌아가기</a>
     </div>
 
 </div>

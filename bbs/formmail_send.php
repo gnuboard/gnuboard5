@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
-include_once(G4_LIB_PATH.'/mailer.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 if (!$config['cf_email_use'])
     alert('환경설정에서 "메일발송 사용"에 체크하셔야 메일을 발송할 수 있습니다.\\n\\n관리자에게 문의하시기 바랍니다.');
@@ -33,7 +33,7 @@ if ($type == 2) {
 
 // html 이면
 if ($type) {
-    $current_url = G4_URL;
+    $current_url = G5_URL;
     $mail_content = '<!doctype html><html lang="ko"><head><meta charset="utf-8"><title>메일보내기</title><link rel="stylesheet" href="'.$current_url.'/style.css"></head><body>'.$content.'</body></html>';
 }
 else
@@ -43,9 +43,9 @@ mailer($fnick, $fmail, $to, $subject, $mail_content, $type, $file);
 
 //$html_title = $tmp_to . "님께 메일발송";
 $html_title = '메일 발송중';
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 
 alert_close('메일을 정상적으로 발송하였습니다.');
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

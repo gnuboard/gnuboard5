@@ -4,10 +4,10 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
-$g4['title'] = '개인결제 복사';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '개인결제 복사';
+include_once(G5_PATH.'/head.sub.php');
 
-$sql = " select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' ";
+$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
 $row = sql_fetch($sql);
 
 if(!$row['pp_id'])
@@ -59,5 +59,5 @@ function form_check(f)
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

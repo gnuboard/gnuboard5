@@ -1,14 +1,14 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
-include_once(G4_PHPMAILER_PATH.'/class.phpmailer.php');
+include_once(G5_PHPMAILER_PATH.'/class.phpmailer.php');
 
 // 메일 보내기 (파일 여러개 첨부 가능)
 // type : text=0, html=1, text+html=2
 function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="") 
 { 
     global $config; 
-    global $g4; 
+    global $g5; 
 
     // 메일발송 사용을 하지 않는다면 
     if (!$config['cf_email_use']) return; 
@@ -17,9 +17,9 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
         $content = nl2br($content); 
 
     $mail = new PHPMailer(); // defaults to using php "mail()"
-    if (defined('G4_SMTP')) {
+    if (defined('G5_SMTP')) {
         $mail->IsSMTP(); // telling the class to use SMTP
-        $mail->Host = G4_SMTP; // SMTP server
+        $mail->Host = G5_SMTP; // SMTP server
     }
     $mail->From = $fmail;
     $mail->FromName = $fname;
@@ -44,7 +44,7 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
 function attach_file($filename, $tmp_name)
 {
     // 서버에 업로드 되는 파일은 확장자를 주지 않는다. (보안 취약점)
-    $dest_file = G4_DATA_PATH.'/tmp/'.str_replace('/', '_', $tmp_name);
+    $dest_file = G5_DATA_PATH.'/tmp/'.str_replace('/', '_', $tmp_name);
     move_uploaded_file($tmp_name, $dest_file);
     /*
     $fp = fopen($tmp_name, "r");
@@ -64,7 +64,7 @@ function attach_file($filename, $tmp_name)
 function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="") 
 { 
     global $config; 
-    global $g4; 
+    global $g5; 
 
     // 메일발송 사용을 하지 않는다면 
     if (!$config['cf_email_use']) return; 
@@ -76,7 +76,7 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
     if ($cc)  $header .= "Cc: $cc\n"; 
     if ($bcc) $header .= "Bcc: $bcc\n"; 
     $header .= "MIME-Version: 1.0\n"; 
-    $header .= "X-Mailer: SIR Mailer 0.94 : {$_SERVER['SERVER_ADDR']} : {$_SERVER['REMOTE_ADDR']} : ".G4_URL." : {$_SERVER['PHP_SELF']} : {$_SERVER['HTTP_REFERER']} \n"; 
+    $header .= "X-Mailer: SIR Mailer 0.94 : {$_SERVER['SERVER_ADDR']} : {$_SERVER['REMOTE_ADDR']} : ".G5_URL." : {$_SERVER['PHP_SELF']} : {$_SERVER['HTTP_REFERER']} \n"; 
     $header .= "Date: ".date ("D, j M Y H:i:s T",time())."\r\n".
                "To: $to\r\n".
                "Subject: =?utf-8?B?".base64_encode($subject)."?=\r\n";
@@ -127,8 +127,8 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
     $mails['from'] = $fmail;
     $mails['text'] = $header.$body;
 
-    if (defined(G4_SMTP)) {
-        ini_set('SMTP', G4_SMTP);
+    if (defined(G5_SMTP)) {
+        ini_set('SMTP', G5_SMTP);
         @mail($to, $subject, $body, $header, "-f $fmail"); 
     } else {
         new maildaemon($mails);
@@ -147,7 +147,7 @@ fclose($fp);
 // hanmail.net , hotmail.com , kebi.com 등이 정상적이지 않음으로 사용 불가
 function verify_email($address, &$error)
 {
-    global $g4;
+    global $g5;
 
     $WAIT_SECOND = 3; // ?초 기다림
 
@@ -179,7 +179,7 @@ function verify_email($address, &$error)
         // 220 메세지들은 건너뜀
         // 3초가 지나도 응답이 없으면 포기
         socket_set_blocking($fp, false);
-        $stoptime = G4_SERVER_TIME + $WAIT_SECOND;
+        $stoptime = G5_SERVER_TIME + $WAIT_SECOND;
         $gotresponse = false;
 
         while (true) {
@@ -188,11 +188,11 @@ function verify_email($address, &$error)
 
             if (substr($line, 0, 3) == '220') {
                 // 타이머를 초기화
-                $stoptime = G4_SERVER_TIME + $WAIT_SECOND;
+                $stoptime = G5_SERVER_TIME + $WAIT_SECOND;
                 $gotresponse = true;
             } else if ($line == '' && $gotresponse)
                 break;
-            else if (G4_SERVER_TIME > $stoptime)
+            else if (G5_SERVER_TIME > $stoptime)
                 break;
         }
 

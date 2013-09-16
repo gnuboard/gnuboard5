@@ -1,17 +1,17 @@
 <?php
 include_once('./_common.php');
 
-$sql = "select * from {$g4['shop_personalpay_table']} where pp_id = '$pp_id' ";
+$sql = "select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
 $pp = sql_fetch($sql);
 if (!$pp['pp_id'] || (md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']) != get_session('ss_personalpay_uid'))) {
-    alert("조회하실 개인결제 내역이 없습니다.", G4_SHOP_URL);
+    alert("조회하실 개인결제 내역이 없습니다.", G5_SHOP_URL);
 }
 
 // 결제방법
 $settle_case = $pp['pp_settle_case'];
 
-$g4['title'] = '개인결제상세내역';
-include_once(G4_MSHOP_PATH.'/_head.php');
+$g5['title'] = '개인결제상세내역';
+include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
 <div id="sod_fin">
@@ -181,7 +181,7 @@ include_once(G4_MSHOP_PATH.'/_head.php');
     <input type="text" name="e_trade_no" value="<?php echo $pp['pp_tno']; ?>" size="80"><br />
     <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
     <input type="text" name="req_name" value="<?php echo $pp['pp_deposit_name']; ?>" size="80"><br />
-    <input type="text" name="noti_url" value="<?php echo G4_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
+    <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
     <input type="submit" value="입금통보 테스트">
     </form>
     </fieldset>
@@ -191,5 +191,5 @@ include_once(G4_MSHOP_PATH.'/_head.php');
 <!-- } 개인결제상세내역 끝 -->
 
 <?php
-include_once(G4_MSHOP_PATH.'/_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

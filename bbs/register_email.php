@@ -1,14 +1,14 @@
 <?php
 include_once('./_common.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
-$sql = " select mb_email, mb_datetime, mb_email_certify from {$g4['member_table']} where mb_id = '{$mb_id}' ";
+$sql = " select mb_email, mb_datetime, mb_email_certify from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 $mb = sql_fetch($sql);
 if (substr($mb['mb_email_certify'],0,1)!=0) {
-    alert("이미 메일인증 하신 회원입니다.", G4_URL);
+    alert("이미 메일인증 하신 회원입니다.", G5_URL);
 }
 
-$g4['title'] = '메일인증 메일주소 변경';
+$g5['title'] = '메일인증 메일주소 변경';
 include_once('./_head.php');
 ?>
 
@@ -28,7 +28,7 @@ include_once('./_head.php');
 </tr>
 </table>
 <input type="submit" id="btn_submit" class="btn_submit" value="인증메일변경">
-<a href="<?php echo G4_URL ?>" class="btn_cancel">취소</a>
+<a href="<?php echo G5_URL ?>" class="btn_cancel">취소</a>
 </form>
 
 <script>
@@ -36,7 +36,7 @@ function fregister_email_submit(f)
 {
     <?php echo chk_captcha_js();  ?>
 
-    f.action = "<?php echo G4_HTTPS_BBS_URL.'/register_email_update.php'; ?>";
+    f.action = "<?php echo G5_HTTPS_BBS_URL.'/register_email_update.php'; ?>";
     return true;
 }
 </script>

@@ -1,8 +1,8 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MOBILE_PATH.'/tail.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MOBILE_PATH.'/tail.php');
     return;
 }
 
@@ -25,7 +25,7 @@ if ($config['cf_include_tail']) {
 <div id="ft">
     <?php echo popular('basic'); // 인기검색어  ?>
     <?php echo visit('basic'); // 방문자수  ?>
-    <div id="ft_catch"><img src="<?php echo G4_IMG_URL; ?>/ft_catch.jpg" alt="gnuboard4 second edition"></div>
+    <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_catch.jpg" alt="<?php echo G5_VERSION ?>"></div>
     <div id="ft_copy">
         <p>
             Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.<br>
@@ -35,7 +35,7 @@ if ($config['cf_include_tail']) {
 </div>
 
 <?php
-if(!G4_IS_MOBILE) {
+if(!G5_IS_MOBILE) {
     $seq = 0;
     $href = $_SERVER['PHP_SELF'];
     if($_SERVER['QUERY_STRING']) {
@@ -57,10 +57,14 @@ if(!G4_IS_MOBILE) {
 <a href="<?php echo $href; ?>" id="device_change">모바일 버전으로 보기</a>
 <?php
 }
+
+if ($config['cf_analytics']) {
+    echo $config['cf_analytics'];
+}
 ?>
 
 <!-- } 하단 끝 -->
 
 <?php
-include_once(G4_PATH."/tail.sub.php");
+include_once(G5_PATH."/tail.sub.php");
 ?>

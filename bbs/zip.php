@@ -43,8 +43,8 @@ if ($addr1)
 /* 기존의 DB에서 불러오는 방식
 if ($addr1) 
 {
-    //$sql = " select * from $g4[zip_table] where zp_dong like '%$addr1%' order by zp_id ";
-    $sql = " select * from $g4[zip_table] where zp_dong like '%$addr1%' order by zp_sido, zp_gugun, zp_dong ";
+    //$sql = " select * from $g5[zip_table] where zp_dong like '%$addr1%' order by zp_id ";
+    $sql = " select * from $g5[zip_table] where zp_dong like '%$addr1%' order by zp_sido, zp_gugun, zp_dong ";
     $result = sql_query($sql);
     $search_count = 0;
     for ($i=0; $row=sql_fetch_array($result); $i++) 
@@ -62,10 +62,10 @@ if ($addr1)
 }
 */
 
-$g4['title'] = '우편번호 검색';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '우편번호 검색';
+include_once(G5_PATH.'/head.sub.php');
 
 include_once($member_skin_path.'/zip.skin.php');
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

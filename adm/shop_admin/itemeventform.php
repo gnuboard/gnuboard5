@@ -1,26 +1,26 @@
 <?php
 $sub_menu = '500300';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
 $html_title = "이벤트";
-$g4['title'] = $html_title.' 관리';
+$g5['title'] = $html_title.' 관리';
 
 if ($w == "u")
 {
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from {$g4['shop_event_table']} where ev_id = '$ev_id' ";
+    $sql = " select * from {$g5['g5_shop_event_table']} where ev_id = '$ev_id' ";
     $ev = sql_fetch($sql);
     if (!$ev['ev_id'])
         alert("등록된 자료가 없습니다.");
 
     // 등록된 이벤트 상품
     $sql = " select b.it_id, b.it_name
-                from {$g4['shop_event_item_table']} a left join {$g4['shop_item_table']} b on ( a.it_id = b.it_id )
+                from {$g5['g5_shop_event_item_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
                 where a.ev_id = '$ev_id' ";
     $res_item = sql_query($sql);
 }
@@ -42,7 +42,7 @@ else
 
 // 분류리스트
 $category_select = '';
-$sql = " select * from {$g4['shop_category_table']} ";
+$sql = " select * from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
     $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
 $sql .= " order by ca_id ";
@@ -58,7 +58,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $category_select .= "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
 }
 
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="feventform" action="./itemeventformupdate.php" onsubmit="return feventform_check(this);" method="post" enctype="MULTIPART/FORM-DATA">
@@ -79,16 +79,16 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <th>이벤트번호</th>
         <td>
             <span class="frm_ev_id"><?php echo $ev_id; ?></span>
-            <a href="<?php echo G4_SHOP_URL; ?>/event.php?ev_id=<?php echo $ev['ev_id']; ?>" class="btn_frmline">이벤트바로가기</a>
+            <a href="<?php echo G5_SHOP_URL; ?>/event.php?ev_id=<?php echo $ev['ev_id']; ?>" class="btn_frmline">이벤트바로가기</a>
         </td>
     </tr>
     <?php } ?>
     <tr>
         <th scope="row"><label for="ev_skin">출력스킨</label></th>
         <td>
-            <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G4_PATH.'/', '', G4_SHOP_SKIN_PATH).'/list.*.skin.php 입니다.'.PHP_EOL.G4_SHOP_DIR.'/event.php&amp;skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.'); ?>
+            <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_SHOP_SKIN_PATH).'/list.*.skin.php 입니다.'.PHP_EOL.G5_SHOP_DIR.'/event.php&amp;skin=userskin.php 처럼 직접 만든 스킨을 사용할 수도 있습니다.'); ?>
             <select name="ev_skin" id="ev_skin">
-                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G4_SHOP_SKIN_PATH, $ev['ev_skin']); ?>
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $ev['ev_skin']); ?>
             </select>
         </td>
     </tr>
@@ -143,7 +143,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <input type="file" name="ev_mimg" id="ev_mimg">
             <?php
             $mimg_str = "";
-            $mimg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_m';
+            $mimg = G5_DATA_PATH.'/event/'.$ev['ev_id'].'_m';
             if (file_exists($mimg)) {
                 $size = @getimagesize($mimg);
                 if($size[0] && $size[0] > 750)
@@ -152,7 +152,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     $width = $size[0];
 
                 echo '<input type="checkbox" name="ev_mimg_del" value="1" id="ev_mimg_del"> <label for="ev_mimg_del">삭제</label>';
-                $mimg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_m" width="'.$width.'" alt="">';
+                $mimg_str = '<img src="'.G5_DATA_URL.'/event/'.$ev['ev_id'].'_m" width="'.$width.'" alt="">';
             }
             if ($mimg_str) {
                 echo '<div class="banner_or_img">';
@@ -214,7 +214,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <input type="file" name="ev_himg" id="ev_himg">
             <?php
             $himg_str = "";
-            $himg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_h';
+            $himg = G5_DATA_PATH.'/event/'.$ev['ev_id'].'_h';
             if (file_exists($himg)) {
                 $size = @getimagesize($himg);
                 if($size[0] && $size[0] > 750)
@@ -223,7 +223,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     $width = $size[0];
 
                 echo '<input type="checkbox" name="ev_himg_del" value="1" id="ev_himg_del"> <label for="ev_himg_del">삭제</label>';
-                $himg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_h" width="'.$width.'" alt="">';
+                $himg_str = '<img src="'.G5_DATA_URL.'/event/'.$ev['ev_id'].'_h" width="'.$width.'" alt="">';
             }
             if ($himg_str) {
                 echo '<div class="banner_or_img">';
@@ -240,7 +240,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
             <input type="file" name="ev_timg" id="ev_timg">
             <?php
             $timg_str = "";
-            $timg = G4_DATA_PATH.'/event/'.$ev['ev_id'].'_t';
+            $timg = G5_DATA_PATH.'/event/'.$ev['ev_id'].'_t';
             if (file_exists($timg)) {
                 $size = @getimagesize($timg);
                 if($size[0] && $size[0] > 750)
@@ -248,7 +248,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                 else
                     $width = $size[0];
                 echo '<input type="checkbox" name="ev_timg_del" value="1" id="ev_timg_del"> <label for="ev_timg_del">삭제</label>';
-                $timg_str = '<img src="'.G4_DATA_URL.'/event/'.$ev['ev_id'].'_t" width="'.$width.'" alt="">';
+                $timg_str = '<img src="'.G5_DATA_URL.'/event/'.$ev['ev_id'].'_t" width="'.$width.'" alt="">';
             }
             if ($timg_str) {
                 echo '<div class="banner_or_img">';
@@ -367,5 +367,5 @@ function feventform_check(f)
 
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

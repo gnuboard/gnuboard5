@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 certify_count_check($member['mb_id'], 'hp');
 
 // 서버상 bin 폴더 이전까지 경로
-$home_dir = G4_KCPCERT_PATH; // ct_cli 절대경로 ( bin 전까지 )
+$home_dir = G5_KCPCERT_PATH; // ct_cli 절대경로 ( bin 전까지 )
 
 // DI 를 위한 중복확인 식별 아이디
 //web_siteid 값이 없으면 KCP 에서 지정한 값으로 설정됨
@@ -23,10 +23,10 @@ if ($config['cf_cert_use'] == 2) { // 실서비스
 }
 
 if(!$site_cd)
-    alert('KCP 휴대폰 본인확인 서비스 사이트코드가 없습니다.\\관리자 > 기본환경설정에 KCP 사이트코드를 입력해 주십시오.', G4_URL);
+    alert('KCP 휴대폰 본인확인 서비스 사이트코드가 없습니다.\\관리자 > 기본환경설정에 KCP 사이트코드를 입력해 주십시오.', G5_URL);
 
 // KCP 인증 라이브러리
-require G4_KCPCERT_PATH.'/lib/ct_cli_lib.php';
+require G5_KCPCERT_PATH.'/lib/ct_cli_lib.php';
 
 /* ============================================================================== */
 /* =   null 값을 처리하는 메소드                                                = */

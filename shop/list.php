@@ -1,13 +1,13 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/list.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/list.php');
     return;
 }
 
 $sql = " select *
-           from {$g4['shop_category_table']}
+           from {$g5['g5_shop_category_table']}
           where ca_id = '$ca_id'
             and ca_use = '1'  ";
 $ca = sql_fetch($sql);
@@ -32,7 +32,7 @@ if(!$is_admin) {
     }
 }
 
-$g4['title'] = $ca['ca_name'].' 상품리스트';
+$g5['title'] = $ca['ca_name'].' 상품리스트';
 
 if ($ca['ca_include_head'])
     @include_once($ca['ca_include_head']);
@@ -43,7 +43,7 @@ else
 //if ($skin) $ca[ca_skin] = $skin;
 
 if ($is_admin)
-    echo '<div class="sct_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
+    echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
 ?>
 
 <!-- 상품 목록 시작 { -->
@@ -51,12 +51,12 @@ if ($is_admin)
 
     <?php
     $nav_ca_id = $ca_id;
-    include G4_SHOP_PATH.'/navigation1.inc.php';
+    include G5_SHOP_PATH.'/navigation.inc.php';
 
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_head_html']).'</div>';
 
-    include G4_SHOP_PATH.'/listcategory3.inc.php';
+    include G5_SHOP_PATH.'/listcategory3.inc.php';
 
     // 상품 출력순서가 있다면
     if ($sort != "")
@@ -65,14 +65,14 @@ if ($is_admin)
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
     // 리스트 유형별로 출력
-    $list_file = G4_SHOP_SKIN_PATH.'/'.$ca['ca_skin'];
+    $list_file = G5_SHOP_SKIN_PATH.'/'.$ca['ca_skin'];
     if (file_exists($list_file)) {
 
 		echo '<div id="sct_sortlst">';
-        include G4_SHOP_PATH.'/list.sort.php';
+        include G5_SHOP_PATH.'/list.sort.php';
 
         // 상품 보기 타입 변경 버튼
-        include G4_SHOP_PATH.'/list.sub.php';
+        include G5_SHOP_PATH.'/list.sub.php';
 		echo '</div>';
 
         // 총몇개 = 한줄에 몇개 * 몇줄
@@ -117,7 +117,7 @@ if ($is_admin)
 
     <?php
     // 상품 보기 타입 변경 처리 스크립트
-    include G4_SHOP_PATH.'/list.sub2.php';
+    include G5_SHOP_PATH.'/list.sub2.php';
 
     $qstr1 .= 'ca_id='.$ca_id;
     if($skin)

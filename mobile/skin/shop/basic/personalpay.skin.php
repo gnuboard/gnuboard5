@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<link rel="stylesheet" href="<?php echo G4_MSHOP_SKIN_URL; ?>/style.css">
+<link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
 
 <!-- 개인결제진열 시작 { -->
 <?php
@@ -19,11 +19,11 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "<ul class=\"sct sct_10\">\n";
     }
 
-    $href = G4_SHOP_URL.'/personalpayform.php?pp_id='.$row['pp_id'].'&amp;page='.$page;
+    $href = G5_SHOP_URL.'/personalpayform.php?pp_id='.$row['pp_id'].'&amp;page='.$page;
 ?>
 <li class="sct_li<?php echo $sct_last; ?>" style="width:<?php echo $img_width; ?>px">
         <a href="<?php echo $href; ?>" class="sct_a">
-            <span class="sct_img"><img src="<?php echo G4_MSHOP_SKIN_URL; ?>/img/personal.jpg" alt=""></span>
+            <span class="sct_img"><img src="<?php echo G5_MSHOP_SKIN_URL; ?>/img/personal.jpg" alt=""></span>
             <b><?php echo get_text($row['pp_name']).'님 개인결제'; ?></b>
             <span class="sct_cost"><?php echo display_price($row['pp_price']); ?></span>
         </a>

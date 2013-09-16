@@ -13,7 +13,7 @@ $qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
 
 if ($w == "u")
 {
-    $sql = "update {$g4['shop_item_use_table']}
+    $sql = "update {$g5['g5_shop_item_use_table']}
                set is_subject = '$is_subject',
                    is_content = '$is_content',
                    is_confirm = '$is_confirm'

@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 // 상품문의의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
 $iq_question_max_length = 10000;
@@ -15,7 +15,7 @@ if (!$is_member) {
 
 if ($w == "u")
 {
-    $qa = sql_fetch(" select * from {$g4['shop_item_qa_table']} where iq_id = '$iq_id' ");
+    $qa = sql_fetch(" select * from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' ");
     if (!$qa) {
         alert_close("상품문의 정보가 없습니다.");
     }
@@ -27,7 +27,7 @@ if ($w == "u")
     }
 }
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <!-- 상품문의 쓰기 시작 { -->
@@ -79,5 +79,5 @@ function fitemqa_submit(f)
 <!-- } 상품문의 쓰기 끝 -->
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = "로그인 검사";
+$g5['title'] = "로그인 검사";
 
 $mb_id       = escape_trim($_POST['mb_id']);
 $mb_password = escape_trim($_POST['mb_password']);
@@ -19,19 +19,19 @@ if (!$mb['mb_id'] || (sql_password($mb_password) != $mb['mb_password'])) {
 }
 
 // 차단된 아이디인가?
-if ($mb['mb_intercept_date'] && $mb['mb_intercept_date'] <= date("Ymd", G4_SERVER_TIME)) {
+if ($mb['mb_intercept_date'] && $mb['mb_intercept_date'] <= date("Ymd", G5_SERVER_TIME)) {
     $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1년 \\2월 \\3일", $mb['mb_intercept_date']);
     alert('회원님의 아이디는 접근이 금지되어 있습니다.\n처리일 : '.$date);
 }
 
 // 탈퇴한 아이디인가?
-if ($mb['mb_leave_date'] && $mb['mb_leave_date'] <= date("Ymd", G4_SERVER_TIME)) {
+if ($mb['mb_leave_date'] && $mb['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME)) {
     $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1년 \\2월 \\3일", $mb['mb_leave_date']);
     alert('탈퇴한 아이디이므로 접근하실 수 없습니다.\n탈퇴일 : '.$date);
 }
 
 if ($config['cf_use_email_certify'] && !preg_match("/[1-9]/", $mb['mb_email_certify'])) {
-    confirm("{$mb['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다. 다른 메일주소로 변경하여 인증하시려면 취소를 클릭하시기 바랍니다.", G4_URL, G4_BBS_URL.'/register_email.php?mb_id='.$mb_id);
+    confirm("{$mb['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다. 다른 메일주소로 변경하여 인증하시려면 취소를 클릭하시기 바랍니다.", G5_URL, G5_BBS_URL.'/register_email.php?mb_id='.$mb_id);
 }
 
 @include_once($member_skin_path.'/login_check.skin.php');
@@ -45,7 +45,7 @@ set_session('ss_mb_key', md5($mb['mb_datetime'] . $_SERVER['REMOTE_ADDR'] . $_SE
 if($config['cf_use_point']) {
     $sum_point = get_point_sum($mb['mb_id']);
 
-    $sql= " update {$g4['member_table']} set mb_point = '$sum_point' where mb_id = '{$mb['mb_id']}' ";
+    $sql= " update {$g5['member_table']} set mb_point = '$sum_point' where mb_id = '{$mb['mb_id']}' ";
     sql_query($sql);
 }
 
@@ -80,7 +80,7 @@ if ($url) {
         }
     }
 } else  {
-    $link = G4_URL;
+    $link = G5_URL;
 }
 
 goto_url($link);

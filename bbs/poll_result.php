@@ -1,15 +1,15 @@
 <?php
 include_once('./_common.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
-$po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '{$po_id}' ");
+$po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$po_id}' ");
 if (!$po['po_id'])
     alert('설문조사 정보가 없습니다.');
 
 if ($member['mb_level'] < $po['po_level'])
     alert('권한 '.$po['po_level'].' 이상의 회원만 결과를 보실 수 있습니다.');
 
-$g4['title'] = '설문조사 결과';
+$g5['title'] = '설문조사 결과';
 
 $po_subject = $po['po_subject'];
 
@@ -48,8 +48,8 @@ $list2 = array();
 
 // 기타의견 리스트
 $sql = " select a.*, b.mb_open
-           from {$g4['poll_etc_table']} a
-           left join {$g4['member_table']} b on (a.mb_id = b.mb_id)
+           from {$g5['poll_etc_table']} a
+           left join {$g5['member_table']} b on (a.mb_id = b.mb_id)
           where po_id = '{$po_id}' order by pc_id desc ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -60,7 +60,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     $list2[$i]['del'] = '';
     if ($is_admin == 'super' || ($row['mb_id'] == $member['mb_id'] && $row['mb_id']))
-        $list2[$i]['del'] = '<a href="'.G4_BBS_URL.'/poll_etc_update.php?w=d&amp;pc_id='.$row['pc_id'].'&amp;po_id='.$po_id.'&amp;skin_dir='.$skin_dir.'" class="poll_delete">';
+        $list2[$i]['del'] = '<a href="'.G5_BBS_URL.'/poll_etc_update.php?w=d&amp;pc_id='.$row['pc_id'].'&amp;po_id='.$po_id.'&amp;skin_dir='.$skin_dir.'" class="poll_delete">';
 }
 
 // 기타의견 입력
@@ -77,7 +77,7 @@ if ($po['po_etc']) {
 $list3 = array();
 
 // 다른투표
-$sql = " select po_id, po_subject, po_date from {$g4['poll_table']} order by po_id desc ";
+$sql = " select po_id, po_subject, po_date from {$g5['poll_table']} order by po_id desc ";
 $result = sql_query($sql);
 for ($i=0; $row2=sql_fetch_array($result); $i++) {
     $list3[$i]['po_id'] = $row2['po_id'];
@@ -85,18 +85,18 @@ for ($i=0; $row2=sql_fetch_array($result); $i++) {
     $list3[$i]['subject'] = cut_str($row2['po_subject'],60,"…");
 }
 
-if (G4_IS_MOBILE) {
-    $poll_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/poll/'.$skin_dir;
-    $poll_skin_url  = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/poll/'.$skin_dir;
+if (G5_IS_MOBILE) {
+    $poll_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/poll/'.$skin_dir;
+    $poll_skin_url  = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/poll/'.$skin_dir;
 } else {
-    $poll_skin_path = G4_SKIN_PATH.'/poll/'.$skin_dir;
-    $poll_skin_url  = G4_SKIN_URL.'/poll/'.$skin_dir;
+    $poll_skin_path = G5_SKIN_PATH.'/poll/'.$skin_dir;
+    $poll_skin_url  = G5_SKIN_URL.'/poll/'.$skin_dir;
 }
 
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 
 if (!file_exists($poll_skin_path.'/poll_result.skin.php')) die('skin error');
 include_once ($poll_skin_path.'/poll_result.skin.php');
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

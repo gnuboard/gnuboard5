@@ -7,8 +7,8 @@ auth_check($auth[$sub_menu], "r");
 $fr_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $fr_date);
 $to_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $to_date);
 
-$g4['title'] = "$fr_date ~ $to_date 일간 매출현황";
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = "$fr_date ~ $to_date 일간 매출현황";
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)
 {
@@ -39,7 +39,7 @@ $sql = " select od_id,
             od_misu,
             (od_cart_price + od_send_cost + od_send_cost2) as orderprice,
             (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
-       from {$g4['shop_order_table']}
+       from {$g5['g5_shop_order_table']}
       where SUBSTRING(od_time,1,10) between '$fr_date' and '$to_date'
       order by od_time desc ";
 $result = sql_query($sql);
@@ -124,5 +124,5 @@ $result = sql_query($sql);
 </section>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

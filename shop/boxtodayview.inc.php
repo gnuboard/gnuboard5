@@ -22,7 +22,7 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
     for ($i=1;$i<=$tv_idx;$i++)
     {
         $tv_it_id = get_session("ss_tv[$i]");
-        $rowx = sql_fetch(" select it_name from $g4[shop_item_table] where it_id = '$tv_it_id' ");
+        $rowx = sql_fetch(" select it_name from {$g5['g5_shop_item_table']} where it_id = '$tv_it_id' ");
         $j = $i - 1;
         if ($j%$tv_div['img_length']==0) $k++;
         $it_name = get_text(addslashes($rowx['it_name']));
@@ -86,9 +86,9 @@ $tv_div['img_length'] = 3; // 한번에 보여줄 이미지 수
     <?php } ?>
 
     <ul id="stv_nb">
-        <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php"><img src="<?php echo G4_SHOP_URL; ?>/img/hd_nb_cart.gif" alt="장바구니"></a></li>
-        <li><a href="<?php echo G4_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G4_SHOP_URL; ?>/img/hd_nb_wish.gif" alt="위시리스트"></a></li>
-        <li><a href="<?php echo G4_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G4_SHOP_URL; ?>/img/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
+        <li><a href="<?php echo G5_SHOP_URL; ?>/cart.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_cart.gif" alt="장바구니"></a></li>
+        <li><a href="<?php echo G5_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_wish.gif" alt="위시리스트"></a></li>
+        <li><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
     </ul>
 </div>
 
@@ -109,6 +109,6 @@ $(window).scroll(function() {
 </script>
 
 <!--[if lte IE 6]>
-<script src="<?php echo G4_JS_URL ?>/scroll_oldie.js"></script>
+<script src="<?php echo G5_JS_URL ?>/scroll_oldie.js"></script>
 <![endif]-->
 <!-- } 오늘 본 상품 끝 -->

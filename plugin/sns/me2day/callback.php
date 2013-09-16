@@ -8,8 +8,8 @@ $auth_key = "12345678" . md5("12345678" . $user_key);
 $_SESSION['me2day']['user_id']  = $user_id;
 $_SESSION['me2day']['user_key'] = $user_key;
 
-$g4['title'] = '미투데이 콜백';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '미투데이 콜백';
+include_once(G5_PATH.'/head.sub.php');
 
 $result = json_decode(file_get_contents("http://me2day.net/api/noop.json?uid={$user_id}&ukey={$auth_key}&akey=".$config['cf_me2day_key']));
 if ($result->code == 0) {
@@ -21,7 +21,7 @@ if ($result->code == 0) {
     set_cookie('ck_sns_name', $sns_name, 86400);
     set_session('ss_me2day_user', $sns_user);
 
-    $g4_sns_url = G4_SNS_URL;
+    $g5_sns_url = G5_SNS_URL;
 
     echo <<<EOT
     <script>
@@ -30,7 +30,7 @@ if ($result->code == 0) {
 
         var opener = window.opener;
         opener.$("#wr_name").val("{$sns_name}");
-        opener.$("#me2day_icon").attr("src", "{$g4_sns_url}/icon/me2day.png");
+        opener.$("#me2day_icon").attr("src", "{$g5_sns_url}/icon/me2day.png");
         opener.$("#me2day_checked").attr("disabled", false);
         opener.$("#me2day_checked").attr("checked", true);
         window.close();
@@ -51,5 +51,5 @@ EOT;
 
 }
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

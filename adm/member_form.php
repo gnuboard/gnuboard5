@@ -100,21 +100,21 @@ $mb_open_no         = !$mb['mb_open']       ? 'checked="checked"' : '';
 if (isset($mb['mb_certify'])) {
     // 날짜시간형이라면 drop 시킴
     if (preg_match("/-/", $mb['mb_certify'])) {
-        sql_query(" ALTER TABLE `{$g4['member_table']}` DROP `mb_certify` ", false);
+        sql_query(" ALTER TABLE `{$g5['member_table']}` DROP `mb_certify` ", false);
     }
 } else {
-    sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_certify` TINYINT(4) NOT NULL DEFAULT '0' AFTER `mb_hp` ", false);
+    sql_query(" ALTER TABLE `{$g5['member_table']}` ADD `mb_certify` TINYINT(4) NOT NULL DEFAULT '0' AFTER `mb_hp` ", false);
 }
 
 if(isset($mb['mb_adult'])) {
-    sql_query(" ALTER TABLE `{$g4['member_table']}` CHANGE `mb_adult` `mb_adult` TINYINT(4) NOT NULL DEFAULT '0' ", false);
+    sql_query(" ALTER TABLE `{$g5['member_table']}` CHANGE `mb_adult` `mb_adult` TINYINT(4) NOT NULL DEFAULT '0' ", false);
 } else {
-    sql_query(" ALTER TABLE `{$g4['member_table']}` ADD `mb_adult` TINYINT NOT NULL DEFAULT '0' AFTER `mb_certify` ", false);
+    sql_query(" ALTER TABLE `{$g5['member_table']}` ADD `mb_adult` TINYINT NOT NULL DEFAULT '0' AFTER `mb_certify` ", false);
 }
 
-if ($mb['mb_intercept_date']) $g4['title'] = "차단된 ";
-else $g4['title'] .= "";
-$g4['title'] .= '회원 '.$html_title;
+if ($mb['mb_intercept_date']) $g5['title'] = "차단된 ";
+else $g5['title'] .= "";
+$g5['title'] .= '회원 '.$html_title;
 include_once('./admin.head.php');
 ?>
 
@@ -204,7 +204,7 @@ include_once('./admin.head.php');
             <input type="text" name="mb_addr2" value="<?php echo $mb['mb_addr2'] ?>" id="mb_addr2" title="상세주소" class="frm_input" size="50"> 상세주소 입력
             <script>
             // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-            $('<a href="<?php echo G4_BBS_URL ?>/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2" id="win_zip" class="win_zip_find btn_frmline" target="_blank">우편번호 검색</a><br>').appendTo('#win_zip');
+            $('<a href="<?php echo G5_BBS_URL ?>/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2" id="win_zip" class="win_zip_find btn_frmline" target="_blank">우편번호 검색</a><br>').appendTo('#win_zip');
             $('#win_zip').css('display','inline');
             $('#mb_zip1,#mb_zip2,#mb_addr1').attr('readonly','readonly');
             </script>
@@ -217,9 +217,9 @@ include_once('./admin.head.php');
             <input type="file" name="mb_icon" id="mb_icon">
             <?php
             $mb_dir = substr($mb['mb_id'],0,2);
-            $icon_file = G4_DATA_PATH.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
             if (file_exists($icon_file)) {
-                $icon_url = G4_DATA_URL.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+                $icon_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
                 echo '<img src="'.$icon_url.'" alt="">';
                 echo '<input type="checkbox" id="del_mb_icon" name="del_mb_icon" value="1">삭제';
             }

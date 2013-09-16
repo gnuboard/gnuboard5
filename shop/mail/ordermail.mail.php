@@ -39,7 +39,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <tbody>
         <?php for ($i=0; $i<count($cart_list); $i++) { ?>
         <tr>
-            <td style="<?php echo $td_st; ?>"><a href="<?php echo G4_SHOP_URL; ?>/item.php?it_id=<?php echo $cart_list[$i]['it_id']; ?>" target="_blank" style="text-decoration:none"><?php echo $cart_list[$i]['it_name']; ?></a></td>
+            <td style="<?php echo $td_st; ?>"><a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $cart_list[$i]['it_id']; ?>" target="_blank" style="text-decoration:none"><?php echo $cart_list[$i]['it_name']; ?></a></td>
             <td style="<?php echo $td_st; ?>;text-align:center"><?php echo $cart_list[$i]['it_opt']; ?></td>
             <td style="<?php echo $td_st; ?>;text-align:center"><?php echo $cart_list[$i]['ct_status']; ?></td>
         </tr>
@@ -148,7 +148,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </p>
         <?php } ?>
 
-        <a href="<?php echo G4_SHOP_URL ?>" target="_blank" style="<?php echo $ft_a_st; ?>"><?php echo $config['cf_title'] ?></a>
+        <a href="<?php echo G5_SHOP_URL ?>" target="_blank" style="<?php echo $ft_a_st; ?>"><?php echo $config['cf_title'] ?></a>
     </div>
 </div>
 

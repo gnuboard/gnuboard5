@@ -9,11 +9,11 @@ $send_cost = $_POST['send_cost'];
 
 // 쿠폰정보
 $sql = " select *
-            from {$g4['shop_coupon_table']}
+            from {$g5['g5_shop_coupon_table']}
             where mb_id IN ( '{$member['mb_id']}', '전체회원' )
               and cp_method = '3'
-              and cp_start <= '".G4_TIME_YMD."'
-              and cp_end >= '".G4_TIME_YMD."'
+              and cp_start <= '".G5_TIME_YMD."'
+              and cp_end >= '".G5_TIME_YMD."'
               and cp_minimum <= '$price' ";
 $result = sql_query($sql);
 $count = mysql_num_rows($result);

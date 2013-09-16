@@ -21,8 +21,8 @@ Field   Status  Notes
 $lt = "<<<";
 $gt = ">>>";
 
-$time = date("Y-m-d 00:00:00", G4_SERVER_TIME - 86400);
-$sql =" select * from {$g4['shop_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
+$time = date("Y-m-d 00:00:00", G5_SERVER_TIME - 86400);
+$sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)

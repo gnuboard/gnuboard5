@@ -7,7 +7,7 @@ if(!$code)
     die('0');
 
 $sql = " select sc_id, sc_price
-            from {$g4['shop_sendcost_table']}
+            from {$g5['g5_shop_sendcost_table']}
             where sc_zip1 <= $code
               and sc_zip2 >= $code ";
 $row = sql_fetch($sql);

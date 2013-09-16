@@ -9,7 +9,7 @@ if($it['it_id']) {
     $opt2_subject = $opt_subject[1];
     $opt3_subject = $opt_subject[2];
 
-    $sql = " select * from {$g4['shop_item_option_table']} where io_type = '0' and it_id = '{$it['it_id']}' order by io_no asc ";
+    $sql = " select * from {$g5['g5_shop_item_option_table']} where io_type = '0' and it_id = '{$it['it_id']}' order by io_no asc ";
     $result = sql_query($sql);
     if(mysql_num_rows($result))
         $po_run = true;

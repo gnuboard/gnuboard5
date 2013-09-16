@@ -3,16 +3,16 @@ $sub_menu = "100700";
 include_once("./_common.php");
 
 if ($is_admin != "super")
-    alert("최고관리자만 접근 가능합니다.", $g4[path]);
+    alert("최고관리자만 접근 가능합니다.", $g5[path]);
 
-$g4[title] = "세션 삭제";
+$g5[title] = "세션 삭제";
 include_once("./admin.head.php");
 echo "'완료' 메세지가 나오기 전에 프로그램의 실행을 중지하지 마십시오.<br><br>";
 echo "<span id='ct'></span>";
 include_once("./admin.tail.php");
 flush();
 
-$session_path = "$g4[path]/data/session";  // 세션이저장된 디렉토리 
+$session_path = "$g5[path]/data/session";  // 세션이저장된 디렉토리 
 if (!$dir=@opendir($session_path)) { 
   echo "세션 디렉토리를 열지못했습니다."; 
 } 

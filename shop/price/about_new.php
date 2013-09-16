@@ -20,8 +20,8 @@ else if($default['de_send_cost_case'] == '상한')
     $delivery = (int)$tmp[0];
 }
 
-$time = date("Y-m-d 00:00:00", G4_SERVER_TIME - 86400);
-$sql =" select * from {$g4['shop_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
+$time = date("Y-m-d 00:00:00", G5_SERVER_TIME - 86400);
+$sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -36,24 +36,24 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $ca_name4 = "";
 
     $ca_id1 = substr($row['ca_id'],0,2);
-    $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$ca_id1' ");
+    $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$ca_id1' ");
     $ca_name1 = $row2['ca_name'];
 
     if (strlen($row['ca_id']) >= 4) {
         $ca_id2 = substr($row['ca_id'],0,4);
-        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$ca_id2' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$ca_id2' ");
         $ca_name2 = $row2['ca_name'];
     }
 
     if (strlen($row['ca_id']) >= 6) {
         $ca_id3 = substr($row['ca_id'],0,6);
-        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$ca_id3' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$ca_id3' ");
         $ca_name3 = $row2['ca_name'];
     }
 
     if (strlen($row['ca_id']) >= 8) {
         $ca_id4 = substr($row['ca_id'],0,8);
-        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$ca_id4' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$ca_id4' ");
         $ca_name4 = $row2['ca_name'];
     }
 
@@ -71,7 +71,7 @@ echo "{$lt}{$row['it_id']}{$gt}"; // 쇼핑몰 상품ID
 echo "{$lt}C{$gt}"; // 상품구분 C/U/D 전체EP는 일괄적으로 C
 echo "{$lt}{$row['it_name']}{$gt}"; // 상품명
 echo "{$lt}{$row['it_price']}{$gt}"; // 판매가격
-echo "{$lt}".G4_SHOP_URL."/item.php?it_id={$row['it_id']}{$gt}"; // 상품의 상세페이지 주소
+echo "{$lt}".G5_SHOP_URL."/item.php?it_id={$row['it_id']}{$gt}"; // 상품의 상세페이지 주소
 echo "{$lt}".$img_url."{$gt}"; // 이미지 URL
 echo "{$lt}$ca_id1{$gt}"; // 대분류 카테고리 코드
 echo "{$lt}$ca_id2{$gt}"; // 중분류 카테고리 코드

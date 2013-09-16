@@ -10,7 +10,7 @@ $no = (int)$no;
 if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
     alert('잘못된 접근입니다.');
 
-$sql = " select bf_source, bf_file from {$g4['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
+$sql = " select bf_source, bf_file from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
 $file = sql_fetch($sql);
 if (!$file['bf_file'])
     alert_close('파일 정보가 존재하지 않습니다.');
@@ -18,7 +18,7 @@ if (!$file['bf_file'])
 // JavaScript 불가일 때
 if($js != 'on' && $board['bo_download_point'] < 0) {
     $msg = $file['bf_source'].' 파일을 다운로드 하시면 포인트가 차감('.number_format($board['bo_download_point']).'점)됩니다.\\n포인트는 게시물당 한번만 차감되며 다음에 다시 다운로드 하셔도 중복하여 차감하지 않습니다.\\n그래도 다운로드 하시겠습니까?';
-    $url1 = G4_BBS_URL.'/download.php?'.$_SERVER['QUERY_STRING'].'&amp;js=on';
+    $url1 = G5_BBS_URL.'/download.php?'.$_SERVER['QUERY_STRING'].'&amp;js=on';
     $url2 = $_SERVER['HTTP_REFERER'];
 
     //$url1 = 확인link, $url2=취소link
@@ -31,10 +31,10 @@ if ($member['mb_level'] < $board['bo_download_level']) {
     if ($member['mb_id'])
         alert($alert_msg);
     else
-        alert($alert_msg.'\\n회원이시라면 로그인 후 이용해 보십시오.', G4_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(G4_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+        alert($alert_msg.'\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
 }
 
-$filepath = G4_DATA_PATH.'/file/'.$bo_table.'/'.$file['bf_file'];
+$filepath = G5_DATA_PATH.'/file/'.$bo_table.'/'.$file['bf_file'];
 $filepath = addslashes($filepath);
 if (!is_file($filepath) || !file_exists($filepath))
     alert('파일이 존재하지 않습니다.');
@@ -61,13 +61,13 @@ if (!get_session($ss_name))
     }
 
     // 다운로드 카운트 증가
-    $sql = " update {$g4['board_file_table']} set bf_download = bf_download + 1 where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
+    $sql = " update {$g5['board_file_table']} set bf_download = bf_download + 1 where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
     sql_query($sql);
 
     set_session($ss_name, TRUE);
 }
 
-$g4['title'] = '다운로드 &gt; '.conv_subject($write['wr_subject'], 255);
+$g5['title'] = '다운로드 &gt; '.conv_subject($write['wr_subject'], 255);
 
 $original = urlencode($file['bf_source']);
 

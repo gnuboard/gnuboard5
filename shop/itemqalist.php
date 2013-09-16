@@ -1,20 +1,20 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/itemqalist.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/itemqalist.php');
     return;
 }
 
-include_once(G4_LIB_PATH.'/thumb.lib.php');
+include_once(G5_LIB_PATH.'/thumb.lib.php');
 
 $sfl = escape_trim($_REQUEST['sfl']);
 $stx = escape_trim($_REQUEST['stx']);
 
-$g4['title'] = '상품문의';
+$g5['title'] = '상품문의';
 include_once('./_head.php');
 
-$sql_common = " from `{$g4['shop_item_qa_table']}` a join `{$g4['shop_item_table']}` b on (a.it_id=b.it_id) ";
+$sql_common = " from `{$g5['g5_shop_item_qa_table']}` a join `{$g5['g5_shop_item_table']}` b on (a.it_id=b.it_id) ";
 $sql_search = " where (1) ";
 
 if(!$sfl)
@@ -96,7 +96,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
         $small_image = $row['it_id'];
 
-        $it_href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $it_href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
         $iq_question = get_view_thumbnail($row['iq_question'], 500);
 

@@ -1,13 +1,13 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '현재접속자';
+$g5['title'] = '현재접속자';
 include_once('./_head.php');
 
 $list = array();
 
 $sql = " select a.mb_id, b.mb_nick, b.mb_name, b.mb_email, b.mb_homepage, b.mb_open, b.mb_point, a.lo_ip, a.lo_location, a.lo_url
-            from {$g4['login_table']} a left join {$g4['member_table']} b on (a.mb_id = b.mb_id)
+            from {$g5['login_table']} a left join {$g5['member_table']} b on (a.mb_id = b.mb_id)
             where a.mb_id <> '{$config['cf_admin']}'
             order by a.lo_datetime desc ";
 $result = sql_query($sql);

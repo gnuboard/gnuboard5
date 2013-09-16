@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/etc.lib.php');
-include_once(G4_LIB_PATH.'/mailer.lib.php');
+include_once(G5_LIB_PATH.'/etc.lib.php');
+include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 /*------------------------------------------------------------------------------
     ※ KCP 에서 가맹점의 결과처리 페이지로 데이터를 전송할 때에, 아래와 같은
@@ -25,7 +25,7 @@ if(!$default['de_card_test']) {
                        . "POST[" . serialize($_POST) . "]"
                        . "COOKIE[" . serialize($_COOKIE) . "]"
                        . "SESSION[" . serialize($_SESSION) . "]";
-            mailer('경고', 'waring', $super_admin['mb_email'], '올바르지 않은 접속 보고', "{$_SERVER['PHP_SELF']} 에 {$_SERVER['REMOTE_ADDR']} 이 ".G4_TIME_YMDHIS." 에 접속을 시도하였습니다.\n\n" . $egpcs_str, 2);
+            mailer('경고', 'waring', $super_admin['mb_email'], '올바르지 않은 접속 보고', "{$_SERVER['PHP_SELF']} 에 {$_SERVER['REMOTE_ADDR']} 이 ".G5_TIME_YMDHIS." 에 접속을 시도하였습니다.\n\n" . $egpcs_str, 2);
             exit;
     }
 }
@@ -48,7 +48,7 @@ if(!$default['de_card_test']) {
     /* =   주시기 바랍니다. 등록 방법은 연동 매뉴얼을 참고하시기 바랍니다.          = */
     /* ============================================================================== */
 
-    //write_log("$g4[path]/data/log/kcp_common.log", print_r($_POST));
+    //write_log("$g5[path]/data/log/kcp_common.log", print_r($_POST));
 
     /* ============================================================================== */
     /* =   02. 공통 통보 데이터 받기                                                = */
@@ -141,12 +141,12 @@ if(!$default['de_card_test']) {
     /* = -------------------------------------------------------------------------- = */
     if ( $tx_cd == "TX00" )
     {
-        $sql = " select pp_id, od_id from {$g4['shop_personalpay_table']} where pp_id = '$order_no' and pp_tno = '$tno' ";
+        $sql = " select pp_id, od_id from {$g5['g5_shop_personalpay_table']} where pp_id = '$order_no' and pp_tno = '$tno' ";
         $row = sql_fetch($sql);
 
         if($row['pp_id']) {
             // 개인결제 UPDATE
-            $sql = " update {$g4['shop_personalpay_table']}
+            $sql = " update {$g5['g5_shop_personalpay_table']}
                         set pp_receipt_price    = '$ipgm_mnyx',
                             pp_receipt_time     = '$tx_tm'
                         where pp_id = '$order_no'
@@ -156,20 +156,20 @@ if(!$default['de_card_test']) {
             if($row['od_id']) {
                 // 주문서 UPDATE
                 $receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $tx_tm);
-                $sql = " update {$g4['shop_order_table']}
+                $sql = " update {$g5['g5_shop_order_table']}
                             set od_receipt_price = od_receipt_price + '$ipgm_mnyx',
                                 od_receipt_time = '$tx_tm',
-                                od_status = '".G4_OD_STATUS_SETTLE."',
+                                od_status = '".G5_OD_STATUS_SETTLE."',
                                 od_shop_memo = concat(od_shop_memo, \"\\n개인결제 ".$row['pp_id']." 로 결제완료 - ".$receipt_time."\")
                           where od_id = '{$row['od_id']}' ";
                 sql_query($sql, FALSE);
             }
         } else {
             // 주문서 UPDATE
-            $sql = " update {$g4['shop_order_table']}
+            $sql = " update {$g5['g5_shop_order_table']}
                         set od_receipt_price = '$ipgm_mnyx',
                             od_receipt_time = '$tx_tm',
-                            od_status = '".G4_OD_STATUS_SETTLE."'
+                            od_status = '".G5_OD_STATUS_SETTLE."'
                       where od_id = '$order_no'
                         and od_tno = '$tno' ";
             sql_query($sql, FALSE);

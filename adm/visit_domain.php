@@ -4,14 +4,14 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g4['title'] = '도메인별 접속자집계';
+$g5['title'] = '도메인별 접속자집계';
 include_once('./visit.sub.php');
 
 $colspan = 5;
 
 $max = 0;
 $sum_count = 0;
-$sql = " select * from {$g4['visit_table']}
+$sql = " select * from {$g5['visit_table']}
             where vi_date between '{$fr_date}' and '{$to_date}' ";
 $result = sql_query($sql);
 while ($row=sql_fetch_array($result)) {

@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/thumbnail.lib.php');
+include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 //$it_id = $_REQUEST['it_id'];
 
@@ -21,8 +21,8 @@ $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
         wr_3 : 평점 1~5
         wr_4 : 관리자확인
     */
-    //$sql_common = " from `{$g4['write_prefix']}itemuse` where wr_is_comment = 0 and wr_1 = '{$it['it_id']}' and wr_4 = '1' ";
-    $sql_common = " from `{$g4['shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+    //$sql_common = " from `{$g5['write_prefix']}itemuse` where wr_is_comment = 0 and wr_1 = '{$it['it_id']}' and wr_4 = '1' ";
+    $sql_common = " from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 
     // 테이블의 전체 레코드수만 얻음
     $sql = " select COUNT(*) as cnt " . $sql_common;
@@ -63,7 +63,7 @@ $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
                 <dt>작성일</dt>
                 <dd><?php echo $is_time; ?></dd>
                 <dt>선호도<dt>
-                <dd class="sit_use_star"><img src="<?php echo G4_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></dd>
+                <dd class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></dd>
             </dl>
 
             <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">

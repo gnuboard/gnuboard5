@@ -1,24 +1,24 @@
 <?php
 $sub_menu = '500400';
 include_once('./_common.php');
-include_once(G4_EDITOR_LIB);
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
 // 상단, 하단 파일경로 필드 추가
-$sql = " ALTER TABLE `{$g4['shop_content_table']}`  ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
+$sql = " ALTER TABLE `{$g5['g5_shop_content_table']}`  ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
                                                 ADD `co_include_tail` VARCHAR( 255 ) NOT NULL ";
 sql_query($sql, false);
 
 $html_title = "내용";
-$g4['title'] = $html_title.' 관리';
+$g5['title'] = $html_title.' 관리';
 
 if ($w == "u")
 {
     $html_title .= " 수정";
     $readonly = " readonly";
 
-    $sql = " select * from {$g4['shop_content_table']} where co_id = '$co_id' ";
+    $sql = " select * from {$g5['g5_shop_content_table']} where co_id = '$co_id' ";
     $co = sql_fetch($sql);
     if (!$co['co_id'])
         alert('등록된 자료가 없습니다.');
@@ -29,7 +29,7 @@ else
     $co['co_html'] = 2;
 }
 
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <form name="frmcontentform" action="./contentformupdate.php" onsubmit="return frmcontentform_check(this);" method="post" enctype="MULTIPART/FORM-DATA" >
@@ -50,7 +50,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <?php echo help('20자 이내의 영문자, 숫자, _ 만 가능합니다.'); ?>
             <input type="text" value="<?php echo $co['co_id']; ?>" name="co_id" id ="co_id" required <?php echo $readonly; ?> class="required <?php echo $readonly; ?> frm_input" size="20" maxlength="20">
-            <?php if ($w == 'u') { ?><a href="<?php echo G4_SHOP_URL; ?>/content.php?co_id=<?php echo $co_id; ?>" class="btn_frmline">내용확인</a><?php } ?>
+            <?php if ($w == 'u') { ?><a href="<?php echo G5_SHOP_URL; ?>/content.php?co_id=<?php echo $co_id; ?>" class="btn_frmline">내용확인</a><?php } ?>
         </td>
     </tr>
     <tr>
@@ -80,7 +80,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="file" name="co_himg" id="co_himg">
             <?php
-            $himg = G4_DATA_PATH.'/content/'.$co['co_id'].'_h';
+            $himg = G5_DATA_PATH.'/content/'.$co['co_id'].'_h';
             if (file_exists($himg)) {
                 $size = @getimagesize($himg);
                 if($size[0] && $size[0] > 750)
@@ -89,7 +89,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     $width = $size[0];
 
                 echo '<input type="checkbox" name="co_himg_del" value="1" id="co_himg_del"> <label for="co_himg_del">삭제</label>';
-                $himg_str = '<img src="'.G4_DATA_URL.'/content/'.$co['co_id'].'_h" width="'.$width.'" alt="">';
+                $himg_str = '<img src="'.G5_DATA_URL.'/content/'.$co['co_id'].'_h" width="'.$width.'" alt="">';
             }
             if ($himg_str) {
                 echo '<div class="banner_or_img">';
@@ -104,7 +104,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="file" name="co_timg" id="co_timg">
             <?php
-            $timg = G4_DATA_PATH.'/content/'.$co['co_id'].'_t';
+            $timg = G5_DATA_PATH.'/content/'.$co['co_id'].'_t';
             if (file_exists($timg)) {
                 $size = @getimagesize($timg);
                 if($size[0] && $size[0] > 750)
@@ -113,7 +113,7 @@ include_once (G4_ADMIN_PATH.'/admin.head.php');
                     $width = $size[0];
 
                 echo '<input type="checkbox" name="co_timg_del" value="1" id="co_timg_del"> <label for="co_timg_del">삭제</label>';
-                $timg_str = '<img src="'.G4_DATA_URL.'/content/'.$co['co_id'].'_t" width="'.$width.'" alt="">';
+                $timg_str = '<img src="'.G5_DATA_URL.'/content/'.$co['co_id'].'_t" width="'.$width.'" alt="">';
             }
             if ($timg_str) {
                 echo '<div class="banner_or_img">';
@@ -156,5 +156,5 @@ function frmcontentform_check(f)
 </script>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

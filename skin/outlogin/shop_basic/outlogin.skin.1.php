@@ -16,8 +16,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <input type="password" name="mb_password" id="ol_pw" required class="required" maxlength="20">
         <input type="submit" id="ol_submit" value="로그인">
         <div id="ol_svc">
-            <a href="<?php echo G4_BBS_URL; ?>/register.php"><b>회원가입</b></a>
-            <a href="<?php echo G4_BBS_URL; ?>/password_lost.php" id="ol_password_lost">정보찾기</a>
+            <a href="<?php echo G5_BBS_URL; ?>/register.php"><b>회원가입</b></a>
+            <a href="<?php echo G5_BBS_URL; ?>/password_lost.php" id="ol_password_lost">정보찾기</a>
         </div>
         <div id="ol_auto">
             <input type="checkbox" name="auto_login" value="1" id="auto_login">

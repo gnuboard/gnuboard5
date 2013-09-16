@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/thumbnail.lib.php');
+include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 //$it_id = $_REQUEST['it_id'];
 
@@ -16,7 +16,7 @@ $thumbnail_width = 500;
     <h3>등록된 상품문의</h3>
 
     <?php
-    $sql_common = " from `{$g4['shop_item_qa_table']}` where it_id = '{$it_id}' ";
+    $sql_common = " from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
 
     // 테이블의 전체 레코드수만 얻음
     $sql = " select COUNT(*) as cnt " . $sql_common;

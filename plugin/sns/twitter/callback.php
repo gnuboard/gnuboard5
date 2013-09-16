@@ -9,8 +9,8 @@ include_once("./_common.php");
 
 /* Start session and load lib */
 //session_start();
-require_once(G4_SNS_PATH.'/twitter/twitteroauth/twitteroauth.php');
-require_once(G4_SNS_PATH.'/twitter/twitterconfig.php');
+require_once(G5_SNS_PATH.'/twitter/twitteroauth/twitteroauth.php');
+require_once(G5_SNS_PATH.'/twitter/twitterconfig.php');
 
 //print_r2($_SESSION); print_r2($_REQUEST); exit;
 
@@ -43,8 +43,8 @@ if (200 == $connection->http_code) {
 exit;
 */
 
-$g4['title'] = '트위터 콜백';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '트위터 콜백';
+include_once(G5_PATH.'/head.sub.php');
 
 if (200 == $connection->http_code) {
     $content  = $connection->get('account/verify_credentials');
@@ -54,7 +54,7 @@ if (200 == $connection->http_code) {
     set_cookie('ck_sns_name', $sns_name, 86400);
     set_session('ss_twitter_user', $sns_user);
 
-    $g4_sns_url = G4_SNS_URL;
+    $g5_sns_url = G5_SNS_URL;
 
     echo <<<EOT
     <script>
@@ -63,7 +63,7 @@ if (200 == $connection->http_code) {
 
         var opener = window.opener;
         opener.$("#wr_name").val("{$sns_name}");
-        opener.$("#twitter_icon").attr("src", "{$g4_sns_url}/icon/twitter.png");
+        opener.$("#twitter_icon").attr("src", "{$g5_sns_url}/icon/twitter.png");
         opener.$("#twitter_checked").attr("disabled", false);
         opener.$("#twitter_checked").attr("checked", true);
         window.close();
@@ -84,5 +84,5 @@ EOT;
 
 }
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -10,7 +10,7 @@ $mb = get_member($mb_id);
 if (!$mb['mb_id'])
     alert('존재하지 않는 회원입니다.');
 
-$g4['title'] = '회원별 접근가능그룹';
+$g5['title'] = '회원별 접근가능그룹';
 include_once('./admin.head.php');
 
 $colspan = 4;
@@ -38,7 +38,7 @@ $colspan = 4;
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g4['group_member_table']} a, {$g4['group_table']} b
+    $sql = " select * from {$g5['group_member_table']} a, {$g5['group_table']} b
                 where a.mb_id = '{$mb['mb_id']}'
                 and a.gr_id = b.gr_id ";
     if ($is_admin != 'super')
@@ -50,7 +50,7 @@ $colspan = 4;
     ?>
     <tr>
         <td class="td_chk"><input type="checkbox" name="chk[]" value="<?php echo $row['gm_id'] ?>" id="chk_<?php echo $i ?>" title="<?php echo $row['gr_subject'] ?> 그룹 선택"></td>
-        <td class="td_grid"><a href="<?php echo $g4['bbs_path'] ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
+        <td class="td_grid"><a href="<?php echo $g5['bbs_path'] ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
         <td class="td_category"><?php echo $row['gr_subject'] ?></td>
         <td class="td_time"><?php echo $row['gm_datetime'] ?></td>
     </tr>
@@ -80,7 +80,7 @@ $colspan = 4;
         <option value="">접근가능 그룹을 선택하세요.</option>
         <?php
         $sql = " select * 
-                    from {$g4['group_table']}
+                    from {$g5['group_table']}
                     where gr_use_access = 1 ";
         //if ($is_admin == 'group') {
         if ($is_admin != 'super') 

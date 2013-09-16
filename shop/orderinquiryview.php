@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/orderinquiryview.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/orderinquiryview.php');
     return;
 }
 
@@ -12,19 +12,19 @@ set_session("ss_token", $token);
 
 if (!$is_member) {
     if (get_session('ss_orderview_uid') != $_GET['uid'])
-        alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.", G4_SHOP_URL);
+        alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.", G5_SHOP_URL);
 }
 
-$sql = "select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
+$sql = "select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 if (!$od['od_id'] || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
-    alert("조회하실 주문서가 없습니다.", G4_SHOP_URL);
+    alert("조회하실 주문서가 없습니다.", G5_SHOP_URL);
 }
 
 // 결제방법
 $settle_case = $od['od_settle_case'];
 
-$g4['title'] = '주문상세내역';
+$g5['title'] = '주문상세내역';
 include_once('./_head.php');
 ?>
 
@@ -55,7 +55,7 @@ if(openwin != null) {
         </dl>
         <?php
         $sql = " select it_id, it_name
-                    from {$g4['shop_cart_table']}
+                    from {$g5['g5_shop_cart_table']}
                     where od_id = '$od_id'
                     group by it_id
                     order by ct_id ";
@@ -85,7 +85,7 @@ if(openwin != null) {
                 <tbody>
                 <?php
                 $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
-                            from {$g4['shop_cart_table']}
+                            from {$g5['g5_shop_cart_table']}
                             where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
                             order by io_type asc, ct_id asc ";
@@ -338,7 +338,7 @@ if(openwin != null) {
                 else
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('<?php echo G4_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');" class="btn_frmline">현금영수증을 발급하시려면 클릭하십시오.</a>
+                    <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');" class="btn_frmline">현금영수증을 발급하시려면 클릭하십시오.</a>
                 <?php } ?>
                 </td>
             </tr>
@@ -438,7 +438,7 @@ if(openwin != null) {
             <tbody>
             <?php
             // 배송회사 정보
-            $dl = sql_fetch(" select * from {$g4['shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+            $dl = sql_fetch(" select * from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
             if ($od['od_invoice'] || !$od['misu'])
             {
@@ -508,7 +508,7 @@ if(openwin != null) {
         <?php
         // 취소한 내역이 없다면
         if ($cancel_price == 0) {
-            if ($od['od_status'] == G4_OD_STATUS_ORDER || $od['od_status'] == G4_OD_STATUS_SETTLE) {
+            if ($od['od_status'] == G5_OD_STATUS_ORDER || $od['od_status'] == G5_OD_STATUS_SETTLE) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
@@ -542,7 +542,7 @@ if(openwin != null) {
     <input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>" size="80"><br />
     <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
     <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>" size="80"><br />
-    <input type="text" name="noti_url" value="<?php echo G4_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
+    <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
     <input type="submit" value="입금통보 테스트">
     </form>
     </fieldset>

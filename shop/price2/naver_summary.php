@@ -19,13 +19,13 @@ Field   Status  Notes
 $lt = "<<<";
 $gt = ">>>";
 
-$sql =" select it_id, it_name, it_price, it_time from {$g4['shop_item_table']} where it_use = '1' order by ca_id";
+$sql =" select it_id, it_name, it_price, it_time from {$g5['g5_shop_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     // 상품별옵션
-    $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
+    $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
     $opt_count = @mysql_num_rows($result2);
 

@@ -27,12 +27,12 @@ function count_mb_id($reg_mb_id)
 
 function exist_mb_id($reg_mb_id)
 {
-    global $g4;
+    global $g5;
 
     $reg_mb_id = trim($reg_mb_id);
     if ($reg_mb_id == "") return "";
 
-    $sql = " select count(*) as cnt from `{$g4['member_table']}` where mb_id = '$reg_mb_id' ";
+    $sql = " select count(*) as cnt from `{$g5['member_table']}` where mb_id = '$reg_mb_id' ";
     $row = sql_fetch($sql);
     if ($row['cnt'])
         return "이미 사용중인 회원아이디 입니다.";
@@ -59,7 +59,7 @@ function empty_mb_nick($reg_mb_nick)
 
 function valid_mb_nick($reg_mb_nick)
 {
-    if (!check_string($reg_mb_nick, G4_HANGUL + G4_ALPHABETIC + G4_NUMERIC))
+    if (!check_string($reg_mb_nick, G5_HANGUL + G5_ALPHABETIC + G5_NUMERIC))
         return "별명은 공백없이 한글, 영문, 숫자만 입력 가능합니다.";
     else
         return "";
@@ -75,8 +75,8 @@ function count_mb_nick($reg_mb_nick)
 
 function exist_mb_nick($reg_mb_nick, $reg_mb_id)
 {
-    global $g4;
-    $row = sql_fetch(" select count(*) as cnt from {$g4['member_table']} where mb_nick = '$reg_mb_nick' and mb_id <> '$reg_mb_id' ");
+    global $g5;
+    $row = sql_fetch(" select count(*) as cnt from {$g5['member_table']} where mb_nick = '$reg_mb_nick' and mb_id <> '$reg_mb_id' ");
     if ($row['cnt'])
         return "이미 존재하는 별명입니다.";
     else
@@ -123,8 +123,8 @@ function prohibit_mb_email($reg_mb_email)
 
 function exist_mb_email($reg_mb_email, $reg_mb_id)
 {
-    global $g4;
-    $row = sql_fetch(" select count(*) as cnt from `{$g4['member_table']}` where mb_email = '$reg_mb_email' and mb_id <> '$reg_mb_id' ");
+    global $g5;
+    $row = sql_fetch(" select count(*) as cnt from `{$g5['member_table']}` where mb_email = '$reg_mb_email' and mb_id <> '$reg_mb_id' ");
     if ($row['cnt'])
         return "이미 사용중인 E-mail 주소입니다.";
     else
@@ -141,7 +141,7 @@ function empty_mb_name($reg_mb_name)
 
 function valid_mb_name($mb_name)
 {
-    if (!check_string($mb_name, G4_HANGUL))
+    if (!check_string($mb_name, G5_HANGUL))
         return "이름은 공백없이 한글만 입력 가능합니다.";
     else
         return "";
@@ -162,13 +162,13 @@ function valid_mb_hp($reg_mb_hp)
 
 function exist_mb_hp($reg_mb_hp, $reg_mb_id)
 {
-    global $g4;
+    global $g5;
 
     if (!trim($reg_mb_hp)) return "";
 
     $reg_mb_hp = hyphen_hp_number($reg_mb_hp);
 
-    $sql = "select count(*) as cnt from {$g4['member_table']} where mb_hp = '$reg_mb_hp' and mb_id <> '$reg_mb_id' ";
+    $sql = "select count(*) as cnt from {$g5['member_table']} where mb_hp = '$reg_mb_hp' and mb_id <> '$reg_mb_id' ";
     $row = sql_fetch($sql);
 
     if($row['cnt'])

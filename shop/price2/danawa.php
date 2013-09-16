@@ -19,16 +19,16 @@ else if($default['de_send_cost_case'] == '상한')
 <?php
 // 상품ID^카테고리^상품명^제조사^이미지URL^상품URL^가격^적립금^할인쿠폰^무이자할부^사은품^모델명^추가정보^출시일^배송료
 $str = "";
-$sql = " select * from {$g4['shop_item_table']}
+$sql = " select * from {$g5['g5_shop_item_table']}
           where it_use = '1'
           order by ca_id ";
 $result = sql_query($sql);
 for ($i=0; $row=mysql_fetch_array($result); $i++) {
-    $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
+    $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '".substr($row['ca_id'],0,2)."' ");
     $ca_name = $row2['ca_name'];
 
     if (strlen($row['ca_id']) >= 4) {
-        $row3 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
+        $row3 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '".substr($row['ca_id'],0,4)."' ");
         $ca_name .= "|" . $row3['ca_name'];
     }
 
@@ -36,13 +36,13 @@ for ($i=0; $row=mysql_fetch_array($result); $i++) {
     $img_url = get_it_imageurl($row['it_id']);
 
     // 상품별옵션
-    $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
+    $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
     $opt_count = @mysql_num_rows($result2);
 
     if(!$opt_count) {
         $it_name = $row['it_name'];
-        $buy_url = G4_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
+        $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
         if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
             $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
         $it_price = $row['it_price'];
@@ -76,7 +76,7 @@ for ($i=0; $row=mysql_fetch_array($result); $i++) {
                 $it_name .= $sep.$subj[$j].':'.$opt[$j];
                 $sep = ' ';
             }
-            $buy_url = G4_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
+            $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
             $it_price = $row['it_price'] + $row2['io_price'];
             if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
                 $delivery = get_item_sendcost($row['it_id'], ($row['it_price'] + $row2['io_price']), 1);

@@ -1,10 +1,10 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '새글';
+$g5['title'] = '새글';
 include_once('./_head.php');
 
-$sql_common = " from {$g4['board_new_table']} a, {$g4['board_table']} b, {$g4['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id and b.bo_use_search = 1 ";
+$sql_common = " from {$g5['board_new_table']} a, {$g5['board_table']} b, {$g5['group_table']} c where a.bo_table = b.bo_table and b.gr_id = c.gr_id and b.bo_use_search = 1 ";
 
 $gr_id = isset($_GET['gr_id']) ? $_GET['gr_id'] : "";
 if ($gr_id) {
@@ -34,7 +34,7 @@ if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $group_select = '<select name="gr_id" id="gr_id" title="검색대상"><option value="">전체그룹';
-$sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_id ";
+$sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $group_select .= "<option value=\"".$row['gr_id']."\">".$row['gr_subject'];
@@ -45,7 +45,7 @@ $list = array();
 $sql = " select a.*, b.bo_subject, c.gr_subject, c.gr_id {$sql_common} {$sql_order} limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $tmp_write_table = $g4['write_prefix'].$row['bo_table'];
+    $tmp_write_table = $g5['write_prefix'].$row['bo_table'];
 
     if ($row['wr_id'] == $row['wr_parent']) {
 
@@ -59,7 +59,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row2['wr_datetime'],0,10);
         $datetime2 = $row2['wr_datetime'];
-        if ($datetime == G4_TIME_YMD) {
+        if ($datetime == G5_TIME_YMD) {
             $datetime2 = substr($datetime2,11,5);
         } else {
             $datetime2 = substr($datetime2,5,5);
@@ -82,7 +82,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row3['wr_datetime'],0,10);
         $datetime2 = $row3['wr_datetime'];
-        if ($datetime == G4_TIME_YMD) {
+        if ($datetime == G5_TIME_YMD) {
             $datetime2 = substr($datetime2,11,5);
         } else {
             $datetime2 = substr($datetime2,5,5);
@@ -103,7 +103,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $list[$i]['wr_subject'] = $row2['wr_subject'];
 }
 
-$write_pages = get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;page=");
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;page=");
 
 include_once($new_skin_path.'/new.skin.php');
 

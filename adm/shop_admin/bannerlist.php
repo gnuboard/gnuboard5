@@ -4,10 +4,10 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g4['title'] = '배너관리';
-include_once (G4_ADMIN_PATH.'/admin.head.php');
+$g5['title'] = '배너관리';
+include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$sql_common = " from {$g4['shop_banner_table']} ";
+$sql_common = " from {$g5['g5_shop_banner_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -46,7 +46,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g4['shop_banner_table']}
+    $sql = " select * from {$g5['g5_shop_banner_table']}
           order by bn_order, bn_id desc
           limit $from_record, $rows  ";
     $result = sql_query($sql);
@@ -56,7 +56,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         // 새창 띄우기인지
         $bn_new_win = ($row['bn_new_win']) ? 'target="_new"' : '';
 
-        $bimg = G4_DATA_PATH.'/banner/'.$row['bn_id'];
+        $bimg = G5_DATA_PATH.'/banner/'.$row['bn_id'];
         if(file_exists($bimg)) {
             $size = @getimagesize($bimg);
             if($size[0] && $size[0] > 800)
@@ -67,7 +67,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
             $bn_img = "";
             if ($row['bn_url'] && $row['bn_url'] != "http://")
                 $bn_img .= '<a href="'.$row['bn_url'].'" '.$bn_new_win.'>';
-            $bn_img .= '<img src="'.G4_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$width.'" alt="'.$row['bn_alt'].'"></a>';
+            $bn_img .= '<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$width.'" alt="'.$row['bn_alt'].'"></a>';
         }
 
         $bn_begin_time = substr($row['bn_begin_time'], 2, 14);
@@ -101,8 +101,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 </section>
 
-<p><?php echo get_paging(G4_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?></p>
+<p><?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?></p>
 
 <?php
-include_once (G4_ADMIN_PATH.'/admin.tail.php');
+include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>

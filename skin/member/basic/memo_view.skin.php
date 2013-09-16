@@ -15,7 +15,7 @@ else {
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_view" class="new_win">
-    <h1 id="new_win_title"><?php echo $g4['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
 
     <!-- 쪽지함 선택 시작 { -->
     <ul class="new_win_ul">

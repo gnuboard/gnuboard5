@@ -7,18 +7,18 @@ if (!$config['cf_email_use'])
 
 auth_check($auth[$sub_menu], 'r');
 
-$sql = " select * from {$g4['mail_table']} where ma_id = '$ma_id' ";
+$sql = " select * from {$g5['mail_table']} where ma_id = '$ma_id' ";
 $ma = sql_fetch($sql);
 if (!$ma['ma_id'])
     alert('보내실 내용을 선택하여 주십시오.');
 
 // 전체회원수
-$sql = " select COUNT(*) as cnt from {$g4['member_table']} ";
+$sql = " select COUNT(*) as cnt from {$g5['member_table']} ";
 $row = sql_fetch($sql);
 $tot_cnt = $row['cnt'];
 
 // 탈퇴대기회원수
-$sql = " select COUNT(*) as cnt from {$g4['member_table']} where mb_leave_date <> '' ";
+$sql = " select COUNT(*) as cnt from {$g5['member_table']} where mb_leave_date <> '' ";
 $row = sql_fetch($sql);
 $finish_cnt = $row['cnt'];
 
@@ -35,7 +35,7 @@ if (!isset($mb_level_from)) $mb_level_from = 1;
 if (!isset($mb_level_to)) $mb_level_to = 10;
 if (!isset($mb_mailling)) $mb_mailling = 1;
 
-$g4['title'] = '회원메일발송';
+$g5['title'] = '회원메일발송';
 include_once('./admin.head.php');
 ?>
 
@@ -96,7 +96,7 @@ include_once('./admin.head.php');
             <select id="gr_id" name="gr_id">
                 <option value=''>전체</option>
                 <?php
-                $sql = " select gr_id, gr_subject from {$g4['group_table']} order by gr_subject ";
+                $sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_subject ";
                 $result = sql_query($sql);
                 for ($i=0; $row=sql_fetch_array($result); $i++) {
                     echo '<option value="'.$row['gr_id'].'">'.$row['gr_subject'].'</option>';

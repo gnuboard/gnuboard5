@@ -21,14 +21,14 @@ Field   Status  Notes
 $lt = "<<<";
 $gt = ">>>";
 
-$time = date("Y-m-d 00:00:00", G4_SERVER_TIME - 86400);
-$sql =" select * from {$g4['shop_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
+$time = date("Y-m-d 00:00:00", G5_SERVER_TIME - 86400);
+$sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     // 상품별옵션
-    $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
+    $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
     $opt_count = @mysql_num_rows($result2);
 

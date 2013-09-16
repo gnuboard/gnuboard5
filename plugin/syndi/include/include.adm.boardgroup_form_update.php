@@ -3,8 +3,8 @@
  * @file include.adm.boardgroup_form_update.php
  * @author sol (ngleader@gmail.com)
  * @brief 게시판 삭제시 Syndication Ping
- *        gnuboard4/adm/board_delete.inc.php 파일에 추가
- *        include '../syndi/include/gnuboard4_euckr/include.adm.boardgroup_form_update.php';
+ *        gnuboard5/adm/board_delete.inc.php 파일에 추가
+ *        include '../syndi/include/gnuboard5_euckr/include.adm.boardgroup_form_update.php';
  */
 if(!defined('_GNUBOARD_')) return;
 

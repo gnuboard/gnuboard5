@@ -1,18 +1,18 @@
 <?php
 include_once('./_common.php');
-include_once(G4_LIB_PATH.'/latest.lib.php');
+include_once(G5_LIB_PATH.'/latest.lib.php');
 
 $list_mod = 2; // 한라인에 몇개씩 출력할것인지?
 $list_row = 3; // 한게시판당 몇행씩 출력할것인지?
 $subject_len = 70; // 제목의 길이는?
 
-$g4['title'] = '커뮤니티';
+$g5['title'] = '커뮤니티';
 include_once('./_head.php');
 ?>
 
     <?php
     //  최신글 시작
-    $sql = " select bo_table, bo_subject from {$g4['board_table']} order by gr_id, bo_table ";
+    $sql = " select bo_table, bo_subject from {$g5['board_table']} order by gr_id, bo_table ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
 

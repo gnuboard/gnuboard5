@@ -1,8 +1,8 @@
 <?php
 /**
- * @file syndi.config.gnuboard4_utf8.php
+ * @file plugin/syndi/func/site.func.php
  * @author sol (ngleader@gmail.com)
- * @brief syndication client functions for gnuboard4 utf-8
+ * @brief syndication client functions for gnuboard5
  * 
  * Syndi_getSiteInfo	: 사이트 정보
  * Syndi_getChannelList	: 사이트의 게시판
@@ -15,15 +15,15 @@
 
 
 // include gnuboard config & lib
-include G4_PATH.'/config.php';
-//include G4_LIB_PATH.'/common.lib.php';
-include G4_DATA_PATH.'/dbconfig.php';
+include G5_PATH.'/config.php';
+//include G5_LIB_PATH.'/common.lib.php';
+include G5_DATA_PATH.'/dbconfig.php';
 
-$connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD);
+$connect_db = sql_connect(G5_MYSQL_HOST, G5_MYSQL_USER, G5_MYSQL_PASSWORD);
 if(!$connect_db) return;
 $GLOBALS['connect_db'] = $connect_db;
 
-sql_select_db(G4_MYSQL_DB, $connect_db);
+sql_select_db(G5_MYSQL_DB, $connect_db);
 
 
 /**
@@ -54,12 +54,12 @@ function Syndi_getSiteInfo($args)
  **/
 function Syndi_getChannelList($args)
 {
-	global $g4;
+	global $g5;
 
 	$where = '';
 	if($args->target_channel_id) $where .= " and b.bo_table='". mysql_real_escape_string($args->target_channel_id) . "'";
 
-	$sql = "select b.bo_table,b.bo_subject from " . $g4['board_table'] . " b, ". $g4['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id ". $where;
+	$sql = "select b.bo_table,b.bo_subject from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id ". $where;
 	$sql .= " order by b.gr_id,b.bo_table";
 
 	if($args->type=='channel')
@@ -102,11 +102,11 @@ function Syndi_getChannelList($args)
  **/
 function _Syndi_getNextChannelId($channel_id=null)
 {
-	global $g4;
+	global $g5;
 
 	if(!$channel_id)
 	{
-		$sql = "select b.bo_table from " . $g4['board_table'] . " b, ". $g4['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
+		$sql = "select b.bo_table from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
 		$sql .= " order by b.gr_id,b.bo_table limit 1";
 
 		$row = sql_fetch($sql);
@@ -116,7 +116,7 @@ function _Syndi_getNextChannelId($channel_id=null)
 
 	$channel_id = mysql_real_escape_string($channel_id);
 
-	$sql = "select b.bo_table from " . $g4['board_table'] . " b, ". $g4['group_table'] . " g where b.bo_table>'$channel_id' and b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
+	$sql = "select b.bo_table from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_table>'$channel_id' and b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
 	$sql .= " order by b.gr_id,b.bo_table limit 1";
 
 	$result = sql_query($sql);
@@ -134,7 +134,7 @@ function _Syndi_getNextChannelId($channel_id=null)
  **/
 function Syndi_getArticleList($args)
 {
-	global $g4;
+	global $g5;
 
 	/*
 	$args->target_content_id	//게시물 번호
@@ -169,7 +169,7 @@ function Syndi_getArticleList($args)
  **/
 function _Syndi_getArticleList($args)
 {
-	global $g4;
+	global $g5;
 
 	/*
 	$args->target_content_id	//게시물 번호
@@ -180,7 +180,7 @@ function _Syndi_getArticleList($args)
 	$args->page					//페이지 번호
 	*/
 
-	$sql = "select count(*) as cnt from " . $g4['board_table'] . " b, ". $g4['group_table'] . " g where b.bo_table='" . mysql_real_escape_string($args->target_channel_id). "' and b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
+	$sql = "select count(*) as cnt from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_table='" . mysql_real_escape_string($args->target_channel_id). "' and b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
 	$row = sql_fetch_array(sql_query($sql));
 	if($row['cnt']<1) return array();
 
@@ -194,7 +194,7 @@ function _Syndi_getArticleList($args)
 	if($args->end_time) $where .= ' and wr_datetime <= '. _getTime($args->end_time);
 
 	$sql = "select wr_id, ca_name, wr_subject, wr_content, mb_id, wr_name, wr_homepage, wr_email, wr_datetime, wr_last 
-		from " . $g4['write_prefix'] . $args->target_channel_id  . " where 1=1" . $where;
+		from " . $g5['write_prefix'] . $args->target_channel_id  . " where 1=1" . $where;
 	$sql .= " order by wr_id desc ";
 	$sql .= sprintf(" limit %s,%s", ($args->page-1)*$args->max_entry, $args->max_entry);
 
@@ -242,8 +242,8 @@ function _Syndi_getArticleList($args)
  **/
 function Syndi_getDeletedList($args)
 {
-    global $g4;
-	$table = $g4['syndi_log_table'];
+    global $g5;
+	$table = $g5['syndi_log_table'];
 
 	// get delete article list
 	$where = '';
@@ -289,12 +289,12 @@ function Syndi_getDeletedList($args)
  **/
 function Syndi_getChannelNextPage($args)
 {
-	global $g4;
+	global $g5;
 
 	$where = '';
 	if($args->target_channel_id) $where .= " and bo_table='". mysql_real_escape_string($args->target_channel_id) . "'";
 
-	$count_sql = "select count(*) as cnt from " . $g4['board_table'] . "  where bo_read_level=1 and bo_list_level=1 " .$where;
+	$count_sql = "select count(*) as cnt from " . $g5['board_table'] . "  where bo_read_level=1 and bo_list_level=1 " .$where;
 	$result = sql_query($count_sql);
 	$row = sql_fetch_array($result);
 	sql_free_result($result);
@@ -320,7 +320,7 @@ function Syndi_getChannelNextPage($args)
  **/
 function Syndi_getArticleNextPage($args)
 {
-	global $g4;
+	global $g5;
 
 	// 사이트 모든 글
 	if(!$args->target_channel_id)
@@ -347,9 +347,9 @@ function Syndi_getArticleNextPage($args)
 
 function _Syndi_getArticleNextPage($args)
 {
-	global $g4;
+	global $g5;
 
-	$sql = "select count(*) as cnt from " . $g4['board_table'] . " b, ". $g4['group_table'] . " g where b.bo_table='" . mysql_real_escape_string($args->target_channel_id). "' and b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
+	$sql = "select count(*) as cnt from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_table='" . mysql_real_escape_string($args->target_channel_id). "' and b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
 	
 	if($row['cnt']==0) return false;
 
@@ -359,7 +359,7 @@ function _Syndi_getArticleNextPage($args)
 	if($args->start_time) $where .= ' and wr_datetime >= '. _getTime($args->start_time);
 	if($args->end_time) $where .= ' and wr_datetime <= '. _getTime($args->end_time);
 
-	$count_sql = "select count(*) as cnt from " . $g4['write_prefix'] . $args->target_channel_id  . " where 1=1 " .$where;
+	$count_sql = "select count(*) as cnt from " . $g5['write_prefix'] . $args->target_channel_id  . " where 1=1 " .$where;
 	$result = sql_query($count_sql);
 
 	$row = sql_fetch_array($result);
@@ -393,8 +393,8 @@ function _Syndi_getArticleNextPage($args)
  **/
 function Syndi_getDeletedNextPage($args)
 {
-    global $g4;
-	$table = $g4['syndi_log_table'];
+    global $g5;
+	$table = $g5['syndi_log_table'];
 
 	// get delete article list
 	$where = '';

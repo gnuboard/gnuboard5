@@ -3,10 +3,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 // $list_row 출력할 이미지 수
 
 for ($i=1; $row=sql_fetch_array($result); $i++) {
-    $href = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
     $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
-    $sns_url  = G4_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
     if ($i == 1) echo '<ul class="sct sct_10">';
 ?>
@@ -20,9 +20,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
             </span>
         </a>
         <div class="sct_sns">
-            <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G4_URL.'/img/shop/sns_fb.png'); ?>
-            <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G4_URL.'/img/shop/sns_twt.png'); ?>
-            <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G4_URL.'/img/shop/sns_goo.png'); ?>
+            <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_URL.'/img/shop/sns_fb.png'); ?>
+            <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_URL.'/img/shop/sns_twt.png'); ?>
+            <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_URL.'/img/shop/sns_goo.png'); ?>
         </div>
     </li>
 <?php

@@ -10,7 +10,7 @@ $no = trim($_GET['no']);
 if($addr) {
     $option_list = '';
     $zipfile = array();
-    $fp = fopen(G4_BBS_PATH."/zip.db", "r");
+    $fp = fopen(G5_BBS_PATH."/zip.db", "r");
     while(!feof($fp)) {
         $zipfile[] = fgets($fp, 4096);
     }
@@ -44,13 +44,13 @@ if($addr) {
     }
 }
 
-$g4['title'] = "우편번호 찾기";
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = "우편번호 찾기";
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 
 <div id="sendcost_postal_win" class="new_win">
-    <h1 id="new_win_title"><?php echo $g4['title']; ?></h1>
+    <h1 id="new_win_title"><?php echo $g5['title']; ?></h1>
 
 
     <form name="fzipcode" id="fzipcode" method="get">
@@ -106,5 +106,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G4_PATH."/tail.sub.php");
+include_once(G5_PATH."/tail.sub.php");
 ?>

@@ -19,7 +19,7 @@ check_token();
 if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'])
     alert('본인확인을 위해 아이핀 또는 휴대폰 본인학인 서비스를 하나이상 선택해 주십시오');
 
-$sql = " update {$g4['config_table']}
+$sql = " update {$g5['config_table']}
             set cf_title = '{$_POST['cf_title']}',
                 cf_admin = '{$_POST['cf_admin']}',
                 cf_admin_email = '{$_POST['cf_admin_email']}',
@@ -52,6 +52,7 @@ $sql = " update {$g4['config_table']}
                 cf_filter = '{$_POST['cf_filter']}',
                 cf_possible_ip = '".trim($_POST['cf_possible_ip'])."',
                 cf_intercept_ip = '".trim($_POST['cf_intercept_ip'])."',
+                cf_analytics = '{$_POST['cf_analytics']}',
                 cf_member_skin = '{$_POST['cf_member_skin']}',
                 cf_use_homepage = '{$_POST['cf_use_homepage']}',
                 cf_req_homepage = '{$_POST['cf_req_homepage']}',
@@ -142,7 +143,7 @@ $sql = " update {$g4['config_table']}
                 cf_10 = '{$_POST['cf_10']}' ";
 sql_query($sql);
 
-//sql_query(" OPTIMIZE TABLE `$g4[config_table]` ");
+//sql_query(" OPTIMIZE TABLE `$g5[config_table]` ");
 
 goto_url('./config_form.php', false);
 ?>

@@ -7,8 +7,8 @@ error_reporting( E_CORE_ERROR | E_CORE_WARNING | E_COMPILE_ERROR | E_ERROR | E_W
 // 보안설정이나 프레임이 달라도 쿠키가 통하도록 설정
 header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV INT DEM CNT STA POL HEA PRE LOC OTC"');
 
-if (!defined('G4_SET_TIME_LIMIT')) define('G4_SET_TIME_LIMIT', 0);
-@set_time_limit(G4_SET_TIME_LIMIT);
+if (!defined('G5_SET_TIME_LIMIT')) define('G5_SET_TIME_LIMIT', 0);
+@set_time_limit(G5_SET_TIME_LIMIT);
 
 
 //==============================================================================
@@ -61,10 +61,10 @@ $config = array();
 $member = array();
 $board  = array();
 $group  = array();
-$g4     = array();
+$g5     = array();
 
 
-function g4_path()
+function g5_path()
 {
     $result['path'] = str_replace('\\', '/', dirname(__FILE__));
     $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $_SERVER['SCRIPT_NAME']);
@@ -77,25 +77,25 @@ function g4_path()
     return $result;
 }
 
-$g4_path = g4_path();
+$g5_path = g5_path();
 
-include_once($g4_path['path'].'/config.php');   // 설정 파일
+include_once($g5_path['path'].'/config.php');   // 설정 파일
 
-unset($g4_path);
+unset($g5_path);
 
 
 //==============================================================================
 // 공통
 //------------------------------------------------------------------------------
-$dbconfig_file = G4_DATA_PATH.'/'.G4_DBCONFIG_FILE;
+$dbconfig_file = G5_DATA_PATH.'/'.G5_DBCONFIG_FILE;
 if (file_exists($dbconfig_file)) {
     include_once($dbconfig_file);
-    include_once(G4_LIB_PATH.'/common.lib.php');    // 공통 라이브러리
+    include_once(G5_LIB_PATH.'/common.lib.php');    // 공통 라이브러리
 
-    $connect_db = sql_connect(G4_MYSQL_HOST, G4_MYSQL_USER, G4_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
-    $select_db  = sql_select_db(G4_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
+    $connect_db = sql_connect(G5_MYSQL_HOST, G5_MYSQL_USER, G5_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
+    $select_db  = sql_select_db(G5_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
     @mysql_query(" set names utf8 ");
-    if (defined(G4_TIMEZONE)) @mysql_query(" set time_zone = '".G4_TIMEZONE."'");
+    if (defined(G5_TIMEZONE)) @mysql_query(" set time_zone = '".G5_TIMEZONE."'");
 } else {
 ?>
 
@@ -103,7 +103,7 @@ if (file_exists($dbconfig_file)) {
 <html lang="ko">
 <head>
 <meta charset="utf-8">
-<title>오류! 그누보드4s 설치하기</title>
+<title>오류! <?php echo G5_VERSION ?> 설치하기</title>
 <style>
 body {background:#f7f7f2}
 h1 {margin:50px auto 30px;width:540px;color:#ff3061;font-size:1.4em}
@@ -117,10 +117,10 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
     <div>
         <p>다음 파일을 찾을 수 없습니다.</p>
         <ul>
-            <li><strong><?php echo G4_DATA_DIR.'/'.G4_DBCONFIG_FILE ?></strong></li>
+            <li><strong><?php echo G5_DATA_DIR.'/'.G5_DBCONFIG_FILE ?></strong></li>
         </ul>
         <p>프로그램 설치 후 실행하시기 바랍니다.</p>
-        <a href="<?php echo G4_URL; ?>/install/">그누보드4s 설치하기</a>
+        <a href="<?php echo G5_URL; ?>/install/"><?php echo G5_VERSION ?> 설치하기</a>
     </div>
 </body>
 </html>
@@ -137,7 +137,7 @@ div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
 @ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
 @ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
-session_save_path(G4_DATA_PATH.'/session');
+session_save_path(G5_DATA_PATH.'/session');
 
 if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
@@ -150,7 +150,7 @@ ini_set("session.gc_probability", 1); // session.gc_probability는 session.gc_di
 ini_set("session.gc_divisor", 100); // session.gc_divisor는 session.gc_probability와 결합하여 각 세션 초기화 시에 gc(쓰레기 수거) 프로세스를 시작할 확률을 정의합니다. 확률은 gc_probability/gc_divisor를 사용하여 계산합니다. 즉, 1/100은 각 요청시에 GC 프로세스를 시작할 확률이 1%입니다. session.gc_divisor의 기본값은 100입니다.
 
 session_set_cookie_params(0, '/');
-ini_set("session.cookie_domain", G4_COOKIE_DOMAIN);
+ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 
 @session_start();
 //==============================================================================
@@ -161,23 +161,23 @@ ini_set("session.cookie_domain", G4_COOKIE_DOMAIN);
 //------------------------------------------------------------------------------
 // 기본환경설정
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
-$config = sql_fetch(" select * from {$g4['config_table']} ");
+$config = sql_fetch(" select * from {$g5['config_table']} ");
 
-define('G4_HTTP_BBS_URL',  https_url(G4_BBS_DIR, false));
-define('G4_HTTPS_BBS_URL', https_url(G4_BBS_DIR, true));
+define('G5_HTTP_BBS_URL',  https_url(G5_BBS_DIR, false));
+define('G5_HTTPS_BBS_URL', https_url(G5_BBS_DIR, true));
 if ($config['cf_editor'])
-    define('G4_EDITOR_LIB', G4_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
+    define('G5_EDITOR_LIB', G5_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
 else
-    define('G4_EDITOR_LIB', G4_LIB_PATH."/editor.lib.php");
+    define('G5_EDITOR_LIB', G5_LIB_PATH."/editor.lib.php");
 
 //==============================================================================
 // Mobile 모바일 설정
 // 쿠키에 저장된 값이 모바일이라면 브라우저 상관없이 모바일로 실행
 // 그렇지 않다면 브라우저의 HTTP_USER_AGENT 에 따라 모바일 결정
-// G4_MOBILE_AGENT : config.php 에서 선언
+// G5_MOBILE_AGENT : config.php 에서 선언
 //------------------------------------------------------------------------------
 $is_mobile = false;
-if (G4_USE_MOBILE) {
+if (G5_USE_MOBILE) {
     if ($_REQUEST['device']=='pc')
         $is_mobile = false;
     else if ($_REQUEST['device']=='mobile')
@@ -189,16 +189,16 @@ if (G4_USE_MOBILE) {
 }
 
 $_SESSION['ss_is_mobile'] = $is_mobile;
-define('G4_IS_MOBILE', $is_mobile);
-if (G4_IS_MOBILE) {
-    include_once(G4_LIB_PATH.'/mobile.lib.php'); // 모바일 전용 라이브러리
-    $g4['mobile_path'] = G4_PATH.'/'.$g4['mobile_dir'];
+define('G5_IS_MOBILE', $is_mobile);
+if (G5_IS_MOBILE) {
+    include_once(G5_LIB_PATH.'/mobile.lib.php'); // 모바일 전용 라이브러리
+    $g5['mobile_path'] = G5_PATH.'/'.$g5['mobile_dir'];
 }
 //==============================================================================
 
 // 4.00.03 : [보안관련] PHPSESSID 가 틀리면 로그아웃한다.
 if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
-    goto_url(G4_BBS_URL.'/logout.php');
+    goto_url(G5_BBS_URL.'/logout.php');
 
 // QUERY_STRING
 $qstr = '';
@@ -295,9 +295,9 @@ if (isset($_REQUEST['url'])) {
 } else {
     $url = '';
     $urlencode = urlencode($_SERVER['REQUEST_URI']);
-    if (G4_DOMAIN) {
-        $p = parse_url(G4_DOMAIN);
-        $urlencode = G4_DOMAIN.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", $urlencode));
+    if (G5_DOMAIN) {
+        $p = parse_url(G5_DOMAIN);
+        $urlencode = G5_DOMAIN.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", $urlencode));
     }
 }
 
@@ -314,13 +314,13 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
     $member = get_member($_SESSION['ss_mb_id']);
 
     // 오늘 처음 로그인 이라면
-    if (substr($member['mb_today_login'], 0, 10) != G4_TIME_YMD) {
+    if (substr($member['mb_today_login'], 0, 10) != G5_TIME_YMD) {
         // 첫 로그인 포인트 지급
-        insert_point($member['mb_id'], $config['cf_login_point'], G4_TIME_YMD.' 첫로그인', '@login', $member['mb_id'], G4_TIME_YMD);
+        insert_point($member['mb_id'], $config['cf_login_point'], G5_TIME_YMD.' 첫로그인', '@login', $member['mb_id'], G5_TIME_YMD);
 
         // 오늘의 로그인이 될 수도 있으며 마지막 로그인일 수도 있음
         // 해당 회원의 접근일시와 IP 를 저장
-        $sql = " update {$g4['member_table']} set mb_today_login = '".G4_TIME_YMDHIS."', mb_login_ip = '{$_SERVER['REMOTE_ADDR']}' where mb_id = '{$member['mb_id']}' ";
+        $sql = " update {$g5['member_table']} set mb_today_login = '".G5_TIME_YMDHIS."', mb_login_ip = '{$_SERVER['REMOTE_ADDR']}' where mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
     }
 
@@ -332,7 +332,7 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
         $tmp_mb_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $tmp_mb_id), 0, 20);
         // 최고관리자는 자동로그인 금지
         if ($tmp_mb_id != $config['cf_admin']) {
-            $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g4['member_table']} where mb_id = '{$tmp_mb_id}' ";
+            $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g5['member_table']} where mb_id = '{$tmp_mb_id}' ";
             $row = sql_fetch($sql);
             $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
             // 쿠키에 저장된 키와 같다면
@@ -361,19 +361,19 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
 $write = array();
 $write_table = "";
 if ($bo_table) {
-    $board = sql_fetch(" select * from {$g4['board_table']} where bo_table = '$bo_table' ");
+    $board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '$bo_table' ");
     if ($board['bo_table']) {
         set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
-        $write_table = $g4['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
-        //$comment_table = $g4['write_prefix'] . $bo_table . $g4['comment_suffix']; // 코멘트 테이블 전체이름
+        $write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
+        //$comment_table = $g5['write_prefix'] . $bo_table . $g5['comment_suffix']; // 코멘트 테이블 전체이름
         if (isset($wr_id) && $wr_id)
             $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
     }
 }
 
 if ($gr_id) {
-    $group = sql_fetch(" select * from {$g4['group_table']} where gr_id = '$gr_id' ");
+    $group = sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
 }
 
 
@@ -433,42 +433,42 @@ if ($is_admin != 'super') {
 //==============================================================================
 // 스킨경로
 //------------------------------------------------------------------------------
-if (G4_IS_MOBILE) {
-    $board_skin_path    = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/board/'.$board['bo_mobile_skin'];
-    $board_skin_url     = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/board/'.$board['bo_mobile_skin'];
-    $member_skin_path   = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/member/'.$config['cf_mobile_member_skin'];
-    $member_skin_url    = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/member/'.$config['cf_mobile_member_skin'];
-    $new_skin_path      = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/new/'.$config['cf_mobile_new_skin'];
-    $new_skin_url       = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/new/'.$config['cf_mobile_new_skin'];
-    $search_skin_path   = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/search/'.$config['cf_mobile_search_skin'];
-    $search_skin_url    = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/search/'.$config['cf_mobile_search_skin'];
-    $connect_skin_path  = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
-    $connect_skin_url   = G4_MOBILE_URL .'/'.G4_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
+if (G5_IS_MOBILE) {
+    $board_skin_path    = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/board/'.$board['bo_mobile_skin'];
+    $board_skin_url     = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/board/'.$board['bo_mobile_skin'];
+    $member_skin_path   = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/member/'.$config['cf_mobile_member_skin'];
+    $member_skin_url    = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/member/'.$config['cf_mobile_member_skin'];
+    $new_skin_path      = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/new/'.$config['cf_mobile_new_skin'];
+    $new_skin_url       = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/new/'.$config['cf_mobile_new_skin'];
+    $search_skin_path   = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/search/'.$config['cf_mobile_search_skin'];
+    $search_skin_url    = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/search/'.$config['cf_mobile_search_skin'];
+    $connect_skin_path  = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
+    $connect_skin_url   = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
 } else {
-    $board_skin_path    = G4_SKIN_PATH.'/board/'.$board['bo_skin'];
-    $board_skin_url     = G4_SKIN_URL .'/board/'.$board['bo_skin'];
-    $member_skin_path   = G4_SKIN_PATH.'/member/'.$config['cf_member_skin'];
-    $member_skin_url    = G4_SKIN_URL .'/member/'.$config['cf_member_skin'];
-    $new_skin_path      = G4_SKIN_PATH.'/new/'.$config['cf_new_skin'];
-    $new_skin_url       = G4_SKIN_URL .'/new/'.$config['cf_new_skin'];
-    $search_skin_path   = G4_SKIN_PATH.'/search/'.$config['cf_search_skin'];
-    $search_skin_url    = G4_SKIN_URL .'/search/'.$config['cf_search_skin'];
-    $connect_skin_path  = G4_SKIN_PATH.'/connect/'.$config['cf_connect_skin'];
-    $connect_skin_url   = G4_SKIN_URL .'/connect/'.$config['cf_connect_skin'];
+    $board_skin_path    = G5_SKIN_PATH.'/board/'.$board['bo_skin'];
+    $board_skin_url     = G5_SKIN_URL .'/board/'.$board['bo_skin'];
+    $member_skin_path   = G5_SKIN_PATH.'/member/'.$config['cf_member_skin'];
+    $member_skin_url    = G5_SKIN_URL .'/member/'.$config['cf_member_skin'];
+    $new_skin_path      = G5_SKIN_PATH.'/new/'.$config['cf_new_skin'];
+    $new_skin_url       = G5_SKIN_URL .'/new/'.$config['cf_new_skin'];
+    $search_skin_path   = G5_SKIN_PATH.'/search/'.$config['cf_search_skin'];
+    $search_skin_url    = G5_SKIN_URL .'/search/'.$config['cf_search_skin'];
+    $connect_skin_path  = G5_SKIN_PATH.'/connect/'.$config['cf_connect_skin'];
+    $connect_skin_url   = G5_SKIN_URL .'/connect/'.$config['cf_connect_skin'];
 }
 //==============================================================================
 
 
 // 방문자수의 접속을 남김
-include_once(G4_BBS_PATH.'/visit_insert.inc.php');
+include_once(G5_BBS_PATH.'/visit_insert.inc.php');
 
 
 // common.php 파일을 수정할 필요가 없도록 확장합니다.
-$tmp = dir(G4_EXTEND_PATH);
+$tmp = dir(G5_EXTEND_PATH);
 while ($entry = $tmp->read()) {
     // php 파일만 include 함
     if (preg_match("/(\.php)$/i", $entry))
-        include_once(G4_EXTEND_PATH.'/'.$entry);
+        include_once(G5_EXTEND_PATH.'/'.$entry);
 }
 
 ob_start();

@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$po = sql_fetch(" select * from {$g4['poll_table']} where po_id = '{$_POST['po_id']}' ");
+$po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$_POST['po_id']}' ");
 if (!$po['po_id'])
     alert('po_id 값이 제대로 넘어오지 않았습니다.');
 
@@ -34,7 +34,7 @@ if($is_member) {
     }
 }
 
-$result_url = G4_BBS_URL."/poll_result.php?po_id=$po_id&skin_dir={$_POST['skin_dir']}";
+$result_url = G5_BBS_URL."/poll_result.php?po_id=$po_id&skin_dir={$_POST['skin_dir']}";
 
 // 없다면 선택한 투표항목을 1증가 시키고 ip, id를 저장
 if (!($search_ip || $search_mb_id)) {
@@ -42,9 +42,9 @@ if (!($search_ip || $search_mb_id)) {
     $mb_ids = $po['mb_ids'];
     if ($is_member) { // 회원일 때는 id만 추가
         $mb_ids .= $member['mb_id'].',';
-        $sql = " update {$g4['poll_table']} set po_cnt{$gb_poll} = po_cnt{$gb_poll} + 1, mb_ids = '$mb_ids' where po_id = '$po_id' ";
+        $sql = " update {$g5['poll_table']} set po_cnt{$gb_poll} = po_cnt{$gb_poll} + 1, mb_ids = '$mb_ids' where po_id = '$po_id' ";
     } else {
-        $sql = " update {$g4['poll_table']} set po_cnt{$gb_poll} = po_cnt{$gb_poll} + 1, po_ips = '$po_ips' where po_id = '$po_id' ";
+        $sql = " update {$g5['poll_table']} set po_cnt{$gb_poll} = po_cnt{$gb_poll} + 1, po_ips = '$po_ips' where po_id = '$po_id' ";
     }
 
     sql_query($sql);
@@ -55,6 +55,6 @@ if (!($search_ip || $search_mb_id)) {
 if (!$search_mb_id)
     insert_point($member['mb_id'], $po['po_point'], $po['po_id'] . '. ' . cut_str($po['po_subject'],20) . ' 투표 참여 ', '@poll', $po['po_id'], '투표');
 
-//goto_url($g4['bbs_url'].'/poll_result.php?po_id='.$po_id.'&amp;skin_dir='.$skin_dir);
+//goto_url($g5['bbs_url'].'/poll_result.php?po_id='.$po_id.'&amp;skin_dir='.$skin_dir);
 goto_url($result_url);
 ?>

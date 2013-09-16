@@ -35,8 +35,8 @@ else {
         $retcode=sprintf("S%03d", $ret);
 }
 
-$g4['title'] = 'KCB 휴대폰 본인확인';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = 'KCB 휴대폰 본인확인';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <script>
@@ -68,5 +68,5 @@ if ($retcode == "B000") {
     echo ("<script>alert(\"$retcode\"); self.close();</script>");
 }
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/largeimage.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/largeimage.php');
     return;
 }
 
@@ -10,18 +10,18 @@ $it_id = $_GET['it_id'];
 $no = $_GET['no'];
 
 $sql = " select it_id, it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
-            from {$g4['shop_item_table']} where it_id='$it_id' ";
+            from {$g5['g5_shop_item_table']} where it_id='$it_id' ";
 $row = sql_fetch_array(sql_query($sql));
 
 if(!$row['it_id'])
     alert_close('상품정보가 존재하지 않습니다.');
 
-$imagefile = G4_DATA_PATH.'/item/'.$row['it_img'.$no];
-$imagefileurl = G4_DATA_URL.'/item/'.$row['it_img'.$no];
+$imagefile = G5_DATA_PATH.'/item/'.$row['it_img'.$no];
+$imagefileurl = G5_DATA_URL.'/item/'.$row['it_img'.$no];
 $size = getimagesize($imagefile);
 
-$g4['title'] = "{$row['it_name']} ($it_id)";
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = "{$row['it_name']} ($it_id)";
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div id="sit_pvi_nw">
@@ -34,12 +34,12 @@ include_once(G4_PATH.'/head.sub.php');
             if(!$row['it_img'.$i])
                 continue;
 
-            $file = G4_DATA_PATH.'/item/'.$row['it_img'.$i];
+            $file = G5_DATA_PATH.'/item/'.$row['it_img'.$i];
             if(is_file($file)) {
                 // 썸네일
                 $thumb = get_it_thumbnail($row['it_img'.$i], 60, 60);
                 $thumbnails[$i] = $thumb;
-                $imageurl = G4_DATA_URL.'/item/'.$row['it_img'.$i];
+                $imageurl = G5_DATA_URL.'/item/'.$row['it_img'.$i];
         ?>
         <span>
             <a href="javascript:window.close();">
@@ -58,7 +58,7 @@ include_once(G4_PATH.'/head.sub.php');
     if($total_count > 0) {
         echo '<ul>';
         foreach($thumbnails as $key=>$val) {
-            echo '<li><a href="'.G4_SHOP_URL.'/largeimage.php?it_id='.$it_id.'&amp;no='.$key.'" class="img_thumb">'.$val.'</a></li>';
+            echo '<li><a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it_id.'&amp;no='.$key.'" class="img_thumb">'.$val.'</a></li>';
         }
         echo '</ul>';
     }
@@ -88,5 +88,5 @@ $(function(){
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

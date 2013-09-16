@@ -52,7 +52,7 @@ else if($default['de_send_cost_case'] == '상한') {
     $send_cost  = (int)$send_cost_list[0];
 }
 
-$sql =" select * from {$g4['shop_item_table']} where it_use = '1' order by ca_id";
+$sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
 for ($i=0; $row=sql_fetch_array($result); $i++)
@@ -61,7 +61,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $caid1 = $caid2 = $caid3 = $caid4 = "";
 
     $caid1 = substr($row['ca_id'],0,2);
-    $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$caid1' ");
+    $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$caid1' ");
     $cate1 = $row2['ca_name'];
 
     $caid2 = $caid3 = $caid4 = "";
@@ -69,19 +69,19 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     if (strlen($row['ca_id']) >= 8) {
         $caid4 = substr($row['ca_id'],0,8);
-        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$caid4' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$caid4' ");
         $cate4 = $row2['ca_name'];
     }
 
     if (strlen($row['ca_id']) >= 6) {
         $caid3 = substr($row['ca_id'],0,6);
-        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$caid3' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$caid3' ");
         $cate3 = $row2['ca_name'];
     }
 
     if (strlen($row['ca_id']) >= 4) {
         $caid2 = substr($row['ca_id'],0,4);
-        $row2 = sql_fetch(" select ca_name from {$g4['shop_category_table']} where ca_id = '$caid2' ");
+        $row2 = sql_fetch(" select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$caid2' ");
         $cate2 = $row2['ca_name'];
     }
 
@@ -95,13 +95,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
 
     // 상품별옵션
-    $sql = " select * from {$g4['shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
+    $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
     $opt_count = @mysql_num_rows($result2);
 
     if(!$opt_count) {
         $it_name = $row['it_name'];
-        $buy_url = G4_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
+        $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
         if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
             $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
         $it_price = $row['it_price'];
@@ -147,7 +147,7 @@ HEREDOC;
                 $it_name .= $sep.$subj[$j].':'.$opt[$j];
                 $sep = ' ';
             }
-            $buy_url = G4_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
+            $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
             $it_price = $row['it_price'] + $row2['io_price'];
             if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
                 $delivery = get_item_sendcost($row['it_id'], ($row['it_price'] + $row2['io_price']), 1);

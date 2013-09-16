@@ -1,10 +1,10 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-include_once(G4_PATH.'/head.sub.php');
-include_once(G4_LIB_PATH.'/visit.lib.php');
-include_once(G4_LIB_PATH.'/connect.lib.php');
-include_once(G4_LIB_PATH.'/popular.lib.php');
+include_once(G5_PATH.'/head.sub.php');
+include_once(G5_LIB_PATH.'/visit.lib.php');
+include_once(G5_LIB_PATH.'/connect.lib.php');
+include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
 <header id="header">
@@ -17,7 +17,7 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
     <a href="<?php echo G4_SHOP_URL; ?>/category.php" target="_blank" id="hd_ct">전체분류</a>
     <button type="button" id="hd_sch_open">검색<span class="sound_only"> 열기</span></button>
 
-    <form name="frmsearch1" action="<?php echo G4_SHOP_URL; ?>/search.php">
+    <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php">
     <aside id="hd_sch">
         <h2>상품 검색</h2>
         <label for="sch_str" class="sound_only">상품명<strong class="sound_only"> 필수</strong></label>
@@ -40,19 +40,19 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <ul id="hd_mb">
         <?php if ($is_member) { ?>
-        <li><a href="<?php echo G4_BBS_URL ?>/member_confirm.php?url=<?php echo G4_BBS_URL ?>/register_form.php">내 정보</a></li>
-        <li><a href="<?php echo G4_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
+        <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">내 정보</a></li>
+        <li><a href="<?php echo G5_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
         <?php } else { ?>
-        <li><a href="<?php echo G4_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>
-        <li><a href="<?php echo G4_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
+        <li><a href="<?php echo G5_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>
+        <li><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
         <?php } ?>
-        <li><a href="<?php echo G4_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
-        <li><a href="<?php echo G4_SHOP_URL; ?>/cart.php">장바구니</a></li>
-        <li><a href="<?php echo G4_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
-        <li><a href="<?php echo G4_URL; ?>/">커뮤니티</a></li>
+        <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
+        <li><a href="<?php echo G5_SHOP_URL; ?>/cart.php">장바구니</a></li>
+        <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
+        <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
     </ul>
 
 </header>
 
 <div id="container">
-    <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><h1 id="container_title"><?php echo $g4['title'] ?></h1><?php } ?>
+    <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><h1 id="container_title"><?php echo $g5['title'] ?></h1><?php } ?>

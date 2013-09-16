@@ -15,7 +15,7 @@ $cmd = "$exe $keypath $memid \"{$reserved1}\" \"{$reserved2}\" $EndPointURL $log
 exec($cmd, $out, $ret);
 
 if($ret == 127) {
-    alert_close('모듈실행 파일이 존재하지 않습니다.\\n\\n'.basename($exe).' 파일이 '.G4_PLUGIN_DIR.'/'.G4_OKNAME_DIR.'/bin 안에 있어야 합니다.');
+    alert_close('모듈실행 파일이 존재하지 않습니다.\\n\\n'.basename($exe).' 파일이 '.G5_PLUGIN_DIR.'/'.G5_OKNAME_DIR.'/bin 안에 있어야 합니다.');
 }
 
 if($ret == 126) {
@@ -34,8 +34,8 @@ $pubkey=$out[0];
 $sig=$out[1];
 $curtime=$out[2];
 
-$g4['title'] = 'KCB 아이핀 본인확인';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = 'KCB 아이핀 본인확인';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <form name="kcbInForm" method="post" action="<?php echo $kcbForm_action; ?>">
@@ -53,5 +53,5 @@ document.kcbInForm.submit();
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

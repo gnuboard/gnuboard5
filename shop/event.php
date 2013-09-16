@@ -1,25 +1,25 @@
 <?php
 include_once('./_common.php');
 
-$sql = " select * from {$g4['shop_event_table']}
+$sql = " select * from {$g5['g5_shop_event_table']}
           where ev_id = '$ev_id'
             and ev_use = 1 ";
 $ev = sql_fetch($sql);
 if (!$ev['ev_id'])
     alert('등록된 이벤트가 없습니다.');
 
-$g4['title'] = $ev['ev_subject'];
+$g5['title'] = $ev['ev_subject'];
 include_once('./_head.php');
 
 if ($is_admin)
-    echo '<div class="sev_admin"><a href="'.G4_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin">이벤트 관리</a></div>';
+    echo '<div class="sev_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin">이벤트 관리</a></div>';
 ?>
 
 <!-- 이벤트 시작 { -->
 <?php
-$himg = G4_DATA_PATH.'/event/'.$ev_id.'_h';
+$himg = G5_DATA_PATH.'/event/'.$ev_id.'_h';
 if (file_exists($himg))
-    echo '<div id="sev_himg" class="sev_img"><img src="'.G4_DATA_URL.'/event/'.$ev_id.'_h" alt=""></div>';
+    echo '<div id="sev_himg" class="sev_img"><img src="'.G5_DATA_URL.'/event/'.$ev_id.'_h" alt=""></div>';
 
 // 상단 HTML
 echo '<div id="sev_hhtml">'.stripslashes($ev['ev_head_html']).'</div>';
@@ -28,19 +28,19 @@ echo '<div id="sev_hhtml">'.stripslashes($ev['ev_head_html']).'</div>';
 if ($sort != "")
     $order_by = $sort.' '.$sortodr.' , b.it_order, b.it_id desc';
 
-$error = "<img src='".G4_SHOP_URL."/img/no_item.gif' border=0>";
+$error = "<img src='".G5_SHOP_URL."/img/no_item.gif' border=0>";
 
 if ($skin)
     $ev['ev_skin'] = $skin;
 
 // 리스트 유형별로 출력
-$list_file = G4_SHOP_SKIN_PATH."/{$ev['ev_skin']}";
+$list_file = G5_SHOP_SKIN_PATH."/{$ev['ev_skin']}";
 if (file_exists($list_file))
 {
-    include G4_SHOP_PATH.'/list.sort.php';
+    include G5_SHOP_PATH.'/list.sort.php';
 
     // 상품 보기 타입 변경 버튼
-    include G4_SHOP_PATH.'/list.sub.php';
+    include G5_SHOP_PATH.'/list.sub.php';
 
     // 총몇개 = 한줄에 몇개 * 몇줄
     $items = $ev['ev_list_mod'] * $ev['ev_list_row'];
@@ -83,7 +83,7 @@ if ($i==0)
 
 <?php
 // 상품 보기 타입 변경 처리 스크립트
-include G4_SHOP_PATH.'/list.sub2.php';
+include G5_SHOP_PATH.'/list.sub2.php';
 
 $qstr .= 'skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
@@ -93,9 +93,9 @@ echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_S
 // 하단 HTML
 echo '<div id="sev_thtml">'.stripslashes($ev['ev_tail_html']).'</div>';
 
-$timg = G4_DATA_PATH.'/event/'.$ev_id.'_t';
+$timg = G5_DATA_PATH.'/event/'.$ev_id.'_t';
 if (file_exists($timg))
-    echo '<div id="sev_timg" class="sev_img"><img src="'.G4_DATA_URL.'/event/'.$ev_id.'_t" alt=""></div>';
+    echo '<div id="sev_timg" class="sev_img"><img src="'.G5_DATA_URL.'/event/'.$ev_id.'_t" alt=""></div>';
 ?>
 <!-- } 이벤트 끝 -->
 

@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$sql_common = " from {$g4['mail_table']} ";
+$sql_common = " from {$g5['mail_table']} ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select COUNT(*) as cnt {$sql_common} ";
@@ -16,7 +16,7 @@ $page = 1;
 $sql = " select * {$sql_common} order by ma_id desc ";
 $result = sql_query($sql);
 
-$g4['title'] = '회원메일발송';
+$g5['title'] = '회원메일발송';
 include_once('./admin.head.php');
 
 $colspan = 7;

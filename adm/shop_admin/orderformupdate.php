@@ -3,7 +3,7 @@ $sub_menu = '400400';
 include_once('./_common.php');
 
 if($_POST['mod_type'] == 'info') {
-    $sql = " update {$g4['shop_order_table']}
+    $sql = " update {$g5['g5_shop_order_table']}
                 set od_name = '$od_name',
                     od_tel = '$od_tel',
                     od_hp = '$od_hp',
@@ -22,7 +22,7 @@ if($_POST['mod_type'] == 'info') {
     if ($default['de_hope_date_use'])
         $sql .= " , od_hope_date = '$od_hope_date' ";
 } else {
-    $sql = "update {$g4['shop_order_table']}
+    $sql = "update {$g5['g5_shop_order_table']}
                 set od_shop_memo = '$od_shop_memo' ";
 }
 $sql .= " where od_id = '$od_id' ";

@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
 
 if ($is_guest)
     alert_close('회원만 이용하실 수 있습니다.');
@@ -20,7 +20,7 @@ if ($me_recv_mb_id)
         alert_close('정보공개를 하지 않았습니다.');
 
     // 4.00.15
-    $row = sql_fetch(" select me_memo from {$g4['memo_table']} where me_id = '{$me_id}' and (me_recv_mb_id = '{$member['mb_id']}' or me_send_mb_id = '{$member['mb_id']}') ");
+    $row = sql_fetch(" select me_memo from {$g5['memo_table']} where me_id = '{$me_id}' and (me_recv_mb_id = '{$member['mb_id']}' or me_send_mb_id = '{$member['mb_id']}') ");
     if ($row['me_memo'])
     {
         $content = "\n\n\n".' >'
@@ -32,11 +32,11 @@ if ($me_recv_mb_id)
     }
 }
 
-$g4['title'] = '쪽지 보내기';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '쪽지 보내기';
+include_once(G5_PATH.'/head.sub.php');
 
-$memo_action_url = G4_HTTPS_BBS_URL."/memo_form_update.php";
+$memo_action_url = G5_HTTPS_BBS_URL."/memo_form_update.php";
 include_once($member_skin_path.'/memo_form.skin.php');
 
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

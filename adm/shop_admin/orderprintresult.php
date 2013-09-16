@@ -40,7 +40,7 @@ if ($csv == 'csv')
 
 
     $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost
-               FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
+               FROM {$g5['g5_shop_order_table']} a, {$g5['g5_shop_cart_table']} b
               where a.od_id = b.od_id ";
     if ($case == 1) // 출력기간
         $sql .= " and a.od_time between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
@@ -98,7 +98,7 @@ if ($csv == 'xls')
     $to_date = date_conv($to_date);
 
     $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost
-               FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
+               FROM {$g5['g5_shop_order_table']} a, {$g5['g5_shop_cart_table']} b
               where a.od_id = b.od_id ";
     if ($case == 1) // 출력기간
         $sql .= " and a.od_time between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
@@ -116,10 +116,10 @@ if ($csv == 'xls')
     php_writeexcel http://www.bettina-attack.de/jonny/view.php/projects/php_writeexcel/
     =================================================================================*/
 
-    include_once(G4_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_workbook.inc.php');
-    include_once(G4_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_worksheet.inc.php');
+    include_once(G5_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_workbook.inc.php');
+    include_once(G5_LIB_PATH.'/Excel/php_writeexcel/class.writeexcel_worksheet.inc.php');
 
-    $fname = tempnam(G4_DATA_PATH, "tmp-orderlist.xls");
+    $fname = tempnam(G5_DATA_PATH, "tmp-orderlist.xls");
     $workbook = new writeexcel_workbook($fname);
     $worksheet = $workbook->addworksheet();
 
@@ -164,26 +164,26 @@ if ($csv == 'xls')
 
 function get_order($od_id)
 {
-    global $g4;
+    global $g5;
 
-    $sql = " select * from {$g4['shop_order_table']} where od_id = '$od_id' ";
+    $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
     return sql_fetch($sql);
 }
 
-$g4['title'] = "주문내역";
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = "주문내역";
+include_once(G5_PATH.'/head.sub.php');
 
 if ($case == 1)
 {
     $fr_date = date_conv($fr_date);
     $to_date = date_conv($to_date);
-    $sql = " SELECT DISTINCT a.od_id FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
+    $sql = " SELECT DISTINCT a.od_id FROM {$g5['g5_shop_order_table']} a, {$g5['g5_shop_cart_table']} b
               where a.od_id = b.od_id
                 and a.od_time between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
 }
 else
 {
-    $sql = " SELECT DISTINCT a.od_id FROM {$g4['shop_order_table']} a, {$g4['shop_cart_table']} b
+    $sql = " SELECT DISTINCT a.od_id FROM {$g5['g5_shop_order_table']} a, {$g5['g5_shop_cart_table']} b
               where a.od_id = b.od_id
                 and a.od_id between '$fr_od_id' and '$to_od_id' ";
 }
@@ -213,7 +213,7 @@ if (mysql_num_rows($result) == 0)
     $tot_total_price = 0;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $sql1 = " select * from {$g4['shop_order_table']} where od_id = '{$row['od_id']}' ";
+        $sql1 = " select * from {$g5['g5_shop_order_table']} where od_id = '{$row['od_id']}' ";
         $row1 = sql_fetch($sql1);
 
         // 1.03.02
@@ -274,7 +274,7 @@ if (mysql_num_rows($result) == 0)
         <tbody>
         <?php
         $sql2 = " select *
-                    from {$g4['shop_cart_table']}
+                    from {$g5['g5_shop_cart_table']}
                    where od_id = '{$row['od_id']}' ";
         if ($ct_status)
             $sql2 .= " and ct_status = '$ct_status' ";

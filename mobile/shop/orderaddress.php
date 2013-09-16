@@ -1,12 +1,12 @@
 <?php
 include_once('./_common.php');
 
-$g4['title'] = '배송지 목록';
-include_once(G4_PATH.'/head.sub.php');
+$g5['title'] = '배송지 목록';
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div class="new_win">
-    <h1 id="new_win_title"><?php echo $g4['title']; ?></h1>
+    <h1 id="new_win_title"><?php echo $g5['title']; ?></h1>
 
     <table class="basic_tbl">
     <thead>
@@ -79,5 +79,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

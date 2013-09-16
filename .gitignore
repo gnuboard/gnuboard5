@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 dbconfig.php
 log
 .htaccess
 data
+=======
+/.htaccess
+data/
+>>>>>>> g5
 test
 config.php
 sirgle
@@ -11,8 +16,16 @@ skin/latest/basic2
 rankiss*
 thumb.lib.php
 test.php
+<<<<<<< HEAD
 g4s_tree
+=======
+>>>>>>> g5
 itzimara*
 nemoluv*
 cheditor*
 *.key
+<<<<<<< HEAD
+g5_tree
+=======
+*.sh
+>>>>>>> g5

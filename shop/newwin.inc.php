@@ -1,8 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-$sql = " select * from {$g4['shop_new_win_table']}
-          where '".G4_TIME_YMDHIS."' between nw_begin_time and nw_end_time
+$sql = " select * from {$g5['g5_shop_new_win_table']}
+          where '".G5_TIME_YMDHIS."' between nw_begin_time and nw_end_time
           order by nw_id asc ";
 $result = sql_query($sql);
 for ($i=0; $row_nw=sql_fetch_array($result); $i++)
@@ -11,7 +11,7 @@ for ($i=0; $row_nw=sql_fetch_array($result); $i++)
     if ($_COOKIE["hd_pops_{$row_nw['nw_id']}"])
         continue;
 
-    $sql = " select * from {$g4['shop_new_win_table']} where nw_id = '{$row_nw['nw_id']}' ";
+    $sql = " select * from {$g5['g5_shop_new_win_table']} where nw_id = '{$row_nw['nw_id']}' ";
     $nw = sql_fetch($sql);
 ?>
 
@@ -36,7 +36,7 @@ $(function() {
         var ck_name = id[1];
         var exp_time = parseInt(id[2]);
         $("#"+id[1]).css("display", "none");
-        set_cookie(ck_name, 1, exp_time, g4_cookie_domain);
+        set_cookie(ck_name, 1, exp_time, g5_cookie_domain);
     });
     $('.hd_pops_close').click(function() {
         var idb = $(this).attr('class').split(' ');

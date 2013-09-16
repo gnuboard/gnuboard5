@@ -9,11 +9,11 @@ include_once("./_common.php");
 </form>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-<script src="<?php echo $g4[path]; ?>/plugin/captcha/captcha.js" type="text/javascript"></script>
+<script src="<?php echo $g5[path]; ?>/plugin/captcha/captcha.js" type="text/javascript"></script>
 <script>
 function change_captcha()
 {
-    document.getElementById('captcha').setAttribute('src', g4_path+'/plugin/captcha/run.php?t='+(new Date).getTime());
+    document.getElementById('captcha').setAttribute('src', g5_path+'/plugin/captcha/run.php?t='+(new Date).getTime());
 }
 
 function form_submit(f)

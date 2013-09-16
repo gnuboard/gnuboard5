@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G4_PATH.'/head.sub.php');
+include_once(G5_PATH.'/head.sub.php');
 
 $msg2 = str_replace("\\n", "<br>", $msg);
 
@@ -57,5 +57,5 @@ window.close();
 </noscript>
 
 <?php
-include_once(G4_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/tail.sub.php');
 ?>

@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit;
 // 방문자수 출력
 function visit($skin_dir='basic')
 {
-    global $config, $g4, $is_admin;
+    global $config, $g5;
 
     // visit 배열변수에
     // $visit[1] = 오늘
@@ -19,12 +19,12 @@ function visit($skin_dir='basic')
     settype($visit[3], "integer");
 
     ob_start();
-    if(G4_IS_MOBILE) {
-        $visit_skin_path = G4_MOBILE_PATH.'/'.G4_SKIN_DIR.'/visit/'.$skin_dir;
-        $visit_skin_url = G4_MOBILE_URL.'/'.G4_SKIN_DIR.'/visit/'.$skin_dir;
+    if(G5_IS_MOBILE) {
+        $visit_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/visit/'.$skin_dir;
+        $visit_skin_url = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/visit/'.$skin_dir;
     } else {
-        $visit_skin_path = G4_SKIN_PATH.'/visit/'.$skin_dir;
-        $visit_skin_url = G4_SKIN_URL.'/visit/'.$skin_dir;
+        $visit_skin_path = G5_SKIN_PATH.'/visit/'.$skin_dir;
+        $visit_skin_url = G5_SKIN_URL.'/visit/'.$skin_dir;
     }
     include_once ($visit_skin_path.'/visit.skin.php');
     $content = ob_get_contents();

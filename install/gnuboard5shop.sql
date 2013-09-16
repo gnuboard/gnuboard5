@@ -1,11 +1,11 @@
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_banner`
+-- Table structure for table `g5_shop_banner`
 --
 
-DROP TABLE IF EXISTS `shop_banner`;
-CREATE TABLE IF NOT EXISTS `shop_banner` (
+DROP TABLE IF EXISTS `g5_shop_banner`;
+CREATE TABLE IF NOT EXISTS `g5_shop_banner` (
   `bn_id` int(11) NOT NULL AUTO_INCREMENT,
   `bn_alt` varchar(255) NOT NULL DEFAULT '',
   `bn_url` varchar(255) NOT NULL DEFAULT '',
@@ -23,11 +23,11 @@ CREATE TABLE IF NOT EXISTS `shop_banner` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_cart`
+-- Table structure for table `g5_shop_cart`
 --
 
-DROP TABLE IF EXISTS `shop_cart`;
-CREATE TABLE IF NOT EXISTS `shop_cart` (
+DROP TABLE IF EXISTS `g5_shop_cart`;
+CREATE TABLE IF NOT EXISTS `g5_shop_cart` (
   `ct_id` int(11) NOT NULL AUTO_INCREMENT,
   `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
@@ -58,11 +58,11 @@ CREATE TABLE IF NOT EXISTS `shop_cart` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_category`
+-- Table structure for table `g5_shop_category`
 --
 
-DROP TABLE IF EXISTS `shop_category`;
-CREATE TABLE IF NOT EXISTS `shop_category` (
+DROP TABLE IF EXISTS `g5_shop_category`;
+CREATE TABLE IF NOT EXISTS `g5_shop_category` (
   `ca_id` varchar(10) NOT NULL DEFAULT '0',
   `ca_name` varchar(255) NOT NULL DEFAULT '',
   `ca_skin` varchar(255) NOT NULL DEFAULT '',
@@ -91,11 +91,11 @@ CREATE TABLE IF NOT EXISTS `shop_category` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_content`
+-- Table structure for table `g5_shop_content`
 --
 
-DROP TABLE IF EXISTS `shop_content`;
-CREATE TABLE IF NOT EXISTS `shop_content` (
+DROP TABLE IF EXISTS `g5_shop_content`;
+CREATE TABLE IF NOT EXISTS `g5_shop_content` (
   `co_id` varchar(20) NOT NULL DEFAULT '',
   `co_html` tinyint(4) NOT NULL DEFAULT '0',
   `co_subject` varchar(255) NOT NULL DEFAULT '',
@@ -109,11 +109,11 @@ CREATE TABLE IF NOT EXISTS `shop_content` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_coupon`
+-- Table structure for table `g5_shop_coupon`
 --
 
-DROP TABLE IF EXISTS `shop_coupon`;
-CREATE TABLE IF NOT EXISTS `shop_coupon` (
+DROP TABLE IF EXISTS `g5_shop_coupon`;
+CREATE TABLE IF NOT EXISTS `g5_shop_coupon` (
   `cp_no` INT(11) NOT NULL AUTO_INCREMENT,
   `cp_id` VARCHAR(255) NOT NULL DEFAULT '',
   `cp_subject` VARCHAR(255) NOT NULL DEFAULT '',
@@ -137,10 +137,10 @@ CREATE TABLE IF NOT EXISTS `shop_coupon` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_coupon_log`
+-- Table structure for table `g5_shop_coupon_log`
 --
 
-CREATE TABLE IF NOT EXISTS `shop_coupon_log` (
+CREATE TABLE IF NOT EXISTS `g5_shop_coupon_log` (
   `cl_id` int(11) NOT NULL AUTO_INCREMENT,
   `cp_id` varchar(255) NOT NULL DEFAULT '',
   `mb_id` varchar(255) NOT NULL DEFAULT '',
@@ -155,11 +155,11 @@ CREATE TABLE IF NOT EXISTS `shop_coupon_log` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_default`
+-- Table structure for table `g5_shop_default`
 --
 
-DROP TABLE IF EXISTS `shop_default`;
-CREATE TABLE IF NOT EXISTS `shop_default` (
+DROP TABLE IF EXISTS `g5_shop_default`;
+CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_admin_company_owner` varchar(255) NOT NULL DEFAULT '',
   `de_admin_company_name` varchar(255) NOT NULL DEFAULT '',
   `de_admin_company_saupja_no` varchar(255) NOT NULL DEFAULT '',
@@ -290,11 +290,11 @@ CREATE TABLE IF NOT EXISTS `shop_default` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_delivery`
+-- Table structure for table `g5_shop_delivery`
 --
 
-DROP TABLE IF EXISTS `shop_delivery`;
-CREATE TABLE IF NOT EXISTS `shop_delivery` (
+DROP TABLE IF EXISTS `g5_shop_delivery`;
+CREATE TABLE IF NOT EXISTS `g5_shop_delivery` (
   `dl_id` int(11) NOT NULL AUTO_INCREMENT,
   `dl_company` varchar(255) NOT NULL DEFAULT '',
   `dl_url` varchar(255) NOT NULL DEFAULT '',
@@ -306,11 +306,11 @@ CREATE TABLE IF NOT EXISTS `shop_delivery` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_event`
+-- Table structure for table `g5_shop_event`
 --
 
-DROP TABLE IF EXISTS `shop_event`;
-CREATE TABLE IF NOT EXISTS `shop_event` (
+DROP TABLE IF EXISTS `g5_shop_event`;
+CREATE TABLE IF NOT EXISTS `g5_shop_event` (
   `ev_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_group` int(11) NOT NULL DEFAULT '0',
   `ev_skin` varchar(255) NOT NULL DEFAULT '',
@@ -329,11 +329,11 @@ CREATE TABLE IF NOT EXISTS `shop_event` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_event_item`
+-- Table structure for table `g5_shop_event_item`
 --
 
-DROP TABLE IF EXISTS `shop_event_item`;
-CREATE TABLE IF NOT EXISTS `shop_event_item` (
+DROP TABLE IF EXISTS `g5_shop_event_item`;
+CREATE TABLE IF NOT EXISTS `g5_shop_event_item` (
   `ev_id` int(11) NOT NULL DEFAULT '0',
   `it_id` varchar(20) NOT NULL DEFAULT '',
   PRIMARY KEY (`ev_id`,`it_id`),
@@ -343,11 +343,11 @@ CREATE TABLE IF NOT EXISTS `shop_event_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_faq`
+-- Table structure for table `g5_shop_faq`
 --
 
-DROP TABLE IF EXISTS `shop_faq`;
-CREATE TABLE IF NOT EXISTS `shop_faq` (
+DROP TABLE IF EXISTS `g5_shop_faq`;
+CREATE TABLE IF NOT EXISTS `g5_shop_faq` (
   `fa_id` int(11) NOT NULL AUTO_INCREMENT,
   `fm_id` int(11) NOT NULL DEFAULT '0',
   `fa_subject` text NOT NULL,
@@ -360,11 +360,11 @@ CREATE TABLE IF NOT EXISTS `shop_faq` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_faq_master`
+-- Table structure for table `g5_shop_faq_master`
 --
 
-DROP TABLE IF EXISTS `shop_faq_master`;
-CREATE TABLE IF NOT EXISTS `shop_faq_master` (
+DROP TABLE IF EXISTS `g5_shop_faq_master`;
+CREATE TABLE IF NOT EXISTS `g5_shop_faq_master` (
   `fm_id` int(11) NOT NULL AUTO_INCREMENT,
   `fm_subject` varchar(255) NOT NULL DEFAULT '',
   `fm_head_html` text NOT NULL,
@@ -376,18 +376,17 @@ CREATE TABLE IF NOT EXISTS `shop_faq_master` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_item`
+-- Table structure for table `g5_shop_item`
 --
 
-DROP TABLE IF EXISTS `shop_item`;
-CREATE TABLE IF NOT EXISTS `shop_item` (
+DROP TABLE IF EXISTS `g5_shop_item`;
+CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_id` varchar(20) NOT NULL DEFAULT '',
   `ca_id` varchar(10) NOT NULL DEFAULT '0',
   `ca_id2` varchar(255) NOT NULL DEFAULT '',
   `ca_id3` varchar(255) NOT NULL DEFAULT '',
   `it_name` varchar(255) NOT NULL DEFAULT '',
   `it_mobile_name` varchar(255) NOT NULL DEFAULT '',
-  `it_gallery` tinyint(4) NOT NULL DEFAULT '0',
   `it_maker` varchar(255) NOT NULL DEFAULT '',
   `it_origin` varchar(255) NOT NULL DEFAULT '',
   `it_brand` varchar(255) NOT NULL DEFAULT '',
@@ -446,11 +445,11 @@ CREATE TABLE IF NOT EXISTS `shop_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_item_option`
+-- Table structure for table `g5_shop_item_option`
 --
 
-DROP TABLE IF EXISTS `shop_item_option`;
-CREATE TABLE IF NOT EXISTS `shop_item_option` (
+DROP TABLE IF EXISTS `g5_shop_item_option`;
+CREATE TABLE IF NOT EXISTS `g5_shop_item_option` (
   `io_no` INT(11) NOT NULL AUTO_INCREMENT,
   `io_id` VARCHAR(255) NOT NULL DEFAULT '0',
   `io_type` TINYINT(4) NOT NULL DEFAULT '0',                    
@@ -467,11 +466,11 @@ CREATE TABLE IF NOT EXISTS `shop_item_option` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_item_use`
+-- Table structure for table `g5_shop_item_use`
 --
 
-DROP TABLE IF EXISTS `shop_item_use`;
-CREATE TABLE IF NOT EXISTS `shop_item_use` (
+DROP TABLE IF EXISTS `g5_shop_item_use`;
+CREATE TABLE IF NOT EXISTS `g5_shop_item_use` (
   `is_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(20) NOT NULL DEFAULT '0',
   `mb_id` varchar(255) NOT NULL DEFAULT '',
@@ -490,11 +489,11 @@ CREATE TABLE IF NOT EXISTS `shop_item_use` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_item_qa`
+-- Table structure for table `g5_shop_item_qa`
 --
 
-DROP TABLE IF EXISTS `shop_item_qa`;
-CREATE TABLE IF NOT EXISTS `shop_item_qa` (
+DROP TABLE IF EXISTS `g5_shop_item_qa`;
+CREATE TABLE IF NOT EXISTS `g5_shop_item_qa` (
   `iq_id` int(11) NOT NULL AUTO_INCREMENT,
   `it_id` varchar(20) NOT NULL DEFAULT '',
   `mb_id` varchar(255) NOT NULL DEFAULT '',
@@ -511,11 +510,11 @@ CREATE TABLE IF NOT EXISTS `shop_item_qa` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_item_relation`
+-- Table structure for table `g5_shop_item_relation`
 --
 
-DROP TABLE IF EXISTS `shop_item_relation`;
-CREATE TABLE IF NOT EXISTS `shop_item_relation` (
+DROP TABLE IF EXISTS `g5_shop_item_relation`;
+CREATE TABLE IF NOT EXISTS `g5_shop_item_relation` (
   `it_id` varchar(20) NOT NULL DEFAULT '',
   `it_id2` varchar(20) NOT NULL DEFAULT '',
   `ir_no` int(11) NOT NULL DEFAULT '0',
@@ -525,11 +524,11 @@ CREATE TABLE IF NOT EXISTS `shop_item_relation` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_new_win`
+-- Table structure for table `g5_shop_new_win`
 --
 
-DROP TABLE IF EXISTS `shop_new_win`;
-CREATE TABLE IF NOT EXISTS `shop_new_win` (
+DROP TABLE IF EXISTS `g5_shop_new_win`;
+CREATE TABLE IF NOT EXISTS `g5_shop_new_win` (
   `nw_id` int(11) NOT NULL AUTO_INCREMENT,
   `nw_begin_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nw_end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -547,11 +546,11 @@ CREATE TABLE IF NOT EXISTS `shop_new_win` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_onlinecalc`
+-- Table structure for table `g5_shop_onlinecalc`
 --
 
-DROP TABLE IF EXISTS `shop_onlinecalc`;
-CREATE TABLE IF NOT EXISTS `shop_onlinecalc` (
+DROP TABLE IF EXISTS `g5_shop_onlinecalc`;
+CREATE TABLE IF NOT EXISTS `g5_shop_onlinecalc` (
   `oc_id` int(11) NOT NULL AUTO_INCREMENT,
   `oc_subject` varchar(255) NOT NULL DEFAULT '',
   `oc_category` text NOT NULL,
@@ -563,11 +562,11 @@ CREATE TABLE IF NOT EXISTS `shop_onlinecalc` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_order`
+-- Table structure for table `g5_shop_order`
 --
 
-DROP TABLE IF EXISTS `shop_order`;
-CREATE TABLE IF NOT EXISTS `shop_order` (
+DROP TABLE IF EXISTS `g5_shop_order`;
+CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_id` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
   `od_pwd` varchar(255) NOT NULL DEFAULT '',
@@ -597,6 +596,7 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
   `od_receipt_price` int(11) NOT NULL DEFAULT '0',
   `od_cancel_price` int(11) NOT NULL DEFAULT '0',
   `od_receipt_point` int(11) NOT NULL DEFAULT '0',
+  `od_refund_price` int(11) NOT NULL DEFAULT '0',
   `od_bank_account` varchar(255) NOT NULL DEFAULT '',
   `od_receipt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `od_coupon` int(11) NOT NULL DEFAULT '0',
@@ -634,10 +634,10 @@ CREATE TABLE IF NOT EXISTS `shop_order` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_order_address`
+-- Table structure for table `g5_shop_order_address`
 --
 
-CREATE TABLE IF NOT EXISTS `shop_order_address` (
+CREATE TABLE IF NOT EXISTS `g5_shop_order_address` (
   `ad_id` int(11) NOT NULL AUTO_INCREMENT,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
   `ad_subject` varchar(255) NOT NULL DEFAULT '',
@@ -656,11 +656,11 @@ CREATE TABLE IF NOT EXISTS `shop_order_address` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_personalpay`
+-- Table structure for table `g5_shop_personalpay`
 --
 
-DROP TABLE IF EXISTS `shop_personalpay`;
-CREATE TABLE IF NOT EXISTS `shop_personalpay` (
+DROP TABLE IF EXISTS `g5_shop_personalpay`;
+CREATE TABLE IF NOT EXISTS `g5_shop_personalpay` (
   `pp_id` BIGINT(20) unsigned NOT NULL,
   `od_id` BIGINT(20) unsigned NOT NULL,  
   `pp_name` VARCHAR(255) NOT NULL DEFAULT '',
@@ -685,11 +685,11 @@ CREATE TABLE IF NOT EXISTS `shop_personalpay` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_sendcost`
+-- Table structure for table `g5_shop_sendcost`
 --
 
-DROP TABLE IF EXISTS `shop_sendcost`;
-CREATE TABLE IF NOT EXISTS `shop_sendcost` (
+DROP TABLE IF EXISTS `g5_shop_sendcost`;
+CREATE TABLE IF NOT EXISTS `g5_shop_sendcost` (
   `sc_id` INT(11) NOT NULL AUTO_INCREMENT,
   `sc_name` VARCHAR(255) NOT NULL DEFAULT '',
   `sc_zip1` VARCHAR(10) NOT NULL DEFAULT '',
@@ -703,11 +703,11 @@ CREATE TABLE IF NOT EXISTS `shop_sendcost` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `shop_wish`
+-- Table structure for table `g5_shop_wish`
 --
 
-DROP TABLE IF EXISTS `shop_wish`;
-CREATE TABLE IF NOT EXISTS `shop_wish` (
+DROP TABLE IF EXISTS `g5_shop_wish`;
+CREATE TABLE IF NOT EXISTS `g5_shop_wish` (
   `wi_id` int(11) NOT NULL AUTO_INCREMENT,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
   `it_id` varchar(20) NOT NULL DEFAULT '0',

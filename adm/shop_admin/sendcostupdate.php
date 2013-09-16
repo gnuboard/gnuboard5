@@ -16,7 +16,7 @@ if($w == 'd') {
     for($i=0; $i<$count; $i++) {
         if($_POST['chk'][$i]) {
             $sc_id = $_POST['sc_id'][$i];
-            sql_query(" delete from {$g4['shop_sendcost_table']} where sc_id = '$sc_id' ");
+            sql_query(" delete from {$g5['g5_shop_sendcost_table']} where sc_id = '$sc_id' ");
         }
     }
 } else {
@@ -34,7 +34,7 @@ if($w == 'd') {
     if(!$sc_price)
         alert('추가배송비를 입력해 주십시오.');
 
-    $sql = " insert into {$g4['shop_sendcost_table']}
+    $sql = " insert into {$g5['g5_shop_sendcost_table']}
                   ( sc_name, sc_zip1, sc_zip2, sc_price )
                 values
                   ( '$sc_name', '$sc_zip1', '$sc_zip2', '$sc_price' ) ";

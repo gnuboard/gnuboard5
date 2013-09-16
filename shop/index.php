@@ -1,29 +1,29 @@
 <?php
 include_once('./_common.php');
 
-if (G4_IS_MOBILE) {
-    include_once(G4_MSHOP_PATH.'/index.php');
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/index.php');
     return;
 }
 
 define("_INDEX_", TRUE);
 
-include_once(G4_LIB_PATH.'/latest.lib.php');
-include_once(G4_LIB_PATH.'/poll.lib.php');
+include_once(G5_LIB_PATH.'/latest.lib.php');
+include_once(G5_LIB_PATH.'/poll.lib.php');
 
-include_once(G4_SHOP_PATH.'/shop.head.php');
+include_once(G5_SHOP_PATH.'/shop.head.php');
 ?>
 
 <!-- 메인이미지 시작 { -->
 <div id="sidx_img">
-    <img src="<?php echo G4_DATA_URL; ?>/common/main_img" alt="">
+    <img src="<?php echo G5_DATA_URL; ?>/common/main_img" alt="">
 </div>
 <!-- } 메인이미지 끝 -->
 
 <!-- 히트상품 시작 { -->
 <section class="sct_wrap">
     <header>
-        <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=1">히트상품</a></h2>
+        <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=1">히트상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 히트상품 모음</p>
     </header>
     <?php
@@ -44,7 +44,7 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 <!-- 추천상품 시작 { -->
 <section class="sct_wrap">
     <header>
-        <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=2">추천상품</a></h2>
+        <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=2">추천상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
     </header>
     <?php
@@ -64,7 +64,7 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 <!-- 최신상품 시작 { -->
 <section class="sct_wrap">
     <header>
-        <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=3">최신상품</a></h2>
+        <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=3">최신상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 최신상품 모음</p>
     </header>
     <?php
@@ -84,7 +84,7 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 <!-- 인기상품 시작 { -->
 <section class="sct_wrap">
     <header>
-        <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=4">인기상품</a></h2>
+        <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=4">인기상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 인기상품 모음</p>
     </header>
     <?php
@@ -104,7 +104,7 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 <!-- 할인상품 시작 { -->
 <section class="sct_wrap">
     <header>
-        <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=5">할인상품</a></h2>
+        <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=5">할인상품</a></h2>
         <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 할인상품 모음</p>
     </header>
     <?php
@@ -142,5 +142,5 @@ include_once(G4_SHOP_PATH.'/shop.head.php');
 <!-- } 메인배너 끝 -->
 
 <?php
-include_once(G4_SHOP_PATH.'/shop.tail.php');
+include_once(G5_SHOP_PATH.'/shop.tail.php');
 ?>
