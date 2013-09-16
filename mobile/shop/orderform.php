@@ -83,6 +83,7 @@ ob_start();
 
     $good_info = '';
     $it_send_cost = 0;
+    $it_cp_count = 0;
 
     $comm_tax_mny = 0; // 과세금액
     $comm_vat_mny = 0; // 부가세
@@ -167,8 +168,10 @@ ob_start();
                 $cp_count++;
             }
 
-            if($cp_count)
+            if($cp_count) {
                 $cp_button = '<button type="button" class="it_coupon_btn btn_frmline">적용</button>';
+                $it_cp_count++;
+            }
         }
     ?>
 
@@ -219,8 +222,10 @@ ob_start();
     <dl id="sod_bsk_tot">
         <dt class="sod_bsk_sell">주문</dt>
         <dd class="sod_bsk_sell"><strong><?php echo number_format($tot_sell_price); ?> 원</strong></dd>
+        <?php if($it_cp_count > 0) { ?>
         <dt class="sod_bsk_coupon">쿠폰</dt>
         <dd class="sod_bsk_coupon"><strong id="ct_tot_coupon">0 원</strong></dd>
+        <?php } ?>
         <dt class="sod_bsk_dvr">배송비</dt>
         <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
         <dt class="sod_bsk_cnt">총계</dt>
