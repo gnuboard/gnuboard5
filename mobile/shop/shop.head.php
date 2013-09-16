@@ -12,7 +12,8 @@ include_once(G4_LIB_PATH.'/popular.lib.php');
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
-    <a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="<?php echo $config['cf_title']; ?> 메인"></a>
+    <div id="logo"><a href="<?php echo G4_SHOP_URL; ?>/"><img src="<?php echo G4_DATA_URL; ?>/common/mobile_logo_img" alt="<?php echo $config['cf_title']; ?> 메인"></a></div>
+
     <a href="<?php echo G4_SHOP_URL; ?>/category.php" target="_blank" id="hd_ct">전체분류</a>
     <button type="button" id="hd_sch_open">검색<span class="sound_only"> 열기</span></button>
 
