@@ -33,11 +33,11 @@ include_once(G5_PATH.'/head.sub.php');
     </colgroup>
     <tbody>
     <tr>
-        <th>과세 입금금액</th>
+        <th scope="row">과세 입금금액</th>
         <td><?php echo display_price($od['od_tax_mny'] + $od['od_vat_mny']); ?></td>
     </tr>
     <tr>
-        <th>비과세 입금금액</th>
+        <th scope="row">비과세 입금금액</th>
         <td><?php echo display_price($od['od_free_mny']); ?></td>
     </tr>
     <tr>
@@ -49,7 +49,7 @@ include_once(G5_PATH.'/head.sub.php');
         <td><input type="text" name="mod_free_mny" value="" id="mod_free_mny" class="frm_input"> 원</td>
     </tr>
     <tr>
-        <th><label for="mod_memo">요청사유</label></th>
+        <th scope="row"><label for="mod_memo">요청사유</label></th>
         <td><input type="text" name="mod_memo" id="mod_memo" required class="required frm_input" size="50"></td>
     </tr>
     </tbody>
