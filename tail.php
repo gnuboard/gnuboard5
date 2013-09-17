@@ -65,6 +65,16 @@ if ($config['cf_analytics']) {
 
 <!-- } 하단 끝 -->
 
+<script>
+$(function() {
+    // 폰트 리사이즈 쿠키있으면 실행
+    var font_resize_act = get_cookie("ck_font_resize_act");
+    if(font_resize_act != "") {
+        font_resize("container", font_resize_act);
+    }
+});
+</script>
+
 <?php
 include_once(G5_PATH."/tail.sub.php");
 ?>
