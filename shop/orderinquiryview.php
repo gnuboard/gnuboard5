@@ -54,6 +54,9 @@ if(openwin != null) {
             <dd>상품 배송이 완료되었습니다.</dd>
         </dl>
         <?php
+        $st_count1 = $st_count2 = 0;
+        $custom_cancel = false;
+
         $sql = " select it_id, it_name
                     from {$g5['g5_shop_cart_table']}
                     where od_id = '$od_id'
@@ -114,6 +117,10 @@ if(openwin != null) {
                 </tr>
                 <?php
                     $tot_point       += $point;
+
+                    $st_count1++;
+                    if($opt['ct_status'] == '주문')
+                        $st_count2++;
                 }
                 ?>
                 </tbody>
@@ -121,6 +128,10 @@ if(openwin != null) {
             </li>
             <?php
             }
+
+            // 주문 상품의 상태가 모두 주문이면 고객 취소 가능
+            if($st_count1 > 0 && $st_count1 == $st_count2)
+                $custom_cancel = true;
             ?>
         </ul>
 
@@ -174,8 +185,9 @@ if(openwin != null) {
         $cancel_price   = $od['od_cancel_price'];
 
         $misu = true;
+        $misu_price = $tot_price - $receipt_price - $cancel_price;
 
-        if ($tot_price - $cancel_price == $receipt_price) {
+        if ($misu_price == 0 && ($od['od_cart_price'] > $od['od_cancel_price'])) {
             $wanbul = " (완불)";
             $misu = false; // 미수금 없음
         }
@@ -183,8 +195,6 @@ if(openwin != null) {
         {
             $wanbul = display_price($receipt_price);
         }
-
-        $misu_price = $tot_price - $receipt_price - $cancel_price;
 
         // 결제정보처리
         if($od['od_receipt_price'] > 0)
@@ -508,7 +518,7 @@ if(openwin != null) {
         <?php
         // 취소한 내역이 없다면
         if ($cancel_price == 0) {
-            if ($od['od_status'] == G5_OD_STATUS_ORDER || $od['od_status'] == G5_OD_STATUS_SETTLE) {
+            if ($custom_cancel) {
         ?>
         <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 

@@ -65,19 +65,6 @@ $(function(){
             submenu_hide();
         }
     });
-
-    // 텍스트 리사이즈 카운트 쿠키있으면 실행
-    var resize_act;
-    var text_resize_count = parseInt(get_cookie("ck_font_resize_count"));
-    if(!isNaN(text_resize_count)) {
-        if(text_resize_count > 0)
-            resize_act = "increase";
-        else if(text_resize_count < 0)
-            resize_act = "decrease";
-
-        if(Math.abs(text_resize_count) > 0)
-            font_resize2("container", resize_act, Math.abs(text_resize_count));
-    }
 });
 
 function submenu_hide() {
