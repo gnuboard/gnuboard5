@@ -33,7 +33,7 @@ h2 {font-size:1.2em}
 #tnb {float:right;margin:0;padding:0;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
 #tnb li {float:left;margin:0 0 0 1px}
-#tnb a {display:block;position:relative;padding:0 15px;height:33px;background:#383a3f;color:#e0e0e0;text-decoration:none;line-height:2.8em}
+#tnb a {display:inline-block;position:relative;padding:0 15px;height:33px;background:#383a3f;color:#e0e0e0;text-decoration:none;line-height:2.8em}
 #tnb a:focus, #tnb a:hover {background:#fff;color:#383a3f}
 #tnb span {position:absolute;bottom:10px;left:0;width:100%;text-align:center}
 
