@@ -400,16 +400,11 @@ function font_resize(id, act)
     var $elements = $("#"+id+" *").not("select").not("option");
     $elements.removeClass("applied");
 
-    // container의 기본 line-height 저장
-    if(!default_line_height_saved) {
-        $("#"+id+" *").data("lh", $("#"+id+" *").css("line-height"));
-        default_line_height_saved = true;
-    }
-
     // 폰트 크기 변경에 따른 line-height 적용
     var lh = 1.5;
     if(act == "default")
-        lh = $("#"+id+" *").data("lh");
+        lh = ""
+
     $("#"+id+" *").css("line-height", lh);
 
     // 엘리먼트의 기본 폰트사이즈 저장
