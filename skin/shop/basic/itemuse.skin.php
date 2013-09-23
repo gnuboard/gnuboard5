@@ -1,0 +1,159 @@
+<?php
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+$itemuse_list = "./itemuselist.php";
+$itemuse_form = "./itemuseform.php?it_id=".$it_id;
+$itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
+
+$sql_common = " from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+
+// 테이블의 전체 레코드수만 얻음
+$sql = " select COUNT(*) as cnt " . $sql_common;
+$row = sql_fetch($sql);
+$total_count = $row['cnt'];
+
+$rows = 5;
+$total_page  = ceil($total_count / $rows); // 전체 페이지 계산
+if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+$from_record = ($page - 1) * $rows; // 시작 레코드 구함
+
+$sql = "select * $sql_common order by is_id desc limit $from_record, $rows ";
+$result = sql_query($sql);
+?>
+
+<link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
+
+<!-- 상품 사용후기 시작 { -->
+<section id="sit_use_list">
+    <h3>등록된 사용후기</h3>
+
+    <?php
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        $is_num     = $total_count - ($page - 1) * $rows - $i;
+        $is_star    = get_star($row['is_score']);
+        $is_name    = get_text($row['is_name']);
+        $is_subject = conv_subject($row['is_subject'],50,"…");
+        $is_content = get_view_thumbnail($row['is_content'], 300);
+        $is_time    = substr($row['is_time'], 2, 8);
+        $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
+
+        $hash = md5($row['is_id'].$row['is_time'].$row['is_ip']);
+
+        // http://stackoverflow.com/questions/6967081/show-hide-multiple-divs-with-jquery?answertab=votes#tab-top
+
+        if ($i == 0) echo '<ol id="sit_use_ol">';
+    ?>
+
+        <li class="sit_use_li">
+            <button type="button" class="sit_use_li_title"><b><?php echo $is_num; ?>.</b> <?php echo $is_subject; ?></button>
+            <dl class="sit_use_dl">
+                <dt>작성자</dt>
+                <dd><?php echo $is_name; ?></dd>
+                <dt>작성일</dt>
+                <dd><?php echo $is_time; ?></dd>
+                <dt>선호도<dt>
+                <dd class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></dd>
+            </dl>
+
+            <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">
+                <div class="sit_use_p">
+                    <?php echo $is_content; // 사용후기 내용 ?>
+                </div>
+
+                <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
+                <div class="sit_use_cmd">
+                    <a href="<?php echo $itemuse_form."&amp;is_id={$row['is_id']}&amp;w=u"; ?>" class="itemuse_form btn01" onclick="return false;">수정</a>
+                    <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete btn01">삭제</a>
+                </div>
+                <?php } ?>
+            </div>
+        </li>
+
+    <?php }
+
+    if ($i >= 0) echo '</ol>';
+
+    if (!$i) echo '<p class="sit_empty">사용후기가 없습니다.</p>';
+    ?>
+</section>
+
+<?php
+// 현재페이지, 총페이지수, 한페이지에 보여줄 행, URL
+function itemuse_page($write_pages, $cur_page, $total_page, $url, $add="")
+{
+    $url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
+
+    $str = '';
+    if ($cur_page > 1) {
+        $str .= '<a href="'.$url.'1'.$add.'" class="pg_page pg_start">처음</a>'.PHP_EOL;
+    }
+
+    $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
+    $end_page = $start_page + $write_pages - 1;
+
+    if ($end_page >= $total_page) $end_page = $total_page;
+
+    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="pg_page pg_prev">이전</a>'.PHP_EOL;
+
+    if ($total_page > 1) {
+        for ($k=$start_page;$k<=$end_page;$k++) {
+            if ($cur_page != $k)
+                $str .= '<a href="'.$url.$k.$add.'" class="pg_page">'.$k.'</a><span class="sound_only">페이지</span>'.PHP_EOL;
+            else
+                $str .= '<span class="sound_only">열린</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span>'.PHP_EOL;
+        }
+    }
+
+    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="pg_page pg_next">다음</a>'.PHP_EOL;
+
+    if ($cur_page < $total_page) {
+        $str .= '<a href="'.$url.$total_page.$add.'" class="pg_page pg_end">맨끝</a>'.PHP_EOL;
+    }
+
+    if ($str)
+        return "<nav class=\"pg_wrap\"><span class=\"pg\">{$str}</span></nav>";
+    else
+        return "";
+}
+
+echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
+?>
+
+<div id="sit_use_wbtn">
+    <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_list; ?>" class="btn01 itemuse_list">더보기</a>
+</div>
+
+<script>
+$(function(){
+    $(".itemuse_form").click(function(){
+        window.open(this.href, "itemuse_form", "width=800,height=700,scrollbars=1");
+        return false;
+    });
+
+    $(".itemuse_delete").click(function(){
+        if (confirm("정말 삭제 하시겠습니까?\n\n삭제후에는 되돌릴수 없습니다.")) {
+            return true;
+        } else {
+            return false;
+        }
+    });
+
+    $(".sit_use_li_title").click(function(){
+        var $con = $(this).siblings(".sit_use_con");
+        if($con.is(":visible")) {
+            $con.slideUp();
+        } else {
+            $(".sit_use_con:visible").hide();
+            $con.slideDown();
+        }
+    });
+
+    $(".pg_page").click(function(){
+        $("#itemuse").load($(this).attr("href"));
+        return false;
+    });
+});
+</script>
+<!-- } 상품 사용후기 끝 -->

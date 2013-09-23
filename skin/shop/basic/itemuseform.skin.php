@@ -1,0 +1,93 @@
+<?php
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+// 사용후기의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
+$is_content_max_length = 10000;
+
+$w     = escape_trim($_REQUEST['w']);
+$it_id = escape_trim($_REQUEST['it_id']);
+$is_id = escape_trim($_REQUEST['is_id']);
+?>
+
+<link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
+
+<!-- 사용후기 쓰기 시작 { -->
+<div id="sit_use_write" class="new_win">
+    <h1 class="new_win_title">사용후기 쓰기</h1>
+
+    <form name="fitemuse" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuse_submit(this);" autocomplete="off">
+    <input type="hidden" name="w" value="<?php echo $w; ?>">
+    <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
+    <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_2">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="is_subject">제목</label></th>
+        <td><input type="text" name="is_subject" value="<?php echo get_text($use['is_subject']); ?>" id="is_subject" required class="frm_input" minlength="2" maxlength="250"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="" style="width:200px;">내용</label></th>
+        <td><?php echo editor_html('is_content', get_text($use['is_content'])); ?></td>
+    </tr>
+    <tr>
+        <th scope="row">평가</th>
+        <td>
+            <ul id="sit_use_write_star">
+                <li>
+                    <input type="radio" name="is_score" value="10" id="is_score10" <?php echo ($is_score==10)?'checked="checked"':''; ?>>
+                    <label for="is_score10">매우만족</label>
+                    <img src="<?php echo G5_URL; ?>/shop/img/s_star5.png">
+                </li>
+                <li>
+                    <input type="radio" name="is_score" value="8" id="is_score8" <?php echo ($is_score==8)?'checked="checked"':''; ?>>
+                    <label for="is_score8">만족</label>
+                    <img src="<?php echo G5_URL; ?>/shop/img/s_star4.png">
+                </li>
+                <li>
+                    <input type="radio" name="is_score" value="6" id="is_score6" <?php echo ($is_score==6)?'checked="checked"':''; ?>>
+                    <label for="is_score6">보통</label>
+                    <img src="<?php echo G5_URL; ?>/shop/img/s_star3.png">
+                </li>
+                <li>
+                    <input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
+                    <label for="is_score4">불만</label>
+                    <img src="<?php echo G5_URL; ?>/shop/img/s_star2.png">
+                </li>
+                <li>
+                    <input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
+                    <label for="is_score2">매우불만</label>
+                    <img src="<?php echo G5_URL; ?>/shop/img/s_star1.png">
+                </li>
+            </ul>
+        </td>
+    </tr>
+    </tbody>
+    </table>
+
+    <div class="btn_win">
+        <input type="submit" value="작성완료" class="btn_submit">
+    </div>
+
+    </form>
+</div>
+
+<script type="text/javascript">
+function fitemuse_submit(f)
+{
+    <?php echo get_editor_js('is_content'); ?>
+
+    if (is_content_editor_data.length > <?php echo $is_content_max_length; ?>) {
+        alert("내용은 <?php echo $is_content_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+is_content_editor_data.length+" 글자");
+        CKEDITOR.instances.is_content.focus();
+        return false;
+    }
+
+    return true;
+}
+</script>
+<!-- } 사용후기 쓰기 끝 -->

@@ -16,7 +16,7 @@ if ($w == "" || $w == "u") {
     if (!$is_content) alert("내용을 입력하여 주십시오.");
 }
 
-$url = "./item.php?it_id=$it_id&amp;_=".get_token()."#sit_use";
+$url = "./item.php?it_id=$it_id&_=".get_token()."#sit_use";
 
 if ($w == "")
 {
