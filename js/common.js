@@ -393,96 +393,15 @@ $(function() {
 /**
  * 텍스트 리사이즈
 **/
-var default_font_size_saved = false;
-var default_line_height_saved = false;
-function font_resize(id, act)
+function font_resize(id, rmv_class, add_class)
 {
-    var $elements = $("#"+id+" *").not("select").not("option");
-    $elements.removeClass("applied");
+    var $el = $("#"+id);
 
-    // 폰트 크기 변경에 따른 line-height 적용
-    var lh = 1.5;
-    if(act == "default")
-        lh = ""
+    $el.removeClass(rmv_class).addClass(add_class);
 
-    $("#"+id+" *").css("line-height", lh);
-
-    // 엘리먼트의 기본 폰트사이즈 저장
-    if(!default_font_size_saved) {
-        save_default_font_size($elements);
-    }
-
-    $elements.each(function() {
-        if($(this).hasClass("no_text_resize"))
-            return true;
-
-        if($(this).data("fs")) {
-            set_font_size($(this), act)
-        }
-    });
-
-    set_cookie("ck_font_resize_act", act, 1, g5_cookie_domain);
+    set_cookie("ck_font_resize_rmv_class", rmv_class, 1, g5_cookie_domain);
+    set_cookie("ck_font_resize_add_class", add_class, 1, g5_cookie_domain);
 }
-
-
-/**
- * font size 적용
-**/
-function set_font_size($el, act)
-{
-    if($el.hasClass("applied"))
-        return true;
-
-    var x = 0;
-    var fs = $el.data("fs");
-    var unit = fs.replace(/[0-9\.]/g, "");
-    var fsize = parseFloat(fs.replace(/[^0-9\.]/g, ""));
-    var nfsize;
-
-    if(!fsize)
-        return true;
-
-    if(unit == "em")
-        x = 1;
-
-    switch(act) {
-        case "large":
-            nfsize = fsize * 1.5;
-            break;
-        case "larger":
-            nfsize = fsize * 2;
-            break;
-        default:
-            nfsize = fsize;
-            lh = 1;
-            break;
-    }
-
-    nfsize = nfsize.toFixed(x);
-
-    $el.css("font-size", nfsize+unit).addClass("applied");
-}
-
-
-/**
- * 기본 font size .data()에 저장
-**/
-function save_default_font_size($el)
-{
-    $el.each(function() {
-        // 텍스트노드 있는지 체크
-        var text = $(this).contents().filter(function() {
-            return this.nodeType == 3;
-        }).text().replace(/\s*/, "");
-
-        if(text.length) {
-            $(this).data("fs", $(this).css("font-size"));
-        }
-    });
-
-    default_font_size_saved = true;
-}
-
 
 $(function(){
     $(".win_point").click(function() {

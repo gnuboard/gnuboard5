@@ -116,8 +116,9 @@ function imageview(id, w, h)
 <div id="wrapper">
     <div id="container">
         <div id="text_size">
-            <button class="no_text_resize" onclick="font_resize('container', 'default');">기본</button>
-            <button class="no_text_resize" onclick="font_resize('container', 'large');">크게</button>
-            <button class="no_text_resize" onclick="font_resize('container', 'larger');">더크게</button>
+            <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
+            <button onclick="font_resize('container', 'ts_up ts_up2', '');">기본</button>
+            <button onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');">크게</button>
+            <button onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');">더크게</button>
         </div>
         <h1><?php echo $g5['title'] ?></h1>
