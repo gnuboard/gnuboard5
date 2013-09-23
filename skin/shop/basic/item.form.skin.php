@@ -47,7 +47,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 $sit_pvi_last ='';
                 if ($thumb_count % 5 == 0) $sit_pvi_last = 'class="li_last"';
                     echo '<li '.$sit_pvi_last.'>';
-                    echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$thumb_count.'" target="_blank" class="popup_item_image img_thumb">'.$val.'</a>';
+                    echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$thumb_count.'" target="_blank" class="popup_item_image img_thumb">'.$val.'<span class="sound_only"> '.$thumb_count.'번째 이미지 새창</span></a>';
                     echo '</li>';
             }
             echo '</ul>';
