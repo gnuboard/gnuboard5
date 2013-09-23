@@ -64,9 +64,9 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($this->view_sns) {
         echo "<div class=\"sct_sns\">";
-        echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_fb.png');
-        echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_twt.png');
-        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_URL.'/img/sns_goo.png');
+        echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_fb.png');
+        echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_twt.png');
+        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_goo.png');
         echo "</div>\n";
     }
 
