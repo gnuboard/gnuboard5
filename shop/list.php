@@ -16,19 +16,19 @@ if (!$ca['ca_id'])
 
 if(!$is_admin) {
     // 본인확인체크
-    if($ca['ca_hp_cert_use'] && !$member['mb_hp_certify']) {
+    if($ca['ca_cert_use'] && !$member['mb_certify']) {
         if($is_member)
-            alert('회원정보 수정에서 휴대폰 본인확인 후 이용해 주십시오.');
+            alert('회원정보 수정에서 본인확인 후 이용해 주십시오.');
         else
-            alert('휴대폰 본인확인된 로그인 회원만 이용할 수 있습니다.');
+            alert('본인확인된 로그인 회원만 이용할 수 있습니다.');
     }
 
     // 성인인증체크
-    if($ca['ca_adult_cert_use'] && !$member['mb_adult']) {
+    if($ca['ca_adult_use'] && !$member['mb_adult']) {
         if($is_member)
-            alert('휴대폰 본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 휴대폰 본인확인을 해주십시오.');
+            alert('본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 본인확인을 해주십시오.');
         else
-            alert('휴대폰 본인확인으로 성인인증된 회원만 이용할 수 있습니다.');
+            alert('본인확인으로 성인인증된 회원만 이용할 수 있습니다.');
     }
 }
 
