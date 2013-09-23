@@ -75,25 +75,6 @@ else if ($w == "u")
     $ca['ca_name'] = get_text($ca['ca_name']);
 }
 
-if (!isset($ca['ca_mobile_skin'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
-                    ADD `ca_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `ca_skin`,
-                    ADD `ca_mobile_img_width` INT(11) NOT NULL DEFAULT '0' AFTER `ca_list_row`,
-                    ADD `ca_mobile_img_height` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_width`,
-                    ADD `ca_mobile_list_row` INT(11) NOT NULL DEFAULT '0' AFTER `ca_mobile_img_height`,
-                    ADD `ca_mobile_head_html` TEXT NOT NULL AFTER `ca_tail_html`,
-                    ADD `ca_mobile_tail_html` TEXT NOT NULL AFTER `ca_mobile_head_html` ", false);
-}
-
-// 인증사용필드추가
-$sql = " select ca_hp_cert_use from {$g5['g5_shop_category_table']} limit 1 ";
-$result = sql_query($sql, false);
-if(!$result) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
-                    ADD `ca_hp_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ca_mb_id`,
-                    ADD `ca_adult_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `ca_hp_cert_use` ", false);
-}
-
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 
 $g5['title'] = $html_title;
