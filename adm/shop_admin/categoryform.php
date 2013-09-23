@@ -140,19 +140,19 @@ $pg_anchor .= '</ul>';
     <tr>
         <th scope="row">본인확인 체크</th>
         <td>
-            <input type="radio" name="ca_hp_cert_use" value="1" id="ca_hp_cert_use_yes" <?php if($ca['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_hp_cert_use_yes">사용함</label>
-            <input type="radio" name="ca_hp_cert_use" value="0" id="ca_hp_cert_use_no" <?php if(!$ca['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_hp_cert_use_no">사용안함</label>
+            <input type="radio" name="ca_cert_use" value="1" id="ca_cert_use_yes" <?php if($ca['ca_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_cert_use_yes">사용함</label>
+            <input type="radio" name="ca_cert_use" value="0" id="ca_cert_use_no" <?php if(!$ca['ca_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_cert_use_no">사용안함</label>
         </td>
     </tr>
     <tr>
         <th scope="row">성인인증 체크</th>
         <td>
-            <input type="radio" name="ca_adult_cert_use" value="1" id="ca_adult_cert_use_yes" <?php if($ca['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_adult_cert_use_yes">사용함</label>
-            <input type="radio" name="ca_adult_cert_use" value="0" id="ca_adult_cert_use_no" <?php if(!$ca['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_adult_cert_use_no">사용안함</label>
+            <input type="radio" name="ca_adult_use" value="1" id="ca_adult_use_yes" <?php if($ca['ca_adult_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_use_yes">사용함</label>
+            <input type="radio" name="ca_adult_use" value="0" id="ca_adult_use_no" <?php if(!$ca['ca_adult_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_use_no">사용안함</label>
         </td>
     </tr>
     <tr>
