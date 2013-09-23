@@ -26,7 +26,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 $thumbnails[] = $thumb;
                 $big_img_count++;
 
-                echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image" target="_blank">'.$img.'</a>';
+                echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" target="_blank" class="popup_item_image">'.$img.'</a>';
             }
         }
 
@@ -47,7 +47,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 $sit_pvi_last ='';
                 if ($thumb_count % 5 == 0) $sit_pvi_last = 'class="li_last"';
                     echo '<li '.$sit_pvi_last.'>';
-                    echo '<a href="#sit_pvi_big" class="img_thumb">'.$val.'</a>';
+                    echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$thumb_count.'" target="_blank" class="popup_item_image img_thumb">'.$val.'</a>';
                     echo '</li>';
             }
             echo '</ul>';
