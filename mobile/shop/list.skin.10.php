@@ -9,7 +9,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++)
     $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
     $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
-    if ($i == 1) echo '<ul class="sct sct_11">';
+    if ($i == 1) echo '<ul class="sct sct_10">';
 ?>
     <li class="sct_li">
         <a href="<?php echo $href; ?>" class="sct_a">
