@@ -1098,7 +1098,7 @@ function display_banner($position, $num="")
 
     if (!$position) $position = '왼쪽';
 
-    include G5_SHOP_PATH.'/boxbanner'.$num.'.inc.php';
+    include G5_SHOP_SKIN_PATH.'/boxbanner'.$num.'.skin.php';
 }
 
 // 1.00.02

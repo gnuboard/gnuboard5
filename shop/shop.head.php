@@ -93,21 +93,21 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 <div id="wrapper">
 
     <aside id="stv">
-        <?php include(G5_SHOP_PATH.'/boxtodayview.inc.php'); ?>
+        <?php include(G5_SHOP_SKIN_PATH.'/boxtodayview.skin.php'); ?>
     </aside>
 
     <div id="aside">
         <?php echo outlogin('shop_basic'); // 아웃로그인 ?>
 
-        <?php include_once(G5_SHOP_PATH.'/boxcategory.inc.php'); // 상품분류 ?>
+        <?php include_once(G5_SHOP_SKIN_PATH.'/boxcategory.skin.php'); // 상품분류 ?>
 
-        <?php include_once(G5_SHOP_PATH.'/boxcart.inc.php'); // 장바구니 ?>
+        <?php include_once(G5_SHOP_SKIN_PATH.'/boxcart.skin.php'); // 장바구니 ?>
 
-        <?php include_once(G5_SHOP_PATH.'/boxwish.inc.php'); // 위시리스트 ?>
+        <?php include_once(G5_SHOP_SKIN_PATH.'/boxwish.skin.php'); // 위시리스트 ?>
 
-        <?php include_once(G5_SHOP_PATH.'/boxevent.inc.php'); // 이벤트 ?>
+        <?php include_once(G5_SHOP_SKIN_PATH.'/boxevent.skin.php'); // 이벤트 ?>
 
-        <?php include_once(G5_SHOP_PATH.'/boxcommunity.inc.php'); // 커뮤니티 ?>
+        <?php include_once(G5_SHOP_SKIN_PATH.'/boxcommunity.skin.php'); // 커뮤니티 ?>
 
         <!-- 쇼핑몰 배너 시작 { -->
         <aside id="sbn_aside">
