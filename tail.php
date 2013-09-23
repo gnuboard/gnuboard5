@@ -68,10 +68,7 @@ if ($config['cf_analytics']) {
 <script>
 $(function() {
     // 폰트 리사이즈 쿠키있으면 실행
-    var font_resize_act = get_cookie("ck_font_resize_act");
-    if(font_resize_act != "") {
-        font_resize("container", font_resize_act);
-    }
+    font_resize("container", get_cookie("ck_font_resize_rmv_class"), get_cookie("ck_font_resize_add_class"));
 });
 </script>
 
