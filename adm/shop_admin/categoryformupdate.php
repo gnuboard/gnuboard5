@@ -60,8 +60,8 @@ $sql_common = " ca_skin                 = '$ca_skin',
                 ca_include_head         = '$ca_include_head',
                 ca_include_tail         = '$ca_include_tail',
                 ca_mb_id                = '$ca_mb_id',
-                ca_hp_cert_use          = '$ca_hp_cert_use',
-                ca_adult_cert_use       = '$ca_adult_cert_use' ";
+                ca_cert_use             = '$ca_cert_use',
+                ca_adult_use            = '$ca_adult_use' ";
 
 
 if ($w == "")
