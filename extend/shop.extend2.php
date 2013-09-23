@@ -540,4 +540,17 @@ if(!sql_query(" select od_refund_price from {$g5['g5_shop_order_table']} limit 1
     sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
                     ADD `od_refund_price` int(11) NOT NULL DEFAULT '0' AFTER `od_receipt_point` ", true);
 }
+
+// 카테고리 인증설정 필드명 변경
+if(sql_query(" select ca_hp_cert_use from {$g5['g5_shop_category_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
+                    CHANGE `ca_hp_cert_use` `ca_cert_use` tinyint(4) NOT NULL DEFAULT '0',
+                    CHANGE `ca_adult_cert_use` `ca_adult_use` tinyint(4) NOT NULL DEFAULT '0' ", true);
+}
+
+if(!sql_query(" select ca_cert_use from {$g5['g5_shop_category_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
+                    ADD `ca_cert_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `ca_mb_id`,
+                    ADD `ca_adult_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `ca_cert_use` ", true);
+}
 ?>
