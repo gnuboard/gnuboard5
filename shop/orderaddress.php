@@ -35,7 +35,11 @@ include_once(G5_PATH.'/head.sub.php');
     <table class="basic_tbl">
     <thead>
     <tr>
+        <th scope="col">
+            <label for="chk_all" class="sound_only">전체선택</label><input type="checkbox" name="chk_all" id="chk_all">
+        </th>
         <th scope="col">배송지명</th>
+        <th scope="col">기본<br>배송지</th>
         <th scope="col">이름</th>
         <th scope="col">전화번호</th>
         <th scope="col">주소</th>
@@ -49,7 +53,9 @@ include_once(G5_PATH.'/head.sub.php');
         $addr = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
     ?>
     <tr>
-        <td class="td_name"><?php echo $row['ad_subject']; ?></td>
+        <td class="td_chk"><label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label><input type="checkbox" name="chk" id="chk_<?php echo $i;?>"></td>
+        <td class="td_name"><input type="text" name="ad_subject" id="ad_subject" class="frm_input" size="10" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
+        <td class="td_basic"><label for="ad_basic<?php echo $i;?>" class="sound_only">기본배송지</label><input type="radio" name="ad_basic" id="ad_basic<?php echo $i;?>"></td>
         <td class="td_smallname"><?php echo $row['ad_name']; ?></td>
         <td class="td_bignum"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
         <td><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></td>
@@ -64,6 +70,9 @@ include_once(G5_PATH.'/head.sub.php');
     ?>
     </tbody>
     </table>
+    <div class="btn_list">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+    </div>
 </div>
 
 <script>
