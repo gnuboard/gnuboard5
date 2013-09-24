@@ -124,11 +124,11 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
                 $od_mobile = '(M)';
 
             $tot_itemcount     += $row['od_cart_count'];
-            $tot_orderprice    += $row['od_cart_price'];
+            $tot_orderprice    += ($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']);
             $tot_ordercancel   += $row['od_cancel_price'];
             $tot_receiptprice  += $row['od_receipt_price'];
             $tot_couponprice   += $row['couponprice'];
-            $tot_misu          += $row['misu'];
+            $tot_misu          += $row['od_misu'];
 
             $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
         ?>
