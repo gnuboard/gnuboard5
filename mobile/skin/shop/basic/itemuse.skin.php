@@ -5,7 +5,7 @@ $itemuse_list = "./itemuselist.php";
 $itemuse_form = "./itemuseform.php?it_id=".$it_id;
 $itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
 
-$sql_common = " from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+ $sql_common = " from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select COUNT(*) as cnt " . $sql_common;
@@ -21,7 +21,7 @@ $sql = "select * $sql_common order by is_id desc limit $from_record, $rows ";
 $result = sql_query($sql);
 ?>
 
-<link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
+<link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
 
 <!-- 상품 사용후기 시작 { -->
 <section id="sit_use_list">
@@ -34,6 +34,7 @@ $result = sql_query($sql);
         $is_star    = get_star($row['is_score']);
         $is_name    = get_text($row['is_name']);
         $is_subject = conv_subject($row['is_subject'],50,"…");
+        //$is_content = ($row['wr_content']);
         $is_content = get_view_thumbnail($row['is_content'], 300);
         $is_time    = substr($row['is_time'], 2, 8);
         $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
@@ -46,7 +47,7 @@ $result = sql_query($sql);
     ?>
 
         <li class="sit_use_li">
-            <button type="button" class="sit_use_li_title"><b><?php echo $is_num; ?>.</b> <?php echo $is_subject; ?></button>
+            <button type="button" class="sit_use_li_title" onclick="javascript:qa_menu('sit_use_con_<?php echo $i; ?>')"><b><?php echo $is_num; ?>.</b> <?php echo $is_subject; ?></button>
             <dl class="sit_use_dl">
                 <dt>작성자</dt>
                 <dd><?php echo $is_name; ?></dd>
@@ -79,18 +80,18 @@ $result = sql_query($sql);
 </section>
 
 <?php
-echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
+echo itemuse_page($config['cf_mobile_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
 ?>
 
 <div id="sit_use_wbtn">
-    <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form" onclick="return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
     <a href="<?php echo $itemuse_list; ?>" class="btn01 itemuse_list">더보기</a>
 </div>
 
 <script>
 $(function(){
     $(".itemuse_form").click(function(){
-        window.open(this.href, "itemuse_form", "width=800,height=700,scrollbars=1");
+        window.open(this.href, "itemuse_form", "width=800,height=500,scrollbars=1");
         return false;
     });
 

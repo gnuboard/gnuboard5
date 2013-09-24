@@ -46,6 +46,11 @@ if ($is_admin)
     echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
 ?>
 
+<script>
+var itemlist_ca_id = "<?php echo $ca_id; ?>";
+</script>
+<script src="<?php echo G5_JS_URL; ?>/shop.list.js"></script>
+
 <!-- 상품 목록 시작 { -->
 <div id="sct">
 
@@ -116,9 +121,6 @@ if ($is_admin)
     ?>
 
     <?php
-    // 상품 보기 타입 변경 처리 스크립트
-    include G5_SHOP_SKIN_PATH.'/list.sub2.skin.php';
-
     $qstr1 .= 'ca_id='.$ca_id;
     if($skin)
         $qstr1 .= '&amp;skin='.$skin;

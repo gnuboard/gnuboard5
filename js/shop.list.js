@@ -1,8 +1,3 @@
-<?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-?>
-
-<script>
 $.fn.listType = function(type)
 {
     var $el = this.find("li.sct_li");
@@ -55,15 +50,15 @@ $.fn.listType = function(type)
         $("button.sct_lst_list span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
     }
 
-    set_cookie("ck_itemlist<?php echo $ca_id; ?>_type", type, 1, g5_cookie_domain);
-}
-
-// 리스트 타입 쿠키가 있을 경우 바로 적용
-if(itemlist_type = get_cookie("ck_itemlist<?php echo $ca_id; ?>_type")) {
-    $("ul.sct").listType(itemlist_type);
+    set_cookie("ck_itemlist"+itemlist_ca_id+"_type", type, 1, g5_cookie_domain);
 }
 
 $(function() {
+    // 리스트 타입 쿠키가 있을 경우 바로 적용
+    if(itemlist_type = get_cookie("ck_itemlist"+itemlist_ca_id+"_type")) {
+        $("ul.sct").listType(itemlist_type);
+    }
+
     $("button.sct_lst_view").on("click", function() {
         if($(this).hasClass("sct_lst_gallery")) {
             $("ul.sct").listType("gallery");
@@ -72,4 +67,3 @@ $(function() {
         }
     });
 });
-</script>

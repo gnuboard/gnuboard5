@@ -11,19 +11,19 @@ if (!$ca['ca_id'])
 
 if(!$is_admin) {
     // 본인확인체크
-    if($ca['ca_hp_cert_use'] && !$member['mb_hp_certify']) {
+    if($ca['ca_cert_use'] && !$member['mb_certify']) {
         if($is_member)
-            alert('회원정보 수정에서 휴대폰 본인확인 후 이용해 주십시오.');
+            alert('회원정보 수정에서 본인확인 후 이용해 주십시오.');
         else
-            alert('휴대폰 본인확인된 로그인 회원만 이용할 수 있습니다.');
+            alert('본인확인된 로그인 회원만 이용할 수 있습니다.');
     }
 
     // 성인인증체크
-    if($ca['ca_adult_cert_use'] && !$member['mb_adult']) {
+    if($ca['ca_adult_use'] && !$member['mb_adult']) {
         if($is_member)
-            alert('휴대폰 본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 휴대폰 본인확인을 해주십시오.');
+            alert('본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 본인확인을 해주십시오.');
         else
-            alert('휴대폰 본인확인으로 성인인증된 회원만 이용할 수 있습니다.');
+            alert('본인확인으로 성인인증된 회원만 이용할 수 있습니다.');
     }
 }
 
@@ -38,11 +38,16 @@ if ($is_admin)
     echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
 ?>
 
+<script>
+var itemlist_ca_id = "<?php echo $ca_id; ?>";
+</script>
+<script src="<?php echo G5_JS_URL; ?>/shop.list.js"></script>
+
 <div id="sct">
 
     <?php
     $nav_ca_id = $ca_id;
-    include G5_MSHOP_PATH.'/navigation1.inc.php';
+    include G5_MSHOP_SKIN_PATH.'/navigation.skin.php';
 
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_mobile_head_html']).'</div>';
@@ -56,10 +61,10 @@ if ($is_admin)
     // 리스트 유형별로 출력
     $list_file = G5_MSHOP_SKIN_PATH.'/'.$ca['ca_mobile_skin'];
     if (file_exists($list_file)) {
-        include G5_MSHOP_PATH.'/list.sort.php';
+        include G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
 
         // 상품 보기 타입 변경 버튼
-        include G5_SHOP_PATH.'/list.sub.php';
+        include G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
 
         // 총몇개
         $items = $ca['ca_mobile_list_mod'];
@@ -103,9 +108,6 @@ if ($is_admin)
     ?>
 
     <?php
-    // 상품 보기 타입 변경 처리 스크립트
-    include G5_SHOP_PATH.'/list.sub2.php';
-
     $qstr1 .= 'ca_id='.$ca_id;
     if($skin)
         $qstr1 .= '&amp;skin='.$skin;
