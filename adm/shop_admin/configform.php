@@ -557,10 +557,10 @@ $pg_anchor = '<ul class="anchor">
         <th scope="row">신용카드 결제테스트</th>
         <td>
             <?php echo help("신용카드를 테스트 하실 경우에 체크하세요. 결제단위 최소 1,000원"); ?>
-            <label for="de_card_test1">실결제 </label>
             <input type="radio" name="de_card_test" value="0" <?php echo $default['de_card_test']==0?"checked":""; ?> id="de_card_test1">
-            <label for="de_card_test2">테스트결제</label>
+            <label for="de_card_test1">실결제 </label>
             <input type="radio" name="de_card_test" value="1" <?php echo $default['de_card_test']==1?"checked":""; ?> id="de_card_test2">
+            <label for="de_card_test2">테스트결제</label>
             <div id="scf_cardtest">
                 <a href="https://admin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">실결제 관리자</a>
                 <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">테스트 관리자</a>
