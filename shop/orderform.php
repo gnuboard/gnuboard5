@@ -704,7 +704,15 @@ function get_intall_file()
         </tr>
         <tr>
             <th scope="row"><label for="ad_subject">배송지명</label></th>
-            <td><input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20"></td>
+            <td>
+                <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
+                <?php
+                if ($is_member) {
+                    echo '<input type="checkbox" name="ad_default" id="ad_default" value="1">'.PHP_EOL.'
+                    <label for="ad_default">기본배송지로 설정</label>';
+                }
+                ?>
+            </td>
         </tr>
         <?php
         }
