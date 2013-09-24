@@ -49,7 +49,7 @@ define('G5_MSHOP_SKIN_URL',  G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/shop/'.$default['d
 
 // 주문상태 상수
 define('G5_OD_STATUS_ORDER'     , '입금확인중');
-define('G5_OD_STATUS_SETTLE'    , '결제완료');
+define('G5_OD_STATUS_SETTLE'    , '입금완료');
 define('G5_OD_STATUS_READY'     , '배송준비중');
 define('G5_OD_STATUS_DELIVERY'  , '배송중');
 define('G5_OD_STATUS_FINISH'    , '배송완료');
