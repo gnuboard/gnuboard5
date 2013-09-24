@@ -21,9 +21,8 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 $sql = " select *,
             (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
            from {$g5['g5_shop_order_table']}
-          where a.mb_id = '{$member['mb_id']}'
-          group by a.od_id
-          order by a.od_id desc
+          where mb_id = '{$member['mb_id']}'
+          order by od_id desc
           $limit ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
