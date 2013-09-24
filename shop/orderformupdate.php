@@ -182,7 +182,7 @@ if ((int)($row['od_price'] - $tot_cp_price) !== $i_price) {
 }
 
 // 배송비가 상이함
-$send_cost = get_sendcost($row['od_price'], $tmp_cart_id);
+$send_cost = get_sendcost($tmp_cart_id);
 
 $tot_sc_cp_price = 0;
 if($is_member && $send_cost > 0) {

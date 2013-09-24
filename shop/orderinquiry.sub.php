@@ -25,7 +25,6 @@ $sql = " select *,
             (od_cart_coupon + od_coupon + od_send_coupon) as couponprice
            from {$g5['g5_shop_order_table']}
           where mb_id = '{$member['mb_id']}'
-          group by od_id
           order by od_id desc
           $limit ";
 $result = sql_query($sql);

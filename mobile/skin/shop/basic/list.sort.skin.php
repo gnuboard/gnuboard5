@@ -11,6 +11,8 @@ if($skin)
 $sct_sort_href .= '&amp;sort=';
 ?>
 
+<link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
+
 <!-- 상품 정렬 선택 시작 { -->
 <section id="sct_sort">
     <h2>상품 정렬</h2>

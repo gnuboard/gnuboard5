@@ -557,10 +557,10 @@ $pg_anchor = '<ul class="anchor">
         <th scope="row">신용카드 결제테스트</th>
         <td>
             <?php echo help("신용카드를 테스트 하실 경우에 체크하세요. 결제단위 최소 1,000원"); ?>
-            <label for="de_card_test1">실결제 </label>
             <input type="radio" name="de_card_test" value="0" <?php echo $default['de_card_test']==0?"checked":""; ?> id="de_card_test1">
-            <label for="de_card_test2">테스트결제</label>
+            <label for="de_card_test1">실결제 </label>
             <input type="radio" name="de_card_test" value="1" <?php echo $default['de_card_test']==1?"checked":""; ?> id="de_card_test2">
+            <label for="de_card_test2">테스트결제</label>
             <div id="scf_cardtest">
                 <a href="https://admin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">실결제 관리자</a>
                 <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">테스트 관리자</a>
@@ -621,18 +621,17 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="de_send_cost_case">배송비유형</label></th>
         <td>
-            <?php echo help("<strong>상한</strong>으로 설정한 경우, 주문총액이 배송비상한가 미만일 경우 배송비를 받습니다.\n<strong>없음</strong>으로 설정한 경우, 배송비상한가 및 배송비를 무시하며 착불의 경우도 없음으로 설정됩니다.\n<strong>개별배송비</strong>로 설정한 경우, 개별 상품의 배송비 설정이 적용됩니다.", 50); ?>
+            <?php echo help("<strong>금액별차등</strong>으로 설정한 경우, 주문총액이 배송비상한가 미만일 경우 배송비를 받습니다.\n<strong>무료배송</strong>으로 설정한 경우, 배송비상한가 및 배송비를 무시하며 착불의 경우도 무료배송으로 설정합니다.\n<strong>상품별로 배송비 설정을 한 경우 상품별 배송비 설정이 우선</strong> 적용됩니다.\n예를 들어 무료배송으로 설정했을 때 특정 상품에 배송비가 설정되어 있으면 주문시 배송비가 부과됩니다.", 50); ?>
             <select name="de_send_cost_case" id="de_send_cost_case">
-                <option value="상한" <?php echo get_selected($default['de_send_cost_case'], "상한"); ?>>상한</option>
-                <option value="없음" <?php echo get_selected($default['de_send_cost_case'], "없음"); ?>>없음</option>
-                <option value="개별" <?php echo get_selected($default['de_send_cost_case'], "개별"); ?>>개별배송비</option>
+                <option value="차등" <?php echo get_selected($default['de_send_cost_case'], "차등"); ?>>금액별차등</option>
+                <option value="무료" <?php echo get_selected($default['de_send_cost_case'], "무료"); ?>>무료배송</option>
             </select>
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="de_send_cost_limit">배송비상한가</label></th>
         <td>
-            <?php echo help("배송비유형이 '상한'일 경우에만 해당되며 배송비상한가를 여러개 두고자 하는 경우는 <b>;</b> 로 구분합니다.\n\n예를 들어 20000원 미만일 경우 4000원, 30000원 미만일 경우 3000원 으로 사용할 경우에는 배송비상한가를 20000;30000 으로 입력하고 배송비를 4000;3000 으로 입력합니다.", 50); ?>
+            <?php echo help("배송비유형이 '금액별차등'일 경우에만 해당되며 배송비상한가를 여러개 두고자 하는 경우는 <b>;</b> 로 구분합니다.\n\n예를 들어 20000원 미만일 경우 4000원, 30000원 미만일 경우 3000원 으로 사용할 경우에는 배송비상한가를 20000;30000 으로 입력하고 배송비를 4000;3000 으로 입력합니다.", 50); ?>
             <input type="text" name="de_send_cost_limit" value="<?php echo $default['de_send_cost_limit']; ?>" size="40" class="frm_input" id="de_send_cost_limit"> 원
         </td>
     </tr>

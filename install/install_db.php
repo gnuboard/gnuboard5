@@ -272,7 +272,7 @@ if($g5_shop_install) {
                     de_point_days = '7',
                     de_card_pg = 'kcp',
                     de_kcp_mid = '',
-                    de_send_cost_case = '상한',
+                    de_send_cost_case = '차등',
                     de_send_cost_limit = '20000;30000;40000',
                     de_send_cost_list = '4000;3000;2000',
                     de_hope_date_use = '0',
@@ -399,7 +399,8 @@ $dir_arr = array (
     $data_path.'/file',
     $data_path.'/log',
     $data_path.'/member',
-    $data_path.'/session'
+    $data_path.'/session',
+    $data_path.'/tmp'
 );
 
 for ($i=0; $i<count($dir_arr); $i++) {

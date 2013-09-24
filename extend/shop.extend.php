@@ -23,13 +23,6 @@ if (G5_HTTPS_DOMAIN) {
     define('G5_HTTPS_MSHOP_URL', G5_MSHOP_URL);
 }
 
-// 미수금에 대한 QUERY 문
-// 테이블 a 는 주문서 ($g5['g5_shop_order_table'])
-// 테이블 b 는 장바구니 ($g5['g5_shop_cart_table'])
-define(_MISU_QUERY_, "
-    ( od_cart_amount + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon - od_receipt_amount - od_cancel_amount ) as misu,
-    ( od_cart_coupon + od_coupon + od_send_coupon ) as couponamount
-    ");
 //------------------------------------------------------------------------------
 // 쇼핑몰 상수 모음 끝
 //------------------------------------------------------------------------------

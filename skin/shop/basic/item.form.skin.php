@@ -209,23 +209,31 @@ $sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SH
                 </td>
             </tr>
             <?php } ?>
-            <?php if($default['de_send_cost_case'] == '개별' && $it['it_sc_type'] != 0) { ?>
+            <?php
+            if($default['de_send_cost_case'] == '무료')
+                $sc_method = '무료배송';
+            else
+                $sc_method = '주문시 결제';
+
+            if($it['it_sc_type'] == 1)
+                $sc_method = '무료배송';
+            else if($it['it_sc_type'] > 1) {
+                if($it['it_sc_method'] == 1)
+                    $sc_method = '수령후 지불';
+                else if($it['it_sc_method'] == 2) {
+                    $sc_method = '<select name="ct_send_cost" id="ct_send_cost">
+                                      <option value="0">주문시 결제</option>
+                                      <option value="1">수령후 지불</option>
+                                  </select>';
+                }
+                else
+                    $sc_method = '주문시 결제';
+            }
+            ?>
             <tr>
                 <th><label for="ct_send_cost">배송비결제</label></th>
-                <td>
-                    <?php
-                    if($it['it_sc_method'] == 2) {
-                    ?>
-                    <select name="ct_send_cost" id="ct_send_cost">
-                        <option value="0">주문시 결제</option>
-                        <option value="1">수령후 지불</option>
-                    </select>
-                    <?php
-                    }
-                    ?>
-                </td>
+                <td><?php echo $sc_method; ?></td>
             </tr>
-            <?php } ?>
             </tbody>
             </table>
 
@@ -309,17 +317,17 @@ $sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SH
         <!-- 총 구매액 -->
         <div id="sit_tot_price"></div>
 
+        <?php if ($it['it_use']) { ?>
         <ul id="sit_ov_btn">
-            <?php if ($it['it_use']) { ?>
-                <?php if (!$it['it_tel_inq']) { ?>
-                <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
-                <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
-                <?php } ?>
-
-                <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
-                <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
+            <?php if (!$it['it_tel_inq']) { ?>
+            <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
+            <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
             <?php } ?>
+
+            <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
+            <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
         </ul>
+        <?php } ?>
 
         <script>
         // 상품보관

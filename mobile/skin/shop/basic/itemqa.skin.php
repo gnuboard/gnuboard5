@@ -23,7 +23,7 @@ $sql = "select * $sql_common order by iq_id desc limit $from_record, $rows ";
 $result = sql_query($sql);
 ?>
 
-<link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
+<link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
 
 <!-- 상품문의 목록 시작 { -->
 <section id="sit_qa_list">
@@ -105,7 +105,7 @@ $result = sql_query($sql);
 </section>
 
 <?php
-echo itemqa_page($config['cf_write_pages'], $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", "");
+echo itemqa_page($config['cf_mobile_pages'], $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", "");
 ?>
 
 <div id="sit_qa_wbtn">
@@ -117,7 +117,7 @@ echo itemqa_page($config['cf_write_pages'], $page, $total_page, "./itemqa.php?it
 <script>
 $(function(){
     $(".itemqa_form").click(function(){
-        window.open(this.href, "itemqa_form", "width=800,height=600,scrollbars=1");
+        window.open(this.href, "itemqa_form", "width=800,height=500,scrollbars=1");
         return false;
     });
 

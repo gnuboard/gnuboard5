@@ -1476,57 +1476,62 @@ function get_item_point($it)
 }
 
 // 배송비 구함
-function get_sendcost($price, $cart_id, $selected=1)
+function get_sendcost($cart_id, $selected=1)
 {
     global $default, $g5;
 
-    if ($default['de_send_cost_case'] == '없음') {
-        $send_cost = 0;
-    } else if($default['de_send_cost_case'] == '상한') {
-        // 배송비 상한 : 여러단계의 배송비 적용 가능
+    $send_cost = 0;
+    $total_price = 0;
+    $total_send_cost = 0;
+
+    $sql = " select distinct it_id
+                from {$g5['g5_shop_cart_table']}
+                where od_id = '$cart_id'
+                  and ct_send_cost = '0'
+                  and ct_status IN ( '쇼핑', '주문', '준비', '배송', '완료' )
+                  and ct_select = '$selected' ";
+
+    $result = sql_query($sql);
+    for($i=0; $sc=sql_fetch_array($result); $i++) {
+        // 합계
+        $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                        SUM(ct_qty) as qty
+                    from {$g5['g5_shop_cart_table']}
+                    where it_id = '{$sc['it_id']}'
+                      and od_id = '$cart_id' ";
+        $sum = sql_fetch($sql);
+
+        $send_cost = get_item_sendcost($sc['it_id'], $sum['price'], $sum['qty']);
+
+        if($send_cost > 0)
+            $total_send_cost += $send_cost;
+
+        if($default['de_send_cost_case'] == '차등' && $send_cost == -1)
+            $total_price += $sum['price'];
+    }
+
+    $send_cost = 0;
+    if($default['de_send_cost_case'] == '차등' && $total_price > 0) {
+        // 금액별차등 : 여러단계의 배송비 적용 가능
         $send_cost_limit = explode(";", $default['de_send_cost_limit']);
         $send_cost_list  = explode(";", $default['de_send_cost_list']);
         $send_cost = 0;
         for ($k=0; $k<count($send_cost_limit); $k++) {
             // 총판매금액이 배송비 상한가 보다 작다면
-            if ($price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
+            if ($total_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
                 $send_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
                 break;
             }
         }
-    } else { // 개별배송비
-        $send_cost = 0;
-        $sql = " select distinct it_id
-                    from {$g5['g5_shop_cart_table']}
-                    where od_id = '$cart_id'
-                      and ct_send_cost = '0'
-                      and ct_status IN ( '쇼핑', '주문', '준비', '배송', '완료' )
-                      and ct_select = '$selected' ";
-
-        $result = sql_query($sql);
-        for($i=0; $sc=sql_fetch_array($result); $i++) {
-            // 합계
-            $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-                            SUM(ct_qty) as qty
-                        from {$g5['g5_shop_cart_table']}
-                        where it_id = '{$sc['it_id']}'
-                          and od_id = '$cart_id' ";
-            $sum = sql_fetch($sql);
-
-            $send_cost += get_item_sendcost($sc['it_id'], $sum['price'], $sum['qty']);
-        }
     }
 
-    return $send_cost;
+    return ($total_send_cost + $send_cost);
 }
 
 // 상품별 배송비
 function get_item_sendcost($it_id, $price, $qty)
 {
     global $g5, $default;
-
-    if($default['de_send_cost_case'] != '개별')
-        return 0;
 
     $sql = " select it_id, it_sc_type, it_sc_method, it_sc_price, it_sc_minimum, it_sc_qty
                 from {$g5['g5_shop_item_table']}
@@ -1535,13 +1540,13 @@ function get_item_sendcost($it_id, $price, $qty)
     if(!$it['it_id'])
         return 0;
 
-    if($it['it_sc_type']) {
-        if($it['it_sc_type'] == 1) { // 조건부무료
+    if($it['it_sc_type'] > 1) {
+        if($it['it_sc_type'] == 2) { // 조건부무료
             if($price >= $it['it_sc_minimum'])
                 $sendcost = 0;
             else
                 $sendcost = $it['it_sc_price'];
-        } else if($it['it_sc_type'] == 2) { // 유료배송
+        } else if($it['it_sc_type'] == 3) { // 유료배송
             $sendcost = $it['it_sc_price'];
         } else { // 수량별 부과
             if(!$it['it_sc_qty'])
@@ -1550,8 +1555,10 @@ function get_item_sendcost($it_id, $price, $qty)
             $q = ceil((int)$qty / (int)$it['it_sc_qty']);
             $sendcost = (int)$it['it_sc_price'] * $q;
         }
-    } else {
+    } else if($it['it_sc_type'] == 1) { // 무료배송
         $sendcost = 0;
+    } else {
+        $sendcost = -1;
     }
 
     return $sendcost;
