@@ -847,7 +847,7 @@ $(function(){
 <section id="anc_sitfrm_sendcost" class="cbox">
     <h2>배송비</h2>
     <?php echo $pg_anchor; ?>
-    <p>쇼핑몰설정 &gt; 배송비유형 설정에서 <strong>개별배송비</strong>로 설정해야만 아래 설정이 적용됩니다.</p>
+    <p>쇼핑몰설정 &gt; 배송비유형 설정보다 <strong>개별상품 배송비설정이 우선</strong> 적용됩니다.</p>
 
     <table class="frm_tbl">
     <colgroup>
@@ -861,10 +861,11 @@ $(function(){
             <td>
                 <?php echo help("배송비 유형을 선택하면 자동으로 항목이 변환됩니다."); ?>
                 <select name="it_sc_type" id="it_sc_type">
-                    <option value="0"<?php echo get_selected('0', $it['it_sc_type']); ?>>무료배송</option>
-                    <option value="1"<?php echo get_selected('1', $it['it_sc_type']); ?>>조건부 무료배송</option>
-                    <option value="2"<?php echo get_selected('2', $it['it_sc_type']); ?>>유료배송</option>
-                    <option value="3"<?php echo get_selected('3', $it['it_sc_type']); ?>>수량별 부과</option>
+                    <option value="0"<?php echo get_selected('0', $it['it_sc_type']); ?>>쇼핑몰 기본설정 사용</option>
+                    <option value="1"<?php echo get_selected('1', $it['it_sc_type']); ?>>무료배송</option>
+                    <option value="2"<?php echo get_selected('2', $it['it_sc_type']); ?>>조건부 무료배송</option>
+                    <option value="3"<?php echo get_selected('3', $it['it_sc_type']); ?>>유료배송</option>
+                    <option value="4"<?php echo get_selected('4', $it['it_sc_type']); ?>>수량별 부과</option>
                 </select>
             </td>
             <td rowspan="4" id="sc_grp" class="group_setting">
@@ -874,7 +875,7 @@ $(function(){
                 <label for="chk_all_it_sendcost">전체적용</label>
             </td>
         </tr>
-        <tr>
+        <tr id="sc_con_method">
             <th scope="row"><label for="it_sc_method">배송비 결제</label></th>
             <td>
                 <select name="it_sc_method" id="it_sc_method">
@@ -884,7 +885,7 @@ $(function(){
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr id="sc_con_basic">
             <th scope="row"><label for="it_sc_price">기본배송비</label></th>
             <td>
                 <?php echo help("무료배송 이외의 설정에 적용되는 배송비 금액입니다."); ?>
@@ -910,31 +911,69 @@ $(function(){
     <script>
     $(function() {
         <?php
-        if($it['it_sc_type'] == 1) {
-            echo '$("#sc_con_minimum").show();'.PHP_EOL;
-            echo '$("#sc_con_qty").hide();'.PHP_EOL;
-        } else if($it['it_sc_type'] == 3) {
-            echo '$("#sc_con_minimum").hide();'.PHP_EOL;
-            echo '$("#sc_con_qty").show();'.PHP_EOL;
-        } else {
-            echo '$("#sc_con_minimum").hide();'.PHP_EOL;
-            echo '$("#sc_con_qty").hide();'.PHP_EOL;
+        switch($it['it_sc_type']) {
+            case 2:
+                echo '$("#sc_con_method").show();'.PHP_EOL;
+                echo '$("#sc_con_basic").show();'.PHP_EOL;
+                echo '$("#sc_con_minimum").show();'.PHP_EOL;
+                echo '$("#sc_con_qty").hide();'.PHP_EOL;
+                echo '$("#sc_grp").attr("rowspan","4");'.PHP_EOL;
+                break;
+            case 3:
+                echo '$("#sc_con_method").show();'.PHP_EOL;
+                echo '$("#sc_con_basic").show();'.PHP_EOL;
+                echo '$("#sc_con_minimum").hide();'.PHP_EOL;
+                echo '$("#sc_con_qty").hide();'.PHP_EOL;
+                echo '$("#sc_grp").attr("rowspan","3");'.PHP_EOL;
+                break;
+            case 4:
+                echo '$("#sc_con_method").show();'.PHP_EOL;
+                echo '$("#sc_con_basic").show();'.PHP_EOL;
+                echo '$("#sc_con_minimum").hide();'.PHP_EOL;
+                echo '$("#sc_con_qty").show();'.PHP_EOL;
+                echo '$("#sc_grp").attr("rowspan","4");'.PHP_EOL;
+                break;
+            default:
+                echo '$("#sc_con_method").hide();'.PHP_EOL;
+                echo '$("#sc_con_basic").hide();'.PHP_EOL;
+                echo '$("#sc_con_minimum").hide();'.PHP_EOL;
+                echo '$("#sc_con_qty").hide();'.PHP_EOL;
+                echo '$("#sc_grp").attr("rowspan","1");'.PHP_EOL;
+                break;
         }
         ?>
         $("#it_sc_type").change(function() {
             var type = $(this).val();
-            if(type == "1") {
-                $("#sc_con_minimum").show();
-                $("#sc_con_qty").hide();
-                $("#sc_grp").attr('rowspan','4');
-            } else if(type == "3") {
-                $("#sc_con_minimum").hide();
-                $("#sc_con_qty").show();
-                $("#sc_grp").attr('rowspan','4');
-            } else {
-                $("#sc_con_minimum").hide();
-                $("#sc_con_qty").hide();
-                $("#sc_grp").attr('rowspan','3');
+
+            switch(type) {
+                case "2":
+                    $("#sc_con_method").show();
+                    $("#sc_con_basic").show();
+                    $("#sc_con_minimum").show();
+                    $("#sc_con_qty").hide();
+                    $("#sc_grp").attr("rowspan","4");
+                    break;
+                case "3":
+                    $("#sc_con_method").show();
+                    $("#sc_con_basic").show();
+                    $("#sc_con_minimum").hide();
+                    $("#sc_con_qty").hide();
+                    $("#sc_grp").attr("rowspan","3");
+                    break;
+                case "4":
+                    $("#sc_con_method").show();
+                    $("#sc_con_basic").show();
+                    $("#sc_con_minimum").hide();
+                    $("#sc_con_qty").show();
+                    $("#sc_grp").attr("rowspan","4");
+                    break;
+                default:
+                    $("#sc_con_method").hide();
+                    $("#sc_con_basic").hide();
+                    $("#sc_con_minimum").hide();
+                    $("#sc_con_qty").hide();
+                    $("#sc_grp").attr("rowspan","1");
+                    break;
             }
         });
     });
@@ -1412,18 +1451,18 @@ function fitemformcheck(f)
         }
     }
 
-    if(f.it_sc_type.value != "0") {
+    if(parseInt(f.it_sc_type.value) > 1) {
         if(!f.it_sc_price.value || f.it_sc_price.value == "0") {
             alert("기본배송비를 입력해 주십시오.");
             return false;
         }
 
-        if(f.it_sc_type.value == "1" && (!f.it_sc_minimum.value || f.it_sc_minimum.value == "0")) {
+        if(f.it_sc_type.value == "2" && (!f.it_sc_minimum.value || f.it_sc_minimum.value == "0")) {
             alert("배송비 상세조건의 주문금액을 입력해 주십시오.");
             return false;
         }
 
-        if(f.it_sc_type.value == "3" && (!f.it_sc_qty.value || f.it_sc_qty.value == "0")) {
+        if(f.it_sc_type.value == "4" && (!f.it_sc_qty.value || f.it_sc_qty.value == "0")) {
             alert("배송비 상세조건의 주문수량을 입력해 주십시오.");
             return false;
         }

@@ -175,7 +175,7 @@ $cart_coupon = $sum['coupon'];
 $cart_count = $sum['cnt'];
 
 // 배송비
-$send_cost = get_sendcost($cart_price, $od_id);
+$send_cost = get_sendcost($od_id);
 
 $tot_od_cp_price = $tot_sc_cp_price = 0;
 

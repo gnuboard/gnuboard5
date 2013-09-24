@@ -293,7 +293,7 @@ function get_intall_file()
         alert('장바구니가 비어 있습니다.', G5_SHOP_URL.'/cart.php');
     } else {
         // 배송비 계산
-        $send_cost = get_sendcost($tot_sell_price, $s_cart_id);
+        $send_cost = get_sendcost($s_cart_id);
     }
 
     // 복합과세처리
