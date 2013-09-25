@@ -161,7 +161,8 @@ $dir_arr = array (
     $data_path.'/file',
     $data_path.'/log',
     $data_path.'/member',
-    $data_path.'/session'
+    $data_path.'/session',
+    $data_path.'/tmp'
 );
 
 for ($i=0; $i<count($dir_arr); $i++) {
