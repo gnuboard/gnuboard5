@@ -42,7 +42,8 @@
             var space = parseInt(wrap_width % item_width);
 
             if((space + padding) < item_width) {
-                var new_padding = parseInt((space + padding) / (line_count * 2));
+                space = wrap_width - ((item_width - padding) * line_count);
+                var new_padding = parseInt(space / (line_count * 2));
 
                 if(new_padding > padding)
                     $element.css("padding-left", new_padding+"px").css("padding-right", new_padding);
