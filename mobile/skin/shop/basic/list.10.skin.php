@@ -81,32 +81,34 @@ $(window).resize(function() {
 
 function set_list_margin()
 {
-    var li_margin = 0;
-    if($("li.sct_li:first").data("margin-right") == undefined) {
-        li_margin = parseInt($("li.sct_li:first").css("margin-right"));
-        $("li.sct_li:first").data("margin-right", li_margin);
+    var li_padding = 0;
+    if($("li.sct_li:first").data("padding-right") == undefined) {
+        li_padding = parseInt($("li.sct_li:first").css("padding-right"));
+        $("li.sct_li:first").data("padding-right", li_padding);
     }
     else
-        li_margin = $("li.sct_li:first").data("margin-right");
+        li_padding = $("li.sct_li:first").data("padding-right");
 
-    $("li.sct_li").css("margin-left", 0).css("margin-right", li_margin);
+    $("li.sct_li").css("padding-left", 0).css("padding-right", li_padding);
+    $("li.sct_clear").removeClass("sct_clear");
 
     var ul_width = parseInt($("ul.sct").width());
-    var li_width = parseInt($("li.sct_li:first").outerWidth(true));
-    var li_count = parseInt((ul_width + li_margin) / li_width);
+    var li_width = parseInt($("li.sct_li:first").outerWidth());
+    var li_count = parseInt((ul_width + li_padding) / li_width);
 
     if(li_count == 0)
         return;
 
     var space = parseInt(ul_width % li_width);
 
-    if((space + li_margin) < li_width) {
-        var new_margin = parseInt((space + li_margin) / (li_count * 2));
+    if((space + li_padding) < li_width) {
+        var new_padding = parseInt((space + li_padding) / (li_count * 2));
 
-        if(new_margin > li_margin)
-            $("li.sct_li").css("margin-left", new_margin+"px").css("margin-right", new_margin);
+        if(new_padding > li_padding)
+            $("li.sct_li").css("padding-left", new_padding+"px").css("padding-right", new_padding);
     }
 
-    $("li.sct_li:nth-child("+li_count+"n)").css("margin-right", 0);
+    $("li.sct_li:nth-child("+li_count+"n)").css("padding-right", 0);
+    $("li.sct_li:nth-child("+li_count+"n+1)").addClass("sct_clear");
 }
 </script>
