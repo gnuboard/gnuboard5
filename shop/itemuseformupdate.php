@@ -77,6 +77,25 @@ else if ($w == "d")
             alert("자신의 사용후기만 삭제하실 수 있습니다.");
     }
 
+    // 에디터로 첨부된 이미지 삭제
+    $sql = " select is_content from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' and md5(concat(is_id,is_time,is_ip)) = '{$hash}' ";
+    $row = sql_fetch($sql);
+
+    $imgs = get_editor_image($row['is_content']);
+
+    for($i=0;$i<count($imgs[1]);$i++) {
+        $p = parse_url($imgs[1][$i]);
+        if(strpos($p['path'], "/data/") != 0)
+            $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        else
+            $data_path = $p['path'];
+
+        $destfile = G5_PATH.$data_path;
+
+        if(is_file($destfile))
+            @unlink($destfile);
+    }
+
     $sql = " delete from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' and md5(concat(is_id,is_time,is_ip)) = '{$hash}' ";
     sql_query($sql);
 
