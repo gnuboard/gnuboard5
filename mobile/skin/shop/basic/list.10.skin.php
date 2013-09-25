@@ -3,15 +3,16 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
+<script src="<?php echo G5_JS_URL ?>/shop.mobile.list.js"></script>
 
 <!-- 상품진열 10 시작 { -->
 <?php
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     if ($i == 0) {
         if ($this->css) {
-            echo "<ul class=\"{$this->css}\">\n";
+            echo "<ul id=\"sct_wrap\" class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct sct_10\">\n";
+            echo "<ul id=\"sct_wrap\" class=\"sct sct_10\">\n";
         }
     }
 
@@ -72,43 +73,6 @@ if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 
 <script>
 $(function() {
-    set_list_margin();
+    $("#sct_wrap").itemList("li.sct_li", "sct_clear");
 });
-
-$(window).resize(function() {
-    set_list_margin();
-});
-
-function set_list_margin()
-{
-    var li_padding = 0;
-    if($("li.sct_li:first").data("padding-right") == undefined) {
-        li_padding = parseInt($("li.sct_li:first").css("padding-right"));
-        $("li.sct_li:first").data("padding-right", li_padding);
-    }
-    else
-        li_padding = $("li.sct_li:first").data("padding-right");
-
-    $("li.sct_li").css("padding-left", 0).css("padding-right", li_padding);
-    $("li.sct_clear").removeClass("sct_clear");
-
-    var ul_width = parseInt($("ul.sct").width());
-    var li_width = parseInt($("li.sct_li:first").outerWidth());
-    var li_count = parseInt((ul_width + li_padding) / li_width);
-
-    if(li_count == 0)
-        return;
-
-    var space = parseInt(ul_width % li_width);
-
-    if((space + li_padding) < li_width) {
-        var new_padding = parseInt((space + li_padding) / (li_count * 2));
-
-        if(new_padding > li_padding)
-            $("li.sct_li").css("padding-left", new_padding+"px").css("padding-right", new_padding);
-    }
-
-    $("li.sct_li:nth-child("+li_count+"n)").css("padding-right", 0);
-    $("li.sct_li:nth-child("+li_count+"n+1)").addClass("sct_clear");
-}
 </script>
