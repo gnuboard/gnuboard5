@@ -85,7 +85,7 @@ echo itemuse_page($config['cf_mobile_pages'], $page, $total_page, "./itemuse.php
 
 <div id="sit_use_wbtn">
     <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form" onclick="return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
-    <a href="<?php echo $itemuse_list; ?>" class="btn01 itemuse_list">더보기</a>
+    <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기</a>
 </div>
 
 <script>
@@ -116,6 +116,11 @@ $(function(){
     $(".pg_page").click(function(){
         $("#itemuse").load($(this).attr("href"));
         return false;
+    });
+
+    $("a#itemuse_list").on("click", function() {
+        opener.location.href = this.href;
+        self.close();
     });
 });
 </script>

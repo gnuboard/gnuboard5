@@ -32,7 +32,7 @@ if (!$skin)
     $skin = 'list.10.skin.php';
 
 // 리스트 유형별로 출력
-$list_file = G5_SHOP_SKIN_PATH.'/'.$skin;
+$list_file = G5_MSHOP_SKIN_PATH.'/'.$skin;
 if (file_exists($list_file)) {
     // 총몇개 = 한줄에 몇개 * 몇줄
     $items = $list_mod * $list_row;
