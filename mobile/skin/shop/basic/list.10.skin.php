@@ -6,16 +6,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 <!-- 상품진열 10 시작 { -->
 <?php
-for ($i=1; $row=sql_fetch_array($result); $i++) {
-    if ($this->list_mod >= 2) { // 1줄 이미지 : 2개 이상
-        if ($i%$this->list_mod == 0) $sct_last = ' sct_last'; // 줄 마지막
-        else if ($i%$this->list_mod == 1) $sct_last = ' sct_clear'; // 줄 첫번째
-        else $sct_last = '';
-    } else { // 1줄 이미지 : 1개
-        $sct_last = 'sct_clear';
-    }
-
-    if ($i == 1) {
+for ($i=0; $row=sql_fetch_array($result); $i++) {
+    if ($i == 0) {
         if ($this->css) {
             echo "<ul class=\"{$this->css}\">\n";
         } else {
@@ -23,7 +15,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         }
     }
 
-    echo "<li class=\"sct_li {$sct_last}\">\n";
+    echo "<li class=\"sct_li\">\n";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
@@ -72,8 +64,49 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     echo "</li>\n";
 }
 
-if ($i > 1) echo "</ul>\n";
+if ($i > 0) echo "</ul>\n";
 
-if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
+if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
 <!-- } 상품진열 10 끝 -->
+
+<script>
+$(function() {
+    set_list_margin();
+});
+
+$(window).resize(function() {
+    set_list_margin();
+});
+
+function set_list_margin()
+{
+    var li_margin = 0;
+    if($("li.sct_li:first").data("margin-right") == undefined) {
+        li_margin = parseInt($("li.sct_li:first").css("margin-right"));
+        $("li.sct_li:first").data("margin-right", li_margin);
+    }
+    else
+        li_margin = $("li.sct_li:first").data("margin-right");
+
+    $("li.sct_li").css("margin-left", 0).css("margin-right", li_margin);
+
+    var ul_width = parseInt($("ul.sct").width());
+    var li_width = parseInt($("li.sct_li:first").outerWidth(true));
+    var li_count = parseInt((ul_width + li_margin) / li_width);
+
+    if(li_count == 0)
+        return;
+
+    var space = parseInt(ul_width % li_width);
+
+    if((space + li_margin) < li_width) {
+        var new_margin = parseInt((space + li_margin) / (li_count * 2));
+
+        if(new_margin > li_margin)
+            $("li.sct_li").css("margin-left", new_margin+"px").css("margin-right", new_margin);
+    }
+
+    $("li.sct_li:nth-child("+li_count+"n)").css("margin-right", 0);
+}
+</script>
