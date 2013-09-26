@@ -9,13 +9,13 @@
 .sct_wrap h2 a {text-decoration:none}
 .sct_wrap_hdesc {float:left;margin:0;padding:0;color:#777;line-height:1em}
 
-.sct {margin:0;padding:0;list-style:none;zoom:1}
+.sct {margin:0;padding:0;list-style:none;zoom:1;clear:both}
 .sct:after {display:block;visibility:hidden;clear:both;content:""}
 .sct_li {position:relative}
 .sct_noitem {padding:100px 0;text-align:center}
 
 /* 상품 목록 스킨 10 */
-.sct_10 .sct_li {float:left;margin:0 25px 15px 0;}
+.sct_10 .sct_li {float:left;padding:0 25px 15px 0;}
 .sct_10 .sct_last {margin:0 0 15px !important}
 .sct_10 .sct_clear {clear:both}
 .sct_10 .sct_a {display:block;position:relative;text-decoration:none}

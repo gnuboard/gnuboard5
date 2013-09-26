@@ -3,27 +3,20 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
+<script src="<?php echo G5_JS_URL ?>/shop.mobile.list.js"></script>
 
 <!-- 상품진열 10 시작 { -->
 <?php
-for ($i=1; $row=sql_fetch_array($result); $i++) {
-    if ($this->list_mod >= 2) { // 1줄 이미지 : 2개 이상
-        if ($i%$this->list_mod == 0) $sct_last = ' sct_last'; // 줄 마지막
-        else if ($i%$this->list_mod == 1) $sct_last = ' sct_clear'; // 줄 첫번째
-        else $sct_last = '';
-    } else { // 1줄 이미지 : 1개
-        $sct_last = 'sct_clear';
-    }
-
-    if ($i == 1) {
+for ($i=0; $row=sql_fetch_array($result); $i++) {
+    if ($i == 0) {
         if ($this->css) {
-            echo "<ul class=\"{$this->css}\">\n";
+            echo "<ul id=\"sct_wrap\" class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct sct_10\">\n";
+            echo "<ul id=\"sct_wrap\" class=\"sct sct_10\">\n";
         }
     }
 
-    echo "<li class=\"sct_li {$sct_last}\">\n";
+    echo "<li class=\"sct_li\">\n";
 
     if ($this->href) {
         echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
@@ -72,8 +65,14 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     echo "</li>\n";
 }
 
-if ($i > 1) echo "</ul>\n";
+if ($i > 0) echo "</ul>\n";
 
-if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
+if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
 <!-- } 상품진열 10 끝 -->
+
+<script>
+$(function() {
+    $("#sct_wrap").itemList("li.sct_li", "sct_clear");
+});
+</script>

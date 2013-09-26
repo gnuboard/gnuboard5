@@ -358,29 +358,51 @@ if ($row['it_id']) {
     ?>
 </aside>
 
+<?php
+// 관리자가 확인한 사용후기의 갯수를 얻음
+$sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
+$row = sql_fetch($sql);
+$item_use_count = $row['cnt'];
+
+// 상품문의의 갯수를 얻음
+$sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
+$row = sql_fetch($sql);
+$item_qa_count = $row['cnt'];
+
+// 관련상품의 갯수를 얻음
+$sql = " select count(*) as cnt
+           from {$g5['g5_shop_item_relation_table']} a
+           left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
+          where a.it_id = '{$it['it_id']}' ";
+$row = sql_fetch($sql);
+$item_relation_count = $row['cnt'];
+
+$href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
+?>
+<div>
+    <ul class="sanchor">
+        <li><a href="<?php echo $href; ?>" target="_blank">상품정보</a></li>
+        <li><a href="<?php echo $href; ?>&amp;info=use" target="_blank">사용후기 <span class="item_use_count"><?php echo $item_use_count; ?></span></a></li>
+        <li><a href="<?php echo $href; ?>&amp;info=qa" target="_blank">상품문의 <span class="item_qa_count"><?php echo $item_qa_count; ?></span></a></li>
+        <?php if ($default['de_baesong_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=dvr" target="_blank">배송정보</a></li><?php } ?>
+        <?php if ($default['de_change_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=ex" target="_blank">교환정보</a></li><?php } ?>
+        <li><a href="<?php echo $href; ?>&amp;info=rel" target="_blank">관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
+    </ul>
+</div>
+
 <script>
-function click_item(id)
-{
-    <?php
-    echo "var str = 'item_explan,item_use,item_qa";
-    if ($default['de_baesong_content']) echo ",item_baesong";
-    if ($default['de_change_content']) echo ",item_change";
-    echo ",item_relation';";
-    ?>
+$(function(){
+    // 상품이미지 크게보기
+    $(".popup_item_image").click(function() {
+        var url = $(this).attr("href");
+        var top = 10;
+        var left = 10;
+        var opt = 'scrollbars=yes,top='+top+',left='+left;
+        popup_window(url, "largeimage", opt);
 
-    var s = str.split(',');
-
-    for (i=0; i<s.length; i++)
-    {
-        if (id=='*')
-            document.getElementById(s[i]).style.display = 'block';
-        else
-            document.getElementById(s[i]).style.display = 'none';
-    }
-
-    if (id!='*')
-        document.getElementById(id).style.display = 'block';
-}
+        return false;
+    });
+});
 
 // 바로구매, 장바구니 폼 전송
 function fitem_submit(f)

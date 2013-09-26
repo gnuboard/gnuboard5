@@ -102,11 +102,6 @@ else
     include_once(G5_MSHOP_SKIN_PATH.'/item.form.skin.php');
     ?>
 
-    <?php
-    // 상품 상세정보
-    include_once(G5_MSHOP_SKIN_PATH.'/item.info.skin.php');
-    ?>
-
 </div>
 
 <?php

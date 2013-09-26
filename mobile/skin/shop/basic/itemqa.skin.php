@@ -139,6 +139,11 @@ $(function(){
         $("#itemqa").load($(this).attr("href"));
         return false;
     });
+
+    $("a#itemqa_list").on("click", function() {
+        opener.location.href = this.href;
+        self.close();
+    });
 });
 </script>
 <!-- } 상품문의 목록 끝 -->

@@ -10,9 +10,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     if ($i == 0) {
         if ($this->css) {
-            echo "<ul class=\"sct_wrap {$this->css}\">\n";
+            echo "<ul id=\"sct_wrap\" class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct_wrap sct sct_10\">\n";
+            echo "<ul id=\"sct_wrap\" class=\"sct sct_10\">\n";
         }
     }
 
@@ -73,6 +73,6 @@ if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 
 <script>
 $(function() {
-    $(".sct_wrap").itemList("li.sct_li", "sct_clear");
+    $("#sct_wrap").itemList("li.sct_li", "sct_clear");
 });
 </script>
