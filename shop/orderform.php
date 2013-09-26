@@ -293,7 +293,7 @@ function get_intall_file()
         alert('장바구니가 비어 있습니다.', G5_SHOP_URL.'/cart.php');
     } else {
         // 배송비 계산
-        $send_cost = get_sendcost($s_cart_id);
+        $send_cost = get_sendcost($tot_sell_price, $s_cart_id);
     }
 
     // 복합과세처리
@@ -662,6 +662,11 @@ function get_intall_file()
             // 배송지 이력
             $addr_list = '';
             $sep = chr(30);
+
+            // 주문자와 동일
+            $addr_list .= '<input type="radio" name="ad_sel_addr" id="ad_sel_addr_same">'.PHP_EOL;
+            $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
+
             // 기본배송지
             $sql = " select *
                         from {$g5['g5_shop_order_address_table']}
@@ -673,9 +678,6 @@ function get_intall_file()
                 $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_def">'.PHP_EOL;
                 $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
             }
-            // 주문자와 동일
-            $addr_list .= '<input type="radio" name="ad_sel_addr" id="ad_sel_addr_same">'.PHP_EOL;
-            $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
 
             // 최근배송지
             $sql = " select *
