@@ -13,7 +13,10 @@ if($w == 'd') {
 $sql = " select *
             from {$g5['g5_shop_order_address_table']}
             where mb_id = '{$member['mb_id']}'
-            order by ad_default, ad_id desc ";
+            order by
+            ad_default desc,
+            ad_id desc ";
+
 $result = sql_query($sql);
 
 if(!mysql_num_rows($result))
@@ -28,11 +31,12 @@ $g5['title'] = '배송지 목록';
 include_once(G5_PATH.'/head.sub.php');
 
 $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddress_update.php';
+
 ?>
-<form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
+<form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return fitemlist_submit(this);" autocomplete="off">
 <div id="sod_addr_list" class="new_win">
 
-    <h1 id="new_win_title">배송지 목록dd</h1>
+    <h1 id="new_win_title">배송지 목록</h1>
 
     <table class="basic_tbl">
     <thead>
@@ -55,9 +59,12 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddress_update.php';
         $addr = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
     ?>
     <tr>
-        <td class="td_chk"><label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label><input type="checkbox" name="ad_id" value="<?php echo $i;?>" id="chk_<?php echo $i;?>"></td>
-        <td class="td_name"><input type="text" name="ad_subject" id="ad_subject" class="frm_input" size="10" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
-        <td class="td_basic"><label for="ad_basic<?php echo $i;?>" class="sound_only">기본배송지</label><input type="radio" name="ad_default" value="1" id="ad_basic<?php echo $i;?>"></td>
+        <td class="td_chk"><label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
+            <input type="hidden" name="ad_id[]" value="<?php echo $row['ad_id'];?>">
+            <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
+        </td>
+        <td class="td_name"><input type="text" name="ad_subject[]" id="ad_subject" class="frm_input" size="10" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
+        <td class="td_default"><label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label><input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>></td>
         <td class="td_smallname"><?php echo $row['ad_name']; ?></td>
         <td class="td_bignum"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
         <td><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></td>
@@ -73,12 +80,28 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddress_update.php';
     </tbody>
     </table>
     <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정">
+        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
     </div>
 </div>
 </form>
 
 <script>
+function fitemlist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if(document.pressed == "선택삭제") {
+        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 $(function() {
     $(".sel_address").on("click", function() {
         var addr = $(this).siblings("input").val().split(String.fromCharCode(30));
@@ -111,6 +134,16 @@ $(function() {
     $(".del_address").on("click", function() {
         return confirm("배송지 목록을 삭제하시겠습니까?");
     });
+
+    // 전체선택 부분
+    $("#chk_all").on("change", function() {
+        if ($(this).attr("checked")){
+            $("input[type='checkbox']:not(checked)").attr("checked", true);
+        }else{
+            $("input[type='checkbox']:checked").attr("checked", false);
+        }
+    });
+
 });
 </script>
 

@@ -576,11 +576,43 @@ if (get_session('ss_direct'))
     set_session('ss_cart_direct', '');
 
 // 배송지처리
-if($is_member && ($add_address || $ad_default)) {
+if($is_member) {
     $ad_zip1 = $od_b_zip1;
     $ad_zip2 = $od_b_zip2;
     $ad_addr1 = $od_b_addr1;
     $ad_addr2 = $od_b_addr2;
+
+    $sql = " select count(*) as count from {$g5['g5_shop_order_address_table']}
+                where mb_id = '{$member['mb_id']}'
+                and ad_subject = '{$_POST['od_b_subject']}'
+                and ad_name = '{$_POST['od_b_name']}'
+                and ad_tel = '{$_POST['od_b_tel']}'
+                and ad_hp = '{$_POST['od_b_hp']}'
+                and ad_zip1 = '{$_POST['od_b_zip1']}'
+                and ad_zip2 = '{$_POST['od_b_zip2']}'
+                and ad_addr1 = '{$_POST['od_b_addr1']}'
+                and ad_addr2 = '{$_POST['od_b_addr2']}' ";
+
+    $row = sql_fetch($sql);
+
+    if(!$row['count']){
+        $sql = " insert into {$g5['g5_shop_order_address_table']}
+                    set mb_id       = '{$member['mb_id']}',
+                        ad_subject  = '$ad_subject',
+                        ad_default  = '$ad_default',
+                        ad_name     = '$od_b_name',
+                        ad_tel      = '$od_b_tel',
+                        ad_hp       = '$od_b_hp',
+                        ad_zip1     = '$od_b_zip1',
+                        ad_zip2     = '$od_b_zip2',
+                        ad_addr1    = '$od_b_addr1',
+                        ad_addr2    = '$od_b_addr2' ";
+        sql_query($sql);
+        echo "됏다";
+    }
+
+
+//print_r ($row);
 
     $sql = " select ad_id
                 from {$g5['g5_shop_order_address_table']}
