@@ -1,9 +1,9 @@
 (function($) {
-    $.fn.itemList = function(element, clear)
+    $.fn.fancyList = function(element, clear)
     {
         var cfg = {
-                element: "li.sct_li",
-                clear: "sct_clear"
+                element: "li",
+                clear: "clear"
             };
 
         if(typeof element == "object")

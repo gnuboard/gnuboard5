@@ -6,7 +6,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <section id="sit_dvr">
     <h2>배송정보</h2>
-    <?php echo pg_anchor($info); ?>
 
     <?php echo conv_content($default['de_baesong_content'], 1); ?>
 </section>

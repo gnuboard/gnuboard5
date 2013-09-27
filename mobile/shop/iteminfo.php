@@ -64,7 +64,17 @@ function pg_anchor($info) {
     </ul>
 <?php
 }
+?>
 
+<script src="<?php echo G5_JS_URL ?>/jquery.floatmenu.js"></script>
+
+<div id="info_top_layer">
+    <h2>상품 정보</h2>
+    <?php echo pg_anchor($info); ?>
+</div>
+
+<div id="info_content">
+<?php
 switch($info) {
     case 'use':
         include_once(G5_MSHOP_SKIN_PATH.'/iteminfo.itemuse.skin.php');
@@ -85,6 +95,15 @@ switch($info) {
         include_once(G5_MSHOP_SKIN_PATH.'/iteminfo.info.skin.php');
         break;
 }
+?>
+</div>
 
+<script>
+$(function() {
+    $("#info_top_layer").topFloatMenu();
+});
+</script>
+
+<?php
 include_once(G5_PATH.'/tail.sub.php');
 ?>

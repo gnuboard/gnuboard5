@@ -6,7 +6,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <section id="sit_rel">
     <h2>관련상품</h2>
-    <?php echo pg_anchor($info); ?>
 
     <div class="sct_wrap">
         <?php

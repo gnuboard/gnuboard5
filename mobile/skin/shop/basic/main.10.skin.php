@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
-<script src="<?php echo G5_JS_URL ?>/shop.mobile.list.js"></script>
+<script src="<?php echo G5_JS_URL ?>/jquery.fancylist.js"></script>
 
 <!-- 상품진열 10 시작 { -->
 <?php
@@ -73,6 +73,6 @@ if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 
 <script>
 $(function() {
-    $(".sct_wrap").itemList("li.sct_li", "sct_clear");
+    $(".sct_wrap").fancyList("li.sct_li", "sct_clear");
 });
 </script>
