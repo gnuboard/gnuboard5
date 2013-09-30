@@ -44,6 +44,12 @@ if (G5_IS_MOBILE) {
 if (defined('G5_IS_ADMIN')) {
     echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/admin.css">'.PHP_EOL;
 } else {
+    // canonical 지정
+    $canonical = '';
+    if ($bo_table && $wr_id) $canonical = 'http://'.$_SERVER["HTTP_HOST"].'/bbs/board.php?bo_table='.$bo_table.'&wr_id='.$wr_id;
+    else $canonical = 'http://'.$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
+    echo '<link rel="canonical" href="'.$canonical.'">';
+
     echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/'.(G5_IS_MOBILE?'mobile':'default').'.css">'.PHP_EOL;
 }
 echo '<meta http-equiv="imagetoolbar" content="no">';
