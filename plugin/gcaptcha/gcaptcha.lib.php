@@ -184,9 +184,9 @@ function captcha_html($class='captcha')
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">자동등록방지</legend>';
     if (G5_IS_MOBILE) $html .= '<audio src="'.$mp3_file_url.'?_='.$rand.'" controls></audio>';
-    $html .= '<img src="'.$jpg_file_url.'?_='.$rand.'" alt="자동등록방지 숫자">';
+    $html .= '<img src="'.$jpg_file_url.'?_='.$rand.'" alt="">';
     if (!G5_IS_MOBILE) $html .= '<a href="'.$mp3_file_url.'?_='.$rand.'" id="captcha_mp3" target="_blank"><img src="'.G5_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
-    $html .= '<input type="text" id="captcha_key" name="captcha_key" class="captcha_box frm_input required" size="6" maxlength="6" required title="자동등록방지 숫자 입력">';
+    $html .= '<label class="sound_only">자동등록방지 숫자 </label><input type="text" name="captcha_key" id="captcha_key" required class="captcha_box frm_input required" size="6" maxlength="6">';
     $html .= '<p class="sound_only">자동등록방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';
     return $html;
