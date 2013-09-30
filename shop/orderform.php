@@ -664,7 +664,7 @@ function get_intall_file()
             $sep = chr(30);
 
             // 주문자와 동일
-            $addr_list .= '<input type="radio" name="ad_sel_addr" value="same">'.PHP_EOL;
+            $addr_list .= '<input type="radio" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
             $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
 
             // 기본배송지
@@ -707,10 +707,8 @@ function get_intall_file()
             <th scope="row"><label for="ad_subject">배송지명</label></th>
             <td>
                 <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
-                <?php if ($addr_list) {
-                    echo '<input type="checkbox" name="ad_default" id="ad_default" value="1">'.PHP_EOL.'
-                    <label for="ad_default">기본배송지로 설정</label>';
-                }?>
+                <input type="checkbox" name="ad_default" id="ad_default" value="1">
+                <label for="ad_default">기본배송지로 설정</label>
             </td>
         </tr>
         <?php

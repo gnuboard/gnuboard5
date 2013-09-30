@@ -31,9 +31,6 @@ $sql = " select *
 
 $result = sql_query($sql);
 
-//$qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
-$qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
-
 if(!mysql_num_rows($result))
     alert_close('배송지 목록 자료가 없습니다.');
 
@@ -49,8 +46,6 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 
 ?>
 <form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
-<input type="hidden" name="page" value="<?php echo $page; ?>">
-<input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
 <div id="sod_addr_list" class="new_win">
 
     <h1 id="new_win_title">배송지 목록</h1>
