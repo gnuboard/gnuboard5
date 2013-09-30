@@ -533,8 +533,8 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="od_receipt_time">입금 확인일시</label></th>
             <td>
-                <label for="od_bank_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_bank_chk" id="od_bank_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_bank_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;"><br>
+                <input type="checkbox" name="od_bank_chk" id="od_bank_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_bank_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;">
+                <label for="od_bank_chk">현재 시간으로 설정</label><br>
                 <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="od_receipt_time" class="frm_input" maxlength="19">
             </td>
         </tr>
@@ -556,8 +556,8 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="op_receipt_time">휴대폰 결제일시</label></th>
             <td>
-                <label for="od_hp_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_hp_chk" id="od_hp_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_hp_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;"><br>
+                <input type="checkbox" name="od_hp_chk" id="od_hp_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_hp_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;">
+                <label for="od_hp_chk">현재 시간으로 설정</label><br>
                 <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="op_receipt_time" class="frm_input" size="19" maxlength="19">
             </td>
         </tr>
@@ -575,8 +575,8 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row" class="sodr_sppay"><label for="od_receipt_time">카드 승인일시</label></th>
             <td>
-                <label for="od_card_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_card_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;"><br>
+                <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_card_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;">
+                <label for="od_card_chk">현재 시간으로 설정</label><br>
                 <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="od_receipt_time" class="frm_input" size="19" maxlength="19">
             </td>
         </tr>
@@ -624,8 +624,8 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="od_invoice_time">배송일시</label></th>
             <td>
-                <label for="od_invoice_chk">현재 시간으로 설정</label>
-                <input type="checkbox" name="od_invoice_chk" id="od_invoice_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_invoice_time.value=this.form.od_invoice_chk.value; else this.form.od_invoice_time.value = this.form.od_invoice_time.defaultValue;"><br>
+                <input type="checkbox" name="od_invoice_chk" id="od_invoice_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_invoice_time.value=this.form.od_invoice_chk.value; else this.form.od_invoice_time.value = this.form.od_invoice_time.defaultValue;">
+                <label for="od_invoice_chk">현재 시간으로 설정</label><br>
                 <input type="text" name="od_invoice_time" value="<?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?>" id="od_invoice_time" class="frm_input" maxlength="19">
             </td>
         </tr>

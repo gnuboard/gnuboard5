@@ -724,8 +724,8 @@ $pg_anchor = '<ul class="anchor">
             {
                 $size = getimagesize($logo_img);
             ?>
-            <label for="logo_img_del"><span class="sound_only">로고이미지</span> 삭제</label>
             <input type="checkbox" name="logo_img_del" value="1" id="logo_img_del">
+            <label for="logo_img_del"><span class="sound_only">로고이미지</span> 삭제</label>
             <span class="scf_img_logoimg"></span>
             <div id="logoimg" class="banner_or_img">
                 <img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="">
@@ -748,8 +748,8 @@ $pg_anchor = '<ul class="anchor">
             {
                 $size = getimagesize($main_img);
             ?>
-            <label for="main_img_del"><span class="sound_only">메인이미지</span> 삭제</label>
             <input type="checkbox" name="main_img_del" value="1" id="main_img_del">
+            <label for="main_img_del"><span class="sound_only">메인이미지</span> 삭제</label>
             <span class="scf_img_mainimg"></span>
             <div id="mainimg" class="banner_or_img">
                 <img src="<?php echo G5_DATA_URL; ?>/common/main_img" alt="">
@@ -772,8 +772,8 @@ $pg_anchor = '<ul class="anchor">
             {
                 $size = getimagesize($mobile_logo_img);
             ?>
-            <label for="mobile_logo_img_del"><span class="sound_only">모바일 로고이미지</span> 삭제</label>
             <input type="checkbox" name="mobile_logo_img_del" value="1" id="mobile_logo_img_del">
+            <label for="mobile_logo_img_del"><span class="sound_only">모바일 로고이미지</span> 삭제</label>
             <span class="scf_img_mobilelogoimg"></span>
             <div id="mobilelogoimg" class="banner_or_img">
                 <img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="">
@@ -1039,8 +1039,8 @@ function byte_check(el_cont, el_byte)
             ?>
             <section class="scf_sms_box">
                 <h4><?php echo $scf_sms_title[$i]?></h4>
-                <label for="de_sms_use<?php echo $i; ?>"><span class="sound_only"><?php echo $scf_sms_title; ?></span>사용</label>
                 <input type="checkbox" name="de_sms_use<?php echo $i; ?>" value="1" id="de_sms_use<?php echo $i; ?>" <?php echo ($default["de_sms_use".$i] ? " checked" : ""); ?>>
+                <label for="de_sms_use<?php echo $i; ?>"><span class="sound_only"><?php echo $scf_sms_title; ?></span>사용</label>
                 <div class="scf_sms_img">
                     <textarea id="de_sms_cont<?php echo $i; ?>" name="de_sms_cont<?php echo $i; ?>" ONKEYUP="byte_check('de_sms_cont<?php echo $i; ?>', 'byte<?php echo $i; ?>');"><?php echo $default['de_sms_cont'.$i]; ?></textarea>
                 </div>
