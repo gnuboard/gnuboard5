@@ -39,6 +39,7 @@ if ($row['it_id']) {
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
+<script src="<?php echo G5_JS_URL ?>/jquery.floatmenu.js"></script>
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
@@ -390,6 +391,10 @@ $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
     </ul>
 </div>
 
+<div id="form_btn_layer">
+ddd
+</div>
+
 <script>
 $(function(){
     // 상품이미지 크게보기
@@ -402,6 +407,8 @@ $(function(){
 
         return false;
     });
+
+    $("#form_btn_layer").bottomFloatMenu();
 });
 
 // 바로구매, 장바구니 폼 전송

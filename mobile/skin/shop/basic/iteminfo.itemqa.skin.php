@@ -6,7 +6,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <section id="sit_qa">
     <h2>상품문의</h2>
-    <?php echo pg_anchor($info); ?>
 
     <div id="itemqa"><?php include_once('./itemqa.php'); ?></div>
 </section>
