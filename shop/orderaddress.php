@@ -10,14 +10,29 @@ if($w == 'd') {
     goto_url($_SERVER['PHP_SELF']);
 }
 
+$sql_common = " from {$g5['g5_shop_order_address_table']} ";
+
+$sql = " select count(ad_id) as cnt " . $sql_common;
+$row = sql_fetch($sql);
+$total_count = $row['cnt'];
+
+$rows = $config['cf_page_rows'];
+$total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
+if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
+$from_record = ($page - 1) * $rows; // 시작 열을 구함
+
 $sql = " select *
             from {$g5['g5_shop_order_address_table']}
             where mb_id = '{$member['mb_id']}'
             order by
             ad_default desc,
-            ad_id desc ";
+            ad_id desc 
+            limit $from_record, $rows";
 
 $result = sql_query($sql);
+
+//$qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
+$qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 
 if(!mysql_num_rows($result))
     alert_close('배송지 목록 자료가 없습니다.');
@@ -33,7 +48,9 @@ include_once(G5_PATH.'/head.sub.php');
 $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddress_update.php';
 
 ?>
-<form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return fitemlist_submit(this);" autocomplete="off">
+<form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
 <div id="sod_addr_list" class="new_win">
 
     <h1 id="new_win_title">배송지 목록</h1>
@@ -63,7 +80,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddress_update.php';
             <input type="hidden" name="ad_id[]" value="<?php echo $row['ad_id'];?>">
             <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
         </td>
-        <td class="td_name"><input type="text" name="ad_subject[]" id="ad_subject" class="frm_input" size="10" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
+        <td class="td_name"><input type="text" name="ad_subject[]" id="ad_subject" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
         <td class="td_default"><label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label><input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>></td>
         <td class="td_smallname"><?php echo $row['ad_name']; ?></td>
         <td class="td_bignum"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
@@ -80,28 +97,14 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddress_update.php';
     </tbody>
     </table>
     <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="선택수정" id="btn_submit">
     </div>
 </div>
 </form>
 
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+
 <script>
-function fitemlist_submit(f)
-{
-    if (!is_checked("chk[]")) {
-        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
-        return false;
-    }
-
-    if(document.pressed == "선택삭제") {
-        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 $(function() {
     $(".sel_address").on("click", function() {
         var addr = $(this).siblings("input").val().split(String.fromCharCode(30));
@@ -141,6 +144,13 @@ $(function() {
             $("input[type='checkbox']:not(checked)").attr("checked", true);
         }else{
             $("input[type='checkbox']:checked").attr("checked", false);
+        }
+    });
+
+    $("#btn_submit").on("click", function() {
+        if( $(":checkbox:checked").length==0 ){
+            alert("수정하실 항목을 하나 이상 선택하세요.");
+            return false;
         }
     });
 

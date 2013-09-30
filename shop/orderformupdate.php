@@ -577,75 +577,36 @@ if (get_session('ss_direct'))
 
 // 배송지처리
 if($is_member) {
-    $ad_zip1 = $od_b_zip1;
-    $ad_zip2 = $od_b_zip2;
-    $ad_addr1 = $od_b_addr1;
-    $ad_addr2 = $od_b_addr2;
-
-    $sql = " select count(*) as count from {$g5['g5_shop_order_address_table']}
+    $sql = " select * from {$g5['g5_shop_order_address_table']}
                 where mb_id = '{$member['mb_id']}'
-                and ad_subject = '{$_POST['od_b_subject']}'
-                and ad_name = '{$_POST['od_b_name']}'
-                and ad_tel = '{$_POST['od_b_tel']}'
-                and ad_hp = '{$_POST['od_b_hp']}'
-                and ad_zip1 = '{$_POST['od_b_zip1']}'
-                and ad_zip2 = '{$_POST['od_b_zip2']}'
-                and ad_addr1 = '{$_POST['od_b_addr1']}'
-                and ad_addr2 = '{$_POST['od_b_addr2']}' ";
+                  and ad_name = '{$_POST['od_b_name']}'
+                  and ad_tel = '{$_POST['od_b_tel']}'
+                  and ad_hp = '{$_POST['od_b_hp']}'
+                  and ad_zip1 = '{$_POST['od_b_zip1']}'
+                  and ad_zip2 = '{$_POST['od_b_zip2']}'
+                  and ad_addr1 = '{$_POST['od_b_addr1']}'
+                  and ad_addr2 = '{$_POST['od_b_addr2']}' ";
 
     $row = sql_fetch($sql);
 
-    if(!$row['count']){
-        $sql = " insert into {$g5['g5_shop_order_address_table']}
-                    set mb_id       = '{$member['mb_id']}',
-                        ad_subject  = '$ad_subject',
-                        ad_default  = '$ad_default',
-                        ad_name     = '$od_b_name',
-                        ad_tel      = '$od_b_tel',
-                        ad_hp       = '$od_b_hp',
-                        ad_zip1     = '$od_b_zip1',
-                        ad_zip2     = '$od_b_zip2',
-                        ad_addr1    = '$od_b_addr1',
-                        ad_addr2    = '$od_b_addr2' ";
-        sql_query($sql);
-        echo "됏다";
-    }
-
-
-//print_r ($row);
-
-    $sql = " select ad_id
-                from {$g5['g5_shop_order_address_table']}
-                where mb_id = '{$member['mb_id']}'
-                  and ad_zip1 = '$ad_zip1'
-                  and ad_zip2 = '$ad_zip2'
-                  and ad_addr1 = '$ad_addr1'
-                  and ad_addr2 = '$ad_addr2' ";
-    $row = sql_fetch($sql);
-
+    // 기본배송지로 할시
     if($ad_default) {
         $sql = " update {$g5['g5_shop_order_address_table']}
                     set ad_default = '0'
                     where mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
+
+        if($row['ad_id']){
+            $sql = " update {$g5['g5_shop_order_address_table']}
+                        set ad_default = '1'
+                        where mb_id = '{$member['mb_id']}'
+                        and ad_id = '{$row['ad_id']}' ";
+            sql_query($sql);
+        }
     }
 
-    if($row['ad_id']) {
-        $sql = " update {$g5['g5_shop_order_address_table']}
-                    set ad_zip1     = '$ad_zip1',
-                        ad_zip2     = '$ad_zip2',
-                        ad_addr1    = '$ad_addr1',
-                        ad_addr2    = '$ad_addr2' ";
-        if($ad_default)
-            $sql .= " , ad_default = '$ad_default' ";
-        if($ad_subject)
-            $sql .= " , ad_subject = '$ad_subject' ";
-        $sql .= " where ad_id = '{$row['ad_id']}'
-                    and mb_id = '{$member['mb_id']}' ";
-        sql_query($sql);
-    }
-
-    if(!$row['ad_id'] && $add_address) {
+    // 카운트 된 값이 없으면 새로 배송지 추가 저장
+    if(!$row['ad_id']){
         $sql = " insert into {$g5['g5_shop_order_address_table']}
                     set mb_id       = '{$member['mb_id']}',
                         ad_subject  = '$ad_subject',

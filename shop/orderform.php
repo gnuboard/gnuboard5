@@ -1299,7 +1299,7 @@ $(function() {
     // 배송지목록
     $("#order_address").on("click", function() {
         var url = this.href;
-        window.open(url, "win_address", "left=100,top=100,width=800,height=500,scrollbars=1");
+        window.open(url, "win_address", "left=100,top=100,width=800,height=600,scrollbars=1");
         return false;
     });
 });
