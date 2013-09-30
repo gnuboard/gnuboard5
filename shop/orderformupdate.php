@@ -579,34 +579,30 @@ if (get_session('ss_direct'))
 if($is_member) {
     $sql = " select * from {$g5['g5_shop_order_address_table']}
                 where mb_id = '{$member['mb_id']}'
-                  and ad_name = '{$_POST['od_b_name']}'
-                  and ad_tel = '{$_POST['od_b_tel']}'
-                  and ad_hp = '{$_POST['od_b_hp']}'
-                  and ad_zip1 = '{$_POST['od_b_zip1']}'
-                  and ad_zip2 = '{$_POST['od_b_zip2']}'
-                  and ad_addr1 = '{$_POST['od_b_addr1']}'
-                  and ad_addr2 = '{$_POST['od_b_addr2']}' ";
-
+                  and ad_name = '$od_b_name'
+                  and ad_tel = '$od_b_tel'
+                  and ad_hp = '$od_b_hp'
+                  and ad_zip1 = '$od_b_zip1'
+                  and ad_zip2 = '$od_b_zip2'
+                  and ad_addr1 = '$od_b_addr1'
+                  and ad_addr2 = '$od_b_addr2' ";
     $row = sql_fetch($sql);
 
-    // 기본배송지로 할시
+    // 기본배송지 체크
     if($ad_default) {
         $sql = " update {$g5['g5_shop_order_address_table']}
                     set ad_default = '0'
                     where mb_id = '{$member['mb_id']}' ";
         sql_query($sql);
-
-        if($row['ad_id']){
-            $sql = " update {$g5['g5_shop_order_address_table']}
-                        set ad_default = '1'
-                        where mb_id = '{$member['mb_id']}'
-                        and ad_id = '{$row['ad_id']}' ";
-            sql_query($sql);
-        }
     }
 
-    // 카운트 된 값이 없으면 새로 배송지 추가 저장
-    if(!$row['ad_id']){
+    if($row['ad_id']){
+        $sql = " update {$g5['g5_shop_order_address_table']}
+                      set ad_default = '1',
+                          ad_subject = '$ad_subject'
+                    where mb_id = '{$member['mb_id']}'
+                      and ad_id = '{$row['ad_id']}' ";
+    } else {
         $sql = " insert into {$g5['g5_shop_order_address_table']}
                     set mb_id       = '{$member['mb_id']}',
                         ad_subject  = '$ad_subject',
@@ -618,8 +614,9 @@ if($is_member) {
                         ad_zip2     = '$od_b_zip2',
                         ad_addr1    = '$od_b_addr1',
                         ad_addr2    = '$od_b_addr2' ";
-        sql_query($sql);
     }
+
+    sql_query($sql);
 }
 
 goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);

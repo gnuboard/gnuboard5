@@ -26,7 +26,7 @@ $sql = " select *
             where mb_id = '{$member['mb_id']}'
             order by
             ad_default desc,
-            ad_id desc 
+            ad_id desc
             limit $from_record, $rows";
 
 $result = sql_query($sql);
@@ -45,7 +45,7 @@ if (G5_IS_MOBILE) {
 $g5['title'] = '배송지 목록';
 include_once(G5_PATH.'/head.sub.php');
 
-$order_action_url = G5_HTTPS_SHOP_URL.'/orderaddress_update.php';
+$order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 
 ?>
 <form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
@@ -77,10 +77,10 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddress_update.php';
     ?>
     <tr>
         <td class="td_chk"><label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
-            <input type="hidden" name="ad_id[]" value="<?php echo $row['ad_id'];?>">
+            <input type="hidden" name="ad_id[<?php echo $i; ?>]" value="<?php echo $row['ad_id'];?>">
             <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
         </td>
-        <td class="td_name"><input type="text" name="ad_subject[]" id="ad_subject" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
+        <td class="td_name"><input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
         <td class="td_default"><label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label><input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>></td>
         <td class="td_smallname"><?php echo $row['ad_name']; ?></td>
         <td class="td_bignum"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
@@ -139,16 +139,16 @@ $(function() {
     });
 
     // 전체선택 부분
-    $("#chk_all").on("change", function() {
-        if ($(this).attr("checked")){
-            $("input[type='checkbox']:not(checked)").attr("checked", true);
-        }else{
-            $("input[type='checkbox']:checked").attr("checked", false);
+    $("#chk_all").on("click", function() {
+        if($(this).is(":checked")) {
+            $("input[name^='chk[']").attr("checked", true);
+        } else {
+            $("input[name^='chk[']").attr("checked", false);
         }
     });
 
     $("#btn_submit").on("click", function() {
-        if( $(":checkbox:checked").length==0 ){
+        if($("input[name^='chk[']:checked").length==0 ){
             alert("수정하실 항목을 하나 이상 선택하세요.");
             return false;
         }

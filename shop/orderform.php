@@ -293,7 +293,7 @@ function get_intall_file()
         alert('장바구니가 비어 있습니다.', G5_SHOP_URL.'/cart.php');
     } else {
         // 배송비 계산
-        $send_cost = get_sendcost($tot_sell_price, $s_cart_id);
+        $send_cost = get_sendcost($s_cart_id);
     }
 
     // 복합과세처리
@@ -664,7 +664,7 @@ function get_intall_file()
             $sep = chr(30);
 
             // 주문자와 동일
-            $addr_list .= '<input type="radio" name="ad_sel_addr" id="ad_sel_addr_same">'.PHP_EOL;
+            $addr_list .= '<input type="radio" name="ad_sel_addr" value="same">'.PHP_EOL;
             $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
 
             // 기본배송지
@@ -683,6 +683,7 @@ function get_intall_file()
             $sql = " select *
                         from {$g5['g5_shop_order_address_table']}
                         where mb_id = '{$member['mb_id']}'
+                          and ad_default = '0'
                         order by ad_id desc
                         limit 2 ";
             $result = sql_query($sql);
@@ -1264,8 +1265,10 @@ $(function() {
     // 배송지선택
     $("input[name=ad_sel_addr]").on("click", function() {
         var addr = $(this).val().split(String.fromCharCode(30));
-        if ($(this).attr("id") == "ad_sel_addr_same"); // 이 아이디가 ad_sel_addr_same 일때는 아무런 실행도 하지 않는다.
-        else{ // 아닐땐 실행
+
+        if (addr[0] == "same") {
+            gumae2baesong();
+        } else {
             if(addr[0] == "new") {
                 for(i=0; i<8; i++) {
                     addr[i] = "";
@@ -1659,7 +1662,7 @@ function forderform_check(f)
 }
 
 // 구매자 정보와 동일합니다.
-$("#ad_sel_addr_same").on("click", function(){
+function gumae2baesong() {
     var f = document.forderform;
 
     f.od_b_name.value = f.od_name.value;
@@ -1671,7 +1674,7 @@ $("#ad_sel_addr_same").on("click", function(){
     f.od_b_addr2.value = f.od_addr2.value;
 
     calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
-});
+}
 // 구매자 정보와 동일 함수 끝
 
 <?php if ($default['de_hope_date_use']) { ?>
