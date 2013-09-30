@@ -53,7 +53,7 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="gr_id">그룹 ID<?php echo $sound_only ?></label></th>
-        <td><input type="text" name="gr_id" value="<?php echo $group['gr_id'] ?>" id="gr_id" class="<?php echo $gr_id_attr ?> alnum_ frm_input" maxlength="10"> 
+        <td><input type="text" name="gr_id" value="<?php echo $group['gr_id'] ?>" id="gr_id" required class="<?php echo $gr_id_attr ?> alnum_ frm_input" maxlength="10"> 
             <?php 
             if ($w=='')
                 echo '영문자, 숫자, _ 만 가능 (공백없이)';
