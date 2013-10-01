@@ -14,6 +14,10 @@
 #poll footer a {display:inline-block;width:86px;height:22px;border:1px solid #ccc;background:#fafafa;text-align:center;line-height:2em}
 #poll footer a:focus,
 #poll footer a:hover {text-decoration:none !important}
+
+#poll a.btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
+#poll a.btn_admin:focus, #poll a.btn_admin:hover {text-decoration:none}
+
 /* 설문조사 결과 (새창) */
 #poll_result section {padding:15px;width:87%;border-right:1px solid #eee;border-bottom:1px solid #eee;background:#fff}
 #poll_result h2 {margin:0;padding:20px 0}
@@ -50,3 +54,30 @@
 #poll_result_oth h2 {padding:0 0 10px}
 #poll_result_oth ul {margin:0;padding:0;list-style:none}
 #poll_result_oth a {display:block;padding:10px 0;border-bottom:1px solid #eee}
+
+/* 필수입력 */
+#poll_result .required {background:url('../../../img/wrest.gif') #f7f7f7 top right no-repeat}
+
+/* 폼 테이블 */
+#poll_result .frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
+#poll_result .frm_tbl caption {padding:10px 0;font-weight:bold;text-align:left}
+#poll_result .frm_tbl th {width:100px;padding:7px 13px;border:1px solid #e9e9e9;border-left:0;background:#f7f7f7;text-align:left}
+#poll_result .frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
+#poll_result .frm_tbl textarea, #poll_result .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;color:#000;vertical-align:middle}
+#poll_result .frm_tbl textarea {width:98%;height:100px}
+#poll_result .frm_address {display:block;margin-top:5px}
+#poll_result .frm_file {display:block;margin-bottom:5px}
+#poll_result .frm_tbl #captcha {margin:0;padding:0;border:0;background:transparent}
+#poll_result .frm_tbl #captcha input {margin-left:5px;text-align:center}
+#poll_result .frm_tbl a {text-decoration:none}
+
+.frm_info {display:block;padding:0 0 5px;line-height:1.4em}
+
+#poll_result .btn_confirm {text-align:center} /* 서식단계 진행 */
+#poll_result .btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:middle;cursor:pointer}
+#poll_result button.btn_submit {height:22px;font-size:1em}
+#poll_result .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
+#poll_result .btn_win button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;vertical-align:top;line-height:2em;cursor:pointer}
+#poll_result .btn_win input {height:30px;line-height:2em}
+#poll_result .btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
+#poll_result .btn_win a:focus, #poll_result .btn_win a:hover {text-decoration:none}

@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <!-- 회원 패스워드 확인 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
-<div id="mb_confirm">
+<div id="mb_confirm" class="mbskin">
     <h1><?php echo $g5['title'] ?></h1>
 
     <p>

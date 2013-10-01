@@ -14,7 +14,7 @@ else {
 <!-- 쪽지보기 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
-<div id="memo_view" class="new_win">
+<div id="memo_view" class="new_win mbskin">
     <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
 
     <!-- 쪽지함 선택 시작 { -->
