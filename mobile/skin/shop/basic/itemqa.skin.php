@@ -1,26 +1,5 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-$itemqa_list = "./itemqalist.php";
-$itemqa_form = "./itemqaform.php?it_id=".$it_id;
-$itemqa_formupdate = "./itemqaformupdate.php?it_id=".$it_id;
-
-$thumbnail_width = 500;
-
-$sql_common = " from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
-
-// 테이블의 전체 레코드수만 얻음
-$sql = " select COUNT(*) as cnt " . $sql_common;
-$row = sql_fetch($sql);
-$total_count = $row['cnt'];
-
-$rows = 5;
-$total_page  = ceil($total_count / $rows); // 전체 페이지 계산
-if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
-$from_record = ($page - 1) * $rows; // 시작 레코드 구함
-
-$sql = "select * $sql_common order by iq_id desc limit $from_record, $rows ";
-$result = sql_query($sql);
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
@@ -30,6 +9,8 @@ $result = sql_query($sql);
     <h3>등록된 상품문의</h3>
 
     <?php
+    $thumbnail_width = 500;
+
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $iq_num     = $total_count - ($page - 1) * $rows - $i;
@@ -40,8 +21,6 @@ $result = sql_query($sql);
         $iq_time    = substr($row['iq_time'], 2, 8);
 
         $hash = md5($row['iq_id'].$row['iq_time'].$row['iq_ip']);
-
-        // http://stackoverflow.com/questions/6967081/show-hide-multiple-divs-with-jquery?answertab=votes#tab-top
 
         $iq_stats = '';
         $iq_style = '';
