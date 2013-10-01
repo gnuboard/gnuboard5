@@ -84,8 +84,8 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         전체 주문내역 <?php echo $total_count; ?>건
     </span>
 
-    <label for="chk_misu">미수금없음</label>
     <input type="checkbox" name="chk_misu" value="1" id="chk_misu" <?php echo $chk_misu?'checked="checked"':''; ?> />
+    <label for="chk_misu">미수금없음</label>
 
     <label for="sel_field" class="sound_only">검색대상</label>
     <select name="sel_field">
@@ -200,12 +200,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
     <fieldset id="sdeli_proc_fs">
         <legend>배송 처리 후 안내 발송 선택</legend>
-        <label for="od_send_mail">메일발송</label>
         <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail" checked>
-        <label for="od_send_sms">SMS</label>
+        <label for="od_send_mail">메일발송</label>
         <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked>
-        <label for="od_send_escrow">에스크로배송시작</label>
+        <label for="od_send_sms">SMS</label>
         <input type="checkbox" name="send_escrow" value="1" id="od_send_escrow">
+        <label for="od_send_escrow">에스크로배송시작</label>
     </fieldset>
 
     <div class="btn_confirm">
