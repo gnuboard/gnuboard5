@@ -14,6 +14,10 @@
 #poll footer a {display:inline-block;width:49%;height:2em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;text-align:center;line-height:2em}
 #poll footer a:focus,
 #poll footer a:hover {text-decoration:none !important}
+
+#poll a.btn_admin {display:inline-block;margin:0 0 0.3em;padding:0 1em;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;line-height:2em;vertical-align:middle} /* 관리자 전용 버튼 */
+#poll a.btn_admin:focus, #poll a.btn_admin:hover {text-decoration:none}
+
 /* 설문조사 결과 (새창) */
 #poll_result section {padding:1em;border-bottom:1px solid #eee}
 #poll_result h2 {margin:0;padding:0}
@@ -51,3 +55,29 @@
 #poll_result_oth h2 {padding:1em}
 #poll_result_oth ul {margin:0;padding:0 1em;list-style:none}
 #poll_result_oth a {display:block;padding:1em 0;border-bottom:1px solid #eee;color:#000;text-decoration:none}
+
+/* 폼 테이블 */
+#poll .frm_tbl {margin-bottom:1.5em;width:100%;border-collapse:collapse;border-spacing:0}
+#poll .frm_tbl caption {padding:1em;color:#4b8b99;font-weight:bold;text-align:left}
+#poll .frm_tbl th {padding:0.4em;width:110px;border:1px solid #e9e9e9;border-left:0;vertical-align:top;text-align:left}
+#poll .frm_tbl td {padding:0.4em 0.5em;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
+#poll .frm_tbl textarea, #poll .frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em;-webkit-appearance:none}
+#poll .frm_tbl textarea {width:90%;height:150px}
+#poll .frm_address {display:block;margin-top:0.3em}
+#poll .frm_file {display:block;margin-bottom:0.3em}
+#poll .frm_tbl #captcha {margin:0;padding:0;border:0;background:transparent}
+#poll .frm_tbl #captcha input {margin-left:0.3em;text-align:center}
+#poll .frm_tbl a {text-decoration:none}
+
+#poll .frm_info {display:block;padding:0.3em 0 0;color:#666;line-height:1.3em}
+
+#poll .required {background:url('../../../../img/wrest.gif') #f7f7f7 top right no-repeat} /* 필수입력 */
+
+#poll .btn_confirm {text-align:center} /* 서식단계 진행 */
+#poll .btn_submit {padding:0 1em;height:2.6em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
+#poll .btn_cancel {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2.5em}
+#poll .btn_frmline {display:inline-block;padding:0 0.3em;height:1.9em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.9em} /* 우편번호검색버튼 등 */
+#poll .btn_win {clear:both;margin-bottom:1.5em;text-align:center} /* 새창용 */
+#poll .btn_win a {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em}
+#poll .btn_win button {display:inline-block;padding:0 1em;height:2.65em;border:0;background:#666;color:#fff;text-decoration:none;vertical-align:middle;line-height:2.65em}
+#poll .btn_win input {height:2.65em;line-height:2.65em}

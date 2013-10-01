@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
-<div id="profile" class="new_win">
+<div id="profile" class="new_win mbskin">
     <h1><?php echo $mb_nick ?>님의 프로필</h1>
 
     <table class="frm_tbl">

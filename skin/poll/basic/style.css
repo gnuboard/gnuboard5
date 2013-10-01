@@ -55,9 +55,6 @@
 #poll_result_oth ul {margin:0;padding:0;list-style:none}
 #poll_result_oth a {display:block;padding:10px 0;border-bottom:1px solid #eee}
 
-/* 필수입력 */
-#poll_result .required {background:url('../../../img/wrest.gif') #f7f7f7 top right no-repeat}
-
 /* 폼 테이블 */
 #poll_result .frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 #poll_result .frm_tbl caption {padding:10px 0;font-weight:bold;text-align:left}
@@ -71,7 +68,9 @@
 #poll_result .frm_tbl #captcha input {margin-left:5px;text-align:center}
 #poll_result .frm_tbl a {text-decoration:none}
 
-.frm_info {display:block;padding:0 0 5px;line-height:1.4em}
+#poll_result .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
+
+#poll_result .required {background:url('../../../img/wrest.gif') #f7f7f7 top right no-repeat} /* 필수입력 */
 
 #poll_result .btn_confirm {text-align:center} /* 서식단계 진행 */
 #poll_result .btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:middle;cursor:pointer}
