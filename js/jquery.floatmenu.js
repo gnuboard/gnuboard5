@@ -115,9 +115,9 @@
             init_menu();
         });
 
-        $(window).on("touchmove", function(event) {
+        document.addEventListener('touchmove', function(event) {
             hide_menu();
-        });
+        }, false);
     }
 
     $.fn.bottomFloatMenu = function(timeout, duration, interval, count)
@@ -257,8 +257,8 @@
                 float_menu();
         });
 
-        $(window).on("touchmove", function(event) {
+        document.addEventListener('touchmove', function(event) {
             hide_menu();
-        });
+        }, false);
     }
 }(jQuery));
