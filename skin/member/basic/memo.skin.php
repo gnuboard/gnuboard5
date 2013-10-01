@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <!-- 쪽지 목록 시작 { -->
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
-<div id="memo_list" class="new_win">
+<div id="memo_list" class="new_win mbskin">
     <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
 
     <ul class="new_win_ul">
