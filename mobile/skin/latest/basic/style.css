@@ -2,9 +2,10 @@
 /* SIR 지운아빠 */
 
 /* 최근게시물 스킨 (latest) */
-.lat {position:relative;margin:0 0 1em;padding:0 1em 1.5em;border-bottom:1px solid #ddd}
-.lat ul {margin:0 0 1em;padding:0;list-style:none}
-.lat li {padding:0.2em 0}
-.lat a {color:#000;text-decoration:none}
-.lat_title {display:block;padding:1em 0}
-.lat_more {position:absolute;top:1em;right:1em}
+.lt {position:relative;margin:0 0 1em;padding:0 1em 1.5em;border-bottom:1px solid #ddd}
+.lt ul {margin:0 0 1em;padding:0;list-style:none}
+.lt li {padding:0.2em 0}
+.lt a {color:#000;text-decoration:none}
+.lt .lt_title {display:block;padding:1em 0}
+.lt .lt_more {position:absolute;top:1em;right:1em}
+.lt .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}

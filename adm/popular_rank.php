@@ -86,7 +86,7 @@ $(function(){
     <tr>
         <td class="td_num"><?php echo $rank ?></td>
         <td><?php echo $word ?></td>
-        <td class="td_bignum"><?php echo $row['cnt'] ?></td>
+        <td class="td_numbig"><?php echo $row['cnt'] ?></td>
     </tr>
 
     <?php

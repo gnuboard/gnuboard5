@@ -13,7 +13,7 @@ else {
 
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
-<div id="memo_view" class="new_win">
+<div id="memo_view" class="new_win mbskin">
     <h1><?php echo $g5['title'] ?></h1>
     <ul class="new_win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>

@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
-<div id="memo_write" class="new_win">
+<div id="memo_write" class="new_win mbskin">
     <h1>쪽지보내기</h1>
 
     <ul class="new_win_ul">

@@ -69,8 +69,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
             만료<?php echo substr(str_replace('-', '', $row['po_expire_date']), 2); ?>
             <?php } else echo $row['po_expire_date'] == '9999-12-31' ? '&nbsp;' : $row['po_expire_date']; ?>
         </td>
-        <td class="td_bignum"><?php echo $point1; ?></td>
-        <td class="td_bignum"><?php echo $point2; ?></td>
+        <td class="td_numbig"><?php echo $point1; ?></td>
+        <td class="td_numbig"><?php echo $point2; ?></td>
     </tr>
     <?php
     }
