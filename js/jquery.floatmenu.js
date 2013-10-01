@@ -5,7 +5,7 @@
                 timeout: 200,
                 duration: 300,
                 interval: 500,
-                count: 10
+                count: 5
             };
 
         if(typeof timeout == "object") {
@@ -66,9 +66,10 @@
 
         function hide_menu()
         {
+            $menu.css("display", "none").clearQueue().stop().css("top", "-"+height+"px");
+
             clearTimeout(timeout);
             clearInterval(interval);
-            $menu.css("display", "none").clearQueue().stop().css("top", "-"+height+"px");
 
             interval_count = 0;
             interval = setInterval(check_menu, cfg.interval);
@@ -106,22 +107,17 @@
         });
 
         $(window).on("resize", function(event) {
-            float_menu();
+            if(origin_y != scroll_y)
+                float_menu();
         });
 
         $(window).on("load", function(event) {
             init_menu();
         });
 
-        $(window).on("touchstart", function(event) {
+        $(window).on("touchmove", function(event) {
             hide_menu();
         });
-
-        if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
-            $(window).on("touchmove", function(event) {
-                hide_menu();
-            });
-        }
     }
 
     $.fn.bottomFloatMenu = function(timeout, duration, interval, count)
@@ -130,7 +126,7 @@
                 timeout: 200,
                 duration: 300,
                 interval: 500,
-                count: 10
+                count: 5
             };
 
         if(typeof timeout == "object") {
@@ -205,9 +201,10 @@
 
         function hide_menu()
         {
+            $menu.css("display", "none").css("top", (w_height + height)+"px").clearQueue().stop();
+
             clearTimeout(timeout);
             clearInterval(interval);
-            $menu.css("display", "none").css("top", (w_height + height)+"px").clearQueue().stop();
 
             interval_count = 0;
             interval = setInterval(check_menu, cfg.interval);
@@ -256,17 +253,12 @@
         });
 
         $(window).on("resize", function(event) {
-            float_menu();
+            if(origin_y != scroll_y)
+                float_menu();
         });
 
-        $(window).on("touchstart", function(event) {
+        $(window).on("touchmove", function(event) {
             hide_menu();
         });
-
-        if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
-            $(window).on("touchmove", function(event) {
-                hide_menu();
-            });
-        }
     }
 }(jQuery));
