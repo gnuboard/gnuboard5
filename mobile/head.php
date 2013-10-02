@@ -107,7 +107,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <div id="container">
         <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="wrapper_title"><?php echo $g5['title'] ?></h1><?php } ?>
         <div id="text_size">
-            <button class="no_text_resize" onclick="font_resize('container', 'decrease');">작게</button>
-            <button class="no_text_resize" onclick="font_default('container');">기본</button>
-            <button class="no_text_resize" onclick="font_resize('container', 'increase');">크게</button>
+            <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
+            <button id="text_size_down" onclick="font_resize('container', 'ts_up ts_up2', '');">기본</button>
+            <button id="text_size_def" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');">크게</button>
+            <button id="text_size_up" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');">더크게</button>
         </div>
