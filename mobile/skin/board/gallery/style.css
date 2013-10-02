@@ -71,7 +71,7 @@
 #bo_cate a:focus, #bo_cate a:hover, #bo_cate a:active {text-decoration:none}
 #bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
 
-#bo_gall .gall_li {float:left;padding:0 1em 2em 0}
+#bo_gall .gall_li {float:left;padding:0 10px 20px 0}
 #bo_gall .gall_clear {clear:both}
 
 #bo_gall .gall_con {margin:0;padding:0;list-style:none}

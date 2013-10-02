@@ -4,6 +4,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/jquery.fancylist.js"></script>
 
 <?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $g5['title'] ?></h1><?php } ?>
 
@@ -48,13 +49,6 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
     <ul id="gall_ul">
         <?php for ($i=0; $i<count($list); $i++) {
-            if($i>0 && ($i % $board['bo_mobile_gallery_cols'] == 0))
-                $style = 'clear:both;';
-            else
-                $style = '';
-            if ($i == 0) $k = 0;
-            $k += 1;
-            if ($k % $board['bo_mobile_gallery_cols'] == 0) $style .= "margin:0 !important;";
         ?>
         <li class="gall_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>gall_now<?php } ?>">
             <?php if ($is_checkbox) { ?>
@@ -144,6 +138,12 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
     </form>
 </div>
+
+<script>
+$(window).on("load", function() {
+    $("#gall_ul").fancyList(".gall_li", "gall_clear");
+});
+</script>
 
 <?php if($is_checkbox) { ?>
 <noscript>
