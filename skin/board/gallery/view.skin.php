@@ -4,6 +4,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <!-- 게시물 읽기 시작 { -->
 <div id="bo_v_table"><?php echo $board['bo_subject']; ?></div>
@@ -178,8 +179,8 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
         <!-- } 스크랩 추천 비추천 끝 -->
     </section>
 
-    <?php 
-    include_once(G5_SNS_PATH."/view.sns.skin.php"); 
+    <?php
+    include_once(G5_SNS_PATH."/view.sns.skin.php");
     ?>
 
     <?php
@@ -221,40 +222,6 @@ function board_move(href)
 </script>
 
 <script>
-// 이미지 등비율 리사이징
-$(window).load(function() {
-    view_image_resize();
-});
-
-var now = new Date();
-var timeout = false;
-var millisec = 200;
-var tid;
-
-$(window).resize(function() {
-    now = new Date();
-    if (timeout === false) {
-        timeout = true;
-
-        if(tid != null)
-            clearTimeout(tid);
-
-        tid = setTimeout(resize_check, millisec);
-    }
-});
-
-function resize_check() {
-    if (new Date() - now < millisec) {
-        if(tid != null)
-            clearTimeout(tid);
-
-        tid = setTimeout(resize_check, millisec);
-    } else {
-        timeout = false;
-        view_image_resize();
-    }
-}
-
 $(function() {
     $("a.view_image").click(function() {
         window.open(this.href, "large_image", "location=yes,links=no,toolbar=no,top=10,left=10,width=10,height=10,resizable=yes,scrollbars=no,status=no");
@@ -272,43 +239,10 @@ $(function() {
         excute_good(this.href, $(this), $tx);
         return false;
     });
+
+    // 이미지 리사이즈
+    $("#bo_v_atc").viewimageresize();
 });
-
-function view_image_resize()
-{
-    var $img = $("#bo_v_atc img");
-    var img_wrap = $("#bo_v_atc").width();
-    var win_width = $(window).width() - 35;
-    var res_width = 0;
-
-    if(img_wrap < win_width)
-        res_width = img_wrap;
-    else
-        res_width = win_width;
-
-    $img.each(function() {
-        var img_width = $(this).width();
-        var img_height = $(this).height();
-        var this_width = $(this).data("width");
-        var this_height = $(this).data("height");
-
-        if(this_width == undefined) {
-            $(this).data("width", img_width); // 원래 이미지 사이즈
-            $(this).data("height", img_height);
-            this_width = img_width;
-            this_height = img_height;
-        }
-
-        if(this_width > res_width) {
-            $(this).width(res_width);
-            var res_height = Math.round(res_width * $(this).data("height") / $(this).data("width"));
-            $(this).height(res_height);
-        } else {
-            $(this).width(this_width);
-            $(this).height(this_height);
-        }
-    });
-}
 
 function excute_good(href, $el, $tx)
 {
@@ -333,4 +267,4 @@ function excute_good(href, $el, $tx)
     );
 }
 </script>
-<!-- } 게시글 읽기 끝 --> 
+<!-- } 게시글 읽기 끝 -->

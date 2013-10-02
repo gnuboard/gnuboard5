@@ -81,7 +81,6 @@ CREATE TABLE IF NOT EXISTS `g5_board` (
   `bo_gallery_cols` int(11) NOT NULL DEFAULT '0',
   `bo_gallery_width` int(11) NOT NULL DEFAULT '0',
   `bo_gallery_height` int(11) NOT NULL DEFAULT '0',
-  `bo_mobile_gallery_cols` int(11) NOT NULL DEFAULT '0',
   `bo_mobile_gallery_width` int(11) NOT NULL DEFAULT '0',
   `bo_mobile_gallery_height` int(11) NOT NULL DEFAULT '0',
   `bo_upload_size` int(11) NOT NULL DEFAULT '0',

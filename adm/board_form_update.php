@@ -100,7 +100,6 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_gallery_cols     = '{$_POST['bo_gallery_cols']}',
                 bo_gallery_width    = '{$_POST['bo_gallery_width']}',
                 bo_gallery_height   = '{$_POST['bo_gallery_height']}',
-                bo_mobile_gallery_cols  = '{$_POST['bo_mobile_gallery_cols']}',
                 bo_mobile_gallery_width = '{$_POST['bo_mobile_gallery_width']}',
                 bo_mobile_gallery_height= '{$_POST['bo_mobile_gallery_height']}',
                 bo_upload_count     = '{$_POST['bo_upload_count']}',
@@ -264,7 +263,6 @@ if (is_checked('chk_grp_mobile_skin'))          $grp_fields .= " , bo_mobile_ski
 if (is_checked('chk_grp_gallery_cols'))         $grp_fields .= " , bo_gallery_cols = '{$bo_gallery_cols}' ";
 if (is_checked('chk_grp_gallery_width'))        $grp_fields .= " , bo_gallery_width = '{$bo_gallery_width}' ";
 if (is_checked('chk_grp_gallery_height'))       $grp_fields .= " , bo_gallery_height = '{$bo_gallery_height}' ";
-if (is_checked('chk_grp_mobile_gallery_cols'))  $grp_fields .= " , bo_mobile_gallery_cols = '{$bo_mobile_gallery_cols}' ";
 if (is_checked('chk_grp_mobile_gallery_width')) $grp_fields .= " , bo_mobile_gallery_width = '{$bo_mobile_gallery_width}' ";
 if (is_checked('chk_grp_mobile_gallery_height'))$grp_fields .= " , bo_mobile_gallery_height = '{$bo_mobile_gallery_height}' ";
 if (is_checked('chk_grp_table_width'))          $grp_fields .= " , bo_table_width = '{$bo_table_width}' ";
@@ -349,7 +347,6 @@ if (is_checked('chk_all_mobile_skin'))          $all_fields .= " , bo_mobile_ski
 if (is_checked('chk_all_gallery_cols'))         $all_fields .= " , bo_gallery_cols = '{$bo_gallery_cols}' ";
 if (is_checked('chk_all_gallery_width'))        $all_fields .= " , bo_gallery_width = '{$bo_gallery_width}' ";
 if (is_checked('chk_all_gallery_height'))       $all_fields .= " , bo_gallery_height = '{$bo_gallery_height}' ";
-if (is_checked('chk_all_mobile_gallery_cols'))  $all_fields .= " , bo_mobile_gallery_cols = '{$bo_mobile_gallery_cols}' ";
 if (is_checked('chk_all_mobile_gallery_width')) $all_fields .= " , bo_mobile_gallery_width = '{$bo_mobile_gallery_width}' ";
 if (is_checked('chk_all_mobile_gallery_height'))$all_fields .= " , bo_mobile_gallery_height = '{$bo_mobile_gallery_height}' ";
 if (is_checked('chk_all_table_width'))          $all_fields .= " , bo_table_width = '{$bo_table_width}' ";

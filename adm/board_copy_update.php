@@ -84,7 +84,6 @@ $sql = " insert into {$g5['board_table']}
                 bo_gallery_cols = '{$board[bo_gallery_cols]}',
                 bo_gallery_width = '{$board[bo_gallery_width]}',
                 bo_gallery_height = '{$board[bo_gallery_height]}',
-                bo_mobile_gallery_cols = '{$board[bo_mobile_gallery_cols]}',
                 bo_mobile_gallery_width = '{$board[bo_mobile_gallery_width]}',
                 bo_mobile_gallery_height = '{$board[bo_mobile_gallery_height]}',
                 bo_upload_size = '{$board[bo_upload_size]}',
