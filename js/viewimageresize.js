@@ -14,10 +14,12 @@
         }
 
         var $img = this.find(cfg.selector);
-        var width = this.width();
+        var $this = this;
 
         function image_resize()
         {
+            var width = $this.width();
+
             $img.each(function() {
                 $(this).removeAttr("width")
                        .removeAttr("height")
