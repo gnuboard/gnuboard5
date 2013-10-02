@@ -3,6 +3,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/iteminfoimageresize.js"></script>
 
 <!-- 상품문의 목록 시작 { -->
 <section id="sit_qa_list">
@@ -110,7 +111,12 @@ $(function(){
             $con.slideUp();
         } else {
             $(".sit_qa_con:visible").hide();
-            $con.slideDown();
+            $con.slideDown(
+                function() {
+                    // 이미지 리사이즈
+                    $con.iteminfoimageresize();
+                }
+            );
         }
     });
 

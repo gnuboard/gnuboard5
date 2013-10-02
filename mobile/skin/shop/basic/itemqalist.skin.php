@@ -3,6 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/iteminfoimageresize.js"></script>
 
 <!-- 전체 상품 문의 목록 시작 { -->
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -111,7 +112,12 @@ $(function(){
         } else {
             $(".sqa_con_btn button").text("보기");
             $("div[id^=sqa_con]:visible").hide();
-            $con.slideDown();
+            $con.slideDown(
+                function() {
+                    // 이미지 리사이즈
+                    $con.iteminfoimageresize();
+                }
+            );
             $(this).text("닫기");
         }
     });
