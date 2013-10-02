@@ -4,25 +4,12 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/jquery.fancylist.js"></script>
 
 <?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $g5['title'] ?></h1><?php } ?>
 
-<div class="ad72890">
-    <script type="text/javascript"><!--
-    google_ad_client = "ca-pub-9955166939194057";
-    /* 써글728-1 */
-    google_ad_slot = "9632665464";
-    google_ad_width = 728;
-    google_ad_height = 90;
-    //-->
-    </script>
-    <script type="text/javascript"
-    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-    </script>
-</div>
-
 <!-- 게시판 목록 시작 -->
-<div id="bo_img">
+<div id="bo_gall">
 
     <?php if ($is_category) { ?>
     <form name="fcategory" id="fcategory" method="get">
@@ -60,18 +47,10 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
     <h2>이미지 목록</h2>
 
-    <ul id="bo_img_list">
+    <ul id="gall_ul">
         <?php for ($i=0; $i<count($list); $i++) {
-            if($i>0 && ($i % $board['bo_mobile_gallery_cols'] == 0))
-                $style = 'clear:both;';
-            else
-                $style = '';
-            if ($i == 0) $k = 0;
-            $k += 1;
-            if ($k % $board['bo_mobile_gallery_cols'] == 0) $style .= "margin:0 !important;";
-            $li_width = 100 / $board['bo_mobile_gallery_cols']; // 100% 를 모바일 이미지 수로 나누어 li 넓이값에 적용 - 지운아빠 2013-03-07
         ?>
-        <li class="bo_img_list_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<?php } ?>" style="<?php echo $style ?>width:<?php echo round($li_width) ?>%">
+        <li class="gall_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>gall_now<?php } ?>">
             <?php if ($is_checkbox) { ?>
             <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
             <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
@@ -84,8 +63,8 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
                     echo $list[$i]['num'];
                 ?>
             </span>
-            <ul class="bo_img_con">
-                <li class="bo_img_href">
+            <ul class="gall_con">
+                <li class="gall_href">
                     <a href="<?php echo $list[$i]['href'] ?>">
                     <?php
                     if ($list[$i]['is_notice']) { // 공지사항 ?>
@@ -105,7 +84,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
                     ?>
                     </a>
                 </li>
-                <li class="bo_img_text_href">
+                <li class="gall_text_href">
                     <?php
                     // echo $list[$i]['icon_reply']; 갤러리는 reply 를 사용 안 할 것 같습니다. - 지운아빠 2013-03-04
                     if ($is_category && $list[$i]['ca_name']) {
@@ -127,11 +106,11 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
                     //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
                     ?>
                 </li>
-                <li><span class="bo_img_subject">작성자 </span><?php echo $list[$i]['name'] ?></li>
-                <li><span class="bo_img_subject">작성일 </span><?php echo $list[$i]['datetime2'] ?></li>
-                <li><span class="bo_img_subject">조회 </span><?php echo $list[$i]['wr_hit'] ?></li>
-                <?php if ($is_good) { ?><li><span class="bo_img_subject">추천</span><strong><?php echo $list[$i]['wr_good'] ?></strong></li><?php } ?>
-                <?php if ($is_nogood) { ?><li><span class="bo_img_subject">비추천</span><strong><?php echo $list[$i]['wr_nogood'] ?></strong></li><?php } ?>
+                <li><span class="gall_subject">작성자 </span><?php echo $list[$i]['name'] ?></li>
+                <li><span class="gall_subject">작성일 </span><?php echo $list[$i]['datetime2'] ?></li>
+                <li><span class="gall_subject">조회 </span><?php echo $list[$i]['wr_hit'] ?></li>
+                <?php if ($is_good) { ?><li><span class="gall_subject">추천</span><strong><?php echo $list[$i]['wr_good'] ?></strong></li><?php } ?>
+                <?php if ($is_nogood) { ?><li><span class="gall_subject">비추천</span><strong><?php echo $list[$i]['wr_nogood'] ?></strong></li><?php } ?>
             </ul>
         </li>
         <?php } ?>
@@ -159,6 +138,12 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
     </form>
 </div>
+
+<script>
+$(window).on("load", function() {
+    $("#gall_ul").fancyList(".gall_li", "gall_clear");
+});
+</script>
 
 <?php if($is_checkbox) { ?>
 <noscript>

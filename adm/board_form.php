@@ -30,7 +30,7 @@ if (!isset($board['bo_mobile_skin'])) {
 }
 
 if (!isset($board['bo_gallery_width'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_width`,  ADD `bo_mobile_gallery_cols` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_width` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_cols`,  ADD `bo_mobile_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_width` ", false);
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_gallery_width` INT NOT NULL AFTER `bo_gallery_cols`,  ADD `bo_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_width`,  ADD `bo_mobile_gallery_width` INT NOT NULL DEFAULT '0' AFTER `bo_gallery_height`,  ADD `bo_mobile_gallery_height` INT NOT NULL DEFAULT '0' AFTER `bo_mobile_gallery_width` ", false);
 }
 
 if (!isset($board['bo_mobile_subject_len'])) {
@@ -101,7 +101,6 @@ if ($w == '') {
     $board['bo_gallery_cols'] = 4;
     $board['bo_gallery_width'] = 174;
     $board['bo_gallery_height'] = 124;
-    $board['bo_mobile_gallery_cols'] = 3;
     $board['bo_mobile_gallery_width'] = 125;
     $board['bo_mobile_gallery_height'] = 100;
     $board['bo_table_width'] = 100;
@@ -986,19 +985,6 @@ $pg_anchor = '<ul class="anchor">
             <label for="chk_grp_gallery_height">그룹적용</label>
             <input type="checkbox" name="chk_all_gallery_height" value="1" id="chk_all_gallery_height">
             <label for="chk_all_gallery_height">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="bo_mobile_gallery_cols">모바일<br>갤러리 이미지 수<strong class="sound_only">필수</strong></label></th>
-        <td>
-            <?php echo help('모바일로 접속시 갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여 줄 것인지를 설정하는 값') ?>
-            <input type="text" name="bo_mobile_gallery_cols" value="<?php echo $board['bo_mobile_gallery_cols'] ?>" id="bo_mobile_gallery_cols" required class="required numeric frm_input" size="4">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="mobile_chk_grp_gallery_cols" id="mobile_chk_grp_gallery_cols" value="1">
-            <label for="mobile_chk_grp_gallery_cols">그룹적용</label>
-            <input type="checkbox" name="mobile_chk_all_gallery_cols" id="mobile_chk_all_gallery_cols" value="1">
-            <label for="mobile_chk_all_gallery_cols">전체적용</label>
         </td>
     </tr>
     <tr>
