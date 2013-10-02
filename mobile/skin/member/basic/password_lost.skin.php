@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="find_info" class="new_win mbskin">
-    <h1>아이디/패스워드 찾기</h1>
+    <h1 id="new_win_title">아이디/패스워드 찾기</h1>
 
     <form name="fpasswordlost" action="<?php echo $action_url ?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
     <fieldset id="find_info_fs">
