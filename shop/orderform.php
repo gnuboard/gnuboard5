@@ -655,11 +655,6 @@ function get_intall_file()
     <section id="sod_frm_taker">
         <h2>받으시는 분</h2>
 
-        <div id="sod_frm_same">
-            <input type="checkbox" name="same" id="same" onclick="javascript:gumae2baesong(document.forderform);">
-            <label for="same">주문하시는 분과 받으시는 분의 정보가 동일한 경우 체크하십시오.</label>
-        </div>
-
         <table class="frm_tbl">
         <tbody>
         <?php
@@ -667,6 +662,11 @@ function get_intall_file()
             // 배송지 이력
             $addr_list = '';
             $sep = chr(30);
+
+            // 주문자와 동일
+            $addr_list .= '<input type="radio" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
+            $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
+
             // 기본배송지
             $sql = " select *
                         from {$g5['g5_shop_order_address_table']}
@@ -683,6 +683,7 @@ function get_intall_file()
             $sql = " select *
                         from {$g5['g5_shop_order_address_table']}
                         where mb_id = '{$member['mb_id']}'
+                          and ad_default = '0'
                         order by ad_id desc
                         limit 2 ";
             $result = sql_query($sql);
@@ -704,7 +705,11 @@ function get_intall_file()
         </tr>
         <tr>
             <th scope="row"><label for="ad_subject">배송지명</label></th>
-            <td><input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20"></td>
+            <td>
+                <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
+                <input type="checkbox" name="ad_default" id="ad_default" value="1">
+                <label for="ad_default">기본배송지로 설정</label>
+            </td>
         </tr>
         <?php
         }
@@ -731,16 +736,6 @@ function get_intall_file()
                 <label for="od_b_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
                 <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="3" maxlength="3">
                 <span id="od_winb_zip" style="display:block"></span>
-                <?php if($addr_list) { ?>
-                <div>
-                    <div>
-                        <input type="checkbox" name="add_address" id="add_address" value="1">
-                        <label for="add_address">배송지목록에 추가</label>
-                        <input type="checkbox" name="ad_default" id="ad_default" value="1">
-                        <label for="ad_default">기본배송지로 설정</label>
-                    </div>
-                </div>
-                <?php } ?>
                 <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
                 <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="50">
                 <label for="od_b_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
@@ -1269,31 +1264,35 @@ $(function() {
     $("input[name=ad_sel_addr]").on("click", function() {
         var addr = $(this).val().split(String.fromCharCode(30));
 
-        if(addr[0] == "new") {
-            for(i=0; i<8; i++) {
-                addr[i] = "";
+        if (addr[0] == "same") {
+            gumae2baesong();
+        } else {
+            if(addr[0] == "new") {
+                for(i=0; i<8; i++) {
+                    addr[i] = "";
+                }
             }
-        }
 
-        var f = document.forderform;
-        f.od_b_name.value   = addr[0];
-        f.od_b_tel.value    = addr[1];
-        f.od_b_hp.value     = addr[2];
-        f.od_b_zip1.value   = addr[3];
-        f.od_b_zip2.value   = addr[4];
-        f.od_b_addr1.value  = addr[5];
-        f.od_b_addr2.value  = addr[6];
-        f.ad_subject.value  = addr[7];
+            var f = document.forderform;
+            f.od_b_name.value   = addr[0];
+            f.od_b_tel.value    = addr[1];
+            f.od_b_hp.value     = addr[2];
+            f.od_b_zip1.value   = addr[3];
+            f.od_b_zip2.value   = addr[4];
+            f.od_b_addr1.value  = addr[5];
+            f.od_b_addr2.value  = addr[6];
+            f.ad_subject.value  = addr[7];
 
-        var zip1 = addr[3].replace(/[^0-9]/g, "");
-        var zip2 = addr[4].replace(/[^0-9]/g, "");
+            var zip1 = addr[3].replace(/[^0-9]/g, "");
+            var zip2 = addr[4].replace(/[^0-9]/g, "");
 
-        if(zip1 != "" && zip2 != "") {
-            var code = String(zip1) + String(zip2);
+            if(zip1 != "" && zip2 != "") {
+                var code = String(zip1) + String(zip2);
 
-            if(zipcode != code) {
-                zipcode = code;
-                calculate_sendcost(code);
+                if(zipcode != code) {
+                    zipcode = code;
+                    calculate_sendcost(code);
+                }
             }
         }
     });
@@ -1301,7 +1300,7 @@ $(function() {
     // 배송지목록
     $("#order_address").on("click", function() {
         var url = this.href;
-        window.open(url, "win_address", "left=100,top=100,width=650,height=500,scrollbars=1");
+        window.open(url, "win_address", "left=100,top=100,width=800,height=600,scrollbars=1");
         return false;
     });
 });
@@ -1661,8 +1660,9 @@ function forderform_check(f)
 }
 
 // 구매자 정보와 동일합니다.
-function gumae2baesong(f)
-{
+function gumae2baesong() {
+    var f = document.forderform;
+
     f.od_b_name.value = f.od_name.value;
     f.od_b_tel.value  = f.od_tel.value;
     f.od_b_hp.value   = f.od_hp.value;
@@ -1673,6 +1673,7 @@ function gumae2baesong(f)
 
     calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
 }
+// 구매자 정보와 동일 함수 끝
 
 <?php if ($default['de_hope_date_use']) { ?>
 $(function(){

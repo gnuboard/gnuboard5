@@ -132,8 +132,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="ev_subject">이벤트제목</label></th>
         <td>
             <input type="text" name="ev_subject" value="<?php echo htmlspecialchars2($ev['ev_subject']); ?>" id="ev_subject" required class="required frm_input"  size="60">
-            <label for="ev_subject_strong">제목 강조</label>
             <input type="checkbox" name="ev_subject_strong" value="1" id="ev_subject_strong" <?php if($ev['ev_subject_strong']) echo 'checked="checked"'; ?>>
+            <label for="ev_subject_strong">제목 강조</label>
         </td>
     </tr>
     <tr>

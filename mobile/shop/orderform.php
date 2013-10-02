@@ -431,6 +431,11 @@ ob_end_clean();
             // 배송지 이력
             $addr_list = '';
             $sep = chr(30);
+
+            // 주문자와 동일
+            $addr_list .= '<input type="radio" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
+            $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
+
             // 기본배송지
             $sql = " select *
                         from {$g5['g5_shop_order_address_table']}
@@ -447,6 +452,7 @@ ob_end_clean();
             $sql = " select *
                         from {$g5['g5_shop_order_address_table']}
                         where mb_id = '{$member['mb_id']}'
+                          and ad_default = '0'
                         order by ad_id desc
                         limit 2 ";
             $result = sql_query($sql);
@@ -468,7 +474,11 @@ ob_end_clean();
         </tr>
         <tr>
             <th scope="row"><label for="ad_subject">배송지명</label></th>
-            <td><input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20"></td>
+            <td>
+                <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
+                <input type="checkbox" name="ad_default" id="ad_default" value="1">
+                <label for="ad_default">기본배송지로 설정</label>
+            </td>
         </tr>
         <?php
         }
@@ -1052,31 +1062,35 @@ $(function() {
     $("input[name=ad_sel_addr]").on("click", function() {
         var addr = $(this).val().split(String.fromCharCode(30));
 
-        if(addr[0] == "new") {
-            for(i=0; i<8; i++) {
-                addr[i] = "";
+        if (addr[0] == "same") {
+            gumae2baesong();
+        } else {
+            if(addr[0] == "new") {
+                for(i=0; i<8; i++) {
+                    addr[i] = "";
+                }
             }
-        }
 
-        var f = document.forderform;
-        f.od_b_name.value   = addr[0];
-        f.od_b_tel.value    = addr[1];
-        f.od_b_hp.value     = addr[2];
-        f.od_b_zip1.value   = addr[3];
-        f.od_b_zip2.value   = addr[4];
-        f.od_b_addr1.value  = addr[5];
-        f.od_b_addr2.value  = addr[6];
-        f.ad_subject.value  = addr[7];
+            var f = document.forderform;
+            f.od_b_name.value   = addr[0];
+            f.od_b_tel.value    = addr[1];
+            f.od_b_hp.value     = addr[2];
+            f.od_b_zip1.value   = addr[3];
+            f.od_b_zip2.value   = addr[4];
+            f.od_b_addr1.value  = addr[5];
+            f.od_b_addr2.value  = addr[6];
+            f.ad_subject.value  = addr[7];
 
-        var zip1 = addr[3].replace(/[^0-9]/g, "");
-        var zip2 = addr[4].replace(/[^0-9]/g, "");
+            var zip1 = addr[3].replace(/[^0-9]/g, "");
+            var zip2 = addr[4].replace(/[^0-9]/g, "");
 
-        if(zip1 != "" && zip2 != "") {
-            var code = String(zip1) + String(zip2);
+            if(zip1 != "" && zip2 != "") {
+                var code = String(zip1) + String(zip2);
 
-            if(zipcode != code) {
-                zipcode = code;
-                calculate_sendcost(code);
+                if(zipcode != code) {
+                    zipcode = code;
+                    calculate_sendcost(code);
+                }
             }
         }
     });
@@ -1469,8 +1483,10 @@ function payment_check(f)
 }
 
 // 구매자 정보와 동일합니다.
-function gumae2baesong(f)
+function gumae2baesong()
 {
+    var f = document.forderform;
+
     f.od_b_name.value = f.od_name.value;
     f.od_b_tel.value  = f.od_tel.value;
     f.od_b_hp.value   = f.od_hp.value;

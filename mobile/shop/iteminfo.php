@@ -71,6 +71,7 @@ function pg_anchor($info) {
 <div id="info_top_layer">
     <h2>상품 정보</h2>
     <?php echo pg_anchor($info); ?>
+    <button type="button" id="iteminfo_close" onclick="self.close();">닫기</button>
 </div>
 
 <div id="info_content">

@@ -305,18 +305,6 @@ if ($row['it_id']) {
 
         <div id="sit_tot_price"></div>
 
-        <?php if ($it['it_use']) { ?>
-        <ul id="sit_ov_btn">
-            <?php if (!$it['it_tel_inq']) { ?>
-            <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
-            <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
-            <?php } ?>
-
-            <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
-            <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
-        </ul>
-        <?php } ?>
-
         <script>
         // 상품보관
         function item_wish(f, it_id)
@@ -344,8 +332,6 @@ if ($row['it_id']) {
         </script>
     </section>
 </div>
-
-</form>
 
 <aside id="sit_siblings">
     <h2>다른 상품 보기</h2>
@@ -391,9 +377,21 @@ $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
     </ul>
 </div>
 
+<?php if ($it['it_use']) { ?>
 <div id="form_btn_layer">
-ddd
+    <ul id="sit_ov_btn">
+        <?php if (!$it['it_tel_inq']) { ?>
+        <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
+        <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
+        <?php } ?>
+
+        <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
+        <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
+    </ul>
 </div>
+<?php } ?>
+
+</form>
 
 <script>
 $(function(){

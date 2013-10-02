@@ -44,6 +44,12 @@ if (G5_IS_MOBILE) {
 if (defined('G5_IS_ADMIN')) {
     echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/admin.css">'.PHP_EOL;
 } else {
+    // canonical 지정
+    $canonical = '';
+    if ($bo_table && $wr_id) $canonical = 'http://'.$_SERVER["HTTP_HOST"].'/bbs/board.php?bo_table='.$bo_table.'&wr_id='.$wr_id;
+    else $canonical = 'http://'.$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
+    echo '<link rel="canonical" href="'.$canonical.'">';
+
     $shop_css = '';
     if (defined('_SHOP_')) $shop_css = '_shop';
     echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/'.(G5_IS_MOBILE?'mobile':'default').$shop_css.'.css">'.PHP_EOL;
@@ -81,7 +87,6 @@ if ($is_admin) {
 <script src="<?php echo G5_JS_URL ?>/wrest.js"></script>
 <?php
 if(G5_IS_MOBILE) {
-    echo '<script> set_cookie("device_width", screen.width, 6, g5_cookie_domain); </script>'.PHP_EOL;
     echo '<script src="'.G5_JS_URL.'/modernizr.custom.70111.js"></script>'.PHP_EOL; // overflow scroll 감지
 }
 //if(!defined('G5_IS_ADMIN'))

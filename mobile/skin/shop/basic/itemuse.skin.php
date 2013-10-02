@@ -1,24 +1,5 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-$itemuse_list = "./itemuselist.php";
-$itemuse_form = "./itemuseform.php?it_id=".$it_id;
-$itemuse_formupdate = "./itemuseformupdate.php?it_id=".$it_id;
-
- $sql_common = " from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
-
-// 테이블의 전체 레코드수만 얻음
-$sql = " select COUNT(*) as cnt " . $sql_common;
-$row = sql_fetch($sql);
-$total_count = $row['cnt'];
-
-$rows = 5;
-$total_page  = ceil($total_count / $rows); // 전체 페이지 계산
-if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
-$from_record = ($page - 1) * $rows; // 시작 레코드 구함
-
-$sql = "select * $sql_common order by is_id desc limit $from_record, $rows ";
-$result = sql_query($sql);
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
@@ -28,6 +9,8 @@ $result = sql_query($sql);
     <h3>등록된 사용후기</h3>
 
     <?php
+    $thumbnail_width = 500;
+
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $is_num     = $total_count - ($page - 1) * $rows - $i;
@@ -35,13 +18,11 @@ $result = sql_query($sql);
         $is_name    = get_text($row['is_name']);
         $is_subject = conv_subject($row['is_subject'],50,"…");
         //$is_content = ($row['wr_content']);
-        $is_content = get_view_thumbnail($row['is_content'], 300);
+        $is_content = get_view_thumbnail($row['is_content'], $thumbnail_width);
         $is_time    = substr($row['is_time'], 2, 8);
         $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
 
         $hash = md5($row['is_id'].$row['is_time'].$row['is_ip']);
-
-        // http://stackoverflow.com/questions/6967081/show-hide-multiple-divs-with-jquery?answertab=votes#tab-top
 
         if ($i == 0) echo '<ol id="sit_use_ol">';
     ?>

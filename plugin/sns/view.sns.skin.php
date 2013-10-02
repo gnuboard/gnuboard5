@@ -9,7 +9,7 @@ $msg_url = $sns_msg.' : '.$sns_url;
 
 // 카카오톡 매뉴얼 : https://github.com/kakao/kakaolink-web
 $kakao_appid   = $_SERVER['HTTP_HOST']; // Mobile Site Domain 정확히 입력하지 않을 경우 이용이 제한될 수 있습니다.
-$kakao_appname = $g5['title'];
+$kakao_appname = urlencode(str_replace('\"', '"', $g5['title']));
 
 $facebook_url  = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]='.$sns_url.'&p[title]='.$sns_msg;
 $twitter_url   = 'http://twitter.com/home?status='.$msg_url;

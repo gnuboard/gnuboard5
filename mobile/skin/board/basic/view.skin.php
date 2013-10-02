@@ -4,6 +4,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 ?>
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <div id="bo_v_table"><?php echo $board['bo_subject']; ?></div>
 
@@ -226,6 +227,9 @@ $(function() {
         excute_good(this.href, $(this), $tx);
         return false;
     });
+
+    // 이미지 리사이즈
+    $("#bo_v_atc").viewimageresize();
 });
 
 function excute_good(href, $el, $tx)

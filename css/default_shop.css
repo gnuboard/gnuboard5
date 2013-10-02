@@ -239,6 +239,10 @@ button.btn_frmline2 {font-size:1em;cursor:pointer}
 .btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c !important;background:#e8180c !important;color:#fff !important;text-decoration:none !important;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
 .btn_admin:focus, .btn_admin:hover {text-decoration:none !important}
 
+/* 선택수정 버튼 */
+.btn_list {margin:0 auto;width:93%}
+.btn_list input, .btn_list button {background: none repeat scroll 0 0 #617D46;border: 0 none;color: #FFFFFF;height: 28px;line-height: 2.2em;padding: 0 15px;vertical-align: middle}
+
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
 .basic_tbl caption {margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
@@ -307,6 +311,7 @@ td.empty_table {padding:85px 0;text-align:center}
 .td_datetime {width:110px;text-align:center}
 .td_smallmng {width:50px;text-align:center}
 .td_mng {width:80px;text-align:center}
+.td_default {width:60px;text-align:center}
 
 /* 새창 기본 스타일 */
 .new_win {}

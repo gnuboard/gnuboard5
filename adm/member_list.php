@@ -247,8 +247,8 @@ $colspan = 15;
             <?php echo get_member_level_select("mb_level[$i]", 1, $member['mb_level'], $row['mb_level']) ?>
         </td>
         <td headers="mb_list_lastcall" class="td_date"><?php echo substr($row['mb_today_login'],2,8); ?></td>
-        <td headers="mb_list_grp" rowspan="2" class="td_smallnum"><?php echo $group ?></td>
-        <td headers="mb_list_mng" rowspan="2" class="td_smallmng"><?php echo $s_mod ?><br><?php echo $s_grp ?></td>
+        <td headers="mb_list_grp" rowspan="2" class="td_numsmall"><?php echo $group ?></td>
+        <td headers="mb_list_mng" rowspan="2" class="td_mngsmall"><?php echo $s_mod ?><br><?php echo $s_grp ?></td>
     </tr>
     <tr <?php echo $tr_bg; ?>>
         <td headers="mb_list_nick" class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>

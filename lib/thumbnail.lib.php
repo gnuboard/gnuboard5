@@ -80,23 +80,8 @@ function get_view_thumbnail($contents, $thumb_width=0)
 {
     global $board, $config;
 
-    if (!$thumb_width) {
-        $dvc_width = intval($_COOKIE['device_width']);
-        if(G5_IS_MOBILE && $dvc_width) {
-            // 썸네일 width 설정
-            $thumb_width = 320;
-
-            if($dvc_width >= 1000) {
-                return $contents;
-            } else if($dvc_width >= 760 && $dvc_width < 1000) {
-                $thumb_width = 760;
-            } else if($dvc_width >= 480 && $dvc_width < 760) {
-                $thumb_width = 480;
-            }
-        } else {
-            $thumb_width = $board['bo_image_width'];
-        }
-    }
+    if (!$thumb_width)
+        $thumb_width = $board['bo_image_width'];
 
     // $contents 중 img 태그 추출
     $matchs = get_editor_image($contents);

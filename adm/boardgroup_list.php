@@ -171,7 +171,7 @@ $colspan = 11;
                 <option value="mobile"<?php echo get_selected($row['gr_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
-        <td class="td_smallmng"><?php echo $s_upd ?></td>
+        <td class="td_mngsmall"><?php echo $s_upd ?></td>
     </tr>
 
     <?php

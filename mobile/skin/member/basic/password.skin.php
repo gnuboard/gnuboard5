@@ -9,7 +9,7 @@ else $g5['title'] = $g5['title'];
 
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
-<div id="pw_confirm">
+<div id="pw_confirm" class="mbskin">
     <h1><?php echo $g5['title'] ?></h1>
     <p>
         <?php if ($w == 'u') { ?>

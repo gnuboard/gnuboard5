@@ -101,7 +101,7 @@ $colspan = 12;
         <td class="td_mbname"><?php echo $row['mb_name'] ?></td>
         <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
         <td class="td_num"><?php echo $row['mb_level'] ?></td>
-        <td class="td_bignum"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
+        <td class="td_numbig"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
         <td class="td_boolean"><?php echo $row['mb_mailling']?'예':'아니오'; ?></td>
         <td class="td_boolean"><?php echo $row['mb_open']?'예':'아니오'; ?></td>
         <td class="td_boolean"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'예':'아니오'; ?></td>
@@ -277,8 +277,8 @@ $colspan = 7;
         <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
         <td class="td_time"><?php echo $row['po_datetime'] ?></td>
         <td><?php echo $link1.$row['po_content'].$link2 ?></td>
-        <td class="td_bignum"><?php echo number_format($row['po_point']) ?></td>
-        <td class="td_bignum"><?php echo number_format($row2['mb_point']) ?></td>
+        <td class="td_numbig"><?php echo number_format($row['po_point']) ?></td>
+        <td class="td_numbig"><?php echo number_format($row2['mb_point']) ?></td>
     </tr>
 
     <?php
