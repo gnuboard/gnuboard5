@@ -126,8 +126,6 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .cke_sc_def dt {width:20%;font-weight:bold}
 .cke_sc_def dd {width:30%}
 
-/* 콘텐츠별 스타일 */
-.cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
 /* 버튼 */
 a.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.15em;vertical-align:middle}
 a.btn01:focus, .btn01:hover {text-decoration:none}
@@ -155,6 +153,9 @@ a.btn_b02:focus, .btn_b02:hover {text-decoration:none}
 a.btn_admin {display:inline-block;padding:0 10px;height:23px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;line-height:2.15em;vertical-align:middle} /* 관리자 전용 버튼 */
 a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
+/* 댓글 스타일 */
+.cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
+
 /* 기본테이블 */
 .basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
 .basic_tbl caption {padding:0;font-size:0;line-height:0;overflow:hidden}
@@ -169,9 +170,6 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 td.empty_table {padding:85px 0;text-align:center}
 li.empty_list {padding:85px 0;text-align:center}
-
-/* 필수입력 */
-.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
 
 /* 폼 테이블 */
 .frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
@@ -188,18 +186,21 @@ li.empty_list {padding:85px 0;text-align:center}
 
 .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
 
+/* 필수입력 */
+.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
+
 /* 테이블 항목별 정의 */
-.td_chk {width:30px;text-align:center}
-.td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
-.td_num {width:50px;text-align:center}
-.td_bignum {width:80px;text-align:center}
-.td_mb_id {width:100px;text-align:center}
-.td_nick {width:100px;text-align:center}
-.td_name {width:100px;text-align:left}
+.td_chk {width:30px;text-align:center}
 .td_date {width:60px;text-align:center}
 .td_datetime {width:110px;text-align:center}
+.td_group {width:100px;text-align:center}
+.td_mb_id {width:100px;text-align:center}
 .td_mng {width:80px;text-align:center}
+.td_name {width:100px;text-align:left}
+.td_nick {width:100px;text-align:center}
+.td_num {width:50px;text-align:center}
+.td_numbig {width:80px;text-align:center}
 
 .txt_active {color:#5d910b}
 .txt_expired {color:#ccc}

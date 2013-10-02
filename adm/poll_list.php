@@ -116,7 +116,7 @@ $colspan = 7;
         <td class="td_num"><?php echo $row['po_level'] ?></td>
         <td class="td_num"><?php echo $row2['sum_po_cnt'] ?></td>
         <td class="td_etc"><?php echo $po_etc ?></td>
-        <td class="td_smallmng"><?php echo $s_mod ?></td>
+        <td class="td_mngsmall"><?php echo $s_mod ?></td>
     </tr>
 
     <?php

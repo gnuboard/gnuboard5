@@ -42,9 +42,6 @@
 .mbskin .bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
 .mbskin td.empty_table {padding:85px 0;text-align:center}
 
-/* 필수입력 */
-.mbskin .required {background:url('../../../img/wrest.gif') #f7f7f7 top right no-repeat}
-
 /* 폼 테이블 */
 .mbskin .frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
 .mbskin .frm_tbl caption {padding:10px 0;font-weight:bold;text-align:left}
@@ -60,18 +57,20 @@
 
 .mbskin .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
 
+.mbskin .required {background:url('../../../img/wrest.gif') #f7f7f7 top right no-repeat} /* 필수입력 */
+
 /* 테이블 항목별 정의 */
-.mbskin .td_chk {width:30px;text-align:center}
-.mbskin .td_group {width:100px;text-align:center}
 .mbskin .td_board {width:120px;text-align:center}
-.mbskin .td_num {width:50px;text-align:center}
-.mbskin .td_bignum {width:80px;text-align:center}
-.mbskin .td_mb_id {width:100px;text-align:center}
-.mbskin .td_nick {width:100px;text-align:center}
-.mbskin .td_name {width:100px;text-align:left}
+.mbskin .td_chk {width:30px;text-align:center}
 .mbskin .td_date {width:60px;text-align:center}
 .mbskin .td_datetime {width:110px;text-align:center}
+.mbskin .td_group {width:100px;text-align:center}
+.mbskin .td_mb_id {width:100px;text-align:center}
 .mbskin .td_mng {width:80px;text-align:center}
+.mbskin .td_name {width:100px;text-align:left}
+.mbskin .td_nick {width:100px;text-align:center}
+.mbskin .td_num {width:50px;text-align:center}
+.mbskin .td_numbig {width:80px;text-align:center}
 
 .mbskin .txt_active {color:#5d910b}
 .mbskin .txt_expired {color:#ccc}
