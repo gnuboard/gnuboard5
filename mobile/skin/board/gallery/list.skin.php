@@ -7,20 +7,6 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 <?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $g5['title'] ?></h1><?php } ?>
 
-<div class="ad72890">
-    <script type="text/javascript"><!--
-    google_ad_client = "ca-pub-9955166939194057";
-    /* 써글728-1 */
-    google_ad_slot = "9632665464";
-    google_ad_width = 728;
-    google_ad_height = 90;
-    //-->
-    </script>
-    <script type="text/javascript"
-    src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-    </script>
-</div>
-
 <!-- 게시판 목록 시작 -->
 <div id="bo_img">
 
@@ -69,9 +55,8 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
             if ($i == 0) $k = 0;
             $k += 1;
             if ($k % $board['bo_mobile_gallery_cols'] == 0) $style .= "margin:0 !important;";
-            $li_width = 100 / $board['bo_mobile_gallery_cols']; // 100% 를 모바일 이미지 수로 나누어 li 넓이값에 적용 - 지운아빠 2013-03-07
         ?>
-        <li class="bo_img_list_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<?php } ?>" style="<?php echo $style ?>width:<?php echo round($li_width) ?>%">
+        <li class="bo_img_list_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<?php } ?>">
             <?php if ($is_checkbox) { ?>
             <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
             <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
