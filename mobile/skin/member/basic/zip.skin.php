@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="post_code" class="new_win mbskin">
-    <h1><?php echo $g5['title'] ?></h1>
+    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
 
     <form name="fzip" method="get" autocomplete="off">
     <input type="hidden" name="frm_name"  value="<?php echo $frm_name ?>">
@@ -24,7 +24,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <script>
     document.fzip.addr1.focus();
     </script>
-
 
     <?php if ($search_count > 0) { ?>
     <dl>
