@@ -56,10 +56,6 @@ pre {overflow-x:scroll;font-size:1.1em}
 #lnb a {display:block;padding:0.5em 0;border-right:1px solid #e7f1ed;border-bottom:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
 #lnb li:nth-of-type(5n) a {border-right:0}
 
-/* 배포시에는 필요없는 부분 */
-#sirgle_title {padding:0 1em;height:100px;color:#fff;font-size:2em}
-#sirgle_title_span {display:block;position:relative;top:33px;left:0}
-
 /* 중간 레이아웃 */
 #wrapper {margin:2em 0}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
