@@ -8,7 +8,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 <?php if (!$wr_id) { ?><h2 id="bo_list_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2><?php } ?>
 
 <!-- 게시판 목록 시작 { -->
-<div id="bo_img" style="width:<?php echo $width; ?>">
+<div id="bo_gall" style="width:<?php echo $width; ?>">
 
     <?php if ($is_category) { ?>
     <form name="fcategory" id="fcategory" method="get">
@@ -44,7 +44,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
 
-    <ul id="bo_img_list">
+    <ul id="bo_gall_list">
         <?php for ($i=0; $i<count($list); $i++) {
             if($i>0 && ($i % $bo_gallery_cols == 0))
                 $style = 'clear:both;';
@@ -54,7 +54,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
             $k += 1;
             if ($k % $bo_gallery_cols == 0) $style .= "margin:0 !important;";
          ?>
-        <li class="bo_img_list_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>bo_img_now<?php } ?>" style="<?php echo $style ?>width:<?php echo $board['bo_gallery_width'] ?>px">
+        <li class="bo_gall_list_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>bo_gall_now<?php } ?>" style="<?php echo $style ?>width:<?php echo $board['bo_gallery_width'] ?>px">
             <?php if ($is_checkbox) { ?>
             <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
             <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
@@ -67,8 +67,8 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
                     echo $list[$i]['num'];
                  ?>
             </span>
-            <ul class="bo_img_con">
-                <li class="bo_img_href">
+            <ul class="bo_gall_con">
+                <li class="bo_gall_href">
                     <a href="<?php echo $list[$i]['href'] ?>">
                     <?php
                     if ($list[$i]['is_notice']) { // 공지사항  ?>
@@ -87,7 +87,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
                      ?>
                     </a>
                 </li>
-                <li class="bo_img_text_href" style="width:<?php echo $board['bo_gallery_width'] ?>px">
+                <li class="bo_gall_text_href" style="width:<?php echo $board['bo_gallery_width'] ?>px">
                     <?php
                     // echo $list[$i]['icon_reply']; 갤러리는 reply 를 사용 안 할 것 같습니다. - 지운아빠 2013-03-04
                     if ($is_category && $list[$i]['ca_name']) {
@@ -109,11 +109,11 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
                     //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
                      ?>
                 </li>
-                <li><span class="bo_img_subject">작성자 </span><?php echo $list[$i]['name'] ?></li>
-                <li><span class="bo_img_subject">작성일 </span><?php echo $list[$i]['datetime2'] ?></li>
-                <li><span class="bo_img_subject">조회 </span><?php echo $list[$i]['wr_hit'] ?></li>
-                <?php if ($is_good) { ?><li><span class="bo_img_subject">추천</span><strong><?php echo $list[$i]['wr_good'] ?></strong></li><?php } ?>
-                <?php if ($is_nogood) { ?><li><span class="bo_img_subject">비추천</span><strong><?php echo $list[$i]['wr_nogood'] ?></strong></li><?php } ?>
+                <li><span class="bo_gall_subject">작성자 </span><?php echo $list[$i]['name'] ?></li>
+                <li><span class="bo_gall_subject">작성일 </span><?php echo $list[$i]['datetime2'] ?></li>
+                <li><span class="bo_gall_subject">조회 </span><?php echo $list[$i]['wr_hit'] ?></li>
+                <?php if ($is_good) { ?><li><span class="bo_gall_subject">추천</span><strong><?php echo $list[$i]['wr_good'] ?></strong></li><?php } ?>
+                <?php if ($is_nogood) { ?><li><span class="bo_gall_subject">비추천</span><strong><?php echo $list[$i]['wr_nogood'] ?></strong></li><?php } ?>
             </ul>
         </li>
         <?php } ?>
