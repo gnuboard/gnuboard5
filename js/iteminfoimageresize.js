@@ -1,5 +1,5 @@
 (function($) {
-    $.fn.viewimageresize = function(selector)
+    $.fn.iteminfoimageresize = function(selector)
     {
         var cfg = {
                 selector: "img"
@@ -35,12 +35,10 @@
             });
         }
 
-        $(window).on("load", function() {
-            image_resize();
-        });
-
         $(window).on("resize", function() {
             image_resize();
         });
+
+        image_resize();
     }
 }(jQuery));
