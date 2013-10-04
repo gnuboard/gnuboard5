@@ -25,19 +25,15 @@ if ($search != "") {
 if ($od_status) {
     $where[] = " od_status = '$od_status' ";
     switch ($od_status) {
-        case G5_OD_STATUS_ORDER :       // 입금확인중
+        case '주문' :
             $sort1 = "od_id";
             $sort2 = "desc";
             break;
-        case G5_OD_STATUS_SETTLE :      // 결제완료
+        case '입금' :   // 결제완료
             $sort1 = "od_receipt_time";
             $sort2 = "desc";
             break;
-        case G5_OD_STATUS_READY :       // 배송준비중
-            $sort1 = "od_receipt_time";
-            $sort2 = "desc";
-            break;
-        case G5_OD_STATUS_DELIVERY :    // 배송중
+        case '배송' :   // 배송중 
             $sort1 = "od_invoice_time";
             $sort2 = "desc";
             break;
@@ -46,6 +42,30 @@ if ($od_status) {
 
 if ($od_status) {
     $where[] = " od_status = '$od_status' ";
+}
+
+if ($od_settle_case) {
+    $where[] = " od_settle_case = '$od_settle_case' ";
+}
+
+if ($od_misu) {
+    $where[] = " od_misu != 0 ";
+}
+
+if ($od_cancel_price) {
+    $where[] = " od_cancel_price != 0 ";
+}
+
+if ($od_refund_price) {
+    $where[] = " od_refund_price != 0 ";
+}
+
+if ($od_receipt_point) {
+    $where[] = " od_receipt_point != 0 ";
+}
+
+if ($od_coupon) {
+    $where[] = " od_coupon != 0 ";
 }
 
 if ($fr_date && $to_date) {
@@ -144,33 +164,60 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </ul>
 
     <ul id="sort_sodr" class="sort_odr" style="display:none;">
-        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G5_OD_STATUS_ORDER; ?>"    ><?php echo G5_OD_STATUS_ORDER;     ?></a></li>
-        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G5_OD_STATUS_SETTLE; ?>"   ><?php echo G5_OD_STATUS_SETTLE;    ?></a></li>
-        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G5_OD_STATUS_READY; ?>"    ><?php echo G5_OD_STATUS_READY;     ?></a></li>
-        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G5_OD_STATUS_DELIVERY; ?>" ><?php echo G5_OD_STATUS_DELIVERY;  ?></a></li>
-        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=<?php echo G5_OD_STATUS_FINISH; ?>"   ><?php echo G5_OD_STATUS_FINISH;    ?></a></li>
+        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=주문">주문</a></li>
+        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=입금">입금</a></li>
+        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=배송">배송</a></li>
+        <li><a href="<?php $_SERVER['PHP_SELF']; ?>?od_status=완료">완료</a></li>
     </ul>
 
     <form>
-    주문상태 :
-    <select id="od_status" name="od_status">
-    <option value="">전체</option>
-    <option value="<?php echo G5_OD_STATUS_ORDER;   ?>"  <?php echo get_selected($od_status, G5_OD_STATUS_ORDER     ); ?>><?php echo G5_OD_STATUS_ORDER;      ?></option>
-    <option value="<?php echo G5_OD_STATUS_SETTLE;  ?>"  <?php echo get_selected($od_status, G5_OD_STATUS_SETTLE    ); ?>><?php echo G5_OD_STATUS_SETTLE;     ?></option>
-    <option value="<?php echo G5_OD_STATUS_READY;   ?>"  <?php echo get_selected($od_status, G5_OD_STATUS_READY     ); ?>><?php echo G5_OD_STATUS_READY;      ?></option>
-    <option value="<?php echo G5_OD_STATUS_DELIVERY;?>"  <?php echo get_selected($od_status, G5_OD_STATUS_DELIVERY  ); ?>><?php echo G5_OD_STATUS_DELIVERY;   ?></option>
-    <option value="<?php echo G5_OD_STATUS_FINISH;  ?>"  <?php echo get_selected($od_status, G5_OD_STATUS_FINISH    ); ?>><?php echo G5_OD_STATUS_FINISH;     ?></option>
-    </select>
+    <div>
+        주문상태 :
+        <label><input type="radio" name="od_status" value=""     <?php echo get_checked($od_status, '');     ?>> 전체</label>
+        <label><input type="radio" name="od_status" value="주문" <?php echo get_checked($od_status, '주문'); ?>> 주문</label>
+        <label><input type="radio" name="od_status" value="입금" <?php echo get_checked($od_status, '입금'); ?>> 입금</label>
+        <label><input type="radio" name="od_status" value="배송" <?php echo get_checked($od_status, '배송'); ?>> 배송</label>
+        <label><input type="radio" name="od_status" value="완료" <?php echo get_checked($od_status, '완료'); ?>> 완료</label>
+        <!-- <select id="od_status" name="od_status">
+        <option value="">전체</option>
+        <option value="주문"  <?php echo get_selected($od_status, '주문'); ?>>주문</option>
+        <option value="입금"  <?php echo get_selected($od_status, '입금'); ?>>입금</option>
+        <option value="배송"  <?php echo get_selected($od_status, '배송'); ?>>배송</option>
+        <option value="완료"  <?php echo get_selected($od_status, '완료'); ?>>완료</option>
+        </select> -->
+    <div>
 
-    주문일 : <input type="text" id="fr_date"  name="fr_date" value="<?php echo $fr_date; ?>" size="10" maxlength="10"> ~
-    <input type="text" id="to_date"  name="to_date" value="<?php echo $to_date; ?>" size="10" maxlength="10">
-    <a href="javascript:set_date('오늘');">오늘</a>
-    <a href="javascript:set_date('어제');">어제</a>
-    <a href="javascript:set_date('이번주');">이번주</a>
-    <a href="javascript:set_date('이번달');">이번달</a>
-    <a href="javascript:set_date('지난주');">지난주</a>
-    <a href="javascript:set_date('지난달');">지난달</a>
-    <input type="submit" value="검색">
+    <div>
+        결제수단 :
+        <label><input type="radio" name="od_settle_case" value=""         <?php echo get_checked($od_settle_case, '');          ?>> 전체</label>
+        <label><input type="radio" name="od_settle_case" value="무통장"   <?php echo get_checked($od_settle_case, '무통장');    ?>> 무통장</label>
+        <label><input type="radio" name="od_settle_case" value="가상계좌" <?php echo get_checked($od_settle_case, '가상계좌');  ?>> 가상계좌</label>
+        <label><input type="radio" name="od_settle_case" value="계좌이체" <?php echo get_checked($od_settle_case, '계좌이체');  ?>> 계좌이체</label>
+        <label><input type="radio" name="od_settle_case" value="휴대폰"   <?php echo get_checked($od_settle_case, '휴대폰');    ?>> 휴대폰</label>
+        <label><input type="radio" name="od_settle_case" value="신용카드" <?php echo get_checked($od_settle_case, '신용카드');  ?>> 신용카드</label>
+    <div>
+
+    <div>
+        기타선택 :
+        <label><input type="checkbox" name="od_misu" value="Y" <?php echo get_checked($od_misu, 'Y'); ?>> 미수금</label>
+        <label><input type="checkbox" name="od_cancel_price" value="Y" <?php echo get_checked($od_cancel_price, 'Y'); ?>> 취소,반품,품절</label>
+        <label><input type="checkbox" name="od_refund_price" value="Y" <?php echo get_checked($od_refund_price, 'Y'); ?>> 환불</label>
+        <label><input type="checkbox" name="od_receipt_point" value="Y" <?php echo get_checked($od_receipt_point, 'Y'); ?>> 포인트주문</label>
+        <label><input type="checkbox" name="od_coupon" value="Y" <?php echo get_checked($od_coupon, 'Y'); ?>> 쿠폰</label>
+    <div>
+
+    <div>
+        주문일자 : <input type="text" id="fr_date"  name="fr_date" value="<?php echo $fr_date; ?>" size="10" maxlength="10"> ~
+        <input type="text" id="to_date"  name="to_date" value="<?php echo $to_date; ?>" size="10" maxlength="10">
+        <a href="javascript:set_date('오늘');">오늘</a>
+        <a href="javascript:set_date('어제');">어제</a>
+        <a href="javascript:set_date('이번주');">이번주</a>
+        <a href="javascript:set_date('이번달');">이번달</a>
+        <a href="javascript:set_date('지난주');">지난주</a>
+        <a href="javascript:set_date('지난달');">지난달</a>
+        <a href="javascript:set_date('전체');">전체</a>
+        <input type="submit" value="검색">
+    </div>
     </form>
 
     <form name="forderlist" id="forderlist" action="./orderlistupdate.php" onsubmit="return forderlist_submit(this);" method="post">
@@ -296,14 +343,15 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     변경하실 주문상태 : 
     <select name="od_status">
     <option value="">선택하세요</option>
-    <option value="<?php echo G5_OD_STATUS_ORDER;   ?>"><?php echo G5_OD_STATUS_ORDER;      ?></option>
-    <option value="<?php echo G5_OD_STATUS_SETTLE;  ?>"><?php echo G5_OD_STATUS_SETTLE;     ?></option>
-    <option value="<?php echo G5_OD_STATUS_READY;   ?>"><?php echo G5_OD_STATUS_READY;      ?></option>
-    <option value="<?php echo G5_OD_STATUS_DELIVERY;?>"><?php echo G5_OD_STATUS_DELIVERY;   ?></option>
-    <option value="<?php echo G5_OD_STATUS_FINISH;  ?>"><?php echo G5_OD_STATUS_FINISH;     ?></option>
+    <option value="주문">주문</option>
+    <option value="입금">입금</option>
+    <option value="배송">배송</option>
+    <option value="완료">완료</option>
     </select>
 
     <input type="submit" value="선택수정" onclick="document.pressed=this.value">
+
+    <p>"무통장"인 경우에만 "주문"에서 "입금"으로 변경됩니다. 가상계좌는 입금시 자동으로 "입금" 처리됩니다.</p>
 
     </form>
 
@@ -336,6 +384,9 @@ function set_date(today)
     } else if (today == "지난달") {
         document.getElementById("fr_date").value = "<?php echo date('Y-m-01', strtotime('-1 Month', G5_SERVER_TIME)); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-t', strtotime('-1 Month', G5_SERVER_TIME)); ?>";
+    } else if (today == "전체") {
+        document.getElementById("fr_date").value = "";
+        document.getElementById("to_date").value = "";
     }
 }
 </script>
@@ -352,7 +403,7 @@ function forderlist_submit(f)
         case "" : 
             alert("변경하실 주문상태를 선택하세요.");
             return false;
-        case "<?php echo G5_OD_STATUS_ORDER;   ?>" : 
+        case '주문' : 
 
         default :
 

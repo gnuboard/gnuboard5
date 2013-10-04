@@ -274,7 +274,7 @@ if ($od_settle_case == "무통장")
     $od_receipt_point   = $i_temp_point;
     $od_receipt_price   = 0;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = G5_OD_STATUS_ORDER;
+    $od_status          = '주문';
 }
 else if ($od_settle_case == "계좌이체")
 {
@@ -290,7 +290,7 @@ else if ($od_settle_case == "계좌이체")
     $od_bank_account    = $bank_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = G5_OD_STATUS_SETTLE;
+    $od_status          = '입금';
 }
 else if ($od_settle_case == "가상계좌")
 {
@@ -305,7 +305,7 @@ else if ($od_settle_case == "가상계좌")
     $od_deposit_name    = $od_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = G5_OD_STATUS_ORDER;
+    $od_status          = '주문';
 }
 else if ($od_settle_case == "휴대폰")
 {
@@ -318,7 +318,7 @@ else if ($od_settle_case == "휴대폰")
     $od_bank_account    = $commid.' '.$mobile_no;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = G5_OD_STATUS_SETTLE;
+    $od_status          = '입금';
 }
 else if ($od_settle_case == "신용카드")
 {
@@ -333,7 +333,7 @@ else if ($od_settle_case == "신용카드")
     $od_bank_account    = $card_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = G5_OD_STATUS_SETTLE;
+    $od_status          = '입금';
 }
 else
 {

@@ -46,12 +46,14 @@ if(openwin != null) {
         <dl id="sod_fin_legend">
             <dt>주문</dt>
             <dd>주문이 접수되었습니다.</dd>
+            <dt>입금</dt>
+            <dd>입금(결제)이 완료 되었습니다.</dd>
             <dt>준비</dt>
             <dd>상품 준비 중입니다.</dd>
             <dt>배송</dt>
             <dd>상품 배송 중입니다.</dd>
             <dt>완료</dt>
-            <dd>상품 배송이 완료되었습니다.</dd>
+            <dd>상품 배송이 완료 되었습니다.</dd>
         </dl>
         <?php
         $st_count1 = $st_count2 = 0;
