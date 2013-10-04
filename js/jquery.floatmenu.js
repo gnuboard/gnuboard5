@@ -52,10 +52,10 @@
         {
             hide_menu();
 
-            origin_y = $("body").scrollTop();
+            origin_y = $(window).scrollTop();
 
             timeout = setTimeout(function() {
-                scroll_y = $("body").scrollTop();
+                scroll_y = $(window).scrollTop();
 
                 if(origin_y == scroll_y) {
                     $menu.css("top", (scroll_y - height)+"px").css("display", "block");
@@ -87,10 +87,10 @@
                 interval_count++;
             }
 
-            origin_y = $("body").scrollTop();
+            origin_y = $(window).scrollTop();
 
             timeout = setTimeout(function() {
-                scroll_y = $("body").scrollTop();
+                scroll_y = $(window).scrollTop();
 
                 if(origin_y == scroll_y) {
                     element_y = parseInt($menu.css("top"));
@@ -164,7 +164,7 @@
             hide_menu();
 
             timeout = setTimeout(function() {
-                scroll_y = $("body").scrollTop();
+                scroll_y = $(window).scrollTop();
                 w_height = $(window).height();
                 element_y = scroll_y + w_height;
                 $menu.css("top", element_y+"px").css("display", "block");
@@ -176,10 +176,10 @@
         {
             hide_menu();
 
-            origin_y = $("body").scrollTop();
+            origin_y = $(window).scrollTop();
 
             timeout = setTimeout(function() {
-                scroll_y = $("body").scrollTop();
+                scroll_y = $(window).scrollTop();
 
                 if(origin_y == scroll_y) {
                     w_height = $(window).height();
@@ -222,10 +222,10 @@
                 interval_count++;
             }
 
-            origin_y = $("body").scrollTop();
+            origin_y = $(window).scrollTop();
 
             timeout = setTimeout(function() {
-                scroll_y = $("body").scrollTop();
+                scroll_y = $(window).scrollTop();
 
                 if(origin_y == scroll_y) {
                     w_height = $(window).height();
