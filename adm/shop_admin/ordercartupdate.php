@@ -253,8 +253,10 @@ $od_misu = ( $cart_price + $send_cost + $od['od_send_cost2'] )
            - ( $od['od_receipt_price'] + $od['od_receipt_point'] - $od['od_refund_price'] );
 
 // 주문정보 반영
+$od_cart_price = $cart_price + $cancel_price;
+
 $sql = " update {$g5['g5_shop_order_table']}
-            set od_cart_price   = '$cart_price',
+            set od_cart_price   = '$od_cart_price',
                 od_cart_coupon  = '$cart_coupon',
                 od_coupon       = '$tot_od_cp_price',
                 od_send_coupon  = '$tot_sc_cp_price',

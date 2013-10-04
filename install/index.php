@@ -1,6 +1,7 @@
 <?php
 include_once ('../config.php');
 $title = G5_VERSION." 설치 3단계 중 1단계 라이센스 확인";
+require_once('./library.check.php');
 include_once ('./install.inc.php');
 ?>
 

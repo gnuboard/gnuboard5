@@ -34,8 +34,8 @@ if($od['od_tax_flag']) {
     $tot_tax_mny = ( $tax_mny + $od_send_cost + $od_send_cost2 )
                    - ( $od['od_coupon'] + $od['od_send_coupon'] + $od_receipt_point );
     if($tot_tax_mny < 0) {
-        $tot_tax_mny = 0;
         $free_mny += $tot_tax_mny;
+        $tot_tax_mny = 0;
     }
 } else {
     $tot_tax_mny = ( $tax_mny + $free_mny + $od_send_cost + $od_send_cost2 )
