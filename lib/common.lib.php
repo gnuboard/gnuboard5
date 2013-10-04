@@ -1879,7 +1879,12 @@ function convert_charset($from_charset, $to_charset, $str)
 function escape_trim($field)
 {
     if ($field) {
-        return mysql_real_escape_string(@trim($field));
+        $str = mysql_real_escape_string(@trim($field));
+
+        if(PHP_VERSION < '5.3.0')
+            $str = stripslashes($str);
+
+        return $str;
     }
 }
 
