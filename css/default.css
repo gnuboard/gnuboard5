@@ -9,7 +9,7 @@ h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
-
+textarea, 
 select {font-size:1em}
 input {margin:0;padding:0;border-radius:0;font-family:dotum}
 input[type=text], input[type=password], input[type=submit], input[type=image] {-webkit-appearance:none}
@@ -138,7 +138,7 @@ fieldset .btn_submit {height:22px;font-size:1em}
 .btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 button.btn_cancel {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 .btn_cancel:focus, .btn_cancel:hover {text-decoration:none !important}
-.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
+a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
 .btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
 .btn_win button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;vertical-align:top;line-height:2em;cursor:pointer}
