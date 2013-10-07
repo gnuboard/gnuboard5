@@ -211,23 +211,46 @@ if ($row['it_id']) {
             </td>
         </tr>
         <?php } ?>
-        <?php if($default['de_send_cost_case'] == '개별' && $it['it_sc_type'] != 0) { ?>
-        <tr>
-            <th><label for="ct_send_cost">배송비결제</label></th>
-            <td>
-                <?php
-                if($it['it_sc_method'] == 2) {
-                ?>
-                <select name="ct_send_cost" id="ct_send_cost">
-                    <option value="0">주문시 결제</option>
-                    <option value="1">수령후 지불</option>
-                </select>
-                <?php
+        <?php
+            $ct_send_cost_label = '배송비결제';
+
+            if($default['de_send_cost_case'] == '무료')
+                $sc_method = '무료배송';
+            else
+                $sc_method = '주문시 결제';
+
+            if($it['it_sc_type'] == 1)
+                $sc_method = '무료배송';
+            else if($it['it_sc_type'] > 1) {
+                if($it['it_sc_method'] == 1)
+                    $sc_method = '수령후 지불';
+                else if($it['it_sc_method'] == 2) {
+                    $ct_send_cost_label = '<label for="ct_send_cost">배송비결제</label>';
+                    $sc_method = '<select name="ct_send_cost" id="ct_send_cost">
+                                      <option value="0">주문시 결제</option>
+                                      <option value="1">수령후 지불</option>
+                                  </select>';
                 }
-                ?>
-            </td>
-        </tr>
-        <?php } ?>
+                else
+                    $sc_method = '주문시 결제';
+            }
+            ?>
+            <tr>
+                <th><?php echo $ct_send_cost_label; ?></th>
+                <td><?php echo $sc_method; ?></td>
+            </tr>
+            <?php if($it['it_buy_min_qty']) { ?>
+            <tr>
+                <th>최소구매수량</th>
+                <td><?php echo number_format($it['it_buy_min_qty']); ?> 개<td>
+            </tr>
+            <?php } ?>
+            <?php if($it['it_buy_max_qty']) { ?>
+            <tr>
+                <th>최대구매수량</th>
+                <td><?php echo number_format($it['it_buy_max_qty']); ?> 개<td>
+            </tr>
+            <?php } ?>
         </tbody>
         </table>
 
@@ -278,7 +301,11 @@ if ($row['it_id']) {
         <?php } // 전화문의가 아닐 경우 끝?>
 
         <div id="sit_sel_option">
-        <?php if(!$option_1 && !$option_2) { ?>
+        <?php
+        if(!$option_1 && !$option_2) {
+            if(!$it['it_buy_min_qty'])
+                $it['it_buy_min_qty'] = 1;
+        ?>
             <ul id="sit_opt_added">
                 <li class="sit_opt_list">
                     <input type="hidden" name="io_type[<?php echo $it_id; ?>][]" value="0">
@@ -289,7 +316,7 @@ if ($row['it_id']) {
                     <span class="sit_opt_subj"><?php echo $it['it_name']; ?></span>
                     <span class="sit_opt_prc">(+0원)</span>
                     <div>
-                        <input type="text" name="ct_qty[<?php echo $it_id; ?>][]" value="1" class="frm_input" size="5">
+                        <input type="text" name="ct_qty[<?php echo $it_id; ?>][]" value="<?php echo $it['it_buy_min_qty']; ?>" class="frm_input" size="5">
                         <button type="button" class="sit_qty_plus btn_frmline">증가</button>
                         <button type="button" class="sit_qty_minus btn_frmline">감소</button>
                     </div>
@@ -429,8 +456,13 @@ function fitem_submit(f)
         return false;
     }
 
-    var val, result = true;
-    $("input[name^=ct_qty]").each(function() {
+    var val, io_type, result = true;
+    var sum_qty = 0;
+    var min_qty = parseInt(<?php echo $it['it_buy_min_qty']; ?>);
+    var max_qty = parseInt(<?php echo $it['it_buy_max_qty']; ?>);
+    var $el_type = $("input[name^=io_type]");
+
+    $("input[name^=ct_qty]").each(function(index) {
         val = $(this).val();
 
         if(val.length < 1) {
@@ -450,9 +482,23 @@ function fitem_submit(f)
             result = false;
             return false;
         }
+
+        io_type = $el_type.eq(index).val();
+        if(io_type == "0")
+            sum_qty += parseInt(val);
     });
 
     if(!result) {
+        return false;
+    }
+
+    if(min_qty > 0 && sum_qty < min_qty) {
+        alert("선택옵션 개수 총합 "+number_format(String(min_qty))+"개 이상 주문해 주십시오.");
+        return false;
+    }
+
+    if(max_qty > 0 && sum_qty > max_qty) {
+        alert("선택옵션 개수 총합 "+number_format(String(max_qty))+"개 이하로 주문해 주십시오.");
         return false;
     }
 

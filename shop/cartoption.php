@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 $it_id = $_POST['it_id'];
 
-$sql = " select it_id, it_option_subject, it_supply_subject, it_price, it_point, it_point_type from {$g5['g5_shop_item_table']} where it_id = '$it_id' and it_use = '1' ";
+$sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' and it_use = '1' ";
 $it = sql_fetch($sql);
 $it_point = get_item_point($it);
 
@@ -123,8 +123,13 @@ if($option_2) {
 <script>
 function formcheck(f)
 {
-    var val, result = true;
-    $("li input[name^=ct_qty]").each(function() {
+    var val, io_type, result = true;
+    var sum_qty = 0;
+    var min_qty = parseInt(<?php echo $it['it_buy_min_qty']; ?>);
+    var max_qty = parseInt(<?php echo $it['it_buy_max_qty']; ?>);
+    var $el_type = $("input[name^=io_type]");
+
+    $("input[name^=ct_qty]").each(function(index) {
         val = $(this).val();
 
         if(val.length < 1) {
@@ -144,12 +149,27 @@ function formcheck(f)
             result = false;
             return false;
         }
+
+        io_type = $el_type.eq(index).val();
+        if(io_type == "0")
+            sum_qty += parseInt(val);
     });
 
-    if(!result)
+    if(!result) {
         return false;
+    }
 
-    f.submit();
+    if(min_qty > 0 && sum_qty < min_qty) {
+        alert("선택옵션 개수 총합 "+number_format(String(min_qty))+"개 이상 주문해 주십시오.");
+        return false;
+    }
+
+    if(max_qty > 0 && sum_qty > max_qty) {
+        alert("선택옵션 개수 총합 "+number_format(String(max_qty))+"개 이하로 주문해 주십시오.");
+        return false;
+    }
+
+    return true;
 }
 </script>
 <!-- } 장바구니 옵션 끝 -->

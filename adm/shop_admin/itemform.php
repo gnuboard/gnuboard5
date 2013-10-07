@@ -495,6 +495,32 @@ $(function(){
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="it_buy_min_qty">최소구매수량</label></th>
+        <td>
+            <?php echo help("상품 구매시 최소 구매 수량을 설정합니다."); ?>
+            <input type="text" name="it_buy_min_qty" value="<?php echo $it['it_buy_min_qty']; ?>" id="it_buy_min_qty" class="frm_input" size="8"> 개
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_buy_min_qty" value="1" id="chk_ca_it_buy_min_qty">
+            <label for="chk_ca_it_buy_min_qty">분류적용</label>
+            <input type="checkbox" name="chk_all_it_buy_min_qty" value="1" id="chk_all_it_buy_min_qty">
+            <label for="chk_all_it_buy_min_qty">전체적용</label>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="it_buy_max_qty">최대구매수량</label></th>
+        <td>
+            <?php echo help("상품 구매시 최대 구매 수량을 설정합니다."); ?>
+            <input type="text" name="it_buy_max_qty" value="<?php echo $it['it_buy_max_qty']; ?>" id="it_buy_max_qty" class="frm_input" size="8"> 개
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_ca_it_buy_max_qty" value="1" id="chk_ca_it_buy_max_qty">
+            <label for="chk_ca_it_buy_max_qty">분류적용</label>
+            <input type="checkbox" name="chk_all_it_buy_max_qty" value="1" id="chk_all_it_buy_max_qty">
+            <label for="chk_all_it_buy_max_qty">전체적용</label>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="it_notax">상품과세 유형</label></th>
         <td>
             <?php echo help("상품의 과세유형(과세, 비과세)을 설정합니다."); ?>

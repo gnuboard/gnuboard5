@@ -96,6 +96,21 @@ else // 장바구니에 담기
         if(!$it['it_id'])
             alert('상품정보가 존재하지 않습니다.');
 
+        // 최소, 최대 수량 체크
+        if($it['it_buy_min_qty'] || $it['it_buy_max_qty']) {
+            $sum_qty = 0;
+            for($k=0; $k<$opt_count; $k++) {
+                if($_POST['io_type'][$it_id][$k] == 0)
+                    $sum_qty += $_POST['ct_qty'][$it_id][$k];
+            }
+
+            if($it['it_buy_min_qty'] > 0 && $sum_qty < $it['it_buy_min_qty'])
+                alert($it['it_name'].'의 선택옵션 개수 총합 '.number_format($it['it_buy_min_qty']).'개 이상 주문해 주십시오.');
+
+            if($it['it_buy_max_qty'] > 0 && $sum_qty > $it['it_buy_max_qty'])
+                alert($it['it_name'].'의 선택옵션 개수 총합 '.number_format($it['it_buy_max_qty']).'개 이하로 주문해 주십시오.');
+        }
+
         // 옵션정보를 얻어서 배열에 저장
         $opt_list = array();
         $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' order by io_no asc ";
@@ -125,8 +140,10 @@ else // 장바구니에 담기
 
             $sql = " select SUM(ct_qty) as cnt from {$g5['g5_shop_cart_table']}
                       where it_id = '$it_id'
-                        and od_id = '$tmp_cart_id'
-                        and io_id = '$io_id' ";
+                        and io_id = '$io_id'
+                        and io_type = '$io_type'
+                        and ct_stock_use = 0
+                        and ct_status in ('주문', '준비') ";
             $row = sql_fetch($sql);
             $sum_qty = $row['cnt'];
 

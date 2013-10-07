@@ -553,4 +553,11 @@ if(!sql_query(" select ca_cert_use from {$g5['g5_shop_category_table']} limit 1 
                     ADD `ca_cert_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `ca_mb_id`,
                     ADD `ca_adult_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `ca_cert_use` ", true);
 }
+
+// 최소 최대구매수량 필드추가
+if(!sql_query(" select it_buy_min_qty from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_buy_min_qty` int(11) NOT NULL DEFAULT '0' AFTER `it_sc_qty`,
+                    ADD `it_buy_max_qty` int(11) NOT NULL DEFAULT '0' AFTER `it_buy_min_qty` ", true);
+}
 ?>
