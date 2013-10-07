@@ -994,10 +994,10 @@ $pg_anchor = '<ul class="anchor">
             <input type="text" name="bo_mobile_gallery_width" value="<?php echo $board['bo_mobile_gallery_width'] ?>" id="bo_mobile_gallery_width" required class="required numeric frm_input" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" name="mobile_chk_grp_gallery_width" value="1" id="mobile_chk_grp_gallery_width">
-            <label for="mobile_chk_grp_gallery_width">그룹적용</label>
-            <input type="checkbox" name="mobile_chk_all_gallery_width" value="1" id="mobile_chk_all_gallery_width">
-            <label for="mobile_chk_all_gallery_width">전체적용</label>
+            <input type="checkbox" name="chk_grp_mobile_gallery_width" value="1" id="chk_grp_mobile_gallery_width">
+            <label for="chk_grp_mobile_gallery_width">그룹적용</label>
+            <input type="checkbox" name="chk_all_mobile_gallery_width" value="1" id="chk_all_mobile_gallery_width">
+            <label for="chk_all_mobile_gallery_width">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -1007,10 +1007,10 @@ $pg_anchor = '<ul class="anchor">
             <input type="text" name="bo_mobile_gallery_height" value="<?php echo $board['bo_mobile_gallery_height'] ?>" id="bo_mobile_gallery_height" required class="required numeric frm_input" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" name="mobile_chk_grp_gallery_height" value="1" id="mobile_chk_grp_gallery_height">
-            <label for="mobile_chk_grp_gallery_height">그룹적용</label>
-            <input type="checkbox" name="mobile_chk_all_gallery_height" value="1" id="mobile_chk_all_gallery_height">
-            <label for="mobile_chk_all_gallery_height">전체적용</label>
+            <input type="checkbox" name="chk_grp_mobile_gallery_height" value="1" id="chk_grp_mobile_gallery_height">
+            <label for="chk_grp_mobile_gallery_height">그룹적용</label>
+            <input type="checkbox" name="chk_all_mobile_gallery_height" value="1" id="chk_all_mobile_gallery_height">
+            <label for="chk_all_mobile_gallery_height">전체적용</label>
         </td>
     </tr>
     <tr>
