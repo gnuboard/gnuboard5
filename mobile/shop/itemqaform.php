@@ -6,6 +6,13 @@ if (!$is_member) {
     alert_close("상품문의는 회원만 작성 가능합니다.");
 }
 
+// 상품문의의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
+$iq_question_max_length = 10000;
+
+$w     = escape_trim($_REQUEST['w']);
+$it_id = escape_trim($_REQUEST['it_id']);
+$iq_id = escape_trim($_REQUEST['iq_id']);
+
 if ($w == "u")
 {
     $qa = sql_fetch(" select * from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' ");

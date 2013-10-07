@@ -31,12 +31,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <!-- <p><?php echo $config['cf_title']; ?> 전체 사용후기 목록입니다.</p> -->
 
     <?php
+    $thumbnail_width = 500;
+
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $num = $total_count - ($page - 1) * $rows - $i;
         $star = get_star($row['is_score']);
 
-        $is_content = get_view_thumbnail($row['is_content'], 500);
+        $is_content = get_view_thumbnail($row['is_content'], $thumbnail_width);
         $small_image = $row['it_id'];
 
         $row2 = sql_fetch(" select it_name from {$g5['g5_shop_item_table']} where it_id = '{$row['it_id']}' ");

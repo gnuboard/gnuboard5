@@ -1,12 +1,5 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-// 상품문의의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
-$iq_question_max_length = 10000;
-
-$w     = escape_trim($_REQUEST['w']);
-$it_id = escape_trim($_REQUEST['it_id']);
-$iq_id = escape_trim($_REQUEST['iq_id']);
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
