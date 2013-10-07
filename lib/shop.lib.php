@@ -528,7 +528,7 @@ function get_it_stock_qty($it_id)
               where it_id = '$it_id'
                 and io_id = ''
                 and ct_stock_use = 0
-                and ct_status in ('주문', '준비') ";
+                and ct_status in ('주문', '입금', '준비') ";
     $row = sql_fetch($sql);
     $daegi = (int)$row['sum_qty'];
 
@@ -553,7 +553,7 @@ function get_option_stock_qty($it_id, $io_id, $type)
                 and io_id = '$io_id'
                 and io_type = '$type'
                 and ct_stock_use = 0
-                and ct_status in ('주문', '준비') ";
+                and ct_status in ('주문', '입금', '준비') ";
     $row = sql_fetch($sql);
     $daegi = (int)$row['sum_qty'];
 
@@ -1482,7 +1482,7 @@ function get_order_info($od_id)
                     SUM( IF( ct_notax = 1, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as free_mny
                 from {$g5['g5_shop_cart_table']}
                 where od_id = '$od_id'
-                  and ct_status IN ( '주문', '준비', '배송', '완료' ) ";
+                  and ct_status IN ( '주문', '입금', '준비', '배송', '완료' ) ";
     $sum = sql_fetch($sql);
 
     $cart_price = $sum['price'];
@@ -1632,7 +1632,7 @@ function get_sendcost($cart_id, $selected=1)
                 from {$g5['g5_shop_cart_table']}
                 where od_id = '$cart_id'
                   and ct_send_cost = '0'
-                  and ct_status IN ( '쇼핑', '주문', '준비', '배송', '완료' )
+                  and ct_status IN ( '쇼핑', '주문', '입금', '준비', '배송', '완료' )
                   and ct_select = '$selected' ";
 
     $result = sql_query($sql);
