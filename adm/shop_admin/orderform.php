@@ -260,9 +260,6 @@ $pg_anchor = '<ul class="anchor">
 
     if ($od['od_receipt_point'] > 0)
         $s_receipt_way .= "+포인트";
-
-    // 배송비
-    $send_cost = get_sendcost($od['od_id']);
     ?>
 
     <strong class="sodr_nonpay">미수금 <?php echo display_price($od['od_misu']); ?></strong>
@@ -285,7 +282,7 @@ $pg_anchor = '<ul class="anchor">
         <td class="td_odrnum2"><?php echo $od['od_id']; ?></td>
         <td class="td_payby"><?php echo $s_receipt_way; ?></td>
         <td class="td_bignum"><?php echo display_price($amount['주문']); ?></td>
-        <td class="td_bignum"><?php echo display_price($send_cost); ?></td>
+        <td class="td_bignum"><?php echo display_price($od['od_send_cost'] + $od['od_send_cost2']); ?></td>
         <td class="td_bignum"><?php echo display_point($od['od_receipt_point']); ?></td>
         <td class="td_bignum"><?php echo number_format($amount['입금']); ?>원</td>
         <td class="td_bignum"><?php echo display_price($amount['쿠폰']); ?></td>
