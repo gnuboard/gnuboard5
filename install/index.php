@@ -1,6 +1,7 @@
 <?php
 include_once ('../config.php');
 $title = G5_VERSION." 설치 3단계 중 1단계 라이센스 확인";
+require_once('./library.check.php');
 include_once ('./install.inc.php');
 ?>
 
@@ -17,7 +18,7 @@ if ($exists_data_dir && $write_data_dir) {
 <form action="./install_config.php" method="post" onsubmit="return frm_submit(this);">
 <div id="idx_agree">
     <label for="agree">동의합니다.</label>
-    <input type="checkbox" id="agree" name="agree" value="동의함"> 
+    <input type="checkbox" id="agree" name="agree" value="동의함">
 </div>
 
 <div id="btn_confirm">
