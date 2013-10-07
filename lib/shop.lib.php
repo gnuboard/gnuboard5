@@ -1461,6 +1461,150 @@ function array_add_callback($func, $array)
     return $array;
 }
 
+// 주문의 금액, 배송비 과세금액 등의 정보를 가져옴
+function get_order_info($od_id)
+{
+    global $g5;
+
+    // 주문정보
+    $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
+    $od = sql_fetch($sql);
+
+    if(!$od['od_id'])
+        return false;
+
+    $info = array();
+
+    // 장바구니 주문금액정보
+    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                    SUM(cp_price) as coupon,
+                    SUM( IF( ct_notax = 0, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as tax_mny,
+                    SUM( IF( ct_notax = 1, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as free_mny
+                from {$g5['g5_shop_cart_table']}
+                where od_id = '$od_id'
+                  and ct_status IN ( '주문', '준비', '배송', '완료' ) ";
+    $sum = sql_fetch($sql);
+
+    $cart_price = $sum['price'];
+    $cart_coupon = $sum['coupon'];
+
+    // 배송비
+    $send_cost = get_sendcost($od_id);
+
+    $od_coupon = $od_send_coupon = 0;
+
+    if($od['mb_id']) {
+        // 주문할인 쿠폰
+        $sql = " select a.cp_id, a.cp_type, a.cp_price, a.cp_trunc, a.cp_minimum, a.cp_maximum
+                    from {$g5['g5_shop_coupon_table']} a right join {$g5['g5_shop_coupon_log_table']} b on ( a.cp_id = b.cp_id )
+                    where b.od_id = '$od_id'
+                      and b.mb_id = '{$od['mb_id']}'
+                      and a.cp_method = '2' ";
+        $cp = sql_fetch($sql);
+
+        $tot_od_price = $cart_price - $cart_coupon;
+
+        if($cp['cp_id']) {
+            $dc = 0;
+
+            if($cp['cp_minimum'] <= $tot_od_price) {
+                if($cp['cp_type']) {
+                    $dc = floor(($tot_od_price * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+                } else {
+                    $dc = $cp['cp_price'];
+                }
+
+                if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+                    $dc = $cp['cp_maximum'];
+
+                if($tot_od_price < $dc)
+                    $dc = $tot_od_price;
+
+                $tot_od_price -= $dc;
+                $od_coupon = $dc;
+            }
+        }
+
+        // 배송쿠폰 할인
+        $sql = " select a.cp_id, a.cp_type, a.cp_price, a.cp_trunc, a.cp_minimum, a.cp_maximum
+                    from {$g5['g5_shop_coupon_table']} a right join {$g5['g5_shop_coupon_log_table']} b on ( a.cp_id = b.cp_id )
+                    where b.od_id = '$od_id'
+                      and b.mb_id = '{$od['mb_id']}'
+                      and a.cp_method = '3' ";
+        $cp = sql_fetch($sql);
+
+        if($cp['cp_id']) {
+            $dc = 0;
+            if($cp['cp_minimum'] <= $tot_od_price) {
+                if($cp['cp_type']) {
+                    $dc = floor(($send_cost * ($cp['cp_price'] / 100)) / $cp['cp_trunc']) * $cp['cp_trunc'];
+                } else {
+                    $dc = $cp['cp_price'];
+                }
+
+                if($cp['cp_maximum'] && $dc > $cp['cp_maximum'])
+                    $dc = $cp['cp_maximum'];
+
+                if($dc > $send_cost)
+                    $dc = $send_cost;
+
+                $od_send_coupon = $dc;
+            }
+        }
+    }
+
+    // 과세, 비과세 금액정보
+    $tax_mny = $sum['tax_mny'];
+    $free_mny = $sum['free_mny'];
+
+    if($od['od_tax_flag']) {
+        $tot_tax_mny = ( $tax_mny + $send_cost + $od['od_send_cost2'] )
+                       - ( $od_coupon + $od_send_coupon + $od['od_receipt_point'] );
+        if($tot_tax_mny < 0) {
+            $free_mny += $tot_tax_mny;
+            $tot_tax_mny = 0;
+        }
+    } else {
+        $tot_tax_mny = ( $tax_mny + $free_mny + $send_cost + $od['od_send_cost2'] )
+                       - ( $od_coupon + $od_send_coupon + $od['od_receipt_point'] );
+        $free_mny = 0;
+    }
+
+    $od_tax_mny = round($tot_tax_mny / 1.1);
+    $od_vat_mny = $tot_tax_mny - $od_tax_mny;
+    $od_free_mny = $free_mny;
+
+    // 장바구니 취소금액 정보
+    $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price
+                from {$g5['g5_shop_cart_table']}
+                where od_id = '$od_id'
+                  and ct_status IN ( '취소', '반품', '품절' ) ";
+    $sum = sql_fetch($sql);
+    $cancel_price = $sum['price'];
+
+    // 미수금액
+    $od_misu = ( $cart_price + $send_cost + $od['od_send_cost2'] )
+               - ( $cart_coupon + $od_coupon + $od_send_coupon )
+               - ( $od['od_receipt_price'] + $od['od_receipt_point'] - $od['od_refund_price'] );
+
+    // 장바구니상품금액
+    $od_cart_price = $cart_price + $cancel_price;
+
+    // 결과처리
+    $info['od_cart_price']      = $od_cart_price;
+    $info['od_send_cost']       = $send_cost;
+    $info['od_coupon']          = $od_coupon;
+    $info['od_send_coupon']     = $od_send_coupon;
+    $info['od_cart_coupon']     = $cart_coupon;
+    $info['od_tax_mny']         = $od_tax_mny;
+    $info['od_vat_mny']         = $od_vat_mny;
+    $info['od_free_mny']        = $od_free_mny;
+    $info['od_cancel_price']    = $cancel_price;
+    $info['od_misu']            = $od_misu;
+
+    return $info;
+}
+
 // 상품포인트
 function get_item_point($it)
 {
@@ -1562,26 +1706,6 @@ function get_item_sendcost($it_id, $price, $qty)
     }
 
     return $sendcost;
-}
-
-// 주문 미수금
-function get_order_misu($od_id)
-{
-    if(!$od_id)
-        return 0;
-
-    global $g5;
-
-    $sql = " select od_id,
-                  ( od_cart_price + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon - od_receipt_price - od_receipt_point ) as misu
-                from {$g5['g5_shop_order_table']}
-                where od_id = '$od_id' ";
-    $od = sql_fetch($sql);
-
-    if(!$od['od_id'])
-        return 0;
-
-    return $od['misu'];
 }
 
 // 쿠폰 사용체크
