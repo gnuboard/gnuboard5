@@ -1,41 +1,5 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-// 이전 상품보기
-$sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
-          where it_id > '$it_id'
-            and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
-            and it_use = '1'
-          order by it_id asc
-          limit 1 ";
-$row = sql_fetch($sql);
-if ($row['it_id']) {
-    $prev_title = '이전상품보기 '.$row['it_name'];
-    $prev_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
-    $prev_href = '</a>';
-} else {
-    $prev_title = '';
-    $prev_href = '';
-    $prev_href2 = '';
-}
-
-// 다음 상품보기
-$sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
-          where it_id < '$it_id'
-            and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."'
-            and it_use = '1'
-          order by it_id desc
-          limit 1 ";
-$row = sql_fetch($sql);
-if ($row['it_id']) {
-    $next_title = '다음 상품 '.$row['it_name'];
-    $next_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
-    $next_href2 = '</a>';
-} else {
-    $next_title = '';
-    $next_href = '';
-    $next_href2 = '';
-}
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
@@ -373,24 +337,6 @@ if ($row['it_id']) {
 </aside>
 
 <?php
-// 관리자가 확인한 사용후기의 갯수를 얻음
-$sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
-$row = sql_fetch($sql);
-$item_use_count = $row['cnt'];
-
-// 상품문의의 갯수를 얻음
-$sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
-$row = sql_fetch($sql);
-$item_qa_count = $row['cnt'];
-
-// 관련상품의 갯수를 얻음
-$sql = " select count(*) as cnt
-           from {$g5['g5_shop_item_relation_table']} a
-           left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
-          where a.it_id = '{$it['it_id']}' ";
-$row = sql_fetch($sql);
-$item_relation_count = $row['cnt'];
-
 $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
 ?>
 <div>
