@@ -310,7 +310,27 @@ $sql_common = " ca_id               = '$ca_id',
                 it_img7             = '$it_img7',
                 it_img8             = '$it_img8',
                 it_img9             = '$it_img9',
-                it_img10            = '$it_img10'
+                it_img10            = '$it_img10',
+                it_1_subj           = '$it_1_subj',
+                it_2_subj           = '$it_2_subj',
+                it_3_subj           = '$it_3_subj',
+                it_4_subj           = '$it_4_subj',
+                it_5_subj           = '$it_5_subj',
+                it_6_subj           = '$it_6_subj',
+                it_7_subj           = '$it_7_subj',
+                it_8_subj           = '$it_8_subj',
+                it_9_subj           = '$it_9_subj',
+                it_10_subj          = '$it_10_subj',
+                it_1                = '$it_1',
+                it_2                = '$it_2',
+                it_3                = '$it_3',
+                it_4                = '$it_4',
+                it_5                = '$it_5',
+                it_6                = '$it_6',
+                it_7                = '$it_7',
+                it_8                = '$it_8',
+                it_9                = '$it_9',
+                it_10               = '$it_10'
                 ";
 
 if ($w == "")
@@ -445,6 +465,16 @@ if(is_checked('chk_ca_it_head_html'))           $ca_fields .= " , it_head_html =
 if(is_checked('chk_ca_it_tail_html'))           $ca_fields .= " , it_tail_html = '$it_tail_html' ";
 if(is_checked('chk_ca_it_mobile_head_html'))    $ca_fields .= " , it_mobile_head_html = '$it_mobile_head_html' ";
 if(is_checked('chk_ca_it_mobile_tail_html'))    $ca_fields .= " , it_mobile_tail_html = '$it_mobile_tail_html' ";
+if(is_checked('chk_grp_1'))                     $ca_fields .= " , it_1_subj = '$it_1_subj', it_1 = '$it_1' ";
+if(is_checked('chk_grp_2'))                     $ca_fields .= " , it_2_subj = '$it_2_subj', it_2 = '$it_2' ";
+if(is_checked('chk_grp_3'))                     $ca_fields .= " , it_3_subj = '$it_3_subj', it_3 = '$it_3' ";
+if(is_checked('chk_grp_4'))                     $ca_fields .= " , it_4_subj = '$it_4_subj', it_4 = '$it_4' ";
+if(is_checked('chk_grp_5'))                     $ca_fields .= " , it_5_subj = '$it_5_subj', it_5 = '$it_5' ";
+if(is_checked('chk_grp_6'))                     $ca_fields .= " , it_6_subj = '$it_6_subj', it_6 = '$it_6' ";
+if(is_checked('chk_grp_7'))                     $ca_fields .= " , it_7_subj = '$it_7_subj', it_7 = '$it_7' ";
+if(is_checked('chk_grp_8'))                     $ca_fields .= " , it_8_subj = '$it_8_subj', it_8 = '$it_8' ";
+if(is_checked('chk_grp_9'))                     $ca_fields .= " , it_9_subj = '$it_9_subj', it_9 = '$it_9' ";
+if(is_checked('chk_grp_10'))                    $ca_fields .= " , it_10_subj = '$it_10_subj', it_10 = '$it_10' ";
 
 if($ca_fields) {
     sql_query(" update {$g5['g5_shop_item_table']} set it_name = it_name {$ca_fields} where ca_id = '$ca_id' ");
@@ -479,6 +509,16 @@ if(is_checked('chk_all_it_head_html'))           $all_fields .= " , it_head_html
 if(is_checked('chk_all_it_tail_html'))           $all_fields .= " , it_tail_html = '$it_tail_html' ";
 if(is_checked('chk_all_it_mobile_head_html'))    $all_fields .= " , it_mobile_head_html = '$it_mobile_head_html' ";
 if(is_checked('chk_all_it_mobile_tail_html'))    $all_fields .= " , it_mobile_tail_html = '$it_mobile_tail_html' ";
+if(is_checked('chk_all_1'))                      $all_fields .= " , it_1_subj = '$it_1_subj', it_1 = '$it_1' ";
+if(is_checked('chk_all_2'))                      $all_fields .= " , it_2_subj = '$it_2_subj', it_2 = '$it_2' ";
+if(is_checked('chk_all_3'))                      $all_fields .= " , it_3_subj = '$it_3_subj', it_3 = '$it_3' ";
+if(is_checked('chk_all_4'))                      $all_fields .= " , it_4_subj = '$it_4_subj', it_4 = '$it_4' ";
+if(is_checked('chk_all_5'))                      $all_fields .= " , it_5_subj = '$it_5_subj', it_5 = '$it_5' ";
+if(is_checked('chk_all_6'))                      $all_fields .= " , it_6_subj = '$it_6_subj', it_6 = '$it_6' ";
+if(is_checked('chk_all_7'))                      $all_fields .= " , it_7_subj = '$it_7_subj', it_7 = '$it_7' ";
+if(is_checked('chk_all_8'))                      $all_fields .= " , it_8_subj = '$it_8_subj', it_8 = '$it_8' ";
+if(is_checked('chk_all_9'))                      $all_fields .= " , it_9_subj = '$it_9_subj', it_9 = '$it_9' ";
+if(is_checked('chk_all_10'))                     $all_fields .= " , it_10_subj = '$it_10_subj', it_10 = '$it_10' ";
 
 if($all_fields) {
     sql_query(" update {$g5['g5_shop_item_table']} set it_name = it_name {$all_fields} ");

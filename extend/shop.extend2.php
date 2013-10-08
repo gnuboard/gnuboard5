@@ -560,4 +560,50 @@ if(!sql_query(" select it_buy_min_qty from {$g5['g5_shop_item_table']} limit 1 "
                     ADD `it_buy_min_qty` int(11) NOT NULL DEFAULT '0' AFTER `it_sc_qty`,
                     ADD `it_buy_max_qty` int(11) NOT NULL DEFAULT '0' AFTER `it_buy_min_qty` ", true);
 }
+
+// 상품, 카테고리 여분필드 추가
+if(!sql_query(" select it_1 from {$g5['g5_shop_item_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_1_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_img10`,
+                    ADD `it_2_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_1_subj`,
+                    ADD `it_3_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_2_subj`,
+                    ADD `it_4_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_3_subj`,
+                    ADD `it_5_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_4_subj`,
+                    ADD `it_6_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_5_subj`,
+                    ADD `it_7_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_6_subj`,
+                    ADD `it_8_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_7_subj`,
+                    ADD `it_9_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_8_subj`,
+                    ADD `it_10_subj` varchar(255) NOT NULL DEFAULT '' AFTER `it_9_subj`,
+                    ADD `it_1` varchar(255) NOT NULL DEFAULT '' AFTER `it_10_subj`,
+                    ADD `it_2` varchar(255) NOT NULL DEFAULT '' AFTER `it_1`,
+                    ADD `it_3` varchar(255) NOT NULL DEFAULT '' AFTER `it_2`,
+                    ADD `it_4` varchar(255) NOT NULL DEFAULT '' AFTER `it_3`,
+                    ADD `it_5` varchar(255) NOT NULL DEFAULT '' AFTER `it_4`,
+                    ADD `it_6` varchar(255) NOT NULL DEFAULT '' AFTER `it_5`,
+                    ADD `it_7` varchar(255) NOT NULL DEFAULT '' AFTER `it_6`,
+                    ADD `it_8` varchar(255) NOT NULL DEFAULT '' AFTER `it_7`,
+                    ADD `it_9` varchar(255) NOT NULL DEFAULT '' AFTER `it_8`,
+                    ADD `it_10` varchar(255) NOT NULL DEFAULT '' AFTER `it_9` ", true);
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
+                    ADD `ca_1_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_adult_use`,
+                    ADD `ca_2_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_1_subj`,
+                    ADD `ca_3_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_2_subj`,
+                    ADD `ca_4_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_3_subj`,
+                    ADD `ca_5_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_4_subj`,
+                    ADD `ca_6_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_5_subj`,
+                    ADD `ca_7_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_6_subj`,
+                    ADD `ca_8_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_7_subj`,
+                    ADD `ca_9_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_8_subj`,
+                    ADD `ca_10_subj` varchar(255) NOT NULL DEFAULT '' AFTER `ca_9_subj`,
+                    ADD `ca_1` varchar(255) NOT NULL DEFAULT '' AFTER `ca_10_subj`,
+                    ADD `ca_2` varchar(255) NOT NULL DEFAULT '' AFTER `ca_1`,
+                    ADD `ca_3` varchar(255) NOT NULL DEFAULT '' AFTER `ca_2`,
+                    ADD `ca_4` varchar(255) NOT NULL DEFAULT '' AFTER `ca_3`,
+                    ADD `ca_5` varchar(255) NOT NULL DEFAULT '' AFTER `ca_4`,
+                    ADD `ca_6` varchar(255) NOT NULL DEFAULT '' AFTER `ca_5`,
+                    ADD `ca_7` varchar(255) NOT NULL DEFAULT '' AFTER `ca_6`,
+                    ADD `ca_8` varchar(255) NOT NULL DEFAULT '' AFTER `ca_7`,
+                    ADD `ca_9` varchar(255) NOT NULL DEFAULT '' AFTER `ca_8`,
+                    ADD `ca_10` varchar(255) NOT NULL DEFAULT '' AFTER `ca_9` ", true);
+}
 ?>
