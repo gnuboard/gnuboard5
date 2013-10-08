@@ -61,7 +61,7 @@ if (!isset($board['bo_use_sns'])) {
     }
 }
 
-$sql = " SHOW COLUMNS FROM `{$g5['board_table']}` WHERE field = 'bo_use_cert' ";
+$sql = " SHOW COLUMNS FROM `{$g5['board_table']}` LIKE 'bo_use_cert' ";
 $row = sql_fetch($sql);
 if(strpos($row['Type'], 'hp-') === false) {
     sql_query(" ALTER TABLE `{$g5['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '' ", false);
