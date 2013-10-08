@@ -74,12 +74,6 @@ function fitemuse_submit(f)
 {
     <?php echo get_editor_js('is_content'); ?>
 
-    if (is_content_editor_data.length > <?php echo $is_content_max_length; ?>) {
-        alert("내용은 <?php echo $is_content_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+is_content_editor_data.length+" 글자");
-        CKEDITOR.instances.is_content.focus();
-        return false;
-    }
-
     return true;
 }
 </script>

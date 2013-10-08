@@ -12,9 +12,6 @@ if (!$is_member) {
     alert_close("사용후기는 회원만 작성 가능합니다.");
 }
 
-// 사용후기의 내용에 쓸수 있는 최대 글자수 (한글은 영문3자)
-$is_content_max_length = 10000;
-
 $w     = escape_trim($_REQUEST['w']);
 $it_id = escape_trim($_REQUEST['it_id']);
 $is_id = escape_trim($_REQUEST['is_id']);

@@ -72,28 +72,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <script type="text/javascript">
 function fitemuse_submit(f)
 {
-    /*
-    if (document.getElementById('tx_is_content')) {
-        var len = ed_is_content.inputLength();
-        if (len == 0) {
-            alert('내용을 입력하십시오.');
-            ed_is_content.returnFalse();
-            return false;
-        } else if (len > 1000) {
-            alert('내용은 1000글자 까지만 입력해 주세요.');
-            ed_is_content.returnFalse();
-            return false;
-        }
-    }
-    */
-
     <?php echo get_editor_js('is_content'); ?>
-
-    if (is_content_editor_data.length > <?php echo $is_content_max_length; ?>) {
-        alert("내용은 <?php echo $is_content_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+is_content_editor_data.length+" 글자");
-        CKEDITOR.instances.is_content.focus();
-        return false;
-    }
 
     return true;
 }

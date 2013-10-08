@@ -41,12 +41,6 @@ function fitemqa_submit(f)
 {
     <?php echo get_editor_js('iq_question'); ?>
 
-    if (iq_question_editor_data.length > <?php echo $iq_question_max_length; ?>) {
-        alert("내용은 <?php echo $iq_question_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+iq_question_editor_data.length+" 글자");
-        CKEDITOR.instances.iq_question.focus();
-        return false;
-    }
-
     return true;
 }
 </script>
