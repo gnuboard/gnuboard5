@@ -94,18 +94,58 @@ function  jsf__pay( form )
 }
 
 // Payplus Plug-in 설치 안내
+
 function init_pay_button()
 {
-    if( GetPluginObject() == null ){
-        document.getElementById("display_setup_message_top").style.display = "block" ;
-        document.getElementById("display_setup_message").style.display = "block" ;
-        document.getElementById("display_pay_button").style.display = "none" ;
-        document.getElementById("display_setup_message").scrollIntoView();
+    if (navigator.userAgent.indexOf('MSIE') > 0)
+    {
+        try
+        {
+            if( document.Payplus.object == null )
+            {
+                document.getElementById("display_setup_message_top").style.display = "block" ;
+                document.getElementById("display_setup_message").style.display = "block" ;
+                document.getElementById("display_pay_button").style.display = "none" ;
+                document.getElementById("display_setup_message").scrollIntoView();
+            }
+            else{
+                document.getElementById("display_setup_message_top").style.display = "none" ;
+                document.getElementById("display_setup_message").style.display = "none" ;
+                document.getElementById("display_pay_button").style.display = "block" ;
+            }
+        }
+        catch (e)
+        {
+            document.getElementById("display_setup_message_top").style.display = "block" ;
+            document.getElementById("display_setup_message").style.display = "block" ;
+            document.getElementById("display_pay_button").style.display = "none" ;
+            document.getElementById("display_setup_message").scrollIntoView();
+        }
     }
-    else{
-        document.getElementById("display_setup_message_top").style.display = "none" ;
-        document.getElementById("display_setup_message").style.display = "none" ;
-        document.getElementById("display_pay_button").style.display = "block" ;
+    else
+    {
+        try
+        {
+            if( Payplus == null )
+            {
+                document.getElementById("display_setup_message_top").style.display = "block" ;
+                document.getElementById("display_setup_message").style.display = "block" ;
+                document.getElementById("display_pay_button").style.display = "none" ;
+                document.getElementById("display_setup_message").scrollIntoView();
+            }
+            else{
+                document.getElementById("display_setup_message_top").style.display = "none" ;
+                document.getElementById("display_setup_message").style.display = "none" ;
+                document.getElementById("display_pay_button").style.display = "block" ;
+            }
+        }
+        catch (e)
+        {
+            document.getElementById("display_setup_message_top").style.display = "block" ;
+            document.getElementById("display_setup_message").style.display = "block" ;
+            document.getElementById("display_pay_button").style.display = "none" ;
+            document.getElementById("display_setup_message").scrollIntoView();
+        }
     }
 }
 
@@ -346,7 +386,6 @@ function get_intall_file()
     ?>
         <input type="hidden" name="req_tx"          value="pay">
         <input type="hidden" name="site_cd"         value="<?php echo $default['de_kcp_mid']; ?>">
-        <input type="hidden" name="site_key"        value="<?php echo $default['de_kcp_site_key']; ?>">
         <input type="hidden" name="site_name"       value="<?php echo $default['de_admin_company_name']; ?>">
 
     <?php

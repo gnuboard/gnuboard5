@@ -77,6 +77,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 	$app_time       = "";                         // 승인시간 (모든 결제 수단 공통)
 	$amount         = "";                         // KCP 실제 거래 금액
 	$total_amount   = 0;                          // 복합결제시 총 거래금액
+    $coupon_mny		= "";						  // 쿠폰금액
     /* = -------------------------------------------------------------------------- = */
     $card_cd        = "";                         // 신용카드 코드
     $card_name      = "";                         // 신용카드 명
@@ -86,9 +87,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 	$partcanc_yn    = "";						  // 부분취소 가능유무
 	$card_bin_type_01 = "";                       // 카드구분1
 	$card_bin_type_01 = "";                       // 카드구분2
+    $card_mny		= "";						  // 카드결제금액
     /* = -------------------------------------------------------------------------- = */
 	$bank_name      = "";                         // 은행명
 	$bank_code      = "";						  // 은행코드
+    $bk_mny			= "";						  // 계좌이체결제금액
 	/* = -------------------------------------------------------------------------- = */
     $bankname       = "";                         // 입금할 은행명
     $depositor      = "";                         // 입금할 계좌 예금주 성명
@@ -258,6 +261,7 @@ if ( $req_tx == "pay" )
         $tno       = $c_PayPlus->mf_get_res_data( "tno"       ); // KCP 거래 고유 번호
         $amount    = $c_PayPlus->mf_get_res_data( "amount"    ); // KCP 실제 거래 금액
         $pnt_issue = $c_PayPlus->mf_get_res_data( "pnt_issue" ); // 결제 포인트사 코드
+        $coupon_mny = $c_PayPlus->mf_get_res_data( "coupon_mny" ); // 쿠폰금액
 
 /* = -------------------------------------------------------------------------- = */
 /* =   05-1. 신용카드 승인 결과 처리                                            = */
@@ -273,6 +277,7 @@ if ( $req_tx == "pay" )
             $partcanc_yn = $c_PayPlus->mf_get_res_data( "partcanc_yn" ); // 부분취소 가능유무
             $card_bin_type_01 = $c_PayPlus->mf_get_res_data( "card_bin_type_01" ); // 카드구분1
             $card_bin_type_02 = $c_PayPlus->mf_get_res_data( "card_bin_type_02" ); // 카드구분2
+            $card_mny = $c_PayPlus->mf_get_res_data( "card_mny" ); // 카드결제금액
 
             /* = -------------------------------------------------------------- = */
             /* =   05-1.1. 복합결제(포인트+신용카드) 승인 결과 처리               = */
@@ -298,6 +303,7 @@ if ( $req_tx == "pay" )
             $app_time  = $c_PayPlus->mf_get_res_data( "app_time"   );  // 승인 시간
             $bank_name = $c_PayPlus->mf_get_res_data( "bank_name"  );  // 은행명
             $bank_code = $c_PayPlus->mf_get_res_data( "bank_code"  );  // 은행코드
+            $bk_mny = $c_PayPlus->mf_get_res_data( "bk_mny" ); // 계좌이체결제금액
         }
 
 /* = -------------------------------------------------------------------------- = */
