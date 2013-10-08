@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <tbody>
     <tr>
         <th scope="row"><label for="iq_subject">제목</label></th>
-        <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="frm_input" minlength="2" maxlength="250"></td>
+        <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
     </tr>
     <tr>
         <th scope="row"><label for="iq_question">질문</label></th>
@@ -40,6 +40,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 function fitemqa_submit(f)
 {
     <?php echo get_editor_js('iq_question'); ?>
+
+    <?php echo chk_editor_js('iq_question'); ?>
 
     return true;
 }
