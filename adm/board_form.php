@@ -671,7 +671,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="bo_write_min">최소 글수 제한</label></th>
         <td>
-            <?php echo help('글 입력시 최소 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
+            <?php echo help('글 입력시 최소 글자수를 설정. 0을 입력하거나 최고관리자, DHTML 에디터 사용시에는 검사하지 않음') ?>
             <input type="text" name="bo_write_min" value="<?php echo $board['bo_write_min'] ?>" id="bo_write_min" class="numeric frm_input" size="4">
         </td>
         <td class="group_setting">
@@ -684,7 +684,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="bo_write_max">최대 글수 제한</label></th>
         <td>
-            <?php echo help('글 입력시 최대 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
+            <?php echo help('글 입력시 최대 글자수를 설정. 0을 입력하거나 최고관리자, DHTML 에디터 사용시에는 검사하지 않음') ?>
             <input type="text" name="bo_write_max" value="<?php echo $board['bo_write_max'] ?>" id="bo_write_max" class="numeric frm_input" size="4">
         </td>
         <td class="group_setting">
