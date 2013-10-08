@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="sit_use_write" class="new_win">
     <h1 class="new_win_title">사용후기 쓰기</h1>
 
-    <form name="fitemuse" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuse_submit(this);" autocomplete="off">
+    <form name="fitemuse" method="post" action="./itemuseformupdate.php" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
@@ -68,19 +68,4 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     </form>
 </div>
-
-<script type="text/javascript">
-function fitemuse_submit(f)
-{
-    <?php echo get_editor_js('is_content'); ?>
-
-    if (is_content_editor_data.length > <?php echo $is_content_max_length; ?>) {
-        alert("내용은 <?php echo $is_content_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+is_content_editor_data.length+" 글자");
-        CKEDITOR.instances.is_content.focus();
-        return false;
-    }
-
-    return true;
-}
-</script>
 <!-- } 사용후기 쓰기 끝 -->

@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="sit_qa_write" class="new_win">
     <h1 class="new_win_title">상품문의 쓰기</h1>
 
-    <form name="fitemqa" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqa_submit(this);" autocomplete="off">
+    <form name="fitemqa" method="post" action="./itemqaformupdate.php" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
@@ -35,19 +35,4 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
     </form>
 </div>
-
-<script type="text/javascript">
-function fitemqa_submit(f)
-{
-    <?php echo get_editor_js('iq_question'); ?>
-
-    if (iq_question_editor_data.length > <?php echo $iq_question_max_length; ?>) {
-        alert("내용은 <?php echo $iq_question_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+iq_question_editor_data.length+" 글자");
-        CKEDITOR.instances.iq_question.focus();
-        return false;
-    }
-
-    return true;
-}
-</script>
 <!-- } 상품문의 쓰기 끝 -->
