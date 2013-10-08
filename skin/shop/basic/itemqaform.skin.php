@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="sit_qa_write" class="new_win">
     <h1 class="new_win_title">상품문의 쓰기</h1>
 
-    <form name="fitemqa" method="post" action="./itemqaformupdate.php" autocomplete="off">
+    <form name="fitemqa" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqa_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
@@ -35,4 +35,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
     </form>
 </div>
+
+<script type="text/javascript">
+function fitemqa_submit(f)
+{
+    <?php echo get_editor_js('iq_question'); ?>
+
+    return true;
+}
+</script>
 <!-- } 상품문의 쓰기 끝 -->
