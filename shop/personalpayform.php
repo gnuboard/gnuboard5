@@ -19,9 +19,8 @@ $g5['title'] = $pp['pp_name'].'님 개인결제';
 include_once('./_head.php');
 
 $action_url = G5_HTTPS_SHOP_URL.'/personalpayformupdate.php';
-if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
-    include './settle_'.$default['de_card_pg'].'.inc.php';
-}
+
+require './settle_kcp.inc.php';
 
 // 개인결제 체크를 위한 hash
 $hash_data = md5($pp['pp_id'].$pp['pp_price'].$pp['pp_time']);

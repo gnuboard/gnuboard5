@@ -258,7 +258,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_card_test` int(11) NOT NULL DEFAULT '0',
   `de_card_use` int(11) NOT NULL DEFAULT '0',
   `de_card_point` int(11) NOT NULL DEFAULT '0',
-  `de_card_pg` varchar(255) NOT NULL DEFAULT '',
   `de_settle_min_point` int(11) NOT NULL DEFAULT '0',
   `de_settle_max_point` int(11) NOT NULL DEFAULT '0',
   `de_settle_point_unit` int(11) NOT NULL DEFAULT '0',

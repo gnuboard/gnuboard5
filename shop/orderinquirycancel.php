@@ -30,9 +30,8 @@ if($od['od_cancel_price'] > 0 || $ct['od_count1'] != $ct['od_count2']) {
 
 // PG 결제 취소
 if($od['od_tno']) {
-    if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
-        include './settle_'.$default['de_card_pg'].'.inc.php';
-    }
+    require './settle_kcp.inc.php';
+
     $_POST['tno'] = $od['od_tno'];
     $_POST['req_tx'] = 'mod';
     $_POST['mod_type'] = 'STSC';

@@ -76,11 +76,12 @@ if ($od['mb_id'] == "") {
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 // PG사를 KCP 사용하면서 테스트 상점아이디라면
+$pg_url = 'http://admin8.kcp.co.kr';
 if ($default['de_card_test']) {
     // 로그인 아이디 / 비번
     // 일반 : test1234 / test12345
     // 에스크로 : escrow / escrow913
-    $g5['g5_shop_cardpg']['kcp'] = "http://testadmin8.kcp.co.kr";
+    $pg_url = 'http://testadmin8.kcp.co.kr';
 }
 
 // 상품목록
@@ -515,7 +516,6 @@ $pg_anchor = '<ul class="anchor">
                 <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input" size="10"> 원
                 <?php
                 if ($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌') {
-                    $pg_url = $g5['g5_shop_cardpg'][$default['de_card_pg']];
                 ?>
                 <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
                 <?php } ?>
@@ -551,7 +551,6 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
             <td>
                 <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input"> 원
-                <?php $pg_url = $g5['g5_shop_cardpg'][$default['de_card_pg']];?>
                 <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
             </td>
         </tr>
@@ -570,8 +569,7 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row" class="sodr_sppay"><label for="od_receipt_price">신용카드 결제액</label></th>
             <td>
                 <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input" size="10"> 원
-                <?php $card_url = $g5['g5_shop_cardpg'][$default['de_card_pg']]; ?>
-                <a href="<?php echo $card_url; ?>" target="_blank">결제대행사</a>
+                <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
             </td>
         </tr>
         <tr>
