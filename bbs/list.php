@@ -130,6 +130,9 @@ $k = 0;
 
 while ($row = sql_fetch_array($result))
 {
+    // 공지글인 경우는 해당글을 같은 페이지에서 다시 노출하지 않는다.
+    if ($arr_notice && in_array($row['wr_id'], $arr_notice)) continue;
+
     // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
     if ($sca || $stx)
         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");

@@ -61,7 +61,7 @@ if (!isset($board['bo_use_sns'])) {
     }
 }
 
-$sql = " SHOW COLUMNS FROM `{$g5['board_table']}` WHERE field = 'bo_use_cert' ";
+$sql = " SHOW COLUMNS FROM `{$g5['board_table']}` LIKE 'bo_use_cert' ";
 $row = sql_fetch($sql);
 if(strpos($row['Type'], 'hp-') === false) {
     sql_query(" ALTER TABLE `{$g5['board_table']}` CHANGE `bo_use_cert` `bo_use_cert` ENUM('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '' ", false);
@@ -671,7 +671,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="bo_write_min">최소 글수 제한</label></th>
         <td>
-            <?php echo help('글 입력시 최소 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
+            <?php echo help('글 입력시 최소 글자수를 설정. 0을 입력하거나 최고관리자, DHTML 에디터 사용시에는 검사하지 않음') ?>
             <input type="text" name="bo_write_min" value="<?php echo $board['bo_write_min'] ?>" id="bo_write_min" class="numeric frm_input" size="4">
         </td>
         <td class="group_setting">
@@ -684,7 +684,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <th scope="row"><label for="bo_write_max">최대 글수 제한</label></th>
         <td>
-            <?php echo help('글 입력시 최대 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
+            <?php echo help('글 입력시 최대 글자수를 설정. 0을 입력하거나 최고관리자, DHTML 에디터 사용시에는 검사하지 않음') ?>
             <input type="text" name="bo_write_max" value="<?php echo $board['bo_write_max'] ?>" id="bo_write_max" class="numeric frm_input" size="4">
         </td>
         <td class="group_setting">
@@ -994,10 +994,10 @@ $pg_anchor = '<ul class="anchor">
             <input type="text" name="bo_mobile_gallery_width" value="<?php echo $board['bo_mobile_gallery_width'] ?>" id="bo_mobile_gallery_width" required class="required numeric frm_input" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" name="mobile_chk_grp_gallery_width" value="1" id="mobile_chk_grp_gallery_width">
-            <label for="mobile_chk_grp_gallery_width">그룹적용</label>
-            <input type="checkbox" name="mobile_chk_all_gallery_width" value="1" id="mobile_chk_all_gallery_width">
-            <label for="mobile_chk_all_gallery_width">전체적용</label>
+            <input type="checkbox" name="chk_grp_mobile_gallery_width" value="1" id="chk_grp_mobile_gallery_width">
+            <label for="chk_grp_mobile_gallery_width">그룹적용</label>
+            <input type="checkbox" name="chk_all_mobile_gallery_width" value="1" id="chk_all_mobile_gallery_width">
+            <label for="chk_all_mobile_gallery_width">전체적용</label>
         </td>
     </tr>
     <tr>
@@ -1007,10 +1007,10 @@ $pg_anchor = '<ul class="anchor">
             <input type="text" name="bo_mobile_gallery_height" value="<?php echo $board['bo_mobile_gallery_height'] ?>" id="bo_mobile_gallery_height" required class="required numeric frm_input" size="4">
         </td>
         <td class="group_setting">
-            <input type="checkbox" name="mobile_chk_grp_gallery_height" value="1" id="mobile_chk_grp_gallery_height">
-            <label for="mobile_chk_grp_gallery_height">그룹적용</label>
-            <input type="checkbox" name="mobile_chk_all_gallery_height" value="1" id="mobile_chk_all_gallery_height">
-            <label for="mobile_chk_all_gallery_height">전체적용</label>
+            <input type="checkbox" name="chk_grp_mobile_gallery_height" value="1" id="chk_grp_mobile_gallery_height">
+            <label for="chk_grp_mobile_gallery_height">그룹적용</label>
+            <input type="checkbox" name="chk_all_mobile_gallery_height" value="1" id="chk_all_mobile_gallery_height">
+            <label for="chk_all_mobile_gallery_height">전체적용</label>
         </td>
     </tr>
     <tr>
