@@ -220,7 +220,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </div>
     </form>
 
-    <form name="forderlist" id="forderlist" action="./orderlistupdate.php" onsubmit="return forderlist_submit(this);" method="post">
+    <form name="forderlist" id="forderlist" onsubmit="return forderlist_submit(this);" method="post">
 
     <table id="sodr_list">
     <thead>
@@ -345,9 +345,18 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <option value="">선택하세요</option>
     <option value="주문">주문</option>
     <option value="입금">입금</option>
+    <option value="준비">준비</option>
     <option value="배송">배송</option>
     <option value="완료">완료</option>
     </select>
+
+    <input type="hidden" name="od_settle_case" value="<?php echo $_GET['od_settle_case']; ?>">
+    <input type="hidden" name="od_misu" value="<?php echo $_GET['od_misu']; ?>">
+    <input type="hidden" name="od_cancel_price" value="<?php echo $_GET['od_cancel_price']; ?>">
+    <input type="hidden" name="od_receipt_price" value="<?php echo $_GET['od_receipt_price']; ?>">
+    <input type="hidden" name="od_receipt_point" value="<?php echo $_GET['od_receipt_point']; ?>">
+    <input type="hidden" name="od_receipt_coupon" value="<?php echo $_GET['od_receipt_coupon']; ?>">
+    <input type="hidden" name="page" value="<?php echo $_GET['page']; ?>">
 
     <input type="submit" value="선택수정" onclick="document.pressed=this.value">
 
@@ -414,6 +423,8 @@ function forderlist_submit(f)
             return false;
         }
     }
+
+    f.action = "./orderlistupdate.php";
 
     return true;
 }
