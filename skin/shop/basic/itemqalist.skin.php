@@ -32,6 +32,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <!-- <p><?php echo $config['cf_title']; ?> 전체 상품문의 목록입니다.</p> -->
 
     <?php
+    $thumbnail_width = 500;
+
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $num = $total_count - ($page - 1) * $rows - $i;
@@ -41,11 +43,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
         $it_href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
-        $iq_question = get_view_thumbnail($row['iq_question'], 500);
+        $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
 
         if ($row['iq_answer'])
         {
-            $iq_answer = get_view_thumbnail($row['iq_answer'], 500);
+            $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
             $iq_stats = '답변완료';
             $iq_style = 'sit_qaa_done';
             $is_answer = true;

@@ -1,57 +1,5 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-// 이전 상품보기
-$sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id > '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id asc limit 1 ";
-$row = sql_fetch($sql);
-if ($row['it_id']) {
-    $prev_title = '이전상품<span class="sound_only"> '.$row['it_name'].'</span>';
-    $prev_href = '<a href="./item.php?it_id='.$row['it_id'].'" class="btn01">';
-    $prev_href2 = '</a>'.PHP_EOL;
-} else {
-    $prev_title = '';
-    $prev_href = '';
-    $prev_href2 = '';
-}
-
-// 다음 상품보기
-$sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id < '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id desc limit 1 ";
-$row = sql_fetch($sql);
-if ($row['it_id']) {
-    $next_title = '다음 상품<span class="sound_only"> '.$row['it_name'].'</span>';
-    $next_href = '<a href="./item.php?it_id='.$row['it_id'].'" class="btn01">';
-    $next_href2 = '</a>'.PHP_EOL;
-} else {
-    $next_title = '';
-    $next_href = '';
-    $next_href2 = '';
-}
-
-// 상품 선택옵션 갯수
-$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '0' and io_use = '1' ";
-$row = sql_fetch($sql);
-$opt_count = $row['cnt'];
-
-// 상품 추가옵션 갯수
-$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '1' and io_use = '1' ";
-$row = sql_fetch($sql);
-$spl_count = $row['cnt'];
-
-// 고객선호도 별점수
-$star_score = get_star_image($it['it_id']);
-
-// 선택 옵션
-$option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
-
-// 추가 옵션
-$option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
-
-// 소셜 관련
-$sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
-$sns_url  = G5_SHOP_URL.'/item.php?it_id='.$it['it_id'];
-$sns_share_links .= get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_fb2.png').' ';
-$sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_twt2.png').' ';
-$sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_goo2.png');
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
