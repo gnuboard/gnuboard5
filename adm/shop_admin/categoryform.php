@@ -82,7 +82,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_scatefrm_basic">필수입력</a></li>
-<li><a href="#anc_scatefrm_optional">선택입력</a></li>';
+<li><a href="#anc_scatefrm_optional">선택입력</a></li>
+<li><a href="#anc_scatefrm_extra">여분필드</a></li>';
 if ($w == 'u') $pg_anchor .= '<li><a href="#frm_etc">기타설정</a></li>';
 $pg_anchor .= '</ul>';
 ?>
@@ -303,6 +304,31 @@ $pg_anchor .= '</ul>';
 
 </section>
 
+<section id="anc_scatefrm_extra" class="cbox">
+    <h2>여분필드 설정</h2>
+    <?php echo $pg_anchor ?>
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col>
+    </colgroup>
+    <tbody>
+    <?php for ($i=1; $i<=10; $i++) { ?>
+    <tr>
+        <th scope="row">여분필드<?php echo $i ?></th>
+        <td>
+            <label for="ca_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
+            <input type="text" name="ca_<?php echo $i ?>_subj" id="ca_<?php echo $i ?>_subj" value="<?php echo get_text($ca['ca_'.$i.'_subj']) ?>" class="frm_input">
+            <label for="ca_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
+            <input type="text" name="ca_<?php echo $i ?>" value="<?php echo get_text($ca['ca_'.$i]) ?>" id="ca_<?php echo $i ?>" class="frm_input">
+        </td>
+    </tr>
+    <?php } ?>
+    </tbody>
+    </table>
+</section>
+
 <?php if ($w == "u") { ?>
 <section id="frm_etc" class="cbox">
     <h2>기타설정</h2>
@@ -310,7 +336,7 @@ $pg_anchor .= '</ul>';
     <table class="frm_tbl">
     <colgroup>
         <col class="grid_3">
-        <col class="grid_13">
+        <col>
     </colgroup>
     <tbody>
     <tr>

@@ -61,7 +61,27 @@ $sql_common = " ca_skin                 = '$ca_skin',
                 ca_include_tail         = '$ca_include_tail',
                 ca_mb_id                = '$ca_mb_id',
                 ca_cert_use             = '$ca_cert_use',
-                ca_adult_use            = '$ca_adult_use' ";
+                ca_adult_use            = '$ca_adult_use',
+                ca_1_subj               = '$ca_1_subj',
+                ca_2_subj               = '$ca_2_subj',
+                ca_3_subj               = '$ca_3_subj',
+                ca_4_subj               = '$ca_4_subj',
+                ca_5_subj               = '$ca_5_subj',
+                ca_6_subj               = '$ca_6_subj',
+                ca_7_subj               = '$ca_7_subj',
+                ca_8_subj               = '$ca_8_subj',
+                ca_9_subj               = '$ca_9_subj',
+                ca_10_subj              = '$ca_10_subj',
+                ca_1                    = '$ca_1',
+                ca_2                    = '$ca_2',
+                ca_3                    = '$ca_3',
+                ca_4                    = '$ca_4',
+                ca_5                    = '$ca_5',
+                ca_6                    = '$ca_6',
+                ca_7                    = '$ca_7',
+                ca_8                    = '$ca_8',
+                ca_9                    = '$ca_9',
+                ca_10                   = '$ca_10' ";
 
 
 if ($w == "")
