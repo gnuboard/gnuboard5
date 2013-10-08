@@ -27,14 +27,15 @@ if ($search != "") {
     }
 }
 
+$sql_search .= " $where od_status = '배송' ";
+
 if ($sel_ca_id != "") {
     $sql_search .= " $where ca_id like '$sel_ca_id%' ";
 }
 
 if ($sel_field == "")  $sel_field = "od_id";
 
-$sql_common = " from {$g5['g5_shop_order_table']}
-                $sql_search ";
+$sql_common = " from {$g5['g5_shop_order_table']} $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
 if ($chk_misu) {
@@ -119,7 +120,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
         <li><a href="<?php echo title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호<span class="sound_only"> 순 정렬</span></a></li>
     </ul>
 
-    <form name="fdeliverylistupate" method="post" action="./deliverylistupdate.php" autocomplete="off">
+    <form name="fdeliverylist" method="post" onsubmit="return fdeliverylist_submit(this);" autocomplete="off">
     <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
     <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
     <input type="hidden" name="search" value="<?php echo $search; ?>">
@@ -130,6 +131,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <table id="sdeli_proc">
     <thead>
     <tr>
+        <th scope="col">
+            <label for="chkall" class="sound_only">주문 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col">주문번호</th>
         <th scope="col">주문자</th>
         <th scope="col">주문액</th>
@@ -143,8 +148,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </thead>
     <tbody>
     <?php
-    $sql  = " select *
-              $sql_common ";
+    $sql  = " select * $sql_common ";
     if ($chk_misu)
         $sql .= " where  od_misu <= 0 ";
     $sql .= "  order by $sort1 $sort2
@@ -167,7 +171,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     <tr>
         <td>
-            <input type="hidden" name="od_id[<?php echo $i; ?>]" value="<?php echo $row['od_id']; ?>">
+            <input type="hidden" name="od_id[<?php echo $i ?>]" value="<?php echo $row['od_id'] ?>" id="od_id_<?php echo $i ?>">
+            <label for="chk_<?php echo $i; ?>" class="sound_only">주문번호 <?php echo $row['od_id']; ?></label>
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
+        </td>
+        <td>
+            <!-- <input type="hidden" name="od_id[<?php echo $i; ?>]" value="<?php echo $row['od_id']; ?>"> -->
             <input type="hidden" name="od_tno[<?php echo $i; ?>]" value="<?php echo $row['od_tno']; ?>">
             <input type="hidden" name="od_escrow[<?php echo $i; ?>]" value="<?php echo $row['od_escrow']; ?>">
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>
@@ -209,7 +218,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </fieldset>
 
     <div class="btn_confirm">
-        <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
+        <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
     </div>
 
     </form>
@@ -217,6 +226,20 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 </section>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+
+<script>
+function fdeliverylist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    f.action = "./deliverylistupdate.php";
+
+    return true;
+}
+</script>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

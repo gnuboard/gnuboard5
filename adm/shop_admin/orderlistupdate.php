@@ -2,70 +2,105 @@
 $sub_menu = '400400';
 include_once('./_common.php');
 
-//print_r2($_POST); 
 
-// 주문상태변경 처리
-function change_order_status($od_status1, $od_status2, $od) 
+// 상품옵션별재고 또는 상품재고에 더하기
+function add_io_stock($it_id, $ct_qty, $io_id="", $io_type="")
 {
     global $g5;
 
-    // 원래 주문상태와 바뀔 주문상태가 같다면 처리하지 않음
-    if ($od_status1 == $od_status2) return;
+    if($io_id) {
+        $sql = " update {$g5['g5_shop_item_option_table']}
+                    set io_stock_qty = io_stock_qty + '{$ct_qty}'
+                    where it_id = '{$it_id}'
+                      and io_id = '{$io_id}'
+                      and io_type = '{$io_type}' ";
+    } else {
+        $sql = " update {$g5['g5_shop_item_table']}
+                    set it_stock_qty = it_stock_qty + '{$ct_qty}'
+                    where it_id = '{$it_id}' ";
+    }
+    return sql_query($sql);
+}
+
+
+// 상품옵션별재고 또는 상품재고에서 빼기
+function subtract_io_stock($it_id, $ct_qty, $io_id="", $io_type="")
+{
+    global $g5;
+
+    if($io_id) {
+        $sql = " update {$g5['g5_shop_item_option_table']}
+                    set io_stock_qty = io_stock_qty - '{$ct_qty}'
+                    where it_id = '{$it_id}'
+                      and io_id = '{$io_id}'
+                      and io_type = '{$io_type}' ";
+    } else {
+        $sql = " update {$g5['g5_shop_item_table']}
+                    set it_stock_qty = it_stock_qty - '{$ct_qty}'
+                    where it_id = '{$it_id}' ";
+    }
+    return sql_query($sql);
+}
+
+
+// 주문과 장바구니의 상태를 변경한다.
+function change_status($od_id, $current_status, $change_status)
+{
+    global $g5;
+
+    $sql = " update {$g5['g5_shop_order_table']} set od_status = '{$change_status}' where od_id = '{$od_id}' and od_status = '{$current_status}' ";
+    sql_query($sql, true);
+
+    $sql = " update {$g5['g5_shop_cart_table']} set ct_status = '{$change_status}' where od_id = '{$od_id}' and ct_status = '{$current_status}' ";
+    sql_query($sql, true);
+}
+
+
+
+//print_r2($_POST); 
+
+// 주문상태변경 처리
+function change_order_status($current_staus, $change_status, $od) 
+{
+    global $g5;
+
+    // 현재 주문상태와 바뀔 주문상태가 같다면 처리하지 않음
+    if ($current_staus == $change_status) return;
 
     $od = sql_fetch(" select od_settle_case from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
     if (!$od) return;
 
-    switch ($od_status1) 
+    switch ($current_staus) 
     {
         case '주문' :
 
-            if ($od_status2 != '입금') return;
+            if ($change_status != '입금') return;
             if ($od['od_settle_case'] != '무통장') return;
 
             $sql = " update {$g5['g5_shop_order_table']} 
-                        set od_status = '입금',  
-                            od_receipt_price = od_misu,
+                        set od_receipt_price = od_misu,
                             od_misu = 0,
                             od_receipt_time = '".G5_TIME_YMDHIS."'
                       where od_id = '$od_id' and od_status = '주문' ";
             sql_query($sql, true);
 
-            $sql = " update {$g5['g5_shop_cart_table']} 
-                        set ct_status = '입금'
-                      where od_id = '$od_id' and ct_status = '주문' ";
-            sql_query($sql, true);
+            change_status($od_id, '주문', '입금');
 
             break;
 
         case '입금' :
 
-            if ($od_status2 != '준비') return;
+            if ($change_status != '준비') return;
 
-            $sql = " update {$g5['g5_shop_order_table']} 
-                        set od_status = '준비'
-                      where od_id = '$od_id' and od_status = '입금' ";
-            sql_query($sql, true);
-
-            $sql = " update {$g5['g5_shop_cart_table']} 
-                        set ct_status = '준비'
-                      where od_id = '$od_id' and ct_status = '입금' ";
-            sql_query($sql, true);
+            change_status($od_id, '입금', '준비');
 
             break;
 
         case '준비' :
 
-            if ($od_status2 != '배송') return;
+            if ($change_status != '배송') return;
 
-            $sql = " update {$g5['g5_shop_order_table']} 
-                        set od_status = '배송'
-                      where od_id = '$od_id' and od_status = '준비' ";
-            sql_query($sql, true);
-
-            $sql = " update {$g5['g5_shop_cart_table']} 
-                        set ct_status = '배송'
-                      where od_id = '$od_id' and ct_status = '준비' ";
-            sql_query($sql, true);
+            change_status($od_id, '준비', '배송');
 
             $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ";
             $result = sql_query($sql);
@@ -78,19 +113,7 @@ function change_order_status($od_status1, $od_status2, $od)
                     {
                         $stock_use = 0;
                         // 재고에 다시 더한다.
-                        if($row['io_id']) {
-                            $sql = " update {$g5['g5_shop_item_option_table']}
-                                        set io_stock_qty = io_stock_qty + '{$row['ct_qty']}'
-                                        where it_id = '{$row['it_id']}'
-                                          and io_id = '{$row['io_id']}'
-                                          and io_type = '{$row['io_type']}' ";
-                        } else {
-                            $sql = " update {$g5['g5_shop_item_table']}
-                                        set it_stock_qty = it_stock_qty + '{$row['ct_qty']}'
-                                        where it_id = '{$row['it_id']}' ";
-                        }
-
-                        sql_query($sql);
+                        add_io_stock($row['it_id'], $row['ct_qty'], $row['io_id'], $row['io_type']);
                     }
                 }
                 else
@@ -100,19 +123,7 @@ function change_order_status($od_status1, $od_status2, $od)
                     {
                         $stock_use = 1;
                         // 재고에서 뺀다.
-                        if($row['io_id']) {
-                            $sql = " update {$g5['g5_shop_item_option_table']}
-                                        set io_stock_qty = io_stock_qty - '{$row['ct_qty']}'
-                                        where it_id = '{$row['it_id']}'
-                                          and io_id = '{$row['io_id']}'
-                                          and io_type = '{$row['io_type']}' ";
-                        } else {
-                            $sql = " update {$g5['g5_shop_item_table']}
-                                        set it_stock_qty = it_stock_qty - '{$row['ct_qty']}'
-                                        where it_id = '{$row['it_id']}' ";
-                        }
-
-                        sql_query($sql);
+                        subtract_io_stock($row['it_id'], $row['ct_qty'], $row['io_id'], $row['io_type']);
                     }
                 }
 
@@ -130,11 +141,15 @@ function change_order_status($od_status1, $od_status2, $od)
                                 ct_stock_use  = '$stock_use',
                                 ct_status     = '$ct_status',
                                 ct_history    = CONCAT(ct_history,'$ct_history')
-                            where od_id = '$row['od_id']' ";
+                            where od_id = '{$row['od_id']}' ";
                 sql_query($sql);
             }
 
             break;
+
+        case '배송' :
+
+            if ($change_status != '완료') return;
     }
 
     // 주문정보

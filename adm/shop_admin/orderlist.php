@@ -220,7 +220,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     </div>
     </form>
 
-    <form name="forderlist" id="forderlist" action="./orderlistupdate.php" onsubmit="return forderlist_submit(this);" method="post">
+    <form name="forderlist" id="forderlist" onsubmit="return forderlist_submit(this);" method="post">
 
     <table id="sodr_list">
     <thead>
@@ -423,6 +423,8 @@ function forderlist_submit(f)
             return false;
         }
     }
+
+    f.action = "./orderlistupdate.php";
 
     return true;
 }
