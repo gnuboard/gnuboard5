@@ -42,8 +42,17 @@ while ($row = sql_fetch_array($result))
         while ($row2 = sql_fetch_array($result2))
         {
             $nick = cut_str($member['mb_nick'], $config['cf_cut_name']);
-            if (!$row2['wr_is_comment'] && $config['cf_use_copy_log'])
-                $row2['wr_content'] .= "\n".'<div class="content_'.$sw.'">[이 게시물은 '.$nick.'님에 의해 '.G5_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]</div>';
+            if (!$row2['wr_is_comment'] && $config['cf_use_copy_log']) {
+                if(strstr($row2['wr_option'], 'html')) {
+                    $log_tag1 = '<div class="content_'.$sw.'">';
+                    $log_tag2 = '</div>';
+                } else {
+                    $log_tag1 = "\n";
+                    $log_tag2 = '';
+                }
+
+                $row2['wr_content'] .= "\n".$log_tag1.'[이 게시물은 '.$nick.'님에 의해 '.G5_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]'.$log_tag2;
+            }
 
             $sql = " insert into $move_write_table
                         set wr_num = '$next_wr_num',
