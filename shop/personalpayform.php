@@ -129,7 +129,6 @@ function get_intall_file()
     ?>
         <input type="hidden" name="req_tx"          value="pay">
         <input type="hidden" name="site_cd"         value="<?php echo $default['de_kcp_mid']; ?>">
-        <input type="hidden" name="site_key"        value="<?php echo $default['de_kcp_site_key']; ?>">
         <input type="hidden" name="site_name"       value="<?php echo $default['de_admin_company_name']; ?>">
 
     <?php
