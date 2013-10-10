@@ -1,6 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 $captcha_html = "";
 if ($is_guest && $board['bo_comment_level'] < 2) {

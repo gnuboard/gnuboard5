@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
-include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 set_session('ss_bo_table', $_REQUEST['bo_table']);
 set_session('ss_wr_id', $_REQUEST['wr_id']);

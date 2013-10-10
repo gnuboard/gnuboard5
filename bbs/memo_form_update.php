@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 if ($is_guest)
     alert('회원만 이용하실 수 있습니다.');
