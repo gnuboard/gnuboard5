@@ -238,8 +238,6 @@
 <input type="hidden" name="req_tx"       value="pay">
 <!-- 사이트 코드 -->
 <input type="hidden" name="site_cd"      value="<?php echo $g_conf_site_cd; ?>">
-<!-- 사이트 키 -->
-<input type="hidden" name="site_key"     value="<?php echo $g_conf_site_key; ?>">
  <!-- 사이트 이름 -->
 <input type="hidden" name="shop_name"    value="<?php echo $g_conf_site_name; ?>">
 <!-- 결제수단-->
