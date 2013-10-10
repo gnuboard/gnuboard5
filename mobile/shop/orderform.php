@@ -418,11 +418,6 @@ ob_end_clean();
     <section id="sod_frm_taker">
         <h2>받으시는 분</h2>
 
-        <div id="sod_frm_same">
-            <input type="checkbox" name="same" id="same" onclick="javascript:gumae2baesong(document.forderform);">
-            <label for="same">주문하시는 분과 받으시는 분의 정보가 동일한 경우 체크하십시오.</label>
-        </div>
-
         <table class="frm_tbl">
         <tbody>
         <?php
