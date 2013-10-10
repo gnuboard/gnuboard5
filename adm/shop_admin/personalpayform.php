@@ -90,6 +90,18 @@ $pg_anchor = '<ul class="anchor">
         </table>
     </section>
 
+    <div class="btn_confirm">
+        <input type="submit" value="확인" class="btn_submit" accesskey="s">
+        <?php if($popup == 'yes') { ?>
+        <button type="button" onclick="self.close();">닫기</button>
+        <?php } else { ?>
+        <a href="./personalpaylist.php?<?php echo $qstr; ?>">목록</a>
+        <?php } ?>
+        <?php if($w == 'u') { ?>
+        <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return del_confirm();">삭제</a>
+        <?php } ?>
+    </div>
+
     <section id="anc_spp_pay" class="cbox">
         <h2>결제 정보</h2>
         <?php echo $pg_anchor; ?>
