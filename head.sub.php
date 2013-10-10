@@ -37,6 +37,9 @@ if (G5_IS_MOBILE) {
     echo '<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10">'.PHP_EOL;
     echo '<meta name="HandheldFriendly" content="true">'.PHP_EOL;
     echo '<meta name="format-detection" content="telephone=no">'.PHP_EOL;
+} else {
+    echo '<meta http-equiv="imagetoolbar" content="no">'.PHP_EOL;
+    echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge">'.PHP_EOL;
 }
 ?>
 <title><?php echo $g5_head_title; ?></title>
@@ -44,18 +47,15 @@ if (G5_IS_MOBILE) {
 if (defined('G5_IS_ADMIN')) {
     echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/admin.css">'.PHP_EOL;
 } else {
-    // canonical 지정
-    $canonical = '';
-    if ($bo_table && $wr_id) $canonical = 'http://'.$_SERVER["HTTP_HOST"].'/bbs/board.php?bo_table='.$bo_table.'&wr_id='.$wr_id;
-    else $canonical = 'http://'.$_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
-    echo '<link rel="canonical" href="'.$canonical.'">';
-
     $shop_css = '';
     if (defined('_SHOP_')) $shop_css = '_shop';
     echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/'.(G5_IS_MOBILE?'mobile':'default').$shop_css.'.css">'.PHP_EOL;
+    // canonical 지정
+    $canonical = '';
+    if ($bo_table && $wr_id) $canonical = 'http://'.$_SERVER['HTTP_HOST'].'/bbs/board.php?bo_table='.$bo_table.'&wr_id='.$wr_id;
+    else $canonical = 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'];
+    echo '<link rel="canonical" href="'.$canonical.'">'.PHP_EOL;
 }
-echo '<meta http-equiv="imagetoolbar" content="no">';
-echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge">';
 ?>
 <!--[if lte IE 8]>
 <script src="<?php echo G5_JS_URL ?>/html5.js"></script>
