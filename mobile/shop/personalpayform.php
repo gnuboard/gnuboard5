@@ -14,9 +14,8 @@ $g5['title'] = $pp['pp_name'].'님 개인결제';
 include_once(G5_MSHOP_PATH.'/_head.php');
 
 $action_url = G5_HTTPS_MSHOP_URL.'/personalpayformupdate.php';
-if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
-    include './settle_'.$default['de_card_pg'].'.inc.php';
-}
+
+require './settle_kcp.inc.php';
 
 // 결제등록 요청시 사용할 입금마감일
 $ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
@@ -264,7 +263,7 @@ if($default['de_escrow_use']) {
     </script>
     <?php } ?>
 
-    <!-- <?php if ($default[de_card_use] || $default[de_iche_use]) { echo "결제대행사 : $default[de_card_pg]"; } ?> -->
+    <!-- <?php if ($default['de_card_use'] || $default['de_iche_use']) { echo "결제대행사 : KCP"; } ?> -->
 </div>
 
 <script>

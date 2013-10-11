@@ -105,6 +105,7 @@ $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_relation">관련상품</a></li>
 <li><a href="#anc_sitfrm_event">관련이벤트</a></li>
 <li><a href="#anc_sitfrm_optional">상세설명설정</a></li>
+<li><a href="#anc_sitfrm_extra">여분필드</a></li>
 </ul>
 ';
 ?>
@@ -1379,18 +1380,50 @@ $(function(){
                 <label for="chk_all_it_mobile_tail_html">전체적용</label>
             </td>
         </tr>
-        <?php if ($w == "u") { ?>
-        <tr>
-            <th scope="row">입력일시</th>
-            <td colspan="2">
-                <?php echo help("상품을 처음 입력(등록)한 시간입니다."); ?>
-                <?php echo $it['it_time']; ?>
-            </td>
-        </tr>
-        <?php } ?>
         </tbody>
         </table>
     </div>
+</section>
+
+<section id="anc_sitfrm_extra" class="cbox">
+    <h2>여분필드 설정</h2>
+    <?php echo $pg_anchor ?>
+
+    <table class="frm_tbl">
+    <colgroup>
+        <col class="grid_3">
+        <col class="grid_12">
+        <col class="grid_3">
+    </colgroup>
+    <tbody>
+    <?php for ($i=1; $i<=10; $i++) { ?>
+    <tr>
+        <th scope="row">여분필드<?php echo $i ?></th>
+        <td>
+            <label for="it_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
+            <input type="text" name="it_<?php echo $i ?>_subj" id="it_<?php echo $i ?>_subj" value="<?php echo get_text($it['it_'.$i.'_subj']) ?>" class="frm_input">
+            <label for="it_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
+            <input type="text" name="it_<?php echo $i ?>" value="<?php echo get_text($it['it_'.$i]) ?>" id="it_<?php echo $i ?>" class="frm_input">
+        </td>
+        <td class="group_setting">
+            <input type="checkbox" name="chk_grp_<?php echo $i ?>" value="1" id="chk_grp_<?php echo $i ?>">
+            <label for="chk_grp_<?php echo $i ?>">그룹적용</label>
+            <input type="checkbox" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
+            <label for="chk_all_<?php echo $i ?>">전체적용</label>
+        </td>
+    </tr>
+    <?php } ?>
+    <?php if ($w == "u") { ?>
+    <tr>
+        <th scope="row">입력일시</th>
+        <td colspan="2">
+            <?php echo help("상품을 처음 입력(등록)한 시간입니다."); ?>
+            <?php echo $it['it_time']; ?>
+        </td>
+    </tr>
+    <?php } ?>
+    </tbody>
+    </table>
 </section>
 
 <div class="btn_confirm01 btn_confirm">

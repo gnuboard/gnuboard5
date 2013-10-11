@@ -468,11 +468,11 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="de_vbank_use">가상계좌 결제사용</label></th>
             <td>
-            <?php echo help("주문자가 현금거래를 원할 경우, 해당 거래건에 대해 주문자에게 고유로 발행되는 일회용 계좌번호입니다.", 50); ?>
-            <select name="de_vbank_use" id="de_vbank_use">
-                <option value="0" <?php echo get_selected($default['de_vbank_use'], 0); ?>>사용안함</option>
-                <option value="1" <?php echo get_selected($default['de_vbank_use'], 1); ?>>사용</option>
-            </select>
+                <?php echo help("주문자가 현금거래를 원할 경우, 해당 거래건에 대해 주문자에게 고유로 발행되는 일회용 계좌번호입니다.", 50); ?>
+                <select name="de_vbank_use" id="de_vbank_use">
+                    <option value="0" <?php echo get_selected($default['de_vbank_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_vbank_use'], 1); ?>>사용</option>
+                </select>
             </td>
         </tr>
         <tr>
@@ -558,7 +558,6 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="de_kcp_mid">KCP SITE CODE</label></th>
             <td>
                 <?php echo help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SRZ89"); ?>
-                <input type="hidden" name="de_card_pg" value="kcp">
                 <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
             </td>
         </tr>

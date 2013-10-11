@@ -27,14 +27,15 @@ if ($search != "") {
     }
 }
 
+$sql_search .= " $where od_status = '배송' ";
+
 if ($sel_ca_id != "") {
     $sql_search .= " $where ca_id like '$sel_ca_id%' ";
 }
 
 if ($sel_field == "")  $sel_field = "od_id";
 
-$sql_common = " from {$g5['g5_shop_order_table']}
-                $sql_search ";
+$sql_common = " from {$g5['g5_shop_order_table']} $sql_search ";
 
 // 테이블의 전체 레코드수만 얻음
 if ($chk_misu) {
@@ -104,7 +105,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </ul>
 </div>
 
-<form name="fdeliverylistupate" method="post" action="./deliverylistupdate.php" autocomplete="off">
+<form name="fdeliverylist" method="post" onsubmit="return fdeliverylist_submit(this);" autocomplete="off">
 <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
 <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
 <input type="hidden" name="search" value="<?php echo $search; ?>">
@@ -117,6 +118,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
+        <th scope="col">
+            <label for="chkall" class="sound_only">주문 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col"><a href="<?php echo title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호</a></th>
         <th scope="col"><a href="<?php echo title_sort("od_name") . "&amp;$qstr1"; ?>">주문자</a></th>
         <th scope="col"><a href="<?php echo title_sort("od_cart_price",1) . "&amp;$qstr1"; ?>">주문액</a></th>
@@ -130,8 +135,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </thead>
     <tbody>
     <?php
-    $sql  = " select *
-              $sql_common ";
+    $sql  = " select * $sql_common ";
     if ($chk_misu)
         $sql .= " where  od_misu <= 0 ";
     $sql .= "  order by $sort1 $sort2
@@ -155,8 +159,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
     <tr<?php echo ' '.$tr_bg; ?>>
-        <td class="td_odrnum3">
-            <input type="hidden" name="od_id[<?php echo $i; ?>]" value="<?php echo $row['od_id']; ?>">
+        <td>
+            <input type="hidden" name="od_id[<?php echo $i ?>]" value="<?php echo $row['od_id'] ?>" id="od_id_<?php echo $i ?>">
+            <label for="chk_<?php echo $i; ?>" class="sound_only">주문번호 <?php echo $row['od_id']; ?></label>
+            <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
+        </td>
+        <td>
+            <!-- <input type="hidden" name="od_id[<?php echo $i; ?>]" value="<?php echo $row['od_id']; ?>"> -->
             <input type="hidden" name="od_tno[<?php echo $i; ?>]" value="<?php echo $row['od_tno']; ?>">
             <input type="hidden" name="od_escrow[<?php echo $i; ?>]" value="<?php echo $row['od_escrow']; ?>">
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>
@@ -183,7 +192,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <?php
     }
     if ($i == 0)
-        echo '<tr><td colspan="20" class="empty_table">자료가 한건도 없습니다.</td></tr>';
+        echo '<tr><td colspan="10" class="empty_table">자료가 한건도 없습니다.</td></tr>';
     ?>
     </table>
 </div>
@@ -198,12 +207,26 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 </div>
 
 <div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
+    <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
 </div>
 
 </form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+
+<script>
+function fdeliverylist_submit(f)
+{
+    if (!is_checked("chk[]")) {
+        alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    f.action = "./deliverylistupdate.php";
+
+    return true;
+}
+</script>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

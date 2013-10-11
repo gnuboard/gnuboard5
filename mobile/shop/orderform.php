@@ -23,9 +23,8 @@ set_session('ss_order_id', $od_id);
 
 $s_cart_id = $tmp_cart_id;
 $order_action_url = G5_HTTPS_MSHOP_URL.'/orderformupdate.php';
-if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
-    include './settle_'.$default['de_card_pg'].'.inc.php';
-}
+
+require './settle_kcp.inc.php';
 
 // 결제등록 요청시 사용할 입금마감일
 $ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
@@ -419,11 +418,6 @@ ob_end_clean();
     <section id="sod_frm_taker">
         <h2>받으시는 분</h2>
 
-        <div id="sod_frm_same">
-            <input type="checkbox" name="same" id="same" onclick="javascript:gumae2baesong(document.forderform);">
-            <label for="same">주문하시는 분과 받으시는 분의 정보가 동일한 경우 체크하십시오.</label>
-        </div>
-
         <table class="frm_tbl">
         <tbody>
         <?php
@@ -813,7 +807,7 @@ ob_end_clean();
     </script>
     <?php } ?>
 
-    <!-- <?php if ($default[de_card_use] || $default[de_iche_use]) { echo "결제대행사 : $default[de_card_pg]"; } ?> -->
+    <!-- <?php if ($default['de_card_use'] || $default['de_iche_use']) { echo "결제대행사 : KCP"; } ?> -->
 
 </div>
 

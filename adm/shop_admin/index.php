@@ -8,12 +8,30 @@ $g5['title'] = ' 쇼핑몰관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor = '<ul class="anchor">
+<li><a href="#anc_sidx_ord">주문현황</a></li>
 <li><a href="#anc_sidx_rdy">입금완료미배송내역</a></li>
 <li><a href="#anc_sidx_wait">미입금주문내역</a></li>
 <li><a href="#anc_sidx_ps">사용후기</a></li>
 <li><a href="#anc_sidx_qna">상품문의</a></li>
 </ul>';
 ?>
+
+<section id="anc_sidx_ord">
+    <h2>주문현황</h2>
+    <?php echo $pg_anchor; ?>
+
+    <?php
+    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
+    $row = sql_fetch($sql);
+    echo "주문 : ".$row['cnt'];
+    ?>
+
+    <?php
+    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '입금' ";
+    $row = sql_fetch($sql);
+    echo "입금 : ".$row['cnt'];
+    ?>
+</section>
 
 <section id="anc_sidx_rdy">
     <h2>입금완료 미배송내역</h2>

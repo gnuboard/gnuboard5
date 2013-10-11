@@ -327,13 +327,12 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <option value="">선택하세요</option>
         <option value="주문">주문</option>
         <option value="입금">입금</option>
+        <option value="준비">준비</option>
         <option value="배송">배송</option>
         <option value="완료">완료</option>
     </select>
     <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
 </div>
-
-</form>
 
 <div class="local_desc01 local_desc">
 <p>
@@ -341,6 +340,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
 </p>
 </div>
+
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
@@ -399,6 +400,8 @@ function forderlist_submit(f)
             return false;
         }
     }
+
+    f.action = "./orderlistupdate.php";
 
     return true;
 }

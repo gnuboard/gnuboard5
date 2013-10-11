@@ -19,9 +19,8 @@ $g5['title'] = $pp['pp_name'].'님 개인결제';
 include_once('./_head.php');
 
 $action_url = G5_HTTPS_SHOP_URL.'/personalpayformupdate.php';
-if (file_exists('./settle_'.$default['de_card_pg'].'.inc.php')) {
-    include './settle_'.$default['de_card_pg'].'.inc.php';
-}
+
+require './settle_kcp.inc.php';
 
 // 개인결제 체크를 위한 hash
 $hash_data = md5($pp['pp_id'].$pp['pp_price'].$pp['pp_time']);
@@ -130,7 +129,6 @@ function get_intall_file()
     ?>
         <input type="hidden" name="req_tx"          value="pay">
         <input type="hidden" name="site_cd"         value="<?php echo $default['de_kcp_mid']; ?>">
-        <input type="hidden" name="site_key"        value="<?php echo $default['de_kcp_site_key']; ?>">
         <input type="hidden" name="site_name"       value="<?php echo $default['de_admin_company_name']; ?>">
 
     <?php

@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <tbody>
     <tr>
         <th scope="row"><label for="is_subject">제목</label></th>
-        <td><input type="text" name="is_subject" value="<?php echo get_text($use['is_subject']); ?>" id="is_subject" required class="frm_input" minlength="2" maxlength="250"></td>
+        <td><input type="text" name="is_subject" value="<?php echo get_text($use['is_subject']); ?>" id="is_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
     </tr>
     <tr>
         <th scope="row"><label for="" style="width:200px;">내용</label></th>
@@ -72,28 +72,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <script type="text/javascript">
 function fitemuse_submit(f)
 {
-    /*
-    if (document.getElementById('tx_is_content')) {
-        var len = ed_is_content.inputLength();
-        if (len == 0) {
-            alert('내용을 입력하십시오.');
-            ed_is_content.returnFalse();
-            return false;
-        } else if (len > 1000) {
-            alert('내용은 1000글자 까지만 입력해 주세요.');
-            ed_is_content.returnFalse();
-            return false;
-        }
-    }
-    */
-
     <?php echo get_editor_js('is_content'); ?>
 
-    if (is_content_editor_data.length > <?php echo $is_content_max_length; ?>) {
-        alert("내용은 <?php echo $is_content_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+is_content_editor_data.length+" 글자");
-        CKEDITOR.instances.is_content.focus();
-        return false;
-    }
+    <?php echo chk_editor_js('is_content'); ?>
 
     return true;
 }

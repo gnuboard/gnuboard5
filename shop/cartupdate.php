@@ -143,7 +143,7 @@ else // 장바구니에 담기
                         and io_id = '$io_id'
                         and io_type = '$io_type'
                         and ct_stock_use = 0
-                        and ct_status in ('주문', '준비') ";
+                        and ct_status in ('주문', '입금', '준비') ";
             $row = sql_fetch($sql);
             $sum_qty = $row['cnt'];
 

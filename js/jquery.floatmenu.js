@@ -55,6 +55,7 @@
             origin_y = $(window).scrollTop();
 
             timeout = setTimeout(function() {
+                height = parseInt($menu.height());
                 scroll_y = $(window).scrollTop();
 
                 if(origin_y == scroll_y) {
@@ -182,6 +183,7 @@
                 scroll_y = $(window).scrollTop();
 
                 if(origin_y == scroll_y) {
+                    height = parseInt($menu.height());
                     w_height = $(window).height();
                     element_y = scroll_y + w_height;
 

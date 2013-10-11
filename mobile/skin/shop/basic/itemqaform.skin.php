@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <tbody>
     <tr>
         <th scope="row"><label for="iq_subject">제목</label></th>
-        <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="frm_input" minlength="2" maxlength="250"></td>
+        <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
     </tr>
     <tr>
         <th scope="row"><label for="iq_question">질문</label></th>
@@ -41,11 +41,7 @@ function fitemqa_submit(f)
 {
     <?php echo get_editor_js('iq_question'); ?>
 
-    if (iq_question_editor_data.length > <?php echo $iq_question_max_length; ?>) {
-        alert("내용은 <?php echo $iq_question_max_length; ?> 글자 이내에서 작성해 주세요. (한글은 영문 3자)\n\n현재 : "+iq_question_editor_data.length+" 글자");
-        CKEDITOR.instances.iq_question.focus();
-        return false;
-    }
+    <?php echo chk_editor_js('iq_question'); ?>
 
     return true;
 }
