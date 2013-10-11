@@ -48,9 +48,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = '';
-if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 
 $mb = array();
 if ($sfl == 'mb_id' && $stx)
@@ -82,63 +80,53 @@ function point_clear()
 }
 </script>
 
-<form name="fsearch" id="fsearch" method="get">
-<fieldset>
-    <legend>포인트 내역 검색</legend>
-    <span>
-        <?php echo $listall ?>
-        전체 <?php echo number_format($total_count) ?> 건
-        <?php
-        if (isset($mb['mb_id']) && $mb['mb_id']) {
-            echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
-        } else {
-            $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g5['point_table']} ");
-            echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
-        }
-        ?>
-        <?php if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><?php } ?>
-    </span>
-    <select name="sfl" title="검색대상">
-        <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
-        <option value="po_content"<?php echo get_selected($_GET['sfl'], "po_content"); ?>>내용</option>
-    </select>
-    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
-    <input type="submit" class="btn_submit" value="검색">
-</fieldset>
+<div class="local_ov01 local_ov">
+    <?php echo $listall ?>
+    전체 <?php echo number_format($total_count) ?> 건
+    <?php
+    if (isset($mb['mb_id']) && $mb['mb_id']) {
+        echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
+    } else {
+        $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g5['point_table']} ");
+        echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
+    }
+    ?>
+    <?php if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><?php } ?>
+</div>
+
+<form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
+<select name="sfl" title="검색대상">
+    <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
+    <option value="po_content"<?php echo get_selected($_GET['sfl'], "po_content"); ?>>내용</option>
+</select>
+<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+<input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
+<input type="submit" class="btn_submit" value="검색">
 </form>
 
-<section class="cbox">
-    <h2>포인트 내역</h2>
+<form name="fpointlist" id="fpointlist" method="post" action="./point_list_delete.php" onsubmit="return fpointlist_submit(this);">
+<input type="hidden" name="sst" value="<?php echo $sst ?>">
+<input type="hidden" name="sod" value="<?php echo $sod ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+<input type="hidden" name="stx" value="<?php echo $stx ?>">
+<input type="hidden" name="page" value="<?php echo $page ?>">
+<input type="hidden" name="token" value="<?php echo $token ?>">
 
-    <ul class="sort_odr">
-        <li><?php echo subject_sort_link('mb_id') ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('po_datetime') ?>일시<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('po_content') ?>포인트 내용<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('po_point') ?>포인트<span class="sound_only"> 순 정렬</span></a></li>
-    </ul>
-
-    <form name="fpointlist" id="fpointlist" method="post" action="./point_list_delete.php" onsubmit="return fpointlist_submit(this);">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="token" value="<?php echo $token ?>">
-
-    <table class="tbl_pt_list">
+<div class="tbl_head01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">
             <label for="chkall" class="sound_only">포인트 내역 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <th scope="col">회원아이디</th>
+        <th scope="col"><?php echo subject_sort_link('mb_id') ?>회원아이디</a></th>
         <th scope="col">이름</th>
         <th scope="col">별명</th>
-        <th scope="col">포인트 내용</th>
-        <th scope="col">포인트</th>
-        <th scope="col">일시</th>
+        <th scope="col"><?php echo subject_sort_link('po_content') ?>포인트 내용</a></th>
+        <th scope="col"><?php echo subject_sort_link('po_point') ?>포인트</a></th>
+        <th scope="col"><?php echo subject_sort_link('po_datetime') ?>일시</a></th>
         <th scope="col">만료일</th>
         <th scope="col">포인트합</th>
     </tr>
@@ -162,9 +150,11 @@ function point_clear()
         $expr = '';
         if($row['po_expired'] == 1)
             $expr = ' txt_expired';
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
 
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_chk">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
             <input type="hidden" name="po_id[<?php echo $i ?>]" value="<?php echo $row['po_id'] ?>" id="po_id_<?php echo $i ?>">
@@ -176,7 +166,7 @@ function point_clear()
         <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
         <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
-        <td class="td_time"><?php echo $row['po_datetime'] ?></td>
+        <td class="td_datetime"><?php echo $row['po_datetime'] ?></td>
         <td class="td_date<?php echo $expr; ?>">
             <?php if ($row['po_expired'] == 1) { ?>
             만료<?php echo substr(str_replace('-', '', $row['po_expire_date']), 2); ?>
@@ -193,18 +183,18 @@ function point_clear()
     ?>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_list">
-        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
-    </div>
+<div class="btn_list">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+</div>
 
-    </form>
-</section>
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
-<section id="point_mng" class="cbox">
-    <h2>개별회원 포인트 증감 설정</h2>
+<section id="point_mng">
+    <h2 class="h2_frm">개별회원 포인트 증감 설정</h2>
 
     <form name="fpointlist2" method="post" id="fpointlist2" action="./point_update.php" autocomplete="off">
     <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
@@ -214,32 +204,34 @@ function point_clear()
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="token" value="<?php echo $token ?>">
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" class="required frm_input" required></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="po_content">포인트 내용<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="po_content" id="po_content" required class="required frm_input" size="80"></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="po_point">포인트<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="po_point" id="po_point" required class="required frm_input"></td>
-    </tr>
-    <?php if($config['cf_point_term'] > 0) { ?>
-    <tr>
-        <th scope="row"><label for="po_expire_term">포인트 유효기간</label></th>
-        <td><input type="text" name="po_expire_term" value="<?php echo $po_expire_term; ?>" id="po_expire_term" class="frm_input" size="5"> 일</td>
-    </tr>
-    <?php } ?>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
+            <td><input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" class="required frm_input" required></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="po_content">포인트 내용<strong class="sound_only">필수</strong></label></th>
+            <td><input type="text" name="po_content" id="po_content" required class="required frm_input" size="80"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="po_point">포인트<strong class="sound_only">필수</strong></label></th>
+            <td><input type="text" name="po_point" id="po_point" required class="required frm_input"></td>
+        </tr>
+        <?php if($config['cf_point_term'] > 0) { ?>
+        <tr>
+            <th scope="row"><label for="po_expire_term">포인트 유효기간</label></th>
+            <td><input type="text" name="po_expire_term" value="<?php echo $po_expire_term; ?>" id="po_expire_term" class="frm_input" size="5"> 일</td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
+    </div>
 
     <div class="btn_confirm">
         <input type="submit" value="확인" class="btn_submit">

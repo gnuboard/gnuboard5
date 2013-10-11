@@ -57,8 +57,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-if (isset($stx))
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="local_ov01 local_ov">전체목록</a>';
 
 $g5['title'] = '인기검색어관리';
 include_once('./admin.head.php');
@@ -71,35 +70,35 @@ var list_update_php = '';
 var list_delete_php = 'popular_list.php';
 </script>
 
-<form id="fsearch" name="fsearch" method="get">
-<fieldset>
-    <legend>인기검색어 검색</legend>
-    <span>
+<div class="local_ov01 local_ov">
         <?php echo $listall ?>
         건수 : <?php echo number_format($total_count) ?>개
-    </span>
-    <select name="sfl" title="검색대상">
+</div>
+
+<form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
+<div class="sch_last">
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="pp_word"<?php echo get_selected($_GET['sfl'], "pp_word"); ?>>검색어</option>
         <option value="pp_date"<?php echo get_selected($_GET['sfl'], "pp_date"); ?>>등록일</option>
     </select>
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
     <input type="submit" value="검색" class="btn_submit">
-</fieldset>
+</div>
 </form>
 
-<section class="cbox">
-    <h2>인기검색어 목록</h2>
+<form name="fpopularlist" id="fpopularlist" method="post">
+<input type="hidden" name="sst" value="<?php echo $sst ?>">
+<input type="hidden" name="sod" value="<?php echo $sod ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+<input type="hidden" name="stx" value="<?php echo $stx ?>">
+<input type="hidden" name="page" value="<?php echo $page ?>">
+<input type="hidden" name="token" value="<?php echo $token ?>">
 
-    <form name="fpopularlist" id="fpopularlist" method="post">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="token" value="<?php echo $token ?>">
-
-    <table class="tbl_pop_list">
+<div class="tbl_head01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 인기검색어 전체선택" onclick="check_all(this.form)"></th>
@@ -113,13 +112,14 @@ var list_delete_php = 'popular_list.php';
     for ($i=0; $row=sql_fetch_array($result); $i++) {
 
         $word = get_text($row['pp_word']);
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
 
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_chk">
             <input type="checkbox" name="chk[]" value="<?php echo $row['pp_id'] ?>" id="chk_<?php echo $i ?>" title="<?php echo $word ?> 선택">
         </td>
-        <td>&nbsp; <a href="<?php echo $_SERVER['PHP_SELF'] ?>?sfl=pp_word&amp;stx=<?php echo $word ?>"><?php echo $word ?></a></td>
+        <td><a href="<?php echo $_SERVER['PHP_SELF'] ?>?sfl=pp_word&amp;stx=<?php echo $word ?>"><?php echo $word ?></a></td>
         <td><?php echo $row['pp_date'] ?></td>
         <td><?php echo $row['pp_ip'] ?></td>
     </tr>
@@ -140,7 +140,7 @@ var list_delete_php = 'popular_list.php';
     <?php } ?>
 
     </form>
-</section>
+</div>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 

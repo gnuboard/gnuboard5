@@ -14,15 +14,16 @@ $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
 <?php
 if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
 ?>
-<form action="./smssendicode.php" name="smsform" method="post" onsubmit="return smsform_check(this);" autocomplete="off">
-<section id="sms_send" class="cbox">
-    <h2>SMS 문자전송 내용 입력</h2>
-    <p>예약발송 기능을 이용하시면, 예약된 시간에 맞춰 SMS 문자를 일괄발송할 수 있습니다.</p>
+<div id="sms_send">
+    <h2 class="h2_frm">SMS 문자전송 내용 입력</h2>
 
-    <div id="sms_frm">
-        <table class="frm_tbl">
+    <form action="./smssendicode.php" name="smsform" id="sms_frm" method="post" onsubmit="return smsform_check(this);" autocomplete="off">
+
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption><?php echo $g5['title']; ?> 내용 입력</caption>
         <colgroup>
-            <col class="grid_3">
+            <col class="grid_4">
             <col>
         </colgroup>
         <tbody>
@@ -52,9 +53,9 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
         <tr>
             <th scope="row">예약발송</th>
             <td>
-                <label for="reserved_flag">예약발송 사용</label>
                 <input type="checkbox" name="reserved_flag" value="true" id="reserved_flag">
-                <label for="reserved_year" class="sound_only">연도 설정</label>
+                <label for="reserved_flag">예약발송 사용</label>
+                <label for="reserved_year" class="sound_only">연도</label>
                 <select name="reserved_year" id="reserved_year">
                     <?php
                     $yy = date("Y");
@@ -63,7 +64,7 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
                     }
                     ?>
                 </select> 년
-                <label for="reserved_month" class="sound_only">월 설정</label>
+                <label for="reserved_month" class="sound_only">월</label>
                 <select name="reserved_month" id="reserved_month">
                     <?php
                     $mm = date("n");
@@ -72,7 +73,7 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
                     }
                     ?>
                 </select> 월
-                <label for="reserved_day" class="sound_only">일 설정</label>
+                <label for="reserved_day" class="sound_only">일</label>
                 <select name="reserved_day" id="reserved_day">
                     <?php
                     $dd = date("j");
@@ -81,7 +82,7 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
                     }
                     ?>
                 </select> 일
-                <label for="reserved_hour" class="sound_only">시 설정</label>
+                <label for="reserved_hour" class="sound_only">시</label>
                 <select name="reserved_hour" id="reserved_hour">
                     <?php
                     for ($i=1; $i<=24; $i++) {
@@ -89,7 +90,7 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
                     }
                     ?>
                 </select> 시
-                <label for="reserved_minute" class="sound_only">분 설정</label>
+                <label for="reserved_minute" class="sound_only">분</label>
                 <select name="reserved_minute" id="reserved_minute">
                     <?php
                     for ($i=1; $i<=60; $i++) {
@@ -101,17 +102,23 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
         </tr>
         </tbody>
         </table>
-
-        <div class="btn_confirm">
-            <input type="submit" value="전송" class="btn_submit">
-        </div>
     </div>
+
+    <div class="local_desc01 local_desc">
+        <p>예약발송 기능을 이용하시면, 예약된 시간에 맞춰 SMS 문자를 일괄발송할 수 있습니다.</p>
+    </div>
+
+    <div class="btn_confirm">
+        <input type="submit" value="전송" class="btn_submit">
+    </div>
+
+    </form>
 
     <div id="sms_sm">
         <span id="sms_sm_text">문자내용을 입력해 주세요</span>
-        <p>이 이미지는 이해를 돕기 위한 이미지로써, 실제 발송 시 화면에서 보이는 것과 차이가 있을 수 있습니다.</p>
+        <p>이 이미지는 이해를 돕기 위한 이미지이므로,<br>실제 발송 시 화면과 다를 수 있습니다.</p>
     </div>
-</section>
+</div>
 </form>
 
 <script>
@@ -238,12 +245,14 @@ function smsform_check(f)
 
 <?php } else { ?>
 
-<section class="cbox">
-    <h2>SMS 문자전송 서비스를 사용할 수 없습니다.</h2>
-    <p>
-        SMS 를 사용하지 않고 있기 때문에, 문자 전송을 할 수 없습니다.<br>
-        SMS 사용 설정은 <a href="./configform.php#frm_sms" class="btn_frmline">쇼핑몰관리 &gt; 쇼핑몰설정 &gt; SMS설정</a> 에서 하실 수 있습니다.
-    </p>
+<section>
+    <h2 class="h2_frm">SMS 문자전송 서비스를 사용할 수 없습니다.</h2>
+    <div class="local_desc01 local_desc">
+        <p>
+            SMS 를 사용하지 않고 있기 때문에, 문자 전송을 할 수 없습니다.<br>
+            SMS 사용 설정은 <a href="./configform.php#frm_sms" class="btn_frmline">쇼핑몰관리 &gt; 쇼핑몰설정 &gt; SMS설정</a> 에서 하실 수 있습니다.
+        </p>
+    </div>
 </section>
 
 <?php } ?>

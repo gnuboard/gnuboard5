@@ -15,11 +15,12 @@ $pg_anchor = '<ul class="anchor">
 </ul>';
 ?>
 
-<section id="anc_sidx_rdy" class="cbox">
+<section id="anc_sidx_rdy">
     <h2>입금완료 미배송내역</h2>
     <?php echo $pg_anchor; ?>
 
     <table>
+    <caption>입금완료 미배송내역</caption>
     <thead>
     <tr>
         <th scope="col">주문번호</th>
@@ -59,9 +60,9 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_odrnum2"><?php echo $row['od_id']; ?></td>
         <td class="td_name"><?php echo $name; ?></td>
-        <td class="td_bignum"><?php echo display_price($row['od_receipt_price']); ?></td>
+        <td class="td_numsmall"><?php echo display_price($row['od_receipt_price']); ?></td>
         <td class="td_payby"><?php echo $settle_method; ?></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
+        <td class="td_mngsmall"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
     </tr>
     <?php
     }
@@ -70,16 +71,17 @@ $pg_anchor = '<ul class="anchor">
     </tbody>
     </table>
 
-    <div class="btn_ft">
+    <div class="btn_list03">
         <a href="./deliverylist.php?sort1=od_invoice&amp;sort2=asc&amp;chk_misu=1">입금완료 미배송내역 더보기</a>
     </div>
 </section>
 
-<section id="anc_sidx_wait" class="cbox">
+<section id="anc_sidx_wait">
     <h2>미입금 주문내역</h2>
     <?php echo $pg_anchor; ?>
 
     <table>
+    <caption>미입금 주문내역</caption>
     <thead>
     <tr>
         <th scope="col">주문번호</th>
@@ -119,9 +121,9 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_odrnum2"><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
         <td class="td_name"><?php echo $name; ?></td>
-        <td class="td_bignum"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
+        <td class="td_numsmall"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td class="td_payby"><?php echo $settle_method; ?></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
+        <td class="td_mngsmall"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
     </tr>
     <?php
     }
@@ -130,16 +132,17 @@ $pg_anchor = '<ul class="anchor">
     </tbody>
     </table>
 
-    <div class="btn_ft">
+    <div class="btn_list03">
         <a href="./orderlist.php?sort1=od_receipt_price&amp;sort2=asc">미입금 주문내역 더보기</a>
     </div>
 </section>
 
-<section id="anc_sidx_ps" class="cbox">
+<section id="anc_sidx_ps">
     <h2>사용후기</h2>
     <?php echo $pg_anchor; ?>
 
     <table>
+    <caption>사용후기 목록</caption>
     <thead>
     <tr>
         <th scope="col">회원명</th>
@@ -164,7 +167,7 @@ $pg_anchor = '<ul class="anchor">
     <tr>
         <td class="td_name"><?php echo $name; ?></td>
         <td><?php echo cut_str($row['is_subject'],40); ?></td>
-        <td class="td_smallmng"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
+        <td class="td_mngsmall"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
     </tr>
     <?php
     }
@@ -173,16 +176,17 @@ $pg_anchor = '<ul class="anchor">
     </tbody>
     </table>
 
-    <div class="btn_ft">
+    <div class="btn_list03">
         <a href="./itemuselist.php?sort1=is_confirm&amp;sort2=asc">사용후기 더보기</a>
     </div>
 </section>
 
-<section id="anc_sidx_qna" class="cbox">
+<section id="anc_sidx_qna">
     <h2>상품문의</h2>
     <?php echo $pg_anchor; ?>
 
     <table>
+    <caption>상품문의 목록</caption>
     <thead>
     <tr>
         <th scope="col">회원명</th>
@@ -218,7 +222,7 @@ $pg_anchor = '<ul class="anchor">
     </tbody>
     </table>
 
-    <div class="btn_ft">
+    <div class="btn_list03">
         <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상품문의 더보기</a>
     </div>
 </section>

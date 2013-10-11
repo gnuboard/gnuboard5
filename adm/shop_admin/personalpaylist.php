@@ -56,13 +56,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 $colspan = 8;
 ?>
 
-<form name="fsearch" id="fsearch" method="get">
-<fieldset>
-    <legend>개인결제 검색</legend>
-    <span>
-        <?php echo $listall ?>
-        전체 <?php echo number_format($total_count) ?> 건
-    </span>
+<div class="local_ov01 local_ov">
+    전체 <?php echo number_format($total_count) ?> 건
+</div>
+
+<form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
     <select name="sfl" title="검색대상">
         <option value="pp_id"<?php echo get_selected($_GET['sfl'], "pp_id"); ?>>개인결제번호</option>
         <option value="pp_name"<?php echo get_selected($_GET['sfl'], "pp_name"); ?>>이름</option>
@@ -71,44 +69,36 @@ $colspan = 8;
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
     <input type="submit" class="btn_submit" value="검색">
-</fieldset>
 </form>
 
-<section id="spp_list" class="cbox">
-    <h2>개인결제 내역</h2>
+<div class="btn_add">
+    <a href="./personalpayform.php" id="personalpay_add">개인결제 추가</a>
+</div>
 
-    <div class="btn_add sort_with">
-        <a href="./personalpayform.php" id="personalpay_add">개인결제 추가</a>
-    </div>
+<form name="fpersonalpaylist" id="fpersonalpaylist" method="post" action="./personalpaylistdelete.php" onsubmit="return fpersonalpaylist_submit(this);">
+<input type="hidden" name="sst" value="<?php echo $sst; ?>">
+<input type="hidden" name="sod" value="<?php echo $sod; ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+<input type="hidden" name="stx" value="<?php echo $stx; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="token" value="<?php echo $token; ?>">
 
-    <ul class="sort_odr">
-        <li><?php echo subject_sort_link('pp_id') ?>개인결제번호<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('od_id') ?>주문번호<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('pp_receipt_time') ?>입금일<span class="sound_only"> 순 정렬</span></a></li>
-    </ul>
-
-    <form name="fpersonalpaylist" id="fpersonalpaylist" method="post" action="./personalpaylistdelete.php" onsubmit="return fpersonalpaylist_submit(this);">
-    <input type="hidden" name="sst" value="<?php echo $sst; ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod; ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="token" value="<?php echo $token; ?>">
-
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">
             <label for="chkall" class="sound_only">개인결제 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <th scope="col">이름</th>
-        <th scope="col">주문번호</th>
+        <th scope="col">제목</th>
+        <th scope="col"><?php echo subject_sort_link('od_id') ?>주문번호</a></th>
         <th scope="col">주문금액</th>
         <th scope="col">입금금액</th>
         <th scope="col">미수금액</th>
         <th scope="col">입금방법</a></th>
-        <th scope="col">입금일</a></th>
+        <th scope="col"><?php echo subject_sort_link('pp_receipt_time') ?>입금일</a></a></th>
         <th scope="col">사용</th>
         <th scope="col">관리</th>
     </tr>
@@ -120,22 +110,24 @@ $colspan = 8;
             $od_id = '<a href="./orderform.php?od_id='.$row['od_id'].'" target="_blank">'.$row['od_id'].'</a>';
         else
             $od_id = '&nbsp;';
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
 
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_chk">
             <input type="hidden" id="pp_id_<?php echo $i; ?>" name="pp_id[<?php echo $i; ?>]" value="<?php echo $row['pp_id']; ?>">
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">
         </td>
-        <td class="spp_list_name"><?php echo $row['pp_name']; ?></td>
-        <td class="td_odrnum3 spp_list_id"><?php echo $od_id; ?></td>
-        <td class="td_bignum"><?php echo number_format($row['pp_price']); ?></td>
-        <td class="td_bignum"><?php echo number_format($row['pp_receipt_price']); ?></td>
-        <td class="td_bignum"><?php echo number_format($row['pp_price'] - $row['pp_receipt_price']); ?></td>
+        <td><?php echo $row['pp_name']; ?></td>
+        <td class="td_odrnum3"><?php echo $od_id; ?></td>
+        <td class="td_numsum"><?php echo number_format($row['pp_price']); ?></td>
+        <td class="td_numincome"><?php echo number_format($row['pp_receipt_price']); ?></td>
+        <td class="td_numrdy"><?php echo number_format($row['pp_price'] - $row['pp_receipt_price']); ?></td>
         <td class="td_payby"><?php echo $row['pp_settle_case']; ?></td>
         <td class="td_date"><?php echo is_null_time($row['pp_receipt_time']) ? '' : substr($row['pp_receipt_time'], 2, 8); ?></td>
         <td class="td_boolean"><?php echo $row['pp_use'] ? '예' : '아니오'; ?></td>
-        <td class="td_smallmng">
+        <td class="td_mngsmall">
             <a href="./personalpayform.php?w=u&amp;pp_id=<?php echo $row['pp_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['pp_id']; ?> </span>수정</a>
             <a href="./personalpaycopy.php?pp_id=<?php echo $row['pp_id']; ?>" class="personalpaycopy"><span class="sound_only"><?php echo $row['pp_id']; ?> </span>복사</a>
         </td>
@@ -149,13 +141,13 @@ $colspan = 8;
     ?>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_list">
-        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
-    </div>
+<div class="btn_list">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+</div>
 
-    </form>
-</section>
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 

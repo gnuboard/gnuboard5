@@ -23,16 +23,18 @@ $sql = "select * $sql_common order by co_id limit $from_record, {$config['cf_pag
 $result = sql_query($sql);
 ?>
 
-<section class="cbox">
-    <h2>내용관리</h2>
-    <p>
-        <?php if ($page > 1) {?><a href="<?php echo $_SERVER['PHP_SELF']; ?>">처음으로</a><?php } ?>
-        <span>전체 내용 <?php echo $total_count; ?>건</span>
-    </p>
-    <div class="btn_add">
-        <a href="./contentform.php">내용 추가</a>
-    </div>
+<div class="local_ov01 local_ov">
+    <?php if ($page > 1) {?><a href="<?php echo $_SERVER['PHP_SELF']; ?>">처음으로</a><?php } ?>
+    <span>전체 내용 <?php echo $total_count; ?>건</span>
+</div>
+
+<div class="btn_add">
+    <a href="./contentform.php">내용 추가</a>
+</div>
+
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">ID</th>
@@ -41,9 +43,11 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
-    <tr>
-        <td class="td_odrnum"><?php echo $row['co_id']; ?></td>
+    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+    ?>
+    <tr<?php echo ' '.$tr_bg; ?>>
+        <td class="td_id"><?php echo $row['co_id']; ?></td>
         <td><?php echo htmlspecialchars2($row['co_subject']); ?></td>
         <td class="td_mng">
             <a href="<?php echo G5_SHOP_URL; ?>/content.php?co_id=<?php echo $row['co_id']; ?>"><span class="sound_only"><?php echo htmlspecialchars2($row['co_subject']); ?> </span> 보기</a>
@@ -59,7 +63,7 @@ $result = sql_query($sql);
     ?>
     </tbody>
     </table>
-</section>
+</div>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 

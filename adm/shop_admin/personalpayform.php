@@ -60,88 +60,100 @@ $pg_anchor = '<ul class="anchor">
 
 <?php echo $wrp_tag_st; ?>
 
-    <section id="anc_spp_info" class="cbox">
-        <h2>주문 정보</h2>
+    <section id="anc_spp_info">
+        <h2 class="h2_frm">주문 정보</h2>
         <?php echo $pg_anchor; ?>
-        <p class="title_desc">주문 관련 기본 정보입니다.</p>
-        <table class="frm_tbl">
-        <colgroup>
-            <col class="grid_3">
-            <col>
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="row"><label for="pp_name">이름</label></th>
-            <td><input type="text" name="pp_name" value="<?php echo $pp['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="pp_price">주문금액</label></th>
-            <td><input type="text" name="pp_price" value="<?php echo $pp['pp_price']; ?>" id="pp_price" required class="required frm_input" size="15"> 원</td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="od_id">주문번호</label></th>
-            <td><input type="text" name="od_id" value="<?php echo $pp['od_id'] ? $pp['od_id'] : ''; ?>" id="od_id" class="frm_input" size="20"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="pp_content">내용</label></th>
-            <td><textarea name="pp_content" id="pp_content" rows="8"><?php echo $pp['pp_content']; ?></textarea></td>
-        </tr>
-        </tbody>
-        </table>
+        <div class="local_desc02 local_desc">
+            <p>주문 관련 기본 정보입니다.</p>
+        </div>
+
+        <div class="tbl_frm01 tbl_wrap">
+            <table>
+            <caption>주문 정보 목록</caption>
+            <colgroup>
+                <col class="grid_4">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="row"><label for="pp_name">이름</label></th>
+                <td><input type="text" name="pp_name" value="<?php echo $pp['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="pp_price">주문금액</label></th>
+                <td><input type="text" name="pp_price" value="<?php echo $pp['pp_price']; ?>" id="pp_price" required class="required frm_input" size="15"> 원</td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="od_id">주문번호</label></th>
+                <td><input type="text" name="od_id" value="<?php echo $pp['od_id'] ? $pp['od_id'] : ''; ?>" id="od_id" class="frm_input" size="20"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="pp_content">내용</label></th>
+                <td><textarea name="pp_content" id="pp_content" rows="8"><?php echo $pp['pp_content']; ?></textarea></td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
     </section>
 
-    <section id="anc_spp_pay" class="cbox">
-        <h2>결제 정보</h2>
+    <section id="anc_spp_pay">
+        <h2 class="h2_frm">결제 정보</h2>
         <?php echo $pg_anchor; ?>
-        <p class="title_desc">결제 관련 정보입니다.</p>
-        <table class="frm_tbl">
-        <colgroup>
-            <col class="grid_3">
-            <col>
-        </colgroup>
-        <tbody>
-        <?php if($popup != 'yes') { ?>
-        <tr>
-            <th scope="row"><label for="pp_receipt_price">결제금액</label></th>
-            <td><input type="text" name="pp_receipt_price" value="<?php echo $pp['pp_receipt_price'] ? $pp['pp_receipt_price'] : ''; ?>" id="pp_receipt_price" class="frm_input" size="15"> 원</td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="pp_settle_case">결제방법</label></th>
-            <td>
-                <select name="pp_settle_case" id="pp_settle_case">
-                    <option value="" <?php echo get_selected($pp['pp_settle_case'], ''); ?>>선택</option>
-                    <option value="무통장" <?php echo get_selected($pp['pp_settle_case'], '무통장'); ?>>무통장</option>
-                    <option value="계좌이체" <?php echo get_selected($pp['pp_settle_case'], '계좌이체'); ?>>계좌이체</option>
-                    <option value="가상계좌" <?php echo get_selected($pp['pp_settle_case'], '가상계좌'); ?>>가상계좌</option>
-                    <option value="신용카드" <?php echo get_selected($pp['pp_settle_case'], '신용카드'); ?>>신용카드</option>
-                    <option value="휴대폰" <?php echo get_selected($pp['pp_settle_case'], '휴대폰'); ?>>휴대폰</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="pp_receipt_time">결제일시</label></th>
-            <td>
-                <input type="checkbox" name="pp_receipt_chk" id="pp_receipt_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.pp_receipt_time.value=this.form.pp_receipt_chk.value; else this.form.pp_receipt_time.value = this.form.pp_receipt_time.defaultValue;">
-                <label for="pp_receipt_chk">현재 시간으로 설정</label><br>
-                <input type="text" name="pp_receipt_time" value="<?php echo is_null_time($pp['pp_receipt_time']) ? "" : $pp['pp_receipt_time']; ?>" id="pp_receipt_time" class="frm_input" maxlength="19">
-            </td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <th scope="row"><label for="pp_shop_memo">상점메모</label></th>
-            <td><textarea name="pp_shop_memo" id="pp_shop_memo" rows="8"><?php echo $pp['pp_shop_memo']; ?></textarea></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="pp_use">사용</label></th>
-            <td>
-                <select name="pp_use" id="pp_use">
-                    <option value="1" <?php echo get_selected($pp['pp_use'], 1); ?>>사용함</option>
-                    <option value="0" <?php echo get_selected($pp['pp_use'], 0); ?>>사용안함</option>
-                </select>
-            </td>
-        </tr>
-        </tbody>
-        </table>
+        <div class="local_desc02 local_desc">
+            <p>결제 관련 정보입니다.</p>
+        </div>
+
+        <div class="tbl_frm01 tbl_wrap">
+            <table>
+            <caption>결제 정보 목록</caption>
+            <colgroup>
+                <col class="grid_4">
+                <col>
+            </colgroup>
+            <tbody>
+            <?php if($popup != 'yes') { ?>
+            <tr>
+                <th scope="row"><label for="pp_receipt_price">결제금액</label></th>
+                <td><input type="text" name="pp_receipt_price" value="<?php echo $pp['pp_receipt_price'] ? $pp['pp_receipt_price'] : ''; ?>" id="pp_receipt_price" class="frm_input" size="15"> 원</td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="pp_settle_case">결제방법</label></th>
+                <td>
+                    <select name="pp_settle_case" id="pp_settle_case">
+                        <option value="" <?php echo get_selected($pp['pp_settle_case'], ''); ?>>선택</option>
+                        <option value="무통장" <?php echo get_selected($pp['pp_settle_case'], '무통장'); ?>>무통장</option>
+                        <option value="계좌이체" <?php echo get_selected($pp['pp_settle_case'], '계좌이체'); ?>>계좌이체</option>
+                        <option value="가상계좌" <?php echo get_selected($pp['pp_settle_case'], '가상계좌'); ?>>가상계좌</option>
+                        <option value="신용카드" <?php echo get_selected($pp['pp_settle_case'], '신용카드'); ?>>신용카드</option>
+                        <option value="휴대폰" <?php echo get_selected($pp['pp_settle_case'], '휴대폰'); ?>>휴대폰</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="pp_receipt_time">결제일시</label></th>
+                <td>
+                    <input type="checkbox" name="pp_receipt_chk" id="pp_receipt_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.pp_receipt_time.value=this.form.pp_receipt_chk.value; else this.form.pp_receipt_time.value = this.form.pp_receipt_time.defaultValue;">
+                    <label for="pp_receipt_chk">현재 시간으로 설정</label><br>
+                    <input type="text" name="pp_receipt_time" value="<?php echo is_null_time($pp['pp_receipt_time']) ? "" : $pp['pp_receipt_time']; ?>" id="pp_receipt_time" class="frm_input" maxlength="19">
+                </td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <th scope="row"><label for="pp_shop_memo">상점메모</label></th>
+                <td><textarea name="pp_shop_memo" id="pp_shop_memo" rows="8"><?php echo $pp['pp_shop_memo']; ?></textarea></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="pp_use">사용</label></th>
+                <td>
+                    <select name="pp_use" id="pp_use">
+                        <option value="1" <?php echo get_selected($pp['pp_use'], 1); ?>>사용함</option>
+                        <option value="0" <?php echo get_selected($pp['pp_use'], 0); ?>>사용안함</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
     </section>
 
     <div class="btn_confirm">
@@ -155,6 +167,7 @@ $pg_anchor = '<ul class="anchor">
         <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return del_confirm();">삭제</a>
         <?php } ?>
     </div>
+
 <?php echo $wrp_tag_end; ?>
 </form>
 

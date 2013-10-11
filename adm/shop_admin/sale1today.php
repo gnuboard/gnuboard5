@@ -26,10 +26,9 @@ $sql = " select od_id,
 $result = sql_query($sql);
 ?>
 
-<section class="cbox">
-    <h2>일일 매출현황</h2>
-
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <thead>
     <tr>
         <th scope="col">주문번호</th>
@@ -37,8 +36,8 @@ $result = sql_query($sql);
         <th scope="col">주문합계</th>
         <th scope="col">쿠폰</th>
         <th scope="col">계좌입금</th>
-        <th scope="col">카드</th>
-        <th scope="col">포인트</th>
+        <th scope="col">카드입금</th>
+        <th scope="col">포인트입금</th>
         <th scope="col">주문취소</th>
         <th scope="col">미수금</th>
     </tr>
@@ -62,15 +61,15 @@ $result = sql_query($sql);
 
     ?>
         <tr>
-            <td class="td_odrnum2"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
+            <td><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
             <td class="td_name"><?php echo $href; ?><?php echo $row['od_name']; ?></a></td>
-            <td class="td_num"><?php echo number_format($row['orderprice']); ?></td>
-            <td class="td_num"><?php echo number_format($row['couponprice']); ?></td>
-            <td class="td_num"><?php echo number_format($receipt_bank); ?></td>
-            <td class="td_num"><?php echo number_format($receipt_card); ?></td>
-            <td class="td_num"><?php echo number_format($row['od_receipt_point']); ?></td>
-            <td class="td_num"><?php echo number_format($row['od_cancel_price']); ?></td>
-            <td class="td_num"><?php echo number_format($row['od_misu']); ?></td>
+            <td class="td_numsum"><?php echo number_format($row['orderprice']); ?></td>
+            <td class="td_numcoupon"><?php echo number_format($row['couponprice']); ?></td>
+            <td class="td_numincome"><?php echo number_format($receipt_bank); ?></td>
+            <td class="td_numincome"><?php echo number_format($receipt_card); ?></td>
+            <td class="td_numincome"><?php echo number_format($row['od_receipt_point']); ?></td>
+            <td class="td_numcancel"><?php echo number_format($row['od_cancel_price']); ?></td>
+            <td class="td_numrdy"><?php echo number_format($row['od_misu']); ?></td>
         </tr>
     <?php
         $tot['orderprice']    += $row['orderprice'];
@@ -102,7 +101,7 @@ $result = sql_query($sql);
     </tr>
     </tfoot>
     </table>
-</section>
+</div>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

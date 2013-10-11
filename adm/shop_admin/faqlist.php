@@ -22,21 +22,24 @@ $sql = "select * $sql_common order by fa_order , fa_id ";
 $result = sql_query($sql);
 ?>
 
-<section class="cbox">
-    <h2><?php echo $fm_subject; ?> 목록</h2>
+<div class="local_ov01 local_ov">
+    등록된 FAQ 상세내용 <?php echo $total_count; ?>건
+</div>
 
-    <p>등록된 FAQ 상세내용 <?php echo $total_count; ?>건</p>
-
+<div class="local_desc01 local_desc">
     <ol>
         <li>FAQ는 무제한으로 등록할 수 있습니다</li>
         <li><strong>FAQ 상세내용 추가</strong>를 눌러 자주하는 질문과 답변을 입력합니다.</li>
     </ol>
+</div>
 
-    <div class="btn_add">
-        <a href="./faqform.php?fm_id=<?php echo $fm['fm_id']; ?>">FAQ 상세내용 추가</a>
-    </div>
+<div class="btn_add">
+    <a href="./faqform.php?fm_id=<?php echo $fm['fm_id']; ?>">FAQ 상세내용 추가</a>
+</div>
 
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">번호</th>
@@ -56,13 +59,15 @@ $result = sql_query($sql);
         $s_del = icon("삭제", "");
 
         $num = $i + 1;
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
 
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_num"><?php echo $num; ?></td>
         <td><?php echo stripslashes($row['fa_subject']); ?></td>
         <td class="td_num"><?php echo $row['fa_order']; ?></td>
-        <td class="td_smallmng">
+        <td class="td_mngsmall">
             <a href="./faqform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fa_subject']); ?> </span>수정</a>
             <a href="javascript:del('./faqformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>');"><span class="sound_only"><?php echo stripslashes($row['fa_subject']); ?> </span>삭제</a>
         </td>
@@ -78,7 +83,7 @@ $result = sql_query($sql);
     </tbody>
     </table>
 
-</section>
+</div>
 
 <div class="btn_confirm">
     <a href="./faqmasterlist.php">FAQ 관리</a>

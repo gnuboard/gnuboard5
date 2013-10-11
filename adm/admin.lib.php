@@ -178,7 +178,7 @@ function help($help="")
 {
     global $g5;
 
-    $str  = '<span class="adm_field_explain">'.str_replace("\n", "<br>", $help).'</span>';
+    $str  = '<span class="frm_info">'.str_replace("\n", "<br>", $help).'</span>';
 
     return $str;
 }
@@ -186,7 +186,7 @@ function help($help="")
 // 출력순서
 function order_select($fld, $sel='')
 {
-    $s = '<select name="'.$fld.'">';
+    $s = '<select name="'.$fld.'" id="'.$fld.'">';
     for ($i=1; $i<=100; $i++) {
         $s .= '<option value="'.$i.'" ';
         if ($sel) {

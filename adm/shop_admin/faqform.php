@@ -34,11 +34,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="fm_id" value="<?php echo $fm_id; ?>">
 <input type="hidden" name="fa_id" value="<?php echo $fa_id; ?>">
 
-<section class="cbox">
-    <h2><?php echo $html_title; ?></h2>
-    <table class="frm_tbl">
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <colgroup>
-        <col class="grid_3">
+        <col class="grid_4">
         <col>
     </colgroup>
     <tbody>
@@ -60,13 +60,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_confirm">
-        <input type="submit" value="확인" class="btn_submit" accesskey="s">
-        <a href="./faqlist.php?fm_id=<?php echo $fm_id; ?>">목록</a>
-    </div>
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./faqlist.php?fm_id=<?php echo $fm_id; ?>">목록</a>
+</div>
 
-</section>
 </form>
 
 <script>

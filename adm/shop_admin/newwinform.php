@@ -32,13 +32,16 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="nw_id" value="<?php echo $nw_id; ?>">
 
-<section class="cbox">
-    <h2><?php echo $html_title; ?></h2>
+<div class="local_desc01 local_desc">
     <p>쇼핑몰 초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다.</p>
-    <table class="frm_tbl">
+</div>
+
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <colgroup>
-        <col class="grid_3">
-        <col class="grid_12">
+        <col class="grid_4">
+        <col>
     </colgroup>
     <tbody>
     <tr>
@@ -100,7 +103,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     </tbody>
     </table>
-</section>
+</div>
 
 <div class="btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">

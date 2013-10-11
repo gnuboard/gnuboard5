@@ -18,13 +18,15 @@ $sql = "select * $sql_common order by nw_id desc ";
 $result = sql_query($sql);
 ?>
 
-<section class="cbox">
-    <h2>팝업레이어 관리</h2>
-    <p>추가된 팝업레이어 <?php echo $total_count; ?>건</p>
-    <div class="btn_add">
-        <a href="./newwinform.php">새창관리추가</a>
-    </div>
-    <table id="spop_list">
+<div class="local_ov01 local_ov">전체 <?php echo $total_count; ?>건</div>
+
+<div class="btn_add">
+    <a href="./newwinform.php">새창관리추가</a>
+</div>
+
+<div class="tbl_head01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">번호</th>
@@ -40,18 +42,21 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) { ?>
-    <tr>
+    <?php
+    for ($i=0; $row=mysql_fetch_array($result); $i++) {
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+    ?>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_num"><?php echo $row['nw_id']; ?></td>
         <td><?php echo $row['nw_subject']; ?></td>
-        <td class="td_time"><?php echo substr($row['nw_begin_time'],2,14); ?></td>
-        <td class="td_time"><?php echo substr($row['nw_end_time'],2,14); ?></td>
-        <td><?php echo $row['nw_disable_hours']; ?>시간</td>
-        <td><?php echo $row['nw_left']; ?>px</td>
-        <td><?php echo $row['nw_top']; ?>px</td>
-        <td><?php echo $row['nw_width']; ?>px</td>
-        <td><?php echo $row['nw_height']; ?>px</td>
-        <td class="td_smallmng">
+        <td class="td_datetime"><?php echo substr($row['nw_begin_time'],2,14); ?></td>
+        <td class="td_datetime"><?php echo substr($row['nw_end_time'],2,14); ?></td>
+        <td class="td_num"><?php echo $row['nw_disable_hours']; ?>시간</td>
+        <td class="td_num"><?php echo $row['nw_left']; ?>px</td>
+        <td class="td_num"><?php echo $row['nw_top']; ?>px</td>
+        <td class="td_num"><?php echo $row['nw_width']; ?>px</td>
+        <td class="td_num"><?php echo $row['nw_height']; ?>px</td>
+        <td class="td_mngsmall">
             <a href="./newwinform.php?w=u&amp;nw_id=<?php echo $row['nw_id']; ?>"><span class="sound_only"><?php echo $row['nw_subject']; ?> </span>수정</a>
             <a href="./newwinformupdate.php?w=d&amp;nw_id=<?php echo $row['nw_id']; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo $row['nw_subject']; ?> </span>삭제</a>
         </td>
@@ -65,7 +70,7 @@ $result = sql_query($sql);
     ?>
     </tbody>
     </table>
-</section>
+</div>
 
 
 <?php

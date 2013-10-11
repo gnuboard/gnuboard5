@@ -39,16 +39,16 @@ $g5['title'] = '회원메일발송';
 include_once('./admin.head.php');
 ?>
 
-<section class="cbox">
-    <h2>메일발송대상 선택</h2>
-    <p>
-        전체회원 <?php echo number_format($tot_cnt) ?>명 , 탈퇴대기회원 <?php echo number_format($finish_cnt) ?>명, 정상회원 <?php echo number_format($tot_cnt - $finish_cnt) ?>명 중 메일 발송 대상 선택
-    </p>
+<div class="local_ov01 local_ov">
+    전체회원 <?php echo number_format($tot_cnt) ?>명 , 탈퇴대기회원 <?php echo number_format($finish_cnt) ?>명, 정상회원 <?php echo number_format($tot_cnt - $finish_cnt) ?>명 중 메일 발송 대상 선택
+</div>
 
-    <form name="frmsendmailselectform" id="frmsendmailselectform" action="./mail_select_list.php" method="post" autocomplete="off">
-    <input type="hidden" name="ma_id" value='<?php echo $ma_id ?>'>
+<form name="frmsendmailselectform" id="frmsendmailselectform" action="./mail_select_list.php" method="post" autocomplete="off">
+<input type="hidden" name="ma_id" value='<?php echo $ma_id ?>'>
 
-    <table class="frm_tbl">
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 대상선택</caption>
     <tbody>
     <tr>
         <th scope="row">회원 ID</th>
@@ -107,16 +107,13 @@ include_once('./admin.head.php');
     </tr>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_confirm">
-        <p>
-            메일발송대상 선택을 완료하시려면 <strong>확인</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>목록</strong> 링크를 누르세요.
-        </p>
-        <input type="submit" value="확인" class="btn_submit">
-        <a href="./mail_list.php">목록 </a>
-    </div>
-    </form>
-</section>
+<div class="btn_confirm">
+    <input type="submit" value="확인" class="btn_submit">
+    <a href="./mail_list.php">목록 </a>
+</div>
+</form>
 
 <?php
 include_once('./admin.tail.php');

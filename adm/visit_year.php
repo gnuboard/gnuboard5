@@ -26,10 +26,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 }
 ?>
 
-<section class="cbox">
-    <h2>연간 접속자 수</h2>
-
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">년</th>
@@ -57,9 +56,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
             $rate = ($count / $sum_count * 100);
             $s_rate = number_format($rate, 1);
+
+            $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
 
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_category"><a href="./visit_month.php?fr_date=<?php echo $key ?>-01-01&amp;to_date=<?php echo $key ?>-12-31"><?php echo $key ?></a></td>
         <td>
             <div class="visit_bar">
@@ -78,7 +79,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     ?>
     </tbody>
     </table>
-</section>
+</div>
 
 <?php
 include_once('./admin.tail.php');

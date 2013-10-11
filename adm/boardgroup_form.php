@@ -34,23 +34,20 @@ $g5['title'] = $html_title;
 include_once('./admin.head.php');
 ?>
 
-<div class="cbox">
-    <p>
-        게시판을 생성하시려면 1개 이상의 게시판그룹이 필요합니다.<br>
-        게시판그룹을 이용하시면 더 효과적으로 게시판을 관리할 수 있습니다.
-    </p>
-    <form name="fboardgroup" id="fboardgroup" action="./boardgroup_form_update.php" onsubmit="return fboardgroup_check(this);" method="post" autocomplete="off">
-    <input type="hidden" name="w" value="<?php echo $w ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
+<form name="fboardgroup" id="fboardgroup" action="./boardgroup_form_update.php" onsubmit="return fboardgroup_check(this);" method="post" autocomplete="off">
+<input type="hidden" name="w" value="<?php echo $w ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+<input type="hidden" name="stx" value="<?php echo $stx ?>">
+<input type="hidden" name="sst" value="<?php echo $sst ?>">
+<input type="hidden" name="sod" value="<?php echo $sod ?>">
+<input type="hidden" name="page" value="<?php echo $page ?>">
 
-    <table id="frm_gr" class="frm_tbl">
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <colgroup>
-        <col class="grid_3">
-        <col class="grid_15">
+        <col class="grid_4">
+        <col>
     </colgroup>
     <tbody>
     <tr>
@@ -126,7 +123,7 @@ include_once('./admin.head.php');
     <?php for ($i=1;$i<=10;$i++) { ?>
     <tr>
         <th scope="row">여분필드<?php echo $i ?></th>
-        <td class="td_gr_extra">
+        <td class="td_extra">
             <label for="gr_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
             <input type="text" name="gr_<?php echo $i ?>_subj" value="<?php echo get_text($group['gr_'.$i.'_subj']) ?>" id="gr_<?php echo $i ?>_subj" class="frm_input">
             <label for="gr_<?php echo $i ?>">여분필드 <?php echo $i ?> 내용</label>
@@ -136,16 +133,20 @@ include_once('./admin.head.php');
     <?php } ?>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_confirm">
-        <p>
-            작성하신 내용을 제출하시려면 <strong>확인</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>목록</strong> 링크를 누르세요.
-        </p>
-        <input type="submit" class="btn_submit" accesskey="s" value="확인">
-        <a href="./boardgroup_list.php?<?php echo $qstr ?>">목록</a>
-    </div>
+<div class="btn_confirm">
+    <input type="submit" class="btn_submit" accesskey="s" value="확인">
+    <a href="./boardgroup_list.php?<?php echo $qstr ?>">목록</a>
+</div>
 
-    </form>
+</form>
+
+<div class="local_desc01 local_desc">
+    <p>
+        게시판을 생성하시려면 1개 이상의 게시판그룹이 필요합니다.<br>
+        게시판그룹을 이용하시면 더 효과적으로 게시판을 관리할 수 있습니다.
+    </p>
 </div>
 
 <script>

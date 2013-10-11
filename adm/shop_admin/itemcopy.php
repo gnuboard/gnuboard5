@@ -8,26 +8,22 @@ $g5['title'] = '상품 복사';
 include_once(G5_PATH.'/head.sub.php');
 ?>
 
-<form name="fitemcopy">
-<div class="cbox">
+<div class="new_win">
     <h1>상품 복사</h1>
+    <form name="fitemcopy">
 
-    <table class="frm_tbl">
-    <tbody>
-    <tr>
-        <th scope="row"><label for="new_it_id">상품코드</label></th>
-        <td><input type="text" name="new_it_id" value="<?php echo time(); ?>" id="new_it_id" class="frm_input" maxlength="20"></td>
-    </tr>
-    </tbody>
-    </table>
+    <div id="sit_copy">
+        <label for="new_it_id">상품코드</label>
+        <input type="text" name="new_it_id" value="<?php echo time(); ?>" id="new_it_id" class="frm_input" maxlength="20">
+    </div>
 
     <div class="btn_confirm">
         <input type="button" value="복사하기" class="btn_submit" onclick="_copy('itemcopyupdate.php?it_id=<?php echo $it_id; ?>&amp;ca_id=<?php echo $ca_id; ?>');">
         <button type="button" onclick="self.close();">창닫기</button>
     </div>
 
+    </form>
 </div>
-</form>
 
 <script>
 // <![CDATA[

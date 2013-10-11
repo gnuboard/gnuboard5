@@ -24,36 +24,39 @@ include_once(G5_PATH.'/head.sub.php');
 <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
 
 <div class="new_win">
-    <h1 id="new_win_title"><?php echo $od['od_settle_case']; ?> 부분취소</h1>
+    <h1><?php echo $od['od_settle_case']; ?> 부분취소</h1>
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row">과세 입금금액</th>
-        <td><?php echo display_price($od['od_tax_mny'] + $od['od_vat_mny']); ?></td>
-    </tr>
-    <tr>
-        <th scope="row">비과세 입금금액</th>
-        <td><?php echo display_price($od['od_free_mny']); ?></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="mod_tax_mny">과세 취소금액</label></th>
-        <td><input type="text" name="mod_tax_mny" value="" id="mod_tax_mny" class="frm_input"> 원</td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="mod_free_mny">비과세 취소금액</label></th>
-        <td><input type="text" name="mod_free_mny" value="" id="mod_free_mny" class="frm_input"> 원</td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="mod_memo">요청사유</label></th>
-        <td><input type="text" name="mod_memo" id="mod_memo" required class="required frm_input" size="50"></td>
-    </tr>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption><?php echo $g5['title']; ?> 입력</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row">과세 입금금액</th>
+            <td><?php echo display_price($od['od_tax_mny'] + $od['od_vat_mny']); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">비과세 입금금액</th>
+            <td><?php echo display_price($od['od_free_mny']); ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="mod_tax_mny">과세 취소금액</label></th>
+            <td><input type="text" name="mod_tax_mny" value="" id="mod_tax_mny" class="frm_input"> 원</td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="mod_free_mny">비과세 취소금액</label></th>
+            <td><input type="text" name="mod_free_mny" value="" id="mod_free_mny" class="frm_input"> 원</td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="mod_memo">요청사유</label></th>
+            <td><input type="text" name="mod_memo" id="mod_memo" required class="required frm_input" size="50"></td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 
     <div class="btn_confirm">
         <input type="submit" value="확인" class="btn_submit" accesskey="s">

@@ -20,8 +20,6 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 ?>
 
-<?php//=subtitle($g5['title'])?>
-
 <form name="fitemqaform" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqaform_submit(this);">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
@@ -29,20 +27,22 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
-<section class="cbox">
-    <h2>상품문의 수정/답변</h2>
+<div class="local_desc01 local_desc">
     <p>상품에 대한 문의에 답변하실 수 있습니다. 상품 문의 내용의 수정도 가능합니다.</p>
+</div>
 
-    <form name="frmitemqaform" action="./itemqaformupdate.php" method="post">
-    <input type="hidden" name="w" value="<?php echo $w; ?>">
-    <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+<form name="frmitemqaform" action="./itemqaformupdate.php" method="post">
+<input type="hidden" name="w" value="<?php echo $w; ?>">
+<input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
-    <table class="frm_tbl">
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 수정</caption>
     <colgroup>
-        <col class="grid_3">
+        <col class="grid_4">
         <col>
     </colgroup>
     <tbody>
@@ -65,14 +65,13 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     </tr>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_confirm">
-        <input type="submit" accesskey='s' value="확인" class="btn_submit">
-        <a href="./itemqalist.php?<?php echo $qstr; ?>">목록</a>
-    </div>
-    </form>
-
-</section>
+<div class="btn_confirm">
+    <input type="submit" accesskey='s' value="확인" class="btn_submit">
+    <a href="./itemqalist.php?<?php echo $qstr; ?>">목록</a>
+</div>
+</form>
 
 <script>
 function fitemqaform_submit(f)

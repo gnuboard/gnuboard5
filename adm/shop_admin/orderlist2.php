@@ -47,58 +47,58 @@ $result = sql_query($sql);
 $qstr1 = "sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
-$listall = '';
-if ($search) // 검색렬일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 ?>
 
-<form name="frmorderlist">
+<div class="local_ov01 local_ov">
+    <?php echo $listall; ?>
+    전체 주문내역 <?php echo $total_count; ?>건
+</div>
+
+<form name="frmorderlist" class="local_sch01 local_sch">
 <input type="hidden" name="doc" value="<?php echo $doc; ?>">
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="save_search" value="<?php echo $search; ?>">
-<fieldset>
-    <legend>주문내역 검색</legend>
-    <span>
-        <?php echo $listall; ?>
-        전체 주문내역 <?php echo $total_count; ?>건
-    </span>
 
-    <label for="sel_field" class="sound_only">검색대상</label>
-    <select name="sel_field" id="sel_field">
-        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
-        <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
-        <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
-        <option value="od_b_name" <?php echo get_selected($sel_field, 'od_b_name'); ?>>받는분</option>
-        <option value="od_deposit_name" <?php echo get_selected($sel_field, 'od_deposit_name'); ?>>입금자</option>
-        <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
-    </select>
+<label for="sel_field" class="sound_only">검색대상</label>
+<select name="sel_field" id="sel_field">
+    <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+    <option value="mb_id" <?php echo get_selected($sel_field, 'mb_id'); ?>>회원 ID</option>
+    <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
+    <option value="od_b_name" <?php echo get_selected($sel_field, 'od_b_name'); ?>>받는분</option>
+    <option value="od_deposit_name" <?php echo get_selected($sel_field, 'od_deposit_name'); ?>>입금자</option>
+    <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
+</select>
 
-    <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="search" value="<?php echo $search; ?>" id="search" class="frm_input" autocomplete="off">
-    <input type="submit" value="검색" class="btn_submit">
-</fieldset>
+<label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+<input type="text" name="search" value="<?php echo $search; ?>" id="search" class="frm_input" autocomplete="off">
+<input type="submit" value="검색" class="btn_submit">
+
 </form>
 
-<section id="sodr_all" class="cbox">
-    <h2>주문통합내역 목록</h2>
-    <p><strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.</p>
+<div class="local_desc01 local_desc">
+    <p>
+        <strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
+    </p>
+</div>
 
-    <div class="btn_add sort_with">
-        <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
-    </div>
+<div class="btn_add">
+    <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
+</div>
 
-    <ul class="sort_odr">
-        <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_cart_count", 1)."&amp;$qstr1"; ?>">건수<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">주문합계<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_cancel_price", 1)."&amp;$qstr1"; ?>">주문취소<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_receipt_price")."&amp;$qstr1"; ?>">입금합계<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_misu", 1)."&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
-    </ul>
+<ul class="sort_odr">
+    <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></li>
+    <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자</a></li>
+    <li><a href="<?php echo title_sort("od_cart_count", 1)."&amp;$qstr1"; ?>">건수</a></li>
+    <li><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">주문합계</a></li>
+    <li><a href="<?php echo title_sort("od_cancel_price", 1)."&amp;$qstr1"; ?>">주문취소</a></li>
+    <li><a href="<?php echo title_sort("od_receipt_price")."&amp;$qstr1"; ?>">입금합계</a></li>
+    <li><a href="<?php echo title_sort("od_misu", 1)."&amp;$qstr1"; ?>">미수금</a></li>
+</ul>
 
+<section id="sodr_all">
     <ul id="sodr_all_list">
         <?php
         for ($i=0; $row=mysql_fetch_array($result); $i++) // for 부모 시작
@@ -192,6 +192,7 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             </div>
 
             <table>
+            <caption>상품 옵션 목록</caption>
             <thead>
             <tr>
                 <th scope="col">옵션</th>
@@ -227,12 +228,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
             <tr>
                 <td><?php echo $row3['ct_option']; ?></td>
-                <td class="td_bignum"><?php echo number_format($ct_price); ?></td>
+                <td class="td_numsmall"><?php echo number_format($ct_price); ?></td>
                 <td class="td_num"><?php echo $row3['ct_qty']; ?></td>
                 <td class="td_num"><?php echo number_format($sub_point); ?></td>
-                <td class="td_bignum"><?php echo number_format($sub_price); ?></td>
+                <td class="td_numsmall"><?php echo number_format($sub_price); ?></td>
                 <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
-                <td class="td_smallmng"><?php echo $row3['ct_status']; ?></td>
+                <td class="td_mngsmall"><?php echo $row3['ct_status']; ?></td>
             </tr>
 
             <?php } // for 손자 끝 ?>
@@ -262,11 +263,12 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
 </section>
 
-<section id="sodr_total" class="cbox">
+<section id="sodr_total">
     <h2>합계</h2>
     <p>현재 <?php echo $page;?>페이지의 주문내역 합계입니다.</p>
 
     <table>
+    <caption>주문내역 합계</caption>
     <thead>
     <tr>
         <th scope="col">주문건수</th>

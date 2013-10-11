@@ -10,27 +10,57 @@ $mb = get_member($mb_id);
 if (!$mb['mb_id'])
     alert('존재하지 않는 회원입니다.');
 
-$g5['title'] = '회원별 접근가능그룹';
+$g5['title'] = '접근가능그룹';
 include_once('./admin.head.php');
 
 $colspan = 4;
 ?>
 
-<div class="cbox">
-    <p>아이디 <?php echo $mb['mb_id'] ?>, 이름 <?php echo $mb['mb_name'] ?>, 별명 <?php echo $mb['mb_nick'] ?>님이 접근가능한 그룹 목록</p>
-    <form name="fboardgroupmember" id="fboardgroupmember" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);" method="post">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>" id="sst">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>" id="sod">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>" id="sfl">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>" id="stx">
-    <input type="hidden" name="page" value="<?php echo $page ?>" id="page">
-    <input type="hidden" name="token" value="<?php echo $token ?>" id="token">
-    <input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
-    <input type="hidden" name="w" value="d" id="w">
+<form name="fboardgroupmember_form" id="fboardgroupmember_form" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)" method="post">
+<input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
+<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+<div class="local_cmd01 local_cmd">
+    <p>아이디 <b><?php echo $mb['mb_id'] ?></b>, 이름 <b><?php echo $mb['mb_name'] ?></b>, 별명 <b><?php echo $mb['mb_nick'] ?></b></p>
+    <label for="gr_id">그룹지정</label>
+    <select name="gr_id" id="gr_id">
+        <option value="">접근가능 그룹을 선택하세요.</option>
+        <?php
+        $sql = " select * 
+                    from {$g5['group_table']}
+                    where gr_use_access = 1 ";
+        //if ($is_admin == 'group') {
+        if ($is_admin != 'super') 
+            $sql .= " and gr_admin = '{$member['mb_id']}' ";
+        $sql .= " order by gr_id ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++) {
+            echo "<option value=\"".$row['gr_id']."\">".$row['gr_subject']."</option>";
+        }
+        ?>
+    </select>
+    <input type="submit" value="선택" class="btn_submit" accesskey="s">
+</div>
+</form>
+
+<form name="fboardgroupmember" id="fboardgroupmember" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);" method="post">
+<input type="hidden" name="sst" value="<?php echo $sst ?>" id="sst">
+<input type="hidden" name="sod" value="<?php echo $sod ?>" id="sod">
+<input type="hidden" name="sfl" value="<?php echo $sfl ?>" id="sfl">
+<input type="hidden" name="stx" value="<?php echo $stx ?>" id="stx">
+<input type="hidden" name="page" value="<?php echo $page ?>" id="page">
+<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+<input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
+<input type="hidden" name="w" value="d" id="w">
+
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 접근가능그룹 전체선택"  onclick="check_all(this.form)"></th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">접근가능그룹 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col">그룹아이디</th>
         <th scope="col">그룹</th>
         <th scope="col">처리일시</th>
@@ -52,7 +82,7 @@ $colspan = 4;
         <td class="td_chk"><input type="checkbox" name="chk[]" value="<?php echo $row['gm_id'] ?>" id="chk_<?php echo $i ?>" title="<?php echo $row['gr_subject'] ?> 그룹 선택"></td>
         <td class="td_grid"><a href="<?php echo $g5['bbs_path'] ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
         <td class="td_category"><?php echo $row['gr_subject'] ?></td>
-        <td class="td_time"><?php echo $row['gm_datetime'] ?></td>
+        <td class="td_datetime"><?php echo $row['gm_datetime'] ?></td>
     </tr>
     <?php
     }
@@ -63,38 +93,11 @@ $colspan = 4;
     ?>
     </tbody>
     </table>
-
-    <div class="btn_list">
-        <input type="submit" name="" value="선택삭제">
-    </div>
-    </form>
 </div>
 
-<form name="fboardgroupmember_form" id="fboardgroupmember_form" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)" method="post">
-<input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
-<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
-<fieldset>
-    <legend><?php echo $mb['mb_id'] ?>님 접근가능그룹 추가</legend>
-    <label for="gr_id">그룹지정</label>
-    <select name="gr_id" id="gr_id">
-        <option value="">접근가능 그룹을 선택하세요.</option>
-        <?php
-        $sql = " select * 
-                    from {$g5['group_table']}
-                    where gr_use_access = 1 ";
-        //if ($is_admin == 'group') {
-        if ($is_admin != 'super') 
-            $sql .= " and gr_admin = '{$member['mb_id']}' ";
-        $sql .= " order by gr_id ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++) {
-            echo "<option value=\"".$row['gr_id']."\">".$row['gr_subject']."</option>";
-        }
-        ?>
-    </select>
-    <input type="submit" value="선택" class="btn_submit" accesskey="s">
-    <p>게시판 그룹이 존재하지 않는다면 <a href="./boardgroup_form.php">게시판그룹생성하기</a></p>
-</fieldset>
+<div class="btn_list">
+    <input type="submit" name="" value="선택삭제">
+</div>
 </form>
 
 <script>

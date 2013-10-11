@@ -33,11 +33,9 @@ $sql = " select *
 $result = sql_query($sql);
 ?>
 
-<section class="cbox">
-    <h2>접속자 개요</h2>
-    <p>IP, 경로, 브라우저, 운영체제, 일시</p>
-
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">IP</th>
@@ -80,13 +78,14 @@ $result = sql_query($sql);
         if ($brow == '기타') { $brow = '<span title="'.$row['vi_agent'].'">'.$brow.'</span>'; }
         if ($os == '기타') { $os = '<span title="'.$row['vi_agent'].'">'.$os.'</span>'; }
 
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_category"><?php echo $ip ?></td>
         <td><?php echo $link ?><?php echo $title ?><?php echo $link2 ?></td>
         <td class="td_category"><?php echo $brow ?></td>
         <td class="td_category"><?php echo $os ?></td>
-        <td class="td_time"><?php echo $row['vi_date'] ?> <?php echo $row['vi_time'] ?></td>
+        <td class="td_datetime"><?php echo $row['vi_date'] ?> <?php echo $row['vi_time'] ?></td>
     </tr>
 
     <?php
@@ -96,7 +95,7 @@ $result = sql_query($sql);
     ?>
     </tbody>
     </table>
-</section>
+</div>
 
 <?php
 if (isset($domain)) 

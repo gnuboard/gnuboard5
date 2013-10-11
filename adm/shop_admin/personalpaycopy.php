@@ -14,35 +14,40 @@ if(!$row['pp_id'])
     alert_close('복사하시려는 개인결제 정보가 존재하지 않습니다.');
 ?>
 
-<form name="fpersonalpaycopy" method="post" action="./personalpaycopyupdate.php" onsubmit="return form_check(this);">
-<input type="hidden" name="pp_id" value="<?php echo $pp_id; ?>">
 <div class="new_win">
-    <h1 id="new_win_title">개인결제 복사</h1>
+    <h1>개인결제 복사</h1>
 
-    <table class="frm_tbl">
-    <tbody>
-    <tr>
-        <th scope="row"><label for="pp_name">이름</label></th>
-        <td><input type="text" name="pp_name" value="<?php echo $row['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="od_id">주문번호</label></th>
-        <td><input type="text" name="od_id" value="<?php echo $row['od_id']; ?>" id="od_id" class="frm_input"></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="pp_price">주문금액</label></th>
-        <td><input type="text" name="pp_price" value="" id="pp_price" required class="required frm_input" size="20"> 원</td>
-    </tr>
-    </tbody>
-    </table>
+    <form name="fpersonalpaycopy" method="post" action="./personalpaycopyupdate.php" onsubmit="return form_check(this);">
+    <input type="hidden" name="pp_id" value="<?php echo $pp_id; ?>">
+
+     <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption><?php echo $g5['title']; ?></caption>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="pp_name">이름</label></th>
+            <td><input type="text" name="pp_name" value="<?php echo $row['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="od_id">주문번호</label></th>
+            <td><input type="text" name="od_id" value="<?php echo $row['od_id']; ?>" id="od_id" class="frm_input"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="pp_price">주문금액</label></th>
+            <td><input type="text" name="pp_price" value="" id="pp_price" required class="required frm_input" size="20"> 원</td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 
     <div class="btn_confirm">
         <input type="submit" value="복사하기" class="btn_submit">
         <button type="button" onclick="self.close();">창닫기</button>
     </div>
 
+    </form>
+
 </div>
-</form>
 
 <script>
 // <![CDATA[
