@@ -57,6 +57,10 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 /* ########## 쇼핑몰 컨텐츠 ########## */
 /* 인덱스 이미지 출력 */
 #sidx {padding:0}
+.sidx {position:relative;width:100%;overflow:hidden;}
+
+/* 인덱스 상품 */
+.sidx_slide {position:absolute;top:0;left:0;width:100%}
 
 /* 상품 목록 */
 #sct {}
