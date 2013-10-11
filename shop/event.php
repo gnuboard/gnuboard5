@@ -15,6 +15,11 @@ if ($is_admin)
     echo '<div class="sev_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin">이벤트 관리</a></div>';
 ?>
 
+<script>
+var itemlist_ca_id = "<?php echo $ca_id; ?>";
+</script>
+<script src="<?php echo G5_JS_URL; ?>/shop.list.js"></script>
+
 <!-- 이벤트 시작 { -->
 <?php
 $himg = G5_DATA_PATH.'/event/'.$ev_id.'_h';
@@ -82,9 +87,6 @@ if ($i==0)
 ?>
 
 <?php
-// 상품 보기 타입 변경 처리 스크립트
-include G5_SHOP_SKIN_PATH.'/list.sub2.skin.php';
-
 $qstr .= 'skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
 ?>
