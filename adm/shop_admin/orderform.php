@@ -415,7 +415,6 @@ $pg_anchor = '<ul class="anchor">
                 <?php
                 $sql = " select dl_company, dl_url, dl_tel from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ";
                 $dl = sql_fetch($sql);
-                if ($od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌') {
                 ?>
                 <tr>
                     <th scope="row">배송회사</th>
