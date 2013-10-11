@@ -40,11 +40,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="stx" value="<?php echo $stx; ?>">
 <input type="hidden" name="page" value="<?php echo $page;?>">
 
-<section class="cbox">
-    <h2><?php echo $html_title; ?></h2>
-    <table class="frm_tbl">
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <colgroup>
-        <col class="grid_3">
+        <col class="grid_4">
         <col>
     </colgroup>
     <tbody>
@@ -137,12 +137,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_confirm">
-        <input type="submit" value="확인" class="btn_submit" accesskey="s">
-        <a href="./couponlist.php">목록</a>
-    </div>
-</section>
+<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./couponlist.php">목록</a>
+</div>
+
 </form>
 
 <script>

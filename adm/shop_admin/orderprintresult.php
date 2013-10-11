@@ -198,7 +198,7 @@ if (mysql_num_rows($result) == 0)
 }
 ?>
 
-<div id="sodr_print_pop" class="cbox">
+<div id="sodr_print_pop" class="new_win">
     <h1>
         <?php
         if ($case == 1)
@@ -239,6 +239,7 @@ if (mysql_num_rows($result) == 0)
     <div class="sodr_print_pop_list">
         <h2>주문번호 <?php echo $row1['od_id']; ?></h2>
         <h3>보내는 사람 : <?php echo $row1['od_name']; ?></h3>
+
         <dl>
             <dt>주소</dt>
             <dd><?php echo $row1['od_addr']; ?></dd>
@@ -260,67 +261,71 @@ if (mysql_num_rows($result) == 0)
             <dd><?php echo $row1['od_b_tel']; ?></dd>
         </dl>
         <?php } ?>
-        <h3>주문목록</h3>
-        <table>
-        <thead>
-        <tr>
-            <th scope="col">상품명(선택사항)</th>
-            <th scope="col">판매가</th>
-            <th scope="col">수량</th>
-            <th scope="col">소계</th>
-            <th scope="col">배송비</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sql2 = " select *
-                    from {$g5['g5_shop_cart_table']}
-                   where od_id = '{$row['od_id']}' ";
-        if ($ct_status)
-            $sql2 .= " and ct_status = '$ct_status' ";
-        $sql2 .= "  order by it_id, io_type, ct_id ";
 
-        $res2 = sql_query($sql2);
-        $cnt = $sub_tot_qty = $sub_tot_price = 0;
-        while ($row2 = sql_fetch_array($res2))
-        {
-            if($row2['io_type'])
-                $row2_tot_price = $row2['io_price'] * $row2['ct_qty'];
-            else
-                $row2_tot_price = ($row2['ct_price'] + $row2['io_price']) * $row2['ct_qty'];
-            $sub_tot_qty += $row2['ct_qty'];
-            $sub_tot_price += $row2_tot_price;
+        <h3>주문 목록</h3>
+        <div class="tbl_head01">
+            <table>
+            <caption>주문 목록</caption>
+            <thead>
+            <tr>
+                <th scope="col">상품명(선택사항)</th>
+                <th scope="col">판매가</th>
+                <th scope="col">수량</th>
+                <th scope="col">소계</th>
+                <th scope="col">배송비</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql2 = " select *
+                        from {$g5['g5_shop_cart_table']}
+                       where od_id = '{$row['od_id']}' ";
+            if ($ct_status)
+                $sql2 .= " and ct_status = '$ct_status' ";
+            $sql2 .= "  order by it_id, io_type, ct_id ";
 
-            $it_name = stripslashes($row2['it_name']);
-            $it_name = "$it_name ({$row2['ct_option']})";
-            $ct_send_cost = ($row2['ct_send_cost'] ? '착불' : '선불');
-
-            $fontqty1 = $fontqty2 = "";
-            if ($row2['ct_qty'] >= 2)
+            $res2 = sql_query($sql2);
+            $cnt = $sub_tot_qty = $sub_tot_price = 0;
+            while ($row2 = sql_fetch_array($res2))
             {
-                $fontqty1 = "<strong>";
-                $fontqty2 = "</strong>";
-            }
+                if($row2['io_type'])
+                    $row2_tot_price = $row2['io_price'] * $row2['ct_qty'];
+                else
+                    $row2_tot_price = ($row2['ct_price'] + $row2['io_price']) * $row2['ct_qty'];
+                $sub_tot_qty += $row2['ct_qty'];
+                $sub_tot_price += $row2_tot_price;
 
-        ?>
-        <tr>
-            <td><?php echo $it_name; ?></td>
-            <td class="td_bignum"><?php echo number_format($row2['ct_price']); ?></td>
-            <td class="td_smallnum"><?php echo $fontqty1; ?><?php echo number_format($row2['ct_qty']); ?><?php echo $fontqty2; ?></td>
-            <td class="td_bignum"><?php echo number_format($row2_tot_price); ?></td>
-            <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
-        </tr>
-        <?php $cnt++; } ?>
-        </tbody>
-        <tfoot>
-        <tr>
-            <th scope="row" colspan="2">합계</th>
-            <td><?php echo number_format($sub_tot_qty); ?></td>
-            <td><?php echo number_format($sub_tot_price); ?></td>
-            <td></td>
-        </tr>
-        </tfoot>
-        </table>
+                $it_name = stripslashes($row2['it_name']);
+                $it_name = "$it_name ({$row2['ct_option']})";
+                $ct_send_cost = ($row2['ct_send_cost'] ? '착불' : '선불');
+
+                $fontqty1 = $fontqty2 = "";
+                if ($row2['ct_qty'] >= 2)
+                {
+                    $fontqty1 = "<strong>";
+                    $fontqty2 = "</strong>";
+                }
+
+            ?>
+            <tr>
+                <td><?php echo $it_name; ?></td>
+                <td class="td_num"><?php echo number_format($row2['ct_price']); ?></td>
+                <td class="td_cntsmall"><?php echo $fontqty1; ?><?php echo number_format($row2['ct_qty']); ?><?php echo $fontqty2; ?></td>
+                <td class="td_num td_numsum"><?php echo number_format($row2_tot_price); ?></td>
+                <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
+            </tr>
+            <?php $cnt++; } ?>
+            </tbody>
+            <tfoot>
+            <tr>
+                <th scope="row" colspan="2">합계</th>
+                <td><?php echo number_format($sub_tot_qty); ?></td>
+                <td><?php echo number_format($sub_tot_price); ?></td>
+                <td></td>
+            </tr>
+            </tfoot>
+            </table>
+        </div>
         <?php
         $tot_tot_qty    += $sub_tot_qty;
         $tot_tot_price  += $sub_tot_price;

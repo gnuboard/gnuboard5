@@ -70,80 +70,67 @@ if ($sort2 == "desc") {
 $qstr1 = 'sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search.'&amp;chk_misu='.$chk_misu;
 $qstr  = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
 
-$listall = '';
-if ($search) // 검색렬일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 ?>
 
-<form name="flist" autocomplete="off">
+<div class="local_ov01 local_ov">
+    <?php echo $listall; ?>
+    전체 주문내역 <?php echo $total_count; ?>건
+</div>
+
+<form name="flist" autocomplete="off" class="local_sch01 local_sch">
 <input type="hidden" name="doc"  value="<?php echo $doc; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
-<fieldset>
-    <legend>배송조건 검색</legend>
-    <span>
-        <?php echo $listall; ?>
-        전체 주문내역 <?php echo $total_count; ?>건
-    </span>
 
-    <input type="checkbox" name="chk_misu" value="1" id="chk_misu" <?php echo $chk_misu?'checked="checked"':''; ?> />
-    <label for="chk_misu">미수금없음</label>
+<input type="checkbox" name="chk_misu" value="1" id="chk_misu" <?php echo $chk_misu?'checked="checked"':''; ?> />
+<label for="chk_misu">미수금없음</label>
 
-    <label for="sel_field" class="sound_only">검색대상</label>
-    <select name="sel_field">
-        <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
-        <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
-        <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
-    </select>
+<label for="sel_field" class="sound_only">검색대상</label>
+<select name="sel_field">
+    <option value="od_id" <?php echo get_selected($sel_field, 'od_id'); ?>>주문번호</option>
+    <option value="od_name" <?php echo get_selected($sel_field, 'od_name'); ?>>주문자</option>
+    <option value="od_invoice" <?php echo get_selected($sel_field, 'od_invoice'); ?>>운송장번호</option>
+</select>
 
-    <label for="search" class="sound_only">검색어</label>
-    <input type="text" name="search" value="<?php echo $search; ?>" id="search" class="frm_input">
-    <input type="submit" value="검색" class="btn_submit">
-</fieldset>
+<label for="search" class="sound_only">검색어</label>
+<input type="text" name="search" value="<?php echo $search; ?>" id="search" class="frm_input">
+<input type="submit" value="검색" class="btn_submit">
 </form>
 
-<section class="cbox">
-    <h2>배송내역</h2>
+<div class="local_desc01 local_desc">
     <ul>
         <li>주문액은 취소, 반품, 품절이 포함된 금액이 아닙니다.</li>
         <li>입금액은 환불/취소가 포함된 금액이 아닙니다.</li>
         <li>배송일시, 배송회사는 입력의 편의성을 위하여 기본값으로 설정되어 있습니다. 운송장번호만 없는것이 미배송 주문자료입니다.</li>
     </ul>
+</div>
 
-    <ul class="sort_odr">
-        <li><a href="<?php echo title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_name") . "&amp;$qstr1"; ?>">주문자<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_cart_price",1) . "&amp;$qstr1"; ?>">주문액<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_receipt_price",1) . "&amp;$qstr1"; ?>">입금액<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_misu",1) . "&amp;$qstr1"; ?>">미수금<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_hope_date",1) . "&amp;$qstr1"; ?>">희망배송일<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호<span class="sound_only"> 순 정렬</span></a></li>
-    </ul>
+<form name="fdeliverylist" method="post" onsubmit="return fdeliverylist_submit(this);" autocomplete="off">
+<input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
+<input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+<input type="hidden" name="search" value="<?php echo $search; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
-    <form name="fdeliverylist" method="post" onsubmit="return fdeliverylist_submit(this);" autocomplete="off">
-    <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
-    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
-    <input type="hidden" name="search" value="<?php echo $search; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-
-    <table id="sdeli_proc">
+<div class="tbl_head01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">
             <label for="chkall" class="sound_only">주문 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <th scope="col">주문번호</th>
-        <th scope="col">주문자</th>
-        <th scope="col">주문액</th>
-        <th scope="col">입금액</th>
-        <th scope="col">미수금</th>
-        <th scope="col">희망배송일</th>
-        <th scope="col">배송일시</th>
+        <th scope="col"><a href="<?php echo title_sort("od_id",1) . "&amp;$qstr1"; ?>">주문번호</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_name") . "&amp;$qstr1"; ?>">주문자</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_cart_price",1) . "&amp;$qstr1"; ?>">주문액</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_receipt_price",1) . "&amp;$qstr1"; ?>">입금액</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_misu",1) . "&amp;$qstr1"; ?>">미수금</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_hope_date",1) . "&amp;$qstr1"; ?>">희망배송일</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시</a></th>
         <th scope="col">배송업체</th>
-        <th scope="col">운송장번호</th>
+        <th scope="col"><a href="<?php echo title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호</a></th>
     </tr>
     </thead>
     <tbody>
@@ -168,8 +155,10 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             $hope_date = substr($row['od_hope_date'],2,8).' ('.get_yoil($row['od_hope_date']).')';
         else
             $hope_date = "사용안함";
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td>
             <input type="hidden" name="od_id[<?php echo $i ?>]" value="<?php echo $row['od_id'] ?>" id="od_id_<?php echo $i ?>">
             <label for="chk_<?php echo $i; ?>" class="sound_only">주문번호 <?php echo $row['od_id']; ?></label>
@@ -182,18 +171,18 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a>
         </td>
         <td class="td_name"><?php echo $row['od_name']; ?></td>
-        <td><?php echo display_price($row['od_cart_price']); ?></td>
-        <td><?php echo display_price($row['od_receipt_price']); ?></td>
-        <td><?php echo display_price($row['od_misu']); ?></td>
-        <td><?php echo $hope_date; ?></td>
-        <td><input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="20" maxlength="19"></td>
-        <td>
-            <label for="dl_id_<?php echo $i; ?>">배송업체</label>
+        <td class="td_numsum"><?php echo display_price($row['od_cart_price']); ?></td>
+        <td class="td_numincome"><?php echo display_price($row['od_receipt_price']); ?></td>
+        <td class="td_numrdy"><?php echo display_price($row['od_misu']); ?></td>
+        <td class="td_mngsmall"><?php echo $hope_date; ?></td>
+        <td class="td_datetime td_input"><input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="20" maxlength="19"></td>
+        <td class="td_delicom">
+            <label for="dl_id_<?php echo $i; ?>" class="sound_only">배송업체</label>
             <select name="dl_id[<?php echo $i; ?>]" id="dl_id_<?php echo $i; ?>">
                 <?php echo conv_selected_option($delivery_options, $row['dl_id']); ?>
             </select>
         </td>
-        <td>
+        <td class="td_input">
             <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
             <input type="hidden" name="save_dl_id[<?php echo $i; ?>]" value="<?php echo $row['dl_id']; ?>">
             <input type="hidden" name="save_od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>">
@@ -203,27 +192,25 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     <?php
     }
     if ($i == 0)
-        echo '<tr><td colspan="20" class="empty_table">자료가 한건도 없습니다.</td></tr>';
+        echo '<tr><td colspan="10" class="empty_table">자료가 한건도 없습니다.</td></tr>';
     ?>
     </table>
+</div>
 
-    <fieldset id="sdeli_proc_fs">
-        <legend>배송 처리 후 안내 발송 선택</legend>
-        <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail" checked>
-        <label for="od_send_mail">메일발송</label>
-        <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked>
-        <label for="od_send_sms">SMS</label>
-        <input type="checkbox" name="send_escrow" value="1" id="od_send_escrow">
-        <label for="od_send_escrow">에스크로배송시작</label>
-    </fieldset>
+<div class="local_cmd01 local_cmd">
+    <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail" checked>
+    <label for="od_send_mail">메일발송</label>
+    <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked>
+    <label for="od_send_sms">SMS</label>
+    <input type="checkbox" name="send_escrow" value="1" id="od_send_escrow">
+    <label for="od_send_escrow">에스크로배송시작</label>
+</div>
 
-    <div class="btn_confirm">
-        <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
-    </div>
+<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
+</div>
 
-    </form>
-
-</section>
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 

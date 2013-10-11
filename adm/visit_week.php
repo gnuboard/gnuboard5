@@ -24,10 +24,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 }
 ?>
 
-<section class="cbox">
-    <h2>요일별 접속자 수</h2>
-
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">요일</th>
@@ -52,9 +51,11 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
             $rate = ($count / $sum_count * 100);
             $s_rate = number_format($rate, 1);
+
+            $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
 
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_category"><?php echo $weekday[$i] ?></td>
         <td>
             <div class="visit_bar">
@@ -73,7 +74,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     ?>
     </tbody>
     </table>
-</section>
+</div>
 
 <?php
 include_once('./admin.tail.php');

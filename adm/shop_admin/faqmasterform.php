@@ -29,11 +29,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="fm_id" value="<?php echo $fm_id; ?>">
 
-<section class="cbox">
-    <h2>FAQ입력</h2>
-    <table class="frm_tbl">
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <colgroup>
-        <col class="grid_3">
+        <col class="grid_4">
         <col>
     </colgroup>
     <tbody>
@@ -109,13 +109,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_confirm">
-        <input type="submit" value="확인" class="btn_submit" accesskey="s">
-        <a href="./faqmasterlist.php">목록</a>
-    </div>
+<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./faqmasterlist.php">목록</a>
+</div>
 
-</section>
 </form>
 
 <script>
@@ -125,7 +125,7 @@ function frmfaqmasterform_check(f)
     <?php echo get_editor_js('fm_tail_html'); ?>
 }
 
-// document.frmfaqmasterform.fm_subject.focus(); 김혜련 2013-04-02 포커스해제
+// document.frmfaqmasterform.fm_subject.focus();
 </script>
 
 <?php

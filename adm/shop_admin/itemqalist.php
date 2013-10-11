@@ -52,83 +52,66 @@ $result = sql_query($sql);
 //$qstr = 'page='.$page.'&amp;sst='.$sst.'&amp;sod='.$sod.'&amp;stx='.$stx;
 $qstr  = $qstr.'&amp;sca='.$sca.'&amp;save_stx='.$stx;
 
-$listall = '';
-if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 ?>
 
-<form name="flist">
+<div class="local_ov01 local_ov">
+    <?php echo $listall; ?>
+    전체 문의내역 <?php echo $total_count; ?>건
+</div>
+
+<form name="flist" class="local_sch01 local_sch">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
 
-<fieldset>
-    <legend>상품문의 검색</legend>
+<label for="sca" class="sound_only">분류선택</label>
+<select name="sca" id="sca">
+    <option value="">전체분류</option>
+    <?php
+    $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
+    $result1 = sql_query($sql1);
+    for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
+        $len = strlen($row1['ca_id']) / 2 - 1;
+        $nbsp = "";
+        for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+        echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
+    }
+    ?>
+</select>
 
-    <span>
-        <?php echo $listall; ?>
-        전체 문의내역 <?php echo $total_count; ?>건
-    </span>
+<label for="sfl" class="sound_only">검색대상</label>
+<select name="sfl" id="sfl">
+    <option value="it_name" <?php echo get_selected($sfl, 'it_name'); ?>>상품명</option>
+    <option value="a.it_id" <?php echo get_selected($sfl, 'a.it_id'); ?>>상품코드</option>
+</select>
 
-    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-12 ?>
-    <label for="sca" class="sound_only">분류선택</label>
-    <select name="sca" id="sca">
-        <option value="">전체분류</option>
-        <?php
-        $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
-        $result1 = sql_query($sql1);
-        for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
-            $len = strlen($row1['ca_id']) / 2 - 1;
-            $nbsp = "";
-            for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-            echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
-        }
-        ?>
-    </select>
-    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
-
-    <label for="sfl" class="sound_only">검색대상</label>
-    <select name="sfl" id="sfl">
-        <option value="it_name" <?php echo get_selected($sfl, 'it_name'); ?>>상품명</option>
-        <option value="a.it_id" <?php echo get_selected($sfl, 'a.it_id'); ?>>상품코드</option>
-    </select>
-
-    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input required">
-    <input type="submit" value="검색" class="btn_submit">
-
-</fieldset>
+<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+<input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input required">
+<input type="submit" value="검색" class="btn_submit">
 
 </form>
 
-<section class="cbox">
-    <h2>상품문의 목록</h2>
+<form name="fitemqalist" method="post" action="./itemqalistupdate.php" onsubmit="return fitemqalist_submit(this);" autocomplete="off">
+<input type="hidden" name="sca" value="<?php echo $sca; ?>">
+<input type="hidden" name="sst" value="<?php echo $sst; ?>">
+<input type="hidden" name="sod" value="<?php echo $sod; ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+<input type="hidden" name="stx" value="<?php echo $stx; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
 
-    <ul class="sort_odr">
-        <li><?php echo subject_sort_link('it_name'); ?>상품명<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('mb_name'); ?>이름<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('iq_subject'); ?>질문<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link('iq_answer'); ?>답변<span class="sound_only"> 순 정렬</span></a></li>
-    </ul>
-
-    <form name="fitemqalist" method="post" action="./itemqalistupdate.php" onsubmit="return fitemqalist_submit(this);" autocomplete="off">
-    <input type="hidden" name="sca" value="<?php echo $sca; ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst; ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod; ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-
-    <table class="frm_basic">
+<div class="tbl_head01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">
             <label for="chkall" class="sound_only">상품문의 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <th scope="col">상품명</th>
-        <th scope="col">이름</th>
-        <th scope="col">질문</th>
-        <th scope="col">답변</th>
+        <th scope="col"><?php echo subject_sort_link('it_name'); ?>상품명</a></th>
+        <th scope="col"><?php echo subject_sort_link('iq_subject'); ?>질문</a></th>
+        <th scope="col"><?php echo subject_sort_link('mb_name'); ?>이름</a></th>
+        <th scope="col"><?php echo subject_sort_link('iq_answer'); ?>답변</a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -141,16 +124,17 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
         $answer = $row['iq_answer'] ? 'Y' : '&nbsp;';
         $iq_question = get_view_thumbnail($row['iq_question'], 300);
         $iq_answer = $row['iq_answer'] ? get_view_thumbnail($row['iq_answer'], 300) : "답변이 등록되지 않았습니다.";
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
      ?>
-    <tr>
-        <td>
+    <tr<?php echo ' '.$tr_bg; ?>>
+        <td class="td_chk">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['iq_subject']) ?> 상품문의</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
             <input type="hidden" name="iq_id[<?php echo $i; ?>]" value="<?php echo $row['iq_id']; ?>">
         </td>
         <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
-        <td class="td_name"><?php echo $name; ?></td>
-        <td class="sit_qa_subject">
+        <td>
             <a href="#" class="qa_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $row['iq_subject']; ?></a>
             <div id="qa_div<?php echo $i; ?>" class="qa_div" style="display:none;">
                 <strong>문의내용</strong><br>
@@ -159,8 +143,9 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
                 <?php echo $iq_answer; ?>
             </div>
         </td>
-        <td class="sit_qa_answer"><?php echo $answer; ?></td>
-        <td class="td_smallmng">
+        <td class="td_name"><?php echo $name; ?></td>
+        <td class="td_boolean"><?php echo $answer; ?></td>
+        <td class="td_mngsmall">
             <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['iq_subject']; ?> </span>수정</a>
         </td>
     </tr>
@@ -172,13 +157,12 @@ if ($sfl || $stx) // 검색 결과일 때만 처음 버튼을 보여줌
     ?>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_list">
-        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
-    </div>
-    </form>
-
-</section>
+<div class="btn_list01 btn_list">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+</div>
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 

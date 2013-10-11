@@ -51,77 +51,62 @@ $result = sql_query($sql);
 //$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 $qstr = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 
-$listall = '';
-if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 ?>
 
-<form name="flist">
+<div class="local_ov01 local_ov">
+    <?php echo $listall; ?>
+    생성된 분류 수 <?php echo number_format($total_count); ?>개
+</div>
+
+<form name="flist" class="local_sch01 local_sch">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
 
-<fieldset>
-    <legend>분류 검색</legend>
-    <span>
-        <?php echo $listall; ?>
-        생성된 분류 수 <?php echo number_format($total_count); ?>개
-    </span>
+<label for="sfl" class="sound_only">검색대상</label>
+<select name="sfl" id="sfl">
+    <option value="ca_name"<?php echo get_selected($_GET['sfl'], "ca_name", true); ?>>분류명</option>
+    <option value="ca_id"<?php echo get_selected($_GET['sfl'], "ca_id", true); ?>>분류코드</option>
+    <option value="ca_mb_id"<?php echo get_selected($_GET['sfl'], "ca_mb_id", true); ?>>회원아이디</option>
+</select>
 
-    <label for="sfl" class="sound_only">검색대상</label>
-    <select name="sfl" id="sfl">
-        <option value="ca_name"<?php echo get_selected($_GET['sfl'], "ca_name", true); ?>>분류명</option>
-        <option value="ca_id"<?php echo get_selected($_GET['sfl'], "ca_id", true); ?>>분류코드</option>
-        <option value="ca_mb_id"<?php echo get_selected($_GET['sfl'], "ca_mb_id", true); ?>>회원아이디</option>
-    </select>
-
-    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="required frm_input">
-    <input type="submit" value="검색" class="btn_submit">
-</fieldset>
+<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+<input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="required frm_input">
+<input type="submit" value="검색" class="btn_submit">
 
 </form>
 
-<section class="cbox">
-    <h2>생성된 분류 전체 목록</h2>
-    <p>생성된 분류 확인, 추가 및 간략 수정을 할 수 있습니다.</p>
+<?php if ($is_admin == 'super') {?>
+<div class="btn_add01 btn_add">
+    <a href="./categoryform.php" id="cate_add">분류 추가</a>
+</div>
+<?php } ?>
 
-    <?php if ($is_admin == 'super') {?>
-    <div class="btn_add sort_with">
-        <a href="./categoryform.php" id="cate_add">분류 추가</a>
-    </div>
-    <?php } ?>
+<form name="fcategorylist" method="post" action="./categorylistupdate.php" autocomplete="off">
+<input type="hidden" name="page"  value="<?php echo $page; ?>">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
-    <ul class="sort_odr">
-        <li><?php echo subject_sort_link("ca_id"); ?>분류코드<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("ca_name"); ?>분류명<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("ca_mb_id"); ?>회원아이디<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("ca_use"); ?>판매가능<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("ca_stock_qty"); ?>기본재고<span class="sound_only"> 순 정렬</span></a></li>
-    </ul>
-
-    <form name="fcategorylist" method="post" action="./categorylistupdate.php" autocomplete="off">
-    <input type="hidden" name="page"  value="<?php echo $page; ?>">
-    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-
-    <table class="frm_basic">
+<div class="tbl_head02 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
-        <th scope="col" rowspan="2">분류<br>코드</th>
-        <th scope="col" rowspan="2">분류명</th>
+        <th scope="col" rowspan="2"><?php echo subject_sort_link("ca_id"); ?>분류코드</a></th>
+        <th scope="col" rowspan="2"><?php echo subject_sort_link("ca_name"); ?>분류명</a></th>
+        <th scope="col">상품수</th>
+        <th scope="col">이미지 폭</th>
+        <th scope="col">이미지 높이</th>
+        <th scope="col">1행이미지수</th>
         <th scope="col">출력스킨</th>
-        <th scope="col">출력이미지폭<br>(픽셀)</th>
-        <th scope="col">출력이미지높이<br>(픽셀)</th>
-        <th scope="col">1줄당<br>이미지 수</th>
-        <th scope="col">이미지<br>줄 수</th>
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
-        <th scope="col">회원아이디</th>
+        <th scope="col"><?php echo subject_sort_link("ca_use"); ?>판매가능</a></th>
         <th scope="col">본인인증</th>
         <th scope="col">성인인증</th>
-        <th scope="col">판매가능</th>
-        <th scope="col">상품수</th>
+        <th scope="col">이미지 행수</th>
+        <th scope="col"><?php echo subject_sort_link("ca_mb_id"); ?>관리회원아이디</a></th>
     </tr>
     </thead>
     <tbody>
@@ -158,19 +143,16 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
                       or ca_id2 = '{$row['ca_id']}'
                       or ca_id3 = '{$row['ca_id']}' ";
         $row1 = sql_fetch($sql1);
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
-    <tr>
-        <td class="td_code" rowspan="2">
+    <tr<?php echo ' '.$tr_bg; ?>>
+        <td class="td_idsmall" rowspan="2">
             <input type="hidden" name="ca_id[<?php echo $i; ?>]" value="<?php echo $row['ca_id']; ?>">
             <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $row['ca_id']; ?>"><?php echo $row['ca_id']; ?></a>
         </td>
         <td class="td_scate" rowspan="2"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required" size="<?php echo $s_level_input_size; ?>"></td>
-        <td class="td_scate_admin">
-            <label for="ca_skin<?php echo $i; ?>" class="sound_only">출력스킨</label>
-            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
-                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
-            </select>
-        </td>
+        <td class="td_amount"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
         <td class="td_output">
             <label for="ca_out_width<?php echo $i; ?>" class="sound_only">출력이미지 폭</label>
             <input type="text" name="ca_img_width[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_img_width']); ?>" id="ca_out_width<?php echo $i; ?>" required class="required frm_input" size="3" > <span class="sound_only">픽셀</span>
@@ -183,9 +165,11 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <label for="ca_lineimg_num<?php echo $i; ?>" class="sound_only">1줄당 이미지 수</label>
             <input type="text" name="ca_list_mod[<?php echo $i; ?>]" size="3" value="<?php echo $row['ca_list_mod']; ?>" id="ca_lineimg_num<?php echo $i; ?>" required class="required frm_input"> <span class="sound_only">개</span>
         </td>
-        <td class="td_imgline">
-            <label for="ca_imgline_num<?php echo $i; ?>" class="sound_only">이미지 줄 수</label>
-            <input type="text" name="ca_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_list_row']; ?>' id="ca_imgline_num<?php echo $i; ?>" required class="required frm_input" size="3"> <span class="sound_only">줄</span>
+        <td>
+            <label for="ca_skin<?php echo $i; ?>" class="sound_only">출력스킨</label>
+            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
+                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+            </select>
         </td>
         <td class="td_mng" rowspan="2">
             <?php echo $s_add; ?>
@@ -194,15 +178,10 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <?php echo $s_del; ?>
         </td>
     </tr>
-    <tr>
-        <td class="td_scate_admin">
-            <?php if ($is_admin == 'super') {?>
-            <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">회원아이디</label>
-            <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="frm_input" size="15" maxlength="20">
-            <?php } else { ?>
-            <input type="hidden" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>">
-            <?php echo $row['ca_mb_id']; ?>
-            <?php } ?>
+    <tr<?php echo ' '.$tr_bg; ?>>
+        <td class="td_possible">
+            <input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" id="ca_use<?php echo $i; ?>" <?php echo ($row['ca_use'] ? "checked" : ""); ?>>
+            <label for="ca_use<?php echo $i; ?>">판매</label>
         </td>
         <td class="td_confirm">
             <input type="checkbox" name="ca_hp_cert_use[<?php echo $i; ?>]" value="1" id="ca_hp_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
@@ -222,27 +201,34 @@ if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
             <input type="radio" name="ca_adult_cert_use[<?php echo $i; ?>]" value="0" id="ca_adult_cert_use_no<?php echo $i; ?>" <?php if(!$row['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
             <label for="ca_adult_cert_use_no<?php echo $i; ?>">사용안함</label> -->
         </td>
-        <td class="td_possible">
-            <input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" id="ca_use<?php echo $i; ?>" <?php echo ($row['ca_use'] ? "checked" : ""); ?>>
-            <label for="ca_use<?php echo $i; ?>">판매</label>
+        <td class="td_imgline">
+            <label for="ca_imgline_num<?php echo $i; ?>" class="sound_only">이미지 줄 수</label>
+            <input type="text" name="ca_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_list_row']; ?>' id="ca_imgline_num<?php echo $i; ?>" required class="required frm_input" size="3"> <span class="sound_only">줄</span>
         </td>
-        <td class="td_amount"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
+        <td class="td_input">
+            <?php if ($is_admin == 'super') {?>
+            <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">회원아이디</label>
+            <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="frm_input" size="15" maxlength="20">
+            <?php } else { ?>
+            <input type="hidden" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>">
+            <?php echo $row['ca_mb_id']; ?>
+            <?php } ?>
+        </td>
     </tr>
     <?php }
     if ($i == 0) echo "<tr><td colspan=\"7\" class=\"empty_table\">자료가 한 건도 없습니다.</td></tr>\n";
     ?>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_list">
-        <input type="submit" value="일괄수정">
-    </div>
+<div class="btn_list01 btn_list">
+    <input type="submit" value="일괄수정">
+</div>
 
-    </form>
+</form>
 
-    <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
-
-</section>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

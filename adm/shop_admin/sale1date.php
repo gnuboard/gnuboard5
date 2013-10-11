@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $fr_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $fr_date);
 $to_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $to_date);
 
-$g5['title'] = "$fr_date ~ $to_date 일간 매출현황";
+$g5['title'] = $fr_date.' ~ '.$to_date.' 일간 매출현황';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)
@@ -15,16 +15,16 @@ function print_line($save)
     $date = preg_replace("/-/", "", $save['od_date']);
 
     ?>
-    <tr class="sale1">
+    <tr>
         <td><a href="./sale1today.php?date=<?php echo $date; ?>"><?php echo $save['od_date']; ?></a></td>
-        <td><?php echo number_format($save['ordercount']); ?></td>
-        <td><?php echo number_format($save['orderprice']); ?></td>
-        <td><?php echo number_format($save['ordercoupon']); ?></td>
-        <td><?php echo number_format($save['receiptbank']); ?></td>
-        <td><?php echo number_format($save['receiptcard']); ?></td>
-        <td><?php echo number_format($save['receiptpoint']); ?></td>
-        <td><?php echo number_format($save['ordercancel']); ?></td>
-        <td><?php echo number_format($save['misu']); ?></td>
+        <td class="td_num"><?php echo number_format($save['ordercount']); ?></td>
+        <td class="td_numsum"><?php echo number_format($save['orderprice']); ?></td>
+        <td class="td_numcoupon"><?php echo number_format($save['ordercoupon']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptbank']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptcard']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptpoint']); ?></td>
+        <td class="td_numcancel"><?php echo number_format($save['ordercancel']); ?></td>
+        <td class="td_numrdy"><?php echo number_format($save['misu']); ?></td>
     </tr>
     <?php
 }
@@ -45,10 +45,10 @@ $sql = " select od_id,
 $result = sql_query($sql);
 ?>
 
-<section id="ssale_date" class="cbox">
-    <h2>일간 매출 집계 목록</h2>
+<div class="tbl_head01 tbl_wrap">
 
     <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <thead>
     <tr>
         <th scope="col">주문일</th>
@@ -121,7 +121,7 @@ $result = sql_query($sql);
     </tr>
     </tfoot>
     </table>
-</section>
+</div>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

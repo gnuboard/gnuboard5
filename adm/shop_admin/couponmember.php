@@ -74,7 +74,7 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
 
     <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <button type="button" onclick="window.close();">닫기</button>
     </div>
 </div>

@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$g5['title'] = "$fr_year ~ $to_year 연간 매출현황"; /*레이블 중복 인식과 페이지와의 연결 때문에 year로 바꿈 김혜련 2013-04-04*/
+$g5['title'] = $fr_year.' ~ '.$to_year.' 연간 매출현황';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)
@@ -12,14 +12,14 @@ function print_line($save)
     ?>
     <tr>
         <td><a href="./sale1month.php?fr_month=<?php echo $save['od_date']; ?>01&amp;to_month=<?php echo $save['od_date']; ?>12"><?php echo $save['od_date']; ?></a></td>
-        <td><?php echo number_format($save['ordercount']); ?></td>
-        <td><?php echo number_format($save['orderprice']); ?></td>
-        <td><?php echo number_format($save['ordercoupon']); ?></td>
-        <td><?php echo number_format($save['receiptbank']); ?></td>
-        <td><?php echo number_format($save['receiptcard']); ?></td>
-        <td><?php echo number_format($save['receiptpoint']); ?></td>
-        <td><?php echo number_format($save['ordercancel']); ?></td>
-        <td><?php echo number_format($save['misu']); ?></td>
+        <td class="td_num"><?php echo number_format($save['ordercount']); ?></td>
+        <td class="td_numsum"><?php echo number_format($save['orderprice']); ?></td>
+        <td class="td_numcoupon"><?php echo number_format($save['ordercoupon']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptbank']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptcard']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptpoint']); ?></td>
+        <td class="td_numcancel"><?php echo number_format($save['ordercancel']); ?></td>
+        <td class="td_numrdy"><?php echo number_format($save['misu']); ?></td>
     </tr>
     <?php
 }
@@ -41,10 +41,9 @@ $sql = " select od_id,
 $result = sql_query($sql);
 ?>
 
-<section id="ssale_year" class="cbox">
-    <h2>연간 매출 집계 목록</h2>
-
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <thead>
     <tr>
         <th scope="col">주문년도</th>
@@ -97,7 +96,7 @@ $result = sql_query($sql);
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="9" calss="empty_table">자료가 없습니다.</td></tr>';
+        echo '<tr><td colspan="9" class="empty_table">자료가 없습니다.</td></tr>';
     } else {
         print_line($save);
     }
@@ -117,7 +116,7 @@ $result = sql_query($sql);
     </tr>
     </tfoot>
     </table>
-</section>
+</div>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

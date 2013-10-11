@@ -24,6 +24,7 @@ if($ps_run) {
 ?>
 <div class="sit_option_frm_wrapper">
     <table>
+    <caption>추가옵션 목록</caption>
     <thead>
     <tr>
         <th scope="col">
@@ -59,7 +60,7 @@ if($ps_run) {
         </td>
         <td class="spl-subject-cell"><?php echo $spl_subject; ?></td>
         <td class="spl-cell"><?php echo $spl; ?></td>
-        <td class="td_bignum">
+        <td class="td_numsmall">
             <label for="spl_price_<?php echo $i; ?>" class="sound_only">상품금액</label>
             <input type="text" name="spl_price[]" value="<?php echo $spl_price; ?>" id="spl_price_<?php echo $i; ?>" class="frm_input" size="5">
         </td>
@@ -104,7 +105,7 @@ if($ps_run) {
         </td>
         <td class="spl-subject-cell"><?php echo $spl_subject; ?></td>
         <td class="spl-cell"><?php echo $spl; ?></td>
-        <td class="td_bignum">
+        <td class="td_numsmall">
             <label for="spl_price_<?php echo $i; ?>" class="sound_only">상품금액</label>
             <input type="text" name="spl_price[]" value="<?php echo $spl_price; ?>" id="spl_price_<?php echo $i; ?>" class="frm_input" size="9">
         </td>
@@ -134,7 +135,7 @@ if($ps_run) {
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <button type="button" id="sel_supply_delete">선택삭제</button>
 </div>
 

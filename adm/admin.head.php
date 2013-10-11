@@ -80,7 +80,7 @@ function imageview(id, w, h)
             <li><a href="<?php echo G5_ADMIN_URL ?>/shop_admin/configform.php">쇼핑몰환경</a></li>
             <li><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
             <?php } ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
+            <li id="tnb_logout"><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
         </ul>
 
         <nav id="gnb">
@@ -117,8 +117,8 @@ function imageview(id, w, h)
     <div id="container">
         <div id="text_size">
             <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
-            <button onclick="font_resize('container', 'ts_up ts_up2', '');">기본</button>
-            <button onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');">크게</button>
-            <button onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');">더크게</button>
+            <button onclick="font_resize('container', 'ts_up ts_up2', '');"><img src="<?php echo G5_ADMIN_URL ?>/shop_admin/img/ts01.gif" alt="기본"></button>
+            <button onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');"><img src="<?php echo G5_ADMIN_URL ?>/shop_admin/img/ts02.gif" alt="크게"></button>
+            <button onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');"><img src="<?php echo G5_ADMIN_URL ?>/shop_admin/img/ts03.gif" alt="더크게"></button>
         </div>
         <h1><?php echo $g5['title'] ?></h1>
