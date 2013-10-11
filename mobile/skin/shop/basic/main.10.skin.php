@@ -73,6 +73,6 @@ if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 
 <script>
 $(function() {
-    $(".sct_wrap").fancyList("li.sct_li", "sct_clear");
+    $("ul.sct_wrap").fancyList("li.sct_li", "sct_clear");
 });
 </script>
