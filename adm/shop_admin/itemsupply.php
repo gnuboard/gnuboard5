@@ -135,7 +135,7 @@ if($ps_run) {
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <button type="button" id="sel_supply_delete">선택삭제</button>
 </div>
 

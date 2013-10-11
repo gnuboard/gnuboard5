@@ -28,7 +28,7 @@ $result = sql_query($sql);
     <span>전체 내용 <?php echo $total_count; ?>건</span>
 </div>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./contentform.php">내용 추가</a>
 </div>
 

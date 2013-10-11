@@ -95,7 +95,7 @@ $colspan = 4;
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="submit" name="" value="선택삭제">
 </div>
 </form>

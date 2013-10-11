@@ -30,7 +30,7 @@ $colspan = 7;
     </p>
 </div>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./mail_form.php" id="mail_add">메일내용추가</a>
 </div>
 
@@ -81,7 +81,7 @@ $colspan = 7;
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <button type="submit">선택삭제</button>
 </div>
 </form>

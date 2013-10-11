@@ -77,7 +77,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 </form>
 
 <?php if ($is_admin == 'super') {?>
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./categoryform.php" id="cate_add">분류 추가</a>
 </div>
 <?php } ?>
@@ -222,7 +222,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="submit" value="일괄수정">
 </div>
 

@@ -169,7 +169,7 @@ if($po_run) {
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="button" value="선택삭제" id="sel_option_delete">
 </div>
 

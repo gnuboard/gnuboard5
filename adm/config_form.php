@@ -964,7 +964,7 @@ $pg_anchor = '<ul class="anchor">
     </div>
 </section>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
 </div>
 

@@ -44,7 +44,7 @@ $colspan = 12;
 
 <section>
     <h2>신규가입회원 <?php echo $new_member_rows ?>건 목록</h2>
-    <div class="local_ov01 local_ov">
+    <div class="local_desc02 local_desc">
         총회원수 <?php echo number_format($total_count) ?>명 중 차단 <?php echo number_format($intercept_count) ?>명, 탈퇴 : <?php echo number_format($leave_count) ?>명
     </div>
 
@@ -121,7 +121,7 @@ $colspan = 12;
         </table>
     </div>
 
-    <div class="btn_list03">
+    <div class="btn_list03 btn_list">
         <a href="./member_list.php">회원 전체보기</a>
     </div>
 
@@ -221,7 +221,7 @@ $colspan = 5;
         </table>
     </div>
 
-    <div class="btn_list03">
+    <div class="btn_list03 btn_list">
         <a href="<?php echo G5_BBS_URL ?>/new.php">최근게시물 더보기</a>
     </div>
 </section>
@@ -243,7 +243,7 @@ $colspan = 7;
 
 <section>
     <h2>최근 포인트 발생내역</h2>
-    <div class="local_ov01 local_ov">
+    <div class="local_desc02 local_desc">
         전체 <?php echo number_format($total_count) ?> 건 중 <?php echo $new_point_rows ?>건 목록
     </div>
 
@@ -302,7 +302,7 @@ $colspan = 7;
         </table>
     </div>
 
-    <div class="btn_list03">
+    <div class="btn_list03 btn_list">
         <a href="./point_list.php">포인트내역 전체보기</a>
     </div>
 </section>

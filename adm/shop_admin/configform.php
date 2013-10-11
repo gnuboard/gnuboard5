@@ -1094,7 +1094,7 @@ function byte_check(el_cont, el_byte)
 
 </section>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
 </div>
 

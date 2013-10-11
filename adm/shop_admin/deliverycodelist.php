@@ -22,7 +22,7 @@ $result = sql_query($sql);
     <?php echo $total_count; ?>개 업체 등록됨
 </div>
 
- <div class="btn_add">
+ <div class="btn_add01 btn_add">
     <a href="./deliverycodeform.php">배송회사추가</a>
 </div>
 

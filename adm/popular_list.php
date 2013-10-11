@@ -134,7 +134,7 @@ var list_delete_php = 'popular_list.php';
     </table>
 
     <?php if ($is_admin == 'super'){ ?>
-    <div class="btn_list">
+    <div class="btn_list01 btn_list">
         <button type="submit">선택삭제</button>
     </div>
     <?php } ?>

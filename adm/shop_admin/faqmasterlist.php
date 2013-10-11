@@ -36,7 +36,7 @@ $result = sql_query($sql);
     </ol>
 </div>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./faqmasterform.php">FAQ추가</a>
 </div>
 

@@ -92,9 +92,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 </form>
 
-<div class="btn_add">
-    <a href="./itemstocklist.php" class="btn_add_optional">상품재고관리</a>
-    <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
+<div class="btn_add01 btn_add">
+    <a href="./itemstocklist.php" class="btn_add01 btn_add_optional">상품재고관리</a>
+    <a href="./itemsellrank.php" class="btn_add01 btn_add_optional">상품판매순위</a>
 </div>
 
 <form name="fitemstocklist" action="./optionstocklistupdate.php" method="post">
@@ -196,7 +196,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </table>
 </div>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="일괄수정" class="btn_submit">
 </div>
 </form>

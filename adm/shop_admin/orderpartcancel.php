@@ -58,7 +58,7 @@ include_once(G5_PATH.'/head.sub.php');
         </table>
     </div>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="확인" class="btn_submit" accesskey="s">
         <button type="button" onclick="self.close();">닫기</button>
     </div>

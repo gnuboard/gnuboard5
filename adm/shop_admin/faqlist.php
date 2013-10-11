@@ -33,7 +33,7 @@ $result = sql_query($sql);
     </ol>
 </div>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./faqform.php?fm_id=<?php echo $fm['fm_id']; ?>">FAQ 상세내용 추가</a>
 </div>
 
@@ -85,7 +85,7 @@ $result = sql_query($sql);
 
 </div>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <a href="./faqmasterlist.php">FAQ 관리</a>
 </div>
 

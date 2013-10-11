@@ -67,7 +67,7 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     </table>
 </div>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" accesskey='s' value="확인" class="btn_submit">
     <a href="./itemqalist.php?<?php echo $qstr; ?>">목록</a>
 </div>

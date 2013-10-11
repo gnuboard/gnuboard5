@@ -101,7 +101,7 @@ include_once('./admin.head.php');
     </tbody>
     </table>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="확인" class="btn_submit" accesskey="s">
         <a href="./poll_list.php?<?php echo $qstr ?>">목록</a>
     </div>

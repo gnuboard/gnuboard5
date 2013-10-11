@@ -187,7 +187,7 @@ if (isset($ev_set)) {
         <?php } ?>
     </p>
 </div>
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
 </div>
 

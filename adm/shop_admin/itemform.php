@@ -594,7 +594,7 @@ $(function(){
                     </tr>
                     </tbody>
                     </table>
-                    <div class="btn_confirm">
+                    <div class="btn_confirm01 btn_confirm">
                         <button type="button" id="option_table_create" class="btn_frmline">옵션목록생성</button>
                     </div>
                 </div>
@@ -733,7 +733,7 @@ $(function(){
                     </tbody>
                     </table>
                     <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
-                    <div class="btn_confirm">
+                    <div class="btn_confirm01 btn_confirm">
                         <button type="button" id="supply_table_create">옵션목록생성</button>
                     </div>
                 </div>
@@ -1067,7 +1067,7 @@ $(function(){
     </div>
 </section>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
 </div>
@@ -1393,7 +1393,7 @@ $(function(){
     </div>
 </section>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
 </div>

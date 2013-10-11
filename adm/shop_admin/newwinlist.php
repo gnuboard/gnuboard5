@@ -20,7 +20,7 @@ $result = sql_query($sql);
 
 <div class="local_ov01 local_ov">전체 <?php echo $total_count; ?>건</div>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./newwinform.php">새창관리추가</a>
 </div>
 

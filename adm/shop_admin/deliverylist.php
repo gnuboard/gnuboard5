@@ -197,7 +197,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <label for="od_send_escrow">에스크로배송시작</label>
 </div>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
 </div>
 

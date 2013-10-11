@@ -24,7 +24,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     등록된 배너 <?php echo $total_count; ?>개
 </div>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./bannerform.php">배너추가</a>
 </div>
 

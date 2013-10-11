@@ -69,10 +69,10 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 </div>
 
-<div class="btn_add">
-    <a href="./orderlist.php" class="btn_add_optional">주문내역</a>
-    <a href="./orderstatuslist.php" class="btn_add_optional">주문개별내역</a>
-    <a href="./orderlist2.php" class="btn_add_optional">주문통합내역</a>
+<div class="btn_add01 btn_add">
+    <a href="./orderlist.php" class="btn_add01 btn_add_optional">주문내역</a>
+    <a href="./orderstatuslist.php" class="btn_add01 btn_add_optional">주문개별내역</a>
+    <a href="./orderlist2.php" class="btn_add01 btn_add_optional">주문통합내역</a>
 </div>
 
 <div class="local_desc01 local_desc">

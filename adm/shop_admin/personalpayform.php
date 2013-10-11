@@ -156,7 +156,7 @@ $pg_anchor = '<ul class="anchor">
         </div>
     </section>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="확인" class="btn_submit" accesskey="s">
         <?php if($popup == 'yes') { ?>
         <button type="button" onclick="self.close();">닫기</button>

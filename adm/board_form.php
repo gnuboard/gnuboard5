@@ -1236,7 +1236,7 @@ $pg_anchor = '<ul class="anchor">
     </div>
 </section>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./board_list.php?<?php echo $qstr ?>">목록</a>
     <?php if ($w == 'u') { ?><a href="./board_copy.php?bo_table=<?php echo $bo_table ?>" id="board_copy" target="win_board_copy">게시판복사</a><?php } ?>

@@ -103,7 +103,7 @@ $colspan = 15;
 </div>
 
 <?php if ($is_admin == 'super') { ?>
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./member_form.php" id="member_add">회원추가</a>
 </div>
 <?php } ?>
@@ -261,7 +261,7 @@ $colspan = 15;
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
 </div>

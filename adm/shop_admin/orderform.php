@@ -214,7 +214,7 @@ $pg_anchor = '<ul class="anchor">
 
     </div>
 
-    <div class="btn_list">
+    <div class="btn_list02 btn_list">
         <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
         <input type="submit" name="act_button" value="주문" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="상품준비중" onclick="document.pressed=this.value">
@@ -319,7 +319,7 @@ $pg_anchor = '<ul class="anchor">
         <section id="anc_sodr_chk" class="compare_left">
             <h3>결제상세정보 확인</h3>
 
-            <div class="tbl_frm01 tbl_wrap">
+            <div class="tbl_frm01">
                 <table>
                 <caption>결제상세정보</caption>
                 <colgroup>
@@ -483,7 +483,7 @@ $pg_anchor = '<ul class="anchor">
         <section id="anc_sodr_paymo" class="compare_right">
             <h3>결제상세정보 수정</h3>
 
-            <div class="tbl_frm01 tbl_wrap">
+            <div class="tbl_frm01">
                 <table>
                 <caption>결제상세정보 수정</caption>
                 <colgroup>
@@ -658,7 +658,7 @@ $pg_anchor = '<ul class="anchor">
 
     </div>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
         <?php if($od['od_misu'] > 0) { ?>
         <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
@@ -694,7 +694,7 @@ $pg_anchor = '<ul class="anchor">
         <textarea name="od_shop_memo" id="od_shop_memo" rows="8"><?php echo stripslashes($od['od_shop_memo']); ?></textarea>
     </div>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="메모 수정" class="btn_submit">
     </div>
 
@@ -719,7 +719,7 @@ $pg_anchor = '<ul class="anchor">
         <section id="anc_sodr_payer" class="compare_left">
             <h3>주문하신 분</h3>
 
-            <div class="tbl_frm01 tbl_wrap">
+            <div class="tbl_frm01">
                 <table>
                 <caption>주문자/배송지 정보</caption>
                 <colgroup>
@@ -777,7 +777,7 @@ $pg_anchor = '<ul class="anchor">
         <section id="anc_sodr_addressee" class="compare_right">
             <h3>받으시는 분</h3>
 
-            <div class="tbl_frm01 tbl_wrap">
+            <div class="tbl_frm01">
                 <table>
                 <caption>받으시는 분 정보</caption>
                 <colgroup>
@@ -841,14 +841,14 @@ $pg_anchor = '<ul class="anchor">
 
     </div>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="주문자/배송지 정보 수정" class="btn_submit">
     </div>
 
     </form>
 </section>
 
-<div class="btn_confirm">
+<div class="btn_list03 btn_list">
     <a href="./orderdelete.php?od_id=<?php echo $od['od_id']; ?>&amo;mb_id=<?php echo $od['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return del_confirm();">주문서 삭제</a>
     <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
 </div>

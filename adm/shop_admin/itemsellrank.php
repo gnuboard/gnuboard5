@@ -95,9 +95,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <p>판매량을 합산하여 상품판매순위를 집계합니다.</p>
 </div>
 
-<div class="btn_add">
-    <a href="./itemlist.php" class="btn_add_optional">상품등록</a>
-    <a href="./itemstocklist.php" class="btn_add_optional">상품재고관리</a>
+<div class="btn_add01 btn_add">
+    <a href="./itemlist.php" class="btn_add01 btn_add_optional">상품등록</a>
+    <a href="./itemstocklist.php" class="btn_add01 btn_add_optional">상품재고관리</a>
 </div>
 
 <div class="tbl_head01 tbl_wrap">

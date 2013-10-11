@@ -23,7 +23,7 @@ $result = sql_query($sql);
 </div>
 
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./itemeventform.php">이벤트 추가</a>
 </div>
 

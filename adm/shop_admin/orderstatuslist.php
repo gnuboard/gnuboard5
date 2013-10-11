@@ -94,8 +94,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 </form>
 
-<div class="btn_add">
-    <a href="./orderprint.php" class="btn_add_optional">주문내역출력</a>
+<div class="btn_add01 btn_add">
+    <a href="./orderprint.php" class="btn_add01 btn_add_optional">주문내역출력</a>
 </div>
 
 <ul class="anchor">

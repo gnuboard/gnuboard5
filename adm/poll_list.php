@@ -69,7 +69,7 @@ $colspan = 7;
 </div>
 </form>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./poll_form.php" id="poll_add">투표 추가</a>
 </div>
 
@@ -130,7 +130,7 @@ $colspan = 7;
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <button type="submit">선택삭제</button>
 </div>
 </form>

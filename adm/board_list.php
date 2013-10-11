@@ -74,7 +74,7 @@ $colspan = 16;
 </form>
 
 <?php if ($is_admin == 'super') { ?>
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./board_form.php" id="bo_add">게시판 추가</a>
 </div>
 <?php } ?>
@@ -204,7 +204,7 @@ $colspan = 16;
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
     <?php if ($is_admin == 'super') { ?>
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">

@@ -109,7 +109,7 @@ include_once('./admin.head.php');
     </table>
 </div>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit">
     <a href="./mail_list.php">목록 </a>
 </div>

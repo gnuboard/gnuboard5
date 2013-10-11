@@ -118,7 +118,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 </form>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./itemform.php">상품등록</a>
     <a href="./itemexcel.php" onclick="return excelform(this.href);" target="_blank">상품일괄등록</a>
 </div>
@@ -212,13 +212,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
     <?php if ($is_admin == 'super') { ?>
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
     <?php } ?>
 </div>
-<!-- <div class="btn_confirm">
+<!-- <div class="btn_confirm01 btn_confirm">
     <input type="submit" value="일괄수정" class="btn_submit" accesskey="s">
 </div> -->
 </form>

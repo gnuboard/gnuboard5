@@ -130,7 +130,7 @@ $colspan = 5;
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
 </div>
 
@@ -212,7 +212,7 @@ echo $pagelist;
         </table>
     </div>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="추가" class="btn_submit">
     </div>
 </section>

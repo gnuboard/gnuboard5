@@ -44,7 +44,7 @@ include_once(G5_PATH.'/head.sub.php');
         </table>
     </div>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" class="btn_submit" value="복사">
         <input type="button" class="btn_cancel" value="창닫기" onclick="window.close();">
     </div>

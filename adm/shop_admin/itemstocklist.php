@@ -92,9 +92,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <p>재고수정의 수치를 수정하시면 창고재고의 수치가 변경됩니다.</p>
 </div>
 
-<div class="btn_add">
-    <a href="./optionstocklist.php" class="btn_add_optional">상품옵션재고</a>
-    <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
+<div class="btn_add01 btn_add">
+    <a href="./optionstocklist.php" class="btn_add01 btn_add_optional">상품옵션재고</a>
+    <a href="./itemsellrank.php" class="btn_add01 btn_add_optional">상품판매순위</a>
 </div>
 
 <form name="fitemstocklist" action="./itemstocklistupdate.php" method="post">
@@ -168,7 +168,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </table>
 </div>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="일괄수정" class="btn_submit">
 </div>
 </form>

@@ -108,7 +108,7 @@ if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
         <p>예약발송 기능을 이용하시면, 예약된 시간에 맞춰 SMS 문자를 일괄발송할 수 있습니다.</p>
     </div>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="전송" class="btn_submit">
     </div>
 

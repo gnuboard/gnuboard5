@@ -71,7 +71,7 @@ $colspan = 8;
     <input type="submit" class="btn_submit" value="검색">
 </form>
 
-<div class="btn_add">
+<div class="btn_add01 btn_add">
     <a href="./personalpayform.php" id="personalpay_add">개인결제 추가</a>
 </div>
 
@@ -143,7 +143,7 @@ $colspan = 8;
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
 </div>
 

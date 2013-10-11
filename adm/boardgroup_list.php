@@ -77,7 +77,7 @@ $colspan = 11;
 </form>
 
 <?php if ($is_admin == 'super') { ?>
-<div class="btn_add sort_with">
+<div class="btn_add01 btn_add sort_with">
     <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
 </div>
 <?php } ?>
@@ -180,7 +180,7 @@ $colspan = 11;
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
     <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
     <a href="./boardgroup_form.php">게시판그룹 추가</a>
