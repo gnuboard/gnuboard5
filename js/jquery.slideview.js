@@ -2,19 +2,24 @@
     $.fn.slideSwipe = function(option)
     {
         var cfg = {
-                element: "section",
-                sidx_class: "sidx",
+                slide_wrap: "sidx_slide",
+                slide: "section",
+                slide_tab: "slide_tab",
+                tab_class: "slide_tab",
                 slide_class: "sidx_slide",
-                active_class: "slide_class",
+                active_class: "slide_active",
                 duration: 300
             };
 
         if(typeof option == "object")
             cfg = $.extend( cfg, option );
 
-        this.addClass(cfg.sidx_class);
         var $this = this;
-        var $slides = this.find(cfg.element);
+        var $wrap = this.find("#"+cfg.slide_wrap);
+        var $tab = this.find("#"+cfg.slide_tab);
+        var $slides = this.find(cfg.slide);
+
+        $tab.addClass(cfg.tab_class);
         $slides.addClass(cfg.slide_class);
 
         var height;
@@ -33,7 +38,7 @@
             $slides.not("."+cfg.active_class).css("left", width+"px");
 
             height = $slides.eq(idx).height();
-            $this.height(height);
+            $wrap.height(height);
         }
 
         function swipe_left()
@@ -48,7 +53,7 @@
 
             width = $(window).width();
             height = $slides.eq(next).height();
-            $this.height(height);
+            $wrap.height(height);
 
             $slides.eq(idx).animate(
                 { left: "-="+width }, cfg.duration,
@@ -77,7 +82,7 @@
 
             width = $(window).width();
             height = $slides.eq(next).height();
-            $this.height(height);
+            $wrap.height(height);
 
             $slides.eq(idx).animate(
                 { left: "+="+width }, cfg.duration,
