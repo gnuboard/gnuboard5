@@ -595,7 +595,7 @@ $(function(){
                     </tr>
                     </tbody>
                     </table>
-                    <div class="btn_confirm01 btn_confirm">
+                    <div class="btn_confirm02 btn_confirm">
                         <button type="button" id="option_table_create" class="btn_frmline">옵션목록생성</button>
                     </div>
                 </div>
@@ -734,7 +734,7 @@ $(function(){
                     </tbody>
                     </table>
                     <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
-                    <div class="btn_confirm01 btn_confirm">
+                    <div class="btn_confirm02 btn_confirm">
                         <button type="button" id="supply_table_create">옵션목록생성</button>
                     </div>
                 </div>
@@ -1073,7 +1073,7 @@ $(function(){
     <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
 </div>
 
-<section id="anc_sitfrm_relation" class="cbox compare_wrap srel">
+<section id="anc_sitfrm_relation" class="srel">
     <h2 class="h2_frm">관련상품</h2>
     <?php echo $pg_anchor; ?>
 
@@ -1085,245 +1085,249 @@ $(function(){
         </p>
     </div>
 
-    <section class="compare_left">
-        <h3>등록된 전체상품 목록</h3>
-        <label for="sch_relation" class="sound_only">상품분류</label>
-        <span class="srel_pad">
-            <select id="sch_relation">
-                <option value=''>분류별 상품</option>
-                <?php
-                    $sql = " select * from {$g5['g5_shop_category_table']} ";
-                    if ($is_admin != 'super')
-                        $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
-                    $sql .= " order by ca_id ";
-                    $result = sql_query($sql);
-                    for ($i=0; $row=sql_fetch_array($result); $i++)
-                    {
-                        $len = strlen($row['ca_id']) / 2 - 1;
+    <div class="compare_wrap">
+        <section class="compare_left">
+            <h3>등록된 전체상품 목록</h3>
+            <label for="sch_relation" class="sound_only">상품분류</label>
+            <span class="srel_pad">
+                <select id="sch_relation">
+                    <option value=''>분류별 상품</option>
+                    <?php
+                        $sql = " select * from {$g5['g5_shop_category_table']} ";
+                        if ($is_admin != 'super')
+                            $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
+                        $sql .= " order by ca_id ";
+                        $result = sql_query($sql);
+                        for ($i=0; $row=sql_fetch_array($result); $i++)
+                        {
+                            $len = strlen($row['ca_id']) / 2 - 1;
 
-                        $nbsp = "";
-                        for ($i=0; $i<$len; $i++)
-                            $nbsp .= "&nbsp;&nbsp;&nbsp;";
+                            $nbsp = "";
+                            for ($i=0; $i<$len; $i++)
+                                $nbsp .= "&nbsp;&nbsp;&nbsp;";
 
-                        echo "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
-                    }
-                ?>
-            </select>
-        </span>
-        <div id="relation" class="srel_list">
-            <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
-        </div>
-        <script>
-        $(function() {
-            $("#sch_relation").change(function() {
-                var ca_id = $(this).val();
-                var $relation = $("#relation");
+                            echo "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
+                        }
+                    ?>
+                </select>
+            </span>
+            <div id="relation" class="srel_list">
+                <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
+            </div>
+            <script>
+            $(function() {
+                $("#sch_relation").change(function() {
+                    var ca_id = $(this).val();
+                    var $relation = $("#relation");
 
-                if(ca_id == "") {
-                    $relation.html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
-                    return false;
-                }
-
-                $("#relation").load(
-                    "./itemformrelation.php",
-                    { it_id: "<?php echo $it_id; ?>", ca_id: ca_id }
-                );
-            });
-
-            $("#relation .add_item").live("click", function() {
-                // 이미 등록된 상품인지 체크
-                var $li = $(this).closest("li");
-                var it_id = $li.find("input:hidden").val();
-                var it_id2;
-                var dup = false;
-                $("#reg_relation input[name='re_it_id[]']").each(function() {
-                    it_id2 = $(this).val();
-                    if(it_id == it_id2) {
-                        dup = true;
+                    if(ca_id == "") {
+                        $relation.html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
                         return false;
                     }
+
+                    $("#relation").load(
+                        "./itemformrelation.php",
+                        { it_id: "<?php echo $it_id; ?>", ca_id: ca_id }
+                    );
                 });
 
-                if(dup) {
-                    alert("이미 선택된 상품입니다.");
-                    return false;
-                }
+                $("#relation .add_item").live("click", function() {
+                    // 이미 등록된 상품인지 체크
+                    var $li = $(this).closest("li");
+                    var it_id = $li.find("input:hidden").val();
+                    var it_id2;
+                    var dup = false;
+                    $("#reg_relation input[name='re_it_id[]']").each(function() {
+                        it_id2 = $(this).val();
+                        if(it_id == it_id2) {
+                            dup = true;
+                            return false;
+                        }
+                    });
 
-                var cont = "<li>"+$li.html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
-                var count = $("#reg_relation li").size();
+                    if(dup) {
+                        alert("이미 선택된 상품입니다.");
+                        return false;
+                    }
 
-                if(count > 0) {
-                    $("#reg_relation li:last").after(cont);
-                } else {
-                    $("#reg_relation").html("<ul>"+cont+"</ul>");
-                }
+                    var cont = "<li>"+$li.html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
+                    var count = $("#reg_relation li").size();
 
-                $li.remove();
+                    if(count > 0) {
+                        $("#reg_relation li:last").after(cont);
+                    } else {
+                        $("#reg_relation").html("<ul>"+cont+"</ul>");
+                    }
+
+                    $li.remove();
+                });
+
+                $("#reg_relation .del_item").live("click", function() {
+                    if(!confirm("상품을 삭제하시겠습니까?"))
+                        return false;
+
+                    $(this).closest("li").remove();
+
+                    var count = $("#reg_relation li").size();
+                    if(count < 1)
+                        $("#reg_relation").html("<p>선택된 상품이 없습니다.</p>");
+                });
             });
+            </script>
+        </section>
 
-            $("#reg_relation .del_item").live("click", function() {
-                if(!confirm("상품을 삭제하시겠습니까?"))
-                    return false;
+        <section class="compare_right">
+            <h3>선택된 관련상품 목록</h3>
+            <span class="srel_pad"></span>
+            <div id="reg_relation" class="srel_sel">
+                <?php
+                $str = array();
+                $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
+                           from {$g5['g5_shop_item_relation_table']} a
+                           left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id)
+                          where a.it_id = '$it_id'
+                          order by ir_no asc ";
+                $result = sql_query($sql);
+                for($g=0; $row=sql_fetch_array($result); $g++)
+                {
+                    $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
 
-                $(this).closest("li").remove();
+                    if($g==0)
+                        echo '<ul>';
+                ?>
+                    <li>
+                        <input type="hidden" name="re_it_id[]" value="<?php echo $row['it_id']; ?>">
+                        <?php echo $it_name; ?>
+                        <button type="button" class="del_item">삭제</button>
+                    </li>
+                <?php
+                    $str[] = $row['it_id'];
+                }
+                $str = implode(",", $str);
 
-                var count = $("#reg_relation li").size();
-                if(count < 1)
-                    $("#reg_relation").html("<p>선택된 상품이 없습니다.</p>");
-            });
-        });
-        </script>
-    </section>
+                if($g > 0)
+                    echo '</ul>';
+                else
+                    echo '<p>선택된 상품이 없습니다.</p>';
+                ?>
+            </div>
+            <input type="hidden" name="it_list" value="<?php echo $str; ?>">
+        </section>
 
-    <section class="compare_right">
-        <h3>선택된 관련상품 목록</h3>
-        <span class="srel_pad"></span>
-        <div id="reg_relation" class="srel_sel">
-            <?php
-            $str = array();
-            $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
-                       from {$g5['g5_shop_item_relation_table']} a
-                       left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id)
-                      where a.it_id = '$it_id'
-                      order by ir_no asc ";
-            $result = sql_query($sql);
-            for($g=0; $row=sql_fetch_array($result); $g++)
-            {
-                $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
-
-                if($g==0)
-                    echo '<ul>';
-            ?>
-                <li>
-                    <input type="hidden" name="re_it_id[]" value="<?php echo $row['it_id']; ?>">
-                    <?php echo $it_name; ?>
-                    <button type="button" class="del_item">삭제</button>
-                </li>
-            <?php
-                $str[] = $row['it_id'];
-            }
-            $str = implode(",", $str);
-
-            if($g > 0)
-                echo '</ul>';
-            else
-                echo '<p>선택된 상품이 없습니다.</p>';
-            ?>
-        </div>
-        <input type="hidden" name="it_list" value="<?php echo $str; ?>">
-    </section>
+    </div>
 
 </section>
 
-<section id="anc_sitfrm_event" class="cbox compare_wrap srel">
+<section id="anc_sitfrm_event" class="srel">
     <h2 class="h2_frm">관련이벤트</h2>
     <?php echo $pg_anchor; ?>
 
-    <section class="compare_left">
-        <h3>등록된 전체이벤트 목록</h3>
-        <div id="event_list" class="srel_list srel_noneimg">
-            <?php
-            $sql = " select ev_id, ev_subject from {$g5['g5_shop_event_table']} order by ev_id desc ";
-            $result = sql_query($sql);
-            for ($g=0; $row=sql_fetch_array($result); $g++) {
-                if($g == 0)
-                    echo '<ul>';
-            ?>
-                <li>
-                    <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
-                    <?php echo get_text($row['ev_subject']); ?>
-                    <button type="button" class="add_event">추가</button>
-                </li>
-            <?php
-            }
+    <div class="compare_wrap">
+        <section class="compare_left">
+            <h3>등록된 전체이벤트 목록</h3>
+            <div id="event_list" class="srel_list srel_noneimg">
+                <?php
+                $sql = " select ev_id, ev_subject from {$g5['g5_shop_event_table']} order by ev_id desc ";
+                $result = sql_query($sql);
+                for ($g=0; $row=sql_fetch_array($result); $g++) {
+                    if($g == 0)
+                        echo '<ul>';
+                ?>
+                    <li>
+                        <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
+                        <?php echo get_text($row['ev_subject']); ?>
+                        <button type="button" class="add_event">추가</button>
+                    </li>
+                <?php
+                }
 
-            if($g > 0)
-                echo '</ul>';
-            else
-                echo '<p>등록된 이벤트가 없습니다.</p>';
-            ?>
-        </div>
-        <script>
-        $(function() {
-            $("#event_list .add_event").live("click", function() {
-                // 이미 등록된 이벤트인지 체크
-                var $li = $(this).closest("li");
-                var ev_id = $li.find("input:hidden").val();
-                var ev_id2;
-                var dup = false;
-                $("#reg_event_list input[name='ev_id[]']").each(function() {
-                    ev_id2 = $(this).val();
-                    if(ev_id == ev_id2) {
-                        dup = true;
+                if($g > 0)
+                    echo '</ul>';
+                else
+                    echo '<p>등록된 이벤트가 없습니다.</p>';
+                ?>
+            </div>
+            <script>
+            $(function() {
+                $("#event_list .add_event").live("click", function() {
+                    // 이미 등록된 이벤트인지 체크
+                    var $li = $(this).closest("li");
+                    var ev_id = $li.find("input:hidden").val();
+                    var ev_id2;
+                    var dup = false;
+                    $("#reg_event_list input[name='ev_id[]']").each(function() {
+                        ev_id2 = $(this).val();
+                        if(ev_id == ev_id2) {
+                            dup = true;
+                            return false;
+                        }
+                    });
+
+                    if(dup) {
+                        alert("이미 선택된 이벤트입니다.");
                         return false;
+                    }
+
+                    var cont = "<li>"+$li.html().replace("add_event", "del_event").replace("추가", "삭제")+"</li>";
+                    var count = $("#reg_event_list li").size();
+
+                    if(count > 0) {
+                        $("#reg_event_list li:last").after(cont);
+                    } else {
+                        $("#reg_event_list").html("<ul>"+cont+"</ul>");
                     }
                 });
 
-                if(dup) {
-                    alert("이미 선택된 이벤트입니다.");
-                    return false;
+                $("#reg_event_list .del_event").live("click", function() {
+                    if(!confirm("상품을 삭제하시겠습니까?"))
+                        return false;
+
+                    $(this).closest("li").remove();
+
+                    var count = $("#reg_event_list li").size();
+                    if(count < 1)
+                        $("#reg_event_list").html("<p>선택된 이벤트가 없습니다.</p>");
+                });
+            });
+            </script>
+        </section>
+
+        <section class="compare_right">
+            <h3>선택된 관련이벤트 목록</h3>
+            <div id="reg_event_list" class="srel_sel srel_noneimg">
+                <?php
+                $str = "";
+                $comma = "";
+                $sql = " select b.ev_id, b.ev_subject
+                           from {$g5['g5_shop_event_item_table']} a
+                           left join {$g5['g5_shop_event_table']} b on (a.ev_id=b.ev_id)
+                          where a.it_id = '$it_id'
+                          order by b.ev_id desc ";
+                $result = sql_query($sql);
+                for ($g=0; $row=sql_fetch_array($result); $g++) {
+                    $str .= $comma . $row['ev_id'];
+                    $comma = ",";
+
+                    if($g == 0)
+                        echo '<ul>';
+                ?>
+                    <li>
+                        <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
+                        <?php echo get_text($row['ev_subject']); ?>
+                        <button type="button" class="del_event">삭제</button>
+                    </li>
+                <?php
                 }
 
-                var cont = "<li>"+$li.html().replace("add_event", "del_event").replace("추가", "삭제")+"</li>";
-                var count = $("#reg_event_list li").size();
-
-                if(count > 0) {
-                    $("#reg_event_list li:last").after(cont);
-                } else {
-                    $("#reg_event_list").html("<ul>"+cont+"</ul>");
-                }
-            });
-
-            $("#reg_event_list .del_event").live("click", function() {
-                if(!confirm("상품을 삭제하시겠습니까?"))
-                    return false;
-
-                $(this).closest("li").remove();
-
-                var count = $("#reg_event_list li").size();
-                if(count < 1)
-                    $("#reg_event_list").html("<p>선택된 이벤트가 없습니다.</p>");
-            });
-        });
-        </script>
-    </section>
-
-    <section class="compare_right">
-        <h3>선택된 관련이벤트 목록</h3>
-        <div id="reg_event_list" class="srel_sel srel_noneimg">
-            <?php
-            $str = "";
-            $comma = "";
-            $sql = " select b.ev_id, b.ev_subject
-                       from {$g5['g5_shop_event_item_table']} a
-                       left join {$g5['g5_shop_event_table']} b on (a.ev_id=b.ev_id)
-                      where a.it_id = '$it_id'
-                      order by b.ev_id desc ";
-            $result = sql_query($sql);
-            for ($g=0; $row=sql_fetch_array($result); $g++) {
-                $str .= $comma . $row['ev_id'];
-                $comma = ",";
-
-                if($g == 0)
-                    echo '<ul>';
-            ?>
-                <li>
-                    <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
-                    <?php echo get_text($row['ev_subject']); ?>
-                    <button type="button" class="del_event">삭제</button>
-                </li>
-            <?php
-            }
-
-            if($g > 0)
-                echo '</ul>';
-            else
-                echo '<p>선택된 이벤트가 없습니다.</p>';
-            ?>
-        </div>
-        <input type="hidden" name="ev_list" value="<?php echo $str; ?>">
-
-    </section>
+                if($g > 0)
+                    echo '</ul>';
+                else
+                    echo '<p>선택된 이벤트가 없습니다.</p>';
+                ?>
+            </div>
+            <input type="hidden" name="ev_list" value="<?php echo $str; ?>">
+        </section>
+    </div>
 
 </section>
 
@@ -1385,45 +1389,47 @@ $(function(){
     </div>
 </section>
 
-<section id="anc_sitfrm_extra" class="cbox">
+<section id="anc_sitfrm_extra">
     <h2>여분필드 설정</h2>
     <?php echo $pg_anchor ?>
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col class="grid_12">
-        <col class="grid_3">
-    </colgroup>
-    <tbody>
-    <?php for ($i=1; $i<=10; $i++) { ?>
-    <tr>
-        <th scope="row">여분필드<?php echo $i ?></th>
-        <td>
-            <label for="it_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
-            <input type="text" name="it_<?php echo $i ?>_subj" id="it_<?php echo $i ?>_subj" value="<?php echo get_text($it['it_'.$i.'_subj']) ?>" class="frm_input">
-            <label for="it_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
-            <input type="text" name="it_<?php echo $i ?>" value="<?php echo get_text($it['it_'.$i]) ?>" id="it_<?php echo $i ?>" class="frm_input">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_grp_<?php echo $i ?>" value="1" id="chk_grp_<?php echo $i ?>">
-            <label for="chk_grp_<?php echo $i ?>">그룹적용</label>
-            <input type="checkbox" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
-            <label for="chk_all_<?php echo $i ?>">전체적용</label>
-        </td>
-    </tr>
-    <?php } ?>
-    <?php if ($w == "u") { ?>
-    <tr>
-        <th scope="row">입력일시</th>
-        <td colspan="2">
-            <?php echo help("상품을 처음 입력(등록)한 시간입니다."); ?>
-            <?php echo $it['it_time']; ?>
-        </td>
-    </tr>
-    <?php } ?>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+            <col class="grid_3">
+        </colgroup>
+        <tbody>
+        <?php for ($i=1; $i<=10; $i++) { ?>
+        <tr>
+            <th scope="row">여분필드<?php echo $i ?></th>
+            <td class="td_extra">
+                <label for="it_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
+                <input type="text" name="it_<?php echo $i ?>_subj" id="it_<?php echo $i ?>_subj" value="<?php echo get_text($it['it_'.$i.'_subj']) ?>" class="frm_input">
+                <label for="it_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
+                <input type="text" name="it_<?php echo $i ?>" value="<?php echo get_text($it['it_'.$i]) ?>" id="it_<?php echo $i ?>" class="frm_input">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_grp_<?php echo $i ?>" value="1" id="chk_grp_<?php echo $i ?>">
+                <label for="chk_grp_<?php echo $i ?>">그룹적용</label>
+                <input type="checkbox" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
+                <label for="chk_all_<?php echo $i ?>">전체적용</label>
+            </td>
+        </tr>
+        <?php } ?>
+        <?php if ($w == "u") { ?>
+        <tr>
+            <th scope="row">입력일시</th>
+            <td colspan="2">
+                <?php echo help("상품을 처음 입력(등록)한 시간입니다."); ?>
+                <?php echo $it['it_time']; ?>
+            </td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
+    </div>
 </section>
 
 <div class="btn_confirm01 btn_confirm">

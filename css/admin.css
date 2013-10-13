@@ -121,10 +121,15 @@ h2.h2_frm {padding-top:15px}
 /* 버튼 */
 .btn_confirm {margin:0 20px 10px}
 
-.btn_confirm01 {clear:both;margin-bottom:20px;text-align:center}
+.btn_confirm01 {clear:both;text-align:center}
 .btn_confirm01 button {padding:0 15px;height:30px;border:0;background:#617d46;color:#fff;line-height:2.2em;vertical-align:middle;cursor:pointer}
 .btn_confirm01 a {display:inline-block;padding:0 15px;height:30px;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 .btn_confirm01 a:focus {background:#555}
+
+.btn_confirm02 {clear:both;margin-top:10px;text-align:center}
+.btn_confirm02 button {padding:0 15px;height:30px;border:0;background:#617d46;color:#fff;line-height:2.2em;vertical-align:middle;cursor:pointer}
+.btn_confirm02 a {display:inline-block;padding:0 15px;height:30px;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
+.btn_confirm02 a:focus {background:#555}
 
 .btn_submit {background:#ff3061}
 .btn_confirm .btn_submit {padding:0 15px;border:0;height:30px;color:#fff}
@@ -323,8 +328,8 @@ table .tr_bg1 {background:#f9f9f9}
 .td_datetime {width:130px;text-align:center}
 .td_delicom {width:100px}
 .td_etc {width:80px;text-align:center}
-.td_extra label {display:inline-block;width:90px}
-.td_extra input {margin-right:5px;width:140px}
+.td_extra label {display:inline-block;width:100px}
+.td_extra input {margin-right:5px;width:130px}
 .td_grid {width:60px;text-align:center}
 td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_id {width:150px}
@@ -511,7 +516,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sit_option_frm fieldset .frm_input {margin:0 10px 0 5px;background:#fff !important;color:#000}
 
 #sit_option_addfrm_btn {position:relative}
-#sit_option_addfrm_btn button {position:absolute;top:-38px;right:0}
+#sit_option_addfrm_btn button {position:absolute;top:-32px;right:0}
 
 #sit_option_addfrm .btn_list {margin:0 0 10px}
 #sit_option_addfrm fieldset {padding:10px;border:1px solid #e9e9e9;background:#f7f7f7;text-align:center}
@@ -543,7 +548,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .srel section li {position:relative;border-bottom:1px solid #e9e9e9}
 .srel .srel_list {height:auto !important;height:200px;max-height:200px;border:1px solid #ced9de;background:#f6f6f6;overflow-y:scroll}
 .srel .srel_sel {border:1px solid #ced9de;background:#fcfff2}
-.srel .srel_list p, .srel .srel_sel p {text-align:center}
+.srel .srel_list p, .srel .srel_sel p {padding:10px 0;text-align:center}
 .srel .compare_left ul {margin:0;list-style:none}
 .srel button {position:absolute;top:12px;right:0}
 .srel .srel_noneimg li {padding:7px 0}
@@ -553,7 +558,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 쿠폰관리 */
 .scp_new_win .empty_table {padding:30px 0}
 
-#scp_list_find {margin:10px auto 20px;padding:20px;width:86%;border:1px solid #e9e9e9;background:#fff}
+#scp_list_find {margin:10px 20px;padding:20px;border:1px solid #e9e9e9;background:#fff}
 #scp_list_find .btn_frmline {line-height:1.5em !important}
 #scp_list_find label {font-weight:bold}
 
