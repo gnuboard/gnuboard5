@@ -94,7 +94,6 @@
 #fregister .btn_confirm {margin-bottom:20px}
 
 /* 회원가입 입력 */
-#fregisterform .cbg {margin-bottom:15px;padding:20px}
 #fregisterform textarea {height:50px}
 
 #msg_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
@@ -144,7 +143,6 @@
 #memo_write textarea {height:100px}
 
 /* 스크랩 */
-#scrap_do .cbg {margin:0 auto 20px;padding:20px;width:87%}
 #scrap_do table {margin:0 0 10px;width:100%}
 #scrap_do textarea {height:100px}
 
