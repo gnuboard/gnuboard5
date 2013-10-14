@@ -20,17 +20,21 @@ $pg_anchor = '<ul class="anchor">
     <h2>주문현황</h2>
     <?php echo $pg_anchor; ?>
 
-    <?php
-    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
-    $row = sql_fetch($sql);
-    echo "주문 : ".$row['cnt'];
-    ?>
+    <div class="local_desc01 local_desc">
+        <p>
+            <?php
+            $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
+            $row = sql_fetch($sql);
+            echo "주문 : ".$row['cnt'];
+            ?>
 
-    <?php
-    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '입금' ";
-    $row = sql_fetch($sql);
-    echo "입금 : ".$row['cnt'];
-    ?>
+            <?php
+            $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '입금' ";
+            $row = sql_fetch($sql);
+            echo "입금 : ".$row['cnt'];
+            ?>
+        </p>
+    </div>
 </section>
 
 <section id="anc_sidx_rdy">

@@ -88,14 +88,14 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <a href="./orderprint.php" class="btn_add01 btn_add_optional">주문내역출력</a>
 </div>
 
-<ul class="sort_odr">
-    <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></li>
-    <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자</a></li>
-    <li><a href="<?php echo title_sort("od_cart_count", 1)."&amp;$qstr1"; ?>">건수</a></li>
-    <li><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">주문합계</a></li>
-    <li><a href="<?php echo title_sort("od_cancel_price", 1)."&amp;$qstr1"; ?>">주문취소</a></li>
-    <li><a href="<?php echo title_sort("od_receipt_price")."&amp;$qstr1"; ?>">입금합계</a></li>
-    <li><a href="<?php echo title_sort("od_misu", 1)."&amp;$qstr1"; ?>">미수금</a></li>
+<ul id="sodr_sort">
+    <li><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>"<?php if ($sort1 == 'od_id') echo ' class="sort_on"'; ?>>주문번호</a></li>
+    <li><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>"<?php if ($sort1 == 'od_name') echo ' class="sort_on"'; ?>>주문자</a></li>
+    <li><a href="<?php echo title_sort("od_cart_count", 1)."&amp;$qstr1"; ?>"<?php if ($sort1 == 'od_cart_count') echo ' class="sort_on"'; ?>>건수</a></li>
+    <li><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>"<?php if ($sort1 == 'od_cart_price') echo ' class="sort_on"'; ?>>주문합계</a></li>
+    <li><a href="<?php echo title_sort("od_cancel_price", 1)."&amp;$qstr1"; ?>"<?php if ($sort1 == 'od_cancel_price') echo ' class="sort_on"'; ?>>주문취소</a></li>
+    <li><a href="<?php echo title_sort("od_receipt_price")."&amp;$qstr1"; ?>"<?php if ($sort1 == 'od_receipt_price') echo ' class="sort_on"'; ?>>입금합계</a></li>
+    <li><a href="<?php echo title_sort("od_misu", 1)."&amp;$qstr1"; ?>"<?php if ($sort1 == 'od_misu') echo ' class="sort_on"'; ?>>미수금</a></li>
 </ul>
 
 <section id="sodr_all">
