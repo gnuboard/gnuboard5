@@ -455,6 +455,12 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sodr_request_list p {position:relative;padding:5px 0;border-bottom:1px solid #e9e9e9}
 
 /* 주문통합내역 */
+#sodr_sort {margin:0 20px 20px;padding:0;list-style:none;zoom:1}
+#sodr_sort:after {display:block;visibility:hidden;clear:both;content:""}
+#sodr_sort li {float:left;margin:0 10px 0 0}
+#sodr_sort a {font-size:0.95em;text-decoration:underline;letter-spacing:-0.1em}
+#sodr_sort a.sort_on {color:#ff3061}
+
 #sodr_all {margin:0 20px}
 #sodr_all h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
