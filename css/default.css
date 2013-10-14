@@ -188,6 +188,7 @@ li.empty_list {padding:85px 0;text-align:center}
 
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
+textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
 
 /* 테이블 항목별 정의 */
 .td_board {width:120px;text-align:center}
