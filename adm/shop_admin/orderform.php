@@ -176,6 +176,7 @@ $pg_anchor = '<ul class="anchor">
                 $ct_point['소계'] = $opt['ct_point'] * $opt['ct_qty'];
             ?>
             <tr>
+                <?php if($k == 0) { ?>
                 <td rowspan="<?php echo $rowspan; ?>">
                     <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
                     <?php if($od['od_tax_flag'] && $row['ct_notax']) echo '[비과세상품]'; ?>
@@ -184,9 +185,10 @@ $pg_anchor = '<ul class="anchor">
                     <label for="sit_sel_<?php echo $i; ?>" class="sound_only"><?php echo $row['it_name']; ?> 옵션 전체선택</label>
                     <input type="checkbox" id="sit_sel_<?php echo $i; ?>" name="it_sel[]">
                 </td>
+                <?php } ?>
                 <td>
                     <label for="ct_opt_chk_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
-                    <input type="checkbox" name="ct_chk[<?php echo $chk_cnt; ?>]" id="ct_chk_<?php echo $chk_cnt; ?>" value="<?php echo $chk_cnt; ?>">
+                    <input type="checkbox" name="ct_chk[<?php echo $chk_cnt; ?>]" id="ct_chk_<?php echo $chk_cnt; ?>" value="<?php echo $chk_cnt; ?>" class="sct_sel_<?php echo $i; ?>">
                     <input type="hidden" name="ct_id[<?php echo $chk_cnt; ?>]" value="<?php echo $opt['ct_id']; ?>">
                     <?php echo $opt['ct_option']; ?>
                 </td>
@@ -862,7 +864,8 @@ $(function() {
 
     // 상품의 옵션선택
     $("input[name='it_sel[]']").click(function() {
-        var $chk = $(this).closest("li").find("input[name^=ct_chk]");
+        var cls = $(this).attr("id").replace("sit_", "sct_");
+        var $chk = $("input[name^=ct_chk]."+cls);
         if($(this).is(":checked"))
             $chk.attr("checked", true);
         else

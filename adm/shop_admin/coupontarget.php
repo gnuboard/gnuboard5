@@ -31,7 +31,7 @@ if($_GET['sch_target'] == 1) {
 } else {
     $sql_common = " from {$g5['g5_shop_item_table']} ";
     $sql_where = " where it_use = '1' ";
-    if($GET['sch_word'])
+    if($_GET['sch_word'])
         $sql_where .= " and it_name like '%$sch_word%' ";
     $sql_select = " select it_id as t_id, it_name as t_name ";
     $sql_order = " order by it_name ";
