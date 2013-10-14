@@ -191,13 +191,8 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 .anchor {margin:0 20px 10px 21px;padding:0;zoom:1}
 .anchor:after {display:block;visibility:hidden;clear:both;content:""}
 .anchor li {float:left;margin-left:-1px;list-style:none}
-.anchor a {display:inline-block;padding:5px 10px;border:1px solid #e9e9e9;background:#f2f5f9;text-decoration:none}
-.anchor a:focus, .anchor a:hover {background:#eee;text-decoration:none}
-
-#sort_mb {width:800px}
-
-
-#sort_sodr {width:600px}
+.anchor a {display:inline-block;padding:5px 10px;border:1px solid #c8ced1;background:#d6dde1;text-decoration:none}
+.anchor a:focus, .anchor a:hover {background:#c8d2d8}
 
 /* 하단 레이아웃 */
 #ft {margin:20px 0;padding:10px 20px;border-top:1px solid #d0d6d8}
