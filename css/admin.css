@@ -477,7 +477,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sodr_all_list .sodr_basic:after {display:block;visibility:hidden;clear:both;content:""}
 .sodr_all_list .sodr_basic dt {float:left;margin:0 10px 0 0}
 .sodr_all_list .sodr_basic dd {float:left;margin:0 30px 0 0}
-.sodr_all_list .sodr_basic strong a {color:#ff3061}
+.sodr_all_list .sodr_basic strong a {color:#ff3061;text-decoration:underline}
 
 .sodr_all_list .sodr_person {float:right;zoom:1}
 .sodr_all_list .sodr_person:after {display:block;visibility:hidden;clear:both;content:""}
@@ -486,8 +486,8 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 
 .sodr_all_list .sodr_pay {clear:both;margin:0;border-top:1px solid #d1dee2;zoom:1}
 .sodr_all_list .sodr_pay:after {display:block;visibility:hidden;clear:both;content:""}
-.sodr_all_list .sodr_pay dt {float:left;padding:10px 0;width:15%}
-.sodr_all_list .sodr_pay dd {float:left;margin:0;padding:10px 0;width:35%}
+.sodr_all_list .sodr_pay dt {float:left;padding:8px 0;width:15%}
+.sodr_all_list .sodr_pay dd {float:left;margin:0;padding:8px 0;width:35%}
 
 #sodr_total table {text-align:center}
 #sodr_total th {width:125px}
