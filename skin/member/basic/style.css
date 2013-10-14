@@ -59,7 +59,9 @@
 
 .mbskin .frm_info {}
 
-.mbskin .required {} /* 필수입력 */
+/* 필수입력 */
+.mbskin .required {}
+.mbskin textarea.required {}
 
 /* 테이블 항목별 정의 */
 .mbskin .td_board {}
