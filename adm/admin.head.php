@@ -104,34 +104,29 @@ function imageview(id, w, h)
             echo $gnb_str;
             ?>
         </nav>
-    </div>
 
+    </div>
 </header>
+
+<?php if($sub_menu) { ?>
+<ul id="lnb">
+<?php
+$menu_key = substr($sub_menu, 0, 3);
+$nl = '';
+foreach($menu['menu'.$menu_key] as $key=>$value) {
+    if($key > 0) {
+        if ($menu_key == substr($menu['menu'.$key][0][0], 0, 2)) echo 1;
+        echo $nl.'<li><a href="'.$value[2].'">'.$value[1].'</a></li>';
+        $nl = PHP_EOL;
+    }
+}
+?>
+</ul>
+<?php } ?>
 
 <div id="wrapper">
 
-    <!-- <ul id="qnb">
-        <li><a href="<?php echo G5_ADMIN_URL ?>/member_list.php">회원</a></li>
-        <li><a href="<?php echo G5_ADMIN_URL ?>/board_list.php">게시판</a></li>
-        <li><a href="<?php echo G5_ADMIN_URL ?>/visit_list.php">접속자</a></li>
-    </ul> -->
-
     <div id="container">
-        <?php if($sub_menu) { ?>
-        <ul>
-        <?php
-        $menu_key = substr($sub_menu, 0, 3);
-        $nl = '';
-        foreach($menu['menu'.$menu_key] as $key=>$value) {
-            if($key > 0) {
-                echo $nl.'<li><a href="'.$value[2].'">'.$value[1].'</a></li>';
-                $nl = PHP_EOL;
-            }
-        }
-        ?>
-        </ul>
-        <?php } ?>
-
         <div id="text_size">
             <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
             <button onclick="font_resize('container', 'ts_up ts_up2', '');">기본</button>
