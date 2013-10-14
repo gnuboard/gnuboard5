@@ -74,6 +74,11 @@ h2.h2_frm {padding-top:15px}
 .gnb_js .gnb_grp_style:focus, .gnb_js .gnb_grp_style:hover {background:#484848 !important}
 .gnb_js .gnb_grp_div {border-top:1px solid #eee}
 
+#lnb {margin:0;padding:10px 15px;list-style:none;zoom:1}
+#lnb:after {display:block;visibility:hidden;clear:both;content:""}
+#lnb li {float:left}
+#lnb a {display:inline-block;padding:5px;font-size:0.95em;letter-spacing:-0.1em}
+
 /* 중간 레이아웃 */
 #wrapper {z-index:5;margin:20px 0;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}

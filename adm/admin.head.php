@@ -103,17 +103,33 @@ function imageview(id, w, h)
                 $gnb_str .=  $href1 . $menu['menu'.$key][0][1] . $href2;
                 $gnb_str .=  print_menu1('menu'.$key, 1);
                 $gnb_str .=  "</li>";
-                if ($current_class) $current_class = ""; // 클래스 반복부여 방지
             }
             $gnb_str .= "</ul>";
             echo $gnb_str;
             ?>
         </nav>
-    </div>
 
+    </div>
 </header>
 
+<?php if($sub_menu) { ?>
+<ul id="lnb">
+<?php
+$menu_key = substr($sub_menu, 0, 3);
+$nl = '';
+foreach($menu['menu'.$menu_key] as $key=>$value) {
+    if($key > 0) {
+        if ($menu_key == substr($menu['menu'.$key][0][0], 0, 2)) echo 1;
+        echo $nl.'<li><a href="'.$value[2].'">'.$value[1].'</a></li>';
+        $nl = PHP_EOL;
+    }
+}
+?>
+</ul>
+<?php } ?>
+
 <div id="wrapper">
+
     <div id="container">
         <div id="text_size">
             <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->

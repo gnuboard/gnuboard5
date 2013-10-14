@@ -44,6 +44,9 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
 
+    <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
+    <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+
     <ul id="gall_ul">
         <?php for ($i=0; $i<count($list); $i++) {
             if($i>0 && ($i % $bo_gallery_cols == 0))
