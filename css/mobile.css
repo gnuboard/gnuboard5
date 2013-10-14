@@ -3,7 +3,7 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;font-size:1em}
+body {margin:0;padding:0;font-size:0.75em}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
@@ -40,7 +40,7 @@ pre {overflow-x:scroll;font-size:1.1em}
 #logo {float:left;padding:0.9em 0;margin-left:0.5em}
 
 #schall {position:absolute;top:0.7em;right:0.5em;letter-spacing:-0.3em}
-#schall_stx {padding-left:0.3em;width:100px;height:1.5em;border:1px solid #aaa;border-right:0;background:#fff;line-height:1.5em;-webkit-appearance:none}
+#schall_stx {padding-left:0.3em;width:100px;height:24px;border:1px solid #aaa;border-right:0;background:#fff;line-height:1.5em;-webkit-appearance:none}
 #schall_submit {border:1px solid #aaa;border-left:0}
 
 #mb_nb {clear:both;border-top:1px solid #e7f1ed;background:#151515;text-align:center}
