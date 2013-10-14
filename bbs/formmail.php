@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 if (!$config['cf_email_use'])
     alert_close('환경설정에서 \"메일발송 사용\"에 체크하셔야 메일을 발송할 수 있습니다.\\n\\n관리자에게 문의하시기 바랍니다.');

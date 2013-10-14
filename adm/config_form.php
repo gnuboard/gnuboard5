@@ -25,14 +25,17 @@ if (!isset($config['cf_mobile_new_skin'])) {
                     ADD `cf_mobile_member_skin` VARCHAR(255) NOT NULL AFTER `cf_mobile_connect_skin` ", true);
 }
 
-if(!isset($config['cf_gcaptcha_mp3'])) {
+if (isset($config['cf_gcaptcha_mp3'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
-                    ADD `cf_gcaptcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
+                    CHANGE `cf_gcaptcha_mp3` `cf_captcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' ", true);
+} else if (!isset($config['cf_captcha_mp3'])) { 
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_captcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
 
 if(!isset($config['cf_editor'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
-                    ADD `cf_editor` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_gcaptcha_mp3` ", true);
+                    ADD `cf_editor` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_captcha_mp3` ", true);
 }
 
 if(!isset($config['cf_googl_shorturl_apikey'])) {

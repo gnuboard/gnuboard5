@@ -86,7 +86,6 @@
 /* 회원가입 입력 */
 #fregisterform #reg_mb_email, #fregisterform .frm_address {width:100%}
 #fregisterform textarea {width:100%;height:50px}
-
 /* 회원가입 완료 */
 #reg_result {padding:4em 1em 0}
 #reg_result_logo {margin-bottom:50px;text-align:center}

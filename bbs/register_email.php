@@ -1,6 +1,6 @@
 <?php
 include_once('./_common.php');
-include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 $sql = " select mb_email, mb_datetime, mb_email_certify from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 $mb = sql_fetch($sql);

@@ -27,6 +27,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <div class="tbl_frm01 tbl_frm">
         <table>
         <caption>사이트 이용정보 입력</caption>
+        <tbody>
         <tr>
             <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
             <td>
@@ -43,12 +44,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <th scope="row"><label for="reg_mb_password_re">패스워드 확인<strong class="sound_only">필수</strong></label></th>
             <td><input type="password" name="mb_password_re" id="reg_mb_password_re" <?php echo $required ?> class="frm_input minlength_3 <?php echo $required ?>" maxlength="20"></td>
         </tr>
+        </tbody>
         </table>
     </div>
 
     <div class="tbl_frm01 tbl_frm">
         <table>
         <caption>개인정보 입력</caption>
+        <tbody>
         <tr>
             <th scope="row"><label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label></th>
             <td>
@@ -160,12 +163,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             </td>
         </tr>
         <?php }  ?>
+        </tbody>
         </table>
     </div>
 
     <div class="tbl_frm01 tbl_frm">
         <table>
         <caption>기타 개인설정</caption>
+        <tbody>
         <?php if ($config['cf_use_signature']) {  ?>
         <tr>
             <th scope="row"><label for="reg_mb_signature">서명<?php if ($config['cf_req_signature']){ ?><strong class="sound_only">필수</strong><?php } ?></label></th>
@@ -249,8 +254,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <tr>
             <th scope="row">자동등록방지</th>
-            <td><?php echo $captcha_html ?></td>
+            <td><?php echo captcha_html(); ?></td>
         </tr>
+        </tbody>
         </table>
     </div>
 
