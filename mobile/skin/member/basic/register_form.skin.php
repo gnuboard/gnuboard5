@@ -240,7 +240,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <tr>
         <th scope="row">자동등록방지</th>
-        <td><?php echo $captcha_html ?></td>
+        <td><?php echo captcha_html(); ?></td>
     </tr>
     </table>
 
