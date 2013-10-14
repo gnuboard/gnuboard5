@@ -213,6 +213,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                                   and it_id = '{$row2['it_id']}'
                                 order by io_type asc, ct_id asc ";
                     $result3 = sql_query($sql3);
+                    $rowspan = mysql_num_rows($result3);
 
                     for($j=0;$row3=sql_fetch_array($result3);$j++) { // for 손자 시작
                         if($row3['io_type'])
@@ -226,7 +227,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                 ?>
 
             <tr>
-                <td><a href="<?php echo $href; ?>" target="_blank"><?php echo get_it_image($row2['it_id'], 50, 50); ?> <strong><?php echo cut_str($row2['it_name'],35); ?></strong><span class="sound_only"> 새창</span></a></td>
+                <?php if($j == 0) { ?>
+                <td rowspan="<?php echo $rowspan; ?>"><a href="<?php echo $href; ?>" target="_blank"><?php echo get_it_image($row2['it_id'], 50, 50); ?> <strong><?php echo cut_str($row2['it_name'],35); ?></strong><span class="sound_only"> 새창</span></a></td>
+                <?php } ?>
                 <td class="td_itopt"><?php echo $row3['ct_option']; ?></td>
                 <td class="td_num"><?php echo number_format($ct_price); ?></td>
                 <td class="td_numsmall"><?php echo $row3['ct_qty']; ?></td>
