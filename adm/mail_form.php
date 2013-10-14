@@ -25,17 +25,19 @@ $g5['title'] = $html_title;
 include_once('./admin.head.php');
 ?>
 
-<div class="cbox">
-    <p>메일 내용에 {이름} , {별명} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일을 발송합니다.</p>
+<p>메일 내용에 {이름} , {별명} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일을 발송합니다.</p>
 
-    <form name="fmailform" id="fmailform" action="./mail_update.php" onsubmit="return fmailform_check(this);" method="post">
-    <input type="hidden" name="w" value="<?php echo $w ?>" id="w">
-    <input type="hidden" name="ma_id" value="<?php echo $ma['ma_id'] ?>" id="ma_id">
-    <input type="hidden" name="token" value="<?php echo $token ?>" id="token">
-    <table class="frm_tbl">
+<form name="fmailform" id="fmailform" action="./mail_update.php" onsubmit="return fmailform_check(this);" method="post">
+<input type="hidden" name="w" value="<?php echo $w ?>" id="w">
+<input type="hidden" name="ma_id" value="<?php echo $ma['ma_id'] ?>" id="ma_id">
+<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <colgroup>
-        <col class="grid_3">
-        <col class="grid_15">
+        <col class="grid_4">
+        <col>
     </colgroup>
     <tbody>
     <tr>
@@ -48,15 +50,12 @@ include_once('./admin.head.php');
     </tr>
     </tbody>
     </table>
-
-    <div class="btn_confirm">
-        <p>
-            작성하신 내용을 제출하시려면 <strong>확인</strong> 버튼을 누르세요.
-        </p>
-        <input type="submit" class="btn_submit" accesskey="s" value="확인">
-    </div>
-    </form>
 </div>
+
+<div class="btn_confirm01 btn_confirm">
+    <input type="submit" class="btn_submit" accesskey="s" value="확인">
+</div>
+</form>
 
 <script>
 function fmailform_check(f)
