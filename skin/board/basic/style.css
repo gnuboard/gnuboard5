@@ -63,21 +63,26 @@
 #bo_v li.empty_list {}
 
 /* 쓰기 테이블 */
-#bo_w .frm_tbl {}
-#bo_w .frm_tbl caption {}
-#bo_w .frm_tbl th {}
-#bo_w .frm_tbl td {}
-#bo_w .frm_tbl textarea, #bo_w .frm_input {}
-#bo_w .frm_tbl textarea {}
-#bo_w .frm_address {}
-#bo_w .frm_file {}
-#bo_w .frm_tbl #captcha {}
-#bo_w .frm_tbl #captcha input {}
-#bo_w .frm_tbl a {}
+#bo_w .tbl_frm table {}
+#bo_w .tbl_frm .frm_info {}
+#bo_w .tbl_frm .frm_address {}
+#bo_w .tbl_frm .frm_file {}
+#bo_w .tbl_frm caption {}
 
-#bo_w .frm_info {}
+#bo_w .tbl_frm01 {}
+#bo_w .tbl_frm01 th {}
+#bo_w .tbl_frm01 td {}
+#bo_w .tbl_frm01 textarea, #bo_w tbl_frm01 .frm_input {}
+#bo_w .tbl_frm01 textarea {}
+/*
+#bo_w .tbl_frm01 #captcha {}
+#bo_w .tbl_frm01 #captcha input {}
+*/
+#bo_w .tbl_frm01 a {}
 
-#bo_w .required {} /* 필수입력 */
+/* 필수입력 */
+#bo_w .required {}
+#bo_w textarea.required {}
 
 #bo_w .cke_sc {}
 #bo_w button.btn_cke_sc{}

@@ -93,42 +93,44 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <input type="hidden" name="page" value="<?php echo $page ?>">
         <input type="hidden" name="is_good" value="">
 
-        <table class="frm_tbl">
-        <tbody>
-        <?php if ($is_guest) { ?>
-        <tr>
-            <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="wr_name" id="wr_name" required class="frm_input required" size="5" maxLength="20"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
-            <td><input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="10" maxLength="20"></td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <th scope="row"><label for="wr_secret">비밀글사용</label></th>
-            <td><input type="checkbox" name="wr_secret" value="secret" id="wr_secret"></td>
-        </tr>
-        <?php if ($is_guest) { ?>
-        <tr>
-            <th scope="row">자동등록방지</th>
-            <td><?php echo $captcha_html; ?></td>
-        </tr>
-        <?php } ?>
-        <?php 
-        include(G5_SNS_PATH."/view_comment_write.sns.skin.php");
-        ?>
-        <tr>
-            <th scope="row">내용</th>
-            <td>
-                <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
-                <textarea id="wr_content" name="wr_content" required title="댓글 내용"
-                <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content; ?></textarea>
-                <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
-            </td>
-        </tr>
-        </tbody>
-        </table>
+        <div class="tbl_frm01 tbl_frm">
+            <table>
+            <tbody>
+            <?php if ($is_guest) { ?>
+            <tr>
+                <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
+                <td><input type="text" name="wr_name" id="wr_name" required class="frm_input required" size="5" maxLength="20"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
+                <td><input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="10" maxLength="20"></td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <th scope="row"><label for="wr_secret">비밀글사용</label></th>
+                <td><input type="checkbox" name="wr_secret" value="secret" id="wr_secret"></td>
+            </tr>
+            <?php if ($is_guest) { ?>
+            <tr>
+                <th scope="row">자동등록방지</th>
+                <td><?php echo $captcha_html; ?></td>
+            </tr>
+            <?php } ?>
+            <?php 
+            include(G5_SNS_PATH."/view_comment_write.sns.skin.php");
+            ?>
+            <tr>
+                <th scope="row">내용</th>
+                <td>
+                    <?php if ($comment_min || $comment_max) { ?><strong id="char_cnt"><span id="char_count"></span>글자</strong><?php } ?>
+                    <textarea id="wr_content" name="wr_content" required title="댓글 내용"
+                    <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content; ?></textarea>
+                    <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
 
         <div class="btn_confirm">
             <input type="submit" value="댓글등록" id="btn_submit" class="btn_submit" accesskey="s">

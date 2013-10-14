@@ -39,21 +39,25 @@
 .mbskin td.empty_table {}
 
 /* 폼 테이블 */
-.mbskin .frm_tbl {}
-.mbskin .frm_tbl caption {}
-.mbskin .frm_tbl th {}
-.mbskin .frm_tbl td {}
-.mbskin .frm_tbl textarea, .mbskin .frm_input {}
-.mbskin .frm_tbl textarea {}
-.mbskin .frm_address {}
-.mbskin .frm_file {}
-.mbskin .frm_tbl #captcha {}
-.mbskin .frm_tbl #captcha input {}
-.mbskin .frm_tbl a {}
+.mbskin .tbl_frm table {}
+.mbskin .tbl_frm .frm_address {}
+.mbskin .tbl_frm .frm_file {}
+.mbskin .tbl_frm .frm_info {}
 
-.mbskin .frm_info {}
+.mbskin .tbl_frm01 {}
+.mbskin .tbl_frm01 caption {}
+.mbskin .tbl_frm01 th {}
+.mbskin .tbl_frm01 td {}
+.mbskin .tbl_frm01 textarea, .mbskin .frm_input {}
+.mbskin .tbl_frm01 textarea {}
+/*
+.mbskin .tbl_frm01 #captcha {}
+.mbskin .tbl_frm01 #captcha input {}
+*/
+.mbskin .tbl_frm01 a {}
 
 .mbskin .required {} /* 필수입력 */
+.mbskin textarea.required {}
 
 /* 테이블 항목별 정의 */
 .mbskin .td_board {}

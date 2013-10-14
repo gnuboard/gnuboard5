@@ -85,7 +85,6 @@ h2.h2_frm {padding-top:15px}
 #wrapper {z-index:5;margin:20px 0;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 
-
 #container {z-index:4;position:relative}
 
 /* 텍스트 크기 조절 */

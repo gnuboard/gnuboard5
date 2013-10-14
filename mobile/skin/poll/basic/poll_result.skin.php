@@ -58,23 +58,26 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <input type="hidden" name="skin_dir" value="<?php echo $skin_dir ?>">
         <?php if ($is_member) { ?><input type="hidden" name="pc_name" value="<?php echo cut_str($member['mb_nick'],255) ?>"><?php } ?>
         <h3><?php echo $po_etc ?></h3>
-        <table id="poll_result_wcmt" class="frm_tbl">
-        <tbody>
-        <?php if ($is_guest) { ?>
-        <tr>
-            <td><input type="text" name="pc_name" id="pc_name" class="frm_input required" required placeholder="이름(필수)"></td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <td><input type="text" name="pc_idea" id="pc_idea" class="frm_input required" required maxlength="100" placeholder="의견(필수)"></td>
-        </tr>
-        <?php if ($is_guest) { ?>
-        <tr>
-            <td><?php echo captcha_html(); ?></td>
-        </tr>
-        <?php } ?>
-        </tbody>
-        </table>
+
+        <div class="tbl_frm01 tbl_frm">
+            <table id="poll_result_wcmt">
+            <tbody>
+            <?php if ($is_guest) { ?>
+            <tr>
+                <td><input type="text" name="pc_name" id="pc_name" class="frm_input required" required placeholder="이름(필수)"></td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <td><input type="text" name="pc_idea" id="pc_idea" class="frm_input required" required maxlength="100" placeholder="의견(필수)"></td>
+            </tr>
+            <?php if ($is_guest) { ?>
+            <tr>
+                <td><?php echo captcha_html(); ?></td>
+            </tr>
+            <?php } ?>
+            </tbody>
+            </table>
+        </div>
 
         <div class="btn_confirm">
             <input type="submit" class="btn_submit" value="의견남기기">

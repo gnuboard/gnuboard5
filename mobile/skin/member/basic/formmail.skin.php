@@ -15,49 +15,52 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="fnick" value="<?php echo $member['mb_nick'] ?>">
     <input type="hidden" name="fmail" value="<?php echo $member['mb_email'] ?>">
     <?php } ?>
-    <table class="frm_tbl">
-    <caption>메일쓰기</caption>
-    <tbody>
-    <?php if (!$is_member) { ?>
-    <tr>
-        <th scope="row"><label for="fnick">이름<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="fnick" id="fnick" required class="frm_input required"></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="fmail">E-mail<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="fmail" id="fmail" required class="frm_input required"></td>
-    </tr>
-    <?php } ?>
-    <tr>
-        <th scope="row"><label for="subject">제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="subject" id="subject" required class="frm_input required"></td>
-    </tr>
-    <tr>
-        <th scope="row">형식</th>
-        <td>
-            <input type="radio" name="type" value="0" id="type_text" checked> <label for="type_text">TEXT</label>
-            <input type="radio" name="type" value="1" id="type_html"> <label for="type_html">HTML</label>
-            <input type="radio" name="type" value="2" id="type_both"> <label for="type_both">TEXT+HTML</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="content">내용<strong class="sound_only">필수</strong></label></th>
-        <td><textarea name="content" id="content" required class="required"></textarea></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="file1">첨부 1</label></th>
-        <td><input type="file" name="file1" id="file1" class="frm_input"></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="file2">첨부 2</label></th>
-        <td><input type="file" name="file2" id="file2" class="frm_input"></td>
-    </tr>
-    <tr>
-        <th scope="row">자동등록방지</th>
-        <td><?php echo captcha_html(); ?></td>
-    </tr>
-    </tbody>
-    </table>
+
+    <div class="tbl_frm01 tbl_frm">
+        <table>
+        <caption>메일쓰기</caption>
+        <tbody>
+        <?php if (!$is_member) { ?>
+        <tr>
+            <th scope="row"><label for="fnick">이름<strong class="sound_only">필수</strong></label></th>
+            <td><input type="text" name="fnick" id="fnick" required class="frm_input required"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="fmail">E-mail<strong class="sound_only">필수</strong></label></th>
+            <td><input type="text" name="fmail" id="fmail" required class="frm_input required"></td>
+        </tr>
+        <?php } ?>
+        <tr>
+            <th scope="row"><label for="subject">제목<strong class="sound_only">필수</strong></label></th>
+            <td><input type="text" name="subject" id="subject" required class="frm_input required"></td>
+        </tr>
+        <tr>
+            <th scope="row">형식</th>
+            <td>
+                <input type="radio" name="type" value="0" id="type_text" checked> <label for="type_text">TEXT</label>
+                <input type="radio" name="type" value="1" id="type_html"> <label for="type_html">HTML</label>
+                <input type="radio" name="type" value="2" id="type_both"> <label for="type_both">TEXT+HTML</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="content">내용<strong class="sound_only">필수</strong></label></th>
+            <td><textarea name="content" id="content" required class="required"></textarea></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="file1">첨부 1</label></th>
+            <td><input type="file" name="file1" id="file1" class="frm_input"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="file2">첨부 2</label></th>
+            <td><input type="file" name="file2" id="file2" class="frm_input"></td>
+        </tr>
+        <tr>
+            <th scope="row">자동등록방지</th>
+            <td><?php echo captcha_html(); ?></td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 
     <div class="btn_win">
         <p>

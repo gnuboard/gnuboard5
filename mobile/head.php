@@ -11,7 +11,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
 <header id="hd">
-    <h1><?php echo $config['cf_title'] ?></h1>
+    <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
 
     <div class="to_content"><a href="#container">본문 바로가기</a></div>
     <div class="to_content"><a href="#gnb">메인메뉴 바로가기</a></div>
@@ -80,7 +80,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
 <hr>
 
-<nav id="lnb">
+<div id="lnb">
     <ul>
         <?php
         $sql2 = " select * from {$g5['board_table']} where bo_show_menu = 1 and bo_device <> 'pc' ";
@@ -96,19 +96,19 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <li><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>"><?php echo $bo_subject; ?></a></li>
         <?php } ?>
     </ul>
-</nav>
+</div>
 
 <hr>
 
 <div id="wrapper">
-    <aside id="aside">
+    <div id="aside">
         <?php echo outlogin('basic'); // 외부 로그인 ?>
-    </aside>
+    </div>
     <div id="container">
-        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><h1 id="wrapper_title"><?php echo $g5['title'] ?></h1><?php } ?>
+        <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><div id="container_title"><?php echo $g5['title'] ?></div><?php } ?>
         <div id="text_size">
             <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
-            <button id="text_size_down" onclick="font_resize('container', 'ts_up ts_up2', '');">기본</button>
-            <button id="text_size_def" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');">크게</button>
-            <button id="text_size_up" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');">더크게</button>
+            <button id="text_size_down" onclick="font_resize('container', 'ts_up ts_up2', '');"><img src="<?php echo G5_URL; ?>/img/ts01.gif" alt="기본"></button>
+            <button id="text_size_def" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');"><img src="<?php echo G5_URL; ?>/img/ts02.gif" alt="크게"></button>
+            <button id="text_size_up" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');"><img src="<?php echo G5_URL; ?>/img/ts03.gif" alt="더크게"></button>
         </div>

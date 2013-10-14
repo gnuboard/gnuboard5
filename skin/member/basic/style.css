@@ -45,19 +45,22 @@
 .mbskin td.empty_table {}
 
 /* 폼 테이블 */
-.mbskin .frm_tbl {}
-.mbskin .frm_tbl caption {}
-.mbskin .frm_tbl th {}
-.mbskin .frm_tbl td {}
-.mbskin .frm_tbl textarea, .mbskin .frm_input {}
-.mbskin .frm_tbl textarea {}
-.mbskin .frm_address {}
-.mbskin .frm_file {}
-.mbskin .frm_tbl #captcha {}
-.mbskin .frm_tbl #captcha input {}
-.mbskin .frm_tbl a {}
+.mb_skin .tbl_frm table {}
+.mb_skin .tbl_frm .frm_info {}
+.mb_skin .tbl_frm .frm_address {}
+.mb_skin .tbl_frm .frm_file {}
+.mb_skin .tbl_frm caption {}
 
-.mbskin .frm_info {}
+.mb_skin .tbl_frm01 {}
+.mb_skin .tbl_frm01 th {}
+.mb_skin .tbl_frm01 td {}
+.mb_skin .tbl_frm01 textarea, .mb_skin tbl_frm01 .frm_input {}
+.mb_skin .tbl_frm01 textarea {}
+/*
+.mb_skin .tbl_frm01 #captcha {}
+.mb_skin .tbl_frm01 #captcha input {}
+*/
+.mb_skin .tbl_frm01 a {}
 
 /* 필수입력 */
 .mbskin .required {}

@@ -16,17 +16,21 @@ include_once('./_head.php');
 
 <form method="post" name="fregister_email" onsubmit="return fregister_email_submit(this);">
 <input type="hidden" name="mb_id" value="<?php echo $mb_id; ?>">
-<table class="frm_tbl">
-<caption>사이트 이용정보 입력</caption>
-<tr>
-    <th scope="row"><label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
-    <td><input type="text" name="mb_email" id="reg_mb_email" required class="frm_input email required" size="50" maxlength="100" value="<?php echo $mb['mb_email']; ?>"></td>
-</tr>
-<tr>
-    <th scope="row">자동등록방지</th>
-    <td><?php echo captcha_html(); ?></td>
-</tr>
-</table>
+
+<div class="tbl_frm01 tbl_frm">
+    <table>
+    <caption>사이트 이용정보 입력</caption>
+    <tr>
+        <th scope="row"><label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong></label></th>
+        <td><input type="text" name="mb_email" id="reg_mb_email" required class="frm_input email required" size="50" maxlength="100" value="<?php echo $mb['mb_email']; ?>"></td>
+    </tr>
+    <tr>
+        <th scope="row">자동등록방지</th>
+        <td><?php echo captcha_html(); ?></td>
+    </tr>
+    </table>
+<div>
+
 <input type="submit" id="btn_submit" class="btn_submit" value="인증메일변경">
 <a href="<?php echo G5_URL ?>" class="btn_cancel">취소</a>
 </form>
