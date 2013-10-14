@@ -46,7 +46,7 @@ define('G5_JS_DIR',         'js');
 define('G5_LIB_DIR',        'lib');
 define('G5_PLUGIN_DIR',     'plugin');
 define('G5_SKIN_DIR',       'skin');
-define('G5_CAPTCHA_DIR',    'gcaptcha');
+define('G5_CAPTCHA_DIR',    'kcaptcha');
 define('G5_EDITOR_DIR',     'editor');
 define('G5_MOBILE_DIR',     'mobile');
 define('G5_OKNAME_DIR',     'okname');

@@ -20,17 +20,20 @@ $g5['title'] = $html_title;
 include_once('./admin.head.php');
 ?>
 
-<div class="cbox">
-    <form name="fpoll" id="fpoll" action="./poll_form_update.php" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
-    <input type="hidden" name="w" value="<?php echo $w ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="token" value="<?php echo $token ?>">
-    <table class="frm_tbl">
+<form name="fpoll" id="fpoll" action="./poll_form_update.php" method="post" enctype="multipart/form-data">
+<input type="hidden" name="po_id" value="<?php echo $po_id ?>">
+<input type="hidden" name="w" value="<?php echo $w ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+<input type="hidden" name="stx" value="<?php echo $stx ?>">
+<input type="hidden" name="sst" value="<?php echo $sst ?>">
+<input type="hidden" name="sod" value="<?php echo $sod ?>">
+<input type="hidden" name="page" value="<?php echo $page ?>">
+<input type="hidden" name="token" value="<?php echo $token ?>">
+
+<div class="tbl_frm01 tbl_wrap">
+
+    <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <tbody>
     <tr>
         <th scope="row"><label for="po_subject">투표 제목<strong class="sound_only">필수</strong></label></th>
@@ -98,15 +101,12 @@ include_once('./admin.head.php');
     </tbody>
     </table>
 
-    <div class="btn_confirm">
-        <p>
-            작성하신 내용을 제출하시려면 <strong>확인</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>목록</strong> 링크를 누르세요.
-        </p>
+    <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="확인" class="btn_submit" accesskey="s">
         <a href="./poll_list.php?<?php echo $qstr ?>">목록</a>
     </div>
-    </form>
-</div>
+
+</form>
 
 <?php
 include_once('./admin.tail.php');
