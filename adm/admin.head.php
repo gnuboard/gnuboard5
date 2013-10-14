@@ -113,6 +113,22 @@ function imageview(id, w, h)
 
 </header>
 
+<?php if($sub_menu) { ?>
+<ul id="lnb">
+<?php
+$menu_key = substr($sub_menu, 0, 3);
+$nl = '';
+foreach($menu['menu'.$menu_key] as $key=>$value) {
+    if($key > 0) {
+        if ($menu_key == substr($menu['menu'.$key][0][0], 0, 2)) echo 1;
+        echo $nl.'<li><a href="'.$value[2].'">'.$value[1].'</a></li>';
+        $nl = PHP_EOL;
+    }
+}
+?>
+</ul>
+<?php } ?>
+
 <div id="wrapper">
     <div id="container">
         <div id="text_size">
