@@ -393,7 +393,8 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #add_admin fieldset {margin-top:20px}
 
 /* 메일 테스트 */
-#fsendmailtest {margin-bottom:20px;padding:30px 0;border:1px solid #ced9de;background:#fff;text-align:center}
+#fsendmailtest {margin:50px 0;text-align:center}
+#fsendmailtest .btn_submit {padding:3px 5px;border:1px solid #ff3061;color:#fff;font-size:0.95em;vertical-align:middle;cursor:pointer}
 
 /* ########## 쇼핑몰 사용시 적용 ########## */
 
