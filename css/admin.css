@@ -393,10 +393,6 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 /* 메일 테스트 */
 #fsendmailtest {margin-bottom:20px;padding:30px 0;border:1px solid #ced9de;background:#fff;text-align:center}
 
-/* 세션파일일괄삭제 */
-#session_del p, #cache_del p {margin-bottom:20px;padding:13px;border:1px solid #ced9de;background:#fff}
-#session_del p span, #cache_del p span {color:#ff3061}
-
 /* ########## 쇼핑몰 사용시 적용 ########## */
 
 /* 쇼핑몰 설정 */
