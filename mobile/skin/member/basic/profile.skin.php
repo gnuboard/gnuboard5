@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="profile" class="new_win mbskin">
     <h1 id="new_win_title"><?php echo $mb_nick ?>님의 프로필</h1>
 
-    <div class="tbl_frm01 tbl_frm">
+    <div class="tbl_frm01 tbl_wrp">
         <table>
         <tbody>
         <tr>

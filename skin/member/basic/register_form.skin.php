@@ -24,7 +24,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="mb_nick" value="<?php echo $member['mb_nick'] ?>">
     <?php }  ?>
 
-    <div class="tbl_frm01 tbl_frm">
+    <div class="tbl_frm01 tbl_wrp">
         <table>
         <caption>사이트 이용정보 입력</caption>
         <tbody>
@@ -48,7 +48,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <div class="tbl_frm01 tbl_frm">
+    <div class="tbl_frm01 tbl_wrp">
         <table>
         <caption>개인정보 입력</caption>
         <tbody>
@@ -167,7 +167,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <div class="tbl_frm01 tbl_frm">
+    <div class="tbl_frm01 tbl_wrp">
         <table>
         <caption>기타 개인설정</caption>
         <tbody>

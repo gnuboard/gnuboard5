@@ -28,38 +28,37 @@
 
 /* 기본테이블 */
 /* 목록 테이블 */
-#bo_list .basic_tbl {}
-#bo_list .basic_tbl caption {}
-#bo_list .basic_tbl thead th {}
-#bo_list .basic_tbl thead a {}
-#bo_list .basic_tbl thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-#bo_list .basic_tbl tfoot th {}
-#bo_list .basic_tbl tfoot td {}
-#bo_list .basic_tbl tbody th {}
-#bo_list .basic_tbl td {}
-#bo_list .basic_tbl a {}
-#bo_list .bo_sideview td {} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
+#bo_list .tbl_head01 {}
+#bo_list .tbl_head01 caption {}
+#bo_list .tbl_head01 thead th {}
+#bo_list .tbl_head01 thead a {}
+#bo_list .tbl_head01 thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+#bo_list .tbl_head01 tfoot th {}
+#bo_list .tbl_head01 tfoot td {}
+#bo_list .tbl_head01 tbody th {}
+#bo_list .tbl_head01 td {}
+#bo_list .tbl_head01 a {}
 #bo_list td.empty_table {}
 
 /* 읽기 내 테이블 */
-#bo_v .basic_tbl {}
-#bo_v .basic_tbl caption {}
-#bo_v .basic_tbl thead th {}
-#bo_v .basic_tbl thead a {}
-#bo_v .basic_tbl thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-#bo_v .basic_tbl tfoot th {}
-#bo_v .basic_tbl tfoot td {}
-#bo_v .basic_tbl tbody th {}
-#bo_v .basic_tbl td {}
-#bo_v .basic_tbl a {}
-#bo_v .bo_sideview td {} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
+#bo_v .tbl_head01 {}
+#bo_v .tbl_head01 caption {}
+#bo_v .tbl_head01 thead th {}
+#bo_v .tbl_head01 thead a {}
+#bo_v .tbl_head01 thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+#bo_v .tbl_head01 tfoot th {}
+#bo_v .tbl_head01 tfoot td {}
+#bo_v .tbl_head01 tbody th {}
+#bo_v .tbl_head01 td {}
+#bo_v .tbl_head01 a {}
 #bo_v td.empty_table {}
 
 /* 쓰기 테이블 */
-#bo_w .tbl_frm table {}
-#bo_w .tbl_frm .frm_address {}
-#bo_w .tbl_frm .frm_file {}
-#bo_w .tbl_frm .frm_info {}
+#bo_w table {}
+#bo_w caption {}
+#bo_w .frm_address {}
+#bo_w .frm_file {}
+#bo_w .frm_info {}
 
 #bo_w .tbl_frm01 {}
 #bo_w .tbl_frm01 caption {}

@@ -101,7 +101,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="is_good" value="">
 
-    <div class="tbl_frm01 tbl_frm">
+    <div class="tbl_frm01 tbl_wrp">
         <table>
         <tbody>
         <?php if ($is_guest) { ?>

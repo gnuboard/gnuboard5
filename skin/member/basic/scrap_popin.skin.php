@@ -12,7 +12,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
 
-    <div class="tbl_frm01 tbl_frm">
+    <div class="tbl_frm01 tbl_wrp">
         <table>
         <caption>제목 확인 및 댓글 쓰기</caption>
         <tbody>

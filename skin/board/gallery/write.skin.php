@@ -53,7 +53,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     echo $option_hidden;
     ?>
 
-    <div class="tbl_frm01 tbl_frm">
+    <div class="tbl_frm01 tbl_wrp">
         <table>
         <tbody>
         <?php if ($is_name) { ?>

@@ -31,25 +31,24 @@
 .mbskin a.btn_admin:focus, .mbskin a.btn_admin:hover {}
 
 /* 기본테이블 */
-.mbskin .basic_tbl {}
-.mbskin .basic_tbl caption {}
-.mbskin .basic_tbl thead th {}
-.mbskin .basic_tbl thead a {}
-.mbskin .basic_tbl thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-.mbskin .basic_tbl tfoot th {}
-.mbskin .basic_tbl tfoot td {}
-.mbskin .basic_tbl tbody th {}
-.mbskin .basic_tbl td {}
-.mbskin .basic_tbl a {}
-.mbskin .bo_sideview td {} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
+.mbskin .tbl_head01 {}
+.mbskin .tbl_head01 caption {}
+.mbskin .tbl_head01 thead th {}
+.mbskin .tbl_head01 thead a {}
+.mbskin .tbl_head01 thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+.mbskin .tbl_head01 tfoot th {}
+.mbskin .tbl_head01 tfoot td {}
+.mbskin .tbl_head01 tbody th {}
+.mbskin .tbl_head01 td {}
+.mbskin .tbl_head01 a {}
 .mbskin td.empty_table {}
 
 /* 폼 테이블 */
-.mb_skin .tbl_frm table {}
-.mb_skin .tbl_frm .frm_info {}
-.mb_skin .tbl_frm .frm_address {}
-.mb_skin .tbl_frm .frm_file {}
-.mb_skin .tbl_frm caption {}
+.mb_skin table {}
+.mb_skin caption {}
+.mb_skin .frm_info {}
+.mb_skin .frm_address {}
+.mb_skin .frm_file {}
 
 .mb_skin .tbl_frm01 {}
 .mb_skin .tbl_frm01 th {}
