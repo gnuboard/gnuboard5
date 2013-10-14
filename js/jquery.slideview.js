@@ -16,16 +16,62 @@
 
         var $this = this;
         var $wrap = this.find("#"+cfg.slide_wrap);
-        var $tab = this.find("#"+cfg.slide_tab);
+        var $tab = null;
+        var $tabs;
         var $slides = this.find(cfg.slide);
 
-        $tab.addClass(cfg.tab_class);
         $slides.addClass(cfg.slide_class);
 
         var height;
         var width = $(window).width();
         var count = $slides.size();
         var idx = next = 0;
+        var tabw_width = 0;
+        var tabs_count = 0;
+        var tab_width = 0;
+
+        function tab_make()
+        {
+            if(count < 1)
+                return;
+
+            var subj;
+            var tabs = "";
+
+            if($tab == null) {
+                $slides.each(function() {
+                    subj = $(this).find("header h2").text();
+                    if(subj.length < 1)
+                        subj = "&nbsp;";
+
+                    tabs += "<li>"+subj+"</li>\n";
+                });
+
+                if(tabs != "") {
+                    tabs = "<ul id=\""+cfg.slide_tab+"\">\n"+tabs+"</ul>";
+                    $wrap.before(tabs);
+
+                    $tab = $this.find("#"+cfg.slide_tab);
+                    $tabs = $tab.find("li");
+                }
+            }
+
+            tabw_width = $tab.width();
+            tabs_count = $tabs.size();
+            tab_width = $tabs.eq(0).width();
+
+            if(tabs_count < 1) {
+                $tab.remove();
+                return;
+            }
+
+            var li_left = 0;
+
+            if(tabs_count < 3) {
+                li_left = parseInt((tab_width - (tab_width * tabs_count)) / (tabs_count + 1));
+            } else {
+            }
+        }
 
         function swipe_init()
         {
@@ -104,6 +150,8 @@
             if($slides.filter(":animated").size())
                 return true;
         }
+
+        tab_make();
 
         $(window).on("load", function(e) {
             swipe_init();

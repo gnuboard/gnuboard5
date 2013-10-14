@@ -12,9 +12,6 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
 
 <div id="sidx">
 
-    <ul id="slide_tab">
-    </ul>
-
     <div id="sidx_slide">
         <section class="sct_wrap">
             <header>
@@ -56,65 +53,7 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=1">더 보기</a></div>
         </section>
 
-        <section class="sct_wrap">
-            <header>
-                <h2>추천상품</h2>
-                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
-            </header>
-            <?php
-            $list = new item_list();
-            $list->set_mobile(true);
-            $list->set_type(3);
-            $list->set_view('it_id', false);
-            $list->set_view('it_name', true);
-            $list->set_view('it_cust_price', false);
-            $list->set_view('it_price', true);
-            $list->set_view('it_icon', true);
-            $list->set_view('sns', true);
-            echo $list->run();
-            ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=2">더 보기</a></div>
-        </section>
 
-        <section class="sct_wrap">
-            <header>
-                <h2>인기상품</h2>
-                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 인기상품 모음</p>
-            </header>
-            <?php
-            $list = new item_list();
-            $list->set_mobile(true);
-            $list->set_type(4);
-            $list->set_view('it_id', false);
-            $list->set_view('it_name', true);
-            $list->set_view('it_cust_price', false);
-            $list->set_view('it_price', true);
-            $list->set_view('it_icon', true);
-            $list->set_view('sns', true);
-            echo $list->run();
-            ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=4">더 보기</a></div>
-        </section>
-
-        <section class="sct_wrap">
-            <header>
-                <h2>할인상품</h2>
-                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 할인상품 모음</p>
-            </header>
-            <?php
-            $list = new item_list();
-            $list->set_mobile(true);
-            $list->set_type(5);
-            $list->set_view('it_id', false);
-            $list->set_view('it_name', true);
-            $list->set_view('it_cust_price', false);
-            $list->set_view('it_price', true);
-            $list->set_view('it_icon', true);
-            $list->set_view('sns', true);
-            echo $list->run();
-            ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=5">더 보기</a></div>
-        </section>
     </div>
 
 </div>
