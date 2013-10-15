@@ -61,8 +61,8 @@ if ($w == "")
         $ca['ca_mobile_list_row'] = 3;
         $ca['ca_stock_qty'] = 99999;
     }
-    $ca['ca_skin'] = "list.skin.10.php";
-    $ca['ca_mobile_skin'] = "list.skin.10.php";
+    $ca['ca_skin'] = "list.10.skin.php";
+    $ca['ca_mobile_skin'] = "list.10.skin.php";
 }
 else if ($w == "u")
 {
