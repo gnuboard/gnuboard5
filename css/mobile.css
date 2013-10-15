@@ -52,7 +52,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #mb_nb img {display:none}
 
 #lnb {}
-#lnb ul {margin:0;padding:0 0 -1px;border-bottom:1px solid #e7f1ed;list-style:none}
+#lnb ul {margin:0;padding:0;border-bottom:1px solid #e7f1ed;list-style:none}
 #lnb ul:after {display:block;visibility:hidden;clear:both;content:""}
 #lnb li {float:left;margin-bottom:-1px;width:20%}
 #lnb a {display:block;padding:10px 0;border-right:1px solid #e7f1ed;border-bottom:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
@@ -98,22 +98,21 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .copymove_current {float:right;color:#ff3061}
 .copymove_currentbg {background:#f4f4f4}
 
-/* PC화면으로 */
-#device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;color:#000;font-size:1em;text-decoration:none;text-align:center}
-
 /* 버튼 */
 a.btn01 {display:inline-block;padding:0 0.5em;height:2em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2em;vertical-align:middle}
 a.btn01:focus, a.btn01:hover {text-decoration:none}
 a.btn02 {display:inline-block;padding:0 0.5em;height:2em;border:1px solid #333;background:#333;color:#fff;font-size:1em;text-decoration:none;line-height:2em;vertical-align:middle}
 a.btn02:focus, .btn02:hover {text-decoration:none}
+
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 1em;height:2.6em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
-.btn_cancel {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2.5em}
+
+input.btn_submit {padding:0 1em;height:2.6em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
+fieldset .btn_submit {padding:0 1em;height:2.2em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
+
+a.btn_cancel {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2.5em}
+
 a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:1.9em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.9em} /* 우편번호검색버튼 등 */
-.btn_win {clear:both;margin-bottom:1.5em;text-align:center} /* 새창용 */
-.btn_win a {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em}
-.btn_win button {display:inline-block;padding:0 1em;height:2.65em;border:0;background:#666;color:#fff;text-decoration:none;vertical-align:middle;line-height:2.65em}
-.btn_win input {height:2.65em;line-height:2.65em}
+
 /* 게시판용 버튼 */
 a.btn_b01 {display:inline-block;margin:0 0 0.3em;padding:0 1em;border:1px solid #eee;background:#fafafa;color:#000;text-decoration:none;line-height:2em;vertical-align:middle}
 a.btn_b01:focus, .btn_b01:hover {text-decoration:none}
@@ -172,27 +171,23 @@ textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repea
 .td_num {width:50px;text-align:center}
 .td_numbig {width:80px;text-align:center}
 
-/* 광고 레이아웃 */
-.ad200200 {display:none}
-.ad72890 {display:none}
-
 /* 새창 기본 스타일 */
 .new_win {}
-#new_win_title {margin-bottom:1.5em;padding:0 1.5em;height:3em;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;font-size:1.2em;line-height:3.5em}
-.new_win .tbl_head01 {margin:0 auto 1.5em;width:90%}
-.new_win caption {padding:1em}
-.new_win_ul {margin:-1.8em 0 1.5em 0;padding:0 0 0 1.5em;border-bottom:1px solid #455255;background:#484848;list-style:none}
-.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.new_win_ul li {float:left;margin-left:-1px}
-.new_win_ul a {display:block;padding:1em;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-weight:bold;text-decoration:none}
-.new_win_desc {padding:1em}
+.new_win #win_title {margin:0 0 20px;padding:20px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;font-size:1.2em}
+.new_win .tbl_wrp {margin:0 20px}
+.new_win .win_ul {margin:-20px 0 20px 0;padding:0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none}
+.new_win .win_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win .win_ul li {float:left;margin-left:-1px}
+.new_win .win_ul a {display:block;padding:1em;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-weight:bold;text-decoration:none}
+.new_win .win_desc {padding:10px 20px}
+
+.new_win .win_btn {clear:both;margin:20px;text-align:center}
+.new_win .win_btn a {display:inline-block;padding:0 1em;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em}
+.new_win .win_btn button {display:inline-block;padding:0 1em;height:2.65em;border:0;background:#666;color:#fff;text-decoration:none;vertical-align:middle;line-height:2.65em}
+.new_win .win_btn input {height:2.65em;line-height:2.65em}
 
 /* 사이드뷰 */
-/* 현재 모바일에서는 사이드뷰를 사용하지 않습니다.
-.sv_wrap {display:inline-block;position:relative;font-weight:normal}
-.sv_wrap img {vertical-align:middle}
-.sv_wrap a {display:inline-block;color:#000;text-decoration:none;vertical-align:middle}
-*/
+/* 모바일에서는 사이드뷰를 지원하지 않습니다. */
 
 /* pagination */
 .pg_wrap {clear:both;margin:0 0 1em;padding-top:1em;text-align:center}
@@ -203,3 +198,6 @@ textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repea
 .pg_start, .pg_prev {border-right:1px solid #cfded8}
 .pg_end, .pg_next {border-left:1px solid #cfded8}
 .pg_current {background:#333;color:#fff;font-weight:bold}
+
+/* PC화면으로 */
+#device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;color:#000;font-size:1em;text-decoration:none;text-align:center}

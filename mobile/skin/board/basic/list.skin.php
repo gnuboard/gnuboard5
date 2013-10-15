@@ -11,7 +11,7 @@ if ($is_nogood) $colspan++;
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $g5['title'] ?></h1><?php } ?>
+<h2 id="container_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2>
 
 <!-- 게시판 목록 시작 -->
 <div id="bo_list<?php if ($is_admin) echo "_admin"; ?>">
@@ -154,8 +154,8 @@ if ($is_nogood) $colspan++;
         <option value="wr_name,1"<?php echo get_selected($sfl, 'wr_name,1'); ?>>글쓴이</option>
         <option value="wr_name,0"<?php echo get_selected($sfl, 'wr_name,0'); ?>>글쓴이(코)</option>
     </select>
-    <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어(필수)" required class="required" size="15" maxlength="15">
-    <input type="submit" value="검색">
+    <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어(필수)" required class="required frm_input" size="15" maxlength="15">
+    <input type="submit" value="검색" class="btn_submit">
     </form>
 </fieldset>
 

@@ -31,8 +31,11 @@ include_once('./_head.php');
     </table>
 <div>
 
-<input type="submit" id="btn_submit" class="btn_submit" value="인증메일변경">
-<a href="<?php echo G5_URL ?>" class="btn_cancel">취소</a>
+<div class="btn_confirm">
+    <input type="submit" id="btn_submit" class="btn_submit" value="인증메일변경">
+    <a href="<?php echo G5_URL ?>" class="btn_cancel">취소</a>
+</div>
+
 </form>
 
 <script>

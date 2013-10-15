@@ -23,7 +23,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
 <div id="point" class="new_win">
-    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
     <div class="tbl_head01 tbl_wrp">
         <table>
@@ -101,7 +101,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
     <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page='); ?>
 
-    <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
+    <div class="win_btn"><button type="button" onclick="javascript:window.close();">창닫기</button></div>
 </div>
 
 <?php

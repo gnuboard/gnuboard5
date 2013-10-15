@@ -42,7 +42,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 ?>
 
 <div id="copymove" class="new_win">
-    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
     <form name="fboardmoveall" method="post" action="./move_update.php" onsubmit="return fboardmoveall_submit(this);">
     <input type="hidden" name="sw" value="<?php echo $sw ?>">
@@ -97,7 +97,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         </table>
     </div>
 
-    <div class="btn_win btn_confirm">
+    <div class="win_btn">
         <input type="submit" value="<?php echo $act ?>" id="btn_submit" class="btn_submit">
     </div>
     </form>
@@ -106,9 +106,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 <script>
 $(function() {
-    $(".btn_win").append("<button type=\"button\" class=\"btn_cancel\">창닫기</button>");
+    $(".win_btn").append("<button type=\"button\" class=\"btn_cancel\">창닫기</button>");
 
-    $(".btn_win button").click(function() {
+    $(".win_btn button").click(function() {
         window.close();
     });
 });

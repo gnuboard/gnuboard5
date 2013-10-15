@@ -79,8 +79,6 @@
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 게시판 목록 */
-#bo_list_title {margin-bottom:20px;font-size:1.2em;letter-spacing:-0.1em}
-
 #bo_cate h2 {width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 #bo_cate ul {margin-bottom:10px;padding-left:1px;width:728px;zoom:1}
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}

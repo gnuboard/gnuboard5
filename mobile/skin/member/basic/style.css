@@ -12,10 +12,10 @@
 .mbskin .btn_submit {}
 .mbskin .btn_cancel {}
 .mbskin .btn_frmline {} /* 우편번호검색버튼 등 */
-.mbskin .btn_win {} /* 새창용 */
-.mbskin .btn_win a {}
-.mbskin .btn_win button {}
-.mbskin .btn_win input {}
+.mbskin .win_btn {} /* 새창용 */
+.mbskin .win_btn a {}
+.mbskin .win_btn button {}
+.mbskin .win_btn input {}
 /* 게시판용 버튼 */
 .mbskin a.btn_b01 {}
 .mbskin a.btn_b01:focus, .mbskin .btn_b01:hover {}
@@ -86,17 +86,18 @@
 /* 회원가입 입력 */
 #fregisterform #reg_mb_email, #fregisterform .frm_address {width:100%}
 #fregisterform textarea {width:100%;height:50px}
+
 /* 회원가입 완료 */
 #reg_result {padding:4em 1em 0}
-#reg_result_logo {margin-bottom:50px;text-align:center}
-#reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
-#reg_result_email span {display:inline-block;width:150px}
-#reg_result_email strong {color:#e8180c;font-size:1.2em}
+#reg_result #result_logo {margin-bottom:50px;text-align:center}
+#reg_result #result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
+#reg_result #result_email span {display:inline-block;width:150px}
+#reg_result #result_email strong {color:#e8180c;font-size:1.2em}
 #reg_result .btn_confirm {margin:50px 0}
 
 /* 아이디/패스워드 찾기 */
-#find_info_fs {margin:0 auto 1em;padding:1em;border-bottom:1px solid #eee}
-#find_info_fs #mb_email {width:100%}
+#find_info #info_fs {margin:0 auto 1em;padding:1em;border-bottom:1px solid #eee}
+#find_info #info_fs #mb_email {width:100%}
 #find_info #captcha {margin:0 0 1em;padding:0 1em 1em}
 #find_info #captcha input {margin-left:0.3em}
 

@@ -69,8 +69,6 @@
 #bo_gall #gall_ul {margin:1em 0 0;padding:0 1em;list-style:none}
 #bo_gall #gall_ul:after {display:block;visibility:hidden;clear:both;content:""}
 
-#bo_list_title {padding:0 1em}
-
 #bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 #bo_cate ul {margin:0.5em 1em;padding-left:1px;zoom:1}
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}

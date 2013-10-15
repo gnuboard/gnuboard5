@@ -78,8 +78,6 @@
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 게시판 목록 */
-#bo_list_title {padding:0 1em}
-
 #bo_list .td_chk {width:30px;text-align:center}
 #bo_list .td_group {width:100px;text-align:center}
 #bo_list .td_board {width:120px;text-align:center}

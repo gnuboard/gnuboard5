@@ -120,6 +120,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #captcha #captcha_mp3 span {position:absolute;top:0;left:0;width:23px;height:22px;background:url('../plugin/kcaptcha/img/sound.gif')}
 #captcha #captcha_reload {position:absolute;top:21px;left:101px;margin:0;padding:0;width:23px;height:22px;border:0;background:transparent;vertical-align:middle;overflow:hidden;cursor:pointer}
 #captcha #captcha_reload span {position:absolute;top:0;left:0;width:23px;height:22px;background:url('../plugin/kcaptcha/img/reload.gif')}
+#captcha #captcha_info {display:block;margin:5px 0 0;font-size:0.95em;letter-spacing:-0.1em}
 #mp3_embed {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden} /* 익스 8 이하에서 음성캡챠 실행 스타일 */
 
 /* ckeditor 단축키 */
@@ -137,20 +138,19 @@ a.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc;b
 a.btn01:focus, .btn01:hover {text-decoration:none}
 a.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #000;background:#333;color:#fff;text-decoration:none;line-height:2.15em;vertical-align:middle}
 a.btn02:focus, .btn02:hover {text-decoration:none}
+
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:middle;cursor:pointer}
+
+input.btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:middle;cursor:pointer}
 button.btn_submit {height:22px;font-size:1em}
 fieldset .btn_submit {height:22px;font-size:1em}
+
 a.btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
 a.btn_cancel:focus, a.btn_cancel:hover {text-decoration:none}
-button.btn_cancel {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;line-height:2em}
+
 a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
-.btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;vertical-align:top;line-height:2em;cursor:pointer}
-.btn_win input {height:30px;line-height:2em}
-.btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
-.btn_win a:focus, .btn_win a:hover {text-decoration:none}
+
 /* 게시판용 버튼 */
 a.btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #d9ded9;background:#f5f6fa;color:#000;text-decoration:none;line-height:2.15em;vertical-align:middle}
 a.btn_b01:focus, .btn_b01:hover {text-decoration:none}
@@ -171,8 +171,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .tbl_head01 thead th {padding:12px 0;border-top:1px solid #d1dee2;border-bottom:1px solid #d1dee2;background:#e5ecef;color:#383838;font-size:0.95em;letter-spacing:-0.1em}
 .tbl_head01 thead a {color:#383838}
 .tbl_head01 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-.tbl_head01 tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
-.tbl_head01 tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
+.tbl_head01 tfoot th, .tbl_head01 tfoot td {padding:10px 0;border-top:1px solid #c1d1d5;border-bottom:1px solid #c1d1d5;background:#d7e0e2;text-align:center}
 .tbl_head01 tbody th {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
 .tbl_head01 td {padding:8px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
 .tbl_head01 a {}
@@ -193,6 +192,8 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .tbl_frm01 .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
 .tbl_frm01 .frm_address {display:block;margin-top:5px}
 .tbl_frm01 .frm_file {display:block;margin-bottom:5px}
+
+fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;color:#000;vertical-align:middle}
 
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
@@ -216,15 +217,20 @@ textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repea
 
 /* 새창 기본 스타일 */
 .new_win {}
-.new_win #new_win_title {margin-bottom:20px;padding:0 20px;height:60px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em;line-height:5em}
-.new_win #new_win_title .sv {font-size:0.75em;line-height:1.2em}
-.new_win .tbl_head01 {margin:0 auto 20px;width:93%;background:#fff}
-.new_win .tbl_frm01 {margin:0 auto 20px;width:93%;background:#fff}
-.new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
-.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.new_win_ul li {float:left;margin-left:-1px}
-.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
-.new_win_desc {margin:0 auto;width:93%}
+.new_win .tbl_wrp {margin:0 20px}
+.new_win #win_title {margin:0 0 20px;padding:20px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em}
+.new_win #win_title .sv {font-size:0.75em;line-height:1.2em}
+.new_win .win_ul {margin:-20px 0 20px 0;padding:0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
+.new_win .win_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win .win_ul li {float:left;margin-left:-1px}
+.new_win .win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
+.new_win .win_desc {margin:0 20px}
+
+.new_win .win_btn {clear:both;margin:20px;text-align:center} /* 새창용 */
+.new_win .win_btn button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;vertical-align:top;line-height:2em;cursor:pointer}
+.new_win .win_btn input {height:30px;line-height:2em}
+.new_win .win_btn a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
+.new_win .win_btn a:focus, .new_win .win_btn a:hover {text-decoration:none}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}

@@ -6,9 +6,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_list" class="new_win mbskin">
-    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
-    <ul class="new_win_ul">
+    <ul class="win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
         <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
@@ -41,11 +41,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <p class="new_win_desc">
+    <p class="win_desc">
         쪽지 보관일수는 최장 <strong><?php echo $config['cf_memo_del'] ?></strong>일 입니다.
     </p>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>

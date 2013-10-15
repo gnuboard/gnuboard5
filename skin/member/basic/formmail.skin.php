@@ -6,7 +6,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="formmail" class="new_win mbskin">
-    <h1 id="new_win_title"><?php echo $name ?>님께 메일보내기</h1>
+    <h1 id="win_title"><?php echo $name ?>님께 메일보내기</h1>
 
     <form name="fformmail" action="./formmail_send.php" onsubmit="return fformmail_submit(this);" method="post" enctype="multipart/form-data" style="margin:0px;">
     <input type="hidden" name="to" value="<?php echo $email ?>">
@@ -66,7 +66,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <p>
            작성하신 메일을 발송하시려면 <strong>메일발송</strong> 버튼을,<br>
            작성을 취소하고 창을 닫으시려면 <strong>창닫기</strong> 버튼을 누르세요.

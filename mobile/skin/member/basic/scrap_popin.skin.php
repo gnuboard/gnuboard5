@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="scrap_do" class="new_win mbskin">
-    <h1 id="new_win_title">스크랩하기</h1>
+    <h1 id="win_title">스크랩하기</h1>
 
     <form name="f_scrap_popin" action="./scrap_popin_update.php" method="post">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -27,11 +27,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <p class="new_win_desc">
+    <p class="win_desc">
         스크랩을 하시면서 감사 혹은 격려의 댓글을 남기실 수 있습니다.
     </p>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <input type="submit" class="btn_submit" value="스크랩 확인">
     </div>
     </form>

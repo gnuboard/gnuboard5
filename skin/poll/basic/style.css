@@ -30,11 +30,11 @@
 #poll_result .btn_confirm {} /* 서식단계 진행 */
 #poll_result .btn_submit {}
 #poll_result button.btn_submit {}
-#poll_result .btn_win {} /* 새창용 */
-#poll_result .btn_win button {}
-#poll_result .btn_win input {}
-#poll_result .btn_win a {}
-#poll_result .btn_win a:focus, #poll_result .btn_win a:hover {}
+#poll_result .win_btn {} /* 새창용 */
+#poll_result .win_btn button {}
+#poll_result .win_btn input {}
+#poll_result .win_btn a {}
+#poll_result .win_btn a:focus, #poll_result .win_btn a:hover {}
 
 /* ### 기본 스타일 커스터마이징 끝 ### */
 

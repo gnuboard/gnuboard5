@@ -31,10 +31,10 @@
 #poll .btn_submit {}
 #poll .btn_cancel {}
 #poll .btn_frmline {} /* 우편번호검색버튼 등 */
-#poll .btn_win {} /* 새창용 */
-#poll .btn_win a {}
-#poll .btn_win button {}
-#poll .btn_win input {}
+#poll .win_btn {} /* 새창용 */
+#poll .win_btn a {}
+#poll .win_btn button {}
+#poll .win_btn input {}
 
 /* ### 기본 스타일 커스터마이징 끝 ### */
 

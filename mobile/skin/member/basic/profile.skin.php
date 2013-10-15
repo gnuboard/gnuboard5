@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="profile" class="new_win mbskin">
-    <h1 id="new_win_title"><?php echo $mb_nick ?>님의 프로필</h1>
+    <h1 id="win_title"><?php echo $mb_nick ?>님의 프로필</h1>
 
     <div class="tbl_frm01 tbl_wrp">
         <table>
@@ -41,7 +41,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <p><?php echo $mb_profile ?></p>
     </section>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>
