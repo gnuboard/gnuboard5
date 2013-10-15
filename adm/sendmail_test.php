@@ -38,10 +38,12 @@ if (isset($_POST['email'])) {
 
 <section>
     <h2>테스트 메일 발송</h2>
-    <p>
-        메일서버가 정상적으로 동작 중인지 확인할 수 있습니다.<br>
-        아래 입력칸에 테스트 메일을 발송하실 메일 주소를 입력하시면, [메일검사] 라는 제목으로 테스트 메일을 발송합니다.<br>
-    </p>
+    <div class="local_desc02 local_desc">
+        <p>
+            메일서버가 정상적으로 동작 중인지 확인할 수 있습니다.<br>
+            아래 입력칸에 테스트 메일을 발송하실 메일 주소를 입력하시면, [메일검사] 라는 제목으로 테스트 메일을 발송합니다.<br>
+        </p>
+    </div>
     <form name="fsendmailtest" method="post">
     <fieldset id="fsendmailtest">
         <legend>테스트메일 발송</legend>
@@ -50,10 +52,12 @@ if (isset($_POST['email'])) {
         <input type="submit" value="발송" class="btn_submit">
     </fieldset>
     </form>
-    <p>
-        만약 [메일검사] 라는 내용으로 테스트 메일이 도착하지 않는다면 보내는 메일서버 혹은 받는 메일서버 중 문제가 발생했을 가능성이 있습니다.<br>
-        따라서 보다 정확한 테스트를 원하신다면 여러 곳으로 테스트 메일을 발송하시기 바랍니다.<br>
-    </p>
+    <div class="local_desc02 local_desc">
+        <p>
+            만약 [메일검사] 라는 내용으로 테스트 메일이 도착하지 않는다면 보내는 메일서버 혹은 받는 메일서버 중 문제가 발생했을 가능성이 있습니다.<br>
+            따라서 보다 정확한 테스트를 원하신다면 여러 곳으로 테스트 메일을 발송하시기 바랍니다.<br>
+        </p>
+    </div>
 </section>
 
 <?php

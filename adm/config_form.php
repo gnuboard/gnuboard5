@@ -892,7 +892,9 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_cf_lay">
     <h2 class="h2_frm">레이아웃 추가설정</h2>
     <?php echo $pg_anchor; ?>
-    <p>기본 설정된 파일 경로 및 script, css 를 추가하거나 변경할 수 있습니다.</p>
+    <div class="local_desc02 local_desc">
+        <p>기본 설정된 파일 경로 및 script, css 를 추가하거나 변경할 수 있습니다.</p>
+    </div>
 
     <div class="tbl_frm01 tbl_wrap">
         <table>
@@ -938,7 +940,9 @@ $pg_anchor = '<ul class="anchor">
 <section id="anc_cf_extra">
     <h2 class="h2_frm">여분필드 기본 설정</h2>
     <?php echo $pg_anchor ?>
-    <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
+    <div class="local_desc02 local_desc">
+        <p>각 게시판 관리에서 개별적으로 설정 가능합니다.</p>
+    </div>
 
     <div class="tbl_frm01 tbl_wrap">
         <table>

@@ -10,6 +10,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 header ul, nav ul, aside ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
 
+
 textarea, select {font-family:dotum;font-size:1em}
 
 input {margin:0;padding:0;border-radius:0;font-family:dotum}
@@ -73,7 +74,6 @@ h2.h2_frm {padding-top:15px}
 .gnb_js .gnb_grp_style {background:#f7f7f7 !important}
 .gnb_js .gnb_grp_style:focus, .gnb_js .gnb_grp_style:hover {background:#484848 !important}
 .gnb_js .gnb_grp_div {border-top:1px solid #eee}
-
 
 #lnb {margin:0;padding:10px 15px;border-bottom:1px solid #e9e9e9;list-style:none;zoom:1}
 
@@ -166,6 +166,7 @@ h2.h2_frm {padding-top:15px}
 
 .btn_add {margin:0 20px 10px} /* 목록용 추가 */
 
+
 .btn_add01 {text-align:right}
 .btn_add01 a {display:inline-block;padding:10px;border:1px solid #ccc;background:#f0f0f0;text-decoration:none;cursor:pointer}
 
@@ -193,6 +194,7 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 .anchor li {float:left;margin-left:-1px;list-style:none}
 .anchor a {display:inline-block;padding:5px 10px;border:1px solid #c8ced1;background:#d6dde1;text-decoration:none}
 .anchor a:focus, .anchor a:hover {background:#c8d2d8}
+
 
 /* 하단 레이아웃 */
 #ft {margin:20px 0;padding:10px 20px;border-top:1px solid #d0d6d8}
@@ -388,7 +390,9 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #add_admin fieldset {margin-top:20px}
 
 /* 메일 테스트 */
-#fsendmailtest {margin-bottom:20px;padding:30px 0;border:1px solid #ced9de;background:#fff;text-align:center}
+
+#fsendmailtest {margin:50px 0;text-align:center}
+#fsendmailtest .btn_submit {padding:3px 5px;border:1px solid #ff3061;color:#fff;font-size:0.95em;vertical-align:middle;cursor:pointer}
 
 /* ########## 쇼핑몰 사용시 적용 ########## */
 
