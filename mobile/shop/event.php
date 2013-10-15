@@ -1,11 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if (G5_IS_MOBILE) {
-    include_once(G5_MSHOP_PATH.'/event.php');
-    return;
-}
-
 $sql = " select * from {$g5['g5_shop_event_table']}
           where ev_id = '$ev_id'
             and ev_use = 1 ";
@@ -14,7 +9,7 @@ if (!$ev['ev_id'])
     alert('등록된 이벤트가 없습니다.');
 
 $g5['title'] = $ev['ev_subject'];
-include_once('./_head.php');
+include_once(G5_MSHOP_PATH.'/_head.php');
 
 if ($is_admin)
     echo '<div class="sev_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin">이벤트 관리</a></div>';
@@ -27,10 +22,6 @@ var itemlist_ca_id = "<?php echo $ev_id; ?>";
 
 <!-- 이벤트 시작 { -->
 <?php
-$himg = G5_DATA_PATH.'/event/'.$ev_id.'_h';
-if (file_exists($himg))
-    echo '<div id="sev_himg" class="sev_img"><img src="'.G5_DATA_URL.'/event/'.$ev_id.'_h" alt=""></div>';
-
 // 상단 HTML
 echo '<div id="sev_hhtml">'.stripslashes($ev['ev_head_html']).'</div>';
 
@@ -47,10 +38,10 @@ if ($skin)
 $list_file = G5_SHOP_SKIN_PATH."/{$ev['ev_skin']}";
 if (file_exists($list_file))
 {
-    include G5_SHOP_SKIN_PATH.'/list.sort.skin.php';
+    include G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
 
     // 상품 보기 타입 변경 버튼
-    include G5_SHOP_SKIN_PATH.'/list.sub.skin.php';
+    include G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
 
     // 총몇개 = 한줄에 몇개 * 몇줄
     $items = $ev['ev_list_mod'] * $ev['ev_list_row'];
@@ -59,9 +50,10 @@ if (file_exists($list_file))
     // 시작 레코드 구함
     $from_record = ($page - 1) * $items;
 
-    $list = new item_list($ev['ev_skin'], $ev['ev_list_mod'], $ev['ev_list_row'], $ev['ev_img_width'], $ev['ev_img_height']);
+    $list = new item_list($ev['ev_skin'], $items, 1, $ev['ev_img_width'], $ev['ev_img_height']);
     $list->set_event($ev['ev_id']);
     $list->set_is_page(true);
+    $list->set_mobile(true);
     $list->set_order_by($order_by);
     $list->set_from_record($from_record);
     $list->set_view('it_img', true);
@@ -99,13 +91,9 @@ echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_S
 <?php
 // 하단 HTML
 echo '<div id="sev_thtml">'.stripslashes($ev['ev_tail_html']).'</div>';
-
-$timg = G5_DATA_PATH.'/event/'.$ev_id.'_t';
-if (file_exists($timg))
-    echo '<div id="sev_timg" class="sev_img"><img src="'.G5_DATA_URL.'/event/'.$ev_id.'_t" alt=""></div>';
 ?>
 <!-- } 이벤트 끝 -->
 
 <?php
-include_once('./_tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

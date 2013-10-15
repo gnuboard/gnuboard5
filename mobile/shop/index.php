@@ -30,7 +30,7 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=3">더 보기</a></div>
+            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=1">더 보기</a></div>
         </section>
 
         <section class="sct_wrap">
@@ -50,12 +50,12 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=1">더 보기</a></div>
+            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=2">더 보기</a></div>
         </section>
 
         <section class="sct_wrap">
             <header>
-                <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=2">추천상품</a></h2>
+                <h2>추천상품</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
             </header>
             <?php
@@ -70,11 +70,12 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
+            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=3">더 보기</a></div>
         </section>
 
         <section class="sct_wrap">
             <header>
-                <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=4">인기상품</a></h2>
+                <h2>인기상품</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 인기상품 모음</p>
             </header>
             <?php
@@ -89,11 +90,12 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
+            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=4">더 보기</a></div>
         </section>
 
         <section class="sct_wrap">
             <header>
-                <h2><a href="<?php echo G4_SHOP_URL; ?>/listtype.php?type=5">할인상품</a></h2>
+                <h2>할인상품</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 할인상품 모음</p>
             </header>
             <?php
@@ -108,7 +110,25 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
+            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=5">더 보기</a></div>
         </section>
+
+        <?php
+        $hsql = " select ev_id, ev_subject, ev_subject_strong from {$g5['g5_shop_event_table']} where ev_use = '1' order by ev_id desc ";
+        $hresult = sql_query($hsql);
+
+        if(mysql_num_rows($hresult)) {
+        ?>
+        <section class="sct_wrap">
+            <header>
+                <h2>이벤트</h2>
+                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 이벤트 모음</p>
+            </header>
+            <?php include_once(G5_MSHOP_SKIN_PATH.'/main.event.skin.php'); ?>
+        </section>
+        <?php
+        }
+        ?>
 
     </div>
 
