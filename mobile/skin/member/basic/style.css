@@ -12,10 +12,10 @@
 .mbskin .btn_submit {}
 .mbskin .btn_cancel {}
 .mbskin .btn_frmline {} /* 우편번호검색버튼 등 */
-.mbskin .btn_win {} /* 새창용 */
-.mbskin .btn_win a {}
-.mbskin .btn_win button {}
-.mbskin .btn_win input {}
+.mbskin .win_btn {} /* 새창용 */
+.mbskin .win_btn a {}
+.mbskin .win_btn button {}
+.mbskin .win_btn input {}
 /* 게시판용 버튼 */
 .mbskin a.btn_b01 {}
 .mbskin a.btn_b01:focus, .mbskin .btn_b01:hover {}
@@ -25,35 +25,39 @@
 .mbskin a.btn_admin:focus, .mbskin a.btn_admin:hover {}
 
 /* 기본테이블 */
-.mbskin .basic_tbl {}
-.mbskin .basic_tbl caption {}
-.mbskin .basic_tbl thead th {}
-.mbskin .basic_tbl thead a {}
-.mbskin .basic_tbl thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-.mbskin .basic_tbl tfoot th {}
-.mbskin .basic_tbl tfoot td {}
-.mbskin .basic_tbl tbody th {}
-.mbskin .basic_tbl td {}
-.mbskin .basic_tbl a {}
-.mbskin .bo_sideview td {} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
+.mbskin .tbl_head01 {}
+.mbskin .tbl_head01 caption {}
+.mbskin .tbl_head01 thead th {}
+.mbskin .tbl_head01 thead a {}
+.mbskin .tbl_head01 thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+.mbskin .tbl_head01 tfoot th {}
+.mbskin .tbl_head01 tfoot td {}
+.mbskin .tbl_head01 tbody th {}
+.mbskin .tbl_head01 td {}
+.mbskin .tbl_head01 a {}
 .mbskin td.empty_table {}
 
 /* 폼 테이블 */
-.mbskin .frm_tbl {}
-.mbskin .frm_tbl caption {}
-.mbskin .frm_tbl th {}
-.mbskin .frm_tbl td {}
-.mbskin .frm_tbl textarea, .mbskin .frm_input {}
-.mbskin .frm_tbl textarea {}
-.mbskin .frm_address {}
-.mbskin .frm_file {}
-.mbskin .frm_tbl #captcha {}
-.mbskin .frm_tbl #captcha input {}
-.mbskin .frm_tbl a {}
+.mb_skin table {}
+.mb_skin caption {}
+.mb_skin .frm_info {}
+.mb_skin .frm_address {}
+.mb_skin .frm_file {}
 
-.mbskin .frm_info {}
+.mbskin .tbl_frm01 {}
+.mbskin .tbl_frm01 caption {}
+.mbskin .tbl_frm01 th {}
+.mbskin .tbl_frm01 td {}
+.mbskin .tbl_frm01 textarea, .mbskin .frm_input {}
+.mbskin .tbl_frm01 textarea {}
+/*
+.mbskin .tbl_frm01 #captcha {}
+.mbskin .tbl_frm01 #captcha input {}
+*/
+.mbskin .tbl_frm01 a {}
 
 .mbskin .required {} /* 필수입력 */
+.mbskin textarea.required {}
 
 /* 테이블 항목별 정의 */
 .mbskin .td_board {}
@@ -74,26 +78,26 @@
 #fregister section {padding:1.5em;border-bottom:1px solid #eee;background:#fafafa}
 #fregister h2 {margin:0 0 1.5em;text-align:center}
 #fregister textarea {display:block;margin-bottom:1em;padding:0.3em;width:99%;height:150px;border:1px solid #cfded8;background:#f7f7f7}
-#fregister textarea:focus {background:#21272e;color:#fff}
 .fregister_agree {padding:1em 0 0;text-align:right}
 .fregister_agree label {display:inline-block;margin-right:0.3em}
 #fregister p {color:#e8180c;text-align:center}
 #fregister .btn_confirm {margin:1.5em 0}
 
 /* 회원가입 입력 */
-#fregisterform textarea {height:50px}
+#fregisterform #reg_mb_email, #fregisterform .frm_address {width:100%}
+#fregisterform textarea {width:100%;height:50px}
 
 /* 회원가입 완료 */
 #reg_result {padding:4em 1em 0}
-#reg_result_logo {margin-bottom:50px;text-align:center}
-#reg_result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
-#reg_result_email span {display:inline-block;width:150px}
-#reg_result_email strong {color:#e8180c;font-size:1.2em}
+#reg_result #result_logo {margin-bottom:50px;text-align:center}
+#reg_result #result_email {padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
+#reg_result #result_email span {display:inline-block;width:150px}
+#reg_result #result_email strong {color:#e8180c;font-size:1.2em}
 #reg_result .btn_confirm {margin:50px 0}
 
 /* 아이디/패스워드 찾기 */
-#find_info_fs {margin:0 auto 1em;padding:1em;border-bottom:1px solid #eee}
-#find_info_fs #mb_email {width:100%}
+#find_info #info_fs {margin:0 auto 1em;padding:1em;border-bottom:1px solid #eee}
+#find_info #info_fs #mb_email {width:100%}
 #find_info #captcha {margin:0 0 1em;padding:0 1em 1em}
 #find_info #captcha input {margin-left:0.3em}
 

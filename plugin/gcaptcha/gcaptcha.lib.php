@@ -100,7 +100,7 @@ class gcaptcha
 
         // Replace path by your own font path
         $fonts = Array();
-        foreach (glob(G5_GCAPTCHA_PATH.'/fonts/*.ttf') as $filename) {
+        foreach (glob(G5_CAPTCHA_PATH.'/fonts/*.ttf') as $filename) {
             $fonts[] = $filename;
         }
         $font = $fonts[mt_rand(0, count($fonts)-1)];
@@ -140,7 +140,7 @@ class gcaptcha
         $number = (string)$_SESSION['ss_captcha_key'];
         $mp3s = array();
         for($i=0;$i<strlen($number);$i++){
-            $file = G5_GCAPTCHA_PATH.'/mp3/'.$config['cf_gcaptcha_mp3'].'/'.$number[$i].'.mp3';
+            $file = G5_CAPTCHA_PATH.'/mp3/'.$config['cf_captcha_mp3'].'/'.$number[$i].'.mp3';
             $mp3s[] = $file;
         }
 
@@ -179,13 +179,13 @@ function captcha_html($class='captcha')
     $jpg_file_url = G5_DATA_URL.'/cache/'.$obj->captcha_filename.'.jpg';
     $mp3_file_url = G5_DATA_URL.'/cache/'.$obj->captcha_filename.'.mp3';
 
-    $html .= "\n".'<script>var g5_gcaptcha_url = "'.G5_GCAPTCHA_URL.'";</script>';
-    $html .= "\n".'<script src="'.G5_GCAPTCHA_URL.'/gcaptcha.js"></script>';
+    $html .= "\n".'<script>var g5_captcha_url = "'.G5_CAPTCHA_URL.'";</script>';
+    $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/gcaptcha.js"></script>';
     $html .= '<fieldset id="captcha" class="'.$class.'">';
     $html .= '<legend class="sound_only">자동등록방지</legend>';
     if (G5_IS_MOBILE) $html .= '<audio src="'.$mp3_file_url.'?_='.$rand.'" controls></audio>';
     $html .= '<img src="'.$jpg_file_url.'?_='.$rand.'" alt="">';
-    if (!G5_IS_MOBILE) $html .= '<a href="'.$mp3_file_url.'?_='.$rand.'" id="captcha_mp3" target="_blank"><img src="'.G5_GCAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
+    if (!G5_IS_MOBILE) $html .= '<a href="'.$mp3_file_url.'?_='.$rand.'" id="captcha_mp3" target="_blank"><img src="'.G5_CAPTCHA_URL.'/img/sound.gif" alt="숫자를 음성으로 듣기"></a>';
     $html .= '<label class="sound_only">자동등록방지 숫자 </label><input type="text" name="captcha_key" id="captcha_key" required class="captcha_box frm_input required" size="6" maxlength="6">';
     $html .= '<p class="sound_only">자동등록방지 숫자를 순서대로 입력하세요.</p>';
     $html .= '</fieldset>';

@@ -6,7 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $poll_skin_url ?>/style.css">
 
 <div id="poll_result" class="new_win">
-    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
     <!-- 설문조사 결과 그래프 시작 { -->
     <section id="poll_result_list">
@@ -62,26 +62,29 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <input type="hidden" name="skin_dir" value="<?php echo $skin_dir ?>">
         <?php if ($is_member) {  ?><input type="hidden" name="pc_name" value="<?php echo cut_str($member['mb_nick'],255) ?>"><?php }  ?>
         <h3><?php echo $po_etc ?></h3>
-        <table id="poll_result_wcmt" class="frm_tbl">
-        <tbody>
-        <?php if ($is_guest) {  ?>
-        <tr>
-            <th scope="row"><label for="pc_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="pc_name" id="pc_name" required class="frm_input required" size="10"></td>
-        </tr>
-        <?php }  ?>
-        <tr>
-            <th scope="row"><label for="pc_idea">의견<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" id="pc_idea" name="pc_idea" required class="frm_input required" size="47" maxlength="100"></td>
-        </tr>
-        <?php if ($is_guest) {  ?>
-        <tr>
-            <th scope="row">자동등록방지</th>
-            <td><?php echo captcha_html(); ?></td>
-        </tr>
-        <?php }  ?>
-        </tbody>
-        </table>
+
+        <div class="tbl_frm01 tbl_wrp">
+            <table id="poll_result_wcmt">
+            <tbody>
+            <?php if ($is_guest) {  ?>
+            <tr>
+                <th scope="row"><label for="pc_name">이름<strong class="sound_only">필수</strong></label></th>
+                <td><input type="text" name="pc_name" id="pc_name" required class="frm_input required" size="10"></td>
+            </tr>
+            <?php }  ?>
+            <tr>
+                <th scope="row"><label for="pc_idea">의견<strong class="sound_only">필수</strong></label></th>
+                <td><input type="text" id="pc_idea" name="pc_idea" required class="frm_input required" size="47" maxlength="100"></td>
+            </tr>
+            <?php if ($is_guest) {  ?>
+            <tr>
+                <th scope="row">자동등록방지</th>
+                <td><?php echo captcha_html(); ?></td>
+            </tr>
+            <?php }  ?>
+            </tbody>
+            </table>
+        </div>
 
         <div class="btn_confirm">
             <input type="submit" class="btn_submit" value="의견남기기">
@@ -104,7 +107,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </aside>
     <!-- } 설문조사 다른 결과 보기 끝 -->
 
-    <div class="btn_win">
+    <div class="win_btn">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>
