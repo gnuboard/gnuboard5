@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 <script src="<?php echo G5_JS_URL; ?>/jquery.fancylist.js"></script>
 
-<?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $g5['title'] ?></h1><?php } ?>
+<h2 id="container_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2>
 
 <!-- 게시판 목록 시작 -->
 <div id="bo_gall">

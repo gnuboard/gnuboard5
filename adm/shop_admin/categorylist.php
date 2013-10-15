@@ -168,7 +168,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <td>
             <label for="ca_skin<?php echo $i; ?>" class="sound_only">출력스킨</label>
             <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
-                <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
             </select>
         </td>
         <td class="td_mng" rowspan="2">

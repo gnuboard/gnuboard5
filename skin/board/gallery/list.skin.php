@@ -5,7 +5,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<?php if (!$wr_id) { ?><h2 id="bo_list_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2><?php } ?>
+<h2 id="container_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2>
 
 <!-- 게시판 목록 시작 { -->
 <div id="bo_gall" style="width:<?php echo $width; ?>">

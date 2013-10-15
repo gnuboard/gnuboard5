@@ -7,30 +7,34 @@
 #poll a.btn_admin:focus, #poll a.btn_admin:hover {}
 
 /* 폼 테이블 */
-#poll .frm_tbl {}
-#poll .frm_tbl caption {}
-#poll .frm_tbl th {}
-#poll .frm_tbl td {}
-#poll .frm_tbl textarea, #poll .frm_input {}
-#poll .frm_tbl textarea {}
-#poll .frm_address {}
-#poll .frm_file {}
-#poll .frm_tbl #captcha {}
-#poll .frm_tbl #captcha input {}
-#poll .frm_tbl a {}
+#poll .tbl_frm table {}
+#poll .tbl_frm .frm_address {}
+#poll .tbl_frm .frm_file {}
+#poll .tbl_frm .frm_info {}
 
-#poll .frm_info {}
+#poll .tbl_frm01 {}
+#poll .tbl_frm01 caption {}
+#poll .tbl_frm01 th {}
+#poll .tbl_frm01 td {}
+#poll .tbl_frm01 textarea, #poll .frm_input {}
+#poll .tbl_frm01 textarea {}
+/*
+#poll .tbl_frm01 #captcha {}
+#poll .tbl_frm01 #captcha input {}
+*/
+#poll .tbl_frm01 a {}
 
 #poll .required {} /* 필수입력 */
+#poll textarea.required {}
 
 #poll .btn_confirm {} /* 서식단계 진행 */
 #poll .btn_submit {}
 #poll .btn_cancel {}
 #poll .btn_frmline {} /* 우편번호검색버튼 등 */
-#poll .btn_win {} /* 새창용 */
-#poll .btn_win a {}
-#poll .btn_win button {}
-#poll .btn_win input {}
+#poll .win_btn {} /* 새창용 */
+#poll .win_btn a {}
+#poll .win_btn button {}
+#poll .win_btn input {}
 
 /* ### 기본 스타일 커스터마이징 끝 ### */
 

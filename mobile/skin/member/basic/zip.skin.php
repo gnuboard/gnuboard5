@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="post_code" class="new_win mbskin">
-    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
     <form name="fzip" method="get" autocomplete="off">
     <input type="hidden" name="frm_name"  value="<?php echo $frm_name ?>">
@@ -39,7 +39,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <p>검색결과가 끝났습니다.</p>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 

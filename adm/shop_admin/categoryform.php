@@ -61,8 +61,8 @@ if ($w == "")
         $ca['ca_mobile_list_row'] = 3;
         $ca['ca_stock_qty'] = 99999;
     }
-    $ca['ca_skin'] = "list.skin.10.php";
-    $ca['ca_mobile_skin'] = "list.skin.10.php";
+    $ca['ca_skin'] = "list.10.skin.php";
+    $ca['ca_mobile_skin'] = "list.10.skin.php";
 }
 else if ($w == "u")
 {
@@ -163,7 +163,7 @@ $pg_anchor .= '</ul>';
             <td>
                 <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_SHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
                 <select id="ca_skin" name="ca_skin">
-                    <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_SHOP_SKIN_PATH, $ca['ca_skin']); ?>
+                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $ca['ca_skin']); ?>
                 </select>
             </td>
         </tr>
@@ -172,7 +172,7 @@ $pg_anchor .= '</ul>';
             <td>
                 <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_MSHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
                 <select id="ca_mobile_skin" name="ca_mobile_skin">
-                    <?php echo get_list_skin_options("^list.[^\.]+\.skin\.php", G5_MSHOP_SKIN_PATH, $ca['ca_mobile_skin']); ?>
+                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $ca['ca_mobile_skin']); ?>
                 </select>
             </td>
         </tr>
