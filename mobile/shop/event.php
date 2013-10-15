@@ -35,7 +35,7 @@ if ($skin)
     $ev['ev_skin'] = $skin;
 
 // 리스트 유형별로 출력
-$list_file = G5_SHOP_SKIN_PATH."/{$ev['ev_skin']}";
+$list_file = G5_SHOP_SKIN_PATH."/{$ev['ev_mobile_skin']}";
 if (file_exists($list_file))
 {
     include G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
@@ -44,13 +44,13 @@ if (file_exists($list_file))
     include G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
 
     // 총몇개 = 한줄에 몇개 * 몇줄
-    $items = $ev['ev_list_mod'] * $ev['ev_list_row'];
+    $items = $ev['ev_mobile_list_mod'];
     // 페이지가 없으면 첫 페이지 (1 페이지)
     if ($page == "") $page = 1;
     // 시작 레코드 구함
     $from_record = ($page - 1) * $items;
 
-    $list = new item_list($ev['ev_skin'], $items, 1, $ev['ev_img_width'], $ev['ev_img_height']);
+    $list = new item_list($ev['ev_mobile_skin'], $ev['ev_mobile_list_mod'], 1, $ev['ev_mobile_img_width'], $ev['ev_mobile_img_height']);
     $list->set_event($ev['ev_id']);
     $list->set_is_page(true);
     $list->set_mobile(true);
@@ -73,7 +73,7 @@ if (file_exists($list_file))
 else
 {
     $i = 0;
-    $error = "<p>{$ev['ev_skin']} 파일을 찾을 수 없습니다.<p>관리자에게 알려주시면 감사하겠습니다.";
+    $error = "<p>{$ev['ev_mobile_skin']} 파일을 찾을 수 없습니다.<p>관리자에게 알려주시면 감사하겠습니다.";
 }
 
 if ($i==0)

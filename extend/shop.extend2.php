@@ -606,4 +606,13 @@ if(!sql_query(" select it_1 from {$g5['g5_shop_item_table']} limit 1", false)) {
                     ADD `ca_9` varchar(255) NOT NULL DEFAULT '' AFTER `ca_8`,
                     ADD `ca_10` varchar(255) NOT NULL DEFAULT '' AFTER `ca_9` ", true);
 }
+
+// 모바일 이벤트 필드 추가
+if(!sql_query(" select ev_mobile_skin from {$g5['g5_shop_event_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_event_table']}`
+                    ADD `ev_mobile_skin` varchar(255) NOT NULL DEFAULT '' AFTER `ev_skin`,
+                    ADD `ev_mobile_img_width` int(11) NOT NULL DEFAULT '0' AFTER `ev_list_row`,
+                    ADD `ev_mobile_img_height` int(11) NOT NULL DEFAULT '0' AFTER `ev_mobile_img_width`,
+                    ADD `ev_mobile_list_mod` int(11) NOT NULL DEFAULT '0' AFTER `ev_mobile_img_height` ", true);
+}
 ?>
