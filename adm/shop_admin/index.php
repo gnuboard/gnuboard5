@@ -31,6 +31,18 @@ $pg_anchor = '<ul class="anchor">
     $row = sql_fetch($sql);
     echo "입금 : ".$row['cnt'];
     ?>
+
+    <?php
+    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '준비' ";
+    $row = sql_fetch($sql);
+    echo "준비 : ".$row['cnt'];
+    ?>
+
+    <?php
+    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '배송' ";
+    $row = sql_fetch($sql);
+    echo "배송 : ".$row['cnt'];
+    ?>
 </section>
 
 <section id="anc_sidx_rdy" class="cbox">
