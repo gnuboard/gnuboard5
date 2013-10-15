@@ -30,9 +30,13 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .img_fix {width:100%;height:auto}
 
 /* 캡챠 자동등록(입력)방지 기본 */
-#captcha audio {display:block;margin:0 0 0.5em}
-#captcha input[type=text] {position:relative;top:0;left:-4px}
-#captcha img {height:1.8em;border:1px solid #cfded8;border-right:0}
+#captcha {display:inline-block;position:relative}
+#captcha legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#captcha audio {display:block;margin:0 0 5px;width:263px}
+#captcha #captcha_img {width:100px;height:41px;border:1px solid #e9e9e9}
+#captcha #captcha_reload {margin:0;padding:0;width:70px;height:43px;border:0;background:#e4eaec;vertical-align:middle;overflow:hidden;cursor:pointer}
+#captcha #captcha_key {margin:0 0 0 4px;padding:0 5px;width:70px;height:41px;border:1px solid #b8c9c2;background:#f7f7f7;font-size:1.333em;font-weight:bold;text-align:center;line-height:2.8em}
+#captcha #captcha_info {display:block;margin:5px 0 0;font-size:0.95em;letter-spacing:-0.1em}
 
 /* 상단 레이아웃 */
 #hd {background:#fff}
