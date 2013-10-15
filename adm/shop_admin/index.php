@@ -20,47 +20,33 @@ $pg_anchor = '<ul class="anchor">
     <h2>주문현황</h2>
     <?php echo $pg_anchor; ?>
 
-<<<<<<< HEAD
-    <?php
-    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
-    $row = sql_fetch($sql);
-    echo "주문 : ".$row['cnt'];
-    ?>
-
-    <?php
-    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '입금' ";
-    $row = sql_fetch($sql);
-    echo "입금 : ".$row['cnt'];
-    ?>
-
-    <?php
-    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '준비' ";
-    $row = sql_fetch($sql);
-    echo "준비 : ".$row['cnt'];
-    ?>
-
-    <?php
-    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '배송' ";
-    $row = sql_fetch($sql);
-    echo "배송 : ".$row['cnt'];
-    ?>
-=======
     <div class="local_desc01 local_desc">
         <p>
-            <?php
-            $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
-            $row = sql_fetch($sql);
-            echo "주문 : ".$row['cnt'];
-            ?>
+        <?php
+        $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
+        $row = sql_fetch($sql);
+        echo "<a href=\"./orderlist.php?od_status=주문\">주문 : ".$row['cnt']."</a>";
+        ?>
 
-            <?php
-            $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '입금' ";
-            $row = sql_fetch($sql);
-            echo "입금 : ".$row['cnt'];
-            ?>
+        <?php
+        $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '입금' ";
+        $row = sql_fetch($sql);
+        echo "입금 : ".$row['cnt'];
+        ?>
+
+        <?php
+        $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '준비' ";
+        $row = sql_fetch($sql);
+        echo "준비 : ".$row['cnt'];
+        ?>
+
+        <?php
+        $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '배송' ";
+        $row = sql_fetch($sql);
+        echo "배송 : ".$row['cnt'];
+        ?>
         </p>
     </div>
->>>>>>> f73f62fa8521d8b34cab42061a1d73d5979cb198
 </section>
 
 <section id="anc_sidx_rdy">

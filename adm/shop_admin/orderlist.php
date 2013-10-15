@@ -200,7 +200,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <div class="tbl_head02 tbl_wrap">
     <table id="sodr_list">
-    <caption>주문 내역 목록</caption></caption>
+    <caption>주문 내역 목록</caption>
     <thead>
     <tr>
         <th scope="col" rowspan="2">
@@ -275,9 +275,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
         <td rowspan="2" class="td_odrstatus">
+            <input type="hidden" name="current_status[<?php echo $i ?>]" value="<?php echo $row['od_status'] ?>">
             <?php echo $row['od_status']; ?>
         </td>
-        <td rowspan="2" class="td_payby"><?php echo $s_receipt_way; ?></td>
+        <td rowspan="2" class="td_payby">
+            <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo $row['od_settle_case'] ?>">
+            <?php echo $s_receipt_way; ?>
+        </td>
         <td rowspan="2" class="td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td rowspan="2" class="td_numincome"><?php echo number_format($row['od_receipt_price']); ?></td>
         <td rowspan="2" class="td_numcancel"><?php echo number_format($row['od_cancel_price']); ?></td>
@@ -308,7 +312,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </tbody>
     <tfoot>
     <tr class="orderlist">
-        <th scope="row" colspan="5">합 계</td>
+        <th scope="row" colspan="5">합 계</th>
         <td><?php echo number_format($tot_orderprice); ?></td>
         <td><?php echo number_format($tot_receiptprice); ?></td>
         <td><?php echo number_format($tot_ordercancel); ?></td>
@@ -398,6 +402,17 @@ function forderlist_submit(f)
     if(document.pressed == "선택삭제") {
         if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
             return false;
+        }
+    }
+
+    var chk = document.getElementsByName("chk[]");
+    for (var i=0; i<chk.length; i++) {
+        if (chk[i].checked) {
+            var k = chk[i].value;
+            if (!(f.elements['current_settle_case['+k+']'].value == "무통장"  && f.od_status.value == "입금")) {
+                alert("무통장의 경우에만 입금 처리 가능합니다.");
+                return false;
+            }
         }
     }
 
