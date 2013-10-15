@@ -5,9 +5,9 @@
                 slide_wrap: "sidx_slide",
                 slide: "section",
                 slide_tab: "slide_tab",
-                tab_class: "slide_tab",
                 slide_class: "sidx_slide",
                 active_class: "slide_active",
+                tab_active: "tab_active",
                 duration: 300
             };
 
@@ -29,11 +29,17 @@
         var tabw_width = 0;
         var tabs_count = 0;
         var tab_width = 0;
+        var li_left = 0;
+        var pos_left = 0;
 
         function tab_make()
         {
             if(count < 1)
                 return;
+
+            idx = $slides.index($slides.filter("."+cfg.active_class));
+            if(idx == -1)
+                idx = 0;
 
             var subj;
             var tabs = "";
@@ -54,22 +60,39 @@
                     $tab = $this.find("#"+cfg.slide_tab);
                     $tabs = $tab.find("li");
                 }
+
+                tabs_count = $tabs.size();
             }
 
             tabw_width = $tab.width();
-            tabs_count = $tabs.size();
-            tab_width = $tabs.eq(0).width();
+            tab_width = $tabs.eq(idx).width();
 
             if(tabs_count < 1) {
                 $tab.remove();
                 return;
             }
 
-            var li_left = 0;
-
             if(tabs_count < 3) {
-                li_left = parseInt((tab_width - (tab_width * tabs_count)) / (tabs_count + 1));
+                li_left = parseInt((tabw_width - (tab_width * tabs_count)) / (tabs_count + 1));
+
+                $tabs.each(function(index) {
+                    pos_left += (li_left + (tab_width * index));
+                    $(this).css("left", pos_left);
+                });
+
+                $tabs.eq(idx).addClass(cfg.tab_active);
             } else {
+                li_left = parseInt((tabw_width - (tab_width * 3)) / 2);
+                pos_left = tab_width + li_left;
+                pos_right = tabw_width - tab_width;
+
+                $tabs.css("display", "none").removeClass("tab_listed");
+
+                $tabs.eq(idx - 1).addClass("tab_listed").css({left: "0px", display: "block"});
+                $tabs.eq(idx).addClass("tab_listed").css({left: pos_left+"px", display: "block"}).addClass(cfg.tab_active);
+                $tabs.eq((idx + 1) % count).addClass("tab_listed").css({left: pos_right+"px", display: "block"});
+
+                $tabs.not(".tab_listed").css("left", "-"+tab_width+"px");
             }
         }
 
@@ -112,6 +135,19 @@
                 { left: "-="+width }, cfg.duration,
                 function() {
                     $slides.eq(next).addClass(cfg.active_class);
+
+                    if(count >= 3) {
+                        $tabs.removeClass("tab_listed").css("display", "none");
+
+                        $tabs.eq(next - 1).addClass("tab_listed").css({left: "0px", display: "block"});
+                        $tabs.eq(next).addClass("tab_listed").css({left: pos_left+"px", display: "block"});
+                        $tabs.eq((next + 1) % count).addClass("tab_listed").css({left: pos_right+"px", display: "block"});
+
+                        $tabs.not(".tab_listed").css("left", tabw_width+"px");
+                    }
+
+                    $tabs.removeClass(cfg.tab_active);
+                    $tabs.eq(next).addClass(cfg.tab_active);
                 }
             );
         }
@@ -141,6 +177,19 @@
                 { left: "+="+width }, cfg.duration,
                 function() {
                     $slides.eq(next).addClass(cfg.active_class);
+
+                    if(count >= 3) {
+                        $tabs.css("display", "none").removeClass("tab_listed");
+
+                        $tabs.eq(next - 1).addClass("tab_listed").css({left: "0px", display: "block"});
+                        $tabs.eq(next).addClass("tab_listed").css({left: pos_left+"px", display: "block"});
+                        $tabs.eq((next + 1) % count).addClass("tab_listed").css({left: pos_right+"px", display: "block"});
+
+                        $tabs.not(".tab_listed").css("left", "-"+tab_width+"px");
+                    }
+
+                    $tabs.removeClass(cfg.tab_active);
+                    $tabs.eq(next).addClass(cfg.tab_active);
                 }
             );
         }
@@ -151,13 +200,13 @@
                 return true;
         }
 
-        tab_make();
-
         $(window).on("load", function(e) {
+            tab_make();
             swipe_init();
         });
 
         $(window).on("resize", function(e) {
+            tab_make();
             swipe_init();
         });
 
