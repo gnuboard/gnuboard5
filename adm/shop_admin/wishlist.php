@@ -45,56 +45,47 @@ $result = sql_query($sql);
 $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 $qstr1 = 'fr_date='.$fr_date.'&amp;to_date='.$to_date.'&amp;sel_ca_id='.$sel_ca_id;
 
-$listall = '';
-if ($search) // 검색렬일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 ?>
 
-<form name="flist">
+<div class="local_ov01 local_ov">
+    <?php echo $listall; ?>
+    <?php echo $total_count; ?>건
+</div>
+
+<form name="flist" class="local_sch01 local_sch">
 <input type="hidden" name="doc" value="<?php echo $doc; ?>">
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 
-<fieldset>
-    <legend>보관함현황 검색</legend>
+<label for="sel_ca_id" class="sound_only">검색대상</label>
+<select name="sel_ca_id" id="sel_ca_id">
+    <option value=''>전체분류</option>
+    <?php
+    $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
+    $result1 = sql_query($sql1);
+    for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
+        $len = strlen($row1['ca_id']) / 2 - 1;
+        $nbsp = "";
+        for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+        echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
+    }
+    ?>
+</select>
 
-    <span>
-        <?php echo $listall; ?>
-        전체 보관함 내역 <?php echo $total_count; ?>건
-    </span>
-
-    <label for="sel_ca_id" class="sound_only">검색대상</label>
-    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-18 ?>
-    <select name="sel_ca_id" id="sel_ca_id">
-        <option value=''>전체분류</option>
-        <?php
-        $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
-        $result1 = sql_query($sql1);
-        for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
-            $len = strlen($row1['ca_id']) / 2 - 1;
-            $nbsp = "";
-            for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-            echo "<option value='{$row1['ca_id']}'>$nbsp{$row1['ca_name']}\n";
-        }
-        ?>
-    </select>
-    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
-    기간설정
-    <label for="fr_date" class="sound_only">기간 시작일</label>
-    <input type="text" name="fr_date" value="<?php echo $fr_date; ?>" id="fr_date" class="frm_input" size="8" maxlength="8"> 부터
-    <label for="to_date" class="sound_only">기간 종료일</label>
-    <input type="text" name="to_date" value="<?php echo $to_date; ?>" id="to_date" class="frm_input" size="8" maxlength="8"> 까지
-    <input type="submit" value="검색" class="btn_submit">
-</fieldset>
+<label for="fr_date" class="sound_only">시작일</label>
+<input type="text" name="fr_date" value="<?php echo $fr_date; ?>" id="fr_date" class="frm_input" size="8" maxlength="8">
+~
+<label for="to_date" class="sound_only">종료일</label>
+<input type="text" name="to_date" value="<?php echo $to_date; ?>" id="to_date" class="frm_input" size="8" maxlength="8">
+<input type="submit" value="검색" class="btn_submit">
 
 </form>
 
-<section class="cbox">
-    <h2>보관함 현황</h2>
-    <p>고객님들이 보관함에 가장 많이 넣은 순으로 순위를 출력합니다.</p>
-
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <thead>
     <tr>
         <th scope="col">순위</th>
@@ -111,10 +102,14 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
 
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         $num = $rank + $i + 1;
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_num"><?php echo $num; ?></td>
-        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
+        <td>
+            <a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a>
+        </td>
         <td class="td_num"><?php echo $row['it_id_cnt']; ?></td>
     </tr>
     <?php
@@ -126,8 +121,13 @@ if ($search) // 검색렬일 때만 처음 버튼을 보여줌
     ?>
     </tbody>
     </table>
-    <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
-</section>
+</div>
+
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+
+<div class="local_desc01 local_desc">
+    <p>고객님들이 보관함에 가장 많이 넣은 순으로 순위를 출력합니다.</p>
+</div>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

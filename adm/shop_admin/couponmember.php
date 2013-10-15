@@ -44,37 +44,39 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
         <input type="text" name="mb_name" id="mb_name" value="<?php echo $mb_name; ?>" class="frm_input required" required size="20">
         <input type="submit" value="검색" class="btn_frmline">
     </div>
-    <table>
-    <caption>검색결과</caption>
-    <thead>
-    <tr>
-        <th>회원이름</th>
-        <th>회원아이디</th>
-        <th>선택</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-    ?>
-    <tr>
-        <td class="td_mbname"><?php echo $row['mb_name']; ?></td>
-        <td><?php echo $row['mb_id']; ?></td>
-        <td class="scp_find_select"><button type="button" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button>
-    </tr>
-    <?php
-    }
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>검색결과</caption>
+        <thead>
+        <tr>
+            <th>회원이름</th>
+            <th>회원아이디</th>
+            <th>선택</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+        ?>
+        <tr>
+            <td class="td_mbname"><?php echo $row['mb_name']; ?></td>
+            <td><?php echo $row['mb_id']; ?></td>
+            <td class="scp_find_select"><button type="button" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button>
+        </tr>
+        <?php
+        }
 
-    if($i ==0)
-        echo '<tr><td colspan="3" class="empty_table">검색된 자료가 없습니다.</td></tr>';
-    ?>
-    </tbody>
-    </table>
+        if($i ==0)
+            echo '<tr><td colspan="3" class="empty_table">검색된 자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
     </form>
 
     <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <button type="button" onclick="window.close();">닫기</button>
     </div>
 </div>

@@ -31,7 +31,7 @@ if($_GET['sch_target'] == 1) {
 } else {
     $sql_common = " from {$g5['g5_shop_item_table']} ";
     $sql_where = " where it_use = '1' ";
-    if($GET['sch_word'])
+    if($_GET['sch_word'])
         $sql_where .= " and it_name like '%$sch_word%' ";
     $sql_select = " select it_id as t_id, it_name as t_name ";
     $sql_order = " order by it_name ";
@@ -56,9 +56,12 @@ $qstr1 = 'sch_target='.$_GET['sch_target'].'&amp;sch_word='.$_GET['sch_word'];
 <div id="sch_target_frm" class="new_win scp_new_win">
     <h1>쿠폰 적용 <?php echo $html_title; ?>선택</h1>
 
-    <p class="new_win_desc">
-        쿠폰을 적용할 <?php echo $t_desc1; ?> 선택하세요. <?php echo $t_desc2; ?> 많을 경우에는 검색 기능을 이용하세요.
-    </p>
+    <div class="local_desc01 local_desc">
+        <p>
+            쿠폰을 적용할 <?php echo $t_desc1; ?> 선택하세요.<br>
+            <?php echo $t_desc2; ?> 많을 경우에는 검색 기능을 이용하세요.
+        </p>
+    </div>
 
     <form name="ftarget" method="get">
     <input type="hidden" name="sch_target" value="<?php echo $_GET['sch_target']; ?>">
@@ -69,37 +72,39 @@ $qstr1 = 'sch_target='.$_GET['sch_target'].'&amp;sch_word='.$_GET['sch_word'];
         <input type="submit" value="검색" class="btn_frmline">
     </div>
 
-    <table>
-    <caption>검색결과</caption>
-    <thead>
-    <tr>
-        <th><?php echo $t_name; ?></th>
-        <th><?php echo $t_id; ?></th>
-        <th>선택</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-    ?>
-    <tr>
-        <td><?php echo $row['t_name']; ?></td>
-        <td class="scp_target_code"><?php echo $row['t_id']; ?></td>
-        <td class="scp_target_select"><button type="button" class="btn_frmline" onclick="sel_target_id('<?php echo $row['t_id']; ?>');">선택</button>
-    </tr>
-    <?php
-    }
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>검색결과</caption>
+        <thead>
+        <tr>
+            <th scope="col"><?php echo $t_name; ?></th>
+            <th scope="col"><?php echo $t_id; ?></th>
+            <th scope="col">선택</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+        ?>
+        <tr>
+            <td><?php echo $row['t_name']; ?></td>
+            <td class="scp_target_code"><?php echo $row['t_id']; ?></td>
+            <td class="scp_target_select"><button type="button" class="btn_frmline" onclick="sel_target_id('<?php echo $row['t_id']; ?>');">선택</button>
+        </tr>
+        <?php
+        }
 
-    if($i ==0)
-        echo '<tr><td colspan="3" class="empty_table">검색된 자료가 없습니다.</td></tr>';
-    ?>
-    </tbody>
-    </table>
+        if($i ==0)
+            echo '<tr><td colspan="3" class="empty_table">검색된 자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
     </form>
 
     <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
 
-    <div class="btn_confirm">
+    <div class="btn_confirm01 btn_confirm">
         <button type="button" onclick="window.close();">닫기</button>
     </div>
 </div>

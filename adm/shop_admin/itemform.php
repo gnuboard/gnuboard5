@@ -127,254 +127,262 @@ $pg_anchor ='<ul class="anchor">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="it_explan_html" value="1"><!---->
 
-<section id="anc_sitfrm_cate" class="cbox">
-    <h2>상품분류</h2>
+<section id="anc_sitfrm_cate">
+    <h2 class="h2_frm">상품분류</h2>
     <?php echo $pg_anchor; ?>
-    <p>기본분류는 반드시 선택하셔야 합니다. 하나의 상품에 최대 3개의 다른 분류를 지정할 수 있습니다.</p>
+    <div class="local_desc02 local_desc">
+        <p>기본분류는 반드시 선택하셔야 합니다. 하나의 상품에 최대 3개의 다른 분류를 지정할 수 있습니다.</p>
+    </div>
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-    </colgroup>
-    <tbody>
-    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-19 ?>
-    <tr>
-        <th scope="row"><label for="ca_id">기본분류</label></th>
-        <td>
-            <?php if ($w == "") echo help("기본분류를 선택하면, 판매/재고/HTML사용/판매자 E-mail 등을, 선택한 분류의 기본값으로 설정합니다."); ?>
-            <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
-                <option value="">선택하세요</option>
-                <?php echo conv_selected_option($category_select, $it['ca_id']); ?>
-            </select>
-            <script>
-                var ca_use = new Array();
-                var ca_stock_qty = new Array();
-                //var ca_explan_html = new Array();
-                var ca_sell_email = new Array();
-                var ca_opt1_subject = new Array();
-                var ca_opt2_subject = new Array();
-                var ca_opt3_subject = new Array();
-                var ca_opt4_subject = new Array();
-                var ca_opt5_subject = new Array();
-                var ca_opt6_subject = new Array();
-                <?php echo "\n$script"; ?>
-            </script>
-        </td>
-    </tr>
-    <?php for ($i=2; $i<=3; $i++) { ?>
-    <tr>
-        <th scope="row"><label for="ca_id<?php echo $i; ?>"><?php echo $i; ?>차 분류</label></th>
-        <td>
-            <?php echo help($i.'차 분류는 기본 분류의 하위 분류 개념이 아니므로 기본 분류 선택시 해당 상품이 포함될 최하위 분류만 선택하시면 됩니다.'); ?>
-            <select name="ca_id<?php echo $i; ?>" id="ca_id<?php echo $i; ?>">
-                <option value="">선택하세요</option>
-                <?php echo conv_selected_option($category_select, $it['ca_id'.$i]); ?>
-            </select>
-        </td>
-    </tr>
-    <?php } ?>
-    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>상품분류 입력</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="ca_id">기본분류</label></th>
+            <td>
+                <?php if ($w == "") echo help("기본분류를 선택하면, 판매/재고/HTML사용/판매자 E-mail 등을, 선택한 분류의 기본값으로 설정합니다."); ?>
+                <select name="ca_id" id="ca_id" onchange="categorychange(this.form)">
+                    <option value="">선택하세요</option>
+                    <?php echo conv_selected_option($category_select, $it['ca_id']); ?>
+                </select>
+                <script>
+                    var ca_use = new Array();
+                    var ca_stock_qty = new Array();
+                    //var ca_explan_html = new Array();
+                    var ca_sell_email = new Array();
+                    var ca_opt1_subject = new Array();
+                    var ca_opt2_subject = new Array();
+                    var ca_opt3_subject = new Array();
+                    var ca_opt4_subject = new Array();
+                    var ca_opt5_subject = new Array();
+                    var ca_opt6_subject = new Array();
+                    <?php echo "\n$script"; ?>
+                </script>
+            </td>
+        </tr>
+        <?php for ($i=2; $i<=3; $i++) { ?>
+        <tr>
+            <th scope="row"><label for="ca_id<?php echo $i; ?>"><?php echo $i; ?>차 분류</label></th>
+            <td>
+                <?php echo help($i.'차 분류는 기본 분류의 하위 분류 개념이 아니므로 기본 분류 선택시 해당 상품이 포함될 최하위 분류만 선택하시면 됩니다.'); ?>
+                <select name="ca_id<?php echo $i; ?>" id="ca_id<?php echo $i; ?>">
+                    <option value="">선택하세요</option>
+                    <?php echo conv_selected_option($category_select, $it['ca_id'.$i]); ?>
+                </select>
+            </td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
+    </div>
 </section>
 
-<section id="anc_sitfrm_ini" class="cbox">
-    <h2>기본정보</h2>
+<section id="anc_sitfrm_ini">
+    <h2 class="h2_frm">기본정보</h2>
     <?php echo $pg_anchor; ?>
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row">상품코드</th>
-        <td colspan="2">
-            <?php if ($w == '') { // 추가 ?>
-                <!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
-                <!-- <input type=text class=required name=it_id value="<?php echo 10000000000-time()?>" size=12 maxlength=10 required> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
-                <?php echo help("상품의 코드는 10자리 숫자로 자동생성합니다. <b>직접 상품코드를 입력할 수도 있습니다.</b>\n상품코드는 영문자, 숫자, - 만 입력 가능합니다."); ?>
-                <input type="text" name="it_id" value="<?php echo time(); ?>" id="it_id" required class="frm_input required" size="20" maxlength="20">
-                <!-- <?php if ($default['de_code_dup_use']) { ?><button type="button" class="btn_frmline" onclick="codedupcheck(document.all.it_id.value)">중복검사</a><?php } ?> -->
-            <?php } else { ?>
-                <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
-                <span class="frm_ca_id"><?php echo $it['it_id']; ?></span>
-                <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $it_id; ?>" class="btn_frmline">상품확인</a>
-                <a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/itemuselist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">사용후기</a>
-                <a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/itemqalist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">상품문의</a>
-            <?php } ?>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_name">상품명</label></th>
-        <td colspan="2">
-            <input type="text" name="it_name" value="<?php echo get_text(cut_str($it['it_name'], 250, "")); ?>" id="it_name" required class="frm_input required" size="95">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_mobile_name">모바일 상품명</label></th>
-        <td colspan="2">
-            <?php echo help("모바일에서 보여지는 상품명이 다른 경우에 입력합니다. 입력이 없으면 기본 상품명이 출력됩니다."); ?>
-            <input type="text" name="it_mobile_name" value="<?php echo get_text(cut_str($it['it_mobile_name'], 250, "")); ?>" id="it_mobile_name" class="frm_input">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_order">출력순서</label></th>
-        <td>
-            <?php echo help("숫자가 작을 수록 상위에 출력됩니다. 음수 입력도 가능하며 입력 가능 범위는 -2147483648 부터 2147483647 까지입니다.\n<b>입력하지 않으면 자동으로 출력됩니다.</b>"); ?>
-            <input type="text" name="it_order" value="<?php echo $it['it_order']; ?>" id="it_order" class="frm_input" size="12">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_order" value="1" id="chk_ca_it_order">
-            <label for="chk_ca_it_order">분류적용</label>
-            <input type="checkbox" name="chk_all_it_order" value="1" id="chk_all_it_order">
-            <label for="chk_all_it_order">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">상품유형</th>
-        <td>
-            <?php echo help("메인화면에 유형별로 출력할때 사용합니다.\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다."); ?>
-            <input type="checkbox" name="it_type1" value="1" <?php echo ($it['it_type1'] ? "checked" : ""); ?> id="it_type1">
-            <label for="it_type1">히트 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_hit2.gif" alt=""></label>
-            <input type="checkbox" name="it_type2" value="1" <?php echo ($it['it_type2'] ? "checked" : ""); ?> id="it_type2">
-            <label for="it_type2">추천 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_rec2.gif" alt=""></label>
-            <input type="checkbox" name="it_type3" value="1" <?php echo ($it['it_type3'] ? "checked" : ""); ?> id="it_type3">
-            <label for="it_type3">신상품 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_new2.gif" alt=""></label>
-            <input type="checkbox" name="it_type4" value="1" <?php echo ($it['it_type4'] ? "checked" : ""); ?> id="it_type4">
-            <label for="it_type4">인기 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_best2.gif" alt=""></label>
-            <input type="checkbox" name="it_type5" value="1" <?php echo ($it['it_type5'] ? "checked" : ""); ?> id="it_type5">
-            <label for="it_type5">할인 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_discount2.gif" alt=""></label>
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_type" value="1" id="chk_ca_it_type">
-            <label for="chk_ca_it_type">분류적용</label>
-            <input type="checkbox" name="chk_all_it_type" value="1" id="chk_all_it_type">
-            <label for="chk_all_it_type">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_maker">제조사</label></th>
-        <td>
-            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
-            <input type="text" name="it_maker" value="<?php echo get_text($it['it_maker']); ?>" id="it_maker" class="frm_input" size="40">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_maker" value="1" id="chk_ca_it_maker">
-            <label for="chk_ca_it_maker">분류적용</label>
-            <input type="checkbox" name="chk_all_it_maker" value="1" id="chk_all_it_maker">
-            <label for="chk_all_it_maker">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_origin">원산지</label></th>
-        <td>
-            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
-            <input type="text" name="it_origin" value="<?php echo get_text($it['it_origin']); ?>" id="it_origin" class="frm_input" size="40">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_origin" value="1" id="chk_ca_it_origin">
-            <label for="chk_ca_it_origin">분류적용</label>
-            <input type="checkbox" name="chk_all_it_origin" value="1" id="chk_all_it_origin">
-            <label for="chk_all_it_origin">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_brand">브랜드</label></th>
-        <td>
-            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
-            <input type="text" name="it_brand" value="<?php echo get_text($it['it_brand']); ?>" id="it_brand" class="frm_input" size="40">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_brand" value="1" id="chk_ca_it_brand">
-            <label for="chk_ca_it_brand">분류적용</label>
-            <input type="checkbox" name="chk_all_it_brand" value="1" id="chk_all_it_brand">
-            <label for="chk_all_it_brand">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_model">모델</label></th>
-        <td>
-            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
-            <input type="text" name="it_model" value="<?php echo get_text($it['it_model']); ?>" id="it_model" class="frm_input" size="40">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_model" value="1" id="chk_ca_it_model">
-            <label for="chk_ca_it_model">분류적용</label>
-            <input type="checkbox" name="chk_all_it_model" value="1" id="chk_all_it_model">
-            <label for="chk_all_it_model">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_tel_inq">전화문의</label></th>
-        <td>
-            <?php echo help("상품 금액 대신 전화문의로 표시됩니다."); ?>
-            <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <?php echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_tel_inq" value="1" id="chk_ca_it_tel_inq">
-            <label for="chk_ca_it_tel_inq">분류적용</label>
-            <input type="checkbox" name="chk_all_it_tel_inq" value="1" id="chk_all_it_tel_inq">
-            <label for="chk_all_it_tel_inq">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_use">판매가능</label></th>
-        <td>
-            <?php echo help("잠시 판매를 중단하거나 재고가 없을 경우에 체크를 해제해 놓으면 출력되지 않으며, 주문도 받지 않습니다."); ?>
-            <input type="checkbox" name="it_use" value="1" id="it_use" <?php echo ($it['it_use']) ? "checked" : ""; ?>> 예
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_use" value="1" id="chk_ca_it_use">
-            <label for="chk_ca_it_use">분류적용</label>
-            <input type="checkbox" name="chk_all_it_use" value="1" id="chk_all_it_use">
-            <label for="chk_all_it_use">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_basic">기본설명</label></th>
-        <td>
-            <?php echo help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다. HTML 입력도 가능합니다."); ?>
-            <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="80">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
-            <label for="chk_ca_it_basic">분류적용</label>
-            <input type="checkbox" name="chk_all_it_basic" value="1" id="chk_all_it_basic">
-            <label for="chk_all_it_basic">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">상품설명</th>
-        <td colspan="2"> <?php echo editor_html('it_explan', $it['it_explan']); ?></td>
-    </tr>
-    <tr>
-        <th scope="row">모바일 상품설명</th>
-        <td colspan="2"> <?php echo editor_html('it_mobile_explan', $it['it_mobile_explan']); ?></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
-        <td>
-            <?php echo help("운영자와 실제 판매자가 다른 경우 실제 판매자의 e-mail을 입력하면, 상품 주문 시점을 기준으로 실제 판매자에게도 주문서를 발송합니다."); ?>
-            <input type="text" name="it_sell_email" value="<?php echo $it['it_sell_email']; ?>" id="it_sell_email" class="frm_input" size="40">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_sell_email" value="1" id="chk_ca_it_sell_email">
-            <label for="chk_ca_it_sell_email">분류적용</label>
-            <input type="checkbox" name="chk_all_it_sell_email" value="1" id="chk_all_it_sell_email">
-            <label for="chk_all_it_sell_email">전체적용</label>
-        </td>
-    </tr>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>기본정보 입력</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+            <col class="grid_3">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row">상품코드</th>
+            <td colspan="2">
+                <?php if ($w == '') { // 추가 ?>
+                    <!-- 최근에 입력한 코드(자동 생성시)가 목록의 상단에 출력되게 하려면 아래의 코드로 대체하십시오. -->
+                    <!-- <input type=text class=required name=it_id value="<?php echo 10000000000-time()?>" size=12 maxlength=10 required> <a href='javascript:;' onclick="codedupcheck(document.all.it_id.value)"><img src='./img/btn_code.gif' border=0 align=absmiddle></a> -->
+                    <?php echo help("상품의 코드는 10자리 숫자로 자동생성합니다. <b>직접 상품코드를 입력할 수도 있습니다.</b>\n상품코드는 영문자, 숫자, - 만 입력 가능합니다."); ?>
+                    <input type="text" name="it_id" value="<?php echo time(); ?>" id="it_id" required class="frm_input required" size="20" maxlength="20">
+                    <!-- <?php if ($default['de_code_dup_use']) { ?><button type="button" class="btn_frmline" onclick="codedupcheck(document.all.it_id.value)">중복검사</a><?php } ?> -->
+                <?php } else { ?>
+                    <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
+                    <span class="frm_ca_id"><?php echo $it['it_id']; ?></span>
+                    <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $it_id; ?>" class="btn_frmline">상품확인</a>
+                    <a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/itemuselist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">사용후기</a>
+                    <a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/itemqalist.php?sel_field=a.it_id&amp;search=<?php echo $it_id; ?>" class="btn_frmline">상품문의</a>
+                <?php } ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_name">상품명</label></th>
+            <td colspan="2">
+                <input type="text" name="it_name" value="<?php echo get_text(cut_str($it['it_name'], 250, "")); ?>" id="it_name" required class="frm_input required" size="95">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_mobile_name">모바일 상품명</label></th>
+            <td colspan="2">
+                <?php echo help("모바일에서 보여지는 상품명이 다른 경우에 입력합니다. 입력이 없으면 기본 상품명이 출력됩니다."); ?>
+                <input type="text" name="it_mobile_name" value="<?php echo get_text(cut_str($it['it_mobile_name'], 250, "")); ?>" id="it_mobile_name" class="frm_input">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_order">출력순서</label></th>
+            <td>
+                <?php echo help("숫자가 작을 수록 상위에 출력됩니다. 음수 입력도 가능하며 입력 가능 범위는 -2147483648 부터 2147483647 까지입니다.\n<b>입력하지 않으면 자동으로 출력됩니다.</b>"); ?>
+                <input type="text" name="it_order" value="<?php echo $it['it_order']; ?>" id="it_order" class="frm_input" size="12">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_order" value="1" id="chk_ca_it_order">
+                <label for="chk_ca_it_order">분류적용</label>
+                <input type="checkbox" name="chk_all_it_order" value="1" id="chk_all_it_order">
+                <label for="chk_all_it_order">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">상품유형</th>
+            <td>
+                <?php echo help("메인화면에 유형별로 출력할때 사용합니다.\n이곳에 체크하게되면 상품리스트에서 유형별로 정렬할때 체크된 상품이 가장 먼저 출력됩니다."); ?>
+                <input type="checkbox" name="it_type1" value="1" <?php echo ($it['it_type1'] ? "checked" : ""); ?> id="it_type1">
+                <label for="it_type1">히트 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_hit2.gif" alt=""></label>
+                <input type="checkbox" name="it_type2" value="1" <?php echo ($it['it_type2'] ? "checked" : ""); ?> id="it_type2">
+                <label for="it_type2">추천 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_rec2.gif" alt=""></label>
+                <input type="checkbox" name="it_type3" value="1" <?php echo ($it['it_type3'] ? "checked" : ""); ?> id="it_type3">
+                <label for="it_type3">신상품 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_new2.gif" alt=""></label>
+                <input type="checkbox" name="it_type4" value="1" <?php echo ($it['it_type4'] ? "checked" : ""); ?> id="it_type4">
+                <label for="it_type4">인기 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_best2.gif" alt=""></label>
+                <input type="checkbox" name="it_type5" value="1" <?php echo ($it['it_type5'] ? "checked" : ""); ?> id="it_type5">
+                <label for="it_type5">할인 <img src="<?php echo G5_SHOP_URL; ?>/img/icon_discount2.gif" alt=""></label>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_type" value="1" id="chk_ca_it_type">
+                <label for="chk_ca_it_type">분류적용</label>
+                <input type="checkbox" name="chk_all_it_type" value="1" id="chk_all_it_type">
+                <label for="chk_all_it_type">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_maker">제조사</label></th>
+            <td>
+                <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+                <input type="text" name="it_maker" value="<?php echo get_text($it['it_maker']); ?>" id="it_maker" class="frm_input" size="40">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_maker" value="1" id="chk_ca_it_maker">
+                <label for="chk_ca_it_maker">분류적용</label>
+                <input type="checkbox" name="chk_all_it_maker" value="1" id="chk_all_it_maker">
+                <label for="chk_all_it_maker">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_origin">원산지</label></th>
+            <td>
+                <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+                <input type="text" name="it_origin" value="<?php echo get_text($it['it_origin']); ?>" id="it_origin" class="frm_input" size="40">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_origin" value="1" id="chk_ca_it_origin">
+                <label for="chk_ca_it_origin">분류적용</label>
+                <input type="checkbox" name="chk_all_it_origin" value="1" id="chk_all_it_origin">
+                <label for="chk_all_it_origin">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_brand">브랜드</label></th>
+            <td>
+                <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+                <input type="text" name="it_brand" value="<?php echo get_text($it['it_brand']); ?>" id="it_brand" class="frm_input" size="40">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_brand" value="1" id="chk_ca_it_brand">
+                <label for="chk_ca_it_brand">분류적용</label>
+                <input type="checkbox" name="chk_all_it_brand" value="1" id="chk_all_it_brand">
+                <label for="chk_all_it_brand">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_model">모델</label></th>
+            <td>
+                <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+                <input type="text" name="it_model" value="<?php echo get_text($it['it_model']); ?>" id="it_model" class="frm_input" size="40">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_model" value="1" id="chk_ca_it_model">
+                <label for="chk_ca_it_model">분류적용</label>
+                <input type="checkbox" name="chk_all_it_model" value="1" id="chk_all_it_model">
+                <label for="chk_all_it_model">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_tel_inq">전화문의</label></th>
+            <td>
+                <?php echo help("상품 금액 대신 전화문의로 표시됩니다."); ?>
+                <input type="checkbox" name="it_tel_inq" value="1" id="it_tel_inq" <?php echo ($it['it_tel_inq']) ? "checked" : ""; ?>> 예
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_tel_inq" value="1" id="chk_ca_it_tel_inq">
+                <label for="chk_ca_it_tel_inq">분류적용</label>
+                <input type="checkbox" name="chk_all_it_tel_inq" value="1" id="chk_all_it_tel_inq">
+                <label for="chk_all_it_tel_inq">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_use">판매가능</label></th>
+            <td>
+                <?php echo help("잠시 판매를 중단하거나 재고가 없을 경우에 체크를 해제해 놓으면 출력되지 않으며, 주문도 받지 않습니다."); ?>
+                <input type="checkbox" name="it_use" value="1" id="it_use" <?php echo ($it['it_use']) ? "checked" : ""; ?>> 예
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_use" value="1" id="chk_ca_it_use">
+                <label for="chk_ca_it_use">분류적용</label>
+                <input type="checkbox" name="chk_all_it_use" value="1" id="chk_all_it_use">
+                <label for="chk_all_it_use">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_basic">기본설명</label></th>
+            <td>
+                <?php echo help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다. HTML 입력도 가능합니다."); ?>
+                <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="80">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
+                <label for="chk_ca_it_basic">분류적용</label>
+                <input type="checkbox" name="chk_all_it_basic" value="1" id="chk_all_it_basic">
+                <label for="chk_all_it_basic">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">상품설명</th>
+            <td colspan="2"> <?php echo editor_html('it_explan', $it['it_explan']); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">모바일 상품설명</th>
+            <td colspan="2"> <?php echo editor_html('it_mobile_explan', $it['it_mobile_explan']); ?></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
+            <td>
+                <?php echo help("운영자와 실제 판매자가 다른 경우 실제 판매자의 e-mail을 입력하면, 상품 주문 시점을 기준으로 실제 판매자에게도 주문서를 발송합니다."); ?>
+                <input type="text" name="it_sell_email" value="<?php echo $it['it_sell_email']; ?>" id="it_sell_email" class="frm_input" size="40">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_sell_email" value="1" id="chk_ca_it_sell_email">
+                <label for="chk_ca_it_sell_email">분류적용</label>
+                <input type="checkbox" name="chk_all_it_sell_email" value="1" id="chk_all_it_sell_email">
+                <label for="chk_all_it_sell_email">전체적용</label>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 </section>
 
-<section id="anc_sitfrm_compact" class="cbox">
-    <h2>상품요약정보</h2>
+<section id="anc_sitfrm_compact">
+    <h2 class="h2_frm">상품요약정보</h2>
     <?php echo $pg_anchor; ?>
-    <p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
+    <div class="local_desc02 local_desc">
+        <p><strong>전자상거래 등에서의 상품 등의 정보제공에 관한 고시</strong>에 따라 총 35개 상품군에 대해 상품 특성 등을 양식에 따라 입력할 수 있습니다.</p>
+    </div>
 
     <div id="sit_compact">
         <?php echo help("상품군을 선택하면 자동으로 항목이 변환됩니다."); ?>
@@ -408,532 +416,543 @@ $(function(){
 });
 </script>
 
-<section id="anc_sitfrm_cost" class="cbox">
-    <h2>가격 및 재고</h2>
+<section id="anc_sitfrm_cost">
+    <h2 class="h2_frm">가격 및 재고</h2>
     <?php echo $pg_anchor; ?>
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row"><label for="it_price">판매가격</label></th>
-        <td>
-            <input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_price" value="1" id="chk_ca_it_price">
-            <label for="chk_ca_it_price">분류적용</label>
-            <input type="checkbox" name="chk_all_it_price" value="1" id="chk_all_it_price">
-            <label for="chk_all_it_price">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_cust_price">시중가격</label></th>
-        <td>
-            <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
-            <input type="text" name="it_cust_price" value="<?php echo $it['it_cust_price']; ?>" id="it_cust_price" class="frm_input" size="8"> 원
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_cust_price" value="1" id="chk_ca_it_cust_price">
-            <label for="chk_ca_it_cust_price">분류적용</label>
-            <input type="checkbox" name="chk_all_it_cust_price" value="1" id="chk_all_it_cust_price">
-            <label for="chk_all_it_cust_price">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_point_type">포인트 유형</label></th>
-        <td>
-            <?php echo help("포인트 유형을 설정할 수 있습니다. 비율로 설정했을 경우 판매가격의 %비율로 포인트가 지급됩니다."); ?>
-            <select name="it_point_type" id="it_point_type">
-                <option value="0"<?php echo get_selected('0', $it['it_point_type']); ?>>금액</option>
-                <option value="1"<?php echo get_selected('1', $it['it_point_type']); ?>>비율</option>
-            </select>
-            <script>
-            $(function() {
-                $("#it_point_type").change(function() {
-                    if($(this).val() == "1")
-                        $("#it_point_unit").text("%");
-                    else
-                        $("#it_point_unit").text("점");
+
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>가격 및 재고 입력</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+            <col class="grid_3">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="it_price">판매가격</label></th>
+            <td>
+                <input type="text" name="it_price" value="<?php echo $it['it_price']; ?>" id="it_price" class="frm_input" size="8"> 원
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_price" value="1" id="chk_ca_it_price">
+                <label for="chk_ca_it_price">분류적용</label>
+                <input type="checkbox" name="chk_all_it_price" value="1" id="chk_all_it_price">
+                <label for="chk_all_it_price">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_cust_price">시중가격</label></th>
+            <td>
+                <?php echo help("입력하지 않으면 상품상세페이지에 출력하지 않습니다."); ?>
+                <input type="text" name="it_cust_price" value="<?php echo $it['it_cust_price']; ?>" id="it_cust_price" class="frm_input" size="8"> 원
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_cust_price" value="1" id="chk_ca_it_cust_price">
+                <label for="chk_ca_it_cust_price">분류적용</label>
+                <input type="checkbox" name="chk_all_it_cust_price" value="1" id="chk_all_it_cust_price">
+                <label for="chk_all_it_cust_price">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_point_type">포인트 유형</label></th>
+            <td>
+                <?php echo help("포인트 유형을 설정할 수 있습니다. 비율로 설정했을 경우 판매가격의 %비율로 포인트가 지급됩니다."); ?>
+                <select name="it_point_type" id="it_point_type">
+                    <option value="0"<?php echo get_selected('0', $it['it_point_type']); ?>>금액</option>
+                    <option value="1"<?php echo get_selected('1', $it['it_point_type']); ?>>비율</option>
+                </select>
+                <script>
+                $(function() {
+                    $("#it_point_type").change(function() {
+                        if($(this).val() == "1")
+                            $("#it_point_unit").text("%");
+                        else
+                            $("#it_point_unit").text("점");
+                    });
                 });
-            });
-            </script>
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_point_type" value="1" id="chk_ca_it_point_type">
-            <label for="chk_ca_it_point_type">분류적용</label>
-            <input type="checkbox" name="chk_all_it_point_type" value="1" id="chk_all_it_point_type">
-            <label for="chk_all_it_point_type">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_point">포인트</label></th>
-        <td>
-            <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n게시판의 포인트 기능과는 별개로 동작합니다."); ?>
-            <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> <span id="it_point_unit"><?php if($it['it_point_type']) echo '%'; else echo '점'; ?></span>
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_point" value="1" id="chk_ca_it_point">
-            <label for="chk_ca_it_point">분류적용</label>
-            <input type="checkbox" name="chk_all_it_point" value="1" id="chk_all_it_point">
-            <label for="chk_all_it_point">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_stock_qty">재고수량</label></th>
-        <td>
-            <?php echo help("<b>주문관리에서 상품별 상태 변경에 따라 자동으로 재고를 가감합니다.</b> 재고는 규격/색상별이 아닌, 상품별로만 관리됩니다."); ?>
-            <input type="text" name="it_stock_qty" value="<?php echo $it['it_stock_qty']; ?>" id="it_stock_qty" class="frm_input" size="8"> 개
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_stock_qty" value="1" id="chk_ca_it_stock_qty">
-            <label for="chk_ca_it_stock_qty">분류적용</label>
-            <input type="checkbox" name="chk_all_it_stock_qty" value="1" id="chk_all_it_stock_qty">
-            <label for="chk_all_it_stock_qty">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_buy_min_qty">최소구매수량</label></th>
-        <td>
-            <?php echo help("상품 구매시 최소 구매 수량을 설정합니다."); ?>
-            <input type="text" name="it_buy_min_qty" value="<?php echo $it['it_buy_min_qty']; ?>" id="it_buy_min_qty" class="frm_input" size="8"> 개
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_buy_min_qty" value="1" id="chk_ca_it_buy_min_qty">
-            <label for="chk_ca_it_buy_min_qty">분류적용</label>
-            <input type="checkbox" name="chk_all_it_buy_min_qty" value="1" id="chk_all_it_buy_min_qty">
-            <label for="chk_all_it_buy_min_qty">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_buy_max_qty">최대구매수량</label></th>
-        <td>
-            <?php echo help("상품 구매시 최대 구매 수량을 설정합니다."); ?>
-            <input type="text" name="it_buy_max_qty" value="<?php echo $it['it_buy_max_qty']; ?>" id="it_buy_max_qty" class="frm_input" size="8"> 개
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_buy_max_qty" value="1" id="chk_ca_it_buy_max_qty">
-            <label for="chk_ca_it_buy_max_qty">분류적용</label>
-            <input type="checkbox" name="chk_all_it_buy_max_qty" value="1" id="chk_all_it_buy_max_qty">
-            <label for="chk_all_it_buy_max_qty">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="it_notax">상품과세 유형</label></th>
-        <td>
-            <?php echo help("상품의 과세유형(과세, 비과세)을 설정합니다."); ?>
-            <select name="it_notax" id="it_notax">
-                <option value="0"<?php echo get_selected('0', $it['it_notax']); ?>>과세</option>
-                <option value="1"<?php echo get_selected('1', $it['it_notax']); ?>>비과세</option>
-            </select>
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_notax" value="1" id="chk_ca_it_notax">
-            <label for="chk_ca_it_notax">분류적용</label>
-            <input type="checkbox" name="chk_all_it_notax" value="1" id="chk_all_it_notax">
-            <label for="chk_all_it_notax">전체적용</label>
-        </td>
-    </tr>
-    <?php
-    $opt_subject = explode(',', $it['it_option_subject']);
-    ?>
-    <tr>
-        <th scope="row">상품선택옵션</th>
-        <td colspan="2">
-            <div class="sit_option">
-                <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰'); ?>
-                <table class="frm_tbl">
-                <colgroup>
-                    <col class="grid_4">
-                    <col>
-                </colgroup>
-                <tbody>
-                <tr>
-                    <th scope="row">
-                        <label for="opt1_subject">옵션1</label>
-                        <input type="text" name="opt1_subject" value="<?php echo $opt_subject[0]; ?>" id="opt1_subject" class="frm_input" size="15">
-                    </th>
-                    <td>
-                        <label for="opt1"><b>옵션1 항목</b></label>
-                        <input type="text" name="opt1" value="" id="opt1" class="frm_input" size="50">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="opt2_subject">옵션2</label>
-                        <input type="text" name="opt2_subject" value="<?php echo $opt_subject[1]; ?>" id="opt2_subject" class="frm_input" size="15">
-                    </th>
-                    <td>
-                        <label for="opt2"><b>옵션2 항목</b></label>
-                        <input type="text" name="opt2" value="" id="opt2" class="frm_input" size="50">
-                    </td>
-                </tr>
-                 <tr>
-                    <th scope="row">
-                        <label for="opt3_subject">옵션3</label>
-                        <input type="text" name="opt3_subject" value="<?php echo $opt_subject[2]; ?>" id="opt3_subject" class="frm_input" size="15">
-                    </th>
-                    <td>
-                        <label for="opt3"><b>옵션3 항목</b></label>
-                        <input type="text" name="opt3" value="" id="opt3" class="frm_input" size="50">
-                    </td>
-                </tr>
-                </tbody>
-                </table>
-                <div class="btn_confirm">
-                    <button type="button" id="option_table_create" class="btn_frmline">옵션목록생성</button>
+                </script>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_point_type" value="1" id="chk_ca_it_point_type">
+                <label for="chk_ca_it_point_type">분류적용</label>
+                <input type="checkbox" name="chk_all_it_point_type" value="1" id="chk_all_it_point_type">
+                <label for="chk_all_it_point_type">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_point">포인트</label></th>
+            <td>
+                <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n게시판의 포인트 기능과는 별개로 동작합니다."); ?>
+                <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> <span id="it_point_unit"><?php if($it['it_point_type']) echo '%'; else echo '점'; ?></span>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_point" value="1" id="chk_ca_it_point">
+                <label for="chk_ca_it_point">분류적용</label>
+                <input type="checkbox" name="chk_all_it_point" value="1" id="chk_all_it_point">
+                <label for="chk_all_it_point">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_stock_qty">재고수량</label></th>
+            <td>
+                <?php echo help("<b>주문관리에서 상품별 상태 변경에 따라 자동으로 재고를 가감합니다.</b> 재고는 규격/색상별이 아닌, 상품별로만 관리됩니다."); ?>
+                <input type="text" name="it_stock_qty" value="<?php echo $it['it_stock_qty']; ?>" id="it_stock_qty" class="frm_input" size="8"> 개
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_stock_qty" value="1" id="chk_ca_it_stock_qty">
+                <label for="chk_ca_it_stock_qty">분류적용</label>
+                <input type="checkbox" name="chk_all_it_stock_qty" value="1" id="chk_all_it_stock_qty">
+                <label for="chk_all_it_stock_qty">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_buy_min_qty">최소구매수량</label></th>
+            <td>
+                <?php echo help("상품 구매시 최소 구매 수량을 설정합니다."); ?>
+                <input type="text" name="it_buy_min_qty" value="<?php echo $it['it_buy_min_qty']; ?>" id="it_buy_min_qty" class="frm_input" size="8"> 개
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_buy_min_qty" value="1" id="chk_ca_it_buy_min_qty">
+                <label for="chk_ca_it_buy_min_qty">분류적용</label>
+                <input type="checkbox" name="chk_all_it_buy_min_qty" value="1" id="chk_all_it_buy_min_qty">
+                <label for="chk_all_it_buy_min_qty">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_buy_max_qty">최대구매수량</label></th>
+            <td>
+                <?php echo help("상품 구매시 최대 구매 수량을 설정합니다."); ?>
+                <input type="text" name="it_buy_max_qty" value="<?php echo $it['it_buy_max_qty']; ?>" id="it_buy_max_qty" class="frm_input" size="8"> 개
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_buy_max_qty" value="1" id="chk_ca_it_buy_max_qty">
+                <label for="chk_ca_it_buy_max_qty">분류적용</label>
+                <input type="checkbox" name="chk_all_it_buy_max_qty" value="1" id="chk_all_it_buy_max_qty">
+                <label for="chk_all_it_buy_max_qty">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_notax">상품과세 유형</label></th>
+            <td>
+                <?php echo help("상품의 과세유형(과세, 비과세)을 설정합니다."); ?>
+                <select name="it_notax" id="it_notax">
+                    <option value="0"<?php echo get_selected('0', $it['it_notax']); ?>>과세</option>
+                    <option value="1"<?php echo get_selected('1', $it['it_notax']); ?>>비과세</option>
+                </select>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_notax" value="1" id="chk_ca_it_notax">
+                <label for="chk_ca_it_notax">분류적용</label>
+                <input type="checkbox" name="chk_all_it_notax" value="1" id="chk_all_it_notax">
+                <label for="chk_all_it_notax">전체적용</label>
+            </td>
+        </tr>
+        <?php
+        $opt_subject = explode(',', $it['it_option_subject']);
+        ?>
+        <tr>
+            <th scope="row">상품선택옵션</th>
+            <td colspan="2">
+                <div class="sit_option tbl_frm01">
+                    <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰'); ?>
+                    <table>
+                    <caption>상품선택옵션 입력</caption>
+                    <colgroup>
+                        <col class="grid_4">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <tr>
+                        <th scope="row">
+                            <label for="opt1_subject">옵션1</label>
+                            <input type="text" name="opt1_subject" value="<?php echo $opt_subject[0]; ?>" id="opt1_subject" class="frm_input" size="15">
+                        </th>
+                        <td>
+                            <label for="opt1"><b>옵션1 항목</b></label>
+                            <input type="text" name="opt1" value="" id="opt1" class="frm_input" size="50">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th scope="row">
+                            <label for="opt2_subject">옵션2</label>
+                            <input type="text" name="opt2_subject" value="<?php echo $opt_subject[1]; ?>" id="opt2_subject" class="frm_input" size="15">
+                        </th>
+                        <td>
+                            <label for="opt2"><b>옵션2 항목</b></label>
+                            <input type="text" name="opt2" value="" id="opt2" class="frm_input" size="50">
+                        </td>
+                    </tr>
+                     <tr>
+                        <th scope="row">
+                            <label for="opt3_subject">옵션3</label>
+                            <input type="text" name="opt3_subject" value="<?php echo $opt_subject[2]; ?>" id="opt3_subject" class="frm_input" size="15">
+                        </th>
+                        <td>
+                            <label for="opt3"><b>옵션3 항목</b></label>
+                            <input type="text" name="opt3" value="" id="opt3" class="frm_input" size="50">
+                        </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    <div class="btn_confirm02 btn_confirm">
+                        <button type="button" id="option_table_create" class="btn_frmline">옵션목록생성</button>
+                    </div>
                 </div>
-            </div>
-            <div id="sit_option_frm"><?php include_once(G5_ADMIN_PATH.'/shop_admin/itemoption.php'); ?></div>
+                <div id="sit_option_frm"><?php include_once(G5_ADMIN_PATH.'/shop_admin/itemoption.php'); ?></div>
 
-            <script>
-            $(function() {
-                <?php if($it['it_id'] && $po_run) { ?>
-                //옵션항목설정
-                var arr_opt1 = new Array();
-                var arr_opt2 = new Array();
-                var arr_opt3 = new Array();
-                var opt1 = opt2 = opt3 = '';
-                var opt_val;
+                <script>
+                $(function() {
+                    <?php if($it['it_id'] && $po_run) { ?>
+                    //옵션항목설정
+                    var arr_opt1 = new Array();
+                    var arr_opt2 = new Array();
+                    var arr_opt3 = new Array();
+                    var opt1 = opt2 = opt3 = '';
+                    var opt_val;
 
-                $(".opt-cell").each(function() {
-                    opt_val = $(this).text().split(" > ");
-                    opt1 = opt_val[0];
-                    opt2 = opt_val[1];
-                    opt3 = opt_val[2];
+                    $(".opt-cell").each(function() {
+                        opt_val = $(this).text().split(" > ");
+                        opt1 = opt_val[0];
+                        opt2 = opt_val[1];
+                        opt3 = opt_val[2];
 
-                    if(opt1 && $.inArray(opt1, arr_opt1) == -1)
-                        arr_opt1.push(opt1);
+                        if(opt1 && $.inArray(opt1, arr_opt1) == -1)
+                            arr_opt1.push(opt1);
 
-                    if(opt2 && $.inArray(opt2, arr_opt2) == -1)
-                        arr_opt2.push(opt2);
+                        if(opt2 && $.inArray(opt2, arr_opt2) == -1)
+                            arr_opt2.push(opt2);
 
-                    if(opt3 && $.inArray(opt3, arr_opt3) == -1)
-                        arr_opt3.push(opt3);
-                });
+                        if(opt3 && $.inArray(opt3, arr_opt3) == -1)
+                            arr_opt3.push(opt3);
+                    });
 
 
-                $("input[name=opt1]").val(arr_opt1.join());
-                $("input[name=opt2]").val(arr_opt2.join());
-                $("input[name=opt3]").val(arr_opt3.join());
-                <?php } ?>
-                // 옵션목록생성
-                $("#option_table_create").click(function() {
-                    var opt1_subject = $.trim($("#opt1_subject").val());
-                    var opt2_subject = $.trim($("#opt2_subject").val());
-                    var opt3_subject = $.trim($("#opt3_subject").val());
-                    var opt1 = $.trim($("#opt1").val());
-                    var opt2 = $.trim($("#opt2").val());
-                    var opt3 = $.trim($("#opt3").val());
-                    var $option_table = $("#sit_option_frm");
+                    $("input[name=opt1]").val(arr_opt1.join());
+                    $("input[name=opt2]").val(arr_opt2.join());
+                    $("input[name=opt3]").val(arr_opt3.join());
+                    <?php } ?>
+                    // 옵션목록생성
+                    $("#option_table_create").click(function() {
+                        var opt1_subject = $.trim($("#opt1_subject").val());
+                        var opt2_subject = $.trim($("#opt2_subject").val());
+                        var opt3_subject = $.trim($("#opt3_subject").val());
+                        var opt1 = $.trim($("#opt1").val());
+                        var opt2 = $.trim($("#opt2").val());
+                        var opt3 = $.trim($("#opt3").val());
+                        var $option_table = $("#sit_option_frm");
 
-                    if(!opt1_subject || !opt1) {
-                        alert("옵션명과 옵션항목을 입력해 주십시오.");
-                        return false;
-                    }
-
-                    $.post(
-                        "<?php echo G5_ADMIN_URL; ?>/shop_admin/itemoption.php",
-                        { opt1_subject: opt1_subject, opt2_subject: opt2_subject, opt3_subject: opt3_subject, opt1: opt1, opt2: opt2, opt3: opt3 },
-                        function(data) {
-                            $option_table.empty().html(data);
+                        if(!opt1_subject || !opt1) {
+                            alert("옵션명과 옵션항목을 입력해 주십시오.");
+                            return false;
                         }
-                    );
-                });
 
-                // 모두선택
-                $("input[name=opt_chk_all]").live("click", function() {
-                    if($(this).is(":checked")) {
-                        $("input[name='opt_chk[]']").attr("checked", true);
-                    } else {
-                        $("input[name='opt_chk[]']").attr("checked", false);
-                    }
-                });
+                        $.post(
+                            "<?php echo G5_ADMIN_URL; ?>/shop_admin/itemoption.php",
+                            { opt1_subject: opt1_subject, opt2_subject: opt2_subject, opt3_subject: opt3_subject, opt1: opt1, opt2: opt2, opt3: opt3 },
+                            function(data) {
+                                $option_table.empty().html(data);
+                            }
+                        );
+                    });
 
-                // 선택삭제
-                $("#sel_option_delete").live("click", function() {
-                    var $el = $("input[name='opt_chk[]']:checked");
-                    if($el.size() < 1) {
-                        alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
-                        return false;
-                    }
-
-                    $el.closest("tr").remove();
-                });
-
-                // 일괄적용
-                $("#opt_value_apply").live("click", function() {
-                    var opt_price = $.trim($("#opt_com_price").val());
-                    var opt_stock = $.trim($("#opt_com_stock").val());
-                    var opt_noti = $.trim($("#opt_com_noti").val());
-                    var opt_use = $("#opt_com_use").val();
-
-                    $("input[name='opt_price[]']").val(opt_price);
-                    $("input[name='opt_stock_qty[]']").val(opt_stock);
-                    $("input[name='opt_noti_qty[]']").val(opt_noti);
-                    $("select[name='opt_use[]']").val(opt_use);
-                });
-            });
-            </script>
-        </td>
-    </tr>
-    <?php
-    $spl_subject = explode(',', $it['it_supply_subject']);
-    $spl_count = count($spl_subject);
-    ?>
-    <tr>
-        <th scope="row">상품추가옵션</th>
-        <td colspan="2">
-            <div id="sit_supply_frm" class="sit_option">
-                <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰'); ?>
-                <table class="frm_tbl">
-                <colgroup>
-                    <col class="grid_4">
-                    <col>
-                </colgroup>
-                <tbody>
-                <?php
-                $i = 0;
-                do {
-                    $seq = $i + 1;
-                ?>
-                <tr>
-                    <th scope="row">
-                        <label for="spl_subject_<?php echo $seq; ?>">추가<?php echo $seq; ?></label>
-                        <input type="text" name="spl_subject[]" id="spl_subject_<?php echo $seq; ?>" value="<?php echo $spl_subject[$i]; ?>" class="frm_input" size="15">
-                    </th>
-                    <td>
-                        <label for="spl_item_<?php echo $seq; ?>"><b>추가<?php echo $seq; ?> 항목</b></label>
-                        <input type="text" name="spl[]" id="spl_item_<?php echo $seq; ?>" value="" class="frm_input" size="40">
-                        <?php
-                        if($i > 0)
-                            echo '<button type="button" id="del_supply_row" class="btn_frmline">삭제</button>';
-                        ?>
-                    </td>
-                </tr>
-                <?php
-                    $i++;
-                } while($i < $spl_count);
-                ?>
-                </tbody>
-                </table>
-                <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
-                <div class="btn_confirm">
-                    <button type="button" id="supply_table_create">옵션목록생성</button>
-                </div>
-            </div>
-            <div id="sit_option_addfrm"><?php include_once(G5_ADMIN_PATH.'/shop_admin/itemsupply.php'); ?></div>
-
-            <script>
-            $(function() {
-                <?php if($it['it_id'] && $ps_run) { ?>
-                // 추가옵션의 항목 설정
-                var arr_subj = new Array();
-                var subj, spl;
-
-                $("input[name='spl_subject[]']").each(function() {
-                    subj = $.trim($(this).val());
-                    if(subj && $.inArray(subj, arr_subj) == -1)
-                        arr_subj.push(subj);
-                });
-
-                for(i=0; i<arr_subj.length; i++) {
-                    var arr_spl = new Array();
-                    $(".spl-subject-cell").each(function(index) {
-                        subj = $(this).text();
-                        if(subj == arr_subj[i]) {
-                            spl = $(".spl-cell:eq("+index+")").text();
-                            arr_spl.push(spl);
+                    // 모두선택
+                    $("input[name=opt_chk_all]").live("click", function() {
+                        if($(this).is(":checked")) {
+                            $("input[name='opt_chk[]']").attr("checked", true);
+                        } else {
+                            $("input[name='opt_chk[]']").attr("checked", false);
                         }
                     });
 
-                    $("input[name='spl[]']:eq("+i+")").val(arr_spl.join());
-                }
-                <?php } ?>
-                // 입력필드추가
-                $("#add_supply_row").click(function() {
-                    var $el = $("#sit_supply_frm tr:last");
-                    var fld = "<tr>\n";
-                    fld += "<th scope=\"row\">\n";
-                    fld += "<label for=\"\">추가</label>\n";
-                    fld += "<input type=\"text\" name=\"spl_subject[]\" value=\"\" class=\"frm_input\" size=\"15\">\n";
-                    fld += "</th>\n";
-                    fld += "<td>\n";
-                    fld += "<label for=\"\"><b>추가 항목</b></label>\n";
-                    fld += "<input type=\"text\" name=\"spl[]\" value=\"\" class=\"frm_input\" size=\"40\">\n";
-                    fld += "<button type=\"button\" id=\"del_supply_row\" class=\"btn_frmline\">삭제</button>\n";
-                    fld += "</td>\n";
-                    fld += "</tr>";
+                    // 선택삭제
+                    $("#sel_option_delete").live("click", function() {
+                        var $el = $("input[name='opt_chk[]']:checked");
+                        if($el.size() < 1) {
+                            alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
+                            return false;
+                        }
 
-                    $el.after(fld);
+                        $el.closest("tr").remove();
+                    });
 
-                    supply_sequence();
+                    // 일괄적용
+                    $("#opt_value_apply").live("click", function() {
+                        var opt_price = $.trim($("#opt_com_price").val());
+                        var opt_stock = $.trim($("#opt_com_stock").val());
+                        var opt_noti = $.trim($("#opt_com_noti").val());
+                        var opt_use = $("#opt_com_use").val();
+
+                        $("input[name='opt_price[]']").val(opt_price);
+                        $("input[name='opt_stock_qty[]']").val(opt_stock);
+                        $("input[name='opt_noti_qty[]']").val(opt_noti);
+                        $("select[name='opt_use[]']").val(opt_use);
+                    });
                 });
+                </script>
+            </td>
+        </tr>
+        <?php
+        $spl_subject = explode(',', $it['it_supply_subject']);
+        $spl_count = count($spl_subject);
+        ?>
+        <tr>
+            <th scope="row">상품추가옵션</th>
+            <td colspan="2">
+                <div id="sit_supply_frm" class="sit_option tbl_frm01">
+                    <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰'); ?>
+                    <table>
+                    <caption>상품추가옵션 입력</caption>
+                    <colgroup>
+                        <col class="grid_4">
+                        <col>
+                    </colgroup>
+                    <tbody>
+                    <?php
+                    $i = 0;
+                    do {
+                        $seq = $i + 1;
+                    ?>
+                    <tr>
+                        <th scope="row">
+                            <label for="spl_subject_<?php echo $seq; ?>">추가<?php echo $seq; ?></label>
+                            <input type="text" name="spl_subject[]" id="spl_subject_<?php echo $seq; ?>" value="<?php echo $spl_subject[$i]; ?>" class="frm_input" size="15">
+                        </th>
+                        <td>
+                            <label for="spl_item_<?php echo $seq; ?>"><b>추가<?php echo $seq; ?> 항목</b></label>
+                            <input type="text" name="spl[]" id="spl_item_<?php echo $seq; ?>" value="" class="frm_input" size="40">
+                            <?php
+                            if($i > 0)
+                                echo '<button type="button" id="del_supply_row" class="btn_frmline">삭제</button>';
+                            ?>
+                        </td>
+                    </tr>
+                    <?php
+                        $i++;
+                    } while($i < $spl_count);
+                    ?>
+                    </tbody>
+                    </table>
+                    <div id="sit_option_addfrm_btn"><button type="button" id="add_supply_row" class="btn_frmline">옵션추가</button></div>
+                    <div class="btn_confirm02 btn_confirm">
+                        <button type="button" id="supply_table_create">옵션목록생성</button>
+                    </div>
+                </div>
+                <div id="sit_option_addfrm"><?php include_once(G5_ADMIN_PATH.'/shop_admin/itemsupply.php'); ?></div>
 
-                // 입력필드삭제
-                $("#del_supply_row").live("click", function() {
-                    $(this).closest("tr").remove();
-
-                    supply_sequence();
-                });
-
-                // 옵션목록생성
-                $("#supply_table_create").click(function() {
-                    var subject = new Array();
-                    var supply = new Array();
+                <script>
+                $(function() {
+                    <?php if($it['it_id'] && $ps_run) { ?>
+                    // 추가옵션의 항목 설정
+                    var arr_subj = new Array();
                     var subj, spl;
-                    var count = 0;
-                    var $el_subj = $("input[name='spl_subject[]']");
-                    var $el_spl = $("input[name='spl[]']");
-                    var $supply_table = $("#sit_option_addfrm");
 
-                    $el_subj.each(function(index) {
+                    $("input[name='spl_subject[]']").each(function() {
                         subj = $.trim($(this).val());
-                        spl = $.trim($el_spl.eq(index).val());
+                        if(subj && $.inArray(subj, arr_subj) == -1)
+                            arr_subj.push(subj);
+                    });
 
-                        if(subj && spl) {
-                            subject.push(subj);
-                            supply.push(spl);
-                            count++;
+                    for(i=0; i<arr_subj.length; i++) {
+                        var arr_spl = new Array();
+                        $(".spl-subject-cell").each(function(index) {
+                            subj = $(this).text();
+                            if(subj == arr_subj[i]) {
+                                spl = $(".spl-cell:eq("+index+")").text();
+                                arr_spl.push(spl);
+                            }
+                        });
+
+                        $("input[name='spl[]']:eq("+i+")").val(arr_spl.join());
+                    }
+                    <?php } ?>
+                    // 입력필드추가
+                    $("#add_supply_row").click(function() {
+                        var $el = $("#sit_supply_frm tr:last");
+                        var fld = "<tr>\n";
+                        fld += "<th scope=\"row\">\n";
+                        fld += "<label for=\"\">추가</label>\n";
+                        fld += "<input type=\"text\" name=\"spl_subject[]\" value=\"\" class=\"frm_input\" size=\"15\">\n";
+                        fld += "</th>\n";
+                        fld += "<td>\n";
+                        fld += "<label for=\"\"><b>추가 항목</b></label>\n";
+                        fld += "<input type=\"text\" name=\"spl[]\" value=\"\" class=\"frm_input\" size=\"40\">\n";
+                        fld += "<button type=\"button\" id=\"del_supply_row\" class=\"btn_frmline\">삭제</button>\n";
+                        fld += "</td>\n";
+                        fld += "</tr>";
+
+                        $el.after(fld);
+
+                        supply_sequence();
+                    });
+
+                    // 입력필드삭제
+                    $("#del_supply_row").live("click", function() {
+                        $(this).closest("tr").remove();
+
+                        supply_sequence();
+                    });
+
+                    // 옵션목록생성
+                    $("#supply_table_create").click(function() {
+                        var subject = new Array();
+                        var supply = new Array();
+                        var subj, spl;
+                        var count = 0;
+                        var $el_subj = $("input[name='spl_subject[]']");
+                        var $el_spl = $("input[name='spl[]']");
+                        var $supply_table = $("#sit_option_addfrm");
+
+                        $el_subj.each(function(index) {
+                            subj = $.trim($(this).val());
+                            spl = $.trim($el_spl.eq(index).val());
+
+                            if(subj && spl) {
+                                subject.push(subj);
+                                supply.push(spl);
+                                count++;
+                            }
+                        });
+
+                        if(!count) {
+                            alert("추가옵션명과 추가옵션항목을 입력해 주십시오.");
+                            return false;
+                        }
+
+                        $.post(
+                            "<?php echo G5_ADMIN_URL; ?>/shop_admin/itemsupply.php",
+                            { 'subject[]': subject, 'supply[]': supply },
+                            function(data) {
+                                $supply_table.empty().html(data);
+                            }
+                        );
+                    });
+
+                    // 모두선택
+                    $("input[name=spl_chk_all]").live("click", function() {
+                        if($(this).is(":checked")) {
+                            $("input[name='spl_chk[]']").attr("checked", true);
+                        } else {
+                            $("input[name='spl_chk[]']").attr("checked", false);
                         }
                     });
 
-                    if(!count) {
-                        alert("추가옵션명과 추가옵션항목을 입력해 주십시오.");
-                        return false;
-                    }
-
-                    $.post(
-                        "<?php echo G5_ADMIN_URL; ?>/shop_admin/itemsupply.php",
-                        { 'subject[]': subject, 'supply[]': supply },
-                        function(data) {
-                            $supply_table.empty().html(data);
+                    // 선택삭제
+                    $("#sel_supply_delete").live("click", function() {
+                        var $el = $("input[name='spl_chk[]']:checked");
+                        if($el.size() < 1) {
+                            alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
+                            return false;
                         }
-                    );
+
+                        $el.closest("tr").remove();
+                    });
+
+                    // 일괄적용
+                    $("#spl_value_apply").live("click", function() {
+                        var spl_price = $.trim($("#spl_com_price").val());
+                        var spl_stock = $.trim($("#spl_com_stock").val());
+                        var spl_noti = $.trim($("#spl_com_noti").val());
+                        var spl_use = $("#spl_com_use").val();
+
+                        $("input[name='spl_price[]']").val(spl_price);
+                        $("input[name='spl_stock_qty[]']").val(spl_stock);
+                        $("input[name='spl_noti_qty[]']").val(spl_noti);
+                        $("select[name='spl_use[]']").val(spl_use);
+                    });
                 });
 
-                // 모두선택
-                $("input[name=spl_chk_all]").live("click", function() {
-                    if($(this).is(":checked")) {
-                        $("input[name='spl_chk[]']").attr("checked", true);
-                    } else {
-                        $("input[name='spl_chk[]']").attr("checked", false);
-                    }
-                });
+                function supply_sequence()
+                {
+                    var $tr = $("#sit_supply_frm tr");
+                    var seq;
+                    var th_label, td_label;
 
-                // 선택삭제
-                $("#sel_supply_delete").live("click", function() {
-                    var $el = $("input[name='spl_chk[]']:checked");
-                    if($el.size() < 1) {
-                        alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
-                        return false;
-                    }
-
-                    $el.closest("tr").remove();
-                });
-
-                // 일괄적용
-                $("#spl_value_apply").live("click", function() {
-                    var spl_price = $.trim($("#spl_com_price").val());
-                    var spl_stock = $.trim($("#spl_com_stock").val());
-                    var spl_noti = $.trim($("#spl_com_noti").val());
-                    var spl_use = $("#spl_com_use").val();
-
-                    $("input[name='spl_price[]']").val(spl_price);
-                    $("input[name='spl_stock_qty[]']").val(spl_stock);
-                    $("input[name='spl_noti_qty[]']").val(spl_noti);
-                    $("select[name='spl_use[]']").val(spl_use);
-                });
-            });
-
-            function supply_sequence()
-            {
-                var $tr = $("#sit_supply_frm tr");
-                var seq;
-                var th_label, td_label;
-
-                $tr.each(function(index) {
-                    seq = index + 1;
-                    $(this).find("th label").attr("for", "spl_subject_"+seq).text("추가"+seq);
-                    $(this).find("th input").attr("id", "spl_subject_"+seq);
-                    $(this).find("td label").attr("for", "spl_item_"+seq);
-                    $(this).find("td label b").text("추가"+seq+" 항목");
-                    $(this).find("td input").attr("id", "spl_item_"+seq);
-                });
-            }
-            </script>
-        </td>
-    </tr>
-    </tbody>
-    </table>
+                    $tr.each(function(index) {
+                        seq = index + 1;
+                        $(this).find("th label").attr("for", "spl_subject_"+seq).text("추가"+seq);
+                        $(this).find("th input").attr("id", "spl_subject_"+seq);
+                        $(this).find("td label").attr("for", "spl_item_"+seq);
+                        $(this).find("td label b").text("추가"+seq+" 항목");
+                        $(this).find("td input").attr("id", "spl_item_"+seq);
+                    });
+                }
+                </script>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 </section>
 
-<section id="anc_sitfrm_sendcost" class="cbox">
-    <h2>배송비</h2>
+<section id="anc_sitfrm_sendcost">
+    <h2 class="h2_frm">배송비</h2>
     <?php echo $pg_anchor; ?>
-    <p>쇼핑몰설정 &gt; 배송비유형 설정보다 <strong>개별상품 배송비설정이 우선</strong> 적용됩니다.</p>
+    <div class="local_desc02 local_desc">
+        <p>쇼핑몰설정 &gt; 배송비유형 설정보다 <strong>개별상품 배송비설정이 우선</strong> 적용됩니다.</p>
+    </div>
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-        <col>
-    </colgroup>
-    <tbody>
-        <tr>
-            <th scope="row"><label for="it_sc_type">배송비 유형</label></th>
-            <td>
-                <?php echo help("배송비 유형을 선택하면 자동으로 항목이 변환됩니다."); ?>
-                <select name="it_sc_type" id="it_sc_type">
-                    <option value="0"<?php echo get_selected('0', $it['it_sc_type']); ?>>쇼핑몰 기본설정 사용</option>
-                    <option value="1"<?php echo get_selected('1', $it['it_sc_type']); ?>>무료배송</option>
-                    <option value="2"<?php echo get_selected('2', $it['it_sc_type']); ?>>조건부 무료배송</option>
-                    <option value="3"<?php echo get_selected('3', $it['it_sc_type']); ?>>유료배송</option>
-                    <option value="4"<?php echo get_selected('4', $it['it_sc_type']); ?>>수량별 부과</option>
-                </select>
-            </td>
-            <td rowspan="4" id="sc_grp" class="group_setting">
-                <input type="checkbox" name="chk_ca_it_sendcost" value="1" id="chk_ca_it_sendcost">
-                <label for="chk_ca_it_sendcost">분류적용</label>
-                <input type="checkbox" name="chk_all_it_sendcost" value="1" id="chk_all_it_sendcost">
-                <label for="chk_all_it_sendcost">전체적용</label>
-            </td>
-        </tr>
-        <tr id="sc_con_method">
-            <th scope="row"><label for="it_sc_method">배송비 결제</label></th>
-            <td>
-                <select name="it_sc_method" id="it_sc_method">
-                    <option value="0"<?php echo get_selected('0', $it['it_sc_method']); ?>>선불</option>
-                    <option value="1"<?php echo get_selected('1', $it['it_sc_method']); ?>>착불</option>
-                    <option value="2"<?php echo get_selected('2', $it['it_sc_method']); ?>>사용자선택</option>
-                </select>
-            </td>
-        </tr>
-        <tr id="sc_con_basic">
-            <th scope="row"><label for="it_sc_price">기본배송비</label></th>
-            <td>
-                <?php echo help("무료배송 이외의 설정에 적용되는 배송비 금액입니다."); ?>
-                <input type="text" name="it_sc_price" value="<?php echo $it['it_sc_price']; ?>" id="it_sc_price" class="frm_input" size="8"> 원
-            </td>
-        </tr>
-        <tr id="sc_con_minimum">
-            <th scope="row"><label for="it_sc_minimum">배송비 상세조건</label></th>
-            <td>
-                주문금액 <input type="text" name="it_sc_minimum" value="<?php echo $it['it_sc_minimum']; ?>" id="it_sc_minimum" class="frm_input" size="8"> 이상 무료 배송
-            </td>
-        </tr>
-        <tr id="sc_con_qty">
-            <th scope="row"><label for="it_sc_qty">배송비 상세조건</label></th>
-            <td>
-                <?php echo help("상품의 주문 수량에 따라 배송비가 부과됩니다. 예를 들어 기본배송비가 3,000원 수량을 3으로 설정했을 경우 상품의 주문수량이 5개이면 6,000원 배송비가 부과됩니다."); ?>
-                주문수량 <input type="text" name="it_sc_qty" value="<?php echo $it['it_sc_qty']; ?>" id="it_sc_qty" class="frm_input" size="8"> 마다 배송비 부과
-            </td>
-        </tr>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>배송비 입력</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+            <col class="grid_3">
+        </colgroup>
+        <tbody>
+            <tr>
+                <th scope="row"><label for="it_sc_type">배송비 유형</label></th>
+                <td>
+                    <?php echo help("배송비 유형을 선택하면 자동으로 항목이 변환됩니다."); ?>
+                    <select name="it_sc_type" id="it_sc_type">
+                        <option value="0"<?php echo get_selected('0', $it['it_sc_type']); ?>>쇼핑몰 기본설정 사용</option>
+                        <option value="1"<?php echo get_selected('1', $it['it_sc_type']); ?>>무료배송</option>
+                        <option value="2"<?php echo get_selected('2', $it['it_sc_type']); ?>>조건부 무료배송</option>
+                        <option value="3"<?php echo get_selected('3', $it['it_sc_type']); ?>>유료배송</option>
+                        <option value="4"<?php echo get_selected('4', $it['it_sc_type']); ?>>수량별 부과</option>
+                    </select>
+                </td>
+                <td rowspan="4" id="sc_grp" class="td_grpset">
+                    <input type="checkbox" name="chk_ca_it_sendcost" value="1" id="chk_ca_it_sendcost">
+                    <label for="chk_ca_it_sendcost">분류적용</label>
+                    <input type="checkbox" name="chk_all_it_sendcost" value="1" id="chk_all_it_sendcost">
+                    <label for="chk_all_it_sendcost">전체적용</label>
+                </td>
+            </tr>
+            <tr id="sc_con_method">
+                <th scope="row"><label for="it_sc_method">배송비 결제</label></th>
+                <td>
+                    <select name="it_sc_method" id="it_sc_method">
+                        <option value="0"<?php echo get_selected('0', $it['it_sc_method']); ?>>선불</option>
+                        <option value="1"<?php echo get_selected('1', $it['it_sc_method']); ?>>착불</option>
+                        <option value="2"<?php echo get_selected('2', $it['it_sc_method']); ?>>사용자선택</option>
+                    </select>
+                </td>
+            </tr>
+            <tr id="sc_con_basic">
+                <th scope="row"><label for="it_sc_price">기본배송비</label></th>
+                <td>
+                    <?php echo help("무료배송 이외의 설정에 적용되는 배송비 금액입니다."); ?>
+                    <input type="text" name="it_sc_price" value="<?php echo $it['it_sc_price']; ?>" id="it_sc_price" class="frm_input" size="8"> 원
+                </td>
+            </tr>
+            <tr id="sc_con_minimum">
+                <th scope="row"><label for="it_sc_minimum">배송비 상세조건</label></th>
+                <td>
+                    주문금액 <input type="text" name="it_sc_minimum" value="<?php echo $it['it_sc_minimum']; ?>" id="it_sc_minimum" class="frm_input" size="8"> 이상 무료 배송
+                </td>
+            </tr>
+            <tr id="sc_con_qty">
+                <th scope="row"><label for="it_sc_qty">배송비 상세조건</label></th>
+                <td>
+                    <?php echo help("상품의 주문 수량에 따라 배송비가 부과됩니다. 예를 들어 기본배송비가 3,000원 수량을 3으로 설정했을 경우 상품의 주문수량이 5개이면 6,000원 배송비가 부과됩니다."); ?>
+                    주문수량 <input type="text" name="it_sc_qty" value="<?php echo $it['it_sc_qty']; ?>" id="it_sc_qty" class="frm_input" size="8"> 마다 배송비 부과
+                </td>
+            </tr>
+        </tbody>
+        </table>
+    </div>
 
     <script>
     $(function() {
@@ -1007,398 +1026,413 @@ $(function(){
     </script>
 </section>
 
-<section id="anc_sitfrm_img" class="cbox">
-    <h2>이미지</h2>
+<section id="anc_sitfrm_img">
+    <h2 class="h2_frm">이미지</h2>
     <?php echo $pg_anchor; ?>
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-    </colgroup>
-    <tbody>
-    <?php for($i=1; $i<=10; $i++) { ?>
-    <tr>
-        <th scope="row"><label for="it_img1">이미지 <?php echo $i; ?></label></th>
-        <td>
-            <input type="file" name="it_img<?php echo $i; ?>" id="it_img<?php echo $i; ?>">
-            <?php
-            $it_img = G5_DATA_PATH.'/item/'.$it['it_img'.$i];
-            if(is_file($it_img) && $it['it_img'.$i]) {
-                $size = @getimagesize($it_img);
-                $thumb = get_it_thumbnail($it['it_img'.$i], 25, 25);
-            ?>
-            <label for="it_img<?php echo $i; ?>_del"><span class="sound_only">이미지 <?php echo $i; ?> </span>파일삭제</label>
-            <input type="checkbox" name="it_img<?php echo $i; ?>_del" id="it_img<?php echo $i; ?>_del" value="1">
-            <span class="sit_wimg_limg<?php echo $i; ?>"><?php echo $thumb; ?></span>
-            <div id="limg<?php echo $i; ?>" class="banner_or_img">
-                <img src="<?php echo G5_DATA_URL; ?>/item/<?php echo $it['it_img'.$i]; ?>" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
-                <button type="button" class="sit_wimg_close">닫기</button>
-            </div>
-            <script>
-            $('<button type="button" id="it_limg<?php echo $i; ?>_view" class="btn_frmline sit_wimg_view">이미지<?php echo $i; ?> 확인</button>').appendTo('.sit_wimg_limg<?php echo $i; ?>');
-            </script>
-            <?php } ?>
-        </td>
-    </tr>
-    <?php } ?>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>이미지 업로드</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <?php for($i=1; $i<=10; $i++) { ?>
+        <tr>
+            <th scope="row"><label for="it_img1">이미지 <?php echo $i; ?></label></th>
+            <td>
+                <input type="file" name="it_img<?php echo $i; ?>" id="it_img<?php echo $i; ?>">
+                <?php
+                $it_img = G5_DATA_PATH.'/item/'.$it['it_img'.$i];
+                if(is_file($it_img) && $it['it_img'.$i]) {
+                    $size = @getimagesize($it_img);
+                    $thumb = get_it_thumbnail($it['it_img'.$i], 25, 25);
+                ?>
+                <label for="it_img<?php echo $i; ?>_del"><span class="sound_only">이미지 <?php echo $i; ?> </span>파일삭제</label>
+                <input type="checkbox" name="it_img<?php echo $i; ?>_del" id="it_img<?php echo $i; ?>_del" value="1">
+                <span class="sit_wimg_limg<?php echo $i; ?>"><?php echo $thumb; ?></span>
+                <div id="limg<?php echo $i; ?>" class="banner_or_img">
+                    <img src="<?php echo G5_DATA_URL; ?>/item/<?php echo $it['it_img'.$i]; ?>" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
+                    <button type="button" class="sit_wimg_close">닫기</button>
+                </div>
+                <script>
+                $('<button type="button" id="it_limg<?php echo $i; ?>_view" class="btn_frmline sit_wimg_view">이미지<?php echo $i; ?> 확인</button>').appendTo('.sit_wimg_limg<?php echo $i; ?>');
+                </script>
+                <?php } ?>
+            </td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
+    </div>
 </section>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
 </div>
 
-<section id="anc_sitfrm_relation" class="cbox compare_wrap srel">
-    <h2>관련상품</h2>
+<section id="anc_sitfrm_relation" class="srel">
+    <h2 class="h2_frm">관련상품</h2>
     <?php echo $pg_anchor; ?>
 
-    <p>
-        등록된 전체상품 목록에서 상품분류를 선택하면 해당 상품 리스트가 연이어 나타납니다.<br>
-        상품리스트에서 관련 상품으로 추가하시면 선택된 관련상품 목록에 <strong>함께</strong> 추가됩니다.<br>
-        예를 들어, A 상품에 B 상품을 관련상품으로 등록하면 B 상품에도 A 상품이 관련상품으로 자동 추가되며, <strong>확인 버튼을 누르셔야 정상 반영됩니다.</strong>
-    </p>
+    <div class="local_desc02 local_desc">
+        <p>
+            등록된 전체상품 목록에서 상품분류를 선택하면 해당 상품 리스트가 연이어 나타납니다.<br>
+            상품리스트에서 관련 상품으로 추가하시면 선택된 관련상품 목록에 <strong>함께</strong> 추가됩니다.<br>
+            예를 들어, A 상품에 B 상품을 관련상품으로 등록하면 B 상품에도 A 상품이 관련상품으로 자동 추가되며, <strong>확인 버튼을 누르셔야 정상 반영됩니다.</strong>
+        </p>
+    </div>
 
-    <section class="compare_left">
-        <h3>등록된 전체상품 목록</h3>
-        <label for="sch_relation" class="sound_only">상품분류</label>
-        <span class="srel_pad">
-            <select id="sch_relation">
-                <option value=''>분류별 상품</option>
+    <div class="compare_wrap">
+        <section class="compare_left">
+            <h3>등록된 전체상품 목록</h3>
+            <label for="sch_relation" class="sound_only">상품분류</label>
+            <span class="srel_pad">
+                <select id="sch_relation">
+                    <option value=''>분류별 상품</option>
+                    <?php
+                        $sql = " select * from {$g5['g5_shop_category_table']} ";
+                        if ($is_admin != 'super')
+                            $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
+                        $sql .= " order by ca_id ";
+                        $result = sql_query($sql);
+                        for ($i=0; $row=sql_fetch_array($result); $i++)
+                        {
+                            $len = strlen($row['ca_id']) / 2 - 1;
+
+                            $nbsp = "";
+                            for ($i=0; $i<$len; $i++)
+                                $nbsp .= "&nbsp;&nbsp;&nbsp;";
+
+                            echo "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
+                        }
+                    ?>
+                </select>
+            </span>
+            <div id="relation" class="srel_list">
+                <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
+            </div>
+            <script>
+            $(function() {
+                $("#sch_relation").change(function() {
+                    var ca_id = $(this).val();
+                    var $relation = $("#relation");
+
+                    if(ca_id == "") {
+                        $relation.html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
+                        return false;
+                    }
+
+                    $("#relation").load(
+                        "./itemformrelation.php",
+                        { it_id: "<?php echo $it_id; ?>", ca_id: ca_id }
+                    );
+                });
+
+                $("#relation .add_item").live("click", function() {
+                    // 이미 등록된 상품인지 체크
+                    var $li = $(this).closest("li");
+                    var it_id = $li.find("input:hidden").val();
+                    var it_id2;
+                    var dup = false;
+                    $("#reg_relation input[name='re_it_id[]']").each(function() {
+                        it_id2 = $(this).val();
+                        if(it_id == it_id2) {
+                            dup = true;
+                            return false;
+                        }
+                    });
+
+                    if(dup) {
+                        alert("이미 선택된 상품입니다.");
+                        return false;
+                    }
+
+                    var cont = "<li>"+$li.html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
+                    var count = $("#reg_relation li").size();
+
+                    if(count > 0) {
+                        $("#reg_relation li:last").after(cont);
+                    } else {
+                        $("#reg_relation").html("<ul>"+cont+"</ul>");
+                    }
+
+                    $li.remove();
+                });
+
+                $("#reg_relation .del_item").live("click", function() {
+                    if(!confirm("상품을 삭제하시겠습니까?"))
+                        return false;
+
+                    $(this).closest("li").remove();
+
+                    var count = $("#reg_relation li").size();
+                    if(count < 1)
+                        $("#reg_relation").html("<p>선택된 상품이 없습니다.</p>");
+                });
+            });
+            </script>
+        </section>
+
+        <section class="compare_right">
+            <h3>선택된 관련상품 목록</h3>
+            <span class="srel_pad"></span>
+            <div id="reg_relation" class="srel_sel">
                 <?php
-                    $sql = " select * from {$g5['g5_shop_category_table']} ";
-                    if ($is_admin != 'super')
-                        $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
-                    $sql .= " order by ca_id ";
-                    $result = sql_query($sql);
-                    for ($i=0; $row=sql_fetch_array($result); $i++)
-                    {
-                        $len = strlen($row['ca_id']) / 2 - 1;
+                $str = array();
+                $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
+                           from {$g5['g5_shop_item_relation_table']} a
+                           left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id)
+                          where a.it_id = '$it_id'
+                          order by ir_no asc ";
+                $result = sql_query($sql);
+                for($g=0; $row=sql_fetch_array($result); $g++)
+                {
+                    $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
 
-                        $nbsp = "";
-                        for ($i=0; $i<$len; $i++)
-                            $nbsp .= "&nbsp;&nbsp;&nbsp;";
-
-                        echo "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
-                    }
+                    if($g==0)
+                        echo '<ul>';
                 ?>
-            </select>
-        </span>
-        <div id="relation" class="srel_list">
-            <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
-        </div>
-        <script>
-        $(function() {
-            $("#sch_relation").change(function() {
-                var ca_id = $(this).val();
-                var $relation = $("#relation");
+                    <li>
+                        <input type="hidden" name="re_it_id[]" value="<?php echo $row['it_id']; ?>">
+                        <?php echo $it_name; ?>
+                        <button type="button" class="del_item">삭제</button>
+                    </li>
+                <?php
+                    $str[] = $row['it_id'];
+                }
+                $str = implode(",", $str);
 
-                if(ca_id == "") {
-                    $relation.html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
-                    return false;
+                if($g > 0)
+                    echo '</ul>';
+                else
+                    echo '<p>선택된 상품이 없습니다.</p>';
+                ?>
+            </div>
+            <input type="hidden" name="it_list" value="<?php echo $str; ?>">
+        </section>
+
+    </div>
+
+</section>
+
+<section id="anc_sitfrm_event" class="srel">
+    <h2 class="h2_frm">관련이벤트</h2>
+    <?php echo $pg_anchor; ?>
+
+    <div class="compare_wrap">
+        <section class="compare_left">
+            <h3>등록된 전체이벤트 목록</h3>
+            <div id="event_list" class="srel_list srel_noneimg">
+                <?php
+                $sql = " select ev_id, ev_subject from {$g5['g5_shop_event_table']} order by ev_id desc ";
+                $result = sql_query($sql);
+                for ($g=0; $row=sql_fetch_array($result); $g++) {
+                    if($g == 0)
+                        echo '<ul>';
+                ?>
+                    <li>
+                        <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
+                        <?php echo get_text($row['ev_subject']); ?>
+                        <button type="button" class="add_event">추가</button>
+                    </li>
+                <?php
                 }
 
-                $("#relation").load(
-                    "./itemformrelation.php",
-                    { it_id: "<?php echo $it_id; ?>", ca_id: ca_id }
-                );
-            });
+                if($g > 0)
+                    echo '</ul>';
+                else
+                    echo '<p>등록된 이벤트가 없습니다.</p>';
+                ?>
+            </div>
+            <script>
+            $(function() {
+                $("#event_list .add_event").live("click", function() {
+                    // 이미 등록된 이벤트인지 체크
+                    var $li = $(this).closest("li");
+                    var ev_id = $li.find("input:hidden").val();
+                    var ev_id2;
+                    var dup = false;
+                    $("#reg_event_list input[name='ev_id[]']").each(function() {
+                        ev_id2 = $(this).val();
+                        if(ev_id == ev_id2) {
+                            dup = true;
+                            return false;
+                        }
+                    });
 
-            $("#relation .add_item").live("click", function() {
-                // 이미 등록된 상품인지 체크
-                var $li = $(this).closest("li");
-                var it_id = $li.find("input:hidden").val();
-                var it_id2;
-                var dup = false;
-                $("#reg_relation input[name='re_it_id[]']").each(function() {
-                    it_id2 = $(this).val();
-                    if(it_id == it_id2) {
-                        dup = true;
+                    if(dup) {
+                        alert("이미 선택된 이벤트입니다.");
                         return false;
+                    }
+
+                    var cont = "<li>"+$li.html().replace("add_event", "del_event").replace("추가", "삭제")+"</li>";
+                    var count = $("#reg_event_list li").size();
+
+                    if(count > 0) {
+                        $("#reg_event_list li:last").after(cont);
+                    } else {
+                        $("#reg_event_list").html("<ul>"+cont+"</ul>");
                     }
                 });
 
-                if(dup) {
-                    alert("이미 선택된 상품입니다.");
-                    return false;
-                }
-
-                var cont = "<li>"+$li.html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
-                var count = $("#reg_relation li").size();
-
-                if(count > 0) {
-                    $("#reg_relation li:last").after(cont);
-                } else {
-                    $("#reg_relation").html("<ul>"+cont+"</ul>");
-                }
-
-                $li.remove();
-            });
-
-            $("#reg_relation .del_item").live("click", function() {
-                if(!confirm("상품을 삭제하시겠습니까?"))
-                    return false;
-
-                $(this).closest("li").remove();
-
-                var count = $("#reg_relation li").size();
-                if(count < 1)
-                    $("#reg_relation").html("<p>선택된 상품이 없습니다.</p>");
-            });
-        });
-        </script>
-    </section>
-
-    <section class="compare_right">
-        <h3>선택된 관련상품 목록</h3>
-        <span class="srel_pad"></span>
-        <div id="reg_relation" class="srel_sel">
-            <?php
-            $str = array();
-            $sql = " select b.ca_id, b.it_id, b.it_name, b.it_price
-                       from {$g5['g5_shop_item_relation_table']} a
-                       left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id)
-                      where a.it_id = '$it_id'
-                      order by ir_no asc ";
-            $result = sql_query($sql);
-            for($g=0; $row=sql_fetch_array($result); $g++)
-            {
-                $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
-
-                if($g==0)
-                    echo '<ul>';
-            ?>
-                <li>
-                    <input type="hidden" name="re_it_id[]" value="<?php echo $row['it_id']; ?>">
-                    <?php echo $it_name; ?>
-                    <button type="button" class="del_item">삭제</button>
-                </li>
-            <?php
-                $str[] = $row['it_id'];
-            }
-            $str = implode(",", $str);
-
-            if($g > 0)
-                echo '</ul>';
-            else
-                echo '<p>선택된 상품이 없습니다.</p>';
-            ?>
-        </div>
-        <input type="hidden" name="it_list" value="<?php echo $str; ?>">
-    </section>
-
-</section>
-
-<section id="anc_sitfrm_event" class="cbox compare_wrap srel">
-    <h2>관련이벤트</h2>
-    <?php echo $pg_anchor; ?>
-
-    <section class="compare_left">
-        <h3>등록된 전체이벤트 목록</h3>
-        <div id="event_list" class="srel_list srel_noneimg">
-            <?php
-            $sql = " select ev_id, ev_subject from {$g5['g5_shop_event_table']} order by ev_id desc ";
-            $result = sql_query($sql);
-            for ($g=0; $row=sql_fetch_array($result); $g++) {
-                if($g == 0)
-                    echo '<ul>';
-            ?>
-                <li>
-                    <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
-                    <?php echo get_text($row['ev_subject']); ?>
-                    <button type="button" class="add_event">추가</button>
-                </li>
-            <?php
-            }
-
-            if($g > 0)
-                echo '</ul>';
-            else
-                echo '<p>등록된 이벤트가 없습니다.</p>';
-            ?>
-        </div>
-        <script>
-        $(function() {
-            $("#event_list .add_event").live("click", function() {
-                // 이미 등록된 이벤트인지 체크
-                var $li = $(this).closest("li");
-                var ev_id = $li.find("input:hidden").val();
-                var ev_id2;
-                var dup = false;
-                $("#reg_event_list input[name='ev_id[]']").each(function() {
-                    ev_id2 = $(this).val();
-                    if(ev_id == ev_id2) {
-                        dup = true;
+                $("#reg_event_list .del_event").live("click", function() {
+                    if(!confirm("상품을 삭제하시겠습니까?"))
                         return false;
-                    }
+
+                    $(this).closest("li").remove();
+
+                    var count = $("#reg_event_list li").size();
+                    if(count < 1)
+                        $("#reg_event_list").html("<p>선택된 이벤트가 없습니다.</p>");
                 });
+            });
+            </script>
+        </section>
 
-                if(dup) {
-                    alert("이미 선택된 이벤트입니다.");
-                    return false;
+        <section class="compare_right">
+            <h3>선택된 관련이벤트 목록</h3>
+            <div id="reg_event_list" class="srel_sel srel_noneimg">
+                <?php
+                $str = "";
+                $comma = "";
+                $sql = " select b.ev_id, b.ev_subject
+                           from {$g5['g5_shop_event_item_table']} a
+                           left join {$g5['g5_shop_event_table']} b on (a.ev_id=b.ev_id)
+                          where a.it_id = '$it_id'
+                          order by b.ev_id desc ";
+                $result = sql_query($sql);
+                for ($g=0; $row=sql_fetch_array($result); $g++) {
+                    $str .= $comma . $row['ev_id'];
+                    $comma = ",";
+
+                    if($g == 0)
+                        echo '<ul>';
+                ?>
+                    <li>
+                        <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
+                        <?php echo get_text($row['ev_subject']); ?>
+                        <button type="button" class="del_event">삭제</button>
+                    </li>
+                <?php
                 }
 
-                var cont = "<li>"+$li.html().replace("add_event", "del_event").replace("추가", "삭제")+"</li>";
-                var count = $("#reg_event_list li").size();
-
-                if(count > 0) {
-                    $("#reg_event_list li:last").after(cont);
-                } else {
-                    $("#reg_event_list").html("<ul>"+cont+"</ul>");
-                }
-            });
-
-            $("#reg_event_list .del_event").live("click", function() {
-                if(!confirm("상품을 삭제하시겠습니까?"))
-                    return false;
-
-                $(this).closest("li").remove();
-
-                var count = $("#reg_event_list li").size();
-                if(count < 1)
-                    $("#reg_event_list").html("<p>선택된 이벤트가 없습니다.</p>");
-            });
-        });
-        </script>
-    </section>
-
-    <section class="compare_right">
-        <h3>선택된 관련이벤트 목록</h3>
-        <div id="reg_event_list" class="srel_sel srel_noneimg">
-            <?php
-            $str = "";
-            $comma = "";
-            $sql = " select b.ev_id, b.ev_subject
-                       from {$g5['g5_shop_event_item_table']} a
-                       left join {$g5['g5_shop_event_table']} b on (a.ev_id=b.ev_id)
-                      where a.it_id = '$it_id'
-                      order by b.ev_id desc ";
-            $result = sql_query($sql);
-            for ($g=0; $row=sql_fetch_array($result); $g++) {
-                $str .= $comma . $row['ev_id'];
-                $comma = ",";
-
-                if($g == 0)
-                    echo '<ul>';
-            ?>
-                <li>
-                    <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
-                    <?php echo get_text($row['ev_subject']); ?>
-                    <button type="button" class="del_event">삭제</button>
-                </li>
-            <?php
-            }
-
-            if($g > 0)
-                echo '</ul>';
-            else
-                echo '<p>선택된 이벤트가 없습니다.</p>';
-            ?>
-        </div>
-        <input type="hidden" name="ev_list" value="<?php echo $str; ?>">
-
-    </section>
+                if($g > 0)
+                    echo '</ul>';
+                else
+                    echo '<p>선택된 이벤트가 없습니다.</p>';
+                ?>
+            </div>
+            <input type="hidden" name="ev_list" value="<?php echo $str; ?>">
+        </section>
+    </div>
 
 </section>
 
-<section id="anc_sitfrm_optional" class="cbox">
-    <h2>상세설명설정</h2>
+<section id="anc_sitfrm_optional">
+    <h2 class="h2_frm">상세설명설정</h2>
     <?php echo $pg_anchor; ?>
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row">상품상단내용</th>
-        <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_head_html', $it['it_head_html']); ?></td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_head_html" value="1" id="chk_ca_it_head_html">
-            <label for="chk_ca_it_head_html">분류적용</label>
-            <input type="checkbox" name="chk_all_it_head_html" value="1" id="chk_all_it_head_html">
-            <label for="chk_all_it_head_html">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">상품하단내용</th>
-        <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_tail_html', $it['it_tail_html']); ?></td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_tail_html" value="1" id="chk_ca_it_tail_html">
-            <label for="chk_ca_it_tail_html">분류적용</label>
-            <input type="checkbox" name="chk_all_it_tail_html" value="1" id="chk_all_it_tail_html">
-            <label for="chk_all_it_tail_html">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">모바일 상품상단내용</th>
-        <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_head_html', $it['it_mobile_head_html']); ?></td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_mobile_head_html" value="1" id="chk_ca_it_mobile_head_html">
-            <label for="chk_ca_it_mobile_head_html">분류적용</label>
-            <input type="checkbox" name="chk_all_it_mobile_head_html" value="1" id="chk_all_it_mobile_head_html">
-            <label for="chk_all_it_mobile_head_html">전체적용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">모바일 상품하단내용</th>
-        <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_tail_html', $it['it_mobile_tail_html']); ?></td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_ca_it_mobile_tail_html" value="1" id="chk_ca_it_mobile_tail_html">
-            <label for="chk_ca_it_mobile_tail_html">분류적용</label>
-            <input type="checkbox" name="chk_all_it_mobile_tail_html" value="1" id="chk_all_it_mobile_tail_html">
-            <label for="chk_all_it_mobile_tail_html">전체적용</label>
-        </td>
-    </tr>
-    </tbody>
-    </table>
+
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>상세설명설정</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+            <col class="grid_3">
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row">상품상단내용</th>
+            <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_head_html', $it['it_head_html']); ?></td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_head_html" value="1" id="chk_ca_it_head_html">
+                <label for="chk_ca_it_head_html">분류적용</label>
+                <input type="checkbox" name="chk_all_it_head_html" value="1" id="chk_all_it_head_html">
+                <label for="chk_all_it_head_html">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">상품하단내용</th>
+            <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_tail_html', $it['it_tail_html']); ?></td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_tail_html" value="1" id="chk_ca_it_tail_html">
+                <label for="chk_ca_it_tail_html">분류적용</label>
+                <input type="checkbox" name="chk_all_it_tail_html" value="1" id="chk_all_it_tail_html">
+                <label for="chk_all_it_tail_html">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">모바일 상품상단내용</th>
+            <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_head_html', $it['it_mobile_head_html']); ?></td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_mobile_head_html" value="1" id="chk_ca_it_mobile_head_html">
+                <label for="chk_ca_it_mobile_head_html">분류적용</label>
+                <input type="checkbox" name="chk_all_it_mobile_head_html" value="1" id="chk_all_it_mobile_head_html">
+                <label for="chk_all_it_mobile_head_html">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">모바일 상품하단내용</th>
+            <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_tail_html', $it['it_mobile_tail_html']); ?></td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_mobile_tail_html" value="1" id="chk_ca_it_mobile_tail_html">
+                <label for="chk_ca_it_mobile_tail_html">분류적용</label>
+                <input type="checkbox" name="chk_all_it_mobile_tail_html" value="1" id="chk_all_it_mobile_tail_html">
+                <label for="chk_all_it_mobile_tail_html">전체적용</label>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 </section>
 
-<section id="anc_sitfrm_extra" class="cbox">
+<section id="anc_sitfrm_extra">
     <h2>여분필드 설정</h2>
     <?php echo $pg_anchor ?>
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col class="grid_12">
-        <col class="grid_3">
-    </colgroup>
-    <tbody>
-    <?php for ($i=1; $i<=10; $i++) { ?>
-    <tr>
-        <th scope="row">여분필드<?php echo $i ?></th>
-        <td>
-            <label for="it_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
-            <input type="text" name="it_<?php echo $i ?>_subj" id="it_<?php echo $i ?>_subj" value="<?php echo get_text($it['it_'.$i.'_subj']) ?>" class="frm_input">
-            <label for="it_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
-            <input type="text" name="it_<?php echo $i ?>" value="<?php echo get_text($it['it_'.$i]) ?>" id="it_<?php echo $i ?>" class="frm_input">
-        </td>
-        <td class="group_setting">
-            <input type="checkbox" name="chk_grp_<?php echo $i ?>" value="1" id="chk_grp_<?php echo $i ?>">
-            <label for="chk_grp_<?php echo $i ?>">그룹적용</label>
-            <input type="checkbox" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
-            <label for="chk_all_<?php echo $i ?>">전체적용</label>
-        </td>
-    </tr>
-    <?php } ?>
-    <?php if ($w == "u") { ?>
-    <tr>
-        <th scope="row">입력일시</th>
-        <td colspan="2">
-            <?php echo help("상품을 처음 입력(등록)한 시간입니다."); ?>
-            <?php echo $it['it_time']; ?>
-        </td>
-    </tr>
-    <?php } ?>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+            <col class="grid_3">
+        </colgroup>
+        <tbody>
+        <?php for ($i=1; $i<=10; $i++) { ?>
+        <tr>
+            <th scope="row">여분필드<?php echo $i ?></th>
+            <td class="td_extra">
+                <label for="it_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
+                <input type="text" name="it_<?php echo $i ?>_subj" id="it_<?php echo $i ?>_subj" value="<?php echo get_text($it['it_'.$i.'_subj']) ?>" class="frm_input">
+                <label for="it_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
+                <input type="text" name="it_<?php echo $i ?>" value="<?php echo get_text($it['it_'.$i]) ?>" id="it_<?php echo $i ?>" class="frm_input">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_grp_<?php echo $i ?>" value="1" id="chk_grp_<?php echo $i ?>">
+                <label for="chk_grp_<?php echo $i ?>">그룹적용</label>
+                <input type="checkbox" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
+                <label for="chk_all_<?php echo $i ?>">전체적용</label>
+            </td>
+        </tr>
+        <?php } ?>
+        <?php if ($w == "u") { ?>
+        <tr>
+            <th scope="row">입력일시</th>
+            <td colspan="2">
+                <?php echo help("상품을 처음 입력(등록)한 시간입니다."); ?>
+                <?php echo $it['it_time']; ?>
+            </td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
+    </div>
 </section>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
 </div>

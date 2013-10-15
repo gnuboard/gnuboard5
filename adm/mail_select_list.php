@@ -68,13 +68,13 @@ $g5['title'] = "메일발송 대상 회원";
 include_once('./admin.head.php');
 ?>
 
-<div class="cbox">
-    <p>조건에 따라 선택된 메일발송 대상자 목록입니다.</p>
+<form name="fmailselectlist" id="fmailselectlist" method="post" action="./mail_select_update.php">
+<input type="hidden" name="token" value="<?php echo $token ?>">
+<input type="hidden" name="ma_id" value="<?php echo $ma_id ?>">
 
-    <form name="fmailselectlist" id="fmailselectlist" method="post" action="./mail_select_update.php">
-    <input type="hidden" name="token" value="<?php echo $token ?>">
-    <input type="hidden" name="ma_id" value="<?php echo $ma_id ?>">
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">번호</th>
@@ -95,12 +95,14 @@ include_once('./admin.head.php');
         $i++;
         $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row['mb_datetime'];
         $cr = "\n";
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_num"><?php echo $i ?></td>
         <td class="td_mbid"><?php echo $row['mb_id'] ?></td>
         <td class="td_mbname"><?php echo $row['mb_name'] ?></td>
-        <td class="td_mbnick"><?php echo $row['mb_nick'] ?></td>
+        <td class="td_mbname"><?php echo $row['mb_nick'] ?></td>
         <td><?php echo $row['mb_email'] ?></td>
     </tr>
     <?php } ?>
@@ -109,7 +111,7 @@ include_once('./admin.head.php');
     <textarea name="ma_list" style="display:none"><?=$ma_list?></textarea>
 </div>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="메일보내기" class="btn_submit">
     <a href="./mail_select_form.php?ma_id=<?php echo $ma_id ?>">뒤로</a>
 </div>

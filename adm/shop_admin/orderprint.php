@@ -8,85 +8,76 @@ $g5['title'] = '주문내역출력';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<section class="cbox">
-    <h2>주문내역출력</h2>
-    <p>기간별 혹은 주문번호구간별 주문내역을 새창으로 출력할 수 있습니다.</p>
+<div class="local_sch02 local_sch">
 
-    <div class="btn_add">
-        <a href="./orderlist.php" class="btn_add_optional">주문내역</a>
-        <a href="./orderstatuslist.php" class="btn_add_optional">주문개별내역</a>
-        <a href="./orderlist2.php" class="btn_add_optional">주문통합내역</a>
+    <div>
+        <form name="forderprint" action="./orderprintresult.php" onsubmit="return forderprintcheck(this);" autocomplete="off">
+        <input type="hidden" name="case" value="1">
+
+        <strong class="sch_long">기간별 출력</strong>
+        <input type="radio" name="csv" value="xls" id="xls1"><label for="xls1">MS엑셀 XLS 데이터</label>
+        <input type="radio" name="csv" value="csv" id="csv1"><label for="csv1">MS엑셀 CSV 데이터</label>
+        <label for="ct_status_p" class="sound_only">출력대상</label>
+        <select name="ct_status" id="ct_status_p">
+            <option value="주문">주문</option>
+            <option value="준비">상품준비중</option>
+            <option value="배송">배송</option>
+            <option value="완료">완료</option>
+            <option value="취소">취소</option>
+            <option value="반품">반품</option>
+            <option value="품절">품절</option>
+            <option value="">전체</option>
+        </select>
+        <label for="fr_date" class="sound_only">기간 시작일</label>
+        <input type="text" name="fr_date" value="<?php echo date("Ymd"); ?>" id="fr_date" class="frm_input" size="10" maxlength="8">
+        ~
+        <label for="to_date" class="sound_only">기간 종료일</label>
+        <input type="text" name="to_date" value="<?php echo date("Ymd"); ?>" id="to_date" class="frm_input" size="10" maxlength="8">
+        <button type="submit" class="btn_frmline">출력 (새창)</button>
+
+        </form>
     </div>
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row">기간별 출력</th>
-        <td>
-            <form name="forderprint" action="./orderprintresult.php" onsubmit="return forderprintcheck(this);" autocomplete="off">
-            <input type="hidden" name="case" value="1">
+    <div class="sch_last">
 
-            <input type="radio" name="csv" value="xls" id="xls1"><label for="xls1">MS엑셀 XLS 데이터</label>
-            <input type="radio" name="csv" value="csv" id="csv1"><label for="csv1">MS엑셀 CSV 데이터</label>
-            <div>
-                <label for="ct_status_p" class="sound_only">출력대상</label>
-                <select name="ct_status" id="ct_status_p">
-                    <option value="주문">주문</option>
-                    <option value="준비">상품준비중</option>
-                    <option value="배송">배송</option>
-                    <option value="완료">완료</option>
-                    <option value="취소">취소</option>
-                    <option value="반품">반품</option>
-                    <option value="품절">품절</option>
-                    <option value="">전체</option>
-                </select>
-                <label for="fr_date" class="sound_only">기간 시작일</label>
-                <input type="text" name="fr_date" value="<?php echo date("Ymd"); ?>" id="fr_date" class="frm_input" size="10" maxlength="8"> 부터
-                <label for="to_date" class="sound_only">기간 종료일</label>
-                <input type="text" name="to_date" value="<?php echo date("Ymd"); ?>" id="to_date" class="frm_input" size="10" maxlength="8"> 까지
-                <button type="submit" class="btn_frmline">출력 (새창)</button>
-            </div>
+        <form name="forderprint" action="./orderprintresult.php" onsubmit="return forderprintcheck(this);" autocomplete="off" >
+        <input type="hidden" name="case" value="2">
+        <strong class="sch_long">주문번호구간별 출력</strong>
 
-            </form>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row">주문번호구간별 출력</th>
-        <td>
-            <form name="forderprint" action="./orderprintresult.php" onsubmit="return forderprintcheck(this);" autocomplete="off" >
-            <input type="hidden" name="case" value="2">
+        <input type="radio" name="csv" value="xls" id="xls2"><label for="xls2">MS엑셀 XLS 데이터</label>
+        <input type="radio" name="csv" value="csv" id="csv2"><label for="csv2">MS엑셀 CSV 데이터</label>
+        <label for="ct_status_n" class="sound_only">출력대상</label>
+        <select name="ct_status" id="ct_status_n">
+            <option value="주문">주문</option>
+            <option value="준비">상품준비중</option>
+            <option value="배송">배송</option>
+            <option value="완료">완료</option>
+            <option value="취소">취소</option>
+            <option value="반품">반품</option>
+            <option value="품절">품절</option>
+            <option value="">전체</option>
+        </select>
+        <label for="fr_od_id" class="sound_only">주문번호 구간 시작</label>
+        <input type="text" name="fr_od_id" id="fr_od_id" class="frm_input" size="10" maxlength="10">
+        ~
+        <label for="fr_od_id" class="sound_only">주문번호 구간 종료</label>
+        <input type="text" name="to_od_id" id="to_od_id" class="frm_input" size="10" maxlength="10">
+        <button type="submit" class="btn_frmline">출력 (새창)</button>
 
-            <input type="radio" name="csv" value="xls" id="xls2"><label for="xls2">MS엑셀 XLS 데이터</label>
-            <input type="radio" name="csv" value="csv" id="csv2"><label for="csv2">MS엑셀 CSV 데이터</label>
-            <div>
-                <label for="ct_status_n" class="sound_only">출력대상</label>
-                <select name="ct_status" id="ct_status_n">
-                    <option value="주문">주문</option>
-                    <option value="준비">상품준비중</option>
-                    <option value="배송">배송</option>
-                    <option value="완료">완료</option>
-                    <option value="취소">취소</option>
-                    <option value="반품">반품</option>
-                    <option value="품절">품절</option>
-                    <option value="">전체</option>
-                </select>
-                <label for="fr_od_id" class="sound_only">주문번호 구간 시작</label>
-                <input type="text" name="fr_od_id" id="fr_od_id" class="frm_input" size="10" maxlength="10"> 부터
-                <label for="fr_od_id" class="sound_only">주문번호 구간 종료</label>
-                <input type="text" name="to_od_id" id="to_od_id" class="frm_input" size="10" maxlength="10"> 까지
-                <button type="submit" class="btn_frmline">출력 (새창)</button>
-            </div>
+        </form>
+    </div>
 
-            </form>
-        </td>
-    </tr>
-    </tbody>
-    </table>
-</section>
+</div>
+
+<div class="btn_add01 btn_add">
+    <a href="./orderlist.php" class="btn_add01 btn_add_optional">주문내역</a>
+    <a href="./orderstatuslist.php" class="btn_add01 btn_add_optional">주문개별내역</a>
+    <a href="./orderlist2.php" class="btn_add01 btn_add_optional">주문통합내역</a>
+</div>
+
+<div class="local_desc01 local_desc">
+    <p>기간별 혹은 주문번호구간별 주문내역을 새창으로 출력할 수 있습니다.</p>
+</div>
 
 <script>
 function forderprintcheck(f)

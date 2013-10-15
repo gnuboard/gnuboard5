@@ -79,7 +79,7 @@ include_once(G5_PATH.'/head.sub.php');
     <p class="new_win_desc">검색된 결과가 없습니다.</p>
     <?php } ?>
 
-    <div class="btn_win">
+    <div class="btn_win01 btn_win">
         <a href="javascript:window.close();">창닫기</a>
     </div>
 </div>

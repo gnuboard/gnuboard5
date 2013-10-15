@@ -74,95 +74,78 @@ $result = sql_query($sql);
 //$qstr  = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
 $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page.'&amp;save_stx='.$stx;
 
-$listall = '';
-if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 ?>
 
-<form name="flist">
+<div class="local_ov01 local_ov">
+    <?php echo $listall; ?>
+    전체 상품 <?php echo $total_count; ?>개
+</div>
+
+<form name="flist" class="local_sch01 local_sch">
 <input type="hidden" name="doc" value="<?php echo $doc; ?>">
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 
-<fieldset>
-    <legend>상품 검색</legend>
+<label for="sca" class="sound_only">분류선택</label>
+<select name="sca" id="sca">
+    <option value="">전체분류</option>
+    <?php
+    $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
+    $result1 = sql_query($sql1);
+    for ($i=0; $row1=sql_fetch_array($result1); $i++) {
+        $len = strlen($row1['ca_id']) / 2 - 1;
+        $nbsp = "";
+        for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+        echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].PHP_EOL;
+    }
+    ?>
+</select>
 
-    <span>
-        <?php echo $listall; ?>
-        전체 상품 <?php echo $total_count; ?>개
-    </span>
+<label for="sfl" class="sound_only">검색대상</label>
+<select name="sfl" id="sfl">
+    <option value="it_name" <?php echo get_selected($sfl, 'it_name'); ?>>상품명</option>
+    <option value="it_id" <?php echo get_selected($sfl, 'it_id'); ?>>상품코드</option>
+</select>
 
-    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-22 ?>
-    <label for="sca" class="sound_only">분류선택</label>
-    <select name="sca" id="sca">
-        <option value="">전체분류</option>
-        <?php
-        $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
-        $result1 = sql_query($sql1);
-        for ($i=0; $row1=sql_fetch_array($result1); $i++) {
-            $len = strlen($row1['ca_id']) / 2 - 1;
-            $nbsp = "";
-            for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-            echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].PHP_EOL;
-        }
-        ?>
-    </select>
-    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
-
-    <label for="sfl" class="sound_only">검색대상</label>
-    <select name="sfl" id="sfl">
-        <option value="it_name" <?php echo get_selected($sfl, 'it_name'); ?>>상품명</option>
-        <option value="it_id" <?php echo get_selected($sfl, 'it_id'); ?>>상품코드</option>
-    </select>
-
-    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input required">
-    <input type="submit" value="검색" class="btn_submit">
-</fieldset>
+<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+<input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="frm_input required">
+<input type="submit" value="검색" class="btn_submit">
 
 </form>
 
-<section class="cbox">
-    <h2>상품 목록</h2>
+<form name="fitemtypelist" method="post" action="./itemtypelistupdate.php">
+<input type="hidden" name="sca" value="<?php echo $sca; ?>">
+<input type="hidden" name="sst" value="<?php echo $sst; ?>">
+<input type="hidden" name="sod" value="<?php echo $sod; ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+<input type="hidden" name="stx" value="<?php echo $stx; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
 
-    <ul class="sort_odr">
-        <li><?php echo subject_sort_link("it_id", $qstr, 1); ?>상품코드<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("it_name"); ?>상품명<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("it_type1", $qstr, 1); ?>히트상품<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("it_type2", $qstr, 1); ?>추천상품<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("it_type3", $qstr, 1); ?>신규상품<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("it_type4", $qstr, 1); ?>인기상품<span class="sound_only"> 순 정렬</span></a></li>
-        <li><?php echo subject_sort_link("it_type5", $qstr, 1); ?>할인상품<span class="sound_only"> 순 정렬</span></a></li>
-    </ul>
-
-    <form name="fitemtypelist" method="post" action="./itemtypelistupdate.php">
-    <input type="hidden" name="sca" value="<?php echo $sca; ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst; ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod; ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-
-    <table class="frm_basic">
+<div class="tbl_head01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
-        <th scope="col">상품코드</th>
-        <th scope="col">상품명</th>
-        <th scope="col">히트<br>상품</th>
-        <th scope="col">추천<br>상품</th>
-        <th scope="col">신규<br>상품</th>
-        <th scope="col">인기<br>상품</th>
-        <th scope="col">할인<br>상품</th>
+        <th scope="col"><?php echo subject_sort_link("it_id", $qstr, 1); ?>상품코드</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_name"); ?>상품명</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type1", $qstr, 1); ?>히트<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type2", $qstr, 1); ?>추천<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type3", $qstr, 1); ?>신규<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type4", $qstr, 1); ?>인기<br>상품</a></th>
+        <th scope="col"><?php echo subject_sort_link("it_type5", $qstr, 1); ?>할인<br>상품</a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
     <tbody>
     <?php for ($i=0; $row=sql_fetch_array($result); $i++) {
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
-    <tr>
-        <td class="td_bignum">
+    <tr<?php echo $tr_bg; ?>>
+        <td class="td_num">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>
         </td>
@@ -172,7 +155,7 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
         <td class="td_chk"><input type="checkbox" name="it_type3[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type3'] ? 'checked' : ''); ?>></td>
         <td class="td_chk"><input type="checkbox" name="it_type4[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type4'] ? 'checked' : ''); ?>></td>
         <td class="td_chk"><input type="checkbox" name="it_type5[<?php echo $i; ?>]" value="1" <?php echo ($row['it_type5'] ? 'checked' : ''); ?>></td>
-        <td class="td_smallmng">
+        <td class="td_mngsmall">
             <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?> </span>수정</a>
          </td>
     </tr>
@@ -183,17 +166,13 @@ if ($stx) // 검색 결과일 때만 처음 버튼을 보여줌
         echo '<tr><td colspan="8" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
     ?>
     </tbody>
-    <tfoot>
-
-    </tfoot>
     </table>
+</div>
 
-    <div class="btn_confirm">
-        <input type="submit" value="일괄수정" class="btn_submit">
-    </div>
-    </form>
-
-</section>
+<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="일괄수정" class="btn_submit">
+</div>
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 

@@ -33,11 +33,12 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
-<section class="cbox">
-    <h2>사용후기 수정</h2>
-    <table class="frm_tbl">
+
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 수정</caption>
     <colgroup>
-        <col class="grid_3">
+        <col class="grid_4">
         <col>
     </colgroup>
     <tbody>
@@ -73,9 +74,9 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     </tr>
     </tbody>
     </table>
-</section>
+</div>
 
-<div class="btn_confirm">
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./itemuselist.php?<?php echo $qstr; ?>">목록</a>
 </div>

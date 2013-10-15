@@ -18,16 +18,17 @@ $sql = "select * $sql_common order by dl_order , dl_id desc ";
 $result = sql_query($sql);
 ?>
 
-<section class="cbox">
+<div class="local_ov01 local_ov">
+    <?php echo $total_count; ?>개 업체 등록됨
+</div>
 
-    <h2>배송업체 목록</h2>
-    <p>등록된 배송업체 <?php echo $total_count; ?>곳</p>
+ <div class="btn_add01 btn_add">
+    <a href="./deliverycodeform.php">배송회사추가</a>
+</div>
 
-     <div class="btn_add">
-        <a href="./deliverycodeform.php">배송회사추가</a>
-    </div>
-
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">ID</th>
@@ -42,7 +43,7 @@ $result = sql_query($sql);
     <tr>
         <td class="td_num"><?php echo $row['dl_id']; ?></td>
         <td><?php echo stripslashes($row['dl_company']); ?></td>
-        <td class="td_bignum"><?php echo $row['dl_tel']; ?></td>
+        <td class="td_numbig"><?php echo $row['dl_tel']; ?></td>
         <td class="td_num"><?php echo $row['dl_order']; ?></td>
         <td class="td_mng">
             <a href="<?php echo $row['dl_url']; ?>" target="_blank"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>사이트</a>
@@ -57,8 +58,7 @@ $result = sql_query($sql);
     ?>
     </tbody>
     </table>
-
-</section>
+</div>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

@@ -52,6 +52,7 @@ if($po_run) {
 
 <div class="sit_option_frm_wrapper">
     <table>
+    <caption>옵션 목록</caption>
     <thead>
     <tr>
         <th scope="col">
@@ -86,7 +87,7 @@ if($po_run) {
             <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" value="1">
         </td>
         <td class="opt-cell"><?php echo $opt_1; if ($opt_2) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3) echo ' <small>&gt;</small> '.$opt_3; ?></td>
-        <td class="td_bignum">
+        <td class="td_numsmall">
             <label for="opt_price_<?php echo $i; ?>" class="sound_only"></label>
             <input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" id="opt_price_<?php echo $i; ?>" class="frm_input" size="9">
         </td>
@@ -135,7 +136,7 @@ if($po_run) {
             <input type="checkbox" name="opt_chk[]" id="opt_chk_<?php echo $i; ?>" value="1">
         </td>
         <td class="opt1-cell"><?php echo $opt_1; if ($opt_2) echo ' <small>&gt;</small> '.$opt_2; if ($opt_3) echo ' <small>&gt;</small> '.$opt_3; ?></td>
-        <td class="td_bignum">
+        <td class="td_numsmall">
             <label for="opt_price_<?php echo $i; ?>" class="sound_only"></label>
             <input type="text" name="opt_price[]" value="<?php echo $opt_price; ?>" id="opt_price_<?php echo $i; ?>" class="frm_input" size="9">
         </td>
@@ -168,7 +169,7 @@ if($po_run) {
     </table>
 </div>
 
-<div class="btn_list">
+<div class="btn_list01 btn_list">
     <input type="button" value="선택삭제" id="sel_option_delete">
 </div>
 

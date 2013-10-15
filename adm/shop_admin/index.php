@@ -16,10 +16,11 @@ $pg_anchor = '<ul class="anchor">
 </ul>';
 ?>
 
-<section id="anc_sidx_ord" class="cbox">
+<section id="anc_sidx_ord">
     <h2>주문현황</h2>
     <?php echo $pg_anchor; ?>
 
+<<<<<<< HEAD
     <?php
     $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
     $row = sql_fetch($sql);
@@ -43,212 +44,241 @@ $pg_anchor = '<ul class="anchor">
     $row = sql_fetch($sql);
     echo "배송 : ".$row['cnt'];
     ?>
+=======
+    <div class="local_desc01 local_desc">
+        <p>
+            <?php
+            $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
+            $row = sql_fetch($sql);
+            echo "주문 : ".$row['cnt'];
+            ?>
+
+            <?php
+            $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '입금' ";
+            $row = sql_fetch($sql);
+            echo "입금 : ".$row['cnt'];
+            ?>
+        </p>
+    </div>
+>>>>>>> f73f62fa8521d8b34cab42061a1d73d5979cb198
 </section>
 
-<section id="anc_sidx_rdy" class="cbox">
+<section id="anc_sidx_rdy">
     <h2>입금완료 미배송내역</h2>
     <?php echo $pg_anchor; ?>
 
-    <table>
-    <thead>
-    <tr>
-        <th scope="col">주문번호</th>
-        <th scope="col">주문자</th>
-        <th scope="col">입금액</th>
-        <th scope="col">결제방법</th>
-        <th scope="col">수정</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    // 미수금이 없고 운송장번호가 없는 자료를 구함
-    $sql = " select *
-               from {$g5['g5_shop_order_table']}
-              where od_receipt_price > 0 and od_misu <= 0 and od_invoice = ''
-              order by od_id desc
-              limit $max_limit ";
-    $result = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
-        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-        $row1 = sql_fetch($sql1);
-
-        $name = get_sideview($row['mb_id'], get_text($row['od_name']), $row1['mb_email'], $row1['mb_homepage']);
-
-        $settle_method = "";
-        if ($row['od_settle_case'])
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>입금완료 미배송내역</caption>
+        <thead>
+        <tr>
+            <th scope="col">주문번호</th>
+            <th scope="col">주문자</th>
+            <th scope="col">입금액</th>
+            <th scope="col">결제방법</th>
+            <th scope="col">수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        // 미수금이 없고 운송장번호가 없는 자료를 구함
+        $sql = " select *
+                   from {$g5['g5_shop_order_table']}
+                  where od_receipt_price > 0 and od_misu <= 0 and od_invoice = ''
+                  order by od_id desc
+                  limit $max_limit ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++)
         {
-            $settle_method = $row['od_settle_case'];
-        }
-        else
-        {
-            $settle_method .= '미입력';
-            if ($row['od_receipt_point']) $settle_method .= '포인트';
-        }
-    ?>
-    <tr>
-        <td class="td_odrnum2"><?php echo $row['od_id']; ?></td>
-        <td class="td_name"><?php echo $name; ?></td>
-        <td class="td_bignum"><?php echo display_price($row['od_receipt_price']); ?></td>
-        <td class="td_payby"><?php echo $settle_method; ?></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
-    </tr>
-    <?php
-    }
-    if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
-    ?>
-    </tbody>
-    </table>
+            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $row1 = sql_fetch($sql1);
 
-    <div class="btn_ft">
+            $name = get_sideview($row['mb_id'], get_text($row['od_name']), $row1['mb_email'], $row1['mb_homepage']);
+
+            $settle_method = "";
+            if ($row['od_settle_case'])
+            {
+                $settle_method = $row['od_settle_case'];
+            }
+            else
+            {
+                $settle_method .= '미입력';
+                if ($row['od_receipt_point']) $settle_method .= '포인트';
+            }
+        ?>
+        <tr>
+            <td class="td_odrnum2"><?php echo $row['od_id']; ?></td>
+            <td class="td_name"><?php echo $name; ?></td>
+            <td class="td_numsmall"><?php echo display_price($row['od_receipt_price']); ?></td>
+            <td class="td_payby"><?php echo $settle_method; ?></td>
+            <td class="td_mngsmall"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
+        </tr>
+        <?php
+        }
+        if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
+
+    <div class="btn_list03 btn_list">
         <a href="./deliverylist.php?sort1=od_invoice&amp;sort2=asc&amp;chk_misu=1">입금완료 미배송내역 더보기</a>
     </div>
 </section>
 
-<section id="anc_sidx_wait" class="cbox">
+<section id="anc_sidx_wait">
     <h2>미입금 주문내역</h2>
     <?php echo $pg_anchor; ?>
 
-    <table>
-    <thead>
-    <tr>
-        <th scope="col">주문번호</th>
-        <th scope="col">주문자</th>
-        <th scope="col">주문액</th>
-        <th scope="col">결제방법</th>
-        <th scope="col">수정</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    // 미수금이 있고 송장번호가 없는 자료를 구함
-    $sql = " select *
-               from {$g5['g5_shop_order_table']}
-              where od_misu > 0
-              order by od_id desc
-              limit $max_limit ";
-    $result = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
-        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-        $row1 = sql_fetch($sql1);
-
-        $name = get_sideview($row['mb_id'], get_text($row['od_name']), $row1['mb_email'], $row1['mb_homepage']);
-
-        $settle_method = "";
-        if ($row['od_settle_case'])
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>미입금 주문내역</caption>
+        <thead>
+        <tr>
+            <th scope="col">주문번호</th>
+            <th scope="col">주문자</th>
+            <th scope="col">주문액</th>
+            <th scope="col">결제방법</th>
+            <th scope="col">수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        // 미수금이 있고 송장번호가 없는 자료를 구함
+        $sql = " select *
+                   from {$g5['g5_shop_order_table']}
+                  where od_misu > 0
+                  order by od_id desc
+                  limit $max_limit ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++)
         {
-            $settle_method = $row['od_settle_case'];
-        }
-        else
-        {
-            $settle_method .= '미입력';
-            if ($row['od_receipt_point']) $settle_method .= '포인트';
-        }
-    ?>
-    <tr>
-        <td class="td_odrnum2"><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
-        <td class="td_name"><?php echo $name; ?></td>
-        <td class="td_bignum"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
-        <td class="td_payby"><?php echo $settle_method; ?></td>
-        <td class="td_smallmng"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
-    </tr>
-    <?php
-    }
-    if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
-    ?>
-    </tbody>
-    </table>
+            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $row1 = sql_fetch($sql1);
 
-    <div class="btn_ft">
+            $name = get_sideview($row['mb_id'], get_text($row['od_name']), $row1['mb_email'], $row1['mb_homepage']);
+
+            $settle_method = "";
+            if ($row['od_settle_case'])
+            {
+                $settle_method = $row['od_settle_case'];
+            }
+            else
+            {
+                $settle_method .= '미입력';
+                if ($row['od_receipt_point']) $settle_method .= '포인트';
+            }
+        ?>
+        <tr>
+            <td class="td_odrnum2"><a href="./orderstatuslist.php?sort1=od_id&amp;sel_field=od_id&amp;search=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
+            <td class="td_name"><?php echo $name; ?></td>
+            <td class="td_numsmall"><?php echo display_price($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
+            <td class="td_payby"><?php echo $settle_method; ?></td>
+            <td class="td_mngsmall"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>">수정</a></td>
+        </tr>
+        <?php
+        }
+        if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
+
+    <div class="btn_list03 btn_list">
         <a href="./orderlist.php?sort1=od_receipt_price&amp;sort2=asc">미입금 주문내역 더보기</a>
     </div>
 </section>
 
-<section id="anc_sidx_ps" class="cbox">
+<section id="anc_sidx_ps">
     <h2>사용후기</h2>
     <?php echo $pg_anchor; ?>
 
-    <table>
-    <thead>
-    <tr>
-        <th scope="col">회원명</th>
-        <th scope="col">제목</th>
-        <th scope="col">수정</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    $sql = " select * from {$g5['g5_shop_item_use_table']}
-              where is_confirm = 0
-              order by is_id desc
-              limit $max_limit ";
-    $result = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
-        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-        $row1 = sql_fetch($sql1);
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>사용후기 목록</caption>
+        <thead>
+        <tr>
+            <th scope="col">회원명</th>
+            <th scope="col">제목</th>
+            <th scope="col">수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $sql = " select * from {$g5['g5_shop_item_use_table']}
+                  where is_confirm = 0
+                  order by is_id desc
+                  limit $max_limit ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++)
+        {
+            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $row1 = sql_fetch($sql1);
 
-        $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
-    ?>
-    <tr>
-        <td class="td_name"><?php echo $name; ?></td>
-        <td><?php echo cut_str($row['is_subject'],40); ?></td>
-        <td class="td_smallmng"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
-    </tr>
-    <?php
-    }
-    if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
-    ?>
-    </tbody>
-    </table>
+            $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
+        ?>
+        <tr>
+            <td class="td_name"><?php echo $name; ?></td>
+            <td><?php echo cut_str($row['is_subject'],40); ?></td>
+            <td class="td_mngsmall"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
+        </tr>
+        <?php
+        }
+        if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
 
-    <div class="btn_ft">
+    <div class="btn_list03 btn_list">
         <a href="./itemuselist.php?sort1=is_confirm&amp;sort2=asc">사용후기 더보기</a>
     </div>
 </section>
 
-<section id="anc_sidx_qna" class="cbox">
+<section id="anc_sidx_qna">
     <h2>상품문의</h2>
     <?php echo $pg_anchor; ?>
 
-    <table>
-    <thead>
-    <tr>
-        <th scope="col">회원명</th>
-        <th scope="col">제목</th>
-        <th scope="col">수정</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    $sql = " select * from {$g5['g5_shop_item_qa_table']}
-              where iq_answer = ''
-              order by iq_id desc
-              limit $max_limit ";
-    $result = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
-        $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-        $row1 = sql_fetch($sql1);
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>상품문의 목록</caption>
+        <thead>
+        <tr>
+            <th scope="col">회원명</th>
+            <th scope="col">제목</th>
+            <th scope="col">수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $sql = " select * from {$g5['g5_shop_item_qa_table']}
+                  where iq_answer = ''
+                  order by iq_id desc
+                  limit $max_limit ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++)
+        {
+            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $row1 = sql_fetch($sql1);
 
-        $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
-    ?>
-    <tr>
-        <td class="td_name"><?php echo $name; ?></td>
-        <td><?php echo cut_str($row['iq_subject'],40); ?></td>
-        <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
-    </tr>
-    <?php
-    }
+            $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
+        ?>
+        <tr>
+            <td class="td_name"><?php echo $name; ?></td>
+            <td><?php echo cut_str($row['iq_subject'],40); ?></td>
+            <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
+        </tr>
+        <?php
+        }
 
-    if ($i == 0)
-        echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
-    ?>
-    </tbody>
-    </table>
+        if ($i == 0)
+            echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
 
-    <div class="btn_ft">
+    <div class="btn_list03 btn_list">
         <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상품문의 더보기</a>
     </div>
 </section>

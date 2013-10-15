@@ -18,16 +18,18 @@ $sql = "select * $sql_common order by ev_id desc ";
 $result = sql_query($sql);
 ?>
 
-<p>전체 이벤트 <?php echo $total_count ?>건</p>
+<div class="local_ov01 local_ov">
+    전체 이벤트 <?php echo $total_count ?>건
+</div>
 
-<section class="cbox">
-    <h2>이벤트 목록</h2>
 
-    <div class="btn_add">
-        <a href="./itemeventform.php">이벤트 추가</a>
-    </div>
+<div class="btn_add01 btn_add">
+    <a href="./itemeventform.php">이벤트 추가</a>
+</div>
 
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col">이벤트번호</th>
@@ -53,10 +55,10 @@ $result = sql_query($sql);
     ?>
 
     <tr>
-        <td class="td_bignum"><?php echo $row['ev_id']; ?></td>
+        <td class="td_num"><?php echo $row['ev_id']; ?></td>
         <td><?php echo $subject; ?></td>
         <td class="td_num"><?php echo $href; ?><?php echo $ev['cnt']; ?><?php echo $href_close; ?></td>
-        <td class="td_smallmng"><?php echo $row['ev_use'] ? '<span class="txt_true">예</span>' : '<span class="txt_false">아니오</span>'; ?></td>
+        <td class="td_boolean"><?php echo $row['ev_use'] ? '<span class="txt_true">예</span>' : '<span class="txt_false">아니오</span>'; ?></td>
         <td class="td_mng">
             <a href="<?php echo G5_SHOP_URL; ?>/event.php?ev_id=<?php echo $row['ev_id']; ?>">보기</a>
             <a href="./itemeventform.php?w=u&amp;ev_id=<?php echo $row['ev_id']; ?>">수정</a>
@@ -73,16 +75,14 @@ $result = sql_query($sql);
     ?>
     </tbody>
     </table>
-</section>
+</div>
 
-
-<SCRIPT>
+<script>
 function itemeventwin(ev_id)
 {
     window.open("./itemeventwin.php?ev_id="+ev_id, "itemeventwin", "left=10,top=10,width=500,height=600,scrollbars=1");
 }
-</SCRIPT>
-
+</script>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

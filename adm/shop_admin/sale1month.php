@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $fr_month = preg_replace("/([0-9]{4})([0-9]{2})/", "\\1-\\2", $fr_month);
 $to_month = preg_replace("/([0-9]{4})([0-9]{2})/", "\\1-\\2", $to_month);
 
-$g5['title'] = "$fr_month ~ $to_month 월간 매출현황"; /*레이블 중복 인식과 페이지와의 연결 때문에 month로 바꿈 김혜련 2013-04-04*/
+$g5['title'] = "$fr_month ~ $to_month 월간 매출현황";
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 function print_line($save)
@@ -17,14 +17,14 @@ function print_line($save)
     ?>
     <tr>
         <td><a href="./sale1date.php?fr_date=<?php echo $date; ?>01&amp;to_date=<?php echo $date; ?>31"><?php echo $save['od_date']; ?></a></td>
-        <td><?php echo number_format($save['ordercount']); ?></td>
-        <td><?php echo number_format($save['orderprice']); ?></td>
-        <td><?php echo number_format($save['ordercoupon']); ?></td>
-        <td><?php echo number_format($save['receiptbank']); ?></td>
-        <td><?php echo number_format($save['receiptcard']); ?></td>
-        <td><?php echo number_format($save['receiptpoint']); ?></td>
-        <td><?php echo number_format($save['ordercancel']); ?></td>
-        <td><?php echo number_format($save['misu']); ?></td>
+        <td class="td_num"><?php echo number_format($save['ordercount']); ?></td>
+        <td class="td_numsum"><?php echo number_format($save['orderprice']); ?></td>
+        <td class="td_numcoupon"><?php echo number_format($save['ordercoupon']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptbank']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptcard']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptpoint']); ?></td>
+        <td class="td_numcancel"><?php echo number_format($save['ordercancel']); ?></td>
+        <td class="td_numrdy"><?php echo number_format($save['misu']); ?></td>
     </tr>
     <?php
 }
@@ -46,10 +46,10 @@ $sql = " select od_id,
 $result = sql_query($sql);
 ?>
 
-<section id="ssale_month" class="cbox">
-    <h2>월간 매출 집계 목록</h2>
+<div class="tbl_head01 tbl_wrap">
 
     <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <thead>
     <tr>
         <th scope="col">주문월</th>
@@ -122,7 +122,7 @@ $result = sql_query($sql);
     </tr>
     </tfoot>
     </table>
-</section>
+</div>
 
 
 <?php

@@ -47,89 +47,76 @@ $result = sql_query($sql);
 $qstr1 = 'sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search;
 $qstr = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
 
-$listall = '';
-if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 ?>
 
-<form name="flist">
+<div class="local_ov01 local_ov">
+    <?php echo $listall; ?>
+    전체 상품 <?php echo $total_count; ?>개
+</div>
+
+<form name="flist" class="local_sch01 local_sch">
 <input type="hidden" name="doc" value="<?php echo $doc; ?>">
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 
-<fieldset>
-    <legend>상품재고 검색</legend>
+<label for="sel_ca_id" class="sound_only">분류선택</label>
+<select name="sel_ca_id" id="sel_ca_id">
+    <option value=''>전체분류</option>
+    <?php
+    $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
+    $result1 = sql_query($sql1);
+    for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
+        $len = strlen($row1['ca_id']) / 2 - 1;
+        $nbsp = "";
+        for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
+        echo '<option value="'.$row1['ca_id'].'" '.get_selected($sel_ca_id, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
+    }
+    ?>
+</select>
 
-    <span>
-        <?php echo $listall; ?>
-        전체 상품 <?php echo $total_count; ?>개
-    </span>
+<label for="sel_field" class="sound_only">검색대상</label>
+<select name="sel_field" id="sel_field">
+    <option value="it_name" <?php echo get_selected($sel_field, 'it_name'); ?>>상품명</option>
+    <option value="it_id" <?php echo get_selected($sel_field, 'it_id'); ?>>상품코드</option>
+</select>
 
-    <?php // ##### // 웹 접근성 취약 지점 시작 - 지운아빠 2013-04-15 ?>
-    <label for="sel_ca_id" class="sound_only">분류선택</label>
-    <select name="sel_ca_id" id="sel_ca_id">
-        <option value=''>전체분류</option>
-        <?php
-        $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
-        $result1 = sql_query($sql1);
-        for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
-            $len = strlen($row1['ca_id']) / 2 - 1;
-            $nbsp = "";
-            for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-            echo '<option value="'.$row1['ca_id'].'" '.get_selected($sel_ca_id, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
-        }
-        ?>
-    </select>
-    <?php // ##### // 웹 접근성 취약 지점 끝 ?>
-
-    <label for="sel_field" class="sound_only">검색대상</label>
-    <select name="sel_field" id="sel_field">
-        <option value="it_name" <?php echo get_selected($sel_field, 'it_name'); ?>>상품명</option>
-        <option value="it_id" <?php echo get_selected($sel_field, 'it_id'); ?>>상품코드</option>
-    </select>
-
-    <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="search" value="<?php echo $search; ?>" required class="frm_input required">
-    <input type="submit" value="검색" class="btn_submit">
-</fieldset>
+<label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+<input type="text" name="search" value="<?php echo $search; ?>" required class="frm_input required">
+<input type="submit" value="검색" class="btn_submit">
 
 </form>
 
-<section class="cbox">
-    <h2>상품재고 목록</h2>
+<div class="local_desc01 local_desc">
     <p>재고수정의 수치를 수정하시면 창고재고의 수치가 변경됩니다.</p>
+</div>
 
-    <div class="btn_add sort_with">
-        <a href="./optionstocklist.php" class="btn_add_optional">상품옵션재고</a>
-        <a href="./itemsellrank.php" class="btn_add_optional">상품판매순위</a>
-    </div>
+<div class="btn_add01 btn_add">
+    <a href="./optionstocklist.php" class="btn_add01 btn_add_optional">상품옵션재고</a>
+    <a href="./itemsellrank.php" class="btn_add01 btn_add_optional">상품판매순위</a>
+</div>
 
-    <ul class="sort_odr">
-        <li><a href="<?php echo title_sort("it_id") . "&amp;$qstr1"; ?>">상품코드<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("it_name") . "&amp;$qstr1"; ?>">상품명<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("it_stock_qty") . "&amp;$qstr1"; ?>">창고재고<span class="sound_only"> 순 정렬</span></a></li>
-        <li><a href="<?php echo title_sort("it_use") . "&amp;$qstr1"; ?>">판매<span class="sound_only"> 순 정렬</span></a></li>
-    </ul>
+<form name="fitemstocklist" action="./itemstocklistupdate.php" method="post">
+<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
+<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
+<input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
+<input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
+<input type="hidden" name="search" value="<?php echo $search; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
 
-    <form name="fitemstocklist" action="./itemstocklistupdate.php" method="post">
-    <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-    <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-    <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
-    <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
-    <input type="hidden" name="search" value="<?php echo $search; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-
-    <table class="frm_basic">
+<div class="tbl_head01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
-        <th scope="col">상품코드</th>
-        <th scope="col">상품명</th>
-        <th scope="col">창고재고</th>
+        <th scope="col"><a href="<?php echo title_sort("it_id") . "&amp;$qstr1"; ?>">상품코드</a></th>
+        <th scope="col"><a href="<?php echo title_sort("it_name") . "&amp;$qstr1"; ?>">상품명</a></th>
+        <th scope="col"><a href="<?php echo title_sort("it_stock_qty") . "&amp;$qstr1"; ?>">창고재고</a></th>
         <th scope="col">주문대기</th>
         <th scope="col">가재고</th>
         <th scope="col">재고수정</th>
-        <th scope="col">판매</th>
+        <th scope="col"><a href="<?php echo title_sort("it_use") . "&amp;$qstr1"; ?>">판매</a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -156,9 +143,11 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         // 가재고 (미래재고)
         $temporary_qty = $row['it_stock_qty'] - $wait_qty;
 
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+
     ?>
-    <tr>
-        <td class="td_bignum">
+    <tr<?php echo ' '.$tr_bg; ?>>
+        <td class="td_num">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>
         </td>
@@ -168,7 +157,7 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
         <td class="td_num"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input" size="10" autocomplete="off"></td>
         <td class="td_chk"><input type="checkbox" name="it_use[<?php echo $i; ?>]" value="1" <?php echo ($row['it_use'] ? "checked" : ""); ?>></td>
-        <td class="td_smallmng"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>">수정</a></td>
+        <td class="td_mngsmall"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>">수정</a></td>
     </tr>
     <?php
     }
@@ -177,12 +166,12 @@ if ($search) // 검색 결과일 때만 처음 버튼을 보여줌
     ?>
     </tbody>
     </table>
-    <div class="btn_confirm">
-        <input type="submit" value="일괄수정" class="btn_submit">
-    </div>
-    </form>
+</div>
 
-</section>
+<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="일괄수정" class="btn_submit">
+</div>
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
