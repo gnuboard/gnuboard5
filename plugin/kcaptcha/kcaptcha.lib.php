@@ -238,14 +238,15 @@ function captcha_html($class="captcha")
     $html .= "\n".'<script>var g5_captcha_url  = "'.G5_CAPTCHA_URL.'";</script>';
     $html .= "\n".'<script>var g5_captcha_path = "'.G5_CAPTCHA_PATH.'";</script>';
     $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/kcaptcha.js"></script>';
-    $html .= "\n".'<fieldset id="sir_captcha" class="'.$class.'">';
+    $html .= "\n".'<fieldset id="captcha" class="'.$class.'">';
     $html .= "\n".'<legend>자동등록방지</legend>';
+    if (G5_IS_MOBILE) $html .= '<audio src="#" id="captcha_audio" controls></audio>';
     $html .= "\n".'<img src="#" alt="" id="captcha_img">';
-    $html .= "\n".'<button type="button" id="captcha_mp3"><span></span>숫자음성듣기</button>';
+    if (!G5_IS_MOBILE) $html .= "\n".'<button type="button" id="captcha_mp3"><span></span>숫자음성듣기</button>';
     $html .= "\n".'<button type="button" id="captcha_reload"><span></span>새로고침</button>';
-    $html .= '<input type="text" name="captcha_key" id="captcha_key" required class="captcha_box sir_inp sir_irq" size="6" maxlength="6">';
+    $html .= '<input type="text" name="captcha_key" id="captcha_key" required class="captcha_box required" size="6" maxlength="6">';
+    $html .= "\n".'<span id="captcha_info">자동등록방지 숫자를 순서대로 입력하세요.</span>';
     $html .= "\n".'</fieldset>';
-    $html .= "\n".'<span class="sir_finfo1">자동등록방지 숫자를 순서대로 입력하세요.</span>';
     return $html;
 }
 

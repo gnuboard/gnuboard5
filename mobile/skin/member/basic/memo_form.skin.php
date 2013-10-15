@@ -5,17 +5,17 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_write" class="new_win mbskin">
-    <h1 id="new_win_title">쪽지보내기</h1>
+    <h1 id="win_title">쪽지보내기</h1>
 
-    <ul class="new_win_ul">
+    <ul class="win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
         <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
     </ul>
 
     <form name="fmemoform" action="./memo_form_update.php" onsubmit="return fmemoform_submit(this);" method="post" autocomplete="off">
-    <div class="cbox">
-        <table class="frm_tbl">
+    <div class="tbl_frm01 tbl_wrp">
+        <table>
         <caption>쪽지쓰기</caption>
         <tbody>
         <tr>
@@ -39,7 +39,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <p>
             작성하신 쪽지를 발송하시려면 <strong>보내기</strong> 버튼을, 작성을 취소하고 창을 닫으시려면 <strong>창닫기</strong> 버튼을 누르세요.
         </p>

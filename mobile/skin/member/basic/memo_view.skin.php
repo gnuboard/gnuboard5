@@ -14,9 +14,9 @@ else {
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="memo_view" class="new_win mbskin">
-    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
-    <ul class="new_win_ul">
+    <ul class="win_ul">
         <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
         <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
@@ -37,7 +37,7 @@ else {
             <?php echo conv_content($memo['me_memo'], 0) ?>
         </p>
     </section>
-    <div class="btn_win">
+    <div class="win_btn">
         <?php if($prev_link) { ?>
         <a href="<?php echo $prev_link ?>">이전쪽지</a>
         <?php } ?>

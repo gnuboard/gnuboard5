@@ -127,13 +127,14 @@ include_once('./admin.head.php');
 <input type="hidden" name="page" value="<?php echo $page ?>">
 <input type="hidden" name="token" value="<?php echo $token ?>">
 
-<div class="cbox">
-    <table class="frm_tbl">
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <caption><?php echo $g5['title']; ?></caption>
     <colgroup>
-        <col class="grid_3">
-        <col class="grid_6">
-        <col class="grid_3">
-        <col class="grid_6">
+        <col class="grid_4">
+        <col>
+        <col class="grid_4">
+        <col>
     </colgroup>
     <tbody>
     <tr>
@@ -320,13 +321,9 @@ include_once('./admin.head.php');
 
     </tbody>
     </table>
-
 </div>
 
-<div class="btn_confirm">
-    <p>
-        작성하신 내용을 제출하시려면 <strong>확인</strong> 버튼을, 작성을 취소하고 목록으로 돌아가시려면 <strong>목록</strong> 링크를 누르세요.
-    </p>
+<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey='s'>
     <a href="./member_list.php?<?php echo $qstr ?>">목록</a>
 </div>

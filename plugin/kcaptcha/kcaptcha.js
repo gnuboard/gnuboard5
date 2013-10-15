@@ -9,6 +9,19 @@ $(function(){
                 $('#captcha_img').attr('src', g5_captcha_url+'/kcaptcha_image.php?t=' + (new Date).getTime());
             }
         });
+
+        $.ajax({
+            type: 'POST',
+            url: g5_captcha_url+'/kcaptcha_mp3.php',
+            cache: false,
+            async: false,
+            success: function(url) {
+                if (url) {
+                    mp3_url = url + "?t="+new Date().getTime();
+                    $("#captcha_audio").attr("src", mp3_url);
+                }
+            }
+        });
     }).trigger("click");
 
     var mp3_url = "";

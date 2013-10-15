@@ -44,9 +44,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = '';
-if ($sfl || $stx) // 검색렬일 때만 처음 버튼을 보여줌
-    $listall = '<a href="'.$_SERVER['PHP_SELF'].'">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 
 $g5['title'] = '투표관리';
 include_once('./admin.head.php');
@@ -54,37 +52,38 @@ include_once('./admin.head.php');
 $colspan = 7;
 ?>
 
-<form id="fsearch" name="fsearch" method="get">
-<fieldset>
-    <legend>투표검색</legend>
-    <span>
-        <?php echo $listall ?>
-        투표수 : <?php echo number_format($total_count) ?>개
-    </span>
-    <select name="sfl" id="sfl" title="검색대상">
+<div class="local_ov01 local_ov">
+    <?php echo $listall ?>
+    투표수 <?php echo number_format($total_count) ?>개
+</div>
+
+<form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
+<div class="sch_last">
+    <label for="sfl" class="sound_only">검색대상</label>
+    <select name="sfl" id="sfl">
         <option value="po_subject"<?php echo get_selected($_GET['sfl'], "po_subject"); ?>>제목</option>
     </select>
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
     <input type="submit" class="btn_submit" value="검색">
-</fieldset>
+</div>
 </form>
 
-<section class="cbox">
-    <h2>투표목록</h2>
+<div class="btn_add01 btn_add">
+    <a href="./poll_form.php" id="poll_add">투표 추가</a>
+</div>
 
-    <div class="btn_add">
-        <a href="./poll_form.php" id="poll_add">투표 추가</a>
-    </div>
+<form name="fpolllist" id="fpolllist" action="./poll_delete.php" method="post">
+<input type="hidden" name="sst" value="<?php echo $sst ?>">
+<input type="hidden" name="sod" value="<?php echo $sod ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+<input type="hidden" name="stx" value="<?php echo $stx ?>">
+<input type="hidden" name="page" value="<?php echo $page ?>">
+<input type="hidden" name="token" value="<?php echo $token ?>">
 
-    <form name="fpolllist" id="fpolllist" action="./poll_delete.php" method="post">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="token" value="<?php echo $token ?>">
+<div class="tbl_head01 tbl_wrap">
     <table>
+    <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
         <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 투표 전체선택" onclick="check_all(this.form)"></th>
@@ -105,9 +104,11 @@ $colspan = 7;
 
         $s_mod = '<a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row['po_id'].'">수정</a>';
         //$s_del = '<a href="javascript:post_delete(\'poll_form_update.php\', \''.$row['po_id'].'\');">삭제</a>';
+
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
     ?>
 
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td class="td_chk">
             <input type="checkbox" name="chk[]" value="<?php echo $row['po_id'] ?>" id="chk_<?php echo $i ?>" title="투표선택">
         </td>
@@ -127,12 +128,12 @@ $colspan = 7;
     ?>
     </tbody>
     </table>
+</div>
 
-    <div class="btn_list">
-        <button type="submit">선택삭제</button>
-    </div>
-    </form>
-</section>
+<div class="btn_list01 btn_list">
+    <button type="submit">선택삭제</button>
+</div>
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 

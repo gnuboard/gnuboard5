@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <nav id="gnb">
     <script>$('#gnb').addClass('gnb_js');</script>
-    <h2>홈페이지 메인메뉴</h2>
+    <h2>메인메뉴</h2>
     <ul>
         <?php
         $sql = " select * from {$g5['group_table']} where gr_show_menu = 1 and gr_device <> 'pc' order by gr_order ";
@@ -27,8 +27,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <hr>
 
-<footer id="ft">
-    <h1><?php echo $config['cf_title'] ?> 정보</h1>
+<div id="ft">
     <?php echo popular('basic'); // 인기검색어 ?>
     <?php echo visit('basic'); // 방문자수 ?>
     <div id="ft_catch"><a href="<?php echo G5_URL; ?>/"><img src="<?php echo G5_IMG_URL; ?>/ft_catch.jpg" alt="Sharing All Possibilities"></a></div>
@@ -38,7 +37,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <a href="#">상단으로</a>
         </p>
     </div>
-</footer>
+</div>
 
 <?php
 $seq = 0;

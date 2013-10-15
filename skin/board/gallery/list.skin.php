@@ -5,7 +5,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 
-<?php if (!$wr_id) { ?><h2 id="bo_list_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2><?php } ?>
+<h2 id="container_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2>
 
 <!-- 게시판 목록 시작 { -->
 <div id="bo_gall" style="width:<?php echo $width; ?>">
@@ -43,6 +43,9 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
     <input type="hidden" name="spt" value="<?php echo $spt ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
+
+    <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
+    <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
 
     <ul id="gall_ul">
         <?php for ($i=0; $i<count($list); $i++) {

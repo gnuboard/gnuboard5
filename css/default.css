@@ -23,7 +23,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 상단 레이아웃 */
 #hd {z-index:10;position:relative;border-top:3px solid #151515;background:#fff}
-#hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#hd_h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
 #logo {padding:26px 0}
@@ -32,7 +32,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #sch_all {position:absolute;top:22px;left:170px;margin:0;padding:0;border:1px solid #555}
 #sch_all legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #sch_all #sch_all_stx {padding-left:5px;width:165px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
-#sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff}
+#sch_all_submit {padding:0 5px;height:26px;border:0;background:#555;color:#fff;cursor:pointer}
 
 #tnb {position:absolute;top:18px;right:0;margin:0;padding:0;list-style:none;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
@@ -81,7 +81,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 텍스트 크기 조절 */
 #text_size {position:absolute;top:-33px;left:-1px;letter-spacing:-3px}
-#text_size button {margin:0;padding:0 10px;height:28px;border:0;background:#555;color:#fff;vertical-align:middle;letter-spacing:0;cursor:pointer}
+#text_size button {margin:0;padding:0;border:0;background:transparent;vertical-align:middle;cursor:pointer}
 .ts_up {font-size:1.167em !important}
 .ts_up2 {font-size:1.3em !important}
 
@@ -112,13 +112,20 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .img_fix {width:100%;height:auto}
 
 /* 캡챠 자동등록(입력)방지 기본 */
-#captcha img {border:1px solid #cfded8;border-right:0}
-#captcha_mp3 img {border:1px solid #cfded8;border-left:0;background:#494949}
+#captcha {display:inline-block;position:relative}
+#captcha legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#captcha_img {width:100px;height:41px;border:1px solid #e9e9e9}
+#captcha #captcha_key {margin:0 0 0 25px;padding:0 5px;width:70px;height:41px;border:1px solid #b8c9c2;background:#f7f7f7;font-size:1.333em;font-weight:bold;text-align:center;line-height:2.8em}
+#captcha #captcha_mp3 {position:absolute;top:0;left:101px;;margin:0;padding:0;width:23px;height:22px;border:0;background:transparent;vertical-align:middle;overflow:hidden;cursor:pointer}
+#captcha #captcha_mp3 span {position:absolute;top:0;left:0;width:23px;height:22px;background:url('../plugin/kcaptcha/img/sound.gif')}
+#captcha #captcha_reload {position:absolute;top:21px;left:101px;margin:0;padding:0;width:23px;height:22px;border:0;background:transparent;vertical-align:middle;overflow:hidden;cursor:pointer}
+#captcha #captcha_reload span {position:absolute;top:0;left:0;width:23px;height:22px;background:url('../plugin/kcaptcha/img/reload.gif')}
+#captcha #captcha_info {display:block;margin:5px 0 0;font-size:0.95em;letter-spacing:-0.1em}
 #mp3_embed {position:absolute;top:0;left:0;width:1px;height:1px;overflow:hidden} /* 익스 8 이하에서 음성캡챠 실행 스타일 */
 
 /* ckeditor 단축키 */
 .cke_sc {margin:0 0 5px;text-align:right}
-.btn_cke_sc{display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:1.9em;vertical-align:middle}
+.btn_cke_sc{display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:1.9em;vertical-align:middle;cursor:pointer}
 .cke_sc_def {margin:0 0 5px;padding:10px;border:1px solid #ccc;background:#f7f7f7;text-align:center}
 .cke_sc_def dl{margin:0 0 5px;text-align:left;zoom:1}
 .cke_sc_def dl:after {display:block;visibility:hidden;clear:both;content:""}
@@ -131,20 +138,19 @@ a.btn01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc;b
 a.btn01:focus, .btn01:hover {text-decoration:none}
 a.btn02 {display:inline-block;padding:0 10px;height:23px;border:1px solid #000;background:#333;color:#fff;text-decoration:none;line-height:2.15em;vertical-align:middle}
 a.btn02:focus, .btn02:hover {text-decoration:none}
+
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:middle;cursor:pointer}
+
+input.btn_submit {padding:0 10px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:middle;cursor:pointer}
 button.btn_submit {height:22px;font-size:1em}
 fieldset .btn_submit {height:22px;font-size:1em}
-.btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
-button.btn_cancel {display:inline-block;padding:0 10px;height:24px;border:1px solid #ccc;background:#fafafa;line-height:2em}
-.btn_cancel:focus, .btn_cancel:hover {text-decoration:none !important}
+
+a.btn_cancel {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em}
+a.btn_cancel:focus, a.btn_cancel:hover {text-decoration:none}
+
 a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:22px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:2em} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
-.btn_win {clear:both;margin-bottom:20px;text-align:center} /* 새창용 */
-.btn_win button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;vertical-align:top;line-height:2em;cursor:pointer}
-.btn_win input {height:30px;line-height:2em}
-.btn_win a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
-.btn_win a:focus, .btn_win a:hover {text-decoration:none}
+
 /* 게시판용 버튼 */
 a.btn_b01 {display:inline-block;padding:0 10px;height:23px;border:1px solid #d9ded9;background:#f5f6fa;color:#000;text-decoration:none;line-height:2.15em;vertical-align:middle}
 a.btn_b01:focus, .btn_b01:hover {text-decoration:none}
@@ -157,37 +163,41 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
 
 /* 기본테이블 */
-.basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
-.basic_tbl caption {padding:0;font-size:0;line-height:0;overflow:hidden}
-.basic_tbl thead th {padding:12px 0;background:#565e60;color:#fff}
-.basic_tbl thead a {color:#fff}
-.basic_tbl thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-.basic_tbl tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
-.basic_tbl tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
-.basic_tbl tbody th {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
-.basic_tbl td {padding:8px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
-.basic_tbl a {}
-.bo_sideview td {padding:6px 4px} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
-td.empty_table {padding:85px 0;text-align:center}
-li.empty_list {padding:85px 0;text-align:center}
+.tbl_wrp table {width:100%;border-collapse:collapse;border-spacing:0}
+.tbl_wrp caption {padding:10px 0;font-weight:bold;text-align:left}
+
+.tbl_head01 {margin:0 0 10px}
+.tbl_head01 caption {padding:0;font-size:0;line-height:0;overflow:hidden}
+.tbl_head01 thead th {padding:12px 0;border-top:1px solid #d1dee2;border-bottom:1px solid #d1dee2;background:#e5ecef;color:#383838;font-size:0.95em;letter-spacing:-0.1em}
+.tbl_head01 thead a {color:#383838}
+.tbl_head01 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+.tbl_head01 tfoot th, .tbl_head01 tfoot td {padding:10px 0;border-top:1px solid #c1d1d5;border-bottom:1px solid #c1d1d5;background:#d7e0e2;text-align:center}
+.tbl_head01 tbody th {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
+.tbl_head01 td {padding:8px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
+.tbl_head01 a {}
+.tbl_head01 .empty_table {padding:50px 0;text-align:center}
 
 /* 폼 테이블 */
-.frm_tbl {margin-bottom:20px;width:100%;border-collapse:collapse;border-spacing:0}
-.frm_tbl caption {padding:10px 0;font-weight:bold;text-align:left}
-.frm_tbl th {width:100px;padding:7px 13px;border:1px solid #e9e9e9;border-left:0;background:#f7f7f7;text-align:left}
-.frm_tbl td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
-.frm_tbl textarea, .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;color:#000;vertical-align:middle}
-.frm_tbl textarea {width:98%;height:100px}
-.frm_address {display:block;margin-top:5px}
-.frm_file {display:block;margin-bottom:5px}
-.frm_tbl #captcha {margin:0;padding:0;border:0;background:transparent}
-.frm_tbl #captcha input {margin-left:5px;text-align:center}
-.frm_tbl a {text-decoration:none}
+.tbl_frm01 {margin:0 0 20px}
+.tbl_frm01 table {width:100%;border-collapse:collapse;border-spacing:0}
+.tbl_frm01 th {width:100px;padding:7px 13px;border:1px solid #e9e9e9;border-left:0;background:#f7f7f7;text-align:left}
+.tbl_frm01 td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
+.tbl_frm01 textarea, .tbl_frm01 .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;color:#000;vertical-align:middle}
+.tbl_frm01 textarea {width:98%;height:100px}
+/*
+.tbl_frm01 #captcha {margin:0;padding:0;border:0;background:transparent}
+.tbl_frm01 #captcha input {margin-left:5px;text-align:center}
+*/
+.tbl_frm01 a {text-decoration:none}
+.tbl_frm01 .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
+.tbl_frm01 .frm_address {display:block;margin-top:5px}
+.tbl_frm01 .frm_file {display:block;margin-bottom:5px}
 
-.frm_info {display:block;padding:0 0 5px;line-height:1.4em}
+fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;color:#000;vertical-align:middle}
 
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
+textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
 
 /* 테이블 항목별 정의 */
 .td_board {width:120px;text-align:center}
@@ -207,15 +217,20 @@ li.empty_list {padding:85px 0;text-align:center}
 
 /* 새창 기본 스타일 */
 .new_win {}
-.new_win #new_win_title {margin-bottom:20px;padding:0 20px;height:60px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em;line-height:5em}
-.new_win #new_win_title .sv {font-size:0.75em;line-height:1.2em}
-.new_win .basic_tbl {margin:0 auto 20px;width:93%;background:#fff}
-.new_win .frm_tbl {margin:0 auto 20px;width:93%;background:#fff}
-.new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
-.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.new_win_ul li {float:left;margin-left:-1px}
-.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
-.new_win_desc {margin:0 auto;width:93%}
+.new_win .tbl_wrp {margin:0 20px}
+.new_win #win_title {margin:0 0 20px;padding:20px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em}
+.new_win #win_title .sv {font-size:0.75em;line-height:1.2em}
+.new_win .win_ul {margin:-20px 0 20px 0;padding:0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
+.new_win .win_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win .win_ul li {float:left;margin-left:-1px}
+.new_win .win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
+.new_win .win_desc {margin:0 20px}
+
+.new_win .win_btn {clear:both;margin:20px;text-align:center} /* 새창용 */
+.new_win .win_btn button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;vertical-align:top;line-height:2em;cursor:pointer}
+.new_win .win_btn input {height:30px;line-height:2em}
+.new_win .win_btn a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
+.new_win .win_btn a:focus, .new_win .win_btn a:hover {text-decoration:none}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}

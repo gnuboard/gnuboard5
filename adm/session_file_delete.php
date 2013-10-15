@@ -9,10 +9,11 @@ $g5['title'] = "세션파일 일괄삭제";
 include_once("./admin.head.php");
 ?>
 
-<div id="session_del">
+<div class="local_desc02 local_desc">
     <p>
         완료 메세지가 나오기 전에 프로그램의 실행을 중지하지 마십시오.
     </p>
+</div>
 
     <?php
     flush();
@@ -52,10 +53,8 @@ include_once("./admin.head.php");
         }
     }
     echo $list_tag_end;
-    //echo "<script>document.getElementById('ct').innerHTML += '세션데이터 {$cnt}건 삭제 완료.<br><br>프로그램의 실행을 끝마치셔도 좋습니다.';</script>\n";
-    echo "<p><span>세션데이터 {$cnt}건 삭제 완료.</span><br>프로그램의 실행을 끝마치셔도 좋습니다.</p>\n";
+    echo '<div class="local_desc01 local_desc"><p><strong>세션데이터 '.$cnt.'건 삭제 완료됐습니다.</strong><br>프로그램의 실행을 끝마치셔도 좋습니다.</p></div>'.PHP_EOL;
 ?>
-</div>
 
 <?php
 include_once("./admin.tail.php");
