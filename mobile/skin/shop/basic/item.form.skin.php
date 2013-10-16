@@ -3,6 +3,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/jquery.event.move.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.event.swipe.js"></script>
 <script src="<?php echo G5_JS_URL ?>/jquery.floatmenu.js"></script>
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
@@ -36,49 +38,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         }
         if ($thumb_count > 0) echo '</ul>';
         ?>
-        <script>
-        $(function() {
-            var time = 500;
-            var idx = idx2 = 0;
-            var slide_width = $("#sit_pvi_slide").width();
-            var slide_count = $("#sit_pvi_slide li").size();
-            $("#sit_pvi_slide li:first").css("display", "block");
-            if(slide_count > 1)
-                $(".sit_pvi_btn").css("display", "inline");
-
-            $("#sit_pvi_prev").click(function() {
-                if(slide_count > 1) {
-                    idx2 = (idx - 1) % slide_count;
-                    if(idx2 < 0)
-                        idx2 = slide_count - 1;
-                    $("#sit_pvi_slide li:hidden").css("left", "-"+slide_width+"px");
-                    $("#sit_pvi_slide li:eq("+idx+")").filter(":not(:animated)").animate({ left: "+="+slide_width+"px" }, time, function() {
-                        $(this).css("display", "none").css("left", "-"+slide_width+"px");
-                    });
-                    $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").filter(":not(:animated)").animate({ left: "+="+slide_width+"px" }, time,
-                        function() {
-                            idx = idx2;
-                        }
-                    );
-                }
-            });
-
-            $("#sit_pvi_next").click(function() {
-                if(slide_count > 1) {
-                    idx2 = (idx + 1) % slide_count;
-                    $("#sit_pvi_slide li:hidden").css("left", slide_width+"px");
-                    $("#sit_pvi_slide li:eq("+idx+")").filter(":not(:animated)").animate({ left: "-="+slide_width+"px" }, time, function() {
-                        $(this).css("display", "none").css("left", slide_width+"px");
-                    });
-                    $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").filter(":not(:animated)").animate({ left: "-="+slide_width+"px" }, time,
-                        function() {
-                            idx = idx2;
-                        }
-                    );
-                }
-            });
-        });
-        </script>
     </div>
 
     <section id="sit_ov">
@@ -367,7 +326,54 @@ $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
 </form>
 
 <script>
+$(window).bind("pageshow", function(event) {
+    if (event.originalEvent.persisted) {
+        document.location.reload();
+    }
+});
+
 $(function(){
+    // 상품이미지 슬라이드
+    var time = 500;
+    var idx = idx2 = 0;
+    var slide_width = $("#sit_pvi_slide").width();
+    var slide_count = $("#sit_pvi_slide li").size();
+    $("#sit_pvi_slide li:first").css("display", "block");
+    if(slide_count > 1)
+        $(".sit_pvi_btn").css("display", "inline");
+
+    $("#sit_pvi_prev").click(function() {
+        if(slide_count > 1) {
+            idx2 = (idx - 1) % slide_count;
+            if(idx2 < 0)
+                idx2 = slide_count - 1;
+            $("#sit_pvi_slide li:hidden").css("left", "-"+slide_width+"px");
+            $("#sit_pvi_slide li:eq("+idx+")").filter(":not(:animated)").animate({ left: "+="+slide_width+"px" }, time, function() {
+                $(this).css("display", "none").css("left", "-"+slide_width+"px");
+            });
+            $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").filter(":not(:animated)").animate({ left: "+="+slide_width+"px" }, time,
+                function() {
+                    idx = idx2;
+                }
+            );
+        }
+    });
+
+    $("#sit_pvi_next").click(function() {
+        if(slide_count > 1) {
+            idx2 = (idx + 1) % slide_count;
+            $("#sit_pvi_slide li:hidden").css("left", slide_width+"px");
+            $("#sit_pvi_slide li:eq("+idx+")").filter(":not(:animated)").animate({ left: "-="+slide_width+"px" }, time, function() {
+                $(this).css("display", "none").css("left", slide_width+"px");
+            });
+            $("#sit_pvi_slide li:eq("+idx2+")").css("display", "block").filter(":not(:animated)").animate({ left: "-="+slide_width+"px" }, time,
+                function() {
+                    idx = idx2;
+                }
+            );
+        }
+    });
+
     // 상품이미지 크게보기
     $(".popup_item_image").click(function() {
         var url = $(this).attr("href");
@@ -379,8 +385,138 @@ $(function(){
         return false;
     });
 
+    // 하단 플로팅 메뉴
     $("#form_btn_layer").bottomFloatMenu();
+
+    // 이전 다음상품 swipe
+    $(window)
+        .on("swipeleft", function(e) {
+            <?php if($next_href) { ?>
+            if($("#loading_message").length > 0)
+                return;
+
+            var content = $("#container").clone()
+                            .find("#form_btn_layer").remove()
+                            .end().find(".sit_pvi_btn").remove()
+                            .end().html();
+            var pos = $("#container").position();
+            var width = $("#container").width();
+            var height = $("#container").height();
+            var pad_top = $("#container").css("padding-top");
+            var duration = 500;
+
+            // 로딩 레이어
+            load_message();
+
+            $("#container")
+                .css({
+                    width: width+"px",
+                    height: height+"px"
+                })
+                .before("<div id=\"container_clone\">"+content+"</div>")
+                .find("*:visible").hide();
+
+            $("#container_clone")
+                .css({
+                    display: "block",
+                    width: width+"px",
+                    height: height+"px",
+                    position: "absolute",
+                    top: pos.top+"px",
+                    left: pos.left+"px",
+                    paddingTop: pad_top
+                })
+                .animate(
+                    { left: "-="+width+"px" }, duration,
+                    function() {
+                        $("#container_clone").remove();
+                        var str = '<?php echo $next_href; ?>';
+                        var href = str.match(/https?:\/{2}[^\"]+/gi);
+                        document.location.href = href[0];
+                    }
+                );
+            <?php } else { ?>
+            alert("다음 상품이 없습니다.");
+            <?php } ?>
+        })
+        .on("swiperight", function(e) {
+            <?php if($prev_href) { ?>
+            if($("#loading_message").length > 0)
+                return;
+
+            var content = $("#container").clone()
+                            .find("#form_btn_layer").remove()
+                            .end().find(".sit_pvi_btn").remove()
+                            .end().html();
+            var pos = $("#container").position();
+            var width = $("#container").width();
+            var height = $("#container").height();
+            var pad_top = $("#container").css("padding-top");
+            var duration = 500;
+
+            // 로딩 레이어
+            load_message();
+
+            $("#container")
+                .css({
+                    width: width+"px",
+                    height: height+"px"
+                })
+                .before("<div id=\"container_clone\">"+content+"</div>")
+                .find("*:visible").hide();
+
+            $("#container_clone")
+                .css({
+                    display: "block",
+                    width: width+"px",
+                    height: height+"px",
+                    position: "absolute",
+                    top: pos.top+"px",
+                    left: pos.left+"px",
+                    zIndex: "1000",
+                    paddingTop: pad_top
+                })
+                .animate(
+                    { left: "+="+width+"px" }, duration,
+                    function() {
+                        $("#container_clone").remove();
+                        var str = '<?php echo $prev_href; ?>';
+                        var href = str.match(/https?:\/{2}[^\"]+/gi);
+                        document.location.href = href[0];
+                    }
+                );
+            <?php } else { ?>
+            alert("이전 상품이 없습니다.");
+            <?php } ?>
+        });
+
+    // scroll event enable
+    $(window).on("movestart", function(e) {
+        if ((e.distX > e.distY && e.distX < -e.distY) ||
+        (e.distX < e.distY && e.distX > -e.distY)) {
+            e.preventDefault();
+        }
+    });
 });
+
+function load_message()
+{
+    var w = $(window).width();
+    var h = $(window).height();
+    var img_w = 32;
+    var img_h = 32;
+    var top, left;
+    var scr_top = $(window).scrollTop();
+
+    top = parseInt((h - img_h) / 2);
+    left = parseInt((w - img_w) / 2);
+
+    var img = "<div id=\"loading_message\" style=\"top:"+scr_top+"px;width:"+w+"px;height:"+h+"px;\">";
+    img += "<img src=\"<?php echo G5_MSHOP_SKIN_URL; ?>/img/loading.gif\" style=\"top:"+top+"px;left:"+left+"px;\" />";
+    img += "</div>";
+
+    $("body").append(img);
+}
 
 // 바로구매, 장바구니 폼 전송
 function fitem_submit(f)
