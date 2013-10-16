@@ -47,6 +47,13 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
     <h2>이미지 목록</h2>
 
+    <?php if ($is_checkbox) { ?>
+    <div id="gall_allchk">
+        <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
+        <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+    </div>
+    <?php } ?>
+
     <ul id="gall_ul">
         <?php for ($i=0; $i<count($list); $i++) {
         ?>

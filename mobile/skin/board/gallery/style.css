@@ -66,11 +66,14 @@
 
 /* 갤러리 목록 */
 #bo_gall h2 {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+
+#bo_gall #gall_allchk {margin:0 10px}
+
 #bo_gall #gall_ul {margin:1em 0 0;padding:0 1em;list-style:none}
 #bo_gall #gall_ul:after {display:block;visibility:hidden;clear:both;content:""}
 
 #bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
-#bo_cate ul {margin:0.5em 1em;padding-left:1px;zoom:1}
+#bo_cate ul {margin:10px;padding-left:1px;zoom:1}
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_cate li {float:left;margin-bottom:-1px;width:25%}
 #bo_cate a {display:block;position:relative;margin-left:-1px;padding:0.4em 0;border:1px solid #ddd;background:#f7f7f7;color:#888;text-align:center;text-decoration:none;letter-spacing:-0.1em}
