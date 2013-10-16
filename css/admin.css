@@ -74,12 +74,10 @@ h2.h2_frm {padding-top:15px}
 .gnb_js .gnb_grp_style:focus, .gnb_js .gnb_grp_style:hover {background:#484848 !important}
 .gnb_js .gnb_grp_div {border-top:1px solid #eee}
 
-
-#lnb {margin:0;padding:10px 15px;border-bottom:1px solid #e9e9e9;list-style:none;zoom:1}
-
+#lnb {margin:0;padding:15px;border-bottom:1px solid #e9e9e9;list-style:none;zoom:1}
 #lnb:after {display:block;visibility:hidden;clear:both;content:""}
 #lnb li {float:left}
-#lnb a {display:inline-block;padding:5px;font-size:0.95em;letter-spacing:-0.1em}
+#lnb a {display:inline-block;margin:0 0 0 10px;padding:0 10px 0 0;border-right:1px solid #ccc;font-size:0.95em;letter-spacing:-0.1em}
 
 /* 중간 레이아웃 */
 #wrapper {z-index:5;margin:20px 0;zoom:1}
