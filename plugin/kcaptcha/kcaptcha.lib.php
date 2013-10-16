@@ -236,12 +236,13 @@ class KCAPTCHA{
 function captcha_html($class="captcha")
 {
     $html .= "\n".'<script>var g5_captcha_url  = "'.G5_CAPTCHA_URL.'";</script>';
-    $html .= "\n".'<script>var g5_captcha_path = "'.G5_CAPTCHA_PATH.'";</script>';
+    //$html .= "\n".'<script>var g5_captcha_path = "'.G5_CAPTCHA_PATH.'";</script>';
     $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/kcaptcha.js"></script>';
     $html .= "\n".'<fieldset id="captcha" class="'.$class.'">';
     $html .= "\n".'<legend>자동등록방지</legend>';
     if (G5_IS_MOBILE) $html .= '<audio src="#" id="captcha_audio" controls></audio>';
-    $html .= "\n".'<img src="#" alt="" id="captcha_img">';
+    //$html .= "\n".'<img src="#" alt="" id="captcha_img">';
+    $html .= "\n".'<img src="javascript:void(0);" alt="" id="captcha_img">';
     if (!G5_IS_MOBILE) $html .= "\n".'<button type="button" id="captcha_mp3"><span></span>숫자음성듣기</button>';
     $html .= "\n".'<button type="button" id="captcha_reload"><span></span>새로고침</button>';
     $html .= '<input type="text" name="captcha_key" id="captcha_key" required class="captcha_box required" size="6" maxlength="6">';
@@ -268,12 +269,14 @@ function chk_captcha()
 
     if (!isset($_POST['captcha_key'])) return false;
     if (!trim($_POST['captcha_key'])) return false;
+    /*
     if ($_POST['captcha_key'] != get_session('ss_captcha_key')) {
         $_SESSION['ss_captcha_count'] = $captcha_count + 1;
         $sql = " insert _error set er_datetime = NOW(), er_ip = '{$_SERVER['REMOTE_ADDR']}', er_user_agent = '{$_SERVER['HTTP_USER_AGENT']}', er_request = 'POST(".$_POST['captcha_key'].')!=SESSION('.get_session('ss_captcha_key').")' ";
         sql_query($sql);
         return false;
     }
+    */
     return true;
 }
 ?>
