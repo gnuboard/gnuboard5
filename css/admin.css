@@ -342,7 +342,9 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_img {text-align:center}
 .td_imgline {width:70px;text-align:center}
 .td_input input {width:94%}
+.td_mbcert {text-align:center}
 .td_mbid, .td_name, .td_mbname {width:100px;text-align:left !important}
+.td_mbstat {text-align:center}
 .td_mng {width:100px;font-size:0.95em;text-align:center;letter-spacing:-0.1em}
 .td_mngsmall {width:60px;font-size:0.95em;text-align:center;letter-spacing:-0.1em}
 .td_mng .mng_mod, .td_mngsmall .mng_mod {}

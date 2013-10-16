@@ -218,14 +218,14 @@ $colspan = 15;
         </td>
         <td headers="mb_list_id" rowspan="2" class="td_name sv_use"><?php echo $mb_id ?></td>
         <td headers="mb_list_name" class="td_mbname"><?php echo $row['mb_name']; ?></td>
-        <td headers="mb_list_cert" colspan="5">
+        <td headers="mb_list_cert" colspan="5" class="td_mbcert">
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" id="mb_certify_ipin_<?php echo $i; ?>" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>>
             <label for="mb_certify_ipin_<?php echo $i; ?>">아이핀</label>
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="hp" id="mb_certify_hp_<?php echo $i; ?>" <?php echo $row['mb_certify']=='hp'?'checked':''; ?>>
             <label for="mb_certify_hp_<?php echo $i; ?>">휴대폰</label>
         </td>
         <td headers="mb_list_mobile" class="td_tel"><?php echo $row['mb_hp']; ?></td>
-        <td headers="mb_list_auth">
+        <td headers="mb_list_auth" class="td_mbstat">
             <?php
             if ($leave_msg || $intercept_msg) echo $leave_msg.' '.$intercept_msg;
             else echo "정상";
