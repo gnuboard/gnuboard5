@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 <link rel="stylesheet" href="<?php echo $board_skin_url ?>/style.css">
 <script src="<?php echo G5_JS_URL; ?>/jquery.fancylist.js"></script>
 
-<?php if (!$wr_id) { ?><h1 id="bo_list_title"><?php echo $g5['title'] ?></h1><?php } ?>
+<h2 id="container_title"><?php echo $board['bo_subject'] ?><span class="sound_only"> 목록</span></h2>
 
 <!-- 게시판 목록 시작 -->
 <div id="bo_gall">
@@ -46,6 +46,13 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
     <input type="hidden" name="sw" value="">
 
     <h2>이미지 목록</h2>
+
+    <?php if ($is_checkbox) { ?>
+    <div id="gall_allchk">
+        <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
+        <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+    </div>
+    <?php } ?>
 
     <ul id="gall_ul">
         <?php for ($i=0; $i<count($list); $i++) {

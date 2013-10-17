@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <div id="reg_result" class="mbskin">
 
-    <div id="reg_result_logo"><img src="<?php echo $member_skin_url ?>/img/reg_result_logo.jpg" alt=""></div>
+    <div id="result_logo"><img src="<?php echo $member_skin_url ?>/img/reg_result_logo.jpg" alt=""></div>
 
     <p>
         <strong><?php echo $mb['mb_name'] ?></strong>님의 회원가입을 진심으로 축하합니다.<br>
@@ -18,7 +18,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         회원 가입 시 입력하신 이메일 주소로 인증메일이 발송되었습니다.<br>
         발송된 인증메일을 확인하신 후 인증처리를 하시면 사이트를 원활하게 이용하실 수 있습니다.
     </p>
-    <div id="reg_result_email">
+    <div id="result_email">
         <span>아이디</span>
         <strong><?php echo $mb['mb_id'] ?></strong><br>
         <span>이메일 주소</span>

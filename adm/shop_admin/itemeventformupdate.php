@@ -18,10 +18,14 @@ if ($ev_himg_del)  @unlink(G5_DATA_PATH."/event/{$ev_id}_h");
 if ($ev_timg_del)  @unlink(G5_DATA_PATH."/event/{$ev_id}_t");
 
 $sql_common = " set ev_skin             = '$ev_skin',
+                    ev_mobile_skin      = '$ev_mobile_skin',
                     ev_img_width        = '$ev_img_width',
                     ev_img_height       = '$ev_img_height',
                     ev_list_mod         = '$ev_list_mod',
                     ev_list_row         = '$ev_list_row',
+                    ev_mobile_img_width = '$ev_mobile_img_width',
+                    ev_mobile_img_height= '$ev_mobile_img_height',
+                    ev_mobile_list_mod  = '$ev_mobile_list_mod',
                     ev_subject          = '$ev_subject',
                     ev_head_html        = '$ev_head_html',
                     ev_tail_html        = '$ev_tail_html',

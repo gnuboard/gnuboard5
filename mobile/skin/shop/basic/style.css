@@ -77,3 +77,8 @@
 .sct_13 .sct_rel_li {float:left;margin:0 0 0 10px}
 .sct_13 .sct_sns {position:absolute;top:20px;right:20px}
 /* ##### maint.(nn).skin.php, list.(nn)skin.php 공통 적용 끝 ##### */
+
+
+/* 로딩안내 레이어 */
+#loading_message {position:absolute;top:0;left:0;z-index:10000;background-color:#000;opacity:.5}
+#loading_message img {position:relative}

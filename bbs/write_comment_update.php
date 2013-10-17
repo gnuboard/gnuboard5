@@ -1,7 +1,7 @@
 <?php
 define('G5_CAPTCHA', true);
 include_once('./_common.php');
-include_once(G5_GCAPTCHA_PATH.'/gcaptcha.lib.php');
+include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 // 090710
 if (substr_count($wr_content, "&#") > 50) {

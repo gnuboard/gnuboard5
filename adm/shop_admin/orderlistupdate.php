@@ -67,8 +67,7 @@ function change_order_status($current_staus, $change_status, $od)
     // 현재 주문상태와 바뀔 주문상태가 같다면 처리하지 않음
     if ($current_staus == $change_status) return;
 
-    $od = sql_fetch(" select od_settle_case from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
-    if (!$od) return;
+    $od_id = $od['od_id'];
 
     switch ($current_staus) 
     {
@@ -169,14 +168,14 @@ function change_order_status($current_staus, $change_status, $od)
 for ($i=0; $i<count($_POST['chk']); $i++)
 {
     // 실제 번호를 넘김
-    $k = $_POST['chk'][$i];
-
+    $k     = $_POST['chk'][$i];
     $od_id = $_POST['od_id'][$k];
-    
-    change_order_status($od['od_status'], $_POST['od_status'], $od_id);
 
+    $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
+    if (!$od) continue;
     
-    echo $od_id . "<br>";
+    change_order_status($od['od_status'], $_POST['od_status'], $od);
+    //echo $od_id . "<br>";
 }
 
 $qstr  = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search";
@@ -188,6 +187,8 @@ $qstr .= "&amp;od_receipt_price=$od_receipt_price";
 $qstr .= "&amp;od_receipt_point=$od_receipt_point";
 $qstr .= "&amp;od_receipt_coupon=$od_receipt_coupon";
 //$qstr .= "&amp;page=$page";
+
+//exit;
 
 goto_url("./orderlist.php?$qstr");
 ?>

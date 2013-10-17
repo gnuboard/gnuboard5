@@ -11,7 +11,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post">
     <input type="hidden" name="url" value='<?php echo $login_url ?>'>
 
-    <fieldset id="mb_login_fs">
+    <fieldset id="login_fs">
         <legend>회원로그인</legend>
         <label for="login_id" class="login_id">회원아이디<strong class="sound_only"> 필수</strong></label>
         <input type="text" name="mb_id" id="login_id" required class="frm_input required" size="20" maxLength="20">
@@ -22,7 +22,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <label for="login_auto_login">자동로그인</label>
     </fieldset>
 
-    <aside id="mb_login_info">
+    <aside id="login_info">
         <h2>회원로그인 안내</h2>
         <p>
             회원아이디 및 패스워드가 기억 안나실 때는 아이디/패스워드 찾기를 이용하십시오.<br>

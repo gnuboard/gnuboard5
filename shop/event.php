@@ -1,6 +1,11 @@
 <?php
 include_once('./_common.php');
 
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/event.php');
+    return;
+}
+
 $sql = " select * from {$g5['g5_shop_event_table']}
           where ev_id = '$ev_id'
             and ev_use = 1 ";
@@ -16,7 +21,7 @@ if ($is_admin)
 ?>
 
 <script>
-var itemlist_ca_id = "<?php echo $ca_id; ?>";
+var itemlist_ca_id = "<?php echo $ev_id; ?>";
 </script>
 <script src="<?php echo G5_JS_URL; ?>/shop.list.js"></script>
 
