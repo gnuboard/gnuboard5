@@ -385,9 +385,6 @@ $(function(){
         return false;
     });
 
-    // 하단 플로팅 메뉴
-    $("#form_btn_layer").bottomFloatMenu();
-
     // 이전 다음상품 swipe
     $(window)
         .on("swipeleft", function(e) {
@@ -490,6 +487,32 @@ $(function(){
             <?php } ?>
         });
 
+    var scroll_timeout = null;
+    var timeout = 200;
+
+    $(window).on("load", function(e) {
+        setTimeout(function() {
+            $("#form_btn_layer").floatBottomMenu();
+        }, timeout);
+    });
+
+    if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+        $(window).on("resize", function(e) {
+            setTimeout(function() {
+                $(window).trigger("scroll");
+            }, timeout);
+        });
+    }
+
+    $(window).on("scroll", function(e) {
+        clearTimeout(scroll_timeout);
+        $("#form_btn_layer").floatBottomMenu("hide");
+
+        scroll_timeout = setTimeout(function() {
+            $("#form_btn_layer").floatBottomMenu("show");
+        }, timeout);
+    });
+
     // scroll event enable
     $(window).on("movestart", function(e) {
         if ((e.distX > e.distY && e.distX < -e.distY) ||
@@ -503,10 +526,15 @@ function load_message()
 {
     var w = $(window).width();
     var h = $(window).height();
-    var img_w = 32;
-    var img_h = 32;
+    var img_w = 64;
+    var img_h = 64;
     var top, left;
     var scr_top = $(window).scrollTop();
+
+    if (/iP(hone|od|ad)/.test(navigator.platform)) {
+        if(window.innerHeight - $(window).outerHeight(true) > 0)
+            h += (window.innerHeight - $(window).outerHeight(true));
+    }
 
     top = parseInt((h - img_h) / 2);
     left = parseInt((w - img_w) / 2);

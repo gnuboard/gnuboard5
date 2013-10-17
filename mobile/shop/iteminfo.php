@@ -101,7 +101,39 @@ switch($info) {
 
 <script>
 $(function() {
-    $("#info_top_layer").topFloatMenu();
+    var scroll_timeout = null;
+    var timeout = 200;
+
+    $(window).on("load", function(e) {
+        setTimeout(function() {
+            $("#info_top_layer").floatTopMenu();
+        }, timeout);
+    });
+
+    if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+        $(window).on("resize", function(e) {
+            setTimeout(function() {
+                $(window).trigger("scroll");
+            }, timeout);
+        });
+    }
+
+    $(window).on("scroll", function(e) {
+        clearTimeout(scroll_timeout);
+        $("#info_top_layer").floatTopMenu("hide");
+
+        scroll_timeout = setTimeout(function() {
+            $("#info_top_layer").floatTopMenu("show");
+        }, timeout);
+    });
+
+    // scroll event enable
+    $(window).on("movestart", function(e) {
+        if ((e.distX > e.distY && e.distX < -e.distY) ||
+        (e.distX < e.distY && e.distX > -e.distY)) {
+            e.preventDefault();
+        }
+    });
 });
 </script>
 

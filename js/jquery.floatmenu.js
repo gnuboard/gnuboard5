@@ -1,266 +1,159 @@
 (function($) {
-    $.fn.topFloatMenu = function(timeout, duration, interval, count)
+    $.fn.floatTopMenu = function(option)
     {
         var cfg = {
-                timeout: 200,
-                duration: 300,
-                interval: 500,
-                count: 5
+                duration: 200
             };
 
-        if(typeof timeout == "object") {
-            cfg = $.extend( cfg, timeout);
-        } else {
-            if(timeout) {
-                cfg = $.extend({ timeout: timeout });
-            }
-
-            if(duration) {
-                cfg = $.extend({ duration: duration });
-            }
-
-            if(interval) {
-                cfg = $.extend({ interval: interval });
-            }
-
-            if(count) {
-                cfg = $.extend({ count: count });
-            }
-        }
-
-        var $menu = this;
+        var $this = this;
+        var height = 0;
         var scroll_y = 0;
-        var origin_y = 0;
-        var timeout = null;
-        var interval = null;
-        var height = parseInt($menu.height());
-        var interval_count = 0;
 
-        function init_menu()
-        {
-            hide_menu();
+        var methods = {
+            init: function(option)
+            {
+                if($this.data("animated") == true)
+                    return;
 
-            timeout = setTimeout(function() {
-                $menu.css("top", (scroll_y - height)+"px").css("display", "block");
-                $menu.animate({ top: scroll_y }, cfg.duration);
+                $this.data("animated", true);
 
-                return;
-            }, cfg.timeout);
-        }
+                if(typeof option == "object") {
+                    cfg = $.extend( cfg, option);
+                }
 
-        function float_menu()
-        {
-            hide_menu();
+                $this.data("cfg", cfg);
+                $this.css({ top: "-500px", display: "block" });
 
-            origin_y = $(window).scrollTop();
-
-            timeout = setTimeout(function() {
-                height = parseInt($menu.height());
+                height = parseInt($this.outerHeight());
                 scroll_y = $(window).scrollTop();
 
-                if(origin_y == scroll_y) {
-                    $menu.css("top", (scroll_y - height)+"px").css("display", "block");
-                    $menu.animate({ top: scroll_y }, cfg.duration);
+                $this
+                    .css("display", "none")
+                    .clearQueue()
+                    .stop()
+                    .css("top", (scroll_y - height)+"px").css("display", "block")
+                    .animate({ top: scroll_y }, cfg.duration, function() { $this.data("animated", false); });
+            },
+            show: function()
+            {
+                if($this.data("animated") == true)
+                    return;
+
+                $this.data("animated", true);
+
+                if($this.data("cfg")) {
+                    cfg = $.extend( cfg, $this.data("cfg"));
                 }
-            }, cfg.timeout);
-        }
 
-        function hide_menu()
-        {
-            $menu.css("display", "none").clearQueue().stop().css("top", "-"+height+"px");
+                $this.css({ top: "-"+height+"px", display: "block" });
 
-            clearTimeout(timeout);
-            clearInterval(interval);
+                height = parseInt($this.outerHeight());
+                scroll_y = $(window).scrollTop();
 
-            interval_count = 0;
-            interval = setInterval(check_menu, cfg.interval);
-        }
-
-        function check_menu()
-        {
-            clearTimeout(timeout);
-
-            if(interval_count == parseInt(cfg.count)) {
-                clearInterval(interval);
-                interval_count = 0;
-                return;
-            } else {
-                interval_count++;
+                $this
+                    .css("display", "none")
+                    .css("top", (scroll_y - height)+"px").css("display", "block")
+                    .animate({ top: scroll_y }, cfg.duration, function() { $this.data("animated", false); });
+            },
+            hide: function()
+            {
+                $this.css({ display: "none", top: "-"+height+"px" });
             }
+        };
 
-            origin_y = $(window).scrollTop();
-
-            timeout = setTimeout(function() {
-                scroll_y = $(window).scrollTop();
-
-                if(origin_y == scroll_y) {
-                    element_y = parseInt($menu.css("top"));
-
-                    if(!$menu.is(":animated") && ($menu.is(":hidden") || (element_y - scroll_y) != 0)) {
-                        float_menu();
-                    }
-                }
-            }, cfg.timeout);
-        }
-
-        $(window).on("scroll",function(event) {
-            float_menu();
-        });
-
-        $(window).on("resize", function(event) {
-            if(origin_y != scroll_y)
-                float_menu();
-        });
-
-        $(window).on("load", function(event) {
-            init_menu();
-        });
-
-        document.addEventListener('touchmove', function(event) {
-            hide_menu();
-        }, false);
+        if (methods[option])
+            return methods[option].apply(this, Array.prototype.slice.call(arguments, 1));
+        else
+            return methods.init.apply(this, arguments);
     }
 
-    $.fn.bottomFloatMenu = function(timeout, duration, interval, count)
+    $.fn.floatBottomMenu = function(option)
     {
         var cfg = {
-                timeout: 200,
-                duration: 300,
-                interval: 500,
-                count: 5
+                duration: 200
             };
 
-        if(typeof timeout == "object") {
-            cfg = $.extend( cfg, timeout);
-        } else {
-            if(timeout) {
-                cfg = $.extend({ timeout: timeout });
-            }
-
-            if(duration) {
-                cfg = $.extend({ duration: duration });
-            }
-
-            if(interval) {
-                cfg = $.extend({ interval: interval });
-            }
-
-            if(count) {
-                cfg = $.extend({ count: count });
-            }
-        }
-
-        var $menu = this;
+        var $this = this;
+        var height = 0;
         var scroll_y = 0;
-        var origin_y = 0;
-        var element_y = 0;
-        var timeout = null;
-        var interval = null;
-        var height = parseInt($menu.height());
         var w_height = 0;
-        var interval_count = 0;
+        var element_y = 0;
 
-        function init_menu()
-        {
-            hide_menu();
+        var methods = {
+            init: function(option)
+            {
+                if($this.data("animated") == true)
+                    return;
 
-            timeout = setTimeout(function() {
+                $this.data("animated", true);
+
+                if(typeof option == "object") {
+                    cfg = $.extend( cfg, option);
+                }
+
+                $this.data("cfg", cfg);
+
+                $this.css({ top: "-500px", display: "block" });
+
+                height = parseInt($this.outerHeight());
                 scroll_y = $(window).scrollTop();
                 w_height = $(window).height();
                 element_y = scroll_y + w_height;
-                $menu.css("top", element_y+"px").css("display", "block");
-                $menu.clearQueue().stop().animate({ top: "-="+height }, cfg.duration);
-            }, cfg.timeout);
-        }
 
-        function float_menu()
-        {
-            hide_menu();
+                $this
+                    .css("display", "none")
+                    .clearQueue()
+                    .stop()
+                    .css({ top: element_y+"px", display: "block" })
+                    .animate({ top: "-="+height }, cfg.duration, function() { $this.data("animated", false); });
+            },
+            show: function()
+            {
+                if($this.data("animated") == true)
+                    return;
 
-            origin_y = $(window).scrollTop();
+                $this.data("animated", true);
 
-            timeout = setTimeout(function() {
+                if($this.data("cfg")) {
+                    cfg = $.extend( cfg, $this.data("cfg"));
+                }
+
+                $this.css({ top: "-"+height+"px", display: "block" });
+
+                height = parseInt($this.outerHeight());
                 scroll_y = $(window).scrollTop();
+                w_height = $(window).height();
+                element_y = scroll_y + w_height;
 
-                if(origin_y == scroll_y) {
-                    height = parseInt($menu.height());
-                    w_height = $(window).height();
-                    element_y = scroll_y + w_height;
+                if (/iP(hone|od|ad)/.test(navigator.platform)) {
+                    if(window.innerHeight - $(window).outerHeight(true) > 0)
+                        element_y += (window.innerHeight - $(window).outerHeight(true));
+                }
 
-                    if (/iP(hone|od|ad)/.test(navigator.platform)) {
-                        if(window.innerHeight - $(window).outerHeight(true) > 0)
-                            element_y += (window.innerHeight - $(window).outerHeight(true));
-                    }
-
-                    $menu.height(0).css("top", element_y+"px").css("display", "block");
-                    $menu.animate({
+                $this
+                    .css("display", "none")
+                    .clearQueue()
+                    .stop()
+                    .height(0)
+                    .css({top: element_y+"px", display: "block"})
+                    .animate({
                         top: "-="+height,
                         height: "+="+height
-                    }, cfg.duration);
-                }
-            }, cfg.timeout);
-        }
-
-        function hide_menu()
-        {
-            $menu.css("display", "none").css("top", (w_height + height)+"px").clearQueue().stop();
-
-            clearTimeout(timeout);
-            clearInterval(interval);
-
-            interval_count = 0;
-            interval = setInterval(check_menu, cfg.interval);
-        }
-
-        function check_menu()
-        {
-            clearTimeout(timeout);
-
-            if(interval_count == parseInt(cfg.count)) {
-                clearInterval(interval);
-                interval_count = 0;
-                return;
-            } else {
-                interval_count++;
+                    }, cfg.duration,
+                        function() {
+                            $this.data("animated", false);
+                        }
+                    );
+            },
+            hide: function()
+            {
+                this.css({ display: "none", top: "-"+height+"px" });
             }
+        };
 
-            origin_y = $(window).scrollTop();
-
-            timeout = setTimeout(function() {
-                scroll_y = $(window).scrollTop();
-
-                if(origin_y == scroll_y) {
-                    w_height = $(window).height();
-                    element_y = parseInt($menu.css("top"));
-
-                    var h = 0;
-                    if (/iP(hone|od|ad)/.test(navigator.platform)) {
-                        if(window.innerHeight - $(window).outerHeight(true) > 0)
-                            h = window.innerHeight - $(window).outerHeight(true);
-                    }
-
-                    if(!$menu.is(":animated") && ($menu.is(":hidden") || element_y != (scroll_y + w_height + h - height))) {
-                        float_menu();
-                    }
-                }
-            }, cfg.timeout);
-        }
-
-        $(window).on("scroll",function(event) {
-            float_menu();
-        });
-
-        $(window).on("load", function(event) {
-            init_menu();
-        });
-
-        $(window).on("resize", function(event) {
-            if(origin_y != scroll_y)
-                float_menu();
-        });
-
-        document.addEventListener('touchmove', function(event) {
-            hide_menu();
-        }, false);
+        if (methods[option])
+            return methods[option].apply(this, Array.prototype.slice.call(arguments, 1));
+        else
+            return methods.init.apply(this, arguments);
     }
 }(jQuery));
