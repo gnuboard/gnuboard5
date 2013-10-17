@@ -139,18 +139,18 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 <form class="local_sch02 local_sch">
 <div>
     <strong>주문상태</strong>
-    <input type="radio" name="od_status" value="" id="od_status01"    <?php echo get_checked($od_status, '');     ?>>
-    <label for="od_status01">전체</label>
-    <input type="radio" name="od_status" value="주문" id="od_status02" <?php echo get_checked($od_status, '주문'); ?>>
-    <label for="od_status02">주문</label>
-    <input type="radio" name="od_status" value="입금" id="od_status03" <?php echo get_checked($od_status, '입금'); ?>>
-    <label for="od_status03">입금</label>
-    <input type="radio" name="od_status" value="준비" id="od_status03" <?php echo get_checked($od_status, '준비'); ?>>
-    <label for="od_status03">준비</label>
-    <input type="radio" name="od_status" value="배송" id="od_status04" <?php echo get_checked($od_status, '배송'); ?>>
-    <label for="od_status04">배송</label>
-    <input type="radio" name="od_status" value="완료" id="od_status05" <?php echo get_checked($od_status, '완료'); ?>>
-    <label for="od_status05">완료</label>
+    <input type="radio" name="od_status" value="" id="od_status_all"    <?php echo get_checked($od_status, '');     ?>>
+    <label for="od_status_all">전체</label>
+    <input type="radio" name="od_status" value="주문" id="od_status_odr" <?php echo get_checked($od_status, '주문'); ?>>
+    <label for="od_status_odr">주문</label>
+    <input type="radio" name="od_status" value="입금" id="od_status_income" <?php echo get_checked($od_status, '입금'); ?>>
+    <label for="od_status_income">입금</label>
+    <input type="radio" name="od_status" value="준비" id="od_status_rdy" <?php echo get_checked($od_status, '준비'); ?>>
+    <label for="od_status_rdy">준비</label>
+    <input type="radio" name="od_status" value="배송" id="od_status_dvr" <?php echo get_checked($od_status, '배송'); ?>>
+    <label for="od_status_dvr">배송</label>
+    <input type="radio" name="od_status" value="완료" id="od_status_done" <?php echo get_checked($od_status, '완료'); ?>>
+    <label for="od_status_done">완료</label>
 </div>
 
 <div>
