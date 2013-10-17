@@ -145,6 +145,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <label for="od_status02">주문</label>
     <input type="radio" name="od_status" value="입금" id="od_status03" <?php echo get_checked($od_status, '입금'); ?>>
     <label for="od_status03">입금</label>
+    <input type="radio" name="od_status" value="준비" id="od_status03" <?php echo get_checked($od_status, '준비'); ?>>
+    <label for="od_status03">준비</label>
     <input type="radio" name="od_status" value="배송" id="od_status04" <?php echo get_checked($od_status, '배송'); ?>>
     <label for="od_status04">배송</label>
     <input type="radio" name="od_status" value="완료" id="od_status05" <?php echo get_checked($od_status, '완료'); ?>>
@@ -406,12 +408,37 @@ function forderlist_submit(f)
     }
 
     var chk = document.getElementsByName("chk[]");
-    for (var i=0; i<chk.length; i++) {
-        if (chk[i].checked) {
+    for (var i=0; i<chk.length; i++) 
+    {
+        if (chk[i].checked) 
+        {
             var k = chk[i].value;
-            if (!(f.elements['current_settle_case['+k+']'].value == "무통장"  && f.od_status.value == "입금")) {
-                alert("무통장의 경우에만 입금 처리 가능합니다.");
-                return false;
+            var current_settle_case = f.elements['current_settle_case['+k+']'].value;
+            var current_status = f.elements['current_status['+k+']'].value;
+            var change_status = f.od_status.value;
+
+            switch (change_status)
+            {
+                case "입금" : 
+                    if (!(current_status == "주문" && current_settle_case == "무통장")) {
+                        alert("주문상태의 '무통장'(결제수단)인 경우에만 입금 처리 가능합니다.");
+                        return false;
+                    }
+                    break;
+
+                case "준비" : 
+                    if (current_status != "입금") {
+                        alert("입금상태의 주문만 '준비'로 변경이 가능합니다.");
+                        return false;
+                    }
+                    break;
+
+                case "배송" : 
+                    if (current_status != "준비") {
+                        alert("준비상태의 주문만 '배송'으로 변경이 가능합니다.");
+                        return false;
+                    }
+                    break;
             }
         }
     }
