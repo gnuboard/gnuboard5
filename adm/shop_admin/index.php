@@ -37,13 +37,13 @@ $pg_anchor = '<ul class="anchor">
         <?php
         $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '준비' ";
         $row = sql_fetch($sql);
-        echo "<li>준비 : ".$row['cnt']."</li>";
+        echo "<li><a href=\"./orderlist.php?od_status=준비\">준비 : ".$row['cnt']."</a></li>";
         ?>
 
         <?php
         $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '배송' ";
         $row = sql_fetch($sql);
-        echo "<li>배송 : ".$row['cnt']."</li>";
+        echo "<li><a href=\"./orderlist.php?od_status=배송\">배송 : ".$row['cnt']."</a></li>";
         ?>
         </ul>
     </div>

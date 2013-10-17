@@ -335,7 +335,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <option value="입금">입금</option>
         <option value="준비">준비</option>
         <option value="배송">배송</option>
-        <option value="완료">완료</option>
+        <!-- <option value="완료">완료</option> -->
     </select>
     <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
 </div>
@@ -343,6 +343,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 <div class="local_desc01 local_desc">
 <p>
     &lt;무통장&gt;인 경우에만 &lt;주문&gt;에서 &lt;입금&gt;으로 변경됩니다. 가상계좌는 입금시 자동으로 &lt;입금&gt;처리됩니다.<br>
+    &lt;준비&gt;에서 &lt;배송&gt;으로 변경된 주문은 배송관리에서 배송정보 입력과 &lt;완료&gt;처리를 해주시기 바랍니다.<br>
     <strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
 </p>
 </div>
