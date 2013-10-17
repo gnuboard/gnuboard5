@@ -27,7 +27,7 @@ if ($search != "") {
     }
 }
 
-$sql_search .= " $where od_status = '배송' ";
+$sql_search .= " $where od_status in ('준비', '배송') ";
 
 if ($sel_ca_id != "") {
     $sql_search .= " $where ca_id like '$sel_ca_id%' ";

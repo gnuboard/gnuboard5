@@ -1056,18 +1056,19 @@ function byte_check(el_cont, el_byte)
 
     <section id="scf_sms_pre">
         <h3>사전에 정의된 SMS프리셋</h3>
-        <dl>
-            <dt>회원가입시</dt>
-            <dd>{이름} {회원아이디} {회사명}</dd>
-            <dt>주문서작성</dt>
-            <dd>{이름} {보낸분} {받는분} {주문번호} {주문금액} {회사명}</dd>
-            <dt>입금확인시</dt>
-            <dd>{이름} {입금액} {주문번호} {회사명}</dd>
-            <dt>상품배송시</dt>
-            <dd>{이름} {택배회사} {운송장번호} {주문번호} {회사명}</dd>
-        </dl>
-
-        <p><?php echo help('주의! 80 bytes 까지만 전송됩니다. (영문 한글자 : 1byte , 한글 한글자 : 2bytes , 특수문자의 경우 1 또는 2 bytes 임)'); ?></p>
+        <div class="local_desc01 local_desc">
+            <dl>
+                <dt>회원가입시</dt>
+                <dd>{이름} {회원아이디} {회사명}</dd>
+                <dt>주문서작성</dt>
+                <dd>{이름} {보낸분} {받는분} {주문번호} {주문금액} {회사명}</dd>
+                <dt>입금확인시</dt>
+                <dd>{이름} {입금액} {주문번호} {회사명}</dd>
+                <dt>상품배송시</dt>
+                <dd>{이름} {택배회사} {운송장번호} {주문번호} {회사명}</dd>
+            </dl>
+           <p><?php echo help('주의! 80 bytes 까지만 전송됩니다. (영문 한글자 : 1byte , 한글 한글자 : 2bytes , 특수문자의 경우 1 또는 2 bytes 임)'); ?></p>
+        </div>
 
         <div id="scf_sms">
             <?php

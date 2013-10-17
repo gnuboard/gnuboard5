@@ -21,31 +21,31 @@ $pg_anchor = '<ul class="anchor">
     <?php echo $pg_anchor; ?>
 
     <div class="local_desc01 local_desc">
-        <p>
+        <ul>
         <?php
         $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '주문' ";
         $row = sql_fetch($sql);
-        echo "<a href=\"./orderlist.php?od_status=주문\">주문 : ".$row['cnt']."</a>";
+        echo "<li><a href=\"./orderlist.php?od_status=주문\">주문 : ".$row['cnt']."</a></li>";
         ?>
 
         <?php
         $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '입금' ";
         $row = sql_fetch($sql);
-        echo "입금 : ".$row['cnt'];
+        echo "<li><a href=\"./orderlist.php?od_status=입금\">입금 : ".$row['cnt']."</a></li>";
         ?>
 
         <?php
         $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '준비' ";
         $row = sql_fetch($sql);
-        echo "준비 : ".$row['cnt'];
+        echo "<li><a href=\"./orderlist.php?od_status=준비\">준비 : ".$row['cnt']."</a></li>";
         ?>
 
         <?php
         $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_status = '배송' ";
         $row = sql_fetch($sql);
-        echo "배송 : ".$row['cnt'];
+        echo "<li><a href=\"./orderlist.php?od_status=배송\">배송 : ".$row['cnt']."</a></li>";
         ?>
-        </p>
+        </ul>
     </div>
 </section>
 
