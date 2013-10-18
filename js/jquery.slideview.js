@@ -28,13 +28,13 @@
         $slides.addClass(cfg.slide_class);
 
         var height;
+        var next_height;
         var width;
         var idx = next = 0;
         var tabw_width = 0;
         var tab_width = 0;
         var li_left = 0;
         var pos_left = 0;
-        var touchstartX, touchstartY, touchendX, touchendY, touchoffsetX, touchoffsetY;
 
         function tab_make()
         {
@@ -120,8 +120,13 @@
             idx = $slides.index($slides.filter("."+cfg.active_class));
             next = (idx + 1) % count;
 
-            height = $slides.eq(next).height();
-            $wrap.height(height);
+            height = $wrap.height();
+            next_height = $slides.eq(next).height();
+
+            if(height >= next_height)
+                $wrap.height(height);
+            else
+                $wrap.height(next_height);
 
             $slides.eq(next).css("left", width+"px");
             $tabs.removeClass(cfg.tab_active);
@@ -144,6 +149,7 @@
                         $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
                     }
 
+                    $wrap.height(next_height);
                     $tabs.eq(next).addClass(cfg.tab_active);
                 }
             );
@@ -165,8 +171,13 @@
             if(next < 0)
                 next = count - 1;
 
-            height = $slides.eq(next).height();
-            $wrap.height(height);
+            height = $wrap.height();
+            next_height = $slides.eq(next).height();
+
+            if(height >= next_height)
+                $wrap.height(height);
+            else
+                $wrap.height(next_height);
 
             $slides.eq(next).css("left", "-"+width+"px");
             $tabs.removeClass(cfg.tab_active);
@@ -189,6 +200,7 @@
                         $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
                     }
 
+                    $wrap.height(next_height);
                     $tabs.eq(next).addClass(cfg.tab_active);
                 }
             );
@@ -234,20 +246,12 @@
 
 
         // swipe event
-        this
-         .on("swipeleft", function(e) {
-             swipe_left();
-         })
-         .on("swiperight", function(e) {
-             swipe_right();
-        });
-
-        // scroll event enable
-        $(window).on("movestart", function(e) {
-            if ((e.distX > e.distY && e.distX < -e.distY) ||
-            (e.distX < e.distY && e.distX > -e.distY)) {
-                e.preventDefault();
-            }
+        $(window).touchwipe({
+            wipeLeft: function() { swipe_left(); },
+            wipeRight: function() { swipe_right(); },
+            min_move_x: 20,
+            min_move_y: 20,
+            preventDefaultEvents: false
         });
     }
 }(jQuery));
