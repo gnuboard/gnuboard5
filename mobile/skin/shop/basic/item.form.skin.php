@@ -3,9 +3,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
-<script src="<?php echo G5_JS_URL; ?>/jquery.event.move.js"></script>
-<script src="<?php echo G5_JS_URL; ?>/jquery.event.swipe.js"></script>
-<script src="<?php echo G5_JS_URL ?>/jquery.floatmenu.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.touchwipe.min.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.floatmenu.js"></script>
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
@@ -386,8 +385,8 @@ $(function(){
     });
 
     // 이전 다음상품 swipe
-    $(window)
-        .on("swipeleft", function(e) {
+    $(window).touchwipe({
+        wipeLeft: function() {
             <?php if($next_href) { ?>
             if($("#loading_message").length > 0)
                 return;
@@ -435,8 +434,8 @@ $(function(){
             <?php } else { ?>
             alert("다음 상품이 없습니다.");
             <?php } ?>
-        })
-        .on("swiperight", function(e) {
+        },
+        wipeRight: function() {
             <?php if($prev_href) { ?>
             if($("#loading_message").length > 0)
                 return;
@@ -485,8 +484,20 @@ $(function(){
             <?php } else { ?>
             alert("이전 상품이 없습니다.");
             <?php } ?>
-        });
+        },
+        wipeUp: function() {
+                    $("#form_btn_layer").floatBottomMenu("hide");
+                  },
+        wipeDown: function() {
+                    $("#form_btn_layer").floatBottomMenu("hide");
+                  },
+        min_move_x: 20,
+        min_move_y: 20,
+        preventDefaultEvents: false
+    });
 
+
+    <?php if ($it['it_use']) { ?>
     var scroll_timeout = null;
     var timeout = 200;
 
@@ -512,6 +523,7 @@ $(function(){
             $("#form_btn_layer").floatBottomMenu("show");
         }, timeout);
     });
+    <?php } ?>
 
     // scroll event enable
     $(window).on("movestart", function(e) {

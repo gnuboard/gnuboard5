@@ -6,9 +6,8 @@ define("_INDEX_", TRUE);
 include_once(G5_MSHOP_PATH.'/shop.head.php');
 ?>
 
-<script src="<?php echo G5_JS_URL; ?>/jquery.event.move.js"></script>
-<script src="<?php echo G5_JS_URL; ?>/jquery.event.swipe.js"></script>
-<script src="<?php echo G5_JS_URL ?>/jquery.slideview.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.touchwipe.min.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.slideview.js"></script>
 
 <div id="sidx">
 

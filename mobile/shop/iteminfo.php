@@ -66,7 +66,8 @@ function pg_anchor($info) {
 }
 ?>
 
-<script src="<?php echo G5_JS_URL ?>/jquery.floatmenu.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.touchwipe.min.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.floatmenu.js"></script>
 
 <div id="info_top_layer">
     <h2>상품 정보</h2>
@@ -110,6 +111,17 @@ $(function() {
         }, timeout);
     });
 
+    $(window).touchwipe({
+        wipeUp: function() {
+            $("#info_top_layer").floatTopMenu("hide");
+        },
+        wipeDown: function() {
+            $("#info_top_layer").floatTopMenu("hide");
+        },
+        min_move_y: 20,
+        preventDefaultEvents: false
+    });
+
     if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
         $(window).on("resize", function(e) {
             setTimeout(function() {
@@ -125,14 +137,6 @@ $(function() {
         scroll_timeout = setTimeout(function() {
             $("#info_top_layer").floatTopMenu("show");
         }, timeout);
-    });
-
-    // scroll event enable
-    $(window).on("movestart", function(e) {
-        if ((e.distX > e.distY && e.distX < -e.distY) ||
-        (e.distX < e.distY && e.distX > -e.distY)) {
-            e.preventDefault();
-        }
     });
 });
 </script>
