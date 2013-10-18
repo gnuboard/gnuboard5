@@ -492,7 +492,7 @@ $(function(){
                     $("#form_btn_layer").floatBottomMenu("hide");
                   },
         min_move_x: 20,
-        min_move_y: 5,
+        min_move_y: 20,
         preventDefaultEvents: false
     });
 

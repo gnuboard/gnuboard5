@@ -118,7 +118,7 @@ $(function() {
         wipeDown: function() {
             $("#info_top_layer").floatTopMenu("hide");
         },
-        min_move_y: 5,
+        min_move_y: 20,
         preventDefaultEvents: false
     });
 
