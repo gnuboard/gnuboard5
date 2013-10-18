@@ -131,6 +131,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col"><a href="<?php echo title_sort("od_invoice_time") . "&amp;$qstr1"; ?>">배송일시</a></th>
         <th scope="col">배송업체</th>
         <th scope="col"><a href="<?php echo title_sort("od_invoice", 1) . "&amp;$qstr1"; ?>">운송장번호</a></th>
+        <th scope="col">완료상태</th>
     </tr>
     </thead>
     <tbody>
@@ -188,6 +189,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <input type="hidden" name="save_od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>">
             <input type="text" name="od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>" class="frm_input" size="10">
         </td>
+        <td><input type="checkbox" name="od_status" value="1"></td>
     </tr>
     <?php
     }
