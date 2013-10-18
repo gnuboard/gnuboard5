@@ -105,7 +105,19 @@
                     .clearQueue()
                     .stop()
                     .css({ top: element_y+"px", display: "block" })
-                    .animate({ top: "-="+height }, cfg.duration, function() { $this.data("animated", false); });
+                    .animate({ top: "-="+height }, cfg.duration,
+                        function() {
+                            $this.data("animated", false);
+
+                            scroll_y = $(window).scrollTop();
+                            w_height = $(window).height();
+                            var temp_y = scroll_y + w_height - height;
+
+                            if( temp_y != element_y) {
+                                $this.css("top", temp_y+"px");
+                            }
+                        }
+                    );
             },
             show: function()
             {

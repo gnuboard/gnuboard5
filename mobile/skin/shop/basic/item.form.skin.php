@@ -294,6 +294,20 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     ?>
 </aside>
 
+<?php if ($it['it_use']) { ?>
+<div>
+    <ul id="sit_ov_btn">
+        <?php if (!$it['it_tel_inq']) { ?>
+        <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
+        <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
+        <?php } ?>
+
+        <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
+        <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
+    </ul>
+</div>
+<?php } ?>
+
 <?php
 $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
 ?>
@@ -307,20 +321,6 @@ $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
         <li><a href="<?php echo $href; ?>&amp;info=rel" target="_blank">관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
     </ul>
 </div>
-
-<?php if ($it['it_use']) { ?>
-<div id="form_btn_layer">
-    <ul id="sit_ov_btn">
-        <?php if (!$it['it_tel_inq']) { ?>
-        <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
-        <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
-        <?php } ?>
-
-        <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
-        <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
-    </ul>
-</div>
-<?php } ?>
 
 </form>
 
@@ -485,52 +485,8 @@ $(function(){
             alert("이전 상품이 없습니다.");
             <?php } ?>
         },
-        wipeUp: function() {
-                    $("#form_btn_layer").floatBottomMenu("hide");
-                  },
-        wipeDown: function() {
-                    $("#form_btn_layer").floatBottomMenu("hide");
-                  },
         min_move_x: 20,
-        min_move_y: 20,
         preventDefaultEvents: false
-    });
-
-
-    <?php if ($it['it_use']) { ?>
-    var scroll_timeout = null;
-    var timeout = 200;
-
-    $(window).on("load", function(e) {
-        setTimeout(function() {
-            $("#form_btn_layer").floatBottomMenu();
-        }, timeout);
-    });
-
-    if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
-        $(window).on("resize", function(e) {
-            setTimeout(function() {
-                $(window).trigger("scroll");
-            }, timeout);
-        });
-    }
-
-    $(window).on("scroll", function(e) {
-        clearTimeout(scroll_timeout);
-        $("#form_btn_layer").floatBottomMenu("hide");
-
-        scroll_timeout = setTimeout(function() {
-            $("#form_btn_layer").floatBottomMenu("show");
-        }, timeout);
-    });
-    <?php } ?>
-
-    // scroll event enable
-    $(window).on("movestart", function(e) {
-        if ((e.distX > e.distY && e.distX < -e.distY) ||
-        (e.distX < e.distY && e.distX > -e.distY)) {
-            e.preventDefault();
-        }
     });
 });
 

@@ -117,6 +117,8 @@
             if(check_animated())
                 return;
 
+            $(window).on("touchmove", blockMove);
+
             idx = $slides.index($slides.filter("."+cfg.active_class));
             next = (idx + 1) % count;
 
@@ -149,6 +151,8 @@
                         $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
                     }
 
+                    $(window).off("touchmove", blockMove);
+
                     $wrap.height(next_height);
                     $tabs.eq(next).addClass(cfg.tab_active);
                 }
@@ -165,6 +169,8 @@
 
             if(check_animated())
                 return;
+
+            $(window).on("touchmove", blockMove);
 
             idx = $slides.index($slides.filter("."+cfg.active_class));
             next = idx - 1;
@@ -200,6 +206,8 @@
                         $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
                     }
 
+                    $(window).off("touchmove", blockMove);
+
                     $wrap.height(next_height);
                     $tabs.eq(next).addClass(cfg.tab_active);
                 }
@@ -234,6 +242,11 @@
                 swipe_right();
             else(idx_pos < btn_pos)
                 swipe_left();
+        }
+
+        function blockMove(event)
+        {
+            event.preventDefault();
         }
 
         $(window).on("load", function(e) {

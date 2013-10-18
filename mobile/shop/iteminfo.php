@@ -66,7 +66,6 @@ function pg_anchor($info) {
 }
 ?>
 
-<script src="<?php echo G5_JS_URL; ?>/jquery.touchwipe.min.js"></script>
 <script src="<?php echo G5_JS_URL; ?>/jquery.floatmenu.js"></script>
 
 <div id="info_top_layer">
@@ -109,17 +108,6 @@ $(function() {
         setTimeout(function() {
             $("#info_top_layer").floatTopMenu();
         }, timeout);
-    });
-
-    $(window).touchwipe({
-        wipeUp: function() {
-            $("#info_top_layer").floatTopMenu("hide");
-        },
-        wipeDown: function() {
-            $("#info_top_layer").floatTopMenu("hide");
-        },
-        min_move_y: 20,
-        preventDefaultEvents: false
     });
 
     if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
