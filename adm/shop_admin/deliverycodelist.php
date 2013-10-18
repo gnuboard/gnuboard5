@@ -23,6 +23,7 @@ $result = sql_query($sql);
 </div>
 
  <div class="btn_add01 btn_add">
+    ■ 는 기본배송업체 표시입니다.
     <a href="./deliverycodeform.php">배송회사추가</a>
 </div>
 
@@ -34,6 +35,7 @@ $result = sql_query($sql);
         <th scope="col">ID</th>
         <th scope="col">배송회사명</th>
         <th scope="col">고객센터</th>
+        <th scope="col">기본배송지</th>
         <th scope="col">순서</th>
         <th scope="col">관리</th>
     </tr>
@@ -44,6 +46,7 @@ $result = sql_query($sql);
         <td class="td_num"><?php echo $row['dl_id']; ?></td>
         <td><?php echo stripslashes($row['dl_company']); ?></td>
         <td class="td_numbig"><?php echo $row['dl_tel']; ?></td>
+        <td><?php echo ($row['dl_default']?"■":""); ?></td>
         <td class="td_num"><?php echo $row['dl_order']; ?></td>
         <td class="td_mng">
             <a href="<?php echo $row['dl_url']; ?>" target="_blank"><span class="sound_only"><?php echo stripslashes($row['dl_company']); ?> </span>사이트</a>

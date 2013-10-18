@@ -10,10 +10,16 @@ if ($W == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
+// 기본 배송업체가 선택 되었다면 추가나 수정시 기본 배송업체를 모두 삭제한다.
+if ($dl_default && ($w == "" || $w == "u")) {
+    sql_query(" update {$g5['g5_shop_delivery_table']} set dl_default = 0 ");
+}
+
 $sql_common .= "set dl_company = '$dl_company',
                     dl_url = '$dl_url',
                     dl_tel = '$dl_tel',
-                    dl_order = '$dl_order' ";
+                    dl_order = '$dl_order',
+                    dl_default = '$dl_default' ";
 
 if ($w == "") {
     $sql = " alter table {$g5['g5_shop_delivery_table']} auto_increment=1 ";
