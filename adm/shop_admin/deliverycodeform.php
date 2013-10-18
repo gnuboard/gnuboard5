@@ -65,7 +65,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="dl_default">기본 배송업체</label></th>
         <td>
             <?php echo help("기본 배송업체로 선택하면 셀렉트박스에서 이 배송업체가 기본으로 노출됩니다."); ?>
-            <input type="checkbox" name="dl_default" value="1" <?php echo get_checked($dl['dl_default'], '1'); ?>> 기본 배송업체로 선택합니다.
+            <input type="checkbox" name="dl_default" value="1" id="dl_default" <?php echo get_checked($dl['dl_default'], '1'); ?>>
+            <label for="dl_default">기본 배송업체로 선택합니다.</label>
         </td>
     </tr>
     </tbody>
