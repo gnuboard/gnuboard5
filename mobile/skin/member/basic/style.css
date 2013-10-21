@@ -56,8 +56,7 @@
 */
 .mbskin .tbl_frm01 a {}
 
-.mbskin .required {} /* 필수입력 */
-.mbskin textarea.required {}
+.mbskin .required, .mbskin textarea.required {background:url('../../../../img/wrest.gif') #f7f7f7 top right no-repeat} /* 필수입력 */
 
 /* 테이블 항목별 정의 */
 .mbskin .td_board {}
