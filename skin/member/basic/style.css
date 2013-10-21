@@ -44,26 +44,25 @@
 .mbskin td.empty_table {}
 
 /* 폼 테이블 */
-.mb_skin table {}
-.mb_skin caption {}
-.mb_skin .frm_info {}
-.mb_skin .frm_address {}
-.mb_skin .frm_file {}
+.mbskin table {}
+.mbskin caption {}
+.mbskin .frm_info {}
+.mbskin .frm_address {}
+.mbskin .frm_file {}
 
-.mb_skin .tbl_frm01 {}
-.mb_skin .tbl_frm01 th {}
-.mb_skin .tbl_frm01 td {}
-.mb_skin .tbl_frm01 textarea, .mb_skin tbl_frm01 .frm_input {}
-.mb_skin .tbl_frm01 textarea {}
+.mbskin .tbl_frm01 {}
+.mbskin .tbl_frm01 th {}
+.mbskin .tbl_frm01 td {}
+.mbskin .tbl_frm01 textarea, .mb_skin tbl_frm01 .frm_input {}
+.mbskin .tbl_frm01 textarea {}
 /*
-.mb_skin .tbl_frm01 #captcha {}
-.mb_skin .tbl_frm01 #captcha input {}
+.mbskin .tbl_frm01 #captcha {}
+.mbskin .tbl_frm01 #captcha input {}
 */
-.mb_skin .tbl_frm01 a {}
+.mbskin .tbl_frm01 a {}
 
 /* 필수입력 */
-.mbskin .required {}
-.mbskin textarea.required {}
+.mbskin .required, .mbskin textarea.required {background:url('../../../img/wrest.gif') #f7f7f7 top right no-repeat}
 
 /* 테이블 항목별 정의 */
 .mbskin .td_board {}
