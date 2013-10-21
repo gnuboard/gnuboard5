@@ -1,4 +1,6 @@
 $(function(){
+    var mp3_url = "";
+
     $("#captcha_reload").bind("click", function(){
         $.ajax({
             type: 'POST',
@@ -24,7 +26,6 @@ $(function(){
         });
     }).trigger("click");
 
-    var mp3_url = "";
     $("#captcha_mp3").click(function(){
         $("body").css("cursor", "wait");
 
