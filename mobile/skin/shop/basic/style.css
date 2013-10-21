@@ -82,3 +82,7 @@
 /* 로딩안내 레이어 */
 #loading_message {position:absolute;top:0;left:0;z-index:10000;background-color:#eee;opacity:0.5}
 #loading_message img {position:relative;opacity:1.0}
+
+/* 알림 box */
+#fancyalert {position:absolute;top:0;left:0;z-index:10000;background-color:#000;opacity: 0.5}
+#fancyalert td { color:#fff;text-align: center;opacity:1.0}
