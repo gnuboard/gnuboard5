@@ -159,8 +159,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .tbl_frm01 .frm_info {display:block;padding:0.3em 0 0;color:#666;line-height:1.3em}
 
 /* 필수입력 */
-.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
-textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
+.required, textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
 
 /* 테이블 항목별 정의 */
 .td_board {width:120px;text-align:center}

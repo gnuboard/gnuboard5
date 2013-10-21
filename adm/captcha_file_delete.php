@@ -25,7 +25,7 @@ if (!$dir=@opendir(G5_DATA_PATH.'/cache')) {
 $cnt=0;
 echo '<ul>'.PHP_EOL;
 
-$files = glob(G5_DATA_PATH.'/cache/gcaptcha-*');
+$files = glob(G5_DATA_PATH.'/cache/?captcha-*');
 if (is_array($files)) {
     $before_time  = G5_SERVER_TIME - 3600; // 한시간전
     foreach ($files as $gcaptcha_file) {

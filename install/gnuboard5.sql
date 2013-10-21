@@ -6,7 +6,7 @@
 
 DROP TABLE IF EXISTS `g5_auth`;
 CREATE TABLE IF NOT EXISTS `g5_auth` (
-  `mb_id` varchar(255) NOT NULL default '',
+  `mb_id` varchar(20) NOT NULL default '',
   `au_menu` varchar(20) NOT NULL default '',
   `au_auth` set('r','w','d') NOT NULL default '',
   PRIMARY KEY  (`mb_id`,`au_menu`)
@@ -281,7 +281,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_mobile_search_skin` varchar(255) NOT NULL DEFAULT '',
   `cf_mobile_connect_skin` varchar(255) NOT NULL DEFAULT '',
   `cf_mobile_member_skin` varchar(255) NOT NULL DEFAULT '',
-  `cf_gcaptcha_mp3` varchar(255) NOT NULL DEFAULT '',
+  `cf_captcha_mp3` varchar(255) NOT NULL DEFAULT '',
   `cf_editor` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_use` tinyint(4) NOT NULL DEFAULT '0',
   `cf_cert_ipin` varchar(255) NOT NULL DEFAULT '',
@@ -325,7 +325,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
 
 CREATE TABLE IF NOT EXISTS `g5_cert_history` (
   `cr_id` int(11) NOT NULL auto_increment,
-  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `mb_id` varchar(20) NOT NULL DEFAULT '',
   `cr_company` varchar(255) NOT NULL DEFAULT '',
   `cr_method` varchar(255) NOT NULL DEFAULT '',
   `cr_ip` varchar(255) NOT NULL DEFAULT '',
@@ -383,7 +383,7 @@ DROP TABLE IF EXISTS `g5_group_member`;
 CREATE TABLE IF NOT EXISTS `g5_group_member` (
   `gm_id` int(11) NOT NULL auto_increment,
   `gr_id` varchar(255) NOT NULL default '',
-  `mb_id` varchar(255) NOT NULL default '',
+  `mb_id` varchar(20) NOT NULL default '',
   `gm_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`gm_id`),
   KEY `gr_id` (`gr_id`),
@@ -399,7 +399,7 @@ CREATE TABLE IF NOT EXISTS `g5_group_member` (
 DROP TABLE IF EXISTS `g5_login`;
 CREATE TABLE IF NOT EXISTS `g5_login` (
   `lo_ip` varchar(255) NOT NULL default '',
-  `mb_id` varchar(255) NOT NULL default '',
+  `mb_id` varchar(20) NOT NULL default '',
   `lo_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `lo_location` text NOT NULL,
   `lo_url` text NOT NULL,
@@ -432,7 +432,7 @@ CREATE TABLE IF NOT EXISTS `g5_mail` (
 DROP TABLE IF EXISTS `g5_member`;
 CREATE TABLE IF NOT EXISTS `g5_member` (
   `mb_no` int(11) NOT NULL auto_increment,
-  `mb_id` varchar(255) NOT NULL default '',
+  `mb_id` varchar(20) NOT NULL default '',
   `mb_password` varchar(255) NOT NULL default '',
   `mb_name` varchar(255) NOT NULL default '',
   `mb_nick` varchar(255) NOT NULL default '',
@@ -496,8 +496,8 @@ CREATE TABLE IF NOT EXISTS `g5_member` (
 DROP TABLE IF EXISTS `g5_memo`;
 CREATE TABLE IF NOT EXISTS `g5_memo` (
   `me_id` int(11) NOT NULL default '0',
-  `me_recv_mb_id` varchar(255) NOT NULL default '',
-  `me_send_mb_id` varchar(255) NOT NULL default '',
+  `me_recv_mb_id` varchar(20) NOT NULL default '',
+  `me_send_mb_id` varchar(20) NOT NULL default '',
   `me_send_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `me_read_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `me_memo` text NOT NULL,
@@ -576,7 +576,7 @@ DROP TABLE IF EXISTS `g5_poll_etc`;
 CREATE TABLE IF NOT EXISTS `g5_poll_etc` (
   `pc_id` int(11) NOT NULL default '0',
   `po_id` int(11) NOT NULL default '0',
-  `mb_id` varchar(255) NOT NULL default '',
+  `mb_id` varchar(20) NOT NULL default '',
   `pc_name` varchar(255) NOT NULL default '',
   `pc_idea` varchar(255) NOT NULL default '',
   `pc_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
@@ -608,7 +608,7 @@ CREATE TABLE IF NOT EXISTS `g5_popular` (
 DROP TABLE IF EXISTS `g5_scrap`;
 CREATE TABLE IF NOT EXISTS `g5_scrap` (
   `ms_id` int(11) NOT NULL auto_increment,
-  `mb_id` varchar(255) NOT NULL default '',
+  `mb_id` varchar(20) NOT NULL default '',
   `bo_table` varchar(20) NOT NULL default '',
   `wr_id` varchar(15) NOT NULL default '',
   `ms_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
