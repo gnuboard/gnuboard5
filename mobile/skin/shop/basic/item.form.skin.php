@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
-<script src="<?php echo G5_JS_URL; ?>/jquery.touchwipe.min.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.touchSwipe.min.js"></script>
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
@@ -384,110 +384,85 @@ $(function(){
     });
 
     // 이전 다음상품 swipe
-    $(window).touchwipe({
-        wipeLeft: function() {
-            <?php if($next_href) { ?>
-            if($("#loading_message").length > 0)
-                return;
-
-            var content = $("#container").clone()
-                            .find("#form_btn_layer").remove()
-                            .end().find(".sit_pvi_btn").remove()
-                            .end().html();
-            var pos = $("#container").position();
-            var width = $("#container").width();
-            var height = $("#container").height();
-            var pad_top = $("#container").css("padding-top");
-            var duration = 500;
-
-            // 로딩 레이어
-            load_message();
-
-            $("#container")
-                .css({
-                    width: width+"px",
-                    height: height+"px"
-                })
-                .before("<div id=\"container_clone\">"+content+"</div>")
-                .find("*:visible").hide();
-
-            $("#container_clone")
-                .css({
-                    display: "block",
-                    width: width+"px",
-                    height: height+"px",
-                    position: "absolute",
-                    top: pos.top+"px",
-                    left: pos.left+"px",
-                    paddingTop: pad_top
-                })
-                .animate(
-                    { left: "-="+width+"px" }, duration,
-                    function() {
-                        $("#container_clone").remove();
-                        var str = '<?php echo $next_href; ?>';
-                        var href = str.match(/https?:\/{2}[^\"]+/gi);
-                        document.location.href = href[0];
-                    }
-                );
-            <?php } else { ?>
-            alert("다음 상품이 없습니다.");
-            <?php } ?>
+    $("#container").swipe({
+        swipe: function(event, direction) {
+            switch(direction) {
+                case "left":
+                    <?php if($next_href) { ?>
+                    content_move(direction);
+                    <?php } else { ?>
+                    alert("다음 상품이 없습니다.");
+                    <?php } ?>
+                    break;
+                case "right":
+                    <?php if($prev_href) { ?>
+                    content_move(direction);
+                    <?php } else { ?>
+                    alert("이전 상품이 없습니다.");
+                    <?php } ?>
+                    break;
+            }
         },
-        wipeRight: function() {
-            <?php if($prev_href) { ?>
-            if($("#loading_message").length > 0)
-                return;
-
-            var content = $("#container").clone()
-                            .find("#form_btn_layer").remove()
-                            .end().find(".sit_pvi_btn").remove()
-                            .end().html();
-            var pos = $("#container").position();
-            var width = $("#container").width();
-            var height = $("#container").height();
-            var pad_top = $("#container").css("padding-top");
-            var duration = 500;
-
-            // 로딩 레이어
-            load_message();
-
-            $("#container")
-                .css({
-                    width: width+"px",
-                    height: height+"px"
-                })
-                .before("<div id=\"container_clone\">"+content+"</div>")
-                .find("*:visible").hide();
-
-            $("#container_clone")
-                .css({
-                    display: "block",
-                    width: width+"px",
-                    height: height+"px",
-                    position: "absolute",
-                    top: pos.top+"px",
-                    left: pos.left+"px",
-                    zIndex: "1000",
-                    paddingTop: pad_top
-                })
-                .animate(
-                    { left: "+="+width+"px" }, duration,
-                    function() {
-                        $("#container_clone").remove();
-                        var str = '<?php echo $prev_href; ?>';
-                        var href = str.match(/https?:\/{2}[^\"]+/gi);
-                        document.location.href = href[0];
-                    }
-                );
-            <?php } else { ?>
-            alert("이전 상품이 없습니다.");
-            <?php } ?>
-        },
-        min_move_x: 50,
-        preventDefaultEvents: false
+        threshold: 50,
+        excludedElements:".noSwipe",
+        allowPageScroll:"vertical"
     });
 });
+
+function content_move(direction)
+{
+    var content = $("#container").clone()
+                    .find("#form_btn_layer").remove()
+                    .end().find(".sit_pvi_btn").remove()
+                    .end().html();
+    var pos = $("#container").position();
+    var width = $("#container").width();
+    var height = $("#container").height();
+    var pad_top = $("#container").css("padding-top");
+    var next_href = '<?php echo $next_href; ?>';
+    var prev_href = '<?php echo $prev_href; ?>';
+    var str, left_value;
+    var duration = 500;
+
+    if(direction == "left") {
+        str = next_href;
+        left_value = "-="+width+"px";
+    } else {
+        str = prev_href;
+        left_value = "+="+width+"px";
+    }
+
+    // 로딩 레이어
+    load_message();
+
+    $("#container")
+        .css({
+            width: width+"px",
+            height: height+"px"
+        })
+        .before("<div id=\"container_clone\">"+content+"</div>")
+        .find("*:visible").hide();
+
+    $("#container_clone")
+        .css({
+            display: "block",
+            width: width+"px",
+            height: height+"px",
+            position: "absolute",
+            top: pos.top+"px",
+            left: pos.left+"px",
+            zIndex: "1000",
+            paddingTop: pad_top
+        })
+        .animate(
+            { left: left_value }, duration,
+            function() {
+                $("#container_clone").remove();
+                var href = str.match(/https?:\/{2}[^\"]+/gi);
+                document.location.href = href[0];
+            }
+        );
+}
 
 function load_message()
 {

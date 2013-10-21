@@ -117,8 +117,6 @@
             if(check_animated())
                 return;
 
-            $(window).on("touchmove", blockMove);
-
             idx = $slides.index($slides.filter("."+cfg.active_class));
             next = (idx + 1) % count;
 
@@ -151,8 +149,6 @@
                         $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
                     }
 
-                    $(window).off("touchmove", blockMove);
-
                     $wrap.height(next_height);
                     $tabs.eq(next).addClass(cfg.tab_active);
                 }
@@ -169,8 +165,6 @@
 
             if(check_animated())
                 return;
-
-            $(window).on("touchmove", blockMove);
 
             idx = $slides.index($slides.filter("."+cfg.active_class));
             next = idx - 1;
@@ -205,8 +199,6 @@
                         $tabs.eq(next).addClass("tab_listed").css("left", pos_left+"px");
                         $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
                     }
-
-                    $(window).off("touchmove", blockMove);
 
                     $wrap.height(next_height);
                     $tabs.eq(next).addClass(cfg.tab_active);
@@ -244,11 +236,6 @@
                 swipe_left();
         }
 
-        function blockMove(event)
-        {
-            event.preventDefault();
-        }
-
         $(window).on("load", function(e) {
             swipe_init();
         });
@@ -259,12 +246,20 @@
 
 
         // swipe event
-        $(window).touchwipe({
-            wipeLeft: function() { swipe_left(); },
-            wipeRight: function() { swipe_right(); },
-            min_move_x: 20,
-            min_move_y: 20,
-            preventDefaultEvents: false
+        this.swipe({
+            swipe: function(event, direction, duration, fingerCount) {
+                switch(direction) {
+                    case "left":
+                        swipe_left();
+                        break;
+                    case "right":
+                        swipe_right();
+                        break;
+                }
+            },
+            threshold: 50,
+            excludedElements:".noSwipe",
+            allowPageScroll:"vertical"
         });
     }
 }(jQuery));
