@@ -3,7 +3,7 @@ include_once("_common.php");
 
 function make_mp3()
 {
-    global $g4, $config;
+    global $config;
 
     $number = get_session("ss_captcha_key");
 
@@ -26,10 +26,10 @@ function make_mp3()
 
     file_put_contents(G5_PATH.'/'.$mp3_file, $contents);
 
-    // 지난 캡챠 파일 삭제
-    if (rand(0,10) == 0) {
+    // 지난 캡챠 파일 삭제 (100번중에 한번만 실행)
+    if (rand(0,99) == 0) {
         foreach (glob(G5_PATH.'/data/cache/kcaptcha-*.mp3') as $file) {
-            if (filemtime($file) + 86400 < $g4['server_time']) {
+            if (filemtime($file) + 86400 < G5_SERVER_TIME) {
                 unset($file);
             }
         }
