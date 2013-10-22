@@ -61,18 +61,13 @@ function pg_anchor($info) {
         <?php if ($default['de_baesong_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=dvr" <?php if ($info == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
         <?php if ($default['de_change_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=ex" <?php if ($info == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
         <li><a href="<?php echo $href; ?>&amp;info=rel" <?php if ($info == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
+        <li><button type="button" id="iteminfo_close" onclick="self.close();">닫기</button></li>
     </ul>
 <?php
 }
 ?>
 
-<script src="<?php echo G5_JS_URL; ?>/jquery.floatmenu.js"></script>
-
-<div id="info_top_layer">
-    <h2>상품 정보</h2>
-    <?php echo pg_anchor($info); ?>
-    <button type="button" id="iteminfo_close" onclick="self.close();">닫기</button>
-</div>
+<script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
 
 <div id="info_content">
 <?php
@@ -99,34 +94,75 @@ switch($info) {
 ?>
 </div>
 
+<div id="menu_button" class="menu_hidden">
+    <button type="button">메뉴열기</button>
+</div>
+<div id="menu_list" class="menu_hidden">
+    <?php echo pg_anchor($info); ?>
+</div>
+
 <script>
 $(function() {
-    var scroll_timeout = null;
-    var timeout = 200;
+    $("#menu_button button").on("click", function(e) {
+        if($("#menu_button").is(":animated") || $("#menu_list").is(":animated"))
+            return false;
 
-    $(window).on("load", function(e) {
-        setTimeout(function() {
-            $("#info_top_layer").floatTopMenu();
-        }, timeout);
-    });
+        var $this = $(this);
+        var mlh = $("#menu_list").outerHeight(true);
+        var duration = 200;
+        var ani_direction;
+        var button_text;
 
-    if(navigator.userAgent.toLowerCase().indexOf("android") > -1) {
-        $(window).on("resize", function(e) {
-            setTimeout(function() {
-                $(window).trigger("scroll");
-            }, timeout);
-        });
-    }
+        if($this.hasClass("menu_opened")) {
+            ani_direction = "-="+mlh;
+            button_text = "메뉴열기";
+        } else {
+            ani_direction = "+="+mlh;
+            button_text = "메뉴닫기";
+        }
 
-    $(window).on("scroll", function(e) {
-        clearTimeout(scroll_timeout);
-        $("#info_top_layer").floatTopMenu("hide");
+        $("#menu_button").animate(
+            { bottom: ani_direction }, duration
+        );
 
-        scroll_timeout = setTimeout(function() {
-            $("#info_top_layer").floatTopMenu("show");
-        }, timeout);
+        $("#menu_list").animate(
+            { bottom: ani_direction }, duration,
+            function() {
+                $this.toggleClass("menu_opened").text(button_text);
+            }
+        );
     });
 });
+
+$(window).on("load resize", function() {
+    content_scroll();
+});
+
+function content_scroll()
+{
+    var sw = $(window).width();
+    var sh = $(window).height();
+    if (/iP(hone|od|ad)/.test(navigator.platform)) {
+        if(window.innerHeight - $(window).outerHeight(true) > 0)
+            sh += (window.innerHeight - $(window).outerHeight(true));
+    }
+    var mbh = $("#menu_button").outerHeight(true);
+    var mlh = $("#menu_list").outerHeight(true);
+    var ch = sh - mbh;
+
+    $("#menu_button")
+        .css("bottom", 0)
+        .removeClass("menu_hidden")
+        .children().removeClass("menu_opened").text("메뉴열기");
+
+    $("#menu_list")
+        .css("bottom", "-"+mlh+"px")
+        .removeClass("menu_hidden");
+
+    $("#info_content")
+        .height(ch)
+        .niceScroll();
+}
 </script>
 
 <?php
