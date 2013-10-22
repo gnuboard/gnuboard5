@@ -378,7 +378,7 @@ $(function(){
             return false;
         },
         threshold: 100,
-        excludedElements:".noSwipe",
+        excludedElements:"button, input, select, textarea, .noSwipe",
         allowPageScroll:"vertical"
     };
 
