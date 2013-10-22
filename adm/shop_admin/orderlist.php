@@ -332,7 +332,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                 <?php echo conv_selected_option($delivery_options, $row['dl_id']?$row['dl_id']:$delivery_default); ?>
             </select> -->
         </td>
-        <td colspan="2">
+        <td colspan="2" class="list_delino">
             <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
             <input type="hidden" name="save_dl_id[<?php echo $i; ?>]" value="<?php echo $row['dl_id']; ?>">
             <input type="hidden" name="save_od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>">

@@ -353,7 +353,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_mng .mng_del, .td_mngsmall .mng_del {}
 .td_num {width:60px;text-align:center}
 .td_numbig {width:100px;text-align:center}
-.td_numcancel {color:#999;text-decoration:line-through}
+.td_numcancel {color:#999;text-align:center;text-decoration:line-through}
 .td_numcoupon {color:#86b325;text-align:center}
 .td_numincome {color:#357dbb;text-align:center}
 .td_numsmall {width:30px;text-align:center}
@@ -429,7 +429,9 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .scf_sms_cnt {display:block}
 
 /* 주문내역 */
-#sodr_list {text-align:center}
+#sodr_list .td_odrnum2 {text-align:left}
+#sodr_list .td_odrnum2 a {text-decoration:underline}
+#sodr_list .list_delino {text-align:center}
 
 /* 주문내역 수정 */
 .sodr_nonpay {color:#ff6600}
