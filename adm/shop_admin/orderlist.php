@@ -205,25 +205,31 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <caption>주문 내역 목록</caption>
     <thead>
     <tr>
-        <th scope="col" rowspan="2">
+        <th scope="col" rowspan="3">
             <label for="chkall" class="sound_only">주문 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
         <th scope="col" id="th_odrnum"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></th>
         <th scope="col" id="th_odrer"><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자</a></th>
-        <th scope="col" rowspan="2">주문상태</th>
-        <th scope="col" rowspan="2">결제수단</th>
-        <th scope="col" rowspan="2"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">주문합계</a></th>
-        <th scope="col" rowspan="2"><a href="<?php echo title_sort("od_receipt_price")."&amp;$qstr1"; ?>">입금합계</a></th>
-        <th scope="col" rowspan="2"><a href="<?php echo title_sort("od_cancel_price", 1)."&amp;$qstr1"; ?>">주문취소</a></th>
-        <th scope="col" rowspan="2">쿠폰</th>
-        <th scope="col" rowspan="2"><a href="<?php echo title_sort("od_misu", 1)."&amp;$qstr1"; ?>">미수금</a></th>
-        <th scope="col" rowspan="2"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">건수</a><br>(누적)</th>
-        <th scope="col" rowspan="2">관리</th>
+        <th scope="col"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">상품수</a></th>
+        <th scope="col" rowspan="3">주문상태</th>
+        <th scope="col" rowspan="3">결제수단</th>
+        <th scope="col" rowspan="3"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">주문합계</a></th>
+        <th scope="col" rowspan="3"><a href="<?php echo title_sort("od_receipt_price")."&amp;$qstr1"; ?>">입금합계</a></th>
+        <th scope="col" rowspan="3"><a href="<?php echo title_sort("od_cancel_price", 1)."&amp;$qstr1"; ?>">주문취소</a></th>
+        <th scope="col" rowspan="3">쿠폰</th>
+        <th scope="col" rowspan="3"><a href="<?php echo title_sort("od_misu", 1)."&amp;$qstr1"; ?>">미수금</a></th>
+        <th scope="col" rowspan="3">관리</th>
     </tr>
     <tr>
         <th scope="col" id="th_odrdate">주문일시</th>
         <th scope="col" id="th_odrid"><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">누적주문수</a></th>
+    </tr>
+    <tr>
+        <th scope="col">배송일시</th>
+        <th scope="col">배송회사</th>
+        <th scope="col">운송장번호</th>
     </tr>
     </thead>
     <tbody>
@@ -263,10 +269,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
         $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
 
+        $invoice_time = is_null_time($row['od_invoice_time']) ? G5_TIME_YMDHIS : $row['od_invoice_time'];
+        $delivery_company = $row['od_delivery_company'] ? $row['od_delivery_company'] : $default['de_delivery_company'];
+
         $tr_bg = $i%2 ? 'tr_bg1' : 'tr_bg0';
     ?>
     <tr class="orderlist<?php echo ' '.$tr_bg; ?>">
-        <td rowspan="2" class="td_chk">
+        <td rowspan="3" class="td_chk">
             <input type="hidden" name="od_id[<?php echo $i ?>]" value="<?php echo $row['od_id'] ?>" id="od_id_<?php echo $i ?>">
             <label for="chk_<?php echo $i; ?>" class="sound_only">주문번호 <?php echo $row['od_id']; ?></label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
@@ -276,21 +285,21 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a><br>
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
-        <td rowspan="2" class="td_odrstatus">
+        <td class="td_cntsmall"><?php echo $row['od_cart_count']; ?>건</td>
+        <td rowspan="3" class="td_odrstatus">
             <input type="hidden" name="current_status[<?php echo $i ?>]" value="<?php echo $row['od_status'] ?>">
             <?php echo $row['od_status']; ?>
         </td>
-        <td rowspan="2" class="td_payby">
+        <td rowspan="3" class="td_payby">
             <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo $row['od_settle_case'] ?>">
             <?php echo $s_receipt_way; ?>
         </td>
-        <td rowspan="2" class="td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
-        <td rowspan="2" class="td_numincome"><?php echo number_format($row['od_receipt_price']); ?></td>
-        <td rowspan="2" class="td_numcancel"><?php echo number_format($row['od_cancel_price']); ?></td>
-        <td rowspan="2" class="td_numcoupon"><?php echo number_format($row['couponprice']); ?></td>
-        <td rowspan="2" class="td_numrdy"><?php echo number_format($row['od_misu']); ?></td>
-        <td rowspan="2" class="td_cntsmall"><?php echo $row['od_cart_count']; ?>건<?php if($od_cnt) { ?><br>(<?php echo $od_cnt; ?>건)<?php } ?></td>
-        <td rowspan="2" class="td_mngsmall">
+        <td rowspan="3" class="td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
+        <td rowspan="3" class="td_numincome"><?php echo number_format($row['od_receipt_price']); ?></td>
+        <td rowspan="3" class="td_numcancel"><?php echo number_format($row['od_cancel_price']); ?></td>
+        <td rowspan="3" class="td_numcoupon"><?php echo number_format($row['couponprice']); ?></td>
+        <td rowspan="3" class="td_numrdy"><?php echo number_format($row['od_misu']); ?></td>
+        <td rowspan="3" class="td_mngsmall">
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod"><span class="sound_only"><?php echo $row['od_id']; ?> </span>수정</a>
             <a href="./orderdelete.php?od_id=<?php echo $row['od_id']; ?>&amp;mb_id=<?php echo $row['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();" class="mng_del"><span class="sound_only"><?php echo $row['od_id']; ?> </span>삭제</a>
         </td>
@@ -298,6 +307,43 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <tr class="<?php echo $tr_bg; ?>">
         <td headers="th_odrdate"><span class="sound_only">주문일시 </span><?php echo $row['od_time']; ?></td>
         <td headers="th_odrid" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a></td>
+        <td><?php echo $od_cnt; ?>건</td>
+    </tr>
+    <tr class="<?php echo $tr_bg; ?>">
+        <td>
+            <?php if ($od_status == '준비') { ?>
+                <input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="16" maxlength="19">
+            <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
+                <?php echo $row['od_invoice_time']; ?>
+            <?php } else { ?>
+                -
+            <?php } ?>
+        </td>
+        <td>
+            <?php if ($od_status == '준비') { ?>
+                <input type="text" name="od_delivery_company[<?php echo $i; ?>]" value="<?php echo $delivery_company; ?>" class="frm_input" size="20">
+            <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
+                <?php echo $row['od_delivery_company']; ?>
+            <?php } else { ?>
+                -
+            <?php } ?>
+            <!-- <label for="dl_id_<?php echo $i; ?>" class="sound_only">배송업체</label>
+            <select name="dl_id[<?php echo $i; ?>]" id="dl_id_<?php echo $i; ?>">
+                <?php echo conv_selected_option($delivery_options, $row['dl_id']?$row['dl_id']:$delivery_default); ?>
+            </select> -->
+        </td>
+        <td>
+            <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
+            <input type="hidden" name="save_dl_id[<?php echo $i; ?>]" value="<?php echo $row['dl_id']; ?>">
+            <input type="hidden" name="save_od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>">
+            <?php if ($od_status == '준비') { ?>
+                <input type="text" name="od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>" class="frm_input" size="10">
+            <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
+                <?php echo $row['od_invoice']; ?>
+            <?php } else { ?>
+                -
+            <?php } ?>
+        </td>
     </tr>
     <?php
         $tot_itemcount     += $row['od_cart_count'];
@@ -309,18 +355,19 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     }
     mysql_free_result($result);
     if ($i == 0)
-        echo '<tr><td colspan="10" class="empty_table">자료가 없습니다.</td></tr>';
+        echo '<tr><td colspan="12" class="empty_table">자료가 없습니다.</td></tr>';
     ?>
     </tbody>
     <tfoot>
     <tr class="orderlist">
-        <th scope="row" colspan="5">합 계</th>
+        <th scope="row" colspan="3">&nbsp;</th>
+        <td><?php echo (int)$tot_itemcount; ?>건</td>
+        <th scope="row" colspan="2">합 계</th>
         <td><?php echo number_format($tot_orderprice); ?></td>
         <td><?php echo number_format($tot_receiptprice); ?></td>
         <td><?php echo number_format($tot_ordercancel); ?></td>
         <td><?php echo number_format($tot_couponprice); ?></td>
         <td><?php echo number_format($tot_misu); ?></td>
-        <td><?php echo (int)$tot_itemcount; ?>건</td>
         <td></td>
     </tr>
     </tfoot>
@@ -328,22 +375,36 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 </div>
 
 <div class="local_cmd01 local_cmd">
+<?php if (($od_status == '' || $od_status == '완료') == false) { // 검색된 주문상태가 '전체', '완료' 가 아니라면 ?>
     <label for="od_status" class="cmd_tit">주문상태 변경</label>
-    <select name="od_status" id="od_status">
+    <!-- <select name="od_status" id="od_status">
         <option value="">선택하세요</option>
         <option value="주문">주문</option>
         <option value="입금">입금</option>
         <option value="준비">준비</option>
         <option value="배송">배송</option>
-        <!-- <option value="완료">완료</option> -->
-    </select>
-    <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
+        <option value="완료">완료</option>
+    </select> -->
+
+    <?php 
+    $change_status = "";
+    if ($od_status == '주문') $change_status = "입금";
+    if ($od_status == '입금') $change_status = "준비";
+    if ($od_status == '준비') $change_status = "배송";
+    if ($od_status == '배송') $change_status = "완료";
+    ?>
+    <?php if ($change_status) { ?>
+        <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> <?php echo $change_status; ?></label>
+        <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
+    <?php } ?>
+<?php } ?>
 </div>
 
 <div class="local_desc01 local_desc">
 <p>
     &lt;무통장&gt;인 경우에만 &lt;주문&gt;에서 &lt;입금&gt;으로 변경됩니다. 가상계좌는 입금시 자동으로 &lt;입금&gt;처리됩니다.<br>
     &lt;준비&gt;에서 &lt;배송&gt;으로 변경된 주문은 배송관리에서 배송정보 입력과 &lt;완료&gt;처리를 해주시기 바랍니다.<br>
+    &lt;배송&gt;전에는 기본으로 배송일시가 현재시간으로 채워져 있습니다.<br>
     <strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
 </p>
 </div>
@@ -392,6 +453,7 @@ function forderlist_submit(f)
         return false;
     }
 
+    /*
     switch (f.od_status.value) {
         case "" : 
             alert("변경하실 주문상태를 선택하세요.");
@@ -400,6 +462,12 @@ function forderlist_submit(f)
 
         default :
 
+    }
+    */
+
+    if (f.od_status.checked == false) {
+        alert("변경하실 주문상태를 선택하세요.");
+        return false;
     }
 
     if(document.pressed == "선택삭제") {
@@ -422,23 +490,46 @@ function forderlist_submit(f)
             {
                 case "입금" : 
                     if (!(current_status == "주문" && current_settle_case == "무통장")) {
-                        alert("주문상태의 '무통장'(결제수단)인 경우에만 입금 처리 가능합니다.");
+                        alert("'주문' 상태의 '무통장'(결제수단)인 경우에만 '입금' 처리 가능합니다.");
                         return false;
                     }
                     break;
 
                 case "준비" : 
                     if (current_status != "입금") {
-                        alert("입금상태의 주문만 '준비'로 변경이 가능합니다.");
+                        alert("'입금' 상태의 주문만 '준비'로 변경이 가능합니다.");
                         return false;
                     }
                     break;
 
                 case "배송" : 
                     if (current_status != "준비") {
-                        alert("준비상태의 주문만 '배송'으로 변경이 가능합니다.");
+                        alert("'준비' 상태의 주문만 '배송'으로 변경이 가능합니다.");
                         return false;
                     }
+
+                    var invoice      = f.elements['od_invoice['+k+']'];
+                    var invoice_time = f.elements['od_invoice_time['+k+']'];
+                    var delivery_company = f.elements['od_delivery_company['+k+']'];
+
+                    if ($.trim(invoice_time.value) == '') {
+                        alert("배송일시를 입력하시기 바랍니다.");
+                        invoice_time.focus();
+                        return false;
+                    }
+
+                    if ($.trim(delivery_company.value) == '') {
+                        alert("배송업체를 입력하시기 바랍니다.");
+                        delivery_company.focus();
+                        return false;
+                    }
+
+                    if ($.trim(invoice.value) == '') {
+                        alert("운송장번호를 입력하시기 바랍니다.");
+                        invoice.focus();
+                        return false;
+                    }
+
                     break;
             }
         }

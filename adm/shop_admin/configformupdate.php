@@ -102,6 +102,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_settle_max_point         = '$de_settle_max_point',
                 de_settle_point_unit        = '$de_settle_point_unit',
                 de_level_sell               = '$de_level_sell',
+                de_delivery_company         = '$de_delivery_company',
                 de_send_cost_case           = '$de_send_cost_case',
                 de_send_cost_limit          = '$de_send_cost_limit',
                 de_send_cost_list           = '$de_send_cost_list',
