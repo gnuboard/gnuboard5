@@ -2,20 +2,6 @@
 include './_common.php';
 include G5_LIB_PATH.'/etc.lib.php';
 
-// 현금영수증 필드생성
-$sql = " ALTER TABLE `{$g5['g5_shop_order_table']}` ADD `od_cash_no` VARCHAR( 255 ) NOT NULL ,
-                                            ADD `od_cash_receipt_no` VARCHAR( 255 ) NOT NULL ,
-                                            ADD `od_cash_app_time` VARCHAR( 255 ) NOT NULL ,
-                                            ADD `od_cash_reg_stat` VARCHAR( 255 ) NOT NULL ,
-                                            ADD `od_cash_reg_desc` VARCHAR( 255 ) NOT NULL ,
-                                            ADD `od_cash_tr_code` VARCHAR( 255 ) NOT NULL ,
-                                            ADD `od_cash_id_info` VARCHAR( 255 ) NOT NULL ";
-sql_query($sql, false);
-
-// 현금영수증 사용, 미사용 구분
-$sql = " ALTER TABLE `{$g5['g5_shop_order_table']}` ADD `od_cash` TINYINT NOT NULL ";
-sql_query($sql, false);
-
 $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_id = '{$_POST['ordr_idxx']}' and od_cash = 1 ";
 $row = sql_fetch($sql);
 if ($row['cnt']) {

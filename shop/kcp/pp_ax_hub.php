@@ -220,7 +220,7 @@ else if ($req_tx = "mod_escrow")
 /* = -------------------------------------------------------------------------- = */
 if ( $tran_cd != "" )
 {
-    $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, "", $tran_cd, "",
+    $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, $g_conf_site_key, $tran_cd, "",
                           $g_conf_gw_url, $g_conf_gw_port, "payplus_cli_slib", $ordr_idxx,
                           $cust_ip, "3" , 0, 0, $g_conf_key_dir, $g_conf_log_dir); // 응답 전문 처리
 
