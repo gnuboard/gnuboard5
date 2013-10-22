@@ -195,7 +195,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7f7f7;color:#000;vertical-align:middle}
 
 /* 필수입력 */
-.required, textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat}
+.required, textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
 
 /* 테이블 항목별 정의 */
 .td_board {width:120px;text-align:center}

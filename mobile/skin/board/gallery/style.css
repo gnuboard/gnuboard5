@@ -59,8 +59,7 @@
 */
 #bo_w .tbl_frm01 a {}
 
-#bo_w .required {} /* 필수입력 */
-#bo_w textarea.required {}
+#bo_w .required, #bo_w textarea.required {}
 
 /* ### 기본 스타일 커스터마이징 끝 ### */
 

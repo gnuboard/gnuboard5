@@ -24,8 +24,7 @@
 */
 #poll .tbl_frm01 a {}
 
-#poll .required {} /* 필수입력 */
-#poll textarea.required {}
+#poll .required, #poll textarea.required {}
 
 #poll .btn_confirm {} /* 서식단계 진행 */
 #poll .btn_submit {}
