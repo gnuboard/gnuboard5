@@ -18,13 +18,6 @@ function fancyalert(msg)
     box += "</div>";
 
     $("body").append(box);
-
-    $("html, body").on("touchmove", blockScroll);
-}
-
-function blockScroll(event)
-{
-    event.preventDefault();
 }
 
 $(function() {
