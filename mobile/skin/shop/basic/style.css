@@ -84,5 +84,5 @@
 #loading_message img {position:relative;opacity:1.0}
 
 /* 알림 box */
-#fancyalert {position:absolute;top:0;left:0;z-index:10000;background-color:#000;opacity: 0.5}
-#fancyalert td { color:#fff;text-align: center;opacity:1.0}
+#fancyalert {display:table;position:absolute;top:0;left:0;z-index:10000;background-color:#000;opacity: 0.5;text-align:center}
+#fancyalert span {display:table-cell;vertical-align:middle;color:#fff;opacity:1.0}

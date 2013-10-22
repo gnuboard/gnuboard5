@@ -11,21 +11,25 @@ function fancyalert(msg)
     }
 
     box = "<div id=\"fancyalert\" style=\"top:"+scroll_top+"px;width:"+w+"px;height:"+h+"px;\">";
-    box += "<table>";
-    box + "<tr>";
-    box += "<td width=\""+w+"\" height=\""+h+"\">"+msg;
+    box += "<span>"+msg;
     box += "<br>";
     box += "<button type=\"button\" id=\"fancyalert_close\">확인</button>";
-    box += "</td>";
-    box += "</tr>";
-    box += "</table>";
+    box += "</span>";
     box += "</div>";
 
     $("body").append(box);
+
+    $("html, body").on("touchmove", blockScroll);
+}
+
+function blockScroll(event)
+{
+    event.preventDefault();
 }
 
 $(function() {
     $("#fancyalert_close").live("click", function() {
         $("#fancyalert").fadeOut().remove();
+        $("html, body").off("touchmove", blockScroll);
     });
 });
