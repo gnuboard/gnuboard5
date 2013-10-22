@@ -64,8 +64,7 @@
 #bo_w .tbl_frm01 a {}
 
 /* 필수입력 */
-#bo_w .required {}
-#bo_w textarea.required {}
+#bo_w .required, #bo_w textarea.required {}
 
 #bo_w .cke_sc {}
 #bo_w button.btn_cke_sc{}
