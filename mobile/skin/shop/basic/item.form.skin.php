@@ -4,6 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
 <script src="<?php echo G5_JS_URL; ?>/jquery.touchSwipe.min.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
 <script src="<?php echo G5_JS_URL; ?>/jquery.fancyalert.js"></script>
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
@@ -376,7 +377,7 @@ $(function(){
 
             return false;
         },
-        threshold: 50,
+        threshold: 100,
         excludedElements:".noSwipe",
         allowPageScroll:"vertical"
     };

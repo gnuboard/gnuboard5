@@ -21,6 +21,7 @@ else {
     $default['de_kcp_mid'] = "SR".$default['de_kcp_mid'];
 }
 
+$g_conf_site_key = $default['de_kcp_site_key'];
 
 $g_conf_js_url = "https://pay.kcp.co.kr/plugin/payplus{$test}_un.js";
 

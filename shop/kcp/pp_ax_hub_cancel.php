@@ -67,7 +67,7 @@ if ( $req_tx == "pay" )
             $c_PayPlus->mf_set_modx_data( "mod_desc", $cancel_msg );  // 변경 사유
 
             $c_PayPlus->mf_do_tx( $tno,  $g_conf_home_dir, $g_conf_site_cd,
-                                  "",  $tran_cd,    "",
+                                  $g_conf_site_key,  $tran_cd,    "",
                                   $g_conf_gw_url,  $g_conf_gw_port,  "payplus_cli_slib",
                                   $ordr_idxx, $cust_ip, "3" ,
                                   0, 0, $g_conf_key_dir, $g_conf_log_dir);

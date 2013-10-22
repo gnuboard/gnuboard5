@@ -24,8 +24,7 @@
 #poll_result .tbl_frm01 a {}
 
 /* 필수입력 */
-#poll_result .required {}
-#poll_result textarea.required {}
+#poll_result .required, #poll_result textarea.required {}
 
 #poll_result .btn_confirm {} /* 서식단계 진행 */
 #poll_result .btn_submit {}
