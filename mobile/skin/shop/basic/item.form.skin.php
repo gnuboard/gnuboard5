@@ -254,31 +254,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <div id="sit_tot_price"></div>
 
-        <script>
-        // 상품보관
-        function item_wish(f, it_id)
-        {
-            f.url.value = "<?php echo G5_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
-            f.action = "<?php echo G5_SHOP_URL; ?>/wishupdate.php";
-            f.submit();
-        }
+        <ul id="sit_ov_btn">
+            <?php if (!$it['it_tel_inq']) { ?>
+            <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
+            <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
+            <?php } ?>
 
-        // 추천메일
-        function popup_item_recommend(it_id)
-        {
-            if (!g5_is_member)
-            {
-                if (confirm("회원만 추천하실 수 있습니다."))
-                    document.location.href = "<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo urlencode(G5_SHOP_URL."/item.php?it_id=$it_id"); ?>";
-            }
-            else
-            {
-                url = "<?php echo G5_SHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
-                opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
-                popup_window(url, "itemrecommend", opt);
-            }
-        }
-        </script>
+            <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
+            <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
+        </ul>
     </section>
 </div>
 
@@ -293,20 +277,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     }
     ?>
 </aside>
-
-<?php if ($it['it_use']) { ?>
-<div>
-    <ul id="sit_ov_btn">
-        <?php if (!$it['it_tel_inq']) { ?>
-        <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
-        <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
-        <?php } ?>
-
-        <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
-        <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
-    </ul>
-</div>
-<?php } ?>
 
 <?php
 $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
@@ -390,14 +360,14 @@ $(function(){
             switch(direction) {
                 case "left":
                     <?php if($next_href) { ?>
-                    content_move(direction);
+                    content_slide(direction);
                     <?php } else { ?>
                     fancyalert("다음 상품이 없습니다.");
                     <?php } ?>
                     break;
                 case "right":
                     <?php if($prev_href) { ?>
-                    content_move(direction);
+                    content_slide(direction);
                     <?php } else { ?>
                     fancyalert("이전 상품이 없습니다.");
                     <?php } ?>
@@ -414,7 +384,7 @@ $(function(){
     $("#container").swipe(swipeOptions);
 });
 
-function content_move(direction)
+function content_slide(direction)
 {
     var content = $("#container").clone()
                     .find("#form_btn_layer").remove()
@@ -491,6 +461,30 @@ function load_message()
     img += "</div>";
 
     $("body").append(img);
+}
+
+// 상품보관
+function item_wish(f, it_id)
+{
+    f.url.value = "<?php echo G5_SHOP_URL; ?>/wishupdate.php?it_id="+it_id;
+    f.action = "<?php echo G5_SHOP_URL; ?>/wishupdate.php";
+    f.submit();
+}
+
+// 추천메일
+function popup_item_recommend(it_id)
+{
+    if (!g5_is_member)
+    {
+        if (confirm("회원만 추천하실 수 있습니다."))
+            document.location.href = "<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo urlencode(G5_SHOP_URL."/item.php?it_id=$it_id"); ?>";
+    }
+    else
+    {
+        url = "<?php echo G5_SHOP_URL; ?>/itemrecommend.php?it_id=" + it_id;
+        opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
+        popup_window(url, "itemrecommend", opt);
+    }
 }
 
 // 바로구매, 장바구니 폼 전송
