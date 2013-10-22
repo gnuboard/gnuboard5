@@ -211,8 +211,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </th>
         <th scope="col" id="th_odrnum"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></th>
         <th scope="col" id="th_odrer"><a href="<?php echo title_sort("od_name")."&amp;$qstr1"; ?>">주문자</a></th>
-        <th scope="col"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">상품수</a></th>
-        <th scope="col" rowspan="3">주문상태</th>
+        <th scope="col" colspan="2">주문상태</th>
         <th scope="col" rowspan="3">결제수단</th>
         <th scope="col" rowspan="3"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">주문합계</a></th>
         <th scope="col" rowspan="3"><a href="<?php echo title_sort("od_receipt_price")."&amp;$qstr1"; ?>">입금합계</a></th>
@@ -224,12 +223,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <tr>
         <th scope="col" id="th_odrdate">주문일시</th>
         <th scope="col" id="th_odrid"><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID</a></th>
-        <th scope="col"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">누적주문수</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">주문건</a></th>
+        <th scope="col"><a href="<?php echo title_sort("od_cart_price", 1)."&amp;$qstr1"; ?>">누적건</a></th>
     </tr>
     <tr>
         <th scope="col">배송일시</th>
         <th scope="col">배송회사</th>
-        <th scope="col">운송장번호</th>
+        <th scope="col" colspan="2">운송장번호</th>
     </tr>
     </thead>
     <tbody>
@@ -285,8 +285,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a><br>
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
-        <td class="td_cntsmall"><?php echo $row['od_cart_count']; ?>건</td>
-        <td rowspan="3" class="td_odrstatus">
+        <td colspan="2" class="td_odrstatus">
             <input type="hidden" name="current_status[<?php echo $i ?>]" value="<?php echo $row['od_status'] ?>">
             <?php echo $row['od_status']; ?>
         </td>
@@ -307,7 +306,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <tr class="<?php echo $tr_bg; ?>">
         <td headers="th_odrdate"><span class="sound_only">주문일시 </span><?php echo $row['od_time']; ?></td>
         <td headers="th_odrid" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a></td>
-        <td><?php echo $od_cnt; ?>건</td>
+        <td class="td_cntsmall"><?php echo $row['od_cart_count']; ?>건</td>
+        <td class="td_cntsmall"><?php echo $od_cnt; ?>건</td>
     </tr>
     <tr class="<?php echo $tr_bg; ?>">
         <td>
@@ -332,7 +332,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                 <?php echo conv_selected_option($delivery_options, $row['dl_id']?$row['dl_id']:$delivery_default); ?>
             </select> -->
         </td>
-        <td>
+        <td colspan="2">
             <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
             <input type="hidden" name="save_dl_id[<?php echo $i; ?>]" value="<?php echo $row['dl_id']; ?>">
             <input type="hidden" name="save_od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>">
