@@ -18,6 +18,7 @@ include $syndi_path . '/config/site.config.php';
 $sql = " select bo_table from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id order by b.gr_id, b.bo_table limit 1 ";
 $channel = sql_fetch($sql);
 
+if (!$channel) die("게시판이 존재하지 않습니다. 게시판 생성후 실행하시기 바랍니다.");
 $sql = " select wr_id from {$g5['write_prefix']}{$channel['bo_table']} where wr_is_comment = 0 order by wr_num, wr_reply desc limit 1 ";
 $article = sql_fetch($sql);
 ?>

@@ -18,7 +18,7 @@ CREATE TABLE `__TABLE_NAME__` (
   `wr_hit` int(11) NOT NULL DEFAULT '0',
   `wr_good` int(11) NOT NULL DEFAULT '0',
   `wr_nogood` int(11) NOT NULL DEFAULT '0',
-  `mb_id` varchar(255) NOT NULL,
+  `mb_id` varchar(20) NOT NULL,
   `wr_password` varchar(255) NOT NULL,
   `wr_name` varchar(255) NOT NULL,
   `wr_email` varchar(255) NOT NULL,
