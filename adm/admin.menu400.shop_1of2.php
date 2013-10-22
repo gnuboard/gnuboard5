@@ -17,7 +17,7 @@ $menu['menu400'] = array (
     array('400500', '상품옵션재고관리', G5_ADMIN_URL.'/shop_admin/optionstocklist.php', 'scf_item_option'),
     array('400650', '쿠폰관리', G5_ADMIN_URL.'/shop_admin/couponlist.php', 'scf_coupon'),
     array('400500', '배송일괄처리', G5_ADMIN_URL.'/shop_admin/deliverylist.php', 'scf_deli', 1),
-    array('400740', '배송업체관리', G5_ADMIN_URL.'/shop_admin/deliverycodelist.php', 'scf_deli_co', 1),
+    //array('400740', '배송업체관리', G5_ADMIN_URL.'/shop_admin/deliverycodelist.php', 'scf_deli_co', 1),
     array('400750', '추가배송비관리', G5_ADMIN_URL.'/shop_admin/sendcostlist.php', 'scf_sendcost', 1)
 );
 ?>

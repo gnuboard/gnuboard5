@@ -615,4 +615,16 @@ if(!sql_query(" select ev_mobile_skin from {$g5['g5_shop_event_table']} limit 1 
                     ADD `ev_mobile_img_height` int(11) NOT NULL DEFAULT '0' AFTER `ev_mobile_img_width`,
                     ADD `ev_mobile_list_mod` int(11) NOT NULL DEFAULT '0' AFTER `ev_mobile_img_height` ", true);
 }
+
+// 쇼핑몰설정 테이블에 배송업체 필드 추가
+if(!sql_query(" select de_delivery_company from {$g5['g5_shop_default_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_delivery_company` varchar(255) NOT NULL DEFAULT '' AFTER `de_level_sell` ", true);
+}
+
+// 주문서 테이블에 배송업체 필드 추가
+if(!sql_query(" select od_delivery_company from {$g5['g5_shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
+                    CHANGE `dl_id` `od_delivery_company` varchar(255) NOT NULL DEFAULT '' ", true);
+}
 ?>

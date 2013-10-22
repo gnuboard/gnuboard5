@@ -648,6 +648,24 @@ $pg_anchor = '<ul class="anchor">
         </colgroup>
         <tbody>
         <tr>
+            <th scope="row"><label for="de_delivery_company">배송업체</label></th>
+            <td>
+                <?php echo help("이용중 이거나 이용하실 배송업체를 선택하세요.", 50); ?>
+                <select name="de_delivery_company" id="de_delivery_company">
+                    <option value="">없음</option>
+                    <option value="자체배송" <?php echo get_selected($default['de_delivery_company'], "자체배송"); ?>>자체배송</option>
+                    <?php
+                    $dlcomp = explode(")", str_replace("(", "", G5_DELIVERY_COMPANY));
+                    for ($i=0; $i<count($dlcomp); $i++) {
+                        if (trim($dlcomp[$i])=="") continue;
+                        list($value, $url, $tel) = explode("^", $dlcomp[$i]);
+                        echo "<option value=\"$value\" ".get_selected($default['de_delivery_company'], $value).">$value</option>\n";
+                    }
+                    ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="de_send_cost_case">배송비유형</label></th>
             <td>
                 <?php echo help("<strong>금액별차등</strong>으로 설정한 경우, 주문총액이 배송비상한가 미만일 경우 배송비를 받습니다.\n<strong>무료배송</strong>으로 설정한 경우, 배송비상한가 및 배송비를 무시하며 착불의 경우도 무료배송으로 설정합니다.\n<strong>상품별로 배송비 설정을 한 경우 상품별 배송비 설정이 우선</strong> 적용됩니다.\n예를 들어 무료배송으로 설정했을 때 특정 상품에 배송비가 설정되어 있으면 주문시 배송비가 부과됩니다.", 50); ?>
