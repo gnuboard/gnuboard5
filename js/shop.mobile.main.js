@@ -131,6 +131,15 @@
             $slides.eq(next).css("left", width+"px");
             $tabs.removeClass(cfg.tab_active);
 
+            if(count >= 3) {
+                $tabs.removeClass("tab_listed").css("left", "-"+tab_width+"px");
+
+                $tabs.eq(next - 1).addClass("tab_listed").css("left", "0px");
+                $tabs.eq(next).addClass("tab_listed").css("left", pos_left+"px");
+                $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
+            }
+            $tabs.eq(next).addClass(cfg.tab_active);
+
             $slides.eq(idx).clearQueue().animate(
                 { left: "-="+width }, cfg.duration,
                 function() {
@@ -141,16 +150,7 @@
             $slides.eq(next).clearQueue().animate(
                 { left: "-="+width }, cfg.duration,
                 function() {
-                    if(count >= 3) {
-                        $tabs.removeClass("tab_listed").css("left", "-"+tab_width+"px");
-
-                        $tabs.eq(next - 1).addClass("tab_listed").css("left", "0px");
-                        $tabs.eq(next).addClass("tab_listed").css("left", pos_left+"px");
-                        $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
-                    }
-
                     $wrap.height(next_height);
-                    $tabs.eq(next).addClass(cfg.tab_active);
                 }
             );
 
@@ -182,6 +182,15 @@
             $slides.eq(next).css("left", "-"+width+"px");
             $tabs.removeClass(cfg.tab_active);
 
+            if(count >= 3) {
+                $tabs.removeClass("tab_listed").css("left", "-"+tab_width+"px");
+
+                $tabs.eq(next - 1).addClass("tab_listed").css("left", "0px");
+                $tabs.eq(next).addClass("tab_listed").css("left", pos_left+"px");
+                $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
+            }
+            $tabs.eq(next).addClass(cfg.tab_active);
+
             $slides.eq(idx).clearQueue().animate(
                 { left: "+="+width }, cfg.duration,
                 function() {
@@ -192,16 +201,7 @@
             $slides.eq(next).clearQueue().animate(
                 { left: "+="+width }, cfg.duration,
                 function() {
-                    if(count >= 3) {
-                        $tabs.removeClass("tab_listed").css("left", "-"+tab_width+"px");
-
-                        $tabs.eq(next - 1).addClass("tab_listed").css("left", "0px");
-                        $tabs.eq(next).addClass("tab_listed").css("left", pos_left+"px");
-                        $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
-                    }
-
                     $wrap.height(next_height);
-                    $tabs.eq(next).addClass(cfg.tab_active);
                 }
             );
 
