@@ -20,7 +20,7 @@ $od = sql_fetch($sql);
 if(!$od['od_id'])
     alert_close('주문정보가 존재하지 않습니다.');
 
-if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G4_TIME_YMD)
+if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G5_TIME_YMD)
     alert_close('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
 
 // 금액비교
@@ -86,9 +86,9 @@ $tno            = $od['od_tno'];
 $req_tx         = 'mod';
 $mod_desc       = $cancel_memo;
 $cust_ip        = getenv('REMOTE_ADDR');
-$rem_mny        = $od['od_receipt_price'] - $od['od_refund_price'];;
-$mod_mny        = $tax_mny;
-$mod_free_mny   = $free_mny;
+$rem_mny        = (int)$od['od_receipt_price'] - (int)$od['od_refund_price'];;
+$mod_mny        = (int)$tax_mny;
+$mod_free_mny   = (int)$free_mny;
 $mod_type       = 'RN07';
 if($od['od_settle_case'] == '계좌이체')
     $mod_type   = 'STPA';
@@ -119,7 +119,7 @@ if ( $req_tx == "mod" )
         $c_PayPlus->mf_set_modx_data( "tax_flag"     , "TG03"				 );  // 복합과세 구분
         $c_PayPlus->mf_set_modx_data( "mod_tax_mny"  , strval($mod_tax_mny)  );	 // 공급가 부분 취소 요청 금액
         $c_PayPlus->mf_set_modx_data( "mod_vat_mny"  , strval($mod_vat_mny)	 );  // 부과세 부분 취소 요청 금액
-        $c_PayPlus->mf_set_modx_data( "mod_free_mny" , $mod_free_mny		 );  // 비관세 부분 취소 요청 금액
+        $c_PayPlus->mf_set_modx_data( "mod_free_mny" , strval($mod_free_mny) );  // 비관세 부분 취소 요청 금액
     }
 }
 
