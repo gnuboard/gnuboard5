@@ -60,7 +60,7 @@
                 $tabs.each(function() {
                     $(this)
                         .css("width", $(this).width())
-                        .data("width", $(this).outerWidth());
+                        .data("width", $(this).width());
                 });
 
                 $btns.on("click", function() {
@@ -87,8 +87,10 @@
 
             $slides.not("."+cfg.active_class).css("left", "-"+width+"px");
 
+            set_tab_width(idx);
+
             if(count == 1) {
-                tab_width = $tabs.eq(0).data("width");
+                tab_width = $tabs.eq(0).outerWidth();
                 pos_left = parseInt((tabw_width - tab_width) / 2);
                 $tabs.eq(0).css("left", pos_left).addClass(cfg.tab_active);
             } else if(count == 2) {
@@ -102,8 +104,6 @@
                 $slides.eq((idx - 1)).css("left", "-"+width+"px");
                 $slides.eq((idx + 1) % count).css("left", width+"px");
             }
-
-            set_tab_width(idx);
         }
 
         function swipe_left()
@@ -128,13 +128,13 @@
             $slides.eq(next).css("left", width+"px");
             $tabs.removeClass(cfg.tab_active);
 
+            set_tab_width(next);
+
             if(count >= 3) {
                 tab_position(next);
             } else {
                 $tabs.eq(next).addClass(cfg.tab_active);
             }
-
-            set_tab_width(next);
 
             $slides.eq(idx).clearQueue().animate(
                 { left: "-="+width }, cfg.duration,
@@ -178,13 +178,13 @@
             $slides.eq(next).css("left", "-"+width+"px");
             $tabs.removeClass(cfg.tab_active);
 
+            set_tab_width(next);
+
             if(count >= 3) {
                 tab_position(next);
             } else {
                 $tabs.eq(next).addClass(cfg.tab_active);
             }
-
-            set_tab_width(next);
 
             $slides.eq(idx).clearQueue().animate(
                 { left: "+="+width }, cfg.duration,
@@ -220,8 +220,8 @@
             var $tab_l = $tabs.eq(idx - 1);
             var $tab_c = $tabs.eq(idx);
             var $tab_r = $tabs.eq((idx + 1) % count);
-            var w_c = $tab_c.data("width");
-            var w_r = $tab_r.data("width");
+            var w_c = $tab_c.outerWidth();
+            var w_r = $tab_r.outerWidth();
 
             var pl = 0;
             var pc = parseInt((tabw_width - w_c) / 2);
