@@ -199,6 +199,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 </form>
 
 <form name="forderlist" id="forderlist" action="./orderlistupdate.php" onsubmit="return forderlist_submit(this);" method="post">
+<input type="hidden" name="search_od_status" value="<?php echo $od_status; ?>">
 
 <div class="tbl_head02 tbl_wrap">
     <table id="sodr_list">
@@ -334,9 +335,6 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <?php echo $s_receipt_way; ?>
         </td>
         <td headers="th_delino">
-            <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
-            <input type="hidden" name="save_dl_id[<?php echo $i; ?>]" value="<?php echo $row['dl_id']; ?>">
-            <input type="hidden" name="save_od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>">
             <?php if ($od_status == '준비') { ?>
                 <input type="text" name="od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>" class="frm_input" size="12">
             <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
@@ -417,8 +415,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     if ($od_status == '배송') $change_status = "완료";
     ?>
     <?php if ($change_status) { ?>
-        <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> <?php echo $change_status; ?></label>
+        <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> <?php echo $change_status; ?> 상태로 변경</label>
+        <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> 이전상태로 되돌리기</label>
         <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
+        <?php if ($od_status == '주문') { ?><input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
     <?php } ?>
 <?php } ?>
 </div>
@@ -488,15 +488,17 @@ function forderlist_submit(f)
     }
     */
 
-    if (f.od_status.checked == false) {
-        alert("변경하실 주문상태를 선택하세요.");
+    if(document.pressed == "선택삭제") {
+        if(confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
+            f.action = "./orderlistdelete.php";
+            return true;
+        }
         return false;
     }
 
-    if(document.pressed == "선택삭제") {
-        if(!confirm("선택한 자료를 정말 삭제하시겠습니까?")) {
-            return false;
-        }
+    if (f.od_status.checked == false) {
+        alert("변경하실 주문상태를 선택하세요.");
+        return false;
     }
 
     var chk = document.getElementsByName("chk[]");
