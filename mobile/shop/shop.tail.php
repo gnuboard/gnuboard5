@@ -9,8 +9,8 @@ $admin = get_admin("super");
 
 </div><!-- container End -->
 
-<footer id="footer">
-    <h1><?php echo $config['cf_title']; ?> 정보</h1>
+<div id="ft">
+    <h2><?php echo $config['cf_title']; ?> 정보</h2>
     <a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="처음으로"></a>
     <p>
         <span><?php echo $default['de_admin_company_addr']; ?></span>
@@ -24,7 +24,7 @@ $admin = get_admin("super");
         Copyright &copy; 2001-2013 <?php echo $default['de_admin_company_name']; ?>. All Rights Reserved.
     </p>
     <a href="#" id="ft_to_top">상단으로</a>
-</footer>
+</div>
 
 <?php
 $sec = get_microtime() - $begin_time;
