@@ -212,8 +212,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <!-- <th scope="col" id="th_odrnum"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></th> -->
         <th scope="col" id="th_odrnum" rowspan="2" colspan="2"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></th>
         <th scope="col" id="th_odrer">주문자</th>
-        <th scope="col" id="th_odrer">주문자전화</th>
-        <th scope="col" id="th_odrid">받는분</th>
+        <th scope="col" id="th_odrertel">주문자전화</th>
+        <th scope="col" id="th_recvr">받는분</th>
         <th scope="col" rowspan="3">주문합계</th>
         <th scope="col" rowspan="3">입금합계</th>
         <th scope="col" rowspan="3">주문취소</th>
@@ -226,16 +226,16 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <!-- <th scope="col">결제수단</th> -->
         <!-- <th scope="col" id="th_odrid"><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID</a></th> -->
         <th scope="col" id="th_odrid">회원ID</th>
-        <th scope="col">주문상품수</th>
-        <th scope="col">누적주문수</th>
+        <th scope="col" id="th_odrcnt">주문상품수</th>
+        <th scope="col" id="th_odrall">누적주문수</th>
     </tr>
     <tr>
         <!-- <th scope="col">배송일시</th> -->
-        <th scope="col">주문상태</th>
-        <th scope="col">결제수단</th>
-        <th scope="col">운송장번호</th>
-        <th scope="col">배송회사</th>
-        <th scope="col">배송일시</th>
+        <th scope="col" id="odrstat">주문상태</th>
+        <th scope="col" id="odrpay">결제수단</th>
+        <th scope="col" id="delino">운송장번호</th>
+        <th scope="col" id="delicom">배송회사</th>
+        <th scope="col" id="delidate">배송일시</th>
     </tr>
     </thead>
     <tbody>
@@ -291,11 +291,12 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a><br>
         </td> -->
         <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
+            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
             <?php echo $od_mobile; ?>
-            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a></td>
+        </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
-        <td headers="th_odrer" class="td_name"><?php echo $row['od_tel']; ?></td>
-        <td headers="th_odrid" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo $row['od_b_name']; ?>"><?php echo $row['od_b_name']; ?></a></td>
+        <td headers="th_odrertel" class="td_tel"><?php echo $row['od_tel']; ?></td>
+        <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo $row['od_b_name']; ?>"><?php echo $row['od_b_name']; ?></a></td>
         <td rowspan="3" class="td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td rowspan="3" class="td_numincome"><?php echo number_format($row['od_receipt_price']); ?></td>
         <td rowspan="3" class="td_numcancel"><?php echo number_format($row['od_cancel_price']); ?></td>
@@ -313,26 +314,26 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <?php echo $s_receipt_way; ?>
         </td> -->
         <!-- <td headers="th_odrid" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a></td> -->
-        <td headers="th_odrid" class="td_name">
+        <td headers="th_odrid">
             <?php if ($row['mb_id']) { ?>
             <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a>
             <?php } else { ?>
             비회원
             <?php } ?>
         </td>
-        <td class="td_cntsmall"><?php echo $row['od_cart_count']; ?>건</td>
-        <td class="td_cntsmall"><?php echo $od_cnt; ?>건</td>
+        <td headers="th_odrcnt"><?php echo $row['od_cart_count']; ?>건</td>
+        <td headers="th_odrall"><?php echo $od_cnt; ?>건</td>
     </tr>
     <tr class="<?php echo $tr_bg; ?>">
-        <td class="td_odrstatus">
+        <td headers="th_odrstat" class="td_odrstatus">
             <input type="hidden" name="current_status[<?php echo $i ?>]" value="<?php echo $row['od_status'] ?>">
             <?php echo $row['od_status']; ?>
         </td>
-        <td class="td_payby">
+        <td headers="th_odrpay" class="td_payby">
             <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo $row['od_settle_case'] ?>">
             <?php echo $s_receipt_way; ?>
         </td>
-        <td class="list_delino">
+        <td headers="th_delino">
             <!-- 값이 바뀌었는지 비교하기 위하여 저장 -->
             <input type="hidden" name="save_dl_id[<?php echo $i; ?>]" value="<?php echo $row['dl_id']; ?>">
             <input type="hidden" name="save_od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>">
@@ -344,7 +345,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                 -
             <?php } ?>
         </td>
-        <td class="list_delino">
+        <td headers="th_delicom">
             <?php if ($od_status == '준비') { ?>
                 <input type="text" name="od_delivery_company[<?php echo $i; ?>]" value="<?php echo $delivery_company; ?>" class="frm_input" size="12">
             <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
@@ -357,7 +358,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                 <?php echo conv_selected_option($delivery_options, $row['dl_id']?$row['dl_id']:$delivery_default); ?>
             </select> -->
         </td>
-        <td class="list_delino">
+        <td headers="th_delidate">
             <?php if ($od_status == '준비') { ?>
                 <input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="12" maxlength="19">
             <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>

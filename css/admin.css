@@ -429,9 +429,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .scf_sms_cnt {display:block}
 
 /* 주문내역 */
-#sodr_list .td_odrnum2 {text-align:center}
-#sodr_list .td_odrnum2 a {text-decoration:none;}
-#sodr_list .list_delino {text-align:center}
+#sodr_list td {text-align:center !important}
 
 /* 주문내역 수정 */
 .sodr_nonpay {color:#ff6600}
