@@ -703,6 +703,21 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order_address` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `g5_shop_order_delete`
+--
+
+DROP TABLE IF EXISTS `g5_shop_order_delete`;
+CREATE TABLE IF NOT EXISTS `g5_shop_order_delete` (
+  `de_id` int(11) NOT NULL AUTO_INCREMENT,
+  `de_key` varchar(255) NOT NULL,
+  `de_data` longtext NOT NULL,
+  PRIMARY KEY (`de_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+
+--
 -- Table structure for table `g5_shop_personalpay`
 --
 

@@ -627,4 +627,14 @@ if(!sql_query(" select od_delivery_company from {$g5['g5_shop_order_table']} lim
     sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
                     CHANGE `dl_id` `od_delivery_company` varchar(255) NOT NULL DEFAULT '' ", true);
 }
+
+// 주문서 삭제 테이블추가
+if(!sql_query(" DESCRIBE `{$g5['g5_shop_order_delete_table']}` ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_order_delete_table']}` (
+                  `de_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `de_key` varchar(255) NOT NULL,
+                  `de_data` longtext NOT NULL,
+                  PRIMARY KEY (`de_id`)
+                )", true);
+}
 ?>

@@ -491,6 +491,7 @@ if($g5_shop_install) {
     fwrite($f, "\$g5['g5_shop_new_win_table'] = G5_SHOP_TABLE_PREFIX.'new_win'; // 새창 테이블\n");
     fwrite($f, "\$g5['g5_shop_onlinecalc_table'] = G5_SHOP_TABLE_PREFIX.'onlinecalc'; // 온라인견적 테이블\n");
     fwrite($f, "\$g5['g5_shop_order_table'] = G5_SHOP_TABLE_PREFIX.'order'; // 주문서 테이블\n");
+    fwrite($f, "\$g5['g5_shop_order_delete_table'] = G5_SHOP_TABLE_PREFIX.'order_delete'; // 주문서 삭제 테이블\n");
     fwrite($f, "\$g5['g5_shop_wish_table'] = G5_SHOP_TABLE_PREFIX.'wish'; // 보관함(위시리스트) 테이블\n");
     fwrite($f, "\$g5['g5_shop_coupon_table'] = G5_SHOP_TABLE_PREFIX.'coupon'; // 쿠폰정보 테이블\n");
     fwrite($f, "\$g5['g5_shop_coupon_log_table'] = G5_SHOP_TABLE_PREFIX.'coupon_log'; // 쿠폰사용정보 테이블\n");
