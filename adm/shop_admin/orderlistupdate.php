@@ -156,7 +156,6 @@ for ($i=0; $i<count($_POST['chk']); $i++)
                 $sql = " update {$g5['g5_shop_cart_table']}
                             set ct_point_use  = '$point_use',
                                 ct_stock_use  = '$stock_use',
-                                ct_status     = '$ct_status',
                                 ct_history    = CONCAT(ct_history,'$ct_history')
                             where od_id = '{$row['od_id']}' ";
                 sql_query($sql);
