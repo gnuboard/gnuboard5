@@ -84,9 +84,8 @@
 #menu_list {position:fixed;left:0;bottom:0}
 .menu_hidden {display:none}
 
-
 /* 로딩안내 레이어 */
-#loading_message {position:absolute;top:0;left:0;z-index:10000;background-color:#eee;opacity:0.5}
+#loading_message {z-index:10000;position:absolute;top:0;left:0;background:#fff;opacity:0.7}
 #loading_message img {position:relative;opacity:1.0}
 
 /* 알림 box */
