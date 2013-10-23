@@ -40,7 +40,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
     <ul id="hd_mb">
         <?php if ($is_member) { ?>
-        <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">내 정보</a></li>
+        <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">내정보</a></li>
         <li><a href="<?php echo G5_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
         <?php } else { ?>
         <li><a href="<?php echo G5_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>
