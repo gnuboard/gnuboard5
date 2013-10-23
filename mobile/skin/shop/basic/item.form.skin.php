@@ -361,14 +361,14 @@ $(function(){
             switch(direction) {
                 case "left":
                     <?php if($next_href) { ?>
-                    content_slide(direction);
+                    content_swipe(direction);
                     <?php } else { ?>
                     fancyalert("다음 상품이 없습니다.");
                     <?php } ?>
                     break;
                 case "right":
                     <?php if($prev_href) { ?>
-                    content_slide(direction);
+                    content_swipe(direction);
                     <?php } else { ?>
                     fancyalert("이전 상품이 없습니다.");
                     <?php } ?>
@@ -385,61 +385,26 @@ $(function(){
     $("#container").swipe(swipeOptions);
 });
 
-function content_slide(direction)
+function content_swipe(direction)
 {
     // 로딩 레이어
     load_message();
 
+    var next_href = '<?php echo $next_href; ?>';
+    var prev_href = '<?php echo $prev_href; ?>';
+    var str;
+
+    if(direction == "left") {
+        str = next_href;
+    } else {
+        str = prev_href;
+    }
+
+    var href = str.match(/https?:\/{2}[^\"]+/gi);
+
     setTimeout(function() {
-        var content = $("#container").clone()
-                        .find("#form_btn_layer").remove()
-                        .end().find(".sit_pvi_btn").remove()
-                        .end().html();
-        var pos = $("#container").position();
-        var width = $("#container").width();
-        var height = $("#container").height();
-        var pad_top = $("#container").css("padding-top");
-        var next_href = '<?php echo $next_href; ?>';
-        var prev_href = '<?php echo $prev_href; ?>';
-        var str, left_value;
-        var duration = 500;
-
-        if(direction == "left") {
-            str = next_href;
-            left_value = "-="+width+"px";
-        } else {
-            str = prev_href;
-            left_value = "+="+width+"px";
-        }
-
-        $("#container")
-            .css({
-                width: width+"px",
-                height: height+"px"
-            })
-            .before("<div id=\"container_clone\">"+content+"</div>")
-            .find("*:visible").hide();
-
-        $("#container_clone")
-            .css({
-                display: "block",
-                width: width+"px",
-                height: height+"px",
-                position: "absolute",
-                top: pos.top+"px",
-                left: pos.left+"px",
-                zIndex: "1000",
-                paddingTop: pad_top
-            })
-            .animate(
-                { left: left_value }, duration,
-                function() {
-                    $("#container_clone").remove();
-                    var href = str.match(/https?:\/{2}[^\"]+/gi);
-                    document.location.href = href[0];
-                }
-            );
-    }, 100);
+        document.location.href = href[0];
+    }, 500);
 }
 
 function load_message()
