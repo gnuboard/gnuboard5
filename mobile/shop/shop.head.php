@@ -7,14 +7,14 @@ include_once(G5_LIB_PATH.'/connect.lib.php');
 include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
-<header id="header">
+<header id="hd">
     <?php if ((!$bo_table || $w == 's' ) && defined('_INDEX_')) { ?><h1><?php echo $config['cf_title'] ?></h1><?php } ?>
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
     <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="<?php echo $config['cf_title']; ?> 메인"></a></div>
 
-    <a href="<?php echo G5_SHOP_URL; ?>/category.php" target="_blank" id="hd_ct">전체분류</a>
+    <a href="<?php echo G5_SHOP_URL; ?>/category.php" target="_blank" id="hd_ct">분류</a>
     <button type="button" id="hd_sch_open">검색<span class="sound_only"> 열기</span></button>
 
     <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php">

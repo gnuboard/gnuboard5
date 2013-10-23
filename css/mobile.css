@@ -41,7 +41,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 /* 상단 레이아웃 */
 #hd {background:#fff}
 #hd:after {display:block;visibility:hidden;clear:both;content:""}
-#hd_h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#hd_h1 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 
 #logo {float:left;padding:0.9em 0;margin-left:0.5em}
 
