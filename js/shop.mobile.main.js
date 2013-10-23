@@ -257,7 +257,7 @@
                         break;
                 }
             },
-            threshold: 100,
+            threshold: 70,
             excludedElements:"button, input, select, textarea, .noSwipe",
             allowPageScroll:"vertical"
         });
