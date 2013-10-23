@@ -22,12 +22,12 @@ a {color:#000;text-decoration:none}
 a:focus, a:hover, a:active {text-decoration:underline}
 
 /* 헤딩 */
-h1 {margin:0 0 10px;padding:0 20px 10px;border-bottom:1px solid #e9e9e9;color:#333;font-size:1.5em;font-family:dotum;letter-spacing:-0.1em}
+h1 {margin:0 0 10px;padding:0 20px 10px;min-width:960px;border-bottom:1px solid #e9e9e9;color:#333;font-size:1.5em;font-family:dotum;letter-spacing:-0.1em}
 h2 {margin:0 0 10px;padding:0 20px;font-size:1.2em}
 h2.h2_frm {padding-top:15px}
 
 /* 레이아웃 */
-#hd {z-index:10;background:url('../adm/img/hd_bg.jpg') #383b3f repeat-x}
+#hd {z-index:10;min-width:1000px;background:url('../adm/img/hd_bg.jpg') #383b3f repeat-x}
 #hd h1, #hd h2 {position:absolute;border:0;font-size:0;line-height:0;overflow:hidden}
 #hd_wrap {z-index:11;position:relative;margin:0 auto}
 #logo {position:relative;height:70px}
@@ -45,7 +45,7 @@ h2.h2_frm {padding-top:15px}
 #tnb span {position:absolute;bottom:10px;left:0;width:100%;text-align:center}
 
 /* gnb js off */
-#gnb {z-index:12;background:#383a3f}
+#gnb {z-index:12;min-width:999px;background:#383a3f}
 #gnb h2 {margin:0;padding:0;font-size:0;line-height:0;overflow:hidden}
 #gnb_1dul {margin:0 auto;padding:0;zoom:1}
 #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -74,13 +74,13 @@ h2.h2_frm {padding-top:15px}
 .gnb_js .gnb_grp_style:focus, .gnb_js .gnb_grp_style:hover {background:#484848 !important}
 .gnb_js .gnb_grp_div {border-top:1px solid #eee}
 
-#lnb {margin:0;padding:15px;border-bottom:1px solid #e9e9e9;list-style:none;zoom:1}
+#lnb {margin:0;padding:15px;min-width:970px;border-bottom:1px solid #e9e9e9;list-style:none;zoom:1}
 #lnb:after {display:block;visibility:hidden;clear:both;content:""}
 #lnb li {float:left}
 #lnb a {display:inline-block;margin:0 0 0 10px;padding:0 10px 0 0;border-right:1px solid #ccc;font-size:0.95em;letter-spacing:-0.1em}
 
 /* 중간 레이아웃 */
-#wrapper {z-index:5;margin:20px 0;zoom:1}
+#wrapper {z-index:5;margin:20px 0;min-width:1000px;zoom:1}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 
 #container {z-index:4;position:relative}
@@ -193,13 +193,13 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 
 #sort_mb {width:800px}
 
-
 #sort_sodr {width:600px}
 
 /* 하단 레이아웃 */
-#ft {margin:20px 0;padding:10px 20px;border-top:1px solid #d0d6d8}
+#ft {margin:20px 0;padding:10px 20px;min-width:960px;border-top:1px solid #d0d6d8}
 
 /* 페이지 내 검색 */
+.local_sch {min-width:960px}
 .local_sch .btn_submit {padding:3px 5px;border:1px solid #ff3061;color:#fff;font-size:0.95em;vertical-align:middle;cursor:pointer}
 
 .local_sch01 {margin:0 0 10px;padding:0 20px 10px;border-bottom:1px solid #e9e9e9}
@@ -214,25 +214,29 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 .local_sch02 button {padding:3px 5px;border:1px solid #ced9de;background:#f6f9fa;font-size:0.95em;cursor:pointer}
 
 /* 페이지 내 실행 */
+.local_cmd {min-width:960px}
+
 .local_cmd01 {margin:0 0 10px;padding:0 20px}
 .local_cmd01 .cmd_tit {font-weight:bold}
 .local_cmd01 .btn_submit {padding:3px 5px;border:1px solid #ff3061;color:#fff;font-size:0.95em;vertical-align:middle;cursor:pointer}
 
 /* 페이지 내 안내문 */
+.local_desc {}
 .local_desc ol, .local_desc ul {margin:0;padding:0 0 10px 21px}
 .local_desc li {margin:0 0 5px}
 
-.local_desc01 {margin:0 20px 10px;padding:10px 20px 0;border:1px solid #f2f2f2;background:#f9f9f9}
+.local_desc01 {margin:0 20px 10px;padding:10px 20px 0;min-width:920px;border:1px solid #f2f2f2;background:#f9f9f9}
 .local_desc01 strong {color:#ff3061}
 .local_desc01 a {text-decoration:underline}
 
-.local_desc02 {margin:0 20px 10px} /* 주로 온라인 서식 관련 안내 내용에 사용 */
+.local_desc02 {margin:0 20px 10px;min-width:960px} /* 주로 온라인 서식 관련 안내 내용에 사용 */
 .local_desc02 p {padding:0}
 
 /* 페이지 내 카운트 */
+.local_ov {min-width:960px}
+
 .local_ov01 {position:relative;margin:-10px 0 10px;padding:10px 20px;border-bottom:1px solid #e9e9e9;background:#f2f5f9}
 .local_ov01 .ov_listall {display:inline-block;margin:0 5px 0 0;padding:0 10px 0 0;border-right:1px solid #ccc}
-
 
 /* 테이블 */
 table {clear:both;width:100%;border-collapse:collapse;border-spacing:0}
