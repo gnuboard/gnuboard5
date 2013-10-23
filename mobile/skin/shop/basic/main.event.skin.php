@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 쇼핑몰 이벤트 시작 { -->
-<ul>
+<ul id="sev">
 <?php
 for ($i=0; $row=sql_fetch_array($hresult); $i++)
 {
