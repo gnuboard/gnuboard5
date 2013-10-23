@@ -257,8 +257,8 @@
                         break;
                 }
             },
-            threshold: 100,
-            excludedElements:".noSwipe",
+            threshold: 70,
+            excludedElements:"button, input, select, textarea, .noSwipe",
             allowPageScroll:"vertical"
         });
     }

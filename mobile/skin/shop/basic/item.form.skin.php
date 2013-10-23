@@ -377,8 +377,8 @@ $(function(){
 
             return false;
         },
-        threshold: 100,
-        excludedElements:".noSwipe",
+        threshold: 70,
+        excludedElements:"button, input, select, textarea, .noSwipe",
         allowPageScroll:"vertical"
     };
 
@@ -387,57 +387,59 @@ $(function(){
 
 function content_slide(direction)
 {
-    var content = $("#container").clone()
-                    .find("#form_btn_layer").remove()
-                    .end().find(".sit_pvi_btn").remove()
-                    .end().html();
-    var pos = $("#container").position();
-    var width = $("#container").width();
-    var height = $("#container").height();
-    var pad_top = $("#container").css("padding-top");
-    var next_href = '<?php echo $next_href; ?>';
-    var prev_href = '<?php echo $prev_href; ?>';
-    var str, left_value;
-    var duration = 500;
-
-    if(direction == "left") {
-        str = next_href;
-        left_value = "-="+width+"px";
-    } else {
-        str = prev_href;
-        left_value = "+="+width+"px";
-    }
-
     // 로딩 레이어
     load_message();
 
-    $("#container")
-        .css({
-            width: width+"px",
-            height: height+"px"
-        })
-        .before("<div id=\"container_clone\">"+content+"</div>")
-        .find("*:visible").hide();
+    setTimeout(function() {
+        var content = $("#container").clone()
+                        .find("#form_btn_layer").remove()
+                        .end().find(".sit_pvi_btn").remove()
+                        .end().html();
+        var pos = $("#container").position();
+        var width = $("#container").width();
+        var height = $("#container").height();
+        var pad_top = $("#container").css("padding-top");
+        var next_href = '<?php echo $next_href; ?>';
+        var prev_href = '<?php echo $prev_href; ?>';
+        var str, left_value;
+        var duration = 500;
 
-    $("#container_clone")
-        .css({
-            display: "block",
-            width: width+"px",
-            height: height+"px",
-            position: "absolute",
-            top: pos.top+"px",
-            left: pos.left+"px",
-            zIndex: "1000",
-            paddingTop: pad_top
-        })
-        .animate(
-            { left: left_value }, duration,
-            function() {
-                $("#container_clone").remove();
-                var href = str.match(/https?:\/{2}[^\"]+/gi);
-                document.location.href = href[0];
-            }
-        );
+        if(direction == "left") {
+            str = next_href;
+            left_value = "-="+width+"px";
+        } else {
+            str = prev_href;
+            left_value = "+="+width+"px";
+        }
+
+        $("#container")
+            .css({
+                width: width+"px",
+                height: height+"px"
+            })
+            .before("<div id=\"container_clone\">"+content+"</div>")
+            .find("*:visible").hide();
+
+        $("#container_clone")
+            .css({
+                display: "block",
+                width: width+"px",
+                height: height+"px",
+                position: "absolute",
+                top: pos.top+"px",
+                left: pos.left+"px",
+                zIndex: "1000",
+                paddingTop: pad_top
+            })
+            .animate(
+                { left: left_value }, duration,
+                function() {
+                    $("#container_clone").remove();
+                    var href = str.match(/https?:\/{2}[^\"]+/gi);
+                    document.location.href = href[0];
+                }
+            );
+    }, 100);
 }
 
 function load_message()

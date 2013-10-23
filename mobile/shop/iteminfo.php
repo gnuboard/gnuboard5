@@ -97,7 +97,7 @@ switch($info) {
 <div id="menu_button" class="menu_hidden">
     <button type="button">메뉴열기</button>
 </div>
-<div id="menu_list" class="menu_hidden">
+<div id="menu_list">
     <?php echo pg_anchor($info); ?>
 </div>
 
