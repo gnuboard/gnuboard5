@@ -76,33 +76,22 @@
 
             width = $wrap.width();
             tabw_width = $tab.width();
-            tab_width = $tabs.eq(0).width();
             height = $slides.eq(idx).height();
             $wrap.height(height);
 
             $slides.not("."+cfg.active_class).css("left", "-"+width+"px");
 
-            if(count < 3) {
-                pos_left = 0;
-                li_left = parseInt((tabw_width - (tab_width * count)) / (count + 1));
-
-                $tabs.each(function(index) {
-                    pos_left += (li_left + (tab_width * index));
-                    $(this).css("left", pos_left);
-                });
-
-                $tabs.removeClass(cfg.tab_actie);
+            if(count == 1) {
+                tab_width = $tabs.eq(0).outerWidth();
+                pos_left = parseInt((tabw_width - tab_width) / 2);
+                $tabs.eq(0).css("left", pos_left).addClass(cfg.tab_active);
+            } else if(count == 2) {
+                $tabs.eq(0).css("left", 0).addClass("tab_left");
+                $tabs.eq(1).css("right", 0);
+                $tabs.removeClass(cfg.tab_active);
                 $tabs.eq(idx).addClass(cfg.tab_active);
-            } else {
-                li_left = parseInt((tabw_width - (tab_width * 3)) / 2);
-                pos_left = tab_width + li_left;
-                pos_right = tabw_width - tab_width;
-
-                $tabs.removeClass(cfg.tab_actie+" tab_listed").css("left", "-"+tab_width+"px");
-
-                $tabs.eq(idx - 1).addClass("tab_listed").css("left", "0px");
-                $tabs.eq(idx).addClass(cfg.tab_active+" tab_listed").css("left", pos_left+"px");
-                $tabs.eq((idx + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
+            } else if(count >= 3) {
+                tab_position(idx);
 
                 $slides.eq((idx - 1)).css("left", "-"+width+"px");
                 $slides.eq((idx + 1) % count).css("left", width+"px");
@@ -131,6 +120,12 @@
             $slides.eq(next).css("left", width+"px");
             $tabs.removeClass(cfg.tab_active);
 
+            if(count >= 3) {
+                tab_position(next);
+            } else {
+                $tabs.eq(next).addClass(cfg.tab_active);
+            }
+
             $slides.eq(idx).clearQueue().animate(
                 { left: "-="+width }, cfg.duration,
                 function() {
@@ -141,16 +136,7 @@
             $slides.eq(next).clearQueue().animate(
                 { left: "-="+width }, cfg.duration,
                 function() {
-                    if(count >= 3) {
-                        $tabs.removeClass("tab_listed").css("left", "-"+tab_width+"px");
-
-                        $tabs.eq(next - 1).addClass("tab_listed").css("left", "0px");
-                        $tabs.eq(next).addClass("tab_listed").css("left", pos_left+"px");
-                        $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
-                    }
-
                     $wrap.height(next_height);
-                    $tabs.eq(next).addClass(cfg.tab_active);
                 }
             );
 
@@ -182,6 +168,12 @@
             $slides.eq(next).css("left", "-"+width+"px");
             $tabs.removeClass(cfg.tab_active);
 
+            if(count >= 3) {
+                tab_position(next);
+            } else {
+                $tabs.eq(next).addClass(cfg.tab_active);
+            }
+
             $slides.eq(idx).clearQueue().animate(
                 { left: "+="+width }, cfg.duration,
                 function() {
@@ -192,21 +184,31 @@
             $slides.eq(next).clearQueue().animate(
                 { left: "+="+width }, cfg.duration,
                 function() {
-                    if(count >= 3) {
-                        $tabs.removeClass("tab_listed").css("left", "-"+tab_width+"px");
-
-                        $tabs.eq(next - 1).addClass("tab_listed").css("left", "0px");
-                        $tabs.eq(next).addClass("tab_listed").css("left", pos_left+"px");
-                        $tabs.eq((next + 1) % count).addClass("tab_listed").css("left", pos_right+"px");
-                    }
-
                     $wrap.height(next_height);
-                    $tabs.eq(next).addClass(cfg.tab_active);
                 }
             );
 
             $slides.eq(idx).removeClass(cfg.active_class);
             $slides.eq(next).addClass(cfg.active_class);
+        }
+
+        function tab_position(idx)
+        {
+            $tabs.removeClass(cfg.tab_actie+" tab_listed tab_left").css("left", "-"+tabw_width+"px");
+
+            var $tab_l = $tabs.eq(idx - 1);
+            var $tab_c = $tabs.eq(idx);
+            var $tab_r = $tabs.eq((idx + 1) % count);
+            var w_c = $tab_c.outerWidth();
+            var w_r = $tab_r.outerWidth();
+
+            var pl = 0;
+            var pc = parseInt((tabw_width - w_c) / 2);
+            var pr = tabw_width - w_r;
+
+            $tab_l.addClass("tab_listed tab_left").css("left", pl);
+            $tab_c.addClass(cfg.tab_active+" tab_listed").css("left", pc);
+            $tab_r.addClass("tab_listed").css("left", pr);
         }
 
         function check_animated()
@@ -225,14 +227,9 @@
             if($el.parent().hasClass(cfg.tab_active))
                 return;
 
-            idx = $slides.index($slides.filter("."+cfg.active_class));
-
-            var idx_pos = parseInt($tabs.eq(idx).css("left"));
-            var btn_pos = parseInt($el.parent().css("left"));
-
-            if(idx_pos > btn_pos)
+            if($el.parent().hasClass("tab_left"))
                 swipe_right();
-            else(idx_pos < btn_pos)
+            else
                 swipe_left();
         }
 

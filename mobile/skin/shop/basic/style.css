@@ -84,11 +84,12 @@
 #menu_list {position:fixed;left:0;bottom:0}
 .menu_hidden {display:none}
 
-
 /* 로딩안내 레이어 */
-#loading_message {position:absolute;top:0;left:0;z-index:10000;background-color:#eee;opacity:0.5}
+#loading_message {z-index:10000;position:absolute;top:0;left:0;background:#fff;opacity:0.7}
 #loading_message img {position:relative;opacity:1.0}
 
 /* 알림 box */
-#fancyalert {display:table;position:absolute;top:0;left:0;z-index:10000;background-color:#000;opacity: 0.5;text-align:center}
-#fancyalert span {display:table-cell;vertical-align:middle;color:#fff;opacity:1.0}
+#fancyalert {display:table;z-index:10000;position:absolute;top:0;left:0;background-color:#282828;text-align:center;opacity: 0.8}
+#fancyalert_inner {display:table-cell;width:100px;height:100px;vertical-align:middle;opacity:1.0}
+#fancyalert_inner span {display:block;margin:0 auto;padding:30px;width:200px;background:#000;color:#f0f1f2}
+#fancyalert_inner button {margin:15px 0 0;padding:10px 30px;border:0;background:#282828;color:#fff}
