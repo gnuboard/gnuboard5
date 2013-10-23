@@ -14,7 +14,7 @@ function fancyalert(msg)
     box += "<div id=\"fancyalert_inner\"><span>"+msg;
     box += "<br>";
     box += "<button type=\"button\" id=\"fancyalert_close\">확인</button>";
-    box += "</span></div>";
+    box += "</span></div><div id=\"fancyalert_bg\"></div>";
     box += "</div>";
 
     $("body").append(box);
