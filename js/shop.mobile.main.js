@@ -8,7 +8,8 @@
                 slide_class: "sidx_slide",
                 active_class: "slide_active",
                 tab_active: "tab_active",
-                duration: 500
+                duration: 500,
+                width_increase: 10
             };
 
         if(typeof option == "object")
@@ -33,7 +34,6 @@
         var idx = next = 0;
         var tabw_width = 0;
         var tab_width = 0;
-        var li_left = 0;
         var pos_left = 0;
 
         function tab_make()
@@ -56,6 +56,12 @@
                 $tab = $this.find("#"+cfg.slide_tab);
                 $tabs = $tab.find("li");
                 $btns = $tab.find("button");
+
+                $tabs.each(function() {
+                    $(this)
+                        .css("width", $(this).width())
+                        .data("width", $(this).outerWidth());
+                });
 
                 $btns.on("click", function() {
                     tab_click($(this));
@@ -82,7 +88,7 @@
             $slides.not("."+cfg.active_class).css("left", "-"+width+"px");
 
             if(count == 1) {
-                tab_width = $tabs.eq(0).outerWidth();
+                tab_width = $tabs.eq(0).data("width");
                 pos_left = parseInt((tabw_width - tab_width) / 2);
                 $tabs.eq(0).css("left", pos_left).addClass(cfg.tab_active);
             } else if(count == 2) {
@@ -96,6 +102,8 @@
                 $slides.eq((idx - 1)).css("left", "-"+width+"px");
                 $slides.eq((idx + 1) % count).css("left", width+"px");
             }
+
+            set_tab_width(idx);
         }
 
         function swipe_left()
@@ -125,6 +133,8 @@
             } else {
                 $tabs.eq(next).addClass(cfg.tab_active);
             }
+
+            set_tab_width(next);
 
             $slides.eq(idx).clearQueue().animate(
                 { left: "-="+width }, cfg.duration,
@@ -174,6 +184,8 @@
                 $tabs.eq(next).addClass(cfg.tab_active);
             }
 
+            set_tab_width(next);
+
             $slides.eq(idx).clearQueue().animate(
                 { left: "+="+width }, cfg.duration,
                 function() {
@@ -192,6 +204,15 @@
             $slides.eq(next).addClass(cfg.active_class);
         }
 
+        function set_tab_width(idx)
+        {
+            $tabs.each(function() {
+                $(this).css("width", $(this).data("width"));
+            });
+
+            $tabs.eq(idx).css("width", "+="+cfg.width_increase);
+        }
+
         function tab_position(idx)
         {
             $tabs.removeClass(cfg.tab_actie+" tab_listed tab_left").css("left", "-"+tabw_width+"px");
@@ -199,8 +220,8 @@
             var $tab_l = $tabs.eq(idx - 1);
             var $tab_c = $tabs.eq(idx);
             var $tab_r = $tabs.eq((idx + 1) % count);
-            var w_c = $tab_c.outerWidth();
-            var w_r = $tab_r.outerWidth();
+            var w_c = $tab_c.data("width");
+            var w_r = $tab_r.data("width");
 
             var pl = 0;
             var pc = parseInt((tabw_width - w_c) / 2);
@@ -233,14 +254,9 @@
                 swipe_left();
         }
 
-        $(window).on("load", function(e) {
+        $(window).on("load resize", function(e) {
             swipe_init();
         });
-
-        $(window).on("resize", function(e) {
-            swipe_init();
-        });
-
 
         // swipe event
         this.swipe({
