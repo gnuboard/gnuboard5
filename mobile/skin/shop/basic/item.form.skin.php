@@ -282,7 +282,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <?php
 $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
 ?>
-<div>
+<div id="sit_more">
     <ul class="sanchor">
         <li><a href="<?php echo $href; ?>" target="_blank">상품정보</a></li>
         <li><a href="<?php echo $href; ?>&amp;info=use" target="_blank">사용후기 <span class="item_use_count"><?php echo $item_use_count; ?></span></a></li>

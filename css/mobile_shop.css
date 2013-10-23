@@ -50,7 +50,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .sanchor {margin:0 0 0.5em;padding:0;zoom:1}
 .sanchor:after {display:block;visibility:hidden;clear:both;content:""}
 .sanchor li {float:left;margin-left:-1px;list-style:none}
-.sanchor a {display:inline-block;border:1px solid #e9e9e9;background:#f5f6fa;padding:0 0.5em;text-decoration:none;line-height:2.6em}
+.sanchor a {display:inline-block;padding:10px;border:1px solid #e9e9e9;background:#f0f1f2;text-decoration:none}
 .sanchor a:focus, .sanchor a:hover {background:#626870;color:#fff;text-decoration:none}
 a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
@@ -182,14 +182,21 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 #sit_ov_btn {margin:0;padding:0;text-align:center;list-style:none}
 #sit_ov_btn li {display:inline-block;margin:0 0 0 1px}
-#sit_ov_btn a {display:inline-block;padding:1em 0 0.7em;width:80px;font-size:0.95em;text-align:center;text-decoration:none;letter-spacing:-0.1em}
+#sit_ov_btn a {display:inline-block;padding:10px 0;width:80px;font-size:0.95em;text-align:center;text-decoration:none;letter-spacing:-0.1em}
+#sit_ov_btn input {margin:0;padding:10px 0;width:80px;border:0;font-size:0.95em;text-align:center;text-decoration:none;letter-spacing:-0.1em}
 #sit_btn_buy {background:#ff5b89;color:#fff}
 #sit_btn_cart, #sit_btn_wish {background:#555;color:#fff}
 #sit_btn_rec {background:#888;color:#fff}
 
 /* 상품 상세보기 - 다른 상품 보기 */
-#sit_siblings {margin:0 0 1em;padding:1em 1em 2em;border-bottom:1px solid #e9e9e9;text-align:center}
+#sit_siblings {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9;text-align:center}
 #sit_siblings h2 {position:absolute;font-size:0;line-height:0;content:""}
+
+/* 상품 상세보기 하단 버튼 */
+#sit_more {padding:0 0 0 1px}
+#sit_more li {position:relative;margin:-1px 0 0 -1px;width:33%}
+#sit_more li:nth-of-type(3n) {width:34%}
+#sit_more a {display:block;padding:15px 0;text-align:center}
 
 /* 상품 상세보기 - 상품정보 */
 #sit_inf {margin:0 0 1em;padding:1em 1em 2em;border-bottom:1px solid #e9e9e9}
@@ -483,7 +490,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 
 /* 쇼핑몰 이벤트 */
 #sev {margin:0;padding:0;min-height:150px;list-style:none}
-#sev li {border-bottom:1px solid #e9e9e9}
+#sev li {position:relative;margin:-1px 0 0;border-bottom:1px solid #e9e9e9}
 #sev a {display:block;padding:10px;border:1px solid #e9e9e9;border-bottom:0;background:#f5f6fa}
 .sev_admin {text-align:right}
 
