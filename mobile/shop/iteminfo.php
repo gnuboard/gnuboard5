@@ -61,7 +61,7 @@ function pg_anchor($info) {
         <?php if ($default['de_baesong_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=dvr" <?php if ($info == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
         <?php if ($default['de_change_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=ex" <?php if ($info == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
         <li><a href="<?php echo $href; ?>&amp;info=rel" <?php if ($info == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
-        <li><button type="button" id="iteminfo_close" onclick="self.close();">닫기</button></li>
+        <li><button type="button" id="iteminfo_close" onclick="self.close();">창닫기</button></li>
     </ul>
 <?php
 }
@@ -95,7 +95,7 @@ switch($info) {
 </div>
 
 <div id="menu_button" class="menu_hidden">
-    <button type="button">메뉴열기</button>
+    <button type="button"><b>1</b>메뉴열기</button>
 </div>
 <div id="menu_list">
     <?php echo pg_anchor($info); ?>
@@ -128,7 +128,7 @@ $(function() {
         $("#menu_list").animate(
             { bottom: ani_direction }, duration,
             function() {
-                $this.toggleClass("menu_opened").text(button_text);
+                $this.toggleClass("menu_opened").html("<span></span>"+button_text);
             }
         );
     });
@@ -153,7 +153,7 @@ function content_scroll()
     $("#menu_button")
         .css("bottom", 0)
         .removeClass("menu_hidden")
-        .children().removeClass("menu_opened").text("메뉴열기");
+        .children().removeClass("menu_opened").html("<span></span>메뉴열기");
 
     $("#menu_list")
         .css("bottom", "-"+mlh+"px")
