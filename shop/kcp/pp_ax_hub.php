@@ -25,7 +25,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     }
 
     $g_conf_site_cd  = $_POST['site_cd'];
-    $g_conf_site_key = $default['de_kcp_mid'];
 
     if (preg_match("/^T000/", $g_conf_site_cd) || $default['de_card_test']) {
         $g_conf_gw_url  = "testpaygw.kcp.co.kr";                    // real url : paygw.kcp.co.kr , test url : testpaygw.kcp.co.kr
