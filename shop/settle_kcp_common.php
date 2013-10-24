@@ -162,7 +162,7 @@ if(!$default['de_card_test']) {
                                 od_status = '입금',
                                 od_shop_memo = concat(od_shop_memo, \"\\n개인결제 ".$row['pp_id']." 로 결제완료 - ".$receipt_time."\")
                           where od_id = '{$row['od_id']}' ";
-                sql_query($sql, FALSE);
+                $result = sql_query($sql, FALSE);
             }
         } else {
             // 주문서 UPDATE
@@ -172,8 +172,23 @@ if(!$default['de_card_test']) {
                             od_status = '입금'
                       where od_id = '$order_no'
                         and od_tno = '$tno' ";
-            sql_query($sql, FALSE);
+            $result = sql_query($sql, FALSE);
         }
+    }
+
+    if($result) {
+        if($row['od_id'])
+            $od_id = $row['od_id'];
+        else
+            $od_id = $order_no;
+
+        // 미수금 정보 업데이트
+        $info = get_order_info($od_id);
+
+        $sql = " update {$g5['g5_shop_order_table']}
+                    set od_misu     = '{$info['od_misu']}'
+                    where od_id = '$od_id' ";
+        sql_query($sql, FALSE);
     }
 
     /* = -------------------------------------------------------------------------- = */
