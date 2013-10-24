@@ -215,7 +215,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col" id="th_odrer">주문자</th>
         <th scope="col" id="th_odrertel">주문자전화</th>
         <th scope="col" id="th_recvr">받는분</th>
-        <th scope="col" rowspan="3">주문합계</th>
+        <th scope="col" rowspan="3">주문합계<br>선불배송비포함</th>
         <th scope="col" rowspan="3">입금합계</th>
         <th scope="col" rowspan="3">주문취소</th>
         <th scope="col" rowspan="3">쿠폰</th>

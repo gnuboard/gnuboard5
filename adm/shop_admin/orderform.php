@@ -218,14 +218,16 @@ $pg_anchor = '<ul class="anchor">
     </div>
 
     <div class="btn_list02 btn_list">
+        <strong>주문상태 변경</strong>
         <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
         <input type="submit" name="act_button" value="주문" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="상품준비중" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="배송중" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="상품" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="배송" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="완료" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="취소" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="반품" onclick="document.pressed=this.value">
         <input type="submit" name="act_button" value="품절" onclick="document.pressed=this.value">
+        <p>취소,반품,품절 상태는 장바구니 상품의 상태만 변경이 되며 주문서의 상태는 변경되지 않습니다.</p>
     </div>
 
     </form>
@@ -247,19 +249,19 @@ $pg_anchor = '<ul class="anchor">
 
     <?php
     // 주문금액 = 상품구입금액 + 배송비 + 추가배송비
-    $amount['주문'] = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2'];
+    $amount['order'] = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2'];
 
     // 입금액 = 결제금액 + 포인트
-    $amount['입금'] = $od['od_receipt_price'] + $od['od_receipt_point'];
+    $amount['receipt'] = $od['od_receipt_price'] + $od['od_receipt_point'];
 
     // 쿠폰금액
-    $amount['쿠폰'] = $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'];
+    $amount['coupon'] = $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'];
 
     // 취소금액
-    $amount['취소'] = $od['od_cancel_price'];
+    $amount['cancel'] = $od['od_cancel_price'];
 
     // 미수금 = 주문금액 - 취소금액 - 입금금액 - 쿠폰금액
-    //$amount['미수'] = $amount['주문'] - $amount['입금'] - $amount['쿠폰'];
+    //$amount['미수'] = $amount['order'] - $amount['receipt'] - $amount['coupon'];
 
     // 결제방법
     $s_receipt_way = $od['od_settle_case'];
@@ -289,12 +291,12 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <td><?php echo $od['od_id']; ?></td>
             <td class="td_paybybig"><?php echo $s_receipt_way; ?></td>
-            <td class="td_numbig td_numsum"><?php echo display_price($amount['주문']); ?></td>
+            <td class="td_numbig td_numsum"><?php echo display_price($amount['order']); ?></td>
             <td class="td_numbig"><?php echo display_price($od['od_send_cost'] + $od['od_send_cost2']); ?></td>
             <td class="td_numbig"><?php echo display_point($od['od_receipt_point']); ?></td>
-            <td class="td_numbig td_numincome"><?php echo number_format($amount['입금']); ?>원</td>
-            <td class="td_numbig td_numcoupon"><?php echo display_price($amount['쿠폰']); ?></td>
-            <td class="td_numbig td_numcancel"><?php echo number_format($amount['취소']); ?>원</td>
+            <td class="td_numbig td_numincome"><?php echo number_format($amount['receipt']); ?>원</td>
+            <td class="td_numbig td_numcoupon"><?php echo display_price($amount['coupon']); ?></td>
+            <td class="td_numbig td_numcancel"><?php echo number_format($amount['cancel']); ?>원</td>
         </tr>
         </tbody>
         </table>
@@ -414,32 +416,19 @@ $pg_anchor = '<ul class="anchor">
                     <th scope="row">결제취소/환불액</th>
                     <td><?php echo display_price($od['od_refund_price']); ?></td>
                 </tr>
-                <?php
-                $sql = " select dl_company, dl_url, dl_tel from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ";
-                $dl = sql_fetch($sql);
-                ?>
-                <tr>
-                    <th scope="row">배송회사</th>
-                    <td>
-                    <?php
-                    if ($od['dl_id'] > 0) {
-                         // get 으로 날리는 경우 운송장번호를 넘김
-                        if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
-                    ?>
-                    <a href="<?php echo $dl['dl_url']; ?><?php echo $invoice; ?>" target="_blank"><?php echo $dl['dl_company']; ?></a> (고객센터 <?php echo $dl['dl_tel']; ?>)
-                    <?php } else { ?>배송회사를 선택해 주세요.
-                    <?php } ?>
-                    </td>
-                </tr>
                 <?php if ($od['od_invoice']) { ?>
                 <tr>
                     <th scope="row">운송장번호</th>
                     <td><?php echo $od['od_invoice']; ?></td>
                 </tr>
+                <tr>
+                    <th scope="row">배송회사</th>
+                    <td><?php echo $od['od_delivery_company']; ?></td>
+                </tr>
                 <?php } ?>
                 <tr>
                     <th scope="row">배송일시</th>
-                    <td><?php echo is_null_time($od['od_invoice_time']) ? $od['od_invoice_time'] : ''; ?></td>
+                    <td><?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?></td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="od_send_cost">배송비</label></th>
@@ -536,8 +525,8 @@ $pg_anchor = '<ul class="anchor">
                     <th scope="row"><label for="od_deposit_name">입금자명</label></th>
                     <td>
                         <?php if ($default['de_sms_use3']) { ?>
-                        <label for="od_sms_ipgum_check">SMS 문자전송</label>
                         <input type="checkbox" name="od_sms_ipgum_check" id="od_sms_ipgum_check">
+                        <label for="od_sms_ipgum_check">SMS 입금 문자전송</label>
                         <br>
                         <?php } ?>
                         <input type="text" name="od_deposit_name" value="<?php echo $od['od_deposit_name']; ?>" id="od_deposit_name" class="frm_input">
@@ -604,32 +593,20 @@ $pg_anchor = '<ul class="anchor">
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="dl_id">배송회사</label></th>
-                    <td>
-                        <select name="dl_id" id="dl_id">
-                            <option value="">배송시 선택하세요.</option>
-                            <?php
-                            $sql = "select * from {$g5['g5_shop_delivery_table']} order by dl_order desc, dl_id desc ";
-                            $result = sql_query($sql);
-                            for ($i=0; $row=sql_fetch_array($result); $i++) {
-                            ?>
-                            <option value="<?php echo $row['dl_id']; ?>" <?php echo get_selected($od['dl_id'], $row['dl_id']); ?>><?php echo $row['dl_company']; ?></option>
-                            <?php
-                            }
-                            mysql_free_result($result);
-                            ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
                     <th scope="row"><label for="od_invoice">운송장번호</label></th>
                     <td>
                         <?php if ($default['de_sms_use4']) { ?>
-                        <label for="od_sms_baesong_check">SMS 문자전송</label>
                         <input type="checkbox" name="od_sms_baesong_check" id="od_sms_baesong_check">
+                        <label for="od_sms_baesong_check">SMS 배송 문자전송</label>
                         <br>
                         <?php } ?>
                         <input type="text" name="od_invoice" value="<?php echo $od['od_invoice']; ?>" id="od_invoice" class="frm_input">
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row"><label for="od_delivery_company">배송회사</label></th>
+                    <td>
+                        <input type="text" name="od_delivery_company" value="<?php echo $od['od_delivery_company']; ?>" id="od_delivery_company" class="frm_input">
                     </td>
                 </tr>
                 <tr>

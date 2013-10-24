@@ -57,6 +57,78 @@ function change_status($od_id, $current_status, $change_status)
 }
 
 
+// 주문서에 입금시 update
+function order_update_receipt($od_id) 
+{
+    global $g5;
+
+    $sql = " update {$g5['g5_shop_order_table']} set od_receipt_price = od_misu, od_misu = 0, od_receipt_time = '".G5_TIME_YMDHIS."' where od_id = '$od_id' and od_status = '입금' ";
+    return sql_query($sql);
+}
+
+
+// 주문서에 배송시 update
+function order_update_delivery($od_id, $mb_id, $change_status, $delivery)
+{
+    global $g5;
+
+    $sql = " update {$g5['g5_shop_order_table']} set od_delivery_company = '{$delivery['delivery_company']}', od_invoice = '{$delivery['invoice']}', od_invoice_time = '{$delivery['invoice_time']}' where od_id = '$od_id' and od_status = '배송' ";
+    sql_query($sql);
+
+    $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ";
+    $result = sql_query($sql);
+
+    for ($i=0; $row=sql_fetch_array($result); $i++) 
+    {
+        // 재고를 이미 사용했거나 재고에서 이미 뺐다면
+        $stock_use = $row['ct_stock_use'];
+    
+        if ($row['ct_stock_use'])
+        {
+            if ($change_status == '주문' || 
+                $change_status == '취소' || 
+                $change_status == '반품' || 
+                $change_status == '품절') 
+            {
+                // 재고에 다시 더한다.
+                add_io_stock($row['it_id'], $row['ct_qty'], $row['io_id'], $row['io_type']);
+                $stock_use = 0;
+            }
+        }
+        else
+        {
+            // 재고 오류로 인한 수정
+            if ($change_status == '배송' || 
+                $change_status == '완료')
+            {
+                // 재고에서 뺀다.
+                subtract_io_stock($row['it_id'], $row['ct_qty'], $row['io_id'], $row['io_type']);
+                $stock_use = 1;
+            }
+        }
+
+        $point_use = $row['ct_point_use'];
+        
+        // 회원이면서 포인트가 0보다 크거나 이미 포인트를 부여했다면 뺀다.
+        if ($mb_id && $row['ct_point'] && $row['ct_point_use'])
+        {
+            delete_point($mb_id, "@delivery", $mb_id, "$od_id,{$row['ct_id']}");
+            $point_use = 0;
+        }
+
+        /*
+        $sql = " update {$g5['g5_shop_cart_table']}
+                    set ct_point_use  = '$point_use',
+                        ct_stock_use  = '$stock_use',
+                        ct_history    = CONCAT(ct_history,'$ct_history')
+                    where od_id = '$od_id' ";
+        */
+        $sql = " update {$g5['g5_shop_cart_table']} set ct_point_use  = '$point_use', ct_stock_use  = '$stock_use' where od_id = '$od_id' ";
+        sql_query($sql);
+    }
+}
+
+
 for ($i=0; $i<count($_POST['chk']); $i++)
 {
     // 실제 번호를 넘김
@@ -76,39 +148,31 @@ for ($i=0; $i<count($_POST['chk']); $i++)
     $current_status = $od['od_status'];
     $change_status  = $_POST['od_status'];
 
-
     switch ($current_status) 
     {
         case '주문' :
-
             if ($change_status != '입금') continue;
             if ($od['od_settle_case'] != '무통장') continue;
-
             change_status($od_id, '주문', '입금');
-
-            $sql = " update {$g5['g5_shop_order_table']} 
-                        set od_receipt_price = od_misu,
-                            od_misu = 0,
-                            od_receipt_time = '".G5_TIME_YMDHIS."'
-                      where od_id = '$od_id' and od_status = '입금' ";
-            sql_query($sql, true);
-
+            order_update_receipt($od_id);
             break;
 
         case '입금' :
-
             if ($change_status != '준비') continue;
-
             change_status($od_id, '입금', '준비');
-
             break;
 
         case '준비' :
-
             if ($change_status != '배송') continue;
-
             change_status($od_id, '준비', '배송');
 
+            $delivery['invoice'] = $invoice;
+            $delivery['invoice_time'] = $invoice_time;
+            $delivery['delivery_company'] = $delivery_company;
+
+            order_update_delivery($od_id, $od['mb_id'], $change_status, $delivery);
+
+            /*
             $sql = " update {$g5['g5_shop_order_table']} 
                         set od_delivery_company = '$delivery_company',
                             od_invoice      = '$invoice',
@@ -160,14 +224,14 @@ for ($i=0; $i<count($_POST['chk']); $i++)
                             where od_id = '{$row['od_id']}' ";
                 sql_query($sql);
             }
+            */
 
             break;
 
         case '배송' :
-
             if ($change_status != '완료') continue;
-
             change_status($od_id, '배송', '완료');
+            break;
 
     } // switch end 
 
