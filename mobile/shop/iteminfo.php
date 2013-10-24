@@ -146,9 +146,9 @@ function content_scroll()
         if(window.innerHeight - $(window).outerHeight(true) > 0)
             sh += (window.innerHeight - $(window).outerHeight(true));
     }
-    var mbh = $("#menu_button").outerHeight(true);
+    var mbh = $("#menu_button").outerHeight();
     var mlh = $("#menu_list").outerHeight(true);
-    var ch = sh - mbh;
+    var ch = sh;
 
     $("#menu_button")
         .css("bottom", 0)

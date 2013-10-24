@@ -544,7 +544,7 @@ if(openwin != null) {
     </section>
 
     <?php if ($od['od_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
-    preg_match("/(\s[^\s]+\s)/", $od['od_bank_account'], $matchs);
+    preg_match("/\s{1}([^\s]+)\s?/", $od['od_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
     ?>
     <fieldset>
