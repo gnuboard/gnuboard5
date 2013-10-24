@@ -377,7 +377,7 @@ $(function(){
 
             return false;
         },
-        threshold: 70,
+        threshold: 100,
         excludedElements:"button, input, select, textarea, .noSwipe",
         allowPageScroll:"vertical"
     };
