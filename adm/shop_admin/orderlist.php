@@ -336,7 +336,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
         <td headers="th_delino">
             <?php if ($od_status == '준비') { ?>
-                <input type="text" name="od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>" class="frm_input" size="12">
+                <input type="text" name="od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>" class="frm_input" size="10">
             <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
                 <?php echo $row['od_invoice']; ?>
             <?php } else { ?>
@@ -345,7 +345,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
         <td headers="th_delicom">
             <?php if ($od_status == '준비') { ?>
-                <input type="text" name="od_delivery_company[<?php echo $i; ?>]" value="<?php echo $delivery_company; ?>" class="frm_input" size="12">
+                <input type="text" name="od_delivery_company[<?php echo $i; ?>]" value="<?php echo $delivery_company; ?>" class="frm_input" size="10">
             <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
                 <?php echo $row['od_delivery_company']; ?>
             <?php } else { ?>
@@ -358,7 +358,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
         <td headers="th_delidate">
             <?php if ($od_status == '준비') { ?>
-                <input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="12" maxlength="19">
+                <input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="10" maxlength="19">
             <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
                 <?php echo substr($row['od_invoice_time'],2,14); ?>
             <?php } else { ?>
@@ -397,7 +397,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <div class="local_cmd01 local_cmd">
 <?php if (($od_status == '' || $od_status == '완료') == false) { // 검색된 주문상태가 '전체', '완료' 가 아니라면 ?>
-    <label class="cmd_tit">주문상태 변경</label>
+    <strong>주문상태 변경</strong>
     <?php
     $change_status = "";
     if ($od_status == '주문') $change_status = "입금";
@@ -406,9 +406,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     if ($od_status == '배송') $change_status = "완료";
     ?>
     <?php if ($change_status) { ?>
-        <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> '<?php echo $od_status ?>'상태에서 '<strong><?php echo $change_status ?></strong>'상태로 변경</label>
+        <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> '<?php echo $od_status ?>'상태에서 '<strong><?php echo $change_status ?></strong>'상태로 변경합니다.</label>
         <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
-        <?php if ($od_status == '주문') { ?><input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
+        <?php if ($od_status == '주문') { ?> <span>주문상태에서만 삭제가 가능합니다.</span> <input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
     <?php } ?>
 <?php } ?>
 </div>
