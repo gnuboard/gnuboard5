@@ -24,11 +24,19 @@ if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 
     alert_close('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
 
 // 금액비교
-if($tax_mny && $tax_mny > ($od['od_tax_mny'] + $od['od_vat_mny']))
-    alert('과세 취소금액을 '.number_format(($od['od_tax_mny'] + $od['od_vat_mny'])).'원 이하로 입력해 주십시오.');
+// 과세, 비과세 취소가능 금액계산
+$sql = " select SUM( IF( ct_notax = 0, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as tax_mny,
+                SUM( IF( ct_notax = 1, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as free_mny
+            from {$g5['g5_shop_cart_table']}
+            where od_id = '$od_id'
+              and ct_status IN ( '취소', '반품', '품절' ) ";
+$sum = sql_fetch($sql);
 
-if($free_mny && $free_mny > $od['od_free_mny'])
-    alert('비과세 취소금액을 '.number_format($od['od_free_mny']).'원 이하로 입력해 주십시오.');
+if($tax_mny && $tax_mny > $sum['tax_mny'])
+    alert('과세 취소금액을 '.number_format($sum['tax_mny']).'원 이하로 입력해 주십시오.');
+
+if($free_mny && $free_mny > $sum['free_mny'])
+    alert('비과세 취소금액을 '.number_format($sum['free_mny']).'원 이하로 입력해 주십시오.');
 
 // 취소사유의 한글깨짐 방지처리
 $def_locale = setlocale(LC_CTYPE, 0);
@@ -160,51 +168,23 @@ if ( $req_tx == "mod" )
         $mod_mny = $c_PayPlus->mf_get_res_data( "panc_mod_mny" ); // 취소요청된 금액
         $rem_mny = $c_PayPlus->mf_get_res_data( "panc_rem_mny" ); // 취소요청후 잔액
 
-        // 주문 합계
-        $sql = " select SUM( IF( ct_notax = 0, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as tax_mny,
-                        SUM( IF( ct_notax = 1, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as free_mny
-                    from {$g5['g5_shop_cart_table']}
-                    where od_id = '{$od['od_id']}'
-                      and ct_status IN ( '주문', '준비', '배송', '완료' ) ";
-        $sum = sql_fetch($sql);
-
-        $tax_mny = $sum['tax_mny'];
-        $free_mny = $sum['free_mny'];
-
-        // 과세, 비과세
-        if($od['od_tax_flag']) {
-            $tot_tax_mny = ( $tax_mny + $od['od_send_cost'] + $od['od_send_cost2'] )
-                           - ( $od['od_coupon'] + $od['od_send_coupon'] + $od['od_receipt_point'] );
-            if($tot_tax_mny < 0) {
-                $tot_tax_mny = 0;
-                $free_mny += $tot_tax_mny;
-            }
-        } else {
-            $tot_tax_mny = ( $tax_mny + $free_mny + $od['od_send_cost'] + $od['od_send_cost2'] )
-                           - ( $od['od_coupon'] + $od['od_send_coupon'] + $od['od_receipt_point'] );
-            $free_mny = 0;
-        }
-
-        $od_tax_mny = round($tot_tax_mny / 1.1);
-        $od_vat_mny = $tot_tax_mny - $od_tax_mny;
-        $od_free_mny = $free_mny;
-
-        // 미수
-        $od_misu = ( $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2'] )
-                   - ( $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'] )
-                   - ( $od['od_receipt_price'] + $od['od_receipt_point'] - $mod_mny );
-
-        $shop_memo = '\\n'.$od['od_settle_case'].' 부분취소(금액: '.number_format($mod_mny).'원) - '.G5_TIME_YMDHIS;
-
+        // 환불금액기록
         $sql = " update {$g5['g5_shop_order_table']}
                     set od_refund_price = od_refund_price + '$mod_mny',
-                        od_misu = '$od_misu',
-                        od_tax_mny = '$od_tax_mny',
-                        od_vat_mny = '$od_vat_mny',
-                        od_free_mny = '$od_free_mny',
-                        od_shop_memo = concat(od_shop_memo, \"$shop_memo\")
+                        od_shop_memo = concat(od_shop_memo, \"$mod_memo\")
                     where od_id = '{$od['od_id']}'
                       and od_tno = '$tno' ";
+        sql_query($sql);
+
+        // 미수금 등의 정보 업데이트
+        $info = get_order_info($od_id);
+
+        $sql = " update {$g5['g5_shop_order_table']}
+                    set od_misu     = '{$info['od_misu']}',
+                        od_tax_mny  = '{$info['od_tax_mny']}',
+                        od_vat_mny  = '{$info['od_vat_mny']}',
+                        od_free_mny = '{$info['od_free_mny']}'
+                    where od_id = '$od_id' ";
         sql_query($sql);
     } // End of [res_cd = "0000"]
 
