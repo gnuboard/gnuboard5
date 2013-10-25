@@ -186,8 +186,10 @@ if(!$default['de_card_test']) {
         $info = get_order_info($od_id);
 
         $sql = " update {$g5['g5_shop_order_table']}
-                    set od_misu     = '{$info['od_misu']}'
-                    where od_id = '$od_id' ";
+                    set od_misu     = '{$info['od_misu']}' ";
+        if($info['od_misu'] == 0)
+            $sql .= " , od_status = '입금' ";
+        $sql .= " where od_id = '$od_id' ";
         sql_query($sql, FALSE);
     }
 
