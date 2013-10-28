@@ -194,7 +194,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                     gif만 가능하며 용량 <?php echo number_format($config['cf_member_icon_size']) ?>바이트 이하만 등록됩니다.
                 </span>
                 <input type="file" name="mb_icon" id="reg_mb_icon" class="frm_input">
-                <?php if ($w == 'u' && file_exists($mb_icon)) {  ?>
+                <?php if ($w == 'u' && file_exists($mb_icon_path)) {  ?>
+                <img src="<?php echo $mb_icon_url ?>" alt="회원아이콘">
                 <input type="checkbox" name="del_mb_icon" value="1" id="del_mb_icon">
                 <label for="del_mb_icon">삭제</label>
                 <?php }  ?>
