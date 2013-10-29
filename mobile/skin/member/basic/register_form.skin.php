@@ -188,6 +188,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 </span>
                 <input type="file" name="mb_icon" id="reg_mb_icon" class="frm_input">
                 <?php if ($w == 'u' && file_exists($mb_icon)) { ?>
+                <img src="<?php echo $mb_icon_url ?>" alt="회원아이콘">
                 <input type="checkbox" name="del_mb_icon" value="1" id="del_mb_icon">
                 <label for="del_mb_icon">삭제</label>
                 <?php } ?>
