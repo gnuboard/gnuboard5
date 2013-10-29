@@ -397,42 +397,17 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <div class="local_cmd01 local_cmd">
 <?php if (($od_status == '' || $od_status == '완료') == false) { // 검색된 주문상태가 '전체', '완료' 가 아니라면 ?>
-<<<<<<< HEAD
     <label for="od_status" class="cmd_tit">주문상태 변경</label>
-    <select name="od_status" id="od_status">
-        <option value="">선택하세요</option>
-        <?php if ($od_status != '주문') { ?><option value="주문">주문</option><?php } ?>
-        <?php if ($od_status != '입금') { ?><option value="입금">입금</option><?php } ?>
-        <?php if ($od_status != '준비') { ?><option value="준비">준비</option><?php } ?>
-        <?php if ($od_status != '배송') { ?><option value="배송">배송</option><?php } ?>
-        <?php if ($od_status != '완료') { ?><option value="완료">완료</option><?php } ?>
-    </select>
-
-    <?php /*
-=======
-    <strong>주문상태 변경</strong>
     <?php
->>>>>>> master
     $change_status = "";
     if ($od_status == '주문') $change_status = "입금";
     if ($od_status == '입금') $change_status = "준비";
     if ($od_status == '준비') $change_status = "배송";
     if ($od_status == '배송') $change_status = "완료";
     ?>
-    <?php if ($change_status) { ?>
-<<<<<<< HEAD
-        <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> <?php echo $od_status .' -> ' . $change_status; ?></label>
-        <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
-        <?php if ($od_status == '주문') { ?><input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
-    <?php } */ ?>
+    <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> '<?php echo $od_status ?>'상태에서 '<strong><?php echo $change_status ?></strong>'상태로 변경합니다.</label>
     <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
-    <?php if ($od_status == '주문') { ?><input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
-=======
-        <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> '<?php echo $od_status ?>'상태에서 '<strong><?php echo $change_status ?></strong>'상태로 변경합니다.</label>
-        <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
-        <?php if ($od_status == '주문') { ?> <span>주문상태에서만 삭제가 가능합니다.</span> <input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
-    <?php } ?>
->>>>>>> master
+    <?php if ($od_status == '주문') { ?> <span>주문상태에서만 삭제가 가능합니다.</span> <input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
 <?php } ?>
 </div>
 
