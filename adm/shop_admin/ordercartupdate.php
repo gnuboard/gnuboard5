@@ -8,33 +8,16 @@ $ct_chk_count = count($_POST['ct_chk']);
 if(!$ct_chk_count)
     alert('처리할 자료를 하나 이상 선택해 주십시오.');
 
-switch($_POST['act_button'])
-{
-    case '주문':
-        $ct_status = '주문';
-        break;
-    case '상품준비중':
-        $ct_status = '준비';
-        break;
-    case '배송중':
-        $ct_status = '배송';
-        break;
-    case '완료':
-        $ct_status = '완료';
-        break;
-    case '취소':
-        $ct_status = '취소';
-        break;
-    case '반품':
-        $ct_status = '반품';
-        break;
-    case '품절':
-        $ct_status = '품절';
-        break;
-    default:
-        alert('변경할 상태가 올바르지 않습니다.');
-        break;
+
+$status_normal = array('주문','입금','준비','배송','완료');
+$status_cancel = array('취소','반품','품절');
+
+if (in_array($_POST['ct_status'], $status_normal) || in_array($_POST['ct_status'], $status_cancel)) {
+    ; // 통과
+} else {
+    alert('변경할 상태가 올바르지 않습니다.');
 }
+
 
 $mod_history = '';
 $cnt = count($_POST['ct_id']);
@@ -43,9 +26,7 @@ for ($i=0; $i<$cnt; $i++)
     $k = $_POST['ct_chk'][$i];
     $ct_id = $_POST['ct_id'][$k];
 
-    $sql = " select * from {$g5['g5_shop_cart_table']}
-              where od_id = '$od_id'
-                and ct_id  = '$ct_id' ";
+    $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' and ct_id  = '$ct_id' ";
     $ct = sql_fetch($sql);
     if(!$ct['ct_id'])
         continue;
@@ -174,21 +155,19 @@ $sql = " update {$g5['g5_shop_order_table']}
                 od_misu         = '{$info['od_misu']}',
                 od_tax_mny      = '{$info['od_tax_mny']}',
                 od_vat_mny      = '{$info['od_vat_mny']}',
-                od_free_mny     = '{$info['od_free_mny']}'
-            where od_id = '$od_id' ";
+                od_free_mny     = '{$info['od_free_mny']}' ";
+if ($mod_history) { // 수량변경 히스토리 기록
+    $sql .= " , od_mod_history = CONCAT(od_mod_history,'$mod_history') ";
+}
+if (in_array($_POST['ct_status'], $status_normal)) { // 정상인 주문상태만 기록
+    $sql .= " , od_status = '{$_POST['ct_status']}' ";
+}
+$sql .= " where od_id = '$od_id' ";
 sql_query($sql);
 
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 $url = "./orderform.php?od_id=$od_id&amp;$qstr";
-
-// 수량변경 히스토리 기록
-if($mod_history) {
-    $sql = " update {$g5['g5_shop_order_table']}
-                set od_mod_history = CONCAT(od_mod_history,'$mod_history')
-                where od_id = '$od_id' ";
-    sql_query($sql);
-}
 
 // 1.06.06
 $od = sql_fetch(" select od_receipt_point from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");

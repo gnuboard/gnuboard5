@@ -110,7 +110,13 @@ $pg_anchor = '<ul class="anchor">
     <h2 class="h2_frm">주문상품 목록</h2>
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
-        <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></strong>원</p>
+        <p>
+            주문상태 <strong><?php echo $od['od_status'] ?></strong>
+            |
+            주문일시 <strong><?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>)</strong>
+            |
+            주문총액 <strong><?php echo number_format($od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></strong>원
+        </p>
         <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $od['od_hope_date']; ?> (<?php echo get_yoil($od['od_hope_date']); ?>) 입니다.</p><?php } ?>
         <?php if($od['od_mobile']) { ?>
         <p>모바일 쇼핑몰의 주문입니다.</p>
@@ -218,16 +224,19 @@ $pg_anchor = '<ul class="anchor">
     </div>
 
     <div class="btn_list02 btn_list">
-        <strong>주문상태 변경</strong>
-        <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
-        <input type="submit" name="act_button" value="주문" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="상품" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="배송" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="완료" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="취소" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="반품" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="품절" onclick="document.pressed=this.value">
-        <p>취소,반품,품절 상태는 장바구니 상품의 상태만 변경이 되며 주문서의 상태는 변경되지 않습니다.</p>
+        <p>
+            <strong>주문상태 변경</strong>
+            <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
+            <input type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="준비" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="배송" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="완료" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="취소" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="반품" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value">
+        </p>
+        <p>주문, 입금, 준비, 배송, 완료는 장바구니와 주문서 상태를 모두 변경하지만, 취소, 반품, 품절은 장바구니의 상태만 변경하며, 주문서 상태는 변경하지 않습니다.</p>
     </div>
 
     </form>
@@ -879,7 +888,7 @@ function form_submit(f)
         return false;
     }
 
-    if (confirm("\'" + status + "\'을(를) 선택하셨습니다.\n\n이대로 처리 하시겠습니까?")) {
+    if (confirm("\'" + status + "\' 상태를 선택하셨습니다.\n\n처리 하시겠습니까?")) {
         return true;
     } else {
         return false;
