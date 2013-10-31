@@ -73,16 +73,21 @@ if ($od['mb_id'] == "") {
 }
 //------------------------------------------------------------------------------
 
-$qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
-// PG사를 KCP 사용하면서 테스트 상점아이디라면
-$pg_url = 'http://admin8.kcp.co.kr';
-if ($default['de_card_test']) {
-    // 로그인 아이디 / 비번
-    // 일반 : test1234 / test12345
-    // 에스크로 : escrow / escrow913
-    $pg_url = 'http://testadmin8.kcp.co.kr';
-}
+$pg_anchor = '<ul class="anchor">
+<li><a href="#anc_sodr_list">주문상품 목록</a></li>
+<li><a href="#anc_sodr_pay">주문결제 내역</a></li>
+<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
+<li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
+<li><a href="#anc_sodr_memo">상점메모</a></li>
+<li><a href="#anc_sodr_payer">주문하신 분</a></li>
+<li><a href="#anc_sodr_addressee">받으시는 분</a></li>
+</ul>';
+
+$html_receipt_chk = '<input type="checkbox" id="od_receipt_chk" value="'.$od['od_misu'].'" onclick="chk_receipt_price()">
+<label for="od_receipt_chk">결제금액 수동 설정</label><br>';
+
+$qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 // 상품목록
 $sql = " select it_id,
@@ -94,23 +99,19 @@ $sql = " select it_id,
           group by it_id
           order by ct_id ";
 $result = sql_query($sql);
-
-$pg_anchor = '<ul class="anchor">
-<li><a href="#anc_sodr_list">주문상품 목록</a></li>
-<li><a href="#anc_sodr_pay">주문결제 내역</a></li>
-<li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
-<li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
-<li><a href="#anc_sodr_memo">상점메모</a></li>
-<li><a href="#anc_sodr_payer">주문하신 분</a></li>
-<li><a href="#anc_sodr_addressee">받으시는 분</a></li>
-</ul>';
 ?>
 
 <section id="anc_sodr_list">
     <h2 class="h2_frm">주문상품 목록</h2>
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
-        <p>주문일시 <?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>) / 주문총액 <strong><?php echo number_format($od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></strong>원</p>
+        <p>
+            주문상태 <strong><?php echo $od['od_status'] ?></strong>
+            |
+            주문일시 <strong><?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>)</strong>
+            |
+            주문총액 <strong><?php echo number_format($od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']); ?></strong>원
+        </p>
         <?php if ($default['de_hope_date_use']) { ?><p>희망배송일은 <?php echo $od['od_hope_date']; ?> (<?php echo get_yoil($od['od_hope_date']); ?>) 입니다.</p><?php } ?>
         <?php if($od['od_mobile']) { ?>
         <p>모바일 쇼핑몰의 주문입니다.</p>
@@ -218,16 +219,19 @@ $pg_anchor = '<ul class="anchor">
     </div>
 
     <div class="btn_list02 btn_list">
-        <strong>주문상태 변경</strong>
-        <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
-        <input type="submit" name="act_button" value="주문" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="상품" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="배송" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="완료" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="취소" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="반품" onclick="document.pressed=this.value">
-        <input type="submit" name="act_button" value="품절" onclick="document.pressed=this.value">
-        <p>취소,반품,품절 상태는 장바구니 상품의 상태만 변경이 되며 주문서의 상태는 변경되지 않습니다.</p>
+        <p>
+            <strong>주문상태 변경</strong>
+            <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
+            <input type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="준비" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="배송" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="완료" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="취소" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="반품" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value">
+        </p>
+        <p>주문, 입금, 준비, 배송, 완료는 장바구니와 주문서 상태를 모두 변경하지만, 취소, 반품, 품절은 장바구니의 상태만 변경하며, 주문서 상태는 변경하지 않습니다.</p>
     </div>
 
     </form>
@@ -378,7 +382,7 @@ $pg_anchor = '<ul class="anchor">
 
                 <?php if ($od['od_settle_case'] == '신용카드') { ?>
                 <tr>
-                    <th scope="row" class="sodr_sppay">신용카드 입금액</th>
+                    <th scope="row" class="sodr_sppay">신용카드 결제금액</th>
                     <td>
                         <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") {?>0원
                         <?php } else { ?><?php echo display_price($od['od_receipt_price']); ?>
@@ -394,6 +398,37 @@ $pg_anchor = '<ul class="anchor">
                     </td>
                 </tr>
                 <?php } ?>
+
+                <?php if ($od['od_settle_case'] != '무통장') { ?>
+                <tr>
+                    <th scope="row">결제대행사 링크</th>
+                    <td>
+                        <?php
+                        //------------------------------------------------------------------------------
+                        // KCP(PG) 바로가기
+                        //------------------------------------------------------------------------------
+                        if ($od['od_settle_case'] != '무통장') { 
+                            // PG사를 KCP 사용하면서 테스트 상점아이디라면
+                            $pg_url  = 'http://admin8.kcp.co.kr';
+                            $pg_test = '';
+                            if ($default['de_card_test']) {
+                                // 로그인 아이디 / 비번
+                                // 일반 : test1234 / test12345
+                                // 에스크로 : escrow / escrow913
+                                $pg_url = 'http://testadmin8.kcp.co.kr';
+                                if ($default['de_escrow_use'])
+                                    $pg_test = '에스크로 테스트 ';
+                                else 
+                                    $pg_test = '일반 테스트 ';
+                            }
+                            echo "<a href=\"{$pg_url}\" target=\"_blank\">KCP {$pg_test}바로가기</a><br>";
+                        }
+                        //------------------------------------------------------------------------------
+                        ?>
+                    </td>
+                </tr>
+                <?php } ?>
+
                 <?php if($od['od_tax_flag']) { ?>
                 <tr>
                     <th scope="row">과세공급가액</th>
@@ -514,11 +549,11 @@ $pg_anchor = '<ul class="anchor">
                     <td><?php echo $bank_account; ?></td>
                 </tr>
                 <?php } ?>
+
                 <tr>
                     <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 입금액</label></th>
                     <td>
                         <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input"> 원
-                        <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
                     </td>
                 </tr>
                 <tr>
@@ -550,8 +585,8 @@ $pg_anchor = '<ul class="anchor">
                 <tr>
                     <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
                     <td>
+                        <?php echo $html_receipt_chk; ?>
                         <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input"> 원
-                        <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
                     </td>
                 </tr>
                 <tr>
@@ -566,10 +601,10 @@ $pg_anchor = '<ul class="anchor">
 
                 <?php if ($od['od_settle_case'] == '신용카드') { ?>
                 <tr>
-                    <th scope="row" class="sodr_sppay"><label for="od_receipt_price">신용카드 결제액</label></th>
+                    <th scope="row" class="sodr_sppay"><label for="od_receipt_price">신용카드 결제금액</label></th>
                     <td>
-                        <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input" size="10"> 원
-                        <a href="<?php echo $pg_url; ?>" target="_blank">결제대행사</a>
+                        <?php echo $html_receipt_chk; ?>
+                        <input type="text" name="od_receipt_price" id="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" class="frm_input" size="10"> 원
                     </td>
                 </tr>
                 <tr>
@@ -606,15 +641,17 @@ $pg_anchor = '<ul class="anchor">
                 <tr>
                     <th scope="row"><label for="od_delivery_company">배송회사</label></th>
                     <td>
-                        <input type="text" name="od_delivery_company" value="<?php echo $od['od_delivery_company']; ?>" id="od_delivery_company" class="frm_input">
+                        <input type="checkbox" id="od_delivery_chk" value="<?php echo $default['de_delivery_company']; ?>" onclick="chk_delivery_company()">
+                        <label for="od_delivery_chk">기본 배송회사로 설정</label><br>
+                        <input type="text" name="od_delivery_company" id="od_delivery_company" value="<?php echo $od['od_delivery_company']; ?>" class="frm_input">
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="od_invoice_time">배송일시</label></th>
                     <td>
-                        <input type="checkbox" name="od_invoice_chk" id="od_invoice_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_invoice_time.value=this.form.od_invoice_chk.value; else this.form.od_invoice_time.value = this.form.od_invoice_time.defaultValue;">
+                        <input type="checkbox" id="od_invoice_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="chk_invoice_time()">
                         <label for="od_invoice_chk">현재 시간으로 설정</label><br>
-                        <input type="text" name="od_invoice_time" value="<?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?>" id="od_invoice_time" class="frm_input" maxlength="19">
+                        <input type="text" name="od_invoice_time" id="od_invoice_time" value="<?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?>" class="frm_input" maxlength="19">
                     </td>
                 </tr>
                 <tr>
@@ -879,7 +916,7 @@ function form_submit(f)
         return false;
     }
 
-    if (confirm("\'" + status + "\'을(를) 선택하셨습니다.\n\n이대로 처리 하시겠습니까?")) {
+    if (confirm("\'" + status + "\' 상태를 선택하셨습니다.\n\n처리 하시겠습니까?")) {
         return true;
     } else {
         return false;
@@ -893,6 +930,30 @@ function del_confirm()
     } else {
         return false;
     }
+}
+
+// 기본 배송회사로 설정
+function chk_delivery_company()
+{
+    var chk = document.getElementById("od_delivery_chk");
+    var company = document.getElementById("od_delivery_company");
+    company.value = chk.checked ? chk.value : company.defaultValue;
+}
+
+// 현재 시간으로 배송일시 설정
+function chk_invoice_time()
+{
+    var chk = document.getElementById("od_invoice_chk");
+    var time = document.getElementById("od_invoice_time");
+    time.value = chk.checked ? chk.value : time.defaultValue;
+}
+
+// 결제금액 수동 설정
+function chk_receipt_price()
+{
+    var chk = document.getElementById("od_receipt_chk");
+    var price = document.getElementById("od_receipt_price");
+    price.value = chk.checked ? chk.value : price.defaultValue;
 }
 </script>
 
