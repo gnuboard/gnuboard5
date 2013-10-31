@@ -1,10 +1,9 @@
 @charset "utf-8";
-#new_sch {
-margin:0 0 5px;
-padding:5px 10px;
-}
+/* SIR 지운아빠 */
 
-#new_tbl th:nth-of-type(3) {width:50px;}
+/* 새글 */
+#new_sch {margin:0 0 5px;padding:5px 10px}
+#new_tbl {}
+#new_tbl th:nth-of-type(3) {width:50px}
 
-#new_tbl td:nth-of-type(3) {text-align:center;}
-
+#new_tbl td:nth-of-type(3) {text-align:center}
