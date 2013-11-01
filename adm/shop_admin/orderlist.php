@@ -198,7 +198,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 </div>
 </form>
 
-<form name="forderlist" id="forderlist" action="./orderlistupdate.php" onsubmit="return forderlist_submit(this);" method="post" autocomplete="off">
+<form name="forderlist" id="forderlist" onsubmit="return forderlist_submit(this);" method="post" autocomplete="off">
 <input type="hidden" name="search_od_status" value="<?php echo $od_status; ?>">
 
 <div class="tbl_head02 tbl_wrap">
@@ -459,6 +459,8 @@ function set_date(today)
 <script>
 function forderlist_submit(f)
 {
+    var change_status = f.od_status.value;
+
     if (!is_checked("chk[]")) {
         alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
         return false;
@@ -490,6 +492,7 @@ function forderlist_submit(f)
     }
 
     var chk = document.getElementsByName("chk[]");
+
     for (var i=0; i<chk.length; i++) 
     {
         if (chk[i].checked) 
@@ -497,7 +500,6 @@ function forderlist_submit(f)
             var k = chk[i].value;
             var current_settle_case = f.elements['current_settle_case['+k+']'].value;
             var current_status = f.elements['current_status['+k+']'].value;
-            var change_status = f.od_status.value;
 
             switch (change_status)
             {
@@ -548,8 +550,10 @@ function forderlist_submit(f)
         }
     }
 
+    if (!confirm("선택하신 주문서의 주문상태를 '"+change_status+"'상태로 변경하시겠습니까?"))
+        return false;
+    
     f.action = "./orderlistupdate.php";
-
     return true;
 }
 </script>

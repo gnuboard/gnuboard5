@@ -2,19 +2,12 @@
 $sub_menu = '400400';
 include_once('./_common.php');
 
-// 메세지
-$html_title = '주문 내역 수정';
-$alt_msg1 = '주문번호 오류입니다.';
-$mb_guest = '비회원';
-
-$cart_title1 = '쇼핑';
-$cart_title2 = '완료';
 $cart_title3 = '주문번호';
 $cart_title4 = '배송완료';
 
 auth_check($auth[$sub_menu], "w");
 
-$g5['title'] = $html_title;
+$g5['title'] = "주문 내역 수정";
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 //------------------------------------------------------------------------------
@@ -23,20 +16,45 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 $keep_term = $default['de_cart_keep_term'];
 if (!$keep_term) $keep_term = 15; // 기본값 15일
 $beforetime = date('Y-m-d H:i:s', ( G5_SERVER_TIME - (86400 * $keep_term) ) );
-$sql = " delete from {$g5['g5_shop_cart_table']} where ct_status = '$cart_title1' and ct_time <= '$beforetime' ";
+$sql = " delete from {$g5['g5_shop_cart_table']} where ct_status = '쇼핑' and ct_time <= '$beforetime' ";
 sql_query($sql);
 //------------------------------------------------------------------------------
 
 
 //------------------------------------------------------------------------------
+// 주문포인트를 적립한다.
+// 설정일이 지난 포인트 부여되지 않은 배송완료된 장바구니 자료에 포인트 부여
+// 설정일이 0 이면 주문서 완료 설정 시점에서 포인트를 바로 부여합니다.
+//------------------------------------------------------------------------------
+function save_order_point($ct_status="완료")
+{
+    global $default;
+
+    $beforedays = date("Y-m-d H:i:s", ( time() - (86400 * (int)$default['de_point_days']) ) ); // 86400초는 하루
+    $sql = " select * from {$g5['g5_shop_cart_table']} where ct_status = '$ct_status' and ct_point_use = '0' and ct_time <= '$beforedays' ";
+    $result = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        // 회원 ID 를 얻는다.
+        $od_row = sql_fetch("select od_id, mb_id from {$g5['g5_shop_order_table']} where od_id = '{$row['od_id']}' ");
+        if ($od_row['mb_id'] && $row['ct_point'] > 0) { // 회원이면서 포인트가 0보다 크다면
+            $po_point = $row['ct_point'] * $row['ct_qty'];
+            $po_content = "주문번호 {$od_row['od_id']} ({$row['ct_id']}) 배송완료";
+            insert_point($od_row['mb_id'], $po_point, $po_content, "@delivery", $od_row['mb_id'], "{$od_row['od_id']},{$row['ct_id']}");
+        }
+        sql_query("update {$g5['g5_shop_cart_table']} set ct_point_use = '1' where ct_id = '{$row['ct_id']}' ");
+    }
+}
+
+
+//------------------------------------------------------------------------------
 // 주문완료 포인트
-//      설정일이 지난 포인트 부여되지 않은 배송완료된 장바구니 자료에 포인트 부여
-//      설정일이 0 이면 주문서 완료 설정 시점에서 포인트를 바로 부여합니다.
+// 설정일이 지난 포인트 부여되지 않은 배송완료된 장바구니 자료에 포인트 부여
+// 설정일이 0 이면 주문서 완료 설정 시점에서 포인트를 바로 부여합니다.
 //------------------------------------------------------------------------------
 if (!isset($order_not_point)) {
     $beforedays = date("Y-m-d H:i:s", ( time() - (60 * 60 * 24 * (int)$default['de_point_days']) ) );
     $sql = " select * from {$g5['g5_shop_cart_table']}
-               where ct_status = '$cart_title2'
+               where ct_status = '완료'
                  and ct_point_use = '0'
                  and ct_time <= '$beforedays' ";
     $result = sql_query($sql);
@@ -65,12 +83,10 @@ if (!isset($order_not_point)) {
 $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 if (!$od['od_id']) {
-    alert($alt_msg1);
+    alert("해당 주문번호로 주문서가 존재하지 않습니다.");
 }
 
-if ($od['mb_id'] == "") {
-    $od['mb_id'] = $mb_guest;
-}
+$od['mb_id'] = $od['mb_id'] ? $od['mb_id'] : "비회원";
 //------------------------------------------------------------------------------
 
 
@@ -85,7 +101,7 @@ $pg_anchor = '<ul class="anchor">
 </ul>';
 
 $html_receipt_chk = '<input type="checkbox" id="od_receipt_chk" value="'.$od['od_misu'].'" onclick="chk_receipt_price()">
-<label for="od_receipt_chk">결제금액 수동 설정</label><br>';
+<label for="od_receipt_chk">결제금액 입력</label><br>';
 
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
@@ -106,7 +122,7 @@ $result = sql_query($sql);
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
         <p>
-            주문상태 <strong><?php echo $od['od_status'] ?></strong>
+            현재 주문상태 <strong><?php echo $od['od_status'] ?></strong>
             |
             주문일시 <strong><?php echo substr($od['od_time'],0,16); ?> (<?php echo get_yoil($od['od_time']); ?>)</strong>
             |
@@ -118,7 +134,7 @@ $result = sql_query($sql);
         <?php } ?>
     </div>
 
-    <form name="frmorderform" method="post" action="./ordercartupdate.php" onsubmit="return form_submit(this);">
+    <form name="frmorderform" method="post" action="./orderformcartupdate.php" onsubmit="return form_submit(this);">
     <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
     <input type="hidden" name="mb_id" value="<?php echo $od['mb_id']; ?>">
     <input type="hidden" name="od_email" value="<?php echo $od['od_email']; ?>">
@@ -173,8 +189,9 @@ $result = sql_query($sql);
                 else
                     $opt_price = $opt['ct_price'] + $opt['io_price'];
 
-                $ct_price['소계'] = $opt_price * $opt['ct_qty'];
-                $ct_point['소계'] = $opt['ct_point'] * $opt['ct_qty'];
+                // 소계
+                $ct_price['stotal'] = $opt_price * $opt['ct_qty'];
+                $ct_point['stotal'] = $opt['ct_point'] * $opt['ct_qty'];
             ?>
             <tr>
                 <?php if($k == 0) { ?>
@@ -199,9 +216,9 @@ $result = sql_query($sql);
                     <input type="text" name="ct_qty[<?php echo $chk_cnt; ?>]" id="ct_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_qty']; ?>" required class="frm_input required" size="5">
                 </td>
                 <td class="td_numsmall"><?php echo number_format($opt_price); ?></td>
-                <td class="td_num"><?php echo number_format($ct_price['소계']); ?></td>
+                <td class="td_num"><?php echo number_format($ct_price['stotal']); ?></td>
                 <td class="td_num"><?php echo number_format($opt['cp_price']); ?></td>
-                <td class="td_num"><?php echo number_format($ct_point['소계']); ?></td>
+                <td class="td_num"><?php echo number_format($ct_point['stotal']); ?></td>
                 <td class="td_sendcost_by"><?php echo $opt['ct_send_cost'] ? '착불' : '선불'; ?></td>
                 <td class="td_mngsmall"><?php echo get_yn($opt['ct_point_use']); ?></td>
                 <td class="td_mngsmall"><?php echo get_yn($opt['ct_stock_use']); ?></td>
@@ -220,8 +237,8 @@ $result = sql_query($sql);
 
     <div class="btn_list02 btn_list">
         <p>
-            <strong>주문상태 변경</strong>
             <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
+            <strong>주문 및 장바구니 상태 변경</strong>
             <input type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value">
             <input type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value">
             <input type="submit" name="ct_status" value="준비" onclick="document.pressed=this.value">
@@ -232,6 +249,7 @@ $result = sql_query($sql);
             <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value">
         </p>
         <p>주문, 입금, 준비, 배송, 완료는 장바구니와 주문서 상태를 모두 변경하지만, 취소, 반품, 품절은 장바구니의 상태만 변경하며, 주문서 상태는 변경하지 않습니다.</p>
+        <p>개별적인(이곳에서의) 상태 변경은 모든 작업을 수동으로 처리합니다. 예를 들어 주문에서 입금으로 상태 변경시 입금액(결제금액)을 포함한 모든 정보는 수동 입력으로 처리하셔야 합니다.</p>
     </div>
 
     </form>
@@ -311,7 +329,7 @@ $result = sql_query($sql);
     <h2 class="h2_frm">결제상세정보</h2>
     <?php echo $pg_anchor; ?>
 
-    <form name="frmorderreceiptform" action="./orderreceiptupdate.php" method="post" autocomplete="off">
+    <form name="frmorderreceiptform" action="./orderformreceiptupdate.php" method="post" autocomplete="off">
     <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
     <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
     <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
@@ -553,13 +571,14 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 입금액</label></th>
                     <td>
+                        <?php echo $html_receipt_chk; ?>
                         <input type="text" name="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" id="od_receipt_price" class="frm_input"> 원
                     </td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="od_deposit_name">입금자명</label></th>
                     <td>
-                        <?php if ($default['de_sms_use3']) { ?>
+                        <?php if ($default['de_sms_use'] && $default['de_sms_use3']) { ?>
                         <input type="checkbox" name="od_sms_ipgum_check" id="od_sms_ipgum_check">
                         <label for="od_sms_ipgum_check">SMS 입금 문자전송</label>
                         <br>
@@ -630,7 +649,7 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="row"><label for="od_invoice">운송장번호</label></th>
                     <td>
-                        <?php if ($default['de_sms_use4']) { ?>
+                        <?php if ($default['de_sms_use'] && $default['de_sms_use4']) { ?>
                         <input type="checkbox" name="od_sms_baesong_check" id="od_sms_baesong_check">
                         <label for="od_sms_baesong_check">SMS 배송 문자전송</label>
                         <br>
@@ -654,6 +673,8 @@ $result = sql_query($sql);
                         <input type="text" name="od_invoice_time" id="od_invoice_time" value="<?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?>" class="frm_input" maxlength="19">
                     </td>
                 </tr>
+
+                <?php if ($config['cf_email_use']) { ?>
                 <tr>
                     <th scope="row"><label for="od_send_mail">메일발송</label></th>
                     <td>
@@ -661,6 +682,8 @@ $result = sql_query($sql);
                         <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail"> 메일발송
                     </td>
                 </tr>
+                <?php } ?>
+
                 </tbody>
                 </table>
             </div>
@@ -670,12 +693,7 @@ $result = sql_query($sql);
 
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
-        <?php if($od['od_misu'] > 0) { ?>
-        <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
-        <?php } ?>
-        <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && $od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') { ?>
-        <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel"><?php echo $od['od_settle_case']; ?> 부분취소</a>
-        <?php } ?>
+        <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
     </div>
     </form>
 </section>
@@ -853,14 +871,19 @@ $result = sql_query($sql);
 
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="주문자/배송지 정보 수정" class="btn_submit">
+        <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
     </div>
 
     </form>
 </section>
 
 <div class="btn_list03 btn_list">
-    <a href="./orderdelete.php?od_id=<?php echo $od['od_id']; ?>&amo;mb_id=<?php echo $od['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return del_confirm();">주문서 삭제</a>
-    <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
+    <?php if($od['od_misu'] > 0) { ?>
+    <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
+    <?php } ?>
+    <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && $od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') { ?>
+    <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel"><?php echo $od['od_settle_case']; ?> 부분취소</a>
+    <?php } ?>
 </div>
 
 <script>
