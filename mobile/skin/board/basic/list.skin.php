@@ -17,14 +17,12 @@ if ($is_nogood) $colspan++;
 <div id="bo_list<?php if ($is_admin) echo "_admin"; ?>">
 
     <?php if ($is_category) { ?>
-    <form name="fcategory" id="fcategory" method="get">
     <nav id="bo_cate">
         <h2><?php echo $board['bo_subject'] ?> 카테고리</h2>
         <ul id="bo_cate_ul">
             <?php echo $category_option ?>
         </ul>
     </nav>
-    </form>
     <?php } ?>
 
     <div class="bo_fx">
