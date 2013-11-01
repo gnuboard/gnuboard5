@@ -650,7 +650,7 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="de_delivery_company">배송업체</label></th>
             <td>
-                <?php echo help("이용중 이거나 이용하실 배송업체를 선택하세요.", 50); ?>
+                <?php echo help("이용 중이거나 이용하실 배송업체를 선택하세요.", 50); ?>
                 <select name="de_delivery_company" id="de_delivery_company">
                     <option value="">없음</option>
                     <option value="자체배송" <?php echo get_selected($default['de_delivery_company'], "자체배송"); ?>>자체배송</option>
