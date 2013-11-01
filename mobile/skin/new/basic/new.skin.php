@@ -2,7 +2,9 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
 ?>
 
-<!-- 검색 -->
+<link rel="stylesheet" href="<?php echo $new_skin_url ?>/style.css">
+
+<!-- 전체게시물 검색 시작 { -->
 <fieldset id="new_sch">
     <legend>상세검색</legend>
     <form name="fnew" method="get">
@@ -13,8 +15,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
-    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" placeholder="검색어(필수)" required class="required">
-    <input type="submit" value="검색">
+    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" placeholder="검색어(필수)" required class="frm_input required">
+    <input type="submit" value="검색" class="btn_submit">
     </form>
     <script>
     function select_change()
@@ -25,9 +27,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     document.getElementById("view").value = "<?php echo $view ?>";
     </script>
 </fieldset>
-<!-- 검색 끝 -->
+<!-- } 전체게시물 검색 끝 -->
 
-<!-- 제목 시작 -->
+<!-- 전체게시물 목록 시작 { -->
 <div class="tbl_head01 tbl_wrp">
     <table id="new_tbl">
     <thead>
@@ -60,3 +62,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </div>
 
 <?php echo $write_pages ?>
+<!-- } 전체게시물 목록 끝 -->
