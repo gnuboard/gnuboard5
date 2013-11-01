@@ -18,6 +18,7 @@ if ($board['bo_use_category']) {
         $category = trim($categories[$i]);
         if ($category=='') continue;
         $category_option .= '<li><a href="'.($category_href."&amp;sca=".urlencode($category)).'"';
+        $category_msg = '';
         if ($category==$sca) { // 현재 선택된 카테고리라면
             $category_option .= ' id="bo_cate_on"';
             $category_msg = '<span class="sound_only">열린 분류 </span>';
