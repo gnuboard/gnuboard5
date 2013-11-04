@@ -467,7 +467,7 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="cf_filter">단어 필터링</label></th>
             <td colspan="3">
                 <?php echo help('입력된 단어가 포함된 내용은 게시할 수 없습니다. 단어와 단어 사이는 ,로 구분합니다.') ?>
-                <textarea name="cf_filter" id="cf_filter" rows="7"><?php echo $config['cf_filter'] ?> </textarea>
+                <textarea name="cf_filter" id="cf_filter" rows="7"><?php echo $config['cf_filter'] ?></textarea>
              </td>
         </tr>
         </tbody>
