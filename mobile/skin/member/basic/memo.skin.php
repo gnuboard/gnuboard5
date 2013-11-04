@@ -13,7 +13,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
     </ul>
 
-    <div class="tbl_head01 tbl_wrp">
+    <div class="tbl_head01 tbl_wrap">
         <table>
         <caption>
             전체 <?php echo $kind_title ?>쪽지 <?php echo $total_count ?>통<br>

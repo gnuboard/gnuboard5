@@ -50,7 +50,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     echo $option_hidden;
     ?>
-    <div id="bo_w" class="tbl_frm01 tbl_wrp">
+    <div id="bo_w" class="tbl_frm01 tbl_wrap">
         <table>
         <caption><?php echo $g5['title'] ?></caption>
         <tbody>
@@ -116,7 +116,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
                 <?php if($write_min || $write_max) { ?>
                 <!-- 최소/최대 글자 수 사용 시 -->
-                <div id="char_count_wrp"><span id="char_count"></span>글자</div>
+                <div id="char_count_wrap"><span id="char_count"></span>글자</div>
                 <?php } ?>
             </td>
         </tr>
