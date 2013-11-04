@@ -17,14 +17,12 @@ if ($is_nogood) $colspan++;
 <div id="bo_list<?php if ($is_admin) echo "_admin"; ?>">
 
     <?php if ($is_category) { ?>
-    <form name="fcategory" id="fcategory" method="get">
     <nav id="bo_cate">
         <h2><?php echo $board['bo_subject'] ?> 카테고리</h2>
         <ul id="bo_cate_ul">
             <?php echo $category_option ?>
         </ul>
     </nav>
-    </form>
     <?php } ?>
 
     <div class="bo_fx">
@@ -154,7 +152,7 @@ if ($is_nogood) $colspan++;
         <option value="wr_name,1"<?php echo get_selected($sfl, 'wr_name,1'); ?>>글쓴이</option>
         <option value="wr_name,0"<?php echo get_selected($sfl, 'wr_name,0'); ?>>글쓴이(코)</option>
     </select>
-    <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어(필수)" required class="required frm_input" size="15" maxlength="15">
+    <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어(필수)" required id="stx" class="required frm_input" size="15" maxlength="15">
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </fieldset>

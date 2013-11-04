@@ -7,36 +7,33 @@ include_once(G5_LIB_PATH.'/icode.sms.lib.php');
 auth_check($auth[$sub_menu], "w");
 
 $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
-$od = sql_fetch($sql);
-
+$od  = sql_fetch($sql);
 if(!$od['od_id'])
     alert('주문자료가 존재하지 않습니다.');
 
-if ($od_receipt_time)
-{
+if ($od_receipt_time) {
     if (check_datetime($od_receipt_time) == false)
         alert('결제일시 오류입니다.');
 }
 
 // 결제정보 반영
 $sql = " update {$g5['g5_shop_order_table']}
-            set od_deposit_name    = '$od_deposit_name',
-                od_bank_account    = '$od_bank_account',
-                od_receipt_time    = '$od_receipt_time',
-                od_receipt_price   = '$od_receipt_price',
-                od_receipt_point   = '$od_receipt_point',
-                od_refund_price    = '$od_refund_price',
-                od_deliver_company = '$od_deliver_company',
-                od_invoice         = '$od_invoice',
-                od_invoice_time    = '$od_invoice_time',
-                od_send_cost       = '$od_send_cost',
-                od_send_cost2      = '$od_send_cost2'
+            set od_deposit_name    = '{$_POST['od_deposit_name']}',
+                od_bank_account    = '{$_POST['od_bank_account']}',
+                od_receipt_time    = '{$_POST['od_receipt_time']}',
+                od_receipt_price   = '{$_POST['od_receipt_price']}',
+                od_receipt_point   = '{$_POST['od_receipt_point']}',
+                od_refund_price    = '{$_POST['od_refund_price']}',
+                od_delivery_company= '{$_POST['od_delivery_company']}',
+                od_invoice         = '{$_POST['od_invoice']}',
+                od_invoice_time    = '{$_POST['od_invoice_time']}',
+                od_send_cost       = '{$_POST['od_send_cost']}',
+                od_send_cost2      = '{$_POST['od_send_cost2']}'
             where od_id = '$od_id' ";
 sql_query($sql);
 
 // 주문정보
 $info = get_order_info($od_id);
-
 if(!$info)
     alert('주문자료가 존재하지 않습니다.');
 
@@ -62,17 +59,25 @@ include "./ordersms.inc.php";
 
 
 // 에스크로 배송처리
-if($_POST['od_tno'] && $_POST['od_escrow'] == 1) {
-    $arr_tno = array();
+if($_POST['od_tno'] && $_POST['od_escrow'] == 1) 
+{
+    $arr_tno  = array();
     $arr_corp = array();
     $arr_numb = array();
 
+    /*
     // 배송회사정보
     $sql = " select dl_company from {$g5['g5_shop_delivery_table']} where dl_id = '$dl_id' ";
     $row = sql_fetch($sql);
 
-    $arr_tno[0] = $_POST['od_tno'];
+    $arr_tno[0]  = $_POST['od_tno'];
     $arr_corp[0] = $row['dl_company'];
+    $arr_numb[0] = $od_invoice;
+    $cust_ip = getenv('REMOTE_ADDR');
+    */
+
+    $arr_tno[0]  = $_POST['od_tno'];
+    $arr_corp[0] = $od_delivery_company;
     $arr_numb[0] = $od_invoice;
     $cust_ip = getenv('REMOTE_ADDR');
 

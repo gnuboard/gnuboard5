@@ -11,14 +11,12 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 <div id="bo_gall" style="width:<?php echo $width; ?>">
 
     <?php if ($is_category) { ?>
-    <form name="fcategory" id="fcategory" method="get">
     <nav id="bo_cate">
         <h2><?php echo $board['bo_subject'] ?> 카테고리</h2>
         <ul id="bo_cate_ul">
             <?php echo $category_option ?>
         </ul>
     </nav>
-    </form>
     <?php } ?>
 
     <div class="bo_fx">
@@ -176,7 +174,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
         <option value="wr_name,0"<?php echo get_selected($sfl, 'wr_name,0'); ?>>글쓴이(코)</option>
     </select>
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required class="frm_input required" size="15" maxlength="15">
+    <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="frm_input required" size="15" maxlength="15">
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </fieldset>
