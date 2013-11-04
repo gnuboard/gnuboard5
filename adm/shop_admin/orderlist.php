@@ -442,8 +442,8 @@ $(function(){
             "./ajax.orderitem.php",
             { od_id: od_id },
             function(data) {
-                $this.parent().append("<div id=\"orderitemlist\"><div></div></div>");
-                $("#orderitemlist > div")
+                $this.parent().append("<div id=\"orderitemlist\"><div class=\"itemlist\"></div></div>");
+                $("#orderitemlist .itemlist")
                     .html(data)
                     .append("<div><button type=\"button\" id=\"orderitemlist-x\">닫기</button></div>");
             }

@@ -442,7 +442,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 /* 주문내역 */
 #sodr_list td {text-align:center !important}
 #orderitemlist {position:relative}
-#orderitemlist > div {position:absolute;top:0;left:0}
+#orderitemlist .itemlist {position:absolute;top:0;left:0}
 
 /* 주문내역 수정 */
 .sodr_nonpay {color:#ff6600}
