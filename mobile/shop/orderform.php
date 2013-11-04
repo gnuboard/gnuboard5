@@ -41,13 +41,15 @@ ob_start();
         <table id="sod_list">
         <thead>
         <tr>
-            <th scope="col">상품이미지</th>
-            <th scope="col">상품명</th>
-            <th scope="col">총수량</th>
-            <th scope="col">판매가</th>
-            <th scope="col">쿠폰</th>
-            <th scope="col">소계</th>
-            <th scope="col">포인트</th>
+            <th scope="col" rowspan="2">상품이미지</th>
+            <th scope="col" colspan="5" id="th_it">상품명</th>
+        </tr>
+        <tr>
+            <th scope="col" id="th_itall">총수량</th>
+            <th scope="col" id="th_itprice">판매가</th>
+            <th scope="col" id="th_cp">쿠폰</th>
+            <th scope="col" id="th_cnt">소계</th>
+            <th scope="col" id="th_pt">포인트</th>
         </tr>
         </thead>
         <tbody>
@@ -177,8 +179,8 @@ ob_start();
         ?>
 
         <tr>
-            <td class="sod_bsk_img"><?php echo $image; ?></td>
-            <td>
+            <td rowspan="2" class="sod_bsk_img"><?php echo $image; ?></td>
+            <td headers ="th_it" colspan="5">
                 <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
                 <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
                 <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo $sell_price; ?>">
@@ -189,11 +191,13 @@ ob_start();
                 <?php } ?>
                 <?php echo $it_name.$mod_options; ?>
             </td>
-            <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
-            <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
-            <td class="td_mngsmall"><?php echo $cp_button; ?></td>
-            <td class="td_numbig"><span class="ct_sell_price"><?php echo number_format($sell_price); ?></span></td>
-            <td class="td_num"><?php echo number_format($sum['point']); ?></td>
+        </tr>
+        <tr>
+            <td headers ="th_itall" class="td_num"><?php echo number_format($sum['qty']); ?></td>
+            <td headers ="th_itprice" class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
+            <td headers ="th_cp" class="td_mngsmall"><?php echo $cp_button; ?></td>
+            <td headers ="th_cnt" class="td_numbig"><span class="ct_sell_price"><?php echo number_format($sell_price); ?></span></td>
+            <td headers ="th_pt" class="td_num"><?php echo number_format($sum['point']); ?></td>
         </tr>
 
         <?php
