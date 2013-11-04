@@ -38,7 +38,7 @@ function editor_html($id, $content, $is_dhtml_editor=true)
     }
 
     $ckeditor_class = $is_dhtml_editor ? "ckeditor" : "";
-    $html .= "\n<textarea id=\"$id\" name=\"$id\" class=\"$ckeditor_class\" style=\"width:100%;\" maxlength=\"65536\">$content</textarea>";
+    $html .= "\n<textarea id=\"$id\" name=\"$id\" class=\"$ckeditor_class\" maxlength=\"65536\">$content</textarea>";
     $html .= "\n<span class=\"sound_only\">웹 에디터 끝</span>";
     return $html;
 }

@@ -33,7 +33,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- } 전체게시물 검색 끝 -->
 
 <!-- 전체게시물 목록 시작 { -->
-<div class="tbl_head01 tbl_wrp">
+<div class="tbl_head01 tbl_wrap">
     <table>
     <thead>
     <tr>

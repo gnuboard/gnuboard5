@@ -33,7 +33,7 @@ if ($od_status) {
             $sort1 = "od_receipt_time";
             $sort2 = "desc";
             break;
-        case '배송' :   // 배송중 
+        case '배송' :   // 배송중
             $sort1 = "od_invoice_time";
             $sort2 = "desc";
             break;
@@ -292,7 +292,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a><br>
         </td> -->
         <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
-            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
+            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
             <?php echo $od_mobile; ?>
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
@@ -426,10 +426,43 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <script>
 $(function(){
-    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); 
+    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
+
+    // 주문상품보기
+    $(".orderitem").on("click", function() {
+        var $this = $(this);
+        var od_id = $this.text().replace(/[^0-9]/g, "");
+
+        if($this.next().size())
+            return false;
+
+        $("#orderitemlist").remove();
+
+        $.post(
+            "./ajax.orderitem.php",
+            { od_id: od_id },
+            function(data) {
+                $this.parent().append("<div id=\"orderitemlist\"><div></div></div>");
+                $("#orderitemlist > div")
+                    .html(data)
+                    .append("<div><button type=\"button\" id=\"orderitemlist-x\">닫기</button></div>");
+            }
+        );
+
+        return false;
+    });
+
+    // 상품리스트 닫기
+    $("#orderitemlist-x").on("click", function() {
+        $("#orderitemlist").remove();
+    });
+
+    $("body").on("click", function() {
+        $("#orderitemlist").remove();
+    });
 });
 
-function set_date(today) 
+function set_date(today)
 {
     if (today == "오늘") {
         document.getElementById("fr_date").value = "<?php echo G5_TIME_YMD; ?>";
@@ -468,10 +501,10 @@ function forderlist_submit(f)
 
     /*
     switch (f.od_status.value) {
-        case "" : 
+        case "" :
             alert("변경하실 주문상태를 선택하세요.");
             return false;
-        case '주문' : 
+        case '주문' :
 
         default :
 
@@ -493,9 +526,9 @@ function forderlist_submit(f)
 
     var chk = document.getElementsByName("chk[]");
 
-    for (var i=0; i<chk.length; i++) 
+    for (var i=0; i<chk.length; i++)
     {
-        if (chk[i].checked) 
+        if (chk[i].checked)
         {
             var k = chk[i].value;
             var current_settle_case = f.elements['current_settle_case['+k+']'].value;
@@ -503,21 +536,21 @@ function forderlist_submit(f)
 
             switch (change_status)
             {
-                case "입금" : 
+                case "입금" :
                     if (!(current_status == "주문" && current_settle_case == "무통장")) {
                         alert("'주문' 상태의 '무통장'(결제수단)인 경우에만 '입금' 처리 가능합니다.");
                         return false;
                     }
                     break;
 
-                case "준비" : 
+                case "준비" :
                     if (current_status != "입금") {
                         alert("'입금' 상태의 주문만 '준비'로 변경이 가능합니다.");
                         return false;
                     }
                     break;
 
-                case "배송" : 
+                case "배송" :
                     if (current_status != "준비") {
                         alert("'준비' 상태의 주문만 '배송'으로 변경이 가능합니다.");
                         return false;
@@ -552,7 +585,7 @@ function forderlist_submit(f)
 
     if (!confirm("선택하신 주문서의 주문상태를 '"+change_status+"'상태로 변경하시겠습니까?"))
         return false;
-    
+
     f.action = "./orderlistupdate.php";
     return true;
 }

@@ -119,8 +119,10 @@
 
 /* 게시판 쓰기 */
 #char_count_desc {display:block;margin:0 0 5px;padding:0}
-#char_count_wrp {margin:5px 0 0;text-align:right}
+#char_count_wrap {margin:5px 0 0;text-align:right}
 #char_count {font-weight:bold}
+
+#wr_email, #wr_homepage, #wr_subject, .wr_link {width:100%}
 
 /* 게시판 읽기 */
 #bo_v {margin-bottom:15px;padding-bottom:15px}

@@ -15,7 +15,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </ul>
 
     <form name="fmemoform" action="<?php echo $memo_action_url; ?>" onsubmit="return fmemoform_submit(this);" method="post" autocomplete="off">
-    <div class="tbl_frm01 tbl_wrp">
+    <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>쪽지쓰기</caption>
         <tbody>

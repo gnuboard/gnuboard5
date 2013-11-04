@@ -23,7 +23,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </div>
     <div>
         <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="stx" value="<?php echo $text_stx ?>" class="frm_input" required class="required" size="14" maxlength="20">
+        <input type="text" name="stx" value="<?php echo $text_stx ?>" class="frm_input" required class="required" maxlength="20">
         <input type="submit" class="btn_submit" value="검색">
 
         <script>

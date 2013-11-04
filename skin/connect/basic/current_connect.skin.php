@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $connect_skin_url ?>/style.css">
 
 <!-- 현재접속자 목록 시작 { -->
-<div class="tbl_head01 tbl_wrp">
+<div class="tbl_head01 tbl_wrap">
     <table id="current_connect_tbl">
     <thead>
     <tr>

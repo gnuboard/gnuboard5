@@ -50,14 +50,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     echo $option_hidden;
     ?>
-    <div id="bo_w" class="tbl_frm01 tbl_wrp">
+    <div id="bo_w" class="tbl_frm01 tbl_wrap">
         <table>
         <caption><?php echo $g5['title'] ?></caption>
         <tbody>
         <?php if ($is_name) { ?>
         <tr>
             <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input required" size="10" maxlength="20"></td>
+            <td><input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input required" size="3" maxlength="20"></td>
         </tr>
         <?php } ?>
 
@@ -71,14 +71,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php if ($is_email) { ?>
         <tr>
             <th scope="row"><label for="wr_email">이메일</label></th>
-            <td><input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email" size="50" maxlength="100"></td>
+            <td><input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email" maxlength="100"></td>
         </tr>
         <?php } ?>
 
         <?php if ($is_homepage) { ?>
         <tr>
             <th scope="row"><label for="wr_homepage">홈페이지</label></th>
-            <td><input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input" size="50"></td>
+            <td><input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input"></td>
         </tr>
         <?php } ?>
 
@@ -103,7 +103,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <tr>
             <th scope="row"><label for="wr_subject">제목<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required" size="50"></td>
+            <td><input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input required"></td>
         </tr>
 
         <tr>
@@ -116,7 +116,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
                 <?php if($write_min || $write_max) { ?>
                 <!-- 최소/최대 글자 수 사용 시 -->
-                <div id="char_count_wrp"><span id="char_count"></span>글자</div>
+                <div id="char_count_wrap"><span id="char_count"></span>글자</div>
                 <?php } ?>
             </td>
         </tr>
@@ -124,7 +124,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
         <tr>
             <th scope="row"><label for="wr_link<?php echo $i ?>">링크 #<?php echo $i ?></label></th>
-            <td><input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input" size="50"></td>
+            <td><input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input wr_link"></td>
         </tr>
         <?php } ?>
 
@@ -134,7 +134,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <td>
                 <input type="file" name="bf_file[]" title="파일첨부 <?php echo $i+1 ?> :  용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file frm_input">
                 <?php if ($is_file_content) { ?>
-                <input type="text" name="bf_content[]" value="<?php echo $file[$i]['bf_content']; ?>" title="파일 설명을 입력해주세요." class="frm_file frm_input" size="50">
+                <input type="text" name="bf_content[]" value="<?php echo $file[$i]['bf_content']; ?>" title="파일 설명을 입력해주세요." class="frm_file frm_input">
                 <?php } ?>
                 <?php if($w == 'u' && $file[$i]['file']) { ?>
                 <input type="checkbox" id="bf_file_del<?php echo $i ?>" name="bf_file_del[<?php echo $i; ?>]" value="1"> <label for="bf_file_del<?php echo $i ?>"><?php echo $file[$i]['source'].'('.$file[$i]['size'].')'; ?> 파일 삭제</label>
