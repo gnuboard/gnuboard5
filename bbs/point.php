@@ -25,7 +25,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 <div id="point" class="new_win">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
-    <div class="tbl_head01 tbl_wrp">
+    <div class="tbl_head01 tbl_wrap">
         <table>
         <caption>포인트 사용내역 목록</caption>
         <thead>

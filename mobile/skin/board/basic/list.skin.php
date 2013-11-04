@@ -48,7 +48,7 @@ if ($is_nogood) $colspan++;
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
 
-    <div class="tbl_head01 tbl_wrp">
+    <div class="tbl_head01 tbl_wrap">
         <table>
         <thead>
         <tr>

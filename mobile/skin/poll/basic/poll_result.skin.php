@@ -59,7 +59,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <?php if ($is_member) { ?><input type="hidden" name="pc_name" value="<?php echo cut_str($member['mb_nick'],255) ?>"><?php } ?>
         <h3><?php echo $po_etc ?></h3>
 
-        <div class="tbl_frm01 tbl_wrp">
+        <div class="tbl_frm01 tbl_wrap">
             <table id="poll_result_wcmt">
             <tbody>
             <?php if ($is_guest) { ?>

@@ -55,7 +55,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <input type="hidden" name="act" value="<?php echo $act ?>">
     <input type="hidden" name="url" value="<?php echo $_SERVER['HTTP_REFERER'] ?>">
 
-    <div class="tbl_head01 tbl_wrp">
+    <div class="tbl_head01 tbl_wrap">
         <table>
         <caption><?php echo $act ?>할 게시판을 한개 이상 선택하여 주십시오.</caption>
         <thead>
