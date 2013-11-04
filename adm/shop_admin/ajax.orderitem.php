@@ -28,7 +28,6 @@ $result = sql_query($sql);
     <h2 class="h2_frm">주문상품 목록</h2>
 
     <div class="tbl_head01 tbl_wrap">
-
         <table>
         <caption>주문 상품 목록</caption>
         <thead>
@@ -71,17 +70,17 @@ $result = sql_query($sql);
             ?>
             <tr>
                 <?php if($k == 0) { ?>
-                <td rowspan="<?php echo $rowspan; ?>">
+                <td class="td_itname" rowspan="<?php echo $rowspan; ?>">
                     <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
                     <?php if($od['od_tax_flag'] && $row['ct_notax']) echo '[비과세상품]'; ?>
                 </td>
                 <?php } ?>
-                <td>
+                <td class="td_itopt_tl">
                     <?php echo $opt['ct_option']; ?>
                 </td>
                 <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
-                <td class="td_num"><?php echo $opt['ct_qty']; ?></td>
-                <td class="td_numsmall"><?php echo number_format($opt_price); ?></td>
+                <td class="td_cntsmall"><?php echo $opt['ct_qty']; ?></td>
+                <td class="td_num"><?php echo number_format($opt_price); ?></td>
                 <td class="td_num"><?php echo number_format($ct_price['stotal']); ?></td>
                 <td class="td_num"><?php echo number_format($opt['cp_price']); ?></td>
                 <td class="td_num"><?php echo number_format($ct_point['stotal']); ?></td>
@@ -95,6 +94,5 @@ $result = sql_query($sql);
         ?>
         </tbody>
         </table>
-
     </div>
 </section>

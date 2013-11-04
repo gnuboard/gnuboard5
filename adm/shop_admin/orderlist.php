@@ -445,7 +445,7 @@ $(function(){
                 $this.parent().append("<div id=\"orderitemlist\"><div class=\"itemlist\"></div></div>");
                 $("#orderitemlist .itemlist")
                     .html(data)
-                    .append("<div><button type=\"button\" id=\"orderitemlist-x\">닫기</button></div>");
+                    .append("<div id=\"orderitemlist_close\"><button type=\"button\" id=\"orderitemlist-x\" class=\"btn_frmline\">닫기</button></div>");
             }
         );
 
@@ -453,7 +453,7 @@ $(function(){
     });
 
     // 상품리스트 닫기
-    $("#orderitemlist-x").on("click", function() {
+    $(".orderitemlist-x").on("click", function() {
         $("#orderitemlist").remove();
     });
 
