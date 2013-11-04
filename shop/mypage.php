@@ -83,43 +83,45 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     <section id="smb_my_wish">
         <h2>최근 위시리스트</h2>
 
-        <table class="basic_tbl">
-        <thead>
-        <tr>
-            <th scope="col">이미지</th>
-            <th scope="col">상품명</th>
-            <th scope="col">보관일시</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sql = " select *
-                   from {$g5['g5_shop_wish_table']} a,
-                        {$g5['g5_shop_item_table']} b
-                  where a.mb_id = '{$member['mb_id']}'
-                    and a.it_id  = b.it_id
-                  order by a.wi_id desc
-                  limit 0, 3 ";
-        $result = sql_query($sql);
-        for ($i=0; $row = sql_fetch_array($result); $i++)
-        {
-            $image = get_it_image($row['it_id'], 70, 70, true);
-        ?>
+        <div class="tbl_head01 tbl_wrap">
+            <table>
+            <thead>
+            <tr>
+                <th scope="col">이미지</th>
+                <th scope="col">상품명</th>
+                <th scope="col">보관일시</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql = " select *
+                       from {$g5['g5_shop_wish_table']} a,
+                            {$g5['g5_shop_item_table']} b
+                      where a.mb_id = '{$member['mb_id']}'
+                        and a.it_id  = b.it_id
+                      order by a.wi_id desc
+                      limit 0, 3 ";
+            $result = sql_query($sql);
+            for ($i=0; $row = sql_fetch_array($result); $i++)
+            {
+                $image = get_it_image($row['it_id'], 70, 70, true);
+            ?>
 
-        <tr>
-            <td class="smb_my_img"><?php echo $image; ?></td>
-            <td><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
-            <td class="td_datetime"><?php echo $row['wi_time']; ?></td>
-        </tr>
+            <tr>
+                <td class="smb_my_img"><?php echo $image; ?></td>
+                <td><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
+                <td class="td_datetime"><?php echo $row['wi_time']; ?></td>
+            </tr>
 
-        <?php
-        }
+            <?php
+            }
 
-        if ($i == 0)
-            echo '<tr><td colspan="3" class="empty_table">보관 내역이 없습니다.</td></tr>';
-        ?>
-        </tbody>
-        </table>
+            if ($i == 0)
+                echo '<tr><td colspan="3" class="empty_table">보관 내역이 없습니다.</td></tr>';
+            ?>
+            </tbody>
+            </table>
+        </div>
 
         <div id="smb_my_more">
             <a href="./wishlist.php" class="btn01">위시리스트 더보기</a>

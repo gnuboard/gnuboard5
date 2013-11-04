@@ -10,104 +10,106 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 <div id="sod_bsk">
 
     <form name="frmcartlist" id="sod_bsk_list" method="post" action="<?php echo $cart_action_url; ?>">
-    <table class="basic_tbl">
-    <thead>
-    <tr>
-        <th scope="col">상품이미지</th>
-        <th scope="col">상품명</th>
-        <th scope="col">총수량</th>
-        <th scope="col">판매가</th>
-        <th scope="col">소계</th>
-        <th scope="col">포인트</th>
-        <th scope="col"><input type="checkbox" name="ct_all" value="1" checked="checked"></th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    $tot_point = 0;
-    $tot_sell_price = 0;
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <thead>
+        <tr>
+            <th scope="col">상품이미지</th>
+            <th scope="col">상품명</th>
+            <th scope="col">총수량</th>
+            <th scope="col">판매가</th>
+            <th scope="col">소계</th>
+            <th scope="col">포인트</th>
+            <th scope="col"><input type="checkbox" name="ct_all" value="1" checked="checked"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $tot_point = 0;
+        $tot_sell_price = 0;
 
-    // $s_cart_id 로 현재 장바구니 자료 쿼리
-    $sql = " select a.ct_id,
-                    a.it_id,
-                    a.it_name,
-                    a.ct_price,
-                    a.ct_point,
-                    a.ct_qty,
-                    a.ct_status,
-                    a.ct_send_cost,
-                    b.ca_id
-               from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
-              where a.od_id = '$s_cart_id' ";
-    if($default['de_cart_keep_term']) {
-        $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
-        $sql .= " and a.ct_time > '$ctime' ";
-    }
-    $sql .= " group by a.it_id ";
-    $sql .= " order by a.ct_id ";
-    $result = sql_query($sql);
-
-    $it_send_cost = 0;
-
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
-    {
-        // 합계금액 계산
-        $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-                        SUM(ct_point * ct_qty) as point,
-                        SUM(ct_qty) as qty
-                    from {$g5['g5_shop_cart_table']}
-                    where it_id = '{$row['it_id']}'
-                      and od_id = '$s_cart_id' ";
-        $sum = sql_fetch($sql);
-
-        if ($i==0) { // 계속쇼핑
-            $continue_ca_id = $row['ca_id'];
+        // $s_cart_id 로 현재 장바구니 자료 쿼리
+        $sql = " select a.ct_id,
+                        a.it_id,
+                        a.it_name,
+                        a.ct_price,
+                        a.ct_point,
+                        a.ct_qty,
+                        a.ct_status,
+                        a.ct_send_cost,
+                        b.ca_id
+                   from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
+                  where a.od_id = '$s_cart_id' ";
+        if($default['de_cart_keep_term']) {
+            $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+            $sql .= " and a.ct_time > '$ctime' ";
         }
+        $sql .= " group by a.it_id ";
+        $sql .= " order by a.ct_id ";
+        $result = sql_query($sql);
 
-        $a1 = '<a href="./item.php?it_id='.$row['it_id'].'"><b>';
-        $a2 = '</b></a>';
-        $image = get_it_image($row['it_id'], 70, 70);
+        $it_send_cost = 0;
 
-        $it_name = $a1 . stripslashes($row['it_name']) . $a2;
-        $it_options = print_item_options($row['it_id'], $s_cart_id);
-        if($it_options) {
-            $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
-            $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
+        for ($i=0; $row=mysql_fetch_array($result); $i++)
+        {
+            // 합계금액 계산
+            $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                            SUM(ct_point * ct_qty) as point,
+                            SUM(ct_qty) as qty
+                        from {$g5['g5_shop_cart_table']}
+                        where it_id = '{$row['it_id']}'
+                          and od_id = '$s_cart_id' ";
+            $sum = sql_fetch($sql);
+
+            if ($i==0) { // 계속쇼핑
+                $continue_ca_id = $row['ca_id'];
+            }
+
+            $a1 = '<a href="./item.php?it_id='.$row['it_id'].'"><b>';
+            $a2 = '</b></a>';
+            $image = get_it_image($row['it_id'], 70, 70);
+
+            $it_name = $a1 . stripslashes($row['it_name']) . $a2;
+            $it_options = print_item_options($row['it_id'], $s_cart_id);
+            if($it_options) {
+                $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
+                $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
+            }
+
+            $point      = $sum['point'];
+            $sell_price = $sum['price'];
+        ?>
+
+        <tr>
+            <td class="sod_bsk_img"><?php echo $image; ?></td>
+            <td>
+                <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
+                <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
+                <?php echo $it_name.$mod_options; ?>
+            </td>
+
+            <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
+            <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
+            <td class="td_numbig"><?php echo number_format($sell_price); ?></td>
+            <td class="td_num"><?php echo number_format($sum['point']); ?></td>
+            <td class="td_mngsmall"><input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" checked="checked"></td>
+        </tr>
+
+        <?php
+            $tot_point      += $point;
+            $tot_sell_price += $sell_price;
+        } // for 끝
+
+        if ($i == 0) {
+            echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+        } else {
+            // 배송비 계산
+            $send_cost = get_sendcost($s_cart_id, 0);
         }
-
-        $point      = $sum['point'];
-        $sell_price = $sum['price'];
-    ?>
-
-    <tr>
-        <td class="sod_bsk_img"><?php echo $image; ?></td>
-        <td>
-            <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
-            <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-            <?php echo $it_name.$mod_options; ?>
-        </td>
-
-        <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
-        <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
-        <td class="td_bignum"><?php echo number_format($sell_price); ?></td>
-        <td class="td_num"><?php echo number_format($sum['point']); ?></td>
-        <td class="td_smallmng"><input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" checked="checked"></td>
-    </tr>
-
-    <?php
-        $tot_point      += $point;
-        $tot_sell_price += $sell_price;
-    } // for 끝
-
-    if ($i == 0) {
-        echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
-    } else {
-        // 배송비 계산
-        $send_cost = get_sendcost($s_cart_id, 0);
-    }
-    ?>
-    </tbody>
-    </table>
+        ?>
+        </tbody>
+        </table>
+    </div>
 
     <?php
     $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비

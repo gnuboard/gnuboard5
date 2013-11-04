@@ -21,68 +21,71 @@ include_once('./_head.php');
     <input type="hidden" name="sw_direct" value="">
     <input type="hidden" name="prog"      value="wish">
 
-    <table class="basic_tbl">
-    <thead>
-    <tr>
-        <th scope="col">선택</th>
-        <th scope="col">이미지</th>
-        <th scope="col">상품명</th>
-        <th scope="col">보관일시</th>
-        <th scope="col">삭제</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    $sql  = " select a.wi_id, a.wi_time, b.* from {$g5['g5_shop_wish_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id ) ";
-    $sql .= " where a.mb_id = '{$member['mb_id']}' order by a.wi_id desc ";
-    $result = sql_query($sql);
-    for ($i=0; $row = mysql_fetch_array($result); $i++) {
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <thead>
+        <tr>
+            <th scope="col">선택</th>
+            <th scope="col">이미지</th>
+            <th scope="col">상품명</th>
+            <th scope="col">보관일시</th>
+            <th scope="col">삭제</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $sql  = " select a.wi_id, a.wi_time, b.* from {$g5['g5_shop_wish_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id ) ";
+        $sql .= " where a.mb_id = '{$member['mb_id']}' order by a.wi_id desc ";
+        $result = sql_query($sql);
+        for ($i=0; $row = mysql_fetch_array($result); $i++) {
 
-        $out_cd = '';
-        $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
-        $tmp = sql_fetch($sql);
-        if($tmp['cnt'])
-            $out_cd = 'no';
+            $out_cd = '';
+            $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
+            $tmp = sql_fetch($sql);
+            if($tmp['cnt'])
+                $out_cd = 'no';
 
-        $it_price = get_price($row);
+            $it_price = get_price($row);
 
-        if ($row['it_tel_inq']) $out_cd = 'tel_inq';
+            if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
-        $image = get_it_image($row['it_id'], 70, 70);
-        $it_point = get_item_point($row);
-    ?>
+            $image = get_it_image($row['it_id'], 70, 70);
+            $it_point = get_item_point($row);
+        ?>
 
-    <tr>
-        <td class="td_chk">
-            <?php
-            // 품절검사
-            $it_stock_qty = get_it_stock_qty($row['it_id']);
-            if($it_stock_qty <= 0)
-            {
-            ?>
-            품절
-            <?php } else { //품절이 아니면 체크할수 있도록한다 ?>
-            <input type="checkbox" name="chk_it_id[<?php echo $i; ?>]" value="1" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
-            <?php } ?>
-            <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
-            <input type="hidden" name="io_type[<?php echo $row['it_id']; ?>][0]" value="0">
-            <input type="hidden" name="io_id[<?php echo $row['it_id']; ?>][0]" value="">
-            <input type="hidden" name="io_value[<?php echo $row['it_id']; ?>][0]" value="<?php echo $row['it_name']; ?>">
-            <input type="hidden"   name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
-        </td>
-        <td class="sod_ws_img"><?php echo $image; ?></td>
-        <td><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
-        <td class="td_datetime"><?php echo $row['wi_time']; ?></td>
-        <td class="td_smallmng"><a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
-    </tr>
-    <?php
-    }
+        <tr>
+            <td class="td_chk">
+                <?php
+                // 품절검사
+                $it_stock_qty = get_it_stock_qty($row['it_id']);
+                if($it_stock_qty <= 0)
+                {
+                ?>
+                품절
+                <?php } else { //품절이 아니면 체크할수 있도록한다 ?>
+                <input type="checkbox" name="chk_it_id[<?php echo $i; ?>]" value="1" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
+                <?php } ?>
+                <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
+                <input type="hidden" name="io_type[<?php echo $row['it_id']; ?>][0]" value="0">
+                <input type="hidden" name="io_id[<?php echo $row['it_id']; ?>][0]" value="">
+                <input type="hidden" name="io_value[<?php echo $row['it_id']; ?>][0]" value="<?php echo $row['it_name']; ?>">
+                <input type="hidden"   name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
+            </td>
+            <td class="sod_ws_img"><?php echo $image; ?></td>
+            <td><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
+            <td class="td_datetime"><?php echo $row['wi_time']; ?></td>
+            <td class="td_mngsmall"><a href="./wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
+        </tr>
+        <?php
+        }
 
-    if ($i == 0)
-        echo '<tr><td colspan="5" class="empty_table">보관함이 비었습니다.</td></tr>';
-    ?>
-    </tr>
-    </table>
+        if ($i == 0)
+            echo '<tr><td colspan="5" class="empty_table">보관함이 비었습니다.</td></tr>';
+        ?>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 
     <div id="sod_ws_act">
         <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">장바구니 담기</button>

@@ -166,183 +166,186 @@ function get_intall_file()
 <div id="sod_frm">
     <!-- 주문상품 확인 시작 { -->
     <p>주문하실 상품을 확인하세요.</p>
-    <table id="sod_list" class="basic_tbl">
-    <thead>
-    <tr>
-        <th scope="col">상품이미지</th>
-        <th scope="col">상품명</th>
-        <th scope="col">총수량</th>
-        <th scope="col">판매가</th>
-        <th scope="col">쿠폰</th>
-        <th scope="col">소계</th>
-        <th scope="col">포인트</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    $tot_point = 0;
-    $tot_sell_price = 0;
 
-    $goods = $goods_it_id = "";
-    $goods_count = -1;
+    <div class="tbl_head01 tbl_wrap">
+        <table id="sod_list">
+        <thead>
+        <tr>
+            <th scope="col">상품이미지</th>
+            <th scope="col">상품명</th>
+            <th scope="col">총수량</th>
+            <th scope="col">판매가</th>
+            <th scope="col">쿠폰</th>
+            <th scope="col">소계</th>
+            <th scope="col">포인트</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $tot_point = 0;
+        $tot_sell_price = 0;
 
-    // $s_cart_id 로 현재 장바구니 자료 쿼리
-    $sql = " select a.ct_id,
-                    a.it_id,
-                    a.it_name,
-                    a.ct_price,
-                    a.ct_point,
-                    a.ct_qty,
-                    a.ct_status,
-                    a.ct_send_cost,
-                    b.ca_id,
-                    b.ca_id2,
-                    b.ca_id3,
-                    b.it_notax
-               from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
-              where a.od_id = '$s_cart_id'
-                and a.ct_select = '1' ";
-    if($default['de_cart_keep_term']) {
-        $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
-        $sql .= " and a.ct_time > '$ctime' ";
-    }
-    $sql .= " group by a.it_id ";
-    $sql .= " order by a.ct_id ";
-    $result = sql_query($sql);
+        $goods = $goods_it_id = "";
+        $goods_count = -1;
 
-    $good_info = '';
-    $it_send_cost = 0;
-    $it_cp_count = 0;
+        // $s_cart_id 로 현재 장바구니 자료 쿼리
+        $sql = " select a.ct_id,
+                        a.it_id,
+                        a.it_name,
+                        a.ct_price,
+                        a.ct_point,
+                        a.ct_qty,
+                        a.ct_status,
+                        a.ct_send_cost,
+                        b.ca_id,
+                        b.ca_id2,
+                        b.ca_id3,
+                        b.it_notax
+                   from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
+                  where a.od_id = '$s_cart_id'
+                    and a.ct_select = '1' ";
+        if($default['de_cart_keep_term']) {
+            $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+            $sql .= " and a.ct_time > '$ctime' ";
+        }
+        $sql .= " group by a.it_id ";
+        $sql .= " order by a.ct_id ";
+        $result = sql_query($sql);
 
-    $comm_tax_mny = 0; // 과세금액
-    $comm_vat_mny = 0; // 부가세
-    $comm_free_mny = 0; // 면세금액
-    $tot_tax_mny = 0;
+        $good_info = '';
+        $it_send_cost = 0;
+        $it_cp_count = 0;
 
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
-    {
-        // 합계금액 계산
-        $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
-                        SUM(ct_point * ct_qty) as point,
-                        SUM(ct_qty) as qty
-                    from {$g5['g5_shop_cart_table']}
-                    where it_id = '{$row['it_id']}'
-                      and od_id = '$s_cart_id' ";
-        $sum = sql_fetch($sql);
+        $comm_tax_mny = 0; // 과세금액
+        $comm_vat_mny = 0; // 부가세
+        $comm_free_mny = 0; // 면세금액
+        $tot_tax_mny = 0;
 
-        if (!$goods)
+        for ($i=0; $row=mysql_fetch_array($result); $i++)
         {
-            //$goods = addslashes($row[it_name]);
-            //$goods = get_text($row[it_name]);
-            $goods = preg_replace("/\'|\"|\||\,|\&|\;/", "", $row['it_name']);
-            $goods_it_id = $row['it_id'];
+            // 합계금액 계산
+            $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                            SUM(ct_point * ct_qty) as point,
+                            SUM(ct_qty) as qty
+                        from {$g5['g5_shop_cart_table']}
+                        where it_id = '{$row['it_id']}'
+                          and od_id = '$s_cart_id' ";
+            $sum = sql_fetch($sql);
+
+            if (!$goods)
+            {
+                //$goods = addslashes($row[it_name]);
+                //$goods = get_text($row[it_name]);
+                $goods = preg_replace("/\'|\"|\||\,|\&|\;/", "", $row['it_name']);
+                $goods_it_id = $row['it_id'];
+            }
+            $goods_count++;
+
+            // 에스크로 상품정보
+            if($default['de_escrow_use']) {
+                if ($i>0)
+                    $good_info .= chr(30);
+                $good_info .= "seq=".($i+1).chr(31);
+                $good_info .= "ordr_numb={$od_id}_".sprintf("%04d", $i).chr(31);
+                $good_info .= "good_name=".addslashes($row['it_name']).chr(31);
+                $good_info .= "good_cntx=".$row['ct_qty'].chr(31);
+                $good_info .= "good_amtx=".$row['ct_price'].chr(31);
+            }
+
+            $image = get_it_image($row['it_id'], 50, 50);
+
+            $it_name = '<b>' . stripslashes($row['it_name']) . '</b>';
+            $it_options = print_item_options($row['it_id'], $s_cart_id);
+            if($it_options) {
+                $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
+            }
+
+            // 복합과세금액
+            if($default['de_tax_flag_use']) {
+                if($row['it_notax']) {
+                    $comm_free_mny += $sum['price'];
+                } else {
+                    $tot_tax_mny += $sum['price'];
+                }
+            }
+
+            $point      = $sum['point'];
+            $sell_price = $sum['price'];
+
+            // 쿠폰
+            if($is_member) {
+                $cp_button = '';
+                $cp_count = 0;
+
+                $sql = " select cp_id
+                            from {$g5['g5_shop_coupon_table']}
+                            where mb_id IN ( '{$member['mb_id']}', '전체회원' )
+                              and cp_start <= '".G5_TIME_YMD."'
+                              and cp_end >= '".G5_TIME_YMD."'
+                              and cp_minimum <= '$sell_price'
+                              and (
+                                    ( cp_method = '0' and cp_target = '{$row['it_id']}' )
+                                    OR
+                                    ( cp_method = '1' and ( cp_target IN ( '{$row['ca_id']}', '{$row['ca_id2']}', '{$row['ca_id3']}' ) ) )
+                                  ) ";
+                $res = sql_query($sql);
+
+                for($k=0; $cp=sql_fetch_array($res); $k++) {
+                    if(is_used_coupon($member['mb_id'], $cp['cp_id']))
+                        continue;
+
+                    $cp_count++;
+                }
+
+                if($cp_count) {
+                    $cp_button = '<button type="button" class="it_coupon_btn btn_frmline">적용</button>';
+                    $it_cp_count++;
+                }
+            }
+        ?>
+
+        <tr>
+            <td class="sod_bsk_img"><?php echo $image; ?></td>
+            <td>
+                <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
+                <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
+                <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo $sell_price; ?>">
+                <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
+                <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
+                <?php if($default['de_tax_flag_use']) { ?>
+                <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
+                <?php } ?>
+                <?php echo $it_name.$mod_options; ?>
+            </td>
+            <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
+            <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
+            <td class="td_mngsmall"><?php echo $cp_button; ?></td>
+            <td class="td_numbig"><span class="ct_sell_price"><?php echo number_format($sell_price); ?></span></td>
+            <td class="td_numbig"><?php echo number_format($point); ?></td>
+        </tr>
+
+        <?php
+            $tot_point      += $point;
+            $tot_sell_price += $sell_price;
+        } // for 끝
+
+        if ($i == 0) {
+            //echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+            alert('장바구니가 비어 있습니다.', G5_SHOP_URL.'/cart.php');
+        } else {
+            // 배송비 계산
+            $send_cost = get_sendcost($s_cart_id);
         }
-        $goods_count++;
 
-        // 에스크로 상품정보
-        if($default['de_escrow_use']) {
-            if ($i>0)
-                $good_info .= chr(30);
-            $good_info .= "seq=".($i+1).chr(31);
-            $good_info .= "ordr_numb={$od_id}_".sprintf("%04d", $i).chr(31);
-            $good_info .= "good_name=".addslashes($row['it_name']).chr(31);
-            $good_info .= "good_cntx=".$row['ct_qty'].chr(31);
-            $good_info .= "good_amtx=".$row['ct_price'].chr(31);
-        }
-
-        $image = get_it_image($row['it_id'], 50, 50);
-
-        $it_name = '<b>' . stripslashes($row['it_name']) . '</b>';
-        $it_options = print_item_options($row['it_id'], $s_cart_id);
-        if($it_options) {
-            $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
-        }
-
-        // 복합과세금액
+        // 복합과세처리
         if($default['de_tax_flag_use']) {
-            if($row['it_notax']) {
-                $comm_free_mny += $sum['price'];
-            } else {
-                $tot_tax_mny += $sum['price'];
-            }
+            $comm_tax_mny = round(($tot_tax_mny + $send_cost) / 1.1);
+            $comm_vat_mny = ($tot_tax_mny + $send_cost) - $comm_tax_mny;
         }
-
-        $point      = $sum['point'];
-        $sell_price = $sum['price'];
-
-        // 쿠폰
-        if($is_member) {
-            $cp_button = '';
-            $cp_count = 0;
-
-            $sql = " select cp_id
-                        from {$g5['g5_shop_coupon_table']}
-                        where mb_id IN ( '{$member['mb_id']}', '전체회원' )
-                          and cp_start <= '".G5_TIME_YMD."'
-                          and cp_end >= '".G5_TIME_YMD."'
-                          and cp_minimum <= '$sell_price'
-                          and (
-                                ( cp_method = '0' and cp_target = '{$row['it_id']}' )
-                                OR
-                                ( cp_method = '1' and ( cp_target IN ( '{$row['ca_id']}', '{$row['ca_id2']}', '{$row['ca_id3']}' ) ) )
-                              ) ";
-            $res = sql_query($sql);
-
-            for($k=0; $cp=sql_fetch_array($res); $k++) {
-                if(is_used_coupon($member['mb_id'], $cp['cp_id']))
-                    continue;
-
-                $cp_count++;
-            }
-
-            if($cp_count) {
-                $cp_button = '<button type="button" class="it_coupon_btn btn_frmline">적용</button>';
-                $it_cp_count++;
-            }
-        }
-    ?>
-
-    <tr>
-        <td class="sod_bsk_img"><?php echo $image; ?></td>
-        <td>
-            <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
-            <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-            <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo $sell_price; ?>">
-            <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
-            <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
-            <?php if($default['de_tax_flag_use']) { ?>
-            <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
-            <?php } ?>
-            <?php echo $it_name.$mod_options; ?>
-        </td>
-        <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
-        <td class="td_bignum"><?php echo number_format($row['ct_price']); ?></td>
-        <td class="td_smallmng"><?php echo $cp_button; ?></td>
-        <td class="td_bignum"><span class="ct_sell_price"><?php echo number_format($sell_price); ?></span></td>
-        <td class="td_bignum"><?php echo number_format($point); ?></td>
-    </tr>
-
-    <?php
-        $tot_point      += $point;
-        $tot_sell_price += $sell_price;
-    } // for 끝
-
-    if ($i == 0) {
-        //echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
-        alert('장바구니가 비어 있습니다.', G5_SHOP_URL.'/cart.php');
-    } else {
-        // 배송비 계산
-        $send_cost = get_sendcost($s_cart_id);
-    }
-
-    // 복합과세처리
-    if($default['de_tax_flag_use']) {
-        $comm_tax_mny = round(($tot_tax_mny + $send_cost) / 1.1);
-        $comm_vat_mny = ($tot_tax_mny + $send_cost) - $comm_tax_mny;
-    }
-    ?>
-    </tbody>
-    </table>
+        ?>
+        </tbody>
+        </table>
+    </div>
 
     <?php if ($goods_count) $goods .= ' 외 '.$goods_count.'건'; ?>
     <!-- } 주문상품 확인 끝 -->
@@ -615,77 +618,79 @@ function get_intall_file()
     <section id="sod_frm_orderer">
         <h2>주문하시는 분</h2>
 
-        <table class="frm_tbl">
-        <tbody>
-        <tr>
-            <th scope="row"><label for="od_name">이름</label></th>
-            <td><input type="text" name="od_name" value="<?php echo $member['mb_name']; ?>" id="od_name" required class="frm_input required" maxlength="20"></td>
-        </tr>
+        <div class="tbl_frm01 tbl_wrap">
+            <table>
+            <tbody>
+            <tr>
+                <th scope="row"><label for="od_name">이름</label></th>
+                <td><input type="text" name="od_name" value="<?php echo $member['mb_name']; ?>" id="od_name" required class="frm_input required" maxlength="20"></td>
+            </tr>
 
-        <?php if (!$is_member) { // 비회원이면 ?>
-        <tr>
-            <th scope="row"><label for="od_pwd">비밀번호</label></th>
-            <td>
-                <span class="frm_info">영,숫자 3~20자 (주문서 조회시 필요)</span>
-                <input type="password" name="od_pwd" id="od_pwd" required class="frm_input required" maxlength="20">
-            </td>
-        </tr>
-        <?php } ?>
+            <?php if (!$is_member) { // 비회원이면 ?>
+            <tr>
+                <th scope="row"><label for="od_pwd">비밀번호</label></th>
+                <td>
+                    <span class="frm_info">영,숫자 3~20자 (주문서 조회시 필요)</span>
+                    <input type="password" name="od_pwd" id="od_pwd" required class="frm_input required" maxlength="20">
+                </td>
+            </tr>
+            <?php } ?>
 
-        <tr>
-            <th scope="row"><label for="od_tel">전화번호</label></th>
-            <td><input type="text" name="od_tel" value="<?php echo $member['mb_tel']; ?>" id="od_tel" required class="frm_input required" maxlength="20"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="od_hp">핸드폰</label></th>
-            <td><input type="text" name="od_hp" value="<?php echo $member['mb_hp']; ?>" id="od_hp" class="frm_input" maxlength="20"></td>
-        </tr>
-        <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2'; ?>
-        <tr>
-            <th scope="row">주소</th>
-            <td>
-                <label for="od_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_zip1" value="<?php echo $member['mb_zip1'] ?>" id="od_zip1" required class="frm_input required" size="2" maxlength="3">
-                -
-                <label for="od_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_zip2" required class="frm_input required" size="2" maxlength="3">
-                <span id="od_win_zip" style="display:block"></span>
-                <label for="od_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="50">
-                <label for="od_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" required class="frm_input frm_address required" size="50">
-                <script>
-                // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-                $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zip');
-                $("#od_win_zip").css("display", "inline");
-                $("#od_zip1, #od_zip2, #od_addr1").attr('readonly', 'readonly');
-                </script>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="od_email">E-mail</label></th>
-            <td><input type="text" name="od_email" value="<?php echo $member['mb_email']; ?>" id="od_email" required class="frm_input required" size="35" maxlength="100"></td>
-        </tr>
+            <tr>
+                <th scope="row"><label for="od_tel">전화번호</label></th>
+                <td><input type="text" name="od_tel" value="<?php echo $member['mb_tel']; ?>" id="od_tel" required class="frm_input required" maxlength="20"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="od_hp">핸드폰</label></th>
+                <td><input type="text" name="od_hp" value="<?php echo $member['mb_hp']; ?>" id="od_hp" class="frm_input" maxlength="20"></td>
+            </tr>
+            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2'; ?>
+            <tr>
+                <th scope="row">주소</th>
+                <td>
+                    <label for="od_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_zip1" value="<?php echo $member['mb_zip1'] ?>" id="od_zip1" required class="frm_input required" size="2" maxlength="3">
+                    -
+                    <label for="od_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_zip2" required class="frm_input required" size="2" maxlength="3">
+                    <span id="od_win_zip" style="display:block"></span>
+                    <label for="od_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="50">
+                    <label for="od_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" required class="frm_input frm_address required" size="50">
+                    <script>
+                    // 우편번호 자바스크립트 비활성화 대응을 위한 코드
+                    $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zip');
+                    $("#od_win_zip").css("display", "inline");
+                    $("#od_zip1, #od_zip2, #od_addr1").attr('readonly', 'readonly');
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="od_email">E-mail</label></th>
+                <td><input type="text" name="od_email" value="<?php echo $member['mb_email']; ?>" id="od_email" required class="frm_input required" size="35" maxlength="100"></td>
+            </tr>
 
-        <?php if ($default['de_hope_date_use']) { // 배송희망일 사용 ?>
-        <tr>
-            <th scope="row"><label for="od_hope_date">희망배송일</label></th>
-            <td>
-                <!-- <select name="od_hope_date" id="od_hope_date">
-                <option value="">선택하십시오.</option>
-                <?php
-                for ($i=0; $i<7; $i++) {
-                    $sdate = date("Y-m-d", time()+86400*($default['de_hope_date_after']+$i));
-                    echo '<option value="'.$sdate.'">'.$sdate.' ('.get_yoil($sdate).')</option>'.PHP_EOL;
-                }
-                ?>
-                </select> -->
-                <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
-            </td>
-        </tr>
-        <?php } ?>
-        </tbody>
-        </table>
+            <?php if ($default['de_hope_date_use']) { // 배송희망일 사용 ?>
+            <tr>
+                <th scope="row"><label for="od_hope_date">희망배송일</label></th>
+                <td>
+                    <!-- <select name="od_hope_date" id="od_hope_date">
+                    <option value="">선택하십시오.</option>
+                    <?php
+                    for ($i=0; $i<7; $i++) {
+                        $sdate = date("Y-m-d", time()+86400*($default['de_hope_date_after']+$i));
+                        echo '<option value="'.$sdate.'">'.$sdate.' ('.get_yoil($sdate).')</option>'.PHP_EOL;
+                    }
+                    ?>
+                    </select> -->
+                    <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
+                </td>
+            </tr>
+            <?php } ?>
+            </tbody>
+            </table>
+        </div>
     </section>
     <!-- } 주문하시는 분 입력 끝 -->
 
@@ -693,105 +698,107 @@ function get_intall_file()
     <section id="sod_frm_taker">
         <h2>받으시는 분</h2>
 
-        <table class="frm_tbl">
-        <tbody>
-        <?php
-        if($is_member) {
-            // 배송지 이력
-            $addr_list = '';
-            $sep = chr(30);
+        <div class="tbl_frm01 tbl_wrap">
+            <table>
+            <tbody>
+            <?php
+            if($is_member) {
+                // 배송지 이력
+                $addr_list = '';
+                $sep = chr(30);
 
-            // 주문자와 동일
-            $addr_list .= '<input type="radio" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
-            $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
+                // 주문자와 동일
+                $addr_list .= '<input type="radio" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
+                $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
 
-            // 기본배송지
-            $sql = " select *
-                        from {$g5['g5_shop_order_address_table']}
-                        where mb_id = '{$member['mb_id']}'
-                          and ad_default = '1' ";
-            $row = sql_fetch($sql);
-            if($row['ad_id']) {
-                $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
-                $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_def">'.PHP_EOL;
-                $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
+                // 기본배송지
+                $sql = " select *
+                            from {$g5['g5_shop_order_address_table']}
+                            where mb_id = '{$member['mb_id']}'
+                              and ad_default = '1' ";
+                $row = sql_fetch($sql);
+                if($row['ad_id']) {
+                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
+                    $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_def">'.PHP_EOL;
+                    $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
+                }
+
+                // 최근배송지
+                $sql = " select *
+                            from {$g5['g5_shop_order_address_table']}
+                            where mb_id = '{$member['mb_id']}'
+                              and ad_default = '0'
+                            order by ad_id desc
+                            limit 2 ";
+                $result = sql_query($sql);
+                for($i=0; $row=sql_fetch_array($result); $i++) {
+                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
+                    $val2 = '<label for="ad_sel_addr_'.($i+1).'">최근배송지('.($row['ad_subject'] ? $row['ad_subject'] : $row['ad_name']).')</label>';
+                    $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_'.($i+1).'"> '.PHP_EOL.$val2.PHP_EOL;
+                }
+
+                $addr_list .= '<input type="radio" name="ad_sel_addr" value="new" id="od_sel_addr_new">'.PHP_EOL;
+                $addr_list .= '<label for="od_sel_addr_new">신규배송지</label>'.PHP_EOL;
+            ?>
+            <tr>
+                <th scope="row">배송지선택</th>
+                <td>
+                    <?php echo $addr_list; ?>
+                    <a href="<?php echo G5_SHOP_URL; ?>/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="ad_subject">배송지명</label></th>
+                <td>
+                    <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
+                    <input type="checkbox" name="ad_default" id="ad_default" value="1">
+                    <label for="ad_default">기본배송지로 설정</label>
+                </td>
+            </tr>
+            <?php
             }
-
-            // 최근배송지
-            $sql = " select *
-                        from {$g5['g5_shop_order_address_table']}
-                        where mb_id = '{$member['mb_id']}'
-                          and ad_default = '0'
-                        order by ad_id desc
-                        limit 2 ";
-            $result = sql_query($sql);
-            for($i=0; $row=sql_fetch_array($result); $i++) {
-                $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
-                $val2 = '<label for="ad_sel_addr_'.($i+1).'">최근배송지('.($row['ad_subject'] ? $row['ad_subject'] : $row['ad_name']).')</label>';
-                $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_'.($i+1).'"> '.PHP_EOL.$val2.PHP_EOL;
-            }
-
-            $addr_list .= '<input type="radio" name="ad_sel_addr" value="new" id="od_sel_addr_new">'.PHP_EOL;
-            $addr_list .= '<label for="od_sel_addr_new">신규배송지</label>'.PHP_EOL;
-        ?>
-        <tr>
-            <th scope="row">배송지선택</th>
-            <td>
-                <?php echo $addr_list; ?>
-                <a href="<?php echo G5_SHOP_URL; ?>/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="ad_subject">배송지명</label></th>
-            <td>
-                <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
-                <input type="checkbox" name="ad_default" id="ad_default" value="1">
-                <label for="ad_default">기본배송지로 설정</label>
-            </td>
-        </tr>
-        <?php
-        }
-        ?>
-        <tr>
-            <th scope="row"><label for="od_b_name">이름</label></th>
-            <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="od_b_tel">전화번호</label></th>
-            <td><input type="text" name="od_b_tel" id="od_b_tel" required class="frm_input required" maxlength="20"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="od_b_hp">핸드폰</label></th>
-            <td><input type="text" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20"></td>
-        </tr>
-        <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2'; ?>
-        <tr>
-            <th scope="row">주소</th>
-            <td id="sod_frm_addr">
-                <label for="od_b_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_zip1" id="od_b_zip1" required class="frm_input required" size="3" maxlength="3">
-                -
-                <label for="od_b_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="3" maxlength="3">
-                <span id="od_winb_zip" style="display:block"></span>
-                <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="50">
-                <label for="od_b_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="od_b_addr2" id="od_b_addr2" required class="frm_input frm_address required" size="50">
-                <script>
-                // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-                $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_winb_zip');
-                $("#od_winb_zip").css("display", "inline");
-                $("#od_b_zip1, #od_b_zip2, #od_b_addr1").attr('readonly', 'readonly');
-                </script>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="od_memo">전하실말씀</label></th>
-            <td><textarea name="od_memo" id="od_memo"></textarea></td>
-        </tr>
-        </tbody>
-        </table>
+            ?>
+            <tr>
+                <th scope="row"><label for="od_b_name">이름</label></th>
+                <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="od_b_tel">전화번호</label></th>
+                <td><input type="text" name="od_b_tel" id="od_b_tel" required class="frm_input required" maxlength="20"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="od_b_hp">핸드폰</label></th>
+                <td><input type="text" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20"></td>
+            </tr>
+            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2'; ?>
+            <tr>
+                <th scope="row">주소</th>
+                <td id="sod_frm_addr">
+                    <label for="od_b_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_b_zip1" id="od_b_zip1" required class="frm_input required" size="3" maxlength="3">
+                    -
+                    <label for="od_b_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="3" maxlength="3">
+                    <span id="od_winb_zip" style="display:block"></span>
+                    <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="50">
+                    <label for="od_b_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_b_addr2" id="od_b_addr2" required class="frm_input frm_address required" size="50">
+                    <script>
+                    // 우편번호 자바스크립트 비활성화 대응을 위한 코드
+                    $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_winb_zip');
+                    $("#od_winb_zip").css("display", "inline");
+                    $("#od_b_zip1, #od_b_zip2, #od_b_addr1").attr('readonly', 'readonly');
+                    </script>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="od_memo">전하실말씀</label></th>
+                <td><textarea name="od_memo" id="od_memo"></textarea></td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
     </section>
     <!-- } 받으시는 분 입력 끝 -->
 
@@ -838,44 +845,46 @@ function get_intall_file()
     <section id="sod_frm_pay">
         <h2>결제정보</h2>
 
-        <table class="frm_tbl">
-        <tbody>
-        <?php if($oc_cnt > 0) { ?>
-        <tr>
-            <th scope="row">주문할인쿠폰</th>
-            <td>
-                <input type="hidden" name="od_cp_id" value="">
-                <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">주문할인금액</th>
-            <td><span id="od_cp_price">0</span>원</td>
-        </tr>
-        <?php } ?>
-        <?php if($sc_cnt > 0) { ?>
-        <tr>
-            <th scope="row">배송비할인쿠폰</th>
-            <td>
-                <input type="hidden" name="sc_cp_id" value="">
-                <button type="button" id="sc_coupon_btn" class="btn_frmline">쿠폰적용</button>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">배송비할인금액</th>
-            <td><span id="sc_cp_price">0</span>원</td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <th>총 주문금액</th>
-            <td><span id="od_tot_price"><?php echo number_format($tot_price); ?></span>원</td>
-        </tr>
-        <tr>
-            <th>추가배송비</th>
-            <td><span id="od_send_cost2">0</span>원 (지역에 따라 추가되는 도선료 등의 배송비입니다.)</td>
-        </tr>
-        </tbody>
-        </table>
+        <div class="tbl_frm01 tbl_wrap">
+            <table>
+            <tbody>
+            <?php if($oc_cnt > 0) { ?>
+            <tr>
+                <th scope="row">주문할인쿠폰</th>
+                <td>
+                    <input type="hidden" name="od_cp_id" value="">
+                    <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">주문할인금액</th>
+                <td><span id="od_cp_price">0</span>원</td>
+            </tr>
+            <?php } ?>
+            <?php if($sc_cnt > 0) { ?>
+            <tr>
+                <th scope="row">배송비할인쿠폰</th>
+                <td>
+                    <input type="hidden" name="sc_cp_id" value="">
+                    <button type="button" id="sc_coupon_btn" class="btn_frmline">쿠폰적용</button>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">배송비할인금액</th>
+                <td><span id="sc_cp_price">0</span>원</td>
+            </tr>
+            <?php } ?>
+            <tr>
+                <th>총 주문금액</th>
+                <td><span id="od_tot_price"><?php echo number_format($tot_price); ?></span>원</td>
+            </tr>
+            <tr>
+                <th>추가배송비</th>
+                <td><span id="od_send_cost2">0</span>원 (지역에 따라 추가되는 도선료 등의 배송비입니다.)</td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
 
         <?php
         if (!$default['de_card_point'])

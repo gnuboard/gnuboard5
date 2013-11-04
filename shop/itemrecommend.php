@@ -21,11 +21,12 @@ include_once(G5_PATH.'/head.sub.php');
 <div id="sit_rec_new" class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
-    <div class="cbox">
-        <form name="fitemrecommend" method="post" action="./itemrecommendmail.php" autocomplete="off" onsubmit="return fitemrecommend_check(this);">
-        <input type="hidden" name="token" value="<?php echo $token; ?>">
-        <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
-        <table class="frm_tbl">
+    <form name="fitemrecommend" method="post" action="./itemrecommendmail.php" autocomplete="off" onsubmit="return fitemrecommend_check(this);">
+    <input type="hidden" name="token" value="<?php echo $token; ?>">
+    <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
+
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
         <colgroup>
             <col class="grid_3">
             <col>
@@ -45,13 +46,13 @@ include_once(G5_PATH.'/head.sub.php');
         </tr>
         </tbody>
         </table>
-
-        <div class="btn_win">
-            <input type="submit" id="btn_submit" value="보내기" class="btn_submit">
-            <a href="javascript:window.close();">창닫기</a>
-        </div>
-        </form>
     </div>
+
+    <div class="btn_win">
+        <input type="submit" id="btn_submit" value="보내기" class="btn_submit">
+        <a href="javascript:window.close();">창닫기</a>
+    </div>
+    </form>
 
 </div>
 
