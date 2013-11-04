@@ -61,57 +61,59 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                     <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo $row['it_name']; ?></a>
                 </p>
 
-                <table class="basic_tbl">
-                <thead>
-                <tr>
-                    <th scope="col">옵션항목</th>
-                    <th scope="col">수량</th>
-                    <th scope="col">판매가</th>
-                    <th scope="col">소계</th>
-                    <th scope="col">포인트</th>
-                    <th scope="col">상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
-                            from {$g5['g5_shop_cart_table']}
-                            where od_id = '$od_id'
-                              and it_id = '{$row['it_id']}'
-                            order by io_type asc, ct_id asc ";
-                $res = sql_query($sql);
-                $ct_list = array();
+                <div class="tbl_head01 tbl_wrap">
+                    <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">옵션항목</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">판매가</th>
+                        <th scope="col">소계</th>
+                        <th scope="col">포인트</th>
+                        <th scope="col">상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
+                                from {$g5['g5_shop_cart_table']}
+                                where od_id = '$od_id'
+                                  and it_id = '{$row['it_id']}'
+                                order by io_type asc, ct_id asc ";
+                    $res = sql_query($sql);
+                    $ct_list = array();
 
-                for($k=0; $opt=sql_fetch_array($res); $k++) {
-                    if($opt['io_type'])
-                        $opt_price = $opt['io_price'];
-                    else
-                        $opt_price = $opt['ct_price'] + $opt['io_price'];
+                    for($k=0; $opt=sql_fetch_array($res); $k++) {
+                        if($opt['io_type'])
+                            $opt_price = $opt['io_price'];
+                        else
+                            $opt_price = $opt['ct_price'] + $opt['io_price'];
 
-                    $sell_price = $opt_price * $opt['ct_qty'];
-                    $point = $opt['ct_point'] * $opt['ct_qty'];
+                        $sell_price = $opt_price * $opt['ct_qty'];
+                        $point = $opt['ct_point'] * $opt['ct_qty'];
 
-                    $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
-                    $ct_list[$opt['ct_id']]['option'] = $opt['ct_option'];
-                ?>
-                <tr>
-                    <td><?php echo $opt['ct_option']; ?></td>
-                    <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
-                    <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
-                    <td class="td_num"><?php echo number_format($sell_price); ?></td>
-                    <td class="td_num"><?php echo number_format($point); ?></td>
-                    <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
-                </tr>
-                <?php
-                    $tot_point       += $point;
+                        $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
+                        $ct_list[$opt['ct_id']]['option'] = $opt['ct_option'];
+                    ?>
+                    <tr>
+                        <td><?php echo $opt['ct_option']; ?></td>
+                        <td class="td_mngsmall"><?php echo number_format($opt['ct_qty']); ?></td>
+                        <td class="td_numbig"><?php echo number_format($opt_price); ?></td>
+                        <td class="td_num"><?php echo number_format($sell_price); ?></td>
+                        <td class="td_num"><?php echo number_format($point); ?></td>
+                        <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
+                    </tr>
+                    <?php
+                        $tot_point       += $point;
 
-                    $st_count1++;
-                    if($opt['ct_status'] == '주문')
-                        $st_count2++;
-                }
-                ?>
-                </tbody>
-                </table>
+                        $st_count1++;
+                        if($opt['ct_status'] == '주문')
+                            $st_count2++;
+                    }
+                    ?>
+                    </tbody>
+                    </table>
+                </div>
             </li>
             <?php
             }
@@ -212,270 +214,282 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <section id="sod_fin_pay">
             <h3>결제정보</h3>
 
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row">주문번호</th>
-                <td><?php echo $od_id; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">주문일시</th>
-                <td><?php echo $od['od_time']; ?></td>
-            </tr>
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">주문번호</th>
+                    <td><?php echo $od_id; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">주문일시</th>
+                    <td><?php echo $od['od_time']; ?></td>
+                </tr>
 
-            <tr>
-                <th scope="row">결제방식</th>
-                <td><?php echo $od['od_settle_case']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">결제금액</th>
-                <td><?php echo $od_receipt_price; ?></td>
-            </tr>
-            <?php
-            if($od['od_receipt_price'] > 0)
-            {
-            ?>
-            <tr>
-                <th scope="row">결제일시</th>
-                <td><?php echo $od['od_receipt_time']; ?></td>
-            </tr>
-            <?php
-            }
-
-            // 승인번호, 휴대폰번호, KCP 거래번호
-            if($app_no_subj)
-            {
-            ?>
-            <tr>
-                <th scope="row"><?php echo $app_no_subj; ?></th>
-                <td><?php echo $app_no; ?></td>
-            </tr>
-            <?php
-            }
-
-            // 계좌정보
-            if($disp_bank)
-            {
-            ?>
-            <tr>
-                <th scope="row">입금자명</th>
-                <td><?php echo $od['od_deposit_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">입금계좌</th>
-                <td><?php echo $od['od_bank_account']; ?></td>
-            </tr>
-            <?php
-            }
-
-            if($disp_receipt) {
-            ?>
-            <tr>
-                <th scope="row">영수증</th>
-                <td>
-                    <?php
-                    if($od['od_settle_case'] == '휴대폰')
-                    {
-                    ?>
-                    <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
-                    <?php
-                    }
-
-                    if($od['od_settle_case'] == '신용카드')
-                    {
-                    ?>
-                    <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
-                    <?php
-                    }
-                    ?>
-                <td>
-                </td>
-            </tr>
-            <?php
-            }
-
-            if ($od['od_receipt_point'] > 0)
-            {
-            ?>
-            <tr>
-                <th scope="row">포인트사용</th>
-                <td><?php echo display_point($od['od_receipt_point']); ?></td>
-            </tr>
-
-            <?php
-            }
-
-            if ($od['od_cancel_price'] > 0)
-            {
-            ?>
-            <tr>
-                <th scope="row">취소/환불 금액</th>
-                <td><?php echo display_price($od['od_cancel_price']); ?></td>
-            </tr>
-            <?php
-            }
-
-            // 현금영수증 발급을 사용하는 경우에만
-            if ($default['de_taxsave_use']) {
-                // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-                if ($misu_price == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
-            ?>
-            <tr>
-                <th scope="row">현금영수증</th>
-                <td>
+                <tr>
+                    <th scope="row">결제방식</th>
+                    <td><?php echo $od['od_settle_case']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">결제금액</th>
+                    <td><?php echo $od_receipt_price; ?></td>
+                </tr>
                 <?php
-                if ($od['od_cash'])
+                if($od['od_receipt_price'] > 0)
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인하기</a>
+                <tr>
+                    <th scope="row">결제일시</th>
+                    <td><?php echo $od['od_receipt_time']; ?></td>
+                </tr>
                 <?php
                 }
-                else
+
+                // 승인번호, 휴대폰번호, KCP 거래번호
+                if($app_no_subj)
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
-                <?php } ?>
-                </td>
-            </tr>
-            <?php
+                <tr>
+                    <th scope="row"><?php echo $app_no_subj; ?></th>
+                    <td><?php echo $app_no; ?></td>
+                </tr>
+                <?php
                 }
-            }
-            ?>
-            </tbody>
-            </table>
+
+                // 계좌정보
+                if($disp_bank)
+                {
+                ?>
+                <tr>
+                    <th scope="row">입금자명</th>
+                    <td><?php echo $od['od_deposit_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">입금계좌</th>
+                    <td><?php echo $od['od_bank_account']; ?></td>
+                </tr>
+                <?php
+                }
+
+                if($disp_receipt) {
+                ?>
+                <tr>
+                    <th scope="row">영수증</th>
+                    <td>
+                        <?php
+                        if($od['od_settle_case'] == '휴대폰')
+                        {
+                        ?>
+                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
+                        <?php
+                        }
+
+                        if($od['od_settle_case'] == '신용카드')
+                        {
+                        ?>
+                        <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
+                        <?php
+                        }
+                        ?>
+                    <td>
+                    </td>
+                </tr>
+                <?php
+                }
+
+                if ($od['od_receipt_point'] > 0)
+                {
+                ?>
+                <tr>
+                    <th scope="row">포인트사용</th>
+                    <td><?php echo display_point($od['od_receipt_point']); ?></td>
+                </tr>
+
+                <?php
+                }
+
+                if ($od['od_cancel_price'] > 0)
+                {
+                ?>
+                <tr>
+                    <th scope="row">취소/환불 금액</th>
+                    <td><?php echo display_price($od['od_cancel_price']); ?></td>
+                </tr>
+                <?php
+                }
+
+                // 현금영수증 발급을 사용하는 경우에만
+                if ($default['de_taxsave_use']) {
+                    // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
+                    if ($misu_price == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
+                ?>
+                <tr>
+                    <th scope="row">현금영수증</th>
+                    <td>
+                    <?php
+                    if ($od['od_cash'])
+                    {
+                    ?>
+                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인하기</a>
+                    <?php
+                    }
+                    else
+                    {
+                    ?>
+                        <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증을 발급하시려면 클릭하십시오.</a>
+                    <?php } ?>
+                    </td>
+                </tr>
+                <?php
+                    }
+                }
+                ?>
+                </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="sod_fin_orderer">
             <h3>주문하신 분</h3>
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row">이 름</th>
-                <td><?php echo $od['od_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">전화번호</th>
-                <td><?php echo $od['od_tel']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">핸드폰</th>
-                <td><?php echo $od['od_hp']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">주 소</th>
-                <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_zip1'], $od['od_zip2'], $od['od_addr1'], $od['od_addr2']); ?></td>
-            </tr>
-            <tr>
-                <th scope="row">E-mail</th>
-                <td><?php echo $od['od_email']; ?></td>
-            </tr>
-            </tbody>
-            </table>
+
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">이 름</th>
+                    <td><?php echo $od['od_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">전화번호</th>
+                    <td><?php echo $od['od_tel']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">핸드폰</th>
+                    <td><?php echo $od['od_hp']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">주 소</th>
+                    <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_zip1'], $od['od_zip2'], $od['od_addr1'], $od['od_addr2']); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">E-mail</th>
+                    <td><?php echo $od['od_email']; ?></td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+
         </section>
 
         <section id="sod_fin_receiver">
             <h3>받으시는 분</h3>
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row">이 름</th>
-                <td><?php echo $od['od_b_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">전화번호</th>
-                <td><?php echo $od['od_b_tel']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">핸드폰</th>
-                <td><?php echo $od['od_b_hp']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">주 소</th>
-                <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_b_zip1'], $od['od_b_zip2'], $od['od_b_addr1'], $od['od_b_addr2']); ?></td>
-            </tr>
-            <?php
-            // 희망배송일을 사용한다면
-            if ($default['de_hope_date_use'])
-            {
-            ?>
-            <tr>
-                <th scope="row">희망배송일</td>
-                <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
-            </tr>
-            <?php }
-            if ($od['od_memo'])
-            {
-            ?>
-            <tr>
-                <th scope="row">전하실 말씀</td>
-                <td><?php echo conv_content($od['od_memo'], 0); ?></td>
-            </tr>
-            <?php } ?>
-            </tbody>
-            </table>
+
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">이 름</th>
+                    <td><?php echo $od['od_b_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">전화번호</th>
+                    <td><?php echo $od['od_b_tel']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">핸드폰</th>
+                    <td><?php echo $od['od_b_hp']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">주 소</th>
+                    <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_b_zip1'], $od['od_b_zip2'], $od['od_b_addr1'], $od['od_b_addr2']); ?></td>
+                </tr>
+                <?php
+                // 희망배송일을 사용한다면
+                if ($default['de_hope_date_use'])
+                {
+                ?>
+                <tr>
+                    <th scope="row">희망배송일</td>
+                    <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
+                </tr>
+                <?php }
+                if ($od['od_memo'])
+                {
+                ?>
+                <tr>
+                    <th scope="row">전하실 말씀</td>
+                    <td><?php echo conv_content($od['od_memo'], 0); ?></td>
+                </tr>
+                <?php } ?>
+                </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="sod_fin_dvr">
             <h3>배송정보</h3>
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <?php
-            // 배송회사 정보
-            $dl = sql_fetch(" select * from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
-            if ($od['od_invoice'] || !$od['misu'])
-            {
-                if (is_array($dl))
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <?php
+                // 배송회사 정보
+                $dl = sql_fetch(" select * from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+
+                if ($od['od_invoice'] || !$od['misu'])
                 {
-                    // get 으로 날리는 경우 운송장번호를 넘김
-                    if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
-            ?>
-            <tr>
-                <th scope="row">배송회사</th>
-                <td><?php echo $dl['dl_company']; ?> [<a href="<?php echo $dl['dl_url'].$invoice; ?>" target="_blank">배송조회하기</a>]</td>
-            </tr>
-            <tr>
-                <th scope="row">운송장번호</th>
-                <td><?php echo $od['od_invoice']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">배송일시</th>
-                <td><?php echo $od['od_invoice_time']; ?></td>
-            </tr>
-            <tr>
-                <th>고객센터 전화</th>
-                <td><?php echo $dl['dl_tel']; ?></td>
-            </tr>
-            <?php
+                    if (is_array($dl))
+                    {
+                        // get 으로 날리는 경우 운송장번호를 넘김
+                        if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
+                ?>
+                <tr>
+                    <th scope="row">배송회사</th>
+                    <td><?php echo $dl['dl_company']; ?> [<a href="<?php echo $dl['dl_url'].$invoice; ?>" target="_blank">배송조회하기</a>]</td>
+                </tr>
+                <tr>
+                    <th scope="row">운송장번호</th>
+                    <td><?php echo $od['od_invoice']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">배송일시</th>
+                    <td><?php echo $od['od_invoice_time']; ?></td>
+                </tr>
+                <tr>
+                    <th>고객센터 전화</th>
+                    <td><?php echo $dl['dl_tel']; ?></td>
+                </tr>
+                <?php
+                    }
+                    else
+                    {
+                ?>
+                <tr>
+                    <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
+                </tr>
+                <?php
+                    }
                 }
-                else
-                {
-            ?>
-            <tr>
-                <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
-            </tr>
-            <?php
-                }
-            }
-            ?>
-            </tbody>
-            </table>
+                ?>
+                </tbody>
+                </table>
+            </div>
         </section>
     </div>
 
@@ -517,7 +531,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
             <label for="cancel_memo">취소사유</label>
-            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" size="40" maxlength="100">
+            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required"maxlength="100">
             <input type="submit" value="확인" class="btn_frmline">
 
             </form>
@@ -538,10 +552,10 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     <legend>모의입금처리</legend>
     <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
     <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
-    <input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>" size="80"><br />
-    <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
-    <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>" size="80"><br />
-    <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
+    <input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>"><br>
+    <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>"><br>
+    <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>"><br>
+    <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php"><br><br>
     <input type="submit" value="입금통보 테스트">
     </form>
     </fieldset>

@@ -104,44 +104,46 @@ $total_count = $row['cnt'];
             $ca_temp = '<a href="./list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> &gt; ';
          }
     ?>
-    <table class="basic_tbl">
-    <caption><?php echo $ca_temp?><a href="./list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo $save['cnt']; ?>개</caption>
-    <thead>
-    <tr>
-        <th scope="col">이미지</td>
-        <th scope="col">상품명</th>
-        <th scope="col">판매가격</td>
-        <th scope="col">포인트</td>
-    </tr>
-    </thead>
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption><?php echo $ca_temp?><a href="./list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo $save['cnt']; ?>개</caption>
+        <thead>
+        <tr>
+            <th scope="col">이미지</td>
+            <th scope="col">상품명</th>
+            <th scope="col">판매가격</td>
+            <th scope="col">포인트</td>
+        </tr>
+        </thead>
 
-    <tbody>
-    <?php
-    for ($i=0; $i<$save['cnt']; $i++) {
-        $sql = " select it_id,
-                        it_name,
-                        it_price,
-                        it_tel_inq,
-                        it_point,
-                        it_type1,
-                        it_type2,
-                        it_type3,
-                        it_type4,
-                        it_type5
-                   from {$g5['g5_shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
-        $row = sql_fetch($sql);
+        <tbody>
+        <?php
+        for ($i=0; $i<$save['cnt']; $i++) {
+            $sql = " select it_id,
+                            it_name,
+                            it_price,
+                            it_tel_inq,
+                            it_point,
+                            it_type1,
+                            it_type2,
+                            it_type3,
+                            it_type4,
+                            it_type5
+                       from {$g5['g5_shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
+            $row = sql_fetch($sql);
 
-        $image = get_it_image($row['it_id'], (int)($default['de_simg_width']), (int)($default['de_simg_height']), true);
-    ?>
-    <tr>
-        <td class="ssch_it_img"><?php echo $image; ?></td>
-        <td><?php echo get_text($row['it_name']); ?></td>
-        <td class="ssch_num"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></td>
-        <td class="ssch_num"><?php echo display_point($row['it_point']); ?></td>
-    </tr>
-    <?php } // for 끝 ?>
-    </tbody>
-    </table>
+            $image = get_it_image($row['it_id'], (int)($default['de_simg_width']), (int)($default['de_simg_height']), true);
+        ?>
+        <tr>
+            <td class="ssch_it_img"><?php echo $image; ?></td>
+            <td><?php echo get_text($row['it_name']); ?></td>
+            <td class="ssch_num"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></td>
+            <td class="ssch_num"><?php echo display_point($row['it_point']); ?></td>
+        </tr>
+        <?php } // for 끝 ?>
+        </tbody>
+        </table>
+    </div>
     <?php } // function 끝 ?>
 
 </div>

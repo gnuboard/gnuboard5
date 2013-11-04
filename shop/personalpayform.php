@@ -347,26 +347,28 @@ function get_intall_file()
     <section id="sod_frm_pay">
         <h2>개인결제정보</h2>
 
-        <table class="frm_tbl">
-        <tbody>
-        <tr>
-            <th>결제금액</th>
-            <td><?php echo display_price($pp['pp_price']); ?></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="pp_name">이름</label></th>
-            <td><input type="text" name="pp_name" value="<?php echo $pp['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="pp_email">이메일</label></th>
-            <td><input type="text" name="pp_email" value="<?php echo $member['mb_email']; ?>" id="pp_email" required class="required frm_input"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="pp_hp">휴대폰</label></th>
-            <td><input type="text" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" class="frm_input"></td>
-        </tr>
-        </tbody>
-        </table>
+        <div class="tbl_frm01 tbl_wrap">
+            <table>
+            <tbody>
+            <tr>
+                <th>결제금액</th>
+                <td><?php echo display_price($pp['pp_price']); ?></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="pp_name">이름</label></th>
+                <td><input type="text" name="pp_name" value="<?php echo $pp['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="pp_email">이메일</label></th>
+                <td><input type="text" name="pp_email" value="<?php echo $member['mb_email']; ?>" id="pp_email" required class="required frm_input"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="pp_hp">휴대폰</label></th>
+                <td><input type="text" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" class="frm_input"></td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
 
         <?php
         if (!$default['de_card_point'])

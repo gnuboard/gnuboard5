@@ -22,50 +22,52 @@ $count = mysql_num_rows($result);
 <!-- 쿠폰선택 시작 { -->
 <div id="sc_coupon_frm">
     <?php if($count > 0) { ?>
-    <table class="basic_tbl">
-    <caption>쿠폰 선택</caption>
-    <thead>
-    <tr>
-        <th scope="col">쿠폰명</th>
-        <th scope="col">할인금액</th>
-        <th scope="col">적용</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        // 사용한 쿠폰인지 체크
-        if(is_used_coupon($member['mb_id'], $row['cp_id']))
-            continue;
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>쿠폰 선택</caption>
+        <thead>
+        <tr>
+            <th scope="col">쿠폰명</th>
+            <th scope="col">할인금액</th>
+            <th scope="col">적용</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+            // 사용한 쿠폰인지 체크
+            if(is_used_coupon($member['mb_id'], $row['cp_id']))
+                continue;
 
-        $dc = 0;
-        if($row['cp_type']) {
-            $dc = floor(($send_cost * ($row['cp_price'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
-        } else {
-            $dc = $row['cp_price'];
+            $dc = 0;
+            if($row['cp_type']) {
+                $dc = floor(($send_cost * ($row['cp_price'] / 100)) / $row['cp_trunc']) * $row['cp_trunc'];
+            } else {
+                $dc = $row['cp_price'];
+            }
+
+            if($row['cp_maximum'] && $dc > $row['cp_maximum'])
+                $dc = $row['cp_maximum'];
+
+            if($dc > $send_cost)
+                $dc = $send_cost;
+        ?>
+        <tr>
+            <td>
+                <input type="hidden" name="s_cp_id[]" value="<?php echo $row['cp_id']; ?>">
+                <input type="hidden" name="s_cp_prc[]" value="<?php echo $dc; ?>">
+                <input type="hidden" name="s_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
+                <?php echo get_text($row['cp_subject']); ?>
+            </td>
+            <td class="td_numbig"><?php echo number_format($dc); ?></td>
+            <td class="td_mngsmall"><button type="button" class="sc_cp_apply btn_frmline">적용</button></td>
+        </tr>
+        <?php
         }
-
-        if($row['cp_maximum'] && $dc > $row['cp_maximum'])
-            $dc = $row['cp_maximum'];
-
-        if($dc > $send_cost)
-            $dc = $send_cost;
-    ?>
-    <tr>
-        <td>
-            <input type="hidden" name="s_cp_id[]" value="<?php echo $row['cp_id']; ?>">
-            <input type="hidden" name="s_cp_prc[]" value="<?php echo $dc; ?>">
-            <input type="hidden" name="s_cp_subj[]" value="<?php echo $row['cp_subject']; ?>">
-            <?php echo get_text($row['cp_subject']); ?>
-        </td>
-        <td class="td_bignum"><?php echo number_format($dc); ?></td>
-        <td class="td_smallmng"><button type="button" class="sc_cp_apply btn_frmline">적용</button></td>
-    </tr>
-    <?php
-    }
-    ?>
-    </tbody>
-    </table>
+        ?>
+        </tbody>
+        </table>
+    </div>
     <?php
     } else {
         echo '<p>사용할 수 있는 쿠폰이 없습니다.</p>';

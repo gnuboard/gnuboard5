@@ -76,57 +76,59 @@ if(openwin != null) {
                     <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo $row['it_name']; ?></a>
                 </p>
 
-                <table class="basic_tbl">
-                <thead>
-                <tr>
-                    <th scope="col">옵션항목</th>
-                    <th scope="col">수량</th>
-                    <th scope="col">판매가</th>
-                    <th scope="col">소계</th>
-                    <th scope="col">포인트</th>
-                    <th scope="col">상태</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php
-                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
-                            from {$g5['g5_shop_cart_table']}
-                            where od_id = '$od_id'
-                              and it_id = '{$row['it_id']}'
-                            order by io_type asc, ct_id asc ";
-                $res = sql_query($sql);
-                $ct_list = array();
+                <div class="tbl_head01 tbl_wrap">
+                    <table>
+                    <thead>
+                    <tr>
+                        <th scope="col">옵션항목</th>
+                        <th scope="col">수량</th>
+                        <th scope="col">판매가</th>
+                        <th scope="col">소계</th>
+                        <th scope="col">포인트</th>
+                        <th scope="col">상태</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php
+                    $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
+                                from {$g5['g5_shop_cart_table']}
+                                where od_id = '$od_id'
+                                  and it_id = '{$row['it_id']}'
+                                order by io_type asc, ct_id asc ";
+                    $res = sql_query($sql);
+                    $ct_list = array();
 
-                for($k=0; $opt=sql_fetch_array($res); $k++) {
-                    if($opt['io_type'])
-                        $opt_price = $opt['io_price'];
-                    else
-                        $opt_price = $opt['ct_price'] + $opt['io_price'];
+                    for($k=0; $opt=sql_fetch_array($res); $k++) {
+                        if($opt['io_type'])
+                            $opt_price = $opt['io_price'];
+                        else
+                            $opt_price = $opt['ct_price'] + $opt['io_price'];
 
-                    $sell_price = $opt_price * $opt['ct_qty'];
-                    $point = $opt['ct_point'] * $opt['ct_qty'];
+                        $sell_price = $opt_price * $opt['ct_qty'];
+                        $point = $opt['ct_point'] * $opt['ct_qty'];
 
-                    $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
-                    $ct_list[$opt['ct_id']]['option'] = $opt['ct_option'];
-                ?>
-                <tr>
-                    <td><?php echo $opt['ct_option']; ?></td>
-                    <td class="td_smallmng"><?php echo number_format($opt['ct_qty']); ?></td>
-                    <td class="td_bignum"><?php echo number_format($opt_price); ?></td>
-                    <td class="td_num"><?php echo number_format($sell_price); ?></td>
-                    <td class="td_num"><?php echo number_format($point); ?></td>
-                    <td class="td_smallmng"><?php echo $opt['ct_status']; ?></td>
-                </tr>
-                <?php
-                    $tot_point       += $point;
+                        $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
+                        $ct_list[$opt['ct_id']]['option'] = $opt['ct_option'];
+                    ?>
+                    <tr>
+                        <td><?php echo $opt['ct_option']; ?></td>
+                        <td class="td_mngsmall"><?php echo number_format($opt['ct_qty']); ?></td>
+                        <td class="td_numbig"><?php echo number_format($opt_price); ?></td>
+                        <td class="td_num"><?php echo number_format($sell_price); ?></td>
+                        <td class="td_num"><?php echo number_format($point); ?></td>
+                        <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
+                    </tr>
+                    <?php
+                        $tot_point       += $point;
 
-                    $st_count1++;
-                    if($opt['ct_status'] == '주문')
-                        $st_count2++;
-                }
-                ?>
-                </tbody>
-                </table>
+                        $st_count1++;
+                        if($opt['ct_status'] == '주문')
+                            $st_count2++;
+                    }
+                    ?>
+                    </tbody>
+                    </table>
+                </div>
             </li>
             <?php
             }
@@ -226,7 +228,8 @@ if(openwin != null) {
         <section id="sod_fin_pay">
             <h3>결제정보</h3>
 
-            <table class="basic_tbl">
+            <div class="tbl_head01 tbl_wrap">
+            <table>
             <colgroup>
                 <col class="grid_3">
                 <col>
@@ -364,131 +367,140 @@ if(openwin != null) {
 
         <section id="sod_fin_orderer">
             <h3>주문하신 분</h3>
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row">이 름</th>
-                <td><?php echo $od['od_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">전화번호</th>
-                <td><?php echo $od['od_tel']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">핸드폰</th>
-                <td><?php echo $od['od_hp']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">주 소</th>
-                <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_zip1'], $od['od_zip2'], $od['od_addr1'], $od['od_addr2']); ?></td>
-            </tr>
-            <tr>
-                <th scope="row">E-mail</th>
-                <td><?php echo $od['od_email']; ?></td>
-            </tr>
-            </tbody>
-            </table>
+
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">이 름</th>
+                    <td><?php echo $od['od_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">전화번호</th>
+                    <td><?php echo $od['od_tel']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">핸드폰</th>
+                    <td><?php echo $od['od_hp']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">주 소</th>
+                    <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_zip1'], $od['od_zip2'], $od['od_addr1'], $od['od_addr2']); ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">E-mail</th>
+                    <td><?php echo $od['od_email']; ?></td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="sod_fin_receiver">
             <h3>받으시는 분</h3>
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row">이 름</th>
-                <td><?php echo $od['od_b_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">전화번호</th>
-                <td><?php echo $od['od_b_tel']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">핸드폰</th>
-                <td><?php echo $od['od_b_hp']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">주 소</th>
-                <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_b_zip1'], $od['od_b_zip2'], $od['od_b_addr1'], $od['od_b_addr2']); ?></td>
-            </tr>
-            <?php
-            // 희망배송일을 사용한다면
-            if ($default['de_hope_date_use'])
-            {
-            ?>
-            <tr>
-                <th scope="row">희망배송일</td>
-                <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
-            </tr>
-            <?php }
-            if ($od['od_memo'])
-            {
-            ?>
-            <tr>
-                <th scope="row">전하실 말씀</td>
-                <td><?php echo conv_content($od['od_memo'], 0); ?></td>
-            </tr>
-            <?php } ?>
-            </tbody>
-            </table>
+
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">이 름</th>
+                    <td><?php echo $od['od_b_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">전화번호</th>
+                    <td><?php echo $od['od_b_tel']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">핸드폰</th>
+                    <td><?php echo $od['od_b_hp']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">주 소</th>
+                    <td><?php echo sprintf("(%s-%s)&nbsp;%s %s", $od['od_b_zip1'], $od['od_b_zip2'], $od['od_b_addr1'], $od['od_b_addr2']); ?></td>
+                </tr>
+                <?php
+                // 희망배송일을 사용한다면
+                if ($default['de_hope_date_use'])
+                {
+                ?>
+                <tr>
+                    <th scope="row">희망배송일</td>
+                    <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
+                </tr>
+                <?php }
+                if ($od['od_memo'])
+                {
+                ?>
+                <tr>
+                    <th scope="row">전하실 말씀</td>
+                    <td><?php echo conv_content($od['od_memo'], 0); ?></td>
+                </tr>
+                <?php } ?>
+                </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="sod_fin_dvr">
             <h3>배송정보</h3>
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <?php
-            // 배송회사 정보
-            $dl = sql_fetch(" select * from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
 
-            if ($od['od_invoice'] || !$od['misu'])
-            {
-                if (is_array($dl))
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <?php
+                // 배송회사 정보
+                $dl = sql_fetch(" select * from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
+
+                if ($od['od_invoice'] || !$od['misu'])
                 {
-                    // get 으로 날리는 경우 운송장번호를 넘김
-                    if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
-            ?>
-            <tr>
-                <th scope="row">배송회사</th>
-                <td><?php echo $dl['dl_company']; ?> [<a href="<?php echo $dl['dl_url'].$invoice; ?>" target="_blank">배송조회하기</a>]</td>
-            </tr>
-            <tr>
-                <th scope="row">운송장번호</th>
-                <td><?php echo $od['od_invoice']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">배송일시</th>
-                <td><?php echo $od['od_invoice_time']; ?></td>
-            </tr>
-            <tr>
-                <th>고객센터 전화</th>
-                <td><?php echo $dl['dl_tel']; ?></td>
-            </tr>
-            <?php
+                    if (is_array($dl))
+                    {
+                        // get 으로 날리는 경우 운송장번호를 넘김
+                        if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
+                ?>
+                <tr>
+                    <th scope="row">배송회사</th>
+                    <td><?php echo $dl['dl_company']; ?> [<a href="<?php echo $dl['dl_url'].$invoice; ?>" target="_blank">배송조회하기</a>]</td>
+                </tr>
+                <tr>
+                    <th scope="row">운송장번호</th>
+                    <td><?php echo $od['od_invoice']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">배송일시</th>
+                    <td><?php echo $od['od_invoice_time']; ?></td>
+                </tr>
+                <tr>
+                    <th>고객센터 전화</th>
+                    <td><?php echo $dl['dl_tel']; ?></td>
+                </tr>
+                <?php
+                    }
+                    else
+                    {
+                ?>
+                <tr>
+                    <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
+                </tr>
+                <?php
+                    }
                 }
-                else
-                {
-            ?>
-            <tr>
-                <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
-            </tr>
-            <?php
-                }
-            }
-            ?>
-            </tbody>
-            </table>
+                ?>
+                </tbody>
+                </table>
+            </div>
         </section>
     </div>
 

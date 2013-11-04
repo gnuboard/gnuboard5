@@ -13,22 +13,24 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_2">
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row"><label for="iq_subject">제목</label></th>
-        <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="iq_question">질문</label></th>
-        <td><?php echo editor_html('iq_question', get_text($qa['iq_question'])); ?></td>
-    </tr>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <colgroup>
+            <col class="grid_2">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="iq_subject">제목</label></th>
+            <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="iq_question">질문</label></th>
+            <td><?php echo editor_html('iq_question', get_text($qa['iq_question'])); ?></td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 
     <div class="btn_win">
         <input type="submit" value="작성완료" class="btn_submit">
