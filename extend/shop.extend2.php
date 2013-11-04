@@ -637,4 +637,12 @@ if(!sql_query(" DESCRIBE `{$g5['g5_shop_order_delete_table']}` ", false)) {
                   PRIMARY KEY (`de_id`)
                 )", true);
 }
+
+// 장바구니 테이블에 입금 상태 추가
+$sql = " SHOW COLUMNS from {$g5['g5_shop_cart_table']} LIKE 'ct_status' ";
+$row= sql_fetch($sql);
+if(stripos($row['Type'], 'enum') !== false) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_cart_table']}`
+                    CHANGE `ct_status` `ct_status` varchar(255) NOT NULL DEFAULT '' ", true);
+}
 ?>
