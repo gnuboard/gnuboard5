@@ -133,9 +133,6 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 $ca_id = $it['ca_id'];
 include G5_MSHOP_SKIN_PATH.'/navigation.skin.php';
 
-if ($is_admin)
-    echo '<div class="sit_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
-
 // 상단 HTML
 echo '<div id="sit_hhtml">'.stripslashes($it['it_mobile_head_html']).'</div>';
 ?>
