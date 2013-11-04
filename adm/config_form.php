@@ -375,19 +375,19 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="cf_possible_ip">접근가능 IP</label></th>
             <td>
                 <?php echo help('입력된 IP의 컴퓨터만 접근할 수 있습니다.<br>123.123.+ 도 입력 가능. (엔터로 구분)') ?>
-                <textarea name="cf_possible_ip" id="cf_possible_ip"><?php echo $config['cf_possible_ip'] ?> </textarea>
+                <textarea name="cf_possible_ip" id="cf_possible_ip"><?php echo $config['cf_possible_ip'] ?></textarea>
             </td>
             <th scope="row"><label for="cf_intercept_ip">접근차단 IP</label></th>
             <td>
                 <?php echo help('입력된 IP의 컴퓨터는 접근할 수 없음.<br>123.123.+ 도 입력 가능. (엔터로 구분)') ?>
-                <textarea name="cf_intercept_ip" id="cf_intercept_ip"><?php echo $config['cf_intercept_ip'] ?> </textarea>
+                <textarea name="cf_intercept_ip" id="cf_intercept_ip"><?php echo $config['cf_intercept_ip'] ?></textarea>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_analytics">방문자분석 스크립트</label></th>
             <td colspan="3">
                 <?php echo help('방문자분석 스크립트 코드를 입력합니다. 예) 구글 애널리스틱'); ?>
-                <textarea name="cf_analytics" id="cf_analytics"><?php echo $config['cf_analytics']; ?> </textarea>
+                <textarea name="cf_analytics" id="cf_analytics"><?php echo $config['cf_analytics']; ?></textarea>
             </td>
         </tr>
         </tbody>
@@ -613,7 +613,7 @@ $pg_anchor = '<ul class="anchor">
         </tr>
         <tr>
             <th scope="row"><label for="cf_privacy">개인정보취급방침</label></th>
-            <td colspan="3"><textarea id="cf_privacy" name="cf_privacy" rows="10"><?php echo $config['cf_privacy'] ?> </textarea></td>
+            <td colspan="3"><textarea id="cf_privacy" name="cf_privacy" rows="10"><?php echo $config['cf_privacy'] ?></textarea></td>
         </tr>
         </tbody>
         </table>
