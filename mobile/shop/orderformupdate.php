@@ -269,12 +269,12 @@ if ($od_temp_point)
 
 $i_price = $i_price + $i_send_cost + $i_send_cost2 - $i_temp_point - $i_send_coupon;
 
+$od_status = '주문';
 if ($od_settle_case == "무통장")
 {
     $od_receipt_point   = $i_temp_point;
     $od_receipt_price   = 0;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = '주문';
 }
 else if ($od_settle_case == "계좌이체")
 {
@@ -290,7 +290,8 @@ else if ($od_settle_case == "계좌이체")
     $od_bank_account    = $bank_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = '입금';
+    if($od_misu == 0)
+        $od_status      = '입금';
 }
 else if ($od_settle_case == "가상계좌")
 {
@@ -305,7 +306,6 @@ else if ($od_settle_case == "가상계좌")
     $od_deposit_name    = $od_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = '주문';
 }
 else if ($od_settle_case == "휴대폰")
 {
@@ -318,7 +318,8 @@ else if ($od_settle_case == "휴대폰")
     $od_bank_account    = $commid.' '.$mobile_no;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = '입금';
+    if($od_misu == 0)
+        $od_status      = '입금';
 }
 else if ($od_settle_case == "신용카드")
 {
@@ -333,7 +334,8 @@ else if ($od_settle_case == "신용카드")
     $od_bank_account    = $card_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
-    $od_status          = '입금';
+    if($od_misu == 0)
+        $od_status      = '입금';
 }
 else
 {
@@ -437,15 +439,16 @@ if(!$result) {
     die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>KCP를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
-// 장바구니 쇼핑에서 주문으로
+// 장바구니 상태변경
 // 신용카드로 주문하면서 신용카드 포인트 사용하지 않는다면 포인트 부여하지 않음
+$cart_status = $od_status;
 $sql_card_point = "";
 if ($od_receipt_price > 0 && !$default['de_card_point']) {
     $sql_card_point = " , ct_point = '0' ";
 }
 $sql = "update {$g5['g5_shop_cart_table']}
            set od_id = '$od_id',
-               ct_status = '주문'
+               ct_status = '$cart_status'
                $sql_card_point
          where od_id = '$tmp_cart_id'
            and ct_select = '1' ";
