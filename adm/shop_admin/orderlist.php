@@ -292,7 +292,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a><br>
         </td> -->
         <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
-            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
+            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
             <?php echo $od_mobile; ?>
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
@@ -322,7 +322,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             비회원
             <?php } ?>
         </td>
-        <td headers="th_odrcnt"><?php echo $row['od_cart_count']; ?>건</td>
+        <td headers="th_odrcnt"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" id="order-id-<?php echo $row['od_id']; ?>" class="orderitem"><?php echo $row['od_cart_count']; ?>건</a></td>
         <td headers="th_odrall"><?php echo $od_cnt; ?>건</td>
     </tr>
     <tr class="<?php echo $tr_bg; ?>">
@@ -431,7 +431,7 @@ $(function(){
     // 주문상품보기
     $(".orderitem").on("click", function() {
         var $this = $(this);
-        var od_id = $this.text().replace(/[^0-9]/g, "");
+        var od_id = $this.attr("id").replace("order-id-", "");
 
         if($this.next().size())
             return false;
