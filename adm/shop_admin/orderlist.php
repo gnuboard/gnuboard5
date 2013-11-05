@@ -65,7 +65,8 @@ if ($od_receipt_point) {
 }
 
 if ($od_coupon) {
-    $where[] = " od_coupon != 0 ";
+    // 개별상품쿠폰, 배송비쿠폰, 주문금액쿠폰
+    $where[] = " (od_cart_coupon + od_send_coupon + od_coupon) != 0 ";
 }
 
 if ($fr_date && $to_date) {
@@ -180,7 +181,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <input type="checkbox" name="od_receipt_point" value="Y" id="od_misu04" <?php echo get_checked($od_receipt_point, 'Y'); ?>>
     <label for="od_misu04">포인트주문</label>
     <input type="checkbox" name="od_coupon" value="Y" id="od_misu05" <?php echo get_checked($od_coupon, 'Y'); ?>>
-    <label for="od_misu05">쿠폰</label>
+    <label for="od_misu05">쿠폰할인</label>
 </div>
 
 <div class="sch_last">
