@@ -77,6 +77,7 @@ class item_list
     protected $view_it_id    = false;       // 상품코드
     protected $view_it_img   = true;        // 상품이미지
     protected $view_it_name  = true;        // 상품명
+    protected $view_it_basic = true;        // 기본설명
     protected $view_it_price = true;        // 판매가격
     protected $view_it_cust_price = false;  // 소비자가
     protected $view_it_icon = false;        // 아이콘

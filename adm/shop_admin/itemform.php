@@ -223,7 +223,7 @@ $pg_anchor ='<ul class="anchor">
             <th scope="row"><label for="it_basic">기본설명</label></th>
             <td>
                 <?php echo help("상품명 하단에 상품에 대한 추가적인 설명이 필요한 경우에 입력합니다. HTML 입력도 가능합니다."); ?>
-                <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="80">
+                <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="95">
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
