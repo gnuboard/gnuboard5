@@ -354,7 +354,7 @@ ob_end_clean();
             <tbody>
             <tr>
                 <th scope="row"><label for="od_name">이름</label></th>
-                <td><input type="text" name="od_name" value="<?php echo $member['mb_name']; ?>" id="od_name" required class="frm_input required" size="5" maxlength="20"></td>
+                <td><input type="text" name="od_name" value="<?php echo $member['mb_name']; ?>" id="od_name" required class="frm_input required" maxlength="20"></td>
             </tr>
 
             <?php if (!$is_member) { // 비회원이면 ?>
@@ -489,7 +489,7 @@ ob_end_clean();
             ?>
             <tr>
                 <th scope="row"><label for="od_b_name">이름</label></th>
-                <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" size="5" maxlength="20"></td>
+                <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>
                 <th scope="row"><label for="od_b_tel">전화번호</label></th>
