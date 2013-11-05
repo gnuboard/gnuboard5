@@ -464,6 +464,9 @@ $(function(){
 
 function set_date(today)
 {
+    <?php
+    $date_term = date('w', G5_SERVER_TIME) - 1;
+    ?>
     if (today == "오늘") {
         document.getElementById("fr_date").value = "<?php echo G5_TIME_YMD; ?>";
         document.getElementById("to_date").value = "<?php echo G5_TIME_YMD; ?>";
@@ -471,13 +474,13 @@ function set_date(today)
         document.getElementById("fr_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME - 86400); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME - 86400); ?>";
     } else if (today == "이번주") {
-        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('this Monday', G5_SERVER_TIME)); ?>";
+        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('this Monday', G5_SERVER_TIME - (86400 * $date_term))); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME); ?>";
     } else if (today == "이번달") {
         document.getElementById("fr_date").value = "<?php echo date('Y-m-01', G5_SERVER_TIME); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME); ?>";
     } else if (today == "지난주") {
-        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('last Monday', G5_SERVER_TIME)); ?>";
+        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('last Monday', G5_SERVER_TIME - (86400 * $date_term))); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', strtotime('last Sunday', G5_SERVER_TIME)); ?>";
     } else if (today == "지난달") {
         document.getElementById("fr_date").value = "<?php echo date('Y-m-01', strtotime('-1 Month', G5_SERVER_TIME)); ?>";
