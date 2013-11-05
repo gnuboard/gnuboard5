@@ -223,6 +223,9 @@ function fboardlist_submit(f) {
     if(document.pressed == "선택삭제") {
         if (!confirm("선택한 게시물을 정말 삭제하시겠습니까?\n\n한번 삭제한 자료는 복구할 수 없습니다"))
             return false;
+
+        f.removeAttribute("target");
+        f.action = "./board_list_update.php";
     }
 
     return true;
