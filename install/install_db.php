@@ -26,7 +26,6 @@ $g5_install  = $_POST['g5_install'];
 $g5_shop_prefix = $_POST['g5_shop_prefix'];
 $g5_shop_install= $_POST['g5_shop_install'];
 
-@mysql_query('set names utf8');
 $dblink = @mysql_connect($mysql_host, $mysql_user, $mysql_pass);
 if (!$dblink) {
     echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
@@ -35,13 +34,19 @@ if (!$dblink) {
     exit;
 }
 
-@mysql_query('set names utf8');
 $select_db = @mysql_select_db($mysql_db, $dblink);
 if (!$select_db) {
     echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
     echo '<div>MySQL DB 를 확인해 주십시오.</div>'.PHP_EOL;
     echo '<div><a href="./install_config.php">뒤로가기</a></div>'.PHP_EOL;
     exit;
+}
+
+$mysql_set_mode = 'false';
+@mysql_query('set names utf8');
+if(version_compare(mysql_get_server_info(), '5.6.6', '>=')  == 1) {
+    @mysql_query("SET SESSION sql_mode = ''");
+    $mysql_set_mode = 'true';
 }
 ?>
 
@@ -441,7 +446,8 @@ fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
 fwrite($f, "define('G5_MYSQL_HOST', '{$mysql_host}');\n");
 fwrite($f, "define('G5_MYSQL_USER', '{$mysql_user}');\n");
 fwrite($f, "define('G5_MYSQL_PASSWORD', '{$mysql_pass}');\n");
-fwrite($f, "define('G5_MYSQL_DB', '{$mysql_db}');\n\n");
+fwrite($f, "define('G5_MYSQL_DB', '{$mysql_db}');\n");
+fwrite($f, "define('G5_MYSQL_SET_MODE', {$mysql_set_mode});\n\n");
 fwrite($f, "define('G5_TABLE_PREFIX', '{$table_prefix}');\n\n");
 fwrite($f, "\$g5['write_prefix'] = G5_TABLE_PREFIX.'write_'; // 게시판 테이블명 접두사\n\n");
 fwrite($f, "\$g5['auth_table'] = G5_TABLE_PREFIX.'auth'; // 관리권한 설정 테이블\n");
