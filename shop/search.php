@@ -83,9 +83,9 @@ $total_count = $row['cnt'];
             $save['it_id'][$save['cnt']] = $row['it_id'];
             $save[cnt]++;
         }
+        mysql_free_result($result);
     }
 
-    mysql_free_result($result);
     write_search_save($save);
 
     function write_search_save($save)
@@ -106,7 +106,7 @@ $total_count = $row['cnt'];
     ?>
     <div class="tbl_head01 tbl_wrap">
         <table>
-        <caption><?php echo $ca_temp?><a href="./list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo $save['cnt']; ?>개</caption>
+        <caption><?php echo $ca_temp?><a href="./list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo (int)$save['cnt']; ?>개</caption>
         <thead>
         <tr>
             <th scope="col">이미지</td>
