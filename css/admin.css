@@ -351,7 +351,9 @@ table .tr_bg1 {background:#f9f9f9}
 td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_id {width:150px}
 .td_idsmall {width:75px}
+.td_itname {text-align:left !important}
 .td_itopt {width:200px}
+.td_itopt_tl {text-align:left !important}
 .td_img {text-align:center}
 .td_imgline {width:70px;text-align:center}
 .td_input input {width:94%}
@@ -440,7 +442,15 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .scf_sms_cnt {display:block}
 
 /* 주문내역 */
-#sodr_list td {text-align:center !important}
+#sodr_list td {text-align:center}
+#sodr_list .td_name {text-align:center !important}
+#orderitemlist {position:relative}
+#orderitemlist .itemlist {position:absolute;top:0;left:0}
+
+#orderitemlist {position:relative}
+#orderitemlist .itemlist {z-index:2;position:absolute;top:0;left:-302px;width:958px;border:1px solid #a2a5a9;background:#f2f5f9}
+#orderitemlist td {background:#fff}
+#orderitemlist #orderitemlist_close {padding:0 20px 10px;text-align:right}
 
 /* 주문내역 수정 */
 .sodr_nonpay {color:#ff6600}
@@ -643,6 +653,8 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .new_win_desc {margin:0 auto;width:93%}
 .new_win .anchor {margin:0 auto 5px;width:93%}
 .new_win .tbl_wrap {margin:0 20px 20px;padding:0}
+
+.new_win .local_sch, .new_win .local_cmd, .new_win .local_desc01, .new_win .local_desc02, .new_win .local_ov {min-width:480px}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}

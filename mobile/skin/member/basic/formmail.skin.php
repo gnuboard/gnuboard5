@@ -16,7 +16,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="fmail" value="<?php echo $member['mb_email'] ?>">
     <?php } ?>
 
-    <div class="tbl_frm01 tbl_wrp">
+    <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>메일쓰기</caption>
         <tbody>

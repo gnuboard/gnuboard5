@@ -75,88 +75,90 @@ if(openwin != null) {
         <section id="sod_fin_pay">
             <h3>결제정보</h3>
 
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <?php if($pp['od_id']) { ?>
-            <tr>
-                <th scope="row">주문번호</th>
-                <td><?php echo $pp['od_id']; ?></td>
-            </tr>
-            <?php } ?>
-            <tr>
-                <th scope="row">결제방식</th>
-                <td><?php echo $pp['pp_settle_case']; ?></td>
-            </tr>
-            <?php if($pp_receipt_price) { ?>
-            <tr>
-                <th scope="row">결제금액</th>
-                <td><?php echo $pp_receipt_price; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">결제일시</th>
-                <td><?php echo is_null_time($pp['pp_receipt_time']) ? $pp['pp_receipt_time'] : ''; ?></td>
-            </tr>
-            <?php
-            }
+            <div class="tbl_head01 tbl_wrap">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <?php if($pp['od_id']) { ?>
+                <tr>
+                    <th scope="row">주문번호</th>
+                    <td><?php echo $pp['od_id']; ?></td>
+                </tr>
+                <?php } ?>
+                <tr>
+                    <th scope="row">결제방식</th>
+                    <td><?php echo $pp['pp_settle_case']; ?></td>
+                </tr>
+                <?php if($pp_receipt_price) { ?>
+                <tr>
+                    <th scope="row">결제금액</th>
+                    <td><?php echo $pp_receipt_price; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">결제일시</th>
+                    <td><?php echo is_null_time($pp['pp_receipt_time']) ? $pp['pp_receipt_time'] : ''; ?></td>
+                </tr>
+                <?php
+                }
 
-            // 승인번호, 휴대폰번호, KCP 거래번호
-            if($app_no_subj)
-            {
-            ?>
-            <tr>
-                <th scope="row"><?php echo $app_no_subj; ?></th>
-                <td><?php echo $app_no; ?></td>
-            </tr>
-            <?php
-            }
+                // 승인번호, 휴대폰번호, KCP 거래번호
+                if($app_no_subj)
+                {
+                ?>
+                <tr>
+                    <th scope="row"><?php echo $app_no_subj; ?></th>
+                    <td><?php echo $app_no; ?></td>
+                </tr>
+                <?php
+                }
 
-            // 계좌정보
-            if($disp_bank)
-            {
-            ?>
-            <tr>
-                <th scope="row">입금자명</th>
-                <td><?php echo $pp['pp_deposit_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">입금계좌</th>
-                <td><?php echo $pp['pp_bank_account']; ?></td>
-            </tr>
-            <?php
-            }
+                // 계좌정보
+                if($disp_bank)
+                {
+                ?>
+                <tr>
+                    <th scope="row">입금자명</th>
+                    <td><?php echo $pp['pp_deposit_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">입금계좌</th>
+                    <td><?php echo $pp['pp_bank_account']; ?></td>
+                </tr>
+                <?php
+                }
 
-            if($disp_receipt) {
-            ?>
-            <tr>
-                <th scope="row">영수증</th>
-                <td>
-                    <?php
-                    if($pp['pp_settle_case'] == '휴대폰')
-                    {
-                    ?>
-                    <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
-                    <?php
-                    }
+                if($disp_receipt) {
+                ?>
+                <tr>
+                    <th scope="row">영수증</th>
+                    <td>
+                        <?php
+                        if($pp['pp_settle_case'] == '휴대폰')
+                        {
+                        ?>
+                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
+                        <?php
+                        }
 
-                    if($pp['pp_settle_case'] == '신용카드')
-                    {
-                    ?>
-                    <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
-                    <?php
-                    }
-                    ?>
-                <td>
-                </td>
-            </tr>
-            <?php
-            }
-            ?>
-            </tbody>
-            </table>
+                        if($pp['pp_settle_case'] == '신용카드')
+                        {
+                        ?>
+                        <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
+                        <?php
+                        }
+                        ?>
+                    <td>
+                    </td>
+                </tr>
+                <?php
+                }
+                ?>
+                </tbody>
+                </table>
+            </div>
         </section>
     </section>
 

@@ -5,7 +5,7 @@ include_once('./_common.php');
 //print_r2($_POST); exit;
 
 // 상품옵션별재고 또는 상품재고에 더하기
-function add_io_stock($it_id, $ct_qty, $io_id="", $io_type="")
+function add_io_stock($it_id, $ct_qty, $io_id="", $io_type=0)
 {
     global $g5;
 
@@ -25,7 +25,7 @@ function add_io_stock($it_id, $ct_qty, $io_id="", $io_type="")
 
 
 // 상품옵션별재고 또는 상품재고에서 빼기
-function subtract_io_stock($it_id, $ct_qty, $io_id="", $io_type="")
+function subtract_io_stock($it_id, $ct_qty, $io_id="", $io_type=0)
 {
     global $g5;
 
@@ -58,7 +58,7 @@ function change_status($od_id, $current_status, $change_status)
 
 
 // 주문서에 입금시 update
-function order_update_receipt($od_id) 
+function order_update_receipt($od_id)
 {
     global $g5;
 
@@ -78,17 +78,17 @@ function order_update_delivery($od_id, $mb_id, $change_status, $delivery)
     $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ";
     $result = sql_query($sql);
 
-    for ($i=0; $row=sql_fetch_array($result); $i++) 
+    for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         // 재고를 이미 사용했거나 재고에서 이미 뺐다면
         $stock_use = $row['ct_stock_use'];
-    
+
         if ($row['ct_stock_use'])
         {
-            if ($change_status == '주문' || 
-                $change_status == '취소' || 
-                $change_status == '반품' || 
-                $change_status == '품절') 
+            if ($change_status == '주문' ||
+                $change_status == '취소' ||
+                $change_status == '반품' ||
+                $change_status == '품절')
             {
                 // 재고에 다시 더한다.
                 add_io_stock($row['it_id'], $row['ct_qty'], $row['io_id'], $row['io_type']);
@@ -98,7 +98,7 @@ function order_update_delivery($od_id, $mb_id, $change_status, $delivery)
         else
         {
             // 재고 오류로 인한 수정
-            if ($change_status == '배송' || 
+            if ($change_status == '배송' ||
                 $change_status == '완료')
             {
                 // 재고에서 뺀다.
@@ -108,7 +108,7 @@ function order_update_delivery($od_id, $mb_id, $change_status, $delivery)
         }
 
         $point_use = $row['ct_point_use'];
-        
+
         // 회원이면서 포인트가 0보다 크거나 이미 포인트를 부여했다면 뺀다.
         if ($mb_id && $row['ct_point'] && $row['ct_point_use'])
         {
@@ -141,14 +141,14 @@ for ($i=0; $i<count($_POST['chk']); $i++)
 
     $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
     if (!$od) continue;
-    
+
     //change_order_status($od['od_status'], $_POST['od_status'], $od);
     //echo $od_id . "<br>";
 
     $current_status = $od['od_status'];
     $change_status  = $_POST['od_status'];
 
-    switch ($current_status) 
+    switch ($current_status)
     {
         case '주문' :
             if ($change_status != '입금') continue;
@@ -173,7 +173,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
             order_update_delivery($od_id, $od['mb_id'], $change_status, $delivery);
 
             /*
-            $sql = " update {$g5['g5_shop_order_table']} 
+            $sql = " update {$g5['g5_shop_order_table']}
                         set od_delivery_company = '$delivery_company',
                             od_invoice      = '$invoice',
                             od_invoice_time = '$invoice_time'
@@ -183,11 +183,11 @@ for ($i=0; $i<count($_POST['chk']); $i++)
             $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ";
             $result = sql_query($sql);
 
-            for ($i=0; $row=sql_fetch_array($result); $i++) 
+            for ($i=0; $row=sql_fetch_array($result); $i++)
             {
                 // 재고를 이미 사용했거나 재고에서 이미 뺐다면
                 $stock_use = $row['ct_stock_use'];
-            
+
                 if ($row['ct_stock_use'])
                 {
                     if ($ct_status == '주문' || $ct_status == '취소' || $ct_status == '반품' || $ct_status == '품절')
@@ -209,7 +209,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
                 }
 
                 $point_use = $row['ct_point_use'];
-                
+
                 // 회원이면서 포인트가 0보다 크거나 이미 포인트를 부여했다면 뺀다.
                 if ($od['mb_id'] && $row['ct_point'] && $row['ct_point_use'])
                 {
@@ -233,7 +233,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
             change_status($od_id, '배송', '완료');
             break;
 
-    } // switch end 
+    } // switch end
 
 
     // 주문정보

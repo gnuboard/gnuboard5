@@ -95,6 +95,7 @@ if (file_exists($dbconfig_file)) {
     $connect_db = sql_connect(G5_MYSQL_HOST, G5_MYSQL_USER, G5_MYSQL_PASSWORD) or die('MySQL Connect Error!!!');
     $select_db  = sql_select_db(G5_MYSQL_DB, $connect_db) or die('MySQL DB Error!!!');
     @mysql_query(" set names utf8 ");
+    if(defined('G5_MYSQL_SET_MODE') && G5_MYSQL_SET_MODE) @mysql_query("SET SESSION sql_mode = ''");
     if (defined(G5_TIMEZONE)) @mysql_query(" set time_zone = '".G5_TIMEZONE."'");
 } else {
 ?>

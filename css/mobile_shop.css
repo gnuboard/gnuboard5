@@ -3,16 +3,18 @@
 
 /* 초기화 */
 html {overflow-y:scroll}
-body {margin:0;padding:0;background:#fff;color:#000;font-size:0.75em;font-family:"dotum"}
+body {margin:0;padding:0;font-size:0.75em}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:"dotum"}
+h1, h2, h3, h4, h5, h6 {font-size:1em}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
+legend {position:absolute;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, select, img {vertical-align:middle}
-input {margin:0;padding:0;border-radius:0;font-family:"dotum"}
-button {border-radius:0;font-size:1em;font-family:"dotum"}
-input[type=text], input[type=password], input[type=submit], input[type=image], button {border-radius:0 !important;font-size:1em} /* 모바일에서만 사용 */
-p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
+input,button {margin:0;padding:0;font-size:1em}
+input[type=text], input[type=password], input[type=submit], input[type=image], button {border-radius:0;font-size:1em;-webkit-appearance:none}
+textarea, select {font-size:1em}
+textarea {border-radius:0;-webkit-appearance:none}
+p {margin:0;padding:1em 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link, a:visited {color:#000;text-decoration:none}
@@ -177,8 +179,8 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 #sit_ov_btn {margin:0;padding:0;text-align:center;list-style:none}
 #sit_ov_btn li {display:inline-block;margin:0 0 0 1px}
-#sit_ov_btn a {display:inline-block;padding:10px 0;width:80px;font-size:0.95em;text-align:center;text-decoration:none;letter-spacing:-0.1em}
-#sit_ov_btn input {margin:0;padding:10px 0;width:80px;border:0;font-size:0.95em;text-align:center;text-decoration:none;letter-spacing:-0.1em}
+#sit_ov_btn a {display:inline-block;padding:10px;vertical-align:middle;text-decoration:none;letter-spacing:-0.1em}
+#sit_ov_btn input {margin:0;padding:10px;border:0;letter-spacing:-0.1em}
 #sit_btn_buy {background:#ff5b89;color:#fff}
 #sit_btn_cart, #sit_btn_wish {background:#555;color:#fff}
 #sit_btn_rec {background:#888;color:#fff}
@@ -341,10 +343,10 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 /* 장바구니 */
 #sod_bsk {}
-.sod_bsk_img {width:90px;text-align:center}
-.sod_bsk_itopt {margin:5px 0;border:1px solid #e9e9e9;border-bottom:0;background:#f5f6fa}
+.sod_bsk_img {width:100px;text-align:center}
+.sod_bsk_itopt {margin:5px 0;border-top:1px dashed #e9e9e9;background:#f5f6fa}
 .sod_bsk_itopt ul {margin:0;padding:0;list-style:none}
-.sod_bsk_itopt li {padding:5px;border-bottom:1px solid #e9e9e9}
+.sod_bsk_itopt li {margin:0 0 1px;padding:5px}
 .sod_option_btn .mod_options {margin:0 0 10px;padding:5px 0;width:100%;border:0;background:#333;color:#fff}
 
 #sod_bsk_list {position:relative}
@@ -356,7 +358,7 @@ html.no-overflowscrolling #mod_option_frm {height:auto;max-height:10000px !impor
 #sod_bsk_tot dt, #sod_bsk_tot dd {float:left;padding:10px 0;border-bottom:1px solid #e9e9e9}
 #sod_bsk_tot dt {padding-left:2%;width:48%;font-weight:bold}
 #sod_bsk_tot dd {margin:0;padding-right:2%;width:47%;text-align:right}
-.sod_bsk_cnt {background:#333;color:#fff}
+.sod_bsk_cnt {background:#ff3061;color:#fff}
 .sod_bsk_point {border-bottom:0 !important}
 
 #sod_bsk_act {margin:0 0 20px;text-align:center}
@@ -364,7 +366,7 @@ html.no-overflowscrolling #mod_option_frm {height:auto;max-height:10000px !impor
 
 /* 위시리스트 */
 #sod_ws {}
-#sod_ws .basic_tbl a {padding-right:0;padding-left:0}
+#sod_ws .tbl_head01 a {padding-right:0;padding-left:0}
 .sod_ws_img {width:90px;text-align:center}
 #sod_ws_act {text-align:center}
 
@@ -378,25 +380,26 @@ html.no-overflowscrolling #it_coupon_frm {height:auto;max-height:10000px !import
 
 #sod_frm_orderer {margin:15px 0 30px}
 
-#sod_frm_addr div {position:relative} /* 갤탭 position */
-#sod_frm_addr div div {position:absolute;top:-25px;left:185px;letter-spacing:-0.1em}
+#sod_frm_addr div {display:inline-block}
 
 #sod_frm_same {margin:0 0 10px}
 
-#sod_frm #od_memo {height:70px}
-
 #sod_frm_pay {position:relative}
-#sod_frm_pay .basic_tbl caption {font-size:0;line-height:0;overflow:hidden}
-#sod_frm_pay .basic_tbl th {width:auto !important;font-weight:bold;text-align:center !important}
-#sod_frm_pay .basic_tbl td {border-top:1px solid #e9e9e9 !important;border-bottom:1px solid #e9e9e9 !important;line-height:1.5em !important;word-break:break-all !important}
+#sod_frm_pay .tbl_head01 caption {font-size:0;line-height:0;overflow:hidden}
+#sod_frm_pay .tbl_head01 th {width:auto !important;font-weight:bold;text-align:center !important}
+#sod_frm_pay .tbl_head01 td {border-top:1px solid #e9e9e9 !important;border-bottom:1px solid #e9e9e9 !important;line-height:1.5em !important;word-break:break-all !important}
 #sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
 html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_frm {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
 
 #sod_frm_paysel {margin:0 0 15px;padding:10px;border:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
 #sod_frm_paysel legend {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
-#settle_bank {margin:10px 0 0}
+#sod_frm_paysel .frm_input {background:#fff}
+#sod_frm_paysel div {margin:5px 0 0}
 
 #sod_frm_escrow {margin:30px 0 0}
+
+#od_addr1, #od_addr2, #od_email, #od_b_addr1, #od_b_addr2 {width:100%}
+#sod_frm #od_memo {height:70px}
 
 /* 주문내역 */
 #sod_v {}
@@ -443,7 +446,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_fin_view {border:1px solid #e9e9e9}
 #sod_fin_view h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sod_fin_view h3 {margin:0 0 10px}
-#sod_fin_view .basic_tbl th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f5f6fa;text-align:left}
+#sod_fin_view .tbl_head01 th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f5f6fa;text-align:left}
 
 #sod_fin_pay {padding:10px;border-bottom:1px solid #e9e9e9}
 
@@ -471,7 +474,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #scash {}
 #scash section {padding:10px 0}
 #scash h2 {margin:0 0 10px;text-align:center}
-#scash .basic_tbl th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f5f6fa;text-align:left}
+#scash .tbl_head01 th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f5f6fa;text-align:left}
 #scash_apply {padding:10px 0 15px;text-align:center}
 #scash_apply button {padding:10px;border:0;background:#565e60;color:#fff}
 #scash_copy {text-align:center}
@@ -541,35 +544,46 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 .btn_admin:focus, .btn_admin:hover {text-decoration:none !important}
 
 /* 기본테이블 */
-.basic_tbl {margin-bottom:10px;width:100%;border-collapse:collapse;border-spacing:0}
-.basic_tbl caption {padding:0 0 10px;color:#777;text-align:left}
-.basic_tbl thead th {padding:5px 0;background:#565e60;color:#fff}
-.basic_tbl thead a {color:#fff}
-.basic_tbl thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-.basic_tbl tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
-.basic_tbl tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
-.basic_tbl td {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
-.basic_tbl a {display:block;padding:5px;color:#000;text-decoration:none}
-.bo_sideview td {} /* 사이드뷰 사용하는 테이블 셀 패딩값 */
-td.empty_table {padding:30px 0;text-align:center}
+.tbl_wrap {margin:0 0 10px}
+.tbl_wrap table {width:100%;border-collapse:collapse;border-spacing:0}
+.tbl_wrap caption {padding:10px 0;color:#4b8b99;font-weight:bold;text-align:left}
 
-/* 필수입력 */
-.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
+.tbl_head01 {}
+.tbl_head01 caption {padding:0 0 10px;color:#777;text-align:left}
+.tbl_head01 thead th {padding:12px 0;border-top:1px solid #d1dee2;border-bottom:1px solid #d1dee2;background:#e5ecef;color:#383838;font-size:0.95em;letter-spacing:-0.1em}
+.tbl_head01 thead a {color:#383838}
+.tbl_head01 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+.tbl_head01 tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
+.tbl_head01 tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
+.tbl_head01 tbody th {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
+.tbl_head01 td {padding:5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
+.tbl_head01 .empty_table {padding:10px 0;text-align:center}
+
+/* thead 두 줄 테이블 */
+.tbl_head02 {}
+.tbl_head02 table {clear:both;width:100%;border-collapse:collapse;border-spacing:0}
+.tbl_head02 thead th {padding:5px 0;border:1px solid #d1dee2;background:#e5ecef;color:#383838;font-size:0.95em;letter-spacing:-0.1em}
+.tbl_head02 thead input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
+.tbl_head02 thead a {color:#383838;text-decoration:underline}
+.tbl_head01 tfoot th {border-top:1px solid #666;border-bottom:1px solid #666;background:#484848;color:#fff}
+.tbl_head01 tfoot td {border-color:#666;background:#484848;color:#fff;font-weight:bold;text-align:center}
+.tbl_head02 tbody th {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
+.tbl_head02 tbody td {padding:5px 3px;line-height:1.4em;word-break:break-all}
+.tbl_head02 .empty_table {padding:10px 0;text-align:center}
 
 /* 폼 테이블 */
-.frm_tbl {margin-bottom:15px;width:100%;border-collapse:collapse;border-spacing:0}
-.frm_tbl caption {padding:10px;color:#4b8b99;font-weight:bold;text-align:left}
-.frm_tbl th {padding-left:10px;width:110px;border-top:1px solid #eee;border-bottom:1px solid #eee;font-weight:normal;text-align:left}
-.frm_tbl td {padding:5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
-.frm_tbl textarea, .frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em;-webkit-appearance:none}
-.frm_tbl textarea {width:90%;height:100px}
-.frm_address {display:block;margin-top:5px}
-.frm_file {display:block;margin-bottom:5px}
-.frm_tbl #captcha {margin:0;padding:0;border:0;background:transparent}
-.frm_tbl #captcha input {margin-left:5px;text-align:center}
-.frm_tbl a {text-decoration:none}
+.tbl_frm01 {}
+.tbl_frm01 th {padding:10px 0;width:90px;border:1px solid #e9e9e9;border-left:0;text-align:left}
+.tbl_frm01 td {padding:10px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
+.tbl_frm01 textarea, .frm_input {border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:middle;line-height:1.8em;-webkit-appearance:none}
+.tbl_frm01 textarea {width:100%;height:100px}
+.tbl_frm01 a {text-decoration:none}
+.tbl_frm01 .frm_address {display:block;margin-top:5px}
+.tbl_frm01 .frm_file {display:block;margin-bottom:5px;width:100%}
+.tbl_frm01 .frm_info {display:block;padding:5px 0 0;color:#666;line-height:1.3em}
 
-.frm_info {display:block;padding:5px 0 0;color:#666;line-height:1.3em}
+/* 필수입력 */
+.required, textarea.required {background:url('../img/wrest.gif') #f7f7f7 top right no-repeat !important}
 
 /* 테이블 그리드 padding 0 5px 고려한 넓이 */
 .grid_1 {width:40px}
@@ -595,16 +609,16 @@ td.empty_table {padding:30px 0;text-align:center}
 .td_chk {width:50px;text-align:center}
 .td_group {width:100px;text-align:center}
 .td_board {width:120px;text-align:center}
-.td_smallstat {width:50px;text-align:center}
+.td_statsmall {width:50px;text-align:center}
 .td_num {width:50px;text-align:center}
-.td_bignum {width:120px;text-align:center}
+.td_numbig {width:120px;text-align:center}
 .td_mb_id {width:100px;text-align:center}
 .td_nick {width:100px;text-align:center}
 .td_name {width:100px;text-align:left}
-.td_smallname {width:100px;text-align:left}
+.td_namesmall {width:100px;text-align:left}
 .td_date {width:50px;text-align:center}
 .td_datetime {width:170px;text-align:center}
-.td_smallmng {width:50px;text-align:center}
+.td_mngsmall {width:50px;text-align:center}
 .td_mng {width:80px;text-align:center}
 .td_stat {text-align:center}
 

@@ -174,7 +174,7 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
         <option value="wr_name,0"<?php echo get_selected($sfl, 'wr_name,0'); ?>>글쓴이(코)</option>
     </select>
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required class="frm_input required" size="15" maxlength="15">
+    <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="frm_input required" size="15" maxlength="15">
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </fieldset>
@@ -217,6 +217,9 @@ function fboardlist_submit(f) {
     if(document.pressed == "선택삭제") {
         if (!confirm("선택한 게시물을 정말 삭제하시겠습니까?\n\n한번 삭제한 자료는 복구할 수 없습니다"))
             return false;
+
+        f.removeAttribute("target");
+        f.action = "./board_list_update.php";
     }
 
     return true;

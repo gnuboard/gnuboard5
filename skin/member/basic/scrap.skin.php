@@ -8,7 +8,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="scrap" class="new_win mbskin">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
-    <div class="tbl_head01 tbl_wrp">
+    <div class="tbl_head01 tbl_wrap">
         <table>
         <caption>스크랩 목록</caption>
         <thead>

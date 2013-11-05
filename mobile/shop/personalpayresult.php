@@ -62,88 +62,90 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <section id="sod_fin_pay">
             <h3>결제정보</h3>
 
-            <table class="basic_tbl">
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <?php if($pp['od_id']) { ?>
-            <tr>
-                <th scope="row">주문번호</th>
-                <td><?php echo $pp['od_id']; ?></td>
-            </tr>
-            <?php } ?>
-            <tr>
-                <th scope="row">결제방식</th>
-                <td><?php echo $pp['pp_settle_case']; ?></td>
-            </tr>
-            <?php if($pp['pp_receipt_price'] > 0) { ?>
-            <tr>
-                <th scope="row">결제금액</th>
-                <td><?php echo $pp_receipt_price; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">결제일시</th>
-                <td><?php echo $pp['pp_receipt_time']; ?></td>
-            </tr>
-            <?php
-            }
+            <div class="tbl_wrap tbl_head01">
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <?php if($pp['od_id']) { ?>
+                <tr>
+                    <th scope="row">주문번호</th>
+                    <td><?php echo $pp['od_id']; ?></td>
+                </tr>
+                <?php } ?>
+                <tr>
+                    <th scope="row">결제방식</th>
+                    <td><?php echo $pp['pp_settle_case']; ?></td>
+                </tr>
+                <?php if($pp['pp_receipt_price'] > 0) { ?>
+                <tr>
+                    <th scope="row">결제금액</th>
+                    <td><?php echo $pp_receipt_price; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">결제일시</th>
+                    <td><?php echo $pp['pp_receipt_time']; ?></td>
+                </tr>
+                <?php
+                }
 
-            // 승인번호, 휴대폰번호, KCP 거래번호
-            if($app_no_subj)
-            {
-            ?>
-            <tr>
-                <th scope="row"><?php echo $app_no_subj; ?></th>
-                <td><?php echo $app_no; ?></td>
-            </tr>
-            <?php
-            }
+                // 승인번호, 휴대폰번호, KCP 거래번호
+                if($app_no_subj)
+                {
+                ?>
+                <tr>
+                    <th scope="row"><?php echo $app_no_subj; ?></th>
+                    <td><?php echo $app_no; ?></td>
+                </tr>
+                <?php
+                }
 
-            // 계좌정보
-            if($disp_bank)
-            {
-            ?>
-            <tr>
-                <th scope="row">입금자명</th>
-                <td><?php echo $pp['pp_deposit_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">입금계좌</th>
-                <td><?php echo $pp['pp_bank_account']; ?></td>
-            </tr>
-            <?php
-            }
+                // 계좌정보
+                if($disp_bank)
+                {
+                ?>
+                <tr>
+                    <th scope="row">입금자명</th>
+                    <td><?php echo $pp['pp_deposit_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">입금계좌</th>
+                    <td><?php echo $pp['pp_bank_account']; ?></td>
+                </tr>
+                <?php
+                }
 
-            if($disp_receipt) {
-            ?>
-            <tr>
-                <th scope="row">영수증</th>
-                <td>
-                    <?php
-                    if($pp['pp_settle_case'] == '휴대폰')
-                    {
-                    ?>
-                    <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
-                    <?php
-                    }
+                if($disp_receipt) {
+                ?>
+                <tr>
+                    <th scope="row">영수증</th>
+                    <td>
+                        <?php
+                        if($pp['pp_settle_case'] == '휴대폰')
+                        {
+                        ?>
+                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
+                        <?php
+                        }
 
-                    if($pp['pp_settle_case'] == '신용카드')
-                    {
-                    ?>
-                    <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
-                    <?php
-                    }
-                    ?>
-                <td>
-                </td>
-            </tr>
-            <?php
-            }
-            ?>
-            </tbody>
-            </table>
+                        if($pp['pp_settle_case'] == '신용카드')
+                        {
+                        ?>
+                        <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
+                        <?php
+                        }
+                        ?>
+                    <td>
+                    </td>
+                </tr>
+                <?php
+                }
+                ?>
+                </tbody>
+                </table>
+            </div>
         </section>
     </section>
 
@@ -178,10 +180,10 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     <legend>모의입금처리</legend>
     <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
     <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
-    <input type="text" name="e_trade_no" value="<?php echo $pp['pp_tno']; ?>" size="80"><br />
-    <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
-    <input type="text" name="req_name" value="<?php echo $pp['pp_deposit_name']; ?>" size="80"><br />
-    <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
+    <input type="text" name="e_trade_no" value="<?php echo $pp['pp_tno']; ?>"><br />
+    <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>"><br />
+    <input type="text" name="req_name" value="<?php echo $pp['pp_deposit_name']; ?>"><br />
+    <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php"><br /><br />
     <input type="submit" value="입금통보 테스트">
     </form>
     </fieldset>

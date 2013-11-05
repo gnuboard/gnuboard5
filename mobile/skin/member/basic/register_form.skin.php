@@ -22,7 +22,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="mb_nick" value="<?php echo $member['mb_nick'] ?>">
     <?php } ?>
 
-    <div class="tbl_frm01 tbl_wrp">
+    <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>사이트 이용정보 입력</caption>
         <tr>
@@ -44,7 +44,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <div class="tbl_frm01 tbl_wrp">
+    <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>개인정보 입력</caption>
         <tr>
@@ -53,7 +53,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 <?php if ($w=="u" && $config['cf_cert_use']) { ?>
                 <span class="frm_info">아이핀 본인확인 후에는 이름이 자동 입력되고 휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되어 수동으로 입력할수 없게 됩니다.</span>
                 <?php } ?>
-                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>" size="10">
+                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo $member['mb_name'] ?>" <?php echo $required ?> <?php if ($w=='u') echo 'readonly'; ?> class="frm_input nospace <?php echo $required ?> <?php echo $readonly ?>">
                 <?php
                 if($config['cf_cert_use']) {
                     if($config['cf_cert_ipin'])
@@ -161,7 +161,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <div class="tbl_frm01 tbl_wrp">
+    <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>기타 개인설정</caption>
         <?php if ($config['cf_use_signature']) { ?>

@@ -13,54 +13,56 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_2">
-        <col>
-    </colgroup>
-    <tbody>
-    <tr>
-        <th scope="row"><label for="is_subject">제목</label></th>
-        <td><input type="text" name="is_subject" value="<?php echo get_text($use['is_subject']); ?>" id="is_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="" style="width:200px;">내용</label></th>
-        <td><?php echo editor_html('is_content', $use['is_content']); ?></td>
-    </tr>
-    <tr>
-        <th scope="row">평가</th>
-        <td>
-            <ul id="sit_use_write_star">
-                <li>
-                    <input type="radio" name="is_score" value="10" id="is_score10" <?php echo ($is_score==10)?'checked="checked"':''; ?>>
-                    <label for="is_score10">매우만족</label>
-                    <img src="<?php echo G5_SHOP_URL; ?>/img/s_star5.png">
-                </li>
-                <li>
-                    <input type="radio" name="is_score" value="8" id="is_score8" <?php echo ($is_score==8)?'checked="checked"':''; ?>>
-                    <label for="is_score8">만족</label>
-                    <img src="<?php echo G5_SHOP_URL; ?>/img/s_star4.png">
-                </li>
-                <li>
-                    <input type="radio" name="is_score" value="6" id="is_score6" <?php echo ($is_score==6)?'checked="checked"':''; ?>>
-                    <label for="is_score6">보통</label>
-                    <img src="<?php echo G5_SHOP_URL; ?>/img/s_star3.png">
-                </li>
-                <li>
-                    <input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
-                    <label for="is_score4">불만</label>
-                    <img src="<?php echo G5_SHOP_URL; ?>/img/s_star2.png">
-                </li>
-                <li>
-                    <input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
-                    <label for="is_score2">매우불만</label>
-                    <img src="<?php echo G5_SHOP_URL; ?>/img/s_star1.png">
-                </li>
-            </ul>
-        </td>
-    </tr>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <colgroup>
+            <col class="grid_2">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="is_subject">제목</label></th>
+            <td><input type="text" name="is_subject" value="<?php echo get_text($use['is_subject']); ?>" id="is_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="" style="width:200px;">내용</label></th>
+            <td><?php echo editor_html('is_content', $use['is_content']); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">평가</th>
+            <td>
+                <ul id="sit_use_write_star">
+                    <li>
+                        <input type="radio" name="is_score" value="10" id="is_score10" <?php echo ($is_score==10)?'checked="checked"':''; ?>>
+                        <label for="is_score10">매우만족</label>
+                        <img src="<?php echo G5_SHOP_URL; ?>/img/s_star5.png">
+                    </li>
+                    <li>
+                        <input type="radio" name="is_score" value="8" id="is_score8" <?php echo ($is_score==8)?'checked="checked"':''; ?>>
+                        <label for="is_score8">만족</label>
+                        <img src="<?php echo G5_SHOP_URL; ?>/img/s_star4.png">
+                    </li>
+                    <li>
+                        <input type="radio" name="is_score" value="6" id="is_score6" <?php echo ($is_score==6)?'checked="checked"':''; ?>>
+                        <label for="is_score6">보통</label>
+                        <img src="<?php echo G5_SHOP_URL; ?>/img/s_star3.png">
+                    </li>
+                    <li>
+                        <input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
+                        <label for="is_score4">불만</label>
+                        <img src="<?php echo G5_SHOP_URL; ?>/img/s_star2.png">
+                    </li>
+                    <li>
+                        <input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
+                        <label for="is_score2">매우불만</label>
+                        <img src="<?php echo G5_SHOP_URL; ?>/img/s_star1.png">
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
 
     <div class="btn_win">
         <input type="submit" value="작성완료" class="btn_submit">

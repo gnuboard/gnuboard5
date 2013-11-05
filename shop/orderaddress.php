@@ -50,47 +50,50 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 
     <h1 id="new_win_title">배송지 목록</h1>
 
-    <table class="basic_tbl">
-    <thead>
-    <tr>
-        <th scope="col">
-            <label for="chk_all" class="sound_only">전체선택</label><input type="checkbox" name="chk_all" id="chk_all">
-        </th>
-        <th scope="col">배송지명</th>
-        <th scope="col">기본<br>배송지</th>
-        <th scope="col">이름</th>
-        <th scope="col">전화번호</th>
-        <th scope="col">주소</th>
-        <th scope="col">관리</th>
-    </tr>
-    </thead>
-    <tbody>
-    <?php
-    $sep = chr(30);
-    for($i=0; $row=sql_fetch_array($result); $i++) {
-        $addr = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
-    ?>
-    <tr>
-        <td class="td_chk"><label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
-            <input type="hidden" name="ad_id[<?php echo $i; ?>]" value="<?php echo $row['ad_id'];?>">
-            <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
-        </td>
-        <td class="td_name"><input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
-        <td class="td_default"><label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label><input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>></td>
-        <td class="td_smallname"><?php echo $row['ad_name']; ?></td>
-        <td class="td_bignum"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
-        <td><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></td>
-        <td class="td_mng">
-            <input type="hidden" value="<?php echo $addr; ?>">
-            <button type="button" class="sel_address btn_frmline">선택</button>
-            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" class="del_address">삭제</a>
-        </td>
-    </tr>
-    <?php
-    }
-    ?>
-    </tbody>
-    </table>
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <thead>
+        <tr>
+            <th scope="col">
+                <label for="chk_all" class="sound_only">전체선택</label><input type="checkbox" name="chk_all" id="chk_all">
+            </th>
+            <th scope="col">배송지명</th>
+            <th scope="col">기본<br>배송지</th>
+            <th scope="col">이름</th>
+            <th scope="col">전화번호</th>
+            <th scope="col">주소</th>
+            <th scope="col">관리</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $sep = chr(30);
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+            $addr = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
+        ?>
+        <tr>
+            <td class="td_chk"><label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
+                <input type="hidden" name="ad_id[<?php echo $i; ?>]" value="<?php echo $row['ad_id'];?>">
+                <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
+            </td>
+            <td class="td_name"><input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
+            <td class="td_default"><label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label><input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>></td>
+            <td class="td_namesmall"><?php echo $row['ad_name']; ?></td>
+            <td class="td_numbig"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
+            <td><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></td>
+            <td class="td_mng">
+                <input type="hidden" value="<?php echo $addr; ?>">
+                <button type="button" class="sel_address btn_frmline">선택</button>
+                <a href="<?php echo $_SERVER['PHP_SELF']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" class="del_address">삭제</a>
+            </td>
+        </tr>
+        <?php
+        }
+        ?>
+        </tbody>
+        </table>
+    </div>
+
     <div class="btn_list">
         <input type="submit" name="act_button" value="선택수정" id="btn_submit">
     </div>

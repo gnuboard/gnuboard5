@@ -24,26 +24,29 @@ include_once(G5_PATH.'/head.sub.php');
         <form name="fitemrecommend" method="post" action="./itemrecommendmail.php" autocomplete="off" onsubmit="return fitemrecommend_check(this);">
         <input type="hidden" name="token" value="<?php echo $token; ?>">
         <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
-        <table class="frm_tbl">
-        <colgroup>
-            <col class="grid_3">
-            <col>
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="row"><label for="to_email">추천받는 분 E-mail</label></th>
-            <td><input type="text" name="to_email" id="to_email" required class="frm_input" size="51"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="subject">제목</label></th>
-            <td><input type="text" name="subject" id="subject" required class="frm_input" size="51"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="content">내용</label></th>
-            <td><textarea name="content" id="content" required></textarea></td>
-        </tr>
-        </tbody>
-        </table>
+
+        <div class="tbl_frm01 tbl_wrap">
+            <table>
+            <colgroup>
+                <col class="grid_3">
+                <col>
+            </colgroup>
+            <tbody>
+            <tr>
+                <th scope="row"><label for="to_email">추천받는 분 E-mail</label></th>
+                <td><input type="text" name="to_email" id="to_email" required class="frm_input"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="subject">제목</label></th>
+                <td><input type="text" name="subject" id="subject" required class="frm_input"></td>
+            </tr>
+            <tr>
+                <th scope="row"><label for="content">내용</label></th>
+                <td><textarea name="content" id="content" required></textarea></td>
+            </tr>
+            </tbody>
+            </table>
+        </div>
 
         <div class="btn_win">
             <input type="submit" id="btn_submit" value="보내기" class="btn_submit">

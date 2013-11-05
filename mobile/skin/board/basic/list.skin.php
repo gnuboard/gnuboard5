@@ -48,7 +48,7 @@ if ($is_nogood) $colspan++;
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="sw" value="">
 
-    <div class="tbl_head01 tbl_wrp">
+    <div class="tbl_head01 tbl_wrap">
         <table>
         <thead>
         <tr>
@@ -152,7 +152,7 @@ if ($is_nogood) $colspan++;
         <option value="wr_name,1"<?php echo get_selected($sfl, 'wr_name,1'); ?>>글쓴이</option>
         <option value="wr_name,0"<?php echo get_selected($sfl, 'wr_name,0'); ?>>글쓴이(코)</option>
     </select>
-    <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어(필수)" required class="required frm_input" size="15" maxlength="15">
+    <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어(필수)" required id="stx" class="required frm_input" size="15" maxlength="15">
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </fieldset>
@@ -194,6 +194,9 @@ function fboardlist_submit(f) {
     if(document.pressed == "선택삭제") {
         if (!confirm("선택한 게시물을 정말 삭제하시겠습니까?\n\n한번 삭제한 자료는 복구할 수 없습니다"))
             return false;
+
+        f.removeAttribute("target");
+        f.action = "./board_list_update.php";
     }
 
     return true;

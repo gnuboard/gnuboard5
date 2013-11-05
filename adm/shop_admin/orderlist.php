@@ -33,7 +33,7 @@ if ($od_status) {
             $sort1 = "od_receipt_time";
             $sort2 = "desc";
             break;
-        case '배송' :   // 배송중 
+        case '배송' :   // 배송중
             $sort1 = "od_invoice_time";
             $sort2 = "desc";
             break;
@@ -323,7 +323,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             비회원
             <?php } ?>
         </td>
-        <td headers="th_odrcnt"><?php echo $row['od_cart_count']; ?>건</td>
+        <td headers="th_odrcnt"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" id="order-id-<?php echo $row['od_id']; ?>" class="orderitem"><?php echo $row['od_cart_count']; ?>건</a></td>
         <td headers="th_odrall"><?php echo $od_cnt; ?>건</td>
     </tr>
     <tr class="<?php echo $tr_bg; ?>">
@@ -427,11 +427,47 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <script>
 $(function(){
-    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); 
+    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
+
+    // 주문상품보기
+    $(".orderitem").on("click", function() {
+        var $this = $(this);
+        var od_id = $this.attr("id").replace("order-id-", "");
+
+        if($this.next().size())
+            return false;
+
+        $("#orderitemlist").remove();
+
+        $.post(
+            "./ajax.orderitem.php",
+            { od_id: od_id },
+            function(data) {
+                $this.parent().append("<div id=\"orderitemlist\"><div class=\"itemlist\"></div></div>");
+                $("#orderitemlist .itemlist")
+                    .html(data)
+                    .append("<div id=\"orderitemlist_close\"><button type=\"button\" id=\"orderitemlist-x\" class=\"btn_frmline\">닫기</button></div>");
+            }
+        );
+
+        return false;
+    });
+
+    // 상품리스트 닫기
+    $(".orderitemlist-x").on("click", function() {
+        $("#orderitemlist").remove();
+    });
+
+    $("body").on("click", function() {
+        $("#orderitemlist").remove();
+    });
 });
 
-function set_date(today) 
+function set_date(today)
 {
+    <?php
+    $date_term = date('w', G5_SERVER_TIME) - 1;
+    ?>
     if (today == "오늘") {
         document.getElementById("fr_date").value = "<?php echo G5_TIME_YMD; ?>";
         document.getElementById("to_date").value = "<?php echo G5_TIME_YMD; ?>";
@@ -439,14 +475,14 @@ function set_date(today)
         document.getElementById("fr_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME - 86400); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME - 86400); ?>";
     } else if (today == "이번주") {
-        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('last Monday', G5_SERVER_TIME)); ?>";
+        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('this Monday', G5_SERVER_TIME - (86400 * $date_term))); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME); ?>";
     } else if (today == "이번달") {
         document.getElementById("fr_date").value = "<?php echo date('Y-m-01', G5_SERVER_TIME); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', G5_SERVER_TIME); ?>";
     } else if (today == "지난주") {
-        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('last Monday', G5_SERVER_TIME - (86400 * 7))); ?>";
-        document.getElementById("to_date").value = "<?php echo date('Y-m-d', strtotime('last Sunday', G5_SERVER_TIME)); ?>";
+        document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('last Monday', G5_SERVER_TIME - (86400 * $date_term))); ?>";
+        document.getElementById("to_date").value = "<?php echo date('Y-m-d', strtotime('last Sunday', G5_SERVER_TIME - (86400 * $date_term))); ?>";
     } else if (today == "지난달") {
         document.getElementById("fr_date").value = "<?php echo date('Y-m-01', strtotime('-1 Month', G5_SERVER_TIME)); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-t', strtotime('-1 Month', G5_SERVER_TIME)); ?>";
@@ -469,10 +505,10 @@ function forderlist_submit(f)
 
     /*
     switch (f.od_status.value) {
-        case "" : 
+        case "" :
             alert("변경하실 주문상태를 선택하세요.");
             return false;
-        case '주문' : 
+        case '주문' :
 
         default :
 
@@ -494,9 +530,9 @@ function forderlist_submit(f)
 
     var chk = document.getElementsByName("chk[]");
 
-    for (var i=0; i<chk.length; i++) 
+    for (var i=0; i<chk.length; i++)
     {
-        if (chk[i].checked) 
+        if (chk[i].checked)
         {
             var k = chk[i].value;
             var current_settle_case = f.elements['current_settle_case['+k+']'].value;
@@ -504,21 +540,21 @@ function forderlist_submit(f)
 
             switch (change_status)
             {
-                case "입금" : 
+                case "입금" :
                     if (!(current_status == "주문" && current_settle_case == "무통장")) {
                         alert("'주문' 상태의 '무통장'(결제수단)인 경우에만 '입금' 처리 가능합니다.");
                         return false;
                     }
                     break;
 
-                case "준비" : 
+                case "준비" :
                     if (current_status != "입금") {
                         alert("'입금' 상태의 주문만 '준비'로 변경이 가능합니다.");
                         return false;
                     }
                     break;
 
-                case "배송" : 
+                case "배송" :
                     if (current_status != "준비") {
                         alert("'준비' 상태의 주문만 '배송'으로 변경이 가능합니다.");
                         return false;
@@ -553,7 +589,7 @@ function forderlist_submit(f)
 
     if (!confirm("선택하신 주문서의 주문상태를 '"+change_status+"'상태로 변경하시겠습니까?"))
         return false;
-    
+
     f.action = "./orderlistupdate.php";
     return true;
 }
