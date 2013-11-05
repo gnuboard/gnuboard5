@@ -389,6 +389,7 @@ function get_image($img, $width=0, $height=0, $img_id='')
     return $str;
 }
 
+
 // 상품 이미지를 얻는다
 function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='')
 {
@@ -448,6 +449,8 @@ function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='')
     return $img;
 }
 
+
+// 상품이미지 썸네일 생성
 function get_it_thumbnail($img, $width, $height=0, $id='')
 {
     $str = '';
@@ -481,7 +484,8 @@ function get_it_thumbnail($img, $width, $height=0, $id='')
     return $str;
 }
 
-//
+
+// 이미지 URL 을 얻는다.
 function get_it_imageurl($it_id)
 {
     global $g5;
@@ -513,6 +517,7 @@ function get_it_imageurl($it_id)
     return $str;
 }
 
+
 // 상품의 재고 (창고재고수량 - 주문대기수량)
 function get_it_stock_qty($it_id)
 {
@@ -534,6 +539,7 @@ function get_it_stock_qty($it_id)
 
     return $jaego - $daegi;
 }
+
 
 // 옵션의 재고 (창고재고수량 - 주문대기수량)
 function get_option_stock_qty($it_id, $io_id, $type)
@@ -560,6 +566,7 @@ function get_option_stock_qty($it_id, $io_id, $type)
     return $jaego - $daegi;
 }
 
+
 // 큰 이미지
 function get_large_image($img, $it_id, $btn_image=true)
 {
@@ -579,6 +586,7 @@ function get_large_image($img, $it_id, $btn_image=true)
     return $str;
 }
 
+
 // 금액 표시
 function display_price($price, $tel_inq=false)
 {
@@ -589,6 +597,7 @@ function display_price($price, $tel_inq=false)
 
     return $price;
 }
+
 
 // 금액표시
 // $it : 상품 배열
@@ -610,11 +619,13 @@ function display_point($point)
     return number_format($point, 0).'점';
 }
 
+
 // 포인트를 구한다
 function get_point($amount, $point)
 {
     return (int)($amount * $point / 100);
 }
+
 
 // HTML 특수문자 변환 htmlspecialchars
 function htmlspecialchars2($str)
@@ -623,6 +634,7 @@ function htmlspecialchars2($str)
     $str = strtr($str, $trans);
     return $str;
 }
+
 
 // 상품이미지 업로드
 function it_img_upload($srcfile, $filename, $dir)
@@ -654,6 +666,7 @@ function it_img_upload($srcfile, $filename, $dir)
     return $file;
 }
 
+
 // 파일을 업로드 함
 function upload_file($srcfile, $destfile, $dir)
 {
@@ -663,6 +676,7 @@ function upload_file($srcfile, $destfile, $dir)
     @chmod($dir.'/'.$destfile, G5_FILE_PERMISSION);
     return true;
 }
+
 
 function message($subject, $content, $align="left", $width="450")
 {
@@ -689,6 +703,7 @@ function message($subject, $content, $align="left", $width="450")
     return $str;
 }
 
+
 // 시간이 비어 있는지 검사
 function is_null_time($datetime)
 {
@@ -700,6 +715,7 @@ function is_null_time($datetime)
     else
         return false;
 }
+
 
 // 출력유형, 스킨파일, 1라인이미지수, 총라인수, 이미지폭, 이미지높이
 // 1.02.01 $ca_id 추가
@@ -745,6 +761,7 @@ function display_type($type, $list_skin='', $list_mod='', $list_row='', $img_wid
     }
 }
 
+
 // 모바일 유형별 상품 출력
 function mobile_display_type($type, $skin_file, $list_row, $img_width, $img_height, $ca_id="")
 {
@@ -774,6 +791,7 @@ function mobile_display_type($type, $skin_file, $list_row, $img_width, $img_heig
     }
 }
 
+
 // 분류별 출력
 // 스킨파일번호, 1라인이미지수, 총라인수, 이미지폭, 이미지높이 , 분류번호
 function display_category($no, $list_mod, $list_row, $img_width, $img_height, $ca_id="")
@@ -801,6 +819,7 @@ function display_category($no, $list_mod, $list_row, $img_width, $img_height, $c
     }
 }
 
+
 // 별
 function get_star($score)
 {
@@ -814,6 +833,7 @@ function get_star($score)
     return $star;
 }
 
+
 // 별 이미지
 function get_star_image($it_id)
 {
@@ -824,6 +844,7 @@ function get_star_image($it_id)
 
     return (int)get_star($row['score']);
 }
+
 
 // 메일 보내는 내용을 HTML 형식으로 만든다.
 function email_content($str)
@@ -839,6 +860,7 @@ function email_content($str)
 
     return $s;
 }
+
 
 // 타임스탬프 형식으로 넘어와야 한다.
 // 시작시간, 종료시간
@@ -863,6 +885,7 @@ function continue_cut_str($str, $len=80)
     $pattern = "/[^ \n<>]{".$len."}/";
     return preg_replace($pattern, "\\0\n", $str);
 }
+
 
 // 제목별로 컬럼 정렬하는 QUERY STRING
 // $type 이 1이면 반대
@@ -902,6 +925,7 @@ function session_check()
     if (!trim(get_session('ss_uniqid')))
         gotourl(G5_SHOP_URL);
 }
+
 
 // 상품 선택옵션
 function get_item_options($it_id, $subject)
@@ -990,6 +1014,7 @@ function get_item_options($it_id, $subject)
     return $str;
 }
 
+
 // 상품 추가옵션
 function get_item_supply($it_id, $subject)
 {
@@ -1059,6 +1084,7 @@ function get_item_supply($it_id, $subject)
     return $str;
 }
 
+
 function print_item_options($it_id, $cart_id)
 {
     global $g5;
@@ -1079,6 +1105,7 @@ function print_item_options($it_id, $cart_id)
     return $str;
 }
 
+
 // 일자형식변환
 function date_conv($date, $case=1)
 {
@@ -1091,6 +1118,7 @@ function date_conv($date, $case=1)
     return $date;
 }
 
+
 // 배너출력
 function display_banner($position, $num="")
 {
@@ -1100,6 +1128,7 @@ function display_banner($position, $num="")
 
     include G5_SHOP_SKIN_PATH.'/boxbanner'.$num.'.skin.php';
 }
+
 
 // 1.00.02
 // 파일번호, 이벤트번호, 1라인이미지수, 총라인수, 이미지폭, 이미지높이
@@ -1130,6 +1159,7 @@ function display_event($no, $event, $list_mod, $list_row, $img_width, $img_heigh
     }
 }
 
+
 function get_yn($val, $case='')
 {
     switch ($case) {
@@ -1138,6 +1168,7 @@ function get_yn($val, $case='')
     }
     return $result;
 }
+
 
 // 상품명과 건수를 반환
 function get_goods($cart_id)
@@ -1213,6 +1244,7 @@ function check_datetime($datetime)
         return false;
 }
 
+
 // 경고메세지를 경고창으로
 function alert_opener($msg='', $url='')
 {
@@ -1229,6 +1261,7 @@ function alert_opener($msg='', $url='')
     exit;
 }
 
+
 // option 리스트에 selected 추가
 function conv_selected_option($options, $value)
 {
@@ -1239,6 +1272,7 @@ function conv_selected_option($options, $value)
 
     return $options;
 }
+
 
 // 주문서 번호를 얻는다.
 function get_new_od_id()
@@ -1265,6 +1299,7 @@ function get_new_od_id()
 
     return $od_id;
 }
+
 
 // cart id 설정
 function set_cart_id($direct)
@@ -1314,6 +1349,7 @@ function set_cart_id($direct)
     }
 }
 
+
 // 상품 목록 : 관련 상품 출력
 function relation_item($it_id, $width, $height, $rows=3)
 {
@@ -1349,6 +1385,7 @@ function relation_item($it_id, $width, $height, $rows=3)
     return $str;
 }
 
+
 // 상품이미지에 유형 아이콘 출력
 function item_icon($it)
 {
@@ -1378,6 +1415,7 @@ function item_icon($it)
     return $icon;
 }
 
+
 // sns 공유하기
 function get_sns_share_link($sns, $url, $title, $img)
 {
@@ -1399,6 +1437,7 @@ function get_sns_share_link($sns, $url, $title, $img)
     return $str;
 }
 
+
 // 상품이미지 썸네일 삭제
 function delete_item_thumbnail($dir, $file)
 {
@@ -1415,6 +1454,7 @@ function delete_item_thumbnail($dir, $file)
         }
     }
 }
+
 
 // 쿠폰번호 생성함수
 function get_coupon_id()
@@ -1439,6 +1479,7 @@ function get_coupon_id()
     return $str;
 }
 
+
 // array_map() 대체
 function array_add_callback($func, $array)
 {
@@ -1460,6 +1501,7 @@ function array_add_callback($func, $array)
 
     return $array;
 }
+
 
 // 주문의 금액, 배송비 과세금액 등의 정보를 가져옴
 function get_order_info($od_id)
@@ -1605,6 +1647,7 @@ function get_order_info($od_id)
     return $info;
 }
 
+
 // 상품포인트
 function get_item_point($it)
 {
@@ -1618,6 +1661,7 @@ function get_item_point($it)
 
     return $it_point;
 }
+
 
 // 배송비 구함
 function get_sendcost($cart_id, $selected=1)
@@ -1672,6 +1716,7 @@ function get_sendcost($cart_id, $selected=1)
     return ($total_send_cost + $send_cost);
 }
 
+
 // 상품별 배송비
 function get_item_sendcost($it_id, $price, $qty)
 {
@@ -1708,6 +1753,7 @@ function get_item_sendcost($it_id, $price, $qty)
     return $sendcost;
 }
 
+
 // 쿠폰 사용체크
 function is_used_coupon($mb_id, $cp_id)
 {
@@ -1723,6 +1769,33 @@ function is_used_coupon($mb_id, $cp_id)
 
     return $used;
 }
+
+
+//------------------------------------------------------------------------------
+// 주문포인트를 적립한다.
+// 설정일이 지난 포인트 부여되지 않은 배송완료된 장바구니 자료에 포인트 부여
+// 설정일이 0 이면 주문서 완료 설정 시점에서 포인트를 바로 부여합니다.
+//------------------------------------------------------------------------------
+function save_order_point($ct_status="완료")
+{
+    global $default;
+
+    $beforedays = date("Y-m-d H:i:s", ( time() - (86400 * (int)$default['de_point_days']) ) ); // 86400초는 하루
+    $sql = " select * from {$g5['g5_shop_cart_table']} where ct_status = '$ct_status' and ct_point_use = '0' and ct_time <= '$beforedays' ";
+    $result = sql_query($sql);
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
+        // 회원 ID 를 얻는다.
+        $od_row = sql_fetch("select od_id, mb_id from {$g5['g5_shop_order_table']} where od_id = '{$row['od_id']}' ");
+        if ($od_row['mb_id'] && $row['ct_point'] > 0) { // 회원이면서 포인트가 0보다 크다면
+            $po_point = $row['ct_point'] * $row['ct_qty'];
+            $po_content = "주문번호 {$od_row['od_id']} ({$row['ct_id']}) 배송완료";
+            insert_point($od_row['mb_id'], $po_point, $po_content, "@delivery", $od_row['mb_id'], "{$od_row['od_id']},{$row['ct_id']}");
+        }
+        sql_query("update {$g5['g5_shop_cart_table']} set ct_point_use = '1' where ct_id = '{$row['ct_id']}' ");
+    }
+}
+
+
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝
 //==============================================================================
