@@ -147,7 +147,7 @@
 
 #bo_v_table {padding:0 10px;color:#999;font-size:0.9em;font-weight:bold}
 
-#bo_v_title {padding:0 7px 5px;font-size:1.2em}
+#bo_v_title {padding:0 10px 5px;font-size:1.2em}
 
 #bo_v_info {padding:0 10px 10px;border-bottom:1px solid #ddd}
 #bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
@@ -185,7 +185,7 @@
 .bo_v_com {float:right}
 .bo_v_com li {float:left;margin-left:5px}
 
-#bo_v_atc {min-height:200px;padding:0 10px;min-height:200px}
+#bo_v_atc {padding:0 10px;min-height:200px}
 #bo_v_atc_title {margin:0;padding:0;height:0;overflow:hidden}
 
 #bo_v_img {margin:0 0 10px;width:100%;overflow:hidden;zoom:1}

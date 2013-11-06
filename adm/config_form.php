@@ -28,7 +28,7 @@ if (!isset($config['cf_mobile_new_skin'])) {
 if (isset($config['cf_gcaptcha_mp3'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     CHANGE `cf_gcaptcha_mp3` `cf_captcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' ", true);
-} else if (!isset($config['cf_captcha_mp3'])) { 
+} else if (!isset($config['cf_captcha_mp3'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_captcha_mp3` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_mobile_member_skin` ", true);
 }
@@ -121,6 +121,15 @@ if(!isset($config['cf_analytics'])) {
                     ADD `cf_analytics` TEXT NOT NULL AFTER `cf_intercept_ip` ", true);
 }
 
+if(!isset($config['cf_sms_use'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_sms_use` varchar(255) NOT NULL DEFAULT '' AFTER `cf_cert_limit`,
+                    ADD `cf_icode_id` varchar(255) NOT NULL DEFAULT '' AFTER `cf_sms_use`,
+                    ADD `cf_icode_pw` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_id`,
+                    ADD `cf_icode_server_ip` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_pw`,
+                    ADD `cf_icode_server_port` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_server_ip` ", true);
+}
+
 $g5['title'] = '환경설정';
 include_once ('./admin.head.php');
 
@@ -135,8 +144,63 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_vote_mail">투표메일</a></li>
     <li><a href="#anc_cf_sns">SNS</a></li>
     <li><a href="#anc_cf_lay">레이아웃 추가설정</a></li>
+    <li><a href="#anc_cf_sms">SMS</a></li>
     <li><a href="#anc_cf_extra">여분필드</a></li>
 </ul>';
+
+if (!function_exists("get_sock")) {
+    function get_sock($url)
+    {
+        // host 와 uri 를 분리
+        //if (ereg("http://([a-zA-Z0-9_\-\.]+)([^<]*)", $url, $res))
+        if (preg_match("/http:\/\/([a-zA-Z0-9_\-\.]+)([^<]*)/", $url, $res))
+        {
+            $host = $res[1];
+            $get  = $res[2];
+        }
+
+        // 80번 포트로 소캣접속 시도
+        $fp = fsockopen ($host, 80, $errno, $errstr, 30);
+        if (!$fp)
+        {
+            die("$errstr ($errno)\n");
+        }
+        else
+        {
+            fputs($fp, "GET $get HTTP/1.0\r\n");
+            fputs($fp, "Host: $host\r\n");
+            fputs($fp, "\r\n");
+
+            // header 와 content 를 분리한다.
+            while (trim($buffer = fgets($fp,1024)) != "")
+            {
+                $header .= $buffer;
+            }
+            while (!feof($fp))
+            {
+                $buffer .= fgets($fp,1024);
+            }
+        }
+        fclose($fp);
+
+        // content 만 return 한다.
+        return $buffer;
+    }
+}
+
+if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
+if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
+
+if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
+    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$config['cf_icode_id'].'&userpw='.$config['cf_icode_pw']);
+    $res = explode(';', $res);
+    $userinfo = array(
+        'code'      => $res[0], // 결과코드
+        'coin'      => $res[1], // 고객 잔액 (충전제만 해당)
+        'gpay'      => $res[2], // 고객의 건수 별 차감액 표시 (충전제만 해당)
+        'payment'   => $res[3]  // 요금제 표시, A:충전제, C:정액제
+    );
+}
 ?>
 
 <form name="fconfigform" id="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
@@ -935,6 +999,86 @@ $pg_anchor = '<ul class="anchor">
                 <textarea name="cf_add_script" id="cf_add_script"><?php echo get_text($config['cf_add_script']); ?></textarea>
             </td>
         </tr>
+        </tbody>
+        </table>
+    </div>
+</section>
+
+<section id="anc_cf_sms">
+    <h2 class="h2_frm">SMS</h2>
+    <?php echo $pg_anchor ?>
+
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>SMS 설정</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="cf_sms_use">SMS 사용</label></th>
+            <td>
+                <select id="cf_sms_use" name="cf_sms_use">
+                    <option value="" <?php echo get_selected($config['cf_sms_use'], ''); ?>>사용안함</option>
+                    <option value="icode" <?php echo get_selected($config['cf_sms_use'], 'icode'); ?>>아이코드</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_icode_id">아이코드 회원아이디</label></th>
+            <td>
+                <?php echo help("아이코드에서 사용하시는 회원아이디를 입력합니다."); ?>
+                <input type="text" name="cf_icode_id" value="<?php echo $config['cf_icode_id']; ?>" id="cf_icode_id" class="frm_input" size="20">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_icode_pw">아이코드 패스워드</label></th>
+            <td>
+                <?php echo help("아이코드에서 사용하시는 패스워드를 입력합니다."); ?>
+                <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" class="frm_input" id="cf_icode_pw">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">요금제</th>
+            <td>
+                <input type="hidden" name="cf_icode_server_ip" value="<?php echo $config['cf_icode_server_ip']; ?>">
+                <?php
+                    if ($userinfo['payment'] == 'A') {
+                       echo '충전제';
+                        echo '<input type="hidden" name="cf_icode_server_port" value="7295">';
+                    } else if ($userinfo['payment'] == 'C') {
+                        echo '정액제';
+                        echo '<input type="hidden" name="cf_icode_server_port" value="7296">';
+                    } else {
+                        echo '가입해주세요.';
+                        echo '<input type="hidden" name="cf_icode_server_port" value="7295">';
+                    }
+                ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">아이코드 SMS 신청<br>회원가입</th>
+            <td>
+                <?php echo help("아래 링크에서 회원가입 하시면 문자 건당 16원에 제공 받을 수 있습니다."); ?>
+                <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
+            </td>
+        </tr>
+         <?php if ($userinfo['payment'] == 'A') { ?>
+        <tr>
+            <th scope="row">충전 잔액</th>
+            <td colspan="3">
+                <?php echo number_format($userinfo['coin']); ?> 원.
+                <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $default['de_icode_id']; ?>&amp;icode_passwd=<?php echo $default['de_icode_pw']; ?>" target="_blank" class="btn_frmline" onclick="window.open(this.href,'icode_payment', 'scrollbars=1,resizable=1'); return false;">충전하기</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">건수별 금액</th>
+            <td colspan="3">
+                <?php echo number_format($userinfo['gpay']); ?> 원.
+            </td>
+        </tr>
+        <?php } ?>
         </tbody>
         </table>
     </div>
