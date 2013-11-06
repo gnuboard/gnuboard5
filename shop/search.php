@@ -11,38 +11,45 @@ include_once('./_head.php');
 
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
-$sql_common = " from {$g5['g5_shop_item_table']} a,
-                     {$g5['g5_shop_category_table']} b
-               where a.ca_id=b.ca_id
-                 and a.it_use = 1
-                 and b.ca_use = 1
-               /* 중복검색에 대한 오류로 인해 막음 : where (a.ca_id=b.ca_id or a.ca_id2=b.ca_id or a.ca_id3=b.ca_id) */ ";
-if ($search_str) {
-    $sql_common .= " and ( a.it_id like '$search_str%' or
-                           a.it_name like   '%$search_str%' or
-                           a.it_basic like  '%$search_str%' or
-                           a.it_explan like '%$search_str%' ) ";
-}
-/*
-// 공백을 구분하여 검색을 할때는 이 코드를 사용하십시오. or 조건
-if ($search_str) {
-    $s_str = explode(" ", $search_str);
-    $or = " ";
-    $sql_common .= " and ( ";
-    for ($i=0; $i<count($s_str); $i++) {
-        $sql_common .= " $or (a.it_id like '$s_str[$i]%' or a.it_name like '%$s_str[$i]%' or a.it_basic like  '%$s_str[$i]%' or a.it_explan like '%$s_str[$i]%' ) ";
-        $or = " or ";
+$sql_common = " from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b ";
+$where = array();
+$where[] = " (a.ca_id = b.ca_id and a.it_use = 1 and b.ca_use = 1) ";
+
+$search_all = true;
+// 상세검색 이라면
+if (isset($qitname) || isset($qitexplan) || isset($qitid))
+    $search_all = false;
+
+$q = trim($_GET['q']);
+if ($q) {
+    $arr = explode(" ", $q);
+    $detail_where = array();
+    for ($i=0; $i<count($arr); $i++) {
+        $query = trim($arr[$i]);
+        if (!$query) continue;
+
+        $or = array();
+        if ($search_all || $qitname) 
+            $or[] = " a.it_name like '%$query%' ";
+        if ($search_all || $qitexplan)
+            $or[] = " a.it_explan2 like '%$query%' "; // tag 를 제거한 상품설명을 검색한다.
+        if ($search_all || $qitid)
+            $or[] = " a.it_id like '%$query%' ";
+
+        $detail_where[] = "(" . implode(" or ", $or) . ")";
     }
-    $sql_common .= " ) ";
+
+    $where[] = "(".implode(" or ", $detail_where).")";
 }
-*/
 
 // 분류선택이 있다면 특정 분류만
-if ($search_ca_id != "")
-    $sql_common .= " and a.ca_id like '$search_ca_id%' ";
+if ($qcaid != "")
+    $where[] = " a.ca_id like '$qcaid%' ";
+
+$sql_where = " where " . implode(" and ", $where);
 
 // 검색된 내용이 몇행인지를 얻는다
-$sql = " select COUNT(*) as cnt $sql_common ";
+$sql = " select COUNT(*) as cnt $sql_common $sql_where ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 ?>
@@ -50,7 +57,7 @@ $total_count = $row['cnt'];
 <!-- 검색결과 시작 { -->
 <div id="ssch">
 
-    <div id="ssch_ov">검색어 <strong><?php echo ($search_str ? stripslashes(get_text($search_str)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
+    <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
 
     <?php
     // 임시배열에 저장해 놓고 분류별로 출력한다.
@@ -66,10 +73,8 @@ $total_count = $row['cnt'];
         }
 
         unset($save); // 임시 저장 배열
-        $sql = " select a.ca_id,
-                        a.it_id
-                 $sql_common
-                 order by a.ca_id, a.it_id desc ";
+        $sql = " select a.ca_id, a.it_id $sql_common $sql_where order by a.ca_id, a.it_id desc ";
+        echo $sql;
         $result = sql_query($sql);
         for ($i=0; $row=mysql_fetch_array($result); $i++) {
             if ($save['ca_id'] != $row['ca_id']) {

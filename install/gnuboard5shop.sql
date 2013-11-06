@@ -426,7 +426,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_type5` tinyint(4) NOT NULL DEFAULT '0',
   `it_basic` text NOT NULL,
   `it_explan` mediumtext NOT NULL,
-  `it_explan_strip_tags` mediumtext NOT NULL,
+  `it_explan2` mediumtext NOT NULL,
   `it_mobile_explan` mediumtext NOT NULL,
   `it_cust_price` int(11) NOT NULL DEFAULT '0',
   `it_price` int(11) NOT NULL DEFAULT '0',

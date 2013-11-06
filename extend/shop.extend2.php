@@ -650,8 +650,8 @@ if(stripos($row['Type'], 'enum') !== false) {
 
 
 // 상품테이블에 검색을 위하여 태그없는 상품설명 저장용 필드 추가
-if(!sql_query(" select it_explan_strip_tags from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+if(!sql_query(" select it_explan2 from {$g5['g5_shop_item_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
-                    ADD `it_explan_strip_tags` METIUMTEXT NOT NULL AFTER `it_explan` ", true);
+                    ADD `it_explan2 METIUMTEXT NOT NULL AFTER `it_explan` ", true);
 }
 ?>
