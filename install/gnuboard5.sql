@@ -289,6 +289,11 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_cert_kcb_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcp_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_limit` int(11) NOT NULL DEFAULT '0',
+  `cf_sms_use` varchar(255) NOT NULL DEFAULT '',
+  `cf_icode_id` varchar(255) NOT NULL DEFAULT '',
+  `cf_icode_pw` varchar(255) NOT NULL DEFAULT '',
+  `cf_icode_server_ip` varchar(255) NOT NULL DEFAULT '',
+  `cf_icode_server_port` varchar(255) NOT NULL DEFAULT '',
   `cf_googl_shorturl_apikey` varchar(255) NOT NULL DEFAULT '',
   `cf_facebook_appid` varchar(255) NOT NULL,
   `cf_facebook_secret` varchar(255) NOT NULL,
@@ -695,6 +700,82 @@ CREATE TABLE IF NOT EXISTS `g5_autosave` (
   PRIMARY KEY (`as_id`),
   UNIQUE KEY `as_uid` (`as_uid`),
   KEY `mb_id` (`mb_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_qa_config`
+--
+
+CREATE TABLE IF NOT EXISTS `g5_qa_config` (
+  `qa_title` varchar(255) NOT NULL DEFAULT'',
+  `qa_category` varchar(255) NOT NULL DEFAULT'',
+  `qa_skin` varchar(255) NOT NULL DEFAULT '',
+  `qa_mobile_skin` varchar(255) NOT NULL DEFAULT '',
+  `qa_use_email` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_req_email` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_use_hp` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_req_hp` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_use_sms` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_send_number` varchar(255) NOT NULL DEFAULT '0',
+  `qa_admin_hp` varchar(255) NOT NULL DEFAULT '',
+  `qa_use_editor` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_subject_len` int(11) NOT NULL DEFAULT '0',
+  `qa_mobile_subject_len` int(11) NOT NULL DEFAULT '0',
+  `qa_page_rows` int(11) NOT NULL DEFAULT '0',
+  `qa_mobile_page_rows` int(11) NOT NULL DEFAULT '0',
+  `qa_image_width` int(11) NOT NULL DEFAULT '0',
+  `qa_upload_size` int(11) NOT NULL DEFAULT '0',
+  `qa_insert_content` text NOT NULL,
+  `qa_1_subj` varchar(255) NOT NULL DEFAULT '',
+  `qa_2_subj` varchar(255) NOT NULL DEFAULT '',
+  `qa_3_subj` varchar(255) NOT NULL DEFAULT '',
+  `qa_4_subj` varchar(255) NOT NULL DEFAULT '',
+  `qa_5_subj` varchar(255) NOT NULL DEFAULT '',
+  `qa_1` varchar(255) NOT NULL DEFAULT '',
+  `qa_2` varchar(255) NOT NULL DEFAULT '',
+  `qa_3` varchar(255) NOT NULL DEFAULT '',
+  `qa_4` varchar(255) NOT NULL DEFAULT '',
+  `qa_5` varchar(255) NOT NULL DEFAULT ''
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_qa_content`
+--
+
+CREATE TABLE IF NOT EXISTS `g5_qa_content` (
+  `qa_id` int(11) NOT NULL AUTO_INCREMENT,
+  `qa_num` int(11) NOT NULL DEFAULT '0',  
+  `qa_parent` int(11) NOT NULL DEFAULT '0',
+  `qa_related` int(11) NOT NULL DEFAULT '0',
+  `mb_id` varchar(20) NOT NULL DEFAULT '',
+  `qa_name` varchar(255) NOT NULL DEFAULT '',
+  `qa_email` varchar(255) NOT NULL DEFAULT '',
+  `qa_hp` varchar(255) NOT NULL DEFAULT '',
+  `qa_type` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_category` varchar(255) NOT NULL DEFAULT '',
+  `qa_email_recv` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_sms_recv` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_html` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_subject` varchar(255) NOT NULL DEFAULT '',
+  `qa_content` varchar(255) NOT NULL DEFAULT '',
+  `qa_status` tinyint(4) NOT NULL DEFAULT '0',
+  `qa_file1` varchar(255) NOT NULL DEFAULT '',
+  `qa_source1` varchar(255) NOT NULL DEFAULT '',
+  `qa_file2` varchar(255) NOT NULL DEFAULT '',
+  `qa_source2` varchar(255) NOT NULL DEFAULT '',
+  `qa_ip` varchar(255) NOT NULL DEFAULT '',
+  `qa_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `qa_1` varchar(255) NOT NULL DEFAULT '',
+  `qa_2` varchar(255) NOT NULL DEFAULT '',
+  `qa_3` varchar(255) NOT NULL DEFAULT '',
+  `qa_4` varchar(255) NOT NULL DEFAULT '',
+  `qa_5` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`qa_id`),
+  KEY `qa_num_parent` (`qa_num`,`qa_parent`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

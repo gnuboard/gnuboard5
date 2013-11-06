@@ -10,7 +10,7 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
 header ul, nav ul, footer ul {margin:0;padding:0;list-style:none}
 legend {position:absolute;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, select, img {vertical-align:middle}
-input,button {margin:0;padding:0;font-size:1em}
+input, button {margin:0;padding:0;font-size:1em}
 input[type=text], input[type=password], input[type=submit], input[type=image], button {border-radius:0;font-size:1em;-webkit-appearance:none}
 textarea, select {font-size:1em}
 textarea {border-radius:0;-webkit-appearance:none}
@@ -111,16 +111,18 @@ a.btn02:focus, .btn02:hover {text-decoration:none}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 
 input.btn_submit {padding:0 10px;height:2.6em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
-fieldset .btn_submit {padding:0 10px;height:1.9em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
+button.btn_submit {height:1.9em}
+fieldset .btn_submit {height:1.9em}
 
 a.btn_cancel {display:inline-block;padding:0 10px;height:2.4em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2.5em;vertical-align:top}
 
 a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:1.9em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.9em} /* 우편번호검색버튼 등 */
+button.btn_frmline {font-size:1em}
 
 /* 게시판용 버튼 */
 a.btn_b01 {display:inline-block;margin:0 0 3px;padding:0 10px;border:1px solid #eee;background:#fafafa;color:#000;text-decoration:none;line-height:2em;vertical-align:middle}
 a.btn_b01:focus, .btn_b01:hover {text-decoration:none}
-a.btn_b02 {display:inline-block;margin:0 0 3px;padding:0 10px;border:1px solid #eee;background:#fafafa;color:#000;text-decoration:none;line-height:2em;vertical-align:middle}
+a.btn_b02 {display:inline-block;margin:0 0 3px;padding:0 10px;border:1px solid #333;background:#333;color:#fff;text-decoration:none;line-height:2em;vertical-align:middle}
 a.btn_b02:focus, .btn_b02:hover {text-decoration:none}
 a.btn_admin {display:inline-block;margin:0 0 3px;padding:0 10px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;line-height:2em;vertical-align:middle} /* 관리자 전용 버튼 */
 a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
@@ -160,6 +162,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 /* 테이블 항목별 정의 */
 .td_board {width:120px;text-align:center}
+.td_category {width:80px;text-align:center}
 .td_chk {width:30px;text-align:center}
 .td_date {width:60px;text-align:center}
 .td_datetime {width:150px;text-align:center}
@@ -170,6 +173,12 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .td_nick {width:100px;text-align:center}
 .td_num {width:50px;text-align:center}
 .td_numbig {width:80px;text-align:center}
+.td_stat {width:60px;text-align:center}
+
+.txt_active {color:#5d910b}
+.txt_done {color:#e8180c}
+.txt_expired {color:#ccc}
+.txt_rdy {color:#8abc2a}
 
 /* 새창 기본 스타일 */
 .new_win {}

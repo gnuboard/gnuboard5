@@ -61,6 +61,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </fieldset>
 
         <ul id="mb_nb">
+            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php" id="snb_new">1:1문의</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" id="snb_cnt">접속자 <?php echo connect(); // 현재 접속자수 ?></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new">새글</a></li>
             <?php if ($is_member) { ?>

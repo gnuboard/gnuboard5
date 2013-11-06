@@ -111,6 +111,12 @@ if ($config['cf_include_head']) {
             </li>
             <?php }  ?>
             <li>
+                <a href="<?php echo G5_BBS_URL ?>/qalist.php">
+                    <img src="<?php echo G5_IMG_URL ?>/tnb_cnt.jpg" alt="">
+                    1:1문의
+                </a>
+            </li>
+            <li>
                 <a href="<?php echo G5_BBS_URL ?>/current_connect.php">
                     <img src="<?php echo G5_IMG_URL ?>/tnb_cnt.jpg" alt="">
                     접속자 <?php echo connect(); // 현재 접속자수  ?>
