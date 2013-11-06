@@ -10,6 +10,9 @@ $bo_table = $_GET['bo_table'];
 if(strpos($filename, 'data/editor')) {
     $editor_file = strstr($filename, 'editor');
     $filepath = G5_DATA_PATH.'/'.$editor_file;
+} else if(strpos($filename, 'data/qa')) {
+    $editor_file = strstr($filename, 'qa');
+    $filepath = G5_DATA_PATH.'/'.$editor_file;
 } else {
     $editor_file = '';
     $filepath = G5_DATA_PATH.'/file/'.$bo_table.'/'.$filename;

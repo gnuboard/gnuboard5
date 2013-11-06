@@ -187,8 +187,7 @@ $colspan = 15;
 
         $address = $row['mb_zip1'] ? $row['mb_addr1'].' '.$row['mb_addr2'] : '';
 
-        $tr_bg = '';
-        if ($i%2 == 0) $tr_bg = 'class="tr_bg"';
+        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
 
         switch($row['mb_certify']) {
             case 'hp':

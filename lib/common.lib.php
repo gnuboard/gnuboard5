@@ -2039,6 +2039,20 @@ function delete_editor_thumbnail($contents)
     }
 }
 
+// 1:1문의 첨부파일 썸네일 삭제
+function delete_qa_thumbnail($file)
+{
+    if(!$file)
+        return;
+
+    $fn = preg_replace("/\.[^\.]+$/i", "", basename($file));
+    $files = glob(G5_DATA_PATH.'/qa/thumb-'.$fn.'*');
+    if (is_array($files)) {
+        foreach ($files as $filename)
+            unlink($filename);
+    }
+}
+
 // 스킨 style sheet 파일 얻기
 function get_skin_stylesheet($skin_path, $dir='')
 {
@@ -2365,5 +2379,16 @@ function die_utf8($msg)
         return;
 
     die('<meta charset="utf-8"><p>'.$msg.'</p>');
+}
+
+// 1:1문의 설정로드
+function get_qa_config($fld='*')
+{
+    global $g5;
+
+    $sql = " select $fld from {$g5['qa_config_table']} ";
+    $row = sql_fetch($sql);
+
+    return $row;
 }
 ?>
