@@ -71,13 +71,8 @@ if ($od_send_mail)
 
     // 배송정보
     $is_delivery = false;
-    if ((int)$od[dl_id] > 0) {
-        $dl = sql_fetch(" select * from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
-
-        $delivery_list['dl_url']          = $dl['dl_url'];
-        if (strpos($delivery_list['dl_url'], "=")) $delivery_list['dl_url'] .= $od['od_invoice'];
-        $delivery_list['dl_company']      = $dl['dl_company'];
-        $delivery_list['dl_tel']          = $dl['dl_tel'];
+    if ($od['od_delivery_company'] && $od['od_invoice']) {
+        $delivery_list['dl_company']      = $od['od_delivery_company'];
         $delivery_list['od_invoice']      = $od['od_invoice'];
         $delivery_list['od_invoice_time'] = $od['od_invoice_time'];
 

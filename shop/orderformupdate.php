@@ -270,6 +270,10 @@ if ($od_settle_case == "무통장")
     $od_receipt_point   = $i_temp_point;
     $od_receipt_price   = 0;
     $od_misu            = $i_price - $od_receipt_price;
+    if($od_misu == 0) {
+        $od_status      = '입금';
+        $od_receipt_time = G5_TIME_YMDHIS;
+    }
 }
 else if ($od_settle_case == "계좌이체")
 {
@@ -537,7 +541,7 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
     include_once(G5_LIB_PATH.'/icode.sms.lib.php');
 
     $SMS = new SMS; // SMS 연결
-    $SMS->SMS_con($config'cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
+    $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
     $sms_count = 0;
 
     for($s=0; $s<count($sms_contents); $s++) {

@@ -65,8 +65,7 @@ if ($od_receipt_point) {
 }
 
 if ($od_coupon) {
-    // 개별상품쿠폰, 배송비쿠폰, 주문금액쿠폰
-    $where[] = " (od_cart_coupon + od_send_coupon + od_coupon) != 0 ";
+    $where[] = " od_coupon != 0 ";
 }
 
 if ($fr_date && $to_date) {
@@ -181,7 +180,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <input type="checkbox" name="od_receipt_point" value="Y" id="od_misu04" <?php echo get_checked($od_receipt_point, 'Y'); ?>>
     <label for="od_misu04">포인트주문</label>
     <input type="checkbox" name="od_coupon" value="Y" id="od_misu05" <?php echo get_checked($od_coupon, 'Y'); ?>>
-    <label for="od_misu05">쿠폰할인</label>
+    <label for="od_misu05">쿠폰</label>
 </div>
 
 <div class="sch_last">
@@ -407,6 +406,16 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     if ($od_status == '배송') $change_status = "완료";
     ?>
     <label><input type="checkbox" name="od_status" value="<?php echo $change_status; ?>"> '<?php echo $od_status ?>'상태에서 '<strong><?php echo $change_status ?></strong>'상태로 변경합니다.</label>
+    <?php if($od_status == '주문' || $od_status == '준비') { ?>
+    <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail" checked="checked">
+    <label for="od_send_mail"><?php echo $change_status; ?>안내 메일</label>
+    <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked="checked">
+    <label for="od_send_sms"><?php echo $change_status; ?>안내 SMS</label>
+    <?php } ?>
+    <?php if($od_status == '준비') { ?>
+    <input type="checkbox" name="send_escrow" value="1" id="od_send_escrow">
+    <label for="od_send_escrow">에스크로배송등록</label>
+    <?php } ?>
     <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
     <?php if ($od_status == '주문') { ?> <span>주문상태에서만 삭제가 가능합니다.</span> <input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
 <?php } ?>
