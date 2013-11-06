@@ -149,12 +149,12 @@ if(openwin != null) {
             <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_price']); ?> 원</strong></dd>
 
             <?php if($od['od_cart_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">상품할인</dt>
+            <dt class="sod_bsk_dvr">개별상품 쿠폰할인</dt>
             <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_coupon']); ?> 원</strong></dd>
             <?php } ?>
 
             <?php if($od['od_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">결제할인</dt>
+            <dt class="sod_bsk_dvr">주문금액 쿠폰할인</dt>
             <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_coupon']); ?> 원</strong></dd>
             <?php } ?>
 
@@ -164,7 +164,7 @@ if(openwin != null) {
             <?php } ?>
 
             <?php if($od['od_send_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">배송비할인</dt>
+            <dt class="sod_bsk_dvr">배송비 쿠폰할인</dt>
             <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_coupon']); ?> 원</strong></dd>
             <?php } ?>
 

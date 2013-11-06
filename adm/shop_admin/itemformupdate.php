@@ -256,6 +256,10 @@ $it_info_value = serialize($value_array);
 if($it_point_type == 1 && $it_point > 99)
     alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
 
+$it_name = strip_tags(trim($_POST['it_name']));
+if ($it_name == "")
+    alert("상품명을 입력해 주십시오.");
+
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
                 ca_id3              = '$ca_id3',

@@ -41,6 +41,10 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "<b>".stripslashes($row['it_name'])."</b>\n";
     }
 
+    if ($this->view_it_basic) {
+        echo "<b>".stripslashes($row['it_basic'])."</b>\n";
+    }
+
     if ($this->view_it_cust_price) {
         echo "<span class=\"sct_cost\">".display_price($row['it_cust_price'])."</span>\n";
     }
