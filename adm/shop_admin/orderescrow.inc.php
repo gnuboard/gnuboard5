@@ -53,6 +53,7 @@ include_once(G5_SHOP_PATH.'/kcp/pp_ax_hub_lib.php');
 $req_tx         = 'mod_escrow';
 $mod_type       = 'STE1';
 $mod_desc       = '에스크로 배송시작 등록';
+$cust_ip        = getenv('REMOTE_ADDR');
 
 $c_PayPlus = new C_PP_CLI;
 $c_PayPlus->mf_clear();
@@ -60,18 +61,18 @@ $c_PayPlus->mf_clear();
 $tran_cd = "00200000";
 
 // 에스크로 상태변경
-$tno_count = count($arr_tno);
+$tno_count = count($escrow_tno);
 for($i=0; $i<$tno_count; $i++) {
-    if(!$arr_tno[$i] || !$arr_corp[$i] || !$arr_numb[$i])
+    if(!$escrow_tno[$i] || !$escrow_corp[$i] || !$escrow_numb[$i])
         continue;
 
-    $c_PayPlus->mf_set_modx_data( "tno",        $arr_tno[$i]  );
-    $c_PayPlus->mf_set_modx_data( "mod_type",   $mod_type     );
-    $c_PayPlus->mf_set_modx_data( "mod_ip",     $cust_ip      );
-    $c_PayPlus->mf_set_modx_data( "mod_desc",   $mod_desc     );
+    $c_PayPlus->mf_set_modx_data( "tno",        $escrow_tno[$i]  );
+    $c_PayPlus->mf_set_modx_data( "mod_type",   $mod_type        );
+    $c_PayPlus->mf_set_modx_data( "mod_ip",     $cust_ip         );
+    $c_PayPlus->mf_set_modx_data( "mod_desc",   $mod_desc        );
 
-    $c_PayPlus->mf_set_modx_data( "deli_numb",  $arr_numb[$i] );
-    $c_PayPlus->mf_set_modx_data( "deli_corp",  $arr_corp[$i] );
+    $c_PayPlus->mf_set_modx_data( "deli_numb",  $escrow_numb[$i] );
+    $c_PayPlus->mf_set_modx_data( "deli_corp",  $escrow_corp[$i] );
 
     $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, $g_conf_site_key, $tran_cd, "",
                           $g_conf_gw_url, $g_conf_gw_port, "payplus_cli_slib", $ordr_idxx,

@@ -59,27 +59,15 @@ include "./ordersms.inc.php";
 
 
 // 에스크로 배송처리
-if($_POST['od_tno'] && $_POST['od_escrow'] == 1) 
+if($_POST['od_tno'] && $_POST['od_escrow'] == 1)
 {
-    $arr_tno  = array();
-    $arr_corp = array();
-    $arr_numb = array();
+    $escrow_tno  = array();
+    $escrow_corp = array();
+    $escrow_numb = array();
 
-    /*
-    // 배송회사정보
-    $sql = " select dl_company from {$g5['g5_shop_delivery_table']} where dl_id = '$dl_id' ";
-    $row = sql_fetch($sql);
-
-    $arr_tno[0]  = $_POST['od_tno'];
-    $arr_corp[0] = $row['dl_company'];
-    $arr_numb[0] = $od_invoice;
-    $cust_ip = getenv('REMOTE_ADDR');
-    */
-
-    $arr_tno[0]  = $_POST['od_tno'];
-    $arr_corp[0] = $od_delivery_company;
-    $arr_numb[0] = $od_invoice;
-    $cust_ip = getenv('REMOTE_ADDR');
+    $escrow_tno[0]  = $_POST['od_tno'];
+    $escrow_corp[0] = $_POST['od_delivery_company'];
+    $escrow_numb[0] = $_POST['od_invoice'];
 
     include_once('./orderescrow.inc.php');
 }

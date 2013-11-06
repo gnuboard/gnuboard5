@@ -25,39 +25,6 @@ sql_query($sql);
 save_order_point("완료");
 
 
-/*
-//------------------------------------------------------------------------------
-// 주문완료 포인트
-// 설정일이 지난 포인트 부여되지 않은 배송완료된 장바구니 자료에 포인트 부여
-// 설정일이 0 이면 주문서 완료 설정 시점에서 포인트를 바로 부여합니다.
-//------------------------------------------------------------------------------
-if (!isset($order_not_point)) {
-    $beforedays = date("Y-m-d H:i:s", ( time() - (60 * 60 * 24 * (int)$default['de_point_days']) ) );
-    $sql = " select * from {$g5['g5_shop_cart_table']}
-               where ct_status = '완료'
-                 and ct_point_use = '0'
-                 and ct_time <= '$beforedays' ";
-    $result = sql_query($sql);
-    for ($i=0; $row=sql_fetch_array($result); $i++)
-    {
-        // 회원 ID 를 얻는다.
-        $tmp_row = sql_fetch("select od_id, mb_id from {$g5['g5_shop_order_table']} where od_id = '{$row['od_id']}' ");
-
-        // 회원이면서 포인트가 0보다 크다면
-        if ($tmp_row['mb_id'] && $row['ct_point'] > 0)
-        {
-            $po_point = $row['ct_point'] * $row['ct_qty'];
-            $po_content = "$cart_title3 {$tmp_row['od_id']} ({$row['ct_id']}) $cart_title4";
-            insert_point($tmp_row['mb_id'], $po_point, $po_content, "@delivery", $tmp_row['mb_id'], "{$tmp_row['od_id']},{$row['ct_id']}");
-        }
-
-        sql_query("update {$g5['g5_shop_cart_table']} set ct_point_use = '1' where ct_id = '{$row['ct_id']}' ");
-    }
-}
-//------------------------------------------------------------------------------
-*/
-
-
 //------------------------------------------------------------------------------
 // 주문서 정보
 //------------------------------------------------------------------------------
