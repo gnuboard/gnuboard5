@@ -449,19 +449,12 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                 </colgroup>
                 <tbody>
                 <?php
-                // 배송회사 정보
-                $dl = sql_fetch(" select * from {$g5['g5_shop_delivery_table']} where dl_id = '{$od['dl_id']}' ");
-
-                if ($od['od_invoice'] || !$od['misu'])
+                if ($od['od_invoice'] && $od['od_delivery_company'])
                 {
-                    if (is_array($dl))
-                    {
-                        // get 으로 날리는 경우 운송장번호를 넘김
-                        if (strpos($dl['dl_url'], "=")) $invoice = $od['od_invoice'];
                 ?>
                 <tr>
                     <th scope="row">배송회사</th>
-                    <td><?php echo $dl['dl_company']; ?> [<a href="<?php echo $dl['dl_url'].$invoice; ?>" target="_blank">배송조회하기</a>]</td>
+                    <td><?php echo $od['od_delivery_company']; ?></td>
                 </tr>
                 <tr>
                     <th scope="row">운송장번호</th>
@@ -471,20 +464,15 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                     <th scope="row">배송일시</th>
                     <td><?php echo $od['od_invoice_time']; ?></td>
                 </tr>
-                <tr>
-                    <th>고객센터 전화</th>
-                    <td><?php echo $dl['dl_tel']; ?></td>
-                </tr>
                 <?php
-                    }
-                    else
-                    {
+                }
+                else
+                {
                 ?>
                 <tr>
                     <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
                 </tr>
                 <?php
-                    }
                 }
                 ?>
                 </tbody>
@@ -544,7 +532,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <?php } ?>
     </section>
 
-    <?php if ($od['od_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
+    <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin) {
     preg_match("/(\s[^\s]+\s)/", $od['od_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
     ?>
