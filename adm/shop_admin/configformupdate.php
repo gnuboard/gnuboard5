@@ -136,11 +136,6 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_cart_keep_term           = '$de_cart_keep_term',
                 de_guest_cart_use           = '$de_guest_cart_use',
                 de_admin_buga_no            = '$de_admin_buga_no',
-                de_sms_use                  = '$de_sms_use',
-				de_icode_id                 = '$de_icode_id',
-				de_icode_pw                 = '$de_icode_pw',
-				de_icode_server_ip          = '$de_icode_server_ip',
-				de_icode_server_port        = '$de_icode_server_port',
                 de_vbank_use                = '$de_vbank_use',
                 de_kcp_site_key             = '$de_kcp_site_key',
                 de_taxsave_use              = '$de_taxsave_use',
@@ -153,6 +148,15 @@ sql_query($sql);
 
 // 환경설정 > 포인트 사용
 sql_query(" update {$g5['config_table']} set cf_use_point = '$cf_use_point' ");
+
+// 아이코드 설정
+$sql = " update {$g5['config_table']}
+            set cf_sms_use              = '$cf_sms_use',
+                cf_icode_id             = '$cf_icode_id',
+                cf_icode_pw             = '$cf_icode_pw',
+                cf_icode_server_ip      = '$cf_icode_server_ip',
+                cf_icode_server_port    = '$cf_icode_server_port' ";
+sql_query($sql);
 
 goto_url("./configform.php");
 ?>

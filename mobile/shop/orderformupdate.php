@@ -542,7 +542,7 @@ if($default['de_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3']
     include_once(G5_LIB_PATH.'/icode.sms.lib.php');
 
     $SMS = new SMS; // SMS 연결
-    $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
+    $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
     $sms_count = 0;
 
     for($s=0; $s<count($sms_contents); $s++) {
@@ -561,7 +561,7 @@ if($default['de_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3']
         $idx = 'de_sms_use'.($s + 2);
 
         if($default[$idx] && $recv_number) {
-            $SMS->Add($recv_number, $send_number, $default['de_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_content)), "");
+            $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_content)), "");
             $sms_count++;
         }
     }

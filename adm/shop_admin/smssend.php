@@ -12,7 +12,7 @@ $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
 ?>
 
 <?php
-if ($default['de_sms_use'] == 'icode') { // 아이코드 사용
+if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
 ?>
 <div id="sms_send">
     <h2 class="h2_frm">SMS 문자전송 내용 입력</h2>
@@ -250,7 +250,7 @@ function smsform_check(f)
     <div class="local_desc01 local_desc">
         <p>
             SMS 를 사용하지 않고 있기 때문에, 문자 전송을 할 수 없습니다.<br>
-            SMS 사용 설정은 <a href="./configform.php#frm_sms" class="btn_frmline">쇼핑몰관리 &gt; 쇼핑몰설정 &gt; SMS설정</a> 에서 하실 수 있습니다.
+            SMS 사용 설정은 <a href="./configform.php#anc_scf_sms" class="btn_frmline">쇼핑몰관리 &gt; 쇼핑몰설정 &gt; SMS설정</a> 에서 하실 수 있습니다.
         </p>
     </div>
 </section>

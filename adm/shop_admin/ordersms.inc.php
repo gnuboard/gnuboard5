@@ -17,8 +17,8 @@ if ($default['de_sms_use']) {
             $sms_contents = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_contents);
 
             $SMS = new SMS;
-            $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
-            $SMS->Add($receive_number, $send_number, $default['de_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_contents)), "");
+            $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
+            $SMS->Add($receive_number, $send_number, $config['cf_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_contents)), "");
             $SMS->Send();
         }
     }
@@ -37,8 +37,8 @@ if ($default['de_sms_use']) {
             $sms_contents = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_contents);
 
             $SMS = new SMS;
-            $SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
-            $SMS->Add($receive_number, $send_number, $default['de_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_contents)), "");
+            $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
+            $SMS->Add($receive_number, $send_number, $config['cf_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_contents)), "");
             $SMS->Send();
         }
     }

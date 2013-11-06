@@ -45,11 +45,11 @@ if (!function_exists("get_sock")) {
     }
 }
 
-if (!$default['de_icode_server_ip'])   $default['de_icode_server_ip'] = '211.172.232.124';
-if (!$default['de_icode_server_port']) $default['de_icode_server_port'] = '7295';
+if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
+if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
-if ($default['de_icode_id'] && $default['de_icode_pw']) {
-    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$default['de_icode_id'].'&userpw='.$default['de_icode_pw']);
+if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
+    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$config['cf_icode_id'].'&userpw='.$config['cf_icode_pw']);
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드
@@ -998,12 +998,12 @@ function byte_check(el_cont, el_byte)
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row"><label for="de_sms_use">SMS 사용</label></th>
+            <th scope="row"><label for="cf_sms_use">SMS 사용</label></th>
             <td>
-                <?php echo help("SMS  서비스 회사를 선택하십시오. 서비스 회사를 선택하지 않으면, SMS 발송 기능이 동작하지 않습니다.\n아이코드는 무료 문자메세지 발송 테스트 환경을 지원합니다."); ?>
-                <select id="de_sms_use" name="de_sms_use">
-                    <option value="" <?php echo get_selected($default['de_sms_use'], ''); ?>>사용안함</option>
-                    <option value="icode" <?php echo get_selected($default['de_sms_use'], 'icode'); ?>>아이코드</option>
+                <?php echo help("SMS  서비스 회사를 선택하십시오. 서비스 회사를 선택하지 않으면, SMS 발송 기능이 동작하지 않습니다.<br>아이코드는 무료 문자메세지 발송 테스트 환경을 지원합니다.<br><a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_sms\">기본환경설정 &gt; SMS</a> 설정과 동일합니다."); ?>
+                <select id="cf_sms_use" name="cf_sms_use">
+                    <option value="" <?php echo get_selected($config['cf_sms_use'], ''); ?>>사용안함</option>
+                    <option value="icode" <?php echo get_selected($config['cf_sms_use'], 'icode'); ?>>아이코드</option>
                 </select>
             </td>
         </tr>
@@ -1015,33 +1015,33 @@ function byte_check(el_cont, el_byte)
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_icode_id">아이코드 회원아이디</label></th>
+            <th scope="row"><label for="cf_icode_id">아이코드 회원아이디</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 회원아이디를 입력합니다."); ?>
-                <input type="text" name="de_icode_id" value="<?php echo $default['de_icode_id']; ?>" id="de_icode_id" class="frm_input" size="20">
+                <input type="text" name="cf_icode_id" value="<?php echo $config['cf_icode_id']; ?>" id="cf_icode_id" class="frm_input" size="20">
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_icode_pw">아이코드 패스워드</label></th>
+            <th scope="row"><label for="cf_icode_pw">아이코드 패스워드</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 패스워드를 입력합니다."); ?>
-                <input type="password" name="de_icode_pw" value="<?php echo $default['de_icode_pw']; ?>" class="frm_input" id="de_icode_pw">
+                <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" class="frm_input" id="cf_icode_pw">
             </td>
         </tr>
         <tr>
             <th scope="row">요금제</th>
             <td>
-                <input type="hidden" name="de_icode_server_ip" value="<?php echo $default['de_icode_server_ip']; ?>">
+                <input type="hidden" name="cf_icode_server_ip" value="<?php echo $config['cf_icode_server_ip']; ?>">
                 <?php
                     if ($userinfo['payment'] == 'A') {
                        echo '충전제';
-                        echo '<input type="hidden" name="de_icode_server_port" value="7295">';
+                        echo '<input type="hidden" name="cf_icode_server_port" value="7295">';
                     } else if ($userinfo['payment'] == 'C') {
                         echo '정액제';
-                        echo '<input type="hidden" name="de_icode_server_port" value="7296">';
+                        echo '<input type="hidden" name="cf_icode_server_port" value="7296">';
                     } else {
                         echo '가입해주세요.';
-                        echo '<input type="hidden" name="de_icode_server_port" value="7295">';
+                        echo '<input type="hidden" name="cf_icode_server_port" value="7295">';
                     }
                 ?>
             </td>
@@ -1058,7 +1058,7 @@ function byte_check(el_cont, el_byte)
             <th scope="row">충전 잔액</th>
             <td colspan="3">
                 <?php echo number_format($userinfo['coin']); ?> 원.
-                <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $default['de_icode_id']; ?>&amp;icode_passwd=<?php echo $default['de_icode_pw']; ?>" target="_blank" class="btn_frmline" onclick="window.open(this.href,'icode_payment', 'scrollbars=1,resizable=1'); return false;">충전하기</a>
+                <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $config['cf_icode_id']; ?>&amp;icode_passwd=<?php echo $config['cf_icode_pw']; ?>" target="_blank" class="btn_frmline" onclick="window.open(this.href,'icode_payment', 'scrollbars=1,resizable=1'); return false;">충전하기</a>
             </td>
         </tr>
         <tr>
