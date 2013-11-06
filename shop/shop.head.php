@@ -52,7 +52,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 </span>
 
                 <label for="sch_all_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="search_str" value="<?php echo stripslashes(get_text($search_str)); ?>" id="sch_all_str" required>
+                <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="sch_all_str" required>
                 <input type="submit" value="검색" id="sch_all_submit">
 
                 </form>
