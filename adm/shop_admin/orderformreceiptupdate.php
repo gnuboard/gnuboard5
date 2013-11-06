@@ -16,6 +16,16 @@ if ($od_receipt_time) {
         alert('결제일시 오류입니다.');
 }
 
+// 배송정보가 있으면 주문상태 배송으로 변경
+$od_status = $od['od_status'];
+$cart_status = false;
+$order_status = array('입금', '준비');
+if($_POST['od_delivery_company'] && $_POST['od_invoice'] && in_array($od['od_status'], $order_status))
+{
+    $od_status = '배송';
+    $cart_status = true;
+}
+
 // 결제정보 반영
 $sql = " update {$g5['g5_shop_order_table']}
             set od_deposit_name    = '{$_POST['od_deposit_name']}',
@@ -28,9 +38,19 @@ $sql = " update {$g5['g5_shop_order_table']}
                 od_invoice         = '{$_POST['od_invoice']}',
                 od_invoice_time    = '{$_POST['od_invoice_time']}',
                 od_send_cost       = '{$_POST['od_send_cost']}',
-                od_send_cost2      = '{$_POST['od_send_cost2']}'
+                od_send_cost2      = '{$_POST['od_send_cost2']}',
+                od_status          = '$od_status'
             where od_id = '$od_id' ";
 sql_query($sql);
+
+// 장바구니 상태변경
+if($cart_status) {
+    $sql = " update {$g5['g5_shop_cart_table']}
+                set ct_status = '$od_status'
+                where od_id = '$od_id'
+                  and ct_status IN ('".implode("', '", $order_status)."') ";
+    sql_query($sql);
+}
 
 // 주문정보
 $info = get_order_info($od_id);
