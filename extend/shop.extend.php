@@ -23,23 +23,6 @@ if (G5_HTTPS_DOMAIN) {
     define('G5_HTTPS_MSHOP_URL', G5_MSHOP_URL);
 }
 
-//------------------------------------------------------------------------------
-// 쇼핑몰 상수 모음 끝
-//------------------------------------------------------------------------------
-
-
-//==============================================================================
-// 쇼핑몰 필수 실행코드 모음 시작
-//==============================================================================
-
-// 쇼핑몰 설정값 배열변수
-$default = sql_fetch(" select * from {$g5['g5_shop_default_table']} ");
-
-define('G5_SHOP_SKIN_PATH',  G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_skin']);
-define('G5_SHOP_SKIN_URL',   G5_URL .'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_skin']);
-define('G5_MSHOP_SKIN_PATH', G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin']);
-define('G5_MSHOP_SKIN_URL',  G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin']);
-
 /*
 배송업체에 데이터를 추가하는 경우 아래 형식으로 추가하세요.
 .'(배송업체명^택배조회URL^연락처)'
@@ -58,6 +41,26 @@ define('G5_DELIVERY_COMPANY',
     .'(KG옐로우캡택배^http://www.yellowcap.co.kr/custom/inquiry_result.asp?invoice_no=^1588-0123)'
     .'(KGB택배^http://www.kgbls.co.kr/sub5/trace.asp?f_slipno=^1577-4577)'
 );
+
+define('G5_SHOP_SEARCH_SKIN', 'list.10.skin.php'); // 상품검색스킨
+define('G5_SHOP_SEARCH_MOD', 4); // 상품검색 1라인에 몇개
+define('G5_SHOP_SEARCH_ROW', 5); // 상품검색 라인수
+//------------------------------------------------------------------------------
+// 쇼핑몰 상수 모음 끝
+//------------------------------------------------------------------------------
+
+
+//==============================================================================
+// 쇼핑몰 필수 실행코드 모음 시작
+//==============================================================================
+
+// 쇼핑몰 설정값 배열변수
+$default = sql_fetch(" select * from {$g5['g5_shop_default_table']} ");
+
+define('G5_SHOP_SKIN_PATH',  G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_skin']);
+define('G5_SHOP_SKIN_URL',   G5_URL .'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_skin']);
+define('G5_MSHOP_SKIN_PATH', G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin']);
+define('G5_MSHOP_SKIN_URL',  G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin']);
 
 /*
 // 주문상태 상수

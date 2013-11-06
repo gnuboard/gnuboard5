@@ -260,8 +260,6 @@ $it_name = strip_tags(trim($_POST['it_name']));
 if ($it_name == "")
     alert("상품명을 입력해 주십시오.");
 
-$it_explan_strip_tags = strip_tags(trim($_POST['it_explan']));
-
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
                 ca_id3              = '$ca_id3',
@@ -280,7 +278,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_type5            = '$it_type5',
                 it_basic            = '$it_basic',
                 it_explan           = '$it_explan',
-                it_explan_strip_tags= '$it_explan_strip_tags',
+                it_explan2          = '".strip_tags(trim($_POST['it_explan']))."',
                 it_mobile_explan    = '$it_mobile_explan',
                 it_cust_price       = '$it_cust_price',
                 it_price            = '$it_price',

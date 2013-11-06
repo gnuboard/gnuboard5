@@ -9,142 +9,138 @@ if (G5_IS_MOBILE) {
 $g5['title'] = "상품 검색 결과";
 include_once('./_head.php');
 
+$q       = utf8_strcut(escape_trim($_GET['q']), 30, "");
+$qname   = escape_trim($_GET['qname']);
+$qexplan = escape_trim($_GET['qexplan']);
+$qid     = escape_trim($_GET['qid']);
+$qcaid   = escape_trim($_GET['qcaid']);
+$qfrom   = escape_trim($_GET['qfrom']);
+$qto     = escape_trim($_GET['qto']);
+
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
-$sql_common = " from {$g5['g5_shop_item_table']} a,
-                     {$g5['g5_shop_category_table']} b
-               where a.ca_id=b.ca_id
-                 and a.it_use = 1
-                 and b.ca_use = 1
-               /* 중복검색에 대한 오류로 인해 막음 : where (a.ca_id=b.ca_id or a.ca_id2=b.ca_id or a.ca_id3=b.ca_id) */ ";
-if ($search_str) {
-    $sql_common .= " and ( a.it_id like '$search_str%' or
-                           a.it_name like   '%$search_str%' or
-                           a.it_basic like  '%$search_str%' or
-                           a.it_explan like '%$search_str%' ) ";
-}
-/*
-// 공백을 구분하여 검색을 할때는 이 코드를 사용하십시오. or 조건
-if ($search_str) {
-    $s_str = explode(" ", $search_str);
-    $or = " ";
-    $sql_common .= " and ( ";
-    for ($i=0; $i<count($s_str); $i++) {
-        $sql_common .= " $or (a.it_id like '$s_str[$i]%' or a.it_name like '%$s_str[$i]%' or a.it_basic like  '%$s_str[$i]%' or a.it_explan like '%$s_str[$i]%' ) ";
-        $or = " or ";
-    }
-    $sql_common .= " ) ";
-}
-*/
+$sql_common = " from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b ";
 
-// 분류선택이 있다면 특정 분류만
-if ($search_ca_id != "")
-    $sql_common .= " and a.ca_id like '$search_ca_id%' ";
+$where = array();
+$where[] = " (a.ca_id = b.ca_id and a.it_use = 1 and b.ca_use = 1) ";
+
+$search_all = true;
+// 상세검색 이라면
+if (isset($qname) || isset($qexplan) || isset($qid))
+    $search_all = false;
+
+if ($q) {
+    $arr = explode(" ", $q);
+    $detail_where = array();
+    for ($i=0; $i<count($arr); $i++) {
+        $word = trim($arr[$i]);
+        if (!$word) continue;
+
+        $or = array();
+        if ($search_all || $qname) 
+            $or[] = " a.it_name like '%$word%' ";
+        if ($search_all || $qexplan)
+            $or[] = " a.it_explan2 like '%$word%' "; // tag 를 제거한 상품설명을 검색한다.
+        if ($search_all || $qid)
+            $or[] = " a.it_id like '%$word%' ";
+
+        $detail_where[] = "(" . implode(" or ", $or) . ")";
+
+        // 인기검색어
+        $sql = " insert into {$g5['popular_table']} set pp_word = '$word', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' "; 
+        sql_query($sql, FALSE);
+    }
+
+    $where[] = "(".implode(" or ", $detail_where).")";
+}
+
+if ($qcaid)
+    $where[] = " a.ca_id like '$qcaid%' ";
+
+if ($qfrom || $qto) 
+    $where[] = " a.it_price between '$qfrom' and '$qto' ";
+
+$sql_where = " where " . implode(" and ", $where);
+
+// 상품 출력순서가 있다면
+if ($sort != "")
+    $order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
 
 // 검색된 내용이 몇행인지를 얻는다
-$sql = " select COUNT(*) as cnt $sql_common ";
+$sql = " select COUNT(*) as cnt $sql_common $sql_where ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 ?>
 
+<form name="frmdetailsearch" onsubmit="return detail_search_submit(this);">
+상세검색 : 
+<input type="checkbox" name="qname"   <?php echo isset($qname)?'checked="checked"':'';?>> 상품명
+<input type="checkbox" name="qexplan" <?php echo isset($qexplan)?'checked="checked"':'';?>> 상품설명
+<input type="checkbox" name="qid"     <?php echo isset($qid)?'checked="checked"':'';?>> 상품코드<br>
+상품가격 : 
+<input type="text" name="qfrom" value="<?php echo $qfrom; ?>" size="10">원 부터
+<input type="text" name="qto" value="<?php echo $qto; ?>" size="10">원 까지<br>
+검색어 : <input type="text" name="q" value="<?php echo $q; ?>" size="40" maxlength="30">
+<input type="submit" value="검색">
+<p>상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 전체에서 검색합니다.</p>
+</form>
+
 <!-- 검색결과 시작 { -->
 <div id="ssch">
 
-    <div id="ssch_ov">검색어 <strong><?php echo ($search_str ? stripslashes(get_text($search_str)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
+    <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
 
-    <?php
-    // 임시배열에 저장해 놓고 분류별로 출력한다.
-    // write_serarch_save() 함수가 임시배열에 있는 내용을 출력함
-    if ($total_count > 0) {
-        if (trim($search_str)) {
-            // 인기검색어
-            $sql = " insert into {$g5['popular_table']}
-                        set pp_word = '$search_str',
-                            pp_date = '".G5_TIME_YMD."',
-                            pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
-            sql_query($sql, FALSE);
-        }
-
-        unset($save); // 임시 저장 배열
-        $sql = " select a.ca_id,
-                        a.it_id
-                 $sql_common
-                 order by a.ca_id, a.it_id desc ";
-        $result = sql_query($sql);
-        for ($i=0; $row=mysql_fetch_array($result); $i++) {
-            if ($save['ca_id'] != $row['ca_id']) {
-                if ($save['ca_id']) {
-                    write_search_save($save);
-                    unset($save);
-                }
-                $save['ca_id'] = $row['ca_id'];
-                $save['cnt'] = 0;
-            }
-            $save['it_id'][$save['cnt']] = $row['it_id'];
-            $save[cnt]++;
-        }
-        mysql_free_result($result);
-    }
-
-    write_search_save($save);
-
-    function write_search_save($save)
-    {
-        global $g5, $search_str , $default , $image_rate , $cart_dir;
-
-        $sql = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '{$save['ca_id']}' ";
-        $row = sql_fetch($sql);
-
-        // 김선용 2006.12 : 중복 하위분류명이 많으므로 대분류 포함하여 출력
-         $ca_temp = "";
-         if(strlen($save['ca_id']) > 2) // 중분류 이하일 경우
-         {
-             $sql2 = " select ca_name from {$g5['g5_shop_category_table']} where ca_id='".substr($save['ca_id'],0,2)."' ";
-            $row2 = sql_fetch($sql2);
-            $ca_temp = '<a href="./list.php?ca_id='.substr($save['ca_id'],0,2).'">'.$row2['ca_name'].'</a> &gt; ';
-         }
-    ?>
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption><?php echo $ca_temp?><a href="./list.php?ca_id=<?php echo $save['ca_id']; ?>"><?php echo $row['ca_name']; ?></a> 상품<?php echo (int)$save['cnt']; ?>개</caption>
-        <thead>
-        <tr>
-            <th scope="col">이미지</td>
-            <th scope="col">상품명</th>
-            <th scope="col">판매가격</td>
-            <th scope="col">포인트</td>
-        </tr>
-        </thead>
-
-        <tbody>
+    <div>
         <?php
-        for ($i=0; $i<$save['cnt']; $i++) {
-            $sql = " select it_id,
-                            it_name,
-                            it_price,
-                            it_tel_inq,
-                            it_point,
-                            it_type1,
-                            it_type2,
-                            it_type3,
-                            it_type4,
-                            it_type5
-                       from {$g5['g5_shop_item_table']} where it_id = '{$save['it_id'][$i]}' ";
-            $row = sql_fetch($sql);
+        // 리스트 유형별로 출력
+        $list_file = G5_SHOP_SKIN_PATH.'/'.G5_SHOP_SEARCH_SKIN;
+        if (file_exists($list_file)) {
 
-            $image = get_it_image($row['it_id'], (int)($default['de_simg_width']), (int)($default['de_simg_height']), true);
+            // 총몇개 = 한줄에 몇개 * 몇줄
+            $items = 4 * 5;
+            // 페이지가 없으면 첫 페이지 (1 페이지)
+            if ($page == "") $page = 1;
+            // 시작 레코드 구함
+            $from_record = ($page - 1) * $items;
+
+            $list = new item_list(G5_SHOP_SEARCH_SKIN, G5_SHOP_SEARCH_MOD, G5_SHOP_SEARCH_ROW, $default['de_simg_width'], $default['de_simg_height']);
+            $list->set_query(" select * $sql_common $sql_where ");
+            $list->set_is_page(true);
+            $list->set_order_by($order_by);
+            $list->set_from_record($from_record);
+            $list->set_view('it_img', true);
+            $list->set_view('it_id', true);
+            $list->set_view('it_name', true);
+            $list->set_view('it_basic', true);
+            $list->set_view('it_cust_price', false);
+            $list->set_view('it_price', true);
+            $list->set_view('it_icon', true);
+            $list->set_view('sns', true);
+            echo $list->run();
+
+            // where 된 전체 상품수
+            $total_count = $list->total_count;
+            // 전체 페이지 계산
+            $total_page  = ceil($total_count / $items);
+        }
+        else
+        {
+            $i = 0;
+            $error = '<p class="sct_nofile">'.$ca['ca_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
+        }
+
+        if ($i==0)
+        {
+            echo '<div>'.$error.'</div>';
+        }
+
+        $qstr1 .= 'ca_id='.$ca_id;
+        if($skin)
+            $qstr1 .= '&amp;skin='.$skin;
+        $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
+        echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
         ?>
-        <tr>
-            <td class="ssch_it_img"><?php echo $image; ?></td>
-            <td><?php echo get_text($row['it_name']); ?></td>
-            <td class="ssch_num"><?php echo display_price(get_price($row), $row['it_tel_inq']); ?></td>
-            <td class="ssch_num"><?php echo display_point($row['it_point']); ?></td>
-        </tr>
-        <?php } // for 끝 ?>
-        </tbody>
-        </table>
     </div>
-    <?php } // function 끝 ?>
 
 </div>
 <!-- } 검색결과 끝 -->
