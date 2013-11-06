@@ -59,13 +59,6 @@ else
     alert();
 }
 
-if (!$it['it_explan_html'])
-{
-    $it['it_explan'] = get_text($it['it_explan'], 1);
-}
-
-//$qstr1 = 'sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search;
-//$qstr = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
 $qstr  = $qstr.'&amp;sca='.$sca.'&amp;page='.$page;
 
 $g5['title'] = $html_title;
@@ -114,18 +107,12 @@ $pg_anchor ='<ul class="anchor">
 
 <input type="hidden" name="codedup" value="<?php echo $default['de_code_dup_use']; ?>">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
-<!-- <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
-<input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
-<input type="hidden" name="search" value="<?php echo $search; ?>">
-<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-<input type="hidden" name="sort2" value="<?php echo $sort2; ?>"> -->
 <input type="hidden" name="sca" value="<?php echo $sca; ?>">
 <input type="hidden" name="sst" value="<?php echo $sst; ?>">
 <input type="hidden" name="sod"  value="<?php echo $sod; ?>">
 <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
 <input type="hidden" name="stx"  value="<?php echo $stx; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
-<input type="hidden" name="it_explan_html" value="1"><!---->
 
 <section id="anc_sitfrm_cate">
     <h2 class="h2_frm">상품분류</h2>
@@ -1613,7 +1600,6 @@ function categorychange(f)
     if (f.w.value == "" && idx)
     {
         f.it_use.checked = ca_use[idx] ? true : false;
-        //f.it_explan_html[ca_explan_html[idx]].checked = true;
         f.it_stock_qty.value = ca_stock_qty[idx];
         f.it_sell_email.value = ca_sell_email[idx];
     }
