@@ -5,7 +5,7 @@ if (!defined("_ORDERSMS_")) exit;
 $receive_number = preg_replace("/[^0-9]/", "", $od_hp);	// 수신자번호 (받는사람 핸드폰번호 ... 여기서는 주문자님의 핸드폰번호임)
 $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
 
-if ($default['de_sms_use']) {
+if ($config['cf_sms_use']) {
     if ($od_sms_ipgum_check)
     {
         if ($od_bank_account && $od_receipt_price && $od_deposit_name)

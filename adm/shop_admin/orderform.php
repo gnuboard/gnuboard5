@@ -406,7 +406,7 @@ $result = sql_query($sql);
                         //------------------------------------------------------------------------------
                         // KCP(PG) 바로가기
                         //------------------------------------------------------------------------------
-                        if ($od['od_settle_case'] != '무통장') { 
+                        if ($od['od_settle_case'] != '무통장') {
                             // PG사를 KCP 사용하면서 테스트 상점아이디라면
                             $pg_url  = 'http://admin8.kcp.co.kr';
                             $pg_test = '';
@@ -417,7 +417,7 @@ $result = sql_query($sql);
                                 $pg_url = 'http://testadmin8.kcp.co.kr';
                                 if ($default['de_escrow_use'])
                                     $pg_test = '에스크로 테스트 ';
-                                else 
+                                else
                                     $pg_test = '일반 테스트 ';
                             }
                             echo "<a href=\"{$pg_url}\" target=\"_blank\">KCP {$pg_test}바로가기</a><br>";
@@ -559,7 +559,7 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="row"><label for="od_deposit_name">입금자명</label></th>
                     <td>
-                        <?php if ($default['de_sms_use'] && $default['de_sms_use3']) { ?>
+                        <?php if ($config['cf_sms_use'] && $default['de_sms_use3']) { ?>
                         <input type="checkbox" name="od_sms_ipgum_check" id="od_sms_ipgum_check">
                         <label for="od_sms_ipgum_check">SMS 입금 문자전송</label>
                         <br>
@@ -630,7 +630,7 @@ $result = sql_query($sql);
                 <tr>
                     <th scope="row"><label for="od_invoice">운송장번호</label></th>
                     <td>
-                        <?php if ($default['de_sms_use'] && $default['de_sms_use4']) { ?>
+                        <?php if ($config['cf_sms_use'] && $default['de_sms_use4']) { ?>
                         <input type="checkbox" name="od_sms_baesong_check" id="od_sms_baesong_check">
                         <label for="od_sms_baesong_check">SMS 배송 문자전송</label>
                         <br>

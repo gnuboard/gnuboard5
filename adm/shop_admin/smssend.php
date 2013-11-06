@@ -206,7 +206,7 @@ function smsform_check(f)
         echo "return false;";
     }
 
-    if ($default['de_sms_use'] == "") {
+    if ($config['cf_sms_use'] == "") {
         echo "alert('우선 SMS 환경을 설정하여 주십시오.');";
         echo "return false;";
     }
