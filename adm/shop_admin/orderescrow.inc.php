@@ -25,6 +25,7 @@ else {
 }
 
 $g_conf_site_cd = $default['de_kcp_mid'];
+$g_conf_site_key = $default['de_kcp_site_key'];
 $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
 $g_conf_key_dir   = '';
 $g_conf_log_dir   = '';
@@ -72,7 +73,7 @@ for($i=0; $i<$tno_count; $i++) {
     $c_PayPlus->mf_set_modx_data( "deli_numb",  $arr_numb[$i] );
     $c_PayPlus->mf_set_modx_data( "deli_corp",  $arr_corp[$i] );
 
-    $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, "", $tran_cd, "",
+    $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, $g_conf_site_key, $tran_cd, "",
                           $g_conf_gw_url, $g_conf_gw_port, "payplus_cli_slib", $ordr_idxx,
                           $cust_ip, "3" , 0, 0, $g_conf_key_dir, $g_conf_log_dir); // 응답 전문 처리
 
