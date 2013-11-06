@@ -97,6 +97,7 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
         $list->set_view('it_img', true);
         $list->set_view('it_id', false);
         $list->set_view('it_name', true);
+        $list->set_view('it_basic', true);
         $list->set_view('it_cust_price', false);
         $list->set_view('it_price', true);
         $list->set_view('it_icon', true);

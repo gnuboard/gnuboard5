@@ -215,7 +215,21 @@ $pg_anchor ='<ul class="anchor">
         <tr>
             <th scope="row"><label for="it_name">상품명</label></th>
             <td colspan="2">
+                <?php echo help("HTML 입력이 불가합니다."); ?>
                 <input type="text" name="it_name" value="<?php echo get_text(cut_str($it['it_name'], 250, "")); ?>" id="it_name" required class="frm_input required" size="95">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_basic">기본설명</label></th>
+            <td>
+                <?php echo help("상품명 하단에 상품에 대한 추가적인 설명이 필요한 경우에 입력합니다. HTML 입력도 가능합니다."); ?>
+                <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="95">
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
+                <label for="chk_ca_it_basic">분류적용</label>
+                <input type="checkbox" name="chk_all_it_basic" value="1" id="chk_all_it_basic">
+                <label for="chk_all_it_basic">전체적용</label>
             </td>
         </tr>
         <tr>
@@ -336,19 +350,6 @@ $pg_anchor ='<ul class="anchor">
                 <label for="chk_ca_it_use">분류적용</label>
                 <input type="checkbox" name="chk_all_it_use" value="1" id="chk_all_it_use">
                 <label for="chk_all_it_use">전체적용</label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="it_basic">기본설명</label></th>
-            <td>
-                <?php echo help("상품상세페이지의 상품설명 상단에 표시되는 설명입니다. HTML 입력도 가능합니다."); ?>
-                <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="80">
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
-                <label for="chk_ca_it_basic">분류적용</label>
-                <input type="checkbox" name="chk_all_it_basic" value="1" id="chk_all_it_basic">
-                <label for="chk_all_it_basic">전체적용</label>
             </td>
         </tr>
         <tr>
