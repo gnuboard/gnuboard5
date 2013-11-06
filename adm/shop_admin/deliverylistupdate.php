@@ -12,10 +12,10 @@ define("_ORDERMAIL_", true);
 
 $admin = get_admin('super');
 
-if ($default['de_sms_use'] == "icode")
+if ($config['cf_sms_use'] == "icode")
 {
 	$SMS = new SMS;
-	$SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
+	$SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
 }
 
 if($_POST['send_escrow']) {
@@ -97,9 +97,9 @@ for ($m=0; $m<count($_POST['od_id']); $m++)
                 $receive_number = preg_replace("/[^0-9]/", "", $od['od_hp']);	// 수신자번호 (받는사람 핸드폰번호 ... 여기서는 주문자님의 핸드폰번호임)
                 $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
 
-				if ($default['de_sms_use'] == "icode")
+				if ($config['cf_sms_use'] == "icode")
 				{
-					$SMS->Add($receive_number, $send_number, $default['de_icode_id'], stripslashes($sms_contents), "");
+					$SMS->Add($receive_number, $send_number, $config['cf_icode_id'], stripslashes($sms_contents), "");
 				}
             }
             //---------------------------------------
@@ -124,7 +124,7 @@ for ($m=0; $m<count($_POST['od_id']); $m++)
     }
 }
 
-if ($default['de_sms_use'] == "icode")
+if ($config['cf_sms_use'] == "icode")
 {
 	$SMS->Send();
 }

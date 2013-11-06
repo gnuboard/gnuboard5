@@ -44,8 +44,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 <input type="hidden" name="stx" value="">
 
                 <span>
-                    <label for="sch_all_flag" class="sound_only">검색대상</label>
-                    <select name="search_flag" id="sch_all_flag">
+                    <label for="search_flag" class="sound_only">검색대상</label>
+                    <select id="search_flag">
                         <option value="상품" <?php echo get_selected($search_flag, '상품'); ?>>상품</option>
                         <option value="게시판" <?php echo get_selected($search_flag, '게시판'); ?>>게시판</option>
                     </select>
@@ -58,7 +58,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 </form>
                 <script>
                 function search_submit(f) {
-                    if (f.search_flag.value == '상품') {
+                    var flag = document.getElementById("search_flag");
+                    if (flag.value == '상품') {
                         f.action = '<?php echo G5_SHOP_URL; ?>/search.php';
                     } else {
                         f.stx.value = f.search_str.value;

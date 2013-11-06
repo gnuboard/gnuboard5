@@ -9,12 +9,12 @@ auth_check($auth[$sub_menu], "w");
 
 // SMS 연결
 $SMS	= new SMS;
-$SMS->SMS_con($default['de_icode_server_ip'], $default['de_icode_id'], $default['de_icode_pw'], $default['de_icode_server_port']);
+$SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
 
 $recv = explode("\n", $receive_number);
 
 $tran_callback = preg_replace("/[^0-9]/", "", $send_number);
-$sms_id = $default['de_icode_id'];
+$sms_id = $config['cf_icode_id'];
 $tran_msg = iconv("utf-8", "euc-kr", stripslashes($sms_contents));
 $tran_date = "";
 if ($reserved_flag) // 예약전송
