@@ -185,7 +185,7 @@ if($_FILES['excelfile']['tmp_name']) {
                          it_img7 = '$it_img7',
                          it_img8 = '$it_img8',
                          it_img9 = '$it_img9',
-                         it_img10 = '$it_img10'; ";
+                         it_img10 = '$it_img10' ";
         sql_query($sql);
 
         $succ_count++;
