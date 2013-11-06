@@ -373,6 +373,7 @@ if(!$result) {
 }
 */
 
+/*
 // 쇼핑몰 스킨 필드 추가
 if (!isset($default['de_shop_skin'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
@@ -644,5 +645,13 @@ $row= sql_fetch($sql);
 if(stripos($row['Type'], 'enum') !== false) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_cart_table']}`
                     CHANGE `ct_status` `ct_status` varchar(255) NOT NULL DEFAULT '' ", true);
+}
+*/
+
+
+// 상품테이블에 검색을 위하여 태그없는 상품설명 저장용 필드 추가
+if(!sql_query(" select it_explan_strip_tags from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_explan_strip_tags` TEXT NOT NULL AFTER `it_explan` ", true);
 }
 ?>
