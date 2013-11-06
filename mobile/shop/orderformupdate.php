@@ -275,6 +275,8 @@ if ($od_settle_case == "무통장")
     $od_receipt_point   = $i_temp_point;
     $od_receipt_price   = 0;
     $od_misu            = $i_price - $od_receipt_price;
+    if($od_misu == 0)
+        $od_status      = '입금';
 }
 else if ($od_settle_case == "계좌이체")
 {
