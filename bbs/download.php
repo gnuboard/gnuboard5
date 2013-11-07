@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// clean the output buffer
+ob_end_clean();
+
 $no = (int)$no;
 
 @include_once($board_skin_path.'/download.head.skin.php');
