@@ -55,9 +55,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
             $rate = ($count / $sum_count * 100);
             $s_rate = number_format($rate, 1);
 
-            $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+            $tr_bg = 'tr_bg'.($i%2);
     ?>
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td class="td_category"><?php echo $hour ?></td>
         <td>
             <div class="visit_bar">

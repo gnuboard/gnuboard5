@@ -96,9 +96,9 @@ include_once('./admin.head.php');
         $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row['mb_datetime'];
         $cr = "\n";
 
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
     ?>
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td class="td_num"><?php echo $i ?></td>
         <td class="td_mbid"><?php echo $row['mb_id'] ?></td>
         <td class="td_mbname"><?php echo $row['mb_name'] ?></td>
