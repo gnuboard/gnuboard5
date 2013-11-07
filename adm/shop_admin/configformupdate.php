@@ -93,7 +93,6 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_rel_list_use             = '$de_rel_list_use',
                 de_rel_list_skin            = '$de_rel_list_skin',
                 de_rel_list_mod             = '$de_rel_list_mod',
-                de_rel_list_row             = '$de_rel_list_row',
                 de_rel_img_width            = '$de_rel_img_width',
                 de_rel_img_height           = '$de_rel_img_height',
                 de_search_list_skin         = '$de_search_list_skin',
