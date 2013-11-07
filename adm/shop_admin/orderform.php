@@ -163,7 +163,7 @@ $result = sql_query($sql);
                     <label for="ct_qty_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo $opt['ct_option']; ?> 수량</label>
                     <input type="text" name="ct_qty[<?php echo $chk_cnt; ?>]" id="ct_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_qty']; ?>" required class="frm_input required" size="5">
                 </td>
-                <td class="td_numsmall"><?php echo number_format($opt_price); ?></td>
+                <td class="td_num"><?php echo number_format($opt_price); ?></td>
                 <td class="td_num"><?php echo number_format($ct_price['stotal']); ?></td>
                 <td class="td_num"><?php echo number_format($opt['cp_price']); ?></td>
                 <td class="td_num"><?php echo number_format($ct_point['stotal']); ?></td>
@@ -196,6 +196,9 @@ $result = sql_query($sql);
             <input type="submit" name="ct_status" value="반품" onclick="document.pressed=this.value">
             <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value">
         </p>
+    </div>
+
+    <div class="local_desc01 local_desc">
         <p>주문, 입금, 준비, 배송, 완료는 장바구니와 주문서 상태를 모두 변경하지만, 취소, 반품, 품절은 장바구니의 상태만 변경하며, 주문서 상태는 변경하지 않습니다.</p>
         <p>개별적인(이곳에서의) 상태 변경은 모든 작업을 수동으로 처리합니다. 예를 들어 주문에서 입금으로 상태 변경시 입금액(결제금액)을 포함한 모든 정보는 수동 입력으로 처리하셔야 합니다.</p>
     </div>
@@ -298,7 +301,7 @@ $result = sql_query($sql);
                 <table>
                 <caption>결제상세정보</caption>
                 <colgroup>
-                    <col class="grid_4">
+                    <col class="grid_3">
                     <col>
                 </colgroup>
                 <tbody>
@@ -480,7 +483,7 @@ $result = sql_query($sql);
                 <table>
                 <caption>결제상세정보 수정</caption>
                 <colgroup>
-                    <col class="grid_4">
+                    <col class="grid_3">
                     <col>
                 </colgroup>
                 <tbody>
