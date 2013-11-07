@@ -287,7 +287,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
         $tr_bg = 'tr_bg'.($i%2);
         if($row['od_escrow'])
-            $tr_bg = 'tr_bg'.($i%2);
+            $tr_bg .= 'escrow';
     ?>
     <tr class="orderlist<?php echo ' '.$tr_bg; ?>">
         <td rowspan="3" class="td_chk">
