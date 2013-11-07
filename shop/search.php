@@ -93,18 +93,18 @@ $total_count = $row['cnt'];
     <div>
         <?php
         // 리스트 유형별로 출력
-        $list_file = G5_SHOP_SKIN_PATH.'/'.G5_SHOP_SEARCH_SKIN;
+        $list_file = G5_SHOP_SKIN_PATH.'/'.$default['de_search_list_skin'];
         if (file_exists($list_file)) {
 
             // 총몇개 = 한줄에 몇개 * 몇줄
-            $items = 4 * 5;
+            $items = $default['de_search_list_mod'] * $default['de_search_list_row'];
             // 페이지가 없으면 첫 페이지 (1 페이지)
             if ($page == "") $page = 1;
             // 시작 레코드 구함
             $from_record = ($page - 1) * $items;
 
-            $list = new item_list(G5_SHOP_SEARCH_SKIN, G5_SHOP_SEARCH_MOD, G5_SHOP_SEARCH_ROW, $default['de_simg_width'], $default['de_simg_height']);
-            $list->set_query(" select * $sql_common $sql_where ");
+            $list = new item_list($default['de_search_list_skin'], $default['de_search_list_mod'], $default['de_search_list_row'], $default['de_search_img_width'], $default['de_search_img_height']);
+            $list->set_query(" select * $sql_common $sql_where limit $from_record, $items ");
             $list->set_is_page(true);
             $list->set_order_by($order_by);
             $list->set_from_record($from_record);
@@ -119,7 +119,9 @@ $total_count = $row['cnt'];
             echo $list->run();
 
             // where 된 전체 상품수
-            $total_count = $list->total_count;
+            $sql = " select count(*) as cnt $sql_common $sql_where ";
+            $row = sql_fetch($sql);
+            $total_count = $row['cnt'];
             // 전체 페이지 계산
             $total_page  = ceil($total_count / $items);
         }
