@@ -69,10 +69,10 @@ while ($row=sql_fetch_array($result)) {
             $rate = ($count / $sum_count * 100);
             $s_rate = number_format($rate, 1);
 
-            $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+            $tr_bg = 'tr_bg'.($i%2);
     ?>
 
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td class="td_num"><?php echo $no ?></td>
         <td class="td_category"><?php echo $key ?></td>
         <td>

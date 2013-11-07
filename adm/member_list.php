@@ -187,7 +187,7 @@ $colspan = 15;
 
         $address = $row['mb_zip1'] ? $row['mb_addr1'].' '.$row['mb_addr2'] : '';
 
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
 
         switch($row['mb_certify']) {
             case 'hp':
@@ -209,7 +209,7 @@ $colspan = 15;
         }
     ?>
 
-    <tr <?php echo $tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td headers="mb_list_chk" class="td_chk" rowspan="2">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_name']; ?> <?php echo $row['mb_nick']; ?>님</label>
