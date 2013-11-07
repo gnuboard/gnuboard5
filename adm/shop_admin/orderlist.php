@@ -68,6 +68,10 @@ if ($od_coupon) {
     $where[] = " od_coupon != 0 ";
 }
 
+if ($od_escrow) {
+    $where[] = " od_escrow = 1 ";
+}
+
 if ($fr_date && $to_date) {
     $where[] = " od_time between '$fr_date 00:00:00' and '$to_date 23:59:59' ";
 }
@@ -181,6 +185,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <label for="od_misu04">포인트주문</label>
     <input type="checkbox" name="od_coupon" value="Y" id="od_misu05" <?php echo get_checked($od_coupon, 'Y'); ?>>
     <label for="od_misu05">쿠폰</label>
+    <input type="checkbox" name="od_escrow" value="Y" id="od_misu06" <?php echo get_checked($od_escrow, 'Y'); ?>>
+    <label for="od_misu06">에스크로</label>
 </div>
 
 <div class="sch_last">
@@ -279,7 +285,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $invoice_time = is_null_time($row['od_invoice_time']) ? G5_TIME_YMDHIS : $row['od_invoice_time'];
         $delivery_company = $row['od_delivery_company'] ? $row['od_delivery_company'] : $default['de_delivery_company'];
 
-        $tr_bg = $i%2 ? 'tr_bg1' : 'tr_bg0';
+        $tr_bg = 'tr_bg'.($i%2);
+        if($row['od_escrow'])
+            $tr_bg = 'tr_bg'.($i%2);
     ?>
     <tr class="orderlist<?php echo ' '.$tr_bg; ?>">
         <td rowspan="3" class="td_chk">
