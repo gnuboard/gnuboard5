@@ -927,7 +927,7 @@ function chk_receipt_price()
 {
     var chk = document.getElementById("od_receipt_chk");
     var price = document.getElementById("od_receipt_price");
-    price.value = chk.checked ? chk.value : price.defaultValue;
+    price.value = chk.checked ? (parseInt(chk.value) + parseInt(price.defaultValue)) : price.defaultValue;
 }
 </script>
 
