@@ -192,13 +192,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <!-- <a href="./itemformupdate.php?w=d&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>삭제</a> -->
         </td>
     </tr>
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td rowspan="2" class="td_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?></a></td>
         <td headers="" class="td_input"><input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" required class="frm_input required" size="30"></td>
         <td headers="th_amt" class="td_numbig td_input"><input type="text" name="it_price[<?php echo $i; ?>]" value="<?php echo $row['it_price']; ?>" class="frm_input sit_amt" size="7"></td>
         <td headers="th_camt" class="td_numbig td_input"><input type="text" name="it_cust_price[<?php echo $i; ?>]" value="<?php echo $row['it_cust_price']; ?>" class="frm_input sit_camt" size="7"></td>
     </tr>
-    <tr>
+    <tr<?php echo ' '.$tr_bg; ?>>
         <td headers="" class="td_input"><input type="text" name="it_mobile_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_mobile_name'],250, "")); ?>" class="frm_input" size="30"></td>
         <td headers="th_pt" class="td_numbig td_input"><input type="text" name="it_point[<?php echo $i; ?>]" value="<?php echo $row['it_point']; ?>" class="frm_input sit_pt" size="7"></td>
         <td headers="th_qty" class="td_numbig td_input"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input sit_qty" size="7"></td>

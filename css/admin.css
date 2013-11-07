@@ -120,12 +120,12 @@ h3 {margin:0 20px}
 /* 공통박스 */
 .compare_wrap {margin:0 20px 10px;zoom:1}
 .compare_wrap:after {display:block;visibility:hidden;clear:both;content:""}
-.compare_wrap section {margin:10px 0;padding-top:10px}
+.compare_wrap section {margin:10px 0;padding:2%;background:#f2f5f9}
 .compare_wrap h3 {margin:10px 0 20px;text-align:center}
 .compare_wrap .tbl_frm {margin:0}
 .compare_wrap .btn_confirm {padding:10px 0 0}
-.compare_left {float:left;width:49%}
-.compare_right {float:right;width:49%}
+.compare_left {float:left;width:45%}
+.compare_right {float:right;width:45%}
 
 /* 버튼 */
 .btn_confirm {margin:0 20px 10px}
