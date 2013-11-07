@@ -78,9 +78,9 @@ $result = sql_query($sql);
         if ($brow == '기타') { $brow = '<span title="'.$row['vi_agent'].'">'.$brow.'</span>'; }
         if ($os == '기타') { $os = '<span title="'.$row['vi_agent'].'">'.$os.'</span>'; }
 
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
     ?>
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td class="td_category"><?php echo $ip ?></td>
         <td><?php echo $link ?><?php echo $title ?><?php echo $link2 ?></td>
         <td class="td_category"><?php echo $brow ?></td>
@@ -98,7 +98,7 @@ $result = sql_query($sql);
 </div>
 
 <?php
-if (isset($domain)) 
+if (isset($domain))
     $qstr .= "&amp;domain=$domain";
 $qstr .= "&amp;page=";
 
