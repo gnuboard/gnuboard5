@@ -6,10 +6,7 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-$sql = " select *
-           from {$g5['g5_shop_category_table']}
-          where ca_id = '$ca_id'
-            and ca_use = '1'  ";
+$sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' and ca_use = '1'  ";
 $ca = sql_fetch($sql);
 if (!$ca['ca_id'])
     alert('등록된 분류가 없습니다.');
