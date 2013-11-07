@@ -22,8 +22,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <script>
 $(function() {
     $("a.sct_a").on("click", function() {
-        opener.location.href = this.href;
+        window.opener.location.href = this.href;
         self.close();
+        return false;
     });
 });
 </script>

@@ -106,8 +106,9 @@ $(function(){
     });
 
     $("a#itemuse_list").on("click", function() {
-        opener.location.href = this.href;
+        window.opener.location.href = this.href;
         self.close();
+        return false;
     });
 });
 </script>
