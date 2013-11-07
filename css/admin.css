@@ -255,8 +255,12 @@ tfoot th, tfoot td {padding:10px 0;border:1px solid #c1d1d5;background:#d7e0e2}
 tfoot th {}
 tfoot td {font-weight:bold;text-align:center}
 table .tr_bg0 {background:#fff}
-table .tr_bg1 {background:#f5fbe8}
-table .tr_bg1 td {border-color:#e4f1c6}
+table .tr_bg1 {background:#f0f3f7}
+
+table .tr_bg0escrow {background:#f3f7e7}
+table .tr_bg0escrow td {border-color:#e4efbb}
+table .tr_bg1escrow {background:#edf1e3}
+table .tr_bg1escrow td {border-color:#dce9ad}
 
 .tbl_wrap {margin:0 0 10px;padding:0 20px}
 .tbl_wrap td.empty_table {padding:100px 0;text-align:center}
