@@ -187,7 +187,7 @@ $colspan = 15;
 
         $address = $row['mb_zip1'] ? $row['mb_addr1'].' '.$row['mb_addr2'] : '';
 
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
 
         switch($row['mb_certify']) {
             case 'hp':
@@ -209,7 +209,7 @@ $colspan = 15;
         }
     ?>
 
-    <tr <?php echo $tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td headers="mb_list_chk" class="td_chk" rowspan="2">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_name']; ?> <?php echo $row['mb_nick']; ?>님</label>
@@ -235,7 +235,7 @@ $colspan = 15;
         <td headers="mb_list_grp" rowspan="2" class="td_numsmall"><?php echo $group ?></td>
         <td headers="mb_list_mng" rowspan="2" class="td_mngsmall"><?php echo $s_mod ?> <?php echo $s_grp ?></td>
     </tr>
-    <tr <?php echo $tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td headers="mb_list_nick" class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
         <td headers="mb_list_mailc" class="td_chk"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
         <td headers="mb_list_mailr" class="td_chk"><input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling']?'checked':''; ?> value="1"></td>

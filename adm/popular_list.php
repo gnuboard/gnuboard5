@@ -112,10 +112,10 @@ var list_delete_php = 'popular_list.php';
     for ($i=0; $row=sql_fetch_array($result); $i++) {
 
         $word = get_text($row['pp_word']);
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
     ?>
 
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td class="td_chk">
             <input type="checkbox" name="chk[]" value="<?php echo $row['pp_id'] ?>" id="chk_<?php echo $i ?>" title="<?php echo $word ?> 선택">
         </td>

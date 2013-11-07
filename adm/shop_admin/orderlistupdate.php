@@ -111,7 +111,7 @@ function order_update_delivery($od_id, $mb_id, $change_status, $delivery)
             subtract_io_stock($row['it_id'], $row['ct_qty'], $row['io_id'], $row['io_type']);
             $stock_use = 1;
 
-            $sql = " update {$g5['g5_shop_cart_table']} set ct_stock_use  = '$stock_use' where od_id = '{$row['ct_id']}' ";
+            $sql = " update {$g5['g5_shop_cart_table']} set ct_stock_use  = '$stock_use' where ct_id = '{$row['ct_id']}' ";
             sql_query($sql);
         }
     }

@@ -56,9 +56,9 @@ $result = sql_query($sql);
         $sql1 = " select COUNT(*) as cnt from {$g5['g5_shop_faq_table']} where fm_id = '{$row['fm_id']}' ";
         $row1 = sql_fetch($sql1);
         $cnt = $row1['cnt'];
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
     ?>
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td class="td_num"><?php echo $row['fm_id']; ?></td>
         <td><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>"><?php echo stripslashes($row['fm_subject']); ?></a></td>
         <td class="td_num"><?php echo $cnt; ?></td>

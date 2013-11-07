@@ -125,10 +125,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row['mb_email'], $row['mb_homepage']);
         $is_content = get_view_thumbnail($row['is_content'], 300);
 
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
     ?>
 
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td class="td_chk">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['is_subject']) ?> 사용후기</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">

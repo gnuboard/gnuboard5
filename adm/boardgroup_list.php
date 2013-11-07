@@ -125,10 +125,10 @@ $colspan = 11;
 
         $s_upd = '<a href="./boardgroup_form.php?'.$qstr.'&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
 
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
     ?>
 
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td class="td_chk">
             <input type="hidden" name="group_id[<?php echo $i ?>]" value="<?php echo $row['gr_id'] ?>">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['gr_subject'] ?> 그룹</label>

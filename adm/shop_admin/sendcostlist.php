@@ -58,9 +58,9 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <tbody>
         <?php
         for($i=0; $row=sql_fetch_array($result); $i++) {
-        $tr_bg = $i%2 ? 'class="tr_bg1"' : 'class="tr_bg0"';
+        $tr_bg = 'tr_bg'.($i%2);
         ?>
-        <tr<?php echo ' '.$tr_bg; ?>>
+        <tr class="<?php echo $tr_bg; ?>">
             <td class="td_chk">
                 <input type="hidden" id="sc_id_<?php echo $i; ?>" name="sc_id[<?php echo $i; ?>]" value="<?php echo $row['sc_id']; ?>">
                 <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="1" title="내역선택">
