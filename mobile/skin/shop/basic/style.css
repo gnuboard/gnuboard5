@@ -104,8 +104,9 @@
 #loading_message img {position:relative;opacity:1.0}
 
 /* 알림 box */
-#fancyalert {display:table;z-index:10000;position:absolute;top:0;left:0}
-#fancyalert_bg {position:absolute;top:0;left:0;width:100%;height:100%;vertical-align:middle;background:#000;text-align:center;opacity: 0.7}
-#fancyalert_inner {display:table-cell;position:relative;z-index:2;vertical-align:middle;text-align:center}
+#fancyalert {display:block;z-index:10000;position:absolute;top:0;left:0}
+#fancyalert_inner {display:table;z-index:2;position:relative}
+#fancyalert_inner div {display:table-cell;vertical-align:middle;text-align:center}
 #fancyalert_inner span {display:block;margin:0 auto;padding:30px;width:200px;background:#1f1f1f;color:#f0f1f2}
 #fancyalert_inner button {margin:15px 0 0;padding:10px 30px;border:0;background:#000;color:#fff}
+#fancyalert_bg {z-index:0;position:absolute;top:0;left:0;width:100%;height:100%;vertical-align:middle;background:#000;text-align:center;opacity: 0.7}
