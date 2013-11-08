@@ -5,6 +5,9 @@ if (!$is_member) {
     alert_close("사용후기는 회원만 작성이 가능합니다.");
 }
 
+// 사용후기 작성 설정에 따른 체크
+check_itemuse_write();
+
 $is_subject = trim($_REQUEST['is_subject']);
 $is_content = trim($_REQUEST['is_content']);
 

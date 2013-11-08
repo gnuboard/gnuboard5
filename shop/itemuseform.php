@@ -16,6 +16,9 @@ $w     = escape_trim($_REQUEST['w']);
 $it_id = escape_trim($_REQUEST['it_id']);
 $is_id = escape_trim($_REQUEST['is_id']);
 
+// 사용후기 작성 설정에 따른 체크
+check_itemuse_write();
+
 if ($w == "") {
     $is_score = 10;
 } else if ($w == "u") {
