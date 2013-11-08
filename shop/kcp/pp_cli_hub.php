@@ -30,6 +30,7 @@ if ($row['cnt']) {
 
     if ($default['de_card_test']) {
         $default['de_kcp_mid'] = 'T0000';
+        $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
     }
 
     if ($default['de_kcp_mid'] == 'T0000') {
@@ -52,6 +53,7 @@ if ($row['cnt']) {
     $g_conf_user_type = "PGNW";  // 변경 불가
     //$g_conf_site_id   = $default[de_kcp_mid]; // 리얼 반영시 KCP에 발급된 site_cd 사용 ex) T0000
     $g_conf_site_id   = strlen($default['de_kcp_mid']) == 3 ? "SR".$default['de_kcp_mid'] : $default['de_kcp_mid']; // 리얼 반영시 KCP에 발급된 site_cd 사용 ex) T0000
+    $g_conf_site_key = $default['de_kcp_site_key'];
     /* ============================================================================== */
 
     /* ============================================================================== */
@@ -187,7 +189,7 @@ if ($row['cnt']) {
         if ( strlen($tx_cd) > 0 )
         {
             $c_PayPlus->mf_do_tx( "",                $g_conf_home_dir, $g_conf_site_id,
-                                  "",                $tx_cd,           "",
+                                  $g_conf_site_key,  $tx_cd,           "",
                                   $g_conf_pa_url,    $g_conf_pa_port,  "payplus_cli_slib",
                                   $ordr_idxx,        $cust_ip,         $g_conf_log_level,
                                   "",                $g_conf_tx_mode );
@@ -227,15 +229,20 @@ if ($row['cnt']) {
     /* = -------------------------------------------------------------------------- = */
                 $bSucc = "";             // DB 작업 실패일 경우 "false" 로 세팅
 
+                // 결과값 serialize
+                $cash = array();
+                $cash['receipt_no'] = $receipt_no;
+                $cash['app_time']   = $app_time;
+                $cash['reg_stat']   = $reg_stat;
+                $cash['reg_desc']   = iconv("cp949", "utf-8", $reg_desc);
+                $cash['tr_code']    = $tr_code;
+                $cash['id_info']    = $id_info;
+                $cash_info = serialize($cash);
+
                 $sql = " update {$g5['g5_shop_order_table']}
-                            set od_cash_no = '$cash_no',
-                                od_cash_receipt_no = '$receipt_no',
-                                od_cash_app_time = '$app_time',
-                                od_cash_reg_stat = '$reg_stat',
-                                od_cash_reg_desc = '".iconv("cp949", "utf-8", $reg_desc)."',
-                                od_cash_tr_code = '$tr_code',
-                                od_cash_id_info = '$id_info',
-                                od_cash = '1'
+                            set od_cash = '1'
+                                od_cash_no = '$cash_no',
+                                od_cash_info = '$cash_info'
                           where od_id = '$ordr_idxx' ";
                 $result = sql_query($sql);
                 if (!$result) $bSucc = "false";
@@ -255,7 +262,7 @@ if ($row['cnt']) {
                     $c_PayPlus->mf_set_modx_data( "trad_time", $trad_time );
 
                     $c_PayPlus->mf_do_tx( "",                $g_conf_home_dir, $g_conf_site_id,
-                                          "",                $tx_cd,           "",
+                                          $g_conf_site_key,  $tx_cd,           "",
                                           $g_conf_pa_url,    $g_conf_pa_port,  "payplus_cli_slib",
                                           $ordr_idxx,        $cust_ip,         $g_conf_log_level,
                                           "",                $g_conf_tx_mode );
