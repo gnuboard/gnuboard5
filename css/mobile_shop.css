@@ -30,7 +30,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 #hd_sch_open {position:absolute;top:10px;right:10px;padding:0 10px;height:2.6em;border:0;background:#333;color:#fff;font-size:1em;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
 
-#hd_sch {display:none;z-index:10;position:absolute;top:0;left:0;padding:22px 0;width:100%;background:#f5f6fa;text-align:center}
+#hd_sch {display:none;z-index:10;position:absolute;top:0;left:0;padding:22px 0;width:100%;background:#f2f5f9;text-align:center}
 #hd_sch h2 {margin:0 0 10px}
 #hd_sch .frm_input {height:2.5em;border-color:#999;background:#fff;line-height:2.5em}
 #hd_sch .pop_close {position:absolute;bottom:5px;right:5px;border:0;background:transparent}
@@ -73,7 +73,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 .sct_admin {margin:0 0 10px;text-align:right}
 
 /* 상품 목록 현재 위치 */
-#sct_location {border:1px solid #e9e9e9;background:#f5f6fa;letter-spacing:-4px}
+#sct_location {border:1px solid #e9e9e9;background:#f2f5f9;letter-spacing:-4px}
 #sct_location a {display:inline-block;padding:5px 10px;text-decoration:none;letter-spacing:0 !important}
 .sct_here {font-weight:bold}
 .sct_bg {padding-right:13px !important;background:url('../shop/img/sct_bg_toright.gif') right 8px no-repeat}
@@ -126,7 +126,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 #sit_pvi_prev {position:absolute;top:0;left:0}
 #sit_pvi_next {position:absolute;top:0;right:0}
-.sit_pvi_btn {display:none;z-index:10;width:2em;height:280px;border:0;background:#f5f6fa}
+.sit_pvi_btn {display:none;z-index:10;width:2em;height:280px;border:0;background:#f2f5f9}
 
 #sit_pvi_slide {position:relative;margin:0 auto;padding:0;list-style:none;width:280px;height:280px;overflow-x:hidden}
 #sit_pvi_slide li {display:none;position:absolute;left:0;top:0}
@@ -142,7 +142,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sit_pvi_nw li img {width:60px;height:60px}
 
 /* 상품 상세보기 - 간략정보 및 구매기능 */
-#sit_ov {position:relative;padding:50px 13px 13px;height:auto !important;height:355px;min-height:355px;background:#f5f6fa}
+#sit_ov {position:relative;padding:50px 13px 13px;height:auto !important;height:355px;min-height:355px;background:#f2f5f9}
 #sit_ov h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sit_ov h3 {margin:0 0 10px}
 
@@ -207,8 +207,8 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sit_inf_explan img {max-width:100%;height:auto}
 
 #sit_inf_open {width:100%;border:0;border-collapse:collapse}
-#sit_inf_open th {padding:0.5px 10px;border:1px solid #fff;background:#f5f6fa;text-align:left}
-#sit_inf_open td {padding:0.5px 10px;border:1px solid #fff;background:#f5f6fa}
+#sit_inf_open th {padding:0.5px 10px;border:1px solid #fff;background:#f2f5f9;text-align:left}
+#sit_inf_open td {padding:0.5px 10px;border:1px solid #fff;background:#f2f5f9}
 
 /* 상품 상세보기 - 사용후기 */
 #sit_use {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
@@ -216,7 +216,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sit_use h3 {margin:0 0 10px}
 
 #sit_use_ol {margin:0 0 5px;padding:0;border-top:1px solid #e9e9e9;list-style:none}
-.sit_use_li {position:relative;padding:0 0 10px;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
+.sit_use_li {position:relative;padding:0 0 10px;border-bottom:1px solid #e9e9e9;background:#f2f5f9}
 .sit_use_li_title {display:block;margin:0;padding:10px;width:100%;border:0;background:transparent;text-align:left}
 
 .sit_use_dl {margin:0;padding:0 10px;zoom:1}
@@ -237,7 +237,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sit_qa h3 {margin:0 0 10px}
 
 #sit_qa_ol {margin:0 0 5px;padding:0;border-top:1px solid #e9e9e9;list-style:none}
-.sit_qa_li {position:relative;padding:0 0 10px;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
+.sit_qa_li {position:relative;padding:0 0 10px;border-bottom:1px solid #e9e9e9;background:#f2f5f9}
 .sit_qa_li_title {display:block;margin:0;padding:10px;width:100%;border:0;background:transparent;text-align:left}
 
 .sit_qa_dl {margin:0;padding:0 10px;zoom:1}
@@ -328,7 +328,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 #smb_my_ov {margin:0 0 20px}
 #smb_my_ov h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
-#smb_my_ov dl {margin:0;border-top:1px solid #e9e9e9;background:#f5f6fa;zoom:1}
+#smb_my_ov dl {margin:0;border-top:1px solid #e9e9e9;background:#f2f5f9;zoom:1}
 #smb_my_ov dl:after {display:block;visibility:hidden;clear:both;content:''}
 #smb_my_ov dt {float:left;padding:10px;width:30%;border-bottom:1px solid #e9e9e9;font-weight:bold}
 #smb_my_ov dd {margin:0;padding:10px 0;border-bottom:1px solid #e9e9e9}
@@ -344,16 +344,16 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 /* 장바구니 */
 #sod_bsk {}
 .sod_bsk_img {width:100px;text-align:center}
-.sod_bsk_itopt {margin:5px 0;border-top:1px dashed #e9e9e9;background:#f5f6fa}
+.sod_bsk_itopt {margin:5px 0;border-top:1px dashed #e9e9e9;background:#f2f5f9}
 .sod_bsk_itopt ul {margin:0;padding:0;list-style:none}
 .sod_bsk_itopt li {margin:0 0 1px;padding:5px}
 .sod_option_btn .mod_options {margin:0 0 10px;padding:5px 0;width:100%;border:0;background:#333;color:#fff}
 
 #sod_bsk_list {position:relative}
-#sod_bsk_list #mod_option_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
+#sod_bsk_list #mod_option_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll}
 html.no-overflowscrolling #mod_option_frm {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
 
-#sod_bsk_tot {margin:0;padding:10px;border:1px solid #e9e9e9;background:#f5f6fa;zoom:1}
+#sod_bsk_tot {margin:0;padding:10px;border:1px solid #e9e9e9;background:#f2f5f9;zoom:1}
 #sod_bsk_tot:after {display:block;visibility:hidden;clear:both;content:""}
 #sod_bsk_tot dt, #sod_bsk_tot dd {float:left;padding:10px 0;border-bottom:1px solid #e9e9e9}
 #sod_bsk_tot dt {padding-left:2%;width:48%;font-weight:bold}
@@ -375,7 +375,7 @@ html.no-overflowscrolling #mod_option_frm {height:auto;max-height:10000px !impor
 #sod_frm h2 {margin:0 0 10px}
 
 #sod_list {position:relative}
-#sod_list #it_coupon_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
+#sod_list #it_coupon_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll}
 html.no-overflowscrolling #it_coupon_frm {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
 
 #sod_frm_orderer {margin:15px 0 30px}
@@ -388,10 +388,10 @@ html.no-overflowscrolling #it_coupon_frm {height:auto;max-height:10000px !import
 #sod_frm_pay .tbl_head01 caption {font-size:0;line-height:0;overflow:hidden}
 #sod_frm_pay .tbl_head01 th {width:auto !important;font-weight:bold;text-align:center !important}
 #sod_frm_pay .tbl_head01 td {border-top:1px solid #e9e9e9 !important;border-bottom:1px solid #e9e9e9 !important;line-height:1.5em !important;word-break:break-all !important}
-#sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f5f6fa;overflow-y:scroll}
+#sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;left:0;padding:20px;width:320px;height:auto !important;height:480px;max-height:480px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll}
 html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_frm {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
 
-#sod_frm_paysel {margin:0 0 15px;padding:10px;border:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
+#sod_frm_paysel {margin:0 0 15px;padding:10px;border:1px solid #e9e9e9;background:#f2f5f9;text-align:center}
 #sod_frm_paysel legend {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sod_frm_paysel .frm_input {background:#fff}
 #sod_frm_paysel div {margin:5px 0 0}
@@ -427,7 +427,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_ul p a {font-weight:bold;text-decoration:none}
 
 #request_form {position:relative}
-#request_form div {display:none;z-index:10000;position:absolute;top:31px;left:0;padding:10px 0;width:290px;border:1px solid #000;background:#f5f6fa;text-align:center}
+#request_form div {display:none;z-index:10000;position:absolute;top:31px;left:0;padding:10px 0;width:290px;border:1px solid #000;background:#f2f5f9;text-align:center}
 #request_form label {letter-spacing:-0.1em}
 #request_form .frm_input {width:170px;background:#fff !important}
 #request_form .btn_frmline, #request_form .btn_cancel {margin:5px 0 0;padding:0 5px;height:1.9em;vertical-align:middle !important;line-height:1.9em}
@@ -436,7 +436,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_req_btn button {background:#626870}
 
 #sod_req_log {margin:0 0 20px}
-#sod_req_log ul {margin:0;padding:0;border-top:1px solid #e9e9e9;background:#f5f6fa;list-style:none}
+#sod_req_log ul {margin:0;padding:0;border-top:1px solid #e9e9e9;background:#f2f5f9;list-style:none}
 #sod_req_log li {padding:10px 10px 20px;border:1px solid #e9e9e9;border-top:0}
 #sod_req_log h3 {margin:20px 0 10px}
 .sod_req_log_view table {margin:0}
@@ -450,7 +450,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_fin_view {border:1px solid #e9e9e9}
 #sod_fin_view h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sod_fin_view h3 {margin:0 0 10px}
-#sod_fin_view .tbl_head01 th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f5f6fa;text-align:left}
+#sod_fin_view .tbl_head01 th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f2f5f9;text-align:left}
 
 #sod_fin_pay {padding:10px;border-bottom:1px solid #e9e9e9}
 
@@ -478,14 +478,14 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #scash {}
 #scash section {padding:10px 0}
 #scash h2 {margin:0 0 10px;text-align:center}
-#scash .tbl_head01 th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f5f6fa;text-align:left}
+#scash .tbl_head01 th {padding:0 10px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#f2f5f9;text-align:left}
 #scash_apply {padding:10px 0 15px;text-align:center}
 #scash_apply button {padding:10px;border:0;background:#565e60;color:#fff}
 #scash_copy {text-align:center}
 
 /* 상품검색 */
 #ssch{margin:0 0 20px}
-#ssch_ov {padding:15px 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
+#ssch_ov {padding:15px 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f2f5f9;text-align:center}
 .ssch_ul {margin:0;padding:0;list-style:none}
 .ssch_ul li {padding:10px;min-height:100px;border-bottom:1px solid #e9e9e9}
 .ssch_ul .sit_icon {display:inline-block}
@@ -495,7 +495,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 /* 쇼핑몰 이벤트 */
 #sev {margin:0;padding:0;min-height:150px;list-style:none}
 #sev li {position:relative;margin:-1px 0 0;border-bottom:1px solid #e9e9e9}
-#sev a {display:block;padding:10px;border:1px solid #e9e9e9;border-bottom:0;background:#f5f6fa}
+#sev a {display:block;padding:10px;border:1px solid #e9e9e9;border-bottom:0;background:#f2f5f9}
 .sev_admin {text-align:right}
 
 /* 화면낭독기 사용자용 */
@@ -519,7 +519,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 /* ckeditor 단축키 */
 .cke_sc {margin:0 0 5px;text-align:right}
 .btn_cke_sc{display:inline-block;padding:0 10px;height:23px;border:1px solid #ccc !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:1.9em;vertical-align:middle}
-.cke_sc_def {margin:0 0 5px;padding:10px;border:1px solid #ccc;background:#f5f6fa;text-align:center}
+.cke_sc_def {margin:0 0 5px;padding:10px;border:1px solid #ccc;background:#f2f5f9;text-align:center}
 .cke_sc_def dl {margin:0 0 5px;text-align:left;zoom:1}
 .cke_sc_def dl:after {display:block;visibility:hidden;clear:both;content:""}
 .cke_sc_def dt, .cke_sc_def dd {float:left;margin:0;padding:5px 0;border-bottom:1px solid #e9e9e9}
