@@ -360,10 +360,6 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <?php } else { ?>
                 -
             <?php } ?>
-            <!-- <label for="dl_id_<?php echo $i; ?>" class="sound_only">배송업체</label>
-            <select name="dl_id[<?php echo $i; ?>]" id="dl_id_<?php echo $i; ?>">
-                <?php echo conv_selected_option($delivery_options, $row['dl_id']?$row['dl_id']:$delivery_default); ?>
-            </select> -->
         </td>
         <td headers="th_delidate">
             <?php if ($od_status == '준비') { ?>
@@ -430,9 +426,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 <?php } ?>
 </div>
 
-<div class="local_desc01 local_desc">
+<div class="local_desc02 local_desc">
 <p>
-    &lt;에스크로&gt;주문의 경우 리스트의 배경색이 다르게 표시됩니다.<br>
+    &lt;에스크로&gt;주문의 경우 리스트의 배경색이 다르게 표시됩니다. <img src="<?php echo G5_ADMIN_URL; ?>/shop_admin/img/escrow_bg.png" alt=""> or <img src="<?php echo G5_ADMIN_URL; ?>/shop_admin/img/escrow_bg2.png" alt=""><br>
     &lt;무통장&gt;인 경우에만 &lt;주문&gt;에서 &lt;입금&gt;으로 변경됩니다. 가상계좌는 입금시 자동으로 &lt;입금&gt;처리됩니다.<br>
     &lt;준비&gt;에서 &lt;배송&gt;으로 변경시 &lt;에스크로배송등록&gt;을 체크하시면 에스크로 주문에 한해 KCP에 배송정보가 자동 등록됩니다.<br>
     <strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
