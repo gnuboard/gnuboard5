@@ -19,9 +19,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <option value="a.is_name"   <?php echo get_selected($sfl, "a.is_name"); ?>>작성자명</option>
         <option value="a.mb_id"     <?php echo get_selected($sfl, "a.mb_id"); ?>>작성자아이디</option>
     </select>
-
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="required frm_input">
+    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="required frm_input" size="10">
     <input type="submit" value="검색" class="btn_submit">
 </div>
 </form>

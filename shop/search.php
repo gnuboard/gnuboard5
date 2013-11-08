@@ -75,6 +75,14 @@ $total_count = $row['cnt'];
 <!-- 검색결과 시작 { -->
 <div id="ssch">
 
+<<<<<<< HEAD
+    <!-- <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div> -->
+    <a href="#">판매량 많은순</a>
+    <a href="#">선호도 높은순</a>
+    <a href="#">사용후기 많은순</a>
+    <a href="#">최근 등록순</a>
+    검색 결과 <strong><?php echo $total_count; ?></strong>건
+=======
     <div id="ssch_frm">
         <form name="frmdetailsearch" onsubmit="return detail_search_submit(this);">
         상세검색 : 
@@ -91,6 +99,7 @@ $total_count = $row['cnt'];
     </div>
 
     <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
+>>>>>>> 23fe590917161cae409fb47b3b92131921dd5c97
 
     <div>
         <?php
