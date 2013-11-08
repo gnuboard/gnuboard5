@@ -452,7 +452,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #orderitemlist .itemlist {position:absolute;top:0;left:0}
 
 #orderitemlist {position:relative}
-#orderitemlist .itemlist {z-index:2;position:absolute;top:0;left:-302px;width:958px;border:1px solid #a2a5a9;background:#f2f5f9}
+#orderitemlist .itemlist {z-index:2;position:absolute;top:0;left:-41px;width:958px;border:1px solid #a2a5a9;background:#f2f5f9}
 #orderitemlist td {background:#fff}
 #orderitemlist #orderitemlist_close {padding:0 20px 10px;text-align:right}
 
