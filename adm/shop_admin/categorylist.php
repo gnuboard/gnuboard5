@@ -184,22 +184,12 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <label for="ca_use<?php echo $i; ?>">판매</label>
         </td>
         <td class="td_confirm">
-            <input type="checkbox" name="ca_hp_cert_use[<?php echo $i; ?>]" value="1" id="ca_hp_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_hp_cert_use_yes<?php echo $i; ?>">사용</label>
-
-            <!-- <input type="radio" name="ca_hp_cert_use[<?php echo $i; ?>]" value="1" id="ca_hp_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_hp_cert_use_yes<?php echo $i; ?>">사용함</label>
-            <input type="radio" name="ca_hp_cert_use[<?php echo $i; ?>]" value="0" id="ca_hp_cert_use_no<?php echo $i; ?>" <?php if(!$row['ca_hp_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_hp_cert_use_no<?php echo $i; ?>">사용안함</label> -->
+            <input type="checkbox" name="ca_cert_use[<?php echo $i; ?>]" value="1" id="ca_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_cert_use_yes<?php echo $i; ?>">사용</label>
         </td>
         <td class="td_confirm">
-            <input type="checkbox" name="ca_adult_cert_use[<?php echo $i; ?>]" value="1" id="ca_adult_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_adult_cert_use_yes<?php echo $i; ?>">사용</label>
-
-            <!-- <input type="radio" name="ca_adult_cert_use[<?php echo $i; ?>]" value="1" id="ca_adult_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_adult_cert_use_yes<?php echo $i; ?>">사용함</label>
-            <input type="radio" name="ca_adult_cert_use[<?php echo $i; ?>]" value="0" id="ca_adult_cert_use_no<?php echo $i; ?>" <?php if(!$row['ca_adult_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_adult_cert_use_no<?php echo $i; ?>">사용안함</label> -->
+            <input type="checkbox" name="ca_adult_use[<?php echo $i; ?>]" value="1" id="ca_adult_use_yes<?php echo $i; ?>" <?php if($row['ca_adult_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_use_yes<?php echo $i; ?>">사용</label>
         </td>
         <td class="td_imgline">
             <label for="ca_imgline_num<?php echo $i; ?>" class="sound_only">이미지 줄 수</label>

@@ -21,12 +21,12 @@ for ($i=0; $i<count($_POST['ca_id']); $i++)
                     ca_mb_id      = '{$_POST['ca_mb_id'][$i]}',
                     ca_img_width  = '{$_POST['ca_img_width'][$i]}',
                     ca_list_mod    = '{$_POST['ca_list_mod'][$i]}',
-                    ca_hp_cert_use  = '{$_POST['ca_hp_cert_use'][$i]}',
+                    ca_cert_use  = '{$_POST['ca_cert_use'][$i]}',
                     ca_use        = '{$_POST['ca_use'][$i]}',
                     ca_skin        = '{$_POST['ca_skin'][$i]}',
                     ca_img_height = '{$_POST['ca_img_height'][$i]}',
                     ca_list_row     = '{$_POST['ca_list_row'][$i]}',
-                    ca_adult_cert_use = '{$_POST['ca_adult_cert_use'][$i]}',
+                    ca_adult_use = '{$_POST['ca_adult_use'][$i]}',
                     ca_stock_qty  = '{$_POST['ca_stock_qty'][$i]}'
               where ca_id = '{$_POST['ca_id'][$i]}' ";
     sql_query($sql);
