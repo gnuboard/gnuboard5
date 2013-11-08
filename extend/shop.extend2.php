@@ -655,6 +655,7 @@ if(!sql_query(" select it_explan2 from {$g5['g5_shop_item_table']} limit 1 ", fa
                     ADD `it_explan2` MEDIUMTEXT NOT NULL AFTER `it_explan` ", true);
 }
 
+<<<<<<< HEAD
 
 // 관련상품 출력과 상품검색을 위한 설정 필드 추가
 if(!sql_query(" select de_rel_list_use from {$g5['g5_shop_default_table']} limit 1 ", false)) {
@@ -667,5 +668,23 @@ if(!sql_query(" select de_rel_list_use from {$g5['g5_shop_default_table']} limit
                     ADD `de_search_img_width` INT NOT NULL AFTER `de_search_list_row`,
                     ADD `de_search_img_height` INT NOT NULL AFTER `de_search_img_width`
               ", true);
+=======
+// de_rel_list_use 추가
+if(!sql_query(" select de_rel_list_use from {$g5['g5_shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_rel_list_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_img_height`,
+                    ADD `de_rel_list_skin` varchar(255) NOT NULL DEFAULT '' AFTER `de_rel_list_use`,
+                    ADD `de_search_list_skin` varchar(255) NOT NULL DEFAULT '' AFTER `de_rel_img_height`,
+                    ADD `de_search_list_mod` int(11) NOT NULL DEFAULT '0' AFTER `de_search_list_skin`,
+                    ADD `de_search_list_row` int(11) NOT NULL DEFAULT '0' AFTER `de_search_list_mod`,
+                    ADD `de_search_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_search_list_row`,
+                    ADD `de_search_img_height` int(11) NOT NULL DEFAULT '0' AFTER `de_search_img_width` ", true);
+}
+
+// 사용후기 쓰기 설정 추가
+if(!sql_query(" select de_item_use_write from {$g5['g5_shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_item_use_write` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_item_use_use` ", true);
+>>>>>>> 23fe590917161cae409fb47b3b92131921dd5c97
 }
 ?>

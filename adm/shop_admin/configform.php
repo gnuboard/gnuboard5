@@ -860,6 +860,16 @@ $pg_anchor = '<ul class="anchor">
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="de_item_use_write">사용후기 작성</label></th>
+            <td>
+                 <?php echo help("주문상태에 따른 사용후기 작성여부를 설정합니다.", 50); ?>
+                <select name="de_item_use_write" id="de_item_use_write">
+                    <option value="0" <?php echo get_selected($default['de_item_use_write'], 0); ?>>주문상태와 무관하게 작성가능</option>
+                    <option value="1" <?php echo get_selected($default['de_item_use_write'], 1); ?>>주문상태가 완료인 경우에만 작성가능</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="de_item_use_use">사용후기</label></th>
             <td>
                  <?php echo help("사용후기가 올라오면, 즉시 출력 혹은 관리자 승인 후 출력 여부를 설정합니다.", 50); ?>

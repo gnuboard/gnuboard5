@@ -72,28 +72,34 @@ $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 ?>
 
-<form name="frmdetailsearch" onsubmit="return detail_search_submit(this);">
-상세검색 : 
-<input type="checkbox" name="qname"   <?php echo isset($qname)?'checked="checked"':'';?>> 상품명
-<input type="checkbox" name="qexplan" <?php echo isset($qexplan)?'checked="checked"':'';?>> 상품설명
-<input type="checkbox" name="qid"     <?php echo isset($qid)?'checked="checked"':'';?>> 상품코드<br>
-상품가격 : 
-<input type="text" name="qfrom" value="<?php echo $qfrom; ?>" size="10">원 부터
-<input type="text" name="qto" value="<?php echo $qto; ?>" size="10">원 까지<br>
-검색어 : <input type="text" name="q" value="<?php echo $q; ?>" size="40" maxlength="30">
-<input type="submit" value="검색">
-<p>상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 전체에서 검색합니다.</p>
-</form>
-
 <!-- 검색결과 시작 { -->
 <div id="ssch">
 
+<<<<<<< HEAD
     <!-- <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div> -->
     <a href="#">판매량 많은순</a>
     <a href="#">선호도 높은순</a>
     <a href="#">사용후기 많은순</a>
     <a href="#">최근 등록순</a>
     검색 결과 <strong><?php echo $total_count; ?></strong>건
+=======
+    <div id="ssch_frm">
+        <form name="frmdetailsearch" onsubmit="return detail_search_submit(this);">
+        상세검색 : 
+        <input type="checkbox" name="qname"   <?php echo isset($qname)?'checked="checked"':'';?>> 상품명
+        <input type="checkbox" name="qexplan" <?php echo isset($qexplan)?'checked="checked"':'';?>> 상품설명
+        <input type="checkbox" name="qid"     <?php echo isset($qid)?'checked="checked"':'';?>> 상품코드<br>
+        상품가격 : 
+        <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" size="10">원 부터
+        <input type="text" name="qto" value="<?php echo $qto; ?>" size="10">원 까지<br>
+        검색어 : <input type="text" name="q" value="<?php echo $q; ?>" size="40" maxlength="30">
+        <input type="submit" value="검색">
+        <p>상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 전체에서 검색합니다.</p>
+        </form>
+    </div>
+
+    <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
+>>>>>>> 23fe590917161cae409fb47b3b92131921dd5c97
 
     <div>
         <?php
