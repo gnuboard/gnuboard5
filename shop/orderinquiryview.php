@@ -127,9 +127,9 @@ if(openwin != null) {
             ?>
         </ul>
 
-        <div>
+        <div id="sod_sts_wrap">
             <span class="sound_only">상품 상태 설명</span>
-            <button type="button" id="sod_sts_explan_open">상태설명보기</button>
+            <button type="button" id="sod_sts_explan_open" class="btn_frmline">상태설명보기</button>
             <div id="sod_sts_explan">
                 <dl id="sod_fin_legend">
                     <dt>주문</dt>
@@ -143,7 +143,7 @@ if(openwin != null) {
                     <dt>완료</dt>
                     <dd>상품 배송이 완료 되었습니다.</dd>
                 </dl>
-                <button type="button" id="sod_sts_explan_close">상태설명닫기</button>
+                <button type="button" id="sod_sts_explan_close" class="btn_frmline">상태설명닫기</button>
             </div>
         </div>
 
