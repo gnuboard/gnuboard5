@@ -25,13 +25,11 @@ if ($config['cf_sms_use']) {
 
     if ($od_sms_baesong_check)
     {
-        if ($dl_id && $od_invoice)
+        if ($od_delivery_company && $od_invoice)
         {
             $sms_contents = $default['de_sms_cont5'];
             $sms_contents = preg_replace("/{이름}/", $od_name, $sms_contents);
-            $sql = " select dl_company from {$g5['g5_shop_delivery_table']} where dl_id = '$dl_id' ";
-            $row = sql_fetch($sql);
-            $sms_contents = preg_replace("/{택배회사}/", $row['dl_company'], $sms_contents);
+            $sms_contents = preg_replace("/{택배회사}/", $od_delivery_company, $sms_contents);
             $sms_contents = preg_replace("/{운송장번호}/", $od_invoice, $sms_contents);
             $sms_contents = preg_replace("/{주문번호}/", $od_id, $sms_contents);
             $sms_contents = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_contents);

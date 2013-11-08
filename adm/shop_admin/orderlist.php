@@ -360,10 +360,6 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <?php } else { ?>
                 -
             <?php } ?>
-            <!-- <label for="dl_id_<?php echo $i; ?>" class="sound_only">배송업체</label>
-            <select name="dl_id[<?php echo $i; ?>]" id="dl_id_<?php echo $i; ?>">
-                <?php echo conv_selected_option($delivery_options, $row['dl_id']?$row['dl_id']:$delivery_default); ?>
-            </select> -->
         </td>
         <td headers="th_delidate">
             <?php if ($od_status == '준비') { ?>
