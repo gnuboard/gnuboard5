@@ -573,7 +573,7 @@ fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7
 #sps li:after {display:block;visibility:hidden;clear:both;content:""}
 
 .sps_img {float:left;margin:0 10px 0 0;width:80px}
-.sps_img span {position:absolute;font-size:0;line-height:0}
+.sps_img span {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
 #sps dl {margin:5px 0 10px;zoom:1}
 #sps dl:after {display:block;visibility:hidden;clear:both;content:""}
