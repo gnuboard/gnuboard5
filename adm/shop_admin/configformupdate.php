@@ -139,6 +139,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_sms_use5                 = '$de_sms_use5',
                 de_sms_hp                   = '$de_sms_hp',
                 de_item_use_use             = '$de_item_use_use',
+                de_item_use_write           = '$de_item_use_write',
                 de_code_dup_use             = '$de_code_dup_use',
                 de_cart_keep_term           = '$de_cart_keep_term',
                 de_guest_cart_use           = '$de_guest_cart_use',

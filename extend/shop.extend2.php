@@ -654,4 +654,22 @@ if(!sql_query(" select it_explan2 from {$g5['g5_shop_item_table']} limit 1 ", fa
     sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
                     ADD `it_explan2` MEDIUMTEXT NOT NULL AFTER `it_explan` ", true);
 }
+
+// de_rel_list_use 추가
+if(!sql_query(" select de_rel_list_use from {$g5['g5_shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_rel_list_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_mobile_type5_img_height`,
+                    ADD `de_rel_list_skin` varchar(255) NOT NULL DEFAULT '' AFTER `de_rel_list_use`,
+                    ADD `de_search_list_skin` varchar(255) NOT NULL DEFAULT '' AFTER `de_rel_img_height`,
+                    ADD `de_search_list_mod` int(11) NOT NULL DEFAULT '0' AFTER `de_search_list_skin`,
+                    ADD `de_search_list_row` int(11) NOT NULL DEFAULT '0' AFTER `de_search_list_mod`,
+                    ADD `de_search_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_search_list_row`,
+                    ADD `de_search_img_height` int(11) NOT NULL DEFAULT '0' AFTER `de_search_img_width` ", true);
+}
+
+// 사용후기 쓰기 설정 추가
+if(!sql_query(" select de_item_use_write from {$g5['g5_shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_item_use_write` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_item_use_use` ", true);
+}
 ?>
