@@ -672,4 +672,17 @@ if(!sql_query(" select de_item_use_write from {$g5['g5_shop_default_table']} ", 
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_item_use_write` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_item_use_use` ", true);
 }
+
+// 현금영수증 필드 정리
+if(!sql_query(" select od_cash_info from {$g5['g5_shop_order_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
+                    MODIFY `od_cash` tinyint(4) NOT NULL DEFAULT '0' AFTER `od_free_mny`,
+                    ADD `od_cash_info` text NOT NULL AFTER `od_cash_no`,
+                    DROP `od_cash_receipt_no`,
+                    DROP `od_cash_app_time`,
+                    DROP `od_cash_reg_stat`,
+                    DROP `od_cash_reg_desc`,
+                    DROP `od_cash_tr_code`,
+                    DROP `od_cash_id_info` ", true);
+}
 ?>

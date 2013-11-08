@@ -315,22 +315,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_delivery`
---
-
-DROP TABLE IF EXISTS `g5_shop_delivery`;
-CREATE TABLE IF NOT EXISTS `g5_shop_delivery` (
-  `dl_id` int(11) NOT NULL AUTO_INCREMENT,
-  `dl_company` varchar(255) NOT NULL DEFAULT '',
-  `dl_url` varchar(255) NOT NULL DEFAULT '',
-  `dl_tel` varchar(255) NOT NULL DEFAULT '',
-  `dl_order` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`dl_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `g5_shop_event`
 --
 
@@ -653,10 +637,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_misu` int(11) NOT NULL DEFAULT '0',
   `od_shop_memo` text NOT NULL,
   `od_mod_history` text NOT NULL,
-  `od_status` varchar(255) NOT NULL DEFAULT '',
-  `dl_id` int(11) NOT NULL DEFAULT '0',
-  `od_invoice` varchar(255) NOT NULL DEFAULT '',
-  `od_invoice_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `od_status` varchar(255) NOT NULL DEFAULT '',  
   `od_hope_date` date NOT NULL DEFAULT '0000-00-00',  
   `od_settle_case` varchar(255) NOT NULL DEFAULT '',
   `od_tno` varchar(255) NOT NULL DEFAULT '',
@@ -666,14 +647,12 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_tax_mny` int(11) NOT NULL DEFAULT '0',
   `od_vat_mny` int(11) NOT NULL DEFAULT '0',
   `od_free_mny` int(11) NOT NULL DEFAULT '0',
-  `od_cash_no` varchar(255) NOT NULL,
-  `od_cash_receipt_no` varchar(255) NOT NULL,
-  `od_cash_app_time` varchar(255) NOT NULL,
-  `od_cash_reg_stat` varchar(255) NOT NULL,
-  `od_cash_reg_desc` varchar(255) NOT NULL,
-  `od_cash_tr_code` varchar(255) NOT NULL,
-  `od_cash_id_info` varchar(255) NOT NULL,
+  `od_delivery_company` varchar(255) NOT NULL DEFAULT '0',
+  `od_invoice` varchar(255) NOT NULL DEFAULT '',
+  `od_invoice_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `od_cash` tinyint(4) NOT NULL,
+  `od_cash_no` varchar(255) NOT NULL,
+  `od_cash_info` text NOT NULL, 
   `od_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
