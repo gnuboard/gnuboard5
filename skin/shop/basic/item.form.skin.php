@@ -248,6 +248,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <?php } // 전화문의가 아닐 경우 끝 ?>
 
+        <?php if ($it['it_use'] && !$it['it_tel_inq']) { ?>
         <!-- 선택된 옵션 시작 { -->
         <section id="sit_sel_option">
             <h3>선택된 옵션</h3>
@@ -284,7 +285,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <!-- 총 구매액 -->
         <div id="sit_tot_price"></div>
 
-        <?php if ($it['it_use']) { ?>
         <ul id="sit_ov_btn">
             <?php if (!$it['it_tel_inq']) { ?>
             <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>

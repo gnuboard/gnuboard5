@@ -49,6 +49,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
         <li><a href="<?php echo G5_SHOP_URL; ?>/cart.php">장바구니</a></li>
         <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
+        <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
         <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
     </ul>
 

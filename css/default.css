@@ -43,8 +43,8 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 /* gnb js off */
 #gnb {position:relative;margin:-1px 0 0;border-bottom:1px solid #c3c7c5;background:#f0f4f8}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#gnb_1dul {margin:0 auto;padding:0;width:980px;zoom:1}
-#gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
+#gnb #gnb_1dul {margin:0 auto !important;padding:0;width:980px;zoom:1}
+#gnb #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1dli {z-index:10;clear:both;zoom:1}
 .gnb_1dli:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1da {display:block;float:left;width:80px;height:35px;font-weight:bold;line-height:2.95em;text-decoration:none}
