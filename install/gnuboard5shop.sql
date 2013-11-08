@@ -602,8 +602,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_onlinecalc` (
 DROP TABLE IF EXISTS `g5_shop_order`;
 CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_id` bigint(20) unsigned NOT NULL,
-  `mb_id` varchar(255) NOT NULL DEFAULT '',
-  `od_pwd` varchar(255) NOT NULL DEFAULT '',
+  `mb_id` varchar(255) NOT NULL DEFAULT '',  
   `od_name` varchar(20) NOT NULL DEFAULT '',
   `od_email` varchar(100) NOT NULL DEFAULT '',
   `od_tel` varchar(20) NOT NULL DEFAULT '',
@@ -625,8 +624,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_cart_price` int(11) NOT NULL DEFAULT '0',
   `od_cart_coupon` int(11) NOT NULL DEFAULT '0',
   `od_send_cost` int(11) NOT NULL DEFAULT '0',
-  `od_send_coupon` int(11) NOT NULL DEFAULT '0',
   `od_send_cost2` int(11) NOT NULL DEFAULT '0',
+  `od_send_coupon` int(11) NOT NULL DEFAULT '0',  
   `od_receipt_price` int(11) NOT NULL DEFAULT '0',
   `od_cancel_price` int(11) NOT NULL DEFAULT '0',
   `od_receipt_point` int(11) NOT NULL DEFAULT '0',
@@ -640,6 +639,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_status` varchar(255) NOT NULL DEFAULT '',  
   `od_hope_date` date NOT NULL DEFAULT '0000-00-00',  
   `od_settle_case` varchar(255) NOT NULL DEFAULT '',
+  `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `od_tno` varchar(255) NOT NULL DEFAULT '',
   `od_app_no` varchar(20) NOT NULL DEFAULT '',
   `od_escrow` tinyint(4) NOT NULL DEFAULT '0',
@@ -653,8 +653,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_cash` tinyint(4) NOT NULL,
   `od_cash_no` varchar(255) NOT NULL,
   `od_cash_info` text NOT NULL, 
-  `od_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
+  `od_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  
+  `od_pwd` varchar(255) NOT NULL DEFAULT '',
   `od_ip` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`od_id`),
   KEY `index2` (`mb_id`)
