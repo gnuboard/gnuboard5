@@ -1771,6 +1771,30 @@ function is_used_coupon($mb_id, $cp_id)
     return $used;
 }
 
+// 상품후기 작성가능한지 체크
+function check_itemuse_write($close=true)
+{
+    global $g5, $default, $is_admin;
+
+    if(!$is_admin && $default['de_item_use_write'])
+    {
+        $sql = " select count(*) as cnt
+                    from {$g5['g5_shop_cart_table']}
+                    where it_id = '$it_id'
+                      and mb_id = '{$member['mb_id']}'
+                      and ct_status = '완료' ";
+        $row = sql_fetch($sql);
+
+        if($row['cnt'] == 0)
+        {
+            if($close)
+                alert_close('사용후기는 주문하신 상품의 상태가 완료인 경우에만 작성하실 수 있습니다.');
+            else
+                alert('사용후기는 주문하신 상품의 상태가 완료인 경우에만 작성하실 수 있습니다.');
+        }
+    }
+}
+
 
 //------------------------------------------------------------------------------
 // 주문포인트를 적립한다.
