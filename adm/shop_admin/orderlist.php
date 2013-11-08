@@ -228,7 +228,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col" rowspan="3">주문취소</th>
         <th scope="col" rowspan="3">쿠폰</th>
         <th scope="col" rowspan="3">미수금</th>
-        <th scope="col" rowspan="3">관리</th>
+        <th scope="col" rowspan="3">보기</th>
     </tr>
     <tr>
         <!-- <th scope="col" id="th_odrdate">주문일시</th> -->
@@ -302,7 +302,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a><br>
         </td> -->
         <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
-            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
+            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
             <?php echo $od_mobile; ?>
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
@@ -314,8 +314,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <td rowspan="3" class="td_numcoupon"><?php echo number_format($row['couponprice']); ?></td>
         <td rowspan="3" class="td_numrdy"><?php echo number_format($row['od_misu']); ?></td>
         <td rowspan="3" class="td_mngsmall">
-            <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod"><span class="sound_only"><?php echo $row['od_id']; ?> </span>수정</a>
-            <a href="./orderdelete.php?od_id=<?php echo $row['od_id']; ?>&amp;mb_id=<?php echo $row['mb_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm();" class="mng_del"><span class="sound_only"><?php echo $row['od_id']; ?> </span>삭제</a>
+            <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
         </td>
     </tr>
     <tr class="<?php echo $tr_bg; ?>">
@@ -332,7 +331,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             비회원
             <?php } ?>
         </td>
-        <td headers="th_odrcnt"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" id="order-id-<?php echo $row['od_id']; ?>" class="orderitem"><?php echo $row['od_cart_count']; ?>건</a></td>
+        <td headers="th_odrcnt"><?php echo $row['od_cart_count']; ?>건</td>
         <td headers="th_odrall"><?php echo $od_cnt; ?>건</td>
     </tr>
     <tr class="<?php echo $tr_bg; ?>">
@@ -433,9 +432,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <div class="local_desc01 local_desc">
 <p>
+    &lt;에스크로&gt;주문의 경우 리스트의 배경색이 다르게 표시됩니다.<br>
     &lt;무통장&gt;인 경우에만 &lt;주문&gt;에서 &lt;입금&gt;으로 변경됩니다. 가상계좌는 입금시 자동으로 &lt;입금&gt;처리됩니다.<br>
-    &lt;준비&gt;에서 &lt;배송&gt;으로 변경된 주문은 배송관리에서 배송정보 입력과 &lt;완료&gt;처리를 해주시기 바랍니다.<br>
-    &lt;배송&gt;전에는 기본으로 배송일시가 현재시간으로 채워져 있습니다.<br>
+    &lt;준비&gt;에서 &lt;배송&gt;으로 변경시 &lt;에스크로배송등록&gt;을 체크하시면 에스크로 주문에 한해 KCP에 배송정보가 자동 등록됩니다.<br>
     <strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
 </p>
 </div>
@@ -451,7 +450,7 @@ $(function(){
     // 주문상품보기
     $(".orderitem").on("click", function() {
         var $this = $(this);
-        var od_id = $this.attr("id").replace("order-id-", "");
+        var od_id = $this.text().replace(/[^0-9]/g, "");
 
         if($this.next().size())
             return false;
