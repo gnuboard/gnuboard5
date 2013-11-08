@@ -74,10 +74,7 @@ $total_count = $row['cnt'];
 
 <!-- 검색결과 시작 { -->
 <div id="ssch">
-<<<<<<< HEAD
 
-=======
->>>>>>> f13964c6ecb1d12f0b922f1ef98f6813242c39ca
     <div id="ssch_frm">
         <form name="frmdetailsearch" onsubmit="return detail_search_submit(this);">
         <div>
@@ -99,14 +96,6 @@ $total_count = $row['cnt'];
         <p>상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 전체에서 검색합니다.</p>
         </form>
 
-<<<<<<< HEAD
-    <!-- <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div> -->
-    <a href="#">판매량 많은순</a>
-    <a href="#">선호도 높은순</a>
-    <a href="#">사용후기 많은순</a>
-    <a href="#">최근 등록순</a>
-    검색 결과 <strong><?php echo $total_count; ?></strong>건
-=======
         <ul id="ssch_sort">
             <li><a href="#" class="btn01">판매량 많은순</a></li>
             <li><a href="#" class="btn01">선호도 높은순</a></li>
@@ -118,7 +107,6 @@ $total_count = $row['cnt'];
             검색 결과 <b><?php echo $total_count; ?></b>건
         </div>
     </div>
->>>>>>> f13964c6ecb1d12f0b922f1ef98f6813242c39ca
 
     <div>
         <?php
