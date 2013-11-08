@@ -88,7 +88,12 @@ $total_count = $row['cnt'];
 <!-- 검색결과 시작 { -->
 <div id="ssch">
 
-    <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div>
+    <!-- <div id="ssch_ov">검색어 <strong><?php echo ($q ? stripslashes(get_text($q)) : '없음'); ?></strong> | 검색 결과 <strong><?php echo $total_count; ?></strong>건</div> -->
+    <a href="#">판매량 많은순</a>
+    <a href="#">선호도 높은순</a>
+    <a href="#">사용후기 많은순</a>
+    <a href="#">최근 등록순</a>
+    검색 결과 <strong><?php echo $total_count; ?></strong>건
 
     <div>
         <?php
