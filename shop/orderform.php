@@ -315,7 +315,7 @@ function get_intall_file()
                 <?php if($default['de_tax_flag_use']) { ?>
                 <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
                 <?php } ?>
-                <?php echo $it_name.$mod_options; ?>
+                <?php echo $it_name; ?>
             </td>
             <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
             <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
