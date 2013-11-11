@@ -206,10 +206,8 @@
 #bo_v_sns:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_sns li {float:left;margin:0 5px 0 0}
 
-#bo_v form {padding-top:15px}
-
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 5px;padding:15px 15px 5px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f7f7f7}
+#bo_vc {margin:0 0 15px;padding:15px 15px 5px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f7f7f7}
 #bo_vc h2 {margin-bottom:5px}
 #bo_vc article {padding:0 0 5px;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:13px 0 5px}
