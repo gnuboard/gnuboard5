@@ -14,13 +14,15 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <table>
         <thead>
         <tr>
-            <th scope="col">상품이미지</th>
-            <th scope="col">상품명</th>
+            <th scope="col" rowspan="2">상품이미지</th>
+            <th scope="col" colspan="4">상품명</th>
+            <th scope="col" rowspan="2"><input type="checkbox" name="ct_all" value="1" checked="checked"></th>
+        </tr>
+        <tr>
             <th scope="col">총수량</th>
             <th scope="col">판매가</th>
             <th scope="col">소계</th>
             <th scope="col">포인트</th>
-            <th scope="col"><input type="checkbox" name="ct_all" value="1" checked="checked"></th>
         </tr>
         </thead>
         <tbody>
@@ -72,7 +74,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             $it_name = $a1 . stripslashes($row['it_name']) . $a2;
             $it_options = print_item_options($row['it_id'], $s_cart_id);
             if($it_options) {
-                $mod_options = '<div class="sod_option_btn"><button type="button" class="mod_options">선택사항수정</button></div>';
+                $mod_options = '<div class="sod_option_btn"><button type="button" id="mod_opt_'.$row['it_id'].'" class="mod_options">선택사항수정</button></div>';
                 $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
             }
 
@@ -81,18 +83,22 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         ?>
 
         <tr>
-            <td class="sod_bsk_img"><?php echo $image; ?></td>
-            <td>
+            <td rowspan="3" class="sod_bsk_img"><?php echo $image; ?></td>
+            <td colspan="4">
                 <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
                 <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-                <?php echo $it_name.$mod_options; ?>
+                <?php echo $it_name; ?>
             </td>
-
+            <td rowspan="3" class="td_mngsmall"><input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" checked="checked"></td>
+        </tr>
+        <tr>
             <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
             <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
             <td class="td_numbig"><?php echo number_format($sell_price); ?></td>
             <td class="td_num"><?php echo number_format($sum['point']); ?></td>
-            <td class="td_mngsmall"><input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" checked="checked"></td>
+        </tr>
+        <tr>
+            <td colspan="4"><?php echo $mod_options; ?></td>
         </tr>
 
         <?php
@@ -153,7 +159,7 @@ $(function() {
 
     // 선택사항수정
     $(".mod_options").click(function() {
-        var it_id = $(this).closest("tr").find("input[name^=it_id]").val();
+        var it_id = $(this).attr("id").replace("mod_opt_", "");
         var $this = $(this);
         close_btn_idx = $(".mod_options").index($(this));
 

@@ -189,7 +189,7 @@ ob_start();
                 <?php if($default['de_tax_flag_use']) { ?>
                 <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
                 <?php } ?>
-                <?php echo $it_name.$mod_options; ?>
+                <?php echo $it_name; ?>
             </td>
         </tr>
         <tr>
