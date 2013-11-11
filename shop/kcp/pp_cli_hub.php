@@ -240,7 +240,7 @@ if ($row['cnt']) {
                 $cash_info = serialize($cash);
 
                 $sql = " update {$g5['g5_shop_order_table']}
-                            set od_cash = '1'
+                            set od_cash = '1',
                                 od_cash_no = '$cash_no',
                                 od_cash_info = '$cash_info'
                           where od_id = '$ordr_idxx' ";
