@@ -343,7 +343,7 @@ function get_cart_count($cart_id)
 
     $sql = " select count(ct_id) as cnt from {$g5['g5_shop_cart_table']} where od_id = '$cart_id' ";
     if($default['de_cart_keep_term']) {
-        $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+        $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - (($default['de_cart_keep_term'] - 1) * 86400));
         $sql .= " and ct_time > '$ctime' ";
     }
     $row = sql_fetch($sql);

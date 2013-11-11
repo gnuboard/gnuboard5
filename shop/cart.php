@@ -62,7 +62,7 @@ include_once('./_head.php');
                    from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
                   where a.od_id = '$s_cart_id' ";
         if($default['de_cart_keep_term']) {
-            $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+            $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - (($default['de_cart_keep_term'] - 1) * 86400));
             $sql .= " and a.ct_time > '$ctime' ";
         }
         $sql .= " group by a.it_id ";
