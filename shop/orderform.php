@@ -205,7 +205,7 @@ function get_intall_file()
                   where a.od_id = '$s_cart_id'
                     and a.ct_select = '1' ";
         if($default['de_cart_keep_term']) {
-            $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+            $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - (($default['de_cart_keep_term'] - 1) * 86400));
             $sql .= " and a.ct_time > '$ctime' ";
         }
         $sql .= " group by a.it_id ";
@@ -315,7 +315,7 @@ function get_intall_file()
                 <?php if($default['de_tax_flag_use']) { ?>
                 <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
                 <?php } ?>
-                <?php echo $it_name.$mod_options; ?>
+                <?php echo $it_name; ?>
             </td>
             <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
             <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>

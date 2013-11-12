@@ -32,7 +32,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <?php } ?>
             작성일
             <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
-            <?php 
+            <?php
             include(G5_SNS_PATH."/view_comment_list.sns.skin.php");
             ?>
         </header>
@@ -116,7 +116,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                 <td><?php echo $captcha_html; ?></td>
             </tr>
             <?php } ?>
-            <?php 
+            <?php
             include(G5_SNS_PATH."/view_comment_write.sns.skin.php");
             ?>
             <tr>
@@ -141,7 +141,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
     <script>
     var save_before = '';
-    var save_html = document.getElementById('bo_vc_w').innerHTML;
+    var save_html;
 
     function good_and_write()
     {
@@ -262,6 +262,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
         if (save_before != el_id)
         {
+            save_html = document.getElementById('bo_vc_w').innerHTML;
+
             if (save_before)
             {
                 document.getElementById(save_before).style.display = 'none';

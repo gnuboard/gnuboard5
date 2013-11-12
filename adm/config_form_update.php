@@ -125,7 +125,6 @@ $sql = " update {$g5['config_table']}
                 cf_facebook_secret = '{$_POST['cf_facebook_secret']}',
                 cf_twitter_key = '{$_POST['cf_twitter_key']}',
                 cf_twitter_secret = '{$_POST['cf_twitter_secret']}',
-                cf_me2day_key = '{$_POST['cf_me2day_key']}',
                 cf_1_subj = '{$_POST['cf_1_subj']}',
                 cf_2_subj = '{$_POST['cf_2_subj']}',
                 cf_3_subj = '{$_POST['cf_3_subj']}',

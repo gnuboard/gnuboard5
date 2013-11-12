@@ -160,7 +160,6 @@ if ($w == 'c') // 댓글 입력
                      wr_ip = '{$_SERVER['REMOTE_ADDR']}',
                      wr_facebook_user = '$wr_facebook_user',
                      wr_twitter_user  = '$wr_twitter_user',
-                     wr_me2day_user   = '$wr_me2day_user',
                      wr_1 = '$wr_1',
                      wr_2 = '$wr_2',
                      wr_3 = '$wr_3',

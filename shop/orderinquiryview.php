@@ -84,7 +84,6 @@ if(openwin != null) {
                                   and it_id = '{$row['it_id']}'
                                 order by io_type asc, ct_id asc ";
                     $res = sql_query($sql);
-                    $ct_list = array();
 
                     for($k=0; $opt=sql_fetch_array($res); $k++) {
                         if($opt['io_type'])
@@ -94,9 +93,6 @@ if(openwin != null) {
 
                         $sell_price = $opt_price * $opt['ct_qty'];
                         $point = $opt['ct_point'] * $opt['ct_qty'];
-
-                        $ct_list[$opt['ct_id']]['name'] = $opt['it_name'];
-                        $ct_list[$opt['ct_id']]['option'] = $opt['ct_option'];
                     ?>
                     <tr>
                         <td><?php echo $opt['ct_option']; ?></td>

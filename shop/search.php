@@ -74,6 +74,7 @@ $total_count = $row['cnt'];
 
 <!-- 검색결과 시작 { -->
 <div id="ssch">
+
     <div id="ssch_frm">
         <form name="frmdetailsearch" onsubmit="return detail_search_submit(this);">
         <div>

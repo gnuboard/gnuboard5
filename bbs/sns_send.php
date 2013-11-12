@@ -12,12 +12,6 @@ switch($_REQUEST['sns']) {
     case 'twitter' :
         header("Location:http://twitter.com/home?status=".$title_url);
         break;
-    case 'me2day' :
-        header("Location:http://me2day.net/posts/new?new_post[body]=".$title_url);
-        break;
-    case 'yozm' :
-        header("Location:http://yozm.daum.net/api/popup/prePost?sourceid=41&prefix=".$title_url);
-        break;
     case 'gplus' :
         header("Location:https://plus.google.com/share?url=".$short_url);
         break;

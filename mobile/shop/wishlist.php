@@ -44,7 +44,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
             if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
-            $image = get_it_image($row['it_id'], 70, 70);
+            $image = get_it_image($row['it_id'], 50, 50);
             $it_point = get_item_point($row);
         ?>
 
@@ -52,7 +52,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             <td class="sod_ws_img"><?php echo $image; ?></td>
             <td>
                 <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
-                <small>보관일시 <?php echo $row['wi_time']; ?></small>
+                <br><small>보관일 <?php echo substr($row['wi_time'], 2, 8); ?></small>
             </td>
             <td class="td_chk">
                 <?php
