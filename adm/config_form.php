@@ -54,8 +54,7 @@ if(!isset($config['cf_facebook_appid'])) {
                     ADD `cf_facebook_appid` VARCHAR(255) NOT NULL AFTER `cf_googl_shorturl_apikey`,
                     ADD `cf_facebook_secret` VARCHAR(255) NOT NULL AFTER `cf_facebook_appid`,
                     ADD `cf_twitter_key` VARCHAR(255) NOT NULL AFTER `cf_facebook_secret`,
-                    ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key`,
-                    ADD `cf_me2day_key` VARCHAR(255) NOT NULL AFTER `cf_twitter_secret` ", true);
+                    ADD `cf_twitter_secret` VARCHAR(255) NOT NULL AFTER `cf_twitter_key` ", true);
 }
 
 // uniqid 테이블이 없을 경우 생성
@@ -937,12 +936,6 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <th scope="row"><label for="cf_twitter_secret">트위터 컨슈머 Secret</label></th>
             <td>
                 <input type="text" name="cf_twitter_secret" value="<?php echo $config['cf_twitter_secret'] ?>" id="cf_twitter_secret" class="frm_input" size="35">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="cf_me2day_key">미투데이 Key</label></th>
-            <td colspan="3">
-                <input type="text" name="cf_me2day_key" value="<?php echo $config['cf_me2day_key'] ?>" id="cf_me2day_key" class="frm_input"> <a href="http://me2day.net/me2/app/get_appkey" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
         </tr>
         <tr>
