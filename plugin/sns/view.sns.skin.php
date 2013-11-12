@@ -13,7 +13,6 @@ $kakao_appname = urlencode(str_replace('\"', '"', $g5['title']));
 
 $facebook_url  = 'http://www.facebook.com/sharer/sharer.php?s=100&p[url]='.$sns_url.'&p[title]='.$sns_msg;
 $twitter_url   = 'http://twitter.com/home?status='.$msg_url;
-$me2day_url    = 'http://me2day.net/posts/new?new_post[body]='.$msg_url;
 $gplus_url     = 'https://plus.google.com/share?url='.$sns_url;
 
 /*
@@ -26,7 +25,6 @@ $sns_send .= '&amp;title='.$sns_msg;
 <ul id="bo_v_sns">
     <li><a href="<?php echo $facebook_url; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/facebook.png" alt="페이스북으로 보내기"></a></li>
     <li><a href="<?php echo $twitter_url; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/twitter.png" alt="트위터로 보내기"></a></li>
-    <li><a href="<?php echo $me2day_url; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/me2day.png" alt="미투데이로 보내기"></a></li>
     <li><a href="<?php echo $gplus_url; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/gplus.png" alt="구글플러스로 보내기"></a></li>
     <?php
     if (G5_IS_MOBILE) {

@@ -13,6 +13,3 @@ if (!$board['bo_use_sns']) return;
 <?php if ($list[$i]['wr_twitter_user']) { ?>
 <a href="https://www.twitter.com/<?php echo $list[$i]['wr_twitter_user']; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/twitter<?php echo $sns_mc_icon; ?>.png" alt="트위터에도 등록됨"></a>
 <?php } ?>
-<?php if ($list[$i]['wr_me2day_user']) { ?>
-<a href="http://me2day.net/<?php echo $list[$i]['wr_me2day_user']; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/me2day<?php echo $sns_mc_icon; ?>.png" alt="미투데이에도 등록됨"></a>
-<?php } ?>

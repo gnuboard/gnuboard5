@@ -64,7 +64,7 @@ if (!$board['bo_use_sns']) return;
                 if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
                     $twitter_url = G5_SNS_URL."/twitter/redirect.php";
                 } else {
-                    $access_token = $_SESSION['access_token']; 
+                    $access_token = $_SESSION['access_token'];
                     $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
                     $content = $connection->get('account/verify_credentials');
 
@@ -73,12 +73,12 @@ if (!$board['bo_use_sns']) return;
                             $twitter_user = true;
                             $twitter_url = $connection->getAuthorizeURL($token);
                             break;
-                        default : 
+                        default :
                             $twitter_url = G5_SNS_URL."/twitter/redirect.php";
                     }
                 }
                 */
-                $access_token = $_SESSION['access_token']; 
+                $access_token = $_SESSION['access_token'];
                 $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
                 $content = $connection->get('account/verify_credentials');
 
@@ -87,7 +87,7 @@ if (!$board['bo_use_sns']) return;
                         $twitter_user = true;
                         $twitter_url = $connection->getAuthorizeURL($token);
                         break;
-                    default : 
+                    default :
                         $twitter_url = G5_SNS_URL."/twitter/redirect.php";
                 }
             }
@@ -102,42 +102,6 @@ if (!$board['bo_use_sns']) return;
                 echo '<label for="" class="sound_only">트위터 동시 등록</label>';
                 echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" disabled value="1">';
                 echo '<script>$(function(){ $("#twitter_url").click(function(){ window.open(this.href, "twitter_url", "width=600,height=250"); }); });</script>';
-            }
-            echo '</li>';
-        }
-        //============================================================================
-
-
-        //============================================================================
-        // 미투데이
-        //----------------------------------------------------------------------------
-        if ($config['cf_me2day_key']) {
-            /*
-            $me2day_user = false;
-            if (empty($_SESSION['me2day']['user_id']) || empty($_SESSION['me2day']['user_key'])) {
-                $result = json_decode(file_get_contents("http://me2day.net/api/get_auth_url.json?akey=".$config['cf_me2day_key']));
-                $me2day_url = $result->url;
-            } else {
-                $me2day_user = true;
-            }
-            */
-
-            $me2day_user = get_session("ss_me2day_user");
-            if (!$me2day_user) {
-                $result = json_decode(file_get_contents("http://me2day.net/api/get_auth_url.json?akey=".$config['cf_me2day_key']));
-                $me2day_url = $result->url;
-            }
-
-            echo '<li>';
-            if ($me2day_user) {
-                echo '<img src="'.G5_SNS_URL.'/icon/me2day.png" id="me2day_icon">';
-                echo '<label for="" class="sound_only">미투데이 동시 등록</label>';
-                echo '<input type="checkbox" name="me2day_checked" id="me2day_checked" '.(get_cookie('ck_me2day_checked')?'checked':'').' value="1">';
-            } else {
-                echo '<a href="'.$me2day_url.'" id="me2day_url" onclick="return false;"><img src="'.G5_SNS_URL.'/icon/me2day'.($me2day_user?'':'_off').'.png" id="me2day_icon"></a>';
-                echo '<label for="" class="sound_only">미투데이 동시 등록</label>';
-                echo '<input type="checkbox" name="me2day_checked" id="me2day_checked" disabled value="1">';
-                echo '<script>$(function(){ $("#me2day_url").click(function(){ window.open(this.href, "me2day_url", "width=1000,height=800"); }); });</script>';
             }
             echo '</li>';
         }
