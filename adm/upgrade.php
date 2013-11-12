@@ -170,7 +170,7 @@ sql_query(" ALTER TABLE `$g5[login_table]` DROP INDEX `lo_datetime` ", false);
 // 회원테이블의 회원가입일시에 인덱스 추가
 sql_query(" ALTER TABLE `$g5[member_table]` ADD INDEX `mb_datetime` ( `mb_datetime` ) ", false);
 
-// 게시판설정 테이블에 업로드 갯수, 이메일 사용 필드 추가
+// 게시판설정 테이블에 업로드 개수, 이메일 사용 필드 추가
 sql_query(" ALTER TABLE `$g5[board_table]` 
     ADD `bo_upload_count` TINYINT NOT NULL AFTER `bo_notice` ,
     ADD `bo_use_email` TINYINT NOT NULL AFTER `bo_upload_count` ", FALSE);
