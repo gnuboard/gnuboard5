@@ -89,7 +89,7 @@ class item_list
     // true 인 경우 페이지를 구한다.
     protected $is_page = false;
 
-    // 페이지 표시를 위하여 총 상품 갯수를 구합니다.
+    // 페이지 표시를 위하여 총 상품수를 구합니다.
     public $total_count = 0;
 
     // sql limit 의 시작 레코드
@@ -733,7 +733,7 @@ function display_type($type, $list_skin='', $list_mod='', $list_row='', $img_wid
     $img_width  = $img_width  ? $img_width  : $default["de_type{$type}_img_width"];
     $img_height = $img_height ? $img_height : $default["de_type{$type}_img_height"];
 
-    // 상품의 갯수
+    // 상품수
     $items = $list_mod * $list_row;
 
     // 1.02.00
@@ -768,7 +768,7 @@ function mobile_display_type($type, $skin_file, $list_row, $img_width, $img_heig
 {
     global $member, $g5, $config;
 
-    // 상품의 갯수
+    // 상품수
     $items = $list_row;
 
     // 1.02.00
@@ -799,7 +799,7 @@ function display_category($no, $list_mod, $list_row, $img_width, $img_height, $c
 {
     global $member, $g5;
 
-    // 상품의 갯수
+    // 상품수
     $items = $list_mod * $list_row;
 
     $sql = " select * from {$g5['g5_shop_item_table']} where it_use = '1'";
@@ -1138,7 +1138,7 @@ function display_event($no, $event, $list_mod, $list_row, $img_width, $img_heigh
 {
     global $member, $g5;
 
-    // 상품의 갯수
+    // 상품수
     $items = $list_mod * $list_row;
 
     // 1.02.00

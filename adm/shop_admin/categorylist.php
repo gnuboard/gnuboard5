@@ -137,7 +137,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         if ($is_admin == 'super')
             $s_del = '<a href="./categoryformupdate.php?w=d&amp;ca_id='.$row['ca_id'].'&amp;'.$qstr.'" onclick="return delete_confirm();"><span class="sound_only">'.get_text($row['ca_name']).' </span>삭제</a> ';
 
-        // 해당 분류에 속한 상품의 갯수
+        // 해당 분류에 속한 상품의 수
         $sql1 = " select COUNT(*) as cnt from {$g5['g5_shop_item_table']}
                       where ca_id = '{$row['ca_id']}'
                       or ca_id2 = '{$row['ca_id']}'

@@ -484,7 +484,7 @@ function conv_content($content, $html)
             $target[] = "<br/>";
         }
 
-        // 테이블 태그의 갯수를 세어 테이블이 깨지지 않도록 한다.
+        // 테이블 태그의 수를 세어 테이블이 깨지지 않도록 한다.
         $table_begin_count = substr_count(strtolower($content), "<table");
         $table_end_count = substr_count(strtolower($content), "</table");
         for ($i=$table_end_count; $i<$table_begin_count; $i++)
@@ -2306,7 +2306,7 @@ function googl_short_url($longUrl)
 }
 
 
-// 임시 저장된 글 갯수
+// 임시 저장된 글 수
 function autosave_count($mb_id)
 {
     global $g5;
