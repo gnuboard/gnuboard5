@@ -1,7 +1,7 @@
 $(function(){
     var mp3_url = "";
 
-    $("#captcha_reload").bind("click", function(){
+    $("#captcha_reload").live("click", function(){
         $.ajax({
             type: 'POST',
             url: g5_captcha_url+'/kcaptcha_session.php',
@@ -26,7 +26,7 @@ $(function(){
         });
     }).trigger("click");
 
-    $("#captcha_mp3").click(function(){
+    $("#captcha_mp3").live("click", function(){
         $("body").css("cursor", "wait");
 
         $.ajax({
@@ -50,13 +50,13 @@ $(function(){
             wav.controls = false;
             wav.autobuffer = false;
             wav.loop = false;
-            
+
             if ($("#mp3_audio").length) $("#mp3_audio").remove();
             $("#captcha_mp3").after(wav);
 
             html5use = true;
-        } 
-        
+        }
+
         if (!html5use) {
             var object = '<object id="mp3_object" classid="clsid:22d6f312-b0f6-11d0-94ab-0080c74c7e95" height="0" width="0" style="width:0; height:0;">';
             object += '<param name="AutoStart" value="1" />';
@@ -65,11 +65,11 @@ $(function(){
             object += '<param name="FileName" value="' + mp3_url + '" />';
             object += '<embed id="mp3_embed" src="' + mp3_url + '" autoplay="true" hidden="true" volume="100" type="audio/x-wav" style="display:inline;" />';
             object += '</object>';
-            if ($("#mp3_object").length) 
+            if ($("#mp3_object").length)
                 $("#mp3_object").remove();
             $("#captcha_mp3").after(object);
         }
-        
+
         $("body").css("cursor", "default");
         return false;
 
@@ -85,7 +85,7 @@ function chk_captcha()
         type: 'POST',
         url: g5_captcha_url+'/kcaptcha_result.php',
         data: {
-            'captcha_key': captcha_key.value 
+            'captcha_key': captcha_key.value
         },
         cache: false,
         async: false,

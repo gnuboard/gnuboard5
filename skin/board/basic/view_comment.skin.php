@@ -124,7 +124,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <td><?php echo $captcha_html; ?></td>
         </tr>
         <?php } ?>
-        <?php 
+        <?php
         include(G5_SNS_PATH."/view_comment_write.sns.skin.php");
         ?>
         <tr>
@@ -135,13 +135,13 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                 <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
                 <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
                 <script>
-                $("textarea#wr_content[maxlength]").live("keyup change", function() {  
-                    var str = $(this).val()  
-                    var mx = parseInt($(this).attr("maxlength"))  
-                    if (str.length > mx) {  
+                $("textarea#wr_content[maxlength]").live("keyup change", function() {
+                    var str = $(this).val()
+                    var mx = parseInt($(this).attr("maxlength"))
+                    if (str.length > mx) {
                         $(this).val(str.substr(0, mx));
-                        return false;  
-                    }  
+                        return false;
+                    }
                 });
                 </script>
             </td>
@@ -159,7 +159,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
 <script>
 var save_before = '';
-var save_html = document.getElementById('bo_vc_w').innerHTML;
+var save_html;
 
 function good_and_write()
 {
@@ -270,6 +270,8 @@ function comment_box(comment_id, work)
 
     if (save_before != el_id)
     {
+        save_html = document.getElementById('bo_vc_w').innerHTML;
+
         if (save_before)
         {
             document.getElementById(save_before).style.display = 'none';
