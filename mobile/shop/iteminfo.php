@@ -30,17 +30,17 @@ $ca = sql_fetch($sql);
 $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 include_once(G5_PATH.'/head.sub.php');
 
-// 관리자가 확인한 사용후기의 갯수를 얻음
+// 관리자가 확인한 사용후기의 개수를 얻음
 $sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 $row = sql_fetch($sql);
 $item_use_count = $row['cnt'];
 
-// 상품문의의 갯수를 얻음
+// 상품문의의 개수를 얻음
 $sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 
-// 관련상품의 갯수를 얻음
+// 관련상품의 개수를 얻음
 $sql = " select count(*) as cnt
            from {$g5['g5_shop_item_relation_table']} a
            left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
