@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// clean the output buffer
+ob_end_clean();
+
 $no = (int)$no;
 
 // 쿠키에 저장된 ID값과 넘어온 ID값을 비교하여 같지 않을 경우 오류 발생
