@@ -12,6 +12,9 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 
     <h1 id="new_win_title">배송지 목록</h1>
 
+    <div>
+        <button type="button" onclick="self.close();">닫기</button>
+    </div>
     <div class="tbl_wrap tbl_head01">
         <table>
         <thead>
