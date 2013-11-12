@@ -552,7 +552,7 @@ for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
     sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 }
 
-// 파일의 갯수를 게시물에 업데이트 한다.
+// 파일의 개수를 게시물에 업데이트 한다.
 $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' ");
 sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{$wr_id}' ");
 

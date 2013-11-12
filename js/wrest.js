@@ -271,7 +271,7 @@ function wrestSubmit()
 
     var attr = null;
 
-    // 해당폼에 대한 요소의 갯수만큼 돌려라
+    // 해당폼에 대한 요소의 개수만큼 돌려라
     for (var i=0; i<this.elements.length; i++) {
         var el = this.elements[i];
 
