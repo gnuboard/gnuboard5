@@ -56,7 +56,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
-    전체 상품 <?php echo $total_count; ?>개
+    전체 옵션 <?php echo $total_count; ?>개
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
@@ -132,7 +132,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                    where it_id = '{$row['it_id']}'
                      and io_id = '{$row['io_id']}'
                      and ct_stock_use = '0'
-                     and ct_status in ('주문', '준비') ";
+                     and ct_status in ('주문', '입금', '준비') ";
         $row1 = sql_fetch($sql1);
         $wait_qty = $row1['sum_qty'];
 
@@ -164,7 +164,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $io_stock_qty = number_format($row['io_stock_qty']);
         $io_stock_qty_st = ''; // 스타일 정의
         if($row['io_stock_qty'] <= $row['io_noti_qty']) {
-            $io_stock_qty_st = 'sit_stock_qty_alert';
+            $io_stock_qty_st = ' sit_stock_qty_alert';
             $io_stock_qty = ''.$io_stock_qty.' !<span class="sound_only"> 재고부족 </span>';
         }
 
@@ -179,7 +179,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
         <td class="td_itopt"><?php echo $option; ?></td>
         <td class="td_mng"><?php echo $type; ?></td>
-        <td class="td_num <?php echo $io_stock_qty_st; ?>"><?php echo $io_stock_qty; ?></td>
+        <td class="td_num<?php echo $io_stock_qty_st; ?>"><?php echo $io_stock_qty; ?></td>
         <td class="td_num"><?php echo number_format($wait_qty); ?></td>
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
         <td class="td_num"><input type="text" name="io_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['io_stock_qty']; ?>" class="frm_input" size="8" autocomplete="off"></td>
