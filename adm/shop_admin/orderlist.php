@@ -23,7 +23,18 @@ if ($search != "") {
 }
 
 if ($od_status) {
-    $where[] = " od_status = '$od_status' ";
+    switch($od_status) {
+        case '전체취소':
+            $where[] = " od_status = '취소' ";
+            break;
+        case '부분취소':
+            $where[] = " od_status IN('주문', '입금', '준비', '배송', '완료') and od_cancel_price > 0 ";
+            break;
+        default:
+            $where[] = " od_status = '$od_status' ";
+            break;
+    }
+
     switch ($od_status) {
         case '주문' :
             $sort1 = "od_id";
@@ -38,10 +49,6 @@ if ($od_status) {
             $sort2 = "desc";
             break;
     }
-}
-
-if ($od_status) {
-    $where[] = " od_status = '$od_status' ";
 }
 
 if ($od_settle_case) {
@@ -155,6 +162,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <label for="od_status_dvr">배송</label>
     <input type="radio" name="od_status" value="완료" id="od_status_done" <?php echo get_checked($od_status, '완료'); ?>>
     <label for="od_status_done">완료</label>
+    <input type="radio" name="od_status" value="전체취소" id="od_status_cancel" <?php echo get_checked($od_status, '전체취소'); ?>>
+    <label for="od_status_done">전체취소</label>
+    <input type="radio" name="od_status" value="부분취소" id="od_status_pcan" <?php echo get_checked($od_status, '부분취소'); ?>>
+    <label for="od_status_done">부분취소</label>
 </div>
 
 <div>
@@ -178,7 +189,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <input type="checkbox" name="od_misu" value="Y" id="od_misu01" <?php echo get_checked($od_misu, 'Y'); ?>>
     <label for="od_misu01">미수금</label>
     <input type="checkbox" name="od_cancel_price" value="Y" id="od_misu02" <?php echo get_checked($od_cancel_price, 'Y'); ?>>
-    <label for="od_misu02">취소,반품,품절</label>
+    <label for="od_misu02">반품,품절</label>
     <input type="checkbox" name="od_refund_price" value="Y" id="od_misu03" <?php echo get_checked($od_refund_price, 'Y'); ?>>
     <label for="od_misu03">환불</label>
     <input type="checkbox" name="od_receipt_point" value="Y" id="od_misu04" <?php echo get_checked($od_receipt_point, 'Y'); ?>>
@@ -290,6 +301,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $tr_bg = 'tr_bg'.($i%2);
         if($default['de_escrow_use'] && $row['od_escrow'])
             $tr_bg .= 'escrow';
+        if($od['od_cancel_price'] > 0)
+            $tr_bg .= 'cancel';
     ?>
     <tr class="orderlist<?php echo ' '.$tr_bg; ?>">
         <td rowspan="3" class="td_chk">
