@@ -495,6 +495,19 @@ $(function(){
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="it_noti_qty">재고 통보수량</label></th>
+            <td>
+                <?php echo help("상품의 재고가 통보수량보다 작을 때 쇼핑몰 현황 재고부족상품에 표시됩니다.<br>옵션이 있는 상품은 개별 옵션의 통보수량이 적용됩니다."); ?>
+                <input type="text" name="it_noti_qty" value="<?php echo $it['it_noti_qty']; ?>" id="it_noti_qty" class="frm_input" size="8"> 개
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_noti_qty" value="1" id="chk_ca_it_noti_qty">
+                <label for="chk_ca_it_noti_qty">분류적용</label>
+                <input type="checkbox" name="chk_all_it_noti_qty" value="1" id="chk_all_it_noti_qty">
+                <label for="chk_all_it_noti_qty">전체적용</label>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="it_buy_min_qty">최소구매수량</label></th>
             <td>
                 <?php echo help("상품 구매시 최소 구매 수량을 설정합니다."); ?>

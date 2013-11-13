@@ -423,6 +423,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_sell_email` varchar(255) NOT NULL DEFAULT '',
   `it_use` tinyint(4) NOT NULL DEFAULT '0',
   `it_stock_qty` int(11) NOT NULL DEFAULT '0',
+  `it_noti_qty` int(11) NOT NULL DEFAULT '0',
   `it_sc_type` tinyint(4) NOT NULL DEFAULT '0',
   `it_sc_method` tinyint(4) NOT NULL DEFAULT '0',
   `it_sc_price` int(11) NOT NULL DEFAULT '0',

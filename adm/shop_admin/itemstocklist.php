@@ -19,8 +19,8 @@ if ($sel_ca_id != "") {
 }
 
 if ($sel_field == "")  $sel_field = "it_name";
-if ($sort1 == "") $sort1 = "it_id";
-if ($sort2 == "") $sort2 = "desc";
+if ($sort1 == "") $sort1 = "it_stock_qty";
+if ($sort2 == "") $sort2 = "asc";
 
 $sql_common = "  from {$g5['g5_shop_item_table']} ";
 $sql_common .= $sql_search;
@@ -38,7 +38,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 $sql  = " select it_id,
                  it_name,
                  it_use,
-                 it_stock_qty
+                 it_stock_qty,
+                 it_noti_qty
            $sql_common
           order by $sort1 $sort2
           limit $from_record, $rows ";
@@ -135,13 +136,21 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                         from {$g5['g5_shop_cart_table']}
                        where it_id = '{$row['it_id']}'
                          and ct_stock_use = '0'
-                         and ct_status in ('주문', '준비') ";
+                         and ct_status in ('주문', '입금', '준비') ";
             $row1 = sql_fetch($sql1);
             $wait_qty = $row1['sum_qty'];
         }
 
         // 가재고 (미래재고)
         $temporary_qty = $row['it_stock_qty'] - $wait_qty;
+
+        // 통보수량보다 재고수량이 작을 때
+        $it_stock_qty = number_format($row['it_stock_qty']);
+        $it_stock_qty_st = ''; // 스타일 정의
+        if($row['it_stock_qty'] <= $row['it_noti_qty']) {
+            $it_stock_qty_st = ' sit_stock_qty_alert';
+            $it_stock_qty = ''.$it_stock_qty.' !<span class="sound_only"> 재고부족 </span>';
+        }
 
         $tr_bg = 'tr_bg'.($i%2);
 
@@ -152,7 +161,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <?php echo $row['it_id']; ?>
         </td>
         <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
-        <td class="td_num"><?php echo number_format($row['it_stock_qty']); ?></td>
+        <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo $it_stock_qty; ?></td>
         <td class="td_num"><?php echo number_format($wait_qty); ?></td>
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
         <td class="td_num"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input" size="10" autocomplete="off"></td>

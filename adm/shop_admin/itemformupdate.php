@@ -288,6 +288,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_sell_email       = '$it_sell_email',
                 it_use              = '$it_use',
                 it_stock_qty        = '$it_stock_qty',
+                it_noti_qty         = '$it_noti_qty',
                 it_sc_type          = '$it_sc_type',
                 it_sc_method        = '$it_sc_method',
                 it_sc_price         = '$it_sc_price',
@@ -462,6 +463,7 @@ if(is_checked('chk_ca_it_cust_price'))          $ca_fields .= " , it_cust_price 
 if(is_checked('chk_ca_it_point'))               $ca_fields .= " , it_point = '$it_point' ";
 if(is_checked('chk_ca_it_point_type'))          $ca_fields .= " , it_point_type = '$it_point_type' ";
 if(is_checked('chk_ca_it_stock_qty'))           $ca_fields .= " , it_stock_qty = '$it_stock_qty' ";
+if(is_checked('chk_ca_it_noti_qty'))            $ca_fields .= " , it_noti_qty = '$it_noti_qty' ";
 if(is_checked('chk_ca_it_sendcost'))            $ca_fields .= " , it_sc_type = '$it_sc_type', it_sc_method = '$it_sc_method', it_sc_price = '$it_sc_price', it_sc_minimum = '$it_sc_minimum', it_sc_qty = '$it_sc_qty' ";
 if(is_checked('chk_ca_it_buy_min_qty'))         $ca_fields .= " , it_buy_min_qty = '$it_buy_min_qty' ";
 if(is_checked('chk_ca_it_buy_max_qty'))         $ca_fields .= " , it_buy_max_qty = '$it_buy_max_qty' ";
@@ -506,6 +508,7 @@ if(is_checked('chk_all_it_cust_price'))          $all_fields .= " , it_cust_pric
 if(is_checked('chk_all_it_point'))               $all_fields .= " , it_point = '$it_point' ";
 if(is_checked('chk_all_it_point_type'))          $all_fields .= " , it_point_type = '$it_point_type' ";
 if(is_checked('chk_all_it_stock_qty'))           $all_fields .= " , it_stock_qty = '$it_stock_qty' ";
+if(is_checked('chk_all_it_noti_qty'))            $all_fields .= " , it_noti_qty = '$it_noti_qty' ";
 if(is_checked('chk_all_it_sendcost'))            $all_fields .= " , it_sc_type = '$it_sc_type', it_sc_method = '$it_sc_method', it_sc_price = '$it_sc_price', it_sc_minimum = '$it_sc_minimum', it_sc_qty = '$it_sc_qty' ";
 if(is_checked('chk_all_it_buy_min_qty'))         $all_fields .= " , it_buy_min_qty = '$it_buy_min_qty' ";
 if(is_checked('chk_all_it_buy_max_qty'))         $all_fields .= " , it_buy_max_qty = '$it_buy_max_qty' ";
