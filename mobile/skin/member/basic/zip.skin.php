@@ -1,5 +1,5 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
@@ -38,11 +38,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </dl>
 
     <p>검색결과가 끝났습니다.</p>
+    <?php
+    }
+    ?>
 
     <div class="win_btn">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 
+    <?php if ($search_count > 0) { ?>
     <script>
     function find_zip(zip1, zip2, addr1)
     {
