@@ -260,12 +260,14 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         else
             el_id = 'bo_vc_w';
 
+        if(!save_html)
+            save_html = document.getElementById(el_id).innerHTML;
+
         if (save_before != el_id)
         {
-            save_html = document.getElementById('bo_vc_w').innerHTML;
-
             if (save_before)
             {
+                save_html = document.getElementById(save_before).innerHTML;
                 document.getElementById(save_before).style.display = 'none';
                 document.getElementById(save_before).innerHTML = '';
             }
