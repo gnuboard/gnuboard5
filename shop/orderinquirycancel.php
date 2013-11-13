@@ -75,6 +75,7 @@ $sql = " update {$g5['g5_shop_order_table']}
                 od_cart_coupon = '0',
                 od_coupon = '0',
                 od_send_coupon = '0',
+                od_status = '취소',
                 od_shop_memo = concat(od_shop_memo,\"\\n주문자 본인 직접 취소 - ".G5_TIME_YMDHIS." (취소이유 : {$cancel_memo})\")
             where od_id = '$od_id' ";
 sql_query($sql);
