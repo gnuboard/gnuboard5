@@ -1796,6 +1796,15 @@ function check_itemuse_write($close=true)
 }
 
 
+// 사용후기의 확인된 건수를 상품테이블에 저장합니다.
+function update_use_cnt($it_id)
+{
+    global $g5;
+    $row = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_use_table']} where it_id = '{$it_id}' and is_confirm = 1 ");
+    return sql_query(" update {$g5['g5_shop_item_table']} set it_use_cnt = '{$row['cnt']}' where it_id = '{$it_id}' ");
+}
+
+
 //------------------------------------------------------------------------------
 // 주문포인트를 적립한다.
 // 설정일이 지난 포인트 부여되지 않은 배송완료된 장바구니 자료에 포인트 부여

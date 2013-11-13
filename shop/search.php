@@ -16,6 +16,7 @@ $qid     = escape_trim($_GET['qid']);
 $qcaid   = escape_trim($_GET['qcaid']);
 $qfrom   = escape_trim($_GET['qfrom']);
 $qto     = escape_trim($_GET['qto']);
+$qsort   = escape_trim($_GET['qsort']);
 
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
@@ -35,7 +36,8 @@ if ($q) {
     for ($i=0; $i<count($arr); $i++) {
         $word = trim($arr[$i]);
         if (!$word) continue;
-
+    
+        /*
         $or = array();
         if ($search_all || $qname) 
             $or[] = " a.it_name like '%$word%' ";
@@ -43,15 +45,26 @@ if ($q) {
             $or[] = " a.it_explan2 like '%$word%' "; // tag 를 제거한 상품설명을 검색한다.
         if ($search_all || $qid)
             $or[] = " a.it_id like '%$word%' ";
-
+        
         $detail_where[] = "(" . implode(" or ", $or) . ")";
+        */
+        $concat = array();
+        if ($search_all || $qname) 
+            $concat[] = "a.it_name";
+        if ($search_all || $qexplan)
+            $concat[] = "a.it_explan2";
+        if ($search_all || $qid)
+            $concat[] = "a.it_id";
+        $concat_fields = "concat(".implode(",' ',",$concat).")";
+
+        $detail_where[] = $concat_fields." like '%$word%' ";
 
         // 인기검색어
         $sql = " insert into {$g5['popular_table']} set pp_word = '$word', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' "; 
         sql_query($sql, FALSE);
     }
 
-    $where[] = "(".implode(" or ", $detail_where).")";
+    $where[] = "(".implode(" and ", $detail_where).")";
 }
 
 if ($qcaid)
@@ -63,25 +76,37 @@ if ($qfrom || $qto)
 $sql_where = " where " . implode(" and ", $where);
 
 // 상품 출력순서가 있다면
-if ($sort != "")
-    $order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
+$order_by = "";
+if ($qsort != "") {
+    $order_by = ' order by ' . $qsort . ' ' . $qorder . ' , it_order, it_id desc';
+}
+
+// 총몇개 = 한줄에 몇개 * 몇줄
+$items = $default['de_search_list_mod'] * $default['de_search_list_row'];
+// 페이지가 없으면 첫 페이지 (1 페이지)
+if ($page == "") $page = 1;
+// 시작 레코드 구함
+$from_record = ($page - 1) * $items;
 
 // 검색된 내용이 몇행인지를 얻는다
 $sql = " select COUNT(*) as cnt $sql_common $sql_where ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
+$total_page  = ceil($total_count / $items); // 전체 페이지 계산
 ?>
 
 <!-- 검색결과 시작 { -->
 <div id="ssch">
 
     <div id="ssch_frm">
-        <form name="frmdetailsearch" onsubmit="return detail_search_submit(this);">
+        <form name="frmdetailsearch">
+        <input type="hidden" name="qsort" id="qsort" value="<?php echo $qsort ?>">
+        <input type="hidden" name="qorder" id="qorder" value="<?php echo $qorder ?>">
         <div>
             <strong>검색범위</strong>
-            <input type="checkbox" name="qname"    class="frm_input" <?php echo isset($qname)?'checked="checked"':'';?>> 상품명
-            <input type="checkbox" name="qexplan"  class="frm_input" <?php echo isset($qexplan)?'checked="checked"':'';?>> 상품설명
-            <input type="checkbox" name="qid"      class="frm_input" <?php echo isset($qid)?'checked="checked"':'';?>> 상품코드<br>
+            <label><input type="checkbox" name="qname"   class="frm_input" <?php echo isset($qname)?'checked="checked"':'';?>> 상품명</label>
+            <label><input type="checkbox" name="qexplan" class="frm_input" <?php echo isset($qexplan)?'checked="checked"':'';?>> 상품설명</label>
+            <label><input type="checkbox" name="qid"     class="frm_input" <?php echo isset($qid)?'checked="checked"':'';?>> 상품코드</label><br>
         </div>
         <div>
             <strong>상품가격</strong>
@@ -93,13 +118,26 @@ $total_count = $row['cnt'];
             <input type="text" name="q" value="<?php echo $q; ?>" class="frm_input" size="40" maxlength="30">
             <input type="submit" value="검색" class="btn_submit">
         </div>
-        <p>상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 전체에서 검색합니다.</p>
+        <p>
+            상세검색을 선택하지 않거나, 상품가격을 입력하지 않으면 전체에서 검색합니다.<br>
+            검색어는 최대 30글자까지, 여러개의 검색어를 공백으로 구분하여 입력 할수 있습니다.
+        </p>
         </form>
 
+<script>
+function set_sort(qsort, qorder)
+{
+    var f = document.frmdetailsearch;
+    f.qsort.value = qsort;
+    f.qorder.value = qorder;
+    f.submit();
+}
+</script>
+
         <ul id="ssch_sort">
-            <li><a href="#" class="btn01">판매량 많은순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_sum_qty', 'desc'); return false;">판매량 많은순</a></li>
             <li><a href="#" class="btn01">선호도 높은순</a></li>
-            <li><a href="#" class="btn01">사용후기 많은순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_use_cnt', 'desc'); return false;">사용후기 많은순</a></li>
             <li><a href="#" class="btn01">최근 등록순</a></li>
         </ul>
 
@@ -114,18 +152,11 @@ $total_count = $row['cnt'];
         $list_file = G5_SHOP_SKIN_PATH.'/'.$default['de_search_list_skin'];
         if (file_exists($list_file)) {
 
-            // 총몇개 = 한줄에 몇개 * 몇줄
-            $items = $default['de_search_list_mod'] * $default['de_search_list_row'];
-            // 페이지가 없으면 첫 페이지 (1 페이지)
-            if ($page == "") $page = 1;
-            // 시작 레코드 구함
-            $from_record = ($page - 1) * $items;
-
             $list = new item_list($default['de_search_list_skin'], $default['de_search_list_mod'], $default['de_search_list_row'], $default['de_search_img_width'], $default['de_search_img_height']);
-            $list->set_query(" select * $sql_common $sql_where limit $from_record, $items ");
+            $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
             $list->set_is_page(true);
-            $list->set_order_by($order_by);
-            $list->set_from_record($from_record);
+            //$list->set_order_by($order_by);
+            //$list->set_from_record($from_record);
             $list->set_view('it_img', true);
             $list->set_view('it_id', true);
             $list->set_view('it_name', true);
@@ -136,12 +167,14 @@ $total_count = $row['cnt'];
             $list->set_view('sns', true);
             echo $list->run();
 
+            /*
             // where 된 전체 상품수
             $sql = " select count(*) as cnt $sql_common $sql_where ";
             $row = sql_fetch($sql);
             $total_count = $row['cnt'];
             // 전체 페이지 계산
             $total_page  = ceil($total_count / $items);
+            */
         }
         else
         {
@@ -154,11 +187,9 @@ $total_count = $row['cnt'];
             echo '<div>'.$error.'</div>';
         }
 
-        $qstr1 .= 'ca_id='.$ca_id;
-        if($skin)
-            $qstr1 .= '&amp;skin='.$skin;
-        $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
-        echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
+        $query_string .= 'ca_id='.$ca_id;
+        $query_string .='&amp;qsort='.$qsort.'&amp;qorder='.$qorder;
+        echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$query_string.'&amp;page=');
         ?>
     </div>
 

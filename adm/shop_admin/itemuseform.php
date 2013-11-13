@@ -29,6 +29,7 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
 <form name="fitemuseform" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuseform_submit(this);">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
+<input type="hidden" name="it_id" value="<?php echo $is['is_id']; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
