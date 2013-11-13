@@ -729,7 +729,7 @@ function get_intall_file()
                             where mb_id = '{$member['mb_id']}'
                               and ad_default = '0'
                             order by ad_id desc
-                            limit 2 ";
+                            limit 1 ";
                 $result = sql_query($sql);
                 for($i=0; $row=sql_fetch_array($result); $i++) {
                     $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
@@ -739,14 +739,21 @@ function get_intall_file()
 
                 $addr_list .= '<input type="radio" name="ad_sel_addr" value="new" id="od_sel_addr_new">'.PHP_EOL;
                 $addr_list .= '<label for="od_sel_addr_new">신규배송지</label>'.PHP_EOL;
+
+                $addr_list .='<a href="'.G5_SHOP_URL.'/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>';
+            } else {
+                // 주문자와 동일
+                $addr_list .= '<input type="checkbox" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
+                $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
+            }
             ?>
             <tr>
                 <th scope="row">배송지선택</th>
                 <td>
                     <?php echo $addr_list; ?>
-                    <a href="<?php echo G5_SHOP_URL; ?>/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>
                 </td>
             </tr>
+            <?php if($is_member) { ?>
             <tr>
                 <th scope="row"><label for="ad_subject">배송지명</label></th>
                 <td>
@@ -755,9 +762,7 @@ function get_intall_file()
                     <label for="ad_default">기본배송지로 설정</label>
                 </td>
             </tr>
-            <?php
-            }
-            ?>
+            <?php } ?>
             <tr>
                 <th scope="row"><label for="od_b_name">이름</label></th>
                 <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"></td>
@@ -1312,7 +1317,10 @@ $(function() {
         var addr = $(this).val().split(String.fromCharCode(30));
 
         if (addr[0] == "same") {
-            gumae2baesong();
+            if($(this).is(":checked"))
+                gumae2baesong(true);
+            else
+                gumae2baesong(false);
         } else {
             if(addr[0] == "new") {
                 for(i=0; i<8; i++) {
@@ -1707,20 +1715,29 @@ function forderform_check(f)
 }
 
 // 구매자 정보와 동일합니다.
-function gumae2baesong() {
+function gumae2baesong(checked) {
     var f = document.forderform;
 
-    f.od_b_name.value = f.od_name.value;
-    f.od_b_tel.value  = f.od_tel.value;
-    f.od_b_hp.value   = f.od_hp.value;
-    f.od_b_zip1.value = f.od_zip1.value;
-    f.od_b_zip2.value = f.od_zip2.value;
-    f.od_b_addr1.value = f.od_addr1.value;
-    f.od_b_addr2.value = f.od_addr2.value;
+    if(checked == true) {
+        f.od_b_name.value = f.od_name.value;
+        f.od_b_tel.value  = f.od_tel.value;
+        f.od_b_hp.value   = f.od_hp.value;
+        f.od_b_zip1.value = f.od_zip1.value;
+        f.od_b_zip2.value = f.od_zip2.value;
+        f.od_b_addr1.value = f.od_addr1.value;
+        f.od_b_addr2.value = f.od_addr2.value;
 
-    calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
+        calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
+    } else {
+        f.od_b_name.value = '';
+        f.od_b_tel.value  = '';
+        f.od_b_hp.value   = '';
+        f.od_b_zip1.value = '';
+        f.od_b_zip2.value = '';
+        f.od_b_addr1.value = '';
+        f.od_b_addr2.value = '';
+    }
 }
-// 구매자 정보와 동일 함수 끝
 
 <?php if ($default['de_hope_date_use']) { ?>
 $(function(){
