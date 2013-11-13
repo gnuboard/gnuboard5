@@ -163,9 +163,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <input type="radio" name="od_status" value="완료" id="od_status_done" <?php echo get_checked($od_status, '완료'); ?>>
     <label for="od_status_done">완료</label>
     <input type="radio" name="od_status" value="전체취소" id="od_status_cancel" <?php echo get_checked($od_status, '전체취소'); ?>>
-    <label for="od_status_done">전체취소</label>
-    <input type="radio" name="od_status" value="부분취소" id="od_status_pcan" <?php echo get_checked($od_status, '부분취소'); ?>>
-    <label for="od_status_done">부분취소</label>
+    <label for="od_status_cancel">전체취소</label>
+    <input type="radio" name="od_status" value="부분취소" id="od_status_pcancel" <?php echo get_checked($od_status, '부분취소'); ?>>
+    <label for="od_status_pcancel">부분취소</label>
 </div>
 
 <div>
