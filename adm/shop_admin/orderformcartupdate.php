@@ -195,7 +195,7 @@ $url = "./orderform.php?od_id=$od_id&amp;$qstr";
 // 1.06.06
 $od = sql_fetch(" select od_receipt_point from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 if ($od['od_receipt_point'])
-    alert("포인트로 결제한 주문은,\\n\\n주문상태 변경으로 인해 포인트의 가감이 발생하는 경우\\n\\n회원관리 > 포인트관리에서 수작업으로 포인트를 맞추어 주셔야 합니다.\\n\\n만약, 미수금이 발생하는 경우에는 DC에 금액을 음수로 입력하시면 해결됩니다.", $url);
+    alert("포인트로 결제한 주문은,\\n\\n주문상태 변경으로 인해 포인트의 가감이 발생하는 경우\\n\\n회원관리 > 포인트관리에서 수작업으로 포인트를 맞추어 주셔야 합니다.", $url);
 else
     goto_url($url);
 ?>
