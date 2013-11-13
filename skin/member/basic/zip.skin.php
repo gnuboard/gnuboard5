@@ -1,5 +1,5 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 우편번호 찾기 시작 { -->
@@ -25,7 +25,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <!-- 검색결과 시작 { -->
 
-    <?php if ($search_count > 0) {  ?>
+    <?php if ($search_count > 0) { ?>
     <dl>
         <dt>총 <?php echo $search_count ?>건 가나다순 정렬</dt>
         <dd>
@@ -42,11 +42,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <p>검색결과가 끝났습니다.</p>
     <!-- } 검색결과 끝 -->
+    <?php
+    }
+    ?>
 
     <div class="win_btn">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 
+    <?php if ($search_count > 0) { ?>
     <script>
     function find_zip(zip1, zip2, addr1)
     {
