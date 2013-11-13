@@ -400,8 +400,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <tfoot>
     <tr class="orderlist">
         <th scope="row" colspan="3">&nbsp;</th>
-        <td><?php echo (int)$tot_itemcount; ?>건</td>
-        <th scope="row" colspan="2">합 계</th>
+        <td>&nbsp;</td>
+        <td><?php echo number_format($tot_itemcount); ?>건</td>
+        <th scope="row">합 계</th>
         <td><?php echo number_format($tot_orderprice); ?></td>
         <td><?php echo number_format($tot_receiptprice); ?></td>
         <td><?php echo number_format($tot_ordercancel); ?></td>
