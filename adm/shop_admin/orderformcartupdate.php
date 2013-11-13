@@ -17,13 +17,16 @@ if (in_array($_POST['ct_status'], $status_normal) || in_array($_POST['ct_status'
     alert('변경할 상태가 올바르지 않습니다.');
 }
 
-
+$cart_count = 0;
 $mod_history = '';
 $cnt = count($_POST['ct_id']);
 for ($i=0; $i<$cnt; $i++)
 {
     $k = $_POST['ct_chk'][$i];
     $ct_id = $_POST['ct_id'][$k];
+
+    if(!$ct_id)
+        continue;
 
     $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' and ct_id  = '$ct_id' ";
     $ct = sql_fetch($sql);
@@ -136,6 +139,18 @@ for ($i=0; $i<$cnt; $i++)
                 where od_id = '$od_id'
                 and ct_id  = '$ct_id' ";
     sql_query($sql);
+
+    $cart_count++;
+}
+
+// 장바구니 상품 모두 취소일 경우 주문상태 변경
+$cancel_change = false;
+if (in_array($_POST['ct_status'], $status_cancel)) {
+    $sql = " select count(*) as cnt from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ";
+    $row = sql_fetch($sql);
+
+    if($cart_count == $row['cnt'])
+        $cancel_change = true;
 }
 
 // 미수금 등의 정보
@@ -158,9 +173,18 @@ $sql = " update {$g5['g5_shop_order_table']}
 if ($mod_history) { // 수량변경 히스토리 기록
     $sql .= " , od_mod_history = CONCAT(od_mod_history,'$mod_history') ";
 }
-if (in_array($_POST['ct_status'], $status_normal)) { // 정상인 주문상태만 기록
+
+if($cancel_change) {
+    $sql .= " , od_status = '취소' "; // 주문상품 모두 취소, 반품, 품절이면 주문 취소
+} else {
+    if (in_array($_POST['ct_status'], $status_normal)) { // 정상인 주문상태만 기록
+        $sql .= " , od_status = '{$_POST['ct_status']}' ";
+    }
+}
+if (in_array($_POST['ct_status'], $status_normal) && !$cancel_change) { // 정상인 주문상태만 기록
     $sql .= " , od_status = '{$_POST['ct_status']}' ";
 }
+
 $sql .= " where od_id = '$od_id' ";
 sql_query($sql);
 
