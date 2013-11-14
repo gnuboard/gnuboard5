@@ -34,7 +34,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 <dd><?php echo $is_name; ?></dd>
                 <dt>작성일</dt>
                 <dd><?php echo $is_time; ?></dd>
-                <dt>선호도<dt>
+                <dt>평점<dt>
                 <dd class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></dd>
             </dl>
 

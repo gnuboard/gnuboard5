@@ -67,7 +67,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </p>
         <?php if ($star_score) { ?>
         <div id="sit_star_sns">
-            고객선호도 <span>별<?php echo $star_score?>개</span>
+            고객평점 <span>별<?php echo $star_score?>개</span>
             <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $star_score?>.png" alt="" class="sit_star">
             <?php echo $sns_share_links; ?>
         </div>

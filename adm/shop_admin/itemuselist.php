@@ -112,7 +112,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col"><?php echo subject_sort_link("it_name"); ?>상품명</a></th>
         <th scope="col"><?php echo subject_sort_link("mb_name"); ?>이름</a></th>
         <th scope="col"><?php echo subject_sort_link("is_subject"); ?>제목</a></th>
-        <th scope="col"><?php echo subject_sort_link("is_score"); ?>점수</a></th>
+        <th scope="col"><?php echo subject_sort_link("is_score"); ?>평점</a></th>
         <th scope="col"><?php echo subject_sort_link("is_confirm"); ?>확인</a></th>
         <th scope="col">관리</th>
     </tr>
@@ -143,7 +143,15 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                 <?php echo $is_content; ?>
             </div>
         </td>
-        <td class="td_num"><?php echo $row['is_score']; ?></td>
+        <td class="td_num">
+            <select name="is_score[<?php echo $i; ?>]">
+            <option value="5" <?php echo get_selected($row['is_score'], "5"); ?>>매우만족</option>
+            <option value="4" <?php echo get_selected($row['is_score'], "4"); ?>>만족</option>
+            <option value="3" <?php echo get_selected($row['is_score'], "3"); ?>>보통</option>
+            <option value="2" <?php echo get_selected($row['is_score'], "2"); ?>>불만</option>
+            <option value="1" <?php echo get_selected($row['is_score'], "1"); ?>>매우불만</option>
+            </select>
+        </td>
         <td class="td_chk"><input type="checkbox" name="is_confirm[<?php echo $i; ?>]" <?php echo ($row['is_confirm'] ? 'checked' : ''); ?> value="1"></td>
         <td class="td_mngsmall">
             <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>수정</a>

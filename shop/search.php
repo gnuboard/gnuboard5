@@ -76,8 +76,12 @@ if ($qfrom || $qto)
 $sql_where = " where " . implode(" and ", $where);
 
 // 상품 출력순서가 있다면
+$qsort  = strtolower($qsort);
+$qorder = strtolower($qorder);
 $order_by = "";
-if ($qsort != "") {
+// 아래의 $qsort 필드만 정렬이 가능하게 하여 다른 필드로 하여금 유추해 볼수 없게함
+if (($qsort == "it_sum_qty" || $qsort == "it_price" || $qsort == "it_use_avg" || $qsort == "it_use_cnt" || $qsort == "it_update_time") && 
+    ($qorder == "asc" || $qorder == "desc")) {
     $order_by = ' order by ' . $qsort . ' ' . $qorder . ' , it_order, it_id desc';
 }
 
@@ -124,21 +128,13 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         </p>
         </form>
 
-<script>
-function set_sort(qsort, qorder)
-{
-    var f = document.frmdetailsearch;
-    f.qsort.value = qsort;
-    f.qorder.value = qorder;
-    f.submit();
-}
-</script>
-
         <ul id="ssch_sort">
             <li><a href="#" class="btn01" onclick="set_sort('it_sum_qty', 'desc'); return false;">판매량 많은순</a></li>
-            <li><a href="#" class="btn01">선호도 높은순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_price', 'asc'); return false;">가격 낮은순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_price', 'desc'); return false;">가격 높은순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_use_avg', 'desc'); return false;">평점 높은순</a></li>
             <li><a href="#" class="btn01" onclick="set_sort('it_use_cnt', 'desc'); return false;">사용후기 많은순</a></li>
-            <li><a href="#" class="btn01">최근 등록순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_update_time', 'desc'); return false;">최근 등록순</a></li>
         </ul>
 
         <div id="ssch_ov">
@@ -195,6 +191,16 @@ function set_sort(qsort, qorder)
 
 </div>
 <!-- } 검색결과 끝 -->
+
+<script>
+function set_sort(qsort, qorder)
+{
+    var f = document.frmdetailsearch;
+    f.qsort.value = qsort;
+    f.qorder.value = qorder;
+    f.submit();
+}
+</script>
 
 <?php
 include_once('./_tail.php');

@@ -300,7 +300,6 @@ $sql_common = " ca_id               = '$ca_id',
                 it_tail_html        = '$it_tail_html',
                 it_mobile_head_html = '$it_mobile_head_html',
                 it_mobile_tail_html = '$it_mobile_tail_html',
-                it_time             = '".G5_TIME_YMDHIS."',
                 it_ip               = '{$_SERVER['REMOTE_ADDR']}',
                 it_order            = '$it_order',
                 it_tel_inq          = '$it_tel_inq',
@@ -350,6 +349,8 @@ if ($w == "")
     if($t_it_id)
         alert('상품 코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.');
 
+    $sql_common .= " , it_time = '".G5_TIME_YMDHIS."' ";
+    $sql_common .= " , it_update_time = '".G5_TIME_YMDHIS."' ";
     $sql = " insert {$g5['g5_shop_item_table']}
                 set it_id = '$it_id',
 					$sql_common	";
@@ -357,6 +358,7 @@ if ($w == "")
 }
 else if ($w == "u")
 {
+    $sql_common .= " , it_update_time = '".G5_TIME_YMDHIS."' ";
     $sql = " update {$g5['g5_shop_item_table']}
                 set $sql_common
               where it_id = '$it_id' ";
