@@ -1427,6 +1427,13 @@ $(function(){
                 <?php echo $it['it_time']; ?>
             </td>
         </tr>
+        <tr>
+            <th scope="row">수정일시</th>
+            <td colspan="2">
+                <?php echo help("상품을 최종 수정한 시간입니다."); ?>
+                <?php echo $it['it_update_time']; ?>
+            </td>
+        </tr>
         <?php } ?>
         </tbody>
         </table>

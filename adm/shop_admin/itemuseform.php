@@ -52,8 +52,8 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
         <td><?php echo $name; ?></td>
     </tr>
     <tr>
-        <th scope="row">점수</th>
-        <td><?php echo stripslashes($is['is_score']); ?> 점</td>
+        <th scope="row">평점</th>
+        <td><img src="<?php echo G5_URL; ?>/shop/img/s_star<?php echo $is['is_score']; ?>.png"> (<?php echo $is['is_score']; ?>점)</td>
     </tr>
     <tr>
         <th scope="row"><label for="is_subject">제목</label></th>

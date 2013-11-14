@@ -23,7 +23,8 @@ for ($i=0; $i<count($_POST['chk']); $i++)
     if ($_POST['act_button'] == "선택수정") 
     {
         $sql = "update {$g5['g5_shop_item_use_table']}
-                   set is_confirm = '{$_POST['is_confirm'][$k]}'
+                   set is_score   = '{$_POST['is_score'][$k]}',
+                       is_confirm = '{$_POST['is_confirm'][$k]}'
                  where is_id      = '{$_POST['is_id'][$k]}' ";
         sql_query($sql);
     } 
@@ -34,6 +35,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
     }
 
     update_use_cnt($_POST['it_id'][$k]);
+    update_use_avg($_POST['it_id'][$k]);
 }
 
 goto_url("./itemuselist.php?sca=$sca&amp;sst=$sst&amp;sod=$sod&amp;sfl=$sfl&amp;stx=$stx&amp;page=$page");

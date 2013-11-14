@@ -824,12 +824,9 @@ function display_category($no, $list_mod, $list_row, $img_width, $img_height, $c
 // 별
 function get_star($score)
 {
-    if ($score > 8) $star = 5;
-    else if ($score > 6) $star = 4;
-    else if ($score > 4) $star = 3;
-    else if ($score > 2) $star = 2;
-    else if ($score > 0) $star = 1;
-    else $star = 5;
+    $star = round($score);
+    if ($star > 5) $star = 5;
+    else if ($star < 0) $star = 0;
 
     return $star;
 }
@@ -1802,6 +1799,16 @@ function update_use_cnt($it_id)
     global $g5;
     $row = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_use_table']} where it_id = '{$it_id}' and is_confirm = 1 ");
     return sql_query(" update {$g5['g5_shop_item_table']} set it_use_cnt = '{$row['cnt']}' where it_id = '{$it_id}' ");
+}
+
+
+// 사용후기의 선호도(별) 평균을 상품테이블에 저장합니다.
+function update_use_avg($it_id)
+{
+    global $g5;
+    $row = sql_fetch(" select count(*) as cnt, sum(is_score) as total from {$g5['g5_shop_item_use_table']} where it_id = '{$it_id}' ");
+    $average = ($row['total'] && $row['cnt']) ? $row['total'] / $row['cnt'] : 0;
+    return sql_query(" update {$g5['g5_shop_item_table']} set it_use_avg = '$average' where it_id = '{$it_id}' ");
 }
 
 

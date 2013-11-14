@@ -8,8 +8,12 @@ if (!$is_member) {
 // 사용후기 작성 설정에 따른 체크
 check_itemuse_write();
 
-$is_subject = trim($_REQUEST['is_subject']);
-$is_content = trim($_REQUEST['is_content']);
+$it_id       = escape_trim($_POST['it_id']);
+$is_subject  = escape_trim($_POST['is_subject']);
+$is_content  = escape_trim($_POST['is_content']);
+$is_name     = escape_trim($_POST['is_name']);
+$is_password = escape_trim($_POST['is_password']);
+$is_score    = (int)$_POST['is_score'] > 5 ? 0 : (int)$_POST['is_score'];
 
 if ($w == "" || $w == "u") {
     $is_name     = $member['mb_name'];
@@ -49,9 +53,9 @@ if ($w == "")
     sql_query($sql);
 
     if ($default['de_item_use_use']) {
-        alert_opener("평가하신 글은 관리자가 확인한 후에 출력됩니다.", $url);
+        $alert_msg = "평가하신 글은 관리자가 확인한 후에 출력됩니다.";
     }  else {
-        alert_opener("사용후기가 등록 되었습니다.", $url);
+        $alert_msg = "사용후기가 등록 되었습니다.";
     }
 }
 else if ($w == "u")
@@ -68,7 +72,7 @@ else if ($w == "u")
               where is_id = '$is_id' ";
     sql_query($sql);
 
-    alert_opener("사용후기가 수정 되었습니다.", $url);
+    $alert_msg = "사용후기가 수정 되었습니다.";
 }
 else if ($w == "d")
 {
@@ -102,6 +106,10 @@ else if ($w == "d")
     $sql = " delete from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' and md5(concat(is_id,is_time,is_ip)) = '{$hash}' ";
     sql_query($sql);
 
-    alert("사용후기를 삭제 하였습니다.", $url);
+    $alert_msg = "사용후기를 삭제 하였습니다.";
 }
+
+update_use_avg($it_id);
+
+alert_opener($alert_msg, $url);
 ?>
