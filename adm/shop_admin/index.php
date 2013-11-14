@@ -14,8 +14,250 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sidx_ps">사용후기</a></li>
 <li><a href="#anc_sidx_qna">상품문의</a></li>
 </ul>';
+
+function get_order_status_sum($status)
+{
+    global $g5;
+
+    $sql = " select count(*) as cnt,
+                    sum(od_cart_price + od_send_cost + od_send_cost2 - od_cancel_price - od_cart_coupon - od_coupon - od_send_coupon) as price
+                from {$g5['g5_shop_order_table']}
+                where od_status = '$status' ";
+    $row = sql_fetch($sql);
+
+    $info = array();
+    $info['count'] = (int)$row['cnt'];
+    $info['price'] = (int)$row['price'];
+    $info['href'] = './orderlist.php?od_status='.$status;
+
+    return $info;
+}
+
+function get_order_date_sum($date)
+{
+    global $g5;
+
+    $sql = " select sum(od_cart_price + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon) as orderprice,
+                    sum(od_cancel_price) as cancelprice
+                from {$g5['g5_shop_order_table']}
+                where SUBSTRING(od_time, 1, 10) = '$date' ";
+    $row = sql_fetch($sql);
+
+    $info = array();
+    $info['order'] = (int)$row['orderprice'];
+    $info['cancel'] = (int)$row['cancelprice'];
+
+    return $info;
+}
+
+function get_max_value($arr)
+{
+    foreach($arr as $key => $val)
+    {
+        if(is_array($val))
+        {
+            $arr[$key] = get_max_value($val);
+        }
+    }
+
+    sort($arr);
+
+    return array_pop($arr);
+}
 ?>
 
+<section id="anc_sidx_act">
+    <h2>처리해야할 주문</h2>
+    <?php echo $pg_anchor; ?>
+
+    <div id="sidx_take_act">
+        <table>
+        <thead>
+        <tr>
+            <th>상태변경</th>
+            <th>건수</th>
+            <th>금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <?php
+            $info = get_order_status_sum('주문');
+            ?>
+            <th>주문 -&gt; 입금</th>
+            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
+            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
+        </tr>
+        <tr>
+            <?php
+            $info = get_order_status_sum('입금');
+            ?>
+            <th>입금 -&gt; 준비</th>
+            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
+            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
+        </tr>
+        <tr>
+            <?php
+            $info = get_order_status_sum('준비');
+            ?>
+            <th>준비 -&gt; 배송</th>
+            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
+            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
+        </tr>
+        <tr>
+            <?php
+            $info = get_order_status_sum('배송');
+            ?>
+            <th>배송 -&gt; 완료</th>
+            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
+            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+</section>
+
+<section id="anc_sidx_ord">
+    <h2>주문현황</h2>
+    <?php echo $pg_anchor; ?>
+
+    <?php
+    $arr_order = array();
+    $x_val = array();
+    for($i=6; $i>=0; $i--) {
+        $date = date('Y-m-d', strtotime('-'.$i.' days', G5_SERVER_TIME));
+
+        $x_val[] = $date;
+        $arr_order[] = get_order_date_sum($date);
+    }
+
+    $max_y = get_max_value($arr_order);
+    $max_y = ceil(($max_y) / 1000) * 1000;
+    $y_val = array();
+    $y_val[] = $max_y;
+
+    for($i=4; $i>=1; $i--) {
+        $y_val[] = $max_y * (($i * 2) / 10);
+    }
+
+    $max_height = 240;
+    $h_val = array();
+    $js_val = array();
+    foreach($arr_order as $val) {
+        if($val['order'] > 0)
+            $h1 = intval(($max_height * $val['order']) / $max_y);
+        else
+            $h1 = 0;
+
+        if($val['cancel'] > 0)
+            $h2 = intval(($max_height * $val['cancel']) / $max_y);
+        else
+            $h2 = 0;
+
+        $h_val[]['order'] = $h1;
+        $h_val[]['cancel'] = $h2;
+
+        $js_val['order'][] = $h1;
+        $js_val['cancel'][] = $h2;
+    }
+    ?>
+
+    <div id="sidx_graph">
+        <ul id="sidx_graph_price">
+            <?php
+            foreach($y_val as $val) {
+            ?>
+            <li><?php echo number_format($val); ?></li>
+            <?php
+            }
+            ?>
+        </ul>
+        <ul id="sidx_graph_area">
+            <?php
+            for($i=0; $i<count($x_val); $i++) {
+                $order_title = date("n월 j일", strtotime($x_val[$i])).' 주문: '.display_price($arr_order[$i]['order']);
+                $cancel_title = date("n월 j일", strtotime($x_val[$i])).' 취소: '.display_price($arr_order[$i]['cancel']);
+            ?>
+            <li>
+                <div class="graph order" title="<?php echo $order_title; ?>"></div>
+                <div class="graph cancel" title="<?php echo $cancel_title; ?>"></div>
+            </li>
+            <?php
+            }
+            ?>
+        </ul>
+        <ul id="sidx_graph_date">
+            <?php
+            foreach($x_val as $val) {
+            ?>
+            <li><?php echo substr($val, 5, 5); ?></li>
+            <?php
+            }
+            ?>
+        </ul>
+    </div>
+</section>
+
+<script>
+$(function() {
+    graph_draw();
+
+    $("#sidx_graph_area div").hover(
+        function() {
+            if($(this).is(":animated"))
+                return false;
+
+            var title = $(this).attr("title");
+            if(title && $(this).data("title") == undefined)
+                $(this).data("title", title);
+            var left = parseInt($(this).css("left")) + 10;
+            var bottom = $(this).height() + 5;
+
+            $(this)
+                .attr("title", "")
+                .parent()
+                .append("<div id=\"price_tooltip\"><div></div></div>");
+            $("#price_tooltip")
+                .find("div")
+                .html(title)
+                .end()
+                .css({ left: left+"px", bottom: bottom+"px" })
+                .show(200);
+        },
+        function() {
+            if($(this).is(":animated"))
+                return false;
+
+            $(this).attr("title", $(this).data("title"));
+            $("#price_tooltip").remove();
+        }
+    );
+});
+
+function graph_draw()
+{
+    var g_h1 = new Array("<?php echo implode('", "', $js_val['order']); ?>");
+    var g_h2 = new Array("<?php echo implode('", "', $js_val['cancel']); ?>");
+    var duration = 600;
+
+    var $el = $("#sidx_graph_area li");
+    var h1, h2;
+    var $g1, $g2;
+
+    $el.each(function(index) {
+        h1 = g_h1[index];
+        h2 = g_h2[index];
+
+        $g1 = $(this).find(".order");
+        $g2 = $(this).find(".cancel");
+
+        $g1.animate({ height: h1+"px" }, duration);
+        $g2.animate({ height: h2+"px" }, duration);
+    });
+}
+</script>
+
+<?php /*
 <section id="anc_sidx_ord">
     <h2>주문현황</h2>
     <?php echo $pg_anchor; ?>
@@ -268,6 +510,7 @@ $pg_anchor = '<ul class="anchor">
         <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상품문의 더보기</a>
     </div>
 </section>
+*/ ?>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

@@ -417,6 +417,20 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 
 /* ########## 쇼핑몰 사용시 적용 ########## */
 
+/* 쇼핑몰관리 index */
+#sidx_graph {position:relative;width:1000px;height:350px}
+#sidx_graph_price {position:absolute;left:20px;top:50px;width:100px;margin:0;padding:0;list-style:none}
+#sidx_graph_price li {height:50px;text-align:right}
+#sidx_graph_area {position:absolute;left:128px;top:40px;width:800px;height:260px;border-left:1px solid #eee;border-bottom:1px solid #eee;margin:0;padding:0;list-style:none}
+#sidx_graph_area li {float:left;position:relative;left:35px;width:100px;height:260px}
+#sidx_graph_area .graph {position:absolute;bottom:0;width:20px;height:0}
+#sidx_graph_area .order {background-color:blue;left:30px}
+#sidx_graph_area .cancel {background-color:gray;left:55px}
+#sidx_graph_area #price_tooltip {display:none;position:absolute;bottom:0;left:0;background-color:#fff;border:1px solid gray}
+#sidx_graph_area #price_tooltip div {white-space:nowrap}
+#sidx_graph_date {position:absolute;left:165px;top:310px;width:800px;margin:0;padding:0;list-style:none}
+#sidx_graph_date li {float:left;width:100px;text-align:center}
+
 /* 쇼핑몰 설정 */
 #anc_scf_payment textarea {height:50px}
 
