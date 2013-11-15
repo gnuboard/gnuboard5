@@ -114,9 +114,38 @@ function get_max_value($arr)
 ?>
 
 <section id="anc_sidx_stock">
-    <h2>재고 및 SMS</h2>
-    <?php echo $pg_anchor; ?>
+    <?php
+    // 재고부족 상품
+    $item_noti = 0;
+    $sql = " select count(*) as cnt
+                from {$g5['g5_shop_item_table']}
+                where it_use = '1'
+                  and it_option_subject = ''
+                  and it_stock_qty <= it_noti_qty ";
+    $row = sql_fetch($sql);
+    $item_noti = (int)$row['cnt'];
 
+    // 재고부족 옵션
+    $option_noti = 0;
+    $sql = " select count(*) as cnt
+                from {$g5['g5_shop_item_option_table']}
+                where io_use = '1'
+                  and io_stock_qty <= io_noti_qty ";
+    $row = sql_fetch($sql);
+    $option_noti = (int)$row['cnt'];
+
+    // SMS 정보
+    if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
+        $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$config['cf_icode_id'].'&userpw='.$config['cf_icode_pw']);
+        $res = explode(';', $res);
+        $userinfo = array(
+            'code'      => $res[0], // 결과코드
+            'coin'      => $res[1], // 고객 잔액 (충전제만 해당)
+            'gpay'      => $res[2], // 고객의 건수 별 차감액 표시 (충전제만 해당)
+            'payment'   => $res[3]  // 요금제 표시, A:충전제, C:정액제
+        );
+    }
+    ?>
     <div id="sidx_stock">
         <table>
         <thead>
@@ -128,6 +157,9 @@ function get_max_value($arr)
         </thead>
         <tbody>
         <tr>
+            <td><a href="./itemstocklist.php"><?php echo number_format($item_noti); ?></a></td>
+            <td><a href="./optionstocklist.php"><?php echo number_format($option_noti); ?></a></td>
+            <td><?php echo display_price($userinfo['coin']); ?></td>
         </tr>
         </tbody>
         </table>
@@ -330,6 +362,152 @@ function get_max_value($arr)
         ?>
         </tbody>
         </table>
+    </div>
+</section>
+
+<section id="anc_sidx_oneq">
+    <h2>1:1문의</h2>
+    <?php echo $pg_anchor; ?>
+
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>1:1문의 목록</caption>
+        <thead>
+        <tr>
+            <th scope="col">분류</th>
+            <th scope="col">제목</th>
+            <th scope="col">작성자</th>
+            <th scope="col">보기</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $sql = " select * from {$g5['qa_content_table']}
+                  where qa_status = '0'
+                    and qa_type = '0'
+                  order by qa_num
+                  limit $max_limit ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++)
+        {
+            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $row1 = sql_fetch($sql1);
+
+            $name = get_sideview($row['mb_id'], get_text($row['qa_name']), $row1['mb_email'], $row1['mb_homepage']);
+        ?>
+        <tr>
+            <td><?php echo get_text($row['qa_category']); ?></td>
+            <td class="td_name"><?php echo $name; ?></td>
+            <td><?php echo cut_str($row['qa_subject'],40); ?></td>
+            <td class="td_mng"><a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank">보기</a></td>
+        </tr>
+        <?php
+        }
+
+        if ($i == 0)
+            echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
+
+    <div class="btn_list03 btn_list">
+        <a href="<?php echo G5_BBS_URL; ?>/qalist.php" target="_blank">1:1문의 더보기</a>
+    </div>
+    </div>
+</section>
+
+<section id="anc_sidx_qna">
+    <h2>상품문의</h2>
+    <?php echo $pg_anchor; ?>
+
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>상품문의 목록</caption>
+        <thead>
+        <tr>
+            <th scope="col">회원명</th>
+            <th scope="col">제목</th>
+            <th scope="col">수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $sql = " select * from {$g5['g5_shop_item_qa_table']}
+                  where iq_answer = ''
+                  order by iq_id desc
+                  limit $max_limit ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++)
+        {
+            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $row1 = sql_fetch($sql1);
+
+            $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
+        ?>
+        <tr>
+            <td class="td_name"><?php echo $name; ?></td>
+            <td><?php echo cut_str($row['iq_subject'],40); ?></td>
+            <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
+        </tr>
+        <?php
+        }
+
+        if ($i == 0)
+            echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
+
+    <div class="btn_list03 btn_list">
+        <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상품문의 더보기</a>
+    </div>
+</section>
+
+<section id="anc_sidx_ps">
+    <h2>사용후기</h2>
+    <?php echo $pg_anchor; ?>
+
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>사용후기 목록</caption>
+        <thead>
+        <tr>
+            <th scope="col">회원명</th>
+            <th scope="col">제목</th>
+            <th scope="col">수정</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $sql = " select * from {$g5['g5_shop_item_use_table']}
+                  where is_confirm = 0
+                  order by is_id desc
+                  limit $max_limit ";
+        $result = sql_query($sql);
+        for ($i=0; $row=sql_fetch_array($result); $i++)
+        {
+            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+            $row1 = sql_fetch($sql1);
+
+            $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
+        ?>
+        <tr>
+            <td class="td_name"><?php echo $name; ?></td>
+            <td><?php echo cut_str($row['is_subject'],40); ?></td>
+            <td class="td_mngsmall"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
+        </tr>
+        <?php
+        }
+        if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+        ?>
+        </tbody>
+        </table>
+    </div>
+
+    <div class="btn_list03 btn_list">
+        <a href="./itemuselist.php?sort1=is_confirm&amp;sort2=asc">사용후기 더보기</a>
     </div>
 </section>
 
@@ -549,100 +727,6 @@ function graph_draw()
 
     <div class="btn_list03 btn_list">
         <a href="./orderlist.php?sort1=od_receipt_price&amp;sort2=asc">미입금 주문내역 더보기</a>
-    </div>
-</section>
-
-<section id="anc_sidx_ps">
-    <h2>사용후기</h2>
-    <?php echo $pg_anchor; ?>
-
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption>사용후기 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col">회원명</th>
-            <th scope="col">제목</th>
-            <th scope="col">수정</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sql = " select * from {$g5['g5_shop_item_use_table']}
-                  where is_confirm = 0
-                  order by is_id desc
-                  limit $max_limit ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
-            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-            $row1 = sql_fetch($sql1);
-
-            $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
-        ?>
-        <tr>
-            <td class="td_name"><?php echo $name; ?></td>
-            <td><?php echo cut_str($row['is_subject'],40); ?></td>
-            <td class="td_mngsmall"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
-        </tr>
-        <?php
-        }
-        if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
-        ?>
-        </tbody>
-        </table>
-    </div>
-
-    <div class="btn_list03 btn_list">
-        <a href="./itemuselist.php?sort1=is_confirm&amp;sort2=asc">사용후기 더보기</a>
-    </div>
-</section>
-
-<section id="anc_sidx_qna">
-    <h2>상품문의</h2>
-    <?php echo $pg_anchor; ?>
-
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption>상품문의 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col">회원명</th>
-            <th scope="col">제목</th>
-            <th scope="col">수정</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sql = " select * from {$g5['g5_shop_item_qa_table']}
-                  where iq_answer = ''
-                  order by iq_id desc
-                  limit $max_limit ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
-            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-            $row1 = sql_fetch($sql1);
-
-            $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
-        ?>
-        <tr>
-            <td class="td_name"><?php echo $name; ?></td>
-            <td><?php echo cut_str($row['iq_subject'],40); ?></td>
-            <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
-        </tr>
-        <?php
-        }
-
-        if ($i == 0)
-            echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
-        ?>
-        </tbody>
-        </table>
-    </div>
-
-    <div class="btn_list03 btn_list">
-        <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상품문의 더보기</a>
     </div>
 </section>
 */ ?>
