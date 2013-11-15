@@ -1,11 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if (G5_IS_MOBILE) {
-    include_once(G5_MSHOP_PATH.'/coupon.php');
-    return;
-}
-
 if ($is_guest)
     alert_close('회원만 조회하실 수 있습니다.');
 
@@ -30,9 +25,11 @@ $result = sql_query($sql);
         <thead>
         <tr>
             <th scope="col">쿠폰명</th>
+            <th scope="col">사용기한</th>
+        </tr>
+        <tr>
             <th scope="col">적용대상</th>
             <th scope="col">할인금액</th>
-            <th scope="col">사용기한</th>
         </tr>
         </thead>
         <tbody>
@@ -65,9 +62,11 @@ $result = sql_query($sql);
         ?>
         <tr>
             <td><?php echo $row['cp_subject']; ?></td>
+            <td class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
+        </tr>
+        <tr>
             <td><?php echo $cp_target; ?></td>
             <td class="td_numbig"><?php echo $cp_price; ?></td>
-            <td class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
         </tr>
         <?php
         }
