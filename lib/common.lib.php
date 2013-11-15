@@ -2391,4 +2391,45 @@ function get_qa_config($fld='*')
 
     return $row;
 }
+
+// get_sock 함수 대체
+if (!function_exists("get_sock")) {
+    function get_sock($url)
+    {
+        // host 와 uri 를 분리
+        //if (ereg("http://([a-zA-Z0-9_\-\.]+)([^<]*)", $url, $res))
+        if (preg_match("/http:\/\/([a-zA-Z0-9_\-\.]+)([^<]*)/", $url, $res))
+        {
+            $host = $res[1];
+            $get  = $res[2];
+        }
+
+        // 80번 포트로 소캣접속 시도
+        $fp = fsockopen ($host, 80, $errno, $errstr, 30);
+        if (!$fp)
+        {
+            die("$errstr ($errno)\n");
+        }
+        else
+        {
+            fputs($fp, "GET $get HTTP/1.0\r\n");
+            fputs($fp, "Host: $host\r\n");
+            fputs($fp, "\r\n");
+
+            // header 와 content 를 분리한다.
+            while (trim($buffer = fgets($fp,1024)) != "")
+            {
+                $header .= $buffer;
+            }
+            while (!feof($fp))
+            {
+                $buffer .= fgets($fp,1024);
+            }
+        }
+        fclose($fp);
+
+        // content 만 return 한다.
+        return $buffer;
+    }
+}
 ?>
