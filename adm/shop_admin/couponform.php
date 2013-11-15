@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '400650';
 include_once('./_common.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -190,6 +191,10 @@ $(function() {
         var url = "./couponmember.php";
         window.open(url, "win_member", opt);
     });
+
+    $("#cp_start, #cp_end").datepicker(
+        { changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99" }
+    );
 });
 
 function change_method(cp_method)
