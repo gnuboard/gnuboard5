@@ -52,6 +52,51 @@ function get_order_date_sum($date)
     return $info;
 }
 
+// 일자별 결제수단 주문 합계 금액
+function get_order_settle_sum($date)
+{
+    global $g5, $default;
+
+    $case = array('신용카드', '계좌이체', '가상계좌', '무통장', '휴대폰');
+    $info = array();
+
+    // 결제수단별 합계
+    foreach($case as $val)
+    {
+        $sql = " select sum(od_cart_price + od_send_cost + od_send_cost2) as price,
+                        count(*) as cnt
+                    from {$g5['g5_shop_order_table']}
+                    where SUBSTRING(od_time, 1, 10) = '$date'
+                      and od_settle_case = '$val' ";
+        $row = sql_fetch($sql);
+
+        $info[$val]['price'] = (int)$row['price'];
+        $info[$val]['count'] = (int)$row['cnt'];
+    }
+
+    // 포인트 합계
+    $sql = " select sum(od_receipt_point) as price,
+                    count(*) as cnt
+                from {$g5['g5_shop_order_table']}
+                where SUBSTRING(od_time, 1, 10) = '$date'
+                  and od_receipt_point > 0 ";
+    $row = sql_fetch($sql);
+    $info['포인트']['price'] = (int)$row['price'];
+    $info['포인트']['count'] = (int)$row['cnt'];
+
+    // 쿠폰 합계
+    $sql = " select sum(od_cart_coupon + od_coupon + od_send_coupon) as price,
+                    count(*) as cnt
+                from {$g5['g5_shop_order_table']}
+                where SUBSTRING(od_time, 1, 10) = '$date'
+                  and ( od_cart_coupon > 0 or od_coupon > 0 or od_send_coupon > 0 ) ";
+    $row = sql_fetch($sql);
+    $info['쿠폰']['price'] = (int)$row['price'];
+    $info['쿠폰']['count'] = (int)$row['cnt'];
+
+    return $info;
+}
+
 function get_max_value($arr)
 {
     foreach($arr as $key => $val)
@@ -67,6 +112,27 @@ function get_max_value($arr)
     return array_pop($arr);
 }
 ?>
+
+<section id="anc_sidx_stock">
+    <h2>재고 및 SMS</h2>
+    <?php echo $pg_anchor; ?>
+
+    <div id="sidx_stock">
+        <table>
+        <thead>
+        <tr>
+            <th>재고부족 상품</th>
+            <th>재고부족 옵션</th>
+            <th>SMS 잔여금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+</section>
 
 <section id="anc_sidx_act">
     <h2>처리해야할 주문</h2>
@@ -195,6 +261,75 @@ function get_max_value($arr)
             }
             ?>
         </ul>
+    </div>
+</section>
+
+<section id="anc_sidx_settle">
+    <h2>결제수단별 주문현황</h2>
+    <?php echo $pg_anchor; ?>
+
+    <?php
+    $term = 3;
+    $info = array();
+    for($i=($term - 1); $i>=0; $i--)
+    {
+        $date = date("Y-m-d", strtotime('-'.$i.' days', G5_SERVER_TIME));
+        $info[$date] = get_order_settle_sum($date);
+    }
+    ?>
+
+    <div id="sidx_settle">
+        <table>
+        <thead>
+        <tr>
+            <td rowspan="2">&nbsp;</td>
+            <?php
+            $term = 3;
+            $info = array();
+            $info_key = array();
+            for($i=($term - 1); $i>=0; $i--) {
+                $date = date("Y-m-d", strtotime('-'.$i.' days', G5_SERVER_TIME));
+                $info[$date] = get_order_settle_sum($date);
+
+                $day = substr($date, 5, 5).' ('.get_yoil($date).')';
+                $info_key[] = $date;
+            ?>
+            <th colspan="2"><?php echo $day; ?></th>
+            <?php } ?>
+        </tr>
+        <tr>
+            <?php
+            for($i=0; $i<$term; $i++) {
+            ?>
+            <th>건수</th>
+            <th>금액</th>
+            <?php } ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $case = array('신용카드', '계좌이체', '가상계좌', '무통장', '휴대폰', '포인트', '쿠폰');
+
+        foreach($case as $val)
+        {
+        ?>
+        <tr>
+            <td><?php echo $val; ?></td>
+            <?php
+            foreach($info_key as $date)
+            {
+            ?>
+            <td><?php echo number_format($info[$date][$val]['count']); ?></td>
+            <td><?php echo number_format($info[$date][$val]['price']); ?></td>
+            <?php
+            }
+            ?>
+        </tr>
+        <?php
+        }
+        ?>
+        </tbody>
+        </table>
     </div>
 </section>
 
