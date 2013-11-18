@@ -496,6 +496,7 @@ function set_date(today)
     <?php
     $date_term = date('w', G5_SERVER_TIME);
     $week_term = $date_term + 7;
+    $last_term = strtotime(date('Y-m-01', G5_SERVER_TIME));
     ?>
     if (today == "오늘") {
         document.getElementById("fr_date").value = "<?php echo G5_TIME_YMD; ?>";
@@ -513,8 +514,8 @@ function set_date(today)
         document.getElementById("fr_date").value = "<?php echo date('Y-m-d', strtotime('-'.$week_term.' days', G5_SERVER_TIME)); ?>";
         document.getElementById("to_date").value = "<?php echo date('Y-m-d', strtotime('-'.($week_term - 6).' days', G5_SERVER_TIME)); ?>";
     } else if (today == "지난달") {
-        document.getElementById("fr_date").value = "<?php echo date('Y-m-01', strtotime('-1 Month', G5_SERVER_TIME)); ?>";
-        document.getElementById("to_date").value = "<?php echo date('Y-m-t', strtotime('-1 Month', G5_SERVER_TIME)); ?>";
+        document.getElementById("fr_date").value = "<?php echo date('Y-m-01', strtotime('-1 Month', $last_term)); ?>";
+        document.getElementById("to_date").value = "<?php echo date('Y-m-t', strtotime('-1 Month', $last_term)); ?>";
     } else if (today == "전체") {
         document.getElementById("fr_date").value = "";
         document.getElementById("to_date").value = "";
