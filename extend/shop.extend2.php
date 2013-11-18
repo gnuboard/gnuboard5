@@ -691,4 +691,10 @@ if(!sql_query(" select it_noti_qty from {$g5['g5_shop_item_table']} limit 1 ", f
     sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
                     ADD `it_noti_qty` int(11) NOT NULL DEFAULT '0' AFTER `it_stock_qty` ", true);
 }
+
+// 상품테이블 업데이트 일시 필드 추가
+if(!sql_query(" select it_update_time from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_update_time` DATETIME NOT NULL AFTER `it_time` ", true);
+}
 ?>
