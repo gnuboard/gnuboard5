@@ -686,10 +686,22 @@ if(!sql_query(" select od_cash_info from {$g5['g5_shop_order_table']} limit 1", 
                     DROP `od_cash_id_info` ", true);
 }
 
-// 상품테이블 재고통보수량 필드 추가
-if(!sql_query(" select it_noti_qty from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+// 상품테이블 판매량합계 필드 추가
+if(!sql_query(" select it_sum_qty from {$g5['g5_shop_item_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
-                    ADD `it_noti_qty` int(11) NOT NULL DEFAULT '0' AFTER `it_stock_qty` ", true);
+                    ADD `it_sum_qty` int(11) NOT NULL DEFAULT '0' AFTER `it_info_value` ", true);
+}
+
+// 상품테이블 사용후기건수합계 필드 추가
+if(!sql_query(" select it_use_cnt from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_use_cnt` int(11) NOT NULL DEFAULT '0' AFTER `it_sum_qty` ", true);
+}
+
+// 상품테이블 사용후기평점 필드 추가
+if(!sql_query(" select it_use_avg from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_use_avg` DECIMAL(2,1) NOT NULL AFTER `it_use_cnt` ", true);
 }
 
 // 상품테이블 업데이트 일시 필드 추가
