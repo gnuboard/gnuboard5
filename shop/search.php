@@ -114,9 +114,9 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
             <label><input type="checkbox" name="qid"     class="frm_input" <?php echo isset($qid)?'checked="checked"':'';?>> 상품코드</label><br>
         </div>
         <div>
-            <strong>상품가격</strong>
-            <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" class="frm_input" size="10">원 부터
-            <input type="text" name="qto" value="<?php echo $qto; ?>" class="frm_input" size="10">원 까지<br>
+            <strong>상품가격 (원)</strong>
+            <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" class="frm_input" size="10"> ~
+            <input type="text" name="qto" value="<?php echo $qto; ?>" class="frm_input" size="10"> 까지<br>
         </div>
         <div>
             <strong>검색어</strong>
@@ -143,19 +143,19 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         </div>
     </div>
 
-    <div>
-    <ul>
-    <?
-    $sql = " select b.ca_id, b.ca_name, count(*) as cnt $sql_common $sql_where and length(b.ca_id) = 2 group by b.ca_id order by b.ca_id ";
-    $result = sql_query($sql);
-    $total_cnt = 0;
-    for ($i=0; $row=sql_fetch_array($result); $i++) {
-        echo "<li><a href=\"#\" onclick=\"set_ca_id('{$row['ca_id']}'); return false;\">{$row['ca_name']} (".$row['cnt'].")</a></li>\n";
-        $total_cnt += $row['cnt'];
-    }
-    echo "<li><a href=\"#\" onclick=\"set_ca_id(''); return false;\">전체분류 ({$total_cnt})</a></li>\n";
-    ?>
-    </ul>
+    <div id="ssch_cate">
+        <ul>
+        <?php
+        $sql = " select b.ca_id, b.ca_name, count(*) as cnt $sql_common $sql_where and length(b.ca_id) = 2 group by b.ca_id order by b.ca_id ";
+        $result = sql_query($sql);
+        $total_cnt = 0;
+        for ($i=0; $row=sql_fetch_array($result); $i++) {
+            echo "<li><a href=\"#\" onclick=\"set_ca_id('{$row['ca_id']}'); return false;\">{$row['ca_name']} (".$row['cnt'].")</a></li>\n";
+            $total_cnt += $row['cnt'];
+        }
+        echo '<li><a href="#" onclick="set_ca_id(\'\'); return false;">전체분류 <span>('.$total_cnt.')</span></a></li>'.PHP_EOL;
+        ?>
+        </ul>
     </div>
 
     <div>
