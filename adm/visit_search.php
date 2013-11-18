@@ -98,15 +98,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
             $referer = get_text(cut_str($row[vi_referer], 255, ""));
             $referer = urldecode($referer);
 
-            if (strtolower($g4['charset']) == 'utf-8') {
-                if (!is_utf8($referer)) {
-                    $referer = iconv('euc-kr', 'utf-8', $referer);
-                }
-            }
-            else {
-                if (is_utf8($referer)) {
-                    $referer = iconv('utf-8', 'euc-kr', $referer);
-                }
+            if (!is_utf8($referer)) {
+                $referer = iconv('euc-kr', 'utf-8', $referer);
             }
 
             $title = str_replace(array("<", ">"), array("&lt;", "&gt;"), $referer);
