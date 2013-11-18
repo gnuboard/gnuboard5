@@ -39,7 +39,7 @@ function get_order_date_sum($date)
 {
     global $g5;
 
-    $sql = " select sum(od_cart_price + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon) as orderprice,
+    $sql = " select sum(od_cart_price + od_send_cost + od_send_cost2) as orderprice,
                     sum(od_cancel_price) as cancelprice
                 from {$g5['g5_shop_order_table']}
                 where SUBSTRING(od_time, 1, 10) = '$date' ";
