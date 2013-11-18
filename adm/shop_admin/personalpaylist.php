@@ -53,7 +53,7 @@ $result = sql_query($sql);
 $g5['title'] = '개인결제 관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$colspan = 8;
+$colspan = 10;
 ?>
 
 <div class="local_ov01 local_ov">
