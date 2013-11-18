@@ -181,6 +181,13 @@ ob_start();
         <tr>
             <td rowspan="2" class="sod_bsk_img"><?php echo $image; ?></td>
             <td headers ="th_it" colspan="5">
+                <?php echo $it_name; ?>
+            </td>
+        </tr>
+        <tr>
+            <td headers ="th_itall" class="td_num"><?php echo number_format($sum['qty']); ?></td>
+            <td headers ="th_itprice" class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
+            <td headers ="th_cp" class="td_mngsmall">
                 <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
                 <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
                 <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo $sell_price; ?>">
@@ -189,13 +196,8 @@ ob_start();
                 <?php if($default['de_tax_flag_use']) { ?>
                 <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
                 <?php } ?>
-                <?php echo $it_name; ?>
+                <?php echo $cp_button; ?>
             </td>
-        </tr>
-        <tr>
-            <td headers ="th_itall" class="td_num"><?php echo number_format($sum['qty']); ?></td>
-            <td headers ="th_itprice" class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
-            <td headers ="th_cp" class="td_mngsmall"><?php echo $cp_button; ?></td>
             <td headers ="th_cnt" class="td_numbig"><span class="ct_sell_price"><?php echo number_format($sell_price); ?></span></td>
             <td headers ="th_pt" class="td_num"><?php echo number_format($sum['point']); ?></td>
         </tr>
