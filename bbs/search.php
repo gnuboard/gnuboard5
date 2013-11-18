@@ -11,7 +11,7 @@ $text_stx = "";
 $srows = 0;
 
 $stx = strip_tags($stx);
-$stx = preg_replace('/[[:punct:]]/', '', $stx); // 특수문자 제거
+$stx = preg_replace('/[[:punct:]]/u', '', $stx); // 특수문자 제거
 if ($stx) {
     $stx = preg_replace('/\//', '\/', trim($stx));
     $sop = strtolower($sop);
