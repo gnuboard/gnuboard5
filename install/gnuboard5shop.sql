@@ -581,22 +581,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_new_win` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_onlinecalc`
---
-
-DROP TABLE IF EXISTS `g5_shop_onlinecalc`;
-CREATE TABLE IF NOT EXISTS `g5_shop_onlinecalc` (
-  `oc_id` int(11) NOT NULL AUTO_INCREMENT,
-  `oc_subject` varchar(255) NOT NULL DEFAULT '',
-  `oc_category` text NOT NULL,
-  `oc_head_html` text NOT NULL,
-  `oc_tail_html` text NOT NULL,
-  PRIMARY KEY (`oc_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `g5_shop_order`
 --
 

@@ -189,9 +189,6 @@ if($g5_shop_install) {
     @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 취급방침', co_content= '<p align=center><b>개인정보 취급방침에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
     @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
 
-    // 온라인견적
-    @mysql_query(" insert into `{$g5_shop_prefix}onlinecalc` set oc_id = '1', oc_subject = '온라인견적' ") or die(mysql_error() . "<p>" . $sql);
-
     // FAQ Master
     @mysql_query(" insert into `{$g5_shop_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ") or die(mysql_error() . "<p>" . $sql);
 
@@ -421,8 +418,7 @@ if($g5_shop_install) {
         $data_path.'/content',
         $data_path.'/event',
         $data_path.'/faq',
-        $data_path.'/item',
-        $data_path.'/onlinecalc'
+        $data_path.'/item'
     );
 
     for ($i=0; $i<count($dir_arr); $i++) {
@@ -496,7 +492,6 @@ if($g5_shop_install) {
     fwrite($f, "\$g5['g5_shop_item_qa_table'] = G5_SHOP_TABLE_PREFIX.'item_qa'; // 상품 질문답변 테이블\n");
     fwrite($f, "\$g5['g5_shop_item_relation_table'] = G5_SHOP_TABLE_PREFIX.'item_relation'; // 관련 상품 테이블\n");
     fwrite($f, "\$g5['g5_shop_new_win_table'] = G5_SHOP_TABLE_PREFIX.'new_win'; // 새창 테이블\n");
-    fwrite($f, "\$g5['g5_shop_onlinecalc_table'] = G5_SHOP_TABLE_PREFIX.'onlinecalc'; // 온라인견적 테이블\n");
     fwrite($f, "\$g5['g5_shop_order_table'] = G5_SHOP_TABLE_PREFIX.'order'; // 주문서 테이블\n");
     fwrite($f, "\$g5['g5_shop_order_delete_table'] = G5_SHOP_TABLE_PREFIX.'order_delete'; // 주문서 삭제 테이블\n");
     fwrite($f, "\$g5['g5_shop_wish_table'] = G5_SHOP_TABLE_PREFIX.'wish'; // 보관함(위시리스트) 테이블\n");
