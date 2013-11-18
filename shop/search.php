@@ -130,12 +130,12 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         </form>
 
         <ul id="ssch_sort">
-            <li><a href="#" class="btn01" onclick="set_sort('it_sum_qty', 'desc'); return false;">판매량 많은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_price', 'asc'); return false;">가격 낮은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_price', 'desc'); return false;">가격 높은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_use_avg', 'desc'); return false;">평점 높은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_use_cnt', 'desc'); return false;">사용후기 많은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_update_time', 'desc'); return false;">최근 등록순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_sum_qty', 'desc'); return false;">판매많은순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_price', 'asc'); return false;">낮은가격순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_price', 'desc'); return false;">높은가격순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_use_avg', 'desc'); return false;">평점높은순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_use_cnt', 'desc'); return false;">후기많은순</a></li>
+            <li><a href="#" class="btn01" onclick="set_sort('it_update_time', 'desc'); return false;">최근등록순</a></li>
         </ul>
 
         <div id="ssch_ov">
