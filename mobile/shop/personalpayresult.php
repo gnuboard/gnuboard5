@@ -86,7 +86,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                 </tr>
                 <tr>
                     <th scope="row">결제일시</th>
-                    <td><?php echo $pp['pp_receipt_time']; ?></td>
+                    <td><?php echo is_null_time($pp['pp_receipt_time']) ? '' : $pp['pp_receipt_time']; ?></td>
                 </tr>
                 <?php
                 }
