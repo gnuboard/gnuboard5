@@ -63,7 +63,7 @@ function get_order_settle_sum($date)
     // 결제수단별 합계
     foreach($case as $val)
     {
-        $sql = " select sum(od_cart_price + od_send_cost + od_send_cost2) as price,
+        $sql = " select sum(od_cart_price + od_send_cost + od_send_cost2 - od_cart_coupon - od_coupon - od_send_coupon) as price,
                         count(*) as cnt
                     from {$g5['g5_shop_order_table']}
                     where SUBSTRING(od_time, 1, 10) = '$date'
