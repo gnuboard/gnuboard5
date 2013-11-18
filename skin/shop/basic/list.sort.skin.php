@@ -17,7 +17,7 @@ $sct_sort_href .= '&amp;sort=';
 <section id="sct_sort">
     <h2>상품 정렬</h2>
 
-    <ul>
+    <!-- <ul>
         <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=asc" class="btn01">낮은가격순</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=desc" class="btn01">높은가격순</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_name&amp;sortodr=asc" class="btn01">상품명순</a></li>
@@ -26,6 +26,24 @@ $sct_sort_href .= '&amp;sort=';
         <li><a href="<?php echo $sct_sort_href; ?>it_type3&amp;sortodr=desc" class="btn01">최신상품</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_type4&amp;sortodr=desc" class="btn01">인기상품</a></li>
         <li><a href="<?php echo $sct_sort_href; ?>it_type5&amp;sortodr=desc" class="btn01">할인상품</a></li>
+    </ul> -->
+    <ul id="ssch_sort">
+        <li><a href="<?php echo $sct_sort_href; ?>it_sum_qty&amp;sortodr=desc" class="btn01">판매많은순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=asc" class="btn01">낮은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=desc" class="btn01">높은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_use_avg&amp;sortodr=desc" class="btn01">평점높은순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_use_cnt&amp;sortodr=desc" class="btn01">후기많은순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_update_time&amp;sortodr=desc" class="btn01">최근등록순</a></li>
     </ul>
 </section>
+
+<script>
+function set_sort(qsort, qorder)
+{
+    var f = document.frmdetailsearch;
+    f.qsort.value = qsort;
+    f.qorder.value = qorder;
+    f.submit();
+}
+</script>
 <!-- } 상품 정렬 선택 끝 -->
