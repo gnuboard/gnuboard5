@@ -429,6 +429,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_sc_price` int(11) NOT NULL DEFAULT '0',
   `it_sc_minimum` int(11) NOT NULL DEFAULT '0',
   `it_sc_qty` int(11) NOT NULL DEFAULT '0',
+  `it_buy_min_qty` int(11) NOT NULL DEFAULT '0',
+  `it_buy_max_qty` int(11) NOT NULL DEFAULT '0',
   `it_head_html` text NOT NULL,
   `it_tail_html` text NOT NULL,
   `it_mobile_head_html` text NOT NULL,
