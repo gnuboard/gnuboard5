@@ -21,7 +21,7 @@ function get_order_status_sum($status)
     global $g5;
 
     $sql = " select count(*) as cnt,
-                    sum(od_cart_price + od_send_cost + od_send_cost2 - od_cancel_price - od_cart_coupon - od_coupon - od_send_coupon) as price
+                    sum(od_cart_price + od_send_cost + od_send_cost2 - od_cancel_price) as price
                 from {$g5['g5_shop_order_table']}
                 where od_status = '$status' ";
     $row = sql_fetch($sql);
