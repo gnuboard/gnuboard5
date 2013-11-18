@@ -35,7 +35,7 @@ if ($config['cf_include_tail']) {
 </div>
 
 <?php
-if(!G5_IS_MOBILE) {
+if(G5_USE_MOBILE && !G5_IS_MOBILE) {
     $seq = 0;
     $href = $_SERVER['PHP_SELF'];
     if($_SERVER['QUERY_STRING']) {
