@@ -437,6 +437,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_mobile_tail_html` text NOT NULL,
   `it_hit` int(11) NOT NULL DEFAULT '0',
   `it_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `it_update_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `it_ip` varchar(25) NOT NULL DEFAULT '',
   `it_order` int(11) NOT NULL DEFAULT '0',
   `it_tel_inq` tinyint(4) NOT NULL DEFAULT '0',
