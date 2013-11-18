@@ -268,6 +268,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_settle_max_point` int(11) NOT NULL DEFAULT '0',
   `de_settle_point_unit` int(11) NOT NULL DEFAULT '0',
   `de_level_sell` int(11) NOT NULL DEFAULT '0',
+  `de_delivery_company` varchar(255) NOT NULL DEFAULT '',
   `de_send_cost_case` varchar(255) NOT NULL DEFAULT '',
   `de_send_cost_limit` varchar(255) NOT NULL DEFAULT '',
   `de_send_cost_list` varchar(255) NOT NULL DEFAULT '',
