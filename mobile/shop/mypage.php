@@ -63,8 +63,10 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             <table>
             <thead>
             <tr>
-                <th scope="col">이미지</th>
+                <th scope="col" rowspan="2">이미지</th>
                 <th scope="col">상품명</th>
+            </tr>
+            <tr>
                 <th scope="col">보관일</th>
             </tr>
             </thead>
@@ -84,8 +86,10 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             ?>
 
             <tr>
-                <td class="smb_my_img"><?php echo $image; ?></td>
+                <td rowspan="2" class="smb_my_img"><?php echo $image; ?></td>
                 <td><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
+            </tr>
+            <tr>
                 <td class="td_datetime"><?php echo substr($row['wi_time'], 2, 8); ?></td>
             </tr>
 
