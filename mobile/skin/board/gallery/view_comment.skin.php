@@ -141,7 +141,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
     <script>
     var save_before = '';
-    var save_html;
+    var save_html = document.getElementById('bo_vc_w').innerHTML;
 
     function good_and_write()
     {
@@ -260,14 +260,10 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         else
             el_id = 'bo_vc_w';
 
-        if(!save_html)
-            save_html = document.getElementById(el_id).innerHTML;
-
         if (save_before != el_id)
         {
             if (save_before)
             {
-                save_html = document.getElementById(save_before).innerHTML;
                 document.getElementById(save_before).style.display = 'none';
                 document.getElementById(save_before).innerHTML = '';
             }
@@ -290,6 +286,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             document.getElementById('w').value = work;
 
             save_before = el_id;
+
+            $("#captcha_reload").trigger("click");
         }
     }
 
