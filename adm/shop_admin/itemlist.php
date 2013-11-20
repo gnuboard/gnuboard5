@@ -200,7 +200,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </tr>
     <tr<?php echo ' '.$tr_bg; ?>>
         <td headers="" class="td_input"><input type="text" name="it_mobile_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_mobile_name'],250, "")); ?>" class="frm_input" size="30"></td>
-        <td headers="th_pt" class="td_numbig td_input"><input type="text" name="it_point[<?php echo $i; ?>]" value="<?php echo $row['it_point']; ?>" class="frm_input sit_pt" size="7"></td>
+        <td headers="th_pt" class="td_numbig td_input"><?php echo number_format(get_item_point($row)); ?></td>
         <td headers="th_qty" class="td_numbig td_input"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input sit_qty" size="7"></td>
     </tr>
     <?php
