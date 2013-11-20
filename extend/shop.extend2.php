@@ -709,4 +709,13 @@ if(!sql_query(" select it_update_time from {$g5['g5_shop_item_table']} limit 1 "
     sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
                     ADD `it_update_time` DATETIME NOT NULL AFTER `it_time` ", true);
 }
+
+// de_mobile_search_list_skin 추가
+if(!sql_query(" select de_mobile_search_list_skin from {$g5['g5_shop_default_table']} ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_mobile_search_list_skin` varchar(255) NOT NULL DEFAULT '' AFTER `de_search_img_height`,
+                    ADD `de_mobile_search_list_mod` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_search_list_skin`,
+                    ADD `de_mobile_search_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_search_list_mod`,
+                    ADD `de_mobile_search_img_height` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_search_img_width` ", true);
+}
 ?>
