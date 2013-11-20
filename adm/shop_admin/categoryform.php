@@ -219,7 +219,7 @@ $pg_anchor .= '</ul>';
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="ca_mobile_list_row">모바일 이미지 수</label></th>
+            <th scope="row"><label for="ca_mobile_list_mod">모바일 이미지 수</label></th>
             <td>
                 <?php echo help("한 페이지에 출력할 이미지 수를 설정합니다."); ?>
                 <input type="text" name="ca_mobile_list_mod" value='<?php echo $ca['ca_mobile_list_mod']; ?>' id="ca_mobile_list_mod" required class="required frm_input" size="3">
