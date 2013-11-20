@@ -23,7 +23,6 @@ if ($_POST['act_button'] == "선택수정") {
                        it_mobile_name = '{$_POST['it_mobile_name'][$k]}',
                        it_cust_price  = '{$_POST['it_cust_price'][$k]}',
                        it_price       = '{$_POST['it_price'][$k]}',
-                       it_point       = '{$_POST['it_point'][$k]}',
                        it_stock_qty   = '{$_POST['it_stock_qty'][$k]}',
                        it_use         = '{$_POST['it_use'][$k]}',
                        it_order       = '{$_POST['it_order'][$k]}',
