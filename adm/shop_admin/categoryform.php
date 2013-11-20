@@ -251,7 +251,7 @@ $pg_anchor .= '</ul>';
     </div>
 </section>
 
-<section id="frm_scatefrm_optional">
+<section id="anc_scatefrm_optional">
     <h2 class="h2_frm">선택 입력</h2>
     <?php echo $pg_anchor; ?>
 
