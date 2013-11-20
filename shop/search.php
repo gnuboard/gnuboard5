@@ -37,17 +37,6 @@ if ($q) {
         $word = trim($arr[$i]);
         if (!$word) continue;
     
-        /*
-        $or = array();
-        if ($search_all || $qname) 
-            $or[] = " a.it_name like '%$word%' ";
-        if ($search_all || $qexplan)
-            $or[] = " a.it_explan2 like '%$word%' "; // tag 를 제거한 상품설명을 검색한다.
-        if ($search_all || $qid)
-            $or[] = " a.it_id like '%$word%' ";
-        
-        $detail_where[] = "(" . implode(" or ", $or) . ")";
-        */
         $concat = array();
         if ($search_all || $qname) 
             $concat[] = "a.it_name";
@@ -97,11 +86,16 @@ $sql = " select COUNT(*) as cnt $sql_common $sql_where ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 $total_page  = ceil($total_count / $items); // 전체 페이지 계산
+
+if ($is_admin) {
+    echo '<div class="sit_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/configform.php#anc_scf_etc'.'" class="btn_admin">검색 설정</a></div>';
+}
 ?>
 
-<!-- 검색결과 시작 { -->
+<!-- 검색 시작 { -->
 <div id="ssch">
 
+    <!-- 상세검색 항목 시작 { -->
     <div id="ssch_frm">
         <form name="frmdetailsearch">
         <input type="hidden" name="qsort" id="qsort" value="<?php echo $qsort ?>">
@@ -142,7 +136,9 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
             검색 결과 <b><?php echo $total_count; ?></b>건
         </div>
     </div>
+    <!-- } 상세검색 항목 끝 -->
 
+    <!-- 검색된 분류 시작 { -->
     <div id="ssch_cate">
         <ul>
         <?php
@@ -157,7 +153,9 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         ?>
         </ul>
     </div>
+    <!-- } 검색된 분류 끝 -->
 
+    <!-- 검색결과 시작 { -->
     <div>
         <?php
         // 리스트 유형별로 출력
@@ -167,8 +165,6 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
             $list = new item_list($default['de_search_list_skin'], $default['de_search_list_mod'], $default['de_search_list_row'], $default['de_search_img_width'], $default['de_search_img_height']);
             $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
             $list->set_is_page(true);
-            //$list->set_order_by($order_by);
-            //$list->set_from_record($from_record);
             $list->set_view('it_img', true);
             $list->set_view('it_id', true);
             $list->set_view('it_name', true);
@@ -178,20 +174,11 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
             $list->set_view('it_icon', true);
             $list->set_view('sns', true);
             echo $list->run();
-
-            /*
-            // where 된 전체 상품수
-            $sql = " select count(*) as cnt $sql_common $sql_where ";
-            $row = sql_fetch($sql);
-            $total_count = $row['cnt'];
-            // 전체 페이지 계산
-            $total_page  = ceil($total_count / $items);
-            */
         }
         else
         {
             $i = 0;
-            $error = '<p class="sct_nofile">'.$ca['ca_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
+            $error = '<p class="sct_nofile">'.$list_file.' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
         }
 
         if ($i==0)
@@ -204,9 +191,10 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$query_string.'&amp;page=');
         ?>
     </div>
+    <!-- } 검색결과 끝 -->
 
 </div>
-<!-- } 검색결과 끝 -->
+<!-- } 검색 끝 -->
 
 <script>
 function set_sort(qsort, qorder)
