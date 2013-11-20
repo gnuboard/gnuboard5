@@ -168,15 +168,6 @@ $pg_anchor .= '</ul>';
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
-            <td>
-                <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_MSHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
-                <select id="ca_mobile_skin" name="ca_mobile_skin">
-                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $ca['ca_mobile_skin']); ?>
-                </select>
-            </td>
-        </tr>
-        <tr>
             <th scope="row"><label for="ca_img_width">출력이미지 폭</label></th>
             <td>
                 <?php echo help("쇼핑몰환경설정 &gt; 이미지(소) 넓이가 기본값으로 설정됩니다.\n".G5_SHOP_URL."/list.php에서 출력되는 이미지의 폭입니다."); ?>
@@ -202,6 +193,15 @@ $pg_anchor .= '</ul>';
             <td>
                 <?php echo help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에서 표시하는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다."); ?>
                 <input type="text" name="ca_list_row" value='<?php echo $ca['ca_list_row']; ?>' id="ca_list_row" required class="required frm_input" size="3"> 줄
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
+            <td>
+                <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_MSHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
+                <select id="ca_mobile_skin" name="ca_mobile_skin">
+                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $ca['ca_mobile_skin']); ?>
+                </select>
             </td>
         </tr>
         <tr>
