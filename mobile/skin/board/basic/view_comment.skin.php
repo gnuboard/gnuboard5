@@ -285,9 +285,10 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             document.getElementById('comment_id').value = comment_id;
             document.getElementById('w').value = work;
 
-            save_before = el_id;
+            if(save_before)
+                $("#captcha_reload").trigger("click");
 
-            $("#captcha_reload").trigger("click");
+            save_before = el_id;
         }
     }
 

@@ -293,9 +293,10 @@ function comment_box(comment_id, work)
         document.getElementById('comment_id').value = comment_id;
         document.getElementById('w').value = work;
 
-        save_before = el_id;
+        if(save_before)
+            $("#captcha_reload").trigger("click");
 
-        $("#captcha_reload").trigger("click");
+        save_before = el_id;
     }
 }
 
