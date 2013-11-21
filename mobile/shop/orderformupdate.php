@@ -610,7 +610,7 @@ if($is_member) {
 
     if($row['ad_id']){
         $sql = " update {$g5['g5_shop_order_address_table']}
-                      set ad_default = '1',
+                      set ad_default = '$ad_default',
                           ad_subject = '$ad_subject'
                     where mb_id = '{$member['mb_id']}'
                       and ad_id = '{$row['ad_id']}' ";

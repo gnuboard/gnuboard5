@@ -151,12 +151,12 @@
 #bo_v_title {padding:0 10px 10px;font-size:1.2em}
 
 #bo_v_info {padding:0 10px 10px;border-bottom:1px solid #ddd}
-#bo_v_info h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_info h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #bo_v_info {}
 #bo_v_info strong {display:inline-block;margin:0 0 0 5px;font-weight:normal}
 
 #bo_v_file {}
-#bo_v_file h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_file h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #bo_v_file ul {margin:0;padding:0;list-style:none}
 #bo_v_file li {padding:0 10px;border-bottom:1px solid #eee;background:#f7f7f7}
 #bo_v_file a {display:inline-block;padding:5px 0;color:#000;text-decoration:none}
@@ -164,21 +164,29 @@
 .bo_v_file_cnt {display:inline-block;margin:0 10px}
 
 #bo_v_link {}
-#bo_v_link h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_link h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #bo_v_link ul {margin:0;padding:0;list-style:none}
 #bo_v_link li {padding:0 10px;border-bottom:1px solid #eee;background:#f7f7f7}
 #bo_v_link a {display:inline-block;padding:5px 0;color:#000;text-decoration:none}
 #bo_v_link a:focus, #bo_v_link a:hover, #bo_v_link a:active {text-decoration:none}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
 
+#bo_v_contact {border-bottom:1px solid #ddd}
+#bo_v_contact h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
+#bo_v_contact dl {margin:0;padding:0;list-style:none}
+#bo_v_contact dl:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_contact dt, #bo_v_contact dd {float:left;margin:0;border-bottom:1px solid #eee;background:#f5f6fa}
+#bo_v_contact dt {clear:both;padding:8px 0 8px 10%;width:20%;font-weight:bold}
+#bo_v_contact dd {padding:8px 0;width:70%}
+
 #bo_v_top {margin:0 0 10px;padding:10px}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_v_top h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_top h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #bo_v_top ul {margin:0;padding:0;list-style:none}
 
 #bo_v_bot {padding:0 10px}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_v_bot h2 {margin:0;padding:0;height:0;overflow:hidden}
+#bo_v_bot h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #bo_v_bot ul {margin:0;padding:0;list-style:none}
 
 .bo_v_nb {float:left}
