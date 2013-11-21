@@ -49,16 +49,18 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
     <?php } ?>
 
     <?php if($view['email'] || $view['hp']) { ?>
-    <section id="bo_v_info">
+    <section id="bo_v_contact">
         <h2>연락처정보</h2>
-        <ul>
+        <dl>
             <?php if($view['email']) { ?>
-            <li>이메일 : <?php echo $view['email']; ?></li>
+            <dt>이메일</dt>
+            <dd><?php echo $view['email']; ?></dd>
             <?php } ?>
             <?php if($view['hp']) { ?>
-            <li>휴대폰 : <?php echo $view['hp']; ?></li>
+            <dt>휴대폰</dt>
+            <dd><?php echo $view['hp']; ?></dd>
             <?php } ?>
-        </ul>
+        </dl>
     </section>
     <?php } ?>
 
