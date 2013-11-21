@@ -48,6 +48,22 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
     <!-- } 첨부파일 끝 -->
     <?php } ?>
 
+    <?php if($view['email'] || $view['hp']) { ?>
+    <section id="bo_v_contact">
+        <h2>연락처정보</h2>
+        <dl>
+            <?php if($view['email']) { ?>
+            <dt>이메일</dt>
+            <dd><?php echo $view['email']; ?></dd>
+            <?php } ?>
+            <?php if($view['hp']) { ?>
+            <dt>휴대폰</dt>
+            <dd><?php echo $view['hp']; ?></dd>
+            <?php } ?>
+        </dl>
+    </section>
+    <?php } ?>
+
     <!-- 게시물 상단 버튼 시작 { -->
     <div id="bo_v_top">
         <?php
