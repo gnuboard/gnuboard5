@@ -543,6 +543,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item_qa` (
   `mb_id` varchar(255) NOT NULL DEFAULT '',
   `iq_secret` tinyint(4) NOT NULL DEFAULT '0',
   `iq_name` varchar(255) NOT NULL DEFAULT '',
+  `iq_email` varchar(255) NOT NULL DEFAULT '',
+  `iq_hp` varchar(255) NOT NULL DEFAULT '',
   `iq_password` varchar(255) NOT NULL DEFAULT '',
   `iq_subject` varchar(255) NOT NULL DEFAULT '',
   `iq_question` text NOT NULL,

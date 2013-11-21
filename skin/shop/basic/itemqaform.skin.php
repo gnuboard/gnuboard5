@@ -28,6 +28,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="iq_email">이메일</label></th>
+            <td><input type="text" name="iq_email" value="<?php echo $qa['iq_email']; ?>" class="frm_input" size="30"> 이메일을 입력하시면 답변 등록 시 답변이 이메일로 전송됩니다.</td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="iq_hp">휴대폰</label></th>
+            <td><input type="text" name="iq_hp" value="<?php echo $qa['iq_hp']; ?>" class="frm_input" size="20"> 휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</td>
+        </tr>
+        <tr>
             <th scope="row"><label for="iq_subject">제목</label></th>
             <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
         </tr>
@@ -41,6 +49,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <div class="btn_win">
         <input type="submit" value="작성완료" class="btn_submit">
+        <button type="button" onclick="self.close();">닫기</button>
     </div>
     </form>
 </div>

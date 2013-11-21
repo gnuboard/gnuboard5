@@ -28,6 +28,8 @@ if ($w == "")
                    mb_id = '{$member['mb_id']}',
                    iq_secret = '$iq_secret',
                    iq_name  = '$iq_name',
+                   iq_email = '$iq_email',
+                   iq_hp = '$iq_hp',
                    iq_password  = '$iq_password',
                    iq_subject  = '$iq_subject',
                    iq_question = '$iq_question',
@@ -49,6 +51,8 @@ else if ($w == "u")
 
     $sql = " update {$g5['g5_shop_item_qa_table']}
                 set iq_secret = '$iq_secret',
+                    iq_email = '$iq_email',
+                    iq_hp = '$iq_hp',
                     iq_subject = '$iq_subject',
                     iq_question = '$iq_question'
               where iq_id = '$iq_id' ";

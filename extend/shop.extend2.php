@@ -724,4 +724,11 @@ if(!sql_query(" select iq_secret from {$g5['g5_shop_item_qa_table']} limit 1 ", 
     sql_query(" ALTER TABLE `{$g5['g5_shop_item_qa_table']}`
                     ADD `iq_secret` tinyint(4) NOT NULL DEFAULT '0' AFTER `mb_id` ", true);
 }
+
+// 상품문의 이메일 휴대폰 필드 추가
+if(!sql_query(" select iq_hp from {$g5['g5_shop_item_qa_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_qa_table']}`
+                    ADD `iq_email` varchar(255) NOT NULL DEFAULT '' AFTER `iq_name`,
+                    ADD `iq_hp` varchar(255) NOT NULL DEFAULT '' AFTER `iq_email` ", true);
+}
 ?>
