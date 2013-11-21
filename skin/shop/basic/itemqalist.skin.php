@@ -33,29 +33,41 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     <?php
     $thumbnail_width = 500;
+    $num = $total_count - ($page - 1) * $rows;
 
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $num = $total_count - ($page - 1) * $rows - $i;
-        $star = get_star($row['is_score']);
+        $iq_subject = conv_subject($row['iq_subject'],50,"…");
 
-        $small_image = $row['it_id'];
+        $is_secret = false;
+        if($row['iq_secret']) {
+            $iq_subject .= ' <img src="'.G5_SHOP_SKIN_URL.'/img/icon_secret.png">';
+
+            if($is_admin || $member['mb_id' ] == $row['mb_id']) {
+                $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
+            } else {
+                $iq_question = '비밀글로 보호된 문의입니다.';
+                $is_secret = true;
+            }
+        } else {
+            $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
+        }
 
         $it_href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
-        $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
-
-        if ($row['iq_answer'])
-        {
-            $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
-            $iq_stats = '답변완료';
-            $iq_style = 'sit_qaa_done';
-            $is_answer = true;
-        } else {
-            $iq_stats = '답변전';
-            $iq_style = 'sit_qaa_yet';
-            $iq_answer = '답변이 등록되지 않았습니다.';
-            $is_answer = false;
+        if(!$is_secret) {
+            if ($row['iq_answer'])
+            {
+                $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
+                $iq_stats = '답변완료';
+                $iq_style = 'sit_qaa_done';
+                $is_answer = true;
+            } else {
+                $iq_stats = '답변전';
+                $iq_style = 'sit_qaa_yet';
+                $iq_answer = '답변이 등록되지 않았습니다.';
+                $is_answer = false;
+            }
         }
 
         if ($i == 0) echo '<ol>';
@@ -64,13 +76,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
         <div class="sqa_img">
             <a href="<?php echo $it_href; ?>">
-                <?php echo get_it_image($small_image, 70, 70); ?>
+                <?php echo get_it_image($row['it_id'], 70, 70); ?>
                 <span><?php echo $row['it_name']; ?></span>
             </a>
         </div>
 
         <section class="sqa_section">
-            <h2><?php echo $row['iq_subject']; ?></h2>
+            <h2><?php echo $iq_subject; ?></h2>
 
             <dl class="sqa_dl">
                 <dt>작성자</dt>
@@ -86,17 +98,22 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                     <strong>문의내용</strong><br>
                     <?php echo $iq_question; // 상품 문의 내용 ?>
                 </div>
+                <?php if(!$is_secret) { ?>
                 <div class="sit_qa_qaa">
                     <strong>답변</strong><br>
                     <?php echo $iq_answer; ?>
                 </div>
+                <?php } ?>
             </div>
 
             <div class="sqa_con_btn"><button class="sqa_con_<?php echo $i; ?>">보기</button></div>
         </section>
 
     </li>
-    <?php }
+    <?php
+        $num--;
+    }
+
     if ($i > 0) echo '</ol>';
     if ($i == 0) echo '<p id="sqa_empty">자료가 없습니다.</p>';
     ?>

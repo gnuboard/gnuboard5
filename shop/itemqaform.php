@@ -16,6 +16,8 @@ $w     = escape_trim($_REQUEST['w']);
 $it_id = escape_trim($_REQUEST['it_id']);
 $iq_id = escape_trim($_REQUEST['iq_id']);
 
+$chk_secret = '';
+
 if ($w == "u")
 {
     $qa = sql_fetch(" select * from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' ");
@@ -28,6 +30,9 @@ if ($w == "u")
     if (!$iq_admin && $qa['mb_id'] != $member['mb_id']) {
         alert_close("자신의 상품문의만 수정이 가능합니다.");
     }
+
+    if($qa['iq_secret'])
+        $chk_secret = 'checked="checked"';
 }
 
 include_once(G5_PATH.'/head.sub.php');

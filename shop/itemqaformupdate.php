@@ -26,6 +26,7 @@ if ($w == "")
     $sql = "insert {$g5['g5_shop_item_qa_table']}
                set it_id = '$it_id',
                    mb_id = '{$member['mb_id']}',
+                   iq_secret = '$iq_secret',
                    iq_name  = '$iq_name',
                    iq_password  = '$iq_password',
                    iq_subject  = '$iq_subject',
@@ -47,7 +48,8 @@ else if ($w == "u")
     }
 
     $sql = " update {$g5['g5_shop_item_qa_table']}
-                set iq_subject = '$iq_subject',
+                set iq_secret = '$iq_secret',
+                    iq_subject = '$iq_subject',
                     iq_question = '$iq_question'
               where iq_id = '$iq_id' ";
     sql_query($sql);

@@ -21,6 +21,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </colgroup>
         <tbody>
         <tr>
+            <th scope="row">옵션</th>
+            <td>
+                <input type="checkbox" name="iq_secret" value="1" <?php echo $chk_secret; ?>>
+                <label for="iq_secret">비밀글</label>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="iq_subject">제목</label></th>
             <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
         </tr>

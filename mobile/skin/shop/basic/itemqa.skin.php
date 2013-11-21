@@ -11,14 +11,26 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <?php
     $thumbnail_width = 500;
+    $iq_num     = $total_count - ($page - 1) * $rows;
 
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $iq_num     = $total_count - ($page - 1) * $rows - $i;
-        $iq_star    = get_star($row['iq_score']);
         $iq_name    = get_text($row['iq_name']);
         $iq_subject = conv_subject($row['iq_subject'],50,"…");
-        $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
+
+        $is_secret = false;
+        if($row['iq_secret']) {
+            $iq_subject .= ' <img src="'.G5_SHOP_SKIN_URL.'/img/icon_secret.png">';
+
+            if($is_admin || $member['mb_id' ] == $row['mb_id']) {
+                $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
+            } else {
+                $iq_question = '비밀글로 보호된 문의입니다.';
+                $is_secret = true;
+            }
+        } else {
+            $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
+        }
         $iq_time    = substr($row['iq_time'], 2, 8);
 
         $hash = md5($row['iq_id'].$row['iq_time'].$row['iq_ip']);
@@ -26,17 +38,19 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         $iq_stats = '';
         $iq_style = '';
         $iq_answer = '';
-        if ($row['iq_answer'])
-        {
-            $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
-            $iq_stats = '답변완료';
-            $iq_style = 'sit_qaa_done';
-            $is_answer = true;
-        } else {
-            $iq_stats = '답변전';
-            $iq_style = 'sit_qaa_yet';
-            $iq_answer = '답변이 등록되지 않았습니다.';
-            $is_answer = false;
+        if(!$is_secret) {
+            if ($row['iq_answer'])
+            {
+                $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
+                $iq_stats = '답변완료';
+                $iq_style = 'sit_qaa_done';
+                $is_answer = true;
+            } else {
+                $iq_stats = '답변전';
+                $iq_style = 'sit_qaa_yet';
+                $iq_answer = '답변이 등록되지 않았습니다.';
+                $is_answer = false;
+            }
         }
 
         if ($i == 0) echo '<ol id="sit_qa_ol">';
@@ -59,10 +73,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                         <strong>문의내용</strong><br>
                         <?php echo $iq_question; // 상품 문의 내용 ?>
                     </div>
+                    <?php if(!$is_secret) { ?>
                     <div class="sit_qa_qaa">
                         <strong>답변</strong><br>
                         <?php echo $iq_answer; ?>
                     </div>
+                    <?php } ?>
                 </div>
 
                 <?php if ($is_admin || ($row['mb_id'] == $member['mb_id'] && !$is_answer)) { ?>
@@ -76,7 +92,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             </div>
         </li>
 
-    <?php }
+    <?php
+        $iq_num--;
+    }
 
     if ($i >= 0) echo '</ol>';
 
