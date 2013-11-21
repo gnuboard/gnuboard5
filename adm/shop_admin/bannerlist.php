@@ -89,7 +89,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
             <a href="./bannerformupdate.php?w=d&amp;bn_id=<?php echo $row['bn_id']; ?>" onclick="return delete_confirm();">삭제</a>
         </td>
     </tr>
-    <tr<?php echo ' '.$tr_bg; ?>>
+    <tr class="<?php echo $tr_bg; ?>">
         <td headers="th_img" colspan="6" class="td_img_view"><?php echo $bn_img; ?></td>
     </tr>
 
