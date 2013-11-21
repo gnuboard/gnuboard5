@@ -230,140 +230,141 @@ if(openwin != null) {
             <h3>결제정보</h3>
 
             <div class="tbl_head01 tbl_wrap">
-            <table>
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row">주문번호</th>
-                <td><?php echo $od_id; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">주문일시</th>
-                <td><?php echo $od['od_time']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">결제방식</th>
-                <td><?php echo $od['od_settle_case']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">결제금액</th>
-                <td><?php echo $od_receipt_price; ?></td>
-            </tr>
-            <?php
-            if($od['od_receipt_price'] > 0)
-            {
-            ?>
-            <tr>
-                <th scope="row">결제일시</th>
-                <td><?php echo $od['od_receipt_time']; ?></td>
-            </tr>
-            <?php
-            }
-
-            // 승인번호, 휴대폰번호, KCP 거래번호
-            if($app_no_subj)
-            {
-            ?>
-            <tr>
-                <th scope="row"><?php echo $app_no_subj; ?></th>
-                <td><?php echo $app_no; ?></td>
-            </tr>
-            <?php
-            }
-
-            // 계좌정보
-            if($disp_bank)
-            {
-            ?>
-            <tr>
-                <th scope="row">입금자명</th>
-                <td><?php echo $od['od_deposit_name']; ?></td>
-            </tr>
-            <tr>
-                <th scope="row">입금계좌</th>
-                <td><?php echo $od['od_bank_account']; ?></td>
-            </tr>
-            <?php
-            }
-
-            if($disp_receipt) {
-            ?>
-            <tr>
-                <th scope="row">영수증</th>
-                <td>
-                    <?php
-                    if($od['od_settle_case'] == '휴대폰')
-                    {
-                    ?>
-                    <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
-                    <?php
-                    }
-
-                    if($od['od_settle_case'] == '신용카드')
-                    {
-                    ?>
-                    <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
-                    <?php
-                    }
-                    ?>
-                <td>
-                </td>
-            </tr>
-            <?php
-            }
-
-            if ($od['od_receipt_point'] > 0)
-            {
-            ?>
-            <tr>
-                <th scope="row">포인트사용</th>
-                <td><?php echo display_point($od['od_receipt_point']); ?></td>
-            </tr>
-
-            <?php
-            }
-
-            if ($od['od_cancel_price'] > 0)
-            {
-            ?>
-            <tr>
-                <th scope="row">취소/환불 금액</th>
-                <td><?php echo display_price($od['od_cancel_price']); ?></td>
-            </tr>
-            <?php
-            }
-
-            // 현금영수증 발급을 사용하는 경우에만
-            if ($default['de_taxsave_use']) {
-                // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-                if ($misu_price == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
-            ?>
-            <tr>
-                <th scope="row">현금영수증</th>
-                <td>
+                <table>
+                <colgroup>
+                    <col class="grid_3">
+                    <col>
+                </colgroup>
+                <tbody>
+                <tr>
+                    <th scope="row">주문번호</th>
+                    <td><?php echo $od_id; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">주문일시</th>
+                    <td><?php echo $od['od_time']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">결제방식</th>
+                    <td><?php echo $od['od_settle_case']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">결제금액</th>
+                    <td><?php echo $od_receipt_price; ?></td>
+                </tr>
                 <?php
-                if ($od['od_cash'])
+                if($od['od_receipt_price'] > 0)
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');" class="btn_frmline">현금영수증 확인하기</a>
+                <tr>
+                    <th scope="row">결제일시</th>
+                    <td><?php echo $od['od_receipt_time']; ?></td>
+                </tr>
                 <?php
                 }
-                else
+
+                // 승인번호, 휴대폰번호, KCP 거래번호
+                if($app_no_subj)
                 {
                 ?>
-                    <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');" class="btn_frmline">현금영수증을 발급하시려면 클릭하십시오.</a>
-                <?php } ?>
-                </td>
-            </tr>
-            <?php
+                <tr>
+                    <th scope="row"><?php echo $app_no_subj; ?></th>
+                    <td><?php echo $app_no; ?></td>
+                </tr>
+                <?php
                 }
-            }
-            ?>
-            </tbody>
-            </table>
+
+                // 계좌정보
+                if($disp_bank)
+                {
+                ?>
+                <tr>
+                    <th scope="row">입금자명</th>
+                    <td><?php echo $od['od_deposit_name']; ?></td>
+                </tr>
+                <tr>
+                    <th scope="row">입금계좌</th>
+                    <td><?php echo $od['od_bank_account']; ?></td>
+                </tr>
+                <?php
+                }
+
+                if($disp_receipt) {
+                ?>
+                <tr>
+                    <th scope="row">영수증</th>
+                    <td>
+                        <?php
+                        if($od['od_settle_case'] == '휴대폰')
+                        {
+                        ?>
+                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
+                        <?php
+                        }
+
+                        if($od['od_settle_case'] == '신용카드')
+                        {
+                        ?>
+                        <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
+                        <?php
+                        }
+                        ?>
+                    <td>
+                    </td>
+                </tr>
+                <?php
+                }
+
+                if ($od['od_receipt_point'] > 0)
+                {
+                ?>
+                <tr>
+                    <th scope="row">포인트사용</th>
+                    <td><?php echo display_point($od['od_receipt_point']); ?></td>
+                </tr>
+
+                <?php
+                }
+
+                if ($od['od_cancel_price'] > 0)
+                {
+                ?>
+                <tr>
+                    <th scope="row">취소/환불 금액</th>
+                    <td><?php echo display_price($od['od_cancel_price']); ?></td>
+                </tr>
+                <?php
+                }
+
+                // 현금영수증 발급을 사용하는 경우에만
+                if ($default['de_taxsave_use']) {
+                    // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
+                    if ($misu_price == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
+                ?>
+                <tr>
+                    <th scope="row">현금영수증</th>
+                    <td>
+                    <?php
+                    if ($od['od_cash'])
+                    {
+                    ?>
+                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');" class="btn_frmline">현금영수증 확인하기</a>
+                    <?php
+                    }
+                    else
+                    {
+                    ?>
+                        <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');" class="btn_frmline">현금영수증을 발급하시려면 클릭하십시오.</a>
+                    <?php } ?>
+                    </td>
+                </tr>
+                <?php
+                    }
+                }
+                ?>
+                </tbody>
+                </table>
+            </div>
         </section>
 
         <section id="sod_fin_orderer">
