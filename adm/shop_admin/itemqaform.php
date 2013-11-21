@@ -50,6 +50,18 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
         <th scope="row">이름</th>
         <td><?php echo $name; ?></td>
     </tr>
+    <?php if($iq['iq_email']) { ?>
+    <tr>
+        <th scope="row">이메일</th>
+        <td><?php echo get_text($iq['iq_email']); ?></td>
+    </tr>
+    <?php } ?>
+    <?php if($iq['iq_hp']) { ?>
+    <tr>
+        <th scope="row">휴대폰</th>
+        <td><?php echo get_text($iq['iq_hp']); ?></td>
+    </tr>
+    <?php } ?>
     <tr>
         <th scope="row"><label for="iq_subject">제목</label></th>
         <td><input type="text" name="iq_subject" value="<?php echo conv_subject($iq['iq_subject'],120); ?>" id="iq_subject" required class="frm_input required" size="95"></td>
