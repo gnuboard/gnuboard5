@@ -674,9 +674,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
 .sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #283646;background:#111}
 .sv_wrap .sv a {display:inline-block !important;margin:0 !important;padding:5px !important;width:94px;border-bottom:1px solid #283646;color:#fff !important}
-.sv_wrap a:focus,
-.sv_wrap a:hover,
-.sv_wrap a:active {text-decoration:none !important}
+.sv_wrap a:focus, .sv_wrap a:hover, .sv_wrap a:active {text-decoration:none !important}
 .sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important}
 .sv_nojs .sv {display:block}
 
