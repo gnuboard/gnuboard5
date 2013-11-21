@@ -644,6 +644,12 @@ $result = sql_query($sql);
 
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
+        <?php if($od['od_misu'] > 0) { ?>
+        <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
+        <?php } ?>
+        <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체')) { ?>
+        <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel"><?php echo $od['od_settle_case']; ?> 부분취소</a>
+        <?php } ?>
         <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
     </div>
     </form>
@@ -827,15 +833,6 @@ $result = sql_query($sql);
 
     </form>
 </section>
-
-<div class="btn_list03 btn_list">
-    <?php if($od['od_misu'] > 0) { ?>
-    <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
-    <?php } ?>
-    <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && $od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체') { ?>
-    <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel"><?php echo $od['od_settle_case']; ?> 부분취소</a>
-    <?php } ?>
-</div>
 
 <script>
 $(function() {
