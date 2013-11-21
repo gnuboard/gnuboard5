@@ -39,7 +39,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
     </div>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <input type="submit" value="작성완료" class="btn_submit">
     </div>
     </form>
