@@ -148,7 +148,8 @@ function content_scroll()
     }
     var mbh = $("#menu_button").outerHeight();
     var mlh = $("#menu_list").outerHeight(true);
-    var ch = sh;
+    var pad = parseInt($("#info_content").css("padding-bottom"));
+    var ch = sh - pad;
 
     $("#menu_button")
         .css("bottom", 0)
