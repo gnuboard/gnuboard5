@@ -176,7 +176,7 @@
 #bo_v_contact dl {margin:0;padding:0;list-style:none}
 #bo_v_contact dl:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_contact dt, #bo_v_contact dd {float:left;margin:0;border-bottom:1px solid #eee;background:#f5f6fa}
-#bo_v_contact dt {padding:8px 0 8px 10%;width:20%;font-weight:bold}
+#bo_v_contact dt {clear:both;padding:8px 0 8px 10%;width:20%;font-weight:bold}
 #bo_v_contact dd {padding:8px 0;width:70%}
 
 #bo_v_top {margin:0 0 10px;padding:10px}
