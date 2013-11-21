@@ -718,4 +718,10 @@ if(!sql_query(" select de_mobile_search_list_skin from {$g5['g5_shop_default_tab
                     ADD `de_mobile_search_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_search_list_mod`,
                     ADD `de_mobile_search_img_height` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_search_img_width` ", true);
 }
+
+// 상품문의 비밀글 필드 추가
+if(!sql_query(" select iq_secret from {$g5['g5_shop_item_qa_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_qa_table']}`
+                    ADD `iq_secret` tinyint(4) NOT NULL DEFAULT '0' AFTER `mb_id` ", true);
+}
 ?>
