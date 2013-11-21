@@ -57,12 +57,15 @@ $pg_anchor = '<ul class="anchor">
 <input type="hidden" name="stx" value="<?php echo $stx; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="popup" value="<?php echo $popup; ?>">
+<?php if($popup == 'yes') { ?>
+<input type="hidden" name="pp_use" value="1">
+<?php } ?>
 
 <?php echo $wrp_tag_st; ?>
 
     <section id="anc_spp_info">
         <h2 class="h2_frm">주문 정보</h2>
-        <?php echo $pg_anchor; ?>
+        <?php if($popup != 'yes') echo $pg_anchor; ?>
         <div class="local_desc02 local_desc">
             <p>주문 관련 기본 정보입니다.</p>
         </div>
@@ -108,6 +111,7 @@ $pg_anchor = '<ul class="anchor">
         <?php } ?>
     </div>
 
+    <?php if($popup != 'yes') { ?>
     <section id="anc_spp_pay" class="cbox">
         <h2>결제 정보</h2>
         <?php echo $pg_anchor; ?>
@@ -179,6 +183,7 @@ $pg_anchor = '<ul class="anchor">
         <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return del_confirm();">삭제</a>
         <?php } ?>
     </div>
+    <?php } ?>
 
 <?php echo $wrp_tag_end; ?>
 </form>

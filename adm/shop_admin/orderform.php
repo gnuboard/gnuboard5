@@ -860,7 +860,7 @@ $(function() {
     // 개인결제추가
     $("#personalpay_add").on("click", function() {
         var href = this.href;
-        window.open(href, "personalpaywin", "left=100, top=100, width=700, height=650, scrollbars=yes");
+        window.open(href, "personalpaywin", "left=100, top=100, width=700, height=560, scrollbars=yes");
         return false;
     });
 
