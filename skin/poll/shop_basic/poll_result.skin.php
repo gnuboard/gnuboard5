@@ -107,7 +107,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </aside>
     <!-- } 설문조사 다른 결과 보기 끝 -->
 
-    <div class="btn_win">
+    <div class="win_btn">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 </div>

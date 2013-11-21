@@ -562,9 +562,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 .btn_submit {padding:0 10px;height:2.6em;border:1px solid #333;background:#333;color:#fff;font-size:1em;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
 .btn_cancel {display:inline-block;padding:0 10px;height:2.6em;border:1px solid #ccc;background:#fafafa;color:#000;font-size:1em;text-decoration:none;line-height:2.6em}
 .btn_frmline {display:inline-block;padding:0 5px;height:1.9em;border:0;background:#333;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:middle;line-height:1.9em} /* 우편번호검색버튼 등 */
-.btn_win {clear:both;margin-bottom:15px;text-align:center} /* 새창용 */
-.btn_win button {margin:0;padding:0 10px;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em}
-.btn_win a {display:inline-block;padding:0 10px;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em}
+
 /* 게시판용 버튼 */
 .btn_b01 {display:inline-block;margin:0 0 5px;padding:0 10px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2em;vertical-align:middle}
 .btn_b01:focus, .btn_b01:hover {text-decoration:none !important}
@@ -662,6 +660,11 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 .new_win_ul a {display:block;padding:10px 10px 5px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
 .new_win_desc {margin:0 auto;width:93%}
 
+.new_win .win_btn {clear:both;margin:20px;text-align:center}
+.new_win .win_btn a {display:inline-block;padding:0 10px;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em}
+.new_win .win_btn button {display:inline-block;padding:0 10px;height:2.65em;border:0;background:#666;color:#fff;text-decoration:none;vertical-align:middle;line-height:2.65em}
+.new_win .win_btn input {height:2.65em;line-height:2.65em}
+
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}
 #validation_check h1 {margin-bottom:20px;font-size:1.3em}
@@ -671,9 +674,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
 .sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #283646;background:#111}
 .sv_wrap .sv a {display:inline-block !important;margin:0 !important;padding:5px !important;width:94px;border-bottom:1px solid #283646;color:#fff !important}
-.sv_wrap a:focus,
-.sv_wrap a:hover,
-.sv_wrap a:active {text-decoration:none !important}
+.sv_wrap a:focus, .sv_wrap a:hover, .sv_wrap a:active {text-decoration:none !important}
 .sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto !important}
 .sv_nojs .sv {display:block}
 

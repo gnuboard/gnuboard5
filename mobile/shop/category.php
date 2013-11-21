@@ -61,7 +61,7 @@ $result = sql_query($sql);
     }
     ?>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <?php if ($i == 0 || $ca) { ?><button onclick="javascript:history.back(-1);" class="btn02">돌아가기</button><?php } ?>
         <button onclick="javascript:window.close();" class="btn01">창닫기</button>
     </div>
