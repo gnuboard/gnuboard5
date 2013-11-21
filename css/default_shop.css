@@ -466,7 +466,8 @@ fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7
 #sit_ov_btn {margin:0 0 0 34px !important;margin:0 0 0 33px;padding:0;list-style:none;zoom:1}
 #sit_ov_btn:after {display:block;visibility:hidden;clear:both;content:""}
 #sit_ov_btn li {float:left;margin:0 0 0 1px}
-#sit_ov_btn a, #sit_ov_btn input {display:inline-block;padding:10px 0 8px;width:80px;border:0;font-size:0.95em;text-align:center;text-decoration:none;letter-spacing:-0.1em;cursor:pointer}
+#sit_ov_btn a {display:inline-block;width:80px;height:30px;border:0;font-size:0.95em;text-align:center;text-decoration:none;letter-spacing:-0.1em;line-height:2.8em;cursor:pointer}
+#sit_ov_btn input {display:inline-block;width:80px;height:30px;border:0;font-size:0.95em;text-align:center;text-decoration:none;letter-spacing:-0.1em;cursor:pointer}
 #sit_btn_buy {background:#ff5b89;color:#fff}
 #sit_btn_cart, #sit_btn_wish {background:#555;color:#fff}
 #sit_btn_rec {background:#888;color:#fff}
