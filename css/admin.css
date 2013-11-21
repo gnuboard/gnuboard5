@@ -256,10 +256,10 @@ tfoot th {}
 tfoot td {font-weight:bold;text-align:center}
 table .tr_bg0 {background:#fff}
 table .tr_bg1 {background:#f0f3f7}
-table .tr_bg0escrow {background:#f3f7e7}
-table .tr_bg0escrow td {border-color:#e4efbb}
-table .tr_bg1escrow {background:#edf1e3}
-table .tr_bg1escrow td {border-color:#dce9ad}
+table .tr_bg0cancel {background:#fdebf3}
+table .tr_bg0cancel td {border-color:#f9d8e6}
+table .tr_bg1cancel {background:#fdebf3}
+table .tr_bg1cancel td {border-color:#f9d8e6}
 
 .tbl_wrap {margin:0 0 10px;padding:0 20px}
 .tbl_wrap td.empty_table {padding:100px 0;text-align:center}
@@ -371,7 +371,8 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_mng .mng_del, .td_mngsmall .mng_del {}
 .td_num {width:60px;text-align:center}
 .td_numbig {width:100px;text-align:center}
-.td_numcancel {color:#999;text-align:center;}
+.td_numcancel0 {color:#999;text-align:center}
+.td_numcancel1 {color:#ff3061;font-weight:bold;text-align:center}
 .td_numcoupon {color:#86b325;text-align:center}
 .td_numincome {color:#357dbb;text-align:center}
 .td_numsmall {width:30px;text-align:center}
@@ -469,6 +470,8 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #orderitemlist .itemlist {z-index:2;position:absolute;top:0;left:-41px;width:958px;border:1px solid #a2a5a9;background:#f2f5f9}
 #orderitemlist td {background:#fff}
 #orderitemlist #orderitemlist_close {padding:0 20px 10px;text-align:right}
+
+#sodr_list .list_escrow {display:block;color:#80bc0d;text-align:center}
 
 /* 주문내역 수정 */
 .sodr_nonpay {color:#ff6600}
