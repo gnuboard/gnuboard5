@@ -660,9 +660,10 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 .new_win_ul a {display:block;padding:10px 10px 5px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
 .new_win_desc {margin:0 auto;width:93%}
 
-.new_win .win_btn {clear:both;margin-bottom:15px;text-align:center} /* 새창용 */
-.new_win .win_btn button {margin:0;padding:0 10px;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em}
+.new_win .win_btn {clear:both;margin:20px;text-align:center}
 .new_win .win_btn a {display:inline-block;padding:0 10px;height:2.5em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle;line-height:2.5em}
+.new_win .win_btn button {display:inline-block;padding:0 10px;height:2.65em;border:0;background:#666;color:#fff;text-decoration:none;vertical-align:middle;line-height:2.65em}
+.new_win .win_btn input {height:2.65em;line-height:2.65em}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}
