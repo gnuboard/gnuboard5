@@ -95,18 +95,20 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         <input type="hidden" name="qcaid" id="qcaid" value="<?php echo $qcaid ?>">
         <div>
             <strong>검색범위</strong>
-            <label><input type="checkbox" name="qname"   class="frm_input" <?php echo isset($qname)?'checked="checked"':'';?>> 상품명</label>
-            <label><input type="checkbox" name="qexplan" class="frm_input" <?php echo isset($qexplan)?'checked="checked"':'';?>> 상품설명</label>
-            <label><input type="checkbox" name="qid"     class="frm_input" <?php echo isset($qid)?'checked="checked"':'';?>> 상품코드</label><br>
+            <input type="checkbox" name="qname" id="ssch_qname" class="frm_input" <?php echo isset($qname)?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
+            <input type="checkbox" name="qexplan" id="ssch_qexplan" class="frm_input" <?php echo isset($qexplan)?'checked="checked"':'';?>> <label for="ssch_qexplan">상품설명</label>
+            <input type="checkbox" name="qid" id="ssch_qid" class="frm_input" <?php echo isset($qid)?'checked="checked"':'';?>> <label for="ssch_qid">상품코드</label><br>
         </div>
         <div>
             <strong>상품가격 (원)</strong>
-            <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" class="frm_input" size="10"> ~
-            <input type="text" name="qto" value="<?php echo $qto; ?>" class="frm_input" size="10"> 까지<br>
+            <label for="ssch_qfrom" class="sound_only">최소 가격</label>
+            <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" id="ssch_qfrom" class="frm_input"> ~
+            <label for="ssch_ qto" class="sound_only">최대 가격</label>
+            <input type="text" name="qto" value="<?php echo $qto; ?>" id="ssch_qto" class="frm_input"> 까지<br>
         </div>
         <div>
-            <strong>검색어</strong>
-            <input type="text" name="q" value="<?php echo $q; ?>" class="frm_input" size="40" maxlength="30">
+            <label for="ssch_q" class="ssch_lbl">검색어</label>
+            <input type="text" name="q" value="<?php echo $q; ?>" id="ssch_q" class="frm_input" maxlength="30">
             <input type="submit" value="검색" class="btn_submit">
         </div>
         <p>

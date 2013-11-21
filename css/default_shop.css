@@ -817,7 +817,7 @@ fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7
 #ssch_frm {padding:20px;border:1px solid #e9e9e9;background:#f2f5f9;zoom:1}
 #ssch_frm:after {display:block;visibility:hidden;clear:both;content:""}
 #ssch_frm div {margin:0 0 5px}
-#ssch_frm strong {display:inline-block;width:100px}
+#ssch_frm strong, #ssch_frm .ssch_lbl {display:inline-block;width:100px;font-weight:bold}
 #ssch_frm .frm_input {background:#fff}
 #ssch_frm .btn_submit {height:21px}
 #ssch_frm p {margin:10px 0 0;border-top:1px solid #e9e9e9}
