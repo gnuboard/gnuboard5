@@ -156,7 +156,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
     ?>
     <tr class="<?php echo $tr_bg; ?>">
-        <td class="td_num">
+        <td class="td_numbig">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>
         </td>

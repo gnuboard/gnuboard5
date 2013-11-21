@@ -288,10 +288,15 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             $od_cnt = $row2['cnt'];
         }
 
-        // 주문device
+        // 주문 번호에 device 표시
         $od_mobile = '';
         if($row['od_mobile'])
             $od_mobile = '(M)';
+
+        // 주문 번호에 에스크로 표시
+        $od_paytype = '';
+        if($default['de_escrow_use'] && $row['od_escrow'])
+            $od_paytype = '<span class="list_escrow">에스크로</span>';
 
         $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
 
@@ -299,10 +304,11 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $delivery_company = $row['od_delivery_company'] ? $row['od_delivery_company'] : $default['de_delivery_company'];
 
         $tr_bg = 'tr_bg'.($i%2);
-        if($default['de_escrow_use'] && $row['od_escrow'])
-            $tr_bg .= 'escrow';
-        if($od['od_cancel_price'] > 0)
+        $td_color = 0;
+        if($row['od_cancel_price'] > 0) {
             $tr_bg .= 'cancel';
+            $td_color = 1;
+        }
     ?>
     <tr class="orderlist<?php echo ' '.$tr_bg; ?>">
         <td rowspan="3" class="td_chk">
@@ -317,13 +323,14 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
             <?php echo $od_mobile; ?>
+            <?php echo $od_paytype; ?>
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
         <td headers="th_odrertel" class="td_tel"><?php echo $row['od_tel']; ?></td>
         <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo $row['od_b_name']; ?>"><?php echo $row['od_b_name']; ?></a></td>
         <td rowspan="3" class="td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td rowspan="3" class="td_numincome"><?php echo number_format($row['od_receipt_price']); ?></td>
-        <td rowspan="3" class="td_numcancel"><?php echo number_format($row['od_cancel_price']); ?></td>
+        <td rowspan="3" class="td_numcancel<?php echo $td_color; ?>"><?php echo number_format($row['od_cancel_price']); ?></td>
         <td rowspan="3" class="td_numcoupon"><?php echo number_format($row['couponprice']); ?></td>
         <td rowspan="3" class="td_numrdy"><?php echo number_format($row['od_misu']); ?></td>
         <td rowspan="3" class="td_mngsmall">
@@ -442,7 +449,6 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <div class="local_desc02 local_desc">
 <p>
-    &lt;에스크로&gt;주문의 경우 리스트의 배경색이 다르게 표시됩니다. <img src="<?php echo G5_ADMIN_URL; ?>/shop_admin/img/escrow_bg.png" alt=""> or <img src="<?php echo G5_ADMIN_URL; ?>/shop_admin/img/escrow_bg2.png" alt=""><br>
     &lt;무통장&gt;인 경우에만 &lt;주문&gt;에서 &lt;입금&gt;으로 변경됩니다. 가상계좌는 입금시 자동으로 &lt;입금&gt;처리됩니다.<br>
     &lt;준비&gt;에서 &lt;배송&gt;으로 변경시 &lt;에스크로배송등록&gt;을 체크하시면 에스크로 주문에 한해 KCP에 배송정보가 자동 등록됩니다.<br>
     <strong>주의!</strong> 주문번호를 클릭하여 나오는 주문상세내역의 주소를 외부에서 조회가 가능한곳에 올리지 마십시오.
