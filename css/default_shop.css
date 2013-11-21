@@ -8,7 +8,7 @@ html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 #hd ul, nav ul, #ft ul {margin:0;padding:0;list-style:none}
-legend {position:absolute;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+legend {position:absolute;margin:0;padding:0;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 label, input, select, img {vertical-align:middle}
 input, button {margin:0;padding:0;font-family:dotum;font-size:1em}
 button {cursor:pointer}
