@@ -66,6 +66,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <div class="win_btn">
         <input type="submit" value="작성완료" class="btn_submit">
+        <button type="button" onclick="self.close();">닫기</button>
     </div>
 
     </form>
