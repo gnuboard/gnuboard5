@@ -115,7 +115,7 @@ echo itemqa_page($config['cf_write_pages'], $page, $total_page, "./itemqa.php?it
 <script>
 $(function(){
     $(".itemqa_form").click(function(){
-        window.open(this.href, "itemqa_form", "width=800,height=600,scrollbars=1");
+        window.open(this.href, "itemqa_form", "width=800,height=660,scrollbars=1");
         return false;
     });
 

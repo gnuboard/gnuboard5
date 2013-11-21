@@ -18,6 +18,11 @@ $iq_id = escape_trim($_REQUEST['iq_id']);
 
 $chk_secret = '';
 
+if($w == '') {
+    $qa['iq_email'] = $member['mb_email'];
+    $qa['iq_hp'] = $member['mb_hp'];
+}
+
 if ($w == "u")
 {
     $qa = sql_fetch(" select * from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' ");
