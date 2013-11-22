@@ -12,6 +12,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
+    <input type="hidden" name="is_mobile_shop" value="1">
 
     <div class="tbl_frm01 tbl_wrap">
         <table>
