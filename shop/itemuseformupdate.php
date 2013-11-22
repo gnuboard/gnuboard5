@@ -23,7 +23,10 @@ if ($w == "" || $w == "u") {
     if (!$is_content) alert("내용을 입력하여 주십시오.");
 }
 
-$url = "./item.php?it_id=$it_id&_=".get_token()."#sit_use";
+if($is_mobile_shop)
+    $url = './iteminfo.php?it_id='.$it_id.'&info=use';
+else
+    $url = "./item.php?it_id=$it_id&_=".get_token()."#sit_use";
 
 if ($w == "")
 {

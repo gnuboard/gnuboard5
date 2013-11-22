@@ -764,13 +764,13 @@ ob_end_clean();
     <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
     <?php } ?>
 
-    <p id="show_progress" style="display:none;">반드시 주문하기 버튼을 클릭 하셔야만 결제가 진행됩니다.</p>
-
     <div id="display_pay_button" class="btn_confirm">
         <span id="show_req_btn"><input type="button" name="submitChecked" onClick="kcp_approval();" value="결제등록요청"class="btn_submit"></span>
         <span id="show_pay_btn" style="display:none;"><input type="button" onClick="forderform_check();" value="주문하기" class="btn_submit"></span>
         <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
     </div>
+
+    <p id="show_progress" style="display:none;">주문완료 중입니다. 잠시만 기다려 주십시오.</p>
     </form>
 
     <?php if ($default['de_escrow_use']) { ?>
@@ -1325,7 +1325,12 @@ function forderform_check()
         return false;
     }
 
-    f.submit();
+    document.getElementById("display_pay_button").style.display = "none";
+    document.getElementById("show_progress").style.display = "block";
+
+    setTimeout(function() {
+        f.submit();
+    }, 300);
 }
 
 // 주문폼 필드체크

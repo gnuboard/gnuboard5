@@ -19,7 +19,10 @@ if ($w == "" || $w == "u") {
     if (!$iq_question) alert("질문을 입력하여 주십시오.");
 }
 
-$url = "./item.php?it_id=$it_id&_=".get_token()."#sit_qa";
+if($is_mobile_shop)
+    $url = './iteminfo.php?it_id='.$it_id.'&info=qa';
+else
+    $url = "./item.php?it_id=$it_id&_=".get_token()."#sit_qa";
 
 if ($w == "")
 {
