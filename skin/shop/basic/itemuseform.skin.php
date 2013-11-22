@@ -26,7 +26,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </tr>
         <tr>
             <th scope="row"><label for="" style="width:200px;">내용</label></th>
-            <td><?php echo editor_html('is_content', get_text($use['is_content'])); ?></td>
+            <td><?php echo $editor_html; ?></td>
         </tr>
         <tr>
             <th scope="row">평점</th>
@@ -75,9 +75,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <script type="text/javascript">
 function fitemuse_submit(f)
 {
-    <?php echo get_editor_js('is_content'); ?>
-
-    <?php echo chk_editor_js('is_content'); ?>
+    <?php echo $editor_js; ?>
 
     return true;
 }

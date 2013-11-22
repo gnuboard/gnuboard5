@@ -42,7 +42,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </tr>
         <tr>
             <th scope="row"><label for="iq_question">질문</label></th>
-            <td><?php echo editor_html('iq_question', $qa['iq_question']); ?></td>
+            <td><?php echo $editor_html; ?></td>
         </tr>
         </tbody>
         </table>
@@ -58,9 +58,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <script type="text/javascript">
 function fitemqa_submit(f)
 {
-    <?php echo get_editor_js('iq_question'); ?>
-
-    <?php echo chk_editor_js('iq_question'); ?>
+    <?php echo $editor_js; ?>
 
     return true;
 }
