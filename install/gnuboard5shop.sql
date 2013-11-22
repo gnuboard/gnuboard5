@@ -162,6 +162,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_coupon` (
 -- Table structure for table `g5_shop_coupon_log`
 --
 
+DROP TABLE IF EXISTS `g5_shop_coupon_log`;
 CREATE TABLE IF NOT EXISTS `g5_shop_coupon_log` (
   `cl_id` int(11) NOT NULL AUTO_INCREMENT,
   `cp_id` varchar(255) NOT NULL DEFAULT '',
@@ -663,6 +664,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
 -- Table structure for table `g5_shop_order_address`
 --
 
+DROP TABLE IF EXISTS `g5_shop_order_address`;
 CREATE TABLE IF NOT EXISTS `g5_shop_order_address` (
   `ad_id` int(11) NOT NULL AUTO_INCREMENT,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
