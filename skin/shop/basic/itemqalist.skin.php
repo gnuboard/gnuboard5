@@ -41,7 +41,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
         $is_secret = false;
         if($row['iq_secret']) {
-            $iq_subject .= ' <img src="'.G5_SHOP_SKIN_URL.'/img/icon_secret.png">';
+            $iq_subject .= ' <img src="'.G5_SHOP_SKIN_URL.'/img/icon_secret.gif" alt="비밀글">';
 
             if($is_admin || $member['mb_id' ] == $row['mb_id']) {
                 $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
