@@ -327,6 +327,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
 -- Table structure for table `g5_cert_history`
 --
 
+DROP TABLE IF EXISTS `g5_cert_history`;
 CREATE TABLE IF NOT EXISTS `g5_cert_history` (
   `cr_id` int(11) NOT NULL auto_increment,
   `mb_id` varchar(20) NOT NULL DEFAULT '',
@@ -707,6 +708,7 @@ CREATE TABLE IF NOT EXISTS `g5_autosave` (
 -- Table structure for table `g5_qa_config`
 --
 
+DROP TABLE IF EXISTS `g5_qa_config`;
 CREATE TABLE IF NOT EXISTS `g5_qa_config` (
   `qa_title` varchar(255) NOT NULL DEFAULT'',
   `qa_category` varchar(255) NOT NULL DEFAULT'',
@@ -745,6 +747,7 @@ CREATE TABLE IF NOT EXISTS `g5_qa_config` (
 -- Table structure for table `g5_qa_content`
 --
 
+DROP TABLE IF EXISTS `g5_qa_content`;
 CREATE TABLE IF NOT EXISTS `g5_qa_content` (
   `qa_id` int(11) NOT NULL AUTO_INCREMENT,
   `qa_num` int(11) NOT NULL DEFAULT '0',  
