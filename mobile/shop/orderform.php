@@ -1325,7 +1325,14 @@ function forderform_check()
         return false;
     }
 
-    f.submit();
+    document.getElementById("display_pay_button").style.display = "none";
+    //document.getElementById("show_req_btn").style.display = "none";
+    //document.getElementById("show_progress").style.display = "block";
+    //document.getElementById("show_pay_btn").style.display = "inline";
+
+    setTimeout(function() {
+        f.submit();
+    }, 300);
 }
 
 // 주문폼 필드체크
