@@ -6,7 +6,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
 
 <?php if (!$limit) { ?>총 <?php echo $cnt; ?> 건<?php } ?>
 
-<div class="tbl_head01 tbl_wrap">
+<div class="tbl_head02 tbl_wrap">
     <table>
     <thead>
     <tr>

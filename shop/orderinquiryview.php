@@ -54,16 +54,20 @@ if(openwin != null) {
                     order by ct_id ";
         $result = sql_query($sql);
         ?>
-        <div class="tbl_head01 tbl_wrap">
+        <div class="tbl_head02 tbl_wrap">
             <table>
             <thead>
             <tr>
-                <th scope="col" colspan="2">상품/옵션</th>
-                <th scope="col">수량</th>
-                <th scope="col">판매가</th>
-                <th scope="col">소계</th>
-                <th scope="col">포인트</th>
-                <th scope="col">상태</th>
+                <th scope="col" rowspan="2">이미지</th>
+                <th scope="col" colspan="6" id="th_itname">상품명</th>
+            </tr>
+            <tr>
+                <th scope="col" id="th_itopt">옵션명</th>
+                <th scope="col" id="th_itqty">수량</th>
+                <th scope="col" id="th_itprice">판매가</th>
+                <th scope="col" id="th_itsum">소계</th>
+                <th scope="col" id="th_itpt">포인트</th>
+                <th scope="col" id="th_itst">상태</th>
             </tr>
             </thead>
             <tbody>
@@ -91,17 +95,17 @@ if(openwin != null) {
                     if($k == 0) {
             ?>
             <tr>
-                <td rowspan="<?php echo $rowspan; ?>"><?php echo $image; ?></td>
-                <td colspan="6"><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $row['it_name']; ?></a></td>
+                <td rowspan="<?php echo $rowspan; ?>" class="td_imgsmall"><?php echo $image; ?></td>
+                <td headers="th_itname" colspan="6"><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $row['it_name']; ?></a></td>
             </tr>
             <?php } ?>
             <tr>
-                <td><?php echo $opt['ct_option']; ?></td>
-                <td class="td_mngsmall"><?php echo number_format($opt['ct_qty']); ?></td>
-                <td class="td_numbig"><?php echo number_format($opt_price); ?></td>
-                <td class="td_num"><?php echo number_format($sell_price); ?></td>
-                <td class="td_num"><?php echo number_format($point); ?></td>
-                <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
+                <td headers="th_itopt"><?php echo $opt['ct_option']; ?></td>
+                <td headers="th_itqty" class="td_mngsmall"><?php echo number_format($opt['ct_qty']); ?></td>
+                <td headers="th_itprice" class="td_numbig"><?php echo number_format($opt_price); ?></td>
+                <td headers="th_itsum" class="td_numbig"><?php echo number_format($sell_price); ?></td>
+                <td headers="th_itpt" class="td_num"><?php echo number_format($point); ?></td>
+                <td headers="th_itst" class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
             </tr>
             <?php
                     $tot_point       += $point;

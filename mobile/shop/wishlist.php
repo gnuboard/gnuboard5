@@ -4,7 +4,7 @@ include_once('./_common.php');
 if (!$is_member)
     goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL.'/mypage.php'));
 
-$g5['title'] = "보관함";
+$g5['title'] = "위시리스트";
 include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
@@ -77,7 +77,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         }
 
         if ($i == 0)
-            echo '<tr><td colspan="5" class="empty_table">보관함이 비었습니다.</td></tr>';
+            echo '<tr><td colspan="5" class="empty_table">위시리스트가 비었습니다.</td></tr>';
         ?>
         </tr>
         </table>

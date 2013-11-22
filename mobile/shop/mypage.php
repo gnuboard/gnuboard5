@@ -59,7 +59,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     <section id="smb_my_wish">
         <h2><a href="<?php echo G5_SHOP_URL; ?>/wishlist.php">최근 위시리스트</a></h2>
 
-        <div class="tbl_wrap tbl_head01">
+        <div class="tbl_wrap tbl_head02">
             <table>
             <thead>
             <tr>

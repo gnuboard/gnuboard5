@@ -29,7 +29,7 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=1">더 보기</a></div>
+            <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=1">더 보기</a></div>
         </section>
 
         <section class="sct_wrap">
@@ -49,7 +49,7 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=2">더 보기</a></div>
+            <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=2">더 보기</a></div>
         </section>
 
         <section class="sct_wrap">
@@ -69,7 +69,7 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=3">더 보기</a></div>
+            <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=3">더 보기</a></div>
         </section>
 
         <section class="sct_wrap">
@@ -89,7 +89,7 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=4">더 보기</a></div>
+            <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=4">더 보기</a></div>
         </section>
 
         <section class="sct_wrap">
@@ -109,7 +109,7 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             $list->set_view('sns', true);
             echo $list->run();
             ?>
-            <div><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=5">더 보기</a></div>
+            <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=5">더 보기</a></div>
         </section>
 
         <?php

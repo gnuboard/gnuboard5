@@ -20,16 +20,16 @@ $result = sql_query($sql);
 <div id="coupon" class="new_win">
     <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
 
-    <div class="tbl_wrap tbl_head01">
+    <div class="tbl_wrap tbl_head02">
         <table>
         <thead>
         <tr>
-            <th scope="col">쿠폰명</th>
-            <th scope="col">사용기한</th>
+            <th scope="col" id="th_cname">쿠폰명</th>
+            <th scope="col" id="th_cperiod">사용기한</th>
         </tr>
         <tr>
-            <th scope="col">적용대상</th>
-            <th scope="col">할인금액</th>
+            <th scope="col" id="th_ctarget">적용대상</th>
+            <th scope="col" id="th_cdc">할인금액</th>
         </tr>
         </thead>
         <tbody>
@@ -61,12 +61,12 @@ $result = sql_query($sql);
             $cp_count++;
         ?>
         <tr>
-            <td><?php echo $row['cp_subject']; ?></td>
-            <td class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
+            <td headers="th_cname"><?php echo $row['cp_subject']; ?></td>
+            <td headers="th_cperiod" class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
         </tr>
         <tr>
-            <td><?php echo $cp_target; ?></td>
-            <td class="td_numbig"><?php echo $cp_price; ?></td>
+            <td headers="th_ctarget"><?php echo $cp_target; ?></td>
+            <td headers="th_cdc" class="td_numbig"><?php echo $cp_price; ?></td>
         </tr>
         <?php
         }

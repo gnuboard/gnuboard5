@@ -14,6 +14,9 @@
 .sct_li {position:relative}
 .sct_noitem {padding:100px 0;text-align:center}
 
+.sct_more {margin:30px 0 0}
+.sct_more a {display:block;padding:10px 0;background:#383838;color:#fff;font-weight:bold;text-align:center}
+
 /* 상품 목록 스킨 10 */
 .sct_10 .sct_li {float:left;padding:0 25px 15px 0;}
 .sct_10 .sct_last {margin:0 0 15px !important}
