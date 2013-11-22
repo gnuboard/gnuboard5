@@ -240,9 +240,9 @@ fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7
 .new_win .win_desc {margin:0 20px}
 
 .new_win .win_btn {clear:both;margin:20px;text-align:center} /* 새창용 */
-.new_win .win_btn button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;vertical-align:top;line-height:2em;cursor:pointer}
+.new_win .win_btn button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;line-height:2em;cursor:pointer}
 .new_win .win_btn input {height:30px;line-height:2em}
-.new_win .win_btn a {display:inline-block;padding:0 10px;height:28px;border:1px solid #ccc;background:#fafafa;vertical-align:top;line-height:2.4em}
+.new_win .win_btn a {display:inline-block;padding:0 10px;height:30px;background:#666;color:#fff;vertical-align:middle;line-height:2.4em}
 .new_win .win_btn a:focus, .new_win .win_btn a:hover {text-decoration:none}
 
 /* 자바스크립트 alert 대안 */
