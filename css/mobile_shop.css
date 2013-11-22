@@ -401,6 +401,9 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #od_addr1, #od_addr2, #od_email, #od_b_addr1, #od_b_addr2 {width:100%}
 #sod_frm #od_memo {height:70px}
 
+#sod_frm #show_progress {text-align:center}
+#sod_frm #show_progress span {display:block;margin:5px 0 0}
+
 /* 주문내역 */
 #sod_v {}
 #sod_v .td_stat {width:100px}

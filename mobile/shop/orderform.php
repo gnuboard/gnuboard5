@@ -287,12 +287,12 @@ ob_end_clean();
     <!-- 배송소요기간 -->
     <input type="hidden" name="deli_term" value="03">
     <!-- 기타 파라메터 추가 부분 - Start - -->
-    <input type="hidden" name="param_opt_1"	 value="<?php echo $param_opt_1; ?>"/>
-    <input type="hidden" name="param_opt_2"	 value="<?php echo $param_opt_2; ?>"/>
-    <input type="hidden" name="param_opt_3"	 value="<?php echo $param_opt_3; ?>"/>
+    <input type="hidden" name="param_opt_1"  value="<?php echo $param_opt_1; ?>"/>
+    <input type="hidden" name="param_opt_2"  value="<?php echo $param_opt_2; ?>"/>
+    <input type="hidden" name="param_opt_3"  value="<?php echo $param_opt_3; ?>"/>
     <!-- 기타 파라메터 추가 부분 - End - -->
     <!-- 화면 크기조정 부분 - Start - -->
-    <input type="hidden" name="tablet_size"	 value="<?php echo $tablet_size; ?>"/>
+    <input type="hidden" name="tablet_size"  value="<?php echo $tablet_size; ?>"/>
     <!-- 화면 크기조정 부분 - End - -->
     <!--
         사용 카드 설정
@@ -327,8 +327,8 @@ ob_end_clean();
         */
     ?>
     <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
-    <input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
-    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
+    <input type="hidden" name="comm_tax_mny"      value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
+    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세     -->
     <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
     <?php
     }
@@ -754,13 +754,13 @@ ob_end_clean();
     <input type="hidden" name="rcvr_zipx"      value="">      <!-- 수취인 우편번호    -->
     <input type="hidden" name="rcvr_add1"      value="">      <!-- 수취인 주소        -->
     <input type="hidden" name="rcvr_add2"      value="">      <!-- 수취인 상세 주소   -->
-	<input type="hidden" name="param_opt_1"	   value="">
-	<input type="hidden" name="param_opt_2"	   value="">
-	<input type="hidden" name="param_opt_3"	   value="">
+    <input type="hidden" name="param_opt_1"    value="">
+    <input type="hidden" name="param_opt_2"    value="">
+    <input type="hidden" name="param_opt_3"    value="">
     <?php if($default['de_tax_flag_use']) { ?>
     <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
-    <input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
-    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
+    <input type="hidden" name="comm_tax_mny"      value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
+    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세     -->
     <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
     <?php } ?>
 
@@ -770,7 +770,10 @@ ob_end_clean();
         <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
     </div>
 
-    <p id="show_progress" style="display:none;">주문완료 중입니다. 잠시만 기다려 주십시오.</p>
+    <div id="show_progress" style="display:none;">
+        <img src="<?php echo G5_MOBILE_URL; ?>/shop/img/loading.gif" alt="">
+        <span>주문완료 중입니다. 잠시만 기다려 주십시오.</span>
+    </div>
     </form>
 
     <?php if ($default['de_escrow_use']) { ?>
