@@ -34,27 +34,27 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <td>
                 <ul id="sit_use_write_star">
                     <li>
-                        <input type="radio" name="is_score" value="10" id="is_score10" <?php echo ($is_score==10)?'checked="checked"':''; ?>>
+                        <input type="radio" name="is_score" value="5" id="is_score10" <?php echo ($is_score==5)?'checked="checked"':''; ?>>
                         <label for="is_score10">매우만족</label>
                         <img src="<?php echo G5_SHOP_URL; ?>/img/s_star5.png">
                     </li>
                     <li>
-                        <input type="radio" name="is_score" value="8" id="is_score8" <?php echo ($is_score==8)?'checked="checked"':''; ?>>
+                        <input type="radio" name="is_score" value="4" id="is_score8" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
                         <label for="is_score8">만족</label>
                         <img src="<?php echo G5_SHOP_URL; ?>/img/s_star4.png">
                     </li>
                     <li>
-                        <input type="radio" name="is_score" value="6" id="is_score6" <?php echo ($is_score==6)?'checked="checked"':''; ?>>
+                        <input type="radio" name="is_score" value="3" id="is_score6" <?php echo ($is_score==3)?'checked="checked"':''; ?>>
                         <label for="is_score6">보통</label>
                         <img src="<?php echo G5_SHOP_URL; ?>/img/s_star3.png">
                     </li>
                     <li>
-                        <input type="radio" name="is_score" value="4" id="is_score4" <?php echo ($is_score==4)?'checked="checked"':''; ?>>
+                        <input type="radio" name="is_score" value="2" id="is_score4" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
                         <label for="is_score4">불만</label>
                         <img src="<?php echo G5_SHOP_URL; ?>/img/s_star2.png">
                     </li>
                     <li>
-                        <input type="radio" name="is_score" value="2" id="is_score2" <?php echo ($is_score==2)?'checked="checked"':''; ?>>
+                        <input type="radio" name="is_score" value="1" id="is_score2" <?php echo ($is_score==1)?'checked="checked"':''; ?>>
                         <label for="is_score2">매우불만</label>
                         <img src="<?php echo G5_SHOP_URL; ?>/img/s_star1.png">
                     </li>

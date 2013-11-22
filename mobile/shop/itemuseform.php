@@ -14,7 +14,7 @@ $is_id = escape_trim($_REQUEST['is_id']);
 check_itemuse_write();
 
 if ($w == "") {
-    $is_score = 10;
+    $is_score = 5;
 } else if ($w == "u") {
     $use = sql_fetch(" select * from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' ");
     if (!$use) {
