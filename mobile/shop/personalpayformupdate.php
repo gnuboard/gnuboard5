@@ -141,6 +141,24 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
 
         die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
     }
+
+    // 미수금 정보 업데이트
+    $info = get_order_info($pp['od_id']);
+
+    $sql = " update {$g5['g5_shop_order_table']}
+                set od_misu     = '{$info['od_misu']}' ";
+    if($info['od_misu'] == 0)
+        $sql .= " , od_status = '입금' ";
+    $sql .= " where od_id = '{$pp['od_id']}' ";
+    sql_query($sql, FALSE);
+
+    // 장바구니 상태변경
+    if($info['od_misu'] == 0) {
+        $sql = " update {$g5['g5_shop_cart_table']}
+                    set ct_status = '입금'
+                    where od_id = '{$pp['od_id']}' ";
+        sql_query($sql, FALSE);
+    }
 }
 
 // 개인결제번호제거

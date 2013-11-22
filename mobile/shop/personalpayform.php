@@ -210,13 +210,13 @@ if($default['de_escrow_use']) {
     <input type="hidden" name="param_opt_2"    value="">
     <input type="hidden" name="param_opt_3"    value="">
 
-    <p id="show_progress" style="display:none;">반드시 결제하기 버튼을 클릭 하셔야만 결제가 진행됩니다.</p>
-
     <div id="display_pay_button" class="btn_confirm">
         <span id="show_req_btn"><input type="button" name="submitChecked" onClick="kcp_approval();" value="결제등록요청"class="btn_submit"></span>
         <span id="show_pay_btn" style="display:none;"><input type="button" onClick="fpersonalpayform_check();" value="결제하기" class="btn_submit"></span>
         <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
     </div>
+
+    <p id="show_progress" style="display:none;">결제진행 중입니다. 잠시만 기다려 주십시오.</p>
     </form>
 
     <?php if ($default['de_escrow_use']) { ?>
@@ -318,7 +318,12 @@ function fpersonalpayform_check()
         return false;
     }
 
-    f.submit();
+    document.getElementById("display_pay_button").style.display = "none";
+    document.getElementById("show_progress").style.display = "block";
+
+    setTimeout(function() {
+        f.submit();
+    }, 300);
 }
 
 // 결제폼 필드체크
