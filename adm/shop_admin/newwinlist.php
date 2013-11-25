@@ -65,7 +65,7 @@ $result = sql_query($sql);
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="10" class="empty_table">자료가 한건도 없습니다.</td></tr>';
+        echo '<tr><td colspan="10" class="empty_data">자료가 한건도 없습니다.</td></tr>';
     }
     ?>
     </tbody>

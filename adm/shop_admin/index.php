@@ -162,7 +162,7 @@ function get_max_value($arr)
                 <?php
                 foreach($y_val as $val) {
                 ?>
-                <li><?php echo number_format($val); ?></li>
+                <li><span></span><?php echo number_format($val); ?></li>
                 <?php
                 }
                 ?>
@@ -176,8 +176,12 @@ function get_max_value($arr)
                     $li_bg = 'bg'.($i%2);
                 ?>
                 <li class="<?php echo $li_bg; ?>" style="z-index:<?php echo $k; ?>">
-                    <div class="graph order" title="<?php echo $order_title; ?>"></div>
-                    <div class="graph cancel" title="<?php echo $cancel_title; ?>"></div>
+                    <div class="graph order" title="<?php echo $order_title; ?>">
+                        
+                    </div>
+                    <div class="graph cancel" title="<?php echo $cancel_title; ?>">
+                        
+                    </div>
                 </li>
                 <?php
                 }
@@ -310,46 +314,35 @@ function get_max_value($arr)
         <h2>1:1문의</h2>
         <?php echo $pg_anchor; ?>
 
-        <div class="tbl_head01 tbl_wrap">
-            <table>
-            <caption>1:1문의 목록</caption>
-            <thead>
-            <tr>
-                <th scope="col">분류</th>
-                <th scope="col">제목</th>
-                <th scope="col">작성자</th>
-                <th scope="col">보기</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $sql = " select * from {$g5['qa_content_table']}
-                      where qa_status = '0'
-                        and qa_type = '0'
-                      order by qa_num
-                      limit $max_limit ";
-            $result = sql_query($sql);
-            for ($i=0; $row=sql_fetch_array($result); $i++)
-            {
-                $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-                $row1 = sql_fetch($sql1);
+        <div class="ul_wrap ul_01">
+            <ul>
+                <?php
+                $sql = " select * from {$g5['qa_content_table']}
+                          where qa_status = '0'
+                            and qa_type = '0'
+                          order by qa_num
+                          limit $max_limit ";
+                $result = sql_query($sql);
+                for ($i=0; $row=sql_fetch_array($result); $i++)
+                {
+                    $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+                    $row1 = sql_fetch($sql1);
 
-                $name = get_sideview($row['mb_id'], get_text($row['qa_name']), $row1['mb_email'], $row1['mb_homepage']);
-            ?>
-            <tr>
-                <td class="td_categorysmall"><?php echo get_text($row['qa_category']); ?></td>
-                <td class="td_name"><?php echo $name; ?></td>
-                <td><?php echo cut_str($row['qa_subject'],40); ?></td>
-                <td class="td_mngsmall"><a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank">보기</a></td>
-            </tr>
-            <?php
-            }
+                    $name = get_sideview($row['mb_id'], get_text($row['qa_name']), $row1['mb_email'], $row1['mb_homepage']);
+                ?>
+                <li>
+                    <?php echo get_text($row['qa_category']); ?>
+                    <?php echo cut_str($row['qa_subject'],40); ?>
+                    <?php echo $name; ?>
+                    <a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank">보기</a>
+                </li>
+                <?php
+                }
 
-            if ($i == 0)
-                echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>';
-            ?>
-            </tbody>
-            </table>
+                if ($i == 0)
+                    echo '<li class="empty_data">자료가 없습니다.</li>';
+                ?>
+            </ul>
         </div>
 
         <div class="btn_list03 btn_list">
@@ -388,13 +381,13 @@ function get_max_value($arr)
             <tr>
                 <td class="td_name"><?php echo $name; ?></td>
                 <td><?php echo cut_str($row['iq_subject'],40); ?></td>
-                <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
+                <td class="td_mngsmall"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
             </tr>
             <?php
             }
 
             if ($i == 0)
-                echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+                echo '<tr><td colspan="3" class="empty_data">자료가 없습니다.</td></tr>';
             ?>
             </tbody>
             </table>
@@ -440,7 +433,7 @@ function get_max_value($arr)
             </tr>
             <?php
             }
-            if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+            if ($i == 0) echo '<tr><td colspan="3" class="empty_data">자료가 없습니다.</td></tr>';
             ?>
             </tbody>
             </table>
@@ -503,7 +496,7 @@ function get_max_value($arr)
             $val_cnt ++;
         ?>
         <tr>
-            <th scope="row" id="th_val_<?php echo $val_cnt; ?>"><?php echo $val; ?></th>
+            <th scope="row" id="th_val_<?php echo $val_cnt; ?>" class="td_category"><?php echo $val; ?></th>
             <?php
             foreach($info_key as $date)
             {
@@ -539,13 +532,12 @@ $(function() {
 
             $(this)
                 .attr("title", "")
-                .parent()
                 .append("<div id=\"price_tooltip\"><div></div></div>");
             $("#price_tooltip")
                 .find("div")
                 .html(title)
                 .end()
-                .css({ left: left+"px", bottom: bottom+"px" })
+//                .css({ left: left+"px", bottom: bottom+"px" })
                 .show(200);
         },
         function() {
@@ -667,7 +659,7 @@ function graph_draw()
         </tr>
         <?php
         }
-        if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
+        if ($i == 0) echo '<tr><td colspan="5" class="empty_data">자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>
@@ -730,7 +722,7 @@ function graph_draw()
         </tr>
         <?php
         }
-        if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
+        if ($i == 0) echo '<tr><td colspan="5" class="empty_data">자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>

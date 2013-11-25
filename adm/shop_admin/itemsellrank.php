@@ -145,7 +145,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="11" class="empty_table">자료가 없습니다.</td></tr>';
+        echo '<tr><td colspan="11" class="empty_data">자료가 없습니다.</td></tr>';
     }
     ?>
     </tbody>

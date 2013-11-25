@@ -256,7 +256,6 @@ tfoot th {}
 tfoot td {font-weight:bold;text-align:center}
 
 .tbl_wrap {margin:0 0 10px;padding:0 20px}
-.tbl_wrap td.empty_table {padding:100px 0;text-align:center}
 
 /* thead 한 줄 테이블 */
 .tbl_head01 {}
@@ -277,6 +276,14 @@ tfoot td {font-weight:bold;text-align:center}
 .tbl_head02 thead a {color:#383838;text-decoration:underline}
 .tbl_head02 tbody th {}
 .tbl_head02 tbody td {padding:7px 5px;line-height:1.4em;word-break:break-all}
+
+/* UL */
+.ul_wrap {}
+
+.ul_01 {}
+
+/* 자료 없는 목록 */
+.empty_data {padding:100px 0;text-align:center}
 
 /* 폼 테이블 */
 .tbl_frm01 th {padding:0;border-top:1px solid #ececec;border-bottom:1px solid #ececec;text-align:left}
@@ -432,21 +439,24 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #anc_sidx_ord {float:left;width:66%}
 #sidx_graph {position:relative}
 #sidx_graph_price {position:absolute;top:15px;left:20px;margin:0;padding:0;width:12%;list-style:none}
-#sidx_graph_price li {font-family:tahoma;text-align:right}
-#sidx_graph_area {position:absolute;top:5px;left:15%;margin:0;padding:0;width:85%;height:260px;border-left:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;list-style:none}
-#sidx_graph_area li {float:left;position:relative;margin:0 1% 0 0;width:13%;height:100%}
-#sidx_graph_area .graph {position:absolute;bottom:0;width:45%;height:0}
-#sidx_graph_area .order {background:#a0ca30;left:0}
-#sidx_graph_area .cancel {background-color:#ff8db6;left:47%}
-#sidx_graph_area #price_tooltip {display:none;position:absolute;bottom:0;left:0;background-color:#fff;border:1px solid gray}
+#sidx_graph_price li {position:relative;padding:0 10% 0 0;height:48px;font-family:tahoma;text-align:right}
+#sidx_graph_price li span {position:absolute;top:7px;right:-10%;width:10px;height:1px;background:#e9e9e9}
+#sidx_graph_area {position:absolute;top:5px;left:15%;margin:0;padding:0;width:85%;height:260px;border:1px solid #e9e9e9;list-style:none}
+#sidx_graph_area li {position:relative;float:left;padding:0 1% 0 0;width:13%;height:100%}
+#sidx_graph_area .graph {position:absolute;bottom:0;width:40%;height:0}
+#sidx_graph_area .order {background:#a0ca30;left:7%}
+#sidx_graph_area .cancel {background:#ff8db6;right:7%}
+#sidx_graph_area #price_tooltip {display:none;position:absolute;top:5px;left:5px;background-color:#fff;border:1px solid gray}
 #sidx_graph_area #price_tooltip div {white-space:nowrap}
-#sidx_graph_date {position:absolute;top:280px;left:15%;margin:0;padding:0;width:85%;list-style:none}
-#sidx_graph_date li {position:relative;float:left;margin:0 1% 0 0;width:13%;font-family:tahoma;text-align:center}
+#sidx_graph_date {position:absolute;top:280px;left:15%;margin:0;padding:0;width:85%;border:1px solid #fff;list-style:none}
+#sidx_graph_date li {position:relative;float:left;width:14%;font-family:tahoma;text-align:center}
 #sidx_graph_date li span {position:absolute;top:-19px;right:0;width:1px;height:10px;background:#e9e9e9}
 
 #sidx_stat {float:right;width:32%}
 #sidx_stat h2 {padding:0 20px 0 0}
 #sidx_stat .tbl_wrap {padding:0 20px 0 0}
+
+#anc_sidx_settle table {text-align:center}
 
 /* idx 1:1문의/상품문의/사용후기 */
 .sidx_cs section {float:left;margin:0 2% 0 0;width:32%}
@@ -635,7 +645,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .srel .srel_pad {display:block;height:30px}
 
 /* 쿠폰관리 */
-.scp_new_win .empty_table {padding:30px 0}
+.scp_new_win .empty_data {padding:30px 0}
 
 #scp_list_find {margin:10px 20px;padding:20px;border:1px solid #e9e9e9;background:#fff}
 #scp_list_find .btn_frmline {line-height:1.5em !important}

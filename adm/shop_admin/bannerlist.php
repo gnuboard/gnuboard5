@@ -96,7 +96,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     <?php
     }
     if ($i == 0) {
-    echo '<tr><td colspan="8" class="empty_table">자료가 없습니다.</td></tr>';
+    echo '<tr><td colspan="8" class="empty_data">자료가 없습니다.</td></tr>';
     }
     ?>
     </tbody>

@@ -73,7 +73,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         }
 
         if ($i == 0)
-            echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>';
+            echo '<tr><td colspan="4" class="empty_data">자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>

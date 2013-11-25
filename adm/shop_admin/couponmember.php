@@ -67,7 +67,7 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
         }
 
         if($i ==0)
-            echo '<tr><td colspan="3" class="empty_table">검색된 자료가 없습니다.</td></tr>';
+            echo '<tr><td colspan="3" class="empty_data">검색된 자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>
