@@ -191,7 +191,7 @@ function get_max_value($arr)
                 <?php
                 foreach($x_val as $val) {
                 ?>
-                <li><span></span><?php echo substr($val, 5, 5); ?></li>
+                <li><span></span><?php echo substr($val, 5, 5).' ('.get_yoil($val).')'; ?></li>
                 <?php
                 }
                 ?>
