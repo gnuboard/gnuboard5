@@ -33,10 +33,26 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- } 전체게시물 검색 끝 -->
 
 <!-- 전체게시물 목록 시작 { -->
+<form name="fnewlist" method="post" action="#" onsubmit="return fnew_submit(this);">
+<input type="hidden" name="sw"       value="move">
+<input type="hidden" name="view"     value="<?php echo $view; ?>">
+<input type="hidden" name="sfl"      value="<?php echo $sfl; ?>">
+<input type="hidden" name="stx"      value="<?php echo $stx; ?>">
+<input type="hidden" name="srows"    value="<?php echo $srows; ?>">
+<input type="hidden" name="bo_table" value="<?php echo $bo_table; ?>">
+<input type="hidden" name="page"     value="<?php echo $page; ?>">
+<input type="hidden" name="pressed"  value="">
+
 <div class="tbl_head01 tbl_wrap">
     <table>
     <thead>
     <tr>
+        <?php if ($is_admin) { ?>
+        <th scope="col">
+            <label for="all_chk" class="sir_sr">목록 전체</label>
+            <input type="checkbox" id="all_chk">
+        </th>
+        <?php } ?>
         <th scope="col">그룹</th>
         <th scope="col">게시판</th>
         <th scope="col">제목</th>
@@ -48,11 +64,20 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <?php
     for ($i=0; $i<count($list); $i++) 
     {
+        $num = $total_count - ($page - 1) * $config['cf_page_rows'] - $i;
         $gr_subject = cut_str($list[$i]['gr_subject'], 20);
         $bo_subject = cut_str($list[$i]['bo_subject'], 20);
         $wr_subject = get_text(cut_str($list[$i]['wr_subject'], 80));
     ?>
     <tr>
+        <?php if ($is_admin) { ?>
+        <td class="sir_set_chk">
+            <label for="chk_bn_id_<?php echo $i; ?>" class="sir_sr"><?php echo $num?>번</label>
+            <input type="checkbox" name="chk_bn_id[]" value="<?php echo $i; ?>">
+            <input type="hidden" name="bo_table[<?php echo $i; ?>]" value="<?php echo $list[$i]['bo_table']; ?>">
+            <input type="hidden" name="wr_id[<?php echo $i; ?>]" value="<?php echo $list[$i]['wr_id']; ?>">
+        </td>
+        <?php } ?>
         <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
         <td class="td_board"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>"><?php echo $bo_subject ?></a></td>
         <td><a href="<?php echo $list[$i]['href'] ?>"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
@@ -67,6 +92,47 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </tbody>
     </table>
 </div>
+
+<?php if ($is_admin) { ?>
+<div class="sir_bw02 sir_bw">
+    <input type="submit" onclick="document.pressed=this.value" value="선택삭제" class="sir_b01_adm">
+</div>
+<?}?>
+</form>
+
+<?php if ($is_admin) { ?>
+<script>
+$(function(){
+    $('#all_chk').click(function(){
+        $('[name="chk_bn_id[]"]').attr('checked', this.checked);
+    });
+});
+
+function fnew_submit(f)
+{
+    f.pressed.value = document.pressed;
+
+    var cnt = 0;
+    for (var i=0; i<f.length; i++) {
+        if (f.elements[i].name == "chk_bn_id[]" && f.elements[i].checked)
+            cnt++;
+    }
+
+    if (!cnt) {
+        alert(document.pressed+"할 게시물을 하나 이상 선택하세요.");
+        return false;
+    }
+
+    if (!confirm("선택한 게시물을 정말 "+document.pressed+" 하시겠습니까?\n\n한번 삭제한 자료는 복구할 수 없습니다")) {
+        return false;
+    }
+
+    f.action = "./new_delete.php";
+
+    return true;
+}
+</script>
+<?php } ?>
 
 <?php echo $write_pages ?>
 <!-- } 전체게시물 목록 끝 -->
