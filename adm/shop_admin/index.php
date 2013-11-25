@@ -314,7 +314,7 @@ function get_max_value($arr)
         <h2>1:1문의</h2>
         <?php echo $pg_anchor; ?>
 
-        <div class="ul_wrap ul_01">
+        <div class="ul_01 ul_wrap">
             <ul>
                 <?php
                 $sql = " select * from {$g5['qa_content_table']}
@@ -331,10 +331,9 @@ function get_max_value($arr)
                     $name = get_sideview($row['mb_id'], get_text($row['qa_name']), $row1['mb_email'], $row1['mb_homepage']);
                 ?>
                 <li>
-                    <?php echo get_text($row['qa_category']); ?>
-                    <?php echo cut_str($row['qa_subject'],40); ?>
+                    <span class="oneq_cate oneq_span"><?php echo get_text($row['qa_category']); ?></span>
+                    <a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank" class="oneq_link"><?php echo cut_str($row['qa_subject'],40); ?></a>
                     <?php echo $name; ?>
-                    <a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank">보기</a>
                 </li>
                 <?php
                 }
@@ -370,15 +369,14 @@ function get_max_value($arr)
                     $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
                 ?>
                 <li>
+                    <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>" class="qna_link"><?php echo cut_str($row['iq_subject'],40); ?></a>
                     <?php echo $name; ?>
-                    <?php echo cut_str($row['iq_subject'],40); ?>
-                    <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a>
                 </li>
                 <?php
                 }
 
                 if ($i == 0)
-                    echo '<li class="empty_table">자료가 없습니다.</li>';
+                    echo '<li class="empty_list">자료가 없습니다.</li>';
                 ?>
             </ul>
         </div>
@@ -392,17 +390,8 @@ function get_max_value($arr)
         <h2>사용후기</h2>
         <?php echo $pg_anchor; ?>
 
-        <div class="tbl_head01 tbl_wrap">
-            <table>
-            <caption>사용후기 목록</caption>
-            <thead>
-            <tr>
-                <th scope="col">회원명</th>
-                <th scope="col">제목</th>
-                <th scope="col">수정</th>
-            </tr>
-            </thead>
-            <tbody>
+        <div class="ul_01 ul_wrap">
+            <ul>
             <?php
             $sql = " select * from {$g5['g5_shop_item_use_table']}
                       where is_confirm = 0
@@ -416,17 +405,15 @@ function get_max_value($arr)
 
                 $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
             ?>
-            <tr>
-                <td class="td_name"><?php echo $name; ?></td>
-                <td><?php echo cut_str($row['is_subject'],40); ?></td>
-                <td class="td_mngsmall"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
-            </tr>
+                <li>
+                    <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>" class="ps_link"><?php echo cut_str($row['is_subject'],40); ?></a>
+                    <?php echo $name; ?>
+                </li>
             <?php
             }
-            if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+            if ($i == 0) echo '<li class="empty_list">자료가 없습니다.</li>';
             ?>
-            </tbody>
-            </table>
+            </ul>
         </div>
 
         <div class="btn_list03 btn_list">
@@ -465,15 +452,15 @@ function get_max_value($arr)
                 $day = substr($date, 5, 5).' ('.get_yoil($date).')';
                 $info_key[] = $date;
             ?>
-            <th scope="col" colspan="2" id="th_day_<?php echo $i; ?>"><?php echo $day; ?></th>
+            <th scope="col" colspan="2"><?php echo $day; ?></th>
             <?php } ?>
         </tr>
         <tr>
             <?php
             for($i=0; $i<$term; $i++) {
             ?>
-            <th scope="col" id="th_cnt_<?php echo $i; ?>">건수</th>
-            <th scope="col" id="th_price_<?php echo $i; ?>">금액</th>
+            <th scope="col">건수</th>
+            <th scope="col">금액</th>
             <?php } ?>
         </tr>
         </thead>

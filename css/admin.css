@@ -280,7 +280,8 @@ tfoot td {font-weight:bold;text-align:center}
 /* UL */
 .ul_wrap {}
 
-.ul_01 {}
+.ul_01 ul {margin:0;padding:0;list-style:none}
+.ul_01 li {padding:10px 0;border-bottom:1px solid #e9e9e9}
 
 /* 자료 없는 목록 */
 .empty_table {padding:100px 0;text-align:center}
@@ -431,7 +432,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #fsendmailtest .btn_submit {padding:3px 5px;border:1px solid #ff3061;color:#fff;font-size:0.95em;vertical-align:middle}
 
 /* ########## 쇼핑몰 사용시 적용 ########## */
-.sidx {margin:0 0 50px;zoom:1}
+.sidx {padding:20px 0 30px;zoom:1}
 .sidx:after {display:block;visibility:hidden;clear:both;content:""}
 
 .sidx_anchor {position:absolute;margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
@@ -460,16 +461,24 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #anc_sidx_settle table {text-align:center}
 
 /* idx 1:1문의/상품문의/사용후기 */
+.sidx_cs {margin:0 0 30px;padding:30px 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
 .sidx_cs section {float:left;margin:0 2% 0 0;width:32%}
 .sidx_cs #anc_sidx_ps {margin:0}
 .sidx_cs h2 {padding:0}
-.sidx_cs .tbl_wrap {padding:0}
+.sidx_cs .ul_wrap {margin:0 0 20px}
 .sidx_cs .btn_list03 {margin:0}
 .sidx_cs #anc_sidx_oneq h2 {padding:0 0 0 20px}
-.sidx_cs #anc_sidx_oneq .tbl_wrap {padding:0 0 0 20px}
+.sidx_cs #anc_sidx_oneq .ul_wrap {padding:0 0 0 20px}
 .sidx_cs #anc_sidx_ps h2 {padding:0 20px 0 0}
-.sidx_cs #anc_sidx_ps .tbl_wrap {padding:0 20px 0 0}
+.sidx_cs #anc_sidx_ps .ul_wrap {padding:0 20px 0 0}
 .sidx_cs #anc_sidx_ps .btn_list03 {margin:0 20px 0 0}
+
+.sidx_cs #anc_sidx_oneq .oneq_cate {font-weight:bold}
+.sidx_cs #anc_sidx_oneq .oneq_link {display:block;margin:5px 0}
+
+.sidx_cs #anc_sidx_qna .qna_link {display:block;margin:5px 0}
+
+.sidx_cs #anc_sidx_ps .ps_link {display:block;margin:5px 0}
 
 /* 쇼핑몰 설정 */
 #anc_scf_payment textarea {height:50px}
