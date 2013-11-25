@@ -440,17 +440,17 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 /* idx 쇼핑몰 */
 #anc_sidx_ord {float:left;width:66%}
 #sidx_graph {position:relative}
-#sidx_graph_price {position:absolute;top:15px;left:20px;margin:0;padding:0;width:12%;list-style:none}
+#sidx_graph_price {position:absolute;top:10px;left:20px;margin:0;padding:0;width:12%;list-style:none}
 #sidx_graph_price li {position:relative;padding:0 10% 0 0;height:48px;font-family:tahoma;text-align:right}
 #sidx_graph_price li span {position:absolute;top:7px;right:-10%;width:10px;height:1px;background:#e9e9e9}
-#sidx_graph_area {position:absolute;top:5px;left:15%;margin:0;padding:0;width:85%;height:260px;border:1px solid #e9e9e9;list-style:none}
+#sidx_graph_area {position:absolute;top:0;left:15%;margin:0;padding:0;width:85%;height:260px;border:1px solid #e9e9e9;list-style:none}
 #sidx_graph_area li {position:relative;float:left;padding:0 1% 0 0;width:13%;height:100%}
 #sidx_graph_area .graph {position:absolute;bottom:0;width:40%;height:0}
 #sidx_graph_area .order {background:#a0ca30;left:7%}
 #sidx_graph_area .cancel {background:#ff8db6;right:7%}
 #sidx_graph_area #price_tooltip {display:none;position:absolute;top:5px;left:5px;background-color:#fff;border:1px solid gray}
 #sidx_graph_area #price_tooltip div {white-space:nowrap}
-#sidx_graph_date {position:absolute;top:280px;left:15%;margin:0;padding:0;width:85%;border:1px solid #fff;list-style:none}
+#sidx_graph_date {position:absolute;top:275px;left:15%;margin:0;padding:0;width:85%;border:1px solid #fff;list-style:none}
 #sidx_graph_date li {position:relative;float:left;width:14%;font-family:tahoma;text-align:center}
 #sidx_graph_date li span {position:absolute;top:-19px;right:0;width:1px;height:10px;background:#e9e9e9}
 
