@@ -313,6 +313,76 @@ function get_max_value($arr)
     </div>
 </div>
 
+<section id="anc_sidx_settle">
+    <h2>결제수단별 주문현황</h2>
+    <?php echo $pg_anchor; ?>
+
+    <?php
+    $term = 3;
+    $info = array();
+    for($i=($term - 1); $i>=0; $i--)
+    {
+        $date = date("Y-m-d", strtotime('-'.$i.' days', G5_SERVER_TIME));
+        $info[$date] = get_order_settle_sum($date);
+    }
+    ?>
+
+    <div id="sidx_settle" class="tbl_head02 tbl_wrap">
+        <table>
+        <thead>
+        <tr>
+            <th scope="col" rowspan="2">구분</th>
+            <?php
+            $term = 3;
+            $info = array();
+            $info_key = array();
+            for($i=($term - 1); $i>=0; $i--) {
+                $date = date("Y-m-d", strtotime('-'.$i.' days', G5_SERVER_TIME));
+                $info[$date] = get_order_settle_sum($date);
+
+                $day = substr($date, 5, 5).' ('.get_yoil($date).')';
+                $info_key[] = $date;
+            ?>
+            <th scope="col" colspan="2"><?php echo $day; ?></th>
+            <?php } ?>
+        </tr>
+        <tr>
+            <?php
+            for($i=0; $i<$term; $i++) {
+            ?>
+            <th scope="col">건수</th>
+            <th scope="col">금액</th>
+            <?php } ?>
+        </tr>
+        </thead>
+        <tbody>
+        <?php
+        $case = array('신용카드', '계좌이체', '가상계좌', '무통장', '휴대폰', '포인트', '쿠폰');
+
+        foreach($case as $val)
+        {
+            $val_cnt ++;
+        ?>
+        <tr>
+            <th scope="row" id="th_val_<?php echo $val_cnt; ?>" class="td_category"><?php echo $val; ?></th>
+            <?php
+            foreach($info_key as $date)
+            {
+            ?>
+            <td><?php echo number_format($info[$date][$val]['count']); ?></td>
+            <td><?php echo number_format($info[$date][$val]['price']); ?></td>
+            <?php
+            }
+            ?>
+        </tr>
+        <?php
+        }
+        ?>
+        </tbody>
+        </table>
+    </div>
+</section>
+
 <div class="sidx sidx_cs">
     <section id="anc_sidx_oneq">
         <h2>1:1문의</h2>
@@ -425,76 +495,6 @@ function get_max_value($arr)
         </div>
     </section>
 </div>
-
-<section id="anc_sidx_settle">
-    <h2>결제수단별 주문현황</h2>
-    <?php echo $pg_anchor; ?>
-
-    <?php
-    $term = 3;
-    $info = array();
-    for($i=($term - 1); $i>=0; $i--)
-    {
-        $date = date("Y-m-d", strtotime('-'.$i.' days', G5_SERVER_TIME));
-        $info[$date] = get_order_settle_sum($date);
-    }
-    ?>
-
-    <div id="sidx_settle" class="tbl_head02 tbl_wrap">
-        <table>
-        <thead>
-        <tr>
-            <th scope="col" rowspan="2">구분</th>
-            <?php
-            $term = 3;
-            $info = array();
-            $info_key = array();
-            for($i=($term - 1); $i>=0; $i--) {
-                $date = date("Y-m-d", strtotime('-'.$i.' days', G5_SERVER_TIME));
-                $info[$date] = get_order_settle_sum($date);
-
-                $day = substr($date, 5, 5).' ('.get_yoil($date).')';
-                $info_key[] = $date;
-            ?>
-            <th scope="col" colspan="2"><?php echo $day; ?></th>
-            <?php } ?>
-        </tr>
-        <tr>
-            <?php
-            for($i=0; $i<$term; $i++) {
-            ?>
-            <th scope="col">건수</th>
-            <th scope="col">금액</th>
-            <?php } ?>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $case = array('신용카드', '계좌이체', '가상계좌', '무통장', '휴대폰', '포인트', '쿠폰');
-
-        foreach($case as $val)
-        {
-            $val_cnt ++;
-        ?>
-        <tr>
-            <th scope="row" id="th_val_<?php echo $val_cnt; ?>" class="td_category"><?php echo $val; ?></th>
-            <?php
-            foreach($info_key as $date)
-            {
-            ?>
-            <td><?php echo number_format($info[$date][$val]['count']); ?></td>
-            <td><?php echo number_format($info[$date][$val]['price']); ?></td>
-            <?php
-            }
-            ?>
-        </tr>
-        <?php
-        }
-        ?>
-        </tbody>
-        </table>
-    </div>
-</section>
 
 <script>
 $(function() {
