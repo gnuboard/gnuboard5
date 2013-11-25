@@ -317,16 +317,6 @@ function get_max_value($arr)
     <h2>결제수단별 주문현황</h2>
     <?php echo $pg_anchor; ?>
 
-    <?php
-    $term = 3;
-    $info = array();
-    for($i=($term - 1); $i>=0; $i--)
-    {
-        $date = date("Y-m-d", strtotime('-'.$i.' days', G5_SERVER_TIME));
-        $info[$date] = get_order_settle_sum($date);
-    }
-    ?>
-
     <div id="sidx_settle" class="tbl_head02 tbl_wrap">
         <table>
         <thead>
