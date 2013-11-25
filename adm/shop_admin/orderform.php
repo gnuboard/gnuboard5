@@ -644,7 +644,7 @@ $result = sql_query($sql);
 
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="결제/배송내역 수정" class="btn_submit">
-        <?php if($od['od_misu'] > 0) { ?>
+        <?php if($od['od_status'] == '주문' && $od['od_misu'] > 0) { ?>
         <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
         <?php } ?>
         <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체')) { ?>
