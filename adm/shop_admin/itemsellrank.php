@@ -126,9 +126,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
         $num = $rank + $i + 1;
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
         ?>
-        <tr class="<?php echo $tr_bg; ?>">
+        <tr class="<?php echo $bg; ?>">
             <td class="td_num"><?php echo $num; ?></td>
             <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
             <td class="td_num"><?php echo $row['ct_status_1']; ?></td>

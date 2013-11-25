@@ -127,10 +127,10 @@ $colspan = 8;
         $tmp = sql_fetch($sql);
         $used_count = $tmp['cnt'];
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
 
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
             <input type="hidden" id="cp_id_<?php echo $i; ?>" name="cp_id[<?php echo $i; ?>]" value="<?php echo $row['cp_id']; ?>">
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">

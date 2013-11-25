@@ -111,10 +111,10 @@ $colspan = 10;
         else
             $od_id = '&nbsp;';
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
 
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
             <input type="hidden" id="pp_id_<?php echo $i; ?>" name="pp_id[<?php echo $i; ?>]" value="<?php echo $row['pp_id']; ?>">
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">

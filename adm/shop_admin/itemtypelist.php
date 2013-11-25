@@ -142,9 +142,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <?php for ($i=0; $row=sql_fetch_array($result); $i++) {
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_num">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>

@@ -125,9 +125,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $iq_question = get_view_thumbnail($row['iq_question'], 300);
         $iq_answer = $row['iq_answer'] ? get_view_thumbnail($row['iq_answer'], 300) : "답변이 등록되지 않았습니다.";
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
      ?>
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['iq_subject']) ?> 상품문의</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">

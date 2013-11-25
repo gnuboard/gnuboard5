@@ -60,10 +60,10 @@ $result = sql_query($sql);
 
         $num = $i + 1;
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
 
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $num; ?></td>
         <td><?php echo stripslashes($row['fa_subject']); ?></td>
         <td class="td_num"><?php echo $row['fa_order']; ?></td>

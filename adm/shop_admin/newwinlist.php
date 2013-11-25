@@ -44,9 +44,9 @@ $result = sql_query($sql);
     <tbody>
     <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $row['nw_id']; ?></td>
         <td><?php echo $row['nw_subject']; ?></td>
         <td class="td_datetime"><?php echo substr($row['nw_begin_time'],2,14); ?></td>

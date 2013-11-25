@@ -58,15 +58,15 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <tbody>
         <?php
         for($i=0; $row=sql_fetch_array($result); $i++) {
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
         ?>
-        <tr class="<?php echo $tr_bg; ?>">
+        <tr class="<?php echo $bg; ?>">
             <td class="td_chk">
                 <input type="hidden" id="sc_id_<?php echo $i; ?>" name="sc_id[<?php echo $i; ?>]" value="<?php echo $row['sc_id']; ?>">
                 <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="1" title="내역선택">
             </td>
             <td><?php echo $row['sc_name']; ?></td>
-            <td class="td_bigpostal"><?php echo preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip1']).' ~ '.preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip2']); ?></td>
+            <td class="td_postalbig"><?php echo preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip1']).' ~ '.preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip2']); ?></td>
             <td class="td_sendcost_add"><?php echo number_format($row['sc_price']); ?></td>
         </tr>
         <?php

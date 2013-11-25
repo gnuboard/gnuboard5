@@ -153,10 +153,10 @@ if (isset($ev_set)) {
                     and ev_id = '$ev_id' ";
         $ev = sql_fetch($sql);
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
 
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <label for="ev_chk_<?php echo $i; ?>" class="sound_only">이벤트 사용</label>

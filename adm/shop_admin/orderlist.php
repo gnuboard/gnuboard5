@@ -303,14 +303,14 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $invoice_time = is_null_time($row['od_invoice_time']) ? G5_TIME_YMDHIS : $row['od_invoice_time'];
         $delivery_company = $row['od_delivery_company'] ? $row['od_delivery_company'] : $default['de_delivery_company'];
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
         $td_color = 0;
         if($row['od_cancel_price'] > 0) {
-            $tr_bg .= 'cancel';
+            $bg .= 'cancel';
             $td_color = 1;
         }
     ?>
-    <tr class="orderlist<?php echo ' '.$tr_bg; ?>">
+    <tr class="orderlist<?php echo ' '.$bg; ?>">
         <td rowspan="3" class="td_chk">
             <input type="hidden" name="od_id[<?php echo $i ?>]" value="<?php echo $row['od_id'] ?>" id="od_id_<?php echo $i ?>">
             <label for="chk_<?php echo $i; ?>" class="sound_only">주문번호 <?php echo $row['od_id']; ?></label>
@@ -337,7 +337,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="mng_mod"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
         </td>
     </tr>
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <!-- <td headers="th_odrdate"><span class="sound_only">주문일시 </span><?php echo $row['od_time']; ?></td> -->
         <!-- <td class="td_payby">
             <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo $row['od_settle_case'] ?>">
@@ -354,7 +354,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <td headers="th_odrcnt"><?php echo $row['od_cart_count']; ?>건</td>
         <td headers="th_odrall"><?php echo $od_cnt; ?>건</td>
     </tr>
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td headers="th_odrstat" class="td_odrstatus">
             <input type="hidden" name="current_status[<?php echo $i ?>]" value="<?php echo $row['od_status'] ?>">
             <?php echo $row['od_status']; ?>

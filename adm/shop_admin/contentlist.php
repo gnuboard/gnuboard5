@@ -44,9 +44,9 @@ $result = sql_query($sql);
     </thead>
     <tbody>
     <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_id"><?php echo $row['co_id']; ?></td>
         <td><?php echo htmlspecialchars2($row['co_subject']); ?></td>
         <td class="td_mng">

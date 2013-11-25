@@ -7,7 +7,7 @@ $max_limit = 7; // 몇행 출력할 것인지?
 $g5['title'] = ' 쇼핑몰관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$pg_anchor = '<ul class="anchor">
+$pg_anchor = '<ul class="anchor sidx_anchor">
 <li><a href="#anc_sidx_ord">주문현황</a></li>
 <li><a href="#anc_sidx_rdy">입금완료미배송내역</a></li>
 <li><a href="#anc_sidx_wait">미입금주문내역</a></li>
@@ -113,188 +113,344 @@ function get_max_value($arr)
 }
 ?>
 
-<section id="anc_sidx_stock">
-    <?php
-    // 재고부족 상품
-    $item_noti = 0;
-    $sql = " select count(*) as cnt
-                from {$g5['g5_shop_item_table']}
-                where it_use = '1'
-                  and it_option_subject = ''
-                  and it_stock_qty <= it_noti_qty ";
-    $row = sql_fetch($sql);
-    $item_noti = (int)$row['cnt'];
+<div class="sidx">
+    <section id="anc_sidx_ord">
+        <h2>주문현황</h2>
+        <?php echo $pg_anchor; ?>
 
-    // 재고부족 옵션
-    $option_noti = 0;
-    $sql = " select count(*) as cnt
-                from {$g5['g5_shop_item_option_table']}
-                where io_use = '1'
-                  and io_stock_qty <= io_noti_qty ";
-    $row = sql_fetch($sql);
-    $option_noti = (int)$row['cnt'];
+        <?php
+        $arr_order = array();
+        $x_val = array();
+        for($i=6; $i>=0; $i--) {
+            $date = date('Y-m-d', strtotime('-'.$i.' days', G5_SERVER_TIME));
 
-    // SMS 정보
-    if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
-        $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$config['cf_icode_id'].'&userpw='.$config['cf_icode_pw']);
-        $res = explode(';', $res);
-        $userinfo = array(
-            'code'      => $res[0], // 결과코드
-            'coin'      => $res[1], // 고객 잔액 (충전제만 해당)
-            'gpay'      => $res[2], // 고객의 건수 별 차감액 표시 (충전제만 해당)
-            'payment'   => $res[3]  // 요금제 표시, A:충전제, C:정액제
-        );
-    }
-    ?>
-    <div id="sidx_stock">
-        <table>
-        <thead>
-        <tr>
-            <th>재고부족 상품</th>
-            <th>재고부족 옵션</th>
-            <th>SMS 잔여금액</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td><a href="./itemstocklist.php"><?php echo number_format($item_noti); ?></a></td>
-            <td><a href="./optionstocklist.php"><?php echo number_format($option_noti); ?></a></td>
-            <td><?php echo display_price($userinfo['coin']); ?></td>
-        </tr>
-        </tbody>
-        </table>
-    </div>
-</section>
+            $x_val[] = $date;
+            $arr_order[] = get_order_date_sum($date);
+        }
 
-<section id="anc_sidx_act">
-    <h2>처리해야할 주문</h2>
-    <?php echo $pg_anchor; ?>
+        $max_y = get_max_value($arr_order);
+        $max_y = ceil(($max_y) / 1000) * 1000;
+        $y_val = array();
+        $y_val[] = $max_y;
 
-    <div id="sidx_take_act">
-        <table>
-        <thead>
-        <tr>
-            <th>상태변경</th>
-            <th>건수</th>
-            <th>금액</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
+        for($i=4; $i>=1; $i--) {
+            $y_val[] = $max_y * (($i * 2) / 10);
+        }
+
+        $max_height = 240;
+        $h_val = array();
+        $js_val = array();
+        $offset = 10; // 금액이 상대적으로 작아 높이가 0일 때 기본 높이로 사용
+        foreach($arr_order as $val) {
+            if($val['order'] > 0)
+                $h1 = intval(($max_height * $val['order']) / $max_y) + $offset;
+            else
+                $h1 = 0;
+
+            if($val['cancel'] > 0)
+                $h2 = intval(($max_height * $val['cancel']) / $max_y) + $offset;
+            else
+                $h2 = 0 ;
+
+            $h_val['order'][] = $h1;
+            $h_val['cancel'][] = $h2;
+        }
+        ?>
+
+        <div id="sidx_graph">
+            <ul id="sidx_graph_price">
+                <?php
+                foreach($y_val as $val) {
+                ?>
+                <li><?php echo number_format($val); ?></li>
+                <?php
+                }
+                ?>
+            </ul>
+            <ul id="sidx_graph_area">
+                <?php
+                for($i=0; $i<count($x_val); $i++) {
+                    $order_title = date("n월 j일", strtotime($x_val[$i])).' 주문: '.display_price($arr_order[$i]['order']);
+                    $cancel_title = date("n월 j일", strtotime($x_val[$i])).' 취소: '.display_price($arr_order[$i]['cancel']);
+                    $k = 10 - $i;
+                    $li_bg = 'bg'.($i%2);
+                ?>
+                <li class="<?php echo $li_bg; ?>" style="z-index:<?php echo $k; ?>">
+                    <div class="graph order" title="<?php echo $order_title; ?>"></div>
+                    <div class="graph cancel" title="<?php echo $cancel_title; ?>"></div>
+                </li>
+                <?php
+                }
+                ?>
+            </ul>
+            <ul id="sidx_graph_date">
+                <?php
+                foreach($x_val as $val) {
+                ?>
+                <li><span></span><?php echo substr($val, 5, 5); ?></li>
+                <?php
+                }
+                ?>
+            </ul>
+        </div>
+    </section>
+
+    <div id="sidx_stat">
+        <section id="anc_sidx_act">
+            <h2>처리할 주문</h2>
+            <?php echo $pg_anchor; ?>
+
+            <div id="sidx_take_act" class="tbl_head01 tbl_wrap">
+                <table>
+                <thead>
+                <tr>
+                    <th scope="col" class="td_mng">상태변경</th>
+                    <th scope="col">건수</th>
+                    <th scope="col">금액</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <?php
+                    $info = get_order_status_sum('주문');
+                    ?>
+                    <th scope="row">주문 -&gt; 입금</th>
+                    <td class="td_numbig"><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
+                    <td class="td_price"><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
+                </tr>
+                <tr>
+                    <?php
+                    $info = get_order_status_sum('입금');
+                    ?>
+                    <th scope="row">입금 -&gt; 준비</th>
+                    <td class="td_numbig"><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
+                    <td class="td_price"><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
+                </tr>
+                <tr>
+                    <?php
+                    $info = get_order_status_sum('준비');
+                    ?>
+                    <th scope="row">준비 -&gt; 배송</th>
+                    <td class="td_numbig"><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
+                    <td class="td_price"><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
+                </tr>
+                <tr>
+                    <?php
+                    $info = get_order_status_sum('배송');
+                    ?>
+                    <th scope="row">배송 -&gt; 완료</th>
+                    <td class="td_numbig"><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
+                    <td class="td_price"><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="anc_sidx_stock">
+            <h2>재고현황</h2>
+            <?php echo $pg_anchor; ?>
+
             <?php
-            $info = get_order_status_sum('주문');
-            ?>
-            <th>주문 -&gt; 입금</th>
-            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
-            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
-        </tr>
-        <tr>
-            <?php
-            $info = get_order_status_sum('입금');
-            ?>
-            <th>입금 -&gt; 준비</th>
-            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
-            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
-        </tr>
-        <tr>
-            <?php
-            $info = get_order_status_sum('준비');
-            ?>
-            <th>준비 -&gt; 배송</th>
-            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
-            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
-        </tr>
-        <tr>
-            <?php
-            $info = get_order_status_sum('배송');
-            ?>
-            <th>배송 -&gt; 완료</th>
-            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['count']); ?></a></td>
-            <td><a href="<?php echo $info['href']; ?>"><?php echo number_format($info['price']); ?></a></td>
-        </tr>
-        </tbody>
-        </table>
-    </div>
-</section>
+            // 재고부족 상품
+            $item_noti = 0;
+            $sql = " select count(*) as cnt
+                        from {$g5['g5_shop_item_table']}
+                        where it_use = '1'
+                          and it_option_subject = ''
+                          and it_stock_qty <= it_noti_qty ";
+            $row = sql_fetch($sql);
+            $item_noti = (int)$row['cnt'];
 
-<section id="anc_sidx_ord">
-    <h2>주문현황</h2>
-    <?php echo $pg_anchor; ?>
+            // 재고부족 옵션
+            $option_noti = 0;
+            $sql = " select count(*) as cnt
+                        from {$g5['g5_shop_item_option_table']}
+                        where io_use = '1'
+                          and io_stock_qty <= io_noti_qty ";
+            $row = sql_fetch($sql);
+            $option_noti = (int)$row['cnt'];
 
-    <?php
-    $arr_order = array();
-    $x_val = array();
-    for($i=6; $i>=0; $i--) {
-        $date = date('Y-m-d', strtotime('-'.$i.' days', G5_SERVER_TIME));
-
-        $x_val[] = $date;
-        $arr_order[] = get_order_date_sum($date);
-    }
-
-    $max_y = get_max_value($arr_order);
-    $max_y = ceil(($max_y) / 1000) * 1000;
-    $y_val = array();
-    $y_val[] = $max_y;
-
-    for($i=4; $i>=1; $i--) {
-        $y_val[] = $max_y * (($i * 2) / 10);
-    }
-
-    $max_height = 240;
-    $h_val = array();
-    $js_val = array();
-    $offset = 10; // 금액이 상대적으로 작아 높이가 0일 때 기본 높이로 사용
-    foreach($arr_order as $val) {
-        if($val['order'] > 0)
-            $h1 = intval(($max_height * $val['order']) / $max_y) + $offset;
-        else
-            $h1 = 0;
-
-        if($val['cancel'] > 0)
-            $h2 = intval(($max_height * $val['cancel']) / $max_y) + $offset;
-        else
-            $h2 = 0 ;
-
-        $h_val['order'][] = $h1;
-        $h_val['cancel'][] = $h2;
-    }
-    ?>
-
-    <div id="sidx_graph">
-        <ul id="sidx_graph_price">
-            <?php
-            foreach($y_val as $val) {
-            ?>
-            <li><?php echo number_format($val); ?></li>
-            <?php
+            // SMS 정보
+            if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
+                $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$config['cf_icode_id'].'&userpw='.$config['cf_icode_pw']);
+                $res = explode(';', $res);
+                $userinfo = array(
+                    'code'      => $res[0], // 결과코드
+                    'coin'      => $res[1], // 고객 잔액 (충전제만 해당)
+                    'gpay'      => $res[2], // 고객의 건수 별 차감액 표시 (충전제만 해당)
+                    'payment'   => $res[3]  // 요금제 표시, A:충전제, C:정액제
+                );
             }
             ?>
-        </ul>
-        <ul id="sidx_graph_area">
-            <?php
-            for($i=0; $i<count($x_val); $i++) {
-                $order_title = date("n월 j일", strtotime($x_val[$i])).' 주문: '.display_price($arr_order[$i]['order']);
-                $cancel_title = date("n월 j일", strtotime($x_val[$i])).' 취소: '.display_price($arr_order[$i]['cancel']);
-            ?>
-            <li>
-                <div class="graph order" title="<?php echo $order_title; ?>"></div>
-                <div class="graph cancel" title="<?php echo $cancel_title; ?>"></div>
-            </li>
-            <?php
-            }
-            ?>
-        </ul>
-        <ul id="sidx_graph_date">
-            <?php
-            foreach($x_val as $val) {
-            ?>
-            <li><?php echo substr($val, 5, 5); ?></li>
-            <?php
-            }
-            ?>
-        </ul>
+            <div id="sidx_stock" class="tbl_head01 tbl_wrap">
+                <table>
+                <thead>
+                <tr>
+                    <th scope="col">재고부족 상품</th>
+                    <th scope="col">재고부족 옵션</th>
+                    <th scope="col">SMS 잔여금액</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td class="td_numbig"><a href="./itemstocklist.php"><?php echo number_format($item_noti); ?></a></td>
+                    <td class="td_numbig"><a href="./optionstocklist.php"><?php echo number_format($option_noti); ?></a></td>
+                    <td class="td_price"><?php echo display_price($userinfo['coin']); ?></td>
+                </tr>
+                </tbody>
+                </table>
+            </div>
+        </section>
     </div>
-</section>
+</div>
+
+<div class="sidx sidx_cs">
+    <section id="anc_sidx_oneq">
+        <h2>1:1문의</h2>
+        <?php echo $pg_anchor; ?>
+
+        <div class="tbl_head01 tbl_wrap">
+            <table>
+            <caption>1:1문의 목록</caption>
+            <thead>
+            <tr>
+                <th scope="col">분류</th>
+                <th scope="col">제목</th>
+                <th scope="col">작성자</th>
+                <th scope="col">보기</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql = " select * from {$g5['qa_content_table']}
+                      where qa_status = '0'
+                        and qa_type = '0'
+                      order by qa_num
+                      limit $max_limit ";
+            $result = sql_query($sql);
+            for ($i=0; $row=sql_fetch_array($result); $i++)
+            {
+                $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+                $row1 = sql_fetch($sql1);
+
+                $name = get_sideview($row['mb_id'], get_text($row['qa_name']), $row1['mb_email'], $row1['mb_homepage']);
+            ?>
+            <tr>
+                <td class="td_categorysmall"><?php echo get_text($row['qa_category']); ?></td>
+                <td class="td_name"><?php echo $name; ?></td>
+                <td><?php echo cut_str($row['qa_subject'],40); ?></td>
+                <td class="td_mngsmall"><a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank">보기</a></td>
+            </tr>
+            <?php
+            }
+
+            if ($i == 0)
+                echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>';
+            ?>
+            </tbody>
+            </table>
+        </div>
+
+        <div class="btn_list03 btn_list">
+            <a href="<?php echo G5_BBS_URL; ?>/qalist.php" target="_blank">1:1문의 더보기</a>
+        </div>
+    </section>
+
+    <section id="anc_sidx_qna">
+        <h2>상품문의</h2>
+        <?php echo $pg_anchor; ?>
+
+        <div class="tbl_head01 tbl_wrap">
+            <table>
+            <caption>상품문의 목록</caption>
+            <thead>
+            <tr>
+                <th scope="col">회원명</th>
+                <th scope="col">제목</th>
+                <th scope="col">수정</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql = " select * from {$g5['g5_shop_item_qa_table']}
+                      where iq_answer = ''
+                      order by iq_id desc
+                      limit $max_limit ";
+            $result = sql_query($sql);
+            for ($i=0; $row=sql_fetch_array($result); $i++)
+            {
+                $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+                $row1 = sql_fetch($sql1);
+
+                $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
+            ?>
+            <tr>
+                <td class="td_name"><?php echo $name; ?></td>
+                <td><?php echo cut_str($row['iq_subject'],40); ?></td>
+                <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
+            </tr>
+            <?php
+            }
+
+            if ($i == 0)
+                echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+            ?>
+            </tbody>
+            </table>
+        </div>
+
+        <div class="btn_list03 btn_list">
+            <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상품문의 더보기</a>
+        </div>
+    </section>
+
+    <section id="anc_sidx_ps">
+        <h2>사용후기</h2>
+        <?php echo $pg_anchor; ?>
+
+        <div class="tbl_head01 tbl_wrap">
+            <table>
+            <caption>사용후기 목록</caption>
+            <thead>
+            <tr>
+                <th scope="col">회원명</th>
+                <th scope="col">제목</th>
+                <th scope="col">수정</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            $sql = " select * from {$g5['g5_shop_item_use_table']}
+                      where is_confirm = 0
+                      order by is_id desc
+                      limit $max_limit ";
+            $result = sql_query($sql);
+            for ($i=0; $row=sql_fetch_array($result); $i++)
+            {
+                $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+                $row1 = sql_fetch($sql1);
+
+                $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
+            ?>
+            <tr>
+                <td class="td_name"><?php echo $name; ?></td>
+                <td><?php echo cut_str($row['is_subject'],40); ?></td>
+                <td class="td_mngsmall"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
+            </tr>
+            <?php
+            }
+            if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
+            ?>
+            </tbody>
+            </table>
+        </div>
+
+        <div class="btn_list03 btn_list">
+            <a href="./itemuselist.php?sort1=is_confirm&amp;sort2=asc">사용후기 더보기</a>
+        </div>
+    </section>
+</div>
 
 <section id="anc_sidx_settle">
     <h2>결제수단별 주문현황</h2>
@@ -310,11 +466,11 @@ function get_max_value($arr)
     }
     ?>
 
-    <div id="sidx_settle">
+    <div id="sidx_settle" class="tbl_head02 tbl_wrap">
         <table>
         <thead>
         <tr>
-            <td rowspan="2">&nbsp;</td>
+            <th scope="col" rowspan="2">구분</th>
             <?php
             $term = 3;
             $info = array();
@@ -326,15 +482,15 @@ function get_max_value($arr)
                 $day = substr($date, 5, 5).' ('.get_yoil($date).')';
                 $info_key[] = $date;
             ?>
-            <th colspan="2"><?php echo $day; ?></th>
+            <th scope="col" colspan="2" id="th_day_<?php echo $i; ?>"><?php echo $day; ?></th>
             <?php } ?>
         </tr>
         <tr>
             <?php
             for($i=0; $i<$term; $i++) {
             ?>
-            <th>건수</th>
-            <th>금액</th>
+            <th scope="col" id="th_cnt_<?php echo $i; ?>">건수</th>
+            <th scope="col" id="th_price_<?php echo $i; ?>">금액</th>
             <?php } ?>
         </tr>
         </thead>
@@ -344,9 +500,10 @@ function get_max_value($arr)
 
         foreach($case as $val)
         {
+            $val_cnt ++;
         ?>
         <tr>
-            <td><?php echo $val; ?></td>
+            <th scope="row" id="th_val_<?php echo $val_cnt; ?>"><?php echo $val; ?></th>
             <?php
             foreach($info_key as $date)
             {
@@ -362,152 +519,6 @@ function get_max_value($arr)
         ?>
         </tbody>
         </table>
-    </div>
-</section>
-
-<section id="anc_sidx_oneq">
-    <h2>1:1문의</h2>
-    <?php echo $pg_anchor; ?>
-
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption>1:1문의 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col">분류</th>
-            <th scope="col">제목</th>
-            <th scope="col">작성자</th>
-            <th scope="col">보기</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sql = " select * from {$g5['qa_content_table']}
-                  where qa_status = '0'
-                    and qa_type = '0'
-                  order by qa_num
-                  limit $max_limit ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
-            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-            $row1 = sql_fetch($sql1);
-
-            $name = get_sideview($row['mb_id'], get_text($row['qa_name']), $row1['mb_email'], $row1['mb_homepage']);
-        ?>
-        <tr>
-            <td><?php echo get_text($row['qa_category']); ?></td>
-            <td class="td_name"><?php echo $name; ?></td>
-            <td><?php echo cut_str($row['qa_subject'],40); ?></td>
-            <td class="td_mng"><a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank">보기</a></td>
-        </tr>
-        <?php
-        }
-
-        if ($i == 0)
-            echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>';
-        ?>
-        </tbody>
-        </table>
-    </div>
-
-    <div class="btn_list03 btn_list">
-        <a href="<?php echo G5_BBS_URL; ?>/qalist.php" target="_blank">1:1문의 더보기</a>
-    </div>
-    </div>
-</section>
-
-<section id="anc_sidx_qna">
-    <h2>상품문의</h2>
-    <?php echo $pg_anchor; ?>
-
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption>상품문의 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col">회원명</th>
-            <th scope="col">제목</th>
-            <th scope="col">수정</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sql = " select * from {$g5['g5_shop_item_qa_table']}
-                  where iq_answer = ''
-                  order by iq_id desc
-                  limit $max_limit ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
-            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-            $row1 = sql_fetch($sql1);
-
-            $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
-        ?>
-        <tr>
-            <td class="td_name"><?php echo $name; ?></td>
-            <td><?php echo cut_str($row['iq_subject'],40); ?></td>
-            <td class="td_mng"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
-        </tr>
-        <?php
-        }
-
-        if ($i == 0)
-            echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
-        ?>
-        </tbody>
-        </table>
-    </div>
-
-    <div class="btn_list03 btn_list">
-        <a href="./itemqalist.php?sort1=iq_answer&amp;sort2=asc">상품문의 더보기</a>
-    </div>
-</section>
-
-<section id="anc_sidx_ps">
-    <h2>사용후기</h2>
-    <?php echo $pg_anchor; ?>
-
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption>사용후기 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col">회원명</th>
-            <th scope="col">제목</th>
-            <th scope="col">수정</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sql = " select * from {$g5['g5_shop_item_use_table']}
-                  where is_confirm = 0
-                  order by is_id desc
-                  limit $max_limit ";
-        $result = sql_query($sql);
-        for ($i=0; $row=sql_fetch_array($result); $i++)
-        {
-            $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-            $row1 = sql_fetch($sql1);
-
-            $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
-        ?>
-        <tr>
-            <td class="td_name"><?php echo $name; ?></td>
-            <td><?php echo cut_str($row['is_subject'],40); ?></td>
-            <td class="td_mngsmall"><a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>"><img src="./img/icon_mod.jpg" alt="<?php cut_str($row['is_subject'],40); ?> 수정"></a></td>
-        </tr>
-        <?php
-        }
-        if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
-        ?>
-        </tbody>
-        </table>
-    </div>
-
-    <div class="btn_list03 btn_list">
-        <a href="./itemuselist.php?sort1=is_confirm&amp;sort2=asc">사용후기 더보기</a>
     </div>
 </section>
 
