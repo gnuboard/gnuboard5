@@ -274,7 +274,8 @@ tfoot td {font-weight:bold;text-align:center}
 .tbl_frm01 #captcha input {margin-left:5px;text-align:center}
 
 /* 자료 없는 목록 */
-.empty_data {padding:100px 0;text-align:center}
+.empty_table {padding:100px 0;text-align:center}
+.empty_list {padding:20px 0;text-align:center}
 
 /* 테이블 그리드 */
 .grid_1 {width:50px}
@@ -575,7 +576,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .srel .srel_pad {display:block;height:30px}
 
 /* 쿠폰관리 */
-.scp_new_win .empty_data {padding:30px 0}
+.scp_new_win .empty_table {padding:30px 0}
 
 #scp_list_find {margin:10px 20px;padding:20px;border:1px solid #e9e9e9;background:#fff}
 #scp_list_find .btn_frmline {line-height:1.5em !important}

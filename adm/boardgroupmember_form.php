@@ -88,7 +88,7 @@ $colspan = 4;
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="'.$colspan.'" class="empty_data">접근가능한 그룹이 없습니다.</td></tr>';
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">접근가능한 그룹이 없습니다.</td></tr>';
     }
     ?>
     </tbody>

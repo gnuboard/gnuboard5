@@ -115,7 +115,7 @@ $colspan = 12;
         <?php
             }
         if ($i == 0)
-            echo '<tr><td colspan="'.$colspan.'" class="empty_data">자료가 없습니다.</td></tr>';
+            echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>
@@ -215,7 +215,7 @@ $colspan = 5;
         <?php
         }
         if ($i == 0)
-            echo '<tr><td colspan="'.$colspan.'" class="empty_data">자료가 없습니다.</td></tr>';
+            echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>
@@ -296,7 +296,7 @@ $colspan = 7;
         }
 
         if ($i == 0)
-            echo '<tr><td colspan="'.$colspan.'" class="empty_data">자료가 없습니다.</td></tr>';
+            echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>
