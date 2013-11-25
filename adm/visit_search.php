@@ -114,9 +114,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
         if ($brow == '기타') $brow = '<span title="'.$row['vi_agent'].'">'.$brow.'</span>';
         if ($os == '기타') $os = '<span title="'.$row['vi_agent'].'">'.$os.'</span>';
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_id"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?search_sort=vi_ip&amp;search_word=<?php echo $ip; ?>"><?php echo $ip; ?></a></td>
         <td><?php echo $link.$title; ?></a></td>
         <td class="td_idsmall"><?php echo $brow; ?></td>

@@ -56,10 +56,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
             $rate = ($count / $sum_count * 100);
             $s_rate = number_format($rate, 1);
 
-            $tr_bg = 'tr_bg'.($i%2);
+            $bg = 'bg'.($i%2);
     ?>
 
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_category"><a href="./visit_list.php?fr_date=<?php echo $key ?>&amp;to_date=<?php echo $key ?>"><?php echo $key ?></a></td>
         <td>
             <div class="visit_bar">
