@@ -334,8 +334,18 @@ if(openwin != null) {
                 {
                 ?>
                 <tr>
-                    <th scope="row">취소/환불 금액</th>
+                    <th scope="row">취소 금액</th>
                     <td><?php echo display_price($od['od_cancel_price']); ?></td>
+                </tr>
+                <?php
+                }
+
+                if ($od['od_refund_price'] > 0)
+                {
+                ?>
+                <tr>
+                    <th scope="row">환불 금액</th>
+                    <td><?php echo display_price($od['od_refund_price']); ?></td>
                 </tr>
                 <?php
                 }
