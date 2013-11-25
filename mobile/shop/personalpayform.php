@@ -216,7 +216,10 @@ if($default['de_escrow_use']) {
         <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
     </div>
 
-    <p id="show_progress" style="display:none;">결제진행 중입니다. 잠시만 기다려 주십시오.</p>
+    <div id="show_progress" style="display:none;">
+        <img src="<?php echo G5_MOBILE_URL; ?>/shop/img/loading.gif" alt="">
+        <span>결제진행 중입니다. 잠시만 기다려 주십시오.</span>
+    </div>
     </form>
 
     <?php if ($default['de_escrow_use']) { ?>
