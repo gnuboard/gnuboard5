@@ -340,7 +340,7 @@ function get_max_value($arr)
                 }
 
                 if ($i == 0)
-                    echo '<li class="empty_data">자료가 없습니다.</li>';
+                    echo '<li class="empty_table">자료가 없습니다.</li>';
                 ?>
             </ul>
         </div>
@@ -354,43 +354,33 @@ function get_max_value($arr)
         <h2>상품문의</h2>
         <?php echo $pg_anchor; ?>
 
-        <div class="tbl_head01 tbl_wrap">
-            <table>
-            <caption>상품문의 목록</caption>
-            <thead>
-            <tr>
-                <th scope="col">회원명</th>
-                <th scope="col">제목</th>
-                <th scope="col">수정</th>
-            </tr>
-            </thead>
-            <tbody>
-            <?php
-            $sql = " select * from {$g5['g5_shop_item_qa_table']}
-                      where iq_answer = ''
-                      order by iq_id desc
-                      limit $max_limit ";
-            $result = sql_query($sql);
-            for ($i=0; $row=sql_fetch_array($result); $i++)
-            {
-                $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
-                $row1 = sql_fetch($sql1);
+        <div class="ul_01 ul_wrap">
+            <ul>
+                <?php
+                $sql = " select * from {$g5['g5_shop_item_qa_table']}
+                          where iq_answer = ''
+                          order by iq_id desc
+                          limit $max_limit ";
+                $result = sql_query($sql);
+                for ($i=0; $row=sql_fetch_array($result); $i++)
+                {
+                    $sql1 = " select * from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
+                    $row1 = sql_fetch($sql1);
 
-                $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
-            ?>
-            <tr>
-                <td class="td_name"><?php echo $name; ?></td>
-                <td><?php echo cut_str($row['iq_subject'],40); ?></td>
-                <td class="td_mngsmall"><a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a></td>
-            </tr>
-            <?php
-            }
+                    $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
+                ?>
+                <li>
+                    <?php echo $name; ?>
+                    <?php echo cut_str($row['iq_subject'],40); ?>
+                    <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>">수정</a>
+                </li>
+                <?php
+                }
 
-            if ($i == 0)
-                echo '<tr><td colspan="3" class="empty_data">자료가 없습니다.</td></tr>';
-            ?>
-            </tbody>
-            </table>
+                if ($i == 0)
+                    echo '<li class="empty_table">자료가 없습니다.</li>';
+                ?>
+            </ul>
         </div>
 
         <div class="btn_list03 btn_list">
@@ -433,7 +423,7 @@ function get_max_value($arr)
             </tr>
             <?php
             }
-            if ($i == 0) echo '<tr><td colspan="3" class="empty_data">자료가 없습니다.</td></tr>';
+            if ($i == 0) echo '<tr><td colspan="3" class="empty_table">자료가 없습니다.</td></tr>';
             ?>
             </tbody>
             </table>
@@ -659,7 +649,7 @@ function graph_draw()
         </tr>
         <?php
         }
-        if ($i == 0) echo '<tr><td colspan="5" class="empty_data">자료가 없습니다.</td></tr>';
+        if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>
@@ -722,7 +712,7 @@ function graph_draw()
         </tr>
         <?php
         }
-        if ($i == 0) echo '<tr><td colspan="5" class="empty_data">자료가 없습니다.</td></tr>';
+        if ($i == 0) echo '<tr><td colspan="5" class="empty_table">자료가 없습니다.</td></tr>';
         ?>
         </tbody>
         </table>
