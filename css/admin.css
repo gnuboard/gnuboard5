@@ -245,8 +245,6 @@ tbody td {border:1px solid #ececec}
 tfoot th, tfoot td {padding:10px 0;border:1px solid #c1d1d5;background:#d7e0e2}
 tfoot th {}
 tfoot td {font-weight:bold;text-align:center}
-table .tr_bg0 {background:#fff}
-table .tr_bg1 {background:#f0f3f7}
 
 .tbl_wrap {margin:0 0 10px;padding:0 20px}
 .tbl_wrap td.empty_table {padding:100px 0;text-align:center}
@@ -295,6 +293,14 @@ table .tr_bg1 {background:#f0f3f7}
 .grid_16 {width:800px}
 .grid_17 {width:850px}
 .grid_18 {width:900px}
+
+/* 목록 홀짝 배경색 */
+.bg0 {background:#fff}
+.bg1 {background:#f0f3f7}
+.bg0cancel {background:#fdebf3}
+.bg0cancel td {border-color:#f9d8e6}
+.bg1cancel {background:#fdebf3}
+.bg1cancel td {border-color:#f9d8e6}
 
 /* 회원관리 목록 */
 .mb_leave_msg {color:#b6b6b6}
