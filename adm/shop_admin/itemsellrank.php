@@ -91,7 +91,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 </form>
 
-<div class="local_desc">
+<div class="local_desc01 local_desc">
     <p>판매량을 합산하여 상품판매순위를 집계합니다.</p>
 </div>
 
