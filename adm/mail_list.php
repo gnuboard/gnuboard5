@@ -57,10 +57,10 @@ $colspan = 7;
 
         $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
 
-        $tr_bg = 'tr_bg'.($i%2);
+        $bg = 'bg'.($i%2);
     ?>
 
-    <tr class="<?php echo $tr_bg; ?>">
+    <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
             <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['ma_id'] ?>" title="메일선택">
         </td>
