@@ -124,7 +124,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
         <td class="td_datetime"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?search_sort=vi_date&amp;search_word=<?php echo $row['vi_date']; ?>"><?php echo $row['vi_date']; ?></a> <?php echo $row['vi_time']; ?></td>
     </tr>
     <?php } ?>
-    <?php if ($i == 0) echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>'; ?>
+    <?php if ($i == 0) echo '<tr><td colspan="'.$colspan.'" class="empty_data">자료가 없습니다.</td></tr>'; ?>
     </tbody>
     </table>
 </div>
