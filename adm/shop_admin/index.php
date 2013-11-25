@@ -196,6 +196,10 @@ function get_max_value($arr)
                 }
                 ?>
             </ul>
+            <div id="sidx_graph_legend">
+                <span id="legend_order"></span> 주문
+                <span id="legend_cancel"></span> 취소
+            </div>
         </div>
     </section>
 
