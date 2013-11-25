@@ -7,10 +7,17 @@ if ($is_admin != 'super')
     alert("최고관리자만 접근이 가능합니다.");
 
 $board = array();
+$save_bo_table = array();
 
 for($i=0;$i<count($_POST['chk_bn_id']);$i++)
 {
-    list($bo_table, $wr_id) = explode(",", $_POST['chk_bn_id'][$i]);
+    // 실제 번호를 넘김
+    $k = $_POST['chk_bn_id'][$i];
+
+    $bo_table = $_POST['bo_table'][$k];
+    $wr_id    = $_POST['wr_id'][$k];
+
+    $save_bo_table[] = $bo_table;
 
     $write_table = $g5['write_prefix'].$bo_table;
 
@@ -124,6 +131,11 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
         // 새글 삭제
         sql_query(" delete from {$g5['board_new_table']} where bo_table = '$bo_table' and wr_id = '$comment_id' ");
     }
+}
+
+$save_bo_table = array_unique($save_bo_table);
+foreach ($save_bo_table as $key=>$value) {
+    delete_cache_latest($value);
 }
 
 goto_url("new.php?sfl=$sfl&stx=$stx&page=$page");

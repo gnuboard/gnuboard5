@@ -73,7 +73,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <?php if ($is_admin) { ?>
         <td class="sir_set_chk">
             <label for="chk_bn_id_<?php echo $i; ?>" class="sir_sr"><?php echo $num?>번</label>
-            <input type="checkbox" name="chk_bn_id[]" value="<?php echo $list[$i]['bo_table'].','.$list[$i]['wr_id']; ?>">
+            <input type="checkbox" name="chk_bn_id[]" value="<?php echo $i; ?>">
+            <input type="hidden" name="bo_table[<?php echo $i; ?>]" value="<?php echo $list[$i]['bo_table']; ?>">
+            <input type="hidden" name="wr_id[<?php echo $i; ?>]" value="<?php echo $list[$i]['wr_id']; ?>">
         </td>
         <?php } ?>
         <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
@@ -94,7 +96,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <?php if ($is_admin) { ?>
 <div class="sir_bw02 sir_bw">
     <input type="submit" onclick="document.pressed=this.value" value="선택삭제" class="sir_b01_adm">
-    <input type="submit" onclick="document.pressed=this.value" value="선택내용삭제" class="sir_b01_adm">
 </div>
 <?}?>
 </form>
