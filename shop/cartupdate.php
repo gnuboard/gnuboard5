@@ -121,7 +121,10 @@ else // 장바구니에 담기
             $opt_list[$row['io_type']][$row['io_id']]['use'] = $row['io_use'];
             $opt_list[$row['io_type']][$row['io_id']]['price'] = $row['io_price'];
             $opt_list[$row['io_type']][$row['io_id']]['stock'] = $row['io_stock_qty'];
-            $lst_count++;
+
+            // 선택옵션 개수
+            if(!$row['io_type'])
+                $lst_count++;
         }
 
         // 포인트
@@ -187,7 +190,7 @@ else // 장바구니에 담기
             $io_type = $_POST['io_type'][$it_id][$k];
             $io_value = $_POST['io_value'][$it_id][$k];
 
-            // 옵션정보가 존재하는데 선택된 옵션이 없으면 건너뜀
+            // 선택옵션정보가 존재하는데 선택된 옵션이 없으면 건너뜀
             if($lst_count && $io_id == '')
                 continue;
 
