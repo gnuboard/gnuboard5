@@ -13,14 +13,17 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="url">
 
 <div id="sit_ov_wrap">
-    <div id="sit_pvi">
-        <button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>
-        <button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>
-        <?php
-        // 이미지(중) 썸네일
-        $thumb_count = 0;
-        for ($i=1; $i<=10; $i++)
+    <?php
+    // 이미지(중) 썸네일
+    $thumb_count = 0;
+    for ($i=1; $i<=10; $i++)
+    {
+        if ($i == 0)
         {
+        echo '<div id="sit_pvi">';
+        echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>';
+        echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>';
+        }
             if(!$it['it_img'.$i])
                 continue;
 
@@ -36,9 +39,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
             $thumb_count++;
         }
-        if ($thumb_count > 0) echo '</ul>';
+        if ($thumb_count > 0) echo '</ul></div>';
         ?>
-    </div>
 
     <section id="sit_ov">
         <h2>상품간략정보 및 구매기능</h2>
