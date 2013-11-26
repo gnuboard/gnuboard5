@@ -53,7 +53,7 @@ include_once(G5_PATH.'/head.sub.php');
         </table>
     </div>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <input type="submit" id="btn_submit" value="보내기" class="btn_submit">
         <a href="javascript:window.close();">창닫기</a>
     </div>

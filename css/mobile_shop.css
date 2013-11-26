@@ -672,7 +672,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 .new_win .win_btn {clear:both;margin:20px;text-align:center}
 .new_win .win_btn a {display:inline-block;padding:0 10px;height:2.5em;background:#666;color:#fff;vertical-align:middle;text-decoration:none;line-height:2.5em}
 .new_win .win_btn button {display:inline-block;padding:0 10px;height:2.5em;border:0;background:#666;color:#fff;text-decoration:none;line-height:2.5em}
-.new_win .win_btn input {height:2.65em;line-height:2.65em}
+.new_win .win_btn input {height:2.5em;line-height:2.5em}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}
