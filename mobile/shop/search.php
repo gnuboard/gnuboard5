@@ -31,9 +31,9 @@ if ($q) {
     for ($i=0; $i<count($arr); $i++) {
         $word = trim($arr[$i]);
         if (!$word) continue;
-    
+
         $concat = array();
-        if ($search_all || $qname) 
+        if ($search_all || $qname)
             $concat[] = "a.it_name";
         if ($search_all || $qexplan)
             $concat[] = "a.it_explan2";
@@ -44,7 +44,7 @@ if ($q) {
         $detail_where[] = $concat_fields." like '%$word%' ";
 
         // 인기검색어
-        $sql = " insert into {$g5['popular_table']} set pp_word = '$word', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' "; 
+        $sql = " insert into {$g5['popular_table']} set pp_word = '$word', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql, FALSE);
     }
 
@@ -54,7 +54,7 @@ if ($q) {
 if ($qcaid)
     $where[] = " a.ca_id like '$qcaid%' ";
 
-if ($qfrom || $qto) 
+if ($qfrom || $qto)
     $where[] = " a.it_price between '$qfrom' and '$qto' ";
 
 $sql_where = " where " . implode(" and ", $where);
@@ -64,7 +64,7 @@ $qsort  = strtolower($qsort);
 $qorder = strtolower($qorder);
 $order_by = "";
 // 아래의 $qsort 필드만 정렬이 가능하게 하여 다른 필드로 하여금 유추해 볼수 없게함
-if (($qsort == "it_sum_qty" || $qsort == "it_price" || $qsort == "it_use_avg" || $qsort == "it_use_cnt" || $qsort == "it_update_time") && 
+if (($qsort == "it_sum_qty" || $qsort == "it_price" || $qsort == "it_use_avg" || $qsort == "it_use_cnt" || $qsort == "it_update_time") &&
     ($qorder == "asc" || $qorder == "desc")) {
     $order_by = ' order by ' . $qsort . ' ' . $qorder . ' , it_order, it_id desc';
 }
@@ -95,9 +95,9 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         <input type="hidden" name="qcaid" id="qcaid" value="<?php echo $qcaid ?>">
         <div>
             <strong>검색범위</strong>
-            <input type="checkbox" name="qname" id="ssch_qname" class="frm_input" <?php echo isset($qname)?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
-            <input type="checkbox" name="qexplan" id="ssch_qexplan" class="frm_input" <?php echo isset($qexplan)?'checked="checked"':'';?>> <label for="ssch_qexplan">상품설명</label>
-            <input type="checkbox" name="qid" id="ssch_qid" class="frm_input" <?php echo isset($qid)?'checked="checked"':'';?>> <label for="ssch_qid">상품코드</label><br>
+            <input type="checkbox" name="qname" id="ssch_qname" <?php echo isset($qname)?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
+            <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo isset($qexplan)?'checked="checked"':'';?>> <label for="ssch_qexplan">상품설명</label>
+            <input type="checkbox" name="qid" id="ssch_qid" <?php echo isset($qid)?'checked="checked"':'';?>> <label for="ssch_qid">상품코드</label><br>
         </div>
         <div>
             <strong>상품가격 (원)</strong>
@@ -159,6 +159,7 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
             $list = new item_list($default['de_mobile_search_list_skin'], $default['de_mobile_search_list_mod'], 1, $default['de_mobile_search_img_width'], $default['de_mobile_search_img_height']);
             $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
             $list->set_is_page(true);
+            $list->set_mobile(true);
             $list->set_view('it_img', true);
             $list->set_view('it_id', true);
             $list->set_view('it_name', true);
@@ -182,7 +183,7 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
 
         $query_string .= 'ca_id='.$ca_id;
         $query_string .='&amp;qsort='.$qsort.'&amp;qorder='.$qorder;
-        echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$query_string.'&amp;page=');
+        echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$query_string.'&amp;page=');
         ?>
     </div>
     <!-- } 검색결과 끝 -->
