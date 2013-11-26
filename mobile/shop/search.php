@@ -96,8 +96,8 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         <div>
             <strong>검색범위</strong>
             <input type="checkbox" name="qname" id="ssch_qname" <?php echo isset($qname)?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
-            <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo isset($qexplan)?'checked="checked"':'';?>> <label for="ssch_qexplan">상품설명</label>
-            <input type="checkbox" name="qid" id="ssch_qid" <?php echo isset($qid)?'checked="checked"':'';?>> <label for="ssch_qid">상품코드</label><br>
+            <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo isset($qexplan)?'checked="checked"':'';?>> <label for="ssch_qexplan"><span class="sound_only">상품</span>설명</label>
+            <input type="checkbox" name="qid" id="ssch_qid" <?php echo isset($qid)?'checked="checked"':'';?>> <label for="ssch_qid"><span class="sound_only">상품</span>코드</label><br>
         </div>
         <div>
             <strong>상품가격 (원)</strong>
