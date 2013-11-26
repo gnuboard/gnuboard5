@@ -70,24 +70,18 @@ if($_FILES['excelfile']['tmp_name']) {
     $total_count = 0;
     $fail_count = 0;
     $succ_count = 0;
-    $comma = '';
-
-    /*
-    $sql = " INSERT INTO {$g5['g5_shop_item_table']}
-                  ( it_id, ca_id, ca_id2, ca_id3, it_name, it_maker, it_origin, it_brand, it_model, it_type1, it_type2, it_type3, it_type4, it_type5, it_basic, it_explan, it_mobile_explan, it_cust_price, it_price, it_point, it_sell_email, it_use, it_stock_qty, it_time, it_ip, it_order, it_tel_inq, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10 )
-                VALUES ";
-    */
 
     for ($i = 3; $i <= $data->sheets[0]['numRows']; $i++) {
         $total_count++;
 
         $j = 1;
-    
+
         $it_id              = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $ca_id              = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $ca_id2             = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $ca_id3             = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_name            = addslashes($data->sheets[0]['cells'][$i][$j++]);
+        $it_mobile_name     = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_maker           = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_origin          = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_brand           = addslashes($data->sheets[0]['cells'][$i][$j++]);
@@ -104,9 +98,14 @@ if($_FILES['excelfile']['tmp_name']) {
         $it_price           = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
         $it_tel_inq         = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_point           = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
+        $it_point_type      = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
         $it_sell_email      = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_use             = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_stock_qty       = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
+        $it_noti_qty        = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
+        $it_buy_min_qty     = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
+        $it_buy_max_qty     = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
+        $it_notax           = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
         $it_order           = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
         $it_img1            = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_img2            = addslashes($data->sheets[0]['cells'][$i][$j++]);
@@ -144,18 +143,13 @@ if($_FILES['excelfile']['tmp_name']) {
             continue;
         }
 
-        /*
-        $sql .= $comma." ( '$it_id', '$ca_id', '$ca_id2', '$ca_id3', '$it_name', '$it_maker', '$it_origin', '$it_brand', '$it_model', '$it_type1', '$it_type2', '$it_type3', '$it_type4', '$it_type5', '$it_basic', '$it_explan', '$it_mobile_explan', '1', '$it_cust_price', '$it_price', '$it_point', '$it_sell_email', '$it_use', '$it_stock_qty', '".G5_TIME_YMDHIS."', '".$_SERVER['REMOTE_ADDR']."', '$it_order', '$it_tel_inq', '$it_img1', '$it_img2', '$it_img3', '$it_img4', '$it_img5', '$it_img6', '$it_img7', '$it_img8', '$it_img9', '$it_img10' ) ";
-
-        $comma = ' , ';
-        */
-
         $sql = " INSERT INTO {$g5['g5_shop_item_table']}
                      SET it_id = '$it_id',
                          ca_id = '$ca_id',
                          ca_id2 = '$ca_id2',
                          ca_id3 = '$ca_id3',
                          it_name = '$it_name',
+                         it_mobile_name = '$it_mobile_name',
                          it_maker = '$it_maker',
                          it_origin = '$it_origin',
                          it_brand = '$it_brand',
@@ -168,14 +162,20 @@ if($_FILES['excelfile']['tmp_name']) {
                          it_basic = '$it_basic',
                          it_explan = '$it_explan',
                          it_mobile_explan = '$it_mobile_explan',
-                         it_cust_price = '$it_cust_price', 
+                         it_cust_price = '$it_cust_price',
                          it_price = '$it_price',
-                         it_point = '$it_point', 
-                         it_use = '$it_use', 
+                         it_point = '$it_point',
+                         it_point_type = '$it_point_type',
+                         it_stock_qty = '$it_stock_qty',
+                         it_noti_qty = '$it_noti_qty',
+                         it_buy_min_qty = '$it_buy_min_qty',
+                         it_buy_max_qty = '$it_buy_max_qty',
+                         it_notax = '$it_notax',
+                         it_use = '$it_use',
                          it_time = '".G5_TIME_YMDHIS."',
-                         it_ip = '{$_SERVER['REMOTE_ADDR']}', 
-                         it_order = '$it_order', 
-                         it_tel_inq = '$it_tel_inq', 
+                         it_ip = '{$_SERVER['REMOTE_ADDR']}',
+                         it_order = '$it_order',
+                         it_tel_inq = '$it_tel_inq',
                          it_img1 = '$it_img1',
                          it_img2 = '$it_img2',
                          it_img3 = '$it_img3',
@@ -190,11 +190,6 @@ if($_FILES['excelfile']['tmp_name']) {
 
         $succ_count++;
     }
-
-    /*
-    if($succ_count > 0)
-        sql_query($sql);
-    */
 }
 
 $g5['title'] = '상품 엑셀일괄등록 결과';
