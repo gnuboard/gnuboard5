@@ -284,6 +284,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <!-- 총 구매액 -->
         <div id="sit_tot_price"></div>
+        <?php } ?>
 
         <ul id="sit_ov_btn">
             <?php if (!$it['it_tel_inq']) { ?>
@@ -294,7 +295,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
             <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
         </ul>
-        <?php } ?>
 
         <script>
         // 상품보관

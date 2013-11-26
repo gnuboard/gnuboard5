@@ -126,16 +126,6 @@ if ($row['it_id']) {
     $next_href2 = '';
 }
 
-// 상품 선택옵션 수
-$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '0' and io_use = '1' ";
-$row = sql_fetch($sql);
-$opt_count = $row['cnt'];
-
-// 상품 추가옵션 수
-$sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '1' and io_use = '1' ";
-$row = sql_fetch($sql);
-$spl_count = $row['cnt'];
-
 // 고객선호도 별점수
 $star_score = get_star_image($it['it_id']);
 
