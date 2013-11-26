@@ -401,7 +401,7 @@ fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7
 #sct_sort {float:left;margin:0 0 10px;width:80%;zoom:1}
 #sct_sort:after {display:block;visibility:hidden;clear:both;content:""}
 #sct_sort h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#sct_sort ul {margin:0;padding:0;list-style:none;zoom:1}
+#sct_sort ul {margin:0;padding:0 0 0 1px;list-style:none;zoom:1}
 #sct_sort ul:after {display:block;visibility:hidden;clear:both;content:""}
 #sct_sort li {float:left;position:relative;margin-left:-1px}
 
