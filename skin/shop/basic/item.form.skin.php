@@ -253,7 +253,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <section id="sit_sel_option">
             <h3>선택된 옵션</h3>
             <?php
-            if(!$option_1 && !$option_2) {
+            if(!$option_1) {
                 if(!$it['it_buy_min_qty'])
                     $it['it_buy_min_qty'] = 1;
             ?>

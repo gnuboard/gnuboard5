@@ -180,7 +180,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
 
         <?php
-        $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
         if($option_1) {
         ?>
         <section>
@@ -202,7 +201,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         ?>
 
         <?php
-        $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
         if($option_2) {
         ?>
         <section>
@@ -225,9 +223,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <?php } // 전화문의가 아닐 경우 끝?>
 
+        <?php if ($it['it_use'] && !$it['it_tel_inq']) { ?>
         <div id="sit_sel_option">
         <?php
-        if(!$option_1 && !$option_2) {
+        if(!$option_1) {
             if(!$it['it_buy_min_qty'])
                 $it['it_buy_min_qty'] = 1;
         ?>
@@ -256,6 +255,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </div>
 
         <div id="sit_tot_price"></div>
+        <?php } ?>
 
         <ul id="sit_ov_btn">
             <?php if (!$it['it_tel_inq']) { ?>

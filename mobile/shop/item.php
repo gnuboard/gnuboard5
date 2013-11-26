@@ -106,6 +106,12 @@ if ($row['it_id']) {
     $next_href2 = '';
 }
 
+// 선택 옵션
+$option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
+
+// 추가 옵션
+$option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
+
 // 관리자가 확인한 사용후기의 개수를 얻음
 $sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 $row = sql_fetch($sql);
