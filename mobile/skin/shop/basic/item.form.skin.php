@@ -24,23 +24,23 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>';
         echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>';
         }
-            if(!$it['it_img'.$i])
-                continue;
+        if(!$it['it_img'.$i])
+            continue;
 
-            if($thumb_count == 0) echo '<ul id="sit_pvi_slide">';
-            $thumb = get_it_thumbnail($it['it_img'.$i], 280, 280);
+        if($thumb_count == 0) echo '<ul id="sit_pvi_slide">';
+        $thumb = get_it_thumbnail($it['it_img'.$i], 280, 280);
 
-            if(!$thumb)
-                continue;
+        if(!$thumb)
+            continue;
 
-            echo '<li>';
-            echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image slide_img" target="_blank">'.$thumb.'</a>';
-            echo '</li>';
+        echo '<li>';
+        echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image slide_img" target="_blank">'.$thumb.'</a>';
+        echo '</li>';
 
-            $thumb_count++;
-        }
-        if ($thumb_count > 0) echo '</ul></div>';
-        ?>
+        $thumb_count++;
+    }
+    if ($thumb_count > 0) echo '</ul></div>';
+    ?>
 
     <section id="sit_ov">
         <h2>상품간략정보 및 구매기능</h2>
