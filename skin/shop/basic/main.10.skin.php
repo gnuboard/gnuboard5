@@ -30,7 +30,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->view_it_img) {
-        echo get_it_image($row['it_id'], $this->img_width, $this->img_height)."\n";
+        echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', stripslashes($row['it_name']))."\n";
     }
 
     if ($this->href) {
@@ -53,7 +53,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "</a>\n";
     }
 
-    if ($this->view_it_basic) {
+    if ($this->view_it_basic && $row['it_basic']) {
         echo "<div class=\"sct_basic\">".stripslashes($row['it_basic'])."</div>\n";
     }
 
@@ -62,7 +62,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "<div class=\"sct_cost\">\n";
 
         if ($this->view_it_cust_price && $row['it_cust_price']) {
-            echo "<strike>".display_price($row['it_cust_price'])."</strike> &gt;\n";
+            echo "<strike>".display_price($row['it_cust_price'])."</strike>\n";
         }
 
         if ($this->view_it_price) {

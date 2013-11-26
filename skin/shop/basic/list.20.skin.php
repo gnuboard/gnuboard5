@@ -53,12 +53,16 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "</a>\n";
     }
 
+    if ($this->view_it_basic && $row['it_basic']) {
+        echo "<div class=\"sct_basic\">".stripslashes($row['it_basic'])."</div>\n";
+    }
+
     if ($this->view_it_cust_price || $this->view_it_price) {
 
         echo "<div class=\"sct_cost\">\n";
 
         if ($this->view_it_cust_price && $row['it_cust_price']) {
-            echo "<strike>".display_price($row['it_cust_price'])."</strike> &gt;\n";
+            echo "<strike>".display_price($row['it_cust_price'])."</strike>\n";
         }
 
         if ($this->view_it_price) {
