@@ -27,7 +27,7 @@ if ($is_guest) {
 
 if ($w == "c" || $w == "cu") {
     if ($member['mb_level'] < $board['bo_comment_level'])
-        alert('댓글를 쓸 권한이 없습니다.');
+        alert('댓글을 쓸 권한이 없습니다.');
 }
 else
     alert('w 값이 제대로 넘어오지 않았습니다.');
@@ -67,12 +67,12 @@ if ($w == 'c') // 댓글 입력
 {
     /*
     if ($member[mb_point] + $board[bo_comment_point] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 댓글쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 댓글를 써 주십시오.');
+        alert('보유하신 포인트('.number_format($member[mb_point]).')가 없거나 모자라서 댓글쓰기('.number_format($board[bo_comment_point]).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 댓글을 써 주십시오.');
     */
-    // 댓글쓰기 포인트설정시 회원의 포인트가 음수인 경우 댓글를 쓰지 못하던 버그를 수정 (곱슬최씨님)
+    // 댓글쓰기 포인트설정시 회원의 포인트가 음수인 경우 댓글을 쓰지 못하던 버그를 수정 (곱슬최씨님)
     $tmp_point = ($member['mb_point'] > 0) ? $member['mb_point'] : 0;
     if ($tmp_point + $board['bo_comment_point'] < 0 && !$is_admin)
-        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 댓글쓰기('.number_format($board['bo_comment_point']).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 댓글를 써 주십시오.');
+        alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 댓글쓰기('.number_format($board['bo_comment_point']).')가 불가합니다.\\n\\n포인트를 적립하신 후 다시 댓글을 써 주십시오.');
 
     // 댓글 답변
     if ($comment_id)
@@ -264,7 +264,7 @@ else if ($w == 'cu') // 댓글 수정
             else
                 alert('그룹관리자의 권한보다 높은 회원의 댓글이므로 수정할 수 없습니다.');
         } else
-            alert('자신이 관리하는 그룹의 게시판이 아니므로 댓글를 수정할 수 없습니다.');
+            alert('자신이 관리하는 그룹의 게시판이 아니므로 댓글을 수정할 수 없습니다.');
     } else if ($is_admin == 'board') { // 게시판관리자이면
         $mb = get_member($comment['mb_id']);
         if ($member['mb_id'] == $board['bo_admin']) { // 자신이 관리하는 게시판인가?
@@ -273,7 +273,7 @@ else if ($w == 'cu') // 댓글 수정
             else
                 alert('게시판관리자의 권한보다 높은 회원의 댓글이므로 수정할 수 없습니다.');
         } else
-            alert('자신이 관리하는 게시판이 아니므로 댓글를 수정할 수 없습니다.');
+            alert('자신이 관리하는 게시판이 아니므로 댓글을 수정할 수 없습니다.');
     } else if ($member['mb_id']) {
         if ($member['mb_id'] != $comment['mb_id'])
             alert('자신의 글이 아니므로 수정할 수 없습니다.');
