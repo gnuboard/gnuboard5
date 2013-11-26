@@ -15,31 +15,31 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="sit_ov_wrap">
     <?php
     // 이미지(중) 썸네일
-    $thumb_count = 0;
+    $thumb_img = '';
     for ($i=1; $i<=10; $i++)
     {
-        if ($i == 0)
-        {
-        echo '<div id="sit_pvi">';
-        echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>';
-        echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>';
-        }
         if(!$it['it_img'.$i])
             continue;
 
-        if($thumb_count == 0) echo '<ul id="sit_pvi_slide">';
         $thumb = get_it_thumbnail($it['it_img'.$i], 280, 280);
 
         if(!$thumb)
             continue;
 
-        echo '<li>';
-        echo '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image slide_img" target="_blank">'.$thumb.'</a>';
-        echo '</li>';
-
-        $thumb_count++;
+        $thumb_img .= '<li>';
+        $thumb_img .= '<a href="'.G5_SHOP_URL.'/largeimage.php?it_id='.$it['it_id'].'&amp;no='.$i.'" class="popup_item_image slide_img" target="_blank">'.$thumb.'</a>';
+        $thumb_img .= '</li>'.PHP_EOL;
     }
-    if ($thumb_count > 0) echo '</ul></div>';
+    if ($thumb_img)
+    {
+        echo '<div id="sit_pvi">'.PHP_EOL;
+        echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>'.PHP_EOL;
+        echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>'.PHP_EOL;
+        echo '<ul id="sit_pvi_slide">'.PHP_EOL;
+        echo $thumb_img;
+        echo '</ul>'.PHP_EOL;
+        echo '</div>';
+    }
     ?>
 
     <section id="sit_ov">
