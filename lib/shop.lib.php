@@ -392,7 +392,7 @@ function get_image($img, $width=0, $height=0, $img_id='')
 
 
 // 상품 이미지를 얻는다
-function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='')
+function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img_alt='')
 {
     global $g5;
 
@@ -432,12 +432,12 @@ function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='')
 
     if($thumb) {
         $file_url = str_replace(G5_PATH, G5_URL, $filepath.'/'.$thumb);
-        $img = '<img src="'.$file_url.'" width="'.$width.'" height="'.$height.'" alt=""';
+        $img = '<img src="'.$file_url.'" width="'.$width.'" height="'.$height.'" alt="'.$img_alt.'"';
     } else {
         $img = '<img src="'.G5_SHOP_URL.'/img/no_image.gif" width="'.$width.'"';
         if($height)
             $img .= ' height="'.$height.'"';
-        $img .= ' alt=""';
+        $img .= ' alt="'.$img_alt.'"';
     }
 
     if($img_id)
