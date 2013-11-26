@@ -24,40 +24,62 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         }
     }
 
-    echo "<li class=\"sct_li{$sct_last}\">\n";
+    $list_top_pad = 20;
+    $list_right_pad = 10;
+    $list_bottom_pad = 20;
+    $list_left_pad = $this->img_width + 10;
+    $list_real_width = 360;
+    $list_width = $list_real_width - $list_right_pad - $list_left_pad;
+    $list_height = $this->img_height - $list_top_pad - $list_bottom_pad;
+
+    echo "<li class=\"sct_li{$sct_last}\" style=\"padding:{$list_top_pad}px {$list_right_pad}px {$list_bottom_pad}px {$list_left_pad}px;width:{$list_width}px;height:{$list_height}px\">\n";
 
     if ($this->href) {
-        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
+        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a sct_img\">\n";
     }
-
-    echo "<span class=\"sct_arw_toleft\"></span>\n";
 
     if ($this->view_it_img) {
-        echo "<span class=\"sct_img\">".get_it_image($row['it_id'], $this->img_width, $this->img_height)."</span>\n";
-    }
-
-    if ($this->view_it_id) {
-        echo "<b>".stripslashes($row['it_id'])."</b>\n";
-    }
-
-    if ($this->view_it_name) {
-        echo "<b>".stripslashes($row['it_name'])."</b>\n";
-    }
-
-    if ($this->view_it_cust_price && $row['it_cust_price']) {
-        echo "<span class=\"sct_cost\">".display_price($row['it_cust_price'])."</span>\n";
-    }
-
-    if ($this->view_it_price) {
-        echo "<span class=\"sct_cost\">".display_price(get_price($row), $row['it_tel_inq'])."</span>\n";
-    }
-
-    if ($this->view_it_icon) {
-        echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
+        echo get_it_image($row['it_id'], $this->img_width, $this->img_height, '', '', stripslashes($row['it_name']))."\n";
     }
 
     if ($this->href) {
         echo "</a>\n";
+    }
+
+    if ($this->view_it_id) {
+        echo "<span class=\"sct_id\">&lt;".stripslashes($row['it_id'])."&gt;</span>\n";
+    }
+
+    if ($this->href) {
+        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a sct_txt\">\n";
+    }
+
+    if ($this->view_it_name) {
+        echo stripslashes($row['it_name'])."\n";
+    }
+
+    if ($this->href) {
+        echo "</a>\n";
+    }
+
+    if ($this->view_it_basic && $row['it_basic']) {
+        echo "<div class=\"sct_basic\">".stripslashes($row['it_basic'])."</div>\n";
+    }
+
+    if ($this->view_it_cust_price || $this->view_it_price) {
+
+        echo "<div class=\"sct_cost\">\n";
+
+        if ($this->view_it_cust_price && $row['it_cust_price']) {
+            echo "<strike>".display_price($row['it_cust_price'])."</strike>\n";
+        }
+
+        if ($this->view_it_price) {
+            echo display_price(get_price($row), $row['it_tel_inq'])."\n";
+        }
+
+        echo "</div>\n";
+
     }
 
     if ($this->view_sns) {
@@ -67,6 +89,8 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_goo.png');
         echo "</div>\n";
     }
+
+    echo "<div class=\"sct_arw_toleft\"></div>";
 
     echo "</li>\n";
 }
