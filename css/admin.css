@@ -299,7 +299,8 @@ tfoot td {font-weight:bold;text-align:center}
 
 /* 목록 홀짝 배경색 */
 .bg0 {background:#fff}
-.bg1 {background:#f0f3f7}
+.bg1 {background:#f2f5f9}
+.bg1 td {border-color:#e9e9e9}
 .bg0cancel {background:#fdebf3}
 .bg0cancel td {border-color:#f9d8e6}
 .bg1cancel {background:#fdebf3}
