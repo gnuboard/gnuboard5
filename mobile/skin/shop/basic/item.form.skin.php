@@ -97,6 +97,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <th scope="row">판매가격</th>
             <td>전화문의</td>
         </tr>
+        </tbody>
+        </table>
 
         <?php } else { // 전화문의가 아닐 경우?>
         <?php if ($it['it_cust_price']) { // 1.00.03?>
@@ -104,7 +106,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <th scope="row">시중가격</th>
             <td><?php echo display_price($it['it_cust_price']); ?></td>
         </tr>
-        <?php } // 전화문의 끝?>
+        <?php } ?>
 
         <tr>
             <th scope="row">판매가격</th>
@@ -135,45 +137,45 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </tr>
         <?php } ?>
         <?php
-            $ct_send_cost_label = '배송비결제';
+        $ct_send_cost_label = '배송비결제';
 
-            if($default['de_send_cost_case'] == '무료')
-                $sc_method = '무료배송';
+        if($default['de_send_cost_case'] == '무료')
+            $sc_method = '무료배송';
+        else
+            $sc_method = '주문시 결제';
+
+        if($it['it_sc_type'] == 1)
+            $sc_method = '무료배송';
+        else if($it['it_sc_type'] > 1) {
+            if($it['it_sc_method'] == 1)
+                $sc_method = '수령후 지불';
+            else if($it['it_sc_method'] == 2) {
+                $ct_send_cost_label = '<label for="ct_send_cost">배송비결제</label>';
+                $sc_method = '<select name="ct_send_cost" id="ct_send_cost">
+                                  <option value="0">주문시 결제</option>
+                                  <option value="1">수령후 지불</option>
+                              </select>';
+            }
             else
                 $sc_method = '주문시 결제';
-
-            if($it['it_sc_type'] == 1)
-                $sc_method = '무료배송';
-            else if($it['it_sc_type'] > 1) {
-                if($it['it_sc_method'] == 1)
-                    $sc_method = '수령후 지불';
-                else if($it['it_sc_method'] == 2) {
-                    $ct_send_cost_label = '<label for="ct_send_cost">배송비결제</label>';
-                    $sc_method = '<select name="ct_send_cost" id="ct_send_cost">
-                                      <option value="0">주문시 결제</option>
-                                      <option value="1">수령후 지불</option>
-                                  </select>';
-                }
-                else
-                    $sc_method = '주문시 결제';
-            }
-            ?>
-            <tr>
-                <th><?php echo $ct_send_cost_label; ?></th>
-                <td><?php echo $sc_method; ?></td>
-            </tr>
-            <?php if($it['it_buy_min_qty']) { ?>
-            <tr>
-                <th>최소구매수량</th>
-                <td><?php echo number_format($it['it_buy_min_qty']); ?> 개<td>
-            </tr>
-            <?php } ?>
-            <?php if($it['it_buy_max_qty']) { ?>
-            <tr>
-                <th>최대구매수량</th>
-                <td><?php echo number_format($it['it_buy_max_qty']); ?> 개<td>
-            </tr>
-            <?php } ?>
+        }
+        ?>
+        <tr>
+            <th><?php echo $ct_send_cost_label; ?></th>
+            <td><?php echo $sc_method; ?></td>
+        </tr>
+        <?php if($it['it_buy_min_qty']) { ?>
+        <tr>
+            <th>최소구매수량</th>
+            <td><?php echo number_format($it['it_buy_min_qty']); ?> 개<td>
+        </tr>
+        <?php } ?>
+        <?php if($it['it_buy_max_qty']) { ?>
+        <tr>
+            <th>최대구매수량</th>
+            <td><?php echo number_format($it['it_buy_max_qty']); ?> 개<td>
+        </tr>
+        <?php } ?>
         </tbody>
         </table>
 
