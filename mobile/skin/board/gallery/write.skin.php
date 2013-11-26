@@ -71,7 +71,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php if ($is_email) { ?>
         <tr>
             <th scope="row"><label for="wr_email">이메일</label></th>
-            <td><input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email" maxlength="100"></td>
+            <td><input type="email" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email" maxlength="100"></td>
         </tr>
         <?php } ?>
 

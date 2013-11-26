@@ -119,11 +119,11 @@ if($default['de_escrow_use']) {
             </tr>
             <tr>
                 <th scope="row"><label for="pp_email">이메일</label></th>
-                <td><input type="text" name="pp_email" value="<?php echo $member['mb_email']; ?>" id="pp_email" required class="required frm_input"></td>
+                <td><input type="email" name="pp_email" value="<?php echo $member['mb_email']; ?>" id="pp_email" required class="required frm_input"></td>
             </tr>
             <tr>
                 <th scope="row"><label for="pp_hp">휴대폰</label></th>
-                <td><input type="text" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" class="frm_input"></td>
+                <td><input type="tel" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" class="frm_input"></td>
             </tr>
             </tbody>
             </table>

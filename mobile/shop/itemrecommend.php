@@ -20,40 +20,38 @@ include_once(G5_PATH.'/head.sub.php');
 <div id="sit_rec_new" class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
-    <div class="cbox">
-        <form name="fitemrecommend" method="post" action="./itemrecommendmail.php" autocomplete="off" onsubmit="return fitemrecommend_check(this);">
-        <input type="hidden" name="token" value="<?php echo $token; ?>">
-        <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
+    <form name="fitemrecommend" method="post" action="./itemrecommendmail.php" autocomplete="off" onsubmit="return fitemrecommend_check(this);">
+    <input type="hidden" name="token" value="<?php echo $token; ?>">
+    <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
 
-        <div class="tbl_frm01 tbl_wrap">
-            <table>
-            <colgroup>
-                <col class="grid_3">
-                <col>
-            </colgroup>
-            <tbody>
-            <tr>
-                <th scope="row"><label for="to_email">추천받는 분 E-mail</label></th>
-                <td><input type="text" name="to_email" id="to_email" required class="frm_input"></td>
-            </tr>
-            <tr>
-                <th scope="row"><label for="subject">제목</label></th>
-                <td><input type="text" name="subject" id="subject" required class="frm_input"></td>
-            </tr>
-            <tr>
-                <th scope="row"><label for="content">내용</label></th>
-                <td><textarea name="content" id="content" required></textarea></td>
-            </tr>
-            </tbody>
-            </table>
-        </div>
-
-        <div class="win_btn">
-            <input type="submit" id="btn_submit" value="보내기" class="btn_submit">
-            <a href="javascript:window.close();">창닫기</a>
-        </div>
-        </form>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <colgroup>
+            <col class="grid_3">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="to_email">추천받는 분 E-mail</label></th>
+            <td><input type="email" name="to_email" id="to_email" required class="frm_input"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="subject">제목</label></th>
+            <td><input type="text" name="subject" id="subject" required class="frm_input"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="content">내용</label></th>
+            <td><textarea name="content" id="content" required></textarea></td>
+        </tr>
+        </tbody>
+        </table>
     </div>
+
+    <div class="win_btn">
+        <input type="submit" id="btn_submit" value="보내기" class="btn_submit">
+        <a href="javascript:window.close();">창닫기</a>
+    </div>
+    </form>
 
 </div>
 

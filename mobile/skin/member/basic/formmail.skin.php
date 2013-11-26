@@ -27,7 +27,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </tr>
         <tr>
             <th scope="row"><label for="fmail">E-mail<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="fmail" id="fmail" required class="frm_input required"></td>
+            <td><input type="email" name="fmail" id="fmail" required class="frm_input required"></td>
         </tr>
         <?php } ?>
         <tr>

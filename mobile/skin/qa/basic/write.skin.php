@@ -52,7 +52,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <tr>
             <th scope="row"><label for="qa_email">이메일</label></th>
             <td>
-                <input type="text" name="qa_email" value="<?php echo $write['qa_email']; ?>" id="qa_email" <?php echo $req_email; ?> class="<?php echo $req_email.' '; ?>frm_input email" maxlength="100">
+                <input type="email" name="qa_email" value="<?php echo $write['qa_email']; ?>" id="qa_email" <?php echo $req_email; ?> class="<?php echo $req_email.' '; ?>frm_input email" maxlength="100">
                 <input type="checkbox" name="qa_email_recv" value="1" id="qa_email_recv" <?php if($write['qa_email_recv']) echo 'checked="checked"'; ?>>
                 <label for="qa_email_recv">답변받기</label>
             </td>
@@ -63,7 +63,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <tr>
             <th scope="row"><label for="qa_hp">휴대폰</label></th>
             <td>
-                <input type="text" name="qa_hp" value="<?php echo $write['qa_hp']; ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_email.' '; ?>frm_input" size="30">
+                <input type="tel" name="qa_hp" value="<?php echo $write['qa_hp']; ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_email.' '; ?>frm_input" size="30">
                 <?php if($qaconfig['qa_use_sms']) { ?>
                 <input type="checkbox" name="qa_sms_recv" value="1" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?>> 답변등록 SMS알림 수신
                 <?php } ?>
