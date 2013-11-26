@@ -1,7 +1,7 @@
 /.htaccess
+/config.php
 data/
 test
-config.php
 sirgle
 sr_*
 google*
