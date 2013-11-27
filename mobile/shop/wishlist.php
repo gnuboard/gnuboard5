@@ -57,8 +57,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             <td class="td_chk">
                 <?php
                 // 품절검사
-                $it_stock_qty = get_it_stock_qty($row['it_id']);
-                if($it_stock_qty <= 0)
+                if(is_soldout($row['it_id']))
                 {
                 ?>
                 품절
