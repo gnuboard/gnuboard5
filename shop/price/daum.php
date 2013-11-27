@@ -100,7 +100,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
 
     $pdate = date("Ymd", strtotime($row['it_time']));
-    $point = ($row['it_point'] <= 0) ? "" : (int)$row['it_point'];
+    $point = get_item_point($row);
 
     // 배송비계산
     $delivery = get_item_sendcost2($row['it_id'], $row['it_price'], 1);

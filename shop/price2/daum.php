@@ -104,7 +104,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
 
     $pdate = date("Ymd", strtotime($row['it_time']));
-    $point = ($row['it_point'] <= 0) ? "" : (int)$row['it_point'];
+    $point = get_item_point($row);
 
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);

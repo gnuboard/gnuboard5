@@ -50,6 +50,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);
 
+    // 포인트
+    $it_point = get_item_point($row);
+
 echo "{$lt}{$row['it_id']}{$gt}"; // 쇼핑몰 상품ID
 echo "{$lt}C{$gt}"; // 상품구분 C/U/D 전체EP는 일괄적으로 C
 echo "{$lt}{$row['it_name']}{$gt}"; // 상품명
@@ -73,7 +76,7 @@ echo "{$lt}$delivery{$gt}"; // 배송비
 echo "{$lt}{$gt}"; // 이벤트
 echo "{$lt}{$gt}"; // 쿠폰금액
 echo "{$lt}{$gt}"; // 무이자
-echo "{$lt}{$row['it_point']}{$gt}"; // 적립금
+echo "{$lt}$it_point{$gt}"; // 적립금
 echo "{$lt}Y{$gt}"; // 이미지변경여부
 echo "{$lt}{$gt}"; // 물품특성정보
 echo "{$lt}{$gt}"; // 상점내 매출비율

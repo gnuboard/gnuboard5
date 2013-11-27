@@ -47,6 +47,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);
 
+    // 포인트
+    $it_point = get_item_point($row);
+
     // 상품별옵션
     $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
@@ -81,7 +84,7 @@ echo "{$lt}$delivery{$gt}"; // 배송비
 echo "{$lt}{$gt}"; // 이벤트
 echo "{$lt}{$gt}"; // 쿠폰금액
 echo "{$lt}{$gt}"; // 무이자
-echo "{$lt}{$row['it_point']}{$gt}"; // 적립금
+echo "{$lt}$it_point{$gt}"; // 적립금
 echo "{$lt}Y{$gt}"; // 이미지변경여부
 echo "{$lt}{$gt}"; // 물품특성정보
 echo "{$lt}{$gt}"; // 상점내 매출비율
@@ -125,7 +128,7 @@ echo "{$lt}$delivery{$gt}"; // 배송비
 echo "{$lt}{$gt}"; // 이벤트
 echo "{$lt}{$gt}"; // 쿠폰금액
 echo "{$lt}{$gt}"; // 무이자
-echo "{$lt}{$row['it_point']}{$gt}"; // 적립금
+echo "{$lt}$it_point{$gt}"; // 적립금
 echo "{$lt}Y{$gt}"; // 이미지변경여부
 echo "{$lt}{$gt}"; // 물품특성정보
 echo "{$lt}{$gt}"; // 상점내 매출비율

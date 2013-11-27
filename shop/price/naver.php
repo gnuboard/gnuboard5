@@ -81,6 +81,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);
 
+    // 포인트
+    $it_point = get_item_point($row);
+
     echo <<< HEREDOC
 {$lt}begin{$gt}
 {$lt}mapid{$gt}{$row['it_id']}
@@ -104,7 +107,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {$lt}event{$gt}
 {$lt}coupo{$gt}
 {$lt}pcard{$gt}
-{$lt}point{$gt}{$row['it_point']}
+{$lt}point{$gt}$it_point
 {$lt}mvurl{$gt}
 {$lt}selid{$gt}
 {$lt}barcode{$gt}
