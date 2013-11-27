@@ -120,11 +120,20 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
             var $smt = this.find("ul.sct_ul");
             var $smt_a = $smt.find("a");
             var count = $smt.size();
-            var height = $smt.height();
+            var height = 0;
             var c_idx = o_idx = 0;
             var fx = null;
             var delay = 0;
             var el_id = this[0].id;
+
+            $smt.find("li.sct_li").each(function() {
+                var h = $(this).height();
+                if(h > height)
+                    height = h;
+            });
+
+            this.height(height);
+            $smt.height(height);
 
             // 기본 설정값
             var settings = $.extend({
@@ -135,6 +144,7 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
 
             // 초기실행
             if(count > 0 && intervals[el_id] == undefined) {
+                $smt.find("li.sct_li").css("top", "-"+height+"px");
                 $smt.eq(0).find("li.sct_li").each(function() {
                     $(this).delay(delay).animate(
                         { top: "+="+height+"px" }, settings.duration

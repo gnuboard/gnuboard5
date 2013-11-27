@@ -117,10 +117,19 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
             var $smt = this.find("ul.sct_ul");
             var $smt_a = $smt.find("a");
             var width = $smt.eq(0).width();
+            var height = 0;
             var count = $smt.size();
             var c_idx = smt_o_idx = 0;
             var fx = null;
             var el_id = this[0].id;
+
+            $smt.each(function() {
+                var h = $(this).height();
+                if(h > height)
+                    height = h;
+            });
+
+            this.height(height);
 
             // 기본 설정값
             var settings = $.extend({
