@@ -405,6 +405,10 @@ function same_option_check(val)
 function price_calculate()
 {
     var it_price = parseInt($("input#it_price").val());
+
+    if(isNaN(it_price))
+        return;
+
     var $el_prc = $("input.io_price");
     var $el_qty = $("input[name^=ct_qty]");
     var $el_type = $("input[name^=io_type]");

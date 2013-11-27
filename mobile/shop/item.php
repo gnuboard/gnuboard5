@@ -106,12 +106,6 @@ if ($row['it_id']) {
     $next_href2 = '';
 }
 
-// 선택 옵션
-$option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
-
-// 추가 옵션
-$option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
-
 // 관리자가 확인한 사용후기의 개수를 얻음
 $sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 $row = sql_fetch($sql);
@@ -130,6 +124,32 @@ $sql = " select count(*) as cnt
 $row = sql_fetch($sql);
 $item_relation_count = $row['cnt'];
 
+// 상품품절체크
+$is_soldout = is_soldout($it['it_id']);
+
+// 주문가능체크
+$is_orderable = true;
+if(!$it['it_use'] || $it['it_tel_inq'] || $is_soldout)
+    $is_orderable = false;
+
+if($is_orderable) {
+    // 선택 옵션
+    $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
+
+    // 추가 옵션
+    $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
+
+    // 상품 선택옵션 수
+    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '0' and io_use = '1' ";
+    $row = sql_fetch($sql);
+    $opt_count = $row['cnt'];
+
+    // 상품 추가옵션 수
+    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '1' and io_use = '1' ";
+    $row = sql_fetch($sql);
+    $spl_count = $row['cnt'];
+}
+
 $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
 include_once(G5_MSHOP_PATH.'/_head.php');
@@ -143,7 +163,9 @@ include G5_MSHOP_SKIN_PATH.'/navigation.skin.php';
 echo '<div id="sit_hhtml">'.stripslashes($it['it_mobile_head_html']).'</div>';
 ?>
 
+<?php if($is_orderable) { ?>
 <script src="<?php echo G5_JS_URL; ?>/shop.js"></script>
+<?php } ?>
 
 <?php
 if (G5_HTTPS_DOMAIN)

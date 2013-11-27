@@ -62,9 +62,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <section id="sit_ov">
         <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?> 요약정보 및 구매</h2>
         <p id="sit_desc"><?php echo $it['it_basic']; ?></p>
+        <?php if($is_orderable) { ?>
         <p id="sit_opt_info">
             상품 선택옵션 <?php echo $opt_count; ?> 개, 추가옵션 <?php echo $spl_count; ?> 개
         </p>
+        <?php } ?>
         <?php if ($star_score) { ?>
         <div id="sit_star_sns">
             고객평점 <span>별<?php echo $star_score?>개</span>
@@ -111,144 +113,138 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <th scope="row">판매가격</th>
             <td>판매중지</td>
         </tr>
-        </tbody>
-        </table>
         <?php } else if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
         <tr>
             <th scope="row">판매가격</th>
             <td>전화문의</td>
         </tr>
-        </tbody>
-        </table>
         <?php } else { // 전화문의가 아닐 경우?>
+        <?php if ($it['it_cust_price']) { ?>
+        <tr>
+            <th scope="row">시중가격</th>
+            <td><?php echo display_price($it['it_cust_price']); ?></td>
+        </tr>
+        <?php } // 시중가격 끝 ?>
 
-            <?php if ($it['it_cust_price']) { ?>
-            <tr>
-                <th scope="row">시중가격</th>
-                <td><?php echo display_price($it['it_cust_price']); ?></td>
-            </tr>
-            <?php } // 시중가격 끝 ?>
+        <tr>
+            <th scope="row">판매가격</th>
+            <td>
+                <?php echo number_format(get_price($it)); ?> 원
+                <input type="hidden" id="it_price" value="<?php echo get_price($it); ?>">
+            </td>
+        </tr>
+        <?php } ?>
 
-            <tr>
-                <th scope="row">판매가격</th>
-                <td>
-                    <?php echo number_format(get_price($it)); ?> 원
-                    <input type="hidden" id="it_price" value="<?php echo get_price($it); ?>">
-                </td>
-            </tr>
+        <?php
+        /* 재고 표시하는 경우 주석 해제
+        <tr>
+            <th scope="row">재고수량</th>
+            <td><?php echo number_format(get_it_stock_qty($it_id)); ?> 개</td>
+        </tr>
+        */
+        ?>
 
-            <?php
-            /* 재고 표시하는 경우 주석 해제
-            <tr>
-                <th scope="row">재고수량</th>
-                <td><?php echo number_format(get_it_stock_qty($it_id)); ?> 개</td>
-            </tr>
-            */
-            ?>
+        <?php if ($config['cf_use_point']) { // 포인트 사용한다면 ?>
+        <tr>
+            <th scope="row">포인트</th>
+            <td>
+                <?php
+                $it_point = get_item_point($it);
+                echo number_format($it_point);
+                ?> 점
+            </td>
+        </tr>
+        <?php } ?>
+        <?php
+        $ct_send_cost_label = '배송비결제';
 
-            <?php if ($config['cf_use_point']) { // 포인트 사용한다면 ?>
-            <tr>
-                <th scope="row">포인트</th>
-                <td>
-                    <?php
-                    $it_point = get_item_point($it);
-                    echo number_format($it_point);
-                    ?> 점
-                </td>
-            </tr>
-            <?php } ?>
-            <?php
-            $ct_send_cost_label = '배송비결제';
+        if($default['de_send_cost_case'] == '무료')
+            $sc_method = '무료배송';
+        else
+            $sc_method = '주문시 결제';
 
-            if($default['de_send_cost_case'] == '무료')
-                $sc_method = '무료배송';
+        if($it['it_sc_type'] == 1)
+            $sc_method = '무료배송';
+        else if($it['it_sc_type'] > 1) {
+            if($it['it_sc_method'] == 1)
+                $sc_method = '수령후 지불';
+            else if($it['it_sc_method'] == 2) {
+                $ct_send_cost_label = '<label for="ct_send_cost">배송비결제</label>';
+                $sc_method = '<select name="ct_send_cost" id="ct_send_cost">
+                                  <option value="0">주문시 결제</option>
+                                  <option value="1">수령후 지불</option>
+                              </select>';
+            }
             else
                 $sc_method = '주문시 결제';
+        }
+        ?>
+        <tr>
+            <th><?php echo $ct_send_cost_label; ?></th>
+            <td><?php echo $sc_method; ?></td>
+        </tr>
+        <?php if($it['it_buy_min_qty']) { ?>
+        <tr>
+            <th>최소구매수량</th>
+            <td><?php echo number_format($it['it_buy_min_qty']); ?> 개<td>
+        </tr>
+        <?php } ?>
+        <?php if($it['it_buy_max_qty']) { ?>
+        <tr>
+            <th>최대구매수량</th>
+            <td><?php echo number_format($it['it_buy_max_qty']); ?> 개<td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
 
-            if($it['it_sc_type'] == 1)
-                $sc_method = '무료배송';
-            else if($it['it_sc_type'] > 1) {
-                if($it['it_sc_method'] == 1)
-                    $sc_method = '수령후 지불';
-                else if($it['it_sc_method'] == 2) {
-                    $ct_send_cost_label = '<label for="ct_send_cost">배송비결제</label>';
-                    $sc_method = '<select name="ct_send_cost" id="ct_send_cost">
-                                      <option value="0">주문시 결제</option>
-                                      <option value="1">수령후 지불</option>
-                                  </select>';
-                }
-                else
-                    $sc_method = '주문시 결제';
-            }
+        <?php
+        if($option_1) {
+        ?>
+        <!-- 선택옵션 시작 { -->
+        <section>
+            <h3>선택옵션</h3>
+            <table class="sit_ov_tbl">
+            <colgroup>
+                <col class="grid_3">
+                <col>
+            </colgroup>
+            <tbody>
+            <?php // 선택옵션
+            echo $option_1;
             ?>
-            <tr>
-                <th><?php echo $ct_send_cost_label; ?></th>
-                <td><?php echo $sc_method; ?></td>
-            </tr>
-            <?php if($it['it_buy_min_qty']) { ?>
-            <tr>
-                <th>최소구매수량</th>
-                <td><?php echo number_format($it['it_buy_min_qty']); ?> 개<td>
-            </tr>
-            <?php } ?>
-            <?php if($it['it_buy_max_qty']) { ?>
-            <tr>
-                <th>최대구매수량</th>
-                <td><?php echo number_format($it['it_buy_max_qty']); ?> 개<td>
-            </tr>
-            <?php } ?>
             </tbody>
             </table>
+        </section>
+        <!-- } 선택옵션 끝 -->
+        <?php
+        }
+        ?>
 
-            <?php
-            if($option_1) {
+        <?php
+        if($option_2) {
+        ?>
+        <!-- 추가옵션 시작 { -->
+        <section>
+            <h3>추가옵션</h3>
+            <table class="sit_ov_tbl">
+            <colgroup>
+                <col class="grid_3">
+                <col>
+            </colgroup>
+            <tbody>
+            <?php // 추가옵션
+            echo $option_2;
             ?>
-            <!-- 선택옵션 시작 { -->
-            <section>
-                <h3>선택옵션</h3>
-                <table class="sit_ov_tbl">
-                <colgroup>
-                    <col class="grid_3">
-                    <col>
-                </colgroup>
-                <tbody>
-                <?php // 선택옵션
-                echo $option_1;
-                ?>
-                </tbody>
-                </table>
-            </section>
-            <!-- } 선택옵션 끝 -->
-            <?php
-            }
-            ?>
+            </tbody>
+            </table>
+        </section>
+        <!-- } 추가옵션 끝 -->
+        <?php
+        }
+        ?>
 
-            <?php
-            if($option_2) {
-            ?>
-            <!-- 추가옵션 시작 { -->
-            <section>
-                <h3>추가옵션</h3>
-                <table class="sit_ov_tbl">
-                <colgroup>
-                    <col class="grid_3">
-                    <col>
-                </colgroup>
-                <tbody>
-                <?php // 추가옵션
-                echo $option_2;
-                ?>
-                </tbody>
-                </table>
-            </section>
-            <!-- } 추가옵션 끝 -->
-            <?php
-            }
-            ?>
-
-        <?php } // 전화문의가 아닐 경우 끝 ?>
-
-        <?php if ($it['it_use'] && !$it['it_tel_inq']) { ?>
+        <?php if ($is_orderable) { ?>
         <!-- 선택된 옵션 시작 { -->
         <section id="sit_sel_option">
             <h3>선택된 옵션</h3>
@@ -286,8 +282,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <div id="sit_tot_price"></div>
         <?php } ?>
 
+        <?php if($is_soldout) { ?>
+        <p>상품의 재고가 부족하여 구매할 수 없습니다.</p>
+        <?php } ?>
+
         <ul id="sit_ov_btn">
-            <?php if (!$it['it_tel_inq']) { ?>
+            <?php if ($is_orderable) { ?>
             <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
             <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
             <?php } ?>

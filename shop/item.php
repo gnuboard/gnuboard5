@@ -129,12 +129,6 @@ if ($row['it_id']) {
 // 고객선호도 별점수
 $star_score = get_star_image($it['it_id']);
 
-// 선택 옵션
-$option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
-
-// 추가 옵션
-$option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
-
 // 관리자가 확인한 사용후기의 개수를 얻음
 $sql = " select count(*) as cnt from `{$g5['g5_shop_item_use_table']}` where it_id = '{$it_id}' and is_confirm = '1' ";
 $row = sql_fetch($sql);
@@ -157,6 +151,32 @@ $sns_share_links .= get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP
 $sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_twt2.png').' ';
 $sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_goo2.png');
 
+// 상품품절체크
+$is_soldout = is_soldout($it['it_id']);
+
+// 주문가능체크
+$is_orderable = true;
+if(!$it['it_use'] || $it['it_tel_inq'] || $is_soldout)
+    $is_orderable = false;
+
+if($is_orderable) {
+    // 선택 옵션
+    $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
+
+    // 추가 옵션
+    $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
+
+    // 상품 선택옵션 수
+    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '0' and io_use = '1' ";
+    $row = sql_fetch($sql);
+    $opt_count = $row['cnt'];
+
+    // 상품 추가옵션 수
+    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '1' and io_use = '1' ";
+    $row = sql_fetch($sql);
+    $spl_count = $row['cnt'];
+}
+
 function pg_anchor($anc_id) {
     global $default;
     global $item_use_count, $item_qa_count, $item_relation_count;
@@ -173,7 +193,9 @@ function pg_anchor($anc_id) {
 }
 ?>
 
+<?php if($is_orderable) { ?>
 <script src="<?php echo G5_JS_URL; ?>/shop.js"></script>
+<?php } ?>
 
 <div id="sit">
 

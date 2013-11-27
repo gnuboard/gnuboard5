@@ -85,23 +85,22 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <td><?php echo $it['it_brand']; ?></td>
         </tr>
         <?php } ?>
-
         <?php if ($it['it_model']) { ?>
         <tr>
             <th scope="row">모델</th>
             <td><?php echo $it['it_model']; ?></td>
         </tr>
         <?php } ?>
-
-        <?php if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
-
+        <?php if (!$it['it_use']) { // 판매가능이 아닐 경우 ?>
+        <tr>
+            <th scope="row">판매가격</th>
+            <td>판매중지</td>
+        </tr>
+        <?php } else if ($it['it_tel_inq']) { // 전화문의일 경우 ?>
         <tr>
             <th scope="row">판매가격</th>
             <td>전화문의</td>
         </tr>
-        </tbody>
-        </table>
-
         <?php } else { // 전화문의가 아닐 경우?>
         <?php if ($it['it_cust_price']) { // 1.00.03?>
         <tr>
@@ -117,6 +116,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 <input type="hidden" id="it_price" value="<?php echo get_price($it); ?>">
             </td>
         </tr>
+        <?php } ?>
 
         <?php
         /* 재고 표시하는 경우 주석 해제
@@ -223,9 +223,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         }
         ?>
 
-        <?php } // 전화문의가 아닐 경우 끝?>
-
-        <?php if ($it['it_use'] && !$it['it_tel_inq']) { ?>
+        <?php if ($it['it_use'] && !$it['it_tel_inq'] && !$is_soldout) { ?>
         <div id="sit_sel_option">
         <?php
         if(!$option_1) {
@@ -259,8 +257,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <div id="sit_tot_price"></div>
         <?php } ?>
 
+        <?php if($is_soldout) { ?>
+        <p>상품의 재고가 부족하여 구매할 수 없습니다.</p>
+        <?php } ?>
+
         <ul id="sit_ov_btn">
-            <?php if (!$it['it_tel_inq']) { ?>
+            <?php if ($is_orderable) { ?>
             <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
             <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
             <?php } ?>

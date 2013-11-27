@@ -1389,8 +1389,7 @@ function item_icon($it)
 {
     $icon = '<span class="sit_icon">';
     // 품절
-    $stock = get_it_stock_qty($it['it_id']);
-    if ($stock <= 0)
+    if (is_soldout($it['it_id']))
         $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_soldout.gif" alt="품절"> ';
 
     if ($it['it_type1'])
@@ -1766,6 +1765,73 @@ function is_used_coupon($mb_id, $cp_id)
         $used = true;
 
     return $used;
+}
+
+// 품절상품인지 체크
+function is_soldout($it_id)
+{
+    global $g5;
+
+    // 상품정보
+    $sql = " select it_stock_qty from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
+    $it = sql_fetch($sql);
+
+    if($it['it_stock_qty'] <= 0)
+        return true;
+
+    $count = 0;
+    $soldout = false;
+
+    // 상품에 선택옵션 있으면..
+    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' and io_type = '0' ";
+    $row = sql_fetch($sql);
+
+    if($row['cnt']) {
+        $sql = " select io_id, io_type, io_stock_qty
+                    from {$g5['g5_shop_item_option_table']}
+                    where it_id = '$it_id'
+                      and io_type = '0'
+                      and io_use = '1' ";
+        $result = sql_query($sql);
+
+        for($i=0; $row=sql_fetch_array($result); $i++) {
+            // 주문대기수량
+            $sql = " select SUM(ct_qty) as qty from {$g5['g5_shop_cart_table']}
+                      where it_id = '$it_id'
+                        and io_id = '{$row['io_id']}'
+                        and io_type = '{$row['io_type']}'
+                        and ct_stock_use = 0
+                        and ct_status in ('주문', '입금', '준비') ";
+            $sum = sql_fetch($sql);
+
+            // 옵션 재고수량
+            $stock_qty = get_option_stock_qty($it_id, $row['io_id'], $row['io_type']);
+
+            if($stock_qty - $sum['qty'] <= 0)
+                $count++;
+        }
+
+        // 모든 선택옵션 품절이면 상품 품절
+        if($i == $count)
+            $soldout = true;
+    } else {
+        // 주문대기수량
+        $sql = " select SUM(ct_qty) as qty from {$g5['g5_shop_cart_table']}
+                  where it_id = '$it_id'
+                    and io_id = ''
+                    and io_type = '0'
+                    and ct_stock_use = 0
+                    and ct_status in ('주문', '입금', '준비') ";
+        $sum = sql_fetch($sql);
+
+        // 상품 재고수량
+        $stock_qty = get_it_stock_qty($it_id);
+
+        if($stock_qty - $sum['qty'] <= 0)
+            $soldout = true;
+    }
+
+    return $soldout;
 }
 
 // 상품후기 작성가능한지 체크
