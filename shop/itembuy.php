@@ -43,16 +43,11 @@ $ct_send_cost = 0;
 if($it['it_sc_method'] == 1)
     $ct_send_cost = 1;
 
-$_POST['it_id'] = $it['it_id'];
-$_POST['it_name'] = $it['it_name'];
-$_POST['it_price'] = $it['it_price'];
-$_POST['it_point'] = get_item_point($it);
-$_POST['total_price'] = $tot_prc;
-$_POST['io_id'][0] = $opt['io_id'];
-$_POST['io_type'][0] = 0;
-$_POST['io_price'][0] = $opt['io_price'];
-$_POST['ct_qty'][0] = 1;
-$_POST['io_value'][0] = $io_value;
+$_POST['it_id'][0] = $it['it_id'];
+$_POST['io_id'][$it['it_id']][0] = $opt['io_id'];
+$_POST['io_type'][$it['it_id']][0] = 0;
+$_POST['ct_qty'][$it['it_id']][0] = 1;
+$_POST['io_value'][$it['it_id']][0] = $io_value;
 $_POST['ct_send_cost'] = $ct_send_cost;
 
 include_once(G5_SHOP_PATH.'/cartupdate.php');
