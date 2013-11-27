@@ -1751,6 +1751,63 @@ function get_item_sendcost($it_id, $price, $qty)
 }
 
 
+// 가격비교 사이트 상품 배송비
+function get_item_sendcost2($it_id, $price, $qty)
+{
+    global $g5, $default;
+
+    $sql = " select it_id, it_sc_type, it_sc_method, it_sc_price, it_sc_minimum, it_sc_qty
+                from {$g5['g5_shop_item_table']}
+                where it_id = '$it_id' ";
+    $it = sql_fetch($sql);
+    if(!$it['it_id'])
+        return 0;
+
+    $sendcost = 0;
+
+    // 쇼핑몰 기본설정을 사용할 때
+    if($it['it_sc_type'] == 0)
+    {
+        if($default['de_send_cost_case'] == '차등') {
+            // 금액별차등 : 여러단계의 배송비 적용 가능
+            $send_cost_limit = explode(";", $default['de_send_cost_limit']);
+            $send_cost_list  = explode(";", $default['de_send_cost_list']);
+
+            for ($k=0; $k<count($send_cost_limit); $k++) {
+                // 총판매금액이 배송비 상한가 보다 작다면
+                if ($price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
+                    $sendcost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
+                    break;
+                }
+            }
+        }
+    }
+    else
+    {
+        if($it['it_sc_type'] > 1) {
+            if($it['it_sc_type'] == 2) { // 조건부무료
+                if($price >= $it['it_sc_minimum'])
+                    $sendcost = 0;
+                else
+                    $sendcost = $it['it_sc_price'];
+            } else if($it['it_sc_type'] == 3) { // 유료배송
+                $sendcost = $it['it_sc_price'];
+            } else { // 수량별 부과
+                if(!$it['it_sc_qty'])
+                    $it['it_sc_qty'] = 1;
+
+                $q = ceil((int)$qty / (int)$it['it_sc_qty']);
+                $sendcost = (int)$it['it_sc_price'] * $q;
+            }
+        } else if($it['it_sc_type'] == 1) { // 무료배송
+            $sendcost = 0;
+        }
+    }
+
+    return $sendcost;
+}
+
+
 // 쿠폰 사용체크
 function is_used_coupon($mb_id, $cp_id)
 {

@@ -40,18 +40,6 @@ Field   Status  Notes
 $lt = "<<<";
 $gt = ">>>";
 
-// 배송비
-if ($default['de_send_cost_case'] == '없음') {
-    $send_cost = 0;
-}
-else if($default['de_send_cost_case'] == '상한') {
-    // 배송비 상한일 경우 제일 앞에 배송비
-    $send_cost_limit = explode(";", $default['de_send_cost_limit']);
-    $send_cost_list  = explode(";", $default['de_send_cost_list']);
-    $cost_limit = (int)$send_cost_limit[0];
-    $send_cost  = (int)$send_cost_list[0];
-}
-
 $sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
@@ -88,12 +76,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);
 
-    // 배송비 상한가 미만이면 배송비 적용
-    $delivery = 0;
-    if ($default['de_send_cost_case'] == '상한' && $row['it_price'] < $cost_limit) {
-        $delivery = $send_cost;
-    }
-
     // 상품별옵션
     $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
@@ -102,9 +84,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     if(!$opt_count) {
         $it_name = $row['it_name'];
         $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
-        if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
-            $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
         $it_price = $row['it_price'];
+        $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
 
         echo <<< HEREDOC
 {$lt}begin{$gt}
@@ -149,8 +130,7 @@ HEREDOC;
             }
             $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
             $it_price = $row['it_price'] + $row2['io_price'];
-            if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
-                $delivery = get_item_sendcost($row['it_id'], ($row['it_price'] + $row2['io_price']), 1);
+            $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
 
     echo <<< HEREDOC
 {$lt}begin{$gt}

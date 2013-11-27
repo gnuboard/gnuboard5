@@ -65,20 +65,6 @@ header("Content-Type: text/html; charset=utf-8");
 $lt = "<<<";
 $gt = ">>>";
 
-// 배송비
-if ($default['de_send_cost_case'] == '없음') {
-    $deliv  = 0;
-    $deliv2 = "";
-}
-else if($default['de_send_cost_case'] == '상한') {
-    $deliv = 1;
-    // 배송비 상한일 경우 제일 앞에 배송비
-    $send_cost_limit = explode(";", $default['de_send_cost_limit']);
-    $send_cost_list  = explode(";", $default['de_send_cost_list']);
-    $cost_limit = (int)$send_cost_limit[0];
-    $deliv2  = (int)$send_cost_list[0]."원";
-}
-
 $sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
@@ -120,18 +106,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $pdate = date("Ymd", strtotime($row['it_time']));
     $point = ($row['it_point'] <= 0) ? "" : (int)$row['it_point'];
 
-    // 개별배송비계산
-    if($default['de_send_cost_case'] == '개별') {
-        $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
-        if($delivery) {
-            $deliv  = $delivery;
-            $deliv2 = $delivery.'원';
-        } else {
-            $deliv  = 0;
-            $deliv2 = "";
-        }
-    }
-
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);
 
@@ -143,8 +117,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     if(!$opt_count) {
         $it_name = $row['it_name'];
         $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
-        if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
-            $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
+        $it_price = $row['it_price'];
+        $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
 
         if($delivery) {
             $deliv  = $delivery;
@@ -153,8 +127,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
             $deliv  = 0;
             $deliv2 = "";
         }
-
-        $it_price = $row['it_price'];
 
     echo <<< HEREDOC
 {$lt}begin{$gt}
@@ -192,8 +164,7 @@ HEREDOC;
             }
             $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
             $it_price = $row['it_price'] + $row2['io_price'];
-            if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
-                $delivery = get_item_sendcost($row['it_id'], ($row['it_price'] + $row2['io_price']), 1);
+            $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
 
             if($delivery) {
                 $deliv  = $delivery;

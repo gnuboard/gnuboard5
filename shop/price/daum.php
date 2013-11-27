@@ -67,20 +67,6 @@ $gt = ">>>";
 $shop_url = G5_SHOP_URL;
 $data_url = G5_DATA_URL;
 
-// 배송비
-if ($default['de_send_cost_case'] == '없음') {
-    $deliv  = 0;
-    $deliv2 = "";
-}
-else if($default['de_send_cost_case'] == '상한') {
-    $deliv = 1;
-    // 배송비 상한일 경우 제일 앞에 배송비
-    $send_cost_limit = explode(";", $default['de_send_cost_limit']);
-    $send_cost_list  = explode(";", $default['de_send_cost_list']);
-    $cost_limit = (int)$send_cost_limit[0];
-    $deliv2  = (int)$send_cost_list[0]."원";
-}
-
 $sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' order by ca_id";
 $result = sql_query($sql);
 
@@ -113,25 +99,17 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $catename2 = $row2['ca_name'];
     }
 
-    // 배송비 상한가 미만이면 배송비 적용
-    $delivery = 0;
-    if ($row['it_price'] < $cost_limit) {
-        $delivery = $send_cost;
-    }
-
     $pdate = date("Ymd", strtotime($row['it_time']));
     $point = ($row['it_point'] <= 0) ? "" : (int)$row['it_point'];
 
-    // 개별배송비계산
-    if($default['de_send_cost_case'] == '개별') {
-        $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
-        if($delivery) {
-            $deliv  = $delivery;
-            $deliv2 = $delivery.'원';
-        } else {
-            $deliv  = 0;
-            $deliv2 = "";
-        }
+    // 배송비계산
+    $delivery = get_item_sendcost2($row['it_id'], $row['it_price'], 1);
+    if($delivery) {
+        $deliv  = $delivery;
+        $deliv2 = $delivery.'원';
+    } else {
+        $deliv  = 0;
+        $deliv2 = "";
     }
 
     // 상품이미지

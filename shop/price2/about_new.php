@@ -6,20 +6,6 @@ ob_start();
 $lt = "";
 $gt = "<!>";
 
-// 배송비
-if ($default['de_send_cost_case'] == '없음')
-    $delivery = 0;
-else if($default['de_send_cost_case'] == '상한')
-{
-    // 배송비 상한일 경우 제일 앞에 배송비 얼마 금액 이하
-    $tmp = explode(';', $default['de_send_cost_limit']);
-    $delivery_limit = (int)$tmp[0];
-
-    // 배송비 상한일 경우 제일 앞에 배송비
-    $tmp = explode(';', $default['de_send_cost_list']);
-    $delivery = (int)$tmp[0];
-}
-
 $time = date("Y-m-d 00:00:00", G5_SERVER_TIME - 86400);
 $sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' and it_time >= '$time' order by ca_id";
 $result = sql_query($sql);
@@ -70,9 +56,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     if(!$opt_count) {
         $it_name = $row['it_name'];
         $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
-        if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
-            $delivery = get_item_sendcost($row['it_id'], $row['it_price'], 1);
         $it_price = $row['it_price'];
+        $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
 
 echo "{$lt}{$row['it_id']}{$gt}"; // 쇼핑몰 상품ID
 echo "{$lt}C{$gt}"; // 상품구분 C/U/D 전체EP는 일괄적으로 C
@@ -116,8 +101,7 @@ echo "\r\n";
             }
             $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
             $it_price = $row['it_price'] + $row2['io_price'];
-            if($default['de_send_cost_case'] == '개별' && $row['it_sc_method'] != 1)
-                $delivery = get_item_sendcost($row['it_id'], ($row['it_price'] + $row2['io_price']), 1);
+            $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
 
 echo "{$lt}{$row['it_id']}{$gt}"; // 쇼핑몰 상품ID
 echo "{$lt}C{$gt}"; // 상품구분 C/U/D 전체EP는 일괄적으로 C
