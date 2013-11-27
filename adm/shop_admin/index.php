@@ -137,7 +137,7 @@ function get_max_value($arr)
             $y_val[] = $max_y * (($i * 2) / 10);
         }
 
-        $max_height = 240;
+        $max_height = 230;
         $h_val = array();
         $js_val = array();
         $offset = 10; // 금액이 상대적으로 작아 높이가 0일 때 기본 높이로 사용
