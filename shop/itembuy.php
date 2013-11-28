@@ -8,12 +8,22 @@ $io_id = $_GET['opt'];
 $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);
 
+if(!$it['it_id'])
+    alert('상품정보가 존재하지 않습니다.', G5_SHOP_URL);
+
+if(is_soldout($it['it_id']))
+    alert('상품의 재고가 부족하여 구매할 수 없습니다.', G5_SHOP_URL);
+
 // 상품옵션체크
 $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' and io_type = '0' and io_use = '1' ";
 $cnt = sql_fetch($sql);
 
 if(($io_id && !$cnt['cnt']) || (!$io_id && $cnt['cnt']))
     alert('상품의 옵션정보가 변경됐습니다.\\n상품페이지에서 다시 주문해 주십시오.', G5_SHOP_URL.'/item.php?it_id='.$it_id);
+
+// 최소구매수량이 있으면 상세페이지에서 다시 주문토록 안내
+if($it['it_buy_min_qty'] > 1)
+    alert(get_text($it['it_name']).' 상품은 최소 '.number_format($it['it_buy_min_qty']).' 이상 구매하셔야 합니다.\\n상품페이지에서 다시 주문해 주십시오.', G5_SHOP_URL.'/item.php?it_id='.$it_id);
 
 // 옵션정보
 if($io_id && $it['it_option_subject']) {
