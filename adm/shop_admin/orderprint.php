@@ -22,7 +22,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <label for="ct_status_p" class="sound_only">출력대상</label>
         <select name="ct_status" id="ct_status_p">
             <option value="주문">주문</option>
-            <option value="준비">상품준비중</option>
+            <option value="주문">입금</option>
+            <option value="준비">준비</option>
             <option value="배송">배송</option>
             <option value="완료">완료</option>
             <option value="취소">취소</option>
@@ -53,7 +54,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <label for="ct_status_n" class="sound_only">출력대상</label>
         <select name="ct_status" id="ct_status_n">
             <option value="주문">주문</option>
-            <option value="준비">상품준비중</option>
+            <option value="주문">입금</option>
+            <option value="준비">준비</option>
             <option value="배송">배송</option>
             <option value="완료">완료</option>
             <option value="취소">취소</option>
@@ -75,8 +77,6 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 <div class="btn_add01 btn_add">
     <a href="./orderlist.php" class="btn_add01 btn_add_optional">주문내역</a>
-    <a href="./orderstatuslist.php" class="btn_add01 btn_add_optional">주문개별내역</a>
-    <a href="./orderlist2.php" class="btn_add01 btn_add_optional">주문통합내역</a>
 </div>
 
 <div class="local_desc01 local_desc">
