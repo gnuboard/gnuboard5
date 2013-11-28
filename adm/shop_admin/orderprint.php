@@ -15,8 +15,10 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <input type="hidden" name="case" value="1">
 
         <strong class="sch_long">기간별 출력</strong>
-        <input type="radio" name="csv" value="xls" id="xls1"><label for="xls1">MS엑셀 XLS 데이터</label>
-        <input type="radio" name="csv" value="csv" id="csv1"><label for="csv1">MS엑셀 CSV 데이터</label>
+        <input type="radio" name="csv" value="xls" id="xls1">
+        <label for="xls1">MS엑셀 XLS 데이터</label>
+        <input type="radio" name="csv" value="csv" id="csv1">
+        <label for="csv1">MS엑셀 CSV 데이터</label>
         <label for="ct_status_p" class="sound_only">출력대상</label>
         <select name="ct_status" id="ct_status_p">
             <option value="주문">주문</option>
@@ -33,7 +35,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         ~
         <label for="to_date" class="sound_only">기간 종료일</label>
         <input type="text" name="to_date" value="<?php echo date("Ymd"); ?>" id="to_date" class="frm_input" size="10" maxlength="8">
-        <button type="submit" class="btn_submit">출력 (새창)</button>
+        <input type="submit" value="출력 (새창)" class="btn_submit">
 
         </form>
     </div>
@@ -44,8 +46,10 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <input type="hidden" name="case" value="2">
         <strong class="sch_long">주문번호구간별 출력</strong>
 
-        <input type="radio" name="csv" value="xls" id="xls2"><label for="xls2">MS엑셀 XLS 데이터</label>
-        <input type="radio" name="csv" value="csv" id="csv2"><label for="csv2">MS엑셀 CSV 데이터</label>
+        <input type="radio" name="csv" value="xls" id="xls2">
+        <label for="xls2">MS엑셀 XLS 데이터</label>
+        <input type="radio" name="csv" value="csv" id="csv2">
+        <label for="csv2">MS엑셀 CSV 데이터</label>
         <label for="ct_status_n" class="sound_only">출력대상</label>
         <select name="ct_status" id="ct_status_n">
             <option value="주문">주문</option>
@@ -62,7 +66,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         ~
         <label for="fr_od_id" class="sound_only">주문번호 구간 종료</label>
         <input type="text" name="to_od_id" id="to_od_id" class="frm_input" size="10" maxlength="10">
-        <button type="submit" class="btn_submit">출력 (새창)</button>
+        <input type="submit" value="출력 (새창)" class="btn_submit">
 
         </form>
     </div>
