@@ -48,7 +48,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 <form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
 <div id="sod_addr_list" class="new_win">
 
-    <h1 id="new_win_title">배송지 목록</h1>
+    <h1 id="win_title">배송지 목록</h1>
 
     <div>
         <button type="button" onclick="self.close();">닫기</button>

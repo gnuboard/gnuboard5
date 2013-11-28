@@ -18,7 +18,7 @@ $result = sql_query($sql);
 
 <!-- 쿠폰 내역 시작 { -->
 <div id="coupon" class="new_win">
-    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
     <div class="tbl_wrap tbl_head02">
         <table>

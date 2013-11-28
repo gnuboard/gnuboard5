@@ -6,7 +6,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <!-- 사용후기 쓰기 시작 { -->
 <div id="sit_use_write" class="new_win">
-    <h1 class="new_win_title">사용후기 쓰기</h1>
+    <h1 id="win_title">사용후기 쓰기</h1>
 
     <form name="fitemuse" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuse_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">

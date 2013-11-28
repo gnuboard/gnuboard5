@@ -328,13 +328,14 @@ fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7
 
 /* 새창 기본 스타일 */
 .new_win {}
-.new_win h1 {margin-bottom:20px;padding:0 20px;height:60px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em;line-height:5em}
-.new_win table {margin:0 auto 20px !important;width:93% !important;background:#fff !important}
-.new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
-.new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.new_win_ul li {float:left;margin-left:-1px}
-.new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:"dotum";font-weight:bold;text-decoration:none}
-.new_win_desc {margin:0 auto;width:93%}
+.new_win .tbl_wrap {margin:0 20px}
+.new_win #win_title {margin:0 0 20px;padding:20px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;background:#fff;font-size:1.2em}
+.new_win #win_title .sv {font-size:0.75em;line-height:1.2em}
+.new_win .win_ul {margin:-20px 0 20px 0;padding:0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
+.new_win .win_ul:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win .win_ul li {float:left;margin-left:-1px}
+.new_win .win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
+.new_win .win_desc {margin:0 20px}
 
 .new_win .win_btn {clear:both;margin:20px;text-align:center} /* 새창용 */
 .new_win .win_btn button {display:inline-block;padding:0 10px;height:30px;border:0;background:#666;color:#fff;line-height:2em;cursor:pointer}

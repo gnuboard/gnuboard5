@@ -6,7 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $poll_skin_url ?>/style.css">
 
 <div id="poll_result" class="new_win">
-    <h1 id="new_win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
     <!-- 설문조사 결과 그래프 시작 { -->
     <section id="poll_result_list">
