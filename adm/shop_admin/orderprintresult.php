@@ -58,14 +58,15 @@ if ($csv == 'csv')
     header("Content-charset=utf-8");
     header('Content-Type: doesn/matter');
     header('Expires: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-    header('Content-Disposition: attachment; filename="' . date("ymd", time()) . '.csv"');
+    header('Content-Disposition: attachment; filename="orderlist-' . date("ymd", time()) . '.csv"');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
     //echo "우편번호,주소,이름,전화1,전화2,상품명,수량,비고,전하실말씀\n";
-    echo "우편번호,주소,이름,전화1,전화2,상품명,수량,선택사항,배송비,상품코드,주문번호,운송장번호,전하실말씀\n";
+    echo iconv('utf-8', 'euc-kr', "우편번호,주소,이름,전화1,전화2,상품명,수량,선택사항,배송비,상품코드,주문번호,운송장번호,전하실말씀\n");
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
-        $ct_send_cost = ($row['ct_send_cost'] ? '착불' : '선불');
+        $row = array_map('iconv_euckr', $row);
+        $ct_send_cost = iconv_euckr($row['ct_send_cost'] ? '착불' : '선불');
 
         echo '"'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'"'.',';
         echo '"'.$row['od_b_addr1'].' '.$row['od_b_addr2'].'"'.',';

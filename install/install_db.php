@@ -363,7 +363,6 @@ if($g5_shop_install) {
                         bo_gallery_cols     = '4',
                         bo_gallery_width    = '174',
                         bo_gallery_height   = '124',
-                        bo_mobile_gallery_cols  = '3',
                         bo_mobile_gallery_width = '125',
                         bo_mobile_gallery_height= '100',
                         bo_upload_count     = '2',
