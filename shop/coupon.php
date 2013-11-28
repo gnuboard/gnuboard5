@@ -79,7 +79,7 @@ $result = sql_query($sql);
         </table>
     </div>
 
-    <div class="btn_win"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
+    <div class="btn_win"><button type="button" onclick="window.close();">창닫기</button></div>
 </div>
 
 <?php
