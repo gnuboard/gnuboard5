@@ -13,7 +13,7 @@ if (!$ca['ca_id'])
 
 // 본인인증, 성인인증체크
 if(!$is_admin) {
-    $msg = shop_member_cert_check($ca_id);
+    $msg = shop_member_cert_check($ca_id, 'list');
     if($msg)
         alert($msg);
 }

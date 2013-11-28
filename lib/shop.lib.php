@@ -1917,7 +1917,7 @@ function check_itemuse_write($close=true)
 
 
 // 구매 본인인증 체크
-function shop_member_cert_check($id, $type='list')
+function shop_member_cert_check($id, $type)
 {
     global $g5, $member;
 
@@ -1961,7 +1961,7 @@ function shop_member_cert_check($id, $type='list')
             }
 
             break;
-        default:
+        case 'list':
             $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$id' ";
             $ca = sql_fetch($sql);
 
@@ -1981,6 +1981,8 @@ function shop_member_cert_check($id, $type='list')
                     $msg = '본인확인으로 성인인증된 회원만 이용할 수 있습니다.';
             }
 
+            break;
+        default:
             break;
     }
 
