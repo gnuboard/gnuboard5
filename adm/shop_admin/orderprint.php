@@ -22,7 +22,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <label for="ct_status_p" class="sound_only">출력대상</label>
         <select name="ct_status" id="ct_status_p">
             <option value="주문">주문</option>
-            <option value="주문">입금</option>
+            <option value="입금">입금</option>
             <option value="준비">준비</option>
             <option value="배송">배송</option>
             <option value="완료">완료</option>
@@ -54,7 +54,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <label for="ct_status_n" class="sound_only">출력대상</label>
         <select name="ct_status" id="ct_status_n">
             <option value="주문">주문</option>
-            <option value="주문">입금</option>
+            <option value="입금">입금</option>
             <option value="준비">준비</option>
             <option value="배송">배송</option>
             <option value="완료">완료</option>
@@ -64,10 +64,10 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <option value="">전체</option>
         </select>
         <label for="fr_od_id" class="sound_only">주문번호 구간 시작</label>
-        <input type="text" name="fr_od_id" id="fr_od_id" class="frm_input" size="10" maxlength="10">
+        <input type="text" name="fr_od_id" id="fr_od_id" class="frm_input" size="10" maxlength="20">
         ~
         <label for="fr_od_id" class="sound_only">주문번호 구간 종료</label>
-        <input type="text" name="to_od_id" id="to_od_id" class="frm_input" size="10" maxlength="10">
+        <input type="text" name="to_od_id" id="to_od_id" class="frm_input" size="10" maxlength="20">
         <input type="submit" value="출력 (새창)" class="btn_submit">
 
         </form>
