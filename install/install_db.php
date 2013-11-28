@@ -473,7 +473,7 @@ fwrite($f, "\$g5['qa_content_table'] = G5_TABLE_PREFIX.'qa_content'; // 1:1문�
 fwrite($f, "?>");
 
 if($g5_shop_install) {
-    fwrite($f, "\n\n<?php\n");
+    fwrite($f, "\n<?php\n");
     fwrite($f, "define('G5_USE_SHOP', true);\n\n");
     fwrite($f, "define('G5_SHOP_TABLE_PREFIX', '{$g5_shop_prefix}');\n\n");
     fwrite($f, "\$g5['g5_shop_default_table'] = G5_SHOP_TABLE_PREFIX.'default'; // 쇼핑몰설정 테이블\n");
