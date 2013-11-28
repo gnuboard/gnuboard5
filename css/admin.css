@@ -210,7 +210,7 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 .local_sch02 strong {display:inline-block;width:80px}
 .local_sch02 strong.sch_long {width:160px}
 .local_sch02 label {display:inline-block;margin:0 5px 0 0}
-.local_sch02 button {padding:3px 5px;border:1px solid #ced9de;background:#f6f9fa;font-size:0.95em;cursor:pointer}
+.local_sch02 button {margin:0;padding:3px 5px;border:1px solid #ced9de;background:#f6f9fa;font-size:0.95em;cursor:pointer}
 
 /* 페이지 내 실행 */
 .local_cmd {min-width:960px}
