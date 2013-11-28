@@ -134,20 +134,24 @@ if(!$it['it_use'] || $it['it_tel_inq'] || $is_soldout)
 
 if($is_orderable) {
     // 선택 옵션
-    $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
+    $option_item = get_item_options($it['it_id'], $it['it_option_subject']);
 
     // 추가 옵션
-    $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
+    $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject']);
 
     // 상품 선택옵션 수
-    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '0' and io_use = '1' ";
-    $row = sql_fetch($sql);
-    $opt_count = $row['cnt'];
+    $option_count = 0;
+    if($it['it_option_subject']) {
+        $temp = explode(',', $it['it_option_subject']);
+        $option_count = count($temp);
+    }
 
     // 상품 추가옵션 수
-    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_type = '1' and io_use = '1' ";
-    $row = sql_fetch($sql);
-    $spl_count = $row['cnt'];
+    $supply_count = 0;
+    if($it['it_supply_subject']) {
+        $temp = explode(',', $it['it_supply_subject']);
+        $supply_count = count($temp);
+    }
 }
 
 $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
