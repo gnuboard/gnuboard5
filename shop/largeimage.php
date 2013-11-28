@@ -64,7 +64,7 @@ include_once(G5_PATH.'/head.sub.php');
     }
     ?>
 
-    <div class="btn_win">
+    <div class="win_btn">
         <button type="button" onclick="javascript:window.close();">창닫기</button>
     </div>
 </div>
