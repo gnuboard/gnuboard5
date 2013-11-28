@@ -283,18 +283,17 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php } ?>
 
         <?php if($is_soldout) { ?>
-        <p>상품의 재고가 부족하여 구매할 수 없습니다.</p>
+        <p id="sit_ov_soldout">상품의 재고가 부족하여 구매할 수 없습니다.</p>
         <?php } ?>
 
-        <ul id="sit_ov_btn">
+        <div id="sit_ov_btn">
             <?php if ($is_orderable) { ?>
-            <li><input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy"></li>
-            <li><input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart"></li>
+            <input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy">
+            <input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart">
             <?php } ?>
-
-            <li><a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a></li>
-            <li><a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a></li>
-        </ul>
+            <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a>
+            <a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a>
+        </div>
 
         <script>
         // 상품보관

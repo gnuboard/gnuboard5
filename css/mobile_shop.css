@@ -177,8 +177,9 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 #sit_tot_price {margin:20px 0;font-size:1.3em;font-weight:bold}
 
-#sit_ov_btn {margin:0;padding:0;text-align:center;list-style:none}
-#sit_ov_btn li {display:inline-block;margin:0 0 0 1px}
+#sit_ov_soldout {margin:0 0 20px;color:#ff3061;font-weight:bold;text-align:center}
+
+#sit_ov_btn {margin:0;padding:0;text-align:center}
 #sit_ov_btn a {display:inline-block;padding:10px;vertical-align:middle;text-decoration:none;letter-spacing:-0.1em}
 #sit_ov_btn input {margin:0;padding:10px;border:0;letter-spacing:-0.1em}
 #sit_btn_buy {background:#ff5b89;color:#fff}

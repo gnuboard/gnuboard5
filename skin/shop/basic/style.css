@@ -65,7 +65,7 @@
 .sct_30 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
 .sct_30 .sct_cost strike {display:block;margin:0 0 5px;color:#999;font-weight:normal}
 .sct_30 .sct_icon {position:absolute;bottom:25px;left:-5px;margin:0 !important}
-.sct_30 .sct_icon img {display:block}
+.sct_30 .sct_icon img {display:block;margin:0 0 1px}
 .sct_30 .sct_sns {position:absolute;bottom:20px;right:10px}
 
 /* 상품 목록 스킨 40 */
@@ -79,7 +79,7 @@
 .sct_40 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
 .sct_40 .sct_cost strike {display:block;margin:0 0 5px;color:#999;font-weight:normal}
 .sct_40 .sct_icon {position:absolute;bottom:25px;left:-5px;margin:0 !important}
-.sct_40 .sct_icon img {display:block}
+.sct_40 .sct_icon img {display:block;margin:0 0 1px}
 .sct_40 .sct_rel {position:absolute;bottom:20px;right:20px}
 .sct_40 .sct_rel_ul {margin:0;padding:0;list-style:none}
 .sct_40 .sct_rel_li {float:left;margin:0 0 0 10px}

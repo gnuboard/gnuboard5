@@ -84,6 +84,10 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     }
 
+    if ($this->view_it_icon) {
+        echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
+    }
+
     if ($this->view_sns) {
         echo "<div class=\"sct_sns\">";
         echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_fb.png');

@@ -82,6 +82,10 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     }
 
+    if ($this->view_it_icon) {
+        echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
+    }
+
     if ($this->view_sns) {
         echo "<div class=\"sct_sns\">";
         echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_fb.png');
@@ -90,7 +94,8 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "</div>\n";
     }
 
-    echo "<div class=\"sct_arw_toleft\"></div>";
+    $arrow_left = $this->img_width - 10;
+    echo "<div class=\"sct_arw_toleft\" style=\"left:{$arrow_left}px\"></div>";
 
     echo "</li>\n";
 }
