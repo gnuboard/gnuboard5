@@ -26,22 +26,11 @@ $sql = " select ca_include_head, ca_include_tail, ca_cert_use, ca_adult_use
           where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
 
+// 본인인증, 성인인증체크
 if(!$is_admin) {
-    // 본인확인체크
-    if($ca['ca_cert_use'] && !$member['mb_certify']) {
-        if($is_member)
-            alert('회원정보 수정에서 본인확인 후 이용해 주십시오.');
-        else
-            alert('본인확인된 로그인 회원만 이용할 수 있습니다.');
-    }
-
-    // 성인인증체크
-    if($ca['ca_adult_use'] && !$member['mb_adult']) {
-        if($is_member)
-            alert('본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 본인확인을 해주십시오.');
-        else
-            alert('본인확인으로 성인인증된 회원만 이용할 수 있습니다.');
-    }
+    $msg = shop_member_cert_check($it_id, 'item');
+    if($msg)
+        alert($msg);
 }
 
 // 오늘 본 상품 저장 시작

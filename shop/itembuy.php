@@ -11,6 +11,13 @@ $it = sql_fetch($sql);
 if(!$it['it_id'])
     alert('상품정보가 존재하지 않습니다.', G5_SHOP_URL);
 
+// 본인인증, 성인인증체크
+if(!$is_admin) {
+    $msg = shop_member_cert_check($it_id, 'item');
+    if($msg)
+        alert($msg, G5_SHOP_URL);
+}
+
 if(is_soldout($it['it_id']))
     alert('상품의 재고가 부족하여 구매할 수 없습니다.', G5_SHOP_URL);
 
