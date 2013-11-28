@@ -6,7 +6,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <!-- 상품문의 쓰기 시작 { -->
 <div id="sit_qa_write" class="new_win">
-    <h1 class="new_win_title">상품문의 쓰기</h1>
+    <h1 id="win_title">상품문의 쓰기</h1>
 
     <form name="fitemqa" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqa_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
