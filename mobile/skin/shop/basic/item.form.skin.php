@@ -46,6 +46,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <h2>상품간략정보 및 구매기능</h2>
         <strong id="sit_title"><?php echo stripslashes($it['it_name']); ?></strong><br>
         <span id="sit_desc"><?php echo $it['it_basic']; ?></span>
+        <?php if($is_orderable) { ?>
+        <p id="sit_opt_info">
+            상품 선택옵션 <?php echo $opt_count; ?> 개, 추가옵션 <?php echo $spl_count; ?> 개
+        </p>
+        <?php } ?>
         <?php if ($score = get_star_image($it['it_id'])) { ?>
         <div id="sit_star_sns">
             <?php
