@@ -48,7 +48,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <span id="sit_desc"><?php echo $it['it_basic']; ?></span>
         <?php if($is_orderable) { ?>
         <p id="sit_opt_info">
-            상품 선택옵션 <?php echo $opt_count; ?> 개, 추가옵션 <?php echo $spl_count; ?> 개
+            상품 선택옵션 <?php echo $option_count; ?> 개, 추가옵션 <?php echo $supply_count; ?> 개
         </p>
         <?php } ?>
         <?php if ($score = get_star_image($it['it_id'])) { ?>
@@ -187,7 +187,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </table>
 
         <?php
-        if($option_1) {
+        if($option_item) {
         ?>
         <section>
             <h3>선택옵션</h3>
@@ -198,7 +198,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             </colgroup>
             <tbody>
             <?php // 선택옵션
-            echo $option_1;
+            echo $option_item;
             ?>
             </tbody>
             </table>
@@ -208,7 +208,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         ?>
 
         <?php
-        if($option_2) {
+        if($supply_item) {
         ?>
         <section>
             <h3>추가옵션</h3>
@@ -219,7 +219,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             </colgroup>
             <tbody>
             <?php // 추가옵션
-            echo $option_2;
+            echo $supply_item;
             ?>
             </tbody>
             </table>
@@ -231,7 +231,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php if ($it['it_use'] && !$it['it_tel_inq'] && !$is_soldout) { ?>
         <div id="sit_sel_option">
         <?php
-        if(!$option_1) {
+        if(!$option_item) {
             if(!$it['it_buy_min_qty'])
                 $it['it_buy_min_qty'] = 1;
         ?>
