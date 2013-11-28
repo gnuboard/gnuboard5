@@ -33,7 +33,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         ~
         <label for="to_date" class="sound_only">기간 종료일</label>
         <input type="text" name="to_date" value="<?php echo date("Ymd"); ?>" id="to_date" class="frm_input" size="10" maxlength="8">
-        <button type="submit" class="btn_frmline">출력 (새창)</button>
+        <button type="submit" class="btn_submit">출력 (새창)</button>
 
         </form>
     </div>
@@ -62,7 +62,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         ~
         <label for="fr_od_id" class="sound_only">주문번호 구간 종료</label>
         <input type="text" name="to_od_id" id="to_od_id" class="frm_input" size="10" maxlength="10">
-        <button type="submit" class="btn_frmline">출력 (새창)</button>
+        <button type="submit" class="btn_submit">출력 (새창)</button>
 
         </form>
     </div>
