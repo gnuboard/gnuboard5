@@ -1932,6 +1932,10 @@ function shop_member_cert_check($id, $type)
             $seq = '';
             for($i=0; $i<3; $i++) {
                 $ca_id = $it['ca_id'.$seq];
+
+                if(!$ca_id)
+                    continue;
+
                 $sql = " select ca_cert_use, ca_adult_use from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
                 $row = sql_fetch($sql);
 
