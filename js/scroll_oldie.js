@@ -20,7 +20,7 @@ $(function(){
 
     //스크롤이벤트가 발생하면
     $(window).scroll(function(){
-        yPosition = $win.scrollTop() - 223;
+        yPosition = $win.scrollTop() - 123;
         if (yPosition < 0)
         {
             yPosition = 0;
