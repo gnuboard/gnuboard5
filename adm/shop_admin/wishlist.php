@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '500140';
 include_once('./_common.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -75,10 +76,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 </select>
 
 <label for="fr_date" class="sound_only">시작일</label>
-<input type="text" name="fr_date" value="<?php echo $fr_date; ?>" id="fr_date" class="frm_input" size="8" maxlength="8">
+<input type="text" name="fr_date" value="<?php echo $fr_date; ?>" id="fr_date" required class="required frm_input" size="8" maxlength="8">
 ~
 <label for="to_date" class="sound_only">종료일</label>
-<input type="text" name="to_date" value="<?php echo $to_date; ?>" id="to_date" class="frm_input" size="8" maxlength="8">
+<input type="text" name="to_date" value="<?php echo $to_date; ?>" id="to_date" required class="required frm_input" size="8" maxlength="8">
 <input type="submit" value="검색" class="btn_submit">
 
 </form>
@@ -108,7 +109,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $num; ?></td>
         <td>
-            <a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a>
+            <a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str($row['it_name'],30); ?></a>
         </td>
         <td class="td_num"><?php echo $row['it_id_cnt']; ?></td>
     </tr>
@@ -128,6 +129,19 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 <div class="local_desc01 local_desc">
     <p>고객님들이 보관함에 가장 많이 넣은 순으로 순위를 출력합니다.</p>
 </div>
+
+<script>
+$(function() {
+    $("#fr_date, #to_date").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yymmdd",
+        showButtonPanel: true,
+        yearRange: "c-99:c+99",
+        maxDate: "+0d"
+    });
+});
+</script>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

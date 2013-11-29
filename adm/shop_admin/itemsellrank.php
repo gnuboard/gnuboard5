@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '500100';
 include_once('./_common.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -16,12 +17,13 @@ $sql  = " select a.it_id,
                  b.*,
                  SUM(IF(ct_status = '쇼핑',ct_qty, 0)) as ct_status_1,
                  SUM(IF(ct_status = '주문',ct_qty, 0)) as ct_status_2,
-                 SUM(IF(ct_status = '준비',ct_qty, 0)) as ct_status_3,
-                 SUM(IF(ct_status = '배송',ct_qty, 0)) as ct_status_4,
-                 SUM(IF(ct_status = '완료',ct_qty, 0)) as ct_status_5,
-                 SUM(IF(ct_status = '취소',ct_qty, 0)) as ct_status_6,
-                 SUM(IF(ct_status = '반품',ct_qty, 0)) as ct_status_7,
-                 SUM(IF(ct_status = '품절',ct_qty, 0)) as ct_status_8,
+                 SUM(IF(ct_status = '입금',ct_qty, 0)) as ct_status_3,
+                 SUM(IF(ct_status = '준비',ct_qty, 0)) as ct_status_4,
+                 SUM(IF(ct_status = '배송',ct_qty, 0)) as ct_status_5,
+                 SUM(IF(ct_status = '완료',ct_qty, 0)) as ct_status_6,
+                 SUM(IF(ct_status = '취소',ct_qty, 0)) as ct_status_7,
+                 SUM(IF(ct_status = '반품',ct_qty, 0)) as ct_status_8,
+                 SUM(IF(ct_status = '품절',ct_qty, 0)) as ct_status_9,
                  SUM(ct_qty) as ct_status_sum
             from {$g5['g5_shop_cart_table']} a, {$g5['g5_shop_item_table']} b ";
 $sql .= " where a.it_id = b.it_id ";
@@ -84,9 +86,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 기간설정
 <label for="fr_date" class="sound_only">시작일</label>
-<input type="text" name="fr_date" value="<?php echo $fr_date; ?>" class="frm_input" size="8" maxlength="8"> 에서
+<input type="text" name="fr_date" value="<?php echo $fr_date; ?>" id="fr_date" required class="required frm_input" size="8" maxlength="8"> 에서
 <label for="to_date" class="sound_only">종료일</label>
-<input type="text" name="to_date" value="<?php echo $to_date; ?>" class="frm_input" size="8" maxlength="8"> 까지
+<input type="text" name="to_date" value="<?php echo $to_date; ?>" id="to_date" required class="required frm_input" size="8" maxlength="8"> 까지
 <input type="submit" value="검색" class="btn_submit">
 
 </form>
@@ -109,12 +111,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col">상품평</th>
         <th scope="col"><a href="<?php echo title_sort("ct_status_1",1)."&amp;$qstr1"; ?>">쇼핑</a></th>
         <th scope="col"><a href="<?php echo title_sort("ct_status_2",1)."&amp;$qstr1"; ?>">주문</a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_status_3",1)."&amp;$qstr1"; ?>">준비</a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_status_4",1)."&amp;$qstr1"; ?>">배송</a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_status_5",1)."&amp;$qstr1"; ?>">완료</a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_status_6",1)."&amp;$qstr1"; ?>">취소</a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_status_7",1)."&amp;$qstr1"; ?>">반품</a></th>
-        <th scope="col"><a href="<?php echo title_sort("ct_status_8",1)."&amp;$qstr1"; ?>">품절</a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_3",1)."&amp;$qstr1"; ?>">입금</a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_4",1)."&amp;$qstr1"; ?>">준비</a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_5",1)."&amp;$qstr1"; ?>">배송</a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_6",1)."&amp;$qstr1"; ?>">완료</a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_7",1)."&amp;$qstr1"; ?>">취소</a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_8",1)."&amp;$qstr1"; ?>">반품</a></th>
+        <th scope="col"><a href="<?php echo title_sort("ct_status_9",1)."&amp;$qstr1"; ?>">품절</a></th>
         <th scope="col"><a href="<?php echo title_sort("ct_status_sum",1)."&amp;$qstr1"; ?>">합계</a></th>
     </tr>
     </thead>
@@ -130,7 +133,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         ?>
         <tr class="<?php echo $bg; ?>">
             <td class="td_num"><?php echo $num; ?></td>
-            <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
+            <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str($row['it_name'],30); ?></a></td>
             <td class="td_num"><?php echo $row['ct_status_1']; ?></td>
             <td class="td_num"><?php echo $row['ct_status_2']; ?></td>
             <td class="td_num"><?php echo $row['ct_status_3']; ?></td>
@@ -139,13 +142,14 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <td class="td_num"><?php echo $row['ct_status_6']; ?></td>
             <td class="td_num"><?php echo $row['ct_status_7']; ?></td>
             <td class="td_num"><?php echo $row['ct_status_8']; ?></td>
+            <td class="td_num"><?php echo $row['ct_status_9']; ?></td>
             <td class="td_num"><?php echo $row['ct_status_sum']; ?></td>
         </tr>
         <?php
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="11" class="empty_table">자료가 없습니다.</td></tr>';
+        echo '<tr><td colspan="12" class="empty_table">자료가 없습니다.</td></tr>';
     }
     ?>
     </tbody>
@@ -154,6 +158,18 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr1&amp;page="); ?>
 
+<script>
+$(function() {
+    $("#fr_date, #to_date").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        dateFormat: "yymmdd",
+        showButtonPanel: true,
+        yearRange: "c-99:c+99",
+        maxDate: "+0d"
+    });
+});
+</script>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
