@@ -59,18 +59,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     <section id="smb_my_wish">
         <h2><a href="<?php echo G5_SHOP_URL; ?>/wishlist.php">최근 위시리스트</a></h2>
 
-        <div class="tbl_wrap tbl_head02">
-            <table>
-            <thead>
-            <tr>
-                <th scope="col" rowspan="2">이미지</th>
-                <th scope="col">상품명</th>
-            </tr>
-            <tr>
-                <th scope="col">보관일</th>
-            </tr>
-            </thead>
-            <tbody>
+        <ul>
             <?php
             $sql = " select *
                        from {$g5['g5_shop_wish_table']} a,
@@ -82,26 +71,27 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             $result = sql_query($sql);
             for ($i=0; $row = sql_fetch_array($result); $i++)
             {
-                $image = get_it_image($row['it_id'], 50, 50, true);
+                $image_w = 50;
+                $image_h = 50;
+                $image = get_it_image($row['it_id'], $image_w, $image_h, true);
+                $list_left_pad = $image_w + 10;
             ?>
 
-            <tr>
-                <td rowspan="2" class="smb_my_img"><?php echo $image; ?></td>
-                <td><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a></td>
-            </tr>
-            <tr>
-                <td class="td_datetime"><?php echo substr($row['wi_time'], 2, 8); ?></td>
-            </tr>
+            <li style="padding-left:<?php echo $list_left_pad; ?>px">
+                <div class="wish_img"><?php echo $image; ?></div>
+                <div class="wish_info">
+                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="info_link"><?php echo stripslashes($row['it_name']); ?></a>
+                    <span class="info_date"><?php echo substr($row['wi_time'], 2, 8); ?></span>
+                </div>
+            </li>
 
             <?php
             }
 
             if ($i == 0)
-                echo '<tr><td colspan="3" class="empty_table">보관 내역이 없습니다.</td></tr>';
+                echo '<li class="empty_list">보관 내역이 없습니다.</list>';
             ?>
-            </tbody>
-            </table>
-        </div>
+        </ul>
     </section>
 
 </div>

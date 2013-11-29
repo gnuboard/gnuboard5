@@ -69,7 +69,7 @@ function pg_anchor($info) {
 
 <script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
 
-<div id="info_content">
+<div id="info_content" class="new_win">
 <?php
 switch($info) {
     case 'use':

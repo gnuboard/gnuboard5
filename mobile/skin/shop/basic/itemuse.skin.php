@@ -6,8 +6,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <script src="<?php echo G5_JS_URL; ?>/iteminfoimageresize.js"></script>
 
 <!-- 상품 사용후기 시작 { -->
-<section id="sit_use_list">
-    <h3>등록된 사용후기</h3>
+<div id="sit_use_list">
 
     <?php
     $thumbnail_width = 500;
@@ -59,7 +58,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     if (!$i) echo '<p class="sit_empty">사용후기가 없습니다.</p>';
     ?>
-</section>
+</div>
 
 <?php
 echo itemuse_page($config['cf_mobile_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");

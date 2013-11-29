@@ -6,8 +6,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <script src="<?php echo G5_JS_URL; ?>/iteminfoimageresize.js"></script>
 
 <!-- 상품문의 목록 시작 { -->
-<section id="sit_qa_list">
-    <h3>등록된 상품문의</h3>
+<div id="sit_qa_list">
 
     <?php
     $thumbnail_width = 500;
@@ -100,7 +99,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     if (!$i) echo '<p class="sit_empty">상품문의가 없습니다.</p>';
     ?>
-</section>
+</div>
 
 <?php
 echo itemqa_page($config['cf_mobile_pages'], $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", "");
