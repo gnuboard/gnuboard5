@@ -22,7 +22,7 @@ a:link, a:visited {color:#000;text-decoration:none}
 a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 상단 레이아웃 */
-#hd {z-index:10;position:relative;border-top:3px solid #151515;background:#fff}
+#hd {z-index:10;position:relative;min-width:980px;border-top:3px solid #151515;background:#fff}
 #hd_h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_wrapper {position:relative;margin:0 auto;width:980px}
 
@@ -86,7 +86,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .ts_up2 {font-size:1.3em !important}
 
 /* 하단 레이아웃 */
-#ft {background:#484848}
+#ft {min-width:980px;background:#484848}
 #ft h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
 #ft_catch {position:relative;margin:0 auto;padding:20px 0;width:980px;text-align:center}
