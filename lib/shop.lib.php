@@ -1916,6 +1916,84 @@ function check_itemuse_write($close=true)
 }
 
 
+// 구매 본인인증 체크
+function shop_member_cert_check($id, $type)
+{
+    global $g5, $member;
+
+    $msg = '';
+
+    switch($type)
+    {
+        case 'item':
+            $sql = " select ca_id, ca_id2, ca_id3 from {$g5['g5_shop_item_table']} where it_id = '$id' ";
+            $it = sql_fetch($sql);
+
+            $seq = '';
+            for($i=0; $i<3; $i++) {
+                $ca_id = $it['ca_id'.$seq];
+
+                if(!$ca_id)
+                    continue;
+
+                $sql = " select ca_cert_use, ca_adult_use from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
+                $row = sql_fetch($sql);
+
+                // 본인확인체크
+                if($row['ca_cert_use'] && !$member['mb_certify']) {
+                    if($member['mb_id'])
+                        $msg = '회원정보 수정에서 본인확인 후 이용해 주십시오.';
+                    else
+                        $msg = '본인확인된 로그인 회원만 이용할 수 있습니다.';
+
+                    break;
+                }
+
+                // 성인인증체크
+                if($row['ca_adult_use'] && !$member['mb_adult']) {
+                    if($member['mb_id'])
+                        $msg = '본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 본인확인을 해주십시오.';
+                    else
+                        $msg = '본인확인으로 성인인증된 회원만 이용할 수 있습니다.';
+
+                    break;
+                }
+
+                if($i == 0)
+                    $seq = 1;
+                $seq++;
+            }
+
+            break;
+        case 'list':
+            $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$id' ";
+            $ca = sql_fetch($sql);
+
+            // 본인확인체크
+            if($ca['ca_cert_use'] && !$member['mb_certify']) {
+                if($member['mb_id'])
+                    $msg = '회원정보 수정에서 본인확인 후 이용해 주십시오.';
+                else
+                    $msg = '본인확인된 로그인 회원만 이용할 수 있습니다.';
+            }
+
+            // 성인인증체크
+            if($ca['ca_adult_use'] && !$member['mb_adult']) {
+                if($member['mb_id'])
+                    $msg = '본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 본인확인을 해주십시오.';
+                else
+                    $msg = '본인확인으로 성인인증된 회원만 이용할 수 있습니다.';
+            }
+
+            break;
+        default:
+            break;
+    }
+
+    return $msg;
+}
+
+
 // 사용후기의 확인된 건수를 상품테이블에 저장합니다.
 function update_use_cnt($it_id)
 {

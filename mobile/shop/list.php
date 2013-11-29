@@ -7,24 +7,13 @@ $sql = " select *
             and ca_use = '1'  ";
 $ca = sql_fetch($sql);
 if (!$ca['ca_id'])
-    alert('등록된 분류가 없습니다.');
+    alert('등록된 분류가 없습니다.', G5_SHOP_URL);
 
+// 본인인증, 성인인증체크
 if(!$is_admin) {
-    // 본인확인체크
-    if($ca['ca_cert_use'] && !$member['mb_certify']) {
-        if($is_member)
-            alert('회원정보 수정에서 본인확인 후 이용해 주십시오.');
-        else
-            alert('본인확인된 로그인 회원만 이용할 수 있습니다.');
-    }
-
-    // 성인인증체크
-    if($ca['ca_adult_use'] && !$member['mb_adult']) {
-        if($is_member)
-            alert('본인확인으로 성인인증된 회원만 이용할 수 있습니다.\\n회원정보 수정에서 본인확인을 해주십시오.');
-        else
-            alert('본인확인으로 성인인증된 회원만 이용할 수 있습니다.');
-    }
+    $msg = shop_member_cert_check($ca_id, 'list');
+    if($msg)
+        alert($msg, G5_SHOP_URL);
 }
 
 $g5['title'] = $ca['ca_name'].' 상품리스트';
@@ -33,9 +22,6 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 스킨을 지정했다면 지정한 스킨을 사용함 (스킨의 다양화)
 //if ($skin) $ca[ca_skin] = $skin;
-
-if ($is_admin)
-    echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
 ?>
 
 <script>
