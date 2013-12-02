@@ -103,10 +103,35 @@ function get_view_thumbnail($contents, $thumb_width=0)
         $srcfile = G5_PATH.$data_path;
 
         if(is_file($srcfile)) {
-            // 썸네일 높이
             $size = @getimagesize($srcfile);
             if(empty($size))
                 continue;
+
+            // jpg 이면 exif 체크
+            if($size[2] == 2) {
+                $degree = 0;
+                $exif = @exif_read_data($srcfile);
+                if(!empty($exif['Orientation'])) {
+                    switch($exif['Orientation']) {
+                        case 8:
+                            $degree = 90;
+                            break;
+                        case 3:
+                            $degree = 180;
+                            break;
+                        case 6:
+                            $degree = -90;
+                            break;
+                    }
+
+                    // 세로사진의 경우 가로, 세로 값 바꿈
+                    if($degree == 90 || $degree == -90) {
+                        $tmp = $size;
+                        $size[0] = $tmp[1];
+                        $size[1] = $tmp[0];
+                    }
+                }
+            }
 
             // 원본 width가 thumb_width보다 작다면
             if($size[0] <= $thumb_width)
@@ -118,6 +143,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
                 $is_animated = is_animated_gif($srcfile);
             }
 
+            // 썸네일 높이
             $thumb_height = round(($thumb_width * $size[1]) / $size[0]);
             $filename = basename($srcfile);
             $filepath = dirname($srcfile);
@@ -186,10 +212,39 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 
     // 원본파일의 GD 이미지 생성
     $src = null;
+    $degree = 0;
+
     if ($size[2] == 1) {
         $src = imagecreatefromgif($source_file);
     } else if ($size[2] == 2) {
         $src = imagecreatefromjpeg($source_file);
+        // exif 정보를 기준으로 회전각도 구함
+        $exif = @exif_read_data($source_file);
+        if(!empty($exif['Orientation'])) {
+            switch($exif['Orientation']) {
+                case 8:
+                    $degree = 90;
+                    break;
+                case 3:
+                    $degree = 180;
+                    break;
+                case 6:
+                    $degree = -90;
+                    break;
+            }
+
+            // 회전각도 있으면 이미지 회전
+            if($degree) {
+                $src = imagerotate($src, $degree, 0);
+
+                // 세로사진의 경우 가로, 세로 값 바꿈
+                if($degree == 90 || $degree == -90) {
+                    $tmp = $size;
+                    $size[0] = $tmp[1];
+                    $size[1] = $tmp[0];
+                }
+            }
+        }
     } else if ($size[2] == 3) {
         $src = imagecreatefrompng($source_file);
     } else {

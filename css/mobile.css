@@ -110,7 +110,7 @@ a.btn02:focus, .btn02:hover {text-decoration:none}
 
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 
-input.btn_submit {padding:0 10px;height:2.6em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
+input.btn_submit {padding:0 10px;height:2.6em;border:0;background:#ff3061;color:#fff;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
 button.btn_submit {height:1.9em}
 fieldset .btn_submit {height:1.9em}
 

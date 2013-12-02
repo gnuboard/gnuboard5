@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '500120';
 include_once('./_common.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], "r");
 
@@ -32,10 +33,10 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <option value="">전체</option>
         </select>
         <label for="fr_date" class="sound_only">기간 시작일</label>
-        <input type="text" name="fr_date" value="<?php echo date("Ymd"); ?>" id="fr_date" class="frm_input" size="10" maxlength="8">
+        <input type="text" name="fr_date" value="<?php echo date("Ymd"); ?>" id="fr_date" required class="required frm_input" size="10" maxlength="8">
         ~
         <label for="to_date" class="sound_only">기간 종료일</label>
-        <input type="text" name="to_date" value="<?php echo date("Ymd"); ?>" id="to_date" class="frm_input" size="10" maxlength="8">
+        <input type="text" name="to_date" value="<?php echo date("Ymd"); ?>" id="to_date" required class="required frm_input" size="10" maxlength="8">
         <input type="submit" value="출력 (새창)" class="btn_submit">
 
         </form>
@@ -64,10 +65,10 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <option value="">전체</option>
         </select>
         <label for="fr_od_id" class="sound_only">주문번호 구간 시작</label>
-        <input type="text" name="fr_od_id" id="fr_od_id" class="frm_input" size="10" maxlength="20">
+        <input type="text" name="fr_od_id" id="fr_od_id" required class="required frm_input" size="10" maxlength="20">
         ~
         <label for="fr_od_id" class="sound_only">주문번호 구간 종료</label>
-        <input type="text" name="to_od_id" id="to_od_id" class="frm_input" size="10" maxlength="20">
+        <input type="text" name="to_od_id" id="to_od_id" required class="required frm_input" size="10" maxlength="20">
         <input type="submit" value="출력 (새창)" class="btn_submit">
 
         </form>
@@ -84,6 +85,10 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 </div>
 
 <script>
+$(function(){
+    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yymmdd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
+});
+
 function forderprintcheck(f)
 {
     if (f.csv[0].checked || f.csv[1].checked)
