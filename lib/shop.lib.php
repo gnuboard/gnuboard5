@@ -1994,6 +1994,35 @@ function shop_member_cert_check($id, $type)
 }
 
 
+// 배송조회버튼 생성
+function get_delivery_inquiry($company, $invoice, $class='')
+{
+    if(!$company || !$invoice)
+        return '';
+
+    $dlcomp = explode(")", str_replace("(", "", G5_DELIVERY_COMPANY));
+
+    for($i=0; $i<count($dlcomp); $i++) {
+        if(strstr($dlcomp[$i], $company)) {
+            list($com, $url, $tel) = explode("^", $dlcomp[$i]);
+            break;
+        }
+    }
+
+    $str = '';
+    if($com && $url) {
+        $str .= '<a href="'.$url.$invoice.'" target="_blank"';
+        if($class)
+            $str .= ' class="'.$class.'"';
+        $str .='>배송조회</a>';
+        if($tel)
+            $str .= ' (문의전화: '.$tel.')';
+    }
+
+    return $str;
+}
+
+
 // 사용후기의 확인된 건수를 상품테이블에 저장합니다.
 function update_use_cnt($it_id)
 {
