@@ -110,7 +110,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
             // jpg 이면 exif 체크
             if($size[2] == 2) {
                 $degree = 0;
-                $exif = exif_read_data($srcfile);
+                $exif = @exif_read_data($srcfile);
                 if(!empty($exif['Orientation'])) {
                     switch($exif['Orientation']) {
                         case 8:
@@ -219,7 +219,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     } else if ($size[2] == 2) {
         $src = imagecreatefromjpeg($source_file);
         // exif 정보를 기준으로 회전각도 구함
-        $exif = exif_read_data($source_file);
+        $exif = @exif_read_data($source_file);
         if(!empty($exif['Orientation'])) {
             switch($exif['Orientation']) {
                 case 8:
