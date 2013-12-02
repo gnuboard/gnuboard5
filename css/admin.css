@@ -139,6 +139,8 @@ h3 {margin:0 20px}
 .btn_confirm02 a {display:inline-block;padding:0 15px;height:30px;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 .btn_confirm02 a:focus {background:#555}
 
+.btn_confirm03 {clear:both;margin-top:10px;text-align:right}
+
 .btn_submit {background:#ff3061;cursor:pointer}
 .btn_confirm .btn_submit {padding:0 15px;border:0;height:30px;color:#fff}
 .btn_cancel {display:inline-block;padding:0 15px;height:30px;border:0;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
@@ -361,7 +363,7 @@ tfoot td {font-weight:bold;text-align:center}
 .td_chk {width:30px;text-align:center}
 .td_cnt {width:100px;font-size:0.95em;text-align:center}
 .td_cntsmall {width:50px;font-size:0.95em;text-align:center}
-.td_code {width:60px}
+.td_code {width:120px;text-align:center}
 .td_confirm {width:90px;text-align:center}
 .td_date {width:70px;text-align:center}
 .td_datetime {width:130px;text-align:center}
@@ -408,7 +410,6 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_postalbig {width:140px;text-align:center}
 .td_price {text-align:right}
 .td_pt {text-align:right !important}
-.td_scate {padding-right:15px;text-align:right;vertical-align:top}
 .td_send {width:50px;text-align:center}
 .td_sendcost_by {width:50px;text-align:center}
 .td_sendcost_add {width:100px;text-align:center}
@@ -592,7 +593,13 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sodr_total th {width:125px}
 
 /* 분류관리 목록 */
-.cate_list_lbl {display:inline-block;width:13px;height:13px;background:url('../adm/shop_admin/img/icon_reply.gif') 0 0 no-repeat}
+#sct .sct_name div {position:relative}
+#sct .sct_name .frm_input {width:98%}
+#sct .sct_name1 {padding-left:25px}
+#sct .sct_name2 {padding-left:50px}
+#sct .sct_name3 {padding-left:75px}
+#sct .sct_name4 {padding-left:100px}
+#sct .name_lbl {position:absolute;top:0;left:-20px;width:13px;height:13px;background:url('../adm/shop_admin/img/icon_reply.gif') 0 0 no-repeat}
 
 /* 분류 추가/수정 */
 .frm_ca_id {display:inline-block;margin:0 10px 0 0;font-weight:bold}

@@ -465,13 +465,13 @@ ob_end_clean();
                 for($i=0; $row=sql_fetch_array($result); $i++) {
                     $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
                     $val2 = '<label for="ad_sel_addr_'.($i+1).'">최근배송지('.($row['ad_subject'] ? $row['ad_subject'] : $row['ad_name']).')</label>';
-                    $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_'.($i+1).'"> '.PHP_EOL.$val2.PHP_EOL;
+                    $addr_list .= '<br><input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_'.($i+1).'"> '.PHP_EOL.$val2.PHP_EOL;
                 }
 
-                $addr_list .= '<input type="radio" name="ad_sel_addr" value="new" id="od_sel_addr_new">'.PHP_EOL;
+                $addr_list .= '<br><input type="radio" name="ad_sel_addr" value="new" id="od_sel_addr_new">'.PHP_EOL;
                 $addr_list .= '<label for="od_sel_addr_new">신규배송지</label>'.PHP_EOL;
 
-                $addr_list .='<a href="'.G5_SHOP_URL.'/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>';
+                $addr_list .='<a href="'.G5_SHOP_URL.'/orderaddress.php" id="order_address">배송지목록</a>';
             } else {
                 // 주문자와 동일
                 $addr_list .= '<input type="checkbox" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
@@ -480,7 +480,7 @@ ob_end_clean();
             ?>
             <tr>
                 <th scope="row">배송지선택</th>
-                <td>
+                <td id="sod_frm_deli">
                     <?php echo $addr_list; ?>
                 </td>
             </tr>

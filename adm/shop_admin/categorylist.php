@@ -87,7 +87,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 <input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
 <input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
-<div class="tbl_head02 tbl_wrap">
+<div id="sct" class="tbl_head02 tbl_wrap">
     <table>
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
@@ -117,7 +117,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $p_ca_name = '';
 
         if ($level > 0) {
-            $class = 'class="cate_list_lbl"'; // 2단 이상 분류의 label 에 스타일 부여 - 지운아빠 2013-04-02
+            $class = 'class="name_lbl"'; // 2단 이상 분류의 label 에 스타일 부여 - 지운아빠 2013-04-02
             // 상위단계의 분류명
             $p_ca_id = substr($row['ca_id'], 0, $level*2);
             $sql = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '$p_ca_id' ";
@@ -127,7 +127,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             $class = '';
         }
 
-        $s_level = '<label for="ca_name_'.$i.'" '.$class.'><span class="sound_only">'.$p_ca_name.''.($level+1).'단 분류</span></label>';
+        echo $level;
+
+        $s_level = '<div><label for="ca_name_'.$i.'" '.$class.'><span class="sound_only">'.$p_ca_name.''.($level+1).'단 분류</span></label></div>';
         $s_level_input_size = 25 - $level *2; // 하위 분류일 수록 입력칸 넓이 작아짐 - 지운아빠 2013-04-02
 
         if ($level+2 < 6) $s_add = '<a href="./categoryform.php?ca_id='.$row['ca_id'].'&amp;'.$qstr.'">추가</a> '; // 분류는 5단계까지만 가능
@@ -151,7 +153,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <input type="hidden" name="ca_id[<?php echo $i; ?>]" value="<?php echo $row['ca_id']; ?>">
             <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $row['ca_id']; ?>"><?php echo $row['ca_id']; ?></a>
         </td>
-        <td class="td_scate" rowspan="2"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required" size="<?php echo $s_level_input_size; ?>"></td>
+        <td class="sct_name sct_name<?php echo $level; ?>" rowspan="2"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required"></td>
         <td class="td_amount"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
         <td class="td_output">
             <label for="ca_out_width<?php echo $i; ?>" class="sound_only">출력이미지 폭</label>

@@ -17,22 +17,11 @@ $result = sql_query($sql);
 ?>
 
 <!-- 쿠폰 내역 시작 { -->
-<div id="coupon" class="new_win">
+<div id="scp_list" class="new_win">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
-    <div class="tbl_wrap tbl_head02">
-        <table>
-        <thead>
-        <tr>
-            <th scope="col" id="th_cname">쿠폰명</th>
-            <th scope="col" id="th_cperiod">사용기한</th>
-        </tr>
-        <tr>
-            <th scope="col" id="th_ctarget">적용대상</th>
-            <th scope="col" id="th_cdc">할인금액</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="win_desc">
+        <ul>
         <?php
         $cp_count = 0;
         for($i=0; $row=sql_fetch_array($result); $i++) {
@@ -60,22 +49,23 @@ $result = sql_query($sql);
 
             $cp_count++;
         ?>
-        <tr>
-            <td headers="th_cname"><?php echo $row['cp_subject']; ?></td>
-            <td headers="th_cperiod" class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
-        </tr>
-        <tr>
-            <td headers="th_ctarget"><?php echo $cp_target; ?></td>
-            <td headers="th_cdc" class="td_numbig"><?php echo $cp_price; ?></td>
-        </tr>
+        <li>
+            <div class="li_title"><?php echo $row['cp_subject']; ?></div>
+            <div class="li_pd">
+                <span class="pd_price"><?php echo $cp_price; ?></span>
+                <span class="pd_date"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></span>
+            </div>
+            <div class="li_target">
+                <?php echo $cp_target; ?>
+            </div>
+        </li>
         <?php
         }
 
         if(!$cp_count)
-            echo '<tr><td colspan="4" class="empty_table">사용할 수 있는 쿠폰이 없습니다.</td></tr>';
+            echo '<li class="empty_list">사용할 수 있는 쿠폰이 없습니다.</li>';
         ?>
-        </tbody>
-        </table>
+        </ul>
     </div>
 
     <div class="win_btn"><a href="javascript:;" onclick="window.close();">창닫기</a></div>

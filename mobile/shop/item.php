@@ -69,7 +69,7 @@ $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $prev_title = '이전상품 <span>'.$row['it_name'].'</span>';
-    $prev_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
+    $prev_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'" id="siblings_prev">';
     $prev_href2 = '</a>';
 } else {
     $prev_title = '';
@@ -87,7 +87,7 @@ $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $next_title = '다음 상품 <span>'.$row['it_name'].'</span>';
-    $next_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'">';
+    $next_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'" id="siblings_next">';
     $next_href2 = '</a>';
 } else {
     $next_title = '';

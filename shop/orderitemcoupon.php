@@ -42,7 +42,7 @@ $count = mysql_num_rows($result);
 <!-- 쿠폰 선택 시작 { -->
 <div id="it_coupon_frm">
     <?php if($count > 0) { ?>
-    <div class="tbl_head01 tbl_wrap">
+    <div class="tbl_head02 tbl_wrap">
         <table>
         <caption>쿠폰 선택</caption>
         <thead>
