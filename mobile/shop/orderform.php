@@ -417,7 +417,7 @@ ob_end_clean();
                     }
                     ?>
                     </select> -->
-                    <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly="readonly"> 이후로 배송 바랍니다.
+                    <input type="text" name="od_hope_date" value="" id="od_hope_date" required class="frm_input required" size="11" maxlength="10" readonly> 이후로 배송 바랍니다.
                 </td>
             </tr>
             <?php } ?>
@@ -450,7 +450,7 @@ ob_end_clean();
                 $row = sql_fetch($sql);
                 if($row['ad_id']) {
                     $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
-                    $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_def">'.PHP_EOL;
+                    $addr_list .= '<br><input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_def">'.PHP_EOL;
                     $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
                 }
 
