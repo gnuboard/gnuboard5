@@ -46,7 +46,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 
 ?>
 <form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
-<div id="sod_addr_list" class="new_win">
+<div id="sod_addr" class="new_win">
 
     <h1 id="win_title">배송지 목록</h1>
 
@@ -75,8 +75,9 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
             $addr = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
         ?>
         <tr>
-            <td class="td_chk"><label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
+            <td class="td_chk">
                 <input type="hidden" name="ad_id[<?php echo $i; ?>]" value="<?php echo $row['ad_id'];?>">
+                <label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
                 <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
             </td>
             <td class="td_name"><input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>

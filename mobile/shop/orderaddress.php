@@ -5,75 +5,50 @@ $g5['title'] = '배송지 목록';
 include_once(G5_PATH.'/head.sub.php');
 
 $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
-
 ?>
-<form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
-<div id="sod_addr_list" class="new_win">
 
+<form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
+<div id="sod_addr" class="new_win">
     <h1 id="win_title">배송지 목록</h1>
 
-    <div>
-        <button type="button" onclick="self.close();">닫기</button>
-    </div>
-    <div class="tbl_wrap tbl_head01">
-        <table>
-        <thead>
-        <tr>
-            <th scope="col" rowspan="3">
-                <label for="chk_all" class="sound_only">전체선택</label><input type="checkbox" name="chk_all" id="chk_all">
-            </th>
-            <th scope="col">기본<br>배송지</th>
-            <th scope="col">배송지명</th>
-            <th scope="col">이름</th>
-            <th scope="col" rowspan="3">관리</th>
-        </tr>
-        <tr>
-            <th scope="col" colspan="3">전화번호</th>
-        </tr>
-            <th scope="col" colspan="3">주소</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        $sep = chr(30);
-        for($i=0; $row=sql_fetch_array($result); $i++) {
-            $addr = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
-        ?>
-        <tr>
-            <td class="td_chk" rowspan="3">
-                <label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
-                <input type="hidden" name="ad_id[<?php echo $i; ?>]" value="<?php echo $row['ad_id'];?>">
-                <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
-            </td>
-            <td class="td_default">
-                <label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label>
-                <input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>>
-            </td>
-            <td class="td_name">
-                <input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject" class="frm_input" size="10" maxlength="20" value="<?php echo $row['ad_subject']; ?>">
-            </td>
-            <td class="td_namesmall"><?php echo $row['ad_name']; ?></td>
-            <td rowspan="3" class="td_mng">
-                <input type="hidden" value="<?php echo $addr; ?>">
-                <button type="button" class="sel_address btn_frmline">선택</button><br>
-                <a href="<?php echo $_SERVER['PHP_SELF']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" class="del_address">삭제</a>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="3" class="td_numbig"><?php echo $row['ad_tel']; ?> / <?php echo $row['ad_hp']; ?></td>
-        </tr>
-        <tr>
-            <td colspan="3"><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></td>
-        </tr>
-        <?php
-        }
-        ?>
-        </tbody>
-        </table>
+    <div class="win_desc">
+        <ul>
+            <?php
+            $sep = chr(30);
+            for($i=0; $row=sql_fetch_array($result); $i++) {
+                $addr = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
+            ?>
+            <li>
+                <div class="addr_chk" rowspan="3">
+                    <input type="hidden" name="ad_id[<?php echo $i; ?>]" value="<?php echo $row['ad_id'];?>">
+                    <label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
+                    <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
+                </div>
+                <div class="addr_title">
+                    <input type="text" name="ad_subject[<?php echo $i; ?>]" value="<?php echo $row['ad_subject']; ?>" id="ad_subject" class="frm_input" maxlength="20">
+                </div>
+                <div class="addr_default">
+                    <input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>>
+                    <label for="ad_default<?php echo $i;?>">기본배송지 설정</label>
+                </div>
+                <div class="addr_addr"><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></div>
+                <div class="addr_name"><?php echo $row['ad_name']; ?></div>
+                <div class="addr_tel"><?php echo $row['ad_tel']; ?> / <?php echo $row['ad_hp']; ?></div>
+                <div class="addr_btn">
+                    <input type="hidden" value="<?php echo $addr; ?>">
+                    <button type="button" id="btn_sel" class="sel_address">선택</button>
+                    <a href="<?php echo $_SERVER['PHP_SELF']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" id="btn_del" class="del_address">삭제</a>
+                </div>
+            </li>
+            <?php
+            }
+            ?>
+        </ul>
     </div>
 
-    <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정" id="btn_submit">
+    <div class="win_btn">
+        <input type="submit" name="act_button" value="선택수정" class="btn_submit">
+        <button type="button" onclick="self.close();">닫기</button>
     </div>
 </div>
 </form>
