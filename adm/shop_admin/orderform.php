@@ -422,12 +422,12 @@ $result = sql_query($sql);
                 </tr>
                 <?php if ($od['od_invoice']) { ?>
                 <tr>
-                    <th scope="row">운송장번호</th>
-                    <td><?php echo $od['od_invoice']; ?></td>
+                    <th scope="row">배송회사</th>
+                    <td><?php echo $od['od_delivery_company']; ?> <?php echo get_delivery_inquiry($od['od_delivery_company'], $od['od_invoice']); ?></td>
                 </tr>
                 <tr>
-                    <th scope="row">배송회사</th>
-                    <td><?php echo $od['od_delivery_company']; ?></td>
+                    <th scope="row">운송장번호</th>
+                    <td><?php echo $od['od_invoice']; ?></td>
                 </tr>
                 <?php } ?>
                 <tr>
