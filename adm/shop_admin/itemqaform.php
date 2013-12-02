@@ -59,7 +59,7 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     <?php if($iq['iq_hp']) { ?>
     <tr>
         <th scope="row">휴대폰</th>
-        <td><?php echo get_text($iq['iq_hp']); ?></td>
+        <td><?php echo hyphen_hp_number($iq['iq_hp']); ?></td>
     </tr>
     <?php } ?>
     <tr>
