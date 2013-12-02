@@ -452,7 +452,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #sidx_graph_area .graph {position:absolute;bottom:0;width:40%;height:0}
 #sidx_graph_area .order {background:#a0ca30;left:7%}
 #sidx_graph_area .cancel {background:#ff8db6;right:7%}
-#sidx_graph_area #price_tooltip {display:none;position:absolute;top:5px;left:5px;background-color:#fff;border:1px solid gray}
+#sidx_graph_area #price_tooltip {display:none;position:absolute;top:-18px;left:0;background-color:#fff;border:1px solid gray}
 #sidx_graph_area #price_tooltip div {white-space:nowrap}
 #sidx_graph_date {position:absolute;top:275px;left:15%;margin:0;padding:0;width:85%;border:1px solid #fff;list-style:none}
 #sidx_graph_date li {position:relative;float:left;width:14%;font-family:tahoma;text-align:center}
