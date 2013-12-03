@@ -24,9 +24,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 $sql = " select *
             from {$g5['g5_shop_order_address_table']}
             where mb_id = '{$member['mb_id']}'
-            order by
-            ad_default desc,
-            ad_id desc
+            order by ad_default desc, ad_id desc
             limit $from_record, $rows";
 
 $result = sql_query($sql);
@@ -102,7 +100,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 </div>
 </form>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
 <script>
 $(function() {
