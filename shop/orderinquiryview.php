@@ -146,7 +146,9 @@ if(openwin != null) {
 
         <?php
         // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
-        $tot_price = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2'] - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon'];
+        $tot_price = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']
+                        - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon']
+                        - $od['od_cancel_price'];
         ?>
 
         <dl id="sod_bsk_tot">
@@ -176,6 +178,11 @@ if(openwin != null) {
             <?php if ($od['od_send_cost2'] > 0) { ?>
             <dt class="sod_bsk_dvr">추가배송비</dt>
             <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_cost2']); ?> 원</strong></dd>
+            <?php } ?>
+
+            <?php if ($od['od_cancel_price'] > 0) { ?>
+            <dt class="sod_bsk_dvr">취소금액</dt>
+            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cancel_price']); ?> 원</strong></dd>
             <?php } ?>
 
             <dt class="sod_bsk_cnt">총계</dt>
@@ -327,16 +334,6 @@ if(openwin != null) {
                     <td><?php echo display_point($od['od_receipt_point']); ?></td>
                 </tr>
 
-                <?php
-                }
-
-                if ($od['od_cancel_price'] > 0)
-                {
-                ?>
-                <tr>
-                    <th scope="row">취소 금액</th>
-                    <td><?php echo display_price($od['od_cancel_price']); ?></td>
-                </tr>
                 <?php
                 }
 
