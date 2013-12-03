@@ -147,7 +147,7 @@ $(function() {
         }
     });
 
-    $("#btn_submit").on("click", function() {
+    $(".btn_submit").on("click", function() {
         if($("input[name^='chk[']:checked").length==0 ){
             alert("수정하실 항목을 하나 이상 선택하세요.");
             return false;
