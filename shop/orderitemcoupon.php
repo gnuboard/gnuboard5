@@ -40,7 +40,7 @@ $count = mysql_num_rows($result);
 ?>
 
 <!-- 쿠폰 선택 시작 { -->
-<div id="it_coupon_frm">
+<div id="cp_frm">
     <?php if($count > 0) { ?>
     <div class="tbl_head02 tbl_wrap">
         <table>
@@ -87,11 +87,11 @@ $count = mysql_num_rows($result);
     </div>
     <?php
     } else {
-        echo '<p>사용할 수 있는 쿠폰이 없습니다.</p>';
+        echo '<div class="empty_list">사용할 수 있는 쿠폰이 없습니다.</div>';
     }
     ?>
     <div class="btn_confirm">
-        <button type="button" id="it_coupon_close" class="btn_submit">닫기</button>
+        <button type="button" id="cp_close" class="btn_submit">닫기</button>
     </div>
 </div>
 <!-- } 쿠폰 선택 끝 -->

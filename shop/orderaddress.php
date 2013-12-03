@@ -50,9 +50,6 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 
     <h1 id="win_title">배송지 목록</h1>
 
-    <div>
-        <button type="button" onclick="self.close();">닫기</button>
-    </div>
     <div class="tbl_head01 tbl_wrap">
         <table>
         <thead>
@@ -87,7 +84,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
             <td><?php echo sprintf('%s %s', $row['ad_addr1'], $row['ad_addr2']); ?></td>
             <td class="td_mng">
                 <input type="hidden" value="<?php echo $addr; ?>">
-                <button type="button" class="sel_address btn_frmline">선택</button>
+                <button type="button" class="sel_address">선택</button>
                 <a href="<?php echo $_SERVER['PHP_SELF']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" class="del_address">삭제</a>
             </td>
         </tr>
@@ -98,8 +95,9 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
         </table>
     </div>
 
-    <div class="btn_list">
-        <input type="submit" name="act_button" value="선택수정" id="btn_submit">
+    <div class="win_btn">
+        <input type="submit" name="act_button" value="선택수정" class="btn_submit">
+        <button type="button" onclick="self.close();">닫기</button>
     </div>
 </div>
 </form>
