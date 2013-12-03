@@ -10,22 +10,13 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 <div id="sod_bsk">
 
     <form name="frmcartlist" id="sod_bsk_list" method="post" action="<?php echo $cart_action_url; ?>">
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <thead>
-        <tr>
-            <th scope="col" rowspan="2">상품이미지</th>
-            <th scope="col" colspan="4">상품명</th>
-            <th scope="col" rowspan="2"><input type="checkbox" name="ct_all" value="1" checked="checked"></th>
-        </tr>
-        <tr>
-            <th scope="col">총수량</th>
-            <th scope="col">판매가</th>
-            <th scope="col">소계</th>
-            <th scope="col">포인트</th>
-        </tr>
-        </thead>
-        <tbody>
+
+    <div id="sod_chk">
+        <label for="ct_all" class="sound_only">상품 전체</label>
+        <input type="checkbox" name="ct_all" value="1" id="ct_all" checked>
+    </div>
+
+    <ul id="sod_list">
         <?php
         $tot_point = 0;
         $tot_sell_price = 0;
@@ -67,14 +58,16 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                 $continue_ca_id = $row['ca_id'];
             }
 
-            $a1 = '<a href="./item.php?it_id='.$row['it_id'].'"><b>';
-            $a2 = '</b></a>';
-            $image = get_it_image($row['it_id'], 70, 70);
+            $a1 = '<a href="./item.php?it_id='.$row['it_id'].'"><strong>';
+            $a2 = '</strong></a>';
+            $image_width = 50;
+            $image_height = 50;
+            $image = get_it_image($row['it_id'], $image_width, $image_height);
 
             $it_name = $a1 . stripslashes($row['it_name']) . $a2;
             $it_options = print_item_options($row['it_id'], $s_cart_id);
             if($it_options) {
-                $mod_options = '<div class="sod_option_btn"><button type="button" id="mod_opt_'.$row['it_id'].'" class="mod_options">선택사항수정</button></div>';
+                $mod_options = '<div class="li_mod"><button type="button" id="mod_opt_'.$row['it_id'].'" class="mod_btn mod_options">선택사항수정</button></div>';
                 $it_name .= '<div class="sod_opt">'.$it_options.'</div>';
             }
 
@@ -82,24 +75,27 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             $sell_price = $sum['price'];
         ?>
 
-        <tr>
-            <td rowspan="3" class="sod_img"><?php echo $image; ?></td>
-            <td colspan="4">
-                <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
-                <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
+        <li class="sod_li">
+            <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
+            <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
+            <div class="li_chk">
+                <label for="ct_chk_<?php echo $i; ?>" class="sound_only">상품선택</label>
+                <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>" checked>
+            </div>
+            <div class="li_name">
                 <?php echo $it_name; ?>
-            </td>
-            <td rowspan="3" class="td_mngsmall"><input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" checked="checked"></td>
-        </tr>
-        <tr>
-            <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
-            <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
-            <td class="td_numbig"><?php echo number_format($sell_price); ?></td>
-            <td class="td_num"><?php echo number_format($sum['point']); ?></td>
-        </tr>
-        <tr>
-            <td colspan="4"><?php echo $mod_options; ?></td>
-        </tr>
+            </div>
+            <div class="li_prqty">
+                <span class="prqty_price"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
+                <span class="prqty_qty"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
+            </div>
+            <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
+                <span class="total_img"><?php echo $image; ?></span>
+                <span class="total_price total_span"><span>소계 </span><strong><?php echo number_format($sell_price); ?></strong></span>
+                <span class="total_point total_span"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
+            </div>
+            <div class="li_mod"><?php echo $mod_options; ?></div>
+        </li>
 
         <?php
             $tot_point      += $point;
@@ -107,15 +103,13 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         } // for 끝
 
         if ($i == 0) {
-            echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+            echo '<li class="empty_list">장바구니에 담긴 상품이 없습니다.</li>';
         } else {
             // 배송비 계산
             $send_cost = get_sendcost($s_cart_id, 0);
         }
         ?>
-        </tbody>
-        </table>
-    </div>
+    </ul>
 
     <?php
     $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비
@@ -129,21 +123,22 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
         <?php if ($tot_price > 0) { ?>
         <dt class="sod_bsk_cnt">총계</dt>
-        <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원 <?php echo number_format($tot_point); ?> 점</strong></dd>
+        <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원</strong></dd>
+        <dt>포인트</dt>
+        <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
         <?php } ?>
     </dl>
     <?php } ?>
 
-    <div id="sod_bsk_act">
+    <div id="sod_bsk_act" class="btn_confirm">
         <?php if ($i == 0) { ?>
         <a href="<?php echo G5_SHOP_URL; ?>/" class="btn01">쇼핑 계속하기</a>
         <?php } else { ?>
         <input type="hidden" name="url" value="<?php echo G5_SHOP_URL; ?>/orderform.php">
         <input type="hidden" name="act" value="">
         <input type="hidden" name="records" value="<?php echo $i; ?>">
-        <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
         <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
-        <button type="button" onclick="return form_check('buy');" class="btn02">주문하기</button>
+        <button type="button" onclick="return form_check('buy');" class="btn_submit">주문하기</button>
         <button type="button" onclick="return form_check('seldelete');" class="btn01">선택삭제</button>
         <button type="button" onclick="return form_check('alldelete');" class="btn01">비우기</button>
         <?php } ?>

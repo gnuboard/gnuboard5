@@ -162,7 +162,6 @@ include_once('./_head.php');
         <input type="hidden" name="url" value="./orderform.php">
         <input type="hidden" name="records" value="<?php echo $i; ?>">
         <input type="hidden" name="act" value="">
-        <p>장바구니의 상품을 주문하시려면 <strong>주문하기</strong>를 클릭하세요. <strong>비우기</strong>는 장바구니의 상품을 모두 비웁니다.</p>
         <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
         <button type="button" onclick="return form_check('buy');" class="btn02">주문하기</button>
         <button type="button" onclick="return form_check('seldelete');" class="btn01">선택삭제</button>
