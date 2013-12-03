@@ -646,7 +646,6 @@ if(stripos($row['Type'], 'enum') !== false) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_cart_table']}`
                     CHANGE `ct_status` `ct_status` varchar(255) NOT NULL DEFAULT '' ", true);
 }
-*/
 
 
 // 상품테이블에 검색을 위하여 태그없는 상품설명 저장용 필드 추가
@@ -731,4 +730,5 @@ if(!sql_query(" select iq_hp from {$g5['g5_shop_item_qa_table']} limit 1 ", fals
                     ADD `iq_email` varchar(255) NOT NULL DEFAULT '' AFTER `iq_name`,
                     ADD `iq_hp` varchar(255) NOT NULL DEFAULT '' AFTER `iq_email` ", true);
 }
+*/
 ?>
