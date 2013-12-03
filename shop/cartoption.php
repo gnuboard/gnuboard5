@@ -34,7 +34,7 @@ if(!mysql_num_rows($result))
 $option_1 = get_item_options($it['it_id'], $it['it_option_subject']);
 if($option_1) {
 ?>
-<section>
+<section class="tbl_wrap tbl_head02">
     <h3>선택옵션</h3>
     <table class="sit_ov_tbl">
     <colgroup>
@@ -56,7 +56,7 @@ if($option_1) {
 $option_2 = get_item_supply($it['it_id'], $it['it_supply_subject']);
 if($option_2) {
 ?>
-<section>
+<section class="tbl_wrap tbl_head02">
     <h3>추가옵션</h3>
     <table class="sit_ov_tbl">
     <colgroup>
@@ -114,6 +114,7 @@ if($option_2) {
 </div>
 
 <div id="sit_tot_price"></div>
+
 <div class="btn_confirm">
     <input type="submit" value="선택사항적용" class="btn_submit">
     <button type="button" id="mod_option_close" class="btn_cancel">닫기</button>
