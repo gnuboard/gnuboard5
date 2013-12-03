@@ -137,7 +137,7 @@ $colspan = 8;
         </td>
         <td><?php echo $row['cp_id']; ?></td>
         <td><?php echo $row['cp_subject']; ?></td>
-        <td class="td_num"><?php echo $cp_target; ?></td>
+        <td><?php echo $cp_target; ?></td>
         <td class="td_name sv_use"><div><?php echo $row['mb_id']; ?></div></td>
         <td class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
         <td class="td_cntsmall"><?php echo number_format($used_count); ?></td>
