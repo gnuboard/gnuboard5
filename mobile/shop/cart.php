@@ -3,6 +3,28 @@ include_once('./_common.php');
 
 $g5['title'] = '장바구니';
 include_once(G5_MSHOP_PATH.'/_head.php');
+
+// $s_cart_id 로 현재 장바구니 자료 쿼리
+$sql = " select a.ct_id,
+                a.it_id,
+                a.it_name,
+                a.ct_price,
+                a.ct_point,
+                a.ct_qty,
+                a.ct_status,
+                a.ct_send_cost,
+                b.ca_id
+           from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
+          where a.od_id = '$s_cart_id' ";
+if($default['de_cart_keep_term']) {
+    $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - (($default['de_cart_keep_term'] - 1) * 86400));
+    $sql .= " and a.ct_time > '$ctime' ";
+}
+$sql .= " group by a.it_id ";
+$sql .= " order by a.ct_id ";
+$result = sql_query($sql);
+
+$cart_count = mysql_num_rows($result);
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/shop.js"></script>
@@ -11,39 +33,20 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
     <form name="frmcartlist" id="sod_bsk_list" method="post" action="<?php echo $cart_action_url; ?>">
 
+    <?php if($cart_count) { ?>
     <div id="sod_chk">
         <label for="ct_all" class="sound_only">상품 전체</label>
         <input type="checkbox" name="ct_all" value="1" id="ct_all" checked>
     </div>
+    <?php } ?>
 
     <ul class="sod_list">
         <?php
         $tot_point = 0;
         $tot_sell_price = 0;
-
-        // $s_cart_id 로 현재 장바구니 자료 쿼리
-        $sql = " select a.ct_id,
-                        a.it_id,
-                        a.it_name,
-                        a.ct_price,
-                        a.ct_point,
-                        a.ct_qty,
-                        a.ct_status,
-                        a.ct_send_cost,
-                        b.ca_id
-                   from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
-                  where a.od_id = '$s_cart_id' ";
-        if($default['de_cart_keep_term']) {
-            $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - (($default['de_cart_keep_term'] - 1) * 86400));
-            $sql .= " and a.ct_time > '$ctime' ";
-        }
-        $sql .= " group by a.it_id ";
-        $sql .= " order by a.ct_id ";
-        $result = sql_query($sql);
-
         $it_send_cost = 0;
 
-        for ($i=0; $row=mysql_fetch_array($result); $i++)
+        for ($i=0; $row=sql_fetch_array($result); $i++)
         {
             // 합계금액 계산
             $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
