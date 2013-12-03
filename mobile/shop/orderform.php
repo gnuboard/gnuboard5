@@ -889,7 +889,7 @@ $(function() {
         $("#cp_frm").remove();
         $cp_btn_el.text("쿠폰변경").focus();
         if(!$cp_row_el.find(".cp_cancel").size())
-            $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel btn_frmline\">쿠폰취소</button>");
+            $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel\">쿠폰취소</button>");
     });
 
     $("#cp_close").live("click", function() {
