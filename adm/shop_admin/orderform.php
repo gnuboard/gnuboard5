@@ -413,7 +413,7 @@ $result = sql_query($sql);
                 </tr>
                 <?php } ?>
                 <tr>
-                    <th scope="row">결제할인금액</th>
+                    <th scope="row">주문금액할인</th>
                     <td><?php echo display_price($od['od_coupon']); ?></td>
                 </tr>
                 <tr>
