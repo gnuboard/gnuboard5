@@ -33,6 +33,9 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
         $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
 
         switch($row['od_status']) {
+            case '주문':
+                $od_status = '입금확인중';
+                break;
             case '입금':
                 $od_status = '입금완료';
                 break;
@@ -46,7 +49,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
                 $od_status = '배송완료';
                 break;
             default:
-                $od_status = '입금확인중';
+                $od_status = '주문취소';
                 break;
         }
     ?>

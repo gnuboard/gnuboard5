@@ -20,17 +20,25 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
         for ($i=0; $row=sql_fetch_array($result); $i++)
         {
             // 주문상품
-            $sql = " select *, count(ct_id) as cnt
+            $sql = " select it_name, ct_option
                         from {$g5['g5_shop_cart_table']}
                         where od_id = '{$row['od_id']}'
-                        order by ct_id
+                        order by io_type, ct_id
                         limit 1 ";
             $ct = sql_fetch($sql);
             $ct_name = get_text($ct['it_name']).' '.get_text($ct['ct_option']);
-            if($ct['cnt'] > 1)
-                $ct_name .= ' 외 '.($ct['cnt'] - 1).'건';
+
+            $sql = " select count(*) as cnt
+                        from {$g5['g5_shop_cart_table']}
+                        where od_id = '{$row['od_id']}' ";
+            $ct2 = sql_fetch($sql);
+            if($ct2['cnt'] > 1)
+                $ct_name .= ' 외 '.($ct2['cnt'] - 1).'건';
 
             switch($row['od_status']) {
+                case '주문':
+                    $od_status = '입금확인중';
+                    break;
                 case '입금':
                     $od_status = '입금완료';
                     break;
@@ -44,7 +52,7 @@ if (!defined("_ORDERINQUIRY_")) exit; // 개별 페이지 접근 불가
                     $od_status = '배송완료';
                     break;
                 default:
-                    $od_status = '입금확인중';
+                    $od_status = '주문취소';
                     break;
             }
 
