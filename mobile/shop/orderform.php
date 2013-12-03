@@ -820,9 +820,9 @@ $(function() {
 
     $(".cp_btn").click(function() {
         $cp_btn_el = $(this);
-        $cp_row_el = $(this).closest("tr");
+        $cp_row_el = $(this).closest("li");
         $("#cp_frm").remove();
-        var it_id = $cp_btn_el.closest("tr").find("input[name^=it_id]").val();
+        var it_id = $cp_btn_el.closest("li").find("input[name^=it_id]").val();
 
         $.post(
             "./orderitemcoupon.php",
@@ -856,7 +856,7 @@ $(function() {
             if(id == cp_id) {
                 cp_dup_idx = index;
                 cp_dup = true;
-                $cp_dup_el = $(this).closest("tr");;
+                $cp_dup_el = $(this).closest("li");;
 
                 return false;
             }
@@ -868,10 +868,13 @@ $(function() {
                 return false;
             } else {
                 coupon_cancel($cp_dup_el);
+                $("#cp_frm").remove();
+                $cp_dup_el.find(".cp_btn").text("쿠폰적용").focus();
+                $cp_dup_el.find(".cp_cancel").remove();
             }
         }
 
-        var $s_el = $cp_row_el.find(".total_price");;
+        var $s_el = $cp_row_el.find(".total_price strong");;
         sell_price = parseInt($cp_row_el.find("input[name^=it_price]").val());
         sell_price = sell_price - parseInt(price);
         if(sell_price < 0) {
@@ -884,9 +887,9 @@ $(function() {
 
         calculate_total_price();
         $("#cp_frm").remove();
-        $cp_btn_el.text("변경").focus();
+        $cp_btn_el.text("쿠폰변경").focus();
         if(!$cp_row_el.find(".cp_cancel").size())
-            $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel btn_frmline\">취소</button>");
+            $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel btn_frmline\">쿠폰취소</button>");
     });
 
     $("#cp_close").live("click", function() {
@@ -895,10 +898,10 @@ $(function() {
     });
 
     $(".cp_cancel").live("click", function() {
-        coupon_cancel($(this).closest("tr"));
+        coupon_cancel($(this).closest("li"));
         calculate_total_price();
         $("#cp_frm").remove();
-        $(this).closest("tr").find(".cp_btn").text("쿠폰적용").focus();
+        $(this).closest("li").find(".cp_btn").text("쿠폰적용").focus();
         $(this).remove();
     });
 
@@ -1103,7 +1106,7 @@ $(function() {
 
 function coupon_cancel($el)
 {
-    var $dup_sell_el = $el.find(".total_price");
+    var $dup_sell_el = $el.find(".total_price strong");
     var $dup_price_el = $el.find("input[name^=cp_price]");
     var org_sell_price = $el.find("input[name^=it_price]").val();
 

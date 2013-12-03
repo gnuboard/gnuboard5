@@ -1131,6 +1131,9 @@ $(function() {
                 return false;
             } else {
                 coupon_cancel($cp_dup_el);
+                $("#cp_frm").remove();
+                $cp_dup_el.find(".cp_btn").text("적용").focus();
+                $cp_dup_el.find(".cp_cancel").remove();
             }
         }
 
