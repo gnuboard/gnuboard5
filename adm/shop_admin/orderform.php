@@ -413,6 +413,10 @@ $result = sql_query($sql);
                 </tr>
                 <?php } ?>
                 <tr>
+                    <th scope="row">결제할인금액</th>
+                    <td><?php echo display_price($od['od_coupon']); ?></td>
+                </tr>
+                <tr>
                     <th scope="row">포인트</th>
                     <td><?php echo display_point($od['od_receipt_point']); ?></td>
                 </tr>
@@ -429,15 +433,14 @@ $result = sql_query($sql);
                     <th scope="row">운송장번호</th>
                     <td><?php echo $od['od_invoice']; ?></td>
                 </tr>
-                <?php } ?>
                 <tr>
                     <th scope="row">배송일시</th>
                     <td><?php echo is_null_time($od['od_invoice_time']) ? "" : $od['od_invoice_time']; ?></td>
                 </tr>
+                <?php } ?>
                 <tr>
                     <th scope="row"><label for="od_send_cost">배송비</label></th>
                     <td>
-                        <?php echo help("주문취소시 배송비는 취소되지 않으므로 이 배송비를 0으로 설정하여 미수금을 맞추십시오."); ?>
                         <input type="text" name="od_send_cost" value="<?php echo $od['od_send_cost']; ?>" id="od_send_cost" class="frm_input" size="10"> 원
                     </td>
                 </tr>
