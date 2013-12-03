@@ -37,22 +37,7 @@ ob_start();
 ?>
     <p>주문하실 상품을 확인하세요.</p>
 
-    <div class="tbl_wrap tbl_head01">
-        <table id="sod_list">
-        <thead>
-        <tr>
-            <th scope="col" rowspan="2">상품이미지</th>
-            <th scope="col" colspan="5" id="th_it">상품명</th>
-        </tr>
-        <tr>
-            <th scope="col" id="th_itall">총수량</th>
-            <th scope="col" id="th_itprice">판매가</th>
-            <th scope="col" id="th_cp">쿠폰</th>
-            <th scope="col" id="th_cnt">소계</th>
-            <th scope="col" id="th_pt">포인트</th>
-        </tr>
-        </thead>
-        <tbody>
+    <ul id="sod_list">
         <?php
         $tot_point = 0;
         $tot_sell_price = 0;
@@ -124,14 +109,16 @@ ob_start();
                 $good_info .= "good_amtx=".$row['ct_price'].chr(31);
             }
 
-            $a1 = '<b>';
-            $a2 = '</b>';
-            $image = get_it_image($row['it_id'], 50, 50);
+            $a1 = '<strong>';
+            $a2 = '</strong>';
+            $image_width = 50;
+            $image_height = 50;
+            $image = get_it_image($row['it_id'], $image_width, $image_height);
 
             $it_name = $a1 . stripslashes($row['it_name']) . $a2;
             $it_options = print_item_options($row['it_id'], $s_cart_id);
             if($it_options) {
-                $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
+                $it_name .= '<div class="sod_opt">'.$it_options.'</div>';
             }
 
             // 복합과세금액
@@ -172,35 +159,33 @@ ob_start();
                 }
 
                 if($cp_count) {
-                    $cp_button = '<button type="button" class="it_coupon_btn btn_frmline">적용</button>';
+                    $cp_button = '<div class="li_cp"><button type="button" class="cp_btn">쿠폰적용</button></div>';
                     $it_cp_count++;
                 }
             }
         ?>
 
-        <tr>
-            <td rowspan="2" class="sod_bsk_img"><?php echo $image; ?></td>
-            <td headers ="th_it" colspan="5">
-                <?php echo $it_name; ?>
-            </td>
-        </tr>
-        <tr>
-            <td headers ="th_itall" class="td_num"><?php echo number_format($sum['qty']); ?></td>
-            <td headers ="th_itprice" class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
-            <td headers ="th_cp" class="td_mngsmall">
-                <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
-                <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-                <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo $sell_price; ?>">
-                <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
-                <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
-                <?php if($default['de_tax_flag_use']) { ?>
-                <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
-                <?php } ?>
-                <?php echo $cp_button; ?>
-            </td>
-            <td headers ="th_cnt" class="td_numbig"><span class="ct_sell_price"><?php echo number_format($sell_price); ?></span></td>
-            <td headers ="th_pt" class="td_num"><?php echo number_format($sum['point']); ?></td>
-        </tr>
+        <li class="sod_li">
+            <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
+            <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
+            <input type="hidden" name="it_price[<?php echo $i; ?>]" value="<?php echo $sell_price; ?>">
+            <?php if($default['de_tax_flag_use']) { ?>
+            <input type="hidden" name="it_notax[<?php echo $i; ?>]" value="<?php echo $row['it_notax']; ?>">
+            <?php } ?>
+            <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
+            <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
+            <div class="li_name"><?php echo $it_name; ?></div>
+            <div class="li_prqty">
+                <span class="prqty_price"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
+                <span class="prqty_qty"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
+            </div>
+            <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
+                <span class="total_img"><?php echo $image; ?></span>
+                <span class="total_price total_span"><span>주문금액 </span><strong><?php echo number_format($sell_price); ?></strong></span>
+                <span class="total_point total_span"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
+            </div>
+            <?php echo $cp_button; ?>
+        </li>
 
         <?php
             $tot_point      += $point;
@@ -635,44 +620,45 @@ ob_end_clean();
         }
 
         if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
-        echo '<fieldset id="sod_frm_paysel">';
-        echo '<legend>결제방법 선택</legend>';
+        echo '<div id="sod_frm_paysel"><ul>';
         }
 
         // 무통장입금 사용
         if ($default['de_bank_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_bank" name="od_settle_case" value="무통장" '.$checked.'> <label for="od_settle_bank">무통장입금</label>'.PHP_EOL;
+            echo '<li><input type="radio" id="od_settle_bank" name="od_settle_case" value="무통장" '.$checked.'> <label for="od_settle_bank">무통장입금</label></li>'.PHP_EOL;
             $checked = '';
         }
 
         // 가상계좌 사용
         if ($default['de_vbank_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_vbank" name="od_settle_case" value="가상계좌" '.$checked.'> <label for="od_settle_vbank">'.$escrow_title.'가상계좌</label>'.PHP_EOL;
+            echo '<li><input type="radio" id="od_settle_vbank" name="od_settle_case" value="가상계좌" '.$checked.'> <label for="od_settle_vbank">'.$escrow_title.'가상계좌</label></li>'.PHP_EOL;
             $checked = '';
         }
 
         // 계좌이체 사용
         if ($default['de_iche_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_iche" name="od_settle_case" value="계좌이체" '.$checked.'> <label for="od_settle_iche">'.$escrow_title.'계좌이체</label>'.PHP_EOL;
+            echo '<li><input type="radio" id="od_settle_iche" name="od_settle_case" value="계좌이체" '.$checked.'> <label for="od_settle_iche">'.$escrow_title.'계좌이체</label></li>'.PHP_EOL;
             $checked = '';
         }
 
         // 휴대폰 사용
         if ($default['de_hp_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_hp" name="od_settle_case" value="휴대폰" '.$checked.'> <label for="od_settle_hp">휴대폰</label>'.PHP_EOL;
+            echo '<li><input type="radio" id="od_settle_hp" name="od_settle_case" value="휴대폰" '.$checked.'> <label for="od_settle_hp">휴대폰</label></li>'.PHP_EOL;
             $checked = '';
         }
 
         // 신용카드 사용
         if ($default['de_card_use']) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" '.$checked.'> <label for="od_settle_card">신용카드</label>'.PHP_EOL;
+            echo '<li><input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" '.$checked.'> <label for="od_settle_card">신용카드</label></li>'.PHP_EOL;
             $checked = '';
         }
+
+        echo '</ul>';
 
         $temp_point = 0;
         // 회원이면서 포인트사용이면
@@ -726,7 +712,7 @@ ob_end_clean();
         }
 
         if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
-        echo '</fieldset>';
+        echo '</div>';
         }
 
         if ($multi_settle == 0)
@@ -832,10 +818,10 @@ $(function() {
     var $cp_row_el;
     var zipcode = "";
 
-    $(".it_coupon_btn").click(function() {
+    $(".cp_btn").click(function() {
         $cp_btn_el = $(this);
         $cp_row_el = $(this).closest("tr");
-        $("#it_coupon_frm").remove();
+        $("#cp_frm").remove();
         var it_id = $cp_btn_el.closest("tr").find("input[name^=it_id]").val();
 
         $.post(
@@ -885,7 +871,7 @@ $(function() {
             }
         }
 
-        var $s_el = $cp_row_el.find(".ct_sell_price");;
+        var $s_el = $cp_row_el.find(".total_price");;
         sell_price = parseInt($cp_row_el.find("input[name^=it_price]").val());
         sell_price = sell_price - parseInt(price);
         if(sell_price < 0) {
@@ -897,22 +883,22 @@ $(function() {
         $cp_row_el.find("input[name^=cp_price]").val(price);
 
         calculate_total_price();
-        $("#it_coupon_frm").remove();
+        $("#cp_frm").remove();
         $cp_btn_el.text("변경").focus();
-        if(!$cp_row_el.find(".it_coupon_cancel").size())
-            $cp_btn_el.after("<button type=\"button\" class=\"it_coupon_cancel btn_frmline\">취소</button>");
+        if(!$cp_row_el.find(".cp_cancel").size())
+            $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel btn_frmline\">취소</button>");
     });
 
-    $("#it_coupon_close").live("click", function() {
-        $("#it_coupon_frm").remove();
+    $("#cp_close").live("click", function() {
+        $("#cp_frm").remove();
         $cp_btn_el.focus();
     });
 
-    $(".it_coupon_cancel").live("click", function() {
+    $(".cp_cancel").live("click", function() {
         coupon_cancel($(this).closest("tr"));
         calculate_total_price();
-        $("#it_coupon_frm").remove();
-        $(this).closest("tr").find(".it_coupon_btn").text("적용").focus();
+        $("#cp_frm").remove();
+        $(this).closest("tr").find(".cp_btn").text("쿠폰적용").focus();
         $(this).remove();
     });
 
@@ -1117,7 +1103,7 @@ $(function() {
 
 function coupon_cancel($el)
 {
-    var $dup_sell_el = $el.find(".ct_sell_price");
+    var $dup_sell_el = $el.find(".total_price");
     var $dup_price_el = $el.find("input[name^=cp_price]");
     var org_sell_price = $el.find("input[name^=it_price]").val();
 

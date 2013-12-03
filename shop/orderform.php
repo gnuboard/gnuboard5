@@ -257,7 +257,7 @@ function get_intall_file()
             $it_name = '<b>' . stripslashes($row['it_name']) . '</b>';
             $it_options = print_item_options($row['it_id'], $s_cart_id);
             if($it_options) {
-                $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
+                $it_name .= '<div class="sod_opt">'.$it_options.'</div>';
             }
 
             // 복합과세금액
@@ -298,14 +298,14 @@ function get_intall_file()
                 }
 
                 if($cp_count) {
-                    $cp_button = '<button type="button" class="it_coupon_btn btn_frmline">적용</button>';
+                    $cp_button = '<button type="button" class="cp_btn btn_frmline">적용</button>';
                     $it_cp_count++;
                 }
             }
         ?>
 
         <tr>
-            <td class="sod_bsk_img"><?php echo $image; ?></td>
+            <td class="sod_img"><?php echo $image; ?></td>
             <td>
                 <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
                 <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
@@ -320,7 +320,7 @@ function get_intall_file()
             <td class="td_num"><?php echo number_format($sum['qty']); ?></td>
             <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
             <td class="td_mngsmall"><?php echo $cp_button; ?></td>
-            <td class="td_numbig"><span class="ct_sell_price"><?php echo number_format($sell_price); ?></span></td>
+            <td class="td_numbig"><span class="total_price"><?php echo number_format($sell_price); ?></span></td>
             <td class="td_numbig"><?php echo number_format($point); ?></td>
         </tr>
 
@@ -1081,10 +1081,10 @@ $(function() {
     var $cp_row_el;
     var zipcode = "";
 
-    $(".it_coupon_btn").click(function() {
+    $(".cp_btn").click(function() {
         $cp_btn_el = $(this);
         $cp_row_el = $(this).closest("tr");
-        $("#it_coupon_frm").remove();
+        $("#cp_frm").remove();
         var it_id = $cp_btn_el.closest("tr").find("input[name^=it_id]").val();
 
         $.post(
@@ -1134,7 +1134,7 @@ $(function() {
             }
         }
 
-        var $s_el = $cp_row_el.find(".ct_sell_price");;
+        var $s_el = $cp_row_el.find(".total_price");;
         sell_price = parseInt($cp_row_el.find("input[name^=it_price]").val());
         sell_price = sell_price - parseInt(price);
         if(sell_price < 0) {
@@ -1146,22 +1146,22 @@ $(function() {
         $cp_row_el.find("input[name^=cp_price]").val(price);
 
         calculate_total_price();
-        $("#it_coupon_frm").remove();
+        $("#cp_frm").remove();
         $cp_btn_el.text("변경").focus();
-        if(!$cp_row_el.find(".it_coupon_cancel").size())
-            $cp_btn_el.after("<button type=\"button\" class=\"it_coupon_cancel btn_frmline\">취소</button>");
+        if(!$cp_row_el.find(".cp_cancel").size())
+            $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel btn_frmline\">취소</button>");
     });
 
-    $("#it_coupon_close").live("click", function() {
-        $("#it_coupon_frm").remove();
+    $("#cp_close").live("click", function() {
+        $("#cp_frm").remove();
         $cp_btn_el.focus();
     });
 
-    $(".it_coupon_cancel").live("click", function() {
+    $(".cp_cancel").live("click", function() {
         coupon_cancel($(this).closest("tr"));
         calculate_total_price();
-        $("#it_coupon_frm").remove();
-        $(this).closest("tr").find(".it_coupon_btn").text("적용").focus();
+        $("#cp_frm").remove();
+        $(this).closest("tr").find(".cp_btn").text("적용").focus();
         $(this).remove();
     });
 
@@ -1362,7 +1362,7 @@ $(function() {
 
 function coupon_cancel($el)
 {
-    var $dup_sell_el = $el.find(".ct_sell_price");
+    var $dup_sell_el = $el.find(".total_price");
     var $dup_price_el = $el.find("input[name^=cp_price]");
     var org_sell_price = $el.find("input[name^=it_price]").val();
 

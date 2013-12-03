@@ -75,7 +75,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             $it_options = print_item_options($row['it_id'], $s_cart_id);
             if($it_options) {
                 $mod_options = '<div class="sod_option_btn"><button type="button" id="mod_opt_'.$row['it_id'].'" class="mod_options">선택사항수정</button></div>';
-                $it_name .= '<div class="sod_bsk_itopt">'.$it_options.'</div>';
+                $it_name .= '<div class="sod_opt">'.$it_options.'</div>';
             }
 
             $point      = $sum['point'];
@@ -83,7 +83,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         ?>
 
         <tr>
-            <td rowspan="3" class="sod_bsk_img"><?php echo $image; ?></td>
+            <td rowspan="3" class="sod_img"><?php echo $image; ?></td>
             <td colspan="4">
                 <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
                 <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
