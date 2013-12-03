@@ -869,7 +869,7 @@ $(function() {
             } else {
                 coupon_cancel($cp_dup_el);
                 $("#cp_frm").remove();
-                $cp_dup_el.find(".cp_btn").text("쿠폰적용").focus();
+                $cp_dup_el.find(".cp_btn").text("쿠폰적용").removeClass("cp_mod").focus();
                 $cp_dup_el.find(".cp_cancel").remove();
             }
         }
@@ -887,7 +887,7 @@ $(function() {
 
         calculate_total_price();
         $("#cp_frm").remove();
-        $cp_btn_el.text("쿠폰변경").focus();
+        $cp_btn_el.text("쿠폰변경").addClass("cp_mod").focus();
         if(!$cp_row_el.find(".cp_cancel").size())
             $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel btn_frmline\">쿠폰취소</button>");
     });
@@ -901,7 +901,7 @@ $(function() {
         coupon_cancel($(this).closest("li"));
         calculate_total_price();
         $("#cp_frm").remove();
-        $(this).closest("li").find(".cp_btn").text("쿠폰적용").focus();
+        $(this).closest("li").find(".cp_btn").text("쿠폰적용").removeClass("cp_mod").focus();
         $(this).remove();
     });
 
