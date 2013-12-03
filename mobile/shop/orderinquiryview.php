@@ -27,7 +27,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
     <p>주문번호 <strong><?php echo $od_id; ?></strong></p>
 
-    <section id="sod_fin_list">
+    <section class="sod_fin_list">
         <h2>주문하신 상품</h2>
 
         <?php
@@ -41,74 +41,64 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                     order by ct_id ";
         $result = sql_query($sql);
         ?>
-        <table>
-        <thead>
-        <tr>
-            <th scope="col" rowspan="3">상품이미지</th>
-            <th scope="col" colspan="5">상품명</th>
-        </tr>
-            <th scope="col" colspan="5">옵션항목</th>
-        <tr>
-            <th scope="col">수량</th>
-            <th scope="col">판매가</th>
-            <th scope="col">소계</th>
-            <th scope="col">포인트</th>
-            <th scope="col">상태</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        for($i=0; $row=sql_fetch_array($result); $i++) {
-            $image = get_it_image($row['it_id'], 70, 70);
+        <ul id="sod_list_inq" class="sod_list">
+            <?php
+            for($i=0; $row=sql_fetch_array($result); $i++) {
+                $image_width = 50;
+                $image_height = 50;
+                $image = get_it_image($row['it_id'], 50, 50, '', '', $row['it_name']);
 
-            // 옵션항목
-            $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
-                        from {$g5['g5_shop_cart_table']}
-                        where od_id = '$od_id'
-                          and it_id = '{$row['it_id']}'
-                        order by io_type asc, ct_id asc ";
-            $res = sql_query($sql);
-            $rowspan = mysql_num_rows($res) * 2 + 1;
-        ?>
-        <tr>
-            <td rowspan="<?php echo $rowspan; ?>"><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?></a></td>
-            <td colspan="5"><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $row['it_name']; ?></a></td>
-        </tr>
-        <?php
-            for($k=0; $opt=sql_fetch_array($res); $k++) {
-                if($opt['io_type'])
-                    $opt_price = $opt['io_price'];
-                else
-                    $opt_price = $opt['ct_price'] + $opt['io_price'];
+                // 옵션항목
+                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
+                            from {$g5['g5_shop_cart_table']}
+                            where od_id = '$od_id'
+                              and it_id = '{$row['it_id']}'
+                            order by io_type asc, ct_id asc ";
+                $res = sql_query($sql);
+            ?>
+            <li class="sod_li">
+                <div class="li_name">
+                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><strong><?php echo $row['it_name']; ?></strong></a>
+                </div>
+            <?php
+                for($k=0; $opt=sql_fetch_array($res); $k++) {
+                    if($opt['io_type'])
+                        $opt_price = $opt['io_price'];
+                    else
+                        $opt_price = $opt['ct_price'] + $opt['io_price'];
 
-                $sell_price = $opt_price * $opt['ct_qty'];
-                $point = $opt['ct_point'] * $opt['ct_qty'];
-        ?>
-        <tr>
-            <td colspan="5"><?php echo $opt['ct_option']; ?></td>
-        </tr>
-        <tr>
-            <td class="td_mngsmall"><?php echo number_format($opt['ct_qty']); ?></td>
-            <td class="td_numbig"><?php echo number_format($opt_price); ?></td>
-            <td class="td_num"><?php echo number_format($sell_price); ?></td>
-            <td class="td_num"><?php echo number_format($point); ?></td>
-            <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
-        </tr>
-        <?php
-                $tot_point       += $point;
+                    $sell_price = $opt_price * $opt['ct_qty'];
+                    $point = $opt['ct_point'] * $opt['ct_qty'];
+            ?>
+                <div class="li_opt"><?php echo $opt['ct_option']; ?></div>
+                <div class="li_prqty">
+                    <span class="prqty_price"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
+                    <span class="prqty_qty"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
+                </div>
+                <?php // echo $opt['ct_status']; ?>
+                <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
+                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="total_img"><?php echo $image; ?></a>
+                    <span class="total_price total_span"><span>주문금액 </span><?php echo number_format($sell_price); ?></span>
+                    <span class="total_point total_span"><span>적립포인트 </span><?php echo number_format($point); ?></span>
+                </div>
+            <?php
+                    $tot_point       += $point;
 
-                $st_count1++;
-                if($opt['ct_status'] == '주문')
-                    $st_count2++;
+                    $st_count1++;
+                    if($opt['ct_status'] == '주문')
+                        $st_count2++;
+                }
+            ?>
+
+            </li>
+            <?php
             }
-        }
 
-        // 주문 상품의 상태가 모두 주문이면 고객 취소 가능
-        if($st_count1 > 0 && $st_count1 == $st_count2)
-            $custom_cancel = true;
-        ?>
-        </tbody>
-        </table>
+            // 주문 상품의 상태가 모두 주문이면 고객 취소 가능
+            if($st_count1 > 0 && $st_count1 == $st_count2)
+                $custom_cancel = true;
+            ?>
+        </ul>
 
         <div id="sod_sts_wrap">
             <span class="sound_only">상품 상태 설명</span>

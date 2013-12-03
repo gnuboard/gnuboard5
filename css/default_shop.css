@@ -575,14 +575,6 @@ fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7
 
 #sod_fin #sod_bsk_tot {border-bottom:0 !important}
 
-#sod_ul {margin:10px 0;padding:0;border-top:1px solid #565e60;list-style:none}
-#sod_ul li {border-bottom:1px solid #565e60}
-#sod_ul table {margin:0}
-#sod_ul th {text-align:center}
-#sod_ul td {background:#fff;color:#000}
-#sod_ul p {padding:5px 14px}
-#sod_ul p a {font-weight:bold;text-decoration:none}
-
 #request_form {position:relative}
 #request_form div {display:none;z-index:10000;position:absolute;top:23px;left:0;padding:20px 0;width:520px;border:1px solid #000;background:#f2f5f9;text-align:center}
 #request_form .frm_input {width:300px;background:#fff !important}

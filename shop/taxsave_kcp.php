@@ -132,7 +132,7 @@ $amt_tax = (int)($amt_tot - $amt_sup);
 <body>
 
 <div id="scash" class="new_win">
-    <h1><?php echo $g5['title']; ?></h1>
+    <h1 id="win_title"><?php echo $g5['title']; ?></h1>
 
     <section>
         <h2>주문정보</h2>

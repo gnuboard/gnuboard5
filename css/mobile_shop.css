@@ -194,32 +194,36 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 /* 장바구니 주문서 공통 */
 #sod_chk {padding:0 0 10px;text-align:right}
 
-#sod_list {position:relative;margin:0;padding:0;list-style:none}
-#sod_list .sod_li {position:relative;padding:5px 0}
-#sod_list .sod_li:nth-of-type(1) {border-top:1px solid #e9e9e9}
-#sod_list .sod_li:after {display:block;visibility:hidden;clear:both;content:""}
-#sod_list .li_chk {position:absolute;top:12px;right:0}
-#sod_list .li_name {margin:0 0 15px}
-#sod_list .li_name a {display:block;width:90%}
-#sod_list .li_name strong {display:inline-block;padding:8px 0 10px;font-size:1.167em}
-#sod_list .li_prqty {margin:0 0 5px;padding:0 0 15px;border-bottom:1px solid #e9e9e9}
-#sod_list .li_prqty:after {display:block;visibility:hidden;clear:both;content:""}
-#sod_list .li_prqty span {font-weight:bold}
-#sod_list .li_prqty span span {font-weight:normal}
-#sod_list .prqty_price {float:left;padding:0 2% 0 0;width:48%;border-right:1px solid #e9e9e9;text-align:right}
-#sod_list .prqty_qty {float:right;width:48%;text-align:left}
-#sod_list .li_cp, #sod_list .li_mod {margin:5px 0 0}
-#sod_list .li_cp:after {display:block;visibility:hidden;clear:both;content:""}
-#sod_list .li_cp .cp_btn, #sod_list .li_cp .cp_cancel, #sod_list .li_mod .mod_btn {margin:0;padding:10px 0;width:100%;border:0;background:#ff882a;color:#fff;font-weight:bold}
-#sod_list .li_cp button.cp_mod {float:left;width:69%}
-#sod_list .li_cp .cp_cancel {float:right;width:30%;background:#626870}
-#sod_list .li_total {position:relative}
-#sod_list .total_img {position:absolute;top:0;left:0}
-#sod_list .total_span {display:block;position:relative;padding:5px 0;text-align:right}
-#sod_list .total_span span {position:absolute;top:5px;left:0}
-#sod_list .total_price {border-bottom:1px solid #e9e9e9}
+.sod_list {position:relative;margin:0;padding:0;list-style:none}
+.sod_list .sod_li {position:relative;padding:5px 0;border-top:1px solid #e9e9e9}
+.sod_list .sod_li:after {display:block;visibility:hidden;clear:both;content:""}
+.sod_list .li_chk {position:absolute;top:12px;right:0}
+.sod_list .li_name {margin:0 0 15px}
+.sod_list .li_name a {display:block;width:90%}
+.sod_list .li_name strong {display:inline-block;padding:8px 0 10px;font-size:1.167em}
+.sod_list .li_prqty {margin:0 0 5px;padding:0 0 15px;border-bottom:1px solid #e9e9e9}
+.sod_list .li_prqty:after {display:block;visibility:hidden;clear:both;content:""}
+.sod_list .li_prqty span {font-weight:bold}
+.sod_list .li_prqty span span {font-weight:normal}
+.sod_list .prqty_price {float:left;padding:0 2% 0 0;width:48%;border-right:1px solid #e9e9e9;text-align:right}
+.sod_list .prqty_qty {float:right;width:48%;text-align:left}
+.sod_list .li_cp, .sod_list .li_mod {margin:5px 0 0}
+.sod_list .li_cp:after {display:block;visibility:hidden;clear:both;content:""}
+.sod_list .li_cp .cp_btn, .sod_list .li_cp .cp_cancel, .sod_list .li_mod .mod_btn {margin:0;padding:10px 0;width:100%;border:0;background:#ff882a;color:#fff;font-weight:bold}
+.sod_list .li_cp button.cp_mod {float:left;width:69%}
+.sod_list .li_cp .cp_cancel {float:right;width:30%;background:#626870}
+.sod_list .li_total {position:relative}
+.sod_list .total_img {position:absolute;top:0;left:0}
+.sod_list .total_span {display:block;position:relative;padding:5px 0;text-align:right}
+.sod_list .total_span span {position:absolute;top:5px;left:0}
+.sod_list .total_price {border-bottom:1px solid #e9e9e9}
 
-.sod_opt {border-top:1px dashed #e9e9e9;background:#f2f5f9}
+#sod_list_inq {margin:0 0 10px}
+#sod_list_inq li.sod_li {border-bottom:1px solid #e9e9e9}
+#sod_list_inq div.li_name {margin:0}
+#sod_list_inq div.li_opt {margin:0 0 15px;border:1px dashed #e9e9e9;background:#f2f5f9;padding:8px;line-height:2em}
+
+.sod_opt {border:1px dashed #e9e9e9;background:#f2f5f9}
 .sod_opt ul {margin:0;padding:0;list-style:none}
 .sod_opt li {padding:8px}
 
@@ -323,18 +327,10 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_sts_wrap {margin:0 0 10px;text-align:right}
 #sod_sts_explan {display:none}
 
-#sod_fin_legend {margin:10px;padding:5px 5px 0;border:1px solid #e9e9e9;text-align:left}
+#sod_fin_legend {margin:10px 0;padding:10px 10px 0;border:1px solid #e9e9e9;text-align:left}
 #sod_fin_legend:after {display:block;visibility:hidden;clear:both;content:''}
 #sod_fin_legend dt {clear:both;float:left;margin:0 0 5px;width:50px;font-weight:bold}
 #sod_fin_legend dd {float:left;margin:0}
-
-#sod_ul {margin:0 0 5px;padding:0;border-top:1px solid #565e60;list-style:none}
-#sod_ul li {padding:0;border-bottom:1px solid #565e60}
-#sod_ul table {margin:0}
-#sod_ul th {text-align:center}
-#sod_ul td {background:#fff;color:#000}
-#sod_ul p {padding:5px 10px}
-#sod_ul p a {font-weight:bold;text-decoration:none}
 
 #request_form {position:relative}
 #request_form div {display:none;z-index:10000;position:absolute;top:31px;left:0;padding:10px 0;width:290px;border:1px solid #000;background:#f2f5f9;text-align:center}

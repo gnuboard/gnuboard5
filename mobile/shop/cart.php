@@ -16,7 +16,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <input type="checkbox" name="ct_all" value="1" id="ct_all" checked>
     </div>
 
-    <ul id="sod_list">
+    <ul class="sod_list">
         <?php
         $tot_point = 0;
         $tot_sell_price = 0;

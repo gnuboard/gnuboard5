@@ -37,7 +37,7 @@ ob_start();
 ?>
     <p>주문하실 상품을 확인하세요.</p>
 
-    <ul id="sod_list">
+    <ul class="sod_list">
         <?php
         $tot_point = 0;
         $tot_sell_price = 0;
