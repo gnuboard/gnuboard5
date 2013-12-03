@@ -122,6 +122,7 @@ h3 {margin:0 20px}
 .compare_wrap section {margin:10px 0;padding:2%;background:#f2f5f9}
 .compare_wrap h3 {margin:10px 0 20px;text-align:center}
 .compare_wrap .tbl_frm {margin:0}
+.compare_wrap .frm_input {background:#fff}
 .compare_wrap .btn_confirm {padding:10px 0 0}
 .compare_left {float:left;width:45%}
 .compare_right {float:right;width:45%}
