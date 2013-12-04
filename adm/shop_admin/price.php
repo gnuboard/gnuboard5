@@ -50,14 +50,6 @@ $pg_anchor = '<ul class="anchor">
                     <li>전체상품 URL : <a href="<?php echo G5_SHOP_URL; ?>/price/daum.php" target="_blank"><?php echo G5_SHOP_URL; ?>/price/daum.php</a></li>
                 </ul>
             </dd>
-            <dt><a href="http://www.about.co.kr/" target="_blank">어바웃</a></dt>
-            <dd>
-                <ul>
-                    <li>입점 안내 : <a href="http://member.about.co.kr/LaunchIntroduce/Default.aspx" target="_blank">http://member.about.co.kr/LaunchIntroduce/Default.aspx</a></li>
-                    <li>전체EP URL : <a href="<?php echo G5_SHOP_URL; ?>/price/about.php" target="_blank"><?php echo G5_SHOP_URL; ?>/price/about.php</a></li>
-                    <li>요약EP URL : <a href="<?php echo G5_SHOP_URL; ?>/price/about_new.php" target="_blank"><?php echo G5_SHOP_URL; ?>/price/about_new.php</a></li>
-                </ul>
-            </dd>
         </dl>
     </div>
 </section>
