@@ -43,7 +43,6 @@ $sql = " insert into {$g5['board_table']}
                 bo_download_level = '{$board[bo_download_level]}',
                 bo_html_level = '{$board[bo_html_level]}',
                 bo_link_level = '{$board[bo_link_level]}',
-                bo_trackback_level = '{$board[bo_trackback_level]}',
                 bo_count_modify = '{$board[bo_count_modify]}',
                 bo_count_delete = '{$board[bo_count_delete]}',
                 bo_read_point = '{$board[bo_read_point]}',
