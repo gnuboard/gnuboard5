@@ -18,6 +18,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <label for="mb_id" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="frm_input required">
     <input type="submit" value="검색" class="btn_submit">
+    <p>회원 아이디만 검색 가능</p>
     </form>
     <script>
     /* 셀렉트 박스에서 자동 이동 해제
