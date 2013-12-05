@@ -26,16 +26,6 @@
 #bo_w .btn_cancel {}
 #bo_w .btn_frmline {} /* 우편번호검색버튼 등 */
 
-/* 목록 */
-#bo_list #list_chk {padding:0 10px 10px}
-#bo_list .ul_wrap ul {margin:0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
-#bo_list .ul_wrap li {position:relative;padding:8px 10px;border-bottom:1px solid #e9e9e9}
-#bo_list .ul_wrap li.bo_adm {padding:8px 10px 8px 30px}
-#bo_list .ul_wrap a {display:block;padding:0 0 10px}
-#bo_list .ul_wrap .li_chk {position:absolute;top:8px;left:10px}
-#bo_list .ul_wrap .li_info span {display:inline-block;margin:0 5px 0 0;vertical-align:middle}
-#bo_list .ul_wrap .li_stat {position:absolute;bottom:8px;right:10px}
-
 /* 읽기 내 테이블 */
 #bo_v .tbl_head01 {}
 #bo_v .tbl_head01 caption {}
@@ -73,17 +63,14 @@
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 게시판 목록 */
-#bo_list .td_chk {width:30px;text-align:center}
-#bo_list .td_group {width:100px;text-align:center}
-#bo_list .td_board {width:120px;text-align:center}
-#bo_list .td_num {width:50px;text-align:center}
-#bo_list .td_numbig {width:80px;text-align:center}
-#bo_list .td_mb_id {width:100px;text-align:center}
-#bo_list .td_nick {width:100px;text-align:center}
-#bo_list .td_name {width:100px;text-align:left}
-#bo_list .td_date {width:60px;text-align:center}
-#bo_list .td_datetime {width:150px;text-align:center}
-#bo_list .td_mng {width:80px;text-align:center}
+#bo_list #list_chk {padding:0 10px 10px}
+#bo_list .ul_wrap ul {margin:0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
+#bo_list .ul_wrap li {position:relative;padding:8px 10px;border-bottom:1px solid #e9e9e9}
+#bo_list .ul_wrap li.bo_adm {padding:8px 10px 8px 30px}
+#bo_list .ul_wrap a {display:block;padding:0 0 10px}
+#bo_list .ul_wrap .li_chk {position:absolute;top:8px;left:10px}
+#bo_list .ul_wrap .li_info span {display:inline-block;margin:0 5px 0 0;vertical-align:middle}
+#bo_list .ul_wrap .li_stat {position:absolute;bottom:8px;right:10px}
 
 #bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 #bo_cate ul {margin:5px 10px;padding-left:1px;zoom:1}
