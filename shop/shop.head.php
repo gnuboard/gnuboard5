@@ -31,12 +31,12 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </ul>
     </aside>
 
-    <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="쇼핑몰 처음으로"></a></div>
+    <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a></div>
 
     <aside id="hd_aside">
         <h2>편의메뉴</h2>
-        <div>
-            <section id="sch_all">
+        <div class="aside_inner">
+            <section id="aside_sch">
                 <h3>쇼핑몰 검색</h3>
                 <form name="frmsearch1" onsubmit="return search_submit(this);">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">
@@ -51,9 +51,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     </select>
                 </span>
 
-                <label for="sch_all_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="sch_all_str" required>
-                <input type="submit" value="검색" id="sch_all_submit">
+                <label for="sch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="sch_str" required>
+                <input type="submit" value="검색" id="sch_submit">
 
                 </form>
                 <script>
@@ -69,15 +69,18 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 </script>
             </section>
 
-            <section id="hd_aside_mb">
+            <section id="anb">
                 <h3>회원메뉴 및 FAQ</h3>
                 <ul>
                     <?php if ($is_member) { ?>
-                    <li><a href="<?php echo G5_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
+                    <?php if ($is_admin) {  ?>
+                    <li><a href="<?php echo G5_ADMIN_URL ?>"><b>관리자</b></a></li>
+                    <?php }  ?>
                     <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
+                    <li><a href="<?php echo G5_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
                     <?php } else { ?>
-                    <li><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">로그인</a></li>
                     <li><a href="<?php echo G5_BBS_URL; ?>/register.php">회원가입</a></li>
+                    <li><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>"><b>로그인</b></a></li>
                     <?php } ?>
                     <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
                     <li><a href="<?php echo G5_SHOP_URL; ?>/faq.php">FAQ</a></li>
