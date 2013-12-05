@@ -1831,10 +1831,10 @@ function is_soldout($it_id)
     global $g5;
 
     // 상품정보
-    $sql = " select it_stock_qty from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
+    $sql = " select it_soldout, it_stock_qty from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
-    if($it['it_stock_qty'] <= 0)
+    if($it['it_soldout'] || $it['it_stock_qty'] <= 0)
         return true;
 
     $count = 0;

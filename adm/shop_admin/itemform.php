@@ -482,6 +482,19 @@ $(function(){
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="it_soldout">상품품절</label></th>
+            <td>
+                <?php echo help("잠시 판매를 중단하거나 재고가 없을 경우에 체크해 놓으면 품절상품으로 표시됩니다."); ?>
+                <input type="checkbox" name="it_soldout" value="1" id="it_soldout" <?php echo ($it['it_soldout']) ? "checked" : ""; ?>> 예
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_soldout" value="1" id="chk_ca_it_soldout">
+                <label for="chk_ca_it_soldout">분류적용</label>
+                <input type="checkbox" name="chk_all_it_soldout" value="1" id="chk_all_it_soldout">
+                <label for="chk_all_it_soldout">전체적용</label>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="it_stock_qty">재고수량</label></th>
             <td>
                 <?php echo help("<b>주문관리에서 상품별 상태 변경에 따라 자동으로 재고를 가감합니다.</b> 재고는 규격/색상별이 아닌, 상품별로만 관리됩니다.<br>재고수량을 0으로 설정하시면 품절상품으로 표시됩니다."); ?>
