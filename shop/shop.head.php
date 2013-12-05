@@ -22,12 +22,12 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     </div>
     <?php } ?>
 
-    <aside id="hd_nb">
+    <aside id="hd_qnb">
         <h2>쇼핑몰 퀵메뉴</h2>
         <ul>
             <li><a href="<?php echo G5_SHOP_URL; ?>/cart.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_cart.gif" alt="장바구니"></a></li>
             <li><a href="<?php echo G5_SHOP_URL; ?>/wishlist.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_wish.gif" alt="위시리스트"></a></li>
-            <li id="hd_nb_last"><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
+            <li id="qnb_last"><a href="<?php echo G5_SHOP_URL; ?>/orderinquiry.php"><img src="<?php echo G5_SHOP_URL; ?>/img/hd_nb_deli.gif" alt="주문/배송조회"></a></li>
         </ul>
     </aside>
 
@@ -36,27 +36,27 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <aside id="hd_aside">
         <h2>편의메뉴</h2>
         <div class="aside_inner">
-            <section id="asch">
+            <section id="hd_sch">
                 <h3>쇼핑몰 검색</h3>
                 <form name="frmsearch1" onsubmit="return search_submit(this);">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">
                 <input type="hidden" name="sop" value="and">
                 <input type="hidden" name="stx" value="">
 
-                <label for="asch_flag" class="sound_only">검색대상</label>
-                <select id="asch_flag">
-                    <option value="상품" <?php echo get_selected($asch_flag, '상품'); ?>>상품</option>
-                    <option value="게시판" <?php echo get_selected($asch_flag, '게시판'); ?>>게시판</option>
+                <label for="sch_flag" class="sound_only">검색대상</label>
+                <select id="sch_flag">
+                    <option value="상품" <?php echo get_selected($sch_flag, '상품'); ?>>상품</option>
+                    <option value="게시판" <?php echo get_selected($sch_flag, '게시판'); ?>>게시판</option>
                 </select>
 
-                <label for="asch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="asch_str" required>
-                <input type="submit" value="검색" id="asch_submit">
+                <label for="sch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="sch_str" required>
+                <input type="submit" value="검색" id="sch_submit">
 
                 </form>
                 <script>
                 function search_submit(f) {
-                    var flag = document.getElementById("asch_flag");
+                    var flag = document.getElementById("sch_flag");
                     if (flag.value == '상품') {
                         f.action = '<?php echo G5_SHOP_URL; ?>/search.php';
                     } else {
@@ -67,7 +67,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 </script>
             </section>
 
-            <section id="anb">
+            <section id="hd_nb">
                 <h3>회원메뉴 및 FAQ</h3>
                 <ul>
                     <?php if ($is_member) { ?>

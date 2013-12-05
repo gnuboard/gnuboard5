@@ -27,6 +27,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <button type="button" class="pop_close"><span class="sound_only">검색 </span>닫기</button>
         </div>
     </aside>
+    </form>
     <script>
         $(function (){
             var $hd_sch = $("#hd_sch");
@@ -38,7 +39,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             });
         });
     </script>
-    </form>
 
     <ul id="hd_mb">
         <?php if ($is_member) { ?>
