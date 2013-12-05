@@ -2,7 +2,7 @@
 /* SIR 지운아빠 */
 
 /* 아웃로그인 스킨 */
-.ol {position:relative;padding:15px 15px 14px 14px}
+.ol {position:relative;padding:15px 15px 14px 14px;border-bottom:1px solid #dde4e9}
 .ol h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
 .ol ul {margin:0;padding:0;list-style:none}
 
@@ -41,6 +41,5 @@
 #ol_after_pt {width:80px;margin-right:1px}
 #ol_after_scrap {width:48px;line-height:2.6em !important}
 #ol_after_ft {text-align:justify}
-#ol_after_ft a {display:inline-block;width:88px;height:22px;background:#333;color:#fff;text-align:center;line-height:1.8em}
-#ol_after_ft a:focus,
-#ol_after_ft a:hover {text-decoration:none !important}
+#ol_after_ft a {display:inline-block;width:88px;height:25px;background:#333;color:#fff;text-align:center;line-height:2.2em}
+#ol_after_ft a:focus, #ol_after_ft a:hover {text-decoration:none !important}
