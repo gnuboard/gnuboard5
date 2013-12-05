@@ -105,6 +105,11 @@ if($_FILES['excelfile']['tmp_name']) {
             continue;
         }
 
+        if($od['od_status'] == '준비') {
+            $fail_od_id[] = $od_id;
+            continue;
+        }
+
         $delivery['invoice'] = $od_invoice;
         $delivery['invoice_time'] = G5_TIME_YMDHIS;
         $delivery['delivery_company'] = $od_delivery_company;
