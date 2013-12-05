@@ -36,29 +36,27 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <aside id="hd_aside">
         <h2>편의메뉴</h2>
         <div class="aside_inner">
-            <section id="aside_sch">
+            <section id="asch">
                 <h3>쇼핑몰 검색</h3>
                 <form name="frmsearch1" onsubmit="return search_submit(this);">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">
                 <input type="hidden" name="sop" value="and">
                 <input type="hidden" name="stx" value="">
 
-                <span>
-                    <label for="search_flag" class="sound_only">검색대상</label>
-                    <select id="search_flag">
-                        <option value="상품" <?php echo get_selected($search_flag, '상품'); ?>>상품</option>
-                        <option value="게시판" <?php echo get_selected($search_flag, '게시판'); ?>>게시판</option>
-                    </select>
-                </span>
+                <label for="asch_flag" class="sound_only">검색대상</label>
+                <select id="asch_flag">
+                    <option value="상품" <?php echo get_selected($asch_flag, '상품'); ?>>상품</option>
+                    <option value="게시판" <?php echo get_selected($asch_flag, '게시판'); ?>>게시판</option>
+                </select>
 
-                <label for="sch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-                <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="sch_str" required>
-                <input type="submit" value="검색" id="sch_submit">
+                <label for="asch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+                <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="asch_str" required>
+                <input type="submit" value="검색" id="asch_submit">
 
                 </form>
                 <script>
                 function search_submit(f) {
-                    var flag = document.getElementById("search_flag");
+                    var flag = document.getElementById("asch_flag");
                     if (flag.value == '상품') {
                         f.action = '<?php echo G5_SHOP_URL; ?>/search.php';
                     } else {
