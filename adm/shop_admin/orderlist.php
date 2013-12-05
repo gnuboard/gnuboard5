@@ -118,6 +118,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
     전체 주문내역 <?php echo $total_count; ?>건
+
+    <a href="./orderdelivery.php" id="order_delivery">엑셀배송처리</a>
 </div>
 
 <form name="frmorderlist" class="local_sch01 local_sch">
@@ -494,6 +496,13 @@ $(function(){
 
     $("body").on("click", function() {
         $("#orderitemlist").remove();
+    });
+
+    // 엑셀배송처리창
+    $("#order_delivery").on("click", function() {
+        var opt = "width=600,height=450,left=10,top=10";
+        window.open(this.href, "win_excel", opt);
+        return false;
     });
 });
 
