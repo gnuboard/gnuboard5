@@ -254,8 +254,8 @@ fieldset .frm_input {padding:2px 2px 3px;border:1px solid #b8c9c2;background:#f7
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
-.sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #283646;background:#111}
-.sv_wrap .sv a {display:inline-block;margin:0;padding:3px;width:94px;border-bottom:1px solid #283646;color:#fff}
+.sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #283646}
+.sv_wrap .sv a {display:inline-block;margin:0;padding:3px;width:94px;border-bottom:1px solid #283646;background:#111;color:#fff !important}
 .sv_wrap a:focus, .sv_wrap a:hover, .sv_wrap a:active {text-decoration:none}
 .sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto}
 .sv_nojs .sv {display:block}
