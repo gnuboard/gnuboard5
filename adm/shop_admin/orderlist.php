@@ -118,8 +118,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
     전체 주문내역 <?php echo $total_count; ?>건
-
+    <?php if($od_status == '준비') { ?>
     <a href="./orderdelivery.php" id="order_delivery">엑셀배송처리</a>
+    <?php } ?>
 </div>
 
 <form name="frmorderlist" class="local_sch01 local_sch">
