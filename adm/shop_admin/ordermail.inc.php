@@ -75,6 +75,7 @@ if ($od_send_mail)
         $delivery_list['dl_company']      = $od['od_delivery_company'];
         $delivery_list['od_invoice']      = $od['od_invoice'];
         $delivery_list['od_invoice_time'] = $od['od_invoice_time'];
+        $delivery_list['dl_inquiry']      = get_delivery_inquiry($od['od_delivery_company'], $od['od_invoice'], 'dvr_link');
 
         $is_delivery = true;
     }

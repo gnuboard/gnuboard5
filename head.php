@@ -77,69 +77,22 @@ if ($config['cf_include_head']) {
         <ul id="tnb">
             <?php if ($is_member) {  ?>
             <?php if ($is_admin) {  ?>
-            <li>
-                <a href="<?php echo G5_ADMIN_URL ?>">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_admin.jpg" alt="">
-                    관리자
-                </a>
-            </li>
+            <li><a href="<?php echo G5_ADMIN_URL ?>"><b>관리자</b></a></li>
             <?php }  ?>
-            <li>
-                <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_modify.jpg" alt="">
-                    내 정보
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo G5_BBS_URL ?>/logout.php">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_logout.jpg" alt="">
-                    로그아웃
-                </a>
-            </li>
+            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
             <?php } else {  ?>
-            <li>
-                <a href="<?php echo G5_BBS_URL ?>/register.php">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_join.jpg" alt="">
-                    회원가입
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo G5_BBS_URL ?>/login.php">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_login.jpg" alt="">
-                    로그인
-                </a>
-            </li>
+            <li><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/login.php"><b>로그인</b></a></li>
             <?php }  ?>
-            <li>
-                <a href="<?php echo G5_BBS_URL ?>/qalist.php">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_cnt.jpg" alt="">
-                    1:1문의
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo G5_BBS_URL ?>/current_connect.php">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_cnt.jpg" alt="">
-                    접속자 <?php echo connect(); // 현재 접속자수  ?>
-                </a>
-            </li>
-            <li>
-                <a href="<?php echo G5_BBS_URL ?>/new.php">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_new.jpg" alt="">
-                    새글
-                </a>
-            </li>
+
+            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php">접속자 <?php echo connect(); // 현재 접속자수  ?></a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
             <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
-
-            <li>
-                <a href="<?php echo G5_SHOP_URL ?>/">
-                    <img src="<?php echo G5_IMG_URL ?>/tnb_shop.jpg" alt="">
-                    쇼핑몰
-                </a>
-            </li>
+            <li><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
             <?php } ?>
-
         </ul>
-
     </div>
 
     <hr>

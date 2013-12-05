@@ -731,4 +731,10 @@ if(!sql_query(" select iq_hp from {$g5['g5_shop_item_qa_table']} limit 1 ", fals
                     ADD `iq_hp` varchar(255) NOT NULL DEFAULT '' AFTER `iq_email` ", true);
 }
 */
+
+// 상품품절 필드추가
+if(!sql_query(" select it_soldout from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_soldout` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_use` ", true);
+}
 ?>

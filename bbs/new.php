@@ -73,6 +73,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ");
         $row3 = sql_fetch(" select mb_id, wr_name, wr_email, wr_homepage, wr_datetime from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
         $list[$i] = $row2;
+        $list[$i]['wr_id'] = $row['wr_id'];
         $list[$i]['mb_id'] = $row3['mb_id'];
         $list[$i]['wr_name'] = $row3['wr_name'];
         $list[$i]['wr_email'] = $row3['wr_email'];

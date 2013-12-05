@@ -287,6 +287,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_notax            = '$it_notax',
                 it_sell_email       = '$it_sell_email',
                 it_use              = '$it_use',
+                it_soldout          = '$it_soldout',
                 it_stock_qty        = '$it_stock_qty',
                 it_noti_qty         = '$it_noti_qty',
                 it_sc_type          = '$it_sc_type',
@@ -459,6 +460,7 @@ if(is_checked('chk_ca_it_notax'))               $ca_fields .= " , it_notax = '$i
 if(is_checked('chk_ca_it_sell_email'))          $ca_fields .= " , it_sell_email = '$it_sell_email' ";
 if(is_checked('chk_ca_it_tel_inq'))             $ca_fields .= " , it_tel_inq = '$it_tel_inq' ";
 if(is_checked('chk_ca_it_use'))                 $ca_fields .= " , it_use = '$it_use' ";
+if(is_checked('chk_ca_it_soldout'))             $ca_fields .= " , it_soldout = '$it_soldout' ";
 if(is_checked('chk_ca_it_info'))                $ca_fields .= " , it_info_gubun = '$it_info_gubun', it_info_value = '$it_info_value' ";
 if(is_checked('chk_ca_it_price'))               $ca_fields .= " , it_price = '$it_price' ";
 if(is_checked('chk_ca_it_cust_price'))          $ca_fields .= " , it_cust_price = '$it_cust_price' ";
@@ -504,6 +506,7 @@ if(is_checked('chk_all_it_notax'))               $all_fields .= " , it_notax = '
 if(is_checked('chk_all_it_sell_email'))          $all_fields .= " , it_sell_email = '$it_sell_email' ";
 if(is_checked('chk_all_it_tel_inq'))             $all_fields .= " , it_tel_inq = '$it_tel_inq' ";
 if(is_checked('chk_all_it_use'))                 $all_fields .= " , it_use = '$it_use' ";
+if(is_checked('chk_all_it_soldout'))             $all_fields .= " , it_soldout = '$it_soldout' ";
 if(is_checked('chk_all_it_info'))                $all_fields .= " , it_info_gubun = '$it_info_gubun', it_info_value = '$it_info_value' ";
 if(is_checked('chk_all_it_price'))               $all_fields .= " , it_price = '$it_price' ";
 if(is_checked('chk_all_it_cust_price'))          $all_fields .= " , it_cust_price = '$it_cust_price' ";

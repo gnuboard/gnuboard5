@@ -117,7 +117,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
-    전체 주문내역 <?php echo $total_count; ?>건
+    전체 주문내역 <?php echo number_format($total_count); ?>건
+    <?php if($od_status == '준비' && $total_count > 0) { ?>
+    <a href="./orderdelivery.php" id="order_delivery">엑셀배송처리</a>
+    <?php } ?>
 </div>
 
 <form name="frmorderlist" class="local_sch01 local_sch">
@@ -468,7 +471,7 @@ $(function(){
         var $this = $(this);
         var od_id = $this.text().replace(/[^0-9]/g, "");
 
-        if($this.next().size())
+        if($this.next("#orderitemlist").size())
             return false;
 
         $("#orderitemlist").remove();
@@ -477,7 +480,7 @@ $(function(){
             "./ajax.orderitem.php",
             { od_id: od_id },
             function(data) {
-                $this.parent().append("<div id=\"orderitemlist\"><div class=\"itemlist\"></div></div>");
+                $this.after("<div id=\"orderitemlist\"><div class=\"itemlist\"></div></div>");
                 $("#orderitemlist .itemlist")
                     .html(data)
                     .append("<div id=\"orderitemlist_close\"><button type=\"button\" id=\"orderitemlist-x\" class=\"btn_frmline\">닫기</button></div>");
@@ -494,6 +497,13 @@ $(function(){
 
     $("body").on("click", function() {
         $("#orderitemlist").remove();
+    });
+
+    // 엑셀배송처리창
+    $("#order_delivery").on("click", function() {
+        var opt = "width=600,height=450,left=10,top=10";
+        window.open(this.href, "win_excel", opt);
+        return false;
     });
 });
 

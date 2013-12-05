@@ -1,10 +1,5 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
-
-// 선택옵션으로 인해 셀합치기가 가변적으로 변함
-$colspan = 6;
-
-if ($is_checkbox) $colspan++;
 ?>
 
 <link rel="stylesheet" href="<?php echo $qa_skin_url ?>/style.css">
@@ -42,55 +37,45 @@ if ($is_checkbox) $colspan++;
     <input type="hidden" name="sca" value="<?php echo $sca; ?>">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
 
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption><?php echo $board['bo_subject'] ?> 목록</caption>
-        <thead>
-        <tr>
-            <th scope="col">번호</th>
-            <?php if ($is_checkbox) { ?>
-            <th scope="col">
-                <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
-                <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
-            </th>
-            <?php } ?>
-            <th scope="col">분류</th>
-            <th scope="col">제목</th>
-            <th scope="col">글쓴이</th>
-            <th scope="col">상태</th>
-            <th scope="col">등록일</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
-        for ($i=0; $i<count($list); $i++) {
-        ?>
-        <tr>
-            <td class="td_num"><?php echo $list[$i]['num']; ?></td>
-            <?php if ($is_checkbox) { ?>
-            <td class="td_chk">
-                <label for="chk_qa_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject']; ?></label>
-                <input type="checkbox" name="chk_qa_id[]" value="<?php echo $list[$i]['qa_id'] ?>" id="chk_qa_id_<?php echo $i ?>">
-            </td>
-            <?php } ?>
-            <td><?php echo $list[$i]['category']; ?></td>
-            <td class="td_subject">
-                <a href="<?php echo $list[$i]['view_href']; ?>">
-                    <?php echo $list[$i]['subject']; ?>
-                </a>
-                <?php echo $list[$i]['icon_file']; ?>
-            </td>
-            <td class="td_name"><?php echo $list[$i]['name']; ?></td>
-            <td class="td_stat <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></td>
-            <td class="td_date"><?php echo $list[$i]['date']; ?></td>
-        </tr>
-        <?php
-        }
-        ?>
+    <?php if ($is_checkbox) { ?>
+    <div id="list_chk">
+        <label for="chkall" class="sound_only">게시물 전체</label>
+        <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+    </div>
+    <?php } ?>
 
-        <?php if ($i == 0) { echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>'; } ?>
-        </tbody>
-        </table>
+    <div class="ul_wrap ul_01">
+        <ul>
+            <?php
+            for ($i=0; $i<count($list); $i++) {
+            ?>
+            <li class="bo_li<?php if ($is_checkbox) echo ' bo_adm'; ?>">
+                <?php if ($is_checkbox) { ?>
+                <div class="li_chk">
+                    <label for="chk_qa_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject']; ?></label>
+                    <input type="checkbox" name="chk_qa_id[]" value="<?php echo $list[$i]['qa_id'] ?>" id="chk_qa_id_<?php echo $i ?>">
+                </div>
+                <?php } ?>
+                <div class="li_title">
+                    <a href="<?php echo $list[$i]['view_href']; ?>">
+                        <strong><?php echo $list[$i]['category']; ?></strong>
+                        <?php echo $list[$i]['subject']; ?>
+                    </a>
+                </div>
+                <div class="li_info">
+                    <span><?php echo $list[$i]['num']; ?></span>
+                    <span><?php echo $list[$i]['name']; ?></span>
+                    <span><?php echo $list[$i]['date']; ?></span>
+                    <span><?php echo $list[$i]['icon_file']; ?></span>
+                </div>
+                <div class="li_stat <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></div>
+            </li>
+            <?php
+            }
+            ?>
+
+            <?php if ($i == 0) { echo '<li class="empty_list">게시물이 없습니다.</li>'; } ?>
+        </ul>
     </div>
 
     <div class="bo_fx">

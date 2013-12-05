@@ -147,7 +147,7 @@ if ($csv == 'xls')
         $worksheet->write($i, 7, $row['ct_option']);
         $worksheet->write($i, 8, $ct_send_cost);
         $worksheet->write($i, 9, $row['it_id']);
-        $worksheet->write($i, 10, $row['od_id']);
+        $worksheet->write($i, 10, ' '.$row['od_id']);
         $worksheet->write($i, 11, $row['od_invoice']);
         $worksheet->write($i, 12, $row['od_memo']);
     }

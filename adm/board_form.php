@@ -434,7 +434,8 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="bo_use_sideview">글쓴이 사이드뷰</label></th>
             <td>
-                <input type="checkbox" name="bo_use_sideview" value="1" id="bo_use_sideview" <?php echo $board['bo_use_sideview']?'checked':''; ?>>사용 (글쓴이 클릭시 나오는 레이어 메뉴)
+                <input type="checkbox" name="bo_use_sideview" value="1" id="bo_use_sideview" <?php echo $board['bo_use_sideview']?'checked':''; ?>>
+                사용 (글쓴이 클릭시 나오는 레이어 메뉴)
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_sideview" value="1" id="chk_grp_use_sideview">

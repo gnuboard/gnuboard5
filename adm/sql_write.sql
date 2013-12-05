@@ -14,7 +14,6 @@ CREATE TABLE `__TABLE_NAME__` (
   `wr_link2` text NOT NULL,
   `wr_link1_hit` int(11) NOT NULL DEFAULT '0',
   `wr_link2_hit` int(11) NOT NULL DEFAULT '0',
-  `wr_trackback` varchar(255) NOT NULL,
   `wr_hit` int(11) NOT NULL DEFAULT '0',
   `wr_good` int(11) NOT NULL DEFAULT '0',
   `wr_nogood` int(11) NOT NULL DEFAULT '0',

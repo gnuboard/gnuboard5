@@ -158,7 +158,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 /* 게시판 읽기 */
 #bo_v {margin-bottom:20px;padding-bottom:20px}
 
-#bo_v_table {position:absolute;top:0;right:15px;margin:0;padding:0 5px;height:25px;background:#565e60;color:#fff;font-weight:bold;line-height:2.2em}
+#bo_v_table {position:absolute;top:0;right:16px;margin:0;padding:0 5px;height:25px;background:#ff3061;color:#fff;font-weight:bold;line-height:2.2em}
 
 #bo_v_title {padding:10px 0;font-size:1.2em}
 
@@ -225,7 +225,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_v_sns li {float:left;margin:0 5px 0 0}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 20px;padding:20px 20px 10px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f5f6fa}
+#bo_vc {margin:0 0 20px;padding:20px 20px 10px;border:1px solid #e5e8ec;background:#f5f8f9}
 #bo_vc h2 {margin-bottom:10px}
 #bo_vc article {padding:0 0 10px;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:15px 0 5px}

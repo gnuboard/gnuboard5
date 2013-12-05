@@ -144,6 +144,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col" colspan="4">분류</th>
         <th scope="col" rowspan="3"><?php echo subject_sort_link('it_order', 'sca='.$sca); ?>순서</a></th>
         <th scope="col" rowspan="3"><?php echo subject_sort_link('it_use', 'sca='.$sca, 1); ?>판매</a></th>
+        <th scope="col" rowspan="3"><?php echo subject_sort_link('it_soldout', 'sca='.$sca, 1); ?>품절</a></th>
         <th scope="col" rowspan="3"><?php echo subject_sort_link('it_hit', 'sca='.$sca, 1); ?>조회</a></th>
         <th scope="col" rowspan="3">관리</th>
     </tr>
@@ -184,6 +185,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
         <td rowspan="3" class="td_mngsmall"><input type="text" name="it_order[<?php echo $i; ?>]" value="<?php echo $row['it_order']; ?>" class="frm_input" size="3"></td>
         <td rowspan="3" class="td_chk"><input type="checkbox" name="it_use[<?php echo $i; ?>]" <?php echo ($row['it_use'] ? 'checked' : ''); ?> value="1"></td>
+        <td rowspan="3" class="td_chk"><input type="checkbox" name="it_soldout[<?php echo $i; ?>]" <?php echo ($row['it_soldout'] ? 'checked' : ''); ?> value="1"></td>
         <td rowspan="3" class="td_num"><?php echo $row['it_hit']; ?></td>
         <td rowspan="3" class="td_mng">
             <a href="<?php echo $href; ?>"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>보기</a>
