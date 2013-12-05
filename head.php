@@ -35,7 +35,7 @@ if ($config['cf_include_head']) {
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.jpg" alt="처음으로"></a>
         </div>
 
-        <fieldset id="sch">
+        <fieldset id="hd_sch">
             <legend>사이트 내 전체검색</legend>
             <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
