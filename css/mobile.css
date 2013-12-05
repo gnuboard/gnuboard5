@@ -45,9 +45,8 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 #logo {float:left;padding:10px 0;margin-left:5px}
 
-#schall {float:right;margin:7px 5px;border:1px solid #aaa;letter-spacing:-4px}
-#schall_stx {padding-left:3px;width:100px;height:24px;border:0;background:#fff;line-height:1.5em;-webkit-appearance:none}
-#schall_submit {}
+#sch {float:right;margin:7px 5px;border:1px solid #aaa;letter-spacing:-4px}
+#sch_stx {padding-left:3px;width:100px;height:24px;border:0;background:#fff;line-height:1.5em;-webkit-appearance:none}
 
 #mb_nb {clear:both;background:#151515;text-align:center}
 #mb_nb li {display:inline-block;border-right:1px solid #333}
