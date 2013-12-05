@@ -32,6 +32,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 <input type="hidden" name="sop" value="and">
                 <input type="text" name="stx" id="sch_stx" placeholder="검색어(필수)" required class="frm_input required" maxlength="20">
                 <input type="submit" value="검색" class="btn_submit">
+                <button type="button" class="pop_close"><span class="sound_only">검색 </span>닫기</button>
                 </form>
 
                 <script>
