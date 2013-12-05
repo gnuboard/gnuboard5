@@ -27,6 +27,7 @@
 #bo_w .btn_frmline {} /* 우편번호검색버튼 등 */
 
 /* 목록 */
+#bo_list #list_chk {padding:0 10px 10px}
 #bo_list .ul_wrap ul {margin:0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
 #bo_list .ul_wrap li {position:relative;padding:8px 10px;border-bottom:1px solid #e9e9e9}
 #bo_list .ul_wrap li.bo_adm {padding:8px 10px 8px 30px}

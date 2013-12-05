@@ -38,7 +38,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="page" value="<?php echo $page; ?>">
 
     <?php if ($is_checkbox) { ?>
-    <div id="bo_chk">
+    <div id="list_chk">
         <label for="chkall" class="sound_only">게시물 전체</label>
         <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
     </div>
