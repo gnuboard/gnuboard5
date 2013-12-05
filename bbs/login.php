@@ -9,7 +9,7 @@ $url = $_GET['url'];
 $p = parse_url($url);
 if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
     //print_r2($p);
-    if ($p['host'] != $_SERVER['HTTP_HOST'])
+    if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST'])
         alert('url에 타 도메인을 지정할 수 없습니다.');
 }
 

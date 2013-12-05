@@ -22,14 +22,16 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.jpg" alt="처음으로"></a>
         </div>
 
-        <fieldset id="schall">
+        <fieldset id="sch">
             <legend>사이트 내 전체검색</legend>
             <form name="fsearchbox" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get">
             <input type="hidden" name="sfl" value="wr_subject||wr_content">
             <input type="hidden" name="sop" value="and">
-            <label for="schall_stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="stx" id="schall_stx" required class="required" maxlength="20">
-            <input type="image" alt="검색" src="<?php echo G5_IMG_URL ?>/btn_search.jpg" id="schall_submit" width="24" height="24">
+
+            <label for="sch_stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+            <input type="text" name="stx" id="sch_stx" placeholder="검색어(필수)" required class="required" maxlength="20">
+            <input type="image" alt="검색" src="<?php echo G5_IMG_URL ?>/btn_search.jpg" id="sch_submit" width="24" height="24">
+
             </form>
 
             <script>
