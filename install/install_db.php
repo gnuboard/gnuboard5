@@ -8,7 +8,7 @@ header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
 include_once ('../config.php');
-$title = G5_VERSION." 설치 3단계 중 3단계 설치 완료";
+$title = G5_VERSION." 설치 완료 3/3";
 include_once ('./install.inc.php');
 
 //print_r($_POST); exit;
@@ -50,9 +50,10 @@ if(version_compare(mysql_get_server_info(), '5.6.6', '>=')  == 1) {
 }
 ?>
 
-<h2><?php echo G5_VERSION ?> 설치가 시작되었습니다.</h2>
+<div class="ins_inner">
+    <h2><?php echo G5_VERSION ?> 설치가 시작되었습니다.</h2>
 
-<ol>
+    <ol>
 <?php
 $sql = " desc {$table_prefix}config";
 $result = @mysql_query($sql);
@@ -87,7 +88,7 @@ if($g5_shop_install) {
 // 테이블 생성 ------------------------------------
 ?>
 
-    <li>전체 테이블 생성 완료</li>
+        <li>전체 테이블 생성 완료</li>
 
 <?php
 $read_point = 0;
@@ -388,7 +389,7 @@ if($g5_shop_install) {
 }
 ?>
 
-    <li>DB설정 완료</li>
+        <li>DB설정 완료</li>
 
 <?php
 //-------------------------------------------------------------------------------------------------
@@ -427,7 +428,7 @@ if($g5_shop_install) {
 }
 ?>
 
-    <li>데이터 디렉토리 생성 완료</li>
+        <li>데이터 디렉토리 생성 완료</li>
 
 <?php
 //-------------------------------------------------------------------------------------------------
@@ -506,7 +507,7 @@ fclose($f);
 @chmod($file, G5_FILE_PERMISSION);
 ?>
 
-    <li>DB설정 파일 생성 완료 (<?php echo $file ?>)</li>
+        <li>DB설정 파일 생성 완료 (<?php echo $file ?>)</li>
 
 <?php
 // data 디렉토리 및 하위 디렉토리에서는 .htaccess .htpasswd .php .phtml .html .htm .inc .cgi .pl 파일을 실행할수 없게함.
@@ -527,22 +528,29 @@ if($g5_shop_install) {
 }
 //-------------------------------------------------------------------------------------------------
 ?>
-</ol>
+    </ol>
 
-<p class="st_strong">축하합니다. <?php echo G5_VERSION ?> 설치가 완료되었습니다.</p>
-
-<h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
-
-<ol>
-    <li>메인화면으로 이동</li>
-    <li>관리자 로그인</li>
-    <li>관리자 모드 접속</li>
-    <li>환경설정 메뉴의 기본환경설정 페이지로 이동</li>
-</ol>
+    <p>축하합니다. <?php echo G5_VERSION ?> 설치가 완료되었습니다.</p>
 
 </div>
 
-<div id="btn_confirm"><a href="../index.php">메인화면으로 가기</a></div>
+<div class="ins_inner">
 
-</body>
-</html>
+    <h2>환경설정 변경은 다음의 과정을 따르십시오.</h2>
+
+    <ol>
+        <li>메인화면으로 이동</li>
+        <li>관리자 로그인</li>
+        <li>관리자 모드 접속</li>
+        <li>환경설정 메뉴의 기본환경설정 페이지로 이동</li>
+    </ol>
+
+    <div class="inner_btn">
+        <a href="../index.php">새로운 그누보드5로 이동</a>
+    </div>
+
+</div>
+
+<?php
+include_once ('./install.inc2.php');
+?>
