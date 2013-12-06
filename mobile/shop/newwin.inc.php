@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $sql = " select * from {$g5['g5_shop_new_win_table']}
           where '".G5_TIME_YMDHIS."' between nw_begin_time and nw_end_time
-            and nw_device IN ( 'both', 'pc' )
+            and nw_device IN ( 'both', 'mobile' )
           order by nw_id asc ";
 $result = sql_query($sql);
 for ($i=0; $row_nw=sql_fetch_array($result); $i++)

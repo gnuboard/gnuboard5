@@ -12,6 +12,13 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
+    <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
+    <div id="hd_pop">
+        <h2>팝업레이어 알림</h2>
+        <?php include G5_MSHOP_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
+    </div>
+    <?php } ?>
+
     <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="<?php echo $config['cf_title']; ?> 메인"></a></div>
 
     <a href="<?php echo G5_SHOP_URL; ?>/category.php" target="_blank" id="hd_ct">분류</a>
