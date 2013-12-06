@@ -193,7 +193,7 @@
 #bo_v_sns li {float:left;margin:0 5px 0 0}
 
 /* 게시판 댓글 */
-#bo_vc {margin:0 0 15px;padding:15px 15px 5px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f7f7f7}
+#bo_vc {margin:0 0 20px;padding:20px 10px 10px;border:1px solid #e5e8ec;background:#f5f8f9}
 #bo_vc h2 {margin-bottom:5px}
 #bo_vc article {padding:0 0 5px;border-top:1px dotted #ccc}
 #bo_vc header {position:relative;padding:13px 0 5px}
@@ -214,8 +214,9 @@
 .bo_vc_act:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_act li {float:left;margin-left:5px}
 
-#bo_vc_w {position:relative;margin-bottom:10px;padding:0 15px 15px;border-bottom:1px solid #cfded8}
+#bo_vc_w {position:relative;margin-bottom:10px;padding:0 10px 15px;border-bottom:1px solid #dde4e9}
 #bo_vc_w h2 {padding:10px 0 5px}
+#bo_vc_w .tbl_wrap {margin:0 0 15px}
 #bo_vc_w #char_cnt {display:block;margin-bottom:5px}
 #bo_vc_w textarea {width:99%}
 

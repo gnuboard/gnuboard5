@@ -30,7 +30,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="ft">
     <?php echo popular('basic'); // 인기검색어 ?>
     <?php echo visit('basic'); // 방문자수 ?>
-    <div id="ft_catch"><a href="<?php echo G5_URL; ?>/"><img src="<?php echo G5_IMG_URL; ?>/ft_catch.jpg" alt="Sharing All Possibilities"></a></div>
     <div id="ft_copy">
         <p>
             Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.<br>

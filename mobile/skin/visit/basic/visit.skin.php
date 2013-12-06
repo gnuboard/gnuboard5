@@ -8,7 +8,7 @@ global $is_admin;
 
 <aside id="visit">
     <div>
-        <h2>방문자집계</h2>
+        <h2>접속자집계</h2>
         <dl>
             <dt>오늘</dt>
             <dd><?php echo number_format($visit[1]) ?></dd>
