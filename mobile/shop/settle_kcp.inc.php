@@ -16,8 +16,16 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
 
 if ($default['de_card_test']) {
     // 결제 테스트
-    $default['de_kcp_mid'] = "T0000";
-    $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
+    if ($default['de_escrow_use'] == 1) {
+        // 에스크로결제 테스트
+        $default['de_kcp_mid'] = "T0007";
+        $default['de_kcp_site_key'] = '2.mDT7R4lUIfHlHq4byhYjf__';
+    }
+    else {
+        // 일반결제 테스트
+        $default['de_kcp_mid'] = "T0000";
+        $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
+    }
     $g_wsdl = "KCPPaymentService.wsdl";
     $g_conf_gw_url = "testpaygw.kcp.co.kr";
 }
