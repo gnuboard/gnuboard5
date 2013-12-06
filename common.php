@@ -105,24 +105,30 @@ if (file_exists($dbconfig_file)) {
 <head>
 <meta charset="utf-8">
 <title>오류! <?php echo G5_VERSION ?> 설치하기</title>
-<style>
-body {background:#f7f7f2}
-h1 {margin:50px auto 30px;width:540px;color:#ff3061;font-size:1.4em}
-div {margin:0 auto;padding:20px;width:500px;border:1px solid #eee;background:#fff}
-div p {line-height:1.5em}
-div a {display:block;margin:50px auto 10px;width:170px;text-align:center}
-</style>
+<link rel="stylesheet" href="install/install.css">
 </head>
 <body>
-    <h1>오류가 있습니다.</h1>
-    <div>
-        <p>다음 파일을 찾을 수 없습니다.</p>
-        <ul>
-            <li><strong><?php echo G5_DATA_DIR.'/'.G5_DBCONFIG_FILE ?></strong></li>
-        </ul>
-        <p>프로그램 설치 후 실행하시기 바랍니다.</p>
+
+<div id="ins_bar">
+    <span id="bar_img">GNUBOARD5</span>
+    <span id="bar_txt">Message</span>
+</div>
+<h1>그누보드5를 먼저 설치해주십시오.</h1>
+<div class="ins_inner">
+    <p>다음 파일을 찾을 수 없습니다.</p>
+    <ul>
+        <li><strong><?php echo G5_DATA_DIR.'/'.G5_DBCONFIG_FILE ?></strong></li>
+    </ul>
+    <p>그누보드 설치 후 다시 실행하시기 바랍니다.</p>
+    <div class="inner_btn">
         <a href="<?php echo G5_URL; ?>/install/"><?php echo G5_VERSION ?> 설치하기</a>
     </div>
+</div>
+<div id="ins_ft">
+    <strong>GNUBOARD5</strong>
+    <p>GPL! OPEN SOURCE GNUBOARD</p>
+</div>
+
 </body>
 </html>
 
