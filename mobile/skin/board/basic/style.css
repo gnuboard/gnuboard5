@@ -191,7 +191,7 @@
 #bo_v_img:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_img img {margin-bottom:15px;max-width:100%;height:auto}
 
-#bo_v_con {margin-bottom:20px;width:100%;line-height:1.7em;word-break:break-all;overflow:hidden}
+#bo_v_con {margin-bottom:20px;width:100%;font-size:1.250em;line-height:1.7em;word-break:break-all;overflow:hidden}
 #bo_v_con a {color:#000;text-decoration:underline}
 #bo_v_con img {max-width:100%;height:auto}
 
