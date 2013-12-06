@@ -166,6 +166,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     {
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         $bg = 'bg'.($i%2);
+
+        $it_point = $row['it_point'];
+        if($row['it_point_type'])
+            $it_point .= '%';
     ?>
     <tr class="<?php echo $bg; ?>">
         <td rowspan="3" class="td_chk">
@@ -202,7 +206,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td headers="" class="td_input"><input type="text" name="it_mobile_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_mobile_name'],250, "")); ?>" class="frm_input" size="30"></td>
-        <td headers="th_pt" class="td_numbig td_input"><?php echo number_format(get_item_point($row)); ?></td>
+        <td headers="th_pt" class="td_numbig td_input"><?php echo $it_point; ?></td>
         <td headers="th_qty" class="td_numbig td_input"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input sit_qty" size="7"></td>
     </tr>
     <?php
