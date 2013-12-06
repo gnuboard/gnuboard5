@@ -29,10 +29,10 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #logo {padding:26px 0}
 
 /* 전체 검색 */
-#sch {position:absolute;top:22px;left:170px;margin:0;padding:0;border:1px solid #c3c6ca}
-#sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
-#sch #sch_stx {padding-left:5px;width:110px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
-#sch_submit {padding:0 5px;height:26px;border:0;background:#e2e6eb;color:#333;cursor:pointer}
+#hd_sch {position:absolute;top:22px;left:170px;margin:0;padding:0;border:1px solid #c3c6ca}
+#hd_sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#hd_sch #sch_stx {padding-left:5px;width:110px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
+#hd_sch #sch_submit {padding:0 5px;height:26px;border:0;background:#e2e6eb;color:#333;cursor:pointer}
 
 #tnb {position:absolute;top:18px;right:0;margin:0;padding:0;list-style:none;zoom:1}
 #tnb:after {display:block;visibility:hidden;clear:both;content:""}
