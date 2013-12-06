@@ -371,6 +371,7 @@ tfoot td {font-weight:bold;text-align:center}
 .td_datetime {width:130px;text-align:center}
 .td_delicom {width:100px}
 .td_delino {width:130px}
+.td_device {width:70px;text-align:center}
 .td_etc {width:80px;text-align:center}
 .td_extra label {display:inline-block;width:100px}
 .td_extra input {margin-right:5px;width:130px}
