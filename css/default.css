@@ -42,6 +42,12 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #tnb a:focus, #tnb a:hover, #tnb a:active {text-decoration:none}
 #tnb img {margin-right:3px}
 
+/* 텍스트 크기 조절 */
+#text_size {position:absolute;top:21px;left:340px;margin:0 0 10px;letter-spacing:-3px}
+#text_size button {margin:0;padding:2px 2px 1px;border:1px solid #c3c6ca;background:transparent;vertical-align:middle;cursor:pointer}
+.ts_up {font-size:1.167em !important}
+.ts_up2 {font-size:1.3em !important}
+
 /* gnb js off */
 #gnb {position:relative;margin:-1px 0 0;border-top:1px dotted #dde4e9;border-bottom:1px solid #dde4e9;background:#ecf0f7}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -76,15 +82,9 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 #aside {float:right;margin:0 0 0 -1px;width:210px;border-left:1px solid #dde4e9;background:#fff}
 
-#container {z-index:4;position:relative;float:left;padding:25px 16px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #dde4e9;background:#fff;font-size:1em;zoom:1}
+#container {z-index:4;position:relative;float:left;padding:15px 16px 15px 15px;width:728px;min-height:500px;height:auto !important;height:500px;border-right:1px solid #dde4e9;background:#fff;font-size:1em;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 #container_title {margin-bottom:20px;font-size:1.2em;font-weight:bold}
-
-/* 텍스트 크기 조절 */
-#text_size {position:absolute;top:-33px;left:-1px;letter-spacing:-3px}
-#text_size button {margin:0;padding:0;border:0;background:transparent;vertical-align:middle;cursor:pointer}
-.ts_up {font-size:1.167em !important}
-.ts_up2 {font-size:1.3em !important}
 
 /* 하단 레이아웃 */
 #ft {min-width:970px;border-top:1px solid #dde4e9;background:#f2f5f9}

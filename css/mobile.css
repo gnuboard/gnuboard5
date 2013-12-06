@@ -77,7 +77,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 /* 텍스트 크기 조절 */
 #text_size {margin:0 0 10px;text-align:center}
-#text_size button {margin:0;padding:0;border:0;background:transparent;vertical-align:middle}
+#text_size button {margin:0;padding:2px 2px 1px;border:1px solid #c3c6ca;background:transparent;vertical-align:middle}
 .ts_up {font-size:1.167em !important}
 .ts_up2 {font-size:1.3em !important}
 
