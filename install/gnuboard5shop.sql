@@ -579,6 +579,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item_relation` (
 DROP TABLE IF EXISTS `g5_shop_new_win`;
 CREATE TABLE IF NOT EXISTS `g5_shop_new_win` (
   `nw_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nw_device` varchar(10) NOT NULL DEFAULT 'both',
   `nw_begin_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nw_end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nw_disable_hours` int(11) NOT NULL DEFAULT '0',

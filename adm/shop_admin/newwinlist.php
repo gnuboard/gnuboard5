@@ -31,6 +31,7 @@ $result = sql_query($sql);
     <tr>
         <th scope="col">번호</th>
         <th scope="col">제목</th>
+        <th scope="col">접속기기</th>
         <th scope="col">시작일시</th>
         <th scope="col">종료일시</th>
         <th scope="col">시간</th>
@@ -45,10 +46,23 @@ $result = sql_query($sql);
     <?php
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
         $bg = 'bg'.($i%2);
+
+        switch($row['nw_device']) {
+            case 'pc':
+                $nw_device = 'PC';
+                break;
+            case 'mobile':
+                $nw_device = '모바일';
+                break;
+            default:
+                $nw_device = '모두';
+                break;
+        }
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $row['nw_id']; ?></td>
         <td><?php echo $row['nw_subject']; ?></td>
+        <td><?php echo $nw_device; ?></td>
         <td class="td_datetime"><?php echo substr($row['nw_begin_time'],2,14); ?></td>
         <td class="td_datetime"><?php echo substr($row['nw_end_time'],2,14); ?></td>
         <td class="td_num"><?php echo $row['nw_disable_hours']; ?>시간</td>
@@ -65,7 +79,7 @@ $result = sql_query($sql);
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="10" class="empty_table">자료가 한건도 없습니다.</td></tr>';
+        echo '<tr><td colspan="11" class="empty_table">자료가 한건도 없습니다.</td></tr>';
     }
     ?>
     </tbody>

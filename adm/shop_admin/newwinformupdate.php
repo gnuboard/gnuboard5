@@ -10,7 +10,8 @@ if ($W == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
-$sql_common = " nw_begin_time = '$nw_begin_time',
+$sql_common = " nw_device = '$nw_device',
+                nw_begin_time = '$nw_begin_time',
                 nw_end_time = '$nw_end_time',
                 nw_disable_hours = '$nw_disable_hours',
                 nw_left = '$nw_left',
@@ -23,9 +24,6 @@ $sql_common = " nw_begin_time = '$nw_begin_time',
 
 if($w == "")
 {
-    $sql = " alter table {$g5['g5_shop_new_win_table']} auto_increment=1 ";
-    sql_query($sql);
-
     $sql = " insert {$g5['g5_shop_new_win_table']} set $sql_common ";
     sql_query($sql);
 

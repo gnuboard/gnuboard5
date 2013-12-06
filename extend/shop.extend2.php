@@ -737,4 +737,10 @@ if(!sql_query(" select it_soldout from {$g5['g5_shop_item_table']} limit 1 ", fa
     sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
                     ADD `it_soldout` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_use` ", true);
 }
+
+// 팝업 레이어 접속기기 필드 추가
+if(!sql_query(" select nw_device from {$g5['g5_shop_new_win_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_new_win_table']}`
+                    ADD `nw_device` varchar(10) NOT NULL DEFAULT 'both' AFTER `nw_id` ", true);
+}
 ?>
