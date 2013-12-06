@@ -7,7 +7,7 @@ header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
 include_once ('../config.php');
-$title = G5_VERSION." 설치 3단계 중 2단계 설정";
+$title = G5_VERSION." 초기환경설정 2/3";
 include_once ('./install.inc.php');
 
 if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
@@ -17,8 +17,11 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
 }
 ?>
 
-    <form id="frm_install" method="post" action="./install_db.php" autocomplete="off" onsubmit="return frm_install_submit(this)">
-    <table style="margin-bottom:30px">
+
+<form id="frm_install" method="post" action="./install_db.php" autocomplete="off" onsubmit="return frm_install_submit(this)">
+
+<div class="ins_inner">
+    <table class="ins_frm">
     <caption>MySQL 정보입력</caption>
     <colgroup>
         <col style="width:150px">
@@ -52,14 +55,14 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
     <tr>
         <th scope="row"><label for="">TABLE명 접두사</label></th>
         <td>
-            <span>가능한 변경하지 마십시오.</span>
             <input name="table_prefix" type="text" value="g5_" id="table_prefix">
+            <span>가능한 변경하지 마십시오.</span>
         </td>
     </tr>
     </tbody>
     </table>
 
-    <table border>
+    <table class="ins_frm">
     <caption>최고관리자 정보입력</caption>
     <colgroup>
         <col style="width:150px">
@@ -93,15 +96,14 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
     </tbody>
     </table>
 
-</div>
+    <p>
+        <strong class="st_strong">주의! 이미 <?php echo G5_VERSION ?>가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
+        주의사항을 이해하고, 새로 설치하시려면 다음을 눌러 설치를 계속하십시오.
+    </p>
 
-<p class="outside">
-    <strong class="st_strong">주의! 이미 <?php echo G5_VERSION ?>가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
-    주의사항을 이해하고, 새로 설치하시려면 다음을 눌러 설치를 계속하십시오.
-</p>
-
-<div id="btn_confirm">
-    <input type="submit" value="다음">
+    <div class="inner_btn">
+        <input type="submit" value="다음">
+    </div>
 </div>
 
 <script>
@@ -147,5 +149,6 @@ function frm_install_submit(f)
 }
 </script>
 
-</body>
-</html>
+<?php
+include_once ('./install.inc2.php');
+?>
