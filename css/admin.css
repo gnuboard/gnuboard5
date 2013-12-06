@@ -9,12 +9,10 @@ h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, aside ul, footer ul {margin:0;padding:0;list-style:none}
 label, input, select, img {vertical-align:middle}
-
 textarea, select {font-family:dotum;font-size:1em}
-
 input {margin:0;padding:0;border-radius:0;font-family:dotum}
 input[type=text], input[type=password], input[type=submit], input[type=image] {-webkit-appearance:none}
-button {border-radius:0;font-size:1em;font-family:dotum;-webkit-appearance:none}
+button {border-radius:0;font-size:1em;font-family:dotum;-webkit-appearance:none;cursor:pointer}
 p {margin:0;padding:0 0 10px;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
