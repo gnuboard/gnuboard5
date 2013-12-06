@@ -38,16 +38,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <div class="aside_inner">
             <section id="hd_sch">
                 <h3>쇼핑몰 검색</h3>
-                <form name="frmsearch1" onsubmit="return search_submit(this);">
+                <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php" onsubmit="return search_submit(this);">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">
                 <input type="hidden" name="sop" value="and">
-                <input type="hidden" name="stx" value="">
-
-                <label for="sch_flag" class="sound_only">검색대상</label>
-                <select id="sch_flag">
-                    <option value="상품" <?php echo get_selected($sch_flag, '상품'); ?>>상품</option>
-                    <option value="게시판" <?php echo get_selected($sch_flag, '게시판'); ?>>게시판</option>
-                </select>
 
                 <label for="sch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
                 <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="sch_str" required>
@@ -56,13 +49,14 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 </form>
                 <script>
                 function search_submit(f) {
-                    var flag = document.getElementById("sch_flag");
-                    if (flag.value == '상품') {
-                        f.action = '<?php echo G5_SHOP_URL; ?>/search.php';
-                    } else {
-                        f.stx.value = f.search_str.value;
-                        f.action = '<?php echo G5_BBS_URL; ?>/search.php';
+                    if (f.q.value.length < 2) {
+                        alert("검색어는 두글자 이상 입력하십시오.");
+                        f.q.select();
+                        f.q.focus();
+                        return false;
                     }
+
+                    return true;
                 }
                 </script>
             </section>
