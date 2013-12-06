@@ -116,7 +116,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php if ($config['cf_use_tel']) { ?>
         <tr>
             <th scope="row"><label for="reg_mb_tel">전화번호<?php if ($config['cf_req_tel']) { ?><strong class="sound_only">필수</strong><?php } ?></label></th>
-            <td><input type="tel" name="mb_tel" value="<?php echo $member['mb_tel'] ?>" id="reg_mb_tel" class="frm_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?>></td>
+            <td><input type="text" name="mb_tel" value="<?php echo $member['mb_tel'] ?>" id="reg_mb_tel" class="frm_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?>></td>
         </tr>
         <?php } ?>
 
@@ -124,7 +124,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <tr>
             <th scope="row"><label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?></label></th>
             <td>
-                <input type="tel" name="mb_hp" value="<?php echo $member['mb_hp'] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20">
+                <input type="text" name="mb_hp" value="<?php echo $member['mb_hp'] ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20">
                 <?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
                 <input type="hidden" name="old_mb_hp" value="<?php echo $member['mb_hp'] ?>">
                 <?php } ?>
