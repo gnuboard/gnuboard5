@@ -246,6 +246,7 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 
 .local_ov01 {position:relative;margin:-10px 0 10px;padding:10px 20px;border-bottom:1px solid #e9e9e9;background:#f2f5f9}
 .local_ov01 .ov_listall {display:inline-block;margin:0 5px 0 0;padding:0 10px 0 0;border-right:1px solid #ccc}
+.local_ov01 .ov_a {display:inline-block;margin:0 0 0 5px;padding:0 0 0 10px;border-left:1px solid #ccc;color:#ff3061}
 
 
 /* 테이블 */
@@ -369,6 +370,7 @@ tfoot td {font-weight:bold;text-align:center}
 .td_datetime {width:130px;text-align:center}
 .td_delicom {width:100px}
 .td_delino {width:130px}
+.td_device {width:70px;text-align:center}
 .td_etc {width:80px;text-align:center}
 .td_extra label {display:inline-block;width:100px}
 .td_extra input {margin-right:5px;width:130px}
@@ -646,10 +648,13 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 상품 일괄 등록 */
 #excelfile_upload {margin:10px auto 20px;padding:20px;width:86%;border:1px solid #e9e9e9;background:#fff}
 #excelfile_upload label {font-weight:bold}
-#excelfile_result {margin:0 auto 20px;padding:20px;width:86%;border:1px solid #e9e9e9;background:#fff;zoom:1}
+#excelfile_input {margin:0 0 20px;text-align:center}
+#excelfile_result {margin:0 20px 20px;border-bottom:1px solid #e9e9e9;zoom:1}
 #excelfile_result:after {display:block;visibility:hidden;clear:both;content:""}
-#excelfile_result dt {clear:both;float:left;padding:10px 0;width:40%}
+#excelfile_result dt {clear:both;float:left;padding:10px 0;width:40%;font-weight:bold}
 #excelfile_result dd {float:left;margin:0;padding:10px 0;width:60%}
+#excelfile_result .result_done {color:#5d910b}
+#excelfile_result .result_fail {color:#ff3061}
 
 /* 상품옵션재고관리 */
 .sit_stock_qty_alert {color:#ff1133;font-weight:bold}
@@ -737,11 +742,10 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .new_win_ul li {float:left;margin-left:-1px}
 
 .new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
-.new_win_desc {margin:0 auto;width:93%}
 .new_win .anchor {margin:0 auto 5px;width:93%}
 .new_win .tbl_wrap {margin:0 20px 20px;padding:0}
 
-.new_win .local_sch, .new_win .local_cmd, .new_win .local_desc01, .new_win .local_desc02, .new_win .local_ov {min-width:480px}
+.new_win .local_sch, .new_win .local_cmd, .new_win .local_desc01, .new_win .local_desc02, .new_win .local_ov {min-width:320px}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}

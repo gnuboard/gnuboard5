@@ -50,34 +50,36 @@ include_once(G5_PATH.'/head.sub.php');
 
 
 <div id="sendcost_postal_win" class="new_win">
-    <h1 id="new_win_title"><?php echo $g5['title']; ?></h1>
+    <h1><?php echo $g5['title']; ?></h1>
 
 
     <form name="fzipcode" id="fzipcode" method="get">
     <input type="hidden" name="no" value="<?php echo $no; ?>">
 
-    <p class="new_win_desc">주소지의 시/군을 입력하세요.</p>
+    <div class="local_desc01 local_desc">
+        <p>주소지의 시/군을 입력하세요.</p>
 
-    <fieldset>
-        <label for="addr">주소</label>
-        <input type="text" name="addr" value="<?php echo stripslashes($addr); ?>" id="addr" class="frm_input" size="20">
-        <input type="submit" value=" 검색 " class="btn_frmline">
-    </fieldset>
+        <fieldset>
+            <label for="addr">주소</label>
+            <input type="text" name="addr" value="<?php echo stripslashes($addr); ?>" id="addr" class="frm_input" size="20">
+            <input type="submit" value=" 검색 " class="btn_frmline">
+        </fieldset>
 
-    </form>
+        </form>
 
-    <?php if($search_count) { ?>
-    <strong class="new_win_desc">검색결과</strong>
-    <ul>
-        <?php
-        for($i=0; $i<$search_count; $i++) {
-        ?>
-        <li><?php echo $result[$i]; ?></li>
+        <?php if($search_count) { ?>
+        <strong>검색결과</strong>
+        <ul>
+            <?php
+            for($i=0; $i<$search_count; $i++) {
+            ?>
+            <li><?php echo $result[$i]; ?></li>
+            <?php } ?>
+        </ul>
+        <?php } else { ?>
+        <p>검색된 결과가 없습니다.</p>
         <?php } ?>
-    </ul>
-    <?php } else { ?>
-    <p class="new_win_desc">검색된 결과가 없습니다.</p>
-    <?php } ?>
+    </div>
 
     <div class="btn_win01 btn_win">
         <a href="javascript:window.close();">창닫기</a>

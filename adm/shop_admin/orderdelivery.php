@@ -32,7 +32,7 @@ include_once(G5_PATH.'/head.sub.php');
         <input type="file" name="excelfile" id="excelfile">
     </div>
 
-    <div>
+    <div id="excelfile_input">
         <input type="checkbox" name="od_send_mail" value="1" id="od_send_mail" checked="checked">
         <label for="od_send_mail">배송안내 메일</label>
         <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked="checked">

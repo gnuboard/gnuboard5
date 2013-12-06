@@ -62,7 +62,7 @@ $result = sql_query($sql);
     <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $row['nw_id']; ?></td>
         <td><?php echo $row['nw_subject']; ?></td>
-        <td><?php echo $nw_device; ?></td>
+        <td class="td_device"><?php echo $nw_device; ?></td>
         <td class="td_datetime"><?php echo substr($row['nw_begin_time'],2,14); ?></td>
         <td class="td_datetime"><?php echo substr($row['nw_end_time'],2,14); ?></td>
         <td class="td_num"><?php echo $row['nw_disable_hours']; ?>시간</td>

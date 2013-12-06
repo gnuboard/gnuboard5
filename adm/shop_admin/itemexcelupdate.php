@@ -199,7 +199,9 @@ include_once(G5_PATH.'/head.sub.php');
 <div class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
-    <p class="new_win_desc">상품등록을 완료했습니다.</p>
+    <div class="local_desc01 local_desc">
+        <p>상품등록을 완료했습니다.</p>
+    </div>
 
     <dl id="excelfile_result">
         <dt>총상품수</dt>
