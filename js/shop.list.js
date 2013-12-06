@@ -29,6 +29,8 @@ $.fn.listType = function(type)
         }
 
         $el.each(function() {
+            $(this).removeAttr("style");
+
             if($(this).data("style")) {
                 $(this).attr("style", $(this).data("style"));
             }
@@ -41,10 +43,31 @@ $.fn.listType = function(type)
         }
         this.addClass("sct sct_40");
 
+        var list_top_pad = 20;
+        var list_right_pad = 10;
+        var list_bottom_pad = 20;
+        var list_real_width = 740;
+        var list_left_pad, list_width, list_height;
+        var img_width, img_height;
+
         $el.each(function() {
-            if($(this).data("style")) {
-                $(this).removeAttr("style");
-            }
+            $(this).removeAttr("style");
+
+            img_width = $(this).find(".sct_img img").width();
+            img_height = $(this).find(".sct_img img").height();
+
+            list_left_pad = img_width + 10;
+            list_width = list_real_width - list_right_pad - list_left_pad;
+            list_height = img_height - list_top_pad - list_bottom_pad;
+
+            $(this).css({
+                paddingTop : list_top_pad+"px",
+                paddingRight: list_right_pad+"px",
+                paddingBottom: list_bottom_pad+"px",
+                paddingLeft: list_left_pad+"px",
+                width: list_width+"px",
+                height: list_height+"px"
+            });
         });
 
         $("button.sct_lst_list span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
