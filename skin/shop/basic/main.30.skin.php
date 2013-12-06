@@ -124,7 +124,7 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
             var el_id = this[0].id;
 
             $smt.each(function() {
-                var h = $(this).height();
+                var h = $(this).outerHeight(true);
                 if(h > height)
                     height = h;
             });
