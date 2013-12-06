@@ -123,7 +123,7 @@ if($default['de_escrow_use']) {
             </tr>
             <tr>
                 <th scope="row"><label for="pp_hp">휴대폰</label></th>
-                <td><input type="tel" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" class="frm_input"></td>
+                <td><input type="text" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" class="frm_input"></td>
             </tr>
             </tbody>
             </table>

@@ -356,11 +356,11 @@ ob_end_clean();
 
             <tr>
                 <th scope="row"><label for="od_tel">전화번호</label></th>
-                <td><input type="tel" name="od_tel" value="<?php echo $member['mb_tel']; ?>" id="od_tel" required class="frm_input required" maxlength="20"></td>
+                <td><input type="text" name="od_tel" value="<?php echo $member['mb_tel']; ?>" id="od_tel" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>
                 <th scope="row"><label for="od_hp">핸드폰</label></th>
-                <td><input type="tel" name="od_hp" value="<?php echo $member['mb_hp']; ?>" id="od_hp" class="frm_input" maxlength="20"></td>
+                <td><input type="text" name="od_hp" value="<?php echo $member['mb_hp']; ?>" id="od_hp" class="frm_input" maxlength="20"></td>
             </tr>
             <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2'; ?>
             <tr>
@@ -487,11 +487,11 @@ ob_end_clean();
             </tr>
             <tr>
                 <th scope="row"><label for="od_b_tel">전화번호</label></th>
-                <td><input type="tel" name="od_b_tel" id="od_b_tel" required class="frm_input required" maxlength="20"></td>
+                <td><input type="text" name="od_b_tel" id="od_b_tel" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>
                 <th scope="row"><label for="od_b_hp">핸드폰</label></th>
-                <td><input type="tel" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20"></td>
+                <td><input type="text" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20"></td>
             </tr>
             <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2'; ?>
             <tr>

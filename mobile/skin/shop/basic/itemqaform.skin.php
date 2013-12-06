@@ -34,7 +34,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </tr>
         <tr>
             <th scope="row"><label for="iq_hp">휴대폰</label></th>
-            <td><input type="tel" name="iq_hp" value="<?php echo $qa['iq_hp']; ?>" class="frm_input" size="20"> 휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</td>
+            <td><input type="text" name="iq_hp" value="<?php echo $qa['iq_hp']; ?>" class="frm_input" size="20"> 휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</td>
         </tr>
         <tr>
             <th scope="row"><label for="iq_subject">제목</label></th>
