@@ -70,9 +70,8 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 
 #hd_sch {position:absolute;top:-58px;left:170px;border:1px solid #c3c6ca}
 #hd_sch h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#hd_sch select {position:static !important;position:relative;margin:0;border:0}
-#hd_sch #asch_str {padding-left:5px;width:110px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
-#hd_sch #asch_submit {padding:0 5px;height:26px;border:0;background:#e2e6eb;color:#333;cursor:pointer}
+#hd_sch #sch_str {padding-left:5px;width:110px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
+#hd_sch #sch_submit {padding:0 5px;height:26px;border:0;background:#e2e6eb;color:#333;cursor:pointer}
 
 #hd_nb {position:absolute;top:-60px;right:0}
 #hd_nb h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
