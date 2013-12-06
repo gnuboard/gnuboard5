@@ -17,7 +17,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <a href="<?php echo G5_SHOP_URL; ?>/category.php" target="_blank" id="hd_ct">분류</a>
     <button type="button" id="hd_sch_open">검색<span class="sound_only"> 열기</span></button>
 
-    <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php">
+    <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php" onsubmit="return search_submit(this);">
     <aside id="hd_sch">
         <div class="sch_inner">
             <h2>상품 검색</h2>
@@ -30,14 +30,25 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     </form>
     <script>
         $(function (){
-            var $hd_sch = $("#hd_sch");
-            $("#hd_sch_open").click(function(){
-                $hd_sch.css("display","block");
-            });
-            $("#hd_sch .pop_close").click(function(){
-                $hd_sch.css("display","none");
-            });
+        var $hd_sch = $("#hd_sch");
+        $("#hd_sch_open").click(function(){
+            $hd_sch.css("display","block");
         });
+        $("#hd_sch .pop_close").click(function(){
+            $hd_sch.css("display","none");
+        });
+    });
+
+    function search_submit(f) {
+        if (f.q.value.length < 2) {
+            alert("검색어는 두글자 이상 입력하십시오.");
+            f.q.select();
+            f.q.focus();
+            return false;
+        }
+
+        return true;
+    }
     </script>
 
     <ul id="hd_mb">
