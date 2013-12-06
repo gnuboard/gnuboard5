@@ -26,7 +26,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <caption style="<?php echo $caption_st; ?>">주문상품 확인</caption>
         <colgroup>
             <col>
-            <col style="width:100px">
+            <col>
             <col style="width:70px">
         </colgroup>
         <thead>
