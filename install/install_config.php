@@ -98,7 +98,7 @@ if (isset($_POST['agree']) && $_POST['agree'] != '동의함') {
 
     <p>
         <strong class="st_strong">주의! 이미 <?php echo G5_VERSION ?>가 존재한다면 DB 자료가 망실되므로 주의하십시오.</strong><br>
-        주의사항을 이해하고, 새로 설치하시려면 다음을 눌러 설치를 계속하십시오.
+        주의사항을 이해했으며, 그누보드 설치를 계속 진행하시려면 다음을 누르십시오.
     </p>
 
     <div class="inner_btn">
