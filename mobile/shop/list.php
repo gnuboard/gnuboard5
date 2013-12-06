@@ -24,11 +24,6 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 //if ($skin) $ca[ca_skin] = $skin;
 ?>
 
-<script>
-var itemlist_ca_id = "<?php echo $ca_id; ?>";
-</script>
-<script src="<?php echo G5_JS_URL; ?>/shop.list.js"></script>
-
 <div id="sct">
 
     <?php
@@ -48,9 +43,6 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
     $list_file = G5_MSHOP_SKIN_PATH.'/'.$ca['ca_mobile_skin'];
     if (file_exists($list_file)) {
         include G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
-
-        // 상품 보기 타입 변경 버튼
-        include G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
 
         // 총몇개
         $items = $ca['ca_mobile_list_mod'];
