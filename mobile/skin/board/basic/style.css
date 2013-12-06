@@ -94,9 +94,7 @@
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_cate li {float:left;margin-bottom:-1px;width:25%}
 #bo_cate a {display:block;position:relative;margin-left:-1px;padding:5px 0;border:1px solid #ddd;background:#f7f7f7;color:#888;text-align:center;text-decoration:none;letter-spacing:-0.1em}
-#bo_cate a:focus,
-#bo_cate a:hover,
-#bo_cate a:active {text-decoration:none}
+#bo_cate a:focus, #bo_cate a:hover, #bo_cate a:active {text-decoration:none}
 #bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
 
 /* 관리자일 때 */
@@ -128,6 +126,7 @@
 .td_num strong {color:#000}
 .bo_cate_link {display:inline-block;margin:0 3px 0 0;padding:0 6px 0 0;border-right:1px solid #e7f1ed;color:#999 !important;font-weight:bold;text-decoration:none} /* 글제목줄 분류스타일 */
 .bo_current {color:#e8180c}
+.td_subject a {display:block}
 .td_subject img {margin-left:3px}
 #bo_list .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
 
@@ -218,7 +217,7 @@
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc p a {text-decoration:underline}
-#bo_vc_empty {margin:0;padding:15px !important;border-bottom:1px dotted #ccc;text-align:center}
+#bo_vc_empty {margin:0;padding:15px !important;text-align:center}
 #bo_vc fieldset {margin:0 0 10px;padding:0}
 #bo_vc #bo_vc_winfo {float:left}
 #bo_vc footer {zoom:1}
