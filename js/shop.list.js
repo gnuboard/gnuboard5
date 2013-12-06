@@ -46,7 +46,7 @@ $.fn.listType = function(type)
         var list_top_pad = 20;
         var list_right_pad = 10;
         var list_bottom_pad = 20;
-        var list_real_width = 740;
+        var list_real_width = this.outerWidth();
         var list_left_pad, list_width, list_height;
         var img_width, img_height;
 
