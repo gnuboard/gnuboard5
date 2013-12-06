@@ -70,10 +70,9 @@
 
 /* 상품 목록 스킨 40 */
 .sct_40 .sct_li {position:relative;margin:0 0 16px 0;border:1px solid #e9e9e9;background:#f5f6fa}
-.sct_40 .sct_arw_toleft {display:block;z-index:2;position:absolute;top:20px;left:221px;width:10px;height:19px;background:url('img/icon_arw_toleft.gif') no-repeat}
 .sct_40 .sct_a {text-decoration:none}
 .sct_40 .sct_a:focus, .sct_40 .sct_a:hover {text-decoration:none}
-.sct_40 .sct_img img {position:absolute;top:0;left:0}
+.sct_40 .sct_img {position:absolute;top:0;left:0}
 .sct_40 .sct_txt {display:inline-block;margin:0 0 20px}
 .sct_40 .sct_basic {margin:0 0 15px;padding:0;line-height:1.5em}
 .sct_40 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}

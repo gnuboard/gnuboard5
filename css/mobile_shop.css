@@ -104,10 +104,9 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sct_sort {float:left;margin:10px 0}
 #sct_sort:after {display:block;visibility:hidden;clear:both;content:""}
 #sct_sort h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
-#sct_sort ul {margin:0;padding:0;list-style:none}
+#sct_sort ul {margin:0;padding:0 0 0 1px;list-style:none}
 #sct_sort ul:after {display:block;visibility:hidden;clear:both;content:""}
 #sct_sort li {float:left;position:relative;margin-left:-1px}
-#sct_sort .btn01 {font-size:0.75em}
 
 /* 상품 리스트 스타일 선택 */
 #sct_lst {float:right;margin:10px 0;padding:0;list-style:none}
