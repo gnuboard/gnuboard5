@@ -4,7 +4,10 @@ include_once('./_common.php');
 if($is_guest)
     exit;
 
-$price = $_POST['price'];
+$price = (int)$_POST['price'];
+
+if($price <= 0)
+    echo '상품금액이 0원이므로 쿠폰을 사용할 수 없습니다.';
 
 // 쿠폰정보
 $sql = " select *

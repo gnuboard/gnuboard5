@@ -909,6 +909,10 @@ $(function() {
         $("#od_coupon_frm").remove();
         var $this = $(this);
         var price = parseInt($("input[name=org_od_price]").val()) - parseInt($("input[name=item_coupon]").val());
+        if(price <= 0) {
+            alert('상품금액이 0원이므로 쿠폰을 사용할 수 없습니다.');
+            return false;
+        }
         $.post(
             "./ordercoupon.php",
             { price: price },
