@@ -671,7 +671,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_bsk_list {position:relative}
 #sod_bsk_list #mod_option_frm {z-index:10000;position:absolute;top:0;left:99px;padding:20px;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll;overflow-x:none}
 
-#sod_bsk_tot {margin:0;padding:10px;border:1px solid #e9e9e9;background:#f2f5f9;zoom:1}
+#sod_bsk_tot {margin:0 0 20px;padding:10px;border:1px solid #e9e9e9;background:#f2f5f9;zoom:1}
 #sod_bsk_tot:after {display:block;visibility:hidden;clear:both;content:""}
 #sod_bsk_tot dt, #sod_bsk_tot dd {float:left;padding:12px 0;border-bottom:1px solid #e9e9e9}
 #sod_bsk_tot dt {padding-left:2%;width:48%;font-weight:bold}
