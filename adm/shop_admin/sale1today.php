@@ -61,14 +61,14 @@ $result = sql_query($sql);
 
     ?>
         <tr>
-            <td><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
+            <td class="td_alignc"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
             <td class="td_name"><?php echo $href; ?><?php echo $row['od_name']; ?></a></td>
             <td class="td_numsum"><?php echo number_format($row['orderprice']); ?></td>
             <td class="td_numcoupon"><?php echo number_format($row['couponprice']); ?></td>
             <td class="td_numincome"><?php echo number_format($receipt_bank); ?></td>
             <td class="td_numincome"><?php echo number_format($receipt_card); ?></td>
             <td class="td_numincome"><?php echo number_format($row['od_receipt_point']); ?></td>
-            <td class="td_numcancel"><?php echo number_format($row['od_cancel_price']); ?></td>
+            <td class="td_numcancel1"><?php echo number_format($row['od_cancel_price']); ?></td>
             <td class="td_numrdy"><?php echo number_format($row['od_misu']); ?></td>
         </tr>
     <?php

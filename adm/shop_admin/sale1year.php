@@ -11,14 +11,14 @@ function print_line($save)
 {
     ?>
     <tr>
-        <td><a href="./sale1month.php?fr_month=<?php echo $save['od_date']; ?>01&amp;to_month=<?php echo $save['od_date']; ?>12"><?php echo $save['od_date']; ?></a></td>
+        <td class="td_alignc"><a href="./sale1month.php?fr_month=<?php echo $save['od_date']; ?>01&amp;to_month=<?php echo $save['od_date']; ?>12"><?php echo $save['od_date']; ?></a></td>
         <td class="td_num"><?php echo number_format($save['ordercount']); ?></td>
         <td class="td_numsum"><?php echo number_format($save['orderprice']); ?></td>
         <td class="td_numcoupon"><?php echo number_format($save['ordercoupon']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptbank']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptcard']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptpoint']); ?></td>
-        <td class="td_numcancel"><?php echo number_format($save['ordercancel']); ?></td>
+        <td class="td_numcancel1"><?php echo number_format($save['ordercancel']); ?></td>
         <td class="td_numrdy"><?php echo number_format($save['misu']); ?></td>
     </tr>
     <?php
