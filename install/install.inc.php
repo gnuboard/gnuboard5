@@ -20,13 +20,13 @@ if (!$title) $title = G5_VERSION." 설치";
     <span id="bar_txt">INSTALLATION</span>
 </div>
 
-<h1><?php echo $title ?></h1>
-
 <?php
 // 파일이 존재한다면 설치할 수 없다.
 $dbconfig_file = $data_path.'/'.G5_DBCONFIG_FILE;
 if (file_exists($dbconfig_file)) {
 ?>
+<h1><?php echo G5_VERSION; ?> 프로그램이 이미 설치되어 있습니다.</h1>
+
 <div class="ins_inner">
     <p>프로그램이 이미 설치되어 있습니다.<br />새로 설치하시려면 다음 파일을 삭제 하신 후 새로고침 하십시오.</p>
     <ul>
@@ -44,6 +44,8 @@ $exists_data_dir = true;
 if (!is_dir($data_path))
 {
 ?>
+<h1><?php echo G5_VERSION; ?> 설치를 위해 아래 내용을 확인해 주십시오.</h1>
+
 <div class="ins_inner">
     <p>
         루트 디렉토리에 아래로 <?php echo G5_DATA_DIR ?> 디렉토리를 생성하여 주십시오.<br />

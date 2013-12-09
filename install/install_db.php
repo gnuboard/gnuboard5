@@ -28,17 +28,29 @@ $g5_shop_install= $_POST['g5_shop_install'];
 
 $dblink = @mysql_connect($mysql_host, $mysql_user, $mysql_pass);
 if (!$dblink) {
-    echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
-    echo '<div>MySQL Host, User, Password 를 확인해 주십시오.</div>'.PHP_EOL;
-    echo '<div><a href="./install_config.php">뒤로가기</a></div>'.PHP_EOL;
+?>
+
+<div class="ins_inner">
+    <p>MySQL Host, User, Password 를 확인해 주십시오.</p>
+    <div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div>
+</div>
+
+<?php
+    include_once ('./install.inc2.php');
     exit;
 }
 
 $select_db = @mysql_select_db($mysql_db, $dblink);
 if (!$select_db) {
-    echo '<meta http-equiv="content-type" content="text/html; charset=utf-8">'.PHP_EOL;
-    echo '<div>MySQL DB 를 확인해 주십시오.</div>'.PHP_EOL;
-    echo '<div><a href="./install_config.php">뒤로가기</a></div>'.PHP_EOL;
+?>
+
+<div class="ins_inner">
+    <p>MySQL DB 를 확인해 주십시오.</p>
+    <div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div>
+</div>
+
+<?php
+    include_once ('./install.inc2.php');
     exit;
 }
 
