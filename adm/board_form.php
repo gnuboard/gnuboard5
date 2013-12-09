@@ -535,7 +535,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_use_signature" value="1" id="bo_use_signature" <?php echo $board['bo_use_signature']?'checked':''; ?>>
                 사용
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_signature" value="1" id="chk_grp_use_signature">
                 <label for="chk_grp_use_signature">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_signature" value="1" id="chk_all_use_signature">
@@ -548,7 +548,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_use_ip_view" value="1" id="bo_use_ip_view" <?php echo $board['bo_use_ip_view']?'checked':''; ?>>
                 사용
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_ip_view" value="1" id="chk_grp_use_ip_view">
                 <label for="chk_grp_use_ip_view">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_ip_view" value="1" id="chk_all_use_ip_view">
@@ -562,7 +562,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_use_list_content" value="1" id="bo_use_list_content" <?php echo $board['bo_use_list_content']?'checked':''; ?>>
                 사용 (사용시 속도가 느려질 수 있습니다.)
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_list_content" value="1" id="chk_grp_use_list_content">
                 <label for="chk_grp_use_list_content">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_list_content" value="1" id="chk_all_use_list_content">
@@ -576,7 +576,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_use_list_file" value="1" id="bo_use_list_file" <?php echo $board['bo_use_list_file']?'checked':''; ?>>
                 사용 (사용시 속도가 느려질 수 있습니다.)
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_list_file" value="1" id="chk_grp_use_list_file">
                 <label for="chk_grp_use_list_file">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_list_file" value="1" id="chk_all_use_list_file">
@@ -589,7 +589,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_use_list_view" value="1" id="bo_use_list_view" <?php echo $board['bo_use_list_view']?'checked':''; ?>>
                 사용
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_list_view" value="1" id="chk_grp_use_list_view">
                 <label for="chk_grp_use_list_view">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_list_view" value="1" id="chk_all_use_list_view">
@@ -602,7 +602,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_use_email" value="1" id="bo_use_email" <?php echo $board['bo_use_email']?'checked':''; ?>>
                 사용
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_email" value="1" id="chk_grp_use_email">
                 <label for="chk_grp_use_email">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_email" value="1" id="chk_all_use_email">
@@ -625,7 +625,7 @@ $pg_anchor = '<ul class="anchor">
                     ?>
                 </select>
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_cert" value="1" id="chk_grp_use_cert">
                 <label for="chk_grp_use_cert">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_cert" value="1" id="chk_all_use_cert">
@@ -638,7 +638,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help('게시물 한건당 업로드 할 수 있는 파일의 최대 개수 (0 은 파일첨부 사용하지 않음)') ?>
                 <input type="text" name="bo_upload_count" value="<?php echo $board['bo_upload_count'] ?>" id="bo_upload_count" required class="required numeric frm_input" size="4">
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_upload_count" value="1" id="chk_grp_upload_count">
                 <label for="chk_grp_upload_count">그룹적용</label>
                 <input type="checkbox" name="chk_all_upload_count" value="1" id="chk_all_upload_count">
@@ -657,7 +657,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help('최대 '.ini_get("upload_max_filesize").' 이하 업로드 가능, 1 MB = 1,048,576 bytes') ?>
                 업로드 파일 한개당 <input type="text" name="bo_upload_size" value="<?php echo $board['bo_upload_size'] ?>" id="bo_upload_size" required class="required numeric frm_input"  size="10"> bytes 이하
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_upload_size" value="1" id="chk_grp_upload_size">
                 <label for="chk_grp_upload_size">그룹적용</label>
                 <input type="checkbox" name="chk_all_upload_size" value="1" id="chk_all_upload_size">
@@ -669,7 +669,7 @@ $pg_anchor = '<ul class="anchor">
             <td>
                 <input type="checkbox" name="bo_use_file_content" value="1" id="bo_use_file_content" <?php echo $board['bo_use_file_content']?'checked':''; ?>>사용
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_file_content" value="1" id="chk_grp_use_file_content">
                 <label for="chk_grp_use_file_content">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_file_content" value="1" id="chk_all_use_file_content">
@@ -682,7 +682,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help('글 입력시 최소 글자수를 설정. 0을 입력하거나 최고관리자, DHTML 에디터 사용시에는 검사하지 않음') ?>
                 <input type="text" name="bo_write_min" value="<?php echo $board['bo_write_min'] ?>" id="bo_write_min" class="numeric frm_input" size="4">
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_write_min" value="1" id="chk_grp_write_min">
                 <label for="chk_grp_write_min">그룹적용</label>
                 <input type="checkbox" name="chk_all_write_min" value="1" id="chk_all_write_min">
@@ -695,7 +695,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help('글 입력시 최대 글자수를 설정. 0을 입력하거나 최고관리자, DHTML 에디터 사용시에는 검사하지 않음') ?>
                 <input type="text" name="bo_write_max" value="<?php echo $board['bo_write_max'] ?>" id="bo_write_max" class="numeric frm_input" size="4">
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_write_max" value="1" id="chk_grp_write_max">
                 <label for="chk_grp_write_max">그룹적용</label>
                 <input type="checkbox" name="chk_all_write_max" value="1" id="chk_all_write_max">
@@ -708,7 +708,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
                 <input type="text" name="bo_comment_min" value="<?php echo $board['bo_comment_min'] ?>" id="bo_comment_min" class="numeric frm_input" size="4">
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_comment_min" value="1" id="chk_grp_comment_min">
                 <label for="chk_grp_comment_min">그룹적용</label>
                 <input type="checkbox" name="chk_all_comment_min" value="1" id="chk_all_comment_min">
@@ -721,7 +721,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
                 <input type="text" name="bo_comment_max" value="<?php echo $board['bo_comment_max'] ?>" id="bo_comment_max" class="numeric frm_input" size="4">
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_comment_max" value="1" id="chk_grp_comment_max">
                 <label for="chk_grp_comment_max">그룹적용</label>
                 <input type="checkbox" name="chk_all_comment_max" value="1" id="chk_all_comment_max">
@@ -735,7 +735,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_use_sns" value="1" id="bo_use_sns" <?php echo $board['bo_use_sns']?'checked':''; ?>>
                 사용
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_sns" value="1" id="chk_grp_use_sns">
                 <label for="chk_grp_use_sns">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_sns" value="1" id="chk_all_use_sns">
@@ -748,7 +748,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_use_search" value="1" id="bo_use_search" <?php echo $board['bo_use_search']?'checked':''; ?>>
                 사용
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_use_search" value="1" id="chk_grp_use_search">
                 <label for="chk_grp_use_search">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_search" value="1" id="chk_all_use_search">
@@ -762,7 +762,7 @@ $pg_anchor = '<ul class="anchor">
                 <input type="checkbox" name="bo_show_menu" value="1" id="bo_show_menu" <?php echo $board['bo_show_menu']?'checked':''; ?>>
                 사용
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_show_menu" value="1" id="chk_grp_show_menu">
                 <label for="chk_grp_show_menu">그룹적용</label>
                 <input type="checkbox" name="chk_all_show_menu" value="1" id="chk_all_show_menu">
@@ -775,7 +775,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php echo help('숫자가 낮은 게시판 부터 메뉴나 검색시 우선 출력합니다.') ?>
                 <input type="text" name="bo_order" value="<?php echo $board['bo_order'] ?>" id="bo_order" class="frm_input" size="4">
             </td>
-            <td class="group_setting">
+            <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_order" value="1" id="chk_grp_order">
                 <label for="chk_grp_order">그룹적용</label>
                 <input type="checkbox" name="chk_all_order" value="1" id="chk_all_order">
