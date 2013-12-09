@@ -24,7 +24,7 @@ $result = sql_query($sql);
 #sct_win {}
 #sct_win h1 {padding:15px 0;text-align:center}
 #sct_win_nav {margin:0 0 20px}
-#sct_win_nav h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sct_win_nav h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sct_win_nav ul {border-top:1px solid #e9e9e9}
 #sct_win_nav li {position:relative;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
 #sct_win_nav a {display:block;padding:0.5em 1em;text-decoration:none}
