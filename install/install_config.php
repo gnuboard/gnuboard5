@@ -10,7 +10,7 @@ include_once ('../config.php');
 $title = G5_VERSION." 초기환경설정 2/3";
 include_once ('./install.inc.php');
 
-if (!isset($_POST['agree']) && $_POST['agree'] != '동의함') {
+if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
     echo "<div class=\"ins_inner\"><p>라이센스(License) 내용에 동의하셔야 설치를 계속하실 수 있습니다.</p>".PHP_EOL;
     echo "<div class=\"inner_btn\"><a href=\"./\">뒤로가기</a></div></div>".PHP_EOL;
     exit;
