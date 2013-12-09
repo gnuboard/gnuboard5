@@ -123,9 +123,9 @@ if(empty($qaconfig)) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="qa_skin">모바일 스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="qa_mobile_skin">모바일 스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
             <td>
-                <?php echo get_mobile_skin_select('qa', 'qa_skin', 'qa_skin', $qaconfig['qa_skin'], 'required'); ?>
+                <?php echo get_mobile_skin_select('qa', 'qa_mobile_skin', 'qa_mobile_skin', $qaconfig['qa_mobile_skin'], 'required'); ?>
             </td>
         </tr>
         <tr>
