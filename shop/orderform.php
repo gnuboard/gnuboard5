@@ -1171,7 +1171,7 @@ $(function() {
     $("#od_coupon_btn").click(function() {
         $("#od_coupon_frm").remove();
         var $this = $(this);
-        var price = parseInt($("input[name=org_od_price]").val());
+        var price = parseInt($("input[name=org_od_price]").val()) - parseInt($("input[name=item_coupon]").val());
         $.post(
             "./ordercoupon.php",
             { price: price },
