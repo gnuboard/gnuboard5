@@ -7,7 +7,7 @@ if($is_guest)
 $price = (int)$_POST['price'];
 
 if($price <= 0)
-    echo '상품금액이 0원이므로 쿠폰을 사용할 수 없습니다.';
+    die('상품금액이 0원이므로 쿠폰을 사용할 수 없습니다.');
 
 // 쿠폰정보
 $sql = " select *
