@@ -82,9 +82,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <li><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new">새글</a></li>
             <?php if ($is_member) { ?>
             <?php if ($is_admin) { ?>
-            <li><a href="<?php echo G5_ADMIN_URL ?>" id="snb_adm">관리자</a></li>
+            <li><a href="<?php echo G5_ADMIN_URL ?>" id="snb_adm"><b>관리자</b></a></li>
             <?php } ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php" id="snb_modify">내 정보</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php" id="snb_modify">정보수정</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php" id="snb_logout">로그아웃</a></li>
             <?php } else { ?>
             <li><a href="<?php echo G5_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>

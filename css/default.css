@@ -133,29 +133,30 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .cke_sc_def dd {width:30%}
 
 /* 버튼 */
-a.btn01 {display:inline-block;padding:0 10px;height:25px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;line-height:2.2em;vertical-align:middle}
-a.btn01:focus, .btn01:hover {text-decoration:none}
-a.btn02 {display:inline-block;padding:0 10px;height:25px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none;line-height:2.2em;vertical-align:middle}
+a.btn01 {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle}
+a.btn01:focus, a.btn01:hover {text-decoration:none}
+button.btn01 {display:inline-block;margin:0;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none}
+a.btn02 {display:inline-block;padding:7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none;vertical-align:middle}
 a.btn02:focus, .btn02:hover {text-decoration:none}
+button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none}
 
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 
-input.btn_submit {padding:0 10px;height:27px;border:0;background:#ff3061;color:#fff;vertical-align:middle;cursor:pointer}
-fieldset .btn_submit {height:24px}
+.btn_submit {padding:8px;border:0;background:#ff3061;color:#fff;letter-spacing:-0.1em}
+fieldset .btn_submit {padding:0 7px;height:24px;line-height:1em}
 
-a.btn_cancel {display:inline-block;padding:0 10px;height:25px;border:1px solid #ccc;background:#fafafa;line-height:2.3em;vertical-align:middle}
-a.btn_cancel:focus, a.btn_cancel:hover {text-decoration:none}
+a.btn_cancel {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle}
+button.btn_cancel {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;vertical-align:top;text-decoration:none}
 
-a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:24px;border:0;background:#4b545e;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
-a.btn_frmline {line-height:2.2em}
+a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:1.9em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.9em} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
 
 /* 게시판용 버튼 */
-a.btn_b01 {display:inline-block;padding:0 10px;height:25px;border:1px solid #d9ded9;background:#f2f5f9;color:#000;text-decoration:none;line-height:2.2em;vertical-align:middle}
+a.btn_b01 {display:inline-block;padding:7px;border:1px solid #d9ded9;background:#f2f5f9;color:#000;text-decoration:none;vertical-align:middle}
 a.btn_b01:focus, .btn_b01:hover {text-decoration:none}
-a.btn_b02 {display:inline-block;padding:0 10px;height:25px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none;line-height:2.2em;vertical-align:middle}
+a.btn_b02 {display:inline-block;padding:7px 7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none;vertical-align:middle}
 a.btn_b02:focus, .btn_b02:hover {text-decoration:none}
-a.btn_admin {display:inline-block;padding:0 10px;height:25px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;line-height:2.2em;vertical-align:middle} /* 관리자 전용 버튼 */
+a.btn_admin {display:inline-block;padding:7px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;vertical-align:middle} /* 관리자 전용 버튼 */
 a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 /* 댓글 스타일 */
