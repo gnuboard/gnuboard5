@@ -2,10 +2,11 @@
 if (!defined('_GNUBOARD_')) exit;
 
 // 최신글 추출
-function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
+// $cache_time 캐시 갱신시간
+function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=1)
 {
     global $g5;
-    static $css = array();
+    //static $css = array();
 
     if (!$skin_dir) $skin_dir = 'basic';
 
@@ -17,12 +18,32 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
         $latest_skin_url  = G5_SKIN_URL.'/latest/'.$skin_dir;
     }
 
-    $cache_file = G5_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
-    if (!G5_USE_CACHE || !file_exists($cache_file)) {
+    $cache_fwrite = false;
+    if(G5_USE_CACHE) {
+        $cache_file = G5_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
+
+        if(!file_exists($cache_file)) {
+            $cache_fwrite = true;
+        } else {
+            if($cache_time > 0) {
+                $filetime = filemtime($cache_file);
+                if($filetime && $filetime < (G5_SERVER_TIME - 3600 * $cache_time)) {
+                    @unlink($cache_file);
+                    $cache_fwrite = true;
+                }
+            }
+
+            if(!$cache_fwrite)
+                include_once($cache_file);
+        }
+    }
+
+    if(!G5_USE_CACHE || $cache_fwrite) {
         $list = array();
 
         $sql = " select * from {$g5['board_table']} where bo_table = '{$bo_table}' ";
         $board = sql_fetch($sql);
+        $bo_subject = get_text($board['bo_subject']);
 
         $tmp_write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
         $sql = " select * from {$tmp_write_table} where wr_is_comment = 0 order by wr_num limit 0, {$rows} ";
@@ -31,13 +52,13 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40)
             $list[$i] = get_list($row, $board, $latest_skin_url, $subject_len);
         }
 
-        $handle = fopen($cache_file, 'w');
-        $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject=\"".get_text($board['bo_subject'])."\";\n\$list=".var_export($list, true)."?>";
-        fwrite($handle, $cache_content);
-        fclose($handle);
+        if($cache_fwrite) {
+            $handle = fopen($cache_file, 'w');
+            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject=\"".$bo_subject."\";\n\$list=".var_export($list, true)."?>";
+            fwrite($handle, $cache_content);
+            fclose($handle);
+        }
     }
-
-    include_once($cache_file);
 
     /*
     // 같은 스킨은 .css 를 한번만 호출한다.
