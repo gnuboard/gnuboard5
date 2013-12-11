@@ -15,11 +15,6 @@ if ($is_admin)
     echo '<div class="sev_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin">이벤트 관리</a></div>';
 ?>
 
-<script>
-var itemlist_ca_id = "<?php echo $ev_id; ?>";
-</script>
-<script src="<?php echo G5_JS_URL; ?>/shop.list.js"></script>
-
 <!-- 이벤트 시작 { -->
 <?php
 // 상단 HTML
@@ -39,9 +34,6 @@ $list_file = G5_SHOP_SKIN_PATH."/{$ev['ev_mobile_skin']}";
 if (file_exists($list_file))
 {
     include G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
-
-    // 상품 보기 타입 변경 버튼
-    include G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
 
     // 총몇개 = 한줄에 몇개 * 몇줄
     $items = $ev['ev_mobile_list_mod'];
