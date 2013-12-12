@@ -22,7 +22,7 @@ if (!isset($board['bo_device'])) {
 }
 
 if (!isset($board['bo_show_menu'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_order_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", false);
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", false);
 }
 
 if (!isset($board['bo_mobile_skin'])) {
