@@ -133,14 +133,15 @@ var list_delete_php = 'popular_list.php';
     </tbody>
     </table>
 
-    <?php if ($is_admin == 'super'){ ?>
-    <div class="btn_list01 btn_list">
-        <button type="submit">선택삭제</button>
-    </div>
-    <?php } ?>
-
-    </form>
 </div>
+
+<?php if ($is_admin == 'super'){ ?>
+<div class="btn_list01 btn_list">
+    <button type="submit">선택삭제</button>
+</div>
+<?php } ?>
+
+</form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
 
