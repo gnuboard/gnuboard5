@@ -1,9 +1,8 @@
 !.gitignore
 .htaccess
-config.php
 data/
 test/
-sirgle
+sirgle/
 test.php
 *.key
 *.sh
