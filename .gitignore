@@ -1,3 +1,4 @@
+!.gitignore
 .htaccess
 config.php
 data/
