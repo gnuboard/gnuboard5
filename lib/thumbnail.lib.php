@@ -22,13 +22,13 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
         $write_table = $g5['write_prefix'].$bo_table;
         $sql = " select wr_content from $write_table where wr_id = '$wr_id' ";
         $write = sql_fetch($sql);
-        $matchs = get_editor_image($write['wr_content']);
+        $matches = get_editor_image($write['wr_content']);
         $edt = true;
 
-        for($i=0; $i<count($matchs[1]); $i++)
+        for($i=0; $i<count($matches[1]); $i++)
         {
             // 이미지 path 구함
-            $p = parse_url($matchs[1][$i]);
+            $p = parse_url($matches[1][$i]);
             if(strpos($p['path'], "/data/") != 0)
                 $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
             else
@@ -47,7 +47,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
                 $filename = basename($srcfile);
                 $filepath = dirname($srcfile);
 
-                preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matchs[0][$i], $malt);
+                preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matches[0][$i], $malt);
                 $alt = get_text($malt[1]);
 
                 break;
@@ -84,14 +84,25 @@ function get_view_thumbnail($contents, $thumb_width=0)
         $thumb_width = $board['bo_image_width'];
 
     // $contents 중 img 태그 추출
-    $matchs = get_editor_image($contents);
+    $matches = get_editor_image($contents);
 
-    if(empty($matchs))
+    if(empty($matches))
         return $contents;
 
-    for($i=0; $i<count($matchs[1]); $i++) {
+    for($i=0; $i<count($matches[1]); $i++) {
+
+        $img = $matches[1][$i];
+        preg_match("/src=[\'\"]?([^>\'\"]+[^>\'\"]+)/i", $img, $m);
+        $src = $m[1];
+        preg_match("/style=[\"\']?([^\"\'>]+)/i", $img, $m);
+        $style = $m[1];
+        preg_match("/width:\s*(\d+)px/", $style, $m);
+        $width = $m[1];
+        preg_match("/height:\s*(\d+)px/", $style, $m);
+        $height = $m[1];
+
         // 이미지 path 구함
-        $p = parse_url($matchs[1][$i]);
+        $p = parse_url($src);
         if(strpos($p['path'], "/data/") != 0)
             $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
         else
@@ -154,14 +165,18 @@ function get_view_thumbnail($contents, $thumb_width=0)
             else
                 $thumb_file = $filename;
 
-            $img_tag = $matchs[0][$i];
             preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $img_tag, $malt);
             $alt = get_text($malt[1]);
-            $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'"/>';
+            if ($width) {
+                $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'" width="'.$width.'" height="'.$height.'"/>';
+            } else {
+                $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'"/>';
+            }
 
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
-            if(strpos($matchs[1][$i], 'data/editor') && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
-                $imgurl = str_replace(G5_URL, "", $matchs[1][$i]);
+            $img_tag = $matches[0][$i];
+            if(strpos($img_tag, 'data/editor') && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
+                $imgurl = str_replace(G5_URL, "", $img_tag);
                 $thumb_tag = '<a href="'.G5_BBS_URL.'/view_image.php?fn='.urlencode($imgurl).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
             }
 

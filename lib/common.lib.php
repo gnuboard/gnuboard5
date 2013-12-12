@@ -2006,7 +2006,8 @@ function get_editor_image($contents)
         return false;
 
     // $contents 중 img 태그 추출
-    $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/";
+    //$pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/";
+    $pattern = "/<img([^>]*)>/iS";
     preg_match_all($pattern, $contents, $matchs);
 
     return $matchs;
