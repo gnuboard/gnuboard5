@@ -176,7 +176,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             $img_tag = $matches[0][$i];
             if(strpos($img_tag, 'data/editor') && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
-                $imgurl = str_replace(G5_URL, "", $img_tag);
+                $imgurl = str_replace(G5_URL, "", $src);
                 $thumb_tag = '<a href="'.G5_BBS_URL.'/view_image.php?fn='.urlencode($imgurl).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
             }
 
