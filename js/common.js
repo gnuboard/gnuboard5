@@ -356,7 +356,7 @@ var win_homepage = function(href) {
  * 우편번호 창
  **/
 var win_zip = function(href) {
-    var new_win = window.open(href, 'win_zip', 'width=616, height=460, scrollbars=1');
+    var new_win = window.open(href, 'win_zip', 'width=616, height=760, scrollbars=1');
     new_win.focus();
 }
 
