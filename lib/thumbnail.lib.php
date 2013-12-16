@@ -22,7 +22,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
         $write_table = $g5['write_prefix'].$bo_table;
         $sql = " select wr_content from $write_table where wr_id = '$wr_id' ";
         $write = sql_fetch($sql);
-        $matches = get_editor_image($write['wr_content']);
+        $matches = get_editor_image($write['wr_content'], false);
         $edt = true;
 
         for($i=0; $i<count($matches[1]); $i++)
@@ -84,7 +84,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
         $thumb_width = $board['bo_image_width'];
 
     // $contents 중 img 태그 추출
-    $matches = get_editor_image($contents);
+    $matches = get_editor_image($contents, true);
 
     if(empty($matches))
         return $contents;
