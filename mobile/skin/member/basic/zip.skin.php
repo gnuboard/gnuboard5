@@ -130,7 +130,7 @@ function put_data(zip1, zip2, addr1, addr2, jibeon)
     of.<?php echo $frm_addr1; ?>.value = addr1;
     of.<?php echo $frm_addr2; ?>.value = addr2;
 
-    window.opener.document.getElementById("addr_jibeon").innerText = "지번주소 : "+jibeon;
+    window.opener.document.getElementById("<?php echo $frm_jibeon; ?>").innerText = "지번주소 : "+jibeon;
 
     if(of.<?php echo $frm_jibeon; ?> !== undefined)
         of.<?php echo $frm_jibeon; ?>.value = jibeon;

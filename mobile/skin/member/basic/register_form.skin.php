@@ -150,7 +150,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 <label for="reg_mb_addr2" class="sound_only">상세주소<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
                 <input type="text" name="mb_addr2" value="<?php echo $member['mb_addr2'] ?>" id="reg_mb_addr2" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50">
                 <input type="hidden" name="mb_addr_jibeon" value=""><br>
-                <span id="addr_jibeon"></span>
+                <span id="mb_addr_jibeon"></span>
                 <script>
                 // 우편번호 자바스크립트 비활성화 대응을 위한 코드
                 $('<a href="<?php echo G5_BBS_URL ?>/zip.php?frm_name=fregisterform&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2&amp;frm_jibeon=mb_addr_jibeon" id="reg_zip_find" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#reg_win_zip');
