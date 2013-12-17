@@ -644,7 +644,7 @@ function get_intall_file()
                 <th scope="row"><label for="od_hp">핸드폰</label></th>
                 <td><input type="text" name="od_hp" value="<?php echo $member['mb_hp']; ?>" id="od_hp" class="frm_input" maxlength="20"></td>
             </tr>
-            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2'; ?>
+            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2&amp;frm_jibeon=od_addr_jibeon'; ?>
             <tr>
                 <th scope="row">주소</th>
                 <td>
@@ -658,9 +658,11 @@ function get_intall_file()
                     <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="50">
                     <label for="od_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
                     <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" required class="frm_input frm_address required" size="50">
+                    <input type="hidden" name="od_addr_jibeon" value="">
+                    <br><span id="od_addr_jibeon"></span>
                     <script>
                     // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-                    $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_win_zip');
+                    $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>').appendTo('#od_win_zip');
                     $("#od_win_zip").css("display", "inline");
                     $("#od_zip1, #od_zip2, #od_addr1").attr('readonly', 'readonly');
                     </script>
@@ -775,7 +777,7 @@ function get_intall_file()
                 <th scope="row"><label for="od_b_hp">핸드폰</label></th>
                 <td><input type="text" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20"></td>
             </tr>
-            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2'; ?>
+            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2&amp;frm_jibeon=od_b_addr_jibeon'; ?>
             <tr>
                 <th scope="row">주소</th>
                 <td id="sod_frm_addr">
@@ -789,9 +791,11 @@ function get_intall_file()
                     <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="50">
                     <label for="od_b_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
                     <input type="text" name="od_b_addr2" id="od_b_addr2" required class="frm_input frm_address required" size="50">
+                    <input type="hidden" name="od_b_addr_jibeon" value="">
+                    <br><span id="od_b_addr_jibeon"></span>
                     <script>
                     // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-                    $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">우편번호 검색</a><br>').appendTo('#od_winb_zip');
+                    $('<a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>').appendTo('#od_winb_zip');
                     $("#od_winb_zip").css("display", "inline");
                     $("#od_b_zip1, #od_b_zip2, #od_b_addr1").attr('readonly', 'readonly');
                     </script>

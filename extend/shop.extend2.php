@@ -743,4 +743,11 @@ if(!sql_query(" select nw_device from {$g5['g5_shop_new_win_table']} limit 1 ", 
     sql_query(" ALTER TABLE `{$g5['g5_shop_new_win_table']}`
                     ADD `nw_device` varchar(10) NOT NULL DEFAULT 'both' AFTER `nw_id` ", true);
 }
+
+// 주문정보 지번주소 필드 추가
+if(!sql_query(" select od_addr_jibeon from {$g5['g5_shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
+                    ADD `od_addr_jibeon` varchar(255) NOT NULL DEFAULT '' AFTER `od_addr2`,
+                    ADD `od_b_addr_jibeon` varchar(255) NOT NULL DEFAULT '' AFTER `od_b_addr2` ", true);
+}
 ?>
