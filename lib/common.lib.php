@@ -2000,14 +2000,16 @@ function delete_board_thumbnail($bo_table, $file)
 }
 
 // 에디터 이미지 얻기
-function get_editor_image($contents)
+function get_editor_image($contents, $view=true)
 {
     if(!$contents)
         return false;
 
     // $contents 중 img 태그 추출
-    //$pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/";
-    $pattern = "/<img([^>]*)>/iS";
+    if ($view)
+        $pattern = "/<img([^>]*)>/iS";
+    else
+        $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/";
     preg_match_all($pattern, $contents, $matchs);
 
     return $matchs;

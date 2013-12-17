@@ -5,6 +5,7 @@ include_once('./_common.php');
 //ini_set('memory_limit', '20M');
 //$zipfile = file("./zip.db");
 
+/*
 $zipfile = array();
 $fp = fopen('./zip.db', 'r');
 while(!feof($fp)) {
@@ -14,17 +15,17 @@ fclose($fp);
 
 $search_count = 0;
 
-if ($addr1) 
+if ($addr1)
 {
-    while ($zipcode = each($zipfile)) 
+    while ($zipcode = each($zipfile))
     {
         if(strstr(substr($zipcode[1],9,512), $addr1))
         {
             $list[$search_count][zip1] = substr($zipcode[1],0,3);
-            $list[$search_count][zip2] = substr($zipcode[1],4,3);    
+            $list[$search_count][zip2] = substr($zipcode[1],4,3);
             $addr = explode(" ", substr($zipcode[1],8));
 
-            if ($addr[sizeof($addr)-1]) 
+            if ($addr[sizeof($addr)-1])
             {
                 $list[$search_count][addr] = str_replace($addr[sizeof($addr)-1], "", substr($zipcode[1],8));
                 $list[$search_count][bunji] = trim($addr[sizeof($addr)-1]);
@@ -34,20 +35,21 @@ if ($addr1)
 
             $list[$search_count][encode_addr] = urlencode($list[$search_count][addr]);
             $search_count++;
-        }    
+        }
     }
 
     if (!$search_count) alert('찾으시는 주소가 없습니다.');
 }
+*/
 
 /* 기존의 DB에서 불러오는 방식
-if ($addr1) 
+if ($addr1)
 {
     //$sql = " select * from $g5[zip_table] where zp_dong like '%$addr1%' order by zp_id ";
     $sql = " select * from $g5[zip_table] where zp_dong like '%$addr1%' order by zp_sido, zp_gugun, zp_dong ";
     $result = sql_query($sql);
     $search_count = 0;
-    for ($i=0; $row=sql_fetch_array($result); $i++) 
+    for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $list[$i][zip1] = substr($row[zp_code], 0, 3);
         $list[$i][zip2] = substr($row[zp_code], 3, 3);
@@ -57,7 +59,7 @@ if ($addr1)
         $search_count++;
     }
 
-    if (!$search_count) 
+    if (!$search_count)
         alert("찾으시는 주소가 없습니다.");
 }
 */

@@ -231,7 +231,6 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc p a {text-decoration:underline}
 #bo_vc_empty {margin:0;padding:20px !important;text-align:center}
-#bo_vc fieldset {margin:0 0 10px;padding:0}
 #bo_vc #bo_vc_winfo {float:left}
 #bo_vc footer {zoom:1}
 #bo_vc footer:after {display:block;visibility:hidden;clear:both;content:""}
@@ -248,5 +247,3 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_vc_sns:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc_sns li {float:left;margin:0 20px 0 0}
 #bo_vc_sns input {margin:0 0 0 5px}
-
-#bo_vc form {padding:0}
