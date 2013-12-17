@@ -21,16 +21,20 @@
             var width = $this.width();
 
             $img.each(function() {
-                $(this).removeAttr("width")
-                       .removeAttr("height")
-                       .css("width","")
-                       .css("height", "");
-
                 if($(this).data("width") == undefined)
                     $(this).data("width", $(this).width());
 
                 if($(this).data("width") > width) {
-                    $(this).css("width", "100%");
+                    $(this).removeAttr("width")
+                           .removeAttr("height")
+                           .css("width","")
+                           .css("height", "");
+
+                    if($(this).data("width") > width) {
+                        $(this).css("width", "100%");
+                    }
+                } else {
+                    $(this).attr("width", $(this).data("width"));
                 }
             });
         }
