@@ -142,13 +142,14 @@ button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f
 
 .btn_confirm {text-align:center} /* 서식단계 진행 */
 
-.btn_submit {padding:8px;border:0;background:#ff3061;color:#fff;letter-spacing:-0.1em}
+.btn_submit {padding:8px;border:0;background:#ff3061;color:#fff;letter-spacing:-0.1em;cursor:pointer}
 fieldset .btn_submit {padding:0 7px;height:24px;line-height:1em}
 
 a.btn_cancel {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle}
 button.btn_cancel {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;vertical-align:top;text-decoration:none}
 
-a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:1.9em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.9em} /* 우편번호검색버튼 등 */
+a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
+a.btn_frmline {line-height:24px}
 button.btn_frmline {font-size:1em}
 
 /* 게시판용 버튼 */
