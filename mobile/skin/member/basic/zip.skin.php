@@ -9,49 +9,47 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
     <p>
-    시도 및 시군구 선택없이 도로명, 읍/면/동, 건물명 등으로 검색하실 수 있습니다.<br>
-    검색결과는 최대 1,000건만 표시됩니다. 만약 검색결과에 찾으시는 주소가 없을 때는<br>
-    시도와 시군구를 선택하신 후 다시 검색해 주십시오.
+        시도 및 시군구 선택없이 도로명, 읍/면/동, 건물명 등으로 검색하실 수 있습니다.<br>
+        만약 검색결과에 찾으시는 주소가 없을 때는 시도와 시군구를 선택하신 후 다시 검색해 주십시오.<br>
+        (검색결과는 최대 1,000건만 표시됩니다.)
     </p>
 
     <form name="fzip" method="get" onsubmit="search_call(); return false;" autocomplete="off">
     <!-- 검색어 입력 시작 { -->
-    <fieldset>
+    <div id="code_sch">
+        <label for="sido" class="sound_only">시도선택</label>
+        <select name="sido" id="sido">
+            <option value="">- 시도 선택 -</option>
+            <option value="서울특별시">서울</option>
+            <option value="부산광역시">부산</option>
+            <option value="대구광역시">대구</option>
+            <option value="인천광역시">인천</option>
+            <option value="광주광역시">광주</option>
+            <option value="대전광역시">대전</option>
+            <option value="울산광역시">울산</option>
+            <option value="강원도">강원</option>
+            <option value="경기도">경기</option>
+            <option value="경상남도">경남</option>
+            <option value="경상북도">경북</option>
+            <option value="전라남도">전남</option>
+            <option value="전라북도">전북</option>
+            <option value="제주특별자치도">제주</option>
+            <option value="충청남도">충남</option>
+            <option value="충청북도">충북</option>
+        </select>
+        <label for="gugun" class="sound_only">시군구</label>
+        <select name="gugun" id="gugun">
+            <option value="">- 시군구 선택 -</option>
+        </select>
         <div>
-            <label for="sido">시도선택</label>
-            <select name="sido" id="sido">
-                <option value="">- 시도 선택 -</option>
-                <option value="서울특별시">서울</option>
-                <option value="부산광역시">부산</option>
-                <option value="대구광역시">대구</option>
-                <option value="인천광역시">인천</option>
-                <option value="광주광역시">광주</option>
-                <option value="대전광역시">대전</option>
-                <option value="울산광역시">울산</option>
-                <option value="강원도">강원</option>
-                <option value="경기도">경기</option>
-                <option value="경상남도">경남</option>
-                <option value="경상북도">경북</option>
-                <option value="전라남도">전남</option>
-                <option value="전라북도">전북</option>
-                <option value="제주특별자치도">제주</option>
-                <option value="충청남도">충남</option>
-                <option value="충청북도">충북</option>
-            </select>
-            <label for="gugun">시군구</label>
-            <select name="gugun" id="gugun">
-                <option value="">- 시군구 선택 -</option>
-            </select>
-        </div>
-        <div>
-            <label for="q">검색어</label>
+            <label for="q" class="sound_only">검색어</label>
             <input type="text" name="q" value="" id="q" required  class="required frm_input">
             <input type="submit" value="검색" class="btn_submit">
         </div>
-    </fieldset>
+    </div>
     <!-- } 검색어 입력 끝 -->
 
-    <div id="result"></div>
+    <div id="result"><span id="result_b4">검색어를 입력해주세요.</span></div>
 
     <div class="win_btn">
         <button type="button" onclick="window.close();">창닫기</button>
