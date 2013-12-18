@@ -205,17 +205,11 @@ include_once('./admin.head.php');
         <td colspan="3" style="line-height:2em">
             <input type="text" name="mb_zip1" value="<?php echo $mb['mb_zip1'] ?>" id="mb_zip1" title="우편번호 앞자리" class="frm_input readonly" size="3" maxlength="3"> -
             <input type="text" name="mb_zip2" value="<?php echo $mb['mb_zip2'] ?>" id="mb_zip2" title="우편번호 뒷자리" class="frm_input readonly" size="3" maxlength="3">
-            <span id="win_zip" style="display:block"></span>
-            <input type="text" name="mb_addr1" value="<?php echo $mb['mb_addr1'] ?>" id="mb_addr1" title="행정기본주소" class="frm_input readonly" size="50"><br>
-            <input type="text" name="mb_addr2" value="<?php echo $mb['mb_addr2'] ?>" id="mb_addr2" title="상세주소" class="frm_input" size="50"> 상세주소 입력
+            <a href="<?php echo G5_BBS_URL ?>/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2&amp;frm_jibeon=mb_addr_jibeon" id="win_zip" class="win_zip_find btn_frmline" target="_blank">주소 검색</a><br>
+            <input type="text" name="mb_addr1" value="<?php echo $mb['mb_addr1'] ?>" id="mb_addr1" title="행정기본주소" class="frm_input readonly" size="70"><br>
+            <input type="text" name="mb_addr2" value="<?php echo $mb['mb_addr2'] ?>" id="mb_addr2" title="상세주소" class="frm_input" size="70">
             <input type="hidden" name="mb_addr_jibeon" value=""><br>
             <span id="mb_addr_jibeon">지번주소 : <?php echo $mb['mb_addr_jibeon']; ?></span>
-            <script>
-            // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-            $('<a href="<?php echo G5_BBS_URL ?>/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2&amp;frm_jibeon=mb_addr_jibeon" id="win_zip" class="win_zip_find btn_frmline" target="_blank">주소 검색</a><br>').appendTo('#win_zip');
-            $('#win_zip').css('display','inline');
-            $('#mb_zip1,#mb_zip2,#mb_addr1').attr('readonly','readonly');
-            </script>
         </td>
     </tr>
     <tr>

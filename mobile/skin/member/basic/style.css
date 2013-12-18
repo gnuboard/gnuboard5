@@ -84,7 +84,11 @@
 
 /* 회원가입 입력 */
 #fregisterform #reg_mb_email, #fregisterform .frm_address {width:100%}
+#fregisterform #mb_addr_jibeon {display:block;margin:5px 0 0}
+
 #fregisterform textarea {width:100%;height:50px}
+
+#fregisterform #msg_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
 
 /* 회원가입 완료 */
 #reg_result {padding:40px 10px 0}
@@ -172,12 +176,17 @@
 #profile .sv_wrap a {margin:0 0 5px;padding:0;font-weight:bold;line-height:10px}
 
 /* 우편번호 검색 */
-#post_code fieldset {margin:0 auto 10px;padding:10px;text-align:center}
-#post_code dl {margin:0 0 10px;padding:15px 10px;background:#fff}
-#post_code dt {margin-bottom:15px;color:#000}
-#post_code dd {margin:0;padding:0}
-#post_code ul {margin:0;padding:0;list-style:none}
-#post_code li a {display:block;padding:5px 0;border-bottom:1px solid #eee;color:#000;text-decoration:none}
-#post_code p {margin:0 auto 30px;padding:0 10px}
-#post_code .btn_submit {height:1.9em !important;line-height:1.9em !important}
-.post_code {display:inline-block;width:100px;color:#999}
+#post_code p {margin:0 20px 10px}
+#post_code #code_sch {margin:0 20px}
+#post_code #code_sch div {margin:5px 0 0}
+#post_code #code_sch .frm_input {height:22px}
+#post_code #code_sch .btn_submit {padding:0 8px;height:24px}
+#post_code #result {margin:0 20px}
+#post_code #result_b4 {display:block;padding:30px 0;border-bottom:1px solid #dde4e9;text-align:center}
+#post_code #result .result_msg {padding:15px 0}
+#post_code #result .result_fail {border:1px solid #dde4e9;background:#f0f5fc;color:#ff3061;text-align:center}
+#post_code #result ul {margin:0;padding:0;border-bottom:1px solid #dde4e9;background:#f0f5fc;list-style:none}
+#post_code #result li {padding:0 10px 10px;border:1px solid #dde4e9;border-bottom:0}
+#post_code #result li a {display:block;padding:10px 0 4px}
+#post_code #result li div {color:#738D94}
+#post_code #result li div:before {content:"▶ "}
