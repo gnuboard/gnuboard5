@@ -8,11 +8,12 @@ html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 #hd ul, nav ul, #ft ul {margin:0;padding:0;list-style:none}
-legend {position:absolute;margin:0;padding:0;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
+legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, button, select, img {vertical-align:middle}
 input, button {margin:0;padding:0;font-family:dotum;font-size:1em}
 button {cursor:pointer}
 textarea, select {font-family:dotum;font-size:1em}
+select {margin:0}
 p {margin:0;padding:10px 0;line-height:1.7em;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
@@ -226,7 +227,8 @@ fieldset .btn_submit {padding:0 7px;height:24px;line-height:1em}
 a.btn_cancel {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;vertical-align:middle}
 button.btn_cancel {display:inline-block;padding:7px;border:1px solid #ccc;background:#fafafa;color:#000;vertical-align:top;text-decoration:none}
 
-a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:1.9em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top;line-height:1.9em} /* 우편번호검색버튼 등 */
+a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;height:24px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:middle} /* 우편번호검색버튼 등 */
+a.btn_frmline {line-height:24px}
 button.btn_frmline {font-size:1em}
 
 /* 게시판용 버튼 */
@@ -698,6 +700,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_list #cp_frm {z-index:10000;position:absolute;top:0;left:99px;padding:20px;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll;overflow-x:none}
 
 #sod_frm_orderer {margin:20px 0 40px}
+#sod_frm_orderer #od_addr_jibeon, #sod_frm_taker #od_b_addr_jibeon {display:block;margin:5px 0 0}
 
 #sod_frm_addr div {position:relative} /* FF 포지션 */
 #sod_frm_addr div div {position:absolute;top:-20px;left:170px}

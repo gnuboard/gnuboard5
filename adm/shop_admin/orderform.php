@@ -44,8 +44,8 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_sodr_chk">결제상세정보 확인</a></li>
 <li><a href="#anc_sodr_paymo">결제상세정보 수정</a></li>
 <li><a href="#anc_sodr_memo">상점메모</a></li>
-<li><a href="#anc_sodr_payer">주문하신 분</a></li>
-<li><a href="#anc_sodr_addressee">받으시는 분</a></li>
+<li><a href="#anc_sodr_orderer">주문하신 분</a></li>
+<li><a href="#anc_sodr_taker">받으시는 분</a></li>
 </ul>';
 
 $html_receipt_chk = '<input type="checkbox" id="od_receipt_chk" value="'.$od['od_misu'].'" onclick="chk_receipt_price()">
@@ -704,7 +704,7 @@ $result = sql_query($sql);
 
     <div class="compare_wrap">
 
-        <section id="anc_sodr_payer" class="compare_left">
+        <section id="anc_sodr_orderer" class="compare_left">
             <h3>주문하신 분</h3>
 
             <div class="tbl_frm01">
@@ -735,21 +735,14 @@ $result = sql_query($sql);
                         -
                         <label for="od_zip2" class="sound_only">우편번호 뒷자리</label>
                         <input type="text" name="od_zip2" value="<?php echo $od['od_zip2']; ?>" id="od_zip2" required class="frm_input required" size="4">
+                        <a href="<?php echo G5_BBS_URL; ?>/zip.php?frm_name=frmorderform3&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2&amp;frm_jibeon=od_addr_jibeon" id="od_zip_find" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>
                         <span id="od_win_zip" style="display:block"></span>
                         <label for="od_addr1" class="sound_only">주소</label>
                         <input type="text" name="od_addr1" value="<?php echo $od['od_addr1']; ?>" id="od_addr1" required class="frm_input required" size="50"><br>
                         <label for="od_addr2" class="sound_only">상세주소</label>
                         <input type="text" name="od_addr2" value="<?php echo $od['od_addr2']; ?>" id="od_addr2" required class="frm_input required" size="50">
-                        <input type="hidden" name="od_addr_jibeon" value="">
-                        <br><span id="od_addr_jibeon">지번주소 : <?php echo $od['od_addr_jibeon']; ?></span>
-
-                        <script>
-                        // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-                        $('<a href="<?php echo G5_BBS_URL; ?>/zip.php?frm_name=frmorderform3&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2&amp;frm_jibeon=od_addr_jibeon" id="od_zip_find" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>').appendTo('#od_win_zip');
-                        $("#od_win_zip").css("display", "inline");
-                        $("#od_zip1, #od_zip2, #od_addr1").attr('readonly', 'readonly');
-                        $("#od_zip1, #od_zip2, #od_addr1").addClass('readonly');
-                        </script>
+                        <input type="hidden" name="od_addr_jibeon" value=""><br>
+                        <span id="od_addr_jibeon">지번주소 : <?php echo $od['od_addr_jibeon']; ?></span>
                 </tr>
                 <tr>
                     <th scope="row"><label for="od_email"><span class="sound_only">주문하신 분 </span>E-mail</label></th>
@@ -764,7 +757,7 @@ $result = sql_query($sql);
             </div>
         </section>
 
-        <section id="anc_sodr_addressee" class="compare_right">
+        <section id="anc_sodr_taker" class="compare_right">
             <h3>받으시는 분</h3>
 
             <div class="tbl_frm01">
@@ -795,21 +788,13 @@ $result = sql_query($sql);
                         -
                         <label for="od_b_zip2" class="sound_only">우편번호 뒷자리</label>
                         <input type="text" name="od_b_zip2" value="<?php echo $od['od_b_zip2']; ?>" id="od_b_zip2" required class="frm_input required" size="4">
-                        <span id="od_win_zipb" style="display:block"></span>
+                        <a href="<?php echo G5_BBS_URL; ?>/zip.php?frm_name=frmorderform3&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2&amp;frm_jibeon=od_b_addr_jibeon" id="od_zip_findb" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>
                         <label for="od_b_addr1" class="sound_only">주소</label>
                         <input type="text" name="od_b_addr1" value="<?php echo $od['od_b_addr1']; ?>" id="od_b_addr1" required class="frm_input required" size="50"><br>
                         <label for="od_b_addr2" class="sound_only">상세주소</label>
                         <input type="text" name="od_b_addr2" value="<?php echo $od['od_b_addr2']; ?>" id="od_b_addr2" required class="frm_input required" size="50">
-                        <input type="hidden" name="od_b_addr_jibeon" value="">
-                        <br><span id="od_b_addr_jibeon">지번주소 : <?php echo $od['od_b_addr_jibeon']; ?></span>
-
-                        <script>
-                        // 우편번호 자바스크립트 비활성화 대응을 위한 코드
-                        $('<a href="<?php echo G5_BBS_URL; ?>/zip.php?frm_name=frmorderform3&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2&amp;frm_jibeon=od_b_addr_jibeon" id="od_zip_findb" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>').appendTo('#od_win_zipb');
-                        $("#od_win_zipb").css("display", "inline");
-                        $("#od_b_zip1, #od_b_zip2, #od_b_addr1").attr('readonly', 'readonly');
-                        $("#od_b_zip1, #od_b_zip2, #od_b_addr1").addClass('readonly');
-                        </script>
+                        <input type="hidden" name="od_b_addr_jibeon" value=""><br>
+                        <span id="od_b_addr_jibeon">지번주소 : <?php echo $od['od_b_addr_jibeon']; ?></span>
                     </td>
                 </tr>
 

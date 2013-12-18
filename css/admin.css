@@ -121,7 +121,7 @@ h3 {margin:0 20px}
 .compare_wrap section {margin:10px 0;padding:2%;background:#f2f5f9}
 .compare_wrap h3 {margin:10px 0 20px;text-align:center}
 .compare_wrap .tbl_frm {margin:0}
-.compare_wrap .frm_input {background:#fff}
+.compare_wrap .frm_input, .compare_wrap .required {background-color:#fff !important}
 .compare_wrap .btn_confirm {padding:10px 0 0}
 .compare_left {float:left;width:45%}
 .compare_right {float:right;width:45%}
@@ -544,10 +544,9 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sodr_sppay {color:#1f9bff}
 #anc_sodr_memo textarea {width:98%}
 #anc_sodr_memo .btn_confirm {margin:10px 0 0}
-#anc_sodr_payer #od_addr1,
-#anc_sodr_payer #od_addr2 {margin:5px 0 0}
-#anc_sodr_addressee #od_b_addr1,
-#anc_sodr_addressee #od_b_addr2 {margin:5px 0 0}
+#anc_sodr_orderer #od_addr1, #anc_sodr_orderer #od_addr2 {margin:5px 0 0}
+#anc_sodr_taker #od_b_addr1, #anc_sodr_taker #od_b_addr2 {margin:5px 0 0}
+#anc_sodr_orderer #od_addr_jibeon, #anc_sodr_taker #od_b_addr_jibeon {display:block;margin:5px 0 0}
 
 #sodr_qty_log h3 {margin:20px 0 10px}
 #sodr_qty_log div {padding:10px;height:auto !important;height:200px;max-height:200px;border:1px solid #e9e9e9;background:#f5f6fa;line-height:1.8em;overflow-y:scroll}

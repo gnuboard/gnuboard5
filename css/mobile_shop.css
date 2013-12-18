@@ -287,6 +287,7 @@ html.no-overflowscrolling #cp_frm {height:auto;max-height:10000px !important} /*
 #sod_frm_deli #order_address {display:block;padding:5px 0;background:#000;color:#fff;text-align:center}
 
 #sod_frm_orderer {margin:15px 0 30px}
+#sod_frm_orderer #od_addr_jibeon, #sod_frm_taker #od_b_addr_jibeon {display:block;margin:5px 0 0}
 
 #sod_frm_addr div {display:inline-block}
 
