@@ -136,7 +136,7 @@ h2.h2_frm {padding-top:15px}
 .btn_submit {background:#ff3061}
 .btn_confirm .btn_submit {padding:0 15px;border:0;height:30px;color:#fff}
 .btn_cancel {display:inline-block;padding:0 15px;height:30px;border:0;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
-.btn_frmline {display:inline-block;padding:0 7px 0 5px;height:21px;border:0;background:#444;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:middle;line-height:2em} /* 우편번호검색버튼 등 */
+.btn_frmline {display:inline-block;padding:0 7px;height:24px;border:0;background:#444;color:#fff !important;letter-spacing:-0.1em;text-decoration:none;vertical-align:middle;line-height:2em} /* 우편번호검색버튼 등 */
 .btn_frmline:focus, .btn_frmline:hover, .btn_frmline:active {text-decoration:none}
 
 .btn_win {margin:0 20px 10px} /* 새창용 */
