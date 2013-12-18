@@ -388,7 +388,7 @@ $(function(){
             return false;
         },
         threshold: 100,
-        excludedElements:"button, input, select, textarea, .noSwipe",
+        excludedElements:"button, input, select, textarea, .noSwipe, div#sit_more",
         allowPageScroll:"vertical"
     };
 

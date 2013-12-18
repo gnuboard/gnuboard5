@@ -271,7 +271,7 @@
                 }
             },
             threshold: 100,
-            excludedElements:"button, input, select, textarea, .noSwipe",
+            excludedElements:"a, button, input, select, textarea, .noSwipe",
             allowPageScroll:"vertical"
         });
     }
