@@ -99,9 +99,10 @@
 #reg_result .btn_confirm {margin:50px 0}
 
 /* 아이디/패스워드 찾기 */
-#find_info #info_fs {margin:0 auto 10px;padding:10px;border-bottom:1px solid #eee}
+#find_info #info_fs {margin:0 20px 10px}
+#find_info #info_fs p {padding:0 0 10px}
 #find_info #info_fs #mb_email {width:100%}
-#find_info #captcha {margin:0 0 10px;padding:0 10px 10px}
+#find_info #captcha {margin:0 20px;padding:0 0 10px}
 #find_info #captcha input {margin-left:5px}
 
 /* 로그인 */

@@ -108,8 +108,8 @@
 
 /* 아이디/패스워드 찾기 */
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
-#find_info #info_fs {margin:0 20px 20px;padding:10px 20px 15px;background:#fff}
-#find_info #captcha {position:absolute;top:110px;right:35px}
+#find_info #info_fs {margin:0 20px 20px;padding:0;background:#fff}
+#find_info #captcha {margin:0 20px}
 
 /* 로그인 */
 #mb_login {margin:0 auto;padding:100px 0;width:500px}
