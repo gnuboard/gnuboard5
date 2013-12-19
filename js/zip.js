@@ -42,10 +42,7 @@ function gugun_make(sido)
     sojae = sojaeji[sido].split(",");
     gugun.options.length = sojae.length+1;
     for (i=0; i<sojae.length; i++) {
-        if (sojae[i] == "없음") 
-            gugun.options[i+1].value = "";
-        else
-            gugun.options[i+1].value = sojae[i];
+        gugun.options[i+1].value = (sojae[i] == "없음") ? "" : sojae[i];
         gugun.options[i+1].text = sojae[i];
     }
 }
