@@ -15,9 +15,9 @@
 
 
 // include gnuboard config & lib
-include G5_PATH.'/config.php';
+//include G5_PATH.'/config.php';
 //include G5_LIB_PATH.'/common.lib.php';
-include G5_DATA_PATH.'/dbconfig.php';
+//include G5_DATA_PATH.'/dbconfig.php';
 
 $connect_db = sql_connect(G5_MYSQL_HOST, G5_MYSQL_USER, G5_MYSQL_PASSWORD);
 if(!$connect_db) return;
@@ -107,7 +107,7 @@ function _Syndi_getNextChannelId($channel_id=null)
 	if(!$channel_id)
 	{
 		$sql = "select b.bo_table from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
-		$sql .= " order by b.gr_id,b.bo_table limit 1";
+		$sql .= " order by b.bo_table limit 1";
 
 		$row = sql_fetch($sql);
 
@@ -117,7 +117,7 @@ function _Syndi_getNextChannelId($channel_id=null)
 	$channel_id = mysql_real_escape_string($channel_id);
 
 	$sql = "select b.bo_table from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_table>'$channel_id' and b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id";
-	$sql .= " order by b.gr_id,b.bo_table limit 1";
+	$sql .= " order by b.bo_table limit 1";
 
 	$result = sql_query($sql);
 	if(mysql_num_rows($result)==0) return false;
@@ -193,8 +193,7 @@ function _Syndi_getArticleList($args)
 	if($args->start_time) $where .= ' and wr_datetime >= '. _getTime($args->start_time);
 	if($args->end_time) $where .= ' and wr_datetime <= '. _getTime($args->end_time);
 
-	$sql = "select wr_id, ca_name, wr_subject, wr_content, mb_id, wr_name, wr_homepage, wr_email, wr_datetime, wr_last 
-		from " . $g5['write_prefix'] . $args->target_channel_id  . " where 1=1" . $where;
+	$sql = "select wr_id, ca_name, wr_subject, wr_content, mb_id, wr_name, wr_homepage, wr_email, wr_datetime, wr_last from " . $g5['write_prefix'] . $args->target_channel_id  . " where 1=1" . $where;
 	$sql .= " order by wr_id desc ";
 	$sql .= sprintf(" limit %s,%s", ($args->page-1)*$args->max_entry, $args->max_entry);
 
