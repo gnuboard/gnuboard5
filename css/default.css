@@ -258,15 +258,15 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto}
 .sv_nojs .sv {display:block}
 
-/* pagination */
-.pg_wrap {clear:both;margin:0 0 20px;padding-top:20px;text-align:center}
-.pg {display:inline-block;border:1px solid #cfded8;letter-spacing:-4px}
-.pg a:focus, .pg a:hover, .pg a:active {text-decoration:none}
-.pg_page, .pg_current {display:inline-block;padding:0 12px;height:30px;color:#000;letter-spacing:0;line-height:2.6em;vertical-align:middle}
-.pg_page {background:#f9f9f9;text-decoration:none}
-.pg_start, .pg_prev {border-right:1px solid #cfded8}
-.pg_end, .pg_next {border-left:1px solid #cfded8}
-.pg_current {background:#333;color:#fff;font-weight:bold}
+/* 페이징 */
+.pg_wrap {clear:both;margin:0 0 20px;padding:20px 0 0;text-align:center}
+.pg {}
+.pg_page, .pg_current {display:inline-block;padding:0 8px;height:25px;color:#000;letter-spacing:0;line-height:2.2em;vertical-align:middle}
+.pg a:focus, .pg a:hover {text-decoration:none}
+.pg_page {background:#e4eaec;text-decoration:none}
+.pg_start, .pg_prev {/* 이전 */}
+.pg_end, .pg_next {/* 다음 */}
+.pg_current {display:inline-block;margin:0 4px 0 0;background:#333;color:#fff;font-weight:normal}
 
 /* Mobile화면으로 */
 #device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
