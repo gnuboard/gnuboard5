@@ -3,8 +3,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 우편번호 찾기 시작 { -->
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
-<script src="<?php echo G5_JS_URL ?>/zip.js"></script>
+<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/zip.js"></script>
 
 <div id="post_code" class="new_win mbskin">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
@@ -45,6 +45,16 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </div>
 
 <script>
+$(function() {
+    $("input#q").bind("focusin", function() {
+        $("#q_info").fadeIn(200);
+    });
+
+    $("input#q").bind("focusout", function() {
+        $("#q_info").fadeOut(200);
+    });
+});
+
 function put_data(zip1, zip2, addr1, addr2, jibeon)
 {
     var of = window.opener.document.<?php echo $frm_name; ?>;

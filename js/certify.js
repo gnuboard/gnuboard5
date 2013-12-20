@@ -13,19 +13,16 @@ function certify_win_open(type, url)
     }
     else if(type == 'kcp-hp')
     {
-        if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) == false ) // 스마트폰이 아닌경우
-        {
-            var return_gubun;
-            var width  = 410;
-            var height = 500;
+        var return_gubun;
+        var width  = 410;
+        var height = 500;
 
-            var leftpos = screen.width  / 2 - ( width  / 2 );
-            var toppos  = screen.height / 2 - ( height / 2 );
+        var leftpos = screen.width  / 2 - ( width  / 2 );
+        var toppos  = screen.height / 2 - ( height / 2 );
 
-            var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
-            var position = ",left=" + leftpos + ", top="    + toppos;
-            var AUTH_POP = window.open(url,'auth_popup', winopts + position);
-        }
+        var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
+        var position = ",left=" + leftpos + ", top="    + toppos;
+        var AUTH_POP = window.open(url,'auth_popup', winopts + position);
     }
 }
 
