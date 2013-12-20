@@ -135,7 +135,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sps li:after {display:block;visibility:hidden;clear:both;content:""}
 
 .sps_img {float:left;width:25%}
-.sps_img span {position:absolute;font-size:0;line-height:0;overflow:hidden}
+.sps_img span {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 
 #sps dl {margin:5px 0 10px}
 #sps dl:after {display:block;visibility:hidden;clear:both;content:""}
