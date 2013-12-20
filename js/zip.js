@@ -43,7 +43,7 @@ sigungu['세종특별자치시'] = '없음';
 
 $(function() {
     // 시도 선택시 시군구 option 을 만든다.
-    $("#sido").on("change", function() {
+    $("#sido").bind("change", function() {
         var sido = $(this).val();
 
         gugun_make(sido);
@@ -77,25 +77,17 @@ function gugun_make(sido)
 
 function search_call(page)
 {
+    $("#q_info").fadeOut(200);
+
     var sido = $("#sido").val();
     var gugun = $("#gugun").val();
     var q = $.trim($("#q").val());
+
     if(!page)
         page = 1;
 
-    $.ajax({
-        type: "POST",
-        url: "http://juso.sir.co.kr/search.php",
-        async: false,
-        dataType: "jsonp",
-        jsonp: "callback",
-        data: {
-            "sido": sido,
-            "gugun": gugun,
-            "page": page,
-            "q": q
-        },
-        success:function(data) {
+    $.getJSON("http://juso.sir.co.kr/search.php?sido="+sido+"&gugun="+gugun+"&page="+page+"&q="+q+"&callback=?",
+        function(data) {
             $("#result").empty();
 
             if(data.error) {
@@ -105,5 +97,5 @@ function search_call(page)
 
             $("#result").html(data.juso);
         }
-    });
+    );
 }
