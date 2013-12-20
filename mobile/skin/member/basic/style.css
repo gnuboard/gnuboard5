@@ -167,8 +167,6 @@
 #post_code p {margin:0 20px 10px}
 #post_code #code_sch {margin:0 20px}
 #post_code #code_sch #sch_q {position:relative;margin:5px 0 0}
-#post_code #code_sch #q_info {display:none;z-index:2;position:absolute;top:33px;left:0;padding:5px;background:#e4eaec}
-#post_code #code_sch #q_info span {position:absolute;top:-6px;left:5px;width:11px;height:6px;background:url('img/zip_ico_up.gif')}
 #post_code #code_sch .frm_input {height:22px}
 #post_code #code_sch .btn_submit {padding:0 8px;height:24px}
 #post_code #result {margin:0 20px}

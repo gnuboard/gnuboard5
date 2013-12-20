@@ -42,7 +42,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <option value="">- 시군구 선택 -</option>
         </select>
         <div id="sch_q">
-            <div id="q_info"><span></span>정확하고 빠른 검색을 위해 아래의 예시처럼 입력해 주세요.<br><br>입력예1) 강남대로37길 24-6<br>입력예2) 서초동 1362-19<br>입력예3) 서초2동 1362-19</div>
             <label for="q" class="sound_only">검색어</label>
             <input type="text" name="q" value="" id="q" required  class="required frm_input">
             <input type="submit" value="검색" class="btn_submit">
