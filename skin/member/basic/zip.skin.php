@@ -3,8 +3,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <!-- 우편번호 찾기 시작 { -->
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
-<script src="<?php echo G5_JS_URL ?>/zip.js"></script>
+<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
+<script src="<?php echo G5_JS_URL; ?>/zip.js"></script>
 
 <div id="post_code" class="new_win mbskin">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
@@ -26,7 +26,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <select name="gugun" id="gugun">
             <option value="">- 시군구 선택 -</option>
         </select>
-        <div>
+        <div id="sch_q">
+            <div id="q_info"><span></span>정확하고 빠른 검색을 위해 아래의 예시처럼 입력해 주세요.<br><br>입력예1) 강남대로37길 24-6<br>입력예2) 서초동 1362-19<br>입력예3) 서초2동 1362-19</div>
             <label for="q" class="sound_only">검색어</label>
             <input type="text" name="q" value="" id="q" required  class="required frm_input">
             <input type="submit" value="검색" class="btn_submit">
@@ -44,6 +45,16 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 </div>
 
 <script>
+$(function() {
+    $("input#q").bind("focusin", function() {
+        $("#q_info").fadeIn(200);
+    });
+
+    $("input#q").bind("focusout", function() {
+        $("#q_info").fadeOut(200);
+    });
+});
+
 function put_data(zip1, zip2, addr1, addr2, jibeon)
 {
     var of = window.opener.document.<?php echo $frm_name; ?>;
