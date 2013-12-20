@@ -255,15 +255,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
     </form>
 
-
-    <?php
-    if ($config['cf_cert_use']) {
-        // KCP 휴대폰인증 form
-        if($config['cf_cert_hp'] == 'kcp')
-            include_once(G5_KCPCERT_PATH.'/kcpcert_form.php');
-    }
-    ?>
-
     <script>
     $(function() {
         $("#reg_zip_find").css("display", "inline-block");
@@ -298,6 +289,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                     $cert_type = 'kcp-hp';
                     break;
                 default:
+                    echo 'alert("기본환경설정에서 휴대폰 본인확인 설정을 해주십시오");';
+                    echo 'return false;';
                     break;
             }
             ?>

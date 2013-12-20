@@ -99,9 +99,10 @@
 #reg_result .btn_confirm {margin:50px 0}
 
 /* 아이디/패스워드 찾기 */
-#find_info #info_fs {margin:0 auto 10px;padding:10px;border-bottom:1px solid #eee}
+#find_info #info_fs {margin:0 20px 10px}
+#find_info #info_fs p {padding:0 0 10px}
 #find_info #info_fs #mb_email {width:100%}
-#find_info #captcha {margin:0 0 10px;padding:0 10px 10px}
+#find_info #captcha {margin:0 20px;padding:0 0 10px}
 #find_info #captcha input {margin-left:5px}
 
 /* 로그인 */
@@ -178,7 +179,7 @@
 /* 우편번호 검색 */
 #post_code p {margin:0 20px 10px}
 #post_code #code_sch {margin:0 20px}
-#post_code #code_sch div {margin:5px 0 0}
+#post_code #code_sch #sch_q {position:relative;margin:5px 0 0}
 #post_code #code_sch .frm_input {height:22px}
 #post_code #code_sch .btn_submit {padding:0 8px;height:24px}
 #post_code #result {margin:0 20px}
@@ -186,7 +187,7 @@
 #post_code #result .result_msg {padding:15px 0}
 #post_code #result .result_fail {border:1px solid #dde4e9;background:#f0f5fc;color:#ff3061;text-align:center}
 #post_code #result ul {margin:0;padding:0;border-bottom:1px solid #dde4e9;background:#f0f5fc;list-style:none}
-#post_code #result li {padding:0 10px 10px;border:1px solid #dde4e9;border-bottom:0}
-#post_code #result li a {display:block;padding:10px 0 4px}
+#post_code #result li {padding:10px;border:1px solid #dde4e9;border-bottom:0}
+#post_code #result li div {margin:4px 0 0;color:#738D94}
 #post_code #result li div {color:#738D94}
 #post_code #result li div:before {content:"▶ "}
