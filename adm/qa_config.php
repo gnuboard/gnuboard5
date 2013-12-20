@@ -57,7 +57,7 @@ if(!sql_query(" DESCRIBE `{$g5['qa_config_table']}` ", false)) {
                   `qa_sms_recv` tinyint(4) NOT NULL DEFAULT '0',
                   `qa_html` tinyint(4) NOT NULL DEFAULT '0',
                   `qa_subject` varchar(255) NOT NULL DEFAULT '',
-                  `qa_content` varchar(255) NOT NULL DEFAULT '',
+                  `qa_content` text NOT NULL,
                   `qa_status` tinyint(4) NOT NULL DEFAULT '0',
                   `qa_file1` varchar(255) NOT NULL DEFAULT '',
                   `qa_source1` varchar(255) NOT NULL DEFAULT '',
@@ -73,6 +73,12 @@ if(!sql_query(" DESCRIBE `{$g5['qa_config_table']}` ", false)) {
                   PRIMARY KEY (`qa_id`),
                   KEY `qa_num_parent` (`qa_num`,`qa_parent`)
                 )", true);
+}
+
+$sql = " SHOW COLUMNS FROM `{$g5['qa_content_table']}` LIKE 'qa_content' ";
+$row = sql_fetch($sql);
+if(strpos($row['Type'], 'text') === false) {
+    sql_query(" ALTER TABLE `{$g5['qa_content_table']}` CHANGE `qa_content` `qa_content` text NOT NULL ", true);
 }
 
 $qaconfig = get_qa_config();
