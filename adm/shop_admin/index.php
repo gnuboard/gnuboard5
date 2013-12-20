@@ -304,7 +304,7 @@ function get_max_value($arr)
                 <tr>
                     <td class="td_numbig"><a href="./itemstocklist.php"><?php echo number_format($item_noti); ?></a></td>
                     <td class="td_numbig"><a href="./optionstocklist.php"><?php echo number_format($option_noti); ?></a></td>
-                    <td class="td_price"><?php echo display_price($userinfo['coin']); ?></td>
+                    <td class="td_price"><?php echo display_price(intval($userinfo['coin'])); ?></td>
                 </tr>
                 </tbody>
                 </table>
