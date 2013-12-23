@@ -40,7 +40,7 @@ function Syndi_getSiteInfo($args)
 	$oSite->setUpdated(date('YmdHis'));
 
 	// 홈페이지 주소
-	$link_alternative = sprintf('http://%s',  $GLOBALS['syndi_tag_domain']);
+	$link_alternative = sprintf('%s',  G5_URL);
 	$oSite->setLinkAlternative($link_alternative);
 
 	$link_self = sprintf('%s?id=%s&type=%s',$GLOBALS['syndi_echo_url'],$tag,$args->type);
@@ -85,7 +85,7 @@ function Syndi_getChannelList($args)
 		$oChannel->setLinkSelf($link_self);
 
 		// 게시판 웹주소
-		$link_alternative = sprintf('http://%s/bbs/board.php?bo_table=%s', $GLOBALS['syndi_tag_domain'], $row['bo_table']);
+		$link_alternative = sprintf('%s/bbs/board.php?bo_table=%s', G5_URL, $row['bo_table']);
 		$oChannel->setLinkAlternative($link_alternative);
 
 		$channel_list[] = $oChannel;
@@ -215,7 +215,7 @@ function _Syndi_getArticleList($args)
 		if($row['wr_last']) $oArticle->setUpdated(date('YmdHis',_getTime($row['wr_last'])));
 		
 		// 게시판 웹주소
-		$link_channel_alternative = sprintf('http://%s/bbs/board.php?bo_table=%s',$GLOBALS['syndi_tag_domain'],$args->target_channel_id);
+		$link_channel_alternative = sprintf('%s/bbs/board.php?bo_table=%s',G5_URL,$args->target_channel_id);
 
 		// 게시물 웹주소
 		$link_alternative = $link_channel_alternative . '&wr_id=' . $row['wr_id'];
@@ -268,7 +268,7 @@ function Syndi_getDeletedList($args)
 
 		if(substr($row['link_alternative'],0,2)=='./')
 		{
-			$row['link_alternative'] = 'http://' . $GLOBALS['syndi_tag_domain'] . substr($row['link_alternative'],1);
+			$row['link_alternative'] = G5_URL . substr($row['link_alternative'],1);
 		}
 		$oDeleted->setLinkAlternative($row['link_alternative']);
 
