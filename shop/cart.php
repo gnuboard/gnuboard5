@@ -148,8 +148,8 @@ include_once('./_head.php');
         if ($tot_price > 0) {
         ?>
 
-        <dt class="sod_bsk_cnt">총계</dt>
-        <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원 <?php echo number_format($tot_point); ?> 점</strong></dd>
+        <dt class="sod_bsk_cnt">총계 가격/포인트</dt>
+        <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원 / <?php echo number_format($tot_point); ?> 점</strong></dd>
         <?php } ?>
 
     </dl>
@@ -163,7 +163,7 @@ include_once('./_head.php');
         <input type="hidden" name="records" value="<?php echo $i; ?>">
         <input type="hidden" name="act" value="">
         <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
-        <button type="button" onclick="return form_check('buy');" class="btn02">주문하기</button>
+        <button type="button" onclick="return form_check('buy');" class="btn_submit">주문하기</button>
         <button type="button" onclick="return form_check('seldelete');" class="btn01">선택삭제</button>
         <button type="button" onclick="return form_check('alldelete');" class="btn01">비우기</button>
         <?php } ?>

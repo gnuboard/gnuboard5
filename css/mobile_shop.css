@@ -255,8 +255,8 @@ html.no-overflowscrolling #mod_option_frm {height:auto;max-height:10000px !impor
 .sod_bsk_point {border-bottom:0 !important}
 
 #sod_bsk_act {margin:0 0 20px;text-align:center}
-#sod_bsk_act a.btn01 {height:2.4em;line-height:2.6em;vertical-align:middle}
-#sod_bsk_act button.btn01 {height:2.6em;line-height:2.6em}
+#sod_bsk_act a.btn01 {}
+#sod_bsk_act button.btn01 {}
 
 /* 위시리스트 */
 #sod_ws {}
