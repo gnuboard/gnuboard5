@@ -741,7 +741,7 @@ $result = sql_query($sql);
                         <input type="text" name="od_addr1" value="<?php echo $od['od_addr1']; ?>" id="od_addr1" required class="frm_input required" size="50"><br>
                         <label for="od_addr2" class="sound_only">상세주소</label>
                         <input type="text" name="od_addr2" value="<?php echo $od['od_addr2']; ?>" id="od_addr2" required class="frm_input required" size="50">
-                        <input type="hidden" name="od_addr_jibeon" value=""><br>
+                        <input type="hidden" name="od_addr_jibeon" value="<?php echo $od['od_addr_jibeon']; ?>"><br>
                         <span id="od_addr_jibeon">지번주소 : <?php echo $od['od_addr_jibeon']; ?></span>
                 </tr>
                 <tr>
@@ -793,7 +793,7 @@ $result = sql_query($sql);
                         <input type="text" name="od_b_addr1" value="<?php echo $od['od_b_addr1']; ?>" id="od_b_addr1" required class="frm_input required" size="50"><br>
                         <label for="od_b_addr2" class="sound_only">상세주소</label>
                         <input type="text" name="od_b_addr2" value="<?php echo $od['od_b_addr2']; ?>" id="od_b_addr2" required class="frm_input required" size="50">
-                        <input type="hidden" name="od_b_addr_jibeon" value=""><br>
+                        <input type="hidden" name="od_b_addr_jibeon" value="<?php echo $od['od_b_addr_jibeon']; ?>"><br>
                         <span id="od_b_addr_jibeon">지번주소 : <?php echo $od['od_b_addr_jibeon']; ?></span>
                     </td>
                 </tr>
