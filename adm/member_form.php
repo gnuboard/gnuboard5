@@ -208,7 +208,7 @@ include_once('./admin.head.php');
             <a href="<?php echo G5_BBS_URL ?>/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2&amp;frm_jibeon=mb_addr_jibeon" id="win_zip" class="win_zip_find btn_frmline" target="_blank">주소 검색</a><br>
             <input type="text" name="mb_addr1" value="<?php echo $mb['mb_addr1'] ?>" id="mb_addr1" title="행정기본주소" class="frm_input readonly" size="70"><br>
             <input type="text" name="mb_addr2" value="<?php echo $mb['mb_addr2'] ?>" id="mb_addr2" title="상세주소" class="frm_input" size="70">
-            <input type="hidden" name="mb_addr_jibeon" value=""><br>
+            <input type="hidden" name="mb_addr_jibeon" value="<?php echo $mb['mb_addr_jibeon']; ?>"><br>
             <span id="mb_addr_jibeon">지번주소 : <?php echo $mb['mb_addr_jibeon']; ?></span>
         </td>
     </tr>

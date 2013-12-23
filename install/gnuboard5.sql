@@ -762,7 +762,7 @@ CREATE TABLE IF NOT EXISTS `g5_qa_content` (
   `qa_sms_recv` tinyint(4) NOT NULL DEFAULT '0',
   `qa_html` tinyint(4) NOT NULL DEFAULT '0',
   `qa_subject` varchar(255) NOT NULL DEFAULT '',
-  `qa_content` varchar(255) NOT NULL DEFAULT '',
+  `qa_content` text NOT NULL,
   `qa_status` tinyint(4) NOT NULL DEFAULT '0',
   `qa_file1` varchar(255) NOT NULL DEFAULT '',
   `qa_source1` varchar(255) NOT NULL DEFAULT '',
