@@ -376,8 +376,8 @@ ob_end_clean();
                     <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required">
                     <label for="od_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
                     <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" required class="frm_input frm_address required">
-                    <input type="hidden" name="od_addr_jibeon" value="">
-                    <span id="od_addr_jibeon"></span>
+                    <input type="hidden" name="od_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>">
+                    <span id="od_addr_jibeon"><?php echo ($member['mb_addr_jibeon'] ? '지번주소 : '.$member['mb_addr_jibeon'] : ''); ?></span>
                 </td>
             </tr>
             <tr>
@@ -430,7 +430,7 @@ ob_end_clean();
                               and ad_default = '1' ";
                 $row = sql_fetch($sql);
                 if($row['ad_id']) {
-                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
+                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
                     $addr_list .= '<br><input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_def">'.PHP_EOL;
                     $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
                 }
@@ -444,7 +444,7 @@ ob_end_clean();
                             limit 1 ";
                 $result = sql_query($sql);
                 for($i=0; $row=sql_fetch_array($result); $i++) {
-                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_subject'];
+                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
                     $val2 = '<label for="ad_sel_addr_'.($i+1).'">최근배송지('.($row['ad_subject'] ? $row['ad_subject'] : $row['ad_name']).')</label>';
                     $addr_list .= '<br><input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_'.($i+1).'"> '.PHP_EOL.$val2.PHP_EOL;
                 }
@@ -1068,14 +1068,17 @@ $(function() {
             }
 
             var f = document.forderform;
-            f.od_b_name.value   = addr[0];
-            f.od_b_tel.value    = addr[1];
-            f.od_b_hp.value     = addr[2];
-            f.od_b_zip1.value   = addr[3];
-            f.od_b_zip2.value   = addr[4];
-            f.od_b_addr1.value  = addr[5];
-            f.od_b_addr2.value  = addr[6];
-            f.ad_subject.value  = addr[7];
+            f.od_b_name.value        = addr[0];
+            f.od_b_tel.value         = addr[1];
+            f.od_b_hp.value          = addr[2];
+            f.od_b_zip1.value        = addr[3];
+            f.od_b_zip2.value        = addr[4];
+            f.od_b_addr1.value       = addr[5];
+            f.od_b_addr2.value       = addr[6];
+            f.od_b_addr_jibeon.value = addr[7];
+            f.ad_subject.value       = addr[8];
+
+            document.getElementById("od_b_addr_jibeon").innerText = "지번주소 : "+addr[7];
 
             var zip1 = addr[3].replace(/[^0-9]/g, "");
             var zip2 = addr[4].replace(/[^0-9]/g, "");
@@ -1495,16 +1498,20 @@ function gumae2baesong(checked) {
         f.od_b_zip2.value = f.od_zip2.value;
         f.od_b_addr1.value = f.od_addr1.value;
         f.od_b_addr2.value = f.od_addr2.value;
+        f.od_b_addr_jibeon.value = f.od_addr_jibeon.value;
+        document.getElementById("od_b_addr_jibeon").innerText = document.getElementById("od_addr_jibeon").innerText;
 
         calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
     } else {
-        f.od_b_name.value = '';
-        f.od_b_tel.value  = '';
-        f.od_b_hp.value   = '';
-        f.od_b_zip1.value = '';
-        f.od_b_zip2.value = '';
-        f.od_b_addr1.value = '';
-        f.od_b_addr2.value = '';
+        f.od_b_name.value = "";
+        f.od_b_tel.value  = "";
+        f.od_b_hp.value   = "";
+        f.od_b_zip1.value = "";
+        f.od_b_zip2.value = "";
+        f.od_b_addr1.value = "";
+        f.od_b_addr2.value = "";
+        f.od_b_addr_jibeon.value = "";
+        document.getElementById("od_b_addr_jibeon").innerText = "";
     }
 }
 

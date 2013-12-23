@@ -622,7 +622,8 @@ if($is_member) {
                         ad_zip1     = '$od_b_zip1',
                         ad_zip2     = '$od_b_zip2',
                         ad_addr1    = '$od_b_addr1',
-                        ad_addr2    = '$od_b_addr2' ";
+                        ad_addr2    = '$od_b_addr2',
+                        ad_jibeon   = '$od_b_addr_jibeon' ";
     }
 
     sql_query($sql);

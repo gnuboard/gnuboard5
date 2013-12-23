@@ -681,6 +681,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order_address` (
   `ad_zip2` char(3) NOT NULL DEFAULT '',
   `ad_addr1` varchar(255) NOT NULL DEFAULT '',
   `ad_addr2` varchar(255) NOT NULL DEFAULT '',
+  `ad_jibeon` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`ad_id`),
   KEY `mb_id` (`mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
