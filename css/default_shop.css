@@ -586,7 +586,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 /* 사용후기 모음 */
 #sps_sch {margin:0 0 10px}
 #sps_sch a {display:inline-block;padding:0 8px;height:21px;background:#333;color:#fff;text-decoration:none;vertical-align:middle;line-height:1.9em}
-#sps_sch .btn_submit {height:21px;vertical-align:middle}
+#sps_sch .btn_submit {padding:0 8px;height:24px;vertical-align:middle}
 
 #sps {zoom:1}
 #sps ol {margin:0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
@@ -611,7 +611,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 /* 상품문의 모음 */
 #sqa_sch {margin:0 0 10px}
 #sqa_sch a {display:inline-block;padding:0 8px;height:21px;background:#333;color:#fff;text-decoration:none;vertical-align:middle;line-height:1.9em}
-#sqa_sch .btn_submit {height:21px;vertical-align:middle}
+#sqa_sch .btn_submit {padding:0 8px;height:24px;vertical-align:middle}
 
 #sqa {zoom:1}
 #sqa ol {margin:0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
@@ -845,7 +845,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #ssch_frm div {margin:0 0 5px}
 #ssch_frm strong, #ssch_frm .ssch_lbl {display:inline-block;width:100px;font-weight:bold}
 #ssch_frm .frm_input {background:#fff}
-#ssch_frm .btn_submit {height:21px}
+#ssch_frm .btn_submit {padding:0 8px;height:24px}
 #ssch_frm p {margin:10px 0 0;border-top:1px solid #e9e9e9}
 #ssch_frm #ssch_sort {float:left;margin:0;padding:0;list-style:none;zoom:1}
 #ssch_frm #ssch_sort:after {display:block;visibility:hidden;clear:both;content:""}
