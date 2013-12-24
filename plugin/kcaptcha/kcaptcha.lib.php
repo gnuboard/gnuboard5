@@ -269,14 +269,10 @@ function chk_captcha()
 
     if (!isset($_POST['captcha_key'])) return false;
     if (!trim($_POST['captcha_key'])) return false;
-    /*
     if ($_POST['captcha_key'] != get_session('ss_captcha_key')) {
         $_SESSION['ss_captcha_count'] = $captcha_count + 1;
-        $sql = " insert _error set er_datetime = NOW(), er_ip = '{$_SERVER['REMOTE_ADDR']}', er_user_agent = '{$_SERVER['HTTP_USER_AGENT']}', er_request = 'POST(".$_POST['captcha_key'].')!=SESSION('.get_session('ss_captcha_key').")' ";
-        sql_query($sql);
         return false;
     }
-    */
     return true;
 }
 ?>
