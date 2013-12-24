@@ -692,15 +692,27 @@ $(function(){
 
                     // 일괄적용
                     $("#opt_value_apply").live("click", function() {
+                        if($(".opt_com_chk:checked").size() < 1) {
+                            alert("일괄 수정할 항목을 하나이상 체크해 주십시오.");
+                            return false;
+                        }
+
                         var opt_price = $.trim($("#opt_com_price").val());
                         var opt_stock = $.trim($("#opt_com_stock").val());
                         var opt_noti = $.trim($("#opt_com_noti").val());
                         var opt_use = $("#opt_com_use").val();
 
-                        $("input[name='opt_price[]']").val(opt_price);
-                        $("input[name='opt_stock_qty[]']").val(opt_stock);
-                        $("input[name='opt_noti_qty[]']").val(opt_noti);
-                        $("select[name='opt_use[]']").val(opt_use);
+                        if($("#opt_com_price_chk").is(":checked"))
+                            $("input[name='opt_price[]']").val(opt_price);
+
+                        if($("#opt_com_stock_chk").is(":checked"))
+                            $("input[name='opt_stock_qty[]']").val(opt_stock);
+
+                        if($("#opt_com_noti_chk").is(":checked"))
+                            $("input[name='opt_noti_qty[]']").val(opt_noti);
+
+                        if($("#opt_com_use_chk").is(":checked"))
+                            $("select[name='opt_use[]']").val(opt_use);
                     });
                 });
                 </script>
@@ -864,15 +876,27 @@ $(function(){
 
                     // 일괄적용
                     $("#spl_value_apply").live("click", function() {
+                        if($(".spl_com_chk:checked").size() < 1) {
+                            alert("일괄 수정할 항목을 하나이상 체크해 주십시오.");
+                            return false;
+                        }
+
                         var spl_price = $.trim($("#spl_com_price").val());
                         var spl_stock = $.trim($("#spl_com_stock").val());
                         var spl_noti = $.trim($("#spl_com_noti").val());
                         var spl_use = $("#spl_com_use").val();
 
-                        $("input[name='spl_price[]']").val(spl_price);
-                        $("input[name='spl_stock_qty[]']").val(spl_stock);
-                        $("input[name='spl_noti_qty[]']").val(spl_noti);
-                        $("select[name='spl_use[]']").val(spl_use);
+                        if($("#spl_com_price_chk").is(":checked"))
+                            $("input[name='spl_price[]']").val(spl_price);
+
+                        if($("#spl_com_stock_chk").is(":checked"))
+                            $("input[name='spl_stock_qty[]']").val(spl_stock);
+
+                        if($("#spl_com_noti_chk").is(":checked"))
+                            $("input[name='spl_noti_qty[]']").val(spl_noti);
+
+                        if($("#spl_com_use_chk").is(":checked"))
+                            $("select[name='spl_use[]']").val(spl_use);
                     });
                 });
 
