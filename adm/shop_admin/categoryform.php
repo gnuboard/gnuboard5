@@ -243,7 +243,8 @@ $pg_anchor .= '</ul>';
             <th scope="row"><label for="ca_use">판매가능</label></th>
             <td>
                 <?php echo help("재고가 없거나 일시적으로 판매를 중단하시려면 체크 해제하십시오.\n체크 해제하시면 상품 출력을 하지 않으며, 주문도 받지 않습니다."); ?>
-                <input type="checkbox" name="ca_use" <?php echo ($ca['ca_use']) ? "checked" : ""; ?> value="1" id="ca_use">예
+                <input type="checkbox" name="ca_use" <?php echo ($ca['ca_use']) ? "checked" : ""; ?> value="1" id="ca_use">
+                예
             </td>
         </tr>
         </tbody>
