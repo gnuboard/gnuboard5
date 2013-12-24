@@ -369,6 +369,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 /* ########## 쇼핑몰 컨텐츠 ########## */
 /* 인덱스 이미지 출력 */
 #sidx_img {margin:0 0 20px}
+#sidx_img img {max-width:100%;height:auto}
 
 /* 상품 목록 */
 #sct {}
