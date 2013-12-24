@@ -311,9 +311,6 @@ class item_list
 
         }
 
-        $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-        $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
-
         if ($this->is_mobile) {
             $file = G5_MSHOP_SKIN_PATH."/{$this->list_skin}";
         } else {
