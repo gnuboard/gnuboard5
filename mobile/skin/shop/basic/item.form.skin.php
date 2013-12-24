@@ -51,19 +51,19 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             상품 선택옵션 <?php echo $option_count; ?> 개, 추가옵션 <?php echo $supply_count; ?> 개
         </p>
         <?php } ?>
-        <?php if ($score = get_star_image($it['it_id'])) { ?>
         <div id="sit_star_sns">
             <?php
             $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
             $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$it['it_id'];
-            ?>
+
+            if ($score = get_star_image($it['it_id'])) { ?>
             고객선호도 <span>별<?php echo $score?>개</span>
             <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $score?>.png" alt="" class="sit_star">
+            <?php } ?>
             <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_fb2.png'); ?>
             <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_twt2.png'); ?>
             <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_goo2.png'); ?>
         </div>
-        <?php } ?>
         <table class="sit_ov_tbl">
         <colgroup>
             <col class="grid_3">
