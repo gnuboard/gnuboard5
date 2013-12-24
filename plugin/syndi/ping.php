@@ -46,7 +46,7 @@ a:focus, a:hover {background:#333;color:#fff;text-decoration:none}
 <h1>네이버 신디케이션 핑 (Naver Syndication PING)</h1>
 
 <ul>
-    <li><a href="http://dev.naver.com/openapi/apis/function/syndication">Syndication API</a></li>
+    <li><a href="http://developer.naver.com/wiki/pages/SyndicationAPI">Syndication API</a></li>
     <li><a href="http://syndication.openapi.naver.com/status/?site=<?php echo $syndi_tag_domain; ?>" class="left_line">Naver Syndication 연결확인</a></li>
     <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=site" class="bg">사이트 정보</a></li>
     <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=channel" class="bg left_line">특정 채널 정보</a></li>
