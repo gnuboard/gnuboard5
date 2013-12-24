@@ -22,7 +22,7 @@ if ($w == "")
         $sql = " select ca_id from {$g5['g5_shop_category_table']} order by ca_id limit 1 ";
         $row = sql_fetch($sql);
         if (!$row['ca_id'])
-            alert("등록된 분류가 없습니다. 우선 분류를 등록하여 주십시오.");
+            alert("등록된 분류가 없습니다. 우선 분류를 등록하여 주십시오.", './categorylist.php');
         $it['ca_id'] = $row['ca_id'];
     }
     //$it[it_maker]  = stripslashes($_COOKIE[ck_maker]);
