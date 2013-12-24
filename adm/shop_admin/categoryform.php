@@ -310,29 +310,31 @@ $pg_anchor .= '</ul>';
     </div>
 </section>
 
-<section id="anc_scatefrm_extra" class="cbox">
+<section id="anc_scatefrm_extra">
     <h2>여분필드 설정</h2>
     <?php echo $pg_anchor ?>
 
-    <table class="frm_tbl">
-    <colgroup>
-        <col class="grid_3">
-        <col>
-    </colgroup>
-    <tbody>
-    <?php for ($i=1; $i<=10; $i++) { ?>
-    <tr>
-        <th scope="row">여분필드<?php echo $i ?></th>
-        <td>
-            <label for="ca_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
-            <input type="text" name="ca_<?php echo $i ?>_subj" id="ca_<?php echo $i ?>_subj" value="<?php echo get_text($ca['ca_'.$i.'_subj']) ?>" class="frm_input">
-            <label for="ca_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
-            <input type="text" name="ca_<?php echo $i ?>" value="<?php echo get_text($ca['ca_'.$i]) ?>" id="ca_<?php echo $i ?>" class="frm_input">
-        </td>
-    </tr>
-    <?php } ?>
-    </tbody>
-    </table>
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <colgroup>
+            <col class="grid_3">
+            <col>
+        </colgroup>
+        <tbody>
+        <?php for ($i=1; $i<=10; $i++) { ?>
+        <tr>
+            <th scope="row">여분필드<?php echo $i ?></th>
+            <td class="td_extra">
+                <label for="ca_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
+                <input type="text" name="ca_<?php echo $i ?>_subj" id="ca_<?php echo $i ?>_subj" value="<?php echo get_text($ca['ca_'.$i.'_subj']) ?>" class="frm_input">
+                <label for="ca_<?php echo $i ?>">여분필드 <?php echo $i ?> 값</label>
+                <input type="text" name="ca_<?php echo $i ?>" value="<?php echo get_text($ca['ca_'.$i]) ?>" id="ca_<?php echo $i ?>" class="frm_input">
+            </td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
+    </div>
 </section>
 
 <?php if ($w == "u") { ?>
