@@ -60,7 +60,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <!-- 상품 요약정보 및 구매 시작 { -->
     <section id="sit_ov">
-        <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?> 요약정보 및 구매</h2>
+        <h2 id="sit_title"><?php echo stripslashes($it['it_name']); ?> <span class="sound_only">요약정보 및 구매</span></h2>
         <p id="sit_desc"><?php echo $it['it_basic']; ?></p>
         <?php if($is_orderable) { ?>
         <p id="sit_opt_info">
