@@ -289,7 +289,7 @@ $colspan = 7;
             <td class="td_datetime"><?php echo $row['po_datetime'] ?></td>
             <td><?php echo $link1.$row['po_content'].$link2 ?></td>
             <td class="td_numbig"><?php echo number_format($row['po_point']) ?></td>
-            <td class="td_numbig"><?php echo number_format($row2['mb_point']) ?></td>
+            <td class="td_numbig"><?php echo number_format($row['po_mb_point']) ?></td>
         </tr>
 
         <?php
