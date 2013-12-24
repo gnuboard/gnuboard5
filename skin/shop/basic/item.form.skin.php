@@ -67,13 +67,13 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             상품 선택옵션 <?php echo $option_count; ?> 개, 추가옵션 <?php echo $supply_count; ?> 개
         </p>
         <?php } ?>
-        <?php if ($star_score) { ?>
         <div id="sit_star_sns">
+            <?php if ($star_score) { ?>
             고객평점 <span>별<?php echo $star_score?>개</span>
             <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $star_score?>.png" alt="" class="sit_star">
+            <?php } ?>
             <?php echo $sns_share_links; ?>
         </div>
-        <?php } ?>
         <table class="sit_ov_tbl">
         <colgroup>
             <col class="grid_3">
