@@ -192,10 +192,10 @@ if($g5_install || !$result) {
 
 if($g5_shop_install) {
     // 이미지 사이즈
-    $simg_width = 130;
-    $simg_height = 130;
-    $mimg_width = 230;
-    $mimg_height = 230;
+    $simg_width = 230;
+    $simg_height = 230;
+    $mimg_width = 320;
+    $mimg_height = 320;
 
     // 내용관리 생성
     @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
