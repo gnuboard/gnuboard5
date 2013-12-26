@@ -29,7 +29,7 @@ include_once('./_head.php');
         <td><?php echo captcha_html(); ?></td>
     </tr>
     </table>
-<div>
+</div>
 
 <div class="btn_confirm">
     <input type="submit" id="btn_submit" class="btn_submit" value="인증메일변경">
