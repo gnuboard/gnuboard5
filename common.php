@@ -144,7 +144,7 @@ if (file_exists($dbconfig_file)) {
 @ini_set("session.use_trans_sid", 0);    // PHPSESSID를 자동으로 넘기지 않음
 @ini_set("url_rewriter.tags",""); // 링크에 PHPSESSID가 따라다니는것을 무력화함 (해뜰녘님께서 알려주셨습니다.)
 
-session_save_path(G5_DATA_PATH.'/session');
+session_save_path(G5_SESSION_PATH);
 
 if (isset($SESSION_CACHE_LIMITER))
     @session_cache_limiter($SESSION_CACHE_LIMITER);
