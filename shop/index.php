@@ -20,6 +20,7 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
 </div>
 <!-- } 메인이미지 끝 -->
 
+<?php if($default['de_type1_list_use']) { ?>
 <!-- 히트상품 시작 { -->
 <section class="sct_wrap">
     <header>
@@ -41,7 +42,9 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 <!-- } 히트상품 끝 -->
+<?php } ?>
 
+<?php if($default['de_type2_list_use']) { ?>
 <!-- 추천상품 시작 { -->
 <section class="sct_wrap">
     <header>
@@ -62,7 +65,9 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 <!-- } 추천상품 끝 -->
+<?php } ?>
 
+<?php if($default['de_type3_list_use']) { ?>
 <!-- 최신상품 시작 { -->
 <section class="sct_wrap">
     <header>
@@ -83,7 +88,9 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 <!-- } 최신상품 끝 -->
+<?php } ?>
 
+<?php if($default['de_type4_list_use']) { ?>
 <!-- 인기상품 시작 { -->
 <section class="sct_wrap">
     <header>
@@ -104,7 +111,9 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 <!-- } 인기상품 끝 -->
+<?php } ?>
 
+<?php if($default['de_type5_list_use']) { ?>
 <!-- 할인상품 시작 { -->
 <section class="sct_wrap">
     <header>
@@ -125,6 +134,7 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
     ?>
 </section>
 <!-- } 할인상품 끝 -->
+<?php } ?>
 
 <!-- 커뮤니티 최신글 시작 { -->
 <section id="sidx_lat">
