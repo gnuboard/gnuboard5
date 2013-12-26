@@ -102,7 +102,7 @@ if( $cert_enc_use == "Y" )
         {
             // 검증 실패시 처리 영역
 
-            echo "dn_hash 변조 위험있음";
+            echo "dn_hash 변조 위험있음 (".G5_KCPCERT_PATH."/bin/ct_cli 파일에 실행권한이 있는지 확인하세요.)";
             exit;
             // 오류 처리 ( dn_hash 변조 위험있음)
         }
