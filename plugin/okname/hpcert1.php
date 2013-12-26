@@ -16,6 +16,18 @@ $cmd = "$exe $svcTxSeqno \"$name\" $birthday $gender $ntvFrnrTpCd $mblTelCmmCd $
 //cmd 실행
 exec($cmd, $out, $ret);
 
+if($ret == 127) {
+    alert_close('모듈실행 파일이 존재하지 않습니다.\\n\\n'.basename($exe).' 파일이 '.G5_PLUGIN_DIR.'/'.G5_OKNAME_DIR.'/bin 안에 있어야 합니다.');
+}
+
+if($ret == 126) {
+    alert_close('모듈실행 파일의 실행권한이 없습니다.\\n\\nchmod 755 '.basename($exe).' 과 같이 실행권한을 부여해 주십시오.');
+}
+
+if($ret == -1) {
+    alert_close('모듈실행 파일의 실행권한이 없습니다.\\n\\ncmd.exe의 IUSER 실행권한이 있는지 확인하여 주십시오.');
+}
+
 /**************************************************************************
 okname 응답 정보
 **************************************************************************/
