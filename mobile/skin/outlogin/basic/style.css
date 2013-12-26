@@ -14,7 +14,7 @@
 #ol_svc a {display:inline-block;margin:0 0 0 5px;color:#000;text-decoration:none;vertical-align:middle}
 
 #ol_after_hd strong {display:inline-block;padding:0 0 5px}
-#ol_after_hd .btn_admin {display:block;padding:0 !important;width:100%;text-align:center}
+#ol_after_hd .btn_admin {display:block;padding:0 !important;text-align:center}
 #ol_after_private {margin:0;padding:0;list-style:none}
 #ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
 #ol_after_private li {float:left}
