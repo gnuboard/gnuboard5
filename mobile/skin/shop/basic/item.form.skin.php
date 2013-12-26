@@ -3,7 +3,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 ?>
 
 <link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
-<script src="<?php echo G5_JS_URL; ?>/jquery.touchSwipe.min.js"></script>
 <script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
 <script src="<?php echo G5_JS_URL; ?>/jquery.fancyalert.js"></script>
 
@@ -364,35 +363,6 @@ $(function(){
 
         return false;
     });
-
-    // 이전 다음상품 swipe
-    var swipeOptions = {
-        swipe: function(event, direction) {
-            switch(direction) {
-                case "left":
-                    <?php if($next_href) { ?>
-                    content_swipe(direction);
-                    <?php } else { ?>
-                    fancyalert("다음 상품이 없습니다.");
-                    <?php } ?>
-                    break;
-                case "right":
-                    <?php if($prev_href) { ?>
-                    content_swipe(direction);
-                    <?php } else { ?>
-                    fancyalert("이전 상품이 없습니다.");
-                    <?php } ?>
-                    break;
-            }
-
-            return false;
-        },
-        threshold: 100,
-        excludedElements:"button, input, select, textarea, .noSwipe, div#sit_more, div#sit_star_sns",
-        allowPageScroll:"vertical"
-    };
-
-    $("#container").swipe(swipeOptions);
 });
 
 function content_swipe(direction)
