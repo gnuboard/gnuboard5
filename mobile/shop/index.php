@@ -6,13 +6,14 @@ define("_INDEX_", TRUE);
 include_once(G5_MSHOP_PATH.'/shop.head.php');
 ?>
 
-<script src="<?php echo G5_JS_URL; ?>/jquery.touchSwipe.min.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/swipe.js"></script>
 <script src="<?php echo G5_JS_URL; ?>/shop.mobile.main.js"></script>
 
-<div id="sidx">
+<div id="sidx" class="swipe">
 
-    <div id="sidx_slide">
-        <section class="sct_wrap">
+    <div id="sidx_slide" class="swipe-wrap">
+        <?php if($default['de_mobile_type1_list_use']) { ?>
+        <div class="sct_wrap">
             <header>
                 <h2>최신상품</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 최신상품 모음</p>
@@ -30,9 +31,11 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             echo $list->run();
             ?>
             <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=1">더 보기</a></div>
-        </section>
+        </div>
+        <?php } ?>
 
-        <section class="sct_wrap">
+        <?php if($default['de_mobile_type2_list_use']) { ?>
+        <div class="sct_wrap">
             <header>
                 <h2>히트상품</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 히트상품 모음</p>
@@ -50,9 +53,11 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             echo $list->run();
             ?>
             <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=2">더 보기</a></div>
-        </section>
+        </div>
+        <?php } ?>
 
-        <section class="sct_wrap">
+        <?php if($default['de_mobile_type3_list_use']) { ?>
+        <div class="sct_wrap">
             <header>
                 <h2>추천상품</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
@@ -70,9 +75,11 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             echo $list->run();
             ?>
             <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=3">더 보기</a></div>
-        </section>
+        </div>
+        <?php } ?>
 
-        <section class="sct_wrap">
+        <?php if($default['de_mobile_type4_list_use']) { ?>
+        <div class="sct_wrap">
             <header>
                 <h2>인기상품</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 인기상품 모음</p>
@@ -90,9 +97,11 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             echo $list->run();
             ?>
             <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=4">더 보기</a></div>
-        </section>
+        </div>
+        <?php } ?>
 
-        <section class="sct_wrap">
+        <?php if($default['de_mobile_type5_list_use']) { ?>
+        <div class="sct_wrap">
             <header>
                 <h2>할인상품</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 할인상품 모음</p>
@@ -110,7 +119,8 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
             echo $list->run();
             ?>
             <div class="sct_more"><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=5">더 보기</a></div>
-        </section>
+        </div>
+        <?php } ?>
 
         <?php
         $hsql = " select ev_id, ev_subject, ev_subject_strong from {$g5['g5_shop_event_table']} where ev_use = '1' order by ev_id desc ";
@@ -118,13 +128,13 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
 
         if(mysql_num_rows($hresult)) {
         ?>
-        <section class="sct_wrap">
+        <div class="sct_wrap">
             <header>
                 <h2>이벤트</h2>
                 <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 이벤트 모음</p>
             </header>
             <?php include_once(G5_MSHOP_SKIN_PATH.'/main.event.skin.php'); ?>
-        </section>
+        </div>
         <?php
         }
         ?>
@@ -135,17 +145,15 @@ include_once(G5_MSHOP_PATH.'/shop.head.php');
 
 <script>
 $(function() {
-    $("#sidx").slideSwipe(
-        {
-            el_class: "sidx",
-            selector: "section.sct_wrap",
-            slide_tab: "slide_tab",
-            slide_class: "sidx_slide",
-            active_class: "slide_active",
-            tab_active: "tab_active",
-            duration: 500
-        }
-    );
+    $("#sidx").swipeSlide({
+        slides: ".swipe-wrap > div",
+        header: "header h2",
+        tabWrap: "slide_tab",
+        tabActive: "tab_active",
+        tabOffset: 10,
+        startSlide: 0,
+        auto: 0
+    });
 });
 </script>
 

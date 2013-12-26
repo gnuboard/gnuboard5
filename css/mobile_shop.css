@@ -76,6 +76,21 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sidx_slide {position:relative;top:0;left:0;width:100%;overflow:hidden}
 .sidx_slide {position:absolute;top:0;left:0;width:100%}
 
+.swipe {
+  overflow: hidden;
+  visibility: hidden;
+  position: relative;
+}
+.swipe-wrap {
+  overflow: hidden;
+  position: relative;
+}
+.swipe-wrap > div {
+  float:left;
+  width:100%;
+  position: relative;
+}
+
 /* 상품 목록 */
 #sct {}
 .sct_admin {margin:0 0 10px;text-align:right}
