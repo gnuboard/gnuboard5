@@ -365,7 +365,7 @@ if($g5_shop_install) {
                         bo_use_list_view    = '0',
                         bo_use_list_content = '0',
                         bo_use_email        = '0',
-                        bo_table_width      = '97',
+                        bo_table_width      = '100',
                         bo_subject_len      = '60',
                         bo_mobile_subject_len      = '30',
                         bo_page_rows        = '15',
