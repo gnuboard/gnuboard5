@@ -2435,4 +2435,65 @@ if (!function_exists("get_sock")) {
         return $buffer;
     }
 }
+
+// 인증, 결제 모듈 실행 체크
+function module_exec_check($exe, $type)
+{
+    $error = '';
+    $is_linux = false;
+    if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN')
+        $is_linux = true;
+
+    // 모듈 파일 존재하는지 체크
+    if(!is_file($exe)) {
+        $error = $exe.' 파일이 존재하지 않습니다.';
+    } else {
+        // 실행권한 체크
+        if(!is_executable($exe)) {
+            if($is_linux)
+                $error = $exe.'\n파일의 실행권한이 없습니다.\n\nchmod 755 '.basename($exe).' 과 같이 실행권한을 부여해 주십시오.';
+            else
+                $error = $exe.'\n파일의 실행권한이 없습니다.\n\n'.basename($exe).' 파일에 실행권한을 부여해 주십시오.';
+        } else {
+            // 바이너리 파일인지
+            if($is_linux) {
+                $search = false;
+                exec('whoami', $out);
+                if(empty($out)) {
+                    $error = 'exec 함수의 실행권한이 없습니다. 서버관리자에게 문의해 주십시오.';
+                } else {
+                    switch($type) {
+                        case 'ct_cli':
+                            exec($exe.' -h 2>&1', $out);
+                            for($i=0; $i<count($out); $i++) {
+                                if(strpos(strtoupper($out[$i]), 'KCP ENC') !== false) {
+                                    $search = true;
+                                    break;
+                                }
+                            }
+                            break;
+                        case 'okname':
+                            exec($exe.' D 2>&1', $out);
+                            for($i=0; $i<count($out); $i++) {
+                                if(strpos(strtolower($out[$i]), 'ret code') !== false) {
+                                    $search = true;
+                                    break;
+                                }
+                            }
+                            break;
+                    }
+
+                    if(!$search)
+                        $error = $exe.'\n파일을 바이너리 타입으로 다시 업로드하여 주십시오.';
+                }
+            }
+        }
+    }
+
+    if($error) {
+        $error = '<script>alert("'.$error.'");</script>';
+    }
+
+    return $error;
+}
 ?>

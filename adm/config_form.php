@@ -1118,22 +1118,14 @@ if($config['cf_cert_use']) {
                 $exe = G5_OKNAME_PATH.'/bin/oknamex64.exe';
         }
 
-        if(!is_executable($exe)) {
-            echo '<script>'.PHP_EOL;
-            echo 'alert("'.$exe.'\n파일의 실행권한이 없습니다.\n\nchmod 755 '.basename($exe).' 과 같이 실행권한을 부여해 주십시오.")'.PHP_EOL;
-            echo '</script>'.PHP_EOL;
-        }
+        echo module_exec_check($exe, 'okname');
     }
 
     // kcp일 때
     if($config['cf_cert_hp'] == 'kcp') {
         $exe = G5_KCPCERT_PATH.'/bin/ct_cli';
 
-        if(!is_executable($exe)) {
-            echo '<script>'.PHP_EOL;
-            echo 'alert("'.$exe.'\n파일의 실행권한이 없습니다.\n\nchmod 755 '.basename($exe).' 과 같이 실행권한을 부여해 주십시오.")'.PHP_EOL;
-            echo '</script>'.PHP_EOL;
-        }
+        echo module_exec_check($exe, 'ct_cli');
     }
 }
 
