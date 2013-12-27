@@ -2481,6 +2481,15 @@ function module_exec_check($exe, $type)
                                 }
                             }
                             break;
+                        case 'pp_cli':
+                            exec($exe.' -h 2>&1', $out);
+                            for($i=0; $i<count($out); $i++) {
+                                if(strpos(strtoupper($out[$i]), 'PAYPLUS CLIENT') !== false) {
+                                    $search = true;
+                                    break;
+                                }
+                            }
+                            break;
                     }
 
                     if(!$search)

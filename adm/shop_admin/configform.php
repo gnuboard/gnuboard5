@@ -1153,5 +1153,25 @@ $(function() {
 </script>
 
 <?php
+// 결제모듈 실행권한 체크
+if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
+    $is_linux = true;
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+        $is_linux = false;
+
+    $exe = '/kcp/bin/';
+    if($is_linux)
+        $exe .= 'pp_cli';
+    else
+        $exe .= 'pp_cli_exe.exe';
+
+    echo module_exec_check(G5_SHOP_PATH.$exe, 'pp_cli');
+
+    // 모바일 결제 모듈 체크
+    if(defined('G5_USE_MOBILE') && G5_USE_MOBILE == true) {
+        echo module_exec_check(G5_MSHOP_PATH.$exe, 'pp_cli');
+    }
+}
+
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
 ?>
