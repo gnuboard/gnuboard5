@@ -159,7 +159,6 @@ function icon($act, $link='', $target='_parent')
 function rm_rf($file)
 {
     if (file_exists($file)) {
-        @chmod($file, G5_FILE_PERMISSION);
         if (is_dir($file)) {
             $handle = opendir($file);
             while($filename = readdir($handle)) {
@@ -167,9 +166,13 @@ function rm_rf($file)
                     rm_rf($file.'/'.$filename);
             }
             closedir($handle);
-            rmdir($file);
-        } else
-            unlink($file);
+
+            @chmod($file, G5_DIR_PERMISSION);
+            @rmdir($file);
+        } else {
+            @chmod($file, G5_FILE_PERMISSION);
+            @unlink($file);
+        }
     }
 }
 
