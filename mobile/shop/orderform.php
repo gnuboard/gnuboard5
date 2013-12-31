@@ -16,6 +16,9 @@ if (get_cart_count($tmp_cart_id) == 0)
 $g5['title'] = '주문서 작성';
 
 include_once(G5_MSHOP_PATH.'/_head.php');
+if ($default['de_hope_date_use']) {
+    include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
+}
 
 // 새로운 주문번호 생성
 $od_id = get_uniqid();

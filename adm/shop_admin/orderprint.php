@@ -1,12 +1,12 @@
 <?php
 $sub_menu = '500120';
 include_once('./_common.php');
-include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = '주문내역출력';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 ?>
 
 <div class="local_sch02 local_sch">

@@ -1,7 +1,6 @@
 <?php
 $sub_menu = '400650';
 include_once('./_common.php');
-include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -30,6 +29,7 @@ if($cp['cp_method'] == 1) {
 }
 
 include_once (G5_ADMIN_PATH.'/admin.head.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 ?>
 
 <form name="fcouponform" action="./couponformupdate.php" method="post" onsubmit="return form_check(this);">
