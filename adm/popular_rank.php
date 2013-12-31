@@ -1,7 +1,6 @@
 <?php
 $sub_menu = "300400";
 include_once('./_common.php');
-include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], 'r');
 
@@ -31,13 +30,14 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
 $g5['title'] = '인기검색어순위';
 include_once('./admin.head.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 $colspan = 3;
 ?>
 
 <script>
 $(function(){
-    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); 
+    $("#fr_date, #to_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" });
 });
 </script>
 

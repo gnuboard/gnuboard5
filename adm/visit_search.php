@@ -1,13 +1,13 @@
-<?php 
+<?php
 $sub_menu = '200810';
 include_once('./_common.php');
 include_once(G5_PATH.'/lib/visit.lib.php');
-include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 auth_check($auth[$sub_menu], 'r');
 
 $g5['title'] = '접속자검색';
 include_once('./admin.head.php');
+include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 $search_word = escape_trim($_GET['search_word']);
 $search_sort = escape_trim($_GET['search_sort']);
@@ -22,7 +22,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
     <?=$listall?>
     <label for="sch_sort" class="sound_only">검색분류</label>
     <select name="search_sort" id="sch_sort" class="search_sort">
-        <?php 
+        <?php
         //echo '<option value="vi_ip" '.($search_sort=='vi_ip'?'selected="selected"':'').'>IP</option>'; //selected 추가
         if($search_sort=='vi_ip'){ //select 안의 옵셥값이 vi_ip면
             echo '<option value="vi_ip" selected="selected">IP</option>'; //selected 추가
@@ -59,7 +59,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
     </tr>
     </thead>
     <tbody>
-    <?php 
+    <?php
     $sql_common = " from {$g5['visit_table']} ";
     if ($search_sort) {
         if($search_sort=='vi_ip' || $search_sort=='vi_date'){
@@ -79,7 +79,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
     if ($page == "") $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
     $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-    $sql = " select * 
+    $sql = " select *
                 {$sql_common}
                 {$sql_search}
                 order by vi_id desc
@@ -150,12 +150,12 @@ $(function(){
     }
 });
 
-function fvisit_submit(f) 
+function fvisit_submit(f)
 {
     return true;
 }
 </script>
 
-<?php 
+<?php
 include_once('./admin.tail.php');
 ?>
