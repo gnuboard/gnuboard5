@@ -173,6 +173,13 @@ if($g5_install || !$result) {
                     ";
     mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
+    // 1:1문의 설정
+    $sql = " insert into `{$table_prefix}qa_config`
+                ( qa_title, qa_category, qa_skin, qa_mobile_skin, qa_use_email, qa_req_email, qa_use_hp, qa_req_hp, qa_use_editor, qa_subject_len, qa_mobile_subject_len, qa_page_rows, qa_mobile_page_rows, qa_image_width, qa_upload_size, qa_insert_content )
+              values
+                ( '1:1문의', '회원|포인트', 'basic', 'basic', '1', '0', '1', '0', '1', '60', '30', '15', '15', '600', '1048576', '' ) ";
+    mysql_query($sql);
+
     // 관리자 회원가입
     $sql = " insert into `{$table_prefix}member`
                 set mb_id = '$admin_id',
