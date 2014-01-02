@@ -1101,5 +1101,33 @@ function fconfigform_submit(f)
 </script>
 
 <?php
+// 본인확인 모듈 실행권한 체크
+if($config['cf_cert_use']) {
+    // kcb일 때
+    if($config['cf_cert_ipin'] == 'kcb' || $config['cf_cert_hp'] == 'kcb') {
+        // 실행모듈
+        if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            if(PHP_INT_MAX == 2147483647) // 32-bit
+                $exe = G5_OKNAME_PATH.'/bin/okname';
+            else
+                $exe = G5_OKNAME_PATH.'/bin/okname_x64';
+        } else {
+            if(PHP_INT_MAX == 2147483647) // 32-bit
+                $exe = G5_OKNAME_PATH.'/bin/okname.exe';
+            else
+                $exe = G5_OKNAME_PATH.'/bin/oknamex64.exe';
+        }
+
+        echo module_exec_check($exe, 'okname');
+    }
+
+    // kcp일 때
+    if($config['cf_cert_hp'] == 'kcp') {
+        $exe = G5_KCPCERT_PATH.'/bin/ct_cli';
+
+        echo module_exec_check($exe, 'ct_cli');
+    }
+}
+
 include_once ('./admin.tail.php');
 ?>
