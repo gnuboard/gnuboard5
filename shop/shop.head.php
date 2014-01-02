@@ -66,7 +66,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 <ul>
                     <?php if ($is_member) { ?>
                     <?php if ($is_admin) {  ?>
-                    <li><a href="<?php echo G5_ADMIN_URL ?>"><b>관리자</b></a></li>
+                    <li><a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/"><b>관리자</b></a></li>
                     <?php }  ?>
                     <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php">정보수정</a></li>
                     <li><a href="<?php echo G5_BBS_URL; ?>/logout.php?url=shop">로그아웃</a></li>
