@@ -96,6 +96,21 @@ if($ps_run) {
                     $spl_stock_qty = 0;
                     $spl_noti_qty = 0;
                     $spl_use = 1;
+
+                    // 기존에 설정된 값이 있는지 체크
+                    if($_POST['w'] == 'u') {
+                        $sql = " select io_price, io_stock_qty, io_noti_qty, io_use
+                                    from {$g5['g5_shop_item_option_table']}
+                                    where it_id = '{$_POST['it_id']}'
+                                      and io_id = '$spl_id'
+                                      and io_type = '1' ";
+                        $row = sql_fetch($sql);
+
+                        $spl_price = (int)$row['io_price'];
+                        $spl_stock_qty = (int)$row['io_stock_qty'];
+                        $spl_noti_qty = (int)$row['io_noti_qty'];
+                        $spl_use = (int)$row['io_use'];
+                    }
     ?>
     <tr>
         <td class="td_chk">

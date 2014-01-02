@@ -648,6 +648,7 @@ $(function(){
                     <?php } ?>
                     // 옵션목록생성
                     $("#option_table_create").click(function() {
+                        var it_id = $.trim($("input[name=it_id]").val());
                         var opt1_subject = $.trim($("#opt1_subject").val());
                         var opt2_subject = $.trim($("#opt2_subject").val());
                         var opt3_subject = $.trim($("#opt3_subject").val());
@@ -663,7 +664,7 @@ $(function(){
 
                         $.post(
                             "<?php echo G5_ADMIN_URL; ?>/shop_admin/itemoption.php",
-                            { opt1_subject: opt1_subject, opt2_subject: opt2_subject, opt3_subject: opt3_subject, opt1: opt1, opt2: opt2, opt3: opt3 },
+                            { it_id: it_id, w: "<?php echo $w; ?>", opt1_subject: opt1_subject, opt2_subject: opt2_subject, opt3_subject: opt3_subject, opt1: opt1, opt2: opt2, opt3: opt3 },
                             function(data) {
                                 $option_table.empty().html(data);
                             }
@@ -821,6 +822,7 @@ $(function(){
 
                     // 옵션목록생성
                     $("#supply_table_create").click(function() {
+                        var it_id = $.trim($("input[name=it_id]").val());
                         var subject = new Array();
                         var supply = new Array();
                         var subj, spl;
@@ -847,7 +849,7 @@ $(function(){
 
                         $.post(
                             "<?php echo G5_ADMIN_URL; ?>/shop_admin/itemsupply.php",
-                            { 'subject[]': subject, 'supply[]': supply },
+                            { it_id: it_id, w: "<?php echo $w; ?>", 'subject[]': subject, 'supply[]': supply },
                             function(data) {
                                 $supply_table.empty().html(data);
                             }
