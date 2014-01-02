@@ -32,6 +32,12 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_scf_etc">기타설정</a></li>
 <li><a href="#anc_scf_sms">SMS설정</a></li>
 </ul>';
+
+// index 선택 설정 필드추가
+if(!isset($default['de_root_index_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_root_index_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_admin_info_email` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -690,6 +696,16 @@ $pg_anchor = '<ul class="anchor">
             <col>
         </colgroup>
         <tbody>
+        <tr>
+            <th scope="row"><label for="de_root_index_use">루트 index 사용</label></th>
+            <td>
+                <?php echo help('쇼핑몰의 접속경로를 '.G5_SHOP_URL.' 에서 '.G5_URL.' 으로 변경하시려면 사용으로 설정해 주십시오.'); ?>
+                <select name="de_root_index_use" id="de_root_index_use">
+                    <option value="0" <?php echo get_selected($default['de_root_index_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_root_index_use'], 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
         <tr>
             <th scope="row">관련상품출력</th>
             <td>

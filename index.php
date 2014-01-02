@@ -2,6 +2,12 @@
 define('_INDEX_', true);
 include_once('./_common.php');
 
+// 루트 index를 쇼핑몰 index 설정했을 때
+if(isset($default['de_root_index_use']) && $default['de_root_index_use']) {
+    require_once(G5_SHOP_PATH.'/index.php');
+    return;
+}
+
 if (G5_IS_MOBILE) {
     include_once(G5_MOBILE_PATH.'/index.php');
     return;

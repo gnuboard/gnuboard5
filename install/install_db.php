@@ -218,6 +218,7 @@ if($g5_shop_install) {
                     de_admin_company_addr = 'OO도 OO시 OO구 OO동 123-45',
                     de_admin_info_name = '정보책임자명',
                     de_admin_info_email = '정보책임자 E-mail',
+                    de_root_index_use = '0',
                     de_shop_skin = 'basic',
                     de_shop_mobile_skin = 'basic',
                     de_type1_list_use = '1',

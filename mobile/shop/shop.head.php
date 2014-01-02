@@ -19,7 +19,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     </div>
     <?php } ?>
 
-    <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="<?php echo $config['cf_title']; ?> 메인"></a></div>
+    <div id="logo"><a href="<?php echo $default['de_root_index_use'] ? G5_URL : G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="<?php echo $config['cf_title']; ?> 메인"></a></div>
 
     <a href="<?php echo G5_SHOP_URL; ?>/category.php" target="_blank" id="hd_ct">분류</a>
     <button type="button" id="hd_sch_open">검색<span class="sound_only"> 열기</span></button>
@@ -73,7 +73,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <li><a href="<?php echo G5_SHOP_URL; ?>/cart.php">장바구니</a></li>
         <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
         <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
+        <?php if(!$default['de_root_index_use']) { ?>
         <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
+        <?php } ?>
     </ul>
 
 </header>

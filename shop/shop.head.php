@@ -31,7 +31,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </ul>
     </aside>
 
-    <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a></div>
+    <div id="logo"><a href="<?php echo $default['de_root_index_use'] ? G5_URL : G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a></div>
 
     <aside id="hd_aside">
         <h2>편의메뉴</h2>
@@ -79,7 +79,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
                     <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
                     <li><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
+                    <?php if(!$default['de_root_index_use']) { ?>
                     <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
+                    <?php } ?>
                 </ul>
             </section>
         </div>
