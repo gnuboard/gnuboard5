@@ -5,12 +5,12 @@
 
 /*
 간편 사용법 : 상품유형을 1~5 사이로 지정합니다.
-$disp = new display_item(1);
+$disp = new item_list(1);
 echo $disp->run();
 
 
 유형+분류별로 노출하는 경우 상세 사용법 : 상품유형을 지정하는 것은 동일합니다.
-$disp = new display_item(1);
+$disp = new item_list(1);
 // 사용할 스킨을 바꿉니다.
 $disp->set_list_skin("type_user.skin.php");
 // 1단계분류를 20으로 시작되는 분류로 지정합니다.
@@ -20,13 +20,13 @@ echo $disp->run();
 
 분류별로 노출하는 경우 상세 사용법
 // type13.skin.php 스킨으로 3개씩 2줄을 폭 150 사이즈로 분류코드 30 으로 시작되는 상품을 노출합니다.
-$disp = new display_item(0, "type13.skin.php", 3, 2, 150, 0, "30");
+$disp = new item_list(0, "type13.skin.php", 3, 2, 150, 0, "30");
 echo $disp->run();
 
 
 이벤트로 노출하는 경우 상세 사용법
 // type13.skin.php 스킨으로 3개씩 2줄을 폭 150 사이즈로 상품을 노출합니다.
-$disp = new display_item(0, "type13.skin.php", 3, 2, 150, 0);
+$disp = new item_list(0, "type13.skin.php", 3, 2, 150, 0);
 // 이벤토번호를 설정합니다.
 $disp->set_event("12345678");
 echo $disp->run();
