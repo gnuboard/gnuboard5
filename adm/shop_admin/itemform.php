@@ -101,6 +101,12 @@ $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_extra">여분필드</a></li>
 </ul>
 ';
+
+$frm_submit = '<div class="btn_confirm01 btn_confirm">
+    <a href="'.G5_SHOP_URL.'/item.php?it_id='.$it_id.'" class="btn_frmline">상품확인</a>
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./itemlist.php?'.$qstr.'">목록</a>
+</div>';
 ?>
 
 <form name="fitemform" action="./itemformupdate.php" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" onsubmit="return fitemformcheck(this)">
@@ -168,6 +174,8 @@ $pg_anchor ='<ul class="anchor">
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_ini">
     <h2 class="h2_frm">기본정보</h2>
@@ -365,6 +373,8 @@ $pg_anchor ='<ul class="anchor">
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_sitfrm_compact">
     <h2 class="h2_frm">상품요약정보</h2>
     <?php echo $pg_anchor; ?>
@@ -388,6 +398,8 @@ $pg_anchor ='<ul class="anchor">
     </div>
     <div id="sit_compact_fields"><?php include_once(G5_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <script>
 $(function(){
@@ -925,6 +937,8 @@ $(function(){
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_sitfrm_sendcost">
     <h2 class="h2_frm">배송비</h2>
     <?php echo $pg_anchor; ?>
@@ -1066,6 +1080,8 @@ $(function(){
     </script>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_sitfrm_img">
     <h2 class="h2_frm">이미지</h2>
     <?php echo $pg_anchor; ?>
@@ -1108,10 +1124,7 @@ $(function(){
     </div>
 </section>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
-</div>
+<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_relation" class="srel">
     <h2 class="h2_frm">관련상품</h2>
@@ -1258,6 +1271,8 @@ $(function(){
 
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_sitfrm_event" class="srel">
     <h2 class="h2_frm">관련이벤트</h2>
     <?php echo $pg_anchor; ?>
@@ -1371,6 +1386,8 @@ $(function(){
 
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_sitfrm_optional">
     <h2 class="h2_frm">상세설명설정</h2>
     <?php echo $pg_anchor; ?>
@@ -1429,6 +1446,8 @@ $(function(){
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_sitfrm_extra">
     <h2>여분필드 설정</h2>
     <?php echo $pg_anchor ?>
@@ -1479,10 +1498,7 @@ $(function(){
     </div>
 </section>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./itemlist.php?<?php echo $qstr; ?>">목록</a>
-</div>
+<?php echo $frm_submit; ?>
 </form>
 
 

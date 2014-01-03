@@ -86,6 +86,11 @@ $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_scatefrm_extra">여분필드</a></li>';
 if ($w == 'u') $pg_anchor .= '<li><a href="#frm_etc">기타설정</a></li>';
 $pg_anchor .= '</ul>';
+
+$frm_submit = '<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./categorylist.php?'.$qstr.'">목록</a>
+</div>';
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -252,6 +257,8 @@ $pg_anchor .= '</ul>';
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_scatefrm_optional">
     <h2 class="h2_frm">선택 입력</h2>
     <?php echo $pg_anchor; ?>
@@ -311,6 +318,8 @@ $pg_anchor .= '</ul>';
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_scatefrm_extra">
     <h2>여분필드 설정</h2>
     <?php echo $pg_anchor ?>
@@ -338,6 +347,8 @@ $pg_anchor .= '</ul>';
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <?php if ($w == "u") { ?>
 <section id="frm_etc">
     <h2 class="h2_frm">기타설정</h2>
@@ -363,12 +374,9 @@ $pg_anchor .= '</ul>';
         </table>
     </div>
 </section>
+<?php echo $frm_submit; ?>
 <?php } ?>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./categorylist.php?<?php echo $qstr; ?>">목록</a>
-</div>
 </form>
 
 <script>

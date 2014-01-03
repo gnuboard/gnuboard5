@@ -33,6 +33,11 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_scf_sms">SMS설정</a></li>
 </ul>';
 
+$frm_submit = '<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="'.G5_SHOP_URL.'">쇼핑몰</a>
+</div>';
+
 // index 선택 설정 필드추가
 if(!isset($default['de_root_index_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
@@ -119,6 +124,8 @@ if(!isset($default['de_root_index_use'])) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_scf_skin">
     <h2 class="h2_frm">스킨설정</h2>
     <?php echo $pg_anchor; ?>
@@ -166,6 +173,8 @@ if(!isset($default['de_root_index_use'])) {
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_scf_index">
     <h2 class="h2_frm">쇼핑몰 초기화면</h2>
@@ -285,6 +294,8 @@ if(!isset($default['de_root_index_use'])) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_mscf_index">
     <h2 class="h2_frm">모바일 쇼핑몰 초기화면 설정</h2>
     <?php echo $pg_anchor; ?>
@@ -392,6 +403,7 @@ if(!isset($default['de_root_index_use'])) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
 
 <section id ="anc_scf_payment">
     <h2 class="h2_frm">결제정보</h2>
@@ -553,8 +565,8 @@ if(!isset($default['de_root_index_use'])) {
                 <input type="radio" name="de_card_test" value="1" <?php echo $default['de_card_test']==1?"checked":""; ?> id="de_card_test2">
                 <label for="de_card_test2">테스트결제</label>
                 <div id="scf_cardtest">
-                    <a href="https://admin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">실결제 관리자</a>
-                    <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">테스트 관리자</a>
+                    <a href="https://admin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">실결제 관리자</a>
+                    <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">테스트 관리자</a>
                 </div>
                 <div id="scf_cardtest_tip">
                     <strong>일반결제 사용시 테스트 결제</strong>
@@ -578,7 +590,7 @@ if(!isset($default['de_root_index_use'])) {
                 </div>
                 <script>
                 $('#scf_cardtest_tip').attr('class','scf_cardtest_tip');
-                $('<button type="button" id="scf_cardtest_btn">테스트결제 팁 더보기</button>').appendTo('#scf_cardtest');
+                $('<button type="button" id="scf_cardtest_btn" class="btn_frmline">테스트결제 팁 더보기</button>').appendTo('#scf_cardtest');
                 </script>
             </td>
         </tr>
@@ -600,6 +612,8 @@ if(!isset($default['de_root_index_use'])) {
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_scf_delivery">
     <h2 >배송정보</h2>
@@ -683,6 +697,8 @@ if(!isset($default['de_root_index_use'])) {
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_scf_etc">
     <h2 class="h2_frm">기타 설정</h2>
@@ -919,6 +935,8 @@ if(!isset($default['de_root_index_use'])) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <?php if (file_exists($logo_img) || file_exists($main_img)) { ?>
 <script>
 $(".banner_or_img").addClass("scf_img");
@@ -1136,9 +1154,7 @@ function byte_check(el_cont, el_byte)
 
 </section>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-</div>
+<?php echo $frm_submit; ?>
 
 </form>
 
