@@ -35,6 +35,7 @@ $mb_zip1        = isset($_POST['mb_zip1'])          ? escape_trim($_POST['mb_zip
 $mb_zip2        = isset($_POST['mb_zip2'])          ? escape_trim($_POST['mb_zip2'])        : "";
 $mb_addr1       = isset($_POST['mb_addr1'])         ? escape_trim($_POST['mb_addr1'])       : "";
 $mb_addr2       = isset($_POST['mb_addr2'])         ? escape_trim($_POST['mb_addr2'])       : "";
+$mb_addr3       = isset($_POST['mb_addr3'])         ? escape_trim($_POST['mb_addr3'])       : "";
 $mb_addr_jibeon = isset($_POST['mb_addr_jibeon'])   ? escape_trim($_POST['mb_addr_jibeon']) : "";
 $mb_signature   = isset($_POST['mb_signature'])     ? escape_trim($_POST['mb_signature'])   : "";
 $mb_profile     = isset($_POST['mb_profile'])       ? escape_trim($_POST['mb_profile'])     : "";
@@ -52,6 +53,8 @@ $mb_8           = isset($_POST['mb_8'])             ? escape_trim($_POST['mb_8']
 $mb_9           = isset($_POST['mb_9'])             ? escape_trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])            ? escape_trim($_POST['mb_10'])          : "";
 
+// 상세주소처리
+$mb_addr2 = get_address2($mb_addr2, $mb_addr3);
 
 if ($w == '' || $w == 'u') {
 

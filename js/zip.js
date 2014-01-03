@@ -86,7 +86,7 @@ function search_call(page)
     if(!page)
         page = 1;
 
-    $.getJSON("http://juso.sir.co.kr/search.php?sido="+sido+"&gugun="+gugun+"&page="+page+"&q="+q+"&callback=?",
+    $.getJSON("http://chicpro.chin.so/juso/search.php?sido="+sido+"&gugun="+gugun+"&page="+page+"&q="+q+"&callback=?",
         function(data) {
             $("#result").empty();
 

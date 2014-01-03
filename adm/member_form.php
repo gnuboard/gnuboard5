@@ -205,9 +205,10 @@ include_once('./admin.head.php');
         <td colspan="3" style="line-height:2em">
             <input type="text" name="mb_zip1" value="<?php echo $mb['mb_zip1'] ?>" id="mb_zip1" title="우편번호 앞자리" class="frm_input readonly" size="3" maxlength="3"> -
             <input type="text" name="mb_zip2" value="<?php echo $mb['mb_zip2'] ?>" id="mb_zip2" title="우편번호 뒷자리" class="frm_input readonly" size="3" maxlength="3">
-            <a href="<?php echo G5_BBS_URL ?>/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2&amp;frm_jibeon=mb_addr_jibeon" id="win_zip" class="win_zip_find btn_frmline" target="_blank">주소 검색</a><br>
-            <input type="text" name="mb_addr1" value="<?php echo $mb['mb_addr1'] ?>" id="mb_addr1" title="행정기본주소" class="frm_input readonly" size="70"><br>
+            <a href="<?php echo G5_BBS_URL ?>/zip.php?frm_name=fmember&amp;frm_zip1=mb_zip1&amp;frm_zip2=mb_zip2&amp;frm_addr1=mb_addr1&amp;frm_addr2=mb_addr2&amp;frm_addr3=mb_addr3&amp;frm_jibeon=mb_addr_jibeon" id="win_zip" class="win_zip_find btn_frmline" target="_blank">주소 검색</a><br>
+            <input type="text" name="mb_addr1" value="<?php echo $mb['mb_addr1'] ?>" id="mb_addr1" title="행정기본주소" class="frm_input readonly" size="40"> <span id="mb_addr3"></span><br>
             <input type="text" name="mb_addr2" value="<?php echo $mb['mb_addr2'] ?>" id="mb_addr2" title="상세주소" class="frm_input" size="70">
+            <input type="hidden" name="mb_addr3" value="">
             <input type="hidden" name="mb_addr_jibeon" value="<?php echo $mb['mb_addr_jibeon']; ?>"><br>
             <span id="mb_addr_jibeon">지번주소 : <?php echo $mb['mb_addr_jibeon']; ?></span>
         </td>

@@ -55,16 +55,18 @@ $(function() {
     });
 });
 
-function put_data(zip1, zip2, addr1, addr2, jibeon)
+function put_data(zip1, zip2, addr1, addr3, jibeon)
 {
     var of = window.opener.document.<?php echo $frm_name; ?>;
 
     of.<?php echo $frm_zip1; ?>.value = zip1;
     of.<?php echo $frm_zip2; ?>.value = zip2;
     of.<?php echo $frm_addr1; ?>.value = addr1;
-    of.<?php echo $frm_addr2; ?>.value = addr2;
+    of.<?php echo $frm_addr2; ?>.value = "";
+    of.<?php echo $frm_addr3; ?>.value = addr3;
 
-    window.opener.document.getElementById("<?php echo $frm_jibeon; ?>").innerText = "지번주소 : "+jibeon;
+    window.opener.$("#<?php echo $frm_addr3; ?>").text(addr3);
+    window.opener.$("#<?php echo $frm_jibeon; ?>").text("지번주소 : "+jibeon);
 
     if(of.<?php echo $frm_jibeon; ?> !== undefined)
         of.<?php echo $frm_jibeon; ?>.value = jibeon;
