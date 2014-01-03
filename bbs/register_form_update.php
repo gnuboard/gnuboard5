@@ -53,9 +53,6 @@ $mb_8           = isset($_POST['mb_8'])             ? escape_trim($_POST['mb_8']
 $mb_9           = isset($_POST['mb_9'])             ? escape_trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])            ? escape_trim($_POST['mb_10'])          : "";
 
-// 상세주소처리
-$mb_addr2 = get_address2($mb_addr2, $mb_addr3);
-
 if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
@@ -202,6 +199,7 @@ if ($w == '') {
                      mb_zip2 = '{$mb_zip2}',
                      mb_addr1 = '{$mb_addr1}',
                      mb_addr2 = '{$mb_addr2}',
+                     mb_addr3 = '{$mb_addr3}',
                      mb_addr_jibeon = '{$mb_addr_jibeon}',
                      mb_signature = '{$mb_signature}',
                      mb_profile = '{$mb_profile}',
@@ -313,6 +311,7 @@ if ($w == '') {
                     mb_zip2 = '{$mb_zip2}',
                     mb_addr1 = '{$mb_addr1}',
                     mb_addr2 = '{$mb_addr2}',
+                    mb_addr3 = '{$mb_addr3}',
                     mb_addr_jibeon = '{$mb_addr_jibeon}',
                     mb_signature = '{$mb_signature}',
                     mb_profile = '{$mb_profile}',

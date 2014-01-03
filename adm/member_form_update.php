@@ -29,8 +29,6 @@ if($_POST['mb_certify_case'] && $_POST['mb_certify']) {
     $mb_adult = 0;
 }
 
-$mb_addr2 = get_address2($_POST['mb_addr2'], $_POST['mb_addr3']);
-
 $sql_common = "  mb_name = '{$_POST['mb_name']}',
                  mb_nick = '{$_POST['mb_nick']}',
                  mb_email = '{$_POST['mb_email']}',
@@ -42,7 +40,8 @@ $sql_common = "  mb_name = '{$_POST['mb_name']}',
                  mb_zip1 = '{$_POST['mb_zip1']}',
                  mb_zip2 = '{$_POST['mb_zip2']}',
                  mb_addr1 = '{$_POST['mb_addr1']}',
-                 mb_addr2 = '{$mb_addr2}',
+                 mb_addr2 = '{$_POST['mb_addr2']}',
+                 mb_addr3 = '{$_POST['mb_addr3']}',
                  mb_addr_jibeon = '{$_POST['mb_addr_jibeon']}',
                  mb_birth = '{$_POST['mb_birth']}',
                  mb_sex = '{$_POST['mb_sex']}',

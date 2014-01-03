@@ -2522,17 +2522,17 @@ function get_address2($addr2, $addr3)
 
 // 도로명주소 출력
 // 주소출력
-function print_address($addr1, $addr2)
+function print_address($addr1, $addr2, $addr3)
 {
     $address = trim($addr1);
     $addr2 = trim($addr2);
+    $addr3 = trim($addr3);
 
-    if($addr2) {
-        if(preg_match('/^\(/', $addr2))
-            $address .= ' '.$addr2;
-        else
-            $address .= ', '.$addr2;
-    }
+    if($addr2)
+        $address .= ', '.$addr2;
+
+    if($addr3)
+        $address .= ' '.$addr3;
 
     return $address;
 }

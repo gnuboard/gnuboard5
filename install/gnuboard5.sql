@@ -456,6 +456,7 @@ CREATE TABLE IF NOT EXISTS `g5_member` (
   `mb_zip2` char(3) NOT NULL default '',
   `mb_addr1` varchar(255) NOT NULL default '',
   `mb_addr2` varchar(255) NOT NULL default '',
+  `mb_addr3` varchar(255) NOT NULL default '',
   `mb_addr_jibeon` varchar(255) NOT NULL default '',
   `mb_signature` text NOT NULL,
   `mb_recommend` varchar(255) NOT NULL default '',
