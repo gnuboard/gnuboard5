@@ -3,9 +3,6 @@ $sub_menu = '400400';
 include_once('./_common.php');
 
 if($_POST['mod_type'] == 'info') {
-    $od_addr2 = get_address2($od_addr2, $od_addr3);
-    $od_b_addr2 = get_address2($od_b_addr2, $od_b_addr3);
-
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_name = '$od_name',
                     od_tel = '$od_tel',
@@ -14,6 +11,7 @@ if($_POST['mod_type'] == 'info') {
                     od_zip2 = '$od_zip2',
                     od_addr1 = '$od_addr1',
                     od_addr2 = '$od_addr2',
+                    od_addr3 = '$od_addr3',
                     od_addr_jibeon = '$od_addr_jibeon',
                     od_email = '$od_email',
                     od_b_name = '$od_b_name',
@@ -23,6 +21,7 @@ if($_POST['mod_type'] == 'info') {
                     od_b_zip2 = '$od_b_zip2',
                     od_b_addr1 = '$od_b_addr1',
                     od_b_addr2 = '$od_b_addr2',
+                    od_b_addr3 = '$od_b_addr3',
                     od_b_addr_jibeon = '$od_b_addr_jibeon' ";
     if ($default['de_hope_date_use'])
         $sql .= " , od_hope_date = '$od_hope_date' ";

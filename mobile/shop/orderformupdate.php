@@ -378,9 +378,6 @@ if($default['de_tax_flag_use']) {
     $od_free_mny = (int)$_POST['comm_free_mny'];
 }
 
-$od_addr2 = get_address2($od_addr2, $od_addr3);
-$od_b_addr2 = get_address2($od_b_addr2, $od_b_addr3);
-
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
             set od_id             = '$od_id',
@@ -394,6 +391,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_zip2           = '$od_zip2',
                 od_addr1          = '$od_addr1',
                 od_addr2          = '$od_addr2',
+                od_addr3          = '$od_addr3',
                 od_addr_jibeon    = '$od_addr_jibeon',
                 od_b_name         = '$od_b_name',
                 od_b_tel          = '$od_b_tel',
@@ -402,6 +400,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_b_zip2         = '$od_b_zip2',
                 od_b_addr1        = '$od_b_addr1',
                 od_b_addr2        = '$od_b_addr2',
+                od_b_addr3        = '$od_b_addr3',
                 od_b_addr_jibeon  = '$od_b_addr_jibeon',
                 od_deposit_name   = '$od_deposit_name',
                 od_memo           = '$od_memo',
@@ -602,7 +601,8 @@ if($is_member) {
                   and ad_zip1 = '$od_b_zip1'
                   and ad_zip2 = '$od_b_zip2'
                   and ad_addr1 = '$od_b_addr1'
-                  and ad_addr2 = '$od_b_addr2' ";
+                  and ad_addr2 = '$od_b_addr2'
+                  and ad_addr3 = '$od_b_addr3' ";
     $row = sql_fetch($sql);
 
     // 기본배송지 체크
@@ -631,6 +631,7 @@ if($is_member) {
                         ad_zip2     = '$od_b_zip2',
                         ad_addr1    = '$od_b_addr1',
                         ad_addr2    = '$od_b_addr2',
+                        ad_addr3    = '$od_b_addr3',
                         ad_jibeon   = '$od_b_addr_jibeon' ";
     }
 

@@ -375,12 +375,12 @@ ob_end_clean();
                     <label for="od_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
                     <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_zip2" required class="frm_input required" size="3" maxlength="3">
                     <a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>
-                    <label for="od_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
+                    <label for="od_addr1" class="sound_only">기본주소<strong class="sound_only"> 필수</strong></label>
                     <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required">
-                    <span id="od_addr3"></span>
-                    <input type="hidden" name="od_addr3" value="">
                     <label for="od_addr2" class="sound_only">상세주소</label>
                     <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" class="frm_input frm_address">
+                    <label for="od_addr3" class="sound_only">참고항목</label>
+                    <input type="text" name="od_addr3" value="<?php echo $member['mb_addr3'] ?>" id="od_addr3" readonly="readonly" class="frm_input frm_address">
                     <input type="hidden" name="od_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>">
                     <span id="od_addr_jibeon"><?php echo ($member['mb_addr_jibeon'] ? '지번주소 : '.$member['mb_addr_jibeon'] : ''); ?></span>
                 </td>
@@ -435,7 +435,7 @@ ob_end_clean();
                               and ad_default = '1' ";
                 $row = sql_fetch($sql);
                 if($row['ad_id']) {
-                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
+                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_addr3'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
                     $addr_list .= '<br><input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_def">'.PHP_EOL;
                     $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
                 }
@@ -449,7 +449,7 @@ ob_end_clean();
                             limit 1 ";
                 $result = sql_query($sql);
                 for($i=0; $row=sql_fetch_array($result); $i++) {
-                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
+                    $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_addr3'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
                     $val2 = '<label for="ad_sel_addr_'.($i+1).'">최근배송지('.($row['ad_subject'] ? $row['ad_subject'] : $row['ad_name']).')</label>';
                     $addr_list .= '<br><input type="radio" name="ad_sel_addr" value="'.$val1.'" id="ad_sel_addr_'.($i+1).'"> '.PHP_EOL.$val2.PHP_EOL;
                 }
@@ -504,12 +504,12 @@ ob_end_clean();
                     <label for="od_b_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
                     <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="3" maxlength="3">
                     <a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>
-                    <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
+                    <label for="od_b_addr1" class="sound_only">기본주소<strong class="sound_only"> 필수</strong></label>
                     <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required">
-                    <span id="od_b_addr3"></span>
-                    <input type="hidden" name="od_b_addr3" value="">
                     <label for="od_b_addr2" class="sound_only">상세주소</label>
                     <input type="text" name="od_b_addr2" id="od_b_addr2" class="frm_input frm_address">
+                    <label for="od_b_addr3" class="sound_only">참고항목</label>
+                    <input type="text" name="od_b_addr3" id="od_b_addr3" class="frm_input frm_address">
                     <input type="hidden" name="od_b_addr_jibeon" value="">
                     <span id="od_b_addr_jibeon"></span>
                 </td>
@@ -1069,7 +1069,7 @@ $(function() {
                 gumae2baesong(false);
         } else {
             if(addr[0] == "new") {
-                for(i=0; i<9; i++) {
+                for(i=0; i<10; i++) {
                     addr[i] = "";
                 }
             }
@@ -1082,10 +1082,11 @@ $(function() {
             f.od_b_zip2.value        = addr[4];
             f.od_b_addr1.value       = addr[5];
             f.od_b_addr2.value       = addr[6];
-            f.od_b_addr_jibeon.value = addr[7];
-            f.ad_subject.value       = addr[8];
+            f.od_b_addr3.value       = addr[7];
+            f.od_b_addr_jibeon.value = addr[8];
+            f.ad_subject.value       = addr[9];
 
-            document.getElementById("od_b_addr_jibeon").innerText = "지번주소 : "+addr[7];
+            document.getElementById("od_b_addr_jibeon").innerText = "지번주소 : "+addr[8];
 
             var zip1 = addr[3].replace(/[^0-9]/g, "");
             var zip2 = addr[4].replace(/[^0-9]/g, "");
@@ -1507,7 +1508,6 @@ function gumae2baesong(checked) {
         f.od_b_addr2.value = f.od_addr2.value;
         f.od_b_addr3.value = f.od_addr3.value;
         f.od_b_addr_jibeon.value = f.od_addr_jibeon.value;
-        document.getElementById("od_b_addr3").innerText = document.getElementById("od_addr3").innerText;
         document.getElementById("od_b_addr_jibeon").innerText = document.getElementById("od_addr_jibeon").innerText;
 
         calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
@@ -1521,7 +1521,6 @@ function gumae2baesong(checked) {
         f.od_b_addr2.value = "";
         f.od_b_addr3.value = "";
         f.od_b_addr_jibeon.value = "";
-        document.getElementById("od_b_addr3").innerText = "";
         document.getElementById("od_b_addr_jibeon").innerText = "";
     }
 }

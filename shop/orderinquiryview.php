@@ -402,7 +402,7 @@ if(openwin != null) {
                 </tr>
                 <tr>
                     <th scope="row">주 소</th>
-                    <td><?php echo sprintf("(%s-%s)", $od['od_zip1'], $od['od_zip2']).' '.print_address($od['od_addr1'], $od['od_addr2']); ?></td>
+                    <td><?php echo sprintf("(%s-%s)", $od['od_zip1'], $od['od_zip2']).' '.print_address($od['od_addr1'], $od['od_addr2'], $od['od_addr3']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">E-mail</th>
@@ -437,7 +437,7 @@ if(openwin != null) {
                 </tr>
                 <tr>
                     <th scope="row">주 소</th>
-                    <td><?php echo sprintf("(%s-%s)", $od['od_b_zip1'], $od['od_b_zip2']).' '.print_address($od['od_b_addr1'], $od['od_b_addr2']); ?></td>
+                    <td><?php echo sprintf("(%s-%s)", $od['od_b_zip1'], $od['od_b_zip2']).' '.print_address($od['od_b_addr1'], $od['od_b_addr2'], $od['od_b_addr3']); ?></td>
                 </tr>
                 <?php
                 // 희망배송일을 사용한다면

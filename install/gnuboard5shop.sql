@@ -612,6 +612,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_zip2` char(3) NOT NULL DEFAULT '',
   `od_addr1` varchar(100) NOT NULL DEFAULT '',
   `od_addr2` varchar(100) NOT NULL DEFAULT '',
+  `od_addr3` varchar(255) NOT NULL DEFAULT '',
   `od_addr_jibeon` varchar(255) NOT NULL DEFAULT '',
   `od_deposit_name` varchar(20) NOT NULL DEFAULT '',
   `od_b_name` varchar(20) NOT NULL DEFAULT '',
@@ -621,6 +622,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_b_zip2` char(3) NOT NULL DEFAULT '',
   `od_b_addr1` varchar(100) NOT NULL DEFAULT '',
   `od_b_addr2` varchar(100) NOT NULL DEFAULT '',
+  `od_b_addr3` varchar(255) NOT NULL DEFAULT '',
   `od_b_addr_jibeon` varchar(255) NOT NULL DEFAULT '',
   `od_memo` text NOT NULL,
   `od_cart_count` int(11) NOT NULL DEFAULT '0',
@@ -682,6 +684,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order_address` (
   `ad_zip2` char(3) NOT NULL DEFAULT '',
   `ad_addr1` varchar(255) NOT NULL DEFAULT '',
   `ad_addr2` varchar(255) NOT NULL DEFAULT '',
+  `ad_addr3` varchar(255) NOT NULL DEFAULT '',
   `ad_jibeon` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`ad_id`),
   KEY `mb_id` (`mb_id`)
