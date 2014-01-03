@@ -41,7 +41,6 @@
 .mb_skin table {}
 .mb_skin caption {}
 .mb_skin .frm_info {}
-.mb_skin .frm_address {}
 .mb_skin .frm_file {}
 
 .mbskin .tbl_frm01 {}
@@ -84,11 +83,14 @@
 
 /* 회원가입 입력 */
 #fregisterform #reg_mb_email, #fregisterform .frm_address {width:100%}
-#fregisterform #mb_addr_jibeon {display:block;margin:5px 0 0}
 
 #fregisterform textarea {width:100%;height:50px}
 
 #fregisterform #msg_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
+
+#fregisterform .frm_address {margin:5px 0 0}
+#fregisterform #mb_addr3 {display:block;margin:5px 0 0}
+#fregisterform #mb_addr_jibeon {display:block;margin:5px 0 0}
 
 /* 회원가입 완료 */
 #reg_result {padding:40px 10px 0}

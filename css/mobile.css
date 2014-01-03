@@ -167,7 +167,6 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .tbl_frm01 textarea, .frm_input {border:1px solid #e4eaec;background:#f7f7f7;vertical-align:middle;line-height:1.8em;-webkit-appearance:none}
 .tbl_frm01 textarea {width:100%;height:100px}
 .tbl_frm01 a {text-decoration:none}
-.tbl_frm01 .frm_address {display:block;margin-top:5px}
 .tbl_frm01 .frm_file {display:block;margin-bottom:5px;width:100%}
 .tbl_frm01 .frm_info {display:block;padding:5px 0 0;color:#666;line-height:1.3em}
 

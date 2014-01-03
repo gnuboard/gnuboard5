@@ -197,7 +197,6 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .frm_input {height:22px}
 .tbl_frm01 textarea {width:98%;height:100px}
 .tbl_frm01 a {text-decoration:none}
-.tbl_frm01 .frm_address {display:block;margin-top:5px}
 .tbl_frm01 .frm_file {display:block;margin-bottom:5px}
 .tbl_frm01 .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
 
