@@ -2501,4 +2501,21 @@ function get_address2($addr2, $addr3)
 
     return $addr2;
 }
+
+// 도로명주소 출력
+// 주소출력
+function print_address($addr1, $addr2)
+{
+    $address = trim($addr1);
+    $addr2 = trim($addr2);
+
+    if($addr2) {
+        if(preg_match('/^\(/', $addr2))
+            $address .= ' '.$addr2;
+        else
+            $address .= ', '.$addr2;
+    }
+
+    return $address;
+}
 ?>
