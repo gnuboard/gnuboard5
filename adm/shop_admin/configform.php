@@ -35,6 +35,7 @@ $pg_anchor = '<ul class="anchor">
 
 $frm_submit = '<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="'.G5_SHOP_URL.'">쇼핑몰</a>
 </div>';
 
 // index 선택 설정 필드추가
