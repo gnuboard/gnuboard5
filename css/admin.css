@@ -139,7 +139,9 @@ h3 {margin:0 20px}
 .btn_confirm02 a {display:inline-block;padding:0 15px;height:30px;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 .btn_confirm02 a:focus {background:#555}
 
+
 .btn_confirm03 {clear:both;margin-top:10px;text-align:right}
+
 
 .btn_submit {background:#ff3061;cursor:pointer}
 .btn_confirm .btn_submit {padding:0 15px;border:0;height:30px;color:#fff}

@@ -2505,4 +2505,18 @@ function module_exec_check($exe, $type)
 
     return $error;
 }
+
+// 도로명 상세 주소처리
+function get_address2($addr2, $addr3)
+{
+    if($addr3) {
+        if($addr2) {
+            $addr2 .= ' '.$addr3;
+        } else {
+            $addr2 = $addr3;
+        }
+    }
+
+    return $addr2;
+}
 ?>

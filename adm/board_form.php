@@ -154,6 +154,13 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_bo_point">포인트 설정</a></li>
     <li><a href="#anc_bo_extra">여분필드</a></li>
 </ul>';
+
+$frm_submit = '<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="./board_list.php?'.$qstr.'">목록</a>'.PHP_EOL;
+if ($w == 'u') $frm_submit .= '    <a href="./board_copy.php?bo_table='.$bo_table.'" id="board_copy" target="win_board_copy">게시판복사</a>
+    <a href="'.G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'" class="btn_frmline">게시판 바로가기</a>'.PHP_EOL;
+$frm_submit .= '</div>';
 ?>
 
 <form name="fboardform" id="fboardform" action="./board_form_update.php" onsubmit="return fboardform_submit(this)" method="post" enctype="multipart/form-data">
@@ -254,6 +261,8 @@ $pg_anchor = '<ul class="anchor">
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_bo_auth">
     <h2 class="h2_frm">게시판 권한 설정</h2>
@@ -393,6 +402,8 @@ $pg_anchor = '<ul class="anchor">
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_bo_function">
     <h2 class="h2_frm">게시판 기능 설정</h2>
@@ -787,6 +798,8 @@ $pg_anchor = '<ul class="anchor">
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_bo_design">
     <h2 class="h2_frm">게시판 디자인/양식</h2>
     <?php echo $pg_anchor ?>
@@ -1128,6 +1141,8 @@ $pg_anchor = '<ul class="anchor">
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_bo_point">
     <h2 class="h2_frm">게시판 포인트 설정</h2>
     <?php echo $pg_anchor ?>
@@ -1201,6 +1216,8 @@ $pg_anchor = '<ul class="anchor">
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_bo_extra">
     <h2 class="h2_frm">게시판 여분필드 설정</h2>
     <?php echo $pg_anchor ?>
@@ -1236,11 +1253,7 @@ $pg_anchor = '<ul class="anchor">
     </div>
 </section>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./board_list.php?<?php echo $qstr ?>">목록</a>
-    <?php if ($w == 'u') { ?><a href="./board_copy.php?bo_table=<?php echo $bo_table ?>" id="board_copy" target="win_board_copy">게시판복사</a><?php } ?>
-</div>
+<?php echo $frm_submit; ?>
 
 </form>
 

@@ -147,6 +147,11 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_extra">여분필드</a></li>
 </ul>';
 
+$frm_submit = '<div class="btn_confirm01 btn_confirm">
+    <input type="submit" value="확인" class="btn_submit" accesskey="s">
+    <a href="'.G5_URL.'/">메인으로</a>
+</div>';
+
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
@@ -418,6 +423,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_cf_board">
     <h2 class="h2_frm">게시판 기본 설정</h2>
     <?php echo $pg_anchor ?>
@@ -497,6 +504,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_cf_join">
     <h2 class="h2_frm">회원가입 설정</h2>
@@ -643,6 +652,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_cf_cert">
     <h2 class="h2_frm">본인확인 설정</h2>
     <?php echo $pg_anchor ?>
@@ -719,6 +730,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_cf_mail">
     <h2 class="h2_frm">기본 메일 환경 설정</h2>
     <?php echo $pg_anchor ?>
@@ -755,6 +768,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_cf_article_mail">
     <h2 class="h2_frm">게시판 글 작성 시 메일 설정</h2>
@@ -808,6 +823,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_cf_join_mail">
     <h2 class="h2_frm">회원가입 시 메일 설정</h2>
     <?php echo $pg_anchor ?>
@@ -839,6 +856,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
 
 <section id="anc_cf_vote_mail">
     <h2 class="h2_frm">투표 기타의견 작성 시 메일 설정</h2>
@@ -863,6 +881,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_cf_sns">
     <h2 class="h2_frm">소셜네트워크서비스(SNS : Social Network Service)</h2>
@@ -908,6 +928,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_cf_lay">
     <h2 class="h2_frm">레이아웃 추가설정</h2>
@@ -956,6 +978,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         </table>
     </div>
 </section>
+
+<?php echo $frm_submit; ?>
 
 <section id="anc_cf_sms">
     <h2 class="h2_frm">SMS</h2>
@@ -1037,6 +1061,8 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
+<?php echo $frm_submit; ?>
+
 <section id="anc_cf_extra">
     <h2 class="h2_frm">여분필드 기본 설정</h2>
     <?php echo $pg_anchor ?>
@@ -1068,9 +1094,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-</div>
+<?php echo $frm_submit; ?>
 
 </form>
 
