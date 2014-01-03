@@ -185,7 +185,7 @@ $colspan = 15;
         if ($intercept_title == '')
             $intercept_title = '차단하기';
 
-        $address = $row['mb_zip1'] ? print_address($row['mb_addr1'], $row['mb_addr2']) : '';
+        $address = $row['mb_zip1'] ? print_address($row['mb_addr1'], $row['mb_addr2'], $row['mb_addr3']) : '';
 
         $bg = 'bg'.($i%2);
 
