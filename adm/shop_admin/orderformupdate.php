@@ -3,6 +3,9 @@ $sub_menu = '400400';
 include_once('./_common.php');
 
 if($_POST['mod_type'] == 'info') {
+    $od_addr2 = get_address2($od_addr2, $od_addr3);
+    $od_b_addr2 = get_address2($od_b_addr2, $od_b_addr3);
+
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_name = '$od_name',
                     od_tel = '$od_tel',

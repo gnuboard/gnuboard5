@@ -41,7 +41,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             <dt>회원가입일시</dt>
             <dd><?php echo $member['mb_datetime']; ?></dd>
             <dt>주소</dt>
-            <dd><?php echo sprintf("(%s-%s) %s %s", $member['mb_zip1'], $member['mb_zip2'], $member['mb_addr1'], $member['mb_addr2']); ?></dd>
+            <dd><?php echo sprintf("(%s-%s)", $member['mb_zip1'], $member['mb_zip2']).' '.print_address($member['mb_addr1'], $member['mb_addr2']); ?></dd>
         </dl>
     </section>
 

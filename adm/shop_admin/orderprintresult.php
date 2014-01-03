@@ -69,7 +69,7 @@ if ($csv == 'csv')
         $ct_send_cost = iconv_euckr($row['ct_send_cost'] ? '착불' : '선불');
 
         echo '"'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'"'.',';
-        echo '"'.$row['od_b_addr1'].' '.$row['od_b_addr2'].'"'.',';
+        echo '"'.print_address($row['od_b_addr1'], $row['od_b_addr2']).'"'.',';
         echo '"'.$row['od_b_name'].'"'.',';
         //echo '"'.multibyte_digit((string)$row[od_b_tel]).'"'.',';
         //echo '"'.multibyte_digit((string)$row[od_b_hp]).'"'.',';
@@ -138,7 +138,7 @@ if ($csv == 'xls')
         $row = array_map('iconv_euckr', $row);
 
         $worksheet->write($i, 0, $row['od_b_zip1'].'-'.$row['od_b_zip2']);
-        $worksheet->write($i, 1, $row['od_b_addr1'].' '.$row['od_b_addr2']);
+        $worksheet->write($i, 1, print_address($row['od_b_addr1'], $row['od_b_addr2']));
         $worksheet->write($i, 2, $row['od_b_name']);
         $worksheet->write($i, 3, $row['od_b_tel']);
         $worksheet->write($i, 4, $row['od_b_hp']);
@@ -146,7 +146,7 @@ if ($csv == 'xls')
         $worksheet->write($i, 6, $row['ct_qty']);
         $worksheet->write($i, 7, $row['ct_option']);
         $worksheet->write($i, 8, $ct_send_cost);
-        $worksheet->write($i, 9, $row['it_id']);
+        $worksheet->write($i, 9, ' '.$row['it_id']);
         $worksheet->write($i, 10, ' '.$row['od_id']);
         $worksheet->write($i, 11, $row['od_invoice']);
         $worksheet->write($i, 12, $row['od_memo']);
@@ -218,8 +218,8 @@ if (mysql_num_rows($result) == 0)
         $row1 = sql_fetch($sql1);
 
         // 1.03.02
-        $row1['od_addr'] = '('.$row1['od_zip1'].'-'.$row1['od_zip2'].') '.$row1['od_addr1'].' '.$row1['od_addr2'];
-        $row1['od_b_addr'] = '('.$row1['od_b_zip1'].'-'.$row1['od_b_zip2'].') '.$row1['od_b_addr1'].' '.$row1['od_b_addr2'];
+        $row1['od_addr'] = '('.$row1['od_zip1'].'-'.$row1['od_zip2'].') '.print_address($row1['od_addr1'], $row1['od_addr2']);
+        $row1['od_b_addr'] = '('.$row1['od_b_zip1'].'-'.$row1['od_b_zip2'].') '.print_address($row1['od_b_addr1'], $row1['od_b_addr2']);
 
         $row1['od_addr'] = ($row1['od_addr']) ? $row1['od_addr'] : '입력안함';
         $row1['od_tel'] = ($row1['od_tel']) ? $row1['od_tel'] : '입력안함';

@@ -373,6 +373,9 @@ if($default['de_tax_flag_use']) {
     $od_free_mny = (int)$_POST['comm_free_mny'];
 }
 
+$od_addr2 = get_address2($od_addr2, $od_addr3);
+$od_b_addr2 = get_address2($od_b_addr2, $od_b_addr3);
+
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
             set od_id             = '$od_id',

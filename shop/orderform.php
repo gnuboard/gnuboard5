@@ -644,7 +644,7 @@ function get_intall_file()
                 <th scope="row"><label for="od_hp">핸드폰</label></th>
                 <td><input type="text" name="od_hp" value="<?php echo $member['mb_hp']; ?>" id="od_hp" class="frm_input" maxlength="20"></td>
             </tr>
-            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2&amp;frm_jibeon=od_addr_jibeon'; ?>
+            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2&amp;frm_addr3=od_addr3&amp;frm_jibeon=od_addr_jibeon'; ?>
             <tr>
                 <th scope="row">주소</th>
                 <td>
@@ -655,9 +655,11 @@ function get_intall_file()
                     <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_zip2" required class="frm_input required" size="3" maxlength="3">
                     <a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>
                     <label for="od_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="70">
-                    <label for="od_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" required class="frm_input frm_address required" size="70">
+                    <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="40">
+                    <span id="od_addr3"></span>
+                    <input type="hidden" name="od_addr3" value="">
+                    <label for="od_addr2" class="sound_only">상세주소</label>
+                    <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" class="frm_input frm_address" size="70">
                     <input type="hidden" name="od_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>">
                     <span id="od_addr_jibeon"><?php echo ($member['mb_addr_jibeon'] ? '지번주소 : '.$member['mb_addr_jibeon'] : ''); ?></span>
                 </td>
@@ -771,7 +773,7 @@ function get_intall_file()
                 <th scope="row"><label for="od_b_hp">핸드폰</label></th>
                 <td><input type="text" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20"></td>
             </tr>
-            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2&amp;frm_jibeon=od_b_addr_jibeon'; ?>
+            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_b_zip1&amp;frm_zip2=od_b_zip2&amp;frm_addr1=od_b_addr1&amp;frm_addr2=od_b_addr2&amp;frm_addr3=od_b_addr3&amp;frm_jibeon=od_b_addr_jibeon'; ?>
             <tr>
                 <th scope="row">주소</th>
                 <td id="sod_frm_addr">
@@ -782,9 +784,11 @@ function get_intall_file()
                     <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="3" maxlength="3">
                     <a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>
                     <label for="od_b_addr1" class="sound_only">주소<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="70">
-                    <label for="od_b_addr2" class="sound_only">상세주소<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_b_addr2" id="od_b_addr2" required class="frm_input frm_address required" size="70">
+                    <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="40">
+                    <span id="od_b_addr3"></span>
+                    <input type="hidden" name="od_b_addr3" value="">
+                    <label for="od_b_addr2" class="sound_only">상세주소</label>
+                    <input type="text" name="od_b_addr2" id="od_b_addr2" class="frm_input frm_address" size="70">
                     <input type="hidden" name="od_b_addr_jibeon" value="">
                     <span id="od_b_addr_jibeon"></span>
                 </td>
@@ -1727,7 +1731,9 @@ function gumae2baesong(checked) {
         f.od_b_zip2.value = f.od_zip2.value;
         f.od_b_addr1.value = f.od_addr1.value;
         f.od_b_addr2.value = f.od_addr2.value;
+        f.od_b_addr3.value = f.od_addr3.value;
         f.od_b_addr_jibeon.value = f.od_addr_jibeon.value;
+        document.getElementById("od_b_addr3").innerText = document.getElementById("od_addr3").innerText;
         document.getElementById("od_b_addr_jibeon").innerText = document.getElementById("od_addr_jibeon").innerText;
 
         calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
@@ -1739,7 +1745,9 @@ function gumae2baesong(checked) {
         f.od_b_zip2.value = "";
         f.od_b_addr1.value = "";
         f.od_b_addr2.value = "";
+        f.od_b_addr3.value = "";
         f.od_b_addr_jibeon.value = "";
+        document.getElementById("od_b_addr3").innerText = "";
         document.getElementById("od_b_addr_jibeon").innerText = "";
     }
 }
