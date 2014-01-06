@@ -148,7 +148,7 @@ $colspan = 16;
         </td>
         <td>
             <label for="bo_subject_<?php echo $i; ?>" class="sound_only">게시판 제목</label>
-            <input type="text" name="bo_subject[<?php echo $i ?>]" value="<?php echo get_text($row['bo_subject']) ?>" id="bo_subject_<?php echo $i ?>" required class="required frm_input" size="10">
+            <input type="text" name="bo_subject[<?php echo $i ?>]" value="<?php echo get_text($row['bo_subject']) ?>" id="bo_subject_<?php echo $i ?>" required class="required frm_input bo_subject" size="10">
         </td>
         <td>
             <label for="" class="sound_only">읽기 포인트</label>
