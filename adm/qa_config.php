@@ -92,6 +92,12 @@ if(empty($qaconfig)) {
 
     $qaconfig = get_qa_config();
 }
+
+// 관리자 이메일필드 추가
+if(!isset($qaconfig['qa_admin_email'])) {
+    sql_query(" ALTER TABLE `{$g5['qa_config_table']}`
+                    ADD `qa_admin_email` varchar(255) NOT NULL DEFAULT '' AFTER `qa_admin_hp` ", true);
+}
 ?>
 
 <form name="fqaconfigform" id="fqaconfigform" method="post" onsubmit="return fqaconfigform_submit(this);" autocomplete="off">
@@ -170,6 +176,13 @@ if(empty($qaconfig)) {
             <td>
                 <?php echo help('관리자 휴대폰번호를 입력하시면 문의글 등록시 등록하신 번호로 SMS 알림이 전송됩니다.<br>SMS 알림을 사용하지 않으시면 알림이 전송되지 않습니다.'); ?>
                 <input type="text" name="qa_admin_hp" value="<?php echo $qaconfig['qa_admin_hp'] ?>" id="qa_admin_hp" class="frm_input"  size="30">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="qa_admin_email">관리자 이메일</label></th>
+            <td>
+                <?php echo help('관리자 이메일을 입력하시면 문의글 등록시 등록하신 이메일로 알림이 전송됩니다.'); ?>
+                <input type="text" name="qa_admin_email" value="<?php echo $qaconfig['qa_admin_email'] ?>" id="qa_admin_email" class="frm_input"  size="50">
             </td>
         </tr>
         <tr>
