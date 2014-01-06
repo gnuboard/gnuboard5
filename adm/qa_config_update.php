@@ -20,6 +20,7 @@ $sql = " update {$g5['qa_config_table']}
                 qa_use_sms              = '{$_POST['qa_use_sms']}',
                 qa_send_number          = '{$_POST['qa_send_number']}',
                 qa_admin_hp             = '{$_POST['qa_admin_hp']}',
+                qa_admin_email          = '{$_POST['qa_admin_email']}',
                 qa_use_editor           = '{$_POST['qa_use_editor']}',
                 qa_subject_len          = '{$_POST['qa_subject_len']}',
                 qa_mobile_subject_len   = '{$_POST['qa_mobile_subject_len']}',

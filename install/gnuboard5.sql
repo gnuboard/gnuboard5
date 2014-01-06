@@ -721,6 +721,7 @@ CREATE TABLE IF NOT EXISTS `g5_qa_config` (
   `qa_use_sms` tinyint(4) NOT NULL DEFAULT '0',
   `qa_send_number` varchar(255) NOT NULL DEFAULT '0',
   `qa_admin_hp` varchar(255) NOT NULL DEFAULT '',
+  `qa_admin_email` varchar(255) NOT NULL DEFAULT '',
   `qa_use_editor` tinyint(4) NOT NULL DEFAULT '0',
   `qa_subject_len` int(11) NOT NULL DEFAULT '0',
   `qa_mobile_subject_len` int(11) NOT NULL DEFAULT '0',
