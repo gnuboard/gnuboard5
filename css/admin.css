@@ -171,7 +171,6 @@ h2.h2_frm {padding-top:15px}
 .sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
 
 /* 폼 */
-label {vertical-align:middle}
 textarea, .frm_input {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea {padding:2px;width:90%}
 .frm_input {height:22px;line-height:2em}
@@ -309,6 +308,9 @@ tfoot td {font-weight:bold;text-align:center}
 .mb_leave_msg {color:#b6b6b6}
 .mb_intercept_msg {color:#f59fe4}
 #point_mng {margin-top:50px}
+
+/* 게시판관리 목록 */
+#fboardlist .bo_subject {width:90%}
 
 /* 게시판추가/수정 */
 #anc_bo_extra .td_grpset label {width:auto}
