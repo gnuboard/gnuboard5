@@ -566,8 +566,7 @@ if(!isset($default['de_root_index_use'])) {
                 <label for="de_card_test2">테스트결제</label>
                 <div id="scf_cardtest">
                     <a href="https://admin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">실결제 관리자</a>
-                    <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">테스트 관리자</a>
-                </div>
+                    <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">테스트 관리자</a></div>
                 <div id="scf_cardtest_tip">
                     <strong>일반결제 사용시 테스트 결제</strong>
                     <dl>
