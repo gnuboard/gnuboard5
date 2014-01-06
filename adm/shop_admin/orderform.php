@@ -751,9 +751,9 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
                         <a href="<?php echo G5_BBS_URL; ?>/zip.php?frm_name=frmorderform3&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2&amp;frm_addr3=od_addr3&amp;frm_jibeon=od_addr_jibeon" id="od_zip_find" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>
                         <span id="od_win_zip" style="display:block"></span>
                         <input type="text" name="od_addr1" value="<?php echo $od['od_addr1']; ?>" id="od_addr1" required class="frm_input required" size="35">
-                        <label for="od_addr1">기본주소</label>
+                        <label for="od_addr1">기본주소</label><br>
                         <input type="text" name="od_addr2" value="<?php echo $od['od_addr2']; ?>" id="od_addr2" class="frm_input" size="35">
-                        <label for="od_addr2">상세주소</label>
+                        <label for="od_addr2">상세주소</label><br>
                         <input type="text" name="od_addr3" value="<?php echo $od['od_addr3']; ?>" id="od_addr3" class="frm_input" size="35">
                         <label for="od_addr3">참고항목</label>
                         <input type="hidden" name="od_addr_jibeon" value="<?php echo $od['od_addr_jibeon']; ?>"><br>

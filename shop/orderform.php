@@ -655,12 +655,12 @@ function get_intall_file()
                     <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_zip2" required class="frm_input required" size="3" maxlength="3">
                     <a href="<?php echo $zip_href; ?>" class="btn_frmline win_zip_find" target="_blank">주소 검색</a><br>
                     <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="60">
-                    <label for="od_addr1">기본주소<strong class="sound_only"> 필수</strong></label>
+                    <label for="od_addr1">기본주소<strong class="sound_only"> 필수</strong></label><br>
                     <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" class="frm_input frm_address" size="60">
-                    <label for="od_addr2">상세주소</label>
+                    <label for="od_addr2">상세주소</label><br>
                     <input type="text" name="od_addr3" value="<?php echo $member['mb_addr3'] ?>" id="od_addr3" readonly="readonly" class="frm_input frm_address" size="60">
                     <label for="od_addr3">참고항목</label>
-                    <input type="hidden" name="od_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>">
+                    <input type="hidden" name="od_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>"><br>
                     <span id="od_addr_jibeon"><?php echo ($member['mb_addr_jibeon'] ? '지번주소 : '.$member['mb_addr_jibeon'] : ''); ?></span>
                 </td>
             </tr>

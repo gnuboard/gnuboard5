@@ -277,7 +277,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .frm_input {height:22px}
 .tbl_frm01 textarea {width:98%;height:100px}
 .tbl_frm01 a {text-decoration:none}
-.tbl_frm01 .frm_address {display:block;margin-top:5px}
+.tbl_frm01 .frm_address {margin-top:5px}
 .tbl_frm01 .frm_file {display:block;margin-bottom:5px}
 .tbl_frm01 .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
 
@@ -701,7 +701,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_list #cp_frm {z-index:10000;position:absolute;top:0;left:99px;padding:20px;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll;overflow-x:none}
 
 #sod_frm_orderer {margin:20px 0 40px}
-#sod_frm_orderer #od_addr_jibeon, #sod_frm_taker #od_b_addr_jibeon {display:block;margin:5px 0 0}
+#sod_frm_orderer #od_addr_jibeon, #sod_frm_taker #od_b_addr_jibeon {display:inline-block;margin:5px 0 0}
 
 #sod_frm_addr div {position:relative} /* FF 포지션 */
 #sod_frm_addr div div {position:absolute;top:-20px;left:170px}

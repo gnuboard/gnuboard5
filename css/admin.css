@@ -182,7 +182,6 @@ h3 {margin:0 20px}
 .sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
 
 /* 폼 */
-label {vertical-align:middle}
 textarea, .frm_input {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea {padding:2px;width:90%}
 .frm_input {height:22px;line-height:2em}
@@ -546,8 +545,8 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sodr_sppay {color:#1f9bff}
 #anc_sodr_memo textarea {width:98%}
 #anc_sodr_memo .btn_confirm {margin:10px 0 0}
-#anc_sodr_orderer #od_addr1, #anc_sodr_orderer #od_addr2 {margin:5px 0 0}
-#anc_sodr_taker #od_b_addr1, #anc_sodr_taker #od_b_addr2 {margin:5px 0 0}
+#anc_sodr_orderer #od_addr1, #anc_sodr_orderer #od_addr2, #anc_sodr_orderer #od_addr3 {margin:5px 0 0}
+#anc_sodr_taker #od_b_addr1, #anc_sodr_taker #od_b_addr2, #anc_sodr_taker #od_b_addr3 {margin:5px 0 0}
 #anc_sodr_orderer #od_addr_jibeon, #anc_sodr_taker #od_b_addr_jibeon {display:block;margin:5px 0 0}
 
 #sodr_qty_log h3 {margin:20px 0 10px}
