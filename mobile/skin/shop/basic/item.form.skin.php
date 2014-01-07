@@ -116,7 +116,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <tr>
             <th scope="row">판매가격</th>
             <td>
-                <?php echo number_format(get_price($it)); ?> 원
+                <?php echo display_price(get_price($it)); ?>
                 <input type="hidden" id="it_price" value="<?php echo get_price($it); ?>">
             </td>
         </tr>
