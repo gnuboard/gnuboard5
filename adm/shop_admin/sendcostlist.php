@@ -140,8 +140,12 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 $(function() {
     $(".sch_zipcode").click(function() {
         var idx = $(".sch_zipcode").index($(this));
-        var url = "./sendcostzipcode.php?no="+(idx+1);
-        var opt = "left=50,top=50,width=500,height=400";
+        var no = idx + 1;
+        var sort = "asc";
+        if(no == 2)
+            sort = "desc";
+        var url = "./sendcostzipcode.php?no="+no+"&sort="+sort;
+        var opt = "left=50,top=50,width=600,height=700";
         window.open(url, "win_zipcode", opt);
     });
 });
