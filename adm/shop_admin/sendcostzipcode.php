@@ -10,7 +10,7 @@ include_once(G5_PATH.'/head.sub.php');
 
 <script src="<?php echo G5_JS_URL; ?>/zip.js"></script>
 
-<div id="post_code" class="new_win mbskin">
+<div id="post_code" class="new_win">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
     <p>
@@ -30,16 +30,14 @@ include_once(G5_PATH.'/head.sub.php');
         <select name="gugun" id="gugun">
             <option value="">- 시군구 선택 -</option>
         </select>
-        <div id="sch_q">
-            <input type="submit" value="검색" class="btn_submit">
-        </div>
+        <input type="submit" value="검색" class="btn_submit">
     </div>
     <!-- } 검색어 입력 끝 -->
     </form>
 
-    <div id="result"><span id="result_b4">시도를 선택 후 검색해주세요.</span></div>
+    <div id="result"><span id="result_b4">시도 선택 후 검색해주세요.</span></div>
 
-    <div class="win_btn">
+    <div class="btn_confirm01 btn_confirm">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
 
