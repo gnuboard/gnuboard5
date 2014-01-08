@@ -2449,7 +2449,7 @@ function module_exec_check($exe, $type)
             // 바이너리 파일인지
             if($is_linux) {
                 $search = false;
-                exec('whoami', $out);
+                exec('ls', $out);
                 if(empty($out)) {
                     $error = 'exec 함수의 실행권한이 없습니다. 서버관리자에게 문의해 주십시오.';
                 } else {
@@ -2486,20 +2486,6 @@ function module_exec_check($exe, $type)
     }
 
     return $error;
-}
-
-// 도로명 상세 주소처리
-function get_address2($addr2, $addr3)
-{
-    if($addr3) {
-        if($addr2) {
-            $addr2 .= ' '.$addr3;
-        } else {
-            $addr2 = $addr3;
-        }
-    }
-
-    return $addr2;
 }
 
 // 도로명주소 출력
