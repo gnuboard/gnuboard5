@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
 
 <div id="formmail" class="new_win mbskin">
-    <h1 id="new_win"><?php echo $name ?>님께 메일보내기</h1>
+    <h1 id="win_title"><?php echo $name ?>님께 메일보내기</h1>
 
     <form name="fformmail" action="./formmail_send.php" onsubmit="return fformmail_submit(this);" method="post" enctype="multipart/form-data" style="margin:0px;">
     <input type="hidden" name="to" value="<?php echo $email ?>">
