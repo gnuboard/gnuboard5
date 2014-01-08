@@ -145,7 +145,7 @@ $(function() {
         if(no == 2)
             sort = "desc";
         var url = "./sendcostzipcode.php?no="+no+"&sort="+sort;
-        var opt = "left=50,top=50,width=600,height=700";
+        var opt = "left=50,top=50,width=600,height=700,scrollbars=1";
         window.open(url, "win_zipcode", opt);
     });
 });
