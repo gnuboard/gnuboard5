@@ -1347,7 +1347,7 @@ function orderfield_check(f)
     }
     check_field(f.od_tel, "주문하시는 분 전화번호를 입력하십시오.");
     check_field(f.od_addr1, "우편번호 찾기를 이용하여 주문하시는 분 주소를 입력하십시오.");
-    check_field(f.od_addr2, " 주문하시는 분의 상세주소를 입력하십시오.");
+    //check_field(f.od_addr2, " 주문하시는 분의 상세주소를 입력하십시오.");
     check_field(f.od_zip1, "");
     check_field(f.od_zip2, "");
 
@@ -1365,7 +1365,7 @@ function orderfield_check(f)
     check_field(f.od_b_name, "받으시는 분 이름을 입력하십시오.");
     check_field(f.od_b_tel, "받으시는 분 전화번호를 입력하십시오.");
     check_field(f.od_b_addr1, "우편번호 찾기를 이용하여 받으시는 분 주소를 입력하십시오.");
-    check_field(f.od_b_addr2, "받으시는 분의 상세주소를 입력하십시오.");
+    //check_field(f.od_b_addr2, "받으시는 분의 상세주소를 입력하십시오.");
     check_field(f.od_b_zip1, "");
     check_field(f.od_b_zip2, "");
 
