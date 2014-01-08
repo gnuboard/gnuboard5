@@ -93,7 +93,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #ft_catch {position:relative;margin:0 auto;padding:20px 0;width:970px;text-align:center}
 
 #ft_copy {background:#414141}
-#ft_copy p {position:relative;margin:0 auto;width:970px;color:#fff}
+#ft_copy p {position:relative;margin:0 auto;padding:10px 0;width:970px;color:#fff}
 #ft_copy a {position:absolute;top:10px;right:0;color:#fff}
 
 /* 게시물 선택복사 선택이동 */
