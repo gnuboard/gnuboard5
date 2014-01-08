@@ -14,7 +14,7 @@ input, button {margin:0;padding:0;font-size:1em}
 input[type=text], input[type=password], input[type=submit], input[type=image], button {border-radius:0;font-size:1em;-webkit-appearance:none}
 textarea, select {font-size:1em}
 textarea {border-radius:0;-webkit-appearance:none}
-p {margin:0;padding:1em 0;line-height:1.7em;word-break:break-all}
+p {margin:0;padding:0;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link, a:visited {color:#000;text-decoration:none}
