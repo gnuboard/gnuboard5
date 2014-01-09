@@ -421,6 +421,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_count_modify">원글 수정 불가<strong class="sound_only">필수</strong></label></th>
             <td>
+                 <?php echo help('댓글의 수가 설정 수 이상이면 원글을 수정할 수 없습니다. 0으로 설정하시면 댓글 수에 관계없이 수정할 수있습니다.'); ?>
                 댓글 <input type="text" name="bo_count_modify" value="<?php echo $board['bo_count_modify'] ?>" id="bo_count_modify" required class="required numeric frm_input" size="3">개 이상 달리면 수정불가
             </td>
             <td class="td_grpset">
@@ -1290,8 +1291,8 @@ function fboardform_submit(f)
     <?php echo get_editor_js("bo_mobile_content_head"); ?>
     <?php echo get_editor_js("bo_mobile_content_tail"); ?>
 
-    if (parseInt(f.bo_count_modify.value) < 1) {
-        alert("원글 수정 불가 댓글수는 1 이상 입력하셔야 합니다.");
+    if (parseInt(f.bo_count_modify.value) < 0) {
+        alert("원글 수정 불가 댓글수는 0 이상 입력하셔야 합니다.");
         f.bo_count_modify.focus();
         return false;
     }

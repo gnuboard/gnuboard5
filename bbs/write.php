@@ -89,8 +89,8 @@ if ($w == '') {
                 and mb_id <> '{$member['mb_id']}'
                 and wr_is_comment = 1 ";
     $row = sql_fetch($sql);
-    if ($row['cnt'] >= $board['bo_count_modify'] && !$is_admin)
-        alert('이 글과 관련된 코멘트가 존재하므로 수정 할 수 없습니다.\\n\\n코멘트가 '.$board['bo_count_modify'].'건 이상 달린 원글은 수정할 수 없습니다.');
+    if ($board['bo_count_modify'] && $row['cnt'] >= $board['bo_count_modify'] && !$is_admin)
+        alert('이 글과 관련된 댓글이 존재하므로 수정 할 수 없습니다.\\n\\n댓글이 '.$board['bo_count_modify'].'건 이상 달린 원글은 수정할 수 없습니다.');
 
     $title_msg = '글수정';
 } else if ($w == 'r') {
