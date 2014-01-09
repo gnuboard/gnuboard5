@@ -2447,33 +2447,45 @@ function module_exec_check($exe, $type)
             // 바이너리 파일인지
             if($is_linux) {
                 $search = false;
-                exec('ls', $out);
-                if(empty($out)) {
-                    $error = 'exec 함수의 실행권한이 없습니다. 서버관리자에게 문의해 주십시오.';
-                } else {
-                    switch($type) {
-                        case 'ct_cli':
-                            exec($exe.' -h 2>&1', $out);
-                            for($i=0; $i<count($out); $i++) {
-                                if(strpos(strtoupper($out[$i]), 'KCP ENC') !== false) {
-                                    $search = true;
-                                    break;
-                                }
-                            }
-                            break;
-                        case 'okname':
-                            exec($exe.' D 2>&1', $out);
-                            for($i=0; $i<count($out); $i++) {
-                                if(strpos(strtolower($out[$i]), 'ret code') !== false) {
-                                    $search = true;
-                                    break;
-                                }
-                            }
-                            break;
-                    }
+                $executable = true;
 
-                    if(!$search)
-                        $error = $exe.'\n파일을 바이너리 타입으로 다시 업로드하여 주십시오.';
+                switch($type) {
+                    case 'ct_cli':
+                        exec($exe.' -h 2>&1', $out);
+
+                        if(empty($out)) {
+                            $executable = false;
+                            break;
+                        }
+
+                        for($i=0; $i<count($out); $i++) {
+                            if(strpos(strtoupper($out[$i]), 'KCP ENC') !== false) {
+                                $search = true;
+                                break;
+                            }
+                        }
+                        break;
+                    case 'okname':
+                        exec($exe.' D 2>&1', $out);
+
+                        if(empty($out)) {
+                            $executable = false;
+                            break;
+                        }
+
+                        for($i=0; $i<count($out); $i++) {
+                            if(strpos(strtolower($out[$i]), 'ret code') !== false) {
+                                $search = true;
+                                break;
+                            }
+                        }
+                        break;
+                }
+
+                if(!$executable) {
+                    $error = 'exec 함수의 실행권한이 없습니다. 서버관리자에게 문의해 주십시오.';
+                } else if(!$search) {
+                    $error = $exe.'\n파일을 바이너리 타입으로 다시 업로드하여 주십시오.';
                 }
             }
         }
