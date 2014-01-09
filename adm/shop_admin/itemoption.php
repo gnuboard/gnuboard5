@@ -191,14 +191,17 @@ if($po_run) {
 <fieldset>
     <legend>옵션 일괄 적용</legend>
     <?php echo help('전체 옵션의 추가금액, 재고/통보수량 및 사용여부를 일괄 적용할 수 있습니다. 단, 체크된 수정항목만 일괄 적용됩니다.'); ?>
-    <label for="opt_com_price_chk">추가금액수정</label><input type="checkbox" name="opt_com_price_chk" value="1" id="opt_com_price_chk" class="opt_com_chk">
-    <label for="opt_com_price">추가금액</label><input type="text" name="opt_com_price" value="0" id="opt_com_price" class="frm_input" size="5">
-    <label for="opt_com_stock_chk">재고수량수정</label><input type="checkbox" name="opt_com_stock_chk" value="1" id="opt_com_stock_chk" class="opt_com_chk">
-    <label for="opt_com_stock">재고수량</label><input type="text" name="opt_com_stock" value="0" id="opt_com_stock" class="frm_input" size="5">
-    <label for="opt_com_noti_chk">통보수량수정</label><input type="checkbox" name="opt_com_noti_chk" value="1" id="opt_com_noti_chk" class="opt_com_chk">
-    <label for="opt_com_noti">통보수량</label><input type="text" name="opt_com_noti" value="0" id="opt_com_noti" class="frm_input" size="5">
-    <label for="opt_com_use_chk">사용여부수정</label><input type="checkbox" name="opt_com_use_chk" value="1" id="opt_com_use_chk" class="opt_com_chk">
+    <label for="opt_com_price">추가금액</label>
+    <label for="opt_com_price_chk" class="sound_only">추가금액일괄수정</label><input type="checkbox" name="opt_com_price_chk" value="1" id="opt_com_price_chk" class="opt_com_chk">
+    <input type="text" name="opt_com_price" value="0" id="opt_com_price" class="frm_input" size="5">
+    <label for="opt_com_stock">재고수량</label>
+    <label for="opt_com_stock_chk" class="sound_only">재고수량일괄수정</label><input type="checkbox" name="opt_com_stock_chk" value="1" id="opt_com_stock_chk" class="opt_com_chk">
+    <input type="text" name="opt_com_stock" value="0" id="opt_com_stock" class="frm_input" size="5">
+    <label for="opt_com_noti">통보수량</label>
+    <label for="opt_com_noti_chk" class="sound_only">통보수량일괄수정</label><input type="checkbox" name="opt_com_noti_chk" value="1" id="opt_com_noti_chk" class="opt_com_chk">
+    <input type="text" name="opt_com_noti" value="0" id="opt_com_noti" class="frm_input" size="5">
     <label for="opt_com_use">사용여부</label>
+    <label for="opt_com_use_chk" class="sound_only">사용여부일괄수정</label><input type="checkbox" name="opt_com_use_chk" value="1" id="opt_com_use_chk" class="opt_com_chk">
     <select name="opt_com_use" id="opt_com_use">
         <option value="1">사용함</option>
         <option value="0">사용안함</option>

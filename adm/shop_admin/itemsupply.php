@@ -156,14 +156,17 @@ if($ps_run) {
 
 <fieldset>
     <?php echo help('전체 추가 옵션의 상품금액, 재고/통보수량 및 사용여부를 일괄 적용할 수 있습니다.  단, 체크된 수정항목만 일괄 적용됩니다.'); ?>
-    <label for="spl_com_price_chk">상품금액수정</label><input type="checkbox" name="spl_com_price_chk" value="1" id="spl_com_price_chk" class="spl_com_chk">
-    <label for="spl_com_price">상품금액</label><input type="text" name="spl_com_price" value="0" id="spl_com_price" class="frm_input" size="9">
-    <label for="spl_com_stock_chk">재고수량수정</label><input type="checkbox" name="spl_com_stock_chk" value="1" id="spl_com_stock_chk" class="spl_com_chk">
-    <label for="spl_com_stock">재고수량</label><input type="text" name="spl_com_stock" value="0" id="spl_com_stock" class="frm_input" size="5">
-    <label for="spl_com_noti_chk">통보수량수정</label><input type="checkbox" name="spl_com_noti_chk" value="1" id="spl_com_noti_chk" class="spl_com_chk">
-    <label for="spl_com_noti">통보수량</label><input type="text" name="spl_com_noti" value="0" id="spl_com_noti" class="frm_input" size="5">
-    <label for="spl_com_use_chk">사용여부수정</label><input type="checkbox" name="spl_com_use_chk" value="1" id="spl_com_use_chk" class="spl_com_chk">
+    <label for="spl_com_price">상품금액</label>
+    <label for="spl_com_price_chk" class="sound_only">상품금액일괄수정</label><input type="checkbox" name="spl_com_price_chk" value="1" id="spl_com_price_chk" class="spl_com_chk">
+    <input type="text" name="spl_com_price" value="0" id="spl_com_price" class="frm_input" size="9">
+    <label for="spl_com_stock">재고수량</label>
+    <label for="spl_com_stock_chk" class="sound_only">재고수량일괄수정</label><input type="checkbox" name="spl_com_stock_chk" value="1" id="spl_com_stock_chk" class="spl_com_chk">
+    <input type="text" name="spl_com_stock" value="0" id="spl_com_stock" class="frm_input" size="5">
+    <label for="spl_com_noti">통보수량</label>
+    <label for="spl_com_noti_chk" class="sound_only">통보수량일괄수정</label><input type="checkbox" name="spl_com_noti_chk" value="1" id="spl_com_noti_chk" class="spl_com_chk">
+    <input type="text" name="spl_com_noti" value="0" id="spl_com_noti" class="frm_input" size="5">
     <label for="spl_com_use">사용여부</label>
+    <label for="spl_com_use_chk" class="sound_only">사용여부일괄수정</label><input type="checkbox" name="spl_com_use_chk" value="1" id="spl_com_use_chk" class="spl_com_chk">
     <select name="spl_com_use" id="spl_com_use">
         <option value="1">사용함</option>
         <option value="0">사용안함</option>
