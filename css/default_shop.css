@@ -861,7 +861,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 /* 쇼핑몰 이벤트 */
 #sev {}
-.sev_admin {text-align:right}
+.sev_admin {margin:0 0 10px;text-align:right}
 
 /* 쿠폰 */
 #coupon .td_numbig {width:150px}

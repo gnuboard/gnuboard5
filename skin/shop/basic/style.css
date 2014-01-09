@@ -14,7 +14,7 @@
 
 #sct {clear:both}
 
-.sct {margin:0;padding:0;list-style:none;zoom:1}
+.sct {clear:both;margin:0;padding:0;list-style:none;zoom:1}
 .sct:after {display:block;visibility:hidden;clear:both;content:""}
 .sct_li {position:relative}
 .sct_noitem {padding:100px 0;text-align:center}
