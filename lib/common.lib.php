@@ -1226,32 +1226,30 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $str = "<span class=\"sv_wrap\">\n";
     $str .= $tmp_name."\n";
 
-    if(!G5_IS_MOBILE) {
-        $str2 = "<span class=\"sv\">\n";
+    $str2 = "<span class=\"sv\">\n";
+    if($mb_id)
+        $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
+    if($email)
+        $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
+    if($homepage)
+        $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
+    if($mb_id)
+        $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
+    if($bo_table) {
         if($mb_id)
-            $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
-        if($email)
-            $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
-        if($homepage)
-            $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
-        if($mb_id)
-            $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
-        if($bo_table) {
-            if($mb_id)
-                $str2 .= "<a href=\"".G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
-            else
-                $str2 .= "<a href=\"".G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\">이름으로 검색</a>\n";
-        }
-        if($mb_id)
-            $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
-        if($is_admin == "super" && $mb_id) {
-            $str2 .= "<a href=\"".G5_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
-            $str2 .= "<a href=\"".G5_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
-        }
-        $str2 .= "</span>\n";
-        $str .= $str2;
-        $str .= "\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
+            $str2 .= "<a href=\"".G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
+        else
+            $str2 .= "<a href=\"".G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\">이름으로 검색</a>\n";
     }
+    if($mb_id)
+        $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
+    if($is_admin == "super" && $mb_id) {
+        $str2 .= "<a href=\"".G5_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
+        $str2 .= "<a href=\"".G5_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
+    }
+    $str2 .= "</span>\n";
+    $str .= $str2;
+    $str .= "\n<noscript class=\"sv_nojs\">".$str2."</noscript>";
 
     $str .= "</span>";
 
@@ -1932,7 +1930,7 @@ function get_uniqid()
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
-        $key = date('YmdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
+        $key = date('ymdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
 
         $result = sql_query(" insert into {$g5['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
         if ($result) break; // 쿼리가 정상이면 빠진다.
@@ -2375,15 +2373,6 @@ function certify_count_check($mb_id, $type)
         alert_close('오늘 '.$cert.' 본인확인을 '.$row['cnt'].'회 이용하셔서 더 이상 이용할 수 없습니다.');
 }
 
-// die 함수를 utf-8 환경에서 사용할 때 한글깨짐방지
-function die_utf8($msg)
-{
-    if(!trim($msg))
-        return;
-
-    die('<meta charset="utf-8"><p>'.$msg.'</p>');
-}
-
 // 1:1문의 설정로드
 function get_qa_config($fld='*')
 {
@@ -2458,42 +2447,60 @@ function module_exec_check($exe, $type)
             // 바이너리 파일인지
             if($is_linux) {
                 $search = false;
-                exec('ls', $out);
-                if(empty($out)) {
-                    $error = 'exec 함수의 실행권한이 없습니다. 서버관리자에게 문의해 주십시오.';
-                } else {
-                    switch($type) {
-                        case 'ct_cli':
-                            exec($exe.' -h 2>&1', $out);
-                            for($i=0; $i<count($out); $i++) {
-                                if(strpos(strtoupper($out[$i]), 'KCP ENC') !== false) {
-                                    $search = true;
-                                    break;
-                                }
-                            }
-                            break;
-                        case 'okname':
-                            exec($exe.' D 2>&1', $out);
-                            for($i=0; $i<count($out); $i++) {
-                                if(strpos(strtolower($out[$i]), 'ret code') !== false) {
-                                    $search = true;
-                                    break;
-                                }
-                            }
-                            break;
-                        case 'pp_cli':
-                            exec($exe.' -h 2>&1', $out);
-                            for($i=0; $i<count($out); $i++) {
-                                if(strpos(strtoupper($out[$i]), 'PAYPLUS CLIENT') !== false) {
-                                    $search = true;
-                                    break;
-                                }
-                            }
-                            break;
-                    }
+                $executable = true;
 
-                    if(!$search)
-                        $error = $exe.'\n파일을 바이너리 타입으로 다시 업로드하여 주십시오.';
+                switch($type) {
+                    case 'ct_cli':
+                        exec($exe.' -h 2>&1', $out);
+
+                        if(empty($out)) {
+                            $executable = false;
+                            break;
+                        }
+
+                        for($i=0; $i<count($out); $i++) {
+                            if(strpos($out[$i], 'KCP ENC') !== false) {
+                                $search = true;
+                                break;
+                            }
+                        }
+                        break;
+                    case 'pp_cli':
+                        exec($exe.' -h 2>&1', $out);
+
+                        if(empty($out)) {
+                            $executable = false;
+                            break;
+                        }
+
+                        for($i=0; $i<count($out); $i++) {
+                            if(strpos($out[$i], 'PayPLUS CLIENT') !== false) {
+                                $search = true;
+                                break;
+                            }
+                        }
+                        break;
+                    case 'okname':
+                        exec($exe.' D 2>&1', $out);
+
+                        if(empty($out)) {
+                            $executable = false;
+                            break;
+                        }
+
+                        for($i=0; $i<count($out); $i++) {
+                            if(strpos(strtolower($out[$i]), 'ret code') !== false) {
+                                $search = true;
+                                break;
+                            }
+                        }
+                        break;
+                }
+
+                if(!$executable) {
+                    $error = 'exec 함수의 실행권한이 없습니다. 서버관리자에게 문의해 주십시오.';
+                } else if(!$search) {
+                    $error = $exe.'\n파일을 바이너리 타입으로 다시 업로드하여 주십시오.';
                 }
             }
         }

@@ -16,7 +16,7 @@ input[type=text], input[type=password], input[type=submit], input[type=image], b
 textarea, select {font-size:1em}
 textarea {border-radius:0;-webkit-appearance:none}
 select {margin:0}
-p {margin:0;padding:1em 0;line-height:1.7em;word-break:break-all}
+p {margin:0;padding:0;word-break:break-all}
 hr {display:none}
 pre {overflow-x:scroll;font-size:1.1em}
 a:link, a:visited {color:#000;text-decoration:none}
@@ -200,6 +200,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 /* 새창 기본 스타일 */
 .new_win {}
 .new_win #win_title {margin:0 0 20px;padding:20px;border-top:3px solid #4e5d60;border-bottom:1px solid #e9e9e9;font-size:1.2em}
+.new_win #win_title .sv {font-size:0.75em;line-height:1.2em}
 .new_win .tbl_wrap {margin:0 20px}
 .new_win .win_ul {margin:-20px 0 20px 0;padding:0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none}
 .new_win .win_ul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -213,7 +214,12 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .new_win .win_btn input {padding:0 10px;height:2.5em;line-height:2.5em}
 
 /* 사이드뷰 */
-/* 모바일에서는 사이드뷰를 지원하지 않습니다. */
+.sv_wrap {display:inline-block;position:relative;font-weight:normal}
+.sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #283646}
+.sv_wrap .sv a {display:inline-block;margin:0;padding:3px;width:94px;border-bottom:1px solid #283646;background:#111;color:#fff !important}
+.sv_wrap a:focus, .sv_wrap a:hover, .sv_wrap a:active {text-decoration:none}
+.sv_on {display:block !important;position:absolute;top:10px;left:20px;width:auto;height:auto}
+.sv_nojs .sv {display:block}
 
 /* 페이징 */
 .pg_wrap {clear:both;margin:0 0 20px;padding:20px 0 0;text-align:center}
