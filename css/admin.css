@@ -173,7 +173,7 @@ h2.h2_frm {padding-top:15px}
 /* 폼 */
 textarea, .frm_input {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea {padding:2px;width:90%}
-.frm_input {height:22px;line-height:2em}
+.frm_input {height:22px;line-height:1.8em}
 select {border:1px solid #ced9de}
 legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent:-9999em;border:0;overflow:hidden}
 
