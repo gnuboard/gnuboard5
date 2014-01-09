@@ -2465,6 +2465,21 @@ function module_exec_check($exe, $type)
                             }
                         }
                         break;
+                    case 'pp_cli':
+                        exec($exe.' -h 2>&1', $out);
+
+                        if(empty($out)) {
+                            $executable = false;
+                            break;
+                        }
+
+                        for($i=0; $i<count($out); $i++) {
+                            if(strpos($out[$i], 'PayPLUS CLIENT') !== false) {
+                                $search = true;
+                                break;
+                            }
+                        }
+                        break;
                     case 'okname':
                         exec($exe.' D 2>&1', $out);
 
