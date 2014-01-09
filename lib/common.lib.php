@@ -2459,7 +2459,7 @@ function module_exec_check($exe, $type)
                         }
 
                         for($i=0; $i<count($out); $i++) {
-                            if(strpos(strtoupper($out[$i]), 'KCP ENC') !== false) {
+                            if(strpos($out[$i], 'KCP ENC') !== false) {
                                 $search = true;
                                 break;
                             }
