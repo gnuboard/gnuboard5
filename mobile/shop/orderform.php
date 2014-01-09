@@ -608,7 +608,7 @@ ob_end_clean();
 
         <?php
         if (!$default['de_card_point'])
-            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
+            echo '<p id="sod_frm_pt_alert"><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
 
         $multi_settle == 0;
         $checked = '';
@@ -677,8 +677,8 @@ ob_end_clean();
                 $point_unit = (int)$default['de_settle_point_unit'];
                 $temp_point = (int)((int)($temp_point / $point_unit) * $point_unit);
 
-                echo '<div><input type="hidden" name="max_temp_point" value="'.$temp_point.'">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" class="frm_input" size="10">점 ('.$point_unit.'점 단위로 입력하세요.)</div>';
-                echo '<div>회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>까지 사용 가능합니다.</div>';
+                echo '<div id="sod_frm_pt"><input type="hidden" name="max_temp_point" value="'.$temp_point.'">결제포인트 : <input type="text" id="od_temp_point" name="od_temp_point" value="0" class="frm_input" size="10">점 ('.$point_unit.'점 단위로 입력하세요.)</div>';
+                echo '<p id="sod_frm_pt_info">회원님의 보유포인트('.display_point($member['mb_point']).')중 <strong id="use_max_point">'.display_point($temp_point).'</strong>까지 사용 가능합니다.</p>';
                 $multi_settle++;
             }
         }

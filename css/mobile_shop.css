@@ -329,6 +329,9 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #od_addr1, #od_addr2, #od_addr3, #od_email, #od_b_addr1, #od_b_addr2, #od_b_addr3 {width:100%}
 #sod_frm #od_memo {height:70px}
 
+#sod_frm_pt {margin:10px 0 5px}
+#sod_frm_pt_alert, #sod_frm_pt_info {margin:0 0 10px}
+
 #sod_frm #show_progress {text-align:center}
 #sod_frm #show_progress span {display:block;margin:5px 0 0}
 
