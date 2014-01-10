@@ -542,7 +542,7 @@ if(!isset($default['de_root_index_use'])) {
         <tr>
             <th scope="row"><label for="de_kcp_site_key">KCP SITE KEY</label></th>
             <td>
-                <?php echo help("25자리 영대문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
+                <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
                 <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="32" maxlength="25">
             </td>
         </tr>
