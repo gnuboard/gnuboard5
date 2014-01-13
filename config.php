@@ -156,4 +156,7 @@ define('G5_SMTP', '127.0.0.1');
 // 게시판에서 링크의 기본개수를 말합니다.
 // 필드를 추가하면 이 숫자를 필드수에 맞게 늘려주십시오.
 define('G5_LINK_COUNT', 2);
+
+// 썸네일 jpg Quality 설정
+define('G5_THUMB_JPG_QUALITY', 90);
 ?>
