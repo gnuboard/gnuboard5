@@ -157,7 +157,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
 
     <div class="btn_confirm">
-        <input type="submit" value="글쓰기" id="btn_submit" class="btn_submit" accesskey="s">
+        <input type="submit" value="작성완료" id="btn_submit" class="btn_submit" accesskey="s">
         <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel">취소</a>
     </div>
     </form>
