@@ -1,4 +1,5 @@
 !.gitignore
+.htaccess
 data/
 test/
 sirgle/
