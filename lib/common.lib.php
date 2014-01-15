@@ -1663,7 +1663,7 @@ function time_select($time, $name="")
 function check_demo()
 {
     global $is_admin;
-    if (file_exists(G5_PATH.'/DEMO'))
+    if ($is_admin != 'super' && file_exists(G5_PATH.'/DEMO'))
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
