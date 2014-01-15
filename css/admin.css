@@ -735,6 +735,8 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sms_sm_text {position:absolute;top:75px;left:27px;width:180px;color:#fff;font-size:2em;word-break:break-all}
 #sms_sm p {position:absolute;bottom:-70px;left:0;font-size:0.95em;letter-spacing:-0.1em}
 
+#sms_send .local_desc01 {min-width:320px}
+
 /* 가격비교사이트 */
 #anc_pricecompare_info li {margin:5px 0}
 
