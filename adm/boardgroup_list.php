@@ -101,7 +101,7 @@ $colspan = 11;
         </th>
         <th scope="col"><?php echo subject_sort_link('gr_id') ?>그룹아이디</a></th>
         <th scope="col"><?php echo subject_sort_link('gr_subject') ?>제목</a></th>
-        <?php if ($is_admin == 'super'){ ?><th scope="col"><?php echo subject_sort_link('gr_admin') ?>그룹관리자</a></th><?php } ?>
+        <th scope="col"><?php echo subject_sort_link('gr_admin') ?>그룹관리자</a></th>
         <th scope="col">게시판</th>
         <th scope="col">접근<br>사용</th>
         <th scope="col">접근<br>회원수</th>
@@ -144,7 +144,7 @@ $colspan = 11;
             <label for="gr_admin_<?php echo $i; ?>" class="sound_only">그룹관리자</label>
             <input type="text" name="gr_admin[<?php echo $i ?>]" value="<?php echo $row['gr_admin'] ?>" id="gr_admin_<?php echo $i ?>" class="frm_input" size="10" maxlength="20">
         <?php }else{ ?>
-            <input type="hidden" name="gr_admin[<?php echo $i ?>]" value="<?php echo $row['gr_admin'] ?>"><td><?php echo $row['gr_admin'] ?>
+            <input type="hidden" name="gr_admin[<?php echo $i ?>]" value="<?php echo $row['gr_admin'] ?>"><?php echo $row['gr_admin'] ?>
         <?php } ?>
         </td>
         <td class="td_numsmall"><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?php echo $row['gr_id'] ?>"><?php echo $row2['cnt'] ?></a></td>
