@@ -1662,8 +1662,8 @@ function time_select($time, $name="")
 // DEMO 라는 파일이 있으면 데모 화면으로 인식함
 function check_demo()
 {
-    global $g5;
-    if (file_exists($g5['path'].'/DEMO'))
+    global $is_admin;
+    if (file_exists(G5_PATH.'/DEMO'))
         alert('데모 화면에서는 하실(보실) 수 없는 작업입니다.');
 }
 
