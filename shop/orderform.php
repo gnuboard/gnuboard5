@@ -889,7 +889,7 @@ function get_intall_file()
 
         <?php
         if (!$default['de_card_point'])
-            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
+            echo '<p id="sod_frm_pt_alert"><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
 
         $multi_settle == 0;
         $checked = '';
@@ -957,7 +957,7 @@ function get_intall_file()
                 $point_unit = (int)$default['de_settle_point_unit'];
                 $temp_point = (int)((int)($temp_point / $point_unit) * $point_unit);
         ?>
-            <p>보유포인트(<?php echo display_point($member['mb_point']); ?>)중 <strong id="use_max_point">최대 <?php echo display_point($temp_point); ?></strong>까지 사용 가능</p>
+            <p id="sod_frm_pt">보유포인트(<?php echo display_point($member['mb_point']); ?>)중 <strong id="use_max_point">최대 <?php echo display_point($temp_point); ?></strong>까지 사용 가능</p>
             <input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">
             <label for="od_temp_point">사용 포인트</label>
             <input type="text" name="od_temp_point" value="0" id="od_temp_point" class="frm_input" size="10">점 (<?php echo $point_unit; ?>점 단위로 입력하세요.)
