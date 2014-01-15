@@ -505,11 +505,6 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
                 <tbody>
                 <?php if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체') { ########## 시작?>
                 <?php
-                // 주문서
-                $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
-                $result = sql_query($sql);
-                $od = sql_fetch_array($result);
-
                 if ($od['od_settle_case'] == '무통장')
                 {
                     // 은행계좌를 배열로 만든후

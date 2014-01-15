@@ -542,7 +542,7 @@ if(!isset($default['de_root_index_use'])) {
         <tr>
             <th scope="row"><label for="de_kcp_site_key">KCP SITE KEY</label></th>
             <td>
-                <?php echo help("25자리 영대문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
+                <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
                 <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="32" maxlength="25">
             </td>
         </tr>
@@ -727,7 +727,7 @@ if(!isset($default['de_root_index_use'])) {
                 <?php echo help("관련상품의 경우 등록된 상품은 모두 출력하므로 '출력할 줄 수'는 설정하지 않습니다. 이미지높이를 0으로 설정하면 상품이미지를 이미지폭에 비례하여 생성합니다."); ?>
                 <label for="de_rel_list_skin">스킨</label>
                 <select name="de_rel_list_skin" id="de_rel_list_skin">
-                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_rel_list_skin']); ?>
+                    <?php echo get_list_skin_options("^relation.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_rel_list_skin']); ?>
                 </select>
                 <label for="de_rel_img_width">이미지폭</label>
                 <input type="text" name="de_rel_img_width" value="<?php echo $default['de_rel_img_width']; ?>" id="de_rel_img_width" class="frm_input" size="3">

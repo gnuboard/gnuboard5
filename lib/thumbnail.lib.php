@@ -356,7 +356,12 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         UnsharpMask($dst, $val[0], $val[1], $val[2]);
     }
 
-    imagejpeg($dst, $thumb_file, 90);
+    if(!defined('G5_THUMB_JPG_QUALITY'))
+        $jpg_quality = 90;
+    else
+        $jpg_quality = G5_THUMB_JPG_QUALITY;
+
+    imagejpeg($dst, $thumb_file, $jpg_quality);
     chmod($thumb_file, G5_FILE_PERMISSION); // 추후 삭제를 위하여 파일모드 변경
 
     imagedestroy($src);
