@@ -201,7 +201,6 @@ function fitemeventlistupdatecheck(f)
     if (!f.ev_id.value)
     {
         alert('이벤트를 선택하세요');
-        document.flist.ev_id.focus();
         return false;
     }
 
