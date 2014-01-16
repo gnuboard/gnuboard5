@@ -549,7 +549,7 @@ if(!isset($default['de_root_index_use'])) {
         <tr>
             <th scope="row">에스크로 사용</th>
             <td>
-                <?php echo help("에스크로 결제를 사용하시려면, 반드시 <strong>KCP 관리자 > 고객센터 > 서비스변경 및 추가 > 에스크로 신청 메뉴에서 에스크로를 사용 선택하고, 결제수단별로 적용 신청한 후 사용</strong>하셔야 합니다.\n에스크로 사용시 배송과의 연동은 되지 않으며 에스크로 결제만 지원됩니다."); ?>
+                <?php echo help("에스크로 결제를 사용하시려면, 반드시 <strong><a href='http://admin.kcp.co.kr/' target='_blank'><u>KCP 관리자</u></a> > 고객센터 > 서비스변경 및 추가 > 에스크로 신청 메뉴에서 에스크로를 사용 선택하고, 결제수단별로 적용 신청한 후 사용</strong>하셔야 합니다.\n에스크로 사용시 배송과의 연동은 되지 않으며 에스크로 결제만 지원됩니다."); ?>
                     <input type="radio" name="de_escrow_use" value="0" <?php echo $default['de_escrow_use']==0?"checked":""; ?> id="de_escrow_use1">
                     <label for="de_escrow_use1">일반결제 사용</label>
                     <input type="radio" name="de_escrow_use" value="1"<?php echo $default['de_escrow_use']==1?"checked":""; ?> id="de_escrow_use2">
@@ -583,7 +583,7 @@ if(!isset($default['de_root_index_use'])) {
                         <dt>휴대폰</dt><dd>테스트 지원되지 않음.</dd>
                     </dl>
                     <ul>
-                        <li>테스트결제는 <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">상점관리자</a>의 로그인 정보를 KCP로 문의하시기 바랍니다. (기술지원 1544-8661)</li>
+                        <li>테스트결제의 <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">상점관리자</a> 로그인 정보는 KCP로 문의하시기 바랍니다. (기술지원 1544-8661)</li>
                         <li><b>일반결제</b>의 테스트 사이트코드는 <b>T0000</b> 이며, <b>에스크로 결제</b>의 테스트 사이트코드는 <b>T0007</b> 입니다.</li>
                     </ul>
                 </div>
