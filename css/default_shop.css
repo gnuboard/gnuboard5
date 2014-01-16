@@ -710,6 +710,9 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 #sod_frm #od_memo {height:50px}
 
+#sod_frm_pt {margin:10px 0 5px}
+#sod_frm_pt_alert {margin:0 0 10px}
+
 #sod_frm_pay {position:relative}
 #sod_frm_pay h2 {margin:0 0 10px}
 #sod_frm_pay .basic_tbl th {width:auto !important;font-weight:bold;text-align:center !important}

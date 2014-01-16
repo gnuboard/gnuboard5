@@ -110,7 +110,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </div>
 
     <div class="btn_confirm">
-        <input type="submit" value="글쓰기" id="btn_submit" accesskey="s" class="btn_submit">
+        <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit">
         <a href="<?php echo $list_href; ?>" class="btn_cancel">목록</a>
     </div>
     </form>
