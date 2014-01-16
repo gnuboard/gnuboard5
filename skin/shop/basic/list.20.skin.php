@@ -37,6 +37,10 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "</a>\n";
     }
 
+    if ($this->view_it_icon) {
+        echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
+    }
+
     if ($this->view_it_id) {
         echo "<span class=\"sct_id\">&lt;".stripslashes($row['it_id'])."&gt;</span>\n";
     }
@@ -71,10 +75,6 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
         echo "</div>\n";
 
-    }
-
-    if ($this->view_it_icon) {
-        echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
     }
 
     if ($this->view_sns) {
