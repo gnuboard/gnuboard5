@@ -12,7 +12,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($this->css) {
             echo "<ul id=\"sct_wrap\" class=\"{$this->css}\">\n";
         } else {
-            echo "<ul id=\"sct_wrap\" class=\"sct sct_10\">\n";
+            echo "<ul id=\"sct_wrap\" class=\"sct scr_10\">\n";
         }
     }
 

@@ -30,6 +30,18 @@
 .sct_10 .sct_cost strike {display:block;margin:0 0 5px;color:#999;font-weight:normal}
 .sct_10 .sct_icon {margin:0 0 10px}
 .sct_10 .sct_sns {margin:15px 0 0}
+
+/* 관련상품 목록 스킨 10 */
+.scr_10 .sct_li {position:relative;float:left;padding:0 25px 15px 0}
+.scr_10 .sct_last {margin:0 0 15px !important}
+.scr_10 .sct_clear {clear:both}
+.scr_10 .sct_a {display:inline-block;position:relative;margin:0 0 5px;text-decoration:none}
+.scr_10 .sct_id {display:block;margin:0 0 5px}
+.scr_10 .sct_basic {margin:0 0 10px}
+.scr_10 .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
+.scr_10 .sct_cost strike {display:block;margin:0 0 5px;color:#999;font-weight:normal}
+.scr_10 .sct_icon {margin:0 0 10px}
+.scr_10 .sct_sns {margin:15px 0 0}
 /* ##### maint.(nn).skin.php, list.(nn).skin.php 공통 적용 끝 ##### */
 
 /* 상품상세 */
