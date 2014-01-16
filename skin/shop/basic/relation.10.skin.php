@@ -19,7 +19,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         if ($this->css) {
             echo "<ul class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct sct_10\">\n";
+            echo "<ul class=\"sct scr_10\">\n";
         }
     }
 
