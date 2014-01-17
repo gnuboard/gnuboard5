@@ -40,7 +40,7 @@ if ($w == "")
                    iq_ip = '$REMOTE_ADDR' ";
     sql_query($sql);
 
-    alert_opener("상품문의가 등록 되었습니다.", $url);
+    $alert_msg = '상품문의가 등록 되었습니다.';
 }
 else if ($w == "u")
 {
@@ -61,7 +61,7 @@ else if ($w == "u")
               where iq_id = '$iq_id' ";
     sql_query($sql);
 
-    alert_opener("상품문의가 수정 되었습니다.", $url);
+    $alert_msg = '상품문의가 수정 되었습니다.';
 }
 else if ($w == "d")
 {
@@ -77,7 +77,7 @@ else if ($w == "d")
     }
 
     // 에디터로 첨부된 이미지 삭제
-    $sql = " select iq_question from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
+    $sql = " select iq_question, iq_answer from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
     $row = sql_fetch($sql);
 
     $imgs = get_editor_image($row['iq_question']);
@@ -95,9 +95,29 @@ else if ($w == "d")
             @unlink($destfile);
     }
 
+    $imgs = get_editor_image($row['iq_answer']);
+
+    for($i=0;$i<count($imgs[1]);$i++) {
+        $p = parse_url($imgs[1][$i]);
+        if(strpos($p['path'], "/data/") != 0)
+            $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        else
+            $data_path = $p['path'];
+
+        $destfile = G5_PATH.$data_path;
+
+        if(is_file($destfile))
+            @unlink($destfile);
+    }
+
     $sql = " delete from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
     sql_query($sql);
 
-    alert("상품문의가 삭제 되었습니다.", $url);
+    $alert_msg = '상품문의가 삭제 되었습니다.';
 }
+
+if($w == 'd')
+    alert($alert_msg, $url);
+else
+    alert_opener($alert_msg, $url);
 ?>
