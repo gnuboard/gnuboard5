@@ -182,11 +182,10 @@
 #bo_v_con a {color:#000;text-decoration:underline}
 #bo_v_con img {max-width:100%;height:auto}
 
-#bo_v_act {margin-bottom:20px;text-align:center}
-#bo_v_act a {margin-right:5px;vertical-align:top}
-#bo_v_act span {display:inline-block;margin-right:5px;padding:0 10px;border:1px solid #eee !important;background:#fafafa !important;color:#000 !important;text-decoration:none !important;line-height:2em;vertical-align:top}
+#bo_v_act {position:relative;margin-bottom:20px;text-align:center}
+#bo_v_act a {margin-right:5px;vertical-align:middle}
 #bo_v_act strong {color:#ff3061}
-#bo_v_act_good, #bo_v_act_nogood {display:inline-block;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+#bo_v_act_good, #bo_v_act_nogood {display:none;position:absolute;top:30px;right:10%;padding:10px 0;width:165px;background:#ff3061;color:#fff;text-align:center}
 
 #bo_v_sns {margin:0 0 20px;padding:0;list-style:none;zoom:1}
 #bo_v_sns:after {display:block;visibility:hidden;clear:both;content:""}
