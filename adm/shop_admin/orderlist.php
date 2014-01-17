@@ -112,6 +112,14 @@ $qstr1 = "sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
 $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
+
+// 주문삭제 히스토리 테이블 필드 추가
+if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_order_delete_table']}`
+                    ADD `mb_id` varchar(20) NOT NULL DEFAULT '' AFTER `de_data`,
+                    ADD `de_ip` varchar(255) NOT NULL DEFAULT '' AFTER `mb_id`,
+                    ADD `de_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `de_ip` ", true);
+}
 ?>
 
 <div class="local_ov01 local_ov">
@@ -447,8 +455,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <label for="od_send_escrow">에스크로배송등록</label>
     <?php } ?>
     <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
-    <?php if ($od_status == '주문') { ?> <span>주문상태에서만 삭제가 가능합니다.</span> <input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
 <?php } ?>
+    <?php if ($od_status == '주문' || $od_status == '전체취소') { ?> <span>주문상태에서만 삭제가 가능합니다.</span> <input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
 </div>
 
 <div class="local_desc02 local_desc">
@@ -543,8 +551,6 @@ function set_date(today)
 <script>
 function forderlist_submit(f)
 {
-    var change_status = f.od_status.value;
-
     if (!is_checked("chk[]")) {
         alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
         return false;
@@ -569,6 +575,8 @@ function forderlist_submit(f)
         }
         return false;
     }
+
+    var change_status = f.od_status.value;
 
     if (f.od_status.checked == false) {
         alert("주문상태 변경에 체크하세요.");
