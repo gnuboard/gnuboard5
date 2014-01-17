@@ -8,7 +8,7 @@ if (!$is_member) {
 // 사용후기 작성 설정에 따른 체크
 check_itemuse_write();
 
-$it_id       = escape_trim($_POST['it_id']);
+$it_id       = escape_trim($_REQUEST['it_id']);
 $is_subject  = escape_trim($_POST['is_subject']);
 $is_content  = escape_trim($_POST['is_content']);
 $is_name     = escape_trim($_POST['is_name']);
@@ -114,5 +114,8 @@ else if ($w == "d")
 
 update_use_avg($it_id);
 
-alert_opener($alert_msg, $url);
+if($w == 'd')
+    alert($alert_msg, $url);
+else
+    alert_opener($alert_msg, $url);
 ?>
