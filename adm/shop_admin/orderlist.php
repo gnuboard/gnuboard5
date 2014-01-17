@@ -424,7 +424,9 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 </div>
 
 <div class="local_cmd01 local_cmd">
-<?php if (($od_status == '' || $od_status == '완료') == false) { // 검색된 주문상태가 '전체', '완료' 가 아니라면 ?>
+<?php if (($od_status == '' || $od_status == '완료' || $od_status == '전체취소' || $od_status == '부분취소') == false) {
+    // 검색된 주문상태가 '전체', '완료', '전체취소', '부분취소' 가 아니라면
+?>
     <label for="od_status" class="cmd_tit">주문상태 변경</label>
     <?php
     $change_status = "";
