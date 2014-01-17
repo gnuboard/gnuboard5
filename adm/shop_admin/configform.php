@@ -1191,17 +1191,16 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
         $is_linux = false;
 
     $exe = '/kcp/bin/';
-    if($is_linux)
-        $exe .= 'pp_cli';
-    else
+    if($is_linux) {
+        if(PHP_INT_MAX == 2147483647) // 32-bit
+            $exe .= 'pp_cli';
+        else
+            $exe .= 'pp_cli_x64';
+    } else {
         $exe .= 'pp_cli_exe.exe';
+    }
 
     echo module_exec_check(G5_SHOP_PATH.$exe, 'pp_cli');
-
-    // 모바일 결제 모듈 체크
-    if(defined('G5_USE_MOBILE') && G5_USE_MOBILE == true) {
-        echo module_exec_check(G5_MSHOP_PATH.$exe, 'pp_cli');
-    }
 }
 
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
