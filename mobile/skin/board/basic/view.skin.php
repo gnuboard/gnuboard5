@@ -147,12 +147,16 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
         <div id="bo_v_act">
             <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href; ?>" target="_blank" class="btn_b01" onclick="win_scrap(this.href); return false;">스크랩</a><?php } ?>
             <?php if ($good_href) { ?>
-            <a href="<?php echo $good_href.'&amp;'.$qstr ?>" id="good_button" class="btn_b01">추천 <strong><?php echo number_format($view['wr_good']) ?></strong></a>
-            <b id="bo_v_act_good"></b>
+            <span class="bo_v_act_gng">
+                <a href="<?php echo $good_href.'&amp;'.$qstr ?>" id="good_button" class="btn_b01">추천 <strong><?php echo number_format($view['wr_good']) ?></strong></a>
+                <b id="bo_v_act_good">이 글을 추천하셨습니다</b>
+            </span>
             <?php } ?>
             <?php if ($nogood_href) { ?>
-            <a href="<?php echo $nogood_href.'&amp;'.$qstr ?>" id="nogood_button" class="btn_b01">비추천  <strong><?php echo number_format($view['wr_nogood']) ?></strong></a>
-            <b id="bo_v_act_nogood"></b>
+            <span class="bo_v_act_gng">
+                <a href="<?php echo $nogood_href.'&amp;'.$qstr ?>" id="nogood_button" class="btn_b01">비추천  <strong><?php echo number_format($view['wr_nogood']) ?></strong></a>
+                <b id="bo_v_act_nogood"></b>
+            </span>
             <?php } ?>
         </div>
         <?php } else {
@@ -247,8 +251,10 @@ function excute_good(href, $el, $tx)
                 $el.find("strong").text(number_format(String(data.count)));
                 if($tx.attr("id").search("nogood") > -1) {
                     $tx.text("이 글을 비추천하셨습니다.");
+                    $tx.fadeIn(200).delay(2500).fadeOut(200);
                 } else {
                     $tx.text("이 글을 추천하셨습니다.");
+                    $tx.fadeIn(200).delay(2500).fadeOut(200);
                 }
             }
         }, "json"

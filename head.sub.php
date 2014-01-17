@@ -41,6 +41,9 @@ if (G5_IS_MOBILE) {
     echo '<meta http-equiv="imagetoolbar" content="no">'.PHP_EOL;
     echo '<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">'.PHP_EOL;
 }
+
+if($config['cf_add_meta'])
+    echo $config['cf_add_meta'].PHP_EOL;
 ?>
 <title><?php echo $g5_head_title; ?></title>
 <?php

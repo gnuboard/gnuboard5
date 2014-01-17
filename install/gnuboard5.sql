@@ -222,6 +222,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_possible_ip` text NOT NULL,
   `cf_intercept_ip` text NOT NULL,
   `cf_analytics` text NOT NULL,
+  `cf_add_meta` text NOT NULL,
   `cf_register_skin` varchar(255) NOT NULL DEFAULT 'basic',
   `cf_member_skin` varchar(255) NOT NULL DEFAULT '',
   `cf_use_homepage` tinyint(4) NOT NULL DEFAULT '0',

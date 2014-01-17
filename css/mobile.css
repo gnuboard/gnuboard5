@@ -64,7 +64,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #lnb {}
 #lnb ul {margin:0;padding:0;border-bottom:1px solid #e7f1ed;list-style:none}
 #lnb ul:after {display:block;visibility:hidden;clear:both;content:""}
-#lnb li {float:left;margin-bottom:-1px;width:20%}
+#lnb li {float:left;margin-bottom:-1px;width:25%}
 #lnb a {display:block;padding:10px 0;border-right:1px solid #e7f1ed;border-bottom:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
 #lnb li:nth-of-type(5n) a {border-right:0}
 

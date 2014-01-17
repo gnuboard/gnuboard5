@@ -10,7 +10,8 @@ if($_POST['js'] == "on") {
     function print_result($error, $count)
     {
         echo '{ "error": "' . $error . '", "count": "' . $count . '" }';
-        exit;
+        if($error)
+            exit;
     }
 
     if (!$is_member)
