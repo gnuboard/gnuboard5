@@ -10,8 +10,8 @@ $g_conf_key_dir   = '';
 $g_conf_log_dir   = '';
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
 {
-    $g_conf_key_dir   = G5_MSHOP_PATH.'/kcp/bin/pub.key';
-    $g_conf_log_dir   = G5_MSHOP_PATH.'/kcp/log';
+    $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
+    $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
 }
 
 if ($default['de_card_test']) {
