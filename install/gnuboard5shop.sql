@@ -699,8 +699,11 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order_address` (
 DROP TABLE IF EXISTS `g5_shop_order_delete`;
 CREATE TABLE IF NOT EXISTS `g5_shop_order_delete` (
   `de_id` int(11) NOT NULL AUTO_INCREMENT,
-  `de_key` varchar(255) NOT NULL,
-  `de_data` longtext NOT NULL,
+  `de_key` varchar(255) NOT NULL DEFAULT '',
+  `de_data` longtext NOT NULL DEFAULT '',
+  `mb_id` varchar(20) NOT NULL DEFAULT '',
+  `de_ip` varchar(255) NOT NULL DEFAULT '',
+  `de_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`de_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
