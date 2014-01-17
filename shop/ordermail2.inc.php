@@ -76,7 +76,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $options .= '</ul>';
 
     $list[$i]['it_id']   = $row['it_id'];
-    $list[$i]['it_simg'] = get_it_image($row['it_id'], $default['de_simg_width'], $default['de_simg_height']);
+    $list[$i]['it_simg'] = get_it_image($row['it_id'], 70, 70);
     $list[$i]['it_name'] = $row['it_name'];
     $list[$i]['it_opt']  = $options;
     $list[$i]['ct_price'] = $sum['price'];
