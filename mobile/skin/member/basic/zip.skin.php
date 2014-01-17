@@ -9,11 +9,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <div id="post_code" class="new_win mbskin">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
-    <div id="search_sel">
-        <input type="radio" name="srch_sel" id="srch_sel_1" value="search" checked="checked">
-        <label for="srch_sel_1">주소검색</label>
-        <input type="radio" name="srch_sel" id="srch_sel_0" value="direct">
-        <label for="srch_sel_0">직접입력</label>
+    <div id="code_sel">
+        <input type="radio" name="sch_sel" id="sch_sel_1" value="search" checked="checked">
+        <label for="sch_sel_1">주소검색</label>
+        <input type="radio" name="sch_sel" id="sch_sel_0" value="direct">
+        <label for="sch_sel_0">직접입력</label>
     </div>
 
     <div id="zip_search_frm" class="zip_frm">
@@ -45,22 +45,26 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <div id="result"><span id="result_b4">검색어를 입력해주세요.</span></div>
     </div>
     <div id="zip_direct_frm" class="zip_frm">
-        <form name="fzip2">
-            <label for="frm_zip1">우편번호앞자리</label>
-            <input type="text" name="frm_zip1" id="frm_zip1" class="required frm_input" maxlength="3"> -
-            <label for="frm_zip2">우편번호뒷자리</label>
-            <input type="text" name="frm_zip2" id="frm_zip2" class="required frm_input" maxlength="3">
-            <label for="frm_addr1">기본주소</label>
-            <input type="text" name="frm_addr1" id="frm_addr1" class="required frm_input">
-            <label for="frm_addr2">상세주소</label>
-            <input type="text" name="frm_addr2" id="frm_addr2" class="frm_input">
-            <label for="frm_addr3">참고항목</label>
-            <input type="text" name="frm_addr3" id="frm_addr3" class="frm_input">
-            <label for="frm_jibeon">지번주소</label>
-            <input type="text" name="frm_jibeon" id="frm_jibeon" class="frm_input">
-            <button type="button" id="put_addr">주소입력</button>
-        </form>
         <p>직접 주소를 입력하실 경우 우편번호와 기본주소는 반드시 입력하셔야 합니다.</p>
+        <form name="fzip2">
+            우편번호
+            <label for="frm_zip1" class="sound_only">우편번호앞자리</label>
+            <input type="text" name="frm_zip1" id="frm_zip1" class="required frm_input" size="3" maxlength="3"> -
+            <label for="frm_zip2" class="sound_only">우편번호뒷자리</label>
+            <input type="text" name="frm_zip2" id="frm_zip2" class="required frm_input" size="3" maxlength="3"><br>
+            <label for="frm_addr1" class="sound_only">기본주소</label>
+            <input type="text" name="frm_addr1" placeholder="기본주소" id="frm_addr1" class="required frm_input frm_addr"><br>
+            <label for="frm_addr2" class="sound_only">상세주소</label>
+            <input type="text" name="frm_addr2" placeholder="상세주소" id="frm_addr2" class="frm_input frm_addr"><br>
+            <label for="frm_addr3" class="sound_only">참고항목</label>
+            <input type="text" name="frm_addr3" placeholder="참고항목" id="frm_addr3" class="frm_input frm_addr"><br>
+            <label for="frm_jibeon" class="sound_only">지번주소</label>
+            <input type="text" name="frm_jibeon" placeholder="지번주소" id="frm_jibeon" class="frm_input frm_addr">
+
+            <div id="sch_dq">
+                <button type="button" id="put_addr" class="btn_submit">주소입력</button>
+            </div>
+        </form>
     </div>
 
     <div class="win_btn">
@@ -71,7 +75,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 <script>
 $(function() {
-    $("input[name='srch_sel']").click(function() {
+    $("input[name='sch_sel']").click(function() {
         var val = $(this).val();
 
         $(".zip_frm").hide();
