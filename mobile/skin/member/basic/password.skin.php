@@ -14,13 +14,13 @@ else $g5['title'] = $g5['title'];
     <p>
         <?php if ($w == 'u') { ?>
         <strong>작성자만 글을 수정할 수 있습니다.</strong>
-        작성자 본인이라면, 글 작성시 입력한 패스워드를 입력하여 글을 수정할 수 있습니다.
+        작성자 본인이라면, 글 작성시 입력한 비밀번호를 입력하여 글을 수정할 수 있습니다.
         <?php } else if ($w == 'd' || $w == 'x') { ?>
         <strong>작성자만 글을 삭제할 수 있습니다.</strong>
-        작성자 본인이라면, 글 작성시 입력한 패스워드를 입력하여 글을 삭제할 수 있습니다.
+        작성자 본인이라면, 글 작성시 입력한 비밀번호를 입력하여 글을 삭제할 수 있습니다.
         <?php } else { ?>
         <strong>비밀글 기능으로 보호된 글입니다.</strong>
-        작성자와 관리자만 열람하실 수 있습니다. 본인이라면 패스워드를 입력하세요.
+        작성자와 관리자만 열람하실 수 있습니다. 본인이라면 비밀번호를 입력하세요.
         <?php } ?>
     </p>
 
@@ -34,7 +34,7 @@ else $g5['title'] = $g5['title'];
     <input type="hidden" name="page" value="<?php echo $page ?>">
 
     <fieldset>
-        <input type="password" name="wr_password" id="pw_wr_password"  placeholder="패스워드(필수)" required class="frm_input required" maxLength="20">
+        <input type="password" name="wr_password" id="pw_wr_password"  placeholder="비밀번호(필수)" required class="frm_input required" maxLength="20">
         <input type="submit" class="btn_submit" value="확인">
     </fieldset>
     </form>

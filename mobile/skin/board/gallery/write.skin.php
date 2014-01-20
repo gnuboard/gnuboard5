@@ -63,7 +63,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <?php if ($is_password) { ?>
         <tr>
-            <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="wr_password">비밀번호<strong class="sound_only">필수</strong></label></th>
             <td><input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> class="frm_input <?php echo $password_required ?>" size="15" maxlength="20"></td>
         </tr>
         <?php } ?>

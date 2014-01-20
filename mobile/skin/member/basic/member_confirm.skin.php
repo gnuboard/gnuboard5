@@ -8,8 +8,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <h1><?php echo $g5['title'] ?></h1>
 
     <p>
-        <strong>패스워드를 한번 더 입력해주세요.</strong>
-        회원님의 정보를 안전하게 보호하기 위해 패스워드를 한번 더 확인합니다.
+        <strong>비밀번호를 한번 더 입력해주세요.</strong>
+        회원님의 정보를 안전하게 보호하기 위해 비밀번호를 한번 더 확인합니다.
     </p>
 
     <form name="fmemberconfirm" action="<?php echo $url ?>" onsubmit="return fmemberconfirm_submit(this);" method="post">
@@ -19,7 +19,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <fieldset>
         회원아이디
         <span id="mb_confirm_id"><?php echo $member['mb_id'] ?></span>
-        <input type="password" name="mb_password" id="mb_confirm_pw" placeholder="패스워드(필수)" required class="frm_input" size="15" maxLength="20">
+        <input type="password" name="mb_password" id="mb_confirm_pw" placeholder="비밀번호(필수)" required class="frm_input" size="15" maxLength="20">
         <input type="submit" value="확인" id="btn_submit" class="btn_submit">
     </fieldset>
 

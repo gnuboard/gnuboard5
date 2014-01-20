@@ -361,7 +361,7 @@ var win_zip = function(href) {
 }
 
 /**
- * 새로운 패스워드 분실 창 : 101123
+ * 새로운 비밀번호 분실 창 : 101123
  **/
 win_password_lost = function(href)
 {

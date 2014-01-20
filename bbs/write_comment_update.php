@@ -51,7 +51,7 @@ if (empty($wr['wr_id']))
 if ($is_member)
 {
     $mb_id = $member['mb_id'];
-    // 4.00.13 - 실명 사용일때 댓글에 별명으로 입력되던 오류를 수정
+    // 4.00.13 - 실명 사용일때 댓글에 닉네임으로 입력되던 오류를 수정
     $wr_name = $board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick'];
     $wr_password = $member['mb_password'];
     $wr_email = $member['mb_email'];

@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$g5['title'] = '패스워드 입력';
+$g5['title'] = '비밀번호 입력';
 
 switch ($w) {
     case 'u' :
@@ -18,7 +18,7 @@ switch ($w) {
         $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_parent'];
         break;
     case 's' :
-        // 패스워드 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
+        // 비밀번호 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
         if ($is_admin || ($member['mb_id'] == $write['mb_id'] && $write['mb_id']))
             goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
         else {

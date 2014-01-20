@@ -11,7 +11,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <fieldset>
         <input type="hidden" name="url" value="<?php echo $outlogin_url ?>">
         <input type="text" name="mb_id" id="ol_id" placeholder="회원아이디(필수)" required class="required" maxlength="20">
-        <input type="password" id="ol_pw" name="mb_password" placeholder="패스워드(필수)" required class="required" maxlength="20">
+        <input type="password" id="ol_pw" name="mb_password" placeholder="비밀번호(필수)" required class="required" maxlength="20">
         <input type="submit" id="ol_submit" value="로그인">
         <div id="ol_svc">
             <input type="checkbox" id="auto_login" name="auto_login" value="1">
@@ -50,7 +50,7 @@ $omp.blur(function() {
 
 $("#auto_login").click(function(){
     if (this.checked) {
-        this.checked = confirm("자동로그인을 사용하시면 다음부터 회원아이디와 패스워드를 입력하실 필요가 없습니다.\n\n공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?");
+        this.checked = confirm("자동로그인을 사용하시면 다음부터 회원아이디와 비밀번호를 입력하실 필요가 없습니다.\n\n공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?");
     }
 });
 

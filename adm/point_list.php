@@ -123,7 +123,7 @@ function point_clear()
         </th>
         <th scope="col"><?php echo subject_sort_link('mb_id') ?>회원아이디</a></th>
         <th scope="col">이름</th>
-        <th scope="col">별명</th>
+        <th scope="col">닉네임</th>
         <th scope="col"><?php echo subject_sort_link('po_content') ?>포인트 내용</a></th>
         <th scope="col"><?php echo subject_sort_link('po_point') ?>포인트</a></th>
         <th scope="col"><?php echo subject_sort_link('po_datetime') ?>일시</a></th>
