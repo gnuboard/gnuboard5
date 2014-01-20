@@ -89,6 +89,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 /* 하단 레이아웃 */
 #ft {min-width:970px;border-top:1px solid #dde4e9;background:#f2f5f9}
 #ft h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#ft p {margin:0;padding:10px 0;line-height:1.8em}
 
 #ft_catch {position:relative;margin:0 auto;padding:20px 0;width:970px;text-align:center}
 
