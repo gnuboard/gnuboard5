@@ -66,7 +66,7 @@ else if ($w == "u")
     $sql = " select is_password from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' ";
     $row = sql_fetch($sql);
     if ($row['is_password'] != $is_password)
-        alert("패스워드가 틀리므로 수정하실 수 없습니다.");
+        alert("비밀번호가 틀리므로 수정하실 수 없습니다.");
 
     $sql = " update {$g5['g5_shop_item_use_table']}
                 set is_subject = '$is_subject',
