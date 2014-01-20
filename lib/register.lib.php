@@ -52,7 +52,7 @@ function reserve_mb_id($reg_mb_id)
 function empty_mb_nick($reg_mb_nick)
 {
     if (!trim($reg_mb_nick))
-        return "별명을 입력해 주십시오.";
+        return "닉네임을 입력해 주십시오.";
     else
         return "";
 }
@@ -60,7 +60,7 @@ function empty_mb_nick($reg_mb_nick)
 function valid_mb_nick($reg_mb_nick)
 {
     if (!check_string($reg_mb_nick, G5_HANGUL + G5_ALPHABETIC + G5_NUMERIC))
-        return "별명은 공백없이 한글, 영문, 숫자만 입력 가능합니다.";
+        return "닉네임은 공백없이 한글, 영문, 숫자만 입력 가능합니다.";
     else
         return "";
 }
@@ -68,7 +68,7 @@ function valid_mb_nick($reg_mb_nick)
 function count_mb_nick($reg_mb_nick)
 {
     if (strlen($reg_mb_nick) < 4)
-        return "별명은 한글 2글자, 영문 4글자 이상 입력 가능합니다.";
+        return "닉네임은 한글 2글자, 영문 4글자 이상 입력 가능합니다.";
     else
         return "";
 }
@@ -78,7 +78,7 @@ function exist_mb_nick($reg_mb_nick, $reg_mb_id)
     global $g5;
     $row = sql_fetch(" select count(*) as cnt from {$g5['member_table']} where mb_nick = '$reg_mb_nick' and mb_id <> '$reg_mb_id' ");
     if ($row['cnt'])
-        return "이미 존재하는 별명입니다.";
+        return "이미 존재하는 닉네임입니다.";
     else
         return "";
 }
@@ -87,7 +87,7 @@ function reserve_mb_nick($reg_mb_nick)
 {
     global $config;
     if (preg_match("/[\,]?{$reg_mb_nick}/i", $config['cf_prohibit_id']))
-        return "이미 예약된 단어로 사용할 수 없는 별명 입니다.";
+        return "이미 예약된 단어로 사용할 수 없는 닉네임 입니다.";
     else
         return "";
 }

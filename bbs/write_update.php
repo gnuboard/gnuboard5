@@ -298,7 +298,7 @@ if ($w == '' || $w == 'r') {
     }
 
     if ($w == 'r') {
-        // 답변의 원글이 비밀글이라면 패스워드는 원글과 동일하게 넣는다.
+        // 답변의 원글이 비밀글이라면 비밀번호는 원글과 동일하게 넣는다.
         if ($secret)
             $wr_password = $wr['wr_password'];
 
@@ -560,7 +560,7 @@ sql_query(" update {$write_table} set wr_file = '{$row['cnt']}' where wr_id = '{
 sql_query(" delete from {$g5['autosave_table']} where as_uid = '{$uid}' ");
 //------------------------------------------------------------------------------
 
-// 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 패스워드를 묻지 않기 위함
+// 비밀글이라면 세션에 비밀글의 아이디를 저장한다. 자신의 글은 다시 비밀번호를 묻지 않기 위함
 if ($secret)
     set_session("ss_secret_{$bo_table}_{$wr_num}", TRUE);
 

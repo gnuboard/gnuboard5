@@ -313,7 +313,7 @@ if ($w == '') {
     if (!$is_admin) {
         if (!($is_member && $member['mb_id'] == $write['mb_id'])) {
             if (sql_password($wr_password) != $write['wr_password']) {
-                alert('패스워드가 틀립니다.');
+                alert('비밀번호가 틀립니다.');
             }
         }
     }

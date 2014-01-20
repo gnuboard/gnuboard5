@@ -110,7 +110,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <td><input type="text" name="wr_name" id="wr_name"  required class="frm_input required" size="5" maxLength="20" value="<?php echo get_cookie("ck_sns_name"); ?>"></td>
         </tr>
         <tr>
-            <th scope="row"><label for="wr_password">패스워드<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="wr_password">비밀번호<strong class="sound_only">필수</strong></label></th>
             <td><input type="password" name="wr_password" id="wr_password"  required class="frm_input required" size="10" maxLength="20"></td>
         </tr>
         <?php } ?>
@@ -241,7 +241,7 @@ function fviewcomment_submit(f)
         f.wr_password.value = f.wr_password.value.replace(pattern, "");
         if (f.wr_password.value == '')
         {
-            alert('패스워드가 입력되지 않았습니다.');
+            alert('비밀번호가 입력되지 않았습니다.');
             f.wr_password.focus();
             return false;
         }

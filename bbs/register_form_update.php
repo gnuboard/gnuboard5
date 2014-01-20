@@ -58,9 +58,9 @@ if ($w == '' || $w == 'u') {
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
 
     if ($w == '' && !$mb_password)
-        alert('패스워드가 넘어오지 않았습니다.');
+        alert('비밀번호가 넘어오지 않았습니다.');
     if($w == '' && $mb_password != $mb_password_re)
-        alert('패스워드가 일치하지 않습니다.');
+        alert('비밀번호가 일치하지 않습니다.');
 
     if ($msg = empty_mb_name($mb_id))       alert($msg, "", true, true);
     if ($msg = empty_mb_nick($mb_nick))     alert($msg, "", true, true);
@@ -86,7 +86,7 @@ if ($w == '' || $w == 'u') {
         }
     } else {
         // 자바스크립트로 정보변경이 가능한 버그 수정
-        // 별명수정일이 지나지 않았다면
+        // 닉네임수정일이 지나지 않았다면
         if ($member['mb_nick_date'] > date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400)))
             $mb_nick = $member['mb_nick'];
         // 회원정보의 메일을 이전 메일로 옮기고 아래에서 비교함

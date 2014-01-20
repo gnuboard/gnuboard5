@@ -95,7 +95,7 @@ if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">패스워드</label></th>
+        <th scope="row"><label for="">비밀번호</label></th>
         <td>
             <input name="admin_pass" type="text" id="admin_pass">
         </td>
@@ -146,7 +146,7 @@ function frm_install_submit(f)
     }
     else if (f.admin_pass.value == '')
     {
-        alert('최고관리자 패스워드를 입력하십시오.'); f.admin_pass.focus(); return false;
+        alert('최고관리자 비밀번호를 입력하십시오.'); f.admin_pass.focus(); return false;
     }
     else if (f.admin_name.value == '')
     {

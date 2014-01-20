@@ -17,7 +17,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="agree2" value="<?php echo $agree2 ?>">
     <input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
     <?php if (isset($member['mb_sex'])) { ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php } ?>
-    <?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 별명수정일이 지나지 않았다면 ?>
+    <?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 닉네임수정일이 지나지 않았다면 ?>
     <input type="hidden" name="mb_nick_default" value="<?php echo $member['mb_nick'] ?>">
     <input type="hidden" name="mb_nick" value="<?php echo $member['mb_nick'] ?>">
     <?php } ?>
@@ -34,11 +34,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="reg_mb_password">패스워드<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="reg_mb_password">비밀번호<strong class="sound_only">필수</strong></label></th>
             <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input minlength_3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
         </tr>
         <tr>
-            <th scope="row"><label for="reg_mb_password_re">패스워드 확인<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="reg_mb_password_re">비밀번호 확인<strong class="sound_only">필수</strong></label></th>
             <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input minlength_3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
         </tr>
         </table>
@@ -79,11 +79,11 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </tr>
         <?php if ($req_nick) { ?>
         <tr>
-            <th scope="row"><label for="reg_mb_nick">별명<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="reg_mb_nick">닉네임<strong class="sound_only">필수</strong></label></th>
             <td>
                 <span class="frm_info">
                     공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br>
-                    별명을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.
+                    닉네임을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.
                 </span>
                 <input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?$member['mb_nick']:''; ?>">
                 <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?$member['mb_nick']:''; ?>" id="reg_mb_nick" required class="frm_input required nospace" maxlength="20">
@@ -341,21 +341,21 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         if (f.w.value == '') {
             if (f.mb_password.value.length < 3) {
-                alert('패스워드를 3글자 이상 입력하십시오.');
+                alert('비밀번호를 3글자 이상 입력하십시오.');
                 f.mb_password.focus();
                 return false;
             }
         }
 
         if (f.mb_password.value != f.mb_password_re.value) {
-            alert('패스워드가 같지 않습니다.');
+            alert('비밀번호가 같지 않습니다.');
             f.mb_password_re.focus();
             return false;
         }
 
         if (f.mb_password.value.length > 0) {
             if (f.mb_password_re.value.length < 3) {
-                alert('패스워드를 3글자 이상 입력하십시오.');
+                alert('비밀번호를 3글자 이상 입력하십시오.');
                 f.mb_password_re.focus();
                 return false;
             }
@@ -370,7 +370,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             }
         }
 
-        // 별명 검사
+        // 닉네임 검사
         if ((f.w.value == "") || (f.w.value == "u" && f.mb_nick.defaultValue != f.mb_nick.value)) {
             var msg = reg_mb_nick_check();
             if (msg) {

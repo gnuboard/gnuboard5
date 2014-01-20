@@ -69,13 +69,13 @@ if ($w == '')
 {
     $mb = get_member($mb_id);
     if ($mb['mb_id'])
-        alert('이미 존재하는 회원입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n별명 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
+        alert('이미 존재하는 회원입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n닉네임 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
 
     if ($mb['mb_nick'] == $mb_nick)
-        alert('이미 존재하는 별명입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n별명 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
+        alert('이미 존재하는 닉네임입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n닉네임 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
 
     if ($mb['mb_email'] == $mb_email)
-        alert('이미 존재하는 E-mail 입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n별명 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
+        alert('이미 존재하는 E-mail 입니다.\\nＩＤ : '.$mb['mb_id'].'\\n이름 : '.$mb['mb_name'].'\\n닉네임 : '.$mb['mb_nick'].'\\n메일 : '.$mb['mb_email']);
 
     sql_query(" insert into {$g5['member_table']} set mb_id = '{$mb_id}', mb_password = '".sql_password($mb_password)."', mb_datetime = '".G5_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G5_TIME_YMDHIS."', {$sql_common} ");
 }
