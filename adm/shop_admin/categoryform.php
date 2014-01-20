@@ -52,10 +52,10 @@ if ($w == "")
         $html_title = "1단계분류추가";
         $ca['ca_use'] = 1;
         $ca['ca_explan_html'] = 1;
-        $ca['ca_img_width']  = $default['de_mimg_width'];
-        $ca['ca_img_height'] = $default['de_mimg_height'];
-        $ca['ca_mobile_img_width']  = $default['de_mimg_width'];
-        $ca['ca_mobile_img_height'] = $default['de_mimg_height'];
+        $ca['ca_img_width']  = $default['de_simg_width'];
+        $ca['ca_img_height'] = $default['de_simg_height'];
+        $ca['ca_mobile_img_width']  = $default['de_simg_width'];
+        $ca['ca_mobile_img_height'] = $default['de_simg_height'];
         $ca['ca_list_mod'] = 3;
         $ca['ca_list_row'] = 5;
         $ca['ca_mobile_list_mod'] = 10;

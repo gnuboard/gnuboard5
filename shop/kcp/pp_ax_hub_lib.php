@@ -165,7 +165,16 @@
       }
       else
       {
-        $res_data = $this->mf_exec( $home_dir . "/bin/pp_cli",
+        if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            if(PHP_INT_MAX == 2147483647) // 32-bit
+                $bin_exe = $home_dir.'/bin/pp_cli';
+            else
+                $bin_exe = $home_dir.'/bin/pp_cli_x64';
+        } else {
+            $bin_exe = $home_dir.'/bin/pp_cli_exe.exe';
+        }
+
+        $res_data = $this->mf_exec( $bin_exe,
                                     "-h",
                                     "home="      . $home_dir          . "," .
                                     "site_cd="   . $site_cd           . "," .

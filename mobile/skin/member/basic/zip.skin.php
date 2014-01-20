@@ -41,6 +41,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             </div>
         </div>
         <!-- } 검색어 입력 끝 -->
+        </form>
 
         <div id="result"><span id="result_b4">검색어를 입력해주세요.</span></div>
     </div>
