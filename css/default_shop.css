@@ -176,7 +176,7 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #ft ul:after {display:block;visibility:hidden;clear:both;content:""}
 #ft li {float:left;margin:0 20px 0 0}
 #ft a {text-decoration:none}
-#ft p {margin:0;padding:0}
+#ft p {margin:0;padding:10px 0;line-height:1.8em}
 #ft span {display:inline-block;margin:0 15px 0 0}
 #ft b {display:inline-block;margin:0 5px 0 0}
 #ft_totop {position:absolute;top:20px;right:0}
