@@ -1063,9 +1063,9 @@ function byte_check(el_cont, el_byte)
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="cf_icode_pw">아이코드 패스워드</label></th>
+            <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호</label></th>
             <td>
-                <?php echo help("아이코드에서 사용하시는 패스워드를 입력합니다."); ?>
+                <?php echo help("아이코드에서 사용하시는 비밀번호를 입력합니다."); ?>
                 <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" class="frm_input" id="cf_icode_pw">
             </td>
         </tr>
