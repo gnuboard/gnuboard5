@@ -59,21 +59,21 @@ if ($w == "") {
 
     /*
     if (!($member[mb_password] == sql_password($_POST[mb_password]) && $_POST[mb_password]))
-        alert("패스워드가 틀립니다.");
+        alert("비밀번호가 틀립니다.");
 
     // 수정 후 다시 이 폼으로 돌아오기 위해 임시로 저장해 놓음
     set_session("ss_tmp_password", $_POST[mb_password]);
     */
 
     if ($_POST['mb_password']) {
-        // 수정된 정보를 업데이트후 되돌아 온것이라면 패스워드가 암호화 된채로 넘어온것임
+        // 수정된 정보를 업데이트후 되돌아 온것이라면 비밀번호가 암호화 된채로 넘어온것임
         if ($_POST['is_update'])
             $tmp_password = $_POST['mb_password'];
         else
             $tmp_password = sql_password($_POST['mb_password']);
 
         if ($member['mb_password'] != $tmp_password)
-            alert('패스워드가 틀립니다.');
+            alert('비밀번호가 틀립니다.');
     }
 
     $g5['title'] = '회원 정보 수정';

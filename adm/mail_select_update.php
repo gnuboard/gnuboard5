@@ -59,7 +59,7 @@ for ($i=0; $i<count($member_list); $i++)
 
         $content = $ma['ma_content'];
         $content = preg_replace("/{이름}/", $name, $content);
-        $content = preg_replace("/{별명}/", $nick, $content);
+        $content = preg_replace("/{닉네임}/", $nick, $content);
         $content = preg_replace("/{회원아이디}/", $mb_id, $content);
         $content = preg_replace("/{이메일}/", $to_email, $content);
 

@@ -107,7 +107,7 @@
 #reg_result #result_email strong {color:#e8180c;font-size:1.2em}
 #reg_result .btn_confirm {margin:50px 0}
 
-/* 아이디/패스워드 찾기 */
+/* 아이디/비밀번호 찾기 */
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
 #find_info #info_fs {margin:0 20px 20px;padding:0;background:#fff}
 #find_info #captcha {margin:0 20px}
@@ -153,7 +153,7 @@
 #scrap_do table {margin:0 0 10px;width:100%}
 #scrap_do textarea {height:100px}
 
-/* 회원 패스워드 확인 */
+/* 회원 비밀번호 확인 */
 #mb_confirm {margin:0 auto;padding:100px 0;width:500px}
 #mb_confirm h1 {margin:0 0 20px;font-size:1.3em}
 #mb_confirm p {padding:20px;border:1px solid #dde4e9;border-bottom:0;background:#fff}
@@ -163,7 +163,7 @@
 #mb_confirm label {letter-spacing:-0.1em}
 #mb_confirm_id {display:inline-block;margin-right:20px;font-weight:bold}
 
-/* 비밀글 패스워드 확인 */
+/* 비밀글 비밀번호 확인 */
 #pw_confirm {margin:0 auto;padding:100px 0;width:500px}
 #pw_confirm h1 {margin:0 0 20px;font-size:1.3em}
 #pw_confirm p {padding:20px;border:1px solid #dde4e9;border-bottom:0;background:#fff}

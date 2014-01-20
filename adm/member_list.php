@@ -79,7 +79,7 @@ $colspan = 15;
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl">
     <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
-    <option value="mb_nick"<?php echo get_selected($_GET['sfl'], "mb_nick"); ?>>별명</option>
+    <option value="mb_nick"<?php echo get_selected($_GET['sfl'], "mb_nick"); ?>>닉네임</option>
     <option value="mb_name"<?php echo get_selected($_GET['sfl'], "mb_name"); ?>>이름</option>
     <option value="mb_level"<?php echo get_selected($_GET['sfl'], "mb_level"); ?>>권한</option>
     <option value="mb_email"<?php echo get_selected($_GET['sfl'], "mb_email"); ?>>E-MAIL</option>
@@ -98,7 +98,7 @@ $colspan = 15;
 
 <div class="local_desc01 local_desc">
     <p>
-        회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 별명은 삭제하지 않고 영구 보관합니다.
+        회원자료 삭제 시 다른 회원이 기존 회원아이디를 사용하지 못하도록 회원아이디, 이름, 닉네임은 삭제하지 않고 영구 보관합니다.
     </p>
 </div>
 
@@ -134,7 +134,7 @@ $colspan = 15;
         <th scope="col" rowspan="2" id="mb_list_mng">관리</th>
     </tr>
     <tr>
-        <th scope="col" id="mb_list_nick"><?php echo subject_sort_link('mb_nick') ?>별명</a></th>
+        <th scope="col" id="mb_list_nick"><?php echo subject_sort_link('mb_nick') ?>닉네임</a></th>
         <th scope="col" id="mb_list_mailr"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일<br>인증</a></th>
         <th scope="col" id="mb_list_open"><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보<br>공개</a></th>
         <th scope="col" id="mb_list_mailc"><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일<br>수신</a></th>

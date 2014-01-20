@@ -221,14 +221,14 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="cf_cut_name">이름(별명) 표시</label></th>
+            <th scope="row"><label for="cf_cut_name">이름(닉네임) 표시</label></th>
             <td colspan="3">
                 <?php echo help('영숫자 2글자 = 한글 1글자') ?>
                 <input type="text" name="cf_cut_name" value="<?php echo $config['cf_cut_name'] ?>" id="cf_cut_name" class="frm_input" size="2"> 자리만 표시
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="cf_nick_modify">별명 수정</label></th>
+            <th scope="row"><label for="cf_nick_modify">닉네임 수정</label></th>
             <td>수정하면 <input type="text" name="cf_nick_modify" value="<?php echo $config['cf_nick_modify'] ?>" id="cf_nick_modify" class="frm_input" size="1"> 일 동안 바꿀 수 없음</td>
             <th scope="row"><label for="cf_open_modify">정보공개 수정</label></th>
             <td>수정하면 <input type="text" name="cf_open_modify" value="<?php echo $config['cf_open_modify'] ?>" id="cf_open_modify" class="frm_input" size="1"> 일 동안 바꿀 수 없음</td>
@@ -611,7 +611,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_use_member_icon">회원아이콘 사용</label></th>
             <td>
-                <?php echo help('게시물에 게시자 별명 대신 아이콘 사용') ?>
+                <?php echo help('게시물에 게시자 닉네임 대신 아이콘 사용') ?>
                 <select id="cf_use_member_icon" name="cf_use_member_icon">
                     <option value="0"<?php echo get_selected($config['cf_use_member_icon'], '0') ?>>미사용
                     <option value="1"<?php echo get_selected($config['cf_use_member_icon'], '1') ?>>아이콘만 표시
@@ -640,9 +640,9 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td><input type="text" name="cf_recommend_point" value="<?php echo $config['cf_recommend_point'] ?>" id="cf_recommend_point" class="frm_input"> 점</td>
         </tr>
         <tr>
-            <th scope="row"><label for="cf_prohibit_id">아이디,별명 금지단어</label></th>
+            <th scope="row"><label for="cf_prohibit_id">아이디,닉네임 금지단어</label></th>
             <td>
-                <?php echo help('회원아이디, 별명으로 사용할 수 없는 단어를 정합니다. 쉼표 (,) 로 구분') ?>
+                <?php echo help('회원아이디, 닉네임으로 사용할 수 없는 단어를 정합니다. 쉼표 (,) 로 구분') ?>
                 <textarea name="cf_prohibit_id" id="cf_prohibit_id" rows="5"><?php echo $config['cf_prohibit_id'] ?></textarea>
             </td>
             <th scope="row"><label for="cf_prohibit_email">입력 금지 메일</label></th>
@@ -1022,9 +1022,9 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="cf_icode_pw">아이코드 패스워드</label></th>
+            <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호</label></th>
             <td>
-                <?php echo help("아이코드에서 사용하시는 패스워드를 입력합니다."); ?>
+                <?php echo help("아이코드에서 사용하시는 비밀번호를 입력합니다."); ?>
                 <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" class="frm_input" id="cf_icode_pw">
             </td>
         </tr>

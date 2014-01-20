@@ -41,7 +41,7 @@ else if ($is_admin == 'group') { // 그룹관리자
         alert('자신의 글이 아니므로 삭제할 수 없습니다.');
 } else {
     if (sql_password($wr_password) != $write['wr_password'])
-        alert('패스워드가 틀립니다.');
+        alert('비밀번호가 틀립니다.');
 }
 
 $len = strlen($write['wr_comment_reply']);

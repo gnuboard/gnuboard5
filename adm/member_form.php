@@ -153,13 +153,13 @@ include_once('./admin.head.php');
             <input type="text" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id" <?php echo $required_mb_id ?> class="frm_input <?php echo $required_mb_id_class ?>" size="15" maxlength="20" >
             <?php if ($w=='u'){ ?><a href="./boardgroupmember_form.php?mb_id=<?php echo $mb['mb_id'] ?>">접근가능그룹보기</a><?php } ?>
         </td>
-        <th scope="row"><label for="mb_password">패스워드<?php echo $sound_only ?></label></th>
+        <th scope="row"><label for="mb_password">비밀번호<?php echo $sound_only ?></label></th>
         <td><input type="password" name="mb_password" id="mb_password" <?php echo $required_mb_password ?> class="frm_input <?php echo $required_mb_password ?>" size="15" maxlength="20"></td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_name">이름(실명)<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="mb_name" value="<?php echo $mb['mb_name'] ?>" id="mb_name" required class="required frm_input minlength=2" size="15" maxlength="20"></td>
-        <th scope="row"><label for="mb_nick">별명<strong class="sound_only">필수</strong></label></th>
+        <th scope="row"><label for="mb_nick">닉네임<strong class="sound_only">필수</strong></label></th>
         <td><input type="text" name="mb_nick" value="<?php echo $mb['mb_nick'] ?>" id="mb_nick" required class="required frm_input minlength=2" size="15" maxlength="20"></td>
     </tr>
     <tr>

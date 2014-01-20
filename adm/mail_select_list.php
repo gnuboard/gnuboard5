@@ -80,7 +80,7 @@ include_once('./admin.head.php');
         <th scope="col">번호</th>
         <th scope="col">회원아이디</th>
         <th scope="col">이름</th>
-        <th scope="col">별명</th>
+        <th scope="col">닉네임</th>
         <th scope="col">E-mail</th>
     </tr>
     </thead>

@@ -85,7 +85,7 @@ $colspan = 5;
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
         <th scope="col"><?php echo subject_sort_link('a.mb_id') ?>회원아이디</a></th>
-        <th scope="col"><?php echo subject_sort_link('mb_nick') ?>별명</a></th>
+        <th scope="col"><?php echo subject_sort_link('mb_nick') ?>닉네임</a></th>
         <th scope="col">메뉴</th>
         <th scope="col">권한</th>
     </tr>

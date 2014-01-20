@@ -23,6 +23,8 @@ echo '<div id="sev_hhtml">'.stripslashes($ev['ev_head_html']).'</div>';
 // 상품 출력순서가 있다면
 if ($sort != "")
     $order_by = $sort.' '.$sortodr.' , b.it_order, b.it_id desc';
+else
+    $order_by = 'b.it_order, b.it_id desc';
 
 $error = "<img src='".G5_SHOP_URL."/img/no_item.gif' border=0>";
 

@@ -11,7 +11,7 @@ else
     $urlencode = urlencode($_SERVER[REQUEST_URI]);
 */
 
-$g5['title'] = '회원 패스워드 확인';
+$g5['title'] = '회원 비밀번호 확인';
 include_once('./_head.sub.php');
 
 include_once($member_skin_path.'/member_confirm.skin.php');
