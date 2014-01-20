@@ -30,6 +30,8 @@ $img_height = $default['de_type'.$type.'_img_height'];  // 출력이미지 높�
 $order_by = ' it_order, it_id desc ';
 if ($sort != '')
     $order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
+else
+    $order_by = 'it_order, it_id desc';
 
 $error = '<img src="'.G5_SHOP_URL.'/img/no_item.gif">';
 

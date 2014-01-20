@@ -36,6 +36,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     // 상품 출력순서가 있다면
     if ($sort != "")
         $order_by = $sort.' '.$sortodr.' , it_order, it_id desc';
+    else
+        $order_by = 'it_order, it_id desc';
 
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
