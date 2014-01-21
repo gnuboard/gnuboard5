@@ -86,8 +86,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
         <label for="od_id" class="od_id sound_only">주문번호<strong class="sound_only"> 필수</strong></label>
         <input type="text" name="od_id" value="<?php echo $od_id ?>" id="od_id" placeholder="주문번호" required class="frm_input required" size="20">
-        <label for="id_pwd" class="od_pwd sound_only">패스워드<strong class="sound_only"> 필수</strong></label>
-        <input type="password" name="od_pwd" size="20" id="od_pwd" placeholder="패스워드" required class="frm_input required">
+        <label for="id_pwd" class="od_pwd sound_only">비밀번호<strong class="sound_only"> 필수</strong></label>
+        <input type="password" name="od_pwd" size="20" id="od_pwd" placeholder="비밀번호" required class="frm_input required">
         <input type="submit" value="확인" class="btn_submit">
 
         </form>
