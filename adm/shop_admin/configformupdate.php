@@ -109,6 +109,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_bank_account             = '$de_bank_account',
                 de_card_test                = '$de_card_test',
                 de_card_use                 = '$de_card_use',
+                de_card_noint_use           = '$de_card_noint_use',
                 de_card_point               = '$de_card_point',
                 de_settle_min_point         = '$de_settle_min_point',
                 de_settle_max_point         = '$de_settle_max_point',

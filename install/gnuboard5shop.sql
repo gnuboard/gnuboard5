@@ -269,6 +269,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_bank_account` text NOT NULL,
   `de_card_test` int(11) NOT NULL DEFAULT '0',
   `de_card_use` int(11) NOT NULL DEFAULT '0',
+  `de_card_noint_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_card_point` int(11) NOT NULL DEFAULT '0',
   `de_settle_min_point` int(11) NOT NULL DEFAULT '0',
   `de_settle_max_point` int(11) NOT NULL DEFAULT '0',

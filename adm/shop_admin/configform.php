@@ -43,6 +43,12 @@ if(!isset($default['de_root_index_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_root_index_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_admin_info_email` ", true);
 }
+
+// 무이자 할부 사용설정 필드 추가
+if(!isset($default['de_card_noint_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_card_noint_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_card_use` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -470,6 +476,16 @@ if(!isset($default['de_root_index_use'])) {
                 <select id="de_card_use" name="de_card_use">
                     <option value="0" <?php echo get_selected($default['de_card_use'], 0); ?>>사용안함</option>
                     <option value="1" <?php echo get_selected($default['de_card_use'], 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_card_noint_use">신용카드 무이자할부사용</label></th>
+            <td>
+                <?php echo help("주문시 신용카드 무이자할부를 가능하게 할것인지를 설정합니다.<br>사용으로 설정하시면 KCP 가맹점 관리자 페이지에서 설정하신 무이자할부 설정이 적용됩니다.<br>사용안함으로 설정하시면 KCP 무이자 이벤트 카드를 제외한 모든 카드의 무이자 설정이 적용되지 않습니다.", 50); ?>
+                <select id="de_card_noint_use" name="de_card_noint_use">
+                    <option value="0" <?php echo get_selected($default['de_card_noint_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_card_noint_use'], 1); ?>>사용</option>
                 </select>
             </td>
         </tr>
