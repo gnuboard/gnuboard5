@@ -49,6 +49,12 @@ if(!isset($default['de_card_noint_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_card_noint_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_card_use` ", true);
 }
+
+// 레이아웃 선택 설정 필드추가
+if(!isset($default['de_shop_layout_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_shop_layout_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_root_index_use` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -734,6 +740,16 @@ if(!isset($default['de_card_noint_use'])) {
                 <select name="de_root_index_use" id="de_root_index_use">
                     <option value="0" <?php echo get_selected($default['de_root_index_use'], 0); ?>>사용안함</option>
                     <option value="1" <?php echo get_selected($default['de_root_index_use'], 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_shop_layout_use">쇼핑몰 레이아웃 사용</label></th>
+            <td>
+                <?php echo help('커뮤니티의 레이아웃을 쇼핑몰과 동일하게 적용하시려면 사용으로 설정해 주십시오.'); ?>
+                <select name="de_shop_layout_use" id="de_shop_layout_use">
+                    <option value="0" <?php echo get_selected($default['de_shop_layout_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_shop_layout_use'], 1); ?>>사용</option>
                 </select>
             </td>
         </tr>

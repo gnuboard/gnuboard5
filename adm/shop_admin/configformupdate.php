@@ -34,6 +34,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_admin_info_name          = '$de_admin_info_name',
                 de_admin_info_email         = '$de_admin_info_email',
                 de_root_index_use           = '$de_root_index_use',
+                de_shop_layout_use          = '$de_shop_layout_use',
                 de_shop_skin                = '$de_shop_skin',
                 de_shop_mobile_skin         = '$de_shop_mobile_skin',
                 de_type1_list_use           = '$de_type1_list_use',

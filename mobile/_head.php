@@ -1,5 +1,8 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-include_once(G5_MOBILE_PATH.'/head.php');
+if(isset($default['de_shop_layout_use']) && $default['de_shop_layout_use'])
+    include_once(G5_SHOP_PATH.'/_head.php');
+else
+    include_once(G5_PATH.'/head.php');
 ?>

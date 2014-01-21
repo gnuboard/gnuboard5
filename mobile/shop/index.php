@@ -1,9 +1,9 @@
 <?php
-include_once("./_common.php");
+include_once('./_common.php');
 
 define("_INDEX_", TRUE);
 
-include_once(G5_MSHOP_PATH.'/shop.head.php');
+include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/swipe.js"></script>
@@ -158,5 +158,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G5_MSHOP_PATH.'/shop.tail.php');
+include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

@@ -194,6 +194,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_admin_info_name` varchar(255) NOT NULL DEFAULT '',
   `de_admin_info_email` varchar(255) NOT NULL DEFAULT '',
   `de_root_index_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_shop_layout_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_shop_skin` varchar(255) NOT NULL DEFAULT '',
   `de_shop_mobile_skin` varchar(255) NOT NULL DEFAULT '',
   `de_type1_list_use` tinyint(4) NOT NULL DEFAULT '0',
