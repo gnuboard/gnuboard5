@@ -1092,7 +1092,10 @@ function print_item_options($it_id, $cart_id)
     for($i=0; $row=sql_fetch_array($result); $i++) {
         if($i == 0)
             $str .= '<ul>'.PHP_EOL;
-        $str .= '<li>'.$row['ct_option'].' '.$row['ct_qty'].'개 (+'.display_price($row['io_price']).')</li>'.PHP_EOL;
+        $price_plus = '';
+        if($row['io_price'] >= 0)
+            $price_plus = '+';
+        $str .= '<li>'.$row['ct_option'].' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
     }
 
     if($i > 0)
