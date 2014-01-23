@@ -22,10 +22,10 @@ if ($od_send_mail)
               where od_id = '{$od['od_id']}'
               order by ct_id ";
     $result = sql_query($sql);
-    for ($i=0; $ct=mysql_fetch_array($result); $i++) {
-        $cart_list[$i]['it_id']   = $ct['it_id'];
-        $cart_list[$i]['it_name'] = $ct['it_name'];
-        $cart_list[$i]['it_opt']  = $ct['ct_option'];
+    for ($j=0; $ct=mysql_fetch_array($result); $j++) {
+        $cart_list[$j]['it_id']   = $ct['it_id'];
+        $cart_list[$j]['it_name'] = $ct['it_name'];
+        $cart_list[$j]['it_opt']  = $ct['ct_option'];
 
         $ct_status = $ct['ct_status'];
         if ($ct_status == "준비") {
@@ -34,8 +34,8 @@ if ($od_send_mail)
             $ct_status = "배송중";
         }
 
-        $cart_list[$i]['ct_status'] = $ct_status;
-        $cart_list[$i]['ct_qty']    = $ct['ct_qty'];
+        $cart_list[$j]['ct_status'] = $ct_status;
+        $cart_list[$j]['ct_qty']    = $ct['ct_qty'];
     }
 
 

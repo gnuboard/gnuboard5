@@ -384,9 +384,14 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         </td>
         <td headers="th_delicom">
             <?php if ($od_status == '준비') { ?>
-                <input type="text" name="od_delivery_company[<?php echo $i; ?>]" value="<?php echo $delivery_company; ?>" class="frm_input" size="10">
+                <select name="od_delivery_company[<?php echo $i; ?>]">
+                    <?php echo get_delivery_company($delivery_company); ?>
+                </select>
+                <?php
+                /*<input type="text" name="od_delivery_company[<?php echo $i; ?>]" value="<?php echo $delivery_company; ?>" class="frm_input" size="10"> */
+                ?>
             <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
-                <?php echo $row['od_delivery_company']; ?>
+                <?php echo $delivery_company; ?>
             <?php } else { ?>
                 -
             <?php } ?>

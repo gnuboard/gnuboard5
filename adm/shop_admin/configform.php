@@ -653,16 +653,7 @@ if(!isset($default['de_shop_layout_use'])) {
             <td>
                 <?php echo help("이용 중이거나 이용하실 배송업체를 선택하세요.", 50); ?>
                 <select name="de_delivery_company" id="de_delivery_company">
-                    <option value="">없음</option>
-                    <option value="자체배송" <?php echo get_selected($default['de_delivery_company'], "자체배송"); ?>>자체배송</option>
-                    <?php
-                    $dlcomp = explode(")", str_replace("(", "", G5_DELIVERY_COMPANY));
-                    for ($i=0; $i<count($dlcomp); $i++) {
-                        if (trim($dlcomp[$i])=="") continue;
-                        list($value, $url, $tel) = explode("^", $dlcomp[$i]);
-                        echo "<option value=\"$value\" ".get_selected($default['de_delivery_company'], $value).">$value</option>\n";
-                    }
-                    ?>
+                    <?php echo get_delivery_company($default['de_delivery_company']); ?>
                 </select>
             </td>
         </tr>
