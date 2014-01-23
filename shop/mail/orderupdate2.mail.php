@@ -41,12 +41,12 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
             <td style="<?php echo $td_st; ?>"><a href="<?php echo G5_SHOP_URL.'/item.php?it_id='.$list[$i]['it_id']; ?>" target="_blank" style="text-decoration:none"><span style="display:inline-block;vertical-align:middle"><?php echo $list[$i]['it_simg']; ?></span> <?php echo $list[$i]['it_name']; ?></a></td>
         </tr>
         <tr>
-            <th scope="row" style="<?php echo $th_st; ?>">선택옵션 </th>
-            <td style="<?php echo $td_st; ?>"><?php echo $list[$i]['it_opt']; ?></td>
-        </tr>
-        <tr>
             <th scope="row" style="<?php echo $th_st; ?>">판매가격</th>
             <td style="<?php echo $td_st; ?>"><?php echo display_price($list[$i]['ct_price']); ?></td>
+        </tr>
+        <tr>
+            <th scope="row" style="<?php echo $th_st; ?>">선택옵션 </th>
+            <td style="<?php echo $td_st; ?>"><?php echo $list[$i]['it_opt']; ?></td>
         </tr>
         <tr>
             <th scope="row" style="<?php echo $th_st; ?>">소계</th>

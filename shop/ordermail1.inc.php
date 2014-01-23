@@ -36,7 +36,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $sum = sql_fetch($sql);
 
     // 옵션정보
-    $sql2 = " select ct_option, ct_qty
+    $sql2 = " select ct_option, ct_qty, io_price
                 from {$g5['g5_shop_cart_table']}
                 where it_id = '{$row['it_id']}' and od_id = '$od_id' and ct_select = '1'
                 order by io_type asc, ct_id asc ";
@@ -48,7 +48,10 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     for($k=0; $row2=sql_fetch_array($result2); $k++) {
         if($k == 0)
             $options .= '<ul'.$options_ul.'>'.PHP_EOL;
-        $options .= '<li'.$options_li.'>'.$row2['ct_option'].' '.$row2['ct_qty'].'개</li>'.PHP_EOL;
+        $price_plus = '';
+        if($row2['io_price'] >= 0)
+            $price_plus = '+';
+        $options .= '<li'.$options_li.'>'.$row2['ct_option'].' ('.$price_plus.display_price($row2['io_price']).') '.$row2['ct_qty'].'개</li>'.PHP_EOL;
     }
 
     if($k > 0)
