@@ -33,6 +33,9 @@ if (!empty($msg)) {
     alert($msg);
 }
 
+if($qa_hp)
+    $qa_hp = preg_replace('/[^0-9\-]/', '', strip_tags($qa_hp));
+
 // 090710
 if (substr_count($qa_content, '&#') > 50) {
     alert('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');
