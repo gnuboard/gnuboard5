@@ -63,7 +63,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <tr>
             <th scope="row"><label for="qa_hp">휴대폰</label></th>
             <td>
-                <input type="text" name="qa_hp" value="<?php echo $write['qa_hp']; ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_email.' '; ?>frm_input" size="30">
+                <input type="text" name="qa_hp" value="<?php echo $write['qa_hp']; ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_hp.' '; ?>frm_input" size="30">
                 <?php if($qaconfig['qa_use_sms']) { ?>
                 <input type="checkbox" name="qa_sms_recv" value="1" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?>> 답변등록 SMS알림 수신
                 <?php } ?>
@@ -165,6 +165,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
                 f.qa_content.focus();
             return false;
         }
+
+        <?php if ($is_hp) { ?>
+        var hp = f.qa_hp.value.replace(/[0-9\-]/g, "");
+        if(hp.length > 0) {
+            alert("휴대폰번호는 숫자, - 으로만 입력해 주십시오.");
+            return false;
+        }
+        <?php } ?>
 
         document.getElementById("btn_submit").disabled = "disabled";
 

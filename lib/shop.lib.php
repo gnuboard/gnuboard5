@@ -1092,7 +1092,10 @@ function print_item_options($it_id, $cart_id)
     for($i=0; $row=sql_fetch_array($result); $i++) {
         if($i == 0)
             $str .= '<ul>'.PHP_EOL;
-        $str .= '<li>'.$row['ct_option'].' '.$row['ct_qty'].'개 (+'.display_price($row['io_price']).')</li>'.PHP_EOL;
+        $price_plus = '';
+        if($row['io_price'] >= 0)
+            $price_plus = '+';
+        $str .= '<li>'.$row['ct_option'].' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
     }
 
     if($i > 0)
@@ -2064,6 +2067,22 @@ function save_order_point($ct_status="완료")
     }
 }
 
+
+// 배송업체 리스트 얻기
+function get_delivery_company($company)
+{
+    $option = '<option value="">없음</option>'.PHP_EOL;
+    $option .= '<option value="자체배송" '.get_selected($company, '자체배송').'>자체배송</option>'.PHP_EOL;
+
+    $dlcomp = explode(")", str_replace("(", "", G5_DELIVERY_COMPANY));
+    for ($i=0; $i<count($dlcomp); $i++) {
+        if (trim($dlcomp[$i])=="") continue;
+        list($value, $url, $tel) = explode("^", $dlcomp[$i]);
+        $option .= '<option value="'.$value.'" '.get_selected($company, $value).'>'.$value.'</option>'.PHP_EOL;
+    }
+
+    return $option;
+}
 
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝

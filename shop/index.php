@@ -8,9 +8,6 @@ if (G5_IS_MOBILE) {
 
 define("_INDEX_", TRUE);
 
-include_once(G5_LIB_PATH.'/latest.lib.php');
-include_once(G5_LIB_PATH.'/poll.lib.php');
-
 include_once(G5_SHOP_PATH.'/shop.head.php');
 ?>
 

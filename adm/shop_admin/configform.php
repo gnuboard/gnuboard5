@@ -43,6 +43,18 @@ if(!isset($default['de_root_index_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_root_index_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_admin_info_email` ", true);
 }
+
+// 무이자 할부 사용설정 필드 추가
+if(!isset($default['de_card_noint_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_card_noint_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_card_use` ", true);
+}
+
+// 레이아웃 선택 설정 필드추가
+if(!isset($default['de_shop_layout_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_shop_layout_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_root_index_use` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -474,6 +486,16 @@ if(!isset($default['de_root_index_use'])) {
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="de_card_noint_use">신용카드 무이자할부사용</label></th>
+            <td>
+                <?php echo help("주문시 신용카드 무이자할부를 가능하게 할것인지를 설정합니다.<br>사용으로 설정하시면 KCP 가맹점 관리자 페이지에서 설정하신 무이자할부 설정이 적용됩니다.<br>사용안함으로 설정하시면 KCP 무이자 이벤트 카드를 제외한 모든 카드의 무이자 설정이 적용되지 않습니다.", 50); ?>
+                <select id="de_card_noint_use" name="de_card_noint_use">
+                    <option value="0" <?php echo get_selected($default['de_card_noint_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_card_noint_use'], 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="de_taxsave_use">현금영수증<br>발급사용</label></th>
             <td>
                 <?php echo help("관리자는 설정에 관계없이 <a href=\"".G5_ADMIN_URL."/shop_admin/orderlist.php\">주문내역</a> &gt; 수정에서 발급이 가능합니다.\n현금영수증 발급 취소는 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.", 50); ?>
@@ -631,16 +653,7 @@ if(!isset($default['de_root_index_use'])) {
             <td>
                 <?php echo help("이용 중이거나 이용하실 배송업체를 선택하세요.", 50); ?>
                 <select name="de_delivery_company" id="de_delivery_company">
-                    <option value="">없음</option>
-                    <option value="자체배송" <?php echo get_selected($default['de_delivery_company'], "자체배송"); ?>>자체배송</option>
-                    <?php
-                    $dlcomp = explode(")", str_replace("(", "", G5_DELIVERY_COMPANY));
-                    for ($i=0; $i<count($dlcomp); $i++) {
-                        if (trim($dlcomp[$i])=="") continue;
-                        list($value, $url, $tel) = explode("^", $dlcomp[$i]);
-                        echo "<option value=\"$value\" ".get_selected($default['de_delivery_company'], $value).">$value</option>\n";
-                    }
-                    ?>
+                    <?php echo get_delivery_company($default['de_delivery_company']); ?>
                 </select>
             </td>
         </tr>
@@ -718,6 +731,16 @@ if(!isset($default['de_root_index_use'])) {
                 <select name="de_root_index_use" id="de_root_index_use">
                     <option value="0" <?php echo get_selected($default['de_root_index_use'], 0); ?>>사용안함</option>
                     <option value="1" <?php echo get_selected($default['de_root_index_use'], 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_shop_layout_use">쇼핑몰 레이아웃 사용</label></th>
+            <td>
+                <?php echo help('커뮤니티의 레이아웃을 쇼핑몰과 동일하게 적용하시려면 사용으로 설정해 주십시오.'); ?>
+                <select name="de_shop_layout_use" id="de_shop_layout_use">
+                    <option value="0" <?php echo get_selected($default['de_shop_layout_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_shop_layout_use'], 1); ?>>사용</option>
                 </select>
             </td>
         </tr>

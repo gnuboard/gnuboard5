@@ -41,10 +41,6 @@ define('G5_DELIVERY_COMPANY',
     .'(KG옐로우캡택배^http://www.yellowcap.co.kr/custom/inquiry_result.asp?invoice_no=^1588-0123)'
     .'(KGB택배^http://www.kgbls.co.kr/sub5/trace.asp?f_slipno=^1577-4577)'
 );
-
-define('G5_SHOP_SEARCH_SKIN', 'list.10.skin.php'); // 상품검색스킨
-define('G5_SHOP_SEARCH_MOD', 4); // 상품검색 1라인에 몇개
-define('G5_SHOP_SEARCH_ROW', 5); // 상품검색 라인수
 //------------------------------------------------------------------------------
 // 쇼핑몰 상수 모음 끝
 //------------------------------------------------------------------------------
@@ -82,7 +78,7 @@ define('G5_OD_STATUS_FINISH'    , '배송완료');
 '배송완료'      : 배송이 완료된 상태에서만 포인트적립이 가능합니다.
 '취소'          : 입금확인중이나 결제완료후 취소가 가능합니다.
 '반품'          : 배송완료 후에만 반품처리가 가능합니다.
-'품절'          : 
+'품절'          :
 
 
 # 13.10.04
