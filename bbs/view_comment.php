@@ -56,7 +56,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 관리자가 아니라면 중간 IP 주소를 감춘후 보여줍니다.
     $list[$i]['ip'] = $row['wr_ip'];
     if (!$is_admin)
-        $list[$i]['ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $row['wr_ip']);
+        $list[$i]['ip'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $row['wr_ip']);
 
     $list[$i]['is_reply'] = false;
     $list[$i]['is_edit'] = false;

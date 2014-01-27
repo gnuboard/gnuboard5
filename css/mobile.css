@@ -13,7 +13,7 @@ label, input, button, select, img {vertical-align:middle}
 input, button {margin:0;padding:0;font-size:1em}
 button {cursor:pointer}
 input[type=text], input[type=password], input[type=submit], input[type=image], button {border-radius:0;font-size:1em;-webkit-appearance:none}
-textarea, select {font-size:1em}
+textarea, select {font-size:1em;font-family:dotum}
 textarea {border-radius:0;-webkit-appearance:none}
 select {margin:0}
 p {margin:0;padding:0;word-break:break-all}
