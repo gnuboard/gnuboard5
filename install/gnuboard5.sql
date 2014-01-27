@@ -507,7 +507,8 @@ CREATE TABLE IF NOT EXISTS `g5_memo` (
   `me_send_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `me_read_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `me_memo` text NOT NULL,
-  PRIMARY KEY  (`me_id`)
+  PRIMARY KEY  (`me_id`),
+  KEY `me_recv_mb_id` (`me_recv_mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

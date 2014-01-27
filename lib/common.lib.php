@@ -1531,7 +1531,7 @@ function get_table_define($table, $crlf="\n")
         $schema_create     .= implode($columns, ', ') . ')';
     } // end while
 
-    $schema_create .= $crlf . ') DEFAULT CHARSET=utf8';
+    $schema_create .= $crlf . ') ENGINE=MyISAM DEFAULT CHARSET=utf8';
 
     return $schema_create;
 } // end of the 'PMA_getTableDef()' function
@@ -2513,5 +2513,23 @@ function print_address($addr1, $addr2, $addr3)
         $address .= ' '.$addr3;
 
     return $address;
+}
+
+// input vars 체크
+function check_input_vars()
+{
+    $max_input_vars = ini_get('max_input_vars');
+
+    if($max_input_vars) {
+        $post_vars = count($_POST, COUNT_RECURSIVE);
+        $get_vars = count($_GET, COUNT_RECURSIVE);
+        $cookie_vars = count($_COOKIE, COUNT_RECURSIVE);
+
+        $input_vars = $post_vars + $get_vars + $cookie_vars;
+
+        if($input_vars > $max_input_vars) {
+            alert('폼에서 전송된 변수의 개수가 max_input_vars 값보다 큽니다.\\n전송된 값중 일부는 유실되어 DB에 기록될 수 있습니다.\\n\\n문제를 해결하기 위해서는 서버 php.ini의 max_input_vars 값을 변경하십시오.');
+        }
+    }
 }
 ?>
