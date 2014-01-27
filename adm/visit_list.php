@@ -73,7 +73,7 @@ $result = sql_query($sql);
         if ($is_admin == 'super')
             $ip = $row['vi_ip'];
         else
-            $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $row['vi_ip']);
+            $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $row['vi_ip']);
 
         if ($brow == '기타') { $brow = '<span title="'.$row['vi_agent'].'">'.$brow.'</span>'; }
         if ($os == '기타') { $os = '<span title="'.$row['vi_agent'].'">'.$os.'</span>'; }
