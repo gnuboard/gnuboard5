@@ -21,7 +21,10 @@ function print_line($save)
         <td class="td_numsum"><?php echo number_format($save['orderprice']); ?></td>
         <td class="td_numcoupon"><?php echo number_format($save['ordercoupon']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptbank']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptvbank']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receiptiche']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptcard']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receipthp']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptpoint']); ?></td>
         <td class="td_numcancel1"><?php echo number_format($save['ordercancel']); ?></td>
         <td class="td_numrdy"><?php echo number_format($save['misu']); ?></td>
@@ -55,8 +58,11 @@ $result = sql_query($sql);
         <th scope="col">주문수</th>
         <th scope="col">주문합계</th>
         <th scope="col">쿠폰</th>
-        <th scope="col">계좌입금</th>
+        <th scope="col">무통장</th>
+        <th scope="col">가상계좌</th>
+        <th scope="col">계좌이체</th>
         <th scope="col">카드입금</th>
+        <th scope="col">휴대폰</th>
         <th scope="col">포인트입금</th>
         <th scope="col">주문취소</th>
         <th scope="col">미수금</th>
@@ -81,8 +87,14 @@ $result = sql_query($sql);
         $save['orderprice']    += $row['orderprice'];
         $save['ordercancel']   += $row['od_cancel_price'];
         $save['ordercoupon']   += $row['couponprice'];
-        if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
+        if($row['od_settle_case'] == '무통장')
             $save['receiptbank']   += $row['od_receipt_price'];
+        if($row['od_settle_case'] == '가상계좌')
+            $save['receiptvbank']   += $row['od_receipt_price'];
+        if($row['od_settle_case'] == '계좌이체')
+            $save['receiptiche']   += $row['od_receipt_price'];
+        if($row['od_settle_case'] == '휴대폰')
+            $save['receipthp']   += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')
             $save['receiptcard']   += $row['od_receipt_price'];
         $save['receiptpoint']  += $lines[$i]['od_receipt_point'];
@@ -92,8 +104,14 @@ $result = sql_query($sql);
         $tot['orderprice']     += $row['orderprice'];
         $tot['ordercancel']    += $row['od_cancel_price'];
         $tot['ordercoupon']    += $row['couponprice'];
-        if($row['od_settle_case'] == '무통장' || $row['od_settle_case'] == '가상계좌' || $row['od_settle_case'] == '계좌이체')
+        if($row['od_settle_case'] == '무통장')
             $tot['receiptbank']    += $row['od_receipt_price'];
+        if($row['od_settle_case'] == '가상계좌')
+            $tot['receiptvbank']    += $row['od_receipt_price'];
+        if($row['od_settle_case'] == '계좌이체')
+            $tot['receiptiche']    += $row['od_receipt_price'];
+        if($row['od_settle_case'] == '휴대폰')
+            $tot['receipthp']    += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')
             $tot['receiptcard']    += $row['od_receipt_price'];
         $tot['receiptpoint ']  += $row['od_receipt_point'];
@@ -101,7 +119,7 @@ $result = sql_query($sql);
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="9" class="empty_table">자료가 없습니다.</td></tr>';
+        echo '<tr><td colspan="12" class="empty_table">자료가 없습니다.</td></tr>';
     } else {
         print_line($save);
     }
@@ -114,7 +132,10 @@ $result = sql_query($sql);
         <td><?php echo number_format($tot['orderprice']); ?></td>
         <td><?php echo number_format($tot['ordercoupon']); ?></td>
         <td><?php echo number_format($tot['receiptbank']); ?></td>
+        <td><?php echo number_format($tot['receiptvbank']); ?></td>
+        <td><?php echo number_format($tot['receiptiche']); ?></td>
         <td><?php echo number_format($tot['receiptcard']); ?></td>
+        <td><?php echo number_format($tot['receipthp']); ?></td>
         <td><?php echo number_format($tot['receiptpoint']); ?></td>
         <td><?php echo number_format($tot['ordercancel']); ?></td>
         <td><?php echo number_format($tot['misu']); ?></td>
