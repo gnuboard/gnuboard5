@@ -140,6 +140,16 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 .sit_admin {margin:10px 10px 0;text-align:right}
 .sit_empty {padding:30px 0;text-align:center}
 
+/* 상품 상세보기 - 이미지 미리보기 */
+#sit_pvi_nw h1 {}
+#sit_pvi_nwbig {padding:10px 0;text-align:center}
+#sit_pvi_nwbig span {display:none}
+#sit_pvi_nwbig span.visible {display:inline}
+#sit_pvi_nw ul {margin:0 0 20px;padding:0 10px;list-style:none;zoom:1}
+#sit_pvi_nw ul:after {display:block;visibility:hidden;clear:both;content:""}
+#sit_pvi_nw li {float:left;margin:0 0 0 1px}
+#sit_pvi_nw li img {width:60px;height:60px}
+
 /* 사용후기 모음 */
 #sps_sch {margin:0 0 10px}
 #sps_sch a {display:inline-block;padding:0 8px;height:23px;background:#333;color:#fff;text-decoration:none;vertical-align:middle;line-height:23px}

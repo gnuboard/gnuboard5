@@ -19,8 +19,8 @@ $g5['title'] = "{$row['it_name']} ($it_id)";
 include_once(G5_PATH.'/head.sub.php');
 ?>
 
-<div id="sit_pvi_nw">
-    <h1>상품 이미지 새 창 보기</h1>
+<div id="sit_pvi_nw" class="new_win">
+    <h1 id="win_title">상품 이미지 새 창 보기</h1>
 
     <div id="sit_pvi_nwbig">
         <?php

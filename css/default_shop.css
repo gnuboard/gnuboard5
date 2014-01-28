@@ -437,7 +437,6 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sit_pvi_thumb .li_last {margin:0 !important}
 #sit_pvi_thumb img {}
 
-#sit_pvi_nw h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sit_pvi_nwbig {padding:10px 0;text-align:center}
 #sit_pvi_nwbig span {display:none}
 #sit_pvi_nwbig span.visible {display:inline}
