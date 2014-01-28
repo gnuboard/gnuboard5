@@ -169,7 +169,7 @@ if ($is_admin) {
 } else {
     // 관리자가 아니라면 IP 주소를 감춘후 보여줍니다.
     if (isset($write['wr_ip'])) {
-        $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $write['wr_ip']);
+        $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $write['wr_ip']);
     }
 }
 

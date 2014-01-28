@@ -289,15 +289,22 @@ if (mysql_num_rows($result) == 0)
             $cnt = $sub_tot_qty = $sub_tot_price = 0;
             while ($row2 = sql_fetch_array($res2))
             {
-                if($row2['io_type'])
+                if($row2['io_type']) {
+                    $it_price = $row2['io_price'];
                     $row2_tot_price = $row2['io_price'] * $row2['ct_qty'];
-                else
+                } else {
+                    $it_price = $row2['ct_price'] + $row2['io_price'];
                     $row2_tot_price = ($row2['ct_price'] + $row2['io_price']) * $row2['ct_qty'];
+                }
                 $sub_tot_qty += $row2['ct_qty'];
                 $sub_tot_price += $row2_tot_price;
 
                 $it_name = stripslashes($row2['it_name']);
-                $it_name = "$it_name ({$row2['ct_option']})";
+                $price_plus = '';
+                if($row2['io_price'] >= 0)
+                    $price_plus = '+';
+
+                $it_name = "$it_name ({$row2['ct_option']} ".$price_plus.display_price($row2['io_price']).")";
                 $ct_send_cost = ($row2['ct_send_cost'] ? '착불' : '선불');
 
                 $fontqty1 = $fontqty2 = "";
@@ -310,18 +317,35 @@ if (mysql_num_rows($result) == 0)
             ?>
             <tr>
                 <td><?php echo $it_name; ?></td>
-                <td class="td_num"><?php echo number_format($row2['ct_price']); ?></td>
+                <td class="td_num"><?php echo number_format($it_price); ?></td>
                 <td class="td_cntsmall"><?php echo $fontqty1; ?><?php echo number_format($row2['ct_qty']); ?><?php echo $fontqty2; ?></td>
                 <td class="td_num td_numsum"><?php echo number_format($row2_tot_price); ?></td>
                 <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
             </tr>
-            <?php $cnt++; } ?>
+            <?php
+                $cnt++;
+            }
+            ?>
+            <tr>
+                <td>배송비</td>
+                <td class="td_num"><?php echo number_format($row1['od_send_cost']); ?></td>
+                <td class="td_cntsmall"><?php echo $fontqty1; ?>1<?php echo $fontqty2; ?></td>
+                <td class="td_num td_numsum"><?php echo number_format($row1['od_send_cost']); ?></td>
+                <td class="td_sendcost_by"></td>
+            </tr>
+            <tr>
+                <td>추가 배송비</td>
+                <td class="td_num"><?php echo number_format($row1['od_send_cost2']); ?></td>
+                <td class="td_cntsmall"><?php echo $fontqty1; ?>1<?php echo $fontqty2; ?></td>
+                <td class="td_num td_numsum"><?php echo number_format($row1['od_send_cost2']); ?></td>
+                <td class="td_sendcost_by"></td>
+            </tr>
             </tbody>
             <tfoot>
             <tr>
                 <th scope="row" colspan="2">합계</th>
-                <td><?php echo number_format($sub_tot_qty); ?></td>
-                <td><?php echo number_format($sub_tot_price); ?></td>
+                <td><?php echo number_format($sub_tot_qty + 2); ?></td>
+                <td><?php echo number_format($sub_tot_price + $row1['od_send_cost'] + $row1['od_send_cost2']); ?></td>
                 <td></td>
             </tr>
             </tfoot>
