@@ -20,7 +20,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($is_admin)
             $list[$i]['name'] = $row[lo_ip];
         else
-            $list[$i]['name'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", "\\1.♡.\\3.\\4", $row['lo_ip']);
+            $list[$i]['name'] = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $row['lo_ip']);
     }
 
     $list[$i]['num'] = sprintf('%03d',$i+1);

@@ -132,6 +132,8 @@ function put_data(zip1, zip2, addr1, addr3, jibeon)
     if(of.<?php echo $frm_jibeon; ?> !== undefined)
         of.<?php echo $frm_jibeon; ?>.value = jibeon;
 
+    of.<?php echo $frm_addr2; ?>.focus();
+
     window.close();
 }
 
