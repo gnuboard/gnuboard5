@@ -147,7 +147,7 @@ $sql = " insert into `{$table_prefix}config`
                 cf_page_rows = '15',
                 cf_cert_limit = '2',
                 cf_stipulation = '해당 홈페이지에 맞는 회원가입약관을 입력합니다.',
-                cf_privacy = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.'
+                cf_privacy = '해당 홈페이지에 맞는 개인정보처리방침을 입력합니다.'
                 ";
 mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
