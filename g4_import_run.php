@@ -7,6 +7,8 @@ ini_set('memory_limit', '50M');
 $g5['title'] = '그누보드4 DB 데이터 이전';
 include_once(G5_PATH.'/_head.php');
 
+echo '<link rel="stylesheet" href="'.G5_URL.'/g4_import.css">';
+
 if(empty($_POST))
     alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 
@@ -47,6 +49,15 @@ function noRefresh()
 document.onkeydown = noRefresh ;
 </script>
 
+<style>
+#g4_import_run {}
+#g4_import_run ol {margin: 0;padding: 0 0 0 25px;border: 1px solid #E9E9E9;border-bottom: 0;background: #f5f8f9;list-style:none;zoom:1}
+#g4_import_run li {padding:7px 10px;border-bottom:1px solid #e9e9e9}
+#g4_import_run #run_msg {padding:30px 0;text-align:center}
+</style>
+
+<div id="g4_import_run">
+    <ol>
 <?php
 flush();
 
@@ -95,7 +106,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     sql_query(" INSERT INTO {$g5['member_table']} SET $sql_common ");
 }
 
-echo '<p>member table 복사</p>'.PHP_EOL;
+echo '<li>member table 복사</li>'.PHP_EOL;
 unset($columns);
 unset($fiels);
 
@@ -120,7 +131,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     sql_query(" INSERT INTO {$g5['point_table']} SET $sql_common ");
 }
-echo '<p>point table 복사</p>'.PHP_EOL;
+echo '<li>point table 복사</li>'.PHP_EOL;
 
 // login table 복사
 $sql = " select * from {$g4['login_table']} ";
@@ -146,7 +157,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     sql_query(" INSERT INTO {$g5['login_table']} SET $sql_common ");
 }
-echo '<p>login table 복사</p>'.PHP_EOL;
+echo '<li>login table 복사</li>'.PHP_EOL;
 
 // visit table 복사
 $sql = " select * from {$g4['visit_table']} ";
@@ -172,7 +183,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     sql_query(" INSERT INTO {$g5['visit_table']} SET $sql_common ");
 }
-echo '<p>visit table 복사</p>'.PHP_EOL;
+echo '<li>visit table 복사</li>'.PHP_EOL;
 
 // visit sum table 복사
 $sql = " select * from {$g4['visit_sum_table']} ";
@@ -198,7 +209,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 
     sql_query(" INSERT INTO {$g5['visit_sum_table']} SET $sql_common ");
 }
-echo '<p>visit sum table 복사</p>'.PHP_EOL;
+echo '<li>visit sum table 복사</li>'.PHP_EOL;
 
 // group table 복사
 $columns = array();
@@ -236,7 +247,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     sql_query(" INSERT INTO {$g5['group_table']} SET $sql_common ");
 }
 
-echo '<p>group table 복사</p>'.PHP_EOL;
+echo '<li>group table 복사</li>'.PHP_EOL;
 unset($columns);
 unset($fiels);
 
@@ -326,7 +337,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
             sql_query(" INSERT INTO $create_table SET $sql_common3 ");
         }
 
-        echo '<p>'.str_replace(G5_TABLE_PREFIX.'write_', '', $create_table).' 게시글 복사</p>';
+        echo '<li>'.str_replace(G5_TABLE_PREFIX.'write_', '', $create_table).' 게시글 복사</li>';
     }
 }
 
@@ -371,17 +382,21 @@ foreach($tables as $table) {
             continue;
     }
 
-    echo '<p>'.$table.' table 복사</p>'.PHP_EOL;
+    echo '<li>'.$table.' table 복사</li>'.PHP_EOL;
 }
 
 unset($columns);
 unset($fiels);
 
-echo '<p>&nbsp;</p>'.PHP_EOL;
-echo '<p><b>그누보드4 DB 데이터 이전 완료</b></p>'.PHP_EOL;
+echo '</ol>'.PHP_EOL;
+
+echo '<div id="run_msg">그누보드4 DB 데이터 이전 완료</div>'.PHP_EOL;
 
 // 실행완료 세션에 기록
 set_session('tables_copied', 'done');
+?>
+</div>
 
+<?php
 include_once(G5_PATH.'/_tail.php');
 ?>
