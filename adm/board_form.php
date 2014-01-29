@@ -826,8 +826,7 @@ $frm_submit .= '</div>';
                 <label for="chk_all_skin">전체적용</label>
             </td>
         </tr>
-        <tbody>
-            <tr>
+        <tr>
             <th scope="row"><label for="bo_mobile_skin">모바일<br>스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo get_mobile_skin_select('board', 'bo_mobile_skin', 'bo_mobile_skin', $board['bo_mobile_skin'], 'required'); ?>
