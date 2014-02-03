@@ -1066,7 +1066,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_new">새글 아이콘<strong class="sound_only">필수</strong></label></th>
             <td>
-                <?php echo help('글 입력후 new 이미지를 출력하는 시간') ?>
+                <?php echo help('글 입력후 new 이미지를 출력하는 시간. 0을 입력하시면 아이콘을 출력하지 않습니다.') ?>
                 <input type="text" name="bo_new" value="<?php echo $board['bo_new'] ?>" id="bo_new" required class="required numeric frm_input" size="4">
             </td>
             <td class="td_grpset">
@@ -1079,7 +1079,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_hot">인기글 아이콘<strong class="sound_only">필수</strong></label></th>
             <td>
-                <?php echo help('조회수가 설정값 이상이면 hot 이미지 출력') ?>
+                <?php echo help('조회수가 설정값 이상이면 hot 이미지 출력. 0을 입력하시면 아이콘을 출력하지 않습니다.') ?>
                 <input type="text" name="bo_hot" value="<?php echo $board['bo_hot'] ?>" id="bo_hot" required class="required numeric frm_input" size="4">
             </td>
             <td class="td_grpset">
