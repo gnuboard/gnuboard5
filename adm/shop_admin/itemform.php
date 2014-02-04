@@ -103,9 +103,9 @@ $pg_anchor ='<ul class="anchor">
 ';
 
 $frm_submit = '<div class="btn_confirm01 btn_confirm">
-    <a href="'.G5_SHOP_URL.'/item.php?it_id='.$it_id.'" class="btn_frmline">상품확인</a>
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./itemlist.php?'.$qstr.'">목록</a>
+    <a href="'.G5_SHOP_URL.'/item.php?it_id='.$it_id.'" class="btn_frmline">상품보기</a>
 </div>';
 ?>
 
