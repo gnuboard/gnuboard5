@@ -2257,6 +2257,9 @@ function https_url($dir, $https=true)
 // 게시판의 공지사항을 , 로 구분하여 업데이트 한다.
 function board_notice($bo_notice, $wr_id, $insert=false)
 {
+    if(strpos($bo_notice, strval($wr_id)) !== false)
+        return $bo_notice;
+
     $notice_array = explode(",", trim($bo_notice));
     $notice_array = array_merge(array($wr_id), $notice_array);
     $notice_array = array_unique($notice_array);
