@@ -27,6 +27,8 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
 
         <div style="text-align:center"><a href="<?php echo G5_SHOP_URL.'/item.php?it_id='.$it_id; ?>" target="_blank"><?php echo $it_mimg; ?></a></div>
 
+        <p style="<?php echo $cont_st; ?>"><?php echo $it_name; ?></p>
+
         <p style="<?php echo $cont_st; ?>"><strong><?php echo $subject; ?></strong></p>
 
         <p style="<?php echo $cont_st; ?>"><?php echo $content; ?></p>
