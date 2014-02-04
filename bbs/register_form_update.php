@@ -135,6 +135,8 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
                     @unlink($dest_path);
                 //=================================================================\
             }
+        } else {
+            $msg .= '회원아이콘을 '.number_format($config['cf_member_icon_size']).'바이트 이하로 업로드 해주십시오.';
         }
 
     } else {
