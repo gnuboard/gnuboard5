@@ -169,7 +169,7 @@ if($g5_install || !$result) {
                     cf_page_rows = '15',
                     cf_cert_limit = '2',
                     cf_stipulation = '해당 홈페이지에 맞는 회원가입약관을 입력합니다.',
-                    cf_privacy = '해당 홈페이지에 맞는 개인정보취급방침을 입력합니다.'
+                    cf_privacy = '해당 홈페이지에 맞는 개인정보처리방침을 입력합니다.'
                     ";
     mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
@@ -206,7 +206,7 @@ if($g5_shop_install) {
 
     // 내용관리 생성
     @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
-    @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 취급방침', co_content= '<p align=center><b>개인정보 취급방침에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 처리방침', co_content= '<p align=center><b>개인정보 처리방침에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
     @mysql_query(" insert into `{$g5_shop_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
 
     // FAQ Master
