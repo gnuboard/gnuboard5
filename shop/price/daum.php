@@ -105,7 +105,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 배송비계산
     $delivery = get_item_sendcost2($row['it_id'], $row['it_price'], 1);
     if($delivery) {
-        $deliv  = $delivery;
+        $deliv  = 1;
         $deliv2 = $delivery.'원';
     } else {
         $deliv  = 0;
