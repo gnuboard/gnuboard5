@@ -104,9 +104,10 @@ $pg_anchor ='<ul class="anchor">
 
 $frm_submit = '<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./itemlist.php?'.$qstr.'">목록</a>
-    <a href="'.G5_SHOP_URL.'/item.php?it_id='.$it_id.'" class="btn_frmline">상품보기</a>
-</div>';
+    <a href="./itemlist.php?'.$qstr.'">목록</a>';
+if($it_id)
+    $frm_submit .= PHP_EOL.'<a href="'.G5_SHOP_URL.'/item.php?it_id='.$it_id.'" class="btn_frmline">상품보기</a>';
+$frm_submit .= '</div>';
 ?>
 
 <form name="fitemform" action="./itemformupdate.php" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" onsubmit="return fitemformcheck(this)">
