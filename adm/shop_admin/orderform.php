@@ -15,8 +15,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 //------------------------------------------------------------------------------
 $keep_term = $default['de_cart_keep_term'];
 if (!$keep_term) $keep_term = 15; // 기본값 15일
-$beforetime = date('Y-m-d H:i:s', ( G5_SERVER_TIME - (86400 * ($keep_term - 1)) ) );
-$sql = " delete from {$g5['g5_shop_cart_table']} where ct_status = '쇼핑' and ct_time <= '$beforetime' ";
+$beforetime = date('Y-m-d', ( G5_SERVER_TIME - (86400 * $keep_term) ) );
+$sql = " delete from {$g5['g5_shop_cart_table']} where ct_status = '쇼핑' and substringct_time < '$beforetime' ";
 sql_query($sql);
 //------------------------------------------------------------------------------
 

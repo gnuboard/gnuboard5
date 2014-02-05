@@ -340,8 +340,8 @@ function get_cart_count($cart_id)
 
     $sql = " select count(ct_id) as cnt from {$g5['g5_shop_cart_table']} where od_id = '$cart_id' ";
     if($default['de_cart_keep_term']) {
-        $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - (($default['de_cart_keep_term'] - 1) * 86400));
-        $sql .= " and ct_time > '$ctime' ";
+        $ctime = date('Y-m-d', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+        $sql .= " and substring(ct_time, 1, 10) >= '$ctime' ";
     }
     $row = sql_fetch($sql);
     $cnt = (int)$row['cnt'];
@@ -1317,11 +1317,11 @@ function set_cart_id($direct)
             $tmp_cart_id = get_cookie('ck_guest_cart_id');
             if($tmp_cart_id) {
                 set_session('ss_cart_id', $tmp_cart_id);
-                set_cookie('ck_guest_cart_id', $tmp_cart_id, (($default['de_cart_keep_term'] - 1) * 86400));
+                //set_cookie('ck_guest_cart_id', $tmp_cart_id, ($default['de_cart_keep_term'] * 86400));
             } else {
                 $tmp_cart_id = get_uniqid();
                 set_session('ss_cart_id', $tmp_cart_id);
-                set_cookie('ck_guest_cart_id', $tmp_cart_id, (($default['de_cart_keep_term'] - 1) * 86400));
+                set_cookie('ck_guest_cart_id', $tmp_cart_id, ($default['de_cart_keep_term'] * 86400));
             }
         } else {
             $tmp_cart_id = get_session('ss_cart_id');
@@ -1339,8 +1339,8 @@ function set_cart_id($direct)
                           and ct_direct = '0'
                           and ct_status = '쇼핑' ";
             if($default['de_cart_keep_term']) {
-                $ctime = date('Y-m-d H:i:s', G5_SERVER_TIME - (($default['de_cart_keep_term'] - 1) * 86400));
-                $sql .= " and ct_time > '$ctime' ";
+                $ctime = date('Y-m-d', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
+                $sql .= " and substring(ct_time, 1, 10) >= '$ctime' ";
             }
 
             sql_query($sql);
