@@ -21,7 +21,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
             <a href="<?php echo G5_URL ?>" target="_blank"><?php echo $config['cf_title'] ?></a>
         </span>
         <p style="margin:20px 0 0;padding:30px 30px 50px;min-height:200px;height:auto !important;height:200px;border-bottom:1px solid #eee">
+            <?php if($w == 'u') { ?>
             <b><?php echo $mb_name ?></b> 님의 E-mail 주소가 변경되었습니다.<br><br>
+            <?php } ?>
 
             아래의 주소를 클릭하시면 인증이 완료됩니다.<br>
             <a href="<?php echo $certify_href ?>" target="_blank"><b><?php echo $certify_href ?></b></a><br><br>
