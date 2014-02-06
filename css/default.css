@@ -25,28 +25,30 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 /* 상단 레이아웃 */
 #hd {z-index:10;position:relative;min-width:970px;background:#fff}
 #hd_h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#hd_wrapper {position:relative;margin:0 auto;width:970px}
+#hd_wrapper {position:relative;margin:0 auto;padding:26px 0;width:970px;zoom:1}
+#hd_wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 
-#logo {padding:26px 0}
+#logo {float:left;padding:5px 0 0}
 
 /* 전체 검색 */
-#hd_sch {position:absolute;top:22px;left:170px;margin:0;padding:0;border:1px solid #c3c6ca}
+#hd_sch {float:left;margin:0 0 0 20px;padding:0;border:1px solid #c3c6ca}
 #hd_sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #hd_sch #sch_stx {padding-left:5px;width:110px;height:24px;border:0;background:#fff;line-height:1.9em !important;line-height:1.6em}
 #hd_sch #sch_submit {padding:0 5px;height:26px;border:0;background:#e2e6eb;color:#333;cursor:pointer}
 
-#tnb {position:absolute;top:18px;right:0;margin:0;padding:0;list-style:none;zoom:1}
-#tnb:after {display:block;visibility:hidden;clear:both;content:""}
-#tnb li {float:left;margin:0 0 0 10px}
-#tnb a {display:inline-block;padding:5px 10px;color:#333;letter-spacing:-0.1em;line-height:2em}
-#tnb a:focus, #tnb a:hover, #tnb a:active {text-decoration:none}
-#tnb img {margin-right:3px}
-
 /* 텍스트 크기 조절 */
-#text_size {position:absolute;top:21px;left:340px;margin:0 0 10px;letter-spacing:-3px}
-#text_size button {margin:0;padding:2px 2px 1px;border:1px solid #c3c6ca;background:transparent;vertical-align:middle;cursor:pointer}
+#text_size {float:left;margin:0 0 0 10px;letter-spacing:-3px}
+#text_size button {margin:0;padding:1px 2px;border:1px solid #c3c6ca;background:transparent;vertical-align:middle;cursor:pointer}
 .ts_up {font-size:1.167em !important}
 .ts_up2 {font-size:1.3em !important}
+
+/* 상단 회원가입 등 링크 */
+#tnb {float:right;margin:0;padding:0;list-style:none;zoom:1}
+#tnb:after {display:block;visibility:hidden;clear:both;content:""}
+#tnb li {float:left;margin:0 0 0 10px}
+#tnb a {display:inline-block;padding:0 10px;height:28px;color:#333;letter-spacing:-0.1em;line-height:2.4em}
+#tnb a:focus, #tnb a:hover, #tnb a:active {text-decoration:none}
+#tnb img {margin-right:3px}
 
 /* gnb js off */
 #gnb {position:relative;margin:-1px 0 0;border-top:1px dotted #dde4e9;border-bottom:1px solid #dde4e9;background:#ecf0f7}
