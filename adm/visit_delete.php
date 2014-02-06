@@ -15,50 +15,46 @@ $min_year = (int)substr($row['min_date'], 0, 4);
 $now_year = (int)substr(G5_TIME_YMD, 0, 4);
 ?>
 
-<div class="tbl_head01 tbl_wrap">
-    <p>
-        접속자 로그를 삭제할 년도와 방법을 선택해 주십시오.
-    </p>
-    <form name="fvisitdelete" method="post" action="./visit_delete_update.php" onsubmit="return form_submit(this);">
-        <div>
-            <span>기간선택</span>
-            <label for="year">년도선택</label>
-            <select name="year" id="year">
-                <option value="">년도선택</option>
-                <?php
-                for($year=$min_year; $year<=$now_year; $year++) {
-                ?>
-                <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
-                <?php
-                }
-                ?>
-            </select> 년
-            <label for="year">월선택</label>
-            <select name="month" id="month">
-                <option value="">월선택</option>
-                <?php
-                for($i=1; $i<=12; $i++) {
-                ?>
-                <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
-                <?php
-                }
-                ?>
-            </select> 월
-        </div>
-        <div>
-            <label for="method">삭제방법선택</label>
-            <select name="method" id="method">
-                <option value="before">선택년월 이전 자료삭제</option>
-                <option value="specific">선택년월의 자료삭제</option>
-            </select>
-        </div>
-        <div>
-            <label for="pass">관리자 비밀번호</label>
-            <input type="password" name="pass" id="pass" class="frm_input required">
-        </div>
-        <input type="submit" value="확인">
-    </form>
+<div class="local_ov01 local_ov">
+    접속자 로그를 삭제할 년도와 방법을 선택해주십시오.
 </div>
+
+<form name="fvisitdelete" class="local_sch02 local_sch" method="post" action="./visit_delete_update.php" onsubmit="return form_submit(this);">
+    <div>
+        <label for="year" class="sound_only">년도선택</label>
+        <select name="year" id="year">
+            <option value="">년도선택</option>
+            <?php
+            for($year=$min_year; $year<=$now_year; $year++) {
+            ?>
+            <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
+            <?php
+            }
+            ?>
+        </select> 년
+        <label for="year" class="sound_only">월선택</label>
+        <select name="month" id="month">
+            <option value="">월선택</option>
+            <?php
+            for($i=1; $i<=12; $i++) {
+            ?>
+            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+            <?php
+            }
+            ?>
+        </select> 월
+        <label for="method" class="sound_only">삭제방법선택</label>
+        <select name="method" id="method">
+            <option value="before">선택년월 이전 자료삭제</option>
+            <option value="specific">선택년월의 자료삭제</option>
+        </select>
+    </div>
+    <div class="sch_last">
+        <label for="pass">관리자 비밀번호</label>
+        <input type="password" name="pass" id="pass" class="frm_input required">
+        <input type="submit" value="확인" class="btn_submit">
+    </div>
+</form>
 
 <script>
 function form_submit(f)
