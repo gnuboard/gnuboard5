@@ -7,7 +7,7 @@
 </head>
 
 <?php
-$cont_st = 'margin:0 auto 20px;width:94%;border:0;border-collapse:collapse';
+$cont_st = 'margin:0 auto 20px;width:94%;border:0';
 $caption_st = 'padding:0 0 5px;font-weight:bold';
 $th_st = 'padding:5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f5f6fa;text-align:left';
 $td_st = 'padding:5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9';
@@ -25,11 +25,15 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
 
         <p style="<?php echo $cont_st; ?>"><b><?php echo $from_name; ?></b> 님께서 추천하신 상품입니다.</p>
 
-        <div style="text-align:center"><a href="<?php echo G5_SHOP_URL.'/item.php?it_id='.$it_id; ?>" target="_blank"><?php echo $it_mimg; ?></a></div>
+        <div style="margin:0 0 10px;text-align:center">
+            <a href="<?php echo G5_SHOP_URL.'/item.php?it_id='.$it_id; ?>" target="_blank" style="display:inline-block;margin:0 0 10px"><?php echo $it_mimg; ?></a><br>
+            <?php echo $it_name; ?>
+        </div>
 
-        <p style="<?php echo $cont_st; ?>"><?php echo $it_name; ?></p>
-
-        <p style="<?php echo $cont_st; ?>"><strong><?php echo $subject; ?></strong></p>
+        <p style="<?php echo $cont_st; ?>">
+            <br>
+            <strong><?php echo $subject; ?></strong>
+        </p>
 
         <p style="<?php echo $cont_st; ?>"><?php echo $content; ?></p>
 
