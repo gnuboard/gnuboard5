@@ -111,6 +111,8 @@
 /* 아이디/비밀번호 찾기 */
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
 #find_info #info_fs {margin:0 20px 20px;padding:0;background:#fff}
+#find_info #info_fs .frm_input {width:70%}
+#find_info p {margin:0 0 10px;line-height:1.8em}
 #find_info #captcha {margin:0 20px}
 
 /* 로그인 */
