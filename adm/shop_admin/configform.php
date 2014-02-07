@@ -555,7 +555,10 @@ if(!isset($default['de_shop_layout_use'])) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_kcp_mid">KCP SITE CODE</label></th>
+            <th scope="row">
+                <label for="de_kcp_mid">KCP SITE CODE</label><br>
+                <a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank" id="scf_kcpreg">KCP서비스신청하기</a>
+            </th>
             <td>
                 <?php echo help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SRZ89"); ?>
                 <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
