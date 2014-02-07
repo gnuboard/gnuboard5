@@ -582,7 +582,7 @@ $(function(){
             <th scope="row">상품선택옵션</th>
             <td colspan="2">
                 <div class="sit_option tbl_frm01">
-                    <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰'); ?>
+                    <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰<br><strong>옵션명과 옵션항목에 따옴표(\', ")는 입력할 수 없습니다.</strong>'); ?>
                     <table>
                     <caption>상품선택옵션 입력</caption>
                     <colgroup>
@@ -740,7 +740,7 @@ $(function(){
             <th scope="row">상품추가옵션</th>
             <td colspan="2">
                 <div id="sit_supply_frm" class="sit_option tbl_frm01">
-                    <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰'); ?>
+                    <?php echo help('옵션항목은 콤마(,) 로 구분하여 여러개를 입력할 수 있습니다. 예시) 라지,미디움,스몰<br><strong>옵션명과 옵션항목에 따옴표(\', ")는 입력할 수 없습니다.</strong>'); ?>
                     <table>
                     <caption>상품추가옵션 입력</caption>
                     <colgroup>
@@ -1013,6 +1013,13 @@ $(function(){
     $(function() {
         <?php
         switch($it['it_sc_type']) {
+            case 1:
+                echo '$("#sc_con_method").hide();'.PHP_EOL;
+                echo '$("#sc_con_basic").hide();'.PHP_EOL;
+                echo '$("#sc_con_minimum").hide();'.PHP_EOL;
+                echo '$("#sc_con_qty").hide();'.PHP_EOL;
+                echo '$("#sc_grp").attr("rowspan","1");'.PHP_EOL;
+                break;
             case 2:
                 echo '$("#sc_con_method").show();'.PHP_EOL;
                 echo '$("#sc_con_basic").show();'.PHP_EOL;
@@ -1035,11 +1042,11 @@ $(function(){
                 echo '$("#sc_grp").attr("rowspan","4");'.PHP_EOL;
                 break;
             default:
-                echo '$("#sc_con_method").hide();'.PHP_EOL;
+                echo '$("#sc_con_method").show();'.PHP_EOL;
                 echo '$("#sc_con_basic").hide();'.PHP_EOL;
                 echo '$("#sc_con_minimum").hide();'.PHP_EOL;
                 echo '$("#sc_con_qty").hide();'.PHP_EOL;
-                echo '$("#sc_grp").attr("rowspan","1");'.PHP_EOL;
+                echo '$("#sc_grp").attr("rowspan","2");'.PHP_EOL;
                 break;
         }
         ?>
@@ -1047,6 +1054,13 @@ $(function(){
             var type = $(this).val();
 
             switch(type) {
+                case "1":
+                    $("#sc_con_method").hide();
+                    $("#sc_con_basic").hide();
+                    $("#sc_con_minimum").hide();
+                    $("#sc_con_qty").hide();
+                    $("#sc_grp").attr("rowspan","1");
+                    break;
                 case "2":
                     $("#sc_con_method").show();
                     $("#sc_con_basic").show();
@@ -1069,11 +1083,11 @@ $(function(){
                     $("#sc_grp").attr("rowspan","4");
                     break;
                 default:
-                    $("#sc_con_method").hide();
+                    $("#sc_con_method").show();
                     $("#sc_con_basic").hide();
                     $("#sc_con_minimum").hide();
                     $("#sc_con_qty").hide();
-                    $("#sc_grp").attr("rowspan","1");
+                    $("#sc_grp").attr("rowspan","2");
                     break;
             }
         });

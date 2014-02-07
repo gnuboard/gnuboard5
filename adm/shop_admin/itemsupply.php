@@ -84,12 +84,12 @@ if($ps_run) {
         } // for
     } else {
         for($i=0; $i<$subject_count; $i++) {
-            $spl_subject = trim($_POST['subject'][$i]);
-            $spl_val = explode(',', trim($_POST['supply'][$i]));
+            $spl_subject = preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['subject'][$i])));
+            $spl_val = explode(',', preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['supply'][$i]))));
             $spl_count = count($spl_val);
 
             for($j=0; $j<$spl_count; $j++) {
-                $spl = trim($spl_val[$j]);
+                $spl = strip_tags(trim($spl_val[$j]));
                 if($spl_subject && $spl) {
                     $spl_id = $spl_subject.chr(30).$spl;
                     $spl_price = 0;

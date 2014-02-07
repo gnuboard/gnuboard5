@@ -145,14 +145,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <?php
         $ct_send_cost_label = '배송비결제';
 
-        if($default['de_send_cost_case'] == '무료')
-            $sc_method = '무료배송';
-        else
-            $sc_method = '주문시 결제';
-
         if($it['it_sc_type'] == 1)
             $sc_method = '무료배송';
-        else if($it['it_sc_type'] > 1) {
+        else {
             if($it['it_sc_method'] == 1)
                 $sc_method = '수령후 지불';
             else if($it['it_sc_method'] == 2) {
