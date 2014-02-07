@@ -40,8 +40,6 @@ if ($sort != "")
 else
     $order_by = 'b.it_order, b.it_id desc';
 
-$error = "<img src='".G5_SHOP_URL."/img/no_item.gif' border=0>";
-
 if ($skin)
     $ev['ev_skin'] = $skin;
 
@@ -82,14 +80,7 @@ if (file_exists($list_file))
 }
 else
 {
-    $i = 0;
-    $error = "<p>{$ev['ev_skin']} 파일을 찾을 수 없습니다.<p>관리자에게 알려주시면 감사하겠습니다.";
-}
-
-if ($i==0)
-{
-    echo "<br>";
-    echo "<div align=center>$error</div>";
+    echo '<div align="center">'.$ev['ev_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
 }
 ?>
 

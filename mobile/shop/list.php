@@ -77,13 +77,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     }
     else
     {
-        $i = 0;
-        $error = '<p class="sct_nofile">'.$ca['ca_mobile_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
-    }
-
-    if ($i==0)
-    {
-        echo '<div>'.$error.'</div>';
+        echo '<div class="sct_nofile">'.$ca['ca_mobile_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
     }
     ?>
 

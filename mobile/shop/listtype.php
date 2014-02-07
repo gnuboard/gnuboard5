@@ -28,8 +28,6 @@ if ($sort != '')
 else
     $order_by = 'it_order, it_id desc';
 
-$error = '<img src="'.G5_SHOP_URL.'/img/no_item.gif">';
-
 if (!$skin)
     $skin = 'list.10.skin.php';
 
@@ -62,14 +60,7 @@ if (file_exists($list_file)) {
 }
 else
 {
-    $i = 0;
-    $error = "<p>$skin 파일을 찾을 수 없습니다.<p>관리자에게 알려주시면 감사하겠습니다.";
-}
-
-if ($i==0)
-{
-    echo "<br>";
-    echo "<div align=center>$error</div>";
+    echo '<div align="center">'.$skin.' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
 }
 ?>
 
