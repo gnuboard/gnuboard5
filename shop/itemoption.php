@@ -24,7 +24,17 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     if(!strlen($val[$key]))
         continue;
 
-    $opt[] = $val[$key];
+    $continue = false;
+    foreach($opt as $v) {
+        if(strval($v) === strval($val[$key])) {
+            $continue = true;
+            break;
+        }
+    }
+    if($continue)
+        continue;
+
+    $opt[] = strval($val[$key]);
 
     if($key + 1 < $sel_count) {
         $str .= PHP_EOL.'<option value="'.$val[$key].'">'.$val[$key].'</option>';
