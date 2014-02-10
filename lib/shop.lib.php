@@ -971,7 +971,7 @@ function get_item_options($it_id, $subject)
                 $select .= '<option value="">선택</option>'.PHP_EOL;
                 for($k=0; $k<$opt_count; $k++) {
                     $opt_val = $opt[$k];
-                    if($opt_val) {
+                    if(strlen($opt_val)) {
                         $select .= '<option value="'.$opt_val.'">'.$opt_val.'</option>'.PHP_EOL;
                     }
                 }
@@ -1036,7 +1036,7 @@ function get_item_supply($it_id, $subject)
         if($opt_id[0] && !array_key_exists($opt_id[0], $options))
             $options[$opt_id[0]] = array();
 
-        if($opt_id[1]) {
+        if(strlen($opt_id[1])) {
             if($row['io_price'] >= 0)
                 $price = '&nbsp;&nbsp;+ '.number_format($row['io_price']).'원';
             else

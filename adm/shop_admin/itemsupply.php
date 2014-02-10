@@ -90,7 +90,7 @@ if($ps_run) {
 
             for($j=0; $j<$spl_count; $j++) {
                 $spl = strip_tags(trim($spl_val[$j]));
-                if($spl_subject && $spl) {
+                if($spl_subject && strlen($spl)) {
                     $spl_id = $spl_subject.chr(30).$spl;
                     $spl_price = 0;
                     $spl_stock_qty = 0;

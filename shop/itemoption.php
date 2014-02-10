@@ -21,10 +21,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     $val = explode(chr(30), $row['io_id']);
     $key = $idx + 1;
 
-    if(!$val[$key])
-        continue;
-
-    if(in_array($val[$key], $opt))
+    if(!strlen($val[$key]))
         continue;
 
     $opt[] = $val[$key];
