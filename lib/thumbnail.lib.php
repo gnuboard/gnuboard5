@@ -100,6 +100,8 @@ function get_view_thumbnail($contents, $thumb_width=0)
         $width = $m[1];
         preg_match("/height:\s*(\d+)px/", $style, $m);
         $height = $m[1];
+        preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $img, $m);
+        $alt = get_text($m[1]);
 
         // 이미지 path 구함
         $p = parse_url($src);
@@ -165,8 +167,6 @@ function get_view_thumbnail($contents, $thumb_width=0)
             else
                 $thumb_file = $filename;
 
-            preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $img_tag, $malt);
-            $alt = get_text($malt[1]);
             if ($width) {
                 $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'" width="'.$width.'" height="'.$height.'"/>';
             } else {
