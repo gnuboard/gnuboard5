@@ -47,7 +47,7 @@ if(openwin != null) {
         $st_count1 = $st_count2 = 0;
         $custom_cancel = false;
 
-        $sql = " select it_id, it_name
+        $sql = " select it_id, it_name, ct_send_cost
                     from {$g5['g5_shop_cart_table']}
                     where od_id = '$od_id'
                     group by it_id
@@ -59,7 +59,7 @@ if(openwin != null) {
             <thead>
             <tr>
                 <th scope="col" rowspan="2">이미지</th>
-                <th scope="col" colspan="6" id="th_itname">상품명</th>
+                <th scope="col" colspan="7" id="th_itname">상품명</th>
             </tr>
             <tr>
                 <th scope="col" id="th_itopt">옵션명</th>
@@ -67,6 +67,7 @@ if(openwin != null) {
                 <th scope="col" id="th_itprice">판매가</th>
                 <th scope="col" id="th_itsum">소계</th>
                 <th scope="col" id="th_itpt">포인트</th>
+                <th scope="col" id="th_itpt">배송비</th>
                 <th scope="col" id="th_itst">상태</th>
             </tr>
             </thead>
@@ -75,13 +76,18 @@ if(openwin != null) {
             for($i=0; $row=sql_fetch_array($result); $i++) {
                 $image = get_it_image($row['it_id'], 70, 70);
 
-                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
+                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price, ct_send_cost
                             from {$g5['g5_shop_cart_table']}
                             where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
                             order by io_type asc, ct_id asc ";
                 $res = sql_query($sql);
                 $rowspan = mysql_num_rows($res) + 1;
+
+                // 배송비
+                $ct_send_cost = '선불';
+                if($row['ct_send_cost'])
+                    $ct_send_cost = '착불';
 
                 for($k=0; $opt=sql_fetch_array($res); $k++) {
                     if($opt['io_type'])
@@ -96,7 +102,7 @@ if(openwin != null) {
             ?>
             <tr>
                 <td rowspan="<?php echo $rowspan; ?>" class="td_imgsmall"><?php echo $image; ?></td>
-                <td headers="th_itname" colspan="6"><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $row['it_name']; ?></a></td>
+                <td headers="th_itname" colspan="7"><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $row['it_name']; ?></a></td>
             </tr>
             <?php } ?>
             <tr>
@@ -105,6 +111,7 @@ if(openwin != null) {
                 <td headers="th_itprice" class="td_numbig"><?php echo number_format($opt_price); ?></td>
                 <td headers="th_itsum" class="td_numbig"><?php echo number_format($sell_price); ?></td>
                 <td headers="th_itpt" class="td_num"><?php echo number_format($point); ?></td>
+                <td headers="th_itpt" class="td_num"><?php echo $ct_send_cost; ?></td>
                 <td headers="th_itst" class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
             </tr>
             <?php

@@ -178,6 +178,7 @@ function get_intall_file()
             <th scope="col">쿠폰</th>
             <th scope="col">소계</th>
             <th scope="col">포인트</th>
+            <th scope="col">배송비</th>
         </tr>
         </thead>
         <tbody>
@@ -302,6 +303,11 @@ function get_intall_file()
                     $it_cp_count++;
                 }
             }
+
+            // 배송비
+            $ct_send_cost = '선불';
+            if($row['ct_send_cost'])
+                $ct_send_cost = '착불';
         ?>
 
         <tr>
@@ -322,6 +328,7 @@ function get_intall_file()
             <td class="td_mngsmall"><?php echo $cp_button; ?></td>
             <td class="td_numbig"><span class="total_price"><?php echo number_format($sell_price); ?></span></td>
             <td class="td_numbig"><?php echo number_format($point); ?></td>
+            <td><?php echo $ct_send_cost; ?></td>
         </tr>
 
         <?php

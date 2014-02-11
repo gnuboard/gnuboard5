@@ -34,7 +34,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         $st_count1 = $st_count2 = 0;
         $custom_cancel = false;
 
-        $sql = " select it_id, it_name, cp_price
+        $sql = " select it_id, it_name, cp_price, ct_send_cost
                     from {$g5['g5_shop_cart_table']}
                     where od_id = '$od_id'
                     group by it_id
@@ -55,6 +55,11 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                               and it_id = '{$row['it_id']}'
                             order by io_type asc, ct_id asc ";
                 $res = sql_query($sql);
+
+                // 배송비
+                $ct_send_cost = '선불';
+                if($row['ct_send_cost'])
+                    $ct_send_cost = '착불';
             ?>
             <li class="sod_li">
                 <div class="li_name">
@@ -74,8 +79,9 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                 <div class="li_prqty">
                     <span class="prqty_price"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
                     <span class="prqty_qty"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
+                    <span class="prqty_qty"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
+                    <span class="prqty_qty"><span>상태 </span><?php echo $opt['ct_status']; ?></span>
                 </div>
-                <?php // echo $opt['ct_status']; ?>
                 <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
                     <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="total_img"><?php echo $image; ?></a>
                     <span class="total_price total_span"><span>주문금액 </span><?php echo number_format($sell_price); ?></span>

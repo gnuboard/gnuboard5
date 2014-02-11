@@ -166,6 +166,11 @@ ob_start();
                     $it_cp_count++;
                 }
             }
+
+            // 배송비
+            $ct_send_cost = '선불';
+            if($ct_send_cost)
+                $ct_send_cost = '착불';
         ?>
 
         <li class="sod_li">
@@ -181,6 +186,7 @@ ob_start();
             <div class="li_prqty">
                 <span class="prqty_price"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
                 <span class="prqty_qty"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
+                <span class="prqty_qty"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
             </div>
             <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
                 <span class="total_img"><?php echo $image; ?></span>

@@ -36,6 +36,7 @@ include_once('./_head.php');
             <th scope="col">판매가</th>
             <th scope="col">소계</th>
             <th scope="col">포인트</th>
+            <th scope="col">배송비</th>
             <th scope="col">
                 <label for="ct_all" class="sound_only">상품 전체</label>
                 <input type="checkbox" name="ct_all" value="1" id="ct_all" checked="checked">
@@ -97,6 +98,11 @@ include_once('./_head.php');
                 $it_name .= '<div class="sod_opt">'.$it_options.'</div>';
             }
 
+            // 배송비
+            $ct_send_cost = '선불';
+            if($row['ct_send_cost'])
+                $ct_send_cost = '착불';
+
             $point      = $sum['point'];
             $sell_price = $sum['price'];
         ?>
@@ -112,6 +118,7 @@ include_once('./_head.php');
             <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
             <td class="td_numbig"><span id="sell_price_<?php echo $i; ?>"><?php echo number_format($sell_price); ?></span></td>
             <td class="td_numbig"><?php echo number_format($point); ?></td>
+            <td><?php echo $ct_send_cost; ?></td>
             <td class="td_chk">
                 <label for="ct_chk_<?php echo $i; ?>" class="sound_only">상품</label>
                 <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>" checked="checked">
@@ -124,7 +131,7 @@ include_once('./_head.php');
         } // for 끝
 
         if ($i == 0) {
-            echo '<tr><td colspan="7" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
+            echo '<tr><td colspan="8" class="empty_table">장바구니에 담긴 상품이 없습니다.</td></tr>';
         } else {
             // 배송비 계산
             $send_cost = get_sendcost($s_cart_id, 0);
