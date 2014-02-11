@@ -120,7 +120,7 @@ if(openwin != null) {
                 <td headers="th_itprice" class="td_numbig"><?php echo number_format($opt_price); ?></td>
                 <td headers="th_itsum" class="td_numbig"><?php echo number_format($sell_price); ?></td>
                 <td headers="th_itpt" class="td_num"><?php echo number_format($point); ?></td>
-                <td headers="th_itpt" class="td_num"><?php echo $ct_send_cost; ?></td>
+                <td headers="th_itpt" class="td_dvr"><?php echo $ct_send_cost; ?></td>
                 <td headers="th_itst" class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
             </tr>
             <?php

@@ -127,7 +127,7 @@ include_once('./_head.php');
             <td class="td_numbig"><?php echo number_format($row['ct_price']); ?></td>
             <td class="td_numbig"><span id="sell_price_<?php echo $i; ?>"><?php echo number_format($sell_price); ?></span></td>
             <td class="td_numbig"><?php echo number_format($point); ?></td>
-            <td><?php echo $ct_send_cost; ?></td>
+            <td class="td_dvr"><?php echo $ct_send_cost; ?></td>
             <td class="td_chk">
                 <label for="ct_chk_<?php echo $i; ?>" class="sound_only">상품</label>
                 <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>" checked="checked">

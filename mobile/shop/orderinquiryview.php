@@ -88,8 +88,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                 <div class="li_prqty">
                     <span class="prqty_price"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
                     <span class="prqty_qty"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
-                    <span class="prqty_qty"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-                    <span class="prqty_qty"><span>상태 </span><?php echo $opt['ct_status']; ?></span>
+                    <span class="prqty_sc"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
+                    <span class="prqty_stat"><span>상태 </span><?php echo $opt['ct_status']; ?></span>
                 </div>
                 <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
                     <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="total_img"><?php echo $image; ?></a>
