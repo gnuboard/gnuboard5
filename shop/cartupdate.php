@@ -218,8 +218,10 @@ else // 장바구니에 담기
             }
 
             // 배송비결제
-            if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
-                $ct_send_cost = 1;
+            if($it['it_sc_type'] == 1)
+                $ct_send_cost = 2; // 무료
+            else if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
+                $ct_send_cost = 1; // 착불
 
             $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '".addslashes($it['it_name'])."', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G5_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select' )";
             $comma = ' , ';

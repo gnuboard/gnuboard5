@@ -66,7 +66,19 @@ if ($csv == 'csv')
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         $row = array_map('iconv_euckr', $row);
-        $ct_send_cost = iconv_euckr($row['ct_send_cost'] ? '착불' : '선불');
+        switch($row['ct_send_cost'])
+        {
+            case 1:
+                $ct_send_cost = '착불';
+                break;
+            case 2:
+                $ct_send_cost = '무료';
+                break;
+            default:
+                $ct_send_cost = '선불';
+                break;
+        }
+        $ct_send_cost = iconv_euckr($ct_send_cost);
 
         echo '"'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'"'.',';
         echo '"'.print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3']).'"'.',';
@@ -134,7 +146,19 @@ if ($csv == 'xls')
     }
 
     for($i=1; $row=sql_fetch_array($result); $i++) {
-        $ct_send_cost = iconv_euckr(($row['ct_send_cost'] ? '착불' : '선불'));
+        switch($row['ct_send_cost'])
+        {
+            case 1:
+                $ct_send_cost = '착불';
+                break;
+            case 2:
+                $ct_send_cost = '무료';
+                break;
+            default:
+                $ct_send_cost = '선불';
+                break;
+        }
+        $ct_send_cost = iconv_euckr($ct_send_cost);
         $row = array_map('iconv_euckr', $row);
 
         $worksheet->write($i, 0, $row['od_b_zip1'].'-'.$row['od_b_zip2']);
@@ -305,7 +329,18 @@ if (mysql_num_rows($result) == 0)
                     $price_plus = '+';
 
                 $it_name = "$it_name ({$row2['ct_option']} ".$price_plus.display_price($row2['io_price']).")";
-                $ct_send_cost = ($row2['ct_send_cost'] ? '착불' : '선불');
+                switch($row2['ct_send_cost'])
+                {
+                    case 1:
+                        $ct_send_cost = '착불';
+                        break;
+                    case 2:
+                        $ct_send_cost = '무료';
+                        break;
+                    default:
+                        $ct_send_cost = '선불';
+                        break;
+                }
 
                 $fontqty1 = $fontqty2 = "";
                 if ($row2['ct_qty'] >= 2)

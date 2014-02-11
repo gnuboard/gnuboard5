@@ -57,8 +57,10 @@ $tot_prc = $it['it_price'] + $opt['io_price'];
 
 // 배송비결제
 $ct_send_cost = 0;
-if($it['it_sc_method'] == 1)
-    $ct_send_cost = 1;
+if($it['it_sc_type'] == 1)
+    $ct_send_cost = 2; // 무료
+else if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
+    $ct_send_cost = 1; // 착불
 
 $_POST['it_id'][0] = $it['it_id'];
 $_POST['io_id'][$it['it_id']][0] = $opt['io_id'];

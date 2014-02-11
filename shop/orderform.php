@@ -305,9 +305,18 @@ function get_intall_file()
             }
 
             // 배송비
-            $ct_send_cost = '선불';
-            if($row['ct_send_cost'])
-                $ct_send_cost = '착불';
+            switch($row['ct_send_cost'])
+            {
+                case 1:
+                    $ct_send_cost = '착불';
+                    break;
+                case 2:
+                    $ct_send_cost = '무료';
+                    break;
+                default:
+                    $ct_send_cost = '선불';
+                    break;
+            }
         ?>
 
         <tr>

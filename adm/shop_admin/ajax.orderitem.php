@@ -16,7 +16,8 @@ if(!$od['od_id'])
 $sql = " select it_id,
                 it_name,
                 cp_price,
-                ct_notax
+                ct_notax,
+                ct_send_cost
            from {$g5['g5_shop_cart_table']}
           where od_id = '$od_id'
           group by it_id
@@ -67,6 +68,20 @@ $result = sql_query($sql);
                 // 소계
                 $ct_price['stotal'] = $opt_price * $opt['ct_qty'];
                 $ct_point['stotal'] = $opt['ct_point'] * $opt['ct_qty'];
+
+                // 배송비
+                switch($opt['ct_send_cost'])
+                {
+                    case 1:
+                        $ct_send_cost = '착불';
+                        break;
+                    case 2:
+                        $ct_send_cost = '무료';
+                        break;
+                    default:
+                        $ct_send_cost = '선불';
+                        break;
+                }
             ?>
             <tr>
                 <?php if($k == 0) { ?>
@@ -84,7 +99,7 @@ $result = sql_query($sql);
                 <td class="td_num"><?php echo number_format($ct_price['stotal']); ?></td>
                 <td class="td_num"><?php echo number_format($opt['cp_price']); ?></td>
                 <td class="td_num"><?php echo number_format($ct_point['stotal']); ?></td>
-                <td class="td_sendcost_by"><?php echo $opt['ct_send_cost'] ? '착불' : '선불'; ?></td>
+                <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
             </tr>
             <?php
             }

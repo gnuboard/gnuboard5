@@ -57,7 +57,8 @@ $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$sear
 $sql = " select it_id,
                 it_name,
                 cp_price,
-                ct_notax
+                ct_notax,
+                ct_send_cost
            from {$g5['g5_shop_cart_table']}
           where od_id = '{$od['od_id']}'
           group by it_id
@@ -144,6 +145,20 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
             $res = sql_query($sql);
             $rowspan = mysql_num_rows($res);
 
+            // 배송비
+            switch($row['ct_send_cost'])
+            {
+                case 1:
+                    $ct_send_cost = '착불';
+                    break;
+                case 2:
+                    $ct_send_cost = '무료';
+                    break;
+                default:
+                    $ct_send_cost = '선불';
+                    break;
+            }
+
             for($k=0; $opt=sql_fetch_array($res); $k++) {
                 if($opt['io_type'])
                     $opt_price = $opt['io_price'];
@@ -180,7 +195,7 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
                 <td class="td_num"><?php echo number_format($ct_price['stotal']); ?></td>
                 <td class="td_num"><?php echo number_format($opt['cp_price']); ?></td>
                 <td class="td_num"><?php echo number_format($ct_point['stotal']); ?></td>
-                <td class="td_sendcost_by"><?php echo $opt['ct_send_cost'] ? '착불' : '선불'; ?></td>
+                <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
                 <td class="td_mngsmall"><?php echo get_yn($opt['ct_point_use']); ?></td>
                 <td class="td_mngsmall"><?php echo get_yn($opt['ct_stock_use']); ?></td>
             </tr>
