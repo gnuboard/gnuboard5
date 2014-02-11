@@ -14,7 +14,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 <footer id="ft">
     <p>
-        Copyright &copy; 소유하신 도메인. All rights reserved.<br>
+        Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved.<br>
         <a href="#">상단으로</a>
     </p>
 </footer>

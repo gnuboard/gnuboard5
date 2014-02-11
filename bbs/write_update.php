@@ -604,21 +604,17 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     // 최고관리자에게 보내는 메일
     if ($config['cf_email_wr_super_admin']) $array_email[] = $super_admin['mb_email'];
 
-    // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
-    if (strstr($wr['wr_option'], 'mail') && $wr['wr_email']) {
-        // 원글 메일발송에 체크가 되어 있다면
-        if ($config['cf_email_wr_write']) $array_email[] = $wr['wr_email'];
+    // 원글게시자에게 보내는 메일
+    if ($config['cf_email_wr_write']) {
+        if($w == '')
+            $wr['wr_email'] = $wr_email;
 
-        // 코멘트 쓴 모든이에게 메일 발송이 되어 있다면 (자신에게는 발송하지 않는다)
-        if ($config['cf_email_wr_comment_all']) {
-            $sql = " select distinct wr_email from {$write_table}
-                        where wr_email not in ( '{$wr['wr_email']}', '{$member['mb_email']}', '' )
-                                  and wr_parent = '{$wr_id}' ";
-            $result = sql_query($sql);
-            while ($row=sql_fetch_array($result))
-                $array_email[] = $row['wr_email'];
-        }
+        $array_email[] = $wr['wr_email'];
     }
+
+    // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
+    if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
+        $array_email[] = $wr['wr_email'];
 
     // 중복된 메일 주소는 제거
     $unique_email = array_unique($array_email);
