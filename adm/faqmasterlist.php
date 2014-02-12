@@ -6,7 +6,7 @@ auth_check($auth[$sub_menu], "r");
 
 //dbconfig파일에 $g5['faq_table'] , $g5['faq_master_table'] 배열변수가 있는지 체크
 if( !isset($g5['faq_table']) || !isset($g5['faq_master_table']) ){
-    die('/data/dbconfig.php 파일에 <br ><strong>$g5[\'faq_table\'] = G5_TABLE_PREFIX.\'faq\';</strong><br ><strong>$g5[\'faq_master_table\'] = G5_TABLE_PREFIX.\'faq_master\';</strong><br > 를 추가해 주세요.');
+    die('<meta charset="utf-8">/data/dbconfig.php 파일에 <br ><strong>$g5[\'faq_table\'] = G5_TABLE_PREFIX.\'faq\';</strong><br ><strong>$g5[\'faq_master_table\'] = G5_TABLE_PREFIX.\'faq_master\';</strong><br > 를 추가해 주세요.');
 }
 
 //자주하시는 질문 마스터 테이블이 있는지 검사한다.
