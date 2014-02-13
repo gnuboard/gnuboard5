@@ -2170,47 +2170,80 @@ if (!function_exists('file_put_contents')) {
 // HTML 마지막 처리
 function html_end()
 {
-    global $config, $g5, $member;
-
-    // 현재접속자 처리
-    $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
-    $tmp_row = sql_fetch($tmp_sql);
-
-    if ($tmp_row['cnt']) {
-        $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
-        sql_query($tmp_sql, FALSE);
-    } else {
-        $tmp_sql = " insert into {$g5['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$g5['lo_location']}',  '{$g5['lo_url']}' ) ";
-        sql_query($tmp_sql, FALSE);
-
-        // 시간이 지난 접속은 삭제한다
-        sql_query(" delete from {$g5['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", G5_SERVER_TIME - (60 * $config['cf_login_minutes']))."' ");
-
-        // 부담(overhead)이 있다면 테이블 최적화
-        //$row = sql_fetch(" SHOW TABLE STATUS FROM `$mysql_db` LIKE '$g5['login_table']' ");
-        //if ($row['Data_free'] > 0) sql_query(" OPTIMIZE TABLE $g5['login_table'] ");
-    }
-
-    // 버퍼의 내용에서 body 태그 중간의 외부 css 파일을 CAPTURE 하여 head 태그로 이동시켜준다.
-    $buffer = ob_get_contents();
-    ob_end_clean();
-    preg_match('#<body>(.*)</body>#is', $buffer, $bodys);
-    preg_match_all('/[\n\r]?(<!.*)?(<link[^>]+>).*(<!.*>)?/i', $bodys[0], $links);
-    $stylesheet = '';
-    $links[0] = array_unique($links[0]);
-    foreach ($links[0] as $key=>$link) {
-        //$link = PHP_EOL.$links[0][$i];
-        $stylesheet .= $link;
-        $buffer = preg_replace('#'.$link.'#', '', $buffer);
-    }
-    /*
-    </title>
-    <link rel="stylesheet" href="default.css">
-    밑으로 스킨의 스타일시트가 위치하도록 하게 한다.
-    */
-    return preg_replace('#(</title>[^<]*<link[^>]+>)#', "$1$stylesheet", $buffer);
+    $end = new html_process();
+    return $end->run();
 }
 
+class html_process {
+    protected $links = array();
+
+    function css_callback1($m) {
+        $s = $m[0];
+        if(preg_match('/<link[^>]+>/i', $s)) {
+            preg_match_all("/(<![^>]+>)|(<link[^>]+>)/is", $s, $m);
+            $this->links = array_merge($this->links, $m[0]);
+        }
+        return '';
+    }
+
+    function css_callback2($m) {
+        $this->links = array_merge($this->links, array($m[0]));
+        return '';
+    }
+
+    function run()
+    {
+        global $config, $g5, $member, $css;
+
+        // 현재접속자 처리
+        $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        $tmp_row = sql_fetch($tmp_sql);
+
+        if ($tmp_row['cnt']) {
+            $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+            sql_query($tmp_sql, FALSE);
+        } else {
+            $tmp_sql = " insert into {$g5['login_table']} ( lo_ip, mb_id, lo_datetime, lo_location, lo_url ) values ( '{$_SERVER['REMOTE_ADDR']}', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$g5['lo_location']}',  '{$g5['lo_url']}' ) ";
+            sql_query($tmp_sql, FALSE);
+
+            // 시간이 지난 접속은 삭제한다
+            sql_query(" delete from {$g5['login_table']} where lo_datetime < '".date("Y-m-d H:i:s", G5_SERVER_TIME - (60 * $config['cf_login_minutes']))."' ");
+
+            // 부담(overhead)이 있다면 테이블 최적화
+            //$row = sql_fetch(" SHOW TABLE STATUS FROM `$mysql_db` LIKE '$g5['login_table']' ");
+            //if ($row['Data_free'] > 0) sql_query(" OPTIMIZE TABLE $g5['login_table'] ");
+        }
+
+        // 버퍼의 내용에서 body 태그 중간의 외부 css 파일을 CAPTURE 하여 head 태그로 이동시켜준다.
+        $buffer = ob_get_contents();
+        ob_end_clean();
+        preg_match('#<body>(.*)</body>#is', $buffer, $bodys);
+
+        $bodys = preg_replace_callback("/<!--\[[^가-힣]*\]-->/is", 'html_process::css_callback1', $bodys);
+        $bodys = preg_replace_callback("/<!--\s*<link[^>]+>\s*-->/is", 'html_process::css_callback2', $bodys);
+        $bodys = preg_replace_callback("/<link[^>]+>/is", 'html_process::css_callback2', $bodys);
+
+        $links = array_unique($this->links);
+
+        $stylesheet = '';
+
+        foreach($links as $link) {
+            if(!trim($link))
+                continue;
+
+            if(preg_match('/<link[^>]+>/i', $link))
+                $buffer = preg_replace('#'.$link.'#', '', $buffer);
+
+            $stylesheet .= PHP_EOL.$link;
+        }
+        /*
+        </title>
+        <link rel="stylesheet" href="default.css">
+        밑으로 스킨의 스타일시트가 위치하도록 하게 한다.
+        */
+        return preg_replace('#(</title>[^<]*<link[^>]+>)#', "$1$stylesheet", $buffer);
+    }
+}
 
 // 휴대폰번호의 숫자만 취한 후 중간에 하이픈(-)을 넣는다.
 function hyphen_hp_number($hp)
