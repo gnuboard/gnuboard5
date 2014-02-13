@@ -2170,30 +2170,41 @@ if (!function_exists('file_put_contents')) {
 // HTML 마지막 처리
 function html_end()
 {
-    $end = new html_process();
-    return $end->run();
+    global $html_process;
+
+    return $html_process->run();
+}
+
+function add_stylesheet($stylesheet, $order=0)
+{
+    global $html_process;
+
+    if(trim($stylesheet))
+        $html_process->merge_stylesheet($stylesheet, $order);
 }
 
 class html_process {
-    protected $links = array();
+    protected $css = array();
 
-    function css_callback1($m) {
-        $s = $m[0];
-        if(preg_match('/<link[^>]+>/i', $s)) {
-            preg_match_all("/(<![^>]+>)|(<link[^>]+>)/is", $s, $m);
-            $this->links = array_merge($this->links, $m[0]);
+    function merge_stylesheet($stylesheet, $order)
+    {
+        $links = $this->css;
+        $is_merge = true;
+
+        foreach($links as $link) {
+            if($link[1] == $stylesheet) {
+                $is_merge = false;
+                break;
+            }
         }
-        return '';
-    }
 
-    function css_callback2($m) {
-        $this->links = array_merge($this->links, array($m[0]));
-        return '';
+        if($is_merge)
+            $this->css[] = array($order, $stylesheet);
     }
 
     function run()
     {
-        global $config, $g5, $member, $css;
+        global $config, $g5, $member;
 
         // 현재접속자 처리
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
@@ -2214,28 +2225,29 @@ class html_process {
             //if ($row['Data_free'] > 0) sql_query(" OPTIMIZE TABLE $g5['login_table'] ");
         }
 
-        // 버퍼의 내용에서 body 태그 중간의 외부 css 파일을 CAPTURE 하여 head 태그로 이동시켜준다.
         $buffer = ob_get_contents();
         ob_end_clean();
-        preg_match('#<body>(.*)</body>#is', $buffer, $bodys);
-
-        $bodys = preg_replace_callback("/<!--\[[^가-힣]*\]-->/is", 'html_process::css_callback1', $bodys);
-        $bodys = preg_replace_callback("/<!--\s*<link[^>]+>\s*-->/is", 'html_process::css_callback2', $bodys);
-        $bodys = preg_replace_callback("/<link[^>]+>/is", 'html_process::css_callback2', $bodys);
-
-        $links = array_unique($this->links);
 
         $stylesheet = '';
+        $links = $this->css;
 
-        foreach($links as $link) {
-            if(!trim($link))
-                continue;
+        if(!empty($links)) {
+            foreach ($links as $key => $row) {
+                $order[$key] = $row[0];
+                $index[$key] = $key;
+                $style[$key] = $row[1];
+            }
 
-            if(preg_match('/<link[^>]+>/i', $link))
-                $buffer = preg_replace('#'.$link.'#', '', $buffer);
+            array_multisort($order, SORT_ASC, $index, SORT_ASC, $links);
 
-            $stylesheet .= PHP_EOL.$link;
+            foreach($links as $link) {
+                if(!trim($link[1]))
+                    continue;
+
+                $stylesheet .= PHP_EOL.$link[1];
+            }
         }
+
         /*
         </title>
         <link rel="stylesheet" href="default.css">

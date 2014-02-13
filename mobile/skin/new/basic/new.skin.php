@@ -1,8 +1,9 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
-?>
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-<link rel="stylesheet" href="<?php echo $new_skin_url ?>/style.css">
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
+?>
 
 <!-- 전체게시물 검색 시작 { -->
 <fieldset id="new_sch">
@@ -41,7 +42,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     </thead>
     <tbody>
     <?php
-    for ($i=0; $i<count($list); $i++) 
+    for ($i=0; $i<count($list); $i++)
     {
         $gr_subject = cut_str($list[$i]['gr_subject'], 20);
         $bo_subject = cut_str($list[$i]['bo_subject'], 20);
