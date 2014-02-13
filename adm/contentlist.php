@@ -5,7 +5,7 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], "r");
 
 if( !isset($g5['content_table']) ){
-    die('/data/dbconfig.php 파일에 <strong>$g5[\'content_table\'] = G5_TABLE_PREFIX.\'content\';</strong> 를 추가해 주세요.');
+    die('<meta charset="utf-8">/data/dbconfig.php 파일에 <strong>$g5[\'content_table\'] = G5_TABLE_PREFIX.\'content\';</strong> 를 추가해 주세요.');
 }
 //내용(컨텐츠)정보 테이블이 있는지 검사한다.
 if(!sql_query(" DESCRIBE {$g5['content_table']} ", false)) {
