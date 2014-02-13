@@ -66,9 +66,9 @@ echo '<div id="faq_hhtml">'.stripslashes($fm['fm_head_html']).'</div>';
     <?php } ?>
         <li id="faq_<?php echo $fm_id.'_'.$i; ?>">
             <h3><?php echo stripslashes($row['fa_subject']); ?></h3>
-            <p>
+            <div id="con_inner">
                 <?php echo stripslashes($row['fa_content']); ?>
-            </p>
+            </div>
             <div class="faq_tolist"><a href="#faq_list" class="btn01">FAQ 목차</a></div>
         </li>
     <?php }

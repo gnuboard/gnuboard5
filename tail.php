@@ -24,13 +24,18 @@ if (G5_IS_MOBILE) {
 <!-- 하단 시작 { -->
 <div id="ft">
     <?php echo popular('basic'); // 인기검색어  ?>
-    <?php echo visit('basic'); // 방문자수  ?>
+    <?php echo visit('basic'); // 접속자집계 ?>
     <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft.png" alt="<?php echo G5_VERSION ?>"></div>
+    <div id="ft_company">
+    </div>
     <div id="ft_copy">
-        <p>
+        <div>
+            <a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=company">회사소개</a>
+            <a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=privacy">개인정보취급방침</a>
+            <a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=provision">서비스이용약관</a>
             Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.<br>
-            <a href="#">상단으로</a>
-        </p>
+            <a href="#hd" id="ft_totop">상단으로</a>
+        </div>
     </div>
 </div>
 
