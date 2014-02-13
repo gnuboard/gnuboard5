@@ -96,7 +96,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <?php
         } else {
      ?>
-    <p>검색된 자료가 하나도 없습니다.</p>
+    <div class="empty_list">검색된 자료가 하나도 없습니다.</div>
     <?php } }  ?>
 
     <hr>
