@@ -835,3 +835,26 @@ CREATE TABLE IF NOT EXISTS `g5_faq_master` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_new_win`
+--
+
+DROP TABLE IF EXISTS `g5_new_win`;
+CREATE TABLE IF NOT EXISTS `g5_new_win` (
+  `nw_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nw_device` varchar(10) NOT NULL DEFAULT 'both',
+  `nw_begin_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `nw_end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `nw_disable_hours` int(11) NOT NULL DEFAULT '0',
+  `nw_left` int(11) NOT NULL DEFAULT '0',
+  `nw_top` int(11) NOT NULL DEFAULT '0',
+  `nw_height` int(11) NOT NULL DEFAULT '0',
+  `nw_width` int(11) NOT NULL DEFAULT '0',
+  `nw_subject` text NOT NULL,
+  `nw_content` text NOT NULL,
+  `nw_content_html` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`nw_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
