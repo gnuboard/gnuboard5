@@ -34,7 +34,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
             }
 
             if(!$cache_fwrite)
-                include_once($cache_file);
+                include($cache_file);
         }
     }
 
