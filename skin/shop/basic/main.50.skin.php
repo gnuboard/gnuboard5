@@ -1,12 +1,13 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
+
 /*
 리스트의 상품이 순차적으로 위에서 내려옴
 */
 ?>
-
-<link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
 
 <!-- 이전 재생 정지 다음 버튼 시작 { -->
 <ul id="btn_smt_<?php echo $this->type; ?>" class="sctrl">
