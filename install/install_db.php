@@ -195,6 +195,14 @@ if($g5_install || !$result) {
                      mb_ip = '{$_SERVER['REMOTE_ADDR']}'
                      ";
     @mysql_query($sql);
+
+    // 내용관리 생성
+    @mysql_query(" insert into `{$table_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$table_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 처리방침', co_content= '<p align=center><b>개인정보 처리방침에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
+    @mysql_query(" insert into `{$table_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>' ") or die(mysql_error() . "<p>" . $sql);
+
+    // FAQ Master
+    @mysql_query(" insert into `{$table_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ") or die(mysql_error() . "<p>" . $sql);
 }
 
 if($g5_shop_install) {
@@ -423,6 +431,8 @@ $dir_arr = array (
     $data_path.'/log',
     $data_path.'/member',
     $data_path.'/session',
+    $data_path.'/content',
+    $data_path.'/faq',
     $data_path.'/tmp'
 );
 
@@ -490,6 +500,10 @@ fwrite($f, "\$g5['autosave_table'] = G5_TABLE_PREFIX.'autosave'; // 게시글 �
 fwrite($f, "\$g5['cert_history_table'] = G5_TABLE_PREFIX.'cert_history'; // 인증내역 테이블\n");
 fwrite($f, "\$g5['qa_config_table'] = G5_TABLE_PREFIX.'qa_config'; // 1:1문의 설정테이블\n");
 fwrite($f, "\$g5['qa_content_table'] = G5_TABLE_PREFIX.'qa_content'; // 1:1문의 테이블\n");
+fwrite($f, "\$g5['content_table'] = G5_TABLE_PREFIX.'content'; // 내용(컨텐츠)정보 테이블\n");
+fwrite($f, "\$g5['faq_table'] = G5_TABLE_PREFIX.'faq'; // 자주하시는 질문 테이블\n");
+fwrite($f, "\$g5['faq_master_table'] = G5_TABLE_PREFIX.'faq_master'; // 자주하시는 질문 마스터 테이블\n");
+fwrite($f, "\$g5['new_win_table'] = G5_TABLE_PREFIX.'new_win'; // 새창 테이블\n");
 
 if($g5_shop_install) {
     fwrite($f, "\n");
