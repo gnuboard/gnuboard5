@@ -14,6 +14,13 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
 
     <div class="to_content"><a href="#container">본문 바로가기</a></div>
+
+    <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
+    <div id="hd_pop">
+        <h2>팝업레이어 알림</h2>
+        <?php include G5_MOBILE_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
+    </div>
+    <?php } ?>
     <div class="to_content"><a href="#gnb">메인메뉴 바로가기</a></div>
 
     <div id="hd_wrapper">
