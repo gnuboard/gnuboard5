@@ -5,6 +5,10 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
+// 팝업레이어 테이블에 영카트, 그누보드 인지 구분하는 여부 필드 추가
+$sql = " ALTER TABLE `{$g5['new_win_table']}` ADD `nw_division` VARCHAR(10) NOT NULL DEFAULT 'both' ";
+sql_query($sql, false);
+
 $html_title = "팝업레이어";
 if ($w == "u")
 {
@@ -45,6 +49,17 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <col>
     </colgroup>
     <tbody>
+    <tr>
+        <th scope="row"><label for="nw_division">구분</label></th>
+        <td>
+            <?php echo help("그누보드5에 표시될 것인지 영카트5에 표시될 것인지를 설정합니다."); ?>
+            <select name="nw_division" id="nw_division">
+                <option value="both"<?php echo get_selected($nw['nw_division'], 'both', true); ?>>그누보드5와 영카트5</option>
+                <option value="g5"<?php echo get_selected($nw['nw_division'], 'g5'); ?>>그누보드5</option>
+                <option value="yc5"<?php echo get_selected($nw['nw_division'], 'yc5'); ?>>영카트5</option>
+            </select>
+        </td>
+    </tr>
     <tr>
         <th scope="row"><label for="nw_device">접속기기</label></th>
         <td>
