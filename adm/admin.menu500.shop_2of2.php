@@ -8,8 +8,6 @@ $menu['menu500'] = array (
     array('500120', '주문내역출력', G5_ADMIN_URL.'/shop_admin/orderprint.php', 'sst_print_order', 1),
     array('500300', '이벤트관리', G5_ADMIN_URL.'/shop_admin/itemevent.php', 'scf_event'),
     array('500310', '이벤트일괄처리', G5_ADMIN_URL.'/shop_admin/itemeventlist.php', 'scf_event_mng'),
-    array('500400', '내용관리', G5_ADMIN_URL.'/shop_admin/contentlist.php', 'scf_contents', 1),
-    array('500410', 'FAQ관리', G5_ADMIN_URL.'/shop_admin/faqmasterlist.php', 'scf_faq', 1),
     array('500500', '배너관리', G5_ADMIN_URL.'/shop_admin/bannerlist.php', 'scf_banner', 1),
     array('500510', '팝업레이어관리', G5_ADMIN_URL.'/shop_admin/newwinlist.php', 'scf_poplayer', 1),
     array('500140', '보관함현황', G5_ADMIN_URL.'/shop_admin/wishlist.php', 'sst_wish'),

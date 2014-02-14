@@ -2550,4 +2550,12 @@ function check_input_vars()
         }
     }
 }
+
+// HTML 특수문자 변환 htmlspecialchars
+function htmlspecialchars2($str)
+{
+    $trans = array("\"" => "&#034;", "'" => "&#039;", "<"=>"&#060;", ">"=>"&#062;");
+    $str = strtr($str, $trans);
+    return $str;
+}
 ?>
