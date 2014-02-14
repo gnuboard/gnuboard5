@@ -263,7 +263,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .new_win .win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .win_ul li {float:left;margin-left:-1px}
 .new_win .win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
-.new_win .win_desc {margin:0 20px}
+.new_win .win_desc {padding:20px}
 
 .new_win .win_btn {clear:both;padding:20px;text-align:center} /* 새창용 */
 .new_win .win_btn button {display:inline-block;padding:0 10px;height:30px;border:0;background:#4b545e;color:#fff;line-height:2em;cursor:pointer}
