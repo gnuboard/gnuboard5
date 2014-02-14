@@ -93,7 +93,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     <?php
         } else {
      ?>
-    <p>검색된 자료가 하나도 없습니다.</p>
+    <div class="empty_list">검색된 자료가 하나도 없습니다.</div>
     <?php } }  ?>
 
     <hr>

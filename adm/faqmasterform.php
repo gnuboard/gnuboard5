@@ -42,7 +42,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <td>
             <input type="text" value="<?php echo get_text($fm['fm_subject']); ?>" name="fm_subject" id="fm_subject" required class="frm_input required"  size="70">
             <?php if ($w == 'u') { ?>
-            <a href="<?php echo G5_SHOP_URL; ?>/faq.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">보기</a>
+            <a href="<?php echo G5_BBS_URL; ?>/faq.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">보기</a>
             <a href="./faqlist.php?fm_id=<?php echo $fm_id; ?>" class="btn_frmline">상세보기</a>
             <?php } ?>
         </td>

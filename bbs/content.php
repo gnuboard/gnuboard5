@@ -1,6 +1,11 @@
 <?php
 include_once('./_common.php');
 
+//dbconfig파일에 $g5['content_table'] 배열변수가 있는지 체크
+if( !isset($g5['content_table']) ){
+    die('<meta charset="utf-8">관리자 모드에서 게시판관리->내용 관리를 먼저 확인해 주세요.');
+}
+
 // 내용
 $sql = " select * from {$g5['content_table']} where co_id = '$co_id' ";
 $co = sql_fetch($sql);
@@ -50,22 +55,22 @@ $dst[] = $default['de_admin_info_email'];
 $str = preg_replace($src, $dst, $str);
 
 if ($is_admin)
-    echo '<div class="socc_admin"><a href="'.G5_ADMIN_URL.'/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
+    echo '<div class="ctt_admin"><a href="'.G5_ADMIN_URL.'/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
 ?>
 
 <!-- 등록내용 시작 { -->
 <?php
 $himg = G5_DATA_PATH.'/content/'.$co_id.'_h';
 if (file_exists($himg)) // 상단 이미지
-    echo '<div id="socc_himg" class="socc_img"><img src="'.G5_DATA_URL.'/content/'.$co_id.'_h" alt=""></div>';
+    echo '<div id="ctt_himg" class="ctt_img"><img src="'.G5_DATA_URL.'/content/'.$co_id.'_h" alt=""></div>';
 ?>
 
-<article id="socc" class="socc_<?php echo $co_id; ?>">
+<article id="ctt" class="ctt_<?php echo $co_id; ?>">
     <header>
         <h1><?php echo $g5['title']; ?></h1>
     </header>
 
-    <div id="socc_con">
+    <div id="ctt_con">
         <?php echo $str; ?>
     </div>
 
@@ -74,10 +79,10 @@ if (file_exists($himg)) // 상단 이미지
 <?php
 $timg = G5_DATA_PATH.'/content/'.$co_id.'_t';
 if (file_exists($timg)) // 하단 이미지
-    echo '<div id="socc_timg" class="socc_img"><img src="'.G5_DATA_URL.'/content/'.$co_id.'_t" alt=""></div>';
+    echo '<div id="ctt_timg" class="ctt_img"><img src="'.G5_DATA_URL.'/content/'.$co_id.'_t" alt=""></div>';
 
 if ($is_admin)
-    echo '<div class="socc_admin"><a href="'.G5_ADMIN_URL.'/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
+    echo '<div class="ctt_admin"><a href="'.G5_ADMIN_URL.'/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
 ?>
 <!-- } 등록내용 끝 -->
 
