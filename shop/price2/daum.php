@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+ob_start();
+
 header("Content-Type: text/html; charset=utf-8");
 
 /*
@@ -201,4 +203,12 @@ HEREDOC;
         }
     }
 }
+
+$content = ob_get_contents();
+ob_end_clean();
+
+// 131227 : 쇼핑하우에서는 아직 utf-8 을 지원하지 않고 있음
+$content = iconv('utf-8', 'euc-kr', $content);
+
+echo $content;
 ?>

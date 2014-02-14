@@ -629,8 +629,7 @@ if(!isset($default['de_shop_layout_use'])) {
             <th scope="row">공통 URL</th>
             <td>
                 <?php echo help("가상계좌 사용시 다음 주소를 <strong>KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
-                <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php
-            </td>
+                <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php</td>
         </tr>
         </tbody>
         </table>
