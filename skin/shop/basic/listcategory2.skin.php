@@ -49,9 +49,10 @@ if (!$exists) {
 
 
 if ($exists) {
-?>
 
-<link rel="stylesheet" href="<?php echo G5_SHOP_SKIN_URL; ?>/style.css">
+    // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+    add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
+?>
 
 <!-- 상품분류 2 시작 { -->
 <aside id="sct_ct_2" class="sct_ct">

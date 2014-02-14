@@ -27,9 +27,10 @@ else
     $str = $g5['title'];
 
 //if ($it_id) $str .= " > $it[it_name]";
-?>
 
-<link rel="stylesheet" href="<?php echo G5_MSHOP_SKIN_URL; ?>/style.css">
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">', 0);
+?>
 
 <div id="sct_location">
     <a href='<?php echo G5_SHOP_URL; ?>/' class="sct_bg">Home</a>

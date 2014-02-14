@@ -17,7 +17,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     }
 
     if ($i==0)
-        echo '<li id="scomm_empty">이벤트 없음</li>'.PHP_EOL;
+        echo '<li id="scomm_empty">게시판 없음</li>'.PHP_EOL;
     ?>
     </ul>
 
