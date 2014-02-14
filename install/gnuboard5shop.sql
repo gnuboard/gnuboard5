@@ -113,24 +113,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_category` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_content`
---
-
-DROP TABLE IF EXISTS `g5_shop_content`;
-CREATE TABLE IF NOT EXISTS `g5_shop_content` (
-  `co_id` varchar(20) NOT NULL DEFAULT '',
-  `co_html` tinyint(4) NOT NULL DEFAULT '0',
-  `co_subject` varchar(255) NOT NULL DEFAULT '',
-  `co_content` longtext NOT NULL,
-  `co_hit` int(11) NOT NULL DEFAULT '0',
-  `co_include_head` varchar(255) NOT NULL,
-  `co_include_tail` varchar(255) NOT NULL,
-  PRIMARY KEY (`co_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `g5_shop_coupon`
 --
 
@@ -364,39 +346,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_event_item` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_shop_faq`
---
-
-DROP TABLE IF EXISTS `g5_shop_faq`;
-CREATE TABLE IF NOT EXISTS `g5_shop_faq` (
-  `fa_id` int(11) NOT NULL AUTO_INCREMENT,
-  `fm_id` int(11) NOT NULL DEFAULT '0',
-  `fa_subject` text NOT NULL,
-  `fa_content` text NOT NULL,
-  `fa_order` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fa_id`),
-  KEY `fm_id` (`fm_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_shop_faq_master`
---
-
-DROP TABLE IF EXISTS `g5_shop_faq_master`;
-CREATE TABLE IF NOT EXISTS `g5_shop_faq_master` (
-  `fm_id` int(11) NOT NULL AUTO_INCREMENT,
-  `fm_subject` varchar(255) NOT NULL DEFAULT '',
-  `fm_head_html` text NOT NULL,
-  `fm_tail_html` text NOT NULL,
-  `fm_order` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fm_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `g5_shop_item`
 --
 
@@ -571,29 +520,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item_relation` (
   `it_id2` varchar(20) NOT NULL DEFAULT '',
   `ir_no` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`it_id`,`it_id2`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `g5_shop_new_win`
---
-
-DROP TABLE IF EXISTS `g5_shop_new_win`;
-CREATE TABLE IF NOT EXISTS `g5_shop_new_win` (
-  `nw_id` int(11) NOT NULL AUTO_INCREMENT,
-  `nw_device` varchar(10) NOT NULL DEFAULT 'both',
-  `nw_begin_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `nw_end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `nw_disable_hours` int(11) NOT NULL DEFAULT '0',
-  `nw_left` int(11) NOT NULL DEFAULT '0',
-  `nw_top` int(11) NOT NULL DEFAULT '0',
-  `nw_height` int(11) NOT NULL DEFAULT '0',
-  `nw_width` int(11) NOT NULL DEFAULT '0',
-  `nw_subject` text NOT NULL,
-  `nw_content` text NOT NULL,
-  `nw_content_html` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`nw_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

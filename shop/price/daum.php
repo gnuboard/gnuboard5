@@ -1,6 +1,10 @@
 <?php
 include_once('./_common.php');
 
+
+
+ob_start(); 
+
 header("Content-Type: text/html; charset=utf-8");
 
 /*
@@ -139,4 +143,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 HEREDOC;
 }
+
+
+
+$content = ob_get_contents(); 
+ob_end_clean(); 
+
+$content = iconv('utf-8', 'euc-kr', $content); 
+echo $content; 
 ?>

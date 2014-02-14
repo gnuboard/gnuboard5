@@ -625,15 +625,6 @@ function get_point($amount, $point)
 }
 
 
-// HTML 특수문자 변환 htmlspecialchars
-function htmlspecialchars2($str)
-{
-    $trans = array("\"" => "&#034;", "'" => "&#039;", "<"=>"&#060;", ">"=>"&#062;");
-    $str = strtr($str, $trans);
-    return $str;
-}
-
-
 // 상품이미지 업로드
 function it_img_upload($srcfile, $filename, $dir)
 {

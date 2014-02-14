@@ -19,7 +19,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
     <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
     <div id="hd_pop">
         <h2>팝업레이어 알림</h2>
-        <?php include G5_SHOP_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
+        <?php include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
     </div>
     <?php } ?>
 
@@ -61,7 +61,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
         </div>
 
         <div id="tnb">
-            <h3>회원메뉴 및 FAQ</h3>
+            <h3>회원메뉴</h3>
             <ul>
                 <?php if ($is_member) { ?>
                 <?php if ($is_admin) {  ?>
@@ -74,7 +74,6 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
                 <li><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>"><b>로그인</b></a></li>
                 <?php } ?>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
-                <li><a href="<?php echo G5_SHOP_URL; ?>/faq.php">FAQ</a></li>
                 <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>

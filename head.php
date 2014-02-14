@@ -29,6 +29,13 @@ if (G5_IS_MOBILE) {
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
+    <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
+    <div id="hd_pop">
+        <h2>팝업레이어 알림</h2>
+        <?php include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
+    </div>
+    <?php } ?>
+
     <div id="hd_wrapper">
 
         <div id="logo">
@@ -92,6 +99,8 @@ if (G5_IS_MOBILE) {
             <li><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/login.php"><b>로그인</b></a></li>
             <?php }  ?>
+
+            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
 
             <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php">접속자 <?php echo connect(); // 현재 접속자수  ?></a></li>

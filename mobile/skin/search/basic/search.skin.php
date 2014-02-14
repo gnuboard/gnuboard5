@@ -1,8 +1,9 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가 
-?>
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-<link rel="stylesheet" href="<?php echo $search_skin_url ?>/style.css">
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 0);
+?>
 
 <form name="fsearch" onsubmit="return fsearch_submit(this);" method="get">
 <input type="hidden" name="srows" value="<?php echo $srows ?>">
@@ -49,7 +50,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 f.stx.focus();
                 return false;
             }
-            
+
             f.action = "";
             return true;
         }
@@ -96,7 +97,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <?php
         } else {
      ?>
-    <p>검색된 자료가 하나도 없습니다.</p>
+    <div class="empty_list">검색된 자료가 하나도 없습니다.</div>
     <?php } }  ?>
 
     <hr>
@@ -112,7 +113,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <ul>
         <?php
         for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
-            if ($list[$idx][$i][wr_is_comment]) 
+            if ($list[$idx][$i][wr_is_comment])
             {
                 $comment_def = "<span class=\"cmt_def\">댓글</span>";
                 $comment_href = "#c_".$list[$idx][$i][wr_id];
