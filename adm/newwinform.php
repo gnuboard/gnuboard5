@@ -52,11 +52,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="nw_division">구분</label></th>
         <td>
-            <?php echo help("그누보드5에 표시될 것인지 영카트5에 표시될 것인지를 설정합니다."); ?>
+            <?php echo help("커뮤니티에 표시될 것인지 쇼핑몰에 표시될 것인지를 설정합니다."); ?>
             <select name="nw_division" id="nw_division">
-                <option value="both"<?php echo get_selected($nw['nw_division'], 'both', true); ?>>그누보드5와 영카트5</option>
-                <option value="g5"<?php echo get_selected($nw['nw_division'], 'g5'); ?>>그누보드5</option>
-                <option value="yc5"<?php echo get_selected($nw['nw_division'], 'yc5'); ?>>영카트5</option>
+                <option value="both"<?php echo get_selected($nw['nw_division'], 'both', true); ?>>커뮤니티와 쇼핑몰</option>
+                <option value="comm"<?php echo get_selected($nw['nw_division'], 'comm'); ?>>커뮤니티</option>
+                <option value="shop"<?php echo get_selected($nw['nw_division'], 'shop'); ?>>쇼핑몰</option>
             </select>
         </td>
     </tr>
