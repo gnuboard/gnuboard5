@@ -1,10 +1,11 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 ?>
 
 <!-- 스크랩 시작 { -->
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
-
 <div id="scrap_do" class="new_win mbskin">
     <h1 id="win_title">스크랩하기</h1>
 
@@ -23,7 +24,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         <tr>
             <th scope="row"><label for="wr_content">댓글</label></th>
             <td><textarea name="wr_content" id="wr_content"></textarea></td>
-        </tr> 
+        </tr>
         </tbody>
         </table>
     </div>
