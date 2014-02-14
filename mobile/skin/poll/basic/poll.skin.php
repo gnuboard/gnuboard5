@@ -1,8 +1,9 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
-?>
 
-<link rel="stylesheet" href="<?php echo $poll_skin_url ?>/style.css">
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0);
+?>
 
 <form name="fpoll" action="<?php echo G5_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
 <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
@@ -46,8 +47,8 @@ function fpoll_submit(f)
         return false;
     }
 
-    var new_win = window.open("about:blank", "win_poll", "width=616,height=500,scrollbars=yes,resizable=yes"); 
-    f.target = "win_poll"; 
+    var new_win = window.open("about:blank", "win_poll", "width=616,height=500,scrollbars=yes,resizable=yes");
+    f.target = "win_poll";
 
     return true;
 }

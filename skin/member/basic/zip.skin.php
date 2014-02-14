@@ -1,9 +1,11 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 ?>
 
 <!-- 우편번호 찾기 시작 { -->
-<link rel="stylesheet" href="<?php echo $member_skin_url; ?>/style.css">
 <script src="<?php echo G5_JS_URL; ?>/zip.js"></script>
 
 <div id="post_code" class="new_win mbskin">

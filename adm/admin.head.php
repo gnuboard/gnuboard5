@@ -119,7 +119,9 @@ $menu_key = substr($sub_menu, 0, 3);
 $nl = '';
 foreach($menu['menu'.$menu_key] as $key=>$value) {
     if($key > 0) {
-        if ($menu_key == substr($menu['menu'.$key][0][0], 0, 2)) echo 1;
+        if ($is_admin != 'super' && (!array_key_exists($value[0],$auth) || !strstr($auth[$value[0]], 'r')))
+            continue;
+
         echo $nl.'<li><a href="'.$value[2].'">'.$value[1].'</a></li>';
         $nl = PHP_EOL;
     }

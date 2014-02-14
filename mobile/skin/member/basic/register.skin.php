@@ -1,8 +1,9 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
-?>
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
+?>
 
 <div class="mbskin">
 
@@ -35,7 +36,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     </form>
 
     <script>
-    function fregister_submit(f) 
+    function fregister_submit(f)
     {
         if (!f.agree.checked) {
             alert("회원가입약관의 내용에 동의하셔야 회원가입 하실 수 있습니다.");
