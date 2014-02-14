@@ -1,10 +1,15 @@
 <?php
 include_once('./_common.php');
 
+<<<<<<< HEAD
 
 ob_start(); 
 
 
+=======
+ob_start();
+
+>>>>>>> c20a7d3a84ad0dfc9546328cfd16cba8b3e9f556
 header("Content-Type: text/html; charset=utf-8");
 
 /*
@@ -144,10 +149,20 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 HEREDOC;
 }
 
+<<<<<<< HEAD
 
 $content = ob_get_contents(); 
 ob_end_clean(); 
 
 $content = iconv('utf-8', 'euc-kr', $content); 
 echo $content; 
+=======
+$content = ob_get_contents();
+ob_end_clean();
+
+// 131227 : 쇼핑하우에서는 아직 utf-8 을 지원하지 않고 있음
+$content = iconv('utf-8', 'euc-kr', $content);
+
+echo $content;
+>>>>>>> c20a7d3a84ad0dfc9546328cfd16cba8b3e9f556
 ?>
