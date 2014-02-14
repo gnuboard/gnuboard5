@@ -5,7 +5,7 @@ $sql = " select * from {$g5['new_win_table']}
           where '".G5_TIME_YMDHIS."' between nw_begin_time and nw_end_time
             and nw_device IN ( 'both', 'pc' )
           order by nw_id asc ";
-$result = sql_query($sql);
+$result = sql_query($sql, false);
 for ($i=0; $row_nw=sql_fetch_array($result); $i++)
 {
     // 이미 체크 되었다면 Continue

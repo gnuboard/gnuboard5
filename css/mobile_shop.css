@@ -23,13 +23,6 @@ a:link, a:visited {color:#000;text-decoration:none}
 #hd {position:relative;margin:0 0 10px;padding:10px 0;border-bottom:1px solid #e9e9e9;text-align:center}
 #hd h1 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 
-#hd_pop {z-index:1000;position:relative;margin:0 auto;width:100%;height:1px}
-#hd_pop h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
-.hd_pops {position:absolute;border:1px solid #e9e9e9;background:#fff}
-.hd_pops_con {margin:0 0 30px}
-.hd_pops_footer {position:absolute;bottom:0;left:0;padding:10px 0;width:100%;background:#000;color:#fff;text-align:right}
-.hd_pops_footer button {margin-right:5px;padding:5px 10px;border:0;background:#393939;color:#fff}
-
 #logo {padding:10px 0}
 
 #hd_ct {position:absolute;top:10px;left:10px;padding:10px;border:0;background:#333;color:#fff;font-size:1em;text-decoration:none;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
