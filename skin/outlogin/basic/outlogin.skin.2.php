@@ -6,8 +6,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
 ?>
 
 <!-- 로그인 후 아웃로그인 시작 { -->
-<link rel="stylesheet" href="<?php echo $outlogin_skin_url ?>/style.css">
-
 <section id="ol_after" class="ol">
     <header id="ol_after_hd">
         <h2>나의 회원정보</h2>
