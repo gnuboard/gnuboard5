@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '400400';
 include_once('./_common.php');
+include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 include_once(G5_LIB_PATH.'/icode.sms.lib.php');
 
@@ -84,6 +85,33 @@ if($cart_status) {
     }
 
     sql_query($sql);
+}
+
+
+// 배송때 재고반영
+if($info['od_misu'] == 0 && $od_status == '배송') {
+    $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ";
+    $result = sql_query($sql);
+
+    for ($i=0; $row=sql_fetch_array($result); $i++)
+    {
+        // 재고를 사용하지 않았다면
+        $stock_use = $row['ct_stock_use'];
+
+        if(!$row['ct_stock_use'])
+        {
+            // 재고에서 뺀다.
+            subtract_io_stock($row['it_id'], $row['ct_qty'], $row['io_id'], $row['io_type']);
+            $stock_use = 1;
+
+            $sql = " update {$g5['g5_shop_cart_table']} set ct_stock_use  = '$stock_use' where ct_id = '{$row['ct_id']}' ";
+            sql_query($sql);
+        }
+    }
+
+    unset($sql);
+    unset($result);
+    unset($row);
 }
 
 
