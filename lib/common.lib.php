@@ -7,6 +7,24 @@ if (!defined('_GNUBOARD_')) exit;
 **
 *************************************************************************/
 
+// multi-dimensional array에 사용자지정 함수적용
+function array_map_deep($fn, $array)
+{
+    if(is_array($array)) {
+        foreach($array as $key => $value) {
+            if(is_array($value)) {
+                $array[$key] = array_map_deep($fn, $value);
+            } else {
+                $array[$key] = call_user_func($fn, $value);
+            }
+        }
+    } else {
+        $array = call_user_func($fn, $array);
+    }
+
+    return $array;
+}
+
 // 마이크로 타임을 얻어 계산 형식으로 만듦
 function get_microtime()
 {
