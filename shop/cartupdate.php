@@ -160,7 +160,7 @@ else // 장바구니에 담기
                         and io_id = '$io_id'
                         and io_type = '$io_type'
                         and ct_stock_use = 0
-                        and ct_status in ('주문', '입금', '준비') ";
+                        and ct_status = '쇼핑' ";
             $row = sql_fetch($sql);
             $sum_qty = $row['cnt'];
 
@@ -173,7 +173,7 @@ else // 장바구니에 담기
 
             if ($ct_qty + $sum_qty > $it_stock_qty)
             {
-                alert($io_value." 의 재고수량이 부족합니다.\\n\\n현재 재고수량 : " . number_format($it_stock_qty) . " 개");
+                alert($io_value." 의 재고수량이 부족합니다.\\n\\n현재 재고수량 : " . number_format($it_stock_qty - $sum_qty) . " 개");
             }
         }
         //--------------------------------------------------------
