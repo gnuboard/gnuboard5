@@ -7,6 +7,24 @@ if (!defined('_GNUBOARD_')) exit;
 **
 *************************************************************************/
 
+// multi-dimensional array에 사용자지정 함수적용
+function array_map_deep($fn, $array)
+{
+    if(is_array($array)) {
+        foreach($array as $key => $value) {
+            if(is_array($value)) {
+                $array[$key] = array_map_deep($fn, $value);
+            } else {
+                $array[$key] = call_user_func($fn, $value);
+            }
+        }
+    } else {
+        $array = call_user_func($fn, $array);
+    }
+
+    return $array;
+}
+
 // 마이크로 타임을 얻어 계산 형식으로 만듦
 function get_microtime()
 {
@@ -1867,8 +1885,8 @@ function escape_trim($field)
     if ($field) {
         $str = mysql_real_escape_string(@trim($field));
 
-        if(PHP_VERSION < '5.3.0')
-            $str = stripslashes($str);
+        //if(PHP_VERSION < '5.3.0')
+        //    $str = stripslashes($str);
 
         return $str;
     }
@@ -2302,10 +2320,11 @@ function https_url($dir, $https=true)
 // 게시판의 공지사항을 , 로 구분하여 업데이트 한다.
 function board_notice($bo_notice, $wr_id, $insert=false)
 {
-    if(strpos($bo_notice, strval($wr_id)) !== false)
+    $notice_array = explode(",", trim($bo_notice));
+
+    if($insert && in_array($wr_id, $notice_array))
         return $bo_notice;
 
-    $notice_array = explode(",", trim($bo_notice));
     $notice_array = array_merge(array($wr_id), $notice_array);
     $notice_array = array_unique($notice_array);
     foreach ($notice_array as $key=>$value) {
