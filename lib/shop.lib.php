@@ -1469,29 +1469,6 @@ function get_coupon_id()
 }
 
 
-// array_map() 대체
-function array_add_callback($func, $array)
-{
-    if(!$func) {
-        return;
-    }
-
-    if(is_array($array)) {
-        foreach($array as $key => $value) {
-            if(is_array($value)) {
-                $array[$key] = array_add_callback($func, $value);
-            } else {
-                $array[$key] = call_user_func($func, $value);
-            }
-        }
-    } else {
-        $array = call_user_func($func, $array);
-    }
-
-    return $array;
-}
-
-
 // 주문의 금액, 배송비 과세금액 등의 정보를 가져옴
 function get_order_info($od_id)
 {
