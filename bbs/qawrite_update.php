@@ -52,7 +52,7 @@ for ($i=1; $i<=5; $i++) {
     $var = "qa_$i";
     $$var = "";
     if (isset($_POST['qa_'.$i]) && $_POST['qa_'.$i]) {
-        $$var = escape_trim($_POST['qa_'.$i]);
+        $$var = trim($_POST['qa_'.$i]);
     }
 }
 

@@ -9,8 +9,8 @@ $g5['title'] = '접속자검색';
 include_once('./admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
-$search_word = escape_trim($_GET['search_word']);
-$search_sort = escape_trim($_GET['search_sort']);
+$search_word = trim($_GET['search_word']);
+$search_sort = trim($_GET['search_sort']);
 
 $colspan = 5;
 $qstr = 'search_word='.$search_word.'&amp;search_sort='.$search_sort; //페이징 처리관련 변수
