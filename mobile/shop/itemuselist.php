@@ -2,8 +2,8 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/thumb.lib.php');
 
-$sfl = escape_trim($_REQUEST['sfl']);
-$stx = escape_trim($_REQUEST['stx']);
+$sfl = trim($_REQUEST['sfl']);
+$stx = trim($_REQUEST['stx']);
 
 $g5['title'] = '사용후기';
 include_once(G5_MSHOP_PATH.'/_head.php');

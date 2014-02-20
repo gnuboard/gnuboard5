@@ -5,11 +5,11 @@ if (!$is_member) {
     alert_close("상품문의는 회원만 작성이 가능합니다.");
 }
 
-$iq_id = escape_trim($_REQUEST['iq_id']);
-$iq_subject = escape_trim($_POST['iq_subject']);
-$iq_question = escape_trim(stripslashes($_POST['iq_question']));
-$iq_answer = escape_trim(stripslashes($_POST['iq_answer']));
-$hash = escape_trim($_REQUEST['hash']);
+$iq_id = trim($_REQUEST['iq_id']);
+$iq_subject = trim($_POST['iq_subject']);
+$iq_question = trim(stripslashes($_POST['iq_question']));
+$iq_answer = trim(stripslashes($_POST['iq_answer']));
+$hash = trim($_REQUEST['hash']);
 
 if ($w == "" || $w == "u") {
     $iq_name     = $member['mb_name'];

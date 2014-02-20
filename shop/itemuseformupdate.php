@@ -8,11 +8,11 @@ if (!$is_member) {
 // 사용후기 작성 설정에 따른 체크
 check_itemuse_write();
 
-$it_id       = escape_trim($_REQUEST['it_id']);
-$is_subject  = escape_trim($_POST['is_subject']);
-$is_content  = escape_trim($_POST['is_content']);
-$is_name     = escape_trim($_POST['is_name']);
-$is_password = escape_trim($_POST['is_password']);
+$it_id       = trim($_REQUEST['it_id']);
+$is_subject  = trim($_POST['is_subject']);
+$is_content  = trim($_POST['is_content']);
+$is_name     = trim($_POST['is_name']);
+$is_password = trim($_POST['is_password']);
 $is_score    = (int)$_POST['is_score'] > 5 ? 0 : (int)$_POST['is_score'];
 
 if ($w == "" || $w == "u") {
