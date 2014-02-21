@@ -75,7 +75,7 @@ if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
     <tr>
         <th scope="row"><label for="">쇼핑몰설치</label></th>
         <td>
-            <input name="g5_shop_install" type="checkbox" value="1" id="g5_shop_install">설치
+            <input name="g5_shop_install" type="checkbox" value="1" id="g5_shop_install" checked="checked">설치
         </td>
     </tr>
     </tbody>
