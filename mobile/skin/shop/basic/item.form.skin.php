@@ -364,52 +364,6 @@ $(function(){
     });
 });
 
-function content_swipe(direction)
-{
-    // 로딩 레이어
-    load_message();
-
-    var next_href = '<?php echo $next_href; ?>';
-    var prev_href = '<?php echo $prev_href; ?>';
-    var str;
-
-    if(direction == "left") {
-        str = next_href;
-    } else {
-        str = prev_href;
-    }
-
-    var href = str.match(/https?:\/{2}[^\"]+/gi);
-
-    setTimeout(function() {
-        document.location.href = href[0];
-    }, 500);
-}
-
-function load_message()
-{
-    var w = $(window).width();
-    var h = $(window).height();
-    var img_w = 64;
-    var img_h = 64;
-    var top, left;
-    var scr_top = $(window).scrollTop();
-
-    if (/iP(hone|od|ad)/.test(navigator.platform)) {
-        if(window.innerHeight - $(window).outerHeight(true) > 0)
-            h += (window.innerHeight - $(window).outerHeight(true));
-    }
-
-    top = parseInt((h - img_h) / 2);
-    left = parseInt((w - img_w) / 2);
-
-    var img = "<div id=\"loading_message\" style=\"top:"+scr_top+"px;width:"+w+"px;height:"+h+"px;\">";
-    img += "<img src=\"<?php echo G5_MSHOP_SKIN_URL; ?>/img/loading.gif\" style=\"top:"+top+"px;left:"+left+"px;\" />";
-    img += "</div>";
-
-    $("body").append(img);
-}
-
 // 상품보관
 function item_wish(f, it_id)
 {
