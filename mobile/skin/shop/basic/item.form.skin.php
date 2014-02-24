@@ -6,7 +6,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
-<script src="<?php echo G5_JS_URL; ?>/jquery.fancyalert.js"></script
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
