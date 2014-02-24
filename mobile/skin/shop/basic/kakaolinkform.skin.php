@@ -7,14 +7,20 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 
 <script src="<?php echo G5_JS_URL; ?>/kakao.link.js"></script>
 
-<div id="kakao_message">
-    <p><?php echo $title; ?></p>
-    <form name="fkakao" onsubmit="return kakaolink_send(this);">
-    <label for="message">메세지</label>
-    <textarea id="message" name="message"></textarea>
-    <input type="submit" value="보내기">
-    <button type="button" onclick="window.close();">취소</button>
-    </form>
+<div id="kakao_message" class="new_win">
+    <h1 id="win_title">카카오톡으로 보내기</h1>
+
+        <form name="fkakao" class="win_desc" onsubmit="return kakaolink_send(this);">
+        <div id="kakao_title"><?php echo $title; ?></div>
+        <div class="tbl_frm01">
+            <label for="message">메세지</label>
+            <textarea id="message" name="message"></textarea>
+        </div>
+        <div class="win_btn">
+            <input type="submit" value="보내기" class="btn_submit">
+            <button type="button" onclick="window.close();">취소</button>
+        </div>
+        </form>
 </div>
 
 <script>
