@@ -12,9 +12,9 @@ if (!$is_member) {
     alert_close("상품문의는 회원만 작성 가능합니다.");
 }
 
-$w     = escape_trim($_REQUEST['w']);
-$it_id = escape_trim($_REQUEST['it_id']);
-$iq_id = escape_trim($_REQUEST['iq_id']);
+$w     = trim($_REQUEST['w']);
+$it_id = trim($_REQUEST['it_id']);
+$iq_id = trim($_REQUEST['iq_id']);
 
 $chk_secret = '';
 

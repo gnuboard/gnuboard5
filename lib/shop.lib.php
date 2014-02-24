@@ -1421,6 +1421,9 @@ function get_sns_share_link($sns, $url, $title, $img)
         case 'googleplus':
             $str = '<a href="https://plus.google.com/share?url='.urlencode($url).'" class="share-googleplus" target="_blank"><img src="'.$img.'" alt="구글플러스에 공유"></a>';
             break;
+        case 'kakaotalk':
+            $str = '<button type="button" onclick="kakaolink_message(this);"><img src="'.$img.'" alt="카카오톡링크 보내기"></button>';
+            break;
     }
 
     return $str;
@@ -1466,29 +1469,6 @@ function get_coupon_id()
     $str = preg_replace("/([0-9A-Z]{4})([0-9A-Z]{4})([0-9A-Z]{4})([0-9A-Z]{4})/", "\\1-\\2-\\3-\\4", $str);
 
     return $str;
-}
-
-
-// array_map() 대체
-function array_add_callback($func, $array)
-{
-    if(!$func) {
-        return;
-    }
-
-    if(is_array($array)) {
-        foreach($array as $key => $value) {
-            if(is_array($value)) {
-                $array[$key] = array_add_callback($func, $value);
-            } else {
-                $array[$key] = call_user_func($func, $value);
-            }
-        }
-    } else {
-        $array = call_user_func($func, $array);
-    }
-
-    return $array;
 }
 
 

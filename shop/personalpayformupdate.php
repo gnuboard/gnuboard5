@@ -1,14 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if(get_magic_quotes_gpc())
-{
-    $_GET  = array_add_callback("stripslashes", $_GET);
-    $_POST = array_add_callback("stripslashes", $_POST);
-}
-$_GET  = array_add_callback("mysql_real_escape_string", $_GET);
-$_POST = array_add_callback("mysql_real_escape_string", $_POST);
-
 // 개인결제 정보
 $pp_check = false;
 $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['pp_id']}' and pp_use = '1' ";

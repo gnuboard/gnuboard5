@@ -1,15 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if(get_magic_quotes_gpc())
-{
-    $_GET  = array_add_callback("stripslashes", $_GET);
-    $_POST = array_add_callback("stripslashes", $_POST);
-}
-
-$_GET  = array_add_callback("mysql_real_escape_string", $_GET);
-$_POST = array_add_callback("mysql_real_escape_string", $_POST);
-
 // 장바구니가 비어있는가?
 if (get_session("ss_direct"))
     $tmp_cart_id = get_session('ss_cart_direct');

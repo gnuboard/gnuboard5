@@ -23,8 +23,8 @@ for ($i=0; $row_nw=sql_fetch_array($result); $i++)
 ?>
 
 <!-- 팝업레이어 시작 { -->
-<div id="hd_pops_<?php echo $nw['nw_id'] ?>" class="hd_pops" style="top:<?php echo $nw['nw_top']?>px;left:<?php echo $nw['nw_left']?>px;width:<?php echo $nw['nw_width'] ?>px;height:<?php echo $nw['nw_height'] ?>px">
-    <div class="hd_pops_con">
+<div id="hd_pops_<?php echo $nw['nw_id'] ?>" class="hd_pops" style="top:<?php echo $nw['nw_top']?>px;left:<?php echo $nw['nw_left']?>px">
+    <div class="hd_pops_con" style="width:<?php echo $nw['nw_width'] ?>px;height:<?php echo $nw['nw_height'] ?>px">
         <?php echo conv_content($nw['nw_content'], 1); ?>
     </div>
     <div class="hd_pops_footer">

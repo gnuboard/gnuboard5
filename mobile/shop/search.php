@@ -4,14 +4,14 @@ include_once('./_common.php');
 $g5['title'] = "상품 검색 결과";
 include_once(G5_MSHOP_PATH.'/_head.php');
 
-$q       = utf8_strcut(escape_trim($_GET['q']), 30, "");
-$qname   = escape_trim($_GET['qname']);
-$qexplan = escape_trim($_GET['qexplan']);
-$qid     = escape_trim($_GET['qid']);
-$qcaid   = escape_trim($_GET['qcaid']);
-$qfrom   = escape_trim($_GET['qfrom']);
-$qto     = escape_trim($_GET['qto']);
-$qsort   = escape_trim($_GET['qsort']);
+$q       = utf8_strcut(trim($_GET['q']), 30, "");
+$qname   = trim($_GET['qname']);
+$qexplan = trim($_GET['qexplan']);
+$qid     = trim($_GET['qid']);
+$qcaid   = trim($_GET['qcaid']);
+$qfrom   = trim($_GET['qfrom']);
+$qto     = trim($_GET['qto']);
+$qsort   = trim($_GET['qsort']);
 
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만

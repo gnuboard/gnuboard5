@@ -1,14 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if(get_magic_quotes_gpc())
-{
-    $_GET  = array_add_callback("stripslashes", $_GET);
-    $_POST = array_add_callback("stripslashes", $_POST);
-}
-$_GET  = array_add_callback("mysql_real_escape_string", $_GET);
-$_POST = array_add_callback("mysql_real_escape_string", $_POST);
-
 // 결제등록 완료 체크
 if($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == '')
     alert('결제등록 요청 후 주문해 주십시오.');

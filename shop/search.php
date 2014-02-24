@@ -9,14 +9,14 @@ if (G5_IS_MOBILE) {
 $g5['title'] = "상품 검색 결과";
 include_once('./_head.php');
 
-$q       = utf8_strcut(escape_trim($_GET['q']), 30, "");
-$qname   = escape_trim($_GET['qname']);
-$qexplan = escape_trim($_GET['qexplan']);
-$qid     = escape_trim($_GET['qid']);
-$qcaid   = escape_trim($_GET['qcaid']);
-$qfrom   = escape_trim($_GET['qfrom']);
-$qto     = escape_trim($_GET['qto']);
-$qsort   = escape_trim($_GET['qsort']);
+$q       = utf8_strcut(trim($_GET['q']), 30, "");
+$qname   = trim($_GET['qname']);
+$qexplan = trim($_GET['qexplan']);
+$qid     = trim($_GET['qid']);
+$qcaid   = trim($_GET['qcaid']);
+$qfrom   = trim($_GET['qfrom']);
+$qto     = trim($_GET['qto']);
+$qsort   = trim($_GET['qsort']);
 
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
@@ -36,9 +36,9 @@ if ($q) {
     for ($i=0; $i<count($arr); $i++) {
         $word = trim($arr[$i]);
         if (!$word) continue;
-    
+
         $concat = array();
-        if ($search_all || $qname) 
+        if ($search_all || $qname)
             $concat[] = "a.it_name";
         if ($search_all || $qexplan)
             $concat[] = "a.it_explan2";
@@ -49,7 +49,7 @@ if ($q) {
         $detail_where[] = $concat_fields." like '%$word%' ";
 
         // 인기검색어
-        $sql = " insert into {$g5['popular_table']} set pp_word = '$word', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' "; 
+        $sql = " insert into {$g5['popular_table']} set pp_word = '$word', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql, FALSE);
     }
 
@@ -59,7 +59,7 @@ if ($q) {
 if ($qcaid)
     $where[] = " a.ca_id like '$qcaid%' ";
 
-if ($qfrom || $qto) 
+if ($qfrom || $qto)
     $where[] = " a.it_price between '$qfrom' and '$qto' ";
 
 $sql_where = " where " . implode(" and ", $where);
@@ -69,7 +69,7 @@ $qsort  = strtolower($qsort);
 $qorder = strtolower($qorder);
 $order_by = "";
 // 아래의 $qsort 필드만 정렬이 가능하게 하여 다른 필드로 하여금 유추해 볼수 없게함
-if (($qsort == "it_sum_qty" || $qsort == "it_price" || $qsort == "it_use_avg" || $qsort == "it_use_cnt" || $qsort == "it_update_time") && 
+if (($qsort == "it_sum_qty" || $qsort == "it_price" || $qsort == "it_use_avg" || $qsort == "it_use_cnt" || $qsort == "it_update_time") &&
     ($qorder == "asc" || $qorder == "desc")) {
     $order_by = ' order by ' . $qsort . ' ' . $qorder . ' , it_order, it_id desc';
 }

@@ -7,6 +7,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 
 <script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
 <script src="<?php echo G5_JS_URL; ?>/jquery.fancyalert.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/kakao.link.js"></script>
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
@@ -64,6 +65,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
             <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_fb2.png'); ?>
             <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_twt2.png'); ?>
             <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_goo2.png'); ?>
+            <?php echo get_sns_share_link('kakaotalk', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_kko2.png'); ?>
         </div>
         <table class="sit_ov_tbl">
         <colgroup>
@@ -364,52 +366,6 @@ $(function(){
     });
 });
 
-function content_swipe(direction)
-{
-    // 로딩 레이어
-    load_message();
-
-    var next_href = '<?php echo $next_href; ?>';
-    var prev_href = '<?php echo $prev_href; ?>';
-    var str;
-
-    if(direction == "left") {
-        str = next_href;
-    } else {
-        str = prev_href;
-    }
-
-    var href = str.match(/https?:\/{2}[^\"]+/gi);
-
-    setTimeout(function() {
-        document.location.href = href[0];
-    }, 500);
-}
-
-function load_message()
-{
-    var w = $(window).width();
-    var h = $(window).height();
-    var img_w = 64;
-    var img_h = 64;
-    var top, left;
-    var scr_top = $(window).scrollTop();
-
-    if (/iP(hone|od|ad)/.test(navigator.platform)) {
-        if(window.innerHeight - $(window).outerHeight(true) > 0)
-            h += (window.innerHeight - $(window).outerHeight(true));
-    }
-
-    top = parseInt((h - img_h) / 2);
-    left = parseInt((w - img_w) / 2);
-
-    var img = "<div id=\"loading_message\" style=\"top:"+scr_top+"px;width:"+w+"px;height:"+h+"px;\">";
-    img += "<img src=\"<?php echo G5_MSHOP_SKIN_URL; ?>/img/loading.gif\" style=\"top:"+top+"px;left:"+left+"px;\" />";
-    img += "</div>";
-
-    $("body").append(img);
-}
-
 // 상품보관
 function item_wish(f, it_id)
 {
@@ -501,5 +457,52 @@ function fitem_submit(f)
     }
 
     return true;
+}
+
+// 카카오톡 링크 보내기 메세지 입력
+function kakaolink_message()
+{
+    var popup = "<div id=\"kakao_message\">";
+    popup += "<form name=\"fkakao\" onsubmit=\"return kakaolink_send(this);\">";
+    popup += "<label for=\"message\">메세지</label>";
+    popup += "<textarea id=\"message\" name=\"message\"></textarea>";
+    popup += "<input type=\"submit\" value=\"보내기\">";
+    popup += "<button type=\"button\" onclick=\"send_cancel();\">취소</button>";
+    popup += "</form>";
+    popup += "</div>";
+
+    $("form[name=fitem]").before(popup);
+}
+
+function send_cancel()
+{
+    $("#kakao_message").remove();
+}
+
+// 카카오톡 링크 보내기
+function kakaolink_send(f)
+{
+    var msg = f.message.value;
+    if(!msg) {
+        alert("메세지를 입력해 주세요");
+        return false;
+    }
+
+    /*
+    msg, url, appid, appname은 실제 서비스에서 사용하는 정보로 업데이트되어야 합니다.
+    */
+    kakao.link("talk").send({
+        msg : msg,
+        url : "<?php echo $sns_url; ?>",
+        appid : "<?php echo $_SERVER['HTTP_HOST']; ?>",
+        appver : "2.0",
+        appname : "<?php echo $config['cf_title']; ?>",
+        type : "link"
+    });
+
+    $("#kakao_message").remove();
+
+    return false;
+
 }
 </script>

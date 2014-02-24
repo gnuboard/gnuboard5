@@ -8,8 +8,8 @@ if (G5_IS_MOBILE) {
 
 include_once(G5_LIB_PATH.'/thumb.lib.php');
 
-$sfl = escape_trim($_REQUEST['sfl']);
-$stx = escape_trim($_REQUEST['stx']);
+$sfl = trim($_REQUEST['sfl']);
+$stx = trim($_REQUEST['stx']);
 
 $g5['title'] = '상품문의';
 include_once('./_head.php');
