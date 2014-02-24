@@ -5,16 +5,22 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
-<script src="<?php echo G5_JS_URL ?>/jquery.fancylist.js"></script>
-
 <!-- 상품진열 10 시작 { -->
 <?php
-for ($i=0; $row=sql_fetch_array($result); $i++) {
-    if ($i == 0) {
+for ($i=1; $row=sql_fetch_array($result); $i++) {
+    if ($this->list_mod >= 2) { // 1줄 이미지 : 2개 이상
+        if ($i%$this->list_mod == 0) $sct_last = ' sct_last'; // 줄 마지막
+        else if ($i%$this->list_mod == 1) $sct_last = ' sct_clear'; // 줄 첫번째
+        else $sct_last = '';
+    } else { // 1줄 이미지 : 1개
+        $sct_last = 'sct_clear';
+    }
+
+    if ($i == 1) {
         if ($this->css) {
-            echo "<ul id=\"sct_wrap\" class=\"{$this->css}\">\n";
+            echo "<ul class=\"{$this->css}\">\n";
         } else {
-            echo "<ul id=\"sct_wrap\" class=\"sct scr_10\">\n";
+            echo "<ul class=\"sct sct_10\">\n";
         }
     }
 
@@ -73,6 +79,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->view_sns) {
+        $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
         echo "<div class=\"sct_sns\">";
         echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_fb.png');
         echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_twt.png');
@@ -88,14 +96,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     echo "</li>\n";
 }
 
-if ($i > 0) echo "</ul>\n";
+if ($i > 1) echo "</ul>\n";
 
-if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
+if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
 <!-- } 상품진열 10 끝 -->
-
-<script>
-$(function() {
-    $("#sct_wrap").fancyList("li.sct_li", "sct_clear");
-});
-</script>

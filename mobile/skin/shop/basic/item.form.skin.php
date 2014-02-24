@@ -6,8 +6,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
-<script src="<?php echo G5_JS_URL; ?>/jquery.fancyalert.js"></script>
-<script src="<?php echo G5_JS_URL; ?>/kakao.link.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/jquery.fancyalert.js"></script
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
@@ -457,52 +456,5 @@ function fitem_submit(f)
     }
 
     return true;
-}
-
-// 카카오톡 링크 보내기 메세지 입력
-function kakaolink_message()
-{
-    var popup = "<div id=\"kakao_message\">";
-    popup += "<form name=\"fkakao\" onsubmit=\"return kakaolink_send(this);\">";
-    popup += "<label for=\"message\">메세지</label>";
-    popup += "<textarea id=\"message\" name=\"message\"></textarea>";
-    popup += "<input type=\"submit\" value=\"보내기\">";
-    popup += "<button type=\"button\" onclick=\"send_cancel();\">취소</button>";
-    popup += "</form>";
-    popup += "</div>";
-
-    $("form[name=fitem]").before(popup);
-}
-
-function send_cancel()
-{
-    $("#kakao_message").remove();
-}
-
-// 카카오톡 링크 보내기
-function kakaolink_send(f)
-{
-    var msg = f.message.value;
-    if(!msg) {
-        alert("메세지를 입력해 주세요");
-        return false;
-    }
-
-    /*
-    msg, url, appid, appname은 실제 서비스에서 사용하는 정보로 업데이트되어야 합니다.
-    */
-    kakao.link("talk").send({
-        msg : msg,
-        url : "<?php echo $sns_url; ?>",
-        appid : "<?php echo $_SERVER['HTTP_HOST']; ?>",
-        appver : "2.0",
-        appname : "<?php echo $config['cf_title']; ?>",
-        type : "link"
-    });
-
-    $("#kakao_message").remove();
-
-    return false;
-
 }
 </script>
