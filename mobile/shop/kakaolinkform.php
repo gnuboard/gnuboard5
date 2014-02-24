@@ -9,7 +9,7 @@ $skin = G5_MSHOP_SKIN_PATH.'/kakaolinkform.skin.php';
 if(is_file($skin))
     include_once($skin);
 else
-    echo '<p>'.str_replace(G5_PATH.'/', '', $skin).' 파일이 존재하지 않습니다.</p>';
+    echo '<div class="empty_list">'.str_replace(G5_PATH.'/', '', $skin).' 파일이 존재하지 않습니다.</div>';
 
 include_once(G5_PATH.'/tail.sub.php');
 ?>
