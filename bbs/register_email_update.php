@@ -3,8 +3,8 @@ include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-$mb_id    = escape_trim($_POST['mb_id']);
-$mb_email = escape_trim($_POST['mb_email']);
+$mb_id    = trim($_POST['mb_id']);
+$mb_email = trim($_POST['mb_email']);
 
 $sql = " select mb_name, mb_datetime from {$g5['member_table']} where mb_id = '{$mb_id}' and mb_email_certify <> '' ";
 $mb = sql_fetch($sql);

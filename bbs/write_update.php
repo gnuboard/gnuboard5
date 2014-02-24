@@ -50,8 +50,8 @@ if (empty($_POST)) {
 }
 
 $w = $_POST['w'];
-$wr_link1 = escape_trim(strip_tags($_POST['wr_link1']));
-$wr_link2 = escape_trim(strip_tags($_POST['wr_link2']));
+$wr_link1 = trim(strip_tags($_POST['wr_link1']));
+$wr_link2 = trim(strip_tags($_POST['wr_link2']));
 
 $notice_array = explode(",", $board['bo_notice']);
 
@@ -91,7 +91,7 @@ for ($i=1; $i<=10; $i++) {
     $var = "wr_$i";
     $$var = "";
     if (isset($_POST['wr_'.$i]) && $_POST['wr_'.$i]) {
-        $$var = escape_trim($_POST['wr_'.$i]);
+        $$var = trim($_POST['wr_'.$i]);
     }
 }
 
@@ -291,7 +291,7 @@ if ($w == '' || $w == 'r') {
     } else {
         $mb_id = '';
         // 비회원의 경우 이름이 누락되는 경우가 있음
-        $wr_name = escape_trim($_POST['wr_name']);
+        $wr_name = trim($_POST['wr_name']);
         if (!$wr_name)
             alert('이름은 필히 입력하셔야 합니다.');
         $wr_password = sql_password($wr_password);

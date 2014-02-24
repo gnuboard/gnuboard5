@@ -12,10 +12,10 @@ if (substr_count($wr_content, "&#") > 50) {
 @include_once($board_skin_path.'/write_comment_update.head.skin.php');
 
 $w = $_POST["w"];
-$wr_name  = escape_trim($_POST['wr_name']);
+$wr_name  = trim($_POST['wr_name']);
 $wr_email = '';
 if (!empty($_POST['wr_email']))
-    $wr_email = escape_trim($_POST['wr_email']);
+    $wr_email = trim($_POST['wr_email']);
 
 // 비회원의 경우 이름이 누락되는 경우가 있음
 if ($is_guest) {

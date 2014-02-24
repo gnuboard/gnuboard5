@@ -62,7 +62,7 @@ if ($_POST['act_button'] == "선택수정") {
         $k = $_POST['chk'][$i];
 
         // include 전에 $bo_table 값을 반드시 넘겨야 함
-        $tmp_bo_table = escape_trim($_POST['board_table'][$k]);
+        $tmp_bo_table = trim($_POST['board_table'][$k]);
         include ('./board_delete.inc.php');
     }
 

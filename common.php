@@ -205,7 +205,7 @@ if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
 $qstr = '';
 
 if (isset($_REQUEST['sca']))  {
-    $sca = escape_trim($_REQUEST['sca']);
+    $sca = trim($_REQUEST['sca']);
     if ($sca)
         $qstr .= '&amp;sca=' . urlencode($sca);
 } else {
@@ -213,7 +213,7 @@ if (isset($_REQUEST['sca']))  {
 }
 
 if (isset($_REQUEST['sfl']))  {
-    $sfl = escape_trim($_REQUEST['sfl']);
+    $sfl = trim($_REQUEST['sfl']);
     $sfl = preg_replace("/[\<\>\'\"\%\=\(\)\s]/", "", $sfl);
     if ($sfl)
         $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
@@ -223,7 +223,7 @@ if (isset($_REQUEST['sfl']))  {
 
 
 if (isset($_REQUEST['stx']))  { // search text (검색어)
-    $stx = escape_trim($_REQUEST['stx']);
+    $stx = trim($_REQUEST['stx']);
     if ($stx)
         $qstr .= '&amp;stx=' . urlencode($stx);
 } else {
@@ -231,7 +231,7 @@ if (isset($_REQUEST['stx']))  { // search text (검색어)
 }
 
 if (isset($_REQUEST['sst']))  {
-    $sst = escape_trim($_REQUEST['sst']);
+    $sst = trim($_REQUEST['sst']);
     if ($sst)
         $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 } else {
@@ -283,7 +283,7 @@ if (isset($_REQUEST['wr_id'])) {
 }
 
 if (isset($_REQUEST['bo_table'])) {
-    $bo_table = escape_trim($_REQUEST['bo_table']);
+    $bo_table = trim($_REQUEST['bo_table']);
     $bo_table = substr($bo_table, 0, 20);
 } else {
     $bo_table = '';
@@ -291,7 +291,7 @@ if (isset($_REQUEST['bo_table'])) {
 
 // URL ENCODING
 if (isset($_REQUEST['url'])) {
-    $url = escape_trim($_REQUEST['url']);
+    $url = trim($_REQUEST['url']);
     $urlencode = urlencode($url);
 } else {
     $url = '';
@@ -303,7 +303,7 @@ if (isset($_REQUEST['url'])) {
 }
 
 if (isset($_REQUEST['gr_id'])) {
-    $gr_id = escape_trim($_REQUEST['gr_id']);
+    $gr_id = trim($_REQUEST['gr_id']);
 } else {
     $gr_id = '';
 }

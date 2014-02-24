@@ -4,8 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
-$target_table   = escape_trim($_POST['target_table']);
-$target_subject = escape_trim($_POST['target_subject']);
+$target_table   = trim($_POST['target_table']);
+$target_subject = trim($_POST['target_subject']);
 
 if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table)) {
     alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)');
