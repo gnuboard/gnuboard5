@@ -296,7 +296,7 @@ $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
         <li><a href="<?php echo $href; ?>&amp;info=qa" target="_blank">상품문의 <span class="item_qa_count"><?php echo $item_qa_count; ?></span></a></li>
         <?php if ($default['de_baesong_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=dvr" target="_blank">배송정보</a></li><?php } ?>
         <?php if ($default['de_change_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=ex" target="_blank">교환정보</a></li><?php } ?>
-        <?php if($default['de_rel_list_use']) {?>
+        <?php if($default['de_mobile_rel_list_use']) {?>
         <li><a href="<?php echo $href; ?>&amp;info=rel" target="_blank">관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
         <?php } ?>
     </ul>

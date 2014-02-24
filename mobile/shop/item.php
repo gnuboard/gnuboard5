@@ -105,13 +105,15 @@ $sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_i
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 
-// 관련상품의 개수를 얻음
-$sql = " select count(*) as cnt
-           from {$g5['g5_shop_item_relation_table']} a
-           left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
-          where a.it_id = '{$it['it_id']}' ";
-$row = sql_fetch($sql);
-$item_relation_count = $row['cnt'];
+if ($default['de_rel_list_use']) {
+    // 관련상품의 개수를 얻음
+    $sql = " select count(*) as cnt
+               from {$g5['g5_shop_item_relation_table']} a
+               left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
+              where a.it_id = '{$it['it_id']}' ";
+    $row = sql_fetch($sql);
+    $item_relation_count = $row['cnt'];
+}
 
 // 상품품절체크
 $is_soldout = is_soldout($it['it_id']);

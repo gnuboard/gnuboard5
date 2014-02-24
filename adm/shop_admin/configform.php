@@ -55,6 +55,15 @@ if(!isset($default['de_shop_layout_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_shop_layout_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_root_index_use` ", true);
 }
+
+// 모바일 관련상품 설정 필드추가
+if(!isset($default['de_mobile_rel_list_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_mobile_rel_list_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_rel_img_height`,
+                    ADD `de_mobile_rel_list_skin` varchar(255) NOT NULL DEFAULT '' AFTER `de_mobile_rel_list_use`,
+                    ADD `de_mobile_rel_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_rel_list_skin`,
+                    ADD `de_mobile_rel_img_height` int(11) NOT NULL DEFAULT ' 0' AFTER `de_mobile_rel_img_width`", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -762,6 +771,22 @@ if(!isset($default['de_shop_layout_use'])) {
                 <input type="text" name="de_rel_list_mod" value="<?php echo $default['de_rel_list_mod']; ?>" id="de_rel_list_mod" class="frm_input" size="3">
                 <label for="de_rel_list_use">출력</label>
                 <input type="checkbox" name="de_rel_list_use" value="1" id="de_rel_list_use" <?php echo $default['de_rel_list_use']?"checked":""; ?>>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">모바일 관련상품출력</th>
+            <td>
+                <?php echo help("관련상품의 경우 등록된 상품은 모두 출력하므로 '출력할 줄 수'는 설정하지 않습니다. 이미지높이를 0으로 설정하면 상품이미지를 이미지폭에 비례하여 생성합니다."); ?>
+                <label for="de_mobile_rel_list_skin">스킨</label>
+                <select name="de_mobile_rel_list_skin" id="de_mobile_rel_list_skin">
+                    <?php echo get_list_skin_options("^relation.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_rel_list_skin']); ?>
+                </select>
+                <label for="de_mobile_rel_img_width">이미지폭</label>
+                <input type="text" name="de_mobile_rel_img_width" value="<?php echo $default['de_mobile_rel_img_width']; ?>" id="de_mobile_rel_img_width" class="frm_input" size="3">
+                <label for="de_mobile_rel_img_height">이미지높이</label>
+                <input type="text" name="de_mobile_rel_img_height" value="<?php echo $default['de_mobile_rel_img_height']; ?>" id="de_mobile_rel_img_height" class="frm_input" size="3">
+                <label for="de_mobile_rel_list_use">출력</label>
+                <input type="checkbox" name="de_mobile_rel_list_use" value="1" id="de_mobile_rel_list_use" <?php echo $default['de_mobile_rel_list_use']?"checked":""; ?>>
             </td>
         </tr>
         <tr>
