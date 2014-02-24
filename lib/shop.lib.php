@@ -1379,6 +1379,8 @@ function relation_item($it_id, $width, $height, $rows=3)
 // 상품이미지에 유형 아이콘 출력
 function item_icon($it)
 {
+    global $g5;
+
     $icon = '<span class="sit_icon">';
     // 품절
     if (is_soldout($it['it_id']))
@@ -1398,6 +1400,20 @@ function item_icon($it)
 
     if ($it['it_type5'])
         $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_discount.gif" alt="할인상품">';
+
+    // 쿠폰상품
+    $sql = " select count(*) as cnt
+                from {$g5['g5_shop_coupon_table']}
+                where cp_start <= '".G5_TIME_YMD."'
+                  and cp_end >= '".G5_TIME_YMD."'
+                  and (
+                        ( cp_method = '0' and cp_target = '{$it['it_id']}' )
+                        OR
+                        ( cp_method = '1' and ( cp_target IN ( '{$it['ca_id']}', '{$it['ca_id2']}', '{$it['ca_id3']}' ) ) )
+                      ) ";
+    $row = sql_fetch($sql);
+    if($row['cnt'])
+        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_cp.gif" alt="쿠폰상품">';
 
     $icon .= '</span>';
 
