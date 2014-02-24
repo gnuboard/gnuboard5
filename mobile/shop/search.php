@@ -4,15 +4,6 @@ include_once('./_common.php');
 $g5['title'] = "상품 검색 결과";
 include_once(G5_MSHOP_PATH.'/_head.php');
 
-$q       = utf8_strcut(trim($_GET['q']), 30, "");
-$qname   = trim($_GET['qname']);
-$qexplan = trim($_GET['qexplan']);
-$qid     = trim($_GET['qid']);
-$qcaid   = trim($_GET['qcaid']);
-$qfrom   = trim($_GET['qfrom']);
-$qto     = trim($_GET['qto']);
-$qsort   = trim($_GET['qsort']);
-
 // QUERY 문에 공통적으로 들어가는 내용
 // 상품명에 검색어가 포한된것과 상품판매가능인것만
 $sql_common = " from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b ";
@@ -22,8 +13,17 @@ $where[] = " (a.ca_id = b.ca_id and a.it_use = 1 and b.ca_use = 1) ";
 
 $search_all = true;
 // 상세검색 이라면
-if (isset($qname) || isset($qexplan) || isset($qid))
+if (isset($_GET['qname']) || isset($_GET['qexplan']) || isset($_GET['qid']))
     $search_all = false;
+
+$q       = utf8_strcut(trim($_GET['q']), 30, "");
+$qname   = trim($_GET['qname']);
+$qexplan = trim($_GET['qexplan']);
+$qid     = trim($_GET['qid']);
+$qcaid   = trim($_GET['qcaid']);
+$qfrom   = trim($_GET['qfrom']);
+$qto     = trim($_GET['qto']);
+$qsort   = trim($_GET['qsort']);
 
 if ($q) {
     $arr = explode(" ", $q);
