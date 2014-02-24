@@ -38,7 +38,7 @@ if(openwin != null) {
 
 <div id="sod_fin">
 
-    <p>주문번호 <strong><?php echo $od_id; ?></strong></p>
+    <div id="sod_fin_no">주문번호 <strong><?php echo $od_id; ?></strong></div>
 
     <section id="sod_fin_list">
         <h2>주문하신 상품</h2>

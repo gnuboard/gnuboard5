@@ -368,6 +368,8 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 /* 주문상세내역 */
 #sod_fin {}
 
+#sod_fin_no {margin:0 0 20px}
+
 #sod_fin_list h2 {margin:0 0 10px}
 
 #sod_sts_wrap {margin:0 0 10px;text-align:right}

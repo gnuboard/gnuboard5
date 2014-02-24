@@ -734,6 +734,8 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 /* 주문상세내역 */
 #sod_fin {}
 
+#sod_fin_no {margin:0 0 20px}
+
 #sod_sts_wrap {margin:0 0 10px;text-align:right}
 #sod_sts_explan {display:none}
 
