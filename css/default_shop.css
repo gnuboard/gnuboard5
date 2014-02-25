@@ -825,7 +825,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #ssch_frm strong, #ssch_frm .ssch_lbl {display:inline-block;width:100px;font-weight:bold}
 #ssch_frm .frm_input {background:#fff}
 #ssch_frm .btn_submit {padding:0 8px;height:24px}
-#ssch_frm p {margin:10px 0 0;border-top:1px solid #e9e9e9}
+#ssch_frm p {padding:10px 0;border-top:1px solid #e9e9e9;line-height:1.5em}
 #ssch_frm #ssch_sort {float:left;margin:0;padding:0;list-style:none;zoom:1}
 #ssch_frm #ssch_sort:after {display:block;visibility:hidden;clear:both;content:""}
 #ssch_frm #ssch_sort li {float:left;margin:0 1px 0 0}
