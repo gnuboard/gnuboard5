@@ -1840,19 +1840,10 @@ function is_soldout($it_id)
         $result = sql_query($sql);
 
         for($i=0; $row=sql_fetch_array($result); $i++) {
-            // 주문대기수량
-            $sql = " select SUM(ct_qty) as qty from {$g5['g5_shop_cart_table']}
-                      where it_id = '$it_id'
-                        and io_id = '{$row['io_id']}'
-                        and io_type = '{$row['io_type']}'
-                        and ct_stock_use = 0
-                        and ct_status in ('주문', '입금', '준비') ";
-            $sum = sql_fetch($sql);
-
             // 옵션 재고수량
             $stock_qty = get_option_stock_qty($it_id, $row['io_id'], $row['io_type']);
 
-            if($stock_qty - $sum['qty'] <= 0)
+            if($stock_qty <= 0)
                 $count++;
         }
 
@@ -1860,19 +1851,10 @@ function is_soldout($it_id)
         if($i == $count)
             $soldout = true;
     } else {
-        // 주문대기수량
-        $sql = " select SUM(ct_qty) as qty from {$g5['g5_shop_cart_table']}
-                  where it_id = '$it_id'
-                    and io_id = ''
-                    and io_type = '0'
-                    and ct_stock_use = 0
-                    and ct_status in ('주문', '입금', '준비') ";
-        $sum = sql_fetch($sql);
-
         // 상품 재고수량
         $stock_qty = get_it_stock_qty($it_id);
 
-        if($stock_qty - $sum['qty'] <= 0)
+        if($stock_qty <= 0)
             $soldout = true;
     }
 
