@@ -289,6 +289,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             <?php } ?>
             <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a>
             <a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a>
+            <?php if(!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
+            <a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');">재입고SMS 알림등록</a>
+            <?php } ?>
         </div>
 
         <script>
@@ -314,6 +317,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
                 opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
                 popup_window(url, "itemrecommend", opt);
             }
+        }
+
+        // 재입고SMS 알림
+        function popup_stocksms(it_id)
+        {
+            url = "<?php echo G5_SHOP_URL; ?>/itemstocksms.php?it_id=" + it_id;
+            opt = "scrollbars=yes,width=616,height=420,top=10,left=10";
+            popup_window(url, "itemstocksms", opt);
         }
         </script>
     </section>

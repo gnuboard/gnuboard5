@@ -11,7 +11,9 @@ for ($i=0; $i<count($_POST['it_id']); $i++)
 {
     $sql = "update {$g5['g5_shop_item_table']}
                set it_stock_qty    = '{$_POST['it_stock_qty'][$i]}',
-                   it_use = '{$_POST['it_use'][$i]}'
+                   it_use          = '{$_POST['it_use'][$i]}',
+                   it_soldout      = '{$_POST['it_soldout'][$i]}',
+                   it_stock_sms    = '{$_POST['it_stock_sms'][$i]}'
              where it_id = '{$_POST['it_id'][$i]}' ";
     sql_query($sql);
 }

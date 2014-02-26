@@ -385,6 +385,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_use` tinyint(4) NOT NULL DEFAULT '0',
   `it_soldout` tinyint(4) NOT NULL DEFAULT '0',
   `it_stock_qty` int(11) NOT NULL DEFAULT '0',
+  `it_stock_sms` tinyint(4) NOT NULL DEFAULT '0',
   `it_noti_qty` int(11) NOT NULL DEFAULT '0',
   `it_sc_type` tinyint(4) NOT NULL DEFAULT '0',
   `it_sc_method` tinyint(4) NOT NULL DEFAULT '0',
@@ -702,4 +703,22 @@ CREATE TABLE IF NOT EXISTS `g5_shop_wish` (
   `wi_ip` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`wi_id`),
   KEY `index1` (`mb_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_shop_item_stocksms`
+--
+
+DROP TABLE IF EXISTS `g5_shop_item_stocksms`;
+CREATE TABLE IF NOT EXISTS `g5_shop_item_stocksms` (
+  `ss_id` int(11) NOT NULL AUTO_INCREMENT,
+  `it_id` varchar(20) NOT NULL DEFAULT '',
+  `ss_hp` varchar(255) NOT NULL DEFAULT '',
+  `ss_send` tinyint(4) NOT NULL DEFAULT '0',
+  `ss_send_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ss_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ss_ip` varchar(25) NOT NULL DEFAULT '',
+  PRIMARY KEY (`ss_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
