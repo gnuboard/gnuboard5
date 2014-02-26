@@ -7,8 +7,8 @@ if (!$is_member) {
 
 $iq_id = trim($_REQUEST['iq_id']);
 $iq_subject = trim($_POST['iq_subject']);
-$iq_question = trim(stripslashes($_POST['iq_question']));
-$iq_answer = trim(stripslashes($_POST['iq_answer']));
+$iq_question = trim($_POST['iq_question']);
+$iq_answer = trim($_POST['iq_answer']);
 $hash = trim($_REQUEST['hash']);
 
 if ($w == "" || $w == "u") {
