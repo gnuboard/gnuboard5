@@ -39,7 +39,9 @@ $sql  = " select it_id,
                  it_name,
                  it_use,
                  it_stock_qty,
-                 it_noti_qty
+                 it_stock_sms,
+                 it_noti_qty,
+                 it_soldout
            $sql_common
           order by $sort1 $sort2
           limit $from_record, $rows ";
@@ -118,6 +120,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col">가재고</th>
         <th scope="col">재고수정</th>
         <th scope="col"><a href="<?php echo title_sort("it_use") . "&amp;$qstr1"; ?>">판매</a></th>
+        <th scope="col"><a href="<?php echo title_sort("it_soldout") . "&amp;$qstr1"; ?>">품절</a></th>
+        <th scope="col"><a href="<?php echo title_sort("it_stock_sms") . "&amp;$qstr1"; ?>">재입고알림</a></th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -160,18 +164,20 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>
         </td>
-        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
+        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str(stripslashes($row['it_name']), 60, "&#133"); ?></a></td>
         <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo $it_stock_qty; ?></td>
         <td class="td_num"><?php echo number_format($wait_qty); ?></td>
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
         <td class="td_num"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input" size="10" autocomplete="off"></td>
         <td class="td_chk"><input type="checkbox" name="it_use[<?php echo $i; ?>]" value="1" <?php echo ($row['it_use'] ? "checked" : ""); ?>></td>
+        <td class="td_chk"><input type="checkbox" name="it_soldout[<?php echo $i; ?>]" value="1" <?php echo ($row['it_soldout'] ? "checked" : ""); ?>></td>
+        <td class="td_chk"><input type="checkbox" name="it_stock_sms[<?php echo $i; ?>]" value="1" <?php echo ($row['it_stock_sms'] ? "checked" : ""); ?>></td>
         <td class="td_mngsmall"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>">수정</a></td>
     </tr>
     <?php
     }
     if (!$i)
-        echo '<tr><td colspan="8" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="10" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
     ?>
     </tbody>
     </table>

@@ -101,11 +101,13 @@ if($_FILES['excelfile']['tmp_name']) {
         // 주문정보
         $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
         if (!$od) {
+            $fail_count++;
             $fail_od_id[] = $od_id;
             continue;
         }
 
-        if($od['od_status'] == '준비') {
+        if($od['od_status'] != '준비') {
+            $fail_count++;
             $fail_od_id[] = $od_id;
             continue;
         }
@@ -117,6 +119,8 @@ if($_FILES['excelfile']['tmp_name']) {
         // 주문정보 업데이트
         order_update_delivery($od_id, $od['mb_id'], '배송', $delivery);
         change_status($od_id, '준비', '배송');
+
+        $succ_count++;
 
         // SMS
         if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'] && $default['de_sms_use5']) {

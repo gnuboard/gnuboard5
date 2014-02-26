@@ -181,7 +181,7 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
             echo '<div>'.$error.'</div>';
         }
 
-        $query_string .= 'ca_id='.$ca_id;
+        $query_string .= 'ca_id='.$ca_id.'&amp;q='.urlencode($q);
         $query_string .='&amp;qsort='.$qsort.'&amp;qorder='.$qorder;
         echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$query_string.'&amp;page=');
         ?>

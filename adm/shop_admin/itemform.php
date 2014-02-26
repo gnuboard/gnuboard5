@@ -88,6 +88,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $script .= "ca_sell_email['{$row['ca_id']}'] = '{$row['ca_sell_email']}';\n";
 }
 
+// 재입고알림 설정 필드 추가
+if(!sql_query(" select it_stock_sms from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_stock_sms` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_stock_qty` ", true);
+}
+
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_cate">상품분류</a></li>
 <li><a href="#anc_sitfrm_ini">기본정보</a></li>
@@ -505,6 +511,13 @@ $(function(){
                 <label for="chk_ca_it_soldout">분류적용</label>
                 <input type="checkbox" name="chk_all_it_soldout" value="1" id="chk_all_it_soldout">
                 <label for="chk_all_it_soldout">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_stock_sms">재입고SMS 알림</label></th>
+            <td colspan="2">
+                <?php echo help("상품이 품절인 경우에 체크해 놓으면 상품상세보기에서 고객이 재입고SMS 알림을 신청할 수 있게 됩니다."); ?>
+                <input type="checkbox" name="it_stock_sms" value="1" id="it_stock_sms" <?php echo ($it['it_stock_sms']) ? "checked" : ""; ?>> 예
             </td>
         </tr>
         <tr>
