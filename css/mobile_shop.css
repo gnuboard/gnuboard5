@@ -250,6 +250,8 @@ html.no-overflowscrolling #mod_option_frm {height:auto;max-height:10000px !impor
 #sod_frm {}
 #sod_frm h2 {margin:0 0 10px}
 
+#sod_frm p {margin:0 0 10px}
+
 #sod_list #cp_frm {z-index:10000;position:absolute;top:0;left:0;padding:10px;width:90%;height:auto !important;height:480px;max-height:480px;border:1px solid #c9c9c9;background:#f2f5f9;overflow-y:scroll}
 html.no-overflowscrolling #cp_frm {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
 

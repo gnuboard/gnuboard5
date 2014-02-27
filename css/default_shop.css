@@ -478,11 +478,13 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_ws_act {text-align:center}
 
 /* 주문서 작성 */
+.display_setup_message {margin:0 0 10px;padding:15px;border:1px solid #fccdff;background:#ffeef9}
+.display_setup_message strong {display:block;margin:0 0 10px}
+
 #sod_frm {}
 #sod_frm h2 {margin:0 0 10px}
 
-#display_setup_message {padding:15px;border:1px solid #fccdff;background:#ffeef9}
-#display_setup_message strong {display:block;margin:0 0 10px}
+#sod_frm p {margin:0 0 10px}
 
 #sod_list {position:relative}
 #sod_list #cp_frm {z-index:10000;position:absolute;top:0;left:99px;padding:20px;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll;overflow-x:none}
