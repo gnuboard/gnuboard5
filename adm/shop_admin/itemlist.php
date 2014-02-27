@@ -187,9 +187,18 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             </select>
             <?php echo $tmp_ca_list; ?><br>
         </td>
-        <td rowspan="3" class="td_mngsmall"><input type="text" name="it_order[<?php echo $i; ?>]" value="<?php echo $row['it_order']; ?>" class="frm_input" size="3"></td>
-        <td rowspan="3" class="td_chk"><input type="checkbox" name="it_use[<?php echo $i; ?>]" <?php echo ($row['it_use'] ? 'checked' : ''); ?> value="1"></td>
-        <td rowspan="3" class="td_chk"><input type="checkbox" name="it_soldout[<?php echo $i; ?>]" <?php echo ($row['it_soldout'] ? 'checked' : ''); ?> value="1"></td>
+        <td rowspan="3" class="td_mngsmall">
+            <label for="order_<?php echo $i; ?>" class="sound_only">순서</label>
+            <input type="text" name="it_order[<?php echo $i; ?>]" value="<?php echo $row['it_order']; ?>" id="order_<?php echo $i; ?>" class="frm_input" size="3">
+        </td>
+        <td rowspan="3" class="td_chk">
+            <label for="use_<?php echo $i; ?>" class="sound_only">판매여부</label>
+            <input type="checkbox" name="it_use[<?php echo $i; ?>]" <?php echo ($row['it_use'] ? 'checked' : ''); ?> value="1" id="use_<?php echo $i; ?>">
+        </td>
+        <td rowspan="3" class="td_chk">
+            <label for="soldout_<?php echo $i; ?>" class="sound_only">품절</label>
+            <input type="checkbox" name="it_soldout[<?php echo $i; ?>]" <?php echo ($row['it_soldout'] ? 'checked' : ''); ?> value="1" id="soldout_<?php echo $i; ?>">
+        </td>
         <td rowspan="3" class="td_num"><?php echo $row['it_hit']; ?></td>
         <td rowspan="3" class="td_mng">
             <a href="<?php echo $href; ?>"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>보기</a>
@@ -200,14 +209,29 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td rowspan="2" class="td_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?></a></td>
-        <td headers="" class="td_input"><input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" required class="frm_input required" size="30"></td>
-        <td headers="th_amt" class="td_numbig td_input"><input type="text" name="it_price[<?php echo $i; ?>]" value="<?php echo $row['it_price']; ?>" class="frm_input sit_amt" size="7"></td>
-        <td headers="th_camt" class="td_numbig td_input"><input type="text" name="it_cust_price[<?php echo $i; ?>]" value="<?php echo $row['it_cust_price']; ?>" class="frm_input sit_camt" size="7"></td>
+        <td headers="th_pc_title" class="td_input">
+            <label for="name_<?php echo $i; ?>" class="sound_only">PC 상품명</label>
+            <input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" id="name_<?php echo $i; ?>" required class="frm_input required" size="30">
+        </td>
+        <td headers="th_amt" class="td_numbig td_input">
+            <label for="price_<?php echo $i; ?>" class="sound_only">판매가격</label>
+            <input type="text" name="it_price[<?php echo $i; ?>]" value="<?php echo $row['it_price']; ?>" id="price_<?php echo $i; ?>" class="frm_input sit_amt" size="7">
+        </td>
+        <td headers="th_camt" class="td_numbig td_input">
+            <label for="cust_price_<?php echo $i; ?>" class="sound_only">시중가격</label>
+            <input type="text" name="it_cust_price[<?php echo $i; ?>]" value="<?php echo $row['it_cust_price']; ?>" id="cust_price_<?php echo $i; ?>" class="frm_input sit_camt" size="7">
+        </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
-        <td headers="" class="td_input"><input type="text" name="it_mobile_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_mobile_name'],250, "")); ?>" class="frm_input" size="30"></td>
+        <td headers="th_mo_title" class="td_input">
+            <label for="mobile_name_<?php echo $i; ?>" class="sound_only">모바일 상품명</label>
+            <input type="text" name="it_mobile_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_mobile_name'],250, "")); ?>" id="mobile_name_<?php echo $i; ?>" class="frm_input" size="30">
+        </td>
         <td headers="th_pt" class="td_numbig td_input"><?php echo $it_point; ?></td>
-        <td headers="th_qty" class="td_numbig td_input"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input sit_qty" size="7"></td>
+        <td headers="th_qty" class="td_numbig td_input">
+            <label for="stock_qty_<?php echo $i; ?>" class="sound_only">재고</label>
+            <input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" id="stock_qty_<?php echo $i; ?>" class="frm_input sit_qty" size="7">
+        </td>
     </tr>
     <?php
     }

@@ -168,10 +168,22 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <td class="td_num<?php echo $it_stock_qty_st; ?>"><?php echo $it_stock_qty; ?></td>
         <td class="td_num"><?php echo number_format($wait_qty); ?></td>
         <td class="td_num"><?php echo number_format($temporary_qty); ?></td>
-        <td class="td_num"><input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" class="frm_input" size="10" autocomplete="off"></td>
-        <td class="td_chk"><input type="checkbox" name="it_use[<?php echo $i; ?>]" value="1" <?php echo ($row['it_use'] ? "checked" : ""); ?>></td>
-        <td class="td_chk"><input type="checkbox" name="it_soldout[<?php echo $i; ?>]" value="1" <?php echo ($row['it_soldout'] ? "checked" : ""); ?>></td>
-        <td class="td_chk"><input type="checkbox" name="it_stock_sms[<?php echo $i; ?>]" value="1" <?php echo ($row['it_stock_sms'] ? "checked" : ""); ?>></td>
+        <td class="td_num">
+            <label for="stock_qty_<?php echo $i; ?>" class="sound_only">재고수정</label>
+            <input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" id="stock_qty_<?php echo $i; ?>" class="frm_input" size="10" autocomplete="off">
+        </td>
+        <td class="td_chk">
+            <label for="use_<?php echo $i; ?>" class="sound_only">판매</label>
+            <input type="checkbox" name="it_use[<?php echo $i; ?>]" value="1" id="use_<?php echo $i; ?>" <?php echo ($row['it_use'] ? "checked" : ""); ?>>
+        </td>
+        <td class="td_chk">
+            <label for="soldout_<?php echo $i; ?>" class="sound_only">품절</label>
+            <input type="checkbox" name="it_soldout[<?php echo $i; ?>]" value="1" id="soldout_<?php echo $i; ?>" <?php echo ($row['it_soldout'] ? "checked" : ""); ?>>
+        </td>
+        <td class="td_chk">
+            <label for="stock_sms_<?php echo $i; ?>" class="sound_only">재입고 알림</label>
+            <input type="checkbox" name="it_stock_sms[<?php echo $i; ?>]" value="1" id="stock_sms_<?php echo $i; ?>" <?php echo ($row['it_stock_sms'] ? "checked" : ""); ?>>
+        </td>
         <td class="td_mngsmall"><a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>">수정</a></td>
     </tr>
     <?php

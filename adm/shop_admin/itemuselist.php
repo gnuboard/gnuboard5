@@ -144,7 +144,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             </div>
         </td>
         <td class="td_num">
-            <select name="is_score[<?php echo $i; ?>]">
+            <label for="score_<?php echo $i; ?>" class="sound_only">평점</label>
+            <select name="is_score[<?php echo $i; ?>]" id="score_<?php echo $i; ?>">
             <option value="5" <?php echo get_selected($row['is_score'], "5"); ?>>매우만족</option>
             <option value="4" <?php echo get_selected($row['is_score'], "4"); ?>>만족</option>
             <option value="3" <?php echo get_selected($row['is_score'], "3"); ?>>보통</option>
@@ -152,7 +153,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <option value="1" <?php echo get_selected($row['is_score'], "1"); ?>>매우불만</option>
             </select>
         </td>
-        <td class="td_chk"><input type="checkbox" name="is_confirm[<?php echo $i; ?>]" <?php echo ($row['is_confirm'] ? 'checked' : ''); ?> value="1"></td>
+        <td class="td_chk">
+            <label for="confirm_<?php echo $i; ?>" class="sound_only">확인</label>
+            <input type="checkbox" name="is_confirm[<?php echo $i; ?>]" <?php echo ($row['is_confirm'] ? 'checked' : ''); ?> value="1" id="confirm_<?php echo $i; ?>">
+        </td>
         <td class="td_mngsmall">
             <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>수정</a>
         </td>
