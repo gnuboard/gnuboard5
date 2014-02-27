@@ -287,11 +287,11 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             <input type="submit" onclick="document.pressed=this.value;" value="바로구매" id="sit_btn_buy">
             <input type="submit" onclick="document.pressed=this.value;" value="장바구니" id="sit_btn_cart">
             <?php } ?>
+            <?php if(!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
+            <a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');" id="sit_btn_buy">재입고알림</a>
+            <?php } ?>
             <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a>
             <a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a>
-            <?php if(!$is_orderable && $it['it_soldout'] && $it['it_stock_sms']) { ?>
-            <a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');">재입고SMS 알림등록</a>
-            <?php } ?>
         </div>
 
         <script>

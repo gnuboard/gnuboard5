@@ -128,16 +128,16 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 
     ?>
     <tr class="<?php echo $bg; ?>">
-        <td>
+        <td class="td_chk">
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $it_name; ?> 알림요청</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
             <input type="hidden" name="ss_id[<?php echo $i; ?>]" value="<?php echo $row['ss_id']; ?>">
         </td>
         <td><?php echo $it_name; ?></td>
-        <td><?php echo $row['ss_hp']; ?></td>
-        <td><?php echo ($row['ss_send'] ? '전송완료' : '전송전'); ?></td>
-        <td><?php echo (is_null_time($row['ss_send_time']) ? '' : $row['ss_send_time']); ?></td>
-        <td><?php echo (is_null_time($row['ss_datetime']) ? '' : $row['ss_datetime']); ?></td>
+        <td class="td_telbig"><?php echo $row['ss_hp']; ?></td>
+        <td class="td_stat"><?php echo ($row['ss_send'] ? '전송완료' : '전송전'); ?></td>
+        <td class="td_datetime"><?php echo (is_null_time($row['ss_send_time']) ? '' : $row['ss_send_time']); ?></td>
+        <td class="td_datetime"><?php echo (is_null_time($row['ss_datetime']) ? '' : $row['ss_datetime']); ?></td>
     </tr>
     <?php
     }
