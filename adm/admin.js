@@ -64,3 +64,11 @@ function delete_confirm()
     else
         return false;
 }
+
+function delete_confirm2(msg)
+{
+    if(confirm(msg))
+        return true;
+    else
+        return false;
+}
