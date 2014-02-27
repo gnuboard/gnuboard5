@@ -148,11 +148,14 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </table>
 </div>
 
+<?php if ($is_admin == 'super') { ?>
+<div class="btn_list01 btn_list">
+    <input type="submit" name="act_button" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value">
+</div>
+<?php } ?>
+
 <div class="btn_confirm01 btn_confirm">
     <input type="submit" name="act_button" value="선택SMS전송" class="btn_submit" onclick="document.pressed=this.value">
-    <?php if ($is_admin == 'super') { ?>
-    <input type="submit" name="act_button" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value">
-    <?php } ?>
 </div>
 </form>
 
