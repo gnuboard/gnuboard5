@@ -87,9 +87,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 
 <div id="wrapper">
 
-    <aside id="stv">
-        <?php include(G5_SHOP_SKIN_PATH.'/boxtodayview.skin.php'); ?>
-    </aside>
+    <?php include(G5_SHOP_SKIN_PATH.'/boxtodayview.skin.php'); // 오늘 본 상품 ?>
 
     <div id="aside">
         <?php echo outlogin('shop_basic'); // 아웃로그인 ?>
