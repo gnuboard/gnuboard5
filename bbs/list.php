@@ -61,9 +61,46 @@ if(G5_IS_MOBILE) {
     $page_rows = $board['bo_page_rows'];
 }
 
+if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
+
+// 년도 2자리
+$today2 = G5_TIME_YMD;
+
+$list = array();
+$i = 0;
+$notice_count = 0;
+$notice_array = array();
+
+// 공지 처리
+if (!$sca && !$stx) {
+    $arr_notice = explode(',', trim($board['bo_notice']));
+    for ($k=0; $k<count($arr_notice); $k++) {
+        if (trim($arr_notice[$k])=='') continue;
+
+        $row = sql_fetch(" select * from {$write_table} where wr_id = '{$arr_notice[$k]}' ");
+
+        if (!$row['wr_id']) continue;
+
+        if($page == 1) {
+            $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
+            $list[$i]['is_notice'] = true;
+
+            $i++;
+        }
+
+        $notice_array[] = $row['wr_id'];
+        $notice_count++;
+    }
+}
+
 $total_page  = ceil($total_count / $page_rows);  // 전체 페이지 계산
-if (!$page) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $page_rows; // 시작 열을 구함
+
+if($page > 1 && $notice_count)
+    $from_record -= $notice_count;
+
+if($page == 1 && $notice_count)
+    $page_rows -= $notice_count;
 
 // 관리자라면 CheckBox 보임
 $is_checkbox = false;
@@ -85,7 +122,7 @@ if (!$sst) {
         $sst = $board['bo_sort_field'];
     } else {
         $sst  = "wr_num, wr_reply";
-    $sod = "";
+        $sod = "";
     }
 } else {
     // 게시물 리스트의 정렬 대상 필드가 아니라면 공백으로 (nasca 님 09.06.16)
@@ -101,39 +138,17 @@ if ($sst) {
 if ($sca || $stx) {
     $sql = " select distinct wr_parent from {$write_table} where {$sql_search} {$sql_order} limit {$from_record}, $page_rows ";
 } else {
-    $sql = " select * from {$write_table} where wr_is_comment = 0 {$sql_order} limit {$from_record}, $page_rows ";
+    $sql = " select * from {$write_table} where wr_is_comment = 0 ";
+    if($notice_count && !empty($notice_array))
+        $sql .= " and wr_id not in (".implode(', ', $notice_array).") ";
+    $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 }
 $result = sql_query($sql);
-
-// 년도 2자리
-$today2 = G5_TIME_YMD;
-
-$list = array();
-$i = 0;
-
-if (!$sca && !$stx) {
-    $arr_notice = explode(',', trim($board['bo_notice']));
-    for ($k=0; $k<count($arr_notice); $k++) {
-        if (trim($arr_notice[$k])=='') continue;
-
-        $row = sql_fetch(" select * from {$write_table} where wr_id = '{$arr_notice[$k]}' ");
-
-        if (!$row['wr_id']) continue;
-
-        $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
-        $list[$i]['is_notice'] = true;
-
-        $i++;
-    }
-}
 
 $k = 0;
 
 while ($row = sql_fetch_array($result))
 {
-    // 공지글인 경우는 해당글을 같은 페이지에서 다시 노출하지 않는다.
-    if ($arr_notice && in_array($row['wr_id'], $arr_notice)) continue;
-
     // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
     if ($sca || $stx)
         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
@@ -143,7 +158,10 @@ while ($row = sql_fetch_array($result))
         $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
     }
     $list[$i]['is_notice'] = false;
-    $list[$i]['num'] = $total_count - ($page - 1) * $page_rows - $k;
+    $list_num = $total_count - ($page - 1) * $page_rows;
+    if($page == 1)
+        $list_num -= $notice_count;
+    $list[$i]['num'] = $list_num - $k;
 
     $i++;
     $k++;
