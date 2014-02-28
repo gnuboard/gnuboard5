@@ -254,7 +254,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <div class="btn_confirm">
         <input type="submit" value="<?php echo $w==''?'회원가입':'정보수정'; ?>" id="btn_submit" class="btn_submit" accesskey="s">
-        <a href="<?php echo $g5['path'] ?>/" class="btn_cancel">취소</a>
+        <a href="<?php echo G5_URL; ?>/" class="btn_cancel">취소</a>
     </div>
     </form>
 
