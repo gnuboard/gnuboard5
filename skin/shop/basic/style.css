@@ -6,8 +6,10 @@
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 .gnb_1dli {position:relative}
 .gnb_1dli_on {color:#fff;text-decoration:none}
-.gnb_1da {display:block;padding:7px 10px;border-bottom:1px solid #f4f4f4;background:url('../shop/img/gnb_bg00.gif') #fff center right no-repeat;font-weight:bold;text-decoration:none}
-.gnb_1dli_on .gnb_1da {background:url('../shop/img/gnb_bg01.gif') #626870 center right no-repeat;color:#fff;text-decoration:none}
+.gnb_1da {display:block;padding:7px 10px;border-bottom:1px solid #f4f4f4;background-color:#fff;font-weight:bold;text-decoration:none}
+.gnb_1dam {background:url('img/gnb_bg00.gif') #fff center right no-repeat}
+.gnb_1dli_on .gnb_1da {background-color:#626870;color:#fff;text-decoration:none}
+.gnb_1dli_on .gnb_1dam {background:url('img/gnb_bg01.gif') #626870 center right no-repeat;color:#fff;text-decoration:none}
 .gnb_2dul {display:none;z-index:1000;position:absolute;border:1px solid #787f89}
 .gnb_1dli_over .gnb_2dul, .gnb_1dli_over2 .gnb_2dul {display:block;top:-1px;left:127px;width:130px;background:#fff}
 .gnb_2da {display:none}
