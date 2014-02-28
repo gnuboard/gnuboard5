@@ -14,6 +14,23 @@
 .gnb_1dli_over .gnb_2da {display:block;padding:0 10px;height:33px;border-bottom:1px solid #e9e9e9;line-height:2.9em !important;line-height:2.6em}
 .gnb_2da:focus, .gnb_2da:hover {background:#f2f5f9;text-decoration:none}
 
+/* 오늘 본 상품 */
+#stv {z-index:1001;position:relative;float:right;width:88px}
+#stv_list {position:absolute;width:88px;border:1px solid #e9e9e9;background:#fff}
+#stv_list h2 {padding:10px 0 8px;background:#f2f5f9;text-align:center;letter-spacing:-0.1em}
+#stv_pg {display:block;margin:5px 0 0}
+#stv_list p {padding:20px 0;text-align:center}
+#stv_btn {text-align:center;zoom:1}
+#stv_btn:after {display:block;visibility:hidden;clear:both;content:""}
+#stv_btn button {float:left;margin:0;padding:5px 0 4px;width:44px;border:0;background:#555;color:#fff;text-align:center}
+#stv_ul {margin:5px 0 10px;padding:0;list-style:none}
+.stv_item {display:none;padding:0 9px;text-align:center;word-break:break-all}
+.stv_item img {margin:5px 0}
+
+#stv_nb {margin:0;padding:0;border-top:1px solid #e9e9e9;background:#f2f5f9;list-style:none}
+#stv_nb li {text-align:center}
+#stv_nb a {display:block}
+
 /* aside:이벤트 링크 */
 #sev {margin:0 0 5px;padding:0 0 10px;border:1px solid #ecc9d6;background:#fff8fb}
 #sev h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
