@@ -29,13 +29,10 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
         {
             // 이미지 path 구함
             $p = parse_url($matches[1][$i]);
-            if(strpos($p['path'], "/data/") != 0)
-                $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+            if(strpos($p['path'], '/'.G5_DATA_DIR.'/') != 0)
+                $data_path = preg_replace('/^\/.*\/'.G5_DATA_DIR.'/', '/'.G5_DATA_DIR, $p['path']);
             else
                 $data_path = $p['path'];
-
-            if(!preg_match('/^\/'.G5_DATA_DIR.'/', $data_path))
-                continue;
 
             $srcfile = G5_PATH.$data_path;
 
@@ -105,13 +102,10 @@ function get_view_thumbnail($contents, $thumb_width=0)
 
         // 이미지 path 구함
         $p = parse_url($src);
-        if(strpos($p['path'], "/data/") != 0)
-            $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
+        if(strpos($p['path'], '/'.G5_DATA_DIR.'/') != 0)
+            $data_path = preg_replace('/^\/.*\/'.G5_DATA_DIR.'/', '/'.G5_DATA_DIR, $p['path']);
         else
             $data_path = $p['path'];
-
-        if(!preg_match('/^\/'.G5_DATA_DIR.'/', $data_path))
-            continue;
 
         $srcfile = G5_PATH.$data_path;
 
