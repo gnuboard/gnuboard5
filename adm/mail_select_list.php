@@ -94,7 +94,7 @@ include_once('./admin.head.php');
     while ($row=sql_fetch_array($result)) {
         $i++;
         $ma_list .= $cr . $row['mb_email'] . "||" . $row['mb_id'] . "||" . $row['mb_name'] . "||" . $row['mb_nick'] . "||" . $row['mb_datetime'];
-        $cr = "\n";
+        $cr = chr(30);
 
         $bg = 'bg'.($i%2);
     ?>
