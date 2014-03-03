@@ -58,29 +58,21 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #tnb a:focus, #tnb a:hover, #tnb a:active {text-decoration:none}
 #tnb img {margin-right:3px}
 
-/* gnb js off */
+/* 메인메뉴 */
 #gnb {position:relative;margin:-1px 0 0;border-top:1px dotted #dde4e9;border-bottom:1px solid #dde4e9;background:#ecf0f7}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #gnb #gnb_1dul {margin:0 auto !important;padding:0;width:970px;zoom:1}
 #gnb #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1dli {z-index:10;clear:both;zoom:1}
+.gnb_1dli {z-index:10;position:relative;float:left;zoom:1}
 .gnb_1dli:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1da {display:block;float:left;width:80px;height:35px;font-weight:bold;line-height:2.95em;text-decoration:none}
-.gnb_1da:focus, .gnb_1da:hover {text-decoration:none}
-.gnb_2dul {float:left;width:auto}
-.gnb_2dli {float:left}
-.gnb_2da {display:block;float:left;width:80px;height:35px;line-height:2.95em;text-decoration:none}
+.gnb_1da {display:block;float:left;padding:0 10px;width:80px;height:35px;background:url('../img/gnb_bg00.gif') center right no-repeat;font-weight:bold;line-height:2.95em;text-decoration:none}
+.gnb_1da:focus, .gnb_1da:hover {background:url('../img/gnb_bg00.gif') #333 center right no-repeat;text-decoration:none}
+.gnb_1dli_air a {background-color:#333;color:#fff}
+.gnb_1dli_on a {background-color:#333;color:#fff}
+.gnb_2dul {display:none;position:absolute;top:35px}
+.gnb_2da {display:block;width:80px;}
+.gnb_2da {display:inline-block;padding:0 10px;width:161px;height:35px;text-align:left;text-decoration:none;line-height:2.95em}
 .gnb_2da:focus, .gnb_2da:hover {text-decoration:none}
-/* gnb js on */
-.gnb_js {}
-.gnb_js #gnb_1dul {zoom:1}
-.gnb_js #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_js .gnb_1dli {clear:none;position:relative;float:left}
-.gnb_js .gnb_1da {text-align:center}
-.gnb_js .gnb_1dli_air a {float:none;background:#333;color:#fff}
-.gnb_js .gnb_1dli_on a {float:none;background:#333;color:#fff}
-.gnb_js .gnb_2dul {display:none;position:absolute;top:35px}
-.gnb_js .gnb_2da {display:inline-block;float:none !important;padding:0 10px;width:161px;text-align:left}
 .gnb_1dli_over .gnb_2dul {display:block;left:0;width:180px;background:#fff}
 .gnb_1dli_over2 .gnb_2dul {display:block;right:1px;width:180px;background:#fff}
 
