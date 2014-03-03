@@ -138,6 +138,13 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
                     height = h;
             });
 
+            $smt.each(function(index) {
+                if($(this).is(":visible")) {
+                    o_idx = index;
+                    return false;
+                }
+            });
+
             this.height(height);
             $smt.eq(o_idx).siblings().css("top", height+"px");
 
@@ -197,6 +204,10 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
             function set_interval() {
                 if(count > 1) {
                     clear_interval();
+
+                    if($("#btn_"+el_id).find("button.sctrl_stop").data("stop") == true)
+                        return;
+
                     intervals[el_id] = setInterval(top_rolling, settings.interval);
 
                     // control 버튼 class
@@ -238,6 +249,8 @@ $(function() {
 
     // 애니메이션 play
     $("#btn_smt_<?php echo $this->type; ?> button.sctrl_play").on("click", function() {
+        $("#btn_smt_<?php echo $this->type; ?> button.sctrl_stop").data("stop", false);
+
         var id = $(this).closest(".sctrl").attr("id").replace("btn_", "");
         $("#"+id).topRolling();
         //$("#"+id).topRolling({ interval: 2000, duration: 800 });
@@ -250,6 +263,8 @@ $(function() {
             $(this).children().addClass("sctrl_on").html("<b class=\"sound_only\">선택됨</b>");
             var id = $(this).closest(".sctrl").attr("id").replace("btn_", "");
             $("#"+id).topRolling("stop");
+
+            $(this).data("stop", true);
         }
     });
 });

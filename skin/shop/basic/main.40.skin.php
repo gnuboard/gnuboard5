@@ -184,6 +184,10 @@ if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\
             function set_interval() {
                 if(count > 1) {
                     clear_interval();
+
+                    if($("#btn_"+el_id).find("button.sctrl_stop").data("stop") == true)
+                        return;
+
                     intervals[el_id] = setInterval(itemlist_show, settings.interval);
 
                     // control 버튼 class
@@ -225,6 +229,8 @@ $(function() {
 
     // 애니메이션 play
     $("#btn_smt_<?php echo $this->type; ?> button.sctrl_play").on("click", function() {
+        $("#btn_smt_<?php echo $this->type; ?> button.sctrl_stop").data("stop", false);
+
         var id = $(this).closest(".sctrl").attr("id").replace("btn_", "");
         $("#"+id).itemlistShow();
         //$("#"+id).itemlistShow({ interval: 4000 });
@@ -237,6 +243,8 @@ $(function() {
             $(this).children().addClass("sctrl_on").html("<b class=\"sound_only\">선택됨</b>");
             var id = $(this).closest(".sctrl").attr("id").replace("btn_", "");
             $("#"+id).itemlistShow("stop");
+
+            $(this).data("stop", true);
         }
     });
 });
