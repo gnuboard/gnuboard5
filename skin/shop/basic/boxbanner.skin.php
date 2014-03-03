@@ -1,9 +1,12 @@
-<?php
+m<?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // 배너 출력
 $sql = " select * from {$g5['g5_shop_banner_table']} where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time and bn_position = '$position' order by bn_order, bn_id desc ";
 $result = sql_query($sql);
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
 <?php
