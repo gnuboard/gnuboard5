@@ -455,6 +455,7 @@ if($supply_count) {
 
 // 동일 분류내 상품 동일 옵션 적용
 $ca_fields = '';
+if(is_checked('chk_ca_it_basic'))               $ca_fields .= " , it_basic = '$it_basic' ";
 if(is_checked('chk_ca_it_order'))               $ca_fields .= " , it_order = '$it_order' ";
 if(is_checked('chk_ca_it_type'))                $ca_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
 if(is_checked('chk_ca_it_maker'))               $ca_fields .= " , it_maker = '$it_maker' ";
@@ -502,6 +503,7 @@ if($ca_fields) {
 
 // 모든 상품 동일 옵션 적용
 $all_fields = '';
+if(is_checked('chk_all_it_basic'))               $all_fields .= " , it_basic = '$it_basic' ";
 if(is_checked('chk_all_it_order'))               $all_fields .= " , it_order = '$it_order' ";
 if(is_checked('chk_all_it_type'))                $all_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
 if(is_checked('chk_all_it_maker'))               $all_fields .= " , it_maker = '$it_maker' ";
