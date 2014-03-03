@@ -17,7 +17,7 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
         $content = nl2br($content); 
 
     $mail = new PHPMailer(); // defaults to using php "mail()"
-    if (defined('G5_SMTP')) {
+    if (defined('G5_SMTP') && G5_SMTP) {
         $mail->IsSMTP(); // telling the class to use SMTP
         $mail->Host = G5_SMTP; // SMTP server
     }
