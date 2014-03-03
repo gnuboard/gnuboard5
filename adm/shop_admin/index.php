@@ -403,7 +403,7 @@ function get_max_value($arr)
                 }
 
                 if ($i == 0)
-                    echo '<li class="empty_table">자료가 없습니다.</li>';
+                    echo '<li class="empty_list">자료가 없습니다.</li>';
                 ?>
             </ul>
         </div>
