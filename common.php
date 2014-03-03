@@ -80,10 +80,10 @@ if (file_exists($dbconfig_file)) {
     }
 
     // mysql_real_escape_string 적용
-    $_POST    = array_map_deep('mysql_real_escape_string', $_POST);
-    $_GET     = array_map_deep('mysql_real_escape_string', $_GET);
-    $_COOKIE  = array_map_deep('mysql_real_escape_string', $_COOKIE);
-    $_REQUEST = array_map_deep('mysql_real_escape_string', $_REQUEST);
+    $_POST    = array_map_deep(G5_ESCAPE_FUNCTION, $_POST);
+    $_GET     = array_map_deep(G5_ESCAPE_FUNCTION, $_GET);
+    $_COOKIE  = array_map_deep(G5_ESCAPE_FUNCTION, $_COOKIE);
+    $_REQUEST = array_map_deep(G5_ESCAPE_FUNCTION, $_REQUEST);
     //==============================================================================
 
     // PHP 4.1.0 부터 지원됨
