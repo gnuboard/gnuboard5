@@ -51,7 +51,7 @@
 #scomm a:focus, #scomm a:hover {background:#f9f9f9}
 #scomm_empty {padding:15px 0;text-align:center}
 
-/* asdie:배너 */
+/* aside:배너 */
 #sbn_aside {margin:0 0 5px}
 #sbn_aside h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #sbn_aside ul {margin:0;padding:0;border:0;list-style:none}
