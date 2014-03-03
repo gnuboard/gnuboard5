@@ -1387,13 +1387,13 @@ function item_icon($it)
         $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_soldout.gif" alt="품절"> ';
 
     if ($it['it_type1'])
-        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_hit.gif" alt="최신상품">';
+        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_hit.gif" alt="히트상품">';
 
     if ($it['it_type2'])
-        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_rec.gif" alt="히트상품">';
+        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_rec.gif" alt="추천상품">';
 
     if ($it['it_type3'])
-        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_new.gif" alt="추천상품">';
+        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_new.gif" alt="최신상품">';
 
     if ($it['it_type4'])
         $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_best.gif" alt="인기상품">';
