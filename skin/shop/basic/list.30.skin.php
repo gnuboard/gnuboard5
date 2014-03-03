@@ -36,7 +36,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     echo "<li class=\"sct_li{$sct_last}\" style=\"padding:{$list_top_pad}px {$list_right_pad}px {$list_bottom_pad}px {$list_left_pad}px;width:{$list_width}px;height:{$list_height}px\">\n";
 
     if ($this->href) {
-        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a sct_img\">\n";
+        echo "<div class=\"sct_img\"><a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
     }
 
     if ($this->view_it_img) {
@@ -44,19 +44,19 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->href) {
-        echo "</a>\n";
+        echo "</a></div>\n";
     }
 
     if ($this->view_it_icon) {
-        echo "<span class=\"sct_icon\">".item_icon($row)."</span>\n";
+        echo "<div class=\"sct_icon\">".item_icon($row)."</div>\n";
     }
 
     if ($this->view_it_id) {
-        echo "<span class=\"sct_id\">&lt;".stripslashes($row['it_id'])."&gt;</span>\n";
+        echo "<div class=\"sct_id\">&lt;".stripslashes($row['it_id'])."&gt;</div>\n";
     }
 
     if ($this->href) {
-        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a sct_txt\">\n";
+        echo "<div class=\"sct_txt\"><a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
     }
 
     if ($this->view_it_name) {
@@ -64,7 +64,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->href) {
-        echo "</a>\n";
+        echo "</a></div>\n";
     }
 
     if ($this->view_it_basic && $row['it_basic']) {

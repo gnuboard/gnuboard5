@@ -30,7 +30,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             $j = $i - 1;
             if ($j%$tv_div['img_length']==0) $k++;
             $it_name = get_text($rowx['it_name']);
-            $img = get_it_image($tv_it_id, $tv_div['img_width'], $tv_div['img_height'], $tv_it_id);
+            $img = get_it_image($tv_it_id, $tv_div['img_width'], $tv_div['img_height'], $tv_it_id, '', $it_name);
             if ($i==1) echo '<ul id="stv_ul">'.PHP_EOL;
             echo '<li class="stv_item c'.$k.'">'.PHP_EOL;
             echo $img;
