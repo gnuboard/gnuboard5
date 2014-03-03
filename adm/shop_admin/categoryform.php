@@ -91,6 +91,12 @@ $frm_submit = '<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./categorylist.php?'.$qstr.'">목록</a>
 </div>';
+
+// 쿠폰 적용 불가 설정 필드 추가
+if(!sql_query(" select ca_nocoupon from {$g5['g5_shop_category_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
+                    ADD `ca_nocoupon` tinyint(4) NOT NULL DEFAULT '0' AFTER `ca_adult_use` ", true);
+}
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -249,6 +255,14 @@ $frm_submit = '<div class="btn_confirm01 btn_confirm">
             <td>
                 <?php echo help("재고가 없거나 일시적으로 판매를 중단하시려면 체크 해제하십시오.\n체크 해제하시면 상품 출력을 하지 않으며, 주문도 받지 않습니다."); ?>
                 <input type="checkbox" name="ca_use" <?php echo ($ca['ca_use']) ? "checked" : ""; ?> value="1" id="ca_use">
+                예
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="ca_nocoupon">쿠폰적용안함</label></th>
+            <td>
+                <?php echo help("설정에 체크하시면 쿠폰생성 때 분류 검색 결과에 노출되지 않습니다."); ?>
+                <input type="checkbox" name="ca_nocoupon" <?php echo ($ca['ca_nocoupon']) ? "checked" : ""; ?> value="1" id="ca_nocoupon">
                 예
             </td>
         </tr>

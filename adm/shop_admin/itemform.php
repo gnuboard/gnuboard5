@@ -114,6 +114,12 @@ $frm_submit = '<div class="btn_confirm01 btn_confirm">
 if($it_id)
     $frm_submit .= PHP_EOL.'<a href="'.G5_SHOP_URL.'/item.php?it_id='.$it_id.'" class="btn_frmline">상품보기</a>';
 $frm_submit .= '</div>';
+
+// 쿠폰적용안함 설정 필드 추가
+if(!sql_query(" select it_nocoupon from {$g5['g5_shop_item_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_nocoupon` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_use` ", true);
+}
 ?>
 
 <form name="fitemform" action="./itemformupdate.php" method="post" enctype="MULTIPART/FORM-DATA" autocomplete="off" onsubmit="return fitemformcheck(this)">
@@ -352,6 +358,19 @@ $frm_submit .= '</div>';
                 <label for="chk_ca_it_use">분류적용</label>
                 <input type="checkbox" name="chk_all_it_use" value="1" id="chk_all_it_use">
                 <label for="chk_all_it_use">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_nocoupon">쿠폰적용안함</label></th>
+            <td>
+                <?php echo help("설정에 체크하시면 쿠폰 생성 때 상품 검색 결과에 노출되지 않습니다."); ?>
+                <input type="checkbox" name="it_nocoupon" value="1" id="it_nocoupon" <?php echo ($it['it_nocoupon']) ? "checked" : ""; ?>> 예
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_nocoupon" value="1" id="chk_ca_it_nocoupon">
+                <label for="chk_ca_it_nocoupon">분류적용</label>
+                <input type="checkbox" name="chk_all_it_nocoupon" value="1" id="chk_all_it_nocoupon">
+                <label for="chk_all_it_nocoupon">전체적용</label>
             </td>
         </tr>
         <tr>
