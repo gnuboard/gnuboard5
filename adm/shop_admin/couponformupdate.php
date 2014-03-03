@@ -38,15 +38,15 @@ if($_POST['cp_type'] && ($_POST['cp_price'] < 1 || $_POST['cp_price'] > 99))
     alert('할인비율을은 1과 99사이 값으로 입력해 주십시오.');
 
 if($_POST['cp_method'] == 0) {
-    $sql = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$cp_target' ";
+    $sql = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$cp_target' and it_nocoupon = '0' ";
     $row = sql_fetch($sql);
     if(!$row['cnt'])
-        alert('입력하신 상품코드는 존재하지 않는 상품코드입니다.');
+        alert('입력하신 상품코드는 존재하지 않는 코드이거나 쿠폰적용안함으로 설정된 상품입니다.');
 } else if($_POST['cp_method'] == 1) {
-    $sql = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$cp_target' ";
+    $sql = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$cp_target' and ca_nocoupon = '0' ";
     $row = sql_fetch($sql);
     if(!$row['cnt'])
-        alert('입력하신 분류코드는 존재하지 않는 분류코드입니다.');
+        alert('입력하신 분류코드는 존재하지 않는 분류코드이거나 쿠폰적용안함으로 설정된 분류입니다.');
 }
 
 if($w == '') {
