@@ -35,7 +35,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
     }
 
     if ($i==0)
-        echo '<li id="sev_empty">이벤트 없음</li>'.PHP_EOL;
+        echo '<li id="sev_empty">이벤트 준비 중</li>'.PHP_EOL;
     ?>
     </ul>
 
