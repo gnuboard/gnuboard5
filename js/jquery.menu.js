@@ -79,15 +79,22 @@ function menu_rearrange(el)
     var width = $("#gnb_1dul").width();
     var left = w1 = w2 = 0;
     var idx = $(".gnb_1dli").index(el);
+    var max_menu_count = 0;
 
     for(i=0; i<=idx; i++) {
         w1 = $(".gnb_1dli:eq("+i+")").outerWidth();
         w2 = $(".gnb_2dli > a:eq("+i+")").outerWidth(true);
 
         if((left + w2) > width) {
-            el.removeClass("gnb_1dli_over").addClass("gnb_1dli_over2");
+            if(max_menu_count == 0)
+                max_menu_count = i + 1;
         }
 
-        left += w1;
+        if(max_menu_count > 0 && (idx + 1) % max_menu_count == 0) {
+            el.removeClass("gnb_1dli_over").addClass("gnb_1dli_over2");
+            left = 0;
+        } else {
+            left += w1;
+        }
     }
 }
