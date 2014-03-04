@@ -5,11 +5,12 @@ if ($w == 'x') $delete_str = "댓";
 if ($w == 'u') $g5['title'] = $delete_str."글 수정";
 else if ($w == 'd' || $w == 'x') $g5['title'] = $delete_str."글 삭제";
 else $g5['title'] = $g5['title'];
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 ?>
 
 <!-- 비밀번호 확인 시작 { -->
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
-
 <div id="pw_confirm" class="mbskin">
     <h1><?php echo $g5['title'] ?></h1>
     <p>

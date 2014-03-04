@@ -10,7 +10,7 @@ auth_check($auth[$sub_menu], 'w');
 
 check_token();
 
-$mb_id = escape_trim($_POST['mb_id']);
+$mb_id = trim($_POST['mb_id']);
 
 // 휴대폰번호 체크
 $mb_hp = $_POST['mb_hp'];

@@ -1,8 +1,8 @@
 <?php
-if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가 
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // 컴퓨터의 아이피와 쿠키에 저장된 아이피가 다르다면 테이블에 반영함
-if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR']) 
+if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
 {
     set_cookie('ck_visit_ip', $_SERVER['REMOTE_ADDR'], 86400); // 하루동안 저장
 
@@ -22,7 +22,7 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
     if ($result) {
         $sql = " insert {$g5['visit_sum_table']} ( vs_count, vs_date) values ( 1, '".G5_TIME_YMD."' ) ";
         $result = sql_query($sql, FALSE);
-        
+
         // DUPLICATE 오류가 발생한다면 이미 날짜별 행이 생성되었으므로 UPDATE 실행
         if (!$result) {
             $sql = " update {$g5['visit_sum_table']} set vs_count = vs_count + 1 where vs_date = '".G5_TIME_YMD."' ";
@@ -48,13 +48,13 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
         $vi_max = $row['cnt'];
 
         // 전체
-        $sql = " select sum(vs_count) as total from {$g5['visit_sum_table']} "; 
+        $sql = " select sum(vs_count) as total from {$g5['visit_sum_table']} ";
         $row = sql_fetch($sql);
         $vi_sum = $row['total'];
 
         $visit = '오늘:'.$vi_today.',어제:'.$vi_yesterday.',최대:'.$vi_max.',전체:'.$vi_sum;
 
-        // 기본설정 테이블에 방문자수를 기록한 후 
+        // 기본설정 테이블에 방문자수를 기록한 후
         // 방문자수 테이블을 읽지 않고 출력한다.
         // 쿼리의 수를 상당부분 줄임
         sql_query(" update {$g5['config_table']} set cf_visit = '{$visit}' ");

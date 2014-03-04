@@ -11,30 +11,6 @@ if (!defined('G5_SET_TIME_LIMIT')) define('G5_SET_TIME_LIMIT', 0);
 @set_time_limit(G5_SET_TIME_LIMIT);
 
 
-//==============================================================================
-// php.ini 의 magic_quotes_gpc 값이 Off 인 경우 addslashes() 적용
-// SQL Injection 등으로 부터 보호
-// http://kr.php.net/manual/en/function.get-magic-quotes-gpc.php#97783
-//------------------------------------------------------------------------------
-if (!get_magic_quotes_gpc()) {
-    $escape_function = 'addslashes($value)';
-    $addslashes_deep = create_function('&$value, $fn', '
-        if (is_string($value)) {
-            $value = ' . $escape_function . ';
-        } else if (is_array($value)) {
-            foreach ($value as &$v) $fn($v, $fn);
-        }
-    ');
-
-    // Escape data
-    $addslashes_deep($_POST, $addslashes_deep);
-    $addslashes_deep($_GET, $addslashes_deep);
-    $addslashes_deep($_COOKIE, $addslashes_deep);
-    $addslashes_deep($_REQUEST, $addslashes_deep);
-}
-//==============================================================================
-
-
 //==========================================================================================================================
 // extract($_GET); 명령으로 인해 page.php?_POST[var1]=data1&_POST[var2]=data2 와 같은 코드가 _POST 변수로 사용되는 것을 막음
 // 081029 : letsgolee 님께서 도움 주셨습니다.
@@ -48,12 +24,6 @@ for ($i=0; $i<$ext_cnt; $i++) {
     if (isset($_GET[$ext_arr[$i]])) unset($_GET[$ext_arr[$i]]);
 }
 //==========================================================================================================================
-
-// PHP 4.1.0 부터 지원됨
-// php.ini 의 register_globals=off 일 경우
-@extract($_GET);
-@extract($_POST);
-@extract($_SERVER);
 
 // 완두콩님이 알려주신 보안관련 오류 수정
 // $member 에 값을 직접 넘길 수 있음
@@ -97,6 +67,30 @@ if (file_exists($dbconfig_file)) {
     @mysql_query(" set names utf8 ");
     if(defined('G5_MYSQL_SET_MODE') && G5_MYSQL_SET_MODE) @mysql_query("SET SESSION sql_mode = ''");
     if (defined(G5_TIMEZONE)) @mysql_query(" set time_zone = '".G5_TIMEZONE."'");
+
+    //==============================================================================
+    // SQL Injection 등으로 부터 보호를 위해 mysql_real_escape_string() 적용
+    //------------------------------------------------------------------------------
+    // magic_quotes_gpc 에 의한 backslashes 제거
+    if (get_magic_quotes_gpc()) {
+        $_POST    = array_map_deep('stripslashes', $_POST);
+        $_GET     = array_map_deep('stripslashes', $_GET);
+        $_COOKIE  = array_map_deep('stripslashes', $_COOKIE);
+        $_REQUEST = array_map_deep('stripslashes', $_REQUEST);
+    }
+
+    // mysql_real_escape_string 적용
+    $_POST    = array_map_deep(G5_ESCAPE_FUNCTION, $_POST);
+    $_GET     = array_map_deep(G5_ESCAPE_FUNCTION, $_GET);
+    $_COOKIE  = array_map_deep(G5_ESCAPE_FUNCTION, $_COOKIE);
+    $_REQUEST = array_map_deep(G5_ESCAPE_FUNCTION, $_REQUEST);
+    //==============================================================================
+
+    // PHP 4.1.0 부터 지원됨
+    // php.ini 의 register_globals=off 일 경우
+    @extract($_GET);
+    @extract($_POST);
+    @extract($_SERVER);
 } else {
 ?>
 
@@ -211,7 +205,7 @@ if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
 $qstr = '';
 
 if (isset($_REQUEST['sca']))  {
-    $sca = escape_trim($_REQUEST['sca']);
+    $sca = trim($_REQUEST['sca']);
     if ($sca)
         $qstr .= '&amp;sca=' . urlencode($sca);
 } else {
@@ -219,7 +213,7 @@ if (isset($_REQUEST['sca']))  {
 }
 
 if (isset($_REQUEST['sfl']))  {
-    $sfl = escape_trim($_REQUEST['sfl']);
+    $sfl = trim($_REQUEST['sfl']);
     $sfl = preg_replace("/[\<\>\'\"\%\=\(\)\s]/", "", $sfl);
     if ($sfl)
         $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
@@ -229,7 +223,7 @@ if (isset($_REQUEST['sfl']))  {
 
 
 if (isset($_REQUEST['stx']))  { // search text (검색어)
-    $stx = escape_trim($_REQUEST['stx']);
+    $stx = trim($_REQUEST['stx']);
     if ($stx)
         $qstr .= '&amp;stx=' . urlencode($stx);
 } else {
@@ -237,7 +231,7 @@ if (isset($_REQUEST['stx']))  { // search text (검색어)
 }
 
 if (isset($_REQUEST['sst']))  {
-    $sst = escape_trim($_REQUEST['sst']);
+    $sst = trim($_REQUEST['sst']);
     if ($sst)
         $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 } else {
@@ -289,7 +283,7 @@ if (isset($_REQUEST['wr_id'])) {
 }
 
 if (isset($_REQUEST['bo_table'])) {
-    $bo_table = escape_trim($_REQUEST['bo_table']);
+    $bo_table = trim($_REQUEST['bo_table']);
     $bo_table = substr($bo_table, 0, 20);
 } else {
     $bo_table = '';
@@ -297,7 +291,7 @@ if (isset($_REQUEST['bo_table'])) {
 
 // URL ENCODING
 if (isset($_REQUEST['url'])) {
-    $url = escape_trim($_REQUEST['url']);
+    $url = trim($_REQUEST['url']);
     $urlencode = urlencode($url);
 } else {
     $url = '';
@@ -309,7 +303,7 @@ if (isset($_REQUEST['url'])) {
 }
 
 if (isset($_REQUEST['gr_id'])) {
-    $gr_id = escape_trim($_REQUEST['gr_id']);
+    $gr_id = trim($_REQUEST['gr_id']);
 } else {
     $gr_id = '';
 }
@@ -489,4 +483,6 @@ header('Last-Modified: ' . $gmnow);
 header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
+
+$html_process = new html_process();
 ?>

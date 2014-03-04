@@ -3,10 +3,10 @@ include_once('./_common.php');
 
 $g5['title'] = "로그인 검사";
 
-$mb_id       = escape_trim($_POST['mb_id']);
-$mb_password = escape_trim($_POST['mb_password']);
+$mb_id       = trim($_POST['mb_id']);
+$mb_password = trim($_POST['mb_password']);
 
-if (!trim($mb_id) || !trim($mb_password))
+if (!$mb_id || !$mb_password)
     alert('회원아이디나 비밀번호가 공백이면 안됩니다.');
 
 $mb = get_member($mb_id);

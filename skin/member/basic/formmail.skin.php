@@ -1,10 +1,11 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 ?>
 
 <!-- 폼메일 시작 { -->
-<link rel="stylesheet" href="<?php echo $member_skin_url ?>/style.css">
-
 <div id="formmail" class="new_win mbskin">
     <h1 id="win_title"><?php echo $name ?>님께 메일보내기</h1>
 

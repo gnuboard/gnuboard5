@@ -3,7 +3,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 $sql = " select * from {$g5['new_win_table']}
           where '".G5_TIME_YMDHIS."' between nw_begin_time and nw_end_time
-            and nw_device IN ( 'both', 'pc' )
+            and nw_device IN ( 'both', 'mobile' )
           order by nw_id asc ";
 $result = sql_query($sql, false);
 for ($i=0; $row_nw=sql_fetch_array($result); $i++)
@@ -17,7 +17,7 @@ for ($i=0; $row_nw=sql_fetch_array($result); $i++)
 ?>
 
 <!-- 팝업레이어 시작 { -->
-<div id="hd_pops_<?php echo $nw['nw_id'] ?>" class="hd_pops" style="top:<?php echo $nw['nw_top']?>px;left:<?php echo $nw['nw_left']?>px">
+<div id="hd_pops_<?php echo $nw['nw_id'] ?>" class="hd_pops" style="top:<?php echo $nw['nw_top']?>px;left:<?php echo $nw['nw_left']?>px;">
     <div class="hd_pops_con" style="width:<?php echo $nw['nw_width'] ?>px;height:<?php echo $nw['nw_height'] ?>px">
         <?php echo conv_content($nw['nw_content'], 1); ?>
     </div>

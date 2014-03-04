@@ -153,6 +153,10 @@ define('G5_SMTP', '127.0.0.1');
     기타 상수
 ********************/
 
+// escape string 처리 함수 지정
+// POST 등에서 한글이 깨질 경우 addslashes 로 변경
+define('G5_ESCAPE_FUNCTION', 'mysql_real_escape_string');
+
 // 게시판에서 링크의 기본개수를 말합니다.
 // 필드를 추가하면 이 숫자를 필드수에 맞게 늘려주십시오.
 define('G5_LINK_COUNT', 2);
