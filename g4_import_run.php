@@ -139,7 +139,6 @@ document.onkeydown = noRefresh ;
     <hr>
 
     <nav id="gnb">
-        <script>$('#gnb').addClass('gnb_js');</script>
         <h2>메인메뉴</h2>
         <ul id="gnb_1dul">
             <?php
