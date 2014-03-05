@@ -52,10 +52,11 @@
 #scomm_empty {padding:15px 0;text-align:center}
 
 /* aside:배너 */
-#sbn_aside {margin:0 0 5px}
-#sbn_aside h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#sbn_aside ul {margin:0;padding:0;border:0;list-style:none}
-#sbn_aside li {margin:0 0 1px}
+.sbn {margin:0 0 5px}
+.sbn h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+.sbn ul {margin:0;padding:0;border:0;list-style:none}
+.sbn li {margin:0 0 1px}
+.sbn .sbn_border {border:1px solid #d5d5d5} /* 인덱스 배너도 함께 사용 */
 
 /* aside:장바구니 */
 #sbsk {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f2f5f9}

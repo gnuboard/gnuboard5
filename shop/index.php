@@ -147,7 +147,7 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
 <?php echo visit('shop_basic'); // 접속자 ?>
 
 <!-- 메인배너 시작 { -->
-<section id="sbn_idx">
+<section id="sbn_idx" class="sbn">
     <h2>쇼핑몰 메인 배너</h2>
     <?php echo display_banner('메인'); ?>
 </section>
