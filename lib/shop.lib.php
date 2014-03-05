@@ -1110,11 +1110,16 @@ function date_conv($date, $case=1)
 
 
 // 배너출력
-function display_banner($position, $num="")
+function display_banner($position, $skin='')
 {
     global $g5;
 
     if (!$position) $position = '왼쪽';
+    if (!$skin) $skin = 'boxbanner.skin.php';
+
+    // 배너 출력
+    $sql = " select * from {$g5['g5_shop_banner_table']} where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time and bn_position = '$position' order by bn_order, bn_id desc ";
+    $result = sql_query($sql);
 
     include G5_SHOP_SKIN_PATH.'/boxbanner'.$num.'.skin.php';
 }
