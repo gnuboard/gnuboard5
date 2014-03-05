@@ -11,7 +11,7 @@ $admin = get_admin("super");
 
 <div id="ft">
     <h2><?php echo $config['cf_title']; ?> 정보</h2>
-    <a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="처음으로"></a>
+    <a href="<?php echo $default['de_root_index_use'] ? G5_URL : G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img2" alt="처음으로"></a>
     <p>
         <span><?php echo $default['de_admin_company_addr']; ?></span>
         <span><b>대표</b> <?php echo $default['de_admin_company_owner']; ?></span><br>
