@@ -12,7 +12,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 <?php
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
-    if ($i==0) echo '<aside id="sbn_aside" class="sbn"><h2>쇼핑몰 배너</h2><ul>'.PHP_EOL;
+    if ($row['bn_position'] == '메인') $bn_position = 'idx';
+    else $bn_position = 'side';
+
+    if ($i==0) echo '<aside id="sbn_'.$bn_position.'" class="sbn"><h2>쇼핑몰 배너</h2><ul>'.PHP_EOL;
     //print_r2($row);
     // 테두리 있는지
     $bn_border  = ($row['bn_border']) ? ' sbn_border' : '';;
