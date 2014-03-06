@@ -250,6 +250,7 @@ $(function() {
 // 선택옵션 추가처리
 function sel_option_process(add_exec)
 {
+    var it_price = parseInt($("input#it_price").val());
     var id = "";
     var value, info, sel_opt, item, price, stock, run_error = false;
     var option = sep = "";
@@ -285,6 +286,12 @@ function sel_option_process(add_exec)
     price = info[1];
     stock = info[2];
 
+    // 금액 음수 체크
+    if(it_price + parseInt(price) < 0) {
+        alert("구매금액이 음수인 상품은 구매할 수 없습니다.");
+        return false;
+    }
+
     if(add_exec) {
         if(same_option_check(option))
             return;
@@ -316,6 +323,12 @@ function sel_supply_process($el, add_exec)
     var option = item+":"+info[0];
     var price = info[1];
     var stock = info[2];
+
+    // 금액 음수 체크
+    if(parseInt(price) < 0) {
+        alert("구매금액이 음수인 상품은 구매할 수 없습니다.");
+        return false;
+    }
 
     if(add_exec) {
         if(same_option_check(option))
