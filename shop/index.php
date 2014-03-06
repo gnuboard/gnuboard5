@@ -12,9 +12,7 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
 ?>
 
 <!-- 메인이미지 시작 { -->
-<div id="sidx_img">
-    <?php echo display_banner('메인', 'mainbanner.10.skin.php'); ?>
-</div>
+<?php echo display_banner('메인', 'mainbanner.10.skin.php'); ?>
 <!-- } 메인이미지 끝 -->
 
 <?php if($default['de_type1_list_use']) { ?>

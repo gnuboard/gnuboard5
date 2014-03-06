@@ -58,7 +58,7 @@
 .sbn li {margin:0 0 1px}
 .sbn .sbn_border {border:1px solid #d5d5d5} /* 인덱스 배너도 함께 사용 */
 
-#sbn_idx {position:relative}
+#sbn_idx {position:relative;margin:0 0 30px}
 #sbn_idx .sbn_btn {z-index:100;position:absolute;top:50%}
 #sbn_idx .sbn_btn button {position:relative;top:-35px;margin:0;padding:0;width:70px;height:70px;border:0;background:transparent;overflow:hidden}
 #sbn_idx .sbn_btn span {display:block;width:100%;height:100%;background:url('img/sbn_btn.png')}
