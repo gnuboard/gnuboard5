@@ -1010,7 +1010,7 @@ if(!isset($default['de_mobile_rel_list_use'])) {
 
 <?php echo $frm_submit; ?>
 
-<?php if (file_exists($logo_img) || file_exists($main_img)) { ?>
+<?php if (file_exists($logo_img) || file_exists($logo_img2) || file_exists($mobile_logo_img) || file_exists($mobile_logo_img2)) { ?>
 <script>
 $(".banner_or_img").addClass("scf_img");
 $(function() {
