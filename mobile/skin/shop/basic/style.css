@@ -115,7 +115,7 @@
 #sit_pvi_slide li {display:none;position:absolute;left:0;top:0}
 #sit_pvi_slide img {width:280px;height:280px}
 
-#sit_pvi_nw h1 {}
+#sit_pvi_nw h1 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sit_pvi_nwbig {padding:10px 0;text-align:center}
 #sit_pvi_nwbig span {display:none}
 #sit_pvi_nwbig span.visible {display:inline}
