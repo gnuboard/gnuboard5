@@ -93,6 +93,14 @@ if ($i>0) echo '</ul>'.PHP_EOL.'</section>'.PHP_EOL;
                 this.find("ul").before(slide_button);
 
                 var $bnnr_btn = this.find(".sbn_btn_slide");
+
+                $bnnr_btn.on("focusin", function() {
+                    clear_interval();
+                });
+
+                $bnnr_btn.on("focusout", function() {
+                    set_interval();
+                });
             }
 
             set_interval();
@@ -125,14 +133,6 @@ if ($i>0) echo '</ul>'.PHP_EOL.'</section>'.PHP_EOL;
             });
 
             $bnnr_a.on("focusout", function() {
-                set_interval();
-            });
-
-            $bnnr_btn.on("focusin", function() {
-                clear_interval();
-            });
-
-            $bnnr_btn.on("focusout", function() {
                 set_interval();
             });
 
