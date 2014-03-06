@@ -1395,7 +1395,7 @@ function item_icon($it)
     $icon = '<span class="sit_icon">';
     // 품절
     if (is_soldout($it['it_id']))
-        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_soldout.gif" alt="품절"> ';
+        $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_soldout.gif" alt="품절">';
 
     if ($it['it_type1'])
         $icon .= '<img src="'.G5_SHOP_URL.'/img/icon_hit.gif" alt="히트상품">';
