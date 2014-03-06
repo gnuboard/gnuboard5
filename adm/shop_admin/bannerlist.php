@@ -90,7 +90,10 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
-        <td headers="th_img" colspan="6" class="td_img_view"><?php echo $bn_img; ?></td>
+        <td headers="th_img" colspan="6" class="td_img_view sbn_img">
+            <div class="sbn_image"><?php echo $bn_img; ?></div>
+            <button type="button" class="sbn_img_view btn_frmline">이미지확인</button>
+        </td>
     </tr>
 
     <?php
@@ -105,6 +108,14 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 </div>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+
+<script>
+$(function() {
+    $(".sbn_img_view").on("click", function() {
+        $(this).closest(".td_img_view").find(".sbn_image").slideToggle();
+    });
+});
+</script>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

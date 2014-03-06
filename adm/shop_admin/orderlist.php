@@ -303,6 +303,16 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         if($row['od_mobile'])
             $od_mobile = '(M)';
 
+        // 주문번호에 - 추가
+        switch(strlen($row['od_id'])) {
+            case 16:
+                $disp_od_id = substr($row['od_id'],0,8).'-'.substr($row['od_id'],8);
+                break;
+            default:
+                $disp_od_id = substr($row['od_id'],0,6).'-'.substr($row['od_id'],6);
+                break;
+        }
+
         // 주문 번호에 에스크로 표시
         $od_paytype = '';
         if($default['de_escrow_use'] && $row['od_escrow'])
@@ -331,7 +341,7 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a><br>
         </td> -->
         <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
-            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo substr($row['od_id'],0,8).'-'.substr($row['od_id'],8); ?></a>
+            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo $disp_od_id; ?></a>
             <?php echo $od_mobile; ?>
             <?php echo $od_paytype; ?>
         </td>

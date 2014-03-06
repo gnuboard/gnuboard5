@@ -13,7 +13,7 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
 
 <!-- 메인이미지 시작 { -->
 <div id="sidx_img">
-    <img src="<?php echo G5_DATA_URL; ?>/common/main_img" alt="">
+    <?php echo display_banner('메인', 'mainbanner.10.skin.php'); ?>
 </div>
 <!-- } 메인이미지 끝 -->
 
@@ -145,13 +145,6 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
 <?php echo poll('shop_basic'); // 설문조사 ?>
 
 <?php echo visit('shop_basic'); // 접속자 ?>
-
-<!-- 메인배너 시작 { -->
-<section id="sbn_idx">
-    <h2>쇼핑몰 메인 배너</h2>
-    <?php echo display_banner('메인'); ?>
-</section>
-<!-- } 메인배너 끝 -->
 
 <?php
 include_once(G5_SHOP_PATH.'/shop.tail.php');

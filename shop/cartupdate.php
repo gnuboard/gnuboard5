@@ -215,6 +215,15 @@ else // 장바구니에 담기
             $io_price = $opt_list[$io_type][$io_id]['price'];
             $ct_qty = $_POST['ct_qty'][$it_id][$k];
 
+            // 구매가격이 음수인지 체크
+            if($io_type) {
+                if((int)$io_price < 0)
+                    alert('구매금액이 음수인 상품은 구매할 수 없습니다.');
+            } else {
+                if((int)$it['it_price'] + (int)$io_price < 0)
+                    alert('구매금액이 음수인 상품은 구매할 수 없습니다.');
+            }
+
             // 동일옵션의 상품이 있으면 수량 더함
             $sql2 = " select ct_id
                         from {$g5['g5_shop_cart_table']}

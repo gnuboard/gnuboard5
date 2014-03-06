@@ -844,9 +844,9 @@ if(!isset($default['de_mobile_rel_list_use'])) {
             </td>
         </tr>
         <tr>
-            <th scope="row">로고이미지</th>
+            <th scope="row">상단로고이미지</th>
             <td>
-                <?php echo help("쇼핑몰 로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
+                <?php echo help("쇼핑몰 상단로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
                 <input type="file" name="logo_img" id="logo_img">
                 <?php
                 $logo_img = G5_DATA_PATH."/common/logo_img";
@@ -855,46 +855,46 @@ if(!isset($default['de_mobile_rel_list_use'])) {
                     $size = getimagesize($logo_img);
                 ?>
                 <input type="checkbox" name="logo_img_del" value="1" id="logo_img_del">
-                <label for="logo_img_del"><span class="sound_only">로고이미지</span> 삭제</label>
+                <label for="logo_img_del"><span class="sound_only">상단로고이미지</span> 삭제</label>
                 <span class="scf_img_logoimg"></span>
                 <div id="logoimg" class="banner_or_img">
                     <img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="">
                     <button type="button" class="sit_wimg_close">닫기</button>
                 </div>
                 <script>
-                $('<button type="button" id="cf_logoimg_view" class="btn_frmline scf_img_view">로고이미지 확인</button>').appendTo('.scf_img_logoimg');
+                $('<button type="button" id="cf_logoimg_view" class="btn_frmline scf_img_view">상단로고이미지 확인</button>').appendTo('.scf_img_logoimg');
                 </script>
                 <?php } ?>
             </td>
         </tr>
         <tr>
-            <th scope="row">메인이미지</th>
+            <th scope="row">하단로고이미지</th>
             <td>
-                <?php echo help("쇼핑몰 메인이미지를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
-                <input type="file" name="main_img">
+                <?php echo help("쇼핑몰 하단로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
+                <input type="file" name="logo_img2" id="logo_img2">
                 <?php
-                $main_img = G5_DATA_PATH."/common/main_img";
-                if (file_exists($main_img))
+                $logo_img2 = G5_DATA_PATH."/common/logo_img2";
+                if (file_exists($logo_img2))
                 {
-                    $size = getimagesize($main_img);
+                    $size = getimagesize($logo_img2);
                 ?>
-                <input type="checkbox" name="main_img_del" value="1" id="main_img_del">
-                <label for="main_img_del"><span class="sound_only">메인이미지</span> 삭제</label>
-                <span class="scf_img_mainimg"></span>
-                <div id="mainimg" class="banner_or_img">
-                    <img src="<?php echo G5_DATA_URL; ?>/common/main_img" alt="">
+                <input type="checkbox" name="logo_img_del2" value="1" id="logo_img_del2">
+                <label for="logo_img_del2"><span class="sound_only">하단로고이미지</span> 삭제</label>
+                <span class="scf_img_logoimg2"></span>
+                <div id="logoimg2" class="banner_or_img">
+                    <img src="<?php echo G5_DATA_URL; ?>/common/logo_img2" alt="">
                     <button type="button" class="sit_wimg_close">닫기</button>
                 </div>
                 <script>
-                $('<button type="button" id="cf_mainimg_view" class="btn_frmline scf_img_view">메인이미지 확인</button>').appendTo('.scf_img_mainimg');
+                $('<button type="button" id="cf_logoimg2_view" class="btn_frmline scf_img_view">하단로고이미지 확인</button>').appendTo('.scf_img_logoimg2');
                 </script>
                 <?php } ?>
             </td>
         </tr>
         <tr>
-            <th scope="row">모바일 로고이미지</th>
+            <th scope="row">모바일 상단로고이미지</th>
             <td>
-                <?php echo help("모바일 쇼핑몰 로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
+                <?php echo help("모바일 쇼핑몰 상단로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
                 <input type="file" name="mobile_logo_img" id="mobile_logo_img">
                 <?php
                 $mobile_logo_img = G5_DATA_PATH."/common/mobile_logo_img";
@@ -903,14 +903,38 @@ if(!isset($default['de_mobile_rel_list_use'])) {
                     $size = getimagesize($mobile_logo_img);
                 ?>
                 <input type="checkbox" name="mobile_logo_img_del" value="1" id="mobile_logo_img_del">
-                <label for="mobile_logo_img_del"><span class="sound_only">모바일 로고이미지</span> 삭제</label>
+                <label for="mobile_logo_img_del"><span class="sound_only">모바일 상단로고이미지</span> 삭제</label>
                 <span class="scf_img_mobilelogoimg"></span>
                 <div id="mobilelogoimg" class="banner_or_img">
                     <img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="">
                     <button type="button" class="sit_wimg_close">닫기</button>
                 </div>
                 <script>
-                $('<button type="button" id="cf_mobilelogoimg_view" class="btn_frmline scf_img_view">로고이미지 확인</button>').appendTo('.scf_img_mobilelogoimg');
+                $('<button type="button" id="cf_mobilelogoimg_view" class="btn_frmline scf_img_view">모바일 상단로고이미지 확인</button>').appendTo('.scf_img_mobilelogoimg');
+                </script>
+                <?php } ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">모바일 하단로고이미지</th>
+            <td>
+                <?php echo help("모바일 쇼핑몰 하단로고를 직접 올릴 수 있습니다. 이미지 파일만 가능합니다."); ?>
+                <input type="file" name="mobile_logo_img2" id="mobile_logo_img2">
+                <?php
+                $mobile_logo_img2 = G5_DATA_PATH."/common/mobile_logo_img2";
+                if (file_exists($mobile_logo_img2))
+                {
+                    $size = getimagesize($mobile_logo_img2);
+                ?>
+                <input type="checkbox" name="mobile_logo_img_del2" value="1" id="mobile_logo_img_del2">
+                <label for="mobile_logo_img_del2"><span class="sound_only">모바일 하단로고이미지</span> 삭제</label>
+                <span class="scf_img_mobilelogoimg2"></span>
+                <div id="mobilelogoimg2" class="banner_or_img">
+                    <img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img2" alt="">
+                    <button type="button" class="sit_wimg_close">닫기</button>
+                </div>
+                <script>
+                $('<button type="button" id="cf_mobilelogoimg2_view" class="btn_frmline scf_img_view">모바일 하단로고이미지 확인</button>').appendTo('.scf_img_mobilelogoimg2');
                 </script>
                 <?php } ?>
             </td>
@@ -986,7 +1010,7 @@ if(!isset($default['de_mobile_rel_list_use'])) {
 
 <?php echo $frm_submit; ?>
 
-<?php if (file_exists($logo_img) || file_exists($main_img)) { ?>
+<?php if (file_exists($logo_img) || file_exists($logo_img2) || file_exists($mobile_logo_img) || file_exists($mobile_logo_img2)) { ?>
 <script>
 $(".banner_or_img").addClass("scf_img");
 $(function() {

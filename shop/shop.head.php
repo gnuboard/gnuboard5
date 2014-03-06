@@ -103,10 +103,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
         <?php include_once(G5_SHOP_SKIN_PATH.'/boxcommunity.skin.php'); // 커뮤니티 ?>
 
         <!-- 쇼핑몰 배너 시작 { -->
-        <aside id="sbn_aside">
-            <h2>쇼핑몰 배너</h2>
-            <?php echo display_banner('왼쪽'); ?>
-        </aside>
+        <?php echo display_banner('왼쪽'); ?>
         <!-- } 쇼핑몰 배너 끝 -->
     </div>
 <!-- } 상단 끝 -->
