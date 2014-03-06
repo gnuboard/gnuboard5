@@ -60,8 +60,8 @@
 
 #sbn_idx {position:relative}
 #sbn_idx .sbn_btn {z-index:100;position:absolute;top:50%}
-#sbn_idx .sbn_btn button {position:relative;top:-35px;width:70px;height:70px;border:0;background:transparent;text-indent:-9999em;overflow:hidden}
-#sbn_idx .sbn_btn span {position:absolute;top:0;left:0;width:100%;height:100%;background:url('img/sbn_btn.png')}
+#sbn_idx .sbn_btn button {position:relative;top:-35px;margin:0;padding:0;width:70px;height:70px;border:0;background:transparent;overflow:hidden}
+#sbn_idx .sbn_btn span {display:block;width:100%;height:100%;background:url('img/sbn_btn.png')}
 #sbn_idx #sbn_btn_p {left:25px}
 #sbn_idx .sbn_btn #sbn_btn_prev span {background-position:0 0}
 #sbn_idx #sbn_btn_n {right:25px}
