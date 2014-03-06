@@ -38,7 +38,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         else if ($row['bn_url'] && $row['bn_url'] != 'http://') {
             echo '<a href="'.G5_SHOP_URL.'/bannerhit.php?bn_id='.$row['bn_id'].'&amp;url='.urlencode($row['bn_url']).'"'.$bn_new_win.'>';
         }
-        echo '<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" alt="'.$row['bn_alt'].'" class="'.$bn_border.'">';
+        echo '<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$size[0].'" alt="'.$row['bn_alt'].'" class="'.$bn_border.'">';
         if($row['bn_url'])
             echo '</a>'.PHP_EOL;
         echo '</li>'.PHP_EOL;
@@ -79,6 +79,16 @@ if ($i>0) echo '</ul>'.PHP_EOL.'</section>'.PHP_EOL;
                 .find("li").width(width).height(height);
 
             $bnnr.not(".sbn_first").css("left", width+"px");
+
+            $bnnr.each(function() {
+                var $img = $(this).find("img");
+                var img_width = parseInt($img.attr("width"));
+                if(img_width > width)
+                    img_width = width;
+
+                $img.removeAttr("width");
+                $img.width(img_width);
+            });
 
             // 기본 설정값
             var settings = $.extend({
