@@ -1117,11 +1117,17 @@ function display_banner($position, $skin='')
     if (!$position) $position = '왼쪽';
     if (!$skin) $skin = 'boxbanner.skin.php';
 
-    // 배너 출력
-    $sql = " select * from {$g5['g5_shop_banner_table']} where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time and bn_position = '$position' order by bn_order, bn_id desc ";
-    $result = sql_query($sql);
+    $skin_path = G5_SHOP_SKIN_PATH.'/'.$skin;
 
-    include G5_SHOP_SKIN_PATH.'/boxbanner'.$num.'.skin.php';
+    if(file_exists($skin_path)) {
+        // 배너 출력
+        $sql = " select * from {$g5['g5_shop_banner_table']} where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time and bn_position = '$position' order by bn_order, bn_id desc ";
+        $result = sql_query($sql);
+
+        include $skin_path;
+    } else {
+        echo '<p>'.str_replace(G5_PATH.'/', '', $skin_path).'파일이 존재하지 않습니다.</p>';
+    }
 }
 
 
