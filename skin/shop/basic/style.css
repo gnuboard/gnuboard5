@@ -58,12 +58,17 @@
 .sbn li {margin:0 0 1px}
 .sbn .sbn_border {border:1px solid #d5d5d5} /* 인덱스 배너도 함께 사용 */
 
+#sbn_idx {position:relative}
+#sbn_idx .sbn_btn {z-index:100;position:absolute;top:50%}
+#sbn_idx .sbn_btn button {position:relative;top:-35px;width:70px;height:70px;border:0;background:transparent;text-indent:-9999em;overflow:hidden}
+#sbn_idx .sbn_btn span {position:absolute;top:0;left:0;width:100%;height:100%;background:url('img/sbn_btn.png')}
+#sbn_idx #sbn_btn_p {left:25px}
+#sbn_idx .sbn_btn #sbn_btn_prev span {background-position:0 0}
+#sbn_idx #sbn_btn_n {right:25px}
+#sbn_idx .sbn_btn #sbn_btn_next span {background-position:-70px 0}
 #sbn_idx ul {position:relative;overflow:hidden}
 #sbn_idx ul li {position:absolute;display:none;top:0;left:0}
 #sbn_idx ul li.sbn_first{display:block}
-#sbn_idx button {position:absolute;top:100px;z-index:100}
-#sbn_idx #sbn_btn_prev{left:50px}
-#sbn_idx #sbn_btn_next{right:50px}
 
 /* aside:장바구니 */
 #sbsk {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f2f5f9}

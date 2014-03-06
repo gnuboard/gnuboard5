@@ -728,6 +728,10 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sodr_print_pop_total span {display:block;margin:0 0 10px;font-size:1.5em}
 #sodr_print_pop_total strong {color:#ff3600}
 
+/* 배너관리 */
+.sbn_img {text-align:center}
+.sbn_image {display:none;margin:0 0 10px;text-align:left}
+
 /* SMS문자전송 */
 #sms_send {padding-bottom:100px;zoom:1}
 #sms_send:after {display:block;visibility:hidden;clear:both;content:""}

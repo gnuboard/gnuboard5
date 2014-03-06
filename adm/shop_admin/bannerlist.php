@@ -90,9 +90,9 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
-        <td headers="th_img" colspan="6" class="td_img_view">
-            <div class="bn_image"><?php echo $bn_img; ?></div>
-            <button type="button" class="bn_img_view">이미지보기</button>
+        <td headers="th_img" colspan="6" class="td_img_view sbn_img">
+            <div class="sbn_image"><?php echo $bn_img; ?></div>
+            <button type="button" class="sbn_img_view btn_frmline">이미지확인</button>
         </td>
     </tr>
 
@@ -111,8 +111,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 <script>
 $(function() {
-    $(".bn_img_view").on("click", function() {
-        $(this).closest(".td_img_view").find(".bn_image").slideToggle();
+    $(".sbn_img_view").on("click", function() {
+        $(this).closest(".td_img_view").find(".sbn_image").slideToggle();
     });
 });
 </script>

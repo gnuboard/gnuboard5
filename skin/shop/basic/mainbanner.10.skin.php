@@ -87,8 +87,8 @@ if ($i>0) echo '</ul>'.PHP_EOL.'</section>'.PHP_EOL;
             }, option);
 
             if(count > 1) {
-                var slide_button = "<button type=\"button\" id=\"sbn_btn_prev\" class=\"sbn_btn_slide\">이전</button>\n";
-                slide_button += "<button type=\"button\" id=\"sbn_btn_next\" class=\"sbn_btn_slide\">다음</button>";
+                var slide_button = "<div id=\"sbn_btn_p\" class=\"sbn_btn\"><button type=\"button\" id=\"sbn_btn_prev\" class=\"sbn_btn_slide\"><span></span>이전</button></div>\n";
+                slide_button += "<div id=\"sbn_btn_n\" class=\"sbn_btn\"><button type=\"button\" id=\"sbn_btn_next\" class=\"sbn_btn_slide\"><span></span>다음</button></div>";
 
                 this.find("ul").before(slide_button);
 
