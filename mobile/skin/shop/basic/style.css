@@ -102,7 +102,7 @@
 #sit_pvi_nwbig span.visible {display:inline}
 #sit_pvi_nw ul {margin:0 0 20px;padding:0 10px;list-style:none;zoom:1}
 #sit_pvi_nw ul:after {display:block;visibility:hidden;clear:both;content:""}
-#sit_pvi_nw li {float:left;margin:0 0 0 1px}
+#sit_pvi_nw li {float:left;margin:0 0 1px 1px}
 #sit_pvi_nw li img {width:60px;height:60px}
 
 /* 상품상세 */
