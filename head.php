@@ -114,9 +114,11 @@ if (G5_IS_MOBILE) {
             <?php
             $sql = " select * from {$g5['group_table']} where gr_show_menu = '1' and gr_device <> 'mobile' order by gr_order ";
             $result = sql_query($sql);
+            $gnb_zindex = 999; // gnb_1dli z-index 값 설정용
             for ($gi=0; $row=sql_fetch_array($result); $gi++) { // gi 는 group index
+                $gnb_zindex -= 1; // html 구조에서 앞선 gnb_1dli 에 더 높은 z-index 값 부여
              ?>
-            <li class="gnb_1dli">
+            <li class="gnb_1dli" style="z-index:<?php echo $gnb_zindex; ?>">
                 <a href="<?php echo G5_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>" class="gnb_1da"><?php echo $row['gr_subject'] ?></a>
                 <ul class="gnb_2dul">
                     <?php
