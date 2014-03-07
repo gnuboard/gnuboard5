@@ -5,15 +5,15 @@ if (!$is_member) {
     alert_close("사용후기는 회원만 작성이 가능합니다.");
 }
 
-// 사용후기 작성 설정에 따른 체크
-check_itemuse_write();
-
 $it_id       = trim($_REQUEST['it_id']);
 $is_subject  = trim($_POST['is_subject']);
 $is_content  = trim($_POST['is_content']);
 $is_name     = trim($_POST['is_name']);
 $is_password = trim($_POST['is_password']);
 $is_score    = (int)$_POST['is_score'] > 5 ? 0 : (int)$_POST['is_score'];
+
+// 사용후기 작성 설정에 따른 체크
+check_itemuse_write($it_id, $member['mb_id']);
 
 if ($w == "" || $w == "u") {
     $is_name     = $member['mb_name'];

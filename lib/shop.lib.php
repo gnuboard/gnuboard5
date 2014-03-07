@@ -1873,7 +1873,7 @@ function is_soldout($it_id)
 }
 
 // 상품후기 작성가능한지 체크
-function check_itemuse_write($close=true)
+function check_itemuse_write($it_id, $mb_id, $close=true)
 {
     global $g5, $default, $is_admin;
 
@@ -1882,7 +1882,7 @@ function check_itemuse_write($close=true)
         $sql = " select count(*) as cnt
                     from {$g5['g5_shop_cart_table']}
                     where it_id = '$it_id'
-                      and mb_id = '{$member['mb_id']}'
+                      and mb_id = '$mb_id'
                       and ct_status = '완료' ";
         $row = sql_fetch($sql);
 
