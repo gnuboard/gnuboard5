@@ -64,6 +64,14 @@ if(!isset($default['de_mobile_rel_list_use'])) {
                     ADD `de_mobile_rel_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_rel_list_skin`,
                     ADD `de_mobile_rel_img_height` int(11) NOT NULL DEFAULT ' 0' AFTER `de_mobile_rel_img_width`", true);
 }
+
+// 신규회원 쿠폰 설정 필드 추가
+if(!isset($default['de_member_reg_coupon_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_member_reg_coupon_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_tax_flag_use`,
+                    ADD `de_member_reg_coupon_term` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_use`,
+                    ADD `de_member_reg_coupon_price` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_term` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -985,6 +993,18 @@ if(!isset($default['de_mobile_rel_list_use'])) {
             <td>
                  <?php echo help("비회원 장바구니 기능을 사용하려면 체크하십시오."); ?>
                 <input type="checkbox" name="de_guest_cart_use" value="1" id="de_guest_cart_use"<?php echo $default['de_guest_cart_use']?' checked':''; ?>> 사용
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">신규회원 쿠폰발행</th>
+            <td>
+                 <?php echo help("신규회원에게 주문금액 할인 쿠폰을 발행하시려면 아래를 설정하십시오."); ?>
+                <label for="de_member_reg_coupon_use">쿠폰발행</label>
+                <input type="checkbox" name="de_member_reg_coupon_use" value="1" id="de_member_reg_coupon_use"<?php echo $default['de_member_reg_coupon_use']?' checked':''; ?>>
+                <label for="de_member_reg_coupon_price">쿠폰할인금액</label>
+                <input type="text" name="de_member_reg_coupon_price" value="<?php echo $default['de_member_reg_coupon_price']; ?>" id="de_member_reg_coupon_price" class="frm_input" size="10"> 원
+                <label for="de_member_reg_coupon_term">쿠폰유효기간</label>
+                <input type="text" name="de_member_reg_coupon_term" value="<?php echo $default['de_member_reg_coupon_term']; ?>" id="de_member_reg_coupon_term" class="frm_input" size="5"> 일
             </td>
         </tr>
         <tr>

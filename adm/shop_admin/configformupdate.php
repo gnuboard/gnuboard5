@@ -163,7 +163,10 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_guest_privacy            = '$de_guest_privacy',
                 de_hp_use                   = '$de_hp_use',
                 de_escrow_use               = '$de_escrow_use',
-                de_tax_flag_use             = '$de_tax_flag_use'
+                de_tax_flag_use             = '$de_tax_flag_use',
+                de_member_reg_coupon_use    = '$de_member_reg_coupon_use',
+                de_member_reg_coupon_term   = '$de_member_reg_coupon_term',
+                de_member_reg_coupon_price  = '$de_member_reg_coupon_price'
                 ";
 sql_query($sql);
 
