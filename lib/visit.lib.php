@@ -13,10 +13,10 @@ function visit($skin_dir='basic')
     // $visit[4] = 전체
     // 숫자가 들어감
     preg_match("/오늘:(.*),어제:(.*),최대:(.*),전체:(.*)/", $config['cf_visit'], $visit);
-    settype($visit[0], "integer");
     settype($visit[1], "integer");
     settype($visit[2], "integer");
     settype($visit[3], "integer");
+    settype($visit[4], "integer");
 
     ob_start();
     if(G5_IS_MOBILE) {
