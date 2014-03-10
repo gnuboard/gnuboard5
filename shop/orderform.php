@@ -917,9 +917,9 @@ function get_intall_file()
             $escrow_title = "에스크로 ";
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
-        echo '<fieldset id="sod_frm_paysel">';
-        echo '<legend>결제방법 선택</legend>';
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
+            echo '<fieldset id="sod_frm_paysel">';
+            echo '<legend>결제방법 선택</legend>';
         }
 
         // 무통장입금 사용
@@ -1011,9 +1011,8 @@ function get_intall_file()
             echo '</div>';
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
-        echo '</fieldset>';
-
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
+            echo '</fieldset>';
         }
 
         if ($multi_settle == 0)
