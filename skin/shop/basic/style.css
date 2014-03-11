@@ -404,7 +404,7 @@
 #sit_inf h3 {position:absolute;font-size:0;line-height:0;content:""}
 
 #sit_inf_basic {margin:0 0 10px}
-#sit_inf_explan {margin:0 0 10px;width:718px;overflow:hidden} /* ie6 미대응시 #sit_inf_explan {margin:0 0 10px} 만으로 충분 */
+#sit_inf_explan {margin:0 0 10px;width:auto !important;width:718px;overflow:hidden} /* ie6 미대응시 #sit_inf_explan {margin:0 0 10px} 만으로 충분 */
 #sit_inf_explan img {max-width:100%;height:auto}
 
 #sit_inf_open {width:100%;border:0;border-collapse:collapse}
