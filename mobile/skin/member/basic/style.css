@@ -98,6 +98,8 @@
 #reg_result #result_email {margin:20px 0;padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
 #reg_result #result_email span {display:inline-block;width:150px}
 #reg_result #result_email strong {color:#e8180c;font-size:1.2em}
+#reg_result #result_coupon {margin:20px 0;padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
+#reg_result #result_coupon strong {color:#ff3061;font-weight:normal}
 #reg_result p {line-height:1.8em}
 #reg_result .btn_confirm {margin:50px 0}
 
