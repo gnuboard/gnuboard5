@@ -85,7 +85,6 @@ function imageview(id, w, h)
 
         <nav id="gnb">
             <h2>관리자 주메뉴</h2>
-            <script>$('#gnb').addClass('gnb_js');</script>
             <?php
             $gnb_str = "<ul id=\"gnb_1dul\">";
             foreach($amenu as $key=>$value) {
