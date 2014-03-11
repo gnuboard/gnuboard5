@@ -61,7 +61,7 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
         <tr>
             <td class="td_mbname"><?php echo $row['mb_name']; ?></td>
             <td><?php echo $row['mb_id']; ?></td>
-            <td class="scp_find_select"><button type="button" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button>
+            <td class="scp_find_select"><button type="button" class="btn_frmline" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button></td>
         </tr>
         <?php
         }
