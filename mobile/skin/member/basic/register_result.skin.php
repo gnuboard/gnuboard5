@@ -40,8 +40,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     </p>
 
     <?php if($default['de_member_reg_coupon_use'] && get_session('ss_member_reg_coupon') == 1) { ?>
-    <p>
-        <?php echo $mb['mb_name']; ?>님께 주문시 사용하실 수 있는 <?php echo number_format($default['de_member_reg_coupon_price']); ?>원 할인 쿠폰이 발행됐습니다.<br>
+    <p id="result_coupon">
+        <?php echo $mb['mb_name']; ?>님께 주문시 사용하실 수 있는 <strong><?php echo number_format($default['de_member_reg_coupon_price']); ?>원 할인 쿠폰</strong>이 발행됐습니다.<br>
         발행된 할인 쿠폰 내역은 마이페이지에서 확인하실 수 있습니다.
     </p>
     <?php } ?>
