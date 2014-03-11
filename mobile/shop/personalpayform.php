@@ -138,7 +138,7 @@ if($default['de_escrow_use']) {
             $escrow_title = "에스크로 ";
         }
 
-        if ($default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
+        if ($default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
         echo '<fieldset id="sod_frm_paysel">';
         echo '<legend>결제방법 선택</legend>';
         }
@@ -171,7 +171,7 @@ if($default['de_escrow_use']) {
             $checked = '';
         }
 
-        if ($default['de_vbank_use'] || $default['de_bank_use'] || $default['de_bank_use'] || $default['de_bank_use']) {
+        if ($default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
         echo '</fieldset>';
 
         }
