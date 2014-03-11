@@ -141,9 +141,9 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
         <th scope="row">쿠폰발행알림</th>
         <td>
             <label for="cp_sms_send">SMS발송</label>
-            <input type="checkbox" name="cp_sms_send" value="1" id="cp_sms_send" checked="checked">
+            <input type="checkbox" name="cp_sms_send" value="1" id="cp_sms_send" checked>
             <label for="cp_email_send">이메일발송</label>
-            <input type="checkbox" name="cp_email_send" value="1" id="cp_email_send"  checked="checked">
+            <input type="checkbox" name="cp_email_send" value="1" id="cp_email_send"  checked>
         </td>
     </tr>
     <?php } ?>
