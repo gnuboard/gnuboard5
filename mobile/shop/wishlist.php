@@ -45,7 +45,6 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
             $image = get_it_image($row['it_id'], 50, 50);
-            $it_point = get_item_point($row);
         ?>
 
         <tr>

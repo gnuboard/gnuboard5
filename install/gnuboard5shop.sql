@@ -384,6 +384,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_price` int(11) NOT NULL DEFAULT '0',
   `it_point` int(11) NOT NULL DEFAULT '0',
   `it_point_type` tinyint(4) NOT NULL DEFAULT '0',
+  `it_supply_point` int(11) NOT NULL DEFAULT '0',
   `it_notax` tinyint(4) NOT NULL DEFAULT '0',
   `it_sell_email` varchar(255) NOT NULL DEFAULT '',
   `it_use` tinyint(4) NOT NULL DEFAULT '0',

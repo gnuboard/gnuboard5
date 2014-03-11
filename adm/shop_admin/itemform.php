@@ -94,6 +94,12 @@ if(!sql_query(" select it_stock_sms from {$g5['g5_shop_item_table']} limit 1 ", 
                     ADD `it_stock_sms` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_stock_qty` ", true);
 }
 
+// 추가옵션 포인트 설정 필드 추가
+if(!sql_query(" select it_supply_point from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_supply_point` int(11) NOT NULL DEFAULT '0' AFTER `it_point_type` ", true);
+}
+
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_cate">상품분류</a></li>
 <li><a href="#anc_sitfrm_ini">기본정보</a></li>
@@ -483,15 +489,16 @@ $(function(){
         <tr>
             <th scope="row"><label for="it_point_type">포인트 유형</label></th>
             <td>
-                <?php echo help("포인트 유형을 설정할 수 있습니다. 비율로 설정했을 경우 판매가격의 %비율로 포인트가 지급됩니다."); ?>
+                <?php echo help("포인트 유형을 설정할 수 있습니다. 비율로 설정했을 경우 설정 기준금액의 %비율로 포인트가 지급됩니다."); ?>
                 <select name="it_point_type" id="it_point_type">
-                    <option value="0"<?php echo get_selected('0', $it['it_point_type']); ?>>금액</option>
-                    <option value="1"<?php echo get_selected('1', $it['it_point_type']); ?>>비율</option>
+                    <option value="0"<?php echo get_selected('0', $it['it_point_type']); ?>>설정금액</option>
+                    <option value="1"<?php echo get_selected('1', $it['it_point_type']); ?>>판매가기준 설정비율</option>
+                    <option value="2"<?php echo get_selected('2', $it['it_point_type']); ?>>구매가기준 설정비율</option>
                 </select>
                 <script>
                 $(function() {
                     $("#it_point_type").change(function() {
-                        if($(this).val() == "1")
+                        if(parseInt($(this).val()) > 0)
                             $("#it_point_unit").text("%");
                         else
                             $("#it_point_unit").text("점");
@@ -509,7 +516,7 @@ $(function(){
         <tr>
             <th scope="row"><label for="it_point">포인트</label></th>
             <td>
-                <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다.\n게시판의 포인트 기능과는 별개로 동작합니다."); ?>
+                <?php echo help("주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다."); ?>
                 <input type="text" name="it_point" value="<?php echo $it['it_point']; ?>" id="it_point" class="frm_input" size="8"> <span id="it_point_unit"><?php if($it['it_point_type']) echo '%'; else echo '점'; ?></span>
             </td>
             <td class="td_grpset">
@@ -517,6 +524,19 @@ $(function(){
                 <label for="chk_ca_it_point">분류적용</label>
                 <input type="checkbox" name="chk_all_it_point" value="1" id="chk_all_it_point">
                 <label for="chk_all_it_point">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_supply_point">추가옵션상품 포인트</label></th>
+            <td>
+                <?php echo help("상품의 추가옵션상품 구매에 일괄적으로 지급하는 포인트입니다. 0으로 설정하시면 구매포인트를 지급하지 않습니다.\n주문완료후 환경설정에서 설정한 주문완료 설정일 후 회원에게 부여하는 포인트입니다.\n또, 포인트부여를 '아니오'로 설정한 경우 신용카드, 계좌이체로 주문하는 회원께는 부여하지 않습니다."); ?>
+                <input type="text" name="it_supply_point" value="<?php echo $it['it_supply_point']; ?>" id="it_supply_point" class="frm_input" size="8"> 점
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_supply_point" value="1" id="chk_ca_it_supply_point">
+                <label for="chk_ca_it_supply_point">분류적용</label>
+                <input type="checkbox" name="chk_all_it_supply_point" value="1" id="chk_all_it_supply_point">
+                <label for="chk_all_it_supply_point">전체적용</label>
             </td>
         </tr>
         <tr>

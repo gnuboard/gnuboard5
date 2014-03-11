@@ -99,14 +99,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $catename2 = $row2['ca_name'];
     }
 
-    // 배송비 상한가 미만이면 배송비 적용
-    $delivery = 0;
-    if ($row['it_price'] < $cost_limit) {
-        $delivery = $send_cost;
-    }
-
     $pdate = date("Ymd", strtotime($row['it_time']));
-    $point = get_item_point($row);
 
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);
@@ -121,6 +114,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
         $it_price = $row['it_price'];
         $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
+        $point = get_item_point($row);
 
         if($delivery) {
             $deliv  = 1;
@@ -167,6 +161,7 @@ HEREDOC;
             $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
             $it_price = $row['it_price'] + $row2['io_price'];
             $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
+            $point = get_item_point($row, $row2['io_id']);
 
             if($delivery) {
                 $deliv  = $delivery;
