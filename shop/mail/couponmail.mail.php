@@ -27,7 +27,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
 
         <p style="<?php echo $cont_st; ?>"><?php echo $contents; ?></p>
 
-        <a href="<?php echo G5_URL; ?>" target="_blank" style="<?php echo $ft_a_st; ?>"><?php echo $config['cf_title']; ?> 방문</a>
+        <a href="<?php echo G5_URL; ?>" target="_blank" style="<?php echo $ft_a_st; ?>"><?php echo $config['cf_title']; ?> 바로가기</a>
 
     </div>
 </div>
