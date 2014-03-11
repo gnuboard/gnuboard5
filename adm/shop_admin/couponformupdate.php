@@ -109,5 +109,98 @@ if($w == '') {
     sql_query($sql);
 }
 
+// 쿠폰생성알림 발송
+if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
+    include_once(G5_LIB_PATH.'/mailer.lib.php');
+    include_once(G5_LIB_PATH.'/icode.sms.lib.php');
+
+    $sms_count = 0;
+    if($config['cf_sms_use'] == 'icode' && $_POST['cp_sms_send'])
+    {
+        $SMS = new SMS;
+        $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
+    }
+
+    $arr_send_list = array();
+
+    if($_POST['chk_all_mb']) {
+        $sql = " select mb_id, mb_name, mb_hp, mb_email, mb_mailling, mb_sms
+                    from {$g5['member_table']}
+                    where mb_leave_date = ''
+                      and mb_intercept_date = ''
+                      and ( mb_mailling = '1' or mb_sms = '1' )
+                      and mb_id <> '{$config['cf_admin']}' ";
+    } else {
+        $sql = " select mb_id, mb_name, mb_hp, mb_email, mb_mailling, mb_sms
+                    from {$g5['member_table']}
+                    where mb_id = '$mb_id' ";
+    }
+
+    $result = sql_query($sql);
+
+    for($i=0; $row = sql_fetch_array($result); $i++) {
+        $arr_send_list[] = $row;
+    }
+
+    $count = count($arr_send_list);
+    $admin = get_admin('super');
+
+    for($i=0; $i<$count; $i++) {
+        if(!$arr_send_list[$i]['mb_id'])
+            continue;
+
+        // SMS
+        if($config['cf_sms_use'] == 'icode' && $_POST['cp_sms_send'] && $arr_send_list[$i]['mb_hp'] && $arr_send_list[$i]['mb_sms']) {
+            $sms_contents = $cp_subject.' 쿠폰이 '.$arr_send_list[$i]['mb_name'].'님께 발행됐습니다. 쿠폰만료 : '.$cp_end.' '.str_replace('http://', '', G5_URL);
+            $sms_contents = iconv_euckr($sms_contents);
+
+            if($sms_contents) {
+                $receive_number = preg_replace("/[^0-9]/", "", $arr_send_list[$i]['mb_hp']);   // 수신자번호
+                $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
+
+                if($receive_number && $send_number) {
+                    $SMS->Add($receive_number, $send_number, $config['cf_icode_id'], $sms_contents, "");
+                    $sms_count++;
+                }
+            }
+        }
+
+        // E-MAIL
+        if($config['cf_email_use'] && $_POST['cp_email_send'] && $arr_send_list[$i]['mb_email'] && $arr_send_list[$i]['mb_mailling']) {
+            $mb_name = $arr_send_list[$i]['mb_name'];
+            switch($cp_method) {
+                case 2:
+                    $coupon_method = '결제금액할인';
+                    break;
+                case 3:
+                    $coupon_method = '배송비할인';
+                    break;
+                default:
+                    $coupon_method = '개별상품할인';
+                    break;
+            }
+            $contents = '쿠폰명 : '.$cp_subject.'<br>';
+            $contents .= '적용대상 : '.$coupon_method.'<br>';
+            $contents .= '쿠폰만료 : '.$cp_end;
+
+            $title = $config['cf_title'].' - 쿠폰발행알림 메일';
+            $email = $arr_send_list[$i]['mb_email'];
+
+            ob_start();
+            include G5_SHOP_PATH.'/mail/couponmail.mail.php';
+            $content = ob_get_contents();
+            ob_end_clean();
+
+            mailer($config['cf_title'], $admin['mb_email'], $email, $title, $content, 1);
+        }
+    }
+
+    // SMS발송
+    if($config['cf_sms_use'] == 'icode' && $_POST['cp_sms_send'] && $sms_count)
+    {
+        $SMS->Send();
+    }
+}
+
 goto_url('./couponlist.php');
 ?>

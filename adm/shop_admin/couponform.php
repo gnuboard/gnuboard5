@@ -136,6 +136,17 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
             <input type="text" name="cp_maximum" value="<?php echo stripslashes($cp['cp_maximum']); ?>" id="cp_maximum" class="frm_input"> 원
         </td>
     </tr>
+    <?php if($w == '') { ?>
+    <tr>
+        <th scope="row">쿠폰발행알림</th>
+        <td>
+            <label for="cp_sms_send">SMS발송</label>
+            <input type="checkbox" name="cp_sms_send" value="1" id="cp_sms_send" checked="checked">
+            <label for="cp_email_send">이메일발송</label>
+            <input type="checkbox" name="cp_email_send" value="1" id="cp_email_send"  checked="checked">
+        </td>
+    </tr>
+    <?php } ?>
     </tbody>
     </table>
 </div>
@@ -255,6 +266,12 @@ function form_check(f)
     if(cp_type == "1" && (cp_price < 1 || cp_price > 99)) {
         alert("할인비율을 1과 99 사이의 숫자로 입력해 주십시오.");
         return false;
+    }
+
+    // 전체회원일 때 쿠폰알림 체크되어 있으면 확인창
+    if(f.chk_all_mb.checked && (f.cp_sms_send.checked || f.cp_email_send.checked)) {
+        if(!confirm("전체회원에게 쿠폰발행알림을 발송하시겠습니까?"))
+            return false;
     }
 
     return true;
