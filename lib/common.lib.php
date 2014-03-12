@@ -33,7 +33,7 @@ function get_microtime()
 }
 
 
-// 현재페이지, 총페이지수, 한페이지에 보여줄 행, URL
+// 한페이지에 보여줄 행, 현재페이지, 총페이지수, URL
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {
     $url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
