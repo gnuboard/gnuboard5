@@ -225,13 +225,14 @@ if (isset($_REQUEST['sfl']))  {
 if (isset($_REQUEST['stx']))  { // search text (검색어)
     $stx = trim($_REQUEST['stx']);
     if ($stx)
-        $qstr .= '&amp;stx=' . urlencode($stx);
+        $qstr .= '&amp;stx=' . urlencode(cut_str($stx, 20, ''));
 } else {
     $stx = '';
 }
 
 if (isset($_REQUEST['sst']))  {
     $sst = trim($_REQUEST['sst']);
+    $sst = preg_replace("/[\<\>\'\"\%\=\(\)\s]/", "", $sst);
     if ($sst)
         $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 } else {
