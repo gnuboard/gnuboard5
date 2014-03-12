@@ -15,8 +15,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <?php if($default['de_mobile_type1_list_use']) { ?>
         <div class="sct_wrap">
             <header>
-                <h2>최신상품</h2>
-                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 최신상품 모음</p>
+                <h2>히트상품</h2>
+                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 히트상품 모음</p>
             </header>
             <?php
             $list = new item_list();
@@ -37,8 +37,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <?php if($default['de_mobile_type2_list_use']) { ?>
         <div class="sct_wrap">
             <header>
-                <h2>히트상품</h2>
-                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 히트상품 모음</p>
+                <h2>추천상품</h2>
+                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
             </header>
             <?php
             $list = new item_list();
@@ -59,8 +59,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <?php if($default['de_mobile_type3_list_use']) { ?>
         <div class="sct_wrap">
             <header>
-                <h2>추천상품</h2>
-                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 추천상품 모음</p>
+                <h2>최신상품</h2>
+                <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 최신상품 모음</p>
             </header>
             <?php
             $list = new item_list();
