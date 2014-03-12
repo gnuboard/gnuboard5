@@ -149,8 +149,10 @@
 /* 쪽지 */
 #memo_view_contents {margin:0 auto 20px;width:90%}
 #memo_view_contents h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#memo_view_ul {margin:0;padding:0 0 10px;border-bottom:1px solid #eee;list-style:none}
+.memo_view_li {position:relative;padding:5px 0}
 .memo_view_subj {display:inline-block;width:65px}
-#memo_view section p {padding:10px;min-height:150px;height:auto !important;height:150px;background:#fff}
+#memo_view p {padding:10px 0;min-height:150px;height:auto !important;height:150px;background:#fff;line-height:1.8em}
 
 #memo_write textarea {height:100px}
 

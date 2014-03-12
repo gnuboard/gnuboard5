@@ -59,7 +59,7 @@ h3 {margin:0 20px}
 .gnb_2dul {display:none;position:absolute;top:34px;width:181px;border:1px solid #999;border-top:0;background:#fff}
 .gnb_2dli {float:left}
 .gnb_2dli a {display:inline-block;float:none;padding:8px 10px;width:161px;height:auto;background:#fff;color:#000;font-weight:normal;text-align:left;line-height:1em}
-.gnb_2dli a:focus, .gnb_js .gnb_2dli a:hover {background:#484848;color:#fff}
+.gnb_2dli a:focus, .gnb_2dli a:hover {background:#484848 !important;color:#fff}
 .gnb_1dli_over .gnb_2dul {display:block;left:-1px}
 .gnb_1dli_over2 .gnb_2dul {display:block;right:-1px}
 
