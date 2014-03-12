@@ -1433,7 +1433,7 @@ function sql_select_db($db, $connect)
 
 
 // mysql_query 와 mysql_error 를 한꺼번에 처리
-function sql_query($sql, $error=TRUE)
+function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
 {
     if ($error)
         $result = @mysql_query($sql) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
@@ -1444,7 +1444,7 @@ function sql_query($sql, $error=TRUE)
 
 
 // 쿼리를 실행한 후 결과값에서 한행을 얻는다.
-function sql_fetch($sql, $error=TRUE)
+function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR)
 {
     $result = sql_query($sql, $error);
     //$row = @sql_fetch_array($result) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER['PHP_SELF']");
