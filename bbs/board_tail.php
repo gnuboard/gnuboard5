@@ -6,7 +6,7 @@ if (G5_IS_MOBILE) {
     echo stripslashes($board['bo_mobile_content_tail']);
     // 모바일의 경우 설정을 따르지 않는다.
     include_once('./_tail.php');
-} else if ($board['bo_include_tail']) {
+} else {
     echo stripslashes($board['bo_content_tail']);
     @include ($board['bo_include_tail']);
 }
