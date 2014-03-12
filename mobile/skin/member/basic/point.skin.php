@@ -30,12 +30,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             $po_content = $row['po_content'];
 
             $expr = '';
-            if($row['po_expired'] == 1)
+//            if($row['po_expired'] == 1)
                 $expr = ' txt_expired';
         ?>
         <li>
             <div class="point_wrap01">
-                <span class="point_date"><?php echo $row['po_datetime']; ?></span>
+                <span class="point_date"><?php echo conv_date_format('y-m-d H시', $row['po_datetime']); ?></span>
                 <span class="point_log"><?php echo $po_content; ?></span>
             </div>
             <div class="point_wrap02">
