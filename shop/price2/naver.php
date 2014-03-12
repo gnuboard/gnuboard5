@@ -76,9 +76,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);
 
-    // 포인트
-    $it_point = get_item_point($row);
-
     // 상품별옵션
     $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
@@ -89,6 +86,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'];
         $it_price = $row['it_price'];
         $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
+        $it_point = get_item_point($row);
 
         echo <<< HEREDOC
 {$lt}begin{$gt}
@@ -134,6 +132,7 @@ HEREDOC;
             $buy_url = G5_SHOP_URL.'/itembuy.php?it_id='.$row['it_id'].'&amp;opt='.$row2['io_id'];
             $it_price = $row['it_price'] + $row2['io_price'];
             $delivery = get_item_sendcost2($row['it_id'], $it_price, 1);
+            $it_point = get_item_point($row, $row2['io_id']);
 
     echo <<< HEREDOC
 {$lt}begin{$gt}

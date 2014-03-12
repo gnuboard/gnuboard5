@@ -138,9 +138,13 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
             <th scope="row"><label for="disp_point">포인트</label></th>
             <td>
                 <?php
-                $it_point = get_item_point($it);
-                echo number_format($it_point);
-                ?> 점
+                if($it['it_point_type'] == 2) {
+                    echo '구매금액(추가옵션 제외)의 '.$it['it_point'].'%';
+                } else {
+                    $it_point = get_item_point($it);
+                    echo number_format($it_point).'점';
+                }
+                ?>
             </td>
         </tr>
         <?php } ?>

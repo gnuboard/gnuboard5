@@ -50,7 +50,6 @@ include_once('./_head.php');
             if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
             $image = get_it_image($row['it_id'], 70, 70);
-            $it_point = get_item_point($row);
         ?>
 
         <tr>

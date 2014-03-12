@@ -141,11 +141,6 @@ else // 장바구니에 담기
                 $lst_count++;
         }
 
-        // 포인트
-        $point = 0;
-        if($config['cf_use_point'])
-            $point = get_item_point($it);
-
         //--------------------------------------------------------
         //  재고 검사
         //--------------------------------------------------------
@@ -238,6 +233,19 @@ else // 장바구니에 담기
                             where ct_id = '{$row2['ct_id']}' ";
                 sql_query($sql3);
                 continue;
+            }
+
+            // 포인트
+            $point = 0;
+            if($config['cf_use_point']) {
+                if($io_type == 0) {
+                    $point = get_item_point($it, $io_id);
+                } else {
+                    $point = $it['it_supply_point'];
+                }
+
+                if($point < 0)
+                    $point = 0;
             }
 
             // 배송비결제

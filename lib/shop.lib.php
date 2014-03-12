@@ -1645,12 +1645,28 @@ function get_order_info($od_id)
 
 
 // 상품포인트
-function get_item_point($it)
+function get_item_point($it, $io_id='', $trunc=10)
 {
+    global $g5;
+
     $it_point = 0;
 
-    if($it['it_point_type']) {
-        $it_point = floor(($it['it_price'] * ($it['it_point'] / 100) / 10)) * 10;
+    if($it['it_point_type'] > 0) {
+        $it_price = $it['it_price'];
+
+        if($it['it_point_type'] == 2 && $io_id) {
+            $sql = " select io_id, io_price
+                        from {$g5['g5_shop_item_option_table']}
+                        where io_id = '$io_id'
+                          and io_type = '0'
+                          and io_use = '1' ";
+            $opt = sql_fetch($sql);
+
+            if($opt['io_id'])
+                $it_price += $opt['io_price'];
+        }
+
+        $it_point = floor(($it_price * ($it['it_point'] / 100) / $trunc)) * $trunc;
     } else {
         $it_point = $it['it_point'];
     }
