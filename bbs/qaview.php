@@ -8,10 +8,8 @@ if($is_guest)
 $qaconfig = get_qa_config();
 
 $g5['title'] = $qaconfig['qa_title'];
-include_once('./_head.php');
+include_once('./qahead.php');
 
-$qa_skin_path = (G5_IS_MOBILE ? G5_MOBILE_PATH : G5_PATH).'/'.G5_SKIN_DIR.'/qa/'.$qaconfig['qa_skin'];
-$qa_skin_url = (G5_IS_MOBILE ? G5_MOBILE_URL : G5_URL).'/'.G5_SKIN_DIR.'/qa/'.$qaconfig['qa_skin'];
 $skin_file = $qa_skin_path.'/view.skin.php';
 
 if(is_file($skin_file)) {
@@ -173,5 +171,5 @@ if(is_file($skin_file)) {
     echo '<div>'.str_replace(G5_PATH.'/', '', $skin_file).'이 존재하지 않습니다.</div>';
 }
 
-include_once('./_tail.php');
+include_once('./qatail.php');
 ?>

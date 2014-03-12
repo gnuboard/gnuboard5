@@ -1,6 +1,7 @@
 <?php
 $sub_menu = "300500";
 include_once('./_common.php');
+include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], 'r');
 
@@ -31,6 +32,12 @@ if(!sql_query(" DESCRIBE `{$g5['qa_config_table']}` ", false)) {
                   `qa_image_width` int(11) NOT NULL DEFAULT '0',
                   `qa_upload_size` int(11) NOT NULL DEFAULT '0',
                   `qa_insert_content` text NOT NULL,
+                  `qa_include_head` varchar(255) NOT NULL DEFAULT '',
+                  `qa_include_tail` varchar(255) NOT NULL DEFAULT '',
+                  `qa_content_head` text NOT NULL,
+                  `qa_content_tail` text NOT NULL,
+                  `qa_mobile_content_head` text NOT NULL,
+                  `qa_mobile_content_tail` text NOT NULL,
                   `qa_1_subj` varchar(255) NOT NULL DEFAULT '',
                   `qa_2_subj` varchar(255) NOT NULL DEFAULT '',
                   `qa_3_subj` varchar(255) NOT NULL DEFAULT '',
@@ -97,6 +104,17 @@ if(empty($qaconfig)) {
 if(!isset($qaconfig['qa_admin_email'])) {
     sql_query(" ALTER TABLE `{$g5['qa_config_table']}`
                     ADD `qa_admin_email` varchar(255) NOT NULL DEFAULT '' AFTER `qa_admin_hp` ", true);
+}
+
+// 상단 하단 설정 필드 추가
+if(!isset($qaconfig['qa_include_head'])) {
+    sql_query(" ALTER TABLE `{$g5['qa_config_table']}`
+                    ADD `qa_include_head` varchar(255) NOT NULL DEFAULT '' AFTER `qa_insert_content`,
+                    ADD `qa_include_tail` varchar(255) NOT NULL DEFAULT '' AFTER `qa_include_head`,
+                    ADD `qa_content_head` text NOT NULL AFTER `qa_include_tail`,
+                    ADD `qa_content_tail` text NOT NULL AFTER `qa_content_head`,
+                    ADD `qa_mobile_content_head` text NOT NULL AFTER `qa_content_tail`,
+                    ADD `qa_mobile_content_tail` text NOT NULL AFTER `qa_mobile_content_head` ", true);
 }
 ?>
 
@@ -236,6 +254,42 @@ if(!isset($qaconfig['qa_admin_email'])) {
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="qa_include_head">상단 파일 경로</label></th>
+            <td>
+                <input type="text" name="qa_include_head" value="<?php echo $qaconfig['qa_include_head'] ?>" id="qa_include_head" class="frm_input" size="50">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="qa_include_tail">하단 파일 경로</label></th>
+            <td>
+                <input type="text" name="qa_include_tail" value="<?php echo $qaconfig['qa_include_tail'] ?>" id="qa_include_tail" class="frm_input" size="50">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="qa_content_head">상단 내용</label></th>
+            <td>
+                <?php echo editor_html("qa_content_head", $qaconfig['qa_content_head']); ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="qa_content_tail">하단 내용</label></th>
+            <td>
+                <?php echo editor_html("qa_content_tail", $qaconfig['qa_content_tail']); ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="qa_mobile_content_head">모바일 상단 내용</label></th>
+            <td>
+                <?php echo editor_html("qa_mobile_content_head", $qaconfig['qa_mobile_content_head']); ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="qa_mobile_content_tail">모바일 하단 내용</label></th>
+            <td>
+                <?php echo editor_html("qa_mobile_content_tail", $qaconfig['qa_mobile_content_tail']); ?>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="qa_insert_content">글쓰기 기본 내용</label></th>
             <td>
                 <textarea id="qa_insert_content" name="qa_insert_content" rows="5"><?php echo $qaconfig['qa_insert_content'] ?></textarea>
@@ -266,6 +320,11 @@ if(!isset($qaconfig['qa_admin_email'])) {
 <script>
 function fqaconfigform_submit(f)
 {
+    <?php echo get_editor_js("qa_content_head"); ?>
+    <?php echo get_editor_js("qa_content_tail"); ?>
+    <?php echo get_editor_js("qa_mobile_content_head"); ?>
+    <?php echo get_editor_js("qa_mobile_content_tail"); ?>
+
     f.action = "./qa_config_update.php";
     return true;
 }
