@@ -2604,4 +2604,15 @@ function htmlspecialchars2($str)
     $str = strtr($str, $trans);
     return $str;
 }
+
+// date 형식 변환
+function conv_date_format($format, $date, $add='')
+{
+    if($add)
+        $timestamp = strtotime($add, strtotime($date));
+    else
+        $timestamp = strtotime($date);
+
+    return date($format, $timestamp);
+}
 ?>
