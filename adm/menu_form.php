@@ -21,27 +21,17 @@ if($new == 'new' || $code == 0) {
 
     <form name="fmenuform" id="fmenuform">
 
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <caption><?php echo $g5['title']; ?></caption>
-        <tbody>
-        <tr>
-            <th scope="col"><label for="me_type">선택</label></th>
-            <td>
-                <select name="me_type" id="me_type">
-                    <option value="">직접입력</option>
-                    <option value="group">게시판그룹</option>
-                    <option value="board">게시판</option>
-                    <option value="content">내용관리</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2"><div id="ajax_result"></div></td>
-        </tr>
-        </tbody>
-        </table>
+    <div class="local_sch01 local_sch">
+        <label for="me_type">대상선택</label>
+        <select name="me_type" id="me_type">
+            <option value="">직접입력</option>
+            <option value="group">게시판그룹</option>
+            <option value="board">게시판</option>
+            <option value="content">내용관리</option>
+        </select>
     </div>
+
+    <div id="menu_result"></div>
 
     <div class="btn_confirm01 btn_confirm">
         <button type="button" class="btn_cancel" onclick="window.close();">창닫기</button>
@@ -53,14 +43,14 @@ if($new == 'new' || $code == 0) {
 
 <script>
 $(function() {
-    $("#ajax_result").load(
+    $("#menu_result").load(
         "./menu_form_search.php"
     );
 
     $("#me_type").on("change", function() {
         var type = $(this).val();
 
-        $("#ajax_result").empty().load(
+        $("#menu_result").empty().load(
             "./menu_form_search.php",
             { type : type }
         );

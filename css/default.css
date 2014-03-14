@@ -70,9 +70,9 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .gnb_1dli_on .gnb_1da {background-color:#333;color:#fff}
 .gnb_2dul {display:none;position:absolute;top:35px;width:180px}
 .gnb_2da {display:block;padding:13px 10px;text-align:left;text-decoration:none}
-.gnb_2da:focus, .gnb_2da:hover {text-decoration:none}
 .gnb_1dli_air .gnb_2da {background-color:#333;color:#fff}
 .gnb_1dli_on .gnb_2da {background-color:#333;color:#fff}
+.gnb_2da:focus, .gnb_2da:hover {background:#666;text-decoration:none}
 .gnb_1dli_over .gnb_2dul {display:block;left:0;background:#fff}
 .gnb_1dli_over2 .gnb_2dul {display:block;right:1px;background:#fff}
 
