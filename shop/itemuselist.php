@@ -6,8 +6,6 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-include_once(G5_LIB_PATH.'/thumb.lib.php');
-
 $sfl = trim($_REQUEST['sfl']);
 $stx = trim($_REQUEST['stx']);
 

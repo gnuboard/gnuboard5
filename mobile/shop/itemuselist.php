@@ -1,6 +1,5 @@
 <?php
 include_once('./_common.php');
-include_once(G5_LIB_PATH.'/thumb.lib.php');
 
 $sfl = trim($_REQUEST['sfl']);
 $stx = trim($_REQUEST['stx']);
