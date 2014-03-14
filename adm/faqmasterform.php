@@ -22,6 +22,13 @@ else
     $html_title .= ' 입력';
 }
 
+// 모바일 상하단 내용 필드추가
+if(!sql_query(" select fm_mobile_head_html from {$g5['faq_master_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['faq_master_table']}`
+                    ADD `fm_mobile_head_html` text NOT NULL AFTER `fm_tail_html`,
+                    ADD `fm_mobile_tail_html` text NOT NULL AFTER `fm_mobile_head_html` ", true);
+}
+
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
@@ -37,6 +44,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <col>
     </colgroup>
     <tbody>
+    <tr>
+        <th scope="row"><label for="fm_order">출력순서</label></th>
+        <td>
+            <?php echo help('숫자가 작을수록 FAQ 분류에서 먼저 출력됩니다.'); ?>
+            <input type="text" name="fm_order" value="<?php echo $fm['fm_order']; ?>" id="fm_order" class="frm_input" maxlength="10" size="10">
+        </td>
+    </tr>
     <tr>
         <th scope="row"><label for="fm_subject">제목</label></th>
         <td>
@@ -107,6 +121,18 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <?php echo editor_html('fm_tail_html', $fm['fm_tail_html']); ?>
         </td>
     </tr>
+    <tr>
+        <th scope="row">모바일상단 내용</th>
+        <td>
+            <?php echo editor_html('fm_mobile_head_html', $fm['fm_mobile_head_html']); ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row">모바일하단 내용</th>
+        <td>
+            <?php echo editor_html('fm_mobile_tail_html', $fm['fm_mobile_tail_html']); ?>
+        </td>
+    </tr>
     </tbody>
     </table>
 </div>
@@ -123,6 +149,8 @@ function frmfaqmasterform_check(f)
 {
     <?php echo get_editor_js('fm_head_html'); ?>
     <?php echo get_editor_js('fm_tail_html'); ?>
+    <?php echo get_editor_js('fm_mobile_head_html'); ?>
+    <?php echo get_editor_js('fm_mobile_tail_html'); ?>
 }
 
 // document.frmfaqmasterform.fm_subject.focus();

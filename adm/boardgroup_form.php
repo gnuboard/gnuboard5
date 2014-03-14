@@ -26,9 +26,6 @@ if (!isset($group['gr_device'])) {
     sql_query(" ALTER TABLE `{$g5['group_table']}` ADD `gr_device` ENUM('both','pc','mobile') NOT NULL DEFAULT 'both' AFTER `gr_subject` ", false);
 }
 
-if (!isset($group['gr_show_menu'])) {
-    sql_query(" ALTER TABLE `{$g5['group_table']}`  ADD `gr_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `gr_use_access`,  ADD `gr_order` INT NOT NULL DEFAULT '0' AFTER `gr_show_menu` ", false);
-}
 
 $g5['title'] = $html_title;
 include_once('./admin.head.php');
@@ -52,11 +49,11 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="gr_id">그룹 ID<?php echo $sound_only ?></label></th>
-        <td><input type="text" name="gr_id" value="<?php echo $group['gr_id'] ?>" id="gr_id" <?php echo $gr_id_attr; ?> class="<?php echo $gr_id_attr; ?> alnum_ frm_input" maxlength="10"> 
-            <?php 
+        <td><input type="text" name="gr_id" value="<?php echo $group['gr_id'] ?>" id="gr_id" <?php echo $gr_id_attr; ?> class="<?php echo $gr_id_attr; ?> alnum_ frm_input" maxlength="10">
+            <?php
             if ($w=='')
                 echo '영문자, 숫자, _ 만 가능 (공백없이)';
-            else 
+            else
                 echo '<a href="'.G5_BBS_URL.'/group.php?gr_id='.$group['gr_id'].'" class="btn_frmline">게시판그룹 바로가기</a>';
             ?>
         </td>
@@ -110,14 +107,6 @@ include_once('./admin.head.php');
             $row1 = sql_fetch($sql1);
             echo '<a href="./boardgroupmember_list.php?gr_id='.$gr_id.'">'.$row1['cnt'].'</a>';
             ?>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="gr_show_menu">메뉴보이기</label></th>
-        <td>
-            <?php echo help("사용에 체크하시면 게시판그룹 제목을 메뉴에 출력합니다.") ?>
-            <input type="checkbox" name="gr_show_menu" value="1" id="gr_show_menu" <?php echo $gr['gr_show_menu']?'checked':''; ?>>
-            사용
         </td>
     </tr>
     <?php for ($i=1;$i<=10;$i++) { ?>

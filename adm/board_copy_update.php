@@ -88,7 +88,6 @@ $sql = " insert into {$g5['board_table']}
                 bo_upload_size = '{$board[bo_upload_size]}',
                 bo_reply_order = '{$board[bo_reply_order]}',
                 bo_use_search = '{$board[bo_use_search]}',
-                bo_show_menu = '{$board[bo_show_menu]}',
                 bo_order = '{$board[bo_order]}',
                 bo_notice = '{$board['bo_notice']}',
                 bo_upload_count = '{$board[bo_upload_count]}',

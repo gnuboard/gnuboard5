@@ -39,7 +39,6 @@ if ($_POST['act_button'] == "선택수정") {
                         bo_download_point   = '{$_POST['bo_download_point'][$k]}',
                         bo_use_search       = '{$_POST['bo_use_search'][$k]}',
                         bo_use_sns          = '{$_POST['bo_use_sns'][$k]}',
-                        bo_show_menu        = '{$_POST['bo_show_menu'][$k]}',
                         bo_order            = '{$_POST['bo_order'][$k]}'
                   where bo_table            = '{$_POST['board_table'][$k]}' ";
         sql_query($sql);
