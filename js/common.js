@@ -71,7 +71,7 @@ function number_format(data)
     var i;
 
     var sign = data.match(/^[\+\-]/);
-    if(sign.length) {
+    if(sign) {
         data = data.replace(/^[\+\-]/, "");
     }
 
@@ -93,7 +93,10 @@ function number_format(data)
         }
     }
 
-    return sign[0]+number;
+    if(sign != null)
+        number = sign+number;
+
+    return number;
 }
 
 // 새 창
