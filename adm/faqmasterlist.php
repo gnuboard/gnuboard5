@@ -59,7 +59,7 @@ $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
 if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
-$sql = "select * $sql_common order by fm_id desc limit $from_record, {$config['cf_page_rows']} ";
+$sql = "select * $sql_common order by fm_order, fm_id limit $from_record, {$config['cf_page_rows']} ";
 $result = sql_query($sql);
 ?>
 
@@ -88,6 +88,7 @@ $result = sql_query($sql);
         <th scope="col">ID</th>
         <th scope="col">제목</th>
         <th scope="col">FAQ수</th>
+        <th scope="col">순서</th>
         <th scope="col">관리</th>
     </tr>
     </thead>
@@ -102,6 +103,7 @@ $result = sql_query($sql);
         <td class="td_num"><?php echo $row['fm_id']; ?></td>
         <td><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>"><?php echo stripslashes($row['fm_subject']); ?></a></td>
         <td class="td_num"><?php echo $cnt; ?></td>
+        <td class="td_num"><?php echo $row['fm_order']?></td>
         <td class="td_mng">
             <a href="<?php echo G5_BBS_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a>
             <a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>수정</a>
