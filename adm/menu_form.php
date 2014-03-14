@@ -16,12 +16,12 @@ if($new == 'new' || $code == 0) {
 }
 ?>
 
-<div class="new_win">
+<div id="menu_frm" class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
     <form name="fmenuform" id="fmenuform">
 
-    <div class="local_sch01 local_sch">
+    <div class="new_win_desc">
         <label for="me_type">대상선택</label>
         <select name="me_type" id="me_type">
             <option value="">직접입력</option>
@@ -32,10 +32,6 @@ if($new == 'new' || $code == 0) {
     </div>
 
     <div id="menu_result"></div>
-
-    <div class="btn_confirm01 btn_confirm">
-        <button type="button" class="btn_cancel" onclick="window.close();">창닫기</button>
-    </div>
 
     </form>
 

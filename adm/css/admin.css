@@ -123,12 +123,12 @@ h3 {margin:0 20px}
 .btn_confirm {margin:0 20px 10px}
 
 .btn_confirm01 {clear:both;text-align:center}
-.btn_confirm01 button {padding:0 15px;height:30px;border:0;background:#617d46;color:#fff;line-height:2.2em;vertical-align:middle;cursor:pointer}
+.btn_confirm01 button {padding:0 15px;height:30px;border:0;background:#617d46;color:#fff}
 .btn_confirm01 a {display:inline-block;padding:0 15px;height:30px;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 .btn_confirm01 a:focus {background:#555}
 
 .btn_confirm02 {clear:both;margin-top:10px;text-align:center}
-.btn_confirm02 button {padding:0 15px;height:30px;border:0;background:#617d46;color:#fff;line-height:2.2em;vertical-align:middle;cursor:pointer}
+.btn_confirm02 button {padding:0 15px;height:30px;border:0;background:#617d46;color:#fff}
 .btn_confirm02 a {display:inline-block;padding:0 15px;height:30px;background:#617d46;color:#fff;text-decoration:none;line-height:2.5em;vertical-align:middle}
 .btn_confirm02 a:focus {background:#555}
 
@@ -146,8 +146,15 @@ a.btn_cancel {line-height:2.5em;vertical-align:middle}
 .btn_win {margin:0 20px 10px} /* 새창용 */
 
 .btn_win01 {clear:both;text-align:center}
-.btn_win01 a, .btn_win01 button {display:inline-block;padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa;line-height:2em;cursor:pointer}
+.btn_win01 a, .btn_win01 button {padding:0 10px;height:22px;border:1px solid #ccc;background:#fafafa}
+.btn_win01 a {display:inline-block;line-height:2em;cursor:pointer}
 .btn_win01 a:focus, .btn_win01 a:hover {text-decoration:none}
+
+.btn_win02 {clear:both;text-align:center}
+.btn_win02 a, .btn_win02 button {padding:0 15px;height:30px;border:0;background:#617d46;color:#fff}
+.btn_win02 a {display:inline-block;vertical-align:middle;cursor:pointer}
+.btn_win02 a:focus, .btn_win02 a:hover {text-decoration:none}
+.btn_win02 button.btn_submit {background:#ff3061;color:#fff}
 
 .btn_list {margin:0 20px 10px} /* 목록용 */
 
@@ -181,6 +188,7 @@ a.btn_cancel {line-height:2.5em;vertical-align:middle}
 textarea, .frm_input {border:1px solid #ced9de;background:#f6f9fa;vertical-align:middle}
 textarea {padding:2px;width:90%}
 .frm_input {height:22px;line-height:1.8em}
+.full_input {width:98%}
 select {border:1px solid #ced9de}
 legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent:-9999em;border:0;overflow:hidden}
 
@@ -330,6 +338,11 @@ tfoot td {font-weight:bold;text-align:center}
 .bg1cancel {background:#fdebf3}
 .bg1cancel td {border-color:#f9d8e6}
 
+/* 메뉴설정 */
+#menu_frm #menu_result {margin:20px 0}
+
+#menulist .sub_menu_class {padding-left:25px;background:url('../img/sub_menu_ico.gif') 5px 15px no-repeat}
+
 /* 회원관리 목록 */
 .mb_leave_msg {color:#b6b6b6}
 .mb_intercept_msg {color:#f59fe4}
@@ -394,8 +407,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_mbstat {text-align:center}
 .td_mng {width:100px;font-size:0.95em;text-align:center;letter-spacing:-0.1em}
 .td_mngsmall {width:60px;font-size:0.95em;text-align:center;letter-spacing:-0.1em}
-.td_mng .mng_mod, .td_mngsmall .mng_mod {}
-.td_mng .mng_del, .td_mngsmall .mng_del {}
+.td_mng button, .td_mngsmall button {margin:0;padding:0;border:0;background:transparent}
 .td_num {width:60px;text-align:center}
 .td_numbig {width:100px;text-align:center}
 .td_numcancel0 {color:#999;text-align:center}
@@ -758,7 +770,11 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .new_win_ul li {float:left;margin-left:-1px}
 
 .new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
-.new_win .anchor {margin:0 auto 5px;width:93%}
+
+
+.new_win_desc {margin:0 20px}
+.new_win .anchor {margin:0 20px 5px}
+
 .new_win .tbl_wrap {margin:0 20px 20px;padding:0}
 
 .new_win .local_sch, .new_win .local_cmd, .new_win .local_desc01, .new_win .local_desc02, .new_win .local_ov {min-width:320px}

@@ -66,45 +66,48 @@ $colspan = 7;
     {
         $bg = 'bg'.($i%2);
         $sub_menu_class = '';
-        if(strlen($row['me_code']) == 4)
-            $sub_menu_class = ' class="sub_menu_class"';
+        if(strlen($row['me_code']) == 4) {
+            $sub_menu_class = ' sub_menu_class';
+            $sub_menu_info = '<span class="sound_only">'.$row['me_name'].'의 서브</span>';
+            $sub_menu_ico = '<span class="sub_menu_ico"></span>';
+        }
     ?>
     <tr class="<?php echo $bg; ?> menu_list menu_group_<?php echo substr($row['me_code'], 0, 2); ?>">
-        <td<?php echo $sub_menu_class; ?>>
+        <td class="td_category<?php echo $sub_menu_class; ?>">
             <input type="hidden" name="code[]" value="<?php echo substr($row['me_code'], 0, 2) ?>">
-            <label for="me_name_<?php echo $i; ?>" class="sound_only">메뉴</label>
-            <input type="text" name="me_name[]" value="<?php echo $row['me_name'] ?>" id="me_name_<?php echo $i; ?>" required class="required frm_input">
+            <label for="me_name_<?php echo $i; ?>" class="sound_only"><?php echo $sub_menu_info; ?>메뉴</label>
+            <input type="text" name="me_name[]" value="<?php echo $row['me_name'] ?>" id="me_name_<?php echo $i; ?>" required class="required frm_input full_input">
         </td>
         <td>
             <label for="me_link_<?php echo $i; ?>" class="sound_only">링크</label>
-            <input type="text" name="me_link[]" value="<?php echo $row['me_link'] ?>" id="me_link_<?php echo $i; ?>" required class="required frm_input">
+            <input type="text" name="me_link[]" value="<?php echo $row['me_link'] ?>" id="me_link_<?php echo $i; ?>" required class="required frm_input full_input">
         </td>
-        <td>
+        <td class="td_mng">
             <label for="me_target_<?php echo $i; ?>" class="sound_only">새창</label>
             <select name="me_target[]" id="me_target_<?php echo $i; ?>">
                 <option value="self"<?php echo get_selected($row['me_target'], 'self', true); ?>>사용안함</option>
                 <option value="blank"<?php echo get_selected($row['me_target'], 'blank', true); ?>>사용함</option>
             </select>
         </td>
-        <td>
+        <td class="td_num">
             <label for="me_order_<?php echo $i; ?>" class="sound_only">순서</label>
             <input type="text" name="me_order[]" value="<?php echo $row['me_order'] ?>" id="me_order_<?php echo $i; ?>" class="frm_input" size="5">
         </td>
-        <td>
+        <td class="td_mng">
             <label for="me_use_<?php echo $i; ?>" class="sound_only">PC사용</label>
             <select name="me_use[]" id="me_use_<?php echo $i; ?>">
                 <option value="1"<?php echo get_selected($row['me_use'], '1', true); ?>>사용함</option>
                 <option value="0"<?php echo get_selected($row['me_use'], '0', true); ?>>사용안함</option>
             </select>
         </td>
-        <td>
+        <td class="td_mng">
             <label for="me_mobile_use_<?php echo $i; ?>" class="sound_only">모바일사용</label>
             <select name="me_mobile_use[]" id="me_mobile_use_<?php echo $i; ?>">
                 <option value="1"<?php echo get_selected($row['me_mobile_use'], '1', true); ?>>사용함</option>
                 <option value="0"<?php echo get_selected($row['me_mobile_use'], '0', true); ?>>사용안함</option>
             </select>
         </td>
-        <td>
+        <td class="td_mng">
             <?php if(strlen($row['me_code']) == 2) { ?>
             <button type="button" class="btn_add_submenu">추가</button>
             <?php } ?>
