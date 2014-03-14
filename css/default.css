@@ -63,18 +63,18 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #gnb #gnb_1dul {margin:0 auto !important;padding:0;width:970px;zoom:1}
 #gnb #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1dli {z-index:10;position:relative;float:left;zoom:1}
-.gnb_1dli:after {display:block;visibility:hidden;clear:both;content:""}
-.gnb_1da {display:block;float:left;padding:0 10px;width:80px;height:35px;background:url('../img/gnb_bg00.gif') center right no-repeat;font-weight:bold;line-height:2.95em;text-decoration:none}
+.gnb_1dli {z-index:10;position:relative;float:left}
+.gnb_1da {display:block;padding:0 40px 0 10px;height:35px;background:url('../img/gnb_bg00.gif') center right no-repeat;font-weight:bold;line-height:2.95em;text-decoration:none}
 .gnb_1da:focus, .gnb_1da:hover {background:url('../img/gnb_bg00.gif') #333 center right no-repeat;text-decoration:none}
-.gnb_1dli_air a {background-color:#333;color:#fff}
-.gnb_1dli_on a {background-color:#333;color:#fff}
-.gnb_2dul {display:none;position:absolute;top:35px}
-.gnb_2da {display:block;width:80px;}
-.gnb_2da {display:inline-block;padding:0 10px;width:161px;height:35px;text-align:left;text-decoration:none;line-height:2.95em}
+.gnb_1dli_air .gnb_1da {background-color:#333;color:#fff}
+.gnb_1dli_on .gnb_1da {background-color:#333;color:#fff}
+.gnb_2dul {display:none;position:absolute;top:35px;width:180px}
+.gnb_2da {display:block;padding:13px 10px;text-align:left;text-decoration:none}
 .gnb_2da:focus, .gnb_2da:hover {text-decoration:none}
-.gnb_1dli_over .gnb_2dul {display:block;left:0;width:180px;background:#fff}
-.gnb_1dli_over2 .gnb_2dul {display:block;right:1px;width:180px;background:#fff}
+.gnb_1dli_air .gnb_2da {background-color:#333;color:#fff}
+.gnb_1dli_on .gnb_2da {background-color:#333;color:#fff}
+.gnb_1dli_over .gnb_2dul {display:block;left:0;background:#fff}
+.gnb_1dli_over2 .gnb_2dul {display:block;right:1px;background:#fff}
 
 .gnb_empty {width:100%;height:35px;text-align:center;line-height:2.95em}
 
