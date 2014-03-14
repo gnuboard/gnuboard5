@@ -61,8 +61,8 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 /* 메인메뉴 */
 #gnb {position:relative;margin:-1px 0 0;border-top:1px dotted #dde4e9;border-bottom:1px solid #dde4e9;background:#ecf0f7}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#gnb #gnb_1dul {margin:0 auto !important;padding:0;width:970px;zoom:1}
-#gnb #gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
+#gnb_1dul {margin:0 auto !important;padding:0;width:970px;zoom:1}
+#gnb_1dul:after {display:block;visibility:hidden;clear:both;content:""}
 .gnb_1dli {z-index:10;position:relative;float:left}
 .gnb_1da {display:block;padding:0 40px 0 10px;height:35px;background:url('../img/gnb_bg00.gif') center right no-repeat;font-weight:bold;line-height:2.95em;text-decoration:none}
 .gnb_1da:focus, .gnb_1da:hover {background:url('../img/gnb_bg00.gif') #333 center right no-repeat;text-decoration:none}
