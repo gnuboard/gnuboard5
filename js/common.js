@@ -70,6 +70,11 @@ function number_format(data)
     var comma = ',';
     var i;
 
+    var sign = data.match(/^[\+\-]/);
+    if(sign.length) {
+        data = data.replace(/^[\+\-]/, "");
+    }
+
     len = data.length;
     mod = (len % cutlen);
     k = cutlen - mod;
@@ -88,7 +93,7 @@ function number_format(data)
         }
     }
 
-    return number;
+    return sign[0]+number;
 }
 
 // 새 창
