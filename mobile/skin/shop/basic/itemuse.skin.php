@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
-<script src="<?php echo G5_JS_URL; ?>/iteminfoimageresize.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <!-- 상품 사용후기 시작 { -->
 <div id="sit_use_list">
@@ -95,7 +95,7 @@ $(function(){
             $con.slideDown(
                 function() {
                     // 이미지 리사이즈
-                    $con.iteminfoimageresize();
+                    $con.viewimageresize();
                 }
             );
         }

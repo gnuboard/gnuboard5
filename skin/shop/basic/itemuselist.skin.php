@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
-<script src="<?php echo G5_JS_URL; ?>/iteminfoimageresize.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
 <!-- 전체 상품 사용후기 목록 시작 { -->
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -98,7 +98,7 @@ $(function(){
             $con.slideDown(
                 function() {
                     // 이미지 리사이즈
-                    $con.iteminfoimageresize();
+                    $con.viewimageresize2();
                 }
             );
             $(this).text("닫기");
