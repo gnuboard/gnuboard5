@@ -144,6 +144,7 @@ if($g5_install || !$result) {
                     cf_mobile_search_skin = 'basic',
                     cf_mobile_connect_skin = 'basic',
                     cf_mobile_member_skin = 'basic',
+                    cf_editor = 'ckeditor4',
                     cf_captcha_mp3 = 'basic',
                     cf_register_level = '2',
                     cf_register_point = '1000',
@@ -510,6 +511,7 @@ fwrite($f, "\$g5['content_table'] = G5_TABLE_PREFIX.'content'; // 내용(컨텐�
 fwrite($f, "\$g5['faq_table'] = G5_TABLE_PREFIX.'faq'; // 자주하시는 질문 테이블\n");
 fwrite($f, "\$g5['faq_master_table'] = G5_TABLE_PREFIX.'faq_master'; // 자주하시는 질문 마스터 테이블\n");
 fwrite($f, "\$g5['new_win_table'] = G5_TABLE_PREFIX.'new_win'; // 새창 테이블\n");
+fwrite($f, "\$g5['menu_table'] = G5_TABLE_PREFIX.'menu'; // 메뉴관리 테이블\n");
 
 if($g5_shop_install) {
     fwrite($f, "\n");

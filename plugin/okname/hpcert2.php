@@ -26,11 +26,15 @@ if($resultCd != 'B000') {
  * 모듈 호출    ; 생년월일 본인 확인서비스 결과 데이터를 복호화한다.
  **************************************************************************/
 $encInfo = $_POST['encInfo'];
+if(preg_match('~[^0-9a-zA-Z+/=]~', $encInfo, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 //KCB서버 공개키
 $WEBPUBKEY = trim($_POST['WEBPUBKEY']);
+if(preg_match('~[^0-9a-zA-Z+/=]~', $WEBPUBKEY, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
+
 //KCB서버 서명값
 $WEBSIGNATURE = trim($_POST['WEBSIGNATURE']);
+if(preg_match('~[^0-9a-zA-Z+/=]~', $WEBSIGNATURE, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 // ########################################################################
 // # 암호화키 파일 설정 (절대경로) - 파일은 주어진 파일명으로 자동 생성 됨

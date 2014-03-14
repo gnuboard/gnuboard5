@@ -51,7 +51,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 $g5['title'] = '게시판관리';
 include_once('./admin.head.php');
 
-$colspan = 16;
+$colspan = 15;
 ?>
 
 <div class="local_ov01 local_ov">
@@ -107,7 +107,6 @@ $colspan = 16;
         <th scope="col">다운P<span class="sound_only">포인트</span></th>
         <th scope="col"><?php echo subject_sort_link('bo_use_sns') ?>SNS<br>사용</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_use_search') ?>검색<br>사용</a></th>
-        <th scope="col"><?php echo subject_sort_link('bo_show_menu') ?>메뉴<br>보임</a></th>
         <th scope="col"><?php echo subject_sort_link('bo_order') ?>출력<br>순서</a></th>
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
@@ -173,10 +172,6 @@ $colspan = 16;
         <td class="td_chk">
             <label for="bo_use_search_<?php echo $i; ?>" class="sound_only">검색 사용</label>
             <input type="checkbox" name="bo_use_search[<?php echo $i ?>]" value="1" id="bo_use_search_<?php echo $i ?>" <?php echo $row['bo_use_search']?"checked":"" ?>>
-        </td>
-        <td class="td_chk">
-            <label for="bo_show_menu_<?php echo $i; ?>" class="sound_only">메인메뉴 보이기</label>
-            <input type="checkbox" name="bo_show_menu[<?php echo $i ?>]" value="1" id="bo_show_menu_<?php echo $i ?>" <?php echo $row['bo_show_menu']?"checked":"" ?>>
         </td>
         <td class="td_chk">
             <label for="bo_order_<?php echo $i; ?>" class="sound_only">출력 순서</label>
