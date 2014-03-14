@@ -9,7 +9,7 @@ $g5['title'] = '메뉴 추가';
 include_once(G5_PATH.'/head.sub.php');
 
 // 코드
-if($new == 'new' || $code == 0) {
+if($new == 'new' || !$code) {
     $code = base_convert(substr($code,0, 2), 36, 10);
     $code += 36;
     $code = base_convert($code, 10, 36);
