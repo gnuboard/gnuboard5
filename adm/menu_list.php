@@ -35,11 +35,15 @@ include_once('./admin.head.php');
 $colspan = 7;
 ?>
 
+<div class="local_desc01 local_desc">
+    <p><strong>주의!</strong> 메뉴설정 작업 후 반드시 <strong>확인</strong>을 누르셔야 저장됩니다.</p>
+</div>
+
 <form name="fmenulist" id="fmenulist" method="post" action="./menu_list_update.php" onsubmit="return fmenulist_submit(this);">
 <input type="hidden" name="token" value="<?php echo $token ?>">
 
-<div>
-    <button type="button" onclick="return add_menu();">메뉴추가</button>
+<div class="btn_add01 btn_add">
+    <button type="button" onclick="return add_menu();">메뉴추가<span class="sound_only"> 새창</span></button>
 </div>
 
 <div id="menulist" class="tbl_head01 tbl_wrap">
@@ -117,8 +121,8 @@ $colspan = 7;
     </table>
 </div>
 
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="확인">
+<div class="btn_confirm01 btn_confirm">
+    <input type="submit" name="act_button" value="확인" class="btn_submit">
 </div>
 
 </form>

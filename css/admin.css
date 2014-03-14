@@ -8,7 +8,7 @@ html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, aside ul, footer ul {margin:0;padding:0;list-style:none}
-label, input, select, img {vertical-align:middle}
+label, input, button, select, img {vertical-align:middle}
 textarea, select {font-family:dotum;font-size:1em}
 input {margin:0;padding:0;border-radius:0;font-family:dotum}
 input[type=text], input[type=password], input[type=submit], input[type=image] {-webkit-appearance:none}
@@ -155,7 +155,9 @@ a.btn_cancel {line-height:2.5em;vertical-align:middle}
 .btn_add {margin:0 20px 10px} /* 목록용 추가 */
 
 .btn_add01 {text-align:right}
-.btn_add01 a {display:inline-block;padding:10px;border:1px solid #ccc;background:#f0f0f0;text-decoration:none;cursor:pointer}
+.btn_add01 a, .btn_add01 button {padding:10px;border:1px solid #ccc;background:#f0f0f0;text-decoration:none;cursor:pointer}
+.btn_add01 a {display:inline-block;vertical-align:middle}
+.btn_add01 button {margin:0}
 
 /* 필수입력 */
 .required {background:url('../img/wrest.gif') #f6f9fa top right no-repeat !important}
