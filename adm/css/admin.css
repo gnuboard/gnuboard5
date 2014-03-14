@@ -8,7 +8,7 @@ html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
 h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 header ul, nav ul, aside ul, footer ul {margin:0;padding:0;list-style:none}
-label, input, select, img {vertical-align:middle}
+label, input, button, select, img {vertical-align:middle}
 textarea, select {font-family:dotum;font-size:1em}
 input {margin:0;padding:0;border-radius:0;font-family:dotum}
 input[type=text], input[type=password], input[type=submit], input[type=image] {-webkit-appearance:none}
@@ -25,7 +25,7 @@ h2 {margin:0 0 10px;padding:0 20px;font-size:1.2em}
 h2.h2_frm {padding-top:15px}
 
 /* 레이아웃 */
-#hd {z-index:10;min-width:1000px;background:url('../adm/img/hd_bg.jpg') #383b3f repeat-x}
+#hd {z-index:10;min-width:1000px;background:url('../img/hd_bg.jpg') #383b3f repeat-x}
 #hd h1, #hd h2 {position:absolute;border:0;font-size:0;line-height:0;overflow:hidden}
 #hd_wrap {z-index:11;position:relative;margin:0 auto}
 #logo {position:relative;height:70px}
@@ -155,10 +155,12 @@ a.btn_cancel {line-height:2.5em;vertical-align:middle}
 .btn_add {margin:0 20px 10px} /* 목록용 추가 */
 
 .btn_add01 {text-align:right}
-.btn_add01 a {display:inline-block;padding:10px;border:1px solid #ccc;background:#f0f0f0;text-decoration:none;cursor:pointer}
+.btn_add01 a, .btn_add01 button {padding:10px;border:1px solid #ccc;background:#f0f0f0;text-decoration:none;cursor:pointer}
+.btn_add01 a {display:inline-block;vertical-align:middle}
+.btn_add01 button {margin:0}
 
 /* 필수입력 */
-.required {background:url('../img/wrest.gif') #f6f9fa top right no-repeat !important}
+.required {background:url('../../img/wrest.gif') #f6f9fa top right no-repeat !important}
 
 /* 외부서비스 사이트코드 */
 .sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
@@ -429,7 +431,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #scf_sms:after {display:block;visibility:hidden;clear:both;content:""}
 .scf_sms_box {float:left;margin:0 8px 0 9px;width:163px;text-align:center}
 .scf_sms_box h4 {margin:0 0 5px}
-.scf_sms_img {margin:10px 0;width:163px;height:191px;background:url('../adm/shop_admin/img/sms_back.gif') no-repeat 0 0;text-align:center}
+.scf_sms_img {margin:10px 0;width:163px;height:191px;background:url('../shop_admin/img/sms_back.gif') no-repeat 0 0;text-align:center}
 .scf_sms_img textarea {margin:54px 0 0;width:115px;height:85px;border:0;background:transparent;font-size:0.95em;overflow:hidden}
 .scf_sms_img span {display:block}
 .scf_sms_cnt {display:block}
@@ -499,7 +501,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sodr_total th {width:125px}
 
 /* 분류관리 목록 */
-.cate_list_lbl {display:inline-block;width:13px;height:13px;background:url('../adm/shop_admin/img/icon_reply.gif') 0 0 no-repeat}
+.cate_list_lbl {display:inline-block;width:13px;height:13px;background:url('../shop_admin/img/icon_reply.gif') 0 0 no-repeat}
 
 /* 분류 추가/수정 */
 .frm_ca_id {display:inline-block;margin:0 10px 0 0;font-weight:bold}
@@ -615,7 +617,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sms_frm table {margin:0 0 30px}
 #sms_frm textarea {height:70px}
 
-#sms_sm {position:relative;float:left;width:229px;height:418px;background:url('../adm/shop_admin/img/mobilebg.jpg') no-repeat}
+#sms_sm {position:relative;float:left;width:229px;height:418px;background:url('../shop_admin/img/mobilebg.jpg') no-repeat}
 #sms_sm_text {position:absolute;top:75px;left:27px;width:180px;color:#fff;font-size:2em;word-break:break-all}
 #sms_sm p {position:absolute;bottom:-70px;left:0;font-size:0.95em;letter-spacing:-0.1em}
 
