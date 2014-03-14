@@ -70,6 +70,11 @@ function number_format(data)
     var comma = ',';
     var i;
 
+    var sign = data.match(/^[\+\-]/);
+    if(sign) {
+        data = data.replace(/^[\+\-]/, "");
+    }
+
     len = data.length;
     mod = (len % cutlen);
     k = cutlen - mod;
@@ -87,6 +92,9 @@ function number_format(data)
             }
         }
     }
+
+    if(sign != null)
+        number = sign+number;
 
     return number;
 }

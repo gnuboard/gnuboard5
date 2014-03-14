@@ -84,7 +84,6 @@ CREATE TABLE IF NOT EXISTS `g5_board` (
   `bo_upload_size` int(11) NOT NULL DEFAULT '0',
   `bo_reply_order` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_search` tinyint(4) NOT NULL DEFAULT '0',
-  `bo_show_menu` tinyint(4) NOT NULL DEFAULT '0',
   `bo_order` int(11) NOT NULL DEFAULT '0',
   `bo_count_write` int(11) NOT NULL DEFAULT '0',
   `bo_count_comment` int(11) NOT NULL DEFAULT '0',
@@ -352,7 +351,6 @@ CREATE TABLE IF NOT EXISTS `g5_group` (
   `gr_device` ENUM('both','pc','mobile') NOT NULL DEFAULT 'both',
   `gr_admin` varchar(255) NOT NULL default '',
   `gr_use_access` tinyint(4) NOT NULL default '0',
-  `gr_show_menu` tinyint(4) NOT NULL default '0',
   `gr_order` int(11) NOT NULL default '0',
   `gr_1_subj` varchar(255) NOT NULL default '',
   `gr_2_subj` varchar(255) NOT NULL default '',
@@ -732,6 +730,12 @@ CREATE TABLE IF NOT EXISTS `g5_qa_config` (
   `qa_image_width` int(11) NOT NULL DEFAULT '0',
   `qa_upload_size` int(11) NOT NULL DEFAULT '0',
   `qa_insert_content` text NOT NULL,
+  `qa_include_head` varchar(255) NOT NULL DEFAULT '',
+  `qa_include_tail` varchar(255) NOT NULL DEFAULT '',
+  `qa_content_head` text NOT NULL,
+  `qa_content_tail` text NOT NULL,
+  `qa_mobile_content_head` text NOT NULL,
+  `qa_mobile_content_tail` text NOT NULL,
   `qa_1_subj` varchar(255) NOT NULL DEFAULT '',
   `qa_2_subj` varchar(255) NOT NULL DEFAULT '',
   `qa_3_subj` varchar(255) NOT NULL DEFAULT '',
@@ -830,6 +834,8 @@ CREATE TABLE IF NOT EXISTS `g5_faq_master` (
   `fm_subject` varchar(255) NOT NULL DEFAULT '',
   `fm_head_html` text NOT NULL,
   `fm_tail_html` text NOT NULL,
+  `fm_mobile_head_html` text NOT NULL,
+  `fm_mobile_tail_html` text NOT NULL,
   `fm_order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`fm_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
@@ -858,3 +864,20 @@ CREATE TABLE IF NOT EXISTS `g5_new_win` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_menu`
+--
+
+DROP TABLE IF EXISTS `g5_menu`;
+CREATE TABLE IF NOT EXISTS `g5_menu` (
+  `me_id` int(11) NOT NULL AUTO_INCREMENT,
+  `me_code` varchar(255) NOT NULL DEFAULT '',
+  `me_name` varchar(255) NOT NULL DEFAULT '',
+  `me_link` varchar(255) NOT NULL DEFAULT '',
+  `me_target` varchar(255) NOT NULL DEFAULT '',
+  `me_order` int(11) NOT NULL DEFAULT '0',
+  `me_use` tinyint(4) NOT NULL DEFAULT '0',
+  `me_mobile_use` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`me_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

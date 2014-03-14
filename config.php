@@ -153,6 +153,10 @@ define('G5_SMTP', '127.0.0.1');
     기타 상수
 ********************/
 
+// SQL 에러를 표시할 것인지 지정
+// 에러를 표시하지 않으려면 FALSE 로 변경
+define('G5_DISPLAY_SQL_ERROR', TRUE);
+
 // escape string 처리 함수 지정
 // POST 등에서 한글이 깨질 경우 addslashes 로 변경
 define('G5_ESCAPE_FUNCTION', 'mysql_real_escape_string');

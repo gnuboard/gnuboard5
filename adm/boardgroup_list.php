@@ -55,7 +55,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">처음</a>';
 $g5['title'] = '게시판그룹설정';
 include_once('./admin.head.php');
 
-$colspan = 11;
+$colspan = 10;
 ?>
 
 <div class="local_ov01 local_ov">
@@ -105,7 +105,6 @@ $colspan = 11;
         <th scope="col">게시판</th>
         <th scope="col">접근<br>사용</th>
         <th scope="col">접근<br>회원수</th>
-        <th scope="col">메뉴<br>보임</th>
         <th scope="col"><?php echo subject_sort_link('gr_order') ?>출력<br>순서</a></th>
         <th scope="col">접속기기</th>
         <th scope="col">관리</th>
@@ -153,10 +152,6 @@ $colspan = 11;
             <input type="checkbox" name="gr_use_access[<?php echo $i ?>]" <?php echo $row['gr_use_access']?'checked':'' ?> value="1" id="gr_use_access_<?php echo $i ?>">
         </td>
         <td class="td_numsmall"><a href="./boardgroupmember_list.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row1['cnt'] ?></a></td>
-        <td class="td_chk">
-            <label for="gr_show_menu_<?php echo $i; ?>" class="sound_only">메인메뉴에 보이기</label>
-            <input type="checkbox" name="gr_show_menu[<?php echo $i ?>]" <?php echo $row['gr_show_menu']?'checked':'' ?> value="1" id="gr_show_menu_<?php echo $i ?>">
-        </td>
         <td class="td_chk">
             <label for="gr_order_<?php echo $i; ?>" class="sound_only">메인메뉴 출력순서</label>
             <input type="text" name="gr_order[<?php echo $i ?>]" value="<?php echo $row['gr_order'] ?>" id="gr_order_<?php echo $i ?>" class="frm_input" size="2">

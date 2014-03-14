@@ -33,7 +33,7 @@ function get_microtime()
 }
 
 
-// 현재페이지, 총페이지수, 한페이지에 보여줄 행, URL
+// 한페이지에 보여줄 행, 현재페이지, 총페이지수, URL
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {
     $url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
@@ -1433,7 +1433,7 @@ function sql_select_db($db, $connect)
 
 
 // mysql_query 와 mysql_error 를 한꺼번에 처리
-function sql_query($sql, $error=TRUE)
+function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
 {
     if ($error)
         $result = @mysql_query($sql) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
@@ -1444,7 +1444,7 @@ function sql_query($sql, $error=TRUE)
 
 
 // 쿼리를 실행한 후 결과값에서 한행을 얻는다.
-function sql_fetch($sql, $error=TRUE)
+function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR)
 {
     $result = sql_query($sql, $error);
     //$row = @sql_fetch_array($result) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER['PHP_SELF']");
@@ -2603,5 +2603,16 @@ function htmlspecialchars2($str)
     $trans = array("\"" => "&#034;", "'" => "&#039;", "<"=>"&#060;", ">"=>"&#062;");
     $str = strtr($str, $trans);
     return $str;
+}
+
+// date 형식 변환
+function conv_date_format($format, $date, $add='')
+{
+    if($add)
+        $timestamp = strtotime($add, strtotime($date));
+    else
+        $timestamp = strtotime($date);
+
+    return date($format, $timestamp);
 }
 ?>

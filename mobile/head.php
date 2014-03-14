@@ -29,6 +29,84 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.jpg" alt="<?php echo $config['cf_title']; ?>"></a>
         </div>
 
+        <button type="button" id="hd_menu_open">메뉴<span class="sound_only"> 열기</span></button>
+
+        <div id="menu_wrap">
+            <ul>
+            <?php
+            $sql = " select *
+                        from {$g5['menu_table']}
+                        where me_mobile_use = '1'
+                          and length(me_code) = '2'
+                        order by me_order, me_id ";
+            $result = sql_query($sql);
+
+            for($i=0; $row=sql_fetch_array($result); $i++) {
+            ?>
+                <li>
+                    <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da"><?php echo $row['me_name'] ?></a>
+                    <?php
+                    $sql2 = " select *
+                                from {$g5['menu_table']}
+                                where me_mobile_use = '1'
+                                  and length(me_code) = '4'
+                                  and substring(me_code, 1, 2) = '{$row['me_code']}'
+                                order by me_order, me_id ";
+                    $result2 = sql_query($sql2);
+
+                    for ($k=0; $row2=sql_fetch_array($result2); $k++) {
+                        if($k == 0)
+                            echo '<ul class="gnb_2dul">'.PHP_EOL;
+                    ?>
+                        <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da"><?php echo $row2['me_name'] ?></a></li>
+                    <?php
+                    }
+
+                    if($k > 0)
+                        echo '</ul>'.PHP_EOL;
+                    ?>
+                </li>
+            <?php
+            }
+
+            if ($i == 0) {  ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php }
+            ?>
+            </ul>
+            <button type="button" id="hd_menu_close">닫기</button>
+        </div>
+        <script>
+        $(function() {
+            $("#hd_menu_open").click(function() {
+                var $menu = $("#menu_wrap");
+                var w = $menu.width();
+                var sw = $(window).width();
+
+                $menu
+                    .css({
+                        display: "none",
+                        left: sw+"px"
+                    })
+                    .css("display", "block")
+                    .animate(
+                        { left: "-="+w+"px" }, 1500
+                    );
+            });
+
+            $("#hd_menu_close").click(function() {
+                var $menu = $("#menu_wrap");
+                var w = $menu.width();
+                var sw = $(window).width();
+
+                $menu.animate(
+                        { left: "+="+w+"px" }, 1500,
+                        function() {
+                            $menu.css("display", "none");
+                        }
+                    );
+            });
+        });
+        </script>
+
         <button type="button" id="hd_sch_open">검색<span class="sound_only"> 열기</span></button>
 
         <aside id="hd_sch">
@@ -85,6 +163,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
         <ul id="hd_nb">
             <li><a href="<?php echo G5_BBS_URL ?>/qalist.php" id="snb_new">1:1문의</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/faq.php" id="snb_faq">FAQ</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" id="snb_cnt">접속자 <?php echo connect(); // 현재 접속자수 ?></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new">새글</a></li>
             <?php if ($is_member) { ?>
@@ -101,26 +180,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
     </div>
 </header>
-
-<hr>
-
-<div id="lnb">
-    <ul>
-        <?php
-        $sql2 = " select * from {$g5['board_table']} where bo_show_menu = 1 and bo_device <> 'pc' ";
-        if ($gr_id) $sql2 .= " and gr_id = '$gr_id' ";
-        $sql2 .= " order by bo_order ";
-        $result2 = sql_query($sql2);
-        for ($bi=0; $row2=sql_fetch_array($result2); $bi++) { // bi 는 board index
-            $bo_subject = $row2['bo_subject'];
-            if (G5_IS_MOBILE && $row2['bo_mobile_subject']) {
-                $bo_subject = $row2['bo_mobile_subject'];
-            }
-        ?>
-        <li><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $row2['bo_table'] ?>"><?php echo $bo_subject; ?></a></li>
-        <?php } ?>
-    </ul>
-</div>
 
 <hr>
 

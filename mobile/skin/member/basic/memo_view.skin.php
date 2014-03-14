@@ -22,8 +22,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <li><a href="./memo.php?kind=send">보낸쪽지</a></li>
         <li><a href="./memo_form.php">쪽지쓰기</a></li>
     </ul>
-    <section>
-        <h2>쪽지 내용</h2>
+
+    <article id="memo_view_contents">
+        <header>
+            <h1>쪽지 내용</h1>
+        </header>
         <ul id="memo_view_ul">
             <li class="memo_view_li">
                 <span class="memo_view_subj"><?php echo $kind_str ?>사람</span>
@@ -37,7 +40,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <p>
             <?php echo conv_content($memo['me_memo'], 0) ?>
         </p>
-    </section>
+    </article>
+
     <div class="win_btn">
         <?php if($prev_link) { ?>
         <a href="<?php echo $prev_link ?>">이전쪽지</a>

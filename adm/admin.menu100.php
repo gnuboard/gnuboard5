@@ -3,6 +3,7 @@ $menu['menu100'] = array (
     array('100000', '환경설정', G5_ADMIN_URL.'/config_form.php',   'config'),
     array('', '기본환경설정', G5_ADMIN_URL.'/config_form.php',   'cf_basic'),
     array('', '관리권한설정', G5_ADMIN_URL.'/auth_list.php',     'cf_auth'),
+    array('', '메뉴설정', G5_ADMIN_URL.'/menu_list.php',     'cf_menu', 1),
     array('100300', '메일 테스트', G5_ADMIN_URL.'/sendmail_test.php', 'cf_mailtest'),
     array('100310', '팝업레이어관리', G5_ADMIN_URL.'/newwinlist.php', 'scf_poplayer'),
     //array('100400', '버전정보', G5_ADMIN_URL.'/version.php', 'cf_version'),

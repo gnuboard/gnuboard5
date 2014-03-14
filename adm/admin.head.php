@@ -24,8 +24,7 @@ function print_menu2($key, $no)
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
             continue;
 
-        if ($menu[$key][$i][4] == 1 && $gnb_grp_style == false) $gnb_grp_div = 'gnb_grp_div';
-        else if ($menu[$key][$i][4] != 1 && $gnb_grp_style == true) $gnb_grp_div = 'gnb_grp_div';
+        if (($menu[$key][$i][4] == 1 && $gnb_grp_style == false) || ($menu[$key][$i][4] != 1 && $gnb_grp_style == true)) $gnb_grp_div = 'gnb_grp_div';
         else $gnb_grp_div = '';
 
         if ($menu[$key][$i][4] == 1) $gnb_grp_style = 'gnb_grp_style';
@@ -85,7 +84,6 @@ function imageview(id, w, h)
 
         <nav id="gnb">
             <h2>관리자 주메뉴</h2>
-            <script>$('#gnb').addClass('gnb_js');</script>
             <?php
             $gnb_str = "<ul id=\"gnb_1dul\">";
             foreach($amenu as $key=>$value) {
