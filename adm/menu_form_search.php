@@ -24,13 +24,27 @@ switch($type) {
         $sql = '';
         break;
 }
+?>
 
+<?php
 if($sql) {
     $result = sql_query($sql);
 
     for($i=0; $row=sql_fetch_array($result); $i++) {
-        if($i == 0) echo '<ul>'.PHP_EOL;
+        if($i == 0) {
+?>
 
+<div class="tbl_head01 tbl_wrap">
+    <table>
+    <thead>
+    <tr>
+        <th scope="col">제목</th>
+        <th scope="col">선택</th>
+    </tr>
+    </thead>
+    <tbody>
+
+<?php }
         switch($type) {
             case 'group':
                 $link = G5_BBS_URL.'/group.php?gr_id='.$row['id'];
@@ -42,34 +56,56 @@ if($sql) {
                 $link = G5_BBS_URL.'/content.php?co_id='.$row['id'];
                 break;
             default:
-                $link = '';
+                $link = ''; 
                 break;
         }
+?>
 
-        echo '<li>'.PHP_EOL;
-        echo '<input type="hidden" name="subject[]" value="'.preg_replace('/[\'\"]/', '', $row['subject']).'">'.PHP_EOL;
-        echo '<input type="hidden" name="link[]" value="'.$link.'">'.PHP_EOL;
-        echo '<span>'.$row['subject'].'</span>';
-        echo '<button type="button" class="add_select">선택</button>'.PHP_EOL;
-        echo '</li>'.PHP_EOL;
-    }
-} else { ?>
-<table>
-<tbody>
-<tr>
-    <th><label for="me_name">메뉴</label></th>
-    <td><input type="text" name="me_name" id="me_name" class="frm_input"></td>
-</tr>
-<tr>
-    <th><label for="me_link">링크</label></th>
-    <td>
-        <input type="text" name="me_link" id="me_link" class="frm_input"><br>
-        링크는 http://를 포함해서 입력해 주세요.
-    </td>
-</tr>
-<tr>
-    <td colspan="2"><button type="button" id="add_manual">추가</button>
-</tr>
-</tbody>
-</table>
+    <tr>
+        <td><?php echo $row['subject']; ?></td>
+        <td class="td_mngsmall">
+            <input type="hidden" name="subject[]" value="<?php preg_replace('/[\'\"]/', '', $row['subject']); ?>">
+            <input type="hidden" name="link[]" value="<?php echo $link; ?>">
+            <button type="button" class="add_select"><span class="sound_only"><?php echo $row['subject']; ?> </span>선택</button>
+        </td>
+    </tr>
+
+<?php } ?>
+
+    </tbody>
+    </table>
+</div>
+
+<div class="btn_win02 btn_win">
+    <button type="button" class="btn_cancel" onclick="window.close();">창닫기</button>
+</div>
+
+<?php } else { ?>
+
+<div class="tbl_frm01 tbl_wrap">
+    <table>
+    <colgroup>
+        <col class="grid_2">
+        <col>
+    </colgroup>
+    <tbody>
+    <tr>
+        <th scope="row"><label for="me_name">메뉴</label></th>
+        <td><input type="text" name="me_name" id="me_name" required class="frm_input required"></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="me_link">링크</label></th>
+        <td>
+            <?php echo help('링크는 http://를 포함해서 입력해 주세요.'); ?>
+            <input type="text" name="me_link" id="me_link" required class="frm_input full_input required">
+        </td>
+    </tr>
+    </tbody>
+    </table>
+</div>
+
+<div class="btn_win02 btn_win">
+    <button type="button" id="add_manual" class="btn_submit">추가</button>
+    <button type="button" class="btn_cancel" onclick="window.close();">창닫기</button>
+</div>
 <?php } ?>
