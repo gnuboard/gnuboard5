@@ -21,10 +21,6 @@ if (!isset($board['bo_device'])) {
     sql_query(" ALTER TABLE  `{$g5['board_table']}` ADD  `bo_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `bo_subject` ", false);
 }
 
-if (!isset($board['bo_show_menu'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_show_menu` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_search`,  ADD `bo_order` INT NOT NULL DEFAULT '0' AFTER `bo_show_menu` ", false);
-}
-
 if (!isset($board['bo_mobile_skin'])) {
     sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_mobile_skin` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_skin` ", false);
 }
@@ -120,7 +116,6 @@ if ($w == '') {
     $board['bo_use_secret'] = 0;
     $board['bo_include_head'] = '_head.php';
     $board['bo_include_tail'] = '_tail.php';
-    $board['bo_show_menu'] = true;
 
 } else if ($w == 'u') {
 
@@ -767,20 +762,6 @@ $frm_submit .= '</div>';
                 <label for="chk_grp_use_search">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_search" value="1" id="chk_all_use_search">
                 <label for="chk_all_use_search">전체적용</label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="bo_show_menu">메뉴보이기</label></th>
-            <td>
-                <?php echo help("사용에 체크하시면 게시판 제목을 메뉴에 출력합니다.") ?>
-                <input type="checkbox" name="bo_show_menu" value="1" id="bo_show_menu" <?php echo $board['bo_show_menu']?'checked':''; ?>>
-                사용
-            </td>
-            <td class="td_grpset">
-                <input type="checkbox" name="chk_grp_show_menu" value="1" id="chk_grp_show_menu">
-                <label for="chk_grp_show_menu">그룹적용</label>
-                <input type="checkbox" name="chk_all_show_menu" value="1" id="chk_all_show_menu">
-                <label for="chk_all_show_menu">전체적용</label>
             </td>
         </tr>
         <tr>
