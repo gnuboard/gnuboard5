@@ -11,13 +11,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$faq_skin_url.'/style.css">', 0);
 echo '<div id="faq_hhtml">'.stripslashes($fm['fm_mobile_head_html']).'</div>';
 ?>
 
-<form name="faq_search_form" method="get">
-<input type="hidden" name="fm_id" value="<?php echo $fm_id;?>">
-<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-<input type="text" name="stx" value="<?php echo $stx;?>" required id="stx" class="frm_input required" size="15" maxlength="15">
-<input type="submit" value="검색" class="btn_submit">
-</form>
-
 <?php
 if( count($faq_master_list) ){
 ?>
@@ -57,7 +50,7 @@ if( count($faq_master_list) ){
                 <h3><a href="#none" onclick="return faq_open(this);"><?php echo conv_content($v['fa_subject'], 1); ?></a></h3>
                 <div class="con_inner">
                     <?php echo conv_content($v['fa_content'], 1); ?>
-                    <button type="button" class="btn_faq_close">닫기</button>
+                    <div class="con_closer"><button type="button" class="closer_btn">닫기</button></div>
                 </div>
             </li>
             <?php
@@ -71,10 +64,10 @@ if( count($faq_master_list) ){
         if($stx){
             echo '<p>검색된 게시물이 없습니다.</p>';
         } else {
-            echo '<p>등록된 FAQ가 없습니다.';
+            echo '<div class="empty_table">등록된 FAQ가 없습니다.';
             if($is_admin)
                 echo '<br><a href="'.G5_ADMIN_URL.'/faqmasterlist.php">FAQ를 새로 등록하시려면 FAQ관리</a> 메뉴를 이용하십시오.';
-            echo '</p>';
+            echo '</div>';
         }
     }
     ?>
@@ -86,12 +79,21 @@ if( count($faq_master_list) ){
 // 하단 HTML
 echo '<div id="faq_thtml">'.stripslashes($fm['fm_tail_html']).'</div>';
 ?>
+
+<div id="faq_sch">
+    <form name="faq_search_form" method="get">
+    <input type="hidden" name="fm_id" value="<?php echo $fm_id;?>">
+    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <input type="text" name="stx" value="<?php echo $stx;?>" required id="stx" class="frm_input required" size="15" maxlength="15">
+    <input type="submit" value="검색" class="btn_submit">
+    </form>
+</div>
 <!-- } FAQ 끝 -->
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 <script>
 $(function() {
-    $(".btn_faq_close").on("click", function() {
+    $(".closer_btn").on("click", function() {
         $(this).closest(".con_inner").slideToggle();
     });
 });
