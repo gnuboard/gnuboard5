@@ -135,9 +135,9 @@ $colspan = 16;
     </tr>
     <tr>
         <th scope="col" id="mb_list_nick"><?php echo subject_sort_link('mb_nick') ?>닉네임</a></th>
-        <th scope="col" id="mb_list_mailr"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일<br>인증</a></th>
+        <th scope="col" id="mb_list_mailc"><?php echo subject_sort_link('mb_email_certify', '', 'desc') ?>메일<br>인증</a></th>
         <th scope="col" id="mb_list_open"><?php echo subject_sort_link('mb_open', '', 'desc') ?>정보<br>공개</a></th>
-        <th scope="col" id="mb_list_mailc"><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일<br>수신</a></th>
+        <th scope="col" id="mb_list_mailr"><?php echo subject_sort_link('mb_mailling', '', 'desc') ?>메일<br>수신</a></th>
         <th scope="col" id="mb_list_sms"><?php echo subject_sort_link('mb_sms', '', 'desc') ?>SMS<br>수신</a></th>
         <th scope="col" id="mb_list_adultc"><?php echo subject_sort_link('mb_adult', '', 'desc') ?>성인<br>인증</a></th>
         <th scope="col" id="mb_list_deny"><?php echo subject_sort_link('mb_intercept_date', '', 'desc') ?>접근<br>차단</a></th>
@@ -239,10 +239,22 @@ $colspan = 16;
     <tr class="<?php echo $bg; ?>">
         <td headers="mb_list_nick" class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
         <td headers="mb_list_mailc" class="td_chk"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
-        <td headers="mb_list_mailr" class="td_chk"><input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open']?'checked':''; ?> value="1"></td>
-        <td headers="mb_list_open" class="td_chk"><input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling']?'checked':''; ?> value="1"></td>
-        <td headers="mb_list_sms" class="td_chk"><input type="checkbox" name="mb_sms[<?php echo $i; ?>]" <?php echo $row['mb_sms']?'checked':''; ?> value="1"></td>
-        <td headers="mb_list_adultc" class="td_chk"><input type="checkbox" name="mb_adult[<?php echo $i; ?>]" <?php echo $row['mb_adult']?'checked':''; ?> value="1"></td>
+        <td headers="mb_list_open" class="td_chk">
+            <label for="mb_open_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open']?'checked':''; ?> value="1" id="mb_open_<?php echo $i; ?>">
+        </td>
+        <td headers="mb_list_mailr" class="td_chk">
+            <label for="mb_mailling_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling']?'checked':''; ?> value="1" id="mb_mailling_<?php echo $i; ?>">
+        </td>
+        <td headers="mb_list_sms" class="td_chk">
+            <label for="mb_sms_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="checkbox" name="mb_sms[<?php echo $i; ?>]" <?php echo $row['mb_sms']?'checked':''; ?> value="1" id="mb_sms_<?php echo $i; ?>">
+        </td>
+        <td headers="mb_list_adultc" class="td_chk">
+            <label for="mb_adult_<?php echo $i; ?>" class="sound_only"></label>
+            <input type="checkbox" name="mb_adult[<?php echo $i; ?>]" <?php echo $row['mb_adult']?'checked':''; ?> value="1" id="mb_adult_<?php echo $i; ?>">
+        </td>
         <td headers="mb_list_deny" class="td_chk">
             <?php if(empty($row['mb_leave_date'])){ ?>
             <input type="checkbox" name="mb_intercept_date[<?php echo $i; ?>]" <?php echo $row['mb_intercept_date']?'checked':''; ?> value="<?php echo $intercept_date ?>" id="mb_intercept_date_<?php echo $i ?>" title="<?php echo $intercept_title ?>">
