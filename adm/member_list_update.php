@@ -35,6 +35,7 @@ if ($_POST['act_button'] == "선택수정") {
                         set mb_level = '{$_POST['mb_level'][$k]}',
                             mb_intercept_date = '{$_POST['mb_intercept_date'][$k]}',
                             mb_mailling = '{$_POST['mb_mailling'][$k]}',
+                            mb_sms = '{$_POST['mb_sms'][$k]}',
                             mb_open = '{$_POST['mb_open'][$k]}',
                             mb_certify = '{$_POST['mb_certify'][$k]}',
                             mb_adult = '{$mb_adult}'
