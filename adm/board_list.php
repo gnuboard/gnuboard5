@@ -147,22 +147,22 @@ $colspan = 15;
         </td>
         <td>
             <label for="bo_subject_<?php echo $i; ?>" class="sound_only">게시판 제목</label>
-            <input type="text" name="bo_subject[<?php echo $i ?>]" value="<?php echo get_text($row['bo_subject']) ?>" id="bo_subject_<?php echo $i ?>" required class="required frm_input bo_subject" size="10">
+            <input type="text" name="bo_subject[<?php echo $i ?>]" value="<?php echo get_text($row['bo_subject']) ?>" id="bo_subject_<?php echo $i ?>" required class="required frm_input bo_subject full_input" size="10">
         </td>
-        <td>
-            <label for="" class="sound_only">읽기 포인트</label>
+        <td class="td_numsmall">
+            <label for="bo_read_point_<?php echo $i; ?>" class="sound_only">읽기 포인트</label>
             <input type="text" name="bo_read_point[<?php echo $i ?>]" value="<?php echo $row['bo_read_point'] ?>" id="bo_read_point_<?php echo $i; ?>" class="frm_input" size="2">
         </td>
-        <td>
-            <label for="" class="sound_only">쓰기 포인트</label>
+        <td class="td_numsmall">
+            <label for="bo_write_point_<?php echo $i; ?>" class="sound_only">쓰기 포인트</label>
             <input type="text" name="bo_write_point[<?php echo $i ?>]" value="<?php echo $row['bo_write_point'] ?>" id="bo_write_point_<?php echo $i; ?>" class="frm_input" size="2">
         </td>
-        <td>
-            <label for="" class="sound_only">댓글 포인트</label>
+        <td class="td_numsmall">
+            <label for="bo_comment_point_<?php echo $i; ?>" class="sound_only">댓글 포인트</label>
             <input type="text" name="bo_comment_point[<?php echo $i ?>]" value="<?php echo $row['bo_comment_point'] ?>" id="bo_comment_point_<?php echo $i; ?>" class="frm_input" size="2">
         </td>
-        <td>
-            <label for="" class="sound_only">다운 포인트</label>
+        <td class="td_numsmall">
+            <label for="bo_download_point_<?php echo $i; ?>" class="sound_only">다운 포인트</label>
             <input type="text" name="bo_download_point[<?php echo $i ?>]" value="<?php echo $row['bo_download_point'] ?>" id="bo_download_point_<?php echo $i; ?>" class="frm_input" size="2">
         </td>
         <td class="td_chk">

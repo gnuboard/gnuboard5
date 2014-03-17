@@ -348,9 +348,6 @@ tfoot td {font-weight:bold;text-align:center}
 .mb_intercept_msg {color:#f59fe4}
 #point_mng {margin-top:50px}
 
-/* 게시판관리 목록 */
-#fboardlist .bo_subject {width:90%}
-
 /* 게시판추가/수정 */
 #anc_bo_extra .td_grpset label {width:auto}
 #anc_bo_extra .td_grpset input {margin:0}

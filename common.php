@@ -466,12 +466,22 @@ include_once(G5_BBS_PATH.'/visit_insert.inc.php');
 
 
 // common.php 파일을 수정할 필요가 없도록 확장합니다.
+$extend_file = array();
 $tmp = dir(G5_EXTEND_PATH);
 while ($entry = $tmp->read()) {
     // php 파일만 include 함
     if (preg_match("/(\.php)$/i", $entry))
-        include_once(G5_EXTEND_PATH.'/'.$entry);
+        $extend_file[] = $entry;
 }
+
+if(!empty($extend_file) && is_array($extend_file)) {
+    natsort($extend_file);
+
+    foreach($extend_file as $file) {
+        include_once(G5_EXTEND_PATH.'/'.$file);
+    }
+}
+unset($extend_file);
 
 ob_start();
 
