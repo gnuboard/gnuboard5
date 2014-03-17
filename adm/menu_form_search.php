@@ -56,7 +56,7 @@ if($sql) {
                 $link = G5_BBS_URL.'/content.php?co_id='.$row['id'];
                 break;
             default:
-                $link = ''; 
+                $link = '';
                 break;
         }
 ?>
@@ -64,7 +64,7 @@ if($sql) {
     <tr>
         <td><?php echo $row['subject']; ?></td>
         <td class="td_mngsmall">
-            <input type="hidden" name="subject[]" value="<?php preg_replace('/[\'\"]/', '', $row['subject']); ?>">
+            <input type="hidden" name="subject[]" value="<?php echo preg_replace('/[\'\"]/', '', $row['subject']); ?>">
             <input type="hidden" name="link[]" value="<?php echo $link; ?>">
             <button type="button" class="add_select"><span class="sound_only"><?php echo $row['subject']; ?> </span>선택</button>
         </td>

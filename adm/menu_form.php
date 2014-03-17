@@ -9,7 +9,7 @@ $g5['title'] = '메뉴 추가';
 include_once(G5_PATH.'/head.sub.php');
 
 // 코드
-if($new == 'new' || $code == 0) {
+if($new == 'new' || !$code) {
     $code = base_convert(substr($code,0, 2), 36, 10);
     $code += 36;
     $code = base_convert($code, 10, 36);
@@ -71,7 +71,12 @@ function add_menu_list(name, link, code)
 {
     var $menulist = $("#menulist", opener.document);
     var ms = new Date().getTime();
-    var sub_menu_class = "";
+    var sub_menu_class;
+    <?php if($new == 'new') { ?>
+    sub_menu_class = " class=\"td_category\"";
+    <?php } else { ?>
+    sub_menu_class = " class=\"td_category sub_menu_class\"";
+    <?php } ?>
 
     var list = "<tr class=\"menu_list menu_group_<?php echo $code; ?>\">\n";
     list += "<td"+sub_menu_class+">\n";

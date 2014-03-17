@@ -2615,4 +2615,13 @@ function conv_date_format($format, $date, $add='')
 
     return date($format, $timestamp);
 }
+
+// unescape nl 얻기
+function conv_unescape_nl($str)
+{
+    $search = array('\\r', '\r', '\\n', '\n');
+    $replace = array('', '', "\n", "\n");
+
+    return str_replace($search, $replace, $str);
+}
 ?>
