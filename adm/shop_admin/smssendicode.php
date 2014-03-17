@@ -11,7 +11,7 @@ auth_check($auth[$sub_menu], "w");
 $SMS	= new SMS;
 $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
 
-$recv = explode('\n', conv_unescape_nl($receive_number));
+$recv = explode("\n", conv_unescape_nl($receive_number));
 
 $tran_callback = preg_replace("/[^0-9]/", "", $send_number);
 $sms_id = $config['cf_icode_id'];
