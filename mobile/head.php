@@ -21,7 +21,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <?php include G5_MOBILE_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
     </div>
     <?php } ?>
-    <div class="to_content"><a href="#gnb">메인메뉴 바로가기</a></div>
 
     <div id="hd_wrapper">
 
@@ -29,10 +28,10 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <a href="<?php echo G5_URL ?>"><img src="<?php echo G5_IMG_URL ?>/logo.jpg" alt="<?php echo $config['cf_title']; ?>"></a>
         </div>
 
-        <button type="button" id="hd_menu_open">메뉴<span class="sound_only"> 열기</span></button>
+        <button type="button" id="gnb_open" class="hd_opener">메뉴<span class="sound_only"> 열기</span></button>
 
-        <div id="menu_wrap">
-            <ul>
+        <div id="gnb" class="hd_div">
+            <ul id="gnb_1dul">
             <?php
             $sql = " select *
                         from {$g5['menu_table']}
@@ -43,7 +42,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
             for($i=0; $row=sql_fetch_array($result); $i++) {
             ?>
-                <li>
+                <li class="gnb_1dli">
                     <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da"><?php echo $row['me_name'] ?></a>
                     <?php
                     $sql2 = " select *
@@ -58,7 +57,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         if($k == 0)
                             echo '<ul class="gnb_2dul">'.PHP_EOL;
                     ?>
-                        <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da"><?php echo $row2['me_name'] ?></a></li>
+                        <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da"><span></span><?php echo $row2['me_name'] ?></a></li>
                     <?php
                     }
 
@@ -72,93 +71,61 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             if ($i == 0) {  ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php }
             ?>
             </ul>
-            <button type="button" id="hd_menu_close">닫기</button>
+            <button type="button" id="gnb_close" class="hd_closer"><span class="sound_only">메뉴 </span>닫기</button>
         </div>
+
+        <button type="button" id="hd_sch_open" class="hd_opener">검색<span class="sound_only"> 열기</span></button>
+
+        <div id="hd_sch" class="hd_div">
+            <h2>사이트 내 전체검색</h2>
+            <form name="fsearchbox" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get">
+            <input type="hidden" name="sfl" value="wr_subject||wr_content">
+            <input type="hidden" name="sop" value="and">
+            <input type="text" name="stx" id="sch_stx" placeholder="검색어(필수)" required class="required" maxlength="20">
+            <input type="submit" value="검색" id="sch_submit">
+            </form>
+
+            <script>
+            function fsearchbox_submit(f)
+            {
+                if (f.stx.value.length < 2) {
+                    alert("검색어는 두글자 이상 입력하십시오.");
+                    f.stx.select();
+                    f.stx.focus();
+                    return false;
+                }
+
+                // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
+                var cnt = 0;
+                for (var i=0; i<f.stx.value.length; i++) {
+                    if (f.stx.value.charAt(i) == ' ')
+                        cnt++;
+                }
+
+                if (cnt > 1) {
+                    alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
+                    f.stx.select();
+                    f.stx.focus();
+                    return false;
+                }
+
+                return true;
+            }
+            </script>
+            <button type="button" id="sch_close" class="hd_closer"><span class="sound_only">검색 </span>닫기</button>
+        </div>
+
         <script>
-        $(function() {
-            $("#hd_menu_open").click(function() {
-                var $menu = $("#menu_wrap");
-                var w = $menu.width();
-                var sw = $(window).width();
-
-                $menu
-                    .css({
-                        display: "none",
-                        left: sw+"px"
-                    })
-                    .css("display", "block")
-                    .animate(
-                        { left: "-="+w+"px" }, 1500
-                    );
+        $(function (){
+            var $hd_div = $(".hd_div");
+            $(".hd_opener").click(function(){
+                $hd_div.hide();
+                $(this).next(".hd_div").show();
             });
-
-            $("#hd_menu_close").click(function() {
-                var $menu = $("#menu_wrap");
-                var w = $menu.width();
-                var sw = $(window).width();
-
-                $menu.animate(
-                        { left: "+="+w+"px" }, 1500,
-                        function() {
-                            $menu.css("display", "none");
-                        }
-                    );
+            $(".hd_closer").click(function(){
+                $hd_div.hide();
             });
         });
-        </script>
-
-        <button type="button" id="hd_sch_open">검색<span class="sound_only"> 열기</span></button>
-
-        <aside id="hd_sch">
-            <div class="sch_inner">
-                <h2>사이트 내 전체검색</h2>
-                <form name="fsearchbox" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);" method="get">
-                <input type="hidden" name="sfl" value="wr_subject||wr_content">
-                <input type="hidden" name="sop" value="and">
-                <input type="text" name="stx" id="sch_stx" placeholder="검색어(필수)" required class="frm_input required" maxlength="20">
-                <input type="submit" value="검색" class="btn_submit">
-                <button type="button" class="pop_close"><span class="sound_only">검색 </span>닫기</button>
-                </form>
-
-                <script>
-                function fsearchbox_submit(f)
-                {
-                    if (f.stx.value.length < 2) {
-                        alert("검색어는 두글자 이상 입력하십시오.");
-                        f.stx.select();
-                        f.stx.focus();
-                        return false;
-                    }
-
-                    // 검색에 많은 부하가 걸리는 경우 이 주석을 제거하세요.
-                    var cnt = 0;
-                    for (var i=0; i<f.stx.value.length; i++) {
-                        if (f.stx.value.charAt(i) == ' ')
-                            cnt++;
-                    }
-
-                    if (cnt > 1) {
-                        alert("빠른 검색을 위하여 검색어에 공백은 한개만 입력할 수 있습니다.");
-                        f.stx.select();
-                        f.stx.focus();
-                        return false;
-                    }
-
-                    return true;
-                }
-                </script>
-            </div>
-        </aside>
-        <script>
-            $(function (){
-                var $hd_sch = $("#hd_sch");
-                $("#hd_sch_open").click(function(){
-                    $hd_sch.css("display","block");
-                });
-                $("#hd_sch .pop_close").click(function(){
-                    $hd_sch.css("display","none");
-                });
-            });
         </script>
 
         <ul id="hd_nb">
