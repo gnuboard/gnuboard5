@@ -80,10 +80,16 @@ function menu_rearrange(el)
     var left = w1 = w2 = 0;
     var idx = $(".gnb_1dli").index(el);
     var max_menu_count = 0;
+    var $gnb_1dli;
 
     for(i=0; i<=idx; i++) {
-        w1 = $(".gnb_1dli:eq("+i+")").outerWidth();
-        w2 = $(".gnb_2dli > a:eq("+i+")").outerWidth(true);
+        $gnb_1dli = $(".gnb_1dli:eq("+i+")");
+        w1 = $gnb_1dli.outerWidth();
+
+        if($gnb_1dli.find(".gnb_2dul").size())
+            w2 = $gnb_1dli.find(".gnb_2dli > a").outerWidth(true);
+        else
+            w2 = w1;
 
         if((left + w2) > width) {
             if(max_menu_count == 0)
