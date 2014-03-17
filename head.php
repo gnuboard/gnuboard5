@@ -122,7 +122,7 @@ if (G5_IS_MOBILE) {
                         where me_use = '1'
                           and length(me_code) = '2'
                         order by me_order, me_id ";
-            $result = sql_query($sql);
+            $result = sql_query($sql, false);
             $gnb_zindex = 999; // gnb_1dli z-index 값 설정용
 
             for ($i=0; $row=sql_fetch_array($result); $i++) {

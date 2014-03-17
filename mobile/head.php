@@ -38,7 +38,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                         where me_mobile_use = '1'
                           and length(me_code) = '2'
                         order by me_order, me_id ";
-            $result = sql_query($sql);
+            $result = sql_query($sql, false);
 
             for($i=0; $row=sql_fetch_array($result); $i++) {
             ?>
