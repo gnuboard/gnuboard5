@@ -2523,14 +2523,15 @@ function module_exec_check($exe, $type)
             // 바이너리 파일인지
             if($is_linux) {
                 $search = false;
+                $isbinary = true;
                 $executable = true;
 
                 switch($type) {
                     case 'ct_cli':
-                        exec($exe.' -h 2>&1', $out);
+                        exec($exe.' -h 2>&1', $out, $return_var);
 
-                        if(empty($out)) {
-                            $executable = false;
+                        if($return_var == 139) {
+                            $isbinary = false;
                             break;
                         }
 
@@ -2557,10 +2558,10 @@ function module_exec_check($exe, $type)
                         }
                         break;
                     case 'okname':
-                        exec($exe.' D 2>&1', $out);
+                        exec($exe.' D 2>&1', $out, $return_var);
 
-                        if(empty($out)) {
-                            $executable = false;
+                        if($return_var == 139) {
+                            $isbinary = false;
                             break;
                         }
 
@@ -2573,9 +2574,7 @@ function module_exec_check($exe, $type)
                         break;
                 }
 
-                if(!$executable) {
-                    $error = 'exec 함수의 실행권한이 없습니다. 서버관리자에게 문의해 주십시오.';
-                } else if(!$search) {
+                if(!$isbinary || !$search) {
                     $error = $exe.'\n파일을 바이너리 타입으로 다시 업로드하여 주십시오.';
                 }
             }
