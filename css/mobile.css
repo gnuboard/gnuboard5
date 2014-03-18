@@ -46,6 +46,9 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .gnb_2da span:before {display:inline-block;margin:0 10px 0 0;color:#666;content:'▶'}
 #gnb_close {display:block;margin:0;padding:10px 0;width:100%;border:0;background:#000;color:#fff}
 
+#gnb_empty {padding:20px 0;color:#fff;text-align:center;line-height:2em}
+#gnb_empty a {display:inline;text-decoration:underline}
+
 #hd_sch_open {position:absolute;top:10px;right:10px;padding:0 10px;height:2.6em;border:0;background:#333;color:#fff;font-size:1em;letter-spacing:-0.1em}
 #hd_sch {display:none;border-top:1px solid #181818;background:#282828;text-align:center}
 #hd_sch h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}

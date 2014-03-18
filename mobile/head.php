@@ -68,8 +68,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php
             }
 
-            if ($i == 0) {  ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php }
-            ?>
+            if ($i == 0) {  ?>
+                <li id="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하세요.<?php } ?></li>
+            <?php } ?>
             </ul>
             <button type="button" id="gnb_close" class="hd_closer"><span class="sound_only">메뉴 </span>닫기</button>
         </div>
