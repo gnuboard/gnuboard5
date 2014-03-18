@@ -2543,10 +2543,10 @@ function module_exec_check($exe, $type)
                         }
                         break;
                     case 'pp_cli':
-                        exec($exe.' -h 2>&1', $out);
+                        exec($exe.' -h 2>&1', $out, $return_var);
 
-                        if(empty($out)) {
-                            $executable = false;
+                        if($return_var == 139) {
+                            $isbinary = false;
                             break;
                         }
 
