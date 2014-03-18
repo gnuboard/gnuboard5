@@ -153,7 +153,7 @@ if (G5_IS_MOBILE) {
             <?php
             }
 
-            if ($i == 0) {  ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php }
+            if ($i == 0) {  ?><li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> (<a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.)<?php } ?></li><?php }
             ?>
         </ul>
     </nav>
