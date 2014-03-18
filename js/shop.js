@@ -353,19 +353,19 @@ function add_sel_option(type, id, option, price, stock)
     else
         opt_prc = "("+number_format(String(price))+"원)";
 
-    opt += "<li class=\""+li_class+"\">\n";
-    opt += "<input type=\"hidden\" name=\"io_type["+item_code+"][]\" value=\""+type+"\">\n";
-    opt += "<input type=\"hidden\" name=\"io_id["+item_code+"][]\" value=\""+id+"\">\n";
-    opt += "<input type=\"hidden\" name=\"io_value["+item_code+"][]\" value=\""+option+"\">\n";
-    opt += "<input type=\"hidden\" class=\"io_price\" value=\""+price+"\">\n";
-    opt += "<input type=\"hidden\" class=\"io_stock\" value=\""+stock+"\">\n";
-    opt += "<span class=\"sit_opt_subj\">"+option+"</span>\n";
-    opt += "<span class=\"sit_opt_prc\">"+opt_prc+"</span>\n";
-    opt += "<div><input type=\"text\" name=\"ct_qty["+item_code+"][]\" value=\"1\" class=\"frm_input\" size=\"5\">\n";
-    opt += "<button type=\"button\" class=\"sit_qty_plus btn_frmline\">증가</button>\n";
-    opt += "<button type=\"button\" class=\"sit_qty_minus btn_frmline\">감소</button>\n";
-    opt += "<button type=\"button\" class=\"sit_opt_del btn_frmline\">삭제</button></div>\n";
-    opt += "</li>\n";
+    opt += "<li class=\""+li_class+"\">";
+    opt += "<input type=\"hidden\" name=\"io_type["+item_code+"][]\" value=\""+type+"\">";
+    opt += "<input type=\"hidden\" name=\"io_id["+item_code+"][]\" value=\""+id+"\">";
+    opt += "<input type=\"hidden\" name=\"io_value["+item_code+"][]\" value=\""+option+"\">";
+    opt += "<input type=\"hidden\" class=\"io_price\" value=\""+price+"\">";
+    opt += "<input type=\"hidden\" class=\"io_stock\" value=\""+stock+"\">";
+    opt += "<span class=\"sit_opt_subj\">"+option+"</span>";
+    opt += "<span class=\"sit_opt_prc\">"+opt_prc+"</span>";
+    opt += "<div><input type=\"text\" name=\"ct_qty["+item_code+"][]\" value=\"1\" class=\"frm_input\" size=\"5\">";
+    opt += "<button type=\"button\" class=\"sit_qty_plus btn_frmline\">증가</button>";
+    opt += "<button type=\"button\" class=\"sit_qty_minus btn_frmline\">감소</button>";
+    opt += "<button type=\"button\" class=\"sit_opt_del btn_frmline\">삭제</button></div>";
+    opt += "</li>";
 
     if($("#sit_sel_option > ul").size() < 1) {
         $("#sit_sel_option").html("<ul id=\"sit_opt_added\"></ul>");
