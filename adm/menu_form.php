@@ -78,48 +78,48 @@ function add_menu_list(name, link, code)
     sub_menu_class = " class=\"td_category sub_menu_class\"";
     <?php } ?>
 
-    var list = "<tr class=\"menu_list menu_group_<?php echo $code; ?>\">\n";
-    list += "<td"+sub_menu_class+">\n";
-    list += "<label for=\"me_name_"+ms+"\"  class=\"sound_only\">메뉴</label>\n";
-    list += "<input type=\"hidden\" name=\"code[]\" value=\"<?php echo $code; ?>\">\n";
-    list += "<input type=\"text\" name=\"me_name[]\" value=\""+name+"\" id=\"me_name_"+ms+"\" required class=\"required frm_input full_input\">\n";
-    list += "</td>\n";
-    list += "<td>\n";
-    list += "<label for=\"me_link_"+ms+"\"  class=\"sound_only\">링크</label>\n";
-    list += "<input type=\"text\" name=\"me_link[]\" value=\""+link+"\" id=\"me_link_"+ms+"\" required class=\"required frm_input full_input\">\n";
-    list += "</td>\n";
-    list += "<td class=\"td_mng\">\n";
-    list += "<label for=\"me_target_"+ms+"\"  class=\"sound_only\">새창</label>\n";
-    list += "<select name=\"me_target[]\" id=\"me_target_"+ms+"\">\n";
-    list += "<option value=\"self\">사용안함</option>\n";
-    list += "<option value=\"blank\">사용함</option>\n";
-    list += "</select>\n";
-    list += "</td>\n";
-    list += "<td class=\"td_numsmall\">\n";
-    list += "<label for=\"me_order_"+ms+"\"  class=\"sound_only\">순서</label>\n";
-    list += "<input type=\"text\" name=\"me_order[]\" value=\"0\" id=\"me_order_"+ms+"\" required class=\"required frm_input\" size=\"5\">\n";
-    list += "</td>\n";
-    list += "<td class=\"td_mngsmall\">\n";
-    list += "<label for=\"me_use_"+ms+"\"  class=\"sound_only\">PC사용</label>\n";
-    list += "<select name=\"me_use[]\" id=\"me_use_"+ms+"\">\n";
-    list += "<option value=\"1\">사용함</option>\n";
-    list += "<option value=\"0\">사용안함</option>\n";
-    list += "</select>\n";
-    list += "</td>\n";
-    list += "<td class=\"td_mngsmall\">\n";
-    list += "<label for=\"me_mobile_use_"+ms+"\"  class=\"sound_only\">모바일사용</label>\n";
-    list += "<select name=\"me_mobile_use[]\" id=\"me_mobile_use_"+ms+"\">\n";
-    list += "<option value=\"1\">사용함</option>\n";
-    list += "<option value=\"0\">사용안함</option>\n";
-    list += "</select>\n";
-    list += "</td>\n";
-    list += "<td class=\"td_mngsmall\">\n";
+    var list = "<tr class=\"menu_list menu_group_<?php echo $code; ?>\">";
+    list += "<td"+sub_menu_class+">";
+    list += "<label for=\"me_name_"+ms+"\"  class=\"sound_only\">메뉴</label>";
+    list += "<input type=\"hidden\" name=\"code[]\" value=\"<?php echo $code; ?>\">";
+    list += "<input type=\"text\" name=\"me_name[]\" value=\""+name+"\" id=\"me_name_"+ms+"\" required class=\"required frm_input full_input\">";
+    list += "</td>";
+    list += "<td>";
+    list += "<label for=\"me_link_"+ms+"\"  class=\"sound_only\">링크</label>";
+    list += "<input type=\"text\" name=\"me_link[]\" value=\""+link+"\" id=\"me_link_"+ms+"\" required class=\"required frm_input full_input\">";
+    list += "</td>";
+    list += "<td class=\"td_mng\">";
+    list += "<label for=\"me_target_"+ms+"\"  class=\"sound_only\">새창</label>";
+    list += "<select name=\"me_target[]\" id=\"me_target_"+ms+"\">";
+    list += "<option value=\"self\">사용안함</option>";
+    list += "<option value=\"blank\">사용함</option>";
+    list += "</select>";
+    list += "</td>";
+    list += "<td class=\"td_numsmall\">";
+    list += "<label for=\"me_order_"+ms+"\"  class=\"sound_only\">순서</label>";
+    list += "<input type=\"text\" name=\"me_order[]\" value=\"0\" id=\"me_order_"+ms+"\" required class=\"required frm_input\" size=\"5\">";
+    list += "</td>";
+    list += "<td class=\"td_mngsmall\">";
+    list += "<label for=\"me_use_"+ms+"\"  class=\"sound_only\">PC사용</label>";
+    list += "<select name=\"me_use[]\" id=\"me_use_"+ms+"\">";
+    list += "<option value=\"1\">사용함</option>";
+    list += "<option value=\"0\">사용안함</option>";
+    list += "</select>";
+    list += "</td>";
+    list += "<td class=\"td_mngsmall\">";
+    list += "<label for=\"me_mobile_use_"+ms+"\"  class=\"sound_only\">모바일사용</label>";
+    list += "<select name=\"me_mobile_use[]\" id=\"me_mobile_use_"+ms+"\">";
+    list += "<option value=\"1\">사용함</option>";
+    list += "<option value=\"0\">사용안함</option>";
+    list += "</select>";
+    list += "</td>";
+    list += "<td class=\"td_mngsmall\">";
     <?php if($new == 'new') { ?>
-    list += "<button type=\"button\" class=\"btn_add_submenu\">추가</button>\n";
+    list += "<button type=\"button\" class=\"btn_add_submenu\">추가</button>";
     <?php } ?>
-    list += "<button type=\"button\" class=\"btn_del_menu\">삭제</button>\n";
-    list += "</td>\n";
-    list += "</tr>\n";
+    list += "<button type=\"button\" class=\"btn_del_menu\">삭제</button>";
+    list += "</td>";
+    list += "</tr>";
 
     var $menu_last = null;
 
@@ -128,14 +128,16 @@ function add_menu_list(name, link, code)
     else
         $menu_last = $menulist.find("tr.menu_list:last");
 
-    if($menu_last.size() > 0) {
+	if($menu_last.size() > 0) {
         $menu_last.after(list);
     } else {
-        $("#menulist", opener.document).find("#empty_menu_list").remove()
-            .end().find("table tbody").append(list);
+        if($menulist.find("#empty_menu_list").size() > 0)
+            $menulist.find("#empty_menu_list").remove();
+
+        $menulist.find("table tbody").append(list);
     }
 
-    $("#menulist", opener.document).find("tr.menu_list").each(function(index) {
+    $menulist.find("tr.menu_list").each(function(index) {
         $(this).removeClass("bg0 bg1")
             .addClass("bg"+(index % 2));
     });
