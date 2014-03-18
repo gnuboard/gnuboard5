@@ -171,14 +171,14 @@ function add_menu()
     });
 
     var url = "./menu_form.php?code="+max_code+"&new=new";
-    window.open(url, "add_menu", "left=100,top=100,width=550,height=650");
+    window.open(url, "add_menu", "left=100,top=100,width=550,height=650,scrollbars=yes,resizable=yes");
     return false;
 }
 
 function add_submenu(code)
 {
     var url = "./menu_form.php?code="+code;
-    window.open(url, "add_menu", "left=100,top=100,width=550,height=650");
+    window.open(url, "add_menu", "left=100,top=100,width=550,height=650,scrollbars=yes,resizable=yes");
     return false;
 }
 
