@@ -1,10 +1,11 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0);
 ?>
 
 <!-- 설문조사 시작 { -->
-<link rel="stylesheet" href="<?php echo $poll_skin_url ?>/style.css">
-
 <form name="fpoll" action="<?php echo G5_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
 <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
 <input type="hidden" name="skin_dir" value="<?php echo $skin_dir ?>">
