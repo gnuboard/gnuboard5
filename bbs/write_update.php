@@ -477,7 +477,8 @@ if ($w == '' || $w == 'r') {
 }
 
 // syndication ping
-include G5_SYNDI_PATH.'/include/include.bbs.write_update.php';
+if(G5_SYNDI_USE)
+    include G5_SYNDI_PATH.'/include/include.bbs.write_update.php';
 
 //------------------------------------------------------------------------------
 // 가변 파일 업로드
