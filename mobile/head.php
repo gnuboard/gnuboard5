@@ -144,6 +144,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <li><a href="<?php echo G5_BBS_URL ?>/register.php" id="snb_join">회원가입</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/login.php" id="snb_login">로그인</a></li>
             <?php } ?>
+            <li><a href="<?php echo G5_SHOP_URL ?>/" id="snb_shop">쇼핑몰</a></li>
         </ul>
 
     </div>
