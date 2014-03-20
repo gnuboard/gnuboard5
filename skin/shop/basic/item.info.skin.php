@@ -12,28 +12,28 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
     <h2>상품 정보</h2>
     <?php echo pg_anchor('inf'); ?>
 
-    <h3>상품 기본설명</h3>
     <?php if ($it['it_basic']) { // 상품 기본설명 ?>
+    <h3>상품 기본설명</h3>
     <div id="sit_inf_basic">
          <?php echo $it['it_basic']; ?>
     </div>
     <?php } ?>
 
-    <h3>상품 상세설명</h3>
     <?php if ($it['it_explan']) { // 상품 상세설명 ?>
+    <h3>상품 상세설명</h3>
     <div id="sit_inf_explan">
         <?php echo conv_content($it['it_explan'], 1); ?>
     </div>
     <?php } ?>
 
-    <h3>상품 정보 고시</h3>
+
     <?php
-    if ($it['it_info_value']) {
+    if ($it['it_info_value']) { // 상품 정보 고시
         $info_data = unserialize($it['it_info_value']);
         $gubun = $it['it_info_gubun'];
         $info_array = $item_info[$gubun]['article'];
     ?>
-    <!-- 상품정보고시 -->
+    <h3>상품 정보 고시</h3>
     <table id="sit_inf_open">
     <colgroup>
         <col class="grid_4">
