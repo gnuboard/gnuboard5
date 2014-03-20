@@ -22,7 +22,9 @@ $admin_id    = $_POST['admin_id'];
 $admin_pass  = $_POST['admin_pass'];
 $admin_name  = $_POST['admin_name'];
 $admin_email = $_POST['admin_email'];
-$g5_install  = $_POST['g5_install'];
+$g5_install = 0;
+if (isset($_POST['g5_install']))
+    $g5_install  = $_POST['g5_install'];
 $g5_shop_prefix = $_POST['g5_shop_prefix'];
 $g5_shop_install= $_POST['g5_shop_install'];
 

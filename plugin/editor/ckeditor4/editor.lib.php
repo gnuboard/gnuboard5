@@ -13,7 +13,7 @@ function editor_html($id, $content, $is_dhtml_editor=true)
     if ($is_dhtml_editor)
         $html .= '<script>document.write("<div class=\'cke_sc\'><button type=\'button\' class=\'btn_cke_sc\'>단축키 일람</button></div>");</script>';
 
-    if ($js) {
+    if ($is_dhtml_editor && $js) {
         $html .= "\n".'<script src="'.$editor_url.'/ckeditor.js"></script>';
         $html .= "\n".'<script>var g5_editor_url = "'.$editor_url.'";</script>';
         $html .= "\n".'<script src="'.$editor_url.'/config.js"></script>';

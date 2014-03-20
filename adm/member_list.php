@@ -77,7 +77,7 @@ $colspan = 16;
 <form id="fsearch" name="fsearch" class="local_sch01 local_sch" method="get">
 
 <label for="sfl" class="sound_only">검색대상</label>
-<select name="sfl">
+<select name="sfl" id="sfl">
     <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
     <option value="mb_nick"<?php echo get_selected($_GET['sfl'], "mb_nick"); ?>>닉네임</option>
     <option value="mb_name"<?php echo get_selected($_GET['sfl'], "mb_name"); ?>>이름</option>

@@ -13,7 +13,7 @@ check_token();
 $mb_id = trim($_POST['mb_id']);
 
 // 휴대폰번호 체크
-$mb_hp = $_POST['mb_hp'];
+$mb_hp = hyphen_hp_number($_POST['mb_hp']);
 if($mb_hp) {
     $result = exist_mb_hp($mb_hp, $mb_id);
     if ($result)
@@ -34,7 +34,7 @@ $sql_common = "  mb_name = '{$_POST['mb_name']}',
                  mb_email = '{$_POST['mb_email']}',
                  mb_homepage = '{$_POST['mb_homepage']}',
                  mb_tel = '{$_POST['mb_tel']}',
-                 mb_hp = '{$_POST['mb_hp']}',
+                 mb_hp = '{$mb_hp}',
                  mb_certify = '{$mb_certify}',
                  mb_adult = '{$mb_adult}',
                  mb_zip1 = '{$_POST['mb_zip1']}',
