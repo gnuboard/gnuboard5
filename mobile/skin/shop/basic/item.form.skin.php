@@ -16,12 +16,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
     <?php
     // 이미지(중) 썸네일
     $thumb_img = '';
+    $thumb_img_w = 280; // 넓이
+    $thumb_img_h = 280; // 높이
     for ($i=1; $i<=10; $i++)
     {
         if(!$it['it_img'.$i])
             continue;
 
-        $thumb = get_it_thumbnail($it['it_img'.$i], 280, 280);
+        $thumb = get_it_thumbnail($it['it_img'.$i], $thumb_img_w, $thumb_img_h);
 
         if(!$thumb)
             continue;
@@ -33,9 +35,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
     if ($thumb_img)
     {
         echo '<div id="sit_pvi">'.PHP_EOL;
-        echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn">이전</button>'.PHP_EOL;
-        echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn">다음</button>'.PHP_EOL;
-        echo '<ul id="sit_pvi_slide">'.PHP_EOL;
+        echo '<button type="button" id="sit_pvi_prev" class="sit_pvi_btn" style="height:'.$thumb_img_h.'px">이전</button>'.PHP_EOL;
+        echo '<button type="button" id="sit_pvi_next" class="sit_pvi_btn" style="height:'.$thumb_img_h.'px">다음</button>'.PHP_EOL;
+        echo '<ul id="sit_pvi_slide" style="width:'.$thumb_img_w.'px;height:'.$thumb_img_h.'px">'.PHP_EOL;
         echo $thumb_img;
         echo '</ul>'.PHP_EOL;
         echo '</div>';

@@ -109,11 +109,10 @@
 
 #sit_pvi_prev {position:absolute;top:0;left:0}
 #sit_pvi_next {position:absolute;top:0;right:0}
-.sit_pvi_btn {display:none;z-index:10;width:2em;height:280px;border:0;background:#f2f5f9}
+.sit_pvi_btn {display:none;z-index:10;width:20px;border:0;background:#f2f5f9}
 
-#sit_pvi_slide {position:relative;margin:0 auto;padding:0;list-style:none;width:280px;height:280px;overflow-x:hidden}
+#sit_pvi_slide {position:relative;margin:0 auto;padding:0;list-style:none;overflow-x:hidden}
 #sit_pvi_slide li {display:none;position:absolute;left:0;top:0}
-#sit_pvi_slide img {width:280px;height:280px}
 
 #sit_pvi_nw h1 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #sit_pvi_nwbig {padding:10px 0;text-align:center}
