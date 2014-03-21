@@ -101,6 +101,7 @@ $sql = " update {$g5['config_table']}
                 cf_movie_extension = '{$_POST['cf_movie_extension']}',
                 cf_formmail_is_member = '{$_POST['cf_formmail_is_member']}',
                 cf_page_rows = '{$_POST['cf_page_rows']}',
+                cf_mobile_page_rows = '{$_POST['cf_mobile_page_rows']}',
                 cf_stipulation = '{$_POST['cf_stipulation']}',
                 cf_privacy = '{$_POST['cf_privacy']}',
                 cf_open_modify = '{$_POST['cf_open_modify']}',
