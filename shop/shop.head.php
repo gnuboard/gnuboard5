@@ -16,12 +16,9 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 
     <div id="skip_to_container"><a href="#container">본문 바로가기</a></div>
 
-    <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
-    <div id="hd_pop">
-        <h2>팝업레이어 알림</h2>
-        <?php include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
-    </div>
-    <?php } ?>
+    <?php if(defined('_INDEX_')) { // index에서만 실행
+        include G5_BBS_PATH.'/newwin.inc.php'; // 팝업레이어
+     } ?>
 
     <aside id="hd_qnb">
         <h2>쇼핑몰 퀵메뉴</h2>
