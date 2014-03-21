@@ -21,7 +21,7 @@ if (!($it['ca_use'] && $it['it_use'])) {
 }
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
-$sql = " select ca_include_head, ca_include_tail, ca_cert_use, ca_adult_use from {$g5['g5_shop_category_table']} where ca_id = '{$it['ca_id']}' ";
+$sql = " select ca_skin_dir, ca_include_head, ca_include_tail, ca_cert_use, ca_adult_use from {$g5['g5_shop_category_table']} where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);
 
 // 본인인증, 성인인증체크
@@ -57,6 +57,36 @@ if ($_COOKIE['ck_it_id'] != $it_id) {
     set_cookie("ck_it_id", $it_id, time() + 3600); // 1시간동안 저장
 }
 
+// 스킨경로
+$skin_dir = G5_SHOP_SKIN_PATH;
+$ca_dir_check = true;
+
+if($it['it_skin']) {
+    $skin_dir = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$it['it_skin'];
+
+    if(is_dir($skin_dir)) {
+        $form_skin_file = $skin_dir.'/item.form.skin.php';
+
+        if(is_file($form_skin_file))
+            $ca_dir_check = false;
+    }
+}
+
+if($ca_dir_check) {
+    if($ca['ca_skin_dir']) {
+        $skin_dir = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_skin_dir'];
+
+        if(is_dir($skin_dir)) {
+            $form_skin_file = $skin_dir.'/item.form.skin.php';
+
+            if(!is_file($skin_file))
+                $skin_dir = G5_SHOP_SKIN_PATH;
+        } else {
+            $skin_dir = G5_SHOP_SKIN_PATH;
+        }
+    }
+}
+
 $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
 // 분류 상단 코드가 있으면 출력하고 없으면 기본 상단 코드 출력
@@ -68,10 +98,16 @@ else
 // 분류 위치
 // HOME > 1단계 > 2단계 ... > 6단계 분류
 $ca_id = $it['ca_id'];
-include G5_SHOP_SKIN_PATH.'/navigation.skin.php';
+$nav_skin = $skin_dir.'/navigation.skin.php';
+if(!is_file($nav_skin))
+    $nav_skin = G5_SHOP_SKIN_PATH.'/navigation.skin.php';
+include $nav_skin;
 
 // 이 분류에 속한 하위분류 출력
-include G5_SHOP_SKIN_PATH.'/listcategory.skin.php';
+$cate_skin = $skin_dir.'/listcategory.skin.php';
+if(!is_file($cate_skin))
+    $cate_skin = G5_SHOP_SKIN_PATH.'/listcategory.skin.php';
+include $cate_skin;
 
 if ($is_admin) {
     echo '<div class="sit_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
@@ -194,12 +230,15 @@ function pg_anchor($anc_id) {
 
     <?php
     // 상품 구입폼
-    include_once(G5_SHOP_SKIN_PATH.'/item.form.skin.php');
+    include_once($skin_dir.'/item.form.skin.php');
     ?>
 
     <?php
     // 상품 상세정보
-    include_once(G5_SHOP_SKIN_PATH.'/item.info.skin.php');
+    $info_skin = $skin_dir.'/item.info.skin.php';
+    if(!is_file($info_skin))
+        $info_skin = G5_SHOP_SKIN_PATH.'/item.info.skin.php';
+    include $info_skin;
     ?>
 
 </div>

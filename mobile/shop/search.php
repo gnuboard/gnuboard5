@@ -156,7 +156,7 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         $list_file = G5_MSHOP_SKIN_PATH.'/'.$default['de_mobile_search_list_skin'];
         if (file_exists($list_file)) {
 
-            $list = new item_list($default['de_mobile_search_list_skin'], $default['de_mobile_search_list_mod'], 1, $default['de_mobile_search_img_width'], $default['de_mobile_search_img_height']);
+            $list = new item_list($list_file, $default['de_mobile_search_list_mod'], 1, $default['de_mobile_search_img_width'], $default['de_mobile_search_img_height']);
             $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
             $list->set_is_page(true);
             $list->set_mobile(true);

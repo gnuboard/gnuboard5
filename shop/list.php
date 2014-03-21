@@ -25,8 +25,21 @@ if ($ca['ca_include_head'])
 else
     include_once('./_head.php');
 
-// 스킨을 지정했다면 지정한 스킨을 사용함 (스킨의 다양화)
-//if ($skin) $ca[ca_skin] = $skin;
+// 스킨경로
+$skin_dir = G5_SHOP_SKIN_PATH;
+
+if($ca['ca_skin_dir']) {
+    $skin_dir = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_skin_dir'];
+
+    if(is_dir($skin_dir)) {
+        $skin_file = $skin_dir.'/'.$ca['ca_skin'];
+
+        if(!is_file($skin_file))
+            $skin_dir = G5_SHOP_SKIN_PATH;
+    } else {
+        $skin_dir = G5_SHOP_SKIN_PATH;
+    }
+}
 
 if ($is_admin)
     echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
@@ -41,13 +54,18 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
 <div id="sct">
 
     <?php
-    $nav_ca_id = $ca_id;
-    include G5_SHOP_SKIN_PATH.'/navigation.skin.php';
+    $nav_skin = $skin_dir.'/navigation.skin.php';
+    if(!is_file($nav_skin))
+        $nav_skin = G5_SHOP_SKIN_PATH.'/navigation.skin.php';
+    include $nav_skin;
 
     // 상단 HTML
     echo '<div id="sct_hhtml">'.stripslashes($ca['ca_head_html']).'</div>';
 
-    include G5_SHOP_SKIN_PATH.'/listcategory.skin.php';
+    $cate_skin = $skin_dir.'/listcategory.skin.php';
+    if(!is_file($cate_skin))
+        $cate_skin = G5_SHOP_SKIN_PATH.'/listcategory.skin.php';
+    include $cate_skin;
 
     // 상품 출력순서가 있다면
     if ($sort != "")
@@ -57,16 +75,23 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
 
     $error = '<p class="sct_noitem">등록된 상품이 없습니다.</p>';
 
-    // 리스트 유형별로 출력
-    $list_file = G5_SHOP_SKIN_PATH.'/'.$ca['ca_skin'];
-    if (file_exists($list_file)) {
+    // 리스트 스킨
+    $skin_file = $skin_dir.'/'.$ca['ca_skin'];
+
+    if (file_exists($skin_file)) {
 
 		echo '<div id="sct_sortlst">';
-        include G5_SHOP_SKIN_PATH.'/list.sort.skin.php';
+        $sort_skin = $skin_dir.'/list.sort.skin.php';
+        if(!is_file($sort_skin))
+            $sort_skin = G5_SHOP_SKIN_PATH.'/list.sort.skin.php';
+        include $sort_skin;
 
         // 상품 보기 타입 변경 버튼
-        include G5_SHOP_SKIN_PATH.'/list.sub.skin.php';
-		echo '</div>';
+        $sub_skin = $skin_dir.'/list.sub.skin.php';
+        if(!is_file($sub_skin))
+            $sub_skin = G5_SHOP_SKIN_PATH.'/list.sub.skin.php';
+        include $sub_skin;
+        echo '</div>';
 
         // 총몇개 = 한줄에 몇개 * 몇줄
         $items = $ca['ca_list_mod'] * $ca['ca_list_row'];
@@ -75,7 +100,7 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
         // 시작 레코드 구함
         $from_record = ($page - 1) * $items;
 
-        $list = new item_list($ca['ca_skin'], $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height']);
+        $list = new item_list($skin_file, $ca['ca_list_mod'], $ca['ca_list_row'], $ca['ca_img_width'], $ca['ca_img_height']);
         $list->set_category($ca['ca_id'], 1);
         $list->set_category($ca['ca_id'], 2);
         $list->set_category($ca['ca_id'], 3);
@@ -99,14 +124,12 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
     }
     else
     {
-        echo '<div class="sct_nofile">'.$ca['ca_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
+        echo '<div class="sct_nofile">'.str_replace(G5_PATH.'/', '', $skin_file).' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
     }
     ?>
 
     <?php
     $qstr1 .= 'ca_id='.$ca_id;
-    if($skin)
-        $qstr1 .= '&amp;skin='.$skin;
     $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
     echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
     ?>

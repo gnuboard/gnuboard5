@@ -59,7 +59,7 @@ if (file_exists($list_file))
     // 시작 레코드 구함
     $from_record = ($page - 1) * $items;
 
-    $list = new item_list($ev['ev_skin'], $ev['ev_list_mod'], $ev['ev_list_row'], $ev['ev_img_width'], $ev['ev_img_height']);
+    $list = new item_list(G5_SHOP_SKIN_PATH.'/'.$ev['ev_skin'], $ev['ev_list_mod'], $ev['ev_list_row'], $ev['ev_img_width'], $ev['ev_img_height']);
     $list->set_event($ev['ev_id']);
     $list->set_is_page(true);
     $list->set_order_by($order_by);

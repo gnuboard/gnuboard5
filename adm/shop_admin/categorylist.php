@@ -7,6 +7,19 @@ auth_check($auth[$sub_menu], "r");
 $g5['title'] = '분류관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
+// 스킨 DIR
+$skin_dir = '<option value="">선택</option>'.PHP_EOL;
+$arr = get_skin_dir('shop');
+for ($i=0; $i<count($arr); $i++) {
+    $skin_dir .= '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+}
+
+$mskin_dir = '<option value="">선택</option>'.PHP_EOL;
+$arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
+for ($i=0; $i<count($arr); $i++) {
+    $mskin_dir .= '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+}
+
 $where = " where ";
 $sql_search = "";
 if ($stx != "") {
@@ -167,12 +180,12 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <input type="text" name="ca_list_mod[<?php echo $i; ?>]" size="3" value="<?php echo $row['ca_list_mod']; ?>" id="ca_lineimg_num<?php echo $i; ?>" required class="required frm_input"> <span class="sound_only">개</span>
         </td>
         <td headers="sct_pcskin">
-            <label for="ca_skin<?php echo $i; ?>" class="sound_only">PC스킨폴더</label>
-            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
-                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+            <label for="ca_skin_dir<?php echo $i; ?>" class="sound_only">PC스킨폴더</label>
+            <select id="ca_skin_dir<?php echo $i; ?>" name="ca_skin_dir[<?php echo $i; ?>]" class="skin_dir">
+                <?php echo conv_selected_option($skin_dir, $row['ca_skin_dir']); ?>
             </select>
             <label for="ca_skin<?php echo $i; ?>" class="sound_only">PC스킨파일</label>
-            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
+            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]" required class="required">
                 <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
             </select>
         </td>
@@ -210,13 +223,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <input type="text" name="ca_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_list_row']; ?>' id="ca_imgline_num<?php echo $i; ?>" required class="required frm_input" size="3"> <span class="sound_only">줄</span>
         </td>
         <td headers="sct_mskin">
-            <label for="ca_skin<?php echo $i; ?>" class="sound_only">모바일스킨폴더</label>
-            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
-                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+            <label for="ca_mobile_skin_dir<?php echo $i; ?>" class="sound_only">모바일스킨폴더</label>
+            <select id="ca_mobile_skin_dir<?php echo $i; ?>" name="ca_mobile_skin_dir[<?php echo $i; ?>]" class="skin_dir">
+                <?php echo conv_selected_option($mskin_dir, $row['ca_mobile_skin_dir']); ?>
             </select>
-            <label for="ca_skin<?php echo $i; ?>" class="sound_only">모바일스킨파일</label>
-            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
-                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+            <label for="ca_mobile_skin<?php echo $i; ?>" class="sound_only">모바일스킨파일</label>
+            <select id="ca_mobile_skin<?php echo $i; ?>" name="ca_mobile_skin[<?php echo $i; ?>]" required class="required">
+                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $row['ca_mobile_skin']); ?>
             </select>
         </td>
     </tr>
@@ -234,6 +247,29 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
 </form>
 
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+
+<script>
+$(function() {
+    $("select.skin_dir").on("change", function() {
+        var type = "";
+        var dir = $(this).val();
+        if(!dir)
+            return false;
+
+        var id = $(this).attr("id");
+        var $sel = $(this).siblings("select");
+        var sval = $sel.find("option:selected").val();
+
+        if(id.search("mobile") > -1)
+            type = "mobile";
+
+        $sel.load(
+            "./ajax.skinfile.php",
+            { dir : dir, type : type, sval: sval }
+        );
+    });
+});
+</script>
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

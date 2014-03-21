@@ -21,7 +21,7 @@ if (!($it['ca_use'] && $it['it_use'])) {
 }
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
-$sql = " select ca_include_head, ca_include_tail, ca_cert_use, ca_adult_use
+$sql = " select ca_mobile_skin_dir, ca_include_head, ca_include_tail, ca_cert_use, ca_adult_use
            from {$g5['g5_shop_category_table']}
           where ca_id = '{$it['ca_id']}' ";
 $ca = sql_fetch($sql);

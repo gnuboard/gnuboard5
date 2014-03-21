@@ -164,7 +164,7 @@ if ($is_admin) {
         $list_file = G5_SHOP_SKIN_PATH.'/'.$default['de_search_list_skin'];
         if (file_exists($list_file)) {
 
-            $list = new item_list($default['de_search_list_skin'], $default['de_search_list_mod'], $default['de_search_list_row'], $default['de_search_img_width'], $default['de_search_img_height']);
+            $list = new item_list($list_file, $default['de_search_list_mod'], $default['de_search_list_row'], $default['de_search_img_width'], $default['de_search_img_height']);
             $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
             $list->set_is_page(true);
             $list->set_view('it_img', true);

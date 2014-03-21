@@ -42,7 +42,7 @@ if (file_exists($list_file))
     // 시작 레코드 구함
     $from_record = ($page - 1) * $items;
 
-    $list = new item_list($ev['ev_mobile_skin'], $ev['ev_mobile_list_mod'], 1, $ev['ev_mobile_img_width'], $ev['ev_mobile_img_height']);
+    $list = new item_list(G5_MSHOP_SKIN_PATH.'/'.$ev['ev_mobile_skin'], $ev['ev_mobile_list_mod'], 1, $ev['ev_mobile_img_width'], $ev['ev_mobile_img_height']);
     $list->set_event($ev['ev_id']);
     $list->set_is_page(true);
     $list->set_mobile(true);

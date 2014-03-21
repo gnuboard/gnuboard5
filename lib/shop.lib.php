@@ -151,9 +151,9 @@ class item_list
     function set_list_skin($list_skin) {
         global $default;
         if ($this->is_mobile) {
-            $this->list_skin = $list_skin ? $list_skin : $default['de_mobile_type'.$this->type.'_list_skin'];
+            $this->list_skin = $list_skin ? $list_skin : G5_MSHOP_SKIN_PATH.'/'.$default['de_mobile_type'.$this->type.'_list_skin'];
         } else {
-            $this->list_skin = $list_skin ? $list_skin : $default['de_type'.$this->type.'_list_skin'];
+            $this->list_skin = $list_skin ? $list_skin : G5_SHOP_SKIN_PATH.'/'.$default['de_type'.$this->type.'_list_skin'];
         }
     }
 
@@ -311,11 +311,7 @@ class item_list
 
         }
 
-        if ($this->is_mobile) {
-            $file = G5_MSHOP_SKIN_PATH."/{$this->list_skin}";
-        } else {
-            $file = G5_SHOP_SKIN_PATH."/{$this->list_skin}";
-        }
+        $file = $this->list_skin;
 
         if ($this->list_skin == "") {
             return $this->count."번 item_list() 의 스킨파일이 지정되지 않았습니다.";
