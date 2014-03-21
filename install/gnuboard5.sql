@@ -269,6 +269,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_movie_extension` varchar(255) NOT NULL DEFAULT '',
   `cf_formmail_is_member` tinyint(4) NOT NULL DEFAULT '0',
   `cf_page_rows` int(11) NOT NULL DEFAULT '0',
+  `cf_mobile_page_rows` int(11) NOT NULL DEFAULT '0',
   `cf_visit` varchar(255) NOT NULL DEFAULT '',
   `cf_max_po_id` int(11) NOT NULL DEFAULT '0',
   `cf_stipulation` text NOT NULL,
