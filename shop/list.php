@@ -41,6 +41,8 @@ if($ca['ca_skin_dir']) {
     }
 }
 
+define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
+
 if ($is_admin)
     echo '<div class="sct_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/categoryform.php?w=u&amp;ca_id='.$ca_id.'" class="btn_admin">분류 관리</a></div>';
 ?>

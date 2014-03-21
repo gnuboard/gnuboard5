@@ -29,6 +29,8 @@ else
 if ($skin)
     $ev['ev_skin'] = $skin;
 
+define('G5_SHOP_CSS_URL', G5_MSHOP_SKIN_URL);
+
 // 리스트 유형별로 출력
 $list_file = G5_SHOP_SKIN_PATH."/{$ev['ev_mobile_skin']}";
 if (file_exists($list_file))
