@@ -93,20 +93,21 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <thead>
     <tr>
         <th scope="col" rowspan="2"><?php echo subject_sort_link("ca_id"); ?>분류코드</a></th>
-        <th scope="col" rowspan="2"><?php echo subject_sort_link("ca_name"); ?>분류명</a></th>
-        <th scope="col">상품수</th>
-        <th scope="col">이미지 폭</th>
-        <th scope="col">이미지 높이</th>
-        <th scope="col">1행이미지수</th>
-        <th scope="col">출력스킨</th>
+        <th scope="col" id="sct_cate"><?php echo subject_sort_link("ca_name"); ?>분류명</a></th>
+        <th scope="col" id="sct_amount">상품수</th>
+        <th scope="col" id="sct_imgw">이미지 폭</th>
+        <th scope="col" id="sct_imgh">이미지 높이</th>
+        <th scope="col" id="sct_imgcol">1행이미지수</th>
+        <th scope="col" id="sct_pcskin">PC스킨지정</th>
         <th scope="col" rowspan="2">관리</th>
     </tr>
     <tr>
-        <th scope="col"><?php echo subject_sort_link("ca_use"); ?>판매가능</a></th>
-        <th scope="col">본인인증</th>
-        <th scope="col">성인인증</th>
-        <th scope="col">이미지 행수</th>
-        <th scope="col"><?php echo subject_sort_link("ca_mb_id"); ?>관리회원아이디</a></th>
+        <th scope="col" id="sct_admin"><?php echo subject_sort_link("ca_mb_id"); ?>관리회원아이디</a></th>
+        <th scope="col" id="sct_sell"><?php echo subject_sort_link("ca_use"); ?>판매가능</a></th>
+        <th scope="col" id="sct_hpcert">본인인증</th>
+        <th scope="col" id="sct_adultcert">성인인증</th>
+        <th scope="col" id="sct_imgrow">이미지 행수</th>
+        <th scope="col" id="sct_mskin">모바일스킨지정</th>
     </tr>
     </thead>
     <tbody>
@@ -151,22 +152,26 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <input type="hidden" name="ca_id[<?php echo $i; ?>]" value="<?php echo $row['ca_id']; ?>">
             <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $row['ca_id']; ?>"><?php echo $row['ca_id']; ?></a>
         </td>
-        <td class="sct_name sct_name<?php echo $level; ?>" rowspan="2"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input required"></td>
-        <td class="td_amount"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
-        <td class="td_output">
+        <td headers="sct_cate" class="sct_name sct_name<?php echo $level; ?>"><?php echo $s_level; ?> <input type="text" name="ca_name[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_name']); ?>" id="ca_name_<?php echo $i; ?>" required class="frm_input full_input required"></td>
+        <td headers="sct_amount" class="td_amount"><a href="./itemlist.php?sca=<?php echo $row['ca_id']; ?>"><?php echo $row1['cnt']; ?></a></td>
+        <td headers="sct_imgw" class="td_output">
             <label for="ca_out_width<?php echo $i; ?>" class="sound_only">출력이미지 폭</label>
             <input type="text" name="ca_img_width[<?php echo $i; ?>]" value="<?php echo get_text($row['ca_img_width']); ?>" id="ca_out_width<?php echo $i; ?>" required class="required frm_input" size="3" > <span class="sound_only">픽셀</span>
         </td>
-        <td class="td_output">
+        <td headers="sct_imgh" class="td_output">
             <label for="ca_img_height<?php echo $i; ?>" class="sound_only">출력이미지 높이</label>
             <input type="text" name="ca_img_height[<?php echo $i; ?>]" value="<?php echo $row['ca_img_height']; ?>" id="ca_img_height<?php echo $i; ?>" required class="required frm_input" size="3" > <span class="sound_only">픽셀</span>
         </td>
-        <td class="td_imgline">
+        <td headers="sct_imgcol" class="td_imgline">
             <label for="ca_lineimg_num<?php echo $i; ?>" class="sound_only">1줄당 이미지 수</label>
             <input type="text" name="ca_list_mod[<?php echo $i; ?>]" size="3" value="<?php echo $row['ca_list_mod']; ?>" id="ca_lineimg_num<?php echo $i; ?>" required class="required frm_input"> <span class="sound_only">개</span>
         </td>
-        <td>
-            <label for="ca_skin<?php echo $i; ?>" class="sound_only">출력스킨</label>
+        <td headers="sct_pcskin">
+            <label for="ca_skin<?php echo $i; ?>" class="sound_only">PC스킨폴더</label>
+            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
+                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+            </select>
+            <label for="ca_skin<?php echo $i; ?>" class="sound_only">PC스킨파일</label>
             <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
                 <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
             </select>
@@ -179,30 +184,40 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
-        <td class="td_possible">
-            <input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" id="ca_use<?php echo $i; ?>" <?php echo ($row['ca_use'] ? "checked" : ""); ?>>
-            <label for="ca_use<?php echo $i; ?>">판매</label>
-        </td>
-        <td class="td_confirm">
-            <input type="checkbox" name="ca_cert_use[<?php echo $i; ?>]" value="1" id="ca_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_cert_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_cert_use_yes<?php echo $i; ?>">사용</label>
-        </td>
-        <td class="td_confirm">
-            <input type="checkbox" name="ca_adult_use[<?php echo $i; ?>]" value="1" id="ca_adult_use_yes<?php echo $i; ?>" <?php if($row['ca_adult_use']) echo 'checked="checked"'; ?>>
-            <label for="ca_adult_use_yes<?php echo $i; ?>">사용</label>
-        </td>
-        <td class="td_imgline">
-            <label for="ca_imgline_num<?php echo $i; ?>" class="sound_only">이미지 줄 수</label>
-            <input type="text" name="ca_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_list_row']; ?>' id="ca_imgline_num<?php echo $i; ?>" required class="required frm_input" size="3"> <span class="sound_only">줄</span>
-        </td>
-        <td class="td_input">
+        <td headers="sct_admin" class="td_mng">
             <?php if ($is_admin == 'super') {?>
-            <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">회원아이디</label>
-            <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="frm_input" size="15" maxlength="20">
+            <label for="ca_mb_id<?php echo $i; ?>" class="sound_only">관리회원아이디</label>
+            <input type="text" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>" id="ca_mb_id<?php echo $i; ?>" class="frm_input full_input" size="15" maxlength="20">
             <?php } else { ?>
             <input type="hidden" name="ca_mb_id[<?php echo $i; ?>]" value="<?php echo $row['ca_mb_id']; ?>">
             <?php echo $row['ca_mb_id']; ?>
             <?php } ?>
+        </td>
+        <td headers="sct_sell" class="td_possible">
+            <input type="checkbox" name="ca_use[<?php echo $i; ?>]" value="1" id="ca_use<?php echo $i; ?>" <?php echo ($row['ca_use'] ? "checked" : ""); ?>>
+            <label for="ca_use<?php echo $i; ?>">판매</label>
+        </td>
+        <td headers="sct_hpcert" class="td_confirm">
+            <input type="checkbox" name="ca_cert_use[<?php echo $i; ?>]" value="1" id="ca_cert_use_yes<?php echo $i; ?>" <?php if($row['ca_cert_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_cert_use_yes<?php echo $i; ?>">사용</label>
+        </td>
+        <td headers="sct_adultcert" class="td_confirm">
+            <input type="checkbox" name="ca_adult_use[<?php echo $i; ?>]" value="1" id="ca_adult_use_yes<?php echo $i; ?>" <?php if($row['ca_adult_use']) echo 'checked="checked"'; ?>>
+            <label for="ca_adult_use_yes<?php echo $i; ?>">사용</label>
+        </td>
+        <td headers="sct_imgrow" class="td_imgline">
+            <label for="ca_imgline_num<?php echo $i; ?>" class="sound_only">이미지 줄 수</label>
+            <input type="text" name="ca_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_list_row']; ?>' id="ca_imgline_num<?php echo $i; ?>" required class="required frm_input" size="3"> <span class="sound_only">줄</span>
+        </td>
+        <td headers="sct_mskin">
+            <label for="ca_skin<?php echo $i; ?>" class="sound_only">모바일스킨폴더</label>
+            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
+                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+            </select>
+            <label for="ca_skin<?php echo $i; ?>" class="sound_only">모바일스킨파일</label>
+            <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]">
+                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+            </select>
         </td>
     </tr>
     <?php }
