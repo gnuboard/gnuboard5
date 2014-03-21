@@ -15,12 +15,10 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
     <div class="to_content"><a href="#container">본문 바로가기</a></div>
 
-    <?php if(defined('_INDEX_')) { // index에서만 실행 ?>
-    <div id="hd_pop">
-        <h2>팝업레이어 알림</h2>
-        <?php include G5_MOBILE_PATH.'/newwin.inc.php'; // 팝업레이어 ?>
-    </div>
-    <?php } ?>
+    <?php
+    if(defined('_INDEX_')) { // index에서만 실행
+        include G5_MOBILE_PATH.'/newwin.inc.php'; // 팝업레이어
+    } ?>
 
     <div id="hd_wrapper">
 
