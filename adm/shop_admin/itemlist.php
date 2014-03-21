@@ -24,6 +24,19 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $ca_list .= '<option value="'.$row['ca_id'].'">'.$nbsp.$row['ca_name'].'</option>'.PHP_EOL;
 }
 
+// 스킨
+$skin_list = '<option value="">선택</option>'.PHP_EOL;
+$arr = get_skin_dir('shop');
+for ($i=0; $i<count($arr); $i++) {
+    $skin_list .= '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+}
+
+$mskin_list = '<option value="">선택</option>'.PHP_EOL;
+$arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
+for ($i=0; $i<count($arr); $i++) {
+    $mskin_list .= '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
+}
+
 
 $where = " and ";
 $sql_search = "";
@@ -141,7 +154,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
         <th scope="col" rowspan="3"><?php echo subject_sort_link('it_id', 'sca='.$sca); ?>상품코드</a></th>
-        <th scope="col" colspan="4">분류</th>
+        <th scope="col" colspan="5">분류</th>
         <th scope="col" rowspan="3"><?php echo subject_sort_link('it_order', 'sca='.$sca); ?>순서</a></th>
         <th scope="col" rowspan="3"><?php echo subject_sort_link('it_use', 'sca='.$sca, 1); ?>판매</a></th>
         <th scope="col" rowspan="3"><?php echo subject_sort_link('it_soldout', 'sca='.$sca, 1); ?>품절</a></th>
@@ -153,11 +166,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col" id="th_pc_title"><?php echo subject_sort_link('it_name', 'sca='.$sca); ?>PC 상품명</a></th>
         <th scope="col" id="th_amt"><?php echo subject_sort_link('it_price', 'sca='.$sca); ?>판매가격</a></th>
         <th scope="col" id="th_camt"><?php echo subject_sort_link('it_cust_price', 'sca='.$sca); ?>시중가격</a></th>
+        <th scope="col" id="th_skin">PC스킨</th>
     </tr>
     <tr>
         <th scope="col" id="th_mo_title">모바일 상품명</th>
         <th scope="col" id="th_pt"><?php echo subject_sort_link('it_point', 'sca='.$sca); ?>포인트</a></th>
         <th scope="col" id="th_qty"><?php echo subject_sort_link('it_stock_qty', 'sca='.$sca); ?>재고</a></th>
+        <th scope="col" id="th_mskin">모바일스킨</th>
     </tr>
     </thead>
     <tbody>
@@ -173,14 +188,14 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     ?>
     <tr class="<?php echo $bg; ?>">
         <td rowspan="3" class="td_chk">
-            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['bo_subject']) ?> 게시판</label>
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['it_name']); ?></label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
         </td>
         <td rowspan="3" class="td_num">
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>
         </td>
-        <td colspan="4">
+        <td colspan="5">
             <label for="ca_id_<?php echo $i; ?>" class="sound_only">분류</label>
             <select name="ca_id[<?php echo $i; ?>]" id="ca_id_<?php echo $i; ?>">
                 <?php echo conv_selected_option($ca_list, $row['ca_id']); ?>
@@ -221,6 +236,12 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <label for="cust_price_<?php echo $i; ?>" class="sound_only">시중가격</label>
             <input type="text" name="it_cust_price[<?php echo $i; ?>]" value="<?php echo $row['it_cust_price']; ?>" id="cust_price_<?php echo $i; ?>" class="frm_input sit_camt" size="7">
         </td>
+        <td headers="th_skin" class="td_numbig td_input">
+            <label for="it_skin_<?php echo $i; ?>" class="sound_only">PC 스킨</label>
+            <select name="it_skin[<?php echo $i; ?>]" id="it_skin_<?php echo $i; ?>">
+                <?php echo conv_selected_option($skin_list, $row['it_skin']); ?>
+            </select>
+        </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td headers="th_mo_title" class="td_input">
@@ -232,11 +253,17 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <label for="stock_qty_<?php echo $i; ?>" class="sound_only">재고</label>
             <input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" id="stock_qty_<?php echo $i; ?>" class="frm_input sit_qty" size="7">
         </td>
+        <td headers="th_mskin" class="td_numbig td_input">
+            <label for="it_mobile_skin_<?php echo $i; ?>" class="sound_only">모바일 스킨</label>
+            <select name="it_mobile_skin[<?php echo $i; ?>]" id="it_mobile_skin_<?php echo $i; ?>">
+                <?php echo conv_selected_option($mskin_list, $row['it_mobile_skin']); ?>
+            </select>
+        </td>
     </tr>
     <?php
     }
     if ($i == 0)
-        echo '<tr><td colspan="11" class="empty_table">자료가 한건도 없습니다.</td></tr>';
+        echo '<tr><td colspan="12" class="empty_table">자료가 한건도 없습니다.</td></tr>';
     ?>
     </tbody>
     </table>

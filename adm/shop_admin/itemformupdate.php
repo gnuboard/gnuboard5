@@ -266,6 +266,8 @@ if ($it_name == "")
 $sql_common = " ca_id               = '$ca_id',
                 ca_id2              = '$ca_id2',
                 ca_id3              = '$ca_id3',
+                it_skin             = '$it_skin',
+                it_mobile_skin      = '$it_mobile_skin',
                 it_name             = '$it_name',
                 it_mobile_name      = '$it_mobile_name',
                 it_maker            = '$it_maker',
@@ -456,6 +458,8 @@ if($supply_count) {
 
 // 동일 분류내 상품 동일 옵션 적용
 $ca_fields = '';
+if(is_checked('chk_ca_it_skin'))                $ca_fields .= " , it_skin = '$it_skin' ";
+if(is_checked('chk_ca_it_mobile_skin'))         $ca_fields .= " , it_mobile_skin = '$it_mobile_skin' ";
 if(is_checked('chk_ca_it_basic'))               $ca_fields .= " , it_basic = '$it_basic' ";
 if(is_checked('chk_ca_it_order'))               $ca_fields .= " , it_order = '$it_order' ";
 if(is_checked('chk_ca_it_type'))                $ca_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";
@@ -505,6 +509,8 @@ if($ca_fields) {
 
 // 모든 상품 동일 옵션 적용
 $all_fields = '';
+if(is_checked('chk_all_it_skin'))                $all_fields .= " , it_skin = '$it_skin' ";
+if(is_checked('chk_all_it_mobile_skin'))         $all_fields .= " , it_mobile_skin = '$it_mobile_skin' ";
 if(is_checked('chk_all_it_basic'))               $all_fields .= " , it_basic = '$it_basic' ";
 if(is_checked('chk_all_it_order'))               $all_fields .= " , it_order = '$it_order' ";
 if(is_checked('chk_all_it_type'))                $all_fields .= " , it_type1 = '$it_type1', it_type2 = '$it_type2', it_type3 = '$it_type3', it_type4 = '$it_type4', it_type5 = '$it_type5' ";

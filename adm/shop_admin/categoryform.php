@@ -97,6 +97,13 @@ if(!sql_query(" select ca_nocoupon from {$g5['g5_shop_category_table']} limit 1 
     sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
                     ADD `ca_nocoupon` tinyint(4) NOT NULL DEFAULT '0' AFTER `ca_adult_use` ", true);
 }
+
+// 스킨 디렉토리 필드 추가
+if(!sql_query(" select ca_skin_dir from {$g5['g5_shop_category_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
+                    ADD `ca_skin_dir` varchar(255) NOT NULL DEFAULT '' AFTER `ca_name`,
+                    ADD `ca_mobile_skin_dir` varchar(255) NOT NULL DEFAULT '' AFTER `ca_skin_dir` ", true);
+}
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -149,6 +156,34 @@ if(!sql_query(" select ca_nocoupon from {$g5['g5_shop_category_table']} limit 1 
                     <input type="hidden" name="ca_mb_id" value="<?php echo $ca['ca_mb_id']; ?>">
                     <?php echo $ca['ca_mb_id']; ?>
                 <?php } ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="ca_skin_dir">PC용 스킨명</label></th>
+            <td colspan="3">
+                <select name="ca_skin_dir" id="ca_skin_dir">
+                <?php
+                $arr = get_skin_dir('shop');
+                for ($i=0; $i<count($arr); $i++) {
+                    if ($i == 0) echo "<option value=\"\">선택</option>";
+                    echo "<option value=\"".$arr[$i]."\"".get_selected($ca['ca_skin_dir'], $arr[$i]).">".$arr[$i]."</option>\n";
+                }
+                ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="ca_mobile_skin_dir">모바일용 스킨명</label></th>
+            <td colspan="3">
+                <select name="ca_mobile_skin_dir" id="ca_mobile_skin_dir">
+                <?php
+                $arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
+                for ($i=0; $i<count($arr); $i++) {
+                    if ($i == 0) echo "<option value=\"\">선택</option>";
+                    echo "<option value=\"".$arr[$i]."\"".get_selected($ca['ca_mobile_skin_dir'], $arr[$i]).">".$arr[$i]."</option>\n";
+                }
+                ?>
+                </select>
             </td>
         </tr>
         <tr>

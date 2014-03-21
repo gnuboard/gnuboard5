@@ -102,6 +102,7 @@ if(!sql_query(" select it_supply_point from {$g5['g5_shop_item_table']} limit 1 
 
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_cate">상품분류</a></li>
+<li><a href="#anc_sitfrm_skin">스킨설정</a></li>
 <li><a href="#anc_sitfrm_ini">기본정보</a></li>
 <li><a href="#anc_sitfrm_compact">요약정보</a></li>
 <li><a href="#anc_sitfrm_cost">가격 및 재고</a></li>
@@ -125,6 +126,13 @@ $frm_submit .= '</div>';
 if(!sql_query(" select it_nocoupon from {$g5['g5_shop_item_table']} limit 1", false)) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
                     ADD `it_nocoupon` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_use` ", true);
+}
+
+// 스킨필드 추가
+if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_skin` varchar(255) NOT NULL DEFAULT '' AFTER `ca_id3`,
+                    ADD `it_mobile_skin` varchar(255) NOT NULL DEFAULT '' AFTER `it_skin` ", true);
 }
 ?>
 
@@ -189,6 +197,68 @@ if(!sql_query(" select it_nocoupon from {$g5['g5_shop_item_table']} limit 1", fa
             </td>
         </tr>
         <?php } ?>
+        </tbody>
+        </table>
+    </div>
+</section>
+
+<?php echo $frm_submit; ?>
+
+<section id="anc_sitfrm_skin">
+    <h2 class="h2_frm">스킨설정</h2>
+    <?php echo $pg_anchor; ?>
+    <div class="local_desc02 local_desc">
+        <p>상품상세보기에서 사용할 스킨을 설정합니다.</p>
+    </div>
+
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>스킨설정</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="it_skin">PC용 스킨</label></th>
+            <td colspan="3">
+                <select name="it_skin" id="it_skin">
+                <?php
+                $arr = get_skin_dir('shop');
+                for ($i=0; $i<count($arr); $i++) {
+                    if ($i == 0) echo "<option value=\"\">선택</option>";
+                    echo "<option value=\"".$arr[$i]."\"".get_selected($it['it_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
+                }
+                ?>
+                </select>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_skin" value="1" id="chk_ca_it_skin">
+                <label for="chk_ca_it_skin">분류적용</label>
+                <input type="checkbox" name="chk_all_it_skin" value="1" id="chk_all_it_skin">
+                <label for="chk_all_it_skin">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_mobile_skin">모바일용 스킨</label></th>
+            <td colspan="3">
+                <select name="it_mobile_skin" id="it_mobile_skin">
+                <?php
+                $arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
+                for ($i=0; $i<count($arr); $i++) {
+                    if ($i == 0) echo "<option value=\"\">선택</option>";
+                    echo "<option value=\"".$arr[$i]."\"".get_selected($it['it_mobile_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
+                }
+                ?>
+                </select>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_mobile_skin" value="1" id="chk_ca_it_mobile_skin">
+                <label for="chk_ca_it_mobile_skin">분류적용</label>
+                <input type="checkbox" name="chk_all_it_mobile_skin" value="1" id="chk_all_it_mobile_skin">
+                <label for="chk_all_it_mobile_skin">전체적용</label>
+            </td>
+        </tr>
         </tbody>
         </table>
     </div>
