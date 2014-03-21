@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "900450";
+$sub_menu = "900410";
 include_once("./_common.php");
 
 $page_size = 20;
