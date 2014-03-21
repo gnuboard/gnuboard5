@@ -69,21 +69,21 @@ if (file_exists($dbconfig_file)) {
     if (defined(G5_TIMEZONE)) @mysql_query(" set time_zone = '".G5_TIMEZONE."'");
 
     //==============================================================================
-    // SQL Injection 등으로 부터 보호를 위해 mysql_real_escape_string() 적용
+    // SQL Injection 등으로 부터 보호를 위해 sql_escape_string() 적용
     //------------------------------------------------------------------------------
     // magic_quotes_gpc 에 의한 backslashes 제거
     if (get_magic_quotes_gpc()) {
-        $_POST    = array_map_deep('stripslashes', $_POST);
-        $_GET     = array_map_deep('stripslashes', $_GET);
-        $_COOKIE  = array_map_deep('stripslashes', $_COOKIE);
-        $_REQUEST = array_map_deep('stripslashes', $_REQUEST);
+        $_POST    = array_map_deep('stripslashes',  $_POST);
+        $_GET     = array_map_deep('stripslashes',  $_GET);
+        $_COOKIE  = array_map_deep('stripslashes',  $_COOKIE);
+        $_REQUEST = array_map_deep('stripslashes',  $_REQUEST);
     }
 
-    // mysql_real_escape_string 적용
-    $_POST    = array_map_deep(G5_ESCAPE_FUNCTION, $_POST);
-    $_GET     = array_map_deep(G5_ESCAPE_FUNCTION, $_GET);
-    $_COOKIE  = array_map_deep(G5_ESCAPE_FUNCTION, $_COOKIE);
-    $_REQUEST = array_map_deep(G5_ESCAPE_FUNCTION, $_REQUEST);
+    // sql_escape_string 적용
+    $_POST    = array_map_deep('sql_escape_string', $_POST);
+    $_GET     = array_map_deep('sql_escape_string', $_GET);
+    $_COOKIE  = array_map_deep('sql_escape_string', $_COOKIE);
+    $_REQUEST = array_map_deep('sql_escape_string', $_REQUEST);
     //==============================================================================
 
     // PHP 4.1.0 부터 지원됨
@@ -466,12 +466,22 @@ include_once(G5_BBS_PATH.'/visit_insert.inc.php');
 
 
 // common.php 파일을 수정할 필요가 없도록 확장합니다.
+$extend_file = array();
 $tmp = dir(G5_EXTEND_PATH);
 while ($entry = $tmp->read()) {
     // php 파일만 include 함
     if (preg_match("/(\.php)$/i", $entry))
-        include_once(G5_EXTEND_PATH.'/'.$entry);
+        $extend_file[] = $entry;
 }
+
+if(!empty($extend_file) && is_array($extend_file)) {
+    natsort($extend_file);
+
+    foreach($extend_file as $file) {
+        include_once(G5_EXTEND_PATH.'/'.$file);
+    }
+}
+unset($extend_file);
 
 ob_start();
 

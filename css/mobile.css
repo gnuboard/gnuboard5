@@ -35,16 +35,27 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #hd:after {display:block;visibility:hidden;clear:both;content:""}
 #hd_h1 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 
-#logo {float:left;padding:15px 0;margin-left:5px}
+#logo {padding:15px 10px}
 
-#hd_sch_open {position:absolute;top:10px;right:10px;padding:0 10px;height:2.6em;border:0;background:#333;color:#fff;font-size:1em;letter-spacing:-0.1em;vertical-align:top;-webkit-appearance:none}
+#gnb_open {position:absolute;top:10px;right:60px;padding:0 10px;height:2.6em;border:0;background:#333;color:#fff;font-size:1em;letter-spacing:-0.1em}
+#gnb {display:none;background:#282828}
+#gnb a {display:block;color:#efefef}
+.gnb_1da {padding:10px;border-top:1px solid #191919}
+.gnb_2dul {background:#383838}
+.gnb_2da {padding:10px;border-top:1px solid #282828}
+.gnb_2da span:before {display:inline-block;margin:0 10px 0 0;color:#666;content:'▶'}
+#gnb_close {display:block;margin:0;padding:10px 0;width:100%;border:0;background:#000;color:#fff}
 
-#hd_sch {display:none;z-index:10;position:absolute;top:0;left:0;width:100%;height:100%;background:#f2f5f9;text-align:center}
-#hd_sch h2 {margin:0 0 10px}
-#hd_sch .sch_inner {padding:10px 0 0}
-#hd_sch .frm_input {height:2.5em;border-color:#999;background:#fff;line-height:2.5em}
-#hd_sch .btn_submit {height:2.7em}
-#hd_sch .pop_close {position:absolute;bottom:5px;right:5px;padding:7px;border:0;background:#626870;color:#fff}
+#gnb_empty {padding:20px 0;color:#fff;text-align:center;line-height:2em}
+#gnb_empty a {display:inline;text-decoration:underline}
+
+#hd_sch_open {position:absolute;top:10px;right:10px;padding:0 10px;height:2.6em;border:0;background:#333;color:#fff;font-size:1em;letter-spacing:-0.1em}
+#hd_sch {display:none;border-top:1px solid #181818;background:#282828;text-align:center}
+#hd_sch h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
+#hd_sch form {position:relative;padding:30px 0}
+#hd_sch #sch_stx {height:30px;border:1px solid #181818;background:#323232 !important;line-height:2.5em;vertical-align:middle}
+#hd_sch #sch_submit {margin:0;padding:0 10px;height:32px;border:0;background:#000;color:#fff;vertical-align:middle}
+#hd_sch #sch_close {display:block;margin:0;padding:10px 0;width:100%;border:0;background:#000;color:#fff}
 
 #hd_nb {clear:both;background:#ecf0f7;text-align:center}
 #hd_nb li {display:inline-block}
@@ -73,15 +84,6 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 .ts_up2 {font-size:1.3em !important}
 
 /* 하단 레이아웃 */
-#gnb {border-top:1px solid #dde4e9;border-bottom:1px solid #dde4e9;background:#f0f4f8}
-#gnb:after {display:block;visibility:hidden;clear:both;content:""}
-#gnb h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
-#gnb li {float:left;margin:0 0 -1px;width:25%;border-bottom:1px solid #dde4e9}
-#gnb li ul {display:none}
-#gnb li a {display:block;padding:10px 0;border-right:1px solid #e7f1ed;color:#000;text-align:center;text-decoration:none}
-
-.gnb_empty {float:none !important;padding:30px 0;width:100% !important;text-align:center}
-
 #ft {;border-top:1px solid #dde4e9;background:#f2f5f9}
 #ft h1 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 #ft p {margin:0;padding:10px 0;line-height:1.8em}
@@ -229,23 +231,6 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #ctt header h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #ctt_con {padding:10px 0}
 .ctt_img {text-align:center}
-
-/* FAQ 관리 */
-#faq_wrap {margin:10px 5px}
-#faq_wrap h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-.faq_admin {margin:0 5px;text-align:right}
-#faq_wrap p {line-height:1.8em}
-#faq_wrap ol {margin:0;padding:0;list-style:none}
-#faq_list {margin:0 0 10px;border:1px solid #ccc}
-#faq_list li {border-bottom:1px solid #fff;background:#f2f5f9}
-#faq_list a {display:block;padding:10px;font-weight:bold;text-decoration:none}
-#faq_list a:focus, #faq_list a:hover {background:#626870;color:#fff}
-#faq_con {border:1px solid #e9e9e9;border-top:0}
-#faq_con li {padding:0 0 10px}
-#faq_con h3 {padding:10px;background:#f2f5f9;border-top:1px solid #e9e9e9}
-#faq_con #con_inner {padding:10px;line-height:1.8em}
-.faq_tolist {padding:0 10px;text-align:right}
-.faq_img {text-align:center}
 
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}

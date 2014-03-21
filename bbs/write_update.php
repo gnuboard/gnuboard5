@@ -477,7 +477,8 @@ if ($w == '' || $w == 'r') {
 }
 
 // syndication ping
-include G5_SYNDI_PATH.'/include/include.bbs.write_update.php';
+if(G5_SYNDI_USE)
+    include G5_SYNDI_PATH.'/include/include.bbs.write_update.php';
 
 //------------------------------------------------------------------------------
 // 가변 파일 업로드
@@ -580,7 +581,7 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     else if (strstr($html, 'html2'))
         $tmp_html = 2;
 
-    $wr_content = conv_content(stripslashes($wr_content), $tmp_html);
+    $wr_content = conv_content(conv_unescape_nl($wr_content), $tmp_html);
 
     $warr = array( ''=>'입력', 'u'=>'수정', 'r'=>'답변', 'c'=>'코멘트', 'cu'=>'코멘트 수정' );
     $str = $warr[$w];

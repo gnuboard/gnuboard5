@@ -117,7 +117,7 @@ if (G5_IS_MOBILE) {
                         where me_use = '1'
                           and length(me_code) = '2'
                         order by me_order, me_id ";
-            $result = sql_query($sql);
+            $result = sql_query($sql, false);
             $gnb_zindex = 999; // gnb_1dli z-index 값 설정용
 
             for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -148,8 +148,9 @@ if (G5_IS_MOBILE) {
             <?php
             }
 
-            if ($i == 0) {  ?><li class="gnb_empty">생성된 메뉴가 없습니다.</li><?php }
-            ?>
+            if ($i == 0) {  ?>
+                <li id="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
+            <?php } ?>
         </ul>
     </nav>
 </div>
