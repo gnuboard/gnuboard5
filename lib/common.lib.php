@@ -1205,7 +1205,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 {
     global $config;
     global $g5;
-    global $bo_table, $sca, $is_admin;
+    global $bo_table, $sca, $is_admin, $member;
 
     $email = base64_encode($email);
     $homepage = set_http($homepage);
@@ -1273,6 +1273,10 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     }
     if($mb_id)
         $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
+    if($g5['sms5_use_sideview']){
+        $mb = get_member($mb_id, " mb_open, mb_sms , mb_hp ");
+        if( $mb['mb_open'] && $mb['mb_sms'] && $mb['mb_hp'] ) $str2 .= "<a href=\"".G5_SMS5_URL."/?mb_id=".$mb_id."\" class=\"win_sms5\" target=\"_blank\">문자보내기</a>\n";
+    }
     if($is_admin == "super" && $mb_id) {
         $str2 .= "<a href=\"".G5_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
         $str2 .= "<a href=\"".G5_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
@@ -1447,8 +1451,14 @@ function sql_select_db($db, $connect)
 // mysql_query 와 mysql_error 를 한꺼번에 처리
 function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
 {
+    // Blind SQL Injection 취약점 해결
+    $sql = trim($sql);
+    // union의 사용을 허락하지 않습니다.
+    $sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
+    // `information_schema` DB로의 접근을 허락하지 않습니다.
+    $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
     if ($error)
-        $result = @mysql_query($sql) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
+        $result = @mysql_query($sql) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER[PHP_SELF]");
     else
         $result = @mysql_query($sql);
     return $result;

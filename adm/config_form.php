@@ -134,6 +134,11 @@ if(!isset($config['cf_sms_use'])) {
                     ADD `cf_icode_server_port` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_server_ip` ", true);
 }
 
+if(!isset($config['cf_mobile_page_rows'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_mobile_page_rows` int(11) NOT NULL DEFAULT '0' AFTER `cf_page_rows` ", true);
+}
+
 if(!isset($config['cf_faq_skin'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_faq_skin` varchar(255) NOT NULL DEFAULT '' AFTER `cf_connect_skin`,
@@ -268,9 +273,14 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         </tr>
         <tr>
             <th scope="row"><label for="cf_login_minutes">현재 접속자</label></th>
-            <td colspan="3">
+            <td>
                 <?php echo help('설정값 이내의 접속자를 현재 접속자로 인정') ?>
                 <input type="text" name="cf_login_minutes" value="<?php echo $config['cf_login_minutes'] ?>" id="cf_login_minutes" class="frm_input" size="2"> 분
+            </td>
+            <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
+            <td>
+                <?php echo help('목록 한페이지당 라인수') ?>
+                <input type="text" name="cf_new_rows" value="<?php echo $config['cf_new_rows'] ?>" id="cf_new_rows" class="frm_input" size="2"> 라인
             </td>
         </tr>
         <tr>
@@ -279,10 +289,10 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
                 <?php echo help('목록(리스트) 한페이지당 라인수') ?>
                 <input type="text" name="cf_page_rows" value="<?php echo $config['cf_page_rows'] ?>" id="cf_page_rows" class="frm_input" size="2"> 라인
             </td>
-            <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
+            <th scope="row"><label for="cf_mobile_page_rows">모바일 한페이지당 라인수</label></th>
             <td>
-                <?php echo help('목록 한페이지당 라인수') ?>
-                <input type="text" name="cf_new_rows" value="<?php echo $config['cf_new_rows'] ?>" id="cf_new_rows" class="frm_input" size="2"> 라인
+                <?php echo help('모바일 목록 한페이지당 라인수') ?>
+                <input type="text" name="cf_mobile_page_rows" value="<?php echo $config['cf_mobile_page_rows'] ?>" id="cf_mobile_page_rows" class="frm_input" size="2"> 라인
             </td>
         </tr>
         <tr>

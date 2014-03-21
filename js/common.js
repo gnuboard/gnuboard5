@@ -369,6 +369,14 @@ var win_zip = function(href) {
 }
 
 /**
+ * sms5 창
+ **/
+var win_sms5 = function(href) {
+    var new_win = window.open(href, 'win_zip', 'width=474, height=560, scrollbars=1');
+    new_win.focus();
+}
+
+/**
  * 새로운 비밀번호 분실 창 : 101123
  **/
 win_password_lost = function(href)
@@ -449,6 +457,11 @@ $(function(){
 
     $(".win_password_lost").click(function() {
         win_password_lost(this.href);
+        return false;
+    });
+
+    $(".win_sms5").click(function() {
+        win_sms5(this.href);
         return false;
     });
 

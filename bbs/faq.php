@@ -73,7 +73,7 @@ if(is_file($skin_file)) {
 
     if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 
-    $page_rows = G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'];
+    $page_rows = G5_IS_MOBILE ? $config['cf_mobile_page_rows'] : $config['cf_page_rows'];
 
     $sql = " select count(*) as cnt
                 from {$g5['faq_table']}
