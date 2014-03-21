@@ -146,6 +146,7 @@ $sql = " insert into `{$table_prefix}config`
                 cf_movie_extension = 'asx|asf|wmv|wma|mpg|mpeg|mov|avi|mp3',
                 cf_formmail_is_member = '1',
                 cf_page_rows = '15',
+                cf_mobile_page_rows = '15',
                 cf_cert_limit = '2',
                 cf_stipulation = '해당 홈페이지에 맞는 회원가입약관을 입력합니다.',
                 cf_privacy = '해당 홈페이지에 맞는 개인정보처리방침을 입력합니다.'
