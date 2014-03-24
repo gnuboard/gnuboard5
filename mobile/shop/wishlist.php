@@ -85,6 +85,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">장바구니 담기</button>
         <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">주문하기</button>
     </div>
+    </form>
 </div>
 
 <script>

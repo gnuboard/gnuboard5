@@ -182,7 +182,6 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             <dt class="sod_bsk_point">포인트</dt>
             <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
         </dl>
-    </form>
     </section>
 
     <div id="sod_fin_view">
