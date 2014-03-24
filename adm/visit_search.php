@@ -9,11 +9,7 @@ $g5['title'] = '접속자검색';
 include_once('./admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
-$search_word = trim($_GET['search_word']);
-$search_sort = trim($_GET['search_sort']);
-
 $colspan = 5;
-$qstr = 'search_word='.$search_word.'&amp;search_sort='.$search_sort; //페이징 처리관련 변수
 $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음으로 (초기화용도)
 ?>
 
@@ -21,28 +17,13 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
     <form name="fvisit" method="get" onsubmit="return fvisit_submit(this);">
     <?=$listall?>
     <label for="sch_sort" class="sound_only">검색분류</label>
-    <select name="search_sort" id="sch_sort" class="search_sort">
-        <?php
-        //echo '<option value="vi_ip" '.($search_sort=='vi_ip'?'selected="selected"':'').'>IP</option>'; //selected 추가
-        if($search_sort=='vi_ip'){ //select 안의 옵셥값이 vi_ip면
-            echo '<option value="vi_ip" selected="selected">IP</option>'; //selected 추가
-        }else{
-            echo '<option value="vi_ip">IP</option>';
-        }
-        if($search_sort=='vi_referer'){ //select 안의 옵셥값이 vi_referer면
-            echo '<option value="vi_referer" selected="selected">접속경로</option>'; //selected 추가
-        }else{
-            echo '<option value="vi_referer">접속경로</option>';
-        }
-        if($search_sort=='vi_date'){ //select 안의 옵셥값이 vi_date면
-            echo '<option value="vi_date" selected="selected">날짜</option>'; //selected 추가
-        }else{
-            echo '<option value="vi_date">날짜</option>';
-        }
-        ?>
+    <select name="sfl" id="sch_sort" class="search_sort">
+        <option value="vi_ip"<?php echo get_selected($sfl, 'vi_ip'); ?>>IP</option>
+        <option value="vi_referer"<?php echo get_selected($sfl, 'vi_referer'); ?>>접속경로</option>
+        <option value="vi_date"<?php echo get_selected($sfl, 'vi_date'); ?>>날짜</option>
     </select>
     <label for="sch_word" class="sound_only">검색어</label>
-    <input type="text" name="search_word" size="20" value="<?php echo $search_word?>" id="sch_word" class="frm_input">
+    <input type="text" name="stx" size="20" value="<?php echo stripslashes($stx); ?>" id="sch_word" class="frm_input">
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </div>
@@ -61,11 +42,11 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
     <tbody>
     <?php
     $sql_common = " from {$g5['visit_table']} ";
-    if ($search_sort) {
-        if($search_sort=='vi_ip' || $search_sort=='vi_date'){
-            $sql_search = " where $search_sort like '$search_word%' ";
+    if ($sfl) {
+        if($sst=='vi_ip' || $sst=='vi_date'){
+            $sql_search = " where $sfl like '$stx%' ";
         }else{
-            $sql_search = " where $search_sort like '%$search_word%' ";
+            $sql_search = " where $sfl like '%$stx%' ";
         }
     }
     $sql = " select count(*) as cnt
@@ -95,7 +76,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
         $title = "";
         if ($row['vi_referer']) {
 
-            $referer = get_text(cut_str($row[vi_referer], 255, ""));
+            $referer = get_text(cut_str($row['vi_referer'], 255, ""));
             $referer = urldecode($referer);
 
             if (!is_utf8($referer)) {
@@ -103,7 +84,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
             }
 
             $title = str_replace(array("<", ">"), array("&lt;", "&gt;"), $referer);
-            $link = "<a href='$row[vi_referer]' target=_blank title='$title '>";
+            $link = '<a href="'.$row['vi_referer'].'" target="_blank" title="'.$title.'">';
         }
 
         if ($is_admin == 'super')
@@ -117,11 +98,11 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
         $bg = 'bg'.($i%2);
     ?>
     <tr class="<?php echo $bg; ?>">
-        <td class="td_id"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?search_sort=vi_ip&amp;search_word=<?php echo $ip; ?>"><?php echo $ip; ?></a></td>
+        <td class="td_id"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sfl=vi_ip&amp;stx=<?php echo $ip; ?>"><?php echo $ip; ?></a></td>
         <td><?php echo $link.$title; ?></a></td>
         <td class="td_idsmall"><?php echo $brow; ?></td>
         <td class="td_idsmall"><?php echo $os; ?></td>
-        <td class="td_datetime"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?search_sort=vi_date&amp;search_word=<?php echo $row['vi_date']; ?>"><?php echo $row['vi_date']; ?></a> <?php echo $row['vi_time']; ?></td>
+        <td class="td_datetime"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sfl=vi_date&amp;stx=<?php echo $row['vi_date']; ?>"><?php echo $row['vi_date']; ?></a> <?php echo $row['vi_time']; ?></td>
     </tr>
     <?php } ?>
     <?php if ($i == 0) echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>'; ?>
@@ -145,6 +126,7 @@ $(function(){
             $("#sch_word").datepicker("destroy"); // datepicker 미실행
         }
     });
+
     if($("#sch_sort option:selected").val()=="vi_date"){ // select #sch_sort 의 옵션중 selected 된것의 값이 vi_date라면
         $("#sch_word").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", maxDate: "+0d" }); // datepicker 실행
     }
