@@ -11,7 +11,7 @@ if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
 if ($config['cf_icode_id'] && $config['cf_icode_pw'])
 {
-    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=".$config['cf_icode_id']."&userpw=".$config['cf_icode_pw']);
+    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=".$config['cf_icode_id']."&amp;userpw=".$config['cf_icode_pw']);
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드

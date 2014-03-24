@@ -1,6 +1,12 @@
 @charset "utf-8";
 /* SIR 지운아빠 */
 
+/* 설치 */
+#sms5_install {padding:20px 20px 0}
+#sms5_install h2 {margin:0;padding:0 0 20px}
+#sms5_install ol {margin:0 0 20px;padding:0 0 0 20px}
+#sms5_install li {margin:0 0 10px}
+
 /* 공통 */
 .sms5_txt_success {color:blue}
 .sms5_txt_fail {color:red}
