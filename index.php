@@ -28,7 +28,11 @@ include_once('./_head.php');
 <!-- 최신글 시작 { -->
 <?php
 //  최신글
-$sql = " select bo_table from `{$g5['board_table']}` a left join `{$g5['group_table']}` b on (a.gr_id=b.gr_id)  where a.bo_device <> 'mobile' order by b.gr_order, a.bo_order ";
+$sql = " select bo_table
+            from `{$g5['board_table']}` a left join `{$g5['group_table']}` b on (a.gr_id=b.gr_id)
+            where a.bo_device <> 'mobile'
+              and a.bo_use_cert = ''
+            order by b.gr_order, a.bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     if ($i%2==1) $lt_style = "margin-left:20px";
