@@ -21,6 +21,8 @@ $settle_case = $od['od_settle_case'];
 
 $g5['title'] = '주문상세내역';
 include_once(G5_MSHOP_PATH.'/_head.php');
+
+require './settle_kcp.inc.php';
 ?>
 
 <div id="sod_fin">
@@ -300,15 +302,17 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                         <?php
                         if($od['od_settle_case'] == '휴대폰')
                         {
+                            $hp_receipt_url = G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'];
                         ?>
-                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
+                        <a href="javascript:;" onclick="window.open('<?php echo $hp_receipt_url; ?>', 'winreceipt', 'width=500,height=690,scrollbars=yes,resizable=yes')">영수증 출력</a>
                         <?php
                         }
 
                         if($od['od_settle_case'] == '신용카드')
                         {
+                            $card_receipt_url = G5_BILL_RECEIPT_URL.'card_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'];
                         ?>
-                        <a href="javascript:;" onclick="window.open('https://admin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=card_bill&tno=<?php echo $od['od_tno']; ?>&order_no=<?php echo $od['od_id']; ?>&trade_mony=<?php echo $od['od_receipt_price']; ?>', 'winreceipt', 'width=470,height=815')">영수증 출력</a>
+                        <a href="javascript:;" onclick="window.open('<?php echo $card_receipt_url; ?>', 'winreceipt', 'width=470,height=815,scrollbars=yes,resizable=yes')">영수증 출력</a>
                         <?php
                         }
                         ?>
@@ -350,8 +354,9 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                     <?php
                     if ($od['od_cash'])
                     {
+                        $cash_receipt_url = G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$od['od_cash_no'];
                     ?>
-                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인하기</a>
+                        <a href="javascript:;" onclick="window.open('<?php echo $cash_receipt_url; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인하기</a>
                     <?php
                     }
                     else

@@ -491,8 +491,13 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
                 <tr>
                     <th scope="row">현금영수증</th>
                     <td>
-                    <?php if ($od['od_cash']) { ?>
-                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no=<?php echo $od['od_cash_no']; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인</a>
+                    <?php
+                    if ($od['od_cash']) {
+                        require G5_SHOP_PATH.'/settle_kcp.inc.php';
+
+                        $cash_receipt_url = G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$od['od_cash_no'];
+                    ?>
+                        <a href="javascript:;" onclick="window.open('<?php echo $cash_receipt_url; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인</a>
                     <?php } else { ?>
                         <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
                     <?php } ?>

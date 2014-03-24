@@ -7,11 +7,10 @@ $g_conf_log_level = '3';           // 변경불가
 $g_conf_gw_port   = '8090';        // 포트번호(변경불가)
 
 $g_conf_key_dir   = '';
-$g_conf_log_dir   = '';
+$g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
 {
     $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
-    $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
 }
 
 if ($default['de_card_test']) {

@@ -12,6 +12,8 @@ $settle_case = $pp['pp_settle_case'];
 
 $g5['title'] = '개인결제상세내역';
 include_once(G5_MSHOP_PATH.'/_head.php');
+
+require './settle_kcp.inc.php';
 ?>
 
 <div id="sod_fin">
@@ -125,15 +127,17 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                         <?php
                         if($pp['pp_settle_case'] == '휴대폰')
                         {
+                            $hp_receipt_url = G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$pp['pp_tno'].'&order_no='.$pp['pp_id'].'&trade_mony='.$pp['pp_receipt_price'];
                         ?>
-                        <a href="javascript:;" onclick="window.open('https://admin.kcp.co.kr/Modules/Bill/ADSA_MCASH_N_Receipt.jsp?a_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=500,height=690')">영수증 출력</a>
+                        <a href="javascript:;" onclick="window.open('<?php echo $hp_receipt_url; ?>', 'winreceipt', 'width=500,height=690,scrollbars=yes,resizable=yes')">영수증 출력</a>
                         <?php
                         }
 
                         if($pp['pp_settle_case'] == '신용카드')
                         {
+                            $card_receipt_url = G5_BILL_RECEIPT_URL.'card_bill&tno='.$pp['pp_tno'].'&order_no='.$pp['pp_id'].'&trade_mony='.$pp['pp_receipt_price'];
                         ?>
-                        <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $pp['pp_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
+                        <a href="javascript:;" onclick="window.open('<?php echo $card_receipt_url; ?>', 'winreceipt', 'width=470,height=815,scrollbars=yes,resizable=yes')">영수증 출력</a>
                         <?php
                         }
                         ?>

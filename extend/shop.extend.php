@@ -121,4 +121,13 @@ $info['od_misu']            // 미수금액
 //==============================================================================
 // 쇼핑몰 미수금 등의 주문정보
 //==============================================================================
+
+// 매출전표 url 설정
+if($default['de_card_test']) {
+    define('G5_BILL_RECEIPT_URL', 'https://testadmin8.kcp.co.kr/assist/bill.BillAction.do?cmd=');
+    define('G5_CASH_RECEIPT_URL', 'https://testadmin8.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?term_id=PGNW');
+} else {
+    define('G5_BILL_RECEIPT_URL', 'https://admin8.kcp.co.kr/assist/bill.BillAction.do?cmd=');
+    define('G5_CASH_RECEIPT_URL', 'https://admin8.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?term_id=PGNW');
+}
 ?>

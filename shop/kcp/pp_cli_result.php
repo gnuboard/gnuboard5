@@ -1,5 +1,7 @@
 <?php
 include './_common.php';
+require G5_SHOP_PATH.'/settle_kcp.inc.php';
+
     /* ============================================================================== */
     /* =   PAGE : 결과 처리 PAGE                                                    = */
     /* = -------------------------------------------------------------------------- = */
@@ -94,9 +96,9 @@ include './_common.php';
     <link href="css/sample.css" rel="stylesheet" type="text/css">
     <script language="javascript">
         //현금영수증 연동 스크립트
-        function receiptView(cash_no)
+        function receiptView(auth_no)
         {
-            var receiptWin = "http://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?cash_no="+cash_no;
+            var receiptWin = "<?php echo G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$ordr_idxx.'&bill_yn=Y&authno='.$receipt_no; ?>";
             window.open(receiptWin , "" , "width=360, height=647")
         }
     </script>
