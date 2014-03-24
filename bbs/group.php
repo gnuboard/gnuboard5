@@ -22,9 +22,10 @@ $sql = " select bo_table, bo_subject
             from {$g5[board_table]}
             where gr_id = '{$gr_id}'
               and bo_list_level <= '{$member[mb_level]}'
-              and bo_device <> 'mobile'
-              and bo_use_cert = ''
-            order by bo_order ";
+              and bo_device <> 'mobile' ";
+if(!$is_admin)
+    $sql .= " and bo_use_cert = '' ";
+$sql .= " order by bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $lt_style = "";

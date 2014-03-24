@@ -9,9 +9,10 @@ include_once(G5_MOBILE_PATH.'/_head.php');
 //  최신글
 $sql = " select bo_table
             from `{$g5['board_table']}` a left join `{$g5['group_table']}` b on (a.gr_id=b.gr_id)
-            where a.bo_device <> 'pc'
-              and a.bo_use_cert = ''
-            order by b.gr_order, a.bo_order ";
+            where a.bo_device <> 'pc' ";
+if(!$is_admin)
+    $sql .= " and a.bo_use_cert = '' ";
+$sql .= " order by b.gr_order, a.bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
