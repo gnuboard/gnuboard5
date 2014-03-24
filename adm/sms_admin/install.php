@@ -31,17 +31,15 @@ if( isset($g5['sms5_config_table']) && sql_query(" DESCRIBE {$g5['sms5_config_ta
 }
 ?>
 
-<div class="ins_inner">
-    <h2>SMS5 설치가 시작되었습니다.</h2>
+<div id="sms5_install">
     <ol>
+        <li>SMS5 설치가 시작되었습니다.</li>
         <li id="sms5_job_01">전체 테이블 생성중</li>
-
         <li id="sms5_job_02">DB설정 중</li>
-
         <li id="sms5_job_03"></li>
     </ol>
 
-    <p><input type="button" id="sms5_btn_next" disabled value="SMS 기본설정 바로가기" onclick="location.href='config.php';"></p>
+    <p><button type="button" id="sms5_btn_next" disabled class="btn_frmline" onclick="location.href='config.php';">SMS 기본설정</button></p>
 
 </div>
 <?php
@@ -75,7 +73,7 @@ echo "<script>document.getElementById('sms5_job_02').innerHTML='DB설정 완료'
 flush(); usleep(50000); 
 //-------------------------------------------------------------------------------------------------
 
-echo "<script>document.getElementById('sms5_job_03').innerHTML='* SMS 기본 설정을 변경해 주십시오.';</script>";
+echo "<script>document.getElementById('sms5_job_03').innerHTML='SMS 기본 설정 변경 후 사용하세요.';</script>";
 flush(); usleep(50000); 
 ?>
 
