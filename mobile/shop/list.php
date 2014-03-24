@@ -35,6 +35,8 @@ if($ca['ca_mobile_skin_dir']) {
         $skin_dir = G5_MSHOP_SKIN_PATH;
     }
 }
+
+define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 ?>
 
 <div id="sct">

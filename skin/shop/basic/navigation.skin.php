@@ -29,7 +29,7 @@ else
 //if ($it_id) $navigation .= " > $it[it_name]";
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
+add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
 ?>
 
 <div id="sct_location">
