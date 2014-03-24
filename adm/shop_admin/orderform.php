@@ -495,7 +495,8 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
                     if ($od['od_cash']) {
                         require G5_SHOP_PATH.'/settle_kcp.inc.php';
 
-                        $cash_receipt_url = G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$od['od_cash_no'];
+                        $cash = unserialize($od['od_cash_info']);
+                        $cash_receipt_url = G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'];
                     ?>
                         <a href="javascript:;" onclick="window.open('<?php echo $cash_receipt_url; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인</a>
                     <?php } else { ?>
