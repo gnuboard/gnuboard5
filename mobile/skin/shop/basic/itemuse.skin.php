@@ -95,7 +95,7 @@ $(function(){
             $con.slideDown(
                 function() {
                     // 이미지 리사이즈
-                    $con.viewimageresize();
+                    $con.viewimageresize2();
                 }
             );
         }

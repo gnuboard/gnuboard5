@@ -76,7 +76,7 @@ if(openwin != null) {
             for($i=0; $row=sql_fetch_array($result); $i++) {
                 $image = get_it_image($row['it_id'], 70, 70);
 
-                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price, ct_send_cost
+                $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
                             from {$g5['g5_shop_cart_table']}
                             where od_id = '$od_id'
                               and it_id = '{$row['it_id']}'
@@ -332,7 +332,7 @@ if(openwin != null) {
                         if($od['od_settle_case'] == '신용카드')
                         {
                         ?>
-                        <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
+                        <a href="javascript:;" onclick="window.open('https://admin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=card_bill&tno=<?php echo $od['od_tno']; ?>&order_no=<?php echo $od['od_id']; ?>&trade_mony=<?php echo $od['od_receipt_price']; ?>', 'winreceipt', 'width=470,height=815')">영수증 출력</a>
                         <?php
                         }
                         ?>

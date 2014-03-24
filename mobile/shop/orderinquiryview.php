@@ -308,7 +308,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                         if($od['od_settle_case'] == '신용카드')
                         {
                         ?>
-                        <a href="javascript:;" onclick="window.open('http://admin.kcp.co.kr/Modules/Sale/Card/ADSA_CARD_BILL_Receipt.jsp?c_trade_no=<?php echo $od['od_tno']; ?>', 'winreceipt', 'width=620,height=800')">영수증 출력</a>
+                        <a href="javascript:;" onclick="window.open('https://admin8.kcp.co.kr/assist/bill.BillActionNew.do?cmd=card_bill&tno=<?php echo $od['od_tno']; ?>&order_no=<?php echo $od['od_id']; ?>&trade_mony=<?php echo $od['od_receipt_price']; ?>', 'winreceipt', 'width=470,height=815')">영수증 출력</a>
                         <?php
                         }
                         ?>
