@@ -172,7 +172,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .tbl_head01 thead a {color:#383838}
 .tbl_head01 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .tbl_head01 tfoot th, .tbl_head01 tfoot td {padding:10px 0;border-top:1px solid #c1d1d5;border-bottom:1px solid #c1d1d5;background:#d7e0e2;text-align:center}
-.tbl_head01 tbody th {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
+.tbl_head01 tbody th {padding:8px 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
 .tbl_head01 td {padding:8px 5px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.5em;word-break:break-all}
 .tbl_head01 a {}
 
@@ -182,7 +182,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .tbl_head02 thead a {color:#383838}
 .tbl_head02 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .tbl_head02 tfoot th, .tbl_head02 tfoot td {padding:10px 0;border-top:1px solid #c1d1d5;border-bottom:1px solid #c1d1d5;background:#d7e0e2;text-align:center}
-.tbl_head02 tbody th {border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
+.tbl_head02 tbody th {padding:5px 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9}
 .tbl_head02 td {padding:5px 3px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;line-height:1.4em;word-break:break-all}
 .tbl_head02 a {}
 
