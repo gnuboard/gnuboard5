@@ -33,7 +33,7 @@ $pg_anchor = '<ul class="anchor">
     <div class="local_desc01 local_desc">
         <p>사이트 명을 클릭하시면 해당 사이트로 이동합니다.</p>
 
-        <dl>
+        <dl class="price_engine">
             <dt><a href="http://shopping.naver.com/" target="_blank">네이버 지식쇼핑</a></dt>
             <dd>
                 <ul>
@@ -63,7 +63,7 @@ $pg_anchor = '<ul class="anchor">
         <p>사이트 명을 클릭하시면 해당 사이트로 이동합니다.</p>
         <p>기존 엔진페이지 URL은 가격비교 사이트에서 상품 클릭시 상품상세 페이지로 이동하지만 아래의 URL은 상품 클릭시 해당 상품이 장바구니에 담기게 됩니다.</p>
 
-        <dl>
+        <dl class="price_engine">
             <dt><a href="http://shopping.naver.com/" target="_blank">네이버 지식쇼핑</a></dt>
             <dd>
                 <ul>

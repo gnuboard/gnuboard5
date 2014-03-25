@@ -755,9 +755,9 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 가격비교사이트 */
 #anc_pricecompare_info li {margin:5px 0 5px -1px}
 
-#anc_pricecompare_engine dt a {font-weight:bold}
-#anc_pricecompare_engine dd {margin:0 0 30px}
-#anc_pricecompare_engine li {margin:5px 0 5px -1px}
+.price_engine dt a {font-weight:bold}
+.price_engine dd {margin:0 0 15px}
+.price_engine li {margin:5px 0 5px -1px}
 
 /* 새창 기본 스타일 */
 .new_win {}
