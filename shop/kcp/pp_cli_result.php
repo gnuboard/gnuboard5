@@ -168,7 +168,7 @@ require G5_SHOP_PATH.'/settle_kcp.inc.php';
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>승인시간</td>
-                        <td><?php echo $app_time; ?></td>
+                        <td><?php echo preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6",$app_time); ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
@@ -273,7 +273,7 @@ require G5_SHOP_PATH.'/settle_kcp.inc.php';
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>승인시간</td>
-                        <td><?php echo $app_time; ?></td>
+                        <td><?php echo preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time); ?></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
