@@ -196,11 +196,18 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <?php echo $row['it_id']; ?>
         </td>
         <td colspan="5">
-            <label for="ca_id_<?php echo $i; ?>" class="sound_only">분류</label>
+            <label for="ca_id_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['it_name']); ?> 기본분류</label>
             <select name="ca_id[<?php echo $i; ?>]" id="ca_id_<?php echo $i; ?>">
                 <?php echo conv_selected_option($ca_list, $row['ca_id']); ?>
             </select>
-            <?php echo $tmp_ca_list; ?><br>
+            <label for="ca_id2_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['it_name']); ?> 2차분류</label>
+            <select name="ca_id2[<?php echo $i; ?>]" id="ca_id2_<?php echo $i; ?>">
+                <?php echo conv_selected_option($ca_list, $row['ca_id2']); ?>
+            </select>
+            <label for="ca_id3_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['it_name']); ?> 3차분류</label>
+            <select name="ca_id3[<?php echo $i; ?>]" id="ca_id3_<?php echo $i; ?>">
+                <?php echo conv_selected_option($ca_list, $row['ca_id3']); ?>
+            </select>
         </td>
         <td rowspan="3" class="td_mngsmall">
             <label for="order_<?php echo $i; ?>" class="sound_only">순서</label>

@@ -19,6 +19,8 @@ if ($_POST['act_button'] == "선택수정") {
 
         $sql = "update {$g5['g5_shop_item_table']}
                    set ca_id          = '{$_POST['ca_id'][$k]}',
+                       ca_id2         = '{$_POST['ca_id2'][$k]}',
+                       ca_id3         = '{$_POST['ca_id3'][$k]}',
                        it_name        = '{$_POST['it_name'][$k]}',
                        it_mobile_name = '{$_POST['it_mobile_name'][$k]}',
                        it_cust_price  = '{$_POST['it_cust_price'][$k]}',
