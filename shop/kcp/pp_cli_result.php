@@ -98,7 +98,7 @@ require G5_SHOP_PATH.'/settle_kcp.inc.php';
         //현금영수증 연동 스크립트
         function receiptView(auth_no)
         {
-            var receiptWin = "<?php echo G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$ordr_idxx.'&bill_yn=Y&authno='.$receipt_no; ?>";
+            var receiptWin = "<?php echo G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$ordr_idxx.'&bill_yn=Y&authno='; ?>"+auth_no;
             window.open(receiptWin , "" , "width=360, height=647")
         }
     </script>
@@ -173,7 +173,7 @@ require G5_SHOP_PATH.'/settle_kcp.inc.php';
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>현금영수증 URL</td>
-                        <td><input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('<?php echo $cash_no; ?>')"></td>
+                        <td><input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('<?php echo $receipt_no; ?>')"></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
@@ -278,7 +278,7 @@ require G5_SHOP_PATH.'/settle_kcp.inc.php';
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
                         <td>현금영수증 URL</td>
-                        <td><input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('<?php echo $cash_no; ?>')"></td>
+                        <td><input type="button" name="receiptView" value="영수증 확인" class="box" onClick="javascript:receiptView('<?php echo $receipt_no; ?>')"></td>
                     </tr>
                     <tr><td colspan="2"><IMG SRC="./img/dot_line.gif" width="100%"></td></tr>
                     <tr>
