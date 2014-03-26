@@ -83,10 +83,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         echo "</div>\n";
     }
 
-    if ($this->href) {
-        echo "</a>\n";
-    }
-
     echo "</li>\n";
 }
 
