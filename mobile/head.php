@@ -115,14 +115,28 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </div>
 
         <script>
-        $(function (){
-            var $hd_div = $(".hd_div");
-            $(".hd_opener").click(function(){
-                $hd_div.hide();
-                $(this).next(".hd_div").show();
+        $(function () {
+            $(".hd_opener").on("click", function() {
+                var $this = $(this);
+                var $hd_layer = $this.next(".hd_div");
+
+                if($hd_layer.is(":visible")) {
+                    $hd_layer.hide();
+                    $this.find("span").text("열기");
+                } else {
+                    var $hd_layer2 = $(".hd_div:visible");
+                    $hd_layer2.prev(".hd_opener").find("span").text("열기");
+                    $hd_layer2.hide();
+
+                    $hd_layer.show();
+                    $this.find("span").text("닫기");
+                }
             });
-            $(".hd_closer").click(function(){
-                $hd_div.hide();
+
+            $(".hd_closer").on("click", function() {
+                var idx = $(".hd_closer").index($(this));
+                $(".hd_div:visible").hide();
+                $(".hd_opener:eq("+idx+")").find("span").text("열기");
             });
         });
         </script>
