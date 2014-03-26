@@ -5,7 +5,6 @@ include_once("./_common.php");
 auth_check($auth[$sub_menu], 'w');
 
 $g5['title'] = '게시판 복사';
-$administrator = 1;
 include_once(G5_PATH.'/head.sub.php');
 ?>
 
