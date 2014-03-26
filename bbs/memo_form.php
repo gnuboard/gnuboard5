@@ -25,7 +25,7 @@ if ($me_recv_mb_id)
     {
         $content = "\n\n\n".' >'
                          ."\n".' >'
-                         ."\n".' >'.preg_replace("/\n/", "\n> ", get_text($row['me_memo'], 0))
+                         ."\n".' >'.str_replace("\n", "\n> ", get_text($row['me_memo'], 0))
                          ."\n".' >'
                          .' >';
 

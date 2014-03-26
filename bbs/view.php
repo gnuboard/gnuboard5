@@ -122,7 +122,12 @@ $view['content'] = conv_content($view['wr_content'], $html);
 if (strstr($sfl, 'content'))
     $view['content'] = search_font($stx, $view['content']);
 
-$view['rich_content'] = preg_replace("/{이미지\:([0-9]+)[:]?([^}]*)}/ie", "view_image(\$view, '\\1', '\\2')", $view['content']);
+//$view['rich_content'] = preg_replace("/{이미지\:([0-9]+)[:]?([^}]*)}/ie", "view_image(\$view, '\\1', '\\2')", $view['content']);
+$view['rich_content'] = preg_replace_callback("/{이미지\:([0-9]+)[:]?([^}]*)}/i",
+                            function ($matches) {
+                                global $view;
+                                return view_image($view, $matches[1], $matches[2]);
+                            }, $view['content']);
 
 $is_signature = false;
 $signature = '';
