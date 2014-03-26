@@ -48,7 +48,8 @@ function get_microtime()
 // 한페이지에 보여줄 행, 현재페이지, 총페이지수, URL
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {
-    $url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
+    //$url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
+    $url = preg_replace('#&amp;page=[0-9]*#', '', $url) . '&amp;page=';
 
     $str = '';
     if ($cur_page > 1) {
@@ -95,7 +96,8 @@ function page_insertbefore($paging_html, $insert_html)
 function page_insertafter($paging_html, $insert_html)
 {
     if ($paging_html) {
-        return preg_replace("/(<\/span><\/div>)$/", $insert_html.'$1', $paging_html);
+        //return preg_replace("/(<\/span><\/div>)$/", $insert_html.'$1', $paging_html);
+        return preg_replace("#(</span></div>)$#", $insert_html.'$1', $paging_html);
     }
 }
 
@@ -106,7 +108,7 @@ function print_r2($var)
     print_r($var);
     $str = ob_get_contents();
     ob_end_clean();
-    $str = preg_replace("/ /", "&nbsp;", $str);
+    $str = str_replace(" ", "&nbsp;", $str);
     echo nl2br("<span style='font-family:Tahoma, 굴림; font-size:9pt;'>$str</span>");
 }
 
@@ -233,6 +235,16 @@ function url_auto_link($str)
     global $g5;
     global $config;
 
+    // 140326 유창화님 제안코드로 수정
+    // http://sir.co.kr/bbs/board.php?bo_table=pg_lecture&wr_id=461
+    // http://sir.co.kr/bbs/board.php?bo_table=pg_lecture&wr_id=463
+    $str = str_replace(array("&lt;", "&gt;", "&amp;", "&quot;", "&nbsp;"), array("\t_lt_\t", "\t_gt_\t", "&", "\"", "\t_nbsp_\t"), $str);
+    $str = preg_replace("/(^|[\"'\s(])(www\.[^\"'\s()]+)/i", "\\1<A HREF=\"http://\\2\" TARGET='{$config['cf_link_target']}'>\\2</A>", $str);
+    $str = preg_replace("`(?:(?:(?:href|src)\s*=\s*(?:\"|'|)){0})((http|https|ftp|telnet|news|mms)://[^\"'\s()]+)`", "<A HREF=\"\\1\" TARGET='{$config['cf_link_target']}'>\\1</A>", $str);
+    $str = preg_replace("/[0-9a-z_-]+@[a-z0-9._-]{4,}/i", "<a href='mailto:\\0'>\\0</a>", $str);
+    $str = str_replace(array("\t_nbsp_\t", "\t_lt_\t", "\t_gt_\t"), array("&nbsp;", "&lt;", "&gt;"), $str);
+
+    /*
     // 속도 향상 031011
     $str = preg_replace("/&lt;/", "\t_lt_\t", $str);
     $str = preg_replace("/&gt;/", "\t_gt_\t", $str);
@@ -251,6 +263,7 @@ function url_auto_link($str)
     $str = preg_replace("/\t_nbsp_\t/", "&nbsp;" , $str);
     $str = preg_replace("/\t_lt_\t/", "&lt;", $str);
     $str = preg_replace("/\t_gt_\t/", "&gt;", $str);
+    */
 
     return $str;
 }
