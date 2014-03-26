@@ -140,7 +140,7 @@ if ($stx) {
 
     $rows = $srows;
     $total_page = ceil($total_count / $rows);  // 전체 페이지 계산
-    if ($page == "") { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
+    if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
     $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
     for ($i=0; $i<count($search_table); $i++) {
@@ -156,7 +156,7 @@ if ($stx) {
 
     $k=0;
     for ($idx=$table_index; $idx<count($search_table); $idx++) {
-        $sql = " select bo_subject from {$g5[board_table]} where bo_table = '{$search_table[$idx]}' ";
+        $sql = " select bo_subject from {$g5['board_table']} where bo_table = '{$search_table[$idx]}' ";
         $row = sql_fetch($sql);
         $bo_subject[$idx] = $row['bo_subject'];
 

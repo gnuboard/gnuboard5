@@ -2,18 +2,18 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-if ($w == '') 
+if ($w == '')
 {
     $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$po_id}' ");
     if (!$po[po_id])
         alert('po_id 값이 제대로 넘어오지 않았습니다.');
 
-    $tmp_row = sql_fetch(" select max(pc_id) as max_pc_id from {$g5[poll_etc_table]} ");
-    $pc_id = $tmp_row[max_pc_id] + 1;
+    $tmp_row = sql_fetch(" select max(pc_id) as max_pc_id from {$g5['poll_etc_table']} ");
+    $pc_id = $tmp_row['max_pc_id'] + 1;
 
-    $sql = " insert into {$g5[poll_etc_table]}
+    $sql = " insert into {$g5['poll_etc_table']}
                 ( pc_id, po_id, mb_id, pc_name, pc_idea, pc_datetime )
-                values ( '{$pc_id}', '{$po_id}', '{$member[mb_id]}', '{$pc_name}', '{$pc_idea}', '".G5_TIME_YMDHIS."' ) ";
+                values ( '{$pc_id}', '{$po_id}', '{$member['mb_id']}', '{$pc_name}', '{$pc_idea}', '".G5_TIME_YMDHIS."' ) ";
     sql_query($sql);
 
     $pc_idea = stripslashes($pc_idea);
@@ -39,12 +39,12 @@ if ($w == '')
         $from_email = $member['mb_email'] ? $member['mb_email'] : $admin['mb_email'];
         mailer($name, $from_email, $admin['mb_email'], '['.$config['cf_title'].'] 설문조사 기타의견 메일', $content, 1);
     }
-} 
-else if ($w == 'd') 
+}
+else if ($w == 'd')
 {
-    if ($member[mb_id] || $is_admin == 'super') 
+    if ($member[mb_id] || $is_admin == 'super')
     {
-        $sql = " delete from {$g5[poll_etc_table]} where pc_id = '{$pc_id}' ";
+        $sql = " delete from {$g5['poll_etc_table']} where pc_id = '{$pc_id}' ";
         if (!$is_admin)
             $sql .= " and mb_id = '{$member['mb_id']}' ";
         sql_query($sql);

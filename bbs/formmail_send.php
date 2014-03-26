@@ -28,7 +28,7 @@ for ($i=1; $i<=$attach; $i++) {
 $content = stripslashes($content);
 if ($type == 2) {
     $type = 1;
-    $content = preg_replace("/\n/", "<br>", $content);
+    $content = str_replace("\n", "<br>", $content);
 }
 
 // html 이면
