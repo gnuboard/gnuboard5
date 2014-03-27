@@ -15,7 +15,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
 
     $data = serialize($od);
 
-    $sql = " insert {$g5['g5_shop_order_delete_table']} set de_key = '$od_id', de_data = '$data', mb_id = '{$member['mb_id']}', de_ip = '{$_SERVER['REMOTE_ADDR']}', de_datetime = '".G5_TIME_YMDHIS."' ";
+    $sql = " insert {$g5['g5_shop_order_delete_table']} set de_key = '$od_id', de_data = '".addslashes($data)."', mb_id = '{$member['mb_id']}', de_ip = '{$_SERVER['REMOTE_ADDR']}', de_datetime = '".G5_TIME_YMDHIS."' ";
     sql_query($sql, true);
 
     $sql = " delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
