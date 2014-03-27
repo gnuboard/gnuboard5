@@ -11,9 +11,9 @@ include_once(G5_MOBILE_PATH.'/_head.php');
 <?php
 //  최신글
 $sql = " select bo_table, bo_subject
-            from {$g5[board_table]}
+            from {$g5['board_table']}
             where gr_id = '{$gr_id}'
-              and bo_list_level <= '{$member[mb_level]}'
+              and bo_list_level <= '{$member['mb_level']}'
               and bo_device <> 'pc' ";
 if(!$is_admin)
     $sql .= " and bo_use_cert = '' ";
