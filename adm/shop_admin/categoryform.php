@@ -344,7 +344,7 @@ if(!sql_query(" select ca_skin_dir from {$g5['g5_shop_category_table']} limit 1 
         <tr>
             <th scope="row">하단내용</th>
             <td>
-                <?php echo help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다.", -150); ?>
+                <?php echo help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다."); ?>
                 <?php echo editor_html('ca_tail_html', $ca['ca_tail_html']); ?>
             </td>
         </tr>
@@ -358,7 +358,7 @@ if(!sql_query(" select ca_skin_dir from {$g5['g5_shop_category_table']} limit 1 
         <tr>
             <th scope="row">모바일 하단내용</th>
             <td>
-                <?php echo help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다.", -150); ?>
+                <?php echo help("상품리스트 페이지 하단에 출력하는 HTML 내용입니다."); ?>
                 <?php echo editor_html('ca_mobile_tail_html', $ca['ca_mobile_tail_html']); ?>
             </td>
         </tr>
