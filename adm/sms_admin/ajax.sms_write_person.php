@@ -8,9 +8,9 @@ auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = "휴대폰번호 관리";
 
-if (!$page) $page = 1;
+if ($page < 1) $page = 1;
 
-if (is_numeric($bg_no)) 
+if (is_numeric($bg_no))
     $sql_group = " and bg_no='$bg_no' ";
 else
     $sql_group = "";

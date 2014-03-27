@@ -15,7 +15,7 @@ $new_wr_renum = $res['wr_renum'] + 1;
 
 if ($w == 'f')
     $sql_flag = " and hs_flag=0 ";
-else 
+else
     $sql_flag = "";
 
 if ($wr_renum)
@@ -37,9 +37,9 @@ if (!$res['cnt']) {
 }
 
 $sql = sql_query("select * from {$g5['sms5_history_table']} where wr_no='$wr_no' $sql_renum $sql_flag");
-while ($res = sql_fetch_array($sql)) 
+while ($res = sql_fetch_array($sql))
 {
-    $res'[bk_hp'] = get_hp($res['bk_hp'], 0);
+    $res['bk_hp'] = get_hp($res['bk_hp'], 0);
 
     if ($g5['sms5_demo'])
         $res['bk_hp'] = '0100000000';
@@ -61,7 +61,7 @@ $reply = str_replace('-', '', trim($write['wr_reply']));
 
 $result = $SMS->Add($list, $reply, '', '', $write['wr_message'], '', $wr_total);
 
-if ($result) 
+if ($result)
 {
     $result = $SMS->Send();
 
@@ -73,7 +73,7 @@ if ($result)
         $wr_failure = 0;
         $count      = 0;
 
-        foreach ($SMS->Result as $result) 
+        foreach ($SMS->Result as $result)
         {
             list($phone, $code) = explode(":", $result);
 
@@ -103,7 +103,7 @@ if ($result)
                 }
                 $wr_failure++;
                 $hs_flag = 0;
-            } 
+            }
             else
             {
                 $hs_code = $code;

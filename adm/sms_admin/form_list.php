@@ -11,7 +11,7 @@ $token = get_token();
 
 $g5['title'] = "이모티콘 관리";
 
-if (!$page) $page = 1;
+if ($page < 1) $page = 1;
 
 if (is_numeric($fg_no))
     $sql_group = " and fg_no='$fg_no' ";

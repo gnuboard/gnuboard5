@@ -28,7 +28,7 @@ if ($w == 'u') // 업데이트
 
     if ($fg_no != $res['fg_no']) {
         if ($res['fg_no'])
-            sql_query("update {$g5['sms5_form_group_table']} set fg_count = fg_count - 1 where fg_no='{$res[fg_no]}'");
+            sql_query("update {$g5['sms5_form_group_table']} set fg_count = fg_count - 1 where fg_no='{$res['fg_no']}'");
 
         sql_query("update {$g5['sms5_form_group_table']} set fg_count = fg_count + 1 where fg_no='$fg_no'");
     }
