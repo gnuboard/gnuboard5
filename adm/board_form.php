@@ -654,12 +654,6 @@ $frm_submit .= '</div>';
                 <label for="chk_all_upload_count">전체적용</label>
             </td>
         </tr>
-        <?php
-        $upload_max_filesize = ini_get('upload_max_filesize');
-        if (!preg_match("/([m|M])$/", $upload_max_filesize)) {
-            $upload_max_filesize = (int)($upload_max_filesize / 1048576);
-        }
-        ?>
         <tr>
             <th scope="row"><label for="bo_upload_size">파일 업로드 용량<strong class="sound_only">필수</strong></label></th>
             <td>

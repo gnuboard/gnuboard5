@@ -51,10 +51,10 @@ if ($w == "") {
     if ($is_admin)
         alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', G5_URL);
 
-    if (!$member[mb_id])
+    if (!$is_member)
         alert('로그인 후 이용하여 주십시오.', G5_URL);
 
-    if ($member[mb_id] != $mb_id)
+    if ($member['mb_id'] != $mb_id)
         alert('로그인된 회원과 넘어온 정보가 서로 다릅니다.');
 
     /*

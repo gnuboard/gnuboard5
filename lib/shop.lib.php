@@ -1653,7 +1653,8 @@ function get_item_point($it, $io_id='', $trunc=10)
         if($it['it_point_type'] == 2 && $io_id) {
             $sql = " select io_id, io_price
                         from {$g5['g5_shop_item_option_table']}
-                        where io_id = '$io_id'
+                        where it_id = '{$it['it_id']}'
+                          and io_id = '$io_id'
                           and io_type = '0'
                           and io_use = '1' ";
             $opt = sql_fetch($sql);

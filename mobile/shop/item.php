@@ -182,7 +182,7 @@ $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 분류 위치
-// HOME > 1단계 > 2단계 ... > 6단계 분류
+// HOME > 1단계 > 2단계 ... > 5단계 분류
 $ca_id = $it['ca_id'];
 $nav_skin = $skin_dir.'/navigation.skin.php';
 if(!is_file($nav_skin))

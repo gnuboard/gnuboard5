@@ -52,7 +52,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         // 원글
         $comment = "";
         $comment_link = "";
-        $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '$row[wr_id]' ");
+        $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
         $list[$i] = $row2;
 
         $name = get_sideview($row2['mb_id'], cut_str($row2['wr_name'], $config['cf_cut_name']), $row2['wr_email'], $row2['wr_homepage']);

@@ -515,7 +515,7 @@ if(!isset($default['de_member_reg_coupon_use'])) {
         <tr>
             <th scope="row"><label for="de_taxsave_use">현금영수증<br>발급사용</label></th>
             <td>
-                <?php echo help("관리자는 설정에 관계없이 <a href=\"".G5_ADMIN_URL."/shop_admin/orderlist.php\">주문내역</a> &gt; 수정에서 발급이 가능합니다.\n현금영수증 발급 취소는 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.", 50); ?>
+                <?php echo help("관리자는 설정에 관계없이 <a href=\"".G5_ADMIN_URL."/shop_admin/orderlist.php\">주문내역</a> &gt; 보기에서 발급이 가능합니다.\n현금영수증 발급 취소는 PG사에서 지원하는 현금영수증 취소 기능을 사용하시기 바랍니다.", 50); ?>
                 <select id="de_taxsave_use" name="de_taxsave_use">
                     <option value="0" <?php echo get_selected($default['de_taxsave_use'], 0); ?>>사용안함</option>
                     <option value="1" <?php echo get_selected($default['de_taxsave_use'], 1); ?>>사용</option>
@@ -557,7 +557,7 @@ if(!isset($default['de_member_reg_coupon_use'])) {
         <tr>
             <th scope="row"><label for="de_card_point">포인트부여</label></th>
             <td>
-                <?php echo help("신용카드, 계좌이체 결제시 포인트를 부여할지를 설정합니다. (기본값은 '아니오')", 50); ?>
+                <?php echo help("신용카드, 계좌이체 결제시 포인트를 부여할지를 설정합니다. (기본값은 '아니오')"); ?>
                 <select id="de_card_point" name="de_card_point">
                     <option value="0" <?php echo get_selected($default['de_card_point'], 0); ?>>아니오</option>
                     <option value="1" <?php echo get_selected($default['de_card_point'], 1); ?>>예</option>
@@ -567,7 +567,7 @@ if(!isset($default['de_member_reg_coupon_use'])) {
         <tr>
             <th scope="row"><label for="de_point_days">주문완료 포인트</label></th>
             <td>
-                <?php echo help("주문자가 회원일 경우에만 주문완료 포인트를 지급합니다. 주문취소, 반품 등을 고려하여 적당한 기간을 입력하십시오. (기본값은 7)\n0 으로 설정하는 경우 주문완료와 동시에 포인트를 부여합니다.", -150); ?>
+                <?php echo help("주문자가 회원일 경우에만 주문완료 포인트를 지급합니다. 주문취소, 반품 등을 고려하여 적당한 기간을 입력하십시오. (기본값은 7)\n0 으로 설정하는 경우 주문완료와 동시에 포인트를 부여합니다."); ?>
                 주문 완료 <input type="text" name="de_point_days" value="<?php echo $default['de_point_days']; ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 부여
             </td>
         </tr>
@@ -670,7 +670,7 @@ if(!isset($default['de_member_reg_coupon_use'])) {
         <tr>
             <th scope="row"><label for="de_delivery_company">배송업체</label></th>
             <td>
-                <?php echo help("이용 중이거나 이용하실 배송업체를 선택하세요.", 50); ?>
+                <?php echo help("이용 중이거나 이용하실 배송업체를 선택하세요."); ?>
                 <select name="de_delivery_company" id="de_delivery_company">
                     <?php echo get_delivery_company($default['de_delivery_company']); ?>
                 </select>
@@ -679,7 +679,7 @@ if(!isset($default['de_member_reg_coupon_use'])) {
         <tr>
             <th scope="row"><label for="de_send_cost_case">배송비유형</label></th>
             <td>
-                <?php echo help("<strong>금액별차등</strong>으로 설정한 경우, 주문총액이 배송비상한가 미만일 경우 배송비를 받습니다.\n<strong>무료배송</strong>으로 설정한 경우, 배송비상한가 및 배송비를 무시하며 착불의 경우도 무료배송으로 설정합니다.\n<strong>상품별로 배송비 설정을 한 경우 상품별 배송비 설정이 우선</strong> 적용됩니다.\n예를 들어 무료배송으로 설정했을 때 특정 상품에 배송비가 설정되어 있으면 주문시 배송비가 부과됩니다.", 50); ?>
+                <?php echo help("<strong>금액별차등</strong>으로 설정한 경우, 주문총액이 배송비상한가 미만일 경우 배송비를 받습니다.\n<strong>무료배송</strong>으로 설정한 경우, 배송비상한가 및 배송비를 무시하며 착불의 경우도 무료배송으로 설정합니다.\n<strong>상품별로 배송비 설정을 한 경우 상품별 배송비 설정이 우선</strong> 적용됩니다.\n예를 들어 무료배송으로 설정했을 때 특정 상품에 배송비가 설정되어 있으면 주문시 배송비가 부과됩니다."); ?>
                 <select name="de_send_cost_case" id="de_send_cost_case">
                     <option value="차등" <?php echo get_selected($default['de_send_cost_case'], "차등"); ?>>금액별차등</option>
                     <option value="무료" <?php echo get_selected($default['de_send_cost_case'], "무료"); ?>>무료배송</option>
@@ -689,7 +689,7 @@ if(!isset($default['de_member_reg_coupon_use'])) {
         <tr>
             <th scope="row"><label for="de_send_cost_limit">배송비상한가</label></th>
             <td>
-                <?php echo help("배송비유형이 '금액별차등'일 경우에만 해당되며 배송비상한가를 여러개 두고자 하는 경우는 <b>;</b> 로 구분합니다.\n\n예를 들어 20000원 미만일 경우 4000원, 30000원 미만일 경우 3000원 으로 사용할 경우에는 배송비상한가를 20000;30000 으로 입력하고 배송비를 4000;3000 으로 입력합니다.", 50); ?>
+                <?php echo help("배송비유형이 '금액별차등'일 경우에만 해당되며 배송비상한가를 여러개 두고자 하는 경우는 <b>;</b> 로 구분합니다.\n\n예를 들어 20000원 미만일 경우 4000원, 30000원 미만일 경우 3000원 으로 사용할 경우에는 배송비상한가를 20000;30000 으로 입력하고 배송비를 4000;3000 으로 입력합니다."); ?>
                 <input type="text" name="de_send_cost_limit" value="<?php echo $default['de_send_cost_limit']; ?>" size="40" class="frm_input" id="de_send_cost_limit"> 원
             </td>
         </tr>

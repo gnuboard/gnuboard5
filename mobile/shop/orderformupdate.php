@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 // 결제등록 완료 체크
 if($od_settle_case != '무통장') {

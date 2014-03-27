@@ -146,7 +146,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="ev_mobile_list_mod">모바일 이미지 수</label></th>
         <td>
-            <?php echo help("한 페이지에 출력할 이미지 수를 설정합니다.", 50); ?>
+            <?php echo help("한 페이지에 출력할 이미지 수를 설정합니다."); ?>
             <input type="text" name="ev_mobile_list_mod" value="<?php echo $ev['ev_mobile_list_mod']; ?>" id="ev_mobile_list_mod" required class="required frm_input" size="3"> 개
         </td>
     </tr>

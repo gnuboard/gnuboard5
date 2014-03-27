@@ -31,7 +31,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         // 전체 페이지 계산
         $total_page  = ceil($total_count / $items);
         // 페이지가 없으면 첫 페이지 (1 페이지)
-        if ($page == "") $page = 1;
+        if ($page < 1) $page = 1;
         // 시작 레코드 구함
         $from_record = ($page - 1) * $items;
 

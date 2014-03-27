@@ -195,14 +195,14 @@ if ($w == '') {
     $bo_notice = "";
     $lf = "";
     if ($board['bo_notice']) {
-        $tmp_array = explode("\n", $board['bo_notice']);
+        $tmp_array = explode(",", $board['bo_notice']);
         for ($i=0; $i<count($tmp_array); $i++) {
             $tmp_wr_id = trim($tmp_array[$i]);
             $row = sql_fetch(" select count(*) as cnt from {$g5['write_prefix']}{$bo_table} where wr_id = '{$tmp_wr_id}' ");
             if ($row['cnt'])
             {
                 $bo_notice .= $lf . $tmp_wr_id;
-                $lf = "\n";
+                $lf = ",";
             }
         }
     }

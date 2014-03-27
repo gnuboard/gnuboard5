@@ -355,7 +355,7 @@ if ($w == '') {
 
 $subject = "";
 if (isset($write['wr_subject'])) {
-    $subject = preg_replace("/\"/", "&#034;", get_text(cut_str($write['wr_subject'], 255), 0));
+    $subject = str_replace("\"", "&#034;", get_text(cut_str($write['wr_subject'], 255), 0));
 }
 
 $content = '';
@@ -365,7 +365,7 @@ if ($w == '') {
     if (!strstr($write['wr_option'], 'html')) {
         $content = "\n\n\n &gt; "
                  ."\n &gt; "
-                 ."\n &gt; ".preg_replace("/\n/", "\n> ", get_text($write['wr_content'], 0))
+                 ."\n &gt; ".str_replace("\n", "\n> ", get_text($write['wr_content'], 0))
                  ."\n &gt; "
                  ."\n &gt; ";
 

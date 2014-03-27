@@ -14,7 +14,7 @@ include_once('./_head.php');
 
 <p>메일인증을 받지 못한 경우 회원정보의 메일주소를 변경 할 수 있습니다.</p>
 
-<form method="post" name="fregister_email" onsubmit="return fregister_email_submit(this);">
+<form method="post" name="fregister_email" action="<?php echo G5_HTTPS_BBS_URL.'/register_email_update.php'; ?>" onsubmit="return fregister_email_submit(this);">
 <input type="hidden" name="mb_id" value="<?php echo $mb_id; ?>">
 
 <div class="tbl_frm01 tbl_frm">
@@ -43,7 +43,6 @@ function fregister_email_submit(f)
 {
     <?php echo chk_captcha_js();  ?>
 
-    f.action = "<?php echo G5_HTTPS_BBS_URL.'/register_email_update.php'; ?>";
     return true;
 }
 </script>
