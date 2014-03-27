@@ -58,11 +58,10 @@ $qstr  = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
 
 $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 
-// 이벤트 아이디와 제목을 분리 - 지운아빠 2013-04-15
-if (isset($ev_set)) {
-    $ev_exp = explode('`',$ev_set);
-    $ev_id = $ev_exp[0];
-    $ev_title = $ev_exp[1];
+// 이벤트제목
+if($ev_id) {
+    $tmp = sql_fetch(" select ev_subject from {$g5['g5_shop_event_table']} where ev_id = '$ev_id' ");
+    $ev_title = $tmp['ev_subject'];
 }
 ?>
 
@@ -72,15 +71,15 @@ if (isset($ev_set)) {
 
 <form name="flist" class="local_sch01 local_sch" autocomplete="off">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
-<label for="ev_set" class="sound_only">이벤트</label>
-<select name="ev_set" id="ev_set" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<label for="ev_id" class="sound_only">이벤트</label>
+<select name="ev_id" id="ev_id" action="<?php echo $_SERVER['PHP_SELF']; ?>">
     <?php
     // 이벤트 옵션처리
     $event_option = "<option value=''>이벤트를 선택하세요</option>";
     $sql1 = " select ev_id, ev_subject from {$g5['g5_shop_event_table']} order by ev_id desc ";
     $result1 = sql_query($sql1);
     while ($row1=mysql_fetch_array($result1))
-        $event_option .= '<option value="'.$row1['ev_id'].'`'.$row1['ev_subject'].'" '.get_selected($ev_set, $row1['ev_id'].'`'.$row1['ev_subject']).' >'.conv_subject($row1['ev_subject'], 20,"…").'</option>';
+        $event_option .= '<option value="'.$row1['ev_id'].'" '.get_selected($ev_id, $row1['ev_id']).' >'.conv_subject($row1['ev_subject'], 20,"…").'</option>';
     echo $event_option;
     ?>
 </select>
@@ -90,6 +89,7 @@ if (isset($ev_set)) {
 
 <form name="flist" class="local_sch01 local_sch" autocomplete="off">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="ev_id" value="<?php echo $ev_id; ?>">
 <?php echo $listall; ?>
 
 <label for="sel_ca_id" class="sound_only">분류선택</label>
@@ -121,12 +121,11 @@ if (isset($ev_set)) {
 </form>
 
 <div class="local_desc01 local_desc">
-    <p>상품을 이벤트별로 일괄 처리합니다. 현재 선택된 이벤트는 <?php echo $ev_title; ?>입니다.</p>
+    <p>상품을 이벤트별로 일괄 처리합니다. <?php echo ($ev_title ? '현재 선택된 이벤트는 '.$ev_title.'입니다.' : '이벤트를 선택해 주세요.'); ?></p>
 </div>
 
 <form name="fitemeventlistupdate" method="post" action="./itemeventlistupdate.php" onsubmit="return fitemeventlistupdatecheck(this)">
 <input type="hidden" name="ev_id" value="<?php echo $ev_id; ?>">
-<input type="hidden" name="ev_set" value="<?php echo $ev_set; ?>">
 <input type="hidden" name="sel_ca_id" value="<?php echo $sel_ca_id; ?>">
 <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
 <input type="hidden" name="search" value="<?php echo $search; ?>">
@@ -183,7 +182,7 @@ if (isset($ev_set)) {
          선택된 이벤트의 상품 수정 내용을 반영하시려면 일괄수정 버튼을 누르십시오.
         <?php } else { ?>
         이벤트를 선택하지 않으셨습니다. <strong>수정 내용을 반영하기 전에 이벤트를 선택해주십시오.</strong><br>
-        <a href="#ev_set" class="sound_only">이벤트 선택</a>
+        <a href="#ev_id" class="sound_only">이벤트 선택</a>
         <?php } ?>
     </p>
 </div>
