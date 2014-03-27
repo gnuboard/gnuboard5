@@ -20,23 +20,6 @@ $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']}
 $result = sql_query($sql);
 ?>
 
-<style>
-#sct_win {}
-#sct_win h1 {padding:15px 0;text-align:center}
-#sct_win_nav {margin:0 0 20px}
-#sct_win_nav h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
-#sct_win_nav ul {border-top:1px solid #e9e9e9}
-#sct_win_nav li {position:relative;border-bottom:1px solid #e9e9e9;background:#f5f6fa}
-#sct_win_nav a {display:block;padding:0.5em 1em;text-decoration:none}
-.sct_ct_view {font-weight:bold}
-.sct_list_view {position:absolute;top:0;right:0;width:4em;background:#333;color:#fff !important;text-align:center}
-
-#sct_win_empty {margin:0 0 1em;padding:5em 0;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:#f5f6fa;text-align:center}
-
-#sct_win .win_btn {text-align:center}
-#sct_win .win_btn button {display:inline-block;padding:0 10px;height:2.5em;border:0;background:#666;color:#fff;text-decoration:none;line-height:2.5em}
-</style>
-
 <div id="sct_win">
 
     <h1><?php echo $config['cf_title']; ?> 카테고리</h1>
