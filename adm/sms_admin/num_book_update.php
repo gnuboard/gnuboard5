@@ -59,7 +59,7 @@ if ($w=='u') // 업데이트
     }
     $get_bg_no = $bg_no;
 
-    $go_url = './num_book_write.php?bk_no='.$bk_no.'&w='.$w.'&page='.$page;
+    $go_url = './num_book_write.php?bk_no='.$bk_no.'&amp;w='.$w.'&amp;page='.$page;
     if( $is_hp_exist ){ //중복된 회원 휴대폰번호가 있다면
         //alert( "중복된 회원 휴대폰번호가 있어서 회원정보에는 반영되지 않았습니다.", $go_url );
         goto_url($go_url);

@@ -9,7 +9,7 @@ auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = "문자전송 내역 (번호별)";
 
-if (!$page) $page = 1;
+if ($page < 1) $page = 1;
 
 if ($st && trim($sv))
     $sql_search = " and $st like '%$sv%' ";

@@ -21,15 +21,15 @@ $receipt    = 0;
 
 // 회원 데이터 마이그레이션
 $qry = sql_query("select mb_id, mb_name, mb_hp, mb_sms, mb_leave_date from ".$g5['member_table']." order by mb_datetime");
-while ($res = sql_fetch_array($qry)) 
+while ($res = sql_fetch_array($qry))
 {
-    if ($res['mb_leave_date'] != '') 
+    if ($res['mb_leave_date'] != '')
         $leave++;
     else if ($res['mb_hp'] == '')
         $hp_empty++;
-    else if (is_hp($res['mb_hp'])) 
+    else if (is_hp($res['mb_hp']))
         $hp_yes++ ;
-    else 
+    else
         $hp_no++;
 
     $hp = get_hp($res['mb_hp']);
@@ -45,7 +45,7 @@ while ($res = sql_fetch_array($qry))
         $mb_count = $res3['cnt'];
 
         // 회원이 삭제되었다면 휴대폰번호 DB 에서도 삭제한다.
-        if ($res['mb_leave_date']) 
+        if ($res['mb_leave_date'])
         {
             sql_query("delete from {$g5['sms5_book_table']} where mb_id='{$res2['mb_id']}'");
 
@@ -63,15 +63,15 @@ while ($res = sql_fetch_array($qry))
             if ($bk_receipt != $res2['bk_receipt']) {
                 if ($bk_receipt == 1)
                     $sql_sms = "bg_receipt = bg_receipt + $mb_count, bg_reject = bg_reject - $mb_count";
-                else 
+                else
                     $sql_sms = "bg_receipt = bg_receipt - $mb_count, bg_reject = bg_reject + $mb_count";
 
                 sql_query("update {$g5['sms5_book_group_table']} set $sql_sms where bg_no='{$res2['bg_no']}'");
             }
-            
+
             if ($bk_receipt) $receipt++;
 
-            sql_query("update {$g5['sms5_book_table']} set $field where mb_id='$res[mb_id]'");
+            sql_query("update {$g5['sms5_book_table']} set $field where mb_id='{$res['mb_id']}'");
         }
     }
     else if ($res['mb_leave_date'] == '') // 기존에 등록되어 있지 않을 경우 추가 (삭제된 회원이 아닐 경우)
