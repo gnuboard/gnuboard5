@@ -72,7 +72,7 @@ if (($qsort == "it_sum_qty" || $qsort == "it_price" || $qsort == "it_use_avg" ||
 // 총몇개 = 한줄에 몇개 * 몇줄
 $items = $default['de_mobile_search_list_mod'];
 // 페이지가 없으면 첫 페이지 (1 페이지)
-if ($page == "") $page = 1;
+if ($page < 1) $page = 1;
 // 시작 레코드 구함
 $from_record = ($page - 1) * $items;
 

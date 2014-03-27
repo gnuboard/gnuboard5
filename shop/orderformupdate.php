@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 // 장바구니가 비어있는가?
 if (get_session("ss_direct"))

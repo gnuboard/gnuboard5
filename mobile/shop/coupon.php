@@ -68,7 +68,7 @@ $result = sql_query($sql);
         </ul>
     </div>
 
-    <div class="win_btn"><a href="javascript:;" onclick="window.close();">창닫기</a></div>
+    <div class="win_btn"><button type="button" onclick="window.close();">창닫기</button></div>
 </div>
 
 <?php

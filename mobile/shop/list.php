@@ -70,7 +70,7 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
         // 총몇개
         $items = $ca['ca_mobile_list_mod'];
         // 페이지가 없으면 첫 페이지 (1 페이지)
-        if ($page == "") $page = 1;
+        if ($page < 1) $page = 1;
         // 시작 레코드 구함
         $from_record = ($page - 1) * $items;
 
