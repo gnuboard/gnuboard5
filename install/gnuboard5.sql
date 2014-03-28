@@ -452,6 +452,7 @@ CREATE TABLE IF NOT EXISTS `g5_member` (
   `mb_hp` varchar(255) NOT NULL default '',
   `mb_certify` varchar(20) NOT NULL default '',
   `mb_adult` tinyint(4) NOT NULL default '0',
+  `mb_dupinfo` varchar(255) NOT NULL default '',
   `mb_zip1` char(3) NOT NULL default '',
   `mb_zip2` char(3) NOT NULL default '',
   `mb_addr1` varchar(255) NOT NULL default '',
