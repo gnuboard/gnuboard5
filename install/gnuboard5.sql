@@ -801,6 +801,7 @@ CREATE TABLE IF NOT EXISTS `g5_content` (
   `co_html` tinyint(4) NOT NULL DEFAULT '0',
   `co_subject` varchar(255) NOT NULL DEFAULT '',
   `co_content` longtext NOT NULL,
+  `co_tag_filter_use` tinyint(4) NOT NULL DEFAULT '0',
   `co_hit` int(11) NOT NULL DEFAULT '0',
   `co_include_head` varchar(255) NOT NULL,
   `co_include_tail` varchar(255) NOT NULL,
