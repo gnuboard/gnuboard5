@@ -44,7 +44,7 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
             if (!$row['wr_is_comment'])
             {
                 if (!delete_point($row['mb_id'], $bo_table, $row['wr_id'], '쓰기'))
-                    insert_point($row['mb_id'], $board['bo_write_point'] * (-1), "{$board['bo_subject']} $row[wr_id] 글삭제");
+                    insert_point($row['mb_id'], $board['bo_write_point'] * (-1), "{$board['bo_subject']} {$row['wr_id']} 글삭제");
 
                 // 업로드된 파일이 있다면 파일삭제
                 $sql2 = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ";
@@ -82,11 +82,16 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
         sql_query(" delete from {$g5['scrap_table']} where bo_table = '$bo_table' and wr_id = '{$write['wr_id']}' ");
 
         // 공지사항 삭제
-        $notice_array = explode("\n", trim($board['bo_notice']));
+        $notice_array = explode(",", trim($board['bo_notice']));
         $bo_notice = "";
-        for ($k=0; $k<count($notice_array); $k++)
+        $lf = '';
+        for ($k=0; $k<count($notice_array); $k++) {
             if ((int)$write['wr_id'] != (int)$notice_array[$k])
-                $bo_notice .= $notice_array[$k] . "\n";
+                $bo_notice .= $nl.$notice_array[$k];
+
+            if($bo_notice)
+                $lf = ',';
+        }
         $bo_notice = trim($bo_notice);
         sql_query(" update {$g5['board_table']} set bo_notice = '$bo_notice' where bo_table = '$bo_table' ");
 

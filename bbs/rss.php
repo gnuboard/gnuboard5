@@ -7,9 +7,14 @@ function specialchars_replace($str, $len=0) {
         $str = substr($str, 0, $len);
     }
 
+    $str = str_replace(array("&", "<", ">"), array("&amp;", "&lt;", "&gt;"), $str);
+
+    /*
     $str = preg_replace("/&/", "&amp;", $str);
     $str = preg_replace("/</", "&lt;", $str);
     $str = preg_replace("/>/", "&gt;", $str);
+    */
+
     return $str;
 }
 

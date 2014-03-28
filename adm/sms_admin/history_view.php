@@ -12,7 +12,7 @@ $g5['title'] = "문자전송 상세내역";
 if (!is_numeric($wr_no))
     alert('전송 고유 번호가 없습니다.');
 
-if (!$spage) $spage = 1;
+if ($spage < 1) $spage = 1;
 
 if ($sst && trim($ssv))
     $sql_search = " and $sst like '%$ssv%' ";

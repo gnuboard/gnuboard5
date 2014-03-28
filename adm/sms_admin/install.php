@@ -16,8 +16,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 //SMS 설정 정보 테이블이 있는지 검사한다.
 if( isset($g5['sms5_config_table']) && sql_query(" DESCRIBE {$g5['sms5_config_table']} ", false)) {
     if(!$setup){
-        echo '<script>  
-            var answer = confirm("이미 sms5가 설치되어 있습니다.새로 설치 할 경우 db 자료가 망실됩니다. 새로 설치하시겠습니까?");
+        echo '<script>
+            var answer = confirm("이미 SMS5가 설치되어 있습니다.새로 설치 할 경우 DB 자료가 망실됩니다. 새로 설치하시겠습니까?");
             if (answer){
                 document.hidden_form.setup.value = "1";
                 document.hidden_form.submit();
@@ -43,7 +43,7 @@ if( isset($g5['sms5_config_table']) && sql_query(" DESCRIBE {$g5['sms5_config_ta
 
 </div>
 <?php
-flush(); usleep(50000); 
+flush(); usleep(50000);
 
 // 테이블 생성 ------------------------------------
 $file = implode("", file("./sms5.sql"));
@@ -57,7 +57,7 @@ for ($i=0; $i<count($f); $i++) {
 // 테이블 생성 ------------------------------------
 
 echo "<script>document.getElementById('sms5_job_01').innerHTML='전체 테이블 생성 완료';</script>";
-flush(); usleep(50000); 
+flush(); usleep(50000);
 
 $read_point = -1;
 $write_point = 5;
@@ -70,11 +70,11 @@ $sql = " insert into {$g5['sms5_book_group_table']} set bg_name='미분류'";
 mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
 
 echo "<script>document.getElementById('sms5_job_02').innerHTML='DB설정 완료';</script>";
-flush(); usleep(50000); 
+flush(); usleep(50000);
 //-------------------------------------------------------------------------------------------------
 
 echo "<script>document.getElementById('sms5_job_03').innerHTML='SMS 기본 설정 변경 후 사용하세요.';</script>";
-flush(); usleep(50000); 
+flush(); usleep(50000);
 ?>
 
 <script>document.getElementById('sms5_btn_next').disabled = false;</script>
