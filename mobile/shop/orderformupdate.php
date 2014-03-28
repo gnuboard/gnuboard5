@@ -567,6 +567,16 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
         }
     }
 
+    // 무통장 입금 때 고객에게 계좌정보 보냄
+    if($od_settle_case == '무통장' && $default['de_sms_use2'] && $od_misu > 0) {
+        $sms_content = $od_name."님의 입금계좌입니다.\n금액:".number_format($od_misu)."원\n계좌:".$od_bank_account."\n".$default['de_admin_company_name'];
+
+        $recv_number = preg_replace("/[^0-9]/", "", $od_hp);
+        $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
+        $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], iconv("utf-8", "euc-kr", $sms_content), "");
+        $sms_count++;
+    }
+
     if($sms_count > 0)
         $SMS->Send();
 }
