@@ -95,13 +95,14 @@ echo "리턴메시지        :$field[16] <br/>";
 $mb_name = $field[7];
 $req_num = $field[12];
 $mb_birth = $field[8];
-
-// 휴대폰번호 중복체크
+$mb_dupinfo = $field[4];
 $phone_no = hyphen_hp_number($req_num);
-$sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
+
+// 중복정보 체크
+$sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
 $row = sql_fetch($sql);
 if ($row['mb_id']) {
-    alert_close("이미 가입되어 있는 휴대폰번호 입니다.\\n회원아이디 : ".$row['mb_id']);
+    alert_close("입력하신 본인학인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
 }
 
 // hash 데이터
@@ -119,6 +120,7 @@ set_session('ss_cert_hash',    $hash_data);
 set_session('ss_cert_adult',   $adult);
 set_session('ss_cert_birth',   $mb_birth);
 set_session('ss_cert_sex',     ($field[9] == 1 ? 'M' : 'F'));
+set_session('ss_cert_dupinfo', $mb_dupinfo);
 
 $g5['title'] = 'KCB 휴대폰 본인확인';
 include_once(G5_PATH.'/head.sub.php');

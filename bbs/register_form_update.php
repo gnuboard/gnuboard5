@@ -148,12 +148,12 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
 //  본인확인
 //---------------------------------------------------------------
 $mb_hp = hyphen_hp_number($mb_hp);
-if($_SESSION['ss_cert_type'] != 'hp' && $mb_hp) {
-    // 휴대폰번호 중복체크
-    $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$mb_hp}' ";
+if($config['cf_cert_use'] && $_SESSION['ss_cert_type'] && $_SESSION['ss_cert_dupinfo']) {
+    // 중복체크
+    $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$_SESSION['ss_cert_dupinfo']}' ";
     $row = sql_fetch($sql);
     if ($row['mb_id']) {
-        alert("이미 가입되어 있는 휴대폰번호 입니다.\\n회원아이디 : ".$row['mb_id']);
+        alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
     }
 }
 
@@ -168,6 +168,7 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
         $sql_certify .= " , mb_adult = '{$_SESSION['ss_cert_adult']}' ";
         $sql_certify .= " , mb_birth = '{$_SESSION['ss_cert_birth']}' ";
         $sql_certify .= " , mb_sex = '{$_SESSION['ss_cert_sex']}' ";
+        $sql_certify .= " , mb_dupinfo = '{$_SESSION['ss_cert_dupinfo']}' ";
     } else {
         $sql_certify .= " , mb_hp = '{$mb_hp}' ";
         $sql_certify .= " , mb_certify  = '' ";
