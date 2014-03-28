@@ -510,7 +510,7 @@ function conv_subject($subject, $len, $suffix='')
 }
 
 // 내용을 변환
-function conv_content($content, $html)
+function conv_content($content, $html, $filter=true)
 {
     global $config, $board;
 
@@ -536,7 +536,9 @@ function conv_content($content, $html)
         }
 
         $content = preg_replace($source, $target, $content);
-        $content = html_purifier($content);
+
+        if($filter)
+            $content = html_purifier($content);
     }
     else // text 이면
     {

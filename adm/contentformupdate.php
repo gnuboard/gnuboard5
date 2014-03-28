@@ -16,11 +16,12 @@ else
 if ($co_himg_del)  @unlink(G5_DATA_PATH."/content/{$co_id}_h");
 if ($co_timg_del)  @unlink(G5_DATA_PATH."/content/{$co_id}_t");
 
-$sql_common = " co_include_head = '$co_include_head',
-                co_include_tail = '$co_include_tail',
-                co_html         = '$co_html',
-                co_subject      = '$co_subject',
-                co_content      = '$co_content' ";
+$sql_common = " co_include_head     = '$co_include_head',
+                co_include_tail     = '$co_include_tail',
+                co_html             = '$co_html',
+                co_tag_filter_use   = '$co_tag_filter_use',
+                co_subject          = '$co_subject',
+                co_content          = '$co_content' ";
 
 if ($w == "")
 {

@@ -6,9 +6,18 @@ include_once(G5_EDITOR_LIB);
 auth_check($auth[$sub_menu], "w");
 
 // 상단, 하단 파일경로 필드 추가
-$sql = " ALTER TABLE `{$g5['content_table']}`  ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
-                                                ADD `co_include_tail` VARCHAR( 255 ) NOT NULL ";
-sql_query($sql, false);
+if(!sql_query(" select co_include_head from {$g5['content_table']} limit 1 ", false)) {
+    $sql = " ALTER TABLE `{$g5['content_table']}`  ADD `co_include_head` VARCHAR( 255 ) NOT NULL ,
+                                                    ADD `co_include_tail` VARCHAR( 255 ) NOT NULL ";
+    sql_query($sql, false);
+}
+
+// html purifier 사용여부 필드
+if(!sql_query(" select co_tag_filter_use from {$g5['content_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['content_table']}`
+                    ADD `co_tag_filter_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `co_content` ", true);
+    sql_query(" update {$g5['content_table']} set co_tag_filter_use = '1' ");
+}
 
 $html_title = "내용";
 $g5['title'] = $html_title.' 관리';
@@ -59,6 +68,16 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row">내용</th>
         <td><?php echo editor_html('co_content', $co['co_content']); ?></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="co_tag_filter_use">태그 필터링 사용</label></th>
+        <td>
+            <?php echo help("내용에서 iframe 등의 태그를 사용하려면 사용안함으로 선택해 주십시오."); ?>
+            <select name="co_tag_filter_use" id="co_tag_filter_use">
+                <option value="1"<?php echo get_selected(1, $co['co_tag_filter_use']); ?>>사용함</option>
+                <option value="0"<?php echo get_selected(0, $co['co_tag_filter_use']); ?>>사용안함</option>
+            </select>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="co_include_head">상단 파일 경로</label></th>
