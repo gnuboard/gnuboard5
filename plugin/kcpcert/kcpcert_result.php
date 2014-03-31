@@ -134,11 +134,12 @@ if( $cert_enc_use == "Y" )
             alert_close("정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.");
 
         $phone_no = hyphen_hp_number($phone_no);
+        $mb_dupinfo = $di;
 
-        $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_hp = '{$phone_no}' ";
+        $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
         $row = sql_fetch($sql);
         if ($row['mb_id']) {
-            alert_close("이미 가입되어 있는 휴대폰번호 입니다.\\n회원아이디 : ".$row['mb_id']);
+            alert_close("입력하신 본인학인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
         }
 
         // hash 데이터
@@ -156,6 +157,7 @@ if( $cert_enc_use == "Y" )
         set_session("ss_cert_adult",   $adult);
         set_session("ss_cert_birth",   $birth_day);
         set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F"));
+        set_session('ss_cert_dupinfo', $mb_dupinfo);
     }
     else if( $res_cd != "0000" )
     {

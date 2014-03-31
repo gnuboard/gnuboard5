@@ -122,6 +122,11 @@ if(!isset($mb['mb_addr3'])) {
     sql_query(" ALTER TABLE {$g5['member_table']} ADD `mb_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `mb_addr2` ", false);
 }
 
+// 중복가입 확인필드 추가
+if(!isset($mb['mb_dupinfo'])) {
+    sql_query(" ALTER TABLE {$g5['member_table']} ADD `mb_dupinfo` varchar(255) NOT NULL DEFAULT '' AFTER `mb_adult` ", false);
+}
+
 if ($mb['mb_intercept_date']) $g5['title'] = "차단된 ";
 else $g5['title'] .= "";
 $g5['title'] .= '회원 '.$html_title;
