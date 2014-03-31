@@ -77,6 +77,16 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
     sql_query(" ALTER TABLE `{$g5['g5_shop_order_address_table']}`
                     ADD `ad_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `ad_addr2` ", true);
 }
+
+// 배송비정보 필드 cart 테이블에 추가
+if(!sql_query(" select it_sc_type from {$g5['g5_shop_cart_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_cart_table']}`
+                    ADD `it_sc_type` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_name`,
+                    ADD `it_sc_method` tinyint(4) NOT NULL DEFAULT '0' AFTER `it_sc_type`,
+                    ADD `it_sc_price` int(11) NOT NULL DEFAULT '0' AFTER `it_sc_method`,
+                    ADD `it_sc_minimum` int(11) NOT NULL DEFAULT '0' AFTER `it_sc_price`,
+                    ADD `it_sc_qty` int(11) NOT NULL DEFAULT '0' AFTER `it_sc_minimum` ", true);
+}
 ?>
 
 <section id="anc_sodr_list">

@@ -1695,10 +1695,12 @@ function get_sendcost($cart_id, $selected=1)
                         SUM(ct_qty) as qty
                     from {$g5['g5_shop_cart_table']}
                     where it_id = '{$sc['it_id']}'
-                      and od_id = '$cart_id' ";
+                      and od_id = '$cart_id'
+                      and ct_status IN ( '쇼핑', '주문', '입금', '준비', '배송', '완료' )
+                      and ct_select = '$selected'";
         $sum = sql_fetch($sql);
 
-        $send_cost = get_item_sendcost($sc['it_id'], $sum['price'], $sum['qty']);
+        $send_cost = get_item_sendcost($sc['it_id'], $sum['price'], $sum['qty'], $cart_id);
 
         if($send_cost > 0)
             $total_send_cost += $send_cost;
@@ -1727,33 +1729,36 @@ function get_sendcost($cart_id, $selected=1)
 
 
 // 상품별 배송비
-function get_item_sendcost($it_id, $price, $qty)
+function get_item_sendcost($it_id, $price, $qty, $cart_id)
 {
     global $g5, $default;
 
     $sql = " select it_id, it_sc_type, it_sc_method, it_sc_price, it_sc_minimum, it_sc_qty
-                from {$g5['g5_shop_item_table']}
-                where it_id = '$it_id' ";
-    $it = sql_fetch($sql);
-    if(!$it['it_id'])
+                from {$g5['g5_shop_cart_table']}
+                where it_id = '$it_id'
+                  and od_id = '$cart_id'
+                order by ct_id
+                limit 1 ";
+    $ct = sql_fetch($sql);
+    if(!$ct['it_id'])
         return 0;
 
-    if($it['it_sc_type'] > 1) {
-        if($it['it_sc_type'] == 2) { // 조건부무료
-            if($price >= $it['it_sc_minimum'])
+    if($ct['it_sc_type'] > 1) {
+        if($ct['it_sc_type'] == 2) { // 조건부무료
+            if($price >= $ct['it_sc_minimum'])
                 $sendcost = 0;
             else
-                $sendcost = $it['it_sc_price'];
-        } else if($it['it_sc_type'] == 3) { // 유료배송
-            $sendcost = $it['it_sc_price'];
+                $sendcost = $ct['it_sc_price'];
+        } else if($ct['it_sc_type'] == 3) { // 유료배송
+            $sendcost = $ct['it_sc_price'];
         } else { // 수량별 부과
-            if(!$it['it_sc_qty'])
-                $it['it_sc_qty'] = 1;
+            if(!$ct['it_sc_qty'])
+                $ct['it_sc_qty'] = 1;
 
-            $q = ceil((int)$qty / (int)$it['it_sc_qty']);
-            $sendcost = (int)$it['it_sc_price'] * $q;
+            $q = ceil((int)$qty / (int)$ct['it_sc_qty']);
+            $sendcost = (int)$ct['it_sc_price'] * $q;
         }
-    } else if($it['it_sc_type'] == 1) { // 무료배송
+    } else if($ct['it_sc_type'] == 1) { // 무료배송
         $sendcost = 0;
     } else {
         $sendcost = -1;
