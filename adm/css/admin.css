@@ -338,6 +338,7 @@ tfoot td {font-weight:bold;text-align:center}
 
 /* 공통 */
 .td_addr {text-align:left !important}
+.td_addr_line {line-height:2em}
 .td_amount {width:70px;text-align:center}
 .td_auth {width:100px;text-align:center}
 .td_auth_mbnick {width:200px}

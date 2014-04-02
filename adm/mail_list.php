@@ -62,7 +62,8 @@ $colspan = 7;
 
     <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
-            <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['ma_id'] ?>" title="메일선택">
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['ma_subject']; ?> 메일</label>
+            <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['ma_id'] ?>">
         </td>
         <td class="td_num"><?php echo $num ?></td>
         <td><a href="./mail_form.php?w=u&amp;ma_id=<?php echo $row['ma_id'] ?>"><?php echo $row['ma_subject'] ?></a></td>

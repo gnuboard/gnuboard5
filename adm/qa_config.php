@@ -214,40 +214,40 @@ if(!isset($qaconfig['qa_include_head'])) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="qa_subject_len">제목 길이</label></th>
+            <th scope="row"><label for="qa_subject_len">제목 길이<strong class="sound_only"> 필수</strong></label></th>
             <td>
                 <?php echo help('목록에서의 제목 글자수') ?>
                 <input type="text" name="qa_subject_len" value="<?php echo $qaconfig['qa_subject_len'] ?>" id="qa_subject_len" required class="required numeric frm_input"  size="4">
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="qa_mobile_subject_len">모바일 제목 길이</label></th>
+            <th scope="row"><label for="qa_mobile_subject_len">모바일 제목 길이<strong class="sound_only"> 필수</strong></label></th>
             <td>
                 <?php echo help('목록에서의 제목 글자수') ?>
                 <input type="text" name="qa_mobile_subject_len" value="<?php echo $qaconfig['qa_mobile_subject_len'] ?>" id="qa_mobile_subject_len" required class="required numeric frm_input"  size="4">
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="qa_page_rows">페이지당 목록 수</label></th>
+            <th scope="row"><label for="qa_page_rows">페이지당 목록 수<strong class="sound_only"> 필수</strong></label></th>
             <td>
                 <input type="text" name="qa_page_rows" value="<?php echo $qaconfig['qa_page_rows'] ?>" id="qa_page_rows" required class="required numeric frm_input"  size="4">
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="qa_mobile_page_rows">모바일 페이지당 목록 수</label></th>
+            <th scope="row"><label for="qa_mobile_page_rows">모바일 페이지당 목록 수<strong class="sound_only"> 필수</strong></label></th>
             <td>
                 <input type="text" name="qa_mobile_page_rows" value="<?php echo $qaconfig['qa_mobile_page_rows'] ?>" id="qa_mobile_page_rows" required class="required numeric frm_input"  size="4">
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="qa_image_width">이미지 폭 크기</label></th>
+            <th scope="row"><label for="qa_image_width">이미지 폭 크기<strong class="sound_only"> 필수</strong></label></th>
             <td>
                 <?php echo help('게시판에서 출력되는 이미지의 폭 크기') ?>
                 <input type="text" name="qa_image_width" value="<?php echo $qaconfig['qa_image_width'] ?>" id="qa_image_width" required class="required numeric frm_input"  size="4"> 픽셀
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="qa_upload_size">파일 업로드 용량</label></th>
+            <th scope="row"><label for="qa_upload_size">파일 업로드 용량<strong class="sound_only"> 필수</strong></label></th>
             <td>
                 <?php echo help('최대 '.ini_get("upload_max_filesize").' 이하 업로드 가능, 1 MB = 1,048,576 bytes') ?>
                 업로드 파일 한개당 <input type="text" name="qa_upload_size" value="<?php echo $qaconfig['qa_upload_size'] ?>" id="qa_upload_size" required class="required numeric frm_input"  size="10"> bytes 이하

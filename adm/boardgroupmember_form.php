@@ -79,7 +79,10 @@ $colspan = 4;
         $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
     ?>
     <tr>
-        <td class="td_chk"><input type="checkbox" name="chk[]" value="<?php echo $row['gm_id'] ?>" id="chk_<?php echo $i ?>" title="<?php echo $row['gr_subject'] ?> 그룹 선택"></td>
+        <td class="td_chk">
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['gr_subject'] ?> 그룹</label>
+            <input type="checkbox" name="chk[]" value="<?php echo $row['gm_id'] ?>" id="chk_<?php echo $i ?>">
+        </td>
         <td class="td_grid"><a href="<?php echo G5_BBS_URL; ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
         <td class="td_category"><?php echo $row['gr_subject'] ?></td>
         <td class="td_datetime"><?php echo $row['gm_datetime'] ?></td>

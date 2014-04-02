@@ -39,7 +39,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <form name="upload_form" method="post" enctype="multipart/form-data" id="sms5_fileup_frm">
 <div>
     <label for="upload_bg_no">그룹선택</label>
-    <select name="upload_bg_no" id="upload_bg_no" >
+    <select name="upload_bg_no" id="upload_bg_no">
         <option value=""></option>
         <option value="1"> <?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?>) </option>
         <?php for ($i=0; $i<count($group); $i++) { ?>
@@ -82,7 +82,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     </p>
 
     <label for="download_bg_no">그룹선택</label>
-    <select name="download_bg_no" id="download_bg_no" >
+    <select name="download_bg_no" id="download_bg_no">
         <option value=""> </option>
         <option value="all"> 전체 </option>
         <option value="1"> <?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?>) </option>

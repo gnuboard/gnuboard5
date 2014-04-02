@@ -81,7 +81,7 @@ $colspan = 5;
     <thead>
     <tr>
         <th scope="col">
-            <label for="chkall" class="sound_only">전체</label>
+            <label for="chkall" class="sound_only">현재 페이지 회원 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
         <th scope="col"><?php echo subject_sort_link('a.mb_id') ?>회원아이디</a></th>
@@ -179,13 +179,13 @@ echo $pagelist;
             <th scope="row"><label for="mb_id">회원아이디<strong class="sound_only">필수</strong></label></th>
             <td>
                 <strong id="msg_mb_id" class="msg_sound_only"></strong>
-                <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" title="회원아이디" required class="required frm_input">
+                <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="required frm_input">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="au_menu">접근가능메뉴<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select id="au_menu" name="au_menu" required class="required" title="접근가능메뉴">
+                <select id="au_menu" name="au_menu" required class="required">
                     <option value=''>선택하세요</option>
                     <?php
                     foreach($auth_menu as $key=>$value)

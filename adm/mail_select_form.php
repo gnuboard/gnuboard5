@@ -44,7 +44,7 @@ include_once('./admin.head.php');
 </div>
 
 <form name="frmsendmailselectform" id="frmsendmailselectform" action="./mail_select_list.php" method="post" autocomplete="off">
-<input type="hidden" name="ma_id" value='<?php echo $ma_id ?>'>
+<input type="hidden" name="ma_id" value="<?php echo $ma_id ?>">
 
 <div class="tbl_frm01 tbl_wrap">
     <table>
@@ -76,14 +76,16 @@ include_once('./admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="mb_level_from">권한</label></th>
+        <th scope="row">권한</th>
         <td>
-            <select name="mb_level_from" id="mb_level_from" title="최소권한">
+            <label for="mb_level_from" class="sound_only">최소권한</label>
+            <select name="mb_level_from" id="mb_level_from">
             <?php for ($i=1; $i<=10; $i++) { ?>
                 <option value="<?php echo $i ?>"><?php echo $i ?></option>
             <?php } ?>
             </select> 에서
-            <select name="mb_level_to" id="mb_level_to" title="최대권한">
+            <label for="mb_level_to" class="sound_only">최대권한</label>
+            <select name="mb_level_to" id="mb_level_to">
             <?php for ($i=1; $i<=10; $i++) { ?>
                 <option value="<?php echo $i ?>"<?php echo $i==10 ? " selected" : ""; ?>><?php echo $i ?></option>
             <?php } ?>
@@ -93,7 +95,7 @@ include_once('./admin.head.php');
     <tr>
         <th scope="row"><label for="gr_id">게시판그룹회원</label></th>
         <td>
-            <select id="gr_id" name="gr_id">
+            <select name="gr_id" id="gr_id">
                 <option value=''>전체</option>
                 <?php
                 $sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_subject ";
