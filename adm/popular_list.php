@@ -101,7 +101,10 @@ var list_delete_php = 'popular_list.php';
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 인기검색어 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">현재 페이지 인기검색어 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col"><?php echo subject_sort_link('pp_word') ?>검색어</a></th>
         <th scope="col">등록일</th>
         <th scope="col">등록IP</th>
@@ -117,7 +120,8 @@ var list_delete_php = 'popular_list.php';
 
     <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
-            <input type="checkbox" name="chk[]" value="<?php echo $row['pp_id'] ?>" id="chk_<?php echo $i ?>" title="<?php echo $word ?> 선택">
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $word ?></label>
+            <input type="checkbox" name="chk[]" value="<?php echo $row['pp_id'] ?>" id="chk_<?php echo $i ?>">
         </td>
         <td><a href="<?php echo $_SERVER['PHP_SELF'] ?>?sfl=pp_word&amp;stx=<?php echo $word ?>"><?php echo $word ?></a></td>
         <td><?php echo $row['pp_date'] ?></td>

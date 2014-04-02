@@ -59,9 +59,9 @@ include_once(G5_ADMIN_PATH."/admin.head.php");
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="bg_no">그룹</label></th>
+        <th scope="row"><label for="bg_no">그룹 <strong class="sound_only"> 필수</strong></label></th>
         <td>
-            <select name="bg_no" id="bg_no" required>
+            <select name="bg_no" id="bg_no" required class="required">
                 <option value="1"><?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?> 명)</option>
                 <?php
                 $qry = sql_query("select * from {$g5['sms5_book_group_table']} where bg_no> 1 order by bg_name");
@@ -73,11 +73,11 @@ include_once(G5_ADMIN_PATH."/admin.head.php");
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="bk_name">이름</label></th>
+        <th scope="row"><label for="bk_name">이름<strong class="sound_only"> 필수</strong></label></th>
         <td><input type="text" name="bk_name" id="bk_name" maxlength="50" value="<?php echo $write['bk_name']?>" required class="frm_input required"></td>
     </tr>
     <tr>
-        <th scope="row"><label for="bk_hp">휴대폰번호</label></th>
+        <th scope="row"><label for="bk_hp">휴대폰번호<strong class="sound_only"> 필수</strong></label></th>
         <td>
             <input type="text" name="bk_hp" id="bk_hp" value="<?php echo $write['bk_hp']?>" required class="frm_input required">
             <?php if( count($exist_hplist) ) { // 중복되는 목록이 있다면 ?>

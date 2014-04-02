@@ -240,24 +240,25 @@ $colspan = 16;
         <td headers="mb_list_nick" class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
         <td headers="mb_list_mailc" class="td_chk"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
         <td headers="mb_list_open" class="td_chk">
-            <label for="mb_open_<?php echo $i; ?>" class="sound_only"></label>
+            <label for="mb_open_<?php echo $i; ?>" class="sound_only">정보공개</label>
             <input type="checkbox" name="mb_open[<?php echo $i; ?>]" <?php echo $row['mb_open']?'checked':''; ?> value="1" id="mb_open_<?php echo $i; ?>">
         </td>
         <td headers="mb_list_mailr" class="td_chk">
-            <label for="mb_mailling_<?php echo $i; ?>" class="sound_only"></label>
+            <label for="mb_mailling_<?php echo $i; ?>" class="sound_only">메일수신</label>
             <input type="checkbox" name="mb_mailling[<?php echo $i; ?>]" <?php echo $row['mb_mailling']?'checked':''; ?> value="1" id="mb_mailling_<?php echo $i; ?>">
         </td>
         <td headers="mb_list_sms" class="td_chk">
-            <label for="mb_sms_<?php echo $i; ?>" class="sound_only"></label>
+            <label for="mb_sms_<?php echo $i; ?>" class="sound_only">SMS수신</label>
             <input type="checkbox" name="mb_sms[<?php echo $i; ?>]" <?php echo $row['mb_sms']?'checked':''; ?> value="1" id="mb_sms_<?php echo $i; ?>">
         </td>
         <td headers="mb_list_adultc" class="td_chk">
-            <label for="mb_adult_<?php echo $i; ?>" class="sound_only"></label>
+            <label for="mb_adult_<?php echo $i; ?>" class="sound_only">성인인증</label>
             <input type="checkbox" name="mb_adult[<?php echo $i; ?>]" <?php echo $row['mb_adult']?'checked':''; ?> value="1" id="mb_adult_<?php echo $i; ?>">
         </td>
         <td headers="mb_list_deny" class="td_chk">
             <?php if(empty($row['mb_leave_date'])){ ?>
             <input type="checkbox" name="mb_intercept_date[<?php echo $i; ?>]" <?php echo $row['mb_intercept_date']?'checked':''; ?> value="<?php echo $intercept_date ?>" id="mb_intercept_date_<?php echo $i ?>" title="<?php echo $intercept_title ?>">
+            <label for="mb_intercept_date_<?php echo $i; ?>" class="sound_only">접근차단</label>
             <?php } ?>
         </td>
         <td headers="mb_list_tel" class="td_tel"><?php echo $row['mb_tel']; ?></td>

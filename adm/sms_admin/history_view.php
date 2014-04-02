@@ -70,7 +70,7 @@ function all_send()
 <input type="hidden" name="st" value="<?php echo $st?>">
 <input type="hidden" name="sv" value="<?php echo $sv?>">
 <label for="sst" class="sound_only">검색대상</label>
-<select name="sst">
+<select name="sst" id="sst">
     <option value="hs_name" <?php echo $sst=='hs_name'?'selected':''?>>이름</option>
     <option value="hs_hp" <?php echo $sst=='hs_hp'?'selected':''?>>휴대폰번호</option>
 </select>

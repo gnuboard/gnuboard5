@@ -80,12 +80,12 @@ function add_menu_list(name, link, code)
 
     var list = "<tr class=\"menu_list menu_group_<?php echo $code; ?>\">";
     list += "<td"+sub_menu_class+">";
-    list += "<label for=\"me_name_"+ms+"\"  class=\"sound_only\">메뉴</label>";
+    list += "<label for=\"me_name_"+ms+"\"  class=\"sound_only\">메뉴<strong class=\"sound_only\"> 필수</strong></label>";
     list += "<input type=\"hidden\" name=\"code[]\" value=\"<?php echo $code; ?>\">";
     list += "<input type=\"text\" name=\"me_name[]\" value=\""+name+"\" id=\"me_name_"+ms+"\" required class=\"required frm_input full_input\">";
     list += "</td>";
     list += "<td>";
-    list += "<label for=\"me_link_"+ms+"\"  class=\"sound_only\">링크</label>";
+    list += "<label for=\"me_link_"+ms+"\"  class=\"sound_only\">링크<strong class=\"sound_only\"> 필수</strong></label>";
     list += "<input type=\"text\" name=\"me_link[]\" value=\""+link+"\" id=\"me_link_"+ms+"\" required class=\"required frm_input full_input\">";
     list += "</td>";
     list += "<td class=\"td_mng\">";
@@ -96,7 +96,7 @@ function add_menu_list(name, link, code)
     list += "</select>";
     list += "</td>";
     list += "<td class=\"td_numsmall\">";
-    list += "<label for=\"me_order_"+ms+"\"  class=\"sound_only\">순서</label>";
+    list += "<label for=\"me_order_"+ms+"\"  class=\"sound_only\">순서<strong class=\"sound_only\"> 필수</strong></label>";
     list += "<input type=\"text\" name=\"me_order[]\" value=\"0\" id=\"me_order_"+ms+"\" required class=\"required frm_input\" size=\"5\">";
     list += "</td>";
     list += "<td class=\"td_mngsmall\">";

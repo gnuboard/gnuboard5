@@ -95,7 +95,8 @@ function point_clear()
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
-<select name="sfl" title="검색대상">
+<label for="sfl" class="sound_only">검색대상</label>
+<select name="sfl" id="sfl">
     <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
     <option value="po_content"<?php echo get_selected($_GET['sfl'], "po_content"); ?>>내용</option>
 </select>
@@ -158,7 +159,7 @@ function point_clear()
         <td class="td_chk">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
             <input type="hidden" name="po_id[<?php echo $i ?>]" value="<?php echo $row['po_id'] ?>" id="po_id_<?php echo $i ?>">
-            <label for="chk_<?php echo $i; ?>" class="sound_only">내역</label>
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['po_content'] ?> 내역</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>

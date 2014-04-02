@@ -86,7 +86,10 @@ $colspan = 7;
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
     <tr>
-        <th scope="col"><input type="checkbox" name="chkall" value="1" id="chkall" title="현재 페이지 투표 전체선택" onclick="check_all(this.form)"></th>
+        <th scope="col">
+            <label for="chkall" class="sound_only">현재 페이지 투표 전체</label>
+            <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
+        </th>
         <th scope="col">번호</th>
         <th scope="col">제목</th>
         <th scope="col">투표권한</th>
@@ -110,7 +113,8 @@ $colspan = 7;
 
     <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
-            <input type="checkbox" name="chk[]" value="<?php echo $row['po_id'] ?>" id="chk_<?php echo $i ?>" title="투표선택">
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo cut_str(get_text($row['po_subject']),70) ?> 투표</label>
+            <input type="checkbox" name="chk[]" value="<?php echo $row['po_id'] ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_num"><?php echo $row['po_id'] ?></td>
         <td><?php echo cut_str(get_text($row['po_subject']),70) ?></td>

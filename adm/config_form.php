@@ -505,7 +505,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <th scope="row"><label for="cf_link_target">새창 링크</label></th>
             <td>
                 <?php echo help('글내용중 자동 링크되는 타켓을 지정합니다.') ?>
-                <select id="cf_link_target" name="cf_link_target">
+                <select name="cf_link_target" id="cf_link_target">
                     <option value="_blank"<?php echo get_selected($config['cf_link_target'], '_blank') ?>>_blank</option>
                     <option value="_self"<?php echo get_selected($config['cf_link_target'], '_self') ?>>_self</option>
                     <option value="_top"<?php echo get_selected($config['cf_link_target'], '_top') ?>>_top</option>
@@ -650,14 +650,14 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td><input type="text" name="cf_register_point" value="<?php echo $config['cf_register_point'] ?>" id="cf_register_point" class="frm_input" size="5"> 점</td>
         </tr>
         <tr>
-            <th scope="row" id="th310"><label for='cf_leave_day'>회원탈퇴후 삭제일</label></th>
+            <th scope="row" id="th310"><label for="cf_leave_day">회원탈퇴후 삭제일</label></th>
             <td colspan="3"><input type="text" name="cf_leave_day" value="<?php echo $config['cf_leave_day'] ?>" id="cf_leave_day" class="frm_input" size="2"> 일 후 자동 삭제</td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_use_member_icon">회원아이콘 사용</label></th>
             <td>
                 <?php echo help('게시물에 게시자 닉네임 대신 아이콘 사용') ?>
-                <select id="cf_use_member_icon" name="cf_use_member_icon">
+                <select name="cf_use_member_icon" id="cf_use_member_icon">
                     <option value="0"<?php echo get_selected($config['cf_use_member_icon'], '0') ?>>미사용
                     <option value="1"<?php echo get_selected($config['cf_use_member_icon'], '1') ?>>아이콘만 표시
                     <option value="2"<?php echo get_selected($config['cf_use_member_icon'], '2') ?>>아이콘+이름 표시
@@ -1070,7 +1070,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 비밀번호를 입력합니다."); ?>
-                <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" class="frm_input" id="cf_icode_pw">
+                <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" id="cf_icode_pw" class="frm_input">
             </td>
         </tr>
         <tr>
