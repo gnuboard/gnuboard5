@@ -152,7 +152,7 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
 </select>
 
 <label for="svv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-<input type="text" size="15" name="sv" id="svv" class="frm_input" value="<?php echo $sv?>">
+<input type="text" size="15" name="sv" value="<?php echo $sv?>" id="svv" required class="required frm_input">
 <input type="submit" value="검색" class="btn_submit">
 </form>
 

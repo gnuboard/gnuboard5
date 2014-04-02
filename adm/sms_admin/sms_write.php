@@ -113,7 +113,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
         </div>
 
         <div id="write_reply">
-            <label for="wr_reply">회신</label>
+            <label for="wr_reply">회신<strong class="sound_only"> 필수</strong></label>
             <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input" size="17" maxlength="20">
         </div>
 
@@ -140,7 +140,6 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
                 <label for="wr_booking"><span class="sound_only">예약전송 </span>사용</label>
                 <input type="checkbox" name="wr_booking" id="wr_booking" onclick="booking(this.checked)">
             </div>
-
 
             <select name="wr_by" id="wr_by" disabled>
                 <option value="<?php echo date('Y')?>"><?php echo date('Y')?></option>

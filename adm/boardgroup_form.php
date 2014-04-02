@@ -59,7 +59,7 @@ include_once('./admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="gr_subject">그룹 제목<strong class="sound_only">필수</strong></label></th>
+        <th scope="row"><label for="gr_subject">그룹 제목<strong class="sound_only"> 필수</strong></label></th>
         <td>
             <input type="text" name="gr_subject" value="<?php echo get_text($group['gr_subject']) ?>" id="gr_subject" required class="required frm_input" size="80">
             <?php
@@ -80,7 +80,7 @@ include_once('./admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="gr_admin">그룹 관리자</label></th>
+        <th scope="row"><?php if ($is_admin == 'super') { ?><label for="gr_admin"><?php } ?>그룹 관리자<?php if ($is_admin == 'super') { ?></label><?php } ?></th>
         <td>
             <?php
             if ($is_admin == 'super')

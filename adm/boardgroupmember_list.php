@@ -57,15 +57,13 @@ $colspan = 7;
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
 <input type="hidden" name="gr_id" value="<?php echo $gr_id ?>">
-
-    <label for="sfl" class="sound_only">검색대상</label>
-    <select id="sfl" name="sfl">
-        <option value="a.mb_id"<?php echo get_selected($_GET['sfl'], "a.mb_id") ?>>회원아이디</option>
-    </select>
-    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
-    <input type="submit" value="검색" class="btn_submit">
-
+<label for="sfl" class="sound_only">검색대상</label>
+<select name="sfl" id="sfl">
+    <option value="a.mb_id"<?php echo get_selected($_GET['sfl'], "a.mb_id") ?>>회원아이디</option>
+</select>
+<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+<input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
+<input type="submit" value="검색" class="btn_submit">
 </form>
 
 <form name="fboardgroupmember" id="fboardgroupmember" action="./boardgroupmember_update.php" onsubmit="return fboardgroupmember_submit(this);" method="post">
