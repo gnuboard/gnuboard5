@@ -61,7 +61,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         <thead>
         <tr>
             <th scope="col">
-                <label for="chkall" class="sound_only">게시판 전체</label>
+                <label for="chkall" class="sound_only">현재 페이지 게시판 전체</label>
                 <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
             </th>
             <th scope="col">게시판</th>
