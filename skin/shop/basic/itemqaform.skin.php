@@ -37,7 +37,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             <td><input type="text" name="iq_hp" value="<?php echo $qa['iq_hp']; ?>" class="frm_input" size="20"> 휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</td>
         </tr>
         <tr>
-            <th scope="row"><label for="iq_subject">제목</label></th>
+            <th scope="row"><label for="iq_subject">제목<strong class="sound_only"> 필수</strong></label></th>
             <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
         </tr>
         <tr>

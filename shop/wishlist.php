@@ -61,7 +61,8 @@ include_once('./_head.php');
                 ?>
                 품절
                 <?php } else { //품절이 아니면 체크할수 있도록한다 ?>
-                <input type="checkbox" name="chk_it_id[<?php echo $i; ?>]" value="1" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
+                <label for="chk_it_id_<?php echo $i; ?>" class="sound_only"><?php echo $row['it_name']; ?></label>
+                <input type="checkbox" name="chk_it_id[<?php echo $i; ?>]" value="1" id="chk_it_id_<?php echo $i; ?>" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
                 <?php } ?>
                 <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
                 <input type="hidden" name="io_type[<?php echo $row['it_id']; ?>][0]" value="0">

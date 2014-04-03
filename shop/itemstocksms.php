@@ -38,7 +38,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             <td><?php echo $it['it_name']; ?></td>
         </tr>
         <tr>
-            <th scope="row"><label for="ss_hp">휴대폰번호</label></th>
+            <th scope="row"><label for="ss_hp">휴대폰번호<strong class="sound_only"> 필수</strong></label></th>
             <td><input type="text" name="ss_hp" value="<?php echo $member['mb_hp']; ?>" id="ss_hp" required class="required frm_input"></td>
         </tr>
         <tr>

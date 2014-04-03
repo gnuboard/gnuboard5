@@ -101,7 +101,8 @@ if($option_2) {
             <span class="sit_opt_subj"><?php echo $row['ct_option']; ?></span>
             <span class="sit_opt_prc"><?php echo $io_price; ?></span>
             <div>
-                <input type="text" name="ct_qty[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['ct_qty']; ?>" class="frm_input" size="5">
+                <label for="ct_qty_<?php echo $i; ?>" class="sound_only">수량</label>
+                <input type="text" name="ct_qty[<?php echo $it['it_id']; ?>][]" value="<?php echo $row['ct_qty']; ?>" id="ct_qty_<?php echo $i; ?>" class="frm_input" size="5">
                 <button type="button" class="sit_qty_plus btn_frmline">증가</button>
                 <button type="button" class="sit_qty_minus btn_frmline">감소</button>
                 <button type="button" class="btn_frmline">삭제</button>

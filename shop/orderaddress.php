@@ -53,7 +53,8 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
         <thead>
         <tr>
             <th scope="col">
-                <label for="chk_all" class="sound_only">전체선택</label><input type="checkbox" name="chk_all" id="chk_all">
+                <label for="chk_all" class="sound_only">전체선택</label>
+                <input type="checkbox" name="chk_all" id="chk_all">
             </th>
             <th scope="col">배송지명</th>
             <th scope="col">기본<br>배송지</th>
@@ -75,8 +76,14 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
                 <label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
                 <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
             </td>
-            <td class="td_name"><input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>"></td>
-            <td class="td_default"><label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label><input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>></td>
+            <td class="td_name">
+                <label for="ad_subject" class="sound_only">배송지명</label>
+                <input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>">
+            </td>
+            <td class="td_default">
+                <label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label>
+                <input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>>
+            </td>
             <td class="td_namesmall"><?php echo $row['ad_name']; ?></td>
             <td class="td_numbig"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
             <td><?php echo print_address($row['ad_addr1'], $row['ad_addr2'], $row['ad_addr3']); ?></td>

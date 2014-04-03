@@ -355,11 +355,11 @@ function get_intall_file()
                 <td><?php echo display_price($pp['pp_price']); ?></td>
             </tr>
             <tr>
-                <th scope="row"><label for="pp_name">이름</label></th>
+                <th scope="row"><label for="pp_name">이름<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="pp_name" value="<?php echo $pp['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
             </tr>
             <tr>
-                <th scope="row"><label for="pp_email">이메일</label></th>
+                <th scope="row"><label for="pp_email">이메일<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="pp_email" value="<?php echo $member['mb_email']; ?>" id="pp_email" required class="required frm_input"></td>
             </tr>
             <tr>
