@@ -200,8 +200,10 @@ $amt_tax = (int)($amt_tot - $amt_sup);
             <tr>
                 <th scope="row">발행 용도</th>
                 <td>
-                    <input type="radio" name="tr_code" value="0" onClick="jsf__chk_tr_code( this.form )" checked>소득공제용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="radio" name="tr_code" value="1" onClick="jsf__chk_tr_code( this.form )">지출증빙용
+                    <input type="radio" name="tr_code" value="0" id="tr_code1" onClick="jsf__chk_tr_code( this.form )" checked>
+                    <label for="tr_code1">소득공제용</label>
+                    <input type="radio" name="tr_code" value="1" id="tr_code2" onClick="jsf__chk_tr_code( this.form )">
+                    <label for="tr_code2">지출증빙용</label>
                 </td>
             </tr>
             <tr>

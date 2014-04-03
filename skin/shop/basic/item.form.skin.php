@@ -263,7 +263,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
                     <span class="sit_opt_subj"><?php echo $it['it_name']; ?></span>
                     <span class="sit_opt_prc">(+0원)</span>
                     <div>
-                        <input type="text" name="ct_qty[<?php echo $it_id; ?>][]" value="<?php echo $it['it_buy_min_qty']; ?>" class="frm_input" size="5">
+                        <label for="ct_qty_<?php echo $i; ?>" class="sound_only">수량</label>
+                        <input type="text" name="ct_qty[<?php echo $it_id; ?>][]" value="<?php echo $it['it_buy_min_qty']; ?>" id="ct_qty_<?php echo $i; ?>" class="frm_input" size="5">
                         <button type="button" class="sit_qty_plus btn_frmline">증가</button>
                         <button type="button" class="sit_qty_minus btn_frmline">감소</button>
                     </div>

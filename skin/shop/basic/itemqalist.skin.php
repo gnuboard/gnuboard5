@@ -12,8 +12,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div id="sqa_sch">
     <a href="<?php echo $_SERVER['PHP_SELF']; ?>">전체보기</a>
-    <label for="sfl" class="sound_only">검색항목</label>
-    <select name="sfl" required id="sfl">
+    <label for="sfl" class="sound_only">검색항목<strong class="sound_only"> 필수</strong></label>
+    <select name="sfl" id="sfl" required class="required">
         <option value="">선택</option>
         <option value="b.it_name"    <?php echo get_selected($sfl, "b.it_name", true); ?>>상품명</option>
         <option value="a.it_id"      <?php echo get_selected($sfl, "a.it_id"); ?>>상품코드</option>

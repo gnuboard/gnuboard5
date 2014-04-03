@@ -38,16 +38,16 @@ include_once(G5_PATH.'/head.sub.php');
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row"><label for="to_email">추천받는 분 E-mail</label></th>
-            <td><input type="text" name="to_email" id="to_email" required class="frm_input" size="51"></td>
+            <th scope="row"><label for="to_email">추천받는 분 E-mail<strong class="sound_only"> 필수</strong></label></th>
+            <td><input type="text" name="to_email" id="to_email" required class="frm_input required" size="51"></td>
         </tr>
         <tr>
-            <th scope="row"><label for="subject">제목</label></th>
-            <td><input type="text" name="subject" id="subject" required class="frm_input" size="51"></td>
+            <th scope="row"><label for="subject">제목<strong class="sound_only"> 필수</strong></label></th>
+            <td><input type="text" name="subject" id="subject" required class="frm_input required" size="51"></td>
         </tr>
         <tr>
-            <th scope="row"><label for="content">내용</label></th>
-            <td><textarea name="content" id="content" required></textarea></td>
+            <th scope="row"><label for="content">내용<strong class="sound_only"> 필수</strong></label></th>
+            <td><textarea name="content" id="content" required class="required"></textarea></td>
         </tr>
         </tbody>
         </table>
