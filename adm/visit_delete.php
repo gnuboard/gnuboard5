@@ -32,7 +32,7 @@ $now_year = (int)substr(G5_TIME_YMD, 0, 4);
             }
             ?>
         </select> 년
-        <label for="year" class="sound_only">월선택</label>
+        <label for="month" class="sound_only">월선택</label>
         <select name="month" id="month">
             <option value="">월선택</option>
             <?php
@@ -50,7 +50,7 @@ $now_year = (int)substr(G5_TIME_YMD, 0, 4);
         </select>
     </div>
     <div class="sch_last">
-        <label for="pass">관리자 비밀번호</label>
+        <label for="pass">관리자 비밀번호<strong class="sound_only"> 필수</strong></label>
         <input type="password" name="pass" id="pass" class="frm_input required">
         <input type="submit" value="확인" class="btn_submit">
     </div>

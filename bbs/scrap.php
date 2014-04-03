@@ -7,8 +7,6 @@ if (!$is_member)
 $g5['title'] = $member['mb_nick'].'님의 스크랩';
 include_once(G5_PATH.'/head.sub.php');
 
-$list = array();
-
 $sql_common = " from {$g5['scrap_table']} where mb_id = '{$member['mb_id']}' ";
 $sql_order = " order by ms_id desc ";
 

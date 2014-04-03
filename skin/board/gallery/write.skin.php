@@ -59,14 +59,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <tbody>
         <?php if ($is_name) { ?>
         <tr>
-            <th scope="row"><label for="wr_name">이름<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="wr_name">이름<strong class="sound_only"> 필수</strong></label></th>
             <td><input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input required" size="10" maxlength="20"></td>
         </tr>
         <?php } ?>
 
         <?php if ($is_password) { ?>
         <tr>
-            <th scope="row"><label for="wr_password">비밀번호<strong class="sound_only">필수</strong></label></th>
+            <th scope="row"><label for="wr_password">비밀번호<strong class="sound_only"> 필수</strong></label></th>
             <td><input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> class="frm_input <?php echo $password_required ?>" maxlength="20"></td>
         </tr>
         <?php } ?>

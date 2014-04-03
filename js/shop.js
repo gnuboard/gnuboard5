@@ -4,7 +4,7 @@ var isAndroid = (navigator.userAgent.toLowerCase().indexOf("android") > -1);
 
 $(function() {
     // 선택옵션
-    /* 가상서커 ctrl keyup 이베트 대응 */
+    /* 가상커서 ctrl keyup 이베트 대응 */
     $("select.it_option").live("keyup", function(e) {
         var sel_count = $("select.it_option").size();
         var idx = $("select.it_option").index($(this));
@@ -106,7 +106,7 @@ $(function() {
     });
 
     // 추가옵션
-    /* 가상서커 ctrl keyup 이베트 대응 */
+    /* 가상커서 ctrl keyup 이베트 대응 */
     $("select.it_supply").live("keyup", function(e) {
         var $el = $(this);
         var code = e.keyCode;

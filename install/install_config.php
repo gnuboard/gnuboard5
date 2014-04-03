@@ -29,31 +29,31 @@ if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="">Host</label></th>
+        <th scope="row"><label for="mysql_host">Host</label></th>
         <td>
             <input name="mysql_host" type="text" value="localhost" id="mysql_host">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">User</label></th>
+        <th scope="row"><label for="mysql_user">User</label></th>
         <td>
             <input name="mysql_user" type="text" id="mysql_user">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">Password</label></th>
+        <th scope="row"><label for="mysql_pass">Password</label></th>
         <td>
             <input name="mysql_pass" type="text" id="mysql_pass">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">DB</label></th>
+        <th scope="row"><label for="mysql_db">DB</label></th>
         <td>
             <input name="mysql_db" type="text" id="mysql_db">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">TABLE명 접두사</label></th>
+        <th scope="row"><label for="table_prefix">TABLE명 접두사</label></th>
         <td>
             <input name="table_prefix" type="text" value="g5_" id="table_prefix">
             <span>가능한 변경하지 마십시오.</span>
@@ -89,25 +89,25 @@ if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
     </colgroup>
     <tbody>
     <tr>
-        <th scope="row"><label for="">회원 ID</label></th>
+        <th scope="row"><label for="admin_id">회원 ID</label></th>
         <td>
             <input name="admin_id" type="text" value="admin" id="admin_id">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">비밀번호</label></th>
+        <th scope="row"><label for="admin_pass">비밀번호</label></th>
         <td>
             <input name="admin_pass" type="text" id="admin_pass">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">이름</label></th>
+        <th scope="row"><label for="admin_name">이름</label></th>
         <td>
             <input name="admin_name" type="text" value="최고관리자" id="admin_name">
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="">E-mail</label></th>
+        <th scope="row"><label for="admin_email">E-mail</label></th>
         <td>
             <input name="admin_email" type="text" value="admin@domain.com" id="admin_email">
         </td>

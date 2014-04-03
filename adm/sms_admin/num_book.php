@@ -11,7 +11,7 @@ $token = get_token();
 
 $g5['title'] = "휴대폰번호 관리";
 
-if (!$page) $page = 1;
+if ($page < 1) $page = 1;
 
 if (is_numeric($bg_no))
     $sql_group = " and bg_no='$bg_no' ";
@@ -130,7 +130,7 @@ function no_hp_click(val)
     <?php } ?>
 </select>
 <input type="checkbox" name="no_hp" id="no_hp" <?php echo $no_hp_checked?> onclick="no_hp_click(this.checked)">
-<label for="no_hp"> 휴대폰 소유자만 보기</label>
+<label for="no_hp">휴대폰 소유자만 보기</label>
 </form>
 
 <div class="btn_add01 btn_add">
@@ -150,7 +150,7 @@ function no_hp_click(val)
     <thead>
     <tr>
         <th scope="col">
-            <label for="chk_all" class="sound_only">현재 페이지 전체선택</label>
+            <label for="chk_all" class="sound_only">현재 페이지 전체</label>
             <input type="checkbox" id="chk_all" onclick="book_all_checked(this.checked)">
         </th>
         <th scope="col">번호</th>

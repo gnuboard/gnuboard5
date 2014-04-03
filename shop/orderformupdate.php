@@ -545,13 +545,13 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
         $recv_number = preg_replace("/[^0-9]/", "", $recv_numbers[$s]);
         $send_number = preg_replace("/[^0-9]/", "", $send_numbers[$s]);
 
-        $sms_content = preg_replace("/{이름}/", $od_name, $sms_content);
-        $sms_content = preg_replace("/{보낸분}/", $od_name, $sms_content);
-        $sms_content = preg_replace("/{받는분}/", $od_b_name, $sms_content);
-        $sms_content = preg_replace("/{주문번호}/", $od_id, $sms_content);
-        $sms_content = preg_replace("/{주문금액}/", number_format($tot_ct_price + $od_send_cost + $od_send_cost2), $sms_content);
-        $sms_content = preg_replace("/{회원아이디}/", $member['mb_id'], $sms_content);
-        $sms_content = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_content);
+        $sms_content = str_replace("{이름}", $od_name, $sms_content);
+        $sms_content = str_replace("{보낸분}", $od_name, $sms_content);
+        $sms_content = str_replace("{받는분}", $od_b_name, $sms_content);
+        $sms_content = str_replace("{주문번호}", $od_id, $sms_content);
+        $sms_content = str_replace("{주문금액}", number_format($tot_ct_price + $od_send_cost + $od_send_cost2), $sms_content);
+        $sms_content = str_replace("{회원아이디}", $member['mb_id'], $sms_content);
+        $sms_content = str_replace("{회사명}", $default['de_admin_company_name'], $sms_content);
 
         $idx = 'de_sms_use'.($s + 2);
 
@@ -559,6 +559,16 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
             $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], iconv("utf-8", "euc-kr", stripslashes($sms_content)), "");
             $sms_count++;
         }
+    }
+
+    // 무통장 입금 때 고객에게 계좌정보 보냄
+    if($od_settle_case == '무통장' && $default['de_sms_use2'] && $od_misu > 0) {
+        $sms_content = $od_name."님의 입금계좌입니다.\n금액:".number_format($od_misu)."원\n계좌:".$od_bank_account."\n".$default['de_admin_company_name'];
+
+        $recv_number = preg_replace("/[^0-9]/", "", $od_hp);
+        $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']);
+        $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], iconv("utf-8", "euc-kr", $sms_content), "");
+        $sms_count++;
     }
 
     if($sms_count > 0)

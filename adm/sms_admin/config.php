@@ -11,7 +11,7 @@ if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
 if ($config['cf_icode_id'] && $config['cf_icode_pw'])
 {
-    $res = get_sock("http://www.icodekorea.com/res/userinfo.php?userid=".$config['cf_icode_id']."&amp;userpw=".$config['cf_icode_pw']);
+    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$config['cf_icode_id'].'&userpw='.$config['cf_icode_pw']);
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드
@@ -126,9 +126,9 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
         <td>
             <?php echo help("문자전송을 허용할 회원레벨을 선택해주세요.");?>
             <select name="cf_level" id="cf_level">
-            <?php for ($i=1; $i<=10; $i++) { ?>
-            <option value='<?php echo $i?>' <?php if ($sms5['cf_level'] == $i) echo 'selected';?> > <?php echo $i?> </option>
-            <?php } ?>
+                <?php for ($i=1; $i<=10; $i++) { ?>
+                <option value='<?php echo $i?>' <?php if ($sms5['cf_level'] == $i) echo 'selected';?> > <?php echo $i?> </option>
+                <?php } ?>
             </select>
             레벨 이상
         </td>

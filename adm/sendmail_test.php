@@ -47,7 +47,7 @@ if (isset($_POST['email'])) {
     <form name="fsendmailtest" method="post">
     <fieldset id="fsendmailtest">
         <legend>테스트메일 발송</legend>
-        <label for="email">받는 메일주소<strong class="sound_only">필수</strong></label>
+        <label for="email">받는 메일주소<strong class="sound_only"> 필수</strong></label>
         <input type="text" name="email" value="<?php echo $member['mb_email'] ?>" id="email" required class="required email frm_input" size="80">
         <input type="submit" value="발송" class="btn_submit">
     </fieldset>

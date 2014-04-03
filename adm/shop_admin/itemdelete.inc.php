@@ -41,7 +41,7 @@ if (!function_exists("itemdelete")) {
         @unlink(G5_DATA_PATH."/item/$it_id"."_t");
 
         // 장바구니 삭제
-        $sql = " delete from {$g5['g5_shop_cart_table']} where it_id = '$it_id' ";
+        $sql = " delete from {$g5['g5_shop_cart_table']} where it_id = '$it_id' and ct_status = '쇼핑' ";
         sql_query($sql);
 
         // 이벤트삭제

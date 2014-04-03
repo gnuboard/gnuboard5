@@ -18,6 +18,7 @@ $(function(){
     var $gnb = $(".gnb_1dli > a");
     $gnb.mouseover(function() {
         if(mouse_event) {
+            $("#hd").addClass("hd_zindex");
             $(".gnb_1dli").removeClass("gnb_1dli_over gnb_1dli_over2 gnb_1dli_on");
             $(this).parent().addClass("gnb_1dli_over gnb_1dli_on");
             menu_rearrange($(this).parent());
@@ -38,6 +39,7 @@ $(function(){
     });
 
     $gnb.focusin(function() {
+        $("#hd").addClass("hd_zindex");
         $(".gnb_1dli").removeClass("gnb_1dli_over gnb_1dli_over2 gnb_1dli_on");
         $(this).parent().addClass("gnb_1dli_over gnb_1dli_on");
         menu_rearrange($(this).parent());
@@ -71,6 +73,7 @@ $(function(){
 });
 
 function submenu_hide() {
+    $("#hd").removeClass("hd_zindex");
     $(".gnb_1dli").removeClass("gnb_1dli_over gnb_1dli_over2 gnb_1dli_on");
 }
 

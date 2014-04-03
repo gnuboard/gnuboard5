@@ -22,13 +22,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
     </div>
     <?php } ?>
 
-    <h2>상품 정보 고시</h2>
     <?php
     if ($it['it_info_value']) {
-        $info_data = unserialize($it['it_info_value']);
-        $gubun = $it['it_info_gubun'];
-        $info_array = $item_info[$gubun]['article'];
+        $info_data = unserialize(stripslashes($it['it_info_value']));
+        if(is_array($info_data)) {
+            $gubun = $it['it_info_gubun'];
+            $info_array = $item_info[$gubun]['article'];
     ?>
+    <h2>상품 정보 고시</h2>
     <!-- 상품정보고시 -->
     <ul id="sit_inf_open">
         <?php
@@ -43,7 +44,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         <?php } //foreach?>
     </ul>
     <!-- 상품정보고시 end -->
-    <?php } //if?>
+    <?php
+        } else {
+            if($is_admin) {
+                echo '<p>상품 정보 고시 정보가 올바르게 저장되지 않았습니다.<br>config.php 파일의 G5_ESCAPE_FUNCTION 설정을 addslashes 로<br>변경하신 후 관리자 &gt; 상품정보 수정에서 상품 정보를 다시 저장해주세요. </p>';
+            }
+        }
+    } //if
+    ?>
 
 </div>
 <!-- 상품설명 end -->

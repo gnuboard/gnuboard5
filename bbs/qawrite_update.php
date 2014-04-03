@@ -323,7 +323,7 @@ if($w == 'a' && $write['qa_email_recv'] && trim($write['qa_email'])) {
     include_once(G5_LIB_PATH.'/mailer.lib.php');
 
     $subject = $config['cf_title'].' '.$qaconfig['qa_title'].' 답변 알림 메일';
-    $content = conv_content($qa_content, $qa_html);
+    $content = nl2br(conv_unescape_nl($qa_content));
 
     mailer($config['cf_title'], $admin['mb_email'], $write['qa_email'], $subject, $content, 1);
 }
@@ -333,9 +333,9 @@ if(($w == '' || $w == 'r') && trim($qaconfig['qa_admin_email'])) {
     include_once(G5_LIB_PATH.'/mailer.lib.php');
 
     $subject = $config['cf_title'].' '.$qaconfig['qa_title'].' 질문 알림 메일';
-    $content = conv_content($qa_content, $qa_html);
+    $content = nl2br(conv_unescape_nl($qa_content));
 
-    mailer($config['cf_title'], $write['qa_email'], $qaconfig['qa_admin_email'], $subject, $content, 1);
+    mailer($config['cf_title'], $qa_email, $qaconfig['qa_admin_email'], $subject, $content, 1);
 }
 
 if($w == 'a')

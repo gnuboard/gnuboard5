@@ -253,7 +253,7 @@ for($i=0; $i<count($_POST['ii_article']); $i++) {
     $val = $_POST['ii_value'][$i];
     $value_array[$key] = $val;
 }
-$it_info_value = serialize($value_array);
+$it_info_value = addslashes(serialize($value_array));
 
 // 포인트 비율 값 체크
 if($it_point_type == 1 && $it_point > 99)

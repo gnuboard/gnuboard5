@@ -109,12 +109,12 @@ function conv_sms_contents($od_id, $contents)
         $od = sql_fetch($sql);
 
         $sms_contents = $contents;
-        $sms_contents = preg_replace("/{이름}/", $od['od_name'], $sms_contents);
-        $sms_contents = preg_replace("/{입금액}/", number_format($od['od_receipt_price']), $sms_contents);
-        $sms_contents = preg_replace("/{택배회사}/", $od['od_delivery_company'], $sms_contents);
-        $sms_contents = preg_replace("/{운송장번호}/", $od['od_invoice'], $sms_contents);
-        $sms_contents = preg_replace("/{주문번호}/", $od['od_id'], $sms_contents);
-        $sms_contents = preg_replace("/{회사명}/", $default['de_admin_company_name'], $sms_contents);
+        $sms_contents = str_replace("{이름}", $od['od_name'], $sms_contents);
+        $sms_contents = str_replace("{입금액}", number_format($od['od_receipt_price']), $sms_contents);
+        $sms_contents = str_replace("{택배회사}", $od['od_delivery_company'], $sms_contents);
+        $sms_contents = str_replace("{운송장번호}", $od['od_invoice'], $sms_contents);
+        $sms_contents = str_replace("{주문번호}", $od['od_id'], $sms_contents);
+        $sms_contents = str_replace("{회사명}", $default['de_admin_company_name'], $sms_contents);
     }
 
     return iconv("utf-8", "euc-kr", stripslashes($sms_contents));

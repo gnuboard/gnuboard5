@@ -122,6 +122,11 @@ if(!isset($mb['mb_addr3'])) {
     sql_query(" ALTER TABLE {$g5['member_table']} ADD `mb_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `mb_addr2` ", false);
 }
 
+// 중복가입 확인필드 추가
+if(!isset($mb['mb_dupinfo'])) {
+    sql_query(" ALTER TABLE {$g5['member_table']} ADD `mb_dupinfo` varchar(255) NOT NULL DEFAULT '' AFTER `mb_adult` ", false);
+}
+
 if ($mb['mb_intercept_date']) $g5['title'] = "차단된 ";
 else $g5['title'] .= "";
 $g5['title'] .= '회원 '.$html_title;
@@ -207,7 +212,7 @@ include_once('./admin.head.php');
     </tr>
     <tr>
         <th scope="row"><label for="mb_zip1">주소</label></th>
-        <td colspan="3" style="line-height:2em">
+        <td colspan="3" class="td_addr_line">
             <label for="mb_zip1" class="sound_only">우편번호 앞자리</label>
             <input type="text" name="mb_zip1" value="<?php echo $mb['mb_zip1'] ?>" id="mb_zip1" class="frm_input readonly" size="3" maxlength="3"> -
             <label for="mb_zip2" class="sound_only">우편번호 뒷자리</label>
@@ -259,7 +264,7 @@ include_once('./admin.head.php');
         <th scope="row"><label for="mb_open">정보 공개</label></th>
         <td colspan="3">
             <input type="radio" name="mb_open" value="1" id="mb_open_yes" <?php echo $mb_open_yes; ?>>
-            <label for="mb_open">예</label>
+            <label for="mb_open_yes">예</label>
             <input type="radio" name="mb_open" value="0" id="mb_open_no" <?php echo $mb_open_no; ?>>
             <label for="mb_open_no">아니오</label>
         </td>
@@ -294,8 +299,8 @@ include_once('./admin.head.php');
         <td colspan="3">
             <?php if ($mb['mb_email_certify'] == '0000-00-00 00:00:00') { ?>
             <?php echo help('회원님이 메일을 수신할 수 없는 경우 등에 직접 인증처리를 하실 수 있습니다.') ?>
-            <input type="checkbox" id="passive_certify" name="passive_certify">
-            <label>수동인증</label>
+            <input type="checkbox" name="passive_certify" id="passive_certify">
+            <label for="passive_certify">수동인증</label>
             <?php } else { ?>
             <?php echo $mb['mb_email_certify'] ?>
             <?php } ?>
@@ -312,22 +317,27 @@ include_once('./admin.head.php');
     <?php } ?>
 
     <tr>
-        <th scope="row">탈퇴일자</th>
+        <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
         <td>
-            <input type="text" name="mb_leave_date" value="<?php echo $mb['mb_leave_date'] ?>" class="frm_input" maxlength="8">
-            <input type="checkbox" value="<?php echo date("Ymd"); ?>" title="탈퇴일을 오늘로 지정" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) { this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }"> 오늘
+            <input type="text" name="mb_leave_date" value="<?php echo $mb['mb_leave_date'] ?>" id="mb_leave_date" class="frm_input" maxlength="8">
+            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_leave_date_set_today" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) { 
+this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }">
+            <label for="mb_leave_date_set_today">탈퇴일을 오늘로 지정</label>
         </td>
         <th scope="row">접근차단일자</th>
         <td>
-            <input type="text" name="mb_intercept_date" value="<?php echo $mb['mb_intercept_date'] ?>" class="frm_input" maxlength="8">
-            <input type="checkbox" value="<?php echo date("Ymd"); ?>" title="접근차단일을 오늘로 지정" onclick="if (this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else { this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }"> 오늘
+            <input type="text" name="mb_intercept_date" value="<?php echo $mb['mb_intercept_date'] ?>" id="mb_intercept_date" class="frm_input" maxlength="8">
+            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_intercept_date_set_today" onclick="if 
+(this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else { 
+this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
+            <label for="mb_intercept_date_set_today">접근차단일을 오늘로 지정</label>
         </td>
     </tr>
 
     <?php for ($i=1; $i<=10; $i++) { ?>
     <tr>
         <th scope="row"><label for="mb_<?php echo $i ?>">여분 필드 <?php echo $i ?></label></th>
-        <td colspan="3"><input type="text" id="mb_<?php echo $i ?>" name="mb_<?php echo $i ?>" value="<?php echo $mb['mb_'.$i] ?>" class="frm_input" size="30" maxlength="255"></td>
+        <td colspan="3"><input type="text" name="mb_<?php echo $i ?>" value="<?php echo $mb['mb_'.$i] ?>" id="mb_<?php echo $i ?>" class="frm_input" size="30" maxlength="255"></td>
     </tr>
     <?php } ?>
 

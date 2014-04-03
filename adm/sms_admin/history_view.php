@@ -12,7 +12,7 @@ $g5['title'] = "문자전송 상세내역";
 if (!is_numeric($wr_no))
     alert('전송 고유 번호가 없습니다.');
 
-if (!$spage) $spage = 1;
+if ($spage < 1) $spage = 1;
 
 if ($sst && trim($ssv))
     $sql_search = " and $sst like '%$ssv%' ";
@@ -70,7 +70,7 @@ function all_send()
 <input type="hidden" name="st" value="<?php echo $st?>">
 <input type="hidden" name="sv" value="<?php echo $sv?>">
 <label for="sst" class="sound_only">검색대상</label>
-<select name="sst">
+<select name="sst" id="sst">
     <option value="hs_name" <?php echo $sst=='hs_name'?'selected':''?>>이름</option>
     <option value="hs_hp" <?php echo $sst=='hs_hp'?'selected':''?>>휴대폰번호</option>
 </select>

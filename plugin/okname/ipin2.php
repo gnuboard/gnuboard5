@@ -67,6 +67,14 @@ $field_name_IPIN_DEC = array(
 $mb_name = $field[6];
 $req_num = $field[7];
 $mb_birth = $field[11];
+$mb_dupinfo = $field[0];
+
+// 중복정보 체크
+$sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
+$row = sql_fetch($sql);
+if ($row['mb_id']) {
+    alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
+}
 
 // hash 데이터
 $cert_type = 'ipin';
@@ -82,6 +90,7 @@ set_session('ss_cert_hash',    $hash_data);
 set_session('ss_cert_adult',   $adult);
 set_session('ss_cert_birth',   $mb_birth);
 set_session('ss_cert_sex',     ($field[9] == 1 ? 'M' : 'F'));
+set_session('ss_cert_dupinfo', $mb_dupinfo);
 
 $g5['title'] = 'KCB 아이핀 본인확인';
 include_once(G5_PATH.'/head.sub.php');
