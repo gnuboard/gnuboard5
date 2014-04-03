@@ -72,6 +72,14 @@ if(!isset($default['de_member_reg_coupon_use'])) {
                     ADD `de_member_reg_coupon_term` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_use`,
                     ADD `de_member_reg_coupon_price` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_term` ", true);
 }
+
+// lg 결제관련 필드 추가
+if(!isset($default['de_pg_service'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_pg_service` varchar(255) NOT NULL DEFAULT '' AFTER `de_sms_hp`,
+                    ADD `de_lg_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_kcp_mid`,
+                    ADD `de_lg_mert_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_kcp_site_key` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -505,7 +513,7 @@ if(!isset($default['de_member_reg_coupon_use'])) {
         <tr>
             <th scope="row"><label for="de_card_noint_use">신용카드 무이자할부사용</label></th>
             <td>
-                <?php echo help("주문시 신용카드 무이자할부를 가능하게 할것인지를 설정합니다.<br>사용으로 설정하시면 KCP 가맹점 관리자 페이지에서 설정하신 무이자할부 설정이 적용됩니다.<br>사용안함으로 설정하시면 KCP 무이자 이벤트 카드를 제외한 모든 카드의 무이자 설정이 적용되지 않습니다.", 50); ?>
+                <?php echo help("주문시 신용카드 무이자할부를 가능하게 할것인지를 설정합니다.<br>사용으로 설정하시면 PG사 가맹점 관리자 페이지에서 설정하신 무이자할부 설정이 적용됩니다.<br>사용안함으로 설정하시면 PG사 무이자 이벤트 카드를 제외한 모든 카드의 무이자 설정이 적용되지 않습니다.", 50); ?>
                 <select id="de_card_noint_use" name="de_card_noint_use">
                     <option value="0" <?php echo get_selected($default['de_card_noint_use'], 0); ?>>사용안함</option>
                     <option value="1" <?php echo get_selected($default['de_card_noint_use'], 1); ?>>사용</option>
@@ -572,6 +580,16 @@ if(!isset($default['de_member_reg_coupon_use'])) {
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="de_pg_service">결제대행사</label></th>
+            <td>
+                <?php echo help('쇼핑몰에서 이용하실 결제대행사를 선택합니다.'); ?>
+                <select id="de_pg_service" name="de_pg_service">
+                    <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>KCP</option>
+                    <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG U+</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="pg_info_fld kcp_info_fld">
             <th scope="row">
                 <label for="de_kcp_mid">KCP SITE CODE</label><br>
                 <a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank" id="scf_kcpreg">KCP서비스신청하기</a>
@@ -581,17 +599,34 @@ if(!isset($default['de_member_reg_coupon_use'])) {
                 <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
             </td>
         </tr>
-        <tr>
+        <tr class="pg_info_fld kcp_info_fld">
             <th scope="row"><label for="de_kcp_site_key">KCP SITE KEY</label></th>
             <td>
                 <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
                 <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="32" maxlength="25">
             </td>
         </tr>
+        <tr class="pg_info_fld lg_info_fld">
+            <th scope="row">
+                <label for="de_lg_mid">LG U+ 상점 ID</label><br>
+                <a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank" id="scf_kcpreg">LG U+ 서비스신청하기</a>
+            </th>
+            <td>
+                <?php echo help("LG U+ 에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG U+에 사이트코드 변경 요청을 하십시오. 예) si_lguplus"); ?>
+                <span class="sitecode">si_</span> <input type="text" name="de_lg_mid" value="<?php echo $default['de_lg_mid']; ?>" id="de_lg_mid" class="frm_input" size="10" maxlength="20" style="font:bold 15px Verdana;"> 영문자, 숫자 혼용
+            </td>
+        </tr>
+        <tr class="pg_info_fld lg_info_fld">
+            <th scope="row"><label for="de_lg_mert_key">LG U+ Mert Key</label></th>
+            <td>
+                <?php echo help("Mert Key 발급 LG U+ 전화: 1544-7772\n예) 95160cce09854ef44d2edb2bfb05f9f3"); ?>
+                <input type="text" name="de_lg_mert_key" value="<?php echo $default['de_lg_mert_key']; ?>" id="de_lg_mert_key" class="frm_input" size="32" maxlength="50">
+            </td>
+        </tr>
         <tr>
             <th scope="row">에스크로 사용</th>
             <td>
-                <?php echo help("에스크로 결제를 사용하시려면, 반드시 <strong><a href='http://admin.kcp.co.kr/' target='_blank'><u>KCP 관리자</u></a> > 고객센터 > 서비스변경 및 추가 > 에스크로 신청 메뉴에서 에스크로를 사용 선택하고, 결제수단별로 적용 신청한 후 사용</strong>하셔야 합니다.\n에스크로 사용시 배송과의 연동은 되지 않으며 에스크로 결제만 지원됩니다."); ?>
+                <?php echo help("에스크로 결제를 사용하시려면, 반드시 결제대행사 상점 관리자 페이지에서 에스크로 서비스를 신청하신 후 사용하셔야 합니다.\n에스크로 사용시 배송과의 연동은 되지 않으며 에스크로 결제만 지원됩니다."); ?>
                     <input type="radio" name="de_escrow_use" value="0" <?php echo $default['de_escrow_use']==0?"checked":""; ?> id="de_escrow_use1">
                     <label for="de_escrow_use1">일반결제 사용</label>
                     <input type="radio" name="de_escrow_use" value="1"<?php echo $default['de_escrow_use']==1?"checked":""; ?> id="de_escrow_use2">
@@ -1262,6 +1297,18 @@ function fconfig_check(f)
 }
 
 $(function() {
+    $(".pg_info_fld").hide();
+    <?php if($default['de_pg_service']) { ?>
+    $(".<?php echo $default['de_pg_service']; ?>_info_fld").show();
+    <?php } else { ?>
+    $(".kcp_info_fld").show();
+    <?php } ?>
+    $("#de_pg_service").on("change", function() {
+        var pg = $(this).val();
+        $(".pg_info_fld:visible").hide();
+        $("."+pg+"_info_fld").show();
+    });
+
     $("#scf_cardtest_btn").bind("click", function() {
         var $cf_cardtest_tip = $("#scf_cardtest_tip");
         var $cf_cardtest_btn = $("#scf_cardtest_btn");

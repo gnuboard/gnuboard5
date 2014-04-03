@@ -269,7 +269,15 @@ if ($od_settle_case == "무통장")
 }
 else if ($od_settle_case == "계좌이체")
 {
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            $bank_name  = iconv("cp949", "utf-8", $bank_name);
+            break;
+    }
 
     $od_tno             = $tno;
     $od_receipt_price   = $amount;
@@ -277,7 +285,6 @@ else if ($od_settle_case == "계좌이체")
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $od_bank_account    = $od_settle_case;
     $od_deposit_name    = $od_name;
-    $bank_name          = iconv("cp949", "utf-8", $bank_name);
     $od_bank_account    = $bank_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
@@ -286,13 +293,20 @@ else if ($od_settle_case == "계좌이체")
 }
 else if ($od_settle_case == "가상계좌")
 {
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            $bankname   = iconv("cp949", "utf-8", $bankname);
+            $depositor  = iconv("cp949", "utf-8", $depositor);
+            break;
+    }
 
     $od_receipt_point   = $i_temp_point;
     $od_tno             = $tno;
     $od_receipt_price   = 0;
-    $bankname           = iconv("cp949", "utf-8", $bankname);
-    $depositor          = iconv("cp949", "utf-8", $depositor);
     $od_bank_account    = $bankname.' '.$account;
     $od_deposit_name    = $depositor;
     $pg_price           = $amount;
@@ -300,7 +314,14 @@ else if ($od_settle_case == "가상계좌")
 }
 else if ($od_settle_case == "휴대폰")
 {
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            break;
+    }
 
     $od_tno             = $tno;
     $od_receipt_price   = $amount;
@@ -314,14 +335,21 @@ else if ($od_settle_case == "휴대폰")
 }
 else if ($od_settle_case == "신용카드")
 {
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            $card_name  = iconv("cp949", "utf-8", $card_name);
+            break;
+    }
 
     $od_tno             = $tno;
     $od_app_no          = $app_no;
     $od_receipt_price   = $amount;
     $od_receipt_point   = $i_temp_point;
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
-    $card_name          = iconv("cp949", "utf-8", $card_name);
     $od_bank_account    = $card_name;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
@@ -337,7 +365,14 @@ else
 if($tno) {
     if((int)$i_price !== (int)$pg_price) {
         $cancel_msg = '결제금액 불일치';
-        include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+        switch($default['de_pg_service']) {
+            case 'lg':
+                include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+                break;
+            default:
+                include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+                break;
+        }
 
         die("Receipt Amount Error");
     }
@@ -364,6 +399,10 @@ if($default['de_tax_flag_use']) {
     $od_vat_mny = (int)$_POST['comm_vat_mny'];
     $od_free_mny = (int)$_POST['comm_free_mny'];
 }
+
+$od_pg = $default['de_pg_service'];
+if($od_settle_case == '무통장')
+    $od_pg = '';
 
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
@@ -403,6 +442,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_bank_account   = '$od_bank_account',
                 od_receipt_time   = '$od_receipt_time',
                 od_misu           = '$od_misu',
+                od_pg             = '$od_pg',
                 od_tno            = '$od_tno',
                 od_app_no         = '$od_app_no',
                 od_escrow         = '$od_escrow',
@@ -423,14 +463,21 @@ $result = sql_query($sql, false);
 if(!$result) {
     if($tno) {
         $cancel_msg = '주문정보 입력 오류';
-        include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+        switch($default['de_pg_service']) {
+            case 'lg':
+                include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+                break;
+            default:
+                include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+                break;
+        }
     }
 
     // 관리자에게 오류 알림 메일발송
     $error = 'order';
     include G5_SHOP_PATH.'/ordererrormail.php';
 
-    die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>KCP를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
+    die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($default['de_pg_service']).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
 // 장바구니 상태변경
@@ -452,7 +499,14 @@ $result = sql_query($sql, false);
 if(!$result) {
     if($tno) {
         $cancel_msg = '주문상태 변경 오류';
-        include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php'; // 결제취소처리
+        switch($default['de_pg_service']) {
+            case 'lg':
+                include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+                break;
+            default:
+                include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+                break;
+        }
     }
 
     // 관리자에게 오류 알림 메일발송
@@ -462,7 +516,7 @@ if(!$result) {
     // 주문삭제
     sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 
-    die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>KCP를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
+    die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($default['de_pg_service']).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
 // 회원이면서 포인트를 사용했다면 테이블에 사용을 추가
@@ -640,7 +694,7 @@ goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 
 <html>
     <head>
-        <title>*** KCP [AX-HUB Version] ***</title>
+        <title>주문정보 기록</title>
         <script>
             // 결제 중 새로고침 방지 샘플 스크립트 (중복결제 방지)
             function noRefresh()

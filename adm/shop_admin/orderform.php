@@ -77,6 +77,12 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
     sql_query(" ALTER TABLE `{$g5['g5_shop_order_address_table']}`
                     ADD `ad_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `ad_addr2` ", true);
 }
+
+// 결제 PG 필드 추가
+if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
+                    ADD `od_pg` varchar(255) NOT NULL DEFAULT '' AFTER `od_mobile` ", true);
+}
 ?>
 
 <section id="anc_sodr_list">
@@ -401,24 +407,29 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
                     <th scope="row">결제대행사 링크</th>
                     <td>
                         <?php
-                        //------------------------------------------------------------------------------
-                        // KCP(PG) 바로가기
-                        //------------------------------------------------------------------------------
                         if ($od['od_settle_case'] != '무통장') {
-                            // PG사를 KCP 사용하면서 테스트 상점아이디라면
-                            $pg_url  = 'http://admin8.kcp.co.kr';
-                            $pg_test = '';
-                            if ($default['de_card_test']) {
-                                // 로그인 아이디 / 비번
-                                // 일반 : test1234 / test12345
-                                // 에스크로 : escrow / escrow913
-                                $pg_url = 'http://testadmin8.kcp.co.kr';
-                                if ($default['de_escrow_use'])
-                                    $pg_test = '에스크로 테스트 ';
-                                else
-                                    $pg_test = '일반 테스트 ';
-                            }
-                            echo "<a href=\"{$pg_url}\" target=\"_blank\">KCP {$pg_test}바로가기</a><br>";
+                            switch($od['od_pg']) {
+                                case 'lg':
+                                    $pg_url  = 'http://pgweb.uplus.co.kr';
+                                    $pg_test = 'LG eCredit';
+                                    if ($default['de_card_test']) {
+                                        $pg_url = 'http://pgweb.uplus.co.kr/tmert';
+                                        $pg_test .= ' 테스트 ';
+                                    }
+                                    break;
+                                default:
+                                    $pg_url  = 'http://admin8.kcp.co.kr';
+                                    $pg_test = 'KCP';
+                                    if ($default['de_card_test']) {
+                                        // 로그인 아이디 / 비번
+                                        // 일반 : test1234 / test12345
+                                        // 에스크로 : escrow / escrow913
+                                        $pg_url = 'http://testadmin8.kcp.co.kr';
+                                        $pg_test .= ' 테스트 ';
+                                    }
+
+                                }
+                            echo "<a href=\"{$pg_url}\" target=\"_blank\">{$pg_test}바로가기</a><br>";
                         }
                         //------------------------------------------------------------------------------
                         ?>
