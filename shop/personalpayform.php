@@ -84,7 +84,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
 
         <?php
         if (!$default['de_card_point'])
-            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
+            echo '<p id="sod_frm_pay_info"><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
 
         $multi_settle == 0;
         $checked = '';

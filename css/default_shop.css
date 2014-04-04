@@ -378,6 +378,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sit_opt_added {margin:0;padding:0;border:1px solid #e9e9e9;border-bottom:0;background:#fff;list-style:none}
 #sit_opt_added li {padding:10px 20px;border-bottom:1px solid #e9e9e9}
 #sit_opt_added li div {margin:5px 0 0;text-align:right}
+#sit_opt_added button {margin:0 0 0 1px}
 
 #sod_bsk_list {position:relative}
 #sod_bsk_list #mod_option_frm {z-index:10000;position:absolute;top:0;left:99px;padding:20px;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll;overflow-x:none}
@@ -423,10 +424,14 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_frm p#sod_frm_pt {margin:10px 0 5px}
 #sod_frm #sod_frm_pt_alert {margin:0 0 10px}
 
+#sod_frm #display_pay_process {text-align:center}
+#sod_frm #display_pay_process span {display:block;margin:5px 0 0}
+
 #sod_frm_pay {position:relative}
 #sod_frm_pay h2 {margin:0 0 10px}
 #sod_frm_pay .tbl_wrap th {width:auto !important;font-weight:bold;text-align:center !important}
 #sod_frm_pay .tbl_wrap td {padding:8px 5px 6px !important;border-top:1px solid #e9e9e9 !important;border-bottom:1px solid #e9e9e9 !important;line-height:1.5em !important;word-break:break-all !important}
+#sod_frm_pay_info {margin:0 0 10px}
 
 #sod_frm_pay #sc_coupon_frm, #sod_frm_pay #od_coupon_frm {z-index:10000;position:absolute;top:0;left:99px;padding:20px;width:500px;height:auto !important;height:500px;max-height:500px;border:1px solid #000;background:#f2f5f9;overflow-y:scroll}
 
@@ -436,12 +441,15 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 #sod_frm_escrow {margin:30px 0 0}
 
+#display_pay_process {padding:20px;text-align:center}
+
 /* 배송지 목록 */
 #sod_addr .td_mng button {margin:0;padding:0;border:0;background:transparent}
 
 /* 주문내역 */
 #sod_v {}
 #sod_v .basic_tbl {text-align:center}
+#sod_v_info {margin:0 0 10px}
 
 /* 주문상세내역 */
 #sod_fin {}
@@ -510,6 +518,8 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_fin_cancel button {padding:10px;border:0;background:#ff3600;color:#fff}
 #sod_fin_cancelfrm {display:none;margin:10px 0 0}
 #sod_fin_cancelfrm .frm_input {background:#fff}
+
+#sod_fin_test {padding:10px}
 
 /* 주문상세내역 중 현금영수증 발급 */
 #scash {}

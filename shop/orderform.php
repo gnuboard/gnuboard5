@@ -286,7 +286,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             <table>
             <tbody>
             <tr>
-                <th scope="row"><label for="od_name">이름</label></th>
+                <th scope="row"><label for="od_name">이름<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_name" value="<?php echo $member['mb_name']; ?>" id="od_name" required class="frm_input required" maxlength="20"></td>
             </tr>
 
@@ -301,7 +301,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             <?php } ?>
 
             <tr>
-                <th scope="row"><label for="od_tel">전화번호</label></th>
+                <th scope="row"><label for="od_tel">전화번호<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_tel" value="<?php echo $member['mb_tel']; ?>" id="od_tel" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>
@@ -329,7 +329,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="od_email">E-mail</label></th>
+                <th scope="row"><label for="od_email">E-mail<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_email" value="<?php echo $member['mb_email']; ?>" id="od_email" required class="frm_input required" size="35" maxlength="100"></td>
             </tr>
 
@@ -426,11 +426,11 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             </tr>
             <?php } ?>
             <tr>
-                <th scope="row"><label for="od_b_name">이름</label></th>
+                <th scope="row"><label for="od_b_name">이름<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>
-                <th scope="row"><label for="od_b_tel">전화번호</label></th>
+                <th scope="row"><label for="od_b_tel">전화번호<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_b_tel" id="od_b_tel" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>
