@@ -359,13 +359,13 @@ ob_end_clean();
             <table>
             <tbody>
             <tr>
-                <th scope="row"><label for="od_name">이름</label></th>
+                <th scope="row"><label for="od_name">이름<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_name" value="<?php echo $member['mb_name']; ?>" id="od_name" required class="frm_input required" maxlength="20"></td>
             </tr>
 
             <?php if (!$is_member) { // 비회원이면 ?>
             <tr>
-                <th scope="row"><label for="od_pwd">비밀번호</label></th>
+                <th scope="row"><label for="od_pwd">비밀번호<strong class="sound_only"> 필수</strong></label></th>
                 <td>
                     <input type="password" name="od_pwd" id="od_pwd" required class="frm_input required" maxlength="20">
                     영,숫자 3~20자 (주문서 조회시 필요)
@@ -374,7 +374,7 @@ ob_end_clean();
             <?php } ?>
 
             <tr>
-                <th scope="row"><label for="od_tel">전화번호</label></th>
+                <th scope="row"><label for="od_tel">전화번호<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_tel" value="<?php echo $member['mb_tel']; ?>" id="od_tel" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>
@@ -402,7 +402,7 @@ ob_end_clean();
                 </td>
             </tr>
             <tr>
-                <th scope="row"><label for="od_email">E-mail</label></th>
+                <th scope="row"><label for="od_email">E-mail<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="email" name="od_email" value="<?php echo $member['mb_email']; ?>" id="od_email" required class="frm_input required" maxlength="100"></td>
             </tr>
 
@@ -499,11 +499,11 @@ ob_end_clean();
             }
             ?>
             <tr>
-                <th scope="row"><label for="od_b_name">이름</label></th>
+                <th scope="row"><label for="od_b_name">이름<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>
-                <th scope="row"><label for="od_b_tel">전화번호</label></th>
+                <th scope="row"><label for="od_b_tel">전화번호<strong class="sound_only"> 필수</strong></label></th>
                 <td><input type="text" name="od_b_tel" id="od_b_tel" required class="frm_input required" maxlength="20"></td>
             </tr>
             <tr>

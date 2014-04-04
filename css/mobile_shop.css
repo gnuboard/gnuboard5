@@ -392,6 +392,8 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_fin_cancelfrm {display:none;margin:10px 0 0}
 #sod_fin_cancelfrm .frm_input {background:#fff}
 
+#sod_fin_test {padding:10px}
+
 /* 주문내역 include */
 #sod_inquiry {}
 #sod_inquiry ul {margin:0;padding:0;list-style:none}
