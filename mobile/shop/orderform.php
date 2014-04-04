@@ -27,7 +27,7 @@ set_session('ss_order_id', $od_id);
 $s_cart_id = $tmp_cart_id;
 $order_action_url = G5_HTTPS_MSHOP_URL.'/orderformupdate.php';
 
-require './settle_kcp.inc.php';
+require_once(G5_MSHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 
 // 결제등록 요청시 사용할 입금마감일
 $ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
@@ -251,93 +251,10 @@ ob_start();
 <?php
 $content = ob_get_contents();
 ob_end_clean();
+
+// 결제대행사별 코드 include (결제등록 필드)
+require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
 ?>
-
-    <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
-    <script src="<?php echo G5_MSHOP_URL; ?>/kcp/approval_key.js"></script>
-
-    <form name="sm_form" method="POST" action="<?php echo G5_MSHOP_URL; ?>/kcp/order_approval_form.php">
-    <input type="hidden" name="good_name"     value="<?php echo $goods; ?>">
-    <input type="hidden" name="good_mny"      value="<?php echo $tot_price ?>" >
-    <input type="hidden" name="buyr_name"     value="">
-    <input type="hidden" name="buyr_tel1"     value="">
-    <input type="hidden" name="buyr_tel2"     value="">
-    <input type="hidden" name="buyr_mail"     value="">
-    <input type="hidden" name="ipgm_date"     value="<?php echo $ipgm_date; ?>">
-    <input type="hidden" name="settle_method" value="">
-    <!-- 주문번호 -->
-    <input type="hidden" name="ordr_idxx" value="<?php echo $od_id; ?>">
-    <!-- 결제등록 키 -->
-    <input type="hidden" name="approval_key" id="approval">
-    <!-- 수취인이름 -->
-    <input type="hidden" name="rcvr_name" value="">
-    <!-- 수취인 연락처 -->
-    <input type="hidden" name="rcvr_tel1" value="">
-    <!-- 수취인 휴대폰 번호 -->
-    <input type="hidden" name="rcvr_tel2" value="">
-    <!-- 수취인 E-MAIL -->
-    <input type="hidden" name="rcvr_add1" value="">
-    <!-- 수취인 우편번호 -->
-    <input type="hidden" name="rcvr_add2" value="">
-    <!-- 수취인 주소 -->
-    <input type="hidden" name="rcvr_mail" value="">
-    <!-- 수취인 상세 주소 -->
-    <input type="hidden" name="rcvr_zipx" value="">
-    <!-- 장바구니 상품 개수 -->
-    <input type="hidden" name="bask_cntx" value="<?php echo (int)$goods_count + 1; ?>">
-    <!-- 장바구니 정보(상단 스크립트 참조) -->
-    <input type="hidden" name="good_info" value="<?php echo $good_info; ?>">
-    <!-- 배송소요기간 -->
-    <input type="hidden" name="deli_term" value="03">
-    <!-- 기타 파라메터 추가 부분 - Start - -->
-    <input type="hidden" name="param_opt_1"  value="<?php echo $param_opt_1; ?>"/>
-    <input type="hidden" name="param_opt_2"  value="<?php echo $param_opt_2; ?>"/>
-    <input type="hidden" name="param_opt_3"  value="<?php echo $param_opt_3; ?>"/>
-    <!-- 기타 파라메터 추가 부분 - End - -->
-    <!-- 화면 크기조정 부분 - Start - -->
-    <input type="hidden" name="tablet_size"  value="<?php echo $tablet_size; ?>"/>
-    <!-- 화면 크기조정 부분 - End - -->
-    <!--
-        사용 카드 설정
-        <input type="hidden" name='used_card'    value="CClg:ccDI">
-        /*  무이자 옵션
-                ※ 설정할부    (가맹점 관리자 페이지에 설정 된 무이자 설정을 따른다)                             - "" 로 설정
-                ※ 일반할부    (KCP 이벤트 이외에 설정 된 모든 무이자 설정을 무시한다)                           - "N" 로 설정
-                ※ 무이자 할부 (가맹점 관리자 페이지에 설정 된 무이자 이벤트 중 원하는 무이자 설정을 세팅한다)   - "Y" 로 설정
-        <input type="hidden" name="kcp_noint"       value=""/> */
-
-        /*  무이자 설정
-                ※ 주의 1 : 할부는 결제금액이 50,000 원 이상일 경우에만 가능
-                ※ 주의 2 : 무이자 설정값은 무이자 옵션이 Y일 경우에만 결제 창에 적용
-                예) 전 카드 2,3,6개월 무이자(국민,비씨,엘지,삼성,신한,현대,롯데,외환) : ALL-02:03:04
-                BC 2,3,6개월, 국민 3,6개월, 삼성 6,9개월 무이자 : CCBC-02:03:06,CCKM-03:06,CCSS-03:06:04
-        <input type="hidden" name="kcp_noint_quota" value="CCBC-02:03:06,CCKM-03:06,CCSS-03:06:09"/> */
-    -->
-    <input type="hidden" name="kcp_noint"       value="<?php echo ($default['de_card_noint_use'] ? '' : 'N'); ?>">
-    <?php
-    if($default['de_tax_flag_use']) {
-        /* KCP는 과세상품과 비과세상품을 동시에 판매하는 업체들의 결제관리에 대한 편의성을 제공해드리고자,
-           복합과세 전용 사이트코드를 지원해 드리며 총 금액에 대해 복합과세 처리가 가능하도록 제공하고 있습니다
-
-           복합과세 전용 사이트 코드로 계약하신 가맹점에만 해당이 됩니다
-
-           상품별이 아니라 금액으로 구분하여 요청하셔야 합니다
-
-           총결제 금액은 과세금액 + 부과세 + 비과세금액의 합과 같아야 합니다.
-           (good_mny = comm_tax_mny + comm_vat_mny + comm_free_mny)
-
-           복합과세는 order_approval_form.php 파일의 의해 적용됨
-           아래 필드는 order_approval_form.php 파일로 전송하는 것
-        */
-    ?>
-    <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
-    <input type="hidden" name="comm_tax_mny"      value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
-    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세     -->
-    <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
-    <?php
-    }
-    ?>
-    </form>
 </div>
 
 <div id="sod_frm">
@@ -735,41 +652,10 @@ ob_end_clean();
         ?>
     </section>
 
-    <input type="hidden" name="req_tx"         value="">      <!-- 요청 구분          -->
-    <input type="hidden" name="res_cd"         value="">      <!-- 결과 코드          -->
-    <input type="hidden" name="tran_cd"        value="">      <!-- 트랜잭션 코드      -->
-    <input type="hidden" name="ordr_idxx"      value="">      <!-- 주문번호           -->
-    <input type="hidden" name="good_mny"       value="">      <!-- 결제금액    -->
-    <input type="hidden" name="good_name"      value="">      <!-- 상품명             -->
-    <input type="hidden" name="buyr_name"      value="">      <!-- 주문자명           -->
-    <input type="hidden" name="buyr_tel1"      value="">      <!-- 주문자 전화번호    -->
-    <input type="hidden" name="buyr_tel2"      value="">      <!-- 주문자 휴대폰번호  -->
-    <input type="hidden" name="buyr_mail"      value="">      <!-- 주문자 E-mail      -->
-    <input type="hidden" name="enc_info"       value="">      <!-- 암호화 정보        -->
-    <input type="hidden" name="enc_data"       value="">      <!-- 암호화 데이터      -->
-    <input type="hidden" name="use_pay_method" value="">      <!-- 요청된 결제 수단   -->
-    <input type="hidden" name="rcvr_name"      value="">      <!-- 수취인 이름        -->
-    <input type="hidden" name="rcvr_tel1"      value="">      <!-- 수취인 전화번호    -->
-    <input type="hidden" name="rcvr_tel2"      value="">      <!-- 수취인 휴대폰번호  -->
-    <input type="hidden" name="rcvr_mail"      value="">      <!-- 수취인 E-Mail      -->
-    <input type="hidden" name="rcvr_zipx"      value="">      <!-- 수취인 우편번호    -->
-    <input type="hidden" name="rcvr_add1"      value="">      <!-- 수취인 주소        -->
-    <input type="hidden" name="rcvr_add2"      value="">      <!-- 수취인 상세 주소   -->
-    <input type="hidden" name="param_opt_1"    value="">
-    <input type="hidden" name="param_opt_2"    value="">
-    <input type="hidden" name="param_opt_3"    value="">
-    <?php if($default['de_tax_flag_use']) { ?>
-    <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
-    <input type="hidden" name="comm_tax_mny"      value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
-    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세     -->
-    <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
-    <?php } ?>
-
-    <div id="display_pay_button" class="btn_confirm">
-        <span id="show_req_btn"><input type="button" name="submitChecked" onClick="kcp_approval();" value="결제등록요청"class="btn_submit"></span>
-        <span id="show_pay_btn" style="display:none;"><input type="button" onClick="forderform_check();" value="주문하기" class="btn_submit"></span>
-        <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
-    </div>
+    <?php
+    // 결제대행사별 코드 include (결제대행사 정보 필드 및 주분버튼)
+    require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.2.php');
+    ?>
 
     <div id="show_progress" style="display:none;">
         <img src="<?php echo G5_MOBILE_URL; ?>/shop/img/loading.gif" alt="">
@@ -777,52 +663,12 @@ ob_end_clean();
     </div>
     </form>
 
-    <?php if ($default['de_escrow_use']) { ?>
-    <section id="sod_frm_escrow">
-        <h2>에스크로 안내</h2>
-        <form name="escrow_foot" method="post" action="http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp">
-        <input type="hidden" name="site_cd" value="SR<?php echo $default['de_kcp_mid']; ?>">
-        <table border="0" cellspacing="0" cellpadding="0">
-        <tr>
-            <td align='center'><img src="<?php echo G5_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
-        </tr>
-        <tr>
-            <td style='line-height:150%;'>
-                <br>
-                <strong>에스크로(escrow) 제도란?</strong>
-                <br>상거래 시에, 판매자와 구매자의 사이에 신뢰할 수 있는 중립적인 제삼자(여기서는 <a href='http://kcp.co.kr' target='_blank'>KCP</a>)가 중개하여
-                금전 또는 물품을 거래를 하도록 하는 것, 또는 그러한 서비스를 말한다. 거래의 안전성을 확보하기 위해 이용된다.
-                (2006.4.1 전자상거래 소비자보호법에 따른 의무 시행)
-                <br><br>
-                현금 거래에만 해당(에스크로 결제를 선택했을 경우에만 해당)되며,
-                신용카드로 구매하는 거래, 배송이 필요하지 않은 재화 등을 구매하는 거래(컨텐츠 등)에는 해당되지 않는다.
-                <br>
-                <br>
-            </td>
-        </tr>
-        </table>
-        <map name="Map" id="Map">
-        <area shape="rect" coords="5,62,74,83" href="javascript:escrow_foot_check()" alt="가입사실확인">
-        </map>
-        </form>
-    </section>
-
-    <script>
-    function escrow_foot_check()
-    {
-        var status  = "width=500 height=450 menubar=no,scrollbars=no,resizable=no,status=no";
-        var obj     = window.open('', 'escrow_foot_pop', status);
-
-        document.escrow_foot.method = "post";
-        document.escrow_foot.target = "escrow_foot_pop";
-        document.escrow_foot.action = "http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp";
-
-        document.escrow_foot.submit();
+    <?php
+    if ($default['de_escrow_use']) {
+        // 결제대행사별 코드 include (에스크로 안내)
+        require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.3.php');
     }
-    </script>
-    <?php } ?>
-
-    <!-- <?php if ($default['de_card_use'] || $default['de_iche_use']) { echo "결제대행사 : KCP"; } ?> -->
+    ?>
 
 </div>
 
@@ -1281,7 +1127,7 @@ function calculate_tax()
 var settle_method = "";
 var temp_point = 0;
 
-function kcp_approval()
+function pay_approval()
 {
     var f = document.sm_form;
     var pf = document.forderform;
@@ -1303,6 +1149,7 @@ function kcp_approval()
         f.good_mny.value = od_price + send_cost + send_cost2 - send_coupon - temp_point;
     }
 
+    <?php if($default['de_pg_service'] == 'kcp') { ?>
     f.buyr_name.value = pf.od_name.value;
     f.buyr_mail.value = pf.od_email.value;
     f.buyr_tel1.value = pf.od_tel.value;
@@ -1315,6 +1162,31 @@ function kcp_approval()
     f.rcvr_add1.value = pf.od_b_addr1.value;
     f.rcvr_add2.value = pf.od_b_addr2.value;
     f.settle_method.value = settle_method;
+    <?php } else if($default['de_pg_service'] == 'lg') { ?>
+    var pay_method = "";
+    switch(settle_method) {
+        case "계좌이체":
+            pay_method = "SC0030";
+            break;
+        case "가상계좌":
+            pay_method = "SC0040";
+            break;
+        case "휴대폰":
+            pay_method = "SC0060";
+            break;
+        case "신용카드":
+            pay_method = "SC0010";
+            break;
+    }
+    f.LGD_CUSTOM_FIRSTPAY.value = pay_method;
+    f.LGD_BUYER.value = pf.od_name.value;
+    f.LGD_BUYEREMAIL.value = pf.od_email.value;
+    f.LGD_BUYERPHONE.value = pf.od_hp.value;
+    f.LGD_AMOUNT.value = f.good_mny.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.LGD_TAXFREEAMOUNT.value = pf.comm_free_mny.value;
+    <?php } ?>
+    <?php } ?>
 
     var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
     f.target = "tar_opener";

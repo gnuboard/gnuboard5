@@ -459,7 +459,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 ";
 $result = sql_query($sql, false);
 
-// 주문정보 입력 오류시 kcp 결제 취소
+// 주문정보 입력 오류시 결제 취소
 if(!$result) {
     if($tno) {
         $cancel_msg = '주문정보 입력 오류';
@@ -495,7 +495,7 @@ $sql = "update {$g5['g5_shop_cart_table']}
            and ct_select = '1' ";
 $result = sql_query($sql, false);
 
-// 주문정보 입력 오류시 kcp 결제 취소
+// 주문정보 입력 오류시 결제 취소
 if(!$result) {
     if($tno) {
         $cancel_msg = '주문상태 변경 오류';

@@ -122,7 +122,7 @@ $sql = " update {$g5['g5_shop_personalpay_table']}
             where pp_id = '{$pp['pp_id']}' ";
 $result = sql_query($sql, false);
 
-// 결제정보 입력 오류시 kcp 결제 취소
+// 결제정보 입력 오류시 결제 취소
 if(!$result) {
     $cancel_msg = '결제정보 입력 오류';
     switch($default['de_pg_service']) {
@@ -156,7 +156,7 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
                 where od_id = '{$pp['od_id']}' ";
     $result = sql_query($sql, false);
 
-    // 결제정보 입력 오류시 kcp 결제 취소
+    // 결제정보 입력 오류시 결제 취소
     if(!$result) {
         $cancel_msg = '결제정보 입력 오류';
         switch($default['de_pg_service']) {
