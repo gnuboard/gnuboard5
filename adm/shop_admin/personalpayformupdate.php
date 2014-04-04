@@ -25,8 +25,10 @@ if($w == 'd') {
     if(preg_match('/[^0-9]/', $_POST['pp_price']))
         alert('주문금액은 숫자만 입력해 주십시오.');
 
+    $od_id = preg_replace('/[^0-9]/', '', $_POST['od_id']);
+
     if($_POST['od_id']) {
-        $sql = " select od_id from {$g5['g5_shop_order_table']} where od_id = '{$_POST['od_id']}' ";
+        $sql = " select od_id from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
         $row = sql_fetch($sql);
         if(!$row['od_id'])
             alert('입력하신 주문번호는 존재하지 않는 주문 자료입니다.');
@@ -34,7 +36,7 @@ if($w == 'd') {
 
     $sql_common = " pp_name             = '{$_POST['pp_name']}',
                     pp_price            = '{$_POST['pp_price']}',
-                    od_id               = '{$_POST['od_id']}',
+                    od_id               = '$od_id',
                     pp_content          = '{$_POST['pp_content']}',
                     pp_receipt_price    = '{$_POST['pp_receipt_price']}',
                     pp_settle_case      = '{$_POST['pp_settle_case']}',
