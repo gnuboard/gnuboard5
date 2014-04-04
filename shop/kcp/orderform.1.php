@@ -40,7 +40,7 @@ function  jsf__pay( form )
     /* Payplus Plugin 실행 */
     if ( MakePayMessage( form ) == true )
     {
-        openwin = window.open( "./kcp/proc_win.html", "proc_win", "width=449, height=209, top=300, left=300" );
+        //openwin = window.open( "./kcp/proc_win.html", "proc_win", "width=449, height=209, top=300, left=300" );
         document.getElementById("display_pay_button").style.display = "none" ;
         document.getElementById("display_pay_process").style.display = "" ;
         RetVal = true ;

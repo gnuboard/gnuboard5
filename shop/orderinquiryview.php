@@ -26,18 +26,9 @@ $settle_case = $od['od_settle_case'];
 
 $g5['title'] = '주문상세내역';
 include_once('./_head.php');
-
-require './settle_kcp.inc.php';
 ?>
 
 <!-- 주문상세내역 시작 { -->
-<script>
-var openwin = window.open( './kcp/proc_win.html', 'proc_win', '' );
-if(openwin != null) {
-    openwin.close();
-}
-</script>
-
 <div id="sod_fin">
 
     <div id="sod_fin_no">주문번호 <strong><?php echo $od_id; ?></strong></div>

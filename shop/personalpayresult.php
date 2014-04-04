@@ -17,18 +17,9 @@ $settle_case = $pp['pp_settle_case'];
 
 $g5['title'] = '개인결제상세내역';
 include_once('./_head.php');
-
-require './settle_kcp.inc.php';
 ?>
 
 <!-- 주문상세내역 시작 { -->
-<script>
-var openwin = window.open( './kcp/proc_win.html', 'proc_win', '' );
-if(openwin != null) {
-    openwin.close();
-}
-</script>
-
 <div id="sod_fin">
 
     <p>개인결제번호 <strong><?php echo $pp_id; ?></strong></p>
@@ -69,7 +60,7 @@ if(openwin != null) {
             $disp_bank = false;
             $disp_receipt = true;
         } else if($pp['pp_settle_case'] == '가상계좌' || $pp['pp_settle_case'] == '계좌이체') {
-            $app_no_subj = 'KCP 거래번호';
+            $app_no_subj = '거래번호';
             $app_no = $pp['pp_tno'];
         }
         ?>
@@ -106,7 +97,7 @@ if(openwin != null) {
                 <?php
                 }
 
-                // 승인번호, 휴대폰번호, KCP 거래번호
+                // 승인번호, 휴대폰번호, 거래번호
                 if($app_no_subj)
                 {
                 ?>
@@ -189,7 +180,7 @@ if(openwin != null) {
         </ul>
     </section>
 
-    <?php if ($pp['pp_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
+    <?php if ($pp['pp_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin && $default['de_pg_service'] == 'kcp') {
     preg_match("/(\s[^\s]+\s)/", $pp['pp_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
     ?>
@@ -197,9 +188,13 @@ if(openwin != null) {
     <legend>모의입금처리</legend>
     <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
     <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
+    <label for="e_trade_no">KCP 거래번호</label>
     <input type="text" name="e_trade_no" value="<?php echo $pp['pp_tno']; ?>" size="80"><br />
+    <label for="deposit_no">입금계좌</label>
     <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>" size="80"><br />
+    <label for="req_name">입금자명</label>
     <input type="text" name="req_name" value="<?php echo $pp['pp_deposit_name']; ?>" size="80"><br />
+    <label for="noti_url">입금통보 URL</label>
     <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php" size="80"><br /><br />
     <input type="submit" value="입금통보 테스트">
     </form>
