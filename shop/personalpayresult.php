@@ -22,7 +22,7 @@ include_once('./_head.php');
 <!-- 주문상세내역 시작 { -->
 <div id="sod_fin">
 
-    <p>개인결제번호 <strong><?php echo $pp_id; ?></strong></p>
+    <p id="sod_fin_no">개인결제번호 <strong><?php echo $pp_id; ?></strong></p>
 
     <section id="sod_fin_view">
         <h2>결제 정보</h2>

@@ -563,9 +563,13 @@ require './settle_kcp.inc.php';
     <legend>모의입금처리</legend>
     <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
     <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
+    <label for="e_trade_no">KCP 거래번호</label>
     <input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>"><br>
+    <label for="deposit_no">입금계좌</label>
     <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>"><br>
+    <label for="req_name">입금자명</label>
     <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>"><br>
+    <label for="noti_url">입금통보 URL</label>
     <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php"><br><br>
     <input type="submit" value="입금통보 테스트">
     </form>

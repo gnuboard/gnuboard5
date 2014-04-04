@@ -57,7 +57,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
 <div id="sod_v">
-    <p>주문서번호 링크를 누르시면 주문상세내역을 조회하실 수 있습니다.</p>
+    <p id="sod_v_info">주문서번호 링크를 누르시면 주문상세내역을 조회하실 수 있습니다.</p>
 
     <?php
     $limit = " limit $from_record, $rows ";

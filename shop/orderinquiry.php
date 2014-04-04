@@ -63,7 +63,7 @@ include_once('./_head.php');
 
 <!-- 주문 내역 시작 { -->
 <div id="sod_v">
-    <p>주문서번호 링크를 누르시면 주문상세내역을 조회하실 수 있습니다.</p>
+    <p id="sod_v_info">주문서번호 링크를 누르시면 주문상세내역을 조회하실 수 있습니다.</p>
 
     <?php
     $limit = " limit $from_record, $rows ";

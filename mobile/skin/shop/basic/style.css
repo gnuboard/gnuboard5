@@ -45,6 +45,18 @@
 .scr_10 .sct_cost strike {display:block;margin:0 0 5px;color:#999;font-weight:normal}
 .scr_10 .sct_icon {margin:0 0 10px}
 .scr_10 .sct_sns {margin:15px 0 0}
+
+/* 개인결제 목록 */
+.sct_pv .sct_li {position:relative;float:left;padding:0 25px 15px 0}
+.sct_pv .sct_last {margin:0 0 15px !important}
+.sct_pv .sct_clear {clear:both}
+.sct_pv .sct_a {display:inline-block;position:relative;margin:0 0 5px;text-decoration:none}
+.sct_pv .sct_id {display:block;margin:0 0 5px}
+.sct_pv .sct_basic {margin:0 0 10px}
+.sct_pv .sct_cost {display:block;margin:0 0 10px;font-weight:bold}
+.sct_pv .sct_cost strike {display:block;margin:0 0 5px;color:#999;font-weight:normal}
+.sct_pv .sct_icon {margin:0 0 10px}
+.sct_pv .sct_sns {margin:15px 0 0}
 /* ##### maint.(nn).skin.php, list.(nn).skin.php 공통 적용 끝 ##### */
 
 /* 상품 목록 */
