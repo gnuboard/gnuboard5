@@ -69,7 +69,7 @@ if($cp['it_explan']) {
         }
     }
 
-    $sql = " update {$g5['g5_shop_item_table']} set it_explan = '{$cp['it_explan']}' where it_id = '$new_it_id' ";
+    $sql = " update {$g5['g5_shop_item_table']} set it_explan = '".addslashes($cp['it_explan'])."' where it_id = '$new_it_id' ";
     sql_query($sql);
 }
 
