@@ -1020,7 +1020,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_include_tail">하단 파일 경로</label></th>
             <td>
-                <?php echo help('입력이 없으면 tail.php가 상단 파일의 기본 경로로 설정됩니다.') ?>
+                <?php echo help('입력이 없으면 tail.php가 하단 파일의 기본 경로로 설정됩니다.') ?>
                 <input type="text" name="cf_include_tail" value="<?php echo $config['cf_include_tail'] ?>" id="cf_include_tail" class="frm_input" size="50">
             </td>
         </tr>
