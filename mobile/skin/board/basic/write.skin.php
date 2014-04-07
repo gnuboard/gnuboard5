@@ -51,7 +51,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     echo $option_hidden;
     ?>
-    <div id="bo_w" class="tbl_frm01 tbl_wrap">
+    <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption><?php echo $g5['title'] ?></caption>
         <tbody>
