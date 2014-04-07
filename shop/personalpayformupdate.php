@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+if($default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
+    alert('결제등록 요청 후 주문해 주십시오.');
+
 // 개인결제 정보
 $pp_check = false;
 $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['pp_id']}' and pp_use = '1' ";

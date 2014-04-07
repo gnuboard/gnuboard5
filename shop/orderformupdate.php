@@ -2,6 +2,9 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
+if($default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
+    alert('결제등록 요청 후 주문해 주십시오.');
+
 // 장바구니가 비어있는가?
 if (get_session("ss_direct"))
     $tmp_cart_id = get_session('ss_cart_direct');
@@ -477,7 +480,7 @@ if(!$result) {
     $error = 'order';
     include G5_SHOP_PATH.'/ordererrormail.php';
 
-    die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($default['de_pg_service']).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
+    die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($default['de_pg_service']).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
 // 장바구니 상태변경
@@ -516,7 +519,7 @@ if(!$result) {
     // 주문삭제
     sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 
-    die_utf8('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($default['de_pg_service']).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
+    die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($default['de_pg_service']).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
 // 회원이면서 포인트를 사용했다면 테이블에 사용을 추가

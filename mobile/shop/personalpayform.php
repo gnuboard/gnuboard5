@@ -170,6 +170,7 @@ function pay_approval()
     if(!payment_check(pf))
         return false;
 
+    <?php if($default['de_pg_service'] == 'kcp') { ?>
     f.buyr_name.value = pf.pp_name.value;
     f.buyr_mail.value = pf.pp_email.value;
     f.buyr_tel1.value = pf.pp_hp.value;
@@ -179,6 +180,31 @@ function pay_approval()
     f.rcvr_tel2.value = pf.pp_hp.value;
     f.rcvr_mail.value = pf.pp_email.value;
     f.settle_method.value = settle_method;
+    <?php } else if($default['de_pg_service'] == 'lg') { ?>
+    var pay_method = "";
+    switch(settle_method) {
+        case "계좌이체":
+            pay_method = "SC0030";
+            break;
+        case "가상계좌":
+            pay_method = "SC0040";
+            break;
+        case "휴대폰":
+            pay_method = "SC0060";
+            break;
+        case "신용카드":
+            pay_method = "SC0010";
+            break;
+    }
+    f.LGD_CUSTOM_FIRSTPAY.value = pay_method;
+    f.LGD_BUYER.value = pf.pp_name.value;
+    f.LGD_BUYEREMAIL.value = pf.pp_email.value;
+    f.LGD_BUYERPHONE.value = pf.pp_hp.value;
+    f.LGD_AMOUNT.value = f.good_mny.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.LGD_TAXFREEAMOUNT.value = pf.comm_free_mny.value;
+    <?php } ?>
+    <?php } ?>
 
     var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
     f.target = "tar_opener";

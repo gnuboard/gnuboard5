@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 if($is_guest)
-    die_utf8('회원 로그인 후 이용해 주십시오.');
+    die('회원 로그인 후 이용해 주십시오.');
 
 $count = count($_POST['chk']);
 

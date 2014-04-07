@@ -81,7 +81,8 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
 // 결제 PG 필드 추가
 if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
-                    ADD `od_pg` varchar(255) NOT NULL DEFAULT '' AFTER `od_mobile` ", true);
+                    ADD `od_pg` varchar(255) NOT NULL DEFAULT '' AFTER `od_mobile`,
+                    ADD `od_casseqno` varchar(255) NOT NULL DEFAULT '' AFTER `od_escrow` ", true);
 }
 ?>
 

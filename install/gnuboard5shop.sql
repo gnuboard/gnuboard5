@@ -600,6 +600,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_tno` varchar(255) NOT NULL DEFAULT '',
   `od_app_no` varchar(20) NOT NULL DEFAULT '',
   `od_escrow` tinyint(4) NOT NULL DEFAULT '0',
+  `od_casseqno` varchar(255) NOT NULL DEFAULT '',
   `od_tax_flag` tinyint(4) NOT NULL DEFAULT '0',
   `od_tax_mny` int(11) NOT NULL DEFAULT '0',
   `od_vat_mny` int(11) NOT NULL DEFAULT '0',

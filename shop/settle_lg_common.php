@@ -93,6 +93,7 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
                     $sql = " update {$g5['g5_shop_order_table']}
                                 set od_receipt_price = od_receipt_price + '$LGD_AMOUNT',
                                     od_receipt_time = '$LGD_PAYDATE',
+                                    od_casseqno = '$LGD_CASSEQNO',
                                     od_shop_memo = concat(od_shop_memo, \"\\n개인결제 ".$row['pp_id']." 로 결제완료 - ".$receipt_time."\")
                               where od_id = '{$row['od_id']}' ";
                     $result = sql_query($sql, FALSE);
@@ -101,7 +102,8 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
                 // 주문서 UPDATE
                 $sql = " update {$g5['g5_shop_order_table']}
                             set od_receipt_price = '$LGD_AMOUNT',
-                                od_receipt_time = '$LGD_PAYDATE'
+                                od_receipt_time = '$LGD_PAYDATE',
+                                od_casseqno = '$LGD_CASSEQNO',
                           where od_id = '$LGD_OID'
                             and od_tno = '$LGD_TID' ";
                 $result = sql_query($sql, FALSE);
