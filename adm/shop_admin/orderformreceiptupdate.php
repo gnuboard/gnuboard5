@@ -57,9 +57,9 @@ if($_POST['od_delivery_company'] && $_POST['od_invoice'] && in_array($od['od_sta
 }
 
 // 미수금액
-$od_misu = ( $od['od_cart_price'] - $od['od_cancel_price'] + $od_send_cost + $od_send_cost2 )
+$od_misu = ( $od['od_cart_price'] - $od['od_cancel_price'] + $_POST['od_send_cost'] + $_POST['od_send_cost2'] )
            - ( $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'] )
-           - ( $od['od_receipt_price'] + $od['od_receipt_point'] - $od['od_refund_price'] );
+           - ( $_POST['od_receipt_price'] + $_POST['od_receipt_point'] - $_POST['od_refund_price'] );
 
 // 미수금 정보 등 반영
 $sql = " update {$g5['g5_shop_order_table']}
