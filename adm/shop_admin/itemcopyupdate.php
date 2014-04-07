@@ -95,7 +95,7 @@ if($cp['it_mobile_explan']) {
         }
     }
 
-    $sql = " update {$g5['g5_shop_item_table']} set it_mobile_explan = '{$cp['it_mobile_explan']}' where it_id = '$new_it_id' ";
+    $sql = " update {$g5['g5_shop_item_table']} set it_mobile_explan = '".addslashes($cp['it_mobile_explan'])."' where it_id = '$new_it_id' ";
     sql_query($sql);
 }
 
