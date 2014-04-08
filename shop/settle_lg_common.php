@@ -75,7 +75,7 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
              * 상점 결과 처리가 정상이면 "OK"
              */
 
-            $sql = " select pp_id, od_id from {$g5['g5_shop_personalpay_table']} where pp_id = '$order_no' and pp_tno = '$LGD_TID' ";
+            $sql = " select pp_id, od_id from {$g5['g5_shop_personalpay_table']} where pp_id = '$LGD_OID' and pp_tno = '$LGD_TID' ";
             $row = sql_fetch($sql);
 
             if($row['pp_id']) {
@@ -83,7 +83,7 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
                 $sql = " update {$g5['g5_shop_personalpay_table']}
                             set pp_receipt_price    = '$LGD_AMOUNT',
                                 pp_receipt_time     = '$LGD_PAYDATE'
-                            where pp_id = '$order_no'
+                            where pp_id = '$LGD_OID'
                               and pp_tno = '$LGD_TID' ";
                 sql_query($sql, false);
 
@@ -103,7 +103,7 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
                 $sql = " update {$g5['g5_shop_order_table']}
                             set od_receipt_price = '$LGD_AMOUNT',
                                 od_receipt_time = '$LGD_PAYDATE',
-                                od_casseqno = '$LGD_CASSEQNO',
+                                od_casseqno = '$LGD_CASSEQNO'
                           where od_id = '$LGD_OID'
                             and od_tno = '$LGD_TID' ";
                 $result = sql_query($sql, FALSE);
@@ -113,7 +113,7 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
                 if($row['od_id'])
                     $od_id = $row['od_id'];
                 else
-                    $od_id = $order_no;
+                    $od_id = $LGD_OID;
 
                 // 미수금 정보 업데이트
                 $info = get_order_info($od_id);

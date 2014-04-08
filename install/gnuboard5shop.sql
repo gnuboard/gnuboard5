@@ -675,6 +675,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_personalpay` (
   `pp_content` TEXT NOT NULL,
   `pp_use` TINYINT(4) NOT NULL DEFAULT '0',
   `pp_price` INT(11) NOT NULL DEFAULT '0',
+  `pp_pg` VARCHAR(255) NOT NULL DEFAULT '',
   `pp_tno` VARCHAR(255) NOT NULL DEFAULT '',
   `pp_app_no` VARCHAR(20) NOT NULL DEFAULT '',
   `pp_receipt_price` INT(11) NOT NULL DEFAULT '0',

@@ -59,6 +59,7 @@ if ($LGD_METHOD == "AUTH") {                 // 현금영수증 발급 요청
     $xpay->Set("LGD_CUSTOM_BUSINESSNUM", $LGD_CUSTOM_BUSINESSNUM);
     $xpay->Set("LGD_CUSTOM_MERTPHONE", $LGD_CUSTOM_MERTPHONE);
     $xpay->Set("LGD_CASHRECEIPTUSE", $LGD_CASHRECEIPTUSE);
+    $xpay->Set("LGD_ENCODING",    "UTF-8");
 
     if($od['od_tax_flag'] && $od['free_mny'] > 0) {
         $xpay->Set("LGD_TAXFREEAMOUNT", $od['free_mny']); //비과세 금액
@@ -73,7 +74,6 @@ if ($LGD_METHOD == "AUTH") {                 // 현금영수증 발급 요청
     }
     else {                                      //무통장입금 단독건 발급요청
         $xpay->Set("LGD_PRODUCTINFO", $LGD_PRODUCTINFO);
-        $xpay->Set("LGD_ENCODING",    "UTF-8");
     }
 }
 
