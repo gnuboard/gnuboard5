@@ -244,7 +244,7 @@ if ($row['cnt']) {
                                 od_cash_no = '$cash_no',
                                 od_cash_info = '$cash_info'
                           where od_id = '$ordr_idxx' ";
-                $result = sql_query($sql);
+                $result = sql_query($sql, false);
                 if (!$result) $bSucc = "false";
 
     /* = -------------------------------------------------------------------------- = */

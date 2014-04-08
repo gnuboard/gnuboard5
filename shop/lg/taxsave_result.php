@@ -23,7 +23,7 @@ switch($od['od_settle_case']) {
         break;
     default:
         die('<p id="scash_empty">현금영수증은 무통장, 가상계좌, 계좌이체에 한해 발급요청이 가능합니다.</p>');
-        break
+        break;
 }
 
 $LGD_METHOD                 = 'AUTH';                                   //메소드('AUTH':승인, 'CANCEL' 취소)
@@ -33,6 +33,7 @@ $LGD_AMOUNT                 = $order_price;                             //금액
 $LGD_PRODUCTINFO            = $goods_name;                              //상품명
 $LGD_TID                    = $od['od_tno'];                            //LG유플러스 거래번호
 $LGD_CUSTOM_MERTNAME        = $default['de_admin_company_name'];        //상점명
+$LGD_CUSTOM_CEONAME         = $default['de_admin_company_owner'];       //대표자명
 $LGD_CUSTOM_BUSINESSNUM     = $default['de_admin_company_saupja_no'];   //사업자등록번호
 $LGD_CUSTOM_MERTPHONE       = $default['de_admin_company_tel'];         //상점 전화번호
 $LGD_CASHCARDNUM            = $_POST['id_info'];                        //발급번호(주민등록번호,현금영수증카드번호,휴대폰번호 등등)
@@ -54,11 +55,12 @@ if ($LGD_METHOD == "AUTH") {                 // 현금영수증 발급 요청
     $xpay->Set("LGD_AMOUNT", $LGD_AMOUNT);
     $xpay->Set("LGD_CASHCARDNUM", $LGD_CASHCARDNUM);
     $xpay->Set("LGD_CUSTOM_MERTNAME", $LGD_CUSTOM_MERTNAME);
+    $xpay->Set("LGD_CUSTOM_CEONAME", $LGD_CUSTOM_CEONAME);
     $xpay->Set("LGD_CUSTOM_BUSINESSNUM", $LGD_CUSTOM_BUSINESSNUM);
     $xpay->Set("LGD_CUSTOM_MERTPHONE", $LGD_CUSTOM_MERTPHONE);
     $xpay->Set("LGD_CASHRECEIPTUSE", $LGD_CASHRECEIPTUSE);
 
-    if($od['od_tax_flag'] && $od['free_mny'] > ) {
+    if($od['od_tax_flag'] && $od['free_mny'] > 0) {
         $xpay->Set("LGD_TAXFREEAMOUNT", $od['free_mny']); //비과세 금액
     }
 
@@ -71,6 +73,7 @@ if ($LGD_METHOD == "AUTH") {                 // 현금영수증 발급 요청
     }
     else {                                      //무통장입금 단독건 발급요청
         $xpay->Set("LGD_PRODUCTINFO", $LGD_PRODUCTINFO);
+        $xpay->Set("LGD_ENCODING",    "UTF-8");
     }
 }
 
@@ -81,6 +84,7 @@ if ($LGD_METHOD == "AUTH") {                 // 현금영수증 발급 요청
  */
 if ($xpay->TX()) {
     //1)현금영수증 발급/취소결과 화면처리(성공,실패 결과 처리를 하시기 바랍니다.)
+    /*
     echo "현금영수증 발급/취소 요청처리가 완료되었습니다.  <br>";
     echo "TX Response_code = " . $xpay->Response_Code() . "<br>";
     echo "TX Response_msg = " . $xpay->Response_Msg() . "<p>";
@@ -90,14 +94,141 @@ if ($xpay->TX()) {
     echo "거래번호 : " . $xpay->Response("LGD_TID",0) . "<p>";
 
     $keys = $xpay->Response_Names();
-        foreach($keys as $name) {
-            echo $name . " = " . $xpay->Response($name, 0) . "<br>";
-        }
+    foreach($keys as $name) {
+        echo $name . " = " . $xpay->Response($name, 0) . "<br>";
+    }
+    */
 
-}else {
+    if($xpay->Response_Code() == '0000') {
+        $LGD_OID = $xpay->Response("LGD_OID",0);
+        $cash_no = $xpay->Response("LGD_CASHRECEIPTNUM",0);
+
+        $cash = array();
+        $cash['LGD_TID']        = $xpay->Response("LGD_TID",0);
+        $cash['LGD_TIMESTAMP']  = $xpay->Response("LGD_TIMESTAMP",0);
+        $cash['LGD_RESPDATE']   = $xpay->Response("LGD_RESPDATE",0);
+        $cash_info = serialize($cash);
+
+        $sql = " update {$g5['g5_shop_order_table']}
+                    set od_cash = '1',
+                        od_cash_no = '$cash_no',
+                        od_cash_info = '$cash_info'
+                  where od_id = '$LGD_OID' ";
+        $result = sql_query($sql, false);
+
+        if(!$result) { // DB 정보갱신 실패시 취소
+            $xpay->Set("LGD_TXNAME", "CashReceipt");
+            $xpay->Set("LGD_METHOD", "CANCEL");
+            $xpay->Set("LGD_PAYTYPE", $LGD_PAYTYPE);
+            $xpay->Set("LGD_TID", $LGD_TID);
+
+            if ($LGD_PAYTYPE == "SC0040"){				//가상계좌건 현금영수증 발급취소시 필수
+                $xpay->Set("LGD_SEQNO", $od['od_casseqno']);
+            }
+
+            if ($xpay->TX()) {
+                /*
+                echo "현금영수증 취소 요청처리가 완료되었습니다.  <br>";
+                echo "TX Response_code = " . $xpay->Response_Code() . "<br>";
+                echo "TX Response_msg = " . $xpay->Response_Msg() . "<p>";
+
+                echo "결과코드 : " . $xpay->Response("LGD_RESPCODE",0) . "<br>";
+                echo "결과메세지 : " . $xpay->Response("LGD_RESPMSG",0) . "<br>";
+                echo "거래번호 : " . $xpay->Response("LGD_TID",0) . "<p>";
+                */
+            } else {
+                $msg = '현금영수증 취소 요청처리가 정상적으로 완료되지 않았습니다.';
+                if(!$is_admin)
+                    $msg .= '쇼핑몰 관리자에게 문의해 주십시오.';
+
+                alert_close($msg);
+            }
+        }
+    }
+
+} else {
     //2)API 요청 실패 화면처리
+    /*
     echo "현금영수증 발급/취소 요청처리가 실패되었습니다.  <br>";
     echo "TX Response_code = " . $xpay->Response_Code() . "<br>";
     echo "TX Response_msg = " . $xpay->Response_Msg() . "<p>";
+    */
+
+    $msg = '현금영수증 발급 요청처리가 정상적으로 완료되지 않았습니다.';
+    $msg .= '\\nTX Response_code = '.$xpay->Response_Code();
+    $msg .= '\\nTX Response_msg = '.$xpay->Response_Msg();
+
+    alert($msg);
 }
+
+$g5['title'] = '';
+include_once(G5_PATH.'/head.sub.php');
+
+if($default['de_card_test']) {
+    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+} else {
+    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+}
+
+switch($LGD_PAYTYPE) {
+    case 'SC0030':
+        $trade_type = 'BANK';
+        break;
+    case 'SC0040':
+        $trade_type = 'CAS';
+        break;
+    default:
+        $trade_type = 'CR';
+        break;
+}
+?>
+
+<div id="lg_req_tx" class="new_win">
+    <h1 id="win_title">현금영수증 - LG U+ eCredit</h1>
+
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row">결과코드</th>
+            <td><?php echo $xpay->Response_Code(); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">결과 메세지</th>
+            <td><?php echo $xpay->Response_Msg(); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">현금영수증 거래번호</th>
+            <td><?php echo $xpay->Response("LGD_TID",0); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">현금영수증 승인번호</th>
+            <td><?php echo $xpay->Response("LGD_CASHRECEIPTNUM",0); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">승인시간</th>
+            <td><?php echo preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6",$xpay->Response("LGD_RESPDATE",0)); ?></td>
+        </tr>
+        <tr>
+            <th scope="row">현금영수증 URL</th>
+            <td>
+                <button type="button" name="receiptView" class="btn_frmline" onClick="javascript:showCashReceipts('<?php echo $LGD_MID; ?>','<?php echo $LGD_OID; ?>','<?php echo $od['od_casseqno']; ?>','<?php echo $trade_type; ?>','<?php echo $CST_PLATFROM; ?>');">영수증 확인</button>
+                <p>영수증 확인은 실 등록의 경우에만 가능합니다.</p>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2"></td>
+        </tr>
+        </tbody>
+        </table>
+    </div>
+
+</div>
+
+<?php
+include_once(G5_PATH.'/tail.sub.php');
 ?>

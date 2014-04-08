@@ -409,6 +409,8 @@ if($default['de_tax_flag_use']) {
     $od_free_mny = (int)$_POST['comm_free_mny'];
 }
 
+$od_pg = $default['de_pg_service'];
+
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
             set od_id             = '$od_id',
@@ -447,6 +449,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_bank_account   = '$od_bank_account',
                 od_receipt_time   = '$od_receipt_time',
                 od_misu           = '$od_misu',
+                od_pg             = '$od_pg',
                 od_tno            = '$od_tno',
                 od_app_no         = '$od_app_no',
                 od_escrow         = '$od_escrow',

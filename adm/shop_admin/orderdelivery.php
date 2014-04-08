@@ -37,8 +37,10 @@ include_once(G5_PATH.'/head.sub.php');
         <label for="od_send_mail">배송안내 메일</label>
         <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked="checked">
         <label for="od_send_sms">배송안내 SMS</label>
+        <?php if($default['de_pg_service'] == 'kcp') { ?>
         <input type="checkbox" name="send_escrow" value="1" id="od_send_escrow">
         <label for="od_send_escrow">에스크로배송등록</label>
+        <?php } ?>
     </div>
 
     <div class="btn_confirm01 btn_confirm">

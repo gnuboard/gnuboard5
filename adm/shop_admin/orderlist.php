@@ -206,7 +206,7 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
     <label for="od_misu04">포인트주문</label>
     <input type="checkbox" name="od_coupon" value="Y" id="od_misu05" <?php echo get_checked($od_coupon, 'Y'); ?>>
     <label for="od_misu05">쿠폰</label>
-    <?php if($default['de_escrow_use']) { ?>
+    <?php if($default['de_escrow_use'] && $default['de_pg_service'] == 'kcp') { ?>
     <input type="checkbox" name="od_escrow" value="Y" id="od_misu06" <?php echo get_checked($od_escrow, 'Y'); ?>>
     <label for="od_misu06">에스크로</label>
     <?php } ?>

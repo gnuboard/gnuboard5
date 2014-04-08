@@ -83,6 +83,18 @@ if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)
     sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
                     ADD `od_pg` varchar(255) NOT NULL DEFAULT '' AFTER `od_mobile`,
                     ADD `od_casseqno` varchar(255) NOT NULL DEFAULT '' AFTER `od_escrow` ", true);
+
+    // 주문 결제 PG kcp로 설정
+    sql_query(" update {$g5['g5_shop_order_table']} set od_pg = 'kcp' ");
+}
+
+// LG 현금영수증 JS
+if($od['od_pg'] == 'lg') {
+    if($default['de_card_test']) {
+    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    } else {
+        echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    }
 }
 ?>
 
@@ -326,6 +338,7 @@ if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)
     <input type="hidden" name="od_hp" value="<?php echo $od['od_hp']; ?>">
     <input type="hidden" name="od_tno" value="<?php echo $od['od_tno']; ?>">
     <input type="hidden" name="od_escrow" value="<?php echo $od['od_escrow']; ?>">
+    <input type="hidden" name="od_pg" value="<?php echo $od['od_pg']; ?>">
 
     <div class="compare_wrap">
 
@@ -505,14 +518,31 @@ if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)
                     <td>
                     <?php
                     if ($od['od_cash']) {
-                        require G5_SHOP_PATH.'/settle_kcp.inc.php';
+                        if($od['od_pg'] == 'lg') {
+                            require G5_SHOP_PATH.'/settle_lg.inc.php';
 
-                        $cash = unserialize($od['od_cash_info']);
-                        $cash_receipt_url = G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'];
+                            switch($od['od_settle_case']) {
+                                case '계좌이체':
+                                    $trade_type = 'BANK';
+                                    break;
+                                case '가상계좌':
+                                    $trade_type = 'CAS';
+                                    break;
+                                default:
+                                    $trade_type = 'CR';
+                                    break;
+                            }
+                            $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                        } else {
+                            require G5_SHOP_PATH.'/settle_kcp.inc.php';
+
+                            $cash = unserialize($od['od_cash_info']);
+                            $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
+                        }
                     ?>
-                        <a href="javascript:;" onclick="window.open('<?php echo $cash_receipt_url; ?>', 'taxsave_receipt', 'width=360,height=647,scrollbars=0,menus=0');">현금영수증 확인</a>
+                        <a href="javascript:;" onclick="<?php echo $cash_receipt_script; ?>">현금영수증 확인</a>
                     <?php } else { ?>
-                        <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave_kcp.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
+                        <a href="javascript:;" onclick="window.open('<?php echo G5_SHOP_URL; ?>/taxsave.php?od_id=<?php echo $od_id; ?>', 'taxsave', 'width=550,height=400,scrollbars=1,menus=0');">현금영수증 발급</a>
                     <?php } ?>
                     </td>
                 </tr>

@@ -12,6 +12,15 @@ $settle_case = $pp['pp_settle_case'];
 
 $g5['title'] = '개인결제상세내역';
 include_once(G5_MSHOP_PATH.'/_head.php');
+
+// LG 현금영수증 JS
+if($od['od_pg'] == 'lg') {
+    if($default['de_card_test']) {
+    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    } else {
+        echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    }
+}
 ?>
 
 <div id="sod_fin">
@@ -125,17 +134,35 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                         <?php
                         if($pp['pp_settle_case'] == '휴대폰')
                         {
-                            $hp_receipt_url = G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$pp['pp_tno'].'&order_no='.$pp['pp_id'].'&trade_mony='.$pp['pp_receipt_price'];
+                            if($pp['pp_pg'] == 'lg') {
+                                require_once G5_SHOP_PATH.'/settle_lg.inc.php';
+                                $LGD_TID      = $pp['pp_tno'];
+                                $LGD_MERTKEY  = $default['de_lg_mert_key'];
+                                $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
+
+                                $hp_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                            } else {
+                                $hp_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$pp['pp_tno'].'&order_no='.$pp['pp_id'].'&trade_mony='.$pp['pp_receipt_price'].'\', \'winreceipt\', \'width=500,height=690,scrollbars=yes,resizable=yes\');';
+                            }
                         ?>
-                        <a href="javascript:;" onclick="window.open('<?php echo $hp_receipt_url; ?>', 'winreceipt', 'width=500,height=690,scrollbars=yes,resizable=yes')">영수증 출력</a>
+                        <a href="javascript:;" onclick="<?php echo $hp_receipt_script; ?>">영수증 출력</a>
                         <?php
                         }
 
                         if($pp['pp_settle_case'] == '신용카드')
                         {
-                            $card_receipt_url = G5_BILL_RECEIPT_URL.'card_bill&tno='.$pp['pp_tno'].'&order_no='.$pp['pp_id'].'&trade_mony='.$pp['pp_receipt_price'];
+                            if($pp['pp_pg'] == 'lg') {
+                                require_once G5_SHOP_PATH.'/settle_lg.inc.php';
+                                $LGD_TID      = $pp['pp_tno'];
+                                $LGD_MERTKEY  = $default['de_lg_mert_key'];
+                                $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
+
+                                $card_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                            } else {
+                                $card_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'card_bill&tno='.$pp['pp_tno'].'&order_no='.$pp['pp_id'].'&trade_mony='.$pp['pp_receipt_price'].'\', \'winreceipt\', \'width=470,height=815,scrollbars=yes,resizable=yes\');';
+                            }
                         ?>
-                        <a href="javascript:;" onclick="window.open('<?php echo $card_receipt_url; ?>', 'winreceipt', 'width=470,height=815,scrollbars=yes,resizable=yes')">영수증 출력</a>
+                        <a href="javascript:;" onclick="<?php echo $card_receipt_script; ?>">영수증 출력</a>
                         <?php
                         }
                         ?>

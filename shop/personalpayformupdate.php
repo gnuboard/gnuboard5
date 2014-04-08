@@ -112,9 +112,12 @@ if((int)$pp['pp_price'] !== (int)$pg_price) {
     die("Receipt Amount Error");
 }
 
+$pp_pg = $default['de_pg_service'];
+
 // 결제정보 입력
 $sql = " update {$g5['g5_shop_personalpay_table']}
-            set pp_tno              = '$pp_tno',
+            set pp_pg               = '$pp_pg',
+                pp_tno              = '$pp_tno',
                 pp_app_no           = '$app_no',
                 pp_receipt_price    = '$pp_receipt_price',
                 pp_settle_case      = '$pp_settle_case',
@@ -149,6 +152,7 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_receipt_price    = od_receipt_price + '$pp_receipt_price',
                     od_receipt_time     = '$pp_receipt_time',
+                    od_pg               = '$pp_pg',
                     od_tno              = '$pp_tno',
                     od_app_no           = '$app_no',
                     od_escrow           = '$od_escrow',
