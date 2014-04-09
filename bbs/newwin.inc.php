@@ -50,6 +50,7 @@ $(function() {
         var idb = $(this).attr('class').split(' ');
         $('#'+idb[1]).css('display','none');
     });
+    $("#hd").css("z-index", 1000);
 });
 </script>
 <!-- } 팝업레이어 끝 -->
