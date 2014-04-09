@@ -72,14 +72,6 @@ if(!isset($default['de_member_reg_coupon_use'])) {
                     ADD `de_member_reg_coupon_term` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_use`,
                     ADD `de_member_reg_coupon_price` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_term` ", true);
 }
-
-// lg 결제관련 필드 추가
-if(!isset($default['de_pg_service'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
-                    ADD `de_pg_service` varchar(255) NOT NULL DEFAULT '' AFTER `de_sms_hp`,
-                    ADD `de_lg_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_kcp_mid`,
-                    ADD `de_lg_mert_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_kcp_site_key` ", true);
-}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -579,17 +571,7 @@ if(!isset($default['de_pg_service'])) {
                 주문 완료 <input type="text" name="de_point_days" value="<?php echo $default['de_point_days']; ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 부여
             </td>
         </tr>
-        <tr>
-            <th scope="row"><label for="de_pg_service">결제대행사</label></th>
-            <td>
-                <?php echo help('쇼핑몰에서 이용하실 결제대행사를 선택합니다.'); ?>
-                <select id="de_pg_service" name="de_pg_service">
-                    <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>KCP</option>
-                    <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG U+</option>
-                </select>
-            </td>
-        </tr>
-        <tr class="pg_info_fld kcp_info_fld">
+        <tr class="kcp_info_fld">
             <th scope="row">
                 <label for="de_kcp_mid">KCP SITE CODE</label><br>
                 <a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank" id="scf_kcpreg">KCP서비스신청하기</a>
@@ -599,28 +581,11 @@ if(!isset($default['de_pg_service'])) {
                 <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
             </td>
         </tr>
-        <tr class="pg_info_fld kcp_info_fld">
+        <tr class="kcp_info_fld">
             <th scope="row"><label for="de_kcp_site_key">KCP SITE KEY</label></th>
             <td>
                 <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
                 <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="32" maxlength="25">
-            </td>
-        </tr>
-        <tr class="pg_info_fld lg_info_fld">
-            <th scope="row">
-                <label for="de_lg_mid">LG U+ 상점 ID</label><br>
-                <a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank" id="scf_kcpreg">LG U+ 서비스신청하기</a>
-            </th>
-            <td>
-                <?php echo help("LG U+ 에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG U+에 사이트코드 변경 요청을 하십시오. 예) si_lguplus"); ?>
-                <span class="sitecode">si_</span> <input type="text" name="de_lg_mid" value="<?php echo $default['de_lg_mid']; ?>" id="de_lg_mid" class="frm_input" size="10" maxlength="20" style="font:bold 15px Verdana;"> 영문자, 숫자 혼용
-            </td>
-        </tr>
-        <tr class="pg_info_fld lg_info_fld">
-            <th scope="row"><label for="de_lg_mert_key">LG U+ Mert Key</label></th>
-            <td>
-                <?php echo help("Mert Key 발급 LG U+ 전화: 1544-7772\n예) 95160cce09854ef44d2edb2bfb05f9f3"); ?>
-                <input type="text" name="de_lg_mert_key" value="<?php echo $default['de_lg_mert_key']; ?>" id="de_lg_mert_key" class="frm_input" size="32" maxlength="50">
             </td>
         </tr>
         <tr>
@@ -1297,18 +1262,6 @@ function fconfig_check(f)
 }
 
 $(function() {
-    $(".pg_info_fld").hide();
-    <?php if($default['de_pg_service']) { ?>
-    $(".<?php echo $default['de_pg_service']; ?>_info_fld").show();
-    <?php } else { ?>
-    $(".kcp_info_fld").show();
-    <?php } ?>
-    $("#de_pg_service").on("change", function() {
-        var pg = $(this).val();
-        $(".pg_info_fld:visible").hide();
-        $("."+pg+"_info_fld").show();
-    });
-
     $("#scf_cardtest_btn").bind("click", function() {
         var $cf_cardtest_tip = $("#scf_cardtest_tip");
         var $cf_cardtest_btn = $("#scf_cardtest_btn");

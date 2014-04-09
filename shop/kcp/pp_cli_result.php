@@ -105,7 +105,7 @@ echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/'.(G5_IS_MOBILE?'mobile':'defa
     //현금영수증 연동 스크립트
     function receiptView(auth_no)
     {
-        var receiptWin = "<?php echo G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&amp;orderid='.$ordr_idxx.'&amp;bill_yn=Y&amp;authno='; ?>"+auth_no;
+        var receiptWin = "<?php echo G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$ordr_idxx.'&bill_yn=Y&authno='; ?>"+auth_no;
         window.open(receiptWin , "" , "width=360, height=647")
     }
 </script>

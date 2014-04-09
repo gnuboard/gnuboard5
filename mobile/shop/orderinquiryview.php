@@ -21,15 +21,6 @@ $settle_case = $od['od_settle_case'];
 
 $g5['title'] = '주문상세내역';
 include_once(G5_MSHOP_PATH.'/_head.php');
-
-// LG 현금영수증 JS
-if($od['od_pg'] == 'lg') {
-    if($default['de_card_test']) {
-    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
-    } else {
-        echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
-    }
-}
 ?>
 
 <div id="sod_fin">
@@ -309,16 +300,7 @@ if($od['od_pg'] == 'lg') {
                         <?php
                         if($od['od_settle_case'] == '휴대폰')
                         {
-                            if($od['od_pg'] == 'lg') {
-                                require_once G5_SHOP_PATH.'/settle_lg.inc.php';
-                                $LGD_TID      = $od['od_tno'];
-                                $LGD_MERTKEY  = $default['de_lg_mert_key'];
-                                $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
-
-                                $hp_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
-                            } else {
-                                $hp_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=500,height=690,scrollbars=yes,resizable=yes\');';
-                            }
+                            $hp_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=500,height=690,scrollbars=yes,resizable=yes\');';
                         ?>
                         <a href="javascript:;" onclick="<?php echo $hp_receipt_script; ?>">영수증 출력</a>
                         <?php
@@ -326,16 +308,7 @@ if($od['od_pg'] == 'lg') {
 
                         if($od['od_settle_case'] == '신용카드')
                         {
-                            if($od['od_pg'] == 'lg') {
-                                require_once G5_SHOP_PATH.'/settle_lg.inc.php';
-                                $LGD_TID      = $od['od_tno'];
-                                $LGD_MERTKEY  = $default['de_lg_mert_key'];
-                                $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
-
-                                $card_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
-                            } else {
-                                $card_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'card_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=470,height=815,scrollbars=yes,resizable=yes\');';
-                            }
+                            $card_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'card_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=470,height=815,scrollbars=yes,resizable=yes\');';
                         ?>
                         <a href="javascript:;" onclick="<?php echo $card_receipt_script; ?>">영수증 출력</a>
                         <?php
@@ -379,27 +352,10 @@ if($od['od_pg'] == 'lg') {
                     <?php
                     if ($od['od_cash'])
                     {
-                        if($od['od_pg'] == 'lg') {
-                            require_once G5_SHOP_PATH.'/settle_lg.inc.php';
+                        require_once G5_MSHOP_PATH.'/settle_kcp.inc.php';
 
-                            switch($od['od_settle_case']) {
-                                case '계좌이체':
-                                    $trade_type = 'BANK';
-                                    break;
-                                case '가상계좌':
-                                    $trade_type = 'CAS';
-                                    break;
-                                default:
-                                    $trade_type = 'CR';
-                                    break;
-                            }
-                            $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
-                        } else {
-                            require_once G5_SHOP_PATH.'/settle_kcp.inc.php';
-
-                            $cash = unserialize($od['od_cash_info']);
-                            $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
-                        }
+                        $cash = unserialize($od['od_cash_info']);
+                        $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
                     ?>
                         <a href="javascript:;" onclick="<?php echo $cash_receipt_script; ?>">현금영수증 확인하기</a>
                     <?php
@@ -599,25 +555,43 @@ if($od['od_pg'] == 'lg') {
         <?php } ?>
     </section>
 
-    <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin && $od['od_pg'] == 'kcp') {
-    preg_match("/(\s[^\s]+\s)/", $od['od_bank_account'], $matchs);
+    <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin) {
+    preg_match("/(\s[^\s]+\s?)/", $od['od_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
     ?>
-    <fieldset>
-    <legend>모의입금처리</legend>
     <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
-    <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
-    <label for="e_trade_no">KCP 거래번호</label>
-    <input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>"><br>
-    <label for="deposit_no">입금계좌</label>
-    <input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>"><br>
-    <label for="req_name">입금자명</label>
-    <input type="text" name="req_name" value="<?php echo $od['od_name']; ?>"><br>
-    <label for="noti_url">입금통보 URL</label>
-    <input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php"><br><br>
-    <input type="submit" value="입금통보 테스트">
-    </form>
-    </fieldset>
+    <div class="tbl_frm01 tbl_wrap">
+        <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
+        <table>
+        <caption>모의입금처리</caption>
+        <colgroup>
+            <col class="grid_3">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="col"><label for="e_trade_no">KCP 거래번호</label></th>
+            <td><input type="text" name="e_trade_no" value="<?php echo $od['od_tno']; ?>"></td>
+        </tr>
+        <tr>
+            <th scope="col"><label for="deposit_no">입금계좌</label></th>
+            <td><input type="text" name="deposit_no" value="<?php echo $deposit_no; ?>"></td>
+        </tr>
+        <tr>
+            <th scope="col"><label for="req_name">입금자명</label></th>
+            <td><input type="text" name="req_name" value="<?php echo $od['od_deposit_name']; ?>"></td>
+        </tr>
+        <tr>
+            <th scope="col"><label for="noti_url">입금통보 URL</label></th>
+            <td><input type="text" name="noti_url" value="<?php echo G5_SHOP_URL; ?>/settle_kcp_common.php"></td>
+        </tr>
+        </tbody>
+        </table>
+        <div id="sod_fin_test" class="btn_confirm">
+            <input type="submit" value="입금통보 테스트" class="btn_submit">
+        </div>
+        </form>
+    </div>
     <?php } ?>
 
 </div>
