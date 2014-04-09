@@ -180,7 +180,7 @@ include_once('./_head.php');
         </ul>
     </section>
 
-    <?php if ($pp['pp_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
+    <?php if ($misu_price > 0 && $pp['pp_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin) {
     preg_match("/(\s[^\s]+\s?)/", $pp['pp_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
     ?>
