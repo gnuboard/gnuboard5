@@ -13,6 +13,10 @@ $no = (int)$no;
 if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
     alert('잘못된 접근입니다.');
 
+// 다운로드 차감일 때 비회원은 다운로드 불가
+if($board['bo_download_point'] < 0 && $is_guest)
+    alert('다운로드 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+
 $sql = " select bf_source, bf_file from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
 $file = sql_fetch($sql);
 if (!$file['bf_file'])
@@ -53,7 +57,7 @@ if (!get_session($ss_name))
     // 관리자인 경우 통과
     if (($write['mb_id'] && $write['mb_id'] == $member['mb_id']) || $is_admin)
         ;
-    else if ($board['bo_download_level'] > 1) // 회원이상 다운로드가 가능하다면
+    else if ($board['bo_download_level'] >= 1) // 회원이상 다운로드가 가능하다면
     {
         // 다운로드 포인트가 음수이고 회원의 포인트가 0 이거나 작다면
         if ($member['mb_point'] + $board['bo_download_point'] < 0)
