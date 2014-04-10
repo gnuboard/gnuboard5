@@ -51,7 +51,6 @@ $sql = " insert into {$g5['board_table']}
                 bo_download_point = '{$board[bo_download_point]}',
                 bo_use_category = '{$board[bo_use_category]}',
                 bo_category_list = '{$board['bo_category_list']}',
-                bo_disable_tags = '{$board['bo_disable_tags']}',
                 bo_use_sideview = '{$board[bo_use_sideview]}',
                 bo_use_file_content = '{$board[bo_use_file_content]}',
                 bo_use_secret = '{$board[bo_use_secret]}',

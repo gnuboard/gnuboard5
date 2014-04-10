@@ -83,8 +83,6 @@ if ($w == "") {
 
     $member['mb_email']       = get_text($member['mb_email']);
     $member['mb_homepage']    = get_text($member['mb_homepage']);
-    $member['mb_password_q']  = get_text($member['mb_password_q']);
-    $member['mb_password_a']  = get_text($member['mb_password_a']);
     $member['mb_birth']       = get_text($member['mb_birth']);
     $member['mb_tel']         = get_text($member['mb_tel']);
     $member['mb_hp']          = get_text($member['mb_hp']);

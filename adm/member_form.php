@@ -33,8 +33,6 @@ else if ($w == 'u')
 
     $mb['mb_email'] = get_text($mb['mb_email']);
     $mb['mb_homepage'] = get_text($mb['mb_homepage']);
-    $mb['mb_password_q'] = get_text($mb['mb_password_q']);
-    $mb['mb_password_a'] = get_text($mb['mb_password_a']);
     $mb['mb_birth'] = get_text($mb['mb_birth']);
     $mb['mb_tel'] = get_text($mb['mb_tel']);
     $mb['mb_hp'] = get_text($mb['mb_hp']);
@@ -320,15 +318,15 @@ include_once('./admin.head.php');
         <th scope="row"><label for="mb_leave_date">탈퇴일자</label></th>
         <td>
             <input type="text" name="mb_leave_date" value="<?php echo $mb['mb_leave_date'] ?>" id="mb_leave_date" class="frm_input" maxlength="8">
-            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_leave_date_set_today" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) { 
+            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_leave_date_set_today" onclick="if (this.form.mb_leave_date.value==this.form.mb_leave_date.defaultValue) {
 this.form.mb_leave_date.value=this.value; } else { this.form.mb_leave_date.value=this.form.mb_leave_date.defaultValue; }">
             <label for="mb_leave_date_set_today">탈퇴일을 오늘로 지정</label>
         </td>
         <th scope="row">접근차단일자</th>
         <td>
             <input type="text" name="mb_intercept_date" value="<?php echo $mb['mb_intercept_date'] ?>" id="mb_intercept_date" class="frm_input" maxlength="8">
-            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_intercept_date_set_today" onclick="if 
-(this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else { 
+            <input type="checkbox" value="<?php echo date("Ymd"); ?>" id="mb_intercept_date_set_today" onclick="if
+(this.form.mb_intercept_date.value==this.form.mb_intercept_date.defaultValue) { this.form.mb_intercept_date.value=this.value; } else {
 this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
             <label for="mb_intercept_date_set_today">접근차단일을 오늘로 지정</label>
         </td>
