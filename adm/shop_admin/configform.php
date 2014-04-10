@@ -1143,7 +1143,7 @@ function byte_check(el_cont, el_byte)
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_sms_hp">관리자 핸드폰번호</label></th>
+            <th scope="row"><label for="de_sms_hp">관리자 휴대폰번호</label></th>
             <td>
                 <?php echo help("주문서작성시 쇼핑몰관리자가 문자메세지를 받아볼 번호를 숫자만으로 입력하세요. 예) 0101234567"); ?>
                 <input type="text" name="de_sms_hp" value="<?php echo $default['de_sms_hp']; ?>" id="de_sms_hp" class="frm_input" size="20">

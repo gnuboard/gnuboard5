@@ -283,9 +283,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_simg_height` int(11) NOT NULL DEFAULT '0',
   `de_mimg_width` int(11) NOT NULL DEFAULT '0',
   `de_mimg_height` int(11) NOT NULL DEFAULT '0',
-  `de_scroll_banner_use` tinyint(4) NOT NULL DEFAULT '0',
-  `de_cart_skin` varchar(255) NOT NULL DEFAULT '',
-  `de_register` varchar(255) NOT NULL DEFAULT '',
   `de_sms_cont1` varchar(255) NOT NULL DEFAULT '',
   `de_sms_cont2` varchar(255) NOT NULL DEFAULT '',
   `de_sms_cont3` varchar(255) NOT NULL DEFAULT '',
@@ -326,7 +323,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
 DROP TABLE IF EXISTS `g5_shop_event`;
 CREATE TABLE IF NOT EXISTS `g5_shop_event` (
   `ev_id` int(11) NOT NULL AUTO_INCREMENT,
-  `it_group` int(11) NOT NULL DEFAULT '0',
   `ev_skin` varchar(255) NOT NULL DEFAULT '',
   `ev_mobile_skin` varchar(255) NOT NULL DEFAULT '',
   `ev_img_width` int(11) NOT NULL DEFAULT '0',
