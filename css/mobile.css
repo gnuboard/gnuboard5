@@ -232,6 +232,9 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #ctt_con {padding:10px 0}
 .ctt_img {text-align:center}
 
+/* 검색결과 색상 */
+.sch_word {color:#ff3061}
+
 /* 사이드뷰 */
 .sv_wrap {display:inline-block;position:relative;font-weight:normal}
 .sv_wrap .sv {z-index:1000;display:none;margin:5px 0 0;border:1px solid #283646}
