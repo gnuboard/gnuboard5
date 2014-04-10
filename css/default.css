@@ -266,6 +266,9 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #ctt_con {padding:10px 0}
 .ctt_img {text-align:center}
 
+/* 검색결과 색상 */
+.sch_word {color:#ff3061}
+
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}
 #validation_check h1 {margin-bottom:20px;font-size:1.3em}
