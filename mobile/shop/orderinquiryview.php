@@ -444,7 +444,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                 {
                 ?>
                 <tr>
-                    <th scope="row">희망배송일</td>
+                    <th scope="row">희망배송일</th>
                     <td><?php echo substr($od['od_hope_date'],0,10).' ('.get_yoil($od['od_hope_date']).')' ;?></td>
                 </tr>
                 <?php }
@@ -452,7 +452,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                 {
                 ?>
                 <tr>
-                    <th scope="row">전하실 말씀</td>
+                    <th scope="row">전하실 말씀</th>
                     <td><?php echo conv_content($od['od_memo'], 0); ?></td>
                 </tr>
                 <?php } ?>
