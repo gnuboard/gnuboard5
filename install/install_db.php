@@ -106,7 +106,6 @@ $sql = " insert into `{$table_prefix}config`
                 cf_write_point = '$write_point',
                 cf_comment_point = '$comment_point',
                 cf_download_point = '$download_point',
-                cf_search_color = 'RED',
                 cf_write_pages = '10',
                 cf_mobile_pages = '5',
                 cf_link_target = '_blank',
