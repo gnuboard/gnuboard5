@@ -65,7 +65,6 @@ DROP TABLE IF EXISTS `{$g5['sms5_config_table']}`;
 
 CREATE TABLE `{$g5['sms5_config_table']}` (
   `cf_phone` varchar(255) NOT NULL default '',
-  `cf_register` varchar(255) NOT NULL default '',
   `cf_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `cf_member` tinyint(4) NOT NULL default '1',
   `cf_level` tinyint(4) NOT NULL default '2',
