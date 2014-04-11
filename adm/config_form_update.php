@@ -116,6 +116,7 @@ $sql = " update {$g5['config_table']}
                 cf_cert_kcb_cd = '{$_POST['cf_cert_kcb_cd']}',
                 cf_cert_kcp_cd = '{$_POST['cf_cert_kcp_cd']}',
                 cf_cert_limit = '{$_POST['cf_cert_limit']}',
+                cf_cert_req = '{$_POST['cf_cert_req']}',
                 cf_sms_use = '{$_POST['cf_sms_use']}',
                 cf_icode_id = '{$_POST['cf_icode_id']}',
                 cf_icode_pw = '{$_POST['cf_icode_pw']}',
