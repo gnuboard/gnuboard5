@@ -76,6 +76,12 @@ if ($w == '' || $w == 'u') {
     if ($w=='') {
         if ($msg = exist_mb_id($mb_id))     alert($msg);
 
+        // 본인확인 체크
+        if($config['cf_cert_use'] && $config['cf_cert_req']) {
+            if(trim($_POST['cert_no']) != $_SESSION['ss_cert_no'])
+                alert("회원가입을 위해서는 본인확인을 해주셔야 합니다.");
+        }
+
         if ($config['cf_use_recommend'] && $mb_recommend) {
             if (!exist_mb_id($mb_recommend))
                 alert("추천인이 존재하지 않습니다.");

@@ -19,6 +19,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <input type="hidden" name="agree" value="<?php echo $agree ?>">
     <input type="hidden" name="agree2" value="<?php echo $agree2 ?>">
     <input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
+    <input type="hidden" name="cert_no" value="">
     <?php if (isset($member['mb_sex'])) {  ?><input type="hidden" name="mb_sex" value="<?php echo $member['mb_sex'] ?>"><?php }  ?>
     <?php if (isset($member['mb_nick_date']) && $member['mb_nick_date'] > date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400))) { // 닉네임수정일이 지나지 않았다면  ?>
     <input type="hidden" name="mb_nick_default" value="<?php echo $member['mb_nick'] ?>">
@@ -364,6 +365,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             }
             */
         }
+
+        <?php if($w == '' && $config['cf_cert_use'] && $config['cf_cert_req']) { ?>
+        // 본인확인 체크
+        if(f.cert_no.value=="") {
+            alert("회원가입을 위해서는 본인확인을 해주셔야 합니다.");
+            return false;
+        }
+        <?php } ?>
 
         // 닉네임 검사
         if ((f.w.value == "") || (f.w.value == "u" && f.mb_nick.defaultValue != f.mb_nick.value)) {

@@ -139,6 +139,11 @@ if(!isset($config['cf_mobile_page_rows'])) {
                     ADD `cf_mobile_page_rows` int(11) NOT NULL DEFAULT '0' AFTER `cf_page_rows` ", true);
 }
 
+if(!isset($config['cf_cert_req'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_cert_req` tinyint(4) NOT NULL DEFAULT '0' AFTER `cf_cert_limit` ", true);
+}
+
 if(!isset($config['cf_faq_skin'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_faq_skin` varchar(255) NOT NULL DEFAULT '' AFTER `cf_connect_skin`,
@@ -780,6 +785,13 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td class="cf_cert_service">
                 <?php echo help('하루동안 아이핀과 휴대폰 본인확인 인증 이용회수를 제한할 수 있습니다.<br>회수제한은 실서비스에서 아이핀과 휴대폰 본인확인 인증에 개별 적용됩니다.<br>0 으로 설정하시면 회수제한이 적용되지 않습니다.'); ?>
                 <input type="text" name="cf_cert_limit" value="<?php echo $config['cf_cert_limit']; ?>" id="cf_cert_limit" class="frm_input" size="3"> 회
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_req">본인확인 필수</label></th>
+            <td class="cf_cert_service">
+                <?php echo help('회원가입 때 본인확인을 필수로 할지 설정합니다. 필수로 설정하시면 본인확인을 하지 않은 경우 회원가입이 안됩니다.'); ?>
+                <input type="checkbox" name="cf_cert_req" value="1" id="cf_cert_req"<?php echo get_checked($config['cf_cert_req'], 1); ?>> 예
             </td>
         </tr>
         </tbody>

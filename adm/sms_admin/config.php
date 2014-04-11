@@ -105,15 +105,6 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
             <input type="text" name="cf_phone" value="<?php echo $sms5['cf_phone']; ?>" id="cf_phone" required class="frm_input required" size="12">
         </td>
     </tr>
-    <!--
-    <tr>
-        <th scope="row"><label for="cf_register">프로그램 등록번호</label></th>
-        <td>
-            <?php echo help("정식구입자께만 발급해 드리고 있습니다.\n등록번호가 틀린 경우 문자메시지를 보내실 수 없습니다.\n등록번호는 서버 IP, MYSQL USER, DB 를 알려주셔야 발급이 가능합니다."); ?>
-            <input type="text" name="cf_register" value="<?php echo $sms5['cf_register']; ?>" id="cf_register" required class="frm_input required">
-        </td>
-    </tr>
-    -->
     <tr>
         <th scope="row"><label for="cf_member">회원간 문자전송</label></th>
         <td>
