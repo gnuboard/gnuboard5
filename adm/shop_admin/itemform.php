@@ -1335,24 +1335,28 @@ $(function(){
                         }
                     ?>
                 </select>
+                <label for="sch_name" class="sound_only">상품명</label>
+                <input type="text" name="sch_name" id="sch_name" class="frm_input" size="15">
+                <button type="button" id="btn_search_item" class="btn_frmline">검색</button>
             </span>
             <div id="relation" class="srel_list">
-                <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
+                <p>상품의 분류를 선택하시거나 상품명을 입력하신 후 검색하여 주십시오.</p>
             </div>
             <script>
             $(function() {
-                $("#sch_relation").change(function() {
-                    var ca_id = $(this).val();
+                $("#btn_search_item").click(function() {
+                    var ca_id = $("#sch_relation").val();
+                    var it_name = $.trim($("#sch_name").val());
                     var $relation = $("#relation");
 
-                    if(ca_id == "") {
-                        $relation.html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
+                    if(ca_id == "" && it_name == "") {
+                        $relation.html("<p>상품의 분류를 선택하시거나 상품명을 입력하신 후 검색하여 주십시오.</p>");
                         return false;
                     }
 
                     $("#relation").load(
                         "./itemformrelation.php",
-                        { it_id: "<?php echo $it_id; ?>", ca_id: ca_id }
+                        { it_id: "<?php echo $it_id; ?>", ca_id: ca_id, it_name: it_name }
                     );
                 });
 
