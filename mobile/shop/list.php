@@ -44,7 +44,7 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
     <?php
     $nav_skin = $skin_dir.'/navigation.skin.php';
     if(!is_file($nav_skin))
-        $nav_skin = G5_SHOP_SKIN_PATH.'/navigation.skin.php';
+        $nav_skin = G5_MSHOP_SKIN_PATH.'/navigation.skin.php';
     include $nav_skin;
 
     // 상단 HTML
@@ -64,7 +64,7 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
     if (file_exists($skin_file)) {
         $sort_skin = $skin_dir.'/list.sort.skin.php';
         if(!is_file($sort_skin))
-            $sort_skin = G5_SHOP_SKIN_PATH.'/list.sort.skin.php';
+            $sort_skin = G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
         include $sort_skin;
 
         // 총몇개
