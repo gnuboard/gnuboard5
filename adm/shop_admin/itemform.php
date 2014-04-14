@@ -317,13 +317,6 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="it_mobile_name">모바일 상품명</label></th>
-            <td colspan="2">
-                <?php echo help("모바일에서 보여지는 상품명이 다른 경우에 입력합니다. 입력이 없으면 기본 상품명이 출력됩니다."); ?>
-                <input type="text" name="it_mobile_name" value="<?php echo get_text(cut_str($it['it_mobile_name'], 250, "")); ?>" id="it_mobile_name" class="frm_input">
-            </td>
-        </tr>
-        <tr>
             <th scope="row"><label for="it_order">출력순서</label></th>
             <td>
                 <?php echo help("숫자가 작을 수록 상위에 출력됩니다. 음수 입력도 가능하며 입력 가능 범위는 -2147483648 부터 2147483647 까지입니다.\n<b>입력하지 않으면 자동으로 출력됩니다.</b>"); ?>

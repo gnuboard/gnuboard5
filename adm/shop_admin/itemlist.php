@@ -163,13 +163,12 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </tr>
     <tr>
         <th scope="col" rowspan="2" id="th_img">이미지</th>
-        <th scope="col" id="th_pc_title"><?php echo subject_sort_link('it_name', 'sca='.$sca); ?>PC 상품명</a></th>
+        <th scope="col" rowspan="2" id="th_pc_title"><?php echo subject_sort_link('it_name', 'sca='.$sca); ?>상품명</a></th>
         <th scope="col" id="th_amt"><?php echo subject_sort_link('it_price', 'sca='.$sca); ?>판매가격</a></th>
         <th scope="col" id="th_camt"><?php echo subject_sort_link('it_cust_price', 'sca='.$sca); ?>시중가격</a></th>
         <th scope="col" id="th_skin">PC스킨</th>
     </tr>
     <tr>
-        <th scope="col" id="th_mo_title">모바일 상품명</th>
         <th scope="col" id="th_pt"><?php echo subject_sort_link('it_point', 'sca='.$sca); ?>포인트</a></th>
         <th scope="col" id="th_qty"><?php echo subject_sort_link('it_stock_qty', 'sca='.$sca); ?>재고</a></th>
         <th scope="col" id="th_mskin">모바일스킨</th>
@@ -231,8 +230,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td rowspan="2" class="td_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?></a></td>
-        <td headers="th_pc_title" class="td_input">
-            <label for="name_<?php echo $i; ?>" class="sound_only">PC 상품명</label>
+        <td headers="th_pc_title" rowspan="2" class="td_input">
+            <label for="name_<?php echo $i; ?>" class="sound_only">상품명</label>
             <input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" id="name_<?php echo $i; ?>" required class="frm_input required" size="30">
         </td>
         <td headers="th_amt" class="td_numbig td_input">
@@ -251,10 +250,6 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
-        <td headers="th_mo_title" class="td_input">
-            <label for="mobile_name_<?php echo $i; ?>" class="sound_only">모바일 상품명</label>
-            <input type="text" name="it_mobile_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_mobile_name'],250, "")); ?>" id="mobile_name_<?php echo $i; ?>" class="frm_input" size="30">
-        </td>
         <td headers="th_pt" class="td_numbig td_input"><?php echo $it_point; ?></td>
         <td headers="th_qty" class="td_numbig td_input">
             <label for="stock_qty_<?php echo $i; ?>" class="sound_only">재고</label>

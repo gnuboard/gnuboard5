@@ -369,7 +369,6 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_skin` varchar(255) NOT NULL DEFAULT '',
   `it_mobile_skin` varchar(255) NOT NULL DEFAULT '',
   `it_name` varchar(255) NOT NULL DEFAULT '',
-  `it_mobile_name` varchar(255) NOT NULL DEFAULT '',
   `it_maker` varchar(255) NOT NULL DEFAULT '',
   `it_origin` varchar(255) NOT NULL DEFAULT '',
   `it_brand` varchar(255) NOT NULL DEFAULT '',

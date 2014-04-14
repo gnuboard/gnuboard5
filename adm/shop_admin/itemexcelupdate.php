@@ -85,7 +85,6 @@ if($_FILES['excelfile']['tmp_name']) {
         $ca_id2             = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $ca_id3             = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_name            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_mobile_name     = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_maker           = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_origin          = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_brand           = addslashes($data->sheets[0]['cells'][$i][$j++]);
@@ -121,6 +120,7 @@ if($_FILES['excelfile']['tmp_name']) {
         $it_img8            = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_img9            = addslashes($data->sheets[0]['cells'][$i][$j++]);
         $it_img10           = addslashes($data->sheets[0]['cells'][$i][$j++]);
+        $it_explan2         = strip_tags(trim($it_explan));
 
         if(!$it_id || !$ca_id || !$it_name) {
             $fail_count++;
@@ -153,7 +153,6 @@ if($_FILES['excelfile']['tmp_name']) {
                          ca_id2 = '$ca_id2',
                          ca_id3 = '$ca_id3',
                          it_name = '$it_name',
-                         it_mobile_name = '$it_mobile_name',
                          it_maker = '$it_maker',
                          it_origin = '$it_origin',
                          it_brand = '$it_brand',
@@ -165,6 +164,7 @@ if($_FILES['excelfile']['tmp_name']) {
                          it_type5 = '$it_type5',
                          it_basic = '$it_basic',
                          it_explan = '$it_explan',
+                         it_explan2 = '$it_explan2',
                          it_mobile_explan = '$it_mobile_explan',
                          it_cust_price = '$it_cust_price',
                          it_price = '$it_price',
