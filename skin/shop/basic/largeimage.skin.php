@@ -51,12 +51,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 </div>
 
 <script>
-$(function(){
-    // 창 사이즈 조절
+// 창 사이즈 조절
+$(window).on("load", function() {
     var w = <?php echo $size[0]; ?> + 50;
-    var h = <?php echo $size[1]; ?> + 210;
+    var h = $("#sit_pvi_nw").outerHeight(true) + $("#sit_pvi_nw h1").outerHeight(true);
     window.resizeTo(w, h);
+});
 
+$(function(){
     $("#sit_pvi_nwbig span:eq("+<?php echo ($no - 1); ?>+")").addClass("visible");
 
     // 이미지 미리보기
