@@ -1426,8 +1426,8 @@ $(function(){
                 ?>
                     <li>
                         <input type="hidden" name="re_it_id[]" value="<?php echo $row['it_id']; ?>">
-                        <?php echo $it_name; ?>
-                        <button type="button" class="del_item">삭제</button>
+                        <div class="list_item"><?php echo $it_name; ?></div>
+                        <div class="list_item_btn"><button type="button" class="del_item btn_frmline">삭제</button></div>
                     </li>
                 <?php
                     $str[] = $row['it_id'];
@@ -1466,8 +1466,8 @@ $(function(){
                 ?>
                     <li>
                         <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
-                        <?php echo get_text($row['ev_subject']); ?>
-                        <button type="button" class="add_event">추가</button>
+                        <div class="list_item"><?php echo get_text($row['ev_subject']); ?></div>
+                        <div class="list_item_btn"><button type="button" class="add_event btn_frmline">추가</button></div>
                     </li>
                 <?php
                 }
@@ -1544,8 +1544,8 @@ $(function(){
                 ?>
                     <li>
                         <input type="hidden" name="ev_id[]" value="<?php echo $row['ev_id']; ?>">
-                        <?php echo get_text($row['ev_subject']); ?>
-                        <button type="button" class="del_event">삭제</button>
+                        <div class="list_item"><?php echo get_text($row['ev_subject']); ?></div>
+                        <div class="list_item_btn"><button type="button" class="del_event btn_frmline">삭제</button></div>
                     </li>
                 <?php
                 }
