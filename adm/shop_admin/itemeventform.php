@@ -224,8 +224,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                     ?>
                         <li>
                             <input type="hidden" name="it_id[]" value="<?php echo $row['it_id']; ?>">
-                            <?php echo $it_name; ?>
-                            <button type="button" class="del_item">삭제</button>
+                            <div class="list_item"><?php echo $it_name; ?></div>
+                            <div class="list_item_btn"><button type="button" class="del_item btn_frmline">삭제</button></div>
                         </li>
                     <?php
                     }
