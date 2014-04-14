@@ -205,9 +205,12 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                         <option value="">분류선택</option>
                         <?php echo $category_select; ?>
                     </select>
+                    <label for="sch_name" class="sound_only">상품명</label>
+                    <input type="text" name="sch_name" id="sch_name" class="frm_input" size="15">
+                    <button type="button" id="btn_search_item" class="btn_frmline">검색</button>
                 </span>
                 <div id="sch_item_list" class="srel_list">
-                    <p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>
+                    <p>상품의 분류를 선택하시거나 상품명을 입력하신 후 검색하여 주십시오.</p>
                 </div>
             </section>
 
@@ -314,17 +317,18 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 <script>
 $(function() {
-    $("#sch_ca_id").change(function() {
-        var ca_id = $(this).val();
+    $("#btn_search_item").click(function() {
+        var ca_id = $("#sch_ca_id").val();
+        var it_name = $.trim($("#sch_name").val());
 
-        if(ca_id == "") {
-            $("#sch_item_list").html("<p>상품 검색을 위해 상품의 분류를 선택해주십시오.</p>");
+        if(ca_id == "" && it_name == "") {
+            $("#sch_item_list").html("<p>상품의 분류를 선택하시거나 상품명을 입력하신 후 검색하여 주십시오.</p>");
             return false;
         }
 
         $("#sch_item_list").load(
             "./itemeventsearch.php",
-            { w: "<?php echo $w; ?>", ev_id: "<?php echo $ev_id; ?>", ca_id: ca_id }
+            { w: "<?php echo $w; ?>", ev_id: "<?php echo $ev_id; ?>", ca_id: ca_id, it_name: it_name }
         );
     });
 

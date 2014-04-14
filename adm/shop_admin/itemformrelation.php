@@ -2,6 +2,8 @@
 $sub_menu = '400300';
 include_once('./_common.php');
 
+auth_check($auth[$sub_menu], "w");
+
 $ca_id = trim($ca_id);
 $it_name = trim(stripslashes($it_name));
 
