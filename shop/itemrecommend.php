@@ -38,7 +38,7 @@ include_once(G5_PATH.'/head.sub.php');
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row"><label for="to_email">추천받는 분 E-mail<strong class="sound_only"> 필수</strong></label></th>
+            <th scope="row"><label for="to_email">추천받는 분<br>E-mail<strong class="sound_only"> 필수</strong></label></th>
             <td><input type="text" name="to_email" id="to_email" required class="frm_input required" size="51"></td>
         </tr>
         <tr>
