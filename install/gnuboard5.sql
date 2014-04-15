@@ -206,7 +206,6 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_write_point` int(11) NOT NULL DEFAULT '0',
   `cf_comment_point` int(11) NOT NULL DEFAULT '0',
   `cf_download_point` int(11) NOT NULL DEFAULT '0',
-  `cf_search_color` varchar(255) NOT NULL DEFAULT '',
   `cf_write_pages` int(11) NOT NULL DEFAULT '0',
   `cf_mobile_pages` int(11) NOT NULL DEFAULT '0',
   `cf_link_target` varchar(255) NOT NULL DEFAULT '',

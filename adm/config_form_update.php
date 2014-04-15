@@ -43,7 +43,6 @@ $sql = " update {$g5['config_table']}
                 cf_write_point = '{$_POST['cf_write_point']}',
                 cf_comment_point = '{$_POST['cf_comment_point']}',
                 cf_download_point = '{$_POST['cf_download_point']}',
-                cf_search_color = '{$_POST['cf_search_color']}',
                 cf_write_pages = '{$_POST['cf_write_pages']}',
                 cf_mobile_pages = '{$_POST['cf_mobile_pages']}',
                 cf_link_target = '{$_POST['cf_link_target']}',
