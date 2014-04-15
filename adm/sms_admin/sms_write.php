@@ -148,19 +148,19 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
             <label for="wr_by">년</label><br>
             <select name="wr_bm" id="wr_bm" disabled>
                 <?php for ($i=1; $i<=12; $i++) { ?>
-                <option value="<?php echo sprintf("%02d",$i)?>" <?php echo date('m')==$i?'selected':''?>><?php echo sprintf("%02d",$i)?></option>
+                <option value="<?php echo sprintf("%02d",$i)?>"<?php echo get_selected(date('m'), $i); ?>><?php echo sprintf("%02d",$i)?></option>
             <?php } ?>
             </select>
             <label for="wr_bm">월</label>
             <select name="wr_bd" id="wr_bd" disabled>
                 <?php for ($i=1; $i<=31; $i++) { ?>
-                <option value="<?php echo sprintf("%02d",$i)?>" <?php echo date('d')==$i?'selected':''?>><?php echo sprintf("%02d",$i)?></option>
+                <option value="<?php echo sprintf("%02d",$i)?>"<?php echo get_selected(date('d'), $i); ?>><?php echo sprintf("%02d",$i)?></option>
                 <?php } ?>
             </select>
             <label for="wr_bd">일</label><br>
                 <select name="wr_bh" id="wr_bh" disabled>
                 <?php for ($i=0; $i<24; $i++) { ?>
-                <option value="<?php echo sprintf("%02d",$i)?>" <?php echo date('H')+1==$i?'selected':''?>><?php echo sprintf("%02d",$i)?></option>
+                <option value="<?php echo sprintf("%02d",$i)?>"<?php echo get_selected(date('H')+1, $i); ?>><?php echo sprintf("%02d",$i)?></option>
                 <?php } ?>
             </select>
             <label for="wr_bh">시</label>
@@ -452,7 +452,7 @@ hp_list.options[hp_list.length] = new Option(item, value);
 <?php
 if ($fo_no) {
     $row = sql_fetch("select * from {$g5['sms5_form_table']} where fo_no='$fo_no'");
-    $fo_content = str_replace("\r\n", "\\n", $row[fo_content]);
+    $fo_content = str_replace("\r\n", "\\n", $row['fo_content']);
     echo "add(\"$fo_content\");";
 }
 ?>

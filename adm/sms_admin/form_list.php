@@ -29,7 +29,7 @@ if ($st == 'all') {
 }
 
 $total_res = sql_fetch("select count(*) as cnt from {$g5['sms5_form_table']} where 1 $sql_group $sql_search");
-$total_count = $total_res[cnt];
+$total_count = $total_res['cnt'];
 
 $total_page = (int)($total_count/$page_size) + ($total_count%$page_size==0 ? 0 : 1);
 $page_start = $page_size * ( $page - 1 );
@@ -41,7 +41,7 @@ $qry = sql_query("select * from {$g5['sms5_form_group_table']} order by fg_name"
 while ($res = sql_fetch_array($qry)) array_push($group, $res);
 
 $res = sql_fetch("select count(*) as cnt from {$g5['sms5_form_table']} where fg_no=0");
-$no_count = $res[cnt];
+$no_count = $res['cnt'];
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
@@ -122,9 +122,9 @@ function multi_update(sel)
     <input type="hidden" name="fg_no" value="<?php echo $fg_no;?>">
     <label for="st" class="sound_only">검색대상</label>
     <select name="st" id="st">
-        <option value="all" <?php echo $st=='all'?'selected':''?>>제목 + 이모티콘</option>
-        <option value="name" <?php echo $st=='name'?'selected':''?>>제목</option>
-        <option value="content" <?php echo $st=='content'?'selected':''?>>이모티콘</option>
+        <option value="all"<?php echo get_selected('all', $st); ?>>제목 + 이모티콘</option>
+        <option value="name"<?php echo get_selected('name', $st); ?>>제목</option>
+        <option value="content"<?php echo get_selected('content', $st); ?>>이모티콘</option>
     </select>
     <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="sv" value="<?php echo $sv;?>" id="sv" required class="frm_input required" >
