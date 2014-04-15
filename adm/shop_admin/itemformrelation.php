@@ -5,7 +5,7 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], "w");
 
 $ca_id = trim($ca_id);
-$it_name = trim(stripslashes($it_name));
+$it_name = trim(strip_tags($it_name));
 
 if(!$ca_id && !$it_name)
     die('<p>상품의 분류를 선택하시거나 상품명을 입력하신 후 검색하여 주십시오.</p>');
