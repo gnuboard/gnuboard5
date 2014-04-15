@@ -116,7 +116,7 @@ echo itemqa_page($config['cf_mobile_pages'], $page, $total_page, "./itemqa.php?i
 <script>
 $(function(){
     $(".itemqa_form").click(function(){
-        window.open(this.href, "itemqa_form", "width=800,height=500,scrollbars=1");
+        window.open(this.href, "itemqa_form", "width=810,height=680,scrollbars=1");
         return false;
     });
 
