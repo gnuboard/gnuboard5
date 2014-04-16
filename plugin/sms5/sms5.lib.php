@@ -68,19 +68,19 @@ function ajax_auth_check($auth, $attr)
     if ($is_admin == 'super') return;
 
     if (!trim($auth))
-        return '이 메뉴에는 접근 권한이 없습니다.\\n\\n접근 권한은 최고관리자만 부여할 수 있습니다.';
+        die("{\"error\":\"이 메뉴에는 접근 권한이 없습니다.\\n\\n접근 권한은 최고관리자만 부여할 수 있습니다.\"}");
 
     $attr = strtolower($attr);
 
     if (!strstr($auth, $attr)) {
         if ($attr == 'r')
-            return '읽을 권한이 없습니다.';
+            die("{\"error\":\"읽을 권한이 없습니다.\"}");
         else if ($attr == 'w')
-            return '입력, 추가, 생성, 수정 권한이 없습니다.';
+            die("{\"error\":\"입력, 추가, 생성, 수정 권한이 없습니다.\"}");
         else if ($attr == 'd')
-            return '삭제 권한이 없습니다.';
+            die("{\"error\":\"삭제 권한이 없습니다.\"}");
         else
-            return '속성이 잘못 되었습니다.';
+            die("{\"error\":\"속성이 잘못 되었습니다.\"}");
     }
 }
 

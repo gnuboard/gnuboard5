@@ -5,9 +5,7 @@ include_once("./_common.php");
 $page_size = 10;
 $colspan = 5;
 
-if( $auth_check = ajax_auth_check($auth[$sub_menu], "r") ){
-    die("{\"error\":\"$auth_check\"}");
-}
+auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = "휴대폰번호 관리";
 

@@ -134,7 +134,7 @@ $SMS = new SMS5;
 $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
 
 $reply = str_replace('-', '', trim($wr_reply));
-$wr_message = str_replace('\r\n', PHP_EOL, $wr_message); // common.php 에서 mysql_real_escape_string 함수로 인해 수정
+$wr_message = conv_unescape_nl($wr_message);
 
 $result = $SMS->Add($list, $reply, '', '', $wr_message, $booking, $wr_total);
 
@@ -200,7 +200,7 @@ if ($result)
 
             $log = array_shift($SMS->Log);
 
-            sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum=0, bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes(stripslashes($log))."'");
+            sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum=0, bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'");
         }
         $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
 

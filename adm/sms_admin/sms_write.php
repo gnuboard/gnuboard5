@@ -452,7 +452,7 @@ hp_list.options[hp_list.length] = new Option(item, value);
 <?php
 if ($fo_no) {
     $row = sql_fetch("select * from {$g5['sms5_form_table']} where fo_no='$fo_no'");
-    $fo_content = str_replace("\r\n", "\\n", $row['fo_content']);
+    $fo_content = str_replace(array("\r\n","\n"), "\\n", $row['fo_content']);
     echo "add(\"$fo_content\");";
 }
 ?>
@@ -472,7 +472,7 @@ if ($wr_no)
     echo "var hp_list = document.getElementById('hp_list');\n";
     //echo "add(\"$row[wr_message]\");\n";
     $wr_message = str_replace('"', '\"', $row['wr_message']);
-    $wr_message = str_replace("\r\n", "\\n", $wr_message);
+    $wr_message = str_replace(array("\r\n","\n"), "\\n", $wr_message);
     echo "add(\"$wr_message\");\n";
     echo "document.getElementById('wr_reply').value = '{$row['wr_reply']}';\n";
 

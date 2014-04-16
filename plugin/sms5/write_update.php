@@ -91,7 +91,8 @@ if ($mh_by && $mh_bm && $mh_bd && $mh_bh && $mh_bi) {
 $SMS = new SMS5;
 $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
 
-$wr_message = str_replace('\r\n', PHP_EOL, $wr_message); // common.php 에서 mysql_real_escape_string 함수로 인해 수정
+$mh_message = conv_unescape_nl($mh_message);
+
 $result = $SMS->Add($mh_hp, $mh_reply, '', '', $mh_message, $booking, $total);
 
 $is_success = null;

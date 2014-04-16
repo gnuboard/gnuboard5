@@ -10,7 +10,11 @@ if( !function_exists('json_encode') ) {
     }
 }
 
-auth_check($auth[$sub_menu], "w");
+if( $mtype == "json" ){
+    ajax_auth_check($auth[$sub_menu], "w");
+} else {
+    auth_check($auth[$sub_menu], "w");
+}
 
 $count      = 0;
 $hp_yes     = 0;
