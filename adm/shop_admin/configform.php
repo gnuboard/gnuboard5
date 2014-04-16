@@ -435,12 +435,12 @@ if(!isset($default['de_member_reg_coupon_use'])) {
 <?php echo $frm_submit; ?>
 
 <section id ="anc_scf_payment">
-    <h2 class="h2_frm">결제정보</h2>
+    <h2 class="h2_frm">결제설정</h2>
     <?php echo $pg_anchor; ?>
 
     <div class="tbl_frm01 tbl_wrap">
         <table>
-        <caption>결제정보 입력</caption>
+        <caption>결제설정 입력</caption>
         <colgroup>
             <col class="grid_4">
             <col>
@@ -656,12 +656,12 @@ if(!isset($default['de_member_reg_coupon_use'])) {
 <?php echo $frm_submit; ?>
 
 <section id="anc_scf_delivery">
-    <h2 >배송정보</h2>
+    <h2 >배송설정</h2>
      <?php echo $pg_anchor; ?>
 
     <div class="tbl_frm01 tbl_wrap">
         <table>
-        <caption>배송정보 입력</caption>
+        <caption>배송설정 입력</caption>
         <colgroup>
             <col class="grid_4">
             <col>
