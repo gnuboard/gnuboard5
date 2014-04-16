@@ -109,7 +109,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
         <th scope="row"><label for="cf_member">회원간 문자전송</label></th>
         <td>
             <?php echo help("허용에 체크하면 회원끼리 문자전송이 가능합니다.");?>
-            <input type="checkbox" name="cf_member" value="1" id="cf_member" <?php get_checked(1, $sms5['cf_member']); ?>> 허용
+            <input type="checkbox" name="cf_member" value="1" id="cf_member" <?php echo get_checked(1, $sms5['cf_member']); ?>> <label for="cf_member">허용</label>
         </td>
     </tr>
     <tr>
@@ -118,7 +118,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
             <?php echo help("문자전송을 허용할 회원레벨을 선택해주세요.");?>
             <select name="cf_level" id="cf_level">
                 <?php for ($i=1; $i<=10; $i++) { ?>
-                <option value="<?php echo $i?>"<?php get_selected($i, $sms5['cf_level']);?>> <?php echo $i?> </option>
+                <option value="<?php echo $i?>"<?php echo get_selected($i, $sms5['cf_level']);?>> <?php echo $i?> </option>
                 <?php } ?>
             </select>
             레벨 이상

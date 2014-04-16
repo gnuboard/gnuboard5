@@ -46,7 +46,7 @@ if ($w=='u') // 업데이트
             sql_query("update {$g5['sms5_book_group_table']} set bg_receipt = bg_receipt - 1, bg_reject = bg_reject + 1 where bg_no='$bg_no'");
     }
 
-    sql_query("update {$g5['sms5_book_table']} set bg_no='$bg_no', bk_name='$bk_name', bk_hp='$bk_hp', bk_receipt='$bk_receipt', bk_datetime='".G5_TIME_YMDHIS."', bk_memo='$bk_memo' where bk_no='$bk_no'");
+    sql_query("update {$g5['sms5_book_table']} set bg_no='$bg_no', bk_name='$bk_name', bk_hp='$bk_hp', bk_receipt='$bk_receipt', bk_datetime='".G5_TIME_YMDHIS."', bk_memo='".addslashes($bk_memo)."' where bk_no='$bk_no'");
     if ($res['mb_id']){ //만약에 mb_id가 있다면...
         // 휴대폰번호 중복체크
         $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$res['mb_id']}' and mb_hp = '{$bk_hp}' ";
@@ -54,7 +54,7 @@ if ($w=='u') // 업데이트
         if ($mb_hp_exist['mb_id']) { //중복된 회원 휴대폰번호가 있다면
             $is_hp_exist = true;
         } else {
-             sql_query("update {$g5['member_table']} set mb_name='$bk_name', mb_hp='$bk_hp', mb_sms='$bk_receipt' where mb_id='{$res['mb_id']}'", false);
+             sql_query("update {$g5['member_table']} set mb_name='".addslashes($bk_name)."', mb_hp='$bk_hp', mb_sms='$bk_receipt' where mb_id='{$res['mb_id']}'", false);
         }
     }
     $get_bg_no = $bg_no;
@@ -126,7 +126,7 @@ else // 등록
     else
         $sql_sms = "bg_reject = bg_reject + 1";
 
-    sql_query("insert into {$g5['sms5_book_table']} set bg_no='$bg_no', bk_name='$bk_name', bk_hp='$bk_hp', bk_receipt='$bk_receipt', bk_datetime='".G5_TIME_YMDHIS."', bk_memo='$bk_memo'");
+    sql_query("insert into {$g5['sms5_book_table']} set bg_no='$bg_no', bk_name='".addslashes($bk_name)."', bk_hp='$bk_hp', bk_receipt='$bk_receipt', bk_datetime='".G5_TIME_YMDHIS."', bk_memo='".addslashes($bk_memo)."'");
     sql_query("update {$g5['sms5_book_group_table']} set bg_count = bg_count + 1, bg_nomember = bg_nomember + 1, $sql_sms where bg_no = '$bg_no'");
 
     $get_bg_no = $bg_no;

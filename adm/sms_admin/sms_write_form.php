@@ -13,7 +13,7 @@ $no_count = $res['cnt'];
     <label for="emo_sel" class="sound_only">이모티콘 그룹</label>
     <select name="fg_no" id="emo_sel">
         <option value=""<?php echo get_selected('', $fg_no); ?>> 전체 </option>
-        <option value="0"<?php echo get_selected(0, $fg_no); ?>> 미분류 (<?php echo number_format($no_count)?>) </option>
+        <option value="0"<?php echo get_selected('0', $fg_no); ?>> 미분류 (<?php echo number_format($no_count)?>) </option>
         <?php for($i=0; $i<count($group); $i++) {?>
         <option value="<?php echo $group[$i]['fg_no']?>"<?php echo get_selected($fg_no, $group[$i]['fg_no']);?>> <?php echo $group[$i]['fg_name']?> (<?php echo number_format($group[$i]['fg_count'])?>) </option>
         <?php } ?>

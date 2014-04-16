@@ -27,7 +27,7 @@ if ($w == 'u') // 업데이트
         if ($res)
             alert('같은 그룹명이 존재합니다.');
 
-        sql_query("update {$g5['sms5_book_group_table']} set bg_name='$bg_name' where bg_no='$bg_no'");
+        sql_query("update {$g5['sms5_book_group_table']} set bg_name='".addslashes($bg_name)."' where bg_no='$bg_no'");
     }
 }
 else if ($w == 'de') // 그룹삭제
@@ -70,7 +70,7 @@ else // 등록
     if ($res)
         alert('같은 그룹명이 존재합니다.');
 
-    sql_query("insert into {$g5['sms5_book_group_table']} set bg_name='$bg_name'");
+    sql_query("insert into {$g5['sms5_book_group_table']} set bg_name='".addslashes($bg_name)."'");
 }
 
 goto_url('./num_group.php');
