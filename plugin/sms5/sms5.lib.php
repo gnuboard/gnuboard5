@@ -60,6 +60,30 @@ function sms5_sub_paging($write_pages, $cur_page, $total_page, $url, $add="", $s
         return "";
 }
 
+// 권한 검사
+function ajax_auth_check($auth, $attr)
+{
+    global $is_admin;
+
+    if ($is_admin == 'super') return;
+
+    if (!trim($auth))
+        return '이 메뉴에는 접근 권한이 없습니다.\\n\\n접근 권한은 최고관리자만 부여할 수 있습니다.';
+
+    $attr = strtolower($attr);
+
+    if (!strstr($auth, $attr)) {
+        if ($attr == 'r')
+            return '읽을 권한이 없습니다.';
+        else if ($attr == 'w')
+            return '입력, 추가, 생성, 수정 권한이 없습니다.';
+        else if ($attr == 'd')
+            return '삭제 권한이 없습니다.';
+        else
+            return '속성이 잘못 되었습니다.';
+    }
+}
+
 if ( ! function_exists('array_overlap')) {
     function array_overlap($arr, $val) {
         for ($i=0, $m=count($arr); $i<$m; $i++) {

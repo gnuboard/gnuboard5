@@ -10,7 +10,9 @@ if( !function_exists('json_encode') ) {
     }
 }
 
-auth_check($auth[$sub_menu], "r");
+if( $auth_check = ajax_auth_check($auth[$sub_menu], "r") ){
+    die("{\"error\":\"$auth_check\"}");
+}
 
 $lev = array();
 

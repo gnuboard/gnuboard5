@@ -10,9 +10,11 @@ if( !function_exists('json_encode') ) {
     }
 }
 
-$page_size = 6;
+if( $auth_check = ajax_auth_check($auth[$sub_menu], "r") ){
+    die("{\"error\":\"$auth_check\"}");
+}
 
-auth_check($auth[$sub_menu], "r");
+$page_size = 6;
 
 if (!$page) $page = 1;
 
