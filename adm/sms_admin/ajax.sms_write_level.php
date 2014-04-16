@@ -1,4 +1,5 @@
 <?php
+$sub_menu = "900300";
 include_once("./_common.php");
 @include_once(G5_PLUGIN_PATH."/sms5/JSON.php");
 
@@ -9,7 +10,7 @@ if( !function_exists('json_encode') ) {
     }
 }
 
-auth_check($auth[$sub_menu], "r");
+ajax_auth_check($auth[$sub_menu], "r");
 
 $lev = array();
 

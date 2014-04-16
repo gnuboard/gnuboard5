@@ -98,7 +98,7 @@ for ($i = 1; $i <= $num_rows; $i++) {
             } 
             else if (!$confirm && $hp) 
             {
-                sql_query("insert into {$g5['sms5_book_table']} set bg_no='$bg_no', bk_name='$name', bk_hp='$hp', bk_receipt=1, bk_datetime='".G5_TIME_YMDHIS."'");
+                sql_query("insert into {$g5['sms5_book_table']} set bg_no='$bg_no', bk_name='".addslashes($name)."', bk_hp='$hp', bk_receipt=1, bk_datetime='".G5_TIME_YMDHIS."'");
                 sql_query("update {$g5['sms5_book_group_table']} set bg_count = bg_count + 1, bg_nomember = bg_nomember + 1, bg_receipt = bg_receipt + 1 where bg_no='$bg_no'");
                 $success++;
             }

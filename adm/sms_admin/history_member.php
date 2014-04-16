@@ -30,9 +30,9 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <form name="search_form" method="get" action="<?php echo $_SEVER['PHP_SELF']?>" class="local_sch01 local_sch">
 <label for="st" class="sound_only">검색대상</label>
 <select name="st" id="st">
-    <option value="mb_id" <?php echo $st=='mh_name'?'selected':''?>>아이디</option>
-    <option value="mh_hp" <?php echo $st=='mh_hp'?'selected':''?>>받는번호</option>
-    <option value="mh_reply" <?php echo $st=='mh_reply'?'selected':''?>>보내는번호</option>
+    <option value="mb_id"<?php echo get_selected('mh_name', $st); ?>>아이디</option>
+    <option value="mh_hp"<?php echo get_selected('mh_hp', $st); ?>>받는번호</option>
+    <option value="mh_reply"<?php echo get_selected('mh_reply', $st); ?>>보내는번호</option>
 </select>
 <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="sv" value="<?php echo $sv ?>" id="sv" required class="required frm_input">

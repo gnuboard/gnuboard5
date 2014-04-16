@@ -12,10 +12,10 @@ $no_count = $res['cnt'];
 <form name="emo_frm">
     <label for="emo_sel" class="sound_only">이모티콘 그룹</label>
     <select name="fg_no" id="emo_sel">
-        <option value="" <?php echo $fg_no?'':'selected'?>> 전체 </option>
-        <option value="0" <?php echo $fg_no=='0'?'selected':''?>> 미분류 (<?php echo number_format($no_count)?>) </option>
+        <option value=""<?php echo get_selected('', $fg_no); ?>> 전체 </option>
+        <option value="0"<?php echo get_selected('0', $fg_no); ?>> 미분류 (<?php echo number_format($no_count)?>) </option>
         <?php for($i=0; $i<count($group); $i++) {?>
-        <option value="<?php echo $group[$i]['fg_no']?>" <?php echo ($fg_no==$group[$i]['fg_no'])?'selected':''?>> <?php echo $group[$i]['fg_name']?> (<?php echo number_format($group[$i]['fg_count'])?>) </option>
+        <option value="<?php echo $group[$i]['fg_no']?>"<?php echo get_selected($fg_no, $group[$i]['fg_no']);?>> <?php echo $group[$i]['fg_name']?> (<?php echo number_format($group[$i]['fg_count'])?>) </option>
         <?php } ?>
     </select>
 </form>
@@ -29,9 +29,9 @@ $no_count = $res['cnt'];
 <input type="hidden" name="fg_no" id="hidden_fg_no" >
 <label for="st" class="sound_only">검색대상</label>
 <select name="st" id="st">
-    <option value="all" <?php echo $st=='all'?'selected':''?>>제목 + 이모티콘</option>
-    <option value="name" <?php echo $st=='name'?'selected':''?>>제목</option>
-    <option value="content" <?php echo $st=='content'?'selected':''?>>이모티콘</option>
+    <option value="all"<?php echo get_selected('all', $st); ?>>제목 + 이모티콘</option>
+    <option value="name"<?php echo get_selected('name', $st); ?>>제목</option>
+    <option value="content"<?php echo get_selected('content', $st); ?>>이모티콘</option>
 </select>
 <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="sv" value="<?php echo $sv?>" id="sv" required class="frm_input required" size="15">

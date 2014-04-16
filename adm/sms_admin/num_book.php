@@ -52,7 +52,7 @@ if ($no_hp_checked == 'checked')
     $sql_no_hp = "and bk_hp <> ''";
 
 $total_res = sql_fetch("select count(*) as cnt from {$g5['sms5_book_table']} where 1 $sql_group $sql_search $sql_korean $sql_no_hp");
-$total_count = $total_res[cnt];
+$total_count = $total_res['cnt'];
 
 $total_page = (int)($total_count/$page_size) + ($total_count%$page_size==0 ? 0 : 1);
 $page_start = $page_size * ( $page - 1 );
@@ -111,9 +111,9 @@ function no_hp_click(val)
 <input type="hidden" name="bg_no" value="<?php echo $bg_no?>" >
 <label for="st" class="sound_only">검색대상</label>
 <select name="st" id="st">
-    <option value="all" <?php echo $st=='all'?'selected':''?>>이름 + 휴대폰번호</option>
-    <option value="name" <?php echo $st=='name'?'selected':''?>>이름</option>
-    <option value="hp" <?php echo $st=='hp'?'selected':''?>>휴대폰번호</option>
+    <option value="all"<?php echo get_selected('all', $st); ?>>이름 + 휴대폰번호</option>
+    <option value="name"<?php echo get_selected('name', $st); ?>>이름</option>
+    <option value="hp" <?php echo get_selected('hp', $st); ?>>휴대폰번호</option>
 </select>
 <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="sv" value="<?php echo $sv?>" id="sv" required class="frm_input required">
@@ -123,10 +123,10 @@ function no_hp_click(val)
 <form name="search_form" class="local_sch01 local_sch">
 <label for="bg_no" class="sound_only">그룹명</label>
 <select name="bg_no" id="bg_no" onchange="location.href='<?php echo $_SERVER['PHP_SELF']?>?bg_no='+this.value;">
-    <option value="" <?php echo $bg_no?'':'selected'?>> 전체 </option>
-    <option value="<?php echo $no_group['bg_no']?>" <?php echo $bg_no==$no_group['bg_no']?'selected':''?>> <?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?> 명) </option>
+    <option value=""<?php echo get_selected('', $bg_no); ?>> 전체 </option>
+    <option value="<?php echo $no_group['bg_no']?>"<?php echo get_selected($bg_no, $no_group['bg_no']); ?>> <?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?> 명) </option>
     <?php for($i=0; $i<count($group); $i++) {?>
-    <option value="<?php echo $group[$i]['bg_no']?>" <?php echo ($bg_no==$group[$i]['bg_no'])?'selected':''?>> <?php echo $group[$i]['bg_name']?> (<?php echo number_format($group[$i]['bg_count'])?> 명) </option>
+    <option value="<?php echo $group[$i]['bg_no']?>"<?php echo get_selected($bg_no, $group[$i]['bg_no']);?>> <?php echo $group[$i]['bg_name']?> (<?php echo number_format($group[$i]['bg_count'])?> 명) </option>
     <?php } ?>
 </select>
 <input type="checkbox" name="no_hp" id="no_hp" <?php echo $no_hp_checked?> onclick="no_hp_click(this.checked)">

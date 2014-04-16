@@ -20,7 +20,7 @@ $userinfo = array(
 if ($userinfo['code'] == '202')
     alert('아이코드 아이디와 패스워드가 맞지 않습니다.');
 
-if ($cf_member == 'on')
+if ($cf_member == '1')
     $cf_member = 1;
 else
     $cf_member = 0;
