@@ -52,7 +52,7 @@ function re_send()
     act = window.open('sms_ing.php', 'act', 'width=300, height=200');
     act.focus();
 
-    location.href = './history_send.php?w=f&amp;page=<?php echo $page?>&amp;st=<?php echo  $st?>&amp;sv=<?php echo $sv?>&amp;wr_no=<?php echo $wr_no?>&amp;wr_renum=<?php echo $wr_renum?>';
+    location.href = './history_send.php?w=f&page=<?php echo $page?>&st=<?php echo  $st?>&sv=<?php echo $sv?>&wr_no=<?php echo $wr_no?>&wr_renum=<?php echo $wr_renum?>';
     <?php } ?>
 }
 function all_send()
@@ -71,8 +71,8 @@ function all_send()
 <input type="hidden" name="sv" value="<?php echo $sv?>">
 <label for="sst" class="sound_only">검색대상</label>
 <select name="sst" id="sst">
-    <option value="hs_name" <?php echo $sst=='hs_name'?'selected':''?>>이름</option>
-    <option value="hs_hp" <?php echo $sst=='hs_hp'?'selected':''?>>휴대폰번호</option>
+    <option value="hs_name" <?php echo get_selected('hs_name', $sst); ?>>이름</option>
+    <option value="hs_hp" <?php echo get_selected('hs_hp', $sst); ?>>휴대폰번호</option>
 </select>
 <label for="ssv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="ssv" value="<?php echo $ssv?>" id="ssv" class="frm_input">
@@ -239,7 +239,7 @@ function all_send()
     </div>
 </div>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $spage, $total_spage, $_SERVER['PHP_SELF']."?wr_no=$wr_no&amp;wr_renum=$wr_renum&amp;page=$page&amp;st=$st&amp;sv=$sv&amp;sst=$sst&amp;ssv=$ssv&amp;spage="); ?>
+<?php echo sms5_sub_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $spage, $total_spage, $_SERVER['PHP_SELF']."?wr_no=$wr_no&amp;wr_renum=$wr_renum&amp;page=$page&amp;st=$st&amp;sv=$sv&amp;sst=$sst&amp;ssv=$ssv", "", "spage"); ?>
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

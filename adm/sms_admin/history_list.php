@@ -17,7 +17,7 @@ else
     $sql_search = "";
 
 $total_res = sql_fetch("select count(*) as cnt from {$g5['sms5_write_table']} where wr_renum=0 $sql_search");
-$total_count = $total_res[cnt];
+$total_count = $total_res['cnt'];
 
 $total_page = (int)($total_count/$page_size) + ($total_count%$page_size==0 ? 0 : 1);
 $page_start = $page_size * ( $page - 1 );
@@ -30,9 +30,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <form name="search_form" id="search_form" action=<?php echo $_SERVER['PHP_SELF'];?> class="local_sch01 local_sch" method="get">
 
 <label for="st" class="sound_only">검색대상</label>
-<select name="st" id="st">
-    <option value="wr_message" <?php echo $st=="wr_message"?"selected":""?>>메세지</option>
-</select>
+<input type="hidden" name="st" id="st" value="wr_message" >
 <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="sv" value="<?php echo $sv ?>" id="sv" required class="required frm_input">
 <input type="submit" value="검색" class="btn_submit">

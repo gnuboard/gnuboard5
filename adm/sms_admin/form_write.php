@@ -41,7 +41,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
                 $qry = sql_query("select * from {$g5['sms5_form_group_table']} order by fg_name");
                 while($res = sql_fetch_array($qry)) {
                 ?>
-                <option value="<?php echo $res['fg_no']?>" <?php echo $res['fg_no']==$write['fg_no']?'selected':''?>><?php echo $res['fg_name']?></option>
+                <option value="<?php echo $res['fg_no']?>"<?php echo get_selected($res['fg_no'], $write['fg_no']); ?>><?php echo $res['fg_name']?></option>
                 <?php } ?>
             </select>
         </td>

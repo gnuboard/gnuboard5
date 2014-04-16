@@ -97,7 +97,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 function upload(w)
 {
     var f = document.upload_form;
-    
+
     if (typeof w == 'undefined') {
         document.getElementById('upload_button').style.display = 'none';
         document.getElementById('uploading').style.display = 'inline';
@@ -138,8 +138,8 @@ function download()
     if (hyphen.checked) hyphen = 1; else hyphen = 0;
 
     par += '?bg_no=' + bg_no.value;
-    par += '&amp;no_hp=' + no_hp;
-    par += '&amp;hyphen=' + hyphen;
+    par += '&no_hp=' + no_hp;
+    par += '&hyphen=' + hyphen;
 
     (function($){
         if(!document.getElementById("fileupload_fr")){
