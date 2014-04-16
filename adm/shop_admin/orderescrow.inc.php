@@ -1,28 +1,9 @@
 <?php
 include_once('./_common.php');
+include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
 
-$def_locale = setlocale(LC_CTYPE, 0);
-$locale_change = false;
-if(preg_match("/utf[\-]?8/i", $def_locale)) {
-    setlocale(LC_CTYPE, 'ko_KR.euc-kr');
-    $locale_change = true;
-}
-
-if ($default['de_card_test']) {
-    if ($default['de_escrow_use'] == 1) {
-        // 에스크로결제 테스트
-        $default['de_kcp_mid'] = "T0007";
-        $default['de_kcp_site_key'] = '4Ho4YsuOZlLXUZUdOxM1Q7X__';
-    }
-    else {
-        // 일반결제 테스트
-        $default['de_kcp_mid'] = "T0000";
-        $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
-    }
-}
-else {
-    $default['de_kcp_mid'] = "SR".$default['de_kcp_mid'];
-}
+// locale ko_KR.euc-kr 로 설정
+setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
 $g_conf_site_cd = $default['de_kcp_mid'];
 $g_conf_site_key = $default['de_kcp_site_key'];
@@ -44,9 +25,6 @@ else {
         alert("SR 로 시작하지 않는 KCP SITE CODE 는 지원하지 않습니다.");
     }
 }
-
-$g_conf_log_level = "3";
-$g_conf_gw_port   = "8090";
 
 include_once(G5_SHOP_PATH.'/kcp/pp_ax_hub_lib.php');
 
@@ -82,6 +60,6 @@ for($i=0; $i<$tno_count; $i++) {
     $res_msg = $c_PayPlus->m_res_msg; // 결과 메시지
 }
 
-if($locale_change)
-    setlocale(LC_CTYPE, $def_locale);
+// locale 설정 초기화
+setlocale(LC_CTYPE, '');
 ?>

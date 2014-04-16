@@ -1,6 +1,7 @@
 <?php
 $sub_menu = '400400';
 include_once('./_common.php');
+include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
 
 auth_check($auth[$sub_menu], "w");
 
@@ -38,32 +39,10 @@ if($tax_mny && $tax_mny > $sum['tax_mny'])
 if($free_mny && $free_mny > $sum['free_mny'])
     alert('비과세 취소금액을 '.number_format($sum['free_mny']).'원 이하로 입력해 주십시오.');
 
-// 취소사유의 한글깨짐 방지처리
-$def_locale = setlocale(LC_CTYPE, 0);
-$cancel_memo = iconv("utf-8", "euc-kr", $mod_memo);
-$locale_change = false;
-if(preg_match("/utf[\-]?8/i", $def_locale)) {
-    setlocale(LC_CTYPE, 'ko_KR.euc-kr');
-    $locale_change = true;
-}
+// locale ko_KR.euc-kr 로 설정
+setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
 // 부분취소 실행
-if ($default['de_card_test']) {
-    if ($default['de_escrow_use'] == 1) {
-        // 에스크로결제 테스트
-        $default['de_kcp_mid'] = "T0007";
-        $default['de_kcp_site_key'] = '4Ho4YsuOZlLXUZUdOxM1Q7X__';
-    }
-    else {
-        // 일반결제 테스트
-        $default['de_kcp_mid'] = "T0000";
-        $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
-    }
-}
-else {
-    $default['de_kcp_mid'] = "SR".$default['de_kcp_mid'];
-}
-
 $g_conf_site_cd   = $default['de_kcp_mid'];
 $g_conf_site_key  = $default['de_kcp_site_key'];
 $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
@@ -84,9 +63,6 @@ else {
         alert("SR 로 시작하지 않는 KCP SITE CODE 는 지원하지 않습니다.");
     }
 }
-
-$g_conf_log_level = "3";
-$g_conf_gw_port   = "8090";
 
 include G5_SHOP_PATH.'/kcp/pp_cli_hub_lib.php';
 
@@ -196,8 +172,8 @@ if ( $req_tx == "mod" )
     }
 }
 
-if($locale_change)
-    setlocale(LC_CTYPE, $def_locale);
+// locale 설정 초기화
+setlocale(LC_CTYPE, '');
 
 include_once(G5_PATH.'/head.sub.php');
 ?>

@@ -1,13 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-$def_locale = setlocale(LC_CTYPE, 0);
-$cancel_msg = iconv("utf-8", "euc-kr", $cancel_msg);
-$locale_change = false;
-if(preg_match("/utf[\-]?8/i", $def_locale)) {
-    setlocale(LC_CTYPE, 'ko_KR.euc-kr');
-    $locale_change = true;
-}
+// locale ko_KR.euc-kr 로 설정
+setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
 /* ============================================================================== */
 /* =   07. 승인 결과 DB처리 실패시 : 자동취소                                   = */
@@ -54,6 +49,6 @@ if ( $req_tx == "pay" )
 } // End of [res_cd = "0000"]
 /* ============================================================================== */
 
-if($locale_change)
-    setlocale(LC_CTYPE, $def_locale);
+// locale 설정 초기화
+setlocale(LC_CTYPE, '');
 ?>
