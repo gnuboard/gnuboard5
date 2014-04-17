@@ -17,8 +17,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 $list_mod   = 1;    // 한줄에 이미지 몇개씩 출력? 단, 모바일환경에서는 사용되지 않음.
 $list_row   = 10;    // 한 페이지에 몇라인씩 출력?
 
-$img_width  = $default['de_type'.$type.'_img_width'];   // 출력이미지 폭
-$img_height = $default['de_type'.$type.'_img_height'];  // 출력이미지 높이
+$img_width  = 230;  // 출력이미지 폭
+$img_height = 230;  // 출력이미지 높이
 ?>
 
 <?php
