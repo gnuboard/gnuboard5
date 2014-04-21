@@ -73,7 +73,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
         include G5_SHOP_PATH.'/orderinquiry.sub.php';
         ?>
 
-        <div id="smb_my_more">
+        <div class="smb_my_more">
             <a href="./orderinquiry.php" class="btn01">주문내역 더보기</a>
         </div>
     </section>
@@ -123,7 +123,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             </table>
         </div>
 
-        <div id="smb_my_more">
+        <div class="smb_my_more">
             <a href="./wishlist.php" class="btn01">위시리스트 더보기</a>
         </div>
     </section>

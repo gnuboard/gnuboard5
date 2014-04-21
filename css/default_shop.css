@@ -363,7 +363,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 #smb_my_wish h2 {margin:0 0 10px}
 
-#smb_my_more {text-align:right}
+.smb_my_more {text-align:right}
 
 .smb_my_img {width:90px;text-align:center}
 
