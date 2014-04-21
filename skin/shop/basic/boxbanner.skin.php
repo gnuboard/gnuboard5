@@ -14,7 +14,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 테두리 있는지
     $bn_border  = ($row['bn_border']) ? ' sbn_border' : '';;
     // 새창 띄우기인지
-    $bn_new_win = ($row['bn_new_win']) ? ' target="'.$row['bn_new_win'].'"' : '';
+    $bn_new_win = ($row['bn_new_win']) ? ' target="_blank"' : '';
 
     $bimg = G5_DATA_PATH.'/banner/'.$row['bn_id'];
     if (file_exists($bimg))

@@ -55,7 +55,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         // 테두리 있는지
         $bn_border  = $row['bn_border'];
         // 새창 띄우기인지
-        $bn_new_win = ($row['bn_new_win']) ? 'target="_new"' : '';
+        $bn_new_win = ($row['bn_new_win']) ? 'target="_blank"' : '';
 
         $bimg = G5_DATA_PATH.'/banner/'.$row['bn_id'];
         if(file_exists($bimg)) {
