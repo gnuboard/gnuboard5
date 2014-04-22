@@ -22,7 +22,7 @@ for ($i=0; $i<count($_POST['bk_no']); $i++)
            sql_query("update {$g5['member_table']} set mb_sms=0 where mb_id='{$res['mb_id']}'");
 
         if ($res['bk_receipt'] == 1)
-            sql_query("update {$g5['sms5_book_group_table']} set bg_receipt= case bg_receipt when 0 then 0 else bg_reject - 1 end, bg_reject=bg_reject+1 where bg_no='{$res['bg_no']}'");
+            sql_query("update {$g5['sms5_book_group_table']} set bg_receipt= case bg_receipt when 0 then 0 else bg_receipt - 1 end, bg_reject=bg_reject+1 where bg_no='{$res['bg_no']}'");
     }
     else if ($atype == 'receipt') // 수신허용
     {
