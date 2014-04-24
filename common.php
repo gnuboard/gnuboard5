@@ -304,7 +304,9 @@ if (isset($_REQUEST['url'])) {
 }
 
 if (isset($_REQUEST['gr_id'])) {
-    $gr_id = trim($_REQUEST['gr_id']);
+    if (!is_array($_REQUEST['gr_id'])) {
+        $gr_id = trim($_REQUEST['gr_id']);
+    }
 } else {
     $gr_id = '';
 }
