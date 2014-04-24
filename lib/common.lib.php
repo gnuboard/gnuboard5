@@ -1927,7 +1927,7 @@ function sql_real_escape_string($field)
 {
     global $g5;
 
-    if($field)
+    if($field != '')
         return mysql_real_escape_string($field, $g5['connect_db']);
 }
 
