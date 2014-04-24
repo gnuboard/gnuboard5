@@ -395,7 +395,7 @@ if($w == '' && $default['de_member_reg_coupon_use'] && $default['de_member_reg_c
         $cp_type = 0;
         $cp_price = $default['de_member_reg_coupon_price'];
         $cp_trunc = 1;
-        $cp_minimum = 0;
+        $cp_minimum = $default['de_member_reg_coupon_minimum'];
         $cp_maximum = 0;
 
         $sql = " INSERT INTO {$g5['g5_shop_coupon_table']}

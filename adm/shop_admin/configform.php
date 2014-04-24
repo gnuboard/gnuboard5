@@ -72,6 +72,12 @@ if(!isset($default['de_member_reg_coupon_use'])) {
                     ADD `de_member_reg_coupon_term` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_use`,
                     ADD `de_member_reg_coupon_price` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_term` ", true);
 }
+
+// 신규회원 쿠폰 주문 최소금액 필드추가
+if(!isset($default['de_member_reg_coupon_minimum'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_member_reg_coupon_minimum` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_price` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -1003,6 +1009,8 @@ if(!isset($default['de_member_reg_coupon_use'])) {
                 <input type="checkbox" name="de_member_reg_coupon_use" value="1" id="de_member_reg_coupon_use"<?php echo $default['de_member_reg_coupon_use']?' checked':''; ?>>
                 <label for="de_member_reg_coupon_price">쿠폰할인금액</label>
                 <input type="text" name="de_member_reg_coupon_price" value="<?php echo $default['de_member_reg_coupon_price']; ?>" id="de_member_reg_coupon_price" class="frm_input" size="10"> 원
+                <label for="de_member_reg_coupon_minimum">주문최소금액</label>
+                <input type="text" name="de_member_reg_coupon_minimum" value="<?php echo $default['de_member_reg_coupon_minimum']; ?>" id="de_member_reg_coupon_minimum" class="frm_input" size="10"> 원이상
                 <label for="de_member_reg_coupon_term">쿠폰유효기간</label>
                 <input type="text" name="de_member_reg_coupon_term" value="<?php echo $default['de_member_reg_coupon_term']; ?>" id="de_member_reg_coupon_term" class="frm_input" size="5"> 일
             </td>
