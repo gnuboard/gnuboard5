@@ -6,7 +6,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <section id="sod_frm_escrow">
     <h2>에스크로 안내</h2>
     <form name="escrow_foot" method="post" action="http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp">
-    <input type="hidden" name="site_cd" value="SR<?php echo $default['de_kcp_mid']; ?>">
+    <input type="hidden" name="site_cd" value="<?php echo $default['de_kcp_mid']; ?>">
     <table>
     <tr>
         <td><img src="<?php echo G5_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
