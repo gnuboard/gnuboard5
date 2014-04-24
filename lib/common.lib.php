@@ -1927,17 +1927,13 @@ function sql_real_escape_string($field)
 {
     global $g5;
 
-    if($field != '')
-        return mysql_real_escape_string($field, $g5['connect_db']);
+    return mysql_real_escape_string($field, $g5['connect_db']);
 }
 
 function escape_trim($field)
 {
-    if ($field) {
-        $str = call_user_func(G5_ESCAPE_FUNCTION, $field);
-
-        return $str;
-    }
+    $str = call_user_func(G5_ESCAPE_FUNCTION, $field);
+    return $str;
 }
 
 
