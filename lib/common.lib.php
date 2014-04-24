@@ -1464,18 +1464,23 @@ function sql_select_db($db, $connect)
 
 
 // mysql_query 와 mysql_error 를 한꺼번에 처리
+// mysql connect resource 지정 - 명랑폐인님 제안
 function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
 {
+    global $g5;
+
     // Blind SQL Injection 취약점 해결
     $sql = trim($sql);
     // union의 사용을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
+
     if ($error)
-        $result = @mysql_query($sql) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER[PHP_SELF]");
+        $result = @mysql_query($sql, $g5['connect_db']) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
     else
-        $result = @mysql_query($sql);
+        $result = @mysql_query($sql, $g5['connect_db']);
+
     return $result;
 }
 
@@ -1512,6 +1517,7 @@ function sql_password($value)
     // mysql 4.0x 이하 버전에서는 password() 함수의 결과가 16bytes
     // mysql 4.1x 이상 버전에서는 password() 함수의 결과가 41bytes
     $row = sql_fetch(" select password('$value') as pass ");
+
     return $row['pass'];
 }
 
@@ -1917,6 +1923,14 @@ function convert_charset($from_charset, $to_charset, $str)
 
 
 // mysql_real_escape_string 의 alias 기능을 한다.
+function sql_real_escape_string($field)
+{
+    global $g5;
+
+    if($field != '')
+        return mysql_real_escape_string($field, $g5['connect_db']);
+}
+
 function escape_trim($field)
 {
     if ($field) {
