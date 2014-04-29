@@ -14,10 +14,10 @@
                 stopPropagation: false,
                 callback: function(index, element) {
                   tab_change(index);
-                  idx = index;
                 },
                 transitionEnd: function(index, element) {
                     set_height(index);
+                    idx = index;
                 }
             };
 
