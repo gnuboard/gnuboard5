@@ -17,13 +17,31 @@ if (isset($_GET['qname']) || isset($_GET['qexplan']) || isset($_GET['qid']))
     $search_all = false;
 
 $q       = utf8_strcut(trim($_GET['q']), 30, "");
-$qname   = trim($_GET['qname']);
-$qexplan = trim($_GET['qexplan']);
-$qid     = trim($_GET['qid']);
-$qcaid   = trim($_GET['qcaid']);
-$qfrom   = trim($_GET['qfrom']);
-$qto     = trim($_GET['qto']);
+$qname   = isset($_GET['qname']) ? trim($_GET['qname']) : '';
+$qexplan = isset($_GET['qexplan']) ? trim($_GET['qexplan']) : '';
+$qid     = isset($_GET['qid']) ? trim($_GET['qid']) : '';
+$qcaid   = isset($_GET['qcaid']) ? trim($_GET['qcaid']) : '';
+$qfrom   = isset($_GET['qfrom']) ? trim($_GET['qfrom']) : '';
+$qto     = isset($_GET['qto']) ? trim($_GET['qto']) : '';
 $qsort   = trim($_GET['qsort']);
+
+// 검색범위 checkbox 처리
+$qname_check = false;
+$qexplan_check = false;
+$qid_check = false;
+
+if($search_all) {
+    $qname_check = true;
+    $qexplan_check = true;
+    $qid_check = true;
+} else {
+    if($qname)
+        $qname_check = true;
+    if($qexplan)
+        $qexplan_check = true;
+    if($qid)
+        $qid_check = true;
+}
 
 if ($q) {
     $arr = explode(" ", $q);
@@ -95,9 +113,9 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         <input type="hidden" name="qcaid" id="qcaid" value="<?php echo $qcaid ?>">
         <div>
             <strong>검색범위</strong>
-            <input type="checkbox" name="qname" id="ssch_qname" <?php echo isset($qname)?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
-            <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo isset($qexplan)?'checked="checked"':'';?>> <label for="ssch_qexplan"><span class="sound_only">상품</span>설명</label>
-            <input type="checkbox" name="qid" id="ssch_qid" <?php echo isset($qid)?'checked="checked"':'';?>> <label for="ssch_qid"><span class="sound_only">상품</span>코드</label><br>
+            <input type="checkbox" name="qname" id="ssch_qname" <?php echo $qname_check?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
+            <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo $qexplan_check?'checked="checked"':'';?>> <label for="ssch_qexplan"><span class="sound_only">상품</span>설명</label>
+            <input type="checkbox" name="qid" id="ssch_qid" <?php echo $qid_check?'checked="checked"':'';?>> <label for="ssch_qid"><span class="sound_only">상품</span>코드</label><br>
         </div>
         <div>
             <strong>상품가격 (원)</strong>
