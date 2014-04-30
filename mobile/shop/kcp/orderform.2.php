@@ -37,3 +37,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <span id="show_pay_btn" style="display:none;"><input type="button" onClick="forderform_check();" value="주문하기" class="btn_submit"></span>
     <a href="javascript:history.go(-1);" class="btn_cancel">취소</a>
 </div>
+
+<?php
+// 무통장 입금만 사용할 때는 주문하기 버튼 보이게
+if(!($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'])) {
+?>
+<script>
+document.getElementById("show_req_btn").style.display = "none";
+document.getElementById("show_pay_btn").style.display = "";
+</script>
+<?php } ?>

@@ -6,6 +6,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 /* = -------------------------------------------------------------------------- = */
 /* =   ※ 필수                                                                  = */
 /* = -------------------------------------------------------------------------- = */
+
+// kcp 전자결제를 사용할 때만 실행
+if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
 ?>
 <script src="<?php echo $g_conf_js_url; ?>"></script>
 <?php
@@ -129,3 +132,5 @@ function get_intall_file()
     <span class="red">결제를 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나, <a href="https://pay.kcp.co.kr/plugin_new/file/KCPPluginSetup.exe" onclick="return get_intall_file();"><span class="bold">[수동설치]</span></a>를 눌러 Payplus Plug-in을 설치하시기 바랍니다.<br>
     [수동설치]를 눌러 설치하신 경우 <span class="red bold">새로고침(F5)키</span>를 눌러 진행하시기 바랍니다.
 </p>
+
+<?php } ?>

@@ -1,5 +1,9 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
+// 무통장 입금만 사용할 때는 아래 코드 실행되지 않음
+if(!($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']))
+    return;
 ?>
 
 <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
