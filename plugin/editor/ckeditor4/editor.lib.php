@@ -59,7 +59,7 @@ function get_editor_js($id, $is_dhtml_editor=true)
 function chk_editor_js($id, $is_dhtml_editor=true)
 {
     if ($is_dhtml_editor) {
-        return "if (!{$id}_editor_data) { alert(\"내용을 입력해 주십시오.\"); CKEDITOR.instances.{$id}.focus(); return false; }\nif (typeof(f.wr_content)!=\"undefined\") f.wr_content.value = {$id}_editor_data;\n";
+        return "if (!{$id}_editor_data) { alert(\"내용을 입력해 주십시오.\"); CKEDITOR.instances.{$id}.focus(); return false; }\nif (typeof(f.{$id})!=\"undefined\") f.{$id}.value = {$id}_editor_data;\n";
     } else {
         return "if (!{$id}_editor.value) { alert(\"내용을 입력해 주십시오.\"); {$id}_editor.focus(); return false; }\n";
     }
