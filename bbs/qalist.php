@@ -51,7 +51,7 @@ if(is_file($skin_file)) {
     $stx = trim($stx);
     if($stx) {
         if (preg_match("/[a-zA-Z]/", $stx))
-            $sql_search .= " and ( INSTR(LOWER(qa_subject), LOWER('$sca')) > 0 or INSTR(LOWER(qa_content), LOWER('$stx')) > 0 )";
+            $sql_search .= " and ( INSTR(LOWER(qa_subject), LOWER('$stx')) > 0 or INSTR(LOWER(qa_content), LOWER('$stx')) > 0 )";
         else
             $sql_search .= " and ( INSTR(qa_subject, '$stx') > 0 or INSTR(qa_content, '$stx') > 0 ) ";
     }
