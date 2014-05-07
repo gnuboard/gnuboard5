@@ -119,10 +119,10 @@ class item_list
     function set_type($type) {
         $this->type = $type;
         if ($type) {
-            $this->set_list_skin($list_skin);
-            $this->set_list_mod($list_mod);
-            $this->set_list_row($list_row);
-            $this->set_img_size($img_width);
+            $this->set_list_skin($this->list_skin);
+            $this->set_list_mod($this->list_mod);
+            $this->set_list_row($this->list_row);
+            $this->set_img_size($this->img_width);
         }
     }
 

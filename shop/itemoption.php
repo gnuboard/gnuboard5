@@ -51,7 +51,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
         else
             $soldout = '';
 
-        $str .= PHP_EOL.'<option value="'.$val[$key].','.$row['io_price'].','.$io_stock_qty.'">'.$val[$key].$price.$soldout.'</otpion>';
+        $str .= PHP_EOL.'<option value="'.$val[$key].','.$row['io_price'].','.$io_stock_qty.'">'.$val[$key].$price.$soldout.'</option>';
     }
 }
 
