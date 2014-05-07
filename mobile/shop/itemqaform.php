@@ -10,6 +10,12 @@ $w     = trim($_REQUEST['w']);
 $it_id = trim($_REQUEST['it_id']);
 $iq_id = trim($_REQUEST['iq_id']);
 
+// 상품정보체크
+$sql = " select it_id from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
+$row = sql_fetch($sql);
+if(!$row['it_id'])
+    alert_close('상품정보가 존재하지 않습니다.');
+
 $chk_secret = '';
 
 if($w == '') {
