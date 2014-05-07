@@ -3,7 +3,7 @@ include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
 if($is_guest)
-    alert('회원이시라면 로그인 후 이용해 보십시오.', './login.php?url='.urlencode(G5_BBS_URL.'/qalist.php'));
+    alert('회원이시라면 로그인 후 이용해 보십시오.', './login.php?url='.urlencode(G5_BBS_URL.'/qaview.php?qa_id='.$qa_id));
 
 $qaconfig = get_qa_config();
 
