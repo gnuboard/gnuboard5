@@ -159,6 +159,7 @@ function frmcontentform_check(f)
     errfld = "";
 
     <?php echo get_editor_js('co_content'); ?>
+    <?php echo chk_editor_js('co_content'); ?>
 
     check_field(f.co_id, "ID를 입력하세요.");
     check_field(f.co_subject, "제목을 입력하세요.");
