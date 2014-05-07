@@ -16,10 +16,13 @@ require G5_SHOP_PATH.'/settle_kcp.inc.php';
     $g_conf_log_level = "3";
 
     if ($default['de_card_test']) {
-        $default['de_kcp_mid'] = 'T0000';
+        if($default['de_escrow_use'] == 1)
+            $default['de_kcp_mid'] = 'T0007';
+        else
+            $default['de_kcp_mid'] = 'T0000';
     }
 
-    if ($default['de_kcp_mid'] == 'T0000') {
+    if ($default['de_card_test']) {
         $g_conf_pa_url    = "testpaygw.kcp.co.kr"; // ※ 테스트: testpaygw.kcp.co.kr, 리얼: paygw.kcp.co.kr
         $g_conf_pa_port   = "8090";                // ※ 테스트: 8090,                리얼: 8090
     }
