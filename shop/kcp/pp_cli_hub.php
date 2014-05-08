@@ -8,6 +8,9 @@ if ($row['cnt']) {
     alert('이미 등록된 현금영수증 입니다.');
 }
 
+// locale ko_KR.euc-kr 로 설정
+setlocale(LC_CTYPE, 'ko_KR.euc-kr');
+
     //write_log("$g5[path]/data/log/cash.log", $_POST);
 
     /* ============================================================================== */
@@ -29,11 +32,16 @@ if ($row['cnt']) {
     $g_conf_log_level = "3";
 
     if ($default['de_card_test']) {
-        $default['de_kcp_mid'] = 'T0000';
-        $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
+        if($default['de_escrow_use'] == 1) {
+            $default['de_kcp_mid'] = 'T0007';
+            $default['de_kcp_site_key'] = '4Ho4YsuOZlLXUZUdOxM1Q7X__';
+        } else {
+            $default['de_kcp_mid'] = 'T0000';
+            $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
+        }
     }
 
-    if ($default['de_kcp_mid'] == 'T0000') {
+    if ($default['de_card_test']) {
         $g_conf_pa_url    = "testpaygw.kcp.co.kr"; // ※ 테스트: testpaygw.kcp.co.kr, 리얼: paygw.kcp.co.kr
         $g_conf_pa_port   = "8090";                // ※ 테스트: 8090,                리얼: 8090
     }
@@ -93,8 +101,8 @@ if ($row['cnt']) {
     $cust_ip    = getenv( "REMOTE_ADDR" );                            // 요청 IP
     /* ============================================================================== */
 
-    $buyr_name = iconv("utf8", "cp949", $buyr_name);
-    $good_name = iconv("utf8", "cp949", $good_name);
+    $buyr_name = iconv("utf-8", "cp949", $buyr_name);
+    $good_name = iconv("utf-8", "cp949", $good_name);
 
     /* ============================================================================== */
     /* =   02. 인스턴스 생성 및 초기화                                              = */
@@ -374,3 +382,8 @@ if ($row['cnt']) {
     </form>
     </body>
     </html>
+
+<?php
+// locale 설정 초기화
+setlocale(LC_CTYPE, '');
+?>

@@ -128,6 +128,6 @@ if($default['de_card_test']) {
     define('G5_CASH_RECEIPT_URL', 'https://testadmin8.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?term_id=PGNW');
 } else {
     define('G5_BILL_RECEIPT_URL', 'https://admin8.kcp.co.kr/assist/bill.BillAction.do?cmd=');
-    define('G5_CASH_RECEIPT_URL', 'https://admin8.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?term_id=PGNW');
+    define('G5_CASH_RECEIPT_URL', 'https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?term_id=PGNW');
 }
 ?>

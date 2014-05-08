@@ -16,10 +16,13 @@ require G5_SHOP_PATH.'/settle_kcp.inc.php';
     $g_conf_log_level = "3";
 
     if ($default['de_card_test']) {
-        if($default['de_escrow_use'] == 1)
+        if($default['de_escrow_use'] == 1) {
             $default['de_kcp_mid'] = 'T0007';
-        else
+            $default['de_kcp_site_key'] = '4Ho4YsuOZlLXUZUdOxM1Q7X__';
+        } else {
             $default['de_kcp_mid'] = 'T0000';
+            $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
+        }
     }
 
     if ($default['de_card_test']) {
