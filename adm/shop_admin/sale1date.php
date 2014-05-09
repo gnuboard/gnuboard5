@@ -97,7 +97,7 @@ $result = sql_query($sql);
             $save['receipthp']   += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')
             $save['receiptcard']   += $row['od_receipt_price'];
-        $save['receiptpoint']  += $lines[$i]['od_receipt_point'];
+        $save['receiptpoint']  += $row['od_receipt_point'];
         $save['misu']          += $row['od_misu'];
 
         $tot['ordercount']++;
