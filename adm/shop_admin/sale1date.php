@@ -114,7 +114,7 @@ $result = sql_query($sql);
             $tot['receipthp']    += $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')
             $tot['receiptcard']    += $row['od_receipt_price'];
-        $tot['receiptpoint ']  += $row['od_receipt_point'];
+        $tot['receiptpoint']  += $row['od_receipt_point'];
         $tot['misu']           += $row['od_misu'];
     }
 
