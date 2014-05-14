@@ -70,7 +70,7 @@ var g5_is_admin  = "<?php echo isset($is_admin)?$is_admin:''; ?>";
 var g5_is_mobile = "<?php echo G5_IS_MOBILE ?>";
 var g5_bo_table  = "<?php echo isset($bo_table)?$bo_table:''; ?>";
 var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
-var g5_editor    = "<?php echo isset($config['cf_editor'])?$config['cf_editor']:''; ?>";
+var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_editor'])?$config['cf_editor']:''; ?>";
 var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
 <?php
 if ($is_admin) {
