@@ -140,7 +140,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                         from {$g5['g5_shop_cart_table']}
                        where it_id = '{$row['it_id']}'
                          and ct_stock_use = '0'
-                         and ct_status in ('주문', '입금', '준비') ";
+                         and ct_status in ('쇼핑', '주문', '입금', '준비') ";
             $row1 = sql_fetch($sql1);
             $wait_qty = $row1['sum_qty'];
         }
