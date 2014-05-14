@@ -27,10 +27,11 @@ $sql_common = "";
 $fields = mysql_list_fields(G5_MYSQL_DB, $g5['g5_shop_item_table']);
 $columns = mysql_num_fields($fields);
 for ($i = 0; $i < $columns; $i++) {
-  $fld = mysql_field_name($fields, $i);
-  if ($fld != 'it_id') {
-      $sql_common .= " , $fld = '".addslashes($cp[$fld])."' ";
-  }
+    $fld = mysql_field_name($fields, $i);
+    if ($fld == 'it_id' || $fld == 'it_sum_qty' || $fld == 'it_use_cnt' || $fld == 'it_use_avg')
+        continue;
+
+    $sql_common .= " , $fld = '".addslashes($cp[$fld])."' ";
 }
 
 $sql = " insert {$g5['g5_shop_item_table']}
