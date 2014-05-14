@@ -4,8 +4,8 @@ include_once('./_common.php');
 if (!$is_member) die('0');
 
 $uid     = trim($_REQUEST['uid']);
-$subject = trim(stripslashes($_REQUEST['subject']));
-$content = trim(stripslashes($_REQUEST['content']));
+$subject = trim($_REQUEST['subject']);
+$content = trim($_REQUEST['content']);
 
 if ($subject && $content) {
     $sql = " select count(*) as cnt from {$g5['autosave_table']} where mb_id = '{$member['mb_id']}' and as_subject = '$subject' and as_content = '$content' ";
