@@ -241,7 +241,7 @@ if ($w == 'c') // 댓글 입력
 }
 else if ($w == 'cu') // 댓글 수정
 {
-    $sql = " select mb_id, wr_comment, wr_comment_reply from $write_table
+    $sql = " select mb_id, wr_password, wr_comment, wr_comment_reply from $write_table
                 where wr_id = '$comment_id' ";
     $comment = $reply_array = sql_fetch($sql);
     $tmp_comment = $reply_array['wr_comment'];
@@ -274,6 +274,9 @@ else if ($w == 'cu') // 댓글 수정
     } else if ($member['mb_id']) {
         if ($member['mb_id'] != $comment['mb_id'])
             alert('자신의 글이 아니므로 수정할 수 없습니다.');
+    } else {
+        if($comment['wr_password'] != $wr_password)
+            alert('댓글을 수정할 권한이 없습니다.');
     }
 
     $sql = " select count(*) as cnt from $write_table
