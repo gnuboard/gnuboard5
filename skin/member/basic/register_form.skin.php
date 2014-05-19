@@ -394,6 +394,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             }
         }
 
+        <?php if (($config['cf_use_hp'] || $config['cf_cert_hp']) && $config['cf_req_hp']) {  ?>
+        // 휴대폰번호 체크
+        var msg = reg_mb_hp_check();
+        if (msg) {
+            alert(msg);
+            f.reg_mb_hp.select();
+            return false;
+        }
+        <?php } ?>
+
         if (typeof f.mb_icon != "undefined") {
             if (f.mb_icon.value) {
                 if (!f.mb_icon.value.toLowerCase().match(/.(gif)$/i)) {
