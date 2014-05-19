@@ -1,6 +1,11 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+// 선택삭제으로 인해 셀합치기가 가변적으로 변함
+$colspan = 5;
+
+if ($is_admin) $colspan++;
+
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 ?>
@@ -89,7 +94,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
     <?php }  ?>
 
     <?php if ($i == 0)
-        echo "<tr><td colspan=\"5\" class=\"empty_table\">게시물이 없습니다.</td></tr>";
+        echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>';
     ?>
     </tbody>
     </table>

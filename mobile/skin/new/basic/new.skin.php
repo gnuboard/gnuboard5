@@ -56,7 +56,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
     <?php } ?>
 
     <?php if ($i == 0)
-        echo "<tr><td colspan=\"5\" class=\"empty_table\">게시물이 없습니다.</td></tr>";
+        echo '<tr><td colspan="3" class="empty_table">게시물이 없습니다.</td></tr>';
     ?>
     </tbody>
     </table>
