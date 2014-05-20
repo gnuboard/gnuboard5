@@ -40,7 +40,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         $star = get_star($row['is_score']);
 
         $is_content = get_view_thumbnail($row['is_content'], $thumbnail_width);
-        $small_image = $row['it_id'];
 
         $row2 = sql_fetch(" select it_name from {$g5['g5_shop_item_table']} where it_id = '{$row['it_id']}' ");
         $it_href = G5_SHOP_URL."/item.php?it_id={$row['it_id']}";
@@ -51,7 +50,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 
         <div class="sps_img">
             <a href="<?php echo $it_href; ?>">
-                <?php echo get_it_image($small_image, 70, 70); ?>
+                <?php echo get_itemuselist_thumbnail($row['it_id'], $row['is_content'], 70, 70); ?>
                 <span><?php echo $row2['it_name']; ?></span>
             </a>
         </div>

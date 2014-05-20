@@ -2082,6 +2082,57 @@ function get_delivery_company($company)
     return $option;
 }
 
+// 사용후기 썸네일 생성
+function get_itemuselist_thumbnail($it_id, $contents, $thumb_width, $thumb_height, $is_create=false, $is_crop=true, $crop_mode='center', $is_sharpen=true, $um_value='80/0.5/3')
+{
+    global $g5, $config;
+    $img = $filename = $alt = "";
+
+    if($contents) {
+        $matches = get_editor_image($contents, false);
+
+        for($i=0; $i<count($matches[1]); $i++)
+        {
+            // 이미지 path 구함
+            $p = parse_url($matches[1][$i]);
+            if(strpos($p['path'], '/'.G5_DATA_DIR.'/') != 0)
+                $data_path = preg_replace('/^\/.*\/'.G5_DATA_DIR.'/', '/'.G5_DATA_DIR, $p['path']);
+            else
+                $data_path = $p['path'];
+
+            $srcfile = G5_PATH.$data_path;
+
+            if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
+                $size = @getimagesize($srcfile);
+                if(empty($size))
+                    continue;
+
+                $filename = basename($srcfile);
+                $filepath = dirname($srcfile);
+
+                preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matches[0][$i], $malt);
+                $alt = get_text($malt[1]);
+
+                break;
+            }
+        }
+
+        if($filename) {
+            $thumb = thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create, $is_crop, $crop_mode, $is_sharpen, $um_value);
+
+            if($thumb) {
+                $src = G5_URL.str_replace($filename, $thumb, $data_path);
+                $img = '<img src="'.$src.'" width="'.$thumb_width.'" height="'.$thumb_height.'" alt="'.$alt.'">';
+            }
+        }
+    }
+
+    if(!$img)
+        $img = get_it_image($it_id, $thumb_width, $thumb_height);
+
+    return $img;
+}
+
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝
 //==============================================================================
