@@ -180,6 +180,8 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
         $sql_certify .= " , mb_birth = '{$_SESSION['ss_cert_birth']}' ";
         $sql_certify .= " , mb_sex = '{$_SESSION['ss_cert_sex']}' ";
         $sql_certify .= " , mb_dupinfo = '{$_SESSION['ss_cert_dupinfo']}' ";
+        if($w == 'u')
+            $sql_certify .= " , mb_name = '{$mb_name}' ";
     } else {
         $sql_certify .= " , mb_hp = '{$mb_hp}' ";
         $sql_certify .= " , mb_certify  = '' ";
