@@ -226,7 +226,7 @@ ob_start();
         ?>
         </tbody>
         </table>
-    </div>
+    </ul>
 
     <?php if ($goods_count) $goods .= ' 외 '.$goods_count.'건'; ?>
 
