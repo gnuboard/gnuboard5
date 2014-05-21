@@ -142,7 +142,7 @@ else // 장바구니에 담기
         }
 
         // 바로구매에 있던 장바구니 자료를 지운다.
-        if($sw_direct)
+        if($i == 0 && $sw_direct)
             sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
 
         // 옵션수정일 때 기존 장바구니 자료를 먼저 삭제
