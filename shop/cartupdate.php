@@ -141,14 +141,6 @@ else // 장바구니에 담기
                 $lst_count++;
         }
 
-        // 바로구매에 있던 장바구니 자료를 지운다.
-        if($i == 0 && $sw_direct)
-            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
-
-        // 옵션수정일 때 기존 장바구니 자료를 먼저 삭제
-        if($act == 'optionmod')
-            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and it_id = '$it_id' ");
-
         //--------------------------------------------------------
         //  재고 검사
         //--------------------------------------------------------
@@ -159,7 +151,8 @@ else // 장바구니에 담기
             $io_value = $_POST['io_value'][$it_id][$k];
 
             $sql = " select SUM(ct_qty) as cnt from {$g5['g5_shop_cart_table']}
-                      where it_id = '$it_id'
+                      where od_id <> '$tmp_cart_id'
+                        and it_id = '$it_id'
                         and io_id = '$io_id'
                         and io_type = '$io_type'
                         and ct_stock_use = 0
@@ -180,6 +173,14 @@ else // 장바구니에 담기
             }
         }
         //--------------------------------------------------------
+
+        // 바로구매에 있던 장바구니 자료를 지운다.
+        if($i == 0 && $sw_direct)
+            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
+
+        // 옵션수정일 때 기존 장바구니 자료를 먼저 삭제
+        if($act == 'optionmod')
+            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and it_id = '$it_id' ");
 
         // 장바구니에 Insert
         // 바로구매일 경우 장바구니가 체크된것으로 강제 설정
