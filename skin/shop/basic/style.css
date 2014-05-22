@@ -498,3 +498,54 @@
 #sit_rel h2 {margin:0 0 10px}
 #sit_rel .sct_wrap li {margin:0 10px 0 0}
 #sit_rel .sct_last {margin:0 !important}
+
+/* 사용후기 모음 */
+#sps_sch {margin:0 0 10px}
+#sps_sch a {display:inline-block;padding:0 8px;height:21px;background:#333;color:#fff;text-decoration:none;vertical-align:middle;line-height:1.9em}
+#sps_sch .btn_submit {padding:0 8px;height:24px;vertical-align:middle}
+
+#sps {zoom:1}
+#sps ol {margin:0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
+#sps li {position:relative;padding:10px;border-bottom:1px solid #e9e9e9}
+#sps li:after {display:block;visibility:hidden;clear:both;content:""}
+
+.sps_img {float:left;margin:0 10px 0 0;width:80px}
+.sps_img span {position:absolute;font-size:0;line-height:0;overflow:hidden}
+
+#sps dl {margin:5px 0 10px;zoom:1}
+#sps dl:after {display:block;visibility:hidden;clear:both;content:""}
+#sps dt {float:left}
+#sps dd {float:left;margin:0 20px 0 5px}
+#sps dd img {position:relative;top:-2px}
+
+.sps_section {float:left;width:630px}
+.sps_section p {padding:0;width:100%;height:20px;overflow:hidden}
+.sps_con_full {padding:0;height:auto !important}
+.sps_con_btn {margin:5px 0 0;text-align:right}
+.sps_con_btn button {margin:0;padding:5px;border:0;background:#565e60;color:#fff}
+
+/* 상품문의 모음 */
+#sqa_sch {margin:0 0 10px}
+#sqa_sch a {display:inline-block;padding:0 8px;height:21px;background:#333;color:#fff;text-decoration:none;vertical-align:middle;line-height:1.9em}
+#sqa_sch .btn_submit {padding:0 8px;height:24px;vertical-align:middle}
+
+#sqa {zoom:1}
+#sqa ol {margin:0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
+#sqa li {position:relative;padding:10px;border-bottom:1px solid #e9e9e9}
+#sqa li:after {display:block;visibility:hidden;clear:both;content:""}
+
+.sqa_img {float:left;margin:0 10px 0 0;width:80px}
+.sqa_img span {position:absolute;font-size:0;line-height:0}
+
+#sqa dl {margin:5px 0 10px;zoom:1}
+#sqa dl:after {display:block;visibility:hidden;clear:both;content:""}
+#sqa dt {float:left}
+#sqa dd {float:left;margin:0 20px 0 5px}
+#sqa dd img {position:relative;top:-2px}
+
+.sqa_section {float:left;width:630px}
+.sqa_section .sqa_con {padding:10px;background:#f2f5f9;line-height:1.7em}
+.sqa_section p {padding:0;width:100%;height:20px;overflow:hidden}
+.sqa_con_full {padding:0;height:auto !important}
+.sqa_con_btn {margin:5px 0 0;text-align:right}
+.sqa_con_btn button {margin:0;padding:5px;border:0;background:#565e60;color:#fff}
