@@ -54,6 +54,13 @@ while ($row = sql_fetch_array($result))
                 $row2['wr_content'] .= "\n".$log_tag1.'[이 게시물은 '.$nick.'님에 의해 '.G5_TIME_YMDHIS.' '.$board['bo_subject'].'에서 '.($sw == 'copy' ? '복사' : '이동').' 됨]'.$log_tag2;
             }
 
+            // 게시글 추천, 비추천수
+            $wr_good = $wr_nogood = 0;
+            if ($sw == 'move' && $i == 0) {
+                $wr_good = $row2['wr_good'];
+                $wr_nogood = $row2['wr_nogood'];
+            }
+
             $sql = " insert into $move_write_table
                         set wr_num = '$next_wr_num',
                              wr_reply = '{$row2['wr_reply']}',
@@ -69,8 +76,8 @@ while ($row = sql_fetch_array($result))
                              wr_link1_hit = '{$row2['wr_link1_hit']}',
                              wr_link2_hit = '{$row2['wr_link2_hit']}',
                              wr_hit = '{$row2['wr_hit']}',
-                             wr_good = '{$row2['wr_good']}',
-                             wr_nogood = '{$row2['wr_nogood']}',
+                             wr_good = '{$wr_good}',
+                             wr_nogood = '{$wr_nogood}',
                              mb_id = '{$row2['mb_id']}',
                              wr_password = '{$row2['wr_password']}',
                              wr_name = '".addslashes($row2['wr_name'])."',
@@ -138,6 +145,9 @@ while ($row = sql_fetch_array($result))
 
                     // 최신글 이동
                     sql_query(" update {$g5['board_new_table']} set bo_table = '$move_bo_table', wr_id = '$save_parent', wr_parent = '$save_parent' where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' ");
+
+                    // 추천데이터 이동
+                    sql_query(" update {$g5['board_good_table']} set bo_table = '$move_bo_table', wr_id = '$save_parent' where bo_table = '$bo_table' and wr_id = '{$row2['wr_id']}' ");
                 }
             }
             else
