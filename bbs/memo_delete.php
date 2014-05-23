@@ -8,7 +8,8 @@ $me_id = (int)$_REQUEST['me_id'];
 
 $sql = " select * from {$g5['memo_table']} where me_id = '{$me_id}' ";
 $row = sql_fetch($sql);
-if (!$row['mb_read_datetime'][0]) // 메모 받기전이면
+
+if (!$row['me_read_datetime'][0]) // 메모 받기전이면
 {
     $sql = " update {$g5['member_table']}
                 set mb_memo_call = ''
