@@ -2586,7 +2586,7 @@ function module_exec_check($exe, $type)
                         }
 
                         for($i=0; $i<count($out); $i++) {
-                            if(strpos($out[$i], 'PayPLUS CLIENT') !== false) {
+                            if(strpos($out[$i], 'CLIENT') !== false) {
                                 $search = true;
                                 break;
                             }
