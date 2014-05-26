@@ -155,8 +155,6 @@ if ($w == 'c') // 댓글 입력
                      wr_datetime = '".G5_TIME_YMDHIS."',
                      wr_last = '',
                      wr_ip = '{$_SERVER['REMOTE_ADDR']}',
-                     wr_facebook_user = '$wr_facebook_user',
-                     wr_twitter_user  = '$wr_twitter_user',
                      wr_1 = '$wr_1',
                      wr_2 = '$wr_2',
                      wr_3 = '$wr_3',
@@ -238,6 +236,12 @@ if ($w == 'c') // 댓글 입력
 
     // SNS 등록
     include_once("./write_comment_update.sns.php");
+    if($wr_facebook_user || $wr_twitter_user) {
+        $sql = " update $write_table
+                    set wr_facebook_user = '$wr_facebook_user',
+                        wr_twitter_user  = '$wr_twitter_user'
+                    where wr_id = '$comment_id' ";
+    }
 }
 else if ($w == 'cu') // 댓글 수정
 {
