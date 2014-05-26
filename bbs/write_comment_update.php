@@ -241,6 +241,7 @@ if ($w == 'c') // 댓글 입력
                     set wr_facebook_user = '$wr_facebook_user',
                         wr_twitter_user  = '$wr_twitter_user'
                     where wr_id = '$comment_id' ";
+        sql_query($sql);
     }
 }
 else if ($w == 'cu') // 댓글 수정
