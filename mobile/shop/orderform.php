@@ -27,7 +27,7 @@ set_session('ss_order_id', $od_id);
 $s_cart_id = $tmp_cart_id;
 $order_action_url = G5_HTTPS_MSHOP_URL.'/orderformupdate.php';
 
-require_once(G5_MSHOP_PATH.'/settle_kcp.inc.php');
+require_once(G5_MSHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 
 // 결제등록 요청시 사용할 입금마감일
 $ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
@@ -253,7 +253,7 @@ $content = ob_get_contents();
 ob_end_clean();
 
 // 결제대행사별 코드 include (결제등록 필드)
-require_once(G5_MSHOP_PATH.'/kcp/orderform.1.php');
+require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
 ?>
 </div>
 
@@ -654,7 +654,7 @@ require_once(G5_MSHOP_PATH.'/kcp/orderform.1.php');
 
     <?php
     // 결제대행사별 코드 include (결제대행사 정보 필드 및 주분버튼)
-    require_once(G5_MSHOP_PATH.'/kcp/orderform.2.php');
+    require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.2.php');
     ?>
 
     <div id="show_progress" style="display:none;">
@@ -666,7 +666,7 @@ require_once(G5_MSHOP_PATH.'/kcp/orderform.1.php');
     <?php
     if ($default['de_escrow_use']) {
         // 결제대행사별 코드 include (에스크로 안내)
-        require_once(G5_MSHOP_PATH.'/kcp/orderform.3.php');
+        require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.3.php');
     }
     ?>
 
@@ -1149,6 +1149,7 @@ function pay_approval()
         f.good_mny.value = od_price + send_cost + send_cost2 - send_coupon - temp_point;
     }
 
+    <?php if($default['de_pg_service'] == 'kcp') { ?>
     f.buyr_name.value = pf.od_name.value;
     f.buyr_mail.value = pf.od_email.value;
     f.buyr_tel1.value = pf.od_tel.value;
@@ -1161,6 +1162,31 @@ function pay_approval()
     f.rcvr_add1.value = pf.od_b_addr1.value;
     f.rcvr_add2.value = pf.od_b_addr2.value;
     f.settle_method.value = settle_method;
+    <?php } else if($default['de_pg_service'] == 'lg') { ?>
+    var pay_method = "";
+    switch(settle_method) {
+        case "계좌이체":
+            pay_method = "SC0030";
+            break;
+        case "가상계좌":
+            pay_method = "SC0040";
+            break;
+        case "휴대폰":
+            pay_method = "SC0060";
+            break;
+        case "신용카드":
+            pay_method = "SC0010";
+            break;
+    }
+    f.LGD_CUSTOM_FIRSTPAY.value = pay_method;
+    f.LGD_BUYER.value = pf.od_name.value;
+    f.LGD_BUYEREMAIL.value = pf.od_email.value;
+    f.LGD_BUYERPHONE.value = pf.od_hp.value;
+    f.LGD_AMOUNT.value = f.good_mny.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.LGD_TAXFREEAMOUNT.value = pf.comm_free_mny.value;
+    <?php } ?>
+    <?php } ?>
 
     var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
     f.target = "tar_opener";

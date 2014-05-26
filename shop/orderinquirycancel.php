@@ -30,27 +30,65 @@ if($od['od_cancel_price'] > 0 || $ct['od_count1'] != $ct['od_count2']) {
 
 // PG 결제 취소
 if($od['od_tno']) {
-    require './settle_kcp.inc.php';
+    switch($od['od_pg']) {
+        case 'lg':
+            require './settle_lg.inc.php';
+            $LGD_TID    = $od['od_tno'];        //LG유플러스으로 부터 내려받은 거래번호(LGD_TID)
 
-    $_POST['tno'] = $od['od_tno'];
-    $_POST['req_tx'] = 'mod';
-    $_POST['mod_type'] = 'STSC';
-    if($od['od_escrow']) {
-        $_POST['req_tx'] = 'mod_escrow';
-        $_POST['mod_type'] = 'STE2';
-        if($od['od_settle_case'] == '가상계좌')
-            $_POST['mod_type'] = 'STE5';
+            $xpay = new XPay($configPath, $CST_PLATFORM);
+
+            // Mert Key 설정
+            $xpay->set_config_value('t'.$LGD_MID, $config['cf_lg_mert_key']);
+            $xpay->set_config_value($LGD_MID, $config['cf_lg_mert_key']);
+            $xpay->Init_TX($LGD_MID);
+
+            $xpay->Set("LGD_TXNAME", "Cancel");
+            $xpay->Set("LGD_TID", $LGD_TID);
+
+            if ($xpay->TX()) {
+                //1)결제취소결과 화면처리(성공,실패 결과 처리를 하시기 바랍니다.)
+                /*
+                echo "결제 취소요청이 완료되었습니다.  <br>";
+                echo "TX Response_code = " . $xpay->Response_Code() . "<br>";
+                echo "TX Response_msg = " . $xpay->Response_Msg() . "<p>";
+                */
+            } else {
+                //2)API 요청 실패 화면처리
+                $msg = "결제 취소요청이 실패하였습니다.\\n";
+                $msg .= "TX Response_code = " . $xpay->Response_Code() . "\\n";
+                $msg .= "TX Response_msg = " . $xpay->Response_Msg();
+
+                alert($msg);
+            }
+            break;
+        default:
+            require './settle_kcp.inc.php';
+
+            $_POST['tno'] = $od['od_tno'];
+            $_POST['req_tx'] = 'mod';
+            $_POST['mod_type'] = 'STSC';
+            if($od['od_escrow']) {
+                $_POST['req_tx'] = 'mod_escrow';
+                $_POST['mod_type'] = 'STE2';
+                if($od['od_settle_case'] == '가상계좌')
+                    $_POST['mod_type'] = 'STE5';
+            }
+            $_POST['mod_desc'] = iconv("utf-8", "euc-kr", '주문자 본인 취소-'.$cancel_memo);
+            $_POST['site_cd'] = $default['de_kcp_mid'];
+
+            // 취소내역 한글깨짐방지
+            $def_locale = setlocale(LC_CTYPE, 0);
+            $locale_change = false;
+            if(preg_match("/utf[\-]?8/i", $def_locale)) {
+                setlocale(LC_CTYPE, 'ko_KR.euc-kr');
+                $locale_change = true;
+            }
+
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+
+            if($locale_change)
+                setlocale(LC_CTYPE, $def_locale);
     }
-    $_POST['mod_desc'] = iconv("utf-8", "euc-kr", '주문자 본인 취소-'.$cancel_memo);
-    $_POST['site_cd'] = $default['de_kcp_mid'];
-
-    // locale ko_KR.euc-kr 로 설정
-    setlocale(LC_CTYPE, 'ko_KR.euc-kr');
-
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
-
-    // locale 설정 초기화
-    setlocale(LC_CTYPE, '');
 }
 
 // 장바구니 자료 취소

@@ -77,6 +77,25 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
     sql_query(" ALTER TABLE `{$g5['g5_shop_order_address_table']}`
                     ADD `ad_addr3` varchar(255) NOT NULL DEFAULT '' AFTER `ad_addr2` ", true);
 }
+
+// 결제 PG 필드 추가
+if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
+                    ADD `od_pg` varchar(255) NOT NULL DEFAULT '' AFTER `od_mobile`,
+                    ADD `od_casseqno` varchar(255) NOT NULL DEFAULT '' AFTER `od_escrow` ", true);
+
+    // 주문 결제 PG kcp로 설정
+    sql_query(" update {$g5['g5_shop_order_table']} set od_pg = 'kcp' ");
+}
+
+// LG 현금영수증 JS
+if($od['od_pg'] == 'lg') {
+    if($default['de_card_test']) {
+    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    } else {
+        echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    }
+}
 ?>
 
 <section id="anc_sodr_list">
@@ -319,6 +338,7 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
     <input type="hidden" name="od_hp" value="<?php echo $od['od_hp']; ?>">
     <input type="hidden" name="od_tno" value="<?php echo $od['od_tno']; ?>">
     <input type="hidden" name="od_escrow" value="<?php echo $od['od_escrow']; ?>">
+    <input type="hidden" name="od_pg" value="<?php echo $od['od_pg']; ?>">
 
     <div class="compare_wrap">
 
@@ -402,16 +422,27 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
                     <td>
                         <?php
                         if ($od['od_settle_case'] != '무통장') {
-                            $pg_url  = 'http://admin8.kcp.co.kr';
-                            $pg_test = 'KCP';
-                            if ($default['de_card_test']) {
-                                // 로그인 아이디 / 비번
-                                // 일반 : test1234 / test12345
-                                // 에스크로 : escrow / escrow913
-                                $pg_url = 'http://testadmin8.kcp.co.kr';
-                                $pg_test .= ' 테스트 ';
-                            }
+                            switch($od['od_pg']) {
+                                case 'lg':
+                                    $pg_url  = 'http://pgweb.uplus.co.kr';
+                                    $pg_test = 'LG eCredit';
+                                    if ($default['de_card_test']) {
+                                        $pg_url = 'http://pgweb.uplus.co.kr/tmert';
+                                        $pg_test .= ' 테스트 ';
+                                    }
+                                    break;
+                                default:
+                                    $pg_url  = 'http://admin8.kcp.co.kr';
+                                    $pg_test = 'KCP';
+                                    if ($default['de_card_test']) {
+                                        // 로그인 아이디 / 비번
+                                        // 일반 : test1234 / test12345
+                                        // 에스크로 : escrow / escrow913
+                                        $pg_url = 'http://testadmin8.kcp.co.kr';
+                                        $pg_test .= ' 테스트 ';
+                                    }
 
+                                }
                             echo "<a href=\"{$pg_url}\" target=\"_blank\">{$pg_test}바로가기</a><br>";
                         }
                         //------------------------------------------------------------------------------
@@ -487,10 +518,27 @@ if(!sql_query(" select ad_addr3 from {$g5['g5_shop_order_address_table']} limit 
                     <td>
                     <?php
                     if ($od['od_cash']) {
-                        require G5_SHOP_PATH.'/settle_kcp.inc.php';
+                        if($od['od_pg'] == 'lg') {
+                            require G5_SHOP_PATH.'/settle_lg.inc.php';
 
-                        $cash = unserialize($od['od_cash_info']);
-                        $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
+                            switch($od['od_settle_case']) {
+                                case '계좌이체':
+                                    $trade_type = 'BANK';
+                                    break;
+                                case '가상계좌':
+                                    $trade_type = 'CAS';
+                                    break;
+                                default:
+                                    $trade_type = 'CR';
+                                    break;
+                            }
+                            $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                        } else {
+                            require G5_SHOP_PATH.'/settle_kcp.inc.php';
+
+                            $cash = unserialize($od['od_cash_info']);
+                            $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
+                        }
                     ?>
                         <a href="javascript:;" onclick="<?php echo $cash_receipt_script; ?>">현금영수증 확인</a>
                     <?php } else { ?>

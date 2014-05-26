@@ -26,6 +26,15 @@ $settle_case = $od['od_settle_case'];
 
 $g5['title'] = '주문상세내역';
 include_once('./_head.php');
+
+// LG 현금영수증 JS
+if($od['od_pg'] == 'lg') {
+    if($default['de_card_test']) {
+    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    } else {
+        echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    }
+}
 ?>
 
 <!-- 주문상세내역 시작 { -->
@@ -317,7 +326,16 @@ include_once('./_head.php');
                         <?php
                         if($od['od_settle_case'] == '휴대폰')
                         {
-                            $hp_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=500,height=690,scrollbars=yes,resizable=yes\');';
+                            if($od['od_pg'] == 'lg') {
+                                require_once G5_SHOP_PATH.'/settle_lg.inc.php';
+                                $LGD_TID      = $od['od_tno'];
+                                $LGD_MERTKEY  = $config['cf_lg_mert_key'];
+                                $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
+
+                                $hp_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                            } else {
+                                $hp_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'mcash_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=500,height=690,scrollbars=yes,resizable=yes\');';
+                            }
                         ?>
                         <a href="javascript:;" onclick="<?php echo $hp_receipt_script; ?>">영수증 출력</a>
                         <?php
@@ -325,7 +343,16 @@ include_once('./_head.php');
 
                         if($od['od_settle_case'] == '신용카드')
                         {
-                            $card_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'card_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=470,height=815,scrollbars=yes,resizable=yes\');';
+                            if($od['od_pg'] == 'lg') {
+                                require_once G5_SHOP_PATH.'/settle_lg.inc.php';
+                                $LGD_TID      = $od['od_tno'];
+                                $LGD_MERTKEY  = $config['cf_lg_mert_key'];
+                                $LGD_HASHDATA = md5($LGD_MID.$LGD_TID.$LGD_MERTKEY);
+
+                                $card_receipt_script = 'showReceiptByTID(\''.$LGD_MID.'\', \''.$LGD_TID.'\', \''.$LGD_HASHDATA.'\');';
+                            } else {
+                                $card_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'card_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=470,height=815,scrollbars=yes,resizable=yes\');';
+                            }
                         ?>
                         <a href="javascript:;" onclick="<?php echo $card_receipt_script; ?>">영수증 출력</a>
                         <?php
@@ -369,10 +396,27 @@ include_once('./_head.php');
                     <?php
                     if ($od['od_cash'])
                     {
-                        require_once G5_SHOP_PATH.'/settle_kcp.inc.php';
+                        if($od['od_pg'] == 'lg') {
+                            require_once G5_SHOP_PATH.'/settle_lg.inc.php';
 
-                        $cash = unserialize($od['od_cash_info']);
-                        $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
+                            switch($od['od_settle_case']) {
+                                case '계좌이체':
+                                    $trade_type = 'BANK';
+                                    break;
+                                case '가상계좌':
+                                    $trade_type = 'CAS';
+                                    break;
+                                default:
+                                    $trade_type = 'CR';
+                                    break;
+                            }
+                            $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                        } else {
+                            require_once G5_SHOP_PATH.'/settle_kcp.inc.php';
+
+                            $cash = unserialize($od['od_cash_info']);
+                            $cash_receipt_script = 'window.open(\''.G5_CASH_RECEIPT_URL.$default['de_kcp_mid'].'&orderid='.$od_id.'&bill_yn=Y&authno='.$cash['receipt_no'].'\', \'taxsave_receipt\', \'width=360,height=647,scrollbars=0,menus=0\');';
+                        }
                     ?>
                         <a href="javascript:;" onclick="<?php echo $cash_receipt_script; ?>" class="btn_frmline">현금영수증 확인하기</a>
                     <?php
@@ -571,7 +615,7 @@ include_once('./_head.php');
         <?php } ?>
     </section>
 
-    <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin) {
+    <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin && $od['od_pg'] == 'kcp') {
     preg_match("/\s{1}([^\s]+)\s?/", $od['od_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
     ?>

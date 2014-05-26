@@ -20,6 +20,10 @@ if (get_cart_count($tmp_cart_id) == 0)
 
 $g5['title'] = '주문서 작성';
 
+// LG Xpay 전자결제를 사용할 때만 실행
+if($default['de_pg_service'] == 'lg' && ($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'])) {
+    $g5['body_script'] = 'onload="isActiveXOK();"';
+}
 include_once('./_head.php');
 if ($default['de_hope_date_use']) {
     include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
@@ -31,10 +35,10 @@ set_session('ss_order_id', $od_id);
 $s_cart_id = $tmp_cart_id;
 $order_action_url = G5_HTTPS_SHOP_URL.'/orderformupdate.php';
 
-require_once('./settle_kcp.inc.php');
+require_once('./settle_'.$default['de_pg_service'].'.inc.php');
 
 // 결제대행사별 코드 include (스크립트 등)
-require_once('./kcp/orderform.1.php');
+require_once('./'.$default['de_pg_service'].'/orderform.1.php');
 ?>
 
 <form name="forderform" id="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
@@ -271,7 +275,7 @@ require_once('./kcp/orderform.1.php');
 
     <?php
     // 결제대행사별 코드 include (결제대행사 정보 필드)
-    require_once('./kcp/orderform.2.php');
+    require_once('./'.$default['de_pg_service'].'/orderform.2.php');
     ?>
 
     <!-- 주문하시는 분 입력 시작 { -->
@@ -665,14 +669,14 @@ require_once('./kcp/orderform.1.php');
 
     <?php
     // 결제대행사별 코드 include (주문버튼)
-    require_once('./kcp/orderform.3.php');
+    require_once('./'.$default['de_pg_service'].'/orderform.3.php');
     ?>
     </form>
 
     <?php
     if ($default['de_escrow_use']) {
         // 결제대행사별 코드 include (에스크로 안내)
-        require_once('./kcp/orderform.4.php');
+        require_once('./'.$default['de_pg_service'].'/orderform.4.php');
     }
     ?>
 
@@ -1285,6 +1289,7 @@ function forderform_check(f)
     <?php } ?>
 
     // pay_method 설정
+    <?php if($default['de_pg_service'] == 'kcp') { ?>
     switch(settle_method)
     {
         case "계좌이체":
@@ -1303,8 +1308,33 @@ function forderform_check(f)
             f.pay_method.value = "무통장";
             break;
     }
+    <?php } else if($default['de_pg_service'] == 'lg') { ?>
+    switch(settle_method)
+    {
+        case "계좌이체":
+            f.LGD_CUSTOM_FIRSTPAY.value = "SC0030";
+            f.LGD_CUSTOM_USABLEPAY.value = "SC0030";
+            break;
+        case "가상계좌":
+            f.LGD_CUSTOM_FIRSTPAY.value = "SC0040";
+            f.LGD_CUSTOM_USABLEPAY.value = "SC0040";
+            break;
+        case "휴대폰":
+            f.LGD_CUSTOM_FIRSTPAY.value = "SC0060";
+            f.LGD_CUSTOM_USABLEPAY.value = "SC0060";
+            break;
+        case "신용카드":
+            f.LGD_CUSTOM_FIRSTPAY.value = "SC0010";
+            f.LGD_CUSTOM_USABLEPAY.value = "SC0010";
+            break;
+        default:
+            f.LGD_CUSTOM_FIRSTPAY.value = "무통장";
+            break;
+    }
+    <?php } ?>
 
     // 결제정보설정
+    <?php if($default['de_pg_service'] == 'kcp') { ?>
     f.buyr_name.value = f.od_name.value;
     f.buyr_mail.value = f.od_email.value;
     f.buyr_tel1.value = f.od_tel.value;
@@ -1326,6 +1356,21 @@ function forderform_check(f)
     } else {
         return true;
     }
+    <?php } if($default['de_pg_service'] == 'lg') { ?>
+    f.LGD_BUYER.value = f.od_name.value;
+    f.LGD_BUYEREMAIL.value = f.od_email.value;
+    f.LGD_BUYERPHONE.value = f.od_hp.value;
+    f.LGD_AMOUNT.value = f.good_mny.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.LGD_TAXFREEAMOUNT.value = f.comm_free_mny.value;
+    <?php } ?>
+
+    if(f.LGD_CUSTOM_FIRSTPAY.value != "무통장") {
+          Pay_Request("<?php echo $od_id; ?>", f.LGD_AMOUNT.value, f.LGD_TIMESTAMP.value);
+    } else {
+        f.submit();
+    }
+    <?php } ?>
 }
 
 // 구매자 정보와 동일합니다.
@@ -1370,5 +1415,5 @@ $(function(){
 include_once('./_tail.php');
 
 // 결제대행사별 코드 include (스크립트 실행)
-require_once('./kcp/orderform.5.php');
+require_once('./'.$default['de_pg_service'].'/orderform.5.php');
 ?>

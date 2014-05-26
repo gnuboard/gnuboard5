@@ -16,6 +16,9 @@ if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.');
 
 $g5['title'] = $pp['pp_name'].'님 개인결제';
+if($default['de_pg_service'] == 'lg') {
+    $g5['body_script'] = 'onload="isActiveXOK();"';
+}
 include_once('./_head.php');
 
 $action_url = G5_HTTPS_SHOP_URL.'/personalpayformupdate.php';
@@ -39,10 +42,10 @@ $od_id = $pp_id;
 $tot_price = $pp['pp_price'];
 $goods = $pp['pp_name'].'님 개인결제';
 
-require_once('./settle_kcp.inc.php');
+require_once('./settle_'.$default['de_pg_service'].'.inc.php')
 
 // 결제대행사별 코드 include (스크립트 등)
-require_once('./kcp/orderform.1.php');
+require_once('./'.$default['de_pg_service'].'/orderform.1.php');
 ?>
 
 <form name="forderform" id="forderform" method="post" action="<?php echo $action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
@@ -50,7 +53,7 @@ require_once('./kcp/orderform.1.php');
 
     <?php
     // 결제대행사별 코드 include (결제대행사 정보 필드)
-    require_once('./kcp/orderform.2.php');
+    require_once('./'.$default['de_pg_service'].'/orderform.2.php');
     ?>
 
     <section id="sod_frm_pay">
@@ -136,7 +139,7 @@ require_once('./kcp/orderform.1.php');
 
     <?php
     // 결제대행사별 코드 include (주문버튼)
-    require_once('./kcp/orderform.3.php');
+    require_once('./'.$default['de_pg_service'].'/orderform.3.php');
     ?>
 
 </form>
@@ -144,7 +147,7 @@ require_once('./kcp/orderform.1.php');
 <?php
 if ($default['de_escrow_use']) {
     // 결제대행사별 코드 include (에스크로 안내)
-    require_once('./kcp/orderform.4.php');
+    require_once('./'.$default['de_pg_service'].'/orderform.4.php');
 }
 ?>
 
@@ -199,6 +202,7 @@ function forderform_check(f)
     }
 
     // pay_method 설정
+    <?php if($default['de_pg_service'] == 'kcp') { ?>
     switch(settle_method)
     {
         case "계좌이체":
@@ -217,8 +221,33 @@ function forderform_check(f)
             f.pay_method.value = "무통장";
             break;
     }
+    <?php } else if($default['de_pg_service'] == 'lg') { ?>
+    switch(settle_method)
+    {
+        case "계좌이체":
+            f.LGD_CUSTOM_FIRSTPAY.value = "SC0030";
+            f.LGD_CUSTOM_USABLEPAY.value = "SC0030";
+            break;
+        case "가상계좌":
+            f.LGD_CUSTOM_FIRSTPAY.value = "SC0040";
+            f.LGD_CUSTOM_USABLEPAY.value = "SC0040";
+            break;
+        case "휴대폰":
+            f.LGD_CUSTOM_FIRSTPAY.value = "SC0060";
+            f.LGD_CUSTOM_USABLEPAY.value = "SC0060";
+            break;
+        case "신용카드":
+            f.LGD_CUSTOM_FIRSTPAY.value = "SC0010";
+            f.LGD_CUSTOM_USABLEPAY.value = "SC0010";
+            break;
+        default:
+            f.LGD_CUSTOM_FIRSTPAY.value = "무통장";
+            break;
+    }
+    <?php } ?>
 
-    // kcp 결제정보설정
+    // 결제정보설정
+    <?php if($default['de_pg_service'] == 'kcp') { ?>
     f.buyr_name.value = f.pp_name.value;
     f.buyr_mail.value = f.pp_email.value;
     f.buyr_tel1.value = f.pp_hp.value;
@@ -237,6 +266,19 @@ function forderform_check(f)
     } else {
         return true;
     }
+    <?php } if($default['de_pg_service'] == 'lg') { ?>
+    f.LGD_BUYER.value = f.pp_name.value;
+    f.LGD_BUYEREMAIL.value = f.pp_email.value;
+    f.LGD_BUYERPHONE.value = f.pp_hp.value;
+    f.LGD_AMOUNT.value = f.good_mny.value;
+    f.LGD_TAXFREEAMOUNT.value = 0;
+
+    if(f.LGD_CUSTOM_FIRSTPAY.value != "무통장") {
+          Pay_Request("<?php echo $pp_id; ?>", f.LGD_AMOUNT.value, f.LGD_TIMESTAMP.value);
+    } else {
+        f.submit();
+    }
+    <?php } ?>
 }
 </script>
 
@@ -244,5 +286,5 @@ function forderform_check(f)
 include_once('./_tail.php');
 
 // 결제대행사별 코드 include (스크립트 실행)
-require_once('./kcp/orderform.5.php');
+require_once('./'.$default['de_pg_service'].'/orderform.5.php');
 ?>

@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+if($default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
+    alert('결제등록 요청 후 주문해 주십시오.');
+
 // 개인결제 정보
 $pp_check = false;
 $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['pp_id']}' and pp_use = '1' ";
@@ -18,8 +21,15 @@ if($_POST['pp_id'] != get_session('ss_personalpay_id') || $hash_data != get_sess
 
 if ($pp_settle_case == "계좌이체")
 {
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
-    $bank_name  = iconv("cp949", "utf-8", $bank_name);
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            $bank_name  = iconv("cp949", "utf-8", $bank_name);
+            break;
+    }
 
     $pp_tno             = $tno;
     $pp_receipt_price   = $amount;
@@ -30,9 +40,16 @@ if ($pp_settle_case == "계좌이체")
 }
 else if ($pp_settle_case == "가상계좌")
 {
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
-    $bankname   = iconv("cp949", "utf-8", $bankname);
-    $depositor  = iconv("cp949", "utf-8", $depositor);
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            $bankname   = iconv("cp949", "utf-8", $bankname);
+            $depositor  = iconv("cp949", "utf-8", $depositor);
+            break;
+    }
 
     $pp_tno             = $tno;
     $pp_receipt_price   = 0;
@@ -42,7 +59,14 @@ else if ($pp_settle_case == "가상계좌")
 }
 else if ($pp_settle_case == "휴대폰")
 {
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            break;
+    }
 
     $pp_tno             = $tno;
     $pp_receipt_price   = $amount;
@@ -52,8 +76,15 @@ else if ($pp_settle_case == "휴대폰")
 }
 else if ($pp_settle_case == "신용카드")
 {
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
-    $card_name  = iconv("cp949", "utf-8", $card_name);
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            $card_name  = iconv("cp949", "utf-8", $card_name);
+            break;
+    }
 
     $pp_tno             = $tno;
     $pp_receipt_price   = $amount;
@@ -69,14 +100,24 @@ else
 // 주문금액과 결제금액이 일치하는지 체크
 if((int)$pp['pp_price'] !== (int)$pg_price) {
     $cancel_msg = '결제금액 불일치';
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+            break;
+    }
 
     die("Receipt Amount Error");
 }
 
+$pp_pg = $default['de_pg_service'];
+
 // 결제정보 입력
 $sql = " update {$g5['g5_shop_personalpay_table']}
-            set pp_tno              = '$pp_tno',
+            set pp_pg               = '$pp_pg',
+                pp_tno              = '$pp_tno',
                 pp_app_no           = '$app_no',
                 pp_receipt_price    = '$pp_receipt_price',
                 pp_settle_case      = '$pp_settle_case',
@@ -90,7 +131,14 @@ $result = sql_query($sql, false);
 // 결제정보 입력 오류시 결제 취소
 if(!$result) {
     $cancel_msg = '결제정보 입력 오류';
-    include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+    switch($default['de_pg_service']) {
+        case 'lg':
+            include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+            break;
+        default:
+            include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+            break;
+    }
 
     die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
 }
@@ -104,6 +152,7 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_receipt_price    = od_receipt_price + '$pp_receipt_price',
                     od_receipt_time     = '$pp_receipt_time',
+                    od_pg               = '$pp_pg',
                     od_tno              = '$pp_tno',
                     od_app_no           = '$app_no',
                     od_escrow           = '$od_escrow',
@@ -117,7 +166,14 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
     // 결제정보 입력 오류시 결제 취소
     if(!$result) {
         $cancel_msg = '결제정보 입력 오류';
-        include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+        switch($default['de_pg_service']) {
+            case 'lg':
+                include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+                break;
+            default:
+                include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
+                break;
+        }
 
         die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
     }

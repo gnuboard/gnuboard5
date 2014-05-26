@@ -295,6 +295,7 @@ if($g5_shop_install) {
                     de_cart_keep_term = '15',
                     de_card_point = '0',
                     de_point_days = '7',
+                    de_pg_service = 'kcp',
                     de_kcp_mid = '',
                     de_send_cost_case = '차등',
                     de_send_cost_limit = '20000;30000;40000',

@@ -465,7 +465,7 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
     <input type="checkbox" name="send_sms" value="1" id="od_send_sms" checked="checked">
     <label for="od_send_sms"><?php echo $change_status; ?>안내 SMS</label>
     <?php } ?>
-    <?php if($od_status == '준비') { ?>
+    <?php if($od_status == '준비' && $default['de_pg_service'] == 'kcp') { ?>
     <input type="checkbox" name="send_escrow" value="1" id="od_send_escrow">
     <label for="od_send_escrow">에스크로배송등록</label>
     <?php } ?>

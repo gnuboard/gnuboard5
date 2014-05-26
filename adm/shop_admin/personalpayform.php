@@ -46,6 +46,15 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_spp_info">주문 정보</a></li>
 <li><a href="#anc_spp_pay">결제 정보</a></li>
 </ul>';
+
+// pg 설정 필드 추가
+if(!sql_query(" select pp_pg from {$g5['g5_shop_personalpay_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_personalpay_table']}`
+                    ADD `pp_pg` varchar(255) NOT NULL DEFAULT '' AFTER `pp_price` ", true);
+
+    // 개인결제 PG kcp로 설정
+    sql_query(" update {$g5['g5_shop_personalpay_table']} set pp_pg = 'kcp' ");
+}
 ?>
 
 <form name="fpersonalpayform" action="./personalpayformupdate.php" method="post" onsubmit="return form_check(this);">

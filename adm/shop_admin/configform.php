@@ -78,6 +78,12 @@ if(!isset($default['de_member_reg_coupon_minimum'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_member_reg_coupon_minimum` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_price` ", true);
 }
+
+// lg 결제관련 필드 추가
+if(!isset($default['de_pg_service'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_pg_service` varchar(255) NOT NULL DEFAULT '' AFTER `de_sms_hp` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -577,7 +583,17 @@ if(!isset($default['de_member_reg_coupon_minimum'])) {
                 주문 완료 <input type="text" name="de_point_days" value="<?php echo $default['de_point_days']; ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 부여
             </td>
         </tr>
-        <tr class="kcp_info_fld">
+        <tr>
+            <th scope="row"><label for="de_pg_service">결제대행사</label></th>
+            <td>
+                <?php echo help('쇼핑몰에서 이용하실 결제대행사를 선택합니다.'); ?>
+                <select id="de_pg_service" name="de_pg_service">
+                    <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>KCP</option>
+                    <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG U+</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="pg_info_fld kcp_info_fld">
             <th scope="row">
                 <label for="de_kcp_mid">KCP SITE CODE</label><br>
                 <a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank" id="scf_kcpreg">KCP서비스신청하기</a>
@@ -587,11 +603,28 @@ if(!isset($default['de_member_reg_coupon_minimum'])) {
                 <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
             </td>
         </tr>
-        <tr class="kcp_info_fld">
+        <tr class="pg_info_fld kcp_info_fld">
             <th scope="row"><label for="de_kcp_site_key">KCP SITE KEY</label></th>
             <td>
                 <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
                 <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="32" maxlength="25">
+            </td>
+        </tr>
+        <tr class="pg_info_fld lg_info_fld">
+            <th scope="row">
+                <label for="cf_lg_mid">LG U+ 상점아이디</label><br>
+                <a href="http://pgweb.dacom.net/pg/wmp/Home/application/apply_testid.jsp?cooperativecode=youngcart" target="_blank" id="scf_kcpreg">LG U+ 서비스신청하기</a>
+            </th>
+            <td>
+                <?php echo help("LG U+ 에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG U+에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG U+ 상점아이디와 동일합니다."); ?>
+                <span class="sitecode">si_</span> <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid']; ?>" id="cf_lg_mid" class="frm_input" size="10" maxlength="20" style="font:bold 15px Verdana;"> 영문자, 숫자 혼용
+            </td>
+        </tr>
+        <tr class="pg_info_fld lg_info_fld">
+            <th scope="row"><label for="cf_lg_mert_key">LG U+ MERT KEY</label></th>
+            <td>
+                <?php echo help("LG U+ 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG U+ MERT KEY와 동일합니다."); ?>
+                <input type="text" name="cf_lg_mert_key" value="<?php echo $config['cf_lg_mert_key']; ?>" id="cf_lg_mert_key" class="frm_input" size="32" maxlength="50">
             </td>
         </tr>
         <tr>
@@ -612,15 +645,20 @@ if(!isset($default['de_member_reg_coupon_minimum'])) {
                 <label for="de_card_test1">실결제 </label>
                 <input type="radio" name="de_card_test" value="1" <?php echo $default['de_card_test']==1?"checked":""; ?> id="de_card_test2">
                 <label for="de_card_test2">테스트결제</label>
-                <div id="scf_cardtest">
+                <div class="scf_cardtest kcp_cardtest">
                     <a href="https://admin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">실결제 관리자</a>
-                    <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">테스트 관리자</a></div>
+                    <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">테스트 관리자</a>
+                </div>
+                <div class="scf_cardtest lg_cardtest">
+                    <a href="https://pgweb.uplus.co.kr/" target="_blank" class="btn_frmline">실결제 관리자</a>
+                    <a href="https://pgweb.uplus.co.kr/tmert" target="_blank" class="btn_frmline">테스트 관리자</a>
+                </div>
                 <div id="scf_cardtest_tip">
                     <strong>일반결제 사용시 테스트 결제</strong>
                     <dl>
                         <dt>신용카드</dt><dd>1000원 이상, 모든 카드가 테스트 되는 것은 아니므로 여러가지 카드로 결제해 보셔야 합니다.<br>(BC, 현대, 롯데, 삼성카드)</dd>
                         <dt>계좌이체</dt><dd>150원 이상, 계좌번호, 비밀번호는 가짜로 입력해도 되며, 주민등록번호는 공인인증서의 것과 일치해야 합니다.</dd>
-                        <dt>가상계좌</dt><dd>1원 이상, 모든 은행이 테스트 되는 것은 아니며 "VB10 : 해당 은행 계좌 없음" 자주 발생함.<br>(광주은행, 하나은행)</dd>
+                        <dt>가상계좌</dt><dd>1원 이상, 모든 은행이 테스트 되는 것은 아니며 "해당 은행 계좌 없음" 자주 발생함.<br>(광주은행, 하나은행)</dd>
                         <dt>휴대폰</dt><dd>1004원, 실결제가 되며 다음날 새벽에 일괄 취소됨</dd>
                     </dl>
                     <strong>에스크로 사용시 테스트 결제</strong><br>
@@ -630,25 +668,24 @@ if(!isset($default['de_member_reg_coupon_minimum'])) {
                         <dt>가상계좌</dt><dd>1원 이상, 입금통보는 제대로 되지 않음.</dd>
                         <dt>휴대폰</dt><dd>테스트 지원되지 않음.</dd>
                     </dl>
-                    <ul>
+                    <ul id="kcp_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
                         <li>테스트결제의 <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">상점관리자</a> 로그인 정보는 KCP로 문의하시기 바랍니다. (기술지원 1544-8661)</li>
                         <li><b>일반결제</b>의 테스트 사이트코드는 <b>T0000</b> 이며, <b>에스크로 결제</b>의 테스트 사이트코드는 <b>T0007</b> 입니다.</li>
                     </ul>
+                    <ul id="lg_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
+                        <li>테스트결제의 <a href="http://pgweb.dacom.net:7085/" target="_blank">상점관리자</a> 로그인 정보는 LG U+ 상점아이디 첫 글자에 t를 추가해서 로그인하시기 바랍니다. 예) tsi_lguplus</li>
+                    </ul>
                 </div>
-                <script>
-                $('#scf_cardtest_tip').attr('class','scf_cardtest_tip');
-                $('<button type="button" id="scf_cardtest_btn" class="btn_frmline">테스트결제 팁 더보기</button>').appendTo('#scf_cardtest');
-                </script>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="de_tax_flag_use">복합과세 결제</label></th>
             <td>
-                 <?php echo help("복합과세(과세, 비과세) 결제를 사용하려면 체크하십시오.\n복합과세 결제를 사용하기 전 KCP에 결제 신청을 해주셔야 합니다."); ?>
+                 <?php echo help("복합과세(과세, 비과세) 결제를 사용하려면 체크하십시오.\n복합과세 결제를 사용하기 전 PG사에 결제 신청을 해주셔야 합니다."); ?>
                 <input type="checkbox" name="de_tax_flag_use" value="1" id="de_tax_flag_use"<?php echo $default['de_tax_flag_use']?' checked':''; ?>> 사용
             </td>
         </tr>
-        <tr>
+        <tr id="kcp_common_url">
             <th scope="row">공통 URL</th>
             <td>
                 <?php echo help("가상계좌 사용시 다음 주소를 <strong>KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
@@ -656,6 +693,17 @@ if(!isset($default['de_member_reg_coupon_minimum'])) {
         </tr>
         </tbody>
         </table>
+        <script>
+        $('#scf_cardtest_tip').addClass('scf_cardtest_tip');
+        $('<button type="button" class="scf_cardtest_btn btn_frmline">테스트결제 팁 더보기</button>').appendTo('.scf_cardtest');
+
+        $(".scf_cardtest").addClass("scf_cardtest_hide");
+        $(".<?php echo $default['de_pg_service']; ?>_cardtest").removeClass("scf_cardtest_hide");
+        $("#<?php echo $default['de_pg_service']; ?>_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
+        <?php if($default['de_pg_service'] != 'kcp') { ?>
+        $("#kcp_common_url").hide();
+        <?php } ?>
+        </script>
     </div>
 </section>
 
@@ -1270,9 +1318,30 @@ function fconfig_check(f)
 }
 
 $(function() {
-    $("#scf_cardtest_btn").bind("click", function() {
+    $(".pg_info_fld").hide();
+    <?php if($default['de_pg_service']) { ?>
+    $(".<?php echo $default['de_pg_service']; ?>_info_fld").show();
+    <?php } else { ?>
+    $(".kcp_info_fld").show();
+    <?php } ?>
+    $("#de_pg_service").on("change", function() {
+        var pg = $(this).val();
+        $(".pg_info_fld:visible").hide();
+        $("."+pg+"_info_fld").show();
+        $(".scf_cardtest").addClass("scf_cardtest_hide");
+        $("."+pg+"_cardtest").removeClass("scf_cardtest_hide");
+        $(".scf_cardtest_tip_adm").addClass("scf_cardtest_tip_adm_hide");
+        $("#"+pg+"_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
+
+        if(pg == 'kcp')
+            $("#kcp_common_url").show();
+        else
+            $("#kcp_common_url").hide();
+    });
+
+    $(".scf_cardtest_btn").bind("click", function() {
         var $cf_cardtest_tip = $("#scf_cardtest_tip");
-        var $cf_cardtest_btn = $("#scf_cardtest_btn");
+        var $cf_cardtest_btn = $(".scf_cardtest_btn");
 
         $cf_cardtest_tip.toggle();
 
@@ -1288,21 +1357,41 @@ $(function() {
 <?php
 // 결제모듈 실행권한 체크
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
-    $is_linux = true;
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
-        $is_linux = false;
+    // kcp의 경우 pp_cli 체크
+    if($default['de_pg_service'] == 'lg') {
+        $is_linux = true;
+        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+            $is_linux = false;
 
-    $exe = '/kcp/bin/';
-    if($is_linux) {
-        if(PHP_INT_MAX == 2147483647) // 32-bit
-            $exe .= 'pp_cli';
-        else
-            $exe .= 'pp_cli_x64';
-    } else {
-        $exe .= 'pp_cli_exe.exe';
+        $exe = '/kcp/bin/';
+        if($is_linux) {
+            if(PHP_INT_MAX == 2147483647) // 32-bit
+                $exe .= 'pp_cli';
+            else
+                $exe .= 'pp_cli_x64';
+        } else {
+            $exe .= 'pp_cli_exe.exe';
+        }
+
+        echo module_exec_check(G5_SHOP_PATH.$exe, 'pp_cli');
     }
 
-    echo module_exec_check(G5_SHOP_PATH.$exe, 'pp_cli');
+    // LG의 경우 log 디렉토리 체크
+    if($default['de_pg_service'] == 'lg') {
+        $log_path = G5_LGXPAY_PATH.'/lgdacom/log';
+
+        if(!is_dir($log_path)) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("'.str_replace(G5_PATH.'/', '', G5_LGXPAY_PATH).'/lgdacom 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        } else {
+            if(!is_writable($log_path)) {
+                echo '<script>'.PHP_EOL;
+                echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
+                echo '</script>'.PHP_EOL;
+            }
+        }
+    }
 }
 
 include_once (G5_ADMIN_PATH.'/admin.tail.php');

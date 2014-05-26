@@ -20,7 +20,12 @@ $amt_svc = 0;
 $amt_tax = (int)($amt_tot - $amt_sup);
 
 // 신청폼
-include_once(G5_SHOP_PATH.'/kcp/taxsave_form.php');
+if($od['od_pg'])
+    $dir = $od['od_pg'];
+else
+    $dir = $default['de_pg_service'];
+
+include_once(G5_SHOP_PATH.'/'.$dir.'/taxsave_form.php');
 
 include_once(G5_PATH.'/tail.sub.php');
 ?>

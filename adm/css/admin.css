@@ -518,8 +518,8 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 
 #scf_kcpreg {display:inline-block;margin:5px 0 0;padding:5px 10px;background:#ff4f91;color:#fff;font-weight:normal;text-decoration:none}
 
-#scf_cardtest {margin:5px 0 0}
-#scf_cardtest_btn {margin-left:5px;vertical-align:middle}
+.scf_cardtest {margin:5px 0 0}
+.scf_cardtest_btn {margin-left:5px;vertical-align:middle}
 #scf_cardtest_tip {margin:10px 0 0;padding:10px;border:3px solid #ddd}
 #scf_cardtest_tip strong {display:inline-block;margin:0 0 5px}
 #scf_cardtest_tip dl {margin:0 0 15px;padding:0;zoom:1}
@@ -527,6 +527,8 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #scf_cardtest_tip dt {float:left;width:100px}
 #scf_cardtest_tip dd {padding:0;overflow:hidden}
 .scf_cardtest_tip {display:none}
+.scf_cardtest_hide {display:none}
+.scf_cardtest_tip_adm_hide {display:none}
 
 .scf_img {display:none}
 

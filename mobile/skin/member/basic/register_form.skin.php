@@ -60,7 +60,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 if($config['cf_cert_use']) {
                     if($config['cf_cert_ipin'])
                         echo '<button type="button" id="win_ipin_cert" class="btn_frmline">아이핀 본인확인</button>'.PHP_EOL;
-                    if($config['cf_cert_hp'])
+                    if($config['cf_cert_hp'] && $config['cf_cert_hp'] != 'lg')
                         echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>'.PHP_EOL;
 
                     echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
