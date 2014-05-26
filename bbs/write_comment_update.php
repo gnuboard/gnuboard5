@@ -136,9 +136,6 @@ if ($w == 'c') // 댓글 입력
 
     $wr_subject = get_text(stripslashes($wr['wr_subject']));
 
-    // SNS 등록
-    include_once("./write_comment_update.sns.php");
-
     $sql = " insert into $write_table
                 set ca_name = '{$wr['ca_name']}',
                      wr_option = '$wr_secret',
@@ -238,6 +235,9 @@ if ($w == 'c') // 댓글 입력
             mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
         }
     }
+
+    // SNS 등록
+    include_once("./write_comment_update.sns.php");
 }
 else if ($w == 'cu') // 댓글 수정
 {

@@ -53,6 +53,8 @@ if ($_POST['twitter_checked']) {
     include_once(G5_SNS_PATH."/twitter/twitterconfig.php");
 
     if ( !(empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) ) {
+        $comment_url = G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&wr_id='.$wr['wr_parent'].'&#c_'.$comment_id;
+
         $post = googl_short_url($comment_url).' '.$wr_content;
         $post = utf8_strcut($post, 140);
 
