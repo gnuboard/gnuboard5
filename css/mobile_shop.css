@@ -12,7 +12,7 @@ legend {position:absolute;font-size:0;line-height:0;text-indent:-9999em;overflow
 label, input, button, select, img {vertical-align:middle}
 input, button {margin:0;padding:0;font-size:1em}
 input[type=text], input[type=password], input[type=submit], input[type=image], button {border-radius:0;font-size:1em;-webkit-appearance:none}
-textarea, select {font-size:1em;font-size:dotum}
+textarea, select {font-size:1em;font-family:dotum}
 textarea {border-radius:0;-webkit-appearance:none}
 p {margin:0;padding:0;word-break:break-all}
 hr {display:none}
