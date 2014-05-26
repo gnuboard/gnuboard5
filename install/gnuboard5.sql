@@ -278,6 +278,8 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_cert_hp` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcb_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcp_cd` varchar(255) NOT NULL DEFAULT '',
+  `cf_lg_mid` varchar(255) NOT NULL DEFAULT '',
+  `cf_lg_mert_key` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_limit` int(11) NOT NULL DEFAULT '0',
   `cf_cert_req` tinyint(4) NOT NULL DEFAULT '0',
   `cf_sms_use` varchar(255) NOT NULL DEFAULT '',

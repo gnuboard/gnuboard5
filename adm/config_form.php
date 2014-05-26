@@ -150,6 +150,13 @@ if(!isset($config['cf_faq_skin'])) {
                     ADD `cf_mobile_faq_skin` varchar(255) NOT NULL DEFAULT '' AFTER `cf_mobile_connect_skin` ", true);
 }
 
+// LG U+ 본인확인 필드 추가
+if(!isset($config['cf_lg_mid'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_lg_mid` varchar(255) NOT NULL DEFAULT '' AFTER `cf_cert_kcp_cd`,
+                    ADD `cf_lg_mert_key` varchar(255) NOT NULL DEFAULT '' AFTER `cf_lg_mid` ", true);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -761,6 +768,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <?php echo option_selected("",    $config['cf_cert_hp'], "사용안함"); ?>
                     <?php echo option_selected("kcb", $config['cf_cert_hp'], "코리아크레딧뷰로(KCB) 휴대폰 본인확인"); ?>
                     <?php echo option_selected("kcp", $config['cf_cert_hp'], "한국사이버결제(KCP) 휴대폰 본인확인"); ?>
+                    <?php echo option_selected("lg",  $config['cf_cert_hp'], "LG U+ 휴대폰 본인확인"); ?>
                 </select>
             </td>
         </tr>
@@ -778,6 +786,21 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
                 <?php echo help('SM으로 시작하는 5자리 사이트 코드중 뒤의 3자리만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 사이트코드를 발급 받으실 수 있습니다.') ?>
                 <span class="sitecode">SM</span>
                 <input type="text" name="cf_cert_kcp_cd" value="<?php echo $config['cf_cert_kcp_cd'] ?>" id="cf_cert_kcp_cd" class="frm_input" size="3"> <a href="http://sir.co.kr/main/provider/p_cert.php" target="_blank" class="btn_frmline">KCP 휴대폰 본인확인 서비스 신청페이지</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_lg_mid">LG U+ 상점아이디</label></th>
+            <td class="cf_cert_service">
+                <?php echo help('LG U+ 상점아이디 중 si_를 제외한 나머지 아이디만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 상점아이디를 발급 받으실 수 있습니다.<br><strong>LG U+ 휴대폰본인확인은 ActiveX 설치가 필요하므로 Internet Explorer 에서만 사용할 수 있습니다.</strong>') ?>
+                <span class="sitecode">si_</span>
+                <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid'] ?>" id="cf_lg_mid" class="frm_input" size="20"> <a href="http://pgweb.dacom.net/pg/wmp/Home/application/apply_testid.jsp?cooperativecode=youngcart" target="_blank" class="btn_frmline">LG U+ 본인확인 서비스 신청페이지</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_lg_mert_key">LG U+ MERT KEY</label></th>
+            <td class="cf_cert_service">
+                <?php echo help('LG U+ 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.') ?>
+                <input type="text" name="cf_lg_mert_key" value="<?php echo $config['cf_lg_mert_key'] ?>" id="cf_lg_mert_key" class="frm_input" size="40">
             </td>
         </tr>
         <tr>
@@ -1174,8 +1197,7 @@ $(function(){
         echo '$(".cf_cert_service").addClass("cf_cert_hide");';
     ?>
     $("#cf_cert_use").change(function(){
-        var cf_cert_sel = $("#cf_cert_use option:selected").val();
-        switch(cf_cert_sel) {
+        switch($(this).val()) {
             case "0":
                 $(".cf_cert_service").addClass("cf_cert_hide");
                 break;
@@ -1219,6 +1241,23 @@ if($config['cf_cert_use']) {
         $exe = G5_KCPCERT_PATH.'/bin/ct_cli';
 
         echo module_exec_check($exe, 'ct_cli');
+    }
+
+    // LG의 경우 log 디렉토리 체크
+    if($config['cf_cert_hp'] == 'lg') {
+        $log_path = G5_LGXPAY_PATH.'/lgdacom/log';
+
+        if(!is_dir($log_path)) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("'.str_replace(G5_PATH.'/', '', G5_LGXPAY_PATH).'/lgdacom 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        } else {
+            if(!is_writable($log_path)) {
+                echo '<script>'.PHP_EOL;
+                echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
+                echo '</script>'.PHP_EOL;
+            }
+        }
     }
 }
 

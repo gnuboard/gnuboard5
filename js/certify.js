@@ -24,6 +24,11 @@ function certify_win_open(type, url)
         var position = ",left=" + leftpos + ", top="    + toppos;
         var AUTH_POP = window.open(url,'auth_popup', winopts + position);
     }
+    else if(type == 'lg-hp')
+    {
+        var popupWindow = window.open( url, "auth_popup", "left=200, top=100, width=400, height=400, scrollbar=yes" );
+        popupWindow.focus();
+    }
 }
 
 // 인증체크
