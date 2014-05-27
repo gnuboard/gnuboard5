@@ -30,7 +30,7 @@ $ca = sql_fetch($sql);
 if(!$is_admin) {
     $msg = shop_member_cert_check($it_id, 'item');
     if($msg)
-        alert($msg);
+        alert($msg, G5_SHOP_URL);
 }
 
 // 오늘 본 상품 저장 시작

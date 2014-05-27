@@ -15,7 +15,7 @@ if (!$ca['ca_id'])
 if(!$is_admin) {
     $msg = shop_member_cert_check($ca_id, 'list');
     if($msg)
-        alert($msg);
+        alert($msg, G5_SHOP_URL);
 }
 
 $g5['title'] = $ca['ca_name'].' 상품리스트';
