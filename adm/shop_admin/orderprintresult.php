@@ -387,8 +387,8 @@ if (mysql_num_rows($result) == 0)
             </table>
         </div>
         <?php
-        $tot_tot_qty    += $sub_tot_qty;
-        $tot_tot_price  += $sub_tot_price;
+        $tot_tot_qty    += ($sub_tot_qty + 2);
+        $tot_tot_price  += ($sub_tot_price + $row1['od_send_cost'] + $row1['od_send_cost2']);
 
         if ($od_memo) $od_memo = "<p><strong>비고</strong> $od_memo</p>";
         if ($od_shop_memo) $od_shop_memo = "<p><strong>상점메모</strong> $od_shop_memo</p>";
