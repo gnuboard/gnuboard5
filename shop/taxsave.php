@@ -14,10 +14,17 @@ $goods_name = $goods['full_name'];
 
 $trad_time = date("YmdHis");
 
+/*
 $amt_tot = (int)($od['od_receipt_price'] - $od['od_refund_price']);
 $amt_sup = (int)round(($amt_tot * 10) / 11);
 $amt_svc = 0;
 $amt_tax = (int)($amt_tot - $amt_sup);
+*/
+
+$amt_tot = (int)$od['od_tax_mny'] + (int)$od['od_vat_mny'] + (int)$od['od_free_mny'];
+$amt_sup = (int)$od['od_tax_mny'] + (int)$od['od_free_mny'];
+$amt_tax = (int)$od['od_vat_mny'];
+$amt_svc = 0;
 
 // 신청폼
 if($od['od_pg'])

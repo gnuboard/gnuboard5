@@ -9,7 +9,7 @@ if (!$od)
 
 $goods = get_goods($od['od_id']);
 $goods_name = $goods['full_name'];
-$order_price = $od['od_receipt_price'] - $od['od_refund_price'];
+$order_price = $od['od_tax_mny'] + $od['od_vat_mny'] + $od['od_free_mny'];
 
 switch($od['od_settle_case']) {
     case '가상계좌':
@@ -61,8 +61,8 @@ if ($LGD_METHOD == "AUTH") {                 // 현금영수증 발급 요청
     $xpay->Set("LGD_CASHRECEIPTUSE", $LGD_CASHRECEIPTUSE);
     $xpay->Set("LGD_ENCODING",    "UTF-8");
 
-    if($od['od_tax_flag'] && $od['free_mny'] > 0) {
-        $xpay->Set("LGD_TAXFREEAMOUNT", $od['free_mny']); //비과세 금액
+    if($od['od_tax_flag'] && $od['od_free_mny'] > 0) {
+        $xpay->Set("LGD_TAXFREEAMOUNT", $od['od_free_mny']); //비과세 금액
     }
 
     if ($LGD_PAYTYPE == "SC0030"){              //기결제된 계좌이체건 현금영수증 발급요청시 필수
