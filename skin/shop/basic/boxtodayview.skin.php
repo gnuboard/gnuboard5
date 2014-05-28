@@ -23,27 +23,36 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         <div id="stv_btn"></div>
 
         <?php
+        $tv_tot_count = 0;
         for ($i=1;$i<=$tv_idx;$i++)
         {
-            $tv_it_id = get_session("ss_tv[$i]");
-            $rowx = sql_fetch(" select it_name from {$g5['g5_shop_item_table']} where it_id = '$tv_it_id' ");
-            $j = $i - 1;
-            if ($j%$tv_div['img_length']==0) $k++;
+            $tv_it_idx = $tv_idx - ($i - 1);
+            $tv_it_id = get_session("ss_tv[$tv_it_idx]");
+
+            $rowx = sql_fetch(" select it_id, it_name from {$g5['g5_shop_item_table']} where it_id = '$tv_it_id' ");
+            if(!$rowx['it_id'])
+                continue;
+
+            if ($tv_tot_count % $tv_div['img_length'] == 0) $k++;
+
             $it_name = get_text($rowx['it_name']);
             $img = get_it_image($tv_it_id, $tv_div['img_width'], $tv_div['img_height'], $tv_it_id, '', $it_name);
-            if ($i==1) echo '<ul id="stv_ul">'.PHP_EOL;
+
+            if ($tv_tot_count == 0) echo '<ul id="stv_ul">'.PHP_EOL;
             echo '<li class="stv_item c'.$k.'">'.PHP_EOL;
             echo $img;
             echo '<br>';
-            echo cut_str($it_name,10,'').PHP_EOL;
+            echo cut_str($it_name, 10, '').PHP_EOL;
             echo '</li>'.PHP_EOL;
+
+            $tv_tot_count++;
         }
-        if ($i > 1) echo '</ul>'.PHP_EOL;
+        if ($tv_tot_count > 0) echo '</ul>'.PHP_EOL;
         ?>
 
         <script>
         $(function() {
-            var itemQty = <?php echo $tv_idx; ?>; // 총 아이템 수량
+            var itemQty = <?php echo $tv_tot_count; ?>; // 총 아이템 수량
             var itemShow = <?php echo $tv_div['img_length']; ?>; // 한번에 보여줄 아이템 수량
             if (itemQty > itemShow)
             {
