@@ -101,7 +101,7 @@ function do_Authonly() {
 <input type="hidden" name="LGD_MOBILE_SUBAUTH_SITECD" value="<?php echo  $LGD_MOBILE_SUBAUTH_SITECD; ?>"/>
 <input type="hidden" name="LGD_TIMESTAMP" value="<?php echo $LGD_TIMESTAMP; ?>"/>
 <input type="hidden" name="LGD_HASHDATA" value="<?php echo $LGD_HASHDATA; ?>"/>
-<input type="hidden" name="LGD_NAMECHECKYN" value="Y">
+<input type="hidden" name="LGD_NAMECHECKYN" value="N">
 <input type="hidden" name="LGD_HOLDCHECKYN" value="Y">
 <input type="hidden" name="LGD_CUSTOM_SKIN" value="red">
 <input type="hidden" name="LGD_CUSTOM_FIRSTPAY" value="ASC007">

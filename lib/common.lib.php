@@ -2677,6 +2677,26 @@ function conv_date_format($format, $date, $add='')
     return date($format, $timestamp);
 }
 
+// 검색어 특수문자 제거
+function get_search_string($stx)
+{
+    $stx_pattern = array();
+    $stx_pattern[] = '#\.*/+#';
+    $stx_pattern[] = '#\\\*#';
+    $stx_pattern[] = '#\.{2,}#';
+    $stx_pattern[] = '#[/\'\"%=*\#\(\)\|\+\-\&\!\$@~\{\}\[\]`]+#';
+
+    $stx_replace = array();
+    $stx_replace[] = '';
+    $stx_replace[] = '';
+    $stx_replace[] = '.';
+    $stx_replace[] = '';
+
+    $stx = preg_replace($stx_pattern, $stx_replace, $stx);
+
+    return $stx;
+}
+
 // unescape nl 얻기
 function conv_unescape_nl($str)
 {
