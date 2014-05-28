@@ -37,7 +37,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
             <form name="frmsearch1" action="<?php echo G5_SHOP_URL; ?>/search.php" onsubmit="return search_submit(this);">
 
             <label for="sch_str" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="sch_str" required>
+            <input type="text" name="q" value="<?php echo stripslashes(get_text(get_search_string($q))); ?>" id="sch_str" required>
             <input type="submit" value="검색" id="sch_submit">
 
             </form>

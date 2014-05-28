@@ -28,7 +28,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
         <div class="sch_inner">
             <h2>상품 검색</h2>
             <label for="sch_str" class="sound_only">상품명<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="q" value="<?php echo stripslashes(get_text($q)); ?>" id="sch_str" required class="frm_input">
+            <input type="text" name="q" value="<?php echo stripslashes(get_text(get_search_string($q))); ?>" id="sch_str" required class="frm_input">
             <input type="submit" value="검색" class="btn_submit">
             <button type="button" class="pop_close"><span class="sound_only">검색 </span>닫기</button>
         </div>

@@ -21,13 +21,13 @@ $search_all = true;
 if (isset($_GET['qname']) || isset($_GET['qexplan']) || isset($_GET['qid']))
     $search_all = false;
 
-$q       = utf8_strcut(trim($_GET['q']), 30, "");
+$q       = utf8_strcut(get_search_string(trim($_GET['q'])), 30, "");
 $qname   = isset($_GET['qname']) ? trim($_GET['qname']) : '';
 $qexplan = isset($_GET['qexplan']) ? trim($_GET['qexplan']) : '';
 $qid     = isset($_GET['qid']) ? trim($_GET['qid']) : '';
 $qcaid   = isset($_GET['qcaid']) ? trim($_GET['qcaid']) : '';
-$qfrom   = isset($_GET['qfrom']) ? trim($_GET['qfrom']) : '';
-$qto     = isset($_GET['qto']) ? trim($_GET['qto']) : '';
+$qfrom   = isset($_GET['qfrom']) ? preg_replace('/[^0-9]/', '', trim($_GET['qfrom'])) : '';
+$qto     = isset($_GET['qto']) ? preg_replace('/[^0-9]/', '', trim($_GET['qto'])) : '';
 $qsort   = trim($_GET['qsort']);
 
 // 검색범위 checkbox 처리
@@ -121,9 +121,9 @@ if ($is_admin) {
         <input type="hidden" name="qcaid" id="qcaid" value="<?php echo $qcaid ?>">
         <div>
             <strong>검색범위</strong>
-            <input type="checkbox" name="qname" id="ssch_qname" <?php echo $qname_check?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
-            <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo $qexplan_check?'checked="checked"':'';?>> <label for="ssch_qexplan">상품설명</label>
-            <input type="checkbox" name="qid" id="ssch_qid" <?php echo $qid_check?'checked="checked"':'';?>> <label for="ssch_qid">상품코드</label>
+            <input type="checkbox" name="qname" id="ssch_qname" value="1" <?php echo $qname_check?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
+            <input type="checkbox" name="qexplan" id="ssch_qexplan" value="1" <?php echo $qexplan_check?'checked="checked"':'';?>> <label for="ssch_qexplan">상품설명</label>
+            <input type="checkbox" name="qid" id="ssch_qid" value="1" <?php echo $qid_check?'checked="checked"':'';?>> <label for="ssch_qid">상품코드</label>
         </div>
         <div>
             <strong>상품가격 (원)</strong>
