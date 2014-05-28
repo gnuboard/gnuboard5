@@ -227,7 +227,7 @@ if (isset($_REQUEST['sfl']))  {
 
 
 if (isset($_REQUEST['stx']))  { // search text (검색어)
-    $stx = trim($_REQUEST['stx']);
+    $stx = get_search_string(trim($_REQUEST['stx']));
     if ($stx)
         $qstr .= '&amp;stx=' . urlencode(cut_str($stx, 20, ''));
 } else {
