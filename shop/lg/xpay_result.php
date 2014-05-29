@@ -1,5 +1,5 @@
 <?php
-// LG U+ 공통 설정
+// LG유플러스 공통 설정
 require_once(G5_SHOP_PATH.'/settle_lg.inc.php');
 
 /*

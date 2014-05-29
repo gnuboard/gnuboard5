@@ -589,7 +589,7 @@ if(!isset($default['de_pg_service'])) {
                 <?php echo help('쇼핑몰에서 이용하실 결제대행사를 선택합니다.'); ?>
                 <select id="de_pg_service" name="de_pg_service">
                     <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>KCP</option>
-                    <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG U+</option>
+                    <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG유플러스</option>
                 </select>
             </td>
         </tr>
@@ -612,18 +612,18 @@ if(!isset($default['de_pg_service'])) {
         </tr>
         <tr class="pg_info_fld lg_info_fld">
             <th scope="row">
-                <label for="cf_lg_mid">LG U+ 상점아이디</label><br>
-                <a href="http://pgweb.dacom.net/pg/wmp/Home/application/apply_testid.jsp?cooperativecode=youngcart" target="_blank" id="scf_kcpreg">LG U+ 서비스신청하기</a>
+                <label for="cf_lg_mid">LG유플러스 상점아이디</label><br>
+                <a href="http://sir.co.kr/bbs/board.php?bo_table=faq&wr_id=36" target="_blank" id="scf_kcpreg">LG유플러스 서비스신청하기</a>
             </th>
             <td>
-                <?php echo help("LG U+ 에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG U+에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG U+ 상점아이디와 동일합니다."); ?>
+                <?php echo help("LG유플러스 에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG유플러스에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 상점아이디와 동일합니다."); ?>
                 <span class="sitecode">si_</span> <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid']; ?>" id="cf_lg_mid" class="frm_input" size="10" maxlength="20" style="font:bold 15px Verdana;"> 영문자, 숫자 혼용
             </td>
         </tr>
         <tr class="pg_info_fld lg_info_fld">
-            <th scope="row"><label for="cf_lg_mert_key">LG U+ MERT KEY</label></th>
+            <th scope="row"><label for="cf_lg_mert_key">LG유플러스 MERT KEY</label></th>
             <td>
-                <?php echo help("LG U+ 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG U+ MERT KEY와 동일합니다."); ?>
+                <?php echo help("LG유플러스 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 MERT KEY와 동일합니다."); ?>
                 <input type="text" name="cf_lg_mert_key" value="<?php echo $config['cf_lg_mert_key']; ?>" id="cf_lg_mert_key" class="frm_input" size="32" maxlength="50">
             </td>
         </tr>
@@ -673,7 +673,7 @@ if(!isset($default['de_pg_service'])) {
                         <li><b>일반결제</b>의 테스트 사이트코드는 <b>T0000</b> 이며, <b>에스크로 결제</b>의 테스트 사이트코드는 <b>T0007</b> 입니다.</li>
                     </ul>
                     <ul id="lg_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
-                        <li>테스트결제의 <a href="http://pgweb.dacom.net:7085/" target="_blank">상점관리자</a> 로그인 정보는 LG U+ 상점아이디 첫 글자에 t를 추가해서 로그인하시기 바랍니다. 예) tsi_lguplus</li>
+                        <li>테스트결제의 <a href="http://pgweb.dacom.net:7085/" target="_blank">상점관리자</a> 로그인 정보는 LG유플러스 상점아이디 첫 글자에 t를 추가해서 로그인하시기 바랍니다. 예) tsi_lguplus</li>
                     </ul>
                 </div>
             </td>

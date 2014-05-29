@@ -184,7 +184,7 @@ switch($LGD_PAYTYPE) {
 ?>
 
 <div id="lg_req_tx" class="new_win">
-    <h1 id="win_title">현금영수증 - LG U+ eCredit</h1>
+    <h1 id="win_title">현금영수증 - LG유플러스 eCredit</h1>
 
     <div class="tbl_head01 tbl_wrap">
         <table>
