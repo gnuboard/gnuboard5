@@ -105,8 +105,8 @@ $result = sql_query($sql);
         <td class="td_num"><?php echo $cnt; ?></td>
         <td class="td_num"><?php echo $row['fm_order']?></td>
         <td class="td_mng">
-            <a href="<?php echo G5_BBS_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a>
             <a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>수정</a>
+            <a href="<?php echo G5_BBS_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a>
             <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" onclick="return delete_confirm();"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>삭제</a>
         </td>
     </tr>
