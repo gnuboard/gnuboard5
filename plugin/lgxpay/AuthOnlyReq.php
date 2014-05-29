@@ -112,7 +112,7 @@ function do_Authonly() {
 
 <div id="uplus_win" class="new_win mbskin">
     <h1 id="win_title">휴대폰 본인확인</h1>
-    <p class="up_cmt"><img src="<?php echo G5_LGXPAY_URL; ?>/img/upluslogo.jpg" alt="">LG U+에 휴대폰 본인확인 요청 중입니다.</p>
+    <p class="up_cmt"><img src="<?php echo G5_LGXPAY_URL; ?>/img/upluslogo.jpg" alt="">LG유플러스에 휴대폰 본인확인 요청 중입니다.</p>
     <div class="up_info">
         <a href="http://pgweb.uplus.co.kr:8080/pg/wmp/Home2009/skill/payment_error_center01.jsp" target="_blank"><img src="<?php echo G5_LGXPAY_URL; ?>/img/btn_gouplus.jpg" alt="U+ 오류 해결방법 바로가기"></a>
         <p>본인확인이 진행되지 않는다면<br /> 왼쪽의 링크로 이동하여보세요.</p>
