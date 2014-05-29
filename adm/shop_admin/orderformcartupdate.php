@@ -181,9 +181,6 @@ if($cancel_change) {
         $sql .= " , od_status = '{$_POST['ct_status']}' ";
     }
 }
-if (in_array($_POST['ct_status'], $status_normal) && !$cancel_change) { // 정상인 주문상태만 기록
-    $sql .= " , od_status = '{$_POST['ct_status']}' ";
-}
 
 $sql .= " where od_id = '$od_id' ";
 sql_query($sql);
