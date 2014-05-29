@@ -23,6 +23,7 @@ $sql = " update {$g5['config_table']}
             set cf_title = '{$_POST['cf_title']}',
                 cf_admin = '{$_POST['cf_admin']}',
                 cf_admin_email = '{$_POST['cf_admin_email']}',
+                cf_admin_email_name = '{$_POST['cf_admin_email_name']}',
                 cf_include_index = '{$_POST['cf_include_index']}',
                 cf_include_head = '{$_POST['cf_include_head']}',
                 cf_include_tail = '{$_POST['cf_include_tail']}',

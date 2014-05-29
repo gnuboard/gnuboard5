@@ -187,6 +187,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_title` varchar(255) NOT NULL DEFAULT '',
   `cf_admin` varchar(255) NOT NULL DEFAULT '',
   `cf_admin_email` varchar(255) NOT NULL DEFAULT '',
+  `cf_admin_email_name` varchar(255) NOT NULL DEFAULT '',
   `cf_include_index` varchar(255) NOT NULL DEFAULT '',
   `cf_include_head` varchar(255) NOT NULL DEFAULT '',
   `cf_include_tail` varchar(255) NOT NULL DEFAULT '',

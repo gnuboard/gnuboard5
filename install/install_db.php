@@ -117,6 +117,7 @@ if($g5_install || !$result) {
                 set cf_title = '".G5_VERSION."',
                     cf_admin = '$admin_id',
                     cf_admin_email = '$admin_email',
+                    cf_admin_email_name = '".G5_VERSION."',
                     cf_use_point = '1',
                     cf_use_copy_log = '1',
                     cf_login_point = '100',

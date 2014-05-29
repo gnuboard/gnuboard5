@@ -90,6 +90,11 @@ if(!isset($config['cf_admin_email'])) {
                     ADD `cf_admin_email` VARCHAR(255) NOT NULL AFTER `cf_admin` ", true);
 }
 
+if(!isset($config['cf_admin_email_name'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_admin_email_name` VARCHAR(255) NOT NULL AFTER `cf_admin_email` ", true);
+}
+
 if(!isset($config['cf_cert_use'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_cert_use` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_editor`,
@@ -228,6 +233,13 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td colspan="3">
                 <?php echo help('관리자가 보내고 받는 용도로 사용하는 메일 주소를 입력합니다. (회원가입, 인증메일, 테스트, 회원메일발송 등에서 사용)') ?>
                 <input type="text" name="cf_admin_email" value="<?php echo $config['cf_admin_email'] ?>" id="cf_admin_email" required class="required email frm_input" size="40">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_admin_email_name">관리자 메일 발송이름<strong class="sound_only">필수</strong></label></th>
+            <td colspan="3">
+                <?php echo help('관리자가 보내고 받는 용도로 사용하는 메일의 발송이름을 입력합니다. (회원가입, 인증메일, 테스트, 회원메일발송 등에서 사용)') ?>
+                <input type="text" name="cf_admin_email_name" value="<?php echo $config['cf_admin_email_name'] ?>" id="cf_admin_email_name" required class="required frm_input" size="40">
             </td>
         </tr>
         <tr>
