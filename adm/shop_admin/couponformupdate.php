@@ -143,7 +143,6 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
     }
 
     $count = count($arr_send_list);
-    $admin = get_admin('super');
 
     for($i=0; $i<$count; $i++) {
         if(!$arr_send_list[$i]['mb_id'])
@@ -191,7 +190,7 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
             $content = ob_get_contents();
             ob_end_clean();
 
-            mailer($config['cf_title'], $admin['mb_email'], $email, $title, $content, 1);
+            mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $email, $title, $content, 1);
         }
     }
 

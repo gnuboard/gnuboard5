@@ -3,8 +3,6 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-$admin = get_admin('super');
-
 $subject = $config['cf_title'].' 주문 오류 알림 메일';
 
 if($error == 'order') {
@@ -14,15 +12,15 @@ if($error == 'order') {
 }
 
 if($tno) {
-    $content .= '<p>KCP의 '.$od_settle_case.'는 자동 취소되었습니다.</p>';
-    $content .= '<p>취소 내역은 KCP 상점관리자에서 확인할 수 있습니다.</p>';
+    $content .= '<p>PG사의 '.$od_settle_case.'는 자동 취소되었습니다.</p>';
+    $content .= '<p>취소 내역은 PG사 상점관리자에서 확인할 수 있습니다.</p>';
 }
 
 $content .= '<p>오류내용</p>';
 $content .= '<p>'.$sql.'</p><p>'.mysql_errno().' : '.mysql_error().'<p>error file : '.$_SERVER['PHP_SELF'].'</p>';
 
 // 메일발송
-mailer($od_name, $od_email, $admin['mb_email'], $subject, $content, 1);
+mailer($od_name, $od_email, $config['cf_admin_email'], $subject, $content, 1);
 
 unset($error);
 ?>

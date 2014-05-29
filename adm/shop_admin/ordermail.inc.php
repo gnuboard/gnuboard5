@@ -103,9 +103,7 @@ if ($od_send_mail)
 
         sql_query(" update {$g5['g5_shop_order_table']} set od_shop_memo = '$od_shop_memo' where od_id = '$od_id' ");
 
-        $admin = get_admin('super');
-
-        mailer($config['cf_title'], $admin['mb_email'], $email, $title, $content, 1);
+        mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $email, $title, $content, 1);
     }
 }
 ?>
