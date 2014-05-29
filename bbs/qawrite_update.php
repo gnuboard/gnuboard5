@@ -325,7 +325,7 @@ if($w == 'a' && $write['qa_email_recv'] && trim($write['qa_email'])) {
     $subject = $config['cf_title'].' '.$qaconfig['qa_title'].' 답변 알림 메일';
     $content = nl2br(conv_unescape_nl($qa_content));
 
-    mailer($config['cf_title'], $admin['mb_email'], $write['qa_email'], $subject, $content, 1);
+    mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $write['qa_email'], $subject, $content, 1);
 }
 
 // 문의글등록 이메일전송
@@ -335,7 +335,7 @@ if(($w == '' || $w == 'r') && trim($qaconfig['qa_admin_email'])) {
     $subject = $config['cf_title'].' '.$qaconfig['qa_title'].' 질문 알림 메일';
     $content = nl2br(conv_unescape_nl($qa_content));
 
-    mailer($config['cf_title'], $qa_email, $qaconfig['qa_admin_email'], $subject, $content, 1);
+    mailer($config['cf_admin_email_name'], $qa_email, $qaconfig['qa_admin_email'], $subject, $content, 1);
 }
 
 if($w == 'a')
