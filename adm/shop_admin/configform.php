@@ -613,7 +613,7 @@ if(!isset($default['de_pg_service'])) {
         <tr class="pg_info_fld lg_info_fld">
             <th scope="row">
                 <label for="cf_lg_mid">LG유플러스 상점아이디</label><br>
-                <a href="http://sir.co.kr/bbs/board.php?bo_table=faq&wr_id=36" target="_blank" id="scf_kcpreg">LG유플러스 서비스신청하기</a>
+                <a href="http://sir.co.kr/bbs/board.php?bo_table=faq&amp;wr_id=36" target="_blank" id="scf_kcpreg">LG유플러스 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("LG유플러스 에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG유플러스에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 상점아이디와 동일합니다."); ?>
