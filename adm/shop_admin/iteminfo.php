@@ -18,9 +18,9 @@ if($it['it_id']) {
     <table>
     <caption>상품요약정보 입력</caption>
     <colgroup>
+        <col class="grid_4">
+        <col>
         <col class="grid_3">
-        <col>
-        <col>
     </colgroup>
     <tbody>
     <?php
