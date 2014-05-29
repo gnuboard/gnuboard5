@@ -155,7 +155,7 @@ if(!isset($config['cf_faq_skin'])) {
                     ADD `cf_mobile_faq_skin` varchar(255) NOT NULL DEFAULT '' AFTER `cf_mobile_connect_skin` ", true);
 }
 
-// LG U+ 본인확인 필드 추가
+// LG유플러스 본인확인 필드 추가
 if(!isset($config['cf_lg_mid'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_lg_mid` varchar(255) NOT NULL DEFAULT '' AFTER `cf_cert_kcp_cd`,
@@ -780,7 +780,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <?php echo option_selected("",    $config['cf_cert_hp'], "사용안함"); ?>
                     <?php echo option_selected("kcb", $config['cf_cert_hp'], "코리아크레딧뷰로(KCB) 휴대폰 본인확인"); ?>
                     <?php echo option_selected("kcp", $config['cf_cert_hp'], "한국사이버결제(KCP) 휴대폰 본인확인"); ?>
-                    <?php echo option_selected("lg",  $config['cf_cert_hp'], "LG U+ 휴대폰 본인확인"); ?>
+                    <?php echo option_selected("lg",  $config['cf_cert_hp'], "LG유플러스 휴대폰 본인확인"); ?>
                 </select>
             </td>
         </tr>
@@ -801,17 +801,17 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_lg_mid">LG U+ 상점아이디</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_lg_mid">LG유플러스 상점아이디</label></th>
             <td class="cf_cert_service">
-                <?php echo help('LG U+ 상점아이디 중 si_를 제외한 나머지 아이디만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 상점아이디를 발급 받으실 수 있습니다.<br><strong>LG U+ 휴대폰본인확인은 ActiveX 설치가 필요하므로 Internet Explorer 에서만 사용할 수 있습니다.</strong>') ?>
+                <?php echo help('LG유플러스 상점아이디 중 si_를 제외한 나머지 아이디만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 상점아이디를 발급 받으실 수 있습니다.<br><strong>LG유플러스 휴대폰본인확인은 ActiveX 설치가 필요하므로 Internet Explorer 에서만 사용할 수 있습니다.</strong>') ?>
                 <span class="sitecode">si_</span>
-                <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid'] ?>" id="cf_lg_mid" class="frm_input" size="20"> <a href="http://pgweb.dacom.net/pg/wmp/Home/application/apply_testid.jsp?cooperativecode=youngcart" target="_blank" class="btn_frmline">LG U+ 본인확인 서비스 신청페이지</a>
+                <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid'] ?>" id="cf_lg_mid" class="frm_input" size="20"> <a href="http://pgweb.dacom.net/pg/wmp/Home/application/apply_testid.jsp?cooperativecode=youngcart" target="_blank" class="btn_frmline">LG유플러스 본인확인 서비스 신청페이지</a>
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_lg_mert_key">LG U+ MERT KEY</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_lg_mert_key">LG유플러스 MERT KEY</label></th>
             <td class="cf_cert_service">
-                <?php echo help('LG U+ 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.') ?>
+                <?php echo help('LG유플러스 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.') ?>
                 <input type="text" name="cf_lg_mert_key" value="<?php echo $config['cf_lg_mert_key'] ?>" id="cf_lg_mert_key" class="frm_input" size="40">
             </td>
         </tr>
