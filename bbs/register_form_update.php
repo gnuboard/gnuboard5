@@ -265,7 +265,7 @@ if ($w == '') {
         $content = ob_get_contents();
         ob_end_clean();
 
-        mailer($config['cf_title'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+        mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
 
         // 메일인증을 사용하는 경우 가입메일에 인증 url이 있으므로 인증메일을 다시 발송되지 않도록 함
         if($config['cf_use_email_certify'])

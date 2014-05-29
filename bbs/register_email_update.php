@@ -35,7 +35,7 @@ include_once ('./register_form_update_mail3.php');
 $content = ob_get_contents();
 ob_end_clean();
 
-mailer($config['cf_title'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
 
 $sql = " update {$g5['member_table']} set mb_email = '$mb_email' where mb_id = '$mb_id' ";
 sql_query($sql);

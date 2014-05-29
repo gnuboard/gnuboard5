@@ -66,8 +66,7 @@ $content .= '<a href="'.$href.'" target="_blank" style="display:block;padding:30
 $content .= '</div>';
 $content .= '</div>';
 
-$admin = get_admin('super');
-mailer($admin['mb_nick'], $admin['mb_email'], $mb['mb_email'], $subject, $content, 1);
+mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb['mb_email'], $subject, $content, 1);
 
 alert_close($email.' 메일로 회원아이디와 비밀번호를 인증할 수 있는 메일이 발송 되었습니다.\\n\\n메일을 확인하여 주십시오.');
 ?>
