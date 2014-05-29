@@ -2684,7 +2684,7 @@ function get_search_string($stx)
     $stx_pattern[] = '#\.*/+#';
     $stx_pattern[] = '#\\\*#';
     $stx_pattern[] = '#\.{2,}#';
-    $stx_pattern[] = '#[/\'\"%=*\#\(\)\|\+\-\&\!\$@~\{\}\[\]`;:\?]+#';
+    $stx_pattern[] = '#[/\'\"%=*\#\(\)\|\+\-\&\!\$@~\{\}\[\]`;:\?\^\,]+#';
 
     $stx_replace = array();
     $stx_replace[] = '';
