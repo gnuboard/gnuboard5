@@ -77,17 +77,12 @@ if($od['od_tno']) {
             $_POST['site_cd'] = $default['de_kcp_mid'];
 
             // 취소내역 한글깨짐방지
-            $def_locale = setlocale(LC_CTYPE, 0);
-            $locale_change = false;
-            if(preg_match("/utf[\-]?8/i", $def_locale)) {
-                setlocale(LC_CTYPE, 'ko_KR.euc-kr');
-                $locale_change = true;
-            }
+            setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
 
-            if($locale_change)
-                setlocale(LC_CTYPE, $def_locale);
+            // locale 설정 초기화
+            setlocale(LC_CTYPE, '');
     }
 }
 
