@@ -17,7 +17,6 @@ if (in_array($_POST['ct_status'], $status_normal) || in_array($_POST['ct_status'
     alert('변경할 상태가 올바르지 않습니다.');
 }
 
-$cart_count = 0;
 $mod_history = '';
 $cnt = count($_POST['ct_id']);
 for ($i=0; $i<$cnt; $i++)
@@ -139,18 +138,23 @@ for ($i=0; $i<$cnt; $i++)
                 where od_id = '$od_id'
                 and ct_id  = '$ct_id' ";
     sql_query($sql);
-
-    $cart_count++;
 }
 
 // 장바구니 상품 모두 취소일 경우 주문상태 변경
 $cancel_change = false;
 if (in_array($_POST['ct_status'], $status_cancel)) {
-    $sql = " select count(*) as cnt from {$g5['g5_shop_cart_table']} where od_id = '$od_id' ";
+    $sql = " select count(*) as od_count1,
+                    SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '환불', 1, 0)) as od_count2
+                from {$g5['g5_shop_cart_table']}
+                where od_id = '$od_id' ";
     $row = sql_fetch($sql);
 
-    if($cart_count == $row['cnt'])
+    if($row['od_count1'] == $row['od_count2']) {
         $cancel_change = true;
+
+        // 관리자 주문취소 로그
+        $mod_history .= G5_TIME_YMDHIS.' '.$member['mb_id'].' 주문'.$_POST['ct_status'].' 처리'."\n";
+    }
 }
 
 // 미수금 등의 정보
@@ -170,7 +174,7 @@ $sql = " update {$g5['g5_shop_order_table']}
                 od_tax_mny      = '{$info['od_tax_mny']}',
                 od_vat_mny      = '{$info['od_vat_mny']}',
                 od_free_mny     = '{$info['od_free_mny']}' ";
-if ($mod_history) { // 수량변경 히스토리 기록
+if ($mod_history) { // 주문변경 히스토리 기록
     $sql .= " , od_mod_history = CONCAT(od_mod_history,'$mod_history') ";
 }
 

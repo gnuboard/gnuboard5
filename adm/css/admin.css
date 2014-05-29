@@ -569,6 +569,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #anc_sodr_taker #od_b_addr1, #anc_sodr_taker #od_b_addr2, #anc_sodr_taker #od_b_addr3 {margin:5px 0 0}
 #anc_sodr_orderer #od_addr_jibeon, #anc_sodr_taker #od_b_addr_jibeon {display:block;margin:5px 0 0}
 
+#sodr_qty_log {padding:0 20px}
 #sodr_qty_log h3 {margin:20px 0 10px}
 #sodr_qty_log div {padding:10px;height:auto !important;height:200px;max-height:200px;border:1px solid #e9e9e9;background:#f5f6fa;line-height:1.8em;overflow-y:scroll}
 
