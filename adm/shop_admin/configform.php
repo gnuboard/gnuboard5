@@ -1358,7 +1358,7 @@ $(function() {
 // 결제모듈 실행권한 체크
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
     // kcp의 경우 pp_cli 체크
-    if($default['de_pg_service'] == 'lg') {
+    if($default['de_pg_service'] == 'kcp') {
         $is_linux = true;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
             $is_linux = false;
