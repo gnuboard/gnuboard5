@@ -120,7 +120,7 @@ if ($stx) {
 
         $sql = " select wr_id from {$tmp_write_table} where {$sql_search} ";
         $result = sql_query($sql, false);
-        $row[cnt] = @mysql_num_rows($result);
+        $row['cnt'] = @mysql_num_rows($result);
 
         $total_count += $row['cnt'];
         if ($row['cnt']) {
@@ -168,7 +168,7 @@ if ($stx) {
         for ($i=0; $row=sql_fetch_array($result); $i++) {
             // 검색어까지 링크되면 게시판 부하가 일어남
             $list[$idx][$i] = $row;
-            $list[$idx][$i][href] = './board.php?bo_table='.$search_table[$idx].'&amp;wr_id='.$row['wr_parent'];
+            $list[$idx][$i]['href'] = './board.php?bo_table='.$search_table[$idx].'&amp;wr_id='.$row['wr_parent'];
 
             if ($row['wr_is_comment'])
             {
@@ -189,7 +189,13 @@ if ($stx) {
 
             if ($read_level[$idx] <= $member['mb_level'])
             {
-                $content = cut_str(get_text(strip_tags($row['wr_content'])),300,"…");
+                //$content = cut_str(get_text(strip_tags($row['wr_content'])), 300, "…");
+                $content = strip_tags($row['wr_content']);
+                $content = get_text($content, 1);
+                $content = strip_tags($content);
+                $content = str_replace('&nbsp;', '', $content);
+                $content = cut_str($content, 300, "…");
+
                 if (strstr($sfl, 'wr_content'))
                     $content = search_font($stx, $content);
             }
