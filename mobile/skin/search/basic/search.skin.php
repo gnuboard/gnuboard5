@@ -113,18 +113,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
         <ul>
         <?php
         for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
-            if ($list[$idx][$i][wr_is_comment])
+            if ($list[$idx][$i]['wr_is_comment'])
             {
                 $comment_def = "<span class=\"cmt_def\">댓글</span>";
-                $comment_href = "#c_".$list[$idx][$i][wr_id];
+                $comment_href = "#c_".$list[$idx][$i]['wr_id'];
             }
          ?>
             <li>
-                <a href="<?php echo $list[$idx][$i][href] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i][subject] ?></a>
-                <a href="<?php echo $list[$idx][$i][href] ?><?php echo $comment_href ?>" target="_blank">새창</a>
-                <p><?php echo $list[$idx][$i][content] ?></p>
-                <?php echo $list[$idx][$i][name] ?>
-                <span class="sch_datetime"><?php echo $list[$idx][$i][wr_datetime] ?></span>
+                <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
+                <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank">새창</a>
+                <p><?php echo $list[$idx][$i]['content'] ?></p>
+                <?php echo $list[$idx][$i]['name'] ?>
+                <span class="sch_datetime"><?php echo $list[$idx][$i]['wr_datetime'] ?></span>
             </li>
         <?php }  ?>
         </ul>
