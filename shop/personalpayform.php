@@ -42,7 +42,7 @@ $od_id = $pp_id;
 $tot_price = $pp['pp_price'];
 $goods = $pp['pp_name'].'님 개인결제';
 
-require_once('./settle_'.$default['de_pg_service'].'.inc.php')
+require_once('./settle_'.$default['de_pg_service'].'.inc.php');
 
 // 결제대행사별 코드 include (스크립트 등)
 require_once('./'.$default['de_pg_service'].'/orderform.1.php');
