@@ -278,6 +278,7 @@
 <input type="hidden" name="param_opt_1"	 value="<?php echo $param_opt_1; ?>"/>
 <input type="hidden" name="param_opt_2"	 value="<?php echo $param_opt_2; ?>"/>
 <input type="hidden" name="param_opt_3"	 value="<?php echo $param_opt_3; ?>"/>
+<input type="hidden" name="disp_tax_yn"  value="N">
 <!-- 기타 파라메터 추가 부분 - End - -->
 <!-- 화면 크기조정 부분 - Start - -->
 <input type="hidden" name="tablet_size"	 value="<?php echo $tablet_size; ?>"/>

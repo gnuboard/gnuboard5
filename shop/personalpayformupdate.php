@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 if($default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
     alert('결제등록 요청 후 주문해 주십시오.');

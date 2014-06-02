@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 // 결제등록 완료 체크
 if($default['de_pg_service'] == 'kcp' && ($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == ''))
@@ -48,7 +49,7 @@ else if ($pp_settle_case == "가상계좌")
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
         default:
-            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             $bankname   = iconv("cp949", "utf-8", $bankname);
             $depositor  = iconv("cp949", "utf-8", $depositor);
             break;
@@ -67,7 +68,7 @@ else if ($pp_settle_case == "휴대폰")
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
         default:
-            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             break;
     }
 
@@ -84,7 +85,7 @@ else if ($pp_settle_case == "신용카드")
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
         default:
-            include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
+            include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             $card_name  = iconv("cp949", "utf-8", $card_name);
             break;
     }

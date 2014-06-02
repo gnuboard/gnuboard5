@@ -207,7 +207,7 @@ if($od['od_pg'] == 'lg') {
         </ul>
     </section>
 
-    <?php if ($pp['pp_settle_case'] == '가상계좌' && $default['de_card_test'] && $is_admin && $pp['pp_pg'] == 'kcp') {
+    <?php if ($pp['pp_settle_case'] == '가상계좌'  && $pp['pp_receipt_price'] == 0 && $default['de_card_test'] && $is_admin && $pp['pp_pg'] == 'kcp') {
     preg_match("/\s{1}([^\s]+)\s?/", $pp['pp_bank_account'], $matchs);
     $deposit_no = trim($matchs[1]);
     ?>
