@@ -114,7 +114,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
 
         <div id="write_reply">
             <label for="wr_reply">회신<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input" size="17" maxlength="20">
+            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20">
         </div>
 
         <div id="write_recv" class="write_inner">
@@ -271,12 +271,17 @@ function sms5_chk_send(f)
 
 function hp_add()
 {
-    var hp_number = document.getElementById('hp_number');
-    var hp_name = document.getElementById('hp_name');
-    var hp_list = document.getElementById('hp_list');
+    var hp_number = document.getElementById('hp_number'),
+        hp_name = document.getElementById('hp_name'),
+        hp_list = document.getElementById('hp_list'),
+        pattern = /^01[016789][0-9]{3,4}[0-9]{4}$/,
+        pattern2 = /^01[016789]-[0-9]{3,4}-[0-9]{4}$/;
 
-    var pattern = /^01[016789][0-9]{3,4}[0-9]{4}$/;
-    var pattern2 = /^01[016789]-[0-9]{3,4}-[0-9]{4}$/;
+    if( !hp_number.value ){
+        alert("휴대폰번호를 입력해 주세요.");
+        hp_number.select();
+        return;
+    }
 
     if(!pattern.test(hp_number.value) && !pattern2.test(hp_number.value)) {
         alert("휴대폰번호 형식이 올바르지 않습니다.");
