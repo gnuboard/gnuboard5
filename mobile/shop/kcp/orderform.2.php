@@ -25,6 +25,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="param_opt_1"    value="">
 <input type="hidden" name="param_opt_2"    value="">
 <input type="hidden" name="param_opt_3"    value="">
+<input type="hidden" name="disp_tax_yn"    value="N">
 <?php if($default['de_tax_flag_use']) { ?>
 <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
 <input type="hidden" name="comm_tax_mny"      value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
