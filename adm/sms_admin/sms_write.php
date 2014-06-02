@@ -655,7 +655,7 @@ var sms_obj={
     }
 };
 (function($){
-    $("#form_sms input[type=text], #form_sms select, #form_sms textare").keypress(function(e){
+    $("#form_sms input[type=text], #form_sms select").keypress(function(e){
         return e.keyCode != 13;
     });
     sms_obj.fn_paging = function( hash_val,total_page,$el,$search_form ){
