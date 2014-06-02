@@ -200,7 +200,7 @@ echo '<link rel="stylesheet" href="'.G5_CSS_URL.'/'.(G5_IS_MOBILE?'mobile':'defa
             <td><?php echo $res_cd; ?></td>
         </tr>
         <tr>
-            <td scope="row">취소 결과 메세지</th>
+            <th scope="row">취소 결과 메세지</th>
             <td><?php echo $res_msg; ?></td>
         </tr>
         <tr>
