@@ -24,7 +24,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
     </div>
 
     <div id="send_write">
-        <form name="form_sms" id="form_sms" method="post" action="sms_write_send.php" onsubmit="return send(this);" >
+        <form name="form_sms" id="form_sms" method="post" action="sms_write_send.php" onsubmit="return sms5_chk_send(this);"  >
         <input type="hidden" name="send_list" value="">
 
         <h2>보낼내용</h2>
@@ -114,7 +114,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
 
         <div id="write_reply">
             <label for="wr_reply">회신<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input" size="17" maxlength="20">
+            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20">
         </div>
 
         <div id="write_recv" class="write_inner">
@@ -230,48 +230,58 @@ function overlap_check()
     })(jQuery);
 }
 
-function send(f)
+var is_sms5_submitted = false;  //중복 submit방지
+function sms5_chk_send(f)
 {
-    var hp_list = document.getElementById('hp_list');
-    var wr_message = document.getElementById('wr_message');
-    var hp_number = document.getElementById('hp_number');
-    var list = '';
+    if( is_sms5_submitted == false ){
+        is_sms5_submitted = true;
+        var hp_list = document.getElementById('hp_list');
+        var wr_message = document.getElementById('wr_message');
+        var hp_number = document.getElementById('hp_number');
+        var list = '';
 
-    if (!wr_message.value) {
-        alert('메세지를 입력해주세요.');
-        wr_message.focus();
-        return false;
+        if (!wr_message.value) {
+            alert('메세지를 입력해주세요.');
+            wr_message.focus();
+            is_sms5_submitted = false;
+            return false;
+        }
+
+        if (hp_list.length < 1) {
+            alert('받는 사람을 입력해주세요.');
+            hp_number.focus();
+            is_sms5_submitted = false;
+            return false;
+        }
+
+        for (i=0; i<hp_list.length; i++)
+            list += hp_list.options[i].value + '/';
+
+        w = document.body.clientWidth/2 - 200;
+        h = document.body.clientHeight/2 - 100;
+        act = window.open('sms_ing.php', 'act', 'width=300, height=200, left=' + w + ', top=' + h);
+        act.focus();
+
+        f.send_list.value = list;
+        return true;
+    } else {
+        alert("데이터 전송중입니다.");
     }
-
-    if (hp_list.length < 1) {
-        alert('받는 사람을 입력해주세요.');
-        hp_number.focus();
-        return false;
-    }
-
-    for (i=0; i<hp_list.length; i++)
-        list += hp_list.options[i].value + '/';
-
-    w = document.body.clientWidth/2 - 200;
-    h = document.body.clientHeight/2 - 100;
-    act = window.open('sms_ing.php', 'act', 'width=300, height=200, left=' + w + ', top=' + h);
-    act.focus();
-
-    f.target = '';
-    f.action = 'sms_write_send.php';
-    f.send_list.value = list;
-    f.submit();
-    return true;
 }
 
 function hp_add()
 {
-    var hp_number = document.getElementById('hp_number');
-    var hp_name = document.getElementById('hp_name');
-    var hp_list = document.getElementById('hp_list');
+    var hp_number = document.getElementById('hp_number'),
+        hp_name = document.getElementById('hp_name'),
+        hp_list = document.getElementById('hp_list'),
+        pattern = /^01[016789][0-9]{3,4}[0-9]{4}$/,
+        pattern2 = /^01[016789]-[0-9]{3,4}-[0-9]{4}$/;
 
-    var pattern = /^01[016789][0-9]{3,4}[0-9]{4}$/;
-    var pattern2 = /^01[016789]-[0-9]{3,4}-[0-9]{4}$/;
+    if( !hp_number.value ){
+        alert("휴대폰번호를 입력해 주세요.");
+        hp_number.select();
+        return;
+    }
 
     if(!pattern.test(hp_number.value) && !pattern2.test(hp_number.value)) {
         alert("휴대폰번호 형식이 올바르지 않습니다.");
@@ -645,6 +655,9 @@ var sms_obj={
     }
 };
 (function($){
+    $("#form_sms input[type=text], #form_sms select").keypress(function(e){
+        return e.keyCode != 13;
+    });
     sms_obj.fn_paging = function( hash_val,total_page,$el,$search_form ){
         $el.paging({
             current:hash_val ? hash_val : 1,
