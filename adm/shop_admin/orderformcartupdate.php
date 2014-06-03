@@ -127,9 +127,9 @@ for ($i=0; $i<$cnt; $i++)
     }
 
     // 히스토리에 남김
-    // 히스토리에 남길때는 작업|시간|IP|그리고 나머지 자료
+    // 히스토리에 남길때는 작업|아이디|시간|IP|그리고 나머지 자료
     $now = G5_TIME_YMDHIS;
-    $ct_history="\n$ct_status|$now|$REMOTE_ADDR";
+    $ct_history="\n$ct_status|{$member['mb_id']}|$now|$REMOTE_ADDR";
 
     $sql = " update {$g5['g5_shop_cart_table']}
                 set ct_point_use  = '$point_use',
