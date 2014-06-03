@@ -27,14 +27,14 @@ if($_GET['sch_target'] == 1) {
     if($_GET['sch_word'])
         $sql_where .= " and ca_name like '%$sch_word%' ";
     $sql_select = " select ca_id as t_id, ca_name as t_name ";
-    $sql_order = " order by ca_name ";
+    $sql_order = " order by ca_order, ca_name ";
 } else {
     $sql_common = " from {$g5['g5_shop_item_table']} ";
     $sql_where = " where it_use = '1' and it_nocoupon = '0' ";
     if($_GET['sch_word'])
         $sql_where .= " and it_name like '%$sch_word%' ";
     $sql_select = " select it_id as t_id, it_name as t_name ";
-    $sql_order = " order by it_name ";
+    $sql_order = " order by it_order, it_name ";
 }
 
 // 테이블의 전체 레코드수만 얻음

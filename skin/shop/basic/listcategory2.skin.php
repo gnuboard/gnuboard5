@@ -22,7 +22,7 @@ if (!$exists) {
     $row = sql_fetch($sql);
     $cnt = $row['cnt'];
 
-    $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '$tmp_ca_id%' and ca_use = '1' and length(ca_id) = $len2 order by ca_id ";
+    $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '$tmp_ca_id%' and ca_use = '1' and length(ca_id) = $len2 order by ca_order, ca_id ";
     $result = sql_query($sql);
     while ($row=sql_fetch_array($result)) {
         $sct_ct_here = '';
@@ -32,7 +32,7 @@ if (!$exists) {
         $str .= '<li>';
         if ($cnt) {
             $str .= '<a href="./list.php?ca_id='.$row['ca_id'].'" class="sct_ct_parent '.$sct_ct_here.'">'.$row['ca_name'].'</a>';
-            $sql2 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '{$row['ca_id']}%' and ca_use = '1' and length(ca_id) = $len4 order by ca_id ";
+            $sql2 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '{$row['ca_id']}%' and ca_use = '1' and length(ca_id) = $len4 order by ca_order, ca_id ";
             $result2 = sql_query($sql2);
             $k=0;
             while ($row2=sql_fetch_array($result2)) {

@@ -40,7 +40,8 @@ $g5['category_path'] = G5_DATA_PATH."/category";
 if ($ca_image1_del) @unlink("{$g5['category_path']}/{$ca_id}_1");
 if ($ca_image0_del) @unlink("{$g5['category_path']}/{$ca_id}_0");
 
-$sql_common = " ca_skin_dir             = '$ca_skin_dir',
+$sql_common = " ca_order                = '$ca_order',
+                ca_skin_dir             = '$ca_skin_dir',
                 ca_mobile_skin_dir      = '$ca_mobile_skin_dir',
                 ca_skin                 = '$ca_skin',
                 ca_mobile_skin          = '$ca_mobile_skin',

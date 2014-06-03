@@ -49,7 +49,7 @@ $category_select = '';
 $sql = " select * from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
     $sql .= " where ca_mb_id = '{$member['mb_id']}' ";
-$sql .= " order by ca_id ";
+$sql .= " order by ca_order, ca_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {

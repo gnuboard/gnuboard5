@@ -96,7 +96,7 @@ if($ev_id) {
 <select name="sel_ca_id" id="sel_ca_id">
     <option value=''>전체분류</option>
     <?php
-    $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_id ";
+    $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_order, ca_id ";
     $result1 = sql_query($sql1);
     for ($i=0; $row1=mysql_fetch_array($result1); $i++)
     {

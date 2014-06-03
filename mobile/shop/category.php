@@ -16,7 +16,7 @@ if($ca) {
 $sql = " select ca_id, ca_name from {$g5['g5_shop_category_table']}
           $sql_where
             and ca_use = '1'
-          order by ca_id ";
+          order by ca_order, ca_id ";
 $result = sql_query($sql);
 ?>
 

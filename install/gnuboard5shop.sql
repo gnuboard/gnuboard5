@@ -115,7 +115,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_category` (
   `ca_8` varchar(255) NOT NULL DEFAULT '',
   `ca_9` varchar(255) NOT NULL DEFAULT '',
   `ca_10` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`ca_id`)
+  PRIMARY KEY (`ca_id`),
+  KEY `ca_order` (`ca_order`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

@@ -104,6 +104,13 @@ if(!sql_query(" select ca_skin_dir from {$g5['g5_shop_category_table']} limit 1 
                     ADD `ca_skin_dir` varchar(255) NOT NULL DEFAULT '' AFTER `ca_name`,
                     ADD `ca_mobile_skin_dir` varchar(255) NOT NULL DEFAULT '' AFTER `ca_skin_dir` ", true);
 }
+
+// 분류 출력순서 필드 추가
+if(!sql_query(" select ca_order from {$g5['g5_shop_category_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
+                    ADD `ca_order` int(11) NOT NULL DEFAULT '0' AFTER `ca_name` ", true);
+    sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}` ADD INDEX(`ca_order`) ", true);
+}
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -146,6 +153,13 @@ if(!sql_query(" select ca_skin_dir from {$g5['g5_shop_category_table']} limit 1 
         <tr>
             <th scope="row"><label for="ca_name">분류명</label></th>
             <td><input type="text" name="ca_name" value="<?php echo $ca['ca_name']; ?>" id="ca_name" size="38" required class="required frm_input"></td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="ca_order">출력순서</label></th>
+            <td>
+                <?php echo help("숫자가 작을 수록 상위에 출력됩니다. 음수 입력도 가능하며 입력 가능 범위는 -2147483648 부터 2147483647 까지입니다.\n<b>입력하지 않으면 자동으로 출력됩니다.</b>"); ?>
+                <input type="text" name="ca_order" value="<?php echo $ca['ca_order']; ?>" id="ca_order" class="frm_input" size="12">
+            </td>
         </tr>
         <tr>
             <th scope="row"><?php if ($is_admin == 'super') { ?><label for="ca_mb_id"><?php } ?>관리 회원아이디<?php if ($is_admin == 'super') { ?></label><?php } ?></th>
