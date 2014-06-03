@@ -251,6 +251,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_memo_del` int(11) NOT NULL DEFAULT '0',
   `cf_visit_del` int(11) NOT NULL DEFAULT '0',
   `cf_popular_del` int(11) NOT NULL DEFAULT '0',
+  `cf_optimize_date` date NOT NULL default '0000-00-00',
   `cf_use_member_icon` tinyint(4) NOT NULL DEFAULT '0',
   `cf_member_icon_size` int(11) NOT NULL DEFAULT '0',
   `cf_member_icon_width` int(11) NOT NULL DEFAULT '0',
