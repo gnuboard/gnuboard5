@@ -161,6 +161,9 @@ function get_view_thumbnail($contents, $thumb_width=0)
             else
                 $thumb_file = $filename;
 
+            if(!$thumb_file)
+                continue;
+
             if ($width) {
                 $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'" width="'.$width.'" height="'.$height.'"/>';
             } else {
@@ -169,7 +172,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
 
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
             $img_tag = $matches[0][$i];
-            if(strpos($img_tag, 'data/editor') && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
+            if(strpos($img_tag, G5_DATA_DIR.'/'.G5_EDITOR_DIR) && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
                 $imgurl = str_replace(G5_URL, "", $src);
                 $thumb_tag = '<a href="'.G5_BBS_URL.'/view_image.php?fn='.urlencode($imgurl).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
             }
@@ -203,6 +206,10 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         @mkdir($target_path, G5_DIR_PERMISSION);
         @chmod($target_path, G5_DIR_PERMISSION);
     }
+
+    // 디렉토리가 존재하지 않거나 쓰기 권한이 없으면 썸네일 생성하지 않음
+    if(!(is_dir($target_path) && is_writable($target_path)))
+        return '';
 
     // Animated GIF는 썸네일 생성하지 않음
     if($size[2] == 1) {
