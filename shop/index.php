@@ -52,7 +52,7 @@ include_once(G5_SHOP_PATH.'/shop.head.php');
     $list->set_view('it_id', false);
     $list->set_view('it_name', true);
     $list->set_view('it_basic', true);
-    $list->set_view('it_cust_price', false);
+    $list->set_view('it_cust_price', true);
     $list->set_view('it_price', true);
     $list->set_view('it_icon', true);
     $list->set_view('sns', true);
