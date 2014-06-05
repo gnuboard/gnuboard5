@@ -254,7 +254,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_login_point">로그인시 포인트<strong class="sound_only">필수</strong></label></th>
             <td>
-                <?php echo help('회원에게 하루에 한번만 부여') ?>
+                <?php echo help('회원이 로그인시 하루에 한번만 적립') ?>
                 <input type="text" name="cf_login_point" value="<?php echo $config['cf_login_point'] ?>" id="cf_login_point" required class="required frm_input" size="2"> 점
             </td>
             <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트<strong class="sound_only">필수</strong></label></th>
@@ -266,7 +266,6 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_cut_name">이름(닉네임) 표시</label></th>
             <td colspan="3">
-                <?php echo help('영숫자 2글자 = 한글 1글자') ?>
                 <input type="text" name="cf_cut_name" value="<?php echo $config['cf_cut_name'] ?>" id="cf_cut_name" class="frm_input" size="2"> 자리만 표시
             </td>
         </tr>
