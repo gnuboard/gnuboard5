@@ -364,7 +364,8 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     $list = $write_row;
     unset($write_row);
 
-    $list['is_notice'] = preg_match("/[^0-9]{0,1}{$list['wr_id']}[\r]{0,1}/",$board['bo_notice']);
+    $board_notice = array_map('trim', explode(',', $board['bo_notice']));
+    $list['is_notice'] = in_array($list['wr_id'], $board_notice);
 
     if ($subject_len)
         $list['subject'] = conv_subject($list['wr_subject'], $subject_len, '…');
