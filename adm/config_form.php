@@ -162,6 +162,11 @@ if(!isset($config['cf_lg_mid'])) {
                     ADD `cf_lg_mert_key` varchar(255) NOT NULL DEFAULT '' AFTER `cf_lg_mid` ", true);
 }
 
+if(!isset($config['cf_optimize_date'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_optimize_date` date NOT NULL default '0000-00-00' AFTER `cf_popular_del` ", true);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
