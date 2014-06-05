@@ -495,6 +495,12 @@ if(!isset($default['de_pg_service'])) {
             </td>
         </tr>
         <tr>
+            <th scope="row">KCP 가상계좌 입금통보 URL</th>
+            <td>
+                <?php echo help("KCP 가상계좌 사용시 다음 주소를 <strong><a href=\"http://admin.kcp.co.kr\" target=\"_blank\">KCP 관리자</a> &gt; 상점정보관리 &gt; 정보변경 &gt; 공통URL 정보 &gt; 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
+                <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php</td>
+        </tr>
+        <tr>
             <th scope="row"><label for="de_hp_use">휴대폰결제사용</label></th>
             <td>
                 <?php echo help("주문시 휴대폰 결제를 가능하게 할것인지를 설정합니다.", 50); ?>
@@ -646,8 +652,8 @@ if(!isset($default['de_pg_service'])) {
                 <input type="radio" name="de_card_test" value="1" <?php echo $default['de_card_test']==1?"checked":""; ?> id="de_card_test2">
                 <label for="de_card_test2">테스트결제</label>
                 <div class="scf_cardtest kcp_cardtest">
-                    <a href="https://admin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">실결제 관리자</a>
-                    <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank" class="btn_frmline">테스트 관리자</a>
+                    <a href="http://admin.kcp.co.kr/" target="_blank" class="btn_frmline">실결제 관리자</a>
+                    <a href="http://testadmin8.kcp.co.kr/" target="_blank" class="btn_frmline">테스트 관리자</a>
                 </div>
                 <div class="scf_cardtest lg_cardtest">
                     <a href="https://pgweb.uplus.co.kr/" target="_blank" class="btn_frmline">실결제 관리자</a>
@@ -685,12 +691,6 @@ if(!isset($default['de_pg_service'])) {
                 <input type="checkbox" name="de_tax_flag_use" value="1" id="de_tax_flag_use"<?php echo $default['de_tax_flag_use']?' checked':''; ?>> 사용
             </td>
         </tr>
-        <tr id="kcp_common_url">
-            <th scope="row">공통 URL</th>
-            <td>
-                <?php echo help("가상계좌 사용시 다음 주소를 <strong>KCP 관리자 > 상점정보관리 > 정보변경 > 공통URL 정보 > 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
-                <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php</td>
-        </tr>
         </tbody>
         </table>
         <script>
@@ -700,9 +700,6 @@ if(!isset($default['de_pg_service'])) {
         $(".scf_cardtest").addClass("scf_cardtest_hide");
         $(".<?php echo $default['de_pg_service']; ?>_cardtest").removeClass("scf_cardtest_hide");
         $("#<?php echo $default['de_pg_service']; ?>_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
-        <?php if($default['de_pg_service'] != 'kcp') { ?>
-        $("#kcp_common_url").hide();
-        <?php } ?>
         </script>
     </div>
 </section>
@@ -1332,11 +1329,6 @@ $(function() {
         $("."+pg+"_cardtest").removeClass("scf_cardtest_hide");
         $(".scf_cardtest_tip_adm").addClass("scf_cardtest_tip_adm_hide");
         $("#"+pg+"_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
-
-        if(pg == 'kcp')
-            $("#kcp_common_url").show();
-        else
-            $("#kcp_common_url").hide();
     });
 
     $(".scf_cardtest_btn").bind("click", function() {
