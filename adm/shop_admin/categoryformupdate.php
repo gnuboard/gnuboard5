@@ -33,13 +33,6 @@ if ($w == "" || $w == "u")
     }
 }
 
-$g5['category_path'] = G5_DATA_PATH."/category";
-@mkdir($g5['category_path'], G5_DIR_PERMISSION);
-@chmod($g5['category_path'], G5_DIR_PERMISSION);
-
-if ($ca_image1_del) @unlink("{$g5['category_path']}/{$ca_id}_1");
-if ($ca_image0_del) @unlink("{$g5['category_path']}/{$ca_id}_0");
-
 $sql_common = " ca_order                = '$ca_order',
                 ca_skin_dir             = '$ca_skin_dir',
                 ca_mobile_skin_dir      = '$ca_mobile_skin_dir',
@@ -147,10 +140,6 @@ else if ($w == "d")
 
     if ($str)
         alert("이 분류와 관련된 상품이 총 {$i} 건 존재하므로 상품을 삭제한 후 분류를 삭제하여 주십시오.\\n\\n$str");
-
-    // 상, 하단 이미지 삭제
-    @unlink("{$g5['category_path']}/$ca_id"."_h");
-    @unlink("{$g5['category_path']}/$ca_id"."_t");
 
     // 분류 삭제
     $sql = " delete from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";

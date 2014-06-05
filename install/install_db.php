@@ -453,7 +453,6 @@ for ($i=0; $i<count($dir_arr); $i++) {
 if($g5_shop_install) {
     $dir_arr = array (
         $data_path.'/banner',
-        $data_path.'/category',
         $data_path.'/common',
         $data_path.'/event',
         $data_path.'/item'

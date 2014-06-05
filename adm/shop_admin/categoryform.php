@@ -5,8 +5,6 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
-$category_path = G5_DATA_PATH."/category";
-
 $sql_common = " from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
     $sql_common .= " where ca_mb_id = '{$member['mb_id']}' ";
