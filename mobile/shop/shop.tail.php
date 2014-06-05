@@ -29,6 +29,10 @@ $admin = get_admin("super");
 <?php
 $sec = get_microtime() - $begin_time;
 $file = $_SERVER['PHP_SELF'];
+
+if ($config['cf_analytics']) {
+    echo $config['cf_analytics'];
+}
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/sns.js"></script>
