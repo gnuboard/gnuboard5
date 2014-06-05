@@ -1,17 +1,11 @@
 <?php
 include_once('./_common.php');
-    
-if ($is_guest) 
+
+if ($is_guest)
     alert_close('회원만 이용하실 수 있습니다.');
 
 $g5['title'] = '내 쪽지함';
 include_once(G5_PATH.'/head.sub.php');
-
-// 설정일이 지난 메모 삭제
-$sql = " delete from {$g5['memo_table']}
-            where me_recv_mb_id = '{$member['mb_id']}'
-            and me_send_datetime < '".date("Y-m-d H:i:s", G5_SERVER_TIME - (86400 * $config['cf_memo_del']))."' ";
-sql_query($sql);
 
 if (!$kind) $kind = 'recv';
 
