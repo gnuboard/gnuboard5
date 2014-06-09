@@ -94,7 +94,6 @@
 
 /* 회원가입 완료 */
 #reg_result {padding:40px 10px 0}
-#reg_result #result_logo {margin-bottom:50px;text-align:center}
 #reg_result #result_email {margin:20px 0;padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
 #reg_result #result_email span {display:inline-block;width:150px}
 #reg_result #result_email strong {color:#e8180c;font-size:1.2em}
