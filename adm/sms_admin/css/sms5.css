@@ -1,0 +1,140 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
+/* 설치 */
+#sms5_install {padding:20px 20px 0}
+#sms5_install h2 {margin:0;padding:0 0 20px}
+#sms5_install ol {margin:0 0 20px;padding:0 0 0 20px}
+#sms5_install li {margin:0 0 10px}
+
+/* 공통 */
+.sms5_txt_success {color:blue}
+.sms5_txt_fail {color:red}
+
+/* 회원정보업데이트 */
+#sms5_mbup dl {zoom:1}
+#sms5_mbup dl:after {display:block;visibility:hidden;clear:both;content:''}
+#sms5_mbup dt {clear:both;float:left;margin:0 0 5px;width:100px}
+#sms5_mbup dd {float:left;margin:0 0 5px}
+#sms5_mbup p {clear:both}
+
+/* SMS BOX */
+.sms5_box {position:relative;padding:10px;border-radius:5px;background:#fbec99}
+.sms5_box .box_ico {position:absolute;top:20px;left:-7px;width:7px;height:13px;background:url('../img/box_ico.gif') no-repeat}
+.sms5_box .box_txt {border:0;background:transparent;word-break:break-all;resize:none;overflow:hidden}
+.sms5_box .box_square {width:100px;height:90px}
+
+#write_wrap {z-index:9}
+#wr_message_lbl {position:absolute;top:50px;left:50px;color:#999;font-size:0.95em;letter-spacing:-0.1em}
+.write_scemo_btn {position:absolute;right:10px !important;right:50px;margin:0;padding:0;width:28px;height:28px;border:0;background:transparent;color:#999;font-size:0.95em}
+#write_sc_btn {top:15px}
+#write_emo_btn {top:50px}
+.write_scemo {display:none;z-index:10;position:absolute;left:150px;border:1px solid #e9e9e9;background:#f7f7f7}
+.scemo_ico {position:absolute;top:10px;left:-7px;width:7px;height:13px;background:url('../img/scemo_ico.gif') no-repeat}
+.write_scemo .scemo_list {z-index:11;margin:0;padding:0;width:190px;height:150px;background:#fff;overflow-y:scroll}
+.write_scemo .scemo_add {margin:0;padding:0;height:25px;border:0;background:transparent}
+#write_sc {top:10px}
+#write_sc .scemo_add {width:25px}
+#write_emo {top:45px}
+#write_emo .scemo_add {width:50px}
+#write_emo .emo_long {width:80px}
+.write_scemo .scemo_cls {text-align:right}
+.write_scemo .scemo_cls button {margin:5px;padding:0;border:0;background:transparent;color:#666;font-size:0.95em}
+
+/* 문자보내기 */
+#sms5_send {position:relative;margin:-10px 0 0 20px;padding:0 0 0 490px;height:600px}
+#sms5_send h2 {font-size:1em}
+#sms5_send ul {margin:0;padding:0;list-style:none;zoom:1}
+#sms5_send ul:after {display:block;visibility:hidden;clear:both;content:''}
+#sms5_send #send_emo {position:absolute;top:0;left:0;padding:20px 0 0;width:280px}
+#sms5_send #send_emo h2 {padding:0 0 10px}
+#sms5_send #send_write {position:absolute;top:0;left:290px;padding:20px 20px 0 !important;padding:20px 0 0 20px;width:160px;height:600px;border-left:1px solid #efefef}
+#sms5_send #send_write h2 {padding:0 0 10px}
+#sms5_send #send_book {position:relative;margin:0 0 0 -1px;padding:20px 0 0;width:100%;height:600px;border-left:1px solid #efefef}
+#sms5_send #send_book h2 {padding-bottom:10px}
+
+#sms5_send .tmp_loading {display:block;padding:180px 0 0;text-align:center}
+#sms5_send #send_emo #emo_sel {position:absolute;top:20px;right:10px;margin:0}
+#sms5_send #send_emo li {float:left;margin:0 10px 10px 0 !important;margin:0 5px 10px 0;width:110px}
+#sms5_send #send_emo .sms5_box {background:#f7f7f7}
+#sms5_send #send_emo .box_ico {display:none}
+#sms5_send #send_emo .box_txt {cursor:pointer}
+#sms5_send #send_emo .emo_tit {display:block;height:20px;line-height:2em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#sms5_send #send_emo .btn_submit {padding:0 5px;height:24px;border:1px solid #ccc;background:#fafafa;color:#000;font-size:0.95em;vertical-align:middle;cursor:pointer}
+
+#sms5_send #send_write {z-index:3}
+#sms5_send .write_inner {position:relative;left:-20px;padding:15px 20px;width:160px;border-top:1px solid #efefef}
+#sms5_send .write_inner h2 {margin:0;padding:0 0 10px !important}
+#sms5_send .write_floater {position:absolute;top:15px;right:20px;text-align:right}
+#sms5_send .write_floater_btn {margin:0;padding:0;border:0;background:transparent;color:#999;font-size:0.95em;letter-spacing:-0.1em}
+#sms5_send .write_inner label, #sms5_send .write_inner input {margin:0 0 3px}
+#sms5_send .write_inner label {display:inline-block}
+#sms5_send #send_write .sms5_box {margin:0 0 5px}
+#sms5_send #sms_byte {position:absolute;top:-37px;right:0;color:#999}
+#sms5_send #write_preset {margin:10px 0;color:#999;font-size:0.95em;letter-spacing:-0.1em}
+#sms5_send #write_reply {margin:0 0 15px}
+#sms5_send #hp_list {width:100%;margin:0 0 5px}
+#sms5_send #recv_add {position:relative}
+#sms5_send #recv_add button {position:absolute;top:0;right:0 !important;right:20px;margin:0;padding:0;width:45px;height:51px;border:1px solid #ccc;background:#fafafa}
+#sms5_send #write_rsv {line-height:1.8em}
+
+#sms5_send #send_book {z-index:2}
+#sms5_send #num_book {margin:0 0 10px;width:auto !important;width:95%;height:500px;overflow-y:auto !important;overflow-y:scroll}
+#sms5_send #book_tab {margin:0 35px 10px;text-align:right}
+#sms5_send #book_tab a {display:inline-block;width:30px;text-align:center}
+#sms5_send #sms_person_form {margin:0 20px}
+#sms5_send #send_book .btn_submit {padding:0 5px;height:24px}
+#sms5_send #book_desc {margin:0 20px;color:#999;font-size:0.95em;letter-spacing:-0.1em}
+#sms5_send .td_mngsmall button.btn_frmline,#sms5_send .td_mng button.btn_frmline {padding: 0 7px;background: #444;}
+
+/* 문자전송상세내역 */
+#sms5_sent {}
+#sms5_sent #sent_overlap {margin:0 20px 20px;padding:0;border-top:1px solid #e9e9e9;list-style:none}
+#sms5_sent #sent_overlap li {padding:10px 0;border-bottom:1px solid #e9e9e9}
+#sms5_sent #con_sms {margin:0 20px 20px}
+
+/* 이모티콘 관리 */
+.sms_preset_sch form {display:inline-block}
+#sms5_preset_sel {float:left;padding:8px 20px 0}
+.btn_add {float:right}
+#sms5_preset {clear:both;margin:0 0 10px;padding:30px 20px 20px 40px;background:#363a3d;list-style:none;zoom:1}
+#sms5_preset:after {display:block;visibility:hidden;clear:both;content:''}
+#sms5_preset li {float:left;margin:0 20px 20px 0;width:270px;height:125px;background:#fbec99;zoom:1}
+#sms5_preset li:after {display:block;visibility:hidden;clear:both;content:''}
+#sms5_preset .li_chk {position:absolute;bottom:10px;left:10px;}
+#sms5_preset .li_preview {float:left;width:110px}
+#sms5_preset .box_square {padding-right:7px;border-right:1px solid #e2d693}
+#sms5_preset .li_info {float:left;margin:0 0 0 10px;width:150px;line-height:1.5em}
+#sms5_preset .li_date {position:absolute;bottom:10px;left:30px;color:#86857d}
+#sms5_preset .li_cmd {position:absolute;bottom:10px;right:10px}
+#sms5_preset .li_cmd a {color:#86857d;font-size:0.95em;letter-spacing:-0.1em}
+
+#sms5_emo_add {position:relative}
+#sms5_emo_add .sms5_box {padding:10px !important;padding:10px 5px;width:160px}
+#sms5_emo_add .box_txt {margin:0 0 5px}
+#sms5_emo_add .write_scemo_btn {right:10px}
+#sms5_emo_add .write_scemo {left:170px}
+
+/* 휴대폰번호 관리 */
+#hp_check_el {width:148px}
+#hp_check_el ul {margin:5px 0 0;padding:0;border:1px solid #f7c3cf;background:#f8e8eb;list-style:none}
+#hp_check_el li {position:relative;padding:5px;border-bottom:1px solid #f6dae1}
+#hp_check_el strong {position:absolute;top:6px;right:5px;color:#ff3061;font-size:0.95em;font-weight:normal;letter-spacing:-0.1em}
+
+/* 휴대폰번호 파일 */
+#sms5_fileup_frm {margin:0 0 10px;padding:0 20px 5px;border-bottom:1px solid #e9e9e9}
+#sms5_fileup_frm div {padding:0 0 5px;margin:0 0 5px;border-bottom:1px solid #f4f4f4}
+#sms5_fileup_frm div.sch_last {margin:0;border:0}
+#sms5_fileup_frm strong {display:inline-block;width:80px}
+#sms5_fileup_frm strong.sch_long {width:160px}
+#sms5_fileup_frm label {display:inline-block;margin:0 5px 0 0}
+#sms5_fileup_frm .btn_submit {padding:0 5px;height:24px}
+
+#sms5_fileup_frm #sms5_fileup {border:0}
+#sms5_fileup_frm #upload_info {margin:20px 0}
+#sms5_fileup_frm #upload_result {margin:0;padding:10px 0;border-top:3px solid #383838;border-bottom:3px solid #383838;list-style:none}
+#sms5_fileup_frm #upload_result li {margin:0 0 5px}
+#sms5_fileup_frm #upload_result .local_desc01 {margin:5px 0;padding:10px}
+#sms5_fileup_frm #btn_fileup {margin:5px 0 0}
+
+#sms5_fileup_frm .sms_fileup_hide {display:none;border:0}

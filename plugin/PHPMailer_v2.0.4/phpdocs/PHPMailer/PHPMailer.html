@@ -1,0 +1,2042 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  <html xmlns="http://www.w3.org/1999/xhtml">
+		<head>
+			<!-- template designed by Marco Von Ballmoos -->
+			<title>Docs For Class PHPMailer</title>
+			<link rel="stylesheet" href="../media/stylesheet.css" />
+			<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+		</head>
+		<body>
+			<div class="page-body">			
+<h2 class="class-name">Class PHPMailer</h2>
+
+<a name="sec-description"></a>
+<div class="info-box">
+	<div class="info-box-title">Description</div>
+	<div class="nav-bar">
+					<span class="disabled">Description</span> |
+													<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+						|											<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+						
+					</div>
+	<div class="info-box-body">
+        		<!-- ========== Info from phpDoc block ========= -->
+		<p class="notes">
+			Located in <a class="field" href="_v2.0.4_PHPMailer_v2.0.4_class_phpmailer_php.html">/class.phpmailer.php</a> (line <span class="field"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a34">34</a></span>)
+		</p>
+		
+				
+		<pre></pre>
+	
+			</div>
+</div>
+
+
+
+	<a name="sec-var-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variable Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+						<span class="disabled">Vars</span> (<a href="#sec-vars">details</a>)
+							| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+								</div>
+		<div class="info-box-body">
+			<div class="var-summary">
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$AltBody" title="details" class="var-name">$AltBody</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$attachment" title="details" class="var-name">$attachment</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$bcc" title="details" class="var-name">$bcc</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Body" title="details" class="var-name">$Body</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$boundary" title="details" class="var-name">$boundary</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$cc" title="details" class="var-name">$cc</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$CharSet" title="details" class="var-name">$CharSet</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$ConfirmReadingTo" title="details" class="var-name">$ConfirmReadingTo</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$ContentType" title="details" class="var-name">$ContentType</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$CustomHeader" title="details" class="var-name">$CustomHeader</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Encoding" title="details" class="var-name">$Encoding</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$ErrorInfo" title="details" class="var-name">$ErrorInfo</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$error_count" title="details" class="var-name">$error_count</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$From" title="details" class="var-name">$From</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$FromName" title="details" class="var-name">$FromName</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Helo" title="details" class="var-name">$Helo</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Host" title="details" class="var-name">$Host</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Hostname" title="details" class="var-name">$Hostname</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$language" title="details" class="var-name">$language</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$LE" title="details" class="var-name">$LE</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Mailer" title="details" class="var-name">$Mailer</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$MessageID" title="details" class="var-name">$MessageID</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$message_type" title="details" class="var-name">$message_type</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Password" title="details" class="var-name">$Password</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$PluginDir" title="details" class="var-name">$PluginDir</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">int</span>
+					<a href="#$Port" title="details" class="var-name">$Port</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">int</span>
+					<a href="#$Priority" title="details" class="var-name">$Priority</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$ReplyTo" title="details" class="var-name">$ReplyTo</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Sender" title="details" class="var-name">$Sender</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Sendmail" title="details" class="var-name">$Sendmail</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$sign_cert_file" title="details" class="var-name">$sign_cert_file</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$sign_key_file" title="details" class="var-name">$sign_key_file</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$sign_key_pass" title="details" class="var-name">$sign_key_pass</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">bool</span>
+					<a href="#$SingleTo" title="details" class="var-name">$SingleTo</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$smtp" title="details" class="var-name">$smtp</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">bool</span>
+					<a href="#$SMTPAuth" title="details" class="var-name">$SMTPAuth</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">bool</span>
+					<a href="#$SMTPDebug" title="details" class="var-name">$SMTPDebug</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">bool</span>
+					<a href="#$SMTPKeepAlive" title="details" class="var-name">$SMTPKeepAlive</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$SMTPSecure" title="details" class="var-name">$SMTPSecure</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Subject" title="details" class="var-name">$Subject</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">int</span>
+					<a href="#$Timeout" title="details" class="var-name">$Timeout</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">mixed</span>
+					<a href="#$to" title="details" class="var-name">$to</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Username" title="details" class="var-name">$Username</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">string</span>
+					<a href="#$Version" title="details" class="var-name">$Version</a>
+				</div>
+								<div class="var-title">
+					<span class="var-type">int</span>
+					<a href="#$WordWrap" title="details" class="var-name">$WordWrap</a>
+				</div>
+							</div>
+		</div>
+	</div>
+
+	<a name="sec-method-summary"></a>
+	<div class="info-box">
+		<div class="info-box-title">Method Summary</span></div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+																		<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+				 
+				|
+						<span class="disabled">Methods</span> (<a href="#sec-methods">details</a>)
+		</div>
+		<div class="info-box-body">			
+			<div class="method-summary">
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#AddAddress" title="details" class="method-name">AddAddress</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$address</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">bool</span>
+										<a href="#AddAttachment" title="details" class="method-name">AddAttachment</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$path</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$encoding</span> = <span class="var-default">'base64'</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span> = <span class="var-default">'application/octet-stream'</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#AddBCC" title="details" class="method-name">AddBCC</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$address</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#AddCC" title="details" class="method-name">AddCC</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$address</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#AddCustomHeader" title="details" class="method-name">AddCustomHeader</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$custom_header</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">bool</span>
+										<a href="#AddEmbeddedImage" title="details" class="method-name">AddEmbeddedImage</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$path</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$cid</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$encoding</span> = <span class="var-default">'base64'</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span> = <span class="var-default">'application/octet-stream'</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#AddReplyTo" title="details" class="method-name">AddReplyTo</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$address</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#AddStringAttachment" title="details" class="method-name">AddStringAttachment</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$string</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$encoding</span> = <span class="var-default">'base64'</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span> = <span class="var-default">'application/octet-stream'</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ClearAddresses" title="details" class="method-name">ClearAddresses</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ClearAllRecipients" title="details" class="method-name">ClearAllRecipients</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ClearAttachments" title="details" class="method-name">ClearAttachments</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ClearBCCs" title="details" class="method-name">ClearBCCs</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ClearCCs" title="details" class="method-name">ClearCCs</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ClearCustomHeaders" title="details" class="method-name">ClearCustomHeaders</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#ClearReplyTos" title="details" class="method-name">ClearReplyTos</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#getFile" title="details" class="method-name">getFile</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#HeaderLine" title="details" class="method-name">HeaderLine</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">bool</span>
+										<a href="#IsError" title="details" class="method-name">IsError</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#IsHTML" title="details" class="method-name">IsHTML</a>
+											(<span class="var-type">bool</span>&nbsp;<span class="var-name">$bool</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#IsMail" title="details" class="method-name">IsMail</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#IsQmail" title="details" class="method-name">IsQmail</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#IsSendmail" title="details" class="method-name">IsSendmail</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#IsSMTP" title="details" class="method-name">IsSMTP</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">$message</span>
+										<a href="#MsgHTML" title="details" class="method-name">MsgHTML</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$message</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$basedir</span> = <span class="var-default">''</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">bool</span>
+										<a href="#Send" title="details" class="method-name">Send</a>
+										()
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#set" title="details" class="method-name">set</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span> = <span class="var-default">''</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">bool</span>
+										<a href="#SetLanguage" title="details" class="method-name">SetLanguage</a>
+											(<span class="var-type">string</span>&nbsp;<span class="var-name">$lang_type</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$lang_path</span> = <span class="var-default">'language/'</span>])
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#Sign" title="details" class="method-name">Sign</a>
+											(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cert_filename</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$key_filename</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$key_pass</span>)
+									</div>
+								
+				<div class="method-definition">
+											<span class="method-result">void</span>
+										<a href="#SmtpClose" title="details" class="method-name">SmtpClose</a>
+										()
+									</div>
+							</div>
+		</div>
+	</div>		
+
+	<a name="sec-vars"></a>
+	<div class="info-box">
+		<div class="info-box-title">Variables</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+										<a href="#sec-var-summary">Vars</a> (<span class="disabled">details</span>)
+						
+			
+										| 
+									<a href="#sec-method-summary">Methods</a> (<a href="#sec-methods">details</a>)
+							
+					</div>
+		<div class="info-box-body">
+			<a name="var$AltBody" id="$AltBody"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$AltBody</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a110">110</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the text-only body of the message.  This automatically sets the  email to multipart/alternative.  This body can be read by mail  clients that do not have HTML email capability such as mutt. Clients  that can read HTML will view the normal Body.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$attachment" id="$attachment"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$attachment</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a253">253</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$bcc" id="$bcc"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$bcc</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a251">251</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$Body" id="$Body"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Body</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a101">101</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the Body of the message.  This can be either an HTML or text body.</p>
+<p class="description"><p>If HTML then run IsHTML(true).</p></p>
+	
+	
+		
+		
+
+</div>
+<a name="var$boundary" id="$boundary"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$boundary</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a256">256</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$cc" id="$cc"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$cc</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a250">250</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$CharSet" id="$CharSet"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$CharSet</span>
+			 = <span class="var-default"> 'iso-8859-1'</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a50">50</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the CharSet of the message.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$ConfirmReadingTo" id="$ConfirmReadingTo"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$ConfirmReadingTo</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a148">148</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the email address that a reading confirmation will be sent.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$ContentType" id="$ContentType"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$ContentType</span>
+			 = <span class="var-default"> 'text/plain'</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a56">56</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the Content-type of the message.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$CustomHeader" id="$CustomHeader"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$CustomHeader</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a254">254</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$Encoding" id="$Encoding"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Encoding</span>
+			 = <span class="var-default"> '8bit'</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a63">63</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the Encoding of the message. Options for this are &quot;8bit&quot;,  &quot;7bit&quot;, &quot;binary&quot;, &quot;base64&quot;, and &quot;quoted-printable&quot;.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$ErrorInfo" id="$ErrorInfo"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$ErrorInfo</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a69">69</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Holds the most recent mailer error message.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$error_count" id="$error_count"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$error_count</span>
+			 = <span class="var-default"> 0</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a258">258</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$From" id="$From"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$From</span>
+			 = <span class="var-default"> 'root@localhost'</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a75">75</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the From email address for the message.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$FromName" id="$FromName"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$FromName</span>
+			 = <span class="var-default"> 'Root User'</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a81">81</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the From name of the message.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Helo" id="$Helo"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Helo</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a189">189</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the SMTP HELO of the message (Default is $Hostname).</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Host" id="$Host"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Host</span>
+			 = <span class="var-default"> 'localhost'</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a177">177</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the SMTP hosts.  All hosts must be separated by a  semicolon.  You can also specify a different port  for each host by using this format: [hostname:port]  (e.g. &quot;smtp1.example.com:25;smtp2.example.com&quot;).</p>
+<p class="description"><p>Hosts will be tried in order.</p></p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Hostname" id="$Hostname"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Hostname</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a156">156</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the hostname to use in Message-Id and Received headers  and as default HELO string. If empty, the value returned  by SERVER_NAME is used or 'localhost.localdomain'.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$language" id="$language"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$language</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a257">257</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$LE" id="$LE"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$LE</span>
+			 = <span class="var-default"> &quot;\n&quot;</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a259">259</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$Mailer" id="$Mailer"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Mailer</span>
+			 = <span class="var-default"> 'mail'</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a123">123</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Method to send mail: (&quot;mail&quot;, &quot;sendmail&quot;, or &quot;smtp&quot;).</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$MessageID" id="$MessageID"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$MessageID</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a163">163</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the message ID to be used in the Message-Id header.</p>
+<p class="description"><p>If empty, a unique id will be generated.</p></p>
+	
+	
+		
+		
+
+</div>
+<a name="var$message_type" id="$message_type"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$message_type</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a255">255</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$Password" id="$Password"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Password</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a214">214</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets SMTP password.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$PluginDir" id="$PluginDir"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$PluginDir</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a136">136</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Path to PHPMailer plugins.  This is now only useful if the SMTP class  is in a different directory than the PHP include path.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Port" id="$Port"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">int</span>
+			<span class="var-name">$Port</span>
+			 = <span class="var-default"> 25</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a183">183</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the default SMTP server port.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Priority" id="$Priority"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">int</span>
+			<span class="var-name">$Priority</span>
+			 = <span class="var-default"> 3</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a44">44</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Email priority (1 = High, 3 = Normal, 5 = low).</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$ReplyTo" id="$ReplyTo"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$ReplyTo</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a252">252</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$Sender" id="$Sender"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Sender</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a88">88</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the Sender email (Return-Path) of the message.  If not empty,  will be sent via -f to sendmail or as 'MAIL FROM' in smtp mode.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Sendmail" id="$Sendmail"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Sendmail</span>
+			 = <span class="var-default"> '/usr/sbin/sendmail'</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a129">129</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the path of the sendmail program.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$sign_cert_file" id="$sign_cert_file"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$sign_cert_file</span>
+			 = <span class="var-default"> &quot;&quot;</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a260">260</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$sign_key_file" id="$sign_key_file"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$sign_key_file</span>
+			 = <span class="var-default"> &quot;&quot;</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a261">261</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$sign_key_pass" id="$sign_key_pass"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$sign_key_pass</span>
+			 = <span class="var-default"> &quot;&quot;</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a262">262</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$SingleTo" id="$SingleTo"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">bool</span>
+			<span class="var-name">$SingleTo</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a242">242</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Provides the ability to have the TO field process individual</p>
+<p class="description"><p>emails, instead of sending to entire TO addresses</p></p>
+	
+	
+		
+		
+
+</div>
+<a name="var$smtp" id="$smtp"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$smtp</span>
+			 = <span class="var-default"> NULL</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a248">248</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$SMTPAuth" id="$SMTPAuth"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">bool</span>
+			<span class="var-name">$SMTPAuth</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a202">202</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets SMTP authentication. Utilizes the Username and Password variables.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$SMTPDebug" id="$SMTPDebug"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">bool</span>
+			<span class="var-name">$SMTPDebug</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a227">227</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets SMTP class debugging on or off.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$SMTPKeepAlive" id="$SMTPKeepAlive"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">bool</span>
+			<span class="var-name">$SMTPKeepAlive</span>
+			 = <span class="var-default"> false</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a235">235</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Prevents the SMTP connection from being closed after each mail  sending.  If this is set to true then to close the connection  requires an explicit call to SmtpClose().</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$SMTPSecure" id="$SMTPSecure"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$SMTPSecure</span>
+			 = <span class="var-default"> &quot;&quot;</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a196">196</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets connection prefix.</p>
+<p class="description"><p>Options are &quot;&quot;, &quot;ssl&quot; or &quot;tls&quot;</p></p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Subject" id="$Subject"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Subject</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a94">94</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the Subject of the message.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Timeout" id="$Timeout"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">int</span>
+			<span class="var-name">$Timeout</span>
+			 = <span class="var-default"> 10</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a221">221</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the SMTP server timeout in seconds. This function will not  work with the win32 version.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$to" id="$to"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">mixed</span>
+			<span class="var-name">$to</span>
+			 = <span class="var-default">array()</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a249">249</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	
+		
+		
+
+</div>
+<a name="var$Username" id="$Username"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Username</span>
+			 = <span class="var-default"> ''</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a208">208</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets SMTP username.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$Version" id="$Version"><!-- --></A>
+<div class="oddrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">string</span>
+			<span class="var-name">$Version</span>
+			 = <span class="var-default"> &quot;2.0.4&quot;</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a142">142</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Holds PHPMailer version.</p>
+	
+	
+		
+		
+
+</div>
+<a name="var$WordWrap" id="$WordWrap"><!-- --></A>
+<div class="evenrow">
+
+	<div class="var-header">
+		<span class="var-title">
+			<span class="var-type">int</span>
+			<span class="var-name">$WordWrap</span>
+			 = <span class="var-default"> 0</span>			(line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a117">117</a></span>)
+		</span>
+	</div>
+
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets word wrapping on the body of the message to a given number of  characters.</p>
+	
+	
+		
+		
+
+</div>
+						
+		</div>
+	</div>
+	
+	<a name="sec-methods"></a>
+	<div class="info-box">
+		<div class="info-box-title">Methods</div>
+		<div class="nav-bar">
+			<a href="#sec-description">Description</a> |
+															<a href="#sec-var-summary">Vars</a> (<a href="#sec-vars">details</a>)
+																	<a href="#sec-method-summary">Methods</a> (<span class="disabled">details</span>)
+						
+		</div>
+		<div class="info-box-body">
+			<A NAME='method_detail'></A>
+<a name="methodAddAddress" id="AddAddress"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">AddAddress</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a324">324</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a &quot;To&quot; address.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			AddAddress
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$address</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$address</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodAddAttachment" id="AddAttachment"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">AddAttachment</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1124">1124</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds an attachment from a path on the filesystem.</p>
+<p class="description"><p>Returns false if the file could not be found  or accessed.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">bool</span>
+		<span class="method-name">
+			AddAttachment
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$path</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$encoding</span> = <span class="var-default">'base64'</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span> = <span class="var-default">'application/octet-stream'</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$path</span><span class="var-description">: Path to the attachment.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: Overrides the attachment name.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$encoding</span><span class="var-description">: File encoding (see $Encoding).</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$type</span><span class="var-description">: File extension (MIME) type.</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodAddBCC" id="AddBCC"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">AddBCC</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a352">352</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a &quot;Bcc&quot; address. Note: this function works  with the SMTP mailer on win32, not with the &quot;mail&quot;  mailer.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			AddBCC
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$address</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$address</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodAddCC" id="AddCC"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">AddCC</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a338">338</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a &quot;Cc&quot; address. Note: this function works  with the SMTP mailer on win32, not with the &quot;mail&quot;  mailer.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			AddCC
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$address</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$address</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodAddCustomHeader" id="AddCustomHeader"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">AddCustomHeader</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1704">1704</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a custom header.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			AddCustomHeader
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$custom_header</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodAddEmbeddedImage" id="AddEmbeddedImage"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">AddEmbeddedImage</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1484">1484</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds an embedded attachment.  This can include images, sounds, and  just about any other document.  Make sure to set the $type to an  image type.  For JPEG images use &quot;image/jpeg&quot; and for GIF images  use &quot;image/gif&quot;.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">bool</span>
+		<span class="method-name">
+			AddEmbeddedImage
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$path</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$cid</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$encoding</span> = <span class="var-default">'base64'</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span> = <span class="var-default">'application/octet-stream'</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$path</span><span class="var-description">: Path to the attachment.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$cid</span><span class="var-description">: Content ID of the attachment.  Use this to identify         the Id for accessing the image in an HTML form.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: Overrides the attachment name.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$encoding</span><span class="var-description">: File encoding (see $Encoding).</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$type</span><span class="var-description">: File extension (MIME) type.</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodAddReplyTo" id="AddReplyTo"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">AddReplyTo</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a364">364</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a &quot;Reply-To&quot; address.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			AddReplyTo
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$address</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$address</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodAddStringAttachment" id="AddStringAttachment"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">AddStringAttachment</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1458">1458</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Adds a string or binary attachment (non-filesystem) to the list.</p>
+<p class="description"><p>This method can be used to attach ascii or binary data,  such as a BLOB record from a database.</p></p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			AddStringAttachment
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$string</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$encoding</span> = <span class="var-default">'base64'</span>], [<span class="var-type">string</span>&nbsp;<span class="var-name">$type</span> = <span class="var-default">'application/octet-stream'</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$string</span><span class="var-description">: String attachment data.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$filename</span><span class="var-description">: Name of the attachment.</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$encoding</span><span class="var-description">: File encoding (see $Encoding).</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$type</span><span class="var-description">: File extension (MIME) type.</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodClearAddresses" id="ClearAddresses"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ClearAddresses</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1535">1535</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Clears all recipients assigned in the TO array.  Returns void.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ClearAddresses
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodClearAllRecipients" id="ClearAllRecipients"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">ClearAllRecipients</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1568">1568</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Clears all recipients assigned in the TO, CC and BCC  array.  Returns void.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ClearAllRecipients
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodClearAttachments" id="ClearAttachments"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ClearAttachments</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1579">1579</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Clears all previously set filesystem, string, and binary  attachments.  Returns void.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ClearAttachments
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodClearBCCs" id="ClearBCCs"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">ClearBCCs</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1551">1551</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Clears all recipients assigned in the BCC array.  Returns void.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ClearBCCs
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodClearCCs" id="ClearCCs"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ClearCCs</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1543">1543</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Clears all recipients assigned in the CC array.  Returns void.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ClearCCs
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodClearCustomHeaders" id="ClearCustomHeaders"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">ClearCustomHeaders</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1587">1587</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Clears all custom headers.  Returns void.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ClearCustomHeaders
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodClearReplyTos" id="ClearReplyTos"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">ClearReplyTos</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1559">1559</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Clears all recipients assigned in the ReplyTo array.  Returns void.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			ClearReplyTos
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodgetFile" id="getFile"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">getFile</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1868">1868</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Read a file from a supplied filename and return it.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			getFile
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$filename</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$filename</span><span class="var-description">: Parameter File Name</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodHeaderLine" id="HeaderLine"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">HeaderLine</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1097">1097</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			HeaderLine
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$name</span>, <span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span>)
+			</div>
+	
+		
+		
+	</div>
+<a name="methodIsError" id="IsError"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">IsError</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1684">1684</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Returns true if an error occurred.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">bool</span>
+		<span class="method-name">
+			IsError
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodIsHTML" id="IsHTML"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">IsHTML</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a273">273</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets message type to HTML.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			IsHTML
+		</span>
+					(<span class="var-type">bool</span>&nbsp;<span class="var-name">$bool</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">bool</span>
+				<span class="var-name">$bool</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodIsMail" id="IsMail"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">IsMail</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a293">293</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets Mailer to send message using PHP mail() function.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			IsMail
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodIsQmail" id="IsQmail"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">IsQmail</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a309">309</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets Mailer to send message using the qmail MTA.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			IsQmail
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodIsSendmail" id="IsSendmail"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">IsSendmail</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a301">301</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets Mailer to send message using the $Sendmail program.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			IsSendmail
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodIsSMTP" id="IsSMTP"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">IsSMTP</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a285">285</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets Mailer to send message using SMTP.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			IsSMTP
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodMsgHTML" id="MsgHTML"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">MsgHTML</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1713">1713</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Evaluates the message and returns modifications for inline images and backgrounds</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">$message</span>
+		<span class="method-name">
+			MsgHTML
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$message</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$basedir</span> = <span class="var-default">''</span>])
+			</div>
+	
+		
+		
+	</div>
+<a name="methodSend" id="Send"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">Send</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a380">380</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Creates message and assigns Mailer. If the message is  not sent successfully then it returns false.  Use the ErrorInfo  variable to view description of the error.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">bool</span>
+		<span class="method-name">
+			Send
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+<a name="methodset" id="set"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">set</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1853">1853</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Set (or reset) Class Objects (variables)</p>
+<p class="description"><p>Usage Example:  $page-&gt;set('X-Priority', '3');</p></p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			set
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$name</span>, [<span class="var-type">mixed</span>&nbsp;<span class="var-name">$value</span> = <span class="var-default">''</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$name</span><span class="var-description">: Parameter Name</span>			</li>
+					<li>
+				<span class="var-type">mixed</span>
+				<span class="var-name">$value</span><span class="var-description">: Parameter Value  NOTE: will not work with arrays, there are no arrays to set/reset</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodSetLanguage" id="SetLanguage"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">SetLanguage</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a647">647</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Sets the language for all class error messages.  Returns false  if it cannot load the language file.  The default language type  is English.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">bool</span>
+		<span class="method-name">
+			SetLanguage
+		</span>
+					(<span class="var-type">string</span>&nbsp;<span class="var-name">$lang_type</span>, [<span class="var-type">string</span>&nbsp;<span class="var-name">$lang_path</span> = <span class="var-default">'language/'</span>])
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$lang_type</span><span class="var-description">: Type of language (e.g. Portuguese: &quot;br&quot;)</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$lang_path</span><span class="var-description">: Path to the language file directory</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodSign" id="Sign"><!-- --></a>
+<div class="evenrow">
+	
+	<div class="method-header">
+		<span class="method-title">Sign</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a1901">1901</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Set the private key file and password to sign the message.</p>
+	<ul class="tags">
+				<li><span class="field">access:</span> public</li>
+			</ul>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			Sign
+		</span>
+					(<span class="var-type">mixed</span>&nbsp;<span class="var-name">$cert_filename</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$key_filename</span>, <span class="var-type">string</span>&nbsp;<span class="var-name">$key_pass</span>)
+			</div>
+	
+			<ul class="parameters">
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$key_filename</span><span class="var-description">: Parameter File Name</span>			</li>
+					<li>
+				<span class="var-type">string</span>
+				<span class="var-name">$key_pass</span><span class="var-description">: Password for private key</span>			</li>
+				</ul>
+		
+		
+	</div>
+<a name="methodSmtpClose" id="SmtpClose"><!-- --></a>
+<div class="oddrow">
+	
+	<div class="method-header">
+		<span class="method-title">SmtpClose</span> (line <span class="line-number"><a href="..//__filesource/fsource_PHPMailer__class.phpmailer.php.html#a629">629</a></span>)
+	</div> 
+	
+	<!-- ========== Info from phpDoc block ========= -->
+<p class="short-description">Closes the active SMTP session if one exists.</p>
+	
+	<div class="method-signature">
+		<span class="method-result">void</span>
+		<span class="method-name">
+			SmtpClose
+		</span>
+				()
+			</div>
+	
+		
+		
+	</div>
+						
+		</div>
+	</div>
+
+
+	<p class="notes" id="credit">
+		Documentation generated on Thu, 02 Apr 2009 21:19:48 -0400 by <a href="http://www.phpdoc.org" target="_blank">phpDocumentor 1.3.0RC3</a>
+	</p>
+	</div></body>
+</html>
