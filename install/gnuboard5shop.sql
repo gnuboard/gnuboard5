@@ -68,8 +68,9 @@ CREATE TABLE IF NOT EXISTS `g5_shop_cart` (
 
 DROP TABLE IF EXISTS `g5_shop_category`;
 CREATE TABLE IF NOT EXISTS `g5_shop_category` (
-  `ca_id` varchar(10) NOT NULL DEFAULT '0',
+  `ca_id` varchar(10) NOT NULL DEFAULT '0',  
   `ca_name` varchar(255) NOT NULL DEFAULT '',
+  `ca_order` int(11) NOT NULL DEFAULT '0',
   `ca_skin_dir` varchar(255) NOT NULL DEFAULT '',
   `ca_mobile_skin_dir` varchar(255) NOT NULL DEFAULT '',
   `ca_skin` varchar(255) NOT NULL DEFAULT '',
