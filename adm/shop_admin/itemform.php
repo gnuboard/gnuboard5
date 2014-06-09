@@ -1646,8 +1646,8 @@ $(function(){
                 <input type="text" name="it_<?php echo $i ?>" value="<?php echo get_text($it['it_'.$i]) ?>" id="it_<?php echo $i ?>" class="frm_input">
             </td>
             <td class="td_grpset">
-                <input type="checkbox" name="chk_grp_<?php echo $i ?>" value="1" id="chk_grp_<?php echo $i ?>">
-                <label for="chk_grp_<?php echo $i ?>">그룹적용</label>
+                <input type="checkbox" name="chk_ca_<?php echo $i ?>" value="1" id="chk_ca_<?php echo $i ?>">
+                <label for="chk_ca_<?php echo $i ?>">분류적용</label>
                 <input type="checkbox" name="chk_all_<?php echo $i ?>" value="1" id="chk_all_<?php echo $i ?>">
                 <label for="chk_all_<?php echo $i ?>">전체적용</label>
             </td>
