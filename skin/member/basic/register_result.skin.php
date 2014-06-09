@@ -8,8 +8,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <!-- 회원가입결과 시작 { -->
 <div id="reg_result" class="mbskin">
 
-    <div id="result_logo"><img src="<?php echo $member_skin_url ?>/img/reg_result_logo.jpg" alt=""></div>
-
     <p>
         <strong><?php echo $mb['mb_name'] ?></strong>님의 회원가입을 진심으로 축하합니다.<br>
     </p>
