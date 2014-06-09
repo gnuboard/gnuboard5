@@ -92,16 +92,27 @@ $colspan = 5;
     </thead>
     <tbody>
     <?php
+    $count = 0;
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
+        $is_continue = false;
+        // 회원아이디가 없는 메뉴는 삭제함
+        if($row['mb_id'] == '' && $row['mb_nick'] == '') {
+            sql_query(" delete from {$g5['auth_table']} where au_menu = '{$row['au_menu']}' ");
+            $is_continue = true;
+        }
 
         // 메뉴번호가 바뀌는 경우에 현재 없는 저장된 메뉴는 삭제함
         if (!isset($auth_menu[$row['au_menu']]))
         {
             sql_query(" delete from {$g5['auth_table']} where au_menu = '{$row['au_menu']}' ");
-            continue;
+            $is_continue = true;
         }
+
+        if($is_continue)
+            continue;
+
+        $mb_nick = get_sideview($row['mb_id'], $row['mb_nick'], $row['mb_email'], $row['mb_homepage']);
 
         $bg = 'bg'.($i%2);
     ?>
@@ -121,9 +132,10 @@ $colspan = 5;
         <td class="td_auth"><?php echo $row['au_auth'] ?></td>
     </tr>
     <?php
+        $count++;
     }
 
-    if ($i==0)
+    if ($count == 0)
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';
     ?>
     </tbody>
