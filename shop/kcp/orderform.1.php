@@ -19,8 +19,6 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
 <script>
 function CheckPayplusInstall()
 {
-    StartSmartUpdate();
-
     if(ChkBrowser())
     {
         if(document.Payplus.object != null) {

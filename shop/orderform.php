@@ -21,9 +21,17 @@ if (get_cart_count($tmp_cart_id) == 0)
 $g5['title'] = '주문서 작성';
 
 // LG Xpay 전자결제를 사용할 때만 실행
-if($default['de_pg_service'] == 'lg' && ($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'])) {
-    $g5['body_script'] = 'onload="isActiveXOK();"';
+if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
+    switch($default['de_pg_service']) {
+        case 'lg':
+            $g5['body_script'] = 'onload="isActiveXOK();"';
+            break;
+        default:
+            $g5['body_script'] = 'onload="CheckPayplusInstall();"';
+            break;
+    }
 }
+
 include_once('./_head.php');
 if ($default['de_hope_date_use']) {
     include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
