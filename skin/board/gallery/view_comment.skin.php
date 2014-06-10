@@ -125,7 +125,14 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </tr>
         <?php } ?>
         <?php
-        include(G5_SNS_PATH."/view_comment_write.sns.skin.php");
+        if($board['bo_use_sns'] && ($config['cf_facebook_appid'] || $config['cf_twitter_key'])) {
+        ?>
+        <tr>
+            <th scope="row">SNS 동시등록</th>
+            <td id="bo_vc_send_sns"></td>
+        </tr>
+        <?php
+        }
         ?>
         <tr>
             <th scope="row">내용</th>
@@ -306,6 +313,13 @@ function comment_delete()
 }
 
 comment_box('', 'c'); // 댓글 입력폼이 보이도록 처리하기위해서 추가 (root님)
+
+<?php if($board['bo_use_sns'] && ($config['cf_facebook_appid'] || $config['cf_twitter_key'])) { ?>
+// sns 등록
+$(function() {
+    $("#bo_vc_send_sns").load( "<?php echo G5_SNS_URL; ?>/view_comment_write.sns.skin.php?bo_table=<?php echo $bo_table; ?>" );
+});
+<?php } ?>
 </script>
 <?php } ?>
 <!-- } 댓글 쓰기 끝 -->
