@@ -98,7 +98,7 @@ if ($w == '') {
         if ($member['mb_id'])
             alert('글을 답변할 권한이 없습니다.');
         else
-            alert('글을 답변할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?$qstr&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
+            alert('답변글을 작성할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['PHP_SELF'].'?bo_table='.$bo_table));
     }
 
     $tmp_point = isset($member['mb_point']) ? $member['mb_point'] : 0;
