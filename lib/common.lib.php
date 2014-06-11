@@ -2725,4 +2725,12 @@ function member_delete($mb_id)
     $sql = " update {$g5['member_table']} set mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G5_SERVER_TIME)." 삭제함\n{$mb['mb_memo']}', mb_leave_date = '".date('Ymd', G5_SERVER_TIME)."' where mb_id = '{$mb_id}' ";
     sql_query($sql);
 }
+
+// 이메일 주소 추출
+function get_email_address($email)
+{
+    preg_match("/[0-9a-z._-]+@[a-z0-9._-]{4,}/i", $email, $matches);
+
+    return $matches[0];
+}
 ?>
