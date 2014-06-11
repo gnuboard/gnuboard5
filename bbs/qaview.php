@@ -30,7 +30,7 @@ if(is_file($skin_file)) {
     $view['content'] = conv_content($view['qa_content'], $view['qa_html']);
     $view['name'] = get_text($view['qa_name']);
     $view['datetime'] = $view['qa_datetime'];
-    $view['email'] = $view['qa_email'];
+    $view['email'] = get_text(get_email_address($view['qa_email']));
     $view['hp'] = $view['qa_hp'];
 
     if (trim($stx))
