@@ -16,7 +16,7 @@ $msg = array();
 
 // e-mail 체크
 if(isset($_POST['qa_email']) && $qa_email) {
-    $qa_email = strip_tags2(trim($_POST['qa_email']));
+    $qa_email = get_email_address(trim($_POST['qa_email']));
 
     if($qaconfig['qa_req_email'] && !$qa_email)
         $msg[] = '이메일을 입력하세요.';

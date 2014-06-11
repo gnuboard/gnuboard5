@@ -2711,12 +2711,11 @@ function member_delete($mb_id)
     sql_query($sql);
 }
 
-// strip_tags 변형
-function strip_tags2($str)
+// 이메일 주소 추출
+function get_email_address($email)
 {
-    if(!$str)
-        return '';
+    preg_match("/[0-9a-z._-]+@[a-z0-9._-]{4,}/i", $email, $matches);
 
-    return strip_tags(preg_replace("#<script[^<]*</script[^>]*>#i", "", $str));
+    return $matches[0];
 }
 ?>
