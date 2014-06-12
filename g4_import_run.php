@@ -263,15 +263,21 @@ document.onkeydown = noRefresh ;
         // visit table 복사
         $sql = " select * from {$g4['visit_table']} ";
         $result = sql_query($sql);
+
+        // g5_visit 테이블 초기화
+        sql_query(" delete from {$g5['visit_table']} ");
+
         for($i=0; $row=sql_fetch_array($result); $i++) {
             if($is_euckr)
                 $row = array_map('iconv_utf8', $row);
 
             // 중복체크
+            /*
             $sql2 = " select count(*) as cnt from {$g5['visit_table']} where vi_ip = '{$row['vi_ip']}' and vi_date = '{$row['vi_date']}' ";
             $row2 = sql_fetch($sql2);
             if($row2['cnt'])
                 continue;
+            */
 
             $comma = '';
             $sql_common = '';
@@ -289,15 +295,21 @@ document.onkeydown = noRefresh ;
         // visit sum table 복사
         $sql = " select * from {$g4['visit_sum_table']} ";
         $result = sql_query($sql);
+
+        // g5_visit_sub 테이블 초기화
+        sql_query(" delete from {$g5['visit_sum_table']} ");
+
         for($i=0; $row=sql_fetch_array($result); $i++) {
             if($is_euckr)
                 $row = array_map('iconv_utf8', $row);
 
             // 중복체크
+            /*
             $sql2 = " select count(*) as cnt from {$g5['visit_sum_table']} where vs_date = '{$row['vs_date']}' ";
             $row2 = sql_fetch($sql2);
             if($row2['cnt'])
                 continue;
+            */
 
             $comma = '';
             $sql_common = '';
