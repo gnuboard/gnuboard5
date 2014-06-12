@@ -16,9 +16,19 @@ if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.');
 
 $g5['title'] = $pp['pp_name'].'님 개인결제';
-if($default['de_pg_service'] == 'lg') {
-    $g5['body_script'] = 'onload="isActiveXOK();"';
+
+// 전자결제를 사용할 때만 실행
+if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
+    switch($default['de_pg_service']) {
+        case 'lg':
+            $g5['body_script'] = 'onload="isActiveXOK();"';
+            break;
+        default:
+            $g5['body_script'] = 'onload="CheckPayplusInstall();"';
+            break;
+    }
 }
+
 include_once('./_head.php');
 
 $action_url = G5_HTTPS_SHOP_URL.'/personalpayformupdate.php';
