@@ -24,6 +24,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
         <?php
         $tv_tot_count = 0;
+        $k = 0;
         for ($i=1;$i<=$tv_idx;$i++)
         {
             $tv_it_idx = $tv_idx - ($i - 1);
