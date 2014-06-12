@@ -145,7 +145,7 @@ for ($i=0; $i<$cnt; $i++)
 $cancel_change = false;
 if (in_array($_POST['ct_status'], $status_cancel)) {
     $sql = " select count(*) as od_count1,
-                    SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '환불', 1, 0)) as od_count2
+                    SUM(IF(ct_status = '취소' OR ct_status = '반품' OR ct_status = '품절', 1, 0)) as od_count2
                 from {$g5['g5_shop_cart_table']}
                 where od_id = '$od_id' ";
     $row = sql_fetch($sql);
