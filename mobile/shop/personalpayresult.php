@@ -117,11 +117,11 @@ if($od['od_pg'] == 'lg') {
                 ?>
                 <tr>
                     <th scope="row">입금자명</th>
-                    <td><?php echo $pp['pp_deposit_name']; ?></td>
+                    <td><?php echo get_text($pp['pp_deposit_name']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">입금계좌</th>
-                    <td><?php echo $pp['pp_bank_account']; ?></td>
+                    <td><?php echo get_text($pp['pp_bank_account']); ?></td>
                 </tr>
                 <?php
                 }

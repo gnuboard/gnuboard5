@@ -346,8 +346,8 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
             <?php echo $od_paytype; ?>
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
-        <td headers="th_odrertel" class="td_tel"><?php echo $row['od_tel']; ?></td>
-        <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo $row['od_b_name']; ?>"><?php echo $row['od_b_name']; ?></a></td>
+        <td headers="th_odrertel" class="td_tel"><?php echo get_text($row['od_tel']); ?></td>
+        <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo get_text($row['od_b_name']); ?>"><?php echo get_text($row['od_b_name']); ?></a></td>
         <td rowspan="3" class="td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td rowspan="3" class="td_numincome"><?php echo number_format($row['od_receipt_price']); ?></td>
         <td rowspan="3" class="td_numcancel<?php echo $td_color; ?>"><?php echo number_format($row['od_cancel_price']); ?></td>

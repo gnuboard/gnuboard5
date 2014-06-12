@@ -292,11 +292,11 @@ if($od['od_pg'] == 'lg') {
                 ?>
                 <tr>
                     <th scope="row">입금자명</th>
-                    <td><?php echo $od['od_deposit_name']; ?></td>
+                    <td><?php echo get_text($od['od_deposit_name']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">입금계좌</th>
-                    <td><?php echo $od['od_bank_account']; ?></td>
+                    <td><?php echo get_text($od['od_bank_account']); ?></td>
                 </tr>
                 <?php
                 }
@@ -432,23 +432,23 @@ if($od['od_pg'] == 'lg') {
                 <tbody>
                 <tr>
                     <th scope="row">이 름</th>
-                    <td><?php echo $od['od_name']; ?></td>
+                    <td><?php echo get_text($od['od_name']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">전화번호</th>
-                    <td><?php echo $od['od_tel']; ?></td>
+                    <td><?php echo get_text($od['od_tel']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">핸드폰</th>
-                    <td><?php echo $od['od_hp']; ?></td>
+                    <td><?php echo get_text($od['od_hp']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">주 소</th>
-                    <td><?php echo sprintf("(%s-%s)", $od['od_zip1'], $od['od_zip2']).' '.print_address($od['od_addr1'], $od['od_addr2'], $od['od_addr3']); ?></td>
+                    <td><?php echo get_text(sprintf("(%s-%s)", $od['od_zip1'], $od['od_zip2']).' '.print_address($od['od_addr1'], $od['od_addr2'], $od['od_addr3'])); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">E-mail</th>
-                    <td><?php echo $od['od_email']; ?></td>
+                    <td><?php echo get_text($od['od_email']); ?></td>
                 </tr>
                 </tbody>
                 </table>
@@ -468,19 +468,19 @@ if($od['od_pg'] == 'lg') {
                 <tbody>
                 <tr>
                     <th scope="row">이 름</th>
-                    <td><?php echo $od['od_b_name']; ?></td>
+                    <td><?php echo get_text($od['od_b_name']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">전화번호</th>
-                    <td><?php echo $od['od_b_tel']; ?></td>
+                    <td><?php echo get_text($od['od_b_tel']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">핸드폰</th>
-                    <td><?php echo $od['od_b_hp']; ?></td>
+                    <td><?php echo get_text($od['od_b_hp']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">주 소</th>
-                    <td><?php echo sprintf("(%s-%s)", $od['od_b_zip1'], $od['od_b_zip2']).' '.print_address($od['od_b_addr1'], $od['od_b_addr2'], $od['od_b_addr3']); ?></td>
+                    <td><?php echo get_text(sprintf("(%s-%s)", $od['od_b_zip1'], $od['od_b_zip2']).' '.print_address($od['od_b_addr1'], $od['od_b_addr2'], $od['od_b_addr3'])); ?></td>
                 </tr>
                 <?php
                 // 희망배송일을 사용한다면

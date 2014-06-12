@@ -20,7 +20,7 @@ if (get_cart_count($tmp_cart_id) == 0)
 
 $g5['title'] = '주문서 작성';
 
-// LG Xpay 전자결제를 사용할 때만 실행
+// 전자결제를 사용할 때만 실행
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
     switch($default['de_pg_service']) {
         case 'lg':

@@ -410,6 +410,7 @@ if($default['de_tax_flag_use']) {
 }
 
 $od_pg = $default['de_pg_service'];
+$od_email = get_email_address($od_email);
 
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
