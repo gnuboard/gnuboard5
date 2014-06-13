@@ -19,13 +19,8 @@ if($od['od_receipt_price'] - $od['od_refund_price'] <= 0)
 $g5['title'] = $od['od_settle_case'].' 부분취소';
 include_once(G5_PATH.'/head.sub.php');
 
-// 과세, 비과세 취소가능 금액계산
-$sql = " select SUM( IF( ct_notax = 0, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as tax_mny,
-                SUM( IF( ct_notax = 1, ( IF(io_type = 1, (io_price * ct_qty), ( (ct_price + io_price) * ct_qty) ) - cp_price ), 0 ) ) as free_mny
-            from {$g5['g5_shop_cart_table']}
-            where od_id = '$od_id'
-              and ct_status IN ( '취소', '반품', '품절' ) ";
-$sum = sql_fetch($sql);
+// 취소가능금액
+$od_misu = abs($od['od_misu']);
 ?>
 
 <form name="forderpartcancel" method="post" action="./orderpartcancelupdate.php" onsubmit="return form_check(this);">
@@ -43,12 +38,9 @@ $sum = sql_fetch($sql);
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row">과세 취소가능 금액</th>
-            <td><?php echo display_price($sum['tax_mny']); ?></td>
+            <th scope="row">취소가능 금액</th>
+            <td><?php echo display_price($od_misu); ?></td>
         </tr>
-        <tr>
-            <th scope="row">비과세 취소가능 금액</th>
-            <td><?php echo display_price($sum['free_mny']); ?></td>
         </tr>
         <tr>
             <th scope="row"><label for="mod_tax_mny">과세 취소금액</label></th>
@@ -76,8 +68,7 @@ $sum = sql_fetch($sql);
 <script>
 function form_check(f)
 {
-    var max_tax_mny = parseInt(<?php echo $sum['tax_mny']; ?>);
-    var max_free_mny = parseInt(<?php echo $sum['free_mny']; ?>);
+    var max_mny = parseInt(<?php echo $od_misu; ?>);
     var tax_mny = parseInt(f.mod_tax_mny.value.replace("/[^0-9]/g", ""));
     var free_mny = parseInt(f.mod_free_mny.value.replace("/[^0-9]/g", ""));
 
@@ -86,13 +77,18 @@ function form_check(f)
         return false;
     }
 
-    if(tax_mny && tax_mny > max_tax_mny) {
-        alert("과세 취소금액을 "+number_format(String(max_tax_mny))+"원 이하로 입력해 주십시오.");
+    if((tax_mny && free_mny) && (tax_mny + free_mny) > max_mny) {
+        alert("과세, 비과세 취소금액의 합을 "+number_format(String(max_mny))+"원 이하로 입력해 주십시오.");
         return false;
     }
 
-    if(free_mny && free_mny > max_free_mny) {
-        alert("비과세 취소금액을 "+number_format(String(max_free_mny))+"원 이하로 입력해 주십시오.");
+    if(tax_mny && tax_mny > max_mny) {
+        alert("과세 취소금액을 "+number_format(String(max_mny))+"원 이하로 입력해 주십시오.");
+        return false;
+    }
+
+    if(free_mny && free_mny > max_mny) {
+        alert("비과세 취소금액을 "+number_format(String(max_mny))+"원 이하로 입력해 주십시오.");
         return false;
     }
 

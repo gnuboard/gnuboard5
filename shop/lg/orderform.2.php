@@ -7,7 +7,7 @@ $LGD_CUSTOM_PROCESSTYPE = 'TWOTR';
 <input type="hidden" name="CST_PLATFORM"                id="CST_PLATFORM"       value="<?php echo $CST_PLATFORM; ?>">      <!-- 테스트, 서비스 구분 -->
 <input type="hidden" name="CST_MID"                     id="CST_MID"            value="<?php echo $CST_MID; ?>">           <!-- 상점아이디 -->
 <input type="hidden" name="LGD_MID"                     id="LGD_MID"            value="<?php echo $LGD_MID; ?>">           <!-- 상점아이디 -->
-<input type="hidden" name="LGD_OID"                     id="LGD_OID"            value="<?php echo $od_id; ?>">                                   <!-- 주문번호 -->
+<input type="hidden" name="LGD_OID"                     id="LGD_OID"            value="<?php echo $od_id; ?>">             <!-- 주문번호 -->
 <input type="hidden" name="LGD_BUYER"                   id="LGD_BUYER"          value="">                                  <!-- 구매자 -->
 <input type="hidden" name="LGD_PRODUCTINFO"             id="LGD_PRODUCTINFO"    value="<?php echo $goods; ?>">             <!-- 상품정보 -->
 <input type="hidden" name="LGD_AMOUNT"                  id="LGD_AMOUNT"         value="">                                  <!-- 결제금액 -->
