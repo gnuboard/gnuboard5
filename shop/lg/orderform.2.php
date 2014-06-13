@@ -25,7 +25,17 @@ $LGD_CUSTOM_PROCESSTYPE = 'TWOTR';
 <input type="hidden" name="LGD_BUYERID"                 id="LGD_BUYERID"        value="<?php echo $LGD_BUYERID; ?>">       <!-- 구매자ID -->
 <input type="hidden" name="LGD_CUSTOM_USABLEPAY"        id="LGD_CUSTOM_USABLEPAY"   value="<?php echo $LGD_CUSTOM_USABLEPAY; ?>">   <!-- 결제가능수단 -->
 <input type="hidden" name="LGD_CASHRECEIPTYN"           id="LGD_CASHRECEIPTYN"  value="N">                                 <!-- 현금영수증 사용 설정 -->
+<input type="hidden" name="LGD_BUYERADDRESS"            id="LGD_BUYERADDRESS"   value="">                                  <!-- 구매자 주소 -->
 <input type="hidden" name="LGD_BUYERPHONE"              id="LGD_BUYERPHONE"     value="">                                  <!-- 구매자 휴대폰번호 -->
+<input type="hidden" name="LGD_RECEIVER"                id="LGD_RECEIVER"       value="">                                  <!-- 수취인 -->
+<input type="hidden" name="LGD_RECEIVERPHONE"           id="LGD_RECEIVERPHONE"  value="">                                  <!-- 수취인 휴대폰번호 -->
+
+<?php if($default['de_escrow_use']) { ?>
+<input type="hidden" name="LGD_ESCROW_ZIPCODE"          id="LGD_ESCROW_ZIPCODE" value="">                                  <!-- 에스크로배송지우편번호 -->
+<input type="hidden" name="LGD_ESCROW_ADDRESS1"         id="LGD_ESCROW_ADDRESS1" value="">                                 <!-- 에스크로배송지우편번호 -->
+<input type="hidden" name="LGD_ESCROW_ADDRESS2"         id="LGD_ESCROW_ADDRESS2" value="">                                 <!-- 에스크로배송지주소동까지 -->
+<input type="hidden" name="LGD_ESCROW_BUYERPHONE"       id="LGD_ESCROW_BUYERPHONE" value="">                               <!-- 에스크로배송지주소상세 -->
+<?php } ?>
 
 <!-- 가상계좌(무통장) 결제연동을 하시는 경우  할당/입금 결과를 통보받기 위해 반드시 LGD_CASNOTEURL 정보를 LG 유플러스에 전송해야 합니다 . -->
 <input type="hidden" name="LGD_CASNOTEURL"              id="LGD_CASNOTEURL"     value="<?php echo $LGD_CASNOTEURL ?>">     <!-- 가상계좌 NOTEURL -->

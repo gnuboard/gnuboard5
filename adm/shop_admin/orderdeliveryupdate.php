@@ -16,14 +16,6 @@ if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'])
 	$SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
 }
 
-$escrow_count = 0;
-if($_POST['send_escrow']) {
-    $escrow_tno  = array();
-    $escrow_corp = array();
-    $escrow_numb = array();
-    $escrow_idx  = 0;
-}
-
 if($_FILES['excelfile']['tmp_name']) {
     $file = $_FILES['excelfile']['tmp_name'];
 
@@ -142,11 +134,11 @@ if($_FILES['excelfile']['tmp_name']) {
 
         // 에스크로 배송
         if($_POST['send_escrow'] && $od['od_tno'] && $od['od_escrow']) {
-            $escrow_tno[$escrow_idx]  = $od['od_tno'];
-            $escrow_numb[$escrow_idx] = $od_invoice;
-            $escrow_corp[$escrow_idx] = $od_delivery_company;
-            $escrow_idx++;
-            $escrow_count++;
+            $escrow_tno  = $od['od_tno'];
+            $escrow_numb = $od_invoice;
+            $escrow_corp = $od_delivery_company;
+
+            include(G5_SHOP_PATH.'/'.$od['od_pg'].'/escrow.register.php');
         }
     }
 }
@@ -155,12 +147,6 @@ if($_FILES['excelfile']['tmp_name']) {
 if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'] && $sms_count)
 {
     $SMS->Send();
-}
-
-// 에스크로 배송
-if($_POST['send_escrow'] && $escrow_count)
-{
-    include_once('./orderescrow.inc.php');
 }
 
 $g5['title'] = '엑셀 배송일괄처리 결과';

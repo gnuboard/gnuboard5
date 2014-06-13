@@ -1369,6 +1369,14 @@ function forderform_check(f)
     f.LGD_BUYEREMAIL.value = f.od_email.value;
     f.LGD_BUYERPHONE.value = f.od_hp.value;
     f.LGD_AMOUNT.value = f.good_mny.value;
+    f.LGD_RECEIVER.value = f.od_b_name.value;
+    f.LGD_RECEIVERPHONE.value = f.od_b_hp.value;
+    <?php if($default['de_escrow_use']) { ?>
+    f.LGD_ESCROW_ZIPCODE.value = f.od_b_zip1.value + f.od_b_zip2.value;
+    f.LGD_ESCROW_ADDRESS1.value = f.od_b_addr1.value;
+    f.LGD_ESCROW_ADDRESS2.value = f.od_b_addr2.value;
+    f.LGD_ESCROW_BUYERPHONE.value = f.od_hp.value;
+    <?php } ?>
     <?php if($default['de_tax_flag_use']) { ?>
     f.LGD_TAXFREEAMOUNT.value = f.comm_free_mny.value;
     <?php } ?>

@@ -16,14 +16,6 @@ if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'])
 	$SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
 }
 
-$escrow_count = 0;
-if($_POST['send_escrow']) {
-    $escrow_tno  = array();
-    $escrow_corp = array();
-    $escrow_numb = array();
-    $escrow_idx  = 0;
-}
-
 for ($i=0; $i<count($_POST['chk']); $i++)
 {
     // 실제 번호를 넘김
@@ -106,11 +98,11 @@ for ($i=0; $i<count($_POST['chk']); $i++)
 
             // 에스크로 배송
             if($_POST['send_escrow'] && $od['od_tno'] && $od['od_escrow']) {
-                $escrow_tno[$escrow_idx]  = $od['od_tno'];
-                $escrow_numb[$escrow_idx] = $invoice;
-                $escrow_corp[$escrow_idx] = $delivery_company;
-                $escrow_idx++;
-                $escrow_count++;
+                $escrow_tno  = $od['od_tno'];
+                $escrow_numb = $invoice;
+                $escrow_corp = $delivery_company;
+
+                include(G5_SHOP_PATH.'/'.$od['od_pg'].'/escrow.register.php');
             }
 
             break;
@@ -150,12 +142,6 @@ for ($i=0; $i<count($_POST['chk']); $i++)
 if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'] && $sms_count)
 {
     $SMS->Send();
-}
-
-// 에스크로 배송
-if($_POST['send_escrow'] && $escrow_count)
-{
-    include_once('./orderescrow.inc.php');
 }
 
 $qstr  = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search";

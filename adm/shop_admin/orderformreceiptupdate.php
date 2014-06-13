@@ -130,17 +130,13 @@ include "./ordersms.inc.php";
 
 
 // 에스크로 배송처리
-if($_POST['od_pg'] == 'kcp' && $_POST['od_tno'] && $_POST['od_escrow'] == 1)
+if($_POST['od_tno'] && $_POST['od_escrow'] == 1)
 {
-    $escrow_tno  = array();
-    $escrow_corp = array();
-    $escrow_numb = array();
+    $escrow_tno  = $_POST['od_tno'];
+    $escrow_corp = $_POST['od_delivery_company'];
+    $escrow_numb = $_POST['od_invoice'];
 
-    $escrow_tno[0]  = $_POST['od_tno'];
-    $escrow_corp[0] = $_POST['od_delivery_company'];
-    $escrow_numb[0] = $_POST['od_invoice'];
-
-    include_once('./orderescrow.inc.php');
+    include(G5_SHOP_PATH.'/'.$od['od_pg'].'/escrow.register.php');
 }
 
 
