@@ -17,7 +17,7 @@ $LGD_CANCELAMOUNT     		= (int)$tax_mny;                                        
 $LGD_REMAINAMOUNT     		= (int)$od['od_receipt_price'] - (int)$od['od_refund_price'];   //취소전 남은금액
 
 $LGD_CANCELTAXFREEAMOUNT    = (int)$free_mny;                                               //면세대상 부분취소 금액 (과세/면세 혼용상점만 적용)
-$LGD_CANCELREASON     		= iconv_euckr($mod_memo);                                                    //취소사유
+$LGD_CANCELREASON     		= $mod_memo;                                                    //취소사유
 $LGD_RFACCOUNTNUM           = $_POST['LGD_RFACCOUNTNUM'];	 		                        //환불계좌 번호(가상계좌 환불인경우만 필수)
 $LGD_RFBANKCODE             = $_POST['LGD_RFBANKCODE'];	 		                            //환불계좌 은행코드(가상계좌 환불인경우만 필수)
 $LGD_RFCUSTOMERNAME         = $_POST['LGD_RFCUSTOMERNAME']; 		                        //환불계좌 예금주(가상계좌 환불인경우만 필수)
@@ -42,6 +42,7 @@ $xpay->Set("LGD_RFBANKCODE",            $LGD_RFBANKCODE);
 $xpay->Set("LGD_RFCUSTOMERNAME",        $LGD_RFCUSTOMERNAME);
 $xpay->Set("LGD_RFPHONE",               $LGD_RFPHONE);
 $xpay->Set("LGD_REQREMAIN",             "0");
+$xpay->Set("LGD_ENCODING",              "UTF-8");
 
 /*
  * 1. 결제 부분취소 요청 결과처리
