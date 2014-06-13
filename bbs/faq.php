@@ -64,11 +64,9 @@ if(is_file($skin_file)) {
     $faq_list = array();
 
     $stx = trim($stx);
-    $sql_search = '';
 
     if($stx) {
        $sql_search = " and ( INSTR(fa_subject, '$stx') > 0 or INSTR(fa_content, '$stx') > 0 ) ";
-       $category_stx = '&amp;stx='.$stx;
     }
 
     if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
@@ -92,8 +90,12 @@ if(is_file($skin_file)) {
                 order by fa_order , fa_id
                 limit $from_record, $page_rows ";
     $result = sql_query($sql);
-    while ($row=sql_fetch_array($result)){
+    for ($i=0;$row=sql_fetch_array($result);$i++){
         $faq_list[] = $row;
+        if($stx) {
+            $faq_list[$i]['fa_subject'] = search_font($stx, $faq_list[$i]['fa_subject']);
+            $faq_list[$i]['fa_content'] = search_font($stx, $faq_list[$i]['fa_content']);
+        }
     }
     include_once($skin_file);
 } else {
