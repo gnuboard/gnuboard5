@@ -603,7 +603,7 @@ if($od['od_pg'] == 'lg') {
                 <tr>
                     <th scope="row"><label for="od_deposit_name">입금자명</label></th>
                     <td>
-                        <?php if ($config['cf_sms_use'] && $default['de_sms_use3']) { ?>
+                        <?php if ($config['cf_sms_use'] && $default['de_sms_use4']) { ?>
                         <input type="checkbox" name="od_sms_ipgum_check" id="od_sms_ipgum_check">
                         <label for="od_sms_ipgum_check">SMS 입금 문자전송</label>
                         <br>
@@ -674,7 +674,7 @@ if($od['od_pg'] == 'lg') {
                 <tr>
                     <th scope="row"><label for="od_invoice">운송장번호</label></th>
                     <td>
-                        <?php if ($config['cf_sms_use'] && $default['de_sms_use4']) { ?>
+                        <?php if ($config['cf_sms_use'] && $default['de_sms_use5']) { ?>
                         <input type="checkbox" name="od_sms_baesong_check" id="od_sms_baesong_check">
                         <label for="od_sms_baesong_check">SMS 배송 문자전송</label>
                         <br>
