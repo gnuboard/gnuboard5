@@ -32,7 +32,7 @@ if( count($faq_master_list) ){
                 $category_msg = '<span class="sound_only">열린 분류 </span>';
             }
         ?>
-        <li><a href="<?php echo $category_href;?>?fm_id=<?php echo $v['fm_id'].$category_stx;?>" <?php echo $category_option;?> ><?php echo $category_msg.$v['fm_subject'];?></a></li>
+        <li><a href="<?php echo $category_href;?>?fm_id=<?php echo $v['fm_id'];?>" <?php echo $category_option;?> ><?php echo $category_msg.$v['fm_subject'];?></a></li>
         <?php
         }
         ?>
@@ -68,7 +68,7 @@ if( count($faq_master_list) ){
 
     } else {
         if($stx){
-            echo '<p>검색된 게시물이 없습니다.</p>';
+            echo '<p class="empty_list">검색된 게시물이 없습니다.</p>';
         } else {
             echo '<div class="empty_list">등록된 FAQ가 없습니다.';
             if($is_admin)
