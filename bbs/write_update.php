@@ -90,7 +90,7 @@ if (isset($_POST['notice']) && $_POST['notice']) {
 for ($i=1; $i<=10; $i++) {
     $var = "wr_$i";
     $$var = "";
-    if (isset($_POST['wr_'.$i]) && $_POST['wr_'.$i]) {
+    if (isset($_POST['wr_'.$i]) && settype($_POST['wr_'.$i], 'string')) {
         $$var = trim($_POST['wr_'.$i]);
     }
 }
