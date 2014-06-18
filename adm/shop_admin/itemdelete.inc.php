@@ -60,6 +60,9 @@ if (!function_exists("itemdelete")) {
         $sql = " delete from {$g5['g5_shop_item_relation_table']} where it_id = '$it_id' or it_id2 = '$it_id' ";
         sql_query($sql);
 
+        // 옵션삭제
+        sql_query(" delete from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' ");
+
 
         //------------------------------------------------------------------------
         // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
