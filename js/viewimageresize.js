@@ -16,6 +16,9 @@
         var $img = this.find(cfg.selector);
         var $this = this;
 
+        $img.removeAttr("height")
+            .css("height", "");
+
         function image_resize()
         {
             var width = $this.width();
