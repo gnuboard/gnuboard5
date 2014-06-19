@@ -38,7 +38,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="nw_id" value="<?php echo $nw_id; ?>">
 
 <div class="local_desc01 local_desc">
-    <p>쇼핑몰 초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다.</p>
+    <p>초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다.</p>
 </div>
 
 <div class="tbl_frm01 tbl_wrap">
