@@ -93,8 +93,8 @@ if($ps_run) {
                 if($spl_subject && strlen($spl)) {
                     $spl_id = $spl_subject.chr(30).$spl;
                     $spl_price = 0;
-                    $spl_stock_qty = 0;
-                    $spl_noti_qty = 0;
+                    $spl_stock_qty = 9999;
+                    $spl_noti_qty = 100;
                     $spl_use = 1;
 
                     // 기존에 설정된 값이 있는지 체크
@@ -106,10 +106,12 @@ if($ps_run) {
                                       and io_type = '1' ";
                         $row = sql_fetch($sql);
 
-                        $spl_price = (int)$row['io_price'];
-                        $spl_stock_qty = (int)$row['io_stock_qty'];
-                        $spl_noti_qty = (int)$row['io_noti_qty'];
-                        $spl_use = (int)$row['io_use'];
+                        if($row) {
+                            $spl_price = (int)$row['io_price'];
+                            $spl_stock_qty = (int)$row['io_stock_qty'];
+                            $spl_noti_qty = (int)$row['io_noti_qty'];
+                            $spl_use = (int)$row['io_use'];
+                        }
                     }
     ?>
     <tr>

@@ -130,8 +130,8 @@ if($po_run) {
                     if($opt_3_len)
                         $opt_id .= chr(30).$opt_3;
                     $opt_price = 0;
-                    $opt_stock_qty = 0;
-                    $opt_noti_qty = 0;
+                    $opt_stock_qty = 9999;
+                    $opt_noti_qty = 100;
                     $opt_use = 1;
 
                     // 기존에 설정된 값이 있는지 체크
@@ -143,10 +143,12 @@ if($po_run) {
                                       and io_type = '0' ";
                         $row = sql_fetch($sql);
 
-                        $opt_price = (int)$row['io_price'];
-                        $opt_stock_qty = (int)$row['io_stock_qty'];
-                        $opt_noti_qty = (int)$row['io_noti_qty'];
-                        $opt_use = (int)$row['io_use'];
+                        if($row) {
+                            $opt_price = (int)$row['io_price'];
+                            $opt_stock_qty = (int)$row['io_stock_qty'];
+                            $opt_noti_qty = (int)$row['io_noti_qty'];
+                            $opt_use = (int)$row['io_use'];
+                        }
                     }
     ?>
     <tr>
