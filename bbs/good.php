@@ -90,7 +90,7 @@ if($_POST['js'] == "on") {
 
     if (!$is_member)
     {
-        $href = './login.php?$qstr&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+        $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
 
         alert('회원만 가능합니다.', $href);
     }
