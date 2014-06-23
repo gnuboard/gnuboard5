@@ -492,7 +492,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_analytics">방문자분석 스크립트</label></th>
             <td colspan="3">
-                <?php echo help('방문자분석 스크립트 코드를 입력합니다. 예) 구글 애널리스틱'); ?>
+                <?php echo help('방문자분석 스크립트 코드를 입력합니다. 예) 구글 애널리틱스'); ?>
                 <textarea name="cf_analytics" id="cf_analytics"><?php echo $config['cf_analytics']; ?></textarea>
             </td>
         </tr>
