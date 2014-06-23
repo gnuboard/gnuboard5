@@ -115,7 +115,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
             $sql2 = " select it_id, sum(ct_qty) as sum_qty from {$g5['g5_shop_cart_table']} where od_id = '$od_id' and ct_status = '완료' group by it_id ";
             $result2 = sql_query($sql2);
             for ($k=0; $row2=sql_fetch_array($result2); $k++) {
-                $sql3 = " update {$g5['g5_shop_item_table']} set it_sum_qty = '{$row3['sum_qty']}' where it_id = '{$row3['it_id']}' ";
+                $sql3 = " update {$g5['g5_shop_item_table']} set it_sum_qty = it_sum_qty + '{$row2['sum_qty']}' where it_id = '{$row2['it_id']}' ";
                 sql_query($sql3);
             }
             break;
