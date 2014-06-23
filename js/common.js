@@ -132,7 +132,20 @@ function no_comma(data)
 function del(href)
 {
     if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
-        document.location.href = encodeURI(href);
+        var iev = -1;
+        if (navigator.appName == 'Microsoft Internet Explorer') {
+            var ua = navigator.userAgent;
+            var re = new RegExp("MSIE ([0-9]{1,}[\.0-9]{0,})");
+            if (re.exec(ua) != null)
+                iev = parseFloat(RegExp.$1);
+        }
+
+        // IE6 이하에서 한글깨짐 방지
+        if (iev != -1 && iev < 7) {
+            document.location.href = encodeURI(href);
+        } else {
+            document.location.href = href;
+        }
     }
 }
 
