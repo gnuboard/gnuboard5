@@ -153,8 +153,112 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
     if($row['od_count1'] == $row['od_count2']) {
         $cancel_change = true;
 
+        $pg_res_cd = '';
+        $pg_res_msg = '';
+        $pg_cancel_log = '';
+
+        // PG 신용카드 결제 취소일 때
+        if($pg_cancel == 1) {
+            $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
+            $od = sql_fetch($sql);
+
+            if($od['od_tno'] && $od['od_settle_case'] == '신용카드') {
+                switch($od['od_pg']) {
+                    case 'lg':
+                        include_once(G5_SHOP_PATH.'/settle_lg.inc.php');
+
+                        $LGD_TID = $od['od_tno'];
+
+                        $xpay = new XPay($configPath, $CST_PLATFORM);
+
+                        // Mert Key 설정
+                        $xpay->set_config_value('t'.$LGD_MID, $config['cf_lg_mert_key']);
+                        $xpay->set_config_value($LGD_MID, $config['cf_lg_mert_key']);
+
+                        $xpay->Init_TX($LGD_MID);
+
+                        $xpay->Set('LGD_TXNAME', 'Cancel');
+                        $xpay->Set('LGD_TID', $LGD_TID);
+
+                        if ($xpay->TX()) {
+                            $res_cd = $xpay->Response_Code();
+                            if($res_cd != '0000' && $res_cd != 'AV11') {
+                                $pg_res_cd = $res_cd;
+                                $pg_res_msg = $xpay->Response_Msg();
+                            }
+                        } else {
+                            $pg_res_cd = $xpay->Response_Code();
+                            $pg_res_msg = $xpay->Response_Msg();
+                        }
+                        break;
+                    default:
+                        include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
+                        require_once(G5_SHOP_PATH.'/kcp/pp_ax_hub_lib.php');
+
+                        // locale ko_KR.euc-kr 로 설정
+                        setlocale(LC_CTYPE, 'ko_KR.euc-kr');
+
+                        $c_PayPlus = new C_PP_CLI;
+
+                        $c_PayPlus->mf_clear();
+
+                        $tno = $od['od_tno'];
+                        $tran_cd = '00200000';
+                        $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
+                        $g_conf_key_dir   = '';
+                        $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
+                        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+                        {
+                            $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
+                        }
+                        $g_conf_site_cd  = $default['de_kcp_mid'];
+
+                        if (preg_match("/^T000/", $g_conf_site_cd) || $default['de_card_test']) {
+                            $g_conf_gw_url  = "testpaygw.kcp.co.kr";
+                        } else {
+                            $g_conf_gw_url  = "paygw.kcp.co.kr";
+                        }
+                        $cancel_msg = iconv_euckr('쇼핑몰 운영자 승인 취소');
+                        $cust_ip = $_SERVER['REMOTE_ADDR'];
+                        $bSucc_mod_type = "STSC";
+
+                        $c_PayPlus->mf_set_modx_data( "tno",      $tno                         );  // KCP 원거래 거래번호
+                        $c_PayPlus->mf_set_modx_data( "mod_type", $bSucc_mod_type              );  // 원거래 변경 요청 종류
+                        $c_PayPlus->mf_set_modx_data( "mod_ip",   $cust_ip                     );  // 변경 요청자 IP
+                        $c_PayPlus->mf_set_modx_data( "mod_desc", $cancel_msg );  // 변경 사유
+
+                        $c_PayPlus->mf_do_tx( $tno,  $g_conf_home_dir, $g_conf_site_cd,
+                                              $g_conf_site_key,  $tran_cd,    "",
+                                              $g_conf_gw_url,  $g_conf_gw_port,  "payplus_cli_slib",
+                                              $ordr_idxx, $cust_ip, "3" ,
+                                              0, 0, $g_conf_key_dir, $g_conf_log_dir);
+
+                        $res_cd  = $c_PayPlus->m_res_cd;
+                        $res_msg = $c_PayPlus->m_res_msg;
+
+                        if($res_cd != '0000') {
+                            $pg_res_cd = $res_cd;
+                            $pg_res_msg = iconv_utf8($res_msg);
+                        }
+
+                        // locale 설정 초기화
+                        setlocale(LC_CTYPE, '');
+                        break;
+                }
+
+                // PG 취소요청 성공했으면
+                if($pg_res_cd == '') {
+                    $pg_cancel_log = ' PG 신용카드 승인취소 처리';
+                    $sql = " update {$g5['g5_shop_order_table']}
+                                set od_refund_price = '{$od['od_receipt_price']}'
+                                where od_id = '$od_id' ";
+                    sql_query($sql);
+                }
+            }
+        }
+
         // 관리자 주문취소 로그
-        $mod_history .= G5_TIME_YMDHIS.' '.$member['mb_id'].' 주문'.$_POST['ct_status'].' 처리'."\n";
+        $mod_history .= G5_TIME_YMDHIS.' '.$member['mb_id'].' 주문'.$_POST['ct_status'].' 처리'.$pg_cancel_log."\n";
     }
 }
 
@@ -189,6 +293,13 @@ if($cancel_change) {
 
 $sql .= " where od_id = '$od_id' ";
 sql_query($sql);
+
+// 신용카드 취소 때 오류가 있으면 알림
+if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
+    echo '<script>';
+    echo 'alert("오류코드 : '.$pg_res_cd.' 오류내용 : '.$pg_res_msg.'");';
+    echo '</script>';
+}
 
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 

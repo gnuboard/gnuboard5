@@ -124,6 +124,7 @@ if($od['od_pg'] == 'lg') {
     <input type="hidden" name="sel_field" value="<?php echo $sel_field; ?>">
     <input type="hidden" name="search" value="<?php echo $search; ?>">
     <input type="hidden" name="page" value="<?php echo $page;?>">
+    <input type="hidden" name="pg_cancel" value="0">
 
     <div class="tbl_head01 tbl_wrap">
 
@@ -954,7 +955,27 @@ function form_submit(f)
         return false;
     }
 
-    if (confirm("\'" + status + "\' 상태를 선택하셨습니다.\n\n처리 하시겠습니까?")) {
+    var msg = "";
+
+    <?php if($od['od_settle_case'] == '신용카드') { ?>
+    if(status == "취소" || status == "반품" || status == "품절") {
+        var $ct_chk = $("input[name^=ct_chk]");
+        var chk_cnt = $ct_chk.size();
+        var chked_cnt = $ct_chk.filter(":checked").size();
+
+        if(chk_cnt == chked_cnt) {
+            if(confirm("PG사의 신용카드 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {
+                f.pg_cancel.value = 1;
+                msg = "PG사의 신용카드 결제 취소와 함께 ";
+            } else {
+                f.pg_cancel.value = 0;
+                msg = "";
+            }
+        }
+    }
+    <?php } ?>
+
+    if (confirm(msg+"\'" + status + "\' 상태를 선택하셨습니다.\n\n선택하신대로 처리하시겠습니까?")) {
         return true;
     } else {
         return false;
