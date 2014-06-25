@@ -6,7 +6,7 @@ $receive_number = preg_replace("/[^0-9]/", "", $od_hp);	// 수신자번호 (받�
 $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
 
 if ($config['cf_sms_use']) {
-    if ($od_sms_ipgum_check)
+    if ($od_sms_ipgum_check && $default['de_sms_use4'])
     {
         if ($od_bank_account && $od_receipt_price && $od_deposit_name)
         {
@@ -23,7 +23,7 @@ if ($config['cf_sms_use']) {
         }
     }
 
-    if ($od_sms_baesong_check)
+    if ($od_sms_baesong_check && $default['de_sms_use5'])
     {
         if ($od_delivery_company && $od_invoice)
         {
