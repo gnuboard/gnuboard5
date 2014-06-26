@@ -78,6 +78,8 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
             $sql = " select pp_id, od_id from {$g5['g5_shop_personalpay_table']} where pp_id = '$LGD_OID' and pp_tno = '$LGD_TID' ";
             $row = sql_fetch($sql);
 
+            $result = false;
+
             if($row['pp_id']) {
                 // 개인결제 UPDATE
                 $sql = " update {$g5['g5_shop_personalpay_table']}
@@ -115,22 +117,31 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
                 else
                     $od_id = $LGD_OID;
 
-                // 미수금 정보 업데이트
-                $info = get_order_info($od_id);
+                // 주문정보 체크
+                $sql = " select count(od_id) as cnt
+                            from {$g5['g5_shop_order_table']}
+                            where od_id = '$od_id'
+                              and od_status = '주문' ";
+                $row = sql_fetch($sql);
 
-                $sql = " update {$g5['g5_shop_order_table']}
-                            set od_misu     = '{$info['od_misu']}' ";
-                if($info['od_misu'] == 0)
-                    $sql .= " , od_status = '입금' ";
-                $sql .= " where od_id = '$od_id' ";
-                $result = sql_query($sql, FALSE);
+                if($row['cnt'] == 1) {
+                    // 미수금 정보 업데이트
+                    $info = get_order_info($od_id);
 
-                // 장바구니 상태변경
-                if($info['od_misu'] == 0) {
-                    $sql = " update {$g5['g5_shop_cart_table']}
-                                set ct_status = '입금'
-                                where od_id = '$od_id' ";
-                    sql_query($sql, FALSE);
+                    $sql = " update {$g5['g5_shop_order_table']}
+                                set od_misu = '{$info['od_misu']}' ";
+                    if($info['od_misu'] == 0)
+                        $sql .= " , od_status = '입금' ";
+                    $sql .= " where od_id = '$od_id' ";
+                    $result = sql_query($sql, FALSE);
+
+                    // 장바구니 상태변경
+                    if($info['od_misu'] == 0) {
+                        $sql = " update {$g5['g5_shop_cart_table']}
+                                    set ct_status = '입금'
+                                    where od_id = '$od_id' ";
+                        sql_query($sql, FALSE);
+                    }
                 }
             }
 

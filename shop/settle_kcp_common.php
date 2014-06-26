@@ -144,6 +144,8 @@ if(!$default['de_card_test']) {
         $sql = " select pp_id, od_id from {$g5['g5_shop_personalpay_table']} where pp_id = '$order_no' and pp_tno = '$tno' ";
         $row = sql_fetch($sql);
 
+        $result = false;
+
         if($row['pp_id']) {
             // 개인결제 UPDATE
             $sql = " update {$g5['g5_shop_personalpay_table']}
@@ -180,22 +182,31 @@ if(!$default['de_card_test']) {
         else
             $od_id = $order_no;
 
-        // 미수금 정보 업데이트
-        $info = get_order_info($od_id);
+        // 주문정보 체크
+        $sql = " select count(od_id) as cnt
+                    from {$g5['g5_shop_order_table']}
+                    where od_id = '$od_id'
+                      and od_status = '주문' ";
+        $row = sql_fetch($sql);
 
-        $sql = " update {$g5['g5_shop_order_table']}
-                    set od_misu     = '{$info['od_misu']}' ";
-        if($info['od_misu'] == 0)
-            $sql .= " , od_status = '입금' ";
-        $sql .= " where od_id = '$od_id' ";
-        sql_query($sql, FALSE);
+        if($row['cnt'] == 1) {
+            // 미수금 정보 업데이트
+            $info = get_order_info($od_id);
 
-        // 장바구니 상태변경
-        if($info['od_misu'] == 0) {
-            $sql = " update {$g5['g5_shop_cart_table']}
-                        set ct_status = '입금'
-                        where od_id = '$od_id' ";
+            $sql = " update {$g5['g5_shop_order_table']}
+                        set od_misu = '{$info['od_misu']}' ";
+            if($info['od_misu'] == 0)
+                $sql .= " , od_status = '입금' ";
+            $sql .= " where od_id = '$od_id' ";
             sql_query($sql, FALSE);
+
+            // 장바구니 상태변경
+            if($info['od_misu'] == 0) {
+                $sql = " update {$g5['g5_shop_cart_table']}
+                            set ct_status = '입금'
+                            where od_id = '$od_id' ";
+                sql_query($sql, FALSE);
+            }
         }
     }
 
