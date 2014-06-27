@@ -5,6 +5,7 @@ var isAndroid = (navigator.userAgent.toLowerCase().indexOf("android") > -1);
 $(function() {
     // 선택옵션
     /* 가상커서 ctrl keyup 이베트 대응 */
+    /*
     $("select.it_option").live("keyup", function(e) {
         var sel_count = $("select.it_option").size();
         var idx = $("select.it_option").index($(this));
@@ -19,6 +20,7 @@ $(function() {
             sel_option_process(true);
         }
     });
+    */
 
     /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
     $("select.it_option").live("keydown", function(e) {
@@ -107,6 +109,7 @@ $(function() {
 
     // 추가옵션
     /* 가상커서 ctrl keyup 이베트 대응 */
+    /*
     $("select.it_supply").live("keyup", function(e) {
         var $el = $(this);
         var code = e.keyCode;
@@ -120,6 +123,7 @@ $(function() {
             sel_supply_process($el, true);
         }
     });
+    */
 
     /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
     $("select.it_supply").live("keydown", function(e) {
