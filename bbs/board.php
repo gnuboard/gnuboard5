@@ -127,7 +127,7 @@ if (isset($wr_id) && $wr_id) {
             ;
         } else {
             // 글읽기 포인트가 설정되어 있다면
-            if ($board['bo_read_point'] && $member['mb_point'] + $board['bo_read_point'] < 0)
+            if ($config['cf_use_point'] && $board['bo_read_point'] && $member['mb_point'] + $board['bo_read_point'] < 0)
                 alert('보유하신 포인트('.number_format($member['mb_point']).')가 없거나 모자라서 글읽기('.number_format($board['bo_read_point']).')가 불가합니다.\\n\\n포인트를 모으신 후 다시 글읽기 해 주십시오.');
 
             insert_point($member['mb_id'], $board['bo_read_point'], "{$board['bo_subject']} {$wr_id} 글읽기", $bo_table, $wr_id, '읽기');
