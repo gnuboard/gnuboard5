@@ -160,6 +160,17 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
                       or ca_id3 = '{$row['ca_id']}' ";
         $row1 = sql_fetch($sql1);
 
+        // 스킨 Path
+        if(!$row['ca_skin_dir'])
+            $g5_shop_skin_path = G5_SHOP_SKIN_PATH;
+        else
+            $g5_shop_skin_path  = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$row['ca_skin_dir'];
+
+        if(!$row['ca_mobile_skin_dir'])
+            $g5_mshop_skin_path = G5_MSHOP_SKIN_PATH;
+        else
+            $g5_mshop_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$row['ca_mobile_skin_dir'];
+
         $bg = 'bg'.($i%2);
     ?>
     <tr class="<?php echo $bg; ?>">
@@ -192,7 +203,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             </select>
             <label for="ca_skin<?php echo $i; ?>" class="sound_only">PC스킨파일</label>
             <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]" required class="required">
-                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $row['ca_skin']); ?>
+                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_shop_skin_path, $row['ca_skin']); ?>
             </select>
         </td>
         <td class="td_mng" rowspan="2">
@@ -239,7 +250,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             </select>
             <label for="ca_mobile_skin<?php echo $i; ?>" class="sound_only">모바일스킨파일</label>
             <select id="ca_mobile_skin<?php echo $i; ?>" name="ca_mobile_skin[<?php echo $i; ?>]" required class="required">
-                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $row['ca_mobile_skin']); ?>
+                <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_mshop_skin_path, $row['ca_mobile_skin']); ?>
             </select>
         </td>
     </tr>

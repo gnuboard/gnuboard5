@@ -109,6 +109,17 @@ if(!sql_query(" select ca_order from {$g5['g5_shop_category_table']} limit 1 ", 
                     ADD `ca_order` int(11) NOT NULL DEFAULT '0' AFTER `ca_name` ", true);
     sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}` ADD INDEX(`ca_order`) ", true);
 }
+
+// 스킨 Path
+if(!$ca['ca_skin_dir'])
+    $g5_shop_skin_path = G5_SHOP_SKIN_PATH;
+else
+    $g5_shop_skin_path  = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_skin_dir'];
+
+if(!$ca['ca_mobile_skin_dir'])
+    $g5_mshop_skin_path = G5_MSHOP_SKIN_PATH;
+else
+    $g5_mshop_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_mobile_skin_dir'];
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -219,9 +230,9 @@ if(!sql_query(" select ca_order from {$g5['g5_shop_category_table']} limit 1 ", 
         <tr>
             <th scope="row"><label for="ca_skin">출력스킨</label></th>
             <td>
-                <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_SHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
+                <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_shop_skin_path).'/list.*.skin.php 입니다.'); ?>
                 <select id="ca_skin" name="ca_skin">
-                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $ca['ca_skin']); ?>
+                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_shop_skin_path, $ca['ca_skin']); ?>
                 </select>
             </td>
         </tr>
@@ -256,9 +267,9 @@ if(!sql_query(" select ca_order from {$g5['g5_shop_category_table']} limit 1 ", 
         <tr>
             <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
             <td>
-                <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', G5_MSHOP_SKIN_PATH).'/list.*.skin.php 입니다.'); ?>
+                <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_mshop_skin_path).'/list.*.skin.php 입니다.'); ?>
                 <select id="ca_mobile_skin" name="ca_mobile_skin">
-                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $ca['ca_mobile_skin']); ?>
+                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_mshop_skin_path, $ca['ca_mobile_skin']); ?>
                 </select>
             </td>
         </tr>
