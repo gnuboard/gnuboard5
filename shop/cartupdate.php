@@ -112,7 +112,7 @@ else // 장바구니에 담기
 
             // 기존에 장바구니에 담긴 상품이 있는 경우에 최대 구매수량 체크
             if($it['it_buy_max_qty'] > 0) {
-                $sql4 = " select count(*) as cnt
+                $sql4 = " select sum(ct_qty) as ct_sum
                             from {$g5['g5_shop_cart_table']}
                             where od_id = '$tmp_cart_id'
                               and it_id = '$it_id'
@@ -120,7 +120,7 @@ else // 장바구니에 담기
                               and ct_status = '쇼핑' ";
                 $row4 = sql_fetch($sql4);
 
-                if(($sum_qty + $row4['cnt']) > $it['it_buy_max_qty'])
+                if(($sum_qty + $row4['ct_sum']) > $it['it_buy_max_qty'])
                     alert($it['it_name'].'의 선택옵션 개수 총합 '.number_format($it['it_buy_max_qty']).'개 이하로 주문해 주십시오.', './cart.php');
             }
         }
