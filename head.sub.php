@@ -76,9 +76,15 @@ if ($is_admin) {
 ?>
 </script>
 <script src="<?php echo G5_JS_URL ?>/jquery-1.8.3.min.js"></script>
-<?php if (defined('_SHOP_')) { ?>
+<?php
+if (defined('_SHOP_')) {
+    if(!G5_IS_MOBILE) {
+?>
 <script src="<?php echo G5_JS_URL ?>/jquery.shop.menu.js"></script>
-<?php } else { ?>
+<?php
+    }
+} else {
+?>
 <script src="<?php echo G5_JS_URL ?>/jquery.menu.js"></script>
 <?php } ?>
 <script src="<?php echo G5_JS_URL ?>/common.js"></script>
