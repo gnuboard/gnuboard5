@@ -163,9 +163,6 @@
 .sit_sel_btn {position:relative;top:-15px;right:-2px} /* 선택옵션용 추가 버튼 */
 .sit_sel_btn button {width:100%}
 
-.td_sit_sel {position:relative}
-.sit_sel_submit {margin:5px 0 0 !important;width:100%}
-
 #sit_ov_soldout {margin:0 0 20px;color:#ff3061;font-weight:bold;text-align:center}
 
 #sit_ov_btn {margin:0;padding:0;text-align:center}

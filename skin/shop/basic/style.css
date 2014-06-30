@@ -384,9 +384,6 @@
 .sit_sel_btn {position:relative} /* 선택옵션용 추가 버튼 */
 .sit_sel_btn button {position:absolute;top:-51px;right:0 !important;right:15px}
 
-.td_sit_sel {position:relative}
-.sit_sel_submit {position:static !important;position:absolute;float:right !important;float:none;top:8px;right:0}
-
 #sit_sel_option h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 
 #sit_tot_price {margin:20px 0;font-size:1.3em;font-weight:bold}
