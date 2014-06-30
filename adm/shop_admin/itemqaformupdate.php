@@ -49,7 +49,7 @@ if ($w == "u")
             $subject = $config['cf_title'].' '.$row['it_name'].' 상품문의 답변 알림 메일';
             $content = conv_content($iq_answer, 1);
 
-            mailer($config['cf_title'], $admin['mb_email'], $row['iq_email'], $subject, $content, 1);
+            mailer($config['cf_title'], $config['cf_admin_email'], $row['iq_email'], $subject, $content, 1);
         }
     }
 
