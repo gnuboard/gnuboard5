@@ -25,14 +25,6 @@ for ($i=0; $i<$ext_cnt; $i++) {
 }
 //==========================================================================================================================
 
-// 완두콩님이 알려주신 보안관련 오류 수정
-// $member 에 값을 직접 넘길 수 있음
-$config = array();
-$member = array();
-$board  = array();
-$group  = array();
-$g5     = array();
-
 
 function g5_path()
 {
@@ -54,6 +46,73 @@ include_once($g5_path['path'].'/config.php');   // 설정 파일
 unset($g5_path);
 
 
+// multi-dimensional array에 사용자지정 함수적용
+function array_map_deep($fn, $array)
+{
+    if(is_array($array)) {
+        foreach($array as $key => $value) {
+            if(is_array($value)) {
+                $array[$key] = array_map_deep($fn, $value);
+            } else {
+                $array[$key] = call_user_func($fn, $value);
+            }
+        }
+    } else {
+        $array = call_user_func($fn, $array);
+    }
+
+    return $array;
+}
+
+
+// SQL Injection 대응 문자열 필터링
+function sql_escape_string($str)
+{
+    $pattern = G5_ESCAPE_PATTERN;
+    $replace = G5_ESCAPE_REPLACE;
+
+    $str = preg_replace($pattern, $replace, $str);
+    $str = call_user_func('addslashes', $str);
+
+    return $str;
+}
+
+
+//==============================================================================
+// SQL Injection 등으로 부터 보호를 위해 sql_escape_string() 적용
+//------------------------------------------------------------------------------
+// magic_quotes_gpc 에 의한 backslashes 제거
+if (get_magic_quotes_gpc()) {
+    $_POST    = array_map_deep('stripslashes',  $_POST);
+    $_GET     = array_map_deep('stripslashes',  $_GET);
+    $_COOKIE  = array_map_deep('stripslashes',  $_COOKIE);
+    $_REQUEST = array_map_deep('stripslashes',  $_REQUEST);
+}
+
+// sql_escape_string 적용
+$_POST    = array_map_deep(G5_ESCAPE_FUNCTION,  $_POST);
+$_GET     = array_map_deep(G5_ESCAPE_FUNCTION,  $_GET);
+$_COOKIE  = array_map_deep(G5_ESCAPE_FUNCTION,  $_COOKIE);
+$_REQUEST = array_map_deep(G5_ESCAPE_FUNCTION,  $_REQUEST);
+//==============================================================================
+
+
+// PHP 4.1.0 부터 지원됨
+// php.ini 의 register_globals=off 일 경우
+@extract($_GET);
+@extract($_POST);
+@extract($_SERVER);
+
+
+// 완두콩님이 알려주신 보안관련 오류 수정
+// $member 에 값을 직접 넘길 수 있음
+$config = array();
+$member = array();
+$board  = array();
+$group  = array();
+$g5     = array();
+
+
 //==============================================================================
 // 공통
 //------------------------------------------------------------------------------
@@ -71,30 +130,6 @@ if (file_exists($dbconfig_file)) {
     sql_query(" set names utf8 ");
     if(defined('G5_MYSQL_SET_MODE') && G5_MYSQL_SET_MODE) sql_query("SET SESSION sql_mode = ''");
     if (defined(G5_TIMEZONE)) sql_query(" set time_zone = '".G5_TIMEZONE."'");
-
-    //==============================================================================
-    // SQL Injection 등으로 부터 보호를 위해 sql_escape_string() 적용
-    //------------------------------------------------------------------------------
-    // magic_quotes_gpc 에 의한 backslashes 제거
-    if (get_magic_quotes_gpc()) {
-        $_POST    = array_map_deep('stripslashes',  $_POST);
-        $_GET     = array_map_deep('stripslashes',  $_GET);
-        $_COOKIE  = array_map_deep('stripslashes',  $_COOKIE);
-        $_REQUEST = array_map_deep('stripslashes',  $_REQUEST);
-    }
-
-    // sql_escape_string 적용
-    $_POST    = array_map_deep(G5_ESCAPE_FUNCTION,  $_POST);
-    $_GET     = array_map_deep(G5_ESCAPE_FUNCTION,  $_GET);
-    $_COOKIE  = array_map_deep(G5_ESCAPE_FUNCTION,  $_COOKIE);
-    $_REQUEST = array_map_deep(G5_ESCAPE_FUNCTION,  $_REQUEST);
-    //==============================================================================
-
-    // PHP 4.1.0 부터 지원됨
-    // php.ini 의 register_globals=off 일 경우
-    @extract($_GET);
-    @extract($_POST);
-    @extract($_SERVER);
 } else {
 ?>
 

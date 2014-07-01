@@ -7,36 +7,6 @@ if (!defined('_GNUBOARD_')) exit;
 **
 *************************************************************************/
 
-// multi-dimensional array에 사용자지정 함수적용
-function array_map_deep($fn, $array)
-{
-    if(is_array($array)) {
-        foreach($array as $key => $value) {
-            if(is_array($value)) {
-                $array[$key] = array_map_deep($fn, $value);
-            } else {
-                $array[$key] = call_user_func($fn, $value);
-            }
-        }
-    } else {
-        $array = call_user_func($fn, $array);
-    }
-
-    return $array;
-}
-
-// SQL Injection 대응 문자열 필터링
-function sql_escape_string($str)
-{
-    $pattern = '/(and|or).*(union|select|insert|update|delete|from|where|limit|create|drop).*/i';
-    $replace = '';
-
-    $str = preg_replace($pattern, $replace, $str);
-    $str = call_user_func(G5_ESCAPE_FUNCTION, $str);
-
-    return $str;
-}
-
 // 마이크로 타임을 얻어 계산 형식으로 만듦
 function get_microtime()
 {
