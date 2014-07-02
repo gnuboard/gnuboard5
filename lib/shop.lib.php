@@ -1444,9 +1444,6 @@ function get_sns_share_link($sns, $url, $title, $img)
         case 'googleplus':
             $str = '<a href="https://plus.google.com/share?url='.urlencode($url).'" class="share-googleplus" target="_blank"><img src="'.$img.'" alt="구글플러스에 공유"></a>';
             break;
-        case 'kakaotalk':
-            $str = '<a href="'.G5_MSHOP_URL.'/kakaolinkform.php?url='.urlencode($url).'&amp;title='.urlencode($title).'" target="_blank"><img src="'.$img.'" alt="카카오톡링크 보내기"></a>';
-            break;
     }
 
     return $str;
