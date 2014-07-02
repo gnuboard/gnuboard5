@@ -1,7 +1,6 @@
 <?php
 $sub_menu = '400400';
 include_once('./_common.php');
-include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
 
 auth_check($auth[$sub_menu], "w");
 

@@ -59,7 +59,7 @@ if ( $req_tx == "pay" )
             $c_PayPlus->mf_set_modx_data( "tno",      $tno                         );  // KCP 원거래 거래번호
             $c_PayPlus->mf_set_modx_data( "mod_type", $bSucc_mod_type              );  // 원거래 변경 요청 종류
             $c_PayPlus->mf_set_modx_data( "mod_ip",   $cust_ip                     );  // 변경 요청자 IP
-            $c_PayPlus->mf_set_modx_data( "mod_desc", $cancel_msg );  // 변경 사유
+            $c_PayPlus->mf_set_modx_data( "mod_desc", iconv_euckr($cancel_msg)     );  // 변경 사유
 
             $c_PayPlus->mf_do_tx( $tno,  $g_conf_home_dir, $g_conf_site_cd,
                                   $g_conf_site_key,  $tran_cd,    "",

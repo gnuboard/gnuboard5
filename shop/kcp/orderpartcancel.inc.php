@@ -3,6 +3,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if($od['od_pg'] != 'kcp') return;
 
+include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
+
 // locale ko_KR.euc-kr 로 설정
 setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
@@ -32,7 +34,7 @@ include G5_SHOP_PATH.'/kcp/pp_cli_hub_lib.php';
 
 $tno            = $od['od_tno'];
 $req_tx         = 'mod';
-$mod_desc       = $mod_memo;
+$mod_desc       = iconv_euckr($mod_memo);
 $cust_ip        = getenv('REMOTE_ADDR');
 $rem_mny        = (int)$od['od_receipt_price'] - (int)$od['od_refund_price'];
 $mod_mny        = (int)$tax_mny;
