@@ -195,10 +195,6 @@ if ($sw == 'move')
     sql_query(" update {$g5['board_table']} set bo_count_write = bo_count_write - '$save_count_write', bo_count_comment = bo_count_comment - '$save_count_comment' where bo_table = '$bo_table' ");
 }
 
-// syndication ping
-if(G5_SYNDI_USE)
-    include G5_SYNDI_PATH.'/include/include.bbs.move_update.php';
-
 $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.';
 $opener_href = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;'.$qstr;
 

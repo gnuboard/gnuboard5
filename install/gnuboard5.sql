@@ -665,22 +665,6 @@ CREATE TABLE IF NOT EXISTS `g5_uniqid` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `g5_syndi_log`
---
-
-DROP TABLE IF EXISTS `g5_syndi_log`;
-CREATE TABLE IF NOT EXISTS `g5_syndi_log` (
-  `content_id` int(11) NOT NULL, 
-  `bbs_id` varchar(50) NOT NULL, 
-  `title` text NOT NULL,
-  `link_alternative` varchar(250) NOT NULL, 
-  `delete_date` varchar(14) NOT NULL, 
-  PRIMARY KEY  (`content_id`,`bbs_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `g5_autosave`
 --
 
