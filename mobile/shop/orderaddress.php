@@ -25,6 +25,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
                     <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>">
                 </div>
                 <div class="addr_title">
+                    <label for="ad_subject<?php echo $i;?>" class="sound_only">배송지명</label>
                     <input type="text" name="ad_subject[<?php echo $i; ?>]" value="<?php echo $row['ad_subject']; ?>" id="ad_subject" class="frm_input" maxlength="20">
                 </div>
                 <div class="addr_default">
