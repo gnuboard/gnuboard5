@@ -83,7 +83,7 @@ if ($w == '' || $w == 'u') {
 
         // 본인확인 체크
         if($config['cf_cert_use'] && $config['cf_cert_req']) {
-            if(trim($_POST['cert_no']) != $_SESSION['ss_cert_no'])
+            if(trim($_POST['cert_no']) != $_SESSION['ss_cert_no'] || !$_SESSION['ss_cert_no'])
                 alert("회원가입을 위해서는 본인확인을 해주셔야 합니다.");
         }
 
