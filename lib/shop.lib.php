@@ -26,8 +26,9 @@ echo $disp->run();
 
 이벤트로 노출하는 경우 상세 사용법
 // type13.skin.php 스킨으로 3개씩 2줄을 폭 150 사이즈로 상품을 노출합니다.
-$disp = new item_list(0, "type13.skin.php", 3, 2, 150, 0);
-// 이벤토번호를 설정합니다.
+// 스킨의 경로는 스킨 파일의 절대경로를 지정합니다.
+$disp = new item_list(0, G5_SHOP_SKIN_PATH.'/list.10.skin.php', 3, 2, 150, 0);
+// 이벤트번호를 설정합니다.
 $disp->set_event("12345678");
 echo $disp->run();
 
