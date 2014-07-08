@@ -117,7 +117,6 @@ define('G5_PHPMAILER_PATH', G5_PLUGIN_PATH.'/'.G5_PHPMAILER_DIR);
 
 define('G5_USE_MOBILE', true); // 모바일 홈페이지를 사용하지 않을 경우 false 로 설정
 define('G5_USE_CACHE',  true); // 최신글등에 cache 기능 사용 여부
-define('G5_SYNDI_USE',  true); // Syndication 기능 사용 여부
 
 
 /********************

@@ -93,10 +93,6 @@ while ($row = sql_fetch_array($result))
         // 파일테이블 행 삭제
         sql_query(" delete from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ");
 
-		// syndication ping
-        if(G5_SYNDI_USE)
-		    include G5_SYNDI_PATH.'/include/include.bbs.delete.php';
-
         $count_write++;
     }
     else

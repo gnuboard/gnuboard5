@@ -30,8 +30,4 @@ delete_cache_latest($tmp_bo_table);
 
 // 게시판 폴더 전체 삭제
 rm_rf(G5_DATA_PATH.'/file/'.$tmp_bo_table);
-
-// syndication ping
-if(G5_SYNDI_USE)
-    include G5_SYNDI_PATH.'/include/include.adm.board_delete.inc.php';
 ?>

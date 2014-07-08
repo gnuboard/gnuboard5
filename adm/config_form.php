@@ -130,6 +130,16 @@ if(!isset($config['cf_add_meta'])) {
                     ADD `cf_add_meta` TEXT NOT NULL AFTER `cf_analytics` ", true);
 }
 
+if (!isset($config['cf_syndi_token'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_syndi_token` VARCHAR(255) NOT NULL AFTER `cf_add_meta` ", true);
+}
+
+if (!isset($config['cf_syndi_except'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_syndi_except` TEXT NOT NULL AFTER `cf_syndi_token` ", true);
+}
+
 if(!isset($config['cf_sms_use'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_sms_use` varchar(255) NOT NULL DEFAULT '' AFTER `cf_cert_limit`,
@@ -501,6 +511,21 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td colspan="3">
                 <?php echo help('추가로 사용하실 meta 태그를 입력합니다.'); ?>
                 <textarea name="cf_add_meta" id="cf_add_meta"><?php echo $config['cf_add_meta']; ?></textarea>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_syndi_token">네이버 신디케이션 연동키</label></th>
+            <td colspan="3">
+                <?php if (function_exists('curl_init')) echo help('<b>경고) curl이 지원되지 않아 네이버 신디케이션을 사용할수 없습니다.</b>'); ?>
+                <?php echo help('네이버 신디케이션 연동키(token)을 입력하면 네이버 신디케이션을 사용할 수 있습니다.<br>연동키는 <a href="http://webmastertool.naver.com/" target="_blank"><u>네이버 웹마스터도구</u></a> -> 네이버 신디케이션에서 발급할 수 있습니다.') ?>
+                <input type="text" name="cf_syndi_token" value="<?php echo $config['cf_syndi_token'] ?>" id="cf_syndi_token" class="frm_input" size="70">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_syndi_except">네이버 신디케이션 제외게시판</label></th>
+            <td colspan="3">
+                <?php echo help('네이버 신디케이션 수집에서 제외할 게시판 아이디를 | 로 구분하여 입력하십시오. 예) notice|adult<br>참고로 그룹접근사용 게시판, 글읽기 권한 2 이상 게시판, 비밀글은 신디케이션 수집에서 제외됩니다.') ?>
+                <input type="text" name="cf_syndi_except" value="<?php echo $config['cf_syndi_except'] ?>" id="cf_syndi_except" class="frm_input" size="70">
             </td>
         </tr>
         </tbody>
