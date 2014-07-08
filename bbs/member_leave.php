@@ -16,7 +16,7 @@ $sql = " update {$g5['member_table']} set mb_leave_date = '{$date}' where mb_id 
 sql_query($sql);
 
 // 3.09 수정 (로그아웃)
-session_unregister("ss_mb_id");
+unset($_SESSION['ss_mb_id']);
 
 if (!$url)
     $url = G5_URL;
