@@ -167,7 +167,7 @@ if($ca_dir_check) {
         if(is_dir($skin_dir)) {
             $form_skin_file = $skin_dir.'/item.form.skin.php';
 
-            if(!is_file($skin_file))
+            if(!is_file($form_skin_file))
                 $skin_dir = G5_MSHOP_SKIN_PATH;
         } else {
             $skin_dir = G5_MSHOP_SKIN_PATH;
