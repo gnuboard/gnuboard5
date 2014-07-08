@@ -49,7 +49,7 @@ sql_query($opt_sql);
 
 // html 에디터로 첨부된 이미지 파일 복사
 if($cp['it_explan']) {
-    $matchs = get_editor_image($cp['it_explan']);
+    $matchs = get_editor_image($cp['it_explan'], false);
 
     // 파일의 경로를 얻어 복사
     for($i=0;$i<count($matchs[1]);$i++) {
@@ -75,7 +75,7 @@ if($cp['it_explan']) {
 }
 
 if($cp['it_mobile_explan']) {
-    $matchs = get_editor_image($cp['it_mobile_explan']);
+    $matchs = get_editor_image($cp['it_mobile_explan'], false);
 
     // 파일의 경로를 얻어 복사
     for($i=0;$i<count($matchs[1]);$i++) {
