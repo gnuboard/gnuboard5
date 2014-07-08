@@ -14,8 +14,11 @@ function naver_syndi_ping($bo_table, $wr_id)
     // 토큰의 길이는 112 글자입니다.
     if (strlen($token) != 112) return -1;
 
+    // 신디케이션 수집 제외게시판
+    if (preg_match('#^('.$config['cf_syndi_except'].')$#', $bo_table)) return -2;
+
     // curl library 가 지원되어야 합니다.
-    if (!function_exists('curl_init')) return -2;
+    if (!function_exists('curl_init')) return -3;
 
     $ping_auth_header = "Authorization: Bearer " . $token;
     $ping_url = urlencode( G5_SYNDI_URL . "/ping.php?bo_table={$bo_table}&wr_id={$wr_id}" );
@@ -29,11 +32,11 @@ function naver_syndi_ping($bo_table, $wr_id)
         CURLOPT_HTTPHEADER => array("Host: apis.naver.com", "Pragma: no-cache", "Accept: */*", $ping_auth_header)
     ); 
 
+    //print_r2($ping_client_opt); exit;
     $ping = curl_init(); 
     curl_setopt_array($ping, $ping_client_opt); 
     $response = curl_exec($ping); 
     curl_close($ping);
-    //print_r2($ping_client_opt); exit;
 
     return $response;
 }

@@ -10,11 +10,11 @@ if ($group['gr_use_access'])
 if ($board['bo_read_level'] > 1) 
     die("비회원 읽기가 가능한 게시판만 신디케이션을 지원합니다.");
 
-if (preg_match('#^('.SYNDI_EXCEPT_TABLE.')$#', $bo_table)) 
-    die("신디케이션에서 제외된 게시판입니다.");
-
 if (strstr($write['wr_option'], 'secret')) 
     die("비밀글은 신디케이션을 지원하지 않습니다.");
+
+if (preg_match('#^('.$config['cf_syndi_except'].')$#', $bo_table)) 
+    die("신디케이션에서 제외된 게시판입니다.");
 
 $title        = htmlspecialchars($write['wr_subject']);
 $author       = htmlspecialchars($write['wr_name']);
