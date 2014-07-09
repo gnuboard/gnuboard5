@@ -65,9 +65,5 @@ if ($w == '') {
     alert('제대로 된 값이 넘어오지 않았습니다.');
 }
 
-// syndication ping
-if(G5_SYNDI_USE)
-    include G5_SYNDI_PATH.'/include/include.adm.boardgroup_form_update.php';
-
 goto_url('./boardgroup_form.php?w=u&amp;gr_id='.$gr_id.'&amp;'.$qstr);
 ?>
