@@ -68,10 +68,14 @@ function array_map_deep($fn, $array)
 // SQL Injection 대응 문자열 필터링
 function sql_escape_string($str)
 {
-    $pattern = G5_ESCAPE_PATTERN;
-    $replace = G5_ESCAPE_REPLACE;
+    if(defined('G5_ESCAPE_PATTERN') && defined('G5_ESCAPE_REPLACE')) {
+        $pattern = G5_ESCAPE_PATTERN;
+        $replace = G5_ESCAPE_REPLACE;
 
-    $str = preg_replace($pattern, $replace, $str);
+        if($pattern)
+            $str = preg_replace($pattern, $replace, $str);
+    }
+
     $str = call_user_func('addslashes', $str);
 
     return $str;
