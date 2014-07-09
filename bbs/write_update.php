@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+include_once(G5_LIB_PATH.'/naver_syndi.lib.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 $g5['title'] = '게시글 저장';
@@ -476,9 +477,10 @@ if ($w == '' || $w == 'r') {
     sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
 }
 
-// syndication ping
-if(G5_SYNDI_USE)
-    include G5_SYNDI_PATH.'/include/include.bbs.write_update.php';
+// 게시판그룹접근사용을 하지 않아야 하고 비회원 글읽기가 가능해야 하며 비밀글이 아니어야 합니다.
+if (!$group['gr_use_access'] && $board['bO_read_level'] < 2 && !$secret) {
+    naver_syndi_ping($bo_table, $wr_id);
+}
 
 //------------------------------------------------------------------------------
 // 가변 파일 업로드

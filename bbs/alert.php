@@ -43,7 +43,7 @@ if($error) {
 alert("<?php echo strip_tags($msg); ?>");
 //document.location.href = "<?php echo $url; ?>";
 <?php if ($url) { ?>
-document.location.replace("<?php echo $url; ?>");
+document.location.replace("<?php echo str_replace('&amp;', '&', $url); ?>");
 <?php } else { ?>
 //alert('history.back();');
 history.back();
