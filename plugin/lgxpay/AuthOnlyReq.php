@@ -61,7 +61,7 @@ $LGD_HASHDATA   = md5($LGD_MID.$LGD_BUYERSSN.$LGD_TIMESTAMP.$LGD_MERTKEY);
 <title>LG유플러스 전자결제 본인확인서비스</title>
 <!-- 고객사 사이트가 https인 경우는 아래 http://을 https:// 으로 변경하시면 됩니다. -->
 <link rel="stylesheet" href="<?php echo G5_CSS_URL;?>/default.css">
-<script language="javascript" src="//xpay.uplus.co.kr/xpay/js/xpay_authonly.js" type="text/javascript"></script>
+<script language="javascript" src="//xpay.uplus.co.kr/xpay/js/xpay_authonly.js" type="text/javascript" charset="EUC-KR"></script>
 <script>
 function do_Authonly() {
     ret = xpay_authonly_check(document.getElementById("LGD_PAYINFO"), document.getElementById("CST_PLATFORM").value);

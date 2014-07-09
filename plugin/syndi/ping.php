@@ -1,62 +1,64 @@
-<?php
-include_once('./_common.php');
+<?
+include_once("./_common.php");
 
-header('Content-Type: text/html; charset=UTF-8');
-header('Pragma: no-cache');
+if (!$write) 
+    die("게시글이 없습니다.");
 
-if(version_compare(PHP_VERSION, '5.3.0') >= 0)
-{
-    date_default_timezone_set(@date_default_timezone_get());
-}
+if ($group['gr_use_access']) 
+    die("게시판그룹에서 접근사용을 해제하여 주십시오.");
 
-error_reporting(E_ALL & ~E_NOTICE & ~E_STRICT);
+if ($board['bo_read_level'] > 1) 
+    die("비회원 읽기가 가능한 게시판만 신디케이션을 지원합니다.");
 
-$syndi_path = dirname(__FILE__);
+if (strstr($write['wr_option'], 'secret')) 
+    die("비밀글은 신디케이션을 지원하지 않습니다.");
 
-include $syndi_path . '/config/site.config.php';
+if (preg_match('#^('.$config['cf_syndi_except'].')$#', $bo_table)) 
+    die("신디케이션에서 제외된 게시판입니다.");
 
-$sql = " select bo_table from " . $g5['board_table'] . " b, ". $g5['group_table'] . " g where b.bo_read_level=1 and b.bo_list_level=1 and g.gr_use_access=0 and g.gr_id = b.gr_id order by b.gr_id, b.bo_table limit 1 ";
-$channel = sql_fetch($sql);
+$title        = htmlspecialchars($write['wr_subject']);
+$author       = htmlspecialchars($write['wr_name']);
+$published    = date('Y-m-d\TH:i:s\+09:00', strtotime($write['wr_datetime']));
+$updated      = $published;
+$link_href    = G5_BBS_URL . "/board.php?bo_table={$bo_table}";
+$id           = $link_href . htmlspecialchars("&wr_id={$wr_id}");
+$link_title   = $board['bo_subject'];
+$feed_updated = date('Y-m-d\TH:i:s\+09:00', G5_SERVER_TIME);
 
-if (!$channel) die("게시판이 존재하지 않습니다. 게시판 생성후 실행하시기 바랍니다.");
-$sql = " select wr_id from {$g5['write_prefix']}{$channel['bo_table']} where wr_is_comment = 0 order by wr_num, wr_reply desc limit 1 ";
-$article = sql_fetch($sql);
+$find         = array('&amp;', '&nbsp;'); # 찾아서
+$replace      = array('&', ' '); # 바꾼다
+
+$content      = str_replace( $find, $replace, $write['wr_content'] );
+$summary      = str_replace( $find, $replace, strip_tags($write['wr_content']) );
+
+Header("Content-type: text/xml"); 
+header("Cache-Control: no-cache, must-revalidate"); 
+header("Pragma: no-cache"); 
+
+echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+echo "<feed xmlns=\"http://webmastertool.naver.com\">\n";
+echo "<id>" . G5_URL . "</id>\n";
+echo "<title>naver syndication feed document</title>\n";
+echo "<author>\n";
+    echo "<name>webmaster</name>\n";
+echo "</author>\n";
+
+echo "<updated>{$feed_updated}</updated>\n";
+
+echo "<link rel=\"site\" href=\"" . G5_URL . "\" title=\"{$config['cf_title']}\" />\n";
+echo "<entry>\n";
+    echo "<id>{$id}</id>\n";
+    echo "<title><![CDATA[{$title}]]></title>\n";
+    echo "<author>\n";
+        echo "<name>{$author}</name>\n";
+    echo "</author>\n";
+    echo "<updated>{$updated}</updated>\n";
+    echo "<published>{$published}</published>\n";
+    echo "<link rel=\"via\" href=\"{$link_href}\" title=\"{$link_title}\" />\n";
+    echo "<link rel=\"mobile\" href=\"{$id}\" />\n";
+    echo "<content type=\"html\"><![CDATA[{$content}]]></content>\n";
+    echo "<summary type=\"text\"><![CDATA[{$summary}]]></summary>\n";
+    echo "<category term=\"{$bo_table}\" label=\"{$link_title}\" />\n";
+echo "</entry>\n";
+echo "</feed>";
 ?>
-
-<!doctype html>
-<html lang="ko">
-<head>
-<meta charset="utf-8">
-<title>네이버 신디케이션 핑</title>
-<style>
-body {background:#f5f6fa;color:#000}
-h1 {padding:20px 0 0;text-align:center}
-ul {margin:30px;padding:0;border:1px solid #aaa;border:1px solid #aaa;list-style:none;zoom:1}
-ul:after {display:block;visibility:hidden;clear:both;content:""}
-li {float:left;width:50%;border-bottom:1px solid #e9e9e9}
-a {display:block;padding:1em;height:2em;background:#fff;color:#000;font-weight:bold;text-decoration:none}
-a:focus, a:hover {background:#333;color:#fff;text-decoration:none}
-.left_line {border-left:1px solid #e9e9e9}
-.no_bottom_line {border-bottom:0 !important}
-.bg {background:#f7f7f7}
-</style>
-</head>
-
-<body>
-<h1>네이버 신디케이션 핑 (Naver Syndication PING)</h1>
-
-<ul>
-    <li><a href="http://developer.naver.com/wiki/pages/SyndicationAPI">Syndication API</a></li>
-    <li><a href="http://syndication.openapi.naver.com/status/?site=<?php echo $syndi_tag_domain; ?>" class="left_line">Naver Syndication 연결확인</a></li>
-    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=site" class="bg">사이트 정보</a></li>
-    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=channel" class="bg left_line">특정 채널 정보</a></li>
-    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=channel" class="bg">채널 목록</a></li>
-    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&type=article" class="left_line">사이트의 모든 문서 목록</a></li>
-    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=article">특정 채널의 문서 목록</a></li>
-    <li><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:article:<?php echo $channel['bo_table']; ?>-<?php echo $article['wr_id']; ?>&type=article" class="left_line">특정 문서 정보</a></li>
-    <li class="no_bottom_line"><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:site&amp;type=deleted" class="bg">사이트의 모든 삭제문서 목록</a></li>
-    <li class="no_bottom_line"><a href="<?php echo G5_SYNDI_URL; ?>/syndi_echo.php?id=tag:<?php echo $syndi_tag_domain.','.$syndi_tag_year; ?>:channel:<?php echo $channel['bo_table']; ?>&type=deleted" class="bg left_line">특정 채널의 삭제 문서 목록</a></li>
-</ul>
-
-</body>
-</html>
