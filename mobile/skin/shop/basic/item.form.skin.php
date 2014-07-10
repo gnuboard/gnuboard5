@@ -6,6 +6,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
+<?php if($config['cf_kakao_js_apikey']) { ?>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/kakaolink.js"></script>
+<script>
+    // 사용할 앱의 Javascript 키를 설정해 주세요.
+    Kakao.init("<?php echo $config['cf_kakao_js_apikey']; ?>");
+</script>
+<?php } ?>
 
 <form name="fitem" action="<?php echo $action_url; ?>" method="post" onsubmit="return fitem_submit(this);">
 <input type="hidden" name="it_id[]" value="<?php echo $it['it_id']; ?>">
@@ -65,6 +73,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
             <?php echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_fb.png'); ?>
             <?php echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_twt.png'); ?>
             <?php echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_goo.png'); ?>
+            <?php echo get_sns_share_link('kakaotalk', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_kakao.png'); ?>
         </div>
         <table class="sit_ov_tbl">
         <colgroup>

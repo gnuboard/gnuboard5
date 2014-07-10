@@ -6,6 +6,14 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 ?>
 
 <script src="<?php echo G5_JS_URL ?>/jquery.fancylist.js"></script>
+<?php if($config['cf_kakao_js_apikey']) { ?>
+<script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+<script src="<?php echo G5_JS_URL; ?>/kakaolink.js"></script>
+<script>
+    // 사용할 앱의 Javascript 키를 설정해 주세요.
+    Kakao.init("<?php echo $config['cf_kakao_js_apikey']; ?>");
+</script>
+<?php } ?>
 
 <!-- 상품진열 10 시작 { -->
 <?php
@@ -79,6 +87,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_fb.png');
         echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_twt.png');
         echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_goo.png');
+        echo get_sns_share_link('kakaotalk', $sns_url, $sns_title, G5_MSHOP_SKIN_URL.'/img/sns_kakao.png');
         echo "</div>\n";
     }
 
