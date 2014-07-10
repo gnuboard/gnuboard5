@@ -127,6 +127,7 @@ $sql = " update {$g5['config_table']}
                 cf_icode_server_ip = '{$_POST['cf_icode_server_ip']}',
                 cf_icode_server_port = '{$_POST['cf_icode_server_port']}',
                 cf_googl_shorturl_apikey = '{$_POST['cf_googl_shorturl_apikey']}',
+                cf_kakao_js_apikey = '{$_POST['cf_kakao_js_apikey']}',
                 cf_facebook_appid = '{$_POST['cf_facebook_appid']}',
                 cf_facebook_secret = '{$_POST['cf_facebook_secret']}',
                 cf_twitter_key = '{$_POST['cf_twitter_key']}',
