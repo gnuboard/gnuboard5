@@ -24,7 +24,7 @@ function itemqa_page($write_pages, $cur_page, $total_page, $url, $add="")
 
     if ($end_page >= $total_page) $end_page = $total_page;
 
-    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="qa_page pg_prev">이전</a>'.PHP_EOL;
+    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="qa_page pg_page pg_prev">이전</a>'.PHP_EOL;
 
     if ($total_page > 1) {
         for ($k=$start_page;$k<=$end_page;$k++) {
@@ -35,7 +35,7 @@ function itemqa_page($write_pages, $cur_page, $total_page, $url, $add="")
         }
     }
 
-    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="qa_page pg_next">다음</a>'.PHP_EOL;
+    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="qa_page pg_page pg_next">다음</a>'.PHP_EOL;
 
     if ($cur_page < $total_page) {
         $str .= '<a href="'.$url.$total_page.$add.'" class="qa_page pg_page pg_end">맨끝</a>'.PHP_EOL;
