@@ -203,6 +203,7 @@
 #bo_vc a {color:#000;text-decoration:none}
 #bo_vc p {padding:0 0 5px;line-height:1.8em}
 #bo_vc p a {text-decoration:underline}
+#bo_vc p a.s_cmt {text-decoration:none}
 #bo_vc_empty {margin:0;padding:15px !important;text-align:center}
 #bo_vc #bo_vc_winfo {float:left}
 #bo_vc footer {zoom:1}

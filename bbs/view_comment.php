@@ -49,6 +49,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $list[$i]['content1'] = $row['wr_content'];
         $list[$i]['content'] = conv_content($row['wr_content'], 0, 'wr_content');
         $list[$i]['content'] = search_font($stx, $list[$i]['content']);
+    } else {
+        $ss_name = 'ss_secret_comment_'.$bo_table.'_'.$list[$i]['wr_id'];
+
+        if(!get_session($ss_name))
+            $list[$i]['content'] = '<a href="./password.php?w=sc&amp;bo_table='.$bo_table.'&amp;wr_id='.$list[$i]['wr_id'].$qstr.'" class="s_cmt">댓글내용 확인</a>';
+        else {
+            $list[$i]['content'] = conv_content($row['wr_content'], 0, 'wr_content');
+            $list[$i]['content'] = search_font($stx, $list[$i]['content']);
+        }
     }
 
     $list[$i]['datetime'] = substr($row['wr_datetime'],2,14);
