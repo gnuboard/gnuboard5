@@ -39,7 +39,7 @@ if ($csv == 'csv')
     $to_date = date_conv($to_date);
 
 
-    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_addr3, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost
+    $sql = " SELECT a.od_id, od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_addr3, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost, b.it_sc_type
                FROM {$g5['g5_shop_order_table']} a, {$g5['g5_shop_cart_table']} b
               where a.od_id = b.od_id ";
     if ($case == 1) // 출력기간
@@ -66,6 +66,15 @@ if ($csv == 'csv')
     for ($i=0; $row=mysql_fetch_array($result); $i++)
     {
         $row = array_map('iconv_euckr', $row);
+
+        // 합계금액 계산
+        $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                        SUM(ct_qty) as qty
+                    from {$g5['g5_shop_cart_table']}
+                    where it_id = '{$row['it_id']}'
+                      and od_id = '{$row['od_id']}' ";
+        $sum = sql_fetch($sql);
+
         switch($row['ct_send_cost'])
         {
             case 1:
@@ -78,6 +87,15 @@ if ($csv == 'csv')
                 $ct_send_cost = '선불';
                 break;
         }
+
+        // 조건부무료
+        if($row['it_sc_type'] == 2) {
+            $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $row['od_id']);
+
+            if($sendcost == 0)
+                $ct_send_cost = '무료';
+        }
+
         $ct_send_cost = iconv_euckr($ct_send_cost);
 
         echo '"'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'"'.',';
@@ -110,7 +128,7 @@ if ($csv == 'xls')
     $fr_date = date_conv($fr_date);
     $to_date = date_conv($to_date);
 
-    $sql = " SELECT od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_addr3, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost
+    $sql = " SELECT a.od_id, od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_addr3, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost, b.it_sc_type
                FROM {$g5['g5_shop_order_table']} a, {$g5['g5_shop_cart_table']} b
               where a.od_id = b.od_id ";
     if ($case == 1) // 출력기간
@@ -146,6 +164,14 @@ if ($csv == 'xls')
     }
 
     for($i=1; $row=sql_fetch_array($result); $i++) {
+        // 합계금액 계산
+        $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                        SUM(ct_qty) as qty
+                    from {$g5['g5_shop_cart_table']}
+                    where it_id = '{$row['it_id']}'
+                      and od_id = '{$row['od_id']}' ";
+        $sum = sql_fetch($sql);
+
         switch($row['ct_send_cost'])
         {
             case 1:
@@ -158,6 +184,15 @@ if ($csv == 'xls')
                 $ct_send_cost = '선불';
                 break;
         }
+
+        // 조건부무료
+        if($row['it_sc_type'] == 2) {
+            $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $row['od_id']);
+
+            if($sendcost == 0)
+                $ct_send_cost = '무료';
+        }
+
         $ct_send_cost = iconv_euckr($ct_send_cost);
         $row = array_map('iconv_euckr', $row);
 
@@ -340,6 +375,22 @@ if (mysql_num_rows($result) == 0)
                     default:
                         $ct_send_cost = '선불';
                         break;
+                }
+
+                // 합계금액 계산
+                $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                                SUM(ct_qty) as qty
+                            from {$g5['g5_shop_cart_table']}
+                            where it_id = '{$row2['it_id']}'
+                              and od_id = '{$row2['od_id']}' ";
+                $sum = sql_fetch($sql);
+
+                // 조건부무료
+                if($row2['it_sc_type'] == 2) {
+                    $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $row['od_id']);
+
+                    if($sendcost == 0)
+                        $ct_send_cost = '무료';
                 }
 
                 $fontqty1 = $fontqty2 = "";

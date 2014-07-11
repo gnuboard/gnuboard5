@@ -57,6 +57,7 @@ ob_start();
                         a.ct_qty,
                         a.ct_status,
                         a.ct_send_cost,
+                        a.it_sc_type,
                         b.ca_id,
                         b.ca_id2,
                         b.ca_id3,
@@ -179,6 +180,14 @@ ob_start();
                 default:
                     $ct_send_cost = '선불';
                     break;
+            }
+
+            // 조건부무료
+            if($row['it_sc_type'] == 2) {
+                $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
+
+                if($sendcost == 0)
+                    $ct_send_cost = '무료';
             }
         ?>
 

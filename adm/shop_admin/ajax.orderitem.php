@@ -17,7 +17,8 @@ $sql = " select it_id,
                 it_name,
                 cp_price,
                 ct_notax,
-                ct_send_cost
+                ct_send_cost,
+                it_sc_type
            from {$g5['g5_shop_cart_table']}
           where od_id = '$od_id'
           group by it_id
@@ -81,6 +82,14 @@ $result = sql_query($sql);
                     default:
                         $ct_send_cost = '선불';
                         break;
+                }
+
+                // 조건부무료
+                if($row['it_sc_type'] == 2) {
+                    $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
+
+                    if($sendcost == 0)
+                        $ct_send_cost = '무료';
                 }
             ?>
             <tr>

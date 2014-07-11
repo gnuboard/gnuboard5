@@ -58,7 +58,8 @@ $sql = " select it_id,
                 it_name,
                 cp_price,
                 ct_notax,
-                ct_send_cost
+                ct_send_cost,
+                it_sc_type
            from {$g5['g5_shop_cart_table']}
           where od_id = '{$od['od_id']}'
           group by it_id
@@ -165,6 +166,14 @@ if($od['od_pg'] == 'lg') {
             $res = sql_query($sql);
             $rowspan = mysql_num_rows($res);
 
+            // 합계금액 계산
+            $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                            SUM(ct_qty) as qty
+                        from {$g5['g5_shop_cart_table']}
+                        where it_id = '{$row['it_id']}'
+                          and od_id = '{$od['od_id']}' ";
+            $sum = sql_fetch($sql);
+
             // 배송비
             switch($row['ct_send_cost'])
             {
@@ -177,6 +186,14 @@ if($od['od_pg'] == 'lg') {
                 default:
                     $ct_send_cost = '선불';
                     break;
+            }
+
+            // 조건부무료
+            if($row['it_sc_type'] == 2) {
+                $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $od['od_id']);
+
+                if($sendcost == 0)
+                    $ct_send_cost = '무료';
             }
 
             for($k=0; $opt=sql_fetch_array($res); $k++) {

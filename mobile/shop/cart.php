@@ -13,6 +13,7 @@ $sql = " select a.ct_id,
                 a.ct_qty,
                 a.ct_status,
                 a.ct_send_cost,
+                a.it_sc_type,
                 b.ca_id
            from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
           where a.od_id = '$s_cart_id' ";
@@ -86,6 +87,14 @@ $cart_count = mysql_num_rows($result);
                 default:
                     $ct_send_cost = '선불';
                     break;
+            }
+
+            // 조건부무료
+            if($row['it_sc_type'] == 2) {
+                $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
+
+                if($sendcost == 0)
+                    $ct_send_cost = '무료';
             }
 
             $point      = $sum['point'];
