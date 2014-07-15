@@ -621,9 +621,9 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 /* 페이징 */
 .pg_wrap {clear:both;margin:0 0 20px;padding:20px 0 0;text-align:center}
 .pg {}
-.pg_page, .pg_current {display:inline-block;padding:0 8px;height:25px;color:#000;letter-spacing:0;line-height:2.2em;vertical-align:middle}
+.pg_page, .pg_current, .qa_page {display:inline-block;padding:0 8px;height:25px;color:#000;letter-spacing:0;line-height:2.2em;vertical-align:middle}
 .pg a:focus, .pg a:hover {text-decoration:none}
-.pg_page {background:#e4eaec;text-decoration:none}
+.pg_page, .qa_page {background:#e4eaec;text-decoration:none}
 .pg_start, .pg_prev {/* 이전 */}
 .pg_end, .pg_next {/* 다음 */}
 .pg_current {display:inline-block;margin:0 4px 0 0;background:#333;color:#fff;font-weight:normal}

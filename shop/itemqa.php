@@ -16,7 +16,7 @@ function itemqa_page($write_pages, $cur_page, $total_page, $url, $add="")
 
     $str = '';
     if ($cur_page > 1) {
-        $str .= '<a href="'.$url.'1'.$add.'" class="qa_page pg_page qa_start">처음</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.'1'.$add.'" class="qa_page qa_start">처음</a>'.PHP_EOL;
     }
 
     $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
@@ -24,21 +24,21 @@ function itemqa_page($write_pages, $cur_page, $total_page, $url, $add="")
 
     if ($end_page >= $total_page) $end_page = $total_page;
 
-    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="qa_page pg_page pg_prev">이전</a>'.PHP_EOL;
+    if ($start_page > 1) $str .= '<a href="'.$url.($start_page-1).$add.'" class="qa_page pg_prev">이전</a>'.PHP_EOL;
 
     if ($total_page > 1) {
         for ($k=$start_page;$k<=$end_page;$k++) {
             if ($cur_page != $k)
-                $str .= '<a href="'.$url.$k.$add.'" class="qa_page pg_page">'.$k.'</a><span class="sound_only">페이지</span>'.PHP_EOL;
+                $str .= '<a href="'.$url.$k.$add.'" class="qa_page">'.$k.'</a><span class="sound_only">페이지</span>'.PHP_EOL;
             else
                 $str .= '<span class="sound_only">열린</span><strong class="pg_current">'.$k.'</strong><span class="sound_only">페이지</span>'.PHP_EOL;
         }
     }
 
-    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="qa_page pg_page pg_next">다음</a>'.PHP_EOL;
+    if ($total_page > $end_page) $str .= '<a href="'.$url.($end_page+1).$add.'" class="qa_page pg_next">다음</a>'.PHP_EOL;
 
     if ($cur_page < $total_page) {
-        $str .= '<a href="'.$url.$total_page.$add.'" class="qa_page pg_page pg_end">맨끝</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.$total_page.$add.'" class="qa_page pg_end">맨끝</a>'.PHP_EOL;
     }
 
     if ($str)
