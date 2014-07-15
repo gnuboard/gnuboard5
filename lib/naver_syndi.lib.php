@@ -1,6 +1,20 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+// http://kr1.php.net/manual/en/function.curl-setopt-array.php 참고
+if (!function_exists('curl_setopt_array')) {
+   function curl_setopt_array(&$ch, $curl_options)
+   {
+       foreach ($curl_options as $option => $value) {
+           if (!curl_setopt($ch, $option, $value)) {
+               return false;
+           } 
+       }
+       return true;
+   }
+}
+
+
 // 네이버 신디케이션에 ping url 을 curl 로 전달합니다.
 function naver_syndi_ping($bo_table, $wr_id)
 {

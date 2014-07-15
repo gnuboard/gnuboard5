@@ -352,8 +352,8 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
 <script>
 function fmember_submit(f)
 {
-    if (!f.mb_icon.value.match(/\.(gif|jp['e']g|png)$/i) && f.mb_icon.value) {
-        alert('아이콘이 이미지 파일이 아닙니다. (bmp 제외)');
+    if (!f.mb_icon.value.match(/\.gif$/i) && f.mb_icon.value) {
+        alert('아이콘은 gif 파일만 가능합니다.');
         return false;
     }
 

@@ -177,6 +177,12 @@ if(!isset($config['cf_optimize_date'])) {
                     ADD `cf_optimize_date` date NOT NULL default '0000-00-00' AFTER `cf_popular_del` ", true);
 }
 
+// 카카오톡링크 api 키
+if(!isset($config['cf_kakao_js_apikey'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_kakao_js_apikey` varchar(255) NOT NULL DEFAULT '' AFTER `cf_googl_shorturl_apikey` ", true);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -1055,6 +1061,10 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <th scope="row"><label for="cf_googl_shorturl_apikey">구글 짧은주소 API Key</label></th>
             <td>
                 <input type="text" name="cf_googl_shorturl_apikey" value="<?php echo $config['cf_googl_shorturl_apikey'] ?>" id="cf_googl_shorturl_apikey" class="frm_input"> <a href="http://code.google.com/apis/console/" target="_blank" class="btn_frmline">API Key 등록하기</a>
+            </td>
+            <th scope="row"><label for="cf_kakao_js_apikey">카카오 Javascript API Key</label></th>
+            <td>
+                <input type="text" name="cf_kakao_js_apikey" value="<?php echo $config['cf_kakao_js_apikey'] ?>" id="cf_kakao_js_apikey" class="frm_input"> <a href="http://developers.kakao.com/" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
         </tr>
         </tbody>
