@@ -165,8 +165,8 @@ define('G5_DISPLAY_SQL_ERROR', TRUE);
 define('G5_ESCAPE_FUNCTION', 'sql_escape_string');
 
 // sql_escape_string 함수에서 사용될 패턴
-define('G5_ESCAPE_PATTERN',  '/(and|or).*(union|select|insert|update|delete|from|where|limit|create|drop).*/i');
-define('G5_ESCAPE_REPLACE',  '');
+//define('G5_ESCAPE_PATTERN',  '/(and|or).*(union|select|insert|update|delete|from|where|limit|create|drop).*/i');
+//define('G5_ESCAPE_REPLACE',  '');
 
 // 게시판에서 링크의 기본개수를 말합니다.
 // 필드를 추가하면 이 숫자를 필드수에 맞게 늘려주십시오.

@@ -309,7 +309,12 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
     <?php if($board['bo_use_sns'] && ($config['cf_facebook_appid'] || $config['cf_twitter_key'])) { ?>
     // sns 등록
     $(function() {
-        $("#bo_vc_send_sns").load( "<?php echo G5_SNS_URL; ?>/view_comment_write.sns.skin.php?bo_table=<?php echo $bo_table; ?>" );
+        $("#bo_vc_send_sns").load(
+            "<?php echo G5_SNS_URL; ?>/view_comment_write.sns.skin.php?bo_table=<?php echo $bo_table; ?>",
+            function() {
+                save_html = document.getElementById('bo_vc_w').innerHTML;
+            }
+        );
     });
     <?php } ?>
     </script>
