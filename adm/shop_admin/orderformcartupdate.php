@@ -19,6 +19,8 @@ if (in_array($_POST['ct_status'], $status_normal) || in_array($_POST['ct_status'
 
 $mod_history = '';
 $cnt = count($_POST['ct_id']);
+$arr_it_id = array();
+
 for ($i=0; $i<$cnt; $i++)
 {
     $k = $_POST['ct_chk'][$i];
@@ -139,6 +141,23 @@ for ($i=0; $i<$cnt; $i++)
                 where od_id = '$od_id'
                 and ct_id  = '$ct_id' ";
     sql_query($sql);
+
+    // it_id를 배열에 저장
+    if($ct_status == '주문' || $ct_status == '취소' || $ct_status == '반품' || $ct_status == '품절' || $ct_status == '완료')
+        $arr_it_id[] = $ct['it_id'];
+}
+
+// 상품 판매수량 반영
+if(is_array($arr_it_id) && !empty($arr_it_id)) {
+    $unq_it_id = array_unique($arr_it_id);
+
+    foreach($unq_it_id as $it_id) {
+        $sql2 = " select sum(ct_qty) as sum_qty from {$g5['g5_shop_cart_table']} where it_id = '$it_id' and ct_status = '완료' ";
+        $row2 = sql_fetch($sql2);
+
+        $sql3 = " update {$g5['g5_shop_item_table']} set it_sum_qty = '{$row2['sum_qty']}' where it_id = '$it_id' ";
+        sql_query($sql3);
+    }
 }
 
 // 장바구니 상품 모두 취소일 경우 주문상태 변경
