@@ -60,6 +60,30 @@ $result = sql_query($sql);
             $res = sql_query($sql);
             $rowspan = mysql_num_rows($res);
 
+            // 배송비
+            switch($row['ct_send_cost'])
+            {
+                case 1:
+                    $ct_send_cost = '착불';
+                    break;
+                case 2:
+                    $ct_send_cost = '무료';
+                    break;
+                default:
+                    $ct_send_cost = '선불';
+                    break;
+            }
+
+            // 조건부무료
+            if($row['it_sc_type'] == 2) {
+                $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
+
+                if($sendcost == 0)
+                    $ct_send_cost = '무료';
+
+                $save_it_id = $row['it_id'];
+            }
+
             for($k=0; $opt=sql_fetch_array($res); $k++) {
                 if($opt['io_type'])
                     $opt_price = $opt['io_price'];
@@ -69,28 +93,6 @@ $result = sql_query($sql);
                 // 소계
                 $ct_price['stotal'] = $opt_price * $opt['ct_qty'];
                 $ct_point['stotal'] = $opt['ct_point'] * $opt['ct_qty'];
-
-                // 배송비
-                switch($opt['ct_send_cost'])
-                {
-                    case 1:
-                        $ct_send_cost = '착불';
-                        break;
-                    case 2:
-                        $ct_send_cost = '무료';
-                        break;
-                    default:
-                        $ct_send_cost = '선불';
-                        break;
-                }
-
-                // 조건부무료
-                if($row['it_sc_type'] == 2) {
-                    $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
-
-                    if($sendcost == 0)
-                        $ct_send_cost = '무료';
-                }
             ?>
             <tr>
                 <?php if($k == 0) { ?>
