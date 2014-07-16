@@ -502,6 +502,7 @@ function get_it_imageurl($it_id)
             continue;
 
         $filepath = $file;
+        break;
     }
 
     if($filepath)
