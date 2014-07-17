@@ -83,7 +83,7 @@ if($cart_status) {
             break;
         case '배송':
             $sql .= " and ct_status IN ('".implode("', '", $order_status)."') ";
-            breask;
+            break;
         default:
             ;
     }
