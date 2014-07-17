@@ -1,0 +1,99 @@
+@charset "UTF-8";
+/*
+ * jQuery File Upload Plugin CSS Example 8.8.2
+ * https://github.com/blueimp/jQuery-File-Upload
+ *
+ * Copyright 2013, Sebastian Tschan
+ * https://blueimp.net
+ *
+ * Licensed under the MIT license:
+ * http://www.opensource.org/licenses/MIT
+ */
+
+body {margin:0;padding:0;overflow-x:hidden}
+body,input,textarea,select,button,table{font-family:'돋움',Dotum,Helvetica,sans-serif;font-size:12px}
+
+#pop_header{height:26px;padding:14px 0 0 20px;border-bottom:1px solid #ededeb;background:#f4f4f3}
+#pop_header h1{color:#333;font-size:14px;letter-spacing:-1px;margin:0;padding:0}
+
+.content_container{padding:5px 10px}
+
+.swfupload{OUTLINE-WIDTH: 0px; OUTLINE-STYLE: none; OUTLINE-COLOR: invert}
+
+.pop_container .drag_area{overflow:hidden;overflow-y:auto;position:relative;width:100%;height:250px;margin-top:4px;border:1px solid #eceff2}
+.pop_container .blind{visibility:hidden;position:absolute;line-height:0}
+.pop_container .drag_area .bg{position:absolute;top:0;left:0;width:100%;height:250px;background: #fdfdfd url(../../../img/photoQuickPopup/bg_drag_image.png) 50% 50% no-repeat;}
+.pop_container .drag_area .showbg{display:block}
+.pop_container .drag_area .hidebg{display:none}
+
+ul.sortable{margin:0;padding:0;*zoom:1}
+ul.sortable:after{display:block;clear:both;content:""}
+
+.sortable > li{
+list-style:none;
+float: left;
+width: 110px;
+height:110px;
+overflow: hidden;
+text-align: center;
+margin: 4px 3px;  border: 1px solid #DDDDDD;padding:1px; cursor: move;
+background: #ffffff;
+}
+.sortable > li:hover, .sortable > li.ui-sortable-helper{border:2px solid #E58524;padding:0;}
+
+.sortable > li > div{
+background: #f7f7f7;
+color:#808080;
+margin:0;
+font-size:11px;
+height:106px;
+width:100%;
+overflow: hidden;
+white-space:nowrap;-o-text-overflow:ellipsis;text-overflow:ellipsis;
+position:relative;
+}
+.sortable > li > div > img{margin:3px;}
+.sortable > li > div .delete_img{position:absolute;top:0;right:0px;display:none}
+.sortable > li:hover > div .delete_img{display:block;cursor:pointer}
+.sortable > li.placeholder{
+border: dashed 2px #ccc;background-color:#FFF;padding:0;
+}
+
+.btn {
+display: inline-block;
+margin-bottom: 0;
+font-weight: 400;
+text-align: center;
+vertical-align: middle;
+cursor: pointer;
+background-image: none;
+border: 1px solid transparent;
+white-space: nowrap;
+padding: 6px 12px;
+font-size: 12px;
+line-height: 1.42857143;
+border-radius: 4px;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+.btn-success {
+color: #fff;
+background-color: #5cb85c;
+border-color: #4cae4c;
+}
+.btn:hover, .btn:focus {
+color: #333;
+text-decoration: none;
+}
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
+color: #fff;
+background-color: #47a447;
+border-color: #398439;
+}
+.seletion_explain{margin:10px 0}
+.drag_explain{position:relative;height:36px}
+.drag_explain p {padding:12px 0 0 0;margin:0;}
+.file_selet_group{position:absolute;top:0;right:0}
+.btn_group{text-align:center}
