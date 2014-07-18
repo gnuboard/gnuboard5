@@ -24,9 +24,6 @@ function naver_syndi_ping($bo_table, $wr_id)
 
     // 토큰값이 없다면 네이버 신디케이션 사용안함
     if ($token == '') return 0;
-    
-    // 토큰의 길이는 112 글자입니다.
-    if (strlen($token) != 112) return -1;
 
     // 신디케이션 수집 제외게시판
     if (preg_match('#^('.$config['cf_syndi_except'].')$#', $bo_table)) return -2;

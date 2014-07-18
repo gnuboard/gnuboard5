@@ -10,6 +10,7 @@ $msg = array();
 $wr_subject = '';
 if (isset($_POST['wr_subject'])) {
     $wr_subject = substr(trim($_POST['wr_subject']),0,255);
+    $wr_subject = preg_replace("#[\\\]+$#", "", $wr_subject);
 }
 if ($wr_subject == '') {
     $msg[] = '<strong>제목</strong>을 입력하세요.';
