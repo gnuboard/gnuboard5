@@ -10,6 +10,15 @@
  * http://www.opensource.org/licenses/MIT
  */
 include_once("../../../../../../common.php");
+@include_once("../../../../../../plugin/sms5/JSON.php");
+
+if( !function_exists('json_encode') ) {
+    function json_encode($data) {
+        $json = new Services_JSON();
+        return( $json->encode($data) );
+    }
+}
+
 ini_set('gd.jpeg_ignore_warning', 1);
 
 $ym = date('ym', G5_SERVER_TIME);
