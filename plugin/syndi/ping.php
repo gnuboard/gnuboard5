@@ -22,7 +22,8 @@ $published    = date('Y-m-d\TH:i:s\+09:00', strtotime($write['wr_datetime']));
 $updated      = $published;
 $link_href    = G5_BBS_URL . "/board.php?bo_table={$bo_table}";
 $id           = $link_href . htmlspecialchars("&wr_id={$wr_id}");
-$link_title   = $board['bo_subject'];
+$cf_title     = htmlspecialchars($config['cf_title']);
+$link_title   = htmlspecialchars($board['bo_subject']);
 $feed_updated = date('Y-m-d\TH:i:s\+09:00', G5_SERVER_TIME);
 
 $find         = array('&amp;', '&nbsp;'); # 찾아서
@@ -45,7 +46,7 @@ echo "</author>\n";
 
 echo "<updated>{$feed_updated}</updated>\n";
 
-echo "<link rel=\"site\" href=\"" . G5_URL . "\" title=\"{$config['cf_title']}\" />\n";
+echo "<link rel=\"site\" href=\"" . G5_URL . "\" title=\"{$cf_title}\" />\n";
 echo "<entry>\n";
     echo "<id>{$id}</id>\n";
     echo "<title><![CDATA[{$title}]]></title>\n";
