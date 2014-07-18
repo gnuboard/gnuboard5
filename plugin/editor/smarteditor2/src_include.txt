@@ -1,0 +1,7 @@
+﻿자바스크립트 소스를 직접 수정하고자 할 경우는 SmartEditor2Skin.html 소스를 아래의 과정으로 수정한 후 자바스크립트 소스를 수정합니다.
+
+1) SmartEditor2Skin.html 소스에서 아래의 부분을 삭제합니다.
+<script src='js/smarteditor2.min.js' charset='utf-8'></script>
+
+2) 다음의 라인을 복사하여 붙여넣습니다.
+<script src='js/smarteditor2.js' charset='utf-8'></script>
