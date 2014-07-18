@@ -9,8 +9,17 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
-include_once("../../../../../../common.php");
-ini_set('gd.jpeg_ignore_warning', 1);
+include_once("./_common.php");
+@include_once("./JSON.php");
+
+if( !function_exists('json_encode') ) {
+    function json_encode($data) {
+        $json = new Services_JSON();
+        return( $json->encode($data) );
+    }
+}
+
+@ini_set('gd.jpeg_ignore_warning', 1);
 
 $ym = date('ym', G5_SERVER_TIME);
 
