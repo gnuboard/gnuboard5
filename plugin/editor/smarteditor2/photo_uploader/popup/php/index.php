@@ -9,8 +9,8 @@
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
  */
-include_once("../../../../../../common.php");
-@include_once("../../../../../../plugin/sms5/JSON.php");
+include_once("./_common.php");
+@include_once("./JSON.php");
 
 if( !function_exists('json_encode') ) {
     function json_encode($data) {
@@ -19,7 +19,7 @@ if( !function_exists('json_encode') ) {
     }
 }
 
-ini_set('gd.jpeg_ignore_warning', 1);
+@ini_set('gd.jpeg_ignore_warning', 1);
 
 $ym = date('ym', G5_SERVER_TIME);
 
