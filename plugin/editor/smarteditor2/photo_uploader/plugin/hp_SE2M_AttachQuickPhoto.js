@@ -32,7 +32,8 @@ nhn.husky.SE2M_AttachQuickPhoto = jindo.$Class({
 	 */
 	$ON_ATTACHPHOTO_OPEN_WINDOW : function(){			
 		this.htPopupOption.sUrl = this.makePopupURL();
-		this.htPopupOption.sProperties = "left=0,top=0,width=640,height=459,scrollbars=yes,location=no,status=0,resizable=no";
+		//this.htPopupOption.sProperties = "left=0,top=0,width=640,height=459,scrollbars=yes,location=no,status=0,resizable=no";
+        this.htPopupOption.sProperties = "left="+(screen.width-640)/2+", top="+(screen.height-459)/2+",width=640,height=459,scrollbars=yes,location=no,status=0,resizable=no";
 
 		this.oPopupWindow = this.oPopupMgr.openWindow(this.htPopupOption);
 		
