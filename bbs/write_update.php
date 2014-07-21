@@ -361,7 +361,7 @@ if ($w == '' || $w == 'r') {
     // 쓰기 포인트 부여
     if ($w == '') {
         if ($notice) {
-            $bo_notice = $wr_id.",".$board['bo_notice'];
+            $bo_notice = $wr_id.($board['bo_notice'] ? ",".$board['bo_notice'] : '');
             sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
         }
 
