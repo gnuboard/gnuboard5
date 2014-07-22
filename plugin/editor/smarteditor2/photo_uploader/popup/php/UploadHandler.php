@@ -1086,6 +1086,9 @@ class UploadHandler
                     $image_width_height = $this->get_image_size($file_path);
                     $file->width = $image_width_height[0];
                     $file->height = $image_width_height[1];
+                } else {    //로빈아빠님이 알려주심, 이미지 업로드 체크
+                    unlink($file_path);
+                    $file->error = $this->get_error_message('accept_file_types');
                 }
             } else {
                 $file->size = $file_size;
