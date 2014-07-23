@@ -19,7 +19,7 @@ $g5['title'] = '개인결제상세내역';
 include_once('./_head.php');
 
 // LG 현금영수증 JS
-if($od['od_pg'] == 'lg') {
+if($pp['pp_pg'] == 'lg') {
     if($default['de_card_test']) {
     echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
     } else {
