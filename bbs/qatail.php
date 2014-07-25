@@ -8,7 +8,7 @@ if (G5_IS_MOBILE) {
 } else {
     echo stripslashes($qaconfig['qa_mobile_content_tail']);
     if($qaconfig['qa_include_tail'])
-        @include ($qaconfig['bo_include_tail']);
+        @include ($qaconfig['qa_include_tail']);
     else
         include ('./_tail.php');
 }
