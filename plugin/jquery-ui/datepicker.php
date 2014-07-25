@@ -1,14 +1,10 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+add_stylesheet('<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/themes/base/jquery-ui.css" rel="stylesheet" />', 0);
+add_stylesheet('<link type="text/css" href="'.G5_PLUGIN_URL.'/jquery-ui/style.css">', 0);
 ?>
 
-<link type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/themes/base/jquery-ui.css" rel="stylesheet" />
-<style>
-.ui-datepicker { font:12px dotum; }
-.ui-datepicker select.ui-datepicker-month,
-.ui-datepicker select.ui-datepicker-year { width: 70px;}
-.ui-datepicker-trigger { margin:0 0 -5px 2px; }
-</style>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.min.js"></script>
 <script>
 jQuery(function($){
