@@ -1243,7 +1243,7 @@ function orderfield_check(f)
             error_field(f.od_pwd, "회원이 아니신 경우 주문서 조회시 필요한 비밀번호를 3자리 이상 입력해 주십시오.");
     }
     check_field(f.od_tel, "주문하시는 분 전화번호를 입력하십시오.");
-    check_field(f.od_addr1, "우편번호 찾기를 이용하여 주문하시는 분 주소를 입력하십시오.");
+    check_field(f.od_addr1, "주소검색을 이용하여 주문하시는 분 주소를 입력하십시오.");
     //check_field(f.od_addr2, " 주문하시는 분의 상세주소를 입력하십시오.");
     check_field(f.od_zip1, "");
     check_field(f.od_zip2, "");
@@ -1261,7 +1261,7 @@ function orderfield_check(f)
 
     check_field(f.od_b_name, "받으시는 분 이름을 입력하십시오.");
     check_field(f.od_b_tel, "받으시는 분 전화번호를 입력하십시오.");
-    check_field(f.od_b_addr1, "우편번호 찾기를 이용하여 받으시는 분 주소를 입력하십시오.");
+    check_field(f.od_b_addr1, "주소검색을 이용하여 받으시는 분 주소를 입력하십시오.");
     //check_field(f.od_b_addr2, "받으시는 분의 상세주소를 입력하십시오.");
     check_field(f.od_b_zip1, "");
     check_field(f.od_b_zip2, "");
