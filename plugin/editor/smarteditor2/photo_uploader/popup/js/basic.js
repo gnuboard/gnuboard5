@@ -152,7 +152,7 @@ jQuery(function ($) {
         _done : function(e, data){
             var othis = this;
             $.each(data.result.files, function (index, file) {
-                if (file.url) {
+                if (file.url && !file.error) {
                     var ret = othis.get_ratio( file.width, file.height ),
                         node = $(data.context.children()[index]),
                         size_text = file.width+" x "+file.height,
