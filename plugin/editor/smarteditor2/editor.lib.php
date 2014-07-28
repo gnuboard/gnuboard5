@@ -38,7 +38,7 @@ function editor_html($id, $content, $is_dhtml_editor=true)
     }
 
     $smarteditor_class = $is_dhtml_editor ? "smarteditor2" : "";
-    $html .= "\n<textarea id=\"$id\" name=\"$id\" class=\"$smarteditor_class\" maxlength=\"65536\">$content</textarea>";
+    $html .= "\n<textarea id=\"$id\" name=\"$id\" class=\"$smarteditor_class\" maxlength=\"65536\" style=\"width:100%\">$content</textarea>";
     $html .= "\n<span class=\"sound_only\">웹 에디터 끝</span>";
     return $html;
 }
@@ -48,7 +48,7 @@ function editor_html($id, $content, $is_dhtml_editor=true)
 function get_editor_js($id, $is_dhtml_editor=true)
 {
     if ($is_dhtml_editor) {
-        return "var {$id}_editor_data = oEditors.getById['{$id}'].getIR();\noEditors.getById['{$id}'].exec('UPDATE_CONTENTS_FIELD', []);\n";
+        return "var {$id}_editor_data = oEditors.getById['{$id}'].getIR();\noEditors.getById['{$id}'].exec('UPDATE_CONTENTS_FIELD', []);\nif(jQuery.inArray(document.getElementById('{$id}').value.toLowerCase().replace(/^\s*|\s*$/g, ''), ['&nbsp;','<p>&nbsp;</p>','<p><br></p>','<div><br></div>','<p></p>','<br>','']) != -1){document.getElementById('{$id}').value='';}\n";
     } else {
         return "var {$id}_editor = document.getElementById('{$id}');\n";
     }
@@ -59,7 +59,7 @@ function get_editor_js($id, $is_dhtml_editor=true)
 function chk_editor_js($id, $is_dhtml_editor=true)
 {
     if ($is_dhtml_editor) {
-        return "if (!{$id}_editor_data || {$id}_editor_data == '&nbsp;' || {$id}_editor_data == '<p>&nbsp;</p>' || {$id}_editor_data == '<p><br></p>' || {$id}_editor_data == '<p></p>') { alert(\"내용을 입력해 주십시오.\"); oEditors.getById['{$id}'].exec('FOCUS'); return false; }\n";
+        return "if (!{$id}_editor_data || jQuery.inArray({$id}_editor_data.toLowerCase(), ['&nbsp;','<p>&nbsp;</p>','<p><br></p>','<p></p>','<br>']) != -1) { alert(\"내용을 입력해 주십시오.\"); oEditors.getById['{$id}'].exec('FOCUS'); return false; }\n";
     } else {
         return "if (!{$id}_editor.value) { alert(\"내용을 입력해 주십시오.\"); {$id}_editor.focus(); return false; }\n";
     }

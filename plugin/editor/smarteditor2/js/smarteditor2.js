@@ -6851,8 +6851,10 @@ nhn.husky.SE_EditingArea_WYSIWYG = jindo.$Class({
 		// --[SMARTEDITORSUS-875]
 		
 		var sContent, 
-			oNavigator = this.oApp.oNavigator, 
-			bUnderIE11 = oNavigator.ie && document.documentMode < 11, // IE11미만
+			oNavigator = this.oApp.oNavigator,
+            tmp_htBrowser = jindo.$Agent().navigator(),
+			//bUnderIE11 = oNavigator.ie && document.documentMode < 11, // IE11미만
+            bUnderIE11 = oNavigator.ie && tmp_htBrowser.nativeVersion < 11, // IE11미만
 			sCursorHolder = bUnderIE11 ? "" : "<br>";
 
 		if(this.oApp.applyConverter){
