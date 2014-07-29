@@ -327,7 +327,7 @@ if (isset($_REQUEST['wr_id'])) {
 }
 
 if (isset($_REQUEST['bo_table'])) {
-    $bo_table = trim($_REQUEST['bo_table']);
+    $bo_table = preg_replace('/[^a-z0-9_]/i', '', trim($_REQUEST['bo_table']));
     $bo_table = substr($bo_table, 0, 20);
 } else {
     $bo_table = '';
@@ -335,7 +335,7 @@ if (isset($_REQUEST['bo_table'])) {
 
 // URL ENCODING
 if (isset($_REQUEST['url'])) {
-    $url = trim($_REQUEST['url']);
+    $url = strip_tags(trim($_REQUEST['url']));
     $urlencode = urlencode($url);
 } else {
     $url = '';
@@ -348,7 +348,7 @@ if (isset($_REQUEST['url'])) {
 
 if (isset($_REQUEST['gr_id'])) {
     if (!is_array($_REQUEST['gr_id'])) {
-        $gr_id = trim($_REQUEST['gr_id']);
+        $gr_id = preg_replace('/[^a-z0-9_]/i', '', trim($_REQUEST['gr_id']));
     }
 } else {
     $gr_id = '';
