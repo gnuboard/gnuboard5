@@ -708,7 +708,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_comment_min">최소 댓글수 제한</label></th>
             <td>
-                <?php echo help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
+                <?php echo help('댓글 입력시 최소 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
                 <input type="text" name="bo_comment_min" value="<?php echo $board['bo_comment_min'] ?>" id="bo_comment_min" class="numeric frm_input" size="4">
             </td>
             <td class="td_grpset">
@@ -721,7 +721,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_comment_max">최대 댓글수 제한</label></th>
             <td>
-                <?php echo help('댓글 입력시 최소 글자수, 최대 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
+                <?php echo help('댓글 입력시 최대 글자수를 설정. 0을 입력하면 검사하지 않음') ?>
                 <input type="text" name="bo_comment_max" value="<?php echo $board['bo_comment_max'] ?>" id="bo_comment_max" class="numeric frm_input" size="4">
             </td>
             <td class="td_grpset">
