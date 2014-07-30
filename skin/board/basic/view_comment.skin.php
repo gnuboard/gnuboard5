@@ -29,7 +29,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
     <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
         <header style="z-index:<?php echo $cmt_sv; ?>">
-            <h1><?php echo $list[$i]['wr_name'] ?>님의 댓글</h1>
+            <h1><?php echo get_text($list[$i]['wr_name']); ?>님의 댓글</h1>
             <?php echo $list[$i]['name'] ?>
             <?php if ($cmt_depth) { ?><img src="<?php echo $board_skin_url ?>/img/icon_reply.gif" class="icon_reply" alt="댓글의 댓글"><?php } ?>
             <?php if ($is_ip_view) { ?>
