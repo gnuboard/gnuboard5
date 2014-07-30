@@ -35,7 +35,10 @@ function g5_path()
     $port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
     $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
     $user = str_replace(str_replace($document_root, '', $_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']);
-    $result['url'] = $http.(isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']).$port.$user.$root;
+    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+    if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host))
+        $host = preg_replace('/:[0-9]+$/', '', $host);
+    $result['url'] = $http.$host.$port.$user.$root;
     return $result;
 }
 
