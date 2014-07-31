@@ -2703,4 +2703,13 @@ function get_email_address($email)
 
     return $matches[0];
 }
+
+// 파일명에서 특수문자 제거
+function get_safe_filename($name)
+{
+    $pattern = '/["\'<>=#&!%\\\\(\)\*\+\?]/';
+    $name = preg_replace($pattern, '', $name);
+
+    return $name;
+}
 ?>
