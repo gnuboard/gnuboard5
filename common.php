@@ -20,8 +20,9 @@ $ext_arr = array ('PHP_SELF', '_ENV', '_GET', '_POST', '_FILES', '_SERVER', '_CO
                   'HTTP_COOKIE_VARS', 'HTTP_SESSION_VARS', 'GLOBALS');
 $ext_cnt = count($ext_arr);
 for ($i=0; $i<$ext_cnt; $i++) {
-    // GET 으로 선언된 전역변수가 있다면 unset() 시킴
-    if (isset($_GET[$ext_arr[$i]])) unset($_GET[$ext_arr[$i]]);
+    // POST, GET 으로 선언된 전역변수가 있다면 unset() 시킴
+    if (isset($_GET[$ext_arr[$i]]))  unset($_GET[$ext_arr[$i]]);
+    if (isset($_POST[$ext_arr[$i]])) unset($_POST[$ext_arr[$i]]);
 }
 //==========================================================================================================================
 
