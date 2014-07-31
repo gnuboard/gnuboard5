@@ -28,6 +28,7 @@ if(isset($_POST['qa_email']) && $qa_email) {
 $qa_subject = '';
 if (isset($_POST['qa_subject'])) {
     $qa_subject = substr(trim($_POST['qa_subject']),0,255);
+    $qa_subject = preg_replace("#[\\\]+$#", "", $qa_subject);
 }
 if ($qa_subject == '') {
     $msg[] = '<strong>제목</strong>을 입력하세요.';
@@ -36,6 +37,7 @@ if ($qa_subject == '') {
 $qa_content = '';
 if (isset($_POST['qa_content'])) {
     $qa_content = substr(trim($_POST['qa_content']),0,65536);
+    $qa_content = preg_replace("#[\\\]+$#", "", $qa_content);
 }
 if ($qa_content == '') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';
@@ -132,7 +134,7 @@ for ($i=1; $i<=count($_FILES['bf_file']['name']); $i++) {
     $tmp_file  = $_FILES['bf_file']['tmp_name'][$i];
     $filesize  = $_FILES['bf_file']['size'][$i];
     $filename  = $_FILES['bf_file']['name'][$i];
-    $filename  = preg_replace('/(<|>|=)/', '', $filename);
+    $filename  = get_safe_filename($filename);
 
     // 서버에 설정된 값보다 큰파일을 업로드 한다면
     if ($filename) {

@@ -19,6 +19,7 @@ if ($wr_subject == '') {
 $wr_content = '';
 if (isset($_POST['wr_content'])) {
     $wr_content = substr(trim($_POST['wr_content']),0,65536);
+    $wr_content = preg_replace("#[\\\]+$#", "", $wr_content);
 }
 if ($wr_content == '') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';
@@ -211,7 +212,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
     $tmp_file  = $_FILES['bf_file']['tmp_name'][$i];
     $filesize  = $_FILES['bf_file']['size'][$i];
     $filename  = $_FILES['bf_file']['name'][$i];
-    $filename  = preg_replace('/(<|>|=)/', '', $filename);
+    $filename  = get_safe_filename($filename);
 
     // 서버에 설정된 값보다 큰파일을 업로드 한다면
     if ($filename) {
@@ -297,6 +298,7 @@ if ($w == '' || $w == 'r') {
         if (!$wr_name)
             alert('이름은 필히 입력하셔야 합니다.');
         $wr_password = sql_password($wr_password);
+        $wr_email = get_email_address(trim($_POST['wr_email']));
     }
 
     if ($w == 'r') {
@@ -417,6 +419,7 @@ if ($w == '' || $w == 'r') {
         $mb_id = "";
         // 비회원의 경우 이름이 누락되는 경우가 있음
         //if (!trim($wr_name)) alert("이름은 필히 입력하셔야 합니다.");
+        $wr_email = get_email_address(trim($_POST['wr_email']));
     }
 
     $sql_password = $wr_password ? " , wr_password = '".sql_password($wr_password)."' " : "";

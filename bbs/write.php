@@ -319,7 +319,7 @@ if ($w == '') {
     }
 
     $name = get_text(cut_str($write['wr_name'],20));
-    $email = $write['wr_email'];
+    $email = get_email_address($write['wr_email']);
     $homepage = get_text($write['wr_homepage']);
 
     for ($i=1; $i<=G5_LINK_COUNT; $i++) {
