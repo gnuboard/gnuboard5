@@ -56,6 +56,8 @@ $mb_10          = isset($_POST['mb_10'])            ? trim($_POST['mb_10'])     
 if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
+    if ($msg = valid_mb_id($mb_id))         alert($msg, "", true, true);
+    if ($msg = count_mb_id($mb_id))         alert($msg, "", true, true);
 
     if ($w == '' && !$mb_password)
         alert('비밀번호가 넘어오지 않았습니다.');
