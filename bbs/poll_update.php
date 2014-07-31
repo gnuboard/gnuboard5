@@ -8,6 +8,7 @@ if (!$po['po_id'])
 if ($member['mb_level'] < $po['po_level'])
     alert_close('권한 '.$po['po_level'].' 이상 회원만 투표에 참여하실 수 있습니다.');
 
+$gb_poll = preg_replace('/[^0-9]/', '', $gb_poll);
 if(!$gb_poll)
     alert_close('항목을 선택하세요.');
 
