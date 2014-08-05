@@ -208,7 +208,7 @@ function wrestMinLength(fld, css)
 {
     if (!wrestTrim(fld)) return;
 
-    var str = css.split('_'); // minlength_?? <-- str[1]
+    var str = css.split('='); // minlength=?? <-- str[1]
 
     if (wrestFld == null) {
         if (fld.value.length < parseInt(str[1])) {
@@ -305,8 +305,8 @@ function wrestSubmit()
                     case "telnum"       : wrestTelNum(el); break; // 김선용 2006.3 - 전화번호 형식 검사
                     case "imgext"       : wrestImgExt(el); break;
                     default :
-                        // css 가 minlength_ 로 시작한다면 _ 뒤의 숫자는 최소길이값
-                        if (/^minlength\_/.test(css)) {
+                        // css 가 minlength= 로 시작한다면 = 뒤의 숫자는 최소길이값
+                        if (/^minlength\=/.test(css)) {
                             wrestMinLength(el, css); break;
                         } else if (/^extension\=/.test(css)) {
                             wrestExtension(el, css); break;
