@@ -2712,4 +2712,19 @@ function get_safe_filename($name)
 
     return $name;
 }
+
+// 아이코드 사용자정보
+function get_icode_userinfo($id, $pass)
+{
+    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$id.'&userpw='.$pass);
+    $res = explode(';', $res);
+    $userinfo = array(
+        'code'      => $res[0], // 결과코드
+        'coin'      => $res[1], // 고객 잔액 (충전제만 해당)
+        'gpay'      => $res[2], // 고객의 건수 별 차감액 표시 (충전제만 해당)
+        'payment'   => $res[3]  // 요금제 표시, A:충전제, C:정액제
+    );
+
+    return $userinfo;
+}
 ?>
