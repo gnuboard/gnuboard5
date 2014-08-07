@@ -172,7 +172,6 @@ if ($stx) {
 
             if ($row['wr_is_comment'])
             {
-                $link .= '#c'.$row['wr_id'];
                 $sql2 = " select wr_subject, wr_option from {$tmp_write_table} where wr_id = '{$row['wr_parent']}' ";
                 $row2 = sql_fetch($sql2);
                 //$row['wr_subject'] = $row2['wr_subject'];
@@ -204,7 +203,7 @@ if ($stx) {
 
             $list[$idx][$i]['subject'] = $subject;
             $list[$idx][$i]['content'] = $content;
-            $list[$idx][$i]['name'] = get_sideview($row['mb_id'], cut_str($row['wr_name'], $config['cf_cut_name']), $row['wr_email'], $row['wr_homepage']);
+            $list[$idx][$i]['name'] = get_sideview($row['mb_id'], get_text(cut_str($row['wr_name'], $config['cf_cut_name'])), $row['wr_email'], $row['wr_homepage']);
 
             $k++;
             if ($k >= $rows)
