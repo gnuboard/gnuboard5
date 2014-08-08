@@ -24,7 +24,7 @@ $g5['sms5_form_table']            = $g5['sms5_prefix'] . 'form';
 $g5['sms5_form_group_table']      = $g5['sms5_prefix'] . 'form_group';
 $g5['sms5_member_history_table']  = $g5['sms5_prefix'] . 'member_history';
 
-if ($config['cf_sms_use'] == 'icode') {
+if (!empty($config['cf_sms_use'])) {
 
     $sms5 = sql_fetch("select * from {$g5['sms5_config_table']} ", false);
     if( $sms5['cf_member'] && trim($member['mb_hp']) ) {

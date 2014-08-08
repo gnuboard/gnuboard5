@@ -496,6 +496,8 @@ if (G5_IS_MOBILE) {
     $search_skin_url    = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/search/'.$config['cf_mobile_search_skin'];
     $connect_skin_path  = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
     $connect_skin_url   = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
+    $faq_skin_path      = G5_MOBILE_PATH .'/'.G5_SKIN_DIR.'/faq/'.$config['cf_mobile_faq_skin'];
+    $faq_skin_url       = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/faq/'.$config['cf_mobile_faq_skin'];
 } else {
     $board_skin_path    = G5_SKIN_PATH.'/board/'.$board['bo_skin'];
     $board_skin_url     = G5_SKIN_URL .'/board/'.$board['bo_skin'];
@@ -507,6 +509,8 @@ if (G5_IS_MOBILE) {
     $search_skin_url    = G5_SKIN_URL .'/search/'.$config['cf_search_skin'];
     $connect_skin_path  = G5_SKIN_PATH.'/connect/'.$config['cf_connect_skin'];
     $connect_skin_url   = G5_SKIN_URL .'/connect/'.$config['cf_connect_skin'];
+    $faq_skin_path      = G5_SKIN_PATH.'/faq/'.$config['cf_faq_skin'];
+    $faq_skin_url       = G5_SKIN_URL.'/faq/'.$config['cf_faq_skin'];
 }
 //==============================================================================
 

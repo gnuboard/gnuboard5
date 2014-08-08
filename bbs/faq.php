@@ -27,15 +27,6 @@ if (!$fm['fm_id'])
 
 $g5['title'] = $fm['fm_subject'];
 
-if(G5_IS_MOBILE){
-    $faq_skin = $config['cf_mobile_faq_skin'];
-} else {
-    $faq_skin = $config['cf_faq_skin'];
-}
-
-if(!$faq_skin) $faq_skin = 'basic';
-$faq_skin_path = (G5_IS_MOBILE ? G5_MOBILE_PATH : G5_PATH).'/'.G5_SKIN_DIR.'/faq/'.$faq_skin;
-$faq_skin_url = (G5_IS_MOBILE ? G5_MOBILE_URL : G5_URL).'/'.G5_SKIN_DIR.'/faq/'.$faq_skin;
 $skin_file = $faq_skin_path.'/list.skin.php';
 
 include_once('./_head.php');
