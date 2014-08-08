@@ -17,9 +17,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
     $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
     $g_conf_key_dir   = '';
-    $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
     if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
     {
+        $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
         $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
     }
 
@@ -237,10 +237,12 @@ if ($res_cd != '0000')
 {
     $res_msg = iconv("euc-kr", "utf-8", $res_msg);
 
+    /*
     echo "<script>
     var openwin = window.open( './kcp/proc_win.php', 'proc_win', '' );
     openwin.close();
     </script>";
+    */
     alert("$res_cd : $res_msg");
     exit;
 }

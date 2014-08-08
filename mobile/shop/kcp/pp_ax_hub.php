@@ -140,7 +140,7 @@
     {
         $c_PayPlus->mf_do_tx( $trace_no, $g_conf_home_dir, $g_conf_site_cd, $g_conf_site_key, $tran_cd, "",
                               $g_conf_gw_url, $g_conf_gw_port, "payplus_cli_slib", $ordr_idxx,
-                              $cust_ip, $g_conf_log_level, 0, 0 ); // 응답 전문 처리
+                              $cust_ip, $g_conf_log_level, 0, 0, $g_conf_key_dir, $g_conf_log_dir ); // 응답 전문 처리
 
 		$res_cd  = $c_PayPlus->m_res_cd;  // 결과 코드
 		$res_msg = $c_PayPlus->m_res_msg; // 결과 메시지
