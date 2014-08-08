@@ -2668,6 +2668,14 @@ function get_search_string($stx)
     return $stx;
 }
 
+// XSS 관련 태그 제거
+function clean_xss_tags($str)
+{
+    $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+
+    return $str;
+}
+
 // unescape nl 얻기
 function conv_unescape_nl($str)
 {
