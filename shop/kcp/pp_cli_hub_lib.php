@@ -132,7 +132,8 @@ class   C_PAYPLUS_CLI
                         $site_key,  $tx_cd,    $pub_key_str,
                         $pa_url,    $pa_port,  $user_agent,
                         $ordr_idxx, $cust_ip,
-                        $log_level, $opt, $mode )
+                        $log_level, $opt, $mode,
+                        $key_dir,   $log_dir)
     {
         $payx_data = $this->m_payx_data;
 
@@ -156,26 +157,59 @@ class   C_PAYPLUS_CLI
         }
         else
         {
-          $res_data = $this->mf_exec( $home_dir . "/bin/pp_cli",
-                                      "-h",
-                                      "home="      . $home_dir          . "," .
-                                      "site_cd="   . $site_cd           . "," .
-                                      "site_key="  . $site_key          . "," .
-                                      "tx_cd="     . $tx_cd             . "," .
-                                      "pa_url="    . $pa_url            . "," .
-                                      "pa_port="   . $pa_port           . "," .
-                                      "ordr_idxx=" . $ordr_idxx         . "," .
-                                      "payx_data=" . $payx_data         . "," .
-                                      "ordr_data=" . $ordr_data         . "," .
-                                      "rcvr_data=" . $rcvr_data         . "," .
-                                      "escw_data=" . $escw_data         . "," .
-                                      "modx_data=" . $modx_data         . "," .
-                                      "enc_data="  . $this->m_encx_data . "," .
-                                      "enc_info="  . $this->m_encx_info . "," .
-                                      "trace_no="  . $trace_no          . "," .
-                                      "cust_ip="   . $cust_ip           . "," .
-                                      "log_level=" . $log_level         . "," .
-                                      "opt="       . $opt               . "" );
+          if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+        {
+            $bin_exe = $home_dir.'/bin/pp_cli_exe ';
+
+            $res_data = $this->mf_exec($bin_exe . "\"".
+                                    "site_cd="   . $site_cd             . "," .
+                                    "site_key="  . $site_key            . "," .
+                                    "tx_cd="     . $tx_cd               . "," .
+                                    "pa_url="    . $pa_url              . "," .
+                                    "pa_port="   . $pa_port             . "," .
+                                    "ordr_idxx=" . $ordr_idxx           . "," .
+                                    "enc_data="  . $this->m_encx_data   . "," .
+                                    "enc_info="  . $this->m_encx_info   . "," .
+                                    "trace_no="  . $trace_no            . "," .
+                                    "cust_ip="   . $cust_ip             . "," .
+                                    "key_path="  . $key_dir             . "," .
+                                    "log_path="  . $log_dir             . "," .
+                                    "log_level=" . $log_level           . "," .
+                                    "plan_data=" . $payx_data           .
+                                                   $ordr_data           .
+                                                   $rcvr_data           .
+                                                   $escw_data           .
+                                                   $modx_data           .
+                                "\"") ;
+        }
+        else
+        {
+            if(PHP_INT_MAX == 2147483647) // 32-bit
+                $bin_exe = $home_dir.'/bin/pp_cli';
+            else
+                $bin_exe = $home_dir.'/bin/pp_cli_x64';
+
+            $res_data = $this->mf_exec( $bin_exe,
+                                        "-h",
+                                        "home="      . $home_dir          . "," .
+                                        "site_cd="   . $site_cd           . "," .
+                                        "site_key="  . $site_key          . "," .
+                                        "tx_cd="     . $tx_cd             . "," .
+                                        "pa_url="    . $pa_url            . "," .
+                                        "pa_port="   . $pa_port           . "," .
+                                        "ordr_idxx=" . $ordr_idxx         . "," .
+                                        "payx_data=" . $payx_data         . "," .
+                                        "ordr_data=" . $ordr_data         . "," .
+                                        "rcvr_data=" . $rcvr_data         . "," .
+                                        "escw_data=" . $escw_data         . "," .
+                                        "modx_data=" . $modx_data         . "," .
+                                        "enc_data="  . $this->m_encx_data . "," .
+                                        "enc_info="  . $this->m_encx_info . "," .
+                                        "trace_no="  . $trace_no          . "," .
+                                        "cust_ip="   . $cust_ip           . "," .
+                                        "log_level=" . $log_level         . "," .
+                                        "opt="       . $opt               . "" );
+        }
 
           if ( $res_data == "" )
           {

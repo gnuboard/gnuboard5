@@ -29,6 +29,12 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
     /* =   01. KCP 지불 서버 정보 설정                                              = */
     /* = -------------------------------------------------------------------------- = */
     $g_conf_home_dir  = G5_SHOP_PATH.'/kcp'; // ※ 쇼핑몰 모듈 설치 절대 경로 bin전까지
+    $g_conf_key_dir   = '';
+    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
+    {
+        $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
+        $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
+    }
     $g_conf_log_level = "3";
 
     if ($default['de_card_test']) {
@@ -200,7 +206,7 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
                                   $g_conf_site_key,  $tx_cd,           "",
                                   $g_conf_pa_url,    $g_conf_pa_port,  "payplus_cli_slib",
                                   $ordr_idxx,        $cust_ip,         $g_conf_log_level,
-                                  "",                $g_conf_tx_mode );
+                                  "",                $g_conf_tx_mode,  $g_conf_key_dir, $g_conf_log_dir );
         }
         else
         {
