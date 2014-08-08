@@ -158,7 +158,7 @@ class   C_PAYPLUS_CLI
         else
         {
           if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
-        {
+          {
             $bin_exe = $home_dir.'/bin/pp_cli_exe ';
 
             $res_data = $this->mf_exec($bin_exe . "\"".
@@ -181,9 +181,9 @@ class   C_PAYPLUS_CLI
                                                    $escw_data           .
                                                    $modx_data           .
                                 "\"") ;
-        }
-        else
-        {
+          }
+          else
+          {
             if(PHP_INT_MAX == 2147483647) // 32-bit
                 $bin_exe = $home_dir.'/bin/pp_cli';
             else
@@ -209,7 +209,7 @@ class   C_PAYPLUS_CLI
                                         "cust_ip="   . $cust_ip           . "," .
                                         "log_level=" . $log_level         . "," .
                                         "opt="       . $opt               . "" );
-        }
+          }
 
           if ( $res_data == "" )
           {
