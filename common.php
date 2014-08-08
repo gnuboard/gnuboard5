@@ -252,7 +252,7 @@ if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
 $qstr = '';
 
 if (isset($_REQUEST['sca']))  {
-    $sca = trim($_REQUEST['sca']);
+    $sca = clean_xss_tags(trim($_REQUEST['sca']));
     if ($sca)
         $qstr .= '&amp;sca=' . urlencode($sca);
 } else {
