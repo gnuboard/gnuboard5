@@ -94,7 +94,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <tbody>
             <tr>
                 <th scope="row">주문 번호</th>
-                <td><?php echo $od['od_id']; ?></td>
+                <td><?php echo $od_id; ?></td>
             </tr>
             <tr>
                 <th scope="row">상품 정보</th>
@@ -102,15 +102,15 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             </tr>
             <tr>
                 <th scope="row">주문자 이름</th>
-                <td><?php echo $od['od_name']; ?></td>
+                <td><?php echo $od_name; ?></td>
             </tr>
             <tr>
                 <th scope="row">주문자 E-Mail</th>
-                <td><?php echo $od['od_email']; ?></td>
+                <td><?php echo $od_email; ?></td>
             </tr>
             <tr>
                 <th scope="row">주문자 전화번호</th>
-                <td><?php echo $od['od_tel']; ?></td>
+                <td><?php echo $od_tel; ?></td>
             </tr>
             </tbody>
             </table>
@@ -121,6 +121,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <h2>현금영수증 발급 정보</h2>
 
         <form method="post" id="LGD_PAYINFO" action="<?php echo G5_SHOP_URL; ?>/lg/taxsave_result.php">
+        <input type="hidden" name="tx"        value="<?php echo $tx; ?>">
         <input type="hidden" name="od_id" value="<?php echo $od_id; ?>">
         <div class="tbl_head01 tbl_wrap">
             <table>

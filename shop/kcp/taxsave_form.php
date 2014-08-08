@@ -22,7 +22,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             return;
         }
 
-        form.ordr_idxx.value = "<?php echo $od['od_id']; ?>";
+        form.ordr_idxx.value = "<?php echo $od_id; ?>";
         form.amt_tot.value = "<?php echo $amt_tot; ?>";
         form.amt_sup.value = "<?php echo $amt_sup; ?>";
         form.amt_svc.value = "<?php echo $amt_svc; ?>";
@@ -129,7 +129,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <tbody>
             <tr>
                 <th scope="row">주문 번호</th>
-                <td><?php echo $od['od_id']; ?></td>
+                <td><?php echo $od_id; ?></td>
             </tr>
             <tr>
                 <th scope="row">상품 정보</th>
@@ -137,15 +137,15 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             </tr>
             <tr>
                 <th scope="row">주문자 이름</th>
-                <td><?php echo $od['od_name']; ?></td>
+                <td><?php echo $od_name; ?></td>
             </tr>
             <tr>
                 <th scope="row">주문자 E-Mail</th>
-                <td><?php echo $od['od_email']; ?></td>
+                <td><?php echo $od_email; ?></td>
             </tr>
             <tr>
                 <th scope="row">주문자 전화번호</th>
-                <td><?php echo $od['od_tel']; ?></td>
+                <td><?php echo $od_tel; ?></td>
             </tr>
             </tbody>
             </table>
@@ -156,12 +156,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <h2>현금영수증 발급 정보</h2>
 
         <form name="cash_form" action="<?php echo G5_SHOP_URL; ?>/kcp/pp_cli_hub.php" method="post">
+        <input type="hidden" name="tx"        value="<?php echo $tx; ?>">
         <input type="hidden" name="corp_type" value="0"> <!-- 사업자 구분 - 0:직접판매 , 1:입점몰판매 -->
         <input type="hidden" name="ordr_idxx">
         <input type="hidden" name="good_name" value="<?php echo addslashes($goods_name); ?>">
-        <input type="hidden" name="buyr_name" value="<?php echo $od['od_name']; ?>">
-        <input type="hidden" name="buyr_mail" value="<?php echo $od['od_email']; ?>">
-        <input type="hidden" name="buyr_tel1" value="<?php echo $od['od_tel']; ?>">
+        <input type="hidden" name="buyr_name" value="<?php echo $od_name; ?>">
+        <input type="hidden" name="buyr_mail" value="<?php echo $od_email; ?>">
+        <input type="hidden" name="buyr_tel1" value="<?php echo $od_tel; ?>">
         <input type="hidden" name="trad_time" value="<?php echo $trad_time; ?>">
 
         <input type="hidden" name="amt_tot">

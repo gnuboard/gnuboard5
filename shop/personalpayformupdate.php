@@ -114,10 +114,13 @@ if((int)$pp['pp_price'] !== (int)$pg_price) {
 }
 
 $pp_pg = $default['de_pg_service'];
+$pp_email = get_email_address($pp_email);
 
 // 결제정보 입력
 $sql = " update {$g5['g5_shop_personalpay_table']}
-            set pp_pg               = '$pp_pg',
+            set pp_email            = '$pp_email',
+                pp_hp               = '$pp_hp',
+                pp_pg               = '$pp_pg',
                 pp_tno              = '$pp_tno',
                 pp_app_no           = '$app_no',
                 pp_receipt_price    = '$pp_receipt_price',

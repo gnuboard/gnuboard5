@@ -3,15 +3,30 @@ include_once('./_common.php');
 
 require_once(G5_SHOP_PATH.'/settle_lg.inc.php');
 
-$od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
-if (!$od)
-    die('<p id="scash_empty">주문서가 존재하지 않습니다.</p>');
+if($tx == 'personalpay') {
+    $od = sql_fetch(" select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$od_id' ");
+    if (!$od)
+        die('<p id="scash_empty">개인결제 내역이 존재하지 않습니다.</p>');
 
-$goods = get_goods($od['od_id']);
-$goods_name = $goods['full_name'];
-$order_price = $od['od_tax_mny'] + $od['od_vat_mny'] + $od['od_free_mny'];
+    $od_tno      = $od['pp_tno'];
+    $goods_name  = $od['pp_name'].'님 개인결제';
+    $settle_case = $od['pp_settle_case'];
+    $order_price = $od['pp_receipt_price'];
+    $od_casseqno = $od['pp_casseqno'];
+} else {
+    $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
+    if (!$od)
+        die('<p id="scash_empty">주문서가 존재하지 않습니다.</p>');
 
-switch($od['od_settle_case']) {
+    $od_tno      = $od['od_tno'];
+    $goods       = get_goods($od['od_id']);
+    $goods_name  = $goods['full_name'];
+    $settle_case = $od['od_settle_case'];
+    $order_price = $od['od_tax_mny'] + $od['od_vat_mny'] + $od['od_free_mny'];
+    $od_casseqno = $od['od_casseqno'];
+}
+
+switch($settle_case) {
     case '가상계좌':
         $pay_type = 'SC0040';
         break;
@@ -27,11 +42,11 @@ switch($od['od_settle_case']) {
 }
 
 $LGD_METHOD                 = 'AUTH';                                   //메소드('AUTH':승인, 'CANCEL' 취소)
-$LGD_OID                    = $od['od_id'];                             //주문번호(상점정의 유니크한 주문번호를 입력하세요)
+$LGD_OID                    = $od_id;                                   //주문번호(상점정의 유니크한 주문번호를 입력하세요)
 $LGD_PAYTYPE                = $pay_type;                                //결제수단 코드 (SC0030:계좌이체, SC0040:가상계좌, SC0100:무통장입금 단독)
 $LGD_AMOUNT                 = $order_price;                             //금액("," 를 제외한 금액을 입력하세요)
 $LGD_PRODUCTINFO            = $goods_name;                              //상품명
-$LGD_TID                    = $od['od_tno'];                            //LG유플러스 거래번호
+$LGD_TID                    = $od_tno;                                  //LG유플러스 거래번호
 $LGD_CUSTOM_MERTNAME        = $default['de_admin_company_name'];        //상점명
 $LGD_CUSTOM_CEONAME         = $default['de_admin_company_owner'];       //대표자명
 $LGD_CUSTOM_BUSINESSNUM     = $default['de_admin_company_saupja_no'];   //사업자등록번호
@@ -61,7 +76,7 @@ if ($LGD_METHOD == "AUTH") {                 // 현금영수증 발급 요청
     $xpay->Set("LGD_CASHRECEIPTUSE", $LGD_CASHRECEIPTUSE);
     $xpay->Set("LGD_ENCODING",    "UTF-8");
 
-    if($od['od_tax_flag'] && $od['od_free_mny'] > 0) {
+    if(isset($od['od_tax_flag']) && $od['od_tax_flag'] && $od['od_free_mny'] > 0) {
         $xpay->Set("LGD_TAXFREEAMOUNT", $od['od_free_mny']); //비과세 금액
     }
 
@@ -70,7 +85,7 @@ if ($LGD_METHOD == "AUTH") {                 // 현금영수증 발급 요청
     }
     else if ($LGD_PAYTYPE == "SC0040"){         //기결제된 가상계좌건 현금영수증 발급요청시 필수
         $xpay->Set("LGD_TID", $LGD_TID);
-        $xpay->Set("LGD_SEQNO", $od['od_casseqno']);
+        $xpay->Set("LGD_SEQNO", $od_casseqno);
     }
     else {                                      //무통장입금 단독건 발급요청
         $xpay->Set("LGD_PRODUCTINFO", $LGD_PRODUCTINFO);
@@ -109,11 +124,20 @@ if ($xpay->TX()) {
         $cash['LGD_RESPDATE']   = $xpay->Response("LGD_RESPDATE",0);
         $cash_info = serialize($cash);
 
-        $sql = " update {$g5['g5_shop_order_table']}
-                    set od_cash = '1',
-                        od_cash_no = '$cash_no',
-                        od_cash_info = '$cash_info'
-                  where od_id = '$LGD_OID' ";
+        if($tx == 'personalpay') {
+            $sql = " update {$g5['g5_shop_personalpay_table']}
+                        set pp_cash = '1',
+                            pp_cash_no = '$cash_no',
+                            pp_cash_info = '$cash_info'
+                      where pp_id = '$LGD_OID' ";
+        } else {
+            $sql = " update {$g5['g5_shop_order_table']}
+                        set od_cash = '1',
+                            od_cash_no = '$cash_no',
+                            od_cash_info = '$cash_info'
+                      where od_id = '$LGD_OID' ";
+        }
+
         $result = sql_query($sql, false);
 
         if(!$result) { // DB 정보갱신 실패시 취소
@@ -123,7 +147,7 @@ if ($xpay->TX()) {
             $xpay->Set("LGD_TID", $LGD_TID);
 
             if ($LGD_PAYTYPE == "SC0040"){				//가상계좌건 현금영수증 발급취소시 필수
-                $xpay->Set("LGD_SEQNO", $od['od_casseqno']);
+                $xpay->Set("LGD_SEQNO", $od_casseqno);
             }
 
             if ($xpay->TX()) {
@@ -216,7 +240,7 @@ switch($LGD_PAYTYPE) {
         <tr>
             <th scope="row">현금영수증 URL</th>
             <td>
-                <button type="button" name="receiptView" class="btn_frmline" onClick="javascript:showCashReceipts('<?php echo $LGD_MID; ?>','<?php echo $LGD_OID; ?>','<?php echo $od['od_casseqno']; ?>','<?php echo $trade_type; ?>','<?php echo $CST_PLATFROM; ?>');">영수증 확인</button>
+                <button type="button" name="receiptView" class="btn_frmline" onClick="javascript:showCashReceipts('<?php echo $LGD_MID; ?>','<?php echo $LGD_OID; ?>','<?php echo $od_casseqno; ?>','<?php echo $trade_type; ?>','<?php echo $CST_PLATFROM; ?>');">영수증 확인</button>
                 <p>영수증 확인은 실 등록의 경우에만 가능합니다.</p>
             </td>
         </tr>

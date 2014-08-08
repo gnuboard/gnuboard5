@@ -2,7 +2,11 @@
 include './_common.php';
 include G5_LIB_PATH.'/etc.lib.php';
 
-$sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_id = '{$_POST['ordr_idxx']}' and od_cash = 1 ";
+if($tx == 'personalpay')
+    $sql = " select count(*) as cnt from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['ordr_idxx']}' and pp_cash = 1 ";
+else
+    $sql = " select count(*) as cnt from {$g5['g5_shop_order_table']} where od_id = '{$_POST['ordr_idxx']}' and od_cash = 1 ";
+
 $row = sql_fetch($sql);
 if ($row['cnt']) {
     alert('이미 등록된 현금영수증 입니다.');
@@ -253,11 +257,20 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
                 $cash['id_info']    = $id_info;
                 $cash_info = serialize($cash);
 
-                $sql = " update {$g5['g5_shop_order_table']}
-                            set od_cash = '1',
-                                od_cash_no = '$cash_no',
-                                od_cash_info = '$cash_info'
-                          where od_id = '$ordr_idxx' ";
+                if($tx == 'personalpay') {
+                    $sql = " update {$g5['g5_shop_personalpay_table']}
+                                set pp_cash = '1',
+                                    pp_cash_no = '$cash_no',
+                                    pp_cash_info = '$cash_info'
+                              where pp_id = '$ordr_idxx' ";
+                } else {
+                    $sql = " update {$g5['g5_shop_order_table']}
+                                set od_cash = '1',
+                                    od_cash_no = '$cash_no',
+                                    od_cash_info = '$cash_info'
+                              where od_id = '$ordr_idxx' ";
+                }
+
                 $result = sql_query($sql, false);
                 if (!$result) $bSucc = "false";
 
