@@ -31,17 +31,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
             <td>
                 <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
-                <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" class="frm_input minlength_3 <?php echo $required ?> <?php echo $readonly ?>" maxlength="20" <?php echo $required ?> <?php echo $readonly ?>>
+                <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" class="frm_input minlength=3 <?php echo $required ?> <?php echo $readonly ?>" maxlength="20" <?php echo $required ?> <?php echo $readonly ?>>
                 <span id="msg_mb_id"></span>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="reg_mb_password">비밀번호<strong class="sound_only">필수</strong></label></th>
-            <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input minlength_3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
+            <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input minlength=3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
         </tr>
         <tr>
             <th scope="row"><label for="reg_mb_password_re">비밀번호 확인<strong class="sound_only">필수</strong></label></th>
-            <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input minlength_3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
+            <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input minlength=3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
         </tr>
         </table>
     </div>
