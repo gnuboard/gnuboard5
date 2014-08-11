@@ -45,8 +45,13 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
             dataType:"json",
             data:params,
             success: function(data) {
-                $("#datetime").html( data.datetime );
-                $("#res_msg").html( data.res_msg );
+                if(data.error){
+                    alert( data.error );
+                    $("#res_msg").html("");
+                } else {
+                    $("#datetime").html( data.datetime );
+                    $("#res_msg").html( data.res_msg );
+                }
             },
             error: function (xhr, ajaxOptions, thrownError) {
                 alert(xhr.status);

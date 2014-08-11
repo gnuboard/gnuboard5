@@ -252,7 +252,7 @@ if (isset($_REQUEST['PHPSESSID']) && $_REQUEST['PHPSESSID'] != session_id())
 $qstr = '';
 
 if (isset($_REQUEST['sca']))  {
-    $sca = trim($_REQUEST['sca']);
+    $sca = clean_xss_tags(trim($_REQUEST['sca']));
     if ($sca)
         $qstr .= '&amp;sca=' . urlencode($sca);
 } else {
@@ -453,9 +453,9 @@ if ($is_admin != 'super') {
             if (empty($pattern[$i]))
                 continue;
 
-            //$pat = "/({$pattern[$i]})/";
             $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
-            $pat = "/^{$pattern[$i]}/";
+            $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
+            $pat = "/^{$pattern[$i]}$/";
             $is_possible_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
             if ($is_possible_ip)
                 break;
@@ -473,7 +473,8 @@ if ($is_admin != 'super') {
             continue;
 
         $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
-        $pat = "/^{$pattern[$i]}/";
+        $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
+        $pat = "/^{$pattern[$i]}$/";
         $is_intercept_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
         if ($is_intercept_ip)
             die ("접근 불가합니다.");
@@ -495,6 +496,8 @@ if (G5_IS_MOBILE) {
     $search_skin_url    = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/search/'.$config['cf_mobile_search_skin'];
     $connect_skin_path  = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
     $connect_skin_url   = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/connect/'.$config['cf_mobile_connect_skin'];
+    $faq_skin_path      = G5_MOBILE_PATH .'/'.G5_SKIN_DIR.'/faq/'.$config['cf_mobile_faq_skin'];
+    $faq_skin_url       = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/faq/'.$config['cf_mobile_faq_skin'];
 } else {
     $board_skin_path    = G5_SKIN_PATH.'/board/'.$board['bo_skin'];
     $board_skin_url     = G5_SKIN_URL .'/board/'.$board['bo_skin'];
@@ -506,6 +509,8 @@ if (G5_IS_MOBILE) {
     $search_skin_url    = G5_SKIN_URL .'/search/'.$config['cf_search_skin'];
     $connect_skin_path  = G5_SKIN_PATH.'/connect/'.$config['cf_connect_skin'];
     $connect_skin_url   = G5_SKIN_URL .'/connect/'.$config['cf_connect_skin'];
+    $faq_skin_path      = G5_SKIN_PATH.'/faq/'.$config['cf_faq_skin'];
+    $faq_skin_url       = G5_SKIN_URL.'/faq/'.$config['cf_faq_skin'];
 }
 //==============================================================================
 

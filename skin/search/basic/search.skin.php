@@ -102,8 +102,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     <?php
     $k=0;
     for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
-        $comment_def = "";
-        $comment_href = "";
      ?>
         <h2><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><?php echo $bo_subject[$idx] ?> 게시판 내 결과</a></h2>
         <ul>
@@ -111,8 +109,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
         for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
             if ($list[$idx][$i]['wr_is_comment'])
             {
-                $comment_def = "<span class=\"cmt_def\">댓글 | </span>";
-                $comment_href = "#c_".$list[$idx][$i]['wr_id'];
+                $comment_def = '<span class="cmt_def">댓글 | </span>';
+                $comment_href = '#c_'.$list[$idx][$i]['wr_id'];
+            }
+            else
+            {
+                $comment_def = '';
+                $comment_href = '';
             }
          ?>
 
