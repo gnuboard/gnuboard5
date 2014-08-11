@@ -154,7 +154,7 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
     <div id="ssch_cate">
         <ul>
         <?php
-        $sql = " select b.ca_id, b.ca_name, count(*) as cnt $sql_common $sql_where and length(b.ca_id) = 2 group by b.ca_id order by b.ca_id ";
+        $sql = " select b.ca_id, b.ca_name, count(*) as cnt $sql_common $sql_where group by b.ca_id order by b.ca_id ";
         $result = sql_query($sql);
         $total_cnt = 0;
         for ($i=0; $row=sql_fetch_array($result); $i++) {
