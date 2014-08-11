@@ -180,8 +180,19 @@ if($pp['pp_pg'] == 'lg') {
 
                 // 현금영수증 발급을 사용하는 경우에만
                 if ($default['de_taxsave_use']) {
+                    $is_cash_receipt = true;
+
+                    // 주문내역이 있으면 현금영수증 발급하지 않음
+                    if($pp['od_id']) {
+                        $sql = " select count(od_id) as cnt from {$g5['g5_shop_order_table']} where od_id = '{$pp['od_id']}' ";
+                        $row = sql_fetch($sql);
+
+                        if($row['cnt'] > 0)
+                            $is_cash_receipt = false;
+                    }
+
                     // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
-                    if ($misu_price == 0 && $pp['pp_receipt_price'] && ($pp['pp_settle_case'] == '계좌이체' || $pp['pp_settle_case'] == '가상계좌')) {
+                    if ($is_cash_receipt && $misu_price == 0 && $pp['pp_receipt_price'] && ($pp['pp_settle_case'] == '계좌이체' || $pp['pp_settle_case'] == '가상계좌')) {
                 ?>
                 <tr>
                     <th scope="row">현금영수증</th>
