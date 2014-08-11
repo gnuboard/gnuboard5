@@ -68,5 +68,5 @@ if( G5_IS_MOBILE ){
     $write_skin_page = "/write.skin.php";
 }
 include_once ($sms5_skin_path.$write_skin_page);
-echo PHP_EOL.'<!-- skin : '.$sms5_skin_path.' -->'.PHP_EOL;
+echo PHP_EOL.'<!-- skin : '.$sms5['bo_skin'].' -->'.PHP_EOL;
 ?>
