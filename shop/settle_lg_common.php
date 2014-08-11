@@ -85,10 +85,10 @@ if ( $LGD_HASHDATA2 == $LGD_HASHDATA ) { //해쉬값 검증이 성공이면
                 $sql = " update {$g5['g5_shop_personalpay_table']}
                             set pp_receipt_price = '$LGD_AMOUNT',
                                 pp_receipt_time  = '$LGD_PAYDATE',
-                                pp_casseqno      = '$LGD_CASSEQNO',
+                                pp_casseqno      = '$LGD_CASSEQNO'
                             where pp_id = '$LGD_OID'
                               and pp_tno = '$LGD_TID' ";
-                sql_query($sql, false);
+                $result = sql_query($sql, false);
 
                 if($row['od_id']) {
                     // 주문서 UPDATE
