@@ -123,7 +123,7 @@ class item_list
             $this->set_list_skin($this->list_skin);
             $this->set_list_mod($this->list_mod);
             $this->set_list_row($this->list_row);
-            $this->set_img_size($this->img_width);
+            $this->set_img_size($this->img_width, $this->img_height);
         }
     }
 
