@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit;
 @ini_set('memory_limit', '512M');
 
 // 게시글리스트 썸네일 생성
-function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=true, $crop_mode='center', $is_sharpen=true, $um_value='80/0.5/3')
+function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=true, $crop_mode='center', $is_sharpen=false, $um_value='80/0.5/3')
 {
     global $g5, $config;
     $filename = $alt = "";
@@ -184,15 +184,13 @@ function get_view_thumbnail($contents, $thumb_width=0)
     return $contents;
 }
 
-function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create, $is_crop=false, $crop_mode='center', $is_sharpen=true, $um_value='80/0.5/3')
+function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create, $is_crop=false, $crop_mode='center', $is_sharpen=false, $um_value='80/0.5/3')
 {
     global $g5;
 
     if(!$thumb_width && !$thumb_height)
         return;
 
-    $thumb_filename = preg_replace("/\.[^\.]+$/i", "", $filename); // 확장자제거
-    $thumb_file = "$target_path/thumb-{$thumb_filename}_{$thumb_width}x{$thumb_height}.jpg";
     $source_file = "$source_path/$filename";
 
     if(!is_file($source_file)) // 원본 파일이 없다면
@@ -216,6 +214,11 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         if(is_animated_gif($source_file))
             return basename($source_file);
     }
+
+    $ext = array(1 => 'gif', 2 => 'jpg', 3 => 'png');
+
+    $thumb_filename = preg_replace("/\.[^\.]+$/i", "", $filename); // 확장자제거
+    $thumb_file = "$target_path/thumb-{$thumb_filename}_{$thumb_width}x{$thumb_height}.".$ext[$size[2]];
 
     $thumb_time = @filemtime($thumb_file);
     $source_time = @filemtime($source_file);
@@ -266,6 +269,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         }
     } else if ($size[2] == 3) {
         $src = imagecreatefrompng($source_file);
+        imagealphablending($src, true);
     } else {
         return;
     }
@@ -324,6 +328,11 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         }
 
         $dst = imagecreatetruecolor($dst_w, $dst_h);
+
+        if($size[2] == 3) {
+            imagealphablending($dst, false);
+            imagesavealpha($dst, true);
+        }
     } else {
         $dst = imagecreatetruecolor($dst_w, $dst_h);
 
@@ -345,8 +354,15 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             }
         }
 
-        $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
-        imagefill($dst, 0, 0, $bgcolor);
+        if($size[2] == 3) {
+            $bgcolor = imagecolorallocatealpha($dst, 0, 0, 0, 127);
+            imagefill($dst, 0, 0, $bgcolor);
+            imagealphablending($dst, false);
+            imagesavealpha($dst, true);
+        } else {
+            $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
+            imagefill($dst, 0, 0, $bgcolor);
+        }
     }
 
     imagecopyresampled($dst, $src, $dst_x, $dst_y, $src_x, $src_y, $dst_w, $dst_h, $src_w, $src_h);
@@ -357,12 +373,24 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         UnsharpMask($dst, $val[0], $val[1], $val[2]);
     }
 
-    if(!defined('G5_THUMB_JPG_QUALITY'))
-        $jpg_quality = 90;
-    else
-        $jpg_quality = G5_THUMB_JPG_QUALITY;
+    if($size[2] == 1) {
+        imagegif($dst, $thumb_file);
+    } else if($size[2] == 3) {
+        if(!defined('G5_THUMB_PNG_COMPRESS'))
+            $png_compress = 5;
+        else
+            $png_compress = G5_THUMB_PNG_COMPRESS;
 
-    imagejpeg($dst, $thumb_file, $jpg_quality);
+        imagepng($dst, $thumb_file, $png_compress);
+    } else {
+        if(!defined('G5_THUMB_JPG_QUALITY'))
+            $jpg_quality = 90;
+        else
+            $jpg_quality = G5_THUMB_JPG_QUALITY;
+
+        imagejpeg($dst, $thumb_file, $jpg_quality);
+    }
+
     chmod($thumb_file, G5_FILE_PERMISSION); // 추후 삭제를 위하여 파일모드 변경
 
     imagedestroy($src);
