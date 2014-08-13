@@ -67,6 +67,12 @@ if ($addr1)
 $g5['title'] = '우편번호 검색';
 include_once(G5_PATH.'/head.sub.php');
 
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신
+    $g5['daum_juso_js'] = "<script src=\"https://spi.maps.daum.net/imap/map_js_init/postcode.js\"></script>";
+} else {  //http 통신 
+    $g5['daum_juso_js'] = "<script src=\"http://dmaps.daum.net/map_js_init/postcode.js\"></script>";
+}
+
 include_once($member_skin_path.'/zip.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
