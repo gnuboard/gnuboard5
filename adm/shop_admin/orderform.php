@@ -895,7 +895,7 @@ if($od['od_pg'] == 'lg') {
                 <tr>
                     <th scope="row"><label for="od_hope_date">희망배송일</label></th>
                     <td>
-                        <input type="text" name="od_hope_date" value="<?php echo $od['od_hope_date']; ?>" id="od_hopedate" required class="frm_input required minlength=10" maxlength="10" minlength="10"> (<?php echo get_yoil($od['od_hope_date']); ?>)
+                        <input type="text" name="od_hope_date" value="<?php echo $od['od_hope_date']; ?>" id="od_hopedate" required class="frm_input required" maxlength="10" minlength="10"> (<?php echo get_yoil($od['od_hope_date']); ?>)
                     </td>
                 </tr>
                 <?php } ?>
