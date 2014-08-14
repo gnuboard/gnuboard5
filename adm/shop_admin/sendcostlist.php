@@ -109,15 +109,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <tr>
             <th scope="row"><label for="sc_zip1">우편번호 시작<strong class="sound_only">필수</strong></label></th>
             <td>
-                <input type="text" name="sc_zip1" id="sc_zip1" required class="required frm_input" size="10">
-                <button type="button" class="sch_zipcode btn_frmline">우편번호검색</button>
+                <input type="text" name="sc_zip1" id="sc_zip1" required class="required frm_input" size="10"> (입력 예 : 123-456)
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="sc_zip2">우편번호 끝<strong class="sound_only">필수</strong></label></th>
             <td>
-                <input type="text" name="sc_zip2" id="sc_zip2" required class="required frm_input" size="10">
-                <button type="button" class="sch_zipcode btn_frmline">우편번호검색</button>
+                <input type="text" name="sc_zip2" id="sc_zip2" required class="required frm_input" size="10"> (입력 예 : 123-456)
             </td>
         </tr>
         <tr>
@@ -137,19 +135,6 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 </section>
 
 <script>
-$(function() {
-    $(".sch_zipcode").click(function() {
-        var idx = $(".sch_zipcode").index($(this));
-        var no = idx + 1;
-        var sort = "asc";
-        if(no == 2)
-            sort = "desc";
-        var url = "./sendcostzipcode.php?no="+no+"&sort="+sort;
-        var opt = "left=50,top=50,width=600,height=700,scrollbars=1";
-        window.open(url, "win_zipcode", opt);
-    });
-});
-
 function fsendcost_submit(f)
 {
     if (!is_checked("chk[]")) {
