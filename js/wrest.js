@@ -204,15 +204,15 @@ function wrestAlNum_(fld)
 }
 
 // 최소 길이 검사
-function wrestMinLength(fld, css)
+function wrestMinLength(fld)
 {
     if (!wrestTrim(fld)) return;
 
-    var str = css.split('='); // minlength=?? <-- str[1]
+    var minlength = fld.getAttribute("minlength");
 
     if (wrestFld == null) {
-        if (fld.value.length < parseInt(str[1])) {
-            wrestMsg = wrestItemname(fld) + " : 최소 "+str[1]+"글자 이상 입력하세요.\n";
+        if (fld.value.length < parseInt(minlength)) {
+            wrestMsg = wrestItemname(fld) + " : 최소 "+minlength+"글자 이상 입력하세요.\n";
             wrestFld = fld;
         }
     }
@@ -282,6 +282,10 @@ function wrestSubmit()
                 wrestRequired(el);
             }
 
+            if (el.getAttribute("minlength") != null) {
+                wrestMinLength(el);
+            }
+
             var array_css = el.className.split(" "); // class 를 공백으로 나눔
 
             el.style.backgroundColor = wrestFldDefaultColor;
@@ -305,10 +309,7 @@ function wrestSubmit()
                     case "telnum"       : wrestTelNum(el); break; // 김선용 2006.3 - 전화번호 형식 검사
                     case "imgext"       : wrestImgExt(el); break;
                     default :
-                        // css 가 minlength= 로 시작한다면 = 뒤의 숫자는 최소길이값
-                        if (/^minlength\=/.test(css)) {
-                            wrestMinLength(el, css); break;
-                        } else if (/^extension\=/.test(css)) {
+                        if (/^extension\=/.test(css)) {
                             wrestExtension(el, css); break;
                         }
                 } // switch (css)
