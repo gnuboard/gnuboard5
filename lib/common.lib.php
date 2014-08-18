@@ -2594,19 +2594,23 @@ function module_exec_check($exe, $type)
     return $error;
 }
 
-// 도로명주소 출력
 // 주소출력
-function print_address($addr1, $addr2, $addr3)
+function print_address($addr1, $addr2, $addr3, $addr4)
 {
     $address = trim($addr1);
     $addr2 = trim($addr2);
     $addr3 = trim($addr3);
 
-    if($addr2)
-        $address .= ', '.$addr2;
+    if($addr4 == 'N') {
+        if($addr2)
+            $address .= ' '.$addr2;
+    } else {
+        if($addr2)
+            $address .= ', '.$addr2;
 
-    if($addr3)
-        $address .= ' '.$addr3;
+        if($addr3)
+            $address .= ' '.$addr3;
+    }
 
     return $address;
 }
