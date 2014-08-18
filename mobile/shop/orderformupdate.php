@@ -225,6 +225,8 @@ if ((int)($send_cost - $tot_sc_cp_price) !== (int)($i_send_cost - $i_send_coupon
 }
 
 // 추가배송비가 상이함
+$od_b_zip1 = preg_replace('/[^0-9]/', '', $od_b_zip1);
+$od_b_zip2 = preg_replace('/[^0-9]/', '', $od_b_zip2);
 $zipcode = $od_b_zip1 . $od_b_zip2;
 $sql = " select sc_id, sc_price from {$g5['g5_shop_sendcost_table']} where sc_zip1 <= '$zipcode' and sc_zip2 >= '$zipcode' ";
 $tmp = sql_fetch($sql);
@@ -697,7 +699,8 @@ if($is_member) {
     if($row['ad_id']){
         $sql = " update {$g5['g5_shop_order_address_table']}
                       set ad_default = '$ad_default',
-                          ad_subject = '$ad_subject'
+                          ad_subject = '$ad_subject',
+                          ad_jibeon  = '$od_b_addr_jibeon'
                     where mb_id = '{$member['mb_id']}'
                       and ad_id = '{$row['ad_id']}' ";
     } else {

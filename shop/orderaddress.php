@@ -86,7 +86,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
             </td>
             <td class="td_namesmall"><?php echo $row['ad_name']; ?></td>
             <td class="td_numbig"><?php echo $row['ad_tel']; ?><br><?php echo $row['ad_hp']; ?></td>
-            <td><?php echo print_address($row['ad_addr1'], $row['ad_addr2'], $row['ad_addr3']); ?></td>
+            <td><?php echo print_address($row['ad_addr1'], $row['ad_addr2'], $row['ad_addr3'], $row['ad_jibeon']); ?></td>
             <td class="td_mng">
                 <input type="hidden" value="<?php echo $addr; ?>">
                 <button type="button" class="sel_address">선택</button>
@@ -126,7 +126,11 @@ $(function() {
         f.od_b_addr_jibeon.value = addr[8];
         f.ad_subject.value       = addr[9];
 
-        window.opener.document.getElementById("od_b_addr_jibeon").innerText = "지번주소 : "+addr[8];
+        if(addr[8] == "N"){ //지번이면
+            f.od_b_addr3.parentNode.style.display="none";
+        } else {    //도로명 또는 그외
+            f.od_b_addr3.parentNode.style.display="";
+        }
 
         var zip1 = addr[3].replace(/[^0-9]/g, "");
         var zip2 = addr[4].replace(/[^0-9]/g, "");

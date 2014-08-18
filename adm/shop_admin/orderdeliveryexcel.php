@@ -45,7 +45,7 @@ for($i=1; $row=sql_fetch_array($result); $i++) {
     $worksheet->write($i, 4, $row['od_b_name']);
     $worksheet->write($i, 5, $row['od_b_tel']);
     $worksheet->write($i, 6, $row['od_b_hp']);
-    $worksheet->write($i, 7, print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3']));
+    $worksheet->write($i, 7, print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']));
     $worksheet->write($i, 8, $row['od_delivery_company']);
     $worksheet->write($i, 9, $row['od_invoice']);
 }

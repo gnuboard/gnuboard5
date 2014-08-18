@@ -307,7 +307,9 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
                 <th scope="row"><label for="od_hp">핸드폰</label></th>
                 <td><input type="text" name="od_hp" value="<?php echo $member['mb_hp']; ?>" id="od_hp" class="frm_input" maxlength="20"></td>
             </tr>
-            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2&amp;frm_addr3=od_addr3&amp;frm_jibeon=od_addr_jibeon'; ?>
+            <?php $zip_href = G5_BBS_URL.'/zip.php?frm_name=forderform&amp;frm_zip1=od_zip1&amp;frm_zip2=od_zip2&amp;frm_addr1=od_addr1&amp;frm_addr2=od_addr2&amp;frm_addr3=od_addr3&amp;frm_jibeon=od_addr_jibeon';
+            $juso_addr3_view = $member['mb_addr_jibeon'] == 'N' ? 'style="display:none"' : '';
+            ?>
             <tr>
                 <th scope="row">주소</th>
                 <td>
@@ -321,10 +323,11 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
                     <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required">
                     <label for="od_addr2" class="sound_only">상세주소</label>
                     <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" class="frm_input frm_address">
-                    <label for="od_addr3" class="sound_only">참고항목</label>
-                    <input type="text" name="od_addr3" value="<?php echo $member['mb_addr3'] ?>" id="od_addr3" readonly="readonly" class="frm_input frm_address">
-                    <input type="hidden" name="od_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>"><br>
-                    <span id="od_addr_jibeon"><?php echo ($member['mb_addr_jibeon'] ? '지번주소 : '.$member['mb_addr_jibeon'] : ''); ?></span>
+                    <span <?php echo $juso_addr3_view; ?>>
+                        <label for="od_addr3" class="sound_only">참고항목</label>
+                        <input type="text" name="od_addr3" value="<?php echo $member['mb_addr3'] ?>" id="od_addr3" class="frm_input frm_address">
+                        <input type="hidden" name="od_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>"><br>
+                    </span>
                 </td>
             </tr>
             <tr>
@@ -450,10 +453,11 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
                     <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required">
                     <label for="od_b_addr2" class="sound_only">상세주소</label>
                     <input type="text" name="od_b_addr2" id="od_b_addr2" class="frm_input frm_address">
-                    <label for="od_b_addr3" class="sound_only">참고항목</label>
-                    <input type="text" name="od_b_addr3" id="od_b_addr3" class="frm_input frm_address">
+                    <span>
+                        <label for="od_b_addr3" class="sound_only">참고항목</label>
+                        <input type="text" name="od_b_addr3" id="od_b_addr3" class="frm_input frm_address">
+                    </span>
                     <input type="hidden" name="od_b_addr_jibeon" value="">
-                    <span id="od_b_addr_jibeon"></span>
                 </td>
             </tr>
             <tr>
@@ -957,7 +961,11 @@ $(function() {
             f.od_b_addr_jibeon.value = addr[8];
             f.ad_subject.value       = addr[9];
 
-            document.getElementById("od_b_addr_jibeon").innerText = "지번주소 : "+addr[8];
+            if(addr[8] == "N"){ //지번이면
+                f.od_b_addr3.parentNode.style.display="none";
+            } else {
+                f.od_b_addr3.parentNode.style.display="";
+            }
 
             var zip1 = addr[3].replace(/[^0-9]/g, "");
             var zip2 = addr[4].replace(/[^0-9]/g, "");
@@ -1405,8 +1413,12 @@ function gumae2baesong(checked) {
         f.od_b_addr2.value = f.od_addr2.value;
         f.od_b_addr3.value = f.od_addr3.value;
         f.od_b_addr_jibeon.value = f.od_addr_jibeon.value;
-        document.getElementById("od_b_addr_jibeon").innerText = document.getElementById("od_addr_jibeon").innerText;
 
+        if(f.od_addr_jibeon.value == "N"){ //지번이면
+            f.od_b_addr3.parentNode.style.display="none";
+        } else {
+            f.od_b_addr3.parentNode.style.display="";
+        }
         calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
     } else {
         f.od_b_name.value = "";
@@ -1418,7 +1430,7 @@ function gumae2baesong(checked) {
         f.od_b_addr2.value = "";
         f.od_b_addr3.value = "";
         f.od_b_addr_jibeon.value = "";
-        document.getElementById("od_b_addr_jibeon").innerText = "";
+        f.od_b_addr3.parentNode.style.display="";
     }
 }
 

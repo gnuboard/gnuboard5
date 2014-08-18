@@ -32,7 +32,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
                     <input type="radio" name="ad_default" value="<?php echo $row['ad_id'];?>" id="ad_default<?php echo $i;?>" <?php if($row['ad_default']) echo 'checked="checked"';?>>
                     <label for="ad_default<?php echo $i;?>">기본배송지 설정</label>
                 </div>
-                <div class="addr_addr"><?php echo print_address($row['ad_addr1'], $row['ad_addr2'], $row['ad_addr3']); ?></div>
+                <div class="addr_addr"><?php echo print_address($row['ad_addr1'], $row['ad_addr2'], $row['ad_addr3'], $row['ad_jibeon']); ?></div>
                 <div class="addr_name"><?php echo $row['ad_name']; ?></div>
                 <div class="addr_tel"><?php echo $row['ad_tel']; ?> / <?php echo $row['ad_hp']; ?></div>
                 <div class="addr_btn">
@@ -73,7 +73,11 @@ $(function() {
         f.od_b_addr_jibeon.value = addr[8];
         f.ad_subject.value       = addr[9];
 
-        window.opener.document.getElementById("od_b_addr_jibeon").innerText = "지번주소 : "+addr[8];
+        if(addr[8] == "N"){ //지번이면
+            f.od_b_addr3.parentNode.style.display="none";
+        } else {    //도로명 또는 그외
+            f.od_b_addr3.parentNode.style.display="";
+        }
 
         var zip1 = addr[3].replace(/[^0-9]/g, "");
         var zip2 = addr[4].replace(/[^0-9]/g, "");

@@ -39,7 +39,7 @@ if ($csv == 'csv')
     $to_date = date_conv($to_date);
 
 
-    $sql = " SELECT a.od_id, od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_addr3, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost, b.it_sc_type
+    $sql = " SELECT a.od_id, od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_addr3, od_b_addr_jibeon, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost, b.it_sc_type
                FROM {$g5['g5_shop_order_table']} a, {$g5['g5_shop_cart_table']} b
               where a.od_id = b.od_id ";
     if ($case == 1) // 출력기간
@@ -105,7 +105,7 @@ if ($csv == 'csv')
         }
 
         echo '"'.$row['od_b_zip1'].'-'.$row['od_b_zip2'].'"'.',';
-        echo '"'.print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3']).'"'.',';
+        echo '"'.print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']).'"'.',';
         echo '"'.$row['od_b_name'].'"'.',';
         //echo '"'.multibyte_digit((string)$row[od_b_tel]).'"'.',';
         //echo '"'.multibyte_digit((string)$row[od_b_hp]).'"'.',';
@@ -134,7 +134,7 @@ if ($csv == 'xls')
     $fr_date = date_conv($fr_date);
     $to_date = date_conv($to_date);
 
-    $sql = " SELECT a.od_id, od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_addr3, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost, b.it_sc_type
+    $sql = " SELECT a.od_id, od_b_zip1, od_b_zip2, od_b_addr1, od_b_addr2, od_b_addr3, od_b_addr_jibeon, od_b_name, od_b_tel, od_b_hp, b.it_name, ct_qty, b.it_id, a.od_id, od_memo, od_invoice, b.ct_option, b.ct_send_cost, b.it_sc_type
                FROM {$g5['g5_shop_order_table']} a, {$g5['g5_shop_cart_table']} b
               where a.od_id = b.od_id ";
     if ($case == 1) // 출력기간
@@ -210,7 +210,7 @@ if ($csv == 'xls')
         $row = array_map('iconv_euckr', $row);
 
         $worksheet->write($i, 0, $row['od_b_zip1'].'-'.$row['od_b_zip2']);
-        $worksheet->write($i, 1, print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3']));
+        $worksheet->write($i, 1, print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']));
         $worksheet->write($i, 2, $row['od_b_name']);
         $worksheet->write($i, 3, $row['od_b_tel']);
         $worksheet->write($i, 4, $row['od_b_hp']);
@@ -291,8 +291,8 @@ if (mysql_num_rows($result) == 0)
         $row1 = sql_fetch($sql1);
 
         // 1.03.02
-        $row1['od_addr'] = '('.$row1['od_zip1'].'-'.$row1['od_zip2'].') '.print_address($row1['od_addr1'], $row1['od_addr2'], $row['od_addr3']);
-        $row1['od_b_addr'] = '('.$row1['od_b_zip1'].'-'.$row1['od_b_zip2'].') '.print_address($row1['od_b_addr1'], $row1['od_b_addr2'], $row['od_b_addr3']);
+        $row1['od_addr'] = '('.$row1['od_zip1'].'-'.$row1['od_zip2'].') '.print_address($row1['od_addr1'], $row1['od_addr2'], $row1['od_addr3'], $row1['od_addr_jibeon']);
+        $row1['od_b_addr'] = '('.$row1['od_b_zip1'].'-'.$row1['od_b_zip2'].') '.print_address($row1['od_b_addr1'], $row1['od_b_addr2'], $row1['od_b_addr3'], $row1['od_b_addr_jibeon']);
 
         $row1['od_addr'] = ($row1['od_addr']) ? $row1['od_addr'] : '입력안함';
         $row1['od_tel'] = ($row1['od_tel']) ? $row1['od_tel'] : '입력안함';
