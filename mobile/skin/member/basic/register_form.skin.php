@@ -3,7 +3,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
-$juso_addr3_view = $member['mb_addr_jibeon'] == 'N' ? 'style="display:none"' : '';
 ?>
 
 <div class="mbskin">
@@ -152,11 +151,9 @@ $juso_addr3_view = $member['mb_addr_jibeon'] == 'N' ? 'style="display:none"' : '
                 <input type="text" name="mb_addr1" value="<?php echo $member['mb_addr1'] ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50"><br>
                 <label for="reg_mb_addr2" class="sound_only">상세주소</label>
                 <input type="text" name="mb_addr2" value="<?php echo $member['mb_addr2'] ?>" id="reg_mb_addr2" class="frm_input frm_address" size="50">
-                <span <?php echo $juso_addr3_view;?>>
-                    <br>
-                    <label for="reg_mb_addr3" class="sound_only">참고항목</label>
-                    <input type="text" name="mb_addr3" value="<?php echo $member['mb_addr3'] ?>" id="reg_mb_addr3" class="frm_input frm_address" size="50">
-                </span>
+                <br>
+                <label for="reg_mb_addr3" class="sound_only">참고항목</label>
+                <input type="text" name="mb_addr3" value="<?php echo $member['mb_addr3'] ?>" id="reg_mb_addr3" class="frm_input frm_address" size="50" readonly="readonly">
                 <input type="hidden" name="mb_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>">
             </td>
         </tr>

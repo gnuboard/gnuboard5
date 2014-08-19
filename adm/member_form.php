@@ -125,7 +125,6 @@ if(!isset($mb['mb_dupinfo'])) {
     sql_query(" ALTER TABLE {$g5['member_table']} ADD `mb_dupinfo` varchar(255) NOT NULL DEFAULT '' AFTER `mb_adult` ", false);
 }
 
-$juso_addr3_view = $mb['mb_addr_jibeon'] == 'N' ? 'style="display:none"' : '';
 if ($mb['mb_intercept_date']) $g5['title'] = "차단된 ";
 else $g5['title'] .= "";
 $g5['title'] .= '회원 '.$html_title;
@@ -221,11 +220,9 @@ include_once('./admin.head.php');
             <label for="mb_addr1">기본주소</label><br>
             <input type="text" name="mb_addr2" value="<?php echo $mb['mb_addr2'] ?>" id="mb_addr2" class="frm_input" size="60">
             <label for="mb_addr2">상세주소</label>
-            <span <?php echo $juso_addr3_view;?>>
-                <br>
-                <input type="text" name="mb_addr3" value="<?php echo $mb['mb_addr3'] ?>" id="mb_addr3" class="frm_input" size="60">
-                <label for="mb_addr3">참고항목</label>
-            </span>
+            <br>
+            <input type="text" name="mb_addr3" value="<?php echo $mb['mb_addr3'] ?>" id="mb_addr3" class="frm_input" size="60">
+            <label for="mb_addr3">참고항목</label>
             <input type="hidden" name="mb_addr_jibeon" value="<?php echo $mb['mb_addr_jibeon']; ?>"><br>
         </td>
     </tr>
