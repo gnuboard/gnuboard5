@@ -28,16 +28,19 @@ if (!$mb['mb_id'])
 else if (is_admin($mb['mb_id']))
     alert('관리자 아이디는 접근 불가합니다.');
 
-// 난수 발생
-srand(time());
+// 임시비밀번호 발급
 $change_password = rand(100000, 999999);
 $mb_lost_certify = sql_password($change_password);
-$mb_datetime     = sql_password($mb['mb_datetime']);
 
-$sql = " update {$g5['member_table']} set mb_lost_certify = '$mb_lost_certify' where mb_id = '{$mb['mb_id']}' ";
+// 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
+$mb_nonce = bin2hex(pack('V*', rand(), rand(), rand(), rand()));
+
+// 임시비밀번호와 난수를 mb_lost_certify 필드에 저장
+$sql = " update {$g5['member_table']} set mb_lost_certify = '$mb_nonce $mb_lost_certify' where mb_id = '{$mb['mb_id']}' ";
 sql_query($sql);
 
-$href = G5_BBS_URL.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_datetime='.$mb_datetime.'&amp;mb_lost_certify='.$mb_lost_certify;
+// 인증 링크 생성
+$href = G5_BBS_URL.'/password_lost_certify.php?mb_no='.$mb['mb_no'].'&amp;mb_nonce='.$mb_nonce;
 
 $subject = "[".$config['cf_title']."] 요청하신 회원정보 찾기 안내 메일입니다.";
 
