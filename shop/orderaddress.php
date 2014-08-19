@@ -126,12 +126,6 @@ $(function() {
         f.od_b_addr_jibeon.value = addr[8];
         f.ad_subject.value       = addr[9];
 
-        if(addr[8] == "N"){ //지번이면
-            f.od_b_addr3.parentNode.style.display="none";
-        } else {    //도로명 또는 그외
-            f.od_b_addr3.parentNode.style.display="";
-        }
-
         var zip1 = addr[3].replace(/[^0-9]/g, "");
         var zip2 = addr[4].replace(/[^0-9]/g, "");
 

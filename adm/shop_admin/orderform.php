@@ -97,9 +97,6 @@ if($od['od_pg'] == 'lg') {
         echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
     }
 }
-
-$juso_addr_view = $od['od_addr_jibeon'] == 'N' ? 'style="display:none"' : '';
-$juso_b_addr_view = $od['od_b_addr_jibeon'] == 'N' ? 'style="display:none"' : '';
 ?>
 
 <section id="anc_sodr_list">
@@ -833,11 +830,9 @@ $juso_b_addr_view = $od['od_b_addr_jibeon'] == 'N' ? 'style="display:none"' : ''
                         <label for="od_addr1">기본주소</label><br>
                         <input type="text" name="od_addr2" value="<?php echo $od['od_addr2']; ?>" id="od_addr2" class="frm_input" size="35">
                         <label for="od_addr2">상세주소</label>
-                        <span <?php echo $juso_addr_view; ?>>
-                            <br>
-                            <input type="text" name="od_addr3" value="<?php echo $od['od_addr3']; ?>" id="od_addr3" class="frm_input" size="35">
-                            <label for="od_addr3">참고항목</label>
-                        </span>
+                        <br>
+                        <input type="text" name="od_addr3" value="<?php echo $od['od_addr3']; ?>" id="od_addr3" class="frm_input" size="35">
+                        <label for="od_addr3">참고항목</label>
                         <input type="hidden" name="od_addr_jibeon" value="<?php echo $od['od_addr_jibeon']; ?>"><br>
                 </tr>
                 <tr>
@@ -889,10 +884,8 @@ $juso_b_addr_view = $od['od_b_addr_jibeon'] == 'N' ? 'style="display:none"' : ''
                         <label for="od_b_addr1">기본주소</label>
                         <input type="text" name="od_b_addr2" value="<?php echo $od['od_b_addr2']; ?>" id="od_b_addr2" class="frm_input" size="35">
                         <label for="od_b_addr2">상세주소</label>
-                        <span <?php echo $juso_b_addr_view; ?>>
-                            <input type="text" name="od_b_addr3" value="<?php echo $od['od_b_addr3']; ?>" id="od_b_addr3" class="frm_input" size="35">
-                            <label for="od_b_addr3">참고항목</label>
-                        </span>
+                        <input type="text" name="od_b_addr3" value="<?php echo $od['od_b_addr3']; ?>" id="od_b_addr3" class="frm_input" size="35">
+                        <label for="od_b_addr3">참고항목</label>
                         <input type="hidden" name="od_b_addr_jibeon" value="<?php echo $od['od_b_addr_jibeon']; ?>"><br>
                     </td>
                 </tr>
