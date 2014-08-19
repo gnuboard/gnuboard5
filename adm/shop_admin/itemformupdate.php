@@ -313,6 +313,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_tel_inq          = '$it_tel_inq',
                 it_info_gubun       = '$it_info_gubun',
                 it_info_value       = '$it_info_value',
+                it_shop_memo        = '$it_shop_memo',
                 it_img1             = '$it_img1',
                 it_img2             = '$it_img2',
                 it_img3             = '$it_img3',
@@ -468,6 +469,7 @@ if(is_checked('chk_ca_it_brand'))               $ca_fields .= " , it_brand = '$i
 if(is_checked('chk_ca_it_model'))               $ca_fields .= " , it_model = '$it_model' ";
 if(is_checked('chk_ca_it_notax'))               $ca_fields .= " , it_notax = '$it_notax' ";
 if(is_checked('chk_ca_it_sell_email'))          $ca_fields .= " , it_sell_email = '$it_sell_email' ";
+if(is_checked('chk_ca_it_shop_memo'))           $ca_fields .= " , it_shop_memo = '$it_shop_memo' ";
 if(is_checked('chk_ca_it_tel_inq'))             $ca_fields .= " , it_tel_inq = '$it_tel_inq' ";
 if(is_checked('chk_ca_it_use'))                 $ca_fields .= " , it_use = '$it_use' ";
 if(is_checked('chk_ca_it_nocoupon'))            $ca_fields .= " , it_nocoupon = '$it_nocoupon' ";
@@ -519,6 +521,7 @@ if(is_checked('chk_all_it_brand'))               $all_fields .= " , it_brand = '
 if(is_checked('chk_all_it_model'))               $all_fields .= " , it_model = '$it_model' ";
 if(is_checked('chk_all_it_notax'))               $all_fields .= " , it_notax = '$it_notax' ";
 if(is_checked('chk_all_it_sell_email'))          $all_fields .= " , it_sell_email = '$it_sell_email' ";
+if(is_checked('chk_all_it_shop_memo'))           $all_fields .= " , it_shop_memo = '$it_shop_memo' ";
 if(is_checked('chk_all_it_tel_inq'))             $all_fields .= " , it_tel_inq = '$it_tel_inq' ";
 if(is_checked('chk_all_it_use'))                 $all_fields .= " , it_use = '$it_use' ";
 if(is_checked('chk_all_it_nocoupon'))            $all_fields .= " , it_nocoupon = '$it_nocoupon' ";

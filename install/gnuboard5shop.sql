@@ -423,6 +423,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_sum_qty` int(11) NOT NULL DEFAULT '0',
   `it_use_cnt` int(11) NOT NULL DEFAULT '0',
   `it_use_avg` DECIMAL(2,1) NOT NULL,
+  `it_shop_memo` text NOT NULL,
   `it_img1` varchar(255) NOT NULL DEFAULT '',
   `it_img2` varchar(255) NOT NULL DEFAULT '',
   `it_img3` varchar(255) NOT NULL DEFAULT '',

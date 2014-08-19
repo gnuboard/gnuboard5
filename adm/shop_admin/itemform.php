@@ -100,6 +100,12 @@ if(!sql_query(" select it_supply_point from {$g5['g5_shop_item_table']} limit 1 
                     ADD `it_supply_point` int(11) NOT NULL DEFAULT '0' AFTER `it_point_type` ", true);
 }
 
+// 상품메모 필드 추가
+if(!sql_query(" select it_shop_memo from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `it_shop_memo` text NOT NULL AFTER `it_use_avg` ", true);
+}
+
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_cate">상품분류</a></li>
 <li><a href="#anc_sitfrm_skin">스킨설정</a></li>
@@ -461,6 +467,16 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_ca_it_sell_email">분류적용</label>
                 <input type="checkbox" name="chk_all_it_sell_email" value="1" id="chk_all_it_sell_email">
                 <label for="chk_all_it_sell_email">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="it_shop_memo">상점메모</label></th>
+            <td><textarea name="it_shop_memo" id="it_shop_memo"><?php echo $it['it_shop_memo']; ?></textarea></td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_ca_it_shop_memo" value="1" id="chk_ca_it_shop_memo">
+                <label for="chk_ca_it_shop_memo">분류적용</label>
+                <input type="checkbox" name="chk_all_it_shop_memo" value="1" id="chk_all_it_shop_memo">
+                <label for="chk_all_it_shop_memo">전체적용</label>
             </td>
         </tr>
         </tbody>
