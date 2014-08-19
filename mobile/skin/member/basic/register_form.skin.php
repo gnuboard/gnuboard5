@@ -31,17 +31,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <th scope="row"><label for="reg_mb_id">아이디<strong class="sound_only">필수</strong></label></th>
             <td>
                 <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
-                <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" class="frm_input minlength=3 <?php echo $required ?> <?php echo $readonly ?>" maxlength="20" <?php echo $required ?> <?php echo $readonly ?>>
+                <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" class="frm_input <?php echo $required ?> <?php echo $readonly ?>" minlength="3" maxlength="20" <?php echo $required ?> <?php echo $readonly ?>>
                 <span id="msg_mb_id"></span>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="reg_mb_password">비밀번호<strong class="sound_only">필수</strong></label></th>
-            <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input minlength=3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
+            <td><input type="password" name="mb_password" id="reg_mb_password" class="frm_input <?php echo $required ?>" minlength="3" maxlength="20" <?php echo $required ?>></td>
         </tr>
         <tr>
             <th scope="row"><label for="reg_mb_password_re">비밀번호 확인<strong class="sound_only">필수</strong></label></th>
-            <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input minlength=3 <?php echo $required ?>" maxlength="20" <?php echo $required ?>></td>
+            <td><input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input <?php echo $required ?>" minlength="3" maxlength="20" <?php echo $required ?>></td>
         </tr>
         </table>
     </div>
@@ -150,11 +150,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <label for="reg_mb_addr1" class="sound_only">주소<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
                 <input type="text" name="mb_addr1" value="<?php echo $member['mb_addr1'] ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50"><br>
                 <label for="reg_mb_addr2" class="sound_only">상세주소</label>
-                <input type="text" name="mb_addr2" value="<?php echo $member['mb_addr2'] ?>" id="reg_mb_addr2" class="frm_input frm_address" size="50"><br>
+                <input type="text" name="mb_addr2" value="<?php echo $member['mb_addr2'] ?>" id="reg_mb_addr2" class="frm_input frm_address" size="50">
+                <br>
                 <label for="reg_mb_addr3" class="sound_only">참고항목</label>
-                <input type="text" name="mb_addr3" value="<?php echo $member['mb_addr3'] ?>" id="reg_mb_addr3" readonly="readonly" class="frm_input frm_address" size="50">
-                <input type="hidden" name="mb_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>"><br>
-                <span id="mb_addr_jibeon"><?php echo ($member['mb_addr_jibeon'] ? '지번주소 : '.$member['mb_addr_jibeon'] : ''); ?></span>
+                <input type="text" name="mb_addr3" value="<?php echo $member['mb_addr3'] ?>" id="reg_mb_addr3" class="frm_input frm_address" size="50" readonly="readonly">
+                <input type="hidden" name="mb_addr_jibeon" value="<?php echo $member['mb_addr_jibeon']; ?>">
             </td>
         </tr>
         <?php } ?>
@@ -262,7 +262,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <script>
     $(function() {
         $("#reg_zip_find").css("display", "inline-block");
-        $("#reg_mb_zip1, #reg_mb_zip2, #reg_mb_addr1").attr("readonly", true);
 
         <?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
         // 아이핀인증
