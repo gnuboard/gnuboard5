@@ -2607,10 +2607,10 @@ function print_address($addr1, $addr2, $addr3, $addr4)
     } else {
         if($addr2)
             $address .= ', '.$addr2;
-
-        if($addr3)
-            $address .= ' '.$addr3;
     }
+
+    if($addr3)
+        $address .= ' '.$addr3;
 
     return $address;
 }
