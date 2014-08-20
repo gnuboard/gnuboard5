@@ -12,5 +12,7 @@ if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신
 
 include_once($member_skin_path.'/zip.skin.php');
 
+echo '<script src="'.G5_JS_URL.'/zip.js"></script>';
+
 include_once(G5_PATH.'/tail.sub.php');
 ?>

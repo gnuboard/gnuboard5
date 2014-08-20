@@ -27,7 +27,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 <?php
 if(G5_USE_MOBILE && G5_IS_MOBILE) {
     $seq = 0;
-    $href = $_SERVER['PHP_SELF'];
+    $p = parse_url(G5_URL);
+    $href = $p['scheme'].'://'.$p['host'].$_SERVER['PHP_SELF'];
     if($_SERVER['QUERY_STRING']) {
         $sep = '?';
         foreach($_GET as $key=>$val) {
