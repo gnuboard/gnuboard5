@@ -6,7 +6,6 @@ include_once(G5_LIB_PATH.'/register.lib.php');
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
-
 set_session("ss_cert_no",   "");
 set_session("ss_cert_hash", "");
 set_session("ss_cert_type", "");
@@ -115,6 +114,10 @@ $register_action_url = G5_HTTPS_BBS_URL.'/register_form_update.php';
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400)));
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
+
+// add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+if ($config['cf_use_addr'])
+    add_javascript(G5_IS_POSTCODE_JS, 0);    //다음 주소 js
 
 include_once($member_skin_path.'/register_form.skin.php');
 include_once('./_tail.php');
