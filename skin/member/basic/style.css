@@ -186,9 +186,5 @@
 /* 자기소개 */
 #profile table {margin-bottom:0}
 #profile section {margin:0 auto 20px;padding:20px;width:86%}
+
 #profile h2 {margin:0}
-
-/* 우편번호 검색 */
-
-#daum_juso_wrap{position:absolute;left:0;top:0;width:100%;height:100%}
-html.daum_juso_body ,body.daum_juso_body {height:100%;overflow:hidden}

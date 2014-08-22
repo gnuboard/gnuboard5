@@ -377,8 +377,51 @@ var win_homepage = function(href) {
  * 우편번호 창
  **/
 var win_zip = function(href) {
-    var new_win = window.open(href, 'win_zip', 'width=483, height=600, scrollbars=1');
-    new_win.focus();
+    if(typeof daum === 'undefined'){
+        alert("다음 juso.js 파일이 로드되지 않았습니다.");
+        return false;
+    }
+
+    var url_to_array = function(url) {
+        var request = [];
+        var pairs = url.substring(url.indexOf('?') + 1).split('&');
+        for (var i = 0; i < pairs.length; i++) {
+            var pair = pairs[i].split('=');
+            request[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1]);
+        }
+        return request;
+    }
+
+    var param = url_to_array(href),
+        frm_name = param['frm_name'],
+        frm_addr1 = param['frm_addr1'],
+        frm_addr2 = param['frm_addr2'],
+        frm_addr3 = param['frm_addr3'],
+        frm_zip1 = param['frm_zip1'],
+        frm_zip2 = param['frm_zip2'],
+        frm_jibeon = param['frm_jibeon'],
+        of = document[frm_name];
+
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+            // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
+            of[frm_zip1].value = data.postcode1;
+            of[frm_zip2].value = data.postcode2;
+            of[frm_addr1].value = data.address1;
+            of[frm_addr2].value = "";
+            of[frm_addr3].value = "";
+
+            if( data.addressType == "R" ){  //도로명이면
+                of[frm_addr3].value = data.address2;
+            }
+            if(of[frm_jibeon] !== undefined){
+                of[frm_jibeon].value = data.addressType;
+            }
+
+            of[frm_addr2].focus();
+        }
+    }).open();
 }
 
 /**
@@ -463,7 +506,8 @@ $(function(){
         return false;
     });
 
-    $(".win_zip_find").click(function() {
+    $(".win_zip_find").click(function(e) {
+        e.preventDefault();
         win_zip(this.href);
         return false;
     });

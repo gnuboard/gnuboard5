@@ -202,9 +202,5 @@
 #profile table {margin-bottom:0}
 #profile section {padding:10px 20px}
 #profile h2 {margin:0}
+
 #profile .sv_wrap a {margin:0 0 5px;padding:0;font-weight:bold;line-height:10px}
-
-/* 우편번호 검색 */
-
-#daum_juso_wrap{width:100%;height:100%}
-html.daum_juso_body ,body.daum_juso_body {height:100%;overflow:hidden}
