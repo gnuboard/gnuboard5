@@ -2216,8 +2216,17 @@ function add_stylesheet($stylesheet, $order=0)
         $html_process->merge_stylesheet($stylesheet, $order);
 }
 
+function add_javascript($javascript, $order=0)
+{
+    global $html_process;
+
+    if(trim($javascript))
+        $html_process->merge_javascript($javascript, $order);
+}
+
 class html_process {
     protected $css = array();
+    protected $js  = array();
 
     function merge_stylesheet($stylesheet, $order)
     {
@@ -2233,6 +2242,22 @@ class html_process {
 
         if($is_merge)
             $this->css[] = array($order, $stylesheet);
+    }
+
+    function merge_javascript($javascript, $order)
+    {
+        $scripts = $this->js;
+        $is_merge = true;
+
+        foreach($scripts as $script) {
+            if($script[1] == $javascript) {
+                $is_merge = false;
+                break;
+            }
+        }
+
+        if($is_merge)
+            $this->js[] = array($order, $javascript);
     }
 
     function run()
@@ -2281,12 +2306,46 @@ class html_process {
             }
         }
 
+        $javascript = '';
+        $scripts = $this->js;
+        $php_eol = '';
+
+        unset($order);
+        unset($index);
+
+        if(!empty($scripts)) {
+            foreach ($scripts as $key => $row) {
+                $order[$key] = $row[0];
+                $index[$key] = $key;
+                $script[$key] = $row[1];
+            }
+
+            array_multisort($order, SORT_ASC, $index, SORT_ASC, $scripts);
+
+            foreach($scripts as $js) {
+                if(!trim($js[1]))
+                    continue;
+
+                $javascript .= $php_eol.$js[1];
+                $php_eol = PHP_EOL;
+            }
+        }
+
         /*
         </title>
         <link rel="stylesheet" href="default.css">
         밑으로 스킨의 스타일시트가 위치하도록 하게 한다.
         */
-        return preg_replace('#(</title>[^<]*<link[^>]+>)#', "$1$stylesheet", $buffer);
+        $buffer = preg_replace('#(</title>[^<]*<link[^>]+>)#', "$1$stylesheet", $buffer);
+
+        /*
+        </head>
+        <body>
+        전에 스킨의 자바스크립트가 위치하도록 하게 한다.
+        */
+        $buffer = preg_replace('#(</head>[^<]*<body[^>]*>)#', "$javascript\n$1", $buffer);
+
+        return $buffer;
     }
 }
 
