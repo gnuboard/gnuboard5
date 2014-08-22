@@ -187,8 +187,8 @@ define('G5_THUMB_PNG_COMPRESS', 5);
 define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신일때 daum 주소 js
-    define('G5_IS_POSTCODE_JS', '<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.js"></script>');
+    define('G5_POSTCODE_JS', '<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.js"></script>');
 } else {  //http 통신일때 daum 주소 js
-    define('G5_IS_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>');
+    define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>');
 }
 ?>
