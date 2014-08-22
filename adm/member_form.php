@@ -129,6 +129,9 @@ if ($mb['mb_intercept_date']) $g5['title'] = "차단된 ";
 else $g5['title'] .= "";
 $g5['title'] .= '회원 '.$html_title;
 include_once('./admin.head.php');
+
+// add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 ?>
 
 <form name="fmember" id="fmember" action="./member_form_update.php" onsubmit="return fmember_submit(this);" method="post" enctype="multipart/form-data">
