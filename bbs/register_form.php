@@ -117,7 +117,7 @@ $readonly = ($w=='u') ? 'readonly' : '';
 
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 if ($config['cf_use_addr'])
-    add_javascript(G5_IS_POSTCODE_JS, 0);    //다음 주소 js
+    add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
 include_once($member_skin_path.'/register_form.skin.php');
 include_once('./_tail.php');
