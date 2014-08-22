@@ -97,6 +97,9 @@ if($od['od_pg'] == 'lg') {
         echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
     }
 }
+
+// add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 ?>
 
 <section id="anc_sodr_list">

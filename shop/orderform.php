@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/orderform.php');
     return;
