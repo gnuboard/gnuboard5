@@ -386,34 +386,25 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         <td headers="th_delino" class="td_delino">
             <?php if ($od_status == '준비') { ?>
                 <input type="text" name="od_invoice[<?php echo $i; ?>]" value="<?php echo $row['od_invoice']; ?>" class="frm_input" size="10">
-            <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
-                <?php echo $row['od_invoice']; ?>
-            <?php } else { ?>
-                -
-            <?php } ?>
+            <?php } else {
+                echo ($row['od_invoice'] ? $row['od_invoice'] : '-');
+            } ?>
         </td>
         <td headers="th_delicom">
             <?php if ($od_status == '준비') { ?>
                 <select name="od_delivery_company[<?php echo $i; ?>]">
                     <?php echo get_delivery_company($delivery_company); ?>
                 </select>
-                <?php
-                /*<input type="text" name="od_delivery_company[<?php echo $i; ?>]" value="<?php echo $delivery_company; ?>" class="frm_input" size="10"> */
-                ?>
-            <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
-                <?php echo $delivery_company; ?>
-            <?php } else { ?>
-                -
-            <?php } ?>
+            <?php } else {
+                echo ($row['od_delivery_company'] ? $row['od_delivery_company'] : '-');
+            } ?>
         </td>
         <td headers="th_delidate">
             <?php if ($od_status == '준비') { ?>
                 <input type="text" name="od_invoice_time[<?php echo $i; ?>]" value="<?php echo $invoice_time; ?>" class="frm_input" size="10" maxlength="19">
-            <?php } else if ($od_status == '배송' || $od_status ==  '완료') { ?>
-                <?php echo substr($row['od_invoice_time'],2,14); ?>
-            <?php } else { ?>
-                -
-            <?php } ?>
+            <?php } else {
+                echo (is_null_time($row['od_invoice_time']) ? '-' : substr($row['od_invoice_time'],2,14));
+            } ?>
         </td>
     </tr>
     <?php
