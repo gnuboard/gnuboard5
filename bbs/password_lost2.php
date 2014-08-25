@@ -33,7 +33,7 @@ $change_password = rand(100000, 999999);
 $mb_lost_certify = sql_password($change_password);
 
 // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
-$mb_nonce = bin2hex(pack('V*', rand(), rand(), rand(), rand()));
+$mb_nonce = md5(pack('V*', rand(), rand(), rand(), rand()));
 
 // 임시비밀번호와 난수를 mb_lost_certify 필드에 저장
 $sql = " update {$g5['member_table']} set mb_lost_certify = '$mb_nonce $mb_lost_certify' where mb_id = '{$mb['mb_id']}' ";
