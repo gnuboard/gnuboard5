@@ -108,7 +108,7 @@ $sql  = " select *,
            limit $from_record, $rows ";
 $result = sql_query($sql);
 
-$qstr1 = "od_status=$od_status&amp;od_settle_case=$od_settle_case&amp;od_misu=$od_misu&amp;od_cancel_price=$od_cancel_price&amp;od_refund_price=$od_refund_price&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
+$qstr1 = "od_status=$od_status&amp;od_settle_case=$od_settle_case&amp;od_misu=$od_misu&amp;od_cancel_price=$od_cancel_price&amp;od_refund_price=$od_refund_price&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;fr_date=$fr_date&amp;to_date=$to_date&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
 $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
