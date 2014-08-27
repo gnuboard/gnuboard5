@@ -29,7 +29,7 @@ function get_order_status_sum($status)
     $info = array();
     $info['count'] = (int)$row['cnt'];
     $info['price'] = (int)$row['price'];
-    $info['href'] = './orderlist.php?od_status='.$status;
+    $info['href'] = './orderlist.php?od_status='.urlencode($status);
 
     return $info;
 }
