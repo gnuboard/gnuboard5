@@ -39,19 +39,18 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         $iq_stats = '';
         $iq_style = '';
         $iq_answer = '';
-        if(!$is_secret) {
-            if ($row['iq_answer'])
-            {
-                $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
-                $iq_stats = '답변완료';
-                $iq_style = 'sit_qaa_done';
-                $is_answer = true;
-            } else {
-                $iq_stats = '답변전';
-                $iq_style = 'sit_qaa_yet';
-                $iq_answer = '답변이 등록되지 않았습니다.';
-                $is_answer = false;
-            }
+
+        if ($row['iq_answer'])
+        {
+            $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
+            $iq_stats = '답변완료';
+            $iq_style = 'sit_qaa_done';
+            $is_answer = true;
+        } else {
+            $iq_stats = '답변전';
+            $iq_style = 'sit_qaa_yet';
+            $iq_answer = '답변이 등록되지 않았습니다.';
+            $is_answer = false;
         }
 
         if ($i == 0) echo '<ol id="sit_qa_ol">';
