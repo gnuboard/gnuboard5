@@ -54,21 +54,27 @@ function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
         return "";
 }
 
-// 페이징 코드의 <div><span> 태그 다음에 코드를 삽입
+// 페이징 코드의 <nav><span> 태그 다음에 코드를 삽입
 function page_insertbefore($paging_html, $insert_html)
 {
-    if ($paging_html) {
-        return preg_replace("/^(<div[^>]+><span[^>]+>)/", '$1'.$insert_html, $paging_html);
-    }
+    if(!$paging_html)
+        $paging_html = '<nav class="pg_wrap"><span class="pg"></span></nav>';
+
+    return preg_replace("/^(<nav[^>]+><span[^>]+>)/", '$1'.$insert_html.PHP_EOL, $paging_html);
 }
 
-// 페이징 코드의 </span></div> 태그 이전에 코드를 삽입
+// 페이징 코드의 </span></nav> 태그 이전에 코드를 삽입
 function page_insertafter($paging_html, $insert_html)
 {
-    if ($paging_html) {
-        //return preg_replace("/(<\/span><\/div>)$/", $insert_html.'$1', $paging_html);
-        return preg_replace("#(</span></div>)$#", $insert_html.'$1', $paging_html);
-    }
+    if(!$paging_html)
+        $paging_html = '<nav class="pg_wrap"><span class="pg"></span></nav>';
+
+    if(preg_match("#".PHP_EOL."</span></nav>#", $paging_html))
+        $php_eol = '';
+    else
+        $php_eol = PHP_EOL;
+
+    return preg_replace("#(</span></nav>)$#", $php_eol.$insert_html.'$1', $paging_html);
 }
 
 // 변수 또는 배열의 이름과 값을 얻어냄. print_r() 함수의 변형
