@@ -409,7 +409,7 @@ var win_zip = function(frm_name, frm_zip1, frm_zip2, frm_addr1, frm_addr2, frm_a
  * sms5 창
  **/
 var win_sms5 = function(href) {
-    var new_win = window.open(href, 'win_zip', 'width=474, height=560, scrollbars=1');
+    var new_win = window.open(href, 'win_sms5', 'width=474, height=560, scrollbars=1');
     new_win.focus();
 }
 
