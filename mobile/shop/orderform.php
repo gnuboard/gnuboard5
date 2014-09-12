@@ -1353,7 +1353,7 @@ function payment_check(f)
 
     if (document.getElementById("od_settle_iche")) {
         if (document.getElementById("od_settle_iche").checked) {
-            if (tot_price - temp_point < 150) {
+            if (tot_price < 150) {
                 alert("계좌이체는 150원 이상 결제가 가능합니다.");
                 return false;
             }
@@ -1362,7 +1362,7 @@ function payment_check(f)
 
     if (document.getElementById("od_settle_card")) {
         if (document.getElementById("od_settle_card").checked) {
-            if (tot_price - temp_point < 1000) {
+            if (tot_price < 1000) {
                 alert("신용카드는 1000원 이상 결제가 가능합니다.");
                 return false;
             }
@@ -1371,7 +1371,7 @@ function payment_check(f)
 
     if (document.getElementById("od_settle_hp")) {
         if (document.getElementById("od_settle_hp").checked) {
-            if (tot_price - temp_point < 350) {
+            if (tot_price < 350) {
                 alert("휴대폰은 350원 이상 결제가 가능합니다.");
                 return false;
             }
