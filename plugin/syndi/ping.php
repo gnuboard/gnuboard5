@@ -1,19 +1,19 @@
-<?
+<?php
 include_once("./_common.php");
 
-if (!$write) 
+if (!$write)
     die("게시글이 없습니다.");
 
-if ($group['gr_use_access']) 
+if ($group['gr_use_access'])
     die("게시판그룹에서 접근사용을 해제하여 주십시오.");
 
-if ($board['bo_read_level'] > 1) 
+if ($board['bo_read_level'] > 1)
     die("비회원 읽기가 가능한 게시판만 신디케이션을 지원합니다.");
 
-if (strstr($write['wr_option'], 'secret')) 
+if (strstr($write['wr_option'], 'secret'))
     die("비밀글은 신디케이션을 지원하지 않습니다.");
 
-if (preg_match('#^('.$config['cf_syndi_except'].')$#', $bo_table)) 
+if (preg_match('#^('.$config['cf_syndi_except'].')$#', $bo_table))
     die("신디케이션에서 제외된 게시판입니다.");
 
 $title        = htmlspecialchars($write['wr_subject']);
@@ -32,9 +32,9 @@ $replace      = array('&', ' '); # 바꾼다
 $content      = str_replace( $find, $replace, $write['wr_content'] );
 $summary      = str_replace( $find, $replace, strip_tags($write['wr_content']) );
 
-Header("Content-type: text/xml"); 
-header("Cache-Control: no-cache, must-revalidate"); 
-header("Pragma: no-cache"); 
+Header("Content-type: text/xml");
+header("Cache-Control: no-cache, must-revalidate");
+header("Pragma: no-cache");
 
 echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
 echo "<feed xmlns=\"http://webmastertool.naver.com\">\n";
