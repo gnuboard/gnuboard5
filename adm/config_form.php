@@ -833,7 +833,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td class="cf_cert_service">
                 <?php echo help('LG유플러스 상점아이디 중 si_를 제외한 나머지 아이디만 입력해 주십시오.<br>서비스에 가입되어 있지 않다면, 본인확인 서비스 신청페이지에서 서비스 신청 후 상점아이디를 발급 받으실 수 있습니다.<br><strong>LG유플러스 휴대폰본인확인은 ActiveX 설치가 필요하므로 Internet Explorer 에서만 사용할 수 있습니다.</strong>') ?>
                 <span class="sitecode">si_</span>
-                <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid'] ?>" id="cf_lg_mid" class="frm_input" size="20"> <a href="http://sir.co.kr/bbs/board.php?bo_table=faq&amp;wr_id=36" target="_blank" class="btn_frmline">LG유플러스 본인확인 서비스 신청페이지</a>
+                <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid'] ?>" id="cf_lg_mid" class="frm_input" size="20"> <a href="http://sir.co.kr/main/provider/lg_cert.php" target="_blank" class="btn_frmline">LG유플러스 본인확인 서비스 신청페이지</a>
             </td>
         </tr>
         <tr>
