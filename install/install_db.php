@@ -144,6 +144,8 @@ if($g5_install || !$result) {
                     cf_mobile_search_skin = 'basic',
                     cf_mobile_connect_skin = 'basic',
                     cf_mobile_member_skin = 'basic',
+                    cf_faq_skin = 'basic',
+                    cf_mobile_faq_skin = 'basic',
                     cf_editor = 'smarteditor2',
                     cf_captcha_mp3 = 'basic',
                     cf_register_level = '2',
