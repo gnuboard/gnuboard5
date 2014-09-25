@@ -513,7 +513,8 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
                         where mb_id IN ( '{$member['mb_id']}', '전체회원' )
                           and cp_method = '3'
                           and cp_start <= '".G5_TIME_YMD."'
-                          and cp_end >= '".G5_TIME_YMD."' ";
+                          and cp_end >= '".G5_TIME_YMD."'
+                          and cp_minimum <= '$tot_sell_price' ";
             $res = sql_query($sql);
 
             for($k=0; $cp=sql_fetch_array($res); $k++) {
