@@ -51,7 +51,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download">
                     <img src="<?php echo $board_skin_url ?>/img/icon_file.gif" alt="첨부">
                     <strong><?php echo $view['file'][$i]['source'] ?></strong>
-                    <?php echo $view['file'][$i]['bf_content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
+                    <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
                 </a>
                 <span class="bo_v_file_cnt"><?php echo $view['file'][$i]['download'] ?>회 다운로드</span>
                 <span>DATE : <?php echo $view['file'][$i]['datetime'] ?></span>
