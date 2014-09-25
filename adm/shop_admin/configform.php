@@ -480,7 +480,7 @@ if(!isset($default['de_pg_service'])) {
         <tr>
             <th scope="row"><label for="de_vbank_use">가상계좌 결제사용</label></th>
             <td>
-                <?php echo help("주문자가 현금거래를 원할 경우, 해당 거래건에 대해 주문자에게 고유로 발행되는 일회용 계좌번호입니다.", 50); ?>
+                <?php echo help("주문별로 유일하게 생성되는 일회용 계좌번호입니다. 주문자가 가상계좌에 입금시 상점에 실시간으로 통보가 되므로 업무처리가 빨라집니다.", 50); ?>
                 <select name="de_vbank_use" id="de_vbank_use">
                     <option value="0" <?php echo get_selected($default['de_vbank_use'], 0); ?>>사용안함</option>
                     <option value="1" <?php echo get_selected($default['de_vbank_use'], 1); ?>>사용</option>
