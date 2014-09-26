@@ -2771,6 +2771,30 @@ function member_delete($mb_id)
     // 회원자료는 정보만 없앤 후 아이디는 보관하여 다른 사람이 사용하지 못하도록 함 : 061025
     $sql = " update {$g5['member_table']} set mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G5_SERVER_TIME)." 삭제함\n{$mb['mb_memo']}', mb_leave_date = '".date('Ymd', G5_SERVER_TIME)."' where mb_id = '{$mb_id}' ";
     sql_query($sql);
+
+    // 포인트 테이블에서 삭제
+    sql_query(" delete from {$g5['point_table']} where mb_id = '$mb_id' ");
+
+    // 그룹접근가능 삭제
+    sql_query(" delete from {$g5['group_member_table']} where mb_id = '$mb_id' ");
+
+    // 쪽지 삭제
+    sql_query(" delete from {$g5['memo_table']} where me_recv_mb_id = '$mb_id' or me_send_mb_id = '$mb_id' ");
+
+    // 스크랩 삭제
+    sql_query(" delete from {$g5['scrap_table']} where mb_id = '$mb_id' ");
+
+    // 관리권한 삭제
+    sql_query(" delete from {$g5['auth_table']} where mb_id = '$mb_id' ");
+
+    // 그룹관리자인 경우 그룹관리자를 공백으로
+    sql_query(" update {$g5['group_table']} set gr_admin = '' where gr_admin = '$mb_id' ");
+
+    // 게시판관리자인 경우 게시판관리자를 공백으로
+    sql_query(" update {$g5['board_table']} set bo_admin = '' where bo_admin = '$mb_id' ");
+
+    // 아이콘 삭제
+    @unlink(G5_DATA_PATH.'/member/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
 }
 
 // 이메일 주소 추출
