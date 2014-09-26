@@ -531,8 +531,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     </td>
                 </tr>
                 <?php
-                if ($default['de_taxsave_use'] && $amount['미수'] == 0) {
-                    if ($od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
+                if ($od['od_misu'] == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체')) {
                 ?>
                 <tr>
                     <th scope="row">현금영수증</th>
@@ -568,7 +567,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     </td>
                 </tr>
                 <?php
-                    }
                 }
                 ?>
                 </tbody>
