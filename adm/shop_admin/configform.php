@@ -568,7 +568,7 @@ if(!isset($default['de_pg_service'])) {
         <tr>
             <th scope="row"><label for="de_card_point">포인트부여</label></th>
             <td>
-                <?php echo help("신용카드, 계좌이체 결제시 포인트를 부여할지를 설정합니다. (기본값은 '아니오')"); ?>
+                <?php echo help("신용카드, 계좌이체, 휴대폰 결제시 포인트를 부여할지를 설정합니다. (기본값은 '아니오')"); ?>
                 <select id="de_card_point" name="de_card_point">
                     <option value="0" <?php echo get_selected($default['de_card_point'], 0); ?>>아니오</option>
                     <option value="1" <?php echo get_selected($default['de_card_point'], 1); ?>>예</option>
@@ -578,14 +578,14 @@ if(!isset($default['de_pg_service'])) {
         <tr>
             <th scope="row"><label for="de_point_days">주문완료 포인트</label></th>
             <td>
-                <?php echo help("주문자가 회원일 경우에만 주문완료 포인트를 지급합니다. 주문취소, 반품 등을 고려하여 적당한 기간을 입력하십시오. (기본값은 7)\n0 으로 설정하는 경우 주문완료와 동시에 포인트를 부여합니다."); ?>
-                주문 완료 <input type="text" name="de_point_days" value="<?php echo $default['de_point_days']; ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 부여
+                <?php echo help("주문자가 회원일 경우에만 주문완료시 포인트를 지급합니다. 주문취소, 반품 등을 고려하여 포인트를 지급할 적당한 기간을 입력하십시오. (기본값은 7일)\n0일로 설정하는 경우에는 주문완료와 동시에 포인트를 지급합니다."); ?>
+                주문 완료 <input type="text" name="de_point_days" value="<?php echo $default['de_point_days']; ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 지급
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="de_pg_service">결제대행사</label></th>
             <td>
-                <?php echo help('쇼핑몰에서 이용하실 결제대행사를 선택합니다.'); ?>
+                <?php echo help('쇼핑몰에서 사용할 결제대행사를 선택합니다.'); ?>
                 <select id="de_pg_service" name="de_pg_service">
                     <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>KCP</option>
                     <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG유플러스</option>
@@ -598,7 +598,7 @@ if(!isset($default['de_pg_service'])) {
                 <a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank" id="scf_kcpreg">KCP서비스신청하기</a>
             </th>
             <td>
-                <?php echo help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SRZ89"); ?>
+                <?php echo help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
                 <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
             </td>
         </tr>
@@ -680,7 +680,7 @@ if(!isset($default['de_pg_service'])) {
         <tr>
             <th scope="row"><label for="de_tax_flag_use">복합과세 결제</label></th>
             <td>
-                 <?php echo help("복합과세(과세, 비과세) 결제를 사용하려면 체크하십시오.\n복합과세 결제를 사용하기 전 PG사에 결제 신청을 해주셔야 합니다."); ?>
+                 <?php echo help("복합과세(과세, 비과세) 결제를 사용하려면 체크하십시오.\n복합과세 결제를 사용하기 전 PG사에 별도로 결제 신청을 해주셔야 합니다. 사용시 PG사로 문의하여 주시기 바랍니다."); ?>
                 <input type="checkbox" name="de_tax_flag_use" value="1" id="de_tax_flag_use"<?php echo $default['de_tax_flag_use']?' checked':''; ?>> 사용
             </td>
         </tr>
@@ -756,7 +756,7 @@ if(!isset($default['de_pg_service'])) {
         <tr>
              <th scope="row"><label for="de_hope_date_after">희망배송일지정</label></th>
             <td>
-                <?php echo help("설정한 날로부터 일주일까지 선택박스 형식으로 출력합니다."); ?>
+                <?php echo help("오늘을 포함하여 설정한 날 이후부터 일주일 동안을 달력 형식으로 노출하여 선택할수 있도록 합니다."); ?>
                 <input type="text" name="de_hope_date_after" value="<?php echo $default['de_hope_date_after']; ?>" id="de_hope_date_after" class="frm_input" size="5"> 일
             </td>
         </tr>
