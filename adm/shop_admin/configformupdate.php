@@ -21,6 +21,12 @@ if ($_FILES['mobile_logo_img2']['name']) upload_file($_FILES['mobile_logo_img2']
 
 $de_kcp_mid = substr($_POST['de_kcp_mid'],0,3);
 
+// kcp 전자결제를 사용할 때 site key 입력체크
+if($de_pg_service == 'kcp' && ($de_iche_use || $de_vbank_use || $de_hp_use || $de_card_use)) {
+    if(trim($de_kcp_site_key) == '')
+        alert('KCP SITE KEY를 입력해 주십시오.');
+}
+
 //
 // 영카트 default
 //

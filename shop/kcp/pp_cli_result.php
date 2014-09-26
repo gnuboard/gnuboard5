@@ -12,19 +12,6 @@ require G5_SHOP_PATH.'/settle_kcp.inc.php';
     /* ============================================================================== */
     /* =   01. KCP 지불 서버 정보 설정                                              = */
     /* = -------------------------------------------------------------------------- = */
-    $g_conf_home_dir  = G5_SHOP_PATH.'/kcp'; // ※ 쇼핑몰 모듈 설치 절대 경로 bin전까지
-    $g_conf_log_level = "3";
-
-    if ($default['de_card_test']) {
-        if($default['de_escrow_use'] == 1) {
-            $default['de_kcp_mid'] = 'T0007';
-            $default['de_kcp_site_key'] = '4Ho4YsuOZlLXUZUdOxM1Q7X__';
-        } else {
-            $default['de_kcp_mid'] = 'T0000';
-            $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
-        }
-    }
-
     if ($default['de_card_test']) {
         $g_conf_pa_url    = "testpaygw.kcp.co.kr"; // ※ 테스트: testpaygw.kcp.co.kr, 리얼: paygw.kcp.co.kr
         $g_conf_pa_port   = "8090";                // ※ 테스트: 8090,                리얼: 8090

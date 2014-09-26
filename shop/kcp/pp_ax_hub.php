@@ -15,29 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     /* =   환경 설정                                                                = */
     /* = -------------------------------------------------------------------------- = */
 
-    $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
-    $g_conf_key_dir   = '';
-    if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
-    {
-        $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
-        $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
-    }
-
-    $g_conf_site_cd  = $_POST['site_cd'];
-
-    if (preg_match("/^T000/", $g_conf_site_cd) || $default['de_card_test']) {
-        $g_conf_gw_url  = "testpaygw.kcp.co.kr";                    // real url : paygw.kcp.co.kr , test url : testpaygw.kcp.co.kr
-    }
-    else {
-        $g_conf_gw_url  = "paygw.kcp.co.kr";
-        if (!preg_match("/^SR/", $g_conf_site_cd)) {
-            alert("SR 로 시작하지 않는 KCP SITE CODE 는 지원하지 않습니다.");
-        }
-    }
-
-    $g_conf_log_level = "3";           // 변경불가
-    $g_conf_gw_port   = "8090";        // 포트번호(변경불가)
-
+    include G5_SHOP_PATH.'/settle_kcp.inc.php';
     require "pp_ax_hub_lib.php";              // library [수정불가]
 
     /* = -------------------------------------------------------------------------- = */
