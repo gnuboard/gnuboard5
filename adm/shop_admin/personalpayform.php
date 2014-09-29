@@ -174,20 +174,19 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
                 </td>
             </tr>
             <?php
-            if ($default['de_taxsave_use']) {
-                $is_cash_receipt = true;
+            $is_cash_receipt = true;
 
-                // 주문내역이 있으면 현금영수증 발급하지 않음
-                if($pp['od_id']) {
-                    $sql = " select count(od_id) as cnt from {$g5['g5_shop_order_table']} where od_id = '{$pp['od_id']}' ";
-                    $row = sql_fetch($sql);
+            // 주문내역이 있으면 현금영수증 발급하지 않음
+            if($pp['od_id']) {
+                $sql = " select count(od_id) as cnt from {$g5['g5_shop_order_table']} where od_id = '{$pp['od_id']}' ";
+                $row = sql_fetch($sql);
 
-                    if($row['cnt'] > 0)
-                        $is_cash_receipt = false;
-                }
+                if($row['cnt'] > 0)
+                    $is_cash_receipt = false;
+            }
 
-                if ($is_cash_receipt && ($pp['pp_price'] - $pp['pp_receipt_price']) == 0) {
-                    if ($pp['pp_receipt_price'] && ($pp['pp_settle_case'] == '무통장' || $pp['pp_settle_case'] == '가상계좌' || $pp['pp_settle_case'] == '계좌이체')) {
+            if ($is_cash_receipt && ($pp['pp_price'] - $pp['pp_receipt_price']) == 0) {
+                if ($pp['pp_receipt_price'] && ($pp['pp_settle_case'] == '무통장' || $pp['pp_settle_case'] == '가상계좌' || $pp['pp_settle_case'] == '계좌이체')) {
             ?>
             <tr>
                 <th scope="row">현금영수증</th>
@@ -223,7 +222,6 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
                 </td>
             </tr>
             <?php
-                    }
                 }
             }
             ?>

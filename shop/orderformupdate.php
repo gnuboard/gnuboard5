@@ -260,6 +260,7 @@ if ($od_temp_point)
 }
 
 $i_price = $i_price + $i_send_cost + $i_send_cost2 - $i_temp_point - $i_send_coupon;
+$order_price = $tot_od_price + $send_cost + $send_cost2 - $tot_sc_cp_price - $od_temp_point;
 
 $od_status = '주문';
 if ($od_settle_case == "무통장")
@@ -368,7 +369,7 @@ else
 
 // 주문금액과 결제금액이 일치하는지 체크
 if($tno) {
-    if((int)$i_price !== (int)$pg_price) {
+    if((int)$order_price !== (int)$pg_price) {
         $cancel_msg = '결제금액 불일치';
         switch($default['de_pg_service']) {
             case 'lg':

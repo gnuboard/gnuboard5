@@ -1303,7 +1303,6 @@ function orderfield_check(f)
 // 결제체크
 function payment_check(f)
 {
-    var temp_point = 0;
     var max_point = 0;
     var od_price = parseInt(f.od_price.value);
     var send_cost = parseInt(f.od_send_cost.value);
