@@ -235,6 +235,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 
     if ($size[2] == 1) {
         $src = imagecreatefromgif($source_file);
+        $src_transparency = imagecolortransparent($src);
     } else if ($size[2] == 2) {
         $src = imagecreatefromjpeg($source_file);
 
@@ -332,9 +333,15 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         if($size[2] == 3) {
             imagealphablending($dst, false);
             imagesavealpha($dst, true);
+        } else if($size[2] == 1 && $src_transparency != -1) {
+            $transparent_color   = imagecolorsforindex($src, $src_transparency);
+            $current_transparent = imagecolorallocate($dst, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+            imagefill($dst, 0, 0, $current_transparent);
+            imagecolortransparent($dst, $current_transparent);
         }
     } else {
         $dst = imagecreatetruecolor($dst_w, $dst_h);
+        $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
 
         if($src_w < $dst_w) {
             if($src_h >= $dst_h) {
@@ -359,8 +366,16 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             imagefill($dst, 0, 0, $bgcolor);
             imagealphablending($dst, false);
             imagesavealpha($dst, true);
+        } else if($size[2] == 1) {
+            if($src_transparency != -1) {
+                $transparent_color   = imagecolorsforindex($src, $src_transparency);
+                $current_transparent = imagecolorallocate($dst, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+                imagefill($dst, 0, 0, $current_transparent);
+                imagecolortransparent($dst, $current_transparent);
+            } else {
+                imagefill($dst, 0, 0, $bgcolor);
+            }
         } else {
-            $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
             imagefill($dst, 0, 0, $bgcolor);
         }
     }
