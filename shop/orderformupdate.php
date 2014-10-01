@@ -62,6 +62,7 @@ $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) 
 $row = sql_fetch($sql);
 $tot_ct_price = $row['od_price'];
 $cart_count = $row['cart_count'];
+$tot_od_price = $tot_ct_price;
 
 // 쿠폰금액계산
 $tot_cp_price = 0;
