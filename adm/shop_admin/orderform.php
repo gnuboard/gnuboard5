@@ -275,7 +275,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
     <?php if ($od['od_mod_history']) { ?>
     <section id="sodr_qty_log">
-        <h3>주문 수량변경 및 취소처리 내역</h3>
+        <h3>주문 수량변경 및 주문 전체취소 처리 내역</h3>
         <div>
             <?php echo conv_content($od['od_mod_history'], 0); ?>
         </div>
