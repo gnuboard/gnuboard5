@@ -132,9 +132,6 @@ $goods = $pp['pp_name'].'님 개인결제';
         ?>
 
         <?php
-        if (!$default['de_card_point'])
-            echo '<p><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
-
         if ($multi_settle == 0)
             echo '<p>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</p>';
         ?>
