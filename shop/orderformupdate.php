@@ -135,7 +135,7 @@ if($is_member) {
         $arr_it_cp_prc[$it_id] = $dc;
     }
 
-    $tot_od_price = $tot_ct_price - $tot_it_cp_price;
+    $tot_od_price -= $tot_it_cp_price;
 
     // 주문쿠폰
     if($_POST['od_cp_id']) {
