@@ -57,6 +57,12 @@ $goods = $pp['pp_name'].'님 개인결제';
         <div class="tbl_frm01 tbl_wrap">
             <table>
             <tbody>
+            <?php if(trim($pp['pp_content'])) { ?>
+            <tr>
+                <th>상세내용</th>
+                <td><?php echo conv_content($pp['pp_content'], 0); ?></td>
+            </tr>
+            <?php } ?>
             <tr>
                 <th>결제금액</th>
                 <td><?php echo display_price($pp['pp_price']); ?></td>

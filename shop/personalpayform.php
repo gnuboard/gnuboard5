@@ -72,6 +72,12 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
         <div class="tbl_frm01 tbl_wrap">
             <table>
             <tbody>
+            <?php if(trim($pp['pp_content'])) { ?>
+            <tr>
+                <th>상세내용</th>
+                <td><?php echo conv_content($pp['pp_content'], 0); ?></td>
+            </tr>
+            <?php } ?>
             <tr>
                 <th>결제금액</th>
                 <td><?php echo display_price($pp['pp_price']); ?></td>
@@ -93,9 +99,6 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
         </div>
 
         <?php
-        if (!$default['de_card_point'])
-            echo '<p id="sod_frm_pay_info"><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
-
         $multi_settle == 0;
         $checked = '';
 
@@ -105,8 +108,8 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
         }
 
         if ($default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
-        echo '<fieldset id="sod_frm_paysel">';
-        echo '<legend>결제방법 선택</legend>';
+            echo '<fieldset id="sod_frm_paysel">';
+            echo '<legend>결제방법 선택</legend>';
         }
 
         // 가상계좌 사용
