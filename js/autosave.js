@@ -26,7 +26,7 @@ function autosave() {
                 type: "POST",
                 success: function(data){
                     if (data) {
-                        $("#autosave_count").html(data);    
+                        $("#autosave_count").html(data);
                     }
                 }
             });
@@ -50,14 +50,15 @@ $(function(){
                 //console.log( "Data: " + data);
                 $("#autosave_pop ul").empty();
                 if ($(data).find("list").find("item").length > 0) {
-                    $(data).find("list").find("item").each(function(i) { 
+                    $(data).find("list").find("item").each(function(i) {
                         var id = $(this).find("id").text();
                         var uid = $(this).find("uid").text();
                         var subject = $(this).find("subject").text();
                         var datetime = $(this).find("datetime").text();
-                        $("#autosave_pop ul").append('<li><a href="#none" class="autosave_load">'+subject+'</a><span>'+datetime+' <button type="button" class="autosave_del">삭제</button></span></li>');
-                        $.data(document.body, "autosave_id"+i, id);
-                        $.data(document.body, "autosave_uid"+i, uid);
+                        $("#autosave_pop ul")
+                            .append('<li><a href="#none" class="autosave_load">'+subject+'</a><span>'+datetime+' <button type="button" class="autosave_del">삭제</button></span></li>')
+                            .find("li:eq("+i+")")
+                            .data({ as_id: id, uid: uid });
                     });
                 }
             }, "xml");
@@ -69,9 +70,9 @@ $(function(){
 
     // 임시저장된 글 제목과 내용을 가져와서 제목과 내용 입력박스에 노출해 줌
     $(".autosave_load").live("click", function(){
-        var i = $(this).parents("li").index();
-        var as_id = $.data(document.body, "autosave_id"+i);
-        var as_uid = $.data(document.body, "autosave_uid"+i);
+        var $li = $(this).parents("li");
+        var as_id = $li.data("as_id");
+        var as_uid = $li.data("uid");
         $("#fwrite input[name='uid']").val(as_uid);
         $.get(g5_bbs_url+"/ajax.autosaveload.php", {"as_id":as_id}, function(data){
             var subject = $(data).find("item").find("subject").text();
@@ -83,7 +84,7 @@ $(function(){
                 ed_wr_content.putContents(content);
             } else if (g5_editor.indexOf("smarteditor2") != -1 && typeof(oEditors.getById['wr_content'])!="undefined" ) {
                 oEditors.getById["wr_content"].exec("SET_CONTENTS", [""]);
-                //oEditors.getById["wr_content"].exec("SET_IR", [""]); 
+                //oEditors.getById["wr_content"].exec("SET_IR", [""]);
                 oEditors.getById["wr_content"].exec("PASTE_HTML", [content]);
             } else {
                 $("#fwrite #wr_content").val(content);
@@ -93,14 +94,14 @@ $(function(){
     });
 
     $(".autosave_del").live("click", function(){
-        var i = $(this).parents("li").index();
-        var as_id = $.data(document.body, "autosave_id"+i);
-        $.get(g5_bbs_url+"/ajax.autosavedel.php", {"as_id":as_id}, function(data){ 
+        var $li = $(this).parents("li");
+        var as_id = $li.data("as_id");
+        $.get(g5_bbs_url+"/ajax.autosavedel.php", {"as_id":as_id}, function(data){
             if (data == -1) {
                 alert("임시 저장된글을 삭제중에 오류가 발생하였습니다.");
             } else {
-                $("#autosave_count").html(data);    
-                $("#autosave_pop ul > li").eq(i).remove();
+                $("#autosave_count").html(data);
+                $li.remove();
             }
         });
     });
