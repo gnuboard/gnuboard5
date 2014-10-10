@@ -40,7 +40,7 @@ if (G5_IS_MOBILE) {
 </div>
 
 <?php
-if(G5_USE_MOBILE && !G5_IS_MOBILE) {
+if(G5_DEVICE_BUTTON_DISPLAY && !G5_IS_MOBILE) {
     $seq = 0;
     $p = parse_url(G5_URL);
     $href = $p['scheme'].'://'.$p['host'].$_SERVER['PHP_SELF'];
