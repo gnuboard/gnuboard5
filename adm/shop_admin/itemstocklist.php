@@ -119,6 +119,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <th scope="col">주문대기</th>
         <th scope="col">가재고</th>
         <th scope="col">재고수정</th>
+        <th scope="col">통보수량</th>
         <th scope="col"><a href="<?php echo title_sort("it_use") . "&amp;$qstr1"; ?>">판매</a></th>
         <th scope="col"><a href="<?php echo title_sort("it_soldout") . "&amp;$qstr1"; ?>">품절</a></th>
         <th scope="col"><a href="<?php echo title_sort("it_stock_sms") . "&amp;$qstr1"; ?>">재입고알림</a></th>
@@ -172,6 +173,10 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <label for="stock_qty_<?php echo $i; ?>" class="sound_only">재고수정</label>
             <input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" id="stock_qty_<?php echo $i; ?>" class="frm_input" size="10" autocomplete="off">
         </td>
+        <td class="td_num">
+            <label for="noti_qty_<?php echo $i; ?>" class="sound_only">통보수량</label>
+            <input type="text" name="it_noti_qty[<?php echo $i; ?>]" value="<?php echo $row['it_noti_qty']; ?>" id="noti_qty_<?php echo $i; ?>" class="frm_input" size="10" autocomplete="off">
+        </td>
         <td class="td_chk">
             <label for="use_<?php echo $i; ?>" class="sound_only">판매</label>
             <input type="checkbox" name="it_use[<?php echo $i; ?>]" value="1" id="use_<?php echo $i; ?>" <?php echo ($row['it_use'] ? "checked" : ""); ?>>
@@ -189,7 +194,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     <?php
     }
     if (!$i)
-        echo '<tr><td colspan="10" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
+        echo '<tr><td colspan="11" class="empty_table"><span>자료가 없습니다.</span></td></tr>';
     ?>
     </tbody>
     </table>
