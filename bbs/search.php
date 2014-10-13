@@ -72,6 +72,10 @@ if ($stx) {
         if (trim($s[$i]) == '') continue;
 
         $search_str = $s[$i];
+
+        // 인기검색어
+        insert_popular($field, $search_str);
+
         $str .= $op1;
         $str .= "(";
 
@@ -100,10 +104,6 @@ if ($stx) {
         $str .= ")";
 
         $op1 = " {$sop} ";
-
-        // 인기검색어
-        $sql = " insert into {$g5['popular_table']} set pp_word = '{$search_str}', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
-        sql_query($sql, FALSE);
     }
     $str .= ")";
 

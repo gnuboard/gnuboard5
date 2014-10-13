@@ -219,13 +219,37 @@ else
     define('G5_EDITOR_LIB', G5_LIB_PATH."/editor.lib.php");
 
 //==============================================================================
+// 사용기기 설정
+// config.php G5_SET_DEVICE 설정에 따라 사용자 화면 제한됨
+// pc 설정 시 모바일 기기에서도 PC화면 보여짐
+// mobile 설정 시 PC에서도 모바일화면 보여짐
+// both 설정 시 접속 기기에 따른 화면 보여짐
+//------------------------------------------------------------------------------
+$is_mobile = false;
+$set_device = true;
+if(defined('G5_SET_DEVICE')) {
+    switch(G5_SET_DEVICE) {
+        case 'pc':
+            $is_mobile  = false;
+            $set_device = false;
+            break;
+        case 'mobile':
+            $is_mobile  = true;
+            $set_device = false;
+            break;
+        default:
+            break;
+    }
+}
+//==============================================================================
+
+//==============================================================================
 // Mobile 모바일 설정
 // 쿠키에 저장된 값이 모바일이라면 브라우저 상관없이 모바일로 실행
 // 그렇지 않다면 브라우저의 HTTP_USER_AGENT 에 따라 모바일 결정
 // G5_MOBILE_AGENT : config.php 에서 선언
 //------------------------------------------------------------------------------
-$is_mobile = false;
-if (G5_USE_MOBILE) {
+if (G5_USE_MOBILE && $set_device) {
     if ($_REQUEST['device']=='pc')
         $is_mobile = false;
     else if ($_REQUEST['device']=='mobile')
@@ -234,10 +258,13 @@ if (G5_USE_MOBILE) {
         $is_mobile = $_SESSION['ss_is_mobile'];
     else if (is_mobile())
         $is_mobile = true;
+} else {
+    $set_device = false;
 }
 
 $_SESSION['ss_is_mobile'] = $is_mobile;
 define('G5_IS_MOBILE', $is_mobile);
+define('G5_DEVICE_BUTTON_DISPLAY', $set_device);
 if (G5_IS_MOBILE) {
     include_once(G5_LIB_PATH.'/mobile.lib.php'); // 모바일 전용 라이브러리
     $g5['mobile_path'] = G5_PATH.'/'.$g5['mobile_dir'];
