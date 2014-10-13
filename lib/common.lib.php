@@ -616,8 +616,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
         if ($search_str == "") continue;
 
         // 인기검색어
-        $sql = " insert into {$g5['popular_table']} set pp_word = '$search_str', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
-        sql_query($sql, FALSE);
+        insert_popular($field, $search_str);
 
         $str .= $op1;
         $str .= "(";
@@ -2827,5 +2826,16 @@ function get_icode_userinfo($id, $pass)
     );
 
     return $userinfo;
+}
+
+// 인기검색어 입력
+function insert_popular($field, $str)
+{
+    global $g5;
+
+    if(!in_array('mb_id', $field)) {
+        $sql = " insert into {$g5['popular_table']} set pp_word = '{$str}', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
+        sql_query($sql, FALSE);
+    }
 }
 ?>
