@@ -67,8 +67,7 @@ if ($q) {
         $detail_where[] = $concat_fields." like '%$word%' ";
 
         // 인기검색어
-        $sql = " insert into {$g5['popular_table']} set pp_word = '$word', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
-        sql_query($sql, FALSE);
+        insert_popular($concat, $word);
     }
 
     $where[] = "(".implode(" and ", $detail_where).")";
