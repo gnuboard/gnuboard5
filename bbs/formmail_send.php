@@ -20,6 +20,7 @@ if (!chk_captcha()) {
 }
 
 
+$file = array();
 for ($i=1; $i<=$attach; $i++) {
     if ($_FILES['file'.$i]['name'])
         $file[] = attach_file($_FILES['file'.$i]['name'], $_FILES['file'.$i]['tmp_name']);
@@ -40,6 +41,13 @@ else
     $mail_content = $content;
 
 mailer($fnick, $fmail, $to, $subject, $mail_content, $type, $file);
+
+// 임시 첨부파일 삭제
+if(!empty($file)) {
+    foreach($file as $f) {
+        @unlink($f['path']);
+    }
+}
 
 //$html_title = $tmp_to . "님께 메일발송";
 $html_title = '메일 발송중';

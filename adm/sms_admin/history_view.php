@@ -143,13 +143,18 @@ function all_send()
     if( $write['wr_memo'] ){
         $tmp_wr_memo = @unserialize($write['wr_memo']);
         if( count($tmp_wr_memo) && is_array($tmp_wr_memo) ){
-        $arr_wr_memo = array_count_values( $tmp_wr_memo['hp'] );
+            if(function_exists('array_fill_keys')){
+                $tmp_wr_hp = array_replace($tmp_wr_memo['hp'],array_fill_keys(array_keys($tmp_wr_memo['hp'], null),''));
+            } else {
+                $tmp_wr_hp = $tmp_wr_memo['hp'];
+            }
+            $arr_wr_memo = @array_count_values( $tmp_wr_hp );
     ?>
     <h2>중복번호 <?php echo $tmp_wr_memo['total'];?>건</h2>
     <ul id="sent_overlap">
         <?php
         foreach( $arr_wr_memo as $key=>$v){
-        if( empty($v) ) continue;
+        if( empty($v) || $key == '' ) continue;
         ?>
         <li><b><?php echo $key;?></b> 중복 <?php echo $v;?>건</li>
         <?php } ?>
