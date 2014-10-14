@@ -2045,7 +2045,7 @@ function get_editor_image($contents, $view=true)
     if ($view)
         $pattern = "/<img([^>]*)>/iS";
     else
-        $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/";
+        $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/i";
     preg_match_all($pattern, $contents, $matchs);
 
     return $matchs;
