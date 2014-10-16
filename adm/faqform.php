@@ -9,7 +9,6 @@ $sql = " select * from {$g5['faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
 $html_title = 'FAQ '.$fm['fm_subject'];;
-$g5['title'] = $html_title.' 관리';
 
 if ($w == "u")
 {
@@ -25,6 +24,8 @@ if ($w == "u")
 }
 else
     $html_title .= ' 항목 입력';
+
+$g5['title'] = $html_title.' 관리';
 
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>

@@ -67,7 +67,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row">내용</th>
-        <td><?php echo editor_html('co_content', $co['co_content']); ?></td>
+        <td><?php echo editor_html('co_content', get_text($co['co_content'], 0)); ?></td>
     </tr>
     <tr>
         <th scope="row"><label for="co_tag_filter_use">태그 필터링 사용</label></th>

@@ -6,7 +6,6 @@ include_once(G5_EDITOR_LIB);
 auth_check($auth[$sub_menu], "w");
 
 $html_title = 'FAQ';
-$g5['title'] = $html_title.' 관리';
 
 if ($w == "u")
 {
@@ -21,6 +20,8 @@ else
 {
     $html_title .= ' 입력';
 }
+
+$g5['title'] = $html_title.' 관리';
 
 // 모바일 상하단 내용 필드추가
 if(!sql_query(" select fm_mobile_head_html from {$g5['faq_master_table']} limit 1 ", false)) {
