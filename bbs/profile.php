@@ -24,7 +24,7 @@ $sql = " select (TO_DAYS('".G5_TIME_YMDHIS."') - TO_DAYS('{$mb['mb_datetime']}')
 $row = sql_fetch($sql);
 $mb_reg_after = $row['days'];
 
-$mb_homepage = set_http($mb['mb_homepage']);
+$mb_homepage = set_http(clean_xss_tags($mb['mb_homepage']));
 $mb_profile = $mb['mb_profile'] ? conv_content($mb['mb_profile'],0) : '소개 내용이 없습니다.';
 
 include_once($member_skin_path.'/profile.skin.php');
