@@ -106,16 +106,16 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
-            <label for="bk_no_<?php echo $res['bk_no']; ?>" class="sound_only"><?php echo $res['bk_name']?></label>
+            <label for="bk_no_<?php echo $res['bk_no']; ?>" class="sound_only"><?php echo get_text($res['bk_name']) ?></label>
             <input type="checkbox" name="bk_no" value="<?php echo $res['bk_no']?>" id="bk_no_<?php echo $res['bk_no']; ?>">
         </td>
         <!-- <td class="td_name"><?php echo $group_name?></td> -->
-        <td class="td_mbname"><?php echo $res['bk_name']?></td>
+        <td class="td_mbname"><?php echo get_text($res['bk_name']) ?></td>
         <td><?php echo $res['bk_hp']?></td>
         <!-- <td class="td_boolean"><?php echo $res['bk_receipt'] ? '수신' : '거부'?></td> -->
         <!-- <td class="td_boolean"><?php echo $res['bk_receipt'] ? '예' : ''?></td> -->
         <td class="td_boolean"><?php echo $res['mb_id'] ? '회원' : '비회원'?></td>
-        <td class="td_mngsmall"><button type="button" class="btn_frmline" onclick="sms_obj.person_add(<?php echo $res['bk_no']?>, '<?php echo $res['bk_name']?>', '<?php echo $res['bk_hp']?>')">추가</button></td>
+        <td class="td_mngsmall"><button type="button" class="btn_frmline" onclick="sms_obj.person_add(<?php echo $res['bk_no']?>, '<?php echo get_text($res['bk_name']) ?>', '<?php echo $res['bk_hp']?>')">추가</button></td>
     </tr>
     <?php } ?>
     </tbody>
