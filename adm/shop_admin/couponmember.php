@@ -59,7 +59,7 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
         for($i=0; $row=sql_fetch_array($result); $i++) {
         ?>
         <tr>
-            <td class="td_mbname"><?php echo $row['mb_name']; ?></td>
+            <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
             <td><?php echo $row['mb_id']; ?></td>
             <td class="scp_find_select"><button type="button" class="btn_frmline" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button></td>
         </tr>

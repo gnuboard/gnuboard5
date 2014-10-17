@@ -16,7 +16,7 @@ $is_score    = (int)$_POST['is_score'] > 5 ? 0 : (int)$_POST['is_score'];
 check_itemuse_write($it_id, $member['mb_id']);
 
 if ($w == "" || $w == "u") {
-    $is_name     = $member['mb_name'];
+    $is_name     = addslashes($member['mb_name']);
     $is_password = $member['mb_password'];
 
     if (!$is_subject) alert("제목을 입력하여 주십시오.");

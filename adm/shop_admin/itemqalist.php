@@ -120,7 +120,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
     for ($i=0; $row=mysql_fetch_array($result); $i++) {
         $row['iq_subject'] = cut_str($row['iq_subject'], 30, "...");
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
-        $name = get_sideview($row['mb_id'], $row['iq_name'], $row['mb_email'], $row['mb_homepage']);
+        $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row['mb_email'], $row['mb_homepage']);
         $answer = $row['iq_answer'] ? 'Y' : '&nbsp;';
         $iq_question = get_view_thumbnail($row['iq_question'], 300);
         $iq_answer = $row['iq_answer'] ? get_view_thumbnail($row['iq_answer'], 300) : "답변이 등록되지 않았습니다.";

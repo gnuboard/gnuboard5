@@ -288,7 +288,7 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         if ($row['od_receipt_point'] > 0)
             $s_receipt_way .= $s_br."포인트";
 
-        $mb_nick = get_sideview($row['mb_id'], $row['od_name'], $row['od_email'], '');
+        $mb_nick = get_sideview($row['mb_id'], get_text($row['od_name']), $row['od_email'], '');
 
         $od_cnt = 0;
         if ($row['mb_id'])

@@ -150,7 +150,7 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
 
         // SMS
         if($config['cf_sms_use'] == 'icode' && $_POST['cp_sms_send'] && $arr_send_list[$i]['mb_hp'] && $arr_send_list[$i]['mb_sms']) {
-            $sms_contents = $cp_subject.' 쿠폰이 '.$arr_send_list[$i]['mb_name'].'님께 발행됐습니다. 쿠폰만료 : '.$cp_end.' '.str_replace('http://', '', G5_URL);
+            $sms_contents = $cp_subject.' 쿠폰이 '.get_text($arr_send_list[$i]['mb_name']).'님께 발행됐습니다. 쿠폰만료 : '.$cp_end.' '.str_replace('http://', '', G5_URL);
             $sms_contents = iconv_euckr($sms_contents);
 
             if($sms_contents) {
@@ -166,7 +166,7 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
 
         // E-MAIL
         if($config['cf_email_use'] && $_POST['cp_email_send'] && $arr_send_list[$i]['mb_email'] && $arr_send_list[$i]['mb_mailling']) {
-            $mb_name = $arr_send_list[$i]['mb_name'];
+            $mb_name = get_text($arr_send_list[$i]['mb_name']);
             switch($cp_method) {
                 case 2:
                     $coupon_method = '결제금액할인';
