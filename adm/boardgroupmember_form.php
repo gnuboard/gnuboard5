@@ -20,7 +20,7 @@ $colspan = 4;
 <input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
 <input type="hidden" name="token" value="<?php echo $token ?>" id="token">
 <div class="local_cmd01 local_cmd">
-    <p>아이디 <b><?php echo $mb['mb_id'] ?></b>, 이름 <b><?php echo $mb['mb_name'] ?></b>, 닉네임 <b><?php echo $mb['mb_nick'] ?></b></p>
+    <p>아이디 <b><?php echo $mb['mb_id'] ?></b>, 이름 <b><?php echo get_text($mb['mb_name']); ?></b>, 닉네임 <b><?php echo $mb['mb_nick'] ?></b></p>
     <label for="gr_id">그룹지정</label>
     <select name="gr_id" id="gr_id">
         <option value="">접근가능 그룹을 선택하세요.</option>

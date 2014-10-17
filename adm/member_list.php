@@ -213,11 +213,11 @@ $colspan = 16;
     <tr class="<?php echo $bg; ?>">
         <td headers="mb_list_chk" class="td_chk" rowspan="2">
             <input type="hidden" name="mb_id[<?php echo $i ?>]" value="<?php echo $row['mb_id'] ?>" id="mb_id_<?php echo $i ?>">
-            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['mb_name']; ?> <?php echo $row['mb_nick']; ?>님</label>
+            <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['mb_name']); ?> <?php echo $row['mb_nick']; ?>님</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td headers="mb_list_id" rowspan="2" class="td_name sv_use"><?php echo $mb_id ?></td>
-        <td headers="mb_list_name" class="td_mbname"><?php echo $row['mb_name']; ?></td>
+        <td headers="mb_list_name" class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
         <td headers="mb_list_cert" colspan="6" class="td_mbcert">
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" id="mb_certify_ipin_<?php echo $i; ?>" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>>
             <label for="mb_certify_ipin_<?php echo $i; ?>">아이핀</label>
