@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <div id="reg_result" class="mbskin">
 
     <p>
-        <strong><?php echo $mb['mb_name'] ?></strong>님의 회원가입을 진심으로 축하합니다.<br>
+        <strong><?php echo get_text($mb['mb_name']); ?></strong>님의 회원가입을 진심으로 축하합니다.<br>
     </p>
 
     <?php if ($config['cf_use_email_certify']) { ?>
