@@ -110,6 +110,9 @@ if ($w == '' || $w == 'u') {
     if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
 }
 
+$mb_name        = clean_xss_tags($mb_name);
+$mb_email       = get_email_address($mb_email);
+$mb_homepage    = clean_xss_tags($mb_homepage);
 $mb_zip1        = preg_replace('/[^0-9]/', '', $mb_zip1);
 $mb_zip2        = preg_replace('/[^0-9]/', '', $mb_zip2);
 $mb_addr1       = clean_xss_tags($mb_addr1);
