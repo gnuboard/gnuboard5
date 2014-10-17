@@ -36,7 +36,7 @@ if (!$it['it_id'])
 $subject = stripslashes($subject);
 $content = nl2br(stripslashes($content));
 
-$from_name = $member['mb_name'];
+$from_name = get_text($member['mb_name']);
 $from_email = $member['mb_email'];
 $it_id = $it['it_id'];
 $it_name = $it['it_name'];
