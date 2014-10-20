@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$faq_skin_url.'/style.css">', 0);
 <!-- FAQ 시작 { -->
 <?php
 // 상단 HTML
-echo '<div id="faq_hhtml">'.stripslashes($fm['fm_mobile_head_html']).'</div>';
+echo '<div id="faq_hhtml">'.conv_content($fm['fm_mobile_head_html'], 1).'</div>';
 ?>
 
 <?php
@@ -77,7 +77,7 @@ if( count($faq_master_list) ){
 
 <?php
 // 하단 HTML
-echo '<div id="faq_thtml">'.stripslashes($fm['fm_tail_html']).'</div>';
+echo '<div id="faq_thtml">'.conv_content($fm['fm_tail_html'], 1).'</div>';
 ?>
 
 <div id="faq_sch">

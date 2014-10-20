@@ -18,9 +18,6 @@ if ($w == "u")
     $sql = " select * from {$g5['faq_table']} where fa_id = '$fa_id' ";
     $fa = sql_fetch($sql);
     if (!$fa['fa_id']) alert("등록된 자료가 없습니다.");
-
-    $fa['fa_subject'] = htmlspecialchars2($fa['fa_subject']);
-    $fa['fa_content'] = htmlspecialchars2($fa['fa_content']);
 }
 else
     $html_title .= ' 항목 입력';
@@ -53,11 +50,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row">질문</th>
-        <td><?php echo editor_html('fa_subject', $fa['fa_subject']); ?></td>
+        <td><?php echo editor_html('fa_subject', get_text($fa['fa_subject'], 0)); ?></td>
     </tr>
     <tr>
         <th scope="row">답변</th>
-        <td><?php echo editor_html('fa_content', $fa['fa_content']); ?></td>
+        <td><?php echo editor_html('fa_content', get_text($fa['fa_content'], 0)); ?></td>
     </tr>
     </tbody>
     </table>

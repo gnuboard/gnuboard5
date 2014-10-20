@@ -84,8 +84,8 @@ if(is_file($skin_file)) {
     for ($i=0;$row=sql_fetch_array($result);$i++){
         $faq_list[] = $row;
         if($stx) {
-            $faq_list[$i]['fa_subject'] = search_font($stx, $faq_list[$i]['fa_subject']);
-            $faq_list[$i]['fa_content'] = search_font($stx, $faq_list[$i]['fa_content']);
+            $faq_list[$i]['fa_subject'] = search_font($stx, conv_content($faq_list[$i]['fa_subject'], 1));
+            $faq_list[$i]['fa_content'] = search_font($stx, conv_content($faq_list[$i]['fa_content'], 1));
         }
     }
     include_once($skin_file);
