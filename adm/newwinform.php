@@ -126,7 +126,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row"><label for="nw_content">내용</label></th>
-        <td><?php echo editor_html('nw_content', $nw['nw_content']); ?></td>
+        <td><?php echo editor_html('nw_content', get_text($nw['nw_content'], 0)); ?></td>
     </tr>
     </tbody>
     </table>

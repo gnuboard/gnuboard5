@@ -190,7 +190,7 @@ if(!is_file($nav_skin))
 include $nav_skin;
 
 // 상단 HTML
-echo '<div id="sit_hhtml">'.stripslashes($it['it_mobile_head_html']).'</div>';
+echo '<div id="sit_hhtml">'.conv_content($it['it_mobile_head_html'], 1).'</div>';
 ?>
 
 <?php if($is_orderable) { ?>
@@ -215,7 +215,7 @@ else
 
 <?php
 // 하단 HTML
-echo stripslashes($it['it_mobile_tail_html']);
+echo conv_content($it['it_mobile_tail_html'], 1);
 
 include_once(G5_MSHOP_PATH.'/_tail.php');
 ?>

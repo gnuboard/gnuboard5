@@ -48,7 +48,7 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
     include $nav_skin;
 
     // 상단 HTML
-    echo '<div id="sct_hhtml">'.stripslashes($ca['ca_mobile_head_html']).'</div>';
+    echo '<div id="sct_hhtml">'.conv_content($ca['ca_mobile_head_html'], 1).'</div>';
 
     // 상품 출력순서가 있다면
     if ($sort != "")
@@ -110,7 +110,7 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 
     <?php
     // 하단 HTML
-    echo '<div id="sct_thtml">'.stripslashes($ca['ca_mobile_tail_html']).'</div>';
+    echo '<div id="sct_thtml">'.conv_content($ca['ca_mobile_tail_html'], 1).'</div>';
 ?>
 </div>
 

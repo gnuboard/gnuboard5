@@ -32,7 +32,7 @@ if (file_exists($himg))
     echo '<div id="sev_himg" class="sev_img"><img src="'.G5_DATA_URL.'/event/'.$ev_id.'_h" alt=""></div>';
 
 // 상단 HTML
-echo '<div id="sev_hhtml">'.stripslashes($ev['ev_head_html']).'</div>';
+echo '<div id="sev_hhtml">'.conv_content($ev['ev_head_html'], 1).'</div>';
 
 // 상품 출력순서가 있다면
 if ($sort != "")
@@ -93,7 +93,7 @@ echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_S
 
 <?php
 // 하단 HTML
-echo '<div id="sev_thtml">'.stripslashes($ev['ev_tail_html']).'</div>';
+echo '<div id="sev_thtml">'.conv_content($ev['ev_tail_html'], 1).'</div>';
 
 $timg = G5_DATA_PATH.'/event/'.$ev_id.'_t';
 if (file_exists($timg))

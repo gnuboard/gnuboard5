@@ -62,7 +62,7 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     </tr>
     <tr>
         <th scope="row">내용</th>
-        <td><?php echo editor_html('is_content', $is['is_content']); ?></td>
+        <td><?php echo editor_html('is_content', get_text($is['is_content'], 0)); ?></td>
     </tr>
     <tr>
         <th scope="row">확인</th>

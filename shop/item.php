@@ -119,7 +119,7 @@ if ($is_admin) {
 <!-- 상품 상세보기 시작 { -->
 <?php
 // 상단 HTML
-echo '<div id="sit_hhtml">'.stripslashes($it['it_head_html']).'</div>';
+echo '<div id="sit_hhtml">'.conv_content($it['it_head_html'], 1).'</div>';
 
 // 보안서버경로
 if (G5_HTTPS_DOMAIN)
@@ -247,7 +247,7 @@ function pg_anchor($anc_id) {
 
 <?php
 // 하단 HTML
-echo stripslashes($it['it_tail_html']);
+echo conv_content($it['it_tail_html'], 1);
 ?>
 
 <?php

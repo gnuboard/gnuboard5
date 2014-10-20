@@ -25,13 +25,13 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             $iq_subject .= ' <img src="'.G5_SHOP_SKIN_URL.'/img/icon_secret.gif" alt="비밀글">';
 
             if($is_admin || $member['mb_id' ] == $row['mb_id']) {
-                $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
+                $iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), $thumbnail_width);
             } else {
                 $iq_question = '비밀글로 보호된 문의입니다.';
                 $is_secret = true;
             }
         } else {
-            $iq_question = get_view_thumbnail($row['iq_question'], $thumbnail_width);
+            $iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), $thumbnail_width);
         }
         $iq_time    = substr($row['iq_time'], 2, 8);
 
@@ -43,7 +43,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
         if ($row['iq_answer'])
         {
-            $iq_answer = get_view_thumbnail($row['iq_answer'], $thumbnail_width);
+            $iq_answer = get_view_thumbnail(conv_content($row['iq_answer'], 1), $thumbnail_width);
             $iq_stats = '답변완료';
             $iq_style = 'sit_qaa_done';
             $is_answer = true;

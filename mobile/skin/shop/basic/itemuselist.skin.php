@@ -39,7 +39,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         $num = $total_count - ($page - 1) * $rows - $i;
         $star = get_star($row['is_score']);
 
-        $is_content = get_view_thumbnail($row['is_content'], $thumbnail_width);
+        $is_content = get_view_thumbnail(conv_content($row['is_content'], 1), $thumbnail_width);
 
         $row2 = sql_fetch(" select it_name from {$g5['g5_shop_item_table']} where it_id = '{$row['it_id']}' ");
         $it_href = G5_SHOP_URL."/item.php?it_id={$row['it_id']}";
