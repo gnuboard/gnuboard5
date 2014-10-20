@@ -762,11 +762,11 @@ if(!isset($default['de_pg_service'])) {
         </tr>
         <tr>
             <th scope="row">배송정보</th>
-            <td><?php echo editor_html('de_baesong_content', $default['de_baesong_content']); ?></td>
+            <td><?php echo editor_html('de_baesong_content', get_text($default['de_baesong_content'], 0)); ?></td>
         </tr>
         <tr>
             <th scope="row">교환/반품</th>
-            <td><?php echo editor_html('de_change_content', $default['de_change_content']); ?></td>
+            <td><?php echo editor_html('de_change_content', get_text($default['de_change_content'], 0)); ?></td>
         </tr>
         </tbody>
         </table>
@@ -1055,7 +1055,7 @@ if(!isset($default['de_pg_service'])) {
         </tr>
         <tr>
             <th scope="row">비회원에 대한<br/>개인정보수집 내용</th>
-            <td><?php echo editor_html('de_guest_privacy', $default['de_guest_privacy']); ?></td>
+            <td><?php echo editor_html('de_guest_privacy', get_text($default['de_guest_privacy'], 0)); ?></td>
         </tr>
         <tr>
             <th scope="row">MYSQL USER</th>

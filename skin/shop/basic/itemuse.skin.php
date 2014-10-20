@@ -20,7 +20,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         $is_star    = get_star($row['is_score']);
         $is_name    = get_text($row['is_name']);
         $is_subject = conv_subject($row['is_subject'],50,"…");
-        $is_content = get_view_thumbnail($row['is_content'], $thumbnail_width);
+        $is_content = get_view_thumbnail(conv_content($row['is_content'], 1), $thumbnail_width);
         $is_time    = substr($row['is_time'], 2, 8);
         $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
 

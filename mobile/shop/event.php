@@ -18,7 +18,7 @@ if ($is_admin)
 <!-- 이벤트 시작 { -->
 <?php
 // 상단 HTML
-echo '<div id="sev_hhtml">'.stripslashes($ev['ev_head_html']).'</div>';
+echo '<div id="sev_hhtml">'.conv_content($ev['ev_head_html'], 1).'</div>';
 
 // 상품 출력순서가 있다면
 if ($sort != "")
@@ -77,7 +77,7 @@ echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_S
 
 <?php
 // 하단 HTML
-echo '<div id="sev_thtml">'.stripslashes($ev['ev_tail_html']).'</div>';
+echo '<div id="sev_thtml">'.conv_content($ev['ev_tail_html'], 1).'</div>';
 ?>
 <!-- } 이벤트 끝 -->
 

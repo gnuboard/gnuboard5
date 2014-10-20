@@ -53,7 +53,7 @@ $is_dhtml_editor = false;
 if ($config['cf_editor'] && !G5_IS_MOBILE) {
     $is_dhtml_editor = true;
 }
-$editor_html = editor_html('iq_question', $qa['iq_question'], $is_dhtml_editor);
+$editor_html = editor_html('iq_question', get_text($qa['iq_question'], 0), $is_dhtml_editor);
 $editor_js = '';
 $editor_js .= get_editor_js('iq_question', $is_dhtml_editor);
 $editor_js .= chk_editor_js('iq_question', $is_dhtml_editor);

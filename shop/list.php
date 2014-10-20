@@ -62,7 +62,7 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
     include $nav_skin;
 
     // 상단 HTML
-    echo '<div id="sct_hhtml">'.stripslashes($ca['ca_head_html']).'</div>';
+    echo '<div id="sct_hhtml">'.conv_content($ca['ca_head_html'], 1).'</div>';
 
     $cate_skin = $skin_dir.'/listcategory.skin.php';
     if(!is_file($cate_skin))
@@ -138,7 +138,7 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
 
     <?php
     // 하단 HTML
-    echo '<div id="sct_thtml">'.stripslashes($ca['ca_tail_html']).'</div>';
+    echo '<div id="sct_thtml">'.conv_content($ca['ca_tail_html'], 1).'</div>';
 
 ?>
 </div>
