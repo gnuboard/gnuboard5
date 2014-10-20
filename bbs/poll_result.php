@@ -53,8 +53,8 @@ $sql = " select a.*, b.mb_open
           where po_id = '{$po_id}' order by pc_id desc ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $list2[$i]['pc_name']  = $row['pc_name'];
-    $list2[$i]['name']     = get_sideview($row['mb_id'], cut_str($row['pc_name'],10), '', '', $row['mb_open']);
+    $list2[$i]['pc_name']  = get_text($row['pc_name']);
+    $list2[$i]['name']     = get_sideview($row['mb_id'], get_text(cut_str($row['pc_name'],10)), '', '', $row['mb_open']);
     $list2[$i]['idea']     = get_text(cut_str($row['pc_idea'], 255));
     $list2[$i]['datetime'] = $row['pc_datetime'];
 

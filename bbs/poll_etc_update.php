@@ -18,7 +18,7 @@ if ($w == '')
 
     $pc_idea = stripslashes($pc_idea);
 
-    $name = cut_str($pc_name, $config['cf_cut_name']);
+    $name = get_text(cut_str($pc_name, $config['cf_cut_name']));
     $mb_id = '';
     if ($member['mb_id'])
         $mb_id = '('.$member['mb_id'].')';
