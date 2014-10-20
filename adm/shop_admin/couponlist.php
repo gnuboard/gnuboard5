@@ -50,7 +50,7 @@ $result = sql_query($sql);
 $g5['title'] = '쿠폰관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$colspan = 8;
+$colspan = 9;
 ?>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
@@ -88,6 +88,7 @@ $colspan = 8;
             <label for="chkall" class="sound_only">쿠폰 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
+        <th scope="col">쿠폰종류</th>
         <th scope="col">쿠폰코드</th>
         <th scope="col">쿠폰이름</th>
         <th scope="col">적용대상</th>
@@ -104,17 +105,21 @@ $colspan = 8;
             case '0':
                 $sql3 = " select it_name from {$g5['g5_shop_item_table']} where it_id = '{$row['cp_target']}' ";
                 $row3 = sql_fetch($sql3);
+                $cp_method = '개별상품할인';
                 $cp_target = get_text($row3['it_name']);
                 break;
             case '1':
                 $sql3 = " select ca_name from {$g5['g5_shop_category_table']} where ca_id = '{$row['cp_target']}' ";
                 $row3 = sql_fetch($sql3);
+                $cp_method = '카테고리할인';
                 $cp_target = get_text($row3['ca_name']);
                 break;
             case '2':
-                $cp_target = '결제금액';
+                $cp_method = '주문금액할인';
+                $cp_target = '주문금액';
                 break;
             case '3':
+                $cp_method = '배송비할인';
                 $cp_target = '배송비';
                 break;
         }
@@ -135,6 +140,7 @@ $colspan = 8;
             <input type="hidden" id="cp_id_<?php echo $i; ?>" name="cp_id[<?php echo $i; ?>]" value="<?php echo $row['cp_id']; ?>">
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">
         </td>
+        <td><?php echo $cp_method; ?></td>
         <td><?php echo $row['cp_id']; ?></td>
         <td><?php echo $row['cp_subject']; ?></td>
         <td><?php echo $cp_target; ?></td>
