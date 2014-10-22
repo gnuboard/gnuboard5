@@ -321,7 +321,7 @@ else if ($od_settle_case == "가상계좌")
     $od_tno             = $tno;
     $od_receipt_price   = 0;
     $od_bank_account    = $bankname.' '.$account;
-    $od_deposit_name    = $od_name;
+    $od_deposit_name    = $depositor;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
 }
