@@ -842,7 +842,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_content_head">상단 내용</label></th>
             <td>
-                <?php echo editor_html("bo_content_head", $board['bo_content_head']); ?>
+                <?php echo editor_html("bo_content_head", get_text($board['bo_content_head'], 0)); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_content_head" value="1" id="chk_grp_content_head">
@@ -854,7 +854,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_content_tail">하단 내용</label></th>
             <td>
-                <?php echo editor_html("bo_content_tail", $board['bo_content_tail']); ?>
+                <?php echo editor_html("bo_content_tail", get_text($board['bo_content_tail'], 0)); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_content_tail" value="1" id="chk_grp_content_tail">
@@ -866,7 +866,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_mobile_content_head">모바일 상단 내용</label></th>
             <td>
-                <?php echo editor_html("bo_mobile_content_head", $board['bo_mobile_content_head']); ?>
+                <?php echo editor_html("bo_mobile_content_head", get_text($board['bo_mobile_content_head'], 0)); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_mobile_content_head" value="1" id="chk_grp_mobile_content_head">
@@ -878,7 +878,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_mobile_content_tail">모바일 하단 내용</label></th>
             <td>
-                <?php echo editor_html("bo_mobile_content_tail", $board['bo_mobile_content_tail']); ?>
+                <?php echo editor_html("bo_mobile_content_tail", get_text($board['bo_mobile_content_tail'], 0)); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_mobile_content_tail" value="1" id="chk_grp_mobile_content_tail">

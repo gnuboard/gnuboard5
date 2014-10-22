@@ -14,7 +14,7 @@ if ($himg_src)
     echo '<div id="faq_himg" class="faq_img"><img src="'.$himg_src.'" alt=""></div>';
 
 // 상단 HTML
-echo '<div id="faq_hhtml">'.stripslashes($fm['fm_head_html']).'</div>';
+echo '<div id="faq_hhtml">'.conv_content($fm['fm_head_html'], 1).'</div>';
 ?>
 
 <?php
@@ -83,7 +83,7 @@ if( count($faq_master_list) ){
 
 <?php
 // 하단 HTML
-echo '<div id="faq_thtml">'.stripslashes($fm['fm_tail_html']).'</div>';
+echo '<div id="faq_thtml">'.conv_content($fm['fm_tail_html'], 1).'</div>';
 
 if ($timg_src)
     echo '<div id="faq_timg" class="faq_img"><img src="'.$timg_src.'" alt=""></div>';

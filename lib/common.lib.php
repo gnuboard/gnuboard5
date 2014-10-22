@@ -1199,7 +1199,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     global $bo_table, $sca, $is_admin, $member;
 
     $email = base64_encode($email);
-    $homepage = set_http($homepage);
+    $homepage = set_http(clean_xss_tags($homepage));
 
     $name = preg_replace("/\&#039;/", "", $name);
     $name = preg_replace("/\'/", "", $name);
@@ -2045,7 +2045,7 @@ function get_editor_image($contents, $view=true)
     if ($view)
         $pattern = "/<img([^>]*)>/iS";
     else
-        $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/";
+        $pattern = "/<img[^>]*src=[\'\"]?([^>\'\"]+[^>\'\"]+)[\'\"]?[^>]*>/i";
     preg_match_all($pattern, $contents, $matchs);
 
     return $matchs;

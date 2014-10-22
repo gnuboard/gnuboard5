@@ -102,7 +102,7 @@ $colspan = 12;
         ?>
         <tr>
             <td class="td_mbid"><?php echo $mb_id ?></td>
-            <td class="td_mbname"><?php echo $row['mb_name'] ?></td>
+            <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
             <td class="td_mbname sv_use"><div><?php echo $mb_nick ?></div></td>
             <td class="td_num"><?php echo $row['mb_level'] ?></td>
             <td><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
@@ -284,7 +284,7 @@ $colspan = 7;
 
         <tr>
             <td class="td_mbid"><a href="./point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
-            <td class="td_mbname"><?php echo $row2['mb_name'] ?></td>
+            <td class="td_mbname"><?php echo get_text($row2['mb_name']); ?></td>
             <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
             <td class="td_datetime"><?php echo $row['po_datetime'] ?></td>
             <td><?php echo $link1.$row['po_content'].$link2 ?></td>

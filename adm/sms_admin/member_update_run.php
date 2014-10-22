@@ -48,7 +48,7 @@ while ($res = sql_fetch_array($qry))
 
     if ($hp == '') $bk_receipt = 0; else $bk_receipt = $res['mb_sms'];
 
-    $field = "mb_id='{$res['mb_id']}', bk_name='{$res['mb_name']}', bk_hp='{$hp}', bk_receipt='{$bk_receipt}', bk_datetime='".G5_TIME_YMDHIS."'";
+    $field = "mb_id='{$res['mb_id']}', bk_name='".addslashes($res['mb_name'])."', bk_hp='{$hp}', bk_receipt='{$bk_receipt}', bk_datetime='".G5_TIME_YMDHIS."'";
 
     $res2 = sql_fetch("select * from {$g5['sms5_book_table']} where mb_id='{$res['mb_id']}'");
     if ($res2) // 기존에 등록되어 있을 경우 업데이트
