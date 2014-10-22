@@ -117,7 +117,7 @@ $colspan = 7;
         </td>
         <td class="td_grid"><?php echo $group ?></td>
         <td class="td_mbid"><?php echo $row['mb_id'] ?></td>
-        <td class="td_mbname"><?php echo $row['mb_name'] ?></td>
+        <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
         <td class="td_name sv_use"><?php echo $mb_nick ?></td>
         <td class="td_datetime"><?php echo substr($row['mb_today_login'],2,8) ?></td>
         <td class="td_datetime"><?php echo $row['gm_datetime'] ?></td>

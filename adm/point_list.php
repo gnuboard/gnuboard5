@@ -163,7 +163,7 @@ function point_clear()
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
-        <td class="td_mbname"><?php echo $row2['mb_name'] ?></td>
+        <td class="td_mbname"><?php echo get_text($row2['mb_name']); ?></td>
         <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
         <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>

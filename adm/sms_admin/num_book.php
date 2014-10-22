@@ -181,12 +181,12 @@ function no_hp_click(val)
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_chk">
-            <label for="bk_no_<?php echo $i; ?>" class="sound_only"><?php echo $group_name?>의 <?php echo $res['bk_name']?></label>
+            <label for="bk_no_<?php echo $i; ?>" class="sound_only"><?php echo $group_name?>의 <?php echo get_text($res['bk_name']) ?></label>
             <input type="checkbox" name="bk_no[]" value="<?php echo $res['bk_no']?>" id="bk_no_<?php echo $i; ?>">
         </td>
         <td class="td_num"><?php echo number_format($vnum--)?></td>
         <td><?php echo $group_name?></td>
-        <td class="td_mbname"><?php echo $res['bk_name']?></td>
+        <td class="td_mbname"><?php echo get_text($res['bk_name']) ?></td>
         <td class="td_numbig"><?php echo $res['bk_hp']?></td>
         <td class="td_boolean"><?php echo $res['bk_receipt'] ? '<font color=blue>수신</font>' : '<font color=red>거부</font>'?></td>
         <td class="td_mbid"><?php echo $res['mb_id'] ? $res['mb_id'] : '비회원'?></td>

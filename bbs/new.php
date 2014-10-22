@@ -55,7 +55,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         $row2 = sql_fetch(" select * from {$tmp_write_table} where wr_id = '{$row['wr_id']}' ");
         $list[$i] = $row2;
 
-        $name = get_sideview($row2['mb_id'], cut_str($row2['wr_name'], $config['cf_cut_name']), $row2['wr_email'], $row2['wr_homepage']);
+        $name = get_sideview($row2['mb_id'], get_text(cut_str($row2['wr_name'], $config['cf_cut_name'])), $row2['wr_email'], $row2['wr_homepage']);
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row2['wr_datetime'],0,10);
         $datetime2 = $row2['wr_datetime'];
@@ -79,7 +79,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         $list[$i]['wr_email'] = $row3['wr_email'];
         $list[$i]['wr_homepage'] = $row3['wr_homepage'];
 
-        $name = get_sideview($row3['mb_id'], cut_str($row3['wr_name'], $config['cf_cut_name']), $row3['wr_email'], $row3['wr_homepage']);
+        $name = get_sideview($row3['mb_id'], get_text(cut_str($row3['wr_name'], $config['cf_cut_name'])), $row3['wr_email'], $row3['wr_homepage']);
         // 당일인 경우 시간으로 표시함
         $datetime = substr($row3['wr_datetime'],0,10);
         $datetime2 = $row3['wr_datetime'];

@@ -138,7 +138,7 @@ $colspan = 15;
             <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>"><?php echo $row['bo_table'] ?></a>
         </td>
         <td>
-            <label for="bo_skin_<?php echo $i; ?>" class="sound_only">모바일 스킨</label>
+            <label for="bo_skin_<?php echo $i; ?>" class="sound_only">스킨</label>
             <?php echo get_skin_select('board', 'bo_skin_'.$i, "bo_skin[$i]", $row['bo_skin']); ?>
         </td>
         <td>
