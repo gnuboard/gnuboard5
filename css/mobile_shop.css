@@ -136,7 +136,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 #sps dd img {position:relative;top:-2px}
 
 .sps_section {float:right;width:75%}
-.sps_section p {padding:0;width:100%;height:1.8em;overflow:hidden}
+.sps_section p {padding:0;width:100%}
 .sps_con_full {padding:0;height:auto !important}
 .sps_con_btn {margin:5px 0 0;text-align:right}
 .sps_con_btn button {margin:0;padding:5px;border:0;background:#565e60;color:#fff}
@@ -162,7 +162,7 @@ a.sanchor_on {background:#626870;color:#fff !important;text-decoration:none}
 
 .sqa_section {float:right;width:75%}
 .sqa_section .sqa_con {padding:10px;background:#f2f5f9;line-height:1.7em}
-.sqa_section p {padding:0;width:100%;height:1.8em;overflow:hidden}
+.sqa_section p {padding:0;width:100%}
 .sqa_con_full {padding:0;height:auto !important}
 .sqa_con_btn {margin:5px 0 0;text-align:right}
 .sqa_con_btn button {margin:0;padding:5px;border:0;background:#565e60;color:#fff}
