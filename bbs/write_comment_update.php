@@ -15,7 +15,7 @@ $w = $_POST["w"];
 $wr_name  = trim($_POST['wr_name']);
 $wr_email = '';
 if (!empty($_POST['wr_email']))
-    $wr_email = trim($_POST['wr_email']);
+    $wr_email = get_email_address(trim($_POST['wr_email']));
 
 // 비회원의 경우 이름이 누락되는 경우가 있음
 if ($is_guest) {
@@ -52,10 +52,10 @@ if ($is_member)
 {
     $mb_id = $member['mb_id'];
     // 4.00.13 - 실명 사용일때 댓글에 닉네임으로 입력되던 오류를 수정
-    $wr_name = $board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick'];
+    $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
     $wr_password = $member['mb_password'];
-    $wr_email = $member['mb_email'];
-    $wr_homepage = $member['mb_homepage'];
+    $wr_email = addslashes($member['mb_email']);
+    $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
 }
 else
 {
