@@ -40,10 +40,10 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
     if ($wr['wr_id'])
     {
         $mb_id = $member['mb_id'];
-        $wr_name = $member['mb_nick'];
+        $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
         $wr_password = $member['mb_password'];
-        $wr_email = $member['mb_email'];
-        $wr_homepage = $member['mb_homepage'];
+        $wr_email = addslashes($member['mb_email']);
+        $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
 
         $sql = " select max(wr_comment) as max_comment from $write_table
                     where wr_parent = '$wr_id' and wr_is_comment = '1' ";
