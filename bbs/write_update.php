@@ -412,14 +412,24 @@ if ($w == '' || $w == 'r') {
             $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
         } else {
             $mb_id = $wr['mb_id'];
-            $wr_name = $wr['wr_name'];
-            $wr_email = $wr['wr_email'];
-            $wr_homepage = $wr['wr_homepage'];
+            if(isset($_POST['wr_name']) && $_POST['wr_name'])
+                $wr_name = clean_xss_tags(trim($_POST['wr_name']));
+            else
+                $wr_name = addslashes(clean_xss_tags($wr['wr_name']));
+            if(isset($_POST['wr_email']) && $_POST['wr_email'])
+                $wr_email = get_email_address(trim($_POST['wr_email']));
+            else
+                $wr_email = addslashes($wr['wr_email']);
+            if(isset($_POST['wr_homepage']) && $_POST['wr_homepage'])
+                $wr_homepage = addslashes(clean_xss_tags($_POST['wr_homepage']));
+            else
+                $wr_homepage = addslashes(clean_xss_tags($wr['wr_homepage']));
         }
     } else {
         $mb_id = "";
         // 비회원의 경우 이름이 누락되는 경우가 있음
-        //if (!trim($wr_name)) alert("이름은 필히 입력하셔야 합니다.");
+        if (!trim($wr_name)) alert("이름은 필히 입력하셔야 합니다.");
+        $wr_name = clean_xss_tags(trim($_POST['wr_name']));
         $wr_email = get_email_address(trim($_POST['wr_email']));
     }
 
