@@ -3,9 +3,6 @@ include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
-set_session('ss_bo_table', $_REQUEST['bo_table']);
-set_session('ss_wr_id', $_REQUEST['wr_id']);
-
 if (!$board['bo_table']) {
     alert('존재하지 않는 게시판입니다.', G5_URL);
 }
@@ -294,10 +291,10 @@ $homepage = "";
 if ($w == "" || $w == "r") {
     if ($is_member) {
         if (isset($write['wr_name'])) {
-            $name = get_text(cut_str($write['wr_name'],20));
+            $name = get_text(cut_str(stripslashes($write['wr_name']),20));
         }
-        $email = $member['mb_email'];
-        $homepage = get_text($member['mb_homepage']);
+        $email = get_email_address($member['mb_email']);
+        $homepage = get_text(stripslashes($member['mb_homepage']));
     }
 }
 
@@ -318,9 +315,9 @@ if ($w == '') {
         }
     }
 
-    $name = get_text(cut_str($write['wr_name'],20));
+    $name = get_text(cut_str(stripslashes($write['wr_name']),20));
     $email = get_email_address($write['wr_email']);
-    $homepage = get_text($write['wr_homepage']);
+    $homepage = get_text(stripslashes($write['wr_homepage']));
 
     for ($i=1; $i<=G5_LINK_COUNT; $i++) {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
@@ -352,6 +349,9 @@ if ($w == '') {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
     }
 }
+
+set_session('ss_bo_table', $_REQUEST['bo_table']);
+set_session('ss_wr_id', $_REQUEST['wr_id']);
 
 $subject = "";
 if (isset($write['wr_subject'])) {

@@ -57,7 +57,7 @@ $sql = " select *
             limit {$from_record}, {$rows} ";
 $result = sql_query($sql);
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="local_ov01 local_ov">전체목록</a>';
+$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 
 $g5['title'] = '인기검색어관리';
 include_once('./admin.head.php');
