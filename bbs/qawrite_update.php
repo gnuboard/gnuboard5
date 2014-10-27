@@ -12,6 +12,9 @@ if($is_guest)
 
 $msg = array();
 
+// 1:1문의 설정값
+$qaconfig = get_qa_config();
+
 // e-mail 체크
 if(isset($_POST['qa_email']) && $qa_email) {
     $qa_email = get_email_address(trim($_POST['qa_email']));
@@ -68,9 +71,6 @@ for ($i=1; $i<=5; $i++) {
         $$var = trim($_POST['qa_'.$i]);
     }
 }
-
-// 1:1문의 설정값
-$qaconfig = get_qa_config();
 
 if($w == 'u' || $w == 'a' || $w == 'r') {
     if($w == 'a' && !$is_admin)
