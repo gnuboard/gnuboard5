@@ -270,7 +270,7 @@ if ($w == '' || $w == 'r') {
     }
 }  else if ($w == 'u') {
     if (get_session('ss_bo_table') != $_POST['bo_table'] || get_session('ss_wr_id') != $_POST['wr_id']) {
-        alert('올바른 방법으로 수정하여 주십시오.');
+        alert('올바른 방법으로 수정하여 주십시오.', G5_BBS_URL.'/board.php?bo_table='.$bo_table);
     }
 
     $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
