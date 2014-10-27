@@ -53,8 +53,8 @@ if (empty($_POST)) {
 }
 
 $w = $_POST['w'];
-$wr_link1 = trim(strip_tags($_POST['wr_link1']));
-$wr_link2 = trim(strip_tags($_POST['wr_link2']));
+$wr_link1 = trim(strip_tags($wr_link1));
+$wr_link2 = trim(strip_tags($wr_link2));
 
 $notice_array = explode(",", $board['bo_notice']);
 
