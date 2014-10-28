@@ -468,7 +468,7 @@ $(function(){
     });
 
     $(".win_email").click(function() {
-        win_email(this.ref);
+        win_email(this.href);
         return false;
     });
 
@@ -478,12 +478,12 @@ $(function(){
     });
 
     $(".win_profile").click(function() {
-        win_profile(this.ref);
+        win_profile(this.href);
         return false;
     });
 
     $(".win_homepage").click(function() {
-        win_homepage(this.ref);
+        win_homepage(this.href);
         return false;
     });
 

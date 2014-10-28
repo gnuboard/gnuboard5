@@ -17,12 +17,16 @@ if(!$count)
 for($i=0; $i<$count; $i++) {
     $qa_id = $tmp_array[$i];
 
-    $sql = " select qa_id, qa_type, qa_status, qa_parent, qa_content, qa_file1, qa_file2
+    $sql = " select qa_id, mb_id, qa_type, qa_status, qa_parent, qa_content, qa_file1, qa_file2
                 from {$g5['qa_content_table']}
                 where qa_id = '$qa_id' ";
     $row = sql_fetch($sql);
 
     if(!$row['qa_id'])
+        continue;
+
+    // 자신의 글이 아니면 건너뜀
+    if($is_admin != 'super' && $row['mb_id'] != $member['mb_id'])
         continue;
 
     // 첨부파일 삭제
