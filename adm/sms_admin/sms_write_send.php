@@ -181,7 +181,7 @@ if ($result)
                         $hs_memo = "인증 받지 못하였습니다. 계정을 다시 확인해 주세요.";
                         break;
                     default:	 // "미 확인 오류"
-                        $hs_memo = "알 수 없는 오류로 전송이 실패하었습니다.";
+                        $hs_memo = "알 수 없는 오류로 전송이 실패하였습니다.";
                         break;
                 }
                 $wr_failure++;
