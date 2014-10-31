@@ -48,6 +48,9 @@ else if ($w == "u")
     $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
     $it = sql_fetch($sql);
 
+    if(!$it)
+        alert('상품정보가 존재하지 않습니다.');
+
     if (!$ca_id)
         $ca_id = $it['ca_id'];
 
