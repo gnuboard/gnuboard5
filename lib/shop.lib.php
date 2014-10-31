@@ -336,10 +336,6 @@ function get_cart_count($cart_id)
     global $g5, $default;
 
     $sql = " select count(ct_id) as cnt from {$g5['g5_shop_cart_table']} where od_id = '$cart_id' ";
-    if($default['de_cart_keep_term']) {
-        $ctime = date('Y-m-d', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
-        $sql .= " and substring(ct_time, 1, 10) >= '$ctime' ";
-    }
     $row = sql_fetch($sql);
     $cnt = (int)$row['cnt'];
     return $cnt;
@@ -1342,11 +1338,6 @@ function set_cart_id($direct)
                         where mb_id = '{$member['mb_id']}'
                           and ct_direct = '0'
                           and ct_status = '쇼핑' ";
-            if($default['de_cart_keep_term']) {
-                $ctime = date('Y-m-d', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
-                $sql .= " and substring(ct_time, 1, 10) >= '$ctime' ";
-            }
-
             sql_query($sql);
         }
     }
@@ -2140,6 +2131,19 @@ function get_itemuselist_thumbnail($it_id, $contents, $thumb_width, $thumb_heigh
         $img = get_it_image($it_id, $thumb_width, $thumb_height);
 
     return $img;
+}
+
+// 장바구니 상품삭제
+function cart_item_clean()
+{
+    global $g5, $default;
+
+    $keep_term = $default['de_cart_keep_term'];
+    if(!$keep_term)
+        $keep_term = 15; // 기본값 15일
+    $beforetime = G5_SERVER_TIME - (86400 * $keep_term);
+
+    sql_query(" delete from {$g5['g5_shop_cart_table']} where ct_status = '쇼핑' and UNIX_TIMESTAMP(ct_time) < '$beforetime' ");
 }
 
 //==============================================================================

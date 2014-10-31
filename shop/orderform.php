@@ -96,10 +96,6 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
                    from {$g5['g5_shop_cart_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
                   where a.od_id = '$s_cart_id'
                     and a.ct_select = '1' ";
-        if($default['de_cart_keep_term']) {
-            $ctime = date('Y-m-d', G5_SERVER_TIME - ($default['de_cart_keep_term'] * 86400));
-            $sql .= " and substring(a.ct_time, 1, 10) >= '$ctime' ";
-        }
         $sql .= " group by a.it_id ";
         $sql .= " order by a.ct_id ";
         $result = sql_query($sql);

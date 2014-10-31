@@ -3,6 +3,9 @@ include_once('./_common.php');
 
 // print_r2($_POST); exit;
 
+// 보관기간이 지난 상품 삭제
+cart_item_clean();
+
 // cart id 설정
 set_cart_id($sw_direct);
 
