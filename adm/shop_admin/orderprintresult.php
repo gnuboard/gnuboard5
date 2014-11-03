@@ -212,8 +212,8 @@ if ($csv == 'xls')
         $worksheet->write($i, 0, $row['od_b_zip1'].'-'.$row['od_b_zip2']);
         $worksheet->write($i, 1, print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']));
         $worksheet->write($i, 2, $row['od_b_name']);
-        $worksheet->write($i, 3, $row['od_b_tel']);
-        $worksheet->write($i, 4, $row['od_b_hp']);
+        $worksheet->write($i, 3, ' '.$row['od_b_tel']);
+        $worksheet->write($i, 4, ' '.$row['od_b_hp']);
         $worksheet->write($i, 5, $row['it_name']);
         $worksheet->write($i, 6, $row['ct_qty']);
         $worksheet->write($i, 7, $row['ct_option']);
