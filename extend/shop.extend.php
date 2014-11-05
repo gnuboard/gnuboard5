@@ -131,6 +131,10 @@ if($default['de_card_test']) {
     define('G5_CASH_RECEIPT_URL', 'https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?term_id=PGNW');
 }
 
+// 주문폼의 상품이 재고 차감에 포함되는 기준 시간설정
+// 0 이면 재고 차감에 계속 포함됨
+define('G5_CART_STOCK_LIMIT', 3);
+
 // 아이코드 코인 최소금액 설정
 // 코인 잔액이 설정 금액보다 작을 때는 주문시 SMS 발송 안함
 define('G5_ICODE_COIN', 100);

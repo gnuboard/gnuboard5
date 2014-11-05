@@ -56,6 +56,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_cart` (
   `ct_send_cost` tinyint(4) NOT NULL DEFAULT '0',
   `ct_direct` tinyint(4) NOT NULL DEFAULT '0',
   `ct_select` tinyint(4) NOT NULL DEFAULT '0',
+  `ct_select_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`ct_id`),
   KEY `od_id` (`od_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

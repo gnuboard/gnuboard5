@@ -2138,12 +2138,38 @@ function cart_item_clean()
 {
     global $g5, $default;
 
+    // 장바구니 보관일
     $keep_term = $default['de_cart_keep_term'];
     if(!$keep_term)
         $keep_term = 15; // 기본값 15일
-    $beforetime = G5_SERVER_TIME - (86400 * $keep_term);
 
-    sql_query(" delete from {$g5['g5_shop_cart_table']} where ct_status = '쇼핑' and UNIX_TIMESTAMP(ct_time) < '$beforetime' ");
+    // ct_select_time이 기준시간 이상 경과된 경우 변경
+    if(defined('G5_CART_STOCK_LIMIT'))
+        $cart_stock_limit = G5_CART_STOCK_LIMIT;
+    else
+        $cart_stock_limit = 3;
+
+    $stocktime = 0;
+    if($cart_stock_limit > 0) {
+        if($cart_stock_limit > $keep_term * 24)
+            $cart_stock_limit = $keep_term * 24;
+
+        $stocktime = G5_SERVER_TIME - (3600 * $cart_stock_limit);
+        $sql = " update {$g5['g5_shop_cart_table']}
+                    set ct_select = '0'
+                    where ct_select = '1'
+                      and ct_status = '쇼핑'
+                      and UNIX_TIMESTAMP(ct_select_time) < '$stocktime' ";
+        sql_query($sql);
+    }
+
+    // 설정 시간이상 경과된 상품 삭제
+    $statustime = G5_SERVER_TIME - (86400 * $keep_term);
+
+    $sql = " delete from {$g5['g5_shop_cart_table']}
+                where ct_status = '쇼핑'
+                  and UNIX_TIMESTAMP(ct_time) < '$statustime' ";
+    sql_query($sql);
 }
 
 //==============================================================================

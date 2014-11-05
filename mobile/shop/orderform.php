@@ -1130,6 +1130,13 @@ var temp_point = 0;
 
 function pay_approval()
 {
+    // 재고체크
+    var stock_msg = order_stock_check();
+    if(stock_msg != "") {
+        alert(stock_msg);
+        return false;
+    }
+
     var f = document.sm_form;
     var pf = document.forderform;
 

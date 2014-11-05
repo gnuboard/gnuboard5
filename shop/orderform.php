@@ -4,6 +4,9 @@ include_once('./_common.php');
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
+// 주문상품 재고체크 js 파일
+add_javascript('<script src="'.G5_JS_URL.'/shop.order.js"></script>', 0);
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/orderform.php');
     return;
@@ -1145,6 +1148,13 @@ function calculate_tax()
 
 function forderform_check(f)
 {
+    // 재고체크
+    var stock_msg = order_stock_check();
+    if(stock_msg != "") {
+        alert(stock_msg);
+        return false;
+    }
+
     errmsg = "";
     errfld = "";
     var deffld = "";
