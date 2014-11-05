@@ -20,7 +20,16 @@ if (!chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
-$mb_id          = trim($_POST['mb_id']);
+if($w == 'u')
+    $mb_id = isset($_SESSION['ss_mb_id']) ? trim($_SESSION['ss_mb_id']) : '';
+else if($w == '')
+    $mb_id = trim($_POST['mb_id']);
+else
+    alert('잘못된 접근입니다', G5_URL);
+
+if(!$mb_id)
+    alert('회원아이디 값이 없습니다. 올바른 방법으로 이용해 주십시오.');
+
 $mb_password    = trim($_POST['mb_password']);
 $mb_password_re = trim($_POST['mb_password_re']);
 $mb_name        = trim($_POST['mb_name']);
@@ -123,50 +132,6 @@ $mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '
 // 사용자 코드 실행
 @include_once($member_skin_path.'/register_form_update.head.skin.php');
 
-$mb_dir = G5_DATA_PATH.'/member/'.substr($mb_id,0,2);
-
-// 아이콘 삭제
-if (isset($_POST['del_mb_icon'])) {
-    @unlink($mb_dir.'/'.$mb_id.'.gif');
-}
-
-$msg = "";
-
-// 아이콘 업로드
-$mb_icon = '';
-if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {
-    if (preg_match("/(\.gif)$/i", $_FILES['mb_icon']['name'])) {
-        // 아이콘 용량이 설정값보다 이하만 업로드 가능
-        if ($_FILES['mb_icon']['size'] <= $config['cf_member_icon_size']) {
-            @mkdir($mb_dir, G5_DIR_PERMISSION);
-            @chmod($mb_dir, G5_DIR_PERMISSION);
-            $dest_path = $mb_dir.'/'.$mb_id.'.gif';
-            move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
-            chmod($dest_path, G5_FILE_PERMISSION);
-            if (file_exists($dest_path)) {
-                //=================================================================\
-                // 090714
-                // gif 파일에 악성코드를 심어 업로드 하는 경우를 방지
-                // 에러메세지는 출력하지 않는다.
-                //-----------------------------------------------------------------
-                $size = getimagesize($dest_path);
-                if ($size[2] != 1) // gif 파일이 아니면 올라간 이미지를 삭제한다.
-                    @unlink($dest_path);
-                else
-                // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
-                if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height'])
-                    @unlink($dest_path);
-                //=================================================================\
-            }
-        } else {
-            $msg .= '회원아이콘을 '.number_format($config['cf_member_icon_size']).'바이트 이하로 업로드 해주십시오.';
-        }
-
-    } else {
-        $msg .= $_FILES['mb_icon']['name'].'은(는) gif 파일이 아닙니다.';
-    }
-}
-
 //===============================================================
 //  본인확인
 //---------------------------------------------------------------
@@ -213,7 +178,6 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
 //===============================================================
 
 if ($w == '') {
-
     $sql = " insert into {$g5['member_table']}
                 set mb_id = '{$mb_id}',
                      mb_password = '".sql_password($mb_password)."',
@@ -303,11 +267,10 @@ if ($w == '') {
     set_session('ss_mb_reg', $mb_id);
 
 } else if ($w == 'u') {
-
     if (!trim($_SESSION['ss_mb_id']))
         alert('로그인 되어 있지 않습니다.');
 
-    if ($_SESSION['ss_mb_id'] != $mb_id)
+    if (trim($_POST['mb_id']) != $mb_id)
         alert("로그인된 정보와 수정하려는 정보가 틀리므로 수정할 수 없습니다.\\n만약 올바르지 않은 방법을 사용하신다면 바로 중지하여 주십시오.");
 
     $sql_password = "";
@@ -365,6 +328,52 @@ if ($w == '') {
                     {$sql_certify}
               where mb_id = '$mb_id' ";
     sql_query($sql);
+}
+
+
+// 회원 아이콘
+$mb_dir = G5_DATA_PATH.'/member/'.substr($mb_id,0,2);
+
+// 아이콘 삭제
+if (isset($_POST['del_mb_icon'])) {
+    @unlink($mb_dir.'/'.$mb_id.'.gif');
+}
+
+$msg = "";
+
+// 아이콘 업로드
+$mb_icon = '';
+if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {
+    if (preg_match("/(\.gif)$/i", $_FILES['mb_icon']['name'])) {
+        // 아이콘 용량이 설정값보다 이하만 업로드 가능
+        if ($_FILES['mb_icon']['size'] <= $config['cf_member_icon_size']) {
+            @mkdir($mb_dir, G5_DIR_PERMISSION);
+            @chmod($mb_dir, G5_DIR_PERMISSION);
+            $dest_path = $mb_dir.'/'.$mb_id.'.gif';
+            move_uploaded_file($_FILES['mb_icon']['tmp_name'], $dest_path);
+            chmod($dest_path, G5_FILE_PERMISSION);
+            if (file_exists($dest_path)) {
+                //=================================================================\
+                // 090714
+                // gif 파일에 악성코드를 심어 업로드 하는 경우를 방지
+                // 에러메세지는 출력하지 않는다.
+                //-----------------------------------------------------------------
+                $size = getimagesize($dest_path);
+                if ($size[2] != 1) // gif 파일이 아니면 올라간 이미지를 삭제한다.
+                    @unlink($dest_path);
+                else
+                // 아이콘의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
+                if ($size[0] > $config['cf_member_icon_width'] || $size[1] > $config['cf_member_icon_height'])
+                    @unlink($dest_path);
+                //=================================================================\
+            }
+        } else {
+            $msg .= '회원아이콘을 '.number_format($config['cf_member_icon_size']).'바이트 이하로 업로드 해주십시오.';
+        }
+
+    } else {
+        $msg .= $_FILES['mb_icon']['name'].'은(는) gif 파일이 아닙니다.';
+    }
 }
 
 
@@ -442,14 +451,14 @@ unset($_SESSION['ss_cert_adult']);
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
 
-if ($w == "") {
+if ($w == '') {
     goto_url(G5_HTTP_BBS_URL.'/register_result.php');
 } else if ($w == 'u') {
     $row  = sql_fetch(" select mb_password from {$g5['member_table']} where mb_id = '{$member['mb_id']}' ");
     $tmp_password = $row['mb_password'];
 
     if ($old_email != $mb_email && $config['cf_use_email_certify']) {
-        set_session("ss_mb_id", "");
+        set_session('ss_mb_id', '');
         alert('회원 정보가 수정 되었습니다.\n\nE-mail 주소가 변경되었으므로 다시 인증하셔야 합니다.', G5_URL);
     } else {
         alert('회원 정보가 수정 되었습니다.', G5_URL);

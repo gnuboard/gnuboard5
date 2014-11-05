@@ -10,16 +10,6 @@ auth_check($auth[$sub_menu], "w");
 $g5['title'] = "주문 내역 수정";
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 
-//------------------------------------------------------------------------------
-// 설정 시간이 지난 주문서 없는 장바구니 자료 삭제
-//------------------------------------------------------------------------------
-$keep_term = $default['de_cart_keep_term'];
-if (!$keep_term) $keep_term = 15; // 기본값 15일
-$beforetime = date('Y-m-d', ( G5_SERVER_TIME - (86400 * $keep_term) ) );
-$sql = " delete from {$g5['g5_shop_cart_table']} where ct_status = '쇼핑' and substring(ct_time, 1, 10) < '$beforetime' ";
-sql_query($sql);
-//------------------------------------------------------------------------------
-
 
 // 완료된 주문에 포인트를 적립한다.
 save_order_point("완료");
