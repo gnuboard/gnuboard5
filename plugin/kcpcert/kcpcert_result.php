@@ -101,8 +101,12 @@ if( $cert_enc_use == "Y" )
         if ( $ct_cert->check_valid_hash ( $home_dir , $dn_hash , $veri_str ) != "1" )
         {
             // 검증 실패시 처리 영역
+            if(PHP_INT_MAX == 2147483647) // 32-bit
+                $bin_exe = '/bin/ct_cli';
+            else
+                $bin_exe = '/bin/ct_cli_x64';
 
-            echo "dn_hash 변조 위험있음 (".G5_KCPCERT_PATH."/bin/ct_cli 파일에 실행권한이 있는지 확인하세요.)";
+            echo "dn_hash 변조 위험있음 (".G5_KCPCERT_PATH.$bin_exe." 파일에 실행권한이 있는지 확인하세요.)";
             exit;
             // 오류 처리 ( dn_hash 변조 위험있음)
         }
