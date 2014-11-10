@@ -413,8 +413,25 @@ if($default['de_tax_flag_use']) {
     $od_free_mny = (int)$_POST['comm_free_mny'];
 }
 
-$od_pg = $default['de_pg_service'];
-$od_email = get_email_address($od_email);
+$od_pg            = $default['de_pg_service'];
+$od_email         = get_email_address($od_email);
+$od_name          = clean_xss_tags($od_name);
+$od_tel           = clean_xss_tags($od_tel);
+$od_hp            = clean_xss_tags($od_hp);
+$od_zip1          = preg_replace('/[^0-9]/', '', $od_zip1);
+$od_zip2          = preg_replace('/[^0-9]/', '', $od_zip2);
+$od_addr1         = clean_xss_tags($od_addr1);
+$od_addr2         = clean_xss_tags($od_addr2);
+$od_addr3         = clean_xss_tags($od_addr3);
+$od_addr_jibeon   = preg_match("/^(N|R)$/", $od_addr_jibeon) ? $od_addr_jibeon : '';
+$od_b_name        = clean_xss_tags($od_b_name);
+$od_b_tel         = clean_xss_tags($od_b_tel);
+$od_b_hp          = clean_xss_tags($od_b_hp);
+$od_b_addr1       = clean_xss_tags($od_b_addr1);
+$od_b_addr2       = clean_xss_tags($od_b_addr2);
+$od_b_addr3       = clean_xss_tags($od_b_addr3);
+$od_b_addr_jibeon = preg_match("/^(N|R)$/", $od_b_addr_jibeon) ? $od_b_addr_jibeon : '';
+$od_memo          = clean_xss_tags($od_memo);
 
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
