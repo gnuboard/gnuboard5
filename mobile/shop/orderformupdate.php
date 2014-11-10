@@ -432,6 +432,7 @@ $od_b_addr2       = clean_xss_tags($od_b_addr2);
 $od_b_addr3       = clean_xss_tags($od_b_addr3);
 $od_b_addr_jibeon = preg_match("/^(N|R)$/", $od_b_addr_jibeon) ? $od_b_addr_jibeon : '';
 $od_memo          = clean_xss_tags($od_memo);
+$od_deposit_name  = clean_xss_tags($od_deposit_name);
 
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
