@@ -462,7 +462,7 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
     <?php } ?>
     <input type="submit" value="선택수정" class="btn_submit" onclick="document.pressed=this.value">
 <?php } ?>
-    <?php if ($od_status == '주문' || $od_status == '전체취소') { ?> <span>주문상태에서만 삭제가 가능합니다.</span> <input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
+    <?php if ($od_status == '주문') { ?> <span>주문상태에서만 삭제가 가능합니다.</span> <input type="submit" value="선택삭제" class="btn_submit" onclick="document.pressed=this.value"><?php } ?>
 </div>
 
 <div class="local_desc02 local_desc">
