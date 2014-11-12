@@ -214,11 +214,12 @@ function url_auto_link($str)
     // 140326 유창화님 제안코드로 수정
     // http://sir.co.kr/bbs/board.php?bo_table=pg_lecture&wr_id=461
     // http://sir.co.kr/bbs/board.php?bo_table=pg_lecture&wr_id=463
-    $str = str_replace(array("&lt;", "&gt;", "&amp;", "&quot;", "&nbsp;"), array("\t_lt_\t", "\t_gt_\t", "&", "\"", "\t_nbsp_\t"), $str);
-    $str = preg_replace("`(?:(?:(?:href|src)\s*=\s*(?:\"|'|)){0})((http|https|ftp|telnet|news|mms)://[^\"'\s()]+)`", "<A HREF=\"\\1\" TARGET='{$config['cf_link_target']}'>\\1</A>", $str);
-    $str = preg_replace("/(^|[\"'\s(])(www\.[^\"'\s()]+)/i", "\\1<A HREF=\"http://\\2\" TARGET='{$config['cf_link_target']}'>\\2</A>", $str);
-    $str = preg_replace("/[0-9a-z_-]+@[a-z0-9._-]{4,}/i", "<a href='mailto:\\0'>\\0</a>", $str);
-    $str = str_replace(array("\t_nbsp_\t", "\t_lt_\t", "\t_gt_\t"), array("&nbsp;", "&lt;", "&gt;"), $str);
+    $str = str_replace(array("&lt;", "&gt;", "&amp;", "&quot;", "&nbsp;", "&#039;"), array("\t_lt_\t", "\t_gt_\t", "&", "\"", "\t_nbsp_\t", "'"), $str);
+    //$str = preg_replace("`(?:(?:(?:href|src)\s*=\s*(?:\"|'|)){0})((http|https|ftp|telnet|news|mms)://[^\"'\s()]+)`", "<A HREF=\"\\1\" TARGET='{$config['cf_link_target']}'>\\1</A>", $str);
+    $str = preg_replace("/([^(href=\"?'?)|(src=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[가-힣\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET=\"{$config['cf_link_target']}\">\\2</A>", $str);
+    $str = preg_replace("/(^|[\"'\s(])(www\.[^\"'\s()]+)/i", "\\1<A HREF=\"http://\\2\" TARGET=\"{$config['cf_link_target']}\">\\2</A>", $str);
+    $str = preg_replace("/[0-9a-z_-]+@[a-z0-9._-]{4,}/i", "<a href=\"mailto:\\0\">\\0</a>", $str);
+    $str = str_replace(array("\t_nbsp_\t", "\t_lt_\t", "\t_gt_\t", "'"), array("&nbsp;", "&lt;", "&gt;", "&#039;"), $str);
 
     /*
     // 속도 향상 031011
@@ -528,7 +529,6 @@ function conv_content($content, $html, $filter=true)
 		$content = str_replace("\n ", "\n&nbsp;", $content);
 
         $content = get_text($content, 1);
-
         $content = url_auto_link($content);
     }
 
