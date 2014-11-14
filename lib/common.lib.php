@@ -484,7 +484,7 @@ function search_font($stx, $str)
 // 제목을 변환
 function conv_subject($subject, $len, $suffix='')
 {
-    return cut_str(get_text($subject), $len, $suffix);
+    return get_text(cut_str($subject, $len, $suffix));
 }
 
 // 내용을 변환
