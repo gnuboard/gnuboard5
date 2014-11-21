@@ -10,13 +10,13 @@ if (!$co['co_id'])
 $g5['title'] = $co['co_subject'];
 include_once('./_head.php');
 
-$str = conv_content($co['co_content'], $co['co_html'], $co['co_tag_filter_use']);
+$co_content = $co['co_mobile_content'] ? $co['co_mobile_content'] : $co['co_content'];
+$str = conv_content($co_content, $co['co_html'], $co['co_tag_filter_use']);
 
 // $src 를 $dst 로 변환
 unset($src);
 unset($dst);
 $src[] = "/{{쇼핑몰명}}|{{홈페이지제목}}/";
-//$dst[] = $default[de_subject];
 $dst[] = $config['cf_title'];
 $src[] = "/{{회사명}}|{{상호}}/";
 $dst[] = $default['de_admin_company_name'];
@@ -44,21 +44,20 @@ $src[] = "/{{정보관리책임자e-mail}}|{{정보책임자e-mail}}/i";
 $dst[] = $default['de_admin_info_email'];
 
 $str = preg_replace($src, $dst, $str);
-?>
 
-<!-- 등록내용 시작 { -->
-<article id="ctt" class="ctt_<?php echo $co_id; ?>">
-    <header>
-        <h1><?php echo $g5['title']; ?></h1>
-    </header>
+// 스킨경로
+if(trim($co['co_mobile_skin']) == '')
+    $co['co_mobile_skin'] = 'basic';
 
-    <div id="ctt_con">
-        <?php echo $str; ?>
-    </div>
+$content_skin_path = G5_MOBILE_PATH .'/'.G5_SKIN_DIR.'/content/'.$co['co_mobile_skin'];
+$content_skin_url  = G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/content/'.$co['co_mobile_skin'];
+$skin_file = $content_skin_path.'/content.skin.php';
 
-</article>
-<!-- } 등록내용 끝 -->
+if(is_file($skin_file)) {
+    include($skin_file);
+} else {
+    echo '<p>'.str_replace(G5_PATH.'/', '', $skin_file).'이 존재하지 않습니다.</p>';
+}
 
-<?php
 include_once('./_tail.php');
 ?>
