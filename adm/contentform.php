@@ -19,6 +19,20 @@ if(!sql_query(" select co_tag_filter_use from {$g5['content_table']} limit 1 ", 
     sql_query(" update {$g5['content_table']} set co_tag_filter_use = '1' ");
 }
 
+// 모바일 내용 추가
+if(!sql_query(" select co_mobile_content from {$g5['content_table']} limit 1", false)) {
+    sql_query(" ALTER TABLE `{$g5['content_table']}`
+                    ADD `co_mobile_content` longtext NOT NULL AFTER `co_content` ", true);
+}
+
+// 스킨 설정 추가
+if(!sql_query(" select co_skin from {$g5['content_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['content_table']}`
+                    ADD `co_skin` varchar(255) NOT NULL DEFAULT '' AFTER `co_mobile_content`,
+                    ADD `co_mobile_skin` varchar(255) NOT NULL DEFAULT '' AFTER `co_skin` ", true);
+    sql_query(" update {$g5['content_table']} set co_skin = 'basic', co_mobile_skin = 'basic' ");
+}
+
 $html_title = "내용";
 $g5['title'] = $html_title.' 관리';
 
@@ -36,6 +50,8 @@ else
 {
     $html_title .= ' 입력';
     $co['co_html'] = 2;
+    $co['co_skin'] = 'basic';
+    $co['co_mobile_skin'] = 'basic';
 }
 
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -68,6 +84,22 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row">내용</th>
         <td><?php echo editor_html('co_content', get_text($co['co_content'], 0)); ?></td>
+    </tr>
+    <tr>
+        <th scope="row">모바일 내용</th>
+        <td><?php echo editor_html('co_mobile_content', get_text($co['co_mobile_content'], 0)); ?></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="co_skin">스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?php echo get_skin_select('content', 'co_skin', 'co_skin', $co['co_skin'], 'required'); ?>
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="co_mobile_skin">모바일스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
+        <td>
+            <?php echo get_mobile_skin_select('content', 'co_mobile_skin', 'co_mobile_skin', $co['co_mobile_skin'], 'required'); ?>
+        </td>
     </tr>
     <tr>
         <th scope="row"><label for="co_tag_filter_use">태그 필터링 사용</label></th>
@@ -160,6 +192,7 @@ function frmcontentform_check(f)
 
     <?php echo get_editor_js('co_content'); ?>
     <?php echo chk_editor_js('co_content'); ?>
+    <?php echo get_editor_js('co_mobile_content'); ?>
 
     check_field(f.co_id, "ID를 입력하세요.");
     check_field(f.co_subject, "제목을 입력하세요.");
