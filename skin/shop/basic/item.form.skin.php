@@ -186,13 +186,13 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
         <?php if($it['it_buy_min_qty']) { ?>
         <tr>
             <th>최소구매수량</th>
-            <td><?php echo number_format($it['it_buy_min_qty']); ?> 개<td>
+            <td><?php echo number_format($it['it_buy_min_qty']); ?> 개</td>
         </tr>
         <?php } ?>
         <?php if($it['it_buy_max_qty']) { ?>
         <tr>
             <th>최대구매수량</th>
-            <td><?php echo number_format($it['it_buy_max_qty']); ?> 개<td>
+            <td><?php echo number_format($it['it_buy_max_qty']); ?> 개</td>
         </tr>
         <?php } ?>
         </tbody>

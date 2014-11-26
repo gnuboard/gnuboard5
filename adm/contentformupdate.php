@@ -21,7 +21,10 @@ $sql_common = " co_include_head     = '$co_include_head',
                 co_html             = '$co_html',
                 co_tag_filter_use   = '$co_tag_filter_use',
                 co_subject          = '$co_subject',
-                co_content          = '$co_content' ";
+                co_content          = '$co_content',
+                co_mobile_content   = '$co_mobile_content',
+                co_skin             = '$co_skin',
+                co_mobile_skin      = '$co_mobile_skin' ";
 
 if ($w == "")
 {

@@ -38,9 +38,15 @@ if(!sql_query(" select it_sc_type from {$g5['g5_shop_cart_table']} limit 1 ", fa
                     where ct_id = '{$row['ct_id']}' ";
         sql_query($sql);
     }
-
-    echo '<p>장바구니 테이블 업그레이드 완료!</p>';
 }
+
+// 장바구니 상품 주문폼 등록시간 기록 필드 추가
+if(!sql_query(" select ct_select_time from {$g5['g5_shop_cart_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_cart_table']}`
+                    ADD `ct_select_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `ct_select` ", true);
+}
+
+echo '<p>장바구니 테이블 업그레이드 완료!</p>';
 
 include_once(G5_PATH.'/tail.sub.php');
 ?>
