@@ -1282,7 +1282,10 @@ if($config['cf_cert_use']) {
 
     // kcp일 때
     if($config['cf_cert_hp'] == 'kcp') {
-        $exe = G5_KCPCERT_PATH.'/bin/ct_cli';
+        if(PHP_INT_MAX == 2147483647) // 32-bit
+            $exe = G5_KCPCERT_PATH . '/bin/ct_cli';
+        else
+            $exe = G5_KCPCERT_PATH . '/bin/ct_cli_x64';
 
         echo module_exec_check($exe, 'ct_cli');
     }

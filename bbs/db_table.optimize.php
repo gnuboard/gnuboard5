@@ -50,6 +50,13 @@ if($config['cf_leave_day'] > 0) {
     }
 }
 
+// 음성 캡챠 파일 삭제
+foreach (glob(G5_PATH.'/data/cache/kcaptcha-*.mp3') as $file) {
+    if (filemtime($file) + 86400 < G5_SERVER_TIME) {
+        @unlink($file);
+    }
+}
+
 // 실행일 기록
 if(isset($config['cf_optimize_date'])) {
     sql_query(" update {$g5['config_table']} set cf_optimize_date = '".G5_TIME_YMD."' ");

@@ -30,7 +30,6 @@ $str = conv_content($co['co_content'], $co['co_html'], $co['co_tag_filter_use'])
 unset($src);
 unset($dst);
 $src[] = "/{{쇼핑몰명}}|{{홈페이지제목}}/";
-//$dst[] = $default[de_subject];
 $dst[] = $config['cf_title'];
 $src[] = "/{{회사명}}|{{상호}}/";
 $dst[] = $default['de_admin_company_name'];
@@ -59,39 +58,33 @@ $dst[] = $default['de_admin_info_email'];
 
 $str = preg_replace($src, $dst, $str);
 
-if ($is_admin)
-    echo '<div class="ctt_admin"><a href="'.G5_ADMIN_URL.'/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
-?>
+// 스킨경로
+if(trim($co['co_skin']) == '')
+    $co['co_skin'] = 'basic';
 
-<!-- 등록내용 시작 { -->
-<?php
-$himg = G5_DATA_PATH.'/content/'.$co_id.'_h';
-if (file_exists($himg)) // 상단 이미지
-    echo '<div id="ctt_himg" class="ctt_img"><img src="'.G5_DATA_URL.'/content/'.$co_id.'_h" alt=""></div>';
-?>
-
-<article id="ctt" class="ctt_<?php echo $co_id; ?>">
-    <header>
-        <h1><?php echo $g5['title']; ?></h1>
-    </header>
-
-    <div id="ctt_con">
-        <?php echo $str; ?>
-    </div>
-
-</article>
-
-<?php
-$timg = G5_DATA_PATH.'/content/'.$co_id.'_t';
-if (file_exists($timg)) // 하단 이미지
-    echo '<div id="ctt_timg" class="ctt_img"><img src="'.G5_DATA_URL.'/content/'.$co_id.'_t" alt=""></div>';
+$content_skin_path = G5_SKIN_PATH.'/content/'.$co['co_skin'];
+$content_skin_url  = G5_SKIN_URL.'/content/'.$co['co_skin'];
+$skin_file = $content_skin_path.'/content.skin.php';
 
 if ($is_admin)
     echo '<div class="ctt_admin"><a href="'.G5_ADMIN_URL.'/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin">내용 수정</a></div>';
 ?>
-<!-- } 등록내용 끝 -->
 
 <?php
+if(is_file($skin_file)) {
+    $himg = G5_DATA_PATH.'/content/'.$co_id.'_h';
+    if (file_exists($himg)) // 상단 이미지
+        echo '<div id="ctt_himg" class="ctt_img"><img src="'.G5_DATA_URL.'/content/'.$co_id.'_h" alt=""></div>';
+
+    include($skin_file);
+
+    $timg = G5_DATA_PATH.'/content/'.$co_id.'_t';
+    if (file_exists($timg)) // 하단 이미지
+        echo '<div id="ctt_timg" class="ctt_img"><img src="'.G5_DATA_URL.'/content/'.$co_id.'_t" alt=""></div>';
+} else {
+    echo '<p>'.str_replace(G5_PATH.'/', '', $skin_file).'이 존재하지 않습니다.</p>';
+}
+
 if ($co['co_include_tail'])
     @include_once($co['co_include_tail']);
 else

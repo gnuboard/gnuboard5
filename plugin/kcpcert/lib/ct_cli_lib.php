@@ -16,19 +16,19 @@ class   C_CT_CLI
     // 변수 초기화 영역
     function mf_clear()
     {
-        $this->m_dec_data="";        
+        $this->m_dec_data="";
     }
 
     // hash 처리 영역
     function make_hash_data( $home_dir , $str )
     {
-        $hash_data = $this -> mf_exec( $home_dir . "/bin/ct_cli" , 
+        $hash_data = $this -> mf_exec( $home_dir . "/bin/ct_cli" ,
                                        "lf_CT_CLI__make_hash_data",
                                        $str
                                      );
 
         if ( $hash_data == "" ) { $hash_data = "HS01"; }
-        
+
         return $hash_data;
     }
 
@@ -49,7 +49,12 @@ class   C_CT_CLI
     // 암호화 인증데이터 복호화
     function decrypt_enc_cert ( $home_dir, $site_cd , $cert_no , $enc_cert_data , $opt)
     {
-        $dec_data = $this -> mf_exec( $home_dir . "/bin/ct_cli" ,
+        if(PHP_INT_MAX == 2147483647) // 32-bit
+            $bin_exe = $home_dir . '/bin/ct_cli';
+        else
+            $bin_exe = $home_dir . '/bin/ct_cli_x64';
+
+        $dec_data = $this -> mf_exec( $bin_exe ,
                                      "lf_CT_CLI__decrypt_enc_cert" ,
                                       $site_cd ,
                                       $cert_no ,
