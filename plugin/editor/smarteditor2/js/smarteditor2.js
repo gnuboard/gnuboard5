@@ -12138,9 +12138,19 @@ nhn.husky.SE2M_Hyperlink = jindo.$Class({
 
 		var sResult;
 		if (sWWWURL){
-			sResult = '<a href="http://'+sWWWURL+'">'+sURL+'</a>';
+            var exp = /([-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?)/gi;
+            if( sWWWURL.match(exp) ){
+			    sResult = sWWWURL.replace(exp, '<a href="http://$1" >$1</a>');
+            } else {
+                sResult = '<a href="http://'+sWWWURL+'">'+sURL+'</a>';
+            }
 		} else {
-			sResult = '<a href="'+sHTTPURL+'">'+sURL+'</a>';
+            var exp = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/ig;
+            if( sHTTPURL.match(exp) ){
+			    sResult = sHTTPURL.replace(exp,"<a href='$1'>$1</a>");
+            } else {
+                sResult = '<a href="'+sHTTPURL+'">'+sURL+'</a>';
+            }
 		}
 		
 		return sBreaker+sResult;
