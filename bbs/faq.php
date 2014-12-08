@@ -55,6 +55,7 @@ if(is_file($skin_file)) {
     $faq_list = array();
 
     $stx = trim($stx);
+    $sql_search = '';
 
     if($stx) {
        $sql_search = " and ( INSTR(fa_subject, '$stx') > 0 or INSTR(fa_content, '$stx') > 0 ) ";

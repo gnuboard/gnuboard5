@@ -7,7 +7,7 @@ test.php
 *.key
 *.sh
 cheditor*/
-ckeditor43/
+ckeditor*/
 log/
 g5_tree/
 naver*.html
