@@ -149,6 +149,9 @@ if (!$sst) {
     $sst = preg_match("/^(wr_datetime|wr_hit|wr_good|wr_nogood)$/i", $sst) ? $sst : "";
 }
 
+if(!$sst)
+    $sst  = "wr_num, wr_reply";
+
 if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
 }
