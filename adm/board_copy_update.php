@@ -58,6 +58,7 @@ $sql = " insert into {$g5['board_table']}
                 bo_use_rss_view = '{$board[bo_use_rss_view]}',
                 bo_use_good = '{$board[bo_use_good]}',
                 bo_use_nogood = '{$board[bo_use_nogood]}',
+                bo_use_name = '{$board[bo_use_name]}',
                 bo_use_signature = '{$board[bo_use_signature]}',
                 bo_use_ip_view = '{$board[bo_use_ip_view]}',
                 bo_use_list_view = '{$board['bo_use_list_view']}',
