@@ -266,7 +266,6 @@ $_SESSION['ss_is_mobile'] = $is_mobile;
 define('G5_IS_MOBILE', $is_mobile);
 define('G5_DEVICE_BUTTON_DISPLAY', $set_device);
 if (G5_IS_MOBILE) {
-    include_once(G5_LIB_PATH.'/mobile.lib.php'); // 모바일 전용 라이브러리
     $g5['mobile_path'] = G5_PATH.'/'.$g5['mobile_dir'];
 }
 //==============================================================================
