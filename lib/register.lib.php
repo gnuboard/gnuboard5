@@ -117,13 +117,10 @@ function prohibit_mb_email($reg_mb_email)
     $email_domains = explode("\n", trim($config['cf_prohibit_email']));
     $email_domains = array_map('trim', $email_domains);
     $email_domains = array_map('strtolower', $email_domains);
-    $count = count($email_domains);
     $email_domain = strtolower($domain);
 
-    for ($i=0; $i<$count; $i++) {
-        if (in_array($email_domain, $email_domains))
-            return "$domain 메일은 사용할 수 없습니다.";
-    }
+    if (in_array($email_domain, $email_domains))
+        return "$domain 메일은 사용할 수 없습니다.";
 
     return "";
 }
