@@ -982,7 +982,7 @@ function get_item_options($it_id, $subject)
             else
                 $price = '&nbsp;&nbsp; '.number_format($row['io_price']).'원';
 
-            if(!$row['io_stock_qty'])
+            if($row['io_stock_qty'] < 1)
                 $soldout = '&nbsp;&nbsp;[품절]';
             else
                 $soldout = '';
