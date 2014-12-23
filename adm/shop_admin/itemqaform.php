@@ -31,13 +31,6 @@ $qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
     <p>상품에 대한 문의에 답변하실 수 있습니다. 상품 문의 내용의 수정도 가능합니다.</p>
 </div>
 
-<form name="frmitemqaform" action="./itemqaformupdate.php" method="post">
-<input type="hidden" name="w" value="<?php echo $w; ?>">
-<input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
-<input type="hidden" name="page" value="<?php echo $page; ?>">
-<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
-
 <div class="tbl_frm01 tbl_wrap">
     <table>
     <caption><?php echo $g5['title']; ?> 수정</caption>
