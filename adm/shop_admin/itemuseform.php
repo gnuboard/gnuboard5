@@ -30,6 +30,7 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
 <input type="hidden" name="it_id" value="<?php echo $is['is_id']; ?>">
+<input type="hidden" name="sca" value="<?php echo $sca; ?>">
 <input type="hidden" name="sst" value="<?php echo $sst; ?>">
 <input type="hidden" name="sod" value="<?php echo $sod; ?>">
 <input type="hidden" name="sfl" value="<?php echo $sfl; ?>">

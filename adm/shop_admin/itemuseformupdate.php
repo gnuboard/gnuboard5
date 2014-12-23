@@ -9,8 +9,6 @@ if ($w == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
-$qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
-
 if ($w == "u")
 {
     $sql = "update {$g5['g5_shop_item_use_table']}
