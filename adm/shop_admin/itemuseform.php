@@ -23,16 +23,18 @@ $is_confirm_no   = !$is['is_confirm'] ? 'checked="checked"' : '';
 $g5['title'] = '사용후기';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
+$qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
 ?>
 
 <form name="fitemuseform" method="post" action="./itemuseformupdate.php" onsubmit="return fitemuseform_submit(this);">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="is_id" value="<?php echo $is_id; ?>">
 <input type="hidden" name="it_id" value="<?php echo $is['is_id']; ?>">
+<input type="hidden" name="sst" value="<?php echo $sst; ?>">
+<input type="hidden" name="sod" value="<?php echo $sod; ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+<input type="hidden" name="stx" value="<?php echo $stx; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
-<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
 
 <div class="tbl_frm01 tbl_wrap">

@@ -22,7 +22,7 @@ if ($w == "u")
 
     update_use_cnt($_POST['it_id']);
 
-    goto_url("./itemuseform.php?w=$w&amp;is_id=$is_id&amp;$qstr");
+    goto_url("./itemuseform.php?w=$w&amp;is_id=$is_id&amp;sca=$sca&amp;$qstr");
 }
 else
 {

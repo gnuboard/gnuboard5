@@ -50,7 +50,7 @@ $sql  = " select *
 $result = sql_query($sql);
 
 //$qstr = 'page='.$page.'&amp;sst='.$sst.'&amp;sod='.$sod.'&amp;stx='.$stx;
-$qstr  = $qstr.'&amp;sca='.$sca.'&amp;save_stx='.$stx;
+$qstr .= ($qstr ? '&amp;' : '').'sca='.$sca.'&amp;save_stx='.$stx;
 
 $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
 ?>
@@ -74,7 +74,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $len = strlen($row1['ca_id']) / 2 - 1;
         $nbsp = "";
         for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
-        echo '<option value="'.$row1['ca_id'].'" '.get_selected($sca, $row1['ca_id']).'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
+        $selected = ($row1['ca_id'] == $sca) ? ' selected="selected"' : '';
+        echo '<option value="'.$row1['ca_id'].'"'.$selected.'>'.$nbsp.$row1['ca_name'].'</option>'.PHP_EOL;
     }
     ?>
 </select>

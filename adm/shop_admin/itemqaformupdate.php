@@ -53,7 +53,7 @@ if ($w == "u")
         }
     }
 
-    goto_url("./itemqaform.php?w=$w&amp;iq_id=$iq_id&amp;$qstr");
+    goto_url("./itemqaform.php?w=$w&amp;iq_id=$iq_id&amp;sca=$sca&amp;$qstr");
 }
 else {
     alert();

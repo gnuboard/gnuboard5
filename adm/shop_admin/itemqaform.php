@@ -17,15 +17,17 @@ $name = get_sideview($iq['mb_id'], get_text($iq['iq_name']), $iq['mb_email'], $i
 $g5['title'] = '상품문의';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
+$qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
 ?>
 
 <form name="fitemqaform" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqaform_submit(this);">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
+<input type="hidden" name="sst" value="<?php echo $sst; ?>">
+<input type="hidden" name="sod" value="<?php echo $sod; ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+<input type="hidden" name="stx" value="<?php echo $stx; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
-<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 
 <div class="local_desc01 local_desc">
     <p>상품에 대한 문의에 답변하실 수 있습니다. 상품 문의 내용의 수정도 가능합니다.</p>
