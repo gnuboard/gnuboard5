@@ -73,8 +73,6 @@ else if ($w == "u")
     $ca['ca_name'] = get_text($ca['ca_name']);
 }
 
-$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
-
 $g5['title'] = $html_title;
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
@@ -126,9 +124,11 @@ else
 
 <input type="hidden" name="codedup"  value="<?php echo $default['de_code_dup_use']; ?>">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
+<input type="hidden" name="sst" value="<?php echo $sst; ?>">
+<input type="hidden" name="sod" value="<?php echo $sod; ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl; ?>">
+<input type="hidden" name="stx" value="<?php echo $stx; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
-<input type="hidden" name="sort1" value="<?php echo $sort1; ?>">
-<input type="hidden" name="sort2" value="<?php echo $sort2; ?>">
 <input type="hidden" name="ca_explan_html" value="<?php echo $ca['ca_explan_html']; ?>">
 
 <section id="anc_scatefrm_basic">

@@ -13,7 +13,7 @@ for ($i=0; $i<count($_POST['ca_id']); $i++)
         $sql = " select mb_id from {$g5['member_table']} where mb_id = '{$_POST['ca_mb_id'][$i]}' ";
         $row = sql_fetch($sql);
         if (!$row['mb_id'])
-            alert("\'{$_POST['ca_mb_id'][$i]}\' 은(는) 존재하는 회원아이디가 아닙니다.", "./categorylist.php?page=$page&amp;sort1=$sort1&amp;sort2=$sort2");
+            alert("\'{$_POST['ca_mb_id'][$i]}\' 은(는) 존재하는 회원아이디가 아닙니다.", "./categorylist.php?$qstr");
     }
 
     $sql = " update {$g5['g5_shop_category_table']}
@@ -37,5 +37,5 @@ for ($i=0; $i<count($_POST['ca_id']); $i++)
 
 }
 
-goto_url("./categorylist.php?page=$page&amp;sort1=$sort1&amp;sort2=$sort2");
+goto_url("./categorylist.php?$qstr");
 ?>

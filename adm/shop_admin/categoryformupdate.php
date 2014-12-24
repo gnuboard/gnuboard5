@@ -146,8 +146,6 @@ else if ($w == "d")
     sql_query($sql);
 }
 
-$qstr = "page=$page&amp;sort1=$sort1&amp;sort2=$sort2";
-
 if ($w == "" || $w == "u")
 {
     goto_url("./categoryform.php?w=u&amp;ca_id=$ca_id&amp;$qstr");
