@@ -22,7 +22,12 @@ class   C_CT_CLI
     // hash 처리 영역
     function make_hash_data( $home_dir , $str )
     {
-        $hash_data = $this -> mf_exec( $home_dir . "/bin/ct_cli" ,
+        if(PHP_INT_MAX == 2147483647) // 32-bit
+            $bin_exe = $home_dir . '/bin/ct_cli';
+        else
+            $bin_exe = $home_dir . '/bin/ct_cli_x64';
+
+        $hash_data = $this -> mf_exec( $bin_exe ,
                                        "lf_CT_CLI__make_hash_data",
                                        $str
                                      );
@@ -35,7 +40,12 @@ class   C_CT_CLI
     // dn_hash 체크 함수
     function check_valid_hash ($home_dir , $hash_data , $str )
     {
-        $ret_val = $this -> mf_exec( $home_dir . "/bin/ct_cli" ,
+        if(PHP_INT_MAX == 2147483647) // 32-bit
+            $bin_exe = $home_dir . '/bin/ct_cli';
+        else
+            $bin_exe = $home_dir . '/bin/ct_cli_x64';
+
+        $ret_val = $this -> mf_exec( $bin_exe ,
                                      "lf_CT_CLI__check_valid_hash" ,
                                      $hash_data ,
                                      $str
