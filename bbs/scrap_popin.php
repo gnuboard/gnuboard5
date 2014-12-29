@@ -5,10 +5,11 @@ include_once(G5_PATH.'/head.sub.php');
 
 if ($is_guest) {
     $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+    $href2 = str_replace('&amp;', '&', $href);
     echo <<<HEREDOC
     <script>
         alert('회원만 접근 가능합니다.');
-        opener.location.href = '$href';
+        opener.location.href = '$href2';
         window.close();
     </script>
     <noscript>
