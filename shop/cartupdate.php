@@ -138,6 +138,10 @@ else // 장바구니에 담기
         if(!$it['it_id'])
             alert('상품정보가 존재하지 않습니다.');
 
+        // 바로구매에 있던 장바구니 자료를 지운다.
+        if($i == 0 && $sw_direct)
+            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
+
         // 최소, 최대 수량 체크
         if($it['it_buy_min_qty'] || $it['it_buy_max_qty']) {
             $sum_qty = 0;
@@ -182,10 +186,6 @@ else // 장바구니에 담기
             if(!$row['io_type'])
                 $lst_count++;
         }
-
-        // 바로구매에 있던 장바구니 자료를 지운다.
-        if($i == 0 && $sw_direct)
-            sql_query(" delete from {$g5['g5_shop_cart_table']} where od_id = '$tmp_cart_id' and ct_direct = 1 ", false);
 
         //--------------------------------------------------------
         //  재고 검사, 바로구매일 때만 체크
