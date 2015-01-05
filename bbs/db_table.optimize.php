@@ -51,9 +51,12 @@ if($config['cf_leave_day'] > 0) {
 }
 
 // 음성 캡챠 파일 삭제
-foreach (glob(G5_PATH.'/data/cache/kcaptcha-*.mp3') as $file) {
-    if (filemtime($file) + 86400 < G5_SERVER_TIME) {
-        @unlink($file);
+$captcha_mp3 = glob(G5_PATH.'/data/cache/kcaptcha-*.mp3');
+if($captcha_mp3 && is_array($captcha_mp3)) {
+    foreach ($captcha_mp3 as $file) {
+        if (filemtime($file) + 86400 < G5_SERVER_TIME) {
+            @unlink($file);
+        }
     }
 }
 
