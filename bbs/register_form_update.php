@@ -277,10 +277,6 @@ if ($w == '') {
     if ($mb_password)
         $sql_password = " , mb_password = '".sql_password($mb_password)."' ";
 
-    $sql_icon = "";
-    if ($mb_icon)
-        $sql_icon = " , mb_icon = '{$mb_icon}' ";
-
     $sql_nick_date = "";
     if ($mb_nick_default != $mb_nick)
         $sql_nick_date =  " , mb_nick_date = '".G5_TIME_YMD."' ";
@@ -321,7 +317,6 @@ if ($w == '') {
                     mb_9 = '{$mb_9}',
                     mb_10 = '{$mb_10}'
                     {$sql_password}
-                    {$sql_icon}
                     {$sql_nick_date}
                     {$sql_open_date}
                     {$sql_email_certify}
