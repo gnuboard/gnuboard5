@@ -687,3 +687,30 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .pg_start, .pg_prev {/* 이전 */}
 .pg_end, .pg_next {/* 다음 */}
 .pg_current {display:inline-block;margin:0 4px 0 0;background:#333;color:#fff;font-weight:normal}
+
+/*부가서비스*/
+.lnb_svc{color:#ff3061;font-weight:bold}
+.service_wrap{min-width:960px; margin:0 20px 10px;overflow:hidden}
+.sevice_1{border:1px solid #ebe8e8;width:286px;float:left;border-radius:5px;text-align:center;margin-right:6px;}
+.sevice_1 .svc_img{padding:30px 0 0;}
+.sevice_1 h3{font-size:16px;margin:15px 0;color:#525252}
+.sevice_1 p{padding:20px;background:#f8f8f8;height:102px;font-size:12px;text-align:left;  color:#898989;line-height:18px}
+.sevice_1 ul {width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
+.sevice_1 ul li{list-style:none;float:left;border-right:1px solid #ebe8e8;width:33%;}
+.sevice_1 ul li a{display:inline-block;height:76px;width:100%}
+.sevice_1 ul li img{padding:10px 0 0;}
+.sevice_1 ul li.last{border:0}
+.sevice_1 h4{width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
+.sevice_1 h4 a{display:inline-block;height:66px;padding:10px 0 0;width:100%}
+
+.sevice_2{border:1px solid #ebe8e8;float:left;width:370px;}
+.sevice_2 .svc_a{float:left;width:203px;padding:33px 0 0 22px ;height:111px; }
+.sevice_2 .svc_a h3{font-size:14px;letter-spacing:-1px;color:#525252;margin-bottom:5px}
+.sevice_2 .svc_a p{color:#898989;line-height:18px;letter-spacing:-1px;}
+.sevice_2 .svc_btn{float:right;}
+.sevice_2 .svc_btn a{display:inline-block; background:#ff3061;width:121px;text-align:center;color:#fff;padding:10px 0;margin:53px 10px 0 0;}
+.sevice_2 .svc_btn a:hover{text-decoration:none;}
+.sevice_2 .svc_sms{overflow:hidden;border-bottom:1px solid #ebe8e8;}
+.sevice_2 .svc_sms .svc_btn a{display:inline-block; width:132px; background:#f8f8f8;height:145px;text-align:center;margin:0;padding:0}
+.sevice_2 .svc_sms .svc_btn a img{margin-top:50px;}
+.sevice_2 .svc_keyword{overflow:hidden;border-bottom:1px solid #ebe8e8;background:#e6f2f4}
