@@ -74,6 +74,7 @@ function imageview(id, w, h)
         <ul id="tnb">
             <li><a href="<?php echo G5_ADMIN_URL ?>/member_form.php?w=u&amp;mb_id=<?php echo $member['mb_id'] ?>">관리자정보</a></li>
             <li><a href="<?php echo G5_ADMIN_URL ?>/config_form.php">기본환경</a></li>
+            <li><a href="<?php echo G5_ADMIN_URL ?>/service.php">부가서비스</a></li>
             <li><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
             <?php if(defined('G5_USE_SHOP')) { ?>
             <li><a href="<?php echo G5_ADMIN_URL ?>/shop_admin/configform.php">쇼핑몰환경</a></li>
@@ -120,7 +121,12 @@ foreach($menu['menu'.$menu_key] as $key=>$value) {
         if ($is_admin != 'super' && (!array_key_exists($value[0],$auth) || !strstr($auth[$value[0]], 'r')))
             continue;
 
-        echo $nl.'<li><a href="'.$value[2].'">'.$value[1].'</a></li>';
+        if($value[3] == 'cf_service')
+            $svc_class = ' class="lnb_svc"';
+        else
+            $svc_class = '';
+
+        echo $nl.'<li><a href="'.$value[2].'"'.$svc_class.'>'.$value[1].'</a></li>';
         $nl = PHP_EOL;
     }
 }
