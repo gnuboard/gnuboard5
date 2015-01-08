@@ -825,6 +825,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .pg_end, .pg_next {/* 다음 */}
 .pg_current {display:inline-block;margin:0 4px 0 0;background:#333;color:#fff;font-weight:normal}
 
+
 /* 우편번호 검색 */
 #post_code p {margin:0 20px 10px}
 #post_code #code_sch {margin:0 20px}
@@ -837,3 +838,48 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #post_code #result li {padding:10px;border:1px solid #dde4e9;border-bottom:0}
 #post_code #result li div {margin:4px 0 0;color:#738D94}
 #post_code #result li div:before {content:"▶ "}
+
+
+/*부가서비스*/
+.lnb_svc{color:#ff3061;font-weight:bold}
+.service_wrap{width:960px; margin:0 20px 10px;overflow:hidden}
+.sevice_1{border:1px solid #ebe8e8;width:309px;float:left;border-radius:5px;text-align:center;}
+.sevice_1 h3{font-size:16px;color:#525252;margin-top:193px;height:43px;}
+.sevice_1 h3 span{font-size:12px;}
+.sevice_1 p{padding:20px;background:#f8f8f8;height:102px;font-size:12px;text-align:left;  color:#898989;line-height:18px}
+.sevice_1 ul {width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
+.sevice_1 ul li{list-style:none;float:left;border-right:1px solid #ebe8e8;}
+.sevice_1 ul li a{display:inline-block;height:75px;width:100%}
+.sevice_1 ul li img{padding:10px 0 0;}
+.sevice_1 ul li.last{border:0}
+.sevice_1 h4{width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
+.sevice_1 h4 a{display:inline-block;height:65px;padding:10px 0 0;width:100%}
+
+.svc_card{background:url('../img/service_img1.jpg') no-repeat top center;margin-right:13px;}
+.svc_card ul li{width:49%;}
+.svc_phone {background:url('../img/service_img2.jpg') no-repeat top center;margin-right:13px;}
+.svc_phone ul li{width:33%;}
+.svc_ipin {background:url('../img/service_img3.jpg') no-repeat top center;}
+
+.service_2{border-top:1px solid #ebe8e8;float:left;margin-top:30px;width:480px;border-bottom:1px solid #ebe8e8;height:166px;}
+.service_2 h3{font-size:14px;letter-spacing:-1px;color:#525252;margin:0 0 4px}
+.service_2 .svc_a{width:300px;float:left}
+.service_2 .svc_a p{color:#898989;line-height:16px;letter-spacing:-1px;}
+
+.svc_keyword{clear:both ;}
+.svc_keyword .svc_a{float:left;width:230px;padding:46px 0 0 15px ;height:120px; }
+
+.service_2 .svc_ri{height:83px;}
+.service_2 .svc_ri .svc_a{padding:18px 0 0 22px;}
+
+.service_2 .svc_btn{float:right;}
+.service_2 .svc_btn a{display:inline-block;width:126px; height:37px;background:#ff3061;color:#fff;line-height:37px;text-align:center;margin:22px 13px 0;}
+.service_2 .svc_btn a:hover,.service_2 .svc_btn a:focus,.service_2 .svc_btn a:active{text-decoration:none}
+.svc_keyword{background:#e6f2f4}
+.svc_keyword .svc_btn{margin:40px 0 0 ;}
+.svc_keyword .svc_btn a{width:160px;}
+
+.svc_sms{border-bottom:1px  solid #ebe8e8;}
+.svc_sms .svc_btn2{float:right}
+.svc_sms .svc_btn2 a{display:inline-block; width:150px; height:63px; background:#fbfbfb; text-align:center; padding:20px 0 0;}
+.svc_sms .svc_btn2 a img 
