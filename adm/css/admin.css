@@ -842,27 +842,37 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 
 /*부가서비스*/
 .lnb_svc{color:#ff3061;font-weight:bold}
-.service_wrap{min-width:960px; margin:0 20px 10px;overflow:hidden}
-.sevice_1{border:1px solid #ebe8e8;width:286px;float:left;border-radius:5px;text-align:center;margin-right:6px;}
-.sevice_1 .svc_img{padding:30px 0 0;}
-.sevice_1 h3{font-size:16px;margin:15px 0;color:#525252}
+.service_wrap{width:960px; margin:0 20px 10px;overflow:hidden}
+.sevice_1{border:1px solid #ebe8e8;width:309px;float:left;border-radius:5px;text-align:center;}
+.sevice_1 h3{font-size:16px;color:#525252;margin-top:193px;height:43px;}
+.sevice_1 h3 span{font-size:12px;}
 .sevice_1 p{padding:20px;background:#f8f8f8;height:102px;font-size:12px;text-align:left;  color:#898989;line-height:18px}
 .sevice_1 ul {width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
-.sevice_1 ul li{list-style:none;float:left;border-right:1px solid #ebe8e8;width:33%;}
-.sevice_1 ul li a{display:inline-block;height:76px;width:100%}
+.sevice_1 ul li{list-style:none;float:left;border-right:1px solid #ebe8e8;}
+.sevice_1 ul li a{display:inline-block;height:75px;width:100%}
 .sevice_1 ul li img{padding:10px 0 0;}
 .sevice_1 ul li.last{border:0}
 .sevice_1 h4{width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
-.sevice_1 h4 a{display:inline-block;height:66px;padding:10px 0 0;width:100%}
+.sevice_1 h4 a{display:inline-block;height:65px;padding:10px 0 0;width:100%}
 
-.sevice_2{border:1px solid #ebe8e8;float:left;width:370px;}
-.sevice_2 .svc_a{float:left;width:203px;padding:33px 0 0 22px ;height:111px; }
-.sevice_2 .svc_a h3{font-size:14px;letter-spacing:-1px;color:#525252;margin-bottom:5px}
-.sevice_2 .svc_a p{color:#898989;line-height:18px;letter-spacing:-1px;}
-.sevice_2 .svc_btn{float:right;}
-.sevice_2 .svc_btn a{display:inline-block; background:#ff3061;width:121px;text-align:center;color:#fff;padding:10px 0;margin:53px 10px 0 0;}
-.sevice_2 .svc_btn a:hover{text-decoration:none;}
-.sevice_2 .svc_sms{overflow:hidden;border-bottom:1px solid #ebe8e8;}
-.sevice_2 .svc_sms .svc_btn a{display:inline-block; width:132px; background:#f8f8f8;height:145px;text-align:center;margin:0;padding:0}
-.sevice_2 .svc_sms .svc_btn a img{margin-top:50px;}
-.sevice_2 .svc_keyword{overflow:hidden;border-bottom:1px solid #ebe8e8;background:#e6f2f4}
+.svc_card{background:url('../img/service_img1.jpg') no-repeat top center;margin-right:13px;}
+.svc_card ul li{width:49%;}
+.svc_phone {background:url('../img/service_img2.jpg') no-repeat top center;margin-right:13px;}
+.svc_phone ul li{width:33%;}
+.svc_ipin {background:url('../img/service_img3.jpg') no-repeat top center;}
+
+.service_2{border-top:1px solid #ebe8e8;float:left;margin-top:30px;width:480px;border-bottom:1px solid #ebe8e8;height:166px;}
+.service_2 h3{font-size:14px;letter-spacing:-1px;color:#525252;margin:0 0 4px}
+.service_2 .svc_a{width:300px;float:left}
+.service_2 .svc_a p{color:#898989;line-height:16px;letter-spacing:-1px;}
+.service_2 .svc_sms{clear:both}
+.service_2 .svc_sms .svc_a{float:left;width:230px;padding:46px 0 0 15px ;height:120px; }
+.service_2 .svc_sms .svc_btn{float:right;}
+.service_2 .svc_sms .svc_btn a{display:inline-block;width:180px;border-right:1px solid #ebe8e8;background:#fbfbfb;height:106px;text-align:center;padding-top:60px}
+
+.service_2 .svc_ri{height:83px;}
+.service_2 .svc_ri .svc_a{padding:18px 0 0 22px;}
+.service_2 .svc_ri .svc_btn{float:right;}
+.service_2 .svc_ri .svc_btn a{display:inline-block;width:126px; height:37px;background:#ff3061;color:#fff;line-height:37px;text-align:center;margin:22px 13px 0;}
+.service_2 .svc_ri .svc_btn a:hover,.service_2 .svc_ri .svc_btn a:focus,.service_2 .svc_ri .svc_btn a:active{text-decoration:none}
+.service_2 .svc_keyword{background:#e6f2f4}
