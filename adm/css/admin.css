@@ -865,14 +865,21 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .service_2 h3{font-size:14px;letter-spacing:-1px;color:#525252;margin:0 0 4px}
 .service_2 .svc_a{width:300px;float:left}
 .service_2 .svc_a p{color:#898989;line-height:16px;letter-spacing:-1px;}
-.service_2 .svc_sms{clear:both}
-.service_2 .svc_sms .svc_a{float:left;width:230px;padding:46px 0 0 15px ;height:120px; }
-.service_2 .svc_sms .svc_btn{float:right;}
-.service_2 .svc_sms .svc_btn a{display:inline-block;width:180px;border-right:1px solid #ebe8e8;background:#fbfbfb;height:106px;text-align:center;padding-top:60px}
+
+.svc_keyword{clear:both ;}
+.svc_keyword .svc_a{float:left;width:230px;padding:46px 0 0 15px ;height:120px; }
 
 .service_2 .svc_ri{height:83px;}
 .service_2 .svc_ri .svc_a{padding:18px 0 0 22px;}
-.service_2 .svc_ri .svc_btn{float:right;}
-.service_2 .svc_ri .svc_btn a{display:inline-block;width:126px; height:37px;background:#ff3061;color:#fff;line-height:37px;text-align:center;margin:22px 13px 0;}
-.service_2 .svc_ri .svc_btn a:hover,.service_2 .svc_ri .svc_btn a:focus,.service_2 .svc_ri .svc_btn a:active{text-decoration:none}
-.service_2 .svc_keyword{background:#e6f2f4}
+
+.service_2 .svc_btn{float:right;}
+.service_2 .svc_btn a{display:inline-block;width:126px; height:37px;background:#ff3061;color:#fff;line-height:37px;text-align:center;margin:22px 13px 0;}
+.service_2 .svc_btn a:hover,.service_2 .svc_btn a:focus,.service_2 .svc_btn a:active{text-decoration:none}
+.svc_keyword{background:#e6f2f4}
+.svc_keyword .svc_btn{margin:40px 0 0 ;}
+.svc_keyword .svc_btn a{width:160px;}
+
+.svc_sms{border-bottom:1px  solid #ebe8e8;}
+.svc_sms .svc_btn2{float:right}
+.svc_sms .svc_btn2 a{display:inline-block; width:150px; height:63px; background:#fbfbfb; text-align:center; padding:20px 0 0;}
+.svc_sms .svc_btn2 a img 

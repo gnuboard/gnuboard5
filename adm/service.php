@@ -18,8 +18,8 @@ include_once('./admin.head.php');
         <p>이곳을 통하여 가입하시면 신용카드 결제를 국내 최저 수수료인 3.2%에 이용 할 수 있습니다. 영카트를 사용하지 않아도 이 수수료를 적용 받을 수 있습니다. 아래 가입을 희망하시는 회사의 로고를 클릭하시면 가입페이지로 이동합니다.</p>
 
         <ul>
-            <li><a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_01.jpg" alt="KCP 신용카드 전자결제 서비스신청하기"></a></li>
-            <li class="last"><a href="http://sir.co.kr/main/provider/lg_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_02.jpg" alt="LG유플러스 신용카드 전자결제 서비스신청하기"></a></li>
+            <li><a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_01.jpg" alt="KCP 신용카드 전자결제 신청하기"></a></li>
+            <li class="last"><a href="http://sir.co.kr/main/provider/lg_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_02.jpg" alt="LG유플러스 신용카드 전자결제 신청하기"></a></li>
             
         </ul>
     </div>
@@ -43,22 +43,22 @@ include_once('./admin.head.php');
     </div>
 
  
-    <div class="service_2">
-        <div class="svc_sms">
+    <div class="service_2   svc_keyword">
+        <div>
                 <div class="svc_a">
-                    <h3>SMS 문자 서비스</h3>
-                    <p>주문이나 배송시에 상점운영자 또는 <br>고객에게 휴대폰으로 단문메세지 <br>(최대 한글 40자, 영문 80자)를 발송합니다.</p>
+                    <h3>키워드 검색광고 (네이버, 다음)</h3>
+                    <p>키워드 광고 최소 70원 부터! <br>키워드 광고의 전문가가 검색 결과의 <br>최상단에 노출시켜 드 립니다</p>
                 </div>
-                <div class="svc_btn"><a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_05.jpg" alt="아이코드 SMS 서비스 신청하기"></a></div>
+                <div class="svc_btn"><a href="http://sir.co.kr/main/ad/" target="_blank">서비스 신청하기</a></div>
         </div>
      </div>
      <div class="service_2">
-        <div class="svc_ri svc_keyword">
+        <div class="svc_ri svc_sms">
                 <div class="svc_a">
-                    <h3>키워드 검색광고 (네이버, 다음)</h3>
-                    <p>키워드 광고 최소 70원 부터! 키워드 광고의 전문가가 <br>검색 결과의 최상단에 노출시켜 드 립니다</p>
+                    <h3>SMS 문자 서비스</h3>
+                    <p>주문이나 배송시에 상점운영자 또는 고객에게 휴대폰으로 <br>단문메세지 (최대 한글 40자, 영문 80자)를 발송합니다.</p>
                 </div>
-                <div class="svc_btn"><a href="http://sir.co.kr/main/ad/" target="_blank">서비스 신청하기</a></div>
+                <div class="svc_btn2"><a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_05.jpg" alt="아이코드 SMS 서비스 신청하기"></a></div>
         </div>
         <div class="svc_ri">
                 <div class="svc_a">
