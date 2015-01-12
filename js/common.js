@@ -187,7 +187,7 @@ function get_cookie(name)
         if(end < start)
             end = document.cookie.length;
 
-        return document.cookie.substring(start, end);
+        return unescape(document.cookie.substring(start, end));
     }
     return "";
 }
