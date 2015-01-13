@@ -303,10 +303,6 @@ tfoot td {font-weight:bold;text-align:center}
 .tbl_frm01 #captcha {margin:0;padding:0;border:0;background:transparent}
 .tbl_frm01 #captcha input {margin-left:5px;text-align:center}
 
-/* 자료 없는 목록 */
-.empty_table {padding:100px 0 !important;text-align:center}
-.empty_list {padding:20px 0 !important;text-align:center}
-
 /* 테이블 그리드 */
 .grid_1 {width:50px}
 .grid_2 {width:100px}
