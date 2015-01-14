@@ -122,6 +122,7 @@ if ($w == '' || $w == 'u') {
 $mb_name        = clean_xss_tags($mb_name);
 $mb_email       = get_email_address($mb_email);
 $mb_homepage    = clean_xss_tags($mb_homepage);
+$mb_tel         = clean_xss_tags($mb_tel);
 $mb_zip1        = preg_replace('/[^0-9]/', '', $mb_zip1);
 $mb_zip2        = preg_replace('/[^0-9]/', '', $mb_zip2);
 $mb_addr1       = clean_xss_tags($mb_addr1);
