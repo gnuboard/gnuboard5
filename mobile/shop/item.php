@@ -105,7 +105,7 @@ $sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_i
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 
-if ($default['de_rel_list_use']) {
+if ($default['de_mobile_rel_list_use']) {
     // 관련상품의 개수를 얻음
     $sql = " select count(*) as cnt
                from {$g5['g5_shop_item_relation_table']} a

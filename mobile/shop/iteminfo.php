@@ -40,7 +40,7 @@ $sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_i
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 
-if ($default['de_rel_list_use']) {
+if ($default['de_mobile_rel_list_use']) {
     // 관련상품의 개수를 얻음
     $sql = " select count(*) as cnt
                from {$g5['g5_shop_item_relation_table']} a
@@ -62,7 +62,7 @@ function pg_anchor($info) {
         <li><a href="<?php echo $href; ?>&amp;info=qa" <?php if ($info == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"><?php echo $item_qa_count; ?></span></a></li>
         <?php if ($default['de_baesong_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=dvr" <?php if ($info == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
         <?php if ($default['de_change_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=ex" <?php if ($info == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
-        <?php if ($default['de_rel_list_use']) { ?>
+        <?php if ($default['de_mobile_rel_list_use']) { ?>
         <li><a href="<?php echo $href; ?>&amp;info=rel" <?php if ($info == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
         <?php } ?>
         <li><button type="button" id="iteminfo_close" onclick="self.close();">창닫기</button></li>
