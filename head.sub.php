@@ -4,6 +4,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 $begin_time = get_microtime();
 
+// 사용자가 지정한 head.sub.php 파일이 있다면 include
+if(defined('G5_HEAD_SUB_FILE') && is_file(G5_PATH.'/'.G5_HEAD_SUB_FILE)) {
+    include_once(G5_PATH.'/'.G5_HEAD_SUB_FILE);
+    return;
+}
+
 if (!isset($g5['title'])) {
     $g5['title'] = $config['cf_title'];
     $g5_head_title = $g5['title'];
