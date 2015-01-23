@@ -181,7 +181,8 @@ $sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_
 $sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_goo_s.png');
 
 // 상품품절체크
-$is_soldout = is_soldout($it['it_id']);
+if(G5_SOLDOUT_CHECK)
+    $is_soldout = is_soldout($it['it_id']);
 
 // 주문가능체크
 $is_orderable = true;

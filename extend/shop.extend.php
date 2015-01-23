@@ -131,6 +131,10 @@ if($default['de_card_test']) {
     define('G5_CASH_RECEIPT_URL', 'https://admin.kcp.co.kr/Modules/Service/Cash/Cash_Bill_Common_View.jsp?term_id=PGNW');
 }
 
+// 상품상세 페이지에서 재고체크 실행 여부 선택
+// 상품의 옵션이 많아 로딩 속도가 느린 경우 false 로 설정
+define('G5_SOLDOUT_CHECK', true);
+
 // 주문폼의 상품이 재고 차감에 포함되는 기준 시간설정
 // 0 이면 재고 차감에 계속 포함됨
 define('G5_CART_STOCK_LIMIT', 3);
