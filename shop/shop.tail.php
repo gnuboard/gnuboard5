@@ -1,6 +1,12 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+// 하단 파일 지정 : 이 코드는 가능한 삭제하지 마십시오.
+if ($default['de_include_tail'] && is_file(G5_SHOP_PATH.'/'.$default['de_include_tail'])) {
+    include_once($default['de_include_tail']);
+    return; // 이 코드의 아래는 실행을 하지 않습니다.
+}
+
 $admin = get_admin("super");
 
 // 사용자 화면 우측과 하단을 담당하는 페이지입니다.
@@ -31,7 +37,7 @@ $admin = get_admin("super");
             <!-- <span><b>운영자</b> <?php echo $admin['mb_name']; ?></span><br> -->
             <span><b>통신판매업신고번호</b> <?php echo $default['de_admin_tongsin_no']; ?></span>
             <span><b>개인정보관리책임자</b> <?php echo $default['de_admin_info_name']; ?></span>
-            
+
             <?php if ($default['de_admin_buga_no']) echo '<span><b>부가통신사업신고번호</b> '.$default['de_admin_buga_no'].'</span>'; ?><br>
             Copyright &copy; 2001-2013 <?php echo $default['de_admin_company_name']; ?>. All Rights Reserved.
         </p>

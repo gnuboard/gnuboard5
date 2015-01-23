@@ -77,6 +77,14 @@ if(!isset($default['de_pg_service'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_pg_service` varchar(255) NOT NULL DEFAULT '' AFTER `de_sms_hp` ", true);
 }
+
+// 레이아웃 파일 필드 추가
+if(!isset($default['de_include_index'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_include_index` varchar(255) NOT NULL DEFAULT '' AFTER `de_admin_info_email`,
+                    ADD `de_include_head` varchar(255) NOT NULL DEFAULT '' AFTER `de_include_index`,
+                    ADD `de_include_tail` varchar(255) NOT NULL DEFAULT '' AFTER `de_include_head` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -153,6 +161,70 @@ if(!isset($default['de_pg_service'])) {
                 <input type="text" name="de_admin_info_email" value="<?php echo $default['de_admin_info_email']; ?>" id="de_admin_info_email" class="frm_input" size="30">
             </td>
         </tr>
+        </tbody>
+        </table>
+    </div>
+</section>
+
+<?php echo $frm_submit; ?>
+
+<section id="anc_scf_lay">
+    <h2 class="h2_frm">레이아웃 설정</h2>
+    <?php echo $pg_anchor; ?>
+    <div class="local_desc02 local_desc">
+        <p>기본 설정된 파일 등을 변경할 수 있습니다.</p>
+    </div>
+
+    <div class="tbl_frm01 tbl_wrap">
+        <table>
+        <caption>레이아웃 설정</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
+        <tbody>
+        <tr>
+            <th scope="row"><label for="cf_include_index">초기화면 파일</label></th>
+            <td>
+                <?php echo help('입력이 없으면 '.G5_SHOP_DIR.'/index.php가 초기화면 파일로 설정됩니다.<br>초기화면 파일은 '.G5_SHOP_DIR.'/index.php 파일과 동일한 위치에 존재해야 합니다.') ?>
+                <input type="text" name="de_include_index" value="<?php echo $default['de_include_index'] ?>" id="de_include_index" class="frm_input" size="50">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_include_head">상단 파일</label></th>
+            <td>
+                <?php echo help('입력이 없으면 '.G5_SHOP_DIR.'/shop.head.php가 상단 파일로 설정됩니다.<br>상단 파일은 '.G5_SHOP_DIR.'/shop.head.php 파일과 동일한 위치에 존재해야 합니다.') ?>
+                <input type="text" name="de_include_head" value="<?php echo $default['de_include_head'] ?>" id="de_include_head" class="frm_input" size="50">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_include_tail">하단 파일</label></th>
+            <td>
+                <?php echo help('입력이 없으면 '.G5_SHOP_DIR.'/shop.tail.php가 하단 파일로 설정됩니다.<br>하단 파일은 '.G5_SHOP_DIR.'/shop.tail.php 파일과 동일한 위치에 존재해야 합니다.') ?>
+                <input type="text" name="de_include_tail" value="<?php echo $default['de_include_tail'] ?>" id="de_include_tail" class="frm_input" size="50">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_root_index_use">루트 index 사용</label></th>
+            <td>
+                <?php echo help('쇼핑몰의 접속경로를 '.G5_SHOP_URL.' 에서 '.G5_URL.' 으로 변경하시려면 사용으로 설정해 주십시오.'); ?>
+                <select name="de_root_index_use" id="de_root_index_use">
+                    <option value="0" <?php echo get_selected($default['de_root_index_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_root_index_use'], 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_shop_layout_use">쇼핑몰 레이아웃 사용</label></th>
+            <td>
+                <?php echo help('커뮤니티의 레이아웃을 쇼핑몰과 동일하게 적용하시려면 사용으로 설정해 주십시오.'); ?>
+                <select name="de_shop_layout_use" id="de_shop_layout_use">
+                    <option value="0" <?php echo get_selected($default['de_shop_layout_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_shop_layout_use'], 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
+
         </tbody>
         </table>
     </div>
@@ -787,26 +859,6 @@ if(!isset($default['de_pg_service'])) {
             <col>
         </colgroup>
         <tbody>
-        <tr>
-            <th scope="row"><label for="de_root_index_use">루트 index 사용</label></th>
-            <td>
-                <?php echo help('쇼핑몰의 접속경로를 '.G5_SHOP_URL.' 에서 '.G5_URL.' 으로 변경하시려면 사용으로 설정해 주십시오.'); ?>
-                <select name="de_root_index_use" id="de_root_index_use">
-                    <option value="0" <?php echo get_selected($default['de_root_index_use'], 0); ?>>사용안함</option>
-                    <option value="1" <?php echo get_selected($default['de_root_index_use'], 1); ?>>사용</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="de_shop_layout_use">쇼핑몰 레이아웃 사용</label></th>
-            <td>
-                <?php echo help('커뮤니티의 레이아웃을 쇼핑몰과 동일하게 적용하시려면 사용으로 설정해 주십시오.'); ?>
-                <select name="de_shop_layout_use" id="de_shop_layout_use">
-                    <option value="0" <?php echo get_selected($default['de_shop_layout_use'], 0); ?>>사용안함</option>
-                    <option value="1" <?php echo get_selected($default['de_shop_layout_use'], 1); ?>>사용</option>
-                </select>
-            </td>
-        </tr>
         <tr>
             <th scope="row">관련상품출력</th>
             <td>
