@@ -9,15 +9,15 @@ auth_check($auth[$sub_menu], "w");
 $w = $_POST['w'];
 
 if($w == 'd') {
-    if(!count($_POST['chk']))
+    $count = count($_POST['chk']);
+    if(!$count)
         alert('삭제하실 항목을 하나이상 선택해 주십시오.');
 
-    $count = count($_POST['sc_id']);
     for($i=0; $i<$count; $i++) {
-        if($_POST['chk'][$i]) {
-            $sc_id = $_POST['sc_id'][$i];
-            sql_query(" delete from {$g5['g5_shop_sendcost_table']} where sc_id = '$sc_id' ");
-        }
+        $k = $_POST['chk'][$i];
+
+        $sc_id = $_POST['sc_id'][$k];
+        sql_query(" delete from {$g5['g5_shop_sendcost_table']} where sc_id = '$sc_id' ");
     }
 } else {
     $sc_name = trim($_POST['sc_name']);
