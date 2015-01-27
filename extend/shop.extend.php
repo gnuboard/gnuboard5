@@ -14,6 +14,9 @@ define('G5_SHOP_URL',   G5_URL.'/'.G5_SHOP_DIR);
 define('G5_MSHOP_PATH', G5_MOBILE_PATH.'/'.G5_SHOP_DIR);
 define('G5_MSHOP_URL',  G5_MOBILE_URL.'/'.G5_SHOP_DIR);
 
+define('G5_SHOP_IMG_URL',  G5_SHOP_URL.'/'.G5_IMG_DIR);
+define('G5_MSHOP_IMG_URL', G5_MSHOP_URL.'/'.G5_IMG_DIR);
+
 // 보안서버주소 설정
 if (G5_HTTPS_DOMAIN) {
     define('G5_HTTPS_SHOP_URL', G5_HTTPS_DOMAIN.'/'.G5_SHOP_DIR);
