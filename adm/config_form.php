@@ -1085,21 +1085,21 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_include_index">초기화면 파일 경로</label></th>
             <td>
-                <?php echo help('입력이 없으면 index.php가 초기화면 파일의 기본 경로로 설정됩니다.') ?>
+                <?php echo help('입력이 없으면 index.php가 초기화면 파일로 설정됩니다.<br>초기화면 파일은 index.php 파일과 동일한 위치에 존재해야 합니다.') ?>
                 <input type="text" name="cf_include_index" value="<?php echo $config['cf_include_index'] ?>" id="cf_include_index" class="frm_input" size="50">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_include_head">상단 파일 경로</label></th>
             <td>
-                <?php echo help('입력이 없으면 head.php가 상단 파일의 기본 경로로 설정됩니다.') ?>
+                <?php echo help('입력이 없으면 head.php가 상단 파일로 설정됩니다.<br>상단 파일은 head.php 파일과 동일한 위치에 존재해야 합니다.') ?>
                 <input type="text" name="cf_include_head" value="<?php echo $config['cf_include_head'] ?>" id="cf_include_head" class="frm_input" size="50">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_include_tail">하단 파일 경로</label></th>
             <td>
-                <?php echo help('입력이 없으면 tail.php가 하단 파일의 기본 경로로 설정됩니다.') ?>
+                <?php echo help('입력이 없으면 tail.php가 하단 파일로 설정됩니다.<br>초기화면 파일은 tail.php 파일과 동일한 위치에 존재해야 합니다.') ?>
                 <input type="text" name="cf_include_tail" value="<?php echo $config['cf_include_tail'] ?>" id="cf_include_tail" class="frm_input" size="50">
             </td>
         </tr>
