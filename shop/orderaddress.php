@@ -10,7 +10,7 @@ if($w == 'd') {
     goto_url($_SERVER['PHP_SELF']);
 }
 
-$sql_common = " from {$g5['g5_shop_order_address_table']} ";
+$sql_common = " from {$g5['g5_shop_order_address_table']} where mb_id = '{$member['mb_id']}' ";
 
 $sql = " select count(ad_id) as cnt " . $sql_common;
 $row = sql_fetch($sql);
@@ -22,8 +22,7 @@ if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이�
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $sql = " select *
-            from {$g5['g5_shop_order_address_table']}
-            where mb_id = '{$member['mb_id']}'
+            $sql_common
             order by ad_default desc, ad_id desc
             limit $from_record, $rows";
 
