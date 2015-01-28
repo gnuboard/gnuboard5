@@ -30,7 +30,7 @@ else {
     }
 }
 
-include G5_SHOP_PATH.'/kcp/pp_cli_hub_lib.php';
+include_once(G5_SHOP_PATH.'/kcp/pp_cli_hub_lib.php');
 
 $tno            = $od['od_tno'];
 $req_tx         = 'mod';

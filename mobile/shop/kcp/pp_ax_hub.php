@@ -17,7 +17,7 @@
     /* =   테스트 및 실결제 연동시 site_conf_inc.php파일을 수정하시기 바랍니다.     = */
     /* = -------------------------------------------------------------------------- = */
 
-    include G5_MSHOP_PATH.'/settle_kcp.inc.php';       // 환경설정 파일 include
+    include_once(G5_MSHOP_PATH.'/settle_kcp.inc.php');       // 환경설정 파일 include
     require "pp_ax_hub_lib.php";              // library [수정불가]
 
     /* = -------------------------------------------------------------------------- = */

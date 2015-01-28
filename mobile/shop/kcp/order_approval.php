@@ -1,8 +1,8 @@
 <?php
     include_once('./_common.php');
 
-    include G5_MSHOP_PATH.'/settle_kcp.inc.php';
-    require G5_MSHOP_PATH.'/kcp/KCPComLibrary.php';              // library [수정불가]
+    include_once(G5_MSHOP_PATH.'/settle_kcp.inc.php');
+    require_once(G5_MSHOP_PATH.'/kcp/KCPComLibrary.php');              // library [수정불가]
 
 ?>
 <?php

@@ -15,7 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     /* =   환경 설정                                                                = */
     /* = -------------------------------------------------------------------------- = */
 
-    include G5_SHOP_PATH.'/settle_kcp.inc.php';
+    include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
     require "pp_ax_hub_lib.php";              // library [수정불가]
 
     /* = -------------------------------------------------------------------------- = */

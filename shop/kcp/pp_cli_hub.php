@@ -27,8 +27,8 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
     /* ============================================================================== */
     /* = 라이브러리 및 사이트 정보 include                                          = */
     /* = -------------------------------------------------------------------------- = */
-    include G5_SHOP_PATH.'/settle_kcp.inc.php';
-    require G5_SHOP_PATH.'/kcp/pp_cli_hub_lib.php';
+    include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
+    require_once(G5_SHOP_PATH.'/kcp/pp_cli_hub_lib.php');
 
     /* ============================================================================== */
     /* =   01. KCP 지불 서버 정보 설정                                              = */

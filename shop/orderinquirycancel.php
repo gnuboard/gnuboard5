@@ -32,7 +32,7 @@ if($od['od_cancel_price'] > 0 || $ct['od_count1'] != $ct['od_count2']) {
 if($od['od_tno']) {
     switch($od['od_pg']) {
         case 'lg':
-            require './settle_lg.inc.php';
+            require_once('./settle_lg.inc.php');
             $LGD_TID    = $od['od_tno'];        //LG유플러스으로 부터 내려받은 거래번호(LGD_TID)
 
             $xpay = new XPay($configPath, $CST_PLATFORM);
@@ -62,7 +62,7 @@ if($od['od_tno']) {
             }
             break;
         default:
-            require './settle_kcp.inc.php';
+            require_once('./settle_kcp.inc.php');
 
             $_POST['tno'] = $od['od_tno'];
             $_POST['req_tx'] = 'mod';

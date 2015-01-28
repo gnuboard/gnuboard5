@@ -1,6 +1,6 @@
 <?php
 include './_common.php';
-require G5_SHOP_PATH.'/settle_kcp.inc.php';
+require_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
 
     /* ============================================================================== */
     /* =   PAGE : 결과 처리 PAGE                                                    = */
