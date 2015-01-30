@@ -630,7 +630,7 @@ var sms_obj={
     },
     person : function(bg_no){
         var params = { bg_no : bg_no };
-        this.person_is_search = false;
+        this.person_is_search = true;
         this.person_select( params, "html" );
         book_change('book_person');
     },
