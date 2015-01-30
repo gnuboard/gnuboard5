@@ -134,7 +134,6 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
 <form name="search_form" id="sms_person_form" method="get" action="<?php echo $_SERVER['PHP_SELF']?>">
 <input type="hidden" name="total_pg" value="<?php echo $total_page?>">
 <input type="hidden" name="page" value="<?php echo $page?>">
-<input type="hidden" name="bg_no" value="<?php echo $bg_no?>">
 
 <label for="bg_no" class="sound_only">그룹</label>
 <select name="bg_no" id="bg_no">
