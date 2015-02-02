@@ -196,13 +196,14 @@ if ($sw == 'move')
 }
 
 $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.';
-$opener_href = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;'.$qstr;
+$opener_href  = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;'.$qstr;
+$opener_href1 = str_replace('&amp;', '&', $opener_href);
 
 echo <<<HEREDOC
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <script>
 alert("$msg");
-opener.document.location.href = "$opener_href";
+opener.document.location.href = "$opener_href1";
 window.close();
 </script>
 <noscript>
