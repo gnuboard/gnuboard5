@@ -19,6 +19,11 @@ check_token();
 if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'])
     alert('본인확인을 위해 아이핀 또는 휴대폰 본인학인 서비스를 하나이상 선택해 주십시오');
 
+if(!$_POST['cf_cert_use']) {
+    $_POST['cf_cert_ipin'] = '';
+    $_POST['cf_cert_hp'] = '';
+}
+
 $sql = " update {$g5['config_table']}
             set cf_title = '{$_POST['cf_title']}',
                 cf_admin = '{$_POST['cf_admin']}',

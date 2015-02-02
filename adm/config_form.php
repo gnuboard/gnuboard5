@@ -264,72 +264,72 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <th scope="row"><label for="cf_login_point">로그인시 포인트<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo help('회원이 로그인시 하루에 한번만 적립') ?>
-                <input type="text" name="cf_login_point" value="<?php echo $config['cf_login_point'] ?>" id="cf_login_point" required class="required frm_input" size="2"> 점
+                <input type="text" name="cf_login_point" value="<?php echo $config['cf_login_point'] ?>" id="cf_login_point" required class="required frm_input" size="5"> 점
             </td>
             <th scope="row"><label for="cf_memo_send_point">쪽지보낼시 차감 포인트<strong class="sound_only">필수</strong></label></th>
             <td>
                  <?php echo help('양수로 입력하십시오. 0점은 쪽지 보낼시 포인트를 차감하지 않습니다.') ?>
-                <input type="text" name="cf_memo_send_point" value="<?php echo $config['cf_memo_send_point'] ?>" id="cf_memo_send_point" required class="required frm_input" size="2"> 점
+                <input type="text" name="cf_memo_send_point" value="<?php echo $config['cf_memo_send_point'] ?>" id="cf_memo_send_point" required class="required frm_input" size="5"> 점
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_cut_name">이름(닉네임) 표시</label></th>
             <td colspan="3">
-                <input type="text" name="cf_cut_name" value="<?php echo $config['cf_cut_name'] ?>" id="cf_cut_name" class="frm_input" size="2"> 자리만 표시
+                <input type="text" name="cf_cut_name" value="<?php echo $config['cf_cut_name'] ?>" id="cf_cut_name" class="frm_input" size="5"> 자리만 표시
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_nick_modify">닉네임 수정</label></th>
-            <td>수정하면 <input type="text" name="cf_nick_modify" value="<?php echo $config['cf_nick_modify'] ?>" id="cf_nick_modify" class="frm_input" size="1"> 일 동안 바꿀 수 없음</td>
+            <td>수정하면 <input type="text" name="cf_nick_modify" value="<?php echo $config['cf_nick_modify'] ?>" id="cf_nick_modify" class="frm_input" size="3"> 일 동안 바꿀 수 없음</td>
             <th scope="row"><label for="cf_open_modify">정보공개 수정</label></th>
-            <td>수정하면 <input type="text" name="cf_open_modify" value="<?php echo $config['cf_open_modify'] ?>" id="cf_open_modify" class="frm_input" size="1"> 일 동안 바꿀 수 없음</td>
+            <td>수정하면 <input type="text" name="cf_open_modify" value="<?php echo $config['cf_open_modify'] ?>" id="cf_open_modify" class="frm_input" size="3"> 일 동안 바꿀 수 없음</td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_new_del">최근게시물 삭제</label></th>
             <td>
                 <?php echo help('설정일이 지난 최근게시물 자동 삭제') ?>
-                <input type="text" name="cf_new_del" value="<?php echo $config['cf_new_del'] ?>" id="cf_new_del" class="frm_input" size="2"> 일
+                <input type="text" name="cf_new_del" value="<?php echo $config['cf_new_del'] ?>" id="cf_new_del" class="frm_input" size="5"> 일
             </td>
             <th scope="row"><label for="cf_memo_del">쪽지 삭제</label></th>
             <td>
                 <?php echo help('설정일이 지난 쪽지 자동 삭제') ?>
-                <input type="text" name="cf_memo_del" value="<?php echo $config['cf_memo_del'] ?>" id="cf_memo_del" class="frm_input" size="2"> 일
+                <input type="text" name="cf_memo_del" value="<?php echo $config['cf_memo_del'] ?>" id="cf_memo_del" class="frm_input" size="5"> 일
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_visit_del">접속자로그 삭제</label></th>
             <td>
                 <?php echo help('설정일이 지난 접속자 로그 자동 삭제') ?>
-                <input type="text" name="cf_visit_del" value="<?php echo $config['cf_visit_del'] ?>" id="cf_visit_del" class="frm_input" size="2"> 일
+                <input type="text" name="cf_visit_del" value="<?php echo $config['cf_visit_del'] ?>" id="cf_visit_del" class="frm_input" size="5"> 일
             </td>
             <th scope="row"><label for="cf_popular_del">인기검색어 삭제</label></th>
             <td>
                 <?php echo help('설정일이 지난 인기검색어 자동 삭제') ?>
-                <input type="text" name="cf_popular_del" value="<?php echo $config['cf_popular_del'] ?>" id="cf_popular_del" class="frm_input" size="2"> 일
+                <input type="text" name="cf_popular_del" value="<?php echo $config['cf_popular_del'] ?>" id="cf_popular_del" class="frm_input" size="5"> 일
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_login_minutes">현재 접속자</label></th>
             <td>
                 <?php echo help('설정값 이내의 접속자를 현재 접속자로 인정') ?>
-                <input type="text" name="cf_login_minutes" value="<?php echo $config['cf_login_minutes'] ?>" id="cf_login_minutes" class="frm_input" size="2"> 분
+                <input type="text" name="cf_login_minutes" value="<?php echo $config['cf_login_minutes'] ?>" id="cf_login_minutes" class="frm_input" size="3"> 분
             </td>
             <th scope="row"><label for="cf_new_rows">최근게시물 라인수</label></th>
             <td>
                 <?php echo help('목록 한페이지당 라인수') ?>
-                <input type="text" name="cf_new_rows" value="<?php echo $config['cf_new_rows'] ?>" id="cf_new_rows" class="frm_input" size="2"> 라인
+                <input type="text" name="cf_new_rows" value="<?php echo $config['cf_new_rows'] ?>" id="cf_new_rows" class="frm_input" size="3"> 라인
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_page_rows">한페이지당 라인수</label></th>
             <td>
                 <?php echo help('목록(리스트) 한페이지당 라인수') ?>
-                <input type="text" name="cf_page_rows" value="<?php echo $config['cf_page_rows'] ?>" id="cf_page_rows" class="frm_input" size="2"> 라인
+                <input type="text" name="cf_page_rows" value="<?php echo $config['cf_page_rows'] ?>" id="cf_page_rows" class="frm_input" size="3"> 라인
             </td>
             <th scope="row"><label for="cf_mobile_page_rows">모바일 한페이지당 라인수</label></th>
             <td>
                 <?php echo help('모바일 목록 한페이지당 라인수') ?>
-                <input type="text" name="cf_mobile_page_rows" value="<?php echo $config['cf_mobile_page_rows'] ?>" id="cf_mobile_page_rows" class="frm_input" size="2"> 라인
+                <input type="text" name="cf_mobile_page_rows" value="<?php echo $config['cf_mobile_page_rows'] ?>" id="cf_mobile_page_rows" class="frm_input" size="3"> 라인
             </td>
         </tr>
         <tr>
@@ -1085,21 +1085,21 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_include_index">초기화면 파일 경로</label></th>
             <td>
-                <?php echo help('입력이 없으면 index.php가 초기화면 파일의 기본 경로로 설정됩니다.') ?>
+                <?php echo help('입력이 없으면 index.php가 초기화면 파일로 설정됩니다.<br>초기화면 파일은 index.php 파일과 동일한 위치에 존재해야 합니다.') ?>
                 <input type="text" name="cf_include_index" value="<?php echo $config['cf_include_index'] ?>" id="cf_include_index" class="frm_input" size="50">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_include_head">상단 파일 경로</label></th>
             <td>
-                <?php echo help('입력이 없으면 head.php가 상단 파일의 기본 경로로 설정됩니다.') ?>
+                <?php echo help('입력이 없으면 head.php가 상단 파일로 설정됩니다.<br>상단 파일은 head.php 파일과 동일한 위치에 존재해야 합니다.') ?>
                 <input type="text" name="cf_include_head" value="<?php echo $config['cf_include_head'] ?>" id="cf_include_head" class="frm_input" size="50">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_include_tail">하단 파일 경로</label></th>
             <td>
-                <?php echo help('입력이 없으면 tail.php가 하단 파일의 기본 경로로 설정됩니다.') ?>
+                <?php echo help('입력이 없으면 tail.php가 하단 파일로 설정됩니다.<br>초기화면 파일은 tail.php 파일과 동일한 위치에 존재해야 합니다.') ?>
                 <input type="text" name="cf_include_tail" value="<?php echo $config['cf_include_tail'] ?>" id="cf_include_tail" class="frm_input" size="50">
             </td>
         </tr>

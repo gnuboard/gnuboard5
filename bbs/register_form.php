@@ -53,7 +53,7 @@ if ($w == "") {
     if (!$is_member)
         alert('로그인 후 이용하여 주십시오.', G5_URL);
 
-    if ($member['mb_id'] != $mb_id)
+    if ($member['mb_id'] != $_POST['mb_id'])
         alert('로그인된 회원과 넘어온 정보가 서로 다릅니다.');
 
     /*
