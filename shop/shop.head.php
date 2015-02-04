@@ -11,7 +11,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 
 // 상단 파일 지정 : 이 코드는 가능한 삭제하지 마십시오.
 if ($default['de_include_head'] && is_file(G5_SHOP_PATH.'/'.$default['de_include_head'])) {
-    include_once($default['de_include_head']);
+    include_once(G5_SHOP_PATH.'/'.$default['de_include_head']);
     return; // 이 코드의 아래는 실행을 하지 않습니다.
 }
 ?>
