@@ -46,9 +46,15 @@ if ($sca || $stx) {
     $sql_search .= " and (wr_num between {$spt} and ({$spt} + {$config['cf_search_part']})) ";
 
     // 원글만 얻는다. (코멘트의 내용도 검색하기 위함)
+    // 라엘님 제안 코드로 대체 http://sir.co.kr/bbs/board.php?bo_table=g5_bug&wr_id=2922
+    $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
+    $row = sql_fetch($sql);
+    $total_count = $row['cnt'];
+    /*
     $sql = " select distinct wr_parent from {$write_table} where {$sql_search} ";
     $result = sql_query($sql);
     $total_count = mysql_num_rows($result);
+    */
 } else {
     $sql_search = "";
 

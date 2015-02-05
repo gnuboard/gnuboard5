@@ -13,7 +13,7 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
     $remote_addr = escape_trim($_SERVER['REMOTE_ADDR']);
     $referer = "";
     if (isset($_SERVER['HTTP_REFERER']))
-        $referer = escape_trim($_SERVER['HTTP_REFERER']);
+        $referer = escape_trim(clean_xss_tags($_SERVER['HTTP_REFERER']));
     $user_agent  = escape_trim($_SERVER['HTTP_USER_AGENT']);
     $sql = " insert {$g5['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent ) values ( '{$vi_id}', '{$remote_addr}', '".G5_TIME_YMD."', '".G5_TIME_HIS."', '{$referer}', '{$user_agent}' ) ";
 
