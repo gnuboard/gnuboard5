@@ -51,6 +51,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
     <input type="hidden" name="stx" value="<?php echo $stx ?>">
     <input type="hidden" name="spt" value="<?php echo $spt ?>">
+    <input type="hidden" name="sst" value="<?php echo $sst ?>">
+    <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
     <input type="hidden" name="act" value="<?php echo $act ?>">
     <input type="hidden" name="url" value="<?php echo $_SERVER['HTTP_REFERER'] ?>">
