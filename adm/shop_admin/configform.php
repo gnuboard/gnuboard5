@@ -17,6 +17,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_scf_info">사업자정보</a></li>
+<li><a href="#anc_scf_lay">레이아웃 설정</a></li>
 <li><a href="#anc_scf_skin">스킨설정</a></li>
 <li><a href="#anc_scf_index">쇼핑몰 초기화면</a></li>
 <li><a href="#anc_mscf_index">모바일 초기화면</a></li>
