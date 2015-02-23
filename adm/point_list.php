@@ -70,16 +70,6 @@ else
     $mb_id = "";
 ?>
 
-<script>
-function point_clear()
-{
-    if (confirm('포인트 정리를 하시면 최근 50건 이전의 포인트 부여 내역을 삭제하므로 포인트 부여 내역을 필요로 할때 찾지 못할 수도 있습니다. 그래도 진행하시겠습니까?'))
-    {
-        document.location.href = "./point_clear.php?ok=1";
-    }
-}
-</script>
-
 <div class="local_ov01 local_ov">
     <?php echo $listall ?>
     전체 <?php echo number_format($total_count) ?> 건
@@ -91,7 +81,6 @@ function point_clear()
         echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
     }
     ?>
-    <?php if ($is_admin == 'super') { ?><!-- <a href="javascript:point_clear();">포인트정리</a> --><?php } ?>
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
