@@ -44,7 +44,7 @@ if ($w == "")
 }
 else if ($w == "u")
 {
-    if (!$is_amdin)
+    if (!$is_admin)
     {
         $sql = " select count(*) as cnt from {$g5['g5_shop_item_qa_table']} where mb_id = '{$member['mb_id']}' and iq_id = '$iq_id' ";
         $row = sql_fetch($sql);
