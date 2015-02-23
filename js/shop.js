@@ -43,7 +43,7 @@ $(function() {
             option_add = true;
         });
     } else {
-        $("select.it_option").live("mousedown", function() {
+        $("select.it_option").live("mouseup", function() {
             option_add = true;
         });
     }
@@ -145,7 +145,7 @@ $(function() {
             supply_add = true;
         });
     } else {
-        $("select.it_supply").live("mousedown", function() {
+        $("select.it_supply").live("mouseup", function() {
             supply_add = true;
         });
     }
