@@ -23,7 +23,17 @@ $qid     = isset($_GET['qid']) ? trim($_GET['qid']) : '';
 $qcaid   = isset($_GET['qcaid']) ? trim($_GET['qcaid']) : '';
 $qfrom   = isset($_GET['qfrom']) ? preg_replace('/[^0-9]/', '', trim($_GET['qfrom'])) : '';
 $qto     = isset($_GET['qto']) ? preg_replace('/[^0-9]/', '', trim($_GET['qto'])) : '';
-$qsort   = trim($_GET['qsort']);
+if (isset($_GET['qsort']))  {
+    $qsort = trim($_GET['qsort']);
+    $qsort = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $qsort);
+} else {
+    $qsort = '';
+}
+if (isset($_GET['qorder']))  {
+    $qorder = preg_match("/^(asc|desc)$/i", $qorder) ? $qorder : '';
+} else {
+    $qorder = '';
+}
 
 // 검색범위 checkbox 처리
 $qname_check = false;
@@ -71,7 +81,7 @@ if ($q) {
 if ($qcaid)
     $where[] = " a.ca_id like '$qcaid%' ";
 
-if ($qfrom || $qto)
+if ($qfrom && $qto)
     $where[] = " a.it_price between '$qfrom' and '$qto' ";
 
 $sql_where = " where " . implode(" and ", $where);
@@ -198,7 +208,9 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
             echo '<div>'.$error.'</div>';
         }
 
-        $query_string .= 'ca_id='.$ca_id.'&amp;q='.urlencode($q);
+        $query_string = 'qname='.$qname.'&amp;qexplan='.$qexplan.'&amp;qid='.$qid;
+        if($qfrom && $qto) $query_string .= '&amp;qfrom='.$qfrom.'&amp;qto='.$qto;
+        $query_string .= '&amp;qcaid='.$qcaid.'&amp;q='.urlencode($q);
         $query_string .='&amp;qsort='.$qsort.'&amp;qorder='.$qorder;
         echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$query_string.'&amp;page=');
         ?>
