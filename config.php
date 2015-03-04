@@ -165,8 +165,8 @@ define('G5_SMTP', '127.0.0.1');
 ********************/
 
 // SQL 에러를 표시할 것인지 지정
-// 에러를 표시하지 않으려면 FALSE 로 변경
-define('G5_DISPLAY_SQL_ERROR', TRUE);
+// 에러를 표시하려면 TRUE 로 변경
+define('G5_DISPLAY_SQL_ERROR', FALSE);
 
 // escape string 처리 함수 지정
 // addslashes 로 변경 가능
