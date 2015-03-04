@@ -43,7 +43,7 @@ $sql = " select gr_subject from {$g5['group_table']} where gr_id = '{$row['gr_id
 $row = sql_fetch($sql);
 $subj1 = specialchars_replace($row['gr_subject'], 255);
 
-echo '<?phpxml version="1.0" encoding="utf-8" ?>'."\n";
+echo '<?xml version="1.0" encoding="utf-8" ?>'."\n";
 ?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
