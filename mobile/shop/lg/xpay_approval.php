@@ -22,6 +22,13 @@ $LGD_RETURNURL			    = G5_MSHOP_URL.'/lg/returnurl.php';
 $LGD_KVPMISPNOTEURL         = G5_MSHOP_URL.'/lg/note_url.php';
 $LGD_KVPMISPWAPURL		    = G5_MSHOP_URL.'/lg/mispwapurl.php?LGD_OID='.$LGD_OID;   //ISP 카드 결제시, URL 대신 앱명 입력시, 앱호출함
 $LGD_KVPMISPCANCELURL       = G5_MSHOP_URL.'/lg/cancel_url.php';
+$LGD_MTRANSFERWAPURL        = G5_MSHOP_URL.'/lg/returnurl.php';
+$LGD_MTRANSFERCANCELURL     = G5_MSHOP_URL.'/lg/cancel_url.php';
+$LGD_MTRANSFERNOTEURL       = G5_MSHOP_URL.'/note_url.php';
+if(preg_match('/iPhone|iPad/', $_SERVER['HTTP_USER_AGENT']))
+    $LGD_MTRANSFERAUTOAPPYN     = 'N';
+else
+    $LGD_MTRANSFERAUTOAPPYN     = 'A';
 
 /*
  *************************************************
@@ -108,6 +115,12 @@ $payReqMap['LGD_KVPMISPCANCELURL']   = $LGD_KVPMISPCANCELURL;          // ISP �
 
 // 가상계좌(무통장) 결제연동을 하시는 경우  할당/입금 결과를 통보받기 위해 반드시 LGD_CASNOTEURL 정보를 LG 유플러스에 전송해야 합니다 .
 $payReqMap['LGD_CASNOTEURL'] = $LGD_CASNOTEURL;               // 가상계좌 NOTEURL
+
+// 계좌이체 파라미터
+//$payReqMap['LGD_MTRANSFERWAPURL']    = $LGD_MTRANSFERWAPURL;
+//$payReqMap['LGD_MTRANSFERCANCELURL'] = $LGD_MTRANSFERCANCELURL;
+$payReqMap['LGD_MTRANSFERNOTEURL']   = $LGD_MTRANSFERNOTEURL;
+$payReqMap['LGD_MTRANSFERAUTOAPPYN'] = $LGD_MTRANSFERAUTOAPPYN;
 
 //Return URL에서 인증 결과 수신 시 셋팅될 파라미터 입니다.*/
 $payReqMap['LGD_RESPCODE']           = "";
