@@ -185,6 +185,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_v_link li {padding:0 10px;border-bottom:1px solid #eee;background:#f5f6fa}
 #bo_v_link a {display:inline-block;padding:8px 0 7px;width:100%;color:#000;word-wrap:break-word}
 #bo_v_link a:focus, #bo_v_link a:hover, #bo_v_link a:active {text-decoration:none}
+#bo_v_link img {float:left;margin:0 10px 0 0}
 .bo_v_link_cnt {display:inline-block;margin:0 0 3px 16px}
 
 #bo_v_top {margin:0 0 10px;padding:10px 0;zoom:1}
