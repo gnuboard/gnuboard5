@@ -46,6 +46,13 @@ if(!sql_query(" select ct_select_time from {$g5['g5_shop_cart_table']} limit 1 "
                     ADD `ct_select_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `ct_select` ", true);
 }
 
+// cart 테이블 index 추가
+if(!sql_fetch(" show keys from {$g5['g5_shop_cart_table']} where Key_name = 'ct_status' ")) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_cart_table']}`
+                    ADD INDEX `it_id` (`it_id`),
+                    ADD INDEX `ct_status` (`ct_status`) ", true);
+}
+
 echo '<p>장바구니 테이블 업그레이드 완료!</p>';
 
 include_once(G5_PATH.'/tail.sub.php');
