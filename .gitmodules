@@ -1,0 +1,3 @@
+[submodule "skin/board/gb5xml-board"]
+	path = skin/board/gb5xml-board
+	url = https://github.com/mabin359/gb5xml-skin-board.git
