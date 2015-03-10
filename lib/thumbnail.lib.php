@@ -333,11 +333,14 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         if($size[2] == 3) {
             imagealphablending($dst, false);
             imagesavealpha($dst, true);
-        } else if($size[2] == 1 && $src_transparency != -1) {
-            $transparent_color   = imagecolorsforindex($src, $src_transparency);
-            $current_transparent = imagecolorallocate($dst, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
-            imagefill($dst, 0, 0, $current_transparent);
-            imagecolortransparent($dst, $current_transparent);
+        } else if($size[2] == 1) {
+            $palletsize = imagecolorstotal($src);
+            if($src_transparency >= 0 && $src_transparency < $palletsize) {
+                $transparent_color   = imagecolorsforindex($src, $src_transparency);
+                $current_transparent = imagecolorallocate($dst, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+                imagefill($dst, 0, 0, $current_transparent);
+                imagecolortransparent($dst, $current_transparent);
+            }
         }
     } else {
         $dst = imagecreatetruecolor($dst_w, $dst_h);
@@ -367,7 +370,8 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             imagealphablending($dst, false);
             imagesavealpha($dst, true);
         } else if($size[2] == 1) {
-            if($src_transparency != -1) {
+            $palletsize = imagecolorstotal($src);
+            if($src_transparency >= 0 && $src_transparency < $palletsize) {
                 $transparent_color   = imagecolorsforindex($src, $src_transparency);
                 $current_transparent = imagecolorallocate($dst, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
                 imagefill($dst, 0, 0, $current_transparent);

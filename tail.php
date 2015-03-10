@@ -41,7 +41,10 @@ if (G5_IS_MOBILE) {
 if(G5_DEVICE_BUTTON_DISPLAY && !G5_IS_MOBILE) {
     $seq = 0;
     $p = parse_url(G5_URL);
-    $href = $p['scheme'].'://'.$p['host'].$_SERVER['PHP_SELF'];
+    $href = $p['scheme'].'://'.$p['host'];
+    if(isset($p['port']) && $p['port'])
+        $href .= ':'.$p['port'];
+    $href .= $_SERVER['PHP_SELF'];
     if($_SERVER['QUERY_STRING']) {
         $sep = '?';
         foreach($_GET as $key=>$val) {

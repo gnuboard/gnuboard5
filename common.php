@@ -287,7 +287,7 @@ if (isset($_REQUEST['sca']))  {
 
 if (isset($_REQUEST['sfl']))  {
     $sfl = trim($_REQUEST['sfl']);
-    $sfl = preg_replace("/[\<\>\'\"\%\=\(\)\s]/", "", $sfl);
+    $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sfl);
     if ($sfl)
         $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
 } else {
@@ -305,7 +305,7 @@ if (isset($_REQUEST['stx']))  { // search text (검색어)
 
 if (isset($_REQUEST['sst']))  {
     $sst = trim($_REQUEST['sst']);
-    $sst = preg_replace("/[\<\>\'\"\%\=\(\)\s]/", "", $sst);
+    $sst = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sst);
     if ($sst)
         $qstr .= '&amp;sst=' . urlencode($sst); // search sort (검색 정렬 필드)
 } else {

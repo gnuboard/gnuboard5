@@ -12,10 +12,10 @@
 #sch_res_ov dd {float:left;margin:0 10px 0 5px}
 #sch_res_ov p {float:right;margin:0;padding:0;line-height:1em}
 
-#sch_res_board {margin:0 0 10px;padding-left:1px;width:728px;list-style:none;zoom:1}
+#sch_res_board {margin:0 0 10px;padding-left:1px;list-style:none;zoom:1}
 #sch_res_board:after {display:block;visibility:hidden;clear:both;content:""}
 #sch_res_board li {float:left;margin-bottom:-1px}
-#sch_res_board a {display:block;position:relative;margin-left:-1px;padding:6px 0 5px;width:181px;border:1px solid #ddd;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
+#sch_res_board a {display:block;position:relative;margin-left:-1px;padding:6px 0 5px;width:180px;border:1px solid #ddd;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
 #sch_res_board a:focus, #sch_res_board a:hover, #sch_res_board a:active {text-decoration:none}
 #sch_res_board .cnt_cmt {font-weight:normal !important}
 
