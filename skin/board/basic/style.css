@@ -107,7 +107,7 @@
 #bo_list .txt_expired {color:#ccc}
 
 #bo_cate h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#bo_cate ul {margin-bottom:10px;padding-left:1px;width:728px;zoom:1}
+#bo_cate ul {margin-bottom:10px;padding-left:1px;zoom:1}
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_cate li {float:left;margin-bottom:-1px}
 #bo_cate a {display:block;position:relative;margin-left:-1px;padding:6px 0 5px;width:90px;border:1px solid #ddd;background:#f7f7f7;color:#888;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
