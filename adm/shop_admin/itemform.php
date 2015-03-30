@@ -1287,7 +1287,7 @@ $(function(){
         <tbody>
         <?php for($i=1; $i<=10; $i++) { ?>
         <tr>
-            <th scope="row"><label for="it_img1">이미지 <?php echo $i; ?></label></th>
+            <th scope="row"><label for="it_img<?php echo $i; ?>">이미지 <?php echo $i; ?></label></th>
             <td>
                 <input type="file" name="it_img<?php echo $i; ?>" id="it_img<?php echo $i; ?>">
                 <?php
