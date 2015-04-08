@@ -238,6 +238,8 @@ function sms5_chk_send(f)
         var hp_list = document.getElementById('hp_list');
         var wr_message = document.getElementById('wr_message');
         var hp_number = document.getElementById('hp_number');
+        var wr_reply = document.getElementById('wr_reply');
+        var wr_reply_regExp = /^[0-9\-]+$/;
         var list = '';
 
         if (!wr_message.value) {
@@ -246,7 +248,12 @@ function sms5_chk_send(f)
             is_sms5_submitted = false;
             return false;
         }
-
+        if( !wr_reply_regExp.test(wr_reply.value) ){
+            alert('회신번호 형식이 잘못 되었습니다.');
+            wr_reply.focus();
+            is_sms5_submitted = false;
+            return false;
+        }
         if (hp_list.length < 1) {
             alert('받는 사람을 입력해주세요.');
             hp_number.focus();
