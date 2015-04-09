@@ -577,8 +577,8 @@ $(function(){
     });
 
     $("textarea#wr_content[maxlength]").live("keyup change", function() {
-        var str = $(this).val()
-        var mx = parseInt($(this).attr("maxlength"))
+        var str = $(this).val();
+        var mx = parseInt($(this).attr("maxlength"));
         if (str.length > mx) {
             $(this).val(str.substr(0, mx));
             return false;

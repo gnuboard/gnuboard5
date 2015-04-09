@@ -1448,7 +1448,8 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
     // Blind SQL Injection 취약점 해결
     $sql = trim($sql);
     // union의 사용을 허락하지 않습니다.
-    $sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
+    //$sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
+    $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
 

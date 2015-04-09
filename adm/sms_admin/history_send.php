@@ -67,7 +67,7 @@ if ($result)
 
     if ($result) //SMS 서버에 접속했습니다.
     {
-        sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='{$write['wr_reply']}', wr_message='{$write['wr_message']}', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
+        sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='".addslashes($write['wr_reply'])."', wr_message='".addslashes($write['wr_message'])."', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
 
         $wr_success = 0;
         $wr_failure = 0;

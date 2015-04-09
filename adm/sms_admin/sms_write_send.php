@@ -6,10 +6,13 @@ auth_check($auth[$sub_menu], "w");
 
 $g5['title'] = "문자전송중";
 
-if (!trim($wr_reply))
-    win_close_alert('회신 번호를 입력해주세요.');
+$wr_reply   = preg_replace('#[^0-9\-]#', '', trim($wr_reply));
+$wr_message = clean_xss_tags(trim($wr_message));
 
-if (!trim($wr_message))
+if (!$wr_reply)
+    win_close_alert('회신 번호를 숫자, - 로 입력해주세요.');
+
+if (!$wr_message)
     win_close_alert('메세지를 입력해주세요.');
 
 if (!trim($send_list))
