@@ -2430,7 +2430,7 @@ function googl_short_url($longUrl)
     // URL Shortener API ON
     $apiKey = $config['cf_googl_shorturl_apikey'];
 
-    $postData = array('longUrl' => $longUrl, 'key' => $apiKey);
+    $postData = array('longUrl' => $longUrl);
     $jsonData = json_encode($postData);
 
     $curlObj = curl_init();
