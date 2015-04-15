@@ -40,6 +40,9 @@ if (isset($_GET['qorder']))  {
     $qorder = '';
 }
 
+if(!($qname || $nexplan || $qid))
+    $search_all = true;
+
 // 검색범위 checkbox 처리
 $qname_check = false;
 $qexplan_check = false;
