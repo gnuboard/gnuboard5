@@ -11,7 +11,7 @@ function autosave() {
             this.wr_content.value = CKEDITOR.instances.wr_content.getData();
         } else if (g5_editor.indexOf("cheditor5") != -1 && typeof(ed_wr_content)!="undefined") {
             this.wr_content.value = ed_wr_content.outputBodyHTML();
-        } else if (g5_editor.indexOf("smarteditor2") != -1 && typeof(oEditors.getById['wr_content'])!="undefined" ) {
+        } else if (g5_editor.indexOf("smarteditor2") != -1 && typeof(oEditors)!="undefined" && typeof(oEditors.getById['wr_content'])!="undefined" ) {
             this.wr_content.value = oEditors.getById['wr_content'].getIR();
         }
         // 변수에 저장해 놓은 값과 다를 경우에만 임시 저장함
@@ -82,7 +82,7 @@ $(function(){
                 CKEDITOR.instances.wr_content.setData(content);
             } else if (g5_editor.indexOf("cheditor5") != -1 && typeof(ed_wr_content)!="undefined") {
                 ed_wr_content.putContents(content);
-            } else if (g5_editor.indexOf("smarteditor2") != -1 && typeof(oEditors.getById['wr_content'])!="undefined" ) {
+            } else if (g5_editor.indexOf("smarteditor2") != -1 && typeof(oEditors)!="undefined" && typeof(oEditors.getById['wr_content'])!="undefined" ) {
                 oEditors.getById["wr_content"].exec("SET_CONTENTS", [""]);
                 //oEditors.getById["wr_content"].exec("SET_IR", [""]);
                 oEditors.getById["wr_content"].exec("PASTE_HTML", [content]);
