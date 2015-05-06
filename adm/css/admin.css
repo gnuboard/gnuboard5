@@ -857,7 +857,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .svc_phone ul li{width:33%;}
 .svc_ipin {background:url('../img/service_img3.jpg') no-repeat top center;}
 
-.service_2{border-top:1px solid #ebe8e8;float:left;margin-top:30px;width:480px;border-bottom:1px solid #ebe8e8;height:166px;}
+.service_2{border-top:1px solid #ebe8e8;float:left;margin-top:30px;border-bottom:1px  solid #ebe8e8;}
 .service_2 h3{font-size:14px;letter-spacing:-1px;color:#525252;margin:0 0 4px}
 .service_2 .svc_a{width:300px;float:left}
 .service_2 .svc_a p{color:#898989;line-height:16px;letter-spacing:-1px;}
@@ -865,7 +865,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .svc_keyword{clear:both ;}
 .svc_keyword .svc_a{float:left;width:230px;padding:46px 0 0 15px ;height:120px; }
 
-.service_2 .svc_ri{height:83px;}
+.service_2 .svc_ri{height:83px;float:left;width:479px}
 .service_2 .svc_ri .svc_a{padding:18px 0 0 22px;}
 
 .service_2 .svc_btn{float:right;}
@@ -875,6 +875,6 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .svc_keyword .svc_btn{margin:40px 0 0 ;}
 .svc_keyword .svc_btn a{width:160px;}
 
-.svc_sms{border-bottom:1px  solid #ebe8e8;}
+.svc_sms{border-right:1px  solid #ebe8e8}
 .svc_sms .svc_btn2{float:right}
 .svc_sms .svc_btn2 a{display:inline-block; width:150px; height:63px; background:#fbfbfb; text-align:center; padding:20px 0 0;}
