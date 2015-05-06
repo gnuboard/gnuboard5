@@ -86,8 +86,8 @@ include_once('./admin.head.php');
 
     <?php if ($w == 'u') { ?>
     <tr>
-        <th scope="row"><label for="po_date">투표시작일</label></th>
-        <td><input type="text" name="po_date" value="<?php echo $po['po_date'] ?>" id="po_date" class="frm_input" maxlength="10"></td>
+        <th scope="row">투표등록일</th>
+        <td><?php echo $po['po_date']; ?></td>
     </tr>
     <tr>
         <th scope="row"><label for="po_ips">투표참가 IP</label></th>
