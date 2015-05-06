@@ -36,7 +36,7 @@ include_once('./admin.head.php');
             <div class="svc_sms">
                 <div class="svc_a">
                     <h3>SMS 문자 서비스</h3>
-                    <p>사이트 관리자 또는 회원이 다른 회원의 휴대폰으로 단문메세지(최대 한글 40자, 영문 80자)를 발송할 수 있습니다.</p>
+                    <p>사이트 관리자 또는 회원이 다른 회원의 <br>휴대폰으로 단문메세지(최대 한글 40자, 영문 80자)를 발송할 수 있습니다.</p>
                 </div>
                 <div class="svc_btn"><a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_05.jpg" alt="아이코드 SMS 서비스 신청하기"></a></div>
             </div>
