@@ -69,7 +69,7 @@ if ($w == "") {
         if ($_POST['is_update'])
             $tmp_password = $_POST['mb_password'];
         else
-            $tmp_password = sql_password($_POST['mb_password']);
+            $tmp_password = get_encrypt_string($_POST['mb_password']);
 
         if ($member['mb_password'] != $tmp_password)
             alert('비밀번호가 틀립니다.');

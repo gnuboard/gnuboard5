@@ -60,7 +60,7 @@ if ($is_member)
 else
 {
     $mb_id = '';
-    $wr_password = sql_password($wr_password);
+    $wr_password = get_encrypt_string($wr_password);
 }
 
 if ($w == 'c') // 댓글 입력
