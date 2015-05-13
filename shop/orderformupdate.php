@@ -388,7 +388,7 @@ if($tno) {
 if ($is_member)
     $od_pwd = $member['mb_password'];
 else
-    $od_pwd = sql_password($_POST['od_pwd']);
+    $od_pwd = get_encrypt_string($_POST['od_pwd']);
 
 // 주문번호를 얻는다.
 $od_id = get_session('ss_order_id');

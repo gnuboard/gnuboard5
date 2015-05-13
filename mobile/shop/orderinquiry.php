@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 define("_ORDERINQUIRY_", true);
 
-$od_pwd = sql_password($od_pwd);
+$od_pwd = get_encrypt_string($od_pwd);
 
 // 회원인 경우
 if ($is_member)
