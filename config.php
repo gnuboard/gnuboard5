@@ -166,6 +166,10 @@ define('G5_SMTP', '127.0.0.1');
     기타 상수
 ********************/
 
+// 암호화 함수 지정
+// 사인트 운영 중 설정을 변경하면 로그인이 안되는 등의 문제가 발생합니다.
+define('G5_STRING_ENCRYPT_FUNCTION', 'sql_password');
+
 // SQL 에러를 표시할 것인지 지정
 // 에러를 표시하려면 TRUE 로 변경
 define('G5_DISPLAY_SQL_ERROR', FALSE);

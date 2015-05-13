@@ -31,7 +31,7 @@ else if ($is_admin == 'group') { // 그룹관리자
 } else {
     if ($write['mb_id'])
         alert('로그인 후 삭제하세요.', './login.php?url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
-    else if (sql_password($wr_password) != $write['wr_password'])
+    else if (!check_password($wr_password, $write['wr_password']))
         alert('비밀번호가 틀리므로 삭제할 수 없습니다.');
 }
 

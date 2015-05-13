@@ -2839,4 +2839,24 @@ function insert_popular($field, $str)
         sql_query($sql, FALSE);
     }
 }
+
+// 문자열 암호화
+function get_encrypt_string($str)
+{
+    if(defined('G5_STRING_ENCRYPT_FUNCTION') && G5_STRING_ENCRYPT_FUNCTION) {
+        $encrypt = call_user_func(G5_STRING_ENCRYPT_FUNCTION, $str);
+    } else {
+        $encrypt = sql_password($str);
+    }
+
+    return $encrypt;
+}
+
+// 비밀번호 비교
+function check_password($pass, $hash)
+{
+    $password = get_encrypt_string($pass);
+
+    return ($password === $hash);
+}
 ?>

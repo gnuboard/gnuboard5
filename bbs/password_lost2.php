@@ -30,7 +30,7 @@ else if (is_admin($mb['mb_id']))
 
 // 임시비밀번호 발급
 $change_password = rand(100000, 999999);
-$mb_lost_certify = sql_password($change_password);
+$mb_lost_certify = get_encrypt_string($change_password);
 
 // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
 $mb_nonce = md5(pack('V*', rand(), rand(), rand(), rand()));

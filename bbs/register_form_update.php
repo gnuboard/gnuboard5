@@ -181,7 +181,7 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
 if ($w == '') {
     $sql = " insert into {$g5['member_table']}
                 set mb_id = '{$mb_id}',
-                     mb_password = '".sql_password($mb_password)."',
+                     mb_password = '".get_encrypt_string($mb_password)."',
                      mb_name = '{$mb_name}',
                      mb_nick = '{$mb_nick}',
                      mb_nick_date = '".G5_TIME_YMD."',
@@ -276,7 +276,7 @@ if ($w == '') {
 
     $sql_password = "";
     if ($mb_password)
-        $sql_password = " , mb_password = '".sql_password($mb_password)."' ";
+        $sql_password = " , mb_password = '".get_encrypt_string($mb_password)."' ";
 
     $sql_nick_date = "";
     if ($mb_nick_default != $mb_nick)

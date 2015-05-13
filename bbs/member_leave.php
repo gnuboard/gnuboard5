@@ -7,7 +7,7 @@ if (!$member['mb_id'])
 if ($is_admin == 'super')
     alert('최고 관리자는 탈퇴할 수 없습니다');
 
-if (!($_POST['mb_password'] && $member['mb_password'] == sql_password($_POST['mb_password'])))
+if (!($_POST['mb_password'] && check_password($_POST['mb_password'], $member['mb_password'])))
     alert('비밀번호가 틀립니다.');
 
 // 회원탈퇴일을 저장
