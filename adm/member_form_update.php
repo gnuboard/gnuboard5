@@ -81,7 +81,7 @@ if ($w == '')
     if ($row['mb_id'])
         alert('이미 존재하는 이메일입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
 
-    sql_query(" insert into {$g5['member_table']} set mb_id = '{$mb_id}', mb_password = '".sql_password($mb_password)."', mb_datetime = '".G5_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G5_TIME_YMDHIS."', {$sql_common} ");
+    sql_query(" insert into {$g5['member_table']} set mb_id = '{$mb_id}', mb_password = '".get_encrypt_string($mb_password)."', mb_datetime = '".G5_TIME_YMDHIS."', mb_ip = '{$_SERVER['REMOTE_ADDR']}', mb_email_certify = '".G5_TIME_YMDHIS."', {$sql_common} ");
 }
 else if ($w == 'u')
 {
@@ -139,7 +139,7 @@ else if ($w == 'u')
     }
 
     if ($mb_password)
-        $sql_password = " , mb_password = '".sql_password($mb_password)."' ";
+        $sql_password = " , mb_password = '".get_encrypt_string($mb_password)."' ";
     else
         $sql_password = "";
 

@@ -19,7 +19,7 @@ if(!$pass)
 
 // 관리자 비밀번호 비교
 $admin = get_admin('super');
-if(sql_password($pass) != $admin['mb_password'])
+if(!check_password($pass, $admin['mb_password']))
     alert('관리자 비밀번호가 일치하지 않습니다.');
 
 if(!$year)

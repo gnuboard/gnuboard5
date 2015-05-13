@@ -53,7 +53,7 @@ for ($i=count($tmp_array)-1; $i>=0; $i--)
     {
         ;
     }
-    else if ($wr_password && !$write['mb_id'] && sql_password($wr_password) == $write['wr_password']) // 비밀번호가 같다면
+    else if ($wr_password && !$write['mb_id'] && check_password($wr_password, $write['wr_password'])) // 비밀번호가 같다면
     {
         ;
     }
