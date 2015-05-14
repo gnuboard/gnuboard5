@@ -50,7 +50,7 @@
 .mbskin .frm_file {}
 
 .mbskin .tbl_frm01 {}
-.mbskin .tbl_frm01 th {}
+.mbskin .tbl_frm01 th {width:85px;}
 .mbskin .tbl_frm01 td {}
 .mbskin .tbl_frm01 textarea, .mb_skin tbl_frm01 .frm_input {}
 .mbskin .tbl_frm01 textarea {}
