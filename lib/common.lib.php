@@ -2860,6 +2860,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
             echo '</script>'.PHP_EOL;
             echo '<noscript>'.PHP_EOL;
             echo '<p>'.$msg.'</p>'.PHP_EOL;
+            echo '<p><a href="'.$return_url.'">돌아가기</a></p>'.PHP_EOL;
             echo '</noscript>'.PHP_EOL;
             exit;
         }
