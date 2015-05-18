@@ -32,6 +32,9 @@ $msg2 = str_replace("\\n", "<br>", $msg);
 
 if (!$url) $url = $_SERVER['HTTP_REFERER'];
 
+// url 체크
+check_url_host($url);
+
 if($error) {
     $header2 = "다음 항목에 오류가 있습니다.";
 } else {
