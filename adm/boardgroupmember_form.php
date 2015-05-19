@@ -76,7 +76,6 @@ $colspan = 4;
     $sql .= " order by a.gr_id desc ";
     $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $s_del = '<a href="javascript:post_delete(\'boardgroupmember_update.php\', \''.$row['gm_id'].'\');">삭제</a>';
     ?>
     <tr>
         <td class="td_chk">
