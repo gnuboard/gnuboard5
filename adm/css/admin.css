@@ -710,7 +710,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sevice_2 .svc_btn{text-align:center;position:absolute;bottom:0;left:0;width:282px;}
 .sevice_2 .svc_btn a{display:inline-block; background:#ff3061;text-align:center;color:#fff;padding:10px 20px;}
 .sevice_2 .svc_btn a:hover{text-decoration:none;}
-.sevice_2 .svc_sms{overflow:hidden;border-bottom:1px solid #ebe8e8; height:212px;position:relative}
+.sevice_2 .svc_sms{overflow:hidden; height:212px;position:relative}
 .sevice_2 .svc_sms .svc_btn a{display:inline-block; background:#f8f8f8;width:100%;text-align:center;margin:0;padding:10px 0 0 }
 .sevice_2 .svc_design{overflow:hidden;height:210px;position:relative}
 .sevice_2 .svc_design .svc_btn a{margin:0 0 20px}
