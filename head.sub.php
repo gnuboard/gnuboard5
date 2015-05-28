@@ -81,7 +81,7 @@ if ($is_admin) {
 </script>
 <script src="<?php echo G5_JS_URL ?>/jquery-1.8.3.min.js"></script>
 <script src="<?php echo G5_JS_URL ?>/jquery.menu.js"></script>
-<script src="<?php echo G5_JS_URL ?>/common.js"></script>
+<script src="<?php echo G5_JS_URL ?>/common.js?v20150528"></script>
 <script src="<?php echo G5_JS_URL ?>/wrest.js"></script>
 <?php
 if(G5_IS_MOBILE) {
