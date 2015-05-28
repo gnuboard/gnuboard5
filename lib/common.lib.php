@@ -2867,8 +2867,11 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
 
     $p = parse_url($url);
+    $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
+
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
-        if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
+        //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
+        if ($p['host'] != $host) {
             echo '<script>'.PHP_EOL;
             echo 'alert("url에 타 도메인을 지정할 수 없습니다.");'.PHP_EOL;
             echo 'document.location.href = "'.$return_url.'";'.PHP_EOL;
