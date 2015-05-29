@@ -90,7 +90,19 @@ if ($xpay->TX()) {
         //최종결제요청 결과 실패 DB처리
         //echo "최종결제요청 결과 실패 DB처리하시기 바랍니다.<br>";
 
-        alert($xpay->Response_Msg().' 코드 : '.$xpay->Response_Code());
+        if(G5_IS_MOBILE) {
+            if(isset($_POST['pp_id']) && $_POST['pp_id']) {
+                $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
+            } else {
+                $page_return_url = G5_SHOP_URL.'/orderform.php';
+                if(get_session('ss_direct'))
+                    $page_return_url .= '?sw_direct=1';
+            }
+
+            alert($xpay->Response_Msg().' 코드 : '.$xpay->Response_Code(), $page_return_url);
+        } else {
+            alert($xpay->Response_Msg().' 코드 : '.$xpay->Response_Code());
+        }
     }
 } else {
     //2)API 요청실패 화면처리

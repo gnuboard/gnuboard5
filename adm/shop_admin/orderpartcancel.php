@@ -10,6 +10,9 @@ $od = sql_fetch($sql);
 if(!$od['od_id'])
     alert_close('주문정보가 존해하지 않습니다.');
 
+if($od['od_pg'] == 'inicis' && $od['od_settle_case'] == '계좌이체')
+    alert_close('KG이니시스는 신용카드만 부분취소가 가능합니다.');
+
 if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G5_TIME_YMD)
         alert_close('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
 

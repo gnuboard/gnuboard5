@@ -164,7 +164,7 @@ HEREDOC;
             $point = get_item_point($row, $row2['io_id']);
 
             if($delivery) {
-                $deliv  = $delivery;
+                $deliv  = 1;
                 $deliv2 = $delivery.'원';
             } else {
                 $deliv  = 0;

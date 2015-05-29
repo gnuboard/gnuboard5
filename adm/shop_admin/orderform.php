@@ -442,6 +442,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                         $pg_test .= ' 테스트 ';
                                     }
                                     break;
+                                case 'inicis':
+                                    $pg_url  = 'https://iniweb.inicis.com/';
+                                    $pg_test = 'KG이니시스';
+                                    break;
                                 default:
                                     $pg_url  = 'http://admin8.kcp.co.kr';
                                     $pg_test = 'KCP';
@@ -543,6 +547,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                     break;
                             }
                             $cash_receipt_script = 'javascript:showCashReceipts(\''.$LGD_MID.'\',\''.$od['od_id'].'\',\''.$od['od_casseqno'].'\',\''.$trade_type.'\',\''.$CST_PLATFORM.'\');';
+                        } else if($od['od_pg'] == 'inicis') {
+                            $cash = unserialize($od['od_cash_info']);
+                            $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
                         } else {
                             require G5_SHOP_PATH.'/settle_kcp.inc.php';
 

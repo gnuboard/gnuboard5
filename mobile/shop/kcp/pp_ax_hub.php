@@ -161,7 +161,15 @@
         openwin.close();
         </script>";
         */
-        alert("$res_cd : $res_msg");
+        if(isset($_POST['pp_id']) && $_POST['pp_id']) {
+            $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
+        } else {
+            $page_return_url = G5_SHOP_URL.'/orderform.php';
+            if(get_session('ss_direct'))
+                $page_return_url .= '?sw_direct=1';
+        }
+
+        alert("$res_cd : $res_msg", $page_return_url);
         exit;
     }
 

@@ -2,22 +2,27 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
+$page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
+
 // 결제등록 완료 체크
 if($default['de_pg_service'] == 'kcp' && ($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == ''))
-    alert('결제등록 요청 후 주문해 주십시오.');
+    alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
 if($default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
-    alert('결제등록 요청 후 주문해 주십시오.');
+    alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
+
+if($default['de_pg_service'] == 'inicis' && !$_POST['P_HASH'])
+    alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
 // 개인결제 정보
 $pp_check = false;
 $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['pp_id']}' and pp_use = '1' ";
 $pp = sql_fetch($sql);
 if(!$pp['pp_id'])
-    alert('개인결제 정보가 존재하지 않습니다.');
+    alert('개인결제 정보가 존재하지 않습니다.', G5_SHOP_URL.'/personalpay.php');
 
 if($pp['pp_tno'])
-    alert('이미 결제하신 개인결제 내역입니다.');
+    alert('이미 결제하신 개인결제 내역입니다.', G5_SHOP_URL);
 
 $hash_data = md5($_POST['pp_id'].$_POST['good_mny'].$pp['pp_time']);
 if($_POST['pp_id'] != get_session('ss_personalpay_id') || $hash_data != get_session('ss_personalpay_hash'))
@@ -28,6 +33,9 @@ if ($pp_settle_case == "계좌이체")
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        case 'inicis':
+            include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -48,6 +56,9 @@ else if ($pp_settle_case == "가상계좌")
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
+        case 'inicis':
+            include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             $bankname   = iconv("cp949", "utf-8", $bankname);
@@ -56,6 +67,7 @@ else if ($pp_settle_case == "가상계좌")
     }
 
     $pp_tno             = $tno;
+    $pp_app_no          = $app_no;
     $pp_receipt_price   = 0;
     $pp_bank_account    = $bankname.' '.$account;
     $pp_deposit_name    = $depositor;
@@ -66,6 +78,9 @@ else if ($pp_settle_case == "휴대폰")
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        case 'inicis':
+            include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -84,6 +99,9 @@ else if ($pp_settle_case == "신용카드")
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
+        case 'inicis':
+            include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             $card_name  = iconv("cp949", "utf-8", $card_name);
@@ -91,6 +109,7 @@ else if ($pp_settle_case == "신용카드")
     }
 
     $pp_tno             = $tno;
+    $pp_app_no          = $app_no;
     $pp_receipt_price   = $amount;
     $pp_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
     $pp_bank_account    = $card_name;
@@ -139,6 +158,9 @@ if(!$result) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_cancel.php';
             break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
             break;
@@ -174,6 +196,9 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
                 break;
+            case 'inicis':
+                include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
                 break;
@@ -200,6 +225,10 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
         sql_query($sql, FALSE);
     }
 }
+
+// 주문 정보 임시 데이터 삭제
+$sql = " delete from {$g5['g5_shop_order_data_table']} where od_id = '{$pp['pp_id']}' and dt_pg = '$pp_pg' ";
+sql_query($sql);
 
 // 개인결제번호제거
 set_session('ss_personalpay_id', '');

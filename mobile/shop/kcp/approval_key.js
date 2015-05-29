@@ -89,7 +89,6 @@
 					else
 					{
 						alert("실패 되었습니다.[" + txt[3].replace(/^\s*/,'').replace(/\s*$/,'') + "]");
-                        window.close();
 					}
 				}
 			}

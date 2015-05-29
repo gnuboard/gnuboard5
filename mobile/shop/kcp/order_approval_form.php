@@ -104,6 +104,14 @@
             $ActionResult = '';
             break;
     }
+
+    if(get_session('ss_personalpay_id') && get_session('ss_personalpay_hash')) {
+        $js_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
+    } else {
+        $js_return_url = G5_SHOP_URL.'/orderform.php';
+        if(get_session('ss_direct'))
+            $js_return_url .= '?sw_direct=1';
+    }
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="ko" xml:lang="ko">
@@ -112,7 +120,9 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta http-equiv="Cache-Control" content="No-Cache">
 <meta http-equiv="Pragma" content="No-Cache">
-<meta name="viewport" content="width=device-width; user-scalable=<?php echo $tablet_size; ?>; initial-scale=<?php echo $tablet_size; ?>; maximum-scale=<?php echo $tablet_size; ?>; minimum-scale=<?php echo $tablet_size; ?>">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=0,maximum-scale=10">
+<meta name="HandheldFriendly" content="true">
+<meta name="format-detection" content="telephone=no">
 
 <style type="text/css">
 	.LINE { background-color:#afc3ff }
@@ -147,6 +157,7 @@
 		{
 			/* Ret_URL값은 현 페이지의 URL 입니다. */
 			alert("연동시 Ret_URL을 반드시 설정하셔야 됩니다.");
+            document.location.href = "<?php echo $js_return_url; ?>";
 			return false;
 		}
 
@@ -158,53 +169,30 @@
     function chk_pay()
     {
         /*kcp 결제서버에서 가맹점 주문페이지로 폼값을 보내기위한 설정(변경불가)*/
+        self.name = "tar_opener";
 
         var sm_form = document.sm_form;
 
         if (sm_form.res_cd.value == "3001" )
         {
             alert("사용자가 취소하였습니다.");
-            window.close();
+            document.location.href = "<?php echo $js_return_url; ?>";
             return false;
         }
         else if (sm_form.res_cd.value == "3000" )
         {
             alert("30만원 이상 결제 할수 없습니다.");
-            window.close();
+            document.location.href = "<?php echo $js_return_url; ?>";
             return false;
         }
 
         if (sm_form.enc_data.value != "" && sm_form.enc_info.value != "" && sm_form.tran_cd.value !="" )
         {
-            var of = window.opener.document.forderform;
-
-            of.req_tx.value         = "<?php echo $req_tx; ?>";
-            of.res_cd.value         = "<?php echo $res_cd; ?>";
-            of.tran_cd.value        = "<?php echo $tran_cd; ?>";
-            of.ordr_idxx.value      = "<?php echo $ordr_idxx; ?>";
-            of.good_mny.value       = "<?php echo $good_mny; ?>";
-            of.good_name.value      = "<?php echo $good_name; ?>";
-            of.buyr_name.value      = "<?php echo $buyr_name; ?>";
-            of.buyr_tel1.value      = "<?php echo $buyr_tel1; ?>";
-            of.buyr_tel2.value      = "<?php echo $buyr_tel2; ?>";
-            of.buyr_mail.value      = "<?php echo $buyr_mail; ?>";
-            of.enc_info.value       = "<?php echo $enc_info; ?>";
-            of.enc_data.value       = "<?php echo $enc_data; ?>";
-            of.use_pay_method.value = "<?php echo $use_pay_method; ?>";
-            of.rcvr_name.value      = "<?php echo $rcvr_name; ?>";
-            of.rcvr_tel1.value      = "<?php echo $rcvr_tel1; ?>";
-            of.rcvr_tel2.value      = "<?php echo $rcvr_tel2; ?>";
-            of.rcvr_mail.value      = "<?php echo $rcvr_mail; ?>";
-            of.rcvr_zipx.value      = "<?php echo $rcvr_zipx; ?>";
-            of.rcvr_add1.value      = "<?php echo $rcvr_add1; ?>";
-            of.rcvr_add2.value      = "<?php echo $rcvr_add2; ?>";
-            of.param_opt_1.value    = "<?php echo $param_opt_1; ?>";
-            of.param_opt_2.value    = "<?php echo $param_opt_2; ?>";
-            of.param_opt_3.value    = "<?php echo $param_opt_3; ?>";
-
-            //alert("주문하기를 클릭하셔야 주문이 완료됩니다.");
-            window.opener.forderform_check();
-            window.close();
+            document.getElementById("pay_fail").style.display = "none";
+            document.getElementById("show_progress").style.display = "block";
+            setTimeout( function() {
+                document.forderform.submit();
+            }, 300);
         } else {
             kcp_AJAX();
         }
@@ -215,6 +203,39 @@
 <body onload="chk_pay();">
 
 <div id="content">
+
+<?php
+if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
+    // 제외할 필드
+    $exclude = array('req_tx', 'res_cd', 'tran_cd', 'ordr_idxx', 'good_mny', 'good_name', 'buyr_name', 'buyr_tel1', 'buyr_tel2', 'buyr_mail', 'enc_info', 'enc_data', 'use_pay_method', 'rcvr_name', 'rcvr_tel1', 'rcvr_tel2', 'rcvr_mail', 'rcvr_zipx', 'rcvr_add1', 'rcvr_add2', 'param_opt_1', 'param_opt_2', 'param_opt_3');
+
+    $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$ordr_idxx' ";
+    $row = sql_fetch($sql);
+
+    $data = unserialize($row['dt_data']);
+
+    if(isset($data['pp_id']) && $data['pp_id']) {
+        $order_action_url = G5_HTTPS_MSHOP_URL.'/personalpayformupdate.php';
+    } else {
+        $order_action_url = G5_HTTPS_MSHOP_URL.'/orderformupdate.php';
+    }
+
+    echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
+
+    foreach($data as $key=>$value) {
+        if(in_array($key, $exclude))
+            continue;
+
+        echo '<input type="hidden" name="'.$key.'" value="'.$value.'">'.PHP_EOL;
+    }
+
+    foreach($_POST as $key=>$value) {
+        echo '<input type="hidden" name="'.$key.'" value="'.$value.'">'.PHP_EOL;
+    }
+
+    echo '</form>'.PHP_EOL;
+}
+?>
 
 <form name="sm_form" method="POST" accept-charset="euc-kr">
 
@@ -325,6 +346,15 @@ if($default['de_tax_flag_use']) {
 <input type="hidden" name="enc_info"       value="<?php echo $enc_info; ?>">    <!-- 암호화 정보        -->
 <input type="hidden" name="enc_data"       value="<?php echo $enc_data; ?>">    <!-- 암호화 데이터      -->
 </form>
+
+    <div id="pay_fail">
+        <p>결제가 실패한 경우 아래 돌아가기 버튼을 클릭해주세요.</p>
+        <a href="<?php echo $js_return_url; ?>">돌아가기</a>
+    </div>
+    <div id="show_progress" style="display:none;">
+        <span style="display:block; text-align:center;margin-top:120px"><img src="<?php echo G5_MOBILE_URL; ?>/shop/img/loading.gif" alt="" ></span>
+        <span style="display:block; text-align:center;margin-top:10px; font-size:14px">주문완료 중입니다. 잠시만 기다려 주십시오.</span>
+    </div>
 </div>
 
 <!-- 스마트폰에서 KCP 결제창을 레이어 형태로 구현-->

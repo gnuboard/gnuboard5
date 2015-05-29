@@ -32,6 +32,10 @@ require_once(G5_MSHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 // 결제등록 요청시 사용할 입금마감일
 $ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
 $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
+
+// 개인결제번호제거
+set_session('ss_personalpay_id', '');
+set_session('ss_personalpay_hash', '');
 ?>
 
 <div id="sod_approval_frm">
@@ -93,7 +97,7 @@ ob_start();
             {
                 //$goods = addslashes($row[it_name]);
                 //$goods = get_text($row[it_name]);
-                $goods = preg_replace("/\'|\"|\||\,|\&|\;/", "", $row['it_name']);
+                $goods = preg_replace("/\?|\'|\"|\||\,|\&|\;/", "", $row['it_name']);
                 $goods_it_id = $row['it_id'];
             }
             $goods_count++;
@@ -1194,10 +1198,61 @@ function pay_approval()
     <?php if($default['de_tax_flag_use']) { ?>
     f.LGD_TAXFREEAMOUNT.value = pf.comm_free_mny.value;
     <?php } ?>
+    <?php } else if($default['de_pg_service'] == 'inicis') { ?>
+    var paymethod = "";
+    var width = 330;
+    var height = 480;
+    var xpos = (screen.width - width) / 2;
+    var ypos = (screen.width - height) / 2;
+    var position = "top=" + ypos + ",left=" + xpos;
+    var features = position + ", width=320, height=440";
+    switch(settle_method) {
+        case "계좌이체":
+            paymethod = "bank";
+            break;
+        case "가상계좌":
+            paymethod = "vbank";
+            break;
+        case "휴대폰":
+            paymethod = "mobile";
+            break;
+        case "신용카드":
+            paymethod = "wcard";
+            break;
+    }
+    f.P_AMT.value = f.good_mny.value;
+    f.P_UNAME.value = pf.od_name.value;
+    f.P_MOBILE.value = pf.od_hp.value;
+    f.P_EMAIL.value = pf.od_email.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.P_TAX.value = pf.comm_vat_mny.value;
+    f.P_TAXFREE = pf.comm_free_mny.value;
+    <?php } ?>
+    f.P_RETURN_URL.value = "<?php echo $return_url.$od_id; ?>";
+    f.action = "https://mobile.inicis.com/smart/" + paymethod + "/";
     <?php } ?>
 
-    var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
-    f.target = "tar_opener";
+    //var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
+    //f.target = "tar_opener";
+
+    // 주문 정보 임시저장
+    var order_data = $(pf).serialize();
+    var save_result = "";
+    $.ajax({
+        type: "POST",
+        data: order_data,
+        url: g5_url+"/shop/ajax.orderdatasave.php",
+        cache: false,
+        async: false,
+        success: function(data) {
+            save_result = data;
+        }
+    });
+
+    if(save_result) {
+        alert(save_result);
+        return false;
+    }
 
     f.submit();
 }

@@ -79,12 +79,22 @@ if(!isset($default['de_pg_service'])) {
                     ADD `de_pg_service` varchar(255) NOT NULL DEFAULT '' AFTER `de_sms_hp` ", true);
 }
 
+
+// inicis 필드 추가
+if(!isset($default['de_inicis_mid'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_inicis_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_kcp_site_key`,
+                    ADD `de_inicis_admin_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_mid` ", true);
+}
+
+
 // 레이아웃 파일 필드 추가
 if(!isset($default['de_include_index'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_include_index` varchar(255) NOT NULL DEFAULT '' AFTER `de_admin_info_email`,
                     ADD `de_include_head` varchar(255) NOT NULL DEFAULT '' AFTER `de_include_index`,
                     ADD `de_include_tail` varchar(255) NOT NULL DEFAULT '' AFTER `de_include_head` ", true);
+
 }
 ?>
 
@@ -560,11 +570,17 @@ if(!isset($default['de_include_index'])) {
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr id="kcp_vbank_url" class="pg_vbank_url">
             <th scope="row">KCP 가상계좌 입금통보 URL</th>
             <td>
                 <?php echo help("KCP 가상계좌 사용시 다음 주소를 <strong><a href=\"http://admin.kcp.co.kr\" target=\"_blank\">KCP 관리자</a> &gt; 상점정보관리 &gt; 정보변경 &gt; 공통URL 정보 &gt; 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
                 <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php</td>
+        </tr>
+        <tr id="inicis_vbank_url" class="pg_vbank_url">
+            <th scope="row">KG이니시스 가상계좌 입금통보 URL</th>
+            <td>
+                <?php echo help("KG이니시스 가상계좌 사용시 다음 주소를 <strong><a href=\"https://iniweb.inicis.com/\" target=\"_blank\">KG이니시스 관리자</a> &gt; 거래조회 &gt; 가상계좌 &gt; 입금통보방식선택 &gt; URL 수신 설정</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
+                <?php echo G5_SHOP_URL; ?>/settle_inicis_common.php</td>
         </tr>
         <tr>
             <th scope="row"><label for="de_hp_use">휴대폰결제사용</label></th>
@@ -662,13 +678,14 @@ if(!isset($default['de_include_index'])) {
                 <select id="de_pg_service" name="de_pg_service">
                     <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>KCP</option>
                     <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG유플러스</option>
+                    <option value="inicis" <?php echo get_selected($default['de_pg_service'], 'inicis'); ?>>KG이니시스</option>
                 </select>
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld">
             <th scope="row">
                 <label for="de_kcp_mid">KCP SITE CODE</label><br>
-                <a href="http://sir.co.kr/main/provider/p_pg.php" target="_blank" id="scf_kcpreg" class="scf_pgreg">KCP서비스신청하기</a>
+                <a href="http://sir.co.kr/main/service/p_pg.php" target="_blank" id="scf_kcpreg" class="scf_pgreg">KCP서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
@@ -685,10 +702,10 @@ if(!isset($default['de_include_index'])) {
         <tr class="pg_info_fld lg_info_fld">
             <th scope="row">
                 <label for="cf_lg_mid">LG유플러스 상점아이디</label><br>
-                <a href="http://sir.co.kr/main/provider/lg_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">LG유플러스 서비스신청하기</a>
+                <a href="http://sir.co.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">LG유플러스 서비스신청하기</a>
             </th>
             <td>
-                <?php echo help("LG유플러스 에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG유플러스에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 상점아이디와 동일합니다."); ?>
+                <?php echo help("LG유플러스에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG유플러스에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 상점아이디와 동일합니다."); ?>
                 <span class="sitecode">si_</span> <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid']; ?>" id="cf_lg_mid" class="frm_input" size="10" maxlength="20" style="font:bold 15px Verdana;"> 영문자, 숫자 혼용
             </td>
         </tr>
@@ -697,6 +714,23 @@ if(!isset($default['de_include_index'])) {
             <td>
                 <?php echo help("LG유플러스 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 MERT KEY와 동일합니다."); ?>
                 <input type="text" name="cf_lg_mert_key" value="<?php echo $config['cf_lg_mert_key']; ?>" id="cf_lg_mert_key" class="frm_input" size="32" maxlength="50">
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row">
+                <label for="de_inicis_mid">KG이니시스 상점아이디</label><br>
+                <a href="http://sir.co.kr/main/service/inicis_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">KG이니시스 서비스신청하기</a>
+            </th>
+            <td>
+                <?php echo help("KG이니시스로 부터 발급 받으신 상점아이디(MID) 10자리 중 SIR 을 제외한 나머지 7자리를 입력 합니다.\n만약, 상점아이디가 SIR로 시작하지 않는다면 계약담당자에게 변경 요청을 해주시기 바랍니다. (Tel. 02-3430-5858) 예) SIRpaytest"); ?>
+                <span class="sitecode">SIR</span> <input type="text" name="de_inicis_mid" value="<?php echo $default['de_inicis_mid']; ?>" id="de_inicis_mid" class="frm_input" size="10" maxlength="10" style="font:bold 15px Verdana;"> 영문소문자(숫자포함 가능)
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="de_inicis_admin_key">KG이니시스 키패스워드</label></th>
+            <td>
+                <?php echo help("KG이니시스에서 발급받은 4자리 상점 키패스워드를 입력합니다.\nKG이니시스 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
+                <input type="text" name="de_inicis_admin_key" value="<?php echo $default['de_inicis_admin_key']; ?>" id="de_inicis_admin_key" class="frm_input" size="5" maxlength="4">
             </td>
         </tr>
         <tr>
@@ -1362,15 +1396,20 @@ function fconfig_check(f)
 
 $(function() {
     $(".pg_info_fld").hide();
+    $(".pg_vbank_url").hide();
     <?php if($default['de_pg_service']) { ?>
     $(".<?php echo $default['de_pg_service']; ?>_info_fld").show();
+    $("#<?php echo $default['de_pg_service']; ?>_vbank_url").show();
     <?php } else { ?>
     $(".kcp_info_fld").show();
+    $("#kcp_vbank_url").show();
     <?php } ?>
     $("#de_pg_service").on("change", function() {
         var pg = $(this).val();
         $(".pg_info_fld:visible").hide();
+        $(".pg_vbank_url:visible").hide();
         $("."+pg+"_info_fld").show();
+        $("#"+pg+"_vbank_url").show();
         $(".scf_cardtest").addClass("scf_cardtest_hide");
         $("."+pg+"_cardtest").removeClass("scf_cardtest_hide");
         $(".scf_cardtest_tip_adm").addClass("scf_cardtest_tip_adm_hide");
@@ -1397,6 +1436,18 @@ $(function() {
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
     // kcp의 경우 pp_cli 체크
     if($default['de_pg_service'] == 'kcp') {
+        if(!extension_loaded('openssl')) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("PHP openssl 확장모듈이 설치되어 있지 않습니다.\n모바일 쇼핑몰 결제 때 사용되오니 openssl 확장 모듈을 설치하여 주십시오.");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        }
+
+        if(!extension_loaded('soap') || !class_exists('SOAPClient')) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("PHP SOAP 확장모듈이 설치되어 있지 않습니다.\n모바일 쇼핑몰 결제 때 사용되오니 SOAP 확장 모듈을 설치하여 주십시오.");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        }
+
         $is_linux = true;
         if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
             $is_linux = false;
@@ -1421,6 +1472,47 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
         if(!is_dir($log_path)) {
             echo '<script>'.PHP_EOL;
             echo 'alert("'.str_replace(G5_PATH.'/', '', G5_LGXPAY_PATH).'/lgdacom 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        } else {
+            if(!is_writable($log_path)) {
+                echo '<script>'.PHP_EOL;
+                echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
+                echo '</script>'.PHP_EOL;
+            }
+        }
+    }
+
+    // 이니시스의 경우 log 디렉토리 체크
+    if($default['de_pg_service'] == 'inicis') {
+        if (!function_exists('xml_set_element_handler')) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("XML 관련 함수를 사용할 수 없습니다.\n서버 관리자에게 문의해 주십시오.");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        }
+
+        if (!function_exists('openssl_get_publickey')) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("OPENSSL 관련 함수를 사용할 수 없습니다.\n서버 관리자에게 문의해 주십시오.");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        }
+
+        if (!function_exists('socket_create')) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("SOCKET 관련 함수를 사용할 수 없습니다.\n서버 관리자에게 문의해 주십시오.");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        }
+
+        if (!function_exists('mcrypt_cbc')) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("MCRYPT 관련 함수를 사용할 수 없습니다.\n서버 관리자에게 문의해 주십시오.");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        }
+
+        $log_path = G5_SHOP_PATH.'/inicis/log';
+
+        if(!is_dir($log_path)) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("'.str_replace(G5_PATH.'/', '', G5_SHOP_PATH).'/inicis 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
             echo '</script>'.PHP_EOL;
         } else {
             if(!is_writable($log_path)) {

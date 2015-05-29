@@ -21,10 +21,13 @@ $g5['title'] = $pp['pp_name'].'님 개인결제';
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
     switch($default['de_pg_service']) {
         case 'lg':
-            $g5['body_script'] = 'onload="isActiveXOK();"';
+            $g5['body_script'] = ' onload="isActiveXOK();"';
+            break;
+        case 'inicis':
+            $g5['body_script'] = ' onload="javascript:enable_click()"';
             break;
         default:
-            $g5['body_script'] = 'onload="CheckPayplusInstall();"';
+            $g5['body_script'] = ' onload="CheckPayplusInstall();"';
             break;
     }
 }
@@ -92,7 +95,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             </tr>
             <tr>
                 <th scope="row"><label for="pp_hp">휴대폰</label></th>
-                <td><input type="text" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" class="frm_input"></td>
+                <td><input type="text" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" required class="required frm_input"></td>
             </tr>
             </tbody>
             </table>
@@ -257,6 +260,25 @@ function forderform_check(f)
             f.LGD_CUSTOM_FIRSTPAY.value = "무통장";
             break;
     }
+    <?php }  else if($default['de_pg_service'] == 'inicis') { ?>
+    switch(settle_method)
+    {
+        case "계좌이체":
+            f.gopaymethod.value = "onlydbank";
+            break;
+        case "가상계좌":
+            f.gopaymethod.value = "onlyvbank";
+            break;
+        case "휴대폰":
+            f.gopaymethod.value = "onlyhpp";
+            break;
+        case "신용카드":
+            f.gopaymethod.value = "onlycard";
+            break;
+        default:
+            f.gopaymethod.value = "무통장";
+            break;
+    }
     <?php } ?>
 
     // 결제정보설정
@@ -279,7 +301,8 @@ function forderform_check(f)
     } else {
         return true;
     }
-    <?php } if($default['de_pg_service'] == 'lg') { ?>
+    <?php } ?>
+    <?php if($default['de_pg_service'] == 'lg') { ?>
     f.LGD_BUYER.value = f.pp_name.value;
     f.LGD_BUYEREMAIL.value = f.pp_email.value;
     f.LGD_BUYERPHONE.value = f.pp_hp.value;
@@ -290,6 +313,20 @@ function forderform_check(f)
           Pay_Request("<?php echo $pp_id; ?>", f.LGD_AMOUNT.value, f.LGD_TIMESTAMP.value);
     } else {
         f.submit();
+    }
+    <?php } ?>
+    <?php if($default['de_pg_service'] == 'inicis') { ?>
+    f.buyername.value   = f.pp_name.value;
+    f.buyeremail.value  = f.pp_email.value;
+    f.buyertel.value    = f.pp_hp.value;
+
+    if(f.gopaymethod.value != "무통장") {
+        if(!set_encrypt_data(f))
+            return false;
+
+        return pay(f);
+    } else {
+        return true;
     }
     <?php } ?>
 }

@@ -3,7 +3,10 @@ include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 if($default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
-    alert('결제등록 요청 후 주문해 주십시오.');
+    alert('결제등록 요청 후 결제해 주십시오.');
+
+if($default['de_pg_service'] == 'inicis' && !$_POST['P_HASH'])
+    alert('결제등록 요청 후 결제해 주십시오.');
 
 // 개인결제 정보
 $pp_check = false;
@@ -26,6 +29,9 @@ if ($pp_settle_case == "계좌이체")
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_result.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
             $bank_name  = iconv("cp949", "utf-8", $bank_name);
@@ -44,6 +50,9 @@ else if ($pp_settle_case == "가상계좌")
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -64,6 +73,9 @@ else if ($pp_settle_case == "휴대폰")
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_result.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
             break;
@@ -80,6 +92,9 @@ else if ($pp_settle_case == "신용카드")
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
+            break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -104,6 +119,9 @@ if((int)$pp['pp_price'] !== (int)$pg_price) {
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+            break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -138,6 +156,9 @@ if(!$result) {
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_cancel.php';
+            break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -174,6 +195,9 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
                 break;
+            case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+            break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
                 break;

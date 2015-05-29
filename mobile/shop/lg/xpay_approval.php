@@ -24,7 +24,7 @@ $LGD_KVPMISPWAPURL		    = G5_MSHOP_URL.'/lg/mispwapurl.php?LGD_OID='.$LGD_OID;  
 $LGD_KVPMISPCANCELURL       = G5_MSHOP_URL.'/lg/cancel_url.php';
 $LGD_MTRANSFERWAPURL        = G5_MSHOP_URL.'/lg/returnurl.php';
 $LGD_MTRANSFERCANCELURL     = G5_MSHOP_URL.'/lg/cancel_url.php';
-$LGD_MTRANSFERNOTEURL       = G5_MSHOP_URL.'/note_url.php';
+$LGD_MTRANSFERNOTEURL       = G5_MSHOP_URL.'/lg/note_url.php';
 if(preg_match('/iPhone|iPad/', $_SERVER['HTTP_USER_AGENT']))
     $LGD_MTRANSFERAUTOAPPYN     = 'N';
 else
@@ -130,7 +130,7 @@ $payReqMap['LGD_PAYKEY']             = "";
 $_SESSION['PAYREQ_MAP'] = $payReqMap;
 
 $g5['title'] = 'LG 유플러스 eCredit서비스 결제';
-$g5['body_script'] = 'onload="launchCrossPlatform();"';
+$g5['body_script'] = ' onload="launchCrossPlatform();"';
 include_once(G5_PATH.'/head.sub.php');
 ?>
 

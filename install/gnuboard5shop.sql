@@ -305,6 +305,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_pg_service` varchar(255) NOT NULL DEFAULT '',
   `de_kcp_mid` varchar(255) NOT NULL DEFAULT '',
   `de_kcp_site_key` varchar(255) NOT NULL DEFAULT '',
+  `de_inicis_mid` varchar(255) NOT NULL DEFAULT '',
+  `de_inicis_admin_key` varchar(255) NOT NULL DEFAULT '',
   `de_iche_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_item_use_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_item_use_write` tinyint(4) NOT NULL DEFAULT '0',
@@ -649,6 +651,21 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order_address` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `g5_shop_order_data`
+--
+
+DROP TABLE IF EXISTS `g5_shop_order_data`;
+CREATE TABLE IF NOT EXISTS `g5_shop_order_data` (
+  `od_id` bigint(20) unsigned NOT NULL,
+  `dt_pg` varchar(255) NOT NULL DEFAULT '',
+  `dt_data` text NOT NULL,
+  `dt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  KEY `od_id` (`od_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `g5_shop_order_delete`
 --
 
@@ -752,3 +769,24 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item_stocksms` (
   `ss_ip` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`ss_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_shop_inicis_log`
+--
+
+DROP TABLE IF EXISTS `g5_shop_inicis_log`;
+CREATE TABLE IF NOT EXISTS `g5_shop_inicis_log` (
+  `oid` bigint(20) unsigned NOT NULL,
+  `P_TID` varchar(255) NOT NULL DEFAULT '',
+  `P_MID` varchar(255) NOT NULL DEFAULT '',
+  `P_AUTH_DT` varchar(255) NOT NULL DEFAULT '',
+  `P_STATUS` varchar(255) NOT NULL DEFAULT '',
+  `P_TYPE` varchar(255) NOT NULL DEFAULT '',
+  `P_OID` varchar(255) NOT NULL DEFAULT '',
+  `P_FN_NM` varchar(255) NOT NULL DEFAULT '',
+  `P_AMT` int(11) NOT NULL DEFAULT '0',
+  `P_RMESG1` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`oid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;

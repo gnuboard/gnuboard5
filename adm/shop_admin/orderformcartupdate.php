@@ -210,6 +210,49 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                             $pg_res_msg = $xpay->Response_Msg();
                         }
                         break;
+                    case 'inicis':
+                        include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
+                        $cancel_msg = iconv_euckr('쇼핑몰 운영자 승인 취소');
+
+                        /*********************
+                         * 3. 취소 정보 설정 *
+                         *********************/
+                        $inipay->SetField("type",      "cancel");                        // 고정 (절대 수정 불가)
+                        $inipay->SetField("mid",       $default['de_inicis_mid']);       // 상점아이디
+                        /**************************************************************************************************
+                         * admin 은 키패스워드 변수명입니다. 수정하시면 안됩니다. 1111의 부분만 수정해서 사용하시기 바랍니다.
+                         * 키패스워드는 상점관리자 페이지(https://iniweb.inicis.com)의 비밀번호가 아닙니다. 주의해 주시기 바랍니다.
+                         * 키패스워드는 숫자 4자리로만 구성됩니다. 이 값은 키파일 발급시 결정됩니다.
+                         * 키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오.
+                         **************************************************************************************************/
+                        $inipay->SetField("admin",     $default['de_inicis_admin_key']); //비대칭 사용키 키패스워드
+                        $inipay->SetField("tid",       $od['od_tno']);                   // 취소할 거래의 거래아이디
+                        $inipay->SetField("cancelmsg", $cancel_msg);                     // 취소사유
+
+                        /****************
+                         * 4. 취소 요청 *
+                         ****************/
+                        $inipay->startAction();
+
+                        /****************************************************************
+                         * 5. 취소 결과                                           	*
+                         *                                                        	*
+                         * 결과코드 : $inipay->getResult('ResultCode') ("00"이면 취소 성공)  	*
+                         * 결과내용 : $inipay->getResult('ResultMsg') (취소결과에 대한 설명) 	*
+                         * 취소날짜 : $inipay->getResult('CancelDate') (YYYYMMDD)          	*
+                         * 취소시각 : $inipay->getResult('CancelTime') (HHMMSS)            	*
+                         * 현금영수증 취소 승인번호 : $inipay->getResult('CSHR_CancelNum')    *
+                         * (현금영수증 발급 취소시에만 리턴됨)                          *
+                         ****************************************************************/
+
+                        $res_cd  = $inipay->getResult('ResultCode');
+                        $res_msg = $inipay->getResult('ResultMsg');
+
+                        if($res_cd != '00') {
+                            $pg_res_cd = $res_cd;
+                            $pg_res_msg = iconv_utf8($res_msg);
+                        }
+                        break;
                     default:
                         include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
                         require_once(G5_SHOP_PATH.'/kcp/pp_ax_hub_lib.php');
@@ -313,21 +356,19 @@ if($cancel_change) {
 $sql .= " where od_id = '$od_id' ";
 sql_query($sql);
 
-// 신용카드 취소 때 오류가 있으면 알림
-if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
-    echo '<script>';
-    echo 'alert("오류코드 : '.$pg_res_cd.' 오류내용 : '.$pg_res_msg.'");';
-    echo '</script>';
-}
-
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 $url = "./orderform.php?od_id=$od_id&amp;$qstr";
 
-// 1.06.06
-$od = sql_fetch(" select od_receipt_point from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
-if ($od['od_receipt_point'])
-    alert("포인트로 결제한 주문은,\\n\\n주문상태 변경으로 인해 포인트의 가감이 발생하는 경우\\n\\n회원관리 > 포인트관리에서 수작업으로 포인트를 맞추어 주셔야 합니다.", $url);
-else
-    goto_url($url);
+// 신용카드 취소 때 오류가 있으면 알림
+if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
+    alert('오류코드 : '.$pg_res_cd.' 오류내용 : '.$pg_res_msg, $url);
+} else {
+    // 1.06.06
+    $od = sql_fetch(" select od_receipt_point from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
+    if ($od['od_receipt_point'])
+        alert("포인트로 결제한 주문은,\\n\\n주문상태 변경으로 인해 포인트의 가감이 발생하는 경우\\n\\n회원관리 > 포인트관리에서 수작업으로 포인트를 맞추어 주셔야 합니다.", $url);
+    else
+        goto_url($url);
+}
 ?>
