@@ -20,7 +20,7 @@ include_once('./admin.head.php');
         <ul>
             <li><a href="http://sir.co.kr/main/service/p_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_01.jpg" alt="KCP 신용카드 전자결제 신청하기"></a></li>
             <li ><a href="http://sir.co.kr/main/service/lg_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_02.jpg" alt="LG유플러스 신용카드 전자결제 신청하기"></a></li>
-            <li class="last"><a href="http://sir.co.kr/main/service/inicis_pg.php"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_06.jpg" alt="KG 이니시스 전자결제 신청하기"></a></li>
+            <li class="last"><a href="http://sir.co.kr/main/service/inicis_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_06.jpg" alt="KG 이니시스 전자결제 신청하기"></a></li>
 
 
         </ul>
@@ -53,7 +53,7 @@ include_once('./admin.head.php');
                 </div>
                 <div class="svc_btn2"><a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_05.jpg" alt="아이코드 SMS 서비스 신청하기"></a></div>
         </div>
-        
+
     </div>
 </div>
 
