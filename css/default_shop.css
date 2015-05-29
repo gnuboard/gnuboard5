@@ -370,9 +370,6 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_frm_orderer {margin:20px 0 40px}
 #sod_frm_orderer #od_addr_jibeon, #sod_frm_taker #od_b_addr_jibeon {display:inline-block;margin:5px 0 0}
 
-#sod_frm_addr div {position:relative} /* FF 포지션 */
-#sod_frm_addr div div {position:absolute;top:-20px;left:170px}
-
 #sod_frm_same {margin:0 0 10px}
 
 #sod_frm #od_memo {height:50px}

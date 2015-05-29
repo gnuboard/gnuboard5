@@ -284,8 +284,6 @@ html.no-overflowscrolling #cp_frm {height:auto;max-height:10000px !important} /*
 #sod_frm_orderer {margin:15px 0 30px}
 #sod_frm_orderer #od_addr_jibeon, #sod_frm_taker #od_b_addr_jibeon {display:inline-block;margin:5px 0 0}
 
-#sod_frm_addr div {display:inline-block}
-
 #sod_frm_same {margin:0 0 10px}
 
 #sod_frm_pay {position:relative}
