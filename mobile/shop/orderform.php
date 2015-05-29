@@ -233,8 +233,6 @@ ob_start();
             $comm_vat_mny = ($tot_tax_mny + $send_cost) - $comm_tax_mny;
         }
         ?>
-        </tbody>
-        </table>
     </ul>
 
     <?php if ($goods_count) $goods .= ' 외 '.$goods_count.'건'; ?>
