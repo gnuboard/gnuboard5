@@ -40,14 +40,7 @@ include_once('./admin.head.php');
                 </div>
                 <div class="svc_btn"><a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_05.jpg" alt="아이코드 SMS 서비스 신청하기"></a></div>
             </div>
-            <div class="svc_design">
-                <div class="svc_a">
-                    <h3>디자인 소스 (아사달)</h3>
-                    <p>이곳을 통하여 아사달 디자인 소스, 시안, 사진 등 구입하시면 10% 할인 쿠폰을 매일 선착순 15분께 드립니다.</p>
-                </div>
-                <div class="svc_btn"><a href="http://design.sir.co.kr/event/coupon.htm" target="_blank">디자인소스 구입하기</a></div>
-            </div>
-
+            
     </div>
 </div>
 

@@ -5,7 +5,7 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.0.33');
+define('G5_GNUBOARD_VER', '5.0.35');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -200,8 +200,8 @@ define('G5_THUMB_PNG_COMPRESS', 5);
 define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신일때 daum 주소 js
-    define('G5_POSTCODE_JS', '<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.js"></script>');
+    define('G5_POSTCODE_JS', '<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>');
 } else {  //http 통신일때 daum 주소 js
-    define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>');
+    define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>');
 }
 ?>
