@@ -16,7 +16,9 @@ $cancelFlag = "true";
 
 if($cancelFlag == "true")
 {
-    $TID = $inipay->GetResult("TID");
+    include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
+
+    $TID = $tno;
     $inipay->SetField("type", "cancel"); // 고정
     $inipay->SetField("tid", $TID); // 고정
     $inipay->SetField("cancelmsg", "DB FAIL"); // 취소사유
