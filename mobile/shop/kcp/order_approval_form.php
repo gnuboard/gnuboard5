@@ -222,12 +222,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 
     echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
-    foreach($data as $key=>$value) {
-        if(in_array($key, $exclude))
-            continue;
-
-        echo '<input type="hidden" name="'.$key.'" value="'.$value.'">'.PHP_EOL;
-    }
+    echo make_order_field($data, $exclude);
 
     foreach($_POST as $key=>$value) {
         echo '<input type="hidden" name="'.$key.'" value="'.$value.'">'.PHP_EOL;

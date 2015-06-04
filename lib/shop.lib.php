@@ -2172,6 +2172,28 @@ function cart_item_clean()
     sql_query($sql);
 }
 
+
+// 모바일 PG 주문 필드 생성
+function make_order_field($data, $exclude)
+{
+    $field = '';
+
+    foreach($data as $key=>$value) {
+        if(in_array($key, $exclude))
+            continue;
+
+        if(is_array($value)) {
+            foreach($value as $k=>$v) {
+                $field .= '<input type="hidden" name="'.$key.'['.$k.']" value="'.$v.'">'.PHP_EOL;
+            }
+        } else {
+            $field .= '<input type="hidden" name="'.$key.'" value="'.$value.'">'.PHP_EOL;
+        }
+    }
+
+    return $field;
+}
+
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝
 //==============================================================================

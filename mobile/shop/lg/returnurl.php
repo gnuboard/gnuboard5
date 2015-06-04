@@ -52,12 +52,7 @@ $exclude = array('res_cd', 'LGD_PAYKEY');
 
 echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
-foreach($data as $key=>$value) {
-    if(in_array($key, $exclude))
-        continue;
-
-    echo '<input type="hidden" name="'.$key.'" value="'.$value.'">'.PHP_EOL;
-}
+echo make_order_field($data, $exclude);
 
 echo '<input type="hidden" name="res_cd" value="'.$LGD_RESPCODE.'">'.PHP_EOL;
 echo '<input type="hidden" name="LGD_PAYKEY" value="'.$LGD_PAYKEY.'">'.PHP_EOL;

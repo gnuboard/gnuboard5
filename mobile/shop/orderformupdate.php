@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
+//print_r2($_POST); exit;
+
 $page_return_url = G5_SHOP_URL.'/orderform.php';
 if(get_session('ss_direct'))
     $page_return_url .= '?sw_direct=1';

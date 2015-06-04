@@ -50,12 +50,7 @@ $exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_VACT_BANK');
 
 echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
-foreach($data as $key=>$value) {
-    if(in_array($key, $exclude))
-        continue;
-
-    echo '<input type="hidden" name="'.$key.'" value="'.$value.'">'.PHP_EOL;
-}
+echo make_order_field($data, $exclude);
 
 echo '<input type="hidden" name="res_cd"      value="'.$PAY['P_STATUS'].'">'.PHP_EOL;
 echo '<input type="hidden" name="P_HASH"      value="'.$hash.'">'.PHP_EOL;
