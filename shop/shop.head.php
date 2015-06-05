@@ -79,9 +79,24 @@ if ($default['de_include_head'] && is_file(G5_SHOP_PATH.'/'.$default['de_include
                 <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
-                <?php if(!$default['de_root_index_use']) { ?>
-                <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
-                <?php } ?>
+                <?php
+                if(!$default['de_root_index_use']) {
+                    $com_href = G5_URL;
+                    $com_name = '커뮤니티';
+
+                    if($default['de_shop_layout_use']) {
+                        if(!preg_match('#'.G5_SHOP_DIR.'/#', $_SERVER['PHP_SELF'])) {
+                            $com_href = G5_SHOP_URL;
+                            $com_name = '쇼핑몰';
+                        }
+                    }
+                ?>
+                <li><a href="<?php echo $com_href; ?>/"><?php echo $com_name; ?></a></li>
+                <?php
+                    unset($com_href);
+                    unset($com_name);
+                }
+                ?>
             </ul>
         </div>
     </div>
