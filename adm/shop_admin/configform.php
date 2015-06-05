@@ -195,7 +195,7 @@ if(!isset($default['de_include_index'])) {
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row"><label for="cf_include_index">초기화면 파일</label></th>
+            <th scope="row"><label for="de_include_index">초기화면 파일</label></th>
             <td>
                 <?php echo help('입력이 없으면 '.G5_SHOP_DIR.'/index.php가 초기화면 파일로 설정됩니다.<br>초기화면 파일은 '.G5_SHOP_DIR.'/index.php 파일과 동일한 위치에 존재해야 합니다.') ?>
                 <input type="text" name="de_include_index" value="<?php echo $default['de_include_index'] ?>" id="de_include_index" class="frm_input" size="50">
