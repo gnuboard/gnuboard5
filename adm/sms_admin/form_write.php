@@ -145,7 +145,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     </div>
     <div class="btn_confirm01 btn_confirm">
         <input type="submit" value="확인" class="btn_submit" accesskey="s">
-        <a href="./form_list.php?<?php echo $_SERVER['QUERY_STRING']?>">목록</a>
+        <a href="./form_list.php?<?php echo clean_query_string($_SERVER['QUERY_STRING']); ?>">목록</a>
     </div>
 </form>
 

@@ -2884,4 +2884,88 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
         }
     }
 }
+
+// QUERY STRING 에 포함된 XSS 태그 제거
+function clean_query_string($query, $amp=true)
+{
+    $qstr = trim($query);
+
+    parse_str($qstr, $out);
+
+    if(is_array($out)) {
+        $q = array();
+
+        foreach($out as $key=>$val) {
+            $key = trim($key);
+            $val = trim($val);
+
+            switch($key) {
+                case 'wr_id':
+                    $val = (int)preg_replace('/[^0-9]/', '', $val);
+                    $q[$key] = $val;
+                    break;
+                case 'sca':
+                    $val = clean_xss_tags($val);
+                    $q[$key] = $val;
+                    break;
+                case 'sfl':
+                    $val = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $val);
+                    $q[$key] = $val;
+                    break;
+                case 'stx':
+                    $val = get_search_string($val);
+                    $q[$key] = $val;
+                    break;
+                case 'sst':
+                    $val = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $val);
+                    $q[$key] = $val;
+                    break;
+                case 'sod':
+                    $val = preg_match("/^(asc|desc)$/i", $val) ? $val : '';
+                    $q[$key] = $val;
+                    break;
+                case 'sop':
+                    $val = preg_match("/^(or|and)$/i", $val) ? $val : '';
+                    $q[$key] = $val;
+                    break;
+                case 'spt':
+                    $val = (int)preg_replace('/[^0-9]/', '', $val);
+                    $q[$key] = $val;
+                    break;
+                case 'page':
+                    $val = (int)preg_replace('/[^0-9]/', '', $val);
+                    $q[$key] = $val;
+                    break;
+                case 'w':
+                    $val = substr($val, 0, 2);
+                    $q[$key] = $val;
+                    break;
+                case 'bo_table':
+                    $val = preg_replace('/[^a-z0-9_]/i', '', $val);
+                    $val = substr($val, 0, 20);
+                    $q[$key] = $val;
+                    break;
+                case 'gr_id':
+                    $val = preg_replace('/[^a-z0-9_]/i', '', $val);
+                    $q[$key] = $val;
+                    break;
+                default:
+                    $val = clean_xss_tags($val);
+                    $q[$key] = $val;
+                    break;
+            }
+        }
+
+        if($amp)
+            $sep = '&amp;';
+        else
+            $sep ='&';
+
+        $str = http_build_query($q, '', $sep);
+    } else {
+        $str = clean_xss_tags($qstr);
+    }
+
+    return $str;
+}
 ?>
