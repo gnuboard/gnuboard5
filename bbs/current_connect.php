@@ -12,6 +12,7 @@ $sql = " select a.mb_id, b.mb_nick, b.mb_name, b.mb_email, b.mb_homepage, b.mb_o
             order by a.lo_datetime desc ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
+    $row['lo_url'] = get_text($row['lo_url']);
     $list[$i] = $row;
 
     if ($row['mb_id']) {
