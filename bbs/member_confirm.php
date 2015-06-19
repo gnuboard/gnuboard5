@@ -14,7 +14,7 @@ else
 $g5['title'] = '회원 비밀번호 확인';
 include_once('./_head.sub.php');
 
-$url = $_GET['url'];
+$url = clean_xss_tags($_GET['url']);
 
 // url 체크
 check_url_host($url);
