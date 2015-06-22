@@ -35,7 +35,7 @@ if (isset($_GET['qorder']))  {
     $qorder = '';
 }
 
-if(!($qname || $nexplan || $qid))
+if(!($qname || $qexplan || $qid))
     $search_all = true;
 
 // 검색범위 checkbox 처리
