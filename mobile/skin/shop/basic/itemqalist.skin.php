@@ -85,7 +85,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 
             <dl class="sqa_dl">
                 <dt>작성자</dt>
-                <dd><?php echo $row['iq_name']; ?></dd>
+                <dd><?php echo get_text($row['iq_name']); ?></dd>
                 <dt>작성일</dt>
                 <dd><?php echo substr($row['iq_time'],0,10); ?></dd>
                 <dt>상태</dt>

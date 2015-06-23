@@ -56,7 +56,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         </div>
 
         <section class="sps_section">
-            <h2><?php echo $row['is_subject']; ?></h2>
+            <h2><?php echo get_text($row['is_subject']); ?></h2>
 
             <dl class="sps_dl">
                 <dt>작성자</dt>
