@@ -389,7 +389,7 @@ function get_max_value($arr)
                 ?>
                 <li>
                     <span class="oneq_cate oneq_span"><?php echo get_text($row['qa_category']); ?></span>
-                    <a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank" class="oneq_link"><?php echo cut_str($row['qa_subject'],40); ?></a>
+                    <a href="<?php echo G5_BBS_URL; ?>/qaview.php?qa_id=<?php echo $row['qa_id']; ?>" target="_blank" class="oneq_link"><?php echo conv_subject($row['qa_subject'],40); ?></a>
                     <?php echo $name; ?>
                 </li>
                 <?php
@@ -426,7 +426,7 @@ function get_max_value($arr)
                     $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row1['mb_email'], $row1['mb_homepage']);
                 ?>
                 <li>
-                    <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>" class="qna_link"><?php echo cut_str($row['iq_subject'],40); ?></a>
+                    <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>" class="qna_link"><?php echo conv_subject($row['iq_subject'],40); ?></a>
                     <?php echo $name; ?>
                 </li>
                 <?php
@@ -463,7 +463,7 @@ function get_max_value($arr)
                 $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row1['mb_email'], $row1['mb_homepage']);
             ?>
                 <li>
-                    <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>" class="ps_link"><?php echo cut_str($row['is_subject'],40); ?></a>
+                    <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>" class="ps_link"><?php echo conv_subject($row['is_subject'],40); ?></a>
                     <?php echo $name; ?>
                 </li>
             <?php

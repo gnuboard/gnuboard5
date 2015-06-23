@@ -123,8 +123,8 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row['mb_email'], $row['mb_homepage']);
         $answer = $row['iq_answer'] ? 'Y' : '&nbsp;';
-        $iq_question = get_view_thumbnail($row['iq_question'], 300);
-        $iq_answer = $row['iq_answer'] ? get_view_thumbnail($row['iq_answer'], 300) : "답변이 등록되지 않았습니다.";
+        $iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), 300);
+        $iq_answer = $row['iq_answer'] ? get_view_thumbnail(conv_content($row['iq_answer'], 1), 300) : "답변이 등록되지 않았습니다.";
 
         $bg = 'bg'.($i%2);
      ?>
@@ -136,7 +136,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         </td>
         <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str($row['it_name'],30); ?></a></td>
         <td>
-            <a href="#" class="qa_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $row['iq_subject']; ?></a>
+            <a href="#" class="qa_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo get_text($row['iq_subject']); ?></a>
             <div id="qa_div<?php echo $i; ?>" class="qa_div" style="display:none;">
                 <strong>문의내용</strong><br>
                 <?php echo $iq_question; ?>
@@ -147,7 +147,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <td class="td_name"><?php echo $name; ?></td>
         <td class="td_boolean"><?php echo $answer; ?></td>
         <td class="td_mngsmall">
-            <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['iq_subject']; ?> </span>수정</a>
+            <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo get_text($row['iq_subject']); ?> </span>수정</a>
         </td>
     </tr>
     <?php

@@ -124,7 +124,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         $row['is_subject'] = cut_str($row['is_subject'], 30, "...");
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row['mb_email'], $row['mb_homepage']);
-        $is_content = get_view_thumbnail($row['is_content'], 300);
+        $is_content = get_view_thumbnail(conv_content($row['is_content'], 1), 300);
 
         $bg = 'bg'.($i%2);
     ?>
@@ -139,7 +139,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
         <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?><?php echo cut_str($row['it_name'],30); ?></a></td>
         <td class="td_name"><?php echo $name; ?></td>
         <td class="sit_use_subject">
-            <a href="#" class="use_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo $row['is_subject']; ?></a>
+            <a href="#" class="use_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo get_text($row['is_subject']); ?></a>
             <div id="use_div<?php echo $i; ?>" class="use_div" style="display:none;">
                 <?php echo $is_content; ?>
             </div>
@@ -159,7 +159,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</
             <input type="checkbox" name="is_confirm[<?php echo $i; ?>]" <?php echo ($row['is_confirm'] ? 'checked' : ''); ?> value="1" id="confirm_<?php echo $i; ?>">
         </td>
         <td class="td_mngsmall">
-            <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['is_subject']; ?> </span>수정</a>
+            <a href="./itemuseform.php?w=u&amp;is_id=<?php echo $row['is_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo get_text($row['is_subject']); ?> </span>수정</a>
         </td>
     </tr>
 
