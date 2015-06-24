@@ -896,8 +896,8 @@ function title_sort($col, $type=0)
             }
         }
     }
-    #return "$_SERVER[PHP_SELF]?$q1&amp;$q2&amp;page=$page";
-    return "{$_SERVER['PHP_SELF']}?$q1&amp;$q2&amp;page=$page";
+    #return "$_SERVER[SCRIPT_NAME]?$q1&amp;$q2&amp;page=$page";
+    return "{$_SERVER['SCRIPT_NAME']}?$q1&amp;$q2&amp;page=$page";
 }
 
 

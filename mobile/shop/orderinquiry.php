@@ -64,7 +64,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     include G5_MSHOP_PATH.'/orderinquiry.sub.php';
     ?>
 
-    <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+    <?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
 </div>
 
 <?php

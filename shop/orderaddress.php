@@ -7,7 +7,7 @@ if(!$is_member)
 if($w == 'd') {
     $sql = " delete from {$g5['g5_shop_order_address_table']} where mb_id = '{$member['mb_id']}' and ad_id = '$ad_id' ";
     sql_query($sql);
-    goto_url($_SERVER['PHP_SELF']);
+    goto_url($_SERVER['SCRIPT_NAME']);
 }
 
 $sql_common = " from {$g5['g5_shop_order_address_table']} where mb_id = '{$member['mb_id']}' ";
@@ -89,7 +89,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
             <td class="td_mng">
                 <input type="hidden" value="<?php echo $addr; ?>">
                 <button type="button" class="sel_address">선택</button>
-                <a href="<?php echo $_SERVER['PHP_SELF']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" class="del_address">삭제</a>
+                <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" class="del_address">삭제</a>
             </td>
         </tr>
         <?php
@@ -106,7 +106,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 </div>
 </form>
 
-<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
 
 <script>
 $(function() {

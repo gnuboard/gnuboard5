@@ -38,7 +38,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
                 <div class="addr_btn">
                     <input type="hidden" value="<?php echo $addr; ?>">
                     <button type="button" id="btn_sel" class="sel_address">선택</button>
-                    <a href="<?php echo $_SERVER['PHP_SELF']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" id="btn_del" class="del_address">삭제</a>
+                    <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?w=d&amp;ad_id=<?php echo $row['ad_id']; ?>" id="btn_del" class="del_address">삭제</a>
                 </div>
             </li>
             <?php
@@ -54,7 +54,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
 </div>
 </form>
 
-<?php echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
 
 <script>
 $(function() {

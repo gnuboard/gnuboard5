@@ -56,7 +56,7 @@ $result = sql_query($sql);
 $qstr1 = 'ev_id='.$ev_id.'&amp;sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search;
 $qstr  = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
+$listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
 // 이벤트제목
 if($ev_id) {
@@ -72,7 +72,7 @@ if($ev_id) {
 <form name="flist" class="local_sch01 local_sch" autocomplete="off">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <label for="ev_id" class="sound_only">이벤트</label>
-<select name="ev_id" id="ev_id" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<select name="ev_id" id="ev_id" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>">
     <?php
     // 이벤트 옵션처리
     $event_option = "<option value=''>이벤트를 선택하세요</option>";
@@ -192,7 +192,7 @@ if($ev_id) {
 
 </form>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
 
 <script>
 function fitemeventlistupdatecheck(f)

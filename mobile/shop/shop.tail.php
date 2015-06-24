@@ -31,7 +31,7 @@ $admin = get_admin("super");
 
 <?php
 $sec = get_microtime() - $begin_time;
-$file = $_SERVER['PHP_SELF'];
+$file = $_SERVER['SCRIPT_NAME'];
 
 if ($config['cf_analytics']) {
     echo $config['cf_analytics'];

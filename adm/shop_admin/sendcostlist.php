@@ -86,7 +86,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </form>
 </section>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
 
 <section id="sendcost_postal">
     <h2 class="h2_frm">추가배송비 등록</h2>

@@ -62,7 +62,7 @@ include_once('./_head.php');
     ?>
 
     <?php
-    echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page=');
+    echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page=');
     ?>
 </div>
 <!-- } 상품 목록 끝 -->

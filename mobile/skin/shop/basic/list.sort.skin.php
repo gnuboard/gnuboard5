@@ -1,7 +1,7 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-$sct_sort_href = $_SERVER['PHP_SELF'].'?';
+$sct_sort_href = $_SERVER['SCRIPT_NAME'].'?';
 if($ca_id)
     $sct_sort_href .= 'ca_id='.$ca_id;
 else if($ev_id)

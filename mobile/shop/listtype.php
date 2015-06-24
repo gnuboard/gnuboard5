@@ -69,7 +69,7 @@ else
 
 <?php
 $qstr .= '&amp;type='.$type.'&amp;sort='.$sort;
-echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page=");
+echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page=");
 ?>
 
 <?php

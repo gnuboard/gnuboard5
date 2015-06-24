@@ -111,7 +111,7 @@ $result = sql_query($sql);
 $qstr1 = "od_status=".urlencode($od_status)."&amp;od_settle_case=".urlencode($od_settle_case)."&amp;od_misu=$od_misu&amp;od_cancel_price=$od_cancel_price&amp;od_refund_price=$od_refund_price&amp;od_receipt_point=$od_receipt_point&amp;od_coupon=$od_coupon&amp;fr_date=$fr_date&amp;to_date=$to_date&amp;sel_field=$sel_field&amp;search=$search&amp;save_search=$search";
 $qstr = "$qstr1&amp;sort1=$sort1&amp;sort2=$sort2&amp;page=$page";
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
+$listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
 // 주문삭제 히스토리 테이블 필드 추가
 if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ", false)) {
@@ -347,7 +347,7 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         </td>
         <td headers="th_odrer" class="td_name"><?php echo $mb_nick; ?></td>
         <td headers="th_odrertel" class="td_tel"><?php echo get_text($row['od_tel']); ?></td>
-        <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo get_text($row['od_b_name']); ?>"><?php echo get_text($row['od_b_name']); ?></a></td>
+        <td headers="th_recvr" class="td_name"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=od_b_name&amp;search=<?php echo get_text($row['od_b_name']); ?>"><?php echo get_text($row['od_b_name']); ?></a></td>
         <td rowspan="3" class="td_numsum"><?php echo number_format($row['od_cart_price'] + $row['od_send_cost'] + $row['od_send_cost2']); ?></td>
         <td rowspan="3" class="td_numincome"><?php echo number_format($row['od_receipt_price']); ?></td>
         <td rowspan="3" class="td_numcancel<?php echo $td_color; ?>"><?php echo number_format($row['od_cancel_price']); ?></td>
@@ -363,10 +363,10 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
             <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo $row['od_settle_case'] ?>">
             <?php echo $s_receipt_way; ?>
         </td> -->
-        <!-- <td headers="th_odrid" class="td_name"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a></td> -->
+        <!-- <td headers="th_odrid" class="td_name"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a></td> -->
         <td headers="th_odrid">
             <?php if ($row['mb_id']) { ?>
-            <a href="<?php echo $_SERVER['PHP_SELF']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a>
+            <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a>
             <?php } else { ?>
             비회원
             <?php } ?>
@@ -475,7 +475,7 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
 
 </form>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
 
 <script>
 $(function(){

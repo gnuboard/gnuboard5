@@ -222,7 +222,7 @@ if ($is_admin) {
         if($qfrom && $qto) $query_string .= '&amp;qfrom='.$qfrom.'&amp;qto='.$qto;
         $query_string .= '&amp;qcaid='.$qcaid.'&amp;q='.urlencode($q);
         $query_string .='&amp;qsort='.$qsort.'&amp;qorder='.$qorder;
-        echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$query_string.'&amp;page=');
+        echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$query_string.'&amp;page=');
         ?>
     </div>
     <!-- } 검색결과 끝 -->

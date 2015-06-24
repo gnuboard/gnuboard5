@@ -79,7 +79,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
             $com_name = '커뮤니티';
 
             if($default['de_shop_layout_use']) {
-                if(!preg_match('#'.G5_SHOP_DIR.'/#', $_SERVER['PHP_SELF'])) {
+                if(!preg_match('#'.G5_SHOP_DIR.'/#', $_SERVER['SCRIPT_NAME'])) {
                     $com_href = G5_SHOP_URL;
                     $com_name = '쇼핑몰';
                 }

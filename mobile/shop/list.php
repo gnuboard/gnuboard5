@@ -105,7 +105,7 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
     <?php
     $qstr1 .= 'ca_id='.$ca_id;
     $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
-    echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr1.'&amp;page=');
+    echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr1.'&amp;page=');
     ?>
 
     <?php
