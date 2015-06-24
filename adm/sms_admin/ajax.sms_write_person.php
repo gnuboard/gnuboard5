@@ -131,7 +131,7 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
     <span class="pg" id="person_pg"></span>
 </nav>
 
-<form name="search_form" id="sms_person_form" method="get" action="<?php echo $_SERVER['PHP_SELF']?>">
+<form name="search_form" id="sms_person_form" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']?>">
 <input type="hidden" name="total_pg" value="<?php echo $total_page?>">
 <input type="hidden" name="page" value="<?php echo $page?>">
 
