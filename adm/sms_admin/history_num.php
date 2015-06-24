@@ -27,7 +27,7 @@ $vnum = $total_count - (($page-1) * $page_size);
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<form name="search_form" method="get" action="<?echo $_SERVER['PHP_SELF']?>" class="local_sch01 local_sch" >
+<form name="search_form" method="get" action="<?echo $_SERVER['SCRIPT_NAME']?>" class="local_sch01 local_sch" >
 <label for="st" class="sound_only">검색대상</label>
 <select name="st" id="st">
     <option value="hs_name"<?php echo get_selected('hs_name', $st); ?>>이름</option>
@@ -100,7 +100,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     </table>
 </div>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF']."?st=$st&amp;sv=$sv&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME']."?st=$st&amp;sv=$sv&amp;page="); ?>
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

@@ -745,7 +745,7 @@ function subject_sort_link($col, $query_string='', $flag='asc')
     $arr_query[] = 'page='.$page;
     $qstr = implode("&amp;", $arr_query);
 
-    return "<a href=\"{$_SERVER['PHP_SELF']}?{$qstr}\">";
+    return "<a href=\"{$_SERVER['SCRIPT_NAME']}?{$qstr}\">";
 }
 
 
@@ -1454,7 +1454,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
 
     if ($error)
-        $result = @mysql_query($sql, $g5['connect_db']) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
+        $result = @mysql_query($sql, $g5['connect_db']) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
     else
         $result = @mysql_query($sql, $g5['connect_db']);
 
@@ -1466,7 +1466,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
 function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR)
 {
     $result = sql_query($sql, $error);
-    //$row = @sql_fetch_array($result) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER['PHP_SELF']");
+    //$row = @sql_fetch_array($result) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER['SCRIPT_NAME']");
     $row = sql_fetch_array($result);
     return $row;
 }

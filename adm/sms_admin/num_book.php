@@ -107,7 +107,7 @@ function no_hp_click(val)
     <span class="ov_listall">거부 <?php echo number_format($reject_count)?>명</span>
 </div>
 
-<form name="search_form" method="get" action="<?php echo $_SERVER['PHP_SELF']?>" class="local_sch01 local_sch">
+<form name="search_form" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']?>" class="local_sch01 local_sch">
 <input type="hidden" name="bg_no" value="<?php echo $bg_no?>" >
 <label for="st" class="sound_only">검색대상</label>
 <select name="st" id="st">
@@ -122,7 +122,7 @@ function no_hp_click(val)
 
 <form name="search_form" class="local_sch01 local_sch">
 <label for="bg_no" class="sound_only">그룹명</label>
-<select name="bg_no" id="bg_no" onchange="location.href='<?php echo $_SERVER['PHP_SELF']?>?bg_no='+this.value;">
+<select name="bg_no" id="bg_no" onchange="location.href='<?php echo $_SERVER['SCRIPT_NAME']?>?bg_no='+this.value;">
     <option value=""<?php echo get_selected('', $bg_no); ?>> 전체 </option>
     <option value="<?php echo $no_group['bg_no']?>"<?php echo get_selected($bg_no, $no_group['bg_no']); ?>> <?php echo $no_group['bg_name']?> (<?php echo number_format($no_group['bg_count'])?> 명) </option>
     <?php for($i=0; $i<count($group); $i++) {?>
@@ -256,7 +256,7 @@ function select_copy(sw, f) {
 }
 </script>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF']."?bg_no=$bg_no&amp;st=$st&amp;sv=$sv&amp;ap=$ap&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME']."?bg_no=$bg_no&amp;st=$st&amp;sv=$sv&amp;ap=$ap&amp;page="); ?>
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
