@@ -135,7 +135,7 @@ if ($stx) {
             $sch_all = "";
             if ($onetable == $g5_search['tables'][$i]) $sch_class = "class=sch_on";
             else $sch_all = "class=sch_on";
-            $str_board_list .= '<li><a href="'.$_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g5_search['tables'][$i].'" '.$sch_class.'><strong>'.$row2['bo_subject'].'</strong><span class="cnt_cmt">'.$row['cnt'].'</span></a></li>';
+            $str_board_list .= '<li><a href="'.$_SERVER['SCRIPT_NAME'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g5_search['tables'][$i].'" '.$sch_class.'><strong>'.$row2['bo_subject'].'</strong><span class="cnt_cmt">'.$row['cnt'].'</span></a></li>';
         }
     }
 
@@ -217,7 +217,7 @@ if ($stx) {
         $from_record = 0;
     }
 
-    $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;srows='.$srows.'&amp;onetable='.$onetable.'&amp;page=');
+    $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;srows='.$srows.'&amp;onetable='.$onetable.'&amp;page=');
 }
 
 $group_select = '<label for="gr_id" class="sound_only">게시판 그룹선택</label><select name="gr_id" id="gr_id" class="select"><option value="">전체 분류';

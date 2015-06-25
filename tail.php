@@ -38,30 +38,8 @@ if (G5_IS_MOBILE) {
 </div>
 
 <?php
-if(G5_DEVICE_BUTTON_DISPLAY && !G5_IS_MOBILE) {
-    $seq = 0;
-    $p = parse_url(G5_URL);
-    $href = $p['scheme'].'://'.$p['host'];
-    if(isset($p['port']) && $p['port'])
-        $href .= ':'.$p['port'];
-    $href .= $_SERVER['PHP_SELF'];
-    if($_SERVER['QUERY_STRING']) {
-        $sep = '?';
-        foreach($_GET as $key=>$val) {
-            if($key == 'device')
-                continue;
-
-            $href .= $sep.$key.'='.strip_tags($val);
-            $sep = '&amp;';
-            $seq++;
-        }
-    }
-    if($seq)
-        $href .= '&amp;device=mobile';
-    else
-        $href .= '?device=mobile';
-?>
-<a href="<?php echo $href; ?>" id="device_change">모바일 버전으로 보기</a>
+if(G5_DEVICE_BUTTON_DISPLAY && !G5_IS_MOBILE) { ?>
+<a href="<?php echo get_device_change_url(); ?>" id="device_change">모바일 버전으로 보기</a>
 <?php
 }
 

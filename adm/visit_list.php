@@ -102,7 +102,7 @@ if (isset($domain))
     $qstr .= "&amp;domain=$domain";
 $qstr .= "&amp;page=";
 
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr");
 echo $pagelist;
 
 include_once('./admin.tail.php');
