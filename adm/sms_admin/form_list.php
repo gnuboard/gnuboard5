@@ -109,7 +109,7 @@ function multi_update(sel)
 <div class="local_sch01 local_sch sms_preset_sch">
     <form>
     <label for="fg_no" class="sound_only">그룹명</label>
-    <select name="fg_no" onchange="location.href='<?php echo $_SERVER['PHP_SELF']?>?fg_no='+this.value;">
+    <select name="fg_no" onchange="location.href='<?php echo $_SERVER['SCRIPT_NAME']?>?fg_no='+this.value;">
         <option value="" <?php echo $fg_no?'':'selected'?>> 전체 </option>
         <option value="0" <?php echo $fg_no=='0'?'selected':''?>> 미분류 (<?php echo number_format($no_count)?>) </option>
         <?php for($i=0; $i<count($group); $i++) {?>
@@ -118,7 +118,7 @@ function multi_update(sel)
     </select>
     </form>
 
-    <form name="search_form" method="get" action="<?php echo $_SERVER['PHP_SELF']?>">
+    <form name="search_form" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']?>">
     <input type="hidden" name="fg_no" value="<?php echo $fg_no;?>">
     <label for="st" class="sound_only">검색대상</label>
     <select name="st" id="st">
@@ -231,7 +231,7 @@ function select_copy(sw, f) {
 }
 </script>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF']."?fg_no=$fg_no&amp;st=$st&amp;sv=$sv&amp;page="); ?>
+<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME']."?fg_no=$fg_no&amp;st=$st&amp;sv=$sv&amp;page="); ?>
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

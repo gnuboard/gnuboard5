@@ -79,7 +79,7 @@ if( count($faq_master_list) ){
     ?>
 </div>
 
-<?php echo get_paging($page_rows, $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;page='); ?>
+<?php echo get_paging($page_rows, $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page='); ?>
 
 <?php
 // 하단 HTML

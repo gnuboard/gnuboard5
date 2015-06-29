@@ -23,7 +23,7 @@ $no_count = $res['cnt'];
 <ul class="emo_list">
 </ul>
 
-<form name="emo_sch" id="emo_sch" method="get" action="<?php echo $_SERVER['PHP_SELF']?>">
+<form name="emo_sch" id="emo_sch" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']?>">
 <input type="hidden" name="fg_no" value="<?php echo $fg_no?>">
 <input type="hidden" name="page" id="hidden_page" >
 <input type="hidden" name="fg_no" id="hidden_fg_no" >

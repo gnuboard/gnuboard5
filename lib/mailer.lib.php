@@ -5,16 +5,16 @@ include_once(G5_PHPMAILER_PATH.'/class.phpmailer.php');
 
 // 메일 보내기 (파일 여러개 첨부 가능)
 // type : text=0, html=1, text+html=2
-function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="") 
-{ 
-    global $config; 
-    global $g5; 
+function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="")
+{
+    global $config;
+    global $g5;
 
-    // 메일발송 사용을 하지 않는다면 
-    if (!$config['cf_email_use']) return; 
+    // 메일발송 사용을 하지 않는다면
+    if (!$config['cf_email_use']) return;
 
-    if ($type != 1) 
-        $content = nl2br($content); 
+    if ($type != 1)
+        $content = nl2br($content);
 
     $mail = new PHPMailer(); // defaults to using php "mail()"
     if (defined('G5_SMTP') && G5_SMTP) {
@@ -27,13 +27,13 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
     $mail->AltBody = ""; // optional, comment out and test
     $mail->MsgHTML($content);
     $mail->AddAddress($to);
-    if ($cc) 
+    if ($cc)
         $mail->AddCC($cc);
-    if ($bcc) 
+    if ($bcc)
         $mail->AddBCC($bcc);
     //print_r2($file); exit;
-    if ($file != "") { 
-        foreach ($file as $f) { 
+    if ($file != "") {
+        foreach ($file as $f) {
             $mail->AddAttachment($f['path'], $f['name']);
         }
     }
@@ -61,27 +61,27 @@ function attach_file($filename, $tmp_name)
 /*
 // 메일 보내기 (파일 여러개 첨부 가능)
 // type : text=0, html=1, text+html=2
-function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="") 
-{ 
-    global $config; 
-    global $g5; 
+function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc="", $bcc="")
+{
+    global $config;
+    global $g5;
 
-    // 메일발송 사용을 하지 않는다면 
-    if (!$config['cf_email_use']) return; 
+    // 메일발송 사용을 하지 않는다면
+    if (!$config['cf_email_use']) return;
 
-    $boundary = uniqid(time()); 
+    $boundary = uniqid(time());
 
     $header = "Message-ID: <".generate_mail_id(preg_replace("/@.+$/i","",$to)).">\r\n".
               "From:=?utf-8?B?".base64_encode($fname)."?=<$fmail>\r\n";
-    if ($cc)  $header .= "Cc: $cc\n"; 
-    if ($bcc) $header .= "Bcc: $bcc\n"; 
-    $header .= "MIME-Version: 1.0\n"; 
-    $header .= "X-Mailer: SIR Mailer 0.94 : {$_SERVER['SERVER_ADDR']} : {$_SERVER['REMOTE_ADDR']} : ".G5_URL." : {$_SERVER['PHP_SELF']} : {$_SERVER['HTTP_REFERER']} \n"; 
+    if ($cc)  $header .= "Cc: $cc\n";
+    if ($bcc) $header .= "Bcc: $bcc\n";
+    $header .= "MIME-Version: 1.0\n";
+    $header .= "X-Mailer: SIR Mailer 0.94 : {$_SERVER['SERVER_ADDR']} : {$_SERVER['REMOTE_ADDR']} : ".G5_URL." : {$_SERVER['SCRIPT_NAME']} : {$_SERVER['HTTP_REFERER']} \n";
     $header .= "Date: ".date ("D, j M Y H:i:s T",time())."\r\n".
                "To: $to\r\n".
                "Subject: =?utf-8?B?".base64_encode($subject)."?=\r\n";
 
-    if ($file == "") { 
+    if ($file == "") {
         $header .= "Content-Type: MULTIPART/ALTERNATIVE;\n".
                    "              BOUNDARY=\"$boundary\"\n\n";
     } else {
@@ -89,39 +89,39 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
                    "              BOUNDARY=\"$boundary\"\n\n";
     }
 
-    if ($type == 2) 
-        $content = nl2br($content); 
+    if ($type == 2)
+        $content = nl2br($content);
 
     $strip_content  = stripslashes(trim($content));
     $encode_content = chunk_split(base64_encode($strip_content));
 
     $body = "";
     $body .= "\n--$boundary\n";
-    $body .= "Content-Type: TEXT/PLAIN; charset=utf-8\n"; 
-    $body .= "Content-Transfer-Encoding: BASE64\n\n"; 
-    $body .= $encode_content; 
+    $body .= "Content-Type: TEXT/PLAIN; charset=utf-8\n";
+    $body .= "Content-Transfer-Encoding: BASE64\n\n";
+    $body .= $encode_content;
     $body .= "\n--$boundary\n";
 
-    if ($type) { 
-        $body .= "Content-Type: TEXT/HTML; charset=utf-8\n"; 
-        $body .= "Content-Transfer-Encoding: BASE64\n\n"; 
-        $body .= $encode_content; 
+    if ($type) {
+        $body .= "Content-Type: TEXT/HTML; charset=utf-8\n";
+        $body .= "Content-Transfer-Encoding: BASE64\n\n";
+        $body .= $encode_content;
         $body .= "\n--$boundary\n";
     }
 
-    if ($file != "") { 
-        foreach ($file as $f) { 
-            $body .= "n--$boundary\n"; 
-            $body .= "Content-Type: APPLICATION/OCTET-STREAM; name=$fname\n"; 
-            $body .= "Content-Transfer-Encoding: BASE64\n"; 
-            $body .= "Content-Disposition: inline; filename=$fname\n"; 
+    if ($file != "") {
+        foreach ($file as $f) {
+            $body .= "n--$boundary\n";
+            $body .= "Content-Type: APPLICATION/OCTET-STREAM; name=$fname\n";
+            $body .= "Content-Transfer-Encoding: BASE64\n";
+            $body .= "Content-Disposition: inline; filename=$fname\n";
 
-            $body .= "\n"; 
-            $body .= chunk_split(base64_encode($f['data'])); 
-            $body .= "\n"; 
-        } 
-        $body .= "--$boundary--\n"; 
-    } 
+            $body .= "\n";
+            $body .= chunk_split(base64_encode($f['data']));
+            $body .= "\n";
+        }
+        $body .= "--$boundary--\n";
+    }
 
     $mails['to'] = $to;
     $mails['from'] = $fmail;
@@ -129,7 +129,7 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
 
     if (defined(G5_SMTP)) {
         ini_set('SMTP', G5_SMTP);
-        @mail($to, $subject, $body, $header, "-f $fmail"); 
+        @mail($to, $subject, $body, $header, "-f $fmail");
     } else {
         new maildaemon($mails);
     }
@@ -306,7 +306,7 @@ class maildaemon {
   #  $t -> 1 (debug of socket open,close)
   #        0 (regular smtp message)
   #  $p -> 1 (print detail debug)
-  # 
+  #
   # return 1 -> success
   # return 0 -> failed
   #
@@ -381,7 +381,7 @@ function generate_mail_id($uid) {
 function mail_header($to,$from,$title,$mta=0) {
   global $langs,$boundary;
 
-  # mail header 를 작성 
+  # mail header 를 작성
   $boundary = get_boundary_msg();
   $header = "Message-ID: <".generate_mail_id(preg_replace("/@.+$/i","",$to)).">\r\n".
             "From:=?utf-8?B?".base64_encode('보내는사람')."?=<$from>\r\n".

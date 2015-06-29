@@ -6,7 +6,7 @@ include_once(G5_PATH.'/head.sub.php');
 if (!$is_member)
 {
     $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
-    echo '<script> alert(\'회원만 접근 가능합니다.\'); top.location.href = \''.$href.'\'; </script>';
+    echo '<script> alert(\'회원만 접근 가능합니다.\'); top.location.href = \''.str_replace('&amp;', '&', $href).'\'; </script>';
     exit;
 }
 
@@ -31,6 +31,8 @@ if ($row['cnt'])
     </noscript>';
     exit;
 }
+
+$wr_content = trim($_POST['wr_content']);
 
 // 덧글이 넘어오고 코멘트를 쓸 권한이 있다면
 if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))

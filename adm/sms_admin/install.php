@@ -10,7 +10,7 @@ $setup = $_POST['setup'];
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
-<form name="hidden_form" method="post" action="<?php echo $_SERVER['PHP_SELF']?>">
+<form name="hidden_form" method="post" action="<?php echo $_SERVER['SCRIPT_NAME']?>">
 <input type="hidden" name="setup">
 </form>
 <?php
