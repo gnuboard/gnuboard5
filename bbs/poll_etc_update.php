@@ -4,8 +4,12 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 if ($w == '')
 {
+    $po_id   = $_POST['po_id'];
+    $pc_name = $_POST['pc_name'];
+    $pc_idea = $_POST['pc_idea'];
+
     $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$po_id}' ");
-    if (!$po[po_id])
+    if (!$po['po_id'])
         alert('po_id 값이 제대로 넘어오지 않았습니다.');
 
     $tmp_row = sql_fetch(" select max(pc_id) as max_pc_id from {$g5['poll_etc_table']} ");
