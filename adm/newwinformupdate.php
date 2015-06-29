@@ -5,23 +5,23 @@ include_once('./_common.php');
 if ($w == "u" || $w == "d")
     check_demo();
 
-if ($W == 'd')
+if ($w == 'd')
     auth_check($auth[$sub_menu], "d");
 else
     auth_check($auth[$sub_menu], "w");
 
-$sql_common = " nw_division = '$nw_division',
-                nw_device = '$nw_device',
-                nw_begin_time = '$nw_begin_time',
-                nw_end_time = '$nw_end_time',
-                nw_disable_hours = '$nw_disable_hours',
-                nw_left = '$nw_left',
-                nw_top = '$nw_top',
-                nw_height = '$nw_height',
-                nw_width = '$nw_width',
-                nw_subject = '$nw_subject',
-                nw_content = '$nw_content',
-                nw_content_html = '$nw_content_html' ";
+$sql_common = " nw_division = '{$_POST['nw_division']}',
+                nw_device = '{$_POST['nw_device']}',
+                nw_begin_time = '{$_POST['nw_begin_time']}',
+                nw_end_time = '{$_POST['nw_end_time']}',
+                nw_disable_hours = '{$_POST['nw_disable_hours']}',
+                nw_left = '{$_POST['nw_left']}',
+                nw_top = '{$_POST['nw_top']}',
+                nw_height = '{$_POST['nw_height']}',
+                nw_width = '{$_POST['nw_width']}',
+                nw_subject = '{$_POST['nw_subject']}',
+                nw_content = '{$_POST['nw_content']}',
+                nw_content_html = '{$_POST['nw_content_html']}' ";
 
 if($w == "")
 {
