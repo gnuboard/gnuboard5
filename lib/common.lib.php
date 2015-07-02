@@ -2762,6 +2762,11 @@ function member_delete($mb_id)
 
     $sql = " select mb_name, mb_nick, mb_ip, mb_recommend, mb_memo, mb_level from {$g5['member_table']} where mb_id= '".$mb_id."' ";
     $mb = sql_fetch($sql);
+
+    // 이미 삭제된 회원은 제외
+    if(preg_match('#^[0-9]{8}.*삭제함#', $mb['mb_memo']))
+        return;
+
     if ($mb['mb_recommend']) {
         $row = sql_fetch(" select count(*) as cnt from {$g5['member_table']} where mb_id = '".addslashes($mb['mb_recommend'])."' ");
         if ($row['cnt'])
@@ -2769,7 +2774,7 @@ function member_delete($mb_id)
     }
 
     // 회원자료는 정보만 없앤 후 아이디는 보관하여 다른 사람이 사용하지 못하도록 함 : 061025
-    $sql = " update {$g5['member_table']} set mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G5_SERVER_TIME)." 삭제함\n{$mb['mb_memo']}', mb_leave_date = '".date('Ymd', G5_SERVER_TIME)."' where mb_id = '{$mb_id}' ";
+    $sql = " update {$g5['member_table']} set mb_password = '', mb_level = 1, mb_email = '', mb_homepage = '', mb_tel = '', mb_hp = '', mb_zip1 = '', mb_zip2 = '', mb_addr1 = '', mb_addr2 = '', mb_birth = '', mb_sex = '', mb_signature = '', mb_memo = '".date('Ymd', G5_SERVER_TIME)." 삭제함\n{$mb['mb_memo']}' where mb_id = '{$mb_id}' ";
     sql_query($sql);
 
     // 포인트 테이블에서 삭제
