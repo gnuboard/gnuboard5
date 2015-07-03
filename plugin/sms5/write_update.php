@@ -15,10 +15,13 @@ if (!$is_member)
 if ($member['mb_level'] < $sms5['cf_level'])
     alert("회원 {$sms5['cf_level']}레벨 이상만 문자전송이 가능합니다.");
 
-if (!trim($mh_reply))
+$mh_reply   = preg_replace('#[^0-9\-]#', '', trim($mh_reply));
+$mh_message = clean_xss_tags(trim($mh_message));
+
+if (!$mh_reply)
     alert('보내는 번호를 입력해주세요.');
 
-if (!trim($mh_message))
+if (!$mh_message)
     alert('메세지를 입력해주세요.');
 
 if ($is_admin != 'super')

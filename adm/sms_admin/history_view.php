@@ -63,7 +63,7 @@ function all_send()
 }
 </script>
 
-<form name="search_form" method="get" action="<?php echo $_SERVER['PHP_SELF']?>" class="local_sch01 local_sch">
+<form name="search_form" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']?>" class="local_sch01 local_sch">
 <input type="hidden" name="wr_no" value="<?php echo $wr_no?>">
 <input type="hidden" name="wr_renum" value="<?php echo $wr_renum?>">
 <input type="hidden" name="page" value="<?php echo $page?>">
@@ -244,7 +244,7 @@ function all_send()
     </div>
 </div>
 
-<?php echo sms5_sub_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $spage, $total_spage, $_SERVER['PHP_SELF']."?wr_no=$wr_no&amp;wr_renum=$wr_renum&amp;page=$page&amp;st=$st&amp;sv=$sv&amp;sst=$sst&amp;ssv=$ssv", "", "spage"); ?>
+<?php echo sms5_sub_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $spage, $total_spage, $_SERVER['SCRIPT_NAME']."?wr_no=$wr_no&amp;wr_renum=$wr_renum&amp;page=$page&amp;st=$st&amp;sv=$sv&amp;sst=$sst&amp;ssv=$ssv", "", "spage"); ?>
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

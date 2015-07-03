@@ -56,7 +56,7 @@ $sql = " select count(*) as cnt {$sql_common} {$sql_search} and mb_intercept_dat
 $row = sql_fetch($sql);
 $intercept_count = $row['cnt'];
 
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'" class="ov_listall">전체목록</a>';
+$listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 
 $g5['title'] = '회원관리';
 include_once('./admin.head.php');
@@ -158,10 +158,8 @@ $colspan = 16;
 
         if ($is_admin == 'group') {
             $s_mod = '';
-            $s_del = '';
         } else {
             $s_mod = '<a href="./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$row['mb_id'].'">수정</a>';
-            //$s_del = '<a href="javascript:post_delete(\'member_delete.php\', \''.$row['mb_id'].'\');">삭제</a>';
         }
         $s_grp = '<a href="./boardgroupmember_form.php?mb_id='.$row['mb_id'].'">그룹</a>';
 
@@ -224,7 +222,7 @@ $colspan = 16;
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="hp" id="mb_certify_hp_<?php echo $i; ?>" <?php echo $row['mb_certify']=='hp'?'checked':''; ?>>
             <label for="mb_certify_hp_<?php echo $i; ?>">휴대폰</label>
         </td>
-        <td headers="mb_list_mobile" class="td_tel"><?php echo $row['mb_hp']; ?></td>
+        <td headers="mb_list_mobile" class="td_tel"><?php echo get_text($row['mb_hp']); ?></td>
         <td headers="mb_list_auth" class="td_mbstat">
             <?php
             if ($leave_msg || $intercept_msg) echo $leave_msg.' '.$intercept_msg;
@@ -261,7 +259,7 @@ $colspan = 16;
             <label for="mb_intercept_date_<?php echo $i; ?>" class="sound_only">접근차단</label>
             <?php } ?>
         </td>
-        <td headers="mb_list_tel" class="td_tel"><?php echo $row['mb_tel']; ?></td>
+        <td headers="mb_list_tel" class="td_tel"><?php echo get_text($row['mb_tel']); ?></td>
         <td headers="mb_list_point" class="td_num"><a href="point_list.php?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo number_format($row['mb_point']) ?></a></td>
         <td headers="mb_list_join" class="td_date"><?php echo substr($row['mb_datetime'],2,8); ?></td>
     </tr>

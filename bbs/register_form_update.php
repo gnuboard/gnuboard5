@@ -181,7 +181,7 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
 if ($w == '') {
     $sql = " insert into {$g5['member_table']}
                 set mb_id = '{$mb_id}',
-                     mb_password = '".sql_password($mb_password)."',
+                     mb_password = '".get_encrypt_string($mb_password)."',
                      mb_name = '{$mb_name}',
                      mb_nick = '{$mb_nick}',
                      mb_nick_date = '".G5_TIME_YMD."',
@@ -276,7 +276,7 @@ if ($w == '') {
 
     $sql_password = "";
     if ($mb_password)
-        $sql_password = " , mb_password = '".sql_password($mb_password)."' ";
+        $sql_password = " , mb_password = '".get_encrypt_string($mb_password)."' ";
 
     $sql_nick_date = "";
     if ($mb_nick_default != $mb_nick)
@@ -419,7 +419,7 @@ if ($w == '') {
         <meta charset="utf-8">
         <title>회원정보수정</title>
         <body>
-        <form name="fregisterupdate" method="post" action="'.G5_HTTPS_BBS_URL.'/register_form.php">
+        <form name="fregisterupdate" method="post" action="'.G5_HTTP_BBS_URL.'/register_form.php">
         <input type="hidden" name="w" value="u">
         <input type="hidden" name="mb_id" value="'.$mb_id.'">
         <input type="hidden" name="mb_password" value="'.$tmp_password.'">

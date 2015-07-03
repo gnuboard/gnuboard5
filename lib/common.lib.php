@@ -745,7 +745,7 @@ function subject_sort_link($col, $query_string='', $flag='asc')
     $arr_query[] = 'page='.$page;
     $qstr = implode("&amp;", $arr_query);
 
-    return "<a href=\"{$_SERVER['PHP_SELF']}?{$qstr}\">";
+    return "<a href=\"{$_SERVER['SCRIPT_NAME']}?{$qstr}\">";
 }
 
 
@@ -1448,12 +1448,13 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
     // Blind SQL Injection 취약점 해결
     $sql = trim($sql);
     // union의 사용을 허락하지 않습니다.
-    $sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
+    //$sql = preg_replace("#^select.*from.*union.*#i", "select 1", $sql);
+    $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
 
     if ($error)
-        $result = @mysql_query($sql, $g5['connect_db']) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['PHP_SELF']}");
+        $result = @mysql_query($sql, $g5['connect_db']) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
     else
         $result = @mysql_query($sql, $g5['connect_db']);
 
@@ -1465,7 +1466,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR)
 function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR)
 {
     $result = sql_query($sql, $error);
-    //$row = @sql_fetch_array($result) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER['PHP_SELF']");
+    //$row = @sql_fetch_array($result) or die("<p>$sql<p>" . mysql_errno() . " : " .  mysql_error() . "<p>error file : $_SERVER['SCRIPT_NAME']");
     $row = sql_fetch_array($result);
     return $row;
 }
@@ -2429,12 +2430,12 @@ function googl_short_url($longUrl)
     // URL Shortener API ON
     $apiKey = $config['cf_googl_shorturl_apikey'];
 
-    $postData = array('longUrl' => $longUrl, 'key' => $apiKey);
+    $postData = array('longUrl' => $longUrl);
     $jsonData = json_encode($postData);
 
     $curlObj = curl_init();
 
-    curl_setopt($curlObj, CURLOPT_URL, 'https://www.googleapis.com/urlshortener/v1/url');
+    curl_setopt($curlObj, CURLOPT_URL, 'https://www.googleapis.com/urlshortener/v1/url?key='.$apiKey);
     curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($curlObj, CURLOPT_SSL_VERIFYPEER, 0);
     curl_setopt($curlObj, CURLOPT_HEADER, 0);
@@ -2822,5 +2823,168 @@ function insert_popular($field, $str)
         $sql = " insert into {$g5['popular_table']} set pp_word = '{$str}', pp_date = '".G5_TIME_YMD."', pp_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql, FALSE);
     }
+}
+
+// 문자열 암호화
+function get_encrypt_string($str)
+{
+    if(defined('G5_STRING_ENCRYPT_FUNCTION') && G5_STRING_ENCRYPT_FUNCTION) {
+        $encrypt = call_user_func(G5_STRING_ENCRYPT_FUNCTION, $str);
+    } else {
+        $encrypt = sql_password($str);
+    }
+
+    return $encrypt;
+}
+
+// 비밀번호 비교
+function check_password($pass, $hash)
+{
+    $password = get_encrypt_string($pass);
+
+    return ($password === $hash);
+}
+
+// 동일한 host url 인지
+function check_url_host($url, $msg='', $return_url=G5_URL)
+{
+    if(!$msg)
+        $msg = 'url에 타 도메인을 지정할 수 없습니다.';
+
+    $p = parse_url($url);
+    $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
+
+    if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
+        //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
+        if ($p['host'] != $host) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("url에 타 도메인을 지정할 수 없습니다.");'.PHP_EOL;
+            echo 'document.location.href = "'.$return_url.'";'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+            echo '<noscript>'.PHP_EOL;
+            echo '<p>'.$msg.'</p>'.PHP_EOL;
+            echo '<p><a href="'.$return_url.'">돌아가기</a></p>'.PHP_EOL;
+            echo '</noscript>'.PHP_EOL;
+            exit;
+        }
+    }
+}
+
+// QUERY STRING 에 포함된 XSS 태그 제거
+function clean_query_string($query, $amp=true)
+{
+    $qstr = trim($query);
+
+    parse_str($qstr, $out);
+
+    if(is_array($out)) {
+        $q = array();
+
+        foreach($out as $key=>$val) {
+            $key = strip_tags(trim($key));
+            $val = trim($val);
+
+            switch($key) {
+                case 'wr_id':
+                    $val = (int)preg_replace('/[^0-9]/', '', $val);
+                    $q[$key] = $val;
+                    break;
+                case 'sca':
+                    $val = clean_xss_tags($val);
+                    $q[$key] = $val;
+                    break;
+                case 'sfl':
+                    $val = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $val);
+                    $q[$key] = $val;
+                    break;
+                case 'stx':
+                    $val = get_search_string($val);
+                    $q[$key] = $val;
+                    break;
+                case 'sst':
+                    $val = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $val);
+                    $q[$key] = $val;
+                    break;
+                case 'sod':
+                    $val = preg_match("/^(asc|desc)$/i", $val) ? $val : '';
+                    $q[$key] = $val;
+                    break;
+                case 'sop':
+                    $val = preg_match("/^(or|and)$/i", $val) ? $val : '';
+                    $q[$key] = $val;
+                    break;
+                case 'spt':
+                    $val = (int)preg_replace('/[^0-9]/', '', $val);
+                    $q[$key] = $val;
+                    break;
+                case 'page':
+                    $val = (int)preg_replace('/[^0-9]/', '', $val);
+                    $q[$key] = $val;
+                    break;
+                case 'w':
+                    $val = substr($val, 0, 2);
+                    $q[$key] = $val;
+                    break;
+                case 'bo_table':
+                    $val = preg_replace('/[^a-z0-9_]/i', '', $val);
+                    $val = substr($val, 0, 20);
+                    $q[$key] = $val;
+                    break;
+                case 'gr_id':
+                    $val = preg_replace('/[^a-z0-9_]/i', '', $val);
+                    $q[$key] = $val;
+                    break;
+                default:
+                    $val = clean_xss_tags($val);
+                    $q[$key] = $val;
+                    break;
+            }
+        }
+
+        if($amp)
+            $sep = '&amp;';
+        else
+            $sep ='&';
+
+        $str = http_build_query($q, '', $sep);
+    } else {
+        $str = clean_xss_tags($qstr);
+    }
+
+    return $str;
+}
+
+function get_device_change_url()
+{
+    $p = parse_url(G5_URL);
+    $href = $p['scheme'].'://'.$p['host'];
+    if(isset($p['port']) && $p['port'])
+        $href .= ':'.$p['port'];
+    $href .= $_SERVER['SCRIPT_NAME'];
+
+    $q = array();
+    $device = 'device='.(G5_IS_MOBILE ? 'pc' : 'mobile');
+
+    if($_SERVER['QUERY_STRING']) {
+        foreach($_GET as $key=>$val) {
+            if($key == 'device')
+                continue;
+
+            $key = strip_tags($key);
+            $val = strip_tags($val);
+
+            if($key && $val)
+                $q[$key] = $val;
+        }
+    }
+
+    if(!empty($q)) {
+        $query = http_build_query($q, '', '&amp;');
+        $href .= '?'.$query.'&amp;'.$device;
+    } else {
+        $href .= '?'.$device;
+    }
+
+    return $href;
 }
 ?>

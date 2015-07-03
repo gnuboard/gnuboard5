@@ -191,7 +191,7 @@ if ($w == '' || $w == 'r') {
         $wr_name = clean_xss_tags(trim($_POST['wr_name']));
         if (!$wr_name)
             alert('이름은 필히 입력하셔야 합니다.');
-        $wr_password = sql_password($wr_password);
+        $wr_password = get_encrypt_string($wr_password);
         $wr_email = get_email_address(trim($_POST['wr_email']));
         $wr_homepage = clean_xss_tags($wr_homepage);
     }
@@ -327,7 +327,7 @@ if ($w == '' || $w == 'r') {
         $wr_email = get_email_address(trim($_POST['wr_email']));
     }
 
-    $sql_password = $wr_password ? " , wr_password = '".sql_password($wr_password)."' " : "";
+    $sql_password = $wr_password ? " , wr_password = '".get_encrypt_string($wr_password)."' " : "";
 
     $sql_ip = '';
     if (!$is_admin)

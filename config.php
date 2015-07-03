@@ -5,6 +5,7 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
+define('G5_GNUBOARD_VER', '5.0.38');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -164,9 +165,13 @@ define('G5_SMTP', '127.0.0.1');
     기타 상수
 ********************/
 
+// 암호화 함수 지정
+// 사이트 운영 중 설정을 변경하면 로그인이 안되는 등의 문제가 발생합니다.
+define('G5_STRING_ENCRYPT_FUNCTION', 'sql_password');
+
 // SQL 에러를 표시할 것인지 지정
-// 에러를 표시하지 않으려면 FALSE 로 변경
-define('G5_DISPLAY_SQL_ERROR', TRUE);
+// 에러를 표시하려면 TRUE 로 변경
+define('G5_DISPLAY_SQL_ERROR', FALSE);
 
 // escape string 처리 함수 지정
 // addslashes 로 변경 가능
@@ -195,8 +200,8 @@ define('G5_THUMB_PNG_COMPRESS', 5);
 define('G5_IP_DISPLAY', '\\1.♡.\\3.\\4');
 
 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신일때 daum 주소 js
-    define('G5_POSTCODE_JS', '<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.js"></script>');
+    define('G5_POSTCODE_JS', '<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>');
 } else {  //http 통신일때 daum 주소 js
-    define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.js"></script>');
+    define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>');
 }
 ?>

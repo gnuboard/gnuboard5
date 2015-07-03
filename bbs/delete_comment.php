@@ -40,7 +40,7 @@ else if ($is_admin == 'group') { // 그룹관리자
     if ($member['mb_id'] != $write['mb_id'])
         alert('자신의 글이 아니므로 삭제할 수 없습니다.');
 } else {
-    if (sql_password($wr_password) != $write['wr_password'])
+    if (!check_password($wr_password, $write['wr_password']))
         alert('비밀번호가 틀립니다.');
 }
 

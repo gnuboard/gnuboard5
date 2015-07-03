@@ -10,7 +10,7 @@ include_once('./admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 $colspan = 5;
-$listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음으로 (초기화용도)
+$listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처음으로 (초기화용도)
 ?>
 
 <div class="local_sch local_sch01">
@@ -92,17 +92,17 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
         else
             $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $row['vi_ip']);
 
-        if ($brow == '기타') $brow = '<span title="'.$row['vi_agent'].'">'.$brow.'</span>';
-        if ($os == '기타') $os = '<span title="'.$row['vi_agent'].'">'.$os.'</span>';
+        if ($brow == '기타') $brow = '<span title="'.get_text($row['vi_agent']).'">'.$brow.'</span>';
+        if ($os == '기타') $os = '<span title="'.get_text($row['vi_agent']).'">'.$os.'</span>';
 
         $bg = 'bg'.($i%2);
     ?>
     <tr class="<?php echo $bg; ?>">
-        <td class="td_id"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sfl=vi_ip&amp;stx=<?php echo $ip; ?>"><?php echo $ip; ?></a></td>
+        <td class="td_id"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sfl=vi_ip&amp;stx=<?php echo $ip; ?>"><?php echo $ip; ?></a></td>
         <td><?php echo $link.$title; ?></a></td>
         <td class="td_idsmall"><?php echo $brow; ?></td>
         <td class="td_idsmall"><?php echo $os; ?></td>
-        <td class="td_datetime"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?sfl=vi_date&amp;stx=<?php echo $row['vi_date']; ?>"><?php echo $row['vi_date']; ?></a> <?php echo $row['vi_time']; ?></td>
+        <td class="td_datetime"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sfl=vi_date&amp;stx=<?php echo $row['vi_date']; ?>"><?php echo $row['vi_date']; ?></a> <?php echo $row['vi_time']; ?></td>
     </tr>
     <?php } ?>
     <?php if ($i == 0) echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>'; ?>
@@ -111,7 +111,7 @@ $listall = '<a href="'.$_SERVER['PHP_SELF'].'">처음</a>'; //페이지 처음�
 </div>
 
 <?php
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['PHP_SELF'].'?'.$qstr.'&amp;domain='.$domain.'&amp;page=');
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;domain='.$domain.'&amp;page=');
 if ($pagelist) {
     echo $pagelist;
 }

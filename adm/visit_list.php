@@ -75,8 +75,8 @@ $result = sql_query($sql);
         else
             $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $row['vi_ip']);
 
-        if ($brow == '기타') { $brow = '<span title="'.$row['vi_agent'].'">'.$brow.'</span>'; }
-        if ($os == '기타') { $os = '<span title="'.$row['vi_agent'].'">'.$os.'</span>'; }
+        if ($brow == '기타') { $brow = '<span title="'.get_text($row['vi_agent']).'">'.$brow.'</span>'; }
+        if ($os == '기타') { $os = '<span title="'.get_text($row['vi_agent']).'">'.$os.'</span>'; }
 
         $bg = 'bg'.($i%2);
     ?>
@@ -102,7 +102,7 @@ if (isset($domain))
     $qstr .= "&amp;domain=$domain";
 $qstr .= "&amp;page=";
 
-$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['PHP_SELF']}?$qstr");
+$pagelist = get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr");
 echo $pagelist;
 
 include_once('./admin.tail.php');

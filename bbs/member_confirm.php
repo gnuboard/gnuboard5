@@ -14,14 +14,10 @@ else
 $g5['title'] = '회원 비밀번호 확인';
 include_once('./_head.sub.php');
 
-$url = $_GET['url'];
+$url = clean_xss_tags($_GET['url']);
 
-$p = parse_url($url);
-if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
-    //print_r2($p);
-    if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST'])
-        alert('url에 타 도메인을 지정할 수 없습니다.');
-}
+// url 체크
+check_url_host($url);
 
 include_once($member_skin_path.'/member_confirm.skin.php');
 

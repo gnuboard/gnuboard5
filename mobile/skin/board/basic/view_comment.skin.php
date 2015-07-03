@@ -50,7 +50,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         <textarea id="save_comment_<?php echo $comment_id ?>" style="display:none"><?php echo get_text($list[$i]['content1'], 0) ?></textarea>
 
         <?php if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
-            $query_string = str_replace("&", "&amp;", $_SERVER['QUERY_STRING']);
+            $query_string = clean_query_string($_SERVER['QUERY_STRING']);
 
             if($w == 'cu') {
                 $sql = " select wr_id, wr_content from $write_table where wr_id = '$c_id' and wr_is_comment = '1' ";
