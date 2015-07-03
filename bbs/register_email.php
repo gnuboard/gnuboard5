@@ -46,6 +46,6 @@ function fregister_email_submit(f)
     return true;
 }
 </script>
-<?
+<?php
 include_once('./_tail.php');
 ?>
