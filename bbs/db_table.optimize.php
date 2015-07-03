@@ -41,7 +41,9 @@ if($config['cf_memo_del'] > 0) {
 
 // 탈퇴회원 자동 삭제
 if($config['cf_leave_day'] > 0) {
-    $sql = " select mb_id from {$g5['member_table']} where (TO_DAYS('".G5_TIME_YMDHIS."') - TO_DAYS(mb_leave_date)) > '{$config['cf_leave_day']}' ";
+    $sql = " select mb_id from {$g5['member_table']}
+                where (TO_DAYS('".G5_TIME_YMDHIS."') - TO_DAYS(mb_leave_date)) > '{$config['cf_leave_day']}'
+                  and mb_memo not regexp '^[0-9]{8}.*삭제함' ";
     $result = sql_query($sql);
     while ($row=sql_fetch_array($result))
     {

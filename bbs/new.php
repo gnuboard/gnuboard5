@@ -18,7 +18,9 @@ if ($view == "w")
 else if ($view == "c")
     $sql_common .= " and a.wr_id <> a.wr_parent ";
 
-$mb_id = isset($_GET['mb_id']) ? strip_tags($_GET['mb_id']) : "";
+$mb_id = isset($_GET['mb_id']) ? ($_GET['mb_id']) : '';
+$mb_id = substr(preg_replace('#[^a-z0-9_]#i', '', $mb_id), 0, 20);
+
 if ($mb_id) {
     $sql_common .= " and a.mb_id = '{$mb_id}' ";
 }
@@ -28,9 +30,9 @@ $sql = " select count(*) as cnt {$sql_common} ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
-$rows = $config['cf_new_rows'];
+$rows = G5_IS_MOBILE ? $config['cf_mobile_page_rows'] : $config['cf_new_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
-if (!$page) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
+if ($page < 1) $page = 1; // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
 $group_select = '<label for="gr_id" class="sound_only">그룹</label><select name="gr_id" id="gr_id"><option value="">전체그룹';
