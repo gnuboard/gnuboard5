@@ -206,13 +206,7 @@ else
     ?>
 
 </div>
-<script>
-//select 아이폰확대 안되게
-var $viewportMeta = $('meta[name="viewport"]');
-$('input, select, textarea').bind('focus blur', function(event) {
-$viewportMeta.attr('content', 'width=device-width,initial-scale=1,maximum-scale=' +        (event.type == 'blur' ? 10 : 1));
-});
-</script>
+
 <?php
 // 하단 HTML
 echo conv_content($it['it_mobile_tail_html'], 1);
