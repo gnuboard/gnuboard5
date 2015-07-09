@@ -2368,7 +2368,7 @@ function login_url($url='')
 {
     if (!$url) $url = G5_URL;
 
-    return urlencode(clean_xss_tags($url));
+    return urlencode(clean_xss_tags(urldecode($url)));
 }
 
 
