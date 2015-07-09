@@ -110,7 +110,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         <th scope="col" id="sct_imgw">이미지 폭</th>
         <th scope="col" id="sct_imgh">이미지 높이</th>
         <th scope="col" id="sct_imgcol">1행이미지수</th>
-        <th scope="col" id="sct_mobileimg">모바일이미지수</th>
+        <th scope="col" id="sct_mobileimg">모바일 1행이미지수</th>
         <th scope="col" id="sct_pcskin">PC스킨지정</th>
         <th scope="col" rowspan="2">관리</th>
     </tr>
@@ -120,7 +120,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         <th scope="col" id="sct_hpcert">본인인증</th>
         <th scope="col" id="sct_adultcert">성인인증</th>
         <th scope="col" id="sct_imgrow">이미지 행수</th>
-        <th scope="col" id="sct_order">순서</th>
+        <th scope="col" id="sct_mobilerow">모바일 이미지 행수</th>
         <th scope="col" id="sct_mskin">모바일스킨지정</th>
     </tr>
     </thead>
@@ -192,7 +192,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <input type="text" name="ca_list_mod[<?php echo $i; ?>]" size="3" value="<?php echo $row['ca_list_mod']; ?>" id="ca_lineimg_num<?php echo $i; ?>" required class="required frm_input"> <span class="sound_only">개</span>
         </td>
         <td headers="sct_mobileimg" class="td_output">
-            <label for="ca_mobileimg_num<?php echo $i; ?>" class="sound_only">모바일 이미지 수</label>
+            <label for="ca_mobileimg_num<?php echo $i; ?>" class="sound_only">모바일 1줄당 이미지 수</label>
             <input type="text" name="ca_mobile_list_mod[<?php echo $i; ?>]" size="3" value="<?php echo $row['ca_mobile_list_mod']; ?>" id="ca_mobileimg_num<?php echo $i; ?>" required class="required frm_input"> <span class="sound_only">개</span>
         </td>
         <td headers="sct_pcskin">
@@ -238,9 +238,9 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <label for="ca_imgline_num<?php echo $i; ?>" class="sound_only">이미지 줄 수</label>
             <input type="text" name="ca_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_list_row']; ?>' id="ca_imgline_num<?php echo $i; ?>" required class="required frm_input" size="3"> <span class="sound_only">줄</span>
         </td>
-        <td headers="sct_order" class="td_output">
-            <label for="ca_order<?php echo $i; ?>" class="sound_only">출력순서</label>
-            <input type="text" name="ca_order[<?php echo $i; ?>]" value='<?php echo $row['ca_order']; ?>' id="ca_order<?php echo $i; ?>" required class="required frm_input" size="3">
+        <td headers="sct_mobilerow" class="td_output">
+            <label for="ca_mobileimg_row<?php echo $i; ?>" class="sound_only">모바일 이미지 줄 수</label>
+            <input type="text" name="ca_mobile_list_row[<?php echo $i; ?>]" value='<?php echo $row['ca_mobile_list_row']; ?>' id="ca_mobileimg_row<?php echo $i; ?>" required class="required frm_input" size="3">
         </td>
         <td headers="sct_mskin">
             <label for="ca_mobile_skin_dir<?php echo $i; ?>" class="sound_only">모바일스킨폴더</label>

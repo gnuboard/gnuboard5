@@ -6,6 +6,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
+<a href="<?php echo $itemqa_form; ?>" class="itemqa_form qa_wr">상품문의 쓰기<span class="sound_only"> 새 창</span></a>
 
 <!-- 상품문의 목록 시작 { -->
 <div id="sit_qa_list">
@@ -70,11 +71,13 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
             <div id="sit_qa_con_<?php echo $i; ?>" class="sit_qa_con">
                 <div class="sit_qa_p">
                     <div class="sit_qa_qaq">
+                        <span class="sit_alp">Q</span>
                         <strong>문의내용</strong><br>
                         <?php echo $iq_question; // 상품 문의 내용 ?>
                     </div>
                     <?php if(!$is_secret) { ?>
                     <div class="sit_qa_qaa">
+                        <span class="sit_alp">A</span>
                         <strong>답변</strong><br>
                         <?php echo $iq_answer; ?>
                     </div>
@@ -85,8 +88,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
                 <div class="sit_qa_cmd">
                     <a href="<?php echo $itemqa_form."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="itemqa_form btn01" onclick="return false;">수정</a>
                     <a href="<?php echo $itemqa_formupdate."&amp;iq_id={$row['iq_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemqa_delete btn01">삭제</a>
-                    <!-- <button type="button" onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
-                    <button type="button" onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button> -->
                 </div>
                 <?php } ?>
             </div>
@@ -107,9 +108,7 @@ echo itemqa_page($config['cf_mobile_pages'], $page, $total_page, "./itemqa.php?i
 ?>
 
 <div id="sit_qa_wbtn">
-    <!-- <a href="javascript:itemqawin('it_id=<?php echo $it_id; ?>');">상품문의 쓰기<span class="sound_only"> 새 창</span></a> -->
-    <a href="<?php echo $itemqa_form; ?>" class="btn02 itemqa_form">상품문의 쓰기<span class="sound_only"> 새 창</span></a>
-    <a href="<?php echo $itemqa_list; ?>" id="itemqa_list" class="btn01">더보기</a>
+    <a href="<?php echo $itemqa_list; ?>" id="itemqa_list" class="btn01">더보기 +</a>
 </div>
 
 <script>

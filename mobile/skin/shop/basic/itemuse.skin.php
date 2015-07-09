@@ -6,6 +6,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
+<a href="<?php echo $itemuse_form; ?>" class="qa_wr itemuse_form " onclick="return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
 
 <!-- 상품 사용후기 시작 { -->
 <div id="sit_use_list">
@@ -67,8 +68,7 @@ echo itemuse_page($config['cf_mobile_pages'], $page, $total_page, "./itemuse.php
 ?>
 
 <div id="sit_use_wbtn">
-    <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form" onclick="return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
-    <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기</a>
+    <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기 +</a>
 </div>
 
 <script>

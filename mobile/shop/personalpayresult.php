@@ -71,7 +71,7 @@ if($pp['pp_pg'] == 'lg') {
         <section id="sod_fin_pay">
             <h3>결제정보</h3>
 
-            <div class="tbl_wrap tbl_head01">
+            <div class="odf_tbl">
                 <table>
                 <colgroup>
                     <col class="grid_3">

@@ -14,19 +14,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     <input type="hidden" name="act"       value="multi">
     <input type="hidden" name="sw_direct" value="">
     <input type="hidden" name="prog"      value="wish">
-
-    <div class="tbl_wrap tbl_head01">
-        <table>
-        <thead>
-        <tr>
-            <th scope="col">이미지</th>
-            <th scope="col">상품명</th>
-            <th scope="col">선택</th>
-            <th scope="col">삭제</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php
+    <ul id="wish_li">
+    <?php
         $sql = " select a.wi_id, a.wi_time, b.*
                    from {$g5['g5_shop_wish_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
                   where a.mb_id = '{$member['mb_id']}'
@@ -45,45 +34,45 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
             $image = get_it_image($row['it_id'], 50, 50);
-        ?>
-
-        <tr>
-            <td class="sod_ws_img"><?php echo $image; ?></td>
-            <td>
-                <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
-                <br><small>보관일 <?php echo substr($row['wi_time'], 2, 8); ?></small>
-            </td>
-            <td class="td_chk">
-                <?php
-                // 품절검사
-                if(is_soldout($row['it_id']))
-                {
-                ?>
-                품절
-                <?php } else { //품절이 아니면 체크할수 있도록한다 ?>
-                <input type="checkbox" name="chk_it_id[<?php echo $i; ?>]" value="1" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
-                <?php } ?>
-                <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
-                <input type="hidden" name="io_type[<?php echo $row['it_id']; ?>][0]" value="0">
-                <input type="hidden" name="io_id[<?php echo $row['it_id']; ?>][0]" value="">
-                <input type="hidden" name="io_value[<?php echo $row['it_id']; ?>][0]" value="<?php echo $row['it_name']; ?>">
-                <input type="hidden"   name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
-            </td>
-            <td class="td_mngsmall"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></td>
-        </tr>
+    ?>
+    
+        <li>
+                <div class="wish_img"><?php echo $image; ?></div>
+                <div class="wish_info">
+                    <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
+                    <span class="info_date">보관일 <?php echo substr($row['wi_time'], 2, 8); ?></span>
+                </div>
+                <div class="wish_chk">
+                    <?php
+                    // 품절검사
+                    if(is_soldout($row['it_id']))
+                    {
+                    ?>
+                    <span class="sold_out">품절</span>
+                    <?php } else { //품절이 아니면 체크할수 있도록한다 ?>
+                    <input type="checkbox" name="chk_it_id[<?php echo $i; ?>]" value="1" onclick="out_cd_check(this, '<?php echo $out_cd; ?>');">
+                    <?php } ?>
+                    <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
+                    <input type="hidden" name="io_type[<?php echo $row['it_id']; ?>][0]" value="0">
+                    <input type="hidden" name="io_id[<?php echo $row['it_id']; ?>][0]" value="">
+                    <input type="hidden" name="io_value[<?php echo $row['it_id']; ?>][0]" value="<?php echo $row['it_name']; ?>">
+                    <input type="hidden"   name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
+                </div>
+                <span class="wish_del"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></span>
+                 
+        </li>
         <?php
         }
-
         if ($i == 0)
-            echo '<tr><td colspan="5" class="empty_table">위시리스트가 비었습니다.</td></tr>';
+            echo '<li class="empty_table">위시리스트가 비었습니다.</li>';
         ?>
-        </tr>
-        </table>
-    </div>
+    </ul>
 
+    
     <div id="sod_ws_act">
-        <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">장바구니 담기</button>
-        <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">주문하기</button>
+        <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">BUY NOW</button>
+        <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">CART</button>
+
     </div>
     </form>
 </div>

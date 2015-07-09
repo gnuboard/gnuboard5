@@ -26,6 +26,7 @@ if ($w=="")
     $sql = " insert into {$g5['g5_shop_banner_table']}
                 set bn_alt        = '$bn_alt',
                     bn_url        = '$bn_url',
+                    bn_device     = '$bn_device',
                     bn_position   = '$bn_position',
                     bn_border     = '$bn_border',
                     bn_new_win    = '$bn_new_win',
@@ -43,6 +44,7 @@ else if ($w=="u")
     $sql = " update {$g5['g5_shop_banner_table']}
                 set bn_alt        = '$bn_alt',
                     bn_url        = '$bn_url',
+                    bn_device     = '$bn_device',
                     bn_position   = '$bn_position',
                     bn_border     = '$bn_border',
                     bn_new_win    = '$bn_new_win',

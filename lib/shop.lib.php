@@ -1116,10 +1116,17 @@ function display_banner($position, $skin='')
     if (!$skin) $skin = 'boxbanner.skin.php';
 
     $skin_path = G5_SHOP_SKIN_PATH.'/'.$skin;
+    if(G5_IS_MOBILE)
+        $skin_path = G5_MSHOP_SKIN_PATH.'/'.$skin;
 
     if(file_exists($skin_path)) {
+        // 접속기기
+        $sql_device = " and ( bn_device = 'both' or bn_device = 'pc' ) ";
+        if(G5_IS_MOBILE)
+            $sql_device = " and ( bn_device = 'both' or bn_device = 'mobile' ) ";
+
         // 배너 출력
-        $sql = " select * from {$g5['g5_shop_banner_table']} where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time and bn_position = '$position' order by bn_order, bn_id desc ";
+        $sql = " select * from {$g5['g5_shop_banner_table']} where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time $sql_device and bn_position = '$position' order by bn_order, bn_id desc ";
         $result = sql_query($sql);
 
         include $skin_path;

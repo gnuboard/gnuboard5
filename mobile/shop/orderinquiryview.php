@@ -96,7 +96,7 @@ if($od['od_pg'] == 'lg') {
                 }
             ?>
             <li class="sod_li">
-                <div class="li_name">
+                <div class="li_name_od">
                     <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><strong><?php echo $row['it_name']; ?></strong></a>
                 </div>
             <?php
@@ -111,10 +111,10 @@ if($od['od_pg'] == 'lg') {
             ?>
                 <div class="li_opt"><?php echo $opt['ct_option']; ?></div>
                 <div class="li_prqty">
-                    <span class="prqty_price"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
-                    <span class="prqty_qty"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
-                    <span class="prqty_sc"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-                    <span class="prqty_stat"><span>상태 </span><?php echo $opt['ct_status']; ?></span>
+                    <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
+                    <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
+                    <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
+                    <span class="prqty_stat li_prqty_sp"><span>상태 </span><?php echo $opt['ct_status']; ?></span>
                 </div>
                 <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
                     <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="total_img"><?php echo $image; ?></a>
@@ -256,10 +256,10 @@ if($od['od_pg'] == 'lg') {
         <section id="sod_fin_pay">
             <h3>결제정보</h3>
 
-            <div class="tbl_head01 tbl_wrap">
+            <div  class="odf_tbl">
                 <table>
                 <colgroup>
-                    <col class="grid_3">
+                    <col class="grid_2">
                     <col>
                 </colgroup>
                 <tbody>
@@ -446,10 +446,10 @@ if($od['od_pg'] == 'lg') {
         <section id="sod_fin_orderer">
             <h3>주문하신 분</h3>
 
-            <div class="tbl_head01 tbl_wrap">
+            <div  class="odf_tbl">
                 <table>
                 <colgroup>
-                    <col class="grid_3">
+                    <col class="grid_2">
                     <col>
                 </colgroup>
                 <tbody>
@@ -482,10 +482,10 @@ if($od['od_pg'] == 'lg') {
         <section id="sod_fin_receiver">
             <h3>받으시는 분</h3>
 
-            <div class="tbl_head01 tbl_wrap">
+            <div  class="odf_tbl">
                 <table>
                 <colgroup>
-                    <col class="grid_3">
+                    <col class="grid_2">
                     <col>
                 </colgroup>
                 <tbody>
@@ -531,10 +531,10 @@ if($od['od_pg'] == 'lg') {
         <section id="sod_fin_dvr">
             <h3>배송정보</h3>
 
-            <div class="tbl_head01 tbl_wrap">
+            <div  class="odf_tbl">
                 <table>
                 <colgroup>
-                    <col class="grid_3">
+                    <col class="grid_2">
                     <col>
                 </colgroup>
                 <tbody>
@@ -560,7 +560,7 @@ if($od['od_pg'] == 'lg') {
                 {
                 ?>
                 <tr>
-                    <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
+                    <td class="empty_table" colspan="2">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
                 </tr>
                 <?php
                 }
@@ -609,7 +609,7 @@ if($od['od_pg'] == 'lg') {
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
             <label for="cancel_memo">취소사유</label>
-            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required"maxlength="100">
+            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" maxlength="100">
             <input type="submit" value="확인" class="btn_frmline">
 
             </form>
@@ -627,12 +627,12 @@ if($od['od_pg'] == 'lg') {
     $deposit_no = trim($matchs[1]);
     ?>
     <p>관리자가 가상계좌 테스트를 한 경우에만 보입니다.</p>
-    <div class="tbl_frm01 tbl_wrap">
+    <div id="kcp_acc_test" class="odf_tbl">
         <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
         <table>
         <caption>모의입금처리</caption>
         <colgroup>
-            <col class="grid_3">
+            <col class="grid_2">
             <col>
         </colgroup>
         <tbody>

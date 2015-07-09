@@ -26,12 +26,13 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 
     <section id="smb_my_ov">
         <h2>회원정보 개요</h2>
+        <ul>
+            <li  class="my_cou">보유쿠폰<a href="<?php echo G5_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp_count); ?></a></li>
+            <li class="my_point">보유포인트
+            <a href="<?php echo G5_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></li>
 
+        </ul>
         <dl>
-            <dt>보유포인트</dt>
-            <dd><a href="<?php echo G5_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></dd>
-            <dt>보유쿠폰</dt>
-            <dd><a href="<?php echo G5_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp_count); ?></a></dd>
             <dt>연락처</dt>
             <dd><?php echo ($member['mb_tel'] ? $member['mb_tel'] : '미등록'); ?></dd>
             <dt>E-Mail</dt>
@@ -77,7 +78,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
                 $list_left_pad = $image_w + 10;
             ?>
 
-            <li style="padding-left:<?php echo $list_left_pad; ?>px">
+            <li style="padding-left:<?php echo $list_left_pad + 10; ?>px">
                 <div class="wish_img"><?php echo $image; ?></div>
                 <div class="wish_info">
                     <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="info_link"><?php echo stripslashes($row['it_name']); ?></a>

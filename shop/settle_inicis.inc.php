@@ -104,7 +104,7 @@ $PAY_METHOD = array(
 
 // 플러그인 호출 URL
 if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {
-    $ini_js_url = 'https://plugin.inicis.com/pay61_secunissl_crossl.js';
+    $ini_js_url = 'https://plugin.inicis.com/pay61_secunissl_cross.js';
 } else {
     $ini_js_url = 'http://plugin.inicis.com/pay61_secuni_cross.js';
 }

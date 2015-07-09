@@ -100,7 +100,7 @@ if (($qsort == "it_sum_qty" || $qsort == "it_price" || $qsort == "it_use_avg" ||
 }
 
 // 총몇개 = 한줄에 몇개 * 몇줄
-$items = $default['de_mobile_search_list_mod'];
+$items = $default['de_mobile_search_list_mod'] * $default['de_mobile_search_list_row'];
 // 페이지가 없으면 첫 페이지 (1 페이지)
 if ($page < 1) $page = 1;
 // 시작 레코드 구함
@@ -133,7 +133,7 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
             <strong>상품가격 (원)</strong>
             <label for="ssch_qfrom" class="sound_only">최소 가격</label>
             <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" id="ssch_qfrom" class="frm_input"> ~
-            <label for="ssch_ qto" class="sound_only">최대 가격</label>
+            <label for="ssch_qto" class="sound_only">최대 가격</label>
             <input type="text" name="qto" value="<?php echo $qto; ?>" id="ssch_qto" class="frm_input"> 까지<br>
         </div>
         <div>
@@ -186,12 +186,12 @@ $total_page  = ceil($total_count / $items); // 전체 페이지 계산
         define('G5_SHOP_CSS_URL', G5_MSHOP_SKIN_URL);
         $list_file = G5_MSHOP_SKIN_PATH.'/'.$default['de_mobile_search_list_skin'];
         if (file_exists($list_file)) {
-            $list = new item_list($list_file, $default['de_mobile_search_list_mod'], 1, $default['de_mobile_search_img_width'], $default['de_mobile_search_img_height']);
+            $list = new item_list($list_file, $default['de_mobile_search_list_mod'], $default['de_mobile_search_list_row'], $default['de_mobile_search_img_width'], $default['de_mobile_search_img_height']);
             $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
             $list->set_is_page(true);
             $list->set_mobile(true);
             $list->set_view('it_img', true);
-            $list->set_view('it_id', true);
+            $list->set_view('it_id', false);
             $list->set_view('it_name', true);
             $list->set_view('it_basic', true);
             $list->set_view('it_cust_price', false);

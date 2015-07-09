@@ -34,6 +34,7 @@ $cart_count = mysql_num_rows($result);
     <div id="sod_chk">
         <label for="ct_all" class="sound_only">상품 전체</label>
         <input type="checkbox" name="ct_all" value="1" id="ct_all" checked>
+        전체상품 선택
     </div>
     <?php } ?>
 
@@ -60,14 +61,14 @@ $cart_count = mysql_num_rows($result);
 
             $a1 = '<a href="./item.php?it_id='.$row['it_id'].'"><strong>';
             $a2 = '</strong></a>';
-            $image_width = 50;
-            $image_height = 50;
+            $image_width = 80;
+            $image_height = 80;
             $image = get_it_image($row['it_id'], $image_width, $image_height);
 
             $it_name = $a1 . stripslashes($row['it_name']) . $a2;
             $it_options = print_item_options($row['it_id'], $s_cart_id);
             if($it_options) {
-                $mod_options = '<div class="li_mod"><button type="button" id="mod_opt_'.$row['it_id'].'" class="mod_btn mod_options">선택사항수정</button></div>';
+                $mod_options = '<button type="button" id="mod_opt_'.$row['it_id'].'" class="mod_btn mod_options">선택사항수정</button>';
                 $it_name .= '<div class="sod_opt">'.$it_options.'</div>';
             }
 
@@ -106,18 +107,19 @@ $cart_count = mysql_num_rows($result);
             </div>
             <div class="li_name">
                 <?php echo $it_name; ?>
+                <span class="total_img"><?php echo $image; ?></span>
+                <div class="li_mod"  style="padding-left:<?php echo $image_width + 20; ?>px;"><?php echo $mod_options; ?></div>
             </div>
             <div class="li_prqty">
-                <span class="prqty_price"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
-                <span class="prqty_qty"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
-                <span class="prqty_sc"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
+                <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
+                <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
+                <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
             </div>
-            <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
-                <span class="total_img"><?php echo $image; ?></span>
+            <div class="li_total">
                 <span class="total_price total_span"><span>소계 </span><strong><?php echo number_format($sell_price); ?></strong></span>
                 <span class="total_point total_span"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
             </div>
-            <div class="li_mod"><?php echo $mod_options; ?></div>
+            
         </li>
 
         <?php
@@ -162,8 +164,8 @@ $cart_count = mysql_num_rows($result);
         <input type="hidden" name="records" value="<?php echo $i; ?>">
         <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $continue_ca_id; ?>" class="btn01">쇼핑 계속하기</a>
         <button type="button" onclick="return form_check('buy');" class="btn_submit">주문하기</button>
-        <button type="button" onclick="return form_check('seldelete');" class="btn01">선택삭제</button>
-        <button type="button" onclick="return form_check('alldelete');" class="btn01">비우기</button>
+        <div><button type="button" onclick="return form_check('seldelete');" class="btn01">선택삭제</button>
+        <button type="button" onclick="return form_check('alldelete');" class="btn01">비우기</button></div>
         <?php } ?>
     </div>
 

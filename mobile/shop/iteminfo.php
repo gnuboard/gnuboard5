@@ -40,16 +40,6 @@ $sql = " select count(*) as cnt from `{$g5['g5_shop_item_qa_table']}` where it_i
 $row = sql_fetch($sql);
 $item_qa_count = $row['cnt'];
 
-if ($default['de_mobile_rel_list_use']) {
-    // 관련상품의 개수를 얻음
-    $sql = " select count(*) as cnt
-               from {$g5['g5_shop_item_relation_table']} a
-               left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id and b.it_use='1')
-              where a.it_id = '{$it['it_id']}' ";
-    $row = sql_fetch($sql);
-    $item_relation_count = $row['cnt'];
-}
-
 function pg_anchor($info) {
     global $default;
     global $it_id, $item_use_count, $item_qa_count, $item_relation_count;
@@ -57,21 +47,17 @@ function pg_anchor($info) {
     $href = G5_SHOP_URL.'/iteminfo.php?it_id='.$it_id;
 ?>
     <ul class="sanchor">
-        <li><a href="<?php echo $href; ?>" <?php if ($info == '') echo 'class="sanchor_on"'; ?>>상품정보</a></li>
-        <li><a href="<?php echo $href; ?>&amp;info=use" <?php if ($info == 'use') echo 'class="sanchor_on"'; ?>>사용후기 <span class="item_use_count"><?php echo $item_use_count; ?></span></a></li>
-        <li><a href="<?php echo $href; ?>&amp;info=qa" <?php if ($info == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"><?php echo $item_qa_count; ?></span></a></li>
-        <?php if ($default['de_baesong_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=dvr" <?php if ($info == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
-        <?php if ($default['de_change_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=ex" <?php if ($info == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
-        <?php if ($default['de_mobile_rel_list_use']) { ?>
-        <li><a href="<?php echo $href; ?>&amp;info=rel" <?php if ($info == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
-        <?php } ?>
-        <li><button type="button" id="iteminfo_close" onclick="self.close();">창닫기</button></li>
+        <li><a href="<?php echo $href; ?>" <?php if ($info == '') echo 'class="sanchor_on"'; ?>>DETAIL</a></li>
+        <?php if ($default['de_baesong_content']) { ?><li><a href="<?php echo $href; ?>&amp;info=dvr" <?php if ($info == 'dvr') echo 'class="sanchor_on"'; ?>>INFO</a></li><?php } ?>
+        <li><a href="<?php echo $href; ?>&amp;info=use" <?php if ($info == 'use') echo 'class="sanchor_on"'; ?>>REVIEW<span class="item_use_count"><?php echo $item_use_count; ?></span></a></li>
+        <li><a href="<?php echo $href; ?>&amp;info=qa" <?php if ($info == 'qa') echo 'class="sanchor_on"'; ?>>Q&amp;A<span class="item_qa_count"><?php echo $item_qa_count; ?></span></a></li>
     </ul>
 <?php
 }
 ?>
-
-<script src="<?php echo G5_JS_URL; ?>/jquery.nicescroll.min.js"></script>
+<div id="menu_list">
+    <?php echo pg_anchor($info); ?>
+</div>
 
 <div id="info_content" class="new_win">
 <?php
@@ -88,87 +74,13 @@ switch($info) {
     case 'ex':
         include_once(G5_MSHOP_SKIN_PATH.'/iteminfo.change.skin.php');
         break;
-    case 'rel':
-        include_once(G5_MSHOP_SKIN_PATH.'/iteminfo.relation.skin.php');
-        break;
     default:
         include_once(G5_MSHOP_SKIN_PATH.'/iteminfo.info.skin.php');
         break;
 }
 ?>
 </div>
-
-<div id="menu_button" class="menu_hidden">
-    <button type="button">메뉴열기</button>
-</div>
-<div id="menu_list">
-    <?php echo pg_anchor($info); ?>
-</div>
-
-<script>
-$(function() {
-    $("#menu_button button").on("click", function(e) {
-        if($("#menu_button").is(":animated") || $("#menu_list").is(":animated"))
-            return false;
-
-        var $this = $(this);
-        var mlh = $("#menu_list").outerHeight(true);
-        var duration = 200;
-        var ani_direction;
-        var button_text;
-
-        if($this.hasClass("menu_opened")) {
-            ani_direction = "-="+mlh;
-            button_text = "메뉴열기";
-        } else {
-            ani_direction = "+="+mlh;
-            button_text = "메뉴닫기";
-        }
-
-        $("#menu_button").animate(
-            { bottom: ani_direction }, duration
-        );
-
-        $("#menu_list").animate(
-            { bottom: ani_direction }, duration,
-            function() {
-                $this.toggleClass("menu_opened").html("<span></span>"+button_text);
-            }
-        );
-    });
-});
-
-$(window).on("load resize", function() {
-    content_scroll();
-});
-
-function content_scroll()
-{
-    var sw = $(window).width();
-    var sh = $(window).height();
-    if (/iP(hone|od|ad)/.test(navigator.platform)) {
-        if(window.innerHeight - $(window).outerHeight(true) > 0)
-            sh += (window.innerHeight - $(window).outerHeight(true));
-    }
-    var mbh = $("#menu_button").outerHeight();
-    var mlh = $("#menu_list").outerHeight(true);
-    var pad = parseInt($("#info_content").css("padding-bottom"));
-    var ch = sh - pad;
-
-    $("#menu_button")
-        .css("bottom", 0)
-        .removeClass("menu_hidden")
-        .children().removeClass("menu_opened").html("<span></span>메뉴열기");
-
-    $("#menu_list")
-        .css("bottom", "-"+mlh+"px")
-        .removeClass("menu_hidden");
-
-    $("#info_content")
-        .height(ch)
-        .niceScroll();
-}
-</script>
+<div class="close_btn"><button type="button" id="iteminfo_close" onclick="self.close();">창닫기</button></div>
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');

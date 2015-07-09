@@ -21,6 +21,13 @@ else
     $bn['bn_end_time']   = date("Y-m-d 00:00:00", time()+(60*60*24*31));
 }
 
+// 접속기기 필드 추가
+if(!sql_query(" select bn_device from {$g5['g5_shop_banner_table']} limit 0, 1 ")) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_banner_table']}`
+                    ADD `bn_device` varchar(10) not null default '' AFTER `bn_url` ", true);
+    sql_query(" update {$g5['g5_shop_banner_table']} set bn_device = 'pc' ", true);
+}
+
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
@@ -52,9 +59,6 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
                 echo '<input type="checkbox" name="bn_bimg_del" value="1" id="bn_bimg_del"> <label for="bn_bimg_del">삭제</label>';
                 $bimg_str = '<img src="'.G5_DATA_URL.'/banner/'.$bn['bn_id'].'" width="'.$width.'">';
-                //$size = getimagesize($bimg);
-                //echo "<img src='$g5[admin_path]/img/icon_viewer.gif' border=0 align=absmiddle onclick=\"imageview('bimg', $size[0], $size[1]);\"><input type=checkbox name=bn_bimg_del value='1'>삭제";
-                //echo "<div id='bimg' style='left:0; top:0; z-index:+1; display:none; position:absolute;'><img src='$bimg' border=1></div>";
             }
             if ($bimg_str) {
                 echo '<div class="banner_or_img">';
@@ -79,9 +83,20 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="bn_device">접속기기</label></th>
+        <td>
+            <?php echo help('배너를 표시할 접속기기를 선택합니다.'); ?>
+            <select name="bn_device" id="bn_device">
+                <option value="both"<?php echo get_selected($bn['bn_device'], 'both', true); ?>>PC와 모바일</option>
+                <option value="pc"<?php echo get_selected($bn['bn_device'], 'pc'); ?>>PC</option>
+                <option value="mobile"<?php echo get_selected($bn['bn_device'], 'mobile'); ?>>모바일</option>
+        </select>
+        </td>
+    </tr>
+    <tr>
         <th scope="row"><label for="bn_position">출력위치</label></th>
         <td>
-            <?php echo help("왼쪽 : 쇼핑몰화면 왼쪽에 출력합니다.\n메인 : 쇼핑몰 메인화면(index.php)에만 출력합니다.", 50); ?>
+            <?php echo help("왼쪽 : 쇼핑몰화면 왼쪽에 출력합니다.\n메인 : 쇼핑몰 메인화면(index.php)에만 출력합니다."); ?>
             <select name="bn_position" id="bn_position">
                 <option value="왼쪽" <?php echo get_selected($bn['bn_position'], '왼쪽'); ?>>왼쪽</option>
                 <option value="메인" <?php echo get_selected($bn['bn_position'], '메인'); ?>>메인</option>

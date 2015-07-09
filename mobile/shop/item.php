@@ -182,13 +182,6 @@ $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
 include_once(G5_MSHOP_PATH.'/_head.php');
 
-// 분류 위치
-// HOME > 1단계 > 2단계 ... > 5단계 분류
-$ca_id = $it['ca_id'];
-$nav_skin = $skin_dir.'/navigation.skin.php';
-if(!is_file($nav_skin))
-    $nav_skin = G5_MSHOP_SKIN_PATH.'/navigation.skin.php';
-include $nav_skin;
 
 // 상단 HTML
 echo '<div id="sit_hhtml">'.conv_content($it['it_mobile_head_html'], 1).'</div>';

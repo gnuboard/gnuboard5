@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
-<h1 id="win_title">사용후기</h1>
+<h1  class="tit_no">사용후기</h1>
 
 <div id="itemuse" class="win_desc">
     <?php include_once('./itemuse.php'); ?>

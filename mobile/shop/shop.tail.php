@@ -11,16 +11,15 @@ $admin = get_admin("super");
 
 <div id="ft">
     <h2><?php echo $config['cf_title']; ?> 정보</h2>
-    <a href="<?php echo $default['de_root_index_use'] ? G5_URL : G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img2" alt="처음으로"></a>
     <p>
         <span><b>회사명</b> <?php echo $default['de_admin_company_name']; ?></span>
         <span><b>주소</b> <?php echo $default['de_admin_company_addr']; ?></span><br>
-        <span><b>사업자 등록번호</b> <?php echo $default['de_admin_company_saupja_no']; ?></span>
+        <span><b>사업자 등록번호</b> <?php echo $default['de_admin_company_saupja_no']; ?></span><br>
         <span><b>대표</b> <?php echo $default['de_admin_company_owner']; ?></span>
         <span><b>전화</b> <?php echo $default['de_admin_company_tel']; ?></span>
         <span><b>팩스</b> <?php echo $default['de_admin_company_fax']; ?></span><br>
         <!-- <span><b>운영자</b> <?php echo $admin['mb_name']; ?></span><br> -->
-        <span><b>통신판매업신고번호</b> <?php echo $default['de_admin_tongsin_no']; ?></span>
+        <span><b>통신판매업신고번호</b> <?php echo $default['de_admin_tongsin_no']; ?></span><br>
         <span><b>개인정보관리책임자</b> <?php echo $default['de_admin_info_name']; ?></span>
 
         <?php if ($default['de_admin_buga_no']) echo '<span><b>부가통신사업신고번호</b> '.$default['de_admin_buga_no'].'</span>'; ?><br>

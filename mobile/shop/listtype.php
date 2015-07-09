@@ -6,7 +6,7 @@ if ($type == 1)      $g5['title'] = '히트상품';
 else if ($type == 2) $g5['title'] = '추천상품';
 else if ($type == 3) $g5['title'] = '최신상품';
 else if ($type == 4) $g5['title'] = '인기상품';
-else if ($type == 5) $g5['title'] = '할인상품';
+else if ($type == 5) $g5['title'] = '세일상품';
 else
     alert('상품유형이 아닙니다.');
 
@@ -14,8 +14,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 한페이지에 출력하는 이미지수 = $list_mod * $list_row
 // 모바일에서는 계산된 이미지수가 중요함
-$list_mod   = 1;    // 한줄에 이미지 몇개씩 출력? 단, 모바일환경에서는 사용되지 않음.
-$list_row   = 10;    // 한 페이지에 몇라인씩 출력?
+$list_mod   = 3;    // 한줄에 이미지 몇개씩 출력? 단, 모바일환경에서는 사용되지 않음.
+$list_row   = 5;    // 한 페이지에 몇라인씩 출력?
 
 $img_width  = 230;  // 출력이미지 폭
 $img_height = 230;  // 출력이미지 높이

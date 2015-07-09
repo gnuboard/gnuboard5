@@ -443,6 +443,8 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .banner_or_img button {display:block;margin:5px 0 0}
 .txt_active {color:#5d910b}
 .txt_expired {color:#ccc}
+#sct_mobileimg{width:125px}
+
 
 /* 환경설정 */
 .cf_cert_hide {display:none}

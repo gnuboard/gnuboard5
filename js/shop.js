@@ -443,7 +443,7 @@ function price_calculate()
         }
     });
 
-    $("#sit_tot_price").empty().html("총 금액 : "+number_format(String(total))+"원");
+    $("#sit_tot_price").empty().html("<span>총 금액 :</span> "+number_format(String(total))+"원");
 }
 
 // php chr() 대응

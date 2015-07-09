@@ -115,8 +115,8 @@ ob_start();
 
             $a1 = '<strong>';
             $a2 = '</strong>';
-            $image_width = 50;
-            $image_height = 50;
+            $image_width = 80;
+            $image_height = 80;
             $image = get_it_image($row['it_id'], $image_width, $image_height);
 
             $it_name = $a1 . stripslashes($row['it_name']) . $a2;
@@ -200,18 +200,22 @@ ob_start();
             <?php } ?>
             <input type="hidden" name="cp_id[<?php echo $i; ?>]" value="">
             <input type="hidden" name="cp_price[<?php echo $i; ?>]" value="0">
-            <div class="li_name"><?php echo $it_name; ?></div>
-            <div class="li_prqty">
-                <span class="prqty_price"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
-                <span class="prqty_qty"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
-                <span class="prqty_sc"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-            </div>
-            <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
+            <div class="li_name">
+                <?php echo $it_name; ?>
+                <div class="li_mod"  style="padding-left:<?php echo $image_width + 20; ?>px;"><?php echo $cp_button; ?></div>
                 <span class="total_img"><?php echo $image; ?></span>
+
+            </div>
+            <div class="li_prqty">
+                <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
+                <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
+                <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
+            </div>
+            <div class="li_total">
                 <span class="total_price total_span"><span>주문금액 </span><strong><?php echo number_format($sell_price); ?></strong></span>
                 <span class="total_point total_span"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
             </div>
-            <?php echo $cp_button; ?>
+            
         </li>
 
         <?php
@@ -276,10 +280,10 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
 
     <?php echo $content; ?>
 
-    <section id="sod_frm_orderer">
+    <section id="sod_frm_orderer" >
         <h2>주문하시는 분</h2>
 
-        <div class="tbl_frm01 tbl_wrap">
+        <div class="odf_tbl">
             <table>
             <tbody>
             <tr>
@@ -353,7 +357,7 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
     <section id="sod_frm_taker">
         <h2>받으시는 분</h2>
 
-        <div class="tbl_frm01 tbl_wrap">
+        <div class="odf_tbl">
             <table>
             <tbody>
             <?php
@@ -503,7 +507,7 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
     <section id="sod_frm_pay">
         <h2>결제정보 입력</h2>
 
-        <div class="tbl_frm01 tbl_wrap">
+        <div class="odf_tbl">
             <table>
             <tbody>
             <?php if($oc_cnt > 0) { ?>

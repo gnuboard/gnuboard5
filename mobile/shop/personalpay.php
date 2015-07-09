@@ -13,7 +13,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     $list_file = G5_MSHOP_SKIN_PATH.'/personalpay.skin.php';
     if (file_exists($list_file)) {
 
-        $list_mod   = 10;
+        $list_mod   = 3;
+        $list_row   = 5;
         $img_width  = 230;
         $img_height = 230;
 
@@ -22,7 +23,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                           and pp_tno = '' ";
 
         // 총몇개 = 한줄에 몇개 * 몇줄
-        $items = $list_mod;
+        $items = $list_mod * $list_row;
 
         $sql = "select COUNT(*) as cnt $sql_common ";
         $row = sql_fetch($sql);
@@ -45,17 +46,9 @@ include_once(G5_MSHOP_PATH.'/_head.php');
     }
     else
     {
-        $i = 0;
-        $error = '<p class="sct_nofile">personalpay.skin.php 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
+        echo '<p class="sct_nofile">personalpay.skin.php 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</p>';
     }
 
-    if ($i==0)
-    {
-        echo '<p class="sct_noitem">등록된 개인결제가 없습니다.</p>';
-    }
-    ?>
-
-    <?php
     echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page=');
     ?>
 </div>

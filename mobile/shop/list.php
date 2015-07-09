@@ -16,7 +16,7 @@ if(!$is_admin) {
         alert($msg, G5_SHOP_URL);
 }
 
-$g5['title'] = $ca['ca_name'].' 상품리스트';
+$g5['title'] = $ca['ca_name'];
 
 include_once(G5_MSHOP_PATH.'/_head.php');
 
@@ -39,16 +39,44 @@ if($ca['ca_mobile_skin_dir']) {
 define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 ?>
 
+<script>
+var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
+</script>
+<script src="<?php echo G5_JS_URL; ?>/shop.mobile.list.js"></script>
+
 <div id="sct">
 
     <?php
-    $nav_skin = $skin_dir.'/navigation.skin.php';
-    if(!is_file($nav_skin))
-        $nav_skin = G5_MSHOP_SKIN_PATH.'/navigation.skin.php';
-    include $nav_skin;
-
     // 상단 HTML
     echo '<div id="sct_hhtml">'.conv_content($ca['ca_mobile_head_html'], 1).'</div>';
+
+    $cate_skin = $skin_dir.'/listcategory.skin.php';
+    if(!is_file($cate_skin))
+        $cate_skin = G5_MSHOP_SKIN_PATH.'/listcategory.skin.php';
+    include $cate_skin;
+
+    // 분류 Best Item
+    $list_mod = 3;
+    $list_row = 3;
+    $limit = $list_mod * $list_row;
+    $best_skin = G5_MSHOP_SKIN_PATH.'/list.best.10.skin.php';
+
+    $sql = " select *
+                from {$g5['g5_shop_item_table']}
+                where ( ca_id like '$ca_id%' or ca_id2 like '$ca_id%' or ca_id3 like '$ca_id%' )
+                  and it_use = '1'
+                  and it_type4 = '1'
+                order by it_order, it_id desc
+                limit 0, $limit ";
+
+    $list = new item_list($best_skin, $list_mod, $list_row, $ca['ca_mobile_img_width'], $ca['ca_mobile_img_height']);
+    $list->set_query($sql);
+    $list->set_mobile(true);
+    $list->set_view('it_img', true);
+    $list->set_view('it_id', false);
+    $list->set_view('it_name', true);
+    $list->set_view('it_price', true);
+    echo $list->run();
 
     // 상품 출력순서가 있다면
     if ($sort != "")
@@ -68,13 +96,13 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
         include $sort_skin;
 
         // 총몇개
-        $items = $ca['ca_mobile_list_mod'];
+        $items = $ca['ca_mobile_list_mod'] * $ca['ca_mobile_list_row'];
         // 페이지가 없으면 첫 페이지 (1 페이지)
         if ($page < 1) $page = 1;
         // 시작 레코드 구함
         $from_record = ($page - 1) * $items;
 
-        $list = new item_list($skin_file, $ca['ca_mobile_list_mod'], 1, $ca['ca_mobile_img_width'], $ca['ca_mobile_img_height']);
+        $list = new item_list($skin_file, $ca['ca_mobile_list_mod'], $ca['ca_mobile_list_row'], $ca['ca_mobile_img_width'], $ca['ca_mobile_img_height']);
         $list->set_category($ca['ca_id'], 1);
         $list->set_category($ca['ca_id'], 2);
         $list->set_category($ca['ca_id'], 3);
@@ -85,16 +113,11 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
         $list->set_view('it_img', true);
         $list->set_view('it_id', false);
         $list->set_view('it_name', true);
-        $list->set_view('it_cust_price', true);
         $list->set_view('it_price', true);
-        $list->set_view('it_icon', true);
-        $list->set_view('sns', true);
         echo $list->run();
 
         // where 된 전체 상품수
         $total_count = $list->total_count;
-        // 전체 페이지 계산
-        $total_page  = ceil($total_count / $items);
     }
     else
     {
@@ -103,15 +126,23 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
     ?>
 
     <?php
-    $qstr1 .= 'ca_id='.$ca_id;
-    $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
-    echo get_paging($config['cf_mobile_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr1.'&amp;page=');
+    if($i > 0 && $total_count > $items) {
+        $qstr1 .= 'ca_id='.$ca_id;
+        $qstr1 .='&sort='.$sort.'&sortodr='.$sortodr;
+        $ajax_url = G5_SHOP_URL.'/ajax.list.php?'.$qstr1;
     ?>
+    <div class="li_more">
+        <p id="item_load_msg"><img src="<?php echo G5_SHOP_CSS_URL; ?>/img/loading.gif" alt="로딩이미지" ><br>잠시만 기다려주세요.</p>
+        <div class="li_more_btn">
+            <button type="button" id="btn_more_item" data-url="<?php echo $ajax_url; ?>" data-page="<?php echo $page; ?>">MORE ITEM +</button>
+        </div>
+    </div>
+    <?php } ?>
 
     <?php
     // 하단 HTML
     echo '<div id="sct_thtml">'.conv_content($ca['ca_mobile_tail_html'], 1).'</div>';
-?>
+    ?>
 </div>
 
 <?php
