@@ -1309,7 +1309,7 @@ function view_file_link($file, $width, $height, $content='')
 
     if (preg_match("/\.({$config['cf_image_extension']})$/i", $file)) {
         $img = '<a href="'.G5_BBS_URL.'/view_image.php?bo_table='.$board['bo_table'].'&amp;fn='.urlencode($file).'" target="_blank" class="view_image">';
-        $img .= '<img src="'.G5_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'">';
+        $img .= '<img src="'.G5_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'" '.$attr.'>';
         $img .= '</a>';
 
         return $img;
