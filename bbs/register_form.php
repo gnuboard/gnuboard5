@@ -30,9 +30,6 @@ if ($w == "") {
         alert('개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
     }
 
-    $agree  = preg_replace('#[^0-9]#', '', $_POST['agree']);
-    $agree2 = preg_replace('#[^0-9]#', '', $_POST['agree2']);
-
     $member['mb_birth'] = '';
     $member['mb_sex']   = '';
     $member['mb_name']  = '';
@@ -117,6 +114,9 @@ $register_action_url = G5_HTTPS_BBS_URL.'/register_form_update.php';
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400)));
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
+
+$agree  = preg_replace('#[^0-9]#', '', $agree);
+$agree2 = preg_replace('#[^0-9]#', '', $agree2);
 
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 if ($config['cf_use_addr'])
