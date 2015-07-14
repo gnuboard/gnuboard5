@@ -30,7 +30,8 @@ include_once(G5_PATH.'/head.sub.php');
 
 $msg2 = str_replace("\\n", "<br>", $msg);
 
-if (!$url) $url = $_SERVER['HTTP_REFERER'];
+$url = clean_xss_tags($url);
+if (!$url) $url = clean_xss_tags($_SERVER['HTTP_REFERER']);
 
 // url 체크
 check_url_host($url);

@@ -19,14 +19,11 @@ $result = sql_query($sql, false);
     <h2>팝업레이어 알림</h2>
 
 <?php
-for ($i=0; $row_nw=sql_fetch_array($result); $i++)
+for ($i=0; $nw=sql_fetch_array($result); $i++)
 {
     // 이미 체크 되었다면 Continue
-    if ($_COOKIE["hd_pops_{$row_nw['nw_id']}"])
+    if ($_COOKIE["hd_pops_{$nw['nw_id']}"])
         continue;
-
-    $sql = " select * from {$g5['new_win_table']} where nw_id = '{$row_nw['nw_id']}' ";
-    $nw = sql_fetch($sql);
 ?>
 
     <div id="hd_pops_<?php echo $nw['nw_id'] ?>" class="hd_pops" style="top:<?php echo $nw['nw_top']?>px;left:<?php echo $nw['nw_left']?>px">

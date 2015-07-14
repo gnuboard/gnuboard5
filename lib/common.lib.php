@@ -192,7 +192,7 @@ function confirm($msg, $url1='', $url2='', $url3='')
         alert($msg);
     }
 
-    if (!$url3) $url3 = $_SERVER['HTTP_REFERER'];
+    if (!$url3) $url3 = clean_xss_tags($_SERVER['HTTP_REFERER']);
 
     $msg = str_replace("\\n", "<br>", $msg);
 
@@ -2737,6 +2737,11 @@ function get_search_string($stx)
 function clean_xss_tags($str)
 {
     $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+
+    $search  = array('"', "'");
+    $replace = array('&#34;', '&#39;');
+
+    $str = str_replace($search, $replace, $str);
 
     return $str;
 }
