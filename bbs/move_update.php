@@ -1,5 +1,6 @@
 <?php
 include_once('./_common.php');
+print_r2($_POST);exit;
 
 // 게시판 관리자 이상 복사, 이동 가능
 if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
