@@ -281,7 +281,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
             <a href="javascript:popup_stocksms('<?php echo $it['it_id']; ?>');" id="sit_btn_buy">재입고알림</a>
             <?php } ?>
             <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">WISH</a>
-            
+
         </div>
     </section>
 </div>
@@ -319,6 +319,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 
 </form>
 
+<?php if($default['de_mobile_rel_list_use']) { ?>
 <!-- 관련상품 시작 { -->
 <section id="sit_rel">
     <h2>WITH ITEM</h2>
@@ -336,6 +337,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
     </div>
 </section>
 <!-- } 관련상품 끝 -->
+<?php } ?>
 
 
 <script>
