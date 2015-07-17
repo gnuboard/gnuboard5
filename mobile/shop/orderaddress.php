@@ -65,8 +65,7 @@ $(function() {
         f.od_b_name.value        = addr[0];
         f.od_b_tel.value         = addr[1];
         f.od_b_hp.value          = addr[2];
-        f.od_b_zip1.value        = addr[3];
-        f.od_b_zip2.value        = addr[4];
+        f.od_b_zip.value         = addr[3] + addr[4];
         f.od_b_addr1.value       = addr[5];
         f.od_b_addr2.value       = addr[6];
         f.od_b_addr3.value       = addr[7];
