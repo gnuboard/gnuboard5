@@ -376,7 +376,7 @@ var win_homepage = function(href) {
 /**
  * 우편번호 창
  **/
-var win_zip = function(frm_name, frm_zip1, frm_zip2, frm_addr1, frm_addr2, frm_addr3, frm_jibeon) {
+var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_jibeon) {
     if(typeof daum === 'undefined'){
         alert("다음 우편번호 postcode.v2.js 파일이 로드되지 않았습니다.");
         return false;
@@ -386,7 +386,7 @@ var win_zip = function(frm_name, frm_zip1, frm_zip2, frm_addr1, frm_addr2, frm_a
 
     var complete_fn = function(data){
         // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-        
+
         // 각 주소의 노출 규칙에 따라 주소를 조합한다.
         // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
         var fullAddr = ''; // 최종 주소 변수
@@ -417,8 +417,7 @@ var win_zip = function(frm_name, frm_zip1, frm_zip2, frm_addr1, frm_addr2, frm_a
         // 우편번호와 주소 정보를 해당 필드에 넣고, 커서를 상세주소 필드로 이동한다.
         var of = document[frm_name];
 
-        of[frm_zip1].value = data.postcode1;
-        of[frm_zip2].value = data.postcode2;
+        of[frm_zip].value = data.zonecode;
 
         of[frm_addr1].value = fullAddr;
         of[frm_addr3].value = extraAddr;
@@ -432,7 +431,7 @@ var win_zip = function(frm_name, frm_zip1, frm_zip2, frm_addr1, frm_addr2, frm_a
 
     switch(zip_case) {
         case 1 :    //iframe을 이용하여 페이지에 끼워 넣기
-            var daum_pape_id = 'daum_juso_page'+frm_zip1,
+            var daum_pape_id = 'daum_juso_page'+frm_zip,
                 element_wrap = document.getElementById(daum_pape_id),
                 currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
             if (element_wrap == null) {
@@ -475,7 +474,7 @@ var win_zip = function(frm_name, frm_zip1, frm_zip2, frm_addr1, frm_addr2, frm_a
             }).open();
             break;
         default :   //iframe을 이용하여 레이어 띄우기
-            var rayer_id = 'daum_juso_rayer'+frm_zip1,
+            var rayer_id = 'daum_juso_rayer'+frm_zip,
                 element_layer = document.getElementById(rayer_id);
             if (element_layer == null) {
                 element_layer = document.createElement("div");
