@@ -3,6 +3,11 @@ $sub_menu = '400400';
 include_once('./_common.php');
 
 if($_POST['mod_type'] == 'info') {
+    $od_zip1   = substr($_POST['od_zip'], 0, 3);
+    $od_zip2   = substr($_POST['od_zip'], 3);
+    $od_b_zip1 = substr($_POST['od_b_zip'], 0, 3);
+    $od_b_zip2 = substr($_POST['od_b_zip'], 3);
+
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_name = '$od_name',
                     od_tel = '$od_tel',
