@@ -253,20 +253,25 @@ if(defined('G5_SET_DEVICE')) {
 // 그렇지 않다면 브라우저의 HTTP_USER_AGENT 에 따라 모바일 결정
 // G5_MOBILE_AGENT : config.php 에서 선언
 //------------------------------------------------------------------------------
+$was_mobile = is_mobile();
 if (G5_USE_MOBILE && $set_device) {
     if ($_REQUEST['device']=='pc')
-        $is_mobile = false;
+        $force_mobile = false;
     else if ($_REQUEST['device']=='mobile')
-        $is_mobile = true;
+        $force_mobile = true;
     else if (isset($_SESSION['ss_is_mobile']))
-        $is_mobile = $_SESSION['ss_is_mobile'];
-    else if (is_mobile())
-        $is_mobile = true;
+        $force_mobile = $_SESSION['ss_is_mobile'];
 } else {
     $set_device = false;
 }
 
-$_SESSION['ss_is_mobile'] = $is_mobile;
+$is_mobile = isset($force_mobile) ? $force_mobile : $was_mobile;
+if ($set_device && isset($force_mobile)) {
+    if ($is_mobile != $was_mobile)
+        $_SESSION['ss_is_mobile'] = $force_mobile;
+    else
+        unset($_SESSION['ss_is_mobile']);
+}
 define('G5_IS_MOBILE', $is_mobile);
 define('G5_DEVICE_BUTTON_DISPLAY', $set_device);
 if (G5_IS_MOBILE) {
