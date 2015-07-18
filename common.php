@@ -187,10 +187,8 @@ if (file_exists($dbconfig_file)) {
 
 session_save_path(G5_SESSION_PATH);
 
-if (isset($SESSION_CACHE_LIMITER))
-    @session_cache_limiter($SESSION_CACHE_LIMITER);
-else
-    @session_cache_limiter("no-cache, must-revalidate");
+// 세션 cache-control 헤더를 직접 제어함
+session_cache_limiter('');
 
 ini_set("session.cache_expire", 180); // 세션 캐쉬 보관시간 (분)
 ini_set("session.gc_maxlifetime", 10800); // session data의 garbage collection 존재 기간을 지정 (초)
@@ -200,7 +198,13 @@ ini_set("session.gc_divisor", 100); // session.gc_divisor는 session.gc_probabil
 session_set_cookie_params(0, '/');
 ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 
-@session_start();
+// PHPSESSID가 이미 세팅되어 있고 이 값이 비어있지 않은 경우
+// 세션이 이미 사용중이다.
+// 이 경우 무조건 session_start() 호출
+$session_name = session_name();
+if (($session_id = $_COOKIE[$session_name]) != false) {
+    @session_start();
+}
 //==============================================================================
 
 
@@ -577,12 +581,15 @@ ob_start();
 // 자바스크립트에서 go(-1) 함수를 쓰면 폼값이 사라질때 해당 폼의 상단에 사용하면
 // 캐쉬의 내용을 가져옴. 완전한지는 검증되지 않음
 header('Content-Type: text/html; charset=utf-8');
-$gmnow = gmdate('D, d M Y H:i:s') . ' GMT';
-header('Expires: 0'); // rfc2616 - Section 14.21
-header('Last-Modified: ' . $gmnow);
-header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
-header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
-header('Pragma: no-cache'); // HTTP/1.0
+
+header('Cache-Control: public, must-revalidate, pre-check=0, post-check=0');
+if ($is_member) {
+    $gmnow = gmdate('D, d M Y H:i:s') . ' GMT';
+    header('Expires: 0'); // rfc2616 - Section 14.21
+    header('Last-Modified: ' . $gmnow);
+    header('Cache-Control: private, must-revalidate, pre-check=0, post-check=0'); // HTTP/1.1
+    header('Cache-Control: no-store, no-cache', false); // HTTP/1.1
+    header('Pragma: no-cache'); // HTTP/1.0
+}
 
 $html_process = new html_process();
-?>

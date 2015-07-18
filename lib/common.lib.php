@@ -2292,6 +2292,9 @@ class html_process {
         $buffer = ob_get_contents();
         ob_end_clean();
 
+        // 세션을 선택적으로 시작함
+        lazy_session_start();
+
         $stylesheet = '';
         $links = $this->css;
 
@@ -2993,4 +2996,21 @@ function get_device_change_url()
 
     return $href;
 }
-?>
+
+/**
+ * 게으른 세션 체크. session_start()를 선택적으로 호출
+ */
+function lazy_session_start()
+{
+    // 세션이 이미 열렸거나 $_SESSION 세션 쿠키가 비어있다. 무시함
+    if (session_id() != '' || count($_SESSION) == 0) {
+        return;
+    }
+
+    // $_SESSION 복사
+    $temp = $_SESSION;
+    // 세션 시작
+    session_start();
+    // $_SESSION restore
+    $_SESSION = $temp;
+}
