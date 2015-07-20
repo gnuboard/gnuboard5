@@ -2,6 +2,10 @@
 include_once('./_common.php');
 include_once(G5_PATH.'/head.sub.php');
 
+$url1 = clean_xss_tags($url1);
+$url2 = clean_xss_tags($url2);
+$url3 = clean_xss_tags($url3);
+
 // url 체크
 check_url_host($url1);
 check_url_host($url2);
