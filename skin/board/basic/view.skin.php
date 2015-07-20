@@ -68,8 +68,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php } ?>
 
     <?php
-    if (implode('', $view['link'])) {
-     ?>
+    if ($view['link']) {
+    ?>
      <!-- 관련링크 시작 { -->
     <section id="bo_v_link">
         <h2>관련링크</h2>

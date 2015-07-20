@@ -248,3 +248,9 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 /* PC화면으로 */
 #device_change {display:block;margin:5px;padding:5px 0;border:1px solid #eee;border-radius:2em;color:#000;font-size:1em;text-decoration:none;text-align:center}
+
+/*메일인증*/
+.rg_em_p{padding:0 5px}
+.rg_em{margin:5px 5px 10px;}
+.rg_em table{width:100%;border-collapse:collapse}
+.rg_em caption{padding:0;font-size:0;line-height:0;overflow:hidden}
