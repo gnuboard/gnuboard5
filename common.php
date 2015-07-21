@@ -204,7 +204,13 @@ ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 $session_name = session_name();
 if (($session_id = $_COOKIE[$session_name]) != false) {
     @session_start();
+} else {
+    // 현재 세션이 열려있지 않은 상태이다.
+    // 모듈 어딘가에서 $_SESSION값을 세팅하고 바로 끝내버리는 경우도 있으므로
+    // 이를 위해서 lazy_session_start를 shutdown_function으로 등록한다.
+    register_shutdown_function('lazy_session_start');
 }
+
 //==============================================================================
 
 
