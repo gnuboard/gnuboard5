@@ -33,10 +33,15 @@ function g5_path()
     $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $_SERVER['SCRIPT_NAME']);
     $document_root = str_replace($tilde_remove, '', $_SERVER['SCRIPT_FILENAME']);
     $root = str_replace($document_root, '', $result['path']);
-    $port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
     $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
     $user = str_replace(str_replace($document_root, '', $_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']);
-    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+    if (isset($_SERVER['HTTP_HOST'])) {
+        $host = $_SERVER['HTTP_HOST'];
+        $port = '';
+    } else {
+        $host = $_SERVER['SERVER_NAME'];
+        $port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
+    }
     if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host))
         $host = preg_replace('/:[0-9]+$/', '', $host);
     $result['url'] = $http.$host.$port.$user.$root;
