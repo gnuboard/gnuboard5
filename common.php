@@ -545,11 +545,6 @@ if (G5_IS_MOBILE) {
 }
 //==============================================================================
 
-
-// 방문자수의 접속을 남김
-include_once(G5_BBS_PATH.'/visit_insert.inc.php');
-
-
 // 일정 기간이 지난 DB 데이터 삭제 및 최적화
 include_once(G5_BBS_PATH.'/db_table.optimize.php');
 
@@ -585,4 +580,4 @@ header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
 $html_process = new html_process();
-?>
+add_javascript("<script src='".G5_BBS_URL."/visit.php'></script>");
