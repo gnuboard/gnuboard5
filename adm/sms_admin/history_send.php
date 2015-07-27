@@ -116,7 +116,7 @@ if ($result)
             $row['bk_hp'] = get_hp($row['bk_hp'], 1);
 
             $log = array_shift($SMS->Log);
-            $log = @iconv('UTF-8', 'UTF-8//IGNORE', $log);
+            $log = @iconv('euc-kr', 'utf-8', $log);
 
             sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='{$row['hs_name']}', hs_hp='{$row['hs_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
         }
