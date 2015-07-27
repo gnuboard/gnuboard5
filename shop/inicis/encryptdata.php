@@ -26,7 +26,7 @@ $inipay->SetField("checkopt", "false");                      //base64함:false, 
 $inipay->SetField("mid",        $default['de_inicis_mid']); // 상점아이디
 $inipay->SetField("price",      $price);                    // 가격
 $inipay->SetField("nointerest", $inipay_nointerest);        // 무이자여부(no:일반, yes:무이자)
-$inipay->SetField("quotabase",  $inipay_quotabase);//할부기간
+$inipay->SetField("quotabase",  iconv_euckr($inipay_quotabase));//할부기간
 
 /********************************
  * 4. 암호화 대상/값을 암호화함 *
