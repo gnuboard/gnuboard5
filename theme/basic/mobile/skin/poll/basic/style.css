@@ -1,0 +1,86 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
+/* ### 기본 스타일 커스터마이징 시작 ### */
+
+#poll a.btn_admin {} /* 관리자 전용 버튼 */
+#poll a.btn_admin:focus, #poll a.btn_admin:hover {}
+
+/* 폼 테이블 */
+#poll .tbl_frm table {}
+#poll .tbl_frm .frm_address {}
+#poll .tbl_frm .frm_file {}
+#poll .tbl_frm .frm_info {}
+
+#poll .tbl_frm01 {}
+#poll .tbl_frm01 caption {}
+#poll .tbl_frm01 th {}
+#poll .tbl_frm01 td {}
+#poll .tbl_frm01 textarea, #poll .frm_input {}
+#poll .tbl_frm01 textarea {}
+/*
+#poll .tbl_frm01 #captcha {}
+#poll .tbl_frm01 #captcha input {}
+*/
+#poll .tbl_frm01 a {}
+
+#poll .required, #poll textarea.required {}
+
+#poll .btn_confirm {} /* 서식단계 진행 */
+#poll .btn_submit {}
+#poll .btn_cancel {}
+#poll .btn_frmline {} /* 우편번호검색버튼 등 */
+#poll .win_btn {} /* 새창용 */
+#poll .win_btn a {}
+#poll .win_btn button {}
+#poll .win_btn input {}
+
+/* ### 기본 스타일 커스터마이징 끝 ### */
+
+/* 설문조사 스킨 */
+#poll {margin:10px 0 0;padding:0 0 10px}
+#poll header {position:relative;padding:0 5px}
+#poll h2 {padding:0 0 5px}
+#poll header .btn_admin {display:block;margin:0 0 5px;padding:0 10px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-align:center;text-decoration:none;line-height:2em;vertical-align:middle}
+#poll header p {padding:0}
+#poll ul {margin:0 0 10px;padding:5px 10px;list-style:none}
+#poll li {padding:3px 0}
+#poll footer {padding:0 5px}
+#poll footer:after {display:block;visibility:hidden;clear:both;content:""}
+#poll footer input {float:left;width:49%;height:2.5em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer;-webkit-appearance:none}
+#poll footer a {display:inline-block;float:right;width:49%;height:2.4em;border:1px solid #ccc;background:#fafafa;color:#000;text-decoration:none;text-align:center;line-height:2.4em}
+#poll footer a:focus, #poll footer a:hover {text-decoration:none !important}
+
+/* 설문조사 결과 (새창) */
+#poll_result section {padding:10px;border-bottom:1px solid #eee}
+#poll_result h2 {margin:0;padding:0}
+#poll_result .member, #poll_result .guest, #poll_result .sv_member, #poll_result .sv_guest {font-weight:bold;margin-right:5px}
+#poll_result_list {margin:0 auto}
+#poll_result_list h2 {text-align:center}
+#poll_result_list dl, #poll_result_list dt, #poll_result_list dd {margin:0;padding:0}
+#poll_result_list dl {padding-bottom:20px}
+#poll_result_list dt {margin-right:5%;color:#e8180d;text-align:right}
+#poll_result_list ol {margin:0;padding-left:25px}
+#poll_result_list li {margin-top:10px}
+#poll_result_list p {position:relative;margin:0;padding:5px 0}
+#poll_result_list p strong {position:absolute;top:5px;right:5%;margin-right:60px;width:100px;text-align:right}
+#poll_result_list p span {position:absolute;top:5px;right:5%;width:60px;color:#68999c;text-align:right}
+.poll_result_graph {position:relative;margin-right:5%;height:5px;background:#eee}
+.poll_result_graph span {position:absolute;top:0;left:0;height:5px;background:#565e60;font-size:0.1em}
+#poll_result_cmt {margin:0 auto;padding:15px !important;background:#f7f7f7}
+#poll_result_cmt h2 {margin:0 0 20px;text-align:center}
+#poll_result_cmt h3 {margin:0 auto 10px}
+#poll_result_cmt article {margin:0 0 10px;border-bottom:1px solid #eee}
+#poll_result_cmt h1 {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
+#poll_result_cmt p {padding:5px 0}
+#poll_result_cmt footer {text-align:right}
+#poll_result_cmt .tbl_wrap {margin:0}
+#poll_result_wcmt {margin:0 0 10px !important}
+#poll_result_wcmt td {padding:0 0 5px;border:0}
+#poll_result_wcmt input[type=text] {background:#fff !important}
+#pc_idea {width:98%}
+.poll_cmt_del a {display:inline-block;padding-bottom:10px}
+#poll_result_oth {margin:0 auto 15px}
+#poll_result_oth h2 {padding:10px}
+#poll_result_oth ul {margin:0;padding:0 10px;list-style:none}
+#poll_result_oth a {display:block;padding:10px 0;border-bottom:1px solid #eee;color:#000;text-decoration:none}

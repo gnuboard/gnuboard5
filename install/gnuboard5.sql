@@ -185,6 +185,7 @@ CREATE TABLE IF NOT EXISTS `g5_board_new` (
 DROP TABLE IF EXISTS `g5_config`;
 CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_title` varchar(255) NOT NULL DEFAULT '',
+  `cf_theme` varchar(255) NOT NULL DEFAULT '',
   `cf_admin` varchar(255) NOT NULL DEFAULT '',
   `cf_admin_email` varchar(255) NOT NULL DEFAULT '',
   `cf_admin_email_name` varchar(255) NOT NULL DEFAULT '',

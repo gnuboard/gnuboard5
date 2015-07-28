@@ -12,11 +12,30 @@ if (!get_session('ss_admin')) {
 // 스킨디렉토리를 SELECT 형식으로 얻음
 function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
 {
-    $skins = get_skin_dir($skin_gubun);
+    global $config;
+
+    $skins = array();
+
+    if(defined('G5_THEME_PATH') && $config['cf_theme']) {
+        $dirs = get_skin_dir($skin_gubun, G5_THEME_PATH.'/'.G5_SKIN_DIR);
+        if(!empty($dirs)) {
+            foreach($dirs as $dir) {
+                $skins[] = 'theme/'.$dir;
+            }
+        }
+    }
+
+    $skins = array_merge($skins, get_skin_dir($skin_gubun));
+
     $str = "<select id=\"$id\" name=\"$name\" $event>\n";
     for ($i=0; $i<count($skins); $i++) {
         if ($i == 0) $str .= "<option value=\"\">선택</option>";
-        $str .= option_selected($skins[$i], $selected);
+        if(preg_match('#^theme/(.+)$#', $skins[$i], $match))
+            $text = '(테마) '.$match[1];
+        else
+            $text = $skins[$i];
+
+        $str .= option_selected($skins[$i], $selected, $text);
     }
     $str .= "</select>";
     return $str;
@@ -25,11 +44,30 @@ function get_skin_select($skin_gubun, $id, $name, $selected='', $event='')
 // 모바일 스킨디렉토리를 SELECT 형식으로 얻음
 function get_mobile_skin_select($skin_gubun, $id, $name, $selected='', $event='')
 {
-    $skins = get_skin_dir($skin_gubun, G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
+    global $config;
+
+    $skins = array();
+
+    if(defined('G5_THEME_PATH') && $config['cf_theme']) {
+        $dirs = get_skin_dir($skin_gubun, G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR);
+        if(!empty($dirs)) {
+            foreach($dirs as $dir) {
+                $skins[] = 'theme/'.$dir;
+            }
+        }
+    }
+
+    $skins = array_merge($skins, get_skin_dir($skin_gubun, G5_MOBILE_PATH.'/'.G5_SKIN_DIR));
+
     $str = "<select id=\"$id\" name=\"$name\" $event>\n";
     for ($i=0; $i<count($skins); $i++) {
         if ($i == 0) $str .= "<option value=\"\">선택</option>";
-        $str .= option_selected($skins[$i], $selected);
+        if(preg_match('#^theme/(.+)$#', $skins[$i], $match))
+            $text = '(테마) '.$match[1];
+        else
+            $text = $skins[$i];
+
+        $str .= option_selected($skins[$i], $selected, $text);
     }
     $str .= "</select>";
     return $str;
@@ -44,6 +82,9 @@ function get_skin_dir($skin, $skin_path=G5_SKIN_PATH)
     $result_array = array();
 
     $dirname = $skin_path.'/'.$skin.'/';
+    if(!is_dir($dirname))
+        return;
+
     $handle = opendir($dirname);
     while ($file = readdir($handle)) {
         if($file == '.'||$file == '..') continue;
@@ -54,6 +95,101 @@ function get_skin_dir($skin, $skin_path=G5_SKIN_PATH)
     sort($result_array);
 
     return $result_array;
+}
+
+
+// 테마
+function get_theme_dir()
+{
+    $result_array = array();
+
+    $dirname = G5_PATH.'/'.G5_THEME_DIR.'/';
+    $handle = opendir($dirname);
+    while ($file = readdir($handle)) {
+        if($file == '.'||$file == '..') continue;
+
+        if (is_dir($dirname.$file)) {
+            $theme_path = $dirname.$file;
+            if(is_file($theme_path.'/index.php') && is_file($theme_path.'/head.php') && is_file($theme_path.'/tail.php'))
+                $result_array[] = $file;
+        }
+    }
+    closedir($handle);
+    natsort($result_array);
+
+    return $result_array;
+}
+
+
+// 테마정보
+function get_theme_info($dir)
+{
+    $info = array();
+    $path = G5_PATH.'/'.G5_THEME_DIR.'/'.$dir;
+
+    if(is_dir($path)) {
+        $screenshot = $path.'/screenshot.png';
+        if(is_file($screenshot)) {
+            $size = @getimagesize($screenshot);
+
+            if($size[2] == 3)
+                $screenshot_url = str_replace(G5_PATH, G5_URL, $screenshot);
+        }
+
+        $info['screenshot'] = $screenshot_url;
+
+        $text = $path.'/readme.txt';
+        if(is_file($text)) {
+            $content = file($text, false);
+            $content = array_map('trim', $content);
+
+            preg_match('#^Theme Name:(.+)$#i', $content[0], $m0);
+            preg_match('#^Theme URI:(.+)$#i', $content[1], $m1);
+            preg_match('#^Maker:(.+)$#i', $content[2], $m2);
+            preg_match('#^Maker URI:(.+)$#i', $content[3], $m3);
+            preg_match('#^Version:(.+)$#i', $content[4], $m4);
+            preg_match('#^Detail:(.+)$#i', $content[5], $m5);
+            preg_match('#^License:(.+)$#i', $content[6], $m6);
+            preg_match('#^License URI:(.+)$#i', $content[7], $m7);
+
+            $info['theme_name'] = trim($m0[1]);
+            $info['theme_uri'] = trim($m1[1]);
+            $info['maker'] = trim($m2[1]);
+            $info['maker_uri'] = trim($m3[1]);
+            $info['version'] = trim($m4[1]);
+            $info['detail'] = trim($m5[1]);
+            $info['license'] = trim($m6[1]);
+            $info['license_uri'] = trim($m7[1]);
+        }
+
+        if(!$info['theme_name'])
+            $info['theme_name'] = $dir;
+    }
+
+    return $info;
+}
+
+
+// 테마설정 정보
+function get_theme_config_value($dir, $key='*')
+{
+    $tconfig = array();
+
+    $theme_config_file = G5_PATH.'/'.G5_THEME_DIR.'/'.$dir.'/theme.config.php';
+    if(is_file) {
+        include($theme_config_file);
+
+        if($key == '*') {
+            $tconfig = $theme_config;
+        } else {
+            $keys = array_map('trim', explode(',', $key));
+            foreach($keys as $v) {
+                $tconfig[$v] = trim($theme_config[$v]);
+            }
+        }
+    }
+
+    return $tconfig;
 }
 
 
@@ -95,26 +231,48 @@ function get_member_id_select($name, $level, $selected="", $event="")
 }
 
 // 권한 검사
-function auth_check($auth, $attr)
+function auth_check($auth, $attr, $return=false)
 {
     global $is_admin;
 
     if ($is_admin == 'super') return;
 
-    if (!trim($auth))
-        alert('이 메뉴에는 접근 권한이 없습니다.\\n\\n접근 권한은 최고관리자만 부여할 수 있습니다.');
+    if (!trim($auth)) {
+        $msg = '이 메뉴에는 접근 권한이 없습니다.\\n\\n접근 권한은 최고관리자만 부여할 수 있습니다.';
+        if($return)
+            return $msg;
+        else
+            alert($msg);
+    }
 
     $attr = strtolower($attr);
 
     if (!strstr($auth, $attr)) {
-        if ($attr == 'r')
-            alert('읽을 권한이 없습니다.');
-        else if ($attr == 'w')
-            alert('입력, 추가, 생성, 수정 권한이 없습니다.');
-        else if ($attr == 'd')
-            alert('삭제 권한이 없습니다.');
-        else
-            alert('속성이 잘못 되었습니다.');
+        if ($attr == 'r') {
+            $msg = '읽을 권한이 없습니다.';
+            if($return)
+                return $msg;
+            else
+                alert($msg);
+        } else if ($attr == 'w') {
+            $msg = '입력, 추가, 생성, 수정 권한이 없습니다.';
+            if($return)
+                return $msg;
+            else
+                alert($msg);
+        } else if ($attr == 'd') {
+            $msg = '삭제 권한이 없습니다.';
+            if($return)
+                return $msg;
+            else
+                alert($msg);
+        } else {
+            $msg = '속성이 잘못 되었습니다.';
+            if($return)
+                return $msg;
+            else
+                alert($msg);
+        }
     }
 }
 

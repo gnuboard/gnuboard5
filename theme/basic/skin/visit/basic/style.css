@@ -1,0 +1,13 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
+/* 방문자 집계 */
+#visit {border-bottom:1px dotted #dde4e9}
+#visit div {margin:0 auto;width:970px;zoom:1}
+#visit div:after {display:block;visibility:hidden;clear:both;content:""}
+#visit h2 {float:left;padding:10px 45px 10px 0}
+#visit dl {float:left;margin:0 0 0 10px;padding:0}
+#visit dt {float:left;margin:0;padding:10px 0 10px}
+#visit dd {float:left;margin:0 30px 0 0;padding:10px}
+#visit a {display:inline-block;padding:10px;text-decoration:none}
+#visit a:focus, #visit a:hover {}

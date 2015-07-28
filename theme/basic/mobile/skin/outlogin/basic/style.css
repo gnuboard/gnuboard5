@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
+/* 아웃로그인 */
+.ol {position:relative;margin:0 0 10px;padding:0 5px 5px;border-bottom:1px solid #e7f1ed}
+.ol h2 {width:0;height:0;overflow:hidden}
+
+.ol a.btn_admin {display:inline-block;margin:0 0 5px;padding:0 10px;border:1px solid #e8180c;background:#e8180c;color:#fff;text-decoration:none;line-height:2em;vertical-align:middle} /* 관리자 전용 버튼 */
+.ol a.btn_admin:focus, .ol a.btn_admin:hover {text-decoration:none}
+
+#ol_before input[type=text], #ol_before input[type=password] {display:block;margin-bottom:5px;padding:0;width:80%;height:1.8em;border:1px solid #e4eaec;background:#f7f7f7;vertical-align:middle;line-height:1.8em}
+#ol_before input[type=submit] {position:absolute;top:0;right:5px;padding:0 !important;width:18%;height:4.3em;border:0;background:#333;color:#fff;letter-spacing:-0.1em;vertical-align:top;cursor:pointer}
+#ol_svc {margin:15px 0 5px;text-align:right}
+#ol_svc a {display:inline-block;margin:0 0 0 5px;color:#000;text-decoration:none;vertical-align:middle}
+
+#ol_after_hd strong {display:inline-block;padding:0 0 5px}
+#ol_after_hd .btn_admin {display:block;padding:0 !important;text-align:center}
+#ol_after_private {margin:0;padding:0;list-style:none}
+#ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_after_private li {float:left}
+#ol_after_memo {width:30%}
+#ol_after_pt {width:40%}
+#ol_after_scrap {width:30%}
+#ol_after_private a {display:block;height:3em;background:#f7f7f7;color:#000;text-decoration:none;text-align:center;line-height:3em}
+#ol_after_private a strong {color:#000;font-weight:normal}
+#ol_after_private a:nth-of-type(1) {border-right:1px solid #fff}
+#ol_after_private a:nth-of-type(2) {border-right:1px solid #fff}
+#ol_after_ft {margin-top:5px;text-align:right}
+#ol_after_ft a {display:inline-block;padding:0 20px;height:2em;background:#333;color:#fff;text-decoration:none;text-align:center;line-height:2em}

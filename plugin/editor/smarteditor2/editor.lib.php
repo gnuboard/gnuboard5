@@ -29,7 +29,7 @@ function editor_html($id, $content, $is_dhtml_editor=true)
                     $(this).text("단축키 일람 닫기");
                 }
             });
-            $(".btn_cke_sc_close").live("click",function(){
+            $(document).on("click", ".btn_cke_sc_close", function(){
                 $(this).parent("div.cke_sc_def").remove();
             });
         });';

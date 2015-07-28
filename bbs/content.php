@@ -62,8 +62,8 @@ $str = preg_replace($src, $dst, $str);
 if(trim($co['co_skin']) == '')
     $co['co_skin'] = 'basic';
 
-$content_skin_path = G5_SKIN_PATH.'/content/'.$co['co_skin'];
-$content_skin_url  = G5_SKIN_URL.'/content/'.$co['co_skin'];
+$content_skin_path = get_skin_path('content', $co['co_skin']);
+$content_skin_url  = get_skin_url('content', $co['co_skin']);
 $skin_file = $content_skin_path.'/content.skin.php';
 
 if ($is_admin)
