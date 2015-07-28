@@ -30,10 +30,10 @@ $write_table = $g5['write_prefix'] . $bo_table;
 $tconfig = get_theme_config_value($theme, 'set_default_skin, preview_board_skin, preview_mobile_board_skin');
 if($mode == 'list' || $mode == 'view') {
     if($tconfig['preview_board_skin'])
-        $board['bo_skin'] = 'theme/'.$tconfig['preview_board_skin'];
+        $board['bo_skin'] = preg_match('#^theme/.+$#', $tconfig['preview_board_skin']) ? $tconfig['preview_board_skin'] : 'theme/'.$tconfig['preview_board_skin'];
 
     if($tconfig['preview_mobile_board_skin'])
-        $board['bo_mobile_skin'] = 'theme/'.$tconfig['preview_mobile_board_skin'];
+        $board['bo_mobile_skin'] = preg_match('#^theme/.+$#', $tconfig['preview_mobile_board_skin']) ? $tconfig['preview_mobile_board_skin'] : 'theme/'.$tconfig['preview_mobile_board_skin'];
 }
 
 // 스킨경로
