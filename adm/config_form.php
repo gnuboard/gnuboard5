@@ -9,12 +9,9 @@ $token = get_token();
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
-if (!isset($config['cf_include_index'])) {
+if (!isset($config['cf_add_script'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
-                    ADD `cf_include_index` VARCHAR(255) NOT NULL AFTER `cf_admin`,
-                    ADD `cf_include_head` VARCHAR(255) NOT NULL AFTER `cf_include_index`,
-                    ADD `cf_include_tail` VARCHAR(255) NOT NULL AFTER `cf_include_head`,
-                    ADD `cf_add_script` TEXT NOT NULL AFTER `cf_include_tail` ", true);
+                    ADD `cf_add_script` TEXT NOT NULL AFTER `cf_admin_email_name` ", true);
 }
 
 if (!isset($config['cf_mobile_new_skin'])) {
@@ -1002,27 +999,6 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
             <col>
         </colgroup>
         <tbody>
-        <tr>
-            <th scope="row"><label for="cf_include_index">초기화면 파일 경로</label></th>
-            <td>
-                <?php echo help('입력이 없으면 index.php가 초기화면 파일로 설정됩니다.<br>초기화면 파일은 index.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="cf_include_index" value="<?php echo $config['cf_include_index'] ?>" id="cf_include_index" class="frm_input" size="50">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="cf_include_head">상단 파일 경로</label></th>
-            <td>
-                <?php echo help('입력이 없으면 head.php가 상단 파일로 설정됩니다.<br>상단 파일은 head.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="cf_include_head" value="<?php echo $config['cf_include_head'] ?>" id="cf_include_head" class="frm_input" size="50">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="cf_include_tail">하단 파일 경로</label></th>
-            <td>
-                <?php echo help('입력이 없으면 tail.php가 하단 파일로 설정됩니다.<br>초기화면 파일은 tail.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="cf_include_tail" value="<?php echo $config['cf_include_tail'] ?>" id="cf_include_tail" class="frm_input" size="50">
-            </td>
-        </tr>
         <tr>
             <th scope="row"><label for="cf_add_script">추가 script, css</label></th>
             <td>
