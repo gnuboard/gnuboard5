@@ -23,13 +23,26 @@ sql_query($sql);
 
 // 테마 설정 스킨 적용
 if($_POST['set_default_skin'] == 1) {
-    $keys = 'set_default_skin, cf_member_skin, cf_mobile_member_skin, cf_new_skin, cf_mobile_new_skin, cf_search_skin, cf_mobile_search_skin, cf_connect_skin, cf_mobile_connect_skin, cf_faq_skin, cf_mobile_faq_skin';
+    $keys = 'set_default_skin, cf_member_skin, cf_mobile_member_skin, cf_new_skin, cf_mobile_new_skin, cf_search_skin, cf_mobile_search_skin, cf_connect_skin, cf_mobile_connect_skin, cf_faq_skin, cf_mobile_faq_skin, qa_skin, qa_mobile_skin';
 
     $tconfig = get_theme_config_value($theme, $keys);
 
     if($tconfig['set_default_skin']) {
         $sql_common = array();
+        $qa_sql_common = array();
+
         foreach($tconfig as $key => $val) {
+            if(preg_match('#^qa_.+$#', $key)) {
+                if($val) {
+                    if(!preg_match('#^theme/.+$#', $val))
+                        $val = 'theme/'.$val;
+
+                    $qa_sql_common[] = " $key = '$val' ";
+                }
+
+                continue;
+            }
+
             if(!isset($config[$key]))
                 continue;
 
@@ -43,6 +56,11 @@ if($_POST['set_default_skin'] == 1) {
 
         if(!empty($sql_common)) {
             $sql = " update {$g5['config_table']} set " . implode(', ', $sql_common);
+            sql_query($sql);
+        }
+
+        if(!empty($qa_sql_common)) {
+            $sql = " update {$g5['qa_config_table']} set " . implode(', ', $qa_sql_common);
             sql_query($sql);
         }
     }

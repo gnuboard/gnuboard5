@@ -1117,7 +1117,7 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_galc">테마 갤러리설정 가져오기</button></div>', $frm_submit); ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_galc">테마 이미지설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_bo_point">
     <h2 class="h2_frm">게시판 포인트 설정</h2>
@@ -1241,7 +1241,7 @@ $(function(){
     });
 
     $(".get_theme_galc").on("click", function() {
-        if(!confirm("현재 테마의 갤러리 이미지 설정을 적용하시겠습니까?"))
+        if(!confirm("현재 테마의 게시판 이미지 설정을 적용하시겠습니까?"))
             return false;
 
         $.ajax({
@@ -1257,7 +1257,7 @@ $(function(){
                     return false;
                 }
 
-                var field = Array('bo_gallery_cols', 'bo_gallery_width', 'bo_gallery_height', 'bo_mobile_gallery_width', 'bo_mobile_gallery_height');
+                var field = Array('bo_gallery_cols', 'bo_gallery_width', 'bo_gallery_height', 'bo_mobile_gallery_width', 'bo_mobile_gallery_height', 'bo_image_width');
                 var count = field.length;
                 var key;
 

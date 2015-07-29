@@ -10,6 +10,7 @@ $theme_config = array();
 
 // 갤러리 이미지 수 등의 설정을 지정하시면 게시판관리에서 해당 값을
 // 가져오기 기능을 통해 게시판 설정의 해당 필드에 바로 적용할 수 있습니다.
+// 사용하지 않는 스킨 설정은 값을 비워두시면 됩니다.
 
 $theme_config = array(
     'set_default_skin'          => false,   // 기본환경설정의 최근게시물 등의 기본스킨 변경여부 true, false
@@ -29,6 +30,9 @@ $theme_config = array(
     'bo_gallery_width'          => 174,     // 갤러리 이미지 폭
     'bo_gallery_height'         => 124,     // 갤러리 이미지 높이
     'bo_mobile_gallery_width'   => 125,     // 모바일 갤러리 이미지 폭
-    'bo_mobile_gallery_height'  => 100      // 모바일 갤러리 이미지 높이
+    'bo_mobile_gallery_height'  => 100,     // 모바일 갤러리 이미지 높이
+    'bo_image_width'            => 600,     // 게시판 뷰 이미지 폭
+    'qa_skin'                   => 'basic', // 1:1문의 스킨
+    'qa_mobile_skin'            => 'basic'  // 1:1문의 모바일 스킨
 );
 ?>

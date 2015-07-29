@@ -29,7 +29,7 @@ if(!in_array($type, $arr_type)) {
 }
 
 if($type == 'board') {
-    $keys = array('bo_gallery_cols', 'bo_gallery_width', 'bo_gallery_height', 'bo_mobile_gallery_width', 'bo_mobile_gallery_height');
+    $keys = array('bo_gallery_cols', 'bo_gallery_width', 'bo_gallery_height', 'bo_mobile_gallery_width', 'bo_mobile_gallery_height', 'bo_image_width');
     $tconfig = get_theme_config_value($config['cf_theme'], implode(',', $keys));
 
     $i = 0;
@@ -41,7 +41,7 @@ if($type == 'board') {
     }
 
     if($i == 0)
-        $data['error'] = '적용할 갤러리 이미지 설정이 없습니다.';
+        $data['error'] = '적용할 게시판 이미지 설정이 없습니다.';
 } else if($type == 'conf_skin') {
     $keys = array('cf_new_skin', 'cf_mobile_new_skin', 'cf_search_skin', 'cf_mobile_search_skin', 'cf_connect_skin', 'cf_mobile_connect_skin', 'cf_faq_skin', 'cf_mobile_faq_skin');
 
