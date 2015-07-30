@@ -1,5 +1,5 @@
 Theme Name: 베이직
-Theme URI: http://demo.sir.co.kr/gnuboard5
+Theme URI: http://theme.sir.co.kr/gnuboard5/demo/basic
 Maker: SIR
 Maker URI: http://sir.co.kr
 Version: 1.0.0
