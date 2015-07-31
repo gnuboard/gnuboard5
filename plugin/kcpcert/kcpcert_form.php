@@ -4,12 +4,41 @@ include_once('./_common.php');
 // 금일 인증시도 회수 체크
 certify_count_check($member['mb_id'], 'hp');
 
+setlocale(LC_CTYPE, 'ko_KR.euc-kr');
+
 // kcp 휴대폰인증파일
 include_once(G5_KCPCERT_PATH.'/kcpcert_config.php');
 
 $ordr_idxx = get_session('ss_uniqid');
 if(!$ordr_idxx)
     $ordr_idxx = get_uniqid();
+
+$ct_cert = new C_CT_CLI;
+$ct_cert->mf_clear();
+
+$year          = "00";
+$month         = "00";
+$day           = "00";
+$user_name     = "";
+$sex_code      = "";
+$local_code    = "";
+
+// !!up_hash 데이터 생성시 주의 사항
+// year , month , day 가 비어 있는 경우 "00" , "00" , "00" 으로 설정이 됩니다
+// 그외의 값은 없을 경우 ""(null) 로 세팅하시면 됩니다.
+// up_hash 데이터 생성시 site_cd 와 ordr_idxx 는 필수 값입니다.
+$hash_data = $site_cd   .
+             $ordr_idxx .
+             $user_name .
+             $year      .
+             $month     .
+             $day       .
+             $sex_code  .
+             $local_code;
+
+$up_hash = $ct_cert->make_hash_data( $home_dir, $hash_data );
+
+$ct_cert->mf_clear();
 ?>
 
 <form name="form_auth" method="post" target="auth_popup" action="<?php echo $cert_url ?>">
@@ -40,6 +69,8 @@ if(!$ordr_idxx)
 
 <input type="hidden" name="res_cd"       value=""/>
 <input type="hidden" name="res_msg"      value=""/>
+
+<input type="hidden" name="up_hash" value="<?php echo $up_hash; ?>"/>
 
 <!-- up_hash 검증 을 위한 필드 -->
 <input type="hidden" name="veri_up_hash" value=""/>
