@@ -674,7 +674,7 @@ $(function(){
         }
     });
 
-    $("textarea#wr_content[maxlength]").live("keyup change", function() {
+    $(document).on( "keyup change", "textarea#wr_content[maxlength]", function(){
         var str = $(this).val();
         var mx = parseInt($(this).attr("maxlength"));
         if (str.length > mx) {

@@ -4,7 +4,7 @@ include_once(G5_LIB_PATH.'/connect.lib.php');
 include_once(G5_LIB_PATH.'/outlogin.lib.php');
 
 $g5['title'] = '그누보드4 DB 데이터 이전';
-include_once(G5_PATH.'/head.sub.php');
+include_once(G5_PATH.'/'.G5_THEME_DIR.'/basic/head.sub.php');
 
 if(get_session('tables_copied') == 'done')
     alert('DB 데이터 변환을 이미 실행하였습니다. 중복 실행시 오류가 발생할 수 있습니다.', G5_URL);
@@ -172,5 +172,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G5_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/'.G5_THEME_DIR.'/basic/tail.sub.php');
 ?>

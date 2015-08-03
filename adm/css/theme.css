@@ -1,0 +1,8 @@
+@charset "utf-8";
+#preview_item{height:50px}
+#preview_item ul{margin:0;padding:0;top:0;width:100%;border-bottom:1px solid #eee; margin:0 auto;text-align:center;background:#333;position:fixed;top:0;z-index:999999;width:100%;}
+#preview_item ul li{list-style:none;display:inline-block;height:50px;line-height:50px;padding:0 3px;*display:inline; zoom:1;}
+#preview_item ul li a{color:#555;padding:0 8px;height:24px;line-height:24px;background:#f2f2f2;border-radius:3px;display:inline-block;vertical-align:middle;border:1px solid #dcdcdc;}
+#preview_item ul li a:hover{background:#ccc;text-decoration:none;border:1px solid #ccc;}
+#preview_item ul li button{color:#fff;padding:0 8px;background:#FF5191;border-radius:3px;height:26px;line-height:24px;vertical-align:middle;border:none}
+#preview_item ul li button:hover{background:#e40d5c;color:#fff;text-decoration:none;}

@@ -136,12 +136,12 @@ $colspan = 7;
 
 <script>
 $(function() {
-    $(".btn_add_submenu").live("click", function() {
+    $(document).on("click", ".btn_add_submenu", function() {
         var code = $(this).closest("tr").find("input[name='code[]']").val().substr(0, 2);
         add_submenu(code);
     });
 
-    $(".btn_del_menu").live("click", function() {
+    $(document).on("click", ".btn_del_menu", function() {
         if(!confirm("메뉴를 삭제하시겠습니까?"))
             return false;
 

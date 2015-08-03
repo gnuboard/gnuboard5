@@ -69,7 +69,7 @@ $(function(){
     });
 
     // 임시저장된 글 제목과 내용을 가져와서 제목과 내용 입력박스에 노출해 줌
-    $(".autosave_load").live("click", function(){
+    $(document).on( "click", ".autosave_load", function(){
         var $li = $(this).parents("li");
         var as_id = $li.data("as_id");
         var as_uid = $li.data("uid");
@@ -93,7 +93,7 @@ $(function(){
         $("#autosave_pop").hide();
     });
 
-    $(".autosave_del").live("click", function(){
+    $(document).on( "click", ".autosave_del", function(){
         var $li = $(this).parents("li");
         var as_id = $li.data("as_id");
         $.get(g5_bbs_url+"/ajax.autosavedel.php", {"as_id":as_id}, function(data){

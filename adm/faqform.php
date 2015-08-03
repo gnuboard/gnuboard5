@@ -8,7 +8,7 @@ auth_check($auth[$sub_menu], "w");
 $sql = " select * from {$g5['faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
-$html_title = 'FAQ '.$fm['fm_subject'];;
+$html_title = 'FAQ '.$fm['fm_subject'];
 
 if ($w == "u")
 {
