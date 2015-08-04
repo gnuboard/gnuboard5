@@ -2066,7 +2066,7 @@ function delete_editor_thumbnail($contents)
 
     for($i=0; $i<count($matchs[1]); $i++) {
         // 이미지 path 구함
-        $imgurl = parse_url($matchs[1][$i]);
+        $imgurl = @parse_url($matchs[1][$i]);
         $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
 
         $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
@@ -2857,7 +2857,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
 
-    $p = parse_url($url);
+    $p = @parse_url($url);
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
 
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
@@ -2962,7 +2962,7 @@ function clean_query_string($query, $amp=true)
 
 function get_device_change_url()
 {
-    $p = parse_url(G5_URL);
+    $p = @parse_url(G5_URL);
     $href = $p['scheme'].'://'.$p['host'];
     if(isset($p['port']) && $p['port'])
         $href .= ':'.$p['port'];
