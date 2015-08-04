@@ -25,7 +25,7 @@ function poll($skin_dir='basic', $po_id=false)
             $poll_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/poll/'.$match[1];
             $poll_skin_url = str_replace(G5_PATH, G5_URL, $poll_skin_path);
         }
-        $skin_dir = $match[1];
+        //$skin_dir = $match[1];
     } else {
         if (G5_IS_MOBILE) {
             $poll_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/poll/'.$skin_dir;
