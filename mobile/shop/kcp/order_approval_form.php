@@ -353,11 +353,11 @@ if($default['de_tax_flag_use']) {
 </div>
 
 <!-- 스마트폰에서 KCP 결제창을 레이어 형태로 구현-->
-<div id="layer_receipt" style="position:absolute; left:1px; top:1px; width:310;height:400; z-index:1; display:none;">
-    <table width="310" border="-" cellspacing="0" cellpadding="0" style="text-align:center">
-        <tr>
+<div id="layer_receipt" style="position:absolute; left:1px; top:1px; width:100%;height:100%; z-index:1; display:none;">
+    <table width="100%" height="100%" border="-" cellspacing="0" cellpadding="0" style="text-align:center">
+        <tr height="100%" width="100%">
             <td>
-                <iframe name="frm_receipt" frameborder="0" border="0" width="310" height="400" scrolling="auto"></iframe>
+                <iframe name="frm_receipt" frameborder="0" border="0" width="100%" height="100%" scrolling="auto"></iframe>
             </td>
         </tr>
     </table>
