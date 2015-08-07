@@ -45,7 +45,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 <input type="hidden" name="view"     value="<?php echo $view; ?>">
 <input type="hidden" name="sfl"      value="<?php echo $sfl; ?>">
 <input type="hidden" name="stx"      value="<?php echo $stx; ?>">
-<input type="hidden" name="srows"    value="<?php echo $srows; ?>">
 <input type="hidden" name="bo_table" value="<?php echo $bo_table; ?>">
 <input type="hidden" name="page"     value="<?php echo $page; ?>">
 <input type="hidden" name="pressed"  value="">

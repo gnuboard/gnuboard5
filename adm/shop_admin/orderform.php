@@ -817,12 +817,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <tr>
                     <th scope="row"><span class="sound_only">주문하시는 분 </span>주소</th>
                     <td>
-                        <label for="od_zip1" class="sound_only">우편번호 앞자리</label>
-                        <input type="text" name="od_zip1" value="<?php echo $od['od_zip1']; ?>" id="od_zip1" required class="frm_input required" size="4">
-                        -
-                        <label for="od_zip2" class="sound_only">우편번호 뒷자리</label>
-                        <input type="text" name="od_zip2" value="<?php echo $od['od_zip2']; ?>" id="od_zip2" required class="frm_input required" size="4">
-                        <button type="button" class="btn_frmline" onclick="win_zip('frmorderform3', 'od_zip1', 'od_zip2', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon');">주소 검색</button><br>
+                        <label for="od_zip" class="sound_only">우편번호</label>
+                        <input type="text" name="od_zip" value="<?php echo $od['od_zip1'].$od['od_zip2']; ?>" id="od_zip" required class="frm_input required" size="5">
+                        <button type="button" class="btn_frmline" onclick="win_zip('frmorderform3', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon');">주소 검색</button><br>
                         <span id="od_win_zip" style="display:block"></span>
                         <input type="text" name="od_addr1" value="<?php echo $od['od_addr1']; ?>" id="od_addr1" required class="frm_input required" size="35">
                         <label for="od_addr1">기본주소</label><br>
@@ -872,12 +869,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <tr>
                     <th scope="row"><span class="sound_only">받으시는 분 </span>주소</th>
                     <td>
-                        <label for="od_b_zip1" class="sound_only">우편번호 앞자리</label>
-                        <input type="text" name="od_b_zip1" value="<?php echo $od['od_b_zip1']; ?>" id="od_b_zip1" required class="frm_input required" size="4">
-                        -
-                        <label for="od_b_zip2" class="sound_only">우편번호 뒷자리</label>
-                        <input type="text" name="od_b_zip2" value="<?php echo $od['od_b_zip2']; ?>" id="od_b_zip2" required class="frm_input required" size="4">
-                        <button type="button" class="btn_frmline" onclick="win_zip('frmorderform3', 'od_b_zip1', 'od_b_zip2', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon');">주소 검색</button><br>
+                        <label for="od_b_zip" class="sound_only">우편번호</label>
+                        <input type="text" name="od_b_zip" value="<?php echo $od['od_b_zip1'].$od['od_b_zip2']; ?>" id="od_b_zip" required class="frm_input required" size="5">
+                        <button type="button" class="btn_frmline" onclick="win_zip('frmorderform3', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon');">주소 검색</button><br>
                         <input type="text" name="od_b_addr1" value="<?php echo $od['od_b_addr1']; ?>" id="od_b_addr1" required class="frm_input required" size="35">
                         <label for="od_b_addr1">기본주소</label>
                         <input type="text" name="od_b_addr2" value="<?php echo $od['od_b_addr2']; ?>" id="od_b_addr2" class="frm_input" size="35">

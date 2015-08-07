@@ -121,7 +121,7 @@
         var count = $slides.size();
         var width, outerW;
 
-        if(count < 2)
+        if(count < 1)
             return;
 
         function button_change(idx)

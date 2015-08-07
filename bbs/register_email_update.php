@@ -8,7 +8,7 @@ $mb_email = trim($_POST['mb_email']);
 
 $sql = " select mb_name, mb_datetime from {$g5['member_table']} where mb_id = '{$mb_id}' and mb_email_certify <> '' ";
 $mb = sql_fetch($sql);
-if (!$mb) {
+if ($mb) {
     alert("이미 메일인증 하신 회원입니다.", G5_URL);
 }
 

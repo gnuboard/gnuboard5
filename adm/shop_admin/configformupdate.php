@@ -146,7 +146,6 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_hope_date_after            = '{$_POST['de_hope_date_after']}',
                 de_baesong_content            = '{$_POST['de_baesong_content']}',
                 de_change_content             = '{$_POST['de_change_content']}',
-                de_level_sell                 = '{$_POST['de_level_sell']}',
                 de_point_days                 = '{$_POST['de_point_days']}',
                 de_simg_width                 = '{$_POST['de_simg_width']}',
                 de_simg_height                = '{$_POST['de_simg_height']}',

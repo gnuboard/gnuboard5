@@ -115,6 +115,9 @@ $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) &
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
 
+$agree  = preg_replace('#[^0-9]#', '', $agree);
+$agree2 = preg_replace('#[^0-9]#', '', $agree2);
+
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 if ($config['cf_use_addr'])
     add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js

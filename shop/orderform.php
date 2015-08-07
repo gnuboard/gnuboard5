@@ -333,12 +333,9 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             <tr>
                 <th scope="row">주소</th>
                 <td>
-                    <label for="od_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_zip1" value="<?php echo $member['mb_zip1'] ?>" id="od_zip1" required class="frm_input required" size="3" maxlength="3">
-                    -
-                    <label for="od_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_zip2" value="<?php echo $member['mb_zip2'] ?>" id="od_zip2" required class="frm_input required" size="3" maxlength="3">
-                    <button type="button" class="btn_frmline" onclick="win_zip('forderform', 'od_zip1', 'od_zip2', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon');">주소 검색</button><br>
+                    <label for="od_zip" class="sound_only">우편번호<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="od_zip" required class="frm_input required" size="5" maxlength="6">
+                    <button type="button" class="btn_frmline" onclick="win_zip('forderform', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon');">주소 검색</button><br>
                     <input type="text" name="od_addr1" value="<?php echo $member['mb_addr1'] ?>" id="od_addr1" required class="frm_input frm_address required" size="60">
                     <label for="od_addr1">기본주소<strong class="sound_only"> 필수</strong></label><br>
                     <input type="text" name="od_addr2" value="<?php echo $member['mb_addr2'] ?>" id="od_addr2" class="frm_input frm_address" size="60">
@@ -461,12 +458,9 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             <tr>
                 <th scope="row">주소</th>
                 <td id="sod_frm_addr">
-                    <label for="od_b_zip1" class="sound_only">우편번호 앞자리<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_b_zip1" id="od_b_zip1" required class="frm_input required" size="3" maxlength="3">
-                    -
-                    <label for="od_b_zip2" class="sound_only">우편번호 뒷자리<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_b_zip2" id="od_b_zip2" required class="frm_input required" size="3" maxlength="3">
-                    <button type="button" class="btn_frmline" onclick="win_zip('forderform', 'od_b_zip1', 'od_b_zip2', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon');">주소 검색</button><br>
+                    <label for="od_b_zip" class="sound_only">우편번호<strong class="sound_only"> 필수</strong></label>
+                    <input type="text" name="od_b_zip" id="od_b_zip" required class="frm_input required" size="5" maxlength="6">
+                    <button type="button" class="btn_frmline" onclick="win_zip('forderform', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon');">주소 검색</button><br>
                     <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="60">
                     <label for="od_b_addr1">기본주소<strong class="sound_only"> 필수</strong></label><br>
                     <input type="text" name="od_b_addr2" id="od_b_addr2" class="frm_input frm_address" size="60">
@@ -925,12 +919,11 @@ $(function() {
     });
 
     $("#od_b_addr2").focus(function() {
-        var zip1 = $("#od_b_zip1").val().replace(/[^0-9]/g, "");
-        var zip2 = $("#od_b_zip2").val().replace(/[^0-9]/g, "");
-        if(zip1 == "" || zip2 == "")
+        var zip = $("#od_b_zip").val().replace(/[^0-9]/g, "");
+        if(zip == "")
             return false;
 
-        var code = String(zip1) + String(zip2);
+        var code = String(zip);
 
         if(zipcode == code)
             return false;
@@ -968,8 +961,7 @@ $(function() {
             f.od_b_name.value        = addr[0];
             f.od_b_tel.value         = addr[1];
             f.od_b_hp.value          = addr[2];
-            f.od_b_zip1.value        = addr[3];
-            f.od_b_zip2.value        = addr[4];
+            f.od_b_zip.value         = addr[3] + addr[4];
             f.od_b_addr1.value       = addr[5];
             f.od_b_addr2.value       = addr[6];
             f.od_b_addr3.value       = addr[7];
@@ -1172,8 +1164,7 @@ function forderform_check(f)
     check_field(f.od_tel, "주문하시는 분 전화번호를 입력하십시오.");
     check_field(f.od_addr1, "주소검색을 이용하여 주문하시는 분 주소를 입력하십시오.");
     //check_field(f.od_addr2, " 주문하시는 분의 상세주소를 입력하십시오.");
-    check_field(f.od_zip1, "");
-    check_field(f.od_zip2, "");
+    check_field(f.od_zip, "");
 
     clear_field(f.od_email);
     if(f.od_email.value=='' || f.od_email.value.search(/(\S+)@(\S+)\.(\S+)/) == -1)
@@ -1190,8 +1181,7 @@ function forderform_check(f)
     check_field(f.od_b_tel, "받으시는 분 전화번호를 입력하십시오.");
     check_field(f.od_b_addr1, "주소검색을 이용하여 받으시는 분 주소를 입력하십시오.");
     //check_field(f.od_b_addr2, "받으시는 분의 상세주소를 입력하십시오.");
-    check_field(f.od_b_zip1, "");
-    check_field(f.od_b_zip2, "");
+    check_field(f.od_b_zip, "");
 
     var od_settle_bank = document.getElementById("od_settle_bank");
     if (od_settle_bank) {
@@ -1389,7 +1379,7 @@ function forderform_check(f)
     f.rcvr_tel1.value = f.od_b_tel.value;
     f.rcvr_tel2.value = f.od_b_hp.value;
     f.rcvr_mail.value = f.od_email.value;
-    f.rcvr_zipx.value = f.od_b_zip1.value + f.od_b_zip2.value;
+    f.rcvr_zipx.value = f.od_b_zip.value;
     f.rcvr_add1.value = f.od_b_addr1.value;
     f.rcvr_add2.value = f.od_b_addr2.value;
 
@@ -1411,7 +1401,7 @@ function forderform_check(f)
     f.LGD_RECEIVER.value = f.od_b_name.value;
     f.LGD_RECEIVERPHONE.value = f.od_b_hp.value;
     <?php if($default['de_escrow_use']) { ?>
-    f.LGD_ESCROW_ZIPCODE.value = f.od_b_zip1.value + f.od_b_zip2.value;
+    f.LGD_ESCROW_ZIPCODE.value = f.od_b_zip.value;
     f.LGD_ESCROW_ADDRESS1.value = f.od_b_addr1.value;
     f.LGD_ESCROW_ADDRESS2.value = f.od_b_addr2.value;
     f.LGD_ESCROW_BUYERPHONE.value = f.od_hp.value;
@@ -1432,7 +1422,7 @@ function forderform_check(f)
     f.buyertel.value    = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
     f.recvname.value    = f.od_b_name.value;
     f.recvtel.value     = f.od_b_hp.value ? f.od_b_hp.value : f.od_b_tel.value;
-    f.recvpostnum.value = f.od_b_zip1.value + f.od_b_zip2.value;
+    f.recvpostnum.value = f.od_b_zip.value;
     f.recvaddr.value    = f.od_b_addr1.value + " " +f.od_b_addr2.value;
 
     if(f.gopaymethod.value != "무통장") {
@@ -1454,20 +1444,18 @@ function gumae2baesong(checked) {
         f.od_b_name.value = f.od_name.value;
         f.od_b_tel.value  = f.od_tel.value;
         f.od_b_hp.value   = f.od_hp.value;
-        f.od_b_zip1.value = f.od_zip1.value;
-        f.od_b_zip2.value = f.od_zip2.value;
+        f.od_b_zip.value  = f.od_zip.value;
         f.od_b_addr1.value = f.od_addr1.value;
         f.od_b_addr2.value = f.od_addr2.value;
         f.od_b_addr3.value = f.od_addr3.value;
         f.od_b_addr_jibeon.value = f.od_addr_jibeon.value;
 
-        calculate_sendcost(String(f.od_b_zip1.value) + String(f.od_b_zip2.value));
+        calculate_sendcost(String(f.od_b_zip.value));
     } else {
         f.od_b_name.value = "";
         f.od_b_tel.value  = "";
         f.od_b_hp.value   = "";
-        f.od_b_zip1.value = "";
-        f.od_b_zip2.value = "";
+        f.od_b_zip.value  = "";
         f.od_b_addr1.value = "";
         f.od_b_addr2.value = "";
         f.od_b_addr3.value = "";

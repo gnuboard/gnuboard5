@@ -17,6 +17,8 @@ if ($view == "w")
     $sql_common .= " and a.wr_id = a.wr_parent ";
 else if ($view == "c")
     $sql_common .= " and a.wr_id <> a.wr_parent ";
+else
+    $view = '';
 
 $mb_id = isset($_GET['mb_id']) ? ($_GET['mb_id']) : '';
 $mb_id = substr(preg_replace('#[^a-z0-9_]#i', '', $mb_id), 0, 20);

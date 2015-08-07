@@ -192,7 +192,7 @@ function confirm($msg, $url1='', $url2='', $url3='')
         alert($msg);
     }
 
-    if (!$url3) $url3 = $_SERVER['HTTP_REFERER'];
+    if (!$url3) $url3 = clean_xss_tags($_SERVER['HTTP_REFERER']);
 
     $msg = str_replace("\\n", "<br>", $msg);
 
@@ -1309,7 +1309,7 @@ function view_file_link($file, $width, $height, $content='')
 
     if (preg_match("/\.({$config['cf_image_extension']})$/i", $file)) {
         $img = '<a href="'.G5_BBS_URL.'/view_image.php?bo_table='.$board['bo_table'].'&amp;fn='.urlencode($file).'" target="_blank" class="view_image">';
-        $img .= '<img src="'.G5_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'">';
+        $img .= '<img src="'.G5_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'" '.$attr.'>';
         $img .= '</a>';
 
         return $img;
@@ -2367,12 +2367,8 @@ function hyphen_hp_number($hp)
 function login_url($url='')
 {
     if (!$url) $url = G5_URL;
-    /*
-    $p = parse_url($url);
-    echo urlencode($_SERVER['REQUEST_URI']);
-    return $url.urldecode(preg_replace("/^".urlencode($p['path'])."/", "", urlencode($_SERVER['REQUEST_URI'])));
-    */
-    return $url;
+
+    return urlencode(clean_xss_tags(urldecode($url)));
 }
 
 
@@ -2741,6 +2737,11 @@ function get_search_string($stx)
 function clean_xss_tags($str)
 {
     $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+
+    $search  = array('"', "'");
+    $replace = array('&#34;', '&#39;');
+
+    $str = str_replace($search, $replace, $str);
 
     return $str;
 }

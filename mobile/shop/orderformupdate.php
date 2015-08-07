@@ -235,8 +235,9 @@ if ((int)($send_cost - $tot_sc_cp_price) !== (int)($i_send_cost - $i_send_coupon
 }
 
 // 추가배송비가 상이함
-$od_b_zip1 = preg_replace('/[^0-9]/', '', $od_b_zip1);
-$od_b_zip2 = preg_replace('/[^0-9]/', '', $od_b_zip2);
+$od_b_zip   = preg_replace('/[^0-9]/', '', $od_b_zip);
+$od_b_zip1  = substr($od_b_zip, 0, 3);
+$od_b_zip2  = substr($od_b_zip, 3);
 $zipcode = $od_b_zip1 . $od_b_zip2;
 $sql = " select sc_id, sc_price from {$g5['g5_shop_sendcost_table']} where sc_zip1 <= '$zipcode' and sc_zip2 >= '$zipcode' ";
 $tmp = sql_fetch($sql);
@@ -443,8 +444,9 @@ $od_email         = get_email_address($od_email);
 $od_name          = clean_xss_tags($od_name);
 $od_tel           = clean_xss_tags($od_tel);
 $od_hp            = clean_xss_tags($od_hp);
-$od_zip1          = preg_replace('/[^0-9]/', '', $od_zip1);
-$od_zip2          = preg_replace('/[^0-9]/', '', $od_zip2);
+$od_zip           = preg_replace('/[^0-9]/', '', $od_zip);
+$od_zip1          = substr($od_zip, 0, 3);
+$od_zip2          = substr($od_zip, 3);
 $od_addr1         = clean_xss_tags($od_addr1);
 $od_addr2         = clean_xss_tags($od_addr2);
 $od_addr3         = clean_xss_tags($od_addr3);

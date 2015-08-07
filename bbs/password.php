@@ -51,7 +51,7 @@ $sql = " select wr_subject from {$write_table}
                       and wr_is_comment = 0 ";
 $row = sql_fetch($sql);
 
-$g5['title'] = $row['wr_subject'];
+$g5['title'] = get_text($row['wr_subject']);
 
 include_once($member_skin_path.'/password.skin.php');
 
