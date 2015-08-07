@@ -250,7 +250,7 @@ ul,li{list-style:none;padding:0;margin:0;}
 #sit_opt_added li:after {display:block;visibility:hidden;clear:both;content:""}
 #sit_opt_added li div {height:25px;margin:5px 0 0;text-align:right;position:relative;width:111px;float:right}
 #sit_opt_added .btn_frmline {height:1.85em;line-height:1.85em;background:url(../mobile/shop/img/del_btn.gif) no-repeat 1px 2px;position:absolute;top:0;right:0 ;text-indent:-999px;width:25px;height:25px;padding:0}
-#sit_opt_added li div .sit_qty_plus.sit_qty_plus{overflow:hidden;position:absolute;top:0;left:57px;background:url(../mobile/shop/img/add.gif) no-repeat -1px -1px;text-indent:-999px;border:1px solid #ccc;width:25px;height:25px}
+#sit_opt_added li div .sit_qty_plus{overflow:hidden;position:absolute;top:0;left:57px;background:url(../mobile/shop/img/add.gif) no-repeat -1px -1px;text-indent:-999px;border:1px solid #ccc;width:25px;height:25px}
 #sit_opt_added li div .sit_qty_minus{overflow:hidden;position:absolute;top:0;left:0;background:url(../mobile/shop/img/add.gif) no-repeat -26px  -1px ;text-indent:-999px;border:1px solid #ccc;width:25px;height:25px}
 #sit_opt_added li div .sit_opt_del{background:url(../mobile/shop/img/del_btn.gif) no-repeat 1px 2px;position:absolute;top:0;right:0 ;text-indent:-999px;width:25px;height:25px;padding:0}
 #sit_opt_added li div .frm_input{width:32px;border:1px solid #ccc;height:23px;padding:0 !important;line-height:25px;text-align:center;background:#fff;position:absolute;top:0;left:24px}
@@ -679,9 +679,9 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .pg_page, .pg_current, .qa_page {display:inline-block;padding:0 8px;height:25px;color:#888 !important;letter-spacing:0;line-height:25px;vertical-align:middle;font-size:1.2em}
 .pg a:focus, .pg a:hover {text-decoration:none}
 .pg_page, .qa_page {text-decoration:none}
-.pg_start, .pg_prev {background:url(../mobile/shop/img/paging.gif) no-repeat 0 0 ;text-indent:-999px;overflow:hidden;width:25px;height:25px;padding:0;} 
+.pg_start, .pg_prev {background:url(../mobile/shop/img/paging.gif) no-repeat 0 0 ;text-indent:-999px;overflow:hidden;width:25px;height:25px;padding:0;}
 .pg_prev{background-position:-28px 0}
-.pg_end, .pg_next {background:url(../mobile/shop/img/paging.gif) no-repeat -55px 0;width:25px;height:25px;;width:25px;height:25px;padding:0;text-indent:-999px;overflow:hidden} 
+.pg_end, .pg_next {background:url(../mobile/shop/img/paging.gif) no-repeat -55px 0;width:25px;height:25px;;width:25px;height:25px;padding:0;text-indent:-999px;overflow:hidden}
 .pg_end{background-position:-83px 0}
 .pg_current {display:inline-block;margin:0 4px 0 0;;color:#34b5a1 !important;font-weight:bold;}
 
