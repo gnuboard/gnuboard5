@@ -4,7 +4,7 @@
 /* aside:gnb */
 #gnb {margin:0 0 5px;padding:0 0 10px;border:1px solid #d5d5d5;background:#f2f5f9}
 #gnb h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-.gnb_1dli {position:relative}
+.gnb_1dli {position:relative; word-wrap: break-word;}
 .gnb_1dli_on {color:#fff;text-decoration:none}
 .gnb_1da {display:block;padding:7px 10px;border-bottom:1px solid #f4f4f4;background-color:#fff;font-weight:bold;text-decoration:none}
 .gnb_1dam {background:url('img/gnb_bg00.gif') #fff center right no-repeat}
