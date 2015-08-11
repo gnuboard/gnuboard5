@@ -11,6 +11,8 @@ if (!$is_member) {
 }
 
 $sql = "select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
+if($is_member && !$is_admin)
+    $sql .= " and mb_id = '{$member['mb_id']}' ";
 $od = sql_fetch($sql);
 if (!$od['od_id'] || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
     alert("조회하실 주문서가 없습니다.", G5_SHOP_URL);
