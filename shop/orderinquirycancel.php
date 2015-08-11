@@ -6,7 +6,8 @@ if ($token && get_session("ss_token") == $token) {
     // 맞으면 세션을 지워 다시 입력폼을 통해서 들어오도록 한다.
     set_session("ss_token", "");
 } else {
-    alert_close("토큰 에러");
+    set_session("ss_token", "");
+    alert("토큰 에러", G5_SHOP_URL);
 }
 
 $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' and mb_id = '{$member['mb_id']}' ");
@@ -132,7 +133,7 @@ if($od['od_tno']) {
 sql_query(" update {$g5['g5_shop_cart_table']} set ct_status = '취소' where od_id = '$od_id' ");
 
 // 주문 취소
-$cancel_memo = addslashes($cancel_memo);
+$cancel_memo = addslashes(strip_tags($cancel_memo));
 $cancel_price = $od['od_cart_price'];
 
 $sql = " update {$g5['g5_shop_order_table']}
