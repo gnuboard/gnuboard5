@@ -9,7 +9,7 @@ $g5['title'] = "SMS 기본설정";
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
-if ($config['cf_icode_id'] && $config['cf_icode_pw'])
+if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw'])
 {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
 }
