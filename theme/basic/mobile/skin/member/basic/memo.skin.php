@@ -21,7 +21,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <ul id="memo_list_ul">
         <?php for ($i=0; $i<count($list); $i++) { ?>
         <li>
-            <a href="<?php echo $list[$i]['view_href'] ?>" class="memo_link"><?php echo $list[$i]['send_datetime'] ?> 에 받은 쪽지</a>
+            <a href="<?php echo $list[$i]['view_href'] ?>" class="memo_link"><?php echo $list[$i]['send_datetime'] ?> 에 <?php echo  ($kind == "recv") ? "받은" : "보낸";  ?> 쪽지</a>
             <span class="memo_read"><?php echo $list[$i]['read_datetime'] ?></span>
             <span class="memo_send"><?php echo $list[$i]['name'] ?></span>
             <a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;" class="memo_del">삭제</a>
