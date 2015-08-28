@@ -53,10 +53,12 @@ if (!$select_db) {
 
 $mysql_set_mode = 'false';
 @mysql_query('set names utf8');
-if(version_compare(mysql_get_server_info(), '5.6.6', '>=')  == 1) {
+$row = mysql_fetch_assoc(mysql_query(" SELECT @@sql_mode as mode "));
+if($row['mode']) {
     @mysql_query("SET SESSION sql_mode = ''");
     $mysql_set_mode = 'true';
 }
+unset($row);
 ?>
 
 <div class="ins_inner">
