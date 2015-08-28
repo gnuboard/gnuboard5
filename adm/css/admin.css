@@ -748,3 +748,14 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #theme_detail table th{padding: 5px 0;  border: 1px solid #d1dee2; background: #e5ecef;width:50px;padding:10px;text-align:left}
 #theme_detail table td{ border: 1px solid #ececec;padding:10px}
 .no_theme{text-align:center;padding:100px 0;color:#555}
+
+/*글,댓글현황*/
+#wr_cont{position:relative;margin:10px 20px}
+#wr_cont input[type="submit"]{background:#ff3061;border:none;color:#fff;padding: 0 5px;height: 24px;}
+#wr_cont select{height: 24px;}
+#grp_color{border:2px solid #ddd;position:absolute;top:0;right:0;list-style:none;padding: 5px 5px; margin:0;}
+#grp_color li{padding:5px 10px;}
+#grp_color li span{width:10px;height:10px; display:inline-block;background:rgb(75, 178, 197);margin-right:5px;}
+#grp_color li.color2 span{background:rgb(234, 162, 40);}
+#chart_wr h5{text-align:center;border:1px solid #eee;padding:30px 0}
+#chart_wr{margin:20px }
