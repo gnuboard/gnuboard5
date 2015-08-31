@@ -71,7 +71,7 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
     if(defined('_THEME_PREVIEW_') && _THEME_PREVIEW_ === true) {
         if(isset($theme_config['ca_mobile_list_best_mod']))
             $theme_config['ca_mobile_list_best_mod'] = (isset($tconfig['ca_mobile_list_best_mod']) && $tconfig['ca_mobile_list_best_mod']) ? $tconfig['ca_mobile_list_best_mod'] : 0;
-        if(isset($theme_config['ca_mobile_list_best_mod']))
+        if(isset($theme_config['ca_mobile_list_best_row']))
             $theme_config['ca_mobile_list_best_row'] = (isset($tconfig['ca_mobile_list_best_row']) && $tconfig['ca_mobile_list_best_row']) ? $tconfig['ca_mobile_list_best_row'] : 0;
     }
 
