@@ -33,7 +33,7 @@ $board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '$bo_ta
 $write_table = $g5['write_prefix'] . $bo_table;
 
 // theme.config.php 미리보기 게시판 스킨이 설정돼 있다면
-$tconfig = get_theme_config_value($theme, 'set_default_skin, preview_board_skin, preview_mobile_board_skin, de_shop_skin, de_shop_mobile_skin');
+$tconfig = get_theme_config_value($theme);
 if($mode == 'list' || $mode == 'view') {
     if($tconfig['preview_board_skin'])
         $board['bo_skin'] = preg_match('#^theme/.+$#', $tconfig['preview_board_skin']) ? $tconfig['preview_board_skin'] : 'theme/'.$tconfig['preview_board_skin'];
@@ -77,6 +77,27 @@ if($tconfig['de_shop_skin'])
 
 if($tconfig['de_shop_mobile_skin'])
     $default['de_shop_mobile_skin'] = preg_match('#^theme/.+$#', $tconfig['de_shop_mobile_skin']) ? $tconfig['de_shop_mobile_skin'] : 'theme/'.$tconfig['de_shop_mobile_skin'];
+
+// 쇼핑몰초기화면 변수 재설정
+for($i=1; $i<=5; $i++) {
+    $default['de_type'.$i.'_list_use']          = (isset($tconfig['de_type'.$i.'_list_use']) && $tconfig['de_type'.$i.'_list_use']) ? $tconfig['de_type'.$i.'_list_use'] : $default['de_type'.$i.'_list_use'];
+    $default['de_type'.$i.'_list_skin']         = (isset($tconfig['de_type'.$i.'_list_skin']) && $tconfig['de_type'.$i.'_list_skin']) ? $tconfig['de_type'.$i.'_list_skin'] : $default['de_type'.$i.'_list_skin'];
+    $default['de_type'.$i.'_list_mod']          = (isset($tconfig['de_type'.$i.'_list_mod']) && $tconfig['de_type'.$i.'_list_mod']) ? $tconfig['de_type'.$i.'_list_mod'] : $default['de_type'.$i.'_list_mod'];
+    $default['de_type'.$i.'_list_row']          = (isset($tconfig['de_type'.$i.'_list_row']) && $tconfig['de_type'.$i.'_list_row']) ? $tconfig['de_type'.$i.'_list_row'] : $default['de_type'.$i.'_list_row'];
+    $default['de_type'.$i.'_img_width']         = (isset($tconfig['de_type'.$i.'_img_width']) && $tconfig['de_type'.$i.'_img_width']) ? $tconfig['de_type'.$i.'_img_width'] : $default['de_type'.$i.'_img_width'];
+    $default['de_type'.$i.'_img_height']        = (isset($tconfig['de_type'.$i.'_img_height']) && $tconfig['de_type'.$i.'_img_height']) ? $tconfig['de_type'.$i.'_img_height'] : $default['de_type'.$i.'_img_height'];
+
+    $default['de_mobile_type'.$i.'_list_use']   = (isset($tconfig['de_mobile_type'.$i.'_list_use']) && $tconfig['de_mobile_type'.$i.'_list_use']) ? $tconfig['de_mobile_type'.$i.'_list_use'] : $default['de_mobile_type'.$i.'_list_use'];
+    $default['de_mobile_type'.$i.'_list_skin']  = (isset($tconfig['de_mobile_type'.$i.'_list_skin']) && $tconfig['de_mobile_type'.$i.'_list_skin']) ? $tconfig['de_mobile_type'.$i.'_list_skin'] : $default['de_mobile_type'.$i.'_list_skin'];
+    $default['de_mobile_type'.$i.'_list_mod']   = (isset($tconfig['de_mobile_type'.$i.'_list_mod']) && $tconfig['de_mobile_type'.$i.'_list_mod']) ? $tconfig['de_mobile_type'.$i.'_list_mod'] : $default['de_mobile_type'.$i.'_list_mod'];
+    $default['de_mobile_type'.$i.'_list_row']   = (isset($tconfig['de_mobile_type'.$i.'_list_row']) && $tconfig['de_mobile_type'.$i.'_list_row']) ? $tconfig['de_mobile_type'.$i.'_list_row'] : $default['de_mobile_type'.$i.'_list_row'];
+    $default['de_mobile_type'.$i.'_img_width']  = (isset($tconfig['de_mobile_type'.$i.'_img_width']) && $tconfig['de_mobile_type'.$i.'_img_width']) ? $tconfig['de_mobile_type'.$i.'_img_width'] : $default['de_mobile_type'.$i.'_img_width'];
+    $default['de_mobile_type'.$i.'_img_height'] = (isset($tconfig['de_mobile_type'.$i.'_img_height']) && $tconfig['de_mobile_type'.$i.'_img_height']) ? $tconfig['de_mobile_type'.$i.'_img_height'] : $default['de_mobile_type'.$i.'_img_height'];
+}
+
+// 상품상세 이미지 사이즈 재설정
+$default['de_mimg_width']  = (isset($tconfig['de_mimg_width']) && $tconfig['de_mimg_width']) ? $tconfig['de_mimg_width'] : $default['de_mimg_width'];
+$default['de_mimg_height'] = (isset($tconfig['de_mimg_height']) && $tconfig['de_mimg_height']) ? $tconfig['de_mimg_height'] : $default['de_mimg_height'];
 
 // 테마 경로 설정
 if(defined('G5_THEME_PATH')) {
