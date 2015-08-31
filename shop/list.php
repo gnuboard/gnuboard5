@@ -23,13 +23,16 @@ $g5['title'] = $ca['ca_name'].' 상품리스트';
 if ($ca['ca_include_head'])
     @include_once($ca['ca_include_head']);
 else
-    include_once('./_head.php');
+    include_once(G5_SHOP_PATH.'/_head.php');
 
 // 스킨경로
 $skin_dir = G5_SHOP_SKIN_PATH;
 
 if($ca['ca_skin_dir']) {
-    $skin_dir = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_skin_dir'];
+    if(preg_match('#^theme/(.+)$#', $ca['ca_skin_dir'], $match))
+        $skin_dir = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1];
+    else
+        $skin_dir = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_skin_dir'];
 
     if(is_dir($skin_dir)) {
         $skin_file = $skin_dir.'/'.$ca['ca_skin'];
@@ -148,7 +151,7 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
 if ($ca['ca_include_tail'])
     @include_once($ca['ca_include_tail']);
 else
-    include_once('./_tail.php');
+    include_once(G5_SHOP_PATH.'/_tail.php');
 
 echo "\n<!-- {$ca['ca_skin']} -->\n";
 ?>

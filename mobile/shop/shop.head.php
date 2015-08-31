@@ -1,6 +1,11 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+if(defined('G5_THEME_PATH')) {
+    require_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
+    return;
+}
+
 include_once(G5_PATH.'/head.sub.php');
 include_once(G5_LIB_PATH.'/outlogin.lib.php');
 include_once(G5_LIB_PATH.'/visit.lib.php');
@@ -35,7 +40,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 
 
     </ul>
-    <div id="logo"><a href="<?php echo $default['de_root_index_use'] ? G5_URL : G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="<?php echo $config['cf_title']; ?> 메인"></a></div>
+    <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img" alt="<?php echo $config['cf_title']; ?> 메인"></a></div>
 
     <?php include_once(G5_MSHOP_PATH.'/category.php'); // 분류 ?>
 
@@ -79,28 +84,8 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
     <ul id="hd_mb">
         <li><a href="<?php echo G5_BBS_URL; ?>/faq.php">FAQ</a></li>
         <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
-        <?php
-        if(!$default['de_root_index_use']) {
-            $com_href = G5_URL;
-            $com_name = '커뮤니티';
-
-            if($default['de_shop_layout_use']) {
-                if(!preg_match('#'.G5_SHOP_DIR.'/#', $_SERVER['SCRIPT_NAME'])) {
-                    $com_href = G5_SHOP_URL;
-                    $com_name = '쇼핑몰';
-                }
-            }
-        ?>
-        <li><a href="<?php echo $com_href; ?>/"><?php echo $com_name; ?></a></li>
-        <?php
-            unset($com_href);
-            unset($com_name);
-        }
-        ?>
+        <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
         <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
-        <?php if($default['de_root_index_use']) { ?>
-        <li><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=5">세일상품</a></li>
-        <?php } ?>
     </ul>
 </header>
 

@@ -118,13 +118,21 @@ if(!sql_query(" select ca_mobile_list_row from {$g5['g5_shop_category_table']} l
 // 스킨 Path
 if(!$ca['ca_skin_dir'])
     $g5_shop_skin_path = G5_SHOP_SKIN_PATH;
-else
-    $g5_shop_skin_path  = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_skin_dir'];
+else {
+    if(preg_match('#^theme/(.+)$#', $ca['ca_skin_dir'], $match))
+        $g5_shop_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1];
+    else
+        $g5_shop_skin_path  = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_skin_dir'];
+}
 
 if(!$ca['ca_mobile_skin_dir'])
     $g5_mshop_skin_path = G5_MSHOP_SKIN_PATH;
-else
-    $g5_mshop_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_mobile_skin_dir'];
+else {
+    if(preg_match('#^theme/(.+)$#', $ca['ca_mobile_skin_dir'], $match))
+        $g5_mshop_skin_path = G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1];
+    else
+        $g5_mshop_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_mobile_skin_dir'];
+}
 ?>
 
 <form name="fcategoryform" action="./categoryformupdate.php" onsubmit="return fcategoryformcheck(this);" method="post" enctype="multipart/form-data">
@@ -191,29 +199,13 @@ else
         <tr>
             <th scope="row"><label for="ca_skin_dir">PC용 스킨명</label></th>
             <td colspan="3">
-                <select name="ca_skin_dir" id="ca_skin_dir">
-                <?php
-                $arr = get_skin_dir('shop');
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($ca['ca_skin_dir'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_skin_select('shop', 'ca_skin_dir', 'ca_skin_dir', $ca['ca_skin_dir']); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="ca_mobile_skin_dir">모바일용 스킨명</label></th>
             <td colspan="3">
-                <select name="ca_mobile_skin_dir" id="ca_mobile_skin_dir">
-                <?php
-                $arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($ca['ca_mobile_skin_dir'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_mobile_skin_select('shop', 'ca_mobile_skin_dir', 'ca_mobile_skin_dir', $ca['ca_mobile_skin_dir']); ?>
             </td>
         </tr>
         <tr>
@@ -238,7 +230,7 @@ else
             <th scope="row"><label for="ca_skin">출력스킨</label></th>
             <td>
                 <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_shop_skin_path).'/list.*.skin.php 입니다.'); ?>
-                <select id="ca_skin" name="ca_skin">
+                <select id="ca_skin" name="ca_skin" required class="required">
                     <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_shop_skin_path, $ca['ca_skin']); ?>
                 </select>
             </td>
@@ -275,7 +267,7 @@ else
             <th scope="row"><label for="ca_mobile_skin">모바일 출력스킨</label></th>
             <td>
                 <?php echo help('기본으로 제공하는 스킨은 '.str_replace(G5_PATH.'/', '', $g5_mshop_skin_path).'/list.*.skin.php 입니다.'); ?>
-                <select id="ca_mobile_skin" name="ca_mobile_skin">
+                <select id="ca_mobile_skin" name="ca_mobile_skin" required class="required">
                     <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_mshop_skin_path, $ca['ca_mobile_skin']); ?>
                 </select>
             </td>
@@ -343,7 +335,7 @@ else
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="shop_category">테마설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_scatefrm_optional">
     <h2 class="h2_frm">선택 입력</h2>
@@ -532,6 +524,35 @@ function fcategoryformcheck(f)
 
     return true;
 }
+
+$(function() {
+    $(".shop_category").on("click", function() {
+        if(!confirm("현재 테마의 스킨, 이미지 사이즈 등의 설정을 적용하시겠습니까?"))
+            return false;
+
+        $.ajax({
+            type: "POST",
+            url: "../theme_config_load.php",
+            cache: false,
+            async: false,
+            data: { type: 'shop_category' },
+            dataType: "json",
+            success: function(data) {
+                if(data.error) {
+                    alert(data.error);
+                    return false;
+                }
+
+                $.each(data, function(key, val) {
+                    if(key == "error")
+                        return true;
+
+                    $("#"+key).val(val);
+                });
+            }
+        });
+    });
+});
 
 /*document.fcategoryform.ca_name.focus(); 포커스 해제*/
 </script>

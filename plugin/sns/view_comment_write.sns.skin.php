@@ -41,7 +41,7 @@ if ($config['cf_facebook_appid']) {
         echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G5_SNS_URL.'/icon/facebook'.($facebook_user?'':'_off').'.png" id="facebook_icon"></a>';
         echo '<label for="" class="sound_only">페이스북 동시 등록</label>';
         echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" disabled value="1">';
-        echo '<script>$(function(){ $("#facebook_url").live("click", function(){ window.open(this.href, "facebook_url", "width=600,height=250"); }); });</script>';
+        echo '<script>$(function(){ $(document).on("click", "#facebook_url", function(){ window.open(this.href, "facebook_url", "width=600,height=250"); }); });</script>';
     }
     echo '</li>';
 }
@@ -99,7 +99,7 @@ if ($config['cf_twitter_key']) {
         echo '<a href="'.$twitter_url.'" id="twitter_url" onclick="return false;"><img src="'.G5_SNS_URL.'/icon/twitter'.($twitter_user?'':'_off').'.png" id="twitter_icon"></a>';
         echo '<label for="" class="sound_only">트위터 동시 등록</label>';
         echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" disabled value="1">';
-        echo '<script>$(function(){ $("#twitter_url").live("click", function(){ window.open(this.href, "twitter_url", "width=600,height=250"); }); });</script>';
+        echo '<script>$(function(){ $(document).on("click", "#twitter_url", function(){ window.open(this.href, "twitter_url", "width=600,height=250"); }); });</script>';
     }
     echo '</li>';
 }

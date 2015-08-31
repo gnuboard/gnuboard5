@@ -2066,7 +2066,7 @@ function delete_editor_thumbnail($contents)
 
     for($i=0; $i<count($matchs[1]); $i++) {
         // 이미지 path 구함
-        $imgurl = parse_url($matchs[1][$i]);
+        $imgurl = @parse_url($matchs[1][$i]);
         $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
 
         $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
@@ -2872,7 +2872,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
 
-    $p = parse_url($url);
+    $p = @parse_url($url);
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
 
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
@@ -2977,7 +2977,7 @@ function clean_query_string($query, $amp=true)
 
 function get_device_change_url()
 {
-    $p = parse_url(G5_URL);
+    $p = @parse_url(G5_URL);
     $href = $p['scheme'].'://'.$p['host'];
     if(isset($p['port']) && $p['port'])
         $href .= ':'.$p['port'];
@@ -3007,5 +3007,40 @@ function get_device_change_url()
     }
 
     return $href;
+}
+
+// 스킨 path
+function get_skin_path($dir, $skin)
+{
+    global $config;
+
+    if(preg_match('#^theme/(.+)$#', $skin, $match)) { // 테마에 포함된 스킨이라면
+        $theme_path = '';
+        $cf_theme = trim($config['cf_theme']);
+
+        $theme_path = G5_PATH.'/'.G5_THEME_DIR.'/'.$cf_theme;
+        if(G5_IS_MOBILE) {
+            $skin_path = $theme_path.'/'.G5_MOBILE_DIR.'/'.G5_SKIN_DIR.'/'.$dir.'/'.$match[1];
+            if(!is_dir($skin_path))
+                $skin_path = $theme_path.'/'.G5_SKIN_DIR.'/'.$dir.'/'.$match[1];
+        } else {
+            $skin_path = $theme_path.'/'.G5_SKIN_DIR.'/'.$dir.'/'.$match[1];
+        }
+    } else {
+        if(G5_IS_MOBILE)
+            $skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/'.$dir.'/'.$skin;
+        else
+            $skin_path = G5_SKIN_PATH.'/'.$dir.'/'.$skin;
+    }
+
+    return $skin_path;
+}
+
+// 스킨 url
+function get_skin_url($dir, $skin)
+{
+    $skin_path = get_skin_path($dir, $skin);
+
+    return str_replace(G5_PATH, G5_URL, $skin_path);
 }
 ?>

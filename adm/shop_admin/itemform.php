@@ -231,15 +231,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
         <tr>
             <th scope="row"><label for="it_skin">PC용 스킨</label></th>
             <td colspan="3">
-                <select name="it_skin" id="it_skin">
-                <?php
-                $arr = get_skin_dir('shop');
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($it['it_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_skin_select('shop', 'it_skin', 'it_skin', $it['it_skin']); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_skin" value="1" id="chk_ca_it_skin">
@@ -251,15 +243,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
         <tr>
             <th scope="row"><label for="it_mobile_skin">모바일용 스킨</label></th>
             <td colspan="3">
-                <select name="it_mobile_skin" id="it_mobile_skin">
-                <?php
-                $arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($it['it_mobile_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_mobile_skin_select('shop', 'it_mobile_skin', 'it_mobile_skin', $it['it_mobile_skin']); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_mobile_skin" value="1" id="chk_ca_it_mobile_skin">
@@ -517,7 +501,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
 
 <script>
 $(function(){
-    $("#it_info_gubun").live("change", function() {
+    $(document).on("change", "#it_info_gubun", function() {
         var gubun = $(this).val();
         $.post(
             "<?php echo G5_ADMIN_URL; ?>/shop_admin/iteminfo.php",
@@ -819,7 +803,7 @@ $(function(){
                     });
 
                     // 모두선택
-                    $("input[name=opt_chk_all]").live("click", function() {
+                    $(document).on("click", "input[name=opt_chk_all]", function() {
                         if($(this).is(":checked")) {
                             $("input[name='opt_chk[]']").attr("checked", true);
                         } else {
@@ -828,7 +812,7 @@ $(function(){
                     });
 
                     // 선택삭제
-                    $("#sel_option_delete").live("click", function() {
+                    $(document).on("click", "#sel_option_delete", function() {
                         var $el = $("input[name='opt_chk[]']:checked");
                         if($el.size() < 1) {
                             alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
@@ -839,7 +823,7 @@ $(function(){
                     });
 
                     // 일괄적용
-                    $("#opt_value_apply").live("click", function() {
+                    $(document).on("click", "#opt_value_apply", function() {
                         if($(".opt_com_chk:checked").size() < 1) {
                             alert("일괄 수정할 항목을 하나이상 체크해 주십시오.");
                             return false;
@@ -982,7 +966,7 @@ $(function(){
                     });
 
                     // 입력필드삭제
-                    $("#del_supply_row").live("click", function() {
+                    $(document).on("click", "#del_supply_row", function() {
                         $(this).closest("tr").remove();
 
                         supply_sequence();
@@ -1025,7 +1009,7 @@ $(function(){
                     });
 
                     // 모두선택
-                    $("input[name=spl_chk_all]").live("click", function() {
+                    $(document).on("click", "input[name=spl_chk_all]", function() {
                         if($(this).is(":checked")) {
                             $("input[name='spl_chk[]']").attr("checked", true);
                         } else {
@@ -1034,7 +1018,7 @@ $(function(){
                     });
 
                     // 선택삭제
-                    $("#sel_supply_delete").live("click", function() {
+                    $(document).on("click", "#sel_supply_delete", function() {
                         var $el = $("input[name='spl_chk[]']:checked");
                         if($el.size() < 1) {
                             alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
@@ -1045,7 +1029,7 @@ $(function(){
                     });
 
                     // 일괄적용
-                    $("#spl_value_apply").live("click", function() {
+                    $(document).on("click", "#spl_value_apply", function() {
                         if($(".spl_com_chk:checked").size() < 1) {
                             alert("일괄 수정할 항목을 하나이상 체크해 주십시오.");
                             return false;
@@ -1379,7 +1363,7 @@ $(function(){
                     );
                 });
 
-                $("#relation .add_item").live("click", function() {
+                $(document).on("click", "#relation .add_item", function() {
                     // 이미 등록된 상품인지 체크
                     var $li = $(this).closest("li");
                     var it_id = $li.find("input:hidden").val();
@@ -1410,7 +1394,7 @@ $(function(){
                     $li.remove();
                 });
 
-                $("#reg_relation .del_item").live("click", function() {
+                $(document).on("click", "#reg_relation .del_item", function() {
                     if(!confirm("상품을 삭제하시겠습니까?"))
                         return false;
 
@@ -1499,7 +1483,7 @@ $(function(){
             </div>
             <script>
             $(function() {
-                $("#event_list .add_event").live("click", function() {
+                $(document).on("click", "#event_list .add_event", function() {
                     // 이미 등록된 이벤트인지 체크
                     var $li = $(this).closest("li");
                     var ev_id = $li.find("input:hidden").val();
@@ -1528,7 +1512,7 @@ $(function(){
                     }
                 });
 
-                $("#reg_event_list .del_event").live("click", function() {
+                $(document).on("click", "#reg_event_list .del_event", function() {
                     if(!confirm("상품을 삭제하시겠습니까?"))
                         return false;
 

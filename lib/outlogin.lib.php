@@ -13,12 +13,25 @@ function outlogin($skin_dir='basic')
         $point = number_format($member['mb_point']);
     }
 
-    if (G5_IS_MOBILE) {
-        $outlogin_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/outlogin/'.$skin_dir;
-        $outlogin_skin_url = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/outlogin/'.$skin_dir;
+    if(preg_match('#^theme/(.+)$#', $skin_dir, $match)) {
+        if (G5_IS_MOBILE) {
+            $outlogin_skin_path = G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/outlogin/'.$match[1];
+            if(!is_dir($outlogin_skin_path))
+                $outlogin_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/outlogin/'.$match[1];
+            $outlogin_skin_url = str_replace(G5_PATH, G5_URL, $outlogin_skin_path);
+        } else {
+            $outlogin_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/outlogin/'.$match[1];
+            $outlogin_skin_url = str_replace(G5_PATH, G5_URL, $outlogin_skin_path);
+        }
+        $skin_dir = $match[1];
     } else {
-        $outlogin_skin_path = G5_SKIN_PATH.'/outlogin/'.$skin_dir;
-        $outlogin_skin_url = G5_SKIN_URL.'/outlogin/'.$skin_dir;
+        if (G5_IS_MOBILE) {
+            $outlogin_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/outlogin/'.$skin_dir;
+            $outlogin_skin_url = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/outlogin/'.$skin_dir;
+        } else {
+            $outlogin_skin_path = G5_SKIN_PATH.'/outlogin/'.$skin_dir;
+            $outlogin_skin_url = G5_SKIN_URL.'/outlogin/'.$skin_dir;
+        }
     }
 
     // 읽지 않은 쪽지가 있다면

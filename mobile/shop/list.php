@@ -24,7 +24,10 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 $skin_dir = G5_MSHOP_SKIN_PATH;
 
 if($ca['ca_mobile_skin_dir']) {
-    $skin_dir = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_mobile_skin_dir'];
+    if(preg_match('#^theme/(.+)$#', $ca['ca_mobile_skin_dir'], $match))
+        $skin_dir = G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1];
+    else
+        $skin_dir = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$ca['ca_mobile_skin_dir'];
 
     if(is_dir($skin_dir)) {
         $skin_file = $skin_dir.'/'.$ca['ca_mobile_skin'];
@@ -56,8 +59,8 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
     include $cate_skin;
 
     // 분류 Best Item
-    $list_mod = 3;
-    $list_row = 3;
+    $list_mod = (isset($theme_config['ca_mobile_list_best_mod']) && $theme_config['ca_mobile_list_best_mod']) ? (int)$theme_config['ca_mobile_list_best_mod'] : $ca['ca_mobile_list_mod'];
+    $list_row = (isset($theme_config['ca_mobile_list_best_row']) && $theme_config['ca_mobile_list_best_row']) ? (int)$theme_config['ca_mobile_list_best_row'] : $ca['ca_mobile_list_row'];
     $limit = $list_mod * $list_row;
     $best_skin = G5_MSHOP_SKIN_PATH.'/list.best.10.skin.php';
 

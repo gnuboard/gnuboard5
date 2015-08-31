@@ -7,19 +7,6 @@ auth_check($auth[$sub_menu], "r");
 $g5['title'] = '분류관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
-// 스킨 DIR
-$skin_dir = '<option value="">선택</option>'.PHP_EOL;
-$arr = get_skin_dir('shop');
-for ($i=0; $i<count($arr); $i++) {
-    $skin_dir .= '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
-}
-
-$mskin_dir = '<option value="">선택</option>'.PHP_EOL;
-$arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-for ($i=0; $i<count($arr); $i++) {
-    $mskin_dir .= '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
-}
-
 $where = " where ";
 $sql_search = "";
 if ($stx != "") {
@@ -162,13 +149,21 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         // 스킨 Path
         if(!$row['ca_skin_dir'])
             $g5_shop_skin_path = G5_SHOP_SKIN_PATH;
-        else
-            $g5_shop_skin_path  = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$row['ca_skin_dir'];
+        else {
+            if(preg_match('#^theme/(.+)$#', $row['ca_skin_dir'], $match))
+                $g5_shop_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1];
+            else
+                $g5_shop_skin_path  = G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$row['ca_skin_dir'];
+        }
 
         if(!$row['ca_mobile_skin_dir'])
             $g5_mshop_skin_path = G5_MSHOP_SKIN_PATH;
-        else
-            $g5_mshop_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$row['ca_mobile_skin_dir'];
+        else {
+            if(preg_match('#^theme/(.+)$#', $row['ca_mobile_skin_dir'], $match))
+                $g5_mshop_skin_path = G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1];
+            else
+                $g5_mshop_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$row['ca_mobile_skin_dir'];
+        }
 
         $bg = 'bg'.($i%2);
     ?>
@@ -197,9 +192,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         </td>
         <td headers="sct_pcskin">
             <label for="ca_skin_dir<?php echo $i; ?>" class="sound_only">PC스킨폴더</label>
-            <select id="ca_skin_dir<?php echo $i; ?>" name="ca_skin_dir[<?php echo $i; ?>]" class="skin_dir">
-                <?php echo conv_selected_option($skin_dir, $row['ca_skin_dir']); ?>
-            </select>
+            <?php echo get_skin_select('shop', 'ca_skin_dir'.$i, 'ca_skin_dir['.$i.']', $row['ca_skin_dir'], 'class="skin_dir"'); ?>
             <label for="ca_skin<?php echo $i; ?>" class="sound_only">PC스킨파일</label>
             <select id="ca_skin<?php echo $i; ?>" name="ca_skin[<?php echo $i; ?>]" required class="required">
                 <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_shop_skin_path, $row['ca_skin']); ?>
@@ -244,9 +237,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         </td>
         <td headers="sct_mskin">
             <label for="ca_mobile_skin_dir<?php echo $i; ?>" class="sound_only">모바일스킨폴더</label>
-            <select id="ca_mobile_skin_dir<?php echo $i; ?>" name="ca_mobile_skin_dir[<?php echo $i; ?>]" class="skin_dir">
-                <?php echo conv_selected_option($mskin_dir, $row['ca_mobile_skin_dir']); ?>
-            </select>
+            <?php echo get_mobile_skin_select('shop', 'ca_mobile_skin_dir'.$i, 'ca_mobile_skin_dir['.$i.']', $row['ca_mobile_skin_dir'], 'class="skin_dir"'); ?>
             <label for="ca_mobile_skin<?php echo $i; ?>" class="sound_only">모바일스킨파일</label>
             <select id="ca_mobile_skin<?php echo $i; ?>" name="ca_mobile_skin[<?php echo $i; ?>]" required class="required">
                 <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", $g5_mshop_skin_path, $row['ca_mobile_skin']); ?>

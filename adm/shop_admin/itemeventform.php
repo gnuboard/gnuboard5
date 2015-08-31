@@ -31,10 +31,6 @@ else
     $ev['ev_mobile_skin'] = 'list.10.skin.php';
     $ev['ev_use'] = 1;
 
-    // 1.03.00
-    // 입력일 경우 기본값으로 대체
-    //$ev['ev_img_width']  = $default['de_simg_width'];
-    //$ev['ev_img_height'] = $default['de_simg_height'];
     $ev['ev_img_width']  = 230;
     $ev['ev_img_height'] = 230;
     $ev['ev_list_mod'] = 3;
@@ -42,6 +38,7 @@ else
     $ev['ev_mobile_img_width']  = 230;
     $ev['ev_mobile_img_height'] = 230;
     $ev['ev_mobile_list_mod'] = 3;
+    $ev['ev_mobile_list_row'] = 5;
 }
 
 // 분류리스트
@@ -60,6 +57,12 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $nbsp .= "&nbsp;&nbsp;&nbsp;";
 
     $category_select .= "<option value=\"{$row['ca_id']}\">$nbsp{$row['ca_name']}</option>\n";
+}
+
+// 모바일 1줄당 이미지수 필드 추가
+if(!sql_query(" select ev_mobile_list_row from {$g5['g5_shop_event_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_event_table']}`
+                    ADD `ev_mobile_list_row` int(11) NOT NULL DEFAULT '0' AFTER `ev_mobile_list_mod` ", true);
 }
 
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -84,6 +87,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <td>
             <span class="frm_ev_id"><?php echo $ev_id; ?></span>
             <a href="<?php echo G5_SHOP_URL; ?>/event.php?ev_id=<?php echo $ev['ev_id']; ?>" class="btn_frmline">이벤트바로가기</a>
+            <button type="button" class="btn_frmline shop_event">테마설정 가져오기</button>
         </td>
     </tr>
     <?php } ?>
@@ -120,7 +124,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="ev_list_mod">1줄당 이미지 수</label></th>
         <td>
-            <?php echo help("1행에 설정한 값만큼의 상품을 출력합니다. 스킨 설정에 따라 1행에 하나의 상품만 출력할 수도 있습니다.", 50); ?>
+            <?php echo help("1행에 설정한 값만큼의 상품을 출력합니다. 스킨 설정에 따라 1행에 하나의 상품만 출력할 수도 있습니다."); ?>
             <input type="text" name="ev_list_mod" value="<?php echo $ev['ev_list_mod']; ?>" id="ev_list_mod" required class="required frm_input" size="3"> 개
         </td>
     </tr>
@@ -144,10 +148,17 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="ev_mobile_list_mod">모바일 이미지 수</label></th>
+        <th scope="row"><label for="ev_mobile_list_mod">모바일 1줄당 이미지 수</label></th>
         <td>
-            <?php echo help("한 페이지에 출력할 이미지 수를 설정합니다."); ?>
+            <?php echo help("1행에 설정한 값만큼의 상품을 출력합니다. 스킨 설정에 따라 1행에 하나의 상품만 출력할 수도 있습니다."); ?>
             <input type="text" name="ev_mobile_list_mod" value="<?php echo $ev['ev_mobile_list_mod']; ?>" id="ev_mobile_list_mod" required class="required frm_input" size="3"> 개
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="ev_mobile_list_row">모바일 이미지 줄 수</label></th>
+        <td>
+            <?php echo help("한 페이지에 출력할 이미지 줄 수를 설정합니다.\n한 페이지에 표시되는 상품수는 (1줄당 이미지 수 x 줄 수) 입니다."); ?>
+            <input type="text" name="ev_mobile_list_row" value="<?php echo $ev['ev_mobile_list_row']; ?>" id="ev_mobile_list_row" required class="required frm_input" size="3"> 개
         </td>
     </tr>
     <tr>
@@ -317,6 +328,33 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 <script>
 $(function() {
+    $(".shop_event").on("click", function() {
+        if(!confirm("현재 테마의 스킨, 이미지 사이즈 등의 설정을 적용하시겠습니까?"))
+            return false;
+
+        $.ajax({
+            type: "POST",
+            url: "../theme_config_load.php",
+            cache: false,
+            async: false,
+            data: { type: 'shop_event' },
+            dataType: "json",
+            success: function(data) {
+                if(data.error) {
+                    alert(data.error);
+                    return false;
+                }
+
+                $.each(data, function(key, val) {
+                    if(key == "error")
+                        return true;
+
+                    $("#"+key).val(val);
+                });
+            }
+        });
+    });
+
     $("#btn_search_item").click(function() {
         var ca_id = $("#sch_ca_id").val();
         var it_name = $.trim($("#sch_name").val());
@@ -332,7 +370,7 @@ $(function() {
         );
     });
 
-    $("#sch_item_list .add_item").live("click", function() {
+    $(document).on("click", "#sch_item_list .add_item", function() {
         // 이미 등록된 상품인지 체크
         var $li = $(this).closest("li");
         var it_id = $li.find("input:hidden").val();
@@ -363,7 +401,7 @@ $(function() {
         $li.remove();
     });
 
-    $("#reg_item_list .del_item").live("click", function() {
+    $(document).on("click", "#reg_item_list .del_item", function() {
         if(!confirm("상품을 삭제하시겠습니까?"))
             return false;
 

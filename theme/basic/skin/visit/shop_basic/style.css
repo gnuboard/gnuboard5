@@ -1,0 +1,10 @@
+/* 방문자 집계 */
+#visit {margin:0 0 20px;padding:0 15px;background:#444;zoom:1}
+#visit:after {display:block;visibility:hidden;clear:both;content:''}
+#visit h2 {float:left;padding:10px 45px 10px 0;color:#fff}
+#visit dl {float:left;margin:0 0 0 10px;padding:0}
+#visit dt {float:left;margin:0;padding:10px 0 10px;color:#fff}
+#visit dd {float:left;margin:0 30px 0 0;padding:10px;color:#fff}
+#visit a {display:inline-block;padding:10px;color:#fff;text-decoration:none}
+#visit a:focus,
+#visit a:hover {background:#333;color:#fff}

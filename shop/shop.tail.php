@@ -1,10 +1,9 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-// 하단 파일 지정 : 이 코드는 가능한 삭제하지 마십시오.
-if ($default['de_include_tail'] && is_file(G5_SHOP_PATH.'/'.$default['de_include_tail'])) {
-    include_once(G5_SHOP_PATH.'/'.$default['de_include_tail']);
-    return; // 이 코드의 아래는 실행을 하지 않습니다.
+if(defined('G5_THEME_PATH')) {
+    require_once(G5_THEME_SHOP_PATH.'/shop.tail.php');
+    return;
 }
 
 $admin = get_admin("super");
@@ -21,7 +20,7 @@ $admin = get_admin("super");
 
 <div id="ft">
     <div>
-        <a href="<?php echo $default['de_root_index_use'] ? G5_URL : G5_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img2" alt="처음으로"></a>
+        <a href="<?php echo G5_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img2" alt="처음으로"></a>
         <ul>
             <li><a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=company">회사소개</a></li>
             <li><a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=provision">서비스이용약관</a></li>

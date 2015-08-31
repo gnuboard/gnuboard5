@@ -59,15 +59,19 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
 
     if($tname) {
         if($edt) {
+            // 오리지날 이미지
+            $ori = G5_URL.$data_path;
+            // 썸네일 이미지
             $src = G5_URL.str_replace($filename, $tname, $data_path);
         } else {
+            $ori = G5_DATA_URL.'/file/'.$bo_table.'/'.$filename;
             $src = G5_DATA_URL.'/file/'.$bo_table.'/'.$tname;
         }
     } else {
         return false;
     }
 
-    $thumb = array("src"=>$src, "alt"=>$alt);
+    $thumb = array("src"=>$src, "ori"=>$ori, "alt"=>$alt);
 
     return $thumb;
 }

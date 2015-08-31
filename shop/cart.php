@@ -228,7 +228,7 @@ $(function() {
     });
 
     // 옵션수정 닫기
-    $("#mod_option_close").live("click", function() {
+    $(document).on("click", "#mod_option_close", function() {
         $("#mod_option_frm").remove();
         $(".mod_options").eq(close_btn_idx).focus();
     });

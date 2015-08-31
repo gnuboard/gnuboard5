@@ -280,7 +280,7 @@ function get_max_value($arr)
             $option_noti = (int)$row['cnt'];
 
             // SMS 정보
-            if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
+            if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
             }
             ?>

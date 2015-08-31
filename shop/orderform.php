@@ -719,7 +719,7 @@ $(function() {
         );
     });
 
-    $(".cp_apply").live("click", function() {
+    $(document).on("click", ".cp_apply", function() {
         var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='f_cp_id[]']").val();
         var price = $el.find("input[name='f_cp_prc[]']").val();
@@ -778,12 +778,12 @@ $(function() {
             $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel btn_frmline\">취소</button>");
     });
 
-    $("#cp_close").live("click", function() {
+    $(document).on("click", "#cp_close", function() {
         $("#cp_frm").remove();
         $cp_btn_el.focus();
     });
 
-    $(".cp_cancel").live("click", function() {
+    $(document).on("click", ".cp_cancel", function() {
         coupon_cancel($(this).closest("tr"));
         calculate_total_price();
         $("#cp_frm").remove();
@@ -808,7 +808,7 @@ $(function() {
         );
     });
 
-    $(".od_cp_apply").live("click", function() {
+    $(document).on("click", ".od_cp_apply", function() {
         var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='o_cp_id[]']").val();
         var price = parseInt($el.find("input[name='o_cp_prc[]']").val());
@@ -845,12 +845,12 @@ $(function() {
             $("#od_coupon_btn").after("<button type=\"button\" id=\"od_coupon_cancel\" class=\"btn_frmline\">쿠폰취소</button>");
     });
 
-    $("#od_coupon_close").live("click", function() {
+    $(document).on("click", "#od_coupon_close", function() {
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").focus();
     });
 
-    $("#od_coupon_cancel").live("click", function() {
+    $(document).on("click", "#od_coupon_cancel", function() {
         var org_price = $("input[name=org_od_price]").val();
         var item_coupon = parseInt($("input[name=item_coupon]").val());
         $("input[name=od_price]").val(org_price - item_coupon);
@@ -881,7 +881,7 @@ $(function() {
         );
     });
 
-    $(".sc_cp_apply").live("click", function() {
+    $(document).on("click", ".sc_cp_apply", function() {
         var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='s_cp_id[]']").val();
         var price = parseInt($el.find("input[name='s_cp_prc[]']").val());
@@ -904,12 +904,12 @@ $(function() {
             $("#sc_coupon_btn").after("<button type=\"button\" id=\"sc_coupon_cancel\" class=\"btn_frmline\">쿠폰취소</button>");
     });
 
-    $("#sc_coupon_close").live("click", function() {
+    $(document).on("click", "#sc_coupon_close", function() {
         $("#sc_coupon_frm").remove();
         $("#sc_coupon_btn").focus();
     });
 
-    $("#sc_coupon_cancel").live("click", function() {
+    $(document).on("click", "#sc_coupon_cancel", function() {
         $("input[name=od_send_coupon]").val(0);
         $("#sc_cp_price").text(0);
         calculate_order_price();

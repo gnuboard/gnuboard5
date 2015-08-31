@@ -153,10 +153,9 @@ $pg_anchor = '<ul class="anchor">
 $frm_submit = '<div class="btn_confirm01 btn_confirm">
     <input type="submit" value="확인" class="btn_submit" accesskey="s">
     <a href="./board_list.php?'.$qstr.'">목록</a>'.PHP_EOL;
-if ($w == 'u') $frm_submit .= '    <a href="./board_copy.php?bo_table='.$bo_table.'" id="board_copy" target="win_board_copy">게시판복사</a>
+if ($w == 'u') $frm_submit .= '<a href="./board_copy.php?bo_table='.$bo_table.'" id="board_copy" target="win_board_copy">게시판복사</a>
     <a href="'.G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'" class="btn_frmline">게시판 바로가기</a>
-    <a href="./board_thumbnail_delete.php?bo_table='.$board['bo_table'].'&amp;'.$qstr.'" onclick="return delete_confirm2(\'게시판 썸네일 파일을 삭제하시겠습니까?\');">게시판 썸네일 삭제</a>
-    '.PHP_EOL;
+    <a href="./board_thumbnail_delete.php?bo_table='.$board['bo_table'].'&amp;'.$qstr.'" onclick="return delete_confirm2(\'게시판 썸네일 파일을 삭제하시겠습니까?\');">게시판 썸네일 삭제</a>'.PHP_EOL;
 $frm_submit .= '</div>';
 ?>
 
@@ -1118,7 +1117,7 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_galc">테마 이미지설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_bo_point">
     <h2 class="h2_frm">게시판 포인트 설정</h2>
@@ -1239,6 +1238,37 @@ $(function(){
     $("#board_copy").click(function(){
         window.open(this.href, "win_board_copy", "left=10,top=10,width=500,height=400");
         return false;
+    });
+
+    $(".get_theme_galc").on("click", function() {
+        if(!confirm("현재 테마의 게시판 이미지 설정을 적용하시겠습니까?"))
+            return false;
+
+        $.ajax({
+            type: "POST",
+            url: "./theme_config_load.php",
+            cache: false,
+            async: false,
+            data: { type: "board" },
+            dataType: "json",
+            success: function(data) {
+                if(data.error) {
+                    alert(data.error);
+                    return false;
+                }
+
+                var field = Array('bo_gallery_cols', 'bo_gallery_width', 'bo_gallery_height', 'bo_mobile_gallery_width', 'bo_mobile_gallery_height', 'bo_image_width');
+                var count = field.length;
+                var key;
+
+                for(i=0; i<count; i++) {
+                    key = field[i];
+
+                    if(data[key] != undefined && data[key] != "")
+                        $("input[name="+key+"]").val(data[key]);
+                }
+            }
+        });
     });
 });
 

@@ -21,7 +21,7 @@ function fancyalert(msg)
 }
 
 $(function() {
-    $("#fancyalert_close, #fancyalert_inner").live("click", function() {
+    $(document).on("click", "#fancyalert_close, #fancyalert_inner", function() {
         $("#fancyalert").fadeOut().remove();
         $("html, body").off("touchmove", blockScroll);
     });

@@ -185,12 +185,10 @@ CREATE TABLE IF NOT EXISTS `g5_board_new` (
 DROP TABLE IF EXISTS `g5_config`;
 CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_title` varchar(255) NOT NULL DEFAULT '',
+  `cf_theme` varchar(255) NOT NULL DEFAULT '',
   `cf_admin` varchar(255) NOT NULL DEFAULT '',
   `cf_admin_email` varchar(255) NOT NULL DEFAULT '',
   `cf_admin_email_name` varchar(255) NOT NULL DEFAULT '',
-  `cf_include_index` varchar(255) NOT NULL DEFAULT '',
-  `cf_include_head` varchar(255) NOT NULL DEFAULT '',
-  `cf_include_tail` varchar(255) NOT NULL DEFAULT '',
   `cf_add_script` text NOT NULL,
   `cf_use_point` tinyint(4) NOT NULL DEFAULT '0',
   `cf_point_term` int(11) NOT NULL DEFAULT '0',

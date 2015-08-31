@@ -1,10 +1,9 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-// 상단 파일 지정 : 이 코드는 가능한 삭제하지 마십시오.
-if ($default['de_include_head'] && is_file(G5_SHOP_PATH.'/'.$default['de_include_head'])) {
-    include_once(G5_SHOP_PATH.'/'.$default['de_include_head']);
-    return; // 이 코드의 아래는 실행을 하지 않습니다.
+if(defined('G5_THEME_PATH')) {
+    require_once(G5_THEME_SHOP_PATH.'/shop.head.php');
+    return;
 }
 
 include_once(G5_PATH.'/head.sub.php');
@@ -36,7 +35,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
     </aside>
 
     <div id="hd_wrapper">
-        <div id="logo"><a href="<?php echo $default['de_root_index_use'] ? G5_URL : G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a></div>
+        <div id="logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img" alt="<?php echo $config['cf_title']; ?>"></a></div>
 
         <div id="hd_sch">
             <h3>쇼핑몰 검색</h3>
@@ -79,24 +78,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
                 <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/itemuselist.php">사용후기</a></li>
-                <?php
-                if(!$default['de_root_index_use']) {
-                    $com_href = G5_URL;
-                    $com_name = '커뮤니티';
-
-                    if($default['de_shop_layout_use']) {
-                        if(!preg_match('#'.G5_SHOP_DIR.'/#', $_SERVER['SCRIPT_NAME'])) {
-                            $com_href = G5_SHOP_URL;
-                            $com_name = '쇼핑몰';
-                        }
-                    }
-                ?>
-                <li><a href="<?php echo $com_href; ?>/"><?php echo $com_name; ?></a></li>
-                <?php
-                    unset($com_href);
-                    unset($com_name);
-                }
-                ?>
+                <li><a href="<?php echo G5_URL; ?>/">커뮤니티</a></li>
             </ul>
         </div>
     </div>

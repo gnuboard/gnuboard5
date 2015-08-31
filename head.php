@@ -1,10 +1,14 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-// 상단 파일 경로 지정 : 이 코드는 가능한 삭제하지 마십시오.
-if ($config['cf_include_head'] && is_file(G5_PATH.'/'.$config['cf_include_head'])) {
-    include_once(G5_PATH.'/'.$config['cf_include_head']);
-    return; // 이 코드의 아래는 실행을 하지 않습니다.
+if(defined('G5_THEME_PATH')) {
+    require_once(G5_THEME_PATH.'/head.php');
+    return;
+}
+
+if (G5_IS_MOBILE) {
+    include_once(G5_MOBILE_PATH.'/head.php');
+    return;
 }
 
 include_once(G5_PATH.'/head.sub.php');
@@ -14,11 +18,6 @@ include_once(G5_LIB_PATH.'/poll.lib.php');
 include_once(G5_LIB_PATH.'/visit.lib.php');
 include_once(G5_LIB_PATH.'/connect.lib.php');
 include_once(G5_LIB_PATH.'/popular.lib.php');
-
-if (G5_IS_MOBILE) {
-    include_once(G5_MOBILE_PATH.'/head.php');
-    return;
-}
 ?>
 
 <!-- 상단 시작 { -->
@@ -100,7 +99,7 @@ if (G5_IS_MOBILE) {
             <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
 
             <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php">접속자 <?php echo connect(); // 현재 접속자수  ?></a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php">접속자 <?php echo connect(); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?></a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
             <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
             <li><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
@@ -163,8 +162,8 @@ if (G5_IS_MOBILE) {
 <!-- 콘텐츠 시작 { -->
 <div id="wrapper">
     <div id="aside">
-        <?php echo outlogin('basic'); // 외부 로그인  ?>
-        <?php echo poll('basic'); // 설문조사  ?>
+        <?php echo outlogin('basic'); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
+        <?php echo poll('basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
     </div>
     <div id="container">
         <?php if ((!$bo_table || $w == 's' ) && !defined("_INDEX_")) { ?><div id="container_title"><?php echo $g5['title'] ?></div><?php } ?>

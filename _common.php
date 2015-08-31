@@ -1,7 +1,8 @@
 <?php
 include_once('./common.php');
 
-if((isset($default['de_root_index_use']) && $default['de_root_index_use']) || (isset($default['de_shop_layout_use']) && $default['de_shop_layout_use'])) {
+// 커뮤니티 사용여부
+if(G5_COMMUNITY_USE === false) {
     if (!defined('G5_USE_SHOP') || !G5_USE_SHOP)
         die('<p>쇼핑몰 설치 후 이용해 주십시오.</p>');
 

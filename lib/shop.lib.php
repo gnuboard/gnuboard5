@@ -417,7 +417,7 @@ function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img
 
     if($filename) {
         //thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create, $is_crop=false, $crop_mode='center', $is_sharpen=true, $um_value='80/0.5/3')
-        $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, false, 'center', true, $um_value='80/0.5/3');
+        $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, true, 'center', false, $um_value='80/0.5/3');
     }
 
     if($thumb) {
@@ -462,7 +462,7 @@ function get_it_thumbnail($img, $width, $height=0, $id='')
         $height = round(($width * $img_height) / $img_width);
     }
 
-    $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, false, 'center', true, $um_value='80/0.5/3');
+    $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, true, 'center', false, $um_value='80/0.5/3');
 
     if($thumb) {
         $file_url = str_replace(G5_PATH, G5_URL, $filepath.'/'.$thumb);
@@ -645,6 +645,23 @@ function it_img_upload($srcfile, $filename, $dir)
                           $filename);
 
     $filename = preg_replace( $pattern, "", $filename);
+    $prepend = '';
+
+    // 동일한 이름의 파일이 있으면 파일명 변경
+    if(is_file($dir.'/'.$filename)) {
+        for($i=0; $i<20; $i++) {
+            $prepend = str_replace('.', '_', microtime(true)).'_';
+
+            if(is_file($dir.'/'.$prepend.$filename)) {
+                usleep(mt_rand(100, 10000));
+                continue;
+            } else {
+                break;
+            }
+        }
+    }
+
+    $filename = $prepend.$filename;
 
     upload_file($srcfile, $filename, $dir);
 

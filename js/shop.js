@@ -6,7 +6,7 @@ $(function() {
     // 선택옵션
     /* 가상커서 ctrl keyup 이베트 대응 */
     /*
-    $("select.it_option").live("keyup", function(e) {
+    $(document).on("keyup", "select.it_option", function(e) {
         var sel_count = $("select.it_option").size();
         var idx = $("select.it_option").index($(this));
         var code = e.keyCode;
@@ -23,7 +23,7 @@ $(function() {
     */
 
     /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
-    $("select.it_option").live("keydown", function(e) {
+    $(document).on("keydown", "select.it_option", function(e) {
         var sel_count = $("select.it_option").size();
         var idx = $("select.it_option").index($(this));
         var code = e.keyCode;
@@ -39,16 +39,16 @@ $(function() {
     });
 
     if(isAndroid) {
-        $("select.it_option").live("touchend", function() {
+        $(document).on("touchend", "select.it_option", function() {
             option_add = true;
         });
     } else {
-        $("select.it_option").live("mouseup", function() {
+        $(document).on("mouseup", "select.it_option", function() {
             option_add = true;
         });
     }
 
-    $("select.it_option").live("change", function() {
+    $(document).on("change", "select.it_option", function() {
         var sel_count = $("select.it_option").size();
         var idx = $("select.it_option").index($(this));
         var val = $(this).val();
@@ -110,7 +110,7 @@ $(function() {
     // 추가옵션
     /* 가상커서 ctrl keyup 이베트 대응 */
     /*
-    $("select.it_supply").live("keyup", function(e) {
+    $(document).on("keyup", "select.it_supply", function(e) {
         var $el = $(this);
         var code = e.keyCode;
         var val = $(this).val();
@@ -126,7 +126,7 @@ $(function() {
     */
 
     /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
-    $("select.it_supply").live("keydown", function(e) {
+    $(document).on("keydown", "select.it_supply", function(e) {
         var $el = $(this);
         var code = e.keyCode;
         var val = $(this).val();
@@ -141,16 +141,16 @@ $(function() {
     });
 
     if(isAndroid) {
-        $("select.it_supply").live("touchend", function() {
+        $(document).on("touchend", "select.it_supply", function() {
             supply_add = true;
         });
     } else {
-        $("select.it_supply").live("mouseup", function() {
+        $(document).on("mouseup", "select.it_supply", function() {
             supply_add = true;
         });
     }
 
-    $("select.it_supply").live("change", function() {
+    $(document).on("change", "select.it_supply", function() {
         var $el = $(this);
         var val = $(this).val();
 
@@ -162,7 +162,7 @@ $(function() {
     });
 
     // 수량변경 및 삭제
-    $("#sit_sel_option li button").live("click", function() {
+    $(document).on("click", "#sit_sel_option li button", function() {
         var mode = $(this).text();
         var this_qty, max_qty = 9999, min_qty = 1;
         var $el_qty = $(this).closest("li").find("input[name^=ct_qty]");
@@ -225,7 +225,7 @@ $(function() {
     });
 
     // 수량직접입력
-    $("input[name^=ct_qty]").live("keyup", function() {
+    $(document).on("keyup", "input[name^=ct_qty]", function() {
         var val= $(this).val();
 
         if(val != "") {

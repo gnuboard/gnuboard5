@@ -15,16 +15,30 @@ function poll($skin_dir='basic', $po_id=false)
     if(!$po_id)
         return;
 
+    if(preg_match('#^theme/(.+)$#', $skin_dir, $match)) {
+        if (G5_IS_MOBILE) {
+            $poll_skin_path = G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/poll/'.$match[1];
+            if(!is_dir($poll_skin_path))
+                $poll_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/poll/'.$match[1];
+            $poll_skin_url = str_replace(G5_PATH, G5_URL, $poll_skin_path);
+        } else {
+            $poll_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/poll/'.$match[1];
+            $poll_skin_url = str_replace(G5_PATH, G5_URL, $poll_skin_path);
+        }
+        //$skin_dir = $match[1];
+    } else {
+        if (G5_IS_MOBILE) {
+            $poll_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/poll/'.$skin_dir;
+            $poll_skin_url  = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/poll/'.$skin_dir;
+        } else {
+            $poll_skin_path = G5_SKIN_PATH.'/poll/'.$skin_dir;
+            $poll_skin_url  = G5_SKIN_URL.'/poll/'.$skin_dir;
+        }
+    }
+
     $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '$po_id' ");
 
     ob_start();
-    if (G5_IS_MOBILE) {
-        $poll_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/poll/'.$skin_dir;
-        $poll_skin_url  = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/poll/'.$skin_dir;
-    } else {
-        $poll_skin_path = G5_SKIN_PATH.'/poll/'.$skin_dir;
-        $poll_skin_url  = G5_SKIN_URL.'/poll/'.$skin_dir;
-    }
     include_once ($poll_skin_path.'/poll.skin.php');
     $content = ob_get_contents();
     ob_end_clean();

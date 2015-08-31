@@ -222,19 +222,19 @@ $admin_href = "";
 if ($member['mb_id'] && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id']))
     $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
-include_once('./board_head.php');
+include_once(G5_BBS_PATH.'/board_head.php');
 
 // 게시물 아이디가 있다면 게시물 보기를 INCLUDE
 if (isset($wr_id) && $wr_id) {
-    include_once('./view.php');
+    include_once(G5_BBS_PATH.'/view.php');
 }
 
 // 전체목록보이기 사용이 "예" 또는 wr_id 값이 없다면 목록을 보임
 //if ($board['bo_use_list_view'] || empty($wr_id))
 if ($member['mb_level'] >= $board['bo_list_level'] && $board['bo_use_list_view'] || empty($wr_id))
-    include_once ('./list.php');
+    include_once (G5_BBS_PATH.'/list.php');
 
-include_once('./board_tail.php');
+include_once(G5_BBS_PATH.'/board_tail.php');
 
 echo "\n<!-- 사용스킨 : ".(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin'])." -->\n";
 

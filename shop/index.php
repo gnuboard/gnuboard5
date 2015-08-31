@@ -1,10 +1,9 @@
 <?php
 include_once('./_common.php');
 
-// 초기화면 파일 지정 : 이 코드는 가능한 삭제하지 마십시오.
-if ($default['de_include_index'] && is_file(G5_SHOP_PATH.'/'.$default['de_include_index'])) {
-    include_once(G5_SHOP_PATH.'/'.$default['de_include_index']);
-    return; // 이 코드의 아래는 실행을 하지 않습니다.
+if(defined('G5_THEME_PATH')) {
+    require_once(G5_THEME_SHOP_PATH.'/index.php');
+    return;
 }
 
 if (G5_IS_MOBILE) {

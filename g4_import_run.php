@@ -10,7 +10,7 @@ set_time_limit ( 0 );
 ini_set('memory_limit', '50M');
 
 $g5['title'] = '그누보드4 DB 데이터 이전';
-include_once(G5_PATH.'/head.sub.php');
+include_once(G5_PATH.'/'.G5_THEME_DIR.'/basic/head.sub.php');
 
 echo '<link rel="stylesheet" href="'.G5_URL.'/g4_import.css">';
 
@@ -536,5 +536,5 @@ $(function() {
 </script>
 
 <?php
-include_once(G5_PATH.'/tail.sub.php');
+include_once(G5_PATH.'/'.G5_THEME_DIR.'/basic/tail.sub.php');
 ?>

@@ -9,12 +9,9 @@ $token = get_token();
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
-if (!isset($config['cf_include_index'])) {
+if (!isset($config['cf_add_script'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
-                    ADD `cf_include_index` VARCHAR(255) NOT NULL AFTER `cf_admin`,
-                    ADD `cf_include_head` VARCHAR(255) NOT NULL AFTER `cf_include_index`,
-                    ADD `cf_include_tail` VARCHAR(255) NOT NULL AFTER `cf_include_head`,
-                    ADD `cf_add_script` TEXT NOT NULL AFTER `cf_include_tail` ", true);
+                    ADD `cf_add_script` TEXT NOT NULL AFTER `cf_admin_email_name` ", true);
 }
 
 if (!isset($config['cf_mobile_new_skin'])) {
@@ -212,7 +209,7 @@ $frm_submit = '<div class="btn_confirm01 btn_confirm">
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
-if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
+if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
 }
 ?>
@@ -341,105 +338,41 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_new_skin">최근게시물 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_new_skin" id="cf_new_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('new');
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_new_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_skin_select('new', 'cf_new_skin', 'cf_new_skin', $config['cf_new_skin'], 'required'); ?>
             </td>
             <th scope="row"><label for="cf_mobile_new_skin">모바일<br>최근게시물 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_mobile_new_skin" id="cf_mobile_new_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('new', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_new_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_mobile_skin_select('new', 'cf_mobile_new_skin', 'cf_mobile_new_skin', $config['cf_mobile_new_skin'], 'required'); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_search_skin">검색 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_search_skin" id="cf_search_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('search');
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_search_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_skin_select('search', 'cf_search_skin', 'cf_search_skin', $config['cf_search_skin'], 'required'); ?>
             </td>
             <th scope="row"><label for="cf_mobile_search_skin">모바일 검색 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_mobile_search_skin" id="cf_mobile_search_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('search', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_search_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_mobile_skin_select('search', 'cf_mobile_search_skin', 'cf_mobile_search_skin', $config['cf_mobile_search_skin'], 'required'); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_connect_skin">접속자 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_connect_skin" id="cf_connect_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('connect');
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_skin_select('connect', 'cf_connect_skin', 'cf_connect_skin', $config['cf_connect_skin'], 'required'); ?>
             </td>
             <th scope="row"><label for="cf_mobile_connect_skin">모바일 접속자 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_mobile_connect_skin" id="cf_mobile_connect_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('connect', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_connect_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_mobile_skin_select('connect', 'cf_mobile_connect_skin', 'cf_mobile_connect_skin', $config['cf_mobile_connect_skin'], 'required'); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_faq_skin">FAQ 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_faq_skin" id="cf_faq_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('faq');
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_faq_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_skin_select('faq', 'cf_faq_skin', 'cf_faq_skin', $config['cf_faq_skin'], 'required'); ?>
             </td>
             <th scope="row"><label for="cf_mobile_faq_skin">모바일 FAQ 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_mobile_faq_skin" id="cf_mobile_faq_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('faq', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_mobile_faq_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_mobile_skin_select('faq', 'cf_mobile_faq_skin', 'cf_mobile_faq_skin', $config['cf_mobile_faq_skin'], 'required'); ?>
             </td>
         </tr>
         <tr>
@@ -532,7 +465,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_confc" data-type="conf_skin">테마 스킨설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_cf_board">
     <h2 class="h2_frm">게시판 기본 설정</h2>
@@ -636,27 +569,11 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_member_skin">회원 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_member_skin" id="cf_member_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('member');
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";
-                }
-                ?>
-                </select>
+                <?php echo get_skin_select('member', 'cf_member_skin', 'cf_member_skin', $config['cf_member_skin'], 'required'); ?>
             </td>
             <th scope="row"><label for="cf_mobile_member_skin">모바일<br>회원 스킨<strong class="sound_only">필수</strong></label></th>
             <td>
-                <select name="cf_mobile_member_skin" id="cf_mobile_member_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('member', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo '<option value="'.$arr[$i].'"'.get_selected($config['cf_mobile_member_skin'], $arr[$i]).'>'.$arr[$i].'</option>'."\n";
-                }
-                ?>
-                </select>
+                <?php echo get_mobile_skin_select('member', 'cf_mobile_member_skin', 'cf_mobile_member_skin', $config['cf_mobile_member_skin'], 'required'); ?>
             </td>
         </tr>
         <tr>
@@ -761,7 +678,7 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_confc" data-type="conf_member">테마 회원스킨설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_cf_cert">
     <h2 class="h2_frm">본인확인 설정</h2>
@@ -1083,27 +1000,6 @@ if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
         </colgroup>
         <tbody>
         <tr>
-            <th scope="row"><label for="cf_include_index">초기화면 파일 경로</label></th>
-            <td>
-                <?php echo help('입력이 없으면 index.php가 초기화면 파일로 설정됩니다.<br>초기화면 파일은 index.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="cf_include_index" value="<?php echo $config['cf_include_index'] ?>" id="cf_include_index" class="frm_input" size="50">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="cf_include_head">상단 파일 경로</label></th>
-            <td>
-                <?php echo help('입력이 없으면 head.php가 상단 파일로 설정됩니다.<br>상단 파일은 head.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="cf_include_head" value="<?php echo $config['cf_include_head'] ?>" id="cf_include_head" class="frm_input" size="50">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="cf_include_tail">하단 파일 경로</label></th>
-            <td>
-                <?php echo help('입력이 없으면 tail.php가 하단 파일로 설정됩니다.<br>초기화면 파일은 tail.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="cf_include_tail" value="<?php echo $config['cf_include_tail'] ?>" id="cf_include_tail" class="frm_input" size="50">
-            </td>
-        </tr>
-        <tr>
             <th scope="row"><label for="cf_add_script">추가 script, css</label></th>
             <td>
                 <?php echo help('HTML의 &lt;/HEAD&gt; 태그위로 추가될 JavaScript와 css 코드를 설정합니다.<br>관리자 페이지에서는 이 코드를 사용하지 않습니다.') ?>
@@ -1249,6 +1145,42 @@ $(function(){
                 $(".cf_cert_service").removeClass("cf_cert_hide");
                 break;
         }
+    });
+
+    $(".get_theme_confc").on("click", function() {
+        var type = $(this).data("type");
+        var msg = "기본환경 스킨 설정";
+        if(type == "conf_member")
+            msg = "기본환경 회원스킨 설정";
+
+        if(!confirm("현재 테마의 "+msg+"을 적용하시겠습니까?"))
+            return false;
+
+        $.ajax({
+            type: "POST",
+            url: "./theme_config_load.php",
+            cache: false,
+            async: false,
+            data: { type: type },
+            dataType: "json",
+            success: function(data) {
+                if(data.error) {
+                    alert(data.error);
+                    return false;
+                }
+
+                var field = Array('cf_member_skin', 'cf_mobile_member_skin', 'cf_new_skin', 'cf_mobile_new_skin', 'cf_search_skin', 'cf_mobile_search_skin', 'cf_connect_skin', 'cf_mobile_connect_skin', 'cf_faq_skin', 'cf_mobile_faq_skin');
+                var count = field.length;
+                var key;
+
+                for(i=0; i<count; i++) {
+                    key = field[i];
+
+                    if(data[key] != undefined && data[key] != "")
+                        $("select[name="+key+"]").val(data[key]);
+                }
+            }
+        });
     });
 });
 

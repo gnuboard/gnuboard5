@@ -119,7 +119,7 @@ $cart_count = mysql_num_rows($result);
                 <span class="total_price total_span"><span>소계 </span><strong><?php echo number_format($sell_price); ?></strong></span>
                 <span class="total_point total_span"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
             </div>
-            
+
         </li>
 
         <?php
@@ -204,7 +204,7 @@ $(function() {
     });
 
     // 옵션수정 닫기
-    $("#mod_option_close").live("click", function() {
+    $(document).on("click", "#mod_option_close", function() {
         $("#mod_option_frm").remove();
         $("#win_mask, .window").hide();
         $(".mod_options").eq(close_btn_idx).focus();

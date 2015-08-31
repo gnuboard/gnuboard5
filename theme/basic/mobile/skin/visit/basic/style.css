@@ -1,0 +1,11 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
+#visit {border-bottom:1px dotted #dde4e9}
+#visit div {zoom:1}
+#visit div:after {display:block;visibility:hidden;clear:both;content:""}
+#visit h2 {float:left;padding:10px}
+#visit dl {float:left;margin:0 0 0 5px;padding:0}
+#visit dt {float:left;margin:0;padding:10px 5px;letter-spacing:-0.1em}
+#visit dd {float:left;margin:0 3px 0 0;padding:10px 5px}
+#visit a {display:inline-block;padding:10px 3px;text-decoration:none}

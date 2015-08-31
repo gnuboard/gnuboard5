@@ -8,7 +8,7 @@ auth_check($auth[$sub_menu], "r");
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
-if ($config['cf_icode_id'] && $config['cf_icode_pw']) {
+if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
 }
 
@@ -17,7 +17,6 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_scf_info">사업자정보</a></li>
-<li><a href="#anc_scf_lay">레이아웃 설정</a></li>
 <li><a href="#anc_scf_skin">스킨설정</a></li>
 <li><a href="#anc_scf_index">쇼핑몰 초기화면</a></li>
 <li><a href="#anc_mscf_index">모바일 초기화면</a></li>
@@ -32,22 +31,10 @@ $frm_submit = '<div class="btn_confirm01 btn_confirm">
     <a href="'.G5_SHOP_URL.'">쇼핑몰</a>
 </div>';
 
-// index 선택 설정 필드추가
-if(!isset($default['de_root_index_use'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
-                    ADD `de_root_index_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_admin_info_email` ", true);
-}
-
 // 무이자 할부 사용설정 필드 추가
 if(!isset($default['de_card_noint_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_card_noint_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_card_use` ", true);
-}
-
-// 레이아웃 선택 설정 필드추가
-if(!isset($default['de_shop_layout_use'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
-                    ADD `de_shop_layout_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_root_index_use` ", true);
 }
 
 // 모바일 관련상품 설정 필드추가
@@ -87,15 +74,6 @@ if(!isset($default['de_inicis_mid'])) {
                     ADD `de_inicis_admin_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_mid` ", true);
 }
 
-
-// 레이아웃 파일 필드 추가
-if(!isset($default['de_include_index'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
-                    ADD `de_include_index` varchar(255) NOT NULL DEFAULT '' AFTER `de_admin_info_email`,
-                    ADD `de_include_head` varchar(255) NOT NULL DEFAULT '' AFTER `de_include_index`,
-                    ADD `de_include_tail` varchar(255) NOT NULL DEFAULT '' AFTER `de_include_head` ", true);
-
-}
 
 // 모바일 초기화면 이미지 줄 수 필드 추가
 if(!isset($default['de_mobile_type1_list_row'])) {
@@ -201,70 +179,6 @@ if(!isset($default['de_mobile_search_list_row'])) {
 
 <?php echo $frm_submit; ?>
 
-<section id="anc_scf_lay">
-    <h2 class="h2_frm">레이아웃 설정</h2>
-    <?php echo $pg_anchor; ?>
-    <div class="local_desc02 local_desc">
-        <p>기본 설정된 파일 등을 변경할 수 있습니다.</p>
-    </div>
-
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <caption>레이아웃 설정</caption>
-        <colgroup>
-            <col class="grid_4">
-            <col>
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="row"><label for="de_include_index">초기화면 파일</label></th>
-            <td>
-                <?php echo help('입력이 없으면 '.G5_SHOP_DIR.'/index.php가 초기화면 파일로 설정됩니다.<br>초기화면 파일은 '.G5_SHOP_DIR.'/index.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="de_include_index" value="<?php echo $default['de_include_index'] ?>" id="de_include_index" class="frm_input" size="50">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="de_include_head">상단 파일</label></th>
-            <td>
-                <?php echo help('입력이 없으면 '.G5_SHOP_DIR.'/shop.head.php가 상단 파일로 설정됩니다.<br>상단 파일은 '.G5_SHOP_DIR.'/shop.head.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="de_include_head" value="<?php echo $default['de_include_head'] ?>" id="de_include_head" class="frm_input" size="50">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="de_include_tail">하단 파일</label></th>
-            <td>
-                <?php echo help('입력이 없으면 '.G5_SHOP_DIR.'/shop.tail.php가 하단 파일로 설정됩니다.<br>하단 파일은 '.G5_SHOP_DIR.'/shop.tail.php 파일과 동일한 위치에 존재해야 합니다.') ?>
-                <input type="text" name="de_include_tail" value="<?php echo $default['de_include_tail'] ?>" id="de_include_tail" class="frm_input" size="50">
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="de_root_index_use">루트 index 사용</label></th>
-            <td>
-                <?php echo help('쇼핑몰의 접속경로를 '.G5_SHOP_URL.' 에서 '.G5_URL.' 으로 변경하시려면 사용으로 설정해 주십시오.'); ?>
-                <select name="de_root_index_use" id="de_root_index_use">
-                    <option value="0" <?php echo get_selected($default['de_root_index_use'], 0); ?>>사용안함</option>
-                    <option value="1" <?php echo get_selected($default['de_root_index_use'], 1); ?>>사용</option>
-                </select>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="de_shop_layout_use">쇼핑몰 레이아웃 사용</label></th>
-            <td>
-                <?php echo help('커뮤니티의 레이아웃을 쇼핑몰과 동일하게 적용하시려면 사용으로 설정해 주십시오.'); ?>
-                <select name="de_shop_layout_use" id="de_shop_layout_use">
-                    <option value="0" <?php echo get_selected($default['de_shop_layout_use'], 0); ?>>사용안함</option>
-                    <option value="1" <?php echo get_selected($default['de_shop_layout_use'], 1); ?>>사용</option>
-                </select>
-            </td>
-        </tr>
-
-        </tbody>
-        </table>
-    </div>
-</section>
-
-<?php echo $frm_submit; ?>
-
 <section id="anc_scf_skin">
     <h2 class="h2_frm">스킨설정</h2>
     <?php echo $pg_anchor; ?>
@@ -283,29 +197,13 @@ if(!isset($default['de_mobile_search_list_row'])) {
         <tr>
             <th scope="row"><label for="de_shop_skin">PC용 스킨</label></th>
             <td colspan="3">
-                <select name="de_shop_skin" id="de_shop_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('shop');
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($default['de_shop_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_skin_select('shop', 'de_shop_skin', 'de_shop_skin', $default['de_shop_skin'], 'required'); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="de_shop_mobile_skin">모바일용 스킨</label></th>
             <td colspan="3">
-                <select name="de_shop_mobile_skin" id="de_shop_mobile_skin" required class="required">
-                <?php
-                $arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-                for ($i=0; $i<count($arr); $i++) {
-                    if ($i == 0) echo "<option value=\"\">선택</option>";
-                    echo "<option value=\"".$arr[$i]."\"".get_selected($default['de_shop_mobile_skin'], $arr[$i]).">".$arr[$i]."</option>\n";
-                }
-                ?>
-                </select>
+                <?php echo get_mobile_skin_select('shop', 'de_shop_mobile_skin', 'de_shop_mobile_skin', $default['de_shop_mobile_skin'], 'required'); ?>
             </td>
         </tr>
         </tbody>
@@ -313,7 +211,7 @@ if(!isset($default['de_mobile_search_list_row'])) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_shop_skin">테마 스킨설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_scf_index">
     <h2 class="h2_frm">쇼핑몰 초기화면</h2>
@@ -433,7 +331,7 @@ if(!isset($default['de_mobile_search_list_row'])) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="shop_pc_index">테마설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_mscf_index">
     <h2 class="h2_frm">모바일 쇼핑몰 초기화면 설정</h2>
@@ -552,7 +450,7 @@ if(!isset($default['de_mobile_search_list_row'])) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="shop_mobile_index">테마설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id ="anc_scf_payment">
     <h2 class="h2_frm">결제설정</h2>
@@ -1203,7 +1101,7 @@ if(!isset($default['de_mobile_search_list_row'])) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<?php echo preg_replace('#</div>$#i', '<button type="button" class="shop_etc">테마설정 가져오기</button></div>', $frm_submit); ?>
 
 <?php if (file_exists($logo_img) || file_exists($logo_img2) || file_exists($mobile_logo_img) || file_exists($mobile_logo_img2)) { ?>
 <script>
@@ -1469,7 +1367,74 @@ $(function() {
         } else {
             $cf_cardtest_btn.text("테스트결제 팁 더보기");
         }
-    })
+    });
+
+    $(".get_shop_skin").on("click", function() {
+        if(!confirm("현재 테마의 쇼핑몰 스킨 설정을 적용하시겠습니까?"))
+            return false;
+
+        $.ajax({
+            type: "POST",
+            url: "../theme_config_load.php",
+            cache: false,
+            async: false,
+            data: { type: "shop_skin" },
+            dataType: "json",
+            success: function(data) {
+                if(data.error) {
+                    alert(data.error);
+                    return false;
+                }
+
+                var field = Array('de_shop_skin', 'de_shop_mobile_skin');
+                var count = field.length;
+                var key;
+
+                for(i=0; i<count; i++) {
+                    key = field[i];
+
+                    if(data[key] != undefined && data[key] != "")
+                        $("select[name="+key+"]").val(data[key]);
+                }
+            }
+        });
+    });
+
+    $(".shop_pc_index, .shop_mobile_index, .shop_etc").on("click", function() {
+        if(!confirm("현재 테마의 스킨, 이미지 사이즈 등의 설정을 적용하시겠습니까?"))
+            return false;
+
+        var type = $(this).attr("class");
+        var $el;
+
+        $.ajax({
+            type: "POST",
+            url: "../theme_config_load.php",
+            cache: false,
+            async: false,
+            data: { type: type },
+            dataType: "json",
+            success: function(data) {
+                if(data.error) {
+                    alert(data.error);
+                    return false;
+                }
+
+                $.each(data, function(key, val) {
+                    if(key == "error")
+                        return true;
+
+                    $el = $("#"+key);
+
+                    if($el[0].type == "checkbox") {
+                        $el.attr("checked", parseInt(val) ? true : false);
+                        return true;
+                    }
+                    $el.val(val);
+                });
+            }
+        });
+    });
 });
 </script>
 
