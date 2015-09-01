@@ -1,5 +1,5 @@
 <?php
-$sub_menu = "300100";
+$sub_menu = "100280";
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/json.lib.php');
 
