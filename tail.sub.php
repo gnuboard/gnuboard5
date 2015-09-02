@@ -1,9 +1,8 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-// 사용자가 지정한 tail.sub.php 파일이 있다면 include
-if(defined('G5_TAIL_SUB_FILE') && is_file(G5_PATH.'/'.G5_TAIL_SUB_FILE)) {
-    include_once(G5_PATH.'/'.G5_TAIL_SUB_FILE);
+if(!defined('G5_IS_ADMIN') && defined('G5_THEME_PATH') && is_file(G5_THEME_PATH.'/tail.sub.php')) {
+    require_once(G5_THEME_PATH.'/tail.sub.php');
     return;
 }
 ?>

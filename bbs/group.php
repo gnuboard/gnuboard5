@@ -1,7 +1,14 @@
 <?php
 include_once('./_common.php');
-include_once(G5_LIB_PATH.'/latest.lib.php');
-$g5['title'] = $group['gr_subject'];
+
+if(defined('G5_THEME_PATH')) {
+    $group_file = G5_THEME_PATH.'/group.php';
+    if(is_file($group_file)) {
+        require_once($group_file);
+        return;
+    }
+    unset($group_file);
+}
 
 if (G5_IS_MOBILE) {
     include_once(G5_MOBILE_PATH.'/group.php');
@@ -11,7 +18,9 @@ if (G5_IS_MOBILE) {
 if(!$is_admin && $group['gr_device'] == 'mobile')
     alert($group['gr_subject'].' 그룹은 모바일에서만 접근할 수 있습니다.');
 
+$g5['title'] = $group['gr_subject'];
 include_once('./_head.php');
+include_once(G5_LIB_PATH.'/latest.lib.php');
 ?>
 
 

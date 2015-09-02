@@ -93,7 +93,9 @@ class   C_CT_CLI
 
       while ( list(,$i) = each($arg) )
       {
-        $exec_cmd .= " " . escapeshellarg( $i );
+        // 일부서버의 경우 빈값일때 '' 결과가 넘어오지 않는 버그가 있다. kagla 150820
+        //$exec_cmd .= " " . escapeshellarg( $i );
+        $exec_cmd .= " " . ( escapeshellarg($i) ? escapeshellarg($i) : "''" );
       }
 
       $rt = exec( $exec_cmd );

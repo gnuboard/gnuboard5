@@ -18,14 +18,28 @@ function visit($skin_dir='basic')
     settype($visit[3], "integer");
     settype($visit[4], "integer");
 
-    ob_start();
-    if(G5_IS_MOBILE) {
-        $visit_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/visit/'.$skin_dir;
-        $visit_skin_url = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/visit/'.$skin_dir;
+    if(preg_match('#^theme/(.+)$#', $skin_dir, $match)) {
+        if (G5_IS_MOBILE) {
+            $visit_skin_path = G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/visit/'.$match[1];
+            if(!is_dir($visit_skin_path))
+                $visit_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/visit/'.$match[1];
+            $visit_skin_url = str_replace(G5_PATH, G5_URL, $visit_skin_path);
+        } else {
+            $visit_skin_path = G5_THEME_PATH.'/'.G5_SKIN_DIR.'/visit/'.$match[1];
+            $visit_skin_url = str_replace(G5_PATH, G5_URL, $visit_skin_path);
+        }
+        $skin_dir = $match[1];
     } else {
-        $visit_skin_path = G5_SKIN_PATH.'/visit/'.$skin_dir;
-        $visit_skin_url = G5_SKIN_URL.'/visit/'.$skin_dir;
+        if(G5_IS_MOBILE) {
+            $visit_skin_path = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/visit/'.$skin_dir;
+            $visit_skin_url = G5_MOBILE_URL.'/'.G5_SKIN_DIR.'/visit/'.$skin_dir;
+        } else {
+            $visit_skin_path = G5_SKIN_PATH.'/visit/'.$skin_dir;
+            $visit_skin_url = G5_SKIN_URL.'/visit/'.$skin_dir;
+        }
     }
+
+    ob_start();
     include_once ($visit_skin_path.'/visit.skin.php');
     $content = ob_get_contents();
     ob_end_clean();

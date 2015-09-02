@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
+/* 전체검색결과 스킨 */
+#sch_res_detail {padding:0 0 10px;border-bottom:1px solid #e9e9e9;text-align:center}
+#sch_res_detail legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#sch_res_ov {margin:0 0 10px;padding:10px;border-bottom:1px solid #e9e9e9;background:#f5f6fa;zoom:1}
+#sch_res_ov:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_res_ov h2 {float:left}
+#sch_res_ov dl {float:left;margin:0 0 0 10px}
+#sch_res_ov dt {float:left}
+#sch_res_ov dd {float:left;margin:0 10px 0 5px}
+#sch_res_ov p {float:right;margin:0;padding:0;line-height:1em}
+
+#sch_res_board {margin:0 0 10px;padding-left:1px;list-style:none;zoom:1}
+#sch_res_board:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_res_board li {float:left;margin-bottom:-1px}
+#sch_res_board a {display:block;position:relative;margin-left:-1px;padding:6px 0 5px;width:180px;border:1px solid #ddd;text-align:center;letter-spacing:-0.1em;line-height:1.2em;cursor:pointer}
+#sch_res_board a:focus, #sch_res_board a:hover, #sch_res_board a:active {text-decoration:none}
+#sch_res_board .cnt_cmt {font-weight:normal !important}
+
+.sch_res_list {margin:0 0 10px;padding:10px 0 15px}
+.sch_res_list h2 {margin:0 0 15px;font-size:1.2em}
+.sch_res_list ul {margin:0;padding:0;list-style:none}
+.sch_res_list li {margin:0 0 10px;padding:0 0 10px;border-bottom:1px solid #e9e9e9}
+.sch_res_title {display:inline-block;margin:0 0 5px}
+.sch_res_list p {margin:0 0 10px;line-height:1.8em}
+.sch_more {text-align:right}
+.sch_on {color:#ff3061}

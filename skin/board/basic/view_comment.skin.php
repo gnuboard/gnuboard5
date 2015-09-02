@@ -142,7 +142,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                 <?php if ($comment_min || $comment_max) { ?>onkeyup="check_byte('wr_content', 'char_count');"<?php } ?>><?php echo $c_wr_content;  ?></textarea>
                 <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
                 <script>
-                $("textarea#wr_content[maxlength]").live("keyup change", function() {
+                $(document).on( "keyup change", "textarea#wr_content[maxlength]", function(){
                     var str = $(this).val()
                     var mx = parseInt($(this).attr("maxlength"))
                     if (str.length > mx) {

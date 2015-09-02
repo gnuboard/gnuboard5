@@ -65,8 +65,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php } ?>
 
     <?php
-    if (implode('', $view['link'])) {
-     ?>
+    if ($view['link']) {
+    ?>
     <section id="bo_v_link">
         <h2>관련링크</h2>
         <ul>
@@ -179,7 +179,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <?php
     // 코멘트 입출력
-    include_once('./view_comment.php');
+    include_once(G5_BBS_PATH.'/view_comment.php');
      ?>
 
     <div id="bo_v_bot">
