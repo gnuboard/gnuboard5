@@ -66,7 +66,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                 <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">
             </td>
             <td><?php echo $row['sc_name']; ?></td>
-            <td class="td_postalbig"><?php echo preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip1']).' ~ '.preg_replace('/([0-9]{3})([0-9]{3})/', '\\1-\\2', $row['sc_zip2']); ?></td>
+            <td class="td_postalbig"><?php echo $row['sc_zip1'].' ~ '.$row['sc_zip2']; ?></td>
             <td class="td_sendcost_add"><?php echo number_format($row['sc_price']); ?></td>
         </tr>
         <?php
