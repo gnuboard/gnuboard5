@@ -593,6 +593,25 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
             $checked = '';
         }
 
+        // PG 간편결제
+        if($default['de_easy_pay_use']) {
+            switch($default['de_pg_service']) {
+                case 'lg':
+                    $pg_easy_pay_name = 'PAYNOW';
+                    break;
+                case 'inicis':
+                    $pg_easy_pay_name = 'KPAY';
+                    break;
+                default:
+                    $pg_easy_pay_name = 'PAYCO';
+                    break;
+            }
+
+            $multi_settle++;
+            echo '<li><input type="radio" id="od_settle_easy_pay" name="od_settle_case" value="간편결제" '.$checked.'> <label for="od_settle_easy_pay">'.$pg_easy_pay_name.'(간편결제)</label></li>'.PHP_EOL;
+            $checked = '';
+        }
+
         echo '</ul>';
 
         $temp_point = 0;
@@ -1170,6 +1189,7 @@ function pay_approval()
     f.settle_method.value = settle_method;
     <?php } else if($default['de_pg_service'] == 'lg') { ?>
     var pay_method = "";
+    var easy_pay = "";
     switch(settle_method) {
         case "계좌이체":
             pay_method = "SC0030";
@@ -1183,12 +1203,16 @@ function pay_approval()
         case "신용카드":
             pay_method = "SC0010";
             break;
+        case "간편결제":
+            easy_pay = "PAYNOW";
+            break;
     }
     f.LGD_CUSTOM_FIRSTPAY.value = pay_method;
     f.LGD_BUYER.value = pf.od_name.value;
     f.LGD_BUYEREMAIL.value = pf.od_email.value;
     f.LGD_BUYERPHONE.value = pf.od_hp.value;
     f.LGD_AMOUNT.value = f.good_mny.value;
+    f.LGD_EASYPAY_ONLY.value = easy_pay;
     <?php if($default['de_tax_flag_use']) { ?>
     f.LGD_TAXFREEAMOUNT.value = pf.comm_free_mny.value;
     <?php } ?>
@@ -1225,9 +1249,6 @@ function pay_approval()
     f.P_RETURN_URL.value = "<?php echo $return_url.$od_id; ?>";
     f.action = "https://mobile.inicis.com/smart/" + paymethod + "/";
     <?php } ?>
-
-    //var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
-    //f.target = "tar_opener";
 
     // 주문 정보 임시저장
     var order_data = $(pf).serialize();

@@ -312,6 +312,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_inicis_mid` varchar(255) NOT NULL DEFAULT '',
   `de_inicis_admin_key` varchar(255) NOT NULL DEFAULT '',
   `de_iche_use` tinyint(4) NOT NULL DEFAULT '0',
+  `de_easy_pay_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_item_use_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_item_use_write` tinyint(4) NOT NULL DEFAULT '0',
   `de_code_dup_use` tinyint(4) NOT NULL DEFAULT '0',

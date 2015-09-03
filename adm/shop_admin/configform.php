@@ -96,6 +96,12 @@ if(!isset($default['de_mobile_search_list_row'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_mobile_search_list_row` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_search_list_mod` ", true);
 }
+
+// PG 간펼결제 사용여부 필드 추가
+if(!isset($default['de_easy_pay_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_easy_pay_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_iche_use` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -539,6 +545,16 @@ if(!isset($default['de_mobile_search_list_row'])) {
                 <select id="de_card_noint_use" name="de_card_noint_use">
                     <option value="0" <?php echo get_selected($default['de_card_noint_use'], 0); ?>>사용안함</option>
                     <option value="1" <?php echo get_selected($default['de_card_noint_use'], 1); ?>>사용</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_easy_pay_use">PG사 간편결제 사용</label></th>
+            <td>
+                <?php echo help("PG사의 간편결제(PAYCO, Paynow, Kpay) 사용여부를 설정합니다.", 50); ?>
+                <select id="de_easy_pay_use" name="de_easy_pay_use">
+                    <option value="0" <?php echo get_selected($default['de_easy_pay_use'], 0); ?>>사용안함</option>
+                    <option value="1" <?php echo get_selected($default['de_easy_pay_use'], 1); ?>>사용</option>
                 </select>
             </td>
         </tr>

@@ -619,6 +619,25 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             $checked = '';
         }
 
+        // PG 간편결제
+        if($default['de_easy_pay_use']) {
+            switch($default['de_pg_service']) {
+                case 'lg':
+                    $pg_easy_pay_name = 'PAYNOW';
+                    break;
+                case 'inicis':
+                    $pg_easy_pay_name = 'KPAY';
+                    break;
+                default:
+                    $pg_easy_pay_name = 'PAYCO';
+                    break;
+            }
+
+            $multi_settle++;
+            echo '<input type="radio" id="od_settle_easy_pay" name="od_settle_case" value="간편결제" '.$checked.'> <label for="od_settle_easy_pay">'.$pg_easy_pay_name.'(간편결제)</label>'.PHP_EOL;
+            $checked = '';
+        }
+
         $temp_point = 0;
         // 회원이면서 포인트사용이면
         if ($is_member && $config['cf_use_point'])
@@ -1326,6 +1345,15 @@ function forderform_check(f)
             break;
     }
     <?php } else if($default['de_pg_service'] == 'lg') { ?>
+    f.LGD_EASYPAY_ONLY.value = "";
+    if(typeof f.LGD_CUSTOM_USABLEPAY === "undefined") {
+        var input = document.createElement("input");
+        input.setAttribute("type", "hidden");
+        input.setAttribute("name", "LGD_CUSTOM_USABLEPAY");
+        input.setAttribute("value", "");
+        f.LGD_EASYPAY_ONLY.parentNode.insertBefore(input, f.LGD_EASYPAY_ONLY);
+    }
+
     switch(settle_method)
     {
         case "계좌이체":
@@ -1343,6 +1371,12 @@ function forderform_check(f)
         case "신용카드":
             f.LGD_CUSTOM_FIRSTPAY.value = "SC0010";
             f.LGD_CUSTOM_USABLEPAY.value = "SC0010";
+            break;
+        case "간편결제":
+            var elm = f.LGD_CUSTOM_USABLEPAY;
+            if(elm.parentNode)
+                elm.parentNode.removeChild(elm);
+            f.LGD_EASYPAY_ONLY.value = "PAYNOW";
             break;
         default:
             f.LGD_CUSTOM_FIRSTPAY.value = "무통장";
@@ -1362,6 +1396,9 @@ function forderform_check(f)
             break;
         case "신용카드":
             f.gopaymethod.value = "onlycard";
+            break;
+        case "KPAY":
+            f.gopaymethod.value = "onlykpay";
             break;
         default:
             f.gopaymethod.value = "무통장";
