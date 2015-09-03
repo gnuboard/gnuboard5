@@ -36,6 +36,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="rcvr_add1"     value="">
     <input type="hidden" name="rcvr_add2"     value="">
 
+    <input type="hidden" name="payco_direct"   value="">      <!-- PAYCO 결제창 호출 -->
+
     <input type="hidden" name="quotaopt"    value="12">
 
     <!-- 필수 항목 : 결제 금액/화폐단위 -->

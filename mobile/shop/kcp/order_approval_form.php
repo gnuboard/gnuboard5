@@ -62,6 +62,8 @@
     $comm_vat_mny    = $_POST[ "comm_vat_mny"   ]; // 부가세
     $comm_free_mny   = $_POST["comm_free_mny"   ]; // 비과세금액
 
+    $payco_direct    = $_POST["payco_direct"    ]; // PAYCO 결제창 호출
+
 	/*
      * 기타 파라메터 추가 부분 - Start -
      */
@@ -98,6 +100,10 @@
         case '가상계좌':
             $pay_method = 'VCNT';
             $ActionResult = 'vcnt';
+            break;
+        case '간편결제':
+            $pay_method = 'CARD';
+            $ActionResult = 'card';
             break;
         default:
             $pay_method = '';
@@ -241,6 +247,8 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <input type="hidden" name="buyr_tel2" value="<?php echo $buyr_tel2; ?>">
 <input type="hidden" name="buyr_mail" value="<?php echo $buyr_mail; ?>">
 <input type="hidden" name="ipgm_date" value="<?php echo $ipgm_date; ?>">
+
+<input type="hidden" name="payco_direct"   value="<?php echo $payco_direct; ?>">      <!-- PAYCO 결제창 호출 -->
 
 <!-- 필수 사항 -->
 

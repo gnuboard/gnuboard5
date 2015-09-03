@@ -1329,19 +1329,24 @@ function forderform_check(f)
     switch(settle_method)
     {
         case "계좌이체":
-            f.pay_method.value = "010000000000";
+            f.pay_method.value   = "010000000000";
             break;
         case "가상계좌":
-            f.pay_method.value = "001000000000";
+            f.pay_method.value   = "001000000000";
             break;
         case "휴대폰":
-            f.pay_method.value = "000010000000";
+            f.pay_method.value   = "000010000000";
             break;
         case "신용카드":
-            f.pay_method.value = "100000000000";
+            f.pay_method.value   = "100000000000";
+            break;
+        case "간편결제":
+            f.site_cd.value      = "S6729";
+            f.pay_method.value   = "100000000000";
+            f.payco_direct.value = "Y";
             break;
         default:
-            f.pay_method.value = "무통장";
+            f.pay_method.value   = "무통장";
             break;
     }
     <?php } else if($default['de_pg_service'] == 'lg') { ?>

@@ -1187,6 +1187,8 @@ function pay_approval()
     f.rcvr_add1.value = pf.od_b_addr1.value;
     f.rcvr_add2.value = pf.od_b_addr2.value;
     f.settle_method.value = settle_method;
+    if(settle_method == "간편결제")
+        f.payco_direct.value = "Y";
     <?php } else if($default['de_pg_service'] == 'lg') { ?>
     var pay_method = "";
     var easy_pay = "";
