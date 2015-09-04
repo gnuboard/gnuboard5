@@ -1189,6 +1189,8 @@ function pay_approval()
     f.settle_method.value = settle_method;
     if(settle_method == "간편결제")
         f.payco_direct.value = "Y";
+    else
+        f.payco_direct.value = "";
     <?php } else if($default['de_pg_service'] == 'lg') { ?>
     var pay_method = "";
     var easy_pay = "";
@@ -1226,6 +1228,8 @@ function pay_approval()
     var ypos = (screen.width - height) / 2;
     var position = "top=" + ypos + ",left=" + xpos;
     var features = position + ", width=320, height=440";
+    var p_reserved = f.P_RESERVED.value;
+    f.P_RESERVED.value = p_reserved;
     switch(settle_method) {
         case "계좌이체":
             paymethod = "bank";
@@ -1238,6 +1242,10 @@ function pay_approval()
             break;
         case "신용카드":
             paymethod = "wcard";
+            break;
+        case "간편결제":
+            paymethod = "wcard";
+            f.P_RESERVED.value = p_reserved+"&d_kpay=Y&d_kpay_app=Y";
             break;
     }
     f.P_AMT.value = f.good_mny.value;
