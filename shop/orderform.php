@@ -1402,7 +1402,7 @@ function forderform_check(f)
         case "신용카드":
             f.gopaymethod.value = "onlycard";
             break;
-        case "KPAY":
+        case "간편결제":
             f.gopaymethod.value = "onlykpay";
             break;
         default:
