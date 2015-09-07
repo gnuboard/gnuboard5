@@ -32,6 +32,12 @@ if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
 $g_conf_site_cd  = $default['de_kcp_mid'];
 $g_conf_site_key = $default['de_kcp_site_key'];
 
+// 테스트 결제 때 PAYCO site_cd, site_key 재설정
+if($default['de_card_test'] && isset($_POST['od_settle_case']) && $_POST['od_settle_case'] == '간편결제') {
+    $g_conf_site_cd = 'S6729';
+    $g_conf_site_key = '';
+}
+
 if (preg_match("/^T000/", $g_conf_site_cd) || $default['de_card_test']) {
     $g_conf_gw_url  = "testpaygw.kcp.co.kr";                    // real url : paygw.kcp.co.kr , test url : testpaygw.kcp.co.kr
 }

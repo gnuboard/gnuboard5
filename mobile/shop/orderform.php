@@ -554,7 +554,7 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
             $escrow_title = "에스크로 ";
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
             echo '<div id="sod_frm_paysel"><ul>';
         }
 
@@ -590,6 +590,25 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
         if ($default['de_card_use']) {
             $multi_settle++;
             echo '<li><input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" '.$checked.'> <label for="od_settle_card">신용카드</label></li>'.PHP_EOL;
+            $checked = '';
+        }
+
+        // PG 간편결제
+        if($default['de_easy_pay_use']) {
+            switch($default['de_pg_service']) {
+                case 'lg':
+                    $pg_easy_pay_name = 'PAYNOW';
+                    break;
+                case 'inicis':
+                    $pg_easy_pay_name = 'KPAY';
+                    break;
+                default:
+                    $pg_easy_pay_name = 'PAYCO';
+                    break;
+            }
+
+            $multi_settle++;
+            echo '<li><input type="radio" id="od_settle_easy_pay" name="od_settle_case" value="간편결제" '.$checked.'> <label for="od_settle_easy_pay" class="'.$pg_easy_pay_name.'">'.$pg_easy_pay_name.'(간편결제)</label></li>'.PHP_EOL;
             $checked = '';
         }
 
@@ -646,7 +665,7 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
             echo '</div>';
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
             echo '</div>';
         }
 
@@ -916,7 +935,7 @@ $(function() {
         $("#show_pay_btn").css("display", "inline");
     });
 
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp").bind("click", function() {
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay").bind("click", function() {
         $("#settle_bank").hide();
         $("#show_req_btn").css("display", "inline");
         $("#show_pay_btn").css("display", "none");
@@ -1168,8 +1187,13 @@ function pay_approval()
     f.rcvr_add1.value = pf.od_b_addr1.value;
     f.rcvr_add2.value = pf.od_b_addr2.value;
     f.settle_method.value = settle_method;
+    if(settle_method == "간편결제")
+        f.payco_direct.value = "Y";
+    else
+        f.payco_direct.value = "";
     <?php } else if($default['de_pg_service'] == 'lg') { ?>
     var pay_method = "";
+    var easy_pay = "";
     switch(settle_method) {
         case "계좌이체":
             pay_method = "SC0030";
@@ -1183,12 +1207,16 @@ function pay_approval()
         case "신용카드":
             pay_method = "SC0010";
             break;
+        case "간편결제":
+            easy_pay = "PAYNOW";
+            break;
     }
     f.LGD_CUSTOM_FIRSTPAY.value = pay_method;
     f.LGD_BUYER.value = pf.od_name.value;
     f.LGD_BUYEREMAIL.value = pf.od_email.value;
     f.LGD_BUYERPHONE.value = pf.od_hp.value;
     f.LGD_AMOUNT.value = f.good_mny.value;
+    f.LGD_EASYPAY_ONLY.value = easy_pay;
     <?php if($default['de_tax_flag_use']) { ?>
     f.LGD_TAXFREEAMOUNT.value = pf.comm_free_mny.value;
     <?php } ?>
@@ -1200,6 +1228,8 @@ function pay_approval()
     var ypos = (screen.width - height) / 2;
     var position = "top=" + ypos + ",left=" + xpos;
     var features = position + ", width=320, height=440";
+    var p_reserved = f.P_RESERVED.value;
+    f.P_RESERVED.value = p_reserved;
     switch(settle_method) {
         case "계좌이체":
             paymethod = "bank";
@@ -1213,6 +1243,10 @@ function pay_approval()
         case "신용카드":
             paymethod = "wcard";
             break;
+        case "간편결제":
+            paymethod = "wcard";
+            f.P_RESERVED.value = p_reserved+"&d_kpay=Y&d_kpay_app=Y";
+            break;
     }
     f.P_AMT.value = f.good_mny.value;
     f.P_UNAME.value = pf.od_name.value;
@@ -1225,9 +1259,6 @@ function pay_approval()
     f.P_RETURN_URL.value = "<?php echo $return_url.$od_id; ?>";
     f.action = "https://mobile.inicis.com/smart/" + paymethod + "/";
     <?php } ?>
-
-    //var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");
-    //f.target = "tar_opener";
 
     // 주문 정보 임시저장
     var order_data = $(pf).serialize();

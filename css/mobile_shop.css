@@ -352,6 +352,10 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_frm_paysel ul {margin:0;padding:0;}
 #sod_frm_paysel ul:after {display:block;visibility:hidden;clear:both;content:""}
 #sod_frm_paysel li {float:left;padding:5px 2%;width:46%}
+#sod_frm_paysel .KPAY{background:url('../img/kpay_logo.png') no-repeat;padding-left:37px;}
+#sod_frm_paysel .PAYNOW{background:url('../img/paynow_logo.png') no-repeat;padding-left:46px;}
+#sod_frm_paysel .PAYCO{background:url('../img/payco_logo.png') no-repeat 1px ;padding-left:46px;}
+
 #sod_frm_paysel #settle_bank {padding:10px;background:#fff;line-height:2em;border:1px solid #dbdbdb}
 #sod_frm_paysel #settle_bank label {display:inline-block;margin:0 10px 0 0;font-weight:bold}
 #sod_frm_paysel #settle_bank .frm_input {background:#fff;text-align:center}

@@ -34,23 +34,25 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25")	//PG에서 보냈는�
     $P_RMESG2;			// 결과메시지
     $P_NOTI;			// 노티메시지(상점에서 올린 메시지)
     $P_AUTH_NO;			// 승인번호
+    $P_SRC_CODE;        // 앱연동 결제구분
 
 
-    $P_TID     = $_POST['P_TID'];
-    $P_MID     = $_POST['P_MID'];
-    $P_AUTH_DT = $_POST['P_AUTH_DT'];
-    $P_STATUS  = $_POST['P_STATUS'];
-    $P_TYPE    = $_POST['P_TYPE'];
-    $P_OID     = $_POST['P_OID'];
-    $P_FN_CD1  = $_POST['P_FN_CD1'];
-    $P_FN_CD2  = $_POST['P_FN_CD2'];
-    $P_FN_NM   = $_POST['P_FN_NM'];
-    $P_AMT     = $_POST['P_AMT'];
-    $P_UNAME   = $_POST['P_UNAME'];
-    $P_RMESG1  = $_POST['P_RMESG1'];
-    $P_RMESG2  = $_POST['P_RMESG2'];
-    $P_NOTI    = $_POST['P_NOTI'];
-    $P_AUTH_NO = $_POST['P_AUTH_NO'];
+    $P_TID      = $_POST['P_TID'];
+    $P_MID      = $_POST['P_MID'];
+    $P_AUTH_DT  = $_POST['P_AUTH_DT'];
+    $P_STATUS   = $_POST['P_STATUS'];
+    $P_TYPE     = $_POST['P_TYPE'];
+    $P_OID      = $_POST['P_OID'];
+    $P_FN_CD1   = $_POST['P_FN_CD1'];
+    $P_FN_CD2   = $_POST['P_FN_CD2'];
+    $P_FN_NM    = $_POST['P_FN_NM'];
+    $P_AMT      = $_POST['P_AMT'];
+    $P_UNAME    = $_POST['P_UNAME'];
+    $P_RMESG1   = $_POST['P_RMESG1'];
+    $P_RMESG2   = $_POST['P_RMESG2'];
+    $P_NOTI     = $_POST['P_NOTI'];
+    $P_AUTH_NO  = $_POST['P_AUTH_NO'];
+    $P_SRC_CODE = $_POST['P_SRC_CODE'];
 
 
     //WEB 방식의 경우 가상계좌 채번 결과 무시 처리
@@ -160,11 +162,12 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25")	//PG에서 보냈는�
                 "P_RMESG1"      => $P_RMESG1,
                 "P_RMESG2"      => $P_RMESG2,
                 "P_NOTI"        => $P_NOTI,
-                "P_AUTH_NO"     => $P_AUTH_NO
+                "P_AUTH_NO"     => $P_AUTH_NO,
+                "P_SRC_CODE"    => $P_SRC_CODE
             );
 
     // 결과 incis log 테이블 기록
-    if($P_TYPE == 'BANK') {
+    if($P_TYPE == 'BANK' || $P_SRC_CODE == 'A') {
         $sql = " insert into {$g5['g5_shop_inicis_log_table']}
                     set oid       = '$P_OID',
                         P_TID     = '$P_TID',

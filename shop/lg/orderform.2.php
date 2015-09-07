@@ -29,6 +29,7 @@ $LGD_CUSTOM_PROCESSTYPE = 'TWOTR';
 <input type="hidden" name="LGD_BUYERPHONE"              id="LGD_BUYERPHONE"     value="">                                  <!-- 구매자 휴대폰번호 -->
 <input type="hidden" name="LGD_RECEIVER"                id="LGD_RECEIVER"       value="">                                  <!-- 수취인 -->
 <input type="hidden" name="LGD_RECEIVERPHONE"           id="LGD_RECEIVERPHONE"  value="">                                  <!-- 수취인 휴대폰번호 -->
+<input type="hidden" name="LGD_EASYPAY_ONLY"            id="LGD_EASYPAY_ONLY"   value="">                                  <!-- 페이나우 결제 호출 -->
 
 <?php if($default['de_escrow_use']) { ?>
 <input type="hidden" name="LGD_ESCROW_ZIPCODE"          id="LGD_ESCROW_ZIPCODE" value="">                                  <!-- 에스크로배송지우편번호 -->

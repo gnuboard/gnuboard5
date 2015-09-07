@@ -17,6 +17,7 @@ $LGD_TAXFREEAMOUNT          = $_POST['LGD_TAXFREEAMOUNT'];      //비과세 금�
 $LGD_CASHRECEIPTYN          = $_POST['LGD_CASHRECEIPTYN'];      //현금영수증 사용설정
 $LGD_BUYERID                = $_POST['LGD_BUYERID'];            //구매자 ID
 $LGD_BUYERPHONE             = $_POST['LGD_BUYERPHONE'];         //구매자 휴대폰번호
+$LGD_EASYPAY_ONLY           = $_POST['LGD_EASYPAY_ONLY'];       //페이나우결제창 호출
 
 $LGD_RETURNURL			    = G5_MSHOP_URL.'/lg/returnurl.php';
 $LGD_KVPMISPNOTEURL         = G5_MSHOP_URL.'/lg/note_url.php';
@@ -87,6 +88,7 @@ $payReqMap['LGD_TAXFREEAMOUNT']      = $LGD_TAXFREEAMOUNT;
 $payReqMap['LGD_CASHRECEIPTYN']      = $LGD_CASHRECEIPTYN;
 $payReqMap['LGD_BUYERPHONE']         = $LGD_BUYERPHONE;
 $payReqMap['LGD_BUYERID']            = $LGD_BUYERID;
+$payReqMap['LGD_EASYPAY_ONLY']       = $LGD_EASYPAY_ONLY;
 
 /*
 ****************************************************

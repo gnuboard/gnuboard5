@@ -239,11 +239,29 @@ if($od['od_pg'] == 'lg') {
         $app_no_subj = '';
         $disp_bank = true;
         $disp_receipt = false;
+        $easy_pay_name = '';
         if($od['od_settle_case'] == '신용카드') {
             $app_no_subj = '승인번호';
             $app_no = $od['od_app_no'];
             $disp_bank = false;
             $disp_receipt = true;
+        } else if($od['od_settle_case'] == '간편결제') {
+            $app_no_subj = '승인번호';
+            $app_no = $od['od_app_no'];
+            $disp_bank = false;
+            switch($od['od_pg']) {
+                case 'lg':
+                    $easy_pay_name = 'PAYNOW';
+                    break;
+                case 'inicis':
+                    $easy_pay_name = 'KPAY';
+                    break;
+                case 'kcp':
+                    $easy_pay_name = 'PAYCO';
+                    break;
+                default:
+                    break;
+            }
         } else if($od['od_settle_case'] == '휴대폰') {
             $app_no_subj = '휴대폰번호';
             $app_no = $od['od_bank_account'];
@@ -273,10 +291,9 @@ if($od['od_pg'] == 'lg') {
                     <th scope="row">주문일시</th>
                     <td><?php echo $od['od_time']; ?></td>
                 </tr>
-
                 <tr>
                     <th scope="row">결제방식</th>
-                    <td><?php echo $od['od_settle_case']; ?></td>
+                    <td><?php echo ($easy_pay_name ? $easy_pay_name.'('.$od['od_settle_case'].')' : $od['od_settle_case']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">결제금액</th>
