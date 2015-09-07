@@ -1326,6 +1326,9 @@ function forderform_check(f)
 
     // pay_method 설정
     <?php if($default['de_pg_service'] == 'kcp') { ?>
+    var kcp_site_cd = f.site_cd.value;
+    f.site_cd.value = kcp_site_cd;
+    f.payco_direct.value = "";
     switch(settle_method)
     {
         case "계좌이체":
@@ -1341,7 +1344,9 @@ function forderform_check(f)
             f.pay_method.value   = "100000000000";
             break;
         case "간편결제":
+            <?php if($default['de_card_test']) { ?>
             f.site_cd.value      = "S6729";
+            <?php } ?>
             f.pay_method.value   = "100000000000";
             f.payco_direct.value = "Y";
             break;
