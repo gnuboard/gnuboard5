@@ -27,7 +27,7 @@ if (get_cart_count($tmp_cart_id) == 0)
 $g5['title'] = '주문서 작성';
 
 // 전자결제를 사용할 때만 실행
-if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
+if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_easy_pay_use']) {
     switch($default['de_pg_service']) {
         case 'lg':
             $g5['body_script'] = ' onload="isActiveXOK();"';
@@ -579,7 +579,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             $escrow_title = "에스크로 ";
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
             echo '<fieldset id="sod_frm_paysel">';
             echo '<legend>결제방법 선택</legend>';
         }
@@ -956,7 +956,7 @@ $(function() {
         $("#settle_bank").show();
     });
 
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp").bind("click", function() {
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay").bind("click", function() {
         $("#settle_bank").hide();
     });
 
@@ -1326,6 +1326,9 @@ function forderform_check(f)
 
     // pay_method 설정
     <?php if($default['de_pg_service'] == 'kcp') { ?>
+    var kcp_site_cd = f.site_cd.value;
+    f.site_cd.value = kcp_site_cd;
+    f.payco_direct.value = "";
     switch(settle_method)
     {
         case "계좌이체":
@@ -1341,7 +1344,9 @@ function forderform_check(f)
             f.pay_method.value   = "100000000000";
             break;
         case "간편결제":
+            <?php if($default['de_card_test']) { ?>
             f.site_cd.value      = "S6729";
+            <?php } ?>
             f.pay_method.value   = "100000000000";
             f.payco_direct.value = "Y";
             break;
