@@ -27,7 +27,7 @@ if (get_cart_count($tmp_cart_id) == 0)
 $g5['title'] = '주문서 작성';
 
 // 전자결제를 사용할 때만 실행
-if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
+if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_easy_pay_use']) {
     switch($default['de_pg_service']) {
         case 'lg':
             $g5['body_script'] = ' onload="isActiveXOK();"';
@@ -579,7 +579,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             $escrow_title = "에스크로 ";
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
             echo '<fieldset id="sod_frm_paysel">';
             echo '<legend>결제방법 선택</legend>';
         }
@@ -956,7 +956,7 @@ $(function() {
         $("#settle_bank").show();
     });
 
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp").bind("click", function() {
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay").bind("click", function() {
         $("#settle_bank").hide();
     });
 
