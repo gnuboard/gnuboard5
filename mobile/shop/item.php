@@ -154,7 +154,7 @@ if($it['it_mobile_skin']) {
     if(preg_match('#^theme/(.+)$#', $it['it_mobile_skin'], $match))
         $skin_dir = G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1];
     else
-        $skin_dir = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$it['it_skin'];
+        $skin_dir = G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$it['it_mobile_skin'];
 
     if(is_dir($skin_dir)) {
         $form_skin_file = $skin_dir.'/item.form.skin.php';
