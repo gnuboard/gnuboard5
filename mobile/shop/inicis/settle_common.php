@@ -177,6 +177,7 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25")	//PG에서 보냈는�
                         P_TYPE    = '$P_TYPE',
                         P_OID     = '$P_OID',
                         P_FN_NM   = '".iconv_utf8($P_FN_NM)."',
+                        P_AUTH_NO = '$P_AUTH_NO',
                         P_AMT     = '$P_AMT',
                         P_RMESG1  = '".iconv_utf8($P_RMESG1)."' ";
         @sql_query($sql);

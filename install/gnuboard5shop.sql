@@ -792,6 +792,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_inicis_log` (
   `P_TYPE` varchar(255) NOT NULL DEFAULT '',
   `P_OID` varchar(255) NOT NULL DEFAULT '',
   `P_FN_NM` varchar(255) NOT NULL DEFAULT '',
+  `P_AUTH_NO` varchar(255) NOT NULL DEFAULT '',
   `P_AMT` int(11) NOT NULL DEFAULT '0',
   `P_RMESG1` varchar(255) NOT NULL DEFAULT '',
   PRIMARY KEY (`oid`)

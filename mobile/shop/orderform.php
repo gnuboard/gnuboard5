@@ -1228,7 +1228,7 @@ function pay_approval()
     var ypos = (screen.width - height) / 2;
     var position = "top=" + ypos + ",left=" + xpos;
     var features = position + ", width=320, height=440";
-    var p_reserved = f.P_RESERVED.value;
+    var p_reserved = f.DEF_RESERVED.value;
     f.P_RESERVED.value = p_reserved;
     switch(settle_method) {
         case "계좌이체":

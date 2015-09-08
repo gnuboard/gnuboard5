@@ -1326,8 +1326,7 @@ function forderform_check(f)
 
     // pay_method 설정
     <?php if($default['de_pg_service'] == 'kcp') { ?>
-    var kcp_site_cd = f.site_cd.value;
-    f.site_cd.value = kcp_site_cd;
+    f.site_cd.value = f.def_site_cd.value;
     f.payco_direct.value = "";
     switch(settle_method)
     {

@@ -46,7 +46,7 @@ $g5['title'] = 'KG 이니시스 결제';
 $g5['body_script'] = ' onload="setPAYResult();"';
 include_once(G5_PATH.'/head.sub.php');
 
-$exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_VACT_BANK');
+$exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_VACT_BANK', 'P_AUTH_NO');
 
 echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
 
@@ -57,6 +57,7 @@ echo '<input type="hidden" name="P_HASH"      value="'.$hash.'">'.PHP_EOL;
 echo '<input type="hidden" name="P_TYPE"      value="'.$PAY['P_TYPE'].'">'.PHP_EOL;
 echo '<input type="hidden" name="P_AUTH_DT"   value="'.$PAY['P_AUTH_DT'].'">'.PHP_EOL;
 echo '<input type="hidden" name="P_VACT_BANK" value="'.$PAY['P_FN_NM'].'">'.PHP_EOL;
+echo '<input type="hidden" name="P_AUTH_NO"   value="'.$PAY['P_AUTH_NO'].'">'.PHP_EOL;
 
 echo '</form>'.PHP_EOL;
 ?>
