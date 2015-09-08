@@ -12,16 +12,25 @@ if (!$bo_table) { alert('게시판 TABLE명은 반드시 입력하세요.'); }
 if (!preg_match("/^([A-Za-z0-9_]{1,20})$/", $bo_table)) { alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)'); }
 if (!$_POST['bo_subject']) { alert('게시판 제목을 입력하세요.'); }
 
+$_POST['bo_include_head'] = preg_replace("#[\\\]+$#", "", substr($_POST['bo_include_head'], 0, 255));
+$_POST['bo_include_tail'] = preg_replace("#[\\\]+$#", "", substr($_POST['bo_include_tail'], 0, 255));
+
 if ($file = $_POST['bo_include_head']) {
+    $purl = parse_url($file);
+    $file = $purl['path'];
     if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
         alert('상단 파일 경로가 php, html 파일이 아닙니다.');
     }
+    $_POST['bo_include_head'] = $file;
 }
 
 if ($file = $_POST['bo_include_tail']) {
+    $purl = parse_url($file);
+    $file = $purl['path'];
     if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
         alert('하단 파일 경로가 php, html 파일이 아닙니다.');
     }
+    $_POST['bo_include_tail'] = $file;
 }
 
 $board_path = G5_DATA_PATH.'/file/'.$bo_table;
