@@ -549,12 +549,12 @@ if(!isset($default['de_easy_pay_use'])) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_easy_pay_use">PG사 간편결제 사용</label></th>
+            <th scope="row"><label for="de_easy_pay_use">PG사 간편결제 버튼 사용</label></th>
             <td>
-                <?php echo help("PG사의 간편결제(PAYCO, Paynow, Kpay) 사용여부를 설정합니다.", 50); ?>
+                <?php echo help("주문서 작성 페이지에 PG사 간편결제(PAYCO, PAYNOW, KPAY) 버튼의 별도 사용 여부를 설정합니다.", 50); ?>
                 <select id="de_easy_pay_use" name="de_easy_pay_use">
-                    <option value="0" <?php echo get_selected($default['de_easy_pay_use'], 0); ?>>사용안함</option>
-                    <option value="1" <?php echo get_selected($default['de_easy_pay_use'], 1); ?>>사용</option>
+                    <option value="0" <?php echo get_selected($default['de_easy_pay_use'], 0); ?>>노출안함</option>
+                    <option value="1" <?php echo get_selected($default['de_easy_pay_use'], 1); ?>>노출함</option>
                 </select>
             </td>
         </tr>
