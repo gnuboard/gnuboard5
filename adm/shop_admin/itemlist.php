@@ -24,20 +24,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $ca_list .= '<option value="'.$row['ca_id'].'">'.$nbsp.$row['ca_name'].'</option>'.PHP_EOL;
 }
 
-// 스킨
-$skin_list = '<option value="">선택</option>'.PHP_EOL;
-$arr = get_skin_dir('shop');
-for ($i=0; $i<count($arr); $i++) {
-    $skin_list .= '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
-}
-
-$mskin_list = '<option value="">선택</option>'.PHP_EOL;
-$arr = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
-for ($i=0; $i<count($arr); $i++) {
-    $mskin_list .= '<option value="'.$arr[$i].'">'.$arr[$i].'</option>'.PHP_EOL;
-}
-
-
 $where = " and ";
 $sql_search = "";
 if ($stx != "") {
@@ -243,9 +229,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         </td>
         <td headers="th_skin" class="td_numbig td_input">
             <label for="it_skin_<?php echo $i; ?>" class="sound_only">PC 스킨</label>
-            <select name="it_skin[<?php echo $i; ?>]" id="it_skin_<?php echo $i; ?>">
-                <?php echo conv_selected_option($skin_list, $row['it_skin']); ?>
-            </select>
+            <?php echo get_skin_select('shop', 'it_skin_'.$i, 'it_skin['.$i.']', $row['it_skin']); ?>
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
@@ -256,9 +240,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         </td>
         <td headers="th_mskin" class="td_numbig td_input">
             <label for="it_mobile_skin_<?php echo $i; ?>" class="sound_only">모바일 스킨</label>
-            <select name="it_mobile_skin[<?php echo $i; ?>]" id="it_mobile_skin_<?php echo $i; ?>">
-                <?php echo conv_selected_option($mskin_list, $row['it_mobile_skin']); ?>
-            </select>
+            <?php echo get_mobile_skin_select('shop', 'it_mobile_skin_'.$i, 'it_mobile_skin['.$i.']', $row['it_mobile_skin']); ?>
         </td>
     </tr>
     <?php
