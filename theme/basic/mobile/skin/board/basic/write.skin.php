@@ -193,8 +193,7 @@ function html_auto_br(obj)
 
 function fwrite_submit(f)
 {
-    <?php echo get_editor_js('wr_content', $is_dhtml_editor); ?>
-    <?php echo chk_editor_js('wr_content', $is_dhtml_editor); ?>
+    <?php echo $editor_js; // 에디터 사용시 자바스크립트에서 내용을 폼필드로 넣어주며 내용이 입력되었는지 검사함   ?>
 
     var subject = "";
     var content = "";
@@ -243,7 +242,7 @@ function fwrite_submit(f)
         }
     }
 
-    <?php if ($is_guest) { echo chk_captcha_js(); } ?>
+    <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
 
     document.getElementById("btn_submit").disabled = "disabled";
 
