@@ -196,6 +196,9 @@ define('G5_THUMB_JPG_QUALITY', 90);
 // 썸네일 png Compress 설정
 define('G5_THUMB_PNG_COMPRESS', 5);
 
+// 모바일 기기에서 DHTML 에디터 사용여부를 설정합니다.
+define('G5_IS_MOBILE_DHTML_USE', false);
+
 // ip 숨김방법 설정
 /* 123.456.789.012 ip의 숨김 방법을 변경하는 방법은
 \\1 은 123, \\2는 456, \\3은 789, \\4는 012에 각각 대응되므로

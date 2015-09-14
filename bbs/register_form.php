@@ -30,6 +30,9 @@ if ($w == "") {
         alert('개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.', G5_BBS_URL.'/register.php');
     }
 
+    $agree  = preg_replace('#[^0-9]#', '', $_POST['agree']);
+    $agree2 = preg_replace('#[^0-9]#', '', $_POST['agree2']);
+
     $member['mb_birth'] = '';
     $member['mb_sex']   = '';
     $member['mb_name']  = '';
