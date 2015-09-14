@@ -53,7 +53,7 @@ $sql = $sql . " limit $from_record, $rows ";
 $result = sql_query($sql);
 
 //$qstr = 'page='.$page.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2;
-$qstr1 = $qstr.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;fr_date='.$fr_date.'&amp;to_date='.$to_date.'&amp;sel_ca_id='.$sel_ca_id;
+$qstr1 = $qstr.'&amp;fr_date='.$fr_date.'&amp;to_date='.$to_date.'&amp;sel_ca_id='.$sel_ca_id;
 
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목록</a>';
 ?>
