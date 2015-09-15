@@ -102,6 +102,16 @@ if(!isset($default['de_easy_pay_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_easy_pay_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_iche_use` ", true);
 }
+
+// 카카오페이 필드 추가
+if(!isset($default['de_kakaopay_mid'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_kakaopay_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_tax_flag_use`,
+                    ADD `de_kakaopay_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_kakaopay_mid`,
+                    ADD `de_kakaopay_enckey` varchar(255) NOT NULL DEFAULT '' AFTER `de_kakaopay_key`,
+                    ADD `de_kakaopay_hashkey` varchar(255) NOT NULL DEFAULT '' AFTER `de_kakaopay_enckey`,
+                    ADD `de_kakaopay_cancelpwd` varchar(255) NOT NULL DEFAULT '' AFTER `de_kakaopay_hashkey` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -680,6 +690,41 @@ if(!isset($default['de_easy_pay_use'])) {
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="de_kakaopay_mid">카카오페이 상점 MID</label></th>
+            <td>
+                <?php echo help("카카오페이로 부터 발급 받으신 상점아이디(MID) 10자리 중 첫 KHSIR과 끝 m 을 제외한 영문4자리를 입력 합니다. 예) KHSIRtestm"); ?>
+                <span class="sitecode">KHSIR</span> <input type="text" name="de_kakaopay_mid" value="<?php echo $default['de_kakaopay_mid']; ?>" id="de_kakaopay_mid" class="frm_input" size="5" maxlength="4"> <span class="sitecode">m</span>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_kakaopay_key">카카오페이 상점 서명키</label></th>
+            <td>
+                <?php echo help("카카오페이로 부터 발급 받으신 상점 서명키를 입력합니다."); ?>
+                <input type="text" name="de_kakaopay_key" value="<?php echo $default['de_kakaopay_key']; ?>" id="de_kakaopay_key" class="frm_input" size="90">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_kakaopay_enckey">카카오페이 상점 EncKey</label></th>
+            <td>
+                <?php echo help("카카오페이로 부터 발급 받으신 상점 인증 전용 EncKey를 입력합니다."); ?>
+                <input type="text" name="de_kakaopay_enckey" value="<?php echo $default['de_kakaopay_enckey']; ?>" id="de_kakaopay_enckey" class="frm_input" size="20">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_kakaopay_hashkey">카카오페이 상점 HashKey</label></th>
+            <td>
+                <?php echo help("카카오페이로 부터 발급 받으신 상점 인증 전용 HashKey를 입력합니다."); ?>
+                <input type="text" name="de_kakaopay_hashkey" value="<?php echo $default['de_kakaopay_hashkey']; ?>" id="de_kakaopay_hashkey" class="frm_input" size="20">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_kakaopay_cancelpwd">카카오페이 결제취소 비밀번호</label></th>
+            <td>
+                <?php echo help("카카오페이 상점관리자에서 설정하신 취소 비밀번호를 입력합니다.<br>입력하신 비밀번호와 상점관리자에서 설정하신 비밀번호가 일치하지 않으면 취소가 되지 않습니다."); ?>
+                <input type="text" name="de_kakaopay_cancelpwd" value="<?php echo $default['de_kakaopay_cancelpwd']; ?>" id="de_kakaopay_cancelpwd" class="frm_input" size="20">
+            </td>
+        </tr>
+        <tr>
             <th scope="row">에스크로 사용</th>
             <td>
                 <?php echo help("에스크로 결제를 사용하시려면, 반드시 결제대행사 상점 관리자 페이지에서 에스크로 서비스를 신청하신 후 사용하셔야 합니다.\n에스크로 사용시 배송과의 연동은 되지 않으며 에스크로 결제만 지원됩니다."); ?>
@@ -690,9 +735,9 @@ if(!isset($default['de_easy_pay_use'])) {
             </td>
         </tr>
         <tr>
-            <th scope="row">신용카드 결제테스트</th>
+            <th scope="row">결제 테스트</th>
             <td>
-                <?php echo help("신용카드를 테스트 하실 경우에 체크하세요. 결제단위 최소 1,000원"); ?>
+                <?php echo help("PG사의 결제 테스트를 하실 경우에 체크하세요. 결제단위 최소 1,000원"); ?>
                 <input type="radio" name="de_card_test" value="0" <?php echo $default['de_card_test']==0?"checked":""; ?> id="de_card_test1">
                 <label for="de_card_test1">실결제 </label>
                 <input type="radio" name="de_card_test" value="1" <?php echo $default['de_card_test']==1?"checked":""; ?> id="de_card_test2">
