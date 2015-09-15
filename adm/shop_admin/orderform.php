@@ -297,6 +297,23 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     // 결제방법
     $s_receipt_way = $od['od_settle_case'];
 
+    if($od['od_settle_case'] == '간편결제') {
+        switch($od['od_pg']) {
+            case 'lg':
+                $s_receipt_way = 'PAYNOW';
+                break;
+            case 'inicis':
+                $s_receipt_way = 'KPAY';
+                break;
+            case 'kcp':
+                $s_receipt_way = 'PAYCO';
+                break;
+            default:
+                $s_receipt_way = $row['od_settle_case'];
+                break;
+        }
+    }
+
     if ($od['od_receipt_point'] > 0)
         $s_receipt_way .= "+포인트";
     ?>
@@ -421,6 +438,25 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <th scope="row" class="sodr_sppay">카드 승인일시</th>
                     <td>
                         <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") {?>신용카드 결제 일시 정보가 없습니다.
+                        <?php } else { ?><?php echo substr($od['od_receipt_time'], 0, 20); ?>
+                        <?php } ?>
+                    </td>
+                </tr>
+                <?php } ?>
+
+                <?php if ($od['od_settle_case'] == '간편결제') { ?>
+                <tr>
+                    <th scope="row" class="sodr_sppay"><?php echo $s_receipt_way; ?> 결제금액</th>
+                    <td>
+                        <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") {?>0원
+                        <?php } else { ?><?php echo display_price($od['od_receipt_price']); ?>
+                        <?php } ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="sodr_sppay"><?php echo $s_receipt_way; ?> 승인일시</th>
+                    <td>
+                        <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") { echo $s_receipt_way; ?> 결제 일시 정보가 없습니다.
                         <?php } else { ?><?php echo substr($od['od_receipt_time'], 0, 20); ?>
                         <?php } ?>
                     </td>
