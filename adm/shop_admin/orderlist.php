@@ -192,6 +192,8 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
     <label for="od_settle_case05">휴대폰</label>
     <input type="radio" name="od_settle_case" value="신용카드" id="od_settle_case06" <?php echo get_checked($od_settle_case, '신용카드');  ?>>
     <label for="od_settle_case06">신용카드</label>
+    <input type="radio" name="od_settle_case" value="간편결제" id="od_settle_case07" <?php echo get_checked($od_settle_case, '간편결제');  ?>>
+    <label for="od_settle_case07">간편결제</label>
 </div>
 
 <div>
