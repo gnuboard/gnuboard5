@@ -20,7 +20,7 @@ if ($default['de_card_test']) {
     $merchantHashKey = trim($default['de_kakaopay_hashkey']);
     $cancelPwd = trim($default['de_kakaopay_cancelpwd']);
     //가맹점서명키
-    $merchantKey = trim($default['de_kakaopay_cancelpwd']);
+    $merchantKey = trim($default['de_kakaopay_key']);
 }
 
 //버전
