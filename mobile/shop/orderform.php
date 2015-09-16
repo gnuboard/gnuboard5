@@ -1200,6 +1200,7 @@ function pay_approval()
 
     // 카카오페이 지불
     if(settle_method == "KAKAOPAY") {
+        pf.good_mny.value = f.good_mny.value;
         getTxnId(pf);
         return false;
     }
