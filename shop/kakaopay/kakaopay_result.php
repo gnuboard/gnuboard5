@@ -1,8 +1,8 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-include(G5_SHOP_PATH.'/kakaopay/incKakaopayCommon.php');
-include(G5_SHOP_PATH.'/kakaopay/lgcns_CNSpay.php');
+include_once(G5_SHOP_PATH.'/kakaopay/incKakaopayCommon.php');
+include_once(G5_SHOP_PATH.'/kakaopay/lgcns_CNSpay.php');
 
 // 로그 저장 위치 지정
 $connector = new CnsPayWebConnector($LogDir);

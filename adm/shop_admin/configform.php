@@ -690,7 +690,10 @@ if(!isset($default['de_kakaopay_mid'])) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_kakaopay_mid">카카오페이 상점 MID</label></th>
+            <th scope="row">
+                <label for="de_kakaopay_mid">카카오페이 상점 MID</label>
+                <a href="http://sir.co.kr/main/service/kakaopay.php" target="_blank" id="scf_lgreg" class="scf_pgreg">카카오페이 서비스신청하기</a>
+            </th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점아이디(MID) 10자리 중 첫 KHSIR과 끝 m 을 제외한 영문4자리를 입력 합니다. 예) KHSIRtestm"); ?>
                 <span class="sitecode">KHSIR</span> <input type="text" name="de_kakaopay_mid" value="<?php echo $default['de_kakaopay_mid']; ?>" id="de_kakaopay_mid" class="frm_input" size="5" maxlength="4"> <span class="sitecode">m</span>

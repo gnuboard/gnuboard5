@@ -13,13 +13,13 @@ if($is_kakaopay_use) {
 <input type="hidden" name="GoodsCnt"       value="<?php echo ($goods_count + 1); ?>">
 <input type="hidden" name="BuyerEmail"     value="">
 <input type="hidden" name="BuyerName"      value="">
-<input type="hidden" name="prType"         value="WPM">
+<input type="hidden" name="prType"         value="<?php echo (is_mobile() ? 'MPM' : 'WPM'); ?>">
 <input type="hidden" name="channelType"    value="4">
 <input type="hidden" name="TransType"      value="0">
 <input type="hidden" name="resultCode"     value="" id="resultCode">
 <input type="hidden" name="resultMsg"      value="" id="resultMsg">
 <input type="hidden" name="txnId"          value="" id="txnId">
-<input type="hidden" name="prDt"           value=""id="prDt">
+<input type="hidden" name="prDt"           value="" id="prDt">
 <input type="hidden" name="SPU"            value="">
 <input type="hidden" name="SPU_SIGN_TOKEN" value="">
 <input type="hidden" name="MPAY_PUB"       value="">

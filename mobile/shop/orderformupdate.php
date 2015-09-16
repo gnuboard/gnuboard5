@@ -9,7 +9,7 @@ if(get_session('ss_direct'))
     $page_return_url .= '?sw_direct=1';
 
 // 결제등록 완료 체크
-if($od_settle_case != '무통장') {
+if($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') {
     if($default['de_pg_service'] == 'kcp' && ($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == ''))
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
@@ -418,21 +418,47 @@ else if ($od_settle_case == "간편결제")
     if($od_misu == 0)
         $od_status      = '입금';
 }
+else if ($od_settle_case == "KAKAOPAY")
+{
+    include G5_SHOP_PATH.'/kakaopay/kakaopay_result.php';
+
+    $od_tno             = $tno;
+    $od_app_no          = $app_no;
+    $od_receipt_price   = $amount;
+    $od_receipt_point   = $i_temp_point;
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_bank_account    = $card_name;
+    $pg_price           = $amount;
+    $od_misu            = $i_price - $od_receipt_price;
+    if($od_misu == 0)
+        $od_status      = '입금';
+}
 else
 {
     die("od_settle_case Error!!!");
 }
 
+$od_pg = $default['de_pg_service'];
+if($od_settle_case == 'KAKAOPAY')
+    $od_pg = 'KAKAOPAY';
+
 // 주문금액과 결제금액이 일치하는지 체크
 if($tno) {
     if((int)$order_price !== (int)$pg_price) {
         $cancel_msg = '결제금액 불일치';
-        switch($default['de_pg_service']) {
+        switch($od_pg) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'KAKAOPAY':
+                $_REQUEST['TID']               = $tno;
+                $_REQUEST['Amt']               = $amount;
+                $_REQUEST['CancelMsg']         = $cancel_msg;
+                $_REQUEST['PartialCancelCode'] = 0;
+                include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -465,7 +491,6 @@ if($default['de_tax_flag_use']) {
     $od_free_mny = (int)$_POST['comm_free_mny'];
 }
 
-$od_pg            = $default['de_pg_service'];
 $od_email         = get_email_address($od_email);
 $od_name          = clean_xss_tags($od_name);
 $od_tel           = clean_xss_tags($od_tel);
@@ -547,12 +572,19 @@ $result = sql_query($sql, false);
 if(!$result) {
     if($tno) {
         $cancel_msg = '주문정보 입력 오류';
-        switch($default['de_pg_service']) {
+        switch($od_pg) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'KAKAOPAY':
+                $_REQUEST['TID']               = $tno;
+                $_REQUEST['Amt']               = $amount;
+                $_REQUEST['CancelMsg']         = $cancel_msg;
+                $_REQUEST['PartialCancelCode'] = 0;
+                include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -564,7 +596,7 @@ if(!$result) {
     $error = 'order';
     include G5_SHOP_PATH.'/ordererrormail.php';
 
-    die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($default['de_pg_service']).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
+    die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
 // 장바구니 상태변경
@@ -586,12 +618,19 @@ $result = sql_query($sql, false);
 if(!$result) {
     if($tno) {
         $cancel_msg = '주문상태 변경 오류';
-        switch($default['de_pg_service']) {
+        switch($od_pg) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'KAKAOPAY':
+                $_REQUEST['TID']               = $tno;
+                $_REQUEST['Amt']               = $amount;
+                $_REQUEST['CancelMsg']         = $cancel_msg;
+                $_REQUEST['PartialCancelCode'] = 0;
+                include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -606,7 +645,7 @@ if(!$result) {
     // 주문삭제
     sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 
-    die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($default['de_pg_service']).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
+    die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
 
 // 회원이면서 포인트를 사용했다면 포인트 테이블에 사용을 추가

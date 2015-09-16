@@ -28,6 +28,7 @@ $s_cart_id = $tmp_cart_id;
 $order_action_url = G5_HTTPS_MSHOP_URL.'/orderformupdate.php';
 
 require_once(G5_MSHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
+require_once(G5_SHOP_PATH.'/settle_kakaopay.inc.php');
 
 // 결제등록 요청시 사용할 입금마감일
 $ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
@@ -267,6 +268,12 @@ ob_end_clean();
 require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
 ?>
 </div>
+
+<?php
+if($is_kakaopay_use) {
+    require_once(G5_SHOP_PATH.'/kakaopay/orderform.1.php');
+}
+?>
 
 <div id="sod_frm">
     <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
@@ -554,8 +561,15 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
             $escrow_title = "에스크로 ";
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
+        if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
             echo '<div id="sod_frm_paysel"><ul>';
+        }
+
+        // 카카오페이
+        if($is_kakaopay_use) {
+            $multi_settle++;
+            echo '<li><input type="radio" id="od_settle_kakaopay" name="od_settle_case" value="KAKAOPAY" '.$checked.'> <label for="od_settle_kakaopay">KAKAOPAY</label></li>'.PHP_EOL;
+            $checked = '';
         }
 
         // 무통장입금 사용
@@ -677,12 +691,22 @@ require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
     <?php
     // 결제대행사별 코드 include (결제대행사 정보 필드 및 주분버튼)
     require_once(G5_MSHOP_PATH.'/'.$default['de_pg_service'].'/orderform.2.php');
+
+    if($is_kakaopay_use) {
+        require_once(G5_SHOP_PATH.'/kakaopay/orderform.2.php');
+    }
     ?>
 
     <div id="show_progress" style="display:none;">
         <img src="<?php echo G5_MOBILE_URL; ?>/shop/img/loading.gif" alt="">
         <span>주문완료 중입니다. 잠시만 기다려 주십시오.</span>
     </div>
+
+    <?php
+    if($is_kakaopay_use) {
+        require_once(G5_SHOP_PATH.'/kakaopay/orderform.3.php');
+    }
+    ?>
     </form>
 
     <?php
@@ -935,7 +959,7 @@ $(function() {
         $("#show_pay_btn").css("display", "inline");
     });
 
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay").bind("click", function() {
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay,#od_settle_kakaopay").bind("click", function() {
         $("#settle_bank").hide();
         $("#show_req_btn").css("display", "inline");
         $("#show_pay_btn").css("display", "none");
@@ -1172,6 +1196,12 @@ function pay_approval()
         var send_cost2 = parseInt(pf.od_send_cost2.value);
         var send_coupon = parseInt(pf.od_send_coupon.value);
         f.good_mny.value = od_price + send_cost + send_cost2 - send_coupon - temp_point;
+    }
+
+    // 카카오페이 지불
+    if(settle_method == "KAKAOPAY") {
+        getTxnId(pf);
+        return false;
     }
 
     <?php if($default['de_pg_service'] == 'kcp') { ?>

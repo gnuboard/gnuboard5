@@ -439,6 +439,11 @@ if($tno) {
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
                 break;
             case 'KAKAOPAY':
+                $_REQUEST['TID']               = $tno;
+                $_REQUEST['Amt']               = $amount;
+                $_REQUEST['CancelMsg']         = $cancel_msg;
+                $_REQUEST['PartialCancelCode'] = 0;
+                include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -559,6 +564,11 @@ if(!$result) {
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
                 break;
             case 'KAKAOPAY':
+                $_REQUEST['TID']               = $tno;
+                $_REQUEST['Amt']               = $amount;
+                $_REQUEST['CancelMsg']         = $cancel_msg;
+                $_REQUEST['PartialCancelCode'] = 0;
+                include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -600,6 +610,11 @@ if(!$result) {
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
                 break;
             case 'KAKAOPAY':
+                $_REQUEST['TID']               = $tno;
+                $_REQUEST['Amt']               = $amount;
+                $_REQUEST['CancelMsg']         = $cancel_msg;
+                $_REQUEST['PartialCancelCode'] = 0;
+                include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';

@@ -28,6 +28,9 @@
     	public function setRequestData($request) {
     	    try {
         		foreach (array_keys($request) as $key) {
+                    if(is_array($request[$key]))
+                        continue;
+
                     $this->requestData[$key] = iconv("UTF-8", "EUC-KR", $request[$key]);
                 }
                 return "_TRUE_";
@@ -62,7 +65,7 @@
         	    return "_FAIL_";
         	}
     	}
-    	
+
     	// 2014.12.02 추가 (check key in array)
     	private function getRequestData($key) {
     		if (array_key_exists($key, $this->requestData)) {
@@ -71,7 +74,7 @@
     			return "";
     		}
     	}
-    	
+
     	public function requestAction() {
     		$encodeKey = $this->requestData["EncodeKey"];
     		unset($this->requestData["EncodeKey"]);
@@ -92,7 +95,7 @@
                 $requestMessage = $this->makeRequestText($this->requestData);
                 $resultMessage = $this->connectToServer($serviceUrl, $requestMessage);
                 $this->writeLog("Result");
-                // 2014.12.02 수신 전문 로깅 처리 제외 
+                // 2014.12.02 수신 전문 로깅 처리 제외
                 //$this->writeLog($resultMessage);
     			if ($resultMessage == "_FAIL_" || substr($resultMessage, 0, 4) == "FAIL") {
     			    $resultCode = "";
@@ -124,7 +127,7 @@
         	    return "_FAIL_";
         	}
     	}
-    	
+
     	// 2014.12.02 결과 배열 마스킹
     	private function resultDataMask($strLogText) {
     		$arrMask = array();
@@ -138,14 +141,14 @@
     			return str_replace("\n", "", trim($strLogText));
     		}
     	}
-    	
+
     	// 2014.12.02 주요 정보 마스킹
     	private function requestMask ($name, $text) {
     		$value = str_replace("\n", "", trim($text));
-    		
+
     		if ($value == null || strlen(trim($value)) == 0) return "";
-			
-			if ($name == "X_CARDNO" || $name == "realPan" || $name == "cardNo" 
+
+			if ($name == "X_CARDNO" || $name == "realPan" || $name == "cardNo"
 					|| $name == "CardBin" || $name == "CardNo") {
 				return $this->masking($value, 6, true, false);
 			} else if ($name == "BuyerName" || $name == "buyerName") {
@@ -164,20 +167,20 @@
 				return $value;
 			}
 		}
-		
+
 		// 2014.12.02 마스킹 처리
 		private function masking($string, $num, $isLeftOrder, $beginMasking) {
-		
+
 			if ( $string == null )
 				return "";
-			
+
 			$res = "";
 			$res2 = "";
 			$sleng = 0;
-			
+
 			$str = iconv('euc-kr','utf-8',$string);
 			$n = mb_strlen($str, 'utf-8');
-					
+
 			if ( $num >= 1 ) {
 				if ( $n < $num ) {
 					$res = $str;
@@ -205,10 +208,10 @@
 			} else {
 				$res = $str;
 			}
-			
+
 			return iconv('utf-8','euc-kr',$res);
 		}
-    	
+
     	private function requestNetCancel() {
     	    try {
         		// 예기치 못한 오류인경우 망상취소 시도.
@@ -441,10 +444,10 @@
         	    return "_FAIL_";
         	}
     	}
-    	
-    	
+
+
       public function makeHashInputString($salt) {
-            
+
         $result = "";
 
 				for($count = 0;$count < strlen($salt)/2;$count++) {
@@ -452,14 +455,14 @@
 					$temp1 = hexdec($temp0);
 					$temp3 = reset(unpack("l", pack("l", $temp1 +0xffffff00)));
 					$temp4 = pack('C*', $temp3);
-				
+
 					$result = $result.$temp4;
-				
+
 				}
-				
+
 				return $result;
 
     	}
-    	
+
     }
 ?>
