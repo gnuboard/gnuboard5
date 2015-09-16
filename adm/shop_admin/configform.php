@@ -691,7 +691,7 @@ if(!isset($default['de_kakaopay_mid'])) {
         </tr>
         <tr>
             <th scope="row">
-                <label for="de_kakaopay_mid">카카오페이 상점 MID</label>
+                <label for="de_kakaopay_mid">카카오페이 상점MID</label>
                 <a href="http://sir.co.kr/main/service/kakaopay.php" target="_blank" id="scf_lgreg" class="scf_pgreg">카카오페이 서비스신청하기</a>
             </th>
             <td>
@@ -700,7 +700,7 @@ if(!isset($default['de_kakaopay_mid'])) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_kakaopay_key">카카오페이 상점 서명키</label></th>
+            <th scope="row"><label for="de_kakaopay_key">카카오페이 상점키</label></th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점 서명키를 입력합니다."); ?>
                 <input type="text" name="de_kakaopay_key" value="<?php echo $default['de_kakaopay_key']; ?>" id="de_kakaopay_key" class="frm_input" size="90">
@@ -1584,6 +1584,23 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
         if(!is_dir($log_path)) {
             echo '<script>'.PHP_EOL;
             echo 'alert("'.str_replace(G5_PATH.'/', '', G5_SHOP_PATH).'/inicis 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        } else {
+            if(!is_writable($log_path)) {
+                echo '<script>'.PHP_EOL;
+                echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
+                echo '</script>'.PHP_EOL;
+            }
+        }
+    }
+
+    // 카카오페이의 경우 log 디렉토리 체크
+    if($default['de_kakaopay_mid'] && $default['de_kakaopay_key'] && $default['de_kakaopay_enckey'] && $default['de_kakaopay_hashkey'] && $default['de_kakaopay_cancelpwd']) {
+        $log_path = G5_SHOP_PATH.'/kakaopay/log';
+
+        if(!is_dir($log_path)) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("'.str_replace(G5_PATH.'/', '', G5_SHOP_PATH).'/kakaopay 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
             echo '</script>'.PHP_EOL;
         } else {
             if(!is_writable($log_path)) {
