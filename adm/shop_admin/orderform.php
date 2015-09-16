@@ -444,6 +444,25 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 </tr>
                 <?php } ?>
 
+                <?php if ($od['od_settle_case'] == 'KAKAOPAY') { ?>
+                <tr>
+                    <th scope="row" class="sodr_sppay">KAKOPAY 결제금액</th>
+                    <td>
+                        <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") {?>0원
+                        <?php } else { ?><?php echo display_price($od['od_receipt_price']); ?>
+                        <?php } ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="sodr_sppay">KAKAOPAY 승인일시</th>
+                    <td>
+                        <?php if ($od['od_receipt_time'] == "0000-00-00 00:00:00") {?>신용카드 결제 일시 정보가 없습니다.
+                        <?php } else { ?><?php echo substr($od['od_receipt_time'], 0, 20); ?>
+                        <?php } ?>
+                    </td>
+                </tr>
+                <?php } ?>
+
                 <?php if ($od['od_settle_case'] == '간편결제') { ?>
                 <tr>
                     <th scope="row" class="sodr_sppay"><?php echo $s_receipt_way; ?> 결제금액</th>
@@ -481,6 +500,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                 case 'inicis':
                                     $pg_url  = 'https://iniweb.inicis.com/';
                                     $pg_test = 'KG이니시스';
+                                    break;
+                                case 'KAKAOPAY':
+                                    $pg_url  = 'https://mms.cnspay.co.kr';
+                                    $pg_test = 'KAKAOPAY';
                                     break;
                                 default:
                                     $pg_url  = 'http://admin8.kcp.co.kr';
@@ -713,6 +736,42 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 </tr>
                 <?php } ?>
 
+                <?php if ($od['od_settle_case'] == 'KAKAOPAY') { ?>
+                <tr>
+                    <th scope="row" class="sodr_sppay"><label for="od_receipt_price">KAKAOPAY 결제금액</label></th>
+                    <td>
+                        <?php echo $html_receipt_chk; ?>
+                        <input type="text" name="od_receipt_price" id="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" class="frm_input" size="10"> 원
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="sodr_sppay"><label for="od_receipt_time">KAKAOPAY 승인일시</label></th>
+                    <td>
+                        <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_card_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;">
+                        <label for="od_card_chk">현재 시간으로 설정</label><br>
+                        <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="od_receipt_time" class="frm_input" size="19" maxlength="19">
+                    </td>
+                </tr>
+                <?php } ?>
+
+                <?php if ($od['od_settle_case'] == '간편결제') { ?>
+                <tr>
+                    <th scope="row" class="sodr_sppay"><label for="od_receipt_price"><?php echo $s_receipt_way; ?> 결제금액</label></th>
+                    <td>
+                        <?php echo $html_receipt_chk; ?>
+                        <input type="text" name="od_receipt_price" id="od_receipt_price" value="<?php echo $od['od_receipt_price']; ?>" class="frm_input" size="10"> 원
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row" class="sodr_sppay"><label for="od_receipt_time"><?php echo $s_receipt_way; ?> 승인일시</label></th>
+                    <td>
+                        <input type="checkbox" name="od_card_chk" id="od_card_chk" value="<?php echo date("Y-m-d H:i:s", G5_SERVER_TIME); ?>" onclick="if (this.checked == true) this.form.od_receipt_time.value=this.form.od_card_chk.value; else this.form.od_receipt_time.value = this.form.od_receipt_time.defaultValue;">
+                        <label for="od_card_chk">현재 시간으로 설정</label><br>
+                        <input type="text" name="od_receipt_time" value="<?php echo is_null_time($od['od_receipt_time']) ? "" : $od['od_receipt_time']; ?>" id="od_receipt_time" class="frm_input" size="19" maxlength="19">
+                    </td>
+                </tr>
+                <?php } ?>
+
                 <tr>
                     <th scope="row"><label for="od_receipt_point">포인트 결제액</label></th>
                     <td><input type="text" name="od_receipt_point" value="<?php echo $od['od_receipt_point']; ?>" id="od_receipt_point" class="frm_input" size="10"> 점</td>
@@ -773,7 +832,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <?php if($od['od_status'] == '주문' && $od['od_misu'] > 0) { ?>
         <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
         <?php } ?>
-        <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체')) { ?>
+        <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY')) { ?>
         <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel"><?php echo $od['od_settle_case']; ?> 부분취소</a>
         <?php } ?>
         <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
@@ -1001,16 +1060,21 @@ function form_submit(f)
 
     var msg = "";
 
-    <?php if($od['od_settle_case'] == '신용카드') { ?>
+    <?php if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == 'KAKAOPAY' || $od['od_settle_case'] == '간편결제') { ?>
     if(status == "취소" || status == "반품" || status == "품절") {
         var $ct_chk = $("input[name^=ct_chk]");
         var chk_cnt = $ct_chk.size();
         var chked_cnt = $ct_chk.filter(":checked").size();
+        <?php if($od['od_pg'] == 'KAKAOPAY') { ?>
+        var cancel_pg = "카카오페이";
+        <?php } else { ?>
+        var cancel_pg = "PG사의 <?php echo $od['od_settle_case']; ?>";
+        <?php } ?>
 
         if(chk_cnt == chked_cnt) {
-            if(confirm("PG사의 신용카드 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {
+            if(confirm(cancel_pg+" 결제를 함께 취소하시겠습니까?\n\n한번 취소한 결제는 다시 복구할 수 없습니다.")) {
                 f.pg_cancel.value = 1;
-                msg = "PG사의 신용카드 결제 취소와 함께 ";
+                msg = cancel_pg+" 결제 취소와 함께 ";
             } else {
                 f.pg_cancel.value = 0;
                 msg = "";

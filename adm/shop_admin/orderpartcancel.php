@@ -49,10 +49,12 @@ $od_misu = abs($od['od_misu']);
             <th scope="row"><label for="mod_tax_mny">과세 취소금액</label></th>
             <td><input type="text" name="mod_tax_mny" value="" id="mod_tax_mny" class="frm_input"> 원</td>
         </tr>
+        <?php if($od['od_pg'] != 'KAKAOPAY') { ?>
         <tr>
             <th scope="row"><label for="mod_free_mny">비과세 취소금액</label></th>
             <td><input type="text" name="mod_free_mny" value="" id="mod_free_mny" class="frm_input"> 원</td>
         </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="mod_memo">요청사유</label></th>
             <td><input type="text" name="mod_memo" id="mod_memo" required class="required frm_input" size="50"></td>
@@ -73,7 +75,9 @@ function form_check(f)
 {
     var max_mny = parseInt(<?php echo $od_misu; ?>);
     var tax_mny = parseInt(f.mod_tax_mny.value.replace("/[^0-9]/g", ""));
-    var free_mny = parseInt(f.mod_free_mny.value.replace("/[^0-9]/g", ""));
+    var free_mny = 0;
+    if(typeof f.mod_free.mny.value != "undefined")
+        free_mny = parseInt(f.mod_free_mny.value.replace("/[^0-9]/g", ""));
 
     if(!tax_mny && !free_mny) {
         alert("과세 취소금액 또는 비과세 취소금액을 입력해 주십시오.");

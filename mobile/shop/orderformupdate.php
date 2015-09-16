@@ -485,7 +485,7 @@ if($escw_yn == 'Y')
 $od_tax_mny = round($i_price / 1.1);
 $od_vat_mny = $i_price - $od_tax_mny;
 $od_free_mny = 0;
-if($default['de_tax_flag_use']) {
+if($default['de_tax_flag_use'] && $od_pg != 'KAKAOPAY') {
     $od_tax_mny = (int)$_POST['comm_tax_mny'];
     $od_vat_mny = (int)$_POST['comm_vat_mny'];
     $od_free_mny = (int)$_POST['comm_free_mny'];
@@ -511,6 +511,10 @@ $od_b_addr3       = clean_xss_tags($od_b_addr3);
 $od_b_addr_jibeon = preg_match("/^(N|R)$/", $od_b_addr_jibeon) ? $od_b_addr_jibeon : '';
 $od_memo          = clean_xss_tags($od_memo);
 $od_deposit_name  = clean_xss_tags($od_deposit_name);
+$od_tax_flag      = $default['de_tax_flag_use'];
+
+if($od_tax_flag && $od_pg == 'KAKAOPAY')
+    $od_tax_flag = 0;
 
 // 주문서에 입력
 $sql = " insert {$g5['g5_shop_order_table']}
@@ -554,7 +558,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_tno            = '$od_tno',
                 od_app_no         = '$od_app_no',
                 od_escrow         = '$od_escrow',
-                od_tax_flag       = '{$default['de_tax_flag_use']}',
+                od_tax_flag       = '$od_tax_flag',
                 od_tax_mny        = '$od_tax_mny',
                 od_vat_mny        = '$od_vat_mny',
                 od_free_mny       = '$od_free_mny',

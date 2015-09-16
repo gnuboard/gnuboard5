@@ -36,7 +36,7 @@ if($free_mny && $free_mny > $od_misu)
     alert('비과세 취소금액을 '.display_price($od_misu).' 이하로 입력해 주십시오.');
 
 // PG사별 부분취소 실행
-include_once(G5_SHOP_PATH.'/'.$od['od_pg'].'/orderpartcancel.inc.php');
+include_once(G5_SHOP_PATH.'/'.strtolower($od['od_pg']).'/orderpartcancel.inc.php');
 
 include_once(G5_PATH.'/head.sub.php');
 ?>
