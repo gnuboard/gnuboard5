@@ -393,6 +393,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_frm_paysel .KPAY{background:url('../../../img/kpay_logo.png') no-repeat;padding-left:37px;display:inline-block}
 #sod_frm_paysel .PAYNOW{background:url('../../../img/paynow_logo.png') no-repeat;padding-left:46px;display:inline-block}
 #sod_frm_paysel .PAYCO{background:url('../../../img/payco_logo.png') no-repeat 1px;padding-left:46px;display:inline-block}
+.kakaopay_icon{background:url('../../../img/kakao.png') no-repeat ;height:21px;width:74px;display:inline-block;overflow:hidden;text-indent:-999px}
 
 #settle_bank {margin:10px 0 0}
 

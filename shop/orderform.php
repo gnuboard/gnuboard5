@@ -596,7 +596,7 @@ if($is_kakaopay_use) {
         // 카카오페이
         if($is_kakaopay_use) {
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_kakaopay" name="od_settle_case" value="KAKAOPAY" '.$checked.'> <label for="od_settle_kakaopay">KAKAOPAY</label>'.PHP_EOL;
+            echo '<input type="radio" id="od_settle_kakaopay" name="od_settle_case" value="KAKAOPAY" '.$checked.'> <label for="od_settle_kakaopay" class="kakaopay_icon">KAKAOPAY</label>'.PHP_EOL;
             $checked = '';
         }
 
