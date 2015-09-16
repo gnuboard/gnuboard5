@@ -16,7 +16,7 @@
     	}
     	public function setPhpVersion($version) {
     		$this->phpVersion = $version;
-    	} 
+    	}
         public function parameterEncrypt($key, $plainText) {
             try {
         		$encryptText = "";
@@ -141,6 +141,9 @@
     	    if (is_array($strLogText)) {
     	        $log_string = "[".date("Y/m/d H:i:s")."] \r\n";
     	        foreach (array_keys($strLogText) as $key) {
+                    if($key == 'MERCHANT_ID')
+                        continue;
+
                     $log_string = $log_string."                      [".$key."] => ".$strLogText[$key]."\r\n";
                 }
             } else {
@@ -243,7 +246,7 @@
             fclose($log_file);
         }
     }
-    
+
     class KMPayDataValidator {
     	public $resultValid = "";
     	public function KMPayDataValidator($value) {
@@ -268,7 +271,7 @@
     		$amount = $this->getValueFromArray($value, "AMOUNT");
     		$currency = $this->getValueFromArray($value, "CURRENCY");
     		$returnUrl = $this->getValueFromArray($value, "RETURN_URL");
-    		
+
     		//추가정보
     		$cardMerchantNum = $this->getValueFromArray($value, "CARD_MERCHANT_NUM");
     		$supplyAmt = $this->getValueFromArray($value, "SUPPLY_AMT");
@@ -279,8 +282,8 @@
     		$certifiedFlag = $this->getValueFromArray($value, "CERTIFIED_FLAG");
     		$offerPeriodFlag = $this->getValueFromArray($value, "OFFER_PERIOD_FLAG");
     		$offerPeriod = $this->getValueFromArray($value, "OFFER_PERIOD");
-    		
-    		
+
+
     		if (strlen($certifiedFlag) == 0) {
     			$certifiedFlag = "N";
     		}
@@ -293,7 +296,7 @@
     		if (strlen($cancelTime) == 0) {
     			$cancelTime = "1440";
     		}
-    		
+
     		//필수
     		if (strlen($prType) == 0) {
     			return "USER_ERROR_CODE,804,결제요청타입은 필수입력사항 입니다.";
@@ -315,7 +318,7 @@
     		else if (strlen($merchantTxnNum) > 40) {
     			return "USER_ERROR_CODE,824,가맹점 거래번호의 제한 길이가 초과 되었습니다.";
     		}
-    		
+
     		if (strlen($productName) == 0) {
     			return "USER_ERROR_CODE,809,상품명은 필수입력사항 입니다.";
     		}
@@ -333,18 +336,18 @@
     		if (strlen($currency) == 0) {
     			return "USER_ERROR_CODE,813,거래통화는 필수입력사항 입니다.";
     		}
-    		
+
     		if ($certifiedFlag == "CN") {
     			//웹결제에서는 필수체크 안함
     		}
     		else if (strlen($certifiedFlag) == 0) {
     			return "USER_ERROR_CODE,830,결제승인결과전송URL은 필수입력사항 입니다.";
     		}
-    		
+
     		if (strlen($cardMerchantNum) > 0 && !is_numeric($cardMerchantNum)) {
     			return "USER_ERROR_CODE,814,카드 가맹점 번호는 숫자형입니다.";
     		}
-    		
+
     		if (strlen($supplyAmt) > 0 && !is_numeric($supplyAmt)) {
     			return "USER_ERROR_CODE,815,공급가액은 숫자형입니다.";
     		}
@@ -360,7 +363,7 @@
     		if (strlen($cancelTime) > 0 && !is_numeric($cancelTime)) {
     			return "USER_ERROR_CODE,818,결제취소시간(분)은 숫자형입니다.";
     		}
-    		
+
     		if (strlen($fixedInt) == 0) {
     			// 정상
     		}
@@ -370,11 +373,11 @@
     		else if (!((0 <= intval($fixedInt) && intval($fixedInt) <= 24) ||  $fixedInt == "36")) {
     			return "USER_ERROR_CODE,820,고정할부개월이 잘못되었습니다.";
     		}
-    		
+
     		if ($certifiedFlag != "N" && $certifiedFlag != "CN") {
     			return "USER_ERROR_CODE,831,가맹점 인증 구분값은 N 혹은 CN 입니다";
     		}
-    		
+
     		return "";
     	}
     }
