@@ -691,7 +691,7 @@ if(!isset($default['de_kakaopay_mid'])) {
         </tr>
         <tr>
             <th scope="row">
-                <label for="de_kakaopay_mid">카카오페이 상점 MID</label>
+                <label for="de_kakaopay_mid">카카오페이 상점MID</label>
                 <a href="http://sir.co.kr/main/service/kakaopay.php" target="_blank" id="scf_lgreg" class="scf_pgreg">카카오페이 서비스신청하기</a>
             </th>
             <td>
@@ -700,7 +700,7 @@ if(!isset($default['de_kakaopay_mid'])) {
             </td>
         </tr>
         <tr>
-            <th scope="row"><label for="de_kakaopay_key">카카오페이 상점 서명키</label></th>
+            <th scope="row"><label for="de_kakaopay_key">카카오페이 상점키</label></th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점 서명키를 입력합니다."); ?>
                 <input type="text" name="de_kakaopay_key" value="<?php echo $default['de_kakaopay_key']; ?>" id="de_kakaopay_key" class="frm_input" size="90">
