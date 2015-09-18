@@ -121,7 +121,6 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     <tbody>
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $row['is_subject'] = cut_str($row['is_subject'], 30, "...");
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         $name = get_sideview($row['mb_id'], get_text($row['is_name']), $row['mb_email'], $row['mb_homepage']);
         $is_content = get_view_thumbnail(conv_content($row['is_content'], 1), 300);

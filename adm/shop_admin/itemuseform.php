@@ -61,7 +61,7 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
     <tr>
         <th scope="row"><label for="is_subject">제목</label></th>
         <td><input type="text" name="is_subject" required class="required frm_input" id="is_subject" size="100"
-        value='<?php echo conv_subject($is['is_subject'], 120); ?>'></td>
+        value="<?php echo get_text($is['is_subject']); ?>"></td>
     </tr>
     <tr>
         <th scope="row">내용</th>
