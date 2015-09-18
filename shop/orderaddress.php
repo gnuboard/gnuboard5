@@ -77,7 +77,7 @@ $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
             </td>
             <td class="td_name">
                 <label for="ad_subject<?php echo $i;?>" class="sound_only">배송지명</label>
-                <input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject<?php echo $i;?>" class="frm_input" size="12" maxlength="20" value="<?php echo $row['ad_subject']; ?>">
+                <input type="text" name="ad_subject[<?php echo $i; ?>]" id="ad_subject<?php echo $i;?>" class="frm_input" size="12" maxlength="20" value="<?php echo get_text($row['ad_subject']); ?>">
             </td>
             <td class="td_default">
                 <label for="ad_default<?php echo $i;?>" class="sound_only">기본배송지</label>
