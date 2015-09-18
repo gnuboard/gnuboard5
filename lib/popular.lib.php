@@ -17,7 +17,7 @@ function popular($skin_dir='basic', $pop_cnt=7, $date_cnt=3)
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         $list[$i] = $row;
         // 스크립트등의 실행금지
-        $list[$i]['pp_word'] = get_text($list[$i]['pp_word']);
+        //$list[$i]['pp_word'] = get_text($list[$i]['pp_word']);
     }
 
     if(preg_match('#^theme/(.+)$#', $skin_dir, $match)) {

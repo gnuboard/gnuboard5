@@ -73,7 +73,7 @@ $colspan = 7;
         }
 
         $search  = array('"', "'");
-        $replace = array('&#34;', '&#39;');
+        $replace = array('&#034;', '&#039;');
         $me_name = str_replace($search, $replace, $row['me_name']);
     ?>
     <tr class="<?php echo $bg; ?> menu_list menu_group_<?php echo substr($row['me_code'], 0, 2); ?>">
