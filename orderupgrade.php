@@ -57,6 +57,7 @@ if(!sql_query(" DESCRIBE {$g5['g5_shop_inicis_log_table']} ", false)) {
                   `P_TYPE` varchar(255) NOT NULL DEFAULT '',
                   `P_OID` varchar(255) NOT NULL DEFAULT '',
                   `P_FN_NM` varchar(255) NOT NULL DEFAULT '',
+                  `P_AUTH_NO` varchar(255) NOT NULL DEFAULT '',
                   `P_AMT` int(11) NOT NULL DEFAULT '0',
                   `P_RMESG1` varchar(255) NOT NULL DEFAULT '',
                   PRIMARY KEY (`oid`)
@@ -79,6 +80,12 @@ if(isset($g5['g5_shop_order_data_table']) && !sql_query(" DESCRIBE {$g5['g5_shop
                   `dt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
                   KEY `od_id` (`od_id`)
                 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;", true);
+}
+
+// 모바일 이니시스 결제정보 테이블 필드 추가
+if(!sql_query(" select P_AUTH_NO from {$g5['g5_shop_inicis_log_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_inicis_log_table']}`
+                    ADD `P_AUTH_NO` varchar(255) NOT NULL DEFAULT '' AFTER `P_FN_NM` ", true);
 }
 
 echo '<p>테이블 업그레이드 완료!</p>';

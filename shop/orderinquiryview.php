@@ -257,7 +257,7 @@ if($od['od_pg'] == 'lg') {
         $app_no_subj = '';
         $disp_bank = true;
         $disp_receipt = false;
-        if($od['od_settle_case'] == '신용카드') {
+        if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == 'KAKAOPAY') {
             $app_no_subj = '승인번호';
             $app_no = $od['od_app_no'];
             $disp_bank = false;
@@ -392,6 +392,14 @@ if($od['od_pg'] == 'lg') {
                             } else {
                                 $card_receipt_script = 'window.open(\''.G5_BILL_RECEIPT_URL.'card_bill&tno='.$od['od_tno'].'&order_no='.$od['od_id'].'&trade_mony='.$od['od_receipt_price'].'\', \'winreceipt\', \'width=470,height=815,scrollbars=yes,resizable=yes\');';
                             }
+                        ?>
+                        <a href="javascript:;" onclick="<?php echo $card_receipt_script; ?>">영수증 출력</a>
+                        <?php
+                        }
+
+                        if($od['od_settle_case'] == 'KAKAOPAY')
+                        {
+                            $card_receipt_script = 'window.open(\'https://mms.cnspay.co.kr/trans/retrieveIssueLoader.do?TID='.$od['od_tno'].'&type=0\', \'popupIssue\', \'toolbar=no,location=no,directories=no,status=yes,menubar=no,scrollbars=yes,resizable=yes,width=420,height=540\');';
                         ?>
                         <a href="javascript:;" onclick="<?php echo $card_receipt_script; ?>">영수증 출력</a>
                         <?php

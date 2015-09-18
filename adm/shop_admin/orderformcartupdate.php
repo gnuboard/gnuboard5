@@ -181,7 +181,7 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
             $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
             $od = sql_fetch($sql);
 
-            if($od['od_tno'] && $od['od_settle_case'] == '신용카드') {
+            if($od['od_tno'] && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '간편결제' || $od['od_settle_case'] == 'KAKAOPAY')) {
                 switch($od['od_pg']) {
                     case 'lg':
                         include_once(G5_SHOP_PATH.'/settle_lg.inc.php');
@@ -252,6 +252,14 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                             $pg_res_cd = $res_cd;
                             $pg_res_msg = iconv_utf8($res_msg);
                         }
+                        break;
+                    case 'KAKAOPAY':
+                        include_once(G5_SHOP_PATH.'/settle_kakaopay.inc.php');
+                        $_REQUEST['TID']               = $od['od_tno'];
+                        $_REQUEST['Amt']               = $od['od_receipt_price'];
+                        $_REQUEST['CancelMsg']         = '쇼핑몰 운영자 승인 취소';
+                        $_REQUEST['PartialCancelCode'] = 0;
+                        include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
                         break;
                     default:
                         include_once(G5_SHOP_PATH.'/settle_kcp.inc.php');

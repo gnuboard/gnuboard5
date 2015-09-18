@@ -11,6 +11,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="req_tx"          value="pay">
     <input type="hidden" name="site_cd"         value="<?php echo $default['de_kcp_mid']; ?>">
     <input type="hidden" name="site_name"       value="<?php echo $default['de_admin_company_name']; ?>">
+    <input type="hidden" name="def_site_cd"     value="<?php echo $default['de_kcp_mid']; ?>">
 
 <?php
     /*

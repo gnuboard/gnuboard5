@@ -192,6 +192,10 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
     <label for="od_settle_case05">휴대폰</label>
     <input type="radio" name="od_settle_case" value="신용카드" id="od_settle_case06" <?php echo get_checked($od_settle_case, '신용카드');  ?>>
     <label for="od_settle_case06">신용카드</label>
+    <input type="radio" name="od_settle_case" value="간편결제" id="od_settle_case07" <?php echo get_checked($od_settle_case, '간편결제');  ?>>
+    <label for="od_settle_case07">PG간편결제</label>
+    <input type="radio" name="od_settle_case" value="KAKAOPAY" id="od_settle_case08" <?php echo get_checked($od_settle_case, 'KAKAOPAY');  ?>>
+    <label for="od_settle_case08">KAKAOPAY</label>
 </div>
 
 <div>
@@ -278,6 +282,24 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         {
             $s_receipt_way = $row['od_settle_case'];
             $s_br = '<br />';
+
+            // 간편결제
+            if($row['od_settle_case'] == '간편결제') {
+                switch($row['od_pg']) {
+                    case 'lg':
+                        $s_receipt_way = 'PAYNOW';
+                        break;
+                    case 'inicis':
+                        $s_receipt_way = 'KPAY';
+                        break;
+                    case 'kcp':
+                        $s_receipt_way = 'PAYCO';
+                        break;
+                    default:
+                        $s_receipt_way = $row['od_settle_case'];
+                        break;
+                }
+            }
         }
         else
         {

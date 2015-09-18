@@ -100,9 +100,9 @@ a:hover, a:focus, a:active {color:#000;text-decoration:underline}
 #captcha legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #captcha #captcha_img {width:100px;height:41px;border:1px solid #e9e9e9}
 #captcha #captcha_mp3 {position:absolute;top:0;left:101px;;margin:0;padding:0;width:23px;height:22px;border:0;background:transparent;vertical-align:middle;overflow:hidden;cursor:pointer}
-#captcha #captcha_mp3 span {position:absolute;top:0;left:0;width:23px;height:22px;background:url('../plugin/kcaptcha/img/sound.gif')}
+#captcha #captcha_mp3 span {position:absolute;top:0;left:0;width:23px;height:22px;background:url('../../../plugin/kcaptcha/img/sound.gif')}
 #captcha #captcha_reload {position:absolute;top:21px;left:101px;margin:0;padding:0;width:23px;height:22px;border:0;background:transparent;vertical-align:middle;overflow:hidden;cursor:pointer}
-#captcha #captcha_reload span {position:absolute;top:0;left:0;width:23px;height:22px;background:url('../plugin/kcaptcha/img/reload.gif')}
+#captcha #captcha_reload span {position:absolute;top:0;left:0;width:23px;height:22px;background:url('../../../plugin/kcaptcha/img/reload.gif')}
 #captcha #captcha_key {margin:0 0 0 25px;padding:0 5px;width:70px;height:41px;border:1px solid #b8c9c2;background:#f7f7f7;font-size:1.333em;font-weight:bold;text-align:center;line-height:2.8em}
 #captcha #captcha_info {display:block;margin:5px 0 0;font-size:0.95em;letter-spacing:-0.1em}
 
@@ -393,6 +393,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_frm_paysel .KPAY{background:url('../../../img/kpay_logo.png') no-repeat;padding-left:37px;display:inline-block}
 #sod_frm_paysel .PAYNOW{background:url('../../../img/paynow_logo.png') no-repeat;padding-left:46px;display:inline-block}
 #sod_frm_paysel .PAYCO{background:url('../../../img/payco_logo.png') no-repeat 1px;padding-left:46px;display:inline-block}
+.kakaopay_icon{background:url('../../../img/kakao.png') no-repeat ;height:21px;width:74px;display:inline-block;overflow:hidden;text-indent:-999px}
 
 #settle_bank {margin:10px 0 0}
 
@@ -521,3 +522,59 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 /* 쿠폰 */
 #coupon .td_numbig {width:150px}
 #coupon .td_datetime {width:180px}
+
+/* 모바일일때 피시버전 주문폼*/
+.sod_list {position:relative;margin:0;padding:0;list-style:none}
+.sod_list .sod_li {position:relative;padding:0;border:1px solid #e9e9e9;margin:10px 0}
+.sod_list .sod_li:after {display:block;visibility:hidden;clear:both;content:""}
+.sod_list .li_chk{position:absolute;top:10px;left:10px;}
+.sod_list .li_name{min-height:130px}
+.sod_list .li_name a,.sod_list .li_name strong{display:block;padding: 0 10px 0 25px;border-bottom:1px solid #e9e9e9;height:35px;line-height:35px}
+.sod_list .li_name strong{padding-left:10px}
+.sod_list .total_img{position:absolute;top:45px;left:10px;}
+.sod_list .sod_opt{padding:10px 10px 5px;margin-left:90px;color:#9e9e9e;font-size:0.93em;background:none;border:none}
+.sod_list .sod_opt li{margin-bottom:3px;border:none}
+.sod_list .li_cp{position:relative}
+.sod_list .li_cp .cp_btn, .sod_list .li_cp .cp_cancel, .sod_list .li_mod .mod_btn {margin:0;padding:5px 8px;border:0;background:#000;color:#fff;font-size:0.93em}
+.sod_list .li_cp .cp_cancel,.odf_tbl #od_coupon_cancel,.odf_tbl #sc_coupon_cancel{border:1px solid #999;color:#777;background:#fafafa;margin-left:3px;padding:4px 5px}
+.sod_list .li_prqty{margin:10px;}
+.sod_list .li_prqty:after {display:block;visibility:hidden;clear:both;content:""}
+.sod_list .li_prqty .li_prqty_sp{width:33%;display:inline-block;float:left;text-align:center;line-height:2.2em;border-top:1px solid #d3d3d3;border-bottom:1px solid #d3d3d3;border-left:1px solid #e9e9e9;color:#9e9e9e;font-size:0.93em;margin-left:-1px}
+.sod_list .li_prqty  .prqty_price{border-left:1px solid #d3d3d3;}
+.sod_list .li_prqty  .prqty_sc{border-right:1px solid #d3d3d3;}
+.sod_list .li_prqty .li_prqty_sp span{display:block;background:#f2f2f2;}
+.sod_list .li_total {position:relative;border-top:1px solid #e9e9e9;margin:10px 10px 0;}
+.sod_list .total_span {display:block;position:relative;padding:5px 0;text-align:right;color:#343434}
+.sod_list .total_span span{position:absolute;top:5px;left:0}
+.sod_list .total_span strong{font-size:1.2em}
+
+#sod_frm {margin:10px;}
+#sod_frm section{margin-bottom:10px}
+#sod_frm p#sod_frm_pt_alert {margin:20px 0;text-align:center }
+#sod_bsk_list #mod_option_frm .sit_ov_tbl{background:#ededed;margin-top:5px}
+#sod_bsk_list #mod_option_frm .sit_ov_tbl th,#sod_bsk_list #mod_option_frm .sit_ov_tbl td{border:none;padding-left:5px;font-weight:normal}
+#sod_bsk_list #mod_option_frm .sit_ov_tbl th{width:90px}
+html.no-overflowscrolling #cp_frm {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
+#sod_frm_deli {position:relative;line-height:2em}
+#sod_frm_deli #order_address {display:block;;width:100px;background:#333;color:#fff;text-align:center}
+#sod_frm_orderer {margin:15px 0 30px}
+#sod_frm_orderer #od_addr_jibeon, #sod_frm_taker #od_b_addr_jibeon {display:inline-block;margin:5px 0 0}
+#sod_frm .odf_tbl table{width:100%;margin:0;padding:0;border-top:1px solid #e9e9e9;border-left:1px solid #e9e9e9;border-right:1px solid #e9e9e9;border-collapse:collapse}
+#sod_frm .odf_tbl table tbody td,#sod_frm .odf_tbl table tbody th{;border-bottom:1px solid #e9e9e9;padding:5px 0px 5px 10px ;text-align:left;line-height:26px;position:relative;}
+#sod_frm .odf_tbl table th{width:90px;color:#343434;font-weight:normal;letter-spacing:-0.1em}
+#sod_frm .odf_tbl table .frm_input{background-color:#fff !important;height:24px;line-height:24px;text-indent:5px}
+#sod_frm .odf_tbl table .frm_address{margin-top:5px}
+#sod_frm .odf_tbl button.btn_frmline{font-size:0.92em;padding:0 8px;height:26px;line-height:26px}
+#sod_frm .odf_tbl textarea{width:99%;border:1px solid #e4eaec;}
+#sod_frm_same {margin:0 0 10px}
+#sod_frm_pay {position:relative}
+#sod_frm_pay .tbl_head01 caption {font-size:0;line-height:0;overflow:hidden}
+#sod_frm_pay .tbl_head01 th {width:auto !important;font-weight:bold;text-align:center !important}
+#sod_frm_pay .tbl_head01 td {border-top:1px solid #e9e9e9 !important;border-bottom:1px solid #e9e9e9 !important;line-height:1.5em !important;word-break:break-all !important}
+
+html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_frm {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
+#sod_frm_pay_info {margin:0 0 10px}
+#sod_frm_paysel {margin:10px 0 ;padding:10px;background:#f2f2f2;border:1px solid #e0e0e0}
+#sod_frm_paysel ul {margin:0;padding:0;}
+#sod_frm_paysel ul:after {display:block;visibility:hidden;clear:both;content:""}
+#sod_frm_paysel li {float:left;padding:5px 2%;width:46%;height:21px;text-align:left;list-style:none}
