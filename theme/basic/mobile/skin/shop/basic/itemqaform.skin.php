@@ -31,11 +31,11 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         </tr>
         <tr>
             <th scope="row"><label for="iq_email">이메일</label></th>
-            <td><input type="email" name="iq_email" value="<?php echo $qa['iq_email']; ?>" class="frm_input" size="30"> 이메일을 입력하시면 답변 등록 시 답변이 이메일로 전송됩니다.</td>
+            <td><input type="email" name="iq_email" value="<?php echo get_text($qa['iq_email']); ?>" class="frm_input" size="30"> 이메일을 입력하시면 답변 등록 시 답변이 이메일로 전송됩니다.</td>
         </tr>
         <tr>
             <th scope="row"><label for="iq_hp">휴대폰</label></th>
-            <td><input type="text" name="iq_hp" value="<?php echo $qa['iq_hp']; ?>" class="frm_input" size="20"> 휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</td>
+            <td><input type="text" name="iq_hp" value="<?php echo get_text($qa['iq_hp']); ?>" class="frm_input" size="20"> 휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</td>
         </tr>
         <tr>
             <th scope="row"><label for="iq_subject">제목</label></th>
