@@ -181,19 +181,19 @@ if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
         $mb_id = $member['mb_id'];
-        $wr_name = addslashes($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']);
+        $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
         $wr_password = $member['mb_password'];
         $wr_email = addslashes($member['mb_email']);
-        $wr_homepage = addslashes($member['mb_homepage']);
+        $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
     } else {
         $mb_id = '';
         // 비회원의 경우 이름이 누락되는 경우가 있음
-        $wr_name = trim($_POST['wr_name']);
+        $wr_name = clean_xss_tags(trim($_POST['wr_name']));
         if (!$wr_name)
             alert('이름은 필히 입력하셔야 합니다.');
         $wr_password = get_encrypt_string($wr_password);
         $wr_email = get_email_address(trim($_POST['wr_email']));
-        $wr_homepage = $_POST['wr_homepage'];
+        $wr_homepage = clean_xss_tags($wr_homepage);
     }
 
     if ($w == 'r') {
@@ -301,29 +301,29 @@ if ($w == '' || $w == 'r') {
         // 자신의 글이라면
         if ($member['mb_id'] == $wr['mb_id']) {
             $mb_id = $member['mb_id'];
-            $wr_name = addslashes($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']);
+            $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
             $wr_email = addslashes($member['mb_email']);
-            $wr_homepage = addslashes($member['mb_homepage']);
+            $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
         } else {
             $mb_id = $wr['mb_id'];
             if(isset($_POST['wr_name']) && $_POST['wr_name'])
-                $wr_name = trim($_POST['wr_name']);
+                $wr_name = clean_xss_tags(trim($_POST['wr_name']));
             else
-                $wr_name = addslashes($wr['wr_name']);
+                $wr_name = addslashes(clean_xss_tags($wr['wr_name']));
             if(isset($_POST['wr_email']) && $_POST['wr_email'])
                 $wr_email = get_email_address(trim($_POST['wr_email']));
             else
                 $wr_email = addslashes($wr['wr_email']);
             if(isset($_POST['wr_homepage']) && $_POST['wr_homepage'])
-                $wr_homepage = addslashes($_POST['wr_homepage']);
+                $wr_homepage = addslashes(clean_xss_tags($_POST['wr_homepage']));
             else
-                $wr_homepage = addslashes($wr['wr_homepage']);
+                $wr_homepage = addslashes(clean_xss_tags($wr['wr_homepage']));
         }
     } else {
         $mb_id = "";
         // 비회원의 경우 이름이 누락되는 경우가 있음
-        $wr_name = trim($_POST['wr_name']);
-        if (!$wr_name) alert('이름은 필히 입력하셔야 합니다.');
+        if (!trim($wr_name)) alert("이름은 필히 입력하셔야 합니다.");
+        $wr_name = clean_xss_tags(trim($_POST['wr_name']));
         $wr_email = get_email_address(trim($_POST['wr_email']));
     }
 
