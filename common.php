@@ -484,6 +484,11 @@ if(isset($config['cf_theme']) && trim($config['cf_theme'])) {
 if(is_file(G5_THEME_PATH.'/theme.config.php'))
     include_once(G5_THEME_PATH.'/theme.config.php');
 
+
+// 쇼핑몰 설정
+if (defined('G5_USE_SHOP') && G5_USE_SHOP)
+    include_once(G5_PATH.'/shop.config.php');
+
 //=====================================================================================
 // 사용기기 설정
 // 테마의 G5_THEME_DEVICE 설정에 따라 사용자 화면 제한됨

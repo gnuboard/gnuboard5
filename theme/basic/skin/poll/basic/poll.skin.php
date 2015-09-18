@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 <!-- 설문조사 시작 { -->
 <form name="fpoll" action="<?php echo G5_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
 <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
-<input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
+<input type="hidden" name="skin_dir" value="<?php echo $skin_dir ?>">
 <section id="poll">
     <header>
         <h2>설문조사</h2>
@@ -22,7 +22,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
     </ul>
     <footer>
         <input type="submit" value="투표하기">
-        <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
+        <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir" ?>" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
     </footer>
 </section>
 </form>

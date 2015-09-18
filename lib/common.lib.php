@@ -1969,7 +1969,7 @@ function get_uniqid()
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
-        $key = date('ymdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
+        $key = date('YmdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
 
         $result = sql_query(" insert into {$g5['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
         if ($result) break; // 쿼리가 정상이면 빠진다.
@@ -2604,6 +2604,21 @@ function module_exec_check($exe, $type)
 
                         for($i=0; $i<count($out); $i++) {
                             if(strpos($out[$i], 'KCP ENC') !== false) {
+                                $search = true;
+                                break;
+                            }
+                        }
+                        break;
+                    case 'pp_cli':
+                        exec($exe.' -h 2>&1', $out, $return_var);
+
+                        if($return_var == 139) {
+                            $isbinary = false;
+                            break;
+                        }
+
+                        for($i=0; $i<count($out); $i++) {
+                            if(strpos($out[$i], 'CLIENT') !== false) {
                                 $search = true;
                                 break;
                             }

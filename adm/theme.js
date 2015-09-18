@@ -8,7 +8,7 @@ $(function() {
 
         var set_default_skin = 0;
         if($(this).data("set_default_skin") == true) {
-            if(confirm("기본환경설정, 1:1문의 스킨을 테마에서 설정된 스킨으로 변경하시겠습니까?\n\n변경을 선택하시면 테마에서 지정된 스킨으로 회원스킨 등이 변경됩니다."))
+            if(confirm("기본환경설정, 1:1문의, 쇼핑몰 스킨을 테마에서 설정된 스킨으로 변경하시겠습니까?\n\n변경을 선택하시면 테마에서 지정된 스킨으로 회원스킨 등이 변경됩니다."))
                 set_default_skin = 1;
         }
 

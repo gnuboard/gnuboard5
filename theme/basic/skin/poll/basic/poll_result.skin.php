@@ -60,7 +60,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
         <form name="fpollresult" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" method="post" autocomplete="off">
         <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
         <input type="hidden" name="w" value="">
-        <input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
+        <input type="hidden" name="skin_dir" value="<?php echo $skin_dir ?>">
         <?php if ($is_member) {  ?><input type="hidden" name="pc_name" value="<?php echo cut_str($member['mb_nick'],255) ?>"><?php }  ?>
         <h3><?php echo $po_etc ?></h3>
 
@@ -102,7 +102,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
         <h2>다른 투표 결과 보기</h2>
         <ul>
             <?php for ($i=0; $i<count($list3); $i++) {  ?>
-            <li><a href="./poll_result.php?po_id=<?php echo $list3[$i]['po_id'] ?>&amp;skin_dir=<?php echo urlencode($skin_dir); ?>">[<?php echo $list3[$i]['date'] ?>] <?php echo $list3[$i]['subject'] ?></a></li>
+            <li><a href="./poll_result.php?po_id=<?php echo $list3[$i]['po_id'] ?>&amp;skin_dir=<?php echo $skin_dir ?>">[<?php echo $list3[$i]['date'] ?>] <?php echo $list3[$i]['subject'] ?></a></li>
             <?php }  ?>
         </ul>
     </aside>

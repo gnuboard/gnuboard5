@@ -16,7 +16,10 @@ if ($url) {
         alert('url에 도메인을 지정할 수 없습니다.');
     }
 
-    $link = $url;
+    if($url == 'shop')
+        $link = G5_SHOP_URL;
+    else
+        $link = $url;
 } else if ($bo_table) {
     $link = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
 } else {

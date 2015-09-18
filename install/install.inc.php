@@ -2,7 +2,9 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 $data_path = '../'.G5_DATA_DIR;
 
+
 if (!$title) $title = G5_VERSION." 설치";
+
 ?>
 <!doctype html>
 <html lang="ko">

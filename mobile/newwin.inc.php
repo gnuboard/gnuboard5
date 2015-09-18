@@ -1,9 +1,15 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+if (!defined('_SHOP_')) {
+    $pop_division = 'comm';
+} else {
+    $pop_division = 'shop';
+}
+
 $sql = " select * from {$g5['new_win_table']}
           where '".G5_TIME_YMDHIS."' between nw_begin_time and nw_end_time
-            and nw_device IN ( 'both', 'mobile' )
+            and nw_device IN ( 'both', 'mobile' ) and nw_division IN ( 'both', '".$pop_division."' )
           order by nw_id asc ";
 $result = sql_query($sql, false);
 ?>

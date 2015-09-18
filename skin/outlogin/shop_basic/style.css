@@ -1,0 +1,38 @@
+/* 아웃로그인 스킨 */
+.ol {position:relative;margin:0 0 5px;width:150px}
+.ol h2 {margin:0;padding:0;width:1px;height:1px;font-size:0;line-height:0;overflow:hidden}
+.ol ul {margin:0;padding:0;list-style:none}
+
+#ol_before {}
+#ol_before fieldset {position:relative}
+#ol_id {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:138px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;line-height:1.6em}
+.ol_idlabel {position:absolute;top:6px;left:5px;color:#626870;font-size:0.95em}
+#ol_pw {display:block;margin:0 0 5px !important;margin:0 0 3px;padding:0 5px;width:138px;height:22px;border:1px solid #b8c9c2;background:#f7f7f7;vertical-align:top;line-height:1.6em}
+.ol_pwlabel {position:absolute;top:35px;left:5px;color:#626870;font-size:0.95em}
+#auto_login {}
+#auto_login_label {letter-spacing:-0.1em}
+#ol_submit {display:inline-block;margin:0 0 4px;width:150px;height:24px;border:0;background:#626870;color:#fff;font-size:0.9em;font-weight:bold}
+#ol_before ul {float:right;margin:7px 0 13px;zoom:1}
+#ol_before ul:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_before li {float:left;margin-left:5px;padding-top:2px}
+#ol_before a {letter-spacing:-0.1em}
+#ol_svc {margin:0 0 5px}
+#ol_svc a {display:inline-block;padding:5px 0;width:71px;border:1px solid #e9e9e9;background:#faf9f5;text-align:center;text-decoration:none}
+#ol_auto {margin:0 0 5px;padding:2px 0 5px;text-align:right}
+
+#ol_after {}
+#ol_after_hd {margin:0 0 5px}
+#ol_after_hd .btn_admin {display:block;margin-top:5px;text-align:center}
+#ol_after_private {margin:0 0 5px;zoom:1}
+#ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_after_private li {margin:0 0 1px}
+#ol_after_private a {display:block;position:relative;padding:6px 8px 5px;background:#f7f7f7}
+#ol_after_private a strong {position:absolute;top:6px;right:8px;color:#000;font-weight:normal}
+#ol_after_private a:focus,
+#ol_after_private a:hover {background:#626870;color:#fff;text-decoration:none}
+#ol_after_private a:focus strong,
+#ol_after_private a:hover strong {color:#fff;text-decoration:none}
+#ol_after_ft {text-align:justify}
+#ol_after_ft a {display:inline-block;padding:4px 0 3px;width:73px;background:#626870;color:#fff;text-align:center}
+#ol_after_ft a:focus,
+#ol_after_ft a:hover {text-decoration:none !important}

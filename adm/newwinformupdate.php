@@ -10,7 +10,8 @@ if ($w == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
-$sql_common = " nw_device = '{$_POST['nw_device']}',
+$sql_common = " nw_division = '{$_POST['nw_division']}',
+                nw_device = '{$_POST['nw_device']}',
                 nw_begin_time = '{$_POST['nw_begin_time']}',
                 nw_end_time = '{$_POST['nw_end_time']}',
                 nw_disable_hours = '{$_POST['nw_disable_hours']}',
