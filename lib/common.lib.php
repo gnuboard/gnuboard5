@@ -1382,8 +1382,8 @@ function get_text($str, $html=0)
     $target[] = "&lt;";
     $source[] = "/>/";
     $target[] = "&gt;";
-    //$source[] = "/\"/";
-    //$target[] = "&#034;";
+    $source[] = "/\"/";
+    $target[] = "&#034;";
     $source[] = "/\'/";
     $target[] = "&#039;";
     //$source[] = "/}/"; $target[] = "&#125;";
