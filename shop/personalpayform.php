@@ -87,7 +87,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             </tr>
             <tr>
                 <th scope="row"><label for="pp_name">이름<strong class="sound_only"> 필수</strong></label></th>
-                <td><input type="text" name="pp_name" value="<?php echo $pp['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
+                <td><input type="text" name="pp_name" value="<?php echo get_text($pp['pp_name']); ?>" id="pp_name" required class="required frm_input"></td>
             </tr>
             <tr>
                 <th scope="row"><label for="pp_email">이메일<strong class="sound_only"> 필수</strong></label></th>
@@ -95,7 +95,7 @@ require_once('./'.$default['de_pg_service'].'/orderform.1.php');
             </tr>
             <tr>
                 <th scope="row"><label for="pp_hp">휴대폰</label></th>
-                <td><input type="text" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" required class="required frm_input"></td>
+                <td><input type="text" name="pp_hp" value="<?php echo get_text($member['mb_hp']); ?>" id="pp_hp" required class="required frm_input"></td>
             </tr>
             </tbody>
             </table>

@@ -69,7 +69,7 @@ $goods = $pp['pp_name'].'님 개인결제';
             </tr>
             <tr>
                 <th scope="row"><label for="pp_name">이름</label></th>
-                <td><input type="text" name="pp_name" value="<?php echo $pp['pp_name']; ?>" id="pp_name" required class="required frm_input"></td>
+                <td><input type="text" name="pp_name" value="<?php echo get_text($pp['pp_name']); ?>" id="pp_name" required class="required frm_input"></td>
             </tr>
             <tr>
                 <th scope="row"><label for="pp_email">이메일</label></th>
@@ -77,7 +77,7 @@ $goods = $pp['pp_name'].'님 개인결제';
             </tr>
             <tr>
                 <th scope="row"><label for="pp_hp">휴대폰</label></th>
-                <td><input type="text" name="pp_hp" value="<?php echo $member['mb_hp']; ?>" id="pp_hp" class="frm_input"></td>
+                <td><input type="text" name="pp_hp" value="<?php echo get_text($member['mb_hp']); ?>" id="pp_hp" class="frm_input"></td>
             </tr>
             </tbody>
             </table>
