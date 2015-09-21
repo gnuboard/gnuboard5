@@ -1174,6 +1174,10 @@ function pay_approval()
 
     // 카카오페이 지불
     if(settle_method == "KAKAOPAY") {
+        <?php if($default['de_tax_flag_use']) { ?>
+        pf.SupplyAmt.value = parseInt(pf.comm_tax_mny.value) + parseInt(pf.comm_free_mny.value);
+        pf.GoodsVat.value  = parseInt(pf.comm_vat_mny.value);
+        <?php } ?>
         pf.good_mny.value = f.good_mny.value;
         getTxnId(pf);
         return false;

@@ -5,15 +5,15 @@ if($od['od_pg'] != 'inicis') return;
 
 include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
 
-$od_tax_mny = round((int)$mod_tax_mny / 1.1);
+$vat_mny       = round((int)$tax_mny / 1.1);
 
 $currency      = 'WON';
 $oldtid        = $od['od_tno'];
-$price         = (int)$mod_tax_mny + (int)$mod_free_mny;
+$price         = (int)$tax_mny + (int)$free_mny;
 $confirm_price = (int)$od['od_receipt_price'] - (int)$od['od_refund_price'] - $price;
 $buyeremail    = $od['od_email'];
-$tax           = (int)$mod_tax_mny - $od_tax_mny;
-$taxfree       = (int)$mod_free_mny;
+$tax           = (int)$tax_mny - $vat_mny;
+$taxfree       = (int)$free_mny;
 
 /***********************
  * 3. 재승인 정보 설정 *

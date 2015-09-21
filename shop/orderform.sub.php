@@ -1295,6 +1295,10 @@ function forderform_check(f)
 
     // 카카오페이 지불
     if(settle_method == "KAKAOPAY") {
+        <?php if($default['de_tax_flag_use']) { ?>
+        f.SupplyAmt.value = parseInt(f.comm_tax_mny.value) + parseInt(f.comm_free_mny.value);
+        f.GoodsVat.value  = parseInt(f.comm_vat_mny.value);
+        <?php } ?>
         getTxnId(f);
         return false;
     }

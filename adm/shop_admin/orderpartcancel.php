@@ -49,12 +49,10 @@ $od_misu = abs($od['od_misu']);
             <th scope="row"><label for="mod_tax_mny">과세 취소금액</label></th>
             <td><input type="text" name="mod_tax_mny" value="" id="mod_tax_mny" class="frm_input"> 원</td>
         </tr>
-        <?php if($od['od_pg'] != 'KAKAOPAY') { ?>
         <tr>
             <th scope="row"><label for="mod_free_mny">비과세 취소금액</label></th>
             <td><input type="text" name="mod_free_mny" value="" id="mod_free_mny" class="frm_input"> 원</td>
         </tr>
-        <?php } ?>
         <tr>
             <th scope="row"><label for="mod_memo">요청사유</label></th>
             <td><input type="text" name="mod_memo" id="mod_memo" required class="required frm_input" size="50"></td>

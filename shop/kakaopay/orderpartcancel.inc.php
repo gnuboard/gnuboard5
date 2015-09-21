@@ -9,13 +9,18 @@ include_once(G5_SHOP_PATH.'/kakaopay/incKakaopayCommon.php');
 include_once(G5_SHOP_PATH.'/kakaopay/lgcns_CNSpay.php');
 
 $CancelNo                      = (int)$od['od_casseqno'] + 1;
+$vat_mny                       = round((int)$tax_mny / 1.1);
 
 $_REQUEST['TID']               = $od['od_tno'];
-$_REQUEST['Amt']               = (int)$tax_mny;
+$_REQUEST['Amt']               = (int)$tax_mny + (int)$free_mny;
 $_REQUEST['CancelMsg']         = $mod_memo;
 $_REQUEST['PartialCancelCode'] = 1;
 $_REQUEST['CheckRemainAmt']    = (int)$od['od_receipt_price'] - (int)$od['od_refund_price'];
 $_REQUEST['CancelNo']          = $CancelNo;
+$_REQUEST['SupplyAmt']         = ((int)$tax_mny + (int)$free_mny - $vat_mny);
+$_REQUEST['GoodsVat']          = $vat_mny;
+$_REQUEST['ServiceAmt']        = 0;
+
 
 // 로그 저장 위치 지정
 $connector = new CnsPayWebConnector($LogDir);

@@ -18,30 +18,37 @@ $kmFunc = new kmpayFunc($LogDir);
 $kmFunc->setPhpVersion($phpVersion);
 
 // TXN_ID를 요청하기 위한 PARAMETERR
-$REQUESTDEALAPPROVEURL = KMPayRequest("requestDealApproveUrl");	//인증 요청 경로
-$PR_TYPE = KMPayRequest("prType");												//결제 요청 타입
-$MERCHANT_ID = KMPayRequest("MID");											//가맹점 ID
-$MERCHANT_TXN_NUM = KMPayRequest("merchantTxnNum");				//가맹점 거래번호
+$REQUESTDEALAPPROVEURL = KMPayRequest("requestDealApproveUrl"); //인증 요청 경로
+$PR_TYPE = KMPayRequest("prType");                              //결제 요청 타입
+$MERCHANT_ID = KMPayRequest("MID");                             //가맹점 ID
+$MERCHANT_TXN_NUM = KMPayRequest("merchantTxnNum");             //가맹점 거래번호
 $channelType = KMPayRequest("channelType");
-$PRODUCT_NAME = KMPayRequest("GoodsName");								//상품명
-$AMOUNT = KMPayRequest("Amt");												//상품금액(총거래금액) (총거래금액 = 공급가액 + 부가세 + 봉사료)
+$PRODUCT_NAME = KMPayRequest("GoodsName");                      //상품명
+$AMOUNT = KMPayRequest("Amt");                                  //상품금액(총거래금액) (총거래금액 = 공급가액 + 부가세 + 봉사료)
 
-$CURRENCY = KMPayRequest("currency");											//거래통화(KRW/USD/JPY 등)
-$RETURN_URL = KMPayRequest("returnUrl");										//결제승인결과전송URL
-$CERTIFIED_FLAG = KMPayRequest("CERTIFIED_FLAG");							//가맹점 인증 구분값 ("N","NC")
+$CURRENCY = KMPayRequest("currency");                           //거래통화(KRW/USD/JPY 등)
+$RETURN_URL = KMPayRequest("returnUrl");                        //결제승인결과전송URL
+$CERTIFIED_FLAG = KMPayRequest("CERTIFIED_FLAG");               //가맹점 인증 구분값 ("N","NC")
 
-$OFFER_PERIOD_FLAG = KMPayRequest("OFFER_PERIOD_FLAG");							//상품제공기간 플래그
-$OFFER_PERIOD = KMPayRequest("OFFER_PERIOD");							//상품제공기간
+$OFFER_PERIOD_FLAG = KMPayRequest("OFFER_PERIOD_FLAG");         //상품제공기간 플래그
+$OFFER_PERIOD = KMPayRequest("OFFER_PERIOD");                   //상품제공기간
 
 
 //무이자옵션
-$NOINTYN = KMPayRequest("noIntYN");											//무이자 설정
-$NOINTOPT = KMPayRequest("noIntOpt");										//무이자 옵션
-$MAX_INT =KMPayRequest("maxInt");												//최대할부개월
-$FIXEDINT = KMPayRequest("fixedInt");												//고정할부개월
-$POINT_USE_YN = KMPayRequest("pointUseYn");								//카드사포인트사용여부
-$POSSICARD = KMPayRequest("possiCard");										//결제가능카드설정
-$BLOCK_CARD = KMPayRequest("blockCard");									//금지카드설정
+$NOINTYN = KMPayRequest("noIntYN");                             //무이자 설정
+$NOINTOPT = KMPayRequest("noIntOpt");                           //무이자 옵션
+$MAX_INT =KMPayRequest("maxInt");                               //최대할부개월
+$FIXEDINT = KMPayRequest("fixedInt");                           //고정할부개월
+$POINT_USE_YN = KMPayRequest("pointUseYn");                     //카드사포인트사용여부
+$POSSICARD = KMPayRequest("possiCard");                         //결제가능카드설정
+$BLOCK_CARD = KMPayRequest("blockCard");                        //금지카드설정
+
+// 복합과세
+if($default['de_tax_flag_use']) {
+    $SUPPLY_AMT  = KMPayRequest("SupplyAmt");                   // 공급가액
+    $GOODS_VAT   = KMPayRequest("GoodsVat");                    // 부가가치세
+    $SERVICE_AMT = KMPayRequest("ServiceAmt");                  // 봉사료
+}
 
 // ENC KEY와 HASH KEY는 가맹점에서 생성한 KEY 로 SETTING 한다.
 $merchantEncKey = KMPayRequest("merchantEncKey");
@@ -76,6 +83,13 @@ $strJsonString->setValue("FIXED_INT", $FIXEDINT);
 $strJsonString->setValue("POINT_USE_YN", $POINT_USE_YN);
 $strJsonString->setValue("POSSI_CARD", $POSSICARD);
 $strJsonString->setValue("BLOCK_CARD", $BLOCK_CARD);
+
+// 복합과세
+if($default['de_tax_flag_use']) {
+    $strJsonString->setValue("SUPPLY_AMT",  $SUPPLY_AMT);
+    $strJsonString->setValue("GOODS_VAT",   $GOODS_VAT);
+    $strJsonString->setValue("SERVICE_AMT", $SERVICE_AMT);
+}
 
 $strJsonString->setValue("PAYMENT_HASH", $payHash);
 

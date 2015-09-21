@@ -26,6 +26,11 @@ if($is_kakaopay_use) {
 <input type="hidden" name="NON_REP_TOKEN"  value="">
 <input type="hidden" name="EdiDate"        value="<?php echo($ediDate); ?>">
 <input type="hidden" name="EncryptData"    value="">
+<?php if($default['de_tax_flag_use']) { ?>
+<input type="hidden" name="SupplyAmt"     value="<?php echo ((int)$comm_tax_mny + (int)$comm_free_mny); ?>">
+<input type="hidden" name="GoodsVat"      value="<?php echo $comm_vat_mny; ?>">
+<input type="hidden" name="ServiceAmt"    value="0">
+<?php } ?>
 </div>
 
 <?php
