@@ -1,11 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if (G5_IS_MOBILE) {
-    include_once(G5_MSHOP_PATH.'/orderinquiryview.php');
-    return;
-}
-
 // 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
 $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
@@ -25,6 +20,21 @@ if (!$od['od_id'] || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip'
 
 // 결제방법
 $settle_case = $od['od_settle_case'];
+
+if (G5_IS_MOBILE) {
+    include_once(G5_MSHOP_PATH.'/orderinquiryview.php');
+    return;
+}
+
+// 테마에 orderinquiryview.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_inquiryview_file = G5_THEME_SHOP_PATH.'/orderinquiryview.php';
+    if(is_file($theme_inquiryview_file)) {
+        include_once($theme_inquiryview_file);
+        return;
+        unset($theme_inquiryview_file);
+    }
+}
 
 $g5['title'] = '주문상세내역';
 include_once('./_head.php');

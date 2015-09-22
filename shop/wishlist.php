@@ -1,13 +1,23 @@
 <?php
 include_once('./_common.php');
 
+if (!$is_member)
+    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL.'/wishlist.php'));
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/wishlist.php');
     return;
 }
 
-if (!$is_member)
-    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL.'/wishlist.php'));
+// 테마에 wishlist.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_wishlist_file = G5_THEME_SHOP_PATH.'/wishlist.php';
+    if(is_file($theme_wishlist_file)) {
+        include_once($theme_wishlist_file);
+        return;
+        unset($theme_wishlist_file);
+    }
+}
 
 $g5['title'] = "위시리스트";
 include_once('./_head.php');

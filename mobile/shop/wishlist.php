@@ -1,8 +1,15 @@
 <?php
 include_once('./_common.php');
 
-if (!$is_member)
-    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL.'/wishlist.php'));
+// 테마에 wishlist.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_wishlist_file = G5_THEME_MSHOP_PATH.'/wishlist.php';
+    if(is_file($theme_wishlist_file)) {
+        include_once($theme_wishlist_file);
+        return;
+        unset($theme_wishlist_file);
+    }
+}
 
 $g5['title'] = "위시리스트";
 include_once(G5_MSHOP_PATH.'/_head.php');
@@ -35,7 +42,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
             $image = get_it_image($row['it_id'], 50, 50);
     ?>
-    
+
         <li>
                 <div class="wish_img"><?php echo $image; ?></div>
                 <div class="wish_info">
@@ -59,7 +66,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                     <input type="hidden"   name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
                 </div>
                 <span class="wish_del"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></span>
-                 
+
         </li>
         <?php
         }
@@ -68,7 +75,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
         ?>
     </ul>
 
-    
+
     <div id="sod_ws_act">
         <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">BUY NOW</button>
         <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">CART</button>

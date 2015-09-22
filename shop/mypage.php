@@ -1,13 +1,23 @@
 <?php
 include_once('./_common.php');
 
+if (!$is_member)
+    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL."/mypage.php"));
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/mypage.php');
     return;
 }
 
-if (!$is_member)
-    goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL."/mypage.php"));
+// 테마에 mypage.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_mypage_file = G5_THEME_SHOP_PATH.'/mypage.php';
+    if(is_file($theme_mypage_file)) {
+        include_once($theme_mypage_file);
+        return;
+        unset($theme_mypage_file);
+    }
+}
 
 $g5['title'] = $member['mb_name'].'님 마이페이지';
 include_once('./_head.php');

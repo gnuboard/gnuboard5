@@ -1,25 +1,15 @@
 <?php
 include_once('./_common.php');
 
-// 불법접속을 할 수 없도록 세션에 아무값이나 저장하여 hidden 으로 넘겨서 다음 페이지에서 비교함
-$token = md5(uniqid(rand(), true));
-set_session("ss_token", $token);
-
-if (!$is_member) {
-    if (get_session('ss_orderview_uid') != $_GET['uid'])
-        alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.", G5_SHOP_URL);
+// 테마에 orderinquiryview.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_inquiryview_file = G5_THEME_MSHOP_PATH.'/orderinquiryview.php';
+    if(is_file($theme_inquiryview_file)) {
+        include_once($theme_inquiryview_file);
+        return;
+        unset($theme_inquiryview_file);
+    }
 }
-
-$sql = "select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
-if($is_member && !$is_admin)
-    $sql .= " and mb_id = '{$member['mb_id']}' ";
-$od = sql_fetch($sql);
-if (!$od['od_id'] || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
-    alert("조회하실 주문서가 없습니다.", G5_SHOP_URL);
-}
-
-// 결제방법
-$settle_case = $od['od_settle_case'];
 
 $g5['title'] = '주문상세내역';
 include_once(G5_MSHOP_PATH.'/_head.php');
