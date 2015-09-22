@@ -1,6 +1,16 @@
 <?php
 include_once('./_common.php');
 
+// 테마에 cart.php 있으면 include
+if(defined('G5_THEME_MSHOP_PATH')) {
+    $theme_cart_file = G5_THEME_MSHOP_PATH.'/cart.php';
+    if(is_file($theme_cart_file)) {
+        include_once($theme_cart_file);
+        return;
+        unset($theme_cart_file);
+    }
+}
+
 $g5['title'] = '장바구니';
 include_once(G5_MSHOP_PATH.'/_head.php');
 

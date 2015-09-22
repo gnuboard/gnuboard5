@@ -19,6 +19,16 @@ if (G5_IS_MOBILE) {
     return;
 }
 
+// 테마에 cart.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_cart_file = G5_THEME_SHOP_PATH.'/cart.php';
+    if(is_file($theme_cart_file)) {
+        include_once($theme_cart_file);
+        return;
+        unset($theme_cart_file);
+    }
+}
+
 $g5['title'] = '장바구니';
 include_once('./_head.php');
 ?>
