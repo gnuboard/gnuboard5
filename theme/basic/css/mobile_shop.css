@@ -714,6 +714,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sev_hhtml img,#sev_thtml img{width:100%}
 
 /*피시일때 모바일버전 주문폼*/
+#sod_frm {position:relative}
 #sod_frm p{margin-bottom:10px}
 #forderform .tbl_frm01 th{border-bottom:1px solid #e9e9e9;background:#f7f7f7;padding-left:10px}
 #sod_list thead th{padding:8px 0 }
