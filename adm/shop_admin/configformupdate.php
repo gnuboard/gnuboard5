@@ -194,6 +194,7 @@ sql_query(" update {$g5['config_table']} set cf_use_point = '{$_POST['cf_use_poi
 // LG, 아이코드 설정
 $sql = " update {$g5['config_table']}
             set cf_sms_use              = '{$_POST['cf_sms_use']}',
+                cf_sms_type             = '{$_POST['cf_sms_type']}',
                 cf_icode_id             = '{$_POST['cf_icode_id']}',
                 cf_icode_pw             = '{$_POST['cf_icode_pw']}',
                 cf_icode_server_ip      = '{$_POST['cf_icode_server_ip']}',
