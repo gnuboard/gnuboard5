@@ -52,21 +52,21 @@ class LMS {
 		// 충전식
 		if ($this->socket_portcode == 1) {
 				if($sendType && $sendType == 1) {
-					$this->socket_port = 8200;		// LMS
-					//$this->socket_port=(int)rand(8200,8201);	// LMS
+					//$this->socket_port = 8200;		// LMS
+					$this->socket_port=(int)rand(8200,8201);	// LMS
 				} else {
-					$this->socket_port = 6295;		// SMS
-					//$this->socket_port=(int)rand(6295,6297);	// SMS
+					//$this->socket_port = 6295;		// SMS
+					$this->socket_port=(int)rand(6295,6297);	// SMS
 				}
 		}
 		// 정액제
 		else {
 			if($sendType && $sendType == 1) {
-				$this->socket_port = 8300; //	LMS
-				//$this->socket_port=(int)rand(8300,8301); //	LMS
+				//$this->socket_port = 8300; //	LMS
+				$this->socket_port=(int)rand(8300,8301); //	LMS
 			} else {
-				$this->socket_port = 6291; //	SMS
-				//$this->socket_port=(int)rand(6291,6293); //	SMS
+				//$this->socket_port = 6291; //	SMS
+				$this->socket_port=(int)rand(6291,6293); //	SMS
 			}
 		}
 
