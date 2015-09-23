@@ -324,15 +324,15 @@ if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
                     $strDate     = '';
                     $nCount      = count($strDest);
 
-                    $LMS = new LMS;
-                    $LMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
-                    $res = $LMS->Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate, $nCount);
+                    $SMS = new LMS;
+                    $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
+                    $res = $SMS->Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate, $nCount);
 
                     if($res) {
-                        $LMS->Send();
+                        $SMS->Send();
                     }
 
-                    $LMS->Init(); // 보관하고 있던 결과값을 지웁니다.
+                    $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
                 }
             }
 
@@ -353,15 +353,15 @@ if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
                     $strDate     = '';
                     $nCount      = count($strDest);
 
-                    $LMS = new LMS;
-                    $LMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
-                    $res = $LMS->Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate, $nCount);
+                    $SMS = new LMS;
+                    $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
+                    $res = $SMS->Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate, $nCount);
 
                     if($res) {
-                        $LMS->Send();
+                        $SMS->Send();
                     }
 
-                    $LMS->Init(); // 보관하고 있던 결과값을 지웁니다.
+                    $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
                 }
             }
         }
