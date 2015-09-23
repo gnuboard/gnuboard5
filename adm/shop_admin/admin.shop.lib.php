@@ -117,6 +117,6 @@ function conv_sms_contents($od_id, $contents)
         $sms_contents = str_replace("{회사명}", $default['de_admin_company_name'], $sms_contents);
     }
 
-    return iconv("utf-8", "euc-kr", stripslashes($sms_contents));
+    return stripslashes($sms_contents);
 }
 ?>

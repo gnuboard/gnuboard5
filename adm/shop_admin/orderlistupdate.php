@@ -3,18 +3,13 @@ $sub_menu = '400400';
 include_once('./_common.php');
 include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
-include_once(G5_LIB_PATH.'/icode.sms.lib.php');
 
 define("_ORDERMAIL_", true);
 
 //print_r2($_POST); exit;
 
 $sms_count = 0;
-if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'])
-{
-    $SMS = new SMS;
-	$SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
-}
+$sms_messages = array();
 
 for ($i=0; $i<count($_POST['chk']); $i++)
 {
@@ -50,10 +45,8 @@ for ($i=0; $i<count($_POST['chk']); $i++)
                     $receive_number = preg_replace("/[^0-9]/", "", $od['od_hp']);	// 수신자번호
                     $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
 
-                    if($receive_number && $send_number) {
-                        $SMS->Add($receive_number, $send_number, $config['cf_icode_id'], $sms_contents, "");
-                        $sms_count++;
-                    }
+                    if($receive_number)
+                        $sms_messages[] = array('recv' => $receive_number, 'send' => $send_number, 'cont' => $sms_contents);
                 }
             }
 
@@ -85,10 +78,8 @@ for ($i=0; $i<count($_POST['chk']); $i++)
                     $receive_number = preg_replace("/[^0-9]/", "", $od['od_hp']);	// 수신자번호
                     $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
 
-                    if($receive_number && $send_number) {
-                        $SMS->Add($receive_number, $send_number, $config['cf_icode_id'], $sms_contents, "");
-                        $sms_count++;
-                    }
+                    if($receive_number)
+                        $sms_messages[] = array('recv' => $receive_number, 'send' => $send_number, 'cont' => $sms_contents);
                 }
             }
 
@@ -150,9 +141,52 @@ for ($i=0; $i<count($_POST['chk']); $i++)
 }
 
 // SMS
-if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'] && $sms_count)
-{
-    $SMS->Send();
+$sms_count = count($sms_messages);
+if($sms_count > 0) {
+    if($config['cf_sms_type'] == 'LMS') {
+        include_once(G5_LIB_PATH.'/icode.lms.lib.php');
+
+        $port_setting = get_icode_port_type($config['cf_icode_id'], $config['cf_icode_pw']);
+
+        // SMS 모듈 클래스 생성
+        if($port_setting !== false) {
+            $SMS = new LMS;
+            $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
+
+            for($s=0; $s<$sms_count; $s++) {
+                $strDest     = array();
+                $strDest[]   = $sms_messages[$s]['recv'];
+                $strCallBack = $sms_messages[$s]['send'];
+                $strCaller   = iconv_euckr(trim($default['de_admin_company_name']));
+                $strSubject  = '';
+                $strURL      = '';
+                $strData     = iconv_euckr($sms_messages[$s]['cont']);
+                $strDate     = '';
+                $nCount      = count($strDest);
+
+                $res = $SMS->Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate, $nCount);
+
+                $SMS->Send();
+                $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
+            }
+        }
+    } else {
+        include_once(G5_LIB_PATH.'/icode.sms.lib.php');
+
+        $SMS = new SMS; // SMS 연결
+        $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
+
+        for($s=0; $s<$sms_count; $s++) {
+            $recv_number = $sms_messages[$s]['recv'];
+            $send_number = $sms_messages[$s]['send'];
+            $sms_content = iconv_euckr($sms_messages[$s]['cont']);
+
+            $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], $sms_content, "");
+        }
+
+        $SMS->Send();
+        $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
+    }
 }
 
 $qstr  = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search";
