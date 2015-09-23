@@ -2,7 +2,7 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-if($od_settle_case != '무통장' && $default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
+if(($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') && $default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
     alert('결제등록 요청 후 주문해 주십시오.');
 
 // 장바구니가 비어있는가?

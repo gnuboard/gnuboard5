@@ -395,11 +395,14 @@
     	}
     	public function writeLog($strLogText) {
     	    $log_string = "";
-            $exclude = array('MID', 'merchantEncKey', 'merchantHashKey', 'CancelPwd');
+            $exclude = array('MID', 'merchantEncKey', 'merchantHashKey', 'CancelPwd', 'site_cd', 'def_site_cd', 'CST_MID', 'LGD_MID');
     	    if (is_array($strLogText)) {
     	        $log_string = "[".date("Y/m/d H:i:s")."] \r\n";
     	        foreach (array_keys($strLogText) as $key) {
                     if(in_array($key, $exclude))
+                        continue;
+
+                    if(preg_match('#^od_.+$#', $key))
                         continue;
 
                     $log_string = $log_string."                      [".$key."] => ".$strLogText[$key]."\r\n";
