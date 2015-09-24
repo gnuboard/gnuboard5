@@ -29,9 +29,9 @@ if($config['cf_cert_use'] == 2) {
 } else {
     // 테스트일 경우
     $cpCode = 'P00000000000';
-    $idpUrl = 'https://tipin.ok-name.co.kr:8443/tis/ti/POTI90B_SendCertInfo.jsp';
+    $idpUrl = 'https://tmpin.ok-name.co.kr:5443/tis/ti/POTI90B_SendCertInfo.jsp';
     $EndPointURL = 'http://twww.ok-name.co.kr:8888/KcbWebService/OkNameService'; //EndPointURL, 테스트 서버
-    $kcbForm_action = 'https://tipin.ok-name.co.kr:8443/tis/ti/POTI01A_LoginRP.jsp';
+    $kcbForm_action = 'https://tmpin.ok-name.co.kr:5443/tis/ti/POTI01A_LoginRP.jsp';
 }
 
 $idpCode   = 'V';

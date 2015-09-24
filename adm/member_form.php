@@ -31,6 +31,8 @@ else if ($w == 'u')
     $required_mb_password = '';
     $html_title = '수정';
 
+    $mb['mb_name'] = get_text($mb['mb_name']);
+    $mb['mb_nick'] = get_text($mb['mb_nick']);
     $mb['mb_email'] = get_text($mb['mb_email']);
     $mb['mb_homepage'] = get_text($mb['mb_homepage']);
     $mb['mb_birth'] = get_text($mb['mb_birth']);
@@ -38,6 +40,7 @@ else if ($w == 'u')
     $mb['mb_hp'] = get_text($mb['mb_hp']);
     $mb['mb_addr1'] = get_text($mb['mb_addr1']);
     $mb['mb_addr2'] = get_text($mb['mb_addr2']);
+    $mb['mb_addr3'] = get_text($mb['mb_addr3']);
     $mb['mb_signature'] = get_text($mb['mb_signature']);
     $mb['mb_recommend'] = get_text($mb['mb_recommend']);
     $mb['mb_profile'] = get_text($mb['mb_profile']);
