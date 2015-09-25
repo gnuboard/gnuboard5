@@ -49,9 +49,5 @@ if (!empty($config['cf_sms_use'])) {
         // 아이코드에 실제로 보내지 않고 가상(Random)으로 전송결과를 저장합니다.
         $g5['sms5_demo_send'] = true;
     }
-
-    include_once(G5_LIB_PATH.'/icode.sms.lib.php');
-    include_once(G5_SMS5_PATH.'/sms5.lib.php');
-
 }
 ?>
