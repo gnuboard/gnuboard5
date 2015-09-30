@@ -392,7 +392,7 @@ if ($is_guest) {
 $is_dhtml_editor = false;
 $is_dhtml_editor_use = false;
 $editor_content_js = '';
-if(!G5_IS_MOBILE || defined('G5_IS_MOBILE_DHTML_USE') && G5_IS_MOBILE_DHTML_USE)
+if(!is_mobile() || defined('G5_IS_MOBILE_DHTML_USE') && G5_IS_MOBILE_DHTML_USE)
     $is_dhtml_editor_use = true;
 
 // 모바일에서는 G5_IS_MOBILE_DHTML_USE 설정에 따라 DHTML 에디터 적용

@@ -1,6 +1,14 @@
 <?php
 include_once("./_common.php");
 
+if(!$config['cf_sms_use'])
+    alert_close('문자보내기를 이용하실 수 없습니다.');
+
+// SMS 라이브러리
+$config['cf_sms_type'] = '';
+include_once(G5_LIB_PATH.'/icode.sms.lib.php');
+include_once(G5_SMS5_PATH.'/sms5.lib.php');
+
 $g5['title'] = "문자전송중";
 
 if (!($token && get_session("ss_token") == $token))

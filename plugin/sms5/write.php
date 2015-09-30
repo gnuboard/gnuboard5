@@ -1,6 +1,9 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+if(!$config['cf_sms_use'])
+    alert_close('문자보내기를 이용하실 수 없습니다.');
+
 if( !$sms5['bo_skin'] ){
     $sms5['bo_skin'] = "basic";
 }
