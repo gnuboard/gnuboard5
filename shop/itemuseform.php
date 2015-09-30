@@ -45,7 +45,7 @@ include_once(G5_PATH.'/head.sub.php');
 
 $is_dhtml_editor = false;
 // 모바일에서는 DHTML 에디터 사용불가
-if ($config['cf_editor'] && !G5_IS_MOBILE) {
+if ($config['cf_editor'] && (!is_mobile() || defined('G5_IS_MOBILE_DHTML_USE') && G5_IS_MOBILE_DHTML_USE)) {
     $is_dhtml_editor = true;
 }
 $editor_html = editor_html('is_content', get_text($use['is_content'], 0), $is_dhtml_editor);
