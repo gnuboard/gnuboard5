@@ -16,7 +16,7 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
 <?php } ?>
 
 <div id="display_pay_button" class="btn_confirm" style="display:none">
-    <input type="submit" value="주문하기" class="btn_submit">
+    <input type="submit" value="주문하기" onclick="return forderform_check(this.form);" class="btn_submit">
     <a href="javascript:history.go(-1);" class="btn01">취소</a>
 </div>
 <div id="display_pay_process" style="display:none">

@@ -12,7 +12,7 @@ if($is_kakaopay_use) {
 }
 ?>
 
-<form name="forderform" id="forderform" method="post" action="<?php echo $order_action_url; ?>" onsubmit="return forderform_check(this);" autocomplete="off">
+<form name="forderform" id="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
 <div id="sod_frm">
     <!-- 주문상품 확인 시작 { -->
     <p>주문하실 상품을 확인하세요.</p>
@@ -1409,11 +1409,7 @@ function forderform_check(f)
     f.rcvr_add2.value = f.od_b_addr2.value;
 
     if(f.pay_method.value != "무통장") {
-        if(jsf__pay( f )) {
-            return true;
-        } else {
-            return false;
-        }
+        return jsf__pay( f );
     } else {
         return true;
     }
