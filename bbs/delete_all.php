@@ -1,5 +1,8 @@
 <?php
-include_once('./_common.php');
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+
+if(!$is_admin)
+    alert('접근 권한이 없습니다.', G5_URL);
 
 // 4.11
 @include_once($board_skin_path.'/delete_all.head.skin.php');
@@ -13,13 +16,16 @@ if ($wr_id) // 건별삭제
 else // 일괄삭제
     $tmp_array = $_POST['chk_wr_id'];
 
+$chk_count = count($tmp_array);
+
+if($chk_count > (G5_IS_MOBILE ? $board['bo_mobile_page_rows'] : $board['bo_page_rows']))
+    alert('올바른 방법으로 이용해 주십시오.');
 
 // 사용자 코드 실행
 @include_once($board_skin_path.'/delete_all.skin.php');
 
-
 // 거꾸로 읽는 이유는 답변글부터 삭제가 되어야 하기 때문임
-for ($i=count($tmp_array)-1; $i>=0; $i--)
+for ($i=$chk_count-1; $i>=0; $i--)
 {
     $write = sql_fetch(" select * from $write_table where wr_id = '$tmp_array[$i]' ");
 
