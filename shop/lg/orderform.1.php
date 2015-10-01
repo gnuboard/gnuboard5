@@ -56,6 +56,8 @@ function payment_return() {
         document.getElementById("forderform").action = "<?php echo $order_action_url; ?>";
         document.getElementById("forderform").submit();
     } else {
+        document.getElementById("forderform").target = "_self";
+        document.getElementById("forderform").action = "<?php echo $order_action_url; ?>";
         alert("LGD_RESPCODE (결과코드) : " + fDoc.document.getElementById('LGD_RESPCODE').value + "\n" + "LGD_RESPMSG (결과메시지): " + fDoc.document.getElementById('LGD_RESPMSG').value);
         closeIframe();
     }

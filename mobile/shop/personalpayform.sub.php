@@ -1,44 +1,11 @@
 <?php
-include_once('./_common.php');
-
-$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' and pp_use = '1' and pp_price > 0 ";
-$pp = sql_fetch($sql);
-
-if(!$pp['pp_id'])
-    alert('개인결제 정보가 존재하지 않습니다.');
-
-if($pp['pp_tno'])
-    alert('이미 결제하신 개인결제 내역입니다.');
-
-$g5['title'] = $pp['pp_name'].'님 개인결제';
-include_once(G5_MSHOP_PATH.'/_head.php');
-
-$action_url = G5_HTTPS_MSHOP_URL.'/personalpayformupdate.php';
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 require_once(G5_MSHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 
 // 결제등록 요청시 사용할 입금마감일
 $ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
 $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
-
-// 개인결제 체크를 위한 hash
-$hash_data = md5($pp['pp_id'].$pp['pp_price'].$pp['pp_time']);
-set_session('ss_personalpay_id', $pp['pp_id']);
-set_session('ss_personalpay_hash', $hash_data);
-
-// 에스크로 상품정보
-if($default['de_escrow_use']) {
-    $good_info .= "seq=1".chr(31);
-    $good_info .= "ordr_numb={$pp_id}_".sprintf("%04d", 1).chr(31);
-    $good_info .= "good_name=".addslashes($pp['pp_name'].'님 개인결제').chr(31);
-    $good_info .= "good_cntx=1".chr(31);
-    $good_info .= "good_amtx=".$pp['pp_price'].chr(31);
-}
-
-// 주문폼과 공통 사용을 위해 추가
-$od_id = $pp_id;
-$tot_price = $pp['pp_price'];
-$goods = $pp['pp_name'].'님 개인결제';
 ?>
 
 <div id="sod_approval_frm">
@@ -49,7 +16,7 @@ $goods = $pp['pp_name'].'님 개인결제';
 </div>
 
 <div id="sod_frm">
-    <form name="forderform" method="post" action="<?php echo $action_url; ?>" autocomplete="off">
+    <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
     <input type="hidden" name="pp_id" value="<?php echo $pp['pp_id']; ?>">
     <section id="sod_frm_orderer">
         <h2>개인결제정보</h2>
@@ -351,7 +318,3 @@ function payment_check(f)
     return true;
 }
 </script>
-
-<?php
-include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

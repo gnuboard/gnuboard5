@@ -69,8 +69,4 @@ if(G5_IS_MOBILE)
     include_once(G5_MSHOP_PATH.'/_tail.php');
 else
     include_once(G5_SHOP_PATH.'/_tail.php');
-
-// 결제대행사별 코드 include (스크립트 실행)
-if(!$is_mobile_order)
-    require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.5.php');
 ?>
