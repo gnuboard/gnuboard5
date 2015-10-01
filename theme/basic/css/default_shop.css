@@ -548,7 +548,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .sod_list .total_span span{position:absolute;top:5px;left:0}
 .sod_list .total_span strong{font-size:1.2em}
 
-#sod_frm {margin:10px;}
+#sod_frm {}
 #sod_frm section{margin-bottom:10px}
 #sod_frm p#sod_frm_pt_alert {margin:20px 0;text-align:center }
 #sod_bsk_list #mod_option_frm .sit_ov_tbl{background:#ededed;margin-top:5px}
