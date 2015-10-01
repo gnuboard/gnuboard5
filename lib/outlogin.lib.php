@@ -7,7 +7,7 @@ function outlogin($skin_dir='basic')
     global $config, $member, $g5, $urlencode, $is_admin, $is_member;
 
     if (array_key_exists('mb_nick', $member)) {
-        $nick  = cut_str($member['mb_nick'], $config['cf_cut_name']);
+        $nick  = get_text(cut_str($member['mb_nick'], $config['cf_cut_name']));
     }
     if (array_key_exists('mb_point', $member)) {
         $point = number_format($member['mb_point']);

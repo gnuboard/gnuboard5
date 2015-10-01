@@ -14,7 +14,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <input type="hidden" name="attach" value="2">
     <input type="hidden" name="token" value="<?php echo $token ?>">
     <?php if ($is_member) { // 회원이면  ?>
-    <input type="hidden" name="fnick" value="<?php echo $member['mb_nick'] ?>">
+    <input type="hidden" name="fnick" value="<?php echo get_text($member['mb_nick']); ?>">
     <input type="hidden" name="fmail" value="<?php echo $member['mb_email'] ?>">
     <?php }  ?>
 

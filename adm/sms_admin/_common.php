@@ -2,6 +2,7 @@
 define('G5_IS_ADMIN', true);
 include_once ('../../common.php');
 include_once(G5_ADMIN_PATH.'/admin.lib.php');
+include_once(G5_SMS5_PATH.'/sms5.lib.php');
 
 if (!strstr($_SERVER['SCRIPT_NAME'], 'install.php')) {
     if(!mysql_num_rows(mysql_query(" show tables like '{$g5['sms5_config_table']}' ")))

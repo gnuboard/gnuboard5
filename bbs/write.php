@@ -390,9 +390,17 @@ if ($is_guest) {
 }
 
 $is_dhtml_editor = false;
-// 모바일에서는 DHTML 에디터 사용불가
-if ($config['cf_editor'] && !G5_IS_MOBILE && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
+$is_dhtml_editor_use = false;
+$editor_content_js = '';
+if(!is_mobile() || defined('G5_IS_MOBILE_DHTML_USE') && G5_IS_MOBILE_DHTML_USE)
+    $is_dhtml_editor_use = true;
+
+// 모바일에서는 G5_IS_MOBILE_DHTML_USE 설정에 따라 DHTML 에디터 적용
+if ($config['cf_editor'] && $is_dhtml_editor_use && $board['bo_use_dhtml_editor'] && $member['mb_level'] >= $board['bo_html_level']) {
     $is_dhtml_editor = true;
+
+    if(is_file(G5_EDITOR_PATH.'/'.$config['cf_editor'].'/autosave.editor.js'))
+        $editor_content_js = '<script src="'.G5_EDITOR_URL.'/'.$config['cf_editor'].'/autosave.editor.js"></script>'.PHP_EOL;
 }
 $editor_html = editor_html('wr_content', $content, $is_dhtml_editor);
 $editor_js = '';

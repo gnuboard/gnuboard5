@@ -380,7 +380,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     else
         $list['last2'] = substr($list['last2'],5,5);
 
-    $list['wr_homepage'] = get_text(addslashes($list['wr_homepage']));
+    $list['wr_homepage'] = get_text($list['wr_homepage']);
 
     $tmp_name = get_text(cut_str($list['wr_name'], $config['cf_cut_name'])); // 설정된 자리수 만큼만 이름 출력
     if ($board['bo_use_sideview'])
@@ -1201,11 +1201,6 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $email = base64_encode($email);
     $homepage = set_http(clean_xss_tags($homepage));
 
-    $name = preg_replace("/\&#039;/", "", $name);
-    $name = preg_replace("/\'/", "", $name);
-    $name = preg_replace("/\"/", "&#034;", $name);
-    $title_name = $name;
-
     $tmp_name = "";
     if ($mb_id) {
         //$tmp_name = "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
@@ -1367,10 +1362,16 @@ function cut_str($str, $len, $suffix="…")
 // TEXT 형식으로 변환
 function get_text($str, $html=0)
 {
-    /* 3.22 막음 (HTML 체크 줄바꿈시 출력 오류때문)
-    $source[] = "/  /";
-    $target[] = " &nbsp;";
-    */
+    $source[] = "<";
+    $target[] = "&lt;";
+    $source[] = ">";
+    $target[] = "&gt;";
+    $source[] = "\"";
+    $target[] = "&#034;";
+    $source[] = "\'";
+    $target[] = "&#039;";
+
+    $str = str_replace($target, $source, $str);
 
     // 3.31
     // TEXT 출력일 경우 &amp; &nbsp; 등의 코드를 정상으로 출력해 주기 위함
@@ -1378,21 +1379,12 @@ function get_text($str, $html=0)
         $str = html_symbol($str);
     }
 
-    $source[] = "/</";
-    $target[] = "&lt;";
-    $source[] = "/>/";
-    $target[] = "&gt;";
-    //$source[] = "/\"/";
-    //$target[] = "&#034;";
-    $source[] = "/\'/";
-    $target[] = "&#039;";
-    //$source[] = "/}/"; $target[] = "&#125;";
     if ($html) {
-        $source[] = "/\n/";
+        $source[] = "\n";
         $target[] = "<br/>";
     }
 
-    return preg_replace($source, $target, $str);
+    return str_replace($source, $target, $str);
 }
 
 
@@ -2722,11 +2714,6 @@ function get_search_string($stx)
 function clean_xss_tags($str)
 {
     $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
-
-    $search  = array('"', "'");
-    $replace = array('&#34;', '&#39;');
-
-    $str = str_replace($search, $replace, $str);
 
     return $str;
 }

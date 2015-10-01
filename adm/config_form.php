@@ -180,6 +180,12 @@ if(!isset($config['cf_kakao_js_apikey'])) {
                     ADD `cf_kakao_js_apikey` varchar(255) NOT NULL DEFAULT '' AFTER `cf_googl_shorturl_apikey` ", true);
 }
 
+// SMS 전송유형 필드 추가
+if(!isset($config['cf_sms_type'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_sms_type` varchar(10) NOT NULL DEFAULT '' AFTER `cf_sms_use` ", true);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -1035,6 +1041,16 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="cf_sms_type">SMS 전송유형</label></th>
+            <td>
+                <?php echo help("전송유형을 SMS로 선택하시면 최대 80바이트까지 전송하실 수 있으며<br>LMS로 선택하시면 90바이트 이하는 SMS로, 그 이상은 1500바이트까지 LMS로 전송됩니다.<br>요금은 건당 SMS는 16원, LMS는 48원입니다."); ?>
+                <select id="cf_sms_type" name="cf_sms_type">
+                    <option value="" <?php echo get_selected($config['cf_sms_type'], ''); ?>>SMS</option>
+                    <option value="LMS" <?php echo get_selected($config['cf_sms_type'], 'LMS'); ?>>LMS</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="cf_icode_id">아이코드 회원아이디</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 회원아이디를 입력합니다."); ?>
@@ -1069,7 +1085,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row">아이코드 SMS 신청<br>회원가입</th>
             <td>
-                <?php echo help("아래 링크에서 회원가입 하시면 문자 건당 16원에 제공 받을 수 있습니다."); ?>
                 <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
             </td>
         </tr>
@@ -1079,12 +1094,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td colspan="3">
                 <?php echo number_format($userinfo['coin']); ?> 원.
                 <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $config['cf_icode_id']; ?>&amp;icode_passwd=<?php echo $config['cf_icode_pw']; ?>" target="_blank" class="btn_frmline" onclick="window.open(this.href,'icode_payment', 'scrollbars=1,resizable=1'); return false;">충전하기</a>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">건수별 금액</th>
-            <td colspan="3">
-                <?php echo number_format($userinfo['gpay']); ?> 원.
             </td>
         </tr>
         <?php } ?>

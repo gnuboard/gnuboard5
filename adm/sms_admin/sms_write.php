@@ -33,7 +33,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
             <label for="wr_message" id="wr_message_lbl">내용</label>
             <textarea name="wr_message" id="wr_message" class="box_txt box_square" onkeyup="byte_check('wr_message', 'sms_bytes');" accesskey="m"></textarea>
 
-            <div id="sms_byte"><span id="sms_bytes">0</span> / 80 byte</div>
+            <div id="sms_byte"><span id="sms_bytes">0</span> / <span id="sms_max_bytes"><?php echo ($config['cf_sms_type'] == 'LMS' ? 90 : 80); ?></span> byte</div>
 
             <button type="button" id="write_sc_btn" class="write_scemo_btn">특수<br>기호</button>
             <div id="write_sc" class="write_scemo">
@@ -406,6 +406,7 @@ function byte_check(wr_message, sms_bytes)
 {
     var conts = document.getElementById(wr_message);
     var bytes = document.getElementById(sms_bytes);
+    var max_bytes = document.getElementById("sms_max_bytes");
 
     var i = 0;
     var cnt = 0;
@@ -424,6 +425,40 @@ function byte_check(wr_message, sms_bytes)
 
     bytes.innerHTML = cnt;
 
+    <?php if($config['cf_sms_type'] == 'LMS') { ?>
+    if(cnt > 90)
+        max_bytes.innerHTML = 1500;
+    else
+        max_bytes.innerHTML = 90;
+
+    if (cnt > 1500)
+    {
+        exceed = cnt - 1500;
+        alert('메시지 내용은 1500바이트를 넘을수 없습니다.\n\n작성하신 메세지 내용은 '+ exceed +'byte가 초과되었습니다.\n\n초과된 부분은 자동으로 삭제됩니다.');
+        var tcnt = 0;
+        var xcnt = 0;
+        var tmp = conts.value;
+        for (i=0; i<tmp.length; i++)
+        {
+            ch = tmp.charAt(i);
+            if (escape(ch).length > 4) {
+                tcnt += 2;
+            } else {
+                tcnt += 1;
+            }
+
+            if (tcnt > 1500) {
+                tmp = tmp.substring(0,i);
+                break;
+            } else {
+                xcnt = tcnt;
+            }
+        }
+        conts.value = tmp;
+        bytes.innerHTML = xcnt;
+        return;
+    }
+    <?php } else { ?>
     if (cnt > 80)
     {
         exceed = cnt - 80;
@@ -451,6 +486,7 @@ function byte_check(wr_message, sms_bytes)
         bytes.innerHTML = xcnt;
         return;
     }
+    <?php } ?>
 }
 
 <?php
