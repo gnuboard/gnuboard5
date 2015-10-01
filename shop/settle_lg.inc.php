@@ -26,6 +26,10 @@ $LGD_BUYERID            = '';                                               //�
 $LGD_CUSTOM_SKIN        = 'red';                                            //상점정의 결제창 스킨 (red, purple, yellow)
 $LGD_WINDOW_VER         = '2.5';                                            //결제창 버젼정보
 $LGD_MERTKEY            = '';                                               //상점MertKey(mertkey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실수 있습니다)
+$LGD_WINDOW_TYPE        = 'iframe';                                         //결제창 호출 방식
+$LGD_CUSTOM_SWITCHINGTYPE = 'IFRAME';                                       //신용카드 카드사 인증 페이지 연동 방식
+$LGD_RETURNURL          = G5_SHOP_URL.'/lg/returnurl.php';                  //LGD_RETURNURL 을 설정하여 주시기 바랍니다. 반드시 현재 페이지와 동일한 프로트콜 및  호스트이어야 합니다. 아래 부분을 반드시 수정하십시요.
+$LGD_VERSION            = 'PHP_Non-ActiveX_Standard';                       // 버전정보 (삭제하지 마세요)
 
 // 결제가능 수단
 $useablepay = array();

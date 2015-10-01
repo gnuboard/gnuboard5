@@ -1432,7 +1432,7 @@ function forderform_check(f)
     <?php } ?>
 
     if(f.LGD_CUSTOM_FIRSTPAY.value != "무통장") {
-          Pay_Request("<?php echo $od_id; ?>", f.LGD_AMOUNT.value, f.LGD_TIMESTAMP.value);
+          launchCrossPlatform(f);
     } else {
         f.submit();
     }
