@@ -720,3 +720,9 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_list thead th{padding:8px 0 }
 #sod_list .sod_opt{min-width:70px}
 #sod_frm #display_pay_button .btn01{width: 49%;text-align: center;padding: 11px 0px;background: #fff;border: 1px solid #34B5A1;color:#34B5A1}
+
+/*피시일때 모바일버전 개인결제폼*/
+#sod_frm_pay{padding:10px}
+#sod_frm_pay h2{padding:10px 0 10px}
+#display_pay_button .btn_submit{padding:8px 5px}
+#sod_frm_paysel{text-align:center}
