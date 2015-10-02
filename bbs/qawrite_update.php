@@ -217,7 +217,7 @@ if($w == '' || $w == 'a' || $w == 'r') {
     $sql = " insert into {$g5['qa_content_table']}
                 set qa_num          = '$qa_num',
                     mb_id           = '{$member['mb_id']}',
-                    qa_name         = '{$member['mb_nick']}',
+                    qa_name         = '".addslashes($member['mb_nick'])."',
                     qa_email        = '$qa_email',
                     qa_hp           = '$qa_hp',
                     qa_type         = '$qa_type',

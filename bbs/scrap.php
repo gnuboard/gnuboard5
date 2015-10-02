@@ -4,7 +4,7 @@ include_once('./_common.php');
 if (!$is_member)
     alert_close('회원만 조회하실 수 있습니다.');
 
-$g5['title'] = $member['mb_nick'].'님의 스크랩';
+$g5['title'] = get_text($member['mb_nick']).'님의 스크랩';
 include_once(G5_PATH.'/head.sub.php');
 
 $sql_common = " from {$g5['scrap_table']} where mb_id = '{$member['mb_id']}' ";
