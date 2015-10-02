@@ -31,7 +31,7 @@ include_once(G5_PATH.'/head.sub.php');
 if (!$name)
     $name = base64_decode($email);
 else
-    $name = get_text(stripslashes($name));
+    $name = get_text(stripslashes($name), true);
 
 if (!isset($type))
     $type = 0;

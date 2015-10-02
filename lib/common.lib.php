@@ -383,8 +383,9 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     $list['wr_homepage'] = get_text($list['wr_homepage']);
 
     $tmp_name = get_text(cut_str($list['wr_name'], $config['cf_cut_name'])); // 설정된 자리수 만큼만 이름 출력
+    $tmp_name2 = cut_str($list['wr_name'], $config['cf_cut_name']); // 설정된 자리수 만큼만 이름 출력
     if ($board['bo_use_sideview'])
-        $list['name'] = get_sideview($list['mb_id'], $tmp_name, $list['wr_email'], $list['wr_homepage']);
+        $list['name'] = get_sideview($list['mb_id'], $tmp_name2, $list['wr_email'], $list['wr_homepage']);
     else
         $list['name'] = '<span class="'.($list['mb_id']?'sv_member':'sv_guest').'">'.$tmp_name.'</span>';
 
@@ -1201,6 +1202,10 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $email = base64_encode($email);
     $homepage = set_http(clean_xss_tags($homepage));
 
+    $name     = get_text($name, true);
+    $email    = get_text($email);
+    $homepage = get_text($homepage);
+
     $tmp_name = "";
     if ($mb_id) {
         //$tmp_name = "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" target=\"_blank\" onclick=\"return false;\">$name</a>";
@@ -1234,10 +1239,6 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         $tmp_name = '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.$sca.'&amp;sfl=wr_name,1&amp;stx='.$name.'" title="'.$name.' 이름으로 검색" class="sv_guest" onclick="return false;">'.$name.'</a>';
         $title_mb_id = '[비회원]';
     }
-
-    $name     = get_text($name);
-    $email    = get_text($email);
-    $homepage = get_text($homepage);
 
     $str = "<span class=\"sv_wrap\">\n";
     $str .= $tmp_name."\n";
@@ -1360,7 +1361,7 @@ function cut_str($str, $len, $suffix="…")
 
 
 // TEXT 형식으로 변환
-function get_text($str, $html=0)
+function get_text($str, $html=0, $restore=false)
 {
     $source[] = "<";
     $target[] = "&lt;";
@@ -1371,7 +1372,8 @@ function get_text($str, $html=0)
     $source[] = "\'";
     $target[] = "&#039;";
 
-    $str = str_replace($target, $source, $str);
+    if($restore)
+        $str = str_replace($target, $source, $str);
 
     // 3.31
     // TEXT 출력일 경우 &amp; &nbsp; 등의 코드를 정상으로 출력해 주기 위함
