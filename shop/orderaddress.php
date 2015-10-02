@@ -31,16 +31,25 @@ $result = sql_query($sql);
 if(!mysql_num_rows($result))
     alert_close('배송지 목록 자료가 없습니다.');
 
+$order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/orderaddress.php');
     return;
 }
 
+// 테마에 orderaddress.php 있으면 include
+if(defined('G5_THEME_SHOP_PATH')) {
+    $theme_orderaddress_file = G5_THEME_SHOP_PATH.'/orderaddress.php';
+    if(is_file($theme_orderaddress_file)) {
+        include_once($theme_orderaddress_file);
+        return;
+        unset($theme_orderaddress_file);
+    }
+}
+
 $g5['title'] = '배송지 목록';
 include_once(G5_PATH.'/head.sub.php');
-
-$order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';
-
 ?>
 <form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
 <div id="sod_addr" class="new_win">
