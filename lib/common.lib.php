@@ -1202,7 +1202,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $email = base64_encode($email);
     $homepage = set_http(clean_xss_tags($homepage));
 
-    $name     = get_text($name, true);
+    $name     = get_text($name, 0, true);
     $email    = get_text($email);
     $homepage = get_text($homepage);
 
