@@ -2650,9 +2650,9 @@ function module_exec_check($exe, $type)
 // 주소출력
 function print_address($addr1, $addr2, $addr3, $addr4)
 {
-    $address = trim($addr1);
-    $addr2 = trim($addr2);
-    $addr3 = trim($addr3);
+    $address = get_text(trim($addr1));
+    $addr2   = get_text(trim($addr2));
+    $addr3   = get_text(trim($addr3));
 
     if($addr4 == 'N') {
         if($addr2)
