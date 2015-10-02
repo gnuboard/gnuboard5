@@ -61,7 +61,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
         <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
         <input type="hidden" name="w" value="">
         <input type="hidden" name="skin_dir" value="<?php echo $skin_dir ?>">
-        <?php if ($is_member) {  ?><input type="hidden" name="pc_name" value="<?php echo cut_str($member['mb_nick'],255) ?>"><?php }  ?>
+        <?php if ($is_member) {  ?><input type="hidden" name="pc_name" value="<?php echo get_text(cut_str($member['mb_nick'],255)); ?>"><?php }  ?>
         <h3><?php echo $po_etc ?></h3>
 
         <div class="tbl_frm01 tbl_wrap">
