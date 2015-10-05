@@ -1,6 +1,16 @@
 <?php
 include_once('./_common.php');
 
+// 테마에 coupon.php 있으면 include
+if(defined('G5_THEME_MSHOP_PATH')) {
+    $theme_coupon_file = G5_THEME_MSHOP_PATH.'/coupon.php';
+    if(is_file($theme_coupon_file)) {
+        include_once($theme_coupon_file);
+        return;
+        unset($theme_coupon_file);
+    }
+}
+
 if ($is_guest)
     alert_close('회원만 조회하실 수 있습니다.');
 
