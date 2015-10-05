@@ -351,9 +351,9 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_frm_paysel ul {margin:0;padding:0;}
 #sod_frm_paysel ul:after {display:block;visibility:hidden;clear:both;content:""}
 #sod_frm_paysel li {float:left;padding:5px 2%;width:46%;height:21px}
-#sod_frm_paysel .KPAY{background:url('../../../img/kpay_logo.png') no-repeat;padding-left:37px;}
-#sod_frm_paysel .PAYNOW{background:url('../../../img/paynow_logo.png') no-repeat;padding-left:46px;}
-#sod_frm_paysel .PAYCO{background:url('../../../img/payco_logo.png') no-repeat 1px ;padding-left:46px;}
+#sod_frm_paysel .KPAY{background:url('../../../img/kpay_logo.png') no-repeat;width:37px;height:15px;overflow:hidden;text-indent:-999px;display:inline-block;}
+#sod_frm_paysel .PAYNOW{background:url('../../../img/paynow_logo.png') no-repeat;width:46px;height:15px;overflow:hidden;text-indent:-999px;display:inline-block;}
+#sod_frm_paysel .PAYCO{background:url('../../../img/payco_logo.png') no-repeat 1px ;width:46px;height:15px;overflow:hidden;text-indent:-999px;display:inline-block;}
 .kakaopay_icon{background:url('../../../img/kakao.png') no-repeat ;height:21px;width:74px;display:inline-block;overflow:hidden;text-indent:-999px}
 
 
@@ -722,7 +722,6 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_frm #display_pay_button .btn01{width: 49%;text-align: center;padding: 11px 0px;background: #fff;border: 1px solid #34B5A1;color:#34B5A1}
 
 /*피시일때 모바일버전 개인결제폼*/
-#sod_frm_pay{padding:10px}
+#sod_frm_pay{padding:10px 0}
 #sod_frm_pay h2{padding:10px 0 10px}
 #display_pay_button .btn_submit{padding:8px 5px}
-#sod_frm_paysel{text-align:center}
