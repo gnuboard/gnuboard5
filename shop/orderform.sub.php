@@ -599,7 +599,7 @@ if($is_kakaopay_use) {
             }
 
             $multi_settle++;
-            echo '<input type="radio" id="od_settle_easy_pay" name="od_settle_case" value="간편결제" '.$checked.'> <label for="od_settle_easy_pay" class="'.$pg_easy_pay_name.'">'.$pg_easy_pay_name.'(간편결제)</label>'.PHP_EOL;
+            echo '<input type="radio" id="od_settle_easy_pay" name="od_settle_case" value="간편결제" '.$checked.'> <label for="od_settle_easy_pay" class="'.$pg_easy_pay_name.'">'.$pg_easy_pay_name.'</label>'.PHP_EOL;
             $checked = '';
         }
 
