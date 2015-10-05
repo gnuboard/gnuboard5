@@ -280,3 +280,9 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 /* Mobile화면으로 */
 #device_change {display:block;margin:0.3em;padding:0.5em 0;border:1px solid #eee;border-radius:2em;background:#fff;color:#000;font-size:2em;text-decoration:none;text-align:center}
+
+/*캡챠 모바일에서 피시버젼*/
+#captcha.m_captcha audio{display:block;margin:5px 0 10px}
+#captcha.m_captcha #captcha_key{margin-left:3px }
+#captcha.m_captcha #captcha_reload span{background:none;display:inline}
+#captcha.m_captcha  #captcha_reload {position:relative ;width:auto;top:0;left:0;margin:0;padding:0 10px;height:43px;border:0;background:#e4eaec;vertical-align:middle;overflow:hidden;cursor:pointer}

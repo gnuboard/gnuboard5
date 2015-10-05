@@ -283,4 +283,11 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 
 /*메일인증*/
 .rg_em{margin-top:5px}
+
 .rg_em caption{padding:0;font-size:0;line-height:0;overflow:hidden}
+
+/*캡챠 모바일에서 피시버젼*/
+#captcha.m_captcha audio{display:block;margin:5px 0 10px;}
+#captcha.m_captcha #captcha_key{margin-left:3px }
+#captcha.m_captcha #captcha_reload span{background:none;display:inline}
+#captcha.m_captcha  #captcha_reload {position:relative ;width:auto;top:0;left:0;margin:0;padding:0 10px;height:43px;border:0;background:#e4eaec;vertical-align:middle;overflow:hidden;cursor:pointer}

@@ -235,6 +235,9 @@ class KCAPTCHA{
 // 캡챠 HTML 코드 출력
 function captcha_html($class="captcha")
 {
+    if(is_mobile())
+        $class .= ' m_captcha';
+
     $html .= "\n".'<script>var g5_captcha_url  = "'.G5_CAPTCHA_URL.'";</script>';
     //$html .= "\n".'<script>var g5_captcha_path = "'.G5_CAPTCHA_PATH.'";</script>';
     $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/kcaptcha.js"></script>';
