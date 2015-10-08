@@ -12,7 +12,7 @@ switch($_REQUEST['sns']) {
         header("Location:http://www.facebook.com/sharer/sharer.php?s=100&u=".$short_url."&p=".$title);
         break;
     case 'twitter' :
-        header("Location:http://twitter.com/home?status=".$title_url);
+        header("Location:https://twitter.com/intent/tweet?text=".$title_url);
         break;
     case 'gplus' :
         header("Location:https://plus.google.com/share?url=".$short_url);
