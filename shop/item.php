@@ -174,7 +174,7 @@ $item_qa_count = $row['cnt'];
 
 // 관련상품의 개수를 얻음
 if($default['de_rel_list_use']) {
-    $sql = " select count(*) as cnt from {$g5['g5_shop_item_relation_table']} a left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and  and b.it_use='1' ";
+    $sql = " select count(*) as cnt from {$g5['g5_shop_item_relation_table']} a left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and  b.it_use='1' ";
     $row = sql_fetch($sql);
     $item_relation_count = $row['cnt'];
 }
