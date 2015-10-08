@@ -474,7 +474,7 @@ and the roundoff errors in the Gaussian blur process, are welcome.
 
     $radius = abs(round($radius));     // Only integers make sense.
     if ($radius == 0) {
-        return $img; imagedestroy($img); break;        }
+        return $img; imagedestroy($img);        }
     $w = imagesx($img); $h = imagesy($img);
     $imgCanvas = imagecreatetruecolor($w, $h);
     $imgBlur = imagecreatetruecolor($w, $h);
