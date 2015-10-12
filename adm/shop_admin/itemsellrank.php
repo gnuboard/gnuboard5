@@ -40,7 +40,7 @@ if ($sel_ca_id)
 $sql .= " group by a.it_id
           order by $sort1 $sort2 ";
 $result = sql_query($sql);
-$total_count = mysql_num_rows($result);
+$total_count = sql_num_rows($result);
 
 $rows = $config['cf_page_rows'];
 $total_page  = ceil($total_count / $rows);  // 전체 페이지 계산
@@ -75,7 +75,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     <?php
     $sql1 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} order by ca_order, ca_id ";
     $result1 = sql_query($sql1);
-    for ($i=0; $row1=mysql_fetch_array($result1); $i++) {
+    for ($i=0; $row1=sql_fetch_array($result1); $i++) {
         $len = strlen($row1['ca_id']) / 2 - 1;
         $nbsp = "";
         for ($i=0; $i<$len; $i++) $nbsp .= "&nbsp;&nbsp;&nbsp;";
@@ -123,7 +123,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     </thead>
     <tbody>
     <?php
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $href = G5_SHOP_URL."/item.php?it_id={$row['it_id']}";
 

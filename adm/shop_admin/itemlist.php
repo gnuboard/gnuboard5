@@ -162,7 +162,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     </thead>
     <tbody>
     <?php
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
         $bg = 'bg'.($i%2);

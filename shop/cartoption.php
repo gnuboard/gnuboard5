@@ -19,7 +19,7 @@ $result = sql_query($sql);
 $sql2 = " select ct_price, it_name, ct_send_cost from {$g5['g5_shop_cart_table']} where od_id = '$cart_id' and it_id = '$it_id' order by ct_id asc limit 1 ";
 $row2 = sql_fetch($sql2);
 
-if(!mysql_num_rows($result))
+if(!sql_num_rows($result))
     die('no-cart');
 ?>
 

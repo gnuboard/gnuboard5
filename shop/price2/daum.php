@@ -107,7 +107,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 상품별옵션
     $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' order by io_no asc ";
     $result2 = sql_query($sql);
-    $opt_count = @mysql_num_rows($result2);
+    $opt_count = @sql_num_rows($result2);
 
     if(!$opt_count) {
         $it_name = $row['it_name'];

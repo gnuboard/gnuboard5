@@ -437,7 +437,7 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         $tot_couponprice   += $row['couponprice'];
         $tot_misu          += $row['od_misu'];
     }
-    mysql_free_result($result);
+    sql_free_result($result);
     if ($i == 0)
         echo '<tr><td colspan="12" class="empty_table">자료가 없습니다.</td></tr>';
     ?>

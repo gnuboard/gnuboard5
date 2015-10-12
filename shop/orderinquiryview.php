@@ -96,7 +96,7 @@ if($od['od_pg'] == 'lg') {
                               and it_id = '{$row['it_id']}'
                             order by io_type asc, ct_id asc ";
                 $res = sql_query($sql);
-                $rowspan = mysql_num_rows($res) + 1;
+                $rowspan = sql_num_rows($res) + 1;
 
                 // 합계금액 계산
                 $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,

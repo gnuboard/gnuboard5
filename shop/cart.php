@@ -82,7 +82,7 @@ include_once('./_head.php');
 
         $it_send_cost = 0;
 
-        for ($i=0; $row=mysql_fetch_array($result); $i++)
+        for ($i=0; $row=sql_fetch_array($result); $i++)
         {
             // 합계금액 계산
             $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,

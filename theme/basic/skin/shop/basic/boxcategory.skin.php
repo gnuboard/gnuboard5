@@ -20,7 +20,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             // 2단계 분류 판매 가능한 것만
             $sql2 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where LENGTH(ca_id) = '4' and SUBSTRING(ca_id,1,2) = '{$row['ca_id']}' and ca_use = '1' order by ca_order, ca_id ";
             $result2 = sql_query($sql2);
-            $count = mysql_num_rows($result2);
+            $count = sql_num_rows($result2);
         ?>
         <li class="gnb_1dli" style="z-index:<?php echo $gnb_zindex; ?>">
             <a href="<?php echo G5_SHOP_URL.'/list.php?ca_id='.$row['ca_id']; ?>" class="gnb_1da<?php if ($count) echo ' gnb_1dam'; ?>"><?php echo $row['ca_name']; ?></a>

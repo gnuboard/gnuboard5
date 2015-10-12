@@ -28,7 +28,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                   where a.mb_id = '{$member['mb_id']}'
                   order by a.wi_id desc ";
         $result = sql_query($sql);
-        for ($i=0; $row = mysql_fetch_array($result); $i++) {
+        for ($i=0; $row = sql_fetch_array($result); $i++) {
 
             $out_cd = '';
             $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";

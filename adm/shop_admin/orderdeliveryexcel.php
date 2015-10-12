@@ -12,7 +12,7 @@ $sql = " select *
             order by od_id desc ";
 $result = sql_query($sql);
 
-if(!@mysql_num_rows($result))
+if(!@sql_num_rows($result))
     alert_close('배송처리할 주문 내역이 없습니다.');
 
 /*================================================================================

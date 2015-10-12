@@ -50,7 +50,7 @@ if ($csv == 'csv')
         $sql .= " and b.ct_status = '$ct_status' ";
     $sql .="  order by od_time asc, b.it_id, b.io_type, b.ct_id ";
     $result = sql_query($sql);
-    $cnt = @mysql_num_rows($result);
+    $cnt = @sql_num_rows($result);
     if (!$cnt)
         alert("출력할 내역이 없습니다.");
 
@@ -65,7 +65,7 @@ if ($csv == 'csv')
     echo iconv('utf-8', 'euc-kr', "우편번호,주소,이름,전화1,전화2,상품명,수량,선택사항,배송비,상품코드,주문번호,운송장번호,전하실말씀\n");
 
     $save_it_id = '';
-    for ($i=0; $row=mysql_fetch_array($result); $i++)
+    for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $row = array_map('iconv_euckr', $row);
 
@@ -145,7 +145,7 @@ if ($csv == 'xls')
         $sql .= " and b.ct_status = '$ct_status' ";
     $sql .="  order by od_time asc, b.it_id, b.io_type, b.ct_id ";
     $result = sql_query($sql);
-    $cnt = @mysql_num_rows($result);
+    $cnt = @sql_num_rows($result);
     if (!$cnt)
         alert("출력할 내역이 없습니다.");
 
@@ -264,7 +264,7 @@ if ($ct_status)
     $sql .= " and b.ct_status = '$ct_status' ";
 $sql .= " order by a.od_id ";
 $result = sql_query($sql);
-if (mysql_num_rows($result) == 0)
+if (sql_num_rows($result) == 0)
 {
     echo "<script>alert('출력할 내역이 없습니다.'); window.close();</script>";
     exit;

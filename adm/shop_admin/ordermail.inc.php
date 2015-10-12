@@ -22,7 +22,7 @@ if ($od_send_mail)
               where od_id = '{$od['od_id']}'
               order by ct_id ";
     $result = sql_query($sql);
-    for ($j=0; $ct=mysql_fetch_array($result); $j++) {
+    for ($j=0; $ct=sql_fetch_array($result); $j++) {
         $cart_list[$j]['it_id']   = $ct['it_id'];
         $cart_list[$j]['it_name'] = $ct['it_name'];
         $cart_list[$j]['it_opt']  = $ct['ct_option'];

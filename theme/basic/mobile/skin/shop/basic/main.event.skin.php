@@ -5,7 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 $hsql = " select ev_id, ev_subject, ev_subject_strong from {$g5['g5_shop_event_table']} where ev_use = '1' order by ev_id desc ";
 $hresult = sql_query($hsql);
 
-if(mysql_num_rows($hresult)) {
+if(sql_num_rows($hresult)) {
     // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
     add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">', 0);
 ?>

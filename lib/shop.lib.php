@@ -259,7 +259,7 @@ class item_list
 
             $sql = $this->query;
             $result = sql_query($sql);
-            $this->total_count = @mysql_num_rows($result);
+            $this->total_count = @sql_num_rows($result);
 
         } else {
 
@@ -746,7 +746,7 @@ function display_type($type, $list_skin='', $list_mod='', $list_row='', $img_wid
     $sql .= " order by it_order, it_id desc limit $items ";
     $result = sql_query($sql);
     /*
-    if (!mysql_num_rows($result)) {
+    if (!sql_num_rows($result)) {
         return false;
     }
     */
@@ -781,7 +781,7 @@ function mobile_display_type($type, $skin_file, $list_row, $img_width, $img_heig
     $sql .= " order by it_order, it_id desc limit $items ";
     $result = sql_query($sql);
     /*
-    if (!mysql_num_rows($result)) {
+    if (!sql_num_rows($result)) {
         return false;
     }
     */
@@ -810,7 +810,7 @@ function display_category($no, $list_mod, $list_row, $img_width, $img_height, $c
         $sql .= " and ca_id LIKE '{$ca_id}%' ";
     $sql .= " order by it_order, it_id desc limit $items ";
     $result = sql_query($sql);
-    if (!mysql_num_rows($result)) {
+    if (!sql_num_rows($result)) {
         return false;
     }
 
@@ -938,7 +938,7 @@ function get_item_options($it_id, $subject)
 
     $sql = " select * from {$g5['g5_shop_item_option_table']} where io_type = '0' and it_id = '$it_id' and io_use = '1' order by io_no asc ";
     $result = sql_query($sql);
-    if(!mysql_num_rows($result))
+    if(!sql_num_rows($result))
         return '';
 
     $str = '';
@@ -1026,7 +1026,7 @@ function get_item_supply($it_id, $subject)
 
     $sql = " select * from {$g5['g5_shop_item_option_table']} where io_type = '1' and it_id = '$it_id' and io_use = '1' order by io_no asc ";
     $result = sql_query($sql);
-    if(!mysql_num_rows($result))
+    if(!sql_num_rows($result))
         return '';
 
     $str = '';
@@ -1169,7 +1169,7 @@ function display_event($no, $event, $list_mod, $list_row, $img_width, $img_heigh
     if ($ca_id) $sql .= " and ca_id = '$ca_id' ";
     $sql .= " order by b.it_order, a.it_id desc limit $items ";
     $result = sql_query($sql);
-    if (!mysql_num_rows($result)) {
+    if (!sql_num_rows($result)) {
         return false;
     }
 

@@ -31,7 +31,7 @@ $sql .= " group by a.it_id ";
 $sql .= " order by a.ct_id ";
 $result = sql_query($sql);
 
-$cart_count = mysql_num_rows($result);
+$cart_count = sql_num_rows($result);
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/shop.js"></script>

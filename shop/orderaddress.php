@@ -28,7 +28,7 @@ $sql = " select *
 
 $result = sql_query($sql);
 
-if(!mysql_num_rows($result))
+if(!sql_num_rows($result))
     alert_close('배송지 목록 자료가 없습니다.');
 
 $order_action_url = G5_HTTPS_SHOP_URL.'/orderaddressupdate.php';

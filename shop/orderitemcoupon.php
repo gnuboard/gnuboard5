@@ -36,7 +36,7 @@ $sql = " select *
                     ( cp_method = '1' and ( cp_target IN ( '{$it['ca_id']}', '{$it['ca_id2']}', '{$it['ca_id3']}' ) ) )
                   ) ";
 $result = sql_query($sql);
-$count = mysql_num_rows($result);
+$count = sql_num_rows($result);
 ?>
 
 <!-- 쿠폰 선택 시작 { -->

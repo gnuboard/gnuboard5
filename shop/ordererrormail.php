@@ -17,7 +17,7 @@ if($tno) {
 }
 
 $content .= '<p>오류내용</p>';
-$content .= '<p>'.$sql.'</p><p>'.mysql_errno().' : '.mysql_error().'<p>error file : '.$_SERVER['SCRIPT_NAME'].'</p>';
+$content .= '<p>'.$sql.'</p><p>'.sql_error_info().'<p>error file : '.$_SERVER['SCRIPT_NAME'].'</p>';
 
 // 메일발송
 mailer($od_name, $od_email, $config['cf_admin_email'], $subject, $content, 1);

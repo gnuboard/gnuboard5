@@ -58,7 +58,7 @@ $result = sql_query($sql);
                           and it_id = '{$row['it_id']}'
                         order by io_type asc, ct_id asc ";
             $res = sql_query($sql);
-            $rowspan = mysql_num_rows($res);
+            $rowspan = sql_num_rows($res);
 
             // 배송비
             switch($row['ct_send_cost'])

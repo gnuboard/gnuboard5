@@ -16,7 +16,7 @@ $sql = " select *
               and cp_end >= '".G5_TIME_YMD."'
               and cp_minimum <= '$price' ";
 $result = sql_query($sql);
-$count = mysql_num_rows($result);
+$count = sql_num_rows($result);
 ?>
 
 <!-- 쿠폰선택 시작 { -->

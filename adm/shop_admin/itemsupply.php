@@ -6,7 +6,7 @@ $ps_run = false;
 if($it['it_id']) {
     $sql = " select * from {$g5['g5_shop_item_option_table']} where io_type = '1' and it_id = '{$it['it_id']}' order by io_no asc ";
     $result = sql_query($sql);
-    if(mysql_num_rows($result))
+    if(sql_num_rows($result))
         $ps_run = true;
 } else if(!empty($_POST)) {
     $subject_count = count($_POST['subject']);
