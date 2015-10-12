@@ -28,7 +28,7 @@ if($w == "")
     $sql = " insert {$g5['new_win_table']} set $sql_common ";
     sql_query($sql);
 
-    $nw_id = mysql_insert_id();
+    $nw_id = sql_insert_id();
 }
 else if ($w == "u")
 {

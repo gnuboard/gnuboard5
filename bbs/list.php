@@ -53,7 +53,7 @@ if ($sca || $stx) {
     /*
     $sql = " select distinct wr_parent from {$write_table} where {$sql_search} ";
     $result = sql_query($sql);
-    $total_count = mysql_num_rows($result);
+    $total_count = sql_num_rows($result);
     */
 } else {
     $sql_search = "";

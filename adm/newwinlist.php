@@ -71,7 +71,7 @@ $result = sql_query($sql);
     </thead>
     <tbody>
     <?php
-    for ($i=0; $row=mysql_fetch_array($result); $i++) {
+    for ($i=0; $row=sql_fetch_array($result); $i++) {
         $bg = 'bg'.($i%2);
 
         switch($row['nw_device']) {

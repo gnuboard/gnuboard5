@@ -244,7 +244,7 @@ if($w == '' || $w == 'a' || $w == 'r') {
     sql_query($sql);
 
     if($w == '' || $w == 'r') {
-        $qa_id = mysql_insert_id();
+        $qa_id = sql_insert_id();
 
         if($w == 'r' && $write['qa_related']) {
             $qa_related = $write['qa_related'];

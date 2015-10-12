@@ -8,6 +8,8 @@ header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
 include_once ('../config.php');
+include_once ('../lib/common.lib.php');
+
 $title = G5_VERSION." 설치 완료 3/3";
 include_once ('./install.inc.php');
 
@@ -28,7 +30,7 @@ if (isset($_POST['g5_install']))
 $g5_shop_prefix = $_POST['g5_shop_prefix'];
 $g5_shop_install= $_POST['g5_shop_install'];
 
-$dblink = @mysql_connect($mysql_host, $mysql_user, $mysql_pass);
+$dblink = sql_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db);
 if (!$dblink) {
 ?>
 
@@ -42,7 +44,7 @@ if (!$dblink) {
     exit;
 }
 
-$select_db = @mysql_select_db($mysql_db, $dblink);
+$select_db = sql_select_db($mysql_db, $dblink);
 if (!$select_db) {
 ?>
 
@@ -57,12 +59,14 @@ if (!$select_db) {
 }
 
 $mysql_set_mode = 'false';
-@mysql_query('set names utf8');
-$row = mysql_fetch_assoc(mysql_query(" SELECT @@sql_mode as mode "));
+sql_set_charset('utf8', $dblink);
+$result = sql_query(" SELECT @@sql_mode as mode ", true, $dblink);
+$row = sql_fetch_array($result);
 if($row['mode']) {
-    @mysql_query("SET SESSION sql_mode = ''");
+    sql_query("SET SESSION sql_mode = ''", true, $dblink);
     $mysql_set_mode = 'true';
 }
+unset($result);
 unset($row);
 ?>
 
@@ -72,7 +76,7 @@ unset($row);
     <ol>
 <?php
 $sql = " desc {$table_prefix}config";
-$result = @mysql_query($sql);
+$result = @sql_query($sql, false, $dblink);
 
 // 그누보드5 재설치에 체크하였거나 그누보드5가 설치되어 있지 않다면
 if($g5_install || !$result) {
@@ -85,7 +89,7 @@ if($g5_install || !$result) {
     $f = explode(';', $file);
     for ($i=0; $i<count($f); $i++) {
         if (trim($f[$i]) == '') continue;
-        mysql_query($f[$i]) or die(mysql_error());
+        sql_query($f[$i], true, $dblink);
     }
 }
 
@@ -98,7 +102,7 @@ if($g5_shop_install) {
     $f = explode(';', $file);
     for ($i=0; $i<count($f); $i++) {
         if (trim($f[$i]) == '') continue;
-        mysql_query($f[$i]) or die(mysql_error());
+        sql_query($f[$i], true, $dblink);
     }
 }
 // 테이블 생성 ------------------------------------
@@ -178,14 +182,14 @@ if($g5_install || !$result) {
                     cf_stipulation = '해당 홈페이지에 맞는 회원가입약관을 입력합니다.',
                     cf_privacy = '해당 홈페이지에 맞는 개인정보처리방침을 입력합니다.'
                     ";
-    mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
+    sql_query($sql, true, $dblink);
 
     // 1:1문의 설정
     $sql = " insert into `{$table_prefix}qa_config`
                 ( qa_title, qa_category, qa_skin, qa_mobile_skin, qa_use_email, qa_req_email, qa_use_hp, qa_req_hp, qa_use_editor, qa_subject_len, qa_mobile_subject_len, qa_page_rows, qa_mobile_page_rows, qa_image_width, qa_upload_size, qa_insert_content )
               values
                 ( '1:1문의', '회원|포인트', 'basic', 'basic', '1', '0', '1', '0', '1', '60', '30', '15', '15', '600', '1048576', '' ) ";
-    mysql_query($sql);
+    sql_query($sql, true, $dblink);
 
     // 관리자 회원가입
     $sql = " insert into `{$table_prefix}member`
@@ -201,15 +205,15 @@ if($g5_install || !$result) {
                      mb_datetime = '".G5_TIME_YMDHIS."',
                      mb_ip = '{$_SERVER['REMOTE_ADDR']}'
                      ";
-    @mysql_query($sql);
+    sql_query($sql, true, $dblink);
 
     // 내용관리 생성
-    @mysql_query(" insert into `{$table_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>', co_skin = 'basic', co_mobile_skin = 'basic' ") or die(mysql_error() . "<p>" . $sql);
-    @mysql_query(" insert into `{$table_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 처리방침', co_content= '<p align=center><b>개인정보 처리방침에 대한 내용을 입력하십시오.</b></p>', co_skin = 'basic', co_mobile_skin = 'basic' ") or die(mysql_error() . "<p>" . $sql);
-    @mysql_query(" insert into `{$table_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>', co_skin = 'basic', co_mobile_skin = 'basic' ") or die(mysql_error() . "<p>" . $sql);
+    sql_query(" insert into `{$table_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>', co_skin = 'basic', co_mobile_skin = 'basic' ", true, $dblink);
+    sql_query(" insert into `{$table_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 처리방침', co_content= '<p align=center><b>개인정보 처리방침에 대한 내용을 입력하십시오.</b></p>', co_skin = 'basic', co_mobile_skin = 'basic' ", true, $dblink);
+    sql_query(" insert into `{$table_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>', co_skin = 'basic', co_mobile_skin = 'basic' ", true, $dblink);
 
     // FAQ Master
-    @mysql_query(" insert into `{$table_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ") or die(mysql_error() . "<p>" . $sql);
+    sql_query(" insert into `{$table_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ", true, $dblink);
 }
 
 if($g5_shop_install) {
@@ -347,10 +351,10 @@ if($g5_shop_install) {
                     de_sms_cont4 = '{이름}님 입금 감사합니다.\n{입금액}원\n주문번호:\n{주문번호}\n{회사명}',
                     de_sms_cont5 = '{이름}님 배송합니다.\n택배:{택배회사}\n운송장번호:\n{운송장번호}\n{회사명}'
                     ";
-    mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
+    sql_query($sql, true, $dblink);
 
     // 게시판 그룹 생성
-    @mysql_query(" insert into `{$table_prefix}group` set gr_id = 'shop', gr_subject = '쇼핑몰' ");
+    sql_query(" insert into `{$table_prefix}group` set gr_id = 'shop', gr_subject = '쇼핑몰' ", true, $dblink);
 
     // 게시판 생성
     $tmp_bo_table   = array ("qa", "free", "notice");
@@ -421,7 +425,7 @@ if($g5_shop_install) {
                         bo_use_search       = '0',
                         bo_order            = '0'
                         ";
-        @mysql_query($sql);
+        sql_query($sql, true, $dblink);
 
         // 게시판 테이블 생성
         $file = file("../adm/sql_write.sql");
@@ -433,7 +437,7 @@ if($g5_shop_install) {
         $source = array("/__TABLE_NAME__/", "/;/");
         $target = array($create_table, "");
         $sql = preg_replace($source, $target, $sql);
-        @mysql_query($sql);
+        sql_query($sql, true, $dblink);
     }
 }
 ?>

@@ -5,7 +5,7 @@ include_once(G5_ADMIN_PATH.'/admin.lib.php');
 include_once(G5_SMS5_PATH.'/sms5.lib.php');
 
 if (!strstr($_SERVER['SCRIPT_NAME'], 'install.php')) {
-    if(!mysql_num_rows(mysql_query(" show tables like '{$g5['sms5_config_table']}' ")))
+    if(!sql_num_rows(sql_query(" show tables like '{$g5['sms5_config_table']}' ")))
         goto_url('install.php');
 
     // SMS 설정값 배열변수
