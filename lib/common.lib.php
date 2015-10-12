@@ -1598,6 +1598,21 @@ function sql_field_names($table, $link=null)
 }
 
 
+function sql_error_info($link=null)
+{
+    global $g5;
+
+    if(!$link)
+        $link = $g5['connect_db'];
+
+    if(function_exists('mysqli_error')) {
+        return mysqli_errno($link) . ' : ' . mysqli_error($link);
+    } else {
+        return mysql_errno($link) . ' : ' . mysql_error($link);
+    }
+}
+
+
 // PHPMyAdmin 참고
 function get_table_define($table, $crlf="\n")
 {
