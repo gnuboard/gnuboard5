@@ -120,7 +120,7 @@ if ($stx) {
 
         $sql = " select wr_id from {$tmp_write_table} where {$sql_search} ";
         $result = sql_query($sql, false);
-        $row['cnt'] = @mysql_num_rows($result);
+        $row['cnt'] = @sql_num_rows($result);
 
         $total_count += $row['cnt'];
         if ($row['cnt']) {

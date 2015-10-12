@@ -17,7 +17,7 @@ if ($w == '')
              values ( '{$_POST['po_subject']}', '{$_POST['po_poll1']}', '{$_POST['po_poll2']}', '{$_POST['po_poll3']}', '{$_POST['po_poll4']}', '{$_POST['po_poll5']}', '{$_POST['po_poll6']}', '{$_POST['po_poll7']}', '{$_POST['po_poll8']}', '{$_POST['po_poll9']}', '{$_POST['po_cnt1']}', '{$_POST['po_cnt2']}', '{$_POST['po_cnt3']}', '{$_POST['po_cnt4']}', '{$_POST['po_cnt5']}', '{$_POST['po_cnt6']}', '{$_POST['po_cnt7']}', '{$_POST['po_cnt8']}', '{$_POST['po_cnt9']}', '{$_POST['po_etc']}', '{$_POST['po_level']}', '{$_POST['po_point']}', '".G5_TIME_YMD."' ) ";
     sql_query($sql);
 
-    $po_id = mysql_insert_id();
+    $po_id = sql_insert_id();
 }
 else if ($w == 'u')
 {

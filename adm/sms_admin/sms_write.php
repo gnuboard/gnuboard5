@@ -532,7 +532,7 @@ if ($wr_no)
     // 회원목록
     $sql = " select * from {$g5['sms5_history_table']} where wr_no = '$wr_no' and bk_no > 0 ";
     $qry = sql_query($sql);
-    $tot = mysql_num_rows($qry);
+    $tot = sql_num_rows($qry);
 
     if ($tot > 0) {
 
@@ -550,7 +550,7 @@ if ($wr_no)
     // 비회원 목록
     $sql = " select * from {$g5['sms5_history_table']} where wr_no = '$wr_no' and bk_no = 0 ";
     $qry = sql_query($sql);
-    $tot = mysql_num_rows($qry);
+    $tot = sql_num_rows($qry);
 
     if ($tot > 0)
     {

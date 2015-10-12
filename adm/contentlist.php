@@ -69,7 +69,7 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
+    <?php for ($i=0; $row=sql_fetch_array($result); $i++) {
         $bg = 'bg'.($i%2);
     ?>
     <tr class="<?php echo $bg; ?>">

@@ -93,7 +93,7 @@ $result = sql_query($sql);
     </tr>
     </thead>
     <tbody>
-    <?php for ($i=0; $row=mysql_fetch_array($result); $i++) {
+    <?php for ($i=0; $row=sql_fetch_array($result); $i++) {
         $sql1 = " select COUNT(*) as cnt from {$g5['faq_table']} where fm_id = '{$row['fm_id']}' ";
         $row1 = sql_fetch($sql1);
         $cnt = $row1['cnt'];
