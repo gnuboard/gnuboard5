@@ -736,7 +736,7 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
     if($is_sms_send) {
         $sms_contents = array($default['de_sms_cont2'], $default['de_sms_cont3']);
         $recv_numbers = array($od_hp, $default['de_sms_hp']);
-        $send_numbers = array($default['de_admin_company_tel'], $od_hp);
+        $send_numbers = array($default['de_admin_company_tel'], $default['de_admin_company_tel']);
 
         $sms_count = 0;
         $sms_messages = array();
