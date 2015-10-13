@@ -1260,10 +1260,6 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     }
     if($mb_id)
         $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\">전체게시물</a>\n";
-    if($g5['sms5_use_sideview']){
-        $mb = get_member($mb_id, " mb_open, mb_sms , mb_hp ");
-        if( $mb['mb_open'] && $mb['mb_sms'] && $mb['mb_hp'] ) $str2 .= "<a href=\"".G5_SMS5_URL."/?mb_id=".$mb_id."\" class=\"win_sms5\" target=\"_blank\">문자보내기</a>\n";
-    }
     if($is_admin == "super" && $mb_id) {
         $str2 .= "<a href=\"".G5_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
         $str2 .= "<a href=\"".G5_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";

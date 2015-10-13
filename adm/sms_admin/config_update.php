@@ -25,7 +25,7 @@ if (!$res)
 else
     $sql = "update ";
 
-$sql .= $g5['sms5_config_table']." set cf_phone='$cf_phone', cf_member='$cf_member', cf_level='$cf_level', cf_point='$cf_point', cf_day_count='$cf_day_count', cf_skin = '$cf_skin' ";
+$sql .= $g5['sms5_config_table']." set cf_phone='$cf_phone' ";
 
 sql_query($sql);
 

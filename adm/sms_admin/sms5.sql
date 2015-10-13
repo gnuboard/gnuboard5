@@ -65,12 +65,7 @@ DROP TABLE IF EXISTS `{$g5['sms5_config_table']}`;
 
 CREATE TABLE `{$g5['sms5_config_table']}` (
   `cf_phone` varchar(255) NOT NULL default '',
-  `cf_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
-  `cf_member` tinyint(4) NOT NULL default '1',
-  `cf_level` tinyint(4) NOT NULL default '2',
-  `cf_point` int(11) NOT NULL default '0',
-  `cf_day_count` int(11) NOT NULL default '0',
-  `cf_skin` varchar(100) NOT NULL DEFAULT ''
+  `cf_datetime` datetime NOT NULL default '0000-00-00 00:00:00'  
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -164,25 +159,3 @@ CREATE TABLE `{$g5['sms5_write_table']}` (
   `wr_memo` text NOT NULL,
   KEY `wr_no` (`wr_no`,`wr_renum`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-##
-## Table structure for table `{$g5['sms5_member_history_table']}`
-##
-
-DROP TABLE IF EXISTS `{$g5['sms5_member_history_table']}`;
-
-
-CREATE TABLE `{$g5['sms5_member_history_table']}` (
-  `mh_no` int(11) NOT NULL auto_increment,
-  `mb_id` varchar(30) NOT NULL,
-  `mh_reply` varchar(30) NOT NULL,
-  `mh_hp` varchar(30) NOT NULL,
-  `mh_datetime` datetime NOT NULL,
-  `mh_booking` datetime NOT NULL,
-  `mh_log` varchar(255) NOT NULL,
-  `mh_ip` varchar(15) NOT NULL,
-  PRIMARY KEY  (`mh_no`),
-  KEY `mb_id` (`mb_id`,`mh_datetime`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
