@@ -22,23 +22,10 @@ $g5['sms5_book_table']            = $g5['sms5_prefix'] . 'book';
 $g5['sms5_book_group_table']      = $g5['sms5_prefix'] . 'book_group';
 $g5['sms5_form_table']            = $g5['sms5_prefix'] . 'form';
 $g5['sms5_form_group_table']      = $g5['sms5_prefix'] . 'form_group';
-$g5['sms5_member_history_table']  = $g5['sms5_prefix'] . 'member_history';
 
 if (!empty($config['cf_sms_use'])) {
 
     $sms5 = sql_fetch("select * from {$g5['sms5_config_table']} ", false);
-    if( $sms5['cf_member'] && trim($member['mb_hp']) ) {
-        $g5['sms5_use_sideview'] = true; //회원 사이드뷰 레이어에 추가
-    } else {
-        $g5['sms5_use_sideview'] = false;
-    }
-
-    //==============================================================================
-    // 스킨경로
-    //------------------------------------------------------------------------------
-
-    $sms5_skin_path = G5_SMS5_PATH.'/skin/'.$sms5['cf_skin']; //sms5 스킨 path
-    $sms5_skin_url = G5_SMS5_URL .'/skin/'.$sms5['cf_skin']; //sms5 스킨 url
 
     // Demo 설정
     if (file_exists(G5_PATH.'/DEMO'))
