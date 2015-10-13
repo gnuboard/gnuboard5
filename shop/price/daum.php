@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 
 
-ob_start(); 
+ob_start();
 
 header("Content-Type: text/html; charset=utf-8");
 
@@ -119,7 +119,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 상품이미지
     $img_url = get_it_imageurl($row['it_id']);
 
-    echo <<< HEREDOC
+    $str = <<< HEREDOC
 {$lt}begin{$gt}
 {$lt}pid{$gt}{$row['it_id']}
 {$lt}price{$gt}{$row['it_price']}
@@ -142,13 +142,14 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {$lt}end{$gt}
 
 HEREDOC;
+
+echo iconv('utf-8', 'euc-kr', $str);
 }
 
 
 
-$content = ob_get_contents(); 
-ob_end_clean(); 
+$content = ob_get_contents();
+ob_end_clean();
 
-$content = iconv('utf-8', 'euc-kr', $content); 
-echo $content; 
+echo $content;
 ?>

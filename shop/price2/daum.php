@@ -124,7 +124,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
             $deliv2 = "";
         }
 
-    echo <<< HEREDOC
+    $str = <<< HEREDOC
 {$lt}begin{$gt}
 {$lt}pid{$gt}{$row['it_id']}
 {$lt}price{$gt}$it_price
@@ -147,6 +147,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {$lt}end{$gt}
 
 HEREDOC;
+
+// 131227 : 쇼핑하우에서는 아직 utf-8 을 지원하지 않고 있음
+echo iconv('utf-8', 'euc-kr', $str);
 
     } else {
         $subj = explode(',', $row['it_option_subject']);
@@ -171,7 +174,7 @@ HEREDOC;
                 $deliv2 = "";
             }
 
-    echo <<< HEREDOC
+    $str = <<< HEREDOC
 {$lt}begin{$gt}
 {$lt}pid{$gt}{$row['it_id']}
 {$lt}price{$gt}$it_price
@@ -195,15 +198,15 @@ HEREDOC;
 
 HEREDOC;
 
+// 131227 : 쇼핑하우에서는 아직 utf-8 을 지원하지 않고 있음
+echo iconv('utf-8', 'euc-kr', $str);
+
         }
     }
 }
 
 $content = ob_get_contents();
 ob_end_clean();
-
-// 131227 : 쇼핑하우에서는 아직 utf-8 을 지원하지 않고 있음
-$content = iconv('utf-8', 'euc-kr', $content);
 
 echo $content;
 ?>

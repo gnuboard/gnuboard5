@@ -85,7 +85,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 포인트
     $it_point = get_item_point($row);
 
-    echo <<< HEREDOC
+    $str = <<< HEREDOC
 {$lt}begin{$gt}
 {$lt}mapid{$gt}{$row['it_id']}
 {$lt}pname{$gt}{$row['it_name']}
@@ -115,13 +115,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 {$lt}ftend{$gt}
 
 HEREDOC;
+
+// 091223 : 네이버에서는 아직 utf-8 을 지원하지 않고 있음
+echo iconv('utf-8', 'euc-kr', $str);
 }
 
 $content = ob_get_contents();
 ob_end_clean();
-
-// 091223 : 네이버에서는 아직 utf-8 을 지원하지 않고 있음
-$content = iconv('utf-8', 'euc-kr', $content);
 
 echo $content;
 ?>
