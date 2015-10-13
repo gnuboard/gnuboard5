@@ -56,7 +56,7 @@ if (!$saved) {
 // 조회수 증가
 if (get_cookie('ck_it_id') != $it_id) {
     sql_query(" update {$g5['g5_shop_item_table']} set it_hit = it_hit + 1 where it_id = '$it_id' "); // 1증가
-    set_cookie("ck_it_id", $it_id, time() + 3600); // 1시간동안 저장
+    set_cookie("ck_it_id", $it_id, 3600); // 1시간동안 저장
 }
 
 // 이전 상품보기
