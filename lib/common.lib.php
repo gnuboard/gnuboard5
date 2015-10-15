@@ -3151,4 +3151,29 @@ function get_skin_url($dir, $skin)
 
     return str_replace(G5_PATH, G5_URL, $skin_path);
 }
+
+// 발신번호 유효성 체크
+function check_vaild_callback($callback){
+   $_callback = preg_replace('/[^0-9]/','', $callback);
+
+   /**
+   * 1588 로시작하면 총8자리인데 7자리라 차단
+   * 02 로시작하면 총9자리 또는 10자리인데 11자리라차단
+   * 1366은 그자체가 원번호이기에 다른게 붙으면 차단
+   * 030으로 시작하면 총10자리 또는 11자리인데 9자리라차단
+   */
+
+   if( substr($_callback,0,4) == '1588') if( strlen($_callback) != 8) return false;
+   if( substr($_callback,0,2) == '02')   if( strlen($_callback) != 9  && strlen($_callback) != 10 ) return false;
+   if( substr($_callback,0,3) == '030')  if( strlen($_callback) != 10 && strlen($_callback) != 11 ) return false;
+
+   if( !preg_match("/^(02|0[3-6]\d|01(0|1|3|5|6|7|8|9)|070|080|007)\-?\d{3,4}\-?\d{4,5}$/",$_callback) &&
+       !preg_match("/^(15|16|18)\d{2}\-?\d{4,5}$/",$_callback) ){
+             return false;
+   } else if( preg_match("/^(02|0[3-6]\d|01(0|1|3|5|6|7|8|9)|070|080)\-?0{3,4}\-?\d{4}$/",$_callback )) {
+             return false;
+   } else {
+             return true;
+   }
+}
 ?>
