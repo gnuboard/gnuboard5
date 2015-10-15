@@ -119,7 +119,10 @@ if(!isset($default['de_kakaopay_mid'])) {
     <h2 class="h2_frm">사업자정보</h2>
     <?php echo $pg_anchor; ?>
     <div class="local_desc02 local_desc">
-        <p>사업자정보는 tail.php 와 content.php 에서 표시합니다.</p>
+        <p>
+            사업자정보는 tail.php 와 content.php 에서 표시합니다.<br>
+            대표전화번호는 SMS 발송번호로 사용되므로 사전등록된 발신번호와 일치해야 합니다.
+        </p>
     </div>
 
     <div class="tbl_frm01 tbl_wrap">

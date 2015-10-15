@@ -6,6 +6,10 @@ check_demo();
 
 auth_check($auth[$sub_menu], "w");
 
+// 대표전화번호 유효성 체크
+if(!check_vaild_callback($_POST['de_admin_company_tel']))
+    alert('대표전화번호를 올바르게 입력해 주세요.');
+
 // 로그인을 바로 이 주소로 하는 경우 쇼핑몰설정값이 사라지는 현상을 방지
 if (!$_POST['de_admin_company_owner']) goto_url("./configform.php");
 
