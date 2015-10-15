@@ -12,6 +12,9 @@ $wr_message = clean_xss_tags(trim($wr_message));
 if (!$wr_reply)
     win_close_alert('회신 번호를 숫자, - 로 입력해주세요.');
 
+if(!check_vaild_callback($wr_reply))
+    win_close_alert('회신 번호를 올바르게 입력해 주십시오.');
+
 if (!$wr_message)
     win_close_alert('메세지를 입력해주세요.');
 

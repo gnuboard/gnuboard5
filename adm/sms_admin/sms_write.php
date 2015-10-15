@@ -114,7 +114,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
 
         <div id="write_reply">
             <label for="wr_reply">회신<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20">
+            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20" readonly="readonly">
         </div>
 
         <div id="write_recv" class="write_inner">

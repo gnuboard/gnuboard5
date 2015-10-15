@@ -8,15 +8,14 @@ check_demo();
 
 $g5['title'] = "SMS 기본설정";
 
+// 회신번호 체크
+if(!check_vaild_callback($cf_phone))
+    alert('회신번호가 올바르지 않습니다.');
+
 $userinfo = get_icode_userinfo($cf_icode_id, $cf_icode_pw);
 
 if ($userinfo['code'] == '202')
     alert('아이코드 아이디와 패스워드가 맞지 않습니다.');
-
-if ($cf_member == '1')
-    $cf_member = 1;
-else
-    $cf_member = 0;
 
 $res = sql_fetch("select * from ".$g5['sms5_config_table']." limit 1");
 
