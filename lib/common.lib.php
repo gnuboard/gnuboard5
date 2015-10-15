@@ -1416,7 +1416,7 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
 {
     global $g5;
 
-    if(function_exists('mysqli_connect')) {
+    if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
         $link = mysqli_connect($host, $user, $pass, $db);
 
         // 연결 오류 발생 시 스크립트 종료
@@ -1436,7 +1436,7 @@ function sql_select_db($db, $connect)
 {
     global $g5;
 
-    if(function_exists('mysqli_select_db'))
+    if(function_exists('mysqli_select_db') && G5_MYSQLI_USE)
         return @mysqli_select_db($connect, $db);
     else
         return @mysql_select_db($db, $connect);
@@ -1450,7 +1450,7 @@ function sql_set_charset($charset, $link=null)
     if(!$link)
         $link = $g5['connect_db'];
 
-    if(function_exists('mysqli_set_charset'))
+    if(function_exists('mysqli_set_charset') && G5_MYSQLI_USE)
         mysqli_set_charset($link, $charset);
     else
         sql_query(" set names {$charset} ");
@@ -1474,7 +1474,7 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
 
-    if(function_exists('mysqli_query')) {
+    if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
         if ($error) {
             $result = @mysqli_query($link, $sql) or die("<p>$sql<p>" . mysqli_errno($link) . " : " .  mysqli_error($link) . "<p>error file : {$_SERVER['SCRIPT_NAME']}");
         } else {
@@ -1510,7 +1510,7 @@ function sql_fetch($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 // 결과값에서 한행 연관배열(이름으로)로 얻는다.
 function sql_fetch_array($result)
 {
-    if(function_exists('mysqli_fetch_assoc'))
+    if(function_exists('mysqli_fetch_assoc') && G5_MYSQLI_USE)
         $row = @mysqli_fetch_assoc($result);
     else
         $row = @mysql_fetch_assoc($result);
@@ -1524,7 +1524,7 @@ function sql_fetch_array($result)
 // 단, 결과 값은 스크립트(script) 실행부가 종료되면서 메모리에서 자동적으로 지워진다.
 function sql_free_result($result)
 {
-    if(function_exists('mysqli_free_result'))
+    if(function_exists('mysqli_free_result') && G5_MYSQLI_USE)
         return mysqli_free_result($result);
     else
         return mysql_free_result($result);
@@ -1548,7 +1548,7 @@ function sql_insert_id($link=null)
     if(!$link)
         $link = $g5['connect_db'];
 
-    if(function_exists('mysqli_insert_id'))
+    if(function_exists('mysqli_insert_id') && G5_MYSQLI_USE)
         return mysqli_insert_id($link);
     else
         return mysql_insert_id($link);
@@ -1557,7 +1557,7 @@ function sql_insert_id($link=null)
 
 function sql_num_rows($result)
 {
-    if(function_exists('mysqli_num_rows'))
+    if(function_exists('mysqli_num_rows') && G5_MYSQLI_USE)
         return mysqli_num_rows($result);
     else
         return mysql_num_rows($result);
@@ -1576,7 +1576,7 @@ function sql_field_names($table, $link=null)
     $sql = " select * from `$table` limit 1 ";
     $result = sql_query($sql, $link);
 
-    if(function_exists('mysqli_fetch_field')) {
+    if(function_exists('mysqli_fetch_field') && G5_MYSQLI_USE) {
         while($field = mysqli_fetch_field($result)) {
             $columns[] = $field->name;
         }
@@ -1601,7 +1601,7 @@ function sql_error_info($link=null)
     if(!$link)
         $link = $g5['connect_db'];
 
-    if(function_exists('mysqli_error')) {
+    if(function_exists('mysqli_error') && G5_MYSQLI_USE) {
         return mysqli_errno($link) . ' : ' . mysqli_error($link);
     } else {
         return mysql_errno($link) . ' : ' . mysql_error($link);
