@@ -5,7 +5,7 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.1.2');
+define('G5_GNUBOARD_VER', '5.1.3');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -194,6 +194,9 @@ define('G5_THUMB_PNG_COMPRESS', 5);
 
 // 모바일 기기에서 DHTML 에디터 사용여부를 설정합니다.
 define('G5_IS_MOBILE_DHTML_USE', false);
+
+// MySQLi 사용여부를 설정합니다.
+define('G5_MYSQLI_USE', true);
 
 // ip 숨김방법 설정
 /* 123.456.789.012 ip의 숨김 방법을 변경하는 방법은

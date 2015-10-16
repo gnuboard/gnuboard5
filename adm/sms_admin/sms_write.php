@@ -114,7 +114,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
 
         <div id="write_reply">
             <label for="wr_reply">회신<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20">
+            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20" readonly="readonly">
         </div>
 
         <div id="write_recv" class="write_inner">
@@ -532,7 +532,7 @@ if ($wr_no)
     // 회원목록
     $sql = " select * from {$g5['sms5_history_table']} where wr_no = '$wr_no' and bk_no > 0 ";
     $qry = sql_query($sql);
-    $tot = mysql_num_rows($qry);
+    $tot = sql_num_rows($qry);
 
     if ($tot > 0) {
 
@@ -550,7 +550,7 @@ if ($wr_no)
     // 비회원 목록
     $sql = " select * from {$g5['sms5_history_table']} where wr_no = '$wr_no' and bk_no = 0 ";
     $qry = sql_query($sql);
-    $tot = mysql_num_rows($qry);
+    $tot = sql_num_rows($qry);
 
     if ($tot > 0)
     {

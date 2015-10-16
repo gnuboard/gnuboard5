@@ -70,7 +70,7 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
                          wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         sql_query($sql);
 
-        $comment_id = mysql_insert_id();
+        $comment_id = sql_insert_id();
 
         // 원글에 코멘트수 증가
         sql_query(" update $write_table set wr_comment = wr_comment + 1 where wr_id = '$wr_id' ");

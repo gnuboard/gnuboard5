@@ -90,47 +90,8 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
     <tr>
         <th scope="row"><label for="cf_phone">회신번호<strong class="sound_only"> 필수</strong></label></th>
         <td>
-            <?php echo help("회신받을 휴대폰 번호를 입력하세요. '-' 를 꼭 입력하세요.<br>예) 010-123-4567"); ?>
+            <?php echo help("회신받을 휴대폰 번호를 입력하세요. 회신번호는 발신번호로 사전등록된 번호와 동일해야 합니다.<br>예) 010-123-4567"); ?>
             <input type="text" name="cf_phone" value="<?php echo $sms5['cf_phone']; ?>" id="cf_phone" required class="frm_input required" size="12">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_member">회원간 문자전송</label></th>
-        <td>
-            <?php echo help("허용에 체크하면 회원끼리 문자전송이 가능합니다.");?>
-            <input type="checkbox" name="cf_member" value="1" id="cf_member" <?php echo get_checked(1, $sms5['cf_member']); ?>> <label for="cf_member">허용</label>
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_level">문자전송가능 레벨</label></th>
-        <td>
-            <?php echo help("문자전송을 허용할 회원레벨을 선택해주세요.");?>
-            <select name="cf_level" id="cf_level">
-                <?php for ($i=1; $i<=10; $i++) { ?>
-                <option value="<?php echo $i?>"<?php echo get_selected($i, $sms5['cf_level']);?>> <?php echo $i?> </option>
-                <?php } ?>
-            </select>
-            레벨 이상
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_point">문자전송 차감 포인트<strong class="sound_only"> 필수</strong></label></th>
-        <td>
-            <?php echo help("회원이 문자를 전송할시에 차감할 포인트를 입력해주세요. 0이면 포인트를 차감하지 않습니다.");?>
-            <input type="text" name="cf_point" value="<?php echo $sms5['cf_point']; ?>" id="cf_point" required class="frm_input required" size="5">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_day_count">문자전송 하루제한 갯수<strong class="sound_only"> 필수</strong></label></th>
-        <td>
-            <?php echo help("회원이 하루에 보낼수 있는 문자 갯수를 입력해주세요. 0이면 제한하지 않습니다.");?>
-            <input type="text" name="cf_day_count" value="<?php echo $sms5['cf_day_count']; ?>" id="cf_day_count" required class="frm_input required" size="5">
-        </td>
-    </tr>
-    <tr>
-        <th scope="row"><label for="cf_skin">스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
-        <td>
-            <?php echo get_sms5_skin_select('skin', 'cf_skin', 'cf_skin', $sms5['cf_skin'], 'required'); ?>
         </td>
     </tr>
     </tbody>

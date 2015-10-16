@@ -31,7 +31,7 @@ if ($w == "")
     $sql = " insert {$g5['faq_master_table']} $sql_common ";
     sql_query($sql);
 
-    $fm_id = mysql_insert_id();
+    $fm_id = sql_insert_id();
 }
 else if ($w == "u")
 {

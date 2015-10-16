@@ -167,7 +167,7 @@ if ($w == 'c') // 댓글 입력
                      wr_10 = '$wr_10' ";
     sql_query($sql);
 
-    $comment_id = mysql_insert_id();
+    $comment_id = sql_insert_id();
 
     // 원글에 댓글수 증가 & 마지막 시간 반영
     sql_query(" update $write_table set wr_comment = wr_comment + 1, wr_last = '".G5_TIME_YMDHIS."' where wr_id = '$wr_id' ");

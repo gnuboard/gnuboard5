@@ -53,7 +53,7 @@ eval("\$file = \"$file\";");
 $f = explode(";", $file);
 for ($i=0; $i<count($f); $i++) {
     if (trim($f[$i]) == "") continue;
-    mysql_query($f[$i]) or die(mysql_error());
+    sql_query($f[$i]) or die(mysqli_error());
 }
 // 테이블 생성 ------------------------------------
 
@@ -68,7 +68,7 @@ $download_point = -20;
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
 $sql = " insert into {$g5['sms5_book_group_table']} set bg_name='미분류'";
-mysql_query($sql) or die(mysql_error() . "<p>" . $sql);
+sql_query($sql) or die(mysqli_error() . "<p>" . $sql);
 
 echo "<script>document.getElementById('sms5_job_02').innerHTML='DB설정 완료';</script>";
 flush(); usleep(50000);

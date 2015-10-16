@@ -244,7 +244,7 @@ if ($w == '' || $w == 'r') {
                      wr_10 = '$wr_10' ";
     sql_query($sql);
 
-    $wr_id = mysql_insert_id();
+    $wr_id = sql_insert_id();
 
     // 부모 아이디에 UPDATE
     sql_query(" update $write_table set wr_parent = '$wr_id' where wr_id = '$wr_id' ");

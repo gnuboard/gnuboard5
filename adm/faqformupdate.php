@@ -21,7 +21,7 @@ if ($w == "")
                     $sql_common ";
     sql_query($sql);
 
-    $fa_id = mysql_insert_id();
+    $fa_id = sql_insert_id();
 }
 else if ($w == "u")
 {

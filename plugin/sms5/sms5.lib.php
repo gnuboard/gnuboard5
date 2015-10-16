@@ -7,19 +7,6 @@ if (!defined('_GNUBOARD_')) exit;
 **
 *************************************************************************/
 
-// 스킨디렉토리를 SELECT 형식으로 얻음
-function get_sms5_skin_select($skin_gubun, $id, $name, $selected='', $event='')
-{
-    $skins = get_skin_dir($skin_gubun, G5_SMS5_PATH);
-    $str = "<select id=\"$id\" name=\"$name\" $event>\n";
-    for ($i=0; $i<count($skins); $i++) {
-        if ($i == 0) $str .= "<option value=\"\">선택</option>";
-        $str .= option_selected($skins[$i], $selected);
-    }
-    $str .= "</select>";
-    return $str;
-}
-
 // 한페이지에 보여줄 행, 현재페이지, 총페이지수, URL
 function sms5_sub_paging($write_pages, $cur_page, $total_page, $url, $add="", $starget="")
 {
