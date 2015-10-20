@@ -62,6 +62,17 @@ $mb_8           = isset($_POST['mb_8'])             ? trim($_POST['mb_8'])      
 $mb_9           = isset($_POST['mb_9'])             ? trim($_POST['mb_9'])           : "";
 $mb_10          = isset($_POST['mb_10'])            ? trim($_POST['mb_10'])          : "";
 
+$mb_name        = clean_xss_tags($mb_name);
+$mb_email       = get_email_address($mb_email);
+$mb_homepage    = clean_xss_tags($mb_homepage);
+$mb_tel         = clean_xss_tags($mb_tel);
+$mb_zip1        = preg_replace('/[^0-9]/', '', $mb_zip1);
+$mb_zip2        = preg_replace('/[^0-9]/', '', $mb_zip2);
+$mb_addr1       = clean_xss_tags($mb_addr1);
+$mb_addr2       = clean_xss_tags($mb_addr2);
+$mb_addr3       = clean_xss_tags($mb_addr3);
+$mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
+
 if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
@@ -118,17 +129,6 @@ if ($w == '' || $w == 'u') {
     if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
     if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
 }
-
-$mb_name        = clean_xss_tags($mb_name);
-$mb_email       = get_email_address($mb_email);
-$mb_homepage    = clean_xss_tags($mb_homepage);
-$mb_tel         = clean_xss_tags($mb_tel);
-$mb_zip1        = preg_replace('/[^0-9]/', '', $mb_zip1);
-$mb_zip2        = preg_replace('/[^0-9]/', '', $mb_zip2);
-$mb_addr1       = clean_xss_tags($mb_addr1);
-$mb_addr2       = clean_xss_tags($mb_addr2);
-$mb_addr3       = clean_xss_tags($mb_addr3);
-$mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
 
 // 사용자 코드 실행
 @include_once($member_skin_path.'/register_form_update.head.skin.php');
