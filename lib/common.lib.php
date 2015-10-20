@@ -562,8 +562,9 @@ function html_purifier($html)
     $config = HTMLPurifier_Config::createDefault();
     // data/cache 디렉토리에 CSS, HTML, URI 디렉토리 등을 만든다.
     $config->set('Cache.SerializerPath', G5_DATA_PATH.'/cache');
-    $config->set('HTML.SafeEmbed', true);
-    $config->set('HTML.SafeObject', true);
+    $config->set('HTML.SafeEmbed', false);
+    $config->set('HTML.SafeObject', false);
+    $config->set('Output.FlashCompat', false);
     $config->set('HTML.SafeIframe', true);
     $config->set('URI.SafeIframeRegexp','%^(https?:)?//('.$safeiframe.')%');
     $config->set('Attr.AllowedFrameTargets', array('_blank'));
