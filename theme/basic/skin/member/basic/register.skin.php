@@ -22,7 +22,31 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <section id="fregister_private">
         <h2>개인정보처리방침안내</h2>
-        <textarea readonly><?php echo get_text($config['cf_privacy']) ?></textarea>
+        <div class="tbl_head01 tbl_wrap">
+            <table>
+                <caption>개인정보처리방침안내</caption>
+                <thead>
+                <tr>
+                    <th>목적</th>
+                    <th>항목</th>
+                    <th>보유기간</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>이용자 식별 및 본인여부 확인</td>
+                    <td>아이디, 이름, 비밀번호</td>
+                    <td>회원 탈퇴 시까지</td>
+                </tr>
+                <tr>
+                    <td>고객서비스 이용에 관한 통지,<br>CS대응을 위한 이용자 식별</td>
+                    <td>연락처 (이메일, 휴대전화번호)</td>
+                    <td>회원 탈퇴 시까지</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
         <fieldset class="fregister_agree">
             <label for="agree21">개인정보처리방침안내의 내용에 동의합니다.</label>
             <input type="checkbox" name="agree2" value="1" id="agree21">
