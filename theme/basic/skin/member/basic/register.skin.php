@@ -33,26 +33,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>이용자 식별 및 본인여부 확인</td>
-                        <td>아이디, 이름, 생년월일, 비밀번호</td>
-                        <td>회원 탈퇴 시까지</td>
-                    </tr>
-                    <tr>
-                        <td>고객서비스 이용에 관한 통지,<br>CS대응을 위한 이용자 식별</td>
-                        <td>연락처 (이메일, 휴대전화번호)</td>
-                        <td>회원 탈퇴 시까지</td>
-                    </tr>
-                    <tr>
-                        <td>만 14세 미만 아동 확인</td>
-                        <td>법정 생년월일</td>
-                        <td>회원 탈퇴 시까지</td>
-                    </tr>
-                    <tr>
-                        <td>맞춤형 서비스 제공을 위한 이용자 식별</td>
-                        <td>성별</td>
-                        <td>회원 탈퇴 시까지</td>
-                    </tr>
+                <tr>
+                    <td>이용자 식별 및 본인여부 확인</td>
+                    <td>아이디, 이름, 비밀번호</td>
+                    <td>회원 탈퇴 시까지</td>
+                </tr>
+                <tr>
+                    <td>고객서비스 이용에 관한 통지,<br>CS대응을 위한 이용자 식별</td>
+                    <td>연락처 (이메일, 휴대전화번호)</td>
+                    <td>회원 탈퇴 시까지</td>
+                </tr>
                 </tbody>
             </table>
         </div>
