@@ -89,6 +89,9 @@
 #fregister .fregister_agree label {display:inline-block;margin-right:5px}
 #fregister p {color:#e8180c;text-align:center}
 #fregister .btn_confirm {margin-bottom:20px}
+#fregister_private .tbl_head01 th{;text-align:center;border:1px solid #d1dee2;width:33%}
+#fregister_private .tbl_head01 td {border:1px solid #e9e9e9}
+#fregister_private .tbl_head01 caption{position:absolute;font-size:0;line-height:0;overflow:hidden}
 
 /* 회원가입 입력 */
 #fregisterform textarea {height:50px}
