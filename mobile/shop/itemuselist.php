@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
 
-$sfl = trim($_REQUEST['sfl']);
-$stx = trim($_REQUEST['stx']);
+//$sfl = trim($_REQUEST['sfl']);
+//$stx = trim($_REQUEST['stx']);
 
 $g5['title'] = 'REVIEW';
 include_once(G5_MSHOP_PATH.'/_head.php');

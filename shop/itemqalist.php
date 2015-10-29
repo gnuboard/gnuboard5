@@ -6,8 +6,8 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-$sfl = trim($_REQUEST['sfl']);
-$stx = trim($_REQUEST['stx']);
+//$sfl = trim($_REQUEST['sfl']);
+//$stx = trim($_REQUEST['stx']);
 
 $g5['title'] = '상품문의';
 include_once('./_head.php');
