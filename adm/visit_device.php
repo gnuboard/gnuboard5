@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$g5['title'] = 'OS별 접속자집계';
+$g5['title'] = '기기별 접속자집계';
 include_once('./visit.sub.php');
 
 $colspan = 5;
@@ -15,9 +15,9 @@ $sql = " select * from {$g5['visit_table']}
           where vi_date between '$fr_date' and '$to_date' ";
 $result = sql_query($sql);
 while ($row=sql_fetch_array($result)) {
-    $s = $row['vi_os'];
+    $s = $row['vi_device'];
     if(!$s)
-        $s = get_os($row['vi_agent']);
+        $s = get_device($row['vi_agent']);
 
     $arr[$s]++;
 
@@ -33,7 +33,7 @@ while ($row=sql_fetch_array($result)) {
     <thead>
     <tr>
         <th scope="col">순위</th>
-        <th scope="col">OS</th>
+        <th scope="col">접속기기</th>
         <th scope="col">그래프</th>
         <th scope="col">접속자수</th>
         <th scope="col">비율(%)</th>
@@ -76,7 +76,7 @@ while ($row=sql_fetch_array($result)) {
 
     <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $no ?></td>
-        <td class="td_category"><?php echo $key ?></td>
+        <td class="td_category td_category1"><?php echo $key ?></td>
         <td>
             <div class="visit_bar">
                 <span style="width:<?php echo $s_rate ?>%"></span>

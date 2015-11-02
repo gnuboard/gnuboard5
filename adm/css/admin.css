@@ -395,6 +395,9 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_tdiv {border-bottom:1px solid #c9c9c9 !important}
 .td_tel {width:80px;text-align:center}
 .td_test {width:50px;text-align:center}
+.td_category1{width:130px;text-align:center}
+.td_category2{width:100px;text-align:center}
+.td_category3{width:80px;text-align:center}
 
 .txt_true {color:#e8180c}
 .txt_false {color:#ccc}
@@ -730,7 +733,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #theme_list li .tmli_if:hover button.tmli_dt{display:block}
 #theme_list li .theme_sl{float:left;border:none;margin-top:5px;padding:0 5px;height:26px;background:#999;color:#fff}
 #theme_list li .theme_sl:hover{background:#ff3061}
-#theme_list li .theme_deactive{margin-left:4px} 
+#theme_list li .theme_deactive{margin-left:4px}
 #theme_list li .theme_sl_use{background:#ff3061;line-height:26px}
 #theme_list li .theme_pr{float:right;margin-top:5px;padding:0 5px;height:24px;line-height:24px;  border: 1px solid #ccc;  background: #fafafa; }
 #theme_list li .theme_preview{  float: right;  margin-top: 5px; padding:0 5px;height:26px; border: 1px solid #ccc;  background: #fafafa; margin-right:3px}
@@ -764,3 +767,10 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .sms_table{padding:0 20px 40px;}
 .sms_table table th{border:1px solid #ddd;padding:9px 0}
 .sms_table table td{border:1px solid #ddd;text-align:center;width:16%;padding:9px 0}
+
+/* Browscap */
+.update_processing{width:300px;height:300px;margin:0 auto;background:url(../img/ajax_loader.gif) no-repeat 0 0}
+#processing{margin: 0 auto;padding: 70px 0;max-width: 800px;border: 1px solid #eee;background: #f9f9f9;text-align:center;}
+#processing p{font-size:1.2em}
+.check_processing {width:300px;height:300px;margin:0 auto;background:url(../img/check.png) no-repeat 50% 50% }
+#processing button{background:#ff3061;border:none;color:#fff;padding: 15px;width:150px;margin-top:15px}

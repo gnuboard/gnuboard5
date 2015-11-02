@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], 'r');
 $g5['title'] = '접속자집계';
 include_once('./visit.sub.php');
 
-$colspan = 5;
+$colspan = 6;
 
 $sql_common = " from {$g5['visit_table']} ";
 $sql_search = " where vi_date between '{$fr_date}' and '{$to_date}' ";
@@ -41,15 +41,25 @@ $result = sql_query($sql);
         <th scope="col">IP</th>
         <th scope="col">접속 경로</th>
         <th scope="col">브라우저</th>
-        <th scope="col">운영체제</th>
+        <th scope="col">OS</th>
+        <th scope="col">접속기기</th>
         <th scope="col">일시</th>
     </tr>
     </thead>
     <tbody>
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $brow = get_brow($row['vi_agent']);
-        $os   = get_os($row['vi_agent']);
+        $brow = $row['vi_browser'];
+        if(!$brow)
+            $brow = get_brow($row['vi_agent']);
+
+        $os = $row['vi_os'];
+        if(!$os)
+            $os = get_os($row['vi_agent']);
+
+        $device = $row['vi_device'];
+        if(!$device)
+            $device = get_device($row['vi_agent']);
 
         $link = '';
         $link2 = '';
@@ -83,8 +93,9 @@ $result = sql_query($sql);
     <tr class="<?php echo $bg; ?>">
         <td class="td_category"><?php echo $ip ?></td>
         <td><?php echo $link ?><?php echo $title ?><?php echo $link2 ?></td>
-        <td class="td_category"><?php echo $brow ?></td>
-        <td class="td_category"><?php echo $os ?></td>
+        <td class="td_category td_category1"><?php echo $brow ?></td>
+        <td class="td_category td_category3"><?php echo $os ?></td>
+        <td class="td_category td_category2"><?php echo $device; ?></td>
         <td class="td_datetime"><?php echo $row['vi_date'] ?> <?php echo $row['vi_time'] ?></td>
     </tr>
 

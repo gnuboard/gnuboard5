@@ -29,6 +29,7 @@ $query_string = $qstr ? '?'.$qstr : '';
     <li><a href="./visit_domain.php<?php echo $query_string ?>">도메인</a></li>
     <li><a href="./visit_browser.php<?php echo $query_string ?>">브라우저</a></li>
     <li><a href="./visit_os.php<?php echo $query_string ?>">운영체제</a></li>
+    <li><a href="./visit_device.php<?php echo $query_string ?>">접속기기</a></li>
     <li><a href="./visit_hour.php<?php echo $query_string ?>">시간</a></li>
     <li><a href="./visit_week.php<?php echo $query_string ?>">요일</a></li>
     <li><a href="./visit_date.php<?php echo $query_string ?>">일</a></li>
