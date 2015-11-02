@@ -202,7 +202,7 @@ define('G5_THUMB_PNG_COMPRESS', 5);
 define('G5_IS_MOBILE_DHTML_USE', false);
 
 // MySQLi 사용여부를 설정합니다.
-define('G5_MYSQLI_USE', false);
+define('G5_MYSQLI_USE', true);
 
 // ip 숨김방법 설정
 /* 123.456.789.012 ip의 숨김 방법을 변경하는 방법은
