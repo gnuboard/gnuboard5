@@ -15,7 +15,14 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
     if (isset($_SERVER['HTTP_REFERER']))
         $referer = escape_trim(clean_xss_tags($_SERVER['HTTP_REFERER']));
     $user_agent  = escape_trim(clean_xss_tags($_SERVER['HTTP_USER_AGENT']));
-    $sql = " insert {$g5['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent ) values ( '{$vi_id}', '{$remote_addr}', '".G5_TIME_YMD."', '".G5_TIME_HIS."', '{$referer}', '{$user_agent}' ) ";
+    // Browscap 캐시 파일이 있으면 실행
+    if(is_file(G5_DATA_PATH.'/cache/browscap_cache.php')) {
+        $browscap = get_browscap_info($_SERVER['HTTP_USER_AGENT']);
+        $vi_browser = $browscap->Comment;
+        $vi_os = $browscap->Platform;
+        $vi_device = $browscap->Device_Type;
+    }
+    $sql = " insert {$g5['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent, vi_browser, vi_os, vi_device ) values ( '{$vi_id}', '{$remote_addr}', '".G5_TIME_YMD."', '".G5_TIME_HIS."', '{$referer}', '{$user_agent}', '{$vi_browser}', '{$vi_os}', '{$vi_device}' ) ";
 
     $result = sql_query($sql, FALSE);
     // 정상으로 INSERT 되었다면 방문자 합계에 반영

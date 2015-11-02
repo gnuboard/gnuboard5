@@ -186,6 +186,14 @@ if(!isset($config['cf_sms_type'])) {
                     ADD `cf_sms_type` varchar(10) NOT NULL DEFAULT '' AFTER `cf_sms_use` ", true);
 }
 
+// 접속자 정보 필드 추가
+if(!sql_query(" select vi_browser from {$g5['visit_table']} limit 1 ")) {
+    sql_query(" ALTER TABLE `{$g5['visit_table']}`
+                    ADD `vi_browser` varchar(255) NOT NULL DEFAULT '' AFTER `vi_agent`,
+                    ADD `vi_os` varchar(255) NOT NULL DEFAULT '' AFTER `vi_browser`,
+                    ADD `vi_device` varchar(255) NOT NULL DEFAULT '' AFTER `vi_os` ", true);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 

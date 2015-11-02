@@ -50,51 +50,22 @@ function visit($skin_dir='basic')
 // get_browser() 함수는 이미 있음
 function get_brow($agent)
 {
-    $agent = strtolower($agent);
+    $info = get_browscap_info($agent);
 
-    //echo $agent; echo "<br/>";
-
-    if (preg_match("/msie ([1-9][0-9]\.[0-9]+)/", $agent, $m)) { $s = 'MSIE '.$m[1]; }
-    else if(preg_match("/firefox/", $agent))            { $s = "FireFox"; }
-    else if(preg_match("/chrome/", $agent))             { $s = "Chrome"; }
-    else if(preg_match("/x11/", $agent))                { $s = "Netscape"; }
-    else if(preg_match("/opera/", $agent))              { $s = "Opera"; }
-    else if(preg_match("/gec/", $agent))                { $s = "Gecko"; }
-    else if(preg_match("/bot|slurp/", $agent))          { $s = "Robot"; }
-    else if(preg_match("/internet explorer/", $agent))  { $s = "IE"; }
-    else if(preg_match("/mozilla/", $agent))            { $s = "Mozilla"; }
-    else { $s = "기타"; }
-
-    return $s;
+    return $info->Comment;
 }
 
 function get_os($agent)
 {
-    $agent = strtolower($agent);
+    $info = get_browscap_info($agent);
 
-    //echo $agent; echo "<br/>";
+    return $info->Platform;
+}
 
-    if (preg_match("/windows 98/", $agent))                 { $s = "98"; }
-    else if(preg_match("/windows 95/", $agent))             { $s = "95"; }
-    else if(preg_match("/windows nt 4\.[0-9]*/", $agent))   { $s = "NT"; }
-    else if(preg_match("/windows nt 5\.0/", $agent))        { $s = "2000"; }
-    else if(preg_match("/windows nt 5\.1/", $agent))        { $s = "XP"; }
-    else if(preg_match("/windows nt 5\.2/", $agent))        { $s = "2003"; }
-    else if(preg_match("/windows nt 6\.0/", $agent))        { $s = "Vista"; }
-    else if(preg_match("/windows nt 6\.1/", $agent))        { $s = "Windows7"; }
-    else if(preg_match("/windows nt 6\.2/", $agent))        { $s = "Windows8"; }
-    else if(preg_match("/windows 9x/", $agent))             { $s = "ME"; }
-    else if(preg_match("/windows ce/", $agent))             { $s = "CE"; }
-    else if(preg_match("/mac/", $agent))                    { $s = "MAC"; }
-    else if(preg_match("/linux/", $agent))                  { $s = "Linux"; }
-    else if(preg_match("/sunos/", $agent))                  { $s = "sunOS"; }
-    else if(preg_match("/irix/", $agent))                   { $s = "IRIX"; }
-    else if(preg_match("/phone/", $agent))                  { $s = "Phone"; }
-    else if(preg_match("/bot|slurp/", $agent))              { $s = "Robot"; }
-    else if(preg_match("/internet explorer/", $agent))      { $s = "IE"; }
-    else if(preg_match("/mozilla/", $agent))                { $s = "Mozilla"; }
-    else { $s = "기타"; }
+function get_device($agent)
+{
+    $info = get_browscap_info($agent);
 
-    return $s;
+    return $info->Device_Type;
 }
 ?>

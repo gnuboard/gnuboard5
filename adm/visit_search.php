@@ -9,7 +9,7 @@ $g5['title'] = '접속자검색';
 include_once('./admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
-$colspan = 5;
+$colspan = 6;
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처음으로 (초기화용도)
 ?>
 
@@ -36,6 +36,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
         <th scope="col">접속 경로</th>
         <th scope="col">브라우저</th>
         <th scope="col">OS</th>
+        <th scope="col">접속기기</th>
         <th scope="col">일시</th>
     </tr>
     </thead>
@@ -68,8 +69,17 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
     $result = sql_query($sql);
 
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $brow = get_brow($row['vi_agent']);
-        $os   = get_os($row['vi_agent']);
+        $brow = $row['vi_browser'];
+        if(!$brow)
+            $brow = get_brow($row['vi_agent']);
+
+        $os = $row['vi_os'];
+        if(!$os)
+            $os = get_os($row['vi_agent']);
+
+        $device = $row['vi_device'];
+        if(!$device)
+            $device = get_device($row['vi_agent']);
 
         $link = "";
         $referer = "";
@@ -92,16 +102,14 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
         else
             $ip = preg_replace("/([0-9]+).([0-9]+).([0-9]+).([0-9]+)/", G5_IP_DISPLAY, $row['vi_ip']);
 
-        if ($brow == '기타') $brow = '<span title="'.get_text($row['vi_agent']).'">'.$brow.'</span>';
-        if ($os == '기타') $os = '<span title="'.get_text($row['vi_agent']).'">'.$os.'</span>';
-
         $bg = 'bg'.($i%2);
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_id"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sfl=vi_ip&amp;stx=<?php echo $ip; ?>"><?php echo $ip; ?></a></td>
         <td><?php echo $link.$title; ?></a></td>
-        <td class="td_idsmall"><?php echo $brow; ?></td>
-        <td class="td_idsmall"><?php echo $os; ?></td>
+        <td class="td_idsmall td_category1"><?php echo $brow; ?></td>
+        <td class="td_idsmall td_category3"><?php echo $os; ?></td>
+        <td class="td_idsmall td_category2"><?php echo $device; ?></td>
         <td class="td_datetime"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sfl=vi_date&amp;stx=<?php echo $row['vi_date']; ?>"><?php echo $row['vi_date']; ?></a> <?php echo $row['vi_time']; ?></td>
     </tr>
     <?php } ?>
