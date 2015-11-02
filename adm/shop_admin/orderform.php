@@ -924,6 +924,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <input type="text" name="od_addr3" value="<?php echo get_text($od['od_addr3']); ?>" id="od_addr3" class="frm_input" size="35">
                         <label for="od_addr3">참고항목</label>
                         <input type="hidden" name="od_addr_jibeon" value="<?php echo get_text($od['od_addr_jibeon']); ?>"><br>
+                    </td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="od_email"><span class="sound_only">주문하신 분 </span>E-mail</label></th>

@@ -215,7 +215,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         </td>
     </tr>
     <tr>
-        <th scope="row"><label for="mb_zip1">주소</label></th>
+        <th scope="row"><label for="mb_zip">주소</label></th>
         <td colspan="3" class="td_addr_line">
             <label for="mb_zip" class="sound_only">우편번호</label>
             <input type="text" name="mb_zip" value="<?php echo $mb['mb_zip1'].$mb['mb_zip2']; ?>" id="mb_zip" class="frm_input readonly" size="5" maxlength="6">
