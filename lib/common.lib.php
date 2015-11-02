@@ -3177,4 +3177,22 @@ function check_vaild_callback($callback){
              return true;
    }
 }
+
+// Browscap 정보 얻기
+function get_browscap_info($agent)
+{
+    if(!$agent)
+        return false;
+
+    include_once(G5_PLUGIN_PATH.'/browscap/Browscap.php');
+
+    $browscap = new phpbrowscap\Browscap(G5_DATA_PATH.'/cache');
+    $browscap->updateMethod = 'cURL';
+    $browscap->doAutoUpdate = false;
+    $browscap->cacheFilename = 'browscap_cache.php';
+
+    $info = $browscap->getBrowser($agent);
+
+    return $info;
+}
 ?>
