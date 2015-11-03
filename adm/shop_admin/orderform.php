@@ -989,7 +989,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
                 <tr>
                     <th scope="row">전달 메세지</th>
-                    <td><?php if ($od['od_memo']) echo nl2br($od['od_memo']);else echo "없음";?></td>
+                    <td><?php if ($od['od_memo']) echo get_text($od['od_memo'], 1);else echo "없음";?></td>
                 </tr>
                 </tbody>
                 </table>
