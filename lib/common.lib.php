@@ -1454,7 +1454,7 @@ function sql_set_charset($charset, $link=null)
     if(function_exists('mysqli_set_charset') && G5_MYSQLI_USE)
         mysqli_set_charset($link, $charset);
     else
-        sql_query(" set names {$charset} ");
+        mysql_query(" set names {$charset} ", $link);
 }
 
 
