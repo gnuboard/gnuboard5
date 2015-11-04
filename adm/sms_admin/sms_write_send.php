@@ -244,7 +244,7 @@ if($config['cf_sms_type'] == 'LMS') {
     }
 } else {
     $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
-    $result = $SMS->Add($list, $reply, '', '', $wr_message, $booking, $wr_total);
+    $result = $SMS->Add2($list, $reply, '', '', $wr_message, $booking, $wr_total);
 
     if ($result)
     {

@@ -379,7 +379,7 @@ if($config['cf_sms_type'] == 'LMS') {
                     break;
             }
         }
-        function Add($strDest, $strCallBack, $strCaller, $strURL, $strMessage, $strDate="", $nCount) {
+        function Add2($strDest, $strCallBack, $strCaller, $strURL, $strMessage, $strDate="", $nCount) {
             global $g5;
 
             $Error = $this->CheckCommonTypeDest($strDest, $nCount);
