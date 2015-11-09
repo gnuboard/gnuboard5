@@ -345,6 +345,7 @@ if($g5_shop_install) {
                     de_item_use_use = '1',
                     de_level_sell = '1',
                     de_code_dup_use = '1',
+                    de_card_test = '1',
                     de_sms_cont1 = '{이름}님의 회원가입을 축하드립니다.\nID:{회원아이디}\n{회사명}',
                     de_sms_cont2 = '{이름}님 주문해주셔서 고맙습니다.\n{주문번호}\n{주문금액}원\n{회사명}',
                     de_sms_cont3 = '{이름}님께서 주문하셨습니다.\n{주문번호}\n{주문금액}원\n{회사명}',
