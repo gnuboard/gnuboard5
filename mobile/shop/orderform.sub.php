@@ -1398,6 +1398,7 @@ function payment_check(f)
     var send_cost = parseInt(f.od_send_cost.value);
     var send_cost2 = parseInt(f.od_send_cost2.value);
     var send_coupon = parseInt(f.od_send_coupon.value);
+    temp_point = 0;
 
     if (typeof(f.max_temp_point) != "undefined")
         var max_point  = parseInt(f.max_temp_point.value);
