@@ -2929,6 +2929,17 @@ function get_safe_filename($name)
     return $name;
 }
 
+// 파일명 치환
+function replace_filename($name)
+{
+    @session_start();
+    $ss_id = session_id();
+    $usec = get_microtime();
+    $ext = array_pop(explode('.', $name));
+
+    return sha1($ss_id.$_SERVER['REMOTE_ADDR'].$usec).'.'.$ext;
+}
+
 // 아이코드 사용자정보
 function get_icode_userinfo($id, $pass)
 {
