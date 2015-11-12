@@ -204,6 +204,12 @@ define('G5_IS_MOBILE_DHTML_USE', false);
 // MySQLi 사용여부를 설정합니다.
 define('G5_MYSQLI_USE', true);
 
+// Browscap 사용여부를 설정합니다.
+define('G5_BROWSCAP_USE', true);
+
+// 접속자 기록 때 Browscap 사용여부를 설정합니다.
+define('G5_VISIT_BROWSCAP_USE', false);
+
 // ip 숨김방법 설정
 /* 123.456.789.012 ip의 숨김 방법을 변경하는 방법은
 \\1 은 123, \\2는 456, \\3은 789, \\4는 012에 각각 대응되므로
