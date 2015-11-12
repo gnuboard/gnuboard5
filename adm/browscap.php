@@ -11,7 +11,7 @@ include_once('./admin.head.php');
 
 <div id="processing">
     <p>Browscap 정보를 업데이트하시려면 아래 업데이트 버튼을 클릭해 주세요.</p>
-    <div><button type="button" id="run_update">업데이트</button>
+    <button type="button" id="run_update">업데이트</button>
 </div>
 
 <script>
