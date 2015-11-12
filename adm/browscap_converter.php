@@ -11,14 +11,6 @@ if(!(version_compare(phpversion(), '5.3.0', '>=') && defined('G5_BROWSCAP_USE') 
 if($is_admin != 'super')
     die('최고관리자로 로그인 후 실행해 주세요.');
 
-// 접속자 정보 필드 추가
-if(!sql_query(" select vi_browser from {$g5['visit_table']} limit 1 ")) {
-    sql_query(" ALTER TABLE `{$g5['visit_table']}`
-                    ADD `vi_browser` varchar(255) NOT NULL DEFAULT '' AFTER `vi_agent`,
-                    ADD `vi_os` varchar(255) NOT NULL DEFAULT '' AFTER `vi_browser`,
-                    ADD `vi_device` varchar(255) NOT NULL DEFAULT '' AFTER `vi_os` ", true);
-}
-
 // browscap cache 파일 체크
 if(!is_file(G5_DATA_PATH.'/cache/browscap_cache.php')) {
     echo '<p>Browscap 정보가 없습니다. 아래 링크로 이동해 Browscap 정보를 업데이트 하세요.</p>'.PHP_EOL;

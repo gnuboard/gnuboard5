@@ -17,7 +17,7 @@ include_once('./admin.head.php');
 ?>
 
 <div id="processing">
-    <p>접속로그 Browscap 정보로 변환하시려면 아래 업데이트 버튼을 클릭해 주세요.</p>
+    <p>접속로그 정보를 Browscap 정보로 변환하시려면 아래 업데이트 버튼을 클릭해 주세요.</p>
     <button type="button" id="run_update">업데이트</button>
 </div>
 
