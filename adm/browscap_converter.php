@@ -28,7 +28,7 @@ $rows = preg_replace('#[^0-9]#', '', $_GET['rows']);
 if(!$rows)
     $rows = 100;
 
-$sql_common = " from {$g5['visit_table']} where vi_browser = '' or vi_os = '' or vi_device = '' ";
+$sql_common = " from {$g5['visit_table']} where vi_agent <> '' and ( vi_browser = '' or vi_os = '' or vi_device = '' ) ";
 $sql_order  = " order by vi_id desc ";
 $sql_limit  = " limit 0, $rows ";
 
@@ -44,9 +44,6 @@ $result = sql_query($sql);
 
 $cnt = 0;
 for($i=0; $row=sql_fetch_array($result); $i++) {
-    if(!$row['vi_agent'])
-        continue;
-
     $info = $browscap->getBrowser($row['vi_agent']);
 
     $brow = $row['vi_browser'];
