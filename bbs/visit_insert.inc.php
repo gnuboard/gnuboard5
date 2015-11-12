@@ -15,12 +15,24 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
     if (isset($_SERVER['HTTP_REFERER']))
         $referer = escape_trim(clean_xss_tags($_SERVER['HTTP_REFERER']));
     $user_agent  = escape_trim(clean_xss_tags($_SERVER['HTTP_USER_AGENT']));
-    // Browscap 캐시 파일이 있으면 실행
-    if(is_file(G5_DATA_PATH.'/cache/browscap_cache.php')) {
-        $browscap = get_browscap_info($_SERVER['HTTP_USER_AGENT']);
-        $vi_browser = $browscap->Comment;
-        $vi_os = $browscap->Platform;
-        $vi_device = $browscap->Device_Type;
+    $vi_browser = '';
+    $vi_os = '';
+    $vi_device = '';
+    if(version_compare(phpversion(), '5.3.0', '>=') && defined('G5_BROWSCAP_USE') && G5_BROWSCAP_USE) {
+        // Browscap 캐시 파일이 있으면 실행
+        if(defined('G5_VISIT_BROWSCAP_USE') && G5_VISIT_BROWSCAP_USE && is_file(G5_DATA_PATH.'/cache/browscap_cache.php')) {
+            include_once(G5_PLUGIN_PATH.'/browscap/Browscap.php');
+
+            $browscap = new phpbrowscap\Browscap(G5_DATA_PATH.'/cache');
+            $browscap->doAutoUpdate = false;
+            $browscap->cacheFilename = 'browscap_cache.php';
+
+            $info = $browscap->getBrowser($_SERVER['HTTP_USER_AGENT']);
+
+            $vi_browser = $info->Comment;
+            $vi_os = $info->Platform;
+            $vi_device = $info->Device_Type;
+        }
     }
     $sql = " insert {$g5['visit_table']} ( vi_id, vi_ip, vi_date, vi_time, vi_referer, vi_agent, vi_browser, vi_os, vi_device ) values ( '{$vi_id}', '{$remote_addr}', '".G5_TIME_YMD."', '".G5_TIME_HIS."', '{$referer}', '{$user_agent}', '{$vi_browser}', '{$vi_os}', '{$vi_device}' ) ";
 
