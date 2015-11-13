@@ -58,8 +58,6 @@ $result = sql_query($sql);
             $os = get_os($row['vi_agent']);
 
         $device = $row['vi_device'];
-        if(!$device)
-            $device = get_device($row['vi_agent']);
 
         $link = '';
         $link2 = '';

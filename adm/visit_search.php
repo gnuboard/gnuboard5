@@ -78,8 +78,6 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
             $os = get_os($row['vi_agent']);
 
         $device = $row['vi_device'];
-        if(!$device)
-            $device = get_device($row['vi_agent']);
 
         $link = "";
         $referer = "";

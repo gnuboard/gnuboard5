@@ -17,7 +17,7 @@ $result = sql_query($sql);
 while ($row=sql_fetch_array($result)) {
     $s = $row['vi_device'];
     if(!$s)
-        $s = get_device($row['vi_agent']);
+        $s = '기타';
 
     $arr[$s]++;
 
@@ -65,7 +65,7 @@ while ($row=sql_fetch_array($result)) {
             }
 
             if (!$key) {
-                $key = 'Unknown';
+                $key = '기타';
             }
 
             $rate = ($count / $sum_count * 100);
