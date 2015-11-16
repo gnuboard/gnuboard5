@@ -79,6 +79,17 @@ if ($w == '' || $w == 'u') {
     if ($msg = valid_mb_id($mb_id))         alert($msg, "", true, true);
     if ($msg = count_mb_id($mb_id))         alert($msg, "", true, true);
 
+    // 이름, 닉네임에 utf-8 이외의 문자가 포함됐다면 오류
+    // 서버환경에 따라 정상적으로 체크되지 않을 수 있음.
+    $tmp_mb_name = iconv('UTF-8', 'UTF-8//IGNORE', $mb_name);
+    if($tmp_mb_name != $mb_name) {
+        alert('이름을 올바르게 입력해 주십시오.');
+    }
+    $tmp_mb_nick = iconv('UTF-8', 'UTF-8//IGNORE', $mb_nick);
+    if($tmp_mb_nick != $mb_nick) {
+        alert('닉네임을 올바르게 입력해 주십시오.');
+    }
+
     if ($w == '' && !$mb_password)
         alert('비밀번호가 넘어오지 않았습니다.');
     if($w == '' && $mb_password != $mb_password_re)
@@ -102,6 +113,14 @@ if ($w == '' || $w == 'u') {
 
     if ($w=='') {
         if ($msg = exist_mb_id($mb_id))     alert($msg);
+
+        if (get_session('ss_check_mb_id') != $mb_id || get_session('ss_check_mb_nick') != $mb_nick || get_session('ss_check_mb_email') != $mb_email) {
+            set_session('ss_check_mb_id', '');
+            set_session('ss_check_mb_nick', '');
+            set_session('ss_check_mb_email', '');
+
+            alert('올바른 방법으로 이용해 주십시오.');
+        }
 
         // 본인확인 체크
         if($config['cf_cert_use'] && $config['cf_cert_req']) {
