@@ -35,96 +35,98 @@ class KCAPTCHA{
 
 		$alphabet_length=strlen($alphabet);
 
-		do{
-            /*
-			// generating random keystring
-			while(true){
-				$this->keystring='';
-				for($i=0;$i<$length;$i++){
-					$this->keystring.=$allowed_symbols{mt_rand(0,strlen($allowed_symbols)-1)};
-				}
-				if(!preg_match('/cp|cb|ck|c6|c9|rn|rm|mm|co|do|cl|db|qp|qb|dp|ww/', $this->keystring)) break;
-			}
-            */
 
-			$font_file=$fonts[mt_rand(0, count($fonts)-1)];
-			$font=imagecreatefrompng($font_file);
-			imagealphablending($font, true);
-			$fontfile_width=imagesx($font);
-			$fontfile_height=imagesy($font)-1;
-			$font_metrics=array();
-			$symbol=0;
-			$reading_symbol=false;
+        $font_file=$fonts[mt_rand(0, count($fonts)-1)];
+        $font=imagecreatefrompng($font_file);
+        imagealphablending($font, true);
+        $fontfile_width=imagesx($font);
+        $fontfile_height=imagesy($font)-1;
+        $font_metrics=array();
+        $symbol=0;
+        $reading_symbol=false;
 
-			// loading font
-			for($i=0;$i<$fontfile_width && $symbol<$alphabet_length;$i++){
-				$transparent = (imagecolorat($font, $i, 0) >> 24) == 127;
+        // loading font
+        for($i=0;$i<$fontfile_width && $symbol<$alphabet_length;$i++){
+            $transparent = (imagecolorat($font, $i, 0) >> 24) == 127;
 
-				if(!$reading_symbol && !$transparent){
-					$font_metrics[$alphabet{$symbol}]=array('start'=>$i);
-					$reading_symbol=true;
-					continue;
-				}
+            if(!$reading_symbol && !$transparent){
+                $font_metrics[$alphabet{$symbol}]=array('start'=>$i);
+                $reading_symbol=true;
+                continue;
+            }
 
-				if($reading_symbol && $transparent){
-					$font_metrics[$alphabet{$symbol}]['end']=$i;
-					$reading_symbol=false;
-					$symbol++;
-					continue;
-				}
-			}
+            if($reading_symbol && $transparent){
+                $font_metrics[$alphabet{$symbol}]['end']=$i;
+                $reading_symbol=false;
+                $symbol++;
+                continue;
+            }
+        }
 
-			$img=imagecreatetruecolor($width, $height);
-			imagealphablending($img, true);
-			$white=imagecolorallocate($img, 255, 255, 255);
-			$black=imagecolorallocate($img, 0, 0, 0);
+        $img=imagecreatetruecolor($width, $height);
+        imagealphablending($img, true);
+        $white=imagecolorallocate($img, 255, 255, 255);
+        $black=imagecolorallocate($img, 0, 0, 0);
 
-			imagefilledrectangle($img, 0, 0, $width-1, $height-1, $white);
+        imagefilledrectangle($img, 0, 0, $width-1, $height-1, $white);
 
-			// draw text
-			$x=1;
-			for($i=0;$i<strlen($this->keystring);$i++){
-				$m=$font_metrics[$this->keystring{$i}];
+        // draw text
+        $x=1;
+        $odd=mt_rand(0,1);
+        if($odd==0) $odd=-1;
+        for($i=0;$i<$length;$i++){
+            $m=$font_metrics[$this->keystring{$i}];
 
-				$y=mt_rand(-$fluctuation_amplitude, $fluctuation_amplitude)+($height-$fontfile_height)/2+2;
+            $y=(($i%2)*$fluctuation_amplitude - $fluctuation_amplitude/2)*$odd
+                + mt_rand(-round($fluctuation_amplitude/3), round($fluctuation_amplitude/3))
+                + ($height-$fontfile_height)/2;
 
-				if($no_spaces){
-					$shift=0;
-					if($i>0){
-						$shift=10000;
-						for($sy=7;$sy<$fontfile_height-20;$sy+=1){
-							for($sx=$m['start']-1;$sx<$m['end'];$sx+=1){
-				        		$rgb=imagecolorat($font, $sx, $sy);
-				        		$opacity=$rgb>>24;
-								if($opacity<127){
-									$left=$sx-$m['start']+$x;
-									$py=$sy+$y;
-									if($py>$height) break;
-									for($px=min($left,$width-1);$px>$left-12 && $px>=0;$px-=1){
-						        		$color=imagecolorat($img, $px, $py) & 0xff;
-										if($color+$opacity<190){
-											if($shift>$left-$px){
-												$shift=$left-$px;
-											}
-											break;
-										}
-									}
-									break;
-								}
-							}
-						}
-						if($shift==10000){
-							$shift=mt_rand(4,6);
-						}
+            if($no_spaces){
+                $shift=0;
+                if($i>0){
+                    $shift=10000;
+                    for($sy=3;$sy<$fontfile_height-10;$sy+=1){
+                        for($sx=$m['start']-1;$sx<$m['end'];$sx+=1){
+                            $rgb=imagecolorat($font, $sx, $sy);
+                            $opacity=$rgb>>24;
+                            if($opacity<127){
+                                $left=$sx-$m['start']+$x;
+                                $py=$sy+$y;
+                                if($py>$height) break;
+                                for($px=min($left,$width-1);$px>$left-200 && $px>=0;$px-=1){
+                                    $color=imagecolorat($img, $px, $py) & 0xff;
+                                    if($color+$opacity<170){ // 170 - threshold
+                                        if($shift>$left-$px){
+                                            $shift=$left-$px;
+                                        }
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    if($shift==10000){
+                        $shift=mt_rand(4,6);
+                    }
 
-					}
-				}else{
-					$shift=1;
-				}
-				imagecopy($img, $font, $x-$shift, $y, $m['start'], 1, $m['end']-$m['start'], $fontfile_height);
-				$x+=$m['end']-$m['start']-$shift;
-			}
-		}while($x>=$width-10); // while not fit in canvas
+                }
+            }else{
+                $shift=1;
+            }
+            imagecopy($img, $font, $x-$shift, $y, $m['start'], 1, $m['end']-$m['start'], $fontfile_height);
+            $x+=$m['end']-$m['start']-$shift;
+        }
+
+		//noise
+		$white=imagecolorallocate($font, 255, 255, 255);
+		$black=imagecolorallocate($font, 0, 0, 0);
+		for($i=0;$i<(($height-30)*$x)*$white_noise_density;$i++){
+			imagesetpixel($img, mt_rand(0, $x-1), mt_rand(10, $height-15), $white);
+		}
+		for($i=0;$i<(($height-30)*$x)*$black_noise_density;$i++){
+			imagesetpixel($img, mt_rand(0, $x-1), mt_rand(10, $height-15), $black);
+		}
 
 		$center=$x/2;
 
@@ -235,21 +237,17 @@ class KCAPTCHA{
 // 캡챠 HTML 코드 출력
 function captcha_html($class="captcha")
 {
-    if(is_mobile())
-        $class .= ' m_captcha';
-
     $html .= "\n".'<script>var g5_captcha_url  = "'.G5_CAPTCHA_URL.'";</script>';
     //$html .= "\n".'<script>var g5_captcha_path = "'.G5_CAPTCHA_PATH.'";</script>';
     $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/kcaptcha.js"></script>';
     $html .= "\n".'<fieldset id="captcha" class="'.$class.'">';
     $html .= "\n".'<legend><label for="captcha_key">자동등록방지</label></legend>';
-    if (is_mobile()) $html .= '<audio src="#" id="captcha_audio" controls></audio>';
     //$html .= "\n".'<img src="#" alt="" id="captcha_img">';
     $html .= "\n".'<img src="javascript:void(0);" alt="" id="captcha_img">';
-    if (!is_mobile()) $html .= "\n".'<button type="button" id="captcha_mp3"><span></span>숫자음성듣기</button>';
+    $html .= "\n".'<button type="button" id="captcha_mp3"><span></span>숫자음성듣기</button>';
     $html .= "\n".'<button type="button" id="captcha_reload"><span></span>새로고침</button>';
     $html .= '<input type="text" name="captcha_key" id="captcha_key" required class="captcha_box required" size="6" maxlength="6">';
-    $html .= "\n".'<span id="captcha_info">자동등록방지 숫자를 순서대로 입력하세요.</span>';
+    $html .= "\n".'<span id="captcha_info">자동등록방지 영숫자를 순서대로 입력하세요.</span>';
     $html .= "\n".'</fieldset>';
     return $html;
 }
