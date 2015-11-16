@@ -247,7 +247,7 @@ function captcha_html($class="captcha")
     $html .= "\n".'<button type="button" id="captcha_mp3"><span></span>숫자음성듣기</button>';
     $html .= "\n".'<button type="button" id="captcha_reload"><span></span>새로고침</button>';
     $html .= '<input type="text" name="captcha_key" id="captcha_key" required class="captcha_box required" size="6" maxlength="6">';
-    $html .= "\n".'<span id="captcha_info">자동등록방지 영숫자를 순서대로 입력하세요.</span>';
+    $html .= "\n".'<span id="captcha_info">자동등록방지 숫자를 순서대로 입력하세요.</span>';
     $html .= "\n".'</fieldset>';
     return $html;
 }
