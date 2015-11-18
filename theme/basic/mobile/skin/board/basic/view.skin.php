@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
-<div id="bo_v_table"><?php echo $board['bo_subject']; ?></div>
+<div id="bo_v_table"><?php echo ($board['bo_mobile_subject'] ? $board['bo_mobile_subject'] : $board['bo_subject']); ?></div>
 
 <article id="bo_v" style="width:<?php echo $width; ?>">
     <header>

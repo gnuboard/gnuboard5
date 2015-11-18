@@ -129,13 +129,13 @@ if ($stx) {
             $read_level[]   = $g5_search['read_level'][$i];
             $search_table_count[] = $total_count;
 
-            $sql2 = " select bo_subject from {$g5['board_table']} where bo_table = '{$g5_search['tables'][$i]}' ";
+            $sql2 = " select bo_subject, bo_mobile_subject from {$g5['board_table']} where bo_table = '{$g5_search['tables'][$i]}' ";
             $row2 = sql_fetch($sql2);
             $sch_class = "";
             $sch_all = "";
             if ($onetable == $g5_search['tables'][$i]) $sch_class = "class=sch_on";
             else $sch_all = "class=sch_on";
-            $str_board_list .= '<li><a href="'.$_SERVER['SCRIPT_NAME'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g5_search['tables'][$i].'" '.$sch_class.'><strong>'.$row2['bo_subject'].'</strong><span class="cnt_cmt">'.$row['cnt'].'</span></a></li>';
+            $str_board_list .= '<li><a href="'.$_SERVER['SCRIPT_NAME'].'?'.$search_query.'&amp;gr_id='.$gr_id.'&amp;onetable='.$g5_search['tables'][$i].'" '.$sch_class.'><strong>'.((G5_IS_MOBILE && $row2['bo_mobile_subject']) ? $row2['bo_mobile_subject'] : $row2['bo_subject']).'</strong><span class="cnt_cmt">'.$row['cnt'].'</span></a></li>';
         }
     }
 
@@ -157,9 +157,9 @@ if ($stx) {
 
     $k=0;
     for ($idx=$table_index; $idx<count($search_table); $idx++) {
-        $sql = " select bo_subject from {$g5['board_table']} where bo_table = '{$search_table[$idx]}' ";
+        $sql = " select bo_subject, bo_mobile_subject from {$g5['board_table']} where bo_table = '{$search_table[$idx]}' ";
         $row = sql_fetch($sql);
-        $bo_subject[$idx] = $row['bo_subject'];
+        $bo_subject[$idx] = ((G5_IS_MOBILE && $row['bo_mobile_subject']) ? $row['bo_mobile_subject'] : $row['bo_subject']);
 
         $tmp_write_table = $g5['write_prefix'] . $search_table[$idx];
 
