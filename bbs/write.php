@@ -214,7 +214,7 @@ else
     $write_max = (int)$board['bo_write_max'];
 }
 
-$g5['title'] = $board['bo_subject']." ".$title_msg;
+$g5['title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']).' '.$title_msg;
 
 $is_notice = false;
 $notice_checked = '';
