@@ -4,8 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
 $ma_last_option = "";
 
 $sql_common = " from {$g5['member_table']} ";
@@ -69,7 +67,7 @@ include_once('./admin.head.php');
 ?>
 
 <form name="fmailselectlist" id="fmailselectlist" method="post" action="./mail_select_update.php">
-<input type="hidden" name="token" value="<?php echo $token ?>">
+<input type="hidden" name="token" value="">
 <input type="hidden" name="ma_id" value="<?php echo $ma_id ?>">
 
 <div class="tbl_head01 tbl_wrap">

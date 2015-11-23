@@ -8,7 +8,7 @@ if ($w == 'u')
 
 auth_check($auth[$sub_menu], 'w');
 
-check_token();
+check_admin_token();
 
 $mb_id = trim($_POST['mb_id']);
 

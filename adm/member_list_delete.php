@@ -6,7 +6,7 @@ check_demo();
 
 auth_check($auth[$sub_menu], "d");
 
-check_token();
+check_admin_token();
 
 $msg = "";
 for ($i=0; $i<count($chk); $i++)

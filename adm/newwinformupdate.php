@@ -5,10 +5,13 @@ include_once('./_common.php');
 if ($w == "u" || $w == "d")
     check_demo();
 
-if ($w == 'd')
+if ($w == 'd') {
+    admin_referer_check();
     auth_check($auth[$sub_menu], "d");
-else
+} else {
+    check_admin_token();
     auth_check($auth[$sub_menu], "w");
+}
 
 $sql_common = " nw_device = '{$_POST['nw_device']}',
                 nw_begin_time = '{$_POST['nw_begin_time']}',

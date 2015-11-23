@@ -13,6 +13,7 @@ include_once(G5_PATH.'/head.sub.php');
 
     <form name="fboardcopy" id="fboardcopy" action="./board_copy_update.php" onsubmit="return fboardcopy_check(this);" method="post">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>" id="bo_table">
+    <input type="hidden" name="token" value="">
 
     <div class="tbl_frm01 tbl_wrap">
         <table>

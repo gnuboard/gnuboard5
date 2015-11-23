@@ -5,10 +5,13 @@ include_once('./_common.php');
 if ($w == "u" || $w == "d")
     check_demo();
 
-if ($w == 'd')
+if ($w == 'd') {
+    admin_referer_check();
     auth_check($auth[$sub_menu], "d");
-else
+} else {
+    check_admin_token();
     auth_check($auth[$sub_menu], "w");
+}
 
 @mkdir(G5_DATA_PATH."/content", G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH."/content", G5_DIR_PERMISSION);

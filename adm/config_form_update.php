@@ -13,7 +13,7 @@ $mb = get_member($cf_admin);
 if (!$mb['mb_id'])
     alert('최고관리자 회원아이디가 존재하지 않습니다.');
 
-check_token();
+check_admin_token();
 
 // 본인확인을 사용할 경우 아이핀, 휴대폰인증 중 하나는 선택되어야 함
 if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'])

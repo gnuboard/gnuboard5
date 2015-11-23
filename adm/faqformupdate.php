@@ -5,10 +5,13 @@ include_once('./_common.php');
 if ($w == "u" || $w == "d")
     check_demo();
 
-if ($W == 'd')
+if ($W == 'd') {
+    admin_referer_check();
     auth_check($auth[$sub_menu], "d");
-else
+} else {
+    check_admin_token();
     auth_check($auth[$sub_menu], "w");
+}
 
 $sql_common = " fa_subject = '$fa_subject',
                 fa_content = '$fa_content',

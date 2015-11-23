@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
-check_token();
+check_admin_token();
 
 $mb_id = $_POST['mb_id'];
 $po_point = $_POST['po_point'];

@@ -9,6 +9,8 @@ auth_check($auth[$sub_menu], 'w');
 
 if ($is_admin != 'super' && $w == '') alert('최고관리자만 접근 가능합니다.');
 
+check_admin_token();
+
 if (!preg_match("/^([A-Za-z0-9_]{1,10})$/", $_POST['gr_id']))
     alert('그룹 ID는 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (10자 이내)');
 

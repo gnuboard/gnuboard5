@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
+check_admin_token();
+
 $target_table   = trim($_POST['target_table']);
 $target_subject = trim($_POST['target_subject']);
 
