@@ -8,11 +8,14 @@ $g5['title'] = '게시판 복사';
 include_once(G5_PATH.'/head.sub.php');
 ?>
 
+<script src="<?php echo G5_ADMIN_URL ?>/admin.js"></script>
+
 <div class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
     <form name="fboardcopy" id="fboardcopy" action="./board_copy_update.php" onsubmit="return fboardcopy_check(this);" method="post">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>" id="bo_table">
+    <input type="hidden" name="token" value="">
 
     <div class="tbl_frm01 tbl_wrap">
         <table>

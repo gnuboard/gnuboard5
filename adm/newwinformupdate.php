@@ -10,6 +10,10 @@ if ($w == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
+
+check_admin_token();
+
+
 $sql_common = " nw_division = '{$_POST['nw_division']}',
                 nw_device = '{$_POST['nw_device']}',
                 nw_begin_time = '{$_POST['nw_begin_time']}',

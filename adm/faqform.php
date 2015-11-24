@@ -31,6 +31,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="fm_id" value="<?php echo $fm_id; ?>">
 <input type="hidden" name="fa_id" value="<?php echo $fa_id; ?>">
+<input type="hidden" name="token" value="">
 
 <div class="tbl_frm01 tbl_wrap">
     <table>

@@ -4,8 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
-$token = get_token();
-
 $mb = get_member($mb_id);
 if (!$mb['mb_id'])
     alert('존재하지 않는 회원입니다.');
@@ -18,7 +16,7 @@ $colspan = 4;
 
 <form name="fboardgroupmember_form" id="fboardgroupmember_form" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)" method="post">
 <input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
-<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+<input type="hidden" name="token" value="" id="token">
 <div class="local_cmd01 local_cmd">
     <p>아이디 <b><?php echo $mb['mb_id'] ?></b>, 이름 <b><?php echo get_text($mb['mb_name']); ?></b>, 닉네임 <b><?php echo $mb['mb_nick'] ?></b></p>
     <label for="gr_id">그룹지정</label>

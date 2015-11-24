@@ -36,6 +36,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 <form name="frmnewwin" action="./newwinformupdate.php" onsubmit="return frmnewwin_check(this);" method="post">
 <input type="hidden" name="w" value="<?php echo $w; ?>">
 <input type="hidden" name="nw_id" value="<?php echo $nw_id; ?>">
+<input type="hidden" name="token" value="">
 
 <div class="local_desc01 local_desc">
     <p>초기화면 접속 시 자동으로 뜰 팝업레이어를 설정합니다.</p>

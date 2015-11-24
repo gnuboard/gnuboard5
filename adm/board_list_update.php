@@ -51,7 +51,7 @@ if ($_POST['act_button'] == "선택수정") {
 
     auth_check($auth[$sub_menu], 'd');
 
-    check_token();
+    check_admin_token();
 
     // _BOARD_DELETE_ 상수를 선언해야 board_delete.inc.php 가 정상 작동함
     define('_BOARD_DELETE_', true);

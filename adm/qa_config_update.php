@@ -6,7 +6,7 @@ check_demo();
 
 auth_check($auth[$sub_menu], 'w');
 
-check_token();
+check_admin_token();
 
 $sql = " update {$g5['qa_config_table']}
             set qa_title                = '{$_POST['qa_title']}',

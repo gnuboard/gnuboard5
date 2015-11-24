@@ -5,8 +5,6 @@ include_once('./_common.php');
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
-$token = get_token();
-
 $sql_common = " from {$g5['auth_table']} a left join {$g5['member_table']} b on (a.mb_id=b.mb_id) ";
 
 $sql_search = " where (1) ";
@@ -73,7 +71,7 @@ $colspan = 5;
 <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
 <input type="hidden" name="stx" value="<?php echo $stx ?>">
 <input type="hidden" name="page" value="<?php echo $page ?>">
-<input type="hidden" name="token" value="<?php echo $token ?>">
+<input type="hidden" name="token" value="">
 
 <div class="tbl_head01 tbl_wrap">
     <table>
@@ -168,7 +166,7 @@ echo $pagelist;
 <input type="hidden" name="sst" value="<?php echo $sst ?>">
 <input type="hidden" name="sod" value="<?php echo $sod ?>">
 <input type="hidden" name="page" value="<?php echo $page ?>">
-<input type="hidden" name="token" value="<?php echo $token ?>">
+<input type="hidden" name="token" value="">
 
 <section id="add_admin">
     <h2 class="h2_frm">관리권한 추가</h2>

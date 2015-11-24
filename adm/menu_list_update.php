@@ -7,7 +7,7 @@ check_demo();
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
-check_token();
+check_admin_token();
 
 // 이전 메뉴정보 삭제
 $sql = " delete from {$g5['menu_table']} ";

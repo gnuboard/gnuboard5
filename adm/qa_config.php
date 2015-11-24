@@ -5,8 +5,6 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
 $g5['title'] = '1:1문의 설정';
 include_once ('./admin.head.php');
 
@@ -119,7 +117,7 @@ if(!isset($qaconfig['qa_include_head'])) {
 ?>
 
 <form name="fqaconfigform" id="fqaconfigform" method="post" onsubmit="return fqaconfigform_submit(this);" autocomplete="off">
-<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+<input type="hidden" name="token" value="" id="token">
 
 <section id="anc_cf_qa_config">
     <h2 class="h2_frm">1:1문의 설정</h2>
