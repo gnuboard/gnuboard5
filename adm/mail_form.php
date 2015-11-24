@@ -5,8 +5,6 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
 $html_title = '회원메일';
 
 if ($w == 'u') {
@@ -30,7 +28,7 @@ include_once('./admin.head.php');
 <form name="fmailform" id="fmailform" action="./mail_update.php" onsubmit="return fmailform_check(this);" method="post">
 <input type="hidden" name="w" value="<?php echo $w ?>" id="w">
 <input type="hidden" name="ma_id" value="<?php echo $ma['ma_id'] ?>" id="ma_id">
-<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+<input type="hidden" name="token" value="" id="token">
 
 <div class="tbl_frm01 tbl_wrap">
     <table>

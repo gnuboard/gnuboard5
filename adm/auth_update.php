@@ -9,7 +9,7 @@ $mb = get_member($mb_id);
 if (!$mb['mb_id'])
     alert('존재하는 회원아이디가 아닙니다.');
 
-check_token();
+check_admin_token();
 
 $sql = " insert into {$g5['auth_table']}
             set mb_id   = '{$_POST['mb_id']}',

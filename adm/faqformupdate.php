@@ -10,6 +10,8 @@ if ($W == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 $sql_common = " fa_subject = '$fa_subject',
                 fa_content = '$fa_content',
                 fa_order = '$fa_order' ";

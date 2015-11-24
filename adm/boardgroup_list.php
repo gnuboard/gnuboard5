@@ -88,7 +88,7 @@ $colspan = 10;
 <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
 <input type="hidden" name="stx" value="<?php echo $stx ?>">
 <input type="hidden" name="page" value="<?php echo $page ?>">
-<input type="hidden" name="token" value="<?php echo $token ?>">
+<input type="hidden" name="token" value="">
 
 <div class="tbl_head01 tbl_wrap">
     <table>

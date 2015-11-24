@@ -10,6 +10,8 @@ if ($W == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 @mkdir(G5_DATA_PATH."/faq", G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH."/faq", G5_DIR_PERMISSION);
 

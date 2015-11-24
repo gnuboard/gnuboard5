@@ -8,6 +8,8 @@ check_demo();
 
 auth_check($auth[$sub_menu], 'w');
 
+check_admin_token();
+
 $count = count($_POST['chk']);
 
 if(!$count)

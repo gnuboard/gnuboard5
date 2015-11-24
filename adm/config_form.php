@@ -4,8 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
 
@@ -229,7 +227,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
 ?>
 
 <form name="fconfigform" id="fconfigform" method="post" onsubmit="return fconfigform_submit(this);">
-<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+<input type="hidden" name="token" value="" id="token">
 
 <section id="anc_cf_basic">
     <h2 class="h2_frm">홈페이지 기본환경 설정</h2>

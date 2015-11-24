@@ -28,7 +28,7 @@ if ($w == '')
     }
     else
     {
-        check_token();
+        check_admin_token();
 
         $sql = " insert into {$g5['group_member_table']}
                     set gr_id = '{$_POST['gr_id']}',
@@ -45,7 +45,7 @@ else if ($w == 'd' || $w == 'ld')
     if(!$count)
         alert('삭제할 목록을 하나이상 선택해 주세요.');
 
-    check_token();
+    check_admin_token();
 
     for($i=0; $i<$count; $i++) {
         $gm_id = $_POST['chk'][$i];

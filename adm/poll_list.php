@@ -4,8 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'r');
 
-$token = get_token();
-
 $sql_common = " from {$g5['poll_table']} ";
 
 $sql_search = " where (1) ";
@@ -79,7 +77,7 @@ $colspan = 7;
 <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
 <input type="hidden" name="stx" value="<?php echo $stx ?>">
 <input type="hidden" name="page" value="<?php echo $page ?>">
-<input type="hidden" name="token" value="<?php echo $token ?>">
+<input type="hidden" name="token" value="">
 
 <div class="tbl_head01 tbl_wrap">
     <table>
@@ -134,7 +132,7 @@ $colspan = 7;
 </div>
 
 <div class="btn_list01 btn_list">
-    <button type="submit">선택삭제</button>
+    <input type="submit" value="선택삭제">
 </div>
 </form>
 

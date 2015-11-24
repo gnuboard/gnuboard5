@@ -4,6 +4,8 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 $g5['title'] = "문자전송중";
 
 $wr_reply   = preg_replace('#[^0-9\-]#', '', trim($wr_reply));

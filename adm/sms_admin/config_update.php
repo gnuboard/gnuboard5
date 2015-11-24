@@ -6,6 +6,8 @@ auth_check($auth[$sub_menu], "w");
 
 check_demo();
 
+check_admin_token();
+
 $g5['title'] = "SMS 기본설정";
 
 // 회신번호 체크

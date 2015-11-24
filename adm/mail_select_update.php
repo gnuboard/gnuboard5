@@ -8,7 +8,7 @@ $html_title = '회원메일 발송';
 
 check_demo();
 
-check_token();
+check_admin_token();
 
 include_once('./admin.head.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
