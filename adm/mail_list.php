@@ -82,7 +82,7 @@ $colspan = 7;
 </div>
 
 <div class="btn_list01 btn_list">
-    <button type="submit">선택삭제</button>
+    <input type="submit" value="선택삭제">
 </div>
 </form>
 

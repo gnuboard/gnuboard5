@@ -57,12 +57,20 @@ function is_checked(elements_name)
     return checked;
 }
 
-function delete_confirm()
+function delete_confirm(el)
 {
-    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?"))
+    if(confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n정말 삭제하시겠습니까?")) {
+        var token = get_ajax_token();
+        var href = el.href.replace(/&token=.+$/g, "");
+        if(!token) {
+            alert("토큰 정보가 올바르지 않습니다.");
+            return false;
+        }
+        el.href = href+"&token="+token;
         return true;
-    else
+    } else {
         return false;
+    }
 }
 
 function delete_confirm2(msg)
@@ -79,7 +87,7 @@ function get_ajax_token()
 
     $.ajax({
         type: "POST",
-        url: "./ajax.token.php",
+        url: g5_admin_url+"/ajax.token.php",
         cache: false,
         async: false,
         dataType: "json",
@@ -112,7 +120,7 @@ $(function() {
         var $f = $(f);
 
         if(typeof f.token === "undefined")
-            $f.append('<input type="hidden" name="token" value="">');
+            $f.prepend('<input type="hidden" name="token" value="">');
 
         $f.find("input[name=token]").val(token);
 

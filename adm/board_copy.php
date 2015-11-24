@@ -8,6 +8,8 @@ $g5['title'] = '게시판 복사';
 include_once(G5_PATH.'/head.sub.php');
 ?>
 
+<script src="<?php echo G5_ADMIN_URL ?>/admin.js"></script>
+
 <div class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
