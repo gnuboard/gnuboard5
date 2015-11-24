@@ -6,6 +6,8 @@ check_demo();
 
 auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 for ($i=0; $i<count($_POST['it_id']); $i++)
 {
     $sql = "update {$g5['g5_shop_item_table']}

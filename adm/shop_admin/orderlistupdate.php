@@ -4,6 +4,8 @@ include_once('./_common.php');
 include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
+check_admin_token();
+
 define("_ORDERMAIL_", true);
 
 //print_r2($_POST); exit;

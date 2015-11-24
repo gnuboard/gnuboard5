@@ -6,6 +6,8 @@ check_demo();
 
 auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 // 재고 일괄수정
 for ($i=0; $i<count($_POST['it_id']); $i++)
 {

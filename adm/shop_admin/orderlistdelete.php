@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 //print_r2($_POST); exit;
 
+check_admin_token();
+
 for ($i=0; $i<count($_POST['chk']); $i++)
 {
     // 실제 번호를 넘김

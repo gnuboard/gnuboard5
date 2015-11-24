@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 $ct_chk_count = count($_POST['ct_chk']);
 if(!$ct_chk_count)
     alert('처리할 자료를 하나 이상 선택해 주십시오.');

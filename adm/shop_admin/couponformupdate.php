@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 $_POST = array_map('trim', $_POST);
 
 if(!$_POST['cp_subject'])

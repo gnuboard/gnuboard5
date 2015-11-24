@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 check_demo();
 
+check_admin_token();
+
 if (!count($_POST['chk'])) {
     alert($_POST['act_button']." 하실 항목을 하나 이상 체크하세요.");
 }

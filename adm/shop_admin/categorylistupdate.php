@@ -6,6 +6,8 @@ check_demo();
 
 auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 for ($i=0; $i<count($_POST['ca_id']); $i++)
 {
     if ($_POST['ca_mb_id'][$i])

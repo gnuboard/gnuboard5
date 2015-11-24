@@ -25,6 +25,8 @@ include_once(G5_PATH.'/head.sub.php');
     </form>
 </div>
 
+<script src="<?php echo G5_ADMIN_URL ?>/admin.js"></script>
+
 <script>
 // <![CDATA[
 function _copy(link)
@@ -35,7 +37,12 @@ function _copy(link)
         alert("상품코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.");
         return false;
     }
-    opener.parent.location.href = encodeURI(link+'&new_it_id='+new_it_id);
+    var token = get_ajax_token();
+    if(!token) {
+        alert("토큰 정보가 올바르지 않습니다.");
+        return false;
+    }
+    opener.parent.location.href = encodeURI(link+'&new_it_id='+new_it_id+"&token="+token);
     self.close();
 }
 // ]]>

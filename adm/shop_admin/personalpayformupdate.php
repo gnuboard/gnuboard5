@@ -2,6 +2,8 @@
 $sub_menu = '400440';
 include_once('./_common.php');
 
+check_admin_token();
+
 if($w == 'd') {
     auth_check($auth[$sub_menu], 'd');
 

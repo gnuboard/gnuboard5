@@ -4,8 +4,6 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
-$token = get_token();
-
 $sql_common = " from {$g5['g5_shop_sendcost_table']} ";
 
 $sql_search = " where (1) ";
@@ -40,7 +38,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <form name="fsendcost" id="fsendcost" method="post" action="./sendcostupdate.php" onsubmit="return fsendcost_submit(this);">
     <input type="hidden" name="w" value="d">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="token" value="<?php echo $token; ?>">
+    <input type="hidden" name="token" value="">
     <div class="tbl_head01 tbl_wrap">
         <table>
         <caption>추가배송비 내역</caption>
@@ -92,7 +90,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <h2 class="h2_frm">추가배송비 등록</h2>
 
     <form name="fsendcost2" method="post" id="fsendcost2" action="./sendcostupdate.php" autocomplete="off">
-    <input type="hidden" name="token" value="<?php echo $token; ?>">
+    <input type="hidden" name="token" value="">
 
     <div class="tbl_frm01 tbl_wrap">
         <table>

@@ -6,6 +6,8 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od  = sql_fetch($sql);
 if(!$od['od_id'])

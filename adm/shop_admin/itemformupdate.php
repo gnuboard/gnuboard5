@@ -10,6 +10,8 @@ if ($w == '' || $w == 'u')
 else if ($w == 'd')
     auth_check($auth[$sub_menu], "d");
 
+check_admin_token();
+
 @mkdir(G5_DATA_PATH."/item", G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH."/item", G5_DIR_PERMISSION);
 

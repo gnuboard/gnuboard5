@@ -100,7 +100,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         <td headers="th_hit" class="td_num"><?php echo $row['bn_hit']; ?></td>
         <td headers="th_mng" class="td_mngsmall">
             <a href="./bannerform.php?w=u&amp;bn_id=<?php echo $row['bn_id']; ?>">수정</a></li>
-            <a href="./bannerformupdate.php?w=d&amp;bn_id=<?php echo $row['bn_id']; ?>" onclick="return delete_confirm();">삭제</a>
+            <a href="./bannerformupdate.php?w=d&amp;bn_id=<?php echo $row['bn_id']; ?>" onclick="return delete_confirm(this);">삭제</a>
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">

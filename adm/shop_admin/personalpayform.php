@@ -127,7 +127,7 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
         <a href="./personalpaylist.php?<?php echo $qstr; ?>">목록</a>
         <?php } ?>
         <?php if($w == 'u') { ?>
-        <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return del_confirm();">삭제</a>
+        <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return delete_confirm(this);">삭제</a>
         <?php } ?>
     </div>
 
@@ -255,7 +255,7 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
         <a href="./personalpaylist.php?<?php echo $qstr; ?>">목록</a>
         <?php } ?>
         <?php if($w == 'u') { ?>
-        <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return del_confirm();">삭제</a>
+        <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return delete_confirm(this);">삭제</a>
         <?php } ?>
     </div>
     <?php } ?>
@@ -272,11 +272,6 @@ function form_check(f)
     }
 
     return true;
-}
-
-function del_confirm()
-{
-    return confirm("개인결제 정보를 삭제하시겠습니까?\n\n삭제한 정보는 복구할 수 없습니다.");
 }
 </script>
 

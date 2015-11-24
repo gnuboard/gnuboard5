@@ -9,6 +9,8 @@ if ($w == 'd')
 else
     auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 if ($w == "u")
 {
     $sql = "update {$g5['g5_shop_item_use_table']}

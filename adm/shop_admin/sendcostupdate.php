@@ -6,6 +6,8 @@ check_demo();
 
 auth_check($auth[$sub_menu], "w");
 
+check_admin_token();
+
 $w = $_POST['w'];
 
 if($w == 'd') {

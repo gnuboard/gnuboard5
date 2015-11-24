@@ -115,6 +115,7 @@ if(!isset($default['de_kakaopay_mid'])) {
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
+<input type="hidden" name="token" value="">
 <section id="anc_scf_info">
     <h2 class="h2_frm">사업자정보</h2>
     <?php echo $pg_anchor; ?>
