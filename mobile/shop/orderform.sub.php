@@ -1251,6 +1251,7 @@ function pay_approval()
             break;
         case "신용카드":
             paymethod = "wcard";
+            f.P_RESERVED.value = f.P_RESERVED.value.replace("&useescrow=Y", "");
             break;
         case "간편결제":
             paymethod = "wcard";

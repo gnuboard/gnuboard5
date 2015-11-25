@@ -1384,6 +1384,7 @@ function forderform_check(f)
             break;
         case "신용카드":
             f.gopaymethod.value = "onlycard";
+            f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
             break;
         case "간편결제":
             f.gopaymethod.value = "onlykpay";
