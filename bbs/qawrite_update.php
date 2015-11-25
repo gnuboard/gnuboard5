@@ -339,7 +339,7 @@ if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
             // 문의글 등록시 관리자에게 전송
             if(($w == '' || $w == 'r') && trim($qaconfig['qa_admin_hp'])) {
                 $sms_content = $config['cf_title'].' '.$qaconfig['qa_title'].'에 문의글이 등록되었습니다.';
-                $send_number = preg_replace('/[^0-9]/', '', $qa_hp);
+                $send_number = preg_replace('/[^0-9]/', '', $qaconfig['qa_send_number']);
                 $recv_number = preg_replace('/[^0-9]/', '', $qaconfig['qa_admin_hp']);
 
                 if($recv_number) {
@@ -385,7 +385,7 @@ if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
         // 문의글 등록시 관리자에게 전송
         if(($w == '' || $w == 'r') && trim($qaconfig['qa_admin_hp'])) {
             $sms_content = $config['cf_title'].' '.$qaconfig['qa_title'].'에 문의글이 등록되었습니다.';
-            $send_number = preg_replace('/[^0-9]/', '', $qa_hp);
+            $send_number = preg_replace('/[^0-9]/', '', $qaconfig['qa_send_number']);
             $recv_number = preg_replace('/[^0-9]/', '', $qaconfig['qa_admin_hp']);
 
             if($recv_number) {
