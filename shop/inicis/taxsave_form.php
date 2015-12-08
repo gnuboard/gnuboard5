@@ -137,9 +137,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
             <tr>
                 <th scope="row">발행 용도</th>
                 <td>
-                    <input type="radio" name="tr_code" value="1" id="tr_code1" onClick="jsf__chk_tr_code( this.form )" checked>
+                    <input type="radio" name="tr_code" value="0" id="tr_code1" onClick="jsf__chk_tr_code( this.form )" checked>
                     <label for="tr_code1">소득공제용</label>
-                    <input type="radio" name="tr_code" value="2" id="tr_code2" onClick="jsf__chk_tr_code( this.form )">
+                    <input type="radio" name="tr_code" value="1" id="tr_code2" onClick="jsf__chk_tr_code( this.form )">
                     <label for="tr_code2">지출증빙용</label>
                 </td>
             </tr>
