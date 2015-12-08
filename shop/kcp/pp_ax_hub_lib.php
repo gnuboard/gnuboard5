@@ -216,6 +216,7 @@
                                         "enc_info="  . $this->m_encx_info . "," .
                                         "trace_no="  . $trace_no          . "," .
                                         "cust_ip="   . $cust_ip           . "," .
+                                        "log_path="  . $log_dir           . ","	.
                                         "log_level=" . $log_level         . "," .
                                         "opt="       . $opt               . "" );
         }

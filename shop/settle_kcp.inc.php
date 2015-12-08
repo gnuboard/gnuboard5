@@ -23,9 +23,18 @@ else {
 
 $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
 $g_conf_key_dir   = '';
+
+/*=======================================================================
+ KCP 결제처리 로그파일 생성을 위한 로그 디렉토리 절대 경로를 지정합니다.
+ 로그 파일의 경로는 웹에서 접근할 수 없는 경로를 지정해 주십시오.
+ 영카트5의 config.php 파일이 존재하는 경로가 /home/youngcart5/www 라면
+ 로그 디렉토리는 /home/youngcart5/log 등으로 지정하셔야 합니다.
+ 로그 디렉토리에 쓰기 권한이 있어야 로그 파일이 생성됩니다.
+=======================================================================*/
+$g_conf_log_dir   = '/home100/kcp'; // 존재하지 않는 경로를 입력하여 로그 파일 생성되지 않도록 함.
+
 if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
 {
-    $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
     $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
 }
 

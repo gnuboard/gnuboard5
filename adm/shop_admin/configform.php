@@ -1542,6 +1542,13 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
         }
 
         echo module_exec_check(G5_SHOP_PATH.$exe, 'pp_cli');
+
+        // shop/kcp/log 디렉토리 체크 후 있으면 경고
+        if(is_dir(G5_SHOP_PATH.'/kcp/log') && is_writable(G5_SHOP_PATH.'/kcp/log')) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("웹접근 가능 경로에 log 디렉토리가 있습니다.\nlog 디렉토리를 웹에서 접근 불가능한 경로로 변경해 주십시오.\n\nlog 디렉토리 경로 변경은 SIR FAQ를 참고해 주세요.")'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
+        }
     }
 
     // LG의 경우 log 디렉토리 체크
