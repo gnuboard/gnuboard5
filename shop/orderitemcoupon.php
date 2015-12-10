@@ -5,7 +5,8 @@ if($is_guest)
     exit;
 
 // 상품정보
-$it_id = $_POST['it_id'];
+$pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#i';
+$it_id  = preg_replace($pattern, '', $_POST['it_id']);
 $sw_direct = $_POST['sw_direct'];
 $sql = " select it_id, ca_id, ca_id2, ca_id3 from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
 $it = sql_fetch($sql);

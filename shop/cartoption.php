@@ -1,7 +1,8 @@
 <?php
 include_once('./_common.php');
 
-$it_id = $_POST['it_id'];
+$pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#i';
+$it_id  = preg_replace($pattern, '', $_POST['it_id']);
 
 $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' and it_use = '1' ";
 $it = sql_fetch($sql);

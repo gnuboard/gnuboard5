@@ -1,10 +1,12 @@
 <?php
 include_once('./_common.php');
 
-$it_id = $_POST['it_id'];
-$opt_id = $_POST['opt_id'];
-$idx = $_POST['idx'];
-$sel_count = $_POST['sel_count'];
+$pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#i';
+
+$it_id  = preg_replace($pattern, '', $_POST['it_id']);
+$opt_id = preg_replace($pattern, '', $_POST['opt_id']);
+$idx    = preg_replace('#[^0-9]#', '', $_POST['idx']);
+$sel_count = preg_replace('#[^0-9]#', '', $_POST['sel_count']);
 
 $sql = " select * from {$g5['g5_shop_item_option_table']}
                 where io_type = '0'

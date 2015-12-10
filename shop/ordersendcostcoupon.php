@@ -4,8 +4,8 @@ include_once('./_common.php');
 if($is_guest)
     exit;
 
-$price = $_POST['price'];
-$send_cost = $_POST['send_cost'];
+$price = preg_replace('#[^0-9]#', '', $_POST['price']);
+$send_cost = preg_replace('#[^0-9]#', '', $_POST['send_cost']);
 
 // 쿠폰정보
 $sql = " select *
