@@ -107,13 +107,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <tr>
             <th scope="row"><label for="sc_zip1">우편번호 시작<strong class="sound_only">필수</strong></label></th>
             <td>
-                <input type="text" name="sc_zip1" id="sc_zip1" required class="required frm_input" size="10"> (입력 예 : 123-456)
+                <input type="text" name="sc_zip1" id="sc_zip1" required class="required frm_input" size="10"> (입력 예 : 01234)
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="sc_zip2">우편번호 끝<strong class="sound_only">필수</strong></label></th>
             <td>
-                <input type="text" name="sc_zip2" id="sc_zip2" required class="required frm_input" size="10"> (입력 예 : 123-456)
+                <input type="text" name="sc_zip2" id="sc_zip2" required class="required frm_input" size="10"> (입력 예 : 01234)
             </td>
         </tr>
         <tr>
