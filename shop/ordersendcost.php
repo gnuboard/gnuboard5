@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$code = $_POST['zipcode'];
+$code = preg_replace('#[^0-9]#', '', $_POST['zipcode']);
 
 if(!$code)
     die('0');
