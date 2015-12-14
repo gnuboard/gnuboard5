@@ -804,7 +804,7 @@ function get_category_option($bo_table='', $ca_name='')
 {
     global $g5, $board, $is_admin;
 
-    $categories = explode("|", $board['bo_category_list'].($is_admin?"|공지":"")); // 구분자가 , 로 되어 있음
+    $categories = explode("|", $board['bo_category_list'].($is_admin?"|공지":"")); // 구분자가 | 로 되어 있음
     $str = "";
     for ($i=0; $i<count($categories); $i++) {
         $category = trim($categories[$i]);
