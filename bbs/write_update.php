@@ -7,6 +7,17 @@ $g5['title'] = '게시글 저장';
 
 $msg = array();
 
+if($board['bo_use_category']) {
+    $ca_name = trim($_POST['ca_name']);
+    if(!$ca_name) {
+        $msg[] = '<strong>분류</strong>를 선택하세요.';
+    } else {
+        $categories = array_map('trim', explode("|", $board['bo_category_list'].($is_admin ? '|공지' : '')));
+        if(!empty($categories) && !in_array($ca_name, $categories))
+            $msg[] = '분류를 올바르게 입력하세요.';
+    }
+}
+
 $wr_subject = '';
 if (isset($_POST['wr_subject'])) {
     $wr_subject = substr(trim($_POST['wr_subject']),0,255);
