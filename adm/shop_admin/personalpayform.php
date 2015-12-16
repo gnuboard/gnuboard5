@@ -276,8 +276,10 @@ function form_check(f)
 </script>
 
 <?php
-if($popup == 'yes')
+if($popup == 'yes') {
+    echo '<script src="'.G5_ADMIN_URL.'/admin.js"></script>'.PHP_EOL;
     include_once(G5_PATH.'/tail.sub.php');
-else
+} else {
     include_once (G5_ADMIN_PATH.'/admin.tail.php');
+}
 ?>
