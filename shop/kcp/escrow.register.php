@@ -14,7 +14,7 @@ $mod_type       = 'STE1';
 $mod_desc       = '에스크로 배송시작 등록';
 $cust_ip        = getenv('REMOTE_ADDR');
 
-$c_PayPlus = new C_PP_CLI;
+$c_PayPlus = new C_PP_CLI_T;
 $c_PayPlus->mf_clear();
 
 $tran_cd = "00200000";

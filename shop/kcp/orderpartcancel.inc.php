@@ -47,7 +47,7 @@ if($od['od_tax_flag']) {
     $mod_mny = $tax_mny + $free_mny;
 }
 
-$c_PayPlus  = new C_PAYPLUS_CLI;
+$c_PayPlus  = new C_PAYPLUS_CLI_T;
 $c_PayPlus->mf_clear();
 
 if ( $req_tx == "mod" )

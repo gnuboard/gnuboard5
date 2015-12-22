@@ -270,7 +270,7 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                         // locale ko_KR.euc-kr 로 설정
                         setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
-                        $c_PayPlus = new C_PP_CLI;
+                        $c_PayPlus = new C_PP_CLI_T;
 
                         $c_PayPlus->mf_clear();
 
