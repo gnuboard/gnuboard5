@@ -27,7 +27,7 @@ class   C_PAYPLUS_CLI
     /* -------------------------------------------------------------------- */
     /* -   생성자                                                         - */
     /* -------------------------------------------------------------------- */
-    function  C_PAYPLUS_CLI()
+    function  __construct()
     {
         $this->m_payx_data="payx_data=";
         $this->m_payx_common="";
