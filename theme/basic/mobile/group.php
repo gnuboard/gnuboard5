@@ -17,7 +17,7 @@ $sql = " select bo_table, bo_subject
               and bo_device <> 'pc' ";
 if(!$is_admin)
     $sql .= " and bo_use_cert = '' ";
-$sql .= " order by bo_table ";
+$sql .= " order by bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
