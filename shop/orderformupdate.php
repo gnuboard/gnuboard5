@@ -843,6 +843,8 @@ if($is_member) {
         sql_query($sql);
     }
 
+    $ad_subject = clean_xss_tags($ad_subject);
+
     if($row['ad_id']){
         $sql = " update {$g5['g5_shop_order_address_table']}
                       set ad_default = '$ad_default',
