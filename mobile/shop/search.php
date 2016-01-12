@@ -20,7 +20,7 @@ $q       = utf8_strcut(get_search_string(trim($_GET['q'])), 30, "");
 $qname   = isset($_GET['qname']) ? trim($_GET['qname']) : '';
 $qexplan = isset($_GET['qexplan']) ? trim($_GET['qexplan']) : '';
 $qid     = isset($_GET['qid']) ? trim($_GET['qid']) : '';
-$qcaid   = isset($_GET['qcaid']) ? trim($_GET['qcaid']) : '';
+$qcaid   = isset($_GET['qcaid']) ? preg_replace('#[^a-z0-9]#i', '', trim($_GET['qcaid'])) : '';
 $qfrom   = isset($_GET['qfrom']) ? preg_replace('/[^0-9]/', '', trim($_GET['qfrom'])) : '';
 $qto     = isset($_GET['qto']) ? preg_replace('/[^0-9]/', '', trim($_GET['qto'])) : '';
 if (isset($_GET['qsort']))  {
