@@ -227,8 +227,10 @@ $qstr = '';
 
 if (isset($_REQUEST['sca']))  {
     $sca = clean_xss_tags(trim($_REQUEST['sca']));
-    if ($sca)
+    if ($sca) {
+        $sca = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sca);
         $qstr .= '&amp;sca=' . urlencode($sca);
+    }
 } else {
     $sca = '';
 }
