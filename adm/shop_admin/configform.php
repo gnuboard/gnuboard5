@@ -1286,7 +1286,7 @@ function byte_check(el_cont, el_byte)
         <tr>
             <th scope="row"><label for="cf_sms_type">SMS 전송유형</label></th>
             <td>
-                <?php echo help("전송유형을 SMS로 선택하시면 최대 80바이트까지 전송하실 수 있으며<br>LMS로 선택하시면 90바이트 이하는 SMS로, 그 이상은 1500바이트까지 LMS로 전송됩니다.<br>요금은 건당 SMS는 16원, LMS는 50원입니다."); ?>
+                <?php echo help("전송유형을 SMS로 선택하시면 최대 80바이트까지 전송하실 수 있으며<br>LMS로 선택하시면 90바이트 이하는 SMS로, 그 이상은 1500바이트까지 LMS로 전송됩니다.<br>요금은 건당 SMS는 16원, LMS는 48원입니다."); ?>
                 <select id="cf_sms_type" name="cf_sms_type">
                     <option value="" <?php echo get_selected($config['cf_sms_type'], ''); ?>>SMS</option>
                     <option value="LMS" <?php echo get_selected($config['cf_sms_type'], 'LMS'); ?>>LMS</option>
