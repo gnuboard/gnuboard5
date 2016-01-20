@@ -33,6 +33,8 @@ $msg2 = str_replace("\\n", "<br>", $msg);
 $url = clean_xss_tags($url);
 if (!$url) $url = clean_xss_tags($_SERVER['HTTP_REFERER']);
 
+$url = preg_replace("/[\<\>\'\"\\\'\\\"\(\)]/", "", $url);
+
 // url 체크
 check_url_host($url);
 
