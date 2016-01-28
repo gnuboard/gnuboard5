@@ -41,6 +41,8 @@ function print_menu2($key, $no)
 ?>
 
 <script>
+var g5_admin_url = "<?php echo G5_ADMIN_URL; ?>";
+
 var tempX = 0;
 var tempY = 0;
 
