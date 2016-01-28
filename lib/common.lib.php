@@ -779,21 +779,13 @@ function get_admin($admin='super', $fields='*')
 // 관리자인가?
 function is_admin($mb_id)
 {
-    global $g5, $config, $group, $board;
+    global $config, $group, $board;
 
     if (!$mb_id) return;
 
     if ($config['cf_admin'] == $mb_id) return 'super';
     if (isset($group['gr_admin']) && ($group['gr_admin'] == $mb_id)) return 'group';
     if (isset($board['bo_admin']) && ($board['bo_admin'] == $mb_id)) return 'board';
-
-    // 쇼핑몰 관리자인지
-    if(defined('G5_USE_SHOP') && G5_USE_SHOP) {
-        $sql = " select count(*) as cnt from {$g5['auth_table']} where mb_id = '$mb_id' and substring(au_menu, 1, 3) IN ('400', '500') ";
-        $row = sql_fetch($sql);
-        if($row['cnt'] > 0) return 'shop';
-    }
-
     return '';
 }
 
