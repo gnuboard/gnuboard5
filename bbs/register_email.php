@@ -6,11 +6,17 @@ $g5['title'] = '메일인증 메일주소 변경';
 include_once('./_head.php');
 
 $mb_id = substr(clean_xss_tags($_GET['mb_id']), 0, 20);
-$sql = " select mb_email, mb_datetime, mb_email_certify from {$g5['member_table']} where mb_id = '{$mb_id}' ";
+$sql = " select mb_email, mb_datetime, mb_ip, mb_email_certify from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 $mb = sql_fetch($sql);
 if (substr($mb['mb_email_certify'],0,1)!=0) {
     alert("이미 메일인증 하신 회원입니다.", G5_URL);
 }
+
+$ckey = trim($_GET['ckey']);
+$key  = md5($mb['mb_ip'].$mb['mb_datetime']);
+
+if(!$ckey || $ckey != $key)
+    alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 ?>
 
 <p class="rg_em_p">메일인증을 받지 못한 경우 회원정보의 메일주소를 변경 할 수 있습니다.</p>
