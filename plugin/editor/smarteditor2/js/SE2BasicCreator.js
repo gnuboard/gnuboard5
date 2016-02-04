@@ -10,7 +10,6 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 	var oIRTextarea = elIRField?elIRField:jindo.$$.getSingle("TEXTAREA.blind", elEditingArea);
 	var oHTMLSrc = jindo.$$.getSingle("TEXTAREA.se2_input_htmlsrc", elEditingArea);
 	var oTextArea = jindo.$$.getSingle("TEXTAREA.se2_input_text", elEditingArea);
-	var sEditorMode = "open";
 	
 	if(!htParams){ 
 		htParams = {}; 
@@ -24,7 +23,7 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 	oEditor.registerPlugin(new nhn.husky.StringConverterManager());
 
 	var htDimension = {
-		nMinHeight:320,
+		nMinHeight:205,
 		nMinWidth:parseInt(elIRField.style.minWidth, 10)||570,
 		nHeight:elIRField.style.height||elIRField.offsetHeight,
 		nWidth:elIRField.style.width||elIRField.offsetWidth
@@ -56,7 +55,6 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 	oEditor.registerPlugin(new nhn.husky.ActiveLayerManager());
 	oEditor.registerPlugin(new nhn.husky.SE_WYSIWYGStyleGetter());							// 커서 위치 스타일 정보 가져오기
 
-	oEditor.registerPlugin(new nhn.husky.SE2B_Customize_ToolBar(elAppContainer));			// 상단 툴바 (Basic)
 	oEditor.registerPlugin(new nhn.husky.SE_WYSIWYGEnterKey("P"));							// 엔터 시 처리, 현재는 P로 처리
 	
 	oEditor.registerPlugin(new nhn.husky.SE2M_ColorPalette(elAppContainer));				// 색상 팔레트
@@ -76,16 +74,22 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 	oEditor.registerPlugin(new nhn.husky.SE2M_TableCreator(elAppContainer));				// 테이블 생성
 	oEditor.registerPlugin(new nhn.husky.SE2M_TableEditor(elAppContainer));					// 테이블 편집
 	oEditor.registerPlugin(new nhn.husky.SE2M_TableBlockStyler(elAppContainer));			// 테이블 스타일
-	oEditor.registerPlugin(new nhn.husky.SE2M_AttachQuickPhoto(elAppContainer));			// 사진			
+	if(nhn.husky.SE2M_AttachQuickPhoto){
+		oEditor.registerPlugin(new nhn.husky.SE2M_AttachQuickPhoto(elAppContainer));			// 사진			
+	}
 
 	oEditor.registerPlugin(new nhn.husky.MessageManager(oMessageMap));
 	oEditor.registerPlugin(new nhn.husky.SE2M_QuickEditor_Common(elAppContainer));			// 퀵에디터 공통(표, 이미지)
 	
 	oEditor.registerPlugin(new nhn.husky.SE2B_CSSLoader());									// CSS lazy load
-	oEditor.registerPlugin(new nhn.husky.SE_OuterIFrameControl(elAppContainer, 100));
+	if(window.frameElement){
+		oEditor.registerPlugin(new nhn.husky.SE_OuterIFrameControl(elAppContainer, 100));
+	}
 	
 	oEditor.registerPlugin(new nhn.husky.SE_ToolbarToggler(elAppContainer, htParams.bUseToolbar));
 	oEditor.registerPlugin(new nhn.husky.SE2M_Accessibility(elAppContainer));				// 에디터내의 웹접근성 관련 기능모음 플러그인 
-	
+
+    oEditor.registerPlugin(new nhn.husky.SE2B_Customize_ToolBar(elAppContainer));       // 2.3 버젼에 있는 툴바 이용
+
 	return oEditor;
 }
