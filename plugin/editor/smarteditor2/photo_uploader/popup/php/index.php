@@ -29,13 +29,30 @@ $data_url = G5_DATA_URL.'/editor/'.$ym.'/';
 @mkdir($data_dir, G5_DIR_PERMISSION);
 @chmod($data_dir, G5_DIR_PERMISSION);
 
-require('UploadHandler.php');
-$options = array(
-    'upload_dir' => $data_dir,
-    'upload_url' => $data_url,
-    // This option will disable creating thumbnail images and will not create that extra folder.
-    // However, due to this, the images preview will not be displayed after upload
-    'image_versions' => array()
-);
+if(!function_exists('ft_nonce_is_valid')){
+    include_once('../../../editor.lib.php');
+}
 
-$upload_handler = new UploadHandler($options);
+$is_editor_upload = false;
+
+if( isset($_GET['_nonce']) && ft_nonce_is_valid( $_GET['_nonce'] , 'smarteditor' ) ){
+    $is_editor_upload = true;
+}
+
+if( $is_editor_upload ) {
+
+    require('UploadHandler.php');
+    $options = array(
+        'upload_dir' => $data_dir,
+        'upload_url' => $data_url,
+        // This option will disable creating thumbnail images and will not create that extra folder.
+        // However, due to this, the images preview will not be displayed after upload
+        'image_versions' => array()
+    );
+
+    $upload_handler = new UploadHandler($options);
+
+} else {
+    echo json_encode(array('files'=>array('0'=>array('error'=>'정상적인 업로드가 아닙니다.'))));
+    exit;
+}

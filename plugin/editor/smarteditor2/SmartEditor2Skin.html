@@ -9,20 +9,20 @@
 <style type="text/css">
 	body { margin: 10px; }
 </style>
-<script type="text/javascript" src="./js/jindo.min.js" charset="utf-8"></script>
-<script type="text/javascript" src="./js/jindo_component.js" charset="utf-8"></script>
-<script type="text/javascript" src="./js/SE2B_Configuration_Service.js" charset="utf-8"></script>	<!-- 설정 파일 -->
-<script type="text/javascript" src="./js/SE2B_Configuration_General.js" charset="utf-8"></script>	<!-- 설정 파일 -->
-<script type="text/javascript" src="./js/SE2BasicCreator.js?v3" charset="utf-8"></script>
+<script type="text/javascript" src="./js/lib/jindo2.all.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/lib/jindo_component.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/SE2M_Configuration.js?v3" charset="utf-8"></script>	<!-- 설정 파일 -->
+<script type="text/javascript" src="./js/SE2BasicCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/smarteditor2.min.js" charset="utf-8"></script>
 
-<script src='js/smarteditor2.min.js?v2' charset='utf-8'></script>
-<script src='photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js' charset='utf-8'></script>
+<!-- 사진첨부샘플  --> 
+<script type="text/javascript" src="photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js?v3" charset="utf-8"></script>
 </head>
 <body>
 
 
 
-<span id="rev"></span>
+<span id="rev" style="display:none">Version: 2.8.2.12056 </span>
 
 <!-- SE2 Markup Start -->	
 <div id="smart_editor2">
@@ -37,24 +37,12 @@
 						<div class="se2_in_layer">
 							<ul class="se2_l_font_fam">
 							<li style="display:none"><button type="button"><span>@DisplayName@<span>(</span><em style="font-family:FontFamily;">@SampleText@</em><span>)</span></span></button></li>
-							<!--
-							<li><button type="button"><span>돋움<span>(</span><em style="font-family:'돋움',Dotum,Sans-serif;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>돋움체<span>(</span><em style="font-family:'돋움체',DotumChe,Sans-serif;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>굴림<span>(</span><em style="font-family:'굴림',Gulim,Sans-serif;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>굴림체<span>(</span><em style="font-family:'굴림체',GulimChe,Sans-serif;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>바탕<span>(</span><em style="font-family:'바탕',Batang,serif;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>바탕체<span>(</span><em style="font-family:'바탕체',BatangChe,serif;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>궁서<span>(</span><em style="font-family:'궁서',Gungsuh,serif;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>Arial<span>(</span><em style="font-family:arial,Sans-serif;">abcd</em><span>)</span></span></button></li>
-							<li><button type="button"><span>Tahoma<span>(</span><em style="font-family:tahoma,Sans-serif;">abcd</em><span>)</span></span></button></li>
-							<li><button type="button"><span>Times New Roman<span>(</span><em style="font-family:'Times New Roman',Times,serif;">abcd</em><span>)</span></span></button></li>
-							<li><button type="button"><span>Verdana<span>(</span><em style="font-family:verdana,Sans-serif;">abcd</em><span>)</span></span></button></li>
-							<li><button type="button"><span>Courier New<span>(</span><em style="font-family:Courier New,Sans-serif;">abcd</em><span>)</span></span></button></li>
-							-->
 							<li class="se2_division husky_seditor_font_separator"></li>
-							<li class="husky_seditor_font_nanumgothic"><button type="button"><span>나눔고딕<span>(</span><em style="font-family:'나눔고딕',NanumGothic,Sans-serif;">가나다라</em><span>)</span></span></button></li>
-							<li class="husky_seditor_font_nanummyeongjo"><button type="button"><span>나눔명조<span>(</span><em style="font-family:'나눔명조',NanumMyeongjo,serif;">가나다라</em><span>)</span></span></button></li>
-							<li class="husky_seditor_font_nanumgothiccoding"><button type="button"><span>나눔고딕코딩<span>(</span><em style="font-family:'나눔고딕코딩',NanumGothicCoding,Sans-serif;">가나다라</em><span>)</span></span></button></li>
+							<li><button type="button"><span>나눔고딕<span>(</span><em style="font-family:'나눔고딕',NanumGothic;">가나다라</em><span>)</span></span></button></li>
+							<li><button type="button"><span>나눔명조<span>(</span><em style="font-family:'나눔명조',NanumMyeongjo;">가나다라</em><span>)</span></span></button></li>
+							<li><button type="button"><span>나눔고딕코딩<span>(</span><em style="font-family:'나눔고딕코딩',NanumGothicCoding;">가나다라</em><span>)</span></span></button></li>
+							<li><button type="button"><span>나눔바른고딕<span>(</span><em style="font-family:'나눔바른고딕',NanumBarunGothic;">가나다라</em><span>)</span></span></button></li>
+							<li><button type="button"><span>나눔바른펜<span>(</span><em style="font-family:'나눔바른펜',NanumBarunPen;">가나다라</em><span>)</span></span></button></li>
 							</ul>
 						</div>
 					</div>
@@ -66,23 +54,23 @@
 					<div class="se2_layer husky_se_fontSize_layer">
 						<div class="se2_in_layer">
 							<ul class="se2_l_font_size">
-							<li><button type="button" style="height:19px;"><span style="margin-top:4px; margin-bottom:3px; margin-left:5px; font-size:7pt;">가나다라마바사<span style=" font-size:7pt;">(7pt)</span></span></button></li>
-							<li><button type="button" style="height:20px;"><span style="margin-bottom:2px; font-size:8pt;">가나다라마바사<span style="font-size:8pt;">(8pt)</span></span></button></li>
-							<li><button type="button" style="height:20px;"><span style="margin-bottom:1px; font-size:9pt;">가나다라마바사<span style="font-size:9pt;">(9pt)</span></span></button></li>
-							<li><button type="button" style="height:21px;"><span style="margin-bottom:1px; font-size:10pt;">가나다라마바사<span style="font-size:10pt;">(10pt)</span></span></button></li>
-							<li><button type="button" style="height:23px;"><span style="margin-bottom:2px; font-size:11pt;">가나다라마바사<span style="font-size:11pt;">(11pt)</span></span></button></li>
-							<li><button type="button" style="height:25px;"><span style="margin-bottom:1px; font-size:12pt;">가나다라마바사<span style="font-size:12pt;">(12pt)</span></span></button></li>
-							<li><button type="button" style="height:27px;"><span style="margin-bottom:2px; font-size:14pt;">가나다라마바사<span style="margin-left:6px;font-size:14pt;">(14pt)</span></span></button></li>
-							<li><button type="button" style="height:33px;"><span style="margin-bottom:1px; font-size:18pt;">가나다라마바사<span style="margin-left:8px;font-size:18pt;">(18pt)</span></span></button></li>
-							<li><button type="button" style="height:39px;"><span style="margin-left:3px; font-size:24pt;">가나다라마<span style="margin-left:11px;font-size:24pt;">(24pt)</span></span></button></li>
-							<li><button type="button" style="height:53px;"><span style="margin-top:-1px; margin-left:3px; font-size:36pt;">가나다<span style="font-size:36pt;">(36pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-top:4px; margin-bottom:3px; margin-left:5px; font-size:7pt;">가나다라마바사<span style=" font-size:7pt;">(7pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-bottom:2px; font-size:8pt;">가나다라마바사<span style="font-size:8pt;">(8pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-bottom:1px; font-size:9pt;">가나다라마바사<span style="font-size:9pt;">(9pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-bottom:1px; font-size:10pt;">가나다라마바사<span style="font-size:10pt;">(10pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-bottom:2px; font-size:11pt;">가나다라마바사<span style="font-size:11pt;">(11pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-bottom:1px; font-size:12pt;">가나다라마바사<span style="font-size:12pt;">(12pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-bottom:2px; font-size:14pt;">가나다라마바사<span style="margin-left:6px;font-size:14pt;">(14pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-bottom:1px; font-size:18pt;">가나다라마바사<span style="margin-left:8px;font-size:18pt;">(18pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-left:3px; font-size:24pt;">가나다라마<span style="margin-left:11px;font-size:24pt;">(24pt)</span></span></button></li>
+							<li><button type="button"><span style="margin-top:-1px; margin-left:3px; font-size:36pt;">가나다<span style="font-size:36pt;">(36pt)</span></span></button></li>
 							</ul>
 						</div>
 					</div>
 					<!-- //폰트 사이즈 레이어 -->
 				</li>
 </ul><ul>
-				<li class="husky_seditor_ui_bold"><button type="button" title="굵게[Ctrl+B]" class="se2_bold"><span class="_buttonRound">굵게[Ctrl+B]</span></button></li>
+				<li class="husky_seditor_ui_bold first_child"><button type="button" title="굵게[Ctrl+B]" class="se2_bold"><span class="_buttonRound tool_bg">굵게[Ctrl+B]</span></button></li>
 
 				<li class="husky_seditor_ui_underline"><button type="button" title="밑줄[Ctrl+U]" class="se2_underline"><span class="_buttonRound">밑줄[Ctrl+U]</span></button></li>
 
@@ -215,17 +203,17 @@
 
 				<li class="husky_seditor_ui_superscript"><button type="button" title="윗첨자" class="se2_sup"><span class="_buttonRound">윗첨자</span></button></li>
 
-				<li class="husky_seditor_ui_subscript"><button type="button" title="아래첨자" class="se2_sub"><span class="_buttonRound">아래첨자</span></button></li>
+				<li class="husky_seditor_ui_subscript last_child"><button type="button" title="아래첨자" class="se2_sub"><span class="_buttonRound tool_bg">아래첨자</span></button></li>
 </ul><ul>
-				<li class="husky_seditor_ui_justifyleft"><button type="button" title="왼쪽정렬" class="se2_left"><span class="_buttonRound">왼쪽정렬</span></button></li>
+				<li class="husky_seditor_ui_justifyleft first_child"><button type="button" title="왼쪽정렬" class="se2_left"><span class="_buttonRound tool_bg">왼쪽정렬</span></button></li>
 
 				<li class="husky_seditor_ui_justifycenter"><button type="button" title="가운데정렬" class="se2_center"><span class="_buttonRound">가운데정렬</span></button></li>
 
 				<li class="husky_seditor_ui_justifyright"><button type="button" title="오른쪽정렬" class="se2_right"><span class="_buttonRound">오른쪽정렬</span></button></li>
 
-				<li class="husky_seditor_ui_justifyfull"><button type="button" title="양쪽정렬" class="se2_justify"><span class="_buttonRound">양쪽정렬</span></button></li>
+				<li class="husky_seditor_ui_justifyfull"><button type="button" title="양쪽정렬" class="se2_justify"><span class="_buttonRound">양쪽정렬</span></button></li>	
 
-				<li class="husky_seditor_ui_lineHeight"><button type="button" title="줄간격" class="se2_lineheight" ><span class="_buttonRound">줄간격</span></button>
+				<li class="husky_seditor_ui_lineHeight last_child"><button type="button" title="줄간격" class="se2_lineheight" ><span class="_buttonRound tool_bg">줄간격</span></button>
 					<!-- 줄간격 레이어 -->
 					<div class="se2_layer husky_se2m_lineHeight_layer">
 						<div class="se2_in_layer">
@@ -265,7 +253,7 @@
 					</div>
 				</li>
 </ul><ul>
-				<li class="husky_seditor_ui_quote"><button type="button" title="인용구" class="se2_blockquote"><span class="_buttonRound">인용구</span></button>
+				<li class="husky_seditor_ui_quote single_child"><button type="button" title="인용구" class="se2_blockquote"><span class="_buttonRound tool_bg">인용구</span></button>
 					<!-- 인용구 -->
 					<div class="se2_layer husky_seditor_blockquote_layer" style="margin-left:-407px; display:none;">
 						<div class="se2_in_layer">
@@ -289,7 +277,7 @@
 					<!-- //인용구 -->
 				</li>
 </ul><ul>
-				<li class="husky_seditor_ui_hyperlink"><button type="button" title="링크" class="se2_url"><span class="_buttonRound">링크</span></button>
+				<li class="husky_seditor_ui_hyperlink first_child"><button type="button" title="링크" class="se2_url"><span class="_buttonRound tool_bg">링크</span></button>
 					<!-- 링크 -->
 					<div class="se2_layer" style="margin-left:-285px">
 						<div class="se2_in_layer">
@@ -512,7 +500,7 @@
 					<!--//@lazyload_html-->
 				</li>
 
-				<li class="husky_seditor_ui_findAndReplace"><button type="button" title="찾기/바꾸기" class="se2_find"><span class="_buttonRound">찾기/바꾸기</span></button>
+				<li class="husky_seditor_ui_findAndReplace last_child"><button type="button" title="찾기/바꾸기" class="se2_find"><span class="_buttonRound tool_bg">찾기/바꾸기</span></button>
 					<!--@lazyload_html find_and_replace-->
 					<!-- 찾기/바꾸기 -->
 					<div class="se2_layer husky_se2m_findAndReplace_layer" style="margin-left:-238px;">
@@ -526,7 +514,7 @@
 								</ul>
 								<div class="se2_in_bx_find husky_se2m_find_ui" style="display:block">
 									<dl>
-									<dt><label for="find_word">찾을단어</label></dt><dd><input type="text" id="find_word" value="스마트에디터" class="input_ty1"></dd>
+									<dt><label for="find_word">찾을 단어</label></dt><dd><input type="text" id="find_word" value="스마트에디터" class="input_ty1"></dd>
 									</dl>
 									<p class="se2_find_btns">
 										<button type="button" class="se2_find_next husky_se2m_find_next"><span>다음 찾기</span></button><button type="button" class="se2_cancel husky_se2m_cancel"><span>취소</span></button>
@@ -534,11 +522,11 @@
 								</div>
 								<div class="se2_in_bx_revise husky_se2m_replace_ui" style="display:none">
 									<dl>
-									<dt><label for="find_word2">찾을단어</label></dt><dd><input type="text" id="find_word2" value="스마트에디터" class="input_ty1"></dd>
-									<dt><label for="revise_word">바꿀단어</label></dt><dd><input type="text" id="revise_word" value="스마트에디터" class="input_ty1"></dd>
+									<dt><label for="find_word2">찾을 단어</label></dt><dd><input type="text" id="find_word2" value="스마트에디터" class="input_ty1"></dd>
+									<dt><label for="revise_word">바꿀 단어</label></dt><dd><input type="text" id="revise_word" value="스마트에디터" class="input_ty1"></dd>
 									</dl>
 									<p class="se2_find_btns">
-										<button type="button" class="se2_find_next2 husky_se2m_replace_find_next"><span>다음찾기</span></button><button type="button" class="se2_revise1 husky_se2m_replace"><span>바꾸기</span></button><button type="button" class="se2_revise2 husky_se2m_replace_all"><span>모두 바꾸기</span></button><button type="button" class="se2_cancel husky_se2m_cancel"><span>취소</span></button>
+										<button type="button" class="se2_find_next2 husky_se2m_replace_find_next"><span>다음 찾기</span></button><button type="button" class="se2_revise1 husky_se2m_replace"><span>바꾸기</span></button><button type="button" class="se2_revise2 husky_se2m_replace_all"><span>모두 바꾸기</span></button><button type="button" class="se2_cancel husky_se2m_cancel"><span>취소</span></button>
 									</p>
 								</div>
 								<button type="button" title="닫기" class="se2_close husky_se2m_cancel"><span>닫기</span></button>
