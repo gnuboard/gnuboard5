@@ -1,4 +1,6 @@
 <?php
+//사용하지 않으니 막아놓겠습니다.
+exit;
 include_once("../../../../../common.php");
 // default redirection
 $url = $_REQUEST["callback"].'?callback_func='.$_REQUEST["callback_func"];

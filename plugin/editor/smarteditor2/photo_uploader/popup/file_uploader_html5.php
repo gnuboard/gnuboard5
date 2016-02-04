@@ -1,4 +1,6 @@
 <?php
+//사용하지 않으니 막아놓겠습니다.
+exit;
 include_once("../../../../../common.php");
 
 $ym = date('ym', G5_SERVER_TIME);

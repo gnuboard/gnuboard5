@@ -8,9 +8,16 @@ jQuery.fn.bindAll = function(options) {
 
 jQuery(function ($) {
     'use strict';
+
+    var ed_nonce = '';
+
+    if( !!opener && !!opener.window && !!opener.window.nhn ){
+        ed_nonce = opener.window.nhn.husky.SE2M_Configuration.SE2M_Accessibility.ed_nonce;
+    }
+
     // Change this to the location of your server-side upload handler:
     var gnu = {
-        url : './php/',
+        url : './php/?_nonce='+ed_nonce,
         container_el : 'body',
         dreg_area : '#drag_area',
         dreg_area_list : '#drag_area > ul',

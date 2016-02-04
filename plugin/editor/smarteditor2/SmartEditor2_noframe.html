@@ -11,18 +11,18 @@
 </style>
 <script type="text/javascript" src="./js/lib/jindo2.all.js" charset="utf-8"></script>
 <script type="text/javascript" src="./js/lib/jindo_component.js" charset="utf-8"></script>
-<script type="text/javascript" src="./js/SE2M_Configuration.js?v3" charset="utf-8"></script>	<!-- 설정 파일 -->
+<script type="text/javascript" src="./js/SE2M_Configuration.js" charset="utf-8"></script>	<!-- 설정 파일 -->
 <script type="text/javascript" src="./js/SE2BasicCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="./js/smarteditor2.min.js" charset="utf-8"></script>
 
 <!-- 사진첨부샘플  --> 
-<script type="text/javascript" src="photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js?v3" charset="utf-8"></script>
+<script type="text/javascript" src="./sample/js/plugin/hp_SE2M_AttachQuickPhoto.js" charset="utf-8"></script>
 </head>
 <body>
 
 
 
-<span id="rev" style="display:none">Version: 2.8.2.12056 </span>
+<span id="rev">Version: 2.8.2.12056 </span>
 
 <!-- SE2 Markup Start -->	
 <div id="smart_editor2">
@@ -211,7 +211,15 @@
 
 				<li class="husky_seditor_ui_justifyright"><button type="button" title="오른쪽정렬" class="se2_right"><span class="_buttonRound">오른쪽정렬</span></button></li>
 
-				<li class="husky_seditor_ui_justifyfull"><button type="button" title="양쪽정렬" class="se2_justify"><span class="_buttonRound">양쪽정렬</span></button></li>	
+				<li class="husky_seditor_ui_justifyfull"><button type="button" title="양쪽정렬" class="se2_justify"><span class="_buttonRound">양쪽정렬</span></button></li>
+
+				<li class="husky_seditor_ui_orderedlist"><button type="button" title="번호매기기" class="se2_ol"><span class="_buttonRound">번호매기기</span></button></li>
+
+				<li class="husky_seditor_ui_unorderedlist"><button type="button" title="글머리기호" class="se2_ul"><span class="_buttonRound">글머리기호</span></button></li>
+
+				<li class="husky_seditor_ui_outdent"><button type="button" title="내어쓰기[Shift+Tab]" class="se2_outdent"><span class="_buttonRound">내어쓰기[Shift+Tab]</span></button></li>
+
+				<li class="husky_seditor_ui_indent"><button type="button" title="들여쓰기[Tab]" class="se2_indent"><span class="_buttonRound">들여쓰기[Tab]</span></button></li>			
 
 				<li class="husky_seditor_ui_lineHeight last_child"><button type="button" title="줄간격" class="se2_lineheight" ><span class="_buttonRound tool_bg">줄간격</span></button>
 					<!-- 줄간격 레이어 -->
@@ -240,17 +248,6 @@
 						</div>
 					</div>
 					<!-- //줄간격 레이어 -->
-				</li>
-</ul><ul>
-				<li class="husky_seditor_ui_text_more" id="se2_text_more"><button title="더보기" type="button" class="se2_text_tool_more"><span>더보기</span></button>
-					<div class="se2_sub_text_tool se2_sub_step1">
-						<ul>
-						<li class="husky_seditor_ui_orderedlist"><button type="button" title="번호매기기" class="se2_ol"><span class="_buttonRound">번호매기기</span></button></li>
-						<li class="husky_seditor_ui_unorderedlist"><button type="button" title="글머리기호" class="se2_ul"><span class="_buttonRound">글머리기호</span></button></li>
-						<li class="husky_seditor_ui_outdent"><button type="button" title="내어쓰기[Shift+Tab]" class="se2_outdent"><span class="_buttonRound">내어쓰기[Shift+Tab]</span></button></li>
-						<li class="husky_seditor_ui_indent"><button type="button" title="들여쓰기[Tab]" class="se2_indent"><span class="_buttonRound">들여쓰기[Tab]</span></button></li>
-						</ul>
-					</div>
 				</li>
 </ul><ul>
 				<li class="husky_seditor_ui_quote single_child"><button type="button" title="인용구" class="se2_blockquote"><span class="_buttonRound tool_bg">인용구</span></button>
@@ -780,6 +777,65 @@
 </div>
 <!-- SE2 Markup End -->
 
+<!--Example Start-->
+<div id="se2_sample" style="margin:10px 0;">
+	<input type="button" onclick="pasteHTML();" value="본문에 내용 넣기" />
+	<input type="button" onclick="showHTML();" value="본문 내용 가져오기" />
+	<input type="button" onclick="submitContents();" value="서버로 내용 전송" />
+	<input type="button" onclick="setDefaultFont();" value="기본 폰트 지정하기 (궁서_24)" />
+	<form action="sample.php" method="post">
+		<textarea name="ir1" id="ir1" rows="10" cols="100" style="width:766px; height:412px; display:none;">
+			<p>글 수정시 여기에 값을 넣어주면 됩니다.</p>
+		</textarea>
+	</form>
+</div>
 
+<script type="text/javascript">
+if(window.frameElement){
+	jindo.$("se2_sample").style.display = "none";
+}else{
+	var oEditor = createSEditor2(jindo.$("ir1"), {
+		bUseToolbar : true,				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+		bUseVerticalResizer : true,		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+		bUseModeChanger : true,			// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+		//aAdditionalFontList : [["MS UI Gothic", "MS UI Gothic"], ["Comic Sans MS", "Comic Sans MS"],["TEST","TEST"]],	// 추가 글꼴 목록
+		fOnBeforeUnload : function(){
+			//예제 코드
+			//return "내용이 변경되었습니다.";
+		}
+	});
+	
+	oEditor.run({
+		fnOnAppReady: function(){
+			//예제 코드
+			//oEditor.exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+		}
+	});
+	
+	function pasteHTML() {
+		var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
+		oEditor.exec("PASTE_HTML", [sHTML]);
+	}
+	
+	function showHTML() {
+		var sHTML = oEditor.getIR();
+		alert(sHTML);
+	}
+	
+	function submitContents() {
+		oEditor.exec("UPDATE_CONTENTS_FIELD");	// 에디터의 내용이 textarea에 적용됩니다.
+	
+		// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
+		jindo.$("ir1").form.submit();
+	}
+	
+	function setDefaultFont() {
+		var sDefaultFont = '궁서';
+		var nFontSize = 24;
+		oEditor.setDefaultFont(sDefaultFont, nFontSize);
+	}
+}
+</script>
+<!--Example End-->
 </body>
 </html>
