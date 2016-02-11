@@ -218,7 +218,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
     $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$ordr_idxx' ";
     $row = sql_fetch($sql);
 
-    $data = unserialize($row['dt_data']);
+    $data = unserialize(base64_decode($row['dt_data']));
 
     if(isset($data['pp_id']) && $data['pp_id']) {
         $order_action_url = G5_HTTPS_MSHOP_URL.'/personalpayformupdate.php';

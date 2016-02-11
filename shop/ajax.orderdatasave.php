@@ -16,7 +16,7 @@ sql_query($sql);
 
 $_POST['sw_direct'] = get_session('ss_direct');
 
-$dt_data = serialize($_POST);
+$dt_data = base64_encode(serialize($_POST));
 
 // 동일한 주문번호가 있는지 체크
 $sql = " select count(*) as cnt from {$g5['g5_shop_order_data_table']} where od_id = '$od_id' ";
