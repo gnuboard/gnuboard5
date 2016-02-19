@@ -212,8 +212,8 @@ function url_auto_link($str)
     global $config;
 
     // 140326 유창화님 제안코드로 수정
-    // http://sir.co.kr/bbs/board.php?bo_table=pg_lecture&wr_id=461
-    // http://sir.co.kr/bbs/board.php?bo_table=pg_lecture&wr_id=463
+    // http://sir.kr/pg_lecture/461
+    // http://sir.kr/pg_lecture/463
     $str = str_replace(array("&lt;", "&gt;", "&amp;", "&quot;", "&nbsp;", "&#039;"), array("\t_lt_\t", "\t_gt_\t", "&", "\"", "\t_nbsp_\t", "'"), $str);
     //$str = preg_replace("`(?:(?:(?:href|src)\s*=\s*(?:\"|'|)){0})((http|https|ftp|telnet|news|mms)://[^\"'\s()]+)`", "<A HREF=\"\\1\" TARGET='{$config['cf_link_target']}'>\\1</A>", $str);
     $str = preg_replace("/([^(href=\"?'?)|(src=\"?'?)]|\(|^)((http|https|ftp|telnet|news|mms):\/\/[a-zA-Z0-9\.-]+\.[가-힣\xA1-\xFEa-zA-Z0-9\.:&#=_\?\/~\+%@;\-\|\,\(\)]+)/i", "\\1<A HREF=\"\\2\" TARGET=\"{$config['cf_link_target']}\">\\2</A>", $str);

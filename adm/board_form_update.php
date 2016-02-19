@@ -184,7 +184,7 @@ if ($w == '') {
     // 글수 조정
     /*
         엔피씨님의 팁으로 교체합니다. 130308
-        http://sir.co.kr/bbs/board.php?bo_table=g5_tiptech&wr_id=27207
+        http://sir.kr/g5_tiptech/27207
     */
     if (isset($_POST['proc_count'])) {
         // 원글을 얻습니다.
