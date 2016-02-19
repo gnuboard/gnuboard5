@@ -645,7 +645,7 @@ if(!isset($default['de_kakaopay_mid'])) {
         <tr class="pg_info_fld kcp_info_fld">
             <th scope="row">
                 <label for="de_kcp_mid">KCP SITE CODE</label><br>
-                <a href="http://sir.co.kr/main/service/p_pg.php" target="_blank" id="scf_kcpreg" class="scf_pgreg">KCP서비스신청하기</a>
+                <a href="http://sir.kr/main/service/p_pg.php" target="_blank" id="scf_kcpreg" class="scf_pgreg">KCP서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
@@ -662,7 +662,7 @@ if(!isset($default['de_kakaopay_mid'])) {
         <tr class="pg_info_fld lg_info_fld">
             <th scope="row">
                 <label for="cf_lg_mid">LG유플러스 상점아이디</label><br>
-                <a href="http://sir.co.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">LG유플러스 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">LG유플러스 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("LG유플러스에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG유플러스에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 상점아이디와 동일합니다."); ?>
@@ -679,7 +679,7 @@ if(!isset($default['de_kakaopay_mid'])) {
         <tr class="pg_info_fld inicis_info_fld">
             <th scope="row">
                 <label for="de_inicis_mid">KG이니시스 상점아이디</label><br>
-                <a href="http://sir.co.kr/main/service/inicis_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">KG이니시스 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/inicis_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">KG이니시스 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("KG이니시스로 부터 발급 받으신 상점아이디(MID) 10자리 중 SIR 을 제외한 나머지 7자리를 입력 합니다.\n만약, 상점아이디가 SIR로 시작하지 않는다면 계약담당자에게 변경 요청을 해주시기 바랍니다. (Tel. 02-3430-5858) 예) SIRpaytest"); ?>
@@ -696,7 +696,7 @@ if(!isset($default['de_kakaopay_mid'])) {
         <tr>
             <th scope="row">
                 <label for="de_kakaopay_mid">카카오페이 상점MID</label>
-                <a href="http://sir.co.kr/main/service/kakaopay.php" target="_blank" id="scf_lgreg" class="scf_pgreg">카카오페이 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/kakaopay.php" target="_blank" id="scf_lgreg" class="scf_pgreg">카카오페이 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점아이디(MID) 10자리 중 첫 KHSIR과 끝 m 을 제외한 영문4자리를 입력 합니다. 예) KHSIRtestm"); ?>
