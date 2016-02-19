@@ -2,7 +2,7 @@
 
 프로그램 명칭 : 그누보드5 ( GNU Board 5 )
 
-저작자 : (주)에스아이알소프트 http://sir.co.kr
+저작자 : (주)에스아이알소프트 http://sir.kr
 
 라이센스 (License)
 
