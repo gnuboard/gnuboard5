@@ -9,7 +9,8 @@ include_once('./hpcert.config.php');
 **************************************************************************/
 
 /* 공통 리턴 항목 */
-$idcfMbrComCd           =   $_POST['idcf_mbr_com_cd'];      // 고객사코드
+//$idcfMbrComCd           =   $_POST['idcf_mbr_com_cd'];      // 고객사코드
+$idcfMbrComCd           =   $memId;
 $hsCertSvcTxSeqno       =   $_POST['hs_cert_svc_tx_seqno']; // 거래번호
 $rqstSiteNm             =   $_POST['rqst_site_nm'];         // 접속도메인
 $hsCertRqstCausCd       =   $_POST['hs_cert_rqst_caus_cd']; // 인증요청사유코드 2byte  (00:회원가입, 01:성인인증, 02:회원정보수정, 03:비밀번호찾기, 04:상품구매, 99:기타)
