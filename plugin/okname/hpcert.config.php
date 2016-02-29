@@ -25,7 +25,14 @@ $mbphnNo = 'x';                                     // 휴대폰번호 (고정�
 $svcTxSeqno = get_uniqid();                         // 거래번호. 동일문자열을 두번 사용할 수 없음. ( 20자리의 문자열. 0-9,A-Z,a-z 사용.)
 
 $clientIp = $_SERVER['SERVER_ADDR'];                // 회원사 IP,   $_SERVER["SERVER_ADDR"] 사용가능.
-$clientDomain = $_SERVER['HTTP_HOST'];              // 회원사 도메인, $_SERVER["HTTP_HOST"] 사용가능.
+//$clientDomain = $_SERVER['HTTP_HOST'];              // 회원사 도메인, $_SERVER["HTTP_HOST"] 사용가능.
+$p = @parse_url($_SERVER['HTTP_HOST']);
+if(isset($p['host']) && $p['host'])
+    $clientDomain = $p['host'];
+else
+    $clientDomain = $_SERVER['SERVER_NAME'];
+unset($p);
+
 
 $rsv1 = '0';                                        // 예약 항목
 $rsv2 = '0';                                        // 예약 항목
