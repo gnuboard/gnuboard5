@@ -1734,7 +1734,7 @@ function get_sendcost($cart_id, $selected=1)
     }
 
     $send_cost = 0;
-    if($default['de_send_cost_case'] == '차등' && $total_price > 0) {
+    if($default['de_send_cost_case'] == '차등' && $total_price >= 0) {
         // 금액별차등 : 여러단계의 배송비 적용 가능
         $send_cost_limit = explode(";", $default['de_send_cost_limit']);
         $send_cost_list  = explode(";", $default['de_send_cost_list']);
