@@ -397,7 +397,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 </tr>
                 <tr>
                     <th scope="row">입금자</th>
-                    <td><?php echo $od['od_deposit_name']; ?></td>
+                    <td><?php echo get_text($od['od_deposit_name']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">입금확인일시</th>
@@ -686,7 +686,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         <label for="od_sms_ipgum_check">SMS 입금 문자전송</label>
                         <br>
                         <?php } ?>
-                        <input type="text" name="od_deposit_name" value="<?php echo $od['od_deposit_name']; ?>" id="od_deposit_name" class="frm_input">
+                        <input type="text" name="od_deposit_name" value="<?php echo get_text($od['od_deposit_name']); ?>" id="od_deposit_name" class="frm_input">
                     </td>
                 </tr>
                 <tr>
