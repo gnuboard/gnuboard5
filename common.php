@@ -228,7 +228,7 @@ $qstr = '';
 if (isset($_REQUEST['sca']))  {
     $sca = clean_xss_tags(trim($_REQUEST['sca']));
     if ($sca) {
-        $sca = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)]/", "", $sca);
+        $sca = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $sca);
         $qstr .= '&amp;sca=' . urlencode($sca);
     }
 } else {
@@ -237,7 +237,7 @@ if (isset($_REQUEST['sca']))  {
 
 if (isset($_REQUEST['sfl']))  {
     $sfl = trim($_REQUEST['sfl']);
-    $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $sfl);
+    $sfl = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*\s]/", "", $sfl);
     if ($sfl)
         $qstr .= '&amp;sfl=' . urlencode($sfl); // search field (검색 필드)
 } else {
