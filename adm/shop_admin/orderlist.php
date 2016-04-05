@@ -71,7 +71,7 @@ if ($od_receipt_point) {
 }
 
 if ($od_coupon) {
-    $where[] = " od_coupon != 0 ";
+    $where[] = " ( od_cart_coupon > 0 or od_coupon > 0 or od_send_coupon > 0 ) ";
 }
 
 if ($od_escrow) {
