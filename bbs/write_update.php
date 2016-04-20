@@ -89,6 +89,11 @@ if (!$is_admin && $board['bo_use_secret'] == 2) {
 $html = '';
 if (isset($_POST['html']) && $_POST['html']) {
     $html = $_POST['html'];
+    
+    // html 쓰기 권한 확인
+    if ($html && $member['mb_level'] < $board['bo_html_level']) {
+        alert('html 쓰기 권한이 없습니다.');
+    }
 }
 
 $mail = '';
