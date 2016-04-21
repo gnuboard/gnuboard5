@@ -1410,9 +1410,9 @@ function forderform_check(f)
     f.rcvr_add2.value = f.od_b_addr2.value;
 
     if(f.pay_method.value != "무통장") {
-        return jsf__pay( f );
+        jsf__pay( f );
     } else {
-        return true;
+        f.submit();
     }
     <?php } ?>
     <?php if($default['de_pg_service'] == 'lg') { ?>
@@ -1433,7 +1433,7 @@ function forderform_check(f)
     <?php } ?>
 
     if(f.LGD_CUSTOM_FIRSTPAY.value != "무통장") {
-          launchCrossPlatform(f);
+        launchCrossPlatform(f);
     } else {
         f.submit();
     }

@@ -1,125 +1,59 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-/* ============================================================================== */
-/* =   Javascript source Include                                                = */
-/* = -------------------------------------------------------------------------- = */
-/* =   ※ 필수                                                                  = */
-/* = -------------------------------------------------------------------------- = */
-
 // kcp 전자결제를 사용할 때만 실행
 if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_easy_pay_use']) {
 ?>
-<script src="<?php echo $g_conf_js_url; ?>"></script>
-<?php
-/* = -------------------------------------------------------------------------- = */
-/* =   Javascript source Include END                                            = */
-/* ============================================================================== */
-?>
-<script>
-StartSmartUpdate();
-
-function CheckPayplusInstall()
+<script type="text/javascript">
+/****************************************************************/
+/* m_Completepayment  설명                                      */
+/****************************************************************/
+/* 인증완료시 재귀 함수                                         */
+/* 해당 함수명은 절대 변경하면 안됩니다.                        */
+/* 해당 함수의 위치는 payplus.js 보다먼저 선언되어여 합니다.    */
+/* Web 방식의 경우 리턴 값이 form 으로 넘어옴                   */
+/* EXE 방식의 경우 리턴 값이 json 으로 넘어옴                   */
+/****************************************************************/
+function m_Completepayment( FormOrJson, closeEvent )
 {
-    setTimeout("init_pay_button();",300);
-}
+    var frm = document.forderform;
 
-/* Payplus Plug-in 실행 */
-function  jsf__pay( form )
-{
-    var RetVal = false;
+    /********************************************************************/
+    /* FormOrJson은 가맹점 임의 활용 금지                               */
+    /* frm 값에 FormOrJson 값이 설정 됨 frm 값으로 활용 하셔야 됩니다.  */
+    /* FormOrJson 값을 활용 하시려면 기술지원팀으로 문의바랍니다.       */
+    /********************************************************************/
+    GetField( frm, FormOrJson );
 
-    /* Payplus Plugin 실행 */
-    if ( MakePayMessage( form ) == true )
+    if( frm.res_cd.value == "0000" )
     {
-        //openwin = window.open( "./kcp/proc_win.html", "proc_win", "width=449, height=209, top=300, left=300" );
         document.getElementById("display_pay_button").style.display = "none" ;
         document.getElementById("display_pay_process").style.display = "" ;
-        RetVal = true ;
-    }
 
-    else
-    {
-        /*  res_cd와 res_msg변수에 해당 오류코드와 오류메시지가 설정됩니다.
-            ex) 고객이 Payplus Plugin에서 취소 버튼 클릭시 res_cd=3001, res_msg=사용자 취소
-            값이 설정됩니다.
-        */
-        res_cd  = document.forderform.res_cd.value ;
-        res_msg = document.forderform.res_msg.value ;
-
-    }
-
-    return RetVal ;
-}
-
-// Payplus Plug-in 설치 안내
-
-function init_pay_button()
-{
-    if ((navigator.userAgent.indexOf('MSIE') > 0) || (navigator.userAgent.indexOf('Trident/7.0') > 0))
-    {
-        try
-        {
-            if( document.Payplus.object == null )
-            {
-                document.getElementById("display_setup_message_top").style.display = "" ;
-                document.getElementById("display_setup_message").style.display = "" ;
-                document.getElementById("display_pay_button").style.display = "none" ;
-                //document.getElementById("display_setup_message").scrollIntoView();
-            }
-            else{
-                document.getElementById("display_setup_message_top").style.display = "none" ;
-                document.getElementById("display_setup_message").style.display = "none" ;
-                document.getElementById("display_pay_button").style.display = "" ;
-            }
-        }
-        catch (e)
-        {
-            document.getElementById("display_setup_message_top").style.display = "" ;
-            document.getElementById("display_setup_message").style.display = "" ;
-            document.getElementById("display_pay_button").style.display = "none" ;
-            //document.getElementById("display_setup_message").scrollIntoView();
-        }
+        frm.submit();
     }
     else
     {
-        try
-        {
-            if( Payplus == null )
-            {
-                document.getElementById("display_setup_message_top").style.display = "" ;
-                document.getElementById("display_setup_message").style.display = "" ;
-                document.getElementById("display_pay_button").style.display = "none" ;
-                //document.getElementById("display_setup_message").scrollIntoView();
-            }
-            else{
-                document.getElementById("display_setup_message_top").style.display = "none" ;
-                document.getElementById("display_setup_message").style.display = "none" ;
-                document.getElementById("display_pay_button").style.display = "" ;
-            }
-        }
-        catch (e)
-        {
-            document.getElementById("display_setup_message_top").style.display = "" ;
-            document.getElementById("display_setup_message").style.display = "" ;
-            document.getElementById("display_pay_button").style.display = "none" ;
-            //document.getElementById("display_setup_message").scrollIntoView();
-        }
-    }
-}
+        alert( "[" + frm.res_cd.value + "] " + frm.res_msg.value );
 
-function get_intall_file()
-{
-    document.location.href = GetInstallFile();
-    return false;
+        closeEvent();
+    }
 }
 </script>
 
-<!-- Payplus Plug-in 설치 안내 -->
-<p id="display_setup_message_top" class="display_setup_message" style="display:block">
-    <strong>결제안내</strong>
-    <span class="red">결제를 하시려면 상단의 노란색 표시줄을 클릭</span>하시거나, <a href="https://pay.kcp.co.kr/plugin_new/file/KCPPluginSetup.exe" onclick="return get_intall_file();"><span class="bold">[수동설치]</span></a>를 눌러 Payplus Plug-in을 설치하시기 바랍니다.<br>
-    [수동설치]를 눌러 설치하신 경우 <span class="red bold">새로고침(F5)키</span>를 눌러 진행하시기 바랍니다.
-</p>
-
+<script src="<?php echo $g_conf_js_url; ?>"></script>
+<script>
+/* Payplus Plug-in 실행 */
+function jsf__pay( form )
+{
+    try
+    {
+        KCP_Pay_Execute( form );
+    }
+    catch (e)
+    {
+        /* IE 에서 결제 정상종료시 throw로 스크립트 종료 */
+    }
+}
+</script>
 <?php } ?>

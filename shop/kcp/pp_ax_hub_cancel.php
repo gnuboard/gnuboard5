@@ -64,7 +64,7 @@ if ( $req_tx == "pay" )
             $c_PayPlus->mf_do_tx( $tno,  $g_conf_home_dir, $g_conf_site_cd,
                                   $g_conf_site_key,  $tran_cd,    "",
                                   $g_conf_gw_url,  $g_conf_gw_port,  "payplus_cli_slib",
-                                  $ordr_idxx, $cust_ip, "3" ,
+                                  $ordr_idxx, $cust_ip, $g_conf_log_level ,
                                   0, 0, $g_conf_key_dir, $g_conf_log_dir);
 
             $res_cd  = $c_PayPlus->m_res_cd;

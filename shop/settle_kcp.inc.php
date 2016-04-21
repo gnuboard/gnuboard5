@@ -1,8 +1,6 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-$test = "";
-
 if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
         // 에스크로결제 테스트
@@ -15,10 +13,11 @@ if ($default['de_card_test']) {
         $default['de_kcp_site_key'] = '3grptw1.zW0GSo4PQdaGvsF__';
     }
 
-    $test = "_test";
+    $g_conf_js_url = 'https://testpay.kcp.co.kr/plugin/payplus_web.jsp';
 }
 else {
     $default['de_kcp_mid'] = "SR".$default['de_kcp_mid'];
+    $g_conf_js_url = 'https://pay.kcp.co.kr/plugin/payplus_web.jsp';
 }
 
 $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
@@ -63,8 +62,8 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
         alert('KCP SITE KEY를 입력해 주십시오.');
 }
 
-$g_conf_js_url = "https://pay.kcp.co.kr/plugin/payplus{$test}_un.js";
-
-$g_conf_log_level = "3";           // 변경불가
-$g_conf_gw_port   = "8090";        // 포트번호(변경불가)
+$g_conf_site_name = $default['de_admin_company_name'];
+$g_conf_log_level = '3';           // 변경불가
+$g_conf_gw_port   = '8090';        // 포트번호(변경불가)
+$module_type      = '01';          // 변경불가
 ?>

@@ -10,7 +10,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
     <input type="hidden" name="req_tx"          value="pay">
     <input type="hidden" name="site_cd"         value="<?php echo $default['de_kcp_mid']; ?>">
-    <input type="hidden" name="site_name"       value="<?php echo $default['de_admin_company_name']; ?>">
+    <input type="hidden" name="site_name"       value="<?php echo $g_conf_site_name; ?>">
     <input type="hidden" name="def_site_cd"     value="<?php echo $default['de_kcp_mid']; ?>">
 
 <?php
@@ -95,6 +95,11 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         good_expr의 나머지 적용 방식에 대해서는 KCP에서 제공하는 매뉴얼을 참고해 주세요.
     -->
     <input type="hidden" name="good_expr" value="0">
+
+    <!-- 가맹점에서 관리하는 고객 아이디 설정을 해야 합니다.(필수 설정) -->
+	<input type="hidden" name="shop_user_id"    value=""/>
+	<!-- 복지포인트 결제시 가맹점에 할당되어진 코드 값을 입력해야합니다.(필수 설정) -->
+    <input type="hidden" name="pt_memcorp_cd"   value=""/>
 
     <!-- 에스크로 항목 -->
 
@@ -185,7 +190,7 @@ if($default['de_tax_flag_use']) {
 <?php
 }
 ?>
-    <input type="hidden" name="wish_vbank_list" value="05:03:04:07:11:23:26:32:34:81:71">
+    <input type="hidden" name="wish_vbank_list" value="">
 <?php
 
 

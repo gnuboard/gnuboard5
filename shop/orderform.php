@@ -40,7 +40,7 @@ if(!$is_mobile_order) {
                 $g5['body_script'] = ' onload="javascript:enable_click()"';
                 break;
             default:
-                $g5['body_script'] = ' onload="CheckPayplusInstall();"';
+                $g5['body_script'] = '';
                 break;
         }
     }
