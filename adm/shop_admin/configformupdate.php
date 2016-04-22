@@ -158,6 +158,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_kcp_site_key               = '{$_POST['de_kcp_site_key']}',
                 de_inicis_mid                 = '{$_POST['de_inicis_mid']}',
                 de_inicis_admin_key           = '{$_POST['de_inicis_admin_key']}',
+                de_inicis_sign_key            = '{$_POST['de_inicis_sign_key']}',
                 de_iche_use                   = '{$_POST['de_iche_use']}',
                 de_sms_cont1                  = '{$_POST['de_sms_cont1']}',
                 de_sms_cont2                  = '{$_POST['de_sms_cont2']}',

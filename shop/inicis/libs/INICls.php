@@ -3,8 +3,8 @@
 /**
  * Copyright (C) 2007 INICIS Inc.
  *
- * ÇØ´ç ¶óÀÌºê·¯¸®´Â Àý´ë ¼öÁ¤µÇ¾î¼­´Â ¾ÈµË´Ï´Ù.
- * ÀÓÀÇ·Î ¼öÁ¤µÈ ÄÚµå¿¡ ´ëÇÑ Ã¥ÀÓÀº ÀüÀûÀ¸·Î ¼öÁ¤ÀÚ¿¡°Ô ÀÖÀ½À» ¾Ë·Áµå¸³´Ï´Ù.
+ * í•´ë‹¹ ë¼ì´ë¸ŒëŸ¬ë¦¬ëŠ” ì ˆëŒ€ ìˆ˜ì •ë˜ì–´ì„œëŠ” ì•ˆë©ë‹ˆë‹¤.
+ * ìž„ì˜ë¡œ ìˆ˜ì •ëœ ì½”ë“œì— ëŒ€í•œ ì±…ìž„ì€ ì „ì ìœ¼ë¡œ ìˆ˜ì •ìžì—ê²Œ ìžˆìŒì„ ì•Œë ¤ë“œë¦½ë‹ˆë‹¤.
  *
  */
 require_once ( "INIDFN.php" );
@@ -16,57 +16,57 @@ require_once ( "INIXml.php" );
 extract($_POST);
 extract($_GET);
 switch ($paymethod) {
-    case(Card):    // ½Å¿ëÄ«µå
+    case(Card):    // ì‹ ìš©ì¹´ë“œ
         $pgid = "CARD";
         break;
-    case(Account):   // ÀºÇà °èÁÂ ÀÌÃ¼
+    case(Account):   // ì€í–‰ ê³„ì¢Œ ì´ì²´
         $pgid = "ACCT";
         break;
-    case(DirectBank): // ½Ç½Ã°£ °èÁÂ ÀÌÃ¼
+    case(DirectBank): // ì‹¤ì‹œê°„ ê³„ì¢Œ ì´ì²´
         $pgid = "DBNK";
         break;
     case(OCBPoint):  // OCB
         $pgid = "OCBP";
         break;
-    case(VCard):    // ISP °áÁ¦
+    case(VCard):    // ISP ê²°ì œ
         $pgid = "ISP_";
         break;
-    case(HPP):     // ÈÞ´ëÆù °áÁ¦
+    case(HPP):     // íœ´ëŒ€í° ê²°ì œ
         $pgid = "HPP_";
         break;
-    case(ArsBill):   // 700 ÀüÈ­°áÁ¦
+    case(ArsBill):   // 700 ì „í™”ê²°ì œ
         $pgid = "ARSB";
         break;
-    case(PhoneBill):  // PhoneBill °áÁ¦(¹Þ´Â ÀüÈ­)
+    case(PhoneBill):  // PhoneBill ê²°ì œ(ë°›ëŠ” ì „í™”)
         $pgid = "PHNB";
         break;
-    case(Ars1588Bill):// 1588 ÀüÈ­°áÁ¦
+    case(Ars1588Bill):// 1588 ì „í™”ê²°ì œ
         $pgid = "1588";
         break;
-    case(VBank):    // °¡»ó°èÁÂ ÀÌÃ¼
+    case(VBank):    // ê°€ìƒê³„ì¢Œ ì´ì²´
         $pgid = "VBNK";
         break;
-    case(Culture):   // ¹®È­»óÇ°±Ç °áÁ¦
+    case(Culture):   // ë¬¸í™”ìƒí’ˆê¶Œ ê²°ì œ
         $pgid = "CULT";
         break;
-    case(CMS):     // CMS °áÁ¦
+    case(CMS):     // CMS ê²°ì œ
         $pgid = "CMS_";
         break;
-    case(AUTH):    // ½Å¿ëÄ«µå À¯È¿¼º °Ë»ç
+    case(AUTH):    // ì‹ ìš©ì¹´ë“œ ìœ íš¨ì„± ê²€ì‚¬
         $pgid = "AUTH";
         break;
-    case(INIcard):   // ³×Æ¼¸Ó´Ï °áÁ¦
+    case(INIcard):   // ë„¤í‹°ë¨¸ë‹ˆ ê²°ì œ
         $pgid = "INIC";
         break;
-    case(MDX):     // ¸óµ¦½ºÄ«µå
+    case(MDX):     // ëª¬ë±ìŠ¤ì¹´ë“œ
         $pgid = "MDX_";
         break;
-    default:         // »ó±â ÁöºÒ¼ö´Ü ¿Ü Ãß°¡µÇ´Â ÁöºÒ¼ö´ÜÀÇ °æ¿ì ±âº»À¸·Î paymethod°¡ 4ÀÚ¸®·Î ³Ñ¾î¿Â´Ù.
+    default:         // ìƒê¸° ì§€ë¶ˆìˆ˜ë‹¨ ì™¸ ì¶”ê°€ë˜ëŠ” ì§€ë¶ˆìˆ˜ë‹¨ì˜ ê²½ìš° ê¸°ë³¸ìœ¼ë¡œ paymethodê°€ 4ìžë¦¬ë¡œ ë„˜ì–´ì˜¨ë‹¤.
         $pgid = $paymethod;
 }
 
 if ($quotainterest == "1") {
-    $interest = "(¹«ÀÌÀÚÇÒºÎ)";
+    $interest = "(ë¬´ì´ìží• ë¶€)";
 }
 
 /* ----------------------------------------------------- */
@@ -188,7 +188,7 @@ class INIData {
     var $m_PG1IP;
     var $m_PG2IP;
     //----------------------------
-    //IFD ¿äÃ»ÇÊµå
+    //IFD ìš”ì²­í•„ë“œ
     //----------------------------
     var $m_sCmd;
     var $m_sCrypto;
@@ -205,7 +205,7 @@ class INIData {
     var $m_sEncrypted;
     var $m_sSessionKey;
     //----------------------------
-    //IFD ÀÀ´äÇì´õ ÇÊµå
+    //IFD ì‘ë‹µí—¤ë” í•„ë“œ
     //----------------------------
     var $m_FlgCrypto;
     var $m_FlgSign;
@@ -215,7 +215,7 @@ class INIData {
     var $m_Xml = array();
     var $m_REQUEST = array();
     var $m_REQUEST2 = array(); //User Defined Entity
-    var $m_RESULT = array();  //Encrypted ÇÊµå hash table
+    var $m_RESULT = array();  //Encrypted í•„ë“œ hash table
     var $m_RESULT2 = array(); //PG Added Entity
 
     function INIData($request, $request2) {
@@ -238,7 +238,7 @@ class INIData {
             $this->m_sCmd = CMS_REQ_OPEN_SUB;
             $this->m_sCrypto = FLAG_CRYPTO_3DES;
         }
-        //°¡»ó°èÁÂ ºÎºÐÈ¯ºÒ Ãß°¡
+        //ê°€ìƒê³„ì¢Œ ë¶€ë¶„í™˜ë¶ˆ ì¶”ê°€
         else if (( $this->m_Type == TYPE_REPAY) || ( $this->m_Type == TYPE_VACCTREPAY)) {
             $this->m_sCmd = CMD_REQ_PRTC;
             $this->m_sCrypto = FLAG_CRYPTO_3DES;
@@ -265,7 +265,7 @@ class INIData {
                 $this->m_sCmd = CMD_REQ_DNY_CNF;
                 $this->m_sCrypto = FLAG_CRYPTO_3DES;
             }
-        } else if ($this->m_Type == TYPE_REFUND) { //°¡»ó°èÁÂÈ¯ºÒ(09.08.05)
+        } else if ($this->m_Type == TYPE_REFUND) { //ê°€ìƒê³„ì¢Œí™˜ë¶ˆ(09.08.05)
             $this->m_sCmd = CMD_REQ_RFD;
             $this->m_sCrypto = FLAG_CRYPTO_3DES;
         } else {
@@ -286,7 +286,7 @@ class INIData {
 
     function CheckField() {
         //---------------------------------
-        //°øÅë
+        //ê³µí†µ
         //---------------------------------
         if (trim($this->m_REQUEST["inipayhome"]) == "") {
             $this->m_ErrCode = NULL_DIR_ERR;
@@ -309,7 +309,7 @@ class INIData {
             return false;
         }
         //---------------------------------
-        //typeº°·Î
+        //typeë³„ë¡œ
         //---------------------------------
         if ($this->m_Type == TYPE_SECUREPAY) {
             /*
@@ -378,7 +378,7 @@ class INIData {
                 return false;
             }
         }
-        //°¡»ó°èÁÂ ºÎºÐÈ¯ºÒµµ ºÎºÐÈ¯ºÒ ·ÎÁ÷¿¡ Ãß°¡
+        //ê°€ìƒê³„ì¢Œ ë¶€ë¶„í™˜ë¶ˆë„ ë¶€ë¶„í™˜ë¶ˆ ë¡œì§ì— ì¶”ê°€
         else if (( $this->m_Type == TYPE_REPAY ) || ( $this->m_Type == TYPE_VACCTREPAY )) {
             if (trim($this->m_REQUEST["oldtid"]) == "") {
                 $this->m_ErrCode = NULL_TID_ERR;
@@ -396,21 +396,21 @@ class INIData {
                 return false;
             }
 
-            //°¡»ó°èÁÂ ºÎºÐÈ¯ºÒ ·ÎÁ÷¿¡¼­´Â °èÁ¶¹øÈ£,ÀºÇàÄÚµå,°èÁÂÁÖ¸íÀÌ ÇÊ¼ö 
+            //ê°€ìƒê³„ì¢Œ ë¶€ë¶„í™˜ë¶ˆ ë¡œì§ì—ì„œëŠ” ê³„ì¡°ë²ˆí˜¸,ì€í–‰ì½”ë“œ,ê³„ì¢Œì£¼ëª…ì´ í•„ìˆ˜ 
             if ($this->m_Type == TYPE_VACCTREPAY) {
                 if (trim($this->m_REQUEST["refundacctnum"]) == "") {
                     $this->m_ErrCode = NULL_FIELD_REFUNDACCTNUM;
-                    $this->m_ErrMsg = "È¯ºÒ°èÁÂ¹øÈ£";
+                    $this->m_ErrMsg = "í™˜ë¶ˆê³„ì¢Œë²ˆí˜¸";
                     return false;
                 }
                 if (trim($this->m_REQUEST["refundbankcode"]) == "") {
                     $this->m_ErrCode = NULL_FIELD_REFUNDBANKCODE;
-                    $this->m_ErrMsg = "È¯ºÒÀºÇàÄÚµå";
+                    $this->m_ErrMsg = "í™˜ë¶ˆì€í–‰ì½”ë“œ";
                     return false;
                 }
                 if (trim($this->m_REQUEST["refundacctname"]) == "") {
                     $this->m_ErrCode = NULL_FIELD_REFUNDACCTNAME;
-                    $this->m_ErrMsg = "È¯ºÒ°èÁÂÁÖ¼º¸í";
+                    $this->m_ErrMsg = "í™˜ë¶ˆê³„ì¢Œì£¼ì„±ëª…";
                     return false;
                 }
             }
@@ -433,17 +433,17 @@ class INIData {
             }
             if (trim($this->m_REQUEST["racctnum"]) == "") {
                 $this->m_ErrCode = NULL_FIELD_REFUNDACCTNUM;
-                $this->m_ErrMsg = "È¯ºÒ°èÁÂ¹øÈ£";
+                $this->m_ErrMsg = "í™˜ë¶ˆê³„ì¢Œë²ˆí˜¸";
                 return false;
             }
             if (trim($this->m_REQUEST["rbankcode"]) == "") {
                 $this->m_ErrCode = NULL_FIELD_REFUNDBANKCODE;
-                $this->m_ErrMsg = "È¯ºÒÀºÇàÄÚµå";
+                $this->m_ErrMsg = "í™˜ë¶ˆì€í–‰ì½”ë“œ";
                 return false;
             }
             if (trim($this->m_REQUEST["racctname"]) == "") {
                 $this->m_ErrCode = NULL_FIELD_REFUNDACCTNAME;
-                $this->m_ErrMsg = "È¯ºÒ°èÁÂÁÖ¼º¸í";
+                $this->m_ErrMsg = "í™˜ë¶ˆê³„ì¢Œì£¼ì„±ëª…";
                 return false;
             }
         }
@@ -460,10 +460,10 @@ class INIData {
         list($usec, $sec) = explode(" ", microtime());
         $datestr = date("YmdHis", $sec) . substr($usec, 2, 3); //YYYYMMDDHHMMSSSSS
 
-        $datestr_con = substr($datestr, 0, 14) . substr($datestr, 15, 2); //YYYYMMDDHHMMSSxSS Áß°£ÀÇ x°ªÀº ¹ö¸²(milli secondÀÇ Ã¹¹øÂ° ÀÚ¸®¼ö)
+        $datestr_con = substr($datestr, 0, 14) . substr($datestr, 15, 2); //YYYYMMDDHHMMSSxSS ì¤‘ê°„ì˜ xê°’ì€ ë²„ë¦¼(milli secondì˜ ì²«ë²ˆì§¸ ìžë¦¬ìˆ˜)
 
-        mt_srand(getmypid() * mt_rand(1, 999));  //mt_rand ÇÏ±âÀü¿¡ srand ·Î seed Àû¿ë , seed key = pid * mt_rand(1,999)
-        //pgid + mid + 16ÀÚ¸® ³¯Â¥¹× ½Ã°£ + random_key 4ÀÚ¸® (seedÀû¿ë)
+        mt_srand(getmypid() * mt_rand(1, 999));  //mt_rand í•˜ê¸°ì „ì— srand ë¡œ seed ì ìš© , seed key = pid * mt_rand(1,999)
+        //pgid + mid + 16ìžë¦¬ ë‚ ì§œë° ì‹œê°„ + random_key 4ìžë¦¬ (seedì ìš©)
         $this->m_sTID = $this->m_REQUEST["pgid"] . $this->m_REQUEST["mid"] . $datestr_con . mt_rand(1000, 9999);
         if (strlen($this->m_sTID) != TID_LEN) {
             return false;
@@ -524,16 +524,16 @@ class INIData {
             $CD = $xml->add_node($CI, TX_PRTC_REMAINS, $this->m_REQUEST["confirm_price"]);
             $CD = $xml->add_node($CI, TX_PRTC_QUOTA, $this->m_REQUEST["cardquota"]);
             $CD = $xml->add_node($CI, TX_PRTC_INTEREST, $this->m_REQUEST["quotainterest"]);
-            //I°èÁÂÀÌÃ¼ ±¹¹ÎÀºÇà ºÎºÐÃë¼Ò½Ã °èÁÂ¹øÈ£ °èÁÂÁÖ¼º¸íÀ» ¹ÞÀ½ 2011-10-06
+            //Iê³„ì¢Œì´ì²´ êµ­ë¯¼ì€í–‰ ë¶€ë¶„ì·¨ì†Œì‹œ ê³„ì¢Œë²ˆí˜¸ ê³„ì¢Œì£¼ì„±ëª…ì„ ë°›ìŒ 2011-10-06
             $CD = $xml->add_node($CI, TX_PRTC_NOACCT, $this->m_REQUEST["no_acct"]);
             $CD = $xml->add_node($CI, TX_PRTC_NMACCT, $this->m_REQUEST["nm_acct"], array("urlencode" => "1"));
-            //°ú¼¼,ºñ°ú¼¼ Ãß°¡ 2014-07-23 by jung.ks
+            //ê³¼ì„¸,ë¹„ê³¼ì„¸ ì¶”ê°€ 2014-07-23 by jung.ks
             //$CD = $xml->add_node($CI,               TX_PRTC_TAX,		$this->m_REQUEST["tax"]		);
             //$CD = $xml->add_node($CI,               TX_PRTC_TAXFREE,		$this->m_REQUEST["taxfree"]		);
 
             $this->AddUserDefinedEntity(PARTCANCELINFO, "", $xml, $CI);
         }
-        //°¡»ó°èÁÂ ºÎºÐÈ¯ºÒ
+        //ê°€ìƒê³„ì¢Œ ë¶€ë¶„í™˜ë¶ˆ
         else if ($this->m_Type == TYPE_VACCTREPAY) {
             //PartCancelInfo(ROOT)
             $CI = $xml->add_node("", PARTCANCELINFO);
@@ -682,18 +682,18 @@ class INIData {
     function MakeBody() {
         $xml = new XML();
 
-        //ROOT(INIpay) ROOT¸¦ ROOTINFO·Î ¼öÁ¤ 2011-05-23
+        //ROOT(INIpay) ROOTë¥¼ ROOTINFOë¡œ ìˆ˜ì • 2011-05-23
         $root = $xml->add_node("", ROOTINFO);
 
         if ($this->m_Type == TYPE_SECUREPAY || $this->m_Type == TYPE_RECEIPT) {
             //GoodsInfo
-            //Àå¹Ù±¸´Ï ±â´É Ãß°¡(2010.04.13)
-            //==goodscnt°¡ ¾øÀ» °æ¿ì(Àå¹Ù±¸´Ï ±â´ÉÀÌ ¾Æ´Ò°æ¿ì) ±âº» °ª 1·Î ¼³Á¤
+            //ìž¥ë°”êµ¬ë‹ˆ ê¸°ëŠ¥ ì¶”ê°€(2010.04.13)
+            //==goodscntê°€ ì—†ì„ ê²½ìš°(ìž¥ë°”êµ¬ë‹ˆ ê¸°ëŠ¥ì´ ì•„ë‹ê²½ìš°) ê¸°ë³¸ ê°’ 1ë¡œ ì„¤ì •
             $tGoodCnt = ($this->m_REQUEST["goodscnt"] != null && (int) $this->m_REQUEST["goodscnt"] > 0 ) ? $this->m_REQUEST["goodscnt"] : 1;
 
             $GI = $xml->add_node($root, GOODSINFO);
-            //Àå¹Ù±¸´Ï ±â´É Ãß°¡(2010.04.13) 
-            //==TX_GOOSCNT´Â  $tGoodCnt·Î ºÎÅÍ ÀÔ·Â
+            //ìž¥ë°”êµ¬ë‹ˆ ê¸°ëŠ¥ ì¶”ê°€(2010.04.13) 
+            //==TX_GOOSCNTëŠ”  $tGoodCntë¡œ ë¶€í„° ìž…ë ¥
             //$GP = $xml->add_node($GI,		TX_GOOSCNT, 		"1"															);
             $GP = $xml->add_node($GI, TX_GOOSCNT, $tGoodCnt);
             $GP = $xml->add_node($GI, TX_MOID, $this->m_REQUEST["oid"], array("urlencode" => "1"));
@@ -702,8 +702,8 @@ class INIData {
             $GP = $xml->add_node($GI, TX_TAXFREE, $this->m_REQUEST["taxfree"]);
             $this->AddUserDefinedEntity(GOODSINFO, "", $xml, $GI);
 
-            //Àå¹Ù±¸´Ï ±â´É Ãß°¡(2010.04.13) [START]
-            //==Àå¹Ù±¸´Ï XML Àü¹® Ãß°¡
+            //ìž¥ë°”êµ¬ë‹ˆ ê¸°ëŠ¥ ì¶”ê°€(2010.04.13) [START]
+            //==ìž¥ë°”êµ¬ë‹ˆ XML ì „ë¬¸ ì¶”ê°€
             $iGoodCnt = 1;
             while ($iGoodCnt <= $tGoodCnt) {
                 if ($this->m_REQUEST["smid_" . $iGoodCnt] != "" && strlen($this->m_REQUEST["smid_" . $iGoodCnt]) > 0) {
@@ -728,7 +728,7 @@ class INIData {
                 }
                 $iGoodCnt++;
             }
-            //Àå¹Ù±¸´Ï ±â´É Ãß°¡(2010.04.13) [END]
+            //ìž¥ë°”êµ¬ë‹ˆ ê¸°ëŠ¥ ì¶”ê°€(2010.04.13) [END]
 
             $this->AddUserDefinedEntity(GOODSINFO, GOODS, $xml, $GS);
             //BuyerInfo
@@ -765,7 +765,7 @@ class INIData {
             $CD = $xml->add_node($CI, TX_SESSIONKEY, $this->m_sSessionKey);
             $CD = $xml->add_node($CI, TX_ENCRYPTED, $this->m_sEncrypted);
         }
-        //°¡»ó°èÁÂ ºÎºÐÈ¯ºÒÃß°¡
+        //ê°€ìƒê³„ì¢Œ ë¶€ë¶„í™˜ë¶ˆì¶”ê°€
         else if (( $this->m_Type == TYPE_REPAY ) || ( $this->m_Type == TYPE_VACCTREPAY )) {
             //PartCancelInfo
             $CI = $xml->add_node($root, PARTCANCELINFO);
@@ -804,8 +804,8 @@ class INIData {
             $CD = $xml->add_node($CI, TX_ENCRYPTED, $this->m_sEncrypted);
         } else if ($this->m_Type == TYPE_OPENSUB) {
             //GoodsInfo
-            //Àå¹Ù±¸´Ï ±â´É Ãß°¡(2010.04.13)
-            //==goodscnt°¡ ¾øÀ» °æ¿ì(Àå¹Ù±¸´Ï ±â´ÉÀÌ ¾Æ´Ò°æ¿ì) ±âº» °ª 1·Î ¼³Á¤
+            //ìž¥ë°”êµ¬ë‹ˆ ê¸°ëŠ¥ ì¶”ê°€(2010.04.13)
+            //==goodscntê°€ ì—†ì„ ê²½ìš°(ìž¥ë°”êµ¬ë‹ˆ ê¸°ëŠ¥ì´ ì•„ë‹ê²½ìš°) ê¸°ë³¸ ê°’ 1ë¡œ ì„¤ì •
             $tSubCnt = ($this->m_REQUEST["subcnt"] != null && (int) $this->m_REQUEST["subcnt"] > 0 ) ? $this->m_REQUEST["subcnt"] : 1;
 
             $OI = $xml->add_node($root, OPENSUBINFO);
@@ -829,7 +829,7 @@ class INIData {
 
                 $iSubCnt++;
             }
-            //Àå¹Ù±¸´Ï ±â´É Ãß°¡(2010.04.13) [END]
+            //ìž¥ë°”êµ¬ë‹ˆ ê¸°ëŠ¥ ì¶”ê°€(2010.04.13) [END]
             $this->AddUserDefinedEntity(OPENSUBINFO, "", $xml, $OI);
         }
         //ReservedInfo
@@ -901,8 +901,8 @@ class INIData {
         $this->m_RESULT[NM_MOID] = $this->GetXMLData(MOID);
 
         //PAYMENTINFO
-        //±âÅ¸ÁöºÒ¼ö´ÜÀÌ paymethod¸¦ ÁÖÁö ¾Ê¾Æ ÀÓ½Ã·Î ¿äÃ» Paymethod·Î ´ëÃ¼
-        //PG¿¡¼­ ÁÖ´Â PayMethod¿Í ¿äÃ»Paymethod´Â °°´Ù!
+        //ê¸°íƒ€ì§€ë¶ˆìˆ˜ë‹¨ì´ paymethodë¥¼ ì£¼ì§€ ì•Šì•„ ìž„ì‹œë¡œ ìš”ì²­ Paymethodë¡œ ëŒ€ì²´
+        //PGì—ì„œ ì£¼ëŠ” PayMethodì™€ ìš”ì²­PaymethodëŠ” ê°™ë‹¤!
         $this->m_RESULT[NM_PAYMETHOD] = $this->m_sPayMethod;
 
         $ResultCode = $this->GetXMLData("ResultCode");
@@ -928,8 +928,8 @@ class INIData {
         $this->m_Xml = array_merge($this->m_Xml, $xml->xml_node);
 
         if ($this->m_Type == TYPE_SECUREPAY || $this->m_Type == TYPE_RECEIPT) {
-            //½ÂÀÎ³¯Â¥(ApplDate), ½ÂÀÎ½Ã°£(ApplTime), ½ÂÀÎ¹øÈ£(ApplNum)´Â °øÅë!!(OCB, Çö±Ý¿µ¼öÁõ Á¦¿Ü)
-            //ISP, CARD´Â CARD·Î assign. °í°´/»óÁ¡Àº ISP°¡ ¹ºÁö, CARD°¡ ¹ºÁö ¾Ë°Ô ¹¹¾ß!!!-_-
+            //ìŠ¹ì¸ë‚ ì§œ(ApplDate), ìŠ¹ì¸ì‹œê°„(ApplTime), ìŠ¹ì¸ë²ˆí˜¸(ApplNum)ëŠ” ê³µí†µ!!(OCB, í˜„ê¸ˆì˜ìˆ˜ì¦ ì œì™¸)
+            //ISP, CARDëŠ” CARDë¡œ assign. ê³ ê°/ìƒì ì€ ISPê°€ ë­”ì§€, CARDê°€ ë­”ì§€ ì•Œê²Œ ë­ì•¼!!!-_-
             if ($this->m_sPayMethod == NM_TX_CARD) {
                 $this->m_RESULT[APPLDATE] = $this->GetXMLData(CARD_APPLDATE);
                 $this->m_RESULT[APPLTIME] = $this->GetXMLData(CARD_APPLTIME);
@@ -994,7 +994,7 @@ class INIData {
                 $this->m_RESULT[APPLTIME] = $this->GetXMLData(GAMG_APPLTIME);
                 $this->m_RESULT[APPLNUM] = $this->GetXMLData(GAMG_APPLNUM);
                 $this->m_RESULT[GAMG_CNT] = $this->GetXMLData(GAMG_CNT);
-                //°ÔÀÓ¹®È­»óÇ°±ÇÀº Multi°áÁ¦ °¡´É
+                //ê²Œìž„ë¬¸í™”ìƒí’ˆê¶Œì€ Multiê²°ì œ ê°€ëŠ¥
                 MakePathGAMG($this->m_RESULT[GAMG_CNT]);
                 for ($i = 1; $i <= $this->m_RESULT[GAMG_CNT]; $i++) {
                     $this->m_RESULT[constant("GAMG_NUM$i")] = $this->GetXMLData(constant("GAMG_NUM$i"));
@@ -1061,7 +1061,7 @@ class INIData {
         $this->m_PG2IP = $pg2ip;
     }
 
-    // Xpath·Î ¾È°¡Á®¿Â´Ù. ÇÑ´ÞÀ» ÇêÁö¶ö Çß´Ù!!
+    // Xpathë¡œ ì•ˆê°€ì ¸ì˜¨ë‹¤. í•œë‹¬ì„ í—›ì§€ëž„ í–ˆë‹¤!!
     // added by ddaemiri, 2007.09.03
     function GetXMLData($node) {
         $content = $this->m_Xml[$node . "[1]"]["text"];
@@ -1074,7 +1074,7 @@ class INIData {
 
 /* ----------------------------------------------------- */
 /* Crypto Class			                                   */
-/* PHP4.2 & OpenSSL ÇÊ¿ä)      	                	     */
+/* PHP4.2 & OpenSSL í•„ìš”)      	                	     */
 /* ----------------------------------------------------- */
 
 class INICrypto {

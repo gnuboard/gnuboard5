@@ -814,6 +814,10 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
 $uid = md5($od_id.G5_TIME_YMDHIS.$REMOTE_ADDR);
 set_session('ss_orderview_uid', $uid);
 
+// 주문 정보 임시 데이터 삭제
+$sql = " delete from {$g5['g5_shop_order_data_table']} where od_id = '$od_id' and dt_pg = '$od_pg' ";
+sql_query($sql);
+
 // 주문번호제거
 set_session('ss_order_id', '');
 

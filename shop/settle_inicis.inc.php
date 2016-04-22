@@ -1,17 +1,21 @@
 <?php
-if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
         // 에스크로결제 테스트
         $default['de_inicis_mid'] = 'iniescrow0';
         $default['de_inicis_admin_key'] = '1111';
+        $default['de_inicis_sign_key'] = 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS';
     }
     else {
         // 일반결제 테스트
         $default['de_inicis_mid'] = 'INIpayTest';
         $default['de_inicis_admin_key'] = '1111';
+        $default['de_inicis_sign_key'] = 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS';
     }
+
+    $stdpay_js_url = 'https:/stgstdpay.inicis.com/stdjs/INIStdPay.js';
 }
 else {
     $default['de_inicis_mid'] = "SIR".$default['de_inicis_mid'];
@@ -24,12 +28,19 @@ else {
         // 일반결제 테스트
         $useescrow = '';
     }
+
+    $stdpay_js_url = 'https://stdpay.inicis.com/stdjs/INIStdPay.js';
 }
 
 /**************************
  * 1. 라이브러리 인클루드 *
  **************************/
 require(G5_SHOP_PATH.'/inicis/libs/INILib.php');
+require_once(G5_SHOP_PATH.'/inicis/libs/INIStdPayUtil.php');
+require_once(G5_SHOP_PATH.'/inicis/libs/sha256.inc.php');
+
+$mid = $default['de_inicis_mid'];
+$signKey = $default['de_inicis_sign_key'];
 
 /***************************************
  * 2. INIpay50 클래스의 인스턴스 생성  *
@@ -37,10 +48,26 @@ require(G5_SHOP_PATH.'/inicis/libs/INILib.php');
 $inipay = new INIpay50;
 
 $inipay->SetField("inipayhome", G5_SHOP_PATH.'/inicis'); // 이니페이 홈디렉터리(상점수정 필요)
-$inipay->SetField("debug", "false");                     // 로그모드("true"로 설정하면 상세로그가 생성됨.)
+$inipay->SetField("debug", "false");
 
-$inipay_nointerest = 'no'; //무이자여부(no:일반, yes:무이자)
-$inipay_quotabase  = '선택:일시불:2개월:3개월:4개월:5개월:6개월:7개월:8개월:9개월:10개월:11개월:12개월'; // 할부기간
+$util = new INIStdPayUtil();
+
+$timestamp = $util->getTimestamp();   // util에 의해서 자동생성
+
+$cardNoInterestQuota = '';  // 카드 무이자 여부 설정(가맹점에서 직접 설정)
+$cardQuotaBase = '2:3:4:5:6:7:8:9:10:11:12';  // 가맹점에서 사용할 할부 개월수 설정
+
+$acceptmethod = 'HPP(2):no_receipt:vbank('.date('Ymd', strtotime("+3 days", G5_SERVER_TIME)).'):below1000'.$useescrow;
+
+/* 기타 */
+$siteDomain = G5_SHOP_URL.'/inicis'; //가맹점 도메인 입력
+// 페이지 URL에서 고정된 부분을 적는다.
+// Ex) returnURL이 http://localhost:8082/demo/INIpayStdSample/INIStdPayReturn.php 라면
+//                 http://localhost:8082/demo/INIpayStdSample 까지만 기입한다.
+
+$returnUrl = $siteDomain.'/INIStdPayReturn.php';
+$closeUrl  = $siteDomain.'/close.php';
+$popupUrl  = $siteDomain.'/popup.php';
 
 $BANK_CODE = array(
     '03' => '기업은행',
@@ -101,11 +128,4 @@ $PAY_METHOD = array(
     'HPP'        => '휴대폰',
     'VBank'      => '가상계좌'
 );
-
-// 플러그인 호출 URL
-if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {
-    $ini_js_url = 'https://plugin.inicis.com/pay61_secunissl_cross.js';
-} else {
-    $ini_js_url = 'http://plugin.inicis.com/pay61_secuni_cross.js';
-}
 ?>

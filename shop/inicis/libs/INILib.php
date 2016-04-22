@@ -1,794 +1,731 @@
 <?php
+
 /**
  * Copyright (C) 2007 INICIS Inc.
  *
- * ÇØ´ç ¶óÀÌºê·¯¸®´Â Àý´ë ¼öÁ¤µÇ¾î¼­´Â ¾ÈµË´Ï´Ù.
- * ÀÓÀÇ·Î ¼öÁ¤µÈ ÄÚµå¿¡ ´ëÇÑ Ã¥ÀÓÀº ÀüÀûÀ¸·Î ¼öÁ¤ÀÚ¿¡°Ô ÀÖÀ½À» ¾Ë·Áµå¸³´Ï´Ù.
+ * í•´ë‹¹ ë¼ì´ë¸ŒëŸ¬ë¦¬ëŠ” ì ˆëŒ€ ìˆ˜ì •ë˜ì–´ì„œëŠ” ì•ˆë©ë‹ˆë‹¤.
+ * ìž„ì˜ë¡œ ìˆ˜ì •ëœ ì½”ë“œì— ëŒ€í•œ ì±…ìž„ì€ ì „ì ìœ¼ë¡œ ìˆ˜ì •ìžì—ê²Œ ìžˆìŒì„ ì•Œë ¤ë“œë¦½ë‹ˆë‹¤.
  *
  */
-
-
-	require_once('INICls.php');
-	require_once('INISoc.php');
-
-class INIpay50
-{
-	var $m_type; 				// °Å·¡ À¯Çü
-	var $m_resulterrcode;       // °á°ú¸Þ¼¼Áö ¿¡·¯ÄÚµå
-	var $m_connIP; 
-	var $m_cancelRC = 0; 
-
-	var $m_Data;
-	var $m_Log;
-	var $m_Socket;
-	var $m_Crypto;
-
-	var $m_REQUEST 	= array();
-	var $m_REQUEST2 = array();
-	var $m_RESULT 	= array();
-
-	function INIpay()
-	{
-		$this->UnsetField();
-	}
-
-	function UnsetField()
-	{
-		unset($this->m_REQUEST); 
-		unset($this->m_RESULT); 
-	}
-
-	/*--------------------------------------------------*/
-	/*																									*/
-	/* °áÁ¦/Ãë¼Ò ¿äÃ»°ª Set or Add                      */
-	/*																									*/
- 	/*--------------------------------------------------*/
-	function SetField( $key, $val ) //Default Entity
-	{
-		$this->m_REQUEST[$key] = $val;
-	}
-	function SetXPath( $xpath, $val ) //User Defined Entity
-	{
-		$this->m_REQUEST2[$xpath] = $val;
-	}
-
-	/*--------------------------------------------------*/
-	/*																									*/
-	/* °áÁ¦/Ãë¼Ò °á°ú°ª fetch                           */
-	/*																									*/
- 	/*--------------------------------------------------*/
-	function GetResult( $name ) //Default Entity
-	{
-		$result = $this->m_RESULT[$name];
-		if( $result == "" )
-			$result = $this->m_Data->GetXMLData( $name );
-		if( $result == "" )
-			$result = $this->m_Data->m_RESULT[$name];
-		return $result;
-	}
-
-	/*--------------------------------------------------*/
-	/*																									*/
-	/* °áÁ¦/Ãë¼Ò Ã³¸® ¸ÞÀÎ                              */
-	/*																									*/
- 	/*--------------------------------------------------*/
-	function startAction()
-	{
-		
-		/*--------------------------------------------------*/
-		/* Overhead Operation                               */
-  	/*--------------------------------------------------*/
-		$this->m_Data = new INIData( $this->m_REQUEST, $this->m_REQUEST2 );
-		
-		/*--------------------------------------------------*/
-		/* Log Start																				*/
-   	/*--------------------------------------------------*/
-		$this->m_Log = new INILog( $this->m_REQUEST );
-		if(!$this->m_Log->StartLog()) 
-		{
-			$this->MakeTXErrMsg( LOG_OPEN_ERR, "·Î±×ÆÄÀÏÀ» ¿­¼ö°¡ ¾ø½À´Ï´Ù.[".$this->m_REQUEST["inipayhome"]."]"); 
-			return;
-		}
-
-		/*--------------------------------------------------*/
-		/* Logging Request Parameter												*/
-   	/*--------------------------------------------------*/
-		$this->m_Log->WriteLog( DEBUG, $this->m_REQUEST );
-
-		/*--------------------------------------------------*/
-		/* Set Type																					*/
-   	/*--------------------------------------------------*/
-		$this->m_type = $this->m_REQUEST["type"];
-
-		/*--------------------------------------------------*/
-		/* Check Field																			*/
-   	/*--------------------------------------------------*/
-		if( !$this->m_Data->CheckField() )
-		{
-			$err_msg = "ÇÊ¼öÇ×¸ñ(".$this->m_Data->m_ErrMsg.")ÀÌ ´©¶ôµÇ¾ú½À´Ï´Ù.";
-			$this->MakeTXErrMsg( $this->m_Data->m_ErrCode, $err_msg ); 
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			return;
-		}
-		$this->m_Log->WriteLog( INFO, "Check Field OK" );
-
-		/*--------------------------------------------------*/
-		//À¥ÆäÀÌÁöÀ§º¯Á¶¿ë Å°»ý¼º. ¿©±â¼­ ³¡!!
-		/*--------------------------------------------------*/
-		if( $this->m_type == TYPE_CHKFAKE )
-		{
-			return $this->MakeChkFake();
-		}
-
-		/*--------------------------------------------------*/
-		//Generate TID
-   	/*--------------------------------------------------*/
-  	if( $this->m_type == TYPE_SECUREPAY   || $this->m_type == TYPE_FORMPAY  || $this->m_type == TYPE_OCBSAVE  		|| 
-      	$this->m_type == TYPE_AUTHBILL 		|| $this->m_type == TYPE_FORMAUTH || $this->m_type == TYPE_REQREALBILL	|| 
-				$this->m_type == TYPE_REPAY   || $this->m_type == TYPE_VACCTREPAY || $this->m_type == TYPE_RECEIPT	|| $this->m_type == TYPE_AUTH      
-    )
-		{
-			if(!$this->m_Data->MakeTID()) 
-			{
-				$err_msg = "TID»ý¼º¿¡ ½ÇÆÐÇß½À´Ï´Ù.::".$this->m_Data->m_sTID;
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				$this->MakeTXErrMsg( MAKE_TID_ERR, $err_msg ); 
-				$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-				return;
-			}
-			$this->m_Log->WriteLog( INFO, 'Make TID OK '.$this->m_Data->m_sTID );
-		} 
-
-		$this->m_Crypto = new INICrypto( $this->m_REQUEST );
-
-		/*--------------------------------------------------*/
-		//PI°ø°³Å° ·Îµå
-		/*--------------------------------------------------*/
-		$this->m_Data->ParsePIEncrypted();
-		$this->m_Log->WriteLog( INFO, "PI PUB KEY LOAD OK [".$this->m_Data->m_PIPGPubSN."]" );
-
-		/*--------------------------------------------------*/
-		//PG°ø°³Å° ·Îµå
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Crypto->LoadPGPubKey( $pg_cert_SN )) != OK)
-		{
-			$err_msg = "PG°ø°³Å° ·Îµå¿À·ù";
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			return;
-		}
-		$this->m_Data->m_TXPGPubSN = $pg_cert_SN;
-		$this->m_Log->WriteLog( INFO, "PG PUB KEY LOAD OK [".$this->m_Data->m_TXPGPubSN."]" );
-
-		/*--------------------------------------------------*/
-		//»óÁ¡°³ÀÎÅ° ·Îµå
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Crypto->LoadMPrivKey()) != OK ) 
-		{
-			$err_msg = "»óÁ¡°³ÀÎÅ° ·Îµå¿À·ù";
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			$this->m_Crypto->FreePubKey();
-			return;
-		}
-		$this->m_Log->WriteLog( INFO, "MERCHANT PRIV KEY LOAD OK" );
-
-		/*--------------------------------------------------*/
-		//»óÁ¡ °ø°³Å° ·Îµå(SN ¸¦ ¾Ë±âÀ§ÇØ!!)
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Crypto->LoadMPubKey( $m_cert_SN )) != OK)
-		{
-			$err_msg = "»óÁ¡°ø°³Å° ·Îµå¿À·ù";
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			return;
-		}
-		$this->m_Data->m_MPubSN = $m_cert_SN;
-		$this->m_Log->WriteLog( INFO, "MERCHANT PUB KEY LOAD OK [".$this->m_Data->m_MPubSN."]" );
-
-		/*--------------------------------------------------*/
-		//ÆûÆäÀÌ ¾ÏÈ£È­( formpay, cancel, repay, recept, inquiry, opensub)
-		/*--------------------------------------------------*/
-		if( $this->m_type == TYPE_CANCEL	|| $this->m_type == TYPE_REPAY		||  $this->m_type == TYPE_VACCTREPAY ||
-			  $this->m_type == TYPE_FORMPAY	|| $this->m_type == TYPE_RECEIPT 	|| 
-				$this->m_type == TYPE_CAPTURE || $this->m_type == TYPE_INQUIRY || $this->m_type == TYPE_OPENSUB ||
-				($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DLV ) ||
-				($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DNY_CNF ) ||
-				$this->m_type == TYPE_REFUND
-			)
-		{
-			if( ($rtv = $this->m_Data->MakeEncrypt( $this->m_Crypto )) != OK )
-			{
-				$err_msg = "¾ÏÈ£È­ ¿À·ù";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-				return;
-			}
-			//$this->m_Log->WriteLog( DEBUG, "MAKE ENCRYPT OK" );
-			$this->m_Log->WriteLog( DEBUG, "MAKE ENCRYPT OK[".$this->m_Data->m_EncBody."]" );
-		}
-
-		/*--------------------------------------------------*/
-		//Àü¹®»ý¼º(Body)
-		/*--------------------------------------------------*/
-		$this->m_Data->MakeBody();
-		$this->m_Log->WriteLog( INFO, "MAKE BODY OK" );
-		//$this->m_Log->WriteLog( INFO, "MAKE BODY OK[".$this->m_Data->m_sBody."]" );
-
-		/*--------------------------------------------------*/
-		//¼­¸í(sign)
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Crypto->Sign( $this->m_Data->m_sBody, $sign )) != OK )
-		{
-			$err_msg = "½ÎÀÎ½ÇÆÐ";
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			$this->m_Crypto->FreeAllKey();
-			return;
-		}
-		$this->m_Data->m_sTail = $sign;
-		$this->m_Log->WriteLog( INFO, "SIGN OK" );
-		//$this->m_Log->WriteLog( INFO, "SIGN OK[".$sign."]" );
-
-		/*--------------------------------------------------*/
-		//Àü¹®»ý¼º(Head)
-		/*--------------------------------------------------*/
-		$this->m_Data->MakeHead();
-		$this->m_Log->WriteLog( INFO, "MAKE HEAD OK" );
-		//$this->m_Log->WriteLog( INFO, "MAKE HEAD OK[".$head."]" );
-
-		$this->m_Log->WriteLog( INFO, "MSG_TO_PG:[".$this->m_Data->m_sMsg."]" );
-
-		/*--------------------------------------------------*/
-		//¼ÒÄÏ»ý¼º
-		/*--------------------------------------------------*/
-		//DRPG ¼ÂÆÃ, added 07.11.15
-		//Ãë¼Ò½Ã-PG¼³Á¤ º¯°æ(µµ¸ÞÀÎ->IP), edited 10.09.09
-		if( $this->m_type == TYPE_SECUREPAY )
-		{
-			if( $this->m_REQUEST["pgn"] == "" )
-					$host = $this->m_Data->m_PG1;
-			else
-					$host = $this->m_REQUEST["pgn"];
-		}
-		else
-		{
-			if( $this->m_REQUEST["pgn"] == "" )
-			{
-				if( $this->m_cancelRC == 1 )
-					$host = DRPG_IP;
-				else
-					$host = PG_IP;
-			}
-			else
-					$host = $this->m_REQUEST["pgn"];
-		}
-
-		$this->m_Socket = new INISocket($host);
-		if( ($rtv = $this->m_Socket->DNSLookup()) != OK )
-		{
-			$err_msg = "[".$host."]DNS LOOKUP ½ÇÆÐ(MAIN)".$this->m_Socket->getErr();
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			if( $this->m_type == TYPE_SECUREPAY ) //PIÀÏ°æ¿ì, PI°¡ ³»·ÁÁÖ´Â pg1ip·Î!
-		  {
-				$this->m_Socket->ip = $this->m_Data->m_PG1IP;
-			}
-			else 
-			{
-				if( $this->m_cancelRC == 1 )
-					$this->m_Socket->ip = DRPG_IP;
-				else
-					$this->m_Socket->ip = PG_IP;
-			}
-		}
-		$this->m_Log->WriteLog( INFO, "DNS LOOKUP OK(".$this->m_Socket->host.":".$this->m_Socket->ip.":".$this->m_Socket->port.") laptime:".$this->m_Socket->dns_laptime );
-		if( ($rtv = $this->m_Socket->open()) != OK )
-		{
-			$this->m_Socket->close();
-
-			//PG2·Î ÀüÈ¯
-			$err_msg = "[".$host."¼ÒÄÏ¿¬°á¿À·ù(MAIN)::PG2·Î ÀüÈ¯";
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			if( $this->m_type == TYPE_SECUREPAY )
-			{
-					$host = $this->m_Data->m_PG2;
-			}
-			else
-			{
-					$host = DRPG_HOST;
-			}
-			$this->m_Socket = new INISocket($host);
-			if( ($rtv = $this->m_Socket->DNSLookup()) != OK )
-			{
-				$err_msg = "[".$host."]DNS LOOKUP ½ÇÆÐ(MAIN)".$this->m_Socket->getErr();
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				if( $this->m_type == TYPE_SECUREPAY ) //PIÀÏ°æ¿ì, PI°¡ ³»·ÁÁÖ´Â pg2ip·Î!
-		  	{
-					$this->m_Socket->ip = $this->m_Data->m_PG2IP;
-				}
-				else 
-				{
-					$this->m_Socket->ip = DRPG_IP;
-				}
-			}
-			$this->m_Log->WriteLog( INFO, "DNS LOOKUP OK(".$this->m_Socket->host.":".$this->m_Socket->ip.":".$this->m_Socket->port.") laptime:".$this->m_Socket->dns_laptime );
-			if( ($rtv = $this->m_Socket->open()) != OK )
-			{
-				$err_msg = "[".$host."¼ÒÄÏ¿¬°á¿À·ù(MAIN)::".$this->m_Socket->getErr();
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-				$this->m_Socket->close();
-				$this->m_Crypto->FreeAllKey();
-				return;
-			}
-		}
-		$this->m_connIP = $this->m_Socket->ip;
-		$this->m_Log->WriteLog( INFO, "SOCKET CONNECT OK" );
-
-		/*--------------------------------------------------*/
-		//Àü¹®¼Û½Å
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Socket->send($this->m_Data->m_sMsg)) != OK ) 
-		{
-			$err_msg = "¼ÒÄÏ¼Û½Å¿À·ù(MAIN)::".$this->m_Socket->getErr();
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			$this->m_Crypto->FreeAllKey();
-			$this->m_Socket->close();
-			return;
-		}
-		$this->m_Log->WriteLog( INFO, "SEND OK" );
-
-		/*--------------------------------------------------*/
-		//Àü¹®¼ö½Å
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Socket->recv($head, $body, $tail)) != OK ) 
-		{
-			$err_msg = "¼ÒÄÏ¼ö½Å¿À·ù(MAIN)::".$this->m_Socket->getErr();
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Socket->close();
-			$this->NetCancel();
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			$this->m_Crypto->FreeAllKey();
-			return;
-		}
-		$this->m_Log->WriteLog( INFO, "RECV OK" );
-		$this->m_Log->WriteLog( INFO, "MSG_FROM_PG:[".$head.$body.$tail."]" );
-		$this->m_Data->m_Body = $body;
-
-		/*--------------------------------------------------*/
-		//¼­¸íÈ®ÀÎ
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Crypto->Verify( $body, $tail )) != OK )
-		{
-			$err_msg = "VERIFY FAIL";
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Socket->close();
-			$this->NetCancel();
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			$this->m_Crypto->FreeAllKey();
-			return;
-		}
-		$this->m_Log->WriteLog( INFO, "VERIFY OK" );
-
-		/*--------------------------------------------------*/
-		//Head ÆÄ½Ì
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Data->ParseHead( $head )) != OK )
-		{
-			$err_msg = "¼ö½ÅÀü¹®(HEAD) ÆÄ½Ì ¿À·ù";
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Socket->close();
-			$this->NetCancel();
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			$this->m_Crypto->FreeAllKey();
-			return;
-		}
-		$this->m_Log->WriteLog( INFO, "PARSE HEAD OK" );
-
-		/*--------------------------------------------------*/
-		//Body ÆÄ½Ì
-		/*--------------------------------------------------*/
-		if( ($rtv = $this->m_Data->ParseBody( $body, $encrypted, $sessionkey )) != OK )
-		{
-			$err_msg = "¼ö½ÅÀü¹®(Body) ÆÄ½Ì ¿À·ù";
-			$this->m_Log->WriteLog( ERROR, $err_msg );
-			$this->MakeTXErrMsg( $rtv, $err_msg ); 
-			$this->m_Socket->close();
-			$this->NetCancel();
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			$this->m_Crypto->FreeAllKey();
-			return;
-		}
-		$this->m_Log->WriteLog( INFO, "PARSE BODY OK" );
-
-		/*--------------------------------------------------*/
-		//º¹È£È­
-		/*--------------------------------------------------*/
-  	if( $this->m_type == TYPE_SECUREPAY   || $this->m_type == TYPE_FORMPAY  || $this->m_type == TYPE_OCBSAVE  || 
-      	$this->m_type == TYPE_CANCEL      || $this->m_type == TYPE_AUTHBILL || $this->m_type == TYPE_FORMAUTH || 
-      	$this->m_type == TYPE_REQREALBILL || $this->m_type == TYPE_REPAY    || $this->m_type == TYPE_VACCTREPAY    || $this->m_type == TYPE_RECEIPT	||
-      	$this->m_type == TYPE_AUTH       	|| $this->m_type == TYPE_CAPTURE 	|| $this->m_type == TYPE_ESCROW		||
-				$this->m_type == TYPE_REFUND || $this->m_type == TYPE_INQUIRY || $this->m_type == TYPE_OPENSUB
-    	)
-		{
-			if( ($rtv = $this->m_Crypto->Decrypt( $sessionkey, $encrypted, $decrypted )) != OK )
-			{
-				$err_msg = "º¹È£È­ ½ÇÆÐ[".$this->GetResult(NM_RESULTMSG)."]";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Socket->close();
-				$this->NetCancel();
-				$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-				$this->m_Crypto->FreeAllKey();
-				return;
-			}
-			$this->m_Log->WriteLog( INFO, "DECRYPT OK" );
-			$this->m_Log->WriteLog( DEBUG, "DECRYPT MSG:[".$decrypted."]" );
-
-			//Parse Decrypt
-			$this->m_Data->ParseDecrypt( $decrypted );
-			$this->m_Log->WriteLog( INFO, "DECRYPT PARSE OK" );
-		}
-
-		/*--------------------------------------------------*/
-		//Assign Interface Variables
-		/*--------------------------------------------------*/
-		$this->m_RESULT					=	$this->m_Data->m_RESULT;
-
-		/*--------------------------------------------------*/
-		//ACK
-		/*--------------------------------------------------*/
-		//if( $this->GetResult(NM_RESULTCODE) == "00" && 
-		if( (strcmp($this->GetResult(NM_RESULTCODE),"00") == 0) && 
-      ( $this->m_type == TYPE_SECUREPAY || $this->m_type == TYPE_OCBSAVE || 
-        $this->m_type == TYPE_FORMPAY   || $this->m_type == TYPE_RECEIPT
-      )
-		)
-		{
-			$this->m_Log->WriteLog( INFO, "WAIT ACK INVOKING" );
-			if( ($rtv = $this->Ack()) != OK )
-			{
-				//ERROR
-				$err_msg = "ACK ½ÇÆÐ";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Socket->close();
-				$this->NetCancel();
-				$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-				$this->m_Crypto->FreeAllKey();
-				return;
-			}
-			$this->m_Log->WriteLog( INFO, "SUCCESS ACK INVOKING" );
-		}
-		/*--------------------------------------------------*/
-		//PG °ø°³Å°°¡ ¹Ù²î¾úÀ¸¸é °ø°³Å° UPDATE
-		/*--------------------------------------------------*/
-		$pgpubkey = $this->m_Data->GetXMLData( NM_PGPUBKEY );
-		if( $pgpubkey != "" )
-		{
-			if( ($rtv = $this->m_Crypto->UpdatePGPubKey( $pgpubkey )) != OK )
-			{
-					$err_msg = "PG°ø°³Å° ¾÷µ¥ÀÌÆ® ½ÇÆÐ";
-					$this->m_Log->WriteLog( ERROR, $err_msg );
-					$this->m_Data->GTHR( $rtv, $err_msg );
-			}
-			else
-				$this->m_Log->WriteLog( INFO, "PGPubKey UPDATED!!" );
-		}
-
-		$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-		$this->m_Crypto->FreeAllKey();
-		$this->m_Socket->close();
-
-		/*--------------------------------------------------*/
-		//Ãë¼Ò½ÇÆÐ-¿ø°Å·¡¾øÀ½½Ã¿¡ DRPG·Î Àç½Ãµµ
-		//2008.04.01
-		/*--------------------------------------------------*/
-		if( $this->GetResult(NM_RESULTCODE) == "01" && ($this->m_type == TYPE_CANCEL || $this->m_type == TYPE_INQUIRY) && $this->m_cancelRC == 0 )
-		{
-				if( intval($this->GetResult(NM_ERRORCODE)) > 400000 && substr( $this->GetResult(NM_ERRORCODE), 3, 3 ) == "623" )	
-				{
-					$this->m_cancelRC = 1;
-					$this->startAction();
-				}
-		}
-
-		return;
-
-	} // End of StartAction
-
-	/*--------------------------------------------------*/
-	/*																									*/
-	/* À¥ÆäÀÌÁö À§º¯Á¶ ¹æÁö¿ë µ¥ÀÌÅ¸ »ý¼º								*/
-	/*																									*/
- 	/*--------------------------------------------------*/
-	function MakeChkFake()
-	{
-			$this->m_Crypto = new INICrypto( $this->m_REQUEST );
-
-			/*--------------------------------------------------*/
-			//»óÁ¡°³ÀÎÅ° ·Îµå
-			/*--------------------------------------------------*/
-			if( ($rtv = $this->m_Crypto->LoadMPrivKey()) != OK ) 
-			{
-				$err_msg = "»óÁ¡°³ÀÎÅ° ·Îµå¿À·ù";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-				$this->m_Crypto->FreePubKey();
-				return;
-			}
-			$this->m_Log->WriteLog( INFO, "MERCHANT PRIV KEY LOAD OK" );
-
-			/*--------------------------------------------------*/
-			//»óÁ¡ °ø°³Å° ·Îµå(SN ¸¦ ¾Ë±âÀ§ÇØ!!)
-			/*--------------------------------------------------*/
-			if( ($rtv = $this->m_Crypto->LoadMPubKey( $m_cert_SN )) != OK)
-			{
-				$err_msg = "»óÁ¡°ø°³Å° ·Îµå¿À·ù";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-				return;
-			}
-			$this->m_Log->WriteLog( INFO, "MERCHANT PUB KEY LOAD OK [".$this->m_Data->m_MPubSN."]" );
-
-      foreach ($this->m_REQUEST as $key => $val)
-      {
-				if( $key == "inipayhome" || $key == "type" || $key == "debug" || 
-						$key == "admin" || $key == "checkopt" || $key == "enctype" )
-					continue;
-				if( $key == "mid" ) 
-					$temp1 .= $key."=".$val."&"; //msg
-				else
-					$temp2 .= $key."=".$val."&"; //hashmsg
-      }
-			//Make RN
-			$this->m_RESULT["rn"] = $this->m_Data->MakeRN();
-			$temp1 .= "rn=".$this->m_RESULT["rn"]."&";
-
-			$checkMsg = $temp1;
-			$checkHashMsg = $temp2;
-
-			$retHashStr = Base64Encode(sha1( $checkHashMsg, TRUE ));
-			$checkMsg .= "data=".$retHashStr;
-
-			$HashMid = Base64Encode(sha1( $this->m_REQUEST["mid"], TRUE ));
-
-			$this->m_Crypto->RSAMPrivEncrypt( $checkMsg, $RSATemp );
-			$this->m_RESULT["encfield"] = "enc=".$RSATemp."&src=".Base64Encode($checkHashMsg);
-			$this->m_RESULT["certid"] = $HashMid.$m_cert_SN;
-
-			$this->m_Log->WriteLog( INFO, "CHKFAKE KEY MAKE OK:".$this->m_RESULT["rn"] );
-
-			$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-			$this->m_Crypto->FreeAllKey();
-			$this->m_RESULT[NM_RESULTCODE] = "00";
-			return;
-	}
-
-	/*--------------------------------------------------*/
-	/*																									*/
-	/* °áÁ¦Ã³¸® È®ÀÎ ¸Þ¼¼Áö Àü¼Û												*/
-	/*																									*/
- 	/*--------------------------------------------------*/
-	function Ack()
-	{
-			//ACK¿ë Data	
-			$this->m_Data->m_sBody = "";
-			$this->m_Data->m_sTail = "";
-			$this->m_Data->m_sCmd = CMD_REQ_ACK;
-
-			//Àü¹®»ý¼º(Head)
-			$this->m_Data->MakeHead();
-			$this->m_Log->WriteLog( DEBUG, "MAKE HEAD OK" );
-			//$this->m_Log->WriteLog( DEBUG, "MSG_TO_PG:[".$this->m_Data->m_sMsg."]" );
-
-			//Send
-			if( ($rtv = $this->m_Socket->send($this->m_Data->m_sMsg)) != OK ) 
-			{
-				$err_msg = "ACK Àü¼Û¿À·ù";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				return ACK_CHECKSUM_ERR;
-			}
-			//$this->m_Log->WriteLog( DEBUG, "SEND OK" );
-
-			if( ($rtv = $this->m_Socket->recv($head, $body, $tail)) != OK ) 
-			{
-				$err_msg = "ACK ¼ö½Å¿À·ù(ACK)";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				return ACK_CHECKSUM_ERR;
-			}
-			//$this->m_Log->WriteLog( DEBUG, "RECV OK" );
-			//$this->m_Log->WriteLog( INFO, "MSG_FROM_PG:[".$recv."]" );
-			return OK;
-	}
-
-	/*--------------------------------------------------*/
-	/*																									*/
-	/* ¸ÁÃë¼Ò ¸Þ¼¼Áö Àü¼Û																*/
-	/*																									*/
- 	/*--------------------------------------------------*/
-	function NetCancel()
-	{
-			$this->m_Log->WriteLog( INFO, "WAIT NETCANCEL INVOKING" );
-
-     	if ( $this->m_type == TYPE_CANCEL || $this->m_type == TYPE_REPAY || $this->m_type == TYPE_VACCTREPAY || $this->m_type == TYPE_RECEIPT || 
-					 $this->m_type == TYPE_CONFIRM || $this->m_type == TYPE_OCBQUERY || $this->m_type == TYPE_ESCROW  || 
-					 $this->m_type == TYPE_CAPTURE || $this->m_type == TYPE_AUTH || $this->m_type == TYPE_AUTHBILL  ||
-      		 ($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DNY_CNF ) ||
-					 $this->m_type == TYPE_NETCANCEL
-				)
-			{
-				$this->m_Log->WriteLog( INFO, "DON'T NEED NETCANCEL" );
-				return true;
-			}
-
-			//NetCancel¿ë Data	
-      $this->m_Data->m_REQUEST["cancelmsg"] = "¸ÁÃë¼Ò";
-			$body = "";
-			$sign = "";
-
-			$this->m_Data->m_Type = TYPE_CANCEL; //¸ÁÃë¼Ò Àü¹®Àº Ãë¼ÒÀü¹®°ú °°À½.Çì´õ¸¸Æ²¸®°í..ÂÁ~
-
-			//added escrow netcancel, 08.03.11
-			if( $this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DLV ) 
-				$this->m_Data->m_sCmd = CMD_REQ_DLV_NETC;
-      else if($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_CNF )
-				$this->m_Data->m_sCmd = CMD_REQ_CNF_NETC;
-      else if($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DNY )
-				$this->m_Data->m_sCmd = CMD_REQ_DNY_NETC;
-			else
-				$this->m_Data->m_sCmd = CMD_REQ_NETC;
-
-			$this->m_Data->m_sCrypto	= FLAG_CRYPTO_3DES;
-
-			//¾ÏÈ£È­
-			if( ($rtv = $this->m_Data->MakeEncrypt( $this->m_Crypto )) != OK )
-			{
-				$err_msg = "¾ÏÈ£È­ ¿À·ù";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				//$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				return;
-			}
-			$this->m_Log->WriteLog( DEBUG, "MAKE ENCRYPT OK[".$this->m_Data->m_EncBody."]" );
-
-			//Àü¹®»ý¼º(Body)
-			$this->m_Data->MakeBody();
-			$this->m_Log->WriteLog( INFO, "MAKE BODY OK" );
-	
-			//¼­¸í(sign)
-			if( ($rtv = $this->m_Crypto->Sign( $this->m_Data->m_sBody, $sign )) != OK )
-			{
-				$err_msg = "½ÎÀÎ½ÇÆÐ";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				//$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				return false;
-			}
-			$this->m_Data->m_sTail = $sign;
-			$this->m_Log->WriteLog( INFO, "SIGN OK" );
-	
-			//Àü¹®»ý¼º(Head)
-			$this->m_Data->MakeHead();
-			$this->m_Log->WriteLog( INFO, "MAKE HEAD OK" );
-	
-			$this->m_Log->WriteLog( DEBUG, "MSG_TO_PG:[".$this->m_Data->m_sMsg."]" );
-
-			//¼ÒÄÏ»ý¼º
-			$this->m_Socket = new INISocket("");
-			$this->m_Socket->ip = $this->m_connIP; //±âÁ¸¿¬°áµÈ IP »ç¿ë, 08.03.12
-			if( ($rtv = $this->m_Socket->open()) != OK )
-			{
-				$err_msg = "[".$this->m_Socket->ip."]¼ÒÄÏ¿¬°á¿À·ù(NETC)::".$this->m_Socket->getErr();
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				//$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Log->CloseLog( $this->GetResult(NM_RESULTMSG) );
-				$this->m_Socket->close();
-				$this->m_Crypto->FreeAllKey();
-				return;
-			}
-			$this->m_Log->WriteLog( INFO, "SOCKET CONNECT OK::".$this->m_Socket->ip );
-
-			//Àü¹®¼Û½Å
-			if( ($rtv = $this->m_Socket->send($this->m_Data->m_sMsg)) != OK ) 
-			{
-				$err_msg = "¼ÒÄÏ¼Û½Å¿À·ù(NETC)".$this->m_Socket->getErr();
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				//$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Socket->close();
-				return false;
-			}
-			$this->m_Log->WriteLog( INFO, "SEND OK" );
-	
-			//Àü¹®¼ö½Å
-			if( ($rtv = $this->m_Socket->recv($head, $body, $tail)) != OK ) 
-			{
-				$err_msg = "¼ÒÄÏ¼ö½Å¿À·ù(NETC)";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				//$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Socket->close();
-				return false;
-			}
-			$this->m_Log->WriteLog( INFO, "RECV OK" );
-			$this->m_Log->WriteLog( DEBUG, "MSG_FROM_PG:[".$head.$body.$tail."]" );
-	
-			//¼­¸íÈ®ÀÎ
-			if( ($rtv = $this->m_Crypto->Verify( $body, $tail )) != OK )
-			{
-				$err_msg = "VERIFY FAIL";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				//$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Socket->close();
-				return false;
-			}
-			$this->m_Log->WriteLog( INFO, "VERIFY OK" );
-
-			//ÀÌÇÏ Çì´õ³ª º»¹®Àº ÆÄ½ÌÇÏÁö ¾Ê´Â´Ù!!!!
-			//±×³É ¿©±â¼­ ³¡³»ÀÚ ÇÇ°ïÇÏ´Ù.-_-;;
-			//Head ÆÄ½Ì
-			if( ($rtv = $this->m_Data->ParseHead( $head )) != OK )
-			{
-				$err_msg = "¼ö½ÅÀü¹®(HEAD) ÆÄ½Ì ¿À·ù";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				//$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Socket->close();
-				return;
-			}
-			//Body ÆÄ½Ì
-			if( ($rtv = $this->m_Data->ParseBody( $body, $encrypted, $sessionkey )) != OK )
-			{
-				$err_msg = "¼ö½ÅÀü¹®(Body) ÆÄ½Ì ¿À·ù";
-				$this->m_Log->WriteLog( ERROR, $err_msg );
-				//$this->MakeTXErrMsg( $rtv, $err_msg ); 
-				$this->m_Socket->close();
-				return;
-			}
-
-			//if( $this->GetResult(NM_RESULTCODE) == "00" )
-			if(strcmp($this->GetResult(NM_RESULTCODE),"00") == 0)
-				$this->m_Log->WriteLog( INFO, "SUCCESS NETCANCEL" );
-			else
-				$this->m_Log->WriteLog( ERROR, "ERROR NETCANCEL[".$this->GetResult(NM_RESULTMSG)."]" );
-			return true;
-	}
-		
-	function MakeIMStr($s, $t)
-	{
-		$this->m_Crypto = new INICrypto( $this->m_REQUEST );
-		if( $t == "H" )
-			return $this->m_Crypto->MakeIMStr($s, base64_decode(IMHK));
-		else if( $t == "J" )
-			return $this->m_Crypto->MakeIMStr($s, base64_decode(IMJK));
-	}
-
-	/*--------------------------------------------------*/
-	/*																									*/
-	/* ¿¡·¯¸Þ¼¼Áö Make				                          */
-	/*																									*/
- 	/*--------------------------------------------------*/
-	function MakeTXErrMsg($err_code, $err_msg)
-	{
-		$this->m_RESULT[NM_RESULTCODE]			= "01";
-		$this->m_RESULT[NM_RESULTERRORCODE]	= $err_code;
-		$this->m_RESULT[NM_RESULTMSG]				= "[".$err_code."|".$err_msg."]";
-		$this->m_Data->GTHR( $err_code, $err_msg );
-		return;
-	}
+require_once('INICls.php');
+require_once('INISoc.php');
+
+class INIpay50 {
+
+    var $m_type;     // ê±°ëž˜ ìœ í˜•
+    var $m_resulterrcode;       // ê²°ê³¼ë©”ì„¸ì§€ ì—ëŸ¬ì½”ë“œ
+    var $m_connIP;
+    var $m_cancelRC = 0;
+    var $m_Data;
+    var $m_Log;
+    var $m_Socket;
+    var $m_Crypto;
+    var $m_REQUEST = array();
+    var $m_REQUEST2 = array();
+    var $m_RESULT = array();
+
+    function INIpay() {
+        $this->UnsetField();
+    }
+
+    function UnsetField() {
+        unset($this->m_REQUEST);
+        unset($this->m_RESULT);
+    }
+
+    /* -------------------------------------------------- */
+    /* 																									 */
+    /* ê²°ì œ/ì·¨ì†Œ ìš”ì²­ê°’ Set or Add                      */
+    /* 																									 */
+    /* -------------------------------------------------- */
+
+    function SetField($key, $val) { //Default Entity
+        $this->m_REQUEST[$key] = $val;
+    }
+
+    function SetXPath($xpath, $val) { //User Defined Entity
+        $this->m_REQUEST2[$xpath] = $val;
+    }
+
+    /* -------------------------------------------------- */
+    /* 																									 */
+    /* ê²°ì œ/ì·¨ì†Œ ê²°ê³¼ê°’ fetch                           */
+    /* 																									 */
+    /* -------------------------------------------------- */
+
+    function GetResult($name) { //Default Entity
+        $result = $this->m_RESULT[$name];
+        if ($result == "")
+            $result = $this->m_Data->GetXMLData($name);
+        if ($result == "")
+            $result = $this->m_Data->m_RESULT[$name];
+        return $result;
+    }
+
+    /* -------------------------------------------------- */
+    /* 																									 */
+    /* ê²°ì œ/ì·¨ì†Œ ì²˜ë¦¬ ë©”ì¸                              */
+    /* 																									 */
+    /* -------------------------------------------------- */
+
+    function startAction() {
+
+        /* -------------------------------------------------- */
+        /* Overhead Operation                               */
+        /* -------------------------------------------------- */
+        $this->m_Data = new INIData($this->m_REQUEST, $this->m_REQUEST2);
+
+        /* -------------------------------------------------- */
+        /* Log Start																				 */
+        /* -------------------------------------------------- */
+        $this->m_Log = new INILog($this->m_REQUEST);
+        if (!$this->m_Log->StartLog()) {
+            $this->MakeTXErrMsg(LOG_OPEN_ERR, "ë¡œê·¸íŒŒì¼ì„ ì—´ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.[" . $this->m_REQUEST["inipayhome"] . "]");
+            return;
+        }
+
+        /* -------------------------------------------------- */
+        /* Logging Request Parameter												 */
+        /* -------------------------------------------------- */
+        $this->m_Log->WriteLog(DEBUG, $this->m_REQUEST);
+
+        /* -------------------------------------------------- */
+        /* Set Type																					 */
+        /* -------------------------------------------------- */
+        $this->m_type = $this->m_REQUEST["type"];
+
+        /* -------------------------------------------------- */
+        /* Check Field																			 */
+        /* -------------------------------------------------- */
+        if (!$this->m_Data->CheckField()) {
+            $err_msg = "í•„ìˆ˜í•­ëª©(" . $this->m_Data->m_ErrMsg . ")ì´ ëˆ„ë½ë˜ì—ˆìŠµë‹ˆë‹¤.";
+            $this->MakeTXErrMsg($this->m_Data->m_ErrCode, $err_msg);
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "Check Field OK");
+
+        /* -------------------------------------------------- */
+        //ì›¹íŽ˜ì´ì§€ìœ„ë³€ì¡°ìš© í‚¤ìƒì„±. ì—¬ê¸°ì„œ ë!!
+        /* -------------------------------------------------- */
+        if ($this->m_type == TYPE_CHKFAKE) {
+            return $this->MakeChkFake();
+        }
+
+        /* -------------------------------------------------- */
+        //Generate TID
+        /* -------------------------------------------------- */
+        if ($this->m_type == TYPE_SECUREPAY || $this->m_type == TYPE_FORMPAY || $this->m_type == TYPE_OCBSAVE ||
+                $this->m_type == TYPE_AUTHBILL || $this->m_type == TYPE_FORMAUTH || $this->m_type == TYPE_REQREALBILL ||
+                $this->m_type == TYPE_REPAY || $this->m_type == TYPE_VACCTREPAY || $this->m_type == TYPE_RECEIPT || $this->m_type == TYPE_AUTH
+        ) {
+            if (!$this->m_Data->MakeTID()) {
+                $err_msg = "TIDìƒì„±ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤.::" . $this->m_Data->m_sTID;
+                $this->m_Log->WriteLog(ERROR, $err_msg);
+                $this->MakeTXErrMsg(MAKE_TID_ERR, $err_msg);
+                $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+                return;
+            }
+            $this->m_Log->WriteLog(INFO, 'Make TID OK ' . $this->m_Data->m_sTID);
+        }
+
+        $this->m_Crypto = new INICrypto($this->m_REQUEST);
+
+        /* -------------------------------------------------- */
+        //PIê³µê°œí‚¤ ë¡œë“œ
+        /* -------------------------------------------------- */
+        $this->m_Data->ParsePIEncrypted();
+        $this->m_Log->WriteLog(INFO, "PI PUB KEY LOAD OK [" . $this->m_Data->m_PIPGPubSN . "]");
+
+        /* -------------------------------------------------- */
+        //PGê³µê°œí‚¤ ë¡œë“œ
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Crypto->LoadPGPubKey($pg_cert_SN)) != OK) {
+            $err_msg = "PGê³µê°œí‚¤ ë¡œë“œì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            return;
+        }
+        $this->m_Data->m_TXPGPubSN = $pg_cert_SN;
+        $this->m_Log->WriteLog(INFO, "PG PUB KEY LOAD OK [" . $this->m_Data->m_TXPGPubSN . "]");
+
+        /* -------------------------------------------------- */
+        //ìƒì ê°œì¸í‚¤ ë¡œë“œ
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Crypto->LoadMPrivKey()) != OK) {
+            $err_msg = "ìƒì ê°œì¸í‚¤ ë¡œë“œì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Crypto->FreePubKey();
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "MERCHANT PRIV KEY LOAD OK");
+
+        /* -------------------------------------------------- */
+        //ìƒì  ê³µê°œí‚¤ ë¡œë“œ(SN ë¥¼ ì•Œê¸°ìœ„í•´!!)
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Crypto->LoadMPubKey($m_cert_SN)) != OK) {
+            $err_msg = "ìƒì ê³µê°œí‚¤ ë¡œë“œì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            return;
+        }
+        $this->m_Data->m_MPubSN = $m_cert_SN;
+        $this->m_Log->WriteLog(INFO, "MERCHANT PUB KEY LOAD OK [" . $this->m_Data->m_MPubSN . "]");
+
+        /* -------------------------------------------------- */
+        //í¼íŽ˜ì´ ì•”í˜¸í™”( formpay, cancel, repay, recept, inquiry, opensub)
+        /* -------------------------------------------------- */
+        if ($this->m_type == TYPE_CANCEL || $this->m_type == TYPE_REPAY || $this->m_type == TYPE_VACCTREPAY ||
+                $this->m_type == TYPE_FORMPAY || $this->m_type == TYPE_RECEIPT ||
+                $this->m_type == TYPE_CAPTURE || $this->m_type == TYPE_INQUIRY || $this->m_type == TYPE_OPENSUB ||
+                ($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DLV ) ||
+                ($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DNY_CNF ) ||
+                $this->m_type == TYPE_REFUND
+        ) {
+            if (($rtv = $this->m_Data->MakeEncrypt($this->m_Crypto)) != OK) {
+                $err_msg = "ì•”í˜¸í™” ì˜¤ë¥˜";
+                $this->m_Log->WriteLog(ERROR, $err_msg);
+                $this->MakeTXErrMsg($rtv, $err_msg);
+                $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+                return;
+            }
+            //$this->m_Log->WriteLog( DEBUG, "MAKE ENCRYPT OK" );
+            $this->m_Log->WriteLog(DEBUG, "MAKE ENCRYPT OK[" . $this->m_Data->m_EncBody . "]");
+        }
+
+        /* -------------------------------------------------- */
+        //ì „ë¬¸ìƒì„±(Body)
+        /* -------------------------------------------------- */
+        $this->m_Data->MakeBody();
+        $this->m_Log->WriteLog(INFO, "MAKE BODY OK");
+        //$this->m_Log->WriteLog( INFO, "MAKE BODY OK[".$this->m_Data->m_sBody."]" );
+
+        /* -------------------------------------------------- */
+        //ì„œëª…(sign)
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Crypto->Sign($this->m_Data->m_sBody, $sign)) != OK) {
+            $err_msg = "ì‹¸ì¸ì‹¤íŒ¨";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Crypto->FreeAllKey();
+            return;
+        }
+        $this->m_Data->m_sTail = $sign;
+        $this->m_Log->WriteLog(INFO, "SIGN OK");
+        //$this->m_Log->WriteLog( INFO, "SIGN OK[".$sign."]" );
+
+        /* -------------------------------------------------- */
+        //ì „ë¬¸ìƒì„±(Head)
+        /* -------------------------------------------------- */
+        $this->m_Data->MakeHead();
+        $this->m_Log->WriteLog(INFO, "MAKE HEAD OK");
+        //$this->m_Log->WriteLog( INFO, "MAKE HEAD OK[".$head."]" );
+
+        $this->m_Log->WriteLog(INFO, "MSG_TO_PG:[" . $this->m_Data->m_sMsg . "]");
+
+        /* -------------------------------------------------- */
+        //ì†Œì¼“ìƒì„±
+        /* -------------------------------------------------- */
+        //DRPG ì…‹íŒ…, added 07.11.15
+        //ì·¨ì†Œì‹œ-PGì„¤ì • ë³€ê²½(ë„ë©”ì¸->IP), edited 10.09.09
+        if ($this->m_type == TYPE_SECUREPAY) {
+            if ($this->m_REQUEST["pgn"] == "")
+                $host = $this->m_Data->m_PG1;
+            else
+                $host = $this->m_REQUEST["pgn"];
+        }
+        else {
+            if ($this->m_REQUEST["pgn"] == "") {
+                if ($this->m_cancelRC == 1)
+                    $host = DRPG_IP;
+                else
+                    $host = PG_IP;
+            } else
+                $host = $this->m_REQUEST["pgn"];
+        }
+
+        $this->m_Socket = new INISocket($host);
+        if (($rtv = $this->m_Socket->DNSLookup()) != OK) {
+            $err_msg = "[" . $host . "]DNS LOOKUP ì‹¤íŒ¨(MAIN)" . $this->m_Socket->getErr();
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            if ($this->m_type == TYPE_SECUREPAY) { //PIì¼ê²½ìš°, PIê°€ ë‚´ë ¤ì£¼ëŠ” pg1ipë¡œ!
+                $this->m_Socket->ip = $this->m_Data->m_PG1IP;
+            } else {
+                if ($this->m_cancelRC == 1)
+                    $this->m_Socket->ip = DRPG_IP;
+                else
+                    $this->m_Socket->ip = PG_IP;
+            }
+        }
+        $this->m_Log->WriteLog(INFO, "DNS LOOKUP OK(" . $this->m_Socket->host . ":" . $this->m_Socket->ip . ":" . $this->m_Socket->port . ") laptime:" . $this->m_Socket->dns_laptime);
+        if (($rtv = $this->m_Socket->open()) != OK) {
+            $this->m_Socket->close();
+
+            //PG2ë¡œ ì „í™˜
+            $err_msg = "[" . $host . "ì†Œì¼“ì—°ê²°ì˜¤ë¥˜(MAIN)::PG2ë¡œ ì „í™˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            if ($this->m_type == TYPE_SECUREPAY) {
+                $host = $this->m_Data->m_PG2;
+            } else {
+                $host = DRPG_HOST;
+            }
+            $this->m_Socket = new INISocket($host);
+            if (($rtv = $this->m_Socket->DNSLookup()) != OK) {
+                $err_msg = "[" . $host . "]DNS LOOKUP ì‹¤íŒ¨(MAIN)" . $this->m_Socket->getErr();
+                $this->m_Log->WriteLog(ERROR, $err_msg);
+                $this->MakeTXErrMsg($rtv, $err_msg);
+                if ($this->m_type == TYPE_SECUREPAY) { //PIì¼ê²½ìš°, PIê°€ ë‚´ë ¤ì£¼ëŠ” pg2ipë¡œ!
+                    $this->m_Socket->ip = $this->m_Data->m_PG2IP;
+                } else {
+                    $this->m_Socket->ip = DRPG_IP;
+                }
+            }
+            $this->m_Log->WriteLog(INFO, "DNS LOOKUP OK(" . $this->m_Socket->host . ":" . $this->m_Socket->ip . ":" . $this->m_Socket->port . ") laptime:" . $this->m_Socket->dns_laptime);
+            if (($rtv = $this->m_Socket->open()) != OK) {
+                $err_msg = "[" . $host . "ì†Œì¼“ì—°ê²°ì˜¤ë¥˜(MAIN)::" . $this->m_Socket->getErr();
+                $this->m_Log->WriteLog(ERROR, $err_msg);
+                $this->MakeTXErrMsg($rtv, $err_msg);
+                $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+                $this->m_Socket->close();
+                $this->m_Crypto->FreeAllKey();
+                return;
+            }
+        }
+        $this->m_connIP = $this->m_Socket->ip;
+        $this->m_Log->WriteLog(INFO, "SOCKET CONNECT OK");
+
+        /* -------------------------------------------------- */
+        //ì „ë¬¸ì†¡ì‹ 
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Socket->send($this->m_Data->m_sMsg)) != OK) {
+            $err_msg = "ì†Œì¼“ì†¡ì‹ ì˜¤ë¥˜(MAIN)::" . $this->m_Socket->getErr();
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Crypto->FreeAllKey();
+            $this->m_Socket->close();
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "SEND OK");
+
+        /* -------------------------------------------------- */
+        //ì „ë¬¸ìˆ˜ì‹ 
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Socket->recv($head, $body, $tail)) != OK) {
+            $err_msg = "ì†Œì¼“ìˆ˜ì‹ ì˜¤ë¥˜(MAIN)::" . $this->m_Socket->getErr();
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Socket->close();
+            $this->NetCancel();
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Crypto->FreeAllKey();
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "RECV OK");
+        $this->m_Log->WriteLog(INFO, "MSG_FROM_PG:[" . $head . $body . $tail . "]");
+        $this->m_Data->m_Body = $body;
+
+        /* -------------------------------------------------- */
+        //ì„œëª…í™•ì¸
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Crypto->Verify($body, $tail)) != OK) {
+            $err_msg = "VERIFY FAIL";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Socket->close();
+            $this->NetCancel();
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Crypto->FreeAllKey();
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "VERIFY OK");
+
+        /* -------------------------------------------------- */
+        //Head íŒŒì‹±
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Data->ParseHead($head)) != OK) {
+            $err_msg = "ìˆ˜ì‹ ì „ë¬¸(HEAD) íŒŒì‹± ì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Socket->close();
+            $this->NetCancel();
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Crypto->FreeAllKey();
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "PARSE HEAD OK");
+
+        /* -------------------------------------------------- */
+        //Body íŒŒì‹±
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Data->ParseBody($body, $encrypted, $sessionkey)) != OK) {
+            $err_msg = "ìˆ˜ì‹ ì „ë¬¸(Body) íŒŒì‹± ì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Socket->close();
+            $this->NetCancel();
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Crypto->FreeAllKey();
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "PARSE BODY OK");
+
+        /* -------------------------------------------------- */
+        //ë³µí˜¸í™”
+        /* -------------------------------------------------- */
+        if ($this->m_type == TYPE_SECUREPAY || $this->m_type == TYPE_FORMPAY || $this->m_type == TYPE_OCBSAVE ||
+                $this->m_type == TYPE_CANCEL || $this->m_type == TYPE_AUTHBILL || $this->m_type == TYPE_FORMAUTH ||
+                $this->m_type == TYPE_REQREALBILL || $this->m_type == TYPE_REPAY || $this->m_type == TYPE_VACCTREPAY || $this->m_type == TYPE_RECEIPT ||
+                $this->m_type == TYPE_AUTH || $this->m_type == TYPE_CAPTURE || $this->m_type == TYPE_ESCROW ||
+                $this->m_type == TYPE_REFUND || $this->m_type == TYPE_INQUIRY || $this->m_type == TYPE_OPENSUB
+        ) {
+            if (($rtv = $this->m_Crypto->Decrypt($sessionkey, $encrypted, $decrypted)) != OK) {
+                $err_msg = "ë³µí˜¸í™” ì‹¤íŒ¨[" . $this->GetResult(NM_RESULTMSG) . "]";
+                $this->m_Log->WriteLog(ERROR, $err_msg);
+                $this->MakeTXErrMsg($rtv, $err_msg);
+                $this->m_Socket->close();
+                $this->NetCancel();
+                $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+                $this->m_Crypto->FreeAllKey();
+                return;
+            }
+            $this->m_Log->WriteLog(INFO, "DECRYPT OK");
+            $this->m_Log->WriteLog(DEBUG, "DECRYPT MSG:[" . $decrypted . "]");
+
+            //Parse Decrypt
+            $this->m_Data->ParseDecrypt($decrypted);
+            $this->m_Log->WriteLog(INFO, "DECRYPT PARSE OK");
+        }
+
+        /* -------------------------------------------------- */
+        //Assign Interface Variables
+        /* -------------------------------------------------- */
+        $this->m_RESULT = $this->m_Data->m_RESULT;
+
+        /* -------------------------------------------------- */
+        //ACK
+        /* -------------------------------------------------- */
+        //if( $this->GetResult(NM_RESULTCODE) == "00" && 
+        if ((strcmp($this->GetResult(NM_RESULTCODE), "00") == 0) &&
+                ( $this->m_type == TYPE_SECUREPAY || $this->m_type == TYPE_OCBSAVE ||
+                $this->m_type == TYPE_FORMPAY || $this->m_type == TYPE_RECEIPT
+                )
+        ) {
+            $this->m_Log->WriteLog(INFO, "WAIT ACK INVOKING");
+            if (($rtv = $this->Ack()) != OK) {
+                //ERROR
+                $err_msg = "ACK ì‹¤íŒ¨";
+                $this->m_Log->WriteLog(ERROR, $err_msg);
+                $this->MakeTXErrMsg($rtv, $err_msg);
+                $this->m_Socket->close();
+                $this->NetCancel();
+                $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+                $this->m_Crypto->FreeAllKey();
+                return;
+            }
+            $this->m_Log->WriteLog(INFO, "SUCCESS ACK INVOKING");
+        }
+        /* -------------------------------------------------- */
+        //PG ê³µê°œí‚¤ê°€ ë°”ë€Œì—ˆìœ¼ë©´ ê³µê°œí‚¤ UPDATE
+        /* -------------------------------------------------- */
+        $pgpubkey = $this->m_Data->GetXMLData(NM_PGPUBKEY);
+        if ($pgpubkey != "") {
+            if (($rtv = $this->m_Crypto->UpdatePGPubKey($pgpubkey)) != OK) {
+                $err_msg = "PGê³µê°œí‚¤ ì—…ë°ì´íŠ¸ ì‹¤íŒ¨";
+                $this->m_Log->WriteLog(ERROR, $err_msg);
+                $this->m_Data->GTHR($rtv, $err_msg);
+            } else
+                $this->m_Log->WriteLog(INFO, "PGPubKey UPDATED!!");
+        }
+
+        $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+        $this->m_Crypto->FreeAllKey();
+        $this->m_Socket->close();
+
+        /* -------------------------------------------------- */
+        //ì·¨ì†Œì‹¤íŒ¨-ì›ê±°ëž˜ì—†ìŒì‹œì— DRPGë¡œ ìž¬ì‹œë„
+        //2008.04.01
+        /* -------------------------------------------------- */
+        if ($this->GetResult(NM_RESULTCODE) == "01" && ($this->m_type == TYPE_CANCEL || $this->m_type == TYPE_INQUIRY) && $this->m_cancelRC == 0) {
+            if (intval($this->GetResult(NM_ERRORCODE)) > 400000 && substr($this->GetResult(NM_ERRORCODE), 3, 3) == "623") {
+                $this->m_cancelRC = 1;
+                $this->startAction();
+            }
+        }
+
+        return;
+    }
+
+// End of StartAction
+
+    /* -------------------------------------------------- */
+    /* 																									 */
+    /* ì›¹íŽ˜ì´ì§€ ìœ„ë³€ì¡° ë°©ì§€ìš© ë°ì´íƒ€ ìƒì„±								 */
+    /* 																									 */
+    /* -------------------------------------------------- */
+
+    function MakeChkFake() {
+        $this->m_Crypto = new INICrypto($this->m_REQUEST);
+
+        /* -------------------------------------------------- */
+        //ìƒì ê°œì¸í‚¤ ë¡œë“œ
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Crypto->LoadMPrivKey()) != OK) {
+            $err_msg = "ìƒì ê°œì¸í‚¤ ë¡œë“œì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Crypto->FreePubKey();
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "MERCHANT PRIV KEY LOAD OK");
+
+        /* -------------------------------------------------- */
+        //ìƒì  ê³µê°œí‚¤ ë¡œë“œ(SN ë¥¼ ì•Œê¸°ìœ„í•´!!)
+        /* -------------------------------------------------- */
+        if (($rtv = $this->m_Crypto->LoadMPubKey($m_cert_SN)) != OK) {
+            $err_msg = "ìƒì ê³µê°œí‚¤ ë¡œë“œì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            $this->MakeTXErrMsg($rtv, $err_msg);
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "MERCHANT PUB KEY LOAD OK [" . $this->m_Data->m_MPubSN . "]");
+
+        foreach ($this->m_REQUEST as $key => $val) {
+            if ($key == "inipayhome" || $key == "type" || $key == "debug" ||
+                    $key == "admin" || $key == "checkopt" || $key == "enctype")
+                continue;
+            if ($key == "mid")
+                $temp1 .= $key . "=" . $val . "&"; //msg
+            else
+                $temp2 .= $key . "=" . $val . "&"; //hashmsg
+        }
+        //Make RN
+        $this->m_RESULT["rn"] = $this->m_Data->MakeRN();
+        $temp1 .= "rn=" . $this->m_RESULT["rn"] . "&";
+
+        $checkMsg = $temp1;
+        $checkHashMsg = $temp2;
+
+        $retHashStr = Base64Encode(sha1($checkHashMsg, TRUE));
+        $checkMsg .= "data=" . $retHashStr;
+
+        $HashMid = Base64Encode(sha1($this->m_REQUEST["mid"], TRUE));
+
+        $this->m_Crypto->RSAMPrivEncrypt($checkMsg, $RSATemp);
+        $this->m_RESULT["encfield"] = "enc=" . $RSATemp . "&src=" . Base64Encode($checkHashMsg);
+        $this->m_RESULT["certid"] = $HashMid . $m_cert_SN;
+
+        $this->m_Log->WriteLog(INFO, "CHKFAKE KEY MAKE OK:" . $this->m_RESULT["rn"]);
+
+        $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+        $this->m_Crypto->FreeAllKey();
+        $this->m_RESULT[NM_RESULTCODE] = "00";
+        return;
+    }
+
+    /* -------------------------------------------------- */
+    /* 																									 */
+    /* ê²°ì œì²˜ë¦¬ í™•ì¸ ë©”ì„¸ì§€ ì „ì†¡												 */
+    /* 																									 */
+    /* -------------------------------------------------- */
+
+    function Ack() {
+        //ACKìš© Data	
+        $this->m_Data->m_sBody = "";
+        $this->m_Data->m_sTail = "";
+        $this->m_Data->m_sCmd = CMD_REQ_ACK;
+
+        //ì „ë¬¸ìƒì„±(Head)
+        $this->m_Data->MakeHead();
+        $this->m_Log->WriteLog(DEBUG, "MAKE HEAD OK");
+        //$this->m_Log->WriteLog( DEBUG, "MSG_TO_PG:[".$this->m_Data->m_sMsg."]" );
+        //Send
+        if (($rtv = $this->m_Socket->send($this->m_Data->m_sMsg)) != OK) {
+            $err_msg = "ACK ì „ì†¡ì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            return ACK_CHECKSUM_ERR;
+        }
+        //$this->m_Log->WriteLog( DEBUG, "SEND OK" );
+
+        if (($rtv = $this->m_Socket->recv($head, $body, $tail)) != OK) {
+            $err_msg = "ACK ìˆ˜ì‹ ì˜¤ë¥˜(ACK)";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            return ACK_CHECKSUM_ERR;
+        }
+        //$this->m_Log->WriteLog( DEBUG, "RECV OK" );
+        //$this->m_Log->WriteLog( INFO, "MSG_FROM_PG:[".$recv."]" );
+        return OK;
+    }
+
+    /* -------------------------------------------------- */
+    /* 																									 */
+    /* ë§ì·¨ì†Œ ë©”ì„¸ì§€ ì „ì†¡																 */
+    /* 																									 */
+    /* -------------------------------------------------- */
+
+    function NetCancel() {
+        $this->m_Log->WriteLog(INFO, "WAIT NETCANCEL INVOKING");
+
+        if ($this->m_type == TYPE_CANCEL || $this->m_type == TYPE_REPAY || $this->m_type == TYPE_VACCTREPAY || $this->m_type == TYPE_RECEIPT ||
+                $this->m_type == TYPE_CONFIRM || $this->m_type == TYPE_OCBQUERY || $this->m_type == TYPE_ESCROW ||
+                $this->m_type == TYPE_CAPTURE || $this->m_type == TYPE_AUTH || $this->m_type == TYPE_AUTHBILL ||
+                ($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DNY_CNF ) ||
+                $this->m_type == TYPE_NETCANCEL
+        ) {
+            $this->m_Log->WriteLog(INFO, "DON'T NEED NETCANCEL");
+            return true;
+        }
+
+        //NetCancelìš© Data	
+        $this->m_Data->m_REQUEST["cancelmsg"] = "ë§ì·¨ì†Œ";
+        $body = "";
+        $sign = "";
+
+        $this->m_Data->m_Type = TYPE_CANCEL; //ë§ì·¨ì†Œ ì „ë¬¸ì€ ì·¨ì†Œì „ë¬¸ê³¼ ê°™ìŒ.í—¤ë”ë§Œí‹€ë¦¬ê³ ..ì©~
+        //added escrow netcancel, 08.03.11
+        if ($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DLV)
+            $this->m_Data->m_sCmd = CMD_REQ_DLV_NETC;
+        else if ($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_CNF)
+            $this->m_Data->m_sCmd = CMD_REQ_CNF_NETC;
+        else if ($this->m_type == TYPE_ESCROW && $this->m_Data->m_EscrowType == TYPE_ESCROW_DNY)
+            $this->m_Data->m_sCmd = CMD_REQ_DNY_NETC;
+        else
+            $this->m_Data->m_sCmd = CMD_REQ_NETC;
+
+        $this->m_Data->m_sCrypto = FLAG_CRYPTO_3DES;
+
+        //ì•”í˜¸í™”
+        if (($rtv = $this->m_Data->MakeEncrypt($this->m_Crypto)) != OK) {
+            $err_msg = "ì•”í˜¸í™” ì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            //$this->MakeTXErrMsg( $rtv, $err_msg ); 
+            return;
+        }
+        $this->m_Log->WriteLog(DEBUG, "MAKE ENCRYPT OK[" . $this->m_Data->m_EncBody . "]");
+
+        //ì „ë¬¸ìƒì„±(Body)
+        $this->m_Data->MakeBody();
+        $this->m_Log->WriteLog(INFO, "MAKE BODY OK");
+
+        //ì„œëª…(sign)
+        if (($rtv = $this->m_Crypto->Sign($this->m_Data->m_sBody, $sign)) != OK) {
+            $err_msg = "ì‹¸ì¸ì‹¤íŒ¨";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            //$this->MakeTXErrMsg( $rtv, $err_msg ); 
+            return false;
+        }
+        $this->m_Data->m_sTail = $sign;
+        $this->m_Log->WriteLog(INFO, "SIGN OK");
+
+        //ì „ë¬¸ìƒì„±(Head)
+        $this->m_Data->MakeHead();
+        $this->m_Log->WriteLog(INFO, "MAKE HEAD OK");
+
+        $this->m_Log->WriteLog(DEBUG, "MSG_TO_PG:[" . $this->m_Data->m_sMsg . "]");
+
+        //ì†Œì¼“ìƒì„±
+        $this->m_Socket = new INISocket("");
+        $this->m_Socket->ip = $this->m_connIP; //ê¸°ì¡´ì—°ê²°ëœ IP ì‚¬ìš©, 08.03.12
+        if (($rtv = $this->m_Socket->open()) != OK) {
+            $err_msg = "[" . $this->m_Socket->ip . "]ì†Œì¼“ì—°ê²°ì˜¤ë¥˜(NETC)::" . $this->m_Socket->getErr();
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            //$this->MakeTXErrMsg( $rtv, $err_msg ); 
+            $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
+            $this->m_Socket->close();
+            $this->m_Crypto->FreeAllKey();
+            return;
+        }
+        $this->m_Log->WriteLog(INFO, "SOCKET CONNECT OK::" . $this->m_Socket->ip);
+
+        //ì „ë¬¸ì†¡ì‹ 
+        if (($rtv = $this->m_Socket->send($this->m_Data->m_sMsg)) != OK) {
+            $err_msg = "ì†Œì¼“ì†¡ì‹ ì˜¤ë¥˜(NETC)" . $this->m_Socket->getErr();
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            //$this->MakeTXErrMsg( $rtv, $err_msg ); 
+            $this->m_Socket->close();
+            return false;
+        }
+        $this->m_Log->WriteLog(INFO, "SEND OK");
+
+        //ì „ë¬¸ìˆ˜ì‹ 
+        if (($rtv = $this->m_Socket->recv($head, $body, $tail)) != OK) {
+            $err_msg = "ì†Œì¼“ìˆ˜ì‹ ì˜¤ë¥˜(NETC)";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            //$this->MakeTXErrMsg( $rtv, $err_msg ); 
+            $this->m_Socket->close();
+            return false;
+        }
+        $this->m_Log->WriteLog(INFO, "RECV OK");
+        $this->m_Log->WriteLog(DEBUG, "MSG_FROM_PG:[" . $head . $body . $tail . "]");
+
+        //ì„œëª…í™•ì¸
+        if (($rtv = $this->m_Crypto->Verify($body, $tail)) != OK) {
+            $err_msg = "VERIFY FAIL";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            //$this->MakeTXErrMsg( $rtv, $err_msg ); 
+            $this->m_Socket->close();
+            return false;
+        }
+        $this->m_Log->WriteLog(INFO, "VERIFY OK");
+
+        //ì´í•˜ í—¤ë”ë‚˜ ë³¸ë¬¸ì€ íŒŒì‹±í•˜ì§€ ì•ŠëŠ”ë‹¤!!!!
+        //ê·¸ëƒ¥ ì—¬ê¸°ì„œ ëë‚´ìž í”¼ê³¤í•˜ë‹¤.-_-;;
+        //Head íŒŒì‹±
+        if (($rtv = $this->m_Data->ParseHead($head)) != OK) {
+            $err_msg = "ìˆ˜ì‹ ì „ë¬¸(HEAD) íŒŒì‹± ì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            //$this->MakeTXErrMsg( $rtv, $err_msg ); 
+            $this->m_Socket->close();
+            return;
+        }
+        //Body íŒŒì‹±
+        if (($rtv = $this->m_Data->ParseBody($body, $encrypted, $sessionkey)) != OK) {
+            $err_msg = "ìˆ˜ì‹ ì „ë¬¸(Body) íŒŒì‹± ì˜¤ë¥˜";
+            $this->m_Log->WriteLog(ERROR, $err_msg);
+            //$this->MakeTXErrMsg( $rtv, $err_msg ); 
+            $this->m_Socket->close();
+            return;
+        }
+
+        //if( $this->GetResult(NM_RESULTCODE) == "00" )
+        if (strcmp($this->GetResult(NM_RESULTCODE), "00") == 0)
+            $this->m_Log->WriteLog(INFO, "SUCCESS NETCANCEL");
+        else
+            $this->m_Log->WriteLog(ERROR, "ERROR NETCANCEL[" . $this->GetResult(NM_RESULTMSG) . "]");
+        return true;
+    }
+
+    function MakeIMStr($s, $t) {
+        $this->m_Crypto = new INICrypto($this->m_REQUEST);
+        if ($t == "H")
+            return $this->m_Crypto->MakeIMStr($s, base64_decode(IMHK));
+        else if ($t == "J")
+            return $this->m_Crypto->MakeIMStr($s, base64_decode(IMJK));
+    }
+
+    /* -------------------------------------------------- */
+    /* 																									 */
+    /* ì—ëŸ¬ë©”ì„¸ì§€ Make				                          */
+    /* 																									 */
+    /* -------------------------------------------------- */
+
+    function MakeTXErrMsg($err_code, $err_msg) {
+        $this->m_RESULT[NM_RESULTCODE] = "01";
+        $this->m_RESULT[NM_RESULTERRORCODE] = $err_code;
+        $this->m_RESULT[NM_RESULTMSG] = "[" . $err_code . "|" . $err_msg . "]";
+        $this->m_Data->GTHR($err_code, $err_msg);
+        return;
+    }
 
 }
 

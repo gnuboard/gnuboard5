@@ -1374,20 +1374,20 @@ function forderform_check(f)
     switch(settle_method)
     {
         case "계좌이체":
-            f.gopaymethod.value = "onlydbank";
+            f.gopaymethod.value = "DirectBank";
             break;
         case "가상계좌":
-            f.gopaymethod.value = "onlyvbank";
+            f.gopaymethod.value = "VBank";
             break;
         case "휴대폰":
-            f.gopaymethod.value = "onlyhpp";
+            f.gopaymethod.value = "HPP";
             break;
         case "신용카드":
-            f.gopaymethod.value = "onlycard";
+            f.gopaymethod.value = "Card";
             f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
             break;
         case "간편결제":
-            f.gopaymethod.value = "onlykpay";
+            f.gopaymethod.value = "Kpay";
             break;
         default:
             f.gopaymethod.value = "무통장";
@@ -1439,6 +1439,11 @@ function forderform_check(f)
     }
     <?php } ?>
     <?php if($default['de_pg_service'] == 'inicis') { ?>
+    f.price.value       = f.good_mny.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+    f.tax.value         = f.comm_vat_mny.value;
+    f.taxfree.value     = f.comm_free_mny.value;
+    <?php } ?>
     f.buyername.value   = f.od_name.value;
     f.buyeremail.value  = f.od_email.value;
     f.buyertel.value    = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
@@ -1448,12 +1453,31 @@ function forderform_check(f)
     f.recvaddr.value    = f.od_b_addr1.value + " " +f.od_b_addr2.value;
 
     if(f.gopaymethod.value != "무통장") {
-        if(!set_encrypt_data(f))
+        // 주문정보 임시저장
+        var order_data = $(f).serialize();
+        var save_result = "";
+        $.ajax({
+            type: "POST",
+            data: order_data,
+            url: g5_url+"/shop/ajax.orderdatasave.php",
+            cache: false,
+            async: false,
+            success: function(data) {
+                save_result = data;
+            }
+        });
+
+        if(save_result) {
+            alert(save_result);
+            return false;
+        }
+
+        if(!make_signature(f))
             return false;
 
-        return pay(f);
+        paybtn(f);
     } else {
-        return true;
+        f.submit();
     }
     <?php } ?>
 }

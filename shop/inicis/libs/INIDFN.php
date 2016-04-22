@@ -3,8 +3,8 @@
 /**
  * Copyright (C) 2007 INICIS Inc.
  *
- * ÇØ´ç ¶óÀÌºê·¯¸®´Â Àı´ë ¼öÁ¤µÇ¾î¼­´Â ¾ÈµË´Ï´Ù.
- * ÀÓÀÇ·Î ¼öÁ¤µÈ ÄÚµå¿¡ ´ëÇÑ Ã¥ÀÓÀº ÀüÀûÀ¸·Î ¼öÁ¤ÀÚ¿¡°Ô ÀÖÀ½À» ¾Ë·Áµå¸³´Ï´Ù.
+ * í•´ë‹¹ ë¼ì´ë¸ŒëŸ¬ë¦¬ëŠ” ì ˆëŒ€ ìˆ˜ì •ë˜ì–´ì„œëŠ” ì•ˆë©ë‹ˆë‹¤.
+ * ì„ì˜ë¡œ ìˆ˜ì •ëœ ì½”ë“œì— ëŒ€í•œ ì±…ì„ì€ ì „ì ìœ¼ë¡œ ìˆ˜ì •ìì—ê²Œ ìˆìŒì„ ì•Œë ¤ë“œë¦½ë‹ˆë‹¤.
  *
  * @version         5.0
  * @author          ddaemiri
@@ -15,37 +15,37 @@
  *
  * @buildno			    5001
  * @date            2008.01.15
- * @note						ÀÚÃ¼¿¡½ºÅ©·Î Ãß°¡, DNS Lookup Timeout Ãß°¡, DNS Lookup ½ÇÆĞ½Ã socket close¾ÈÇÏ´Â ºÎºĞ Ãß°¡
+ * @note						ìì²´ì—ìŠ¤í¬ë¡œ ì¶”ê°€, DNS Lookup Timeout ì¶”ê°€, DNS Lookup ì‹¤íŒ¨ì‹œ socket closeì•ˆí•˜ëŠ” ë¶€ë¶„ ì¶”ê°€
  * @date            2008.01.16
- * @note						Encrypt,Decrypt ¸ğµâ °³¼±, pkcs5 padding Ãß°¡
+ * @note						Encrypt,Decrypt ëª¨ë“ˆ ê°œì„ , pkcs5 padding ì¶”ê°€
  * @date            2008.01.24
  * @note						non block connect immediate return check code/str	
  * @date            2008.02.11
- * @note						key load ÈÄ read¿¡·¯¹ß»ı½Ã fclose Ãß°¡
+ * @note						key load í›„ readì—ëŸ¬ë°œìƒì‹œ fclose ì¶”ê°€
  * @date            2008.03.03
- * @note						ÂüÁ¶¿¡ ÀÇÇÑ Àü´Ş(passing by reference) ¼öÁ¤
+ * @note						ì°¸ì¡°ì— ì˜í•œ ì „ë‹¬(passing by reference) ìˆ˜ì •
  * @date            2008.03.11
- * @note						¿¡½ºÅ©·Î ¸ÁÃë¼Ò Cmd Ãß°¡
+ * @note						ì—ìŠ¤í¬ë¡œ ë§ì·¨ì†Œ Cmd ì¶”ê°€
  * @date            2008.03.12
- * @note						±âÁ¸ ¿¬°áµÈ IP·Î ¸ÁÃë¼Ò ¼öÁ¤
+ * @note						ê¸°ì¡´ ì—°ê²°ëœ IPë¡œ ë§ì·¨ì†Œ ìˆ˜ì •
  * @buildno			    5002
- * @note						¸ÁÃë¼Ò½Ã SignÃß°¡(±âÁ¸¿¡ ¾ÈÇßÀ½->5001Àº ¸ÁÃë¼Ò½Ã ¼­¹öÃø¿¡¼­ ¼­¸í¿À·ù°¡ ³²,±×·¡µµ ¸ÁÃë¼ÒÃ³¸®´Â µÊ)
+ * @note						ë§ì·¨ì†Œì‹œ Signì¶”ê°€(ê¸°ì¡´ì— ì•ˆí–ˆìŒ->5001ì€ ë§ì·¨ì†Œì‹œ ì„œë²„ì¸¡ì—ì„œ ì„œëª…ì˜¤ë¥˜ê°€ ë‚¨,ê·¸ë˜ë„ ë§ì·¨ì†Œì²˜ë¦¬ëŠ” ë¨)
  * @date            2008.03.12
  * @buildno			    5016
- * @note						pg1ip, pg2ip Ãß°¡/Ãë¼Ò ¿ø°Å·¡¾øÀ½½Ã drpg·Î Àç½Ãµµ
+ * @note						pg1ip, pg2ip ì¶”ê°€/ì·¨ì†Œ ì›ê±°ë˜ì—†ìŒì‹œ drpgë¡œ ì¬ì‹œë„
  * @date            2008.04.02
  * @buildno			    5017
- * @note						1)chkfake½Ã ÆÄ¶ó¹ÌÅÍ ·Î±ë »èÁ¦(Áßº¹)
- * 									2)call-time pass-by-reference => pass-by-value·Î ¼öÁ¤
+ * @note						1)chkfakeì‹œ íŒŒë¼ë¯¸í„° ë¡œê¹… ì‚­ì œ(ì¤‘ë³µ)
+ * 									2)call-time pass-by-reference => pass-by-valueë¡œ ìˆ˜ì •
  * @date            2009.01.12
  * @buildno			    5019
  * @note						delete UIP
  * @date            2009.01.21
  * @note						add mkey/mergelog ( for Makeshop )
  * @date            2009.02.24
- * @note            1)define MKEY deprecated 2009.02.19 ( Makeshop ÃÊ±â ÇÑ¹ø³ª°¨. ¼­ºñ½ºµÇ°í ÀÖ´ÂÁö´Â ¸ğ¸§)
- *                  2)Makeshop PG Updrade¿ëÀ¸·Î »õ·Î³ª°¨ 2009.02.19 (interface¿¡¼­ mkey°ªÀ» ¹Ş¾Æ Ã³¸®ÇÏ°Ô º¯°æ)
- *                  3)Makeshop PG Updrade¿ëÀ¸·Î »õ·Î³ª°¨ 2009.02.24 (interface¿¡¼­ mergelog°ªÀ» ¹Ş¾Æ Ã³¸®ÇÏ°Ô º¯°æ)
+ * @note            1)define MKEY deprecated 2009.02.19 ( Makeshop ì´ˆê¸° í•œë²ˆë‚˜ê°. ì„œë¹„ìŠ¤ë˜ê³  ìˆëŠ”ì§€ëŠ” ëª¨ë¦„)
+ *                  2)Makeshop PG Updradeìš©ìœ¼ë¡œ ìƒˆë¡œë‚˜ê° 2009.02.19 (interfaceì—ì„œ mkeyê°’ì„ ë°›ì•„ ì²˜ë¦¬í•˜ê²Œ ë³€ê²½)
+ *                  3)Makeshop PG Updradeìš©ìœ¼ë¡œ ìƒˆë¡œë‚˜ê° 2009.02.24 (interfaceì—ì„œ mergelogê°’ì„ ë°›ì•„ ì²˜ë¦¬í•˜ê²Œ ë³€ê²½)
  * @date            2009.05.07
  * @note						add BUILDDATE in TXVersion
  * @date            2009.08.05
@@ -57,12 +57,12 @@
  * @date			2010.07.14  
  * @note 						add Tax, TaxFree info(TX_TAX, TX_TAXFREE)
  * @date 			2010.09.09
- * @note						Ãë¼Ò¿äÃ»½Ã PG ¼³Á¤ º¯°æ(µµ¸ŞÀÎ->IP, INILib.php)
+ * @note						ì·¨ì†Œìš”ì²­ì‹œ PG ì„¤ì • ë³€ê²½(ë„ë©”ì¸->IP, INILib.php)
  * @note 						BUILDDATE update(100414 -> 100909)
- * @note            2011.05.23      5030                XML ELEMENT Áß  ROOT ¸¦ ROOTINFO·Î ¼öÁ¤
+ * @note            2011.05.23      5030                XML ELEMENT ì¤‘  ROOT ë¥¼ ROOTINFOë¡œ ìˆ˜ì •
  * @buildno			    5032
- * @note			2012.07.09	°Å·¡Á¶È¸ Ãß°¡ (TYPE_INQUIRY)
- * @note			2012.07.09	PHP ini ÆÄÀÏ error display setting Ãß°¡
+ * @note			2012.07.09	ê±°ë˜ì¡°íšŒ ì¶”ê°€ (TYPE_INQUIRY)
+ * @note			2012.07.09	PHP ini íŒŒì¼ error display setting ì¶”ê°€
  * @buildno			    5036
  * @note			2014.12.09	add gather parameter tid, type
  */
@@ -111,8 +111,8 @@ define("IMJK", "UkVHSVNUX05PX1JDNEtFWQ==");
 define("IMJV", "UkVHSVNUX05PX1JDNElW");
 
 //define for mkey
-//deprecated 2009.02.19 ( Makeshop ÃÊ±â ÇÑ¹ø³ª°¨. ¼­ºñ½ºµÇ°í ÀÖ´ÂÁö´Â ¸ğ¸§)
-//Makeshop PG Updrade¿ëÀ¸·Î »õ·Î³ª°¨ 2009.02.19 (interface¿¡¼­ mkey°ªÀ» ¹Ş¾Æ Ã³¸®ÇÏ°Ô º¯°æ)
+//deprecated 2009.02.19 ( Makeshop ì´ˆê¸° í•œë²ˆë‚˜ê°. ì„œë¹„ìŠ¤ë˜ê³  ìˆëŠ”ì§€ëŠ” ëª¨ë¦„)
+//Makeshop PG Updradeìš©ìœ¼ë¡œ ìƒˆë¡œë‚˜ê° 2009.02.19 (interfaceì—ì„œ mkeyê°’ì„ ë°›ì•„ ì²˜ë¦¬í•˜ê²Œ ë³€ê²½)
 //define("MKEY", 1);
 //non block connect immediate return check code/str
 define("ERRSTR_INPROGRESS", "Operation now in progress");
@@ -152,24 +152,24 @@ define("CMD_REQ_PRTC", "0620");
 define("CMD_RES_PRTC", "0630");
 define("CMD_REQ_ACK", "0800");
 define("CMD_RES_ACK", "0810");
-//ÀÚÃ¼¿¡½ºÅ©·Î
+//ìì²´ì—ìŠ¤í¬ë¡œ
 //added 2008.01.08
-define("CMD_REQ_DLV", "3020"); //¹è¼Ûµî·Ï
-define("CMD_REQ_CNF", "3030"); //±¸¸ÅÈ®ÀÎ
-define("CMD_REQ_DNY", "3040"); //±¸¸Å°ÅÀı 
-define("CMD_REQ_DNY_CNF", "3080"); //°ÅÀıÈ®ÀÎ
-define("CMD_REQ_DLV_NETC", "3520"); //¹è¼Ûµî·Ï¸Á»óÃë¼Ò
-define("CMD_REQ_CNF_NETC", "3530"); //±¸¸ÅÈ®ÀÎ¸Á»óÃë¼Ò
-define("CMD_REQ_DNY_NETC", "3540"); //±¸¸Å°ÅÀı¸Á»óÃë¼Ò 
-//°¡»ó°èÁÂÈ¯ºÒ(09.08.05)
+define("CMD_REQ_DLV", "3020"); //ë°°ì†¡ë“±ë¡
+define("CMD_REQ_CNF", "3030"); //êµ¬ë§¤í™•ì¸
+define("CMD_REQ_DNY", "3040"); //êµ¬ë§¤ê±°ì ˆ 
+define("CMD_REQ_DNY_CNF", "3080"); //ê±°ì ˆí™•ì¸
+define("CMD_REQ_DLV_NETC", "3520"); //ë°°ì†¡ë“±ë¡ë§ìƒì·¨ì†Œ
+define("CMD_REQ_CNF_NETC", "3530"); //êµ¬ë§¤í™•ì¸ë§ìƒì·¨ì†Œ
+define("CMD_REQ_DNY_NETC", "3540"); //êµ¬ë§¤ê±°ì ˆë§ìƒì·¨ì†Œ 
+//ê°€ìƒê³„ì¢Œí™˜ë¶ˆ(09.08.05)
 define("CMD_REQ_RFD", "0421");
 define("CMD_RES_RFD", "0431");
 
-//°Å·¡Á¶È¸(12.04.20)
+//ê±°ë˜ì¡°íšŒ(12.04.20)
 define("CMS_REQ_INQR", "0900");
 define("CMS_RES_INQR", "0910");
 
-//¼­ºê¸ôÇÏÀ§°¡¸ÍÁ¡µî·Ï(14.03.06)
+//ì„œë¸Œëª°í•˜ìœ„ê°€ë§¹ì ë“±ë¡(14.03.06)
 define("CMS_REQ_OPEN_SUB", "1040");
 define("CMS_RES_OPEN_SUB", "1041");
 
@@ -187,14 +187,14 @@ define("FLAG_SIGN_SHA1", "SHA1");
 define("FLAG_SIGN_MD5", "MD5");
 
 //------------------------------------------------------
-//TYPE(¼­ºñ½ºº°)
+//TYPE(ì„œë¹„ìŠ¤ë³„)
 //------------------------------------------------------
 define("TYPE_SECUREPAY", "securepay");
 define("TYPE_CANCEL", "cancel");
 define("TYPE_FORMPAY", "formpay");
 define("TYPE_RECEIPT", "receipt");
 define("TYPE_REPAY", "repay");
-define("TYPE_ESCROW", "escrow");  //ÀÚÃ¼¿¡½ºÅ©·Î!
+define("TYPE_ESCROW", "escrow");  //ìì²´ì—ìŠ¤í¬ë¡œ!
 define("TYPE_CONFIRM", "confirm");
 define("TYPE_OCBQUERY", "ocbquery");
 define("TYPE_OCBSAVE", "ocbsave");
@@ -207,26 +207,26 @@ define("TYPE_VBANK", "VBank");
 define("TYPE_REQREALBILL", "reqrealbill");
 define("TYPE_FORMAUTH", "formauth");
 define("TYPE_CHKFAKE", "chkfake");
-//°¡»ó°èÁÂÈ¯ºÒ(09.08.05)
+//ê°€ìƒê³„ì¢Œí™˜ë¶ˆ(09.08.05)
 define("TYPE_REFUND", "refund");
-//°¡»ó°èÁÂºÎºĞÈ¯ºÒ(12.06.05)
+//ê°€ìƒê³„ì¢Œë¶€ë¶„í™˜ë¶ˆ(12.06.05)
 define("TYPE_VACCTREPAY", "vacctrepay");
-//°Å·¡Á¶È¸(12.04.20)
+//ê±°ë˜ì¡°íšŒ(12.04.20)
 define("TYPE_INQUIRY", "inquiry");
-//¼­ºê¸ôÇÏÀ§°¡¸ÍÁ¡µî·Ï(14.03.06)
+//ì„œë¸Œëª°í•˜ìœ„ê°€ë§¹ì ë“±ë¡(14.03.06)
 define("TYPE_OPENSUB", "opensub");
 //------------------------------------------------------
-//EscrowType(ÀÚÃ¼¿¡½ºÅ©·Î Å¸ÀÔ)
+//EscrowType(ìì²´ì—ìŠ¤í¬ë¡œ íƒ€ì…)
 //added 2008.01.08
 //------------------------------------------------------
 define("TYPE_ESCROW_DLV", "dlv");
-define("TYPE_ESCROW_CNF", "confirm"); //±¸¸ÅÈ®ÀÎ/°ÅÀı(ÇÃ·¯±×ÀÎ)
-define("TYPE_ESCROW_DNY", "deny");  //À§¿¡¼­ Ã³¸®µÊ,ÀÇ¹Ì¾øÀ½
+define("TYPE_ESCROW_CNF", "confirm"); //êµ¬ë§¤í™•ì¸/ê±°ì ˆ(í”ŒëŸ¬ê·¸ì¸)
+define("TYPE_ESCROW_DNY", "deny");  //ìœ„ì—ì„œ ì²˜ë¦¬ë¨,ì˜ë¯¸ì—†ìŒ
 define("TYPE_ESCROW_DNY_CNF", "dcnf");
 
 
 //------------------------------------------------------
-//PayMethod(¼­ºñ½ºº°, TX)
+//PayMethod(ì„œë¹„ìŠ¤ë³„, TX)
 //------------------------------------------------------
 define("NM_TX_ISP", "VCard");
 define("NM_TX_CARD", "Card");
@@ -244,7 +244,7 @@ define("NM_TX_TEEN", "TEEN");
 define("NM_TX_ESCR", "Escrow");
 
 //------------------------------------------------------
-//PayMethod(¼­ºñ½ºº°, PG)
+//PayMethod(ì„œë¹„ìŠ¤ë³„, PG)
 //------------------------------------------------------
 define("NM_ISP", "ISP");
 define("NM_CARD", "CARD");
@@ -274,7 +274,7 @@ define("URLENCODE", "urlencode");
 define("URLDECODE", "urldecode");
 
 //------------------------------------------------------
-//¿äÃ»Àü¹®
+//ìš”ì²­ì „ë¬¸
 //------------------------------------------------------
 define("TX_GOOSCNT", "GoodsCnt");
 define("TX_MOID", "MOID");
@@ -317,8 +317,8 @@ define("TX_RN", "TXRN");
 //CancelInfo
 define("TX_CANCELTID", "CancelTID");
 define("TX_CANCELMSG", "CancelMsg");
-define("TX_CANCELREASON", "CancelReason");      //2012-10-19 Ãë¼Ò»çÀ¯ÄÚµå Ãß°¡
-//°¡»ó°èÁÂÈ¯ºÒ(09.08.05)
+define("TX_CANCELREASON", "CancelReason");      //2012-10-19 ì·¨ì†Œì‚¬ìœ ì½”ë“œ ì¶”ê°€
+//ê°€ìƒê³„ì¢Œí™˜ë¶ˆ(09.08.05)
 define("TX_REFUNDACCTNUM", "RefundAcctNum");
 define("TX_REFUNDBANKCODE", "RefundBankCode");
 define("TX_REFUNDACCTNAME", "RefundAcctName");
@@ -333,15 +333,15 @@ define("TX_PRTC_TAXFREE", "TaxFree");
 
 define("TX_PRTC_CURRENCY", "Currency");
 
-//±¹¹ÎÀºÇà I°èÁÂÀÌÃ¼ ºÎºĞÃë¼Ò½Ã °èÁÂ¹øÈ£/°èÁÂÁÖ¼º¸íÃß°¡ 2011-10-06
+//êµ­ë¯¼ì€í–‰ Iê³„ì¢Œì´ì²´ ë¶€ë¶„ì·¨ì†Œì‹œ ê³„ì¢Œë²ˆí˜¸/ê³„ì¢Œì£¼ì„±ëª…ì¶”ê°€ 2011-10-06
 define("TX_PRTC_NOACCT", "PRTC_NoAcctFNBC");
 define("TX_PRTC_NMACCT", "PRTC_NmAcctFNBC");
-//°¡»ó°èÁÂ ºÎºĞÈ¯ºÒ °ü·Ã Ãß°¡ 
+//ê°€ìƒê³„ì¢Œ ë¶€ë¶„í™˜ë¶ˆ ê´€ë ¨ ì¶”ê°€ 
 define("TX_PRTC_REFUNDFLGREMIT", "PRTC_RefundFlgRemit");
 define("TX_PRTC_REFUNDBANKCODE", "PRTC_RefundBankCode");
 //CaptureInfo
 define("TX_CAPTURETID", "CaptureTID");
-//Çö±İ¿µ¼öÁõ
+//í˜„ê¸ˆì˜ìˆ˜ì¦
 define("TX_CSHR_APPLPRICE", "CSHR_ApplPrice");
 define("TX_CSHR_SUPPLYPRICE", "CSHR_SupplyPrice");
 define("TX_CSHR_TAX", "CSHR_Tax");
@@ -357,9 +357,9 @@ define("TX_CSHR_SUBREGNUM1", "CSHR_SubRegNum1");
 define("TX_CSHR_SUBMID1", "CSHR_SubMID1");
 define("TX_CSHR_SUBAPPLPRICE1", "CSHR_SubApplPrice1");
 define("TX_CSHR_SUBSERVICEPRICE1", "CSHR_SubServicePrice1");
-//°Å·¡Á¶È¸(12.04.20)
+//ê±°ë˜ì¡°íšŒ(12.04.20)
 define("TX_INQR_TID", "INQR_TID");
-//¼­ºê¸ôÇÏÀ§°¡¸ÍÁ¡µî·Ï(14.03.06)
+//ì„œë¸Œëª°í•˜ìœ„ê°€ë§¹ì ë“±ë¡(14.03.06)
 define("TX_OPENREG_TID", "OrgTID");
 define("TX_OPENREG_MID", "MID");
 define("TX_OPENREG_SUBCNT", "SubCnt");
@@ -374,7 +374,7 @@ define("TX_OPENREG_SUBPRICE", "SubPrice");
 
 //------------------------------------------------------
 //
-//ÀÀ´äÀü¹®
+//ì‘ë‹µì „ë¬¸
 //
 //------------------------------------------------------
 //HEAD
@@ -433,9 +433,9 @@ define("CANCELINFO", "CancelInfo");
 define("PARTCANCELINFO", "PartCancelInfo");
 //Capture
 define("CAPTUREINFO", "CaptureInfo");
-//°Å·¡Á¶È¸(12.04.20)
+//ê±°ë˜ì¡°íšŒ(12.04.20)
 define("INQUIRYINFO", "InquiryInfo");
-//¼­ºê¸ôÇÏÀ§°¡¸ÍÁ¡µî·Ï(14.03.06)
+//ì„œë¸Œëª°í•˜ìœ„ê°€ë§¹ì ë“±ë¡(14.03.06)
 define("OPENSUBINFO", "OpenSubInfo");
 //Escrow
 //added 2008.01.09
@@ -541,7 +541,7 @@ define("TEEN_APPLNUM", "TEEN_ApplNum");
 //----------------------------------
 //ERROR CODE
 //----------------------------------
-//!!½ÅTX¿¡ Ãß°¡µÈ ¿¡·¯!!!
+//!!ì‹ TXì— ì¶”ê°€ëœ ì—ëŸ¬!!!
 define("NULL_DIR_ERR", "TX9001");
 define("NULL_TYPE_ERR", "TX9002");
 define("NULL_NOINTEREST_ERR", "TX9003");
@@ -551,7 +551,7 @@ define("MERCHANT_DB_ERR", "TX9006");
 define("DNS_LOOKUP_TIMEOUT_ERR", "TX9007");
 define("PGPUB_UPDATE_ERR", "TX9612");
 
-//¾Ïº¹È£È­ ¿¡·¯
+//ì•”ë³µí˜¸í™” ì—ëŸ¬
 define("B64DECODE_UPDATE_ERR", "TX9101");
 define("B64DECODE_FINAL_ERR", "TX9102");
 define("B64DECODE_LENGTH_ERR", "TX9103");
@@ -576,7 +576,7 @@ define("SIGN_CHECK_ERR", "TX9121");
 define("ENC_NULL_F_ERR", "TX9122");
 define("ENC_INIT_RAND_ERR", "TX9123");
 define("ENC_PUTENV_ERR", "TX9124");
-//ÇÊµåÃ¼Å©
+//í•„ë“œì²´í¬
 define("NULL_KEYPW_ERR", "TX9201");
 define("NULL_MID_ERR", "TX9202");
 define("NULL_PGID_ERR", "TX9203");
@@ -607,37 +607,37 @@ define("NULL_BUYERNAME_ERR", "TX9227");
 define("NULL_BUYERTEL_ERR", "TX9228");
 define("NULL_BUYEREMAIL_ERR", "TX9229");
 define("NULL_SESSIONKEY_ERR", "TX9230");
-//pg°ø°³Å° ·Îµå ¿À·ù
+//pgê³µê°œí‚¤ ë¡œë“œ ì˜¤ë¥˜
 define("NULL_PGCERT_FP_ERR", "TX9231");
 define("NULL_X509_ERR", "TX9232");
 define("NULL_PGCERT_ERR", "TX9233");
 
 define("RESULT_MSG_FORMAT_ERR", "TX9234");
 
-// °¡»ó °èÁÂ ÀÌÃ¼ ¿¹¾à
-define("NULL_PERNO_ERR", "TX9235");  // ÁÖ¹Î¹øÈ£ ºüÁü
-define("NULL_OID_ERR", "TX9236");  // ÁÖ¹®¹øÈ£ ºüÁü
-define("NULL_VCDBANK_ERR", "TX9237");  // ÀºÇàÄÚµå ºüÁü
-define("NULL_DTINPUT_ERR", "TX9238");  // ÀÔ±İ ¿¹Á¤ÀÏ ºüÁü
-define("NULL_NMINPUT_ERR", "TX9239");  // ¼Û±İÀÚ ¼º¸í ºüÁü
-//½Ç½Ã°£ ºô¸µ
-define("NULL_BILLKEY_ERR", "TX9240");  // ºôÅ° ºüÁü
-define("NULL_CARDPASS_ERR", "TX9241");  // Ä«µå ºñ¹ø ºüÁü
-define("NULL_BILLTYPE_ERR", "TX9242");  // ºôÅ¸ÀÔ ´©¶ô
-// CMS °èÁÂÀÌÃ¼
-define("NULL_PRICE_ORG_ERR", "TX9250"); // CMS Ãâ±İÃÑ±İ¾× ºüÁü
-define("NULL_CMSDAY_ERR", "TX9251"); // CMS Ãâ±İÀÏÀÚ ºüÁü
-define("NULL_CMSDATEFROM_ERR", "TX9252"); // CMS Ãâ±İ½ÃÀÛ¿ù ºüÁü
-define("NULL_CMSDATETO_ERR", "TX9253"); // CMS Ãâ±İÁ¾·á¿ù ºüÁü
-// ºÎºĞÃë¼Ò
-define("NULL_CONFIRM_PRICE_ERR", "TX9260"); // Àç½ÂÀÎ ¿äÃ»±İ¾× ´©¶ô ¿¡·¯
-// Çö±İ¿µ¼öÁõ ¹ßÇà
-define("NULL_CR_PRICE_ERR", "TX9270"); // Çö±İ°áÁ¦ ±İ¾× ºüÁü
-define("NULL_SUP_PRICE_ERR", "TX9271"); // °ø±Ş°¡¾× ºüÁü
-define("NULL_TAX_ERR", "TX9272"); // ºÎ°¡¼¼ ºüÁü
-define("NULL_SRVC_PRICE_ERR", "TX9273"); // ºÀ»ç·á ºüÁü
-define("NULL_REG_NUM_ERR", "TX9274");  // ÁÖ¹Î¹øÈ£(»ç¾÷ÀÚ¹øÈ£)
-define("NULL_USEOPT_ERR", "TX9275"); // Çö±İ¿µ¼öÁõ ¿ëµµ ±¸ºĞÀÚ ºüÁü
+// ê°€ìƒ ê³„ì¢Œ ì´ì²´ ì˜ˆì•½
+define("NULL_PERNO_ERR", "TX9235");  // ì£¼ë¯¼ë²ˆí˜¸ ë¹ ì§
+define("NULL_OID_ERR", "TX9236");  // ì£¼ë¬¸ë²ˆí˜¸ ë¹ ì§
+define("NULL_VCDBANK_ERR", "TX9237");  // ì€í–‰ì½”ë“œ ë¹ ì§
+define("NULL_DTINPUT_ERR", "TX9238");  // ì…ê¸ˆ ì˜ˆì •ì¼ ë¹ ì§
+define("NULL_NMINPUT_ERR", "TX9239");  // ì†¡ê¸ˆì ì„±ëª… ë¹ ì§
+//ì‹¤ì‹œê°„ ë¹Œë§
+define("NULL_BILLKEY_ERR", "TX9240");  // ë¹Œí‚¤ ë¹ ì§
+define("NULL_CARDPASS_ERR", "TX9241");  // ì¹´ë“œ ë¹„ë²ˆ ë¹ ì§
+define("NULL_BILLTYPE_ERR", "TX9242");  // ë¹Œíƒ€ì… ëˆ„ë½
+// CMS ê³„ì¢Œì´ì²´
+define("NULL_PRICE_ORG_ERR", "TX9250"); // CMS ì¶œê¸ˆì´ê¸ˆì•¡ ë¹ ì§
+define("NULL_CMSDAY_ERR", "TX9251"); // CMS ì¶œê¸ˆì¼ì ë¹ ì§
+define("NULL_CMSDATEFROM_ERR", "TX9252"); // CMS ì¶œê¸ˆì‹œì‘ì›” ë¹ ì§
+define("NULL_CMSDATETO_ERR", "TX9253"); // CMS ì¶œê¸ˆì¢…ë£Œì›” ë¹ ì§
+// ë¶€ë¶„ì·¨ì†Œ
+define("NULL_CONFIRM_PRICE_ERR", "TX9260"); // ì¬ìŠ¹ì¸ ìš”ì²­ê¸ˆì•¡ ëˆ„ë½ ì—ëŸ¬
+// í˜„ê¸ˆì˜ìˆ˜ì¦ ë°œí–‰
+define("NULL_CR_PRICE_ERR", "TX9270"); // í˜„ê¸ˆê²°ì œ ê¸ˆì•¡ ë¹ ì§
+define("NULL_SUP_PRICE_ERR", "TX9271"); // ê³µê¸‰ê°€ì•¡ ë¹ ì§
+define("NULL_TAX_ERR", "TX9272"); // ë¶€ê°€ì„¸ ë¹ ì§
+define("NULL_SRVC_PRICE_ERR", "TX9273"); // ë´‰ì‚¬ë£Œ ë¹ ì§
+define("NULL_REG_NUM_ERR", "TX9274");  // ì£¼ë¯¼ë²ˆí˜¸(ì‚¬ì—…ìë²ˆí˜¸)
+define("NULL_USEOPT_ERR", "TX9275"); // í˜„ê¸ˆì˜ìˆ˜ì¦ ìš©ë„ êµ¬ë¶„ì ë¹ ì§
 
 define("PRIVKEY_FILE_OPEN_ERR", "TX9301");
 define("INVALID_KEYPASS_ERR", "TX9302");

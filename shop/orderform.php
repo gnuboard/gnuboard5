@@ -29,23 +29,6 @@ $s_cart_id = $tmp_cart_id;
 
 $g5['title'] = '주문서 작성';
 
-// 전자결제를 사용할 때만 실행
-if(!$is_mobile_order) {
-    if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use'] || $default['de_easy_pay_use']) {
-        switch($default['de_pg_service']) {
-            case 'lg':
-                $g5['body_script'] = '';
-                break;
-            case 'inicis':
-                $g5['body_script'] = ' onload="javascript:enable_click()"';
-                break;
-            default:
-                $g5['body_script'] = '';
-                break;
-        }
-    }
-}
-
 if(G5_IS_MOBILE)
     include_once(G5_MSHOP_PATH.'/_head.php');
 else
