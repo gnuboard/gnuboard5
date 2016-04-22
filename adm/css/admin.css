@@ -559,7 +559,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #orderitemlist #orderitemlist_close {padding:0 20px 10px;text-align:right}
 
 #sodr_list .list_escrow {display:block;color:#80bc0d;text-align:center}
-#sodr_list .list_test {display:block;text-align:center}
+#sodr_list .list_test {display:block;text-align:center;color:#ff3061}
 
 /* 주문내역 수정 */
 .sodr_nonpay {color:#ff6600}
