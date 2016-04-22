@@ -245,7 +245,6 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
             <label for="chkall" class="sound_only">주문 전체</label>
             <input type="checkbox" name="chkall" value="1" id="chkall" onclick="check_all(this.form)">
         </th>
-        <!-- <th scope="col" id="th_odrnum"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></th> -->
         <th scope="col" id="th_odrnum" rowspan="2" colspan="2"><a href="<?php echo title_sort("od_id", 1)."&amp;$qstr1"; ?>">주문번호</a></th>
         <th scope="col" id="th_odrer">주문자</th>
         <th scope="col" id="th_odrertel">주문자전화</th>
@@ -258,15 +257,11 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         <th scope="col" rowspan="3">보기</th>
     </tr>
     <tr>
-        <!-- <th scope="col" id="th_odrdate">주문일시</th> -->
-        <!-- <th scope="col">결제수단</th> -->
-        <!-- <th scope="col" id="th_odrid"><a href="<?php echo title_sort("mb_id")."&amp;$qstr1"; ?>">회원ID</a></th> -->
         <th scope="col" id="th_odrid">회원ID</th>
         <th scope="col" id="th_odrcnt">주문상품수</th>
         <th scope="col" id="th_odrall">누적주문수</th>
     </tr>
     <tr>
-        <!-- <th scope="col">배송일시</th> -->
         <th scope="col" id="odrstat">주문상태</th>
         <th scope="col" id="odrpay">결제수단</th>
         <th scope="col" id="delino">운송장번호</th>
@@ -339,8 +334,11 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
 
         // 주문 번호에 에스크로 표시
         $od_paytype = '';
+        if($row['od_test'])
+            $od_paytype .= '<span class="list_test">테스트</span>';
+
         if($default['de_escrow_use'] && $row['od_escrow'])
-            $od_paytype = '<span class="list_escrow">에스크로</span>';
+            $od_paytype .= '<span class="list_escrow">에스크로</span>';
 
         $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
 
@@ -360,10 +358,6 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
             <label for="chk_<?php echo $i; ?>" class="sound_only">주문번호 <?php echo $row['od_id']; ?></label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
-        <!-- <td headers="th_ordnum" class="td_odrnum2">
-            <?php echo $od_mobile; ?>
-            <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>"><?php echo $row['od_id']; ?></a><br>
-        </td> -->
         <td headers="th_ordnum" class="td_odrnum2" rowspan="2" colspan="2">
             <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="orderitem"><?php echo $disp_od_id; ?></a>
             <?php echo $od_mobile; ?>
@@ -382,12 +376,6 @@ if(!sql_query(" select mb_id from {$g5['g5_shop_order_delete_table']} limit 1 ",
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
-        <!-- <td headers="th_odrdate"><span class="sound_only">주문일시 </span><?php echo $row['od_time']; ?></td> -->
-        <!-- <td class="td_payby">
-            <input type="hidden" name="current_settle_case[<?php echo $i ?>]" value="<?php echo $row['od_settle_case'] ?>">
-            <?php echo $s_receipt_way; ?>
-        </td> -->
-        <!-- <td headers="th_odrid" class="td_name"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a></td> -->
         <td headers="th_odrid">
             <?php if ($row['mb_id']) { ?>
             <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sort1=<?php echo $sort1; ?>&amp;sort2=<?php echo $sort2; ?>&amp;sel_field=mb_id&amp;search=<?php echo $row['mb_id']; ?>"><?php echo $row['mb_id']; ?></a>

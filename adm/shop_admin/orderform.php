@@ -124,7 +124,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <input type="hidden" name="pg_cancel" value="0">
 
     <div class="tbl_head01 tbl_wrap">
-
         <table>
         <caption>주문 상품 목록</caption>
         <thead>
@@ -241,7 +240,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         ?>
         </tbody>
         </table>
-
     </div>
 
     <div class="btn_list02 btn_list">
@@ -276,6 +274,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <?php } ?>
 
 </section>
+
+<?php if($od['od_test']) { ?>
+<div>주의) 이 주문은 테스트용으로 실제 결제가 이루어지지 않았으므로 절대 배송하시면 안됩니다.</div>
+<?php } ?>
 
 <section id="anc_sodr_pay">
     <h2 class="h2_frm">주문결제 내역</h2>

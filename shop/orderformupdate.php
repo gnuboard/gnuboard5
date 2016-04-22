@@ -549,7 +549,8 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_hope_date      = '$od_hope_date',
                 od_time           = '".G5_TIME_YMDHIS."',
                 od_ip             = '$REMOTE_ADDR',
-                od_settle_case    = '$od_settle_case'
+                od_settle_case    = '$od_settle_case',
+                od_test           = '{$default['de_card_test']}'
                 ";
 $result = sql_query($sql, false);
 
@@ -815,8 +816,10 @@ $uid = md5($od_id.G5_TIME_YMDHIS.$REMOTE_ADDR);
 set_session('ss_orderview_uid', $uid);
 
 // 주문 정보 임시 데이터 삭제
-$sql = " delete from {$g5['g5_shop_order_data_table']} where od_id = '$od_id' and dt_pg = '$od_pg' ";
-sql_query($sql);
+if($od_pg == 'inicis') {
+    $sql = " delete from {$g5['g5_shop_order_data_table']} where od_id = '$od_id' and dt_pg = '$od_pg' ";
+    sql_query($sql);
+}
 
 // 주문번호제거
 set_session('ss_order_id', '');

@@ -88,6 +88,12 @@ if(!sql_query(" select P_AUTH_NO from {$g5['g5_shop_inicis_log_table']} limit 1 
                     ADD `P_AUTH_NO` varchar(255) NOT NULL DEFAULT '' AFTER `P_FN_NM` ", true);
 }
 
+// 테스트 주문필드 추가
+if(!sql_query(" select od_test from {$g5['g5_shop_order_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`
+                    ADD `od_test` tinyint(4) NOT NULL DEFAULT '0' AFTER `od_settle_case` ", true);
+}
+
 echo '<p>테이블 업그레이드 완료!</p>';
 
 include_once(G5_PATH.'/tail.sub.php');

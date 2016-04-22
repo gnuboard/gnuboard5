@@ -565,7 +565,8 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_time           = '".G5_TIME_YMDHIS."',
                 od_mobile         = '1',
                 od_ip             = '$REMOTE_ADDR',
-                od_settle_case    = '$od_settle_case'
+                od_settle_case    = '$od_settle_case',
+                od_test           = '{$default['de_card_test']}'
                 ";
 $result = sql_query($sql, false);
 
