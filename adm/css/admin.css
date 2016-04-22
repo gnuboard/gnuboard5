@@ -559,6 +559,7 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 #orderitemlist #orderitemlist_close {padding:0 20px 10px;text-align:right}
 
 #sodr_list .list_escrow {display:block;color:#80bc0d;text-align:center}
+#sodr_list .list_test {display:block;text-align:center}
 
 /* 주문내역 수정 */
 .sodr_nonpay {color:#ff6600}
@@ -589,6 +590,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #sodr_request_list p {position:relative;padding:5px 0;border-bottom:1px solid #e9e9e9}
 
 #anc_sodr_chk .dvr_link {color:#ff3061;text-decoration:underline}
+.od_test_caution{font-weight:bold;color:#ff0000;margin:10px 20px;font-size:1.167em;background:#ffe3e3;padding:10px}
 
 /* 주문통합내역 */
 #sodr_sort {margin:0 20px 20px;padding:0;list-style:none;zoom:1}
