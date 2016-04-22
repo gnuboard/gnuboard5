@@ -15,23 +15,6 @@ if($pp['pp_tno'])
 
 $g5['title'] = $pp['pp_name'].'님 개인결제';
 
-// 전자결제를 사용할 때만 실행
-if(!$is_mobile_pay) {
-    if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] || $default['de_card_use']) {
-        switch($default['de_pg_service']) {
-            case 'lg':
-                $g5['body_script'] = '';
-                break;
-            case 'inicis':
-                $g5['body_script'] = ' onload="javascript:enable_click()"';
-                break;
-            default:
-                $g5['body_script'] = ' onload="CheckPayplusInstall();"';
-                break;
-        }
-    }
-}
-
 if(G5_IS_MOBILE)
     include_once(G5_MSHOP_PATH.'/_head.php');
 else
@@ -55,6 +38,9 @@ if($default['de_escrow_use']) {
 $od_id = $pp_id;
 $tot_price = $pp['pp_price'];
 $goods = $pp['pp_name'].'님 개인결제';
+
+if($default['de_pg_service'] == 'inicis')
+    set_session('ss_order_inicis_id', $od_id);
 
 // 기기별 결제폼 include
 if($is_mobile_pay) {

@@ -258,17 +258,37 @@ function forderform_check(f)
     }
     <?php } ?>
     <?php if($default['de_pg_service'] == 'inicis') { ?>
+    f.price.value       = f.good_mny.value;
     f.buyername.value   = f.pp_name.value;
     f.buyeremail.value  = f.pp_email.value;
     f.buyertel.value    = f.pp_hp.value;
 
     if(f.gopaymethod.value != "무통장") {
-        if(!set_encrypt_data(f))
+        // 주문정보 임시저장
+        var order_data = $(f).serialize();
+        var save_result = "";
+        $.ajax({
+            type: "POST",
+            data: order_data,
+            url: g5_url+"/shop/ajax.orderdatasave.php",
+            cache: false,
+            async: false,
+            success: function(data) {
+                save_result = data;
+            }
+        });
+
+        if(save_result) {
+            alert(save_result);
+            return false;
+        }
+
+        if(!make_signature(f))
             return false;
 
-        return pay(f);
+        paybtn(f);
     } else {
-        return true;
+        f.submit();
     }
     <?php } ?>
 }

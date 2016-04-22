@@ -3,7 +3,10 @@ include_once('./_common.php');
 include_once(G5_LIB_PATH.'/json.lib.php');
 include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
 
-$orderNumber = get_session('ss_order_id');
+if($default['de_pg_service'] != 'inicis')
+    die(json_encode(array('error'=>'올바른 방법으로 이용해 주십시오.')));
+
+$orderNumber = get_session('ss_order_inicis_id');
 $price = preg_replace('#[^0-9]#', '', $_POST['price']);
 
 if(strlen($price) < 1)
