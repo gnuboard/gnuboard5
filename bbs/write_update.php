@@ -77,8 +77,14 @@ if ($w == 'u' || $w == 'r') {
 }
 
 // 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글은 사용일 경우에만 가능해야 함
-if (!$is_admin && !$board['bo_use_secret'] && $secret) {
+if (!$is_admin && !$board['bo_use_secret'] && (stripos($_POST['html'], 'secret') !== false || stripos($_POST['secret'], 'secret') !== false || stripos($_POST['mail'], 'secret') !== false)) {
 	alert('비밀글 미사용 게시판 이므로 비밀글로 등록할 수 없습니다.');
+}
+
+$secret = '';
+if (isset($_POST['secret']) && $_POST['secret']) {
+    if(preg_match('#secret#', strtolower($_POST['secret']), $matches))
+        $secret = $matches[0];
 }
 
 // 외부에서 글을 등록할 수 있는 버그가 존재하므로 비밀글 무조건 사용일때는 관리자를 제외(공지)하고 무조건 비밀글로 등록
@@ -88,12 +94,14 @@ if (!$is_admin && $board['bo_use_secret'] == 2) {
 
 $html = '';
 if (isset($_POST['html']) && $_POST['html']) {
-    $html = $_POST['html'];
+    if(preg_match('#html(1|2)#', strtolower($_POST['html']), $matches))
+        $html = $matches[0];
 }
 
 $mail = '';
 if (isset($_POST['mail']) && $_POST['mail']) {
-    $mail = $_POST['mail'];
+    if(preg_match('#mail#', strtolower($_POST['mail']), $matches))
+        $mail = $matches[0];
 }
 
 $notice = '';
