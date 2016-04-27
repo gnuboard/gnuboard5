@@ -94,6 +94,13 @@ if(!sql_query(" select od_test from {$g5['g5_shop_order_table']} limit 1 ", fals
                     ADD `od_test` tinyint(4) NOT NULL DEFAULT '0' AFTER `od_settle_case` ", true);
 }
 
+// 주문정보 임시저장 테이블에 장바구니 ID 필드 추가
+if(!sql_query(" select cart_id from {$g5['g5_shop_order_data_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_order_data_table']}`
+                    ADD `cart_id` bigint(20) unsigned NOT NULL AFTER `od_id`,
+                    ADD `mb_id` varchar(20) NOT NULL DEFAULT '' AFTER `cart_id` ", true);
+}
+
 echo '<p>테이블 업그레이드 완료!</p>';
 
 include_once(G5_PATH.'/tail.sub.php');

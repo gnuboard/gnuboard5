@@ -2200,13 +2200,13 @@ function cart_item_clean()
 }
 
 
-// 모바일 PG 주문 필드 생성
+// 임시주문 데이터로 주문 필드 생성
 function make_order_field($data, $exclude)
 {
     $field = '';
 
     foreach($data as $key=>$value) {
-        if(in_array($key, $exclude))
+        if(!empty($exclude) && in_array($key, $exclude))
             continue;
 
         if(is_array($value)) {
@@ -2220,7 +2220,6 @@ function make_order_field($data, $exclude)
 
     return $field;
 }
-
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝
 //==============================================================================

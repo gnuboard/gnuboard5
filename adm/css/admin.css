@@ -363,11 +363,8 @@ tfoot td {font-weight:bold;text-align:center}
 
 /* 공통 */
 .td_addr {text-align:left !important}
-
 .td_alignc {text-align:center}
-
 .td_addr_line {line-height:2em}
-
 .td_amount {width:70px;text-align:center}
 .td_auth {width:100px;text-align:center}
 .td_auth_mbnick {width:200px}
@@ -435,10 +432,11 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .td_category1{width:130px;text-align:center}
 .td_category2{width:100px;text-align:center}
 .td_category3{width:80px;text-align:center}
+.td_time{text-align:center;width:130px}
+.td_center{text-align:center;}
 
 .txt_true {color:#e8180c}
 .txt_false {color:#ccc}
-
 .txt_succeed {color:#40b300}
 .txt_fail {color:#ce4242}
 
@@ -943,3 +941,9 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #processing p{font-size:1.2em}
 .check_processing {width:300px;height:300px;margin:0 auto;background:url(../img/check.png) no-repeat 50% 50% }
 #processing button{background:#ff3061;border:none;color:#fff;padding: 15px;width:150px;margin-top:15px}
+
+
+/*미완료 주문*/
+#inorderlist .td_name{text-align:center !important}
+#anc_sodr_pay .btn_confirm{margin-top:30px}
+#anc_sodr_pay .btn_confirm .btn_submit{width:300px;height:40px;font-size:14px;}

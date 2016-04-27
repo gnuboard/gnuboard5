@@ -670,6 +670,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order_address` (
 DROP TABLE IF EXISTS `g5_shop_order_data`;
 CREATE TABLE IF NOT EXISTS `g5_shop_order_data` (
   `od_id` bigint(20) unsigned NOT NULL,
+  `cart_id` bigint(20) unsigned NOT NULL,
+  `mb_id` varchar(20) NOT NULL DEFAULT '',
   `dt_pg` varchar(255) NOT NULL DEFAULT '',
   `dt_data` text NOT NULL,
   `dt_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
