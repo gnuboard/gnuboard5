@@ -396,8 +396,11 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
 if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
-    $mb_datetime = $member['mb_datetime'] ? $member['mb_datetime'] : G5_TIME_YMDHIS;
-    $mb_md5 = md5($mb_id.$mb_email.$mb_datetime);
+    // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
+    $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+
+    sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
+
     $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
 
     ob_start();
@@ -405,7 +408,7 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     $content = ob_get_contents();
     ob_end_clean();
 
-    mailer($config['cf_title'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+    mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
 }
 
 
