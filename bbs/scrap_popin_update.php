@@ -10,6 +10,10 @@ if (!$is_member)
     exit;
 }
 
+// 게시글 존재하는지
+if(!$write['wr_id'])
+    alert_close('스크랩하시려는 게시글이 존재하지 않습니다.');
+
 $sql = " select count(*) as cnt from {$g5['scrap_table']}
             where mb_id = '{$member['mb_id']}'
             and bo_table = '$bo_table'
