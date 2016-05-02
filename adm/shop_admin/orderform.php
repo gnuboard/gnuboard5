@@ -213,14 +213,14 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 </td>
                 <?php } ?>
                 <td>
-                    <label for="ct_opt_chk_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo $opt['ct_option']; ?></label>
+                    <label for="ct_opt_chk_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['ct_option']); ?></label>
                     <input type="checkbox" name="ct_chk[<?php echo $chk_cnt; ?>]" id="ct_chk_<?php echo $chk_cnt; ?>" value="<?php echo $chk_cnt; ?>" class="sct_sel_<?php echo $i; ?>">
                     <input type="hidden" name="ct_id[<?php echo $chk_cnt; ?>]" value="<?php echo $opt['ct_id']; ?>">
-                    <?php echo $opt['ct_option']; ?>
+                    <?php echo get_text($opt['ct_option']); ?>
                 </td>
                 <td class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
                 <td class="td_num">
-                    <label for="ct_qty_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo $opt['ct_option']; ?> 수량</label>
+                    <label for="ct_qty_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['ct_option']); ?> 수량</label>
                     <input type="text" name="ct_qty[<?php echo $chk_cnt; ?>]" id="ct_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_qty']; ?>" required class="frm_input required" size="5">
                 </td>
                 <td class="td_num"><?php echo number_format($opt_price); ?></td>

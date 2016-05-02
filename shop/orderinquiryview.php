@@ -145,7 +145,7 @@ if($od['od_pg'] == 'lg') {
             </tr>
             <?php } ?>
             <tr>
-                <td headers="th_itopt"><?php echo $opt['ct_option']; ?></td>
+                <td headers="th_itopt"><?php echo get_text($opt['ct_option']); ?></td>
                 <td headers="th_itqty" class="td_mngsmall"><?php echo number_format($opt['ct_qty']); ?></td>
                 <td headers="th_itprice" class="td_numbig"><?php echo number_format($opt_price); ?></td>
                 <td headers="th_itsum" class="td_numbig"><?php echo number_format($sell_price); ?></td>

@@ -101,7 +101,7 @@ if($od['od_pg'] == 'lg') {
                     $sell_price = $opt_price * $opt['ct_qty'];
                     $point = $opt['ct_point'] * $opt['ct_qty'];
             ?>
-                <div class="li_opt"><?php echo $opt['ct_option']; ?></div>
+                <div class="li_opt"><?php echo get_text($opt['ct_option']); ?></div>
                 <div class="li_prqty">
                     <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
                     <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
