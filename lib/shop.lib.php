@@ -1101,7 +1101,7 @@ function print_item_options($it_id, $cart_id)
         $price_plus = '';
         if($row['io_price'] >= 0)
             $price_plus = '+';
-        $str .= '<li>'.$row['ct_option'].' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
+        $str .= '<li>'.get_text($row['ct_option']).' '.$row['ct_qty'].'개 ('.$price_plus.display_price($row['io_price']).')</li>'.PHP_EOL;
     }
 
     if($i > 0)
