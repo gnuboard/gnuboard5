@@ -9,7 +9,8 @@ if (!$config['cf_email_use'])
 if (!$is_member && $config['cf_formmail_is_member'])
     alert_close('회원만 이용하실 수 있습니다.');
 
-$to = base64_decode($to);
+$email_enc = new str_encrypt();
+$to = $email_enc->decrypt($to);
 
 if (substr_count($to, "@") > 1)
     alert_close('한번에 한사람에게만 메일을 발송할 수 있습니다.');
