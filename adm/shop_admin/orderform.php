@@ -390,7 +390,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <?php if ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '가상계좌') { ?>
                 <tr>
                     <th scope="row">계좌번호</th>
-                    <td><?php echo $od['od_bank_account']; ?></td>
+                    <td><?php echo get_text($od['od_bank_account']); ?></td>
                 </tr>
                 <?php } ?>
                 <tr>
@@ -414,7 +414,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <?php if ($od['od_settle_case'] == '휴대폰') { ?>
                 <tr>
                     <th scope="row">휴대폰번호</th>
-                    <td><?php echo $od['od_bank_account']; ?></td>
+                    <td><?php echo get_text($od['od_bank_account']); ?></td>
                     </tr>
                 <tr>
                     <th scope="row"><?php echo $od['od_settle_case']; ?> 결제액</th>
@@ -704,7 +704,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <?php if ($od['od_settle_case'] == '휴대폰') { ?>
                 <tr>
                     <th scope="row">휴대폰번호</th>
-                    <td><?php echo $od['od_bank_account']; ?></td>
+                    <td><?php echo get_text($od['od_bank_account']); ?></td>
                 </tr>
                 <tr>
                     <th scope="row"><label for="od_receipt_price"><?php echo $od['od_settle_case']; ?> 결제액</label></th>
