@@ -410,6 +410,24 @@ if (!$group['gr_use_access'] && $board['bo_read_level'] < 2 && !$secret) {
     naver_syndi_ping($bo_table, $wr_id);
 }
 
+// 파일개수 체크
+$file_count   = 0;
+$upload_count = count($_FILES['bf_file']['name']);
+
+for ($i=0; $i<$upload_count; $i++) {
+    if($_FILES['bf_file']['name'][$i] && is_uploaded_file($_FILES['bf_file']['tmp_name'][$i]))
+        $file_count++;
+}
+
+if($w == 'u') {
+    $file = get_file($bo_table, $wr_id);
+    if($file_count && (int)$file['count'] > $board['bo_upload_count'])
+        alert('기존 파일을 삭제하신 후 첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
+} else {
+    if($file_count > $board['bo_upload_count'])
+        alert('첨부파일을 '.number_format($board['bo_upload_count']).'개 이하로 업로드 해주십시오.');
+}
+
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
 @mkdir(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH.'/file/'.$bo_table, G5_DIR_PERMISSION);
