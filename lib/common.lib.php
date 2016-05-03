@@ -1200,7 +1200,8 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     global $g5;
     global $bo_table, $sca, $is_admin, $member;
 
-    $email = base64_encode($email);
+    $email_enc = new str_encrypt();
+    $email = $email_enc->encrypt($email);
     $homepage = set_http(clean_xss_tags($homepage));
 
     $name     = get_text($name, 0, true);
@@ -3187,5 +3188,52 @@ function check_vaild_callback($callback){
    } else {
              return true;
    }
+}
+
+// 문자열 암복호화
+class str_encrypt
+{
+    var $salt;
+    var $lenght;
+
+    function __construct($salt='')
+    {
+        if(!$salt)
+            $this->salt = md5(G5_MYSQL_PASSWORD);
+        else
+            $this->salt = $salt;
+
+        $this->length = strlen($this->salt);
+    }
+
+    function encrypt($str)
+    {
+        $length = strlen($str);
+        $result = '';
+
+        for($i=0; $i<$length; $i++) {
+            $char    = substr($str, $i, 1);
+            $keychar = substr($this->salt, ($i % $this->length) - 1, 1);
+            $char    = chr(ord($char) + ord($keychar));
+            $result .= $char;
+        }
+
+        return base64_encode($result);
+    }
+
+    function decrypt($str) {
+        $result = '';
+        $str    = base64_decode($str);
+        $length = strlen($str);
+
+        for($i=0; $i<$length; $i++) {
+            $char    = substr($str, $i, 1);
+            $keychar = substr($this->salt, ($i % $this->length) - 1, 1);
+            $char    = chr(ord($char) - ord($keychar));
+            $result .= $char;
+        }
+
+        return $result;
+    }
 }
 ?>

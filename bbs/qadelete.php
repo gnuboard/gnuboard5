@@ -29,6 +29,10 @@ for($i=0; $i<$count; $i++) {
     if($is_admin != 'super' && $row['mb_id'] != $member['mb_id'])
         continue;
 
+    // 답변이 달린 글은 삭제못함
+    if($is_admin != 'super' && !$row['qa_type'] && $row['qa_status'])
+        continue;
+
     // 첨부파일 삭제
     for($k=1; $k<=2; $k++) {
         @unlink(G5_DATA_PATH.'/qa/'.$row['qa_file'.$k]);

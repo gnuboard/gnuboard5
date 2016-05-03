@@ -16,15 +16,12 @@ $msg = array();
 $qaconfig = get_qa_config();
 
 // e-mail 체크
-if(isset($_POST['qa_email']) && $qa_email) {
+$qa_email = '';
+if(isset($_POST['qa_email']) && $_POST['qa_email'])
     $qa_email = get_email_address(trim($_POST['qa_email']));
 
-    if($qaconfig['qa_req_email'] && !$qa_email)
-        $msg[] = '이메일을 입력하세요.';
-
-    if (!preg_match("/([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)\.([0-9a-zA-Z_-]+)/", $qa_email))
-        $msg[] = '이메일 주소가 형식에 맞지 않습니다.';
-}
+if($qaconfig['qa_req_email'] && !$qa_email)
+    $msg[] = '이메일을 입력하세요.';
 
 $qa_subject = '';
 if (isset($_POST['qa_subject'])) {
