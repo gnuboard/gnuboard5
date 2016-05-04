@@ -128,7 +128,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </tr>
         <?php } ?>
 
-        <?php for ($i=0; $is_file && $i<$file['count']; $i++) { ?>
+        <?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
         <tr>
             <th scope="row">파일 #<?php echo $i+1 ?></th>
             <td>
