@@ -15,6 +15,14 @@ $msg = array();
 // 1:1문의 설정값
 $qaconfig = get_qa_config();
 
+if(trim($qaconfig['qa_category'])) {
+    $category = explode('|', $qaconfig['qa_category']);
+    if(!in_array($qa_category, $category))
+        alert('분류를 올바르게 지정해 주십시오.');
+} else {
+    alert('1:1문의 설정에서 분류를 설정해 주십시오');
+}
+
 // e-mail 체크
 $qa_email = '';
 if(isset($_POST['qa_email']) && $_POST['qa_email'])
@@ -101,6 +109,18 @@ if($w == 'u' || $w == 'a' || $w == 'r') {
             alert('답변글에는 다시 답변을 등록할 수 없습니다.');
     }
 }
+
+// 파일개수 체크
+$file_count   = 0;
+$upload_count = count($_FILES['bf_file']['name']);
+
+for ($i=1; $i<=$upload_count; $i++) {
+    if($_FILES['bf_file']['name'][$i] && is_uploaded_file($_FILES['bf_file']['tmp_name'][$i]))
+        $file_count++;
+}
+
+if($file_count > 2)
+    alert('첨부파일을 2개 이하로 업로드 해주십시오.');
 
 // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
 @mkdir(G5_DATA_PATH.'/qa', G5_DIR_PERMISSION);
