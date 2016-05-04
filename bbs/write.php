@@ -304,7 +304,6 @@ $secret_checked = "";
 
 if ($w == '') {
     $password_required = 'required';
-    $file = array('count'=>$file_count);
 } else if ($w == 'u') {
     $password_required = '';
 
@@ -338,6 +337,8 @@ if ($w == '') {
     }
 
     $file = get_file($bo_table, $wr_id);
+    if($file_count < $file['count'])
+        $file_count = $file['count'];
 } else if ($w == 'r') {
     if (strstr($write['wr_option'], 'secret')) {
         $is_secret = true;
@@ -349,7 +350,6 @@ if ($w == '') {
     for ($i=1; $i<=G5_LINK_COUNT; $i++) {
         $write['wr_link'.$i] = get_text($write['wr_link'.$i]);
     }
-    $file = array('count'=>$file_count);
 }
 
 set_session('ss_bo_table', $_REQUEST['bo_table']);
