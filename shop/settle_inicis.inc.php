@@ -15,17 +15,17 @@ if ($default['de_card_test']) {
         $default['de_inicis_sign_key'] = 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS';
     }
 
-    $stdpay_js_url = 'https:/stgstdpay.inicis.com/stdjs/INIStdPay.js';
+    $stdpay_js_url = 'https://stgstdpay.inicis.com/stdjs/INIStdPay.js';
 }
 else {
     $default['de_inicis_mid'] = "SIR".$default['de_inicis_mid'];
 
     if ($default['de_escrow_use'] == 1) {
-        // 에스크로결제 테스트
+        // 에스크로결제
         $useescrow = ':useescrow';
     }
     else {
-        // 일반결제 테스트
+        // 일반결제
         $useescrow = '';
     }
 
