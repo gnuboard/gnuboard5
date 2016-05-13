@@ -532,9 +532,9 @@ if(!isset($default['de_inicis_sign_key'])) {
             </td>
         </tr>
         <tr id="kcp_vbank_url" class="pg_vbank_url">
-            <th scope="row">KCP 가상계좌 입금통보 URL</th>
+            <th scope="row">NHN KCP 가상계좌<br>입금통보 URL</th>
             <td>
-                <?php echo help("KCP 가상계좌 사용시 다음 주소를 <strong><a href=\"http://admin.kcp.co.kr\" target=\"_blank\">KCP 관리자</a> &gt; 상점정보관리 &gt; 정보변경 &gt; 공통URL 정보 &gt; 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
+                <?php echo help("NHN KCP 가상계좌 사용시 다음 주소를 <strong><a href=\"http://admin.kcp.co.kr\" target=\"_blank\">NHN KCP 관리자</a> &gt; 상점정보관리 &gt; 정보변경 &gt; 공통URL 정보 &gt; 공통URL 변경후</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
                 <?php echo G5_SHOP_URL; ?>/settle_kcp_common.php</td>
         </tr>
         <tr id="inicis_vbank_url" class="pg_vbank_url">
@@ -647,7 +647,7 @@ if(!isset($default['de_inicis_sign_key'])) {
             <td>
                 <?php echo help('쇼핑몰에서 사용할 결제대행사를 선택합니다.'); ?>
                 <select id="de_pg_service" name="de_pg_service">
-                    <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>KCP</option>
+                    <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>NHN KCP</option>
                     <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG유플러스</option>
                     <option value="inicis" <?php echo get_selected($default['de_pg_service'], 'inicis'); ?>>KG이니시스</option>
                 </select>
@@ -656,17 +656,17 @@ if(!isset($default['de_inicis_sign_key'])) {
         <tr class="pg_info_fld kcp_info_fld">
             <th scope="row">
                 <label for="de_kcp_mid">KCP SITE CODE</label><br>
-                <a href="http://sir.kr/main/service/p_pg.php" target="_blank" id="scf_kcpreg" class="scf_pgreg">KCP서비스신청하기</a>
+                <a href="http://sir.kr/main/service/p_pg.php" target="_blank" id="scf_kcpreg" class="scf_pgreg">NHN KCP서비스신청하기</a>
             </th>
             <td>
-                <?php echo help("KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
+                <?php echo help("NHN KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 NHN KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
                 <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input" size="2" maxlength="3" style="font:bold 15px Verdana;"> 영대문자, 숫자 혼용 3자리
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld">
-            <th scope="row"><label for="de_kcp_site_key">KCP SITE KEY</label></th>
+            <th scope="row"><label for="de_kcp_site_key">NHN KCP SITE KEY</label></th>
             <td>
-                <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
+                <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 NHN KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
                 <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="32" maxlength="25">
             </td>
         </tr>
@@ -794,7 +794,7 @@ if(!isset($default['de_inicis_sign_key'])) {
                         <dt>휴대폰</dt><dd>테스트 지원되지 않음.</dd>
                     </dl>
                     <ul id="kcp_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
-                        <li>테스트결제의 <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">상점관리자</a> 로그인 정보는 KCP로 문의하시기 바랍니다. (기술지원 1544-8661)</li>
+                        <li>테스트결제의 <a href="http://testadmin8.kcp.co.kr/assist/login.LoginAction.do" target="_blank">상점관리자</a> 로그인 정보는 NHN KCP로 문의하시기 바랍니다. (기술지원 1544-8661)</li>
                         <li><b>일반결제</b>의 테스트 사이트코드는 <b>T0000</b> 이며, <b>에스크로 결제</b>의 테스트 사이트코드는 <b>T0007</b> 입니다.</li>
                     </ul>
                     <ul id="lg_cardtest_tip" class="scf_cardtest_tip_adm scf_cardtest_tip_adm_hide">
