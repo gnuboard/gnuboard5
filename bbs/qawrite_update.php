@@ -16,9 +16,11 @@ $msg = array();
 $qaconfig = get_qa_config();
 
 if(trim($qaconfig['qa_category'])) {
-    $category = explode('|', $qaconfig['qa_category']);
-    if(!in_array($qa_category, $category))
-        alert('분류를 올바르게 지정해 주십시오.');
+    if($w != 'a') {
+        $category = explode('|', $qaconfig['qa_category']);
+        if(!in_array($qa_category, $category))
+            alert('분류를 올바르게 지정해 주십시오.');
+    }
 } else {
     alert('1:1문의 설정에서 분류를 설정해 주십시오');
 }
@@ -28,7 +30,7 @@ $qa_email = '';
 if(isset($_POST['qa_email']) && $_POST['qa_email'])
     $qa_email = get_email_address(trim($_POST['qa_email']));
 
-if($qaconfig['qa_req_email'] && !$qa_email)
+if($w != 'a' && $qaconfig['qa_req_email'] && !$qa_email)
     $msg[] = '이메일을 입력하세요.';
 
 $qa_subject = '';
