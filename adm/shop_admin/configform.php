@@ -74,12 +74,6 @@ if(!isset($default['de_inicis_mid'])) {
                     ADD `de_inicis_admin_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_mid` ", true);
 }
 
-if(!isset($default['de_inicis_sign_key'])) {
-    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
-                    ADD `de_inicis_sign_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_mid` ", true);
-}
-
-
 // 모바일 초기화면 이미지 줄 수 필드 추가
 if(!isset($default['de_mobile_type1_list_row'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
