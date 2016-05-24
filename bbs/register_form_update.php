@@ -253,8 +253,12 @@ if ($w == '') {
     if ($config['cf_email_mb_member']) {
         $subject = '['.$config['cf_title'].'] 회원가입을 축하드립니다.';
 
-        $mb_md5 = md5($mb_id.$mb_email.G5_TIME_YMDHIS);
-        $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
+        if ($config['cf_use_email_certify']) {
+            $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+            sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
+            $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+        }
 
         ob_start();
         include_once ('./register_form_update_mail1.php');
