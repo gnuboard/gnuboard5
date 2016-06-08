@@ -276,20 +276,6 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
 
                         $tno = $od['od_tno'];
                         $tran_cd = '00200000';
-                        $g_conf_home_dir  = G5_SHOP_PATH.'/kcp';
-                        $g_conf_key_dir   = '';
-                        if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN')
-                        {
-                            $g_conf_log_dir   = G5_SHOP_PATH.'/kcp/log';
-                            $g_conf_key_dir   = G5_SHOP_PATH.'/kcp/bin/pub.key';
-                        }
-                        $g_conf_site_cd  = $default['de_kcp_mid'];
-
-                        if (preg_match("/^T000/", $g_conf_site_cd) || $default['de_card_test']) {
-                            $g_conf_gw_url  = "testpaygw.kcp.co.kr";
-                        } else {
-                            $g_conf_gw_url  = "paygw.kcp.co.kr";
-                        }
                         $cancel_msg = iconv_euckr('쇼핑몰 운영자 승인 취소');
                         $cust_ip = $_SERVER['REMOTE_ADDR'];
                         $bSucc_mod_type = "STSC";
