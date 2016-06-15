@@ -280,6 +280,7 @@ $i_price = $i_price + $i_send_cost + $i_send_cost2 - $i_temp_point - $i_send_cou
 $order_price = $tot_od_price + $send_cost + $send_cost2 - $tot_sc_cp_price - $od_temp_point;
 
 $od_status = '주문';
+$od_tno    = '';
 if ($od_settle_case == "무통장")
 {
     $od_receipt_point   = $i_temp_point;
