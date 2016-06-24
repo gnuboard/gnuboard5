@@ -1,11 +1,11 @@
 <?php
 include_once('./_common.php');
 
-if ($is_admin)
-{
-    if (!($token && get_session('ss_delete_token') == $token))
-        alert('토큰 에러로 삭제 불가합니다.');
-}
+$delete_token = get_session('ss_delete_token');
+set_session('ss_delete_token', '');
+
+if (!($token && $delete_token == $token))
+    alert('토큰 에러로 삭제 불가합니다.');
 
 //$wr = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
 
