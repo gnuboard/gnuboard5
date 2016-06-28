@@ -2,8 +2,8 @@
 // 코멘트 삭제
 include_once('./_common.php');
 
-$delete_comment_token = get_session('ss_delete_comment_token');
-set_session('ss_delete_comment_token', '');
+$delete_comment_token = get_session('ss_delete_comment_'.$comment_id.'_token');
+set_session('ss_delete_comment_'.$comment_id.'_token', '');
 
 if (!($token && $delete_comment_token == $token))
     alert('토큰 에러로 삭제 불가합니다.');
