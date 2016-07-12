@@ -687,10 +687,11 @@ if($is_kakaopay_use) {
 </div>
 
 <script>
+var zipcode = "";
+
 $(function() {
     var $cp_btn_el;
     var $cp_row_el;
-    var zipcode = "";
 
     $(".cp_btn").click(function() {
         $cp_btn_el = $(this);
@@ -934,10 +935,7 @@ $(function() {
         var addr = $(this).val().split(String.fromCharCode(30));
 
         if (addr[0] == "same") {
-            if($(this).is(":checked"))
-                gumae2baesong(true);
-            else
-                gumae2baesong(false);
+            gumae2baesong();
         } else {
             if(addr[0] == "new") {
                 for(i=0; i<10; i++) {
@@ -959,13 +957,10 @@ $(function() {
             var zip1 = addr[3].replace(/[^0-9]/g, "");
             var zip2 = addr[4].replace(/[^0-9]/g, "");
 
-            if(zip1 != "" && zip2 != "") {
-                var code = String(zip1) + String(zip2);
+            var code = String(zip1) + String(zip2);
 
-                if(zipcode != code) {
-                    zipcode = code;
-                    calculate_sendcost(code);
-                }
+            if(zipcode != code) {
+                calculate_sendcost(code);
             }
         }
     });
@@ -1081,6 +1076,8 @@ function calculate_sendcost(code)
         function(data) {
             $("input[name=od_send_cost2]").val(data);
             $("#od_send_cost2").text(number_format(String(data)));
+
+            zipcode = code;
 
             calculate_order_price();
         }
@@ -1483,30 +1480,19 @@ function forderform_check(f)
 }
 
 // 구매자 정보와 동일합니다.
-function gumae2baesong(checked) {
+function gumae2baesong() {
     var f = document.forderform;
 
-    if(checked == true) {
-        f.od_b_name.value = f.od_name.value;
-        f.od_b_tel.value  = f.od_tel.value;
-        f.od_b_hp.value   = f.od_hp.value;
-        f.od_b_zip.value  = f.od_zip.value;
-        f.od_b_addr1.value = f.od_addr1.value;
-        f.od_b_addr2.value = f.od_addr2.value;
-        f.od_b_addr3.value = f.od_addr3.value;
-        f.od_b_addr_jibeon.value = f.od_addr_jibeon.value;
+    f.od_b_name.value = f.od_name.value;
+    f.od_b_tel.value  = f.od_tel.value;
+    f.od_b_hp.value   = f.od_hp.value;
+    f.od_b_zip.value  = f.od_zip.value;
+    f.od_b_addr1.value = f.od_addr1.value;
+    f.od_b_addr2.value = f.od_addr2.value;
+    f.od_b_addr3.value = f.od_addr3.value;
+    f.od_b_addr_jibeon.value = f.od_addr_jibeon.value;
 
-        calculate_sendcost(String(f.od_b_zip.value));
-    } else {
-        f.od_b_name.value = "";
-        f.od_b_tel.value  = "";
-        f.od_b_hp.value   = "";
-        f.od_b_zip.value  = "";
-        f.od_b_addr1.value = "";
-        f.od_b_addr2.value = "";
-        f.od_b_addr3.value = "";
-        f.od_b_addr_jibeon.value = "";
-    }
+    calculate_sendcost(String(f.od_b_zip.value));
 }
 
 <?php if ($default['de_hope_date_use']) { ?>
