@@ -28,9 +28,9 @@ if ($_FILES['mobile_logo_img2']['name']) upload_file($_FILES['mobile_logo_img2']
 $de_kcp_mid = substr($_POST['de_kcp_mid'],0,3);
 
 // kcp 전자결제를 사용할 때 site key 입력체크
-if($_POST['de_pg_service'] == 'kcp' && ($_POST['de_iche_use'] || $_POST['de_vbank_use'] || $_POST['de_hp_use'] || $_POST['de_card_use'])) {
+if($_POST['de_pg_service'] == 'kcp' && !$_POST['de_card_test'] && ($_POST['de_iche_use'] || $_POST['de_vbank_use'] || $_POST['de_hp_use'] || $_POST['de_card_use'])) {
     if(trim($_POST['de_kcp_site_key']) == '')
-        alert('KCP SITE KEY를 입력해 주십시오.');
+        alert('NHN KCP SITE KEY를 입력해 주십시오.');
 }
 
 //
