@@ -176,6 +176,9 @@ $cart_count = sql_num_rows($result);
         <button type="button" onclick="return form_check('buy');" class="btn_submit">주문하기</button>
         <div><button type="button" onclick="return form_check('seldelete');" class="btn01">선택삭제</button>
         <button type="button" onclick="return form_check('alldelete');" class="btn01">비우기</button></div>
+        <?php if ($naverpay_button_js) { ?>
+        <div class="naverpay-cart"><?php echo $naverpay_request_js.$naverpay_button_js; ?></div>
+        <?php } ?>
         <?php } ?>
     </div>
 
@@ -226,6 +229,15 @@ $(function() {
     });
 
 });
+
+function fsubmit_check(f) {
+    if($("input[name^=ct_chk]:checked").size() < 1) {
+        alert("구매하실 상품을 하나이상 선택해 주십시오.");
+        return false;
+    }
+
+    return true;
+}
 
 function form_check(act) {
     var f = document.frmcartlist;

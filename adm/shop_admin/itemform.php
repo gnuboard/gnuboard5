@@ -109,6 +109,13 @@ if(!sql_query(" select it_shop_memo from {$g5['g5_shop_item_table']} limit 1 ", 
                     ADD `it_shop_memo` text NOT NULL AFTER `it_use_avg` ", true);
 }
 
+// 지식쇼핑 PID 필드추가
+// 상품메모 필드 추가
+if(!sql_query(" select ec_mall_pid from {$g5['g5_shop_item_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_table']}`
+                    ADD `ec_mall_pid` varchar(255) NOT NULL AFTER `it_shop_memo` ", true);
+}
+
 $pg_anchor ='<ul class="anchor">
 <li><a href="#anc_sitfrm_cate">상품분류</a></li>
 <li><a href="#anc_sitfrm_skin">스킨설정</a></li>
@@ -433,6 +440,13 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <label for="chk_ca_it_nocoupon">분류적용</label>
                 <input type="checkbox" name="chk_all_it_nocoupon" value="1" id="chk_all_it_nocoupon">
                 <label for="chk_all_it_nocoupon">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="ec_mall_pid">네이버쇼핑 상품ID</label></th>
+            <td colspan="2">
+                <?php echo help("네이버쇼핑에 입점한 경우 네이버쇼핑 상품ID를 입력하시면 네이버페이와 연동됩니다."); ?>
+                <input type="text" name="ec_mall_pid" value="<?php echo get_text($it['ec_mall_pid']); ?>" id="ec_mall_pid" class="frm_input" size="20">
             </td>
         </tr>
         <tr>

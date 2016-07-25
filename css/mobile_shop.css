@@ -726,3 +726,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 #sod_frm_pay{padding:10px 0}
 #sod_frm_pay h2{padding:10px 0 10px}
 #display_pay_button .btn_submit{padding:8px 5px}
+
+/*네이버페이*/
+.naverpay-item{padding-top:15px;clear:both}
+#sod_bsk_act .naverpay-cart{margin-top:15px;clear:both;position:static}

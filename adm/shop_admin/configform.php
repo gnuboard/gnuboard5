@@ -117,6 +117,17 @@ if(!isset($default['de_inicis_sign_key'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_inicis_sign_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_admin_key` ", true);
 }
+
+// 네이버페이 필드추가
+if(!isset($default['de_naverpay_mid'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_naverpay_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_kakaopay_cancelpwd`,
+                    ADD `de_naverpay_cert_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_naverpay_mid`,
+                    ADD `de_naverpay_button_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_naverpay_cert_key`,
+                    ADD `de_naverpay_test` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_naverpay_button_key`,
+                    ADD `de_naverpay_mb_id` varchar(255) NOT NULL DEFAULT '' AFTER `de_naverpay_test`,
+                    ADD `de_naverpay_sendcost` varchar(255) NOT NULL DEFAULT '' AFTER `de_naverpay_mb_id`", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -708,7 +719,7 @@ if(!isset($default['de_inicis_sign_key'])) {
         <tr>
             <th scope="row">
                 <label for="de_kakaopay_mid">카카오페이 상점MID</label>
-                <a href="http://sir.kr/main/service/kakaopay.php" target="_blank" id="scf_lgreg" class="scf_pgreg">카카오페이 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/kakaopay.php" target="_blank" class="scf_pgreg">카카오페이 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점아이디(MID) 10자리 중 첫 KHSIR과 끝 m 을 제외한 영문4자리를 입력 합니다. 예) KHSIRtestm"); ?>
@@ -742,6 +753,69 @@ if(!isset($default['de_inicis_sign_key'])) {
                 <?php echo help("카카오페이 상점관리자에서 설정하신 취소 비밀번호를 입력합니다.<br>입력하신 비밀번호와 상점관리자에서 설정하신 비밀번호가 일치하지 않으면 취소가 되지 않습니다."); ?>
                 <input type="text" name="de_kakaopay_cancelpwd" value="<?php echo $default['de_kakaopay_cancelpwd']; ?>" id="de_kakaopay_cancelpwd" class="frm_input" size="20">
             </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="de_naverpay_mid">네이버페이 가맹점 아이디</label>
+                <a href="http://sir.kr/main/service/naverpay.php" target="_blank" class="scf_pgreg">네이버페이 서비스신청하기</a>
+            </th>
+            <td>
+                <?php echo help("네이버페이 가맹점 아이디를 입력합니다."); ?>
+                <input type="text" name="de_naverpay_mid" value="<?php echo $default['de_naverpay_mid']; ?>" id="de_naverpay_mid" class="frm_input" size="20" maxlength="50">
+             </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="de_naverpay_cert_key">네이버페이 가맹점 인증키</label>
+            </th>
+            <td>
+                <?php echo help("네이버페이 가맹점 인증키를 입력합니다."); ?>
+                <input type="text" name="de_naverpay_cert_key" value="<?php echo $default['de_naverpay_cert_key']; ?>" id="de_naverpay_cert_key" class="frm_input" size="50" maxlength="100">
+             </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="de_naverpay_button_key">네이버페이 버튼 인증키</label>
+            </th>
+            <td>
+                <?php echo help("네이버페이 버튼 인증키를 입력합니다."); ?>
+                <input type="text" name="de_naverpay_button_key" value="<?php echo $default['de_naverpay_button_key']; ?>" id="de_naverpay_button_key" class="frm_input" size="50" maxlength="100">
+             </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="de_naverpay_test">네이버페이 결제테스트</label></th>
+            <td>
+                <?php echo help("네이버페이 결제테스트 여부를 설정합니다. 검수 과정 중에는 <strong>예</strong>로 설정해야 하며 최종 승인 후 <strong>아니오</strong>로 설정합니다."); ?>
+                <select id="de_naverpay_test" name="de_naverpay_test">
+                    <option value="1" <?php echo get_selected($default['de_naverpay_test'], 1); ?>>예</option>
+                    <option value="0" <?php echo get_selected($default['de_naverpay_test'], 0); ?>>아니오</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="de_naverpay_mb_id">네이버페이 결제테스트 아이디</label>
+            </th>
+            <td>
+                <?php echo help("네이버페이 결제테스트를 위한 테스트 회원 아이디를 입력합니다. 네이버페이 검수 과정에서 필요합니다."); ?>
+                <input type="text" name="de_naverpay_mb_id" value="<?php echo $default['de_naverpay_mb_id']; ?>" id="de_naverpay_mb_id" class="frm_input" size="20" maxlength="20">
+             </td>
+        </tr>
+        <tr>
+            <th scope="row">네이버페이 상품정보 XML URL</th>
+            <td>
+                <?php echo help("네이버페이에 상품정보를 XML 데이터로 제공하는 페이지입니다. 검수과정에서 아래의 URL 정보를 제공해야 합니다."); ?>
+                <?php echo G5_SHOP_URL; ?>/naverpay/naverpay_item.php
+             </td>
+        </tr>
+        <tr>
+            <th scope="row">
+                <label for="de_naverpay_sendcost">네이버페이 추가배송비 안내</label>
+            </th>
+            <td>
+                <?php echo help("네이버페이를 통한 결제 때 구매자에게 보여질 추가배송비 내용을 입력합니다.<br>예) 제주도 3,000원 추가, 제주도 외 도서·산간 지역 5,000원 추가"); ?>
+                <input type="text" name="de_naverpay_sendcost" value="<?php echo $default['de_naverpay_sendcost']; ?>" id="de_naverpay_sendcost" class="frm_input" size="70">
+             </td>
         </tr>
         <tr>
             <th scope="row">에스크로 사용</th>

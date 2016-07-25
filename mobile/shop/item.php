@@ -187,7 +187,7 @@ define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
 
 include_once(G5_MSHOP_PATH.'/_head.php');
-
+include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 
 // 상단 HTML
 echo '<div id="sit_hhtml">'.conv_content($it['it_mobile_head_html'], 1).'</div>';

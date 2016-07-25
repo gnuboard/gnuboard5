@@ -297,6 +297,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
             <?php } ?>
             <a href="javascript:item_wish(document.fitem, '<?php echo $it['it_id']; ?>');" id="sit_btn_wish">위시리스트</a>
             <a href="javascript:popup_item_recommend('<?php echo $it['it_id']; ?>');" id="sit_btn_rec">추천하기</a>
+            <?php if ($naverpay_button_js) { ?>
+            <div class="itemform-naverpay"><?php echo $naverpay_request_js.$naverpay_button_js; ?></div>
+            <?php } ?>
         </div>
 
         <script>
@@ -376,6 +379,67 @@ $(function(){
     });
 });
 
+function fsubmit_check(f)
+{
+    // 판매가격이 0 보다 작다면
+    if (document.getElementById("it_price").value < 0) {
+        alert("전화로 문의해 주시면 감사하겠습니다.");
+        return false;
+    }
+
+    if($(".sit_opt_list").size() < 1) {
+        alert("상품의 선택옵션을 선택해 주십시오.");
+        return false;
+    }
+
+    var val, io_type, result = true;
+    var sum_qty = 0;
+    var min_qty = parseInt(<?php echo $it['it_buy_min_qty']; ?>);
+    var max_qty = parseInt(<?php echo $it['it_buy_max_qty']; ?>);
+    var $el_type = $("input[name^=io_type]");
+
+    $("input[name^=ct_qty]").each(function(index) {
+        val = $(this).val();
+
+        if(val.length < 1) {
+            alert("수량을 입력해 주십시오.");
+            result = false;
+            return false;
+        }
+
+        if(val.replace(/[0-9]/g, "").length > 0) {
+            alert("수량은 숫자로 입력해 주십시오.");
+            result = false;
+            return false;
+        }
+
+        if(parseInt(val.replace(/[^0-9]/g, "")) < 1) {
+            alert("수량은 1이상 입력해 주십시오.");
+            result = false;
+            return false;
+        }
+
+        io_type = $el_type.eq(index).val();
+        if(io_type == "0")
+            sum_qty += parseInt(val);
+    });
+
+    if(!result) {
+        return false;
+    }
+
+    if(min_qty > 0 && sum_qty < min_qty) {
+        alert("선택옵션 개수 총합 "+number_format(String(min_qty))+"개 이상 주문해 주십시오.");
+        return false;
+    }
+
+    if(max_qty > 0 && sum_qty > max_qty) {
+        alert("선택옵션 개수 총합 "+number_format(String(max_qty))+"개 이하로 주문해 주십시오.");
+        return false;
+    }
+
+    return true;
+}
 
 // 바로구매, 장바구니 폼 전송
 function fitem_submit(f)
