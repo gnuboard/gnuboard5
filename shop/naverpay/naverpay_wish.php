@@ -24,7 +24,7 @@ for($i=0; $i<$count; $i++) {
     $description = urlencode($it['it_basic']);
     $price       = get_price($it);
     $image       = urlencode(get_naverpay_item_image_url($it_id));
-    $item_url    = urlencode($g5_shop_base_url.'/item.php?it_id='.$it_id);
+    $item_url    = urlencode(G5_SHOP_URL.'/item.php?it_id='.$it_id);
 
     $item .= '&ITEM_ID='.$id;
     if($it['ec_mall_pid'])
