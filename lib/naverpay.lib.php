@@ -16,7 +16,7 @@ class naverpay_register
 
     function get_sendcost()
     {
-        global $g5;
+        global $g5, $default;
 
         $options = $this->options;
         $send_cost = $this->send_cost;
@@ -29,6 +29,9 @@ class naverpay_register
 
         $cost = 0;
         $cnt  = 0;
+        $diff = 0;
+        $total_price = 0;
+        $diff_cost = 0;
 
         foreach($keys as $it_id) {
             $it = sql_fetch(" select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ");
@@ -71,8 +74,31 @@ class naverpay_register
                 }
             } else if($it['it_sc_type'] == 1) { // 무료배송
                 $cost += 0;
+            } else {
+                if($default['de_send_cost_case'] == '차등') {
+                    $total_price += $price;
+                    $diff++;
+                } else {
+                    $cost += 0;
+                }
             }
         }
+
+        if($default['de_send_cost_case'] == '차등' && $total_price >= 0 && $diff > 0) {
+            // 금액별차등 : 여러단계의 배송비 적용 가능
+            $send_cost_limit = explode(";", $default['de_send_cost_limit']);
+            $send_cost_list  = explode(";", $default['de_send_cost_list']);
+
+            for ($k=0; $k<count($send_cost_limit); $k++) {
+                // 총판매금액이 배송비 상한가 보다 작다면
+                if ($total_price < preg_replace('/[^0-9]/', '', $send_cost_limit[$k])) {
+                    $diff_cost = preg_replace('/[^0-9]/', '', $send_cost_list[$k]);
+                    break;
+                }
+            }
+        }
+
+        $cost += $diff_cost;
 
         // 모두 착불상품이면
         if(count($keys) == $cnt && $cnt > 0)
