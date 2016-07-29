@@ -19,6 +19,8 @@ $save_count_write = 0;
 $save_count_comment = 0;
 $cnt = 0;
 
+$wr_id_list = preg_replace('/[^0-9\,]/', '', $_POST['wr_id_list']);
+
 $sql = " select distinct wr_num from $write_table where wr_id in ({$wr_id_list}) order by wr_id ";
 $result = sql_query($sql);
 while ($row = sql_fetch_array($result))
