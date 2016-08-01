@@ -28,6 +28,8 @@ $g4_config_file = trim($_POST['file_path']);
 if(!$g4_config_file)
     alert('config.php 파일의 경로를 입력해 주십시오.');
 
+$g4_config_file = preg_replace('#/config.php$#i', '', $g4_config_file).'/config.php';
+
 if(!is_file($g4_config_file))
     alert('입력하신 경로에 config.php 파일이 존재하지 않습니다.');
 
