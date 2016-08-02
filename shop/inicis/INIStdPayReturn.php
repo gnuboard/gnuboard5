@@ -85,6 +85,16 @@ try {
             $tid = $resultMap['tid'];
             $oid = $resultMap['MOID'];
 
+            /*************************  결제보안 추가 2016-05-18 START ****************************/
+            $secureMap['mid']       = $mid;                         //mid
+            $secureMap['tstamp']    = $timestamp;                   //timestemp
+            $secureMap['MOID']      = $resultMap['MOID'];           //MOID
+            $secureMap['TotPrice']  = $resultMap['TotPrice'];       //TotPrice
+
+            // signature 데이터 생성
+            $secureSignature = $util->makeSignatureAuth($secureMap);
+            /*************************  결제보안 추가 2016-05-18 END ****************************/
+
             $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
             $row = sql_fetch($sql);
 
@@ -100,7 +110,7 @@ try {
                     $page_return_url .= '?sw_direct=1';
             }
 
-            if (strcmp('0000', $resultMap['resultCode']) == 0) {
+            if ((strcmp('0000', $resultMap['resultCode']) == 0) && (strcmp($secureSignature, $resultMap['authSignature']) == 0) ) { //결제보안 추가 2016-05-18
                 /*                         * ***************************************************************************
                  * 여기에 가맹점 내부 DB에 결제 결과를 반영하는 관련 프로그램 코드를 구현한다.
 
