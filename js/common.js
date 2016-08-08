@@ -546,6 +546,26 @@ function font_resize(id, rmv_class, add_class)
     set_cookie("ck_font_resize_add_class", add_class, 1, g5_cookie_domain);
 }
 
+/**
+ * 댓글 수정 토큰
+**/
+function set_comment_token(f)
+{
+    if(typeof f.token === "undefined")
+        $(f).prepend('<input type="hidden" name="token" value="">');
+
+    $.ajax({
+        url: g5_bbs_url+"/ajax.comment_token.php",
+        type: "GET",
+        dataType: "json",
+        async: false,
+        cache: false,
+        success: function(data, textStatus) {
+            f.token.value = data.token;
+        }
+    });
+}
+
 $(function(){
     $(".win_point").click(function() {
         win_point(this.href);
