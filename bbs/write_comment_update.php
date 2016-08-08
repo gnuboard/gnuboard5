@@ -3,6 +3,11 @@ define('G5_CAPTCHA', true);
 include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
+// 토큰체크
+$comment_token = trim(get_session('ss_comment_token'));
+if(!trim($_POST['token']) || !$comment_token || $comment_token != $_POST['token'])
+    alert('올바른 방법으로 이용해 주십시오.');
+
 // 090710
 if (substr_count($wr_content, "&#") > 50) {
     alert('내용에 올바르지 않은 코드가 다수 포함되어 있습니다.');

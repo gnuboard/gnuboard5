@@ -258,6 +258,8 @@ function fviewcomment_submit(f)
 
     <?php if($is_guest) echo chk_captcha_js();  ?>
 
+    set_comment_token(f);
+
     document.getElementById("btn_submit").disabled = "disabled";
 
     return true;
