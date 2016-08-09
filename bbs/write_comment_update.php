@@ -5,6 +5,7 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
 // 토큰체크
 $comment_token = trim(get_session('ss_comment_token'));
+set_session('ss_comment_token', '');
 if(!trim($_POST['token']) || !$comment_token || $comment_token != $_POST['token'])
     alert('올바른 방법으로 이용해 주십시오.');
 
