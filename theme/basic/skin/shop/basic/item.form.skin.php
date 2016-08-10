@@ -444,6 +444,9 @@ function fsubmit_check(f)
 // 바로구매, 장바구니 폼 전송
 function fitem_submit(f)
 {
+    f.action = "<?php echo $action_url; ?>";
+    f.target = "";
+
     if (document.pressed == "장바구니") {
         f.sw_direct.value = 0;
     } else { // 바로구매
