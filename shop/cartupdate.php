@@ -32,6 +32,10 @@ if($act == "buy")
     if(!count($_POST['ct_chk']))
         alert("주문하실 상품을 하나이상 선택해 주십시오.");
 
+    // 선택필드 초기화
+    $sql = " update {$g5['g5_shop_cart_table']} set ct_select = '0' where od_id = '$tmp_cart_id' ";
+    sql_query($sql);
+
     $fldcnt = count($_POST['it_id']);
     for($i=0; $i<$fldcnt; $i++) {
         $ct_chk = $_POST['ct_chk'][$i];
