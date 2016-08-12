@@ -68,7 +68,7 @@ jQuery(function ($) {
                 delete_url = $button.attr("data-delete");
             if( delete_url ){
                 $.ajax({
-                    url: othis.url+"?del=1&file="+ delete_url
+                    url: othis.url+"&del=1&file="+ delete_url
                 }).done(function (result) {
                 });
             }
@@ -122,7 +122,7 @@ jQuery(function ($) {
                 // Uncomment the following to send cross-domain cookies:
                 //xhrFields: {withCredentials: true},
                 //url: $('#fileupload').fileupload('option', 'url'),
-                url: this.url+"?t="+ oDate.getTime(),
+                url: this.url+"&t="+ oDate.getTime(),
                 dataType: 'json',
                 context: $('#fileupload')[0]
             }).always(function () {
