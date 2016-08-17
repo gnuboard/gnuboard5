@@ -1,6 +1,5 @@
 /**
- * SmartEditor2 NAVER_Library:SE2.8.2.O12056
- * Copyright NAVER Corp. Licensed under LGPL v2
+ * SmartEditor2 NAVER_Library:SE2.8.2.O4259f59 * Copyright NAVER Corp. Licensed under LGPL v2
  * See license text at http://dev.naver.com/projects/smarteditor/wiki/LICENSE
  */
 if(typeof window.nhn=='undefined'){window.nhn = {};}
@@ -4241,9 +4240,9 @@ nhn.husky.SE_EditingAreaManager = jindo.$Class({
 		return this.elEditingAreaContainer.offsetHeight;
 	}
 });
-var nSE2Version = "12056";
+var nSE2Version = "4259f59";
 nhn.husky.SE_EditingAreaManager.version = {
-	revision : "12056",
+	revision : "4259f59",
 	type : "open",
 	number : "2.8.2"
 };
