@@ -2996,6 +2996,11 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
     $p = @parse_url($url);
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
 
+    if(stripos($url, 'http:') !== false) {
+        if(!isset($p['scheme']) || !$p['scheme'] || !isset($p['host']) || !$p['host'])
+            alert('url 정보가 올바르지 않습니다.', $return_url);
+    }
+
     if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
         //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
         if ($p['host'] != $host) {
