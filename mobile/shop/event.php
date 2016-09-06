@@ -26,8 +26,10 @@ if ($sort != "")
 else
     $order_by = 'b.it_order, b.it_id desc';
 
-if ($skin)
+if ($skin) {
+    $skin = preg_replace('#\.+/#', '', $skin);
     $ev['ev_skin'] = $skin;
+}
 
 define('G5_SHOP_CSS_URL', G5_MSHOP_SKIN_URL);
 
