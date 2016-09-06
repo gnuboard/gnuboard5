@@ -38,7 +38,7 @@ if ($w == "u")
 
     $it_id    = $qa['it_id'];
 
-    if (!$iq_admin && $qa['mb_id'] != $member['mb_id']) {
+    if (!$is_admin && $qa['mb_id'] != $member['mb_id']) {
         alert_close("자신의 상품문의만 수정이 가능합니다.");
     }
 
