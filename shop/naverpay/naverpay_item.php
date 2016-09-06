@@ -9,7 +9,7 @@ $vars = array();
 foreach(explode('&', $query) as $pair) {
     list($key, $value) = explode('=', $pair);
     $key = urldecode($key);
-    $value = urldecode($value);
+    $value = preg_replace("/[^A-Za-z0-9\-_]/", "", urldecode($value));
     $vars[$key][] = $value;
 }
 
