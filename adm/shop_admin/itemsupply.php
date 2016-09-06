@@ -84,8 +84,8 @@ if($ps_run) {
         } // for
     } else {
         for($i=0; $i<$subject_count; $i++) {
-            $spl_subject = preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['subject'][$i])));
-            $spl_val = explode(',', preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['supply'][$i]))));
+            $spl_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['subject'][$i])));
+            $spl_val = explode(',', preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['supply'][$i]))));
             $spl_count = count($spl_val);
 
             for($j=0; $j<$spl_count; $j++) {

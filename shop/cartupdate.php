@@ -197,8 +197,8 @@ else // 장바구니에 담기
         // 이미 주문폼에 있는 같은 상품의 수량합계를 구한다.
         if($sw_direct) {
             for($k=0; $k<$opt_count; $k++) {
-                $io_id = $_POST['io_id'][$it_id][$k];
-                $io_type = $_POST['io_type'][$it_id][$k];
+                $io_id = preg_replace(G5_OPTION_ID_FILTER, '', $_POST['io_id'][$it_id][$k]);
+                $io_type = preg_replace('#[^01]#', '', $_POST['io_type'][$it_id][$k]);
                 $io_value = $_POST['io_value'][$it_id][$k];
 
                 $sql = " select SUM(ct_qty) as cnt from {$g5['g5_shop_cart_table']}
@@ -248,8 +248,8 @@ else // 장바구니에 담기
                     VALUES ";
 
         for($k=0; $k<$opt_count; $k++) {
-            $io_id = $_POST['io_id'][$it_id][$k];
-            $io_type = $_POST['io_type'][$it_id][$k];
+            $io_id = preg_replace(G5_OPTION_ID_FILTER, '', $_POST['io_id'][$it_id][$k]);
+            $io_type = preg_replace('#[^01]#', '', $_POST['io_type'][$it_id][$k]);
             $io_value = $_POST['io_value'][$it_id][$k];
 
             // 선택옵션정보가 존재하는데 선택된 옵션이 없으면 건너뜀

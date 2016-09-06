@@ -65,6 +65,9 @@ if(!defined('_THEME_PREVIEW_')) {
     }
 }
 
+// 옵션 ID 특수문자 필터링 패턴
+define('G5_OPTION_ID_FILTER', '/[\'\"\\\'\\\"]/');
+
 /*
 // 주문상태 상수
 define('G5_OD_STATUS_ORDER'     , '입금확인중');

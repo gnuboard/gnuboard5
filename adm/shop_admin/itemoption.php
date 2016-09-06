@@ -14,13 +14,13 @@ if($it['it_id']) {
     if(sql_num_rows($result))
         $po_run = true;
 } else if(!empty($_POST)) {
-    $opt1_subject = preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['opt1_subject'])));
-    $opt2_subject = preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['opt2_subject'])));
-    $opt3_subject = preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['opt3_subject'])));
+    $opt1_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt1_subject'])));
+    $opt2_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt2_subject'])));
+    $opt3_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt3_subject'])));
 
-    $opt1_val = preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['opt1'])));
-    $opt2_val = preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['opt2'])));
-    $opt3_val = preg_replace('/[\'\"]/', '', trim(stripslashes($_POST['opt3'])));
+    $opt1_val = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt1'])));
+    $opt2_val = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt2'])));
+    $opt3_val = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['opt3'])));
 
     if(!$opt1_subject || !$opt1_val) {
         echo '옵션1과 옵션1 항목을 입력해 주십시오.';
