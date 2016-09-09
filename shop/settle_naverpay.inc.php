@@ -69,7 +69,7 @@ if($default['de_naverpay_test'] || $default['de_card_test']) {
     $req_port     = 443;
     if($is_mobile_order) {
         $orderUrl = 'https://test-m.pay.naver.com/mobile/customer/order.nhn';
-        $wishUrl  = 'https://m.pay.naver.com/mobile/customer/wishList.nhn';
+        $wishUrl  = 'https://test-m.pay.naver.com/mobile/customer/wishList.nhn';
     } else {
         $orderUrl = 'https://test-pay.naver.com/customer/order.nhn';
         $wishUrl  = 'https://test-pay.naver.com/customer/wishlistPopup.nhn';
