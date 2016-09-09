@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '400800';
+$sub_menu = '400810';
 include_once('./_common.php');
 
 check_demo();
@@ -17,9 +17,9 @@ for ($i=0; $i<$count; $i++)
     // 실제 번호를 넘김
     $k = $_POST['chk'][$i];
 
-    $sql = " delete from {$g5['g5_shop_coupon_table']} where cp_id = '{$_POST['cp_id'][$k]}' ";
+    $sql = " delete from {$g5['g5_shop_coupon_zone_table']} where cz_id = '{$_POST['cz_id'][$k]}' ";
     sql_query($sql);
 }
 
-goto_url('./couponlist.php?'.$qstr);
+goto_url('./couponzonelist.php?'.$qstr);
 ?>

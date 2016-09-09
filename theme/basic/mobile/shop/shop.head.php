@@ -28,9 +28,9 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
         <?php } else { ?>
         <li><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>">LOGIN</a></li>
         <li><a href="<?php echo G5_BBS_URL ?>/register.php" id="snb_join">JOIN</a></li>
-
         <?php } ?>
         <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">MY PAGE</a></li>
+        <li><a href="<?php echo G5_SHOP_URL; ?>/couponzone.php">쿠폰존</a></li>
         <li><a href="<?php echo G5_SHOP_URL; ?>/cart.php" class="tnb_cart"><span></span>CART</a></li>
 
 

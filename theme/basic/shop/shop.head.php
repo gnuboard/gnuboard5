@@ -74,6 +74,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
                 <li><a href="<?php echo G5_BBS_URL; ?>/login.php?url=<?php echo $urlencode; ?>"><b>로그인</b></a></li>
                 <?php } ?>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/mypage.php">마이페이지</a></li>
+                <li><a href="<?php echo G5_SHOP_URL; ?>/couponzone.php">쿠폰존</a></li>
                 <li><a href="<?php echo G5_BBS_URL; ?>/faq.php">FAQ</a></li>
                 <li><a href="<?php echo G5_BBS_URL; ?>/qalist.php">1:1문의</a></li>
                 <li><a href="<?php echo G5_SHOP_URL; ?>/personalpay.php">개인결제</a></li>

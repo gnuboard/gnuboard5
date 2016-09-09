@@ -546,3 +546,23 @@
 .sqa_con_full {padding:0;height:auto !important}
 .sqa_con_btn {margin:5px 0 0;text-align:right}
 .sqa_con_btn button {margin:0;padding:5px;border:0;background:#565e60;color:#fff}
+
+
+/*쿠폰존 리스트*/
+.couponzone_list{margin:0 0 50px;}
+.couponzone_list h2{margin:0 0 5px}
+.couponzone_list p{margin:0 0 5px;}
+.couponzone_list ul{padding:0;margin:0;list-style:none}
+.couponzone_list ul:after {display:block;visibility:hidden;clear:both;content:""}
+.couponzone_list ul li{float:left;width:230px;height:210px;border:1px solid #e9e9e9;background:#f2f6f9;padding:0;margin:0 10px 10px 0;line-height:1.2em}
+.couponzone_list ul li img{width:100%;height:auto}
+.couponzone_list ul li .coupon_img{height:100px;overflow:hidden;border-bottom:1px solid #e9e9e9}
+.couponzone_list ul li .coupon_tit{margin:10px 10px 5px;font-weight:bold;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.couponzone_list ul li .coupon_date{margin: 5px 10px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.couponzone_list ul li .coupon_target{margin: 5px 10px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.couponzone_list ul li .coupon_point{margin: 5px 10px;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;}
+.couponzone_list ul li .coupon_btn{margin:10px;text-align:center}
+.couponzone_list ul li .coupon_btn .btn02{width:60%;padding:7px 0;background:#ec2037;border-color:#c92033}
+.couponzone_list ul li .coupon_btn .disabled {background: #ddd;border:1px;color:#999;border-color:#ddd}
+.couponzone_list .no_coupon{padding: 100px 0;text-align:center;color:#999}
+#point_coupon li{height:230px;}

@@ -101,6 +101,38 @@ if(!sql_query(" select cart_id from {$g5['g5_shop_order_data_table']} limit 1 ",
                     ADD `mb_id` varchar(20) NOT NULL DEFAULT '' AFTER `cart_id` ", true);
 }
 
+// 쿠폰존 테이블 추가
+if(isset($g5['g5_shop_coupon_zone_table'])) {
+    if(!sql_query(" DESCRIBE {$g5['g5_shop_coupon_zone_table']} ", false)) {
+        sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_coupon_zone_table']}` (
+                      `cz_id` int(11) NOT NULL AUTO_INCREMENT,
+                      `cz_type` tinyint(4) NOT NULL DEFAULT '0',
+                      `cz_subject` varchar(255) NOT NULL DEFAULT '',
+                      `cz_start` DATE NOT NULL DEFAULT '0000-00-00',
+                      `cz_end` DATE NOT NULL DEFAULT '0000-00-00',
+                      `cz_file` varchar(255) NOT NULL DEFAULT '',
+                      `cz_period` int(11) NOT NULL DEFAULT '0',
+                      `cz_point` INT(11) NOT NULL DEFAULT '0',
+                      `cp_method` TINYINT(4) NOT NULL DEFAULT '0',
+                      `cp_target` VARCHAR(255) NOT NULL DEFAULT '',
+                      `cp_price` INT(11) NOT NULL DEFAULT '0',
+                      `cp_type` TINYINT(4) NOT NULL DEFAULT '0',
+                      `cp_trunc` INT(11) NOT NULL DEFAULT '0',
+                      `cp_minimum` INT(11) NOT NULL DEFAULT '0',
+                      `cp_maximum` INT(11) NOT NULL DEFAULT '0',
+                      `cz_download` int(11) NOT NULL DEFAULT '0',
+                      `cz_datetime` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+                      PRIMARY KEY (`cz_id`)
+                    ) ENGINE=MyISAM DEFAULT CHARSET=utf8 ", true);
+    }
+}
+
+// 쿠폰테이블에 cz_id 필드 추가
+if(!sql_query(" select cz_id from {$g5['g5_shop_coupon_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_coupon_table']}`
+                    ADD `cz_id` int(11) NOT NULL DEFAULT '0' AFTER `mb_id` ", true);
+}
+
 echo '<p>테이블 업그레이드 완료!</p>';
 
 include_once(G5_PATH.'/tail.sub.php');

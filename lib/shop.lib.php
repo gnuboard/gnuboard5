@@ -2220,6 +2220,21 @@ function make_order_field($data, $exclude)
 
     return $field;
 }
+
+// 다운로드한 쿠폰인지
+function is_coupon_downloaded($mb_id, $cz_id)
+{
+    global $g5;
+
+    if(!$mb_id)
+        return false;
+
+    $sql = " select count(*) as cnt from {$g5['g5_shop_coupon_table']} where mb_id = '$mb_id' and cz_id = '$cz_id' ";
+    $row = sql_fetch($sql);
+
+    return ($row['cnt'] > 0);
+}
+
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝
 //==============================================================================
