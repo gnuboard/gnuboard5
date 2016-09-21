@@ -77,7 +77,7 @@ if( count($faq_master_list) ){
 
 <?php
 // 하단 HTML
-echo '<div id="faq_thtml">'.conv_content($fm['fm_tail_html'], 1).'</div>';
+echo '<div id="faq_thtml">'.conv_content($fm['fm_mobile_tail_html'], 1).'</div>';
 ?>
 
 <div id="faq_sch">
