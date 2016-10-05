@@ -3248,4 +3248,29 @@ class str_encrypt
         return $result;
     }
 }
+
+// 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
+function get_write_token($bo_table)
+{
+    $token = md5(uniqid(rand(), true));
+    set_session('ss_write_'.$bo_table.'_token', $token);
+
+    return $token;
+}
+
+
+// POST로 넘어온 토큰과 세션에 저장된 토큰 비교
+function check_write_token($bo_table)
+{
+    if(!$bo_table)
+        alert('올바른 방법으로 이용해 주십시오.', G5_URL);
+
+    $token = get_session('ss_write_'.$bo_table.'_token');
+    set_session('ss_write_'.$bo_table.'_token', '');
+
+    if(!$token || !$_REQUEST['token'] || $token != $_REQUEST['token'])
+        alert('올바른 방법으로 이용해 주십시오.', G5_URL);
+
+    return true;
+}
 ?>
