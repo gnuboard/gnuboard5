@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 <!-- <p>실행시간 : <?php echo get_microtime() - $begin_time; ?> -->
 
-<script src="<?php echo G5_ADMIN_URL ?>/admin.js<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo G5_ADMIN_URL ?>/admin.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script>
 $(function(){
     var hide_menu = false;

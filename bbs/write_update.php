@@ -3,6 +3,9 @@ include_once('./_common.php');
 include_once(G5_LIB_PATH.'/naver_syndi.lib.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
+// 토큰체크
+check_write_token($bo_table);
+
 $g5['title'] = '게시글 저장';
 
 $msg = array();
