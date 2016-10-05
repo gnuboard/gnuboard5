@@ -46,7 +46,7 @@ if($config['cf_add_meta'])
     echo $config['cf_add_meta'].PHP_EOL;
 ?>
 <title><?php echo $g5_head_title; ?></title>
-<link rel="stylesheet" href="<?php echo G5_THEME_CSS_URL; ?>/<?php echo G5_IS_MOBILE ? 'mobile' : 'default'; ?>.css">
+<link rel="stylesheet" href="<?php echo G5_THEME_CSS_URL; ?>/<?php echo G5_IS_MOBILE ? 'mobile' : 'default'; ?>.css?ver=<?php echo G5_CSS_VER; ?>">
 <!--[if lte IE 8]>
 <script src="<?php echo G5_JS_URL ?>/html5.js"></script>
 <![endif]-->
@@ -63,9 +63,9 @@ var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_edi
 var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
 </script>
 <script src="<?php echo G5_JS_URL ?>/jquery-1.8.3.min.js"></script>
-<script src="<?php echo G5_JS_URL ?>/jquery.menu.js"></script>
-<script src="<?php echo G5_JS_URL ?>/common.js"></script>
-<script src="<?php echo G5_JS_URL ?>/wrest.js"></script>
+<script src="<?php echo G5_JS_URL ?>/jquery.menu.js?ver=<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo G5_JS_URL ?>/common.js?ver=<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo G5_JS_URL ?>/wrest.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <?php
 if(G5_IS_MOBILE) {
     echo '<script src="'.G5_JS_URL.'/modernizr.custom.70111.js"></script>'.PHP_EOL; // overflow scroll 감지
