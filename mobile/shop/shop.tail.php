@@ -26,7 +26,7 @@ $admin = get_admin("super");
         <span><b>팩스</b> <?php echo $default['de_admin_company_fax']; ?></span><br>
         <!-- <span><b>운영자</b> <?php echo $admin['mb_name']; ?></span><br> -->
         <span><b>통신판매업신고번호</b> <?php echo $default['de_admin_tongsin_no']; ?></span><br>
-        <span><b>개인정보관리책임자</b> <?php echo $default['de_admin_info_name']; ?></span>
+        <span><b>개인정보 보호책임자</b> <?php echo $default['de_admin_info_name']; ?></span>
 
         <?php if ($default['de_admin_buga_no']) echo '<span><b>부가통신사업신고번호</b> '.$default['de_admin_buga_no'].'</span>'; ?><br>
         Copyright &copy; 2001-2013 <?php echo $default['de_admin_company_name']; ?>. All Rights Reserved.
