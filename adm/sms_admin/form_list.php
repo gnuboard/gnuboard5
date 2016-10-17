@@ -18,6 +18,9 @@ if (is_numeric($fg_no))
 else
     $sql_group = "";
 
+$st = clean_xss_tags($st);
+$sv = clean_xss_tags($sv);
+
 if ($st == 'all') {
     $sql_search = "and (fo_name like '%{$sv}%' or fo_content like '%{$sv}%')";
 } else if ($st == 'name') {
@@ -60,7 +63,7 @@ function book_all_checked(chk)
 function book_del(fo_no)
 {
     if (confirm("한번 삭제한 자료는 복구할 방법이 없습니다.\n\n그래도 삭제하시겠습니까?"))
-        location.href = "./form_update.php?w=d&fo_no=" + fo_no + "&page=<?php echo $page?>&fg_no=<?php echo $fg_no?>&st=<?php echo $st?>&sv=<?php echo $sv?>";
+        location.href = "./form_update.php?w=d&fo_no=" + fo_no + "&page=<?php echo $page?>&fg_no=<?php echo $fg_no?>&st=<?php echo get_text($st); ?>&sv=<?php echo get_text($sv); ?>";
 }
 
 function multi_update(sel)
@@ -127,7 +130,7 @@ function multi_update(sel)
         <option value="content"<?php echo get_selected('content', $st); ?>>이모티콘</option>
     </select>
     <label for="sv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="sv" value="<?php echo $sv;?>" id="sv" required class="frm_input required" >
+    <input type="text" name="sv" value="<?php echo get_text($sv) ;?>" id="sv" required class="frm_input required" >
     <input type="submit" value="검색" class="btn_submit">
     </form>
 </div>
@@ -181,7 +184,7 @@ function multi_update(sel)
             <span class="sound_only">등록 </span><?php echo date('Y-m-d', strtotime($res['fo_datetime']))?>
         </div>
         <div class="li_cmd">
-            <a href="./form_write.php?w=u&amp;fo_no=<?php echo $res['fo_no']?>&amp;page=<?php echo $page;?>&amp;fg_no=<?php echo $fg_no;?>&amp;st=<?php echo $st;?>&amp;sv=<?php echo $sv;?>">수정</a>
+            <a href="./form_write.php?w=u&amp;fo_no=<?php echo $res['fo_no']?>&amp;page=<?php echo $page;?>&amp;fg_no=<?php echo $fg_no;?>&amp;st=<?php echo get_text($st);?>&amp;sv=<?php echo get_text($sv);?>">수정</a>
             <a href="javascript:void(book_del('<?php echo $res['fo_no']?>'));">삭제</a>
             <a href="./sms_write.php?fo_no=<?php echo $res['fo_no']?>">보내기</a>
         </div>
