@@ -4,6 +4,9 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
+$sch_target = substr($_GET['sch_target'], 0, 1);
+$sch_word   = clean_xss_tags($_GET['sch_word']);
+
 if($_GET['sch_target'] == 1) {
     $html_title = '분류';
     $t_name = '분류명';
@@ -21,17 +24,17 @@ if($_GET['sch_target'] == 1) {
 $g5['title'] = $html_title.'검색';
 include_once(G5_PATH.'/head.sub.php');
 
-if($_GET['sch_target'] == 1) {
+if($sch_target == 1) {
     $sql_common = " from {$g5['g5_shop_category_table']} ";
     $sql_where = " where ca_use = '1' and ca_nocoupon = '0' ";
-    if($_GET['sch_word'])
+    if($sch_word)
         $sql_where .= " and ca_name like '%$sch_word%' ";
     $sql_select = " select ca_id as t_id, ca_name as t_name ";
     $sql_order = " order by ca_order, ca_name ";
 } else {
     $sql_common = " from {$g5['g5_shop_item_table']} ";
     $sql_where = " where it_use = '1' and it_nocoupon = '0' ";
-    if($_GET['sch_word'])
+    if($sch_word)
         $sql_where .= " and it_name like '%$sch_word%' ";
     $sql_select = " select it_id as t_id, it_name as t_name ";
     $sql_order = " order by it_order, it_name ";
@@ -50,7 +53,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 $sql = $sql_select . $sql_common . $sql_where . $sql_order . " limit $from_record, $rows ";
 $result = sql_query($sql);
 
-$qstr1 = 'sch_target='.$_GET['sch_target'].'&amp;sch_word='.$_GET['sch_word'];
+$qstr1 = 'sch_target='.$sch_target.'&amp;sch_word='.urlencode($sch_word);
 ?>
 
 <div id="sch_target_frm" class="new_win scp_new_win">
@@ -68,7 +71,7 @@ $qstr1 = 'sch_target='.$_GET['sch_target'].'&amp;sch_word='.$_GET['sch_word'];
 
     <div id="scp_list_find">
         <label for="sch_word"><?php echo $t_name; ?></label>
-        <input type="text" name="sch_word" id="sch_word" value="<?php echo $sch_word; ?>" class="frm_input required" required size="20">
+        <input type="text" name="sch_word" id="sch_word" value="<?php echo get_text($sch_word); ?>" class="frm_input required" required size="20">
         <input type="submit" value="검색" class="btn_frmline">
     </div>
 
