@@ -128,6 +128,21 @@ if(!isset($default['de_naverpay_mid'])) {
                     ADD `de_naverpay_mb_id` varchar(255) NOT NULL DEFAULT '' AFTER `de_naverpay_test`,
                     ADD `de_naverpay_sendcost` varchar(255) NOT NULL DEFAULT '' AFTER `de_naverpay_mb_id`", true);
 }
+
+// 유형별상품리스트 설정필드 추가
+if(!isset($default['de_listtype_list_skin'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_listtype_list_skin` varchar(255) NOT NULL DEFAULT '' AFTER `de_mobile_search_img_height`,
+                    ADD `de_listtype_list_mod` int(11) NOT NULL DEFAULT '0' AFTER `de_listtype_list_skin`,
+                    ADD `de_listtype_list_row` int(11) NOT NULL DEFAULT '0' AFTER `de_listtype_list_mod`,
+                    ADD `de_listtype_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_listtype_list_row`,
+                    ADD `de_listtype_img_height` int(11) NOT NULL DEFAULT '0' AFTER `de_listtype_img_width`,
+                    ADD `de_mobile_listtype_list_skin` varchar(255) NOT NULL DEFAULT '' AFTER `de_listtype_img_height`,
+                    ADD `de_mobile_listtype_list_mod` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_listtype_list_skin`,
+                    ADD `de_mobile_listtype_list_row` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_listtype_list_mod`,
+                    ADD `de_mobile_listtype_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_listtype_list_row`,
+                    ADD `de_mobile_listtype_img_height` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_listtype_img_width` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -1052,6 +1067,40 @@ if(!isset($default['de_naverpay_mid'])) {
                 <input type="text" name="de_mobile_search_list_mod" value="<?php echo $default['de_mobile_search_list_mod']; ?>" id="de_mobile_search_list_mod" class="frm_input" size="3">
                 <label for="de_mobile_search_list_row">출력할 줄 수</label>
                 <input type="text" name="de_mobile_search_list_row" value="<?php echo $default['de_mobile_search_list_row']; ?>" id="de_mobile_search_list_row" class="frm_input" size="3">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">유형별 상품리스트</th>
+            <td>
+                <label for="de_listtype_list_skin">스킨</label>
+                <select name="de_listtype_list_skin" id="de_listtype_list_skin">
+                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_listtype_list_skin']); ?>
+                </select>
+                <label for="de_listtype_img_width">이미지폭</label>
+                <input type="text" name="de_listtype_img_width" value="<?php echo $default['de_listtype_img_width']; ?>" id="de_listtype_img_width" class="frm_input" size="3">
+                <label for="de_listtype_img_height">이미지높이</label>
+                <input type="text" name="de_listtype_img_height" value="<?php echo $default['de_listtype_img_height']; ?>" id="de_listtype_img_height" class="frm_input" size="3">
+                <label for="de_listtype_list_mod">1줄당 이미지 수</label>
+                <input type="text" name="de_listtype_list_mod" value="<?php echo $default['de_listtype_list_mod']; ?>" id="de_listtype_list_mod" class="frm_input" size="3">
+                <label for="de_listtype_list_row">출력할 줄 수</label>
+                <input type="text" name="de_listtype_list_row" value="<?php echo $default['de_listtype_list_row']; ?>" id="de_listtype_list_row" class="frm_input" size="3">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">모바일 유형별 상품리스트</th>
+            <td>
+                <label for="de_mobile_listtype_list_skin">스킨</label>
+                <select name="de_mobile_listtype_list_skin" id="de_mobile_listtype_list_skin">
+                    <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_listtype_list_skin']); ?>
+                </select>
+                <label for="de_mobile_listtype_img_width">이미지폭</label>
+                <input type="text" name="de_mobile_listtype_img_width" value="<?php echo $default['de_mobile_listtype_img_width']; ?>" id="de_mobile_listtype_img_width" class="frm_input" size="3">
+                <label for="de_mobile_listtype_img_height">이미지높이</label>
+                <input type="text" name="de_mobile_listtype_img_height" value="<?php echo $default['de_mobile_listtype_img_height']; ?>" id="de_mobile_listtype_img_height" class="frm_input" size="3">
+                <label for="de_mobile_listtype_list_mod">1줄당 이미지 수</label>
+                <input type="text" name="de_mobile_listtype_list_mod" value="<?php echo $default['de_mobile_listtype_list_mod']; ?>" id="de_mobile_listtype_list_mod" class="frm_input" size="3">
+                <label for="de_mobile_listtype_list_row">출력할 줄 수</label>
+                <input type="text" name="de_mobile_listtype_list_row" value="<?php echo $default['de_mobile_listtype_list_row']; ?>" id="de_mobile_listtype_list_row" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
