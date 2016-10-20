@@ -712,7 +712,7 @@ function get_member($mb_id, $fields='*')
 // 제목별로 컬럼 정렬하는 QUERY STRING
 function subject_sort_link($col, $query_string='', $flag='asc')
 {
-    global $sst, $sod, $sfl, $stx, $page;
+    global $sst, $sod, $sfl, $stx, $page, $sca;
 
     $q1 = "sst=$col";
     if ($flag == 'asc')
@@ -744,6 +744,7 @@ function subject_sort_link($col, $query_string='', $flag='asc')
     $arr_query[] = $q2;
     $arr_query[] = 'sfl='.$sfl;
     $arr_query[] = 'stx='.$stx;
+    $arr_query[] = 'sca='.$sca;
     $arr_query[] = 'page='.$page;
     $qstr = implode("&amp;", $arr_query);
 
