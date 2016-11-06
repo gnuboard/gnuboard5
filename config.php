@@ -159,8 +159,25 @@ define('G5_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|[^A]skt|nokia|blackberry
 
 // SMTP
 // lib/mailer.lib.php 에서 사용
-define('G5_SMTP',      '127.0.0.1');
-define('G5_SMTP_PORT', '25');
+//
+// Gmail 및 외부 smtp 서버 사용할때, G5_SMTP_USE_EXT 1 로 세팅
+// 아래 예는 gmail 을 사용할때 임.
+//
+define('G5_SMTP_USE_EXT',  1);
+
+if(defined('G5_SMTP_USE_EXT') && G5_SMTP_USE_EXT == 1){
+  define('G5_SMTP',      'smtp.gmail.com');
+  define('G5_SMTP_PORT', '465');
+  define('G5_SMTP_USEAUTH', true);
+  define('G5_SMTP_USESECURE', 'ssl');
+  define('G5_SMTP_USER', 'yourusername@gmail.com');
+  define('G5_SMTP_PASS', 'yourpassword');
+}
+else
+{
+  define('G5_SMTP',      '127.0.0.1');
+  define('G5_SMTP_PORT', '25');
+}
 
 
 /********************
