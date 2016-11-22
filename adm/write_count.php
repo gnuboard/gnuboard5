@@ -14,7 +14,7 @@ add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.categoryAxi
 add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.pointLabels.min.js"></script>', 0);
 add_javascript('<!--[if lt IE 9]><script src="'.G5_PLUGIN_URL.'/jqplot/excanvas.js"></script><![endif]-->', 0);
 
-if (!($graph == 'line' || $graph == 'bar')) 
+if (!($graph == 'line' || $graph == 'bar'))
     $graph = 'line';
 
 if ($graph == 'bar') {
@@ -49,7 +49,7 @@ foreach($period_array as $key=>$value) {
         break;
     }
 }
-if (!$is_period) 
+if (!$is_period)
     $period = '오늘';
 
 $day = $period_array[$period][0];
@@ -64,15 +64,15 @@ if ($period == '오늘') {
     $from = $yesterday;
     $to = $from;
 } else if ($period == '내일') {
-    $from = date('Y-m-d', G5_SERVER_TIME + (86400 * 2)); 
+    $from = date('Y-m-d', G5_SERVER_TIME + (86400 * 2));
     $to = $from;
 } else {
-    $from = date('Y-m-d', G5_SERVER_TIME - (86400 * $period_array[$period][1])); 
+    $from = date('Y-m-d', G5_SERVER_TIME - (86400 * $period_array[$period][1]));
     $to = $yesterday;
 }
 
 $sql_bo_table = '';
-if ($bo_table) 
+if ($bo_table)
     $sql_bo_table = "and bo_table = '$bo_table'";
 
 switch ($day) {
@@ -130,7 +130,7 @@ switch ($day) {
     <form>
     <select name="bo_table">
     <option value="">전체게시판</a>
-    <?php 
+    <?php
     $sql = " select bo_table, bo_subject from {$g5['board_table']} order by bo_count_write desc ";
     $result = sql_query($sql);
     for($i=0; $row=sql_fetch_array($result); $i++) {
@@ -179,7 +179,7 @@ $(document).ready(function(){
     var line1 = [<?php echo implode($line1, ','); ?>];
     var line2 = [<?php echo implode($line2, ','); ?>];
     var plot1 = $.jqplot ('chart1', [line1, line2], {
-            seriesDefaults: { 
+            seriesDefaults: {
                 <?php if ($graph == 'bar') { ?>
                 renderer:$.jqplot.BarRenderer,
                 <?php } ?>
@@ -205,6 +205,6 @@ $(document).ready(function(){
 }
 ?>
 
-<?
+<?php
 include_once ('./admin.tail.php');
 ?>
