@@ -230,7 +230,7 @@ if($od['od_pg'] == 'lg') {
         $disp_bank = true;
         $disp_receipt = false;
         $easy_pay_name = '';
-        if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == 'KAKAOPAY') {
+        if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == 'KAKAOPAY' || $od['od_settle_case'] == '삼성페이') {
             $app_no_subj = '승인번호';
             $app_no = $od['od_app_no'];
             $disp_bank = false;
@@ -351,7 +351,7 @@ if($od['od_pg'] == 'lg') {
                         <?php
                         }
 
-                        if($od['od_settle_case'] == '신용카드')
+                        if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '삼성페이')
                         {
                             if($od['od_pg'] == 'lg') {
                                 require_once G5_SHOP_PATH.'/settle_lg.inc.php';
