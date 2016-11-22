@@ -183,7 +183,7 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
             $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
             $od = sql_fetch($sql);
 
-            if($od['od_tno'] && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '간편결제' || $od['od_settle_case'] == 'KAKAOPAY')) {
+            if($od['od_tno'] && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '간편결제' || $od['od_settle_case'] == 'KAKAOPAY') || ($od['od_pg'] == 'inicis' && $od['od_settle_case'] == '삼성페이')) {
                 switch($od['od_pg']) {
                     case 'lg':
                         include_once(G5_SHOP_PATH.'/settle_lg.inc.php');

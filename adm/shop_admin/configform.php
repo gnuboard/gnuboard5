@@ -102,6 +102,12 @@ if(!isset($default['de_easy_pay_use'])) {
                     ADD `de_easy_pay_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_iche_use` ", true);
 }
 
+// 이니시스 삼성페이 사용여부 필드 추가
+if(!isset($default['de_samsung_pay_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_samsung_pay_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_easy_pay_use` ", true);
+}
+
 // 카카오페이 필드 추가
 if(!isset($default['de_kakaopay_mid'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
@@ -729,6 +735,16 @@ if(!isset($default['de_listtype_list_skin'])) {
             <td>
                 <?php echo help("KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\n관리자 페이지의 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
                 <input type="text" name="de_inicis_sign_key" value="<?php echo $default['de_inicis_sign_key']; ?>" id="de_inicis_sign_key" class="frm_input" size="40" maxlength="50">
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row"><label for="de_samsung_pay_use">KG이니시스 삼성페이 버튼 사용</label></th>
+            <td>
+                <?php echo help("주문서 작성 페이지에 KG이니시스 삼성페이 버튼의 별도 사용 여부를 설정합니다.", 50); ?>
+                <select id="de_easy_pay_use" name="de_samsung_pay_use">
+                    <option value="0" <?php echo get_selected($default['de_samsung_pay_use'], 0); ?>>노출안함</option>
+                    <option value="1" <?php echo get_selected($default['de_samsung_pay_use'], 1); ?>>노출함</option>
+                </select>
             </td>
         </tr>
         <tr>

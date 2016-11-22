@@ -18,6 +18,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="DEF_RESERVED" value="bank_receipt=N&twotrs_isp=Y&block_isp=Y<?php echo $useescrow; ?>">
 <input type="hidden" name="P_NOTI"       value="<?php echo $od_id; ?>">
 <input type="hidden" name="P_QUOTABASE"  value="01:02:03:04:05:06:07:08:09:10:11:12"> <!-- 할부기간 설정 01은 일시불 -->
+<input type="hidden" name="P_SKIP_TERMS"      value="">
 
 <input type="hidden" name="good_mny"     value="<?php echo $tot_price; ?>" >
 

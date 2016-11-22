@@ -144,6 +144,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_card_test                  = '{$_POST['de_card_test']}',
                 de_card_use                   = '{$_POST['de_card_use']}',
                 de_easy_pay_use               = '{$_POST['de_easy_pay_use']}',
+                de_samsung_pay_use            = '{$_POST['de_samsung_pay_use']}',       
                 de_card_noint_use             = '{$_POST['de_card_noint_use']}',
                 de_card_point                 = '{$_POST['de_card_point']}',
                 de_settle_min_point           = '{$_POST['de_settle_min_point']}',

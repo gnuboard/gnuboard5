@@ -419,6 +419,22 @@ else if ($od_settle_case == "간편결제")
     if($od_misu == 0)
         $od_status      = '입금';
 }
+else if ($od_settle_case == "삼성페이")
+{
+    // 이니시스에서만 지원
+    include G5_MSHOP_PATH.'/inicis/pay_result.php';
+
+    $od_tno             = $tno;
+    $od_app_no          = $app_no;
+    $od_receipt_price   = $amount;
+    $od_receipt_point   = $i_temp_point;
+    $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
+    $od_bank_account    = $card_name;
+    $pg_price           = $amount;
+    $od_misu            = $i_price - $od_receipt_price;
+    if($od_misu == 0)
+        $od_status      = '입금';
+}
 else if ($od_settle_case == "KAKAOPAY")
 {
     include G5_SHOP_PATH.'/kakaopay/kakaopay_result.php';

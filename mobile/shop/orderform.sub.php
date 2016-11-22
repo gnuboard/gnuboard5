@@ -535,7 +535,7 @@ if($is_kakaopay_use) {
             $escrow_title = "에스크로 ";
         }
 
-        if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
+        if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || ('inicis' == $default['de_pg_service'] && $default['de_samsung_pay_use'])) {
             echo '<div id="sod_frm_paysel"><ul>';
         }
 
@@ -600,6 +600,12 @@ if($is_kakaopay_use) {
             $checked = '';
         }
 
+        //이니시스 삼성페이
+        if('inicis' == $default['de_pg_service'] && $default['de_samsung_pay_use']) {
+            echo '<li><input type="radio" id="od_settle_samsung_pay" name="od_settle_case" value="삼성페이" '.$checked.'> <label for="od_settle_samsung_pay" class="samsung_pay">삼성페이</label></li>'.PHP_EOL;
+            $checked = '';
+        }
+
         echo '</ul>';
 
         $temp_point = 0;
@@ -653,7 +659,7 @@ if($is_kakaopay_use) {
             echo '</div>';
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
+        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || ('inicis' == $default['de_pg_service'] && $default['de_samsung_pay_use'])) {
             echo '</div>';
         }
 
@@ -1253,6 +1259,11 @@ function pay_approval()
         case "간편결제":
             paymethod = "wcard";
             f.P_RESERVED.value = p_reserved+"&d_kpay=Y&d_kpay_app=Y";
+            break;
+        case "삼성페이":
+            paymethod = "wcard";
+            f.P_RESERVED.value = p_reserved+"&d_samsungpay=Y";
+            f.P_SKIP_TERMS.value = "Y"; //약관을 skip 해야 제대로 실행됨
             break;
     }
     f.P_AMT.value = f.good_mny.value;
