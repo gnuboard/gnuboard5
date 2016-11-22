@@ -355,7 +355,7 @@ html.no-overflowscrolling #sc_coupon_frm, html.no-overflowscrolling #od_coupon_f
 #sod_frm_paysel .PAYNOW{background:url('../../../img/paynow_logo.png') no-repeat;width:46px;height:15px;overflow:hidden;text-indent:-999px;display:inline-block;}
 #sod_frm_paysel .PAYCO{background:url('../../../img/payco_logo.png') no-repeat 1px ;width:46px;height:15px;overflow:hidden;text-indent:-999px;display:inline-block;}
 .kakaopay_icon{background:url('../../../img/kakao.png') no-repeat ;height:21px;width:74px;display:inline-block;overflow:hidden;text-indent:-999px}
-
+.samsung_pay{background:url('../../../img/samsungpay.png') no-repeat ;height:12px;width:83px;display:inline-block;overflow:hidden;text-indent:-999px}
 
 #sod_frm_paysel #settle_bank {padding:10px;background:#fff;line-height:2em;border:1px solid #dbdbdb}
 #sod_frm_paysel #settle_bank label {display:inline-block;margin:0 10px 0 0;font-weight:bold}
