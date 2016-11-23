@@ -15,7 +15,7 @@ include_once('./_common.php');
 
 $PGIP = $_SERVER['REMOTE_ADDR'];
 
-if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25")	//PG에서 보냈는지 IP로 체크
+if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.71.153")	//PG에서 보냈는지 IP로 체크
 {
 
     // 이니시스 NOTI 서버에서 받은 Value
