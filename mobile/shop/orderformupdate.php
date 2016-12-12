@@ -2,7 +2,10 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-//print_r2($_POST); exit;
+//삼성페이 요청으로 왔다면 현재 삼성페이는 이니시스 밖에 없으므로 $default['de_pg_service'] 값을 이니시스로 변경한다.
+if( $od_settle_case == '삼성페이' && !empty($_POST['P_HASH']) ){
+    $default['de_pg_service'] = 'inicis';
+}
 
 $page_return_url = G5_SHOP_URL.'/orderform.php';
 if(get_session('ss_direct'))

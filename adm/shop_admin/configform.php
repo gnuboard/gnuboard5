@@ -671,18 +671,19 @@ if(!isset($default['de_listtype_list_skin'])) {
         <tr>
             <th scope="row"><label for="de_pg_service">결제대행사</label></th>
             <td>
+                <input type="hidden" name="de_pg_service" id="de_pg_service" value="<?php echo $default['de_pg_service']; ?>" >
                 <?php echo help('쇼핑몰에서 사용할 결제대행사를 선택합니다.'); ?>
-                <select id="de_pg_service" name="de_pg_service">
-                    <option value="kcp" <?php echo get_selected($default['de_pg_service'], 'kcp'); ?>>NHN KCP</option>
-                    <option value="lg" <?php echo get_selected($default['de_pg_service'], 'lg'); ?>>LG유플러스</option>
-                    <option value="inicis" <?php echo get_selected($default['de_pg_service'], 'inicis'); ?>>KG이니시스</option>
-                </select>
+                <ul class="de_pg_tab">
+                    <li class="<?php if($default['de_pg_service'] == 'kcp') echo 'tab-current'; ?>"><a href="#kcp_info_anchor" data-value="kcp" title="NHN KCP 선택하기" >NHN KCP</a></li>
+                    <li class="<?php if($default['de_pg_service'] == 'lg') echo 'tab-current'; ?>"><a href="#lg_info_anchor" data-value="lg" title="LG유플러스 선택하기">LG유플러스</a></li>
+                    <li class="<?php if($default['de_pg_service'] == 'inicis') echo 'tab-current'; ?>"><a href="#inicis_info_anchor" data-value="inicis" title="KG이니시스 선택하기">KG이니시스</a></li>
+                </ul>
             </td>
         </tr>
-        <tr class="pg_info_fld kcp_info_fld">
+        <tr class="pg_info_fld kcp_info_fld" id="kcp_info_anchor">
             <th scope="row">
                 <label for="de_kcp_mid">KCP SITE CODE</label><br>
-                <a href="http://sir.kr/main/service/p_pg.php" target="_blank" id="scf_kcpreg" class="scf_pgreg">NHN KCP서비스신청하기</a>
+                <a href="http://sir.kr/main/service/p_pg.php" target="_blank" id="scf_kcpreg" class="kcp_btn">NHN KCP서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("NHN KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 NHN KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
@@ -693,13 +694,13 @@ if(!isset($default['de_listtype_list_skin'])) {
             <th scope="row"><label for="de_kcp_site_key">NHN KCP SITE KEY</label></th>
             <td>
                 <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 NHN KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
-                <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="32" maxlength="25">
+                <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="36" maxlength="25">
             </td>
         </tr>
-        <tr class="pg_info_fld lg_info_fld">
+        <tr class="pg_info_fld lg_info_fld" id="lg_info_anchor">
             <th scope="row">
                 <label for="cf_lg_mid">LG유플러스 상점아이디</label><br>
-                <a href="http://sir.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">LG유플러스 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/lg_pg.php" target="_blank" id="scf_lgreg" class="lg_btn">LG유플러스 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("LG유플러스에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG유플러스에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 상점아이디와 동일합니다."); ?>
@@ -710,13 +711,13 @@ if(!isset($default['de_listtype_list_skin'])) {
             <th scope="row"><label for="cf_lg_mert_key">LG유플러스 MERT KEY</label></th>
             <td>
                 <?php echo help("LG유플러스 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 MERT KEY와 동일합니다."); ?>
-                <input type="text" name="cf_lg_mert_key" value="<?php echo $config['cf_lg_mert_key']; ?>" id="cf_lg_mert_key" class="frm_input" size="32" maxlength="50">
+                <input type="text" name="cf_lg_mert_key" value="<?php echo $config['cf_lg_mert_key']; ?>" id="cf_lg_mert_key" class="frm_input" size="36" maxlength="50">
             </td>
         </tr>
-        <tr class="pg_info_fld inicis_info_fld">
+        <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
             <th scope="row">
                 <label for="de_inicis_mid">KG이니시스 상점아이디</label><br>
-                <a href="http://sir.kr/main/service/inicis_pg.php" target="_blank" id="scf_lgreg" class="scf_pgreg">KG이니시스 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/inicis_pg.php" target="_blank" id="scf_lgreg" class="kg_btn">KG이니시스 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("KG이니시스로 부터 발급 받으신 상점아이디(MID) 10자리 중 SIR 을 제외한 나머지 7자리를 입력 합니다.\n만약, 상점아이디가 SIR로 시작하지 않는다면 계약담당자에게 변경 요청을 해주시기 바랍니다. (Tel. 02-3430-5858) 예) SIRpaytest"); ?>
@@ -738,64 +739,64 @@ if(!isset($default['de_listtype_list_skin'])) {
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
-            <th scope="row"><label for="de_samsung_pay_use">KG이니시스 삼성페이 버튼 사용</label></th>
+            <th scope="row">
+                <label for="de_samsung_pay_use">KG이니시스 삼성페이 사용</label>
+                <a href="http://sir.kr/main/service/samsungpay.php" target="_blank" class="kg_btn">삼성페이 서비스신청하기</a>
+            </th>
             <td>
-                <?php echo help("주문서 작성 페이지에 KG이니시스 삼성페이 버튼의 별도 사용 여부를 설정합니다.", 50); ?>
-                <select id="de_easy_pay_use" name="de_samsung_pay_use">
-                    <option value="0" <?php echo get_selected($default['de_samsung_pay_use'], 0); ?>>노출안함</option>
-                    <option value="1" <?php echo get_selected($default['de_samsung_pay_use'], 1); ?>>노출함</option>
-                </select>
+                <?php echo help("체크시 KG이니시스 삼성페이를 사용합니다. <br >실결제시 반드시 결제대행사 KG이니시스 항목에 상점 아이디와 키패스워드를 입력해 주세요.", 50); ?>
+                <input type="checkbox" name="de_samsung_pay_use" value="1" id="de_samsung_pay_use"<?php echo $default['de_samsung_pay_use']?' checked':''; ?>> <label for="de_samsung_pay_use">사용</label>
             </td>
         </tr>
-        <tr>
+        <tr class="kakao_info_fld">
             <th scope="row">
                 <label for="de_kakaopay_mid">카카오페이 상점MID</label>
-                <a href="http://sir.kr/main/service/kakaopay.php" target="_blank" class="scf_pgreg">카카오페이 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/kakaopay.php" target="_blank" class="kakao_btn">카카오페이 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점아이디(MID) 10자리 중 첫 KHSIR과 끝 m 을 제외한 영문4자리를 입력 합니다. 예) KHSIRtestm"); ?>
                 <span class="sitecode">KHSIR</span> <input type="text" name="de_kakaopay_mid" value="<?php echo $default['de_kakaopay_mid']; ?>" id="de_kakaopay_mid" class="frm_input" size="5" maxlength="4"> <span class="sitecode">m</span>
             </td>
         </tr>
-        <tr>
+        <tr class="kakao_info_fld">
             <th scope="row"><label for="de_kakaopay_key">카카오페이 상점키</label></th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점 서명키를 입력합니다."); ?>
-                <input type="text" name="de_kakaopay_key" value="<?php echo $default['de_kakaopay_key']; ?>" id="de_kakaopay_key" class="frm_input" size="90">
+                <input type="text" name="de_kakaopay_key" value="<?php echo $default['de_kakaopay_key']; ?>" id="de_kakaopay_key" class="frm_input" size="100">
             </td>
         </tr>
-        <tr>
+        <tr class="kakao_info_fld">
             <th scope="row"><label for="de_kakaopay_enckey">카카오페이 상점 EncKey</label></th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점 인증 전용 EncKey를 입력합니다."); ?>
                 <input type="text" name="de_kakaopay_enckey" value="<?php echo $default['de_kakaopay_enckey']; ?>" id="de_kakaopay_enckey" class="frm_input" size="20">
             </td>
         </tr>
-        <tr>
+        <tr class="kakao_info_fld">
             <th scope="row"><label for="de_kakaopay_hashkey">카카오페이 상점 HashKey</label></th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점 인증 전용 HashKey를 입력합니다."); ?>
                 <input type="text" name="de_kakaopay_hashkey" value="<?php echo $default['de_kakaopay_hashkey']; ?>" id="de_kakaopay_hashkey" class="frm_input" size="20">
             </td>
         </tr>
-        <tr>
+        <tr class="kakao_info_fld">
             <th scope="row"><label for="de_kakaopay_cancelpwd">카카오페이 결제취소 비밀번호</label></th>
             <td>
                 <?php echo help("카카오페이 상점관리자에서 설정하신 취소 비밀번호를 입력합니다.<br>입력하신 비밀번호와 상점관리자에서 설정하신 비밀번호가 일치하지 않으면 취소가 되지 않습니다."); ?>
                 <input type="text" name="de_kakaopay_cancelpwd" value="<?php echo $default['de_kakaopay_cancelpwd']; ?>" id="de_kakaopay_cancelpwd" class="frm_input" size="20">
             </td>
         </tr>
-        <tr>
+        <tr class="naver_info_fld">
             <th scope="row">
                 <label for="de_naverpay_mid">네이버페이 가맹점 아이디</label>
-                <a href="http://sir.kr/main/service/naverpay.php" target="_blank" class="scf_pgreg">네이버페이 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/naverpay.php" target="_blank" class="naver_btn">네이버페이 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("네이버페이 가맹점 아이디를 입력합니다."); ?>
                 <input type="text" name="de_naverpay_mid" value="<?php echo $default['de_naverpay_mid']; ?>" id="de_naverpay_mid" class="frm_input" size="20" maxlength="50">
              </td>
         </tr>
-        <tr>
+        <tr class="naver_info_fld">
             <th scope="row">
                 <label for="de_naverpay_cert_key">네이버페이 가맹점 인증키</label>
             </th>
@@ -804,7 +805,7 @@ if(!isset($default['de_listtype_list_skin'])) {
                 <input type="text" name="de_naverpay_cert_key" value="<?php echo $default['de_naverpay_cert_key']; ?>" id="de_naverpay_cert_key" class="frm_input" size="50" maxlength="100">
              </td>
         </tr>
-        <tr>
+        <tr class="naver_info_fld">
             <th scope="row">
                 <label for="de_naverpay_button_key">네이버페이 버튼 인증키</label>
             </th>
@@ -813,7 +814,7 @@ if(!isset($default['de_listtype_list_skin'])) {
                 <input type="text" name="de_naverpay_button_key" value="<?php echo $default['de_naverpay_button_key']; ?>" id="de_naverpay_button_key" class="frm_input" size="50" maxlength="100">
              </td>
         </tr>
-        <tr>
+        <tr class="naver_info_fld">
             <th scope="row"><label for="de_naverpay_test">네이버페이 결제테스트</label></th>
             <td>
                 <?php echo help("네이버페이 결제테스트 여부를 설정합니다. 검수 과정 중에는 <strong>예</strong>로 설정해야 하며 최종 승인 후 <strong>아니오</strong>로 설정합니다."); ?>
@@ -823,7 +824,7 @@ if(!isset($default['de_listtype_list_skin'])) {
                 </select>
             </td>
         </tr>
-        <tr>
+        <tr class="naver_info_fld">
             <th scope="row">
                 <label for="de_naverpay_mb_id">네이버페이 결제테스트 아이디</label>
             </th>
@@ -832,14 +833,14 @@ if(!isset($default['de_listtype_list_skin'])) {
                 <input type="text" name="de_naverpay_mb_id" value="<?php echo $default['de_naverpay_mb_id']; ?>" id="de_naverpay_mb_id" class="frm_input" size="20" maxlength="20">
              </td>
         </tr>
-        <tr>
+        <tr class="naver_info_fld">
             <th scope="row">네이버페이 상품정보 XML URL</th>
             <td>
                 <?php echo help("네이버페이에 상품정보를 XML 데이터로 제공하는 페이지입니다. 검수과정에서 아래의 URL 정보를 제공해야 합니다."); ?>
                 <?php echo G5_SHOP_URL; ?>/naverpay/naverpay_item.php
              </td>
         </tr>
-        <tr>
+        <tr class="naver_info_fld">
             <th scope="row">
                 <label for="de_naverpay_sendcost">네이버페이 추가배송비 안내</label>
             </th>
@@ -1558,15 +1559,33 @@ function fconfig_check(f)
 }
 
 $(function() {
-    $(".pg_info_fld").hide();
+    //$(".pg_info_fld").hide();
     $(".pg_vbank_url").hide();
     <?php if($default['de_pg_service']) { ?>
-    $(".<?php echo $default['de_pg_service']; ?>_info_fld").show();
+    //$(".<?php echo $default['de_pg_service']; ?>_info_fld").show();
     $("#<?php echo $default['de_pg_service']; ?>_vbank_url").show();
     <?php } else { ?>
     $(".kcp_info_fld").show();
     $("#kcp_vbank_url").show();
     <?php } ?>
+    $(".de_pg_tab").on("click", "a", function(e){
+
+        var pg = $(this).attr("data-value"),
+            class_name = "tab-current";
+        
+        $("#de_pg_service").val(pg);
+        $(this).parent("li").addClass(class_name).siblings().removeClass(class_name);
+
+        //$(".pg_info_fld:visible").hide();
+        $(".pg_vbank_url:visible").hide();
+        //$("."+pg+"_info_fld").show();
+        $("#"+pg+"_vbank_url").show();
+        $(".scf_cardtest").addClass("scf_cardtest_hide");
+        $("."+pg+"_cardtest").removeClass("scf_cardtest_hide");
+        $(".scf_cardtest_tip_adm").addClass("scf_cardtest_tip_adm_hide");
+        $("#"+pg+"_cardtest_tip").removeClass("scf_cardtest_tip_adm_hide");
+    });
+
     $("#de_pg_service").on("change", function() {
         var pg = $(this).val();
         $(".pg_info_fld:visible").hide();

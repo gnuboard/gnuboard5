@@ -36,11 +36,17 @@ $row = sql_fetch($sql);
 if($row['cnt'])
     sql_query(" delete from {$g5['g5_shop_order_data_table']} where od_id = '$od_id' ");
 
+$default_pg = $default['de_pg_service'];
+
+if( $od_settle_case == '삼성페이' ){    //현재 삼성페이인 경우에는 pg를 inicis로 처리 
+    $default_pg = 'inicis';
+}
+
 $sql = " insert into {$g5['g5_shop_order_data_table']}
             set od_id   = '$od_id',
                 cart_id = '$cart_id',
                 mb_id   = '{$member['mb_id']}',
-                dt_pg   = '{$default['de_pg_service']}',
+                dt_pg   = '$default_pg',
                 dt_data = '$dt_data',
                 dt_time = '".G5_TIME_YMDHIS."' ";
 sql_query($sql);

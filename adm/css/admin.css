@@ -516,7 +516,12 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 /* 쇼핑몰 설정 */
 #anc_scf_payment textarea {height:50px}
 
-.scf_pgreg {display:inline-block;margin:5px 0 0;padding:5px 10px;background:#ff4f91;color:#fff;font-weight:normal;text-decoration:none}
+.scf_pgreg {display:inline-block;margin:5px 0 0;padding:5px 10px;background:#226C8B;color:#fff;font-weight:normal;text-decoration:none}
+.kcp_btn {display:inline-block;margin:5px 0 0;padding:5px 10px;background:#226C8B;color:#fff;font-weight:normal;text-decoration:none}
+.lg_btn{display:inline-block;margin:5px 0 0;padding:5px 10px;background:#ED008C;color:#fff;font-weight:normal;text-decoration:none}
+.kg_btn{display:inline-block;margin:5px 0 0;padding:5px 10px;background:#4A2C7C;color:#fff;font-weight:normal;text-decoration:none}
+.kakao_btn{display:inline-block;margin:5px 0 0;padding:5px 10px;background:#FDDC2F;color:#3B1E1E;font-weight:normal;text-decoration:none}
+.naver_btn {display:inline-block;margin:5px 0 0;padding:5px 10px;background:#00C73C;color:#fff;font-weight:normal;text-decoration:none}
 
 .scf_cardtest {margin:5px 0 0}
 .scf_cardtest_btn {margin-left:5px;vertical-align:middle}
@@ -545,6 +550,20 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .scf_sms_img textarea {margin:54px 0 0;width:115px;height:85px;border:0;background:transparent;font-size:0.95em;overflow:hidden}
 .scf_sms_img span {display:block}
 .scf_sms_cnt {display:block}
+
+ul.de_pg_tab{margin:0;padding:0;zoom:1}
+ul.de_pg_tab:after{display:block;visibility:hidden;clear:both;content:"";}
+ul.de_pg_tab li{position:relative;display:inline-block;float:left;text-align:center;margin:0;padding:0;width:120px}
+ul.de_pg_tab li a{margin:0 2px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:2.5;background-color:#f7f7f7;color:#74777b;font-weight:bold;font-size:1.2em;text-decoration:none}
+ul.de_pg_tab li a:hover{text-decoration:none}
+ul.de_pg_tab li.tab-current a{background:#2CC185;color:#fff}
+
+.pg_info_fld{position:relative}
+.kcp_info_fld th{background-color:#F6FCFF}
+.lg_info_fld th{background-color:#FFF4FA}
+.inicis_info_fld th{background-color:#F6F1FF}
+.kakao_info_fld th{background-color:#FFFCED}
+.naver_info_fld th{background-color:#F3FFF3}
 
 /* 주문내역 */
 #sodr_list td {text-align:center}
