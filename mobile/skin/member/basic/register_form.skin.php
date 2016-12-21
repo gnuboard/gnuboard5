@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <div class="mbskin">
     <script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
     <?php if($config['cf_cert_use'] && ($config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
-    <script src="<?php echo G5_JS_URL ?>/certify.js"></script>
+    <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
     <?php } ?>
 
     <form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
@@ -122,7 +122,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </tr>
         <?php } ?>
 
-        <?php if ($config['cf_use_hp']) {  ?>
+        <?php if ($config['cf_use_hp'] || $config['cf_cert_hp']) {  ?>
         <tr>
             <th scope="row"><label for="reg_mb_hp">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong class="sound_only">필수</strong><?php } ?></label></th>
             <td>
