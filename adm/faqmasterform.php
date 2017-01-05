@@ -7,6 +7,8 @@ auth_check($auth[$sub_menu], "w");
 
 $html_title = 'FAQ';
 
+$fm_id = preg_replace('/[^0-9]/', '', $fm_id);
+
 if ($w == "u")
 {
     $html_title .= ' 수정';

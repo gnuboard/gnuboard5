@@ -5,8 +5,8 @@ include_once(G5_LIB_PATH.'/visit.lib.php');
 include_once('./admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
-if (empty($fr_date)) $fr_date = G5_TIME_YMD;
-if (empty($to_date)) $to_date = G5_TIME_YMD;
+if (empty($fr_date) || ! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $fr_date) ) $fr_date = G5_TIME_YMD;
+if (empty($to_date) || ! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $to_date) ) $to_date = G5_TIME_YMD;
 
 $qstr = "fr_date=".$fr_date."&amp;to_date=".$to_date;
 $query_string = $qstr ? '?'.$qstr : '';
