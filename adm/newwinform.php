@@ -5,6 +5,8 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
+$nw_id = preg_replace('/[^0-9]/', '', $nw_id);
+
 $html_title = "팝업레이어";
 if ($w == "u")
 {
