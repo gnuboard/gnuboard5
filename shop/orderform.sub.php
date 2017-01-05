@@ -688,6 +688,7 @@ if($is_kakaopay_use) {
 
 <script>
 var zipcode = "";
+var form_action_url = "<?php echo $order_action_url; ?>";
 
 $(function() {
     var $cp_btn_el;
@@ -1288,6 +1289,14 @@ function forderform_check(f)
 
     <?php if($default['de_tax_flag_use']) { ?>
     calculate_tax();
+    <?php } ?>
+
+    <?php if($default['de_pg_service'] == 'inicis') { ?>
+    if( f.action != form_action_url ){
+        f.action = form_action_url;
+        f.removeAttribute("target");
+        f.removeAttribute("accept-charset");
+    }
     <?php } ?>
 
     // 카카오페이 지불
