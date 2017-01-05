@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
+$doc = strip_tags($doc);
+
 $g5['title'] = '상품유형관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 

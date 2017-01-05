@@ -33,7 +33,12 @@ if ($search != "") {
 
 if ($sel_field == "")  $sel_field = "it_it";
 if ($sort1 == "") $sort1 = "ss_send";
-if ($sort2 == "") $sort2 = "asc";
+if ($sort2 == "" || $sort2 != "desc") $sort2 = "asc";
+
+$doc = strip_tags($doc);
+$sort1 = strip_tags($sort1);
+$sel_field = strip_tags($sel_field);
+$search = get_search_string($search);
 
 $sql_common = "  from {$g5['g5_shop_item_stocksms_table']} ";
 

@@ -5,6 +5,8 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
+$ev_id = preg_replace('/[^0-9]/', '', $ev_id);
+
 $html_title = "이벤트";
 $g5['title'] = $html_title.' 관리';
 

@@ -4,6 +4,13 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
+$doc = strip_tags($doc);
+$sort1 = strip_tags($sort1);
+$sort2 = in_array($sort2, array('desc', 'asc')) ? $sort2 : 'desc';
+$sel_ca_id = get_search_string($sel_ca_id);
+$sel_field = get_search_string($sel_field);
+$search = get_search_string($search);
+
 $g5['title'] = '상품재고관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
