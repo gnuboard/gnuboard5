@@ -11,7 +11,10 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 if (!$to_date) $to_date = date("Ymd", time());
 
 if ($sort1 == "") $sort1 = "ct_status_sum";
-if ($sort2 == "") $sort2 = "desc";
+if ($sort2 == "" || $sort2 != "asc") $sort2 = "desc";
+
+$doc = strip_tags($doc);
+$sort1 = strip_tags($sort1);
 
 $sql  = " select a.it_id,
                  b.*,

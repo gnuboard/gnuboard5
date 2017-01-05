@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
+$bn_id = preg_replace('/[^0-9]/', '', $bn_id);
+
 $html_title = '배너';
 $g5['title'] = $html_title.'관리';
 

@@ -4,6 +4,12 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
+$ev_id = preg_replace('/[^0-9]/', '', $ev_id);
+$sort1 = strip_tags($sort1);
+$sel_field = strip_tags($sel_field);
+$sel_ca_id = get_search_string($sel_ca_id);
+$search = get_search_string($search);
+
 $g5['title'] = '이벤트일괄처리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
@@ -42,7 +48,7 @@ if (!$sort1) {
     $sort1 = "b.ev_id";
 }
 
-if (!$sort2) {
+if (!$sort2 || $sort2 != "asc") {
     $sort2 = "desc";
 }
 

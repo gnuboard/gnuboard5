@@ -10,6 +10,15 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 $where = array();
 
+$doc = strip_tags($doc);
+$sort1 = strip_tags($sort1);
+$sort2 = in_array($sort2, array('desc', 'asc')) ? $sort2 : 'desc';
+$sel_field = get_search_string($sel_field);
+$od_status = get_search_string($od_status);
+$search = get_search_string($search);
+if(! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $fr_date) ) $fr_date = '';
+if(! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $to_date) ) $to_date = '';
+
 $sql_search = "";
 if ($search != "") {
     if ($sel_field != "") {
