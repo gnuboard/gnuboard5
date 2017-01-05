@@ -12,7 +12,7 @@ $iq_answer = trim($_POST['iq_answer']);
 $hash = trim($_REQUEST['hash']);
 
 if ($w == "" || $w == "u") {
-    $iq_name     = addslashes($member['mb_name']);
+    $iq_name     = addslashes(strip_tags($member['mb_name']));
     $iq_password = $member['mb_password'];
 
     if (!$iq_subject) alert("제목을 입력하여 주십시오.");
