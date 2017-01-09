@@ -13,16 +13,41 @@ function certify_win_open(type, url)
     }
     else if(type == 'kcp-hp')
     {
-        var return_gubun;
-        var width  = 410;
-        var height = 500;
+        if($("input[name=veri_up_hash]").size() < 1)
+                $("input[name=cert_no]").after('<input type="hidden" name="veri_up_hash" value="">');
 
-        var leftpos = screen.width  / 2 - ( width  / 2 );
-        var toppos  = screen.height / 2 - ( height / 2 );
+        if( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 )
+        {
+            var $frm = $(event.target.form);
+            if($("#kcp_cert").size() < 1) {
+                $frm.wrap('<div id="cert_info"></div>');
 
-        var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
-        var position = ",left=" + leftpos + ", top="    + toppos;
-        var AUTH_POP = window.open(url,'auth_popup', winopts + position);
+                $("#cert_info").append('<form name="form_temp" method="post">')
+                               .after('<iframe id="kcp_cert" name="kcp_cert" width="100%" height="700" frameborder="0" scrolling="no" style="display:none"></iframe>');
+            }
+
+            var temp_form = document.form_temp;
+            temp_form.target = "kcp_cert";
+            temp_form.action = url;
+
+            document.getElementById( "cert_info" ).style.display = "none";
+            document.getElementById( "kcp_cert"  ).style.display = "";
+
+            temp_form.submit();
+        }
+        else
+        {
+            var return_gubun;
+            var width  = 410;
+            var height = 500;
+
+            var leftpos = screen.width  / 2 - ( width  / 2 );
+            var toppos  = screen.height / 2 - ( height / 2 );
+
+            var winopts  = "width=" + width   + ", height=" + height + ", toolbar=no,status=no,statusbar=no,menubar=no,scrollbars=no,resizable=no";
+            var position = ",left=" + leftpos + ", top="    + toppos;
+            var AUTH_POP = window.open(url,'auth_popup', winopts + position);
+        }
     }
     else if(type == 'lg-hp')
     {

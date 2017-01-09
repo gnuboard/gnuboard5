@@ -41,7 +41,17 @@ $up_hash = $ct_cert->make_hash_data( $home_dir, $hash_data );
 $ct_cert->mf_clear();
 ?>
 
-<form name="form_auth" method="post" target="auth_popup" action="<?php echo $cert_url ?>">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<?php if(is_mobile()) { ?>
+<meta name="viewport" content="user-scalable=yes, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width, target-densitydpi=medium-dpi" >
+<?php } ?>
+</head>
+
+<body oncontextmenu="return false;" ondragstart="return false;" onselectstart="return false;">
+<form name="form_auth" method="post" action="<?php echo $cert_url ?>">
 <!-- 유저네임 -->
 <input type="hidden" name="user_name"    value="" />
 <!-- 주문번호 -->
@@ -67,6 +77,11 @@ $ct_cert->mf_clear();
 <!-- cert_enc_use 필수 (고정값 : 메뉴얼 참고) -->
 <input type="hidden" name="cert_enc_use" value="Y"/>
 
+<?php if(is_mobile()) { ?>
+<!-- cert_able_yn input 비활성화 설정 -->
+<input type="hidden" name="cert_able_yn" value=""/>
+<?php } ?>
+
 <input type="hidden" name="res_cd"       value=""/>
 <input type="hidden" name="res_msg"      value=""/>
 
@@ -82,5 +97,53 @@ $ct_cert->mf_clear();
 </form>
 
 <script>
-document.form_auth.submit();
+window.onload = function() {
+    cert_page();
+}
+
+// 인증 요청 시 호출 함수
+function cert_page()
+{
+    var frm = document.form_auth;
+
+    if ( ( frm.req_tx.value == "auth" || frm.req_tx.value == "otp_auth" ) )
+    {
+        frm.action="./kcpcert_result.php";
+
+       // MOBILE
+        if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) )
+        {
+            self.name="kcp_cert";
+        }
+        // PC
+        else
+        {
+            frm.target="kcp_cert";
+        }
+
+        frm.submit();
+
+        window.close();
+    }
+
+    else if ( frm.req_tx.value == "cert" )
+    {
+        if( ( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) ) // 스마트폰인 경우
+        {
+            window.parent.$("input[name=veri_up_hash]").val(frm.up_hash.value); // up_hash 데이터 검증을 위한 필드
+            self.name="auth_popup";
+        }
+        else // 스마트폰 아닐때
+        {
+            window.opener.$("input[name=veri_up_hash]").val(frm.up_hash.value); // up_hash 데이터 검증을 위한 필드
+            frm.target = "auth_popup";
+        }
+
+        frm.action="<?php echo $cert_url; ?>";
+        frm.submit();
+    }
+}
 </script>
+
+</body>
+</html>

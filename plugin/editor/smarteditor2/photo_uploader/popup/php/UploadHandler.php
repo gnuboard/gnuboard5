@@ -8,39 +8,54 @@
  *
  * Licensed under the MIT license:
  * http://www.opensource.org/licenses/MIT
+ * https://github.com/blueimp/jQuery-File-Upload/wiki/Security
+ * https://github.com/blueimp/jQuery-File-Upload/pull/148
  */
-
 class UploadHandler
 {
 
+    public $files = array();
     protected $options;
-
-    // PHP File Upload error message codes:
-    // http://php.net/manual/en/features.file-upload.errors.php
-    protected $error_messages = array(
-        1 => 'The uploaded file exceeds the upload_max_filesize directive in php.ini',
-        2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
-        3 => 'The uploaded file was only partially uploaded',
-        4 => 'No file was uploaded',
-        6 => 'Missing a temporary folder',
-        7 => 'Failed to write file to disk',
-        8 => 'A PHP extension stopped the file upload',
-        'post_max_size' => 'The uploaded file exceeds the post_max_size directive in php.ini',
-        'max_file_size' => 'File is too big',
-        'min_file_size' => 'File is too small',
-        'accept_file_types' => 'Filetype not allowed',
-        'max_number_of_files' => 'Maximum number of files exceeded',
-        'max_width' => 'Image exceeds maximum width',
-        'min_width' => 'Image requires a minimum width',
-        'max_height' => 'Image exceeds maximum height',
-        'min_height' => 'Image requires a minimum height',
-        'abort' => 'File upload aborted',
-        'image_resize' => 'Failed to resize image'
-    );
+    protected $post_max_size;
+    protected $error_messages;
 
     protected $image_objects = array();
 
-    function __construct($options = null, $initialize = true, $error_messages = null) {
+    private static $MIME_TYPES_PROCESSORS = array(
+        "image/gif"       => array("imagecreatefromgif", "imagegif"),
+        "image/jpg"       => array("imagecreatefromjpeg", "imagejpeg"),
+        "image/jpeg"      => array("imagecreatefromjpeg", "imagejpeg"),
+        "image/png"       => array("imagecreatefrompng", "imagepng"),
+        "image/bmp"       => array("imagecreatefromwbmp", "imagewbmp")
+    );
+
+    public function __construct($options = null, $initialize = true, $error_messages = null) {
+
+        $this->post_max_size = (defined('SMARTEDITOR_UPLOAD_SIZE_LIMIT') && SMARTEDITOR_UPLOAD_SIZE_LIMIT) ? SMARTEDITOR_UPLOAD_SIZE_LIMIT.'M' : ini_get('post_max_size');
+
+        // PHP File Upload error message codes:
+        // http://php.net/manual/en/features.file-upload.errors.php
+        $this->error_messages = array(
+            1 => 'The uploaded file exceeds the upload_max_filesize',
+            2 => 'The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form',
+            3 => 'The uploaded file was only partially uploaded',
+            4 => 'No file was uploaded',
+            6 => 'Missing a temporary folder',
+            7 => 'Failed to write file to disk',
+            8 => 'A PHP extension stopped the file upload',
+            'post_max_size' => 'The uploaded file exceeds the post_max_size',
+            'max_file_size' => 'File is too big',
+            'min_file_size' => 'File is too small',
+            'accept_file_types' => 'Filetype not allowed',
+            'max_number_of_files' => 'Maximum number of files exceeded',
+            'max_width' => 'Image exceeds maximum width',
+            'min_width' => 'Image requires a minimum width',
+            'max_height' => 'Image exceeds maximum height',
+            'min_height' => 'Image requires a minimum height',
+            'abort' => 'File upload aborted',
+            'image_resize' => 'Failed to resize image'
+        );
+
         $this->options = array(
             'script_url' => $this->get_full_url().'/',
             'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
@@ -90,6 +105,10 @@ class UploadHandler
             'max_number_of_files' => null,
             // Defines which files are handled as image files:
             'image_file_types' => '/\.(gif|jpe?g|bmp|png)$/i',
+            'is_resize' => (defined('SMARTEDITOR_UPLOAD_RESIZE') && SMARTEDITOR_UPLOAD_RESIZE) ? true : false,
+            'resize_max_width' => (defined('SMARTEDITOR_UPLOAD_MAX_WIDTH') && SMARTEDITOR_UPLOAD_MAX_WIDTH) ? SMARTEDITOR_UPLOAD_MAX_WIDTH : 800,
+            'resize_max_height' => (defined('SMARTEDITOR_UPLOAD_MAX_HEIGHT') && SMARTEDITOR_UPLOAD_MAX_HEIGHT) ? SMARTEDITOR_UPLOAD_MAX_HEIGHT : 800,
+            'resize_jpeg_compress' => (defined('SMARTEDITOR_UPLOAD_IMAGE_QUALITY') && SMARTEDITOR_UPLOAD_IMAGE_QUALITY) ? SMARTEDITOR_UPLOAD_IMAGE_QUALITY : 800,
             // Image resolution restrictions:
             'max_width' => null,
             'max_height' => null,
@@ -362,7 +381,8 @@ class UploadHandler
         $content_length = $this->fix_integer_overflow(intval(
             $this->get_server_var('CONTENT_LENGTH')
         ));
-        $post_max_size = $this->get_config_bytes(ini_get('post_max_size'));
+        $post_max_size = $this->get_config_bytes($this->post_max_size);
+
         if ($post_max_size && ($content_length > $post_max_size)) {
             $file->error = $this->get_error_message('post_max_size');
             return false;
@@ -1038,6 +1058,48 @@ class UploadHandler
         return $tmp_name;
     }
 
+    protected function reprocessImage($file_path, $callback)
+    {
+        // Extracting mime type using getimagesize
+        try {
+            $image_info = getimagesize($file_path);
+            if ($image_info === null) {
+              //throw new Exception("Invalid image type");
+              return false;
+            }
+
+            $mime_type = $image_info["mime"];
+
+            if (!array_key_exists($mime_type, self::$MIME_TYPES_PROCESSORS)) {
+              //throw new Exception("Invalid image MIME type");
+              return false;
+            }
+
+            $image_from_file = self::$MIME_TYPES_PROCESSORS[$mime_type][0];
+            $image_to_file = self::$MIME_TYPES_PROCESSORS[$mime_type][1];
+
+            $reprocessed_image = @$image_from_file($file_path);
+
+            if (!$reprocessed_image) {
+              //throw new Exception("Unable to create reprocessed image from file");
+              return false;
+            }
+
+            // Calling callback(if set) with path of image as a parameter
+            if ($callback !== null) {
+              $callback($reprocessed_image);
+            }
+
+            // Freeing up memory
+            imagedestroy($reprocessed_image);
+        } catch (Exception $e) {
+            unlink($file_path);
+            return false;
+        }
+
+        return true;
+    }
+
     protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
             $index = null, $content_range = null) {
         $file = new \stdClass();
@@ -1050,6 +1112,12 @@ class UploadHandler
         //$file->name = iconv('UTF-8', 'UTF-8//IGNORE', utf8_encode($file->name));
         $file->size = $this->fix_integer_overflow(intval($size));
         $file->type = $type;
+
+        if ( SMARTEDITOR_UPLOAD_IMG_CHECK && ! $this->reprocessImage($uploaded_file, null) ){
+            $file->error = $this->get_error_message('accept_file_types');
+            return $file;
+        }
+
         if ($this->validate($uploaded_file, $file, $error, $index)) {
             $this->handle_form_data($file, $index);
             $upload_dir = $this->get_upload_path();
@@ -1079,10 +1147,32 @@ class UploadHandler
                 );
             }
             $file_size = $this->get_file_size($file_path, $append_file);
+
+            try {
+                if(defined('G5_FILE_PERMISSION')) chmod($file_path, G5_FILE_PERMISSION);
+            } catch (Exception $e) {
+            }
+
             if ($file_size === $file->size) {
                 $file->url = $this->get_download_url($file->name);
                 if ($this->is_valid_image_file($file_path)) {
                     $this->handle_image_file($file_path, $file);
+
+                    $this->files[] = $file->name;
+
+                    if( $this->options['is_resize'] ){
+                        $resize_options = array(
+                            'max_width'=>$this->options['resize_max_width'],
+                            'max_height'=>$this->options['resize_max_height'],
+                            'jpeg_quality'=>$this->options['resize_jpeg_compress'],
+                            'auto_orient' => true,
+                            );
+
+                        if ($this->create_scaled_image($file->name, '', $resize_options)) {
+                            $file->size = $this->get_file_size($file_path, true);
+                        }
+                    }
+
                     $image_width_height = $this->get_image_size($file_path);
                     $file->width = $image_width_height[0];
                     $file->height = $image_width_height[1];
@@ -1099,6 +1189,7 @@ class UploadHandler
             }
             $this->set_additional_file_properties($file);
         }
+
         return $file;
     }
 
