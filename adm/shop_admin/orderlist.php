@@ -11,9 +11,12 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 $where = array();
 
 $doc = strip_tags($doc);
-$sort1 = strip_tags($sort1);
+$sort1 = in_array($sort1, array('od_id', 'od_cart_price', 'od_receipt_price', 'od_cancel_price', 'od_misu', 'od_cash')) ? $sort1 : '';
 $sort2 = in_array($sort2, array('desc', 'asc')) ? $sort2 : 'desc';
 $sel_field = get_search_string($sel_field);
+if( !in_array($sel_field, array('od_id', 'mb_id', 'od_name', 'od_tel', 'od_hp', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_deposit_name', 'od_invoice')) ){   //검색할 필드 대상이 아니면 값을 제거
+    $sel_field = '';
+}
 $od_status = get_search_string($od_status);
 $search = get_search_string($search);
 if(! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $fr_date) ) $fr_date = '';
