@@ -80,6 +80,9 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     }
 
     $point = get_item_point($row);
+    if( $point ){
+        $point .= '원';
+    }
 
     // 배송비계산
     $deliv = get_item_sendcost2($row['it_id'], $row['it_price'], 1);
@@ -100,31 +103,46 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 수정시간
     $utime = str_replace(array('-', ' ', ':'), '', $row['it_update_time']);
 
-    $str = <<< HEREDOC
-{$lt}begin{$gt}
-{$lt}mapid{$gt}{$row['it_id']}
-{$lt}price{$gt}{$row['it_price']}
-{$lt}class{$gt}$class
-{$lt}utime{$gt}$utime
-{$lt}pname{$gt}{$row['it_name']}
-{$lt}pgurl{$gt}$shop_url/item.php?it_id={$row['it_id']}
-{$lt}igurl{$gt}$img_url
-{$lt}cate1{$gt}$cate1
-{$lt}caid1{$gt}$caid1
-{$lt}cate2{$gt}$cate2
-{$lt}caid2{$gt}$caid2
-{$lt}cate3{$gt}$cate3
-{$lt}caid3{$gt}$caid3
-{$lt}cate4{$gt}$cate4
-{$lt}caid4{$gt}$caid4
-{$lt}model{$gt}{$row['it_model']}
-{$lt}brand{$gt}{$row['it_brand']}
-{$lt}maker{$gt}{$row['it_maker']}
-{$lt}point{$gt}$point
-{$lt}deliv{$gt}$deliv
-{$lt}ftend{$gt}
-
-HEREDOC;
+    $str = "{$lt}begin{$gt}".PHP_EOL;
+    $str .= "{$lt}mapid{$gt}{$row['it_id']}".PHP_EOL;
+    $str .= "{$lt}price{$gt}{$row['it_price']}".PHP_EOL;
+    $str .= "{$lt}class{$gt}$class".PHP_EOL;
+    $str .= "{$lt}utime{$gt}$utime".PHP_EOL;
+    $str .= "{$lt}pname{$gt}{$row['it_name']}".PHP_EOL;
+    $str .= "{$lt}pgurl{$gt}$shop_url/item.php?it_id={$row['it_id']}".PHP_EOL;
+    $str .= "{$lt}igurl{$gt}$img_url".PHP_EOL;
+    $str .= "{$lt}cate1{$gt}$cate1".PHP_EOL;
+    $str .= "{$lt}caid1{$gt}$caid1".PHP_EOL;
+    if( $cate2 ){
+        $str .= "{$lt}cate2{$gt}$cate2".PHP_EOL;
+    }
+    if( $caid2 ){
+        $str .= "{$lt}caid2{$gt}$caid2".PHP_EOL;
+    }
+    if( $cate3 ){
+        $str .= "{$lt}cate3{$gt}$cate3".PHP_EOL;
+    }
+    if( $caid3 ){
+        $str .= "{$lt}caid3{$gt}$caid3".PHP_EOL;
+    }
+    if( $cate4 ){
+        $str .= "{$lt}cate4{$gt}$cate4".PHP_EOL;
+    }
+    if( $caid4 ){
+        $str .= "{$lt}caid4{$gt}$caid4".PHP_EOL;
+    }
+    if( $row['it_model'] ){
+        $str .= "{$lt}model{$gt}{$row['it_model']}".PHP_EOL;
+    }
+    if( $row['it_brand'] ){
+        $str .= "{$lt}brand{$gt}{$row['it_brand']}".PHP_EOL;
+    }
+    if( $row['it_maker'] ){
+        $str .= "{$lt}maker{$gt}{$row['it_maker']}".PHP_EOL;
+    }
+    $str .= "{$lt}point{$gt}$point".PHP_EOL;
+    $str .= "{$lt}deliv{$gt}$deliv".PHP_EOL;
+    $str .= "{$lt}ftend{$gt}".PHP_EOL;
 
 echo iconv('utf-8', 'euc-kr', $str);
 }
