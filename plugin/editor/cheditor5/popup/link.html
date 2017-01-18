@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>CHEditor</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <link rel="stylesheet" type="text/css" href="../css/dialog.css" />
+  <script src="js/dialog.js" type="text/javascript"></script>
+  <script src="js/link.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="content-outline">
+    <form name="set" id="fm_set" action="javascript:void%200">
+    <input type="hidden" value="" name="SelTxt" />
+    <table style="border: 0; padding: 0; border-spacing: 0;">
+      <tr>
+        <td>
+          <table style="border: none; border-spacing: 4px">
+            <tr>
+              <td style="text-align:right; width:50px"><span class="font-normal">유형:</span>
+              </td>
+              <td>
+                <select name="protocol" id="fm_protocol" onchange="updateProtocol()">
+                <option value="http://" selected="selected">http</option>
+                <option value="https://">https</option>
+                <option value="mailto:">mailto</option>
+                <option value="file://">file</option>
+                <option value="ftp://">ftp</option>
+                <option value="gopher://">gopher</option>
+                <option value="news:">news</option>
+                <option value="telnet:">telnet</option>
+                <option value="wias:">wias</option>
+                <option value="javascript:">javascript</option>
+                </select>
+              </td>
+              <td style="text-align: right;"><span class="font-normal">타겟:</span>
+              </td>
+              <td>
+                <select name="target" id="fm_target">
+                  <option value="">없음</option>
+                  <option value="_self">_self</option>
+                  <option value="_blank" selected="selected">_blank</option>
+                  <option value="_parent">_parent</option>
+                  <option value="_top">_top</option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right"><span class="font-normal">URL:</span>
+              </td>
+              <td colspan="3">
+                <input type="text" name="link_value" id="fm_link_value" value="http://" size="40" spellcheck="false" />
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align:right"><span class="font-normal">타이틀:</span>
+              </td>
+              <td colspan="3">
+                <input type="text" name="title" id="fm_title" value="" size="40" spellcheck="false" />
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    </form>
+</div>
+<div class="bottom-status" id="buttonWrapper"></div>
+</body>
+</html>

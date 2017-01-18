@@ -1,0 +1,185 @@
+body {
+    background-color: #fff;
+    margin: 0;
+    border: 0;
+    padding: 0;
+    font-size: 9pt;
+    font-family: "Malgun Gothic", "Apple SD Gothic Neo", gulim, monospace;
+    line-height: 1em;
+    overflow: hidden;
+}
+td, input {
+    font-size: 9pt;
+    vertical-align: middle;
+    margin: 0;
+    line-height: 15px;
+    height: 15px;
+}
+select {
+    font-size: 9pt;
+    vertical-align: middle;
+    margin: 0;
+}
+.handCursor {
+    cursor: pointer;
+}
+td.hover
+{
+    background-color : Fuchsia;
+}
+table.dlg {
+    border: 0;
+}
+fieldset {
+    border: 1px solid #ccc;
+    padding: 2px;
+    margin: 0;
+}
+.content-outline {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 5px;
+    margin: 0;
+}
+.dlg td {
+    text-align: left;
+    height: 20px;
+}
+form {
+    display: inline;
+}
+.dlg input {
+    border: 2px;
+}
+.img {
+    border: 0;
+    vertical-align: middle;
+}
+.font-normal {
+    font-size: 9pt;
+}
+legend {
+    font-size: 9pt;
+    font-weight: bold;
+}
+.bottom-status {
+    background-color: #fff;
+    margin-top: 10px;
+    padding: 0;
+    text-align: center;
+    height: 24px;
+    vertical-align: middle;
+}
+.button {
+    width: 64px;
+    height: 22px;
+    margin: 1px 2px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+.button8em {
+    font-size: 9pt;
+    padding-top: 2px !important;
+    height: 21px;
+    width: 8em;
+}
+.button10em {
+    font-size: 9pt;
+    padding-top: 1px !important;
+    height: 21px;
+    width: 10em;
+}
+.emIcon {
+    width: 19px;
+    height: 19px;
+    cursor: pointer;
+}
+.schar {
+    border: 1px solid #ccc;
+    background-color: #fff;
+    width: 18px;
+    height: 17px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 12px;
+    line-height: 1.2em;
+}
+.spacer {
+    margin: 10px 0 0 0;
+}
+.spacer5 {
+    margin: 5px 0 0 0;
+    clear: both;
+}
+.wrapper {
+    text-align: center;
+}
+.clear {
+    clear: both;
+}
+.flash-movie-source {
+    margin: 0 auto;
+}
+.flash-player-wrapper {
+    width: 560px;
+    height: 315px;
+    border: 1px #a0a0a0 solid;
+    text-align: center;
+    overflow: auto;
+    margin: 0 auto;
+    background-color: #fff;
+    display: block;
+}
+.media-player-wrapper {
+    height: 200px;
+    margin-top: 5px;
+    text-align: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+.hr {
+    border: 0;
+    background: #e0e0e0;
+    height: 1px;
+}
+.colorCellMouseOver {
+    line-height: 0;
+    font-size: 0;
+    height: 8px;
+    width: 8px;
+    border: 1px solid #fff;
+}
+.colorCellMouseOut {
+    line-height: 8px;
+    font-size: 0;
+    height: 8px;
+    width: 8px;
+    border: 1px solid #000;
+}
+.colorInputBox {
+    background-color: #000;
+    text-align: center;
+    border: 1px solid #000;
+    height: 16px;
+}
+.colorWrapper {
+    border: 1px solid #000;
+    background-color: #fff;
+    position: absolute;
+    padding: 2px;
+    display: none;
+}
+.colorPickerButton {
+    background: url("../icons/button/color_picker.png") no-repeat center center;
+    width: 24px;
+    height: 20px;
+    cursor: pointer;
+    float: left;
+}
+.colorPickerButtonGray {
+    background: url("../icons/button/color_picker_disable.png") no-repeat center center;
+    width: 24px;
+    height: 20px;
+    cursor: pointer;
+    float: left;
+}
