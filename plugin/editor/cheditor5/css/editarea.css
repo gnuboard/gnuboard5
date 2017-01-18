@@ -1,0 +1,23 @@
+html, body {
+}
+
+p {
+    margin: 0;
+}
+table, td, th { border:1px dotted #ccc; }
+table { border-collapse: collapse }
+
+/*-------------------------------------------------------------------------------*/
+.ch_bogus_spacer {}
+.cheditor-zero-width { font-family: monospace; }
+.cheditor-insertpara-pointer {
+    height: 1px;
+    display: none;
+    overflow: hidden;
+    background-color: red;
+    position: absolute;
+}
+.cheditor-add-paragraph {
+    border: #999 dotted 1px;
+    margin: 1px 0px;
+}

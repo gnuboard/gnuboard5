@@ -1,0 +1,180 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+        <title>CHEditor</title>
+		<meta name="robots" content="noindex, nofollow" />
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" type="text/css" href="../css/dialog.css" />
+		<script src="js/dialog.js" type="text/javascript"></script>
+		<script src="js/table_modify.js" type="text/javascript"></script>
+	</head>
+	<body>
+		<fieldset><legend><span class="font-normal">표 속성</span></legend>
+			<div>
+				<table cellspacing="0" width="100%" border="0" cellpadding="2">
+                    <tr>
+    					<td width="20%"><span class="font-normal">줄 수:</span>
+    					</td>
+    					<td width="30%"><span id="numrows" class="font-normal"></span>
+    					</td>
+                        <td width="20%"><span class="font-normal">칸 수:</span>
+    					</td>
+    					<td width="30%"><span id="numcols" class="font-normal"></span>
+    					</td>
+  					</tr>
+                    <tr><td colspan="4"><hr class="hr" noshade="noshade" /></td></tr>
+  					<tr>
+    					<td width="20%"><span class="font-normal">너비:</span>
+    					</td>
+    					<td width="30%">
+    						<input type="text" size="3" name="width" id="width" value="100" />
+    						<select name="widthtype" id="widthtype">
+    						<option value="%" selected="selected">%</option>
+    						<option value="px">px</option>
+    						</select>
+    					</td>
+    					<td width="20%"><span class="font-normal">높이:</span>
+    					</td>
+    					<td width="30%">
+    						<input type="text" size="3" name="height" id="height" value="" />
+    						<select name="heighttype" id="heighttype">
+    						<option value="%">%</option>
+    						<option value="px" selected="selected">px</option>
+    						</select>
+    					</td>
+  					</tr>
+  					<tr>
+    					<td><span class="font-normal">셀 안 여백:</span>
+    					</td>
+    					<td><input type="text" size="3" name="cellpd" id="cellpd" value="3" />
+    					</td>
+    					<td><span class="font-normal">셀 간격:</span>
+    					</td>
+    					<td><input type="text" size="3" name="cellsp" id="cellsp" value="0" />
+    					</td>
+  					</tr>
+  					<tr>
+    					<td><span class="font-normal">테두리 굵기:</span>
+    					</td>
+    					<td><input type="text" size="3" name="bordersize" id="bordersize" value="1" />
+    					</td>
+    					<td><span class="font-normal">정렬:</span>
+    					</td>
+    					<td><select id="talign" name="talign">
+    						<option value="none" selected="selected">없음</option>
+    						<option value="left">왼쪽</option>
+    						<option value="center">가운데</option>
+    						<option value="right">오른쪽</option>
+    						</select>
+    					</td>
+  					</tr>
+                    <tr><td colspan="4"><hr class="hr" noshade="noshade" /></td></tr>
+                    <tr>
+    					<td width="50"><span class="font-normal">표 제목:</span>
+    					</td>
+                        <td colspan="2"><input type="text" size="27" name="caption" id="tableCaption" value="" />
+    					</td>
+                        <td><span class="font-normal">표 제목 숨김:</span>
+                            <input type="checkbox" id="hideCaption" />
+                        </td>
+                    </tr>
+                    <tr>
+    					<td width="50"><span class="font-normal">표 요약:</span>
+    					</td>
+                        <td colspan="2"><input type="text" size="27" name="summary" id="tableSummary" value="" />
+    					</td>
+
+                        <td><span class="font-normal">표 헤더:</span>
+                        <select id="tableHeader" name="header">
+    						<option value="none">없음</option>
+    						<option value="col">첫 줄</option>
+    						<option value="row">첫 칸</option>
+    						<option value="all">모두</option>
+    						</select>
+                        </td>
+  					</tr>
+                    <tr><td colspan="4"><hr class="hr" noshade="noshade" /></td></tr>
+                    <tr>
+    					<td><span class="font-normal">CSS class:</span>
+    					</td>
+                        <td><input type="text" size="10" name="cssClass" id="cssClass" value="" />
+    					</td>
+                        <td><span class="font-normal">CSS id:</span>
+                        </td>
+                        <td><input type="text" size="10" name="cssId" id="cssId" value="" />
+    					</td>
+                    </tr>
+  				</table>
+  			</div>
+  			</fieldset>
+  		<br />
+        <fieldset><legend><span class="font-normal">색 지정</span></legend>
+        <div id="tableColorWrapper">
+            <table cellspacing="0" width="100%" border="0" cellpadding="2">
+                <tr>
+                    <td width="20%"><span class="font-normal">테두리 색:</span>
+                    </td>
+                    <td width="30%">
+                        <div style="float:left">
+                            <input type="text" size="10" name="idbordercolor" id="idbordercolor" value="#000000" class="colorInputBox" />
+                        </div>
+                        <div class="colorPickerButton" onclick="showColorPicker('bordercolor', this);">&nbsp;</div>
+                    </td>
+                    <td width="20%"><span class="font-normal">표 배경색:</span>
+                    </td>
+                    <td width="30%">
+                        <div style="float:left">
+                            <input type="text" size="10" name="idbgcolor" id="idbgcolor" value="없음" class="colorInputBox" style="background-color:#fff" />
+                        </div>
+                        <div class="colorPickerButton" onclick="showColorPicker('bgcolor', this);">&nbsp;</div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="colorWrapper" class="colorWrapper"></div>
+        </fieldset>
+		<div class="bottom-status" id="buttonWrapper"></div>
+        <script type="text/javascript">
+            var offsetTop, offsetLeft, obj, showColorSwitch=false, showColorSwitch=false, beforeButton=null, tableColorWrapper, colorPickerWrapper;
+            window.onload = function() {
+                tableColorWrapper = document.getElementById('tableColorWrapper');
+                colorPickerWrapper = document.getElementById('colorWrapper');
+                obj = tableColorWrapper;
+                offsetTop = obj.offsetTop;
+                offsetLeft = obj.offsetLeft;
+                if (obj.offsetParent) {
+                    obj = obj.offsetParent;
+                    while (obj) {
+                        offsetTop += obj.offsetTop;
+                        offsetLeft += obj.offsetLeft;
+                        obj = obj.offsetParent;
+                    }
+                }
+                colorPickerWrapper.style.top = (offsetTop-74) + 'px';
+                colorPickerWrapper.style.left = offsetLeft + 'px';
+                drawColor();
+            };
+
+            function showColorPicker(which, img) {
+                showColorSwitch = !showColorSwitch;
+                if (beforeButton && beforeButton !== img) {
+                    beforeButton.className = 'colorPickerButton';
+                    showColorSwitch = true;
+                }
+                if (showColorSwitch) {
+                    displayAttr = 'block';
+                    img.className = 'colorPickerButtonGray';
+                    if (beforeButton === null || beforeButton !== img) {
+                        beforeButton = img;
+                    }
+                    setColor(which);
+                }
+                else {
+                    img.className = 'colorPickerButton';
+                    displayAttr = 'none';
+                }
+                document.getElementById('colorWrapper').style.display = displayAttr;
+            }
+        </script>
+	</body>
+</html>
