@@ -6,7 +6,7 @@ sirgle/
 test.php
 *.key
 *.sh
-cheditor*/
+cheditor5.*/
 ckeditor*/
 log/
 g5_tree/
