@@ -1371,6 +1371,7 @@ function byte_check(el_cont, el_byte)
     var cnt = 0;
     var exceed = 0;
     var ch = '';
+    var limit_num = (jQuery("#cf_sms_type").val() == "LMS") ? 1500 : 80;
 
     for (i=0; i<cont.value.length; i++) {
         ch = cont.value.charAt(i);
@@ -1382,11 +1383,11 @@ function byte_check(el_cont, el_byte)
     }
 
     //byte.value = cnt + ' / 80 bytes';
-    bytes.innerHTML = cnt + ' / 80 bytes';
+    bytes.innerHTML = cnt + ' / ' + limit_num +' bytes';
 
-    if (cnt > 80) {
-        exceed = cnt - 80;
-        alert('메시지 내용은 80바이트를 넘을수 없습니다.\r\n작성하신 메세지 내용은 '+ exceed +'byte가 초과되었습니다.\r\n초과된 부분은 자동으로 삭제됩니다.');
+    if (cnt > limit_num) {
+        exceed = cnt - limit_num;
+        alert('메시지 내용은 ' + limit_num +' 바이트를 넘을수 없습니다.\r\n작성하신 메세지 내용은 '+ exceed +'byte가 초과되었습니다.\r\n초과된 부분은 자동으로 삭제됩니다.');
         var tcnt = 0;
         var xcnt = 0;
         var tmp = cont.value;
@@ -1398,7 +1399,7 @@ function byte_check(el_cont, el_byte)
                 tcnt += 1;
             }
 
-            if (tcnt > 80) {
+            if (tcnt > limit_num) {
                 tmp = tmp.substring(0,i);
                 break;
             } else {
@@ -1407,7 +1408,7 @@ function byte_check(el_cont, el_byte)
         }
         cont.value = tmp;
         //byte.value = xcnt + ' / 80 bytes';
-        bytes.innerHTML = xcnt + ' / 80 bytes';
+        bytes.innerHTML = xcnt + ' / ' + limit_num +' bytes';
         return;
     }
 }
