@@ -76,7 +76,16 @@ $result = sql_query($sql);
 
             // 조건부무료
             if($row['it_sc_type'] == 2) {
-                $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
+                
+                // 합계금액 계산
+                $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                           SUM(ct_qty) as qty
+                           from {$g5['g5_shop_cart_table']}
+                          where it_id = '{$row['it_id']}'
+                         and od_id = '$od_id' ";
+                $sum = sql_fetch($sql);
+
+                $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $od_id);
 
                 if($sendcost == 0)
                     $ct_send_cost = '무료';
