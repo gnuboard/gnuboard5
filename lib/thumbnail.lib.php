@@ -273,8 +273,8 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             }
         }
     } else if ($size[2] == 3) {
-        $src = imagecreatefrompng($source_file);
-        imagealphablending($src, true);
+        $src = @imagecreatefrompng($source_file);
+        @imagealphablending($src, true);
     } else {
         return;
     }
