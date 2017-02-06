@@ -8,6 +8,18 @@ auth_check($auth[$sub_menu], 'w');
 
 check_admin_token();
 
+$error_msg = '';
+
+if( $qa_include_head && ! is_include_path_check($qa_include_head) ){
+    $qa_include_head = '';
+    $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 상단 파일 경로에 포함시킬수 없습니다.';
+}
+
+if( $qa_include_tail && ! is_include_path_check($qa_include_tail) ){
+    $qa_include_tail = '';
+    $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.';
+}
+
 $sql = " update {$g5['qa_config_table']}
             set qa_title                = '{$_POST['qa_title']}',
                 qa_category             = '{$_POST['qa_category']}',
@@ -29,8 +41,8 @@ $sql = " update {$g5['qa_config_table']}
                 qa_image_width          = '{$_POST['qa_image_width']}',
                 qa_upload_size          = '{$_POST['qa_upload_size']}',
                 qa_insert_content       = '{$_POST['qa_insert_content']}',
-                qa_include_head         = '{$_POST['qa_include_head']}',
-                qa_include_tail         = '{$_POST['qa_include_tail']}',
+                qa_include_head         = '{$qa_include_head}',
+                qa_include_tail         = '{$qa_include_tail}',
                 qa_content_head         = '{$_POST['qa_content_head']}',
                 qa_content_tail         = '{$_POST['qa_content_tail']}',
                 qa_mobile_content_head  = '{$_POST['qa_mobile_content_head']}',
@@ -47,5 +59,9 @@ $sql = " update {$g5['qa_config_table']}
                 qa_5                    = '{$_POST['qa_5']}' ";
 sql_query($sql);
 
-goto_url('./qa_config.php');
+if($error_msg){
+    alert($error_msg, './qa_config.php');
+} else {
+    goto_url('./qa_config.php');
+}
 ?>
