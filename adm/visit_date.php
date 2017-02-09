@@ -71,6 +71,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     </tr>
 
     <?php
+        $i++;
         }
     } else {
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">자료가 없습니다.</td></tr>';

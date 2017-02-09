@@ -44,7 +44,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
     <?php
     $sql_common = " from {$g5['visit_table']} ";
     if ($sfl) {
-        if($sst=='vi_ip' || $sst=='vi_date'){
+        if($sfl=='vi_ip' || $sfl=='vi_date'){
             $sql_search = " where $sfl like '$stx%' ";
         }else{
             $sql_search = " where $sfl like '%$stx%' ";
