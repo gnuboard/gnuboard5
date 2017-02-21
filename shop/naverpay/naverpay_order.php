@@ -3,6 +3,10 @@ include_once('./_common.php');
 include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 include_once(G5_LIB_PATH.'/naverpay.lib.php');
 
+$is_collect = false;    //착불체크 변수 초기화
+$is_prepay = false;     //선불체크 변수 초기화
+$is_cart = false;       //장바구니 체크 변수 초기화
+
 if($_POST['naverpay_form'] == 'cart.php') {
     if(!count($_POST['ct_chk']))
         return_error2json('구매하실 상품을 하나이상 선택해 주십시오.');
@@ -20,7 +24,7 @@ if($_POST['naverpay_form'] == 'cart.php') {
         $it_id = $_POST['it_id'][$i];
 
         // 장바구니 상품
-        $sql = " select ct_id, it_id, ct_option, io_id, io_type, ct_qty from {$g5['g5_shop_cart_table']} where od_id = '$s_cart_id' and it_id = '$it_id' and ct_status = '쇼핑' order by ct_id asc ";
+        $sql = " select ct_id, it_id, ct_option, io_id, io_type, ct_qty, ct_send_cost, it_sc_type from {$g5['g5_shop_cart_table']} where od_id = '$s_cart_id' and it_id = '$it_id' and ct_status = '쇼핑' order by ct_id asc ";
         $result = sql_query($sql);
 
         for($k=0; $row=sql_fetch_array($result); $k++) {
@@ -28,13 +32,43 @@ if($_POST['naverpay_form'] == 'cart.php') {
             $_POST['io_type'][$it_id][] = $row['io_type'];
             $_POST['ct_qty'][$it_id][] = $row['ct_qty'];
             $_POST['io_value'][$it_id][] = $row['ct_option'];
+            $_POST['ct_send_cost'][$it_id][] = $row['ct_send_cost'];
+
+            $is_free = false;   //무료 인지 체크 변수 초기화
+
+            if( $row['it_sc_type'] == 2 ){
+                // 합계금액 계산
+                $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as price,
+                                SUM(ct_point * ct_qty) as point,
+                                SUM(ct_qty) as qty
+                            from {$g5['g5_shop_cart_table']}
+                            where it_id = '{$row['it_id']}'
+                              and od_id = '$s_cart_id' ";
+                $sum = sql_fetch($sql);
+
+                $sendcost = get_item_sendcost($row['it_id'], $sum['price'], $sum['qty'], $s_cart_id);
+
+                if($sendcost == 0)
+                    $is_free = true;
+            }
+
+            if( !$is_free && ! $row['ct_send_cost'] ){  //무료가 아니며 선불인 경우
+                $is_prepay = true;
+            } else if ( !$is_free && $row['ct_send_cost'] == 1 ){   //무료가 아니며 착불인 경우
+                $is_collect = true;
+            }
         }
 
         if($k > 0)
             $items[] = $it_id;
     }
 
+    $is_cart = true;
     $_POST['it_id'] = $items;
+}
+
+if( $is_cart && $is_prepay && $is_collect ){
+    return_error2json("네이버페이는 배송비 착불인 상품과 선불인 상품을 동시에 주문할수 없습니다.\n\n장바구니에서 착불 또는 선불 중 한가지를 선택하여 상품들을 주문해 주세요.");
 }
 
 $count = count($_POST['it_id']);
@@ -157,11 +191,17 @@ for($i=0; $i<$count; $i++) {
                 return_error2json('구매금액이 음수 또는 0원인 상품은 구매할 수 없습니다.');
         }
 
-        // 배송비결제
-        if($it['it_sc_type'] == 1)
-            $ct_send_cost = 2; // 무료
-        else if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
-            $ct_send_cost = 1; // 착불
+        if( $is_cart && !empty($_POST['ct_send_cost'][$it_id][$k]) ){
+
+            $ct_send_cost = $_POST['ct_send_cost'][$it_id][$k];
+
+        } else {
+            // 배송비결제
+            if($it['it_sc_type'] == 1)
+                $ct_send_cost = 2; // 무료
+            else if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
+                $ct_send_cost = 1; // 착불
+        }
 
         // 옵션정보배열에 저장
         $options[$it_id][] = array(
