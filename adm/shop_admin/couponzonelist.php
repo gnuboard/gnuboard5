@@ -8,7 +8,7 @@ $sql_common = " from {$g5['g5_shop_coupon_zone_table']} ";
 
 $sql_search = " where (1) ";
 if ($stx) {
-    $sql_search .= " and cp_subject like '%$stx%' ";
+    $sql_search .= " and cz_subject like '%$stx%' ";
 }
 
 if (!$sst) {
