@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit;
 @ini_set('memory_limit', '-1');
 
 // 게시글리스트 썸네일 생성
-function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=true, $crop_mode='center', $is_sharpen=false, $um_value='80/0.5/3')
+function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=false, $crop_mode='center', $is_sharpen=false, $um_value='80/0.5/3')
 {
     global $g5, $config;
     $filename = $alt = "";
@@ -238,10 +238,10 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     $degree = 0;
 
     if ($size[2] == 1) {
-        $src = imagecreatefromgif($source_file);
-        $src_transparency = imagecolortransparent($src);
+        $src = @imagecreatefromgif($source_file);
+        $src_transparency = @imagecolortransparent($src);
     } else if ($size[2] == 2) {
-        $src = imagecreatefromjpeg($source_file);
+        $src = @imagecreatefromjpeg($source_file);
 
         if(function_exists('exif_read_data')) {
             // exif 정보를 기준으로 회전각도 구함
@@ -273,8 +273,8 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             }
         }
     } else if ($size[2] == 3) {
-        $src = imagecreatefrompng($source_file);
-        imagealphablending($src, true);
+        $src = @imagecreatefrompng($source_file);
+        @imagealphablending($src, true);
     } else {
         return;
     }
@@ -330,20 +330,52 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
                     }
                     break;
             }
-        }
 
-        $dst = imagecreatetruecolor($dst_w, $dst_h);
+            $dst = imagecreatetruecolor($dst_w, $dst_h);
 
-        if($size[2] == 3) {
-            imagealphablending($dst, false);
-            imagesavealpha($dst, true);
-        } else if($size[2] == 1) {
-            $palletsize = imagecolorstotal($src);
-            if($src_transparency >= 0 && $src_transparency < $palletsize) {
-                $transparent_color   = imagecolorsforindex($src, $src_transparency);
-                $current_transparent = imagecolorallocate($dst, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
-                imagefill($dst, 0, 0, $current_transparent);
-                imagecolortransparent($dst, $current_transparent);
+            if($size[2] == 3) {
+                imagealphablending($dst, false);
+                imagesavealpha($dst, true);
+            } else if($size[2] == 1) {
+                $palletsize = imagecolorstotal($src);
+                if($src_transparency >= 0 && $src_transparency < $palletsize) {
+                    $transparent_color   = imagecolorsforindex($src, $src_transparency);
+                    $current_transparent = imagecolorallocate($dst, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+                    imagefill($dst, 0, 0, $current_transparent);
+                    imagecolortransparent($dst, $current_transparent);
+                }
+            }
+        } else { // 비율에 맞게 생성
+            $dst = imagecreatetruecolor($dst_w, $dst_h);
+            $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
+
+            if($src_w > $src_h) {
+                $tmp_h = round(($dst_w * $src_h) / $src_w);
+                $dst_y = round(($dst_h - $tmp_h) / 2);
+                $dst_h = $tmp_h;
+            } else {
+                $tmp_w = round(($dst_h * $src_w) / $src_h);
+                $dst_x = round(($dst_w - $tmp_w) / 2);
+                $dst_w = $tmp_w;
+            }
+
+            if($size[2] == 3) {
+                $bgcolor = imagecolorallocatealpha($dst, 0, 0, 0, 127);
+                imagefill($dst, 0, 0, $bgcolor);
+                imagealphablending($dst, false);
+                imagesavealpha($dst, true);
+            } else if($size[2] == 1) {
+                $palletsize = imagecolorstotal($src);
+                if($src_transparency >= 0 && $src_transparency < $palletsize) {
+                    $transparent_color   = imagecolorsforindex($src, $src_transparency);
+                    $current_transparent = imagecolorallocate($dst, $transparent_color['red'], $transparent_color['green'], $transparent_color['blue']);
+                    imagefill($dst, 0, 0, $current_transparent);
+                    imagecolortransparent($dst, $current_transparent);
+                } else {
+                    imagefill($dst, 0, 0, $bgcolor);
+                }
+            } else {
+                imagefill($dst, 0, 0, $bgcolor);
             }
         }
     } else {

@@ -3274,4 +3274,13 @@ function check_write_token($bo_table)
 
     return true;
 }
+
+// include 하는 경로에 data file 경로가 포함되어 있는지 체크합니다.
+function is_include_path_check($path='')
+{
+    if( !$path || preg_match('/\/data\/(file|editor)\/[A-Za-z0-9_]{1,20}\//', $path) ){
+        return false;
+    }
+    return true;
+}
 ?>
