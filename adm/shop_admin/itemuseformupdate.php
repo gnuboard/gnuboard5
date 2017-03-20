@@ -16,7 +16,10 @@ if ($w == "u")
     $sql = "update {$g5['g5_shop_item_use_table']}
                set is_subject = '$is_subject',
                    is_content = '$is_content',
-                   is_confirm = '$is_confirm'
+                   is_confirm = '$is_confirm',
+                   is_reply_subject = '$is_reply_subject',
+                   is_reply_content = '$is_reply_content',
+                   is_reply_name = '".$member['mb_nick']."'
              where is_id = '$is_id' ";
     sql_query($sql);
 

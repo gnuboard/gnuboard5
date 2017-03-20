@@ -11,8 +11,18 @@ $sql = " select *
            left join {$g5['g5_shop_item_table']} c on (a.it_id = c.it_id)
           where is_id = '$is_id' ";
 $is = sql_fetch($sql);
+
 if (!$is['is_id'])
     alert('등록된 자료가 없습니다.');
+
+// 사용후기 의 답변 필드 추가
+if (!isset($is['is_reply_subject'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_item_use_table']}`
+                ADD COLUMN `is_reply_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `is_confirm`,
+                ADD COLUMN `is_reply_content` TEXT NOT NULL AFTER `is_reply_subject`,
+                ADD COLUMN `is_reply_name` VARCHAR(25) NOT NULL DEFAULT '' AFTER `is_reply_content`
+                ", true);
+}
 
 $name = get_sideview($is['mb_id'], get_text($is['is_name']), $is['mb_email'], $is['mb_homepage']);
 
@@ -68,6 +78,15 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
         <td><?php echo editor_html('is_content', get_text($is['is_content'], 0)); ?></td>
     </tr>
     <tr>
+        <th scope="row"><label for="is_reply_subject">답변 제목</label></th>
+        <td><input type="text" name="is_reply_subject" required class="required frm_input" id="is_reply_subject" size="100"
+        value="<?php echo get_text($is['is_reply_subject']); ?>"></td>
+    </tr>
+    <tr>
+        <th scope="row">답변 내용</th>
+        <td><?php echo editor_html('is_reply_content', get_text($is['is_reply_content'], 0)); ?></td>
+    </tr>
+    <tr>
         <th scope="row">확인</th>
         <td>
             <input type="radio" name="is_confirm" value="1" id="is_confirm_yes" <?php echo $is_confirm_yes; ?>>
@@ -90,7 +109,7 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
 function fitemuseform_submit(f)
 {
     <?php echo get_editor_js('is_content'); ?>
-
+    <?php echo get_editor_js('is_reply_content'); ?>
     return true;
 }
 </script>

@@ -264,6 +264,12 @@
 #sit_use_write li label {display:inline-block;width:80px}
 #sit_use_write_star {margin:0;padding:0;list-style:none}
 
+.sit_use_reply{position:relative;border-top:1px dotted #bbb;margin:10px 0 0 ;padding:10px 0 0 40px}
+.use_reply_icon{position:absolute;top:10px;left:5px;background:url('./img/use_reply.png') no-repeat 0 0; width:28px;height:17px;text-indent:-999px;overflow:hidden;}
+.use_reply_tit{font-weight:bold;line-height:1.5em}
+.use_reply_name{font-size:0.92em;color:#777;margin:5px 0}
+.use_reply_p{padding:10px;background:#f2f2f2;line-height:1.5em}
+
 /* 상품 상세보기 - 상품문의 */
 #sit_qa {margin:0 0 10px;padding:10px 10px 20px;border-bottom:1px solid #e9e9e9}
 #sit_qa_ol {margin:0 0 5px;padding:0;border-top:1px solid #e9e9e9;list-style:none}

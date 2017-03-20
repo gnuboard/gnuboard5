@@ -21,6 +21,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         $is_name    = get_text($row['is_name']);
         $is_subject = conv_subject($row['is_subject'],50,"…");
         $is_content = get_view_thumbnail(conv_content($row['is_content'], 1), $thumbnail_width);
+        $is_reply_name = !empty($row['is_reply_name']) ? get_text($row['is_reply_name']) : '';
+        $is_reply_subject = !empty($row['is_reply_subject']) ? conv_subject($row['is_reply_subject'],50,"…") : '';
+        $is_reply_content = !empty($row['is_reply_content']) ? get_view_thumbnail(conv_content($row['is_reply_content'], 1), $thumbnail_width) : '';
         $is_time    = substr($row['is_time'], 2, 8);
         $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
 
@@ -43,6 +46,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">
                 <div class="sit_use_p">
                     <?php echo $is_content; // 사용후기 내용 ?>
+                  
                 </div>
 
                 <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
@@ -51,6 +55,21 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
                     <a href="<?php echo $itemuse_formupdate."&amp;is_id={$row['is_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemuse_delete btn01">삭제</a>
                 </div>
                 <?php } ?>
+
+                <?php if( $is_reply_subject ){  //  사용후기 답변 내용이 있다면 ?>
+                <div class="sit_use_reply">
+                    <div class="use_reply_icon">답변</div>
+                    <div class="use_reply_tit">
+                        <?php echo $is_reply_subject; // 답변 제목 ?>
+                    </div>
+                    <div class="use_reply_name">
+                        <?php echo $is_reply_name; // 답변자 이름 ?>
+                    </div>
+                    <div class="use_reply_p">
+                        <?php echo $is_reply_content; // 답변 내용 ?>
+                    </div>
+                </div>
+                <?php } //end if ?>
             </div>
         </li>
 

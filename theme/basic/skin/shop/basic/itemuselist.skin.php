@@ -75,6 +75,37 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         </section>
 
     </li>
+
+    <?php
+    if( !empty($row['is_reply_subject']) ){     //사용후기 답변이 있다면
+        $is_reply_content = get_view_thumbnail(conv_content($row['is_reply_content'], 1), $thumbnail_width);
+    ?>
+    <li class="sps_reply">
+        <div class="sps_img">
+            <a href="<?php echo $it_href; ?>">
+                <?php echo get_itemuselist_thumbnail($row['it_id'], $row['is_reply_content'], 50, 50); ?>
+                <span><?php echo $row2['it_name']; ?></span>
+            </a>
+        </div>
+
+        <section class="sps_section">
+
+            <h2 class="is_use_reply"><?php echo get_text($row['is_reply_subject']); ?></h2>
+
+            <dl class="sps_dl">
+                <dt>작성자</dt>
+                <dd><?php echo $row['is_reply_name']; ?></dd>
+            </dl>
+
+            <div id="sps_con_<?php echo $i; ?>_reply" style="display:none;">
+                <?php echo $is_reply_content; // 사용후기 답변 내용 ?>
+            </div>
+
+            <div class="sps_con_btn"><button class="sps_con_<?php echo $i; ?>_reply">보기</button></div>
+        </section>
+    </li>
+    <?php }     //end if ?>
+
     <?php }
     if ($i > 0) echo '</ol>';
     if ($i == 0) echo '<p id="sps_empty">자료가 없습니다.</p>';

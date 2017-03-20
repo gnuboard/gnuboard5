@@ -158,10 +158,13 @@ ul,li{list-style:none;padding:0;margin:0;}
 #sps dd img {position:relative;top:-2px}
 
 .sps_section {margin-left:80px;display:block;}
+.sps_section .is_use_reply{background:url('../mobile/shop/img/use_reply.png') no-repeat;text-indent:30px;line-height:1.5em}
 .sps_section p {padding:0;width:100%}
 .sps_con_full {padding:0;height:auto !important}
 .sps_con_btn {margin:5px 0 0;text-align:right}
 .sps_con_btn button {margin:0;padding:5px;border:0;background:#565e60;color:#fff}
+
+.sps_reply .sps_img {text-align:right;width:70px}
 
 /* 상품문의 모음 */
 #sqa_sch {margin:10px 10px}
