@@ -67,9 +67,12 @@ if($_POST['naverpay_form'] == 'cart.php') {
     $_POST['it_id'] = $items;
 }
 
+//착불인 상품과 선불인 상품을 주문할수 없게 하려면
+/*
 if( $is_cart && $is_prepay && $is_collect ){
-    return_error2json("네이버페이는 배송비 착불인 상품과 선불인 상품을 동시에 주문할수 없습니다.\n\n장바구니에서 착불 또는 선불 중 한가지를 선택하여 상품들을 주문해 주세요.");
+    return_error2json("배송비 착불인 상품과 선불인 상품을 동시에 주문할수 없습니다.\n\n장바구니에서 착불 또는 선불 중 한가지를 선택하여 상품들을 주문해 주세요.");
 }
+*/
 
 $count = count($_POST['it_id']);
 if ($count < 1)
