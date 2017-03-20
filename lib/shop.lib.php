@@ -382,7 +382,7 @@ function get_image($img, $width=0, $height=0, $img_id='')
 
 
 // 상품 이미지를 얻는다
-function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img_alt='')
+function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img_alt='', $is_crop=false)
 {
     global $g5;
 
@@ -417,7 +417,7 @@ function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img
 
     if($filename) {
         //thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create, $is_crop=false, $crop_mode='center', $is_sharpen=true, $um_value='80/0.5/3')
-        $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, true, 'center', false, $um_value='80/0.5/3');
+        $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, $is_crop, 'center', false, $um_value='80/0.5/3');
     }
 
     if($thumb) {
@@ -442,7 +442,7 @@ function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img
 
 
 // 상품이미지 썸네일 생성
-function get_it_thumbnail($img, $width, $height=0, $id='')
+function get_it_thumbnail($img, $width, $height=0, $id='', $is_crop=false)
 {
     $str = '';
 
@@ -462,7 +462,7 @@ function get_it_thumbnail($img, $width, $height=0, $id='')
         $height = round(($width * $img_height) / $img_width);
     }
 
-    $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, true, 'center', false, $um_value='80/0.5/3');
+    $thumb = thumbnail($filename, $filepath, $filepath, $width, $height, false, $is_crop, 'center', false, $um_value='80/0.5/3');
 
     if($thumb) {
         $file_url = str_replace(G5_PATH, G5_URL, $filepath.'/'.$thumb);
