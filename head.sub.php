@@ -45,7 +45,7 @@ if (G5_IS_MOBILE) {
     echo '<meta name="format-detection" content="telephone=no">'.PHP_EOL;
 } else {
     echo '<meta http-equiv="imagetoolbar" content="no">'.PHP_EOL;
-    echo '<meta http-equiv="X-UA-Compatible" content="IE=10,chrome=1">'.PHP_EOL;
+    echo '<meta http-equiv="X-UA-Compatible" content="IE=Edge">'.PHP_EOL;
 }
 
 if($config['cf_add_meta'])

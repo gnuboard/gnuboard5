@@ -1064,7 +1064,11 @@ DoUpload.prototype = {
 
         if (evt.target.readyState === FileReader.DONE) {
             blob = new self.MyBlob(self.NewBlob(evt.target.result, filetype));
-            orientation = self.getOrientation(evt.target.result.slice(0, 64 * 1024));
+            try {
+                orientation = self.getOrientation(evt.target.result.slice(0, 64 * 1024));
+            } catch(err) {
+
+            }
             image = new Image();
 
             image.onload = function () {
