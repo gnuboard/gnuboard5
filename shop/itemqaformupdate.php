@@ -5,11 +5,12 @@ if (!$is_member) {
     alert_close("상품문의는 회원만 작성이 가능합니다.");
 }
 
-$iq_id = trim($_REQUEST['iq_id']);
+$iq_id = (int) trim($_REQUEST['iq_id']);
 $iq_subject = trim($_POST['iq_subject']);
 $iq_question = trim($_POST['iq_question']);
 $iq_answer = trim($_POST['iq_answer']);
 $hash = trim($_REQUEST['hash']);
+$get_editor_img_mode = $config['cf_editor'] ? false : true;
 
 if ($w == "" || $w == "u") {
     $iq_name     = addslashes(strip_tags($member['mb_name']));
@@ -80,7 +81,7 @@ else if ($w == "d")
     $sql = " select iq_question, iq_answer from {$g5['g5_shop_item_qa_table']} where iq_id = '$iq_id' and md5(concat(iq_id,iq_time,iq_ip)) = '{$hash}' ";
     $row = sql_fetch($sql);
 
-    $imgs = get_editor_image($row['iq_question']);
+    $imgs = get_editor_image($row['iq_question'], $get_editor_img_mode);
 
     for($i=0;$i<count($imgs[1]);$i++) {
         $p = parse_url($imgs[1][$i]);
@@ -89,13 +90,17 @@ else if ($w == "d")
         else
             $data_path = $p['path'];
 
+        if( end(explode('.', $data_path)) === 'php' ){
+            continue;
+        }
+
         $destfile = G5_PATH.$data_path;
 
-        if(is_file($destfile))
+        if(preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile))
             @unlink($destfile);
     }
 
-    $imgs = get_editor_image($row['iq_answer']);
+    $imgs = get_editor_image($row['iq_answer'], $get_editor_img_mode);
 
     for($i=0;$i<count($imgs[1]);$i++) {
         $p = parse_url($imgs[1][$i]);
@@ -104,9 +109,13 @@ else if ($w == "d")
         else
             $data_path = $p['path'];
 
+        if( end(explode('.', $data_path)) === 'php' ){
+            continue;
+        }
+
         $destfile = G5_PATH.$data_path;
 
-        if(is_file($destfile))
+        if(preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile))
             @unlink($destfile);
     }
 

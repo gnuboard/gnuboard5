@@ -11,6 +11,8 @@ $is_content  = trim($_POST['is_content']);
 $is_name     = trim($_POST['is_name']);
 $is_password = trim($_POST['is_password']);
 $is_score    = (int)$_POST['is_score'] > 5 ? 0 : (int)$_POST['is_score'];
+$get_editor_img_mode = $config['cf_editor'] ? false : true;
+$is_id       = (int) trim($_REQUEST['is_id']);
 
 // 사용후기 작성 설정에 따른 체크
 check_itemuse_write($it_id, $member['mb_id']);
@@ -64,6 +66,7 @@ if ($w == "")
 else if ($w == "u")
 {
     $sql = " select is_password from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' ";
+
     $row = sql_fetch($sql);
     if ($row['is_password'] != $is_password)
         alert("비밀번호가 틀리므로 수정하실 수 없습니다.");
@@ -91,7 +94,7 @@ else if ($w == "d")
     $sql = " select is_content from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' and md5(concat(is_id,is_time,is_ip)) = '{$hash}' ";
     $row = sql_fetch($sql);
 
-    $imgs = get_editor_image($row['is_content']);
+    $imgs = get_editor_image($row['is_content'], $get_editor_img_mode);
 
     for($i=0;$i<count($imgs[1]);$i++) {
         $p = parse_url($imgs[1][$i]);
@@ -100,9 +103,13 @@ else if ($w == "d")
         else
             $data_path = $p['path'];
 
+        if( end(explode('.', $data_path)) === 'php' ){
+            continue;
+        }
+
         $destfile = G5_PATH.$data_path;
 
-        if(is_file($destfile))
+        if(preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile))
             @unlink($destfile);
     }
 
