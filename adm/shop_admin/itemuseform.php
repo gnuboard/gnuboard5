@@ -79,7 +79,7 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
     </tr>
     <tr>
         <th scope="row"><label for="is_reply_subject">답변 제목</label></th>
-        <td><input type="text" name="is_reply_subject" required class="required frm_input" id="is_reply_subject" size="100"
+        <td><input type="text" name="is_reply_subject" class="frm_input" id="is_reply_subject" size="100"
         value="<?php echo get_text($is['is_reply_subject']); ?>"></td>
     </tr>
     <tr>
