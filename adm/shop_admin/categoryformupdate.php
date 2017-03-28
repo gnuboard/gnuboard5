@@ -35,6 +35,10 @@ if ($w == "" || $w == "u")
     }
 }
 
+if( $ca_skin && ! is_include_path_check($ca_skin) ){
+    alert('오류 : 데이터폴더가 포함된 path 를 포함할수 없습니다.');
+}
+
 $sql_common = " ca_order                = '$ca_order',
                 ca_skin_dir             = '$ca_skin_dir',
                 ca_mobile_skin_dir      = '$ca_mobile_skin_dir',
