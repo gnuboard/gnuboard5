@@ -2,6 +2,7 @@
 /* SIR 지운아빠 */
 
 /* 초기화 */
+* {font-family:dotum, sans-serif}
 html {overflow-y:scroll}
 body {margin:0;padding:0;font-size:0.75em}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
@@ -13,7 +14,7 @@ label, input, button, select, img {vertical-align:middle}
 input, button {margin:0;padding:0;font-size:1em}
 button {cursor:pointer}
 input[type=text], input[type=password], input[type=submit], input[type=image], button {border-radius:0;font-size:1em;-webkit-appearance:none}
-textarea, select {font-size:1em;font-family:dotum}
+textarea, select {font-size:1em}
 textarea {border-radius:0;-webkit-appearance:none}
 select {margin:0}
 p {margin:0;padding:0;word-break:break-all}

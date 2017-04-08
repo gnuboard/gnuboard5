@@ -2,19 +2,20 @@
 /* SIR 지운아빠 */
 
 /* 초기화 */
+* {font-family:dotum, sans-serif}
 html {overflow-y:scroll}
-body {margin:0;padding:0;font-size:0.75em;font-family:dotum}
+body {margin:0;padding:0;font-size:0.75em}
 html, h1, h2, h3, h4, h5, h6, form, fieldset, img {margin:0;padding:0;border:0}
-h1, h2, h3, h4, h5, h6 {font-size:1em;font-family:dotum}
+h1, h2, h3, h4, h5, h6 {font-size:1em}
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display:block}
 
 #hd ul, nav ul, #ft ul {margin:0;padding:0;list-style:none}
 legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 label, input, button, select, img {vertical-align:middle}
-input, button {margin:0;padding:0;font-family:dotum;font-size:1em}
+input, button {margin:0;padding:0;font-size:1em}
 button {cursor:pointer}
 
-textarea, select {font-family:dotum;font-size:1em}
+textarea, select {font-size:1em}
 select {margin:0}
 p {margin:0;padding:0;word-break:break-all}
 hr {display:none}
@@ -251,7 +252,7 @@ a.btn_admin:focus, a.btn_admin:hover {text-decoration:none}
 .new_win .win_ul {margin:-20px 0 20px 0;padding:0 20px;border-bottom:1px solid #455255;background:#484848;list-style:none;zoom:1}
 .new_win .win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .win_ul li {float:left;margin-left:-1px}
-.new_win .win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
+.new_win .win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #455255;border-left:1px solid #455255;color:#fff;font-weight:bold;text-decoration:none}
 .new_win .win_desc {padding:20px}
 
 .new_win .win_btn {clear:both;padding:20px;text-align:center} /* 새창용 */
