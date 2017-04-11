@@ -967,3 +967,6 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #inorderlist .td_name{text-align:center !important}
 #anc_sodr_pay .btn_confirm{margin-top:30px}
 #anc_sodr_pay .btn_confirm .btn_submit{width:300px;height:40px;font-size:14px;}
+
+
+ .pg_input{font:bold 15px Consolas}
