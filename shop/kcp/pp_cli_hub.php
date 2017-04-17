@@ -1,6 +1,6 @@
 <?php
-include './_common.php';
-include G5_LIB_PATH.'/etc.lib.php';
+include_once './_common.php';
+include_once G5_LIB_PATH.'/etc.lib.php';
 
 if($tx == 'personalpay')
     $sql = " select count(*) as cnt from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['ordr_idxx']}' and pp_cash = 1 ";

@@ -1,5 +1,5 @@
 <?php
-include './_common.php';
+include_once './_common.php';
 require_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
 
     /* ============================================================================== */
