@@ -840,7 +840,7 @@ function get_star_image($it_id)
 {
     global $g5;
 
-    $sql = "select (SUM(is_score) / COUNT(*)) as score from {$g5['g5_shop_item_use_table']} where it_id = '$it_id' ";
+    $sql = "select (SUM(is_score) / COUNT(*)) as score from {$g5['g5_shop_item_use_table']} where it_id = '$it_id' and is_confirm = 1 ";
     $row = sql_fetch($sql);
 
     return (int)get_star($row['score']);
@@ -2062,7 +2062,7 @@ function update_use_cnt($it_id)
 function update_use_avg($it_id)
 {
     global $g5;
-    $row = sql_fetch(" select count(*) as cnt, sum(is_score) as total from {$g5['g5_shop_item_use_table']} where it_id = '{$it_id}' ");
+    $row = sql_fetch(" select count(*) as cnt, sum(is_score) as total from {$g5['g5_shop_item_use_table']} where it_id = '{$it_id}' and is_confirm = 1 ");
     $average = ($row['total'] && $row['cnt']) ? $row['total'] / $row['cnt'] : 0;
     return sql_query(" update {$g5['g5_shop_item_table']} set it_use_avg = '$average' where it_id = '{$it_id}' ");
 }

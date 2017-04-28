@@ -24,6 +24,7 @@ if ($w == "u")
     sql_query($sql);
 
     update_use_cnt($_POST['it_id']);
+    update_use_avg($_POST['it_id']);
 
     goto_url("./itemuseform.php?w=$w&amp;is_id=$is_id&amp;sca=$sca&amp;$qstr");
 }
