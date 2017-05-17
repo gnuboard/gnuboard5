@@ -3260,6 +3260,27 @@ function check_write_token($bo_table)
     return true;
 }
 
+function get_call_func_cache($func, $args=array()){
+    
+    static $cache = array();
+
+    $key = md5(serialize($args));
+
+    if( isset($cache[$func]) && isset($cache[$func][$key]) ){
+        return $cache[$func][$key];
+    }
+
+    $result = null;
+
+    try{
+        $cache[$func][$key] = $result = call_user_func_array($func, $args);
+    } catch (Exception $e) {
+        return null;
+    }
+    
+    return $result;
+}
+
 // include 하는 경로에 data file 경로가 포함되어 있는지 체크합니다.
 function is_include_path_check($path='')
 {
