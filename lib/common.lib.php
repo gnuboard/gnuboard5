@@ -628,7 +628,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
 
             // SQL Injection 방지
             // 필드값에 a-z A-Z 0-9 _ , | 이외의 값이 있다면 검색필드를 wr_subject 로 설정한다.
-            $field[$k] = preg_match("/^[\w\,\|]+$/", $field[$k]) ? $field[$k] : "wr_subject";
+            $field[$k] = preg_match("/^[\w\,\|]+$/", $field[$k]) ? strtolower($field[$k]) : "wr_subject";
 
             $str .= $op2;
             switch ($field[$k]) {
