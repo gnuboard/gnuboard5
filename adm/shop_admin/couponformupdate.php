@@ -89,7 +89,7 @@ if($w == '') {
     $cp = sql_fetch($sql);
 
     if(!$cp['cp_id'])
-        alert('쿠폰정보가 존해하지 않습니다.', './couponlist.php');
+        alert('쿠폰정보가 존재하지 않습니다.', './couponlist.php');
 
     if($_POST['chk_all_mb']) {
         $mb_id = '전체회원';
