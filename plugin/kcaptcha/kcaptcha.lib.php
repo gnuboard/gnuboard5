@@ -245,7 +245,7 @@ function captcha_html($class="captcha")
     $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/kcaptcha.js"></script>';
     $html .= "\n".'<fieldset id="captcha" class="'.$class.'">';
     $html .= "\n".'<legend><label for="captcha_key">자동등록방지</label></legend>';
-    if (is_mobile()) $html .= '<audio src="#" id="captcha_audio" controls></audio>';
+    if (is_mobile()) $html .= '<audio id="captcha_audio" controls></audio>';
     //$html .= "\n".'<img src="#" alt="" id="captcha_img">';
     $html .= "\n".'<img src="javascript:void(0);" alt="" id="captcha_img">';
     if (!is_mobile()) $html .= "\n".'<button type="button" id="captcha_mp3"><span></span>숫자음성듣기</button>';
