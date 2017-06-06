@@ -19,9 +19,22 @@ if ($member['mb_level'] >= $board['bo_comment_level'])
 //$sql = " select * from {$write_table} where wr_parent = '{$wr_id}' and wr_is_comment = 1 order by wr_comment desc, wr_comment_reply ";
 $sql = " select * from $write_table where wr_parent = '$wr_id' and wr_is_comment = 1 order by wr_comment, wr_comment_reply ";
 $result = sql_query($sql);
+
+$comment_map = array();
+$comment_map['C'] = $view;
+
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $list[$i] = $row;
+
+    $comment_key = 'C' . $row['wr_comment'] . $row['wr_comment_reply'];
+    $comment_map[$comment_key] = $row;
+
+    if($row['wr_comment_reply']) {
+        $parent_key = substr($comment_key, 0, strlen($comment_key) - 1);
+    } else {
+        $parent_key = "C";
+    }
 
     //$list[$i]['name'] = get_sideview($row['mb_id'], cut_str($row['wr_name'], 20, ''), $row['wr_email'], $row['wr_homepage']);
 
@@ -32,14 +45,13 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $list[$i]['name'] = '<span class="'.($row['mb_id']?'member':'guest').'">'.$tmp_name.'</span>';
 
 
-
     // 공백없이 연속 입력한 문자 자르기 (way 보드 참고. way.co.kr)
     //$list[$i]['content'] = eregi_replace("[^ \n<>]{130}", "\\0\n", $row['wr_content']);
 
     $list[$i]['content'] = $list[$i]['content1']= '비밀글 입니다.';
     if (!strstr($row['wr_option'], 'secret') ||
         $is_admin ||
-        ($write['mb_id']==$member['mb_id'] && $member['mb_id']) ||
+        ($comment_map[$parent_key]['mb_id'] == $member['mb_id'] && $member['mb_id']) ||
         ($row['mb_id']==$member['mb_id'] && $member['mb_id'])) {
         $list[$i]['content1'] = $row['wr_content'];
         $list[$i]['content'] = conv_content($row['wr_content'], 0, 'wr_content');
