@@ -3,6 +3,8 @@ include_once('./_common.php');
 include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 include_once(G5_LIB_PATH.'/naverpay.lib.php');
 
+$pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#';
+
 $is_collect = false;    //착불체크 변수 초기화
 $is_prepay = false;     //선불체크 변수 초기화
 $is_cart = false;       //장바구니 체크 변수 초기화
@@ -21,7 +23,7 @@ if($_POST['naverpay_form'] == 'cart.php') {
         if(!$ct_chk)
             continue;
 
-        $it_id = $_POST['it_id'][$i];
+        $it_id = preg_replace($pattern, '', $_POST['it_id'][$i]);
 
         // 장바구니 상품
         $sql = " select ct_id, it_id, ct_option, io_id, io_type, ct_qty, ct_send_cost, it_sc_type from {$g5['g5_shop_cart_table']} where od_id = '$s_cart_id' and it_id = '$it_id' and ct_status = '쇼핑' order by ct_id asc ";
@@ -92,7 +94,7 @@ else
 define('NAVERPAY_BACK_URL', G5_SHOP_URL.$back_uri);
 
 for($i=0; $i<$count; $i++) {
-    $it_id = $_POST['it_id'][$i];
+    $it_id = preg_replace($pattern, '', $_POST['it_id'][$i]);
     $opt_count = count($_POST['io_id'][$it_id]);
 
     if($opt_count && $_POST['io_type'][$it_id][0] != 0)
@@ -147,12 +149,13 @@ for($i=0; $i<$count; $i++) {
     //  재고 검사
     //--------------------------------------------------------
     for($k=0; $k<$opt_count; $k++) {
-        $io_id = $_POST['io_id'][$it_id][$k];
-        $io_type = $_POST['io_type'][$it_id][$k];
+        $io_id = preg_replace($pattern, '', $_POST['io_id'][$it_id][$k]);
+        $io_type = (int) $_POST['io_type'][$it_id][$k];
         $io_value = $_POST['io_value'][$it_id][$k];
+       
 
         // 재고 구함
-        $ct_qty = $_POST['ct_qty'][$it_id][$k];
+        $ct_qty = (int) $_POST['ct_qty'][$it_id][$k];
         if(!$io_id)
             $it_stock_qty = get_it_stock_qty($it_id);
         else
@@ -168,8 +171,8 @@ for($i=0; $i<$count; $i++) {
     $itm_ids[] = $it_id;
 
     for($k=0; $k<$opt_count; $k++) {
-        $io_id = $_POST['io_id'][$it_id][$k];
-        $io_type = $_POST['io_type'][$it_id][$k];
+        $io_id = preg_replace($pattern, '', $_POST['io_id'][$it_id][$k]);
+        $io_type = (int) $_POST['io_type'][$it_id][$k];
         $io_value = $_POST['io_value'][$it_id][$k];
 
         // 선택옵션정보가 존재하는데 선택된 옵션이 없으면 건너뜀
@@ -181,7 +184,7 @@ for($i=0; $i<$count; $i++) {
             continue;
 
         $io_price = $opt_list[$io_type][$io_id]['price'];
-        $ct_qty = $_POST['ct_qty'][$it_id][$k];
+        $ct_qty = (int) $_POST['ct_qty'][$it_id][$k];
 
         $it_price = get_price($it);
 
