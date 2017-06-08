@@ -19,6 +19,19 @@ $bn_bimg_name = $_FILES['bn_bimg']['name'];
 
 if ($bn_bimg_del)  @unlink(G5_DATA_PATH."/banner/$bn_id");
 
+//파일이 이미지인지 체크합니다.
+if( $bn_bimg || $bn_bimg_name ){
+
+    if( !preg_match('/\.(gif|jpe?g|bmp|png)$/i', $bn_bimg_name) ){
+        alert("이미지 파일만 업로드 할수 있습니다.");
+    }
+
+    $timg = @getimagesize($bn_bimg);
+    if ($timg['2'] < 1 || $timg['2'] > 16){
+        alert("이미지 파일만 업로드 할수 있습니다.");
+    }
+}
+
 if ($w=="")
 {
     if (!$bn_bimg_name) alert('배너 이미지를 업로드 하세요.');
