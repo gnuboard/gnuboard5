@@ -14,20 +14,21 @@ if ($is_member && $count) {
     for ($i=0; $i<$count; $i++)
     {
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
+        $k = (int) $_POST['chk'][$i];
+        $ad_id = (int) $_POST['ad_id'][$k];
 
         $ad_subject = clean_xss_tags($_POST['ad_subject'][$k]);
 
         $sql = " update {$g5['g5_shop_order_address_table']}
                     set ad_subject = '$ad_subject' ";
 
-        if($_POST['ad_default'] && $_POST['ad_id'][$k] == $_POST['ad_default']) {
+        if(!empty($_POST['ad_default']) && $ad_id == $_POST['ad_default']) {
             sql_query(" update {$g5['g5_shop_order_address_table']} set ad_default = '0' where mb_id = '{$member['mb_id']}' ");
 
             $sql .= ", ad_default = '1' ";
         }
 
-        $sql .= " where ad_id = '{$_POST['ad_id'][$k]}'
+        $sql .= " where ad_id = '".$ad_id."'
                     and mb_id = '{$member['mb_id']}' ";
 
         sql_query($sql);
