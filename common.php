@@ -32,10 +32,11 @@ function g5_path()
     $result['path'] = str_replace('\\', '/', dirname(__FILE__));
     $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $_SERVER['SCRIPT_NAME']);
     $document_root = str_replace($tilde_remove, '', $_SERVER['SCRIPT_FILENAME']);
-    $root = str_replace($document_root, '', $result['path']);
+    $pattern = '/' . preg_quote($document_root, '/') . '/i';
+    $root = preg_replace($pattern, '', $result['path']);
     $port = $_SERVER['SERVER_PORT'] != 80 ? ':'.$_SERVER['SERVER_PORT'] : '';
     $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
-    $user = str_replace(str_replace($document_root, '', $_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']);
+    $user = str_replace(preg_replace($pattern, '', $_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']);
     $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
     if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host))
         $host = preg_replace('/:[0-9]+$/', '', $host);
@@ -370,7 +371,7 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
             $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
             // 쿠키에 저장된 키와 같다면
             $tmp_key = get_cookie('ck_auto');
-            if ($tmp_key == $key && $tmp_key) {
+            if ($tmp_key === $key && $tmp_key) {
                 // 차단, 탈퇴가 아니고 메일인증이 사용이면서 인증을 받았다면
                 if ($row['mb_intercept_date'] == '' &&
                     $row['mb_leave_date'] == '' &&
