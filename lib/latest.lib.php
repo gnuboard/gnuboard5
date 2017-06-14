@@ -66,7 +66,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
 
         if($cache_fwrite) {
             $handle = fopen($cache_file, 'w');
-            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject='".$bo_subject."';\n\$list=".var_export($list, true)."?>";
+            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject='".sql_escape_string($bo_subject)."';\n\$list=".var_export($list, true)."?>";
             fwrite($handle, $cache_content);
             fclose($handle);
         }
