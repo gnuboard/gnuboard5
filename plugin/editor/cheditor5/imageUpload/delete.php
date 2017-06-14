@@ -5,7 +5,7 @@ if(!function_exists('ft_nonce_is_valid')){
     include_once('../editor.lib.php');
 }
 
-$filesrc = isset($_POST["filesrc"]) ? preg_replace("/[ #\&\+\-%@=\/\\\:;,\'\"\^`~\_|\!\?\*$#<>()\[\]\{\}]/", "", $_POST["filesrc"]) : '';
+$filesrc = isset($_POST["filesrc"]) ? preg_replace("/[ #\&\+\-%@=\/\\\:;,\'\"\^`~|\!\?\*$#<>()\[\]\{\}]/", "", $_POST["filesrc"]) : '';
 
 if( !$filesrc || ! preg_match('=^[^/?*;:{}\\\\]+\.[^/?*;:{}\\\\]+$=', $filesrc) || ! preg_match('/\.(gif|jpe?g|bmp|png)$/i', $filesrc) ){
     die( false );
