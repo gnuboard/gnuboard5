@@ -54,15 +54,19 @@ if ($stx) {
         $g5_search['read_level'][] = $row['bo_read_level'];
     }
 
-    $search_query = 'sfl='.urlencode($sfl).'&amp;stx='.urlencode($stx).'&amp;sop='.$sop;
-
-
-    $text_stx = get_text(stripslashes($stx));
-
     $op1 = '';
 
     // 검색어를 구분자로 나눈다. 여기서는 공백
     $s = explode(' ', strip_tags($stx));
+    
+    if( count($s) > 1 ){
+        $s = array_slice($s, 0, 2);
+        $stx = implode(' ', $s);
+    }
+
+    $text_stx = get_text(stripslashes($stx));
+    
+    $search_query = 'sfl='.urlencode($sfl).'&amp;stx='.urlencode($stx).'&amp;sop='.$sop;
 
     // 검색필드를 구분자로 나눈다. 여기서는 +
     $field = explode('||', trim($sfl));
