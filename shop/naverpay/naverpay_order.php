@@ -211,7 +211,7 @@ for($i=0; $i<$count; $i++) {
 
         // 옵션정보배열에 저장
         $options[$it_id][] = array(
-            'option'    => $io_value,
+            'option'    => get_text(stripslashes($io_value)),
             'price'     => $io_price,
             'qty'       => $ct_qty,
             'send_cost' => $ct_send_cost,
