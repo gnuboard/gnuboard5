@@ -134,5 +134,5 @@ if ($count_write > 0 || $count_comment > 0)
 
 delete_cache_latest($bo_table);
 
-goto_url('./board.php?bo_table='.$bo_table.'&amp;page='.$page.$qstr);
+goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;page='.$page.$qstr);
 ?>

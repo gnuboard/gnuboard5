@@ -91,7 +91,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 <!-- 댓글 쓰기 시작 { -->
 <aside id="bo_vc_w">
     <h2>댓글쓰기</h2>
-    <form name="fviewcomment" action="./write_comment_update.php" onsubmit="return fviewcomment_submit(this);" method="post" autocomplete="off">
+    <form name="fviewcomment" action="<?php echo $comment_action_url; ?>" onsubmit="return fviewcomment_submit(this);" method="post" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w ?>" id="w">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
