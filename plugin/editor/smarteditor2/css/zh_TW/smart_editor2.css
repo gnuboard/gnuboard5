@@ -1,0 +1,190 @@
+@charset "UTF-8";
+/* NHN Web Standardization Team (http://html.nhndesign.com/) HHJ 090226 */
+/* COMMON */
+body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 ul,#smart_editor2 ol,#smart_editor2 li,#smart_editor2 dl,#smart_editor2 dt,#smart_editor2 dd,#smart_editor2 table,#smart_editor2 th,#smart_editor2 td,#smart_editor2 form,#smart_editor2 fieldset,#smart_editor2 legend,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 button,#smart_editor2 select{margin:0;padding:0}
+#smart_editor2,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 select,#smart_editor2 table,#smart_editor2 button{font-family:'돋움',Dotum,Helvetica,sans-serif;font-size:12px;color:#666}
+#smart_editor2 span,#smart_editor2 em{font-size:12px}
+#smart_editor2 em,#smart_editor2 address{font-style:normal}
+#smart_editor2 img,#smart_editor2 fieldset{border:0}
+#smart_editor2 hr{display:none}
+#smart_editor2 ol,#smart_editor2 ul{list-style:none}
+#smart_editor2 button{border:0;background:none;font-size:11px;vertical-align:top;cursor:pointer}
+#smart_editor2 button span,#smart_editor2 button em{visibility:hidden;overflow:hidden;position:absolute;top:0;font-size:0;line-height:0}
+#smart_editor2 legend,#smart_editor2 .blind{visibility:hidden;overflow:hidden;position:absolute;width:0;height:0;font-size:0;line-height:0}
+#smart_editor2 .input_ty1{height:14px;margin:0;padding:4px 2px 0 4px;border:1px solid #c7c7c7;font-size:11px;color:#666}
+#smart_editor2 a:link,#smart_editor2 a:visited,#smart_editor2 a:active,#smart_editor2 a:focus{color:#666;text-decoration:none}
+#smart_editor2 a:hover{color:#666;text-decoration:underline}
+/* LAYOUT */
+#smart_editor2 .se2_header{margin:10px 0 29px 0}
+#smart_editor2 .se2_bi{float:left;width:93px;height:20px;margin:0;padding:0;background:url("../../img/zh_TW/btn_set.png?160622") -343px -358px no-repeat;font-size:0;line-height:0;text-indent:-10000px;vertical-align:middle}
+#smart_editor2 .se2_allhelp{display:inline-block;width:18px;height:18px;padding:0;background:url("../../img/zh_TW/btn_set.png?160622") -437px -358px no-repeat;font-size:0;line-height:0;text-indent:-10000px;vertical-align:middle}
+#smart_editor2 #smart_editor2_content{position:relative;border:1px solid #b5b5b5}
+#smart_editor2 .se2_tool{overflow:visible;position:relative;z-index:25}
+/* EDITINGAREA */
+#smart_editor2 .se2_input_area{position:relative;z-index:22;height:400px;margin:0;padding:0;*zoom:1}
+#smart_editor2 .se2_input_wysiwyg,#smart_editor2 .se2_input_syntax{display:block;overflow:auto;width:100%;height:100%;margin:0;*margin:-1px 0 0 0;border:0}
+/* EDITINGMODE */
+#smart_editor2 .se2_conversion_mode{position:relative;height:15px;padding-top:1px;border-top:1px solid #b5b5b5;background:url("../../img/icon_set.gif?141007") 0 -896px repeat-x}
+#smart_editor2 .se2_inputarea_controller{display:block;clear:both;position:relative;width:100%;height:15px;background:url("../../img/icon_set.gif?141007") center -47px no-repeat;text-align:center;cursor:n-resize}
+#smart_editor2 .se2_inputarea_controller span{display:block;visibility:visible;height:15px;font-size:0;line-height:0;color:#fff;white-space:nowrap}
+#smart_editor2 .ly_controller{display:block;position:absolute;bottom:2px;left:50%;width:287px;margin-left:-148px;padding:8px 0 7px 9px;border:1px solid #827f7c;background:#fffdef}
+#smart_editor2 .ly_controller p{color:#666;font-size:11px;letter-spacing:-1px;line-height:11px}
+#smart_editor2 .ly_controller .bt_clse,#smart_editor2 .ly_controller .ic_arr{position:absolute;background:url("../../img/ico_extend.png") no-repeat}
+#smart_editor2 .ly_controller .bt_clse{top:5px;right:4px;width:14px;height:15px;background-position:1px -43px}
+#smart_editor2 .ly_controller .ic_arr{top:25px;left:50%;width:10px;height:6px;margin-left:-5px;background-position:0 -65px}
+#smart_editor2 .se2_converter{float:left;position:absolute;top:-1px;right:3px;z-index:20}
+#smart_editor2 .se2_converter li{float:left}
+#smart_editor2 .se2_converter .se2_to_editor{width:59px;height:15px;background:url("../../img/zh_TW/btn_set.png?160622") 0 -85px no-repeat;vertical-align:top}
+#smart_editor2 .se2_converter .se2_to_html{width:59px;height:15px;background:url("../../img/zh_TW/btn_set.png?160622") -59px -70px no-repeat;vertical-align:top}
+#smart_editor2 .se2_converter .se2_to_text{width:60px;height:15px;background:url("../../img/zh_TW/btn_set.png?160622") -417px -466px no-repeat;vertical-align:top}
+#smart_editor2 .se2_converter .active .se2_to_editor{width:59px;height:15px;background:url("../../img/zh_TW/btn_set.png?160622") 0 -70px no-repeat;vertical-align:top}
+#smart_editor2 .se2_converter .active .se2_to_html{width:59px;height:15px;background:url("../../img/zh_TW/btn_set.png?160622") -59px -85px no-repeat;vertical-align:top}
+#smart_editor2 .se2_converter .active .se2_to_text{width:60px;height:15px;background:url("../../img/zh_TW/btn_set.png?160622") -417px -481px no-repeat;vertical-align:top}
+/* EDITINGAREA_HTMLSRC */
+#smart_editor2 .off .ico_btn,#smart_editor2 .off .se2_more,#smart_editor2 .off .se2_more2,#smart_editor2 .off .se2_font_family,#smart_editor2 .off .se2_font_size,#smart_editor2 .off .se2_bold,#smart_editor2 .off .se2_underline,#smart_editor2 .off .se2_italic,#smart_editor2 .off .se2_tdel,#smart_editor2 .off .se2_fcolor,#smart_editor2 .off .se2_fcolor_more,#smart_editor2 .off .se2_bgcolor,#smart_editor2 .off .se2_bgcolor_more,#smart_editor2 .off .se2_left,#smart_editor2 .off .se2_center,#smart_editor2 .off .se2_right,#smart_editor2 .off .se2_justify,#smart_editor2 .off .se2_ol,#smart_editor2 .off .se2_ul,#smart_editor2 .off .se2_indent,#smart_editor2 .off .se2_outdent,#smart_editor2 .off .se2_lineheight,#smart_editor2 .off .se2_del_style,#smart_editor2 .off .se2_blockquote,#smart_editor2 .off .se2_summary,#smart_editor2 .off .se2_footnote,#smart_editor2 .off .se2_url,#smart_editor2 .off .se2_emoticon,#smart_editor2 .off .se2_character,#smart_editor2 .off .se2_table,#smart_editor2 .off .se2_find,#smart_editor2 .off .se2_spelling,#smart_editor2 .off .se2_sup,#smart_editor2 .off .se2_sub,#smart_editor2 .off .se2_text_tool_more,#smart_editor2 .off .se2_new,#smart_editor2 .off .selected_color,#smart_editor2 .off .se2_lineSticker{-ms-filter:alpha(opacity=50);opacity:.5;cursor:default;filter:alpha(opacity=50)}
+/* LAYER */
+#smart_editor2 .se2_text_tool .se2_layer{display:none;float:left;position:absolute;top:20px;left:0;z-index:50;margin:0;padding:0;border:1px solid #bcbbbb;background:#fafafa}
+#smart_editor2 .se2_text_tool li.active{z-index:50}
+#smart_editor2 .se2_text_tool .active .se2_layer{display:block}
+#smart_editor2 .se2_text_tool .active li .se2_layer{display:none}
+#smart_editor2 .se2_text_tool .active .active .se2_layer{display:block}
+#smart_editor2 .se2_text_tool .se2_layer .se2_in_layer{float:left;margin:0;padding:0;border:1px solid #fff;background:#fafafa}
+#smart_editor2 .se2_content_loading{display:none;z-index:10;position:absolute;top:0;left:0;width:100%;height:100%;text-align:center}
+#smart_editor2 .se2_content_loading img{position:absolute;top:50%;left:50%;margin:-27px 0 0 -27px}
+#smart_editor2 .se2_alert_wrap{display:none;z-index:20;position:absolute;top:0;bottom:0;left:0;width:100%;height:100%;text-align:center}
+#smart_editor2 .se2_alert_wrap.active{display:block}
+#smart_editor2 .se2_alert_wrap .dimmed{position:absolute;top:0;left:0;width:100%;height:100%;background:#000;opacity:0.4;filter:alpha(opacity=40)}
+#smart_editor2 .se2_alert_wrap .ie_cover{position:absolute;top:0;left:0;width:100%;height:100%;background:#fff;opacity:0;filter:alpha(opacity=0)}
+#smart_editor2 .se2_alert_wrap .va_line{display:inline-block;height:100%;vertical-align:middle;*zoom:1}
+#smart_editor2 .se2_alert_wrap .se2_alert_content{z-index:10;position:relative;display:inline-block;*display:inline;*zoom:1;border:1px solid #727272;background:#fff;padding:26px 33px 22px;vertical-align:middle}
+#smart_editor2 .se2_alert_wrap .se2_alert_content{margin-top:47px}
+#smart_editor2 .se2_alert_wrap .txt1{color:#333;line-height:18px}
+#smart_editor2 .se2_alert_wrap .txt2{margin-top:3px;color:#999}
+#smart_editor2 .se2_alert_wrap .btn_close,#smart_editor2 .se2_alert_btns button{background:url("../../img/zh_TW/btn_set.png?160622") no-repeat}
+#smart_editor2 .se2_alert_wrap .btn_close{z-index:10;position:absolute;top:7px;right:7px;width:11px;height:11px;background-position:-122px -32px;text-indent:-5000px}
+#smart_editor2 .se2_alert_btns{margin-top:19px}
+#smart_editor2 .se2_alert_btns button{display:inline;float:none;width:48px;height:27px}
+#smart_editor2 .se2_alert_btns button + button{margin-left:10px}
+#smart_editor2 .se2_alert_btns .se2_confirm{background-position:-369px -434px}
+#smart_editor2 .se2_alert_btns .se2_cancel{background-position:-419px -434px}
+/* TEXT_TOOLBAR */
+#smart_editor2 .se2_text_tool{position:relative;clear:both;z-index:30;padding:4px 0 4px 3px;background:#f4f4f4 url("../../img/bg_text_tool.gif") 0 0 repeat-x;border-bottom:1px solid #b5b5b5;*zoom:1}
+#smart_editor2 .se2_text_tool:after{content:"";display:block;clear:both}
+#smart_editor2 .se2_text_tool ul{float:left;display:inline;margin-right:3px;padding-left:1px;white-space:nowrap}
+#smart_editor2 .se2_text_tool li{_display:inline;float:left;position:relative;z-index:30}
+#smart_editor2 .se2_text_tool button,#smart_editor2 .se2_multy .se2_icon{width:21px;height:21px;background:url("../../img/zh_TW/text_tool_set.png?140317") no-repeat;vertical-align:top}
+#smart_editor2 .se2_text_tool .se2_font_type{position:relative}
+#smart_editor2 .se2_text_tool .se2_font_type li{margin-left:3px}
+#smart_editor2 .se2_text_tool .se2_font_type button{text-align:left}
+#smart_editor2 .se2_text_tool .se2_font_type button.se2_font_family span,#smart_editor2 .se2_text_tool .se2_font_type button.se2_font_size span{display:inline-block;visibility:visible;position:static;width:52px;height:20px;padding:0 0 0 6px;font-size:12px;line-height:20px;*line-height:22px;color:#333;*zoom:1}
+#smart_editor2 .se2_text_tool .se2_multy{position:absolute;top:0;right:0;padding-left:0;margin-right:0;white-space:nowrap;border-left:1px solid #e0dedf}
+#smart_editor2 .se2_text_tool .se2_multy .se2_mn{float:left;white-space:nowrap}
+#smart_editor2 .se2_text_tool .se2_multy button{background-image:none;width:47px}
+#smart_editor2 .se2_text_tool .se2_multy .se2_icon{display:inline-block;visibility:visible;overflow:visible;position:static;width:16px;height:29px;margin:-1px 2px 0 -1px;background-position:0 -132px;line-height:30px;vertical-align:top}
+#smart_editor2 .se2_text_tool .se2_multy button,#smart_editor2 .se2_text_tool .se2_multy button span{height:29px;line-height:29px}
+#smart_editor2 .se2_text_tool .se2_map .se2_icon{background-position:-29px -132px}
+#smart_editor2 .se2_text_tool button span.se2_mntxt{display:inline-block;visibility:visible;overflow:visible;_overflow-y:hidden;position:relative;*margin-right:-1px;width:auto;height:29px;font-weight:normal;font-size:11px;line-height:30px;*line-height:29px;_line-height:30px;color:#444;letter-spacing:-1px;vertical-align:top}
+#smart_editor2 .se2_text_tool .se2_multy .se2_photo{margin-right:1px}
+#smart_editor2 .se2_text_tool .se2_multy .hover .ico_btn{background:#e8e8e8}
+#smart_editor2 .se2_text_tool .se2_multy .se2_mn.hover{background:#e0dedf}
+/* TEXT_TOOLBAR : ROUNDING */
+#smart_editor2 ul li.first_child button span.tool_bg, #smart_editor2 ul li.last_child button span.tool_bg, #smart_editor2 ul li.single_child button span.tool_bg{visibility:visible;height:21px}
+#smart_editor2 ul li.first_child button span.tool_bg{left:-1px;width:3px;background:url("../../img/bg_button_left.gif?20121228") no-repeat}
+#smart_editor2 ul li.last_child button span.tool_bg{right:0px;_right:-1px;width:2px;background:url("../../img/bg_button_right.gif") no-repeat}
+#smart_editor2 ul li.single_child{padding-right:1px}
+#smart_editor2 ul li.single_child button span.tool_bg{left:0;background:url("../../img/bg_button.gif?20121228") no-repeat;width:22px}
+#smart_editor2 div.se2_text_tool ul li.hover button span.tool_bg{background-position:0 -21px}
+#smart_editor2 div.se2_text_tool ul li.active button span.tool_bg, #smart_editor2 div.se2_text_tool ul li.active li.active button span.tool_bg{background-position:0 -42px}
+#smart_editor2 div.se2_text_tool ul li.active li button span.tool_bg{background-position:0 0}
+/* TEXT_TOOLBAR : SUB_MENU */
+#smart_editor2 .se2_sub_text_tool{display:none;position:absolute;top:20px;left:0;z-index:40;width:auto;height:29px;padding:0 4px 0 0;border:1px solid #b5b5b5;border-top:1px solid #9a9a9a;background:#f4f4f4}
+#smart_editor2 .active .se2_sub_text_tool{display:block}
+#smart_editor2 .se2_sub_text_tool ul{float:left;height:25px;margin:0;padding:4px 0 0 4px}
+/* TEXT_TOOLBAR : SUB_MENU_SIZE */
+#smart_editor2 .se2_sub_step1{width:88px}
+#smart_editor2 .se2_sub_step2{width:199px}
+#smart_editor2 .se2_sub_step2_1{width:178px}
+/* TEXT_TOOLBAR : BUTTON */
+#smart_editor2 .se2_text_tool .se2_font_family{width:70px;height:21px;background-position:0 -10px}
+#smart_editor2 .se2_text_tool .hover .se2_font_family{background-position:0 -72px}
+#smart_editor2 .se2_text_tool .active .se2_font_family{background-position:0 -103px}
+#smart_editor2 .se2_text_tool .se2_font_size{width:45px;height:21px;background-position:-70px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_font_size{background-position:-70px -72px}
+#smart_editor2 .se2_text_tool .active .se2_font_size{background-position:-70px -103px}
+#smart_editor2 .se2_text_tool .se2_bold{background-position:-115px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_bold{background-position:-115px -72px}
+#smart_editor2 .se2_text_tool .active .se2_bold{background-position:-115px -103px}
+#smart_editor2 .se2_text_tool .se2_underline{background-position:-136px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_underline{background-position:-136px -72px}
+#smart_editor2 .se2_text_tool .active .se2_underline{background-position:-136px -103px}
+#smart_editor2 .se2_text_tool .se2_italic{background-position:-157px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_italic{background-position:-157px -72px}
+#smart_editor2 .se2_text_tool .active .se2_italic{background-position:-157px -103px}
+#smart_editor2 .se2_text_tool .se2_tdel{background-position:-178px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_tdel{background-position:-178px -72px}
+#smart_editor2 .se2_text_tool .active .se2_tdel{background-position:-178px -103px}
+#smart_editor2 .se2_text_tool .se2_fcolor{position:relative;background-position:-199px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_fcolor{background-position:-199px -72px}
+#smart_editor2 .se2_text_tool .active .se2_fcolor{background-position:-199px -103px}
+#smart_editor2 .se2_text_tool .se2_fcolor_more{background-position:-220px -10px;width:10px}
+#smart_editor2 .se2_text_tool .hover .se2_fcolor_more{background-position:-220px -72px}
+#smart_editor2 .se2_text_tool .active .se2_fcolor_more{background-position:-220px -103px}
+#smart_editor2 .se2_text_tool .selected_color{position:absolute;top:14px;left:5px;width:11px;height:3px;font-size:0}
+#smart_editor2 .se2_text_tool .se2_ol,#smart_editor2 .se2_text_tool .active .se2_sub_text_tool .se2_ol{background-position:-345px -10px}
+#smart_editor2 .se2_text_tool .se2_ul,#smart_editor2 .se2_text_tool .active .se2_sub_text_tool .se2_ul{background-position:-366px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_ol,#smart_editor2 .se2_text_tool .active .se2_sub_text_tool .hover .se2_ol{background-position:-345px -72px}
+#smart_editor2 .se2_text_tool .hover .se2_ul,#smart_editor2 .se2_text_tool .active .se2_sub_text_tool .hover .se2_ul{background-position:-366px -72px}
+#smart_editor2 .se2_text_tool .active .se2_ol,#smart_editor2 .se2_text_tool .active .active .se2_ol{background-position:-345px -103px}
+#smart_editor2 .se2_text_tool .active .se2_ul,#smart_editor2 .se2_text_tool .active .active .se2_ul{background-position:-366px -103px}
+#smart_editor2 .se2_text_tool .se2_indent,#smart_editor2 .se2_text_tool .active .se2_sub_text_tool .se2_indent{background-position:-408px -10px}
+#smart_editor2 .se2_text_tool .se2_outdent,#smart_editor2 .se2_text_tool .active .se2_sub_text_tool .se2_outdent{background-position:-387px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_indent,#smart_editor2 .se2_text_tool .active .se2_sub_text_tool .hover .se2_indent{background-position:-408px -72px}
+#smart_editor2 .se2_text_tool .hover .se2_outdent,#smart_editor2 .se2_text_tool .active .se2_sub_text_tool .hover .se2_outdent{background-position:-387px -72px}
+#smart_editor2 .se2_text_tool .active .se2_indent,#smart_editor2 .se2_text_tool .active .active .se2_indent{background-position:-408px -103px}
+#smart_editor2 .se2_text_tool .active .se2_outdent,#smart_editor2 .se2_text_tool .active .active .se2_outdent{background-position:-387px -103px}
+#smart_editor2 .se2_text_tool .se2_lineheight{background-position:-429px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_lineheight{background-position:-429px -72px}
+#smart_editor2 .se2_text_tool .active .se2_lineheight{background-position:-429px -103px}
+#smart_editor2 .se2_text_tool .se2_url{background-position:-513px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_url{background-position:-513px -72px}
+#smart_editor2 .se2_text_tool .active .se2_url{background-position:-513px -103px}
+#smart_editor2 .se2_text_tool .se2_bgcolor{position:relative;background-position:-230px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_bgcolor{background-position:-230px -72px}
+#smart_editor2 .se2_text_tool .active .se2_bgcolor{background-position:-230px -103px}
+#smart_editor2 .se2_text_tool .se2_bgcolor_more{background-position:-251px -10px;width:10px}
+#smart_editor2 .se2_text_tool .hover .se2_bgcolor_more{background-position:-251px -72px}
+#smart_editor2 .se2_text_tool .active .se2_bgcolor_more{background-position:-251px -103px}
+#smart_editor2 .se2_text_tool .se2_left{background-position:-261px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_left{background-position:-261px -72px}
+#smart_editor2 .se2_text_tool .active .se2_left{background-position:-261px -103px}
+#smart_editor2 .se2_text_tool .se2_center{background-position:-282px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_center{background-position:-282px -72px}
+#smart_editor2 .se2_text_tool .active .se2_center{background-position:-282px -103px}
+#smart_editor2 .se2_text_tool .se2_right{background-position:-303px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_right{background-position:-303px -72px}
+#smart_editor2 .se2_text_tool .active .se2_right{background-position:-303px -103px}
+#smart_editor2 .se2_text_tool .se2_justify{background-position:-324px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_justify{background-position:-324px -72px}
+#smart_editor2 .se2_text_tool .active .se2_justify{background-position:-324px -103px}
+#smart_editor2 .se2_text_tool .se2_blockquote{background-position:-471px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_blockquote{background-position:-471px -72px}
+#smart_editor2 .se2_text_tool .active .se2_blockquote{background-position:-471px -103px}
+#smart_editor2 .se2_text_tool .se2_character{background-position:-555px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_character{background-position:-555px -72px}
+#smart_editor2 .se2_text_tool .active .se2_character{background-position:-555px -103px}
+#smart_editor2 .se2_text_tool .se2_table{background-position:-576px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_table{background-position:-576px -72px}
+#smart_editor2 .se2_text_tool .active .se2_table{background-position:-576px -103px}
+#smart_editor2 .se2_text_tool .se2_find{background-position:-597px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_find{background-position:-597px -72px}
+#smart_editor2 .se2_text_tool .active .se2_find{background-position:-597px -103px}
+#smart_editor2 .se2_text_tool .se2_sup{background-position:-660px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_sup{background-position:-660px -72px}
+#smart_editor2 .se2_text_tool .active .se2_sup{background-position:-660px -103px}
+#smart_editor2 .se2_text_tool .se2_sub{background-position:-681px -10px}
+#smart_editor2 .se2_text_tool .hover .se2_sub{background-position:-681px -72px}
+#smart_editor2 .se2_text_tool .active .se2_sub{background-position:-681px -103px}
+#smart_editor2 .se2_text_tool .se2_text_tool_more{background-position:0 -41px;width:13px}
+#smart_editor2 .se2_text_tool .se2_text_tool_more span.tool_bg{background:none}
+#smart_editor2 .se2_text_tool .hover .se2_text_tool_more{background-position:-13px -41px}
+#smart_editor2 .se2_text_tool .active .se2_text_tool_more{background-position:-26px -41px}

@@ -20,7 +20,7 @@ function editor_html($id, $content, $is_dhtml_editor=true)
         $html .= '<script>document.write("<div class=\'cke_sc\'><button type=\'button\' class=\'btn_cke_sc\'>단축키 일람</button></div>");</script>';
 
     if ($is_dhtml_editor && $js) {
-        $html .= "\n".'<script src="'.$editor_url.'/js/HuskyEZCreator.js"></script>';
+        $html .= "\n".'<script src="'.$editor_url.'/js/service/HuskyEZCreator.js"></script>';
         $html .= "\n".'<script>var g5_editor_url = "'.$editor_url.'", oEditors = [], ed_nonce = "'.ft_nonce_create('smarteditor').'";</script>';
         $html .= "\n".'<script src="'.$editor_url.'/config.js"></script>';
         $html .= "\n<script>";
