@@ -118,6 +118,8 @@ else
     $comment_max = (int)$board['bo_comment_max'];
 }
 
+$comment_action_url = https_url(G5_BBS_DIR)."/write_comment_update.php";
+
 include_once($board_skin_path.'/view_comment.skin.php');
 
 if (!$member['mb_id']) // 비회원일 경우에만
