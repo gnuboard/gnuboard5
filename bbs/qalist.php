@@ -110,7 +110,7 @@ if(is_file($skin_file)) {
     $list_href = G5_BBS_URL.'/qalist.php';
     $write_href = G5_BBS_URL.'/qawrite.php';
 
-    $list_pages = preg_replace('/(\.php)(&amp;|&)/i', '$1?', get_paging(G5_IS_MOBILE ? $qaconfig['qa_mobile_page_rows'] : $qaconfig['qa_page_rows'], $page, $total_page, './qalist.php'.$qstr.'&amp;page='));
+    $list_pages = preg_replace('/(\.php)(&amp;|&)/i', '$1?', get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './qalist.php'.$qstr.'&amp;page='));
 
     $stx = get_text(stripslashes($stx));
     include_once($skin_file);

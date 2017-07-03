@@ -5,36 +5,36 @@ $g5['title'] = '비밀번호 입력';
 
 switch ($w) {
     case 'u' :
-        $action = './write.php';
-        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+        $action = G5_HTTP_BBS_URL.'/write.php';
+        $return_url = G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
         break;
     case 'd' :
         set_session('ss_delete_token', $token = uniqid(time()));
-        $action = './delete.php?token='.$token;
-        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+        $action = https_url(G5_BBS_DIR).'/delete.php?token='.$token;
+        $return_url = G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
         break;
     case 'x' :
         set_session('ss_delete_comment_'.$comment_id.'_token', $token = uniqid(time()));
-        $action = './delete_comment.php?token='.$token;
+        $action = https_url(G5_BBS_DIR).'/delete_comment.php?token='.$token;
         $row = sql_fetch(" select wr_parent from $write_table where wr_id = '$comment_id' ");
-        $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_parent'];
+        $return_url = G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_parent'];
         break;
     case 's' :
         // 비밀번호 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
         if ($is_admin || ($member['mb_id'] == $write['mb_id'] && $write['mb_id']))
-            goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+            goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
         else {
-            $action = './password_check.php';
-            $return_url = './board.php?bo_table='.$bo_table;
+            $action = https_url(G5_BBS_DIR).'/password_check.php';
+            $return_url = G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table;
         }
         break;
     case 'sc' :
         // 비밀번호 창에서 로그인 하는 경우 관리자 또는 자신의 글이면 바로 글보기로 감
         if ($is_admin || ($member['mb_id'] == $write['mb_id'] && $write['mb_id']))
-            goto_url('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+            goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
         else {
-            $action = './password_check.php';
-            $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+            $action = https_url(G5_BBS_DIR).'/password_check.php';
+            $return_url = G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
         }
         break;
     default :

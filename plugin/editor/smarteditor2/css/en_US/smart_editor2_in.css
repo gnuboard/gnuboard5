@@ -1,0 +1,24 @@
+@charset "UTF-8";
+/* NHN Web Standardization Team (http://html.nhndesign.com/) HHJ 090226 */
+/* COMMON */
+body,.se2_inputarea{margin:0;padding:0;font-family:'돋움',Dotum,Helvetica,Sans-serif;font-size:12px;line-height:1.5}
+/* body,.se2_inputarea,.se2_inputarea th,.se2_inputarea td{margin:0;padding:0;font-family:'돋움',Dotum,Helvetica,Sans-serif;font-size:12px;line-height:1.5;color:#666} */
+.se2_inputarea p,.se2_inputarea br{margin:0;padding:0}
+.se2_inputarea{margin:15px;word-wrap:break-word;*word-wrap:normal;*word-break:break-all}
+.se2_inputarea td{word-break:break-all}
+.se2_inputarea_890{width:741px;margin:20px 0 10px 64px}
+.se2_inputarea_698{width:548px;margin:20px 0 10px 64px}
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
+    .se2_inputarea td:empty:after,.se2_inputarea td > p:empty:after{content:"\00A0";line-height:1}
+}
+/* TEXT_TOOLBAR : QUOTE */
+.se2_quote1{margin:0 0 30px 20px;padding:0 8px;border-left:2px solid #ccc;color:#888}
+.se2_quote2{margin:0 0 30px 13px;padding:0 8px 0 16px;background:url("../../img/bg_quote2.gif") 0 3px no-repeat;color:#888}
+.se2_quote3{margin:0 0 30px;padding:12px 10px 11px;border:1px dashed #ccc;color:#888}
+.se2_quote4{margin:0 0 30px;padding:12px 10px 11px;border:1px dashed #66b246;color:#888}
+.se2_quote5{margin:0 0 30px;padding:12px 10px 11px;border:1px dashed #ccc;background:#fafafa;color:#888}
+.se2_quote6{margin:0 0 30px;padding:12px 10px 11px;border:1px solid #e5e5e5;color:#888}
+.se2_quote7{margin:0 0 30px;padding:12px 10px 11px;border:1px solid #66b246;color:#888}
+.se2_quote8{margin:0 0 30px;padding:12px 10px 11px;border:1px solid #e5e5e5;background:#fafafa;color:#888}
+.se2_quote9{margin:0 0 30px;padding:12px 10px 11px;border:2px solid #e5e5e5;color:#888}
+.se2_quote10{margin:0 0 30px;padding:12px 10px 11px;border:2px solid #e5e5e5;background:#fafafa;color:#888}

@@ -1,0 +1,12 @@
+@charset "UTF-8";
+/* NHN Web Standardization Team (http://html.nhndesign.com/) HHJ 090226 */
+/* COMMON */
+.se2_outputarea, .se2_outputarea th, .se2_outputarea td{margin:0;padding:0;color:#666;font-size:12px;font-family:'돋움',Dotum,'굴림',Gulim,Helvetica,Sans-serif;line-height:1.5}
+.se2_outputarea p{margin:0;padding:0}
+.se2_outputarea a:hover{text-decoration:underline}
+.se2_outputarea a:link{color:#0000ff}
+.se2_outputarea ul{margin:0 0 0 40px;padding:0}
+.se2_outputarea ul li{margin:0;list-style-type:disc;padding:0}
+.se2_outputarea ul ul li{list-style-type:circle}
+.se2_outputarea ul ul ul li{list-style-type:square}
+.se2_outputarea img, .se2_outputarea fieldset{border:0}

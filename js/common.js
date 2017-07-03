@@ -719,7 +719,7 @@ function get_write_token(bo_table)
 }
 
 $(function() {
-    $(document).on("click", "form[name=fwrite] input:submit", function() {
+    $(document).on("click", "form[name=fwrite] input:submit, form[name=fwrite] button:submit", function() {
         var f = this.form;
         var bo_table = f.bo_table.value;
         var token = get_write_token(bo_table);

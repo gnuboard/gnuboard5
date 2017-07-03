@@ -5,16 +5,15 @@
 <meta http-equiv="Content-Script-Type" content="text/javascript">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title>네이버 :: Smart Editor 2 &#8482;</title>
-<link href="css/smart_editor2.css" rel="stylesheet" type="text/css">
+<link href="css/ko_KR/smart_editor2.css" rel="stylesheet" type="text/css">
 <style type="text/css">
 	body { margin: 10px; }
 </style>
 <script type="text/javascript" src="./js/lib/jindo2.all.js" charset="utf-8"></script>
 <script type="text/javascript" src="./js/lib/jindo_component.js" charset="utf-8"></script>
-<script type="text/javascript" src="./js/SE2M_Configuration.js?v3" charset="utf-8"></script>	<!-- 설정 파일 -->
-<script type="text/javascript" src="./js/SE2BasicCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="./js/service/SE2M_Configuration.js" charset="utf-8"></script>	<!-- 설정 파일 -->
+<script type="text/javascript" src="./js/service/SE2BasicCreator.js" charset="utf-8"></script>
 <script type="text/javascript" src="./js/smarteditor2.min.js" charset="utf-8"></script>
-
 <!-- 사진첨부샘플  --> 
 <script type="text/javascript" src="photo_uploader/plugin/hp_SE2M_AttachQuickPhoto.js?v3" charset="utf-8"></script>
 </head>
@@ -22,7 +21,7 @@
 
 
 
-<span id="rev" style="display:none">Version: 2.8.2.12056 </span>
+<span id="rev" style="display:none">Version: 2.9.0.4a256db </span>
 
 <!-- SE2 Markup Start -->	
 <div id="smart_editor2">
@@ -41,8 +40,8 @@
 							<li><button type="button"><span>나눔고딕<span>(</span><em style="font-family:'나눔고딕',NanumGothic;">가나다라</em><span>)</span></span></button></li>
 							<li><button type="button"><span>나눔명조<span>(</span><em style="font-family:'나눔명조',NanumMyeongjo;">가나다라</em><span>)</span></span></button></li>
 							<li><button type="button"><span>나눔고딕코딩<span>(</span><em style="font-family:'나눔고딕코딩',NanumGothicCoding;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>나눔바른고딕<span>(</span><em style="font-family:'나눔바른고딕',NanumBarunGothic;">가나다라</em><span>)</span></span></button></li>
-							<li><button type="button"><span>나눔바른펜<span>(</span><em style="font-family:'나눔바른펜',NanumBarunPen;">가나다라</em><span>)</span></span></button></li>
+							<li><button type="button"><span>나눔바른고딕<span>(</span><em style="font-family:'나눔바른고딕',NanumBarunGothic,NanumBarunGothicOTF;">가나다라</em><span>)</span></span></button></li>
+							<li><button type="button"><span>나눔바른펜<span>(</span><em style="font-family:'나눔바른펜',NanumBarunpen;">가나다라</em><span>)</span></span></button></li>
 							</ul>
 						</div>
 					</div>
@@ -211,7 +210,7 @@
 
 				<li class="husky_seditor_ui_justifyright"><button type="button" title="오른쪽정렬" class="se2_right"><span class="_buttonRound">오른쪽정렬</span></button></li>
 
-				<li class="husky_seditor_ui_justifyfull"><button type="button" title="양쪽정렬" class="se2_justify"><span class="_buttonRound">양쪽정렬</span></button></li>	
+				<li class="husky_seditor_ui_justifyfull"><button type="button" title="양쪽정렬" class="se2_justify"><span class="_buttonRound">양쪽정렬</span></button></li>		
 
 				<li class="husky_seditor_ui_lineHeight last_child"><button type="button" title="줄간격" class="se2_lineheight" ><span class="_buttonRound tool_bg">줄간격</span></button>
 					<!-- 줄간격 레이어 -->
@@ -242,7 +241,7 @@
 					<!-- //줄간격 레이어 -->
 				</li>
 </ul><ul>
-				<li class="husky_seditor_ui_text_more" id="se2_text_more"><button title="더보기" type="button" class="se2_text_tool_more"><span>더보기</span></button>
+                <li class="husky_seditor_ui_text_more" id="se2_text_more"><button title="더보기" type="button" class="se2_text_tool_more"><span>더보기</span></button>
 					<div class="se2_sub_text_tool se2_sub_step1">
 						<ul>
 						<li class="husky_seditor_ui_orderedlist"><button type="button" title="번호매기기" class="se2_ol"><span class="_buttonRound">번호매기기</span></button></li>
@@ -775,7 +774,20 @@
 		</div>
 		<!-- //입력창조절/ 모드전환 -->
 		<hr>
-		
+		<!-- 얼럿 메세지 공통 -->
+		<div class="se2_alert_wrap" style="display:none">
+			<div class="se2_alert_content">
+				<div class="se2_alert_txts"></div>
+				<p class="se2_alert_btns">
+					<button type="button" class="se2_confirm"><span>확인</span></button><button type="button" class="se2_cancel"><span>취소</span></button>
+				</p>
+				<a href="#" class="btn_close">닫기</a>
+			</div>
+			<!-- 레이어 중앙정렬 -->
+			<span class="va_line"></span>
+			<div class="ie_cover"></div>
+		</div>
+		<!-- //얼럿 메세지 공통 -->
 	</div>
 </div>
 <!-- SE2 Markup End -->
