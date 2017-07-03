@@ -1082,7 +1082,7 @@ cheditor.prototype = {
             showError('현재 브라우저에서 ' + self.templateFile + ' 파일을 사용할 수 없습니다.');
         }
     },
-
+/*
     getCDATASection : function (node) {
         var elem, data;
         if (node.hasChildNodes()) {
@@ -1099,6 +1099,14 @@ cheditor.prototype = {
             }
         }
         return null;
+    },
+*/
+    getCDATASection : function (node) {
+        var text = node.textContent || node.text;
+        text = text.replace(/\n/g, '');
+        text = text.replace(/(\s+?)<([^>]*)>/g, '<$2>');
+        text = this.trimSpace(text);
+        return text;
     },
 
     setToolbarBgPosition : function (elem, attr) {
@@ -2036,7 +2044,7 @@ cheditor.prototype = {
         container.style.width = self.config.editorWidth;
         self.cheditor.container = container;
     },
-
+/*
     loadTemplate : function (xmlDoc) {
         var self = this,
             tmpl = xmlDoc.getElementsByTagName('Template').item(0),
@@ -2082,6 +2090,55 @@ cheditor.prototype = {
         self.cheditor.htmlEditable.style.height = '1px';
         self.cheditor.htmlEditable.style.visibility = 'hidden';
         container.appendChild(self.cheditor.htmlEditable);
+    },
+*/
+
+    loadTemplate : function (xmlDoc) {
+        var cdata, container, dragHandle, html, modalFrame, popupWindow, tmpDiv, tmpl, toolbar;
+        tmpl = xmlDoc.getElementsByTagName('Template').item(0);
+        if (!tmpl) {
+            throw 'Template 노드를 설정할 수 없습니다.';
+        }
+        cdata = tmpl.getElementsByTagName('Container').item(0).getElementsByTagName('Html').item(0);
+        if (!cdata) {
+            throw 'XML CDATA 오류';
+        }
+        html = this.getCDATASection(cdata);
+        tmpDiv = document.createElement('div');
+        tmpDiv.innerHTML = html;
+        container = tmpDiv.firstChild;
+
+        toolbar = tmpl.getElementsByTagName('Toolbar').item(0);
+        this.createEditorElement(container, toolbar);
+
+        cdata = tmpl.getElementsByTagName('PopupWindow').item(0).getElementsByTagName('Html').item(0);
+        if (!cdata) {
+            throw 'XML CDATA 오류';
+        }
+        html = this.getCDATASection(cdata);
+        tmpDiv.innerHTML = html;
+        popupWindow = tmpDiv.firstChild;
+        this.cheditor.popupElem = popupWindow;
+
+        dragHandle = popupWindow.firstChild;
+        this.cheditor.dragHandle = dragHandle;
+        this.cheditor.popupTitle = dragHandle.getElementsByTagName('label')[0];
+        this.cheditor.popupFrameWrapper = dragHandle.nextSibling;
+        container.appendChild(popupWindow);
+
+        modalFrame = document.createElement('div');
+        modalFrame.className = 'cheditor-modalPopupTransparent';
+        this.cheditor.modalBackground = modalFrame;
+        this.cheditor.modalBackground.id = 'popupModalBackground';
+        this.cheditor.modalBackground.className = 'cheditor-popupModalBackground';
+        container.parentNode.insertBefore(modalFrame, container);
+
+        this.cheditor.htmlEditable = document.createElement('iframe');
+        this.cheditor.htmlEditable.style.display = 'none';
+        this.cheditor.htmlEditable.style.width = '1px';
+        this.cheditor.htmlEditable.style.height = '1px';
+        this.cheditor.htmlEditable.style.visibility = 'hidden';
+        container.appendChild(this.cheditor.htmlEditable);
     },
 
     imageEvent : function (img, action) {
