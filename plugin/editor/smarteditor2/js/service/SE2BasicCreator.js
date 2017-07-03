@@ -1,3 +1,20 @@
+/*
+Copyright (C) NAVER corp.  
+
+This library is free software; you can redistribute it and/or  
+modify it under the terms of the GNU Lesser General Public  
+License as published by the Free Software Foundation; either  
+version 2.1 of the License, or (at your option) any later version.  
+
+This library is distributed in the hope that it will be useful,  
+but WITHOUT ANY WARRANTY; without even the implied warranty of  
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU  
+Lesser General Public License for more details.  
+
+You should have received a copy of the GNU Lesser General Public  
+License along with this library; if not, write to the Free Software  
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA  
+*/
 function createSEditor2(elIRField, htParams, elSeAppContainer){
 	if(!window.$Jindo){
 		parent.document.body.innerHTML="진도 프레임웍이 필요합니다.<br>\n<a href='http://dev.naver.com/projects/jindo/download'>http://dev.naver.com/projects/jindo/download</a>에서 Jindo 1.5.3 버전의 jindo.min.js를 다운로드 받아 /js 폴더에 복사 해 주세요.\n(아직 Jindo 2 는 지원하지 않습니다.)";
@@ -17,10 +34,24 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 	}
 	htParams.elAppContainer = elAppContainer;												// 에디터 UI 최상위 element 셋팅 
 	htParams.oNavigator = jindo.$Agent().navigator();										// navigator 객체 셋팅
-	
+	htParams.I18N_LOCALE = htParams.I18N_LOCALE || "ko_KR";
+
 	var oEditor = new nhn.husky.HuskyCore(htParams);
 	oEditor.registerPlugin(new nhn.husky.CorePlugin(htParams?htParams.fOnAppLoad:null));	
 	oEditor.registerPlugin(new nhn.husky.StringConverterManager());
+	if(htParams.bSkipXssFilter !== true){
+		// 보안 필터링 플러그인 (TODO:소스분리 및 블랙리스트 옵션 추가)
+		oEditor.registerPlugin({
+			_rxFilter:/<\/*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*?>/gi,
+			$ON_REGISTER_CONVERTERS : function() {
+				var fXssFilter = jindo.$Fn(function(sHtml){
+					return sHtml.replace(this._rxFilter, "");
+				}, this).bind();
+				this.oApp.exec("ADD_CONVERTER",["HTMLSrc_TO_IR", fXssFilter]);
+				this.oApp.exec("ADD_CONVERTER",["IR_TO_DB", fXssFilter]);
+			}
+		});
+	}
 
 	var htDimension = {
 		nMinHeight:205,
@@ -78,7 +109,7 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 		oEditor.registerPlugin(new nhn.husky.SE2M_AttachQuickPhoto(elAppContainer));			// 사진			
 	}
 
-	oEditor.registerPlugin(new nhn.husky.MessageManager(oMessageMap));
+	oEditor.registerPlugin(new nhn.husky.MessageManager(oMessageMap, htParams.I18N_LOCALE));
 	oEditor.registerPlugin(new nhn.husky.SE2M_QuickEditor_Common(elAppContainer));			// 퀵에디터 공통(표, 이미지)
 	
 	oEditor.registerPlugin(new nhn.husky.SE2B_CSSLoader());									// CSS lazy load
@@ -87,8 +118,8 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 	}
 	
 	oEditor.registerPlugin(new nhn.husky.SE_ToolbarToggler(elAppContainer, htParams.bUseToolbar));
-	oEditor.registerPlugin(new nhn.husky.SE2M_Accessibility(elAppContainer));				// 에디터내의 웹접근성 관련 기능모음 플러그인 
-
+	oEditor.registerPlugin(new nhn.husky.SE2M_Accessibility(elAppContainer, htParams.I18N_LOCALE));	// 에디터내의 웹접근성 관련 기능모음 플러그인 
+	
     oEditor.registerPlugin(new nhn.husky.SE2B_Customize_ToolBar(elAppContainer));       // 2.3 버젼에 있는 툴바 이용
 
 	return oEditor;
