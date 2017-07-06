@@ -3335,11 +3335,12 @@ function is_include_path_check($path='')
             //echo 'Caught exception: ',  $e->getMessage(), "\n";
             return false;
         }
+
+        if( preg_match('/\/data\/(file|editor)\/[A-Za-z0-9_]{1,20}\//', $path) ){
+            return false;
+        }
     }
 
-    if( !$path || preg_match('/\/data\/(file|editor)\/[A-Za-z0-9_]{1,20}\//', $path) ){
-        return false;
-    }
     return true;
 }
 ?>
