@@ -83,7 +83,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
         <th scope="row">충전 잔액</th>
         <td>
             <?php echo number_format($userinfo['coin'])?> 원
-            <input type="button" value="충전하기" class="btn_frmline" onclick="window.open('http://icodekorea.com/company/credit_card_input.php?icode_id=<?php echo $config['cf_icode_id']?>&icode_passwd=<?php echo $config['cf_icode_pw']?>','icode_payment','width=650,height=500')">
+            <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $config['cf_icode_id']; ?>&amp;icode_passwd=<?php echo $config['cf_icode_pw']; ?>" target="_blank" class="btn_frmline">충전하기</a>
         </td>
     </tr>
     <?php } ?>
