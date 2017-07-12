@@ -20,6 +20,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <table>
         <caption>쪽지쓰기</caption>
         <tbody>
+        <?php if ($config['cf_memo_send_point']) { ?>
+        <tr>
+            <td colspan="2">
+                <strong>쪽지 보낼때 회원당 <?php echo number_format($config['cf_memo_send_point']); ?>점의 포인트를 차감합니다.</strong>
+            </td>
+        </tr>
+        <?php } ?>
         <tr>
             <th scope="row"><label for="me_recv_mb_id">받는 회원아이디<strong class="sound_only">필수</strong></label></th>
             <td>
