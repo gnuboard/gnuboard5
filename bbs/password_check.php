@@ -31,5 +31,5 @@ if ($w == 's') {
 } else
     alert('w 값이 제대로 넘어오지 않았습니다.');
 
-goto_url('./board.php?'.$qstr);
+goto_url(G5_HTTP_BBS_URL.'/board.php?'.$qstr);
 ?>
