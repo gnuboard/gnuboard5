@@ -45,6 +45,8 @@ if($_REQUEST['P_STATUS'] != '00') {
     // 결과를 배열로 변환
     parse_str($return, $ret);
     $PAY = array_map('trim', $ret);
+    $PAY = array_map('strip_tags', $PAY);
+    $PAY = array_map('get_search_string', $PAY);
 
     if($PAY['P_STATUS'] != '00')
         alert('오류 : '.iconv_utf8($PAY['P_RMESG1']).' 코드 : '.$PAY['P_STATUS'], $page_return_url);
