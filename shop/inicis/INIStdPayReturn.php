@@ -30,7 +30,7 @@ try {
 
         $authUrl = $_REQUEST['authUrl'];    // 승인요청 API url(수신 받은 값으로 설정, 임의 세팅 금지)
 
-        $netCancel = $_REQUEST['netCancel'];   // 망취소 API url(수신 받은f값으로 설정, 임의 세팅 금지)
+        $netCancel = $_REQUEST['netCancelUrl'];   // 망취소 API url(수신 받은f값으로 설정, 임의 세팅 금지)
 
         ///$mKey = $util->makeHash(signKey, "sha256"); // 가맹점 확인을 위한 signKey를 해시값으로 변경 (SHA-256방식 사용)
         $mKey = hash("sha256", $signKey);

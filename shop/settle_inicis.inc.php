@@ -15,7 +15,7 @@ if ($default['de_card_test']) {
         $default['de_inicis_sign_key'] = 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS';
     }
 
-    $stdpay_js_url = 'https://stgstdpay.inicis.com/stdjs/INIStdPay.js';
+    $stdpay_js_url = 'https://stdpay.inicis.com/stdjs/INIStdPay.js';
 }
 else {
     $default['de_inicis_mid'] = "SIR".$default['de_inicis_mid'];
