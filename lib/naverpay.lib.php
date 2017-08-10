@@ -208,6 +208,18 @@ function get_naverpay_item_image_url($it_id)
                 continue;
 
             $url = str_replace(G5_PATH, G5_URL, $file);
+
+            if( isset($_SERVER['HTTPS']) && ($_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1) ){
+                $url = preg_replace('#^https:#', '', $url);
+                
+                $port_str = ':'.$_SERVER['SERVER_PORT'];
+                
+                if( strpos($url, $port_str) !== false ){
+                    $url = str_replace($port_str, '', $url);
+                }
+            }
+            
+            //TLS(SSL/HTTPS) 프로토콜 사용 시 네이버페이/네이버 쇼핑 서버가 해당 경로로 접근하여 데이터를 취득할 수 없으므로, 반드시 http 를 사용해야 함
             $url = (preg_match('#^http:#', $url) ? '' : 'http:').$url;
 
             break;
