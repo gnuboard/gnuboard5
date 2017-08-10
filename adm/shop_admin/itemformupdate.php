@@ -262,7 +262,7 @@ for($i=0; $i<count($_POST['ii_article']); $i++) {
 $it_info_value = addslashes(serialize($value_array));
 
 // 포인트 비율 값 체크
-if($it_point_type == 1 && $it_point > 99)
+if(($it_point_type == 1 || $it_point_type == 2) && $it_point > 99)
     alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
 
 $it_name = strip_tags(trim($_POST['it_name']));
