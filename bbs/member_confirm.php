@@ -11,6 +11,10 @@ else
     $urlencode = urlencode($_SERVER[REQUEST_URI]);
 */
 
+if( function_exists('is_social_member_type') && 'is_social' == is_social_member_type($member) ){
+    goto_url( G5_PLUGIN_URL.'/oauth/register_member.php' );
+}
+
 $g5['title'] = '회원 비밀번호 확인';
 include_once('./_head.sub.php');
 

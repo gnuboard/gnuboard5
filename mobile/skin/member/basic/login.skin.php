@@ -23,6 +23,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </div>
     </div>
 
+    <?php
+    // 소셜로그인 사용시 소셜로그인 버튼
+    @include_once(get_social_skin_path().'/social_login_icon.skin.php');
+    ?>
+
     <section>
         <h2>회원로그인 안내</h2>
         <p>

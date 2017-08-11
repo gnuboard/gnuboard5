@@ -391,15 +391,15 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
 
     $reply = $list['wr_reply'];
 
-    $list['reply'] = strlen($reply)*10;
+    $list['reply'] = strlen($reply)*20;
 
     $list['icon_reply'] = '';
     if ($list['reply'])
-        $list['icon_reply'] = '<img src="'.$skin_url.'/img/icon_reply.gif" style="margin-left:'.$list['reply'].'px;" alt="답변글">';
+        $list['icon_reply'] = '<img src="'.$skin_url.'/img/icon_reply.gif" alt="답변글">';
 
     $list['icon_link'] = '';
     if ($list['wr_link1'] || $list['wr_link2'])
-        $list['icon_link'] = '<img src="'.$skin_url.'/img/icon_link.gif" alt="관련링크">';
+        $list['icon_link'] = '<i class="fa fa-link" aria-hidden="true"></i> ';
 
     // 분류명 링크
     $list['ca_name_href'] = G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
@@ -409,15 +409,15 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
 
     $list['icon_new'] = '';
     if ($board['bo_new'] && $list['wr_datetime'] >= date("Y-m-d H:i:s", G5_SERVER_TIME - ($board['bo_new'] * 3600)))
-        $list['icon_new'] = '<img src="'.$skin_url.'/img/icon_new.gif" alt="새글">';
+        $list['icon_new'] = '<img src="'.$skin_url.'/img/icon_new.gif" alt="새글"> ';
 
     $list['icon_hot'] = '';
     if ($board['bo_hot'] && $list['wr_hit'] >= $board['bo_hot'])
-        $list['icon_hot'] = '<img src="'.$skin_url.'/img/icon_hot.gif" alt="인기글">';
+        $list['icon_hot'] = '<i class="fa fa-heart" aria-hidden="true"></i> ';
 
     $list['icon_secret'] = '';
     if (strstr($list['wr_option'], 'secret'))
-        $list['icon_secret'] = '<img src="'.$skin_url.'/img/icon_secret.gif" alt="비밀글">';
+        $list['icon_secret'] = '<i class="fa fa-lock" aria-hidden="true"></i> ';
 
     // 링크
     for ($i=1; $i<=G5_LINK_COUNT; $i++) {
@@ -434,7 +434,7 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
     }
 
     if ($list['file']['count'])
-        $list['icon_file'] = '<img src="'.$skin_url.'/img/icon_file.gif" alt="첨부파일">';
+        $list['icon_file'] = '<i class="fa fa-download" aria-hidden="true"></i> ';
 
     return $list;
 }
@@ -3327,5 +3327,19 @@ function is_include_path_check($path='')
     }
 
     return true;
+}
+
+function option_array_checked($option, $arr=array()){
+    $checked = '';
+
+    if( !is_array($arr) ){
+        $arr = explode(',', $arr);
+    }
+
+    if ( !empty($arr) && in_array($option, (array) $arr) ){
+        $checked = 'checked="checked"';
+    }
+
+    return $checked;
 }
 ?>

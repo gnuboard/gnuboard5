@@ -215,7 +215,32 @@ $colspan = 16;
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['mb_name']); ?> <?php echo get_text($row['mb_nick']); ?>님</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
-        <td headers="mb_list_id" rowspan="2" class="td_name sv_use"><?php echo $mb_id ?></td>
+        <td headers="mb_list_id" rowspan="2" class="td_name sv_use">
+            <?php echo $mb_id ?>
+            <?php
+            //소셜계정이 있다면
+            if(function_exists('social_login_link_account')){
+                if( $my_social_accounts = social_login_link_account($row['mb_id'], false, 'get_data') ){
+                    
+                    echo '<div class="member_social_provider sns-wrap-over sns-wrap-32">';
+                    foreach( (array) $my_social_accounts as $account){     //반복문
+
+                        if( empty($account) || empty($account['provider']) ) continue;
+                        
+                        $provider = strtolower($account['provider']);
+                        $provider_name = social_get_provider_service_name($provider);
+                        
+                        echo '<span class="sns-icon sns-'.$provider.'" title="'.$provider_name.'">';
+                        echo '<span class="ico"></span>';
+                        echo '<span class="txt">'.$provider_name.'</span>';
+                        echo '</span>';
+
+                    }
+                    echo '</div>';
+                }
+            }
+            ?>
+        </td>
         <td headers="mb_list_name" class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
         <td headers="mb_list_cert" colspan="6" class="td_mbcert">
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" id="mb_certify_ipin_<?php echo $i; ?>" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>>

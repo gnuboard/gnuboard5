@@ -1,0 +1,59 @@
+@charset "utf-8";
+
+.social_info_guide{background:#f3f3f3;border:1px solid #ddd;margin:0 10px 10px;padding:10px 15px;line-height:1.5em}
+.bg-warning{margin:0 10px 10px;padding:10px 15px;line-height:1.5em}
+.bg-warning1{background:#f7dfe4;border:1px solid #eac3cb}
+.bg-warning2{background:#deeabf;border:1px solid #bde498}
+.bg-warning3{background:#fff8dc;border:1px solid #f1e4b2}
+
+/* SNS LOGIN */
+.login-sns{padding-bottom:10px;border:1px solid #cfded8;border-bottom:none}
+.sns-wrap {margin:10px 0 0;text-align:center}
+.sns-icon {display:inline-block;vertical-align:middle;text-decoration:none}
+.sns-icon:hover {text-decoration:none}
+.sns-icon .ico {display:block;background:url('./img/sns_logo.png') no-repeat;vertical-align:middle}
+.sns-icon .txt {position:absolute;line-height:0;font-size:0;vertical-align:middle;overflow:hidden}
+.sns-icon .txt i {font-style:normal}
+
+.reg-form .sns-wrap {margin:0;text-align:left}
+.reg-form .sns-icon {display:inline-block;vertical-align:middle;text-decoration:none}
+.reg-form .sns-icon:hover {text-decoration:none}
+.reg-form .sns-icon .ico {display:block;background:url('./img/sns_logo.png') no-repeat;vertical-align:middle}
+.reg-form .sns-icon-not .ico {display:block;background:url('./img/sns_logo_not.png') no-repeat;vertical-align:middle}
+.reg-form .sns-icon .txt {position:absolute;line-height:0;font-size:0;vertical-align:middle;overflow:hidden}
+.reg-form .sns-icon .txt i {font-style:normal}
+
+/* SNS by COLOR */
+.sns-wrap-org .sns-naver {border-color:#18a400;background:#2db400}
+.sns-wrap-org .sns-naver .ico {background-position:-29px 0; }
+.sns-wrap-org .sns-google {border-color:#ca2c19;background:#dd5443}
+.sns-wrap-org .sns-google .ico {background-position:-58px 0}
+.sns-wrap-org .sns-facebook {border-color:#2e5393;background:#3a5897}
+.sns-wrap-org .sns-facebook .ico {background-position:0 0 }
+
+.sns-wrap-over .sns-icon {border-color:#dcdcdc}
+.sns-wrap-over .sns-icon-not {border-color:#8b8b8b}
+.sns-wrap-over .sns-naver{border-color:#18a400}
+.sns-wrap-over .sns-naver .ico {background-position:-29px 0; }
+.sns-wrap-over .sns-google .ico {background-position:-58px 0}
+.sns-wrap-over .sns-google {border-color:#ca2c19}
+.sns-wrap-over .sns-facebook .ico {background-position:0 0 }
+.sns-wrap-over .sns-facebook {border-color:#2e5393}
+.sns-wrap-over .sns-kakao .ico {background-position:-87px 0}
+.sns-wrap-over .sns-twitter {border-color:#488FC9}
+.sns-wrap-over .sns-twitter .ico {background-position:-145px 0}
+.sns-wrap-over .sns-payco {border-color:#C44646}
+.sns-wrap-over .sns-payco .ico {background-position:-116px 0}
+.sns-wrap-over .sns-kakao {border-color:#f2df00}
+.reg-form .sns-icon-not {border-color:#8b8b8b}
+
+/* SNS by SIZE */
+.sns-wrap-32 .sns-icon {border-width:1px;border-style:solid;overflow:hidden;margin:0 1px}
+.sns-wrap-32 .sns-icon .txt {display:inline-block;margin:0 10px 0 0;font-size:0.95em;letter-spacing:-0.1em}
+.sns-wrap-32 .sns-icon .ico {width:24px;height:24px}
+
+/* LOGIN LOADING */
+.social-login-loading{width:100%;height:auto;text-align:center}
+.social-login-loading p{display:inline-block;margin-top:10px;padding:40px 0 0;line-height:30px}
+
+

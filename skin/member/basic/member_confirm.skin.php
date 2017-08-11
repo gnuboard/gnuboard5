@@ -29,6 +29,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <label for="confirm_mb_password">비밀번호<strong class="sound_only">필수</strong></label>
         <input type="password" name="mb_password" id="confirm_mb_password" required class="required frm_input" size="15" maxLength="20">
         <input type="submit" value="확인" id="btn_submit" class="btn_submit">
+
+        <?php
+        // 소셜로그인 버튼
+        include_once(G5_PLUGIN_PATH.'/oauth/member_confirm.skin.inc.php');
+        ?>
     </fieldset>
 
     </form>

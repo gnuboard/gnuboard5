@@ -339,6 +339,94 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
         </td>
     </tr>
 
+    <?php
+    //소셜계정이 있다면
+    if(function_exists('social_login_link_account') && $mb['mb_id'] ){
+        if( $my_social_accounts = social_login_link_account($mb['mb_id'], false, 'get_data') ){ ?>
+
+    <tr>
+    <th>소셜계정목록</th>
+    <td colspan="3">
+        <ul class="social_link_box">
+            <li class="social_login_container">
+                <h4>연결된 소셜 계정 목록</h4>
+                <?php foreach($my_social_accounts as $account){     //반복문
+                    if( empty($account) ) continue;
+
+                    $provider = strtolower($account['provider']);
+                    $provider_name = social_get_provider_service_name($provider);
+                ?>
+                <div class="account_provider" data-mpno="social_<?php echo $account['mp_no'];?>" >
+                    <div class="sns-wrap-32 sns-wrap-over">
+                        <span class="sns-icon sns-<?php echo $provider; ?>" title="<?php echo $provider_name; ?>">
+                            <span class="ico"></span>
+                            <span class="txt"><?php echo $provider_name; ?></span>
+                        </span>
+
+                        <span class="provider_name"><?php echo $provider_name;   //서비스이름?> ( <?php echo $account['displayname']; ?> )</span>
+                        <span class="account_hidden" style="display:none"><?php echo $account['mb_id']; ?></span>
+                    </div>
+                    <div><a href="<?php echo G5_SOCIAL_LOGIN_URL.'/unlink.php?mp_no='.$account['mp_no'] ?>" class="social_unlink" data-provider="<?php echo $account['mp_no'];?>" >연결해제</a></div>
+                </div>
+                <?php } //end foreach ?>
+            </li>
+        </ul>
+        <script>
+        jQuery(function($){
+            $(".account_provider").on("click", ".social_unlink", function(e){
+                e.preventDefault();
+
+                if (!confirm('정말 이 계정 연결을 삭제하시겠습니까?')) {
+                    return false;
+                }
+
+                var ajax_url = "<?php echo G5_SOCIAL_LOGIN_URL.'/unlink.php' ?>";
+                var mb_id = '',
+                    mp_no = $(this).attr("data-provider"),
+                    $mp_el = $(this).parents(".account_provider");
+
+                    mb_id = $mp_el.find(".account_hidden").text();
+
+                if( ! mp_no ){
+                    alert('잘못된 요청! mp_no 값이 없습니다.');
+                    return;
+                }
+
+                $.ajax({
+                    url: ajax_url,
+                    type: 'POST',
+                    data: {
+                        'mp_no': mp_no,
+                        'mb_id': mb_id
+                    },
+                    dataType: 'json',
+                    async: false,
+                    success: function(data, textStatus) {
+                        if (data.error) {
+                            alert(data.error);
+                            return false;
+                        } else {
+                            alert("연결이 해제 되었습니다.");
+                            $mp_el.fadeOut("normal", function() {
+                                $(this).remove();
+                            });
+                        }
+                    }
+                });
+
+                return;
+            });
+        });
+        </script>
+
+    </td>
+    </tr>
+
+    <?php
+        }   //end if
+    }   //end if
+    ?>
+
     <?php for ($i=1; $i<=10; $i++) { ?>
     <tr>
         <th scope="row"><label for="mb_<?php echo $i ?>">여분 필드 <?php echo $i ?></label></th>
