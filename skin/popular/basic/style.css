@@ -1,12 +1,6 @@
 @charset "utf-8";
-/* SIR 지운아빠 */
-
 /* 인기검색어 */
-#popular {border-bottom:1px dotted #dde4e9}
-#popular div {margin:0 auto;width:970px;zoom:1}
-#popular div:after {display:block;visibility:hidden;clear:both;content:""}
-#popular h2 {float:left;padding:10px 45px 10px 0}
-#popular ul {float:left;margin:0;padding:0;list-style:none}
-#popular li {float:left}
-#popular a {display:inline-block;padding:10px;text-decoration:none}
-#popular a:focus, #popular a:hover {}
+#popular {border-bottom:1px solid #e8e8e9;padding:20px 0}
+#popular h2{font-size:1.083em;margin: 0 0 10px;}
+#popular a{display:inline-block;height:22px;line-height:22px;background:#bbb;color:#fff;margin:2px 0;padding: 0 5px;border-radius:3px}
+#popular a:hover{background:#47aba2}

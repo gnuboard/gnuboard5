@@ -6,9 +6,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 ?>
 
 <!-- 회원가입결과 시작 { -->
-<div id="reg_result" class="mbskin">
-
-    <p>
+<div id="reg_result">
+    <h2><strong>회원가입</strong>이 완료되었습니다.</h2>
+    <p class="reg_result_p">
         <strong><?php echo get_text($mb['mb_name']); ?></strong>님의 회원가입을 진심으로 축하합니다.<br>
     </p>
 
@@ -38,9 +38,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         감사합니다.
     </p>
 
-    <div class="btn_confirm">
-        <a href="<?php echo G5_URL ?>/" class="btn02">메인으로</a>
-    </div>
+        <a href="<?php echo G5_URL ?>/" class="btn_submit">메인으로</a>
 
 </div>
 <!-- } 회원가입결과 끝 -->

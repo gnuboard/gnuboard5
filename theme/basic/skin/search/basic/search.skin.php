@@ -130,7 +130,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
                 </div>
                 <p><?php echo $list[$idx][$i]['content'] ?></p>
                 <div class="sch_info">
-                    <span class="profile_img"><img src="http://sora.gnutest.com/g5/theme/basic/img/no_profile.gif" alt="프로필이미지" width="20" height="20"></span> <?php echo $list[$idx][$i]['name'] ?>
+                    <span class="profile_img"><img src="<?php echo G5_THEME_IMG_URL; ?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span> <?php echo $list[$idx][$i]['name'] ?>
                     <span class="sch_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$idx][$i]['wr_datetime'] ?></span>
                 </div>
             </li>

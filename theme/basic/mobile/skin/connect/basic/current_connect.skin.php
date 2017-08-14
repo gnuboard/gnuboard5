@@ -19,7 +19,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$connect_skin_url.'/style.css">',
         <li>
             <div class="crt_wr">
                 <span class="crt_num"><?php echo $list[$i]['num'] ?></span>
-                <span class="crt_name"><img src="http://sora.gnutest.com/g5/theme/basic/img/no_profile.gif" alt="프로필이미지"><br><?php echo $list[$i]['name'] ?></span>
+                <span class="crt_name"><img src="<?php echo G5_THEME_IMG_URL;?>/no_profile.gif" alt="프로필이미지"><br><?php echo $list[$i]['name'] ?></span>
                 <span class="crt_lct"><?php echo $display_location ?></span>
             </div>
         </li>
