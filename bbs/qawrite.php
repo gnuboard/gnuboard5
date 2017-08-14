@@ -76,7 +76,10 @@ if(is_file($skin_file)) {
 
         $content .= get_text($write['qa_content'], 0);
     } else {
-        $content = get_text($write['qa_content'], 0);
+        //$content = get_text($write['qa_content'], 0);
+        
+        // KISA 취약점 권고사항 Stored XSS
+        $content = get_text(html_purifier($write['qa_content']), 0);
     }
 
     $editor_html = editor_html('qa_content', $content, $is_dhtml_editor);
