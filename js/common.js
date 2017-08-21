@@ -459,6 +459,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
                 onresize : function(size) {
                     element_wrap.style.height = size.height + "px";
                 },
+                maxSuggestItems : g5_is_mobile ? 6 : 10,
                 width : '100%',
                 height : '100%'
             }).embed(element_wrap);
@@ -494,6 +495,7 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
                     // iframe을 넣은 element를 안보이게 한다.
                     element_layer.style.display = 'none';
                 },
+                maxSuggestItems : g5_is_mobile ? 6 : 10,
                 width : '100%',
                 height : '100%'
             }).embed(element_layer);
