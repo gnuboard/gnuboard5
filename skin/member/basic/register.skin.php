@@ -80,6 +80,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
         return true;
     }
+    jQuery(function($){
+        $(document).on("click", "#chk_all", function(e){
+
+            if ($(this).prop('checked')) {
+                $( "input[name^='agree']" ).prop('checked', true);
+            } else {
+                $( "input[name^='agree']" ).prop('checked', false);
+            }
+
+        });
+    });
     </script>
 </div>
 <!-- } 회원가입 약관 동의 끝 -->

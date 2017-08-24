@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `g5_board` (
   `bo_use_email` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_cert` enum('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '',
   `bo_use_sns` tinyint(4) NOT NULL DEFAULT '0',
+  `bo_use_captcha` tinyint(4) NOT NULL DEFAULT '0',
   `bo_sort_field` varchar(255) NOT NULL DEFAULT '',
   `bo_1_subj` varchar(255) NOT NULL DEFAULT '',
   `bo_2_subj` varchar(255) NOT NULL DEFAULT '',
@@ -837,6 +838,34 @@ CREATE TABLE IF NOT EXISTS `g5_faq_master` (
   `fm_order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`fm_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_member_social_profiles`
+--
+
+DROP TABLE IF EXISTS `g5_member_social_profiles`;
+CREATE TABLE IF NOT EXISTS `g5_member_social_profiles` (
+  `mp_no` int(11) NOT NULL AUTO_INCREMENT,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `provider` varchar(50) NOT NULL DEFAULT '',
+  `object_sha` varchar(45) NOT NULL DEFAULT '',
+  `identifier` varchar(255) NOT NULL DEFAULT '',
+  `profileurl` varchar(255) NOT NULL DEFAULT '',
+  `photourl` varchar(255) NOT NULL DEFAULT '',
+  `displayname` varchar(150) NOT NULL DEFAULT '',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `gender` varchar(10) NOT NULL DEFAULT '',
+  `age` varchar(10) NOT NULL DEFAULT '',
+  `birthday` int(11) NOT NULL DEFAULT '0',
+  `birthmonth` int(11) NOT NULL DEFAULT '0',
+  `birthyear` int(11) NOT NULL DEFAULT '0',
+  `mp_latest_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  UNIQUE KEY `mp_no` (`mp_no`),
+  KEY `mb_id` (`mb_id`),
+  KEY `provider` (`provider`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

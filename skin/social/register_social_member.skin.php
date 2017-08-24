@@ -117,14 +117,8 @@ add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css
             <div class="mw-title">기존 계정에 연결하기</div>
 
             <div class="mw-desc">
-                SIR 기존 아이디에 SNS 아이디를 연결합니다.<br>
-                SNS 아이디로 로그인 하시면 SIR 아이디로 로그인 됩니다.
+                기존 아이디에 SNS 아이디를 연결합니다.
             </div>
-
-            <button type="button" class="mw-close">
-                <i class="fa fa-close"></i>
-                <span class="txt">닫기</span>
-            </button>
 
             <div id="login_fs">
                 <label for="login_id" class="login_id">아이디<strong class="sound_only"> 필수</strong></label>

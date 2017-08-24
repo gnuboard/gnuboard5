@@ -3,6 +3,8 @@ include_once('./_common.php');
 //include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/register.lib.php');
 
+define('ASIDE_DISABLE', 1);
+
 if( ! $config['cf_social_login_use'] ){
     alert('소셜 로그인을 사용하지 않습니다.');
 }

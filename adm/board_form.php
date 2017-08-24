@@ -76,6 +76,10 @@ if (!isset($board['bo_mobile_subject'])) {
     sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_mobile_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_subject` ", false);
 }
 
+if (!isset($board['bo_use_captcha'])) {
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_captcha` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_sns` ");
+}
+
 $required = "";
 $readonly = "";
 if ($w == '') {
@@ -769,6 +773,20 @@ $frm_submit .= '</div>';
                 <label for="chk_grp_order">그룹적용</label>
                 <input type="checkbox" name="chk_all_order" value="1" id="chk_all_order">
                 <label for="chk_all_order">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="bo_use_captcha">캡챠 사용</label></th>
+            <td>
+                <?php echo help("체크하면 글 작성시 캡챠를 무조건 사용합니다.( 회원 + 비회원 모두 )<br>미 체크하면 비회원에게만 캡챠를 사용합니다.") ?>
+                <input type="checkbox" name="bo_use_captcha" value="1" <?php echo $board['bo_use_captcha']?'checked':''; ?> id="bo_use_captcha">
+                사용
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_grp_use_captcha" value="1" id="chk_grp_use_captcha">
+                <label for="chk_grp_use_captcha">그룹적용</label>
+                <input type="checkbox" name="chk_all_use_captcha" value="1" id="chk_all_use_captcha">
+                <label for="chk_all_use_captcha">전체적용</label>
             </td>
         </tr>
         </tbody>

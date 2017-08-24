@@ -192,7 +192,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <li>
                 <label for="reg_mb_mailling" class="frm_label">메일링서비스</label>
                 <input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?>>
-                정보 메일을 받겠습니다.
+                <label for="reg_mb_mailling">정보 메일을 받겠습니다.</label>
                 
             </li>
 
@@ -201,7 +201,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <label for="reg_mb_sms" class="frm_label">SMS 수신여부</label>
                 
                     <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?>>
-                    휴대폰 문자메세지를 받겠습니다.
+                    <label for="reg_mb_sms">휴대폰 문자메세지를 받겠습니다.</label>
                 
             </li>
             <?php }  ?>
@@ -211,7 +211,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <label for="reg_mb_open" class="frm_label">정보공개</label>
                 <input type="hidden" name="mb_open_default" value="<?php echo $member['mb_open'] ?>">
                 <input type="checkbox" name="mb_open" value="1" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> id="reg_mb_open">
-                다른분들이 나의 정보를 볼 수 있도록 합니다.
+                <label for="reg_mb_open">다른분들이 나의 정보를 볼 수 있도록 합니다.</label>
                 <span class="frm_info">
                     정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
                 </span>                
@@ -241,7 +241,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             }
             ?>
 
-            <li>
+            <li class="is_captcha_use">
                 자동등록방지
                 <?php echo captcha_html(); ?>
             </li>

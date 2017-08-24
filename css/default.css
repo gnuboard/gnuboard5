@@ -130,6 +130,7 @@ a.gnb_2da:hover{background:#f9f9f9;color:#000}
 #aside {float:right;width:271px;padding:20px;border-left:1px solid #e8e8e8;margin-left:-1px;height:100%;}
 
 #container {z-index:4;position:relative;float:left;padding:20px 20px 20px 0;width:670px;border-right:1px solid #e8e8e8;min-height:500px;height:auto !important;height:500px;font-size:1em;zoom:1}
+#container.aside_disable {float:none;width:100%;padding-right:0px;border-right:none 0}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 #container_title {font-size:1.25em;;font-weight:bold;border-bottom:1px solid #e8e8e8}
 #container_title span{margin:0 auto;display:block;width:940px;height:60px;line-height:30px;padding:15px 0;}

@@ -29,8 +29,8 @@ $sql .= " order by bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $lt_style = "";
-    if ($i%2==1) $lt_style = "margin-left:20px";
-    else $lt_style = "";
+    if ($i%2==1) $lt_style = "margin-left:15px";
+    if ($i%2==0) $lt_style = "clear:both";
 ?>
     <div style="float:left;<?php echo $lt_style ?>">
     <?php

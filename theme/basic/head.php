@@ -144,7 +144,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 </div>
 <!-- } 상단 끝 -->
 <script>
-$(function (){
+jQuery(function($){
     $("#sch_op_btn").on("click", function() {
         $("#hd_sch").css("display","block");
     });
@@ -160,6 +160,7 @@ $(function (){
 <div id="wrapper">
     <?php if (!defined("_INDEX_")) { ?><h2 id="container_title"><span><?php echo $g5['title'] ?></span></h2><?php } ?>
     <div id="container_wr">
+    <?php if(!defined('ASIDE_DISABLE')) { ?>
     <div id="aside">
         <?php echo outlogin('theme/basic'); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
         <?php echo poll('theme/basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
@@ -175,4 +176,5 @@ $(function (){
             </div>
         </div>
     </div>
-    <div id="container">
+    <?php }     //end if ?>
+    <div id="container" class="<?php echo defined('ASIDE_DISABLE') ? 'aside_disable' : ''; ?>">

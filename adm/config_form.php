@@ -451,17 +451,18 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 <?php echo help('사용할 캡챠를 선택합니다.') ?>
                 <select name="cf_captcha" id="cf_captcha" required class="required">
                 <option value="kcaptcha" <?php echo get_selected($config['cf_captcha'], 'kcaptcha') ; ?>>Kcaptcha</option>
-                <option value="recaptcha" <?php echo get_selected($config['cf_captcha'], 'recaptcha') ; ?>>Google Recaptcha</option>
+                <option value="recaptcha" <?php echo get_selected($config['cf_captcha'], 'recaptcha') ; ?>>reCAPTCHA V2</option>
+                <option value="recaptcha_inv" <?php echo get_selected($config['cf_captcha'], 'recaptcha_inv') ; ?>>Invisible reCAPTCHA</option>
                 </select>
             </td>
         </tr>
         <tr class="kcaptcha_mp3">
             <th scope="row"><label for="cf_captcha_mp3">음성캡챠 선택<strong class="sound_only">필수</strong></label></th>
             <td colspan="3">
-                <?php echo help(str_replace('recaptcha', 'kcaptcha', G5_CAPTCHA_URL).'/mp3 밑의 음성 폴더를 선택합니다.') ?>
+                <?php echo help(str_replace(array('recaptcha_inv', 'recaptcha'), 'kcaptcha', G5_CAPTCHA_URL).'/mp3 밑의 음성 폴더를 선택합니다.') ?>
                 <select name="cf_captcha_mp3" id="cf_captcha_mp3" required class="required">
                 <?php
-                $arr = get_skin_dir('mp3', str_replace('recaptcha', 'kcaptcha', G5_CAPTCHA_PATH));
+                $arr = get_skin_dir('mp3', str_replace(array('recaptcha_inv', 'recaptcha'), 'kcaptcha', G5_CAPTCHA_PATH));
                 for ($i=0; $i<count($arr); $i++) {
                     if ($i == 0) echo "<option value=\"\">선택</option>";
                     echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_captcha_mp3'], $arr[$i]).">".$arr[$i]."</option>\n";
@@ -470,16 +471,21 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 </select>
             </td>
         </tr>
-        <tr>
-            <th scope="row"><label for="cf_recaptcha_site_key">구글 reCAPTCHA Site key</label></th>
-            <td>
-                <input type="text" name="cf_recaptcha_site_key" value="<?php echo $config['cf_recaptcha_site_key']; ?>" id="cf_naver_clientid" class="frm_input"> <a href="https://www.google.com/recaptcha/admin" target="_blank" class="btn_frmline">reCAPTCHA 등록하기</a>
+		<tr>
+			<th scope="row" rowspan="2"><label for="cf_recaptcha_site_key">구글 reCAPTCHA Site key</label></th>
+			<td colspan="3" style="border-bottom:none 0">
+            <?php echo help('reCAPTCHA V2와 Invisible reCAPTCHA 캡챠의 sitekey 와 secret 키는 동일하지 않고, 서로 발급받는 키가 다릅니다.') ?>
+            </td>
+		</tr>
+		<tr>
+			<td>
+                <input type="text" name="cf_recaptcha_site_key" value="<?php echo $config['cf_recaptcha_site_key']; ?>" id="cf_naver_clientid" class="frm_input" size="52"> <a href="https://www.google.com/recaptcha/admin" target="_blank" class="btn_frmline">reCAPTCHA 등록하기</a>
             </td>
             <th scope="row"><label for="cf_recaptcha_secret_key">구글 reCAPTCHA Secret key</label></th>
             <td>
-                <input type="text" name="cf_recaptcha_secret_key" value="<?php echo $config['cf_recaptcha_secret_key']; ?>" id="cf_recaptcha_secret_key" class="frm_input" size="35">
+                <input type="text" name="cf_recaptcha_secret_key" value="<?php echo $config['cf_recaptcha_secret_key']; ?>" id="cf_recaptcha_secret_key" class="frm_input" size="52">
             </td>
-        </tr>
+		</tr>
         <tr>
             <th scope="row"><label for="cf_use_copy_log">복사, 이동시 로그</label></th>
             <td colspan="3">
@@ -1316,7 +1322,7 @@ $(function(){
         }
     });
     $("#cf_captcha").on("change", function(){
-        if ($(this).val() == 'recaptcha') {
+        if ($(this).val() == 'recaptcha' || $(this).val() == 'recaptcha_inv') {
             $("[class^='kcaptcha_']").hide();
         } else {
             $("[class^='kcaptcha_']").show();

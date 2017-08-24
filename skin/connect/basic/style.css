@@ -1,4 +1,5 @@
 @charset "utf-8";
+#current_connect ul:after{content:"";display:block;clear:both}
 #current_connect li{width:208px;float:left;border:1px solid #d8d8d8;margin-left:10px;margin-bottom:10px;text-align:center;position:relative}
 #current_connect li:nth-child(3n+1){clear:both;margin-left:0}
 #current_connect .crt_name {margin:20px;display:block}
