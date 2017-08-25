@@ -23,7 +23,7 @@ $g5['title'] = $html_title;
 include_once('./admin.head.php');
 ?>
 
-<p>메일 내용에 {이름} , {닉네임} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일을 발송합니다.</p>
+<div class="local_desc"><p>메일 내용에 {이름} , {닉네임} , {회원아이디} , {이메일} 처럼 내용에 삽입하면 해당 내용에 맞게 변환하여 메일을 발송합니다.</p></div>
 
 <form name="fmailform" id="fmailform" action="./mail_update.php" onsubmit="return fmailform_check(this);" method="post">
 <input type="hidden" name="w" value="<?php echo $w ?>" id="w">
@@ -50,8 +50,8 @@ include_once('./admin.head.php');
     </table>
 </div>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" class="btn_submit" accesskey="s" value="확인">
+<div class="btn_fixed_top ">
+    <input type="submit" class="btn_submit btn" accesskey="s" value="확인">
 </div>
 </form>
 

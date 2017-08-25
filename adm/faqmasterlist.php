@@ -65,7 +65,7 @@ $result = sql_query($sql);
 
 <div class="local_ov01 local_ov">
     <?php if ($page > 1) {?><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>">처음으로</a><?php } ?>
-    <span>전체 FAQ <?php echo $total_count; ?>건</span>
+    <span class="btn_ov01"><span class="ov_txt"> 전체 FAQ </span><span class="ov_num"> <?php echo $total_count; ?>건</span></span>
 </div>
 
 <div class="local_desc01 local_desc">
@@ -76,8 +76,8 @@ $result = sql_query($sql);
     </ol>
 </div>
 
-<div class="btn_add01 btn_add">
-    <a href="./faqmasterform.php">FAQ추가</a>
+<div class="btn_fixed_top">
+    <a href="./faqmasterform.php" class="btn_01 btn">FAQ추가</a>
 </div>
 
 <div class="tbl_head01 tbl_wrap">
@@ -101,13 +101,13 @@ $result = sql_query($sql);
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $row['fm_id']; ?></td>
-        <td><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>"><?php echo stripslashes($row['fm_subject']); ?></a></td>
+        <td class="td_left"><a href="./faqlist.php?fm_id=<?php echo $row['fm_id']; ?>&amp;fm_subject=<?php echo $row['fm_subject']; ?>"><?php echo stripslashes($row['fm_subject']); ?></a></td>
         <td class="td_num"><?php echo $cnt; ?></td>
         <td class="td_num"><?php echo $row['fm_order']?></td>
-        <td class="td_mng">
-            <a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>수정</a>
-            <a href="<?php echo G5_BBS_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a>
-            <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" onclick="return delete_confirm(this);"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>삭제</a>
+        <td class="td_mng td_mng_l">
+            <a href="./faqmasterform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>" class="btn btn_03"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>수정</a>
+            <a href="<?php echo G5_BBS_URL; ?>/faq.php?fm_id=<?php echo $row['fm_id']; ?>" class="btn btn_02"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>보기</a>
+            <a href="./faqmasterformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>" onclick="return delete_confirm(this);" class="btn btn_02"><span class="sound_only"><?php echo stripslashes($row['fm_subject']); ?> </span>삭제</a>
         </td>
     </tr>
     <?php
