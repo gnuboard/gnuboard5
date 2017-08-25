@@ -23,7 +23,7 @@ include_once("./admin.head.php");
     if (!$dir=@opendir(G5_DATA_PATH.'/session')) {
       echo "<p>세션 디렉토리를 열지못했습니다.</p>";
     } else {
-        $list_tag_st = "<ul>\n<li>완료됨</li>\n";
+        $list_tag_st = "<ul class=\"session_del\">\n<li>완료됨</li>\n";
         $list_tag_end = "</ul>\n";
     }
 
