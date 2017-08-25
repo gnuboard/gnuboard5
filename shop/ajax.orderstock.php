@@ -48,6 +48,19 @@ $result = sql_query($sql);
 for($i=0; $row=sql_fetch_array($result); $i++) {
     $ct_qty = $row['ct_qty'];
 
+    // 해당 상품이 품절 상태인지 체크합니다.
+    $sql = " select it_soldout from {$g5['g5_shop_item_table']} where it_id = '".$row['it_id']."' ";
+    $item = sql_fetch($sql);
+
+    // 해당 상품이 품절 상태이면
+    if( $item['it_soldout'] ){
+        $item_option = $row['it_name'];
+        if($row['io_id'])
+            $item_option .= '('.$row['ct_option'].')';
+
+        die( $item_option." 상품이 품절되었습니다.\n\n장바구니에서 해당 상품을 삭제후 다시 주문해 주세요." );
+    }
+
     if(!$row['io_id'])
         $it_stock_qty = get_it_stock_qty($row['it_id']);
     else
