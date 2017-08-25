@@ -154,13 +154,6 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_bo_extra">여분필드</a></li>
 </ul>';
 
-$frm_submit = '<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./board_list.php?'.$qstr.'">목록</a>'.PHP_EOL;
-if ($w == 'u') $frm_submit .= '<a href="./board_copy.php?bo_table='.$bo_table.'" id="board_copy" target="win_board_copy">게시판복사</a>
-    <a href="'.G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'" class="btn_frmline">게시판 바로가기</a>
-    <a href="./board_thumbnail_delete.php?bo_table='.$board['bo_table'].'&amp;'.$qstr.'" onclick="return delete_confirm2(\'게시판 썸네일 파일을 삭제하시겠습니까?\');">게시판 썸네일 삭제</a>'.PHP_EOL;
-$frm_submit .= '</div>';
 ?>
 
 <form name="fboardform" id="fboardform" action="./board_form_update.php" onsubmit="return fboardform_submit(this)" method="post" enctype="multipart/form-data">
@@ -193,7 +186,7 @@ $frm_submit .= '</div>';
                     영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
                 <?php } else { ?>
                     <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $board['bo_table'] ?>" class="btn_frmline">게시판 바로가기</a>
-                    <a href="./board_list.php" class="btn_frmline">목록으로</a>
+                    <a href="./board_list.php?<?php echo $qstr;?>" class="btn_frmline">목록으로</a>
                 <?php } ?>
             </td>
         </tr>
@@ -201,7 +194,7 @@ $frm_submit .= '</div>';
             <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
             <td colspan="2">
                 <?php echo get_group_select('gr_id', $board['gr_id'], 'required'); ?>
-                <?php if ($w=='u') { ?><a href="javascript:document.location.href='./board_list.php?sfl=a.gr_id&stx='+document.fboardform.gr_id.value;" class="btn_frmline">동일그룹 게시판목록</a><?php } ?></td>
+                <?php if ($w=='u') { ?><a href="javascript:document.location.href='./board_list.php?sfl=a.gr_id&stx='+document.fboardform.gr_id.value;" class="btn_frmline">동일그룹 게시판목록</a><?php } ?>
             </td>
         </tr>
         <tr>
@@ -263,7 +256,7 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+
 
 <section id="anc_bo_auth">
     <h2 class="h2_frm">게시판 권한 설정</h2>
@@ -404,7 +397,7 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+
 
 <section id="anc_bo_function">
     <h2 class="h2_frm">게시판 기능 설정</h2>
@@ -794,7 +787,6 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_bo_design">
     <h2 class="h2_frm">게시판 디자인/양식</h2>
@@ -1134,9 +1126,10 @@ $frm_submit .= '</div>';
         </tbody>
         </table>
     </div>
+    <button type="button" class="get_theme_galc btn btn_02" >테마 이미지설정 가져오기</button>
+
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_galc">테마 이미지설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_bo_point">
     <h2 class="h2_frm">게시판 포인트 설정</h2>
@@ -1211,8 +1204,6 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
-
 <section id="anc_bo_extra">
     <h2 class="h2_frm">게시판 여분필드 설정</h2>
     <?php echo $pg_anchor ?>
@@ -1248,7 +1239,15 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+
+<div class="btn_fixed_top">
+    <?php if( $bo_table && $w ){ ?>
+        <a href="./board_copy.php?bo_table='.$bo_table.'" id="board_copy" target="win_board_copy" class=" btn_02 btn">게시판복사</a>
+        <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $board['bo_table']; ?>'" class=" btn_02 btn">게시판 바로가기</a>
+        <a href="./board_thumbnail_delete.php?bo_table=<?php echo $board['bo_table']; ?>'&amp;'.$qstr.'" onclick="return delete_confirm2('게시판 썸네일 파일을 삭제하시겠습니까?');" class="btn_02 btn">게시판 썸네일 삭제</a>
+    <?php } ?>
+    <input type="submit" value="확인" class="btn_submi btn btn_01" accesskey="s">
+</div>
 
 </form>
 
