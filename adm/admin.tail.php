@@ -9,15 +9,22 @@ if (!defined('_GNUBOARD_')) exit;
             </p>
         </noscript>
 
+        </div>    
+        <footer id="ft">
+            <p>
+                Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved.<br>
+               <button type="button" class="scroll_top"><span class="top_img"></span><span class="top_txt">TOP</span></button>
+           </p>
+        </footer>
     </div>
+
 </div>
 
-<footer id="ft">
-    <p>
-        Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved.<br>
-        <a href="#">상단으로</a>
-    </p>
-</footer>
+<script>
+$(".scroll_top").click(function(){
+     $("body,html").animate({scrollTop:0},400);
+})
+</script>
 
 <!-- <p>실행시간 : <?php echo get_microtime() - $begin_time; ?> -->
 
