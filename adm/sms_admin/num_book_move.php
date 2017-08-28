@@ -34,42 +34,42 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <input type="hidden" name="bk_no_list" value="<?php echo $bk_no_list ?>">
     <input type="hidden" name="act" value="<?php echo $act ?>">
     <input type="hidden" name="url" value="<?php echo $_SERVER['HTTP_REFERER'] ?>">
-
-    <div class="tbl_head01 tbl_wrap">
-        <table>
-        <caption><?php echo $act ?>할 그룹을 한개 이상 선택하여 주십시오.</caption>
-        <thead>
-        <tr>
-            <th scope="col">
-                <?php if ( $inputbox_type == "checkbox" ){ //복사일때만 ?>
-                <label for="chkall" class="sound_only">그룹 전체</label>
-                <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
-                <?php } ?>
-            </th>
-            <th scope="col">그룹</th>
-        </tr>
-        </thead>
-        <tbody>
-        <?php for ($i=0; $i<count($list); $i++) { ?>
-        <tr>
-            <td class="td_chk">
-                <label for="chk<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['bg_name'] ?></label>
-                <input type="<?php echo $inputbox_type; ?>" value="<?php echo $list[$i]['bg_no'] ?>" id="chk<?php echo $i ?>" name="chk_bg_no[]">
-            </td>
-            <td>
-                <label for="chk<?php echo $i ?>">
-                    <?php echo $list[$i]['bg_name'] ?>
-                </label>
-            </td>
-        </tr>
-        <?php } ?>
-        </tbody>
-        </table>
+    <div class=" new_win_con"> 
+        <div class="tbl_head01 tbl_wrap">
+            <table>
+            <caption><?php echo $act ?>할 그룹을 한개 이상 선택하여 주십시오.</caption>
+            <thead>
+            <tr>
+                <th scope="col">
+                    <?php if ( $inputbox_type == "checkbox" ){ //복사일때만 ?>
+                    <label for="chkall" class="sound_only">그룹 전체</label>
+                    <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+                    <?php } ?>
+                </th>
+                <th scope="col">그룹</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php for ($i=0; $i<count($list); $i++) { ?>
+            <tr>
+                <td class="td_chk">
+                    <label for="chk<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['bg_name'] ?></label>
+                    <input type="<?php echo $inputbox_type; ?>" value="<?php echo $list[$i]['bg_no'] ?>" id="chk<?php echo $i ?>" name="chk_bg_no[]">
+                </td>
+                <td>
+                    <label for="chk<?php echo $i ?>">
+                        <?php echo $list[$i]['bg_name'] ?>
+                    </label>
+                </td>
+            </tr>
+            <?php } ?>
+            </tbody>
+            </table>
+        </div>
     </div>
-
     <div class="win_btn">
-        <input type="submit" value="<?php echo $act ?>" id="btn_submit" class="btn_submit">
-        <button type="button" class="btn_cancel">창닫기</button>
+        <input type="submit" value="<?php echo $act ?>" id="btn_submit" class="btn_submit btn">
+        <button type="button" class="btn_cancel btn">창닫기</button>
     </div>
     </form>
 

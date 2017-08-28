@@ -123,8 +123,8 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
 </div>
 
 <div class="btn_list01 btn_list">
-    <button type="button" onclick="sms_obj.person_multi_add()">선택추가</button>
-    <button type="button" onclick="sms_obj.triggerclick('#book_group')" >그룹목록</button>
+    <button type="button" onclick="sms_obj.person_multi_add()" class="btn btn02">선택추가</button>
+    <button type="button" onclick="sms_obj.triggerclick('#book_group')"  class="btn btn02">그룹목록</button>
 </div>
 
 <nav class="pg_wrap">
@@ -153,7 +153,7 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
 
 <label for="svv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" size="15" name="sv" value="<?php echo $sv?>" id="svv" required class="required frm_input">
-<input type="submit" value="검색" class="btn_submit">
+<input type="submit" value="검색" class="btn_submit btn">
 </form>
 
 <!--
