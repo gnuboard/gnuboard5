@@ -1,10 +1,16 @@
 @charset "utf-8";
-/* SIR 지운아빠 */
 
 /* 최근게시물 스킨 (latest) */
-.lt {position:relative;margin:0 0 10px;padding:0 10px 15px;border-bottom:1px solid #ddd}
-.lt ul {margin:0 0 10px;padding:0;list-style:none}
-.lt a {display:block;padding:5px 0;color:#000;text-decoration:none}
-.lt .lt_title {display:inline-block;padding:10px 0}
+.lt {position:relative;padding:15px 10px ;}
+.lt ul {margin:10px 0 0 ;padding:0;list-style:none}
+.lt .lt_title {display:inline-block;background: #4162ff;color: #fff;border-radius: 13px;line-height: 24px;padding: 0 10px;border-bottom:1px solid #ccc;}
 .lt .lt_more {position:absolute;top:5px;right:10px}
-.lt .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
+.lt .cnt_cmt {display:inline-block;margin:0 5px 0 3px;}
+.lt .lt_info{border-top: 1px solid #eee;margin: 10px 0 0;line-height: 28px;color: #666;position: relative;padding-top: 3px;}
+.lt .profile_img img{border-radius:50%}
+.lt .lt_tit{display: block;font-size: 1.083em;font-weight: bold;margin: 5px 0;}
+.lt .lt_tit i{font-size:12px;color:#8d96c2}
+.lt .lt_tit .fa-heart{color: #fe4560;}
+.lt .lt_date{position:absolute;top:3px;right:0;color:#666;font-style:italic}
+.lt .comment_icon{background:url(./img/icon_comment.png) no-repeat 50% 50% ;display:inline-block;width:20px;height:28px;text-indent:-999px;overflow:hidden;vertical-align:top;background-size:70%;margin:0 0px 0 5px}
+.lt .empty_li{text-align:center;padding:40px 0;color:#777}
