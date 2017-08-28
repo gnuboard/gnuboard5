@@ -121,9 +121,10 @@ function imageview(id, w, h)
                 if (isset($sub_menu) && (substr($sub_menu, 0, 3) == substr($menu['menu'.$key][0][0], 0, 3)))
                     $current_class = " on";
 
+                $button_title = $menu['menu'.$key][0][1];
             ?>
             <li class="gnb_li<?php echo $current_class;?>">
-                <button type="button" class="btn_op menu-<?php echo $jj; ?>"><?php echo $menu['menu'.$key][0][1];?></button>
+                <button type="button" class="btn_op menu-<?php echo $jj; ?>" title="<?php echo $button_title; ?>"><?php echo $button_title;?></button>
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <h3><?php echo $menu['menu'.$key][0][1];?></h3>
