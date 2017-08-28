@@ -65,13 +65,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
             </th>
             <?php } ?>
-            <th scope="col"><i class="fa fa-sort-numeric-desc" aria-hidden="true"></i><span class="sound_only">번호</span></th>
-            <th scope="col"><i class="fa fa-th-list" aria-hidden="true"></i><span class="sound_only">제목</span></th>
-            <th scope="col"><i class="fa fa-user" aria-hidden="true"></i><span class="sound_only">글쓴이</span></th>
-            <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?><i class="fa fa-eye" aria-hidden="true"></i><span class="sound_only">조회</span></a></th>
-            <?php if ($is_good) { ?><th scope="col"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span class="sound_only">추천</span></a></th><?php } ?>
-            <?php if ($is_nogood) { ?><th scope="col"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?><i class="fa fa-thumbs-o-down" aria-hidden="true"></i><span class="sound_only">비추천</span></a></th><?php } ?>
-            <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?><i class="fa fa-clock-o" aria-hidden="true"></i><span class="sound_only">날짜</span></a></th>
+            <th scope="col">번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">글쓴이</th>
+            <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회 <i class="fa fa-sort" aria-hidden="true"></i></a></th>
+            <?php if ($is_good) { ?><th scope="col"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천 <i class="fa fa-sort" aria-hidden="true"></i></a></th><?php } ?>
+            <?php if ($is_nogood) { ?><th scope="col"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?>비추천 <i class="fa fa-sort" aria-hidden="true"></i></a></th><?php } ?>
+            <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>날짜</a></th>
         </tr>
         </thead>
         <tbody>
@@ -113,9 +113,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
                     // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
                     if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
-                    if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
                     if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
                     if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
+                    if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
                      ?>
                     <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?php echo $list[$i]['comment_cnt']; ?><span class="sound_only">개</span><?php } ?>
                 </a>

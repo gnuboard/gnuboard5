@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 var char_min = parseInt(<?php echo $comment_min ?>); // 최소
 var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 </script>
-<button type="button" class="cmt_btn">댓글목록</button>
+<button type="button" class="cmt_btn"><i class="fa fa-commenting-o" aria-hidden="true"></i> 댓글목록</button>
 <!-- 댓글 시작 { -->
 <section id="bo_vc">
     <h2>댓글목록</h2>
@@ -15,7 +15,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
     $cmt_amt = count($list);
     for ($i=0; $i<$cmt_amt; $i++) {
         $comment_id = $list[$i]['wr_id'];
-        $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 75;
+        $cmt_depth = strlen($list[$i]['wr_comment_reply']) * 50;
         $comment = $list[$i]['content'];
         /*
         if (strstr($list[$i]['wr_option'], "secret")) {
@@ -36,7 +36,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <span>(<?php echo $list[$i]['ip']; ?>)</span>
             <?php } ?>
             <span class="sound_only">작성일</span>
-            <span class="bo_vc_hdinfo"><time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
+            <span class="bo_vc_hdinfo"><i class="fa fa-clock-o" aria-hidden="true"></i> <time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
             <?php
             include(G5_SNS_PATH.'/view_comment_list.sns.skin.php');
             ?>
@@ -138,7 +138,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </div>
         <div class="btn_confirm">
             <input type="checkbox" name="wr_secret" value="secret" id="wr_secret">
-            <label for="wr_secret">비밀글사용</label>
+            <label for="wr_secret"><i class="fa fa-lock" aria-hidden="true"></i><span class="sound_only">비밀글사용</span></label>
             <input type="submit" id="btn_submit" class="btn_submit" value="댓글등록">
         </div>
     </div>
@@ -307,15 +307,15 @@ $(function() {
             save_html = document.getElementById('bo_vc_w').innerHTML;
         }
     );
-
+});
+<?php } ?>
+$(function() {            
     //댓글열기
     $(".cmt_btn").click(function(){
         $(this).toggleClass("cmt_btn_op");
         $("#bo_vc").toggle();
     });
-       
 });
-<?php } ?>
 </script>
 <?php } ?>
 <!-- } 댓글 쓰기 끝 -->

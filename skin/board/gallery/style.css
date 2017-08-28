@@ -277,8 +277,8 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 
 
 /* 게시판 댓글 */
-.cmt_btn{background:url('./img/cmt_btn.png') no-repeat 60px 8px;text-align:left ;width:100% ;border:0;color:#ed6478;font-weight:bold;font-size:1.167em;margin: 30px 0 10px;padding:0  0 10px ;border-bottom:1px solid #e8e8e8}
-.cmt_btn_op{background:url('./img/cmt_btn.png') no-repeat 60px  -23px}
+.cmt_btn{background:url('./img/cmt_btn.png') no-repeat 85px 8px;text-align:left ;width:100% ;border:0;color:#ed6478;font-weight:bold;font-size:1.25em;margin: 30px 0 10px;padding:0  0 10px ;border-bottom:1px solid #e8e8e8}
+.cmt_btn_op{background:url('./img/cmt_btn.png') no-repeat 85px  -23px}
 #bo_vc {}
 #bo_vc h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #bo_vc article {margin:20px 0;padding-left:75px;position:relative}
@@ -314,7 +314,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .bo_vc_w_info .frm_input{float:left;margin-right:5px}
 .bo_vc_w_info #captcha{padding-top:10px;display:block;clear:both}
 .bo_vc_w .btn_confirm{float:right;margin-top:10px}
-.bo_vc_w .btn_confirm label{display:inline-block;background:url(./img/icon_lock.png) no-repeat 50% 50%;width:20px;height:20px;text-indent:9999px;overflow:hidden;margin-right:5px}
+.bo_vc_w .btn_confirm label{display:inline-block;margin-right:10px;border-radius:3px;font-size:1.5em;text-align:center;}
 .bo_vc_w .btn_submit{height:45px;padding:0 20px;border-radius:3px;font-weight:bold;font-size:1.083em;}
 .bo_vc_w_wr:after {display:block;visibility:hidden;clear:both;content:""}
 

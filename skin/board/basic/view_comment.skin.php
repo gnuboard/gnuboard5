@@ -138,7 +138,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         </div>
         <div class="btn_confirm">
             <input type="checkbox" name="wr_secret" value="secret" id="wr_secret">
-            <label for="wr_secret">비밀글사용</label>
+            <label for="wr_secret"><i class="fa fa-lock" aria-hidden="true"></i><span class="sound_only">비밀글사용</span></label>
             <input type="submit" id="btn_submit" class="btn_submit" value="댓글등록">
         </div>
     </div>
