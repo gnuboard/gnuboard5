@@ -44,6 +44,18 @@ function print_menu2($key, $no='')
 
     return $str;
 }
+
+$adm_menu_cookie = array(
+'container' => '',
+'gnb'       => '',
+'btn_gnb'   => '',
+);
+
+if( ! empty($_COOKIE['g5_admin_btn_gnb']) ){
+    $adm_menu_cookie['container'] = 'container-small';
+    $adm_menu_cookie['gnb'] = 'gnb_small';
+    $adm_menu_cookie['btn_gnb'] = 'btn_gnb_open';
+}
 ?>
 
 <script>
@@ -74,7 +86,7 @@ function imageview(id, w, h)
 <header id="hd">
     <h1><?php echo $config['cf_title'] ?></h1>
     <div id="hd_top">
-        <button type="button" id="btn_gnb" class="btn_gnb_close">메뉴</button>
+        <button type="button" id="btn_gnb" class="btn_gnb_close <?php echo $adm_menu_cookie['btn_gnb'];?>">메뉴</button>
        <div id="logo"><a href="<?php echo G5_ADMIN_URL ?>"><img src="<?php echo G5_ADMIN_URL ?>/img/logo.png" alt="<?php echo $config['cf_title'] ?> 관리자"></a></div>
 
         <div id="tnb">
@@ -90,7 +102,7 @@ function imageview(id, w, h)
             </ul>
         </div>
     </div>
-    <nav id="gnb" class="gnb_large">
+    <nav id="gnb" class="gnb_large <?php echo $adm_menu_cookie['gnb']; ?>">
         <h2>관리자 주메뉴</h2>
         <ul class="gnb_ul">
             <?php
@@ -127,16 +139,34 @@ function imageview(id, w, h)
     </nav>
 
 </header>
+<script src="<?php echo G5_JS_URL; ?>/js.cookie.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script>
-$(function(){ 
+jQuery(function($){
+
+    var menu_cookie_key = 'g5_admin_btn_gnb';
+
     $(".tnb_mb_btn").click(function(){
         $(".tnb_mb_area").toggle();
     });
 
     $("#btn_gnb").click(function(){
+        
+        var $this = $(this);
+
+        try {
+            if( ! $this.hasClass("btn_gnb_open") ){
+                Cookies.set(menu_cookie_key, 1);
+            } else {
+                Cookies.remove(menu_cookie_key);
+            }
+        }
+        catch(err) {
+        }
+
         $("#container").toggleClass("container-small");
         $("#gnb").toggleClass("gnb_small");
-        $("#btn_gnb").toggleClass("btn_gnb_open");
+        $this.toggleClass("btn_gnb_open");
+
     });
 
     $(".gnb_ul li .btn_op" ).click(function() {
@@ -149,7 +179,7 @@ $(function(){
 
 <div id="wrapper">
 
-    <div id="container">
+    <div id="container" class="<?php echo $adm_menu_cookie['container']; ?>">
 
         <h1 id="container_title"><?php echo $g5['title'] ?></h1>
         <div class="container_wr">
