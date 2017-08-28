@@ -59,11 +59,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
             <input type="checkbox" id="all_chk">
         </th>
         <?php } ?>
-        <th scope="col"><i class="fa fa-folder-open" aria-hidden="true"></i><span class="sound_only">그룹</span></th>
-        <th scope="col"><i class="fa fa-list-alt" aria-hidden="true"></i><span class="sound_only">게시판</span></th>
-        <th scope="col"><i class="fa fa-list-ul" aria-hidden="true"></i><span class="sound_only">제목</span></th>
-        <th scope="col"><i class="fa fa-user" aria-hidden="true"></i><span class="sound_only">이름</span></th>
-        <th scope="col"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="sound_only">일시</span></th>
+        <th scope="col">그룹</th>
+        <th scope="col">게시판</th>
+        <th scope="col">제목</th>
+        <th scope="col">이름</th>
+        <th scope="col">일시</th>
     </tr>
     </thead>
     <tbody>
@@ -87,7 +87,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
         <td class="td_board"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>"><?php echo $bo_subject ?></a></td>
         <td><a href="<?php echo $list[$i]['href'] ?>" class="new_tit"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
-        <td class="td_name"><span class="profile_img"><img src="<?php echo G5_IMG_URL;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span> <?php echo $list[$i]['name'] ?></td>
+        <td class="td_name"><span class="profile_img"><img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span> <?php echo $list[$i]['name'] ?></td>
         <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>
     </tr>
     <?php }  ?>

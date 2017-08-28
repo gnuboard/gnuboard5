@@ -11,10 +11,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
         <h2>나의 회원정보</h2>
         <span class="profile_img">
             <img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지">
-            <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info" title="정보수정">정보수정</a>
+            <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info">정보수정</a>
         </span>
         <strong><?php echo $nick ?>님</strong>
-        <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo G5_ADMIN_URL ?>" class="btn_admin" title="관리자">관리자</a><?php }  ?>
+        <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo G5_ADMIN_URL ?>" class="btn_admin">관리자</a><?php }  ?>
     </header>
     <ul id="ol_after_private">
         <li>

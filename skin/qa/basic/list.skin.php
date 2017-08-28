@@ -54,11 +54,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
             </th>
             <?php } ?>
-            <th scope="col"><i class="fa fa-sort-numeric-asc" aria-hidden="true"></i><span class="sound_only">번호</span></th>
-            <th scope="col"><i class="fa fa-th-list" aria-hidden="true"></i><span class="sound_only">제목</span></th>
-            <th scope="col"><i class="fa fa-user" aria-hidden="true"></i><span class="sound_only">글쓴이</span></th>
-            <th scope="col"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="sound_only">등록일</span></th>
-            <th scope="col"><i class="fa fa-check-circle-o" aria-hidden="true"></i><span class="sound_only">상태</span></th>
+            <th scope="col">번호</th>
+            <th scope="col">제목</th>
+            <th scope="col">글쓴이</th>
+            <th scope="col">등록일</th>
+            <th scope="col">상태</th>
         </tr>
         </thead>
         <tbody>

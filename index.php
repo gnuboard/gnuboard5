@@ -19,6 +19,7 @@ include_once(G5_PATH.'/head.php');
 
 <h2 class="sound_only">최신글</h2>
 <!-- 최신글 시작 { -->
+<div class="latest_wrap">
 <?php
 //  최신글
 $sql = " select bo_table
@@ -29,10 +30,11 @@ if(!$is_admin)
 $sql .= " order by b.gr_order, a.bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    if ($i%2==1) $lt_style = "margin-left:2%";
-    else $lt_style = "";
+    $mod_cnt = 2;
+    $lt_class = 'col-row col-gn-'.$mod_cnt;
+    $lt_class .= ($i % $mod_cnt === 0) ? ' box_clear' : '';
 ?>
-    <div style="float:left;<?php echo $lt_style ?>" class="lt_wr">
+    <div class="<?php echo $lt_class; ?>">
         <?php
         // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
         // 사용방법 : latest(스킨, 게시판아이디, 출력라인, 글자수);
@@ -43,6 +45,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 <?php
 }
 ?>
+</div>
 <!-- } 최신글 끝 -->
 
 <?php

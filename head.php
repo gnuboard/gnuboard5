@@ -58,7 +58,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <div class="hd_sch_wr">
             <fieldset id="hd_sch" >
                 <legend>사이트 내 전체검색</legend>
-                <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
+                <form name="fsearchbox" class="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">
                 <input type="hidden" name="sop" value="and">
                 <label for="sch_stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
@@ -162,17 +162,20 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     <?php if (!defined("_INDEX_")) { ?><h2 id="container_title"><span><?php echo $g5['title'] ?></span></h2><?php } ?>
     <div id="container_wr">
     <div id="aside">
-        <?php echo outlogin('basic'); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
-        <?php echo poll('basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
-        <?php echo visit('basic'); // 접속자집계, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
+        <div class="aside_inner">
+            <?php echo outlogin('basic'); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
+            <?php echo poll('basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
+            <?php echo visit('basic'); // 접속자집계, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
 
-        <div id="text_size">
-            <div>
-                <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
-                <button id="size_down" onclick="font_resize('container', 'ts_up ts_up2', '');" class="select"><img src="<?php echo G5_URL; ?>/img/ts01.png" alt="기본" width="20"></button>
-                <button id="size_def" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');"><img src="<?php echo G5_URL; ?>/img/ts02.png" alt="크게" width="20"></button>
-                <button id="size_up" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');"><img src="<?php echo G5_URL; ?>/img/ts03.png" alt="더크게" width="20"></button>
+            <div id="text_size">
+                <div>
+                    <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
+                    <button id="size_down" onclick="font_resize('container', 'ts_up ts_up2', '');" class="select"><img src="<?php echo G5_URL; ?>/img/ts01.png" alt="기본" width="20"></button>
+                    <button id="size_def" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');"><img src="<?php echo G5_URL; ?>/img/ts02.png" alt="크게" width="20"></button>
+                    <button id="size_up" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');"><img src="<?php echo G5_URL; ?>/img/ts03.png" alt="더크게" width="20"></button>
+                </div>
             </div>
         </div>
     </div>
     <div id="container">
+        <div class="container_inner">

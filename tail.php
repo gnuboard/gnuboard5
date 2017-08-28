@@ -11,10 +11,10 @@ if (G5_IS_MOBILE) {
     return;
 }
 ?>
-
-    </div>
-</div>
-</div>
+        </div>  <?php /* end container_inner */ ?>
+    </div>  <?php /* end container */ ?>
+</div>  <?php /* end container_wr */ ?>
+</div>  <?php /* end wrapper */ ?>
 <!-- } 콘텐츠 끝 -->
 
 <hr>

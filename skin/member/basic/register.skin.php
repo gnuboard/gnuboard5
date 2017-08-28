@@ -12,7 +12,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <p>회원가입약관 및 개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.</p>
     <div id="fregister_chkall">
         <label for="chk_all">전체선택</label>
-        <input type="checkbox" name="chk_all"  id="chk_all">
+        <input type="checkbox" name="chk_all"  value="1"  id="chk_all">
 
     </div>
     <section id="fregister_term">
@@ -80,17 +80,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
         return true;
     }
+    
     jQuery(function($){
-        $(document).on("click", "#chk_all", function(e){
-
+        // 모두선택
+        $("input[name=chk_all]").click(function() {
             if ($(this).prop('checked')) {
-                $( "input[name^='agree']" ).prop('checked', true);
+                $("input[name^=agree]").prop('checked', true);
             } else {
-                $( "input[name^='agree']" ).prop('checked', false);
+                $("input[name^=agree]").prop("checked", false);
             }
-
         });
     });
+
     </script>
 </div>
 <!-- } 회원가입 약관 동의 끝 -->
