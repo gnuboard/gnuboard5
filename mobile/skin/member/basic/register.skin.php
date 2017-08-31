@@ -7,6 +7,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
 <div class="mbskin">
 
+    <?php
+    // 소셜로그인 사용시 소셜로그인 버튼
+    @include_once(get_social_skin_path().'/register_social.skin.php');
+    ?>
+
     <form name="fregister" id="fregister" action="<?php echo $register_action_url ?>" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">
 
     <div class="chk_all">
@@ -61,7 +66,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
        </fieldset>
     </section>
 
-    <div class=" btn_top">
+    <div class="btn_top top">
         <input type="submit" class="btn_submit" value="회원가입">
     </div>
 
@@ -84,6 +89,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
         return true;
     }
+
+    jQuery(function($){
+        // 모두선택
+        $("input[name=chk_all]").click(function() {
+            if ($(this).prop('checked')) {
+                $("input[name^=agree]").prop('checked', true);
+            } else {
+                $("input[name^=agree]").prop("checked", false);
+            }
+        });
+    });
     </script>
 
 </div>

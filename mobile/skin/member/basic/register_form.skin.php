@@ -229,7 +229,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </li>
         <?php } ?>
 
-        <li>
+        <li class="is_captcha_use">
             <span  class="frm_label">자동등록방지</span>
             <?php echo captcha_html(); ?>
         </li>

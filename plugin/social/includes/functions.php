@@ -41,7 +41,7 @@ function get_social_skin_url(){
 
 function get_social_convert_id($identifier, $service)
 {
-    return strtolower($service).'_'.hash('adler32', $identifier);
+    return strtolower($service).'_'.hash('adler32', md5($identifier));
 }
 
 function social_return_from_provider_page( $provider, $login_action_url, $mb_id, $mb_password, $url, $use_popup=2 ){
@@ -131,8 +131,6 @@ function social_get_data($by='provider', $provider, $user_profile){
 
     // 소셜 가입이 되어 있는지 체크
     if( $by == 'provider' ){
-        
-        //$sql = sprintf("select * from {$g5['social_member_table']} where sm_service = '%s' and sm_id = '%s' order by mb_id desc ", $provider, $user_profile->sid);
         
         $sql = sprintf("select * from {$g5['social_profile_table']} where provider = '%s' and identifier = '%s' order by mb_id desc ", $provider, $user_profile->identifier);
 
@@ -848,6 +846,16 @@ function social_member_link_delete($mb_id, $mp_no=''){
     }
 
     sql_query($sql, false);
+}
+
+function social_service_check($provider){
+    global $config;
+
+    if( $config['cf_social_servicelist'] && option_array_checked($provider, $config['cf_social_servicelist']) ) {
+        return true;
+    }
+    
+    return false;
 }
 
 function social_get_nonce($key=''){

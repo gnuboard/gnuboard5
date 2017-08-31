@@ -107,19 +107,18 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SOCIAL_SKIN_URL.'/style.css">'
     <!-- 새로가입 끝 -->
 
     <!-- 기존 계정 연결 시작 -->
-    <div id="sns-link-pnl" class="mw">
+    <div>
 
-        <div class="mw-fg">
+        <div>
             <form method="post" action="<?php echo $login_action_url; ?>" onsubmit="return social_obj.flogin_submit(this);">
             <input type="hidden" name="url" value="<?php echo $login_url; ?>">
             <input type="hidden" name="provider" value="<?php echo $provider_name; ?>">
             <input type="hidden" name="action" value="link">
 
-            <div class="mw-title">기존 계정에 연결하기</div>
+            <div>기존 계정에 연결하기</div>
 
-            <div class="mw-desc">
-                SIR 기존 아이디에 SNS 아이디를 연결합니다.<br>
-                SNS 아이디로 로그인 하시면 SIR 아이디로 로그인 됩니다.
+            <div>
+                기존 아이디에 SNS 아이디를 연결합니다.
             </div>
 
             <button type="button" class="mw-close">
@@ -127,7 +126,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SOCIAL_SKIN_URL.'/style.css">'
                 <span class="txt">닫기</span>
             </button>
 
-            <div id="login_fs">
+            <div>
                 <label for="login_id" class="login_id">아이디<strong class="sound_only"> 필수</strong></label>
                 <span class="lg_id"><input type="text" name="mb_id" id="login_id" class="frm_input required" size="20" maxLength="20" ></span>
                 <label for="login_pw" class="login_pw">비밀번호<strong class="sound_only"> 필수</strong></label>

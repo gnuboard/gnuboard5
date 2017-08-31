@@ -76,7 +76,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             if ($i == 0) {  ?>
                 <li id="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하세요.<?php } ?></li>
             <?php } ?>
-                <li class="gnb_1dli"><a href="<?php echo G5_SHOP_URL ?>" class="gnb_1da"> 쇼핑몰</a></li>
             </ul>
 
             <div id="hd_sch">
@@ -141,7 +140,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </div>
 
         <script>
-        $(function () {
+        jQuery(function ($) {
             $(".hd_opener").on("click", function() {
                 var $this = $(this);
                 var $hd_layer = $this.next(".hd_div");
