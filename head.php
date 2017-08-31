@@ -166,15 +166,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php echo outlogin('basic'); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
             <?php echo poll('basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
             <?php echo visit('basic'); // 접속자집계, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
-
-            <div id="text_size">
-                <div>
-                    <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
-                    <button id="size_down" onclick="font_resize('container', 'ts_up ts_up2', '');" class="select"><img src="<?php echo G5_URL; ?>/img/ts01.png" alt="기본" width="20"></button>
-                    <button id="size_def" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');"><img src="<?php echo G5_URL; ?>/img/ts02.png" alt="크게" width="20"></button>
-                    <button id="size_up" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');"><img src="<?php echo G5_URL; ?>/img/ts03.png" alt="더크게" width="20"></button>
-                </div>
-            </div>
         </div>
     </div>
     <div id="container">

@@ -19,7 +19,7 @@
 
 /* 쓰기 버튼 */
 #bo_w .btn_confirm {} /* 서식단계 진행 */
-#bo_w .btn_submit {}
+#bo_w .btn_submit {padding:0 20px}
 #bo_w button.btn_submit {}
 #bo_w fieldset .btn_submit {}
 #bo_w .btn_cancel {}
@@ -134,7 +134,7 @@
 .bo_notice .notice_icon{display:inline-block;background:#ff6f6f;padding:0 5px;line-height:20px;border-radius:5px;font-weight:normal;font-size:0.92em;color:#fff}
 .td_num strong {color:#000}
 .bo_cate_link {display: inline-block;color: #3497d9;height: 20px;font-size:0.92em} /* 글제목줄 분류스타일 */
-.bo_tit{display:block;font-weight:bold;color:#000}
+.bo_tit{display:block;font-weight:bold;color:#000;font-size:1.084em}
 .bo_current {color:#e8180c}
 /*#bo_list .profile_img {display:inline-block;;margin-right:2px}*/
 #bo_list .profile_img img{border-radius:50%}
@@ -238,12 +238,13 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .bo_v_left {margin:20px 0;float:left}
 .bo_v_left li {float:left;margin-right:5px}
 
-.bo_v_nb {margin:20px 0;position:relative;clear:both;text-align:center;padding:15px 0; border-top:1px solid #000;border-bottom:1px solid #ddd}
+.bo_v_nb {margin:20px 0;position:relative;clear:both;text-align:left;;border-bottom:1px solid #e8e8e8}
 .bo_v_nb:after {display:block;visibility:hidden;clear:both;content:""}
-.bo_v_nb li {display:inline-block}
+.bo_v_nb li {border-top:1px solid #e8e8e8;padding:10px;border-left:1px solid #e8e8e8;border-right:1px solid #e8e8e8;}
+.bo_v_nb li:hover{background:#f6f6f6}
 .bo_v_nb li i{font-size:13px}
-.bo_v_nb .btn_prv{position:absolute;top:15px;left:10px}
-.bo_v_nb .btn_next{position:absolute;top:15px;right:10px}
+.bo_v_nb li .nb_tit{display:inline-block;padding-right:20px;color:#666}
+.bo_v_nb li .nb_date{float:right;color:#888}
 
 #bo_v_atc {min-height:200px;height:auto !important;height:200px}
 #bo_v_atc_title {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -338,7 +339,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_w div{margin:10px 0;position:relative;}
 #bo_w .bo_w_info:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_w .bo_w_info .frm_input{float:left;width:33%}
-#bo_w #wr_password{margin:0 0.5%}
+#bo_w #wr_password{margin:0 0.5%  }
 #bo_w .bo_w_tit{position:relative}
 #bo_w .bo_w_tit .frm_input{padding-right:120px;}
 #bo_w .bo_w_tit #btn_autosave{position:absolute;top:5px;right:5px;line-height:30px;height:30px;}

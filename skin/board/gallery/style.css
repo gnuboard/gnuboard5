@@ -22,7 +22,7 @@
 
 /* 쓰기 버튼 */
 #bo_w .btn_confirm {} /* 서식단계 진행 */
-#bo_w .btn_submit {}
+#bo_w .btn_submit {padding:0 20px}
 #bo_w button.btn_submit {}
 #bo_w fieldset .btn_submit {}
 #bo_w .btn_cancel {}
@@ -334,7 +334,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_w div{margin:10px 0;position:relative;}
 #bo_w .bo_w_info:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_w .bo_w_info .frm_input{float:left;width:33%}
-#bo_w #wr_password{margin:0 0.5%}
+#bo_w #wr_password{margin:0 0.5%  }
 #bo_w .bo_w_tit{position:relative}
 #bo_w .bo_w_tit .frm_input{padding-right:120px;}
 #bo_w .bo_w_tit #btn_autosave{position:absolute;top:5px;right:5px;line-height:30px;height:30px;}
