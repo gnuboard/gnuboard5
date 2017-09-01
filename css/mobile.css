@@ -159,6 +159,10 @@ box-shadow: 0 0 5px  rgba(100,100,100,0.2);}
 /* 캡챠 자동등록(입력)방지 기본 - mobile */
 #captcha.m_captcha audio {display:block;margin:0 0 5px}
 
+/* 구글리캡챠 크기 조정 scale */
+#captcha.recaptcha{width:213px;height:55px;overflow:hidden}
+#rc-imageselect, .g-recaptcha {transform:scale(0.7);-webkit-transform:scale(0.7);transform-origin:0 0;-webkit-transform-origin:0 0;}
+
 /*단축키일람 */
 .cke_sc{text-align:right}
 .btn_cke_sc{background:#333;color:#fff;padding:5px;border:none}
