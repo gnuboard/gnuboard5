@@ -123,7 +123,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 #find_info #captcha{margin:5px 0 }
 
 /* 로그인 */
-#mb_login {margin:40px 0 0}
+#mb_login {margin:40px auto 10px;;max-width:500px;padding:20px;}
 #mb_login h1 {font-size:2em;text-align:center;margin:0 0 20px}
 #mb_login h2 {margin:0}
 #mb_login p {padding:10px 0;line-height:1.5em}
@@ -131,12 +131,25 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 #mb_login #login_frm div {padding:10px 0 ;text-align:right}
 #mb_login .frm_input {width:100%;margin:5px 0}
 #mb_login .btn_submit {width:100%;border-radius:3px;height:40px;margin:5px 0;font-size:1.083em;font-weight:bold}
-#mb_login .mb_login_join{border-top:1px solid #cdcdcd;margin:30px 0 0 ;padding:10px 0}
+#mb_login .mb_login_join{border-top:1px solid #ddd;margin:20px 0 0 ;padding:10px 0}
 #mb_login .mb_login_join:after {display:block;visibility:hidden;clear:both;content:""}
 #mb_login .mb_login_join h2{position:absolute;font-size:0;line-height:0;overflow:hidden}
 #mb_login .mb_login_join a{display:block;float:left;width:50%;}
 #login_password_lost{border-right:1px solid #cdcdcd;}
 
+#flogin{background:#fff;padding:20px;margin:20px 0;border-bottom:1px solid #ddd;}
+
+#mb_login_notmb{background:#fff;border-bottom:1px solid #ccc;padding:20px;}
+#mb_login_notmb h2{font-size:1.25em;padding:10px;background:#f3f3f3}
+#mb_login_notmb p{border:0;padding:0;margin:10px;color:#}
+#guest_privacy p{border:1px solid #ddd;background:#fff;color:#666;min-height:20px;height:200px;padding:10px;text-align:left;overflow-y:auto;margin:10px 0}
+#mb_login_notmb .btn_submit{width:100%;display:block;height:40px;line-height:40px}
+
+#mb_login_od_wr{background:#fff;border-bottom:1px solid #ccc;padding:20px;}
+#mb_login_od_wr p{border:0;text-align:left;}
+#mb_login_od_wr p strong{display:inline}
+#mb_login_odinfo{margin:10px 0 0 ;background:#f3f3f3;padding:10px}
+#mb_login_odinfo h2{font-size:1.167em}
 /* 쪽지 */
 #memo_view_contents {}
 #memo_view_contents h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}

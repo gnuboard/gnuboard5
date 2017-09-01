@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <div id="mb_login" class="mbskin">
     <h1><?php echo $g5['title'] ?></h1>
 
-    <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post">
+    <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post" id="flogin">
     <input type="hidden" name="url" value="<?php echo $login_url ?>">
 
     <div id="login_frm">
@@ -22,11 +22,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </div>
        <input type="submit" value="로그인" class="btn_submit">
     </div>
-
-    <?php
-    // 소셜로그인 사용시 소셜로그인 버튼
-    @include_once(get_social_skin_path().'/social_login_icon.skin.php');
-    ?>
 
     <section class="mb_login_join">
         <h2>회원로그인 안내</h2>

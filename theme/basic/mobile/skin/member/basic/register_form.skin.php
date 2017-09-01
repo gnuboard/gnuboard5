@@ -229,18 +229,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </li>
         <?php } ?>
 
-        <li>
+        <li class="is_captcha_use">
             <span  class="frm_label">자동등록방지</span>
             <?php echo captcha_html(); ?>
         </li>
-
-        <?php
-        //회원정보 수정인 경우 소셜 계정 출력
-        if( $w == 'u' && function_exists('social_login_link_account') ){
-            social_login_link_account($member['mb_id'], false, 'mb_form');
-        }
-        ?>
-
+        
     </div>
 
     <div class="btn_top top">

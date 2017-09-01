@@ -90,6 +90,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </div>
         <?php } ?>
 
+        <?php if ($option) { ?>
+        <div>
+            <span class="sound_only">옵션</span>
+            <?php echo $option ?>
+        </div>
+        <?php } ?>
 
         <div class="bo_w_tit">
             <label for="wr_subject" class="sound_only">제목<strong>필수</strong></label>
@@ -109,12 +115,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <?php } ?>
         </div>
 
-        <?php if ($option) { ?>
-        <div>
-            <span class="sound_only">옵션</span>
-            <?php echo $option ?>
-        </div>
-        <?php } ?>
 
         <?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
         <div class="bo_w_link">
@@ -154,8 +154,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </div>
 
     <div class="btn_top top">
-        <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a>
-        <button type="submit" value="작성완료" id="btn_submit" class="btn_submit" accesskey="s"><i class="fa fa-pencil" aria-hidden="true"></i> 작성완료</button>
+        <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel">취소</a>
+        <input type="submit" value="작성완료" id="btn_submit" class="btn_submit" accesskey="s">
     </div>
     </form>
 </section>

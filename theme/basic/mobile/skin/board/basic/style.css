@@ -10,7 +10,7 @@
 #bo_list a.btn_b02:focus, #bo_list .btn_b02:hover {}
 #bo_list a.btn_admin {} /* 관리자 전용 버튼 */
 #bo_list a.btn_admin:focus, #bo_list a.btn_admin:hover {}
-
+.chk_all{margin:10px 0}
 /* 읽기 버튼 */
 #bo_v a.btn_b01 {}
 #bo_v a.btn_b01:focus, #bo_v .btn_b01:hover {}
@@ -40,6 +40,12 @@
 #bo_list .td_mng {width:80px;text-align:center}
 #bo_list .notice_icon{display: inline-block;background: #ff6f6f;padding: 0 5px;line-height: 20px;border-radius: 5px;font-weight: normal;font-size:11px;color: #fff;}
 #bo_list .notice_icon i{color:#fff}
+#bo_list .bo_subject .fa-download{width:16px;height:16px;line-height:16px;background:#ecaa30;color:#fff;text-align:center;font-size:10px;border-radius:2px}
+#bo_list .bo_subject .fa-link{width:16px;height:16px;line-height:16px;background:#2aa974;color:#fff;text-align:center;font-size:10px;border-radius:2px}
+#bo_list .bo_subject .fa-heart{color:#ff0000;;text-align:center;font-size:10px;border-radius:2px}
+#bo_list .bo_subject .new_icon{display:inline-block;padding: 0 3px;line-height:16px ;font-size:0.833em;color:#fff;background:#c56bed}
+#bo_list .bo_tit .fa-lock{color:#666}
+
 
 #bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 #bo_cate ul {margin: 10px;padding-left:1px;zoom:1}
@@ -83,11 +89,11 @@ box-shadow: 0 0 8px  rgba(65,98,255,0.8);}
 .bo_subject i{color: #8d96c2;font-size:12px}
 .bo_subject  .fa-heart{color:#ff0000}
 .bo_current {color:#e8180c}
-.bo_info{border-top:1px solid #eee;margin:10px 0 0 ;line-height:28px;color:#666;position:relative;padding-top:3px}
+.bo_info{border-top: 1px solid #eee;margin: 10px 0 0;line-height: 20px;color: #666;position: relative;padding-top: 10px;vertical-align:top}
 .bo_info .comment_icon{background:url(./img/icon_comment.png) no-repeat 50% 50% ;display:inline-block;width:20px;height:28px;text-indent:-999px;overflow:hidden;vertical-align:top;background-size:70%;margin:0 0px 0 5px}
-.bo_info .bo_date{position:absolute;top:3px;right:0;font-style: italic;}
+.bo_info .bo_date{position:absolute;top:10px;right:0;font-style: italic;}
 .bo_info .cnt_cmt {display:inline-block;margin: 0 5px 0 3px;}
-.bo_info .profile_img img{border-radius:50%}
+.bo_info .profile_img img{border-radius:50%;vertical-align:top}
 
 #bo_sch {background:#fff;border:1px solid #bdc2d8;position:relative;margin:10px;border-radius:3px}
 #bo_sch:after {display:block;visibility:hidden;clear:both;content:""}
@@ -121,13 +127,12 @@ box-shadow: 0 0 8px rgba(65,98,255,0.8);}
 .bo_v_tit{display:block;font-size:1.5em;margin:10px 0 0}
 #bo_v header p{font-size:0.92em;color:#777;font-style:italic ;text-align:center;margin:10px 0 0 }
 
-#bo_v_info {padding:15px 0px 10px;border-bottom:1px solid #eee;text-align:center;color:#666}
+#bo_v_info {padding:15px 0px 10px;border-bottom:1px solid #eee;text-align:center;color:#666;line-height:20px;}
 #bo_v_info h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #bo_v_info strong {display:inline-block;font-weight:normal;margin:0 5px}
-#bo_v_info .profile_img img{border-radius:50%}
+#bo_v_info .profile_img img{border-radius:50%;vertical-align:top}
 #bo_v_info .icon_view{display:inline-block;background:url(./img/icon_view.png) no-repeat 50% 50%;background-size:80%;height:15px;width:20px;overflow:hidden;text-indent:-999px;vertical-align:middle;margin:0 3px 0 5px}
 #bo_v_info .icon_comment{display:inline-block;background:url(./img/icon_comment.png) no-repeat 50% 50%;background-size:70%;height:15px;width:20px;overflow:hidden;text-indent:-999px;vertical-align:middle;margin:0 3px 0 5px}
-#bo_v_info .ip{vertical-align:middle}
 
 #bo_v_file {margin:10px 0}
 #bo_v_file h2 {background:#949ab4;color:#fff;margin-bottom:1px;line-height:35px;padding: 0 10px}
@@ -204,8 +209,8 @@ box-shadow: 0 0 8px rgba(65,98,255,0.8);}
 #bo_v_sns li img{vertical-align:top}
 
 /* 게시판 댓글 */
-.cmt_btn{background:url('./img/cmt_btn.png') no-repeat 79px 8px;text-align:left ;width:100% ;border:0;color:#ed6478;font-weight:bold;font-size:1.167em;margin: 20px 0 10px;padding:0  0 10px ;border-bottom:1px solid #e8e8e8}
-.cmt_btn_op{background:url('./img/cmt_btn.png') no-repeat 79px  -23px}
+.cmt_btn{background:url('./img/cmt_btn.png') no-repeat right 8px;text-align:left ;width:100% ;border:0;color:#ed6478;font-weight:bold;font-size:1.167em;margin: 20px 0 10px;padding:0  0 10px ;border-bottom:1px solid #e8e8e8}
+.cmt_btn_op{background:url('./img/cmt_btn.png') no-repeat right  -23px}
 
 #bo_vc {}
 #bo_vc h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}

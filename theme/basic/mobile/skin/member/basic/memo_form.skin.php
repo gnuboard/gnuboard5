@@ -22,7 +22,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 
                 <input type="text" name="me_recv_mb_id" value="<?php echo $me_recv_mb_id ?>" id="me_recv_mb_id" required class="frm_input required" placeholder="받는 회원아이디">
                 <span class="frm_info">여러 회원에게 보낼때는 컴마(,)로 구분하세요.</span>
-                
+                <?php if ($config['cf_memo_send_point']) { ?>
+                <br ><span class="frm_info">쪽지 보낼때 회원당 <?php echo number_format($config['cf_memo_send_point']); ?>점의 포인트를 차감합니다.</span>
+                <?php } ?>
             </li>
             <li>
                 <label for="me_memo" class="sound_only">내용</label>

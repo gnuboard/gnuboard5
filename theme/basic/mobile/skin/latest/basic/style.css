@@ -3,11 +3,7 @@
 /* 최근게시물 스킨 (latest) */
 .lt {position:relative;padding:15px 10px ;}
 .lt ul {margin:10px 0 0 ;padding:0;list-style:none}
-.lt .lt_title {display:inline-block;background: #4162ff;color: #fff;border-radius: 13px;line-height: 24px;padding: 0 10px;
--webkit-box-shadow: 0 0 5px rgba(65,98,255,0.8);
--moz-box-shadow: 0 0 5px rgba(65,98,255,0.8);
-box-shadow: 0 0 8px rgba(65,98,255,0.8); 
-}
+.lt .lt_title {display:inline-block;background: #4162ff;color: #fff;border-radius: 13px;line-height: 24px;padding: 0 10px;border-bottom:1px solid #ccc;}
 .lt .lt_more {position:absolute;top:5px;right:10px}
 .lt .cnt_cmt {display:inline-block;margin:0 5px 0 3px;}
 .lt .lt_info{border-top: 1px solid #eee;margin: 10px 0 0;line-height: 28px;color: #666;position: relative;padding-top: 3px;}
