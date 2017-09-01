@@ -16,32 +16,35 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 
 
 <!-- 메인화면 최신글 시작 -->
+<div class="latest_wrap">
 <?php
 //  최신글
 $sql = " select bo_table, bo_subject
-            from {$g5[board_table]}
+            from {$g5['board_table']}
             where gr_id = '{$gr_id}'
-              and bo_list_level <= '{$member[mb_level]}'
+              and bo_list_level <= '{$member['mb_level']}'
               and bo_device <> 'mobile' ";
 if(!$is_admin)
     $sql .= " and bo_use_cert = '' ";
 $sql .= " order by bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
-    $lt_style = "";
-    if ($i%2==1) $lt_style = "margin-left:15px";
-    if ($i%2==0) $lt_style = "clear:both";
+    $mod_cnt = 2;
+    $lt_class = 'col-row col-gn-'.$mod_cnt;
+    $lt_class .= ($i % $mod_cnt === 0) ? ' box_clear' : '';
 ?>
-    <div style="float:left;<?php echo $lt_style ?>">
+    <div class="<?php echo $lt_class; ?>">
     <?php
     // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
     // 사용방법 : latest(스킨, 게시판아이디, 출력라인, 글자수);
-    echo latest('theme/basic', $row['bo_table'], 5, 70);
+    // 테마의 스킨을 사용하려면 theme/basic 과 같이 지정
+    echo latest('basic', $row['bo_table'], 5, 37);
     ?>
     </div>
 <?php
 }
 ?>
+</div>
 <!-- 메인화면 최신글 끝 -->
 
 <?php
