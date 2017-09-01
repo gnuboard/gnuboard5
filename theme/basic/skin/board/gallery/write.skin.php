@@ -34,7 +34,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             if ($is_dhtml_editor) {
                 $option_hidden .= '<input type="hidden" value="html1" name="html">';
             } else {
-                $option .= "\n".'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="html">html</label>';
+                $option .= "\n".'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="html">HTML</label>';
             }
         }
 
@@ -64,6 +64,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </div>
     <?php } ?>
 
+
     <div class="bo_w_info">
     <?php if ($is_name) { ?>
         <label for="wr_name" class="sound_only">이름<strong>필수</strong></label>
@@ -76,8 +77,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php } ?>
 
     <?php if ($is_email) { ?>
-        <label for="wr_email" class="sound_only">이메일</label>
-        <input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input emai full_inputl" placeholder="이메일">
+            <label for="wr_email" class="sound_only">이메일</label>
+            <input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email " placeholder="이메일">
     <?php } ?>
     </div>
 
@@ -85,6 +86,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <div>
         <label for="wr_homepage" class="sound_only">홈페이지</label>
         <input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input full_input" size="50" placeholder="홈페이지">
+    </div>
+    <?php } ?>
+
+    <?php if ($option) { ?>
+    <div>
+        <span class="sound_only">옵션</span>
+        <?php echo $option ?>
     </div>
     <?php } ?>
 
@@ -123,12 +131,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         
     </div>
 
-    <?php if ($option) { ?>
-    <div>
-        <span class="sound_only">옵션</span>
-        <?php echo $option ?>
-    </div>
-    <?php } ?>
 
     <?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
     <div class="bo_w_link">

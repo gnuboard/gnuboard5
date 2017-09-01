@@ -1,12 +1,17 @@
 @charset "utf-8";
 /* 새글 스킨 (latest) */
-.lt_pc {float:left;margin-left:20px}
-.lt {position:relative;float:left;margin-bottom:10px;width:315px;}
-.lt ul {margin:0 0 10px;padding:10px;list-style:none;border:1px solid #e8e8e8;}
-.lt li {line-height:25px;position:relative;padding:0 70px 0 10px;;background:#fff;}
-.lt li .lt_left{display:block;}
-.lt .lt_title {font-size:1.083em;position: relative;background: #eee;border-bottom:1px solid #ffa74d;height: 40px;line-height: 40px;}
-.lt .lt_title i{width:40px;background:#ffa74d;height:39px;line-height:39px;color:#fff;text-align:center;margin-right:5px}
-.lt .cnt_cmt {position:absolute;top:0px;right:45px;display:inline-block;color:#ed6478;font-weight:bold;font-size:0.92em}
-.lt .lt_date{position:absolute;top:0;right:10px;display:inline-block;color:#777;font-style:italic;font-size:0.92em}
-.lt .empty_li{padding: 0;line-height:125px ;text-align:center;color:#777}
+.lat {position:relative;margin:0 10px}
+.lat .lat_title {display:block;padding:10px 0 ;font-size:1.167em;}
+.lat ul {margin:0 0 10px;padding:0;list-style:none;border:1px solid #ddd;border-top:2px solid #000}
+.lat li {border-top:1px solid #f3f3f3;padding:10px 60px 10px 10px ;position:relative;line-height:20px}
+.lat li:first-child{border:0}
+.lat li .fa-download{width:16px;height:16px;line-height:16px;background:#ecaa30;color:#fff;text-align:center;font-size:10px;border-radius:2px}
+.lat li .fa-link{width:16px;height:16px;line-height:16px;background:#2aa974;color:#fff;text-align:center;font-size:10px;border-radius:2px}
+.lat li .fa-heart{color:#ff0000;}
+.lat li .new_icon{display:inline-block;padding: 0 3px;line-height:16px ;font-size:0.833em;color:#fff;background:#c56bed}
+.lat li .cnt_cmt{color:#ff3970}
+.lat_title {display:block;padding:10px 0 ;font-size:1.167em;}
+.lat_more {position:absolute;top:10px;right:0;}
+.lat  .empty_li{line-height:160px ;color:#666;text-align:center;padding:0;background:#fafafa}
+.lat .lt_date{position:absolute;top:10px;right:10px;font-size:0.92em;color:#888}
+.lat .lt_more {position:absolute;top:10px;right:0;display:block;background:url('img/more-btn.gif') no-repeat 0 2px;padding-left:20px;height:30px}

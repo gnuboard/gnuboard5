@@ -192,7 +192,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <li>
                 <label for="reg_mb_mailling" class="frm_label">메일링서비스</label>
                 <input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?>>
-                <label for="reg_mb_mailling">정보 메일을 받겠습니다.</label>
+                정보 메일을 받겠습니다.
                 
             </li>
 
@@ -201,7 +201,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <label for="reg_mb_sms" class="frm_label">SMS 수신여부</label>
                 
                     <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?>>
-                    <label for="reg_mb_sms">휴대폰 문자메세지를 받겠습니다.</label>
+                    휴대폰 문자메세지를 받겠습니다.
                 
             </li>
             <?php }  ?>
@@ -211,7 +211,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <label for="reg_mb_open" class="frm_label">정보공개</label>
                 <input type="hidden" name="mb_open_default" value="<?php echo $member['mb_open'] ?>">
                 <input type="checkbox" name="mb_open" value="1" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> id="reg_mb_open">
-                <label for="reg_mb_open">다른분들이 나의 정보를 볼 수 있도록 합니다.</label>
+                다른분들이 나의 정보를 볼 수 있도록 합니다.
                 <span class="frm_info">
                     정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
                 </span>                
@@ -224,6 +224,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                     정보공개는 수정후 <?php echo (int)$config['cf_open_modify'] ?>일 이내, <?php echo date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:G5_SERVER_TIME+$config['cf_open_modify']*86400); ?> 까지는 변경이 안됩니다.<br>
                     이렇게 하는 이유는 잦은 정보공개 수정으로 인하여 쪽지를 보낸 후 받지 않는 경우를 막기 위해서 입니다.
                 </span>
+                
             </li>
             <?php }  ?>
 
@@ -233,13 +234,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <input type="text" name="mb_recommend" id="reg_mb_recommend" class="frm_input" placeholder="추천인아이디">
             </li>
             <?php }  ?>
-
-            <?php
-            //회원정보 수정인 경우 소셜 계정 출력
-            if( $w == 'u' && function_exists('social_login_link_account') ){
-                social_login_link_account($member['mb_id'], false, 'mb_form');
-            }
-            ?>
 
             <li class="is_captcha_use">
                 자동등록방지

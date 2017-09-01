@@ -48,7 +48,7 @@ position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
          -o-transform:skew(8deg) rotate(3deg);
             transform:skew(8deg) rotate(3deg);}
 .mbskin .frm_input{width:100%}
-.mbskin .btn_submit{width:100%;border-radius:3px;margin:10px 0 0;height:45px;font-weight:bold}
+.mbskin .btn_submit{width:100%;border-radius:3px;margin:10px 0 0;height:45px;font-weight:bold;font-size:1.25em}
 .mbskin  h1{margin: 60px 0 30px;font-size: 2em;}
 
 
@@ -124,9 +124,7 @@ box-shadow: 0 1px 3px #eee;
 #fregister .btn_confirm .btn_submit{height:50px;border-radius:3px;padding:0 40px;font-weight:bold;font-size:1.083em}
 
 /* 회원가입 입력 */
-#register_form{
-}
-/*#fregisterform textarea {height:50px}*/
+#register_form{margin:0 auto;max-width:700px}
 #fregisterform #msg_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
 #fregisterform .frm_address {margin:5px 0 0}
 #fregisterform #mb_addr3 {display:inline-block;margin:5px 0 0;vertical-align:middle}
@@ -137,6 +135,9 @@ box-shadow: 0 1px 3px #eee;
 #fregisterform .frm_info{display:block;color:#3497d9;font-size:0.92em}
 #fregisterform .form_01 div{margin: 0 0 50px}
 #fregisterform .captcha{display:block;margin:5px 0 0}
+
+
+
 /* 회원가입 완료 */
 #reg_result {padding:100px 0 0;text-align:center}
 #reg_result h2{font-size:2em;margin:0 0 20px}
@@ -165,6 +166,16 @@ box-shadow: 0 1px 3px #eee;
 #mb_login #login_info h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #mb_login #login_info a{display:inline-block;width:50%;float:left}
 #login_password_lost{border-right:1px solid #ddd}
+
+#mb_login_notmb{margin:30px auto;padding:20px 30px }
+#mb_login_notmb h2{font-size:1.25em;margin:20px 0 10px}
+#guest_privacy{border:1px solid #ccc;text-align:left;line-height:1.6em;color:#666;background:#fafafa;padding:10px;height:150px;margin:10px 0;overflow-y:auto}
+#mb_login_notmb .btn_submit{display:block;text-align:center;line-height:45px}
+
+#mb_login_od_wr{margin:30px auto;padding:20px 30px }
+#mb_login_od_wr h2{font-size:1.25em;margin:20px 0 10px}
+#mb_login_od_wr .frm_input{margin:10px 0 0 }
+#mb_login_od_wr p{background:#f3f3f3;margin:20px 0 0 ;padding:15px 20px;line-height:1.5em}
 
 /* 쪽지 */
 #memo_list .memo_name,#memo_list .memo_name .sv_wrap{font-weight:bold}
