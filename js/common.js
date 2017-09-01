@@ -546,6 +546,8 @@ function font_resize(id, rmv_class, add_class)
 
     set_cookie("ck_font_resize_rmv_class", rmv_class, 1, g5_cookie_domain);
     set_cookie("ck_font_resize_add_class", add_class, 1, g5_cookie_domain);
+
+    $el.trigger("click_font_resize");
 }
 
 /**

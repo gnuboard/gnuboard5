@@ -141,7 +141,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
         <script>
         jQuery(function ($) {
-            $(".hd_opener").on("click", function() {
+            $(".hd_opener").on("click", function(e) {
                 var $this = $(this);
                 var $hd_layer = $this.next(".hd_div");
 
@@ -158,17 +158,30 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 }
             });
 
-            $("#container").on("click", function() {
+            $("#container").on("click", function(e) {
                 $(".hd_div").hide();
+            }).on("click_font_resize", function(e) {
 
+                var $this = $(this),
+                    $text_size_button = $("#text_size button");
+                
+                $text_size_button.removeClass("select");
+
+                if( $this.hasClass("ts_up") ){
+                    $text_size_button.eq(1).addClass("select");
+                } else if ( $this.hasClass("ts_up2") ) {
+                    $text_size_button.eq(2).addClass("select");
+                } else {
+                    $text_size_button.eq(0).addClass("select");
+                }
             });
 
-            $(".btn_gnb_op").click(function(){
+            $(".btn_gnb_op").click(function(e){
                 $(this).toggleClass("btn_gnb_cl").next(".gnb_2dul").slideToggle(300);
                 
             });
 
-            $(".hd_closer").on("click", function() {
+            $(".hd_closer").on("click", function(e) {
                 var idx = $(".hd_closer").index($(this));
                 $(".hd_div:visible").hide();
                 $(".hd_opener:eq("+idx+")").find("span").text("열기");

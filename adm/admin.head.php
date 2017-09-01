@@ -140,7 +140,6 @@ function imageview(id, w, h)
     </nav>
 
 </header>
-<script src="<?php echo G5_JS_URL; ?>/js.cookie.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script>
 jQuery(function($){
 
@@ -156,9 +155,9 @@ jQuery(function($){
 
         try {
             if( ! $this.hasClass("btn_gnb_open") ){
-                Cookies.set(menu_cookie_key, 1);
+                set_cookie(menu_cookie_key, 1, 60*60*24*365);
             } else {
-                Cookies.remove(menu_cookie_key);
+                delete_cookie(menu_cookie_key);
             }
         }
         catch(err) {
