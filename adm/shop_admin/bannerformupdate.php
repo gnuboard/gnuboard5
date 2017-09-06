@@ -17,6 +17,8 @@ check_admin_token();
 $bn_bimg      = $_FILES['bn_bimg']['tmp_name'];
 $bn_bimg_name = $_FILES['bn_bimg']['name'];
 
+$bn_id = (int) $bn_id;
+
 if ($bn_bimg_del)  @unlink(G5_DATA_PATH."/banner/$bn_id");
 
 //파일이 이미지인지 체크합니다.

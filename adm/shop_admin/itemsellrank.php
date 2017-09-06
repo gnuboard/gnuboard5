@@ -16,6 +16,9 @@ if ($sort2 == "" || $sort2 != "asc") $sort2 = "desc";
 $doc = strip_tags($doc);
 $sort1 = strip_tags($sort1);
 
+if( preg_match("/[^0-9]/", $fr_date) ) $fr_date = '';
+if( preg_match("/[^0-9]/", $to_date) ) $to_date = '';
+
 $sql  = " select a.it_id,
                  b.*,
                  SUM(IF(ct_status = '쇼핑',ct_qty, 0)) as ct_status_1,
