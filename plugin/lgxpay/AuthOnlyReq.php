@@ -19,10 +19,10 @@ $CST_MID                    = 'si_'.$config['cf_lg_mid'];       // 상점아이�
                                                                 //테스트 아이디는 't'를 반드시 제외하고 입력하세요.
 $LGD_MID                    = (('test' == $CST_PLATFORM) ? 't':'').$CST_MID;  //상점아이디(자동생성)
 $LGD_BUYER                  = '홍길동';                         // 성명 (보안을 위해 DB난 세션에서 가져오세요)
-$LGD_BUYERSSN               = '0000000000000';                  // 주민등록번호 (보안을 위해 DB나 세션에서 가져오세요)
+$LGD_BUYERSSN               = '000000';                  // 주민등록번호 (보안을 위해 DB나 세션에서 가져오세요)
                                                                 // 휴대폰 본인인증을 사용할 경우 주민번호는 '0' 13자리를 넘기세요. 예)0000000000000
                                                                 // 기타 인증도 사용할 경우 실 주민등록번호 (보안을 위해 DB나 세션에 저장처리 권장)
-$LGD_MOBILE_SUBAUTH_SITECD  = '';                               // 신용평가사에서 부여받은 회원사 고유 코드
+$LGD_MOBILE_SUBAUTH_SITECD  = '123456789abc';                               // 신용평가사에서 부여받은 회원사 고유 코드
                                                                 //  (CI값만 필요한 경우 옵션, DI값도 필요한 경우 필수)
 $LGD_TIMESTAMP              = date('YmdHis');                   // 타임스탬프 (YYYYMMDDhhmmss)
 $LGD_CUSTOM_SKIN            = 'red';                            // 상점정의 인증창 스킨 (red, blue, cyan, green, yellow)

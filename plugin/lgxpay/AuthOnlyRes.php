@@ -66,6 +66,7 @@ include_once(G5_PATH.'/head.sub.php');
  */
 if ($xpay->TX()) {
     //1)인증결과 화면처리(성공,실패 결과 처리를 하시기 바랍니다.)
+    
     /*
     echo "인증요청이 완료되었습니다.  <br>";
     echo "TX Response_code = " . $xpay->Response_Code() . "<br>";
@@ -76,7 +77,7 @@ if ($xpay->TX()) {
         echo $name . " = " . $xpay->Response($name, 0) . "<br>";
     }
 
-    echo "<p>";
+    echo "</p>";
     */
 
     // 인증내역기록
