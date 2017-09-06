@@ -15,6 +15,10 @@
  * under the License.
  */
 
+if( ! class_exists('PHPUnit_Framework_TestCase') ){
+    return;
+}
+
 class PHPSDKTestCase extends PHPUnit_Framework_TestCase {
   const APP_ID = '117743971608120';
   const SECRET = '9c8ea2071859659bea1246d33a9207cf';
