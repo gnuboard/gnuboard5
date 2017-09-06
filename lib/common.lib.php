@@ -2666,7 +2666,10 @@ if (!function_exists("get_sock")) {
         $fp = fsockopen ($host, 80, $errno, $errstr, 30);
         if (!$fp)
         {
-            die("$errstr ($errno)\n");
+            //die("$errstr ($errno)\n");
+
+            echo "$errstr ($errno)\n";
+            return null;
         }
         else
         {
