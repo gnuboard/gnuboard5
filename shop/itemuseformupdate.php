@@ -103,14 +103,14 @@ else if ($w == "d")
         else
             $data_path = $p['path'];
 
-        if( end(explode('.', $data_path)) === 'php' ){
-            continue;
+
+        if( preg_match('/(gif|jpe?g|bmp|png)$/i', strtolower(end(explode('.', $data_path))) ) ){
+
+            $destfile = ( ! preg_match('/\w+\/\.\.\//', $data_path) ) ? G5_PATH.$data_path : '';
+
+            if($destfile && preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile))
+                @unlink($destfile);
         }
-
-        $destfile = G5_PATH.$data_path;
-
-        if(preg_match('/\/data\/editor\/[A-Za-z0-9_]{1,20}\//', $destfile) && is_file($destfile))
-            @unlink($destfile);
     }
 
     $sql = " delete from {$g5['g5_shop_item_use_table']} where is_id = '$is_id' and md5(concat(is_id,is_time,is_ip)) = '{$hash}' ";
