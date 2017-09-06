@@ -34,6 +34,8 @@ if( $bn_bimg || $bn_bimg_name ){
     }
 }
 
+$bn_url = clean_xss_tags($bn_url);
+
 if ($w=="")
 {
     if (!$bn_bimg_name) alert('배너 이미지를 업로드 하세요.');
