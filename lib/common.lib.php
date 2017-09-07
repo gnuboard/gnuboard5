@@ -2666,7 +2666,10 @@ if (!function_exists("get_sock")) {
         $fp = fsockopen ($host, 80, $errno, $errstr, 30);
         if (!$fp)
         {
-            die("$errstr ($errno)\n");
+            //die("$errstr ($errno)\n");
+
+            echo "$errstr ($errno)\n";
+            return null;
         }
         else
         {
@@ -3003,15 +3006,32 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
 
     $p = @parse_url($url);
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
+    $is_host_check = false;
 
     if(stripos($url, 'http:') !== false) {
         if(!isset($p['scheme']) || !$p['scheme'] || !isset($p['host']) || !$p['host'])
             alert('url 정보가 올바르지 않습니다.', $return_url);
     }
 
-    if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host'])) {
+    //php 5.6.29 이하 버전에서는 parse_url 버그가 존재함
+    if ( (isset($p['host']) && $p['host']) && version_compare(PHP_VERSION, '5.6.29') < 0) {
+        $bool_ch = false;
+        foreach( array('user','host') as $key) {
+            if ( isset( $p[ $key ] ) && strpbrk( $p[ $key ], ':/?#@' ) ) {
+                $bool_ch = true;
+            }
+        }
+        if( $bool_ch ){
+            $regex = '/https?\:\/\/'.$host.'/i';
+            if( ! preg_match($regex, $url) ){
+                $is_host_check = true;
+            }
+        }
+    }
+
+    if ((isset($p['scheme']) && $p['scheme']) || (isset($p['host']) && $p['host']) || $is_host_check) {
         //if ($p['host'].(isset($p['port']) ? ':'.$p['port'] : '') != $_SERVER['HTTP_HOST']) {
-        if ($p['host'] != $host) {
+        if ( ($p['host'] != $host) || $is_host_check ) {
             echo '<script>'.PHP_EOL;
             echo 'alert("url에 타 도메인을 지정할 수 없습니다.");'.PHP_EOL;
             echo 'document.location.href = "'.$return_url.'";'.PHP_EOL;

@@ -12,16 +12,26 @@ header('Pragma: no-cache'); // HTTP/1.0
 include_once ('../config.php');
 include_once ('../lib/common.lib.php');
 
+if( ! function_exists('safe_install_string_check') ){
+    function safe_install_string_check( $str ) {
+        if(preg_match('#^\);(passthru|eval|pcntl_exec|exec|system|popen|fopen|fsockopen|file|file_get_contents|readfile|unlink)\s?\(\$_(get|post|request)\s?\[.*?\]\s?\)#i', $str)) {
+            die("입력한 값에 안전하지 않는 문자가 포함되어 있습니다. 설치를 중단합니다.");
+        }
+
+        return $str;
+    }
+}
+
 $title = G5_VERSION." 설치 완료 3/3";
 include_once ('./install.inc.php');
 
 //print_r($_POST); exit;
 
-$mysql_host  = $_POST['mysql_host'];
-$mysql_user  = $_POST['mysql_user'];
-$mysql_pass  = $_POST['mysql_pass'];
-$mysql_db    = $_POST['mysql_db'];
-$table_prefix= $_POST['table_prefix'];
+$mysql_host  = safe_install_string_check($_POST['mysql_host']);
+$mysql_user  = safe_install_string_check($_POST['mysql_user']);
+$mysql_pass  = safe_install_string_check($_POST['mysql_pass']);
+$mysql_db    = safe_install_string_check($_POST['mysql_db']);
+$table_prefix= safe_install_string_check($_POST['table_prefix']);
 $admin_id    = $_POST['admin_id'];
 $admin_pass  = $_POST['admin_pass'];
 $admin_name  = $_POST['admin_name'];
