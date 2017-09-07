@@ -1,5 +1,6 @@
 <?php
 define('G5_IS_ADMIN', true);
+define('G5_IS_SHOP_ADMIN_PAGE', true);
 include_once ('../../common.php');
 
 if (!defined('G5_USE_SHOP') || !G5_USE_SHOP)
