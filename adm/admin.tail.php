@@ -1,5 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
+
+$print_version = (defined('G5_IS_SHOP_ADMIN_PAGE') && defined('G5_YOUNGCART_VER')) ? 'Cart Version '.G5_YOUNGCART_VER : 'Version '.G5_GNUBOARD_VER;
 ?>
 
         <noscript>
@@ -14,7 +16,7 @@ if (!defined('_GNUBOARD_')) exit;
 
 <footer id="ft">
     <p>
-        Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved.<br>
+        Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved. <?php echo $print_version; ?><br>
         <a href="#">상단으로</a>
     </p>
 </footer>

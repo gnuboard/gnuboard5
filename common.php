@@ -444,7 +444,7 @@ if ($is_admin != 'super') {
                 break;
         }
         if (!$is_possible_ip)
-            die ("접근이 가능하지 않습니다.");
+            die ("<meta charset=utf-8>접근이 가능하지 않습니다.");
     }
 
     // 접근차단 IP
@@ -460,7 +460,7 @@ if ($is_admin != 'super') {
         $pat = "/^{$pattern[$i]}$/";
         $is_intercept_ip = preg_match($pat, $_SERVER['REMOTE_ADDR']);
         if ($is_intercept_ip)
-            die ("접근 불가합니다.");
+            die ("<meta charset=utf-8>접근 불가합니다.");
     }
 }
 

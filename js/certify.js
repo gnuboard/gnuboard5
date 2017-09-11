@@ -22,9 +22,13 @@ function certify_win_open(type, url)
             if($("#kcp_cert").size() < 1) {
                 $frm.wrap('<div id="cert_info"></div>');
 
-                $("#cert_info").append('<form name="form_temp" method="post">')
-                               .after('<iframe id="kcp_cert" name="kcp_cert" width="100%" height="700" frameborder="0" scrolling="no" style="display:none"></iframe>');
+                $("#cert_info").append('<form name="form_temp" method="post">');
+            } else {
+                $("#kcp_cert").remove();
             }
+
+            $("#cert_info")
+                .after('<iframe id="kcp_cert" name="kcp_cert" width="100%" height="700" frameborder="0" scrolling="no" style="display:none"></iframe>');
 
             var temp_form = document.form_temp;
             temp_form.target = "kcp_cert";
@@ -51,8 +55,36 @@ function certify_win_open(type, url)
     }
     else if(type == 'lg-hp')
     {
-        var popupWindow = window.open( url, "auth_popup", "left=200, top=100, width=400, height=400, scrollbar=yes" );
-        popupWindow.focus();
+
+        if( g5_is_mobile )
+        {
+            var $frm = $(event.target.form),
+                lgu_cert = "lgu_cert";
+
+            if($("#lgu_cert").size() < 1) {
+                $frm.wrap('<div id="cert_info"></div>');
+
+                $("#cert_info").append('<form name="form_temp" method="post">');
+            } else {
+                $("#"+lgu_cert).remove();
+            }
+
+            $("#cert_info")
+                .after('<iframe id="'+lgu_cert+'" name="lgu_cert" width="100%" src="'+url+'" height="700" frameborder="0" scrolling="no" style="display:none"></iframe>');
+
+            document.getElementById( "cert_info" ).style.display = "none";
+            document.getElementById( lgu_cert  ).style.display = "";
+
+        } else {
+            var width= 640;
+            var height = 660;
+
+            var leftpos = screen.width  / 2 - ( width  / 2 );
+            var toppos  = screen.height / 2 - ( height / 2 );
+
+            var popupWindow = window.open( url, "auth_popup", "left=" + leftpos + ", top="    + toppos + ", width=" + width   + ", height=" + height + ", scrollbar=yes" );
+            popupWindow.focus();
+        }
     }
 }
 
