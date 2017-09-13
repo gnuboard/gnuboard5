@@ -149,7 +149,7 @@ for($i=0; $i<$count; $i++) {
     //  재고 검사
     //--------------------------------------------------------
     for($k=0; $k<$opt_count; $k++) {
-        $io_id = preg_replace($pattern, '', $_POST['io_id'][$it_id][$k]);
+        $io_id = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['io_id'][$it_id][$k])));
         $io_type = (int) $_POST['io_type'][$it_id][$k];
         $io_value = $_POST['io_value'][$it_id][$k];
        
@@ -171,7 +171,7 @@ for($i=0; $i<$count; $i++) {
     $itm_ids[] = $it_id;
 
     for($k=0; $k<$opt_count; $k++) {
-        $io_id = preg_replace($pattern, '', $_POST['io_id'][$it_id][$k]);
+        $io_id = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['io_id'][$it_id][$k])));
         $io_type = (int) $_POST['io_type'][$it_id][$k];
         $io_value = $_POST['io_value'][$it_id][$k];
 
