@@ -91,6 +91,9 @@ $PAY_METHOD = array(
     'VBANK'  => '가상계좌'
 );
 
+//신용카드 포인트 결제에 관한 옵션 ( 신청해야 함 )
+$inicis_cardpoint = $default['de_inicis_cartpoint_use'] ? '&cp_yn=Y' : '';
+
 $noti_url   = G5_MSHOP_URL.'/inicis/settle_common.php';
 $next_url   = G5_MSHOP_URL.'/inicis/pay_approval.php';
 $return_url = G5_MSHOP_URL.'/inicis/pay_return.php?oid=';
