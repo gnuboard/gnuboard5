@@ -108,6 +108,12 @@ if(!isset($default['de_samsung_pay_use'])) {
                     ADD `de_samsung_pay_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_easy_pay_use` ", true);
 }
 
+// 이니시스 
+if(!isset($default['de_inicis_cartpoint_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_inicis_cartpoint_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_samsung_pay_use` ", true);
+}
+
 // 카카오페이 필드 추가
 if(!isset($default['de_kakaopay_mid'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
@@ -746,6 +752,15 @@ if(!isset($default['de_listtype_list_skin'])) {
             <td>
                 <?php echo help("체크시 KG이니시스 삼성페이를 사용합니다. <br >실결제시 반드시 결제대행사 KG이니시스 항목에 상점 아이디와 키패스워드를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_samsung_pay_use" value="1" id="de_samsung_pay_use"<?php echo $default['de_samsung_pay_use']?' checked':''; ?>> <label for="de_samsung_pay_use">사용</label>
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row">
+                <label for="de_inicis_cartpoint_use">KG이니시스 신용카드 포인트 결제</label>
+            </th>
+            <td>
+                <?php echo help("신용카드 포인트 결제에 대해 이니시스와 계약을 맺은 상점에서만 적용하는 옵션입니다.<br>체크시 pc 결제에서는 신용카드 포인트 사용 여부에 대한 팝업창에 사용 버튼과 사용안함 버튼이 표기되어 결제하는 고객의 선택여부에 따라 신용카드 포인트 결제가 가능합니다.<br >모바일에서는 신용카드 포인트 사용이 가능합니다.", 50); ?>
+                <input type="checkbox" name="de_inicis_cartpoint_use" value="1" id="de_inicis_cartpoint_use"<?php echo $default['de_inicis_cartpoint_use']?' checked':''; ?>> <label for="de_inicis_cartpoint_use">사용</label>
             </td>
         </tr>
         <tr class="kakao_info_fld">

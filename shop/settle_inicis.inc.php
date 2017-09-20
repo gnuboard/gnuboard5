@@ -57,7 +57,9 @@ $timestamp = $util->getTimestamp();   // util에 의해서 자동생성
 $cardNoInterestQuota = '';  // 카드 무이자 여부 설정(가맹점에서 직접 설정)
 $cardQuotaBase = '2:3:4:5:6:7:8:9:10:11:12';  // 가맹점에서 사용할 할부 개월수 설정
 
-$acceptmethod = 'HPP(2):no_receipt:vbank('.date('Ymd', strtotime("+3 days", G5_SERVER_TIME)).'):below1000'.$useescrow;
+$inicis_cardpoint = $default['de_inicis_cartpoint_use'] ? ':cardpoint' : '';   //신용카드 포인트 결제에 관한 옵션 ( 신청해야 함 )
+
+$acceptmethod = 'HPP(2):no_receipt:vbank('.date('Ymd', strtotime("+3 days", G5_SERVER_TIME)).'):below1000'.$useescrow.$inicis_cardpoint;
 
 /* 기타 */
 $siteDomain = G5_SHOP_URL.'/inicis'; //가맹점 도메인 입력
