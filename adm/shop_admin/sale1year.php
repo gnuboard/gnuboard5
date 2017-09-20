@@ -4,6 +4,9 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
+$fr_year = preg_replace('/[^0-9]/i', '', $fr_year);
+$to_year = preg_replace('/[^0-9]/i', '', $to_year);
+
 $g5['title'] = $fr_year.' ~ '.$to_year.' 연간 매출현황';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 

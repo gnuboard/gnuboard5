@@ -4,6 +4,9 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
+$fr_date = preg_replace('/[^0-9]/i', '', $fr_date);
+$to_date = preg_replace('/[^0-9]/i', '', $to_date);
+
 $fr_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $fr_date);
 $to_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $to_date);
 

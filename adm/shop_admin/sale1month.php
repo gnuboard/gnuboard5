@@ -4,6 +4,9 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
+$fr_month = preg_replace('/[^0-9]/i', '', $fr_month);
+$to_month = preg_replace('/[^0-9]/i', '', $to_month);
+
 $fr_month = preg_replace("/([0-9]{4})([0-9]{2})/", "\\1-\\2", $fr_month);
 $to_month = preg_replace("/([0-9]{4})([0-9]{2})/", "\\1-\\2", $to_month);
 

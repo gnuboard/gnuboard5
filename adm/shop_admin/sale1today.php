@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
+$date = preg_replace('/[^0-9]/i', '', $date);
+
 $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $date);
 
 $g5['title'] = "$date 일 매출현황";
