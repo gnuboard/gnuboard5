@@ -6,7 +6,7 @@
 
 define('G5_VERSION', '그누보드5');
 define('G5_GNUBOARD_VER', '5.2.9.3');
-define('G5_YOUNGCART_VER', '5.2.9.3');
+define('G5_YOUNGCART_VER', '5.2.9.4');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
