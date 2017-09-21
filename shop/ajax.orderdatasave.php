@@ -14,6 +14,16 @@ sql_query($sql);
 if(isset($_POST['pp_id']) && $_POST['pp_id']) {
     $od_id   = get_session('ss_personalpay_id');
     $cart_id = 0;
+
+    $sql = "select pp_use, pp_tno from {$g5['g5_shop_personalpay_table']} where pp_id = '$od_id' ";
+    $pp_row = sql_fetch($sql);
+
+    if( $pp_row['pp_tno'] ){
+        die('해당 개인결제는 이미 결제되었습니다.');
+    } else if( ! $pp_row['pp_use'] ){
+        die('해당 개인결제는 사용이 금지되어 있습니다.');
+    }
+
 } else {
     $od_id   = get_session('ss_order_id');
     $_POST['sw_direct'] = get_session('ss_direct');
@@ -25,6 +35,10 @@ if(isset($_POST['pp_id']) && $_POST['pp_id']) {
     }
     else {
         $cart_id = get_session('ss_cart_id');
+    }
+
+    if( G5_IS_MOBILE && $default['de_pg_service'] == 'inicis' ){
+        $_POST['post_cart_id'] = $cart_id;
     }
 }
 

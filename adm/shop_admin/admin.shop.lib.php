@@ -119,4 +119,64 @@ function conv_sms_contents($od_id, $contents)
 
     return stripslashes($sms_contents);
 }
+
+function check_order_inicis_tmps(){
+    global $g5, $config, $default, $member;
+
+    $admin_cookie_time = get_cookie('admin_visit_time');
+
+    if( ! $admin_cookie_time ){
+
+        if( $default['de_pg_service'] === 'inicis' && empty($default['de_card_test']) ){
+            $sql = " select * from {$g5['g5_shop_inicis_log_table']} where P_TID <> '' and P_TYPE in ('CARD', 'ISP', 'BANK') and P_MID <> '' and P_STATUS = '00' and is_mail_send = 0 and substr(P_AUTH_DT, 1, 14) < '".date('YmdHis', strtotime('-3 minutes', G5_SERVER_TIME))."' ";
+
+            $result = sql_query($sql, false);
+            
+            if( !$result ){
+                return;
+            }
+
+            $mail_msg = '';
+
+            for($i=0;$row=sql_fetch_array($result);$i++){
+                
+                $oid = $row['oid'];
+                $p_tid = $row['P_TID'];
+                $p_mid = strtolower($tmps['P_MID']);
+
+                if( in_array($p_mid, array('iniescrow0', 'inipaytest')) ) continue;
+
+                $sql = "update {$g5['g5_shop_inicis_log_table']} set is_mail_send = 1 where oid = '".$oid."' and P_TID = '".$p_tid."' ";
+                sql_query($sql);
+
+                $sql = " select od_id from {$g5['g5_shop_order_table']} where od_id = '$oid' and od_tno = '$p_tid' ";
+                $tmp = sql_fetch($sql);
+
+                if( $tmp['od_id'] ) continue;
+
+                $sql = " select pp_id from {$g5['g5_shop_personalpay_table']} where pp_id = '$oid' and pp_tno = '$p_tid' ";
+                $tmp = sql_fetch($sql);
+
+                if( $tmp['pp_id'] ) continue;
+
+                $mail_msg .= '<a href="'.G5_ADMIN_URL.'/shop_admin/inorderform.php?od_id='.$oid.'" target="_blank" >미완료 발생 주문번호 : '.$oid.'</a><br><br>';
+                
+            }
+            
+            if( $mail_msg ){
+                include_once(G5_LIB_PATH.'/mailer.lib.php');
+
+                $mails = array_unique(array($member['mb_email'], $config['cf_admin_email']));
+
+                foreach($mails as $mail_address){
+                    if (!preg_match("/([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)\.([0-9a-zA-Z_-]+)/", $mail_address)) continue;
+
+                    mailer($member['mb_nick'], $member['mb_email'], $mail_address, $config['cf_title'].' 사이트 미완료 주문 알림', '이니시스를 통해 결제한 주문건 중에서 미완료 주문이 발생했습니다.<br><br>발생된 원인으로는 장바구니 금액와 실결제 금액이 맞지 않는 경우, 네트워크 오류, 프로그램 오류, 알수 없는 오류 등이 있습니다.<br><br>아래 내용과 실제 주문내역, 이니시스 상점 관리자 에서 결제된 내용을 확인하여 조치를 취해 주세요.<br><br>'.$mail_msg, 0);
+                }
+            }
+        }
+
+        set_cookie('admin_visit_time', G5_SERVER_TIME, 3600);   //1시간 간격으로 체크
+    }
+}   //end function check_order_inicis_tmps
 ?>

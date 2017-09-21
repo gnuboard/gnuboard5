@@ -88,6 +88,13 @@ if(!sql_query(" select P_AUTH_NO from {$g5['g5_shop_inicis_log_table']} limit 1 
                     ADD `P_AUTH_NO` varchar(255) NOT NULL DEFAULT '' AFTER `P_FN_NM` ", true);
 }
 
+// 모바일 이니시스 noti 받는 테이블 필드 추가
+if(!sql_query(" select post_data from {$g5['g5_shop_inicis_log_table']} limit 1 ", false)) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_inicis_log_table']}`
+                    ADD `post_data` text NOT NULL AFTER `P_RMESG1`,
+                    ADD `is_mail_send` tinyint(4) NOT NULL DEFAULT '1' AFTER `post_data` ", true);
+}
+
 // 테스트 주문필드 추가
 if(!sql_query(" select od_test from {$g5['g5_shop_order_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_order_table']}`

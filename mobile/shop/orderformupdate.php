@@ -7,6 +7,15 @@ if( $od_settle_case == '삼성페이' && !empty($_POST['P_HASH']) ){
     $default['de_pg_service'] = 'inicis';
 }
 
+if( $default['de_pg_service'] == 'inicis' && get_session('ss_order_id') ){
+    if( $exist_order = get_shop_order_data(get_session('ss_order_id')) ){    //이미 상품이 주문되었다면 리다이렉트
+        if($exist_order['od_tno']){
+            exists_inicis_shop_order(get_session('ss_order_id'), array(), $exist_order['od_time'], $exist_order['od_ip']);
+            exit;
+        }
+    }
+}
+
 $page_return_url = G5_SHOP_URL.'/orderform.php';
 if(get_session('ss_direct'))
     $page_return_url .= '?sw_direct=1';
@@ -497,6 +506,10 @@ else
 // 주문번호를 얻는다.
 $od_id = get_session('ss_order_id');
 
+if( !$od_id ){
+    die("주문번호가 없습니다.");
+}
+
 $od_escrow = 0;
 if($escw_yn == 'Y')
     $od_escrow = 1;
@@ -617,6 +630,9 @@ if(!$result) {
     // 관리자에게 오류 알림 메일발송
     $error = 'order';
     include G5_SHOP_PATH.'/ordererrormail.php';
+
+    // 주문삭제
+    sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ", false);
 
     die('<p>고객님의 주문 정보를 처리하는 중 오류가 발생해서 주문이 완료되지 않았습니다.</p><p>'.strtoupper($od_pg).'를 이용한 전자결제(신용카드, 계좌이체, 가상계좌 등)은 자동 취소되었습니다.');
 }
@@ -854,6 +870,12 @@ set_session('ss_orderview_uid', $uid);
 $sql = " delete from {$g5['g5_shop_order_data_table']} where od_id = '$od_id' and dt_pg = '$od_pg' ";
 sql_query($sql);
 
+if( $od_pg == 'inicis' && $od_tno ){
+    $sql = "delete from {$g5['g5_shop_inicis_log_table']} where oid = '$od_id' and P_TID = '$od_tno' ";
+    sql_query($sql, false);
+}
+
+
 // 주문번호제거
 set_session('ss_order_id', '');
 
@@ -909,6 +931,13 @@ if($is_member) {
     }
 
     sql_query($sql);
+}
+
+$is_noti_pay = isset($is_noti_pay) ? $is_noti_pay : false;
+
+if( $is_noti_pay ){
+    $order_id = $od_id;
+    return;
 }
 
 goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);

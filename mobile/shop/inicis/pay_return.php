@@ -10,6 +10,20 @@ set_session('P_HASH', '');
 $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
 $row = sql_fetch($sql);
 
+if( empty($row) ){  //이미 결제가 완료 되었다면
+    if( $exist_order = get_shop_order_data($oid) ){    //상품주문
+        if($exist_order['od_tno']){
+            exists_inicis_shop_order($oid, array(), $exist_order['od_time'], $exist_order['od_ip']);
+            exit;
+        }
+    } else if( $pp = get_shop_order_data($oid, 'personal') ){   //개인결제
+        if($pp['pp_tno']){      //이미 결제가 완료되었다면
+            exists_inicis_shop_order($oid, $pp, $pp['pp_time'], $pp['pp_ip']);
+            exit;
+        }
+    }
+}
+
 $data = unserialize(base64_decode($row['dt_data']));
 
 if(isset($data['pp_id']) && $data['pp_id']) {

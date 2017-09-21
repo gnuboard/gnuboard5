@@ -17,7 +17,6 @@ $PGIP = $_SERVER['REMOTE_ADDR'];
 
 if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.71.153")	//PG에서 보냈는지 IP로 체크
 {
-
     // 이니시스 NOTI 서버에서 받은 Value
     $P_TID;				// 거래번호
     $P_MID;				// 상점아이디
@@ -54,6 +53,185 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
     $P_AUTH_NO  = $_POST['P_AUTH_NO'];
     $P_SRC_CODE = $_POST['P_SRC_CODE'];
 
+    // 결과 incis log 테이블 기록
+    if($P_TYPE == 'BANK' || $P_SRC_CODE == 'A') {
+
+        if(!sql_query(" select post_data from {$g5['g5_shop_inicis_log_table']} limit 1 ", false)) {
+            sql_query(" ALTER TABLE `{$g5['g5_shop_inicis_log_table']}`
+                            ADD `post_data` text NOT NULL AFTER `P_RMESG1`,
+                            ADD `is_mail_send` tinyint(4) NOT NULL DEFAULT '1' AFTER `post_data` ", false);
+        }
+
+        $sql = " insert into {$g5['g5_shop_inicis_log_table']}
+                    set oid       = '$P_OID',
+                        P_TID     = '$P_TID',
+                        P_MID     = '$P_MID',
+                        P_AUTH_DT = '$P_AUTH_DT',
+                        P_STATUS  = '$P_STATUS',
+                        P_TYPE    = '$P_TYPE',
+                        P_OID     = '$P_OID',
+                        P_FN_NM   = '".iconv_utf8($P_FN_NM)."',
+                        P_AUTH_NO = '$P_AUTH_NO',
+                        P_AMT     = '$P_AMT',
+                        P_RMESG1  = '".iconv_utf8($P_RMESG1)."',
+                        post_data = '".base64_encode(serialize($_POST))."',
+                        is_mail_send = 0 ";
+        sql_query($sql, false);
+    }
+
+    if( $P_STATUS == "00" && $P_TID && $P_MID && $P_TYPE != "VBANK" ){
+
+        // 주문이 있는지 체크
+        $sql = "select count(od_id) as cnt from {$g5['g5_shop_order_table']} where od_id = '$P_OID' and od_tno = '$P_TID' ";
+        $exist_order = sql_fetch($sql);
+        
+        if( !$exist_order['cnt'] ){
+            //주문정보를 insert 합니다.
+            
+            include_once(G5_MSHOP_PATH.'/settle_inicis.inc.php');
+            
+            $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = $P_OID ";
+            $od = sql_fetch($sql);
+            $data = unserialize(base64_decode($od['dt_data']));
+
+            //개인결제
+            if(isset($data['pp_id']) && !empty($data['pp_id'])) {
+
+                // 개인결제 정보
+                $pp_check = false;
+                $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$P_OID' and pp_tno = '$P_TID' and pp_use = '1' ";
+                $pp = sql_fetch($sql);
+
+                if( !$pp['pp_tno'] && $data['pp_id'] == $P_OID ){
+
+                    $res_cd = $P_STATUS;
+                    $pp_id = $P_OID;
+
+                    $exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_VACT_BANK', 'LGD_PAYKEY', 'pp_id', 'good_mny', 'pp_name', 'pp_email', 'pp_hp', 'pp_settle_case');
+
+                    $params = array();
+
+                    foreach($data as $key=>$v) {
+                        if( !in_array($key, $exclude) ){
+                            $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($v));
+                        }
+                    }
+
+                    extract($params);
+
+                    $good_mny = $P_AMT;
+                    $pp_name = clean_xss_tags($data['pp_name']);
+                    $pp_email = clean_xss_tags($data['pp_email']);
+                    $pp_hp = clean_xss_tags($data['pp_hp']);
+                    $pp_settle_case = clean_xss_tags($data['pp_settle_case']);
+
+                    set_session('P_TID', $P_TID);
+                    set_session('P_AMT', $P_AMT);
+                    $_POST['P_HASH'] = md5(get_session('P_TID').$default['de_inicis_mid'].$P_AMT);
+                    $_POST['P_AUTH_NO'] = $P_AUTH_NO;
+                    $_POST['pp_id'] = $P_OID;
+                    $_POST['good_mny'] = $P_AMT;
+                    $is_noti_pay = true;
+
+                    $sql = " select pp_time from {$g5['g5_shop_personalpay_table']} where pp_id = '$P_OID' and pp_use = '1' ";
+                    $pp_time = sql_fetch($sql);
+
+                    set_session('ss_personalpay_id', $P_OID);
+                    set_session('ss_personalpay_hash', md5($P_OID.$P_AMT.$pp_time['pp_time']));
+
+                    include_once( G5_MSHOP_PATH.'/personalpayformupdate.php' );
+
+                    if( !$order_id ){
+                        echo "FAIL";
+                    } else {
+                        $sql = " delete from {$g5['g5_shop_inicis_log_table']} where (oid = '$P_OID' and P_TID = '$P_TID') OR substr(P_AUTH_DT, 1, 8) < '".date('Ymd', strtotime('-3 month', G5_SERVER_TIME))."' ";
+                        sql_query( $sql , false);
+                    }
+                }
+
+            //상품주문
+            } else {
+
+                if($od && isset($data['it_id']) && !empty($data['it_id'])) {
+
+                    $PAY = array(
+                        'oid'   => $P_OID,
+                        'P_TID'     => $P_TID,
+                        'P_MID'     => $P_MID,
+                        'P_AUTH_DT' => $P_AUTH_DT,
+                        'P_STATUS'  => $P_STATUS,
+                        'P_TYPE'    => $P_TYPE,
+                        'P_OID'     => $P_OID,
+                        'P_FN_NM'   => iconv_utf8($P_FN_NM),
+                        'P_AUTH_NO' => $P_AUTH_NO,
+                        'P_AMT'     => $P_AMT,
+                        'P_RMESG1'  => iconv_utf8($P_RMESG1)
+                        );
+
+                    // TID, AMT 를 세션으로 주문완료 페이지 전달
+                    $hash = md5($PAY['P_TID'].$PAY['P_MID'].$PAY['P_AMT']);
+                    set_session('P_TID',  $PAY['P_TID']);
+                    set_session('P_AMT',  $PAY['P_AMT']);
+                    set_session('P_HASH', $hash);
+                    set_session('ss_order_id', $P_OID);
+
+                    $params = array();
+                    $exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_VACT_BANK', 'P_AUTH_NO');
+
+                    foreach($data as $key=>$value) {
+                        if(!empty($exclude) && in_array($key, $exclude))
+                            continue;
+
+                        if(is_array($value)) {
+                            foreach($value as $k=>$v) {
+                                $_POST[$key][$k] = $params[$key][$k] = clean_xss_tags(strip_tags($v));
+                            }
+                        } else {
+                            $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
+                        }
+                    }
+                    
+                    if( !empty($params['sw_direct']) && !empty($params['post_cart_id'])  ){
+                        set_session('ss_direct', $params['sw_direct']);
+                        set_session('ss_cart_direct', $params['post_cart_id']);
+                    } else if ( $params['post_cart_id'] ){
+                        set_session('ss_cart_id', $params['post_cart_id']);
+                    }
+                    
+                    try {
+                        unset($params['sw_direct']);
+                        unset($params['post_cart_id']);
+                    } catch (Exception $e) {
+                    }
+
+                    $_POST['res_cd'] = $params['res_cd'] = $PAY['P_STATUS'];
+                    $_POST['P_HASH'] = $params['P_HASH'] = $hash;
+                    $_POST['P_TYPE'] = $params['P_TYPE'] = $PAY['P_TYPE'];
+                    $_POST['P_AUTH_DT'] = $params['P_AUTH_DT'] = $PAY['P_AUTH_DT'];
+                    $_POST['P_VACT_BANK'] = $params['P_VACT_BANK'] = $PAY['P_FN_NM'];
+                    $_POST['P_AUTH_NO'] = $params['P_AUTH_NO'] = $PAY['P_AUTH_NO'];
+
+                    extract($params);
+                    
+                    if( $od['mb_id'] ){
+                        $is_member = true;
+                        $member = get_member($od['mb_id']);
+                    }
+
+                    $is_noti_pay = true;
+                    include_once( G5_MSHOP_PATH.'/orderformupdate.php' );
+                    
+                    if( !$order_id ){
+                        echo "FAIL";
+                    } else {
+                        $sql = " delete from {$g5['g5_shop_inicis_log_table']} where (oid = '$P_OID' and P_TID = '$P_TID') OR substr(P_AUTH_DT, 1, 8) < '".date('Ymd', strtotime('-3 month', G5_SERVER_TIME))."' ";
+                        sql_query( $sql , false);
+                    }
+                }
+
+            }
+        }
+    }
 
     //WEB 방식의 경우 가상계좌 채번 결과 무시 처리
     //(APP 방식의 경우 해당 내용을 삭제 또는 주석 처리 하시기 바랍니다.)
@@ -165,23 +343,6 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
                 "P_AUTH_NO"     => $P_AUTH_NO,
                 "P_SRC_CODE"    => $P_SRC_CODE
             );
-
-    // 결과 incis log 테이블 기록
-    if($P_TYPE == 'BANK' || $P_SRC_CODE == 'A') {
-        $sql = " insert into {$g5['g5_shop_inicis_log_table']}
-                    set oid       = '$P_OID',
-                        P_TID     = '$P_TID',
-                        P_MID     = '$P_MID',
-                        P_AUTH_DT = '$P_AUTH_DT',
-                        P_STATUS  = '$P_STATUS',
-                        P_TYPE    = '$P_TYPE',
-                        P_OID     = '$P_OID',
-                        P_FN_NM   = '".iconv_utf8($P_FN_NM)."',
-                        P_AUTH_NO = '$P_AUTH_NO',
-                        P_AMT     = '$P_AMT',
-                        P_RMESG1  = '".iconv_utf8($P_RMESG1)."' ";
-        @sql_query($sql);
-    }
 
     // 결제처리에 관한 로그 기록
     //writeLog($value);

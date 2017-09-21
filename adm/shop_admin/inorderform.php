@@ -382,6 +382,76 @@ $pg_anchor = '<ul class="anchor">
 </section>
 
 <section>
+
+    <?php
+    // 이니시스를 사용하고 있다면
+    if( $default['de_pg_service'] === 'inicis' && empty($default['de_card_test']) ){
+        $sql = " select * from {$g5['g5_shop_inicis_log_table']} where P_TID <> '' and P_TYPE in ('CARD', 'ISP', 'BANK') and P_MID <> '' and P_STATUS = '00' and oid = '".$od['od_id']."' ";
+        $results = sql_query($sql);
+
+        $tmps = array();
+
+        while( $tmp=sql_fetch_array($results) ){
+
+            $sql = " select od_id from {$g5['g5_shop_order_table']} where od_id = '".$tmp['oid']."' and od_tno = '".$tmp['P_TID']."' ";
+            $exist_od = sql_fetch($sql);
+
+            if( $exist_od['od_id'] ) continue;
+
+            $sql = " select pp_id from {$g5['g5_shop_personalpay_table']} where pp_id = '".$tmp['oid']."' and pp_tno = '".$tmp['P_TID']."' ";
+            $exist_od = sql_fetch($sql);
+
+            if( $exist_od['od_id'] ) continue;
+
+            $tmps[] = $tmp;
+        }
+
+        if( $tmps ) {
+    ?>
+    <h2 class="h2_frm">이니시스 결제 로그</h2>
+    <div class="local_desc01 local_desc">
+        <p>실결제로 결제된 경우 반드시 이니시스 상점 관리자에서 해당 결제건을 확인 후에 주문을 처리해 주세요.</p>
+    </div>
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption>이니시스 결제 로그</caption>
+        <tbody>
+        <?php foreach( $tmps as $tmp ){
+            if( empty($tmp) ) continue;
+        ?>
+        <tr>
+            <th>주문번호</th>
+            <td><?php echo $tmp['oid']; ?></td>
+        </tr>
+        <tr>
+            <th>결제 TID</th>
+            <td><?php echo $tmp['P_TID']; ?></td>
+        </tr>
+        <tr>
+            <th>결제 MID</th>
+            <td><?php echo $tmp['P_MID']; ?><?php echo in_array( strtolower($tmp['P_MID']), array('iniescrow0', 'inipaytest') ) ? ' ( 테스트결제 )' : ''; ?></td>
+        </tr>
+        <tr>
+            <th>결제 시간</th>
+            <td><?php echo date('Y-m-d H:i:s', strtotime(substr($tmp['P_AUTH_DT'], 0, 14))); ?></td>
+        </tr>
+        <tr>
+            <th>결제 수단</th>
+            <td><?php echo $tmp['P_TYPE'].' '.$tmp['P_FN_NM']; ?></td>
+        </tr>
+        <tr>
+            <th>결제된 금액</th>
+            <td><?php echo $tmp['P_AMT'] ? number_format($tmp['P_AMT']) : 0; ?></td>
+        </tr>
+        <?php }     //end foreach ?>
+        </tbody>
+        </table>
+    </div>
+    <?php
+        }   //end if tmps
+    }     //end if inicis
+    ?>
+
     <h2 class="h2_frm">주문자/배송지 정보</h2>
     <?php echo $pg_anchor; ?>
 

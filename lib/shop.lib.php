@@ -2067,6 +2067,56 @@ function update_use_avg($it_id)
     return sql_query(" update {$g5['g5_shop_item_table']} set it_use_avg = '$average' where it_id = '{$it_id}' ");
 }
 
+//주문데이터 또는 개인결제 주문데이터 가져오기
+function get_shop_order_data($od_id, $type='item'){
+    global $g5;
+    
+    $od_id = clean_xss_tags($od_id);
+
+    if( $type == 'personal' ){
+        $row = sql_fetch("select * from {$g5['g5_shop_personalpay_table']} where pp_id = $od_id ", false);
+    } else {
+        $row = sql_fetch("select * from {$g5['g5_shop_order_table']} where od_id = $od_id ", false);
+    }
+
+    return $row;
+}
+
+function exists_inicis_shop_order($oid, $pp=array(), $od_time='', $od_ip=''){
+
+    $od_ip = $od_ip ? $od_ip : $_SERVER['REMOTE_ADDR'];
+
+    //개인결제
+    if( $pp ) {
+        $hash_data = md5($pp['pp_id'].$pp['pp_price'].$pp['pp_time']);
+        if( $hash_data == get_session('ss_personalpay_hash') ){
+            // 개인결제번호제거
+            set_session('ss_personalpay_id', '');
+            set_session('ss_personalpay_hash', '');
+
+            $uid = md5($pp['pp_id'].$pp['pp_time'].$od_ip);
+            set_session('ss_personalpay_uid', $uid);
+            
+            goto_url(G5_SHOP_URL.'/personalpayresult.php?pp_id='.$pp['pp_id'].'&amp;uid='.$uid.'&amp;ini_noti=1');
+        } else {
+            goto_url(G5_SHOP_URL.'/personalpayresult.php?pp_id='.$pp['pp_id'].'&amp;ini_noti=1');
+        }
+    } else {    //그렇지 않으면
+        if (!$od_time){
+            $od_time = G5_TIME_YMDHIS;
+        }
+
+        if( $oid == get_session('ss_order_id') ){
+            // orderview 에서 사용하기 위해 session에 넣고
+            $uid = md5($oid.$od_time.$od_ip);
+            set_session('ss_orderview_uid', $uid);
+            goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$oid.'&amp;uid='.$uid.'&amp;ini_noti=1');
+        } else {
+            goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$oid.'&amp;ini_noti=1');
+        }
+    }
+    return '';
+}
 
 //------------------------------------------------------------------------------
 // 주문포인트를 적립한다.

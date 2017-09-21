@@ -237,5 +237,12 @@ set_session('ss_personalpay_hash', '');
 $uid = md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']);
 set_session('ss_personalpay_uid', $uid);
 
+$is_noti_pay = isset($is_noti_pay) ? $is_noti_pay : false;
+
+if( $is_noti_pay ){
+    $order_id = $pp['pp_id'];
+    return;
+}
+
 goto_url(G5_SHOP_URL.'/personalpayresult.php?pp_id='.$pp['pp_id'].'&amp;uid='.$uid);
 ?>
