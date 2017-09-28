@@ -20,6 +20,22 @@ if ($co_timg_del)  @unlink(G5_DATA_PATH."/content/{$co_id}_t");
 
 $error_msg = '';
 
+if( $co_include_head ){
+    $purl = parse_url($co_include_head);
+    $file = $purl['path'];
+    if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
+        alert('상단 파일 경로의 확장자는 php, html 만 허용합니다.');
+    }
+}
+
+if( $co_include_tail ){
+    $purl = parse_url($co_include_tail);
+    $file = $purl['path'];
+    if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
+        alert('하단 파일 경로의 확장자는 php, html 만 허용합니다.');
+    }
+}
+
 if( $co_include_head && ! is_include_path_check($co_include_head) ){
     $co_include_head = '';
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 상단 파일 경로에 포함시킬수 없습니다.';
