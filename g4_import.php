@@ -125,6 +125,7 @@ if($is_admin != 'super')
             <p>프로그램을 실행하시려면 그누보드4의 config.php 파일 경로를 입력하신 후 확인을 클릭해 주십시오.</p>
 
             <form name="fimport" method="post" action="./g4_import_run.php" onsubmit="return fimport_submit(this);">
+            <input type="hidden" name="token" value="" >
             <div id="g4_import_frm">
                 <label for="file_path">config.php 파일 경로</label>
                 <input type="text" name="file_path" id="file_path" required class="frm_input required">
@@ -142,6 +143,10 @@ if($is_admin != 'super')
         <script>
         function fimport_submit(f)
         {
+            var token = get_write_token('g4_import');
+            
+            f.token.value = token;
+
             return confirm('그누보드4의 DB 데이터를 이전하시겠습니까?');
         }
         </script>
