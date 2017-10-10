@@ -1,7 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
-$print_version = (defined('G5_IS_SHOP_ADMIN_PAGE') && defined('G5_YOUNGCART_VER')) ? 'Cart Version '.G5_YOUNGCART_VER : 'Version '.G5_GNUBOARD_VER;
+$print_version = defined('G5_YOUNGCART_VER') ? 'YoungCart Version '.G5_YOUNGCART_VER : 'Version '.G5_GNUBOARD_VER;
 ?>
 
         <noscript>
