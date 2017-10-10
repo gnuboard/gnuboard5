@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], 'r');
 if (empty($fr_date) || ! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $fr_date) ) $fr_date = G5_TIME_YMD;
 if (empty($to_date) || ! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $to_date) ) $to_date = G5_TIME_YMD;
 
-$qstr = "fr_date={$fr_date}{&amp;to_date}={$to_date}";
+$qstr = "fr_date={$fr_date}&amp;to_date={$to_date}";
 
 $sql_common = " from {$g5['popular_table']} a ";
 $sql_search = " where trim(pp_word) <> '' and pp_date between '{$fr_date}' and '{$to_date}' ";

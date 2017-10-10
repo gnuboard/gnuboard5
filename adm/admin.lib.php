@@ -382,15 +382,24 @@ function admin_referer_check($return=false)
     }
 
     $p = @parse_url($referer);
+
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
+    $msg = '';
 
     if($host != $p['host']) {
         $msg = '올바른 방법으로 이용해 주십시오.';
+    }
 
-        if($return)
+    if( $p['path'] && ! preg_match( '/\/'.preg_quote(G5_ADMIN_DIR).'\//i', $p['path'] ) ){
+        $msg = '올바른 방법으로 이용해 주십시오';
+    }
+
+    if( $msg ){
+        if($return) {
             return $msg;
-        else
+        } else {
             alert($msg, G5_URL);
+        }
     }
 }
 

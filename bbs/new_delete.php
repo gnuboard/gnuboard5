@@ -69,7 +69,7 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
 
         if ($pressed == '선택내용삭제') {
             // 게시글 내용만 삭제
-            sql_query(" update $write_table set wr_subject = '{$g5['time_ymdhis']} - 본인 요청으로 인한 삭제 (냉무) ☆', wr_content = '', wr_name='본인요청삭제☆' where wr_id = '{$write['wr_id']}' ");
+            sql_query(" update $write_table set wr_subject =  '".G5_TIME_YMDHIS." - 본인 요청으로 인한 삭제 (냉무) ☆', wr_content = '', wr_name='본인요청삭제☆' where wr_id = '{$write['wr_id']}' ");
         } else {
             // 게시글 삭제
             sql_query(" delete from $write_table where wr_parent = '{$write['wr_id']}' ");

@@ -153,7 +153,7 @@ function alert($msg='', $url='', $error=true, $post=false)
     global $g5, $config, $member;
     global $is_admin;
 
-    if (!$msg) $msg = '올바른 방법으로 이용해 주십시오.';
+    $msg = $msg ? strip_tags($msg, '<br>') : '올바른 방법으로 이용해 주십시오.';
 
     $header = '';
     if (isset($g5['title'])) {
@@ -168,6 +168,8 @@ function alert($msg='', $url='', $error=true, $post=false)
 function alert_close($msg, $error=true)
 {
     global $g5;
+    
+    $msg = strip_tags($msg, '<br>');
 
     $header = '';
     if (isset($g5['title'])) {
@@ -3317,46 +3319,54 @@ function get_call_func_cache($func, $args=array()){
 }
 
 // include 하는 경로에 data file 경로가 포함되어 있는지 체크합니다.
-function is_include_path_check($path='')
+function is_include_path_check($path='', $is_input='')
 {
     if( $path ){
-        try {
-            // whether $path is unix or not
-            $unipath = strlen($path)==0 || $path{0}!='/';
-            $unc = substr($path,0,2)=='\\\\'?true:false;
-            // attempts to detect if path is relative in which case, add cwd
-            if(strpos($path,':') === false && $unipath && !$unc){
-                $path=getcwd().DIRECTORY_SEPARATOR.$path;
-                if($path{0}=='/'){
-                    $unipath = false;
+        if ($is_input){
+            try {
+                // whether $path is unix or not
+                $unipath = strlen($path)==0 || $path{0}!='/';
+                $unc = substr($path,0,2)=='\\\\'?true:false;
+                // attempts to detect if path is relative in which case, add cwd
+                if(strpos($path,':') === false && $unipath && !$unc){
+                    $path=getcwd().DIRECTORY_SEPARATOR.$path;
+                    if($path{0}=='/'){
+                        $unipath = false;
+                    }
                 }
+
+                // resolve path parts (single dot, double dot and double delimiters)
+                $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
+                $parts = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
+                $absolutes = array();
+                foreach ($parts as $part) {
+                    if ('.'  == $part){
+                        continue;
+                    }
+                    if ('..' == $part) {
+                        array_pop($absolutes);
+                    } else {
+                        $absolutes[] = $part;
+                    }
+                }
+                $path = implode(DIRECTORY_SEPARATOR, $absolutes);
+                // resolve any symlinks
+                // put initial separator that could have been lost
+                $path = !$unipath ? '/'.$path : $path;
+                $path = $unc ? '\\\\'.$path : $path;
+            } catch (Exception $e) {
+                //echo 'Caught exception: ',  $e->getMessage(), "\n";
+                return false;
             }
 
-            // resolve path parts (single dot, double dot and double delimiters)
-            $path = str_replace(array('/', '\\'), DIRECTORY_SEPARATOR, $path);
-            $parts = array_filter(explode(DIRECTORY_SEPARATOR, $path), 'strlen');
-            $absolutes = array();
-            foreach ($parts as $part) {
-                if ('.'  == $part){
-                    continue;
-                }
-                if ('..' == $part) {
-                    array_pop($absolutes);
-                } else {
-                    $absolutes[] = $part;
-                }
+            if( preg_match('/\/data\/(file|editor)\/[A-Za-z0-9_]{1,20}\//', $path) ){
+                return false;
             }
-            $path = implode(DIRECTORY_SEPARATOR, $absolutes);
-            // resolve any symlinks
-            // put initial separator that could have been lost
-            $path = !$unipath ? '/'.$path : $path;
-            $path = $unc ? '\\\\'.$path : $path;
-        } catch (Exception $e) {
-            //echo 'Caught exception: ',  $e->getMessage(), "\n";
-            return false;
         }
 
-        if( preg_match('/\/data\/(file|editor)\/[A-Za-z0-9_]{1,20}\//', $path) ){
+        $extension = pathinfo($path, PATHINFO_EXTENSION);
+        
+        if($extension && preg_match('/(jpg|jpeg|png|gif|bmp|conf)$/', $extension)) {
             return false;
         }
     }
