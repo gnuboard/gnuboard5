@@ -36,7 +36,7 @@ else
 if (!$skin)
     $skin = $default['de_listtype_list_skin'];
 else
-    $skin = preg_replace('#\.+/#', '', $skin);
+    $skin = preg_replace('#\.+[\\\/]#', '', $skin);
 
 define('G5_SHOP_CSS_URL', G5_SHOP_SKIN_URL);
 

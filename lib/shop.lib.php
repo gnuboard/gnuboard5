@@ -152,9 +152,9 @@ class item_list
     function set_list_skin($list_skin) {
         global $default;
         if ($this->is_mobile) {
-            $this->list_skin = $list_skin ? $list_skin : G5_MSHOP_SKIN_PATH.'/'.$default['de_mobile_type'.$this->type.'_list_skin'];
+            $this->list_skin = $list_skin ? $list_skin : G5_MSHOP_SKIN_PATH.'/'.preg_replace('/[^A-Za-z0-9 _ .-]/', '', $default['de_mobile_type'.$this->type.'_list_skin']);
         } else {
-            $this->list_skin = $list_skin ? $list_skin : G5_SHOP_SKIN_PATH.'/'.$default['de_type'.$this->type.'_list_skin'];
+            $this->list_skin = $list_skin ? $list_skin : G5_SHOP_SKIN_PATH.'/'.preg_replace('/[^A-Za-z0-9 _ .-]/', '', $default['de_type'.$this->type.'_list_skin']);
         }
     }
 
