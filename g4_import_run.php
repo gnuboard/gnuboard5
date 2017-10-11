@@ -17,6 +17,13 @@ echo '<link rel="stylesheet" href="'.G5_URL.'/g4_import.css">';
 if(empty($_POST))
     alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 
+if (!preg_match("/^http['s']?:\/\/".$_SERVER['HTTP_HOST']."/", $_SERVER['HTTP_REFERER'])){
+    alert("제대로 된 접근이 아닌것 같습니다.", G5_URL);
+}
+
+// 토큰체크
+check_write_token('g4_import');
+
 if(get_session('tables_copied') == 'done')
     alert('DB 데이터 변환을 이미 실행하였습니다. 중복 실행시 오류가 발생할 수 있습니다.', G5_URL);
 
@@ -165,7 +172,7 @@ document.onkeydown = noRefresh ;
         flush();
 
         // g4의 confing.php
-        require($g4_config_file);
+        require('./'.$g4_config_file);
 
         if(preg_replace('/[^a-z]/', '', strtolower($g4['charset'])) == 'euckr')
             $is_euckr = true;
