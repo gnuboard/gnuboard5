@@ -4,7 +4,7 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 if ($is_member) {
-    alert('이미 로그인중입니다.');
+    alert_close('이미 로그인중입니다.', G5_URL);
 }
 
 if (!chk_captcha()) {
