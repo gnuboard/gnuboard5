@@ -4,7 +4,8 @@ include_once('./_common.php');
 $pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#';
 
 $it_id  = preg_replace($pattern, '', $_POST['it_id']);
-$opt_id = preg_replace($pattern, '', $_POST['opt_id']);
+//$opt_id = preg_replace($pattern, '', $_POST['opt_id']);
+$opt_id = addslashes(sql_real_escape_string(preg_replace(G5_OPTION_ID_FILTER, '', $_POST['opt_id'])));
 $idx    = preg_replace('#[^0-9]#', '', $_POST['idx']);
 $sel_count = preg_replace('#[^0-9]#', '', $_POST['sel_count']);
 
