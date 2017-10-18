@@ -22,8 +22,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
             <?php }  ?>
         </ul>
         <div id="poll_btn">
+            <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;" class="btn_result btn_b04">결과보기</a>
             <input type="submit" value="투표하기" class="btn_poll btn_b02">
-            <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;" class="btn_result btn_b01">결과보기</a>
         </div>
     </div>
 </section>

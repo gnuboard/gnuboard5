@@ -66,8 +66,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         
             <li class="point_status">
                 소계
-                <span><?php echo $sum_point1; ?>
-                <?php echo $sum_point2; ?></span>
+                <span><?php echo $sum_point1; ?></span>
+                <span><?php echo $sum_point2; ?></span>
             </li>
         </ul>
 

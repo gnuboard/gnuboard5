@@ -24,7 +24,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
     <section id="bo_v_info">
         <h2>페이지 정보</h2>
-        <span class="sound_only">작성자</span><strong><span class="profile_img"><img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span><?php echo $view['name'] ?></strong>
+        <span class="sound_only">작성자</span><strong><span class="profile_img"><img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span><?php echo $view['name'] ?></strong>
         <span class="sound_only">작성일</span><strong class="bo_date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $view['datetime']; ?></strong>
         <?php if($view['email'] || $view['hp']) { ?>
             <?php if($view['email']) { ?>
@@ -136,9 +136,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             <table>
             <thead>
             <tr>
-                <th scope="col"><i class="fa fa-th-list" aria-hidden="true"></i><span class="sound_only">제목</span></th>
-                <th scope="col"><i class="fa fa-clock-o" aria-hidden="true"></i><span class="sound_only">등록일</span></th>
-                <th scope="col"><i class="fa fa-check-circle-o" aria-hidden="true"></i><span class="sound_only">상태</span></th>
+                <th scope="col">제목</th>
+                <th scope="col">등록일</th>
+                <th scope="col">상태</th>
             </tr>
             </thead>
             <tbody>

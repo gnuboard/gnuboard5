@@ -28,7 +28,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <span class="memo_datetime"><?php echo $list[$i]['send_datetime'] ?> - <?php echo $list[$i]['read_datetime'] ?> <a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;" class="memo_del"><i class="fa fa-times-circle" aria-hidden="true"></i> <span class="sound_only">삭제</span></a></span>
             </li>
             <?php }  ?>
-            <?php if ($i==0) { echo '<tr><td colspan="4" class="empty_table">자료가 없습니다.</td></tr>'; }  ?>
+            <?php if ($i==0) { echo '<li class="empty_table">자료가 없습니다.</li>'; }  ?>
             </ul>
         </div>
 

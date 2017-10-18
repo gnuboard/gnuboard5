@@ -10,35 +10,34 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
     <header id="ol_after_hd">
         <h2>나의 회원정보</h2>
         <span class="profile_img">
-            <img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지">
-            <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info" title="정보수정">정보수정</a>
+            <img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" >
+            <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info" title="정보수정"><i class="fa fa-cog" aria-hidden="true"></i><span class="sound_only">정보수정</span></a>
         </span>
         <strong><?php echo $nick ?>님</strong>
-        <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo G5_ADMIN_URL ?>" class="btn_admin">관리자</a><?php }  ?>
+        <a href="<?php echo G5_BBS_URL ?>/logout.php" id="ol_after_logout" class="btn_b04">로그아웃</a>
+        <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo G5_ADMIN_URL ?>" class="btn_admin btn_04">관리자</a><?php }  ?>
     </header>
     <ul id="ol_after_private">
         <li>
             <a href="<?php echo G5_BBS_URL ?>/memo.php" target="_blank" id="ol_after_memo" class="win_memo">
-                <i class="fa fa-envelope-o" aria-hidden="true"></i> <span class="sound_only">안 읽은 </span>쪽지
-                <strong><?php echo $memo_not_read ?></strong>
+                 <span class="sound_only">안 읽은 </span>쪽지<br>
+                <strong><i class="fa fa-envelope-o" aria-hidden="true"></i> <?php echo $memo_not_read ?></strong>
             </a>
         </li>
         <li>
             <a href="<?php echo G5_BBS_URL ?>/point.php" target="_blank" id="ol_after_pt" class="win_point">
-                <i class="fa fa-database" aria-hidden="true"></i> 포인트
-                <strong><?php echo $point ?></strong>
+                 포인트<br>
+                <strong><i class="fa fa-database" aria-hidden="true"></i> <?php echo $point ?></strong>
             </a>
         </li>
         <li>
-            <a href="<?php echo G5_BBS_URL ?>/scrap.php" target="_blank" id="ol_after_scrap" class="win_scrap"><i class="fa fa-thumb-tack" aria-hidden="true"></i> 스크랩
-            <strong>11</strong>
+            <a href="<?php echo G5_BBS_URL ?>/scrap.php" target="_blank" id="ol_after_scrap" class="win_scrap">스크랩<br>
+            <strong><i class="fa fa-thumb-tack" aria-hidden="true"></i> 11</strong>
             </a>
             
         </li>
     </ul>
-    <footer id="ol_after_ft">
-        <a href="<?php echo G5_BBS_URL ?>/logout.php" id="ol_after_logout" class="btn_b02">로그아웃</a>
-    </footer>
+
 </section>
 
 <script>

@@ -43,7 +43,6 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
 <div id="copymove" class="new_win">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
-
     <form name="fboardmoveall" method="post" action="./move_update.php" onsubmit="return fboardmoveall_submit(this);">
     <input type="hidden" name="sw" value="<?php echo $sw ?>">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -57,43 +56,50 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <input type="hidden" name="act" value="<?php echo $act ?>">
     <input type="hidden" name="url" value="<?php echo get_text(clean_xss_tags($_SERVER['HTTP_REFERER'])); ?>">
 
-    <div class="list_01 new_win_con">
-        <span class="win_desc"><?php echo $act ?>할 게시판을 한개 이상 선택하여 주십시오.</span>
-        <div>
-            <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
-            <label for="chkall"><span  class="sound_only">현재 페이지 게시판</span> 전체선택</label>
-        </div>
-        <ul>
-            <?php for ($i=0; $i<count($list); $i++) {
-                $atc_mark = '';
-                $atc_bg = '';
-                if ($list[$i]['bo_table'] == $bo_table) { // 게시물이 현재 속해 있는 게시판이라면
-                    $atc_mark = '<span class="copymove_current">현재<span class="sound_only">게시판</span></span>';
-                    $atc_bg = 'copymove_currentbg';
-                }
-            ?>
-            <li class="<?php echo $atc_bg; ?>">
-                <td class="td_chk">
-                    <label for="chk<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['bo_table'] ?></label>
-                    <input type="checkbox" value="<?php echo $list[$i]['bo_table'] ?>" id="chk<?php echo $i ?>" name="chk_bo_table[]">
-                </td>
-                <td>
-                    <label for="chk<?php echo $i ?>">
-                        <?php
-                        echo $list[$i]['gr_subject'] . ' &gt; ';
-                        $save_gr_subject = $list[$i]['gr_subject'];
-                        ?>
-                        <?php echo $list[$i]['bo_subject'] ?> (<?php echo $list[$i]['bo_table'] ?>)
-                        <?php echo $atc_mark; ?>
-                    </label>
-                </td>
-            </li>
-            <?php } ?>
-        </ul>
+    <div class="tbl_head01 tbl_wrap">
+        <table>
+        <caption><?php echo $act ?>할 게시판을 한개 이상 선택하여 주십시오.</caption>
+        <thead>
+        <tr>
+            <th scope="col">
+                <label for="chkall" class="sound_only">현재 페이지 게시판 전체</label>
+                <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+            </th>
+            <th scope="col">게시판</th>
+        </tr>
+        </thead>
+        <tbody>
+        <?php for ($i=0; $i<count($list); $i++) {
+            $atc_mark = '';
+            $atc_bg = '';
+            if ($list[$i]['bo_table'] == $bo_table) { // 게시물이 현재 속해 있는 게시판이라면
+                $atc_mark = '<span class="copymove_current">현재<span class="sound_only">게시판</span></span>';
+                $atc_bg = 'copymove_currentbg';
+            }
+        ?>
+        <tr class="<?php echo $atc_bg; ?>">
+            <td class="td_chk">
+                <label for="chk<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['bo_table'] ?></label>
+                <input type="checkbox" value="<?php echo $list[$i]['bo_table'] ?>" id="chk<?php echo $i ?>" name="chk_bo_table[]">
+            </td>
+            <td>
+                <label for="chk<?php echo $i ?>">
+                    <?php
+                    echo $list[$i]['gr_subject'] . ' &gt; ';
+                    $save_gr_subject = $list[$i]['gr_subject'];
+                    ?>
+                    <?php echo $list[$i]['bo_subject'] ?> (<?php echo $list[$i]['bo_table'] ?>)
+                    <?php echo $atc_mark; ?>
+                </label>
+            </td>
+        </tr>
+        <?php } ?>
+        </tbody>
+        </table>
+    </div>
 
-        <div class="win_btn">
-            <input type="submit" value="<?php echo $act ?>" id="btn_submit" class="btn_submit">
-        </div>
+    <div class="win_btn">
+        <input type="submit" value="<?php echo $act ?>" id="btn_submit" class="btn_submit">
     </div>
     </form>
 
