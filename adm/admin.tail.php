@@ -29,8 +29,23 @@ $(".scroll_top").click(function(){
 <!-- <p>실행시간 : <?php echo get_microtime() - $begin_time; ?> -->
 
 <script src="<?php echo G5_ADMIN_URL ?>/admin.js?ver=<?php echo G5_JS_VER; ?>"></script>
+<script src="<?php echo G5_JS_URL ?>/jquery.anchorScroll.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script>
 $(function(){
+
+    var admin_head_height = $("#hd_top").height() + $("#container_title").height() + 5;
+
+    $("a[href^='#']").anchorScroll({
+        scrollSpeed: 0, // scroll speed
+        offsetTop: admin_head_height, // offset for fixed top bars (defaults to 0)
+        onScroll: function () { 
+          // callback on scroll start
+        },
+        scrollEnd: function () { 
+          // callback on scroll end
+        }
+    });
+
     var hide_menu = false;
     var mouse_event = false;
     var oldX = oldY = 0;
