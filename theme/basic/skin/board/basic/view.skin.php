@@ -144,10 +144,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 $cnt++;
         }
     }
-     ?>
+    ?>
 
-
-     <!-- 관련링크 시작 { -->
+    <?php if($cnt) { ?>
+    <!-- 관련링크 시작 { -->
     <section id="bo_v_link">
         <h2>관련링크</h2>
         <ul>
@@ -173,9 +173,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </ul>
     </section>
     <!-- } 관련링크 끝 -->
-
-
-    <!-- } 관련링크 끝 -->
+    <?php } ?>
 
     <!-- 게시물 상단 버튼 시작 { -->
     <div id="bo_v_top">
