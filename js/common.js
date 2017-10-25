@@ -69,6 +69,8 @@ function number_format(data)
     var cutlen = 3;
     var comma = ',';
     var i;
+    
+    data = data + '';
 
     var sign = data.match(/^[\+\-]/);
     if(sign) {
@@ -546,8 +548,6 @@ function font_resize(id, rmv_class, add_class)
 
     set_cookie("ck_font_resize_rmv_class", rmv_class, 1, g5_cookie_domain);
     set_cookie("ck_font_resize_add_class", add_class, 1, g5_cookie_domain);
-
-    $el.trigger("click_font_resize");
 }
 
 /**
@@ -723,25 +723,27 @@ function get_write_token(bo_table)
 }
 
 $(function() {
-    $(document).on("click", "form[name=fwrite] input:submit, form[name=fwrite] button:submit, form[name=fwrite] input:image", function() { 
+    $(document).on("click", "form[name=fwrite] input:submit, form[name=fwrite] button:submit, form[name=fwrite] input:image", function() {
         var f = this.form;
-        var bo_table = (typeof f.bo_table != "undefined") ? f.bo_table.value : "";
 
-        if( bo_table ){
-            var token = get_write_token(bo_table);
-
-            if(!token) {
-                alert("토큰 정보가 올바르지 않습니다.");
-                return false;
-            }
-
-            var $f = $(f);
-
-            if(typeof f.token === "undefined")
-                $f.prepend('<input type="hidden" name="token" value="">');
-
-            $f.find("input[name=token]").val(token);
+        if (typeof(f.bo_table) == "undefined") {
+            return;
         }
+
+        var bo_table = f.bo_table.value;
+        var token = get_write_token(bo_table);
+
+        if(!token) {
+            alert("토큰 정보가 올바르지 않습니다.");
+            return false;
+        }
+
+        var $f = $(f);
+
+        if(typeof f.token === "undefined")
+            $f.prepend('<input type="hidden" name="token" value="">');
+
+        $f.find("input[name=token]").val(token);
 
         return true;
     });

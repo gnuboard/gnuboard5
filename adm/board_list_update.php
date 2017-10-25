@@ -62,7 +62,10 @@ if ($_POST['act_button'] == "선택수정") {
 
         // include 전에 $bo_table 값을 반드시 넘겨야 함
         $tmp_bo_table = trim($_POST['board_table'][$k]);
-        include ('./board_delete.inc.php');
+
+        if( preg_match("/^[A-Za-z0-9_]+$/", $tmp_bo_table) ){
+            include ('./board_delete.inc.php');
+        }
     }
 
 

@@ -66,6 +66,7 @@ include_once(G5_PATH.'/head.sub.php');
  */
 if ($xpay->TX()) {
     //1)인증결과 화면처리(성공,실패 결과 처리를 하시기 바랍니다.)
+    
     /*
     echo "인증요청이 완료되었습니다.  <br>";
     echo "TX Response_code = " . $xpay->Response_Code() . "<br>";
@@ -76,11 +77,8 @@ if ($xpay->TX()) {
         echo $name . " = " . $xpay->Response($name, 0) . "<br>";
     }
 
-    echo "<p>";
+    echo "</p>";
     */
-
-    // 인증내역기록
-    @insert_cert_history($member['mb_id'], 'lg', 'hp');
 
     if( "0000" == $xpay->Response_Code() ) {
         //인증요청 결과 성공 DB처리
@@ -152,11 +150,23 @@ if ($xpay->TX()) {
         set_session("ss_cert_birth",   $birth_day);
         set_session("ss_cert_sex",     $mb_sex);
         set_session('ss_cert_dupinfo', $mb_dupinfo);
+
+        // 인증내역기록
+        @insert_cert_history($member['mb_id'], 'lg', 'hp');
+
     } else {
         //인증요청 결과 실패 DB처리
         //echo "인증요청 결과 실패 DB처리하시기 바랍니다.<br>";
 
-        alert_close('인증요청이 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg());
+        if( G5_IS_MOBILE ){
+            echo '<script>'.PHP_EOL;
+            echo 'window.parent.$("#cert_info").css("display", "");'.PHP_EOL;
+            echo 'window.parent.$("#lgu_cert" ).css("display", "none");'.PHP_EOL;
+            echo 'alert("인증요청이 취소 또는 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg().'")';
+            echo '</script>'.PHP_EOL;
+        } else {
+            alert_close('인증요청이 취소 또는 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg());
+        }
         exit;
     }
 } else {
@@ -170,20 +180,42 @@ if ($xpay->TX()) {
     echo "인증요청 결과 실패 DB처리하시기 바랍니다.<br>";
     */
 
-    alert_close('인증요청이 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg());
+    if( G5_IS_MOBILE ){
+        echo '<script>'.PHP_EOL;
+        echo 'window.parent.$("#cert_info").css("display", "");'.PHP_EOL;
+        echo 'window.parent.$("#lgu_cert" ).css("display", "none");'.PHP_EOL;
+        echo 'alert("인증요청이 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg().'")';
+        echo '</script>'.PHP_EOL;
+    } else {
+        alert_close('인증요청이 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg());
+    }
     exit;
 }
 ?>
 
 <script>
-$(function() {
+jQuery(function($) {
+    
     var $opener = window.opener;
+    var is_mobile = false;
+
+    if (typeof g5_is_mobile != "undefined" && g5_is_mobile ) {
+        $opener = window.parent;
+        is_mobile = true;
+    } else {
+        $opener = window.opener;
+    }
 
     // 인증정보
     $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
     $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>").attr("readonly", true);
     $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
     $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
+
+    if(is_mobile) {
+        $opener.$("#cert_info").css("display", "");
+        $opener.$("#lgu_cert" ).css("display", "none");
+    }
 
     alert("본인의 휴대폰번호로 확인 되었습니다.");
     window.close();

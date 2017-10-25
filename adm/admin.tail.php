@@ -1,5 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
+
+$print_version = defined('G5_YOUNGCART_VER') ? 'YoungCart Version '.G5_YOUNGCART_VER : 'Version '.G5_GNUBOARD_VER;
 ?>
 
         <noscript>
@@ -12,7 +14,7 @@ if (!defined('_GNUBOARD_')) exit;
         </div>    
         <footer id="ft">
             <p>
-                Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved.<br>
+                Copyright &copy; <?php echo $_SERVER['HTTP_HOST']; ?>. All rights reserved. <?php echo $print_version; ?><br>
                <button type="button" class="scroll_top"><span class="top_img"></span><span class="top_txt">TOP</span></button>
            </p>
         </footer>

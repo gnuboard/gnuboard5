@@ -7,7 +7,7 @@ if ($is_guest)
 $g5['title'] = '내 쪽지함';
 include_once(G5_PATH.'/head.sub.php');
 
-if (!$kind) $kind = 'recv';
+$kind = $kind ? clean_xss_tags(strip_tags($kind)) : 'recv';
 
 if ($kind == 'recv')
     $unkind = 'send';
