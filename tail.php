@@ -11,10 +11,16 @@ if (G5_IS_MOBILE) {
     return;
 }
 ?>
-        </div>  <?php /* end container_inner */ ?>
-    </div>  <?php /* end container */ ?>
-</div>  <?php /* end container_wr */ ?>
-</div>  <?php /* end wrapper */ ?>
+
+    </div>
+    <div id="aside">
+        <?php echo outlogin(); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
+        <?php echo poll(); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
+        <?php echo visit(); // 접속자집계, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
+    </div>
+</div>
+
+</div>
 <!-- } 콘텐츠 끝 -->
 
 <hr>

@@ -62,8 +62,7 @@ var g5_sca       = "<?php echo isset($sca)?$sca:''; ?>";
 var g5_editor    = "<?php echo ($config['cf_editor'] && $board['bo_use_dhtml_editor'])?$config['cf_editor']:''; ?>";
 var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
 </script>
-<script src="<?php echo G5_JS_URL ?>/jquery-1.12.4.min.js"></script>
-<script src="<?php echo G5_JS_URL ?>/jquery-migrate-1.4.1.min.js"></script>
+<script src="<?php echo G5_JS_URL ?>/jquery-1.8.3.min.js"></script>
 <script src="<?php echo G5_JS_URL ?>/jquery.menu.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script src="<?php echo G5_JS_URL ?>/common.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script src="<?php echo G5_JS_URL ?>/wrest.js?ver=<?php echo G5_JS_VER; ?>"></script>
@@ -77,7 +76,7 @@ if(!defined('G5_IS_ADMIN'))
     echo $config['cf_add_script'];
 ?>
 </head>
-<body>
+<body<?php echo isset($g5['body_script']) ? $g5['body_script'] : ''; ?>>
 <?php
 if ($is_member) { // 회원이라면 로그인 중이라는 메세지를 출력해준다.
     $sr_admin_msg = '';
