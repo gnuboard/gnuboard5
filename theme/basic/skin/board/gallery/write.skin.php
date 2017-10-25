@@ -117,7 +117,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <div>
         <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
-        <div class="wr_content">
+        <div class="wr_content <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
             <?php if($write_min || $write_max) { ?>
             <!-- 최소/최대 글자 수 사용 시 -->
             <p id="char_count_desc">이 게시판은 최소 <strong><?php echo $write_min; ?></strong>글자 이상, 최대 <strong><?php echo $write_max; ?></strong>글자 이하까지 글을 쓰실 수 있습니다.</p>

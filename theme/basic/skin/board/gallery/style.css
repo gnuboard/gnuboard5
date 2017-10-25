@@ -353,6 +353,7 @@ box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);}
 #bo_w .bo_w_info:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_w .bo_w_info .frm_input{float:left;width:33%}
 #bo_w #wr_password{margin:0 0.5%  }
+#bo_w .wr_content.smarteditor2 iframe{background:#fff}
 #bo_w .bo_w_tit{position:relative}
 #bo_w .bo_w_tit .frm_input{padding-right:120px;}
 #bo_w .bo_w_tit #btn_autosave{position:absolute;top:5px;right:5px;line-height:30px;height:30px;}

@@ -69,7 +69,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 
             </li>
 
-            <li>
+            <li class="qa_content_wrap <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
                 <label for="qa_content" class="sound_only">내용<strong class="sound_only">필수</strong></label>
                     <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
                 
