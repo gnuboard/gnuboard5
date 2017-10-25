@@ -11,16 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 ?>
 
 <div id="bo_list">
-    <?php if ($category_option) { ?>
-    <!-- 카테고리 시작 { -->
-    <nav id="bo_cate">
-        <h2><?php echo $qaconfig['qa_title'] ?> 카테고리</h2>
-        <ul id="bo_cate_ul">
-            <?php echo $category_option ?>
-        </ul>
-    </nav>
-    <!-- } 카테고리 끝 -->
-    <?php } ?>
+
 
      <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
@@ -37,6 +28,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         <?php } ?>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
+
+    <?php if ($category_option) { ?>
+    <!-- 카테고리 시작 { -->
+    <nav id="bo_cate">
+        <h2><?php echo $qaconfig['qa_title'] ?> 카테고리</h2>
+        <ul id="bo_cate_ul">
+            <?php echo $category_option ?>
+        </ul>
+    </nav>
+    <!-- } 카테고리 끝 -->
+    <?php } ?>
 
     <form name="fqalist" id="fqalist" action="./qadelete.php" onsubmit="return fqalist_submit(this);" method="post">
     <input type="hidden" name="stx" value="<?php echo $stx; ?>">
@@ -77,7 +79,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 <span class="bo_cate_link"><?php echo $list[$i]['category']; ?></span>
                 <a href="<?php echo $list[$i]['view_href']; ?>" class="bo_tit">
                     <?php echo $list[$i]['subject']; ?>
-                    <?php echo $list[$i]['icon_file']; ?>
+                    <?php if ($list[$i]['icon_file']) echo " <i class=\"fa fa-download\" aria-hidden=\"true\"></i>" ; ?>
                 </a>
             </td>
             <td class="td_name"><span class="profile_img"><img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span> <?php echo $list[$i]['name']; ?></td>
@@ -96,9 +98,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     <div class="bo_fx">
         <ul class="btn_bo_user">
             <?php if ($is_checkbox) { ?>
-            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_admin"><i class="fa fa-trash-o" aria-hidden="true"></i></button></li>
+            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_admin"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
             <?php } ?>
-            <?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i>목록</a></li><?php } ?>
+            <?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i> 목록</a></li><?php } ?>
             <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02 btn"><i class="fa fa-pencil" aria-hidden="true"></i> 문의등록</a></li><?php } ?>
         </ul>
     </div>
