@@ -6,6 +6,16 @@ $g5['social_profile_table'] = G5_TABLE_PREFIX.'member_social_profiles';
 
 //플러그인 폴더 이름 및 스킨 폴더 이름
 define('G5_SOCIAL_LOGIN_DIR', 'social');
+
+// 소셜로그인 login_start 파라미터 이름입니다. 기본값은 hauth.start
+define('G5_SOCIAL_LOGIN_START_PARAM', 'hauth.start');
+
+// 소셜로그인 login_done 파라미터 이름입니다. 기본값은 hauth.done
+define('G5_SOCIAL_LOGIN_DONE_PARAM', 'hauth.done');
+
+// 소셜로그인 G5_SOCIAL_LOGIN_URL 값의 끝에 해당 문자열을 더합니다.
+define('G5_SOCIAL_LOGIN_ADD_URL', '/');
+
 define('G5_SOCIAL_LOGIN_PATH', G5_PLUGIN_PATH.'/'.G5_SOCIAL_LOGIN_DIR);
 define('G5_SOCIAL_LOGIN_URL', G5_PLUGIN_URL.'/'.G5_SOCIAL_LOGIN_DIR);
 

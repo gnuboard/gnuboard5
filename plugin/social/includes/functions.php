@@ -80,7 +80,19 @@ function social_login_get_provider_adapter( $provider )
 
     $newsession  = $g5['hybrid_auth']->getSessionData();
 
-	return $g5['hybrid_auth']->authenticate($provider);
+    if( defined('G5_SOCIAL_LOGIN_START_PARAM') && G5_SOCIAL_LOGIN_START_PARAM === 'hauth.start' && G5_SOCIAL_LOGIN_DONE_PARAM === 'hauth.done' ){
+        return $g5['hybrid_auth']->authenticate($provider);
+    }
+    
+    $base_url = G5_SOCIAL_LOGIN_URL.G5_SOCIAL_LOGIN_ADD_URL;
+    $hauth_time = time();
+
+    $connect_data = array(
+            'login_start' => $base_url . ( strpos($base_url, '?') ? '&' : '?' ) . G5_SOCIAL_LOGIN_START_PARAM.'='.$provider.'&hauth.time='.$hauth_time,
+            'login_done'  => $base_url . ( strpos($base_url, '?') ? '&' : '?' ) . G5_SOCIAL_LOGIN_DONE_PARAM.'='.$provider,
+    );
+
+    return $g5['hybrid_auth']->authenticate($provider, $connect_data);
 }
 
 function social_before_join_check($url=''){

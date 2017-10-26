@@ -10,8 +10,6 @@
 // ------------------------------------------------------------------------
 
 include_once('_common.php');
-require_once( "Hybrid/Auth.php" );
-require_once( "Hybrid/Endpoint.php" );
 require_once( "includes/g5_endpoint.php" );
 
-G5_Hybrid_Endpoint::process();
+G5_Hybrid_Authentication::hybridauth_endpoint();
