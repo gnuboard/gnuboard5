@@ -11,11 +11,11 @@ class G5_Hybrid_Authentication {
         require_once( G5_SOCIAL_LOGIN_PATH.'/includes/g5_endpoint_class.php' );
 
         if( defined('G5_SOCIAL_LOGIN_START_PARAM') && G5_SOCIAL_LOGIN_START_PARAM !== 'hauth.start' && isset($_REQUEST[G5_SOCIAL_LOGIN_START_PARAM]) ){
-            $_REQUEST['hauth.start'] = preg_replace('/[^a-zA-Z0-9\-\._]/i', '', $_REQUEST[G5_SOCIAL_LOGIN_START_PARAM]);
+            $_REQUEST['hauth_start'] = preg_replace('/[^a-zA-Z0-9\-\._]/i', '', $_REQUEST[G5_SOCIAL_LOGIN_START_PARAM]);
         }
 
         if( defined('G5_SOCIAL_LOGIN_DONE_PARAM') && G5_SOCIAL_LOGIN_DONE_PARAM !== 'hauth.done' && isset($_REQUEST[G5_SOCIAL_LOGIN_DONE_PARAM]) ){
-            $_REQUEST['hauth.done'] = preg_replace('/[^a-zA-Z0-9\-\._]/i', '', $_REQUEST[G5_SOCIAL_LOGIN_DONE_PARAM]);
+            $_REQUEST['hauth_done'] = preg_replace('/[^a-zA-Z0-9\-\._]/i', '', $_REQUEST[G5_SOCIAL_LOGIN_DONE_PARAM]);
         }
 
         /*

@@ -41,10 +41,16 @@ if($tmp_mb_nick != $mb_nick) {
     alert('닉네임을 올바르게 입력해 주십시오.');
 }
 
-if ($w == '' && !$mb_password)
-    alert('비밀번호가 넘어오지 않았습니다.');
-if($w == '' && $mb_password != $mb_password_re)
-    alert('비밀번호가 일치하지 않습니다.');
+if( $mb_password ){
+
+    if ($w == '' && !$mb_password)
+        alert('비밀번호가 넘어오지 않았습니다.');
+    if($w == '' && $mb_password != $mb_password_re)
+        alert('비밀번호가 일치하지 않습니다.');
+
+} else {
+    $mb_password = '';
+}
 
 if ($msg = empty_mb_name($mb_name))       alert($msg, "", true, true);
 if ($msg = empty_mb_nick($mb_nick))     alert($msg, "", true, true);

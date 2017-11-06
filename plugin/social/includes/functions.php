@@ -84,7 +84,7 @@ function social_login_get_provider_adapter( $provider )
         return $g5['hybrid_auth']->authenticate($provider);
     }
     
-    $base_url = G5_SOCIAL_LOGIN_URL.G5_SOCIAL_LOGIN_ADD_URL;
+    $base_url = SOCIAL_LOGIN_BASE_URL;
     $hauth_time = time();
 
     $connect_data = array(
@@ -868,6 +868,32 @@ function social_service_check($provider){
     }
     
     return false;
+}
+
+function exist_mb_id_recursive($mb_id){
+    static $count = 0;
+
+    $mb_id = ($count > 0) ? $mb_id.(string)$count : $mb_id;
+
+    if( ! exist_mb_id($mb_id) ){
+        return $mb_id;
+    }
+    
+    $count++;
+    return exist_mb_id_recursive($mb_id);
+}
+
+function exist_mb_nick_recursive($mb_nick){
+    static $count = 0;
+
+    $mb_nick = ($count > 0) ? $mb_nick.(string)$count : $mb_nick;
+
+    if( ! exist_mb_nick($mb_nick, '') ){
+        return $mb_nick;
+    }
+    
+    $count++;
+    return exist_mb_nick_recursive($mb_nick);
 }
 
 function social_get_nonce($key=''){

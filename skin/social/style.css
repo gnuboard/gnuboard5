@@ -56,4 +56,45 @@
 .social-login-loading{width:100%;height:auto;text-align:center}
 .social-login-loading p{display:inline-block;margin-top:10px;padding:40px 0 0;line-height:30px}
 
+/*기존 계정에 연결하기*/
 
+/* Styles for Accordion */
+.mbskin .toggle:last-child{border-bottom:1px solid #ddd}
+.mbskin .toggle .toggle-title{position:relative;display:block;border-top:1px solid #ddd;margin-bottom:6px}
+.mbskin .toggle .toggle-title h3{font-size:20px;margin:0;line-height:1;cursor:pointer;font-weight:200}
+.mbskin .toggle .toggle-inner{padding:7px 25px 10px 25px;display:none;margin:-7px 0 6px}
+.mbskin .toggle .toggle-inner div{max-width:100%}
+.mbskin .toggle .toggle-title .title-name{display:block;padding:25px 25px 14px}
+.mbskin .right_i{position:absolute;margin:20px;right:0}
+.mbskin .toggle .toggle-title .right_i i{background:url("http://arielbeninca.com/Storage/plus_minus.png") 0 -24px no-repeat;width:24px;height:24px;display:inline-block;vertical-align:middle}
+.mbskin .toggle .toggle-title.active .right_i i{background:url("http://arielbeninca.com/Storage/plus_minus.png") 0 0 no-repeat}
+
+
+#fregisterform .btn_confirm{text-align:left}
+#fregisterform .btn_confirm .btn_submit{height:45px;;padding:0 30px;font-weight:bold;font-size:1.083em}
+#fregisterform .btn_confirm .btn_cancel{line-height:45px;height:45px;padding:0 30px;font-weight:bold;font-size:1.083em}
+
+#sns-link-pnl.remodal{border-radius:5px}
+#sns-link-pnl .mw-close {position:absolute;top:10px;right:10px;margin:0;padding:0;width:30px;height:30px;border:1px solid #dcdcdc;border-radius:30px;background:transparent;color:#383838;cursor:pointer}
+#sns-link-pnl .mw-close:hover {border-color:#ff5191;background:#f7f7f7;color:#ff5191}
+#sns-link-pnl .mw-close .fa {margin:0 0 0 1px}
+#sns-link-pnl .mw-close .txt {position:absolute;line-height:0;font-size:0;overflow:hidden}
+
+#sns-link-pnl #login_fs{margin:0 auto;width:100%;text-align:left}
+#sns-link-pnl #login_fs label{display:block;display: block;font-size: 0.93em;color: #7a7a7a;margin: 5px 0;}
+#sns-link-pnl #login_fs .lg_id,#sns-link-pnl #login_fs .lg_pw{width:100%;margin-bottom:5px;}
+#sns-link-pnl #login_id,#sns-link-pnl #login_pw{margin-left: 45px;border: none;font-size: 1.167em;height: 36px;line-height: 36px;border: transparent;outline: none;width:212px;background:none}
+#sns-link-pnl #login_fs .login_submit{background: url('./img/btn_p.jpg') 50% 50% no-repeat;width: 260px;height: 44px;border: none;color: #fff;font-size:1.167em;margin:10px auto 0;font-weight:bold;cursor:pointer;display:block;}
+#sns-link-pnl .mw-fg {height:320px;text-align:left}
+#sns-link-pnl .login_fs {margin:0 auto;width:260px}
+#sns-link-pnl .mw-fg .mw-desc {margin:0 0 10px;padding:15px;border:1px solid #ededed;background:#f7f7f7}
+#sns-link-pnl .lg_id{background:#fff;border:1px solid #e6e6e6;width:258px;height:36px;background:url('./img/login_id.jpg') 10px 50% no-repeat #fff !important;display:inline-block}
+#sns-link-pnl .lg_pw{background:#fff;border:1px solid #e6e6e6;width:258px;height:36px;background:url('./img/login_pw.jpg') 10px 50% no-repeat #fff !important;display:inline-block}
+#sns-link-pnl .mw-fg .mw-title {margin-top:25px;margin-bottom:10px;font-size:1.667em;font-weight:normal;text-align:center}
+
+.member_connect{margin-top:1em}
+
+html.remodal-is-locked {overflow-y:scroll !important}
+@media only screen and (min-width: 641px) {
+    #sns-link-pnl.remodal{max-width:400px}
+}

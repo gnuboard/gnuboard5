@@ -13,11 +13,11 @@ define('G5_SOCIAL_LOGIN_START_PARAM', 'hauth.start');
 // 소셜로그인 login_done 파라미터 이름입니다. 기본값은 hauth.done
 define('G5_SOCIAL_LOGIN_DONE_PARAM', 'hauth.done');
 
-// 소셜로그인 G5_SOCIAL_LOGIN_URL 값의 끝에 해당 문자열을 더합니다.
-define('G5_SOCIAL_LOGIN_ADD_URL', '/');
-
 define('G5_SOCIAL_LOGIN_PATH', G5_PLUGIN_PATH.'/'.G5_SOCIAL_LOGIN_DIR);
 define('G5_SOCIAL_LOGIN_URL', G5_PLUGIN_URL.'/'.G5_SOCIAL_LOGIN_DIR);
+
+// 소셜로그인 SOCIAL_LOGIN_BASE_URL 기본값은 G5_SOCIAL_LOGIN_URL.'/'
+define('SOCIAL_LOGIN_BASE_URL', G5_SOCIAL_LOGIN_URL.'/');
 
 if(G5_IS_MOBILE) {
     define('G5_SOCIAL_SKIN_PATH', G5_PATH.'/'.G5_MOBILE_DIR.'/'.G5_SKIN_DIR.'/'.G5_SOCIAL_LOGIN_DIR);
