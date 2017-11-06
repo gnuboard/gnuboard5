@@ -240,7 +240,7 @@ switch($LGD_PAYTYPE) {
         <tr>
             <th scope="row">현금영수증 URL</th>
             <td>
-                <button type="button" name="receiptView" class="btn_frmline" onClick="javascript:showCashReceipts('<?php echo $LGD_MID; ?>','<?php echo $LGD_OID; ?>','<?php echo $od_casseqno; ?>','<?php echo $trade_type; ?>','<?php echo $CST_PLATFROM; ?>');">영수증 확인</button>
+                <button type="button" name="receiptView" class="btn_frmline" onClick="javascript:showCashReceipts('<?php echo $LGD_MID; ?>','<?php echo $LGD_OID; ?>','<?php echo $od_casseqno; ?>','<?php echo $trade_type; ?>','<?php echo $CST_PLATFORM; ?>');">영수증 확인</button>
                 <p>영수증 확인은 실 등록의 경우에만 가능합니다.</p>
             </td>
         </tr>
