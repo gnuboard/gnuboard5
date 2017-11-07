@@ -32,7 +32,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
         </li>
         <li>
             <a href="<?php echo G5_BBS_URL ?>/scrap.php" target="_blank" id="ol_after_scrap" class="win_scrap">스크랩<br>
-            <strong><i class="fa fa-thumb-tack" aria-hidden="true"></i> 11</strong>
+            <strong class="scrap"><i class="fa fa-thumb-tack" aria-hidden="true"></i></strong>
             </a>
             
         </li>
