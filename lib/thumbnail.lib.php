@@ -284,6 +284,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 
     $is_large = true;
     // width, height 설정
+
     if($thumb_width) {
         if(!$thumb_height) {
             $thumb_height = round(($thumb_width * $size[1]) / $size[0]);
@@ -348,7 +349,6 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         } else { // 비율에 맞게 생성
             $dst = imagecreatetruecolor($dst_w, $dst_h);
             $bgcolor = imagecolorallocate($dst, 255, 255, 255); // 배경색
-
             if($src_w > $src_h) {
                 $tmp_h = round(($dst_w * $src_h) / $src_w);
                 $dst_y = round(($dst_h - $tmp_h) / 2);
@@ -384,8 +384,14 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 
         if($src_w < $dst_w) {
             if($src_h >= $dst_h) {
-                $dst_x = round(($dst_w - $src_w) / 2);
-                $src_h = $dst_h;
+                if( $src_h > $src_w ){
+                    $tmp_w = round(($dst_h * $src_w) / $src_h);
+                    $dst_x = round(($dst_w - $tmp_w) / 2);
+                    $dst_w = $tmp_w;
+                } else {
+                    $dst_x = round(($dst_w - $src_w) / 2);
+                    $src_h = $dst_h;
+                }
             } else {
                 $dst_x = round(($dst_w - $src_w) / 2);
                 $dst_y = round(($dst_h - $src_h) / 2);
@@ -394,9 +400,15 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             }
         } else {
             if($src_h < $dst_h) {
-                $dst_y = round(($dst_h - $src_h) / 2);
-                $dst_h = $src_h;
-                $src_w = $dst_w;
+                if( $src_w > $dst_w ){
+                    $tmp_h = round(($dst_w * $src_h) / $src_w);
+                    $dst_y = round(($dst_h - $tmp_h) / 2);
+                    $dst_h = $tmp_h;
+                } else {
+                    $dst_y = round(($dst_h - $src_h) / 2);
+                    $dst_h = $src_h;
+                    $src_w = $dst_w;
+                }
             }
         }
 
