@@ -2021,8 +2021,12 @@ function sql_real_escape_string($str, $link=null)
 
     if(!$link)
         $link = $g5['connect_db'];
+    
+    if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
+        return mysqli_real_escape_string($link, $str);
+    }
 
-    return mysqli_real_escape_string($link, $str);
+    return mysql_real_escape_string($str, $link);
 }
 
 function escape_trim($field)
