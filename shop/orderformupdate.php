@@ -283,7 +283,7 @@ else if ($od_settle_case == "계좌이체")
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inipay_result.php';
+            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -310,7 +310,7 @@ else if ($od_settle_case == "가상계좌")
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inipay_result.php';
+            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             $od_app_no = $app_no;
             break;
         default:
@@ -335,7 +335,7 @@ else if ($od_settle_case == "휴대폰")
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inipay_result.php';
+            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -359,7 +359,7 @@ else if ($od_settle_case == "신용카드")
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inipay_result.php';
+            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -385,7 +385,7 @@ else if ($od_settle_case == "간편결제")
             include G5_SHOP_PATH.'/lg/xpay_result.php';
             break;
         case 'inicis':
-            include G5_SHOP_PATH.'/inicis/inipay_result.php';
+            include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';

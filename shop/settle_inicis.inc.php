@@ -35,7 +35,7 @@ else {
 /**************************
  * 1. 라이브러리 인클루드 *
  **************************/
-require(G5_SHOP_PATH.'/inicis/libs/INILib.php');
+require_once(G5_SHOP_PATH.'/inicis/libs/INILib.php');
 require_once(G5_SHOP_PATH.'/inicis/libs/INIStdPayUtil.php');
 require_once(G5_SHOP_PATH.'/inicis/libs/sha256.inc.php');
 
@@ -67,7 +67,7 @@ $siteDomain = G5_SHOP_URL.'/inicis'; //가맹점 도메인 입력
 // Ex) returnURL이 http://localhost:8082/demo/INIpayStdSample/INIStdPayReturn.php 라면
 //                 http://localhost:8082/demo/INIpayStdSample 까지만 기입한다.
 
-$returnUrl = $siteDomain.'/INIStdPayReturn.php';
+$returnUrl = $siteDomain.'/inistdpay_return.php';
 $closeUrl  = $siteDomain.'/close.php';
 $popupUrl  = $siteDomain.'/popup.php';
 
