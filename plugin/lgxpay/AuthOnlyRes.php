@@ -80,9 +80,6 @@ if ($xpay->TX()) {
     echo "</p>";
     */
 
-    // 인증내역기록
-    @insert_cert_history($member['mb_id'], 'lg', 'hp');
-
     if( "0000" == $xpay->Response_Code() ) {
         //인증요청 결과 성공 DB처리
         //echo "인증요청 결과 성공 DB처리하시기 바랍니다.<br>";
@@ -153,6 +150,10 @@ if ($xpay->TX()) {
         set_session("ss_cert_birth",   $birth_day);
         set_session("ss_cert_sex",     $mb_sex);
         set_session('ss_cert_dupinfo', $mb_dupinfo);
+
+        // 인증내역기록
+        @insert_cert_history($member['mb_id'], 'lg', 'hp');
+
     } else {
         //인증요청 결과 실패 DB처리
         //echo "인증요청 결과 실패 DB처리하시기 바랍니다.<br>";
@@ -161,10 +162,10 @@ if ($xpay->TX()) {
             echo '<script>'.PHP_EOL;
             echo 'window.parent.$("#cert_info").css("display", "");'.PHP_EOL;
             echo 'window.parent.$("#lgu_cert" ).css("display", "none");'.PHP_EOL;
-            echo 'alert("인증요청이 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg().'")';
+            echo 'alert("인증요청이 취소 또는 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg().'")';
             echo '</script>'.PHP_EOL;
         } else {
-            alert_close('인증요청이 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg());
+            alert_close('인증요청이 취소 또는 실패하였습니다.\\n\\n코드 : '.$xpay->Response_Code().'  '.$xpay->Response_Msg());
         }
         exit;
     }

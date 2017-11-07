@@ -69,6 +69,8 @@ function number_format(data)
     var cutlen = 3;
     var comma = ',';
     var i;
+    
+    data = data + '';
 
     var sign = data.match(/^[\+\-]/);
     if(sign) {
