@@ -25,7 +25,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <?php
     // 소셜로그인 사용시 소셜로그인 버튼
-    @include_once(get_social_skin_path().'/social_login_icon.skin.php');
+    @include_once(get_social_skin_path().'/social_login.skin.php');
     ?>
 
     <aside id="login_info">

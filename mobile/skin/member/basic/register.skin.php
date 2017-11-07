@@ -9,7 +9,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <?php
     // 소셜로그인 사용시 소셜로그인 버튼
-    @include_once(get_social_skin_path().'/register_social.skin.php');
+    @include_once(get_social_skin_path().'/social_register.skin.php');
     ?>
 
     <form name="fregister" id="fregister" action="<?php echo $register_action_url ?>" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">

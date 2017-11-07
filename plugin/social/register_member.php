@@ -46,7 +46,7 @@ $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) &
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
 
-include_once(G5_SOCIAL_SKIN_PATH.'/register_social_member.skin.php');
+include_once(G5_SOCIAL_SKIN_PATH.'/social_register_member.skin.php');
 
 include_once(G5_BBS_PATH.'/_tail.php');
 ?>
