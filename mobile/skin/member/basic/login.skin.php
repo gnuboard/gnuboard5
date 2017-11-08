@@ -23,6 +23,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
        <input type="submit" value="로그인" class="btn_submit">
     </div>
 
+    <?php
+    // 소셜로그인 사용시 소셜로그인 버튼
+    @include_once(get_social_skin_path().'/social_login.skin.php');
+    ?>
+
     <section class="mb_login_join">
         <h2>회원로그인 안내</h2>
         

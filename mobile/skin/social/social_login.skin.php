@@ -10,8 +10,9 @@ $social_pop_once = false;
 $self_url = G5_BBS_URL."/login.php";
 
 //새창을 사용한다면
-if( G5_SOCIAL_USE_POPUP )
+if( G5_SOCIAL_USE_POPUP ) {
     $self_url = G5_SOCIAL_LOGIN_URL.'/popup.php';
+}
 
 add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css">', 10);
 ?>
