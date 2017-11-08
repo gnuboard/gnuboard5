@@ -38,7 +38,7 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
     {
         $token = $this->generate_state_token();
         Hybrid_Auth::storage()->set("naver_state_token", $token);
-
+        
         $parameters = array(
             "response_type" => "code",
             "client_id" => $this->api->client_id,

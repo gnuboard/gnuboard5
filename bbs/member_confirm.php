@@ -11,8 +11,9 @@ else
     $urlencode = urlencode($_SERVER[REQUEST_URI]);
 */
 
-if( function_exists('is_social_member_type') && 'is_social' == is_social_member_type($member) ){
-    goto_url( G5_PLUGIN_URL.'/oauth/register_member.php' );
+//소셜 로그인 한 경우
+if( function_exists('social_member_comfirm_redirect') ){    
+    social_member_comfirm_redirect();
 }
 
 $g5['title'] = '회원 비밀번호 확인';

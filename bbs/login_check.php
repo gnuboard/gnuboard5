@@ -115,6 +115,7 @@ if ($url) {
 if(function_exists('social_login_success_after')){
     // 로그인 성공시 소셜 데이터를 기존의 데이터와 비교하여 바뀐 부분이 있으면 업데이트 합니다.
     $link = social_login_success_after($mb, $link);
+    social_login_session_clear(1);
 }
 
 goto_url($link);

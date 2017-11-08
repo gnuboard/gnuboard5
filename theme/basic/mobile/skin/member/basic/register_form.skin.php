@@ -222,6 +222,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </li>
         <?php } ?>
 
+        <?php
+        //회원정보 수정인 경우 소셜 계정 출력
+        if( $w == 'u' && function_exists('social_member_provider_manage') ){
+            social_member_provider_manage();
+        }
+        ?>
+
         <?php if ($w == "" && $config['cf_use_recommend']) { ?>
         <li>
             <label for="reg_mb_recommend" class="sound_only">추천인아이디</label>

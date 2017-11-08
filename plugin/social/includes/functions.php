@@ -347,12 +347,14 @@ function social_get_request_provider(){
     return $provider_name;
 }
 
-function social_login_session_clear(){
+function social_login_session_clear($mycf=0){
 	$_SESSION["HA::STORE"]        = array(); // used by hybridauth library. to clear as soon as the auth process ends.
 	$_SESSION["HA::CONFIG"]       = array(); // used by hybridauth library. to clear as soon as the auth process ends.
     set_session('sl_userprofile', '');
-    set_session('ss_social_provider', '');
     set_session('social_login_redirect', '');
+    if(!$mycf){
+        set_session('ss_social_provider', '');
+    }
 }
 
 function social_session_exists_check(){
@@ -360,13 +362,6 @@ function social_session_exists_check(){
     $provider_name = social_get_request_provider();
 
     if(!$provider_name){
-        /*
-        if( isset($_SESSION['sl_userprofile']) ){
-            $sl_userprofile = $_SESSION['sl_userprofile'];
-            reset($sl_userprofile);
-            $provider_name = key($sl_userprofile);
-        }
-        */
         return false;
     }
 
@@ -425,11 +420,11 @@ if( !function_exists('replaceQueryParams') ){
     }
 }
 
-function social_check_login_before(){
+function social_check_login_before($p_service=''){
     global $is_member, $member;
 
     $action = isset( $_REQUEST['action'] ) ? social_escape_request($_REQUEST['action']) : '';
-    $provider_name = social_get_request_provider();
+    $provider_name = $p_service ? $p_service : social_get_request_provider();
     $url = isset($_REQUEST['url']) ? $_REQUEST['url'] : G5_URL;
     $mode = isset($_REQUEST['mode']) ? $_REQUEST['mode'] : 'login';
     $use_popup = G5_SOCIAL_USE_POPUP ? 1 : 2;
@@ -471,6 +466,7 @@ function social_check_login_before(){
         if( $user_provider = social_get_data('provider', $provider_name, $user_profile) ){
 
             if( $is_member ){
+
                 $msg = "이미 로그인 하셨거나 잘못된 요청입니다.";
                 
                 if( $mylink ){
@@ -481,6 +477,10 @@ function social_check_login_before(){
                     alert_close( $msg );
                 } else {
                     alert( $msg );
+                }
+
+                if( is_object( $adapter ) ){    //연결한것은 인증 받은 즉시 로그아웃한다.
+                    social_logout_with_adapter($adapter);
                 }
                 exit;
             }
@@ -504,7 +504,7 @@ function social_check_login_before(){
                     social_user_profile_replace($member['mb_id'], $provider_name, $user_profile);
 
                     if( is_object( $adapter ) ){    //연결한것은 인증 받은 즉시 로그아웃한다.
-                        $adapter->logout();
+                        social_logout_with_adapter($adapter);
                     }
 
                     if( $use_popup == 1 || ! $use_popup ){   //팝업이면
@@ -608,6 +608,70 @@ function social_is_login_check(){
     return false;
 }
 
+function social_logout_with_adapter($adapter=null){
+    if( is_object( $adapter ) ){
+        $adapter->logout();
+    }
+    social_login_session_clear(1);
+}
+
+function social_member_provider_manage(){
+    global $member;
+
+    return social_login_link_account($member['mb_id'], false, 'mb_form');
+}
+
+function social_member_comfirm_redirect(){
+    global $is_member;
+
+    if( !$is_member ){
+        return;
+    }
+
+    $provider_name = get_session('ss_social_provider');
+
+    if( social_get_provider_service_name($provider_name) ){
+
+        try
+        {
+            $adapter = social_login_get_provider_adapter( $provider_name );
+            
+            // then grab the user profile 
+            $user_profile = $adapter->getUserProfile();
+        }
+
+        catch( Exception $e )
+        {
+            $get_error = social_get_error_msg( $e->getCode() );
+
+            if( is_object( $adapter ) ){
+                social_logout_with_adapter($adapter);
+            }
+
+            alert('SNS 사용자 인증에 실패하였습니다.', G5_URL);
+        }
+
+        if( $user_provider = social_get_data('provider', $provider_name, $user_profile) ){
+            
+            social_login_session_clear(1);
+
+            $url = G5_BBS_URL.'/register_form.php';
+
+            $social_token = social_nonce_create($provider_name);
+            set_session('social_link_token', $social_token);
+            
+            $params = array('provider'=>$provider_name);
+
+            $url = replaceQueryParams($url, $params);
+            goto_url($url);
+
+        }
+
+        set_session('ss_social_provider', '');
+        alert('잘못된 요청입니다.', G5_URL);
+    }
+}
+
 function social_is_login_password_check($mb_id){
     global $g5;
 
@@ -670,16 +734,7 @@ function social_login_success_after($mb, $link='', $mode='', $tmp_create_info=ar
             set_session('ss_mb_key', md5($mb['mb_datetime'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']));
 
             if( !empty($user_profile->photoURL) ){  //회원 프로필 사진이 있다면
-                $url = $user_profile->photoURL;
-                
-                $mb_dir = G5_DATA_PATH."/member_image";
-                $mb_dir .= "/".substr($mb_id,0,2);
-                @mkdir($mb_dir, 0707);
-                @chmod($mb_dir, 0707);
-
-                $dest_path = "$mb_dir/$mb_id.gif";
-                
-                social_profile_img_resize($dest_path, $user_profile->photoURL, 58, 58 );
+                //해당 처리
             }
 
             return;
@@ -688,48 +743,6 @@ function social_login_success_after($mb, $link='', $mode='', $tmp_create_info=ar
     }
 
     return $link;
-}
-
-function social_profile_img_resize($path, $file_url, $width, $height){
-
-    list($w, $h, $ext) = @getimagesize($file_url);
-    if( $w && $h && $ext ){
-        $ratio = max($width/$w, $height/$h);
-        $h = ceil($height / $ratio);
-        $x = ($w - $width / $ratio) / 2;
-        $w = ceil($width / $ratio);
-
-        $tmp = imagecreatetruecolor($width, $height);
-        
-        if($ext == 1){
-            $image = imagecreatefromgif($file_url);
-        } else if($ext == 3) {
-            $image = imagecreatefrompng($file_url);
-        } else {
-            $image = imagecreatefromjpeg($file_url);
-        }
-        imagecopyresampled($tmp, $image,
-        0, 0,
-        $x, 0,
-        $width, $height,
-        $w, $h);
-
-        switch ($ext) {
-        case '2':
-          imagejpeg($tmp, $path, 100);
-          break;
-        case '3':
-          imagepng($tmp, $path, 0);
-          break;
-        case '1':
-          imagegif($tmp, $path);
-          break;
-        }
-
-        /* cleanup memory */
-        imagedestroy($image);
-        imagedestroy($tmp);
-    }
 }
 
 function social_login_link_account($mb_id, $is_buffer=false, $is_type=''){
@@ -813,18 +826,25 @@ function social_provider_logout($provider='', $session_delete=1){
 
         try
         {
-            if( $adapter = social_login_get_provider_adapter( $provider ) ){
-                if( $session_delete )
-                    set_session('ss_social_provider', '');
+            if( ! class_exists( 'Hybrid_Auth', false ) )
+            {
+                include_once G5_SOCIAL_LOGIN_PATH . "/Hybrid/Auth.php";
+            }
 
-                //Hybrid_Auth::logoutAllProviders();
+            Hybrid_Auth::logoutAllProviders();
+            
+            /*
+            if( $adapter = social_login_get_provider_adapter( $provider ) ){
                 $adapter->logout();
             }
+            */
+            if( $session_delete )
+                set_session('ss_social_provider', '');
         }
 
         catch( Exception $e ){
             if( is_object( $adapter ) ){
-                $adapter->logout();
+                social_logout_with_adapter($adapter);
             }
         }
     }
@@ -873,10 +893,10 @@ function social_service_check($provider){
 function exist_mb_id_recursive($mb_id){
     static $count = 0;
 
-    $mb_id = ($count > 0) ? $mb_id.(string)$count : $mb_id;
+    $mb_id_add = ($count > 0) ? $mb_id.(string)$count : $mb_id;
 
-    if( ! exist_mb_id($mb_id) ){
-        return $mb_id;
+    if( ! exist_mb_id($mb_id_add) ){
+        return $mb_id_add;
     }
     
     $count++;
@@ -886,10 +906,10 @@ function exist_mb_id_recursive($mb_id){
 function exist_mb_nick_recursive($mb_nick){
     static $count = 0;
 
-    $mb_nick = ($count > 0) ? $mb_nick.(string)$count : $mb_nick;
+    $mb_nick_add = ($count > 0) ? $mb_nick.(string)$count : $mb_nick;
 
-    if( ! exist_mb_nick($mb_nick, '') ){
-        return $mb_nick;
+    if( ! exist_mb_nick($mb_nick_add, '') ){
+        return $mb_nick_add;
     }
     
     $count++;
