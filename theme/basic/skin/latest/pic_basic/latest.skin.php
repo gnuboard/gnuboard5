@@ -18,7 +18,7 @@ $thumb_height = 150;
     if($thumb['src']) {
         $img = $thumb['src'];
     } else {
-        $img = $latest_skin_path.'/img/no_img.gif';
+        $img = $latest_skin_url.'/img/no_img.gif';
     }
     $img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" width="'.$thumb_width.'" height="'.$thumb_height.'">';
     ?>
