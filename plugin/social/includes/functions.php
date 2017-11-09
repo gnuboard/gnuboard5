@@ -196,6 +196,8 @@ function social_user_profile_replace( $mb_id, $provider, $profile ){
     if( !$mb_id )
         return;
 
+    // $profile 에 성별, 나이, 생일 등의 정보가 포함되어 있습니다.
+
     //받아온 정보를 암호화 하여
     $object_sha = sha1( serialize( $profile ) );
     
@@ -209,7 +211,7 @@ function social_user_profile_replace( $mb_id, $provider, $profile ){
         }
     }
     
-    $sql = sprintf("SELECT mp_no, object_sha from {$g5['social_profile_table']} where mb_id= '%s' and provider= '%s' and identifier = '%s' ", $mb_id, $provider, $profile->identifier);
+    $sql = sprintf("SELECT mp_no, object_sha, mp_register_day from {$g5['social_profile_table']} where mb_id= '%s' and provider= '%s' and identifier = '%s' ", $mb_id, $provider, $profile->identifier);
 
     $row = sql_fetch($sql);
 
@@ -218,6 +220,7 @@ function social_user_profile_replace( $mb_id, $provider, $profile ){
         'mb_id' =>  "'". $mb_id. "'",
         'provider'  => "'".  $provider . "'",
         'object_sha'    => "'". $object_sha . "'",
+        'mp_register_day' => ! empty($row) ? "'".$row['mp_register_day']."'" : "'". G5_TIME_YMDHIS . "'",
         'mp_latest_day' => "'". G5_TIME_YMDHIS . "'",
     );
 
@@ -227,11 +230,6 @@ function social_user_profile_replace( $mb_id, $provider, $profile ){
         'photourl',
         'displayname',
         'description',
-        'gender',
-        'age',
-        'birthday',
-        'birthmonth',
-        'birthyear',
     );
 
     foreach( (array) $profile as $key => $value ){
@@ -239,14 +237,8 @@ function social_user_profile_replace( $mb_id, $provider, $profile ){
 
         if( in_array( $key, $fields ) )
         {
-            if( in_array($key, array('birthday', 'birthmonth', 'birthyear')) ){
-                
-                $value = $value ? $value : 0;
-                $table_data[ $key ] = $value;
-
-            } else {
-                $table_data[ $key ] = "'". (string) $value. "'";
-            }
+            $value = (string) $value;
+            $table_data[ $key ] = "'". sql_real_escape_string($value). "'";
         }
     }
     
@@ -868,7 +860,7 @@ function social_member_link_delete($mb_id, $mp_no=''){
         $sql = "delete from {$g5['social_profile_table']} where mb_id = '' and mp_latest_day < '$time' ";
         sql_query($sql);
 
-        $sql = "update {$g5['social_profile_table']} set mb_id='', object_sha='', profileurl='', photourl='', displayname='', gender='', age='', birthyear='', birthmonth='', birthday='', mp_latest_day = '".G5_TIME_YMDHIS."' where mb_id= '".$mb_id."'";
+        $sql = "update {$g5['social_profile_table']} set mb_id='', object_sha='', profileurl='', photourl='', displayname='', mp_latest_day = '".G5_TIME_YMDHIS."' where mb_id= '".$mb_id."'";
     } else {
         $sql = "delete from {$g5['social_profile_table']} where mb_id= '".$mb_id."'"; //바로 삭제합니다.
     }
