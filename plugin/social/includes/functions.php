@@ -44,6 +44,14 @@ function get_social_convert_id($identifier, $service)
     return strtolower($service).'_'.hash('adler32', md5($identifier));
 }
 
+function get_social_callbackurl($provider){
+
+    $base_url = SOCIAL_LOGIN_BASE_URL;
+    $base_url = $base_url . ( strpos($base_url, '?') ? '&' : '?' ).G5_SOCIAL_LOGIN_DONE_PARAM.'='.$provider;
+
+    return $base_url;
+}
+
 function social_return_from_provider_page( $provider, $login_action_url, $mb_id, $mb_password, $url, $use_popup=2 ){
 
     $ref = $_SERVER['HTTP_REFERER'];

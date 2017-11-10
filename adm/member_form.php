@@ -366,7 +366,7 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
                         <span class="provider_name"><?php echo $provider_name;   //서비스이름?> ( <?php echo $account['displayname']; ?> )</span>
                         <span class="account_hidden" style="display:none"><?php echo $account['mb_id']; ?></span>
                     </div>
-                    <div><a href="<?php echo G5_SOCIAL_LOGIN_URL.'/unlink.php?mp_no='.$account['mp_no'] ?>" class="social_unlink" data-provider="<?php echo $account['mp_no'];?>" >연결해제</a></div>
+                    <div class="btn_info"><a href="<?php echo G5_SOCIAL_LOGIN_URL.'/unlink.php?mp_no='.$account['mp_no'] ?>" class="social_unlink" data-provider="<?php echo $account['mp_no'];?>" >연동해제</a> <span class="sound_only"><?php echo substr($account['mp_register_day'], 2, 14); ?></span></div>
                 </div>
                 <?php } //end foreach ?>
             </li>

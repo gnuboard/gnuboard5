@@ -10,6 +10,11 @@
 // ------------------------------------------------------------------------
 
 include_once('_common.php');
+
+if( ! $config['cf_social_login_use']){
+    die("소셜로그인을 사용하지 않습니다.");
+}
+
 require_once( "includes/g5_endpoint.php" );
 
 error_reporting(0); // Turn off all error reporting
