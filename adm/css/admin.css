@@ -622,6 +622,8 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .pg_end {background:url(../img/page_4.png) 50% 50% no-repeat;width:32px;text-indent:-999px;overflow:hidden}
 .pg_current {display:inline-block;background:#3f51b5;color:#fff;font-weight:normal}
 
+.social_config_explain p{padding-bottom:10px}
+
 /* social member_list.php member_form.php */
 .sns-icon .ico {display:inline-block;background:url('../img/social/sns_logo.png') no-repeat;vertical-align:top}
 .sns-icon .txt {position:absolute;line-height:0;font-size:0;vertical-align:middle;overflow:hidden}

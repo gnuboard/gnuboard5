@@ -6,10 +6,10 @@ if( ! $config['cf_social_login_use']) {     //소셜 로그인을 사용하지 �
 }
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/remodal/remodal.css">', 11);
-add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/remodal/remodal-default-theme.css">', 12);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal.css">', 11);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal-default-theme.css">', 12);
 add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css">', 13);
-add_javascript('<script src="'.get_social_skin_url().'/remodal/remodal.js"></script>', 10);
+add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
 
 $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.다른 이메일을 입력해 주세요.' : '';
 ?>
@@ -79,7 +79,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
     <!-- 기존 계정 연결 -->
 
     <div class="member_connect">
-        <p>혹시 기존 회원이신가요?</p>
+        <p class="strong">혹시 기존 회원이신가요?</p>
         <button type="button" class="connect-opener btn-txt" data-remodal-target="modal">
             기존 계정에 연결하기
             <i class="fa fa-angle-double-right"></i>
@@ -101,7 +101,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
 
             <div class="connect-desc">
                 기존 아이디에 SNS 아이디를 연결합니다.<br>
-                SNS 아이디로 로그인 하시면 기존 아이디로 로그인 됩니다.
+                이 후 SNS 아이디로 로그인 하시면 기존 아이디로 로그인 할 수 있습니다.
             </div>
 
             <div id="login_fs">

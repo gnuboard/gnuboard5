@@ -1020,7 +1020,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         </tr>
         <tr>
             <th scope="row"><label for="cf_social_servicelist">소셜로그인설정</label></th>
-            <td colspan="3">
+            <td colspan="3" class="social_config_explain">
                 <p>
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_naver" value="naver" <?php echo option_array_checked('naver', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_naver">네이버 로그인을 사용합니다</label>
@@ -1034,7 +1034,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <label for="check_social_kakao">카카오 로그인을 사용합니다</label>
                     <div>
                     <h3>카카오 웹 Redirect Path</h3>
-                    <p>
                     <p><?php echo get_social_callbackurl('kakao'); ?></p>
                     </p>
                     </div>
@@ -1068,7 +1067,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_naver_clientid">네이버 Client ID</label></th>
             <td>
-                <input type="text" name="cf_naver_clientid" value="<?php echo $config['cf_naver_clientid'] ?>" id="cf_naver_clientid" class="frm_input" size="40"> <a href="https://nid.naver.com/devcenter/register.nhn" target="_blank" class="btn_frmline">앱 등록하기</a>
+                <input type="text" name="cf_naver_clientid" value="<?php echo $config['cf_naver_clientid'] ?>" id="cf_naver_clientid" class="frm_input" size="40"> <a href="https://developers.naver.com/apps/#/register" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
             <th scope="row"><label for="cf_naver_secret">네이버 Client Secret</label></th>
             <td>

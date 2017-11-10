@@ -18,9 +18,10 @@ $thumb_height = 150;
     if($thumb['src']) {
         $img = $thumb['src'];
     } else {
-        $img = $latest_skin_url.'/img/no_img.gif';
+        $img = G5_IMG_URL.'/no_img.png';
+        $thumb['alt'] = '이미지가 없습니다.';
     }
-    $img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" width="'.$thumb_width.'" height="'.$thumb_height.'">';
+    $img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" >';
     ?>
         <li>
             <a href="<?php echo $list[$i]['href'] ?>" class="lt_img"><?php echo $img_content; ?></a>

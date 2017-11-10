@@ -12,44 +12,42 @@ $session_id = session_id();
 add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css">', 10);
 ?>
 
-<tr>
-    <th scope="row">소셜로그인</th>
-    <td>
-        <div class="reg-form sns-wrap-32 sns-wrap-over">
-            <div class="sns-wrap">
+<li>
+    <label class="frm_label">SNS 로그인 관리</label>
+    <div class="reg-form sns-wrap-reg">
+        <div class="sns-wrap">
 
-            <?php foreach( $socials as $social=>$provider_name ){
+        <?php foreach( $socials as $social=>$provider_name ){
+            
+            if( !option_array_checked($social, $config['cf_social_servicelist'])) {
+                continue;
+            }
+
+            $social_nonce = social_nonce_create($social, $session_id);
+            $add_class='';
+            $title='';
+            if( in_array($social, $my_provides) ){
                 
-                if( !option_array_checked($social, $config['cf_social_servicelist'])) {
-                    continue;
-                }
+                $link_href = G5_SOCIAL_LOGIN_URL.'/unlink.php?provider='.$social.'&amp;social_nonce='.$social_nonce;
 
-                $social_nonce = social_nonce_create($social, $session_id);
-                $add_class='';
-                $title='';
-                if( in_array($social, $my_provides) ){
-                    
-                    $link_href = G5_SOCIAL_LOGIN_URL.'/unlink.php?provider='.$social.'&amp;social_nonce='.$social_nonce;
+                $title = $provider_name.' 연결을 해제합니다.';
+            } else {
+                $add_class = ' sns-icon-not';
 
-                    $title = $provider_name.' 연결해제하기';
-                } else {
-                    $add_class = ' sns-icon-not';
+                $link_href = $self_url.'?provider='.$social.'&amp;mylink=1&amp;url='.$urlencode;
 
-                    $link_href = $self_url.'?provider='.$social.'&amp;mylink=1&amp;url='.$urlencode;
+                $title = $provider_name.' 계정을 연결 합니다.';
 
-                    $title = $provider_name.' 연결하기';
+            }
+        ?>
 
-                }
-            ?>
+        <a href="<?php echo $link_href; ?>" id="sns-<?php echo $social; ?>" class="sns-icon social_link sns-<?php echo $social; ?><?php echo $add_class; ?>" title="<?php echo $title; ?>" data-provider="<?php echo $social; ?>" ><span class="ico"></span><span class="txt"><?php echo $provider_name; ?> 로그인</span></a>
 
-            <a href="<?php echo $link_href; ?>" id="sns-<?php echo $social; ?>" class="sns-icon oauth_connect social_link sns-<?php echo $social; ?><?php echo $add_class; ?>" title="<?php echo $title; ?>" data-provider="<?php echo $social; ?>" ><span class="ico"></span><span class="txt"><?php echo $provider_name; ?> 로그인</span></a>
+        <?php }     //end foreach ?>
 
-            <?php }     //end foreach ?>
-
-            </div>
         </div>
-    </td>
-</tr>
+    </div>
+</li>
 
 <script>
 
@@ -73,11 +71,9 @@ function social_link_fn(provider){
 
         var social_url = "<?php echo G5_SOCIAL_LOGIN_URL; ?>",
             link_href = social_url+"/unlink.php?provider="+provider+"&social_nonce="+social_get_nonce(provider),
-            atitle = provider+" 연결해제하기";
+            atitle = provider+" 연결을 해제합니다.";
 
         $icon.attr({"href":link_href, "title":atitle}).removeClass("sns-icon-not");
-
-        //$icon.children("img").attr({"src" : social_url+"/img/32x32/"+provider+".png", "title":atitle, "alt":atitle}).removeClass("link").addClass("unlink");
         
         alert('연결 되었습니다');
 
@@ -129,12 +125,10 @@ jQuery(function($){
                         alert(data.error);
                         return false;
                     } else {
-                        var atitle = provider+" 연결하기",
+                        var atitle = provider+" 계정을 연결 합니다.",
                             link_href = self_url+"?provider="+provider+"&mylink=1&url="+urlencode;
                         
                         othis.attr({"href":link_href, "title":atitle}).addClass("sns-icon-not");
-
-                        //othis.children("img").attr({"src" : social_img_path+"/img/32x32/"+provider+"_off.png", "title":atitle, "alt":atitle}).removeClass("unlink").addClass("link");
 
                     }
                 },
