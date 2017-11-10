@@ -17,7 +17,8 @@ if( G5_SOCIAL_USE_POPUP ) {
 add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css">', 10);
 ?>
 
-<div class="login-sns sns-wrap-32 sns-wrap-over">
+<div class="login-sns sns-wrap-32 sns-wrap-over" id="sns_outlogin">
+    <h3>소셜계정으로 로그인</h3>
     <div class="sns-wrap">
         <?php if( social_service_check('naver') ) {     //네이버 로그인을 사용한다면 ?>
         <a href="<?php echo $self_url;?>?provider=naver&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-naver" title="네이버">

@@ -15,7 +15,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
 ?>
 
 <!-- 회원정보 입력/수정 시작 { -->
-<div class="mbskin">
+<div class="mbskin" id="register_member">
 
     <script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
     
@@ -49,13 +49,11 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
             <p><?php echo conv_content($config['cf_privacy'], 0); ?></p>
         </div>
     </div>  <!-- END OF TOGGLE -->
-    <div class="toggle">
-        <div class="toggle-title">
+    <div class="all_agree">
 		<span class="title-name"><input type="checkbox" name="chk_all" value="1" id="chk_all"> <label for="chk_all"><strong>전체약관에 동의합니다.</strong></label></span>
-        </div>
     </div>
 
-    <div class="tbl_frm01 tbl_wrap">
+    <div class="sns_tbl tbl_wrap">
         <table>
         <caption>개인정보 입력</caption>
         <tbody>
@@ -71,9 +69,9 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
         </table>
     </div>
 
-    <div class="btn_confirm">
-        <input type="submit" value="회원가입" id="btn_submit" class="btn_submit" accesskey="s">
+    <div class="btn_top top">
         <a href="<?php echo G5_URL ?>" class="btn_cancel">취소</a>
+        <input type="submit" value="회원가입" id="btn_submit" class="btn_submit" accesskey="s">
     </div>
     </form>
     <!-- 새로가입 끝 -->
@@ -112,7 +110,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                 <label for="login_pw" class="login_pw">비밀번호<strong class="sound_only"> 필수</strong></label>
                 <span class="lg_pw"><input type="password" name="mb_password" id="login_pw" class="frm_input required" size="20" maxLength="20"></span>
                 <br>
-                <input type="submit" value="연결하기" class="login_submit">
+                <input type="submit" value="연결하기" class="login_submit btn_submit">
             </div>
 
             </form>
