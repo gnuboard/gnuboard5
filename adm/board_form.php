@@ -98,8 +98,8 @@ if ($w == '') {
     $board['bo_download_point'] = $config['cf_download_point'];
 
     $board['bo_gallery_cols'] = 4;
-    $board['bo_gallery_width'] = 174;
-    $board['bo_gallery_height'] = 124;
+    $board['bo_gallery_width'] = 202;
+    $board['bo_gallery_height'] = 150;
     $board['bo_mobile_gallery_width'] = 125;
     $board['bo_mobile_gallery_height'] = 100;
     $board['bo_table_width'] = 100;
@@ -963,7 +963,7 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="bo_gallery_cols">갤러리 이미지 수<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여 줄 것인지를 설정하는 값') ?>
-                <input type="text" name="bo_gallery_cols" value="<?php echo $board['bo_gallery_cols'] ?>" id="bo_gallery_cols" required class="required numeric frm_input" size="4">
+                <?php echo get_member_level_select('bo_gallery_cols', 1, 10, $board['bo_gallery_cols']); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_gallery_cols" value="1" id="chk_grp_gallery_cols">

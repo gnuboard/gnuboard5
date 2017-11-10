@@ -1026,7 +1026,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <label for="check_social_naver">네이버 로그인을 사용합니다</label>
                     <div>
                     <h3>네이버 CallbackURL</h3>
-                    <p><?php echo G5_SOCIAL_BASE_URL; ?>/?hauth.done=Naver</p>
+                    <p><?php echo get_social_callbackurl('naver'); ?></p>
                     </div>
                 </p>
                 <p>
@@ -1035,8 +1035,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <div>
                     <h3>카카오 웹 Redirect Path</h3>
                     <p>
-                    <?php /* echo '/'.ltrim(parse_url(G5_SOCIAL_BASE_URL, PHP_URL_PATH), '/').'/?hauth.done=Kakao'; */ ?>
-                    <?php echo G5_SOCIAL_BASE_URL.'/?hauth.done=Kakao';?>
+                    <p><?php echo get_social_callbackurl('kakao'); ?></p>
                     </p>
                     </div>
                 </p>
@@ -1045,7 +1044,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <label for="check_social_facebook">페이스북 로그인을 사용합니다</label>
                     <div>
                     <h3>페이스북 CallbackURL</h3>
-                    <p><?php echo G5_SOCIAL_BASE_URL; ?>/?hauth.done=Facebook</p>
+                    <p><?php echo get_social_callbackurl('facebook'); ?></p>
                     </div>
                 </p>
                 <p>
@@ -1053,7 +1052,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <label for="check_social_google">구글 로그인을 사용합니다</label>
                     <div>
                     <h3>구글 CallbackURL</h3>
-                    <p><?php echo G5_SOCIAL_BASE_URL; ?>/?hauth.done=Google</p>
+                    <p><?php echo get_social_callbackurl('google'); ?></p>
                     </div>
                 </p>
                 <p>

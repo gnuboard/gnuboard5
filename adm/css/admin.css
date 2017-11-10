@@ -650,7 +650,8 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .account_provider{position:relative;margin:10px 0 5px}
 .account_provider .sns-wrap-32 .sns-icon{vertical-align:middle}
 .account_provider .provider_name{display:inline-block;vertical-align:middle}
-.account_provider .social_unlink{position:absolute;top:-7px;right:0; height:30px;line-height:30px;background:#a0a8b8;padding:0 10px;color:#fff;display:inline-block;vertical-align:middle}
+.account_provider .btn_info{position:absolute;top:-7px;right:0}
+.account_provider .social_unlink{height:30px;line-height:30px;background:#a0a8b8;padding:0 10px;color:#fff;display:inline-block;vertical-align:middle}
 .account_provider .social_unlink:hover{text-decoration:none}
 
 /*부가서비스*/
