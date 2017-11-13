@@ -99,8 +99,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </div>
 
     <?php
+    $cnt = 0;
     if ($view['file']['count']) {
-        $cnt = 0;
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
                 $cnt++;
@@ -137,8 +137,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 
     <?php
+    $cnt = 0;
     if ($view['link']['count']) {
-        $cnt = 0;
         for ($i=0; $i<count($view['link']); $i++) {
             if (isset($view['link'][$i]['source']) && $view['link'][$i]['source'] && !$view['link'][$i]['view'])
                 $cnt++;

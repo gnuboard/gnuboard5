@@ -11,6 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
     <?php for ($i=0; $i<count($list); $i++) { ?>
         <li>
             <?php
+            if ($list[$i]['icon_secret']) echo "<i class=\"fa fa-lock\" aria-hidden=\"true\"></i> ";
             //echo $list[$i]['icon_reply']." ";
             echo "<a href=\"".$list[$i]['href']."\" class=\"lt_tit\">";
             if ($list[$i]['is_notice'])
@@ -21,11 +22,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
                 // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
                 // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
 
-                if (isset($list[$i]['icon_new']))    echo " " . $list[$i]['icon_new'];
-                if (isset($list[$i]['icon_hot']))    echo " " . $list[$i]['icon_hot'];
-                if (isset($list[$i]['icon_file']))   echo " " . $list[$i]['icon_file'];
-                if (isset($list[$i]['icon_link']))   echo " " . $list[$i]['icon_link'];
-                if (isset($list[$i]['icon_secret'])) echo " " . $list[$i]['icon_secret'];
+            if ($list[$i]['icon_new']) echo " <span class=\"new_icon\">NEW</span>";
+            if ($list[$i]['icon_file']) echo " <i class=\"fa fa-download\" aria-hidden=\"true\"></i>" ;
+            if ($list[$i]['icon_link']) echo " <i class=\"fa fa-link\" aria-hidden=\"true\"></i>" ;
+            if ($list[$i]['icon_hot']) echo " <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>";
 
             echo "</a>";
 
