@@ -104,7 +104,7 @@
 .mbskin .toggle .title-name{display:block}
 .mbskin .toggle .toggle-inner{padding:15px;line-height:1.5em;display:none;background:#fff;border-top:1px solid #e2e2e2;}
 .mbskin .toggle .toggle-inner div{max-width:100%}
-.mbskin .right_i{position:absolute;font-size:0.92em;top:10px;right:10px;padding:0 10px 0 0;border-radius:3px;display:inline-block;z-index: 2;background: #3497d9;color: #fff;border-bottom-color: #1977b5;}
+.mbskin .right_i{position:absolute;font-size:0.92em;top:10px;right:10px;padding:0 10px 0 0;border-radius:3px;display:inline-block;z-index: 2;background: #3497d9;color: #fff;border-bottom-color: #1977b5;cursor:pointer}
 .mbskin .toggle .toggle-title .right_i i{background:url("./img/plus_minus.png") 0 -24px no-repeat;width:20px;height:24px;display:inline-block;vertical-align:middle}
 .mbskin .toggle .toggle-title.active .right_i i{background:url("./img/plus_minus.png") 0 0 no-repeat}
 .mbskin .all_agree{position:relative;display:block;;margin-bottom:6px;background:#fff;border:1px solid #c6cacc;border-top:0;padding:13px 15px;line-height:20px}
@@ -136,9 +136,9 @@
 #sns-link-pnl .connect-fg .connect-title {margin-top:25px;margin-bottom:10px;font-size:1.667em;font-weight:bold;text-align:center}
 
 .mbskin .member_connect:after {display:block;visibility:hidden;clear:both;content:""}
-.mbskin .member_connect{margin-top:50px;background:#d9d9d9;border-radius:3px;padding:10px;text-align:center}
+.mbskin .member_connect{margin-top:80px;background:#d9d9d9;border-radius:3px;padding:10px;text-align:left}
 .mbskin .member_connect .strong{font-size:1em;font-weight:bold;margin:0 0 10px}
-.mbskin .member_connect button{color: #fff;border:0;padding:10px 20px;border:1px solid #6446e7;font-weight:bold;background: #6f50e7;border-radius:3px;font-size:0.91em}
+.mbskin .member_connect button{color: #fff;border:0;padding:6px 20px 7px;border:1px solid #6446e7;font-weight:bold;background: #6f50e7;border-radius:3px;font-size:0.91em}
 .mbskin .member_connect button:hover{background:#6446e7}
 
 html.remodal-is-locked {overflow-y:scroll !important}
