@@ -1050,7 +1050,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_google" value="google" <?php echo option_array_checked('google', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_google">구글 로그인을 사용합니다</label>
                     <div>
-                    <h3>구글 CallbackURL</h3>
+                    <h3>구글 승인된 리디렉션 URI</h3>
                     <p><?php echo get_social_callbackurl('google'); ?></p>
                     </div>
                 </p>
