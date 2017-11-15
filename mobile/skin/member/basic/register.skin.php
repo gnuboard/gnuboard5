@@ -66,7 +66,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
        </fieldset>
     </section>
 
-    <div class="btn_top top">
+    <div class=" btn_top">
         <input type="submit" class="btn_submit" value="회원가입">
     </div>
 

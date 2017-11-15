@@ -140,7 +140,9 @@ transition: all 0.3s ease-out;}
 .gnb_2da:focus, .gnb_2da:hover {color:#fff}
 .gnb_1dli_over .gnb_2dul {display:block;left:0}
 .gnb_1dli_over2 .gnb_2dul {display:block;right:0;background:#fff}
-#gnb_empty {padding:10px 0;width:100%;text-align:center;line-height:2em;color:#fff}
+.gnb_wrap .gnb_empty {padding:10px 0;width:100%;text-align:center;line-height:2em;color:#fff}
+.gnb_wrap .gnb_empty a{color:#fff;text-decoration:underline}
+.gnb_wrap .gnb_al_ul .gnb_empty, .gnb_wrap .gnb_al_ul .gnb_empty a{color:#555}
 
 #gnb .gnb_menu_btn{background:#4158d1;color:#fff;width:50px;height:50px;border:0;vertical-align:top;font-size:18px}
 #gnb .gnb_close_btn{background:#4158d1;color:#fff;width:50px;height:50px;border:0;vertical-align:top;font-size:18px;position:absolute;top:-50px;left:0}
