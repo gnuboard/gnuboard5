@@ -315,6 +315,7 @@ function social_extends_get_keys($provider){
                     "enabled" => option_array_checked('google', $config['cf_social_servicelist']) ? true : false,
                     "keys" => array("id" => $config['cf_google_clientid'],
                     "secret" => $config['cf_google_secret']),
+                    "redirect_uri" => get_social_callbackurl('google'),
                     //"access_type"     => "offline",   // optional
                     //"approval_prompt" => "force",     // optional
                 );
