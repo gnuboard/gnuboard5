@@ -290,10 +290,10 @@ function social_extends_get_keys($provider){
         // Naver
         $r['Naver'] = array(
                     "enabled" => option_array_checked('naver', $config['cf_social_servicelist']) ? true : false,
+                    "redirect_uri" => get_social_callbackurl('naver'),
                     "keys" => array(
                         "id" => $config['cf_naver_clientid'],
                         "secret" => $config['cf_naver_secret'],
-                        "redirect_uri" => get_social_callbackurl('naver'),
                     ),
                 );
 
