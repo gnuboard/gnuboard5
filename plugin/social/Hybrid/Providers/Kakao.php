@@ -29,6 +29,11 @@ class Hybrid_Providers_Kakao extends Hybrid_Provider_Model_OAuth2
         $this->api->api_base_url  = "https://kapi.kakao.com/v1/";
         $this->api->authorize_url = "https://kauth.kakao.com/oauth/authorize";
         $this->api->token_url     = "https://kauth.kakao.com/oauth/token";
+
+		// redirect uri mismatches when authenticating with Kakao.
+		if (isset($this->config['redirect_uri']) && !empty($this->config['redirect_uri'])) {
+			$this->api->redirect_uri = $this->config['redirect_uri'];
+		}
     }
 
     /**
