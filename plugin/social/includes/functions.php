@@ -44,9 +44,14 @@ function get_social_convert_id($identifier, $service)
     return strtolower($service).'_'.hash('adler32', md5($identifier));
 }
 
-function get_social_callbackurl($provider){
+function get_social_callbackurl($provider, $no_domain=false){
 
     $base_url = SOCIAL_LOGIN_BASE_URL;
+
+    if( $provider === 'kakao' && $no_domain ){
+        $base_url = '/'.ltrim(parse_url($base_url, PHP_URL_PATH), '/');
+    }
+
     $base_url = $base_url . ( strpos($base_url, '?') ? '&' : '?' ).G5_SOCIAL_LOGIN_DONE_PARAM.'='.$provider;
 
     return $base_url;

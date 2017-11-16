@@ -1014,7 +1014,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_social_login_use">소셜로그인설정</label></th>
             <td colspan="3">
-                <?php echo help('소셜로그인을 사용합니다.') ?>
+                <?php echo help('소셜로그인을 사용합니다. <a href="https://sir.kr/manual/g5/276" class="btn btn_03" target="_blank" style="margin-left:10px" >설정 관련 메뉴얼 보기</a> ') ?>
                 <input type="checkbox" name="cf_social_login_use" value="1" id="cf_social_login_use" <?php echo (!empty($config['cf_social_login_use']))?'checked':''; ?>> 사용
             </td>
         </tr>
@@ -1034,7 +1034,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <label for="check_social_kakao">카카오 로그인을 사용합니다</label>
                     <div>
                     <h3>카카오 웹 Redirect Path</h3>
-                    <p><?php echo get_social_callbackurl('kakao'); ?></p>
+                    <p><?php echo get_social_callbackurl('kakao', true); ?></p>
                     </p>
                     </div>
                 </p>
