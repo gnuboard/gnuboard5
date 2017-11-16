@@ -1057,6 +1057,10 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 <p>
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_twitter" value="twitter" <?php echo option_array_checked('twitter', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_twitter">트위터 로그인을 사용합니다</label>
+                    <div>
+                    <h3>트위터 CallbackURL</h3>
+                    <p><?php echo get_social_callbackurl('twitter'); ?></p>
+                    </div>
                 </p>
                 <p>
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_payco" value="payco" <?php echo option_array_checked('payco', $config['cf_social_servicelist']); ?> >
