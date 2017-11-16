@@ -29,6 +29,11 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
       $this->api->api_base_url  = "https://apis.naver.com/nidlogin/";
       $this->api->authorize_url = "https://nid.naver.com/oauth2.0/authorize";
       $this->api->token_url     = "https://nid.naver.com/oauth2.0/token";
+
+		// redirect uri mismatches when authenticating with Naver.
+		if (isset($this->config['redirect_uri']) && !empty($this->config['redirect_uri'])) {
+			$this->api->redirect_uri = $this->config['redirect_uri'];
+		}
   }
 
     /**

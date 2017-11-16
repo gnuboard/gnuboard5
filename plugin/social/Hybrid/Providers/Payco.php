@@ -34,6 +34,10 @@ class Hybrid_Providers_Payco extends Hybrid_Provider_Model_OAuth2 {
 			throw new Exception("Your application id and secret are required in order to connect to {$this->providerId}.", 4);
 		}
 
+		// redirect uri mismatches when authenticating with Payco.
+		if (isset($this->config['redirect_uri']) && !empty($this->config['redirect_uri'])) {
+			$this->api->redirect_uri = $this->config['redirect_uri'];
+		}
 	}
 	/**
 	 * {@inheritdoc}

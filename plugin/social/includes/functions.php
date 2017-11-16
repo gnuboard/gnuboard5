@@ -292,7 +292,8 @@ function social_extends_get_keys($provider){
                     "enabled" => option_array_checked('naver', $config['cf_social_servicelist']) ? true : false,
                     "keys" => array(
                         "id" => $config['cf_naver_clientid'],
-                        "secret" => $config['cf_naver_secret']
+                        "secret" => $config['cf_naver_secret'],
+                        "redirect_uri" => get_social_callbackurl('naver'),
                     ),
                 );
 
@@ -300,6 +301,7 @@ function social_extends_get_keys($provider){
         $r['Kakao'] = array(
                     "enabled" => option_array_checked('kakao', $config['cf_social_servicelist']) ? true : false,
                     "keys" => array("id" => $config['cf_kakao_rest_key'], "secret" => $config['cf_kakao_rest_key']),
+                    "redirect_uri" => get_social_callbackurl('kakao')
                 );
 
         // Facebook
@@ -307,6 +309,7 @@ function social_extends_get_keys($provider){
                     "enabled" => option_array_checked('facebook', $config['cf_social_servicelist']) ? true : false,
                     "keys" => array("id" => $config['cf_facebook_appid'], "secret" => $config['cf_facebook_secret']),
                     "display"   =>  "popup",
+                    "redirect_uri" => get_social_callbackurl('facebook'),
                     "trustForwarded" => false
                 );
 
@@ -324,6 +327,7 @@ function social_extends_get_keys($provider){
         $r['Twitter'] = array(
                     "enabled" => option_array_checked('twitter', $config['cf_social_servicelist']) ? true : false,
                     "keys" => array("key" => $config['cf_twitter_key'], "secret" => $config['cf_twitter_secret']),
+                    "redirect_uri" => get_social_callbackurl('twitter'),
                     "trustForwarded" => false
                 );
 
@@ -331,6 +335,7 @@ function social_extends_get_keys($provider){
         $r['Payco'] = array(
                     "enabled" => option_array_checked('payco', $config['cf_social_servicelist']) ? true : false,
                     "keys" => array("id" => $config['cf_payco_clientid'], "secret" => $config['cf_payco_secret']),
+                    "redirect_uri" => get_social_callbackurl('payco'),
                     "trustForwarded" => false
                 );
     }
