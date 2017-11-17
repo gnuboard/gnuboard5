@@ -23,14 +23,14 @@ if( ! $user_profile ){
 $is_exists_social_account = social_before_join_check($url);
 
 $user_nick = social_relace_nick($user_profile->displayName);
-$user_email = ($user_profile->emailVerified) ? $user_profile->emailVerified : $user_profile->email;
+$user_email = isset($user_profile->emailVerified) ? $user_profile->emailVerified : $user_profile->email;
 $user_id = $user_profile->sid ? preg_replace("/[^0-9a-z_]+/i", "", $user_profile->sid) : get_social_convert_id($user_profile->identifier, $provider_name);
 
 //$is_exists_id = exist_mb_id($user_id);
 //$is_exists_name = exist_mb_nick($user_nick, '');
 $user_id = exist_mb_id_recursive($user_id);
 $user_nick = exist_mb_nick_recursive($user_nick, '');
-$is_exists_email = exist_mb_email($user_email, '');
+$is_exists_email = $user_email ? exist_mb_email($user_email, '') : false;
 
 // 불법접근을 막도록 토큰생성
 $token = md5(uniqid(rand(), true));

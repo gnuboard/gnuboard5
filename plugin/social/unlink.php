@@ -34,8 +34,8 @@ if( $row['mp_no'] ){
 
     social_member_link_delete($mb_id, $row['mp_no']);
     
-    if( $mb_id == $row['mb_id'] ){
-        //social_provider_logout($provider, 0);
+    if( $provider === get_session('ss_social_provider') ){
+        set_session('ss_social_provider', '');
     }
 
     die("{\"error\":\"\", \"mp_no\":".$row['mp_no']."}");

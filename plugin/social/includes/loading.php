@@ -21,7 +21,7 @@ if (!defined('_GNUBOARD_')) exit;
           </tr> 
         </table>
 
-        <?php if( G5_SOCIAL_USE_POPUP && empty($login_action_url) ){ ?>
+        <?php if( (defined('G5_SOCIAL_IS_LOADING') && G5_SOCIAL_IS_LOADING ) || (G5_SOCIAL_USE_POPUP && empty($login_action_url)) ){ ?>
         <script>
             window.location.href = window.location.href + "&redirect_to_idp=1";
         </script>

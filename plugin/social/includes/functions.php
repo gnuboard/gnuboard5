@@ -91,7 +91,7 @@ function social_login_get_provider_adapter( $provider )
         $g5['hybrid_auth'] = new Hybrid_Auth( $setting );
     }
 
-    $newsession  = $g5['hybrid_auth']->getSessionData();
+    //$newsession  = $g5['hybrid_auth']->getSessionData();
 
     if( defined('G5_SOCIAL_LOGIN_START_PARAM') && G5_SOCIAL_LOGIN_START_PARAM === 'hauth.start' && G5_SOCIAL_LOGIN_DONE_PARAM === 'hauth.done' ){
         return $g5['hybrid_auth']->authenticate($provider);
@@ -433,6 +433,18 @@ if( !function_exists('replaceQueryParams') ){
     }
 }
 
+function social_loading_provider_page( $provider ){
+    
+	social_login_session_clear(1);
+
+    define('G5_SOCIAL_IS_LOADING', TRUE );
+
+    $login_action_url = G5_URL;
+
+    $img_url = G5_SOCIAL_LOGIN_URL.'/img/';
+    include_once(G5_SOCIAL_LOGIN_PATH.'/includes/loading.php');
+}
+
 function social_check_login_before($p_service=''){
     global $is_member, $member;
 
@@ -444,6 +456,11 @@ function social_check_login_before($p_service=''){
     $ss_social_provider = get_session('ss_social_provider');
 
     if( $provider_name ){
+
+        if( ! isset( $_REQUEST["redirect_to_idp"] ) )
+        {
+            return social_loading_provider_page( $provider_name );
+        }
 
         try
         {
@@ -518,6 +535,11 @@ function social_check_login_before($p_service=''){
 
                     if( is_object( $adapter ) ){    //연결한것은 인증 받은 즉시 로그아웃한다.
                         social_logout_with_adapter($adapter);
+                    }
+                    
+                    // 세션에 소셜정보가 없으면 연결된 소셜서비스를 저장합니다.
+                    if( ! get_session('ss_social_provider') ){
+                        set_session('ss_social_provider', $provider_name);
                     }
 
                     if( $use_popup == 1 || ! $use_popup ){   //팝업이면
