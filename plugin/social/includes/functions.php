@@ -46,7 +46,7 @@ function get_social_convert_id($identifier, $service)
 
 function get_social_callbackurl($provider, $no_domain=false){
 
-    $base_url = SOCIAL_LOGIN_BASE_URL;
+    $base_url = G5_SOCIAL_LOGIN_BASE_URL;
 
     if( $provider === 'kakao' && $no_domain ){
         $base_url = '/'.ltrim(parse_url($base_url, PHP_URL_PATH), '/');
@@ -97,7 +97,7 @@ function social_login_get_provider_adapter( $provider )
         return $g5['hybrid_auth']->authenticate($provider);
     }
     
-    $base_url = SOCIAL_LOGIN_BASE_URL;
+    $base_url = G5_SOCIAL_LOGIN_BASE_URL;
     $hauth_time = time();
 
     $connect_data = array(
@@ -268,7 +268,7 @@ function social_user_profile_replace( $mb_id, $provider, $profile ){
 
 function social_build_provider_config($provider){
     $setting = array(
-        'base_url'  =>  G5_SOCIAL_BASE_URL.'/',
+        'base_url'  =>  https_url(G5_PLUGIN_DIR.'/'.G5_SOCIAL_LOGIN_DIR).'/',
         'providers' =>  array(
             $provider   =>  array(
                     'enabled'   => true,
@@ -633,6 +633,50 @@ function social_register_member_check($member){
     return $member;
 }
 
+function social_profile_img_resize($path, $file_url, $width, $height){
+
+    list($w, $h, $ext) = @getimagesize($file_url);
+    if( $w && $h && $ext ){
+        $ratio = max($width/$w, $height/$h);
+        $h = ceil($height / $ratio);
+        $x = ($w - $width / $ratio) / 2;
+        $w = ceil($width / $ratio);
+
+        $tmp = imagecreatetruecolor($width, $height);
+        
+        if($ext == 1){
+            $image = imagecreatefromgif($file_url);
+        } else if($ext == 3) {
+            $image = imagecreatefrompng($file_url);
+        } else {
+            $image = imagecreatefromjpeg($file_url);
+        }
+        imagecopyresampled($tmp, $image,
+        0, 0,
+        $x, 0,
+        $width, $height,
+        $w, $h);
+
+        switch ($ext) {
+        case '2':
+          imagejpeg($tmp, $path, 100);
+          break;
+        case '3':
+          imagepng($tmp, $path, 0);
+          break;
+        case '1':
+          imagegif($tmp, $path);
+          break;
+        }
+        
+        chmod($path, G5_FILE_PERMISSION);
+
+        /* cleanup memory */
+        imagedestroy($image);
+        imagedestroy($tmp);
+    }
+}
+
 function social_is_login_check(){
 
     //소셜 로그인이 맞는지 체크합니다.
@@ -761,15 +805,27 @@ function social_login_success_after($mb, $link='', $mode='', $tmp_create_info=ar
         }
 
         if($mode=='register'){   //회원가입 했다면
+            
+            //메일인증을 사용한다면
+            if( defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL && $config['cf_use_email_certify'] ){
 
-            //로그인 처리 한다.
-            // 회원아이디 세션 생성
-            set_session('ss_mb_id', $mb['mb_id']);
-            // FLASH XSS 공격에 대응하기 위하여 회원의 고유키를 생성해 놓는다. 관리자에서 검사함 - 110106
-            set_session('ss_mb_key', md5($mb['mb_datetime'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']));
+            } else {
+                //로그인 처리 합니다.
+                // 회원아이디 세션 생성
+                set_session('ss_mb_id', $mb['mb_id']);
 
+                set_session('ss_mb_reg', $mb['mb_id']);
+            }
+            
             if( !empty($user_profile->photoURL) ){  //회원 프로필 사진이 있다면
                 //해당 처리
+                
+                $mb_dir = G5_DATA_PATH.'/member/'.substr($mb_id,0,2);
+                @mkdir($mb_dir, G5_DIR_PERMISSION);
+                @chmod($mb_dir, G5_DIR_PERMISSION);
+                $dest_path = "$mb_dir/$mb_id.gif";
+                
+                social_profile_img_resize($dest_path, $user_profile->photoURL, $config['cf_member_icon_width'], $config['cf_member_icon_height'] );
             }
 
             return;

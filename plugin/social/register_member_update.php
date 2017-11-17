@@ -69,6 +69,13 @@ $data = array(
 'mb_name'   =>  $mb_name,
 );
 
+$mb_email_certify = G5_TIME_YMDHIS;
+
+//메일인증을 사용한다면
+if( defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL && $config['cf_use_email_certify'] ){
+    $mb_email_certify = '';
+}
+
 // 회원정보 입력
 $sql = " insert into {$g5['member_table']}
             set mb_id = '{$mb_id}',
@@ -77,7 +84,7 @@ $sql = " insert into {$g5['member_table']}
                 mb_nick = '{$mb_nick}',
                 mb_nick_date = '".G5_TIME_YMD."',
                 mb_email = '{$mb_email}',
-                mb_email_certify = '".G5_TIME_YMDHIS."',
+                mb_email_certify = '".$mb_email_certify."',
                 mb_today_login = '".G5_TIME_YMDHIS."',
                 mb_datetime = '".G5_TIME_YMDHIS."',
                 mb_ip = '{$_SERVER['REMOTE_ADDR']}',
@@ -107,20 +114,39 @@ if($result) {
         mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
     }
 
-    set_session('ss_mb_id', $mb_id);
-
-    set_session('ss_mb_reg', $mb_id);
-
     //소셜 로그인 계정 추가
     if( function_exists('social_login_success_after') ){
         $mb = get_member($mb_id);
         social_login_success_after($mb, '', 'register');
     }
 
+    // 메일인증을 사용한다면
+    if( ! $mb_email_certify ){
+        $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
+
+        // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
+        $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+
+        sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
+
+        $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
+
+        ob_start();
+        include_once (G5_BBS_PATH.'/register_form_update_mail3.php');
+        $content = ob_get_contents();
+        ob_end_clean();
+
+        mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+    }
+
+    // 사용자 코드 실행
+    @include_once ($member_skin_path.'/register_form_update.tail.skin.php');
+
+    goto_url(G5_HTTP_BBS_URL.'/register_result.php');
+
+} else {
+
+    alert('회원 가입 오류!', G5_URL );
+
 }
-
-// 사용자 코드 실행
-@include_once (get_social_skin_path().'/register_form_update.tail.skin.php');
-
-goto_url(G5_HTTP_BBS_URL.'/register_result.php');
 ?>

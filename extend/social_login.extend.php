@@ -19,7 +19,7 @@ define('G5_SOCIAL_LOGIN_PATH', G5_PLUGIN_PATH.'/'.G5_SOCIAL_LOGIN_DIR);
 define('G5_SOCIAL_LOGIN_URL', G5_PLUGIN_URL.'/'.G5_SOCIAL_LOGIN_DIR);
 
 // 소셜로그인 SOCIAL_LOGIN_BASE_URL 기본값은 G5_SOCIAL_LOGIN_URL.'/'
-define('SOCIAL_LOGIN_BASE_URL', G5_SOCIAL_LOGIN_URL.'/');
+define('G5_SOCIAL_LOGIN_BASE_URL', G5_SOCIAL_LOGIN_URL.'/');
 
 if(G5_IS_MOBILE) {
     define('G5_SOCIAL_SKIN_PATH', G5_PATH.'/'.G5_MOBILE_DIR.'/'.G5_SKIN_DIR.'/'.G5_SOCIAL_LOGIN_DIR);
@@ -38,7 +38,8 @@ define('G5_SOCIAL_USE_POPUP', ! is_mobile() );  // 모바일에서는 팝업사�
 //0 이면 체크를 하지 않습니다.
 define('G5_SOCIAL_DELETE_DAY', 0);
 
-define('G5_SOCIAL_BASE_URL', https_url(G5_PLUGIN_DIR.'/'.G5_SOCIAL_LOGIN_DIR) );
+// 메일 인증관련, false 이면 메일인증을 받지 않고 로그인됩니다. true 이고 기본환경설정에서 메일인증설정이 활성화 되어 있는 경우 메일인증을 받아야만 로그인 됩니다.
+define('G5_SOCIAL_CERTIFY_MAIL', false );
 
 include_once(G5_SOCIAL_LOGIN_PATH.'/includes/functions.php');
 ?>

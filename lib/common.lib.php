@@ -3291,6 +3291,19 @@ function check_write_token($bo_table)
     return true;
 }
 
+function is_use_email_certify(){
+    global $config;
+
+    if( $config['cf_use_email_certify'] ){
+        if( $config['cf_social_login_use'] && get_session('ss_social_provider') ){      //소셜 로그인을 사용한다면
+            $tmp = (defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL) ? 1 : 0;
+            return $tmp;
+        }
+    }
+
+    return $config['cf_use_email_certify'];
+}
+
 function get_call_func_cache($func, $args=array()){
     
     static $cache = array();
