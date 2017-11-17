@@ -210,6 +210,13 @@ if(!isset($config['cf_social_login_use'])) {
     ", true);
 }
 
+//소셜 로그인 관련 필드 카카오 클라이언트 시크릿 추가
+if(!isset($config['cf_kakao_client_secret'])) {
+    sql_query("ALTER TABLE `{$g5['config_table']}`
+                ADD `cf_kakao_client_secret` varchar(100) NOT NULL DEFAULT '' AFTER `cf_kakao_rest_key`
+    ", true);
+}
+
 // 소셜 로그인 관리 테이블 없을 경우 생성
 if(!sql_query(" DESC {$g5['social_profile_table']} ", false)) {
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['social_profile_table']}` (
@@ -439,7 +446,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_captcha">캡챠 선택<strong class="sound_only">필수</strong></label></th>
             <td colspan="3">
-                <?php echo help('사용할 캡챠를 선택합니다.') ?>
+                <?php echo help('사용할 캡챠를 선택합니다.<br>1) Kcaptcha 는 그누보드5의 기본캡챠입니다. ( 문자입력 )<br>2) reCAPTCHA V2 는 구글에서 서비스하는 원클릭 형식의 간편한 캡챠입니다. ( 모바일 친화적 UI )<br>3) Invisible reCAPTCHA 는 구글에서 서비스하는 안보이는 형식의 캡챠입니다. ( 간혹 퀴즈를 풀어야 합니다. )<br>') ?>
                 <select name="cf_captcha" id="cf_captcha" required class="required">
                 <option value="kcaptcha" <?php echo get_selected($config['cf_captcha'], 'kcaptcha') ; ?>>Kcaptcha</option>
                 <option value="recaptcha" <?php echo get_selected($config['cf_captcha'], 'recaptcha') ; ?>>reCAPTCHA V2</option>
@@ -1122,8 +1129,14 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td>
                 <input type="text" name="cf_kakao_rest_key" value="<?php echo $config['cf_kakao_rest_key'] ?>" id="cf_kakao_rest_key" class="frm_input" size="40"> <a href="https://developers.kakao.com/apps/new" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
-            <th scope="row"><label for="cf_kakao_js_apikey">카카오 JavaScript 키</label></th>
+            <th scope="row"><label for="cf_kakao_client_secret">카카오 Client Secret</label></th>
             <td>
+                <input type="text" name="cf_kakao_client_secret" value="<?php echo $config['cf_kakao_client_secret'] ?>" id="cf_kakao_js_apikey" class="frm_input" size="45">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_kakao_js_apikey">카카오 JavaScript 키</label></th>
+            <td colspan="3">
                 <input type="text" name="cf_kakao_js_apikey" value="<?php echo $config['cf_kakao_js_apikey'] ?>" id="cf_kakao_js_apikey" class="frm_input" size="45">
             </td>
         </tr>

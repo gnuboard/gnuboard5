@@ -2911,6 +2911,11 @@ function member_delete($mb_id)
     // 게시판관리자인 경우 게시판관리자를 공백으로
     sql_query(" update {$g5['board_table']} set bo_admin = '' where bo_admin = '$mb_id' ");
 
+    //소셜로그인에서 삭제 또는 해제
+    if(function_exists('social_member_link_delete')){
+        social_member_link_delete($mb_id);
+    }
+
     // 아이콘 삭제
     @unlink(G5_DATA_PATH.'/member/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
 }

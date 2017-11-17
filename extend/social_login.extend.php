@@ -1,8 +1,10 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-// 소셜로그인 회원가입 정보 테이블
-$g5['social_profile_table'] = G5_TABLE_PREFIX.'member_social_profiles';
+// 소셜로그인 테이블 정보가 dbconfig에 없으면 소셜 테이블 정의
+if( !isset($g5['social_profile_table']) ){
+    $g5['social_profile_table'] = G5_TABLE_PREFIX.'member_social_profiles';
+}
 
 //플러그인 폴더 이름 및 스킨 폴더 이름
 define('G5_SOCIAL_LOGIN_DIR', 'social');

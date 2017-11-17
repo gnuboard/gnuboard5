@@ -305,6 +305,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_naver_clientid` varchar(100) NOT NULL DEFAULT '',
   `cf_naver_secret` varchar(100) NOT NULL DEFAULT '',
   `cf_kakao_rest_key` varchar(100) NOT NULL DEFAULT '',
+  `cf_kakao_client_secret` varchar(100) NOT NULL DEFAULT '',
   `cf_kakao_js_apikey` varchar(255) NOT NULL,
   `cf_captcha` varchar(100) NOT NULL DEFAULT '',
   `cf_recaptcha_site_key` varchar(100) NOT NULL DEFAULT '',

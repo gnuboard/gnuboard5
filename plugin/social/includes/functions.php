@@ -305,7 +305,9 @@ function social_extends_get_keys($provider){
         // Kakao
         $r['Kakao'] = array(
                     "enabled" => option_array_checked('kakao', $config['cf_social_servicelist']) ? true : false,
-                    "keys" => array("id" => $config['cf_kakao_rest_key'], "secret" => $config['cf_kakao_rest_key']),
+                    "keys" => array("id" => $config['cf_kakao_rest_key'],
+                                    "secret" => $config['cf_kakao_client_secret'] ? $config['cf_kakao_client_secret'] : $config['cf_kakao_rest_key']
+                    ),
                     "redirect_uri" => get_social_callbackurl('kakao')
                 );
 

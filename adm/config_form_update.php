@@ -143,6 +143,7 @@ $sql = " update {$g5['config_table']}
                 cf_google_clientid = '{$_POST['cf_google_clientid']}',
                 cf_google_secret = '{$_POST['cf_google_secret']}',
                 cf_kakao_rest_key = '{$_POST['cf_kakao_rest_key']}',
+                cf_kakao_client_secret = '{$_POST['cf_kakao_client_secret']}',
                 cf_social_servicelist   =   '{$cf_social_servicelist}',
                 cf_captcha = '{$_POST['cf_captcha']}',
                 cf_recaptcha_site_key = '{$_POST['cf_recaptcha_site_key']}',

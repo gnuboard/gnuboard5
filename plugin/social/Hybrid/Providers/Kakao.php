@@ -106,6 +106,10 @@ class Hybrid_Providers_Kakao extends Hybrid_Provider_Model_OAuth2
             "code"          => $code
         );
 
+        if( $this->api->client_secret && ($this->api->client_secret !== $this->api->client_id) ){
+            $params['client_secret'] = $this->api->client_secret;
+        }
+
         $response = $this->request($this->api->token_url, $params, $this->api->curl_authenticate_method);
         $response = $this->parseRequestResult($response);
         if ( ! $response || ! isset($response->access_token) ) {
