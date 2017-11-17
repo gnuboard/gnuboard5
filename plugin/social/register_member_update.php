@@ -114,14 +114,32 @@ if($result) {
         mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
     }
 
+    $mb = get_member($mb_id);
+
     //소셜 로그인 계정 추가
     if( function_exists('social_login_success_after') ){
-        $mb = get_member($mb_id);
         social_login_success_after($mb, '', 'register');
     }
 
-    // 메일인증을 사용한다면
-    if( ! $mb_email_certify ){
+    set_session('ss_mb_reg', $mb['mb_id']);
+
+    if( !empty($user_profile->photoURL) ){  //회원 프로필 사진이 있다면
+        //해당 처리
+        
+        $mb_dir = G5_DATA_PATH.'/member/'.substr($mb_id,0,2);
+        @mkdir($mb_dir, G5_DIR_PERMISSION);
+        @chmod($mb_dir, G5_DIR_PERMISSION);
+        $dest_path = "$mb_dir/$mb_id.gif";
+        
+        social_profile_img_resize($dest_path, $user_profile->photoURL, $config['cf_member_icon_width'], $config['cf_member_icon_height'] );
+    }
+
+    if( $mb_email_certify ){    //메일인증 사용 안하면
+
+        //바로 로그인 처리
+        set_session('ss_mb_id', $mb['mb_id']);
+
+    } else {    // 메일인증을 사용한다면
         $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
         // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용

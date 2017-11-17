@@ -586,7 +586,6 @@ function social_check_login_before($p_service=''){
             /*
              * 회원이 아닌 경우에만 아래 실행
             */
-
             $register_url = G5_SOCIAL_LOGIN_URL.'/register_member.php?provider='.$provider_name;
 
             if( $url ){
@@ -805,29 +804,6 @@ function social_login_success_after($mb, $link='', $mode='', $tmp_create_info=ar
         }
 
         if($mode=='register'){   //회원가입 했다면
-            
-            //메일인증을 사용한다면
-            if( defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL && $config['cf_use_email_certify'] ){
-
-            } else {
-                //로그인 처리 합니다.
-                // 회원아이디 세션 생성
-                set_session('ss_mb_id', $mb['mb_id']);
-
-                set_session('ss_mb_reg', $mb['mb_id']);
-            }
-            
-            if( !empty($user_profile->photoURL) ){  //회원 프로필 사진이 있다면
-                //해당 처리
-                
-                $mb_dir = G5_DATA_PATH.'/member/'.substr($mb_id,0,2);
-                @mkdir($mb_dir, G5_DIR_PERMISSION);
-                @chmod($mb_dir, G5_DIR_PERMISSION);
-                $dest_path = "$mb_dir/$mb_id.gif";
-                
-                social_profile_img_resize($dest_path, $user_profile->photoURL, $config['cf_member_icon_width'], $config['cf_member_icon_height'] );
-            }
-
             return;
         }
 
