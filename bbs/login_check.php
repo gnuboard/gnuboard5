@@ -45,8 +45,8 @@ if ($mb['mb_leave_date'] && $mb['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME))
     alert('탈퇴한 아이디이므로 접근하실 수 없습니다.\n탈퇴일 : '.$date);
 }
 
-//쇼설 로그인이 아니고 메일인증 설정이 되어 있다면
-if (!$is_social_login && $config['cf_use_email_certify'] && !preg_match("/[1-9]/", $mb['mb_email_certify'])) {
+// 메일인증 설정이 되어 있다면
+if ( is_use_email_certify() && !preg_match("/[1-9]/", $mb['mb_email_certify'])) {
     $ckey = md5($mb['mb_ip'].$mb['mb_datetime']);
     confirm("{$mb['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다. 다른 메일주소로 변경하여 인증하시려면 취소를 클릭하시기 바랍니다.", G5_URL, G5_BBS_URL.'/register_email.php?mb_id='.$mb_id.'&ckey='.$ckey);
 }
