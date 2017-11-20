@@ -189,6 +189,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             </li>
             <?php }  ?>
 
+            <?php if ($member['mb_level'] >= $config['cf_icon_level'] && $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height']) {  ?>
+            <li>
+                <label for="reg_mb_img" class="frm_label">회원이미지</label>
+                <input type="file" name="mb_img" id="reg_mb_img" >
+                                
+                <span class="frm_info">
+                    이미지 크기는 가로 <?php echo $config['cf_member_img_width'] ?>픽셀, 세로 <?php echo $config['cf_member_img_height'] ?>픽셀 이하로 해주세요.<br>
+                    gif 또는 jpg만 가능하며 용량 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하만 등록됩니다.
+                </span>
+
+                <?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
+                <img src="<?php echo $mb_img_url ?>" alt="회원아이콘">
+                <input type="checkbox" name="del_mb_img" value="1" id="del_mb_img">
+                <label for="del_mb_img">삭제</label>
+                <?php }  ?>
+            
+            </li>
+            <?php } ?>
+
             <li>
                 <label for="reg_mb_mailling" class="frm_label">메일링서비스</label>
                 <input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?>>

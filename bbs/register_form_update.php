@@ -395,6 +395,52 @@ if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name']
     }
 }
 
+// 회원 프로필 이미지
+if( $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height'] ){
+    $mb_tmp_dir = G5_DATA_PATH.'/member_image/';
+    $mb_dir = $mb_tmp_dir.substr($mb_id,0,2);
+    if( !is_dir($mb_tmp_dir) ){
+        @mkdir($mb_tmp_dir, G5_DIR_PERMISSION);
+        @chmod($mb_tmp_dir, G5_DIR_PERMISSION);
+    }
+
+    // 아이콘 삭제
+    if (isset($_POST['del_mb_img'])) {
+        @unlink($mb_dir.'/'.$mb_id.'.gif');
+    }
+
+    $msg = '';
+
+    // 회원 프로필 이미지 업로드
+    $mb_img = '';
+    if (isset($_FILES['mb_img']) && is_uploaded_file($_FILES['mb_img']['tmp_name'])) {
+        if (preg_match("/(\.gif)$/i", $_FILES['mb_img']['name']) || preg_match("/(\.jpg)$/i", $_FILES['mb_img']['name'])) {
+            // 아이콘 용량이 설정값보다 이하만 업로드 가능
+            if ($_FILES['mb_icon']['size'] <= $config['cf_member_img_size']) {
+                @mkdir($mb_dir, G5_DIR_PERMISSION);
+                @chmod($mb_dir, G5_DIR_PERMISSION);
+                $dest_path = $mb_dir.'/'.$mb_id.'.gif';
+                move_uploaded_file($_FILES['mb_img']['tmp_name'], $dest_path);
+                chmod($dest_path, G5_FILE_PERMISSION);
+                if (file_exists($dest_path)) {
+                    $size = getimagesize($dest_path);
+                    if ( ! ($size[2] === 1 || $size[2] === 2) ) // gif 또는 jpg 파일이 아니면 올라간 이미지를 삭제한다.
+                        @unlink($dest_path);
+                    else
+                    // 이미지의 폭 또는 높이가 설정값 보다 크다면 이미 업로드 된 아이콘 삭제
+                    if ($size[0] > $config['cf_member_img_width'] || $size[1] > $config['cf_member_img_height'])
+                        @unlink($dest_path);
+                    //=================================================================\
+                }
+            } else {
+                $msg .= '회원아이콘을 '.number_format($config['cf_member_img_size']).'바이트 이하로 업로드 해주십시오.';
+            }
+
+        } else {
+            $msg .= $_FILES['mb_img']['name'].'은(는) gif/jpg 파일이 아닙니다.';
+        }
+    }
+}
 
 // 인증메일 발송
 if ($config['cf_use_email_certify'] && $old_email != $mb_email) {

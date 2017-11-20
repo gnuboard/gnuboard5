@@ -1224,12 +1224,18 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
                 $icon_file_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
-                $tmp_name .= '<img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt="">';
+                $tmp_name .= '<span class="profile_img"><img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt=""></span>';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
                     $tmp_name = $tmp_name.' '.$name;
             } else {
-                  $tmp_name = $tmp_name." ".$name;
+                if( defined('G5_THEME_NO_PROFILE_IMG') ){
+                    $tmp_name .= G5_THEME_NO_PROFILE_IMG;
+                } else if( defined('G5_NO_PROFILE_IMG') ){
+                    $tmp_name .= G5_NO_PROFILE_IMG;
+                }
+                if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
+                    $tmp_name = $tmp_name.' '.$name;
             }
         } else {
             $tmp_name = $tmp_name.' '.$name;
@@ -3289,6 +3295,52 @@ function check_write_token($bo_table)
         alert('올바른 방법으로 이용해 주십시오.', G5_URL);
 
     return true;
+}
+
+function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_image', $title=''){
+    global $is_member, $member;
+
+    if( ! $is_member ) return '';
+
+    if( !$mb_id ) $mb_id = $member['mb_id'];
+
+    static $cache = array();
+    
+    $src = '';
+    if( isset($cache[$mb_id]) ){
+        $src = $cache[$mb_id];
+    } else {
+        // 프로필 이미지가 없을때 기본 이미지
+        $no_profile_img = (defined('G5_THEME_NO_PROFILE_IMG') && G5_THEME_NO_PROFILE_IMG) ? G5_THEME_NO_PROFILE_IMG : G5_NO_PROFILE_IMG;
+        $tmp = array();
+        preg_match( '/src="([^"]*)"/i', $foo, $tmp );
+        $src = isset($tmp[1]) ? $tmp[1] : G5_IMG_URL.'/no_profile.gif';
+
+        if( $mb_id ){
+            $member_img = G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_id.'.gif';
+            if (is_file($member_img)) {
+                $src = str_replace(G5_DATA_PATH, G5_DATA_URL, $member_img);
+            }
+        }
+
+        $cache[$mb_id] = $src;
+    }
+
+    if( $src ){
+        $attributes = array('src'=>$src, 'width'=>$width, 'height'=>$height, 'alt'=>$alt, 'title'=>$title);
+
+        $output = '<img';
+        foreach ($attributes as $name => $value) {
+            if (!empty($value)) {
+                $output .= sprintf(' %s="%s"', $name, $value);
+            }
+        }
+        $output .= '>';
+
+        return $output;
+    }
+
+    return '';
 }
 
 function is_use_email_certify(){

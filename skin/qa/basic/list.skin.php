@@ -82,7 +82,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                     <?php if ($list[$i]['icon_file']) echo " <i class=\"fa fa-download\" aria-hidden=\"true\"></i>" ; ?>
                 </a>
             </td>
-            <td class="td_name"><span class="profile_img"><img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span> <?php echo $list[$i]['name']; ?></td>
+            <td class="td_name"><?php echo $list[$i]['name']; ?></td>
             <td class="td_date"><?php echo $list[$i]['date']; ?></td>
             <td class="td_stat"><span class=" <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '<i class="fa fa-check-circle" aria-hidden="true"></i> 답변완료' : '<i class="fa fa-times-circle" aria-hidden="true"></i> 답변대기'); ?></span></td>
         </tr>

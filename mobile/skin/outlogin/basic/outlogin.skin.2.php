@@ -11,7 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
     <h2>나의 회원정보</h2>
     <div id="ol_after_hd">
         <span class="profile_img">
-            <img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지">
+            <?php echo get_member_profile_img(); ?>
             <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info" title="정보수정">정보수정</a>
         </span>
         <strong><?php echo $nick ?>님</strong>

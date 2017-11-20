@@ -216,8 +216,8 @@ box-shadow: 0 0 8px rgba(65,98,255,0.8);}
 #bo_vc h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #bo_vc article {margin:0 0 15px}
 #bo_vc header {position:relative;padding:0 0 0 50px;height:40px;line-height:20px}
-#bo_vc .profile_img{position:absolute;top:0;left:0}
-#bo_vc .profile_img img{border-radius:50%}
+#bo_vc .comment_profile_img{position:absolute;top:0;left:0}
+#bo_vc .comment_profile_img img, #bo_vc .profile_img img{border-radius:50%}
 #bo_vc .sv_member, #bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo {display:inline-block;color:#777;font-style:italic}
 #bo_vc h1 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}

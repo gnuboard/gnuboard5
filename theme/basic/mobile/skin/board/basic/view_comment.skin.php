@@ -26,7 +26,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
     <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
         <header>
             <h2><?php echo get_text($list[$i]['wr_name']); ?>님의 댓글<?php if ($cmt_depth) { ?><span class="sound_only">의 댓글</span><?php } ?></h2>
-            <span class="profile_img"><img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="40" height="40"></span> <?php echo $list[$i]['name'] ?>
+            <span class="comment_profile_img"><?php echo get_member_profile_img($list[$i]['mb_id'], 40, 40); ?></span> <?php echo $list[$i]['name'] ?>
             
             <?php if ($is_ip_view) { ?>
             <span class="sound_only">아이피</span>

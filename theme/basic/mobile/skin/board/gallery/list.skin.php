@@ -112,7 +112,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     //if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
                     //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
                     ?>
-                    <span class="profile_img"><span class="sound_only">작성자 </span><img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"> <?php echo $list[$i]['name'] ?></span> 
+                    <span class="sound_only">작성자 </span><?php echo $list[$i]['name'] ?>
                     <div class="gall_info">
                         <span class="sound_only">조회 </span><strong><i class="fa fa-eye" aria-hidden="true"></i> <?php echo $list[$i]['wr_hit'] ?></strong>
                         <?php if ($is_good) { ?><span class="sound_only">추천</span><strong><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> <?php echo $list[$i]['wr_good'] ?></strong><?php } ?>

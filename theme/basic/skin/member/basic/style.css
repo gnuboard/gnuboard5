@@ -256,6 +256,6 @@ box-shadow: 0 1px 3px #eee;
 #profile section {color: #2d4c7b;background: #eff9f9;padding: 10px;border: 1px solid #bfd4dc;margin: 10px 0;}
 #profile h2 {margin:0 0 5px}
 #profile .profile_name{text-align:center;font-weight:bold}
-#profile .profile_img{display:block;margin:20px 0 5px;}
-#profile .profile_img img{border-radius:50%;border:1px solid #aaa}
+#profile .my_profile_img{display:block;margin:20px 0 5px;}
+#profile .my_profile_img img{border-radius:50%;border:1px solid #aaa}
 #profile .profile_name .sv_wrap{font-weight:bold;text-align:left}

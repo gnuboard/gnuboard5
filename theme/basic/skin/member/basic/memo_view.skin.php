@@ -33,7 +33,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <ul id="memo_view_ul">
                 <li class="memo_view_li memo_view_name">
                     <span class="memo_view_subj"><?php echo $kind_str ?>사람</span>
-                    <strong><span class="profile_img"><img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span> <?php echo $nick ?></strong>
+                    <strong><?php echo $nick ?></strong>
                 </li>
                 <li class="memo_view_li memo_view_date">
                     <span class="sound_only"><?php echo $kind_date ?>시간</span>

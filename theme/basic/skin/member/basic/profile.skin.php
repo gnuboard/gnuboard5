@@ -9,8 +9,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <div id="profile" class="new_win">
     <h1 id="win_title"><?php echo $mb_nick ?>님의 프로필</h1>
     <div class="profile_name">
-        <span class="profile_img">
-            <img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지">
+        <span class="my_profile_img">
+            <?php echo get_member_profile_img(); ?>
         </span>
         <?php echo $mb_nick ?>
     </div>

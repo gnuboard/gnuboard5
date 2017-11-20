@@ -24,7 +24,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
     <section id="bo_v_info">
         <h2>페이지 정보</h2>
-        <span class="sound_only">작성자</span><strong><span class="profile_img"><img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20" height="20"></span><?php echo $view['name'] ?></strong>
+        <span class="sound_only">작성자</span><strong><?php echo $view['name'] ?></strong>
         <span class="sound_only">작성일</span><strong class="bo_date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $view['datetime']; ?></strong>
         <?php if($view['email'] || $view['hp']) { ?>
             <?php if($view['email']) { ?>

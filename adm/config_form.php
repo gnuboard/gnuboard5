@@ -217,6 +217,22 @@ if(!isset($config['cf_kakao_client_secret'])) {
     ", true);
 }
 
+// 회원 이미지 관련 필드 추가
+if(!isset($config['cf_member_img_size'])) {
+    sql_query("ALTER TABLE `{$g5['config_table']}`
+                ADD `cf_member_img_size` int(11) NOT NULL DEFAULT '0' AFTER `cf_member_icon_height`,
+                ADD `cf_member_img_width` int(11) NOT NULL DEFAULT '0' AFTER `cf_member_img_size`,
+                ADD `cf_member_img_height` int(11) NOT NULL DEFAULT '0' AFTER `cf_member_img_width`
+    ", true);
+
+    $sql = " update {$g5['config_table']} set cf_member_img_size = 50000, cf_member_img_width = 60, cf_member_img_height = 60 ";
+    sql_query($sql, false);
+
+    $config['cf_member_img_size'] = 50000;
+    $config['cf_member_img_width'] = 60;
+    $config['cf_member_img_height'] = 60;
+}
+
 // 소셜 로그인 관리 테이블 없을 경우 생성
 if(!sql_query(" DESC {$g5['social_profile_table']} ", false)) {
     sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['social_profile_table']}` (
@@ -708,7 +724,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <option value="2"<?php echo get_selected($config['cf_use_member_icon'], '2') ?>>아이콘+이름 표시
                 </select>
             </td>
-            <th scope="row"><label for="cf_icon_level">아이콘 업로드 권한</label></th>
+            <th scope="row"><label for="cf_icon_level">회원 아이콘, 이미지 업로드 권한</label></th>
             <td><?php echo get_member_level_select('cf_icon_level', 1, 9, $config['cf_icon_level']) ?> 이상</td>
         </tr>
         <tr>
@@ -720,6 +736,18 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 <input type="text" name="cf_member_icon_width" value="<?php echo $config['cf_member_icon_width'] ?>" id="cf_member_icon_width" class="frm_input" size="2">
                 <label for="cf_member_icon_height">세로</label>
                 <input type="text" name="cf_member_icon_height" value="<?php echo $config['cf_member_icon_height'] ?>" id="cf_member_icon_height" class="frm_input" size="2">
+                픽셀 이하
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_member_img_size">회원이미지 용량</label></th>
+            <td><input type="text" name="cf_member_img_size" value="<?php echo $config['cf_member_img_size'] ?>" id="cf_member_img_size" class="frm_input" size="10"> 바이트 이하</td>
+            <th scope="row">회원이미지 사이즈</th>
+            <td>
+                <label for="cf_member_img_width">가로</label>
+                <input type="text" name="cf_member_img_width" value="<?php echo $config['cf_member_img_width'] ?>" id="cf_member_img_width" class="frm_input" size="2">
+                <label for="cf_member_img_height">세로</label>
+                <input type="text" name="cf_member_img_height" value="<?php echo $config['cf_member_img_height'] ?>" id="cf_member_img_height" class="frm_input" size="2">
                 픽셀 이하
             </td>
         </tr>
