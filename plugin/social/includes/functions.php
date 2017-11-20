@@ -633,7 +633,8 @@ function social_register_member_check($member){
 }
 
 function social_profile_img_resize($path, $file_url, $width, $height){
-
+    
+    // getimagesize 경우 php.ini 에서 allow_url_fopen 이 활성화 되어 있어야 원격이미지를 읽어올수 있습니다.
     list($w, $h, $ext) = @getimagesize($file_url);
     if( $w && $h && $ext ){
         $ratio = max($width/$w, $height/$h);
