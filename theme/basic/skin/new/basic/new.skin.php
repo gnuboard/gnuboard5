@@ -22,8 +22,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         <option value="c">코멘트만
     </select>
     <label for="mb_id" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="frm_input required">
-    <input type="submit" value="검색" class="btn_submit">
+    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="frm_input" size="40">
+    <button type="submit" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i> 검색</button>
     <p>회원 아이디만 검색 가능</p>
     </form>
     <script>
@@ -40,7 +40,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 <!-- } 전체게시물 검색 끝 -->
 
 <!-- 전체게시물 목록 시작 { -->
-<form name="fnewlist" method="post" action="#" onsubmit="return fnew_submit(this);">
+<form name="fnewlist" id="fnewlist" method="post" action="#" onsubmit="return fnew_submit(this);">
 <input type="hidden" name="sw"       value="move">
 <input type="hidden" name="view"     value="<?php echo $view; ?>">
 <input type="hidden" name="sfl"      value="<?php echo $sfl; ?>">
@@ -86,8 +86,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         <?php } ?>
         <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
         <td class="td_board"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>"><?php echo $bo_subject ?></a></td>
-        <td><a href="<?php echo $list[$i]['href'] ?>"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
-        <td class="td_name"><div><?php echo $list[$i]['name'] ?></div></td>
+        <td><a href="<?php echo $list[$i]['href'] ?>" class="new_tit"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
+        <td class="td_name"><?php echo $list[$i]['name'] ?></td>
         <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>
     </tr>
     <?php }  ?>
@@ -101,7 +101,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 
 <?php if ($is_admin) { ?>
 <div class="sir_bw02 sir_bw">
-    <input type="submit" onclick="document.pressed=this.value" value="선택삭제" class="btn_submit">
+    <button type="submit" onclick="document.pressed=this.value" class="btn_b01 btn"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button>
 </div>
 <?php } ?>
 </form>

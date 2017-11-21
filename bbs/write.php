@@ -386,7 +386,9 @@ else
 
 $captcha_html = '';
 $captcha_js   = '';
-if ($is_guest) {
+$is_use_captcha = ((!empty($board['bo_use_captcha']) || $is_guest) && !$is_admin) ? 1 : 0;
+
+if ($is_use_captcha) {
     $captcha_html = captcha_html();
     $captcha_js   = chk_captcha_js();
 }

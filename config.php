@@ -5,7 +5,7 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.2.9.6');
+define('G5_GNUBOARD_VER', '5.3');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -47,7 +47,6 @@ define('G5_JS_DIR',         'js');
 define('G5_LIB_DIR',        'lib');
 define('G5_PLUGIN_DIR',     'plugin');
 define('G5_SKIN_DIR',       'skin');
-define('G5_CAPTCHA_DIR',    'kcaptcha');
 define('G5_EDITOR_DIR',     'editor');
 define('G5_MOBILE_DIR',     'mobile');
 define('G5_OKNAME_DIR',     'okname');
@@ -85,7 +84,6 @@ define('G5_IMG_URL',        G5_URL.'/'.G5_IMG_DIR);
 define('G5_JS_URL',         G5_URL.'/'.G5_JS_DIR);
 define('G5_SKIN_URL',       G5_URL.'/'.G5_SKIN_DIR);
 define('G5_PLUGIN_URL',     G5_URL.'/'.G5_PLUGIN_DIR);
-define('G5_CAPTCHA_URL',    G5_PLUGIN_URL.'/'.G5_CAPTCHA_DIR);
 define('G5_EDITOR_URL',     G5_PLUGIN_URL.'/'.G5_EDITOR_DIR);
 define('G5_OKNAME_URL',     G5_PLUGIN_URL.'/'.G5_OKNAME_DIR);
 define('G5_KCPCERT_URL',    G5_PLUGIN_URL.'/'.G5_KCPCERT_DIR);
@@ -104,7 +102,6 @@ define('G5_PLUGIN_PATH',    G5_PATH.'/'.G5_PLUGIN_DIR);
 define('G5_SKIN_PATH',      G5_PATH.'/'.G5_SKIN_DIR);
 define('G5_MOBILE_PATH',    G5_PATH.'/'.G5_MOBILE_DIR);
 define('G5_SESSION_PATH',   G5_DATA_PATH.'/'.G5_SESSION_DIR);
-define('G5_CAPTCHA_PATH',   G5_PLUGIN_PATH.'/'.G5_CAPTCHA_DIR);
 define('G5_EDITOR_PATH',    G5_PLUGIN_PATH.'/'.G5_EDITOR_DIR);
 define('G5_OKNAME_PATH',    G5_PLUGIN_PATH.'/'.G5_OKNAME_DIR);
 

@@ -72,7 +72,7 @@ var list_delete_php = 'popular_list.php';
 
 <div class="local_ov01 local_ov">
         <?php echo $listall ?>
-        건수 : <?php echo number_format($total_count) ?>개
+        <span class="btn_ov01"><span class="ov_txt">건수</span><span class="ov_num">  <?php echo number_format($total_count) ?>개</span></span>
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
@@ -123,7 +123,7 @@ var list_delete_php = 'popular_list.php';
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $word ?></label>
             <input type="checkbox" name="chk[]" value="<?php echo $row['pp_id'] ?>" id="chk_<?php echo $i ?>">
         </td>
-        <td><a href="<?php echo $_SERVER['SCRIPT_NAME'] ?>?sfl=pp_word&amp;stx=<?php echo $word ?>"><?php echo $word ?></a></td>
+        <td class="td_left"><a href="<?php echo $_SERVER['SCRIPT_NAME'] ?>?sfl=pp_word&amp;stx=<?php echo $word ?>"><?php echo $word ?></a></td>
         <td><?php echo $row['pp_date'] ?></td>
         <td><?php echo $row['pp_ip'] ?></td>
     </tr>
@@ -140,8 +140,8 @@ var list_delete_php = 'popular_list.php';
 </div>
 
 <?php if ($is_admin == 'super'){ ?>
-<div class="btn_list01 btn_list">
-    <button type="submit">선택삭제</button>
+<div class=" btn_fixed_top">
+    <button type="submit" class="btn btn_02">선택삭제</button>
 </div>
 <?php } ?>
 

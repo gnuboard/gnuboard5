@@ -26,8 +26,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     <div id="res_msg" class="local_desc01 local_desc">
     </div>
 
-    <div class="btn_confirm01 btn_confirm">
-        <input type="submit" value="실행" class="btn_submit">
+    <div class="btn_fixed_top">
+        <input type="submit" value="실행" class="btn_submit btn">
     </div>
     </form>
 </div>

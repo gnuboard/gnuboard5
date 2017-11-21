@@ -30,12 +30,15 @@ $gplus_url    = $sns_send.'&amp;sns=gplus';
     Kakao.init("<?php echo $config['cf_kakao_js_apikey']; ?>");
 </script>
 <?php } ?>
+<div class="bo_v_snswr">
+<button type="button" class="btn btn_b03 btn_share"><i class="fa fa-share-alt" aria-hidden="true"></i> SNS공유</button>
 
 <ul id="bo_v_sns">
-    <li><a href="<?php echo $facebook_url; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/facebook.png" alt="페이스북으로 보내기"></a></li>
-    <li><a href="<?php echo $twitter_url; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/twitter.png" alt="트위터로 보내기"></a></li>
-    <li><a href="<?php echo $gplus_url; ?>" target="_blank"><img src="<?php echo G5_SNS_URL; ?>/icon/gplus.png" alt="구글플러스로 보내기"></a></li>
+    <li><a href="<?php echo $twitter_url; ?>" target="_blank" class="sns_t"><img src="<?php echo G5_SNS_URL; ?>/icon/twitter.png" alt="트위터로 보내기" width="20"></a></li>
+    <li><a href="<?php echo $facebook_url; ?>" target="_blank" class="sns_f"><img src="<?php echo G5_SNS_URL; ?>/icon/facebook.png" alt="페이스북으로 보내기" width="20"></a></li>
+    <li><a href="<?php echo $gplus_url; ?>" target="_blank" class="sns_g"><img src="<?php echo G5_SNS_URL; ?>/icon/gplus.png" alt="구글플러스로 보내기" width="20"></a></li>
     <?php if(G5_IS_MOBILE && $config['cf_kakao_js_apikey']) { ?>
-    <li><a href="javascript:kakaolink_send('<?php echo $sns_msg; ?>', '<?php echo urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); ?>');"><img src="<?php echo G5_SNS_URL; ?>/icon/kakaotalk.png" alt="카카오톡으로 보내기"></a></li>
+    <li><a href="javascript:kakaolink_send('<?php echo $sns_msg; ?>', '<?php echo urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); ?>');" class="sns_k" ><img src="<?php echo G5_SNS_URL; ?>/icon/kakaotalk.png" alt="카카오톡으로 보내기" width="20"></a></li>
     <?php } ?>
 </ul>
+</div>

@@ -76,6 +76,10 @@ if (!isset($board['bo_mobile_subject'])) {
     sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_mobile_subject` VARCHAR(255) NOT NULL DEFAULT '' AFTER `bo_subject` ", false);
 }
 
+if (!isset($board['bo_use_captcha'])) {
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_captcha` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_sns` ");
+}
+
 $required = "";
 $readonly = "";
 if ($w == '') {
@@ -94,8 +98,8 @@ if ($w == '') {
     $board['bo_download_point'] = $config['cf_download_point'];
 
     $board['bo_gallery_cols'] = 4;
-    $board['bo_gallery_width'] = 174;
-    $board['bo_gallery_height'] = 124;
+    $board['bo_gallery_width'] = 202;
+    $board['bo_gallery_height'] = 150;
     $board['bo_mobile_gallery_width'] = 125;
     $board['bo_mobile_gallery_height'] = 100;
     $board['bo_table_width'] = 100;
@@ -150,13 +154,6 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_bo_extra">여분필드</a></li>
 </ul>';
 
-$frm_submit = '<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./board_list.php?'.$qstr.'">목록</a>'.PHP_EOL;
-if ($w == 'u') $frm_submit .= '<a href="./board_copy.php?bo_table='.$bo_table.'" id="board_copy" target="win_board_copy">게시판복사</a>
-    <a href="'.G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'" class="btn_frmline">게시판 바로가기</a>
-    <a href="./board_thumbnail_delete.php?bo_table='.$board['bo_table'].'&amp;'.$qstr.'" onclick="return delete_confirm2(\'게시판 썸네일 파일을 삭제하시겠습니까?\');">게시판 썸네일 삭제</a>'.PHP_EOL;
-$frm_submit .= '</div>';
 ?>
 
 <form name="fboardform" id="fboardform" action="./board_form_update.php" onsubmit="return fboardform_submit(this)" method="post" enctype="multipart/form-data">
@@ -189,7 +186,7 @@ $frm_submit .= '</div>';
                     영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
                 <?php } else { ?>
                     <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $board['bo_table'] ?>" class="btn_frmline">게시판 바로가기</a>
-                    <a href="./board_list.php" class="btn_frmline">목록으로</a>
+                    <a href="./board_list.php?<?php echo $qstr;?>" class="btn_frmline">목록으로</a>
                 <?php } ?>
             </td>
         </tr>
@@ -197,7 +194,7 @@ $frm_submit .= '</div>';
             <th scope="row"><label for="gr_id">그룹<strong class="sound_only">필수</strong></label></th>
             <td colspan="2">
                 <?php echo get_group_select('gr_id', $board['gr_id'], 'required'); ?>
-                <?php if ($w=='u') { ?><a href="javascript:document.location.href='./board_list.php?sfl=a.gr_id&stx='+document.fboardform.gr_id.value;" class="btn_frmline">동일그룹 게시판목록</a><?php } ?></td>
+                <?php if ($w=='u') { ?><a href="javascript:document.location.href='./board_list.php?sfl=a.gr_id&stx='+document.fboardform.gr_id.value;" class="btn_frmline">동일그룹 게시판목록</a><?php } ?>
             </td>
         </tr>
         <tr>
@@ -259,7 +256,7 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+
 
 <section id="anc_bo_auth">
     <h2 class="h2_frm">게시판 권한 설정</h2>
@@ -400,7 +397,7 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+
 
 <section id="anc_bo_function">
     <h2 class="h2_frm">게시판 기능 설정</h2>
@@ -771,12 +768,25 @@ $frm_submit .= '</div>';
                 <label for="chk_all_order">전체적용</label>
             </td>
         </tr>
+        <tr>
+            <th scope="row"><label for="bo_use_captcha">캡챠 사용</label></th>
+            <td>
+                <?php echo help("체크하면 글 작성시 캡챠를 무조건 사용합니다.( 회원 + 비회원 모두 )<br>미 체크하면 비회원에게만 캡챠를 사용합니다.") ?>
+                <input type="checkbox" name="bo_use_captcha" value="1" <?php echo $board['bo_use_captcha']?'checked':''; ?> id="bo_use_captcha">
+                사용
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_grp_use_captcha" value="1" id="chk_grp_use_captcha">
+                <label for="chk_grp_use_captcha">그룹적용</label>
+                <input type="checkbox" name="chk_all_use_captcha" value="1" id="chk_all_use_captcha">
+                <label for="chk_all_use_captcha">전체적용</label>
+            </td>
+        </tr>
         </tbody>
         </table>
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_bo_design">
     <h2 class="h2_frm">게시판 디자인/양식</h2>
@@ -953,7 +963,7 @@ $frm_submit .= '</div>';
             <th scope="row"><label for="bo_gallery_cols">갤러리 이미지 수<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여 줄 것인지를 설정하는 값') ?>
-                <input type="text" name="bo_gallery_cols" value="<?php echo $board['bo_gallery_cols'] ?>" id="bo_gallery_cols" required class="required numeric frm_input" size="4">
+                <?php echo get_member_level_select('bo_gallery_cols', 1, 10, $board['bo_gallery_cols']); ?>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_gallery_cols" value="1" id="chk_grp_gallery_cols">
@@ -1116,9 +1126,10 @@ $frm_submit .= '</div>';
         </tbody>
         </table>
     </div>
+    <button type="button" class="get_theme_galc btn btn_02" >테마 이미지설정 가져오기</button>
+
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_galc">테마 이미지설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_bo_point">
     <h2 class="h2_frm">게시판 포인트 설정</h2>
@@ -1193,8 +1204,6 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
-
 <section id="anc_bo_extra">
     <h2 class="h2_frm">게시판 여분필드 설정</h2>
     <?php echo $pg_anchor ?>
@@ -1230,7 +1239,15 @@ $frm_submit .= '</div>';
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+
+<div class="btn_fixed_top">
+    <?php if( $bo_table && $w ){ ?>
+        <a href="./board_copy.php?bo_table='.$bo_table.'" id="board_copy" target="win_board_copy" class=" btn_02 btn">게시판복사</a>
+        <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $board['bo_table']; ?>'" class=" btn_02 btn">게시판 바로가기</a>
+        <a href="./board_thumbnail_delete.php?bo_table=<?php echo $board['bo_table']; ?>'&amp;'.$qstr.'" onclick="return delete_confirm2('게시판 썸네일 파일을 삭제하시겠습니까?');" class="btn_02 btn">게시판 썸네일 삭제</a>
+    <?php } ?>
+    <input type="submit" value="확인" class="btn_submi btn btn_01" accesskey="s">
+</div>
 
 </form>
 

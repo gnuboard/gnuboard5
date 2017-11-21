@@ -40,9 +40,7 @@ $colspan = 7;
 <form name="fmenulist" id="fmenulist" method="post" action="./menu_list_update.php" onsubmit="return fmenulist_submit(this);">
 <input type="hidden" name="token" value="">
 
-<div class="btn_add01 btn_add">
-    <button type="button" onclick="return add_menu();">메뉴추가<span class="sound_only"> 새창</span></button>
-</div>
+
 
 <div id="menulist" class="tbl_head01 tbl_wrap">
     <table>
@@ -78,11 +76,11 @@ $colspan = 7;
         <td class="td_category<?php echo $sub_menu_class; ?>">
             <input type="hidden" name="code[]" value="<?php echo substr($row['me_code'], 0, 2) ?>">
             <label for="me_name_<?php echo $i; ?>" class="sound_only"><?php echo $sub_menu_info; ?> 메뉴<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="me_name[]" value="<?php echo $me_name; ?>" id="me_name_<?php echo $i; ?>" required class="required frm_input full_input">
+            <input type="text" name="me_name[]" value="<?php echo $me_name; ?>" id="me_name_<?php echo $i; ?>" required class="required tbl_input full_input">
         </td>
         <td>
             <label for="me_link_<?php echo $i; ?>" class="sound_only">링크<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="me_link[]" value="<?php echo $row['me_link'] ?>" id="me_link_<?php echo $i; ?>" required class="required frm_input full_input">
+            <input type="text" name="me_link[]" value="<?php echo $row['me_link'] ?>" id="me_link_<?php echo $i; ?>" required class="required tbl_input full_input">
         </td>
         <td class="td_mng">
             <label for="me_target_<?php echo $i; ?>" class="sound_only">새창</label>
@@ -93,7 +91,7 @@ $colspan = 7;
         </td>
         <td class="td_num">
             <label for="me_order_<?php echo $i; ?>" class="sound_only">순서</label>
-            <input type="text" name="me_order[]" value="<?php echo $row['me_order'] ?>" id="me_order_<?php echo $i; ?>" class="frm_input" size="5">
+            <input type="text" name="me_order[]" value="<?php echo $row['me_order'] ?>" id="me_order_<?php echo $i; ?>" class="tbl_input" size="5">
         </td>
         <td class="td_mng">
             <label for="me_use_<?php echo $i; ?>" class="sound_only">PC사용</label>
@@ -111,9 +109,9 @@ $colspan = 7;
         </td>
         <td class="td_mng">
             <?php if(strlen($row['me_code']) == 2) { ?>
-            <button type="button" class="btn_add_submenu">추가</button>
+            <button type="button" class="btn_add_submenu btn_03 ">추가</button>
             <?php } ?>
-            <button type="button" class="btn_del_menu">삭제</button>
+            <button type="button" class="btn_del_menu btn_02">삭제</button>
         </td>
     </tr>
     <?php
@@ -126,8 +124,9 @@ $colspan = 7;
     </table>
 </div>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" name="act_button" value="확인" class="btn_submit">
+<div class="btn_fixed_top">
+    <button type="button" onclick="return add_menu();" class="btn btn_02">메뉴추가<span class="sound_only"> 새창</span></button>
+    <input type="submit" name="act_button" value="확인" class="btn_submit btn ">
 </div>
 
 </form>
