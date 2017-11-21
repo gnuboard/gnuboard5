@@ -10,7 +10,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <h1 id="win_title"><?php echo $mb_nick ?>님의 프로필</h1>
     <div class="profile_name">
         <span class="my_profile_img">
-            <?php echo get_member_profile_img(); ?>
+            <?php echo get_member_profile_img($mb['mb_id']); ?>
         </span>
         <?php echo $mb_nick ?>
     </div>

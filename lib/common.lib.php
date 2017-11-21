@@ -3298,32 +3298,34 @@ function check_write_token($bo_table)
 }
 
 function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_image', $title=''){
-    global $is_member, $member;
+    global $member;
 
-    if( ! $is_member ) return '';
-
-    if( !$mb_id ) $mb_id = $member['mb_id'];
-
-    static $cache = array();
+    static $no_profile_cache = '';
+    static $member_cache = array();
     
     $src = '';
-    if( isset($cache[$mb_id]) ){
-        $src = $cache[$mb_id];
-    } else {
-        // 프로필 이미지가 없을때 기본 이미지
-        $no_profile_img = (defined('G5_THEME_NO_PROFILE_IMG') && G5_THEME_NO_PROFILE_IMG) ? G5_THEME_NO_PROFILE_IMG : G5_NO_PROFILE_IMG;
-        $tmp = array();
-        preg_match( '/src="([^"]*)"/i', $foo, $tmp );
-        $src = isset($tmp[1]) ? $tmp[1] : G5_IMG_URL.'/no_profile.gif';
 
-        if( $mb_id ){
+    if( $mb_id ){
+        if( isset($member_cache[$mb_id]) ){
+            $src = $member_cache[$mb_id];
+        } else {
             $member_img = G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_id.'.gif';
             if (is_file($member_img)) {
-                $src = str_replace(G5_DATA_PATH, G5_DATA_URL, $member_img);
+                $member_cache[$mb_id] = $src = str_replace(G5_DATA_PATH, G5_DATA_URL, $member_img);
             }
         }
+    }
 
-        $cache[$mb_id] = $src;
+    if( !$src ){
+        if( !empty($no_profile_cache) ){
+            $src = $no_profile_cache;
+        } else {
+            // 프로필 이미지가 없을때 기본 이미지
+            $no_profile_img = (defined('G5_THEME_NO_PROFILE_IMG') && G5_THEME_NO_PROFILE_IMG) ? G5_THEME_NO_PROFILE_IMG : G5_NO_PROFILE_IMG;
+            $tmp = array();
+            preg_match( '/src="([^"]*)"/i', $foo, $tmp );
+            $no_profile_cache = $src = isset($tmp[1]) ? $tmp[1] : G5_IMG_URL.'/no_profile.gif';
+        }
     }
 
     if( $src ){
