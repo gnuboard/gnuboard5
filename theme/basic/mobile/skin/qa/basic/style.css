@@ -117,6 +117,8 @@ box-shadow: 0 0 8px  rgba(65,98,255,0.8);}
 #bo_list .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
 
 #bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}
+#bo_sch .btn_submit{width:40px;height:40px}
+
 
 /* 게시판 쓰기 */
 #bo_w #wr_email, #bo_w #wr_homepage, #bo_w #wr_subject {width:100%}
