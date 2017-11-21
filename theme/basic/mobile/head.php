@@ -128,14 +128,24 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
             <div id="text_size">
             <!-- font_resize('엘리먼트id', '제거할 class', '추가할 class'); -->
-                <button id="size_down" onclick="font_resize('container', 'ts_up ts_up2', '');" class="select"><img src="<?php echo G5_URL; ?>/img/ts01.png" width="20" alt="기본"></button>
-                <button id="size_def" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up');"><img src="<?php echo G5_URL; ?>/img/ts02.png" width="20" alt="크게"></button>
-                <button id="size_up" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2');"><img src="<?php echo G5_URL; ?>/img/ts03.png" width="20" alt="더크게"></button>
+                <button id="size_down" onclick="font_resize('container', 'ts_up ts_up2', '', this);" class="select"><img src="<?php echo G5_URL; ?>/img/ts01.png" width="20" alt="기본"></button>
+                <button id="size_def" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up', this);"><img src="<?php echo G5_URL; ?>/img/ts02.png" width="20" alt="크게"></button>
+                <button id="size_up" onclick="font_resize('container', 'ts_up ts_up2', 'ts_up2', this);"><img src="<?php echo G5_URL; ?>/img/ts03.png" width="20" alt="더크게"></button>
             </div>
         </div>
 
         <script>
         $(function () {
+            //폰트 크기 조정 위치 지정
+            var font_resize_class = get_cookie("ck_font_resize_add_class");
+            if( font_resize_class == 'ts_up' ){
+                $("#text_size button").removeClass("select");
+                $("#size_def").addClass("select");
+            } else if (font_resize_class == 'ts_up2') {
+                $("#text_size button").removeClass("select");
+                $("#size_up").addClass("select");
+            }
+
             $(".hd_opener").on("click", function() {
                 var $this = $(this);
                 var $hd_layer = $this.next(".hd_div");
