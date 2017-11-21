@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '900400';
+$sub_menu = '900410';
 include_once('./_common.php');
 
 $page_size = 20;
@@ -90,9 +90,9 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
         <td class="td_datetime"><?php echo date('Y-m-d H:i', strtotime($write['wr_datetime']))?></td>
         <td class="td_boolean"><?php echo $write['wr_booking']!='0000-00-00 00:00:00'?"<span title='{$write['wr_booking']}'>예약</span>":'';?></td>
         <td class="td_boolean"><?php echo $res['hs_flag']?'성공':'실패'?></td>
-        <td><span title="<?php echo $write['wr_message']?>"><?php echo $write['wr_message']?></span></td>
-        <td class="td_mngsmall">
-            <a href="./history_view.php?page=<?php echo $page; ?>&amp;st=<?php echo $st; ?>&amp;sv=<?php echo $sv; ?>&amp;wr_no=<?php echo $res['wr_no']; ?>">수정</a>
+        <td class="td_left"><span title="<?php echo $write['wr_message']?>"><?php echo $write['wr_message']?></span></td>
+        <td class="td_mng td_mng_s">
+            <a href="./history_view.php?page=<?php echo $page; ?>&amp;st=<?php echo $st; ?>&amp;sv=<?php echo $sv; ?>&amp;wr_no=<?php echo $res['wr_no']; ?>" class="btn btn_03">수정</a>
         </td>
     </tr>
     <?php } ?>

@@ -192,6 +192,67 @@ if(!sql_query(" select vi_browser from {$g5['visit_table']} limit 1 ")) {
                     ADD `vi_device` varchar(255) NOT NULL DEFAULT '' AFTER `vi_os` ", true);
 }
 
+//소셜 로그인 관련 필드 및 구글 리챕챠 필드 추가
+if(!isset($config['cf_social_login_use'])) {
+    sql_query("ALTER TABLE `{$g5['config_table']}`
+                ADD `cf_social_login_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `cf_googl_shorturl_apikey`,
+                ADD `cf_google_clientid` varchar(100) NOT NULL DEFAULT '' AFTER `cf_twitter_secret`,
+                ADD `cf_google_secret` varchar(100) NOT NULL DEFAULT '' AFTER `cf_google_clientid`,
+                ADD `cf_naver_clientid` varchar(100) NOT NULL DEFAULT '' AFTER `cf_google_secret`,
+                ADD `cf_naver_secret` varchar(100) NOT NULL DEFAULT '' AFTER `cf_naver_clientid`,
+                ADD `cf_kakao_rest_key` varchar(100) NOT NULL DEFAULT '' AFTER `cf_naver_secret`,
+                ADD `cf_social_servicelist` varchar(255) NOT NULL DEFAULT '' AFTER `cf_social_login_use`,
+                ADD `cf_payco_clientid` varchar(100) NOT NULL DEFAULT '' AFTER `cf_social_servicelist`,
+                ADD `cf_payco_secret` varchar(100) NOT NULL DEFAULT '' AFTER `cf_payco_clientid`,
+                ADD `cf_captcha` varchar(100) NOT NULL DEFAULT '' AFTER `cf_kakao_js_apikey`,
+                ADD `cf_recaptcha_site_key` varchar(100) NOT NULL DEFAULT '' AFTER `cf_captcha`,
+                ADD `cf_recaptcha_secret_key` varchar(100) NOT NULL DEFAULT '' AFTER `cf_recaptcha_site_key`
+    ", true);
+}
+
+//소셜 로그인 관련 필드 카카오 클라이언트 시크릿 추가
+if(!isset($config['cf_kakao_client_secret'])) {
+    sql_query("ALTER TABLE `{$g5['config_table']}`
+                ADD `cf_kakao_client_secret` varchar(100) NOT NULL DEFAULT '' AFTER `cf_kakao_rest_key`
+    ", true);
+}
+
+// 회원 이미지 관련 필드 추가
+if(!isset($config['cf_member_img_size'])) {
+    sql_query("ALTER TABLE `{$g5['config_table']}`
+                ADD `cf_member_img_size` int(11) NOT NULL DEFAULT '0' AFTER `cf_member_icon_height`,
+                ADD `cf_member_img_width` int(11) NOT NULL DEFAULT '0' AFTER `cf_member_img_size`,
+                ADD `cf_member_img_height` int(11) NOT NULL DEFAULT '0' AFTER `cf_member_img_width`
+    ", true);
+
+    $sql = " update {$g5['config_table']} set cf_member_img_size = 50000, cf_member_img_width = 60, cf_member_img_height = 60 ";
+    sql_query($sql, false);
+
+    $config['cf_member_img_size'] = 50000;
+    $config['cf_member_img_width'] = 60;
+    $config['cf_member_img_height'] = 60;
+}
+
+// 소셜 로그인 관리 테이블 없을 경우 생성
+if(!sql_query(" DESC {$g5['social_profile_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['social_profile_table']}` (
+                  `mp_no` int(11) NOT NULL AUTO_INCREMENT,
+                  `mb_id` varchar(255) NOT NULL DEFAULT '',
+                  `provider` varchar(50) NOT NULL DEFAULT '',
+                  `object_sha` varchar(45) NOT NULL DEFAULT '',
+                  `identifier` varchar(255) NOT NULL DEFAULT '',
+                  `profileurl` varchar(255) NOT NULL DEFAULT '',
+                  `photourl` varchar(255) NOT NULL DEFAULT '',
+                  `displayname` varchar(150) NOT NULL DEFAULT '',
+                  `description` varchar(255) NOT NULL DEFAULT '',
+                  `mp_register_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  `mp_latest_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  UNIQUE KEY `mp_no` (`mp_no`),
+                  KEY `mb_id` (`mb_id`),
+                  KEY `provider` (`provider`)
+                ) ", true);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -213,10 +274,6 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_extra">여분필드</a></li>
 </ul>';
 
-$frm_submit = '<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="'.G5_URL.'/">메인으로</a>
-</div>';
 
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
@@ -403,12 +460,23 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
+            <th scope="row"><label for="cf_captcha">캡챠 선택<strong class="sound_only">필수</strong></label></th>
+            <td colspan="3">
+                <?php echo help('사용할 캡챠를 선택합니다.<br>1) Kcaptcha 는 그누보드5의 기본캡챠입니다. ( 문자입력 )<br>2) reCAPTCHA V2 는 구글에서 서비스하는 원클릭 형식의 간편한 캡챠입니다. ( 모바일 친화적 UI )<br>3) Invisible reCAPTCHA 는 구글에서 서비스하는 안보이는 형식의 캡챠입니다. ( 간혹 퀴즈를 풀어야 합니다. )<br>') ?>
+                <select name="cf_captcha" id="cf_captcha" required class="required">
+                <option value="kcaptcha" <?php echo get_selected($config['cf_captcha'], 'kcaptcha') ; ?>>Kcaptcha</option>
+                <option value="recaptcha" <?php echo get_selected($config['cf_captcha'], 'recaptcha') ; ?>>reCAPTCHA V2</option>
+                <option value="recaptcha_inv" <?php echo get_selected($config['cf_captcha'], 'recaptcha_inv') ; ?>>Invisible reCAPTCHA</option>
+                </select>
+            </td>
+        </tr>
+        <tr class="kcaptcha_mp3">
             <th scope="row"><label for="cf_captcha_mp3">음성캡챠 선택<strong class="sound_only">필수</strong></label></th>
             <td colspan="3">
-                <?php echo help(G5_CAPTCHA_URL.'/mp3 밑의 음성 폴더를 선택합니다.') ?>
+                <?php echo help('kcaptcha 사용시 '.str_replace(array('recaptcha_inv', 'recaptcha'), 'kcaptcha', G5_CAPTCHA_URL).'/mp3 밑의 음성 폴더를 선택합니다.') ?>
                 <select name="cf_captcha_mp3" id="cf_captcha_mp3" required class="required">
                 <?php
-                $arr = get_skin_dir('mp3', G5_CAPTCHA_PATH);
+                $arr = get_skin_dir('mp3', str_replace(array('recaptcha_inv', 'recaptcha'), 'kcaptcha', G5_CAPTCHA_PATH));
                 for ($i=0; $i<count($arr); $i++) {
                     if ($i == 0) echo "<option value=\"\">선택</option>";
                     echo "<option value=\"".$arr[$i]."\"".get_selected($config['cf_captcha_mp3'], $arr[$i]).">".$arr[$i]."</option>\n";
@@ -417,6 +485,21 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 </select>
             </td>
         </tr>
+		<tr>
+			<th scope="row" rowspan="2"><label for="cf_recaptcha_site_key">구글 reCAPTCHA Site key</label></th>
+			<td colspan="3" style="border-bottom:none 0">
+            <?php echo help('reCAPTCHA V2와 Invisible reCAPTCHA 캡챠의 sitekey 와 secret 키는 동일하지 않고, 서로 발급받는 키가 다릅니다.') ?>
+            </td>
+		</tr>
+		<tr>
+			<td>
+                <input type="text" name="cf_recaptcha_site_key" value="<?php echo $config['cf_recaptcha_site_key']; ?>" id="cf_naver_clientid" class="frm_input" size="52"> <a href="https://www.google.com/recaptcha/admin" target="_blank" class="btn_frmline">reCAPTCHA 등록하기</a>
+            </td>
+            <th scope="row"><label for="cf_recaptcha_secret_key">구글 reCAPTCHA Secret key</label></th>
+            <td>
+                <input type="text" name="cf_recaptcha_secret_key" value="<?php echo $config['cf_recaptcha_secret_key']; ?>" id="cf_recaptcha_secret_key" class="frm_input" size="52">
+            </td>
+		</tr>
         <tr>
             <th scope="row"><label for="cf_use_copy_log">복사, 이동시 로그</label></th>
             <td colspan="3">
@@ -476,8 +559,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         </table>
     </div>
 </section>
-
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_confc" data-type="conf_skin">테마 스킨설정 가져오기</button></div>', $frm_submit); ?>
+<button type="button" class="get_theme_confc btn_02 btn" data-type="conf_skin" >테마 스킨설정 가져오기</button>
 
 <section id="anc_cf_board">
     <h2 class="h2_frm">게시판 기본 설정</h2>
@@ -558,8 +640,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         </table>
     </div>
 </section>
-
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_join">
     <h2 class="h2_frm">회원가입 설정</h2>
@@ -644,7 +724,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <option value="2"<?php echo get_selected($config['cf_use_member_icon'], '2') ?>>아이콘+이름 표시
                 </select>
             </td>
-            <th scope="row"><label for="cf_icon_level">아이콘 업로드 권한</label></th>
+            <th scope="row"><label for="cf_icon_level">회원 아이콘, 이미지 업로드 권한</label></th>
             <td><?php echo get_member_level_select('cf_icon_level', 1, 9, $config['cf_icon_level']) ?> 이상</td>
         </tr>
         <tr>
@@ -656,6 +736,18 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 <input type="text" name="cf_member_icon_width" value="<?php echo $config['cf_member_icon_width'] ?>" id="cf_member_icon_width" class="frm_input" size="2">
                 <label for="cf_member_icon_height">세로</label>
                 <input type="text" name="cf_member_icon_height" value="<?php echo $config['cf_member_icon_height'] ?>" id="cf_member_icon_height" class="frm_input" size="2">
+                픽셀 이하
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_member_img_size">회원이미지 용량</label></th>
+            <td><input type="text" name="cf_member_img_size" value="<?php echo $config['cf_member_img_size'] ?>" id="cf_member_img_size" class="frm_input" size="10"> 바이트 이하</td>
+            <th scope="row">회원이미지 사이즈</th>
+            <td>
+                <label for="cf_member_img_width">가로</label>
+                <input type="text" name="cf_member_img_width" value="<?php echo $config['cf_member_img_width'] ?>" id="cf_member_img_width" class="frm_input" size="2">
+                <label for="cf_member_img_height">세로</label>
+                <input type="text" name="cf_member_img_height" value="<?php echo $config['cf_member_img_height'] ?>" id="cf_member_img_height" class="frm_input" size="2">
                 픽셀 이하
             </td>
         </tr>
@@ -688,9 +780,9 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         </tbody>
         </table>
     </div>
+    <button type="button" class="get_theme_confc btn btn_02" data-type="conf_member">테마 회원스킨설정 가져오기</button>
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_theme_confc" data-type="conf_member">테마 회원스킨설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_cf_cert">
     <h2 class="h2_frm">본인확인 설정</h2>
@@ -791,7 +883,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_mail">
     <h2 class="h2_frm">기본 메일 환경 설정</h2>
@@ -815,7 +906,8 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_use_email_certify">메일인증 사용</label></th>
             <td>
-                <?php echo help('메일에 배달된 인증 주소를 클릭하여야 회원으로 인정합니다.'); ?>
+                <?php $tmp = !(defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL) ? '<br>( SNS를 이용한 소셜로그인 한 회원은 회원메일인증을 하지 않습니다. 일반회원에게만 해당됩니다. )' : ''; ?>
+                <?php echo help('메일에 배달된 인증 주소를 클릭하여야 회원으로 인정합니다.'.$tmp); ?>
                 <input type="checkbox" name="cf_use_email_certify" value="1" id="cf_use_email_certify" <?php echo $config['cf_use_email_certify']?'checked':''; ?>> 사용
             </td>
         </tr>
@@ -830,7 +922,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_article_mail">
     <h2 class="h2_frm">게시판 글 작성 시 메일 설정</h2>
@@ -884,7 +975,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_join_mail">
     <h2 class="h2_frm">회원가입 시 메일 설정</h2>
@@ -917,7 +1007,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_vote_mail">
     <h2 class="h2_frm">투표 기타의견 작성 시 메일 설정</h2>
@@ -943,7 +1032,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_sns">
     <h2 class="h2_frm">소셜네트워크서비스(SNS : Social Network Service)</h2>
@@ -960,33 +1048,135 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         </colgroup>
         <tbody>
         <tr>
+            <th scope="row"><label for="cf_social_login_use">소셜로그인설정</label></th>
+            <td colspan="3">
+                <?php echo help('소셜로그인을 사용합니다. <a href="https://sir.kr/manual/g5/276" class="btn btn_03" target="_blank" style="margin-left:10px" >설정 관련 메뉴얼 보기</a> ') ?>
+                <input type="checkbox" name="cf_social_login_use" value="1" id="cf_social_login_use" <?php echo (!empty($config['cf_social_login_use']))?'checked':''; ?>> 사용
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_social_servicelist">소셜로그인설정</label></th>
+            <td colspan="3" class="social_config_explain">
+                <p>
+                    <input type="checkbox" name="cf_social_servicelist[]" id="check_social_naver" value="naver" <?php echo option_array_checked('naver', $config['cf_social_servicelist']); ?> >
+                    <label for="check_social_naver">네이버 로그인을 사용합니다</label>
+                    <div>
+                    <h3>네이버 CallbackURL</h3>
+                    <p><?php echo get_social_callbackurl('naver'); ?></p>
+                    </div>
+                </p>
+                <p>
+                    <input type="checkbox" name="cf_social_servicelist[]" id="check_social_kakao" value="kakao" <?php echo option_array_checked('kakao', $config['cf_social_servicelist']); ?> >
+                    <label for="check_social_kakao">카카오 로그인을 사용합니다</label>
+                    <div>
+                    <h3>카카오 웹 Redirect Path</h3>
+                    <p><?php echo get_social_callbackurl('kakao', true); ?></p>
+                    </p>
+                    </div>
+                </p>
+                <p>
+                    <input type="checkbox" name="cf_social_servicelist[]" id="check_social_facebook" value="facebook" <?php echo option_array_checked('facebook', $config['cf_social_servicelist']); ?> >
+                    <label for="check_social_facebook">페이스북 로그인을 사용합니다</label>
+                    <div>
+                    <h3>페이스북 유효한 OAuth 리디렉션 URI</h3>
+                    <p><?php echo get_social_callbackurl('facebook'); ?></p>
+                    </div>
+                </p>
+                <p>
+                    <input type="checkbox" name="cf_social_servicelist[]" id="check_social_google" value="google" <?php echo option_array_checked('google', $config['cf_social_servicelist']); ?> >
+                    <label for="check_social_google">구글 로그인을 사용합니다</label>
+                    <div>
+                    <h3>구글 승인된 리디렉션 URI</h3>
+                    <p><?php echo get_social_callbackurl('google'); ?></p>
+                    </div>
+                </p>
+                <p>
+                    <input type="checkbox" name="cf_social_servicelist[]" id="check_social_twitter" value="twitter" <?php echo option_array_checked('twitter', $config['cf_social_servicelist']); ?> >
+                    <label for="check_social_twitter">트위터 로그인을 사용합니다</label>
+                    <div>
+                    <h3>트위터 CallbackURL</h3>
+                    <p><?php echo get_social_callbackurl('twitter'); ?></p>
+                    </div>
+                </p>
+                <p>
+                    <input type="checkbox" name="cf_social_servicelist[]" id="check_social_payco" value="payco" <?php echo option_array_checked('payco', $config['cf_social_servicelist']); ?> >
+                    <label for="check_social_payco">페이코 로그인을 사용합니다</label>
+                    <h3>페이코 CallbackURL</h3>
+                    <p><?php echo get_social_callbackurl('payco'); ?></p>
+                    </div>
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_naver_clientid">네이버 Client ID</label></th>
+            <td>
+                <input type="text" name="cf_naver_clientid" value="<?php echo $config['cf_naver_clientid'] ?>" id="cf_naver_clientid" class="frm_input" size="40"> <a href="https://developers.naver.com/apps/#/register" target="_blank" class="btn_frmline">앱 등록하기</a>
+            </td>
+            <th scope="row"><label for="cf_naver_secret">네이버 Client Secret</label></th>
+            <td>
+                <input type="text" name="cf_naver_secret" value="<?php echo $config['cf_naver_secret'] ?>" id="cf_naver_secret" class="frm_input" size="45">
+            </td>
+        </tr>
+        <tr>
             <th scope="row"><label for="cf_facebook_appid">페이스북 앱 ID</label></th>
             <td>
-                <input type="text" name="cf_facebook_appid" value="<?php echo $config['cf_facebook_appid'] ?>" id="cf_facebook_appid" class="frm_input"> <a href="https://developers.facebook.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
+                <input type="text" name="cf_facebook_appid" value="<?php echo $config['cf_facebook_appid'] ?>" id="cf_facebook_appid" class="frm_input" size="40"> <a href="https://developers.facebook.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
             <th scope="row"><label for="cf_facebook_secret">페이스북 앱 Secret</label></th>
             <td>
-                <input type="text" name="cf_facebook_secret" value="<?php echo $config['cf_facebook_secret'] ?>" id="cf_facebook_secret" class="frm_input" size="35">
+                <input type="text" name="cf_facebook_secret" value="<?php echo $config['cf_facebook_secret'] ?>" id="cf_facebook_secret" class="frm_input" size="45">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_twitter_key">트위터 컨슈머 Key</label></th>
             <td>
-                <input type="text" name="cf_twitter_key" value="<?php echo $config['cf_twitter_key'] ?>" id="cf_twitter_key" class="frm_input"> <a href="https://dev.twitter.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
+                <input type="text" name="cf_twitter_key" value="<?php echo $config['cf_twitter_key'] ?>" id="cf_twitter_key" class="frm_input" size="40"> <a href="https://dev.twitter.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
             <th scope="row"><label for="cf_twitter_secret">트위터 컨슈머 Secret</label></th>
             <td>
-                <input type="text" name="cf_twitter_secret" value="<?php echo $config['cf_twitter_secret'] ?>" id="cf_twitter_secret" class="frm_input" size="35">
+                <input type="text" name="cf_twitter_secret" value="<?php echo $config['cf_twitter_secret'] ?>" id="cf_twitter_secret" class="frm_input" size="45">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_google_clientid">구글 Client ID</label></th>
+            <td>
+                <input type="text" name="cf_google_clientid" value="<?php echo $config['cf_google_clientid'] ?>" id="cf_google_clientid" class="frm_input" size="40"> <a href="https://console.developers.google.com" target="_blank" class="btn_frmline">앱 등록하기</a>
+            </td>
+            <th scope="row"><label for="cf_google_secret">구글 Client Secret</label></th>
+            <td>
+                <input type="text" name="cf_google_secret" value="<?php echo $config['cf_google_secret'] ?>" id="cf_google_secret" class="frm_input" size="45">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_googl_shorturl_apikey">구글 짧은주소 API Key</label></th>
-            <td>
-                <input type="text" name="cf_googl_shorturl_apikey" value="<?php echo $config['cf_googl_shorturl_apikey'] ?>" id="cf_googl_shorturl_apikey" class="frm_input"> <a href="http://code.google.com/apis/console/" target="_blank" class="btn_frmline">API Key 등록하기</a>
+            <td colspan="3">
+                <input type="text" name="cf_googl_shorturl_apikey" value="<?php echo $config['cf_googl_shorturl_apikey'] ?>" id="cf_googl_shorturl_apikey" class="frm_input" size="40"> <a href="http://code.google.com/apis/console/" target="_blank" class="btn_frmline">API Key 등록하기</a>
             </td>
-            <th scope="row"><label for="cf_kakao_js_apikey">카카오 Javascript API Key</label></th>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_kakao_rest_key">카카오 REST API 키</label></th>
             <td>
-                <input type="text" name="cf_kakao_js_apikey" value="<?php echo $config['cf_kakao_js_apikey'] ?>" id="cf_kakao_js_apikey" class="frm_input"> <a href="http://developers.kakao.com/" target="_blank" class="btn_frmline">앱 등록하기</a>
+                <input type="text" name="cf_kakao_rest_key" value="<?php echo $config['cf_kakao_rest_key'] ?>" id="cf_kakao_rest_key" class="frm_input" size="40"> <a href="https://developers.kakao.com/apps/new" target="_blank" class="btn_frmline">앱 등록하기</a>
+            </td>
+            <th scope="row"><label for="cf_kakao_client_secret">카카오 Client Secret</label></th>
+            <td>
+                <input type="text" name="cf_kakao_client_secret" value="<?php echo $config['cf_kakao_client_secret'] ?>" id="cf_kakao_js_apikey" class="frm_input" size="45">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_kakao_js_apikey">카카오 JavaScript 키</label></th>
+            <td colspan="3">
+                <input type="text" name="cf_kakao_js_apikey" value="<?php echo $config['cf_kakao_js_apikey'] ?>" id="cf_kakao_js_apikey" class="frm_input" size="45">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="cf_payco_clientid">페이코 Client ID</label></th>
+            <td>
+                <input type="text" name="cf_payco_clientid" value="<?php echo $config['cf_payco_clientid']; ?>" id="cf_payco_clientid" class="frm_input" size="40"> <a href="https://developers.payco.com/guide" target="_blank" class="btn_frmline">앱 등록하기</a>
+            </td>
+            <th scope="row"><label for="cf_payco_secret">페이코 Secret</label></th>
+            <td>
+                <input type="text" name="cf_payco_secret" value="<?php echo $config['cf_payco_secret']; ?>" id="cf_payco_secret" class="frm_input" size="45">
             </td>
         </tr>
         </tbody>
@@ -994,7 +1184,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_lay">
     <h2 class="h2_frm">레이아웃 추가설정</h2>
@@ -1023,7 +1212,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_sms">
     <h2 class="h2_frm">SMS</h2>
@@ -1097,7 +1285,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
          <?php if ($userinfo['payment'] == 'A') { ?>
         <tr>
             <th scope="row">충전 잔액</th>
-            <td colspan="3">
+            <td>
                 <?php echo number_format($userinfo['coin']); ?> 원.
                 <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $config['cf_icode_id']; ?>&amp;icode_passwd=<?php echo $config['cf_icode_pw']; ?>" target="_blank" class="btn_frmline">충전하기</a>
             </td>
@@ -1108,7 +1296,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_cf_extra">
     <h2 class="h2_frm">여분필드 기본 설정</h2>
@@ -1141,7 +1328,9 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<div class="btn_fixed_top btn_confirm">
+    <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
+</div>
 
 </form>
 
@@ -1161,6 +1350,13 @@ $(function(){
                 break;
         }
     });
+    $("#cf_captcha").on("change", function(){
+        if ($(this).val() == 'recaptcha' || $(this).val() == 'recaptcha_inv') {
+            $("[class^='kcaptcha_']").hide();
+        } else {
+            $("[class^='kcaptcha_']").show();
+        }
+    }).trigger("change");
 
     $(".get_theme_confc").on("click", function() {
         var type = $(this).data("type");

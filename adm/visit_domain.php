@@ -86,7 +86,7 @@ while ($row=sql_fetch_array($result)) {
                 <span style="width:<?php echo $s_rate ?>%"></span>
             </div>
         </td>
-        <td class="td_numbig"><?php echo $count ?></td>
+        <td class="td_num_c3"><?php echo $count ?></td>
         <td class="td_num"><?php echo $s_rate ?></td>
     </tr>
     <?php

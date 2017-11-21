@@ -10,7 +10,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 <input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
 <aside id="poll">
     <header>
-        <h2>설문조사</h2>
+        <h2><i class="fa fa-bar-chart" aria-hidden="true"></i> 설문조사</h2>
         <?php if ($is_admin == "super") { ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin">설문조사 관리</a><?php } ?>
         <p><?php echo $po['po_subject'] ?></p>
     </header>
@@ -20,8 +20,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
         <?php } ?>
     </ul>
     <footer>
-        <input type="submit" value="투표하기">
-        <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
+        <input type="submit" value="투표하기" class="btn btn_b02">
+        <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;" class="btn btn_b01">결과보기</a>
     </footer>
 </aside>
 </form>

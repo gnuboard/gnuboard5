@@ -125,9 +125,9 @@ include_once('./admin.head.php');
     </table>
 </div>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" class="btn_submit" accesskey="s" value="확인">
-    <a href="./boardgroup_list.php?<?php echo $qstr ?>">목록</a>
+<div class="btn_fixed_top">
+    <a href="./boardgroup_list.php?<?php echo $qstr ?>" class="btn btn_02">목록</a>
+    <input type="submit" class="btn_submit btn" accesskey="s" value="확인">
 </div>
 
 </form>

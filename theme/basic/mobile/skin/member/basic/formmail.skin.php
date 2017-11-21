@@ -5,7 +5,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 ?>
 
-<div id="formmail" class="new_win mbskin">
+<div id="formmail" class="new_win">
     <h1 id="win_title"><?php echo $name ?>님께 메일보내기</h1>
 
     <form name="fformmail" action="./formmail_send.php" onsubmit="return fformmail_submit(this);" method="post" enctype="multipart/form-data" style="margin:0px;">
@@ -16,56 +16,55 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <input type="hidden" name="fmail" value="<?php echo $member['mb_email'] ?>">
     <?php } ?>
 
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <caption>메일쓰기</caption>
-        <tbody>
-        <?php if (!$is_member) { ?>
-        <tr>
-            <th scope="row"><label for="fnick">이름<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="fnick" id="fnick" required class="frm_input required"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="fmail">E-mail<strong class="sound_only">필수</strong></label></th>
-            <td><input type="email" name="fmail" id="fmail" required class="frm_input required"></td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <th scope="row"><label for="subject">제목<strong class="sound_only">필수</strong></label></th>
-            <td><input type="text" name="subject" id="subject" required class="frm_input required"></td>
-        </tr>
-        <tr>
-            <th scope="row">형식</th>
-            <td>
-                <input type="radio" name="type" value="0" id="type_text" checked> <label for="type_text">TEXT</label>
-                <input type="radio" name="type" value="1" id="type_html"> <label for="type_html">HTML</label>
-                <input type="radio" name="type" value="2" id="type_both"> <label for="type_both">TEXT+HTML</label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="content">내용<strong class="sound_only">필수</strong></label></th>
-            <td><textarea name="content" id="content" required class="required"></textarea></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="file1">첨부 1</label></th>
-            <td><input type="file" name="file1" id="file1" class="frm_input"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="file2">첨부 2</label></th>
-            <td><input type="file" name="file2" id="file2" class="frm_input"></td>
-        </tr>
-        <tr>
-            <th scope="row">자동등록방지</th>
-            <td><?php echo captcha_html(); ?></td>
-        </tr>
-        </tbody>
-        </table>
+    <div class="form_01">
+        <h2 class="sound_only">메일쓰기</h2>
+        <ul>
+            <?php if (!$is_member) { ?>
+            <li>
+                <label for="fnick" class="sound_only">이름<strong>필수</strong></label>
+                <input type="text" name="fnick" id="fnick" required class="frm_input required" placeholder="이름">
+            </li>
+            <li>
+                <label for="fmail" class="sound_only">E-mail<strong>필수</strong></label>
+                <input type="email" name="fmail" id="fmail" required class="frm_input required" placeholder="E-mail">
+            </li>
+            <?php } ?>
+            <li>
+                <label for="subject" class="sound_only">제목<strong>필수</strong></label>
+                <input type="text" name="subject" id="subject" required class="frm_input required" placeholder="제목">
+            </li>
+            <li>
+                형식
+                
+                    <input type="radio" name="type" value="0" id="type_text" checked> <label for="type_text">TEXT</label>
+                    <input type="radio" name="type" value="1" id="type_html"> <label for="type_html">HTML</label>
+                    <input type="radio" name="type" value="2" id="type_both"> <label for="type_both">TEXT+HTML</label>
+                
+            </li>
+            <li>
+                <label for="content" class="sound_only">내용<strong>필수</strong></label>
+                <textarea name="content" id="content" required class="required" placeholder="내용"></textarea>
+            </li>
+            <li class="file_wr">
+                <label for="file1" class="lb_icon">첨부 1</label>
+                <input type="file" name="file1" id="file1" class="frm_file">
+            </li>
+            <li class="file_wr">
+                <label for="file2" class="lb_icon">첨부 2</label>
+                <input type="file" name="file2" id="file2" class="frm_file">
+            </li>
+            <li>
+                자동등록방지
+                <?php echo captcha_html(); ?>
+            </li>
+        </ul>
+
+        <div class="win_btn">
+            <input type="submit" value="메일발송" id="btn_submit" class="btn_submit">
+            <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
+        </div>
     </div>
 
-    <div class="win_btn">
-        <input type="submit" value="메일발송" id="btn_submit" class="btn_submit">
-        <button type="button" onclick="window.close();">창닫기</button>
-    </div>
 
     </form>
 </div>

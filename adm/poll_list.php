@@ -52,7 +52,7 @@ $colspan = 7;
 
 <div class="local_ov01 local_ov">
     <?php echo $listall ?>
-    투표수 <?php echo number_format($total_count) ?>개
+    <span class="btn_ov01"><span class="ov_txt">투표수</span><span class="ov_num"> <?php echo number_format($total_count) ?>개</span></span>
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
@@ -67,9 +67,6 @@ $colspan = 7;
 </div>
 </form>
 
-<div class="btn_add01 btn_add">
-    <a href="./poll_form.php" id="poll_add">투표 추가</a>
-</div>
 
 <form name="fpolllist" id="fpolllist" action="./poll_delete.php" method="post">
 <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -103,7 +100,7 @@ $colspan = 7;
         $row2 = sql_fetch($sql2);
         $po_etc = ($row['po_etc']) ? "사용" : "미사용";
 
-        $s_mod = '<a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row['po_id'].'">수정</a>';
+        $s_mod = '<a href="./poll_form.php?'.$qstr.'&amp;w=u&amp;po_id='.$row['po_id'].'" class="btn btn_03">수정</a>';
 
         $bg = 'bg'.($i%2);
     ?>
@@ -114,11 +111,11 @@ $colspan = 7;
             <input type="checkbox" name="chk[]" value="<?php echo $row['po_id'] ?>" id="chk_<?php echo $i ?>">
         </td>
         <td class="td_num"><?php echo $row['po_id'] ?></td>
-        <td><?php echo cut_str(get_text($row['po_subject']),70) ?></td>
+        <td class="td_left"><?php echo cut_str(get_text($row['po_subject']),70) ?></td>
         <td class="td_num"><?php echo $row['po_level'] ?></td>
         <td class="td_num"><?php echo $row2['sum_po_cnt'] ?></td>
         <td class="td_etc"><?php echo $po_etc ?></td>
-        <td class="td_mngsmall"><?php echo $s_mod ?></td>
+        <td class="td_mng td_mng_s"><?php echo $s_mod ?></td>
     </tr>
 
     <?php
@@ -131,8 +128,9 @@ $colspan = 7;
     </table>
 </div>
 
-<div class="btn_list01 btn_list">
-    <input type="submit" value="선택삭제">
+<div class="btn_fixed_top">
+    <input type="submit" value="선택삭제" class="btn btn_02">
+    <a href="./poll_form.php" id="poll_add" class="btn btn_01">투표 추가</a>
 </div>
 </form>
 

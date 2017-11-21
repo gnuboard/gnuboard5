@@ -444,12 +444,17 @@ unset($auth_menu);
 unset($menu);
 unset($amenu);
 $tmp = dir(G5_ADMIN_PATH);
+$menu_files = array();
 while ($entry = $tmp->read()) {
     if (!preg_match('/^admin.menu([0-9]{3}).*\.php$/', $entry, $m))
         continue;  // 파일명이 menu 으로 시작하지 않으면 무시한다.
 
     $amenu[$m[1]] = $entry;
-    include_once(G5_ADMIN_PATH.'/'.$entry);
+    $menu_files[] = G5_ADMIN_PATH.'/'.$entry;
+}
+@asort($menu_files);
+foreach($menu_files as $file){
+    include_once($file);
 }
 @ksort($amenu);
 

@@ -6,13 +6,23 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 ?>
 
 <!-- 회원가입약관 동의 시작 { -->
-<div class="mbskin">
+<div>
+
+    <?php
+    // 소셜로그인 사용시 소셜로그인 버튼
+    @include_once(get_social_skin_path().'/social_register.skin.php');
+    ?>
+
     <form  name="fregister" id="fregister" action="<?php echo $register_action_url ?>" onsubmit="return fregister_submit(this);" method="POST" autocomplete="off">
 
     <p>회원가입약관 및 개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.</p>
+    <div id="fregister_chkall">
+        <label for="chk_all">전체선택</label>
+        <input type="checkbox" name="chk_all"  value="1"  id="chk_all">
 
+    </div>
     <section id="fregister_term">
-        <h2>회원가입약관</h2>
+        <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> 회원가입약관</h2>
         <textarea readonly><?php echo get_text($config['cf_stipulation']) ?></textarea>
         <fieldset class="fregister_agree">
             <label for="agree11">회원가입약관의 내용에 동의합니다.</label>
@@ -21,8 +31,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     </section>
 
     <section id="fregister_private">
-        <h2>개인정보처리방침안내</h2>
-        <div class="tbl_head01 tbl_wrap">
+        <h2><i class="fa fa-check-square-o" aria-hidden="true"></i> 개인정보처리방침안내</h2>
+        <div>
             <table>
                 <caption>개인정보처리방침안내</caption>
                 <thead>
@@ -76,6 +86,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
         return true;
     }
+    
+    jQuery(function($){
+        // 모두선택
+        $("input[name=chk_all]").click(function() {
+            if ($(this).prop('checked')) {
+                $("input[name^=agree]").prop('checked', true);
+            } else {
+                $("input[name^=agree]").prop("checked", false);
+            }
+        });
+    });
+
     </script>
 </div>
 <!-- } 회원가입 약관 동의 끝 -->
