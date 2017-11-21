@@ -115,7 +115,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <?php } ?>
                         <a href="<?php echo $list[$i]['href'] ?>" class="bo_tit">
                             <?php echo $list[$i]['subject'] ?>
-                            <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?php echo rtrim($list[$i]['comment_cnt']); ?><span class="sound_only">개</span><?php } ?>
+                            <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><span class="cnt_cmt">+ <?php echo $list[$i]['wr_comment']; ?></span><span class="sound_only">개</span><?php } ?>
                             <?php
                             // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
                             // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }

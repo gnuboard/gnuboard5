@@ -319,7 +319,6 @@ box-shadow: inset 0 2px 5px rgb(33, 135, 202);}
 #bo_vc header {}
 #bo_vc header:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc header .icon_reply {position:absolute;top:15px;left:-20px}
-#bo_vc .sv_wrap a{color:#000 !important;font-weight:bold;font-size:1.08em}
 #bo_vc .member, #bo_vc .guest, #bo_vc .sv_member, #bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo{float:right;font-style:italic;color:#777}
 #bo_vc h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
