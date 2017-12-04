@@ -382,6 +382,14 @@ document.onkeydown = noRefresh ;
             foreach($row as $key=>$val) {
                 if(!in_array($key, $columns))
                     continue;
+                
+                if($key === 'bo_notice'){
+                    $val = str_replace("\n", ",", $val);
+
+                    if( substr($val, -1)  === ',' ){
+                        $val = substr($val, 0, -1);
+                    }
+                }
 
                 $sql_common .= $comma . " $key = '".addslashes($val)."' ";
 
