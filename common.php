@@ -139,7 +139,7 @@ if (file_exists($dbconfig_file)) {
 
     sql_set_charset('utf8', $connect_db);
     if(defined('G5_MYSQL_SET_MODE') && G5_MYSQL_SET_MODE) sql_query("SET SESSION sql_mode = ''");
-    if (defined(G5_TIMEZONE)) sql_query(" set time_zone = '".G5_TIMEZONE."'");
+    if (defined('G5_TIMEZONE')) sql_query(" set time_zone = '".G5_TIMEZONE."'");
 } else {
 ?>
 
@@ -485,7 +485,7 @@ if(isset($config['cf_theme']) && trim($config['cf_theme'])) {
 
 
 // 테마 설정 로드
-if(is_file(G5_THEME_PATH.'/theme.config.php'))
+if(defined('G5_THEME_PATH') && is_file(G5_THEME_PATH.'/theme.config.php'))
     include_once(G5_THEME_PATH.'/theme.config.php');
 
 
