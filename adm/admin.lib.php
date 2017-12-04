@@ -176,7 +176,7 @@ function get_theme_config_value($dir, $key='*')
     $tconfig = array();
 
     $theme_config_file = G5_PATH.'/'.G5_THEME_DIR.'/'.$dir.'/theme.config.php';
-    if(is_file) {
+    if(is_file($theme_config_file)) {
         include($theme_config_file);
 
         if($key == '*') {

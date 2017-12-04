@@ -13,26 +13,37 @@ $g5['title'] = '메일 테스트';
 include_once('./admin.head.php');
 
 if (isset($_POST['email'])) {
+    $_POST['email'] = strip_tags($_POST['email']);
     $email = explode(',', $_POST['email']);
-    for ($i=0; $i<count($email); $i++)
-        mailer($config['cf_admin_email_name'], $config['cf_admin_email'], trim($email[$i]), '[메일검사] 제목', '<span style="font-size:9pt;">[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>'.G5_TIME_YMDHIS.'<p>이 메일 주소로는 회신되지 않습니다.</span>', 1);
 
-    echo '<section>';
-    echo '<h2>결과메세지</h2>';
-    echo '<div class="local_desc01 local_desc"><p>';
-    echo '다음 '.count($email).'개의 메일 주소로 테스트 메일 발송이 완료되었습니다.';
-    echo '</p></div>';
-    echo '<ul>';
-    for ($i=0;$i<count($email);$i++) {
-        echo '<li>'.$email[$i].'</li>';
+    $real_email = array();
+
+    for ($i=0; $i<count($email); $i++){
+
+        if (!preg_match("/([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)\.([0-9a-zA-Z_-]+)/", $email[$i])) continue;
+        
+        $real_email[] = $email[$i];
+        mailer($config['cf_admin_email_name'], $config['cf_admin_email'], trim($email[$i]), '[메일검사] 제목', '<span style="font-size:9pt;">[메일검사] 내용<p>이 내용이 제대로 보인다면 보내는 메일 서버에는 이상이 없는것입니다.<p>'.G5_TIME_YMDHIS.'<p>이 메일 주소로는 회신되지 않습니다.</span>', 1);
     }
-    echo '</ul>';
-    echo '<div class="local_desc02 local_desc"><p>';
-    echo '해당 주소로 테스트 메일이 도착했는지 확인해 주십시오.<br>';
-    echo '만약, 테스트 메일이 오지 않는다면 더 다양한 계정의 메일 주소로 메일을 보내 보십시오.<br>';
-    echo '그래도 메일이 하나도 도착하지 않는다면 메일 서버(sendmail server)의 오류일 가능성이 높으니, 웹 서버관리자에게 문의하여 주십시오.<br>';
-    echo '</p></div>';
-    echo '</section>';
+
+    if( $real_email ){
+        echo '<section>';
+        echo '<h2>결과메세지</h2>';
+        echo '<div class="local_desc01 local_desc"><p>';
+        echo '다음 '.count($real_email).'개의 메일 주소로 테스트 메일 발송이 완료되었습니다.';
+        echo '</p></div>';
+        echo '<ul>';
+        for ($i=0;$i<count($real_email);$i++) {
+            echo '<li>'.$real_email[$i].'</li>';
+        }
+        echo '</ul>';
+        echo '<div class="local_desc02 local_desc"><p>';
+        echo '해당 주소로 테스트 메일이 도착했는지 확인해 주십시오.<br>';
+        echo '만약, 테스트 메일이 오지 않는다면 더 다양한 계정의 메일 주소로 메일을 보내 보십시오.<br>';
+        echo '그래도 메일이 하나도 도착하지 않는다면 메일 서버(sendmail server)의 오류일 가능성이 높으니, 웹 서버관리자에게 문의하여 주십시오.<br>';
+        echo '</p></div>';
+        echo '</section>';
+    }
 }
 ?>
 
