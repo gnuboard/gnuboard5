@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "w");
 
-$sch_target = substr($_GET['sch_target'], 0, 1);
+$sch_target = substr(preg_replace('/[^a-zA-Z0-9]/', '', strip_tags($_GET['sch_target'])), 0, 1);
 $sch_word   = clean_xss_tags($_GET['sch_word']);
 
 if($_GET['sch_target'] == 1) {
@@ -67,7 +67,7 @@ $qstr1 = 'sch_target='.$sch_target.'&amp;sch_word='.urlencode($sch_word);
     </div>
 
     <form name="ftarget" method="get">
-    <input type="hidden" name="sch_target" value="<?php echo $_GET['sch_target']; ?>">
+    <input type="hidden" name="sch_target" value="<?php echo preg_replace('/[^a-zA-Z0-9]/', '', strip_tags($_GET['sch_target'])); ?>">
 
     <div id="scp_list_find">
         <label for="sch_word"><?php echo $t_name; ?></label>
