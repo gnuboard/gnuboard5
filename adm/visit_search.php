@@ -15,7 +15,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
 
 <div class="local_sch local_sch01">
     <form name="fvisit" method="get" onsubmit="return fvisit_submit(this);">
-    <?=$listall?>
+    <?php echo $listall?>
     <label for="sch_sort" class="sound_only">검색분류</label>
     <select name="sfl" id="sch_sort" class="search_sort">
         <option value="vi_ip"<?php echo get_selected($sfl, 'vi_ip'); ?>>IP</option>
