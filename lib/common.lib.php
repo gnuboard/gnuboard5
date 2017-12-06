@@ -2137,6 +2137,10 @@ function check_device($device)
 // 게시판 최신글 캐시 파일 삭제
 function delete_cache_latest($bo_table)
 {
+    if (!preg_match("/^([A-Za-z0-9_]{1,20})$/", $bo_table)) {
+        return;
+    }
+
     $files = glob(G5_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
     if (is_array($files)) {
         foreach ($files as $filename)
