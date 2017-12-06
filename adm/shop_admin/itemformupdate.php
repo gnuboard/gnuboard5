@@ -209,7 +209,7 @@ sql_query(" delete from {$g5['g5_shop_event_item_table']} where it_id = '$it_id'
 // 선택옵션
 sql_query(" delete from {$g5['g5_shop_item_option_table']} where io_type = '0' and it_id = '$it_id' "); // 기존선택옵션삭제
 
-$option_count = count($_POST['opt_id']);
+$option_count = (isset($_POST['opt_id']) && is_array($_POST['opt_id'])) ? count($_POST['opt_id']) : array();
 if($option_count) {
     // 옵션명
     $opt1_cnt = $opt2_cnt = $opt3_cnt = 0;
@@ -237,7 +237,7 @@ if($option_count) {
 // 추가옵션
 sql_query(" delete from {$g5['g5_shop_item_option_table']} where io_type = '1' and it_id = '$it_id' "); // 기존추가옵션삭제
 
-$supply_count = count($_POST['spl_id']);
+$supply_count = (isset($_POST['spl_id']) && is_array($_POST['spl_id'])) ? count($_POST['spl_id']) : array();
 if($supply_count) {
     // 추가옵션명
     $arr_spl = array();
