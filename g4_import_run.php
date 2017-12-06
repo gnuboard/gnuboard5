@@ -379,6 +379,41 @@ document.onkeydown = noRefresh ;
             $comma = '';
             $sql_common = '';
 
+            // 모바일 스킨 디렉토리
+            if( ! isset($row['bo_mobile_skin']) ){
+                $row['bo_mobile_skin'] = 'basic';
+            }
+
+            // 모바일 제목 길이
+            if( ! isset($row['bo_mobile_subject_len']) ){
+                $row['bo_mobile_subject_len'] = '30';
+            }
+            
+            // 모바일 페이지당 목록 수
+            if( ! isset($row['bo_mobile_page_rows']) ){
+                $row['bo_mobile_page_rows'] = '15';
+            }
+
+            // 갤러리 이미지 폭 ( 리스트 )
+            if( ! isset($row['bo_gallery_width']) ){
+                $row['bo_gallery_width'] = '174';
+            }
+
+            // 갤러리 이미지 높이 ( 리스트 )
+            if( ! isset($row['bo_gallery_height']) ){
+                $row['bo_gallery_height'] = '124';
+            }
+
+            // 모바일 갤러리 이미지 폭 ( 리스트 )
+            if( ! isset($row['bo_mobile_gallery_width']) ){
+                $row['bo_mobile_gallery_width'] = '125';
+            }
+
+            // 모바일 갤러리 이미지 높이 ( 리스트 )
+            if( ! isset($row['bo_mobile_gallery_height']) ){
+                $row['bo_mobile_gallery_height'] = '100';
+            }
+
             foreach($row as $key=>$val) {
                 if(!in_array($key, $columns))
                     continue;
