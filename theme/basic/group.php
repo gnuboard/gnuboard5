@@ -19,9 +19,9 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
 <?php
 //  최신글
 $sql = " select bo_table, bo_subject
-            from {$g5[board_table]}
+            from {$g5['board_table']}
             where gr_id = '{$gr_id}'
-              and bo_list_level <= '{$member[mb_level]}'
+              and bo_list_level <= '{$member['mb_level']}'
               and bo_device <> 'mobile' ";
 if(!$is_admin)
     $sql .= " and bo_use_cert = '' ";
