@@ -11,7 +11,10 @@ set_cookie('ck_auto', '', 0);
 // 자동로그인 해제 end --------------------------------
 
 if ($url) {
-    $p = @parse_url($url);
+    if ( substr($url, 0, 2) == '//' )
+        $url = 'http:' . $url;
+
+    $p = @parse_url(urldecode($url));
     if ($p['scheme'] || $p['host']) {
         alert('url에 도메인을 지정할 수 없습니다.');
     }
