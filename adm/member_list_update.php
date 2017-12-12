@@ -10,6 +10,8 @@ if (!count($_POST['chk'])) {
 
 auth_check($auth[$sub_menu], 'w');
 
+check_admin_token();
+
 if ($_POST['act_button'] == "선택수정") {
 
     for ($i=0; $i<count($_POST['chk']); $i++)
