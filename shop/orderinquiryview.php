@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$od_id = isset($od_id) ? preg_replace('/[^A-Za-z0-9\-_]/', '', strip_tags($od_id)) : 0;
+
 if( isset($_GET['ini_noti']) && !isset($_GET['uid']) ){
     goto_url(G5_SHOP_URL.'/orderinquiry.php');
 }
