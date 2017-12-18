@@ -2967,9 +2967,13 @@ function replace_filename($name)
     @session_start();
     $ss_id = session_id();
     $usec = get_microtime();
-    $ext = array_pop(explode('.', $name));
+    $file_path = pathinfo($name);
+    $ext = $file_path['extension'];
+    $return_filename = sha1($ss_id.$_SERVER['REMOTE_ADDR'].$usec); 
+    if( $ext )
+        $return_filename .= '.'.$ext;
 
-    return sha1($ss_id.$_SERVER['REMOTE_ADDR'].$usec).'.'.$ext;
+    return $return_filename;
 }
 
 // 아이코드 사용자정보
