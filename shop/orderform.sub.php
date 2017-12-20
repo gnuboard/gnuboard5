@@ -4,8 +4,16 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 require_once(G5_SHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
 require_once(G5_SHOP_PATH.'/settle_kakaopay.inc.php');
 
+if( $default['de_inicis_lpay_use'] ){   //이니시스 Lpay 사용시
+    require_once(G5_SHOP_PATH.'/inicis/lpay_common.php');
+}
+
 // 결제대행사별 코드 include (스크립트 등)
 require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
+
+if( $default['de_inicis_lpay_use'] ){   //이니시스 L.pay 사용시
+    require_once(G5_SHOP_PATH.'/inicis/lpay_form.1.php');
+}
 
 if($is_kakaopay_use) {
     require_once(G5_SHOP_PATH.'/kakaopay/orderform.1.php');
@@ -248,6 +256,7 @@ if($is_kakaopay_use) {
     <input type="hidden" name="item_coupon" value="0">
     <input type="hidden" name="od_coupon" value="0">
     <input type="hidden" name="od_send_coupon" value="0">
+    <input type="hidden" name="od_goods_name" value="<?php echo $goods; ?>">
 
     <?php
     // 결제대행사별 코드 include (결제대행사 정보 필드)
@@ -537,7 +546,7 @@ if($is_kakaopay_use) {
             $escrow_title = "에스크로 ";
         }
 
-        if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use']) {
+        if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || $default['de_inicis_lpay_use'] ) {
             echo '<fieldset id="sod_frm_paysel">';
             echo '<legend>결제방법 선택</legend>';
         }
@@ -603,6 +612,12 @@ if($is_kakaopay_use) {
             $checked = '';
         }
 
+        //이니시스 Lpay
+        if($default['de_inicis_lpay_use']) {
+            echo '<input type="radio" id="od_settle_inicislpay" data-case="lpay" name="od_settle_case" value="lpay" '.$checked.'> <label for="od_settle_inicislpay" class="inicis_lpay">L.pay</label>'.PHP_EOL;
+            $checked = '';
+        }
+
         $temp_point = 0;
         // 회원이면서 포인트사용이면
         if ($is_member && $config['cf_use_point'])
@@ -657,7 +672,7 @@ if($is_kakaopay_use) {
             echo '</div>';
         }
 
-        if ($default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
+        if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || $default['de_inicis_lpay_use'] ) {
             echo '</fieldset>';
         }
 
@@ -686,6 +701,11 @@ if($is_kakaopay_use) {
 
 </div>
 
+<?php
+if( $default['de_inicis_lpay_use'] ){   //이니시스 L.pay 사용시
+    require_once(G5_SHOP_PATH.'/inicis/lpay_order.script.php');
+}
+?>
 <script>
 var zipcode = "";
 var form_action_url = "<?php echo $order_action_url; ?>";
@@ -1309,183 +1329,197 @@ function forderform_check(f)
         return false;
     }
 
-    // pay_method 설정
-    <?php if($default['de_pg_service'] == 'kcp') { ?>
-    f.site_cd.value = f.def_site_cd.value;
-    f.payco_direct.value = "";
-    switch(settle_method)
-    {
-        case "계좌이체":
-            f.pay_method.value   = "010000000000";
-            break;
-        case "가상계좌":
-            f.pay_method.value   = "001000000000";
-            break;
-        case "휴대폰":
-            f.pay_method.value   = "000010000000";
-            break;
-        case "신용카드":
-            f.pay_method.value   = "100000000000";
-            break;
-        case "간편결제":
-            <?php if($default['de_card_test']) { ?>
-            f.site_cd.value      = "S6729";
-            <?php } ?>
-            f.pay_method.value   = "100000000000";
-            f.payco_direct.value = "Y";
-            break;
-        default:
-            f.pay_method.value   = "무통장";
-            break;
-    }
-    <?php } else if($default['de_pg_service'] == 'lg') { ?>
-    f.LGD_EASYPAY_ONLY.value = "";
-    if(typeof f.LGD_CUSTOM_USABLEPAY === "undefined") {
-        var input = document.createElement("input");
-        input.setAttribute("type", "hidden");
-        input.setAttribute("name", "LGD_CUSTOM_USABLEPAY");
-        input.setAttribute("value", "");
-        f.LGD_EASYPAY_ONLY.parentNode.insertBefore(input, f.LGD_EASYPAY_ONLY);
+    var form_order_method = '';
+
+    if( settle_method == "lpay" ){      //이니시스 L.pay 이면 ( 이니시스의 삼성페이는 모바일에서만 단독실행 가능함 )
+        form_order_method = 'samsungpay';
     }
 
-    switch(settle_method)
-    {
-        case "계좌이체":
-            f.LGD_CUSTOM_FIRSTPAY.value = "SC0030";
-            f.LGD_CUSTOM_USABLEPAY.value = "SC0030";
-            break;
-        case "가상계좌":
-            f.LGD_CUSTOM_FIRSTPAY.value = "SC0040";
-            f.LGD_CUSTOM_USABLEPAY.value = "SC0040";
-            break;
-        case "휴대폰":
-            f.LGD_CUSTOM_FIRSTPAY.value = "SC0060";
-            f.LGD_CUSTOM_USABLEPAY.value = "SC0060";
-            break;
-        case "신용카드":
-            f.LGD_CUSTOM_FIRSTPAY.value = "SC0010";
-            f.LGD_CUSTOM_USABLEPAY.value = "SC0010";
-            break;
-        case "간편결제":
-            var elm = f.LGD_CUSTOM_USABLEPAY;
-            if(elm.parentNode)
-                elm.parentNode.removeChild(elm);
-            f.LGD_EASYPAY_ONLY.value = "PAYNOW";
-            break;
-        default:
-            f.LGD_CUSTOM_FIRSTPAY.value = "무통장";
-            break;
-    }
-    <?php }  else if($default['de_pg_service'] == 'inicis') { ?>
-    switch(settle_method)
-    {
-        case "계좌이체":
-            f.gopaymethod.value = "DirectBank";
-            break;
-        case "가상계좌":
-            f.gopaymethod.value = "VBank";
-            break;
-        case "휴대폰":
-            f.gopaymethod.value = "HPP";
-            break;
-        case "신용카드":
-            f.gopaymethod.value = "Card";
-            f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
-            break;
-        case "간편결제":
-            f.gopaymethod.value = "Kpay";
-            break;
-        default:
-            f.gopaymethod.value = "무통장";
-            break;
-    }
-    <?php } ?>
+    if( jQuery(f).triggerHandler("form_sumbit_order_"+form_order_method) !== false ) {
 
-    // 결제정보설정
-    <?php if($default['de_pg_service'] == 'kcp') { ?>
-    f.buyr_name.value = f.od_name.value;
-    f.buyr_mail.value = f.od_email.value;
-    f.buyr_tel1.value = f.od_tel.value;
-    f.buyr_tel2.value = f.od_hp.value;
-    f.rcvr_name.value = f.od_b_name.value;
-    f.rcvr_tel1.value = f.od_b_tel.value;
-    f.rcvr_tel2.value = f.od_b_hp.value;
-    f.rcvr_mail.value = f.od_email.value;
-    f.rcvr_zipx.value = f.od_b_zip.value;
-    f.rcvr_add1.value = f.od_b_addr1.value;
-    f.rcvr_add2.value = f.od_b_addr2.value;
-
-    if(f.pay_method.value != "무통장") {
-        jsf__pay( f );
-    } else {
-        f.submit();
-    }
-    <?php } ?>
-    <?php if($default['de_pg_service'] == 'lg') { ?>
-    f.LGD_BUYER.value = f.od_name.value;
-    f.LGD_BUYEREMAIL.value = f.od_email.value;
-    f.LGD_BUYERPHONE.value = f.od_hp.value;
-    f.LGD_AMOUNT.value = f.good_mny.value;
-    f.LGD_RECEIVER.value = f.od_b_name.value;
-    f.LGD_RECEIVERPHONE.value = f.od_b_hp.value;
-    <?php if($default['de_escrow_use']) { ?>
-    f.LGD_ESCROW_ZIPCODE.value = f.od_b_zip.value;
-    f.LGD_ESCROW_ADDRESS1.value = f.od_b_addr1.value;
-    f.LGD_ESCROW_ADDRESS2.value = f.od_b_addr2.value;
-    f.LGD_ESCROW_BUYERPHONE.value = f.od_hp.value;
-    <?php } ?>
-    <?php if($default['de_tax_flag_use']) { ?>
-    f.LGD_TAXFREEAMOUNT.value = f.comm_free_mny.value;
-    <?php } ?>
-
-    if(f.LGD_CUSTOM_FIRSTPAY.value != "무통장") {
-        launchCrossPlatform(f);
-    } else {
-        f.submit();
-    }
-    <?php } ?>
-    <?php if($default['de_pg_service'] == 'inicis') { ?>
-    f.price.value       = f.good_mny.value;
-    <?php if($default['de_tax_flag_use']) { ?>
-    f.tax.value         = f.comm_vat_mny.value;
-    f.taxfree.value     = f.comm_free_mny.value;
-    <?php } ?>
-    f.buyername.value   = f.od_name.value;
-    f.buyeremail.value  = f.od_email.value;
-    f.buyertel.value    = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
-    f.recvname.value    = f.od_b_name.value;
-    f.recvtel.value     = f.od_b_hp.value ? f.od_b_hp.value : f.od_b_tel.value;
-    f.recvpostnum.value = f.od_b_zip.value;
-    f.recvaddr.value    = f.od_b_addr1.value + " " +f.od_b_addr2.value;
-
-    if(f.gopaymethod.value != "무통장") {
-        // 주문정보 임시저장
-        var order_data = $(f).serialize();
-        var save_result = "";
-        $.ajax({
-            type: "POST",
-            data: order_data,
-            url: g5_url+"/shop/ajax.orderdatasave.php",
-            cache: false,
-            async: false,
-            success: function(data) {
-                save_result = data;
-            }
-        });
-
-        if(save_result) {
-            alert(save_result);
-            return false;
+        // pay_method 설정
+        <?php if($default['de_pg_service'] == 'kcp') { ?>
+        f.site_cd.value = f.def_site_cd.value;
+        f.payco_direct.value = "";
+        switch(settle_method)
+        {
+            case "계좌이체":
+                f.pay_method.value   = "010000000000";
+                break;
+            case "가상계좌":
+                f.pay_method.value   = "001000000000";
+                break;
+            case "휴대폰":
+                f.pay_method.value   = "000010000000";
+                break;
+            case "신용카드":
+                f.pay_method.value   = "100000000000";
+                break;
+            case "간편결제":
+                <?php if($default['de_card_test']) { ?>
+                f.site_cd.value      = "S6729";
+                <?php } ?>
+                f.pay_method.value   = "100000000000";
+                f.payco_direct.value = "Y";
+                break;
+            default:
+                f.pay_method.value   = "무통장";
+                break;
+        }
+        <?php } else if($default['de_pg_service'] == 'lg') { ?>
+        f.LGD_EASYPAY_ONLY.value = "";
+        if(typeof f.LGD_CUSTOM_USABLEPAY === "undefined") {
+            var input = document.createElement("input");
+            input.setAttribute("type", "hidden");
+            input.setAttribute("name", "LGD_CUSTOM_USABLEPAY");
+            input.setAttribute("value", "");
+            f.LGD_EASYPAY_ONLY.parentNode.insertBefore(input, f.LGD_EASYPAY_ONLY);
         }
 
-        if(!make_signature(f))
-            return false;
+        switch(settle_method)
+        {
+            case "계좌이체":
+                f.LGD_CUSTOM_FIRSTPAY.value = "SC0030";
+                f.LGD_CUSTOM_USABLEPAY.value = "SC0030";
+                break;
+            case "가상계좌":
+                f.LGD_CUSTOM_FIRSTPAY.value = "SC0040";
+                f.LGD_CUSTOM_USABLEPAY.value = "SC0040";
+                break;
+            case "휴대폰":
+                f.LGD_CUSTOM_FIRSTPAY.value = "SC0060";
+                f.LGD_CUSTOM_USABLEPAY.value = "SC0060";
+                break;
+            case "신용카드":
+                f.LGD_CUSTOM_FIRSTPAY.value = "SC0010";
+                f.LGD_CUSTOM_USABLEPAY.value = "SC0010";
+                break;
+            case "간편결제":
+                var elm = f.LGD_CUSTOM_USABLEPAY;
+                if(elm.parentNode)
+                    elm.parentNode.removeChild(elm);
+                f.LGD_EASYPAY_ONLY.value = "PAYNOW";
+                break;
+            default:
+                f.LGD_CUSTOM_FIRSTPAY.value = "무통장";
+                break;
+        }
+        <?php }  else if($default['de_pg_service'] == 'inicis') { ?>
+        switch(settle_method)
+        {
+            case "계좌이체":
+                f.gopaymethod.value = "DirectBank";
+                break;
+            case "가상계좌":
+                f.gopaymethod.value = "VBank";
+                break;
+            case "휴대폰":
+                f.gopaymethod.value = "HPP";
+                break;
+            case "신용카드":
+                f.gopaymethod.value = "Card";
+                f.acceptmethod.value = f.acceptmethod.value.replace(":useescrow", "");
+                break;
+            case "간편결제":
+                f.gopaymethod.value = "Kpay";
+                break;
+            case "lpay":
+                f.gopaymethod.value = "onlylpay";
+                f.acceptmethod.value = f.acceptmethod.value+":cardonly";
+                break;
+            default:
+                f.gopaymethod.value = "무통장";
+                break;
+        }
+        <?php } ?>
 
-        paybtn(f);
-    } else {
-        f.submit();
+        // 결제정보설정
+        <?php if($default['de_pg_service'] == 'kcp') { ?>
+        f.buyr_name.value = f.od_name.value;
+        f.buyr_mail.value = f.od_email.value;
+        f.buyr_tel1.value = f.od_tel.value;
+        f.buyr_tel2.value = f.od_hp.value;
+        f.rcvr_name.value = f.od_b_name.value;
+        f.rcvr_tel1.value = f.od_b_tel.value;
+        f.rcvr_tel2.value = f.od_b_hp.value;
+        f.rcvr_mail.value = f.od_email.value;
+        f.rcvr_zipx.value = f.od_b_zip.value;
+        f.rcvr_add1.value = f.od_b_addr1.value;
+        f.rcvr_add2.value = f.od_b_addr2.value;
+
+        if(f.pay_method.value != "무통장") {
+            jsf__pay( f );
+        } else {
+            f.submit();
+        }
+        <?php } ?>
+        <?php if($default['de_pg_service'] == 'lg') { ?>
+        f.LGD_BUYER.value = f.od_name.value;
+        f.LGD_BUYEREMAIL.value = f.od_email.value;
+        f.LGD_BUYERPHONE.value = f.od_hp.value;
+        f.LGD_AMOUNT.value = f.good_mny.value;
+        f.LGD_RECEIVER.value = f.od_b_name.value;
+        f.LGD_RECEIVERPHONE.value = f.od_b_hp.value;
+        <?php if($default['de_escrow_use']) { ?>
+        f.LGD_ESCROW_ZIPCODE.value = f.od_b_zip.value;
+        f.LGD_ESCROW_ADDRESS1.value = f.od_b_addr1.value;
+        f.LGD_ESCROW_ADDRESS2.value = f.od_b_addr2.value;
+        f.LGD_ESCROW_BUYERPHONE.value = f.od_hp.value;
+        <?php } ?>
+        <?php if($default['de_tax_flag_use']) { ?>
+        f.LGD_TAXFREEAMOUNT.value = f.comm_free_mny.value;
+        <?php } ?>
+
+        if(f.LGD_CUSTOM_FIRSTPAY.value != "무통장") {
+            launchCrossPlatform(f);
+        } else {
+            f.submit();
+        }
+        <?php } ?>
+        <?php if($default['de_pg_service'] == 'inicis') { ?>
+        f.price.value       = f.good_mny.value;
+        <?php if($default['de_tax_flag_use']) { ?>
+        f.tax.value         = f.comm_vat_mny.value;
+        f.taxfree.value     = f.comm_free_mny.value;
+        <?php } ?>
+        f.buyername.value   = f.od_name.value;
+        f.buyeremail.value  = f.od_email.value;
+        f.buyertel.value    = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
+        f.recvname.value    = f.od_b_name.value;
+        f.recvtel.value     = f.od_b_hp.value ? f.od_b_hp.value : f.od_b_tel.value;
+        f.recvpostnum.value = f.od_b_zip.value;
+        f.recvaddr.value    = f.od_b_addr1.value + " " +f.od_b_addr2.value;
+
+        if(f.gopaymethod.value != "무통장") {
+            // 주문정보 임시저장
+            var order_data = $(f).serialize();
+            var save_result = "";
+            $.ajax({
+                type: "POST",
+                data: order_data,
+                url: g5_url+"/shop/ajax.orderdatasave.php",
+                cache: false,
+                async: false,
+                success: function(data) {
+                    save_result = data;
+                }
+            });
+
+            if(save_result) {
+                alert(save_result);
+                return false;
+            }
+
+            if(!make_signature(f))
+                return false;
+            
+            paybtn(f);
+        } else {
+            f.submit();
+        }
+        <?php } ?>
     }
-    <?php } ?>
+
 }
 
 // 구매자 정보와 동일합니다.

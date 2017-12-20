@@ -26,7 +26,7 @@ if (get_cart_count($tmp_cart_id) == 0)
 $od_id = get_uniqid();
 set_session('ss_order_id', $od_id);
 $s_cart_id = $tmp_cart_id;
-if($default['de_pg_service'] == 'inicis')
+if($default['de_pg_service'] == 'inicis' || $default['de_inicis_lpay_use'])
     set_session('ss_order_inicis_id', $od_id);
 
 $g5['title'] = '주문서 작성';

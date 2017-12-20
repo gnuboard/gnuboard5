@@ -3,7 +3,7 @@ include_once('./_common.php');
 include_once(G5_LIB_PATH.'/json.lib.php');
 include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
 
-if($default['de_pg_service'] != 'inicis')
+if($default['de_pg_service'] != 'inicis' && ! $default['de_inicis_lpay_use'] )
     die(json_encode(array('error'=>'올바른 방법으로 이용해 주십시오.')));
 
 $orderNumber = get_session('ss_order_inicis_id');
