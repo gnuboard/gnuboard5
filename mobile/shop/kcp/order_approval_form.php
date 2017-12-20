@@ -52,7 +52,7 @@
 	$rcvr_add2		 = $_POST[ "rcvr_add2"		]; // 수취인 상세주소
 
     /* 주문폼에서 전송되는 정보 */
-    $ipgm_date       = $_POST[ "ipgm_date"      ]; // 입금마감일
+    $ipgm_date       = isset($_POST['ipgm_date']) ? $_POST['ipgm_date'] : ''; // 입금마감일
     $settle_method   = $_POST[ "settle_method"  ]; // 결제방법
     $good_info       = $_POST[ "good_info"      ]; // 에스크로 상품정보
     $bask_cntx       = $_POST[ "bask_cntx"      ]; // 장바구니 상품수
@@ -246,7 +246,11 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <input type="hidden" name="buyr_tel1" value="<?php echo $buyr_tel1; ?>">
 <input type="hidden" name="buyr_tel2" value="<?php echo $buyr_tel2; ?>">
 <input type="hidden" name="buyr_mail" value="<?php echo $buyr_mail; ?>">
-<input type="hidden" name="ipgm_date" value="<?php echo $ipgm_date; ?>">
+<?php
+// 가상계좌 입금 마감일을 설정하려면 아래 주석을 풀어서 사용해 주세요.
+//$ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
+//echo '<input type="hidden" name="ipgm_date" value="'.$ipgm_date.'">';
+?>
 
 <input type="hidden" name="payco_direct"   value="<?php echo $payco_direct; ?>">      <!-- PAYCO 결제창 호출 -->
 

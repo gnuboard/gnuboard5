@@ -8,8 +8,6 @@ if( is_inicis_simple_pay() ){   //이니시스 삼성페이 또는 Lpay 사용�
     require_once(G5_MSHOP_PATH.'/samsungpay/incSamsungpayCommon.php');
 }
 
-// 결제등록 요청시 사용할 입금마감일
-$ipgm_date = date("Ymd", (G5_SERVER_TIME + 86400 * 5));
 $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
 
 // 개인결제번호제거

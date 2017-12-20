@@ -16,7 +16,6 @@ if(!($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'
 <input type="hidden" name="buyr_tel1"     value="">
 <input type="hidden" name="buyr_tel2"     value="">
 <input type="hidden" name="buyr_mail"     value="">
-<input type="hidden" name="ipgm_date"     value="<?php echo $ipgm_date; ?>">
 <input type="hidden" name="settle_method" value="">
 <input type="hidden" name="payco_direct"   value="">      <!-- PAYCO 결제창 호출 -->
 <!-- 주문번호 -->
