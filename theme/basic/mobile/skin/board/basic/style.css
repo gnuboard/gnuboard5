@@ -68,7 +68,6 @@ box-shadow: 0 0 8px  rgba(65,98,255,0.8);}
 
 /* 관리자가 아닐 때 */
 #bo_list th:nth-of-type(2) {width:100px}
-
 #bo_list td:nth-of-type(2) {text-align:center}
 
 /* 게시판 목록 공통 */
@@ -101,6 +100,8 @@ box-shadow: 0 0 8px  rgba(65,98,255,0.8);}
 #bo_sch select{border:0;;margin:9px 0;height:20px;border-right:1px solid #ddd;float:left;width:40%}
 #bo_sch .sch_input{height:38px;border:0;padding:0;background-color:transparent;float:left;width:60%;padding:0 40px 0 10px}
 #bo_sch .sch_btn{height:38px;position:absolute;top:0;right:0;border:0;width:40px;background:none;font-size:15px}
+
+#bo_list{margin:10px 0}
 
 /* 게시판 쓰기 */
 #bo_w #wr_email, #bo_w #wr_homepage, #bo_w #wr_subject {width:100%}

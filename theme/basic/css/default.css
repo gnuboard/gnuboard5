@@ -231,6 +231,11 @@ box-shadow: 0 2px 5px rgba(0,0,0,0.2);}
 .cke_sc_def dt {width:20%;font-weight:bold}
 .cke_sc_def dd {width:30%}
 
+/* ckeditor 태그 기본값 */
+#bo_v_con ul{display: block;list-style-type: disc;margin-top: 1em;margin-bottom: 1em;margin-left: 0;margin-right: 0;padding-left: 40px;}
+#bo_v_con ol{display: block;list-style-type: decimal;margin-top: 1em;margin-bottom: 1em;margin-left: 0;margin-right: 0;padding-left: 40px;}
+#bo_v_con li{display: list-item;}
+
 /* 버튼 */
 a.btn,.btn{line-height:35px;height:35px;padding:0 10px;text-align:center;font-weight:bold;border:0;
 -webkit-transition: background-color 0.3s ease-out;
