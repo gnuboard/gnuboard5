@@ -39,8 +39,8 @@ ul,li,dl,dt,dd{list-style:none;padding:0;margin:0}
 #hd:after {display:block;visibility:hidden;clear:both;content:""}
 #hd_h1 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 
-#logo {padding:15px 10px;height:50px;text-align:center}
-#logo img{vertical-align:middle}
+#logo {padding:10px 10px;height:50px;text-align:center}
+#logo img{vertical-align:middle;max-height:100%;width:auto}
 #gnb_open {position:absolute;top:10px;left:10px;padding:0 10px;height:30px;width:30px;border:0;background-size:70%;color:#fff;background:none; font-size: 16px;}
 #gnb {display:none;background:#262626;position:fixed;top:0;left:0;z-index:99999;height:100%;overflow-y:auto;width:300px;
 -webkit-box-shadow:0 0 5px  rgba(55,55,5,0.4));

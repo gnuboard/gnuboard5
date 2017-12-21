@@ -1057,54 +1057,54 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row"><label for="cf_social_servicelist">소셜로그인설정</label></th>
             <td colspan="3" class="social_config_explain">
-                <p>
+                <div class="explain_box">
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_naver" value="naver" <?php echo option_array_checked('naver', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_naver">네이버 로그인을 사용합니다</label>
                     <div>
                     <h3>네이버 CallbackURL</h3>
                     <p><?php echo get_social_callbackurl('naver'); ?></p>
                     </div>
-                </p>
-                <p>
+                </div>
+                <div class="explain_box">
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_kakao" value="kakao" <?php echo option_array_checked('kakao', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_kakao">카카오 로그인을 사용합니다</label>
                     <div>
                     <h3>카카오 웹 Redirect Path</h3>
                     <p><?php echo get_social_callbackurl('kakao', true); ?></p>
-                    </p>
                     </div>
-                </p>
-                <p>
+                </div>
+                <div class="explain_box">
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_facebook" value="facebook" <?php echo option_array_checked('facebook', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_facebook">페이스북 로그인을 사용합니다</label>
                     <div>
                     <h3>페이스북 유효한 OAuth 리디렉션 URI</h3>
                     <p><?php echo get_social_callbackurl('facebook'); ?></p>
                     </div>
-                </p>
-                <p>
+                </div>
+                <div class="explain_box">
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_google" value="google" <?php echo option_array_checked('google', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_google">구글 로그인을 사용합니다</label>
                     <div>
                     <h3>구글 승인된 리디렉션 URI</h3>
                     <p><?php echo get_social_callbackurl('google'); ?></p>
                     </div>
-                </p>
-                <p>
+                </div>
+                <div class="explain_box">
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_twitter" value="twitter" <?php echo option_array_checked('twitter', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_twitter">트위터 로그인을 사용합니다</label>
                     <div>
                     <h3>트위터 CallbackURL</h3>
                     <p><?php echo get_social_callbackurl('twitter'); ?></p>
                     </div>
-                </p>
-                <p>
+                </div>
+                <div class="explain_box">
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_payco" value="payco" <?php echo option_array_checked('payco', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_payco">페이코 로그인을 사용합니다</label>
+                    <div>
                     <h3>페이코 CallbackURL</h3>
                     <p><?php echo get_social_callbackurl('payco'); ?></p>
                     </div>
-                </p>
+                </div>
             </td>
         </tr>
         <tr>

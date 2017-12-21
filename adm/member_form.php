@@ -250,6 +250,22 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         </td>
     </tr>
     <tr>
+        <th scope="row"><label for="mb_img">회원이미지</label></th>
+        <td colspan="3">
+            <?php echo help('이미지 크기는 <strong>넓이 '.$config['cf_member_img_width'].'픽셀 높이 '.$config['cf_member_img_height'].'픽셀</strong>로 해주세요.') ?>
+            <input type="file" name="mb_img" id="mb_img">
+            <?php
+            $mb_dir = substr($mb['mb_id'],0,2);
+            $icon_file = G5_DATA_PATH.'/member_image/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+            if (file_exists($icon_file)) {
+                $icon_url = G5_DATA_URL.'/member_image/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+                echo '<img src="'.$icon_url.'" alt="">';
+                echo '<input type="checkbox" id="del_mb_img" name="del_mb_img" value="1">삭제';
+            }
+            ?>
+        </td>
+    </tr>
+    <tr>
         <th scope="row">메일 수신</th>
         <td>
             <input type="radio" name="mb_mailling" value="1" id="mb_mailling_yes" <?php echo $mb_mailling_yes; ?>>
