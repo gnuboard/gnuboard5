@@ -3,6 +3,20 @@ if (!defined('_GNUBOARD_')) exit;
 
 $begin_time = get_microtime();
 
+$files = glob(G5_ADMIN_PATH.'/css/admin_extend_*');
+if (is_array($files)) {
+    foreach ((array) $files as $k=>$css_file) {
+        
+        $fileinfo = pathinfo($css_file);
+        $ext = $fileinfo['extension'];
+        
+        if( $ext !== 'css' ) continue;
+        
+        $css_file = str_replace(G5_ADMIN_PATH, G5_ADMIN_URL, $css_file);
+        add_stylesheet('<link rel="stylesheet" href="'.$css_file.'">', $k);
+    }
+}
+
 include_once(G5_PATH.'/head.sub.php');
 
 function print_menu1($key, $no='')
@@ -124,7 +138,7 @@ function imageview(id, w, h)
                 $button_title = $menu['menu'.$key][0][1];
             ?>
             <li class="gnb_li<?php echo $current_class;?>">
-                <button type="button" class="btn_op menu-<?php echo $jj; ?>" title="<?php echo $button_title; ?>"><?php echo $button_title;?></button>
+                <button type="button" class="btn_op menu-<?php echo $key; ?> menu-order-<?php echo $jj; ?>" title="<?php echo $button_title; ?>"><?php echo $button_title;?></button>
                 <div class="gnb_oparea_wr">
                     <div class="gnb_oparea">
                         <h3><?php echo $menu['menu'.$key][0][1];?></h3>

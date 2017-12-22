@@ -4,6 +4,12 @@ include_once('./_common.php');
 if (!$is_member)
     alert('회원만 이용하실 수 있습니다.');
 
+$delete_token = get_session('ss_memo_delete_token');
+set_session('ss_memo_delete_token', '');
+
+if (!($token && $delete_token == $token))
+    alert('토큰 에러로 삭제 불가합니다.');
+
 $me_id = (int)$_REQUEST['me_id'];
 
 $sql = " select * from {$g5['memo_table']} where me_id = '{$me_id}' ";

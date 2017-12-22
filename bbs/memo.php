@@ -4,6 +4,8 @@ include_once('./_common.php');
 if ($is_guest)
     alert_close('회원만 이용하실 수 있습니다.');
 
+set_session('ss_memo_delete_token', $token = uniqid(time()));
+
 $g5['title'] = '내 쪽지함';
 include_once(G5_PATH.'/head.sub.php');
 
@@ -65,7 +67,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['send_datetime'] = $send_datetime;
     $list[$i]['read_datetime'] = $read_datetime;
     $list[$i]['view_href'] = './memo_view.php?me_id='.$row['me_id'].'&amp;kind='.$kind;
-    $list[$i]['del_href'] = './memo_delete.php?me_id='.$row['me_id'].'&amp;kind='.$kind;
+    $list[$i]['del_href'] = './memo_delete.php?me_id='.$row['me_id'].'&amp;token='.$token.'&amp;kind='.$kind;
 }
 
 include_once($member_skin_path.'/memo.skin.php');

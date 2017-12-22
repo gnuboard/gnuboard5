@@ -4,6 +4,12 @@ include_once('./_common.php');
 if($is_guest)
     alert('회원이시라면 로그인 후 이용해 주십시오.', G5_URL);
 
+$delete_token = get_session('ss_qa_delete_token');
+set_session('ss_qa_delete_token', '');
+
+if (!($token && $delete_token == $token))
+    alert('토큰 에러로 삭제 불가합니다.');
+
 $tmp_array = array();
 if ($qa_id) // 건별삭제
     $tmp_array[0] = $qa_id;

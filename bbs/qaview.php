@@ -109,7 +109,8 @@ if(is_file($skin_file)) {
     */
     if(($view['qa_type'] && $is_admin) || (!$view['qa_type'] && $view['qa_status'] == 0)) {
         $update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$view['qa_id'].$qstr;
-        $delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$view['qa_id'].$qstr;
+        set_session('ss_qa_delete_token', $token = uniqid(time()));
+        $delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$view['qa_id'].'&amp;token='.$token.$qstr;
     }
 
     // 질문글이고 등록된 답변이 있다면

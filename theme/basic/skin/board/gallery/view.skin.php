@@ -135,20 +135,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <!-- } 첨부파일 끝 -->
     <?php } ?>
 
-
-    <?php
-    $cnt = 0;
-    if ($view['link']['count']) {
-        for ($i=0; $i<count($view['link']); $i++) {
-            if (isset($view['link'][$i]['source']) && $view['link'][$i]['source'] && !$view['link'][$i]['view'])
-                $cnt++;
-        }
-    }
-     ?>
-
-    <?php if($cnt) { ?>
-
-     <!-- 관련링크 시작 { -->
+    <?php if(isset($view['link'][1]) && $view['link'][1]) { ?>
+    <!-- 관련링크 시작 { -->
     <section id="bo_v_link">
         <h2>관련링크</h2>
         <ul>
@@ -159,7 +147,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             if ($view['link'][$i]) {
                 $cnt++;
                 $link = cut_str($view['link'][$i], 70);
-         ?>
+            ?>
             <li>
                 <i class="fa fa-link" aria-hidden="true"></i> <a href="<?php echo $view['link_href'][$i] ?>" target="_blank">
                     
@@ -167,17 +155,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 </a>
                 <span class="bo_v_link_cnt"><?php echo $view['link_hit'][$i] ?>회 연결</span>
             </li>
-        <?php
+            <?php
             }
         }
-         ?>
+        ?>
         </ul>
     </section>
     <!-- } 관련링크 끝 -->
     <?php } ?>
-
-
-    <!-- } 관련링크 끝 -->
 
     <!-- 게시물 상단 버튼 시작 { -->
     <div id="bo_v_top">
