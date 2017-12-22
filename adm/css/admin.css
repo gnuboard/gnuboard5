@@ -29,7 +29,7 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
 
 /* 레이아웃 */
 #hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#hd_top{position:fixed;top:0;left:0;width:100%;width:100%;height:50px;background:#3f51b5;z-index:1000}
+#hd_top{position:fixed;top:0;left:0;width:100%;height:50px;background:#3f51b5;z-index:1000}
 #hd_top:after{display:block;visibility:hidden;clear:both;content:""}
 #logo{background:#2f409f;height:100%;float:left;width:220px;padding:15px 0 15px 50px;text-align:center}
 #btn_gnb{background:url(../img/menu-cl.png) 50% 50% no-repeat #223390;width:50px;height:50px;border:0;position:absolute;top:0;left:0;text-indent:-999px;overflow:hidden}
@@ -58,18 +58,20 @@ h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
 #gnb .gnb_ul{position:relative;height:100%;background:#ebebeb;width:50px}
 #gnb .gnb_li{border-bottom:1px solid #ddd }
 #gnb .gnb_li button{background-color: #ebebeb;border:0;width:50px;height:50px;text-indent:-999px;overflow:hidden;}
-#gnb .gnb_li .menu-100{background:url(../img/menu-1-1.png) 50% 50% no-repeat #ebebeb }
-#gnb .on .menu-100{background:url(../img/menu-1.png) 50% 50% no-repeat #fff}
-#gnb .gnb_li .menu-200{background:url(../img/menu-2-1.png) 50% 50% no-repeat #ebebeb }
-#gnb .on .menu-200{background:url(../img/menu-2.png) 50% 50% no-repeat #fff}
-#gnb .gnb_li .menu-300{background:url(../img/menu-3-1.png) 50% 50% no-repeat #ebebeb }
-#gnb .on .menu-300{background:url(../img/menu-3.png) 50% 50% no-repeat #fff}
-#gnb .gnb_li .menu-400{background:url(../img/menu-7-1.png) 50% 50% no-repeat #ebebeb }
-#gnb .on .menu-400{background:url(../img/menu-7.png) 50% 50% no-repeat #fff}
-#gnb .gnb_li .menu-500{background:url(../img/menu-6-1.png) 50% 50% no-repeat #ebebeb }
-#gnb .on .menu-500{background:url(../img/menu-6.png) 50% 50% no-repeat #fff}
-#gnb .gnb_li .menu-900{background:url(../img/menu-4-1.png) 50% 50% no-repeat #ebebeb }
-#gnb .on .menu-900{background:url(../img/menu-4.png) 50% 50% no-repeat #fff}
+#gnb .gnb_li .btn_op{background:url(../img/menu_default.png) 50% 50% no-repeat #ebebeb}
+#gnb .on .btn_op{background:url(../img/menu_default_on.png) 50% 50% no-repeat #fff}
+#gnb .gnb_li .btn_op.menu-100{background:url(../img/menu-1-1.png) 50% 50% no-repeat #ebebeb }
+#gnb .on .btn_op.menu-100{background:url(../img/menu-1.png) 50% 50% no-repeat #fff}
+#gnb .gnb_li .btn_op.menu-200{background:url(../img/menu-2-1.png) 50% 50% no-repeat #ebebeb }
+#gnb .on .btn_op.menu-200{background:url(../img/menu-2.png) 50% 50% no-repeat #fff}
+#gnb .gnb_li .btn_op.menu-300{background:url(../img/menu-3-1.png) 50% 50% no-repeat #ebebeb }
+#gnb .on .btn_op.menu-300{background:url(../img/menu-3.png) 50% 50% no-repeat #fff}
+#gnb .gnb_li .btn_op.menu-400{background:url(../img/menu-7-1.png) 50% 50% no-repeat #ebebeb }
+#gnb .on .btn_op.menu-400{background:url(../img/menu-7.png) 50% 50% no-repeat #fff}
+#gnb .gnb_li .btn_op.menu-500{background:url(../img/menu-6-1.png) 50% 50% no-repeat #ebebeb }
+#gnb .on .btn_op.menu-500{background:url(../img/menu-6.png) 50% 50% no-repeat #fff}
+#gnb .gnb_li .btn_op.menu-900{background:url(../img/menu-4-1.png) 50% 50% no-repeat #ebebeb }
+#gnb .on .btn_op.menu-900{background:url(../img/menu-4.png) 50% 50% no-repeat #fff}
 #gnb .gnb_li button:hover{background-color:#f3f3f3}
 #gnb .gnb_oparea{display:none;position:absolute;top:0;left:50px;background:#fff;height:100%;width:170px;padding:20px;border-right:1px solid #dbdbdb;
 -webkit-box-shadow: 2px 0 2px  rgba(150,150,150,100.1);
@@ -748,3 +750,13 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 #processing p{font-size:1.2em}
 .check_processing {width:300px;height:300px;margin:0 auto;background:url(../img/check.png) no-repeat 50% 50% }
 #processing button{background:#ff3061;border:none;color:#fff;padding: 15px;width:200px;margin-top:15px;border-radius:5px;font-weight:bold;font-size:1.167em}
+
+@media only screen and (max-device-width : 768px) and (orientation : landscape){
+/* Styles */
+input[type="text"]{max-width:200px}
+}
+
+@media only screen and (max-device-width : 480px) and (orientation : portrait){
+/* Styles */
+input[type="text"]{max-width:200px}
+}
