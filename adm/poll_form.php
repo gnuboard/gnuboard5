@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], 'w');
 
+$po_id = isset($po_id) ? (int) $po_id : 0;
+
 $html_title = '투표';
 if ($w == '')
     $html_title .= ' 생성';

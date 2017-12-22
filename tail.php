@@ -42,7 +42,7 @@ if (G5_IS_MOBILE) {
             <a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=provision">서비스이용약관</a>
             <a href="<?php echo get_device_change_url(); ?>">모바일버전</a>
         </div>
-        <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_logo.jpg" alt="<?php echo G5_VERSION ?>"></div>
+        <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_logo.png" alt="<?php echo G5_VERSION ?>"></div>
         <div id="ft_copy">Copyright &copy; <b>소유하신 도메인.</b> All rights reserved.</div>
     </div>
     

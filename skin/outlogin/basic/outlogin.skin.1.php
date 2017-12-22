@@ -13,9 +13,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
         <div class="ol_wr">
             <input type="hidden" name="url" value="<?php echo $outlogin_url ?>">
             <label for="ol_id" id="ol_idlabel" class="sound_only">회원아이디<strong>필수</strong></label>
-            <input type="text" id="ol_id" name="mb_id" required " maxlength="20" placeholder="아이디">
+            <input type="text" id="ol_id" name="mb_id" required maxlength="20" placeholder="아이디">
             <label for="ol_pw" id="ol_pwlabel" class="sound_only">비밀번호<strong>필수</strong></label>
-            <input type="password" name="mb_password" id="ol_pw" required  maxlength="20" placeholder="비밀번호">
+            <input type="password" name="mb_password" id="ol_pw" required maxlength="20" placeholder="비밀번호">
             <input type="submit" id="ol_submit" value="로그인" class="btn_b02">
         </div>
         <div class="ol_auto_wr"> 
