@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-if (!$board['bo_use_sns']) die('');
+if (!$board['bo_use_sns']) return;
 ?>
 
 <ul id="bo_vc_sns">
