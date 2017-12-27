@@ -21,11 +21,24 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 		 */
 		public function preFilter($html, $config, $context)
 		{
-			$html = preg_replace('#<iframe#i', '<img class="Iframevideo"', $html);
-			$html = preg_replace('#</iframe>#i', '</img>', $html);
+			if (strstr($html, '<iframe')) {
+				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/www\.youtube\.com\/embed\/([^"]*)[^>]*>(.*?)?\/iframe>/si', array($this, 'trust_url_match'), $html);
+				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/player\.vimeo.com\/video\/([^"]*)[^>]*>(.*?)?\/iframe>/si', array($this, 'trust_url_match'), $html);
+				//$html = preg_replace('#<iframe#i', '<img class="Iframevideo"', $html);
+				//$html = preg_replace('#</iframe>#i', '</img>', $html);
+			}
 			return $html;
 		}
 
+		public function trust_url_match($matches)
+		{
+			$str = $matches[0];
+			if( $matches[1] ){
+				$str = preg_replace('#<iframe#i', '<img class="Iframevideo"', $str);
+				$str = preg_replace('#</iframe>#i', '</img>', $str);
+			}
+			return $str;
+		}
 		/**
 		 *
 		 * @param string $html
@@ -48,7 +61,7 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 		{
 			// Domain Whitelist
 			$youTubeMatch = preg_match('#src="https?://www.youtube(-nocookie)?.com/#i', $matches[1]);
-			$vimeoMatch = preg_match('#src="http://player.vimeo.com/#i', $matches[1]);
+			$vimeoMatch = preg_match('#src="https?://player.vimeo.com/#i', $matches[1]);
 			if ($youTubeMatch || $vimeoMatch) {
 				$extra = ' frameborder="0"';
 				if ($youTubeMatch) {
