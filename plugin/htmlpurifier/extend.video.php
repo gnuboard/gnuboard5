@@ -22,8 +22,8 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 		public function preFilter($html, $config, $context)
 		{
 			if (strstr($html, '<iframe')) {
-				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/www\.youtube\.com\/embed\/([^"]*)[^>]*>(.*?)?\/iframe>/si', array($this, 'trust_url_match'), $html);
-				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/player\.vimeo.com\/video\/([^"]*)[^>]*>(.*?)?\/iframe>/si', array($this, 'trust_url_match'), $html);
+				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/www\.youtube\.com\/embed\/([^"]*)[^>]*>(.*?)?\/iframe>/i', array($this, 'trust_url_match'), $html);
+				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/player\.vimeo.com\/video\/([^"]*)[^>]*>(.*?)?\/iframe>/i', array($this, 'trust_url_match'), $html);
 				//$html = preg_replace('#<iframe#i', '<img class="Iframevideo"', $html);
 				//$html = preg_replace('#</iframe>#i', '</img>', $html);
 			}
