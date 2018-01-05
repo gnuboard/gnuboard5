@@ -136,7 +136,7 @@ if (isset($wr_id) && $wr_id) {
         set_session($ss_name, TRUE);
     }
 
-    $g5['title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
+    $g5['title'] = strip_tags(conv_subject($write['wr_subject'], 255))." > ".((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
 } else {
     if ($member['mb_level'] < $board['bo_list_level']) {
         if ($member['mb_id'])
@@ -171,7 +171,7 @@ if (isset($wr_id) && $wr_id) {
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
 
-    $g5['title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']) ;
+    $g5['title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']).' '.$page.' 페이지';
 }
 
 include_once(G5_PATH.'/head.sub.php');
