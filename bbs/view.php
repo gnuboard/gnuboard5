@@ -25,20 +25,20 @@ if (!$board['bo_use_list_view']) {
         $sql_search = " and " . $sql_search;
 
     // 윗글을 얻음
-    $sql = " select wr_id, wr_subject from {$write_table} where wr_is_comment = 0 and wr_num = '{$write['wr_num']}' and wr_reply < '{$write['wr_reply']}' {$sql_search} order by wr_num desc, wr_reply desc limit 1 ";
+    $sql = " select wr_id, wr_subject, wr_datetime from {$write_table} where wr_is_comment = 0 and wr_num = '{$write['wr_num']}' and wr_reply < '{$write['wr_reply']}' {$sql_search} order by wr_num desc, wr_reply desc limit 1 ";
     $prev = sql_fetch($sql);
     // 위의 쿼리문으로 값을 얻지 못했다면
     if (!$prev['wr_id'])     {
-        $sql = " select wr_id, wr_subject from {$write_table} where wr_is_comment = 0 and wr_num < '{$write['wr_num']}' {$sql_search} order by wr_num desc, wr_reply desc limit 1 ";
+        $sql = " select wr_id, wr_subject, wr_datetime from {$write_table} where wr_is_comment = 0 and wr_num < '{$write['wr_num']}' {$sql_search} order by wr_num desc, wr_reply desc limit 1 ";
         $prev = sql_fetch($sql);
     }
 
     // 아래글을 얻음
-    $sql = " select wr_id, wr_subject from {$write_table} where wr_is_comment = 0 and wr_num = '{$write['wr_num']}' and wr_reply > '{$write['wr_reply']}' {$sql_search} order by wr_num, wr_reply limit 1 ";
+    $sql = " select wr_id, wr_subject, wr_datetime from {$write_table} where wr_is_comment = 0 and wr_num = '{$write['wr_num']}' and wr_reply > '{$write['wr_reply']}' {$sql_search} order by wr_num, wr_reply limit 1 ";
     $next = sql_fetch($sql);
     // 위의 쿼리문으로 값을 얻지 못했다면
     if (!$next['wr_id']) {
-        $sql = " select wr_id, wr_subject from {$write_table} where wr_is_comment = 0 and wr_num > '{$write['wr_num']}' {$sql_search} order by wr_num, wr_reply limit 1 ";
+        $sql = " select wr_id, wr_subject, wr_datetime from {$write_table} where wr_is_comment = 0 and wr_num > '{$write['wr_num']}' {$sql_search} order by wr_num, wr_reply limit 1 ";
         $next = sql_fetch($sql);
     }
 }
@@ -48,6 +48,7 @@ $prev_href = '';
 if (isset($prev['wr_id']) && $prev['wr_id']) {
     $prev_wr_subject = get_text(cut_str($prev['wr_subject'], 255));
     $prev_href = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$prev['wr_id'].$qstr;
+    $prev_wr_date = $prev['wr_datetime'];
 }
 
 // 다음글 링크
@@ -55,6 +56,7 @@ $next_href = '';
 if (isset($next['wr_id']) && $next['wr_id']) {
     $next_wr_subject = get_text(cut_str($next['wr_subject'], 255));
     $next_href = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$next['wr_id'].$qstr;
+    $next_wr_date = $next['wr_datetime'];
 }
 
 // 쓰기 링크
