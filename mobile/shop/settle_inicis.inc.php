@@ -1,6 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+define('G5_MOBILE_INICIS_SETTLE', true);
+
 // curl 체크
 if (!function_exists('curl_init')) {
     alert('cURL 모듈이 설치되어 있지 않습니다.\\n상점관리자에게 문의해 주십시오.');

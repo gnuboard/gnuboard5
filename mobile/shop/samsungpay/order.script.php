@@ -37,7 +37,12 @@ jQuery(function($){
                 samsungpayform.P_RESERVED.value = samsungpayform.P_RESERVED.value.replace("&useescrow=Y", "")+"&d_samsungpay=Y";
             }
 
-            samsungpayform.P_AMT.value = samsungpayform.good_mny.value;
+            if( ! jQuery("form[name='sm_form']").length ){
+                alert("해당 폼이 존재 하지 않는 결제오류입니다.");
+                return false;
+            }
+
+            samsungpayform.P_AMT.value = samsungpayform.good_mny.value = document.sm_form.good_mny.value; 
             samsungpayform.P_UNAME.value = pf.od_name.value;
             samsungpayform.P_MOBILE.value = pf.od_hp.value;
             samsungpayform.P_EMAIL.value = pf.od_email.value;

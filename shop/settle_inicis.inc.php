@@ -18,7 +18,9 @@ if ($default['de_card_test']) {
     $stdpay_js_url = 'https://stdpay.inicis.com/stdjs/INIStdPay.js';
 }
 else {
-    $default['de_inicis_mid'] = "SIR".$default['de_inicis_mid'];
+    if( !defined('G5_MOBILE_INICIS_SETTLE') ){
+        $default['de_inicis_mid'] = "SIR".$default['de_inicis_mid'];
+    }
 
     if ($default['de_escrow_use'] == 1) {
         // 에스크로결제

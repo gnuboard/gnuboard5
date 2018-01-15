@@ -20,6 +20,10 @@ if($cancelFlag == "true")
 
     $TID = $tno;
     $inipay->SetField("type", "cancel"); // 고정
+    if( $default['de_inicis_admin_key'] ){
+        $inipay->SetField("mid", $mid);
+        $inipay->SetField("admin", $default['de_inicis_admin_key']);
+    }
     $inipay->SetField("tid", $TID); // 고정
     $inipay->SetField("cancelmsg", "DB FAIL"); // 취소사유
     $inipay->startAction();
