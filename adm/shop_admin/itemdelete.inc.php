@@ -71,6 +71,8 @@ if (!function_exists("itemdelete")) {
 
         for($i=0;$i<count($imgs[1]);$i++) {
             $p = parse_url($imgs[1][$i]);
+            if(strpos($p['path'], "/data/editor/") === false)
+                continue;
             if(strpos($p['path'], "/data/") != 0)
                 $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
             else
@@ -86,6 +88,8 @@ if (!function_exists("itemdelete")) {
 
         for($i=0;$i<count($imgs[1]);$i++) {
             $p = parse_url($imgs[1][$i]);
+            if(strpos($p['path'], "/data/editor/") === false)
+                continue;
             if(strpos($p['path'], "/data/") != 0)
                 $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
             else
