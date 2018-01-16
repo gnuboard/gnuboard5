@@ -348,7 +348,7 @@ box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);}
 
 
 /*글쓰기*/
-#bo_w div{margin:10px 0;position:relative;}
+#bo_w .write_div{margin:10px 0;position:relative}
 #bo_w .bo_w_info:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_w .bo_w_info .frm_input{float:left;width:33%}
 #bo_w #wr_password{margin:0 0.5%  }
