@@ -24,20 +24,23 @@ $sm_id = $user_profile->sid;
 $mb_id = trim($_POST['mb_id']);
 $mb_password    = trim($_POST['mb_password']);
 $mb_password_re = trim($_POST['mb_password_re']);
-$mb_nick        = trim($_POST['mb_nick']);
+$mb_nick        = trim(strip_tags($_POST['mb_nick']));
 $mb_email       = trim($_POST['mb_email']);
-$mb_name        = clean_xss_tags(trim($_POST['mb_name']));
+$mb_name        = clean_xss_tags(trim(strip_tags($_POST['mb_name'])));
 $mb_email       = get_email_address($mb_email);
 
-// 이름, 닉네임에 utf-8 이외의 문자가 포함됐다면 오류
-// 서버환경에 따라 정상적으로 체크되지 않을 수 있음.
-$tmp_mb_name = iconv('UTF-8', 'UTF-8//IGNORE', $mb_name);
-if($tmp_mb_name != $mb_name) {
-    alert('이름을 올바르게 입력해 주십시오.');
+if( function_exists('filter_var') ){
+    $mb_nick = filter_var($mb_nick, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+    $mb_name = filter_var($mb_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
+} else {
+    $mb_nick = sql_real_escape_string($mb_nick);
+    $mb_name = sql_real_escape_string($mb_name);
 }
-$tmp_mb_nick = iconv('UTF-8', 'UTF-8//IGNORE', $mb_nick);
-if($tmp_mb_nick != $mb_nick) {
-    alert('닉네임을 올바르게 입력해 주십시오.');
+
+if( ! $mb_nick || ! $mb_name ){
+    $tmp = explode('@', $mb_email);
+    $mb_nick = $mb_nick ? $mb_nick : $tmp[0];
+    $mb_name = $mb_name ? $mb_name : $tmp[0];
 }
 
 if( ! isset($mb_password) || ! $mb_password ){
@@ -76,6 +79,11 @@ if( defined('G5_SOCIAL_CERTIFY_MAIL') && G5_SOCIAL_CERTIFY_MAIL && $config['cf_u
     $mb_email_certify = '';
 }
 
+//회원 메일 동의
+$mb_mailling = (isset($_POST['mb_mailling']) && $_POST['mb_mailling']) ? 1 : 0;
+//회원 정보 공개
+$mb_open = (isset($_POST['mb_open']) && $_POST['mb_open']) ? 1 : 0;
+
 // 회원정보 입력
 $sql = " insert into {$g5['member_table']}
             set mb_id = '{$mb_id}',
@@ -90,9 +98,9 @@ $sql = " insert into {$g5['member_table']}
                 mb_ip = '{$_SERVER['REMOTE_ADDR']}',
                 mb_level = '{$config['cf_register_level']}',
                 mb_login_ip = '{$_SERVER['REMOTE_ADDR']}',
-                mb_mailling = '0',
+                mb_mailling = '{$mb_mailling}',
                 mb_sms = '0',
-                mb_open = '0',
+                mb_open = '{$mb_open}',
                 mb_open_date = '".G5_TIME_YMD."' ";
 
 $result = sql_query($sql, false);

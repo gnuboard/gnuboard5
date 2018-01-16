@@ -317,6 +317,7 @@ function social_extends_get_keys($provider){
                     "keys" => array("id" => $config['cf_facebook_appid'], "secret" => $config['cf_facebook_secret']),
                     "display"   =>  "popup",
                     "redirect_uri" => get_social_callbackurl('facebook'),
+                    "scope"   => array('email'), // optional
                     "trustForwarded" => false
                 );
 
