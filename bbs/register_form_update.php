@@ -424,14 +424,15 @@ if( $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['
         @unlink($mb_dir.'/'.$mb_icon_img);
     }
 
-    $msg = '';
-
     // 회원 프로필 이미지 업로드
     $mb_img = '';
     if (isset($_FILES['mb_img']) && is_uploaded_file($_FILES['mb_img']['tmp_name'])) {
+
+        $msg = $msg ? $msg."\\r\\n" : '';
+
         if (preg_match($image_regex, $_FILES['mb_img']['name'])) {
             // 아이콘 용량이 설정값보다 이하만 업로드 가능
-            if ($_FILES['mb_icon']['size'] <= $config['cf_member_img_size']) {
+            if ($_FILES['mb_img']['size'] <= $config['cf_member_img_size']) {
                 @mkdir($mb_dir, G5_DIR_PERMISSION);
                 @chmod($mb_dir, G5_DIR_PERMISSION);
                 $dest_path = $mb_dir.'/'.$mb_icon_img;
@@ -459,7 +460,7 @@ if( $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['
                     //=================================================================\
                 }
             } else {
-                $msg .= '회원아이콘을 '.number_format($config['cf_member_img_size']).'바이트 이하로 업로드 해주십시오.';
+                $msg .= '회원이미지을 '.number_format($config['cf_member_img_size']).'바이트 이하로 업로드 해주십시오.';
             }
 
         } else {
