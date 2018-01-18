@@ -29,12 +29,15 @@ $mb_email       = trim($_POST['mb_email']);
 $mb_name        = clean_xss_tags(trim(strip_tags($_POST['mb_name'])));
 $mb_email       = get_email_address($mb_email);
 
-if( function_exists('filter_var') ){
-    $mb_nick = filter_var($mb_nick, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-    $mb_name = filter_var($mb_name, FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_HIGH);
-} else {
-    $mb_nick = sql_real_escape_string($mb_nick);
-    $mb_name = sql_real_escape_string($mb_name);
+// 이름, 닉네임에 utf-8 이외의 문자가 포함됐다면 오류
+// 서버환경에 따라 정상적으로 체크되지 않을 수 있음.
+$tmp_mb_name = iconv('UTF-8', 'UTF-8//IGNORE', $mb_name);
+if($tmp_mb_name != $mb_name) {
+    $mb_name = $tmp_mb_name;
+}
+$tmp_mb_nick = iconv('UTF-8', 'UTF-8//IGNORE', $mb_nick);
+if($tmp_mb_nick != $mb_nick) {
+    $mb_nick = $tmp_mb_nick;
 }
 
 if( ! $mb_nick || ! $mb_name ){
