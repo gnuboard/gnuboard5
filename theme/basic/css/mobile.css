@@ -237,7 +237,7 @@ a.btn_admin:focus, a.btn_admin:hover {}
 /* 기본폼 */
 .form_01{margin:10px}
 .form_01 .write_div{margin:5px 0;position:relative}
-.form_01 li{margin:5px 0;position:relative}
+.form_01 li{margin:5px 0;position:relative;list-style:none}
 .form_01 textarea, .frm_input {border:1px solid #ccc;background:#fff;color:#000;vertical-align:middle;border-radius:3px;padding:5px;}
 .form_01 textarea {width:100%;height:100px}
 .frm_input {height:40px;}
