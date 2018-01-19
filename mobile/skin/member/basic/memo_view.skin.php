@@ -50,7 +50,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <?php if($next_link) { ?>
             <a href="<?php echo $next_link ?>" class="btn_b03 btn">다음쪽지</a>
             <?php } ?>
-            <a href="./memo.php?kind=<?php echo $kind ?>" class="btn_b03 btn">목록보기</a>
+            <a href="<?php echo $list_link ?>" class="btn_b03 btn">목록보기</a>
             <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
         </div>
     </div>

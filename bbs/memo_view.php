@@ -57,13 +57,21 @@ $sql = " select * from {$g5[memo_table]}
             order by me_id desc
             limit 1 ";
 $next = sql_fetch($sql);
-if ($next[me_id])
-    $next_link = './memo_view.php?kind='.$kind.'&amp;me_id='.$next[me_id];
+if ($next['me_id'])
+    $next_link = './memo_view.php?kind='.$kind.'&amp;me_id='.$next['me_id'];
 else
     //$next_link = 'javascript:alert(\'쪽지의 마지막입니다.\');';
     $next_link = '';
 
 $mb = get_member($memo['me_'.$unkind.'_mb_id']);
+
+$list_link = './memo.php?kind='.$kind;
+
+if(isset($page) && $page){
+    $prev_link .= '&amp;page='.(int) $page;
+    $next_link .= '&amp;page='.(int) $page;
+    $list_link .= '&amp;page='.(int) $page;
+}
 
 include_once($member_skin_path.'/memo_view.skin.php');
 
