@@ -30,6 +30,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <?php if ($i==0) { echo "<li class=\"empty_list\">자료가 없습니다.</li>"; } ?>
     </ul>
 
+    <!-- 페이지 -->
+    <?php echo $write_pages;  ?>
+
     <p class="win_desc">
         쪽지 보관일수는 최장 <strong><?php echo $config['cf_memo_del'] ?></strong>일 입니다.
     </p>
