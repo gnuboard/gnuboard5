@@ -317,6 +317,7 @@ function social_extends_get_keys($provider){
                     "keys" => array("id" => $config['cf_facebook_appid'], "secret" => $config['cf_facebook_secret']),
                     "display"   =>  "popup",
                     "redirect_uri" => get_social_callbackurl('facebook'),
+                    "scope"   => array('email'), // optional
                     "trustForwarded" => false
                 );
 
@@ -326,6 +327,9 @@ function social_extends_get_keys($provider){
                     "keys" => array("id" => $config['cf_google_clientid'],
                     "secret" => $config['cf_google_secret']),
                     "redirect_uri" => get_social_callbackurl('google'),
+                    "scope"   => "https://www.googleapis.com/auth/plus.login ". // optional
+                                    "https://www.googleapis.com/auth/plus.me ". // optional
+                                    "https://www.googleapis.com/auth/plus.profile.emails.read", // optional
                     //"access_type"     => "offline",   // optional
                     //"approval_prompt" => "force",     // optional
                 );
@@ -468,6 +472,10 @@ function social_check_login_before($p_service=''){
             
             // then grab the user profile 
             $user_profile = $adapter->getUserProfile();
+
+            if( ! (isset($_SESSION['sl_userprofile']) && is_array($_SESSION['sl_userprofile'])) ){ 
+                $_SESSION['sl_userprofile'] = array(); 
+            }
 
             if( ! $is_member ){ 
                 $_SESSION['sl_userprofile'][$provider_name] = json_encode( $user_profile );

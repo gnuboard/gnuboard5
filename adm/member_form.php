@@ -463,8 +463,13 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
 <script>
 function fmember_submit(f)
 {
-    if (!f.mb_icon.value.match(/\.gif$/i) && f.mb_icon.value) {
-        alert('아이콘은 gif 파일만 가능합니다.');
+    if (!f.mb_icon.value.match(/\.(gif|jpe?g|png)$/i) && f.mb_icon.value) {
+        alert('아이콘은 이미지 파일만 가능합니다.');
+        return false;
+    }
+
+    if (!f.mb_img.value.match(/\.(gif|jpe?g|png)$/i) && f.mb_img.value) {
+        alert('회원이미지는 이미지 파일만 가능합니다.');
         return false;
     }
 

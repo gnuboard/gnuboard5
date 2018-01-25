@@ -53,6 +53,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model_OAuth2 {
             "client_id" => $this->api->client_id,
             "redirect_uri" => $this->api->redirect_uri,
             "state" => $token,
+            "scope" => $this->scope,
             );
         
         Hybrid_Auth::redirect($this->api->authorizeUrl($parameters));
