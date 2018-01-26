@@ -207,4 +207,4 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 <div id="wrapper">
 
     <div id="container">
-    <?php if (!defined("_INDEX_")) { ?><h2 id="container_title" class="top"><?php echo $g5['title'] ?></h2><?php } ?>
+    <?php if (!defined("_INDEX_")) { ?><h2 id="container_title" class="top" title="<?php echo get_text($g5['title']); ?>"><?php echo get_head_title($g5['title']); ?></h2><?php } ?>
