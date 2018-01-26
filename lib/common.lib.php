@@ -3363,6 +3363,16 @@ function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_
     return '';
 }
 
+function get_head_title($title){
+    global $g5;
+
+    if( isset($g5['board_title']) && $g5['board_title'] ){
+        $title = $g5['board_title'];
+    }
+
+    return $title;
+}
+
 function is_use_email_certify(){
     global $config;
 
