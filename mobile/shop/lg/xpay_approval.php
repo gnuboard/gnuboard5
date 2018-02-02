@@ -136,7 +136,7 @@ $g5['body_script'] = ' onload="launchCrossPlatform();"';
 include_once(G5_PATH.'/head.sub.php');
 ?>
 
-<script language="javascript" src="http://xpay.uplus.co.kr/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
+<script language="javascript" src="//xpay.uplus.co.kr/xpay/js/xpay_crossplatform.js" type="text/javascript"></script>
 <script type="text/javascript">
 
 /*
