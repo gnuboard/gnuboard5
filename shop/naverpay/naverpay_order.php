@@ -209,6 +209,11 @@ for($i=0; $i<$count; $i++) {
                 $ct_send_cost = 1; // 착불
         }
 
+        // 조건부 무료배송시 착불일 경우 ( 야수님이 알려주심 )
+        if ($it['it_sc_type'] === 2 && $ct_send_cost === 1 && ((int)$io_price + (int)$it_price) * $ct_qty >= $it['it_sc_minimum'] ){
+            $ct_send_cost = 2; // 무료
+        }
+
         // 옵션정보배열에 저장
         $options[$it_id][] = array(
             'option'    => get_text(stripslashes($io_value)),
