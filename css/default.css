@@ -139,7 +139,7 @@ transition: all 0.3s ease-out;}
 .gnb_1dli_on .gnb_2da {}
 .gnb_2da:focus, .gnb_2da:hover {color:#fff}
 .gnb_1dli_over .gnb_2dul {display:block;left:0}
-.gnb_1dli_over2 .gnb_2dul {display:block;right:0;background:#fff}
+.gnb_1dli_over2 .gnb_2dul {display:block;right:0}
 .gnb_wrap .gnb_empty {padding:10px 0;width:100%;text-align:center;line-height:2em;color:#fff}
 .gnb_wrap .gnb_empty a{color:#fff;text-decoration:underline}
 .gnb_wrap .gnb_al_ul .gnb_empty, .gnb_wrap .gnb_al_ul .gnb_empty a{color:#555}
