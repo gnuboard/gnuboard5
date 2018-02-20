@@ -45,6 +45,14 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
     // 원글이 존재한다면
     if ($wr['wr_id'])
     {
+
+        // 세션의 시간 검사
+        // 4.00.15 - 댓글 수정시 연속 게시물 등록 메시지로 인한 오류 수정
+        if ($w == 'c' && $_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
+            alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
+        
+        set_session('ss_datetime', G5_SERVER_TIME);
+
         $mb_id = $member['mb_id'];
         $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
         $wr_password = $member['mb_password'];
@@ -86,7 +94,7 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
         sql_query(" update {$g5['board_table']}  set bo_count_comment = bo_count_comment + 1 where bo_table = '$bo_table' ");
 
         // 포인트 부여
-        insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 코멘트쓰기", $bo_table, $comment_id, '코멘트');
+        insert_point($member['mb_id'], $board['bo_comment_point'], "{$board['bo_subject']} {$wr_id}-{$comment_id} 댓글쓰기(스크랩)", $bo_table, $comment_id, '댓글');
     }
 }
 
