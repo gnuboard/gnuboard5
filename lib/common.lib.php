@@ -458,7 +458,7 @@ function search_font($stx, $str)
     $src = array('/', '|');
     $dst = array('\/', '\|');
 
-    if (!trim($stx)) return $str;
+    if (!trim($stx) && $stx !== '0') return $str;
 
     // 검색어 전체를 공란으로 나눈다
     $s = explode(' ', $stx);
@@ -597,7 +597,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     $search_text = strip_tags(($search_text));
     $search_text = trim(stripslashes($search_text));
 
-    if (!$search_text) {
+    if (!$search_text && $search_text !== '0') {
         if ($search_ca_name) {
             return $str;
         } else {
