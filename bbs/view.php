@@ -10,7 +10,7 @@ if ($sop != 'and' && $sop != 'or')
 
 $sql_search = "";
 // 검색이면
-if ($sca || $stx) {
+if ($sca || $stx || $stx === '0') {
     // where 문을 얻음
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
     $search_href = './board.php?bo_table='.$bo_table.'&amp;page='.$page.$qstr;
