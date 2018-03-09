@@ -3016,6 +3016,22 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
     $p = @parse_url($url);
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
     $is_host_check = false;
+    
+    // url을 urlencode 를 2번이상하면 parse_url 에서 scheme와 host 값을 가져올수 없는 취약점이 존재함
+    if ( !isset($p['host']) && urldecode($url) != $url ){
+        $i = 0;
+        while($i <= 3){
+            $url = urldecode($url);
+            if( urldecode($url) == $url ) break;
+            $i++;
+        }
+
+        if( urldecode($url) == $url ){
+            $p = @parse_url($url);
+        } else {
+            $is_host_check = true;
+        }
+    }
 
     if(stripos($url, 'http:') !== false) {
         if(!isset($p['scheme']) || !$p['scheme'] || !isset($p['host']) || !$p['host'])
