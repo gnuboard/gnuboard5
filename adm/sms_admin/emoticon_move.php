@@ -11,7 +11,8 @@ auth_check($auth[$sub_menu], "r");
 $g5['title'] = '이모티콘그룹 이동';
 include_once(G5_PATH.'/head.sub.php');
 
-$fo_no_list = implode(',', $_POST['fo_no']);
+$list = array();    //배열 변수 초기화
+$fo_no_list = isset($_POST['fo_no']) ? implode(',', $_POST['fo_no']) : '';
 
 $sql = " select * from {$g5['sms5_form_group_table']} order by fg_no ";
 $result = sql_query($sql);
@@ -27,7 +28,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     <form name="fboardmoveall" method="post" action="./emoticon_move_update.php" onsubmit="return fboardmoveall_submit(this);">
     <input type="hidden" name="sw" value="<?php echo $sw ?>">
     <input type="hidden" name="fo_no_list" value="<?php echo $fo_no_list ?>">
-    <input type="hidden" name="url" value="<?php echo $_SERVER['HTTP_REFERER'] ?>">
+    <input type="hidden" name="url" value="<?php echo clean_xss_tags(strip_tags($_SERVER['HTTP_REFERER'])); ?>">
 
     <div class="tbl_head01 tbl_wrap">
         <table>
