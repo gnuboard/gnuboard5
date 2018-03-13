@@ -5,7 +5,7 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], "r");
 
 $doc = strip_tags($doc);
-$sort1 = strip_tags($sort1);
+$sort1 = in_array($sort1, array('it_id', 'it_name', 'it_stock_qty', 'it_use', 'it_soldout', 'it_stock_sms')) ? $sort1 : '';
 $sort2 = in_array($sort2, array('desc', 'asc')) ? $sort2 : 'desc';
 $sel_ca_id = get_search_string($sel_ca_id);
 $sel_field = get_search_string($sel_field);
