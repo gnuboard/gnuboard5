@@ -1,13 +1,15 @@
 <?php
 include_once('./_common.php');
 
+if( isset($sfl) && ! in_array($sfl, array('b.it_name', 'a.it_id', 'a.is_subject', 'a.is_content', 'a.is_name', 'a.mb_id')) ){
+    //다른값이 들어가있다면 초기화
+    $sfl = '';
+}
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/itemuselist.php');
     return;
 }
-
-//$sfl = trim($_REQUEST['sfl']);
-//$stx = trim($_REQUEST['stx']);
 
 $g5['title'] = '사용후기';
 include_once('./_head.php');
