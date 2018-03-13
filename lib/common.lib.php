@@ -3346,6 +3346,11 @@ function is_include_path_check($path='', $is_input='')
 {
     if( $path ){
         if ($is_input){
+
+            if( strpos($path, 'php://') !== false || strpos($path, 'zlib://') !== false || strpos($path, 'bzip2://') !== false || strpos($path, 'zip://') !== false ){
+                return false;
+            }
+
             try {
                 // whether $path is unix or not
                 $unipath = strlen($path)==0 || $path{0}!='/';

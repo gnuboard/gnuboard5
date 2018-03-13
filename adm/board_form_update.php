@@ -36,11 +36,11 @@ if ($file = $_POST['bo_include_tail']) {
 }
 
 if(!is_include_path_check($_POST['bo_include_head'], 1)) {
-    alert('/data/file/ 또는 /data/editor/ 포함된 문자를 상단 파일 경로에 포함시킬수 없습니다.');
+    alert('상단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
 if(!is_include_path_check($_POST['bo_include_tail'], 1)) {
-    alert('/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.');
+    alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
 $board_path = G5_DATA_PATH.'/file/'.$bo_table;

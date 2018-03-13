@@ -70,7 +70,7 @@ if ($member['mb_level'] >= $board['bo_reply_level'])
 // 수정, 삭제 링크
 $update_href = $delete_href = '';
 // 로그인중이고 자신의 글이라면 또는 관리자라면 비밀번호를 묻지 않고 바로 수정, 삭제 가능
-if (($member['mb_id'] && ($member['mb_id'] == $write['mb_id'])) || $is_admin) {
+if (($member['mb_id'] && ($member['mb_id'] === $write['mb_id'])) || $is_admin) {
     $update_href = './write.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
     set_session('ss_delete_token', $token = uniqid(time()));
     $delete_href ='./delete.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;token='.$token.'&amp;page='.$page.urldecode($qstr);

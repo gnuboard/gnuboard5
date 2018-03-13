@@ -26,7 +26,7 @@ else if ($is_admin == 'group') { // 그룹관리자
     else if ($member['mb_level'] < $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
         alert('자신의 권한보다 높은 권한의 회원이 작성한 글은 삭제할 수 없습니다.');
 } else if ($member['mb_id']) {
-    if ($member['mb_id'] != $write['mb_id'])
+    if ($member['mb_id'] !== $write['mb_id'])
         alert('자신의 글이 아니므로 삭제할 수 없습니다.');
 } else {
     if ($write['mb_id'])

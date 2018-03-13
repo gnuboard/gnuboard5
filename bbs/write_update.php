@@ -140,7 +140,7 @@ if ($w == '' || $w == 'u') {
     }
 
     // 김선용 1.00 : 글쓰기 권한과 수정은 별도로 처리되어야 함
-    if($w =='u' && $member['mb_id'] && $wr['mb_id'] == $member['mb_id']) {
+    if($w =='u' && $member['mb_id'] && $wr['mb_id'] === $member['mb_id']) {
         ;
     } else if ($member['mb_level'] < $board['bo_write_level']) {
         alert('글을 쓸 권한이 없습니다.');
@@ -331,7 +331,7 @@ if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
         // 자신의 글이라면
-        if ($member['mb_id'] == $wr['mb_id']) {
+        if ($member['mb_id'] === $wr['mb_id']) {
             $mb_id = $member['mb_id'];
             $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
             $wr_email = addslashes($member['mb_email']);
