@@ -3039,7 +3039,8 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
     }
 
     //php 5.6.29 이하 버전에서는 parse_url 버그가 존재함
-    if ( (isset($p['host']) && $p['host']) && version_compare(PHP_VERSION, '5.6.29') < 0) {
+    //php 7.0.1 ~ 7.0.5 버전에서는 parse_url 버그가 존재함
+    if ( (isset($p['host']) && $p['host']) ) {
         $bool_ch = false;
         foreach( array('user','host') as $key) {
             if ( isset( $p[ $key ] ) && strpbrk( $p[ $key ], ':/?#@' ) ) {
