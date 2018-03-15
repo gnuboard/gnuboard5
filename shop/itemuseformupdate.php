@@ -8,6 +8,7 @@ if (!$is_member) {
 $it_id       = trim($_REQUEST['it_id']);
 $is_subject  = trim($_POST['is_subject']);
 $is_content  = trim($_POST['is_content']);
+$is_content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $is_content);
 $is_name     = trim($_POST['is_name']);
 $is_password = trim($_POST['is_password']);
 $is_score    = (int)$_POST['is_score'] > 5 ? 0 : (int)$_POST['is_score'];

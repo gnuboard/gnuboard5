@@ -629,6 +629,10 @@ function it_img_upload($srcfile, $filename, $dir)
     if($size[2] < 1 || $size[2] > 3)
         return '';
 
+    //php파일도 getimagesize 에서 Image Type Flag 를 속일수 있다
+    if (!preg_match('/\.(gif|jpe?g|png)$/i', $filename))
+        return '';
+
     if(!is_dir($dir)) {
         @mkdir($dir, G5_DIR_PERMISSION);
         @chmod($dir, G5_DIR_PERMISSION);

@@ -8,6 +8,7 @@ if (!$is_member) {
 $iq_id = (int) trim($_REQUEST['iq_id']);
 $iq_subject = trim($_POST['iq_subject']);
 $iq_question = trim($_POST['iq_question']);
+$iq_question = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $iq_question);
 $iq_answer = trim($_POST['iq_answer']);
 $hash = trim($_REQUEST['hash']);
 $get_editor_img_mode = $config['cf_editor'] ? false : true;
