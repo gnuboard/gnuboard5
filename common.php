@@ -373,20 +373,22 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
         if (strtolower($tmp_mb_id) != strtolower($config['cf_admin'])) {
             $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g5['member_table']} where mb_id = '{$tmp_mb_id}' ";
             $row = sql_fetch($sql);
-            $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
-            // 쿠키에 저장된 키와 같다면
-            $tmp_key = get_cookie('ck_auto');
-            if ($tmp_key === $key && $tmp_key) {
-                // 차단, 탈퇴가 아니고 메일인증이 사용이면서 인증을 받았다면
-                if ($row['mb_intercept_date'] == '' &&
-                    $row['mb_leave_date'] == '' &&
-                    (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) ) {
-                    // 세션에 회원아이디를 저장하여 로그인으로 간주
-                    set_session('ss_mb_id', $tmp_mb_id);
+            if($row['mb_password']){
+                $key = md5($_SERVER['SERVER_ADDR'] . $_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT'] . $row['mb_password']);
+                // 쿠키에 저장된 키와 같다면
+                $tmp_key = get_cookie('ck_auto');
+                if ($tmp_key === $key && $tmp_key) {
+                    // 차단, 탈퇴가 아니고 메일인증이 사용이면서 인증을 받았다면
+                    if ($row['mb_intercept_date'] == '' &&
+                        $row['mb_leave_date'] == '' &&
+                        (!$config['cf_use_email_certify'] || preg_match('/[1-9]/', $row['mb_email_certify'])) ) {
+                        // 세션에 회원아이디를 저장하여 로그인으로 간주
+                        set_session('ss_mb_id', $tmp_mb_id);
 
-                    // 페이지를 재실행
-                    echo "<script type='text/javascript'> window.location.reload(); </script>";
-                    exit;
+                        // 페이지를 재실행
+                        echo "<script type='text/javascript'> window.location.reload(); </script>";
+                        exit;
+                    }
                 }
             }
             // $row 배열변수 해제

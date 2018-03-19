@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_PATH.'/head.sub.php');
 
+$msg = isset($msg) ? strip_tags($msg) : '';
+
 $msg2 = str_replace("\\n", "<br>", $msg);
 
 if($error) {
