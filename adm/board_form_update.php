@@ -60,6 +60,8 @@ $f = @fopen($file, 'w');
 $src_char = array('&', '=');
 $dst_char = array('＆', '〓');
 $bo_category_list = str_replace($src_char, $dst_char, $bo_category_list);
+//https://github.com/gnuboard/gnuboard5/commit/f5f4925d4eb28ba1af728e1065fc2bdd9ce1da58 에 따른 조치
+$str_bo_category_list = isset($_POST['bo_category_list']) ? preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $_POST['bo_category_list']) : '';
 
 $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_subject          = '{$_POST['bo_subject']}',
@@ -82,7 +84,7 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_comment_point    = '{$_POST['bo_comment_point']}',
                 bo_download_point   = '{$_POST['bo_download_point']}',
                 bo_use_category     = '{$_POST['bo_use_category']}',
-                bo_category_list    = '{$_POST['bo_category_list']}',
+                bo_category_list    = '{$str_bo_category_list}',
                 bo_use_sideview     = '{$_POST['bo_use_sideview']}',
                 bo_use_file_content = '{$_POST['bo_use_file_content']}',
                 bo_use_secret       = '{$_POST['bo_use_secret']}',
