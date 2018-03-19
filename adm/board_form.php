@@ -233,7 +233,7 @@ $frm_submit .= '</div>';
         <tr>
             <th scope="row"><label for="bo_category_list">분류</label></th>
             <td>
-                <?php echo help('분류와 분류 사이는 | 로 구분하세요. (예: 질문|답변) 첫자로 #은 입력하지 마세요. (예: #질문|#답변 [X])') ?>
+                <?php echo help('분류와 분류 사이는 | 로 구분하세요. (예: 질문|답변) 첫자로 #은 입력하지 마세요. (예: #질문|#답변 [X])'."\n".'분류명에 일부 특수문자 ()/ 는 사용할수 없습니다.'); ?>
                 <input type="text" name="bo_category_list" value="<?php echo get_text($board['bo_category_list']) ?>" id="bo_category_list" class="frm_input" size="70">
                 <input type="checkbox" name="bo_use_category" value="1" id="bo_use_category" <?php echo $board['bo_use_category']?'checked':''; ?>>
                 <label for="bo_use_category">사용</label>
@@ -815,6 +815,7 @@ $frm_submit .= '</div>';
                 <label for="chk_all_mobile_skin">전체적용</label>
             </td>
         </tr>
+        <?php if ($is_admin === 'super'){   // 슈퍼관리자인 경우에만 수정 가능 ?>
         <tr>
             <th scope="row"><label for="bo_include_head">상단 파일 경로</label></th>
             <td>
@@ -887,6 +888,7 @@ $frm_submit .= '</div>';
                 <label for="chk_all_mobile_content_tail">전체적용</label>
             </td>
         </tr>
+        <?php }     //end if $is_admin === 'super' ?>
          <tr>
             <th scope="row"><label for="bo_insert_content">글쓰기 기본 내용</label></th>
             <td>

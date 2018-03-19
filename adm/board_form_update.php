@@ -18,29 +18,29 @@ $_POST['bo_include_head'] = preg_replace("#[\\\]+$#", "", substr($_POST['bo_incl
 $_POST['bo_include_tail'] = preg_replace("#[\\\]+$#", "", substr($_POST['bo_include_tail'], 0, 255));
 
 if ($file = $_POST['bo_include_head']) {
-    $purl = parse_url($file);
-    $file = $purl['path'];
-    if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
+    $file_ext = pathinfo($file, PATHINFO_EXTENSION);
+
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) ) {
         alert('상단 파일 경로의 확장자는 php, html 만 허용합니다.');
     }
     $_POST['bo_include_head'] = $file;
 }
 
 if ($file = $_POST['bo_include_tail']) {
-    $purl = parse_url($file);
-    $file = $purl['path'];
-    if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
+    $file_ext = pathinfo($file, PATHINFO_EXTENSION);
+
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) ) {
         alert('하단 파일 경로의 확장자는 php, html 만 허용합니다.');
     }
     $_POST['bo_include_tail'] = $file;
 }
 
 if(!is_include_path_check($_POST['bo_include_head'], 1)) {
-    alert('/data/file/ 또는 /data/editor/ 포함된 문자를 상단 파일 경로에 포함시킬수 없습니다.');
+    alert('상단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
 if(!is_include_path_check($_POST['bo_include_tail'], 1)) {
-    alert('/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.');
+    alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
 $board_path = G5_DATA_PATH.'/file/'.$bo_table;
@@ -60,6 +60,8 @@ $f = @fopen($file, 'w');
 $src_char = array('&', '=');
 $dst_char = array('＆', '〓');
 $bo_category_list = str_replace($src_char, $dst_char, $bo_category_list);
+//https://github.com/gnuboard/gnuboard5/commit/f5f4925d4eb28ba1af728e1065fc2bdd9ce1da58 에 따른 조치
+$str_bo_category_list = isset($_POST['bo_category_list']) ? preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $_POST['bo_category_list']) : '';
 
 $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_subject          = '{$_POST['bo_subject']}',
@@ -82,7 +84,7 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_comment_point    = '{$_POST['bo_comment_point']}',
                 bo_download_point   = '{$_POST['bo_download_point']}',
                 bo_use_category     = '{$_POST['bo_use_category']}',
-                bo_category_list    = '{$_POST['bo_category_list']}',
+                bo_category_list    = '{$str_bo_category_list}',
                 bo_use_sideview     = '{$_POST['bo_use_sideview']}',
                 bo_use_file_content = '{$_POST['bo_use_file_content']}',
                 bo_use_secret       = '{$_POST['bo_use_secret']}',
@@ -109,13 +111,20 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
                 bo_image_width      = '{$_POST['bo_image_width']}',
                 bo_skin             = '{$_POST['bo_skin']}',
                 bo_mobile_skin      = '{$_POST['bo_mobile_skin']}',
-                bo_include_head     = '{$_POST['bo_include_head']}',
+                ";
+
+// 최고 관리자인 경우에만 수정가능
+if ($is_admin === 'super'){
+$sql_common .= " bo_include_head     = '{$_POST['bo_include_head']}',
                 bo_include_tail     = '{$_POST['bo_include_tail']}',
                 bo_content_head     = '{$_POST['bo_content_head']}',
                 bo_content_tail     = '{$_POST['bo_content_tail']}',
                 bo_mobile_content_head     = '{$_POST['bo_mobile_content_head']}',
                 bo_mobile_content_tail     = '{$_POST['bo_mobile_content_tail']}',
-                bo_insert_content   = '{$_POST['bo_insert_content']}',
+                ";
+}
+
+$sql_common .= " bo_insert_content   = '{$_POST['bo_insert_content']}',
                 bo_gallery_cols     = '{$_POST['bo_gallery_cols']}',
                 bo_gallery_width    = '{$_POST['bo_gallery_width']}',
                 bo_gallery_height   = '{$_POST['bo_gallery_height']}',
@@ -299,12 +308,17 @@ if (is_checked('chk_grp_comment_min'))          $grp_fields .= " , bo_comment_mi
 if (is_checked('chk_grp_comment_max'))          $grp_fields .= " , bo_comment_max = '{$bo_comment_max}' ";
 if (is_checked('chk_grp_upload_count'))         $grp_fields .= " , bo_upload_count = '{$bo_upload_count}' ";
 if (is_checked('chk_grp_upload_size'))          $grp_fields .= " , bo_upload_size = '{$bo_upload_size}' ";
-if (is_checked('chk_grp_include_head'))         $grp_fields .= " , bo_include_head = '{$bo_include_head}' ";
-if (is_checked('chk_grp_include_tail'))         $grp_fields .= " , bo_include_tail = '{$bo_include_tail}' ";
-if (is_checked('chk_grp_content_head'))         $grp_fields .= " , bo_content_head = '{$bo_content_head}' ";
-if (is_checked('chk_grp_content_tail'))         $grp_fields .= " , bo_content_tail = '{$bo_content_tail}' ";
-if (is_checked('chk_grp_mobile_content_head'))         $grp_fields .= " , bo_mobile_content_head = '{$bo_mobile_content_head}' ";
-if (is_checked('chk_grp_mobile_content_tail'))         $grp_fields .= " , bo_mobile_content_tail = '{$bo_mobile_content_tail}' ";
+
+//최고관리자만 수정가능
+if ($is_admin === 'super'){
+    if (is_checked('chk_grp_include_head'))         $grp_fields .= " , bo_include_head = '{$bo_include_head}' ";
+    if (is_checked('chk_grp_include_tail'))         $grp_fields .= " , bo_include_tail = '{$bo_include_tail}' ";
+    if (is_checked('chk_grp_content_head'))         $grp_fields .= " , bo_content_head = '{$bo_content_head}' ";
+    if (is_checked('chk_grp_content_tail'))         $grp_fields .= " , bo_content_tail = '{$bo_content_tail}' ";
+    if (is_checked('chk_grp_mobile_content_head'))         $grp_fields .= " , bo_mobile_content_head = '{$bo_mobile_content_head}' ";
+    if (is_checked('chk_grp_mobile_content_tail'))         $grp_fields .= " , bo_mobile_content_tail = '{$bo_mobile_content_tail}' ";
+}
+
 if (is_checked('chk_grp_insert_content'))       $grp_fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_grp_use_search'))           $grp_fields .= " , bo_use_search = '{$bo_use_search}' ";
 if (is_checked('chk_grp_order'))                $grp_fields .= " , bo_order = '{$bo_order}' ";
@@ -382,12 +396,17 @@ if (is_checked('chk_all_comment_min'))          $all_fields .= " , bo_comment_mi
 if (is_checked('chk_all_comment_max'))          $all_fields .= " , bo_comment_max = '{$bo_comment_max}' ";
 if (is_checked('chk_all_upload_count'))         $all_fields .= " , bo_upload_count = '{$bo_upload_count}' ";
 if (is_checked('chk_all_upload_size'))          $all_fields .= " , bo_upload_size = '{$bo_upload_size}' ";
-if (is_checked('chk_all_include_head'))         $all_fields .= " , bo_include_head = '{$bo_include_head}' ";
-if (is_checked('chk_all_include_tail'))         $all_fields .= " , bo_include_tail = '{$bo_include_tail}' ";
-if (is_checked('chk_all_content_head'))         $all_fields .= " , bo_content_head = '{$bo_content_head}' ";
-if (is_checked('chk_all_content_tail'))         $all_fields .= " , bo_content_tail = '{$bo_content_tail}' ";
-if (is_checked('chk_all_mobile_content_head'))         $all_fields .= " , bo_mobile_content_head = '{$bo_mobile_content_head}' ";
-if (is_checked('chk_all_mobile_content_tail'))         $all_fields .= " , bo_mobile_content_tail = '{$bo_mobile_content_tail}' ";
+
+//최고관리자만 수정가능
+if ($is_admin === 'super'){
+    if (is_checked('chk_all_include_head'))         $all_fields .= " , bo_include_head = '{$bo_include_head}' ";
+    if (is_checked('chk_all_include_tail'))         $all_fields .= " , bo_include_tail = '{$bo_include_tail}' ";
+    if (is_checked('chk_all_content_head'))         $all_fields .= " , bo_content_head = '{$bo_content_head}' ";
+    if (is_checked('chk_all_content_tail'))         $all_fields .= " , bo_content_tail = '{$bo_content_tail}' ";
+    if (is_checked('chk_all_mobile_content_head'))         $all_fields .= " , bo_mobile_content_head = '{$bo_mobile_content_head}' ";
+    if (is_checked('chk_all_mobile_content_tail'))         $all_fields .= " , bo_mobile_content_tail = '{$bo_mobile_content_tail}' ";
+}
+
 if (is_checked('chk_all_insert_content'))       $all_fields .= " , bo_insert_content = '{$bo_insert_content}' ";
 if (is_checked('chk_all_use_search'))           $all_fields .= " , bo_use_search = '{$bo_use_search}' ";
 if (is_checked('chk_all_order'))                $all_fields .= " , bo_order = '{$bo_order}' ";

@@ -39,8 +39,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $list[$i]['content'] = $list[$i]['content1']= '비밀글 입니다.';
     if (!strstr($row['wr_option'], 'secret') ||
         $is_admin ||
-        ($write['mb_id']==$member['mb_id'] && $member['mb_id']) ||
-        ($row['mb_id']==$member['mb_id'] && $member['mb_id'])) {
+        ($write['mb_id']===$member['mb_id'] && $member['mb_id']) ||
+        ($row['mb_id']===$member['mb_id'] && $member['mb_id'])) {
         $list[$i]['content1'] = $row['wr_content'];
         $list[$i]['content'] = conv_content($row['wr_content'], 0, 'wr_content');
         $list[$i]['content'] = search_font($stx, $list[$i]['content']);
@@ -71,7 +71,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
         if ($member['mb_id'])
         {
-            if ($row['mb_id'] == $member['mb_id'] || $is_admin)
+            if ($row['mb_id'] === $member['mb_id'] || $is_admin)
             {
                 set_session('ss_delete_comment_'.$row['wr_id'].'_token', $token = uniqid(time()));
                 $list[$i]['del_link']  = './delete_comment.php?bo_table='.$bo_table.'&amp;comment_id='.$row['wr_id'].'&amp;token='.$token.'&amp;page='.$page.$qstr;

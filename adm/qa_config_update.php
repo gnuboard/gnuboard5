@@ -11,17 +11,17 @@ check_admin_token();
 $error_msg = '';
 
 if( $qa_include_head ){
-    $purl = parse_url($qa_include_head);
-    $file = $purl['path'];
-    if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
+    $file_ext = pathinfo($qa_include_head, PATHINFO_EXTENSION);
+
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) ) {
         alert('상단 파일 경로의 확장자는 php, html 만 허용합니다.');
     }
 }
 
 if( $qa_include_tail ){
-    $purl = parse_url($qa_include_tail);
-    $file = $purl['path'];
-    if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
+    $file_ext = pathinfo($qa_include_tail, PATHINFO_EXTENSION);
+
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) ) {
         alert('하단 파일 경로의 확장자는 php, html 만 허용합니다.');
     }
 }
