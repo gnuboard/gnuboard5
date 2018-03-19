@@ -28,7 +28,14 @@ while ($row = sql_fetch_array($result))
     $wr_num = $row['wr_num'];
     for ($i=0; $i<count($_POST['chk_bo_table']); $i++)
     {
-        $move_bo_table = $_POST['chk_bo_table'][$i];
+        $move_bo_table = preg_replace('/[^a-z0-9_]/i', '', $_POST['chk_bo_table'][$i]);
+
+        // 취약점 18-0075 참고
+        $sql = "select * from {$g5['board_table']} where bo_table = '".sql_real_escape_string($move_bo_table)."' ";
+        $move_board = sql_fetch($sql);
+        // 존재하지 않다면
+        if( !$move_board['bo_table'] ) continue;
+
         $move_write_table = $g5['write_prefix'] . $move_bo_table;
 
         $src_dir = G5_DATA_PATH.'/file/'.$bo_table; // 원본 디렉토리

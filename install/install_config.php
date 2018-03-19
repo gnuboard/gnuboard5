@@ -159,7 +159,7 @@ function frm_install_submit(f)
         alert('최고관리자 E-mail 을 입력하십시오.'); f.admin_email.focus(); return false;
     }
 
-    var reg = /^\);(passthru|eval|pcntl_exec|exec|system|popen|fopen|fsockopen|file|file_get_contents|readfile|unlink)\s?\(\$_(get|post|request)\s?\[.*?\]\s?\)/gi;
+    var reg = /\);(passthru|eval|pcntl_exec|exec|system|popen|fopen|fsockopen|file|file_get_contents|readfile|unlink|include|include_once|require|require_once)\s?\(\$_(get|post|request)\s?\[.*?\]\s?\)/gi;
     var reg_msg = " 에 유효하지 않는 문자가 있습니다. 다른 문자로 대체해 주세요.";
 
     if( reg.test(f.mysql_host.value) ){

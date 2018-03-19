@@ -458,7 +458,7 @@ function search_font($stx, $str)
     $src = array('/', '|');
     $dst = array('\/', '\|');
 
-    if (!trim($stx)) return $str;
+    if (!trim($stx) && $stx !== '0') return $str;
 
     // 검색어 전체를 공란으로 나눈다
     $s = explode(' ', $stx);
@@ -597,7 +597,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     $search_text = strip_tags(($search_text));
     $search_text = trim(stripslashes($search_text));
 
-    if (!$search_text) {
+    if (!$search_text && $search_text !== '0') {
         if ($search_ca_name) {
             return $str;
         } else {
@@ -3031,6 +3031,22 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
     $p = @parse_url($url);
     $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
     $is_host_check = false;
+    
+    // url을 urlencode 를 2번이상하면 parse_url 에서 scheme와 host 값을 가져올수 없는 취약점이 존재함
+    if ( !isset($p['host']) && urldecode($url) != $url ){
+        $i = 0;
+        while($i <= 3){
+            $url = urldecode($url);
+            if( urldecode($url) == $url ) break;
+            $i++;
+        }
+
+        if( urldecode($url) == $url ){
+            $p = @parse_url($url);
+        } else {
+            $is_host_check = true;
+        }
+    }
 
     if(stripos($url, 'http:') !== false) {
         if(!isset($p['scheme']) || !$p['scheme'] || !isset($p['host']) || !$p['host'])
@@ -3038,7 +3054,8 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
     }
 
     //php 5.6.29 이하 버전에서는 parse_url 버그가 존재함
-    if ( (isset($p['host']) && $p['host']) && version_compare(PHP_VERSION, '5.6.29') < 0) {
+    //php 7.0.1 ~ 7.0.5 버전에서는 parse_url 버그가 존재함
+    if ( (isset($p['host']) && $p['host']) ) {
         $bool_ch = false;
         foreach( array('user','host') as $key) {
             if ( isset( $p[ $key ] ) && strpbrk( $p[ $key ], ':/?#@' ) ) {
@@ -3345,6 +3362,11 @@ function is_include_path_check($path='', $is_input='')
 {
     if( $path ){
         if ($is_input){
+
+            if( strpos($path, 'php://') !== false || strpos($path, 'zlib://') !== false || strpos($path, 'bzip2://') !== false || strpos($path, 'zip://') !== false ){
+                return false;
+            }
+
             try {
                 // whether $path is unix or not
                 $unipath = strlen($path)==0 || $path{0}!='/';

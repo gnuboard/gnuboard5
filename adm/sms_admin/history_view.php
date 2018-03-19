@@ -5,6 +5,9 @@ include_once("./_common.php");
 $spage_size = 20;
 $colspan = 10;
 
+$st = isset($st) ? strip_tags($st) : '';
+$ssv = isset($ssv) ? strip_tags($ssv) : '';
+
 auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = "문자전송 상세내역";
@@ -64,18 +67,18 @@ function all_send()
 </script>
 
 <form name="search_form" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']?>" class="local_sch01 local_sch">
-<input type="hidden" name="wr_no" value="<?php echo $wr_no?>">
-<input type="hidden" name="wr_renum" value="<?php echo $wr_renum?>">
-<input type="hidden" name="page" value="<?php echo $page?>">
-<input type="hidden" name="st" value="<?php echo $st?>">
-<input type="hidden" name="sv" value="<?php echo $sv?>">
+<input type="hidden" name="wr_no" value="<?php echo get_sanitize_input($wr_no); ?>">
+<input type="hidden" name="wr_renum" value="<?php echo get_sanitize_input($wr_renum); ?>">
+<input type="hidden" name="page" value="<?php echo get_sanitize_input($page); ?>">
+<input type="hidden" name="st" value="<?php echo get_sanitize_input($st); ?>">
+<input type="hidden" name="sv" value="<?php echo get_sanitize_input($sv); ?>">
 <label for="sst" class="sound_only">검색대상</label>
 <select name="sst" id="sst">
     <option value="hs_name" <?php echo get_selected('hs_name', $sst); ?>>이름</option>
     <option value="hs_hp" <?php echo get_selected('hs_hp', $sst); ?>>휴대폰번호</option>
 </select>
 <label for="ssv" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-<input type="text" name="ssv" value="<?php echo $ssv?>" id="ssv" class="frm_input">
+<input type="text" name="ssv" value="<?php echo get_sanitize_input($ssv); ?>" id="ssv" class="frm_input">
 <input type="submit" value="검색" class="btn_submit">
 </form>
 
