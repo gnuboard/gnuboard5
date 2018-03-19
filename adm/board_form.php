@@ -815,6 +815,7 @@ $frm_submit .= '</div>';
                 <label for="chk_all_mobile_skin">전체적용</label>
             </td>
         </tr>
+        <?php if ($is_admin === 'super'){   // 슈퍼관리자인 경우에만 수정 가능 ?>
         <tr>
             <th scope="row"><label for="bo_include_head">상단 파일 경로</label></th>
             <td>
@@ -887,6 +888,7 @@ $frm_submit .= '</div>';
                 <label for="chk_all_mobile_content_tail">전체적용</label>
             </td>
         </tr>
+        <?php }     //end if $is_admin === 'super' ?>
          <tr>
             <th scope="row"><label for="bo_insert_content">글쓰기 기본 내용</label></th>
             <td>
