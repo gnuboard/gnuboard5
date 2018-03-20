@@ -20,7 +20,7 @@ else
 
 $sql = " select count(*) as cnt from {$g5['memo_table']} where me_{$kind}_mb_id = '{$member['mb_id']}' ";
 $row = sql_fetch($sql);
-$total_count = number_format($row['cnt']);
+$total_count = $row['cnt'];
 
 $total_page  = ceil($total_count / $config['cf_page_rows']);  // 전체 페이지 계산
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
