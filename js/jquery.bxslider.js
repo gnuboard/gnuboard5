@@ -112,7 +112,8 @@
 		var windowWidth = $(window).width();
 		var windowHeight = $(window).height();
 
-
+        // Return if slider is already initialized
+        if ($(el).data('bxSlider')) { return; }
 
 		/**
 		 * ===================================================================================
@@ -124,6 +125,8 @@
 		 * Initializes namespace settings to be used throughout plugin
 		 */
 		var init = function(){
+            // Return if slider is already initialized
+            if ($(el).data('bxSlider')) { return; }
 			// merge user-supplied options with the defaults
 			slider.settings = $.extend({}, defaults, options);
 			// parse slideWidth setting
@@ -1344,6 +1347,8 @@
 			$('.bx-caption', this).remove();
 			if(slider.controls.autoEl) slider.controls.autoEl.remove();
 			el.clearTimer();
+            //remove self reference in data
+            $(this).removeData('bxSlider');
 			if(slider.settings.responsive) $(window).unbind('resize', resizeWindow);
 		}
 
@@ -1354,9 +1359,13 @@
 			if (settings != undefined) options = settings;
 			el.destroySlider();
 			init();
+            //store reference to self in order to access public functions later
+            $(el).data('bxSlider', this);
 		}
 
 		init();
+
+        $(el).data('bxSlider', this);
 
 		// returns the current jQuery object
 		return this;
