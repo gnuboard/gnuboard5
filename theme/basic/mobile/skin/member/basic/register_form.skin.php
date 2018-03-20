@@ -183,7 +183,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <?php } ?>
 
         <?php if ($member['mb_level'] >= $config['cf_icon_level'] && $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height']) {  ?>
-        <li>
+        <li class="reg_mb_img_file">
             <label for="reg_mb_img" class="frm_label">회원이미지</label>
             <input type="file" name="mb_img" id="reg_mb_img" >
             <span class="frm_info">
