@@ -425,7 +425,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .pg_page, .pg_current {display:inline-block;vertical-align:middle;background:#f3f3f3;border:1px solid #bbbcc3}
 .pg a:focus, .pg a:hover {text-decoration:none}
 .pg_page {color:#555;font-size:1.083em;height:30px;line-height:28px;padding:0 5px;min-width:30px;text-decoration:none;border-radius:3px;}
-.pg_page:hover{background:#ddd}
+.pg_page:hover{background-color:#ddd}
 .pg_start {text-indent:-999px;overflow:hidden;background:url('../img/btn_first.gif') no-repeat 50% 50% #fff;padding:0;border:1px solid #bbb;}
 .pg_prev {text-indent:-999px;overflow:hidden;background:url('../img/btn_prev.gif') no-repeat 50% 50% #fff;padding:0;border:1px solid #bbb}
 .pg_end {text-indent:-999px;overflow:hidden;background:url('../img/btn_end.gif') no-repeat 50% 50% #fff;padding:0;border:1px solid #bbb}
