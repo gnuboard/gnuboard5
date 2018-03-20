@@ -135,7 +135,7 @@ if ($w == '' || $w == 'u') {
     }
 
     //회원 자신이 쓴글을 수정할 경우 공지가 풀리는 경우가 있음 
-    if($w =='u' && $board['bo_notice'] && in_array($wr['wr_id'], $notice_array)){
+    if($w =='u' && !$is_admin && $board['bo_notice'] && in_array($wr['wr_id'], $notice_array)){
         $notice = 1;
     }
 
