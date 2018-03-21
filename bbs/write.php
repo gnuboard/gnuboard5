@@ -56,7 +56,7 @@ if ($w == '') {
 } else if ($w == 'u') {
     // 김선용 1.00 : 글쓰기 권한과 수정은 별도로 처리되어야 함
     //if ($member['mb_level'] < $board['bo_write_level']) {
-    if($member['mb_id'] && $write['mb_id'] == $member['mb_id']) {
+    if($member['mb_id'] && $write['mb_id'] === $member['mb_id']) {
         ;
     } else if ($member['mb_level'] < $board['bo_write_level']) {
         if ($member['mb_id']) {
@@ -116,7 +116,7 @@ if ($w == '') {
     if (strstr($write['wr_option'], 'secret')) {
         if ($write['mb_id']) {
             // 회원의 경우는 해당 글쓴 회원 및 관리자
-            if (!($write['mb_id'] == $member['mb_id'] || $is_admin))
+            if (!($write['mb_id'] === $member['mb_id'] || $is_admin))
                 alert('비밀글에는 자신 또는 관리자만 답변이 가능합니다.');
         } else {
             // 비회원의 경우는 비밀글에 답변이 불가함
@@ -168,7 +168,7 @@ if (!empty($group['gr_use_access'])) {
         alert("접근 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.", 'login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
     }
 
-    if ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id'] || $board['bo_admin'] == $member['mb_id']) {
+    if ($is_admin == 'super' || $group['gr_admin'] === $member['mb_id'] || $board['bo_admin'] === $member['mb_id']) {
         ; // 통과
     } else {
         // 그룹접근
@@ -251,7 +251,7 @@ $is_name     = false;
 $is_password = false;
 $is_email    = false;
 $is_homepage = false;
-if ($is_guest || ($is_admin && $w == 'u' && $member['mb_id'] != $write['mb_id'])) {
+if ($is_guest || ($is_admin && $w == 'u' && $member['mb_id'] !== $write['mb_id'])) {
     $is_name = true;
     $is_password = true;
     $is_email = true;
@@ -308,7 +308,7 @@ if ($w == '') {
     $password_required = '';
 
     if (!$is_admin) {
-        if (!($is_member && $member['mb_id'] == $write['mb_id'])) {
+        if (!($is_member && $member['mb_id'] === $write['mb_id'])) {
             if (!check_password($wr_password, $write['wr_password'])) {
                 alert('비밀번호가 틀립니다.');
             }

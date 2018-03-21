@@ -20,16 +20,16 @@ if ($is_admin == 'super') // 최고관리자 통과
     ;
 else if ($is_admin == 'group') { // 그룹관리자
     $mb = get_member($write['mb_id']);
-    if ($member['mb_id'] == $group['gr_admin']) { // 자신이 관리하는 그룹인가?
+    if ($member['mb_id'] === $group['gr_admin']) { // 자신이 관리하는 그룹인가?
         if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
             ;
         else
             alert('그룹관리자의 권한보다 높은 회원의 코멘트이므로 삭제할 수 없습니다.');
     } else
         alert('자신이 관리하는 그룹의 게시판이 아니므로 코멘트를 삭제할 수 없습니다.');
-} else if ($is_admin == 'board') { // 게시판관리자이면
+} else if ($is_admin === 'board') { // 게시판관리자이면
     $mb = get_member($write['mb_id']);
-    if ($member['mb_id'] == $board['bo_admin']) { // 자신이 관리하는 게시판인가?
+    if ($member['mb_id'] === $board['bo_admin']) { // 자신이 관리하는 게시판인가?
         if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
             ;
         else
@@ -37,7 +37,7 @@ else if ($is_admin == 'group') { // 그룹관리자
     } else
         alert('자신이 관리하는 게시판이 아니므로 코멘트를 삭제할 수 없습니다.');
 } else if ($member['mb_id']) {
-    if ($member['mb_id'] != $write['mb_id'])
+    if ($member['mb_id'] !== $write['mb_id'])
         alert('자신의 글이 아니므로 삭제할 수 없습니다.');
 } else {
     if (!check_password($wr_password, $write['wr_password']))

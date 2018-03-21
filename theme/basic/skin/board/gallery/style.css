@@ -276,6 +276,7 @@ box-shadow: inset 0 2px 5px rgb(33, 135, 202);}
 
 #bo_v_img {width:100%;overflow:hidden;zoom:1}
 #bo_v_img:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_img a.view_image{display:block}
 #bo_v_img img {margin-bottom:20px;max-width:100%;height:auto}
 
 #bo_v_con {margin:10px 0 30px;width:100%;line-height:1.7em;min-height:200px;word-break:break-all;overflow:hidden}
