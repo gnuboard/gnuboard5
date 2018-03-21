@@ -96,7 +96,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
             fwrite($handle, $cache_content);
             fclose($handle);
 
-            //@chmod($cache_file, 0640);
+            @chmod($cache_file, 0640);
         }
     }
 
