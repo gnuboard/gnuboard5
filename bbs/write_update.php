@@ -129,16 +129,21 @@ for ($i=1; $i<=10; $i++) {
 
 if ($w == '' || $w == 'u') {
 
+    // 외부에서 글을 등록할 수 있는 버그가 존재하므로 공지는 관리자만 등록이 가능해야 함
+    if (!$is_admin && $notice) {
+        alert('관리자만 공지할 수 있습니다.');
+    }
+
+    //회원 자신이 쓴글을 수정할 경우 공지가 풀리는 경우가 있음 
+    if($w =='u' && !$is_admin && $board['bo_notice'] && in_array($wr['wr_id'], $notice_array)){
+        $notice = 1;
+    }
+
     // 김선용 1.00 : 글쓰기 권한과 수정은 별도로 처리되어야 함
-    if($w =='u' && $member['mb_id'] && $wr['mb_id'] == $member['mb_id']) {
+    if($w =='u' && $member['mb_id'] && $wr['mb_id'] === $member['mb_id']) {
         ;
     } else if ($member['mb_level'] < $board['bo_write_level']) {
         alert('글을 쓸 권한이 없습니다.');
-    }
-
-	// 외부에서 글을 등록할 수 있는 버그가 존재하므로 공지는 관리자만 등록이 가능해야 함
-	if (!$is_admin && $notice) {
-		alert('관리자만 공지할 수 있습니다.');
     }
 
 } else if ($w == 'r') {
@@ -188,7 +193,7 @@ if ($w == '' || $w == 'u') {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-$is_use_captcha = ((!empty($board['bo_use_captcha']) || $is_guest) && !$is_admin) ? 1 : 0;
+$is_use_captcha = ((($board['bo_use_captcha'] && $w !== 'u') || $is_guest) && !$is_admin) ? 1 : 0;
 
 if ($is_use_captcha && !chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
@@ -328,7 +333,7 @@ if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
         // 자신의 글이라면
-        if ($member['mb_id'] == $wr['mb_id']) {
+        if ($member['mb_id'] === $wr['mb_id']) {
             $mb_id = $member['mb_id'];
             $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
             $wr_email = addslashes($member['mb_email']);

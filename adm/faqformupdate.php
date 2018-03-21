@@ -5,7 +5,7 @@ include_once('./_common.php');
 if ($w == "u" || $w == "d")
     check_demo();
 
-if ($W == 'd')
+if ($w == 'd')
     auth_check($auth[$sub_menu], "d");
 else
     auth_check($auth[$sub_menu], "w");

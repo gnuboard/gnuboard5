@@ -32,7 +32,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
 
     $cache_fwrite = false;
     if(G5_USE_CACHE) {
-        $cache_file = G5_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}.php";
+        $cache_file = G5_DATA_PATH."/cache/latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}-serial.php";
 
         if(!file_exists($cache_file)) {
             $cache_fwrite = true;
@@ -44,9 +44,20 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
                     $cache_fwrite = true;
                 }
             }
+            
+            if(!$cache_fwrite) {
+                try{
+                    $file_contents = file_get_contents($cache_file);
+                    $file_ex = explode("\n\n", $file_contents);
+                    $caches = unserialize(base64_decode($file_ex[1]));
 
-            if(!$cache_fwrite)
-                include($cache_file);
+                    $list = (is_array($caches) && isset($caches['list'])) ? $caches['list'] : array();
+                    $bo_subject = (is_array($caches) && isset($caches['bo_subject'])) ? $caches['bo_subject'] : '';
+                } catch(Exception $e){
+                    $cache_fwrite = true;
+                    $list = array();
+                }
+            }
         }
     }
 
@@ -61,14 +72,31 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
         $sql = " select * from {$tmp_write_table} where wr_is_comment = 0 order by wr_num limit 0, {$rows} ";
         $result = sql_query($sql);
         for ($i=0; $row = sql_fetch_array($result); $i++) {
+            try {
+                unset($row['wr_password']);     //패스워드 저장 안함( 아예 삭제 )
+            } catch (Exception $e) {
+            }
+            $row['wr_email'] = '';              //이메일 저장 안함
+            if (strstr($row['wr_option'], 'secret')){           // 비밀글일 경우 내용, 링크, 파일 저장 안함
+                $row['wr_content'] = $row['wr_link1'] = $row['wr_link2'] = '';
+                $row['file'] = array('count'=>0);
+            }
             $list[$i] = get_list($row, $board, $latest_skin_url, $subject_len);
         }
 
         if($cache_fwrite) {
             $handle = fopen($cache_file, 'w');
-            $cache_content = "<?php\nif (!defined('_GNUBOARD_')) exit;\n\$bo_subject='".sql_escape_string($bo_subject)."';\n\$list=".var_export($list, true)."?>";
+            $caches = array(
+                'list' => $list,
+                'bo_subject' => sql_escape_string($bo_subject),
+                );
+            $cache_content = "<?php if (!defined('_GNUBOARD_')) exit; ?>\n\n";
+            $cache_content .= base64_encode(serialize($caches));  //serialize
+
             fwrite($handle, $cache_content);
             fclose($handle);
+
+            @chmod($cache_file, 0640);
         }
     }
 

@@ -33,7 +33,11 @@ if ($sop != 'and' && $sop != 'or')
 
 // 분류 선택 또는 검색어가 있다면
 $stx = trim($stx);
-if ($sca || $stx) {
+//검색인지 아닌지 구분하는 변수 초기화
+$is_search_bbs = false;
+
+if ($sca || $stx || $stx === '0') {     //검색이면
+    $is_search_bbs = true;      //검색구분변수 true 지정
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
 
     // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
@@ -80,7 +84,7 @@ $notice_count = 0;
 $notice_array = array();
 
 // 공지 처리
-if (!$sca && !$stx) {
+if (!$is_search_bbs) {
     $arr_notice = explode(',', trim($board['bo_notice']));
     $from_notice_idx = ($page - 1) * $page_rows;
     if($from_notice_idx < 0)
@@ -162,7 +166,7 @@ if ($sst) {
     $sql_order = " order by {$sst} {$sod} ";
 }
 
-if ($sca || $stx) {
+if ($is_search_bbs) {
     $sql = " select distinct wr_parent from {$write_table} where {$sql_search} {$sql_order} limit {$from_record}, $page_rows ";
 } else {
     $sql = " select * from {$write_table} where wr_is_comment = 0 ";
@@ -180,7 +184,7 @@ if($page_rows > 0) {
     while ($row = sql_fetch_array($result))
     {
         // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
-        if ($sca || $stx)
+        if ($is_search_bbs)
             $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
 
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
@@ -201,7 +205,7 @@ $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['c
 $list_href = '';
 $prev_part_href = '';
 $next_part_href = '';
-if ($sca || $stx) {
+if ($is_search_bbs) {
     $list_href = './board.php?bo_table='.$bo_table;
 
     $patterns = array('#&amp;page=[0-9]*#', '#&amp;spt=[0-9\-]*#');

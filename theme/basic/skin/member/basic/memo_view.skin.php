@@ -54,7 +54,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <a href="<?php echo $next_link ?>" class="btn btn_b01">다음쪽지 <i class="fa fa-angle-right" aria-hidden="true"></i></a>
             <?php }  ?>
 
-            <a href="./memo.php?kind=<?php echo $kind ?>" class="btn btn_b01"><i class="fa fa-list" aria-hidden="true"></i> 목록</a>
+            <a href="<?php echo $list_link ?>" class="btn btn_b01"><i class="fa fa-list" aria-hidden="true"></i> 목록</a>
             <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
             <?php if ($kind == 'recv') {  ?><a href="./memo_form.php?me_recv_mb_id=<?php echo $mb['mb_id'] ?>&amp;me_id=<?php echo $memo['me_id'] ?>" class="btn btn_b02">답장</a><?php }  ?>
         </div>

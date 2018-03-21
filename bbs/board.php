@@ -16,6 +16,8 @@ if (!$bo_table) {
     alert($msg);
 }
 
+$g5['board_title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
+
 // wr_id 값이 있으면 글읽기
 if (isset($wr_id) && $wr_id) {
     // 글이 없을 경우 해당 게시판 목록으로 이동
@@ -77,7 +79,7 @@ if (isset($wr_id) && $wr_id) {
     }
 
     // 자신의 글이거나 관리자라면 통과
-    if (($write['mb_id'] && $write['mb_id'] == $member['mb_id']) || $is_admin) {
+    if (($write['mb_id'] && $write['mb_id'] === $member['mb_id']) || $is_admin) {
         ;
     } else {
         // 비밀글이라면
@@ -93,7 +95,7 @@ if (isset($wr_id) && $wr_id) {
                             and wr_reply = ''
                             and wr_is_comment = 0 ";
                 $row = sql_fetch($sql);
-                if ($row['mb_id'] == $member['mb_id'])
+                if ($row['mb_id'] === $member['mb_id'])
                     $is_owner = true;
             }
 
@@ -120,7 +122,7 @@ if (isset($wr_id) && $wr_id) {
         sql_query(" update {$write_table} set wr_hit = wr_hit + 1 where wr_id = '{$wr_id}' ");
 
         // 자신의 글이면 통과
-        if ($write['mb_id'] && $write['mb_id'] == $member['mb_id']) {
+        if ($write['mb_id'] && $write['mb_id'] === $member['mb_id']) {
             ;
         } else if ($is_guest && $board['bo_read_level'] == 1 && $write['wr_ip'] == $_SERVER['REMOTE_ADDR']) {
             // 비회원이면서 읽기레벨이 1이고 등록된 아이피가 같다면 자신의 글이므로 통과
@@ -136,7 +138,7 @@ if (isset($wr_id) && $wr_id) {
         set_session($ss_name, TRUE);
     }
 
-    $g5['title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']);
+    $g5['title'] = strip_tags(conv_subject($write['wr_subject'], 255))." > ".$g5['board_title'];
 } else {
     if ($member['mb_level'] < $board['bo_list_level']) {
         if ($member['mb_id'])
@@ -171,7 +173,7 @@ if (isset($wr_id) && $wr_id) {
 
     if (!isset($page) || (isset($page) && $page == 0)) $page = 1;
 
-    $g5['title'] = ((G5_IS_MOBILE && $board['bo_mobile_subject']) ? $board['bo_mobile_subject'] : $board['bo_subject']) ;
+    $g5['title'] = $g5['board_title'].' '.$page.' 페이지';
 }
 
 include_once(G5_PATH.'/head.sub.php');
@@ -219,7 +221,7 @@ if ($board['bo_use_nogood'])
 
 $admin_href = "";
 // 최고관리자 또는 그룹관리자라면
-if ($member['mb_id'] && ($is_admin == 'super' || $group['gr_admin'] == $member['mb_id']))
+if ($member['mb_id'] && ($is_admin === 'super' || $group['gr_admin'] === $member['mb_id']))
     $admin_href = G5_ADMIN_URL.'/board_form.php?w=u&amp;bo_table='.$bo_table;
 
 include_once(G5_BBS_PATH.'/board_head.php');

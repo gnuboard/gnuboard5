@@ -13,7 +13,7 @@
 #ol_after_hd strong {display:block;color:#fff;}
 #ol_after_hd .btn_admin {display:block;padding:0 !important;text-align:center}
 #ol_after_hd .profile_img{display:inline-block;position:relative;margin:0 0 10px}
-#ol_after_hd  .profile_img img{border-radius:50%;}
+#ol_after_hd  .profile_img img{border-radius:50%;width:60px;height:60px}
 #ol_after_info{position:absolute;bottom:-5px;right:-5px;background:url(./img/icon_edit.png) no-repeat 50% 50% #292929;background-size:15px;width:30px;height:30px;text-indent:-9999px;overflow:hidden;border-radius:50%}
 
 #ol_after_private {margin:0;padding:0;list-style:none}

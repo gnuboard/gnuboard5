@@ -8,6 +8,8 @@ if (!count($_POST['chk'])) {
     alert($_POST['act_button']." 하실 항목을 하나 이상 체크하세요.");
 }
 
+check_admin_token();
+
 if ($_POST['act_button'] == "선택수정") {
 
     auth_check($auth[$sub_menu], 'w');
@@ -19,7 +21,7 @@ if ($_POST['act_button'] == "선택수정") {
 
         if ($is_admin != 'super') {
             $sql = " select count(*) as cnt from {$g5['board_table']} a, {$g5['group_table']} b
-                      where a.gr_id = '{$_POST['gr_id'][$k]}'
+                      where a.gr_id = '".sql_real_escape_string($_POST['gr_id'][$k])."'
                         and a.gr_id = b.gr_id
                         and b.gr_admin = '{$member['mb_id']}' ";
             $row = sql_fetch($sql);
@@ -28,19 +30,20 @@ if ($_POST['act_button'] == "선택수정") {
         }
 
         $sql = " update {$g5['board_table']}
-                    set gr_id               = '{$_POST['gr_id'][$k]}',
-                        bo_subject          = '{$_POST['bo_subject'][$k]}',
-                        bo_device           = '{$_POST['bo_device'][$k]}',
-                        bo_skin             = '{$_POST['bo_skin'][$k]}',
-                        bo_mobile_skin      = '{$_POST['bo_mobile_skin'][$k]}',
-                        bo_read_point       = '{$_POST['bo_read_point'][$k]}',
-                        bo_write_point      = '{$_POST['bo_write_point'][$k]}',
-                        bo_comment_point    = '{$_POST['bo_comment_point'][$k]}',
-                        bo_download_point   = '{$_POST['bo_download_point'][$k]}',
-                        bo_use_search       = '{$_POST['bo_use_search'][$k]}',
-                        bo_use_sns          = '{$_POST['bo_use_sns'][$k]}',
-                        bo_order            = '{$_POST['bo_order'][$k]}'
-                  where bo_table            = '{$_POST['board_table'][$k]}' ";
+                    set gr_id               = '".sql_real_escape_string($_POST['gr_id'][$k])."',
+                        bo_subject          = '".sql_real_escape_string($_POST['bo_subject'][$k])."',
+                        bo_device           = '".sql_real_escape_string($_POST['bo_device'][$k])."',
+                        bo_skin             = '".sql_real_escape_string($_POST['bo_skin'][$k])."',
+                        bo_mobile_skin      = '".sql_real_escape_string($_POST['bo_mobile_skin'][$k])."',
+                        bo_read_point       = '".sql_real_escape_string($_POST['bo_read_point'][$k])."',
+                        bo_write_point      = '".sql_real_escape_string($_POST['bo_write_point'][$k])."',
+                        bo_comment_point    = '".sql_real_escape_string($_POST['bo_comment_point'][$k])."',
+                        bo_download_point   = '".sql_real_escape_string($_POST['bo_download_point'][$k])."',
+                        bo_use_search       = '".sql_real_escape_string($_POST['bo_use_search'][$k])."',
+                        bo_use_sns          = '".sql_real_escape_string($_POST['bo_use_sns'][$k])."',
+                        bo_order            = '".sql_real_escape_string($_POST['bo_order'][$k])."'
+                  where bo_table            = '".sql_real_escape_string($_POST['board_table'][$k])."' ";
+
         sql_query($sql);
     }
 
@@ -50,8 +53,6 @@ if ($_POST['act_button'] == "선택수정") {
         alert('게시판 삭제는 최고관리자만 가능합니다.');
 
     auth_check($auth[$sub_menu], 'd');
-
-    check_admin_token();
 
     // _BOARD_DELETE_ 상수를 선언해야 board_delete.inc.php 가 정상 작동함
     define('_BOARD_DELETE_', true);

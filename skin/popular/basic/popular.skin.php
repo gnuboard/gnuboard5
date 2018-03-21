@@ -9,6 +9,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$popular_skin_url.'/style.css">',
 <section id="popular">
     <div>
         <h2>인기검색어</h2>
+        <div class="popular_inner">
         <ul>
         <?php
         if( isset($list) && is_array($list) ){
@@ -20,6 +21,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$popular_skin_url.'/style.css">',
         }   //end if
         ?>
         </ul>
+        </div>
     </div>
 </section>
 <!-- } 인기검색어 끝 -->

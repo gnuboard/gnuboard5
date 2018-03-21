@@ -179,6 +179,7 @@ box-shadow: 0 0 8px rgba(65,98,255,0.8);}
 
 #bo_v_img {margin:0 0 10px;width:100%;overflow:hidden;zoom:1}
 #bo_v_img:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_v_img a.view_image{display:block}
 #bo_v_img img {margin-bottom:15px;max-width:100%;height:auto}
 
 #bo_v_con {min-height:200px;margin-bottom:20px;width:100%;font-size:1.250em;line-height:1.7em;word-break:break-all;overflow:hidden}

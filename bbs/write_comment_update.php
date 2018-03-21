@@ -269,7 +269,7 @@ else if ($w == 'cu') // 댓글 수정
         ;
     else if ($is_admin == 'group') { // 그룹관리자
         $mb = get_member($comment['mb_id']);
-        if ($member['mb_id'] == $group['gr_admin']) { // 자신이 관리하는 그룹인가?
+        if ($member['mb_id'] === $group['gr_admin']) { // 자신이 관리하는 그룹인가?
             if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
                 ;
             else
@@ -278,7 +278,7 @@ else if ($w == 'cu') // 댓글 수정
             alert('자신이 관리하는 그룹의 게시판이 아니므로 댓글을 수정할 수 없습니다.');
     } else if ($is_admin == 'board') { // 게시판관리자이면
         $mb = get_member($comment['mb_id']);
-        if ($member['mb_id'] == $board['bo_admin']) { // 자신이 관리하는 게시판인가?
+        if ($member['mb_id'] === $board['bo_admin']) { // 자신이 관리하는 게시판인가?
             if ($member['mb_level'] >= $mb['mb_level']) // 자신의 레벨이 크거나 같다면 통과
                 ;
             else
@@ -286,7 +286,7 @@ else if ($w == 'cu') // 댓글 수정
         } else
             alert('자신이 관리하는 게시판이 아니므로 댓글을 수정할 수 없습니다.');
     } else if ($member['mb_id']) {
-        if ($member['mb_id'] != $comment['mb_id'])
+        if ($member['mb_id'] !== $comment['mb_id'])
             alert('자신의 글이 아니므로 수정할 수 없습니다.');
     } else {
         if($comment['wr_password'] != $wr_password)

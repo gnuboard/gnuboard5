@@ -88,7 +88,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 <!-- 댓글 쓰기 시작 { -->
 <aside id="bo_vc_w" class="bo_vc_w">
     <h2>댓글쓰기</h2>
-    <form name="fviewcomment" action="<?php echo $comment_action_url; ?>" onsubmit="return fviewcomment_submit(this);" method="post" autocomplete="off">
+    <form name="fviewcomment" id="fviewcomment" action="<?php echo $comment_action_url; ?>" onsubmit="return fviewcomment_submit(this);" method="post" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w ?>" id="w">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="wr_id" value="<?php echo $wr_id ?>">
@@ -107,10 +107,10 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
     <?php if ($comment_min || $comment_max) { ?><script> check_byte('wr_content', 'char_count'); </script><?php } ?>
     <script>
     $(document).on("keyup change", "textarea#wr_content[maxlength]", function() {
-        var sdiv = $(this).val()
-        var mx = parseInt($(this).atdiv("maxlength"))
-        if (sdiv.length > mx) {
-            $(this).val(sdiv.subsdiv(0, mx));
+        var str = $(this).val()
+        var mx = parseInt($(this).attr("maxlength"))
+        if (str.length > mx) {
+            $(this).val(str.substr(0, mx));
             return false;
         }
     });
@@ -245,7 +245,10 @@ function fviewcomment_submit(f)
 
 function comment_box(comment_id, work)
 {
-    var el_id;
+    var el_id,
+        form_el = 'fviewcomment',
+        respond = document.getElementById(form_el);
+
     // 댓글 아이디가 넘어오면 답변, 수정
     if (comment_id)
     {
@@ -262,11 +265,13 @@ function comment_box(comment_id, work)
         if (save_before)
         {
             document.getElementById(save_before).style.display = 'none';
-            document.getElementById(save_before).innerHTML = '';
         }
 
         document.getElementById(el_id).style.display = '';
-        document.getElementById(el_id).innerHTML = save_html;
+        document.getElementById(el_id).appendChild(respond);
+        //입력값 초기화
+        document.getElementById('wr_content').value = '';
+        
         // 댓글 수정
         if (work == 'cu')
         {

@@ -55,7 +55,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     ?>
 
     <?php if ($is_category) { ?>
-    <div class="bo_w_select">
+    <div class="bo_w_select write_div">
         <label for="ca_name"  class="sound_only">분류<strong>필수</strong></label>
         <select name="ca_name" id="ca_name" required>
             <option value="">분류를 선택하세요</option>
@@ -65,7 +65,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php } ?>
 
 
-    <div class="bo_w_info">
+    <div class="bo_w_info write_div">
     <?php if ($is_name) { ?>
         <label for="wr_name" class="sound_only">이름<strong>필수</strong></label>
         <input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input required" placeholder="이름">
@@ -83,23 +83,23 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </div>
 
     <?php if ($is_homepage) { ?>
-    <div>
+    <div class="write_div">
         <label for="wr_homepage" class="sound_only">홈페이지</label>
         <input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input full_input" size="50" placeholder="홈페이지">
     </div>
     <?php } ?>
 
     <?php if ($option) { ?>
-    <div>
+    <div class="write_div">
         <span class="sound_only">옵션</span>
         <?php echo $option ?>
     </div>
     <?php } ?>
 
-    <div class="bo_w_tit">
+    <div class="bo_w_tit write_div">
         <label for="wr_subject" class="sound_only">제목<strong>필수</strong></label>
         
-        <div id="autosave_wrapper">
+        <div id="autosave_wrapper write_div">
             <input type="text" name="wr_subject" value="<?php echo $subject ?>" id="wr_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
             <?php if ($is_member) { // 임시 저장된 글 기능 ?>
             <script src="<?php echo G5_JS_URL; ?>/autosave.js"></script>
@@ -115,7 +115,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         
     </div>
 
-    <div>
+    <div class="write_div">
         <label for="wr_content" class="sound_only">내용<strong>필수</strong></label>
         <div class="wr_content <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
             <?php if($write_min || $write_max) { ?>
@@ -133,15 +133,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 
     <?php for ($i=1; $is_link && $i<=G5_LINK_COUNT; $i++) { ?>
-    <div class="bo_w_link">
+    <div class="bo_w_link write_div">
         <label for="wr_link<?php echo $i ?>"><i class="fa fa-link" aria-hidden="true"></i><span class="sound_only"> 링크  #<?php echo $i ?></span></label>
         <input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){echo$write['wr_link'.$i];} ?>" id="wr_link<?php echo $i ?>" class="frm_input full_input" size="50">
     </div>
     <?php } ?>
 
     <?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
-    <div class="bo_w_flie">
-        <div class="file_wr">
+    <div class="bo_w_flie write_div">
+        <div class="file_wr write_div">
             <label for="bf_file_<?php echo $i+1 ?>" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #<?php echo $i+1 ?></span></label>
             <input type="file" name="bf_file[]" id="bf_file_<?php echo $i+1 ?>" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file ">
         </div>
@@ -160,13 +160,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 
     <?php if ($is_use_captcha) { //자동등록방지  ?>
-    <div>
+    <div class="write_div">
         <?php echo $captcha_html ?>
     </div>
     <?php } ?>
 
 
-    <div class="btn_confirm">
+    <div class="btn_confirm write_div">
         <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel btn">취소</a>
         <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn">
     </div>

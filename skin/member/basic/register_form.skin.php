@@ -177,7 +177,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                                 
                 <span class="frm_info">
                     이미지 크기는 가로 <?php echo $config['cf_member_icon_width'] ?>픽셀, 세로 <?php echo $config['cf_member_icon_height'] ?>픽셀 이하로 해주세요.<br>
-                    gif만 가능하며 용량 <?php echo number_format($config['cf_member_icon_size']) ?>바이트 이하만 등록됩니다.
+                    gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_member_icon_size']) ?>바이트 이하만 등록됩니다.
                 </span>
 
                 <?php if ($w == 'u' && file_exists($mb_icon_path)) {  ?>
@@ -190,13 +190,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <?php }  ?>
 
             <?php if ($member['mb_level'] >= $config['cf_icon_level'] && $config['cf_member_img_size'] && $config['cf_member_img_width'] && $config['cf_member_img_height']) {  ?>
-            <li>
+            <li class="reg_mb_img_file">
                 <label for="reg_mb_img" class="frm_label">회원이미지</label>
                 <input type="file" name="mb_img" id="reg_mb_img" >
                                 
                 <span class="frm_info">
                     이미지 크기는 가로 <?php echo $config['cf_member_img_width'] ?>픽셀, 세로 <?php echo $config['cf_member_img_height'] ?>픽셀 이하로 해주세요.<br>
-                    gif 또는 jpg만 가능하며 용량 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하만 등록됩니다.
+                    gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_member_img_size']) ?>바이트 이하만 등록됩니다.
                 </span>
 
                 <?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
@@ -417,9 +417,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
         if (typeof f.mb_icon != "undefined") {
             if (f.mb_icon.value) {
-                if (!f.mb_icon.value.toLowerCase().match(/.(gif)$/i)) {
-                    alert("회원아이콘이 gif 파일이 아닙니다.");
+                if (!f.mb_icon.value.toLowerCase().match(/.(gif|jpe?g|png)$/i)) {
+                    alert("회원아이콘이 이미지 파일이 아닙니다.");
                     f.mb_icon.focus();
+                    return false;
+                }
+            }
+        }
+
+        if (typeof f.mb_img != "undefined") {
+            if (f.mb_img.value) {
+                if (!f.mb_img.value.toLowerCase().match(/.(gif|jpe?g|png)$/i)) {
+                    alert("회원이미지가 이미지 파일이 아닙니다.");
+                    f.mb_img.focus();
                     return false;
                 }
             }
