@@ -421,7 +421,6 @@ if($od['od_pg'] == 'lg') {
                         <?php
                         }
                         ?>
-                    <td>
                     </td>
                 </tr>
                 <?php
