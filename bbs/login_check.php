@@ -67,7 +67,7 @@ if ($auto_login) {
 
 if ($url) {
     // url 체크
-    check_url_host($url);
+    check_url_host($url, '', G5_URL, true);
 
     $link = urldecode($url);
     // 2003-06-14 추가 (다른 변수들을 넘겨주기 위함)
