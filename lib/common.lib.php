@@ -3023,7 +3023,7 @@ function check_password($pass, $hash)
 }
 
 // 동일한 host url 인지
-function check_url_host($url, $msg='', $return_url=G5_URL)
+function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
 {
     if(!$msg)
         $msg = 'url에 타 도메인을 지정할 수 없습니다.';
@@ -3033,7 +3033,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
     $is_host_check = false;
     
     // url을 urlencode 를 2번이상하면 parse_url 에서 scheme와 host 값을 가져올수 없는 취약점이 존재함
-    if ( !isset($p['host']) && urldecode($url) != $url ){
+    if ( $is_redirect && !isset($p['host']) && urldecode($url) != $url ){
         $i = 0;
         while($i <= 3){
             $url = urldecode($url);
@@ -3055,7 +3055,7 @@ function check_url_host($url, $msg='', $return_url=G5_URL)
 
     //php 5.6.29 이하 버전에서는 parse_url 버그가 존재함
     //php 7.0.1 ~ 7.0.5 버전에서는 parse_url 버그가 존재함
-    if ( (isset($p['host']) && $p['host']) ) {
+    if ( $is_redirect && (isset($p['host']) && $p['host']) ) {
         $bool_ch = false;
         foreach( array('user','host') as $key) {
             if ( isset( $p[ $key ] ) && strpbrk( $p[ $key ], ':/?#@' ) ) {

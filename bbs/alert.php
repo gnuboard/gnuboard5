@@ -28,6 +28,7 @@ include_once(G5_PATH.'/head.sub.php');
 // 파일만 가능합니다.
 // 공백이 없어야 합니다.
 
+$msg = isset($msg) ? strip_tags($msg) : '';
 $msg2 = str_replace("\\n", "<br>", $msg);
 
 $url = clean_xss_tags($url);
@@ -36,7 +37,7 @@ if (!$url) $url = clean_xss_tags($_SERVER['HTTP_REFERER']);
 $url = preg_replace("/[\<\>\'\"\\\'\\\"\(\)]/", "", $url);
 
 // url 체크
-check_url_host($url);
+check_url_host($url, $msg);
 
 if($error) {
     $header2 = "다음 항목에 오류가 있습니다.";
@@ -46,7 +47,7 @@ if($error) {
 ?>
 
 <script>
-alert("<?php echo strip_tags($msg); ?>");
+alert("<?php echo $msg; ?>");
 //document.location.href = "<?php echo $url; ?>";
 <?php if ($url) { ?>
 document.location.replace("<?php echo str_replace('&amp;', '&', $url); ?>");
