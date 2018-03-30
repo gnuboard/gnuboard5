@@ -27,7 +27,7 @@ function itemqa_page($write_pages, $cur_page, $total_page, $url, $add="")
 
     $str = '';
     if ($cur_page > 1) {
-        $str .= '<a href="'.$url.'1'.$add.'" class="qa_page qa_start">처음</a>'.PHP_EOL;
+        $str .= '<a href="'.$url.'1'.$add.'" class="qa_page pg_start">처음</a>'.PHP_EOL;
     }
 
     $start_page = ( ( (int)( ($cur_page - 1 ) / $write_pages ) ) * $write_pages ) + 1;
