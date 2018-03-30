@@ -72,8 +72,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_numsmall"><?php echo $vnum--?></td>
-        <td><span title="<?php echo $res['wr_message']?>"><?php echo $res['wr_message']?></span></td>
-        <td class="td_numbig"><?php echo $res['wr_reply']?></td>
+        <td class="td_left"><span title="<?php echo $res['wr_message']?>"><?php echo $res['wr_message']?></span></td>
+        <td class="td_tel"><?php echo $res['wr_reply']?></td>
         <td class="td_datetime"><?php echo date('Y-m-d H:i', strtotime($res['wr_datetime']))?></td>
         <td class="td_boolean"><?php echo $res['wr_booking']!='0000-00-00 00:00:00'?"<span title='{$res['wr_booking']}'>예약</span>":'';?></td>
         <td class="td_num"><?php echo number_format($res['wr_total'])?></td>
@@ -81,8 +81,8 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
         <td class="td_num"><?php echo number_format($res['wr_failure'])?></td>
         <td class="td_num"><?php echo $dupli_count;?></td>
         <td class="td_num"><?php echo number_format($res['wr_re_total'])?></td>
-        <td class="td_mngsmall">
-            <a href="./history_view.php?page=<?php echo $page;?>&amp;st=<?php echo $st;?>&amp;sv=<?php echo $sv;?>&amp;wr_no=<?php echo $res['wr_no'];?>">수정</a>
+        <td class="td_mng td_mng_s">
+            <a href="./history_view.php?page=<?php echo $page;?>&amp;st=<?php echo $st;?>&amp;sv=<?php echo $sv;?>&amp;wr_no=<?php echo $res['wr_no'];?>" class="btn btn_03">수정</a>
             <!-- <a href="./history_del.php?page=<?php echo $page;?>&amp;st=<?php echo $st;?>&amp;sv=<?php echo $sv;?>&amp;wr_no=<?php echo $res['wr_no'];?>">삭제</a> -->
         </td>
     </tr>

@@ -95,6 +95,8 @@ if(is_file($skin_file)) {
             $list[$i]['icon_file'] = '<img src="'.$qa_skin_url.'/img/icon_file.gif">';
 
         $list[$i]['name'] = get_text($row['qa_name']);
+        // 사이드뷰 적용시
+        //$list[$i]['name'] = get_sideview($row['mb_id'], $row['qa_name']);
         $list[$i]['date'] = substr($row['qa_datetime'], 2, 8);
 
         $list[$i]['num'] = $num - $i;

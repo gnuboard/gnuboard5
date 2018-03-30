@@ -14,32 +14,29 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <fieldset id="login_fs">
         <legend>회원로그인</legend>
-        <label for="login_id" class="login_id">회원아이디<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="mb_id" id="login_id" required class="frm_input required" size="20" maxLength="20">
-        <label for="login_pw" class="login_pw">비밀번호<strong class="sound_only"> 필수</strong></label>
-        <input type="password" name="mb_password" id="login_pw" required class="frm_input required" size="20" maxLength="20">
+        <label for="login_id" class="sound_only">회원아이디<strong class="sound_only"> 필수</strong></label>
+        <input type="text" name="mb_id" id="login_id" required class="frm_input required" size="20" maxLength="20" placeholder="아이디">
+        <label for="login_pw" class="sound_only">비밀번호<strong class="sound_only"> 필수</strong></label>
+        <input type="password" name="mb_password" id="login_pw" required class="frm_input required" size="20" maxLength="20" placeholder="비밀번호">
         <input type="submit" value="로그인" class="btn_submit">
         <input type="checkbox" name="auto_login" id="login_auto_login">
         <label for="login_auto_login">자동로그인</label>
     </fieldset>
 
+    <?php
+    // 소셜로그인 사용시 소셜로그인 버튼
+    @include_once(get_social_skin_path().'/social_login.skin.php');
+    ?>
+
     <aside id="login_info">
         <h2>회원로그인 안내</h2>
-        <p>
-            회원아이디 및 비밀번호가 기억 안나실 때는 아이디/비밀번호 찾기를 이용하십시오.<br>
-            아직 회원이 아니시라면 회원으로 가입 후 이용해 주십시오.
-        </p>
-        <div>
-            <a href="<?php echo G5_BBS_URL ?>/password_lost.php" target="_blank" id="login_password_lost" class="btn02">아이디 비밀번호 찾기</a>
-            <a href="./register.php" class="btn01">회원 가입</a>
+            <a href="<?php echo G5_BBS_URL ?>/password_lost.php" target="_blank" id="login_password_lost">아이디 비밀번호 찾기</a>
+            <a href="./register.php">회원 가입</a>
         </div>
     </aside>
 
-    <div class="btn_confirm">
-        <a href="<?php echo G5_URL ?>/">메인으로 돌아가기</a>
-    </div>
-
     </form>
+
 
 </div>
 

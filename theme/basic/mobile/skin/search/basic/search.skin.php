@@ -9,7 +9,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
 <input type="hidden" name="srows" value="<?php echo $srows ?>">
 <fieldset id="sch_res_detail">
     <legend>상세검색</legend>
-    <div>
+    <div class="sch_wr">
         <?php echo $group_select ?>
         <script>document.getElementById("gr_id").value = "<?php echo $gr_id ?>";</script>
 
@@ -21,11 +21,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
             <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id") ?>>회원아이디</option>
             <option value="wr_name"<?php echo get_selected($_GET['sfl'], "wr_name") ?>>이름</option>
         </select>
-    </div>
-    <div>
+
         <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="stx" value="<?php echo $text_stx ?>" class="frm_input" required class="required" maxlength="20">
-        <input type="submit" class="btn_submit" value="검색">
+        <input type="text" name="stx" id="stx" value="<?php echo $text_stx ?>" class="frm_input" required  maxlength="20">
+        <button type="submit" class="btn_submit" value="검색"><i class="fa fa-search" aria-hidden="true"></i></button>
 
         <script>
         function fsearch_submit(f)
@@ -72,12 +71,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
         if ($board_count) {
     ?>
     <section id="sch_res_ov">
-        <h2><?php echo $stx ?> 전체검색 결과</h2>
+        <h2><strong class="sch_word"><?php echo $stx ?></strong> 전체검색 결과</h2>
         <dl>
             <dt>게시판</dt>
-            <dd><strong class="sch_word"><?php echo $board_count ?>개</strong></dd>
+            <dd><strong><?php echo $board_count ?>개</strong></dd>
             <dt>게시물</dt>
-            <dd><strong class="sch_word"><?php echo number_format($total_count) ?>개</strong></dd>
+            <dd><strong><?php echo number_format($total_count) ?>개</strong></dd>
         </dl>
         <p><?php echo number_format($page) ?>/<?php echo number_format($total_page) ?> 페이지 열람 중</p>
     </section>
@@ -101,7 +100,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     <?php } }  ?>
 
     <hr>
-
+    <div class="list_01">
     <?php if ($stx && $board_count) { ?><section class="sch_res_list"><?php }  ?>
     <?php
     $k=0;
@@ -113,7 +112,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
         for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
             if ($list[$idx][$i]['wr_is_comment'])
             {
-                $comment_def = '<span class="cmt_def">댓글</span>';
+                $comment_def = '<span class="cmt_def"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="sound_only">댓글</span></span> ';
                 $comment_href = '#c_'.$list[$idx][$i]['wr_id'];
             }
             else
@@ -123,19 +122,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
             }
          ?>
             <li>
-                <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
-                <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank">새창</a>
+                <div  class="sch_res_title">
+                    <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
+                    <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank" class="sch_res_new"><i class="fa fa-share-square-o" aria-hidden="true"></i><span class="sound_only">새창</span></a>
+                </div>
                 <p><?php echo $list[$idx][$i]['content'] ?></p>
-                <?php echo $list[$idx][$i]['name'] ?>
-                <span class="sch_datetime"><?php echo $list[$idx][$i]['wr_datetime'] ?></span>
+                <div class="sch_res_info">
+                    <?php echo $list[$idx][$i]['name'] ?>
+                    <span class="sch_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$idx][$i]['wr_datetime'] ?></span>
+                </div>
             </li>
         <?php }  ?>
         </ul>
-        <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><strong><?php echo $bo_subject[$idx] ?></strong> 결과 더보기</a></div>
+        <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><i class="fa fa-plus-circle" aria-hidden="true"></i> <strong><?php echo $bo_subject[$idx] ?></strong> 결과 더보기</a></div>
 
         <hr>
     <?php }  ?>
+
     <?php if ($stx && $board_count) {  ?></section><?php }  ?>
+    </div>
 
     <?php echo $write_pages ?>
 

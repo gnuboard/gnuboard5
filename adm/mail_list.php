@@ -30,9 +30,6 @@ $colspan = 7;
     </p>
 </div>
 
-<div class="btn_add01 btn_add">
-    <a href="./mail_form.php" id="mail_add">메일내용추가</a>
-</div>
 
 <form name="fmaillist" id="fmaillist" action="./mail_delete.php" method="post">
 <div class="tbl_head01 tbl_wrap">
@@ -52,7 +49,7 @@ $colspan = 7;
     <tbody>
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank">미리보기</a>';
+        $s_vie = '<a href="./mail_preview.php?ma_id='.$row['ma_id'].'" target="_blank" class="btn btn_03">미리보기</a>';
 
         $num = number_format($total_count - ($page - 1) * $config['cf_page_rows'] - $i);
 
@@ -64,12 +61,12 @@ $colspan = 7;
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['ma_subject']; ?> 메일</label>
             <input type="checkbox" id="chk_<?php echo $i ?>" name="chk[]" value="<?php echo $row['ma_id'] ?>">
         </td>
-        <td class="td_num"><?php echo $num ?></td>
-        <td><a href="./mail_form.php?w=u&amp;ma_id=<?php echo $row['ma_id'] ?>"><?php echo $row['ma_subject'] ?></a></td>
+        <td class="td_num_c"><?php echo $num ?></td>
+        <td class="td_left"><a href="./mail_form.php?w=u&amp;ma_id=<?php echo $row['ma_id'] ?>"><?php echo $row['ma_subject'] ?></a></td>
         <td class="td_datetime"><?php echo $row['ma_time'] ?></td>
         <td class="td_test"><a href="./mail_test.php?ma_id=<?php echo $row['ma_id'] ?>">테스트</a></td>
         <td class="td_send"><a href="./mail_select_form.php?ma_id=<?php echo $row['ma_id'] ?>">보내기</a></td>
-        <td class="td_mngsmall"><?php echo $s_vie ?></td>
+        <td class="td_mng"><?php echo $s_vie ?></td>
     </tr>
 
     <?php
@@ -80,9 +77,9 @@ $colspan = 7;
     </tbody>
     </table>
 </div>
-
-<div class="btn_list01 btn_list">
-    <input type="submit" value="선택삭제">
+<div class="btn_fixed_top">
+    <input type="submit" value="선택삭제" class="btn btn_02">
+    <a href="./mail_form.php" id="mail_add" class="btn btn_01">메일내용추가</a>
 </div>
 </form>
 

@@ -23,8 +23,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     </select>
 
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $text_stx ?>" id="stx" required class="frm_input required" maxlength="20">
-    <input type="submit" class="btn_submit" value="검색">
+    <span class="sch_wr">
+        <input type="text" name="stx" value="<?php echo $text_stx ?>" id="stx" required class="frm_input" size="40">
+        <button type="submit" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i> 검색</button>
+    </span>
 
     <script>
     function fsearch_submit(f)
@@ -54,10 +56,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
         return true;
     }
     </script>
-    <input type="radio" value="or" <?php echo ($sop == "or") ? "checked" : ""; ?> id="sop_or" name="sop">
-    <label for="sop_or">OR</label>
-    <input type="radio" value="and" <?php echo ($sop == "and") ? "checked" : ""; ?> id="sop_and" name="sop">
-    <label for="sop_and">AND</label>
+    <span class="sch_rd">
+        <input type="radio" value="or" <?php echo ($sop == "or") ? "checked" : ""; ?> id="sop_or" name="sop">
+        <label for="sop_or">OR</label>
+        <input type="radio" value="and" <?php echo ($sop == "and") ? "checked" : ""; ?> id="sop_and" name="sop">
+        <label for="sop_and">AND</label>
+    </span>
 </fieldset>
 </form>
 
@@ -68,7 +72,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
         if ($board_count) {
     ?>
     <section id="sch_res_ov">
-        <h2><?php echo $stx ?> 전체검색 결과</h2>
+        <h2><strong><?php echo $stx ?></strong> 전체검색 결과</h2>
         <dl>
             <dt>게시판</dt>
             <dd><strong class="sch_word"><?php echo $board_count ?>개</strong></dd>
@@ -109,7 +113,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
         for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
             if ($list[$idx][$i]['wr_is_comment'])
             {
-                $comment_def = '<span class="cmt_def">댓글 | </span>';
+                $comment_def = '<span class="cmt_def"><i class="fa fa-commenting-o" aria-hidden="true"></i><span class="sound_only">댓글</span></span> ';
                 $comment_href = '#c_'.$list[$idx][$i]['wr_id'];
             }
             else
@@ -120,15 +124,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
          ?>
 
             <li>
-                <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
-                <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank">새창</a>
+                <div class="sch_tit">
+                    <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" class="sch_res_title"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
+                    <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank" class="pop_a"><i class="fa fa-share-square-o" aria-hidden="true"></i>새창</a>
+                </div>
                 <p><?php echo $list[$idx][$i]['content'] ?></p>
-                <?php echo $list[$idx][$i]['name'] ?>
-                <span class="sch_datetime"><?php echo $list[$idx][$i]['wr_datetime'] ?></span>
+                <div class="sch_info">
+                    <?php echo $list[$idx][$i]['name'] ?>
+                    <span class="sch_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$idx][$i]['wr_datetime'] ?></span>
+                </div>
             </li>
         <?php }  ?>
         </ul>
-        <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><strong><?php echo $bo_subject[$idx] ?></strong> 결과 더보기</a></div>
+        <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><strong><i class="fa fa-plus-circle" aria-hidden="true"></i> <?php echo $bo_subject[$idx] ?></strong> 결과 더보기</a></div>
 
         <hr>
     <?php }  ?>
