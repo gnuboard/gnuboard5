@@ -21,5 +21,10 @@ unset($_SESSION['ss_mb_id']);
 if (!$url)
     $url = G5_URL;
 
+//소셜로그인 해제
+if(function_exists('social_member_link_delete')){
+    social_member_link_delete($member['mb_id']);
+}
+
 alert(''.$member['mb_nick'].'님께서는 '. date("Y년 m월 d일") .'에 회원에서 탈퇴 하셨습니다.', $url);
 ?>

@@ -23,19 +23,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <input type="hidden" name="w" value="u">
 
     <fieldset>
-        회원아이디
+        <span class="confirm_id">회원아이디</span>
         <span id="mb_confirm_id"><?php echo $member['mb_id'] ?></span>
-
-        <label for="confirm_mb_password">비밀번호<strong class="sound_only">필수</strong></label>
-        <input type="password" name="mb_password" id="confirm_mb_password" required class="required frm_input" size="15" maxLength="20">
+        <label for="confirm_mb_password" class="sound_only">비밀번호<strong>필수</strong></label>
+        <input type="password" name="mb_password" id="confirm_mb_password" required class="required frm_input" size="15" maxLength="20" placeholder="비밀번호">
         <input type="submit" value="확인" id="btn_submit" class="btn_submit">
     </fieldset>
 
     </form>
-
-    <div class="btn_confirm">
-        <a href="<?php echo G5_URL ?>">메인으로 돌아가기</a>
-    </div>
 
 </div>
 

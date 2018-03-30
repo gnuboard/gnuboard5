@@ -9,17 +9,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$popular_skin_url.'/style.css">',
 <section id="popular">
     <div>
         <h2>인기검색어</h2>
+        <div class="popular_inner">
         <ul>
         <?php
         if( isset($list) && is_array($list) ){
             for ($i=0; $i<count($list); $i++) {
             ?>
-                <li><a href="<?php echo G5_BBS_URL ?>/search.php?sfl=wr_subject&amp;sop=and&amp;stx=<?php echo urlencode($list[$i]['pp_word']) ?>"><?php echo get_text($list[$i]['pp_word']); ?></a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/search.php?sfl=wr_subject&amp;sop=and&amp;stx=<?php echo urlencode($list[$i]['pp_word']) ?>"><?php echo get_text($list[$i]['pp_word']); ?></a></li>
             <?php
             }   //end for
         }   //end if
         ?>
         </ul>
+        </div>
     </div>
 </section>
 <!-- } 인기검색어 끝 -->

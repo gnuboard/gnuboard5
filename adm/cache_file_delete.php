@@ -23,7 +23,7 @@ if (!$dir=@opendir(G5_DATA_PATH.'/cache')) {
 }
 
 $cnt=0;
-echo '<ul>'.PHP_EOL;
+echo '<ul class="session_del">'.PHP_EOL;
 
 $files = glob(G5_DATA_PATH.'/cache/latest-*');
 if (is_array($files)) {

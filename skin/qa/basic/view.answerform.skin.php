@@ -2,7 +2,7 @@
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 ?>
 
-<section id="bo_v_ans">
+<section id="bo_v_ans_form">
     <?php
     if($is_admin) // 관리자이면 답변등록
     {
@@ -29,27 +29,25 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     echo $option_hidden;
     ?>
 
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <tbody>
-        <?php if ($option) { ?>
-        <tr>
-            <th scope="row">옵션</th>
-            <td><?php echo $option; ?></td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <th><label for="qa_subject">제목</label></th>
-            <td><input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required" size="50" maxlength="255"></td>
-        </tr>
-        <tr>
-        <th scope="row"><label for="qa_content">내용<strong class="sound_only">필수</strong></label></th>
-            <td class="wr_content">
-                <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-            </td>
-        </tr>
-        </tbody>
-        </table>
+    <div class="form_01">
+        <ul>
+            <?php if ($option) { ?>
+            <li>
+                옵션
+                <?php echo $option; ?>
+            </li>
+            <?php } ?>
+            <li>
+                <label for="qa_subject" class="sound_only">제목</label>
+                <input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required full_input" size="50" maxlength="255" placeholder="제목">
+            </li>
+            <li>
+                <label for="qa_content" class="sound_only">내용<strong>필수</strong></label>
+                <span class="wr_content">
+                    <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
+                </span>
+            </li>
+        </ul>
     </div>
 
     <div class="btn_confirm">

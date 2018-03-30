@@ -17,8 +17,13 @@ $colspan = 4;
 <form name="fboardgroupmember_form" id="fboardgroupmember_form" action="./boardgroupmember_update.php" onsubmit="return boardgroupmember_form_check(this)" method="post">
 <input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
 <input type="hidden" name="token" value="" id="token">
+<div class="local_ov01 local_ov">
+    <span class="btn_ov01"><span class="ov_txt"> 아이디</span><span class="ov_num"><?php echo $mb['mb_id'] ?></span></span>
+    <span class="btn_ov01"><span class="ov_txt"> 이름</span><span class="ov_num"><?php echo get_text($mb['mb_name']); ?></span></span>
+    <span class="btn_ov01"><span class="ov_txt"> 닉네임</span><span class="ov_num"><?php echo $mb['mb_nick'] ?></span></span>
+</div>    
 <div class="local_cmd01 local_cmd">
-    <p>아이디 <b><?php echo $mb['mb_id'] ?></b>, 이름 <b><?php echo get_text($mb['mb_name']); ?></b>, 닉네임 <b><?php echo $mb['mb_nick'] ?></b></p>
+
     <label for="gr_id">그룹지정</label>
     <select name="gr_id" id="gr_id">
         <option value="">접근가능 그룹을 선택하세요.</option>
@@ -36,7 +41,7 @@ $colspan = 4;
         }
         ?>
     </select>
-    <input type="submit" value="선택" class="btn_submit" accesskey="s">
+    <input type="submit" value="선택" class="btn_submit btn" accesskey="s">
 </div>
 </form>
 
@@ -96,7 +101,7 @@ $colspan = 4;
 </div>
 
 <div class="btn_list01 btn_list">
-    <input type="submit" name="" value="선택삭제">
+    <input type="submit" name="" value="선택삭제" class="btn btn_02">
 </div>
 </form>
 

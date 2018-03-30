@@ -24,6 +24,8 @@ if(!$_POST['cf_cert_use']) {
     $_POST['cf_cert_hp'] = '';
 }
 
+$cf_social_servicelist = !empty($_POST['cf_social_servicelist']) ? implode(',', $_POST['cf_social_servicelist']) : '';
+
 $sql = " update {$g5['config_table']}
             set cf_title = '{$_POST['cf_title']}',
                 cf_admin = '{$_POST['cf_admin']}',
@@ -96,6 +98,9 @@ $sql = " update {$g5['config_table']}
                 cf_member_icon_size = '{$_POST['cf_member_icon_size']}',
                 cf_member_icon_width = '{$_POST['cf_member_icon_width']}',
                 cf_member_icon_height = '{$_POST['cf_member_icon_height']}',
+                cf_member_img_size = '{$_POST['cf_member_img_size']}',
+                cf_member_img_width = '{$_POST['cf_member_img_width']}',
+                cf_member_img_height = '{$_POST['cf_member_img_height']}',
                 cf_login_minutes = '{$_POST['cf_login_minutes']}',
                 cf_image_extension = '{$_POST['cf_image_extension']}',
                 cf_flash_extension = '{$_POST['cf_flash_extension']}',
@@ -135,6 +140,19 @@ $sql = " update {$g5['config_table']}
                 cf_facebook_secret = '{$_POST['cf_facebook_secret']}',
                 cf_twitter_key = '{$_POST['cf_twitter_key']}',
                 cf_twitter_secret = '{$_POST['cf_twitter_secret']}',
+                cf_social_login_use = '{$_POST['cf_social_login_use']}',
+                cf_naver_clientid = '{$_POST['cf_naver_clientid']}',
+                cf_naver_secret = '{$_POST['cf_naver_secret']}',
+                cf_google_clientid = '{$_POST['cf_google_clientid']}',
+                cf_google_secret = '{$_POST['cf_google_secret']}',
+                cf_kakao_rest_key = '{$_POST['cf_kakao_rest_key']}',
+                cf_kakao_client_secret = '{$_POST['cf_kakao_client_secret']}',
+                cf_social_servicelist   =   '{$cf_social_servicelist}',
+                cf_captcha = '{$_POST['cf_captcha']}',
+                cf_recaptcha_site_key = '{$_POST['cf_recaptcha_site_key']}',
+                cf_recaptcha_secret_key   =   '{$_POST['cf_recaptcha_secret_key']}',
+                cf_payco_clientid = '{$_POST['cf_payco_clientid']}',
+                cf_payco_secret = '{$_POST['cf_payco_secret']}',
                 cf_1_subj = '{$_POST['cf_1_subj']}',
                 cf_2_subj = '{$_POST['cf_2_subj']}',
                 cf_3_subj = '{$_POST['cf_3_subj']}',

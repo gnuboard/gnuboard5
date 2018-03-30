@@ -21,7 +21,7 @@ if($new == 'new' || !$code) {
 <div id="menu_frm" class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
-    <form name="fmenuform" id="fmenuform">
+    <form name="fmenuform" id="fmenuform" class="new_win_con">
 
     <div class="new_win_desc">
         <label for="me_type">대상선택</label>
@@ -161,9 +161,9 @@ function add_menu_list(name, link, code)
     list += "</td>";
     list += "<td class=\"td_mngsmall\">";
     <?php if($new == 'new') { ?>
-    list += "<button type=\"button\" class=\"btn_add_submenu\">추가</button>";
+    list += "<button type=\"button\" class=\"btn_add_submenu btn\">추가</button>";
     <?php } ?>
-    list += "<button type=\"button\" class=\"btn_del_menu\">삭제</button>";
+    list += "<button type=\"button\" class=\"btn_del_menu btn\">삭제</button>";
     list += "</td>";
     list += "</tr>";
 

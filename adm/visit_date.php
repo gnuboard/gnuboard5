@@ -66,7 +66,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
                 <span style="width:<?php echo $s_rate ?>%"></span>
             </div>
         </td>
-        <td class="td_numbig"><?php echo number_format($value) ?></td>
+        <td class="td_num_c3"><?php echo number_format($value) ?></td>
         <td class="td_num"><?php echo $s_rate ?></td>
     </tr>
 

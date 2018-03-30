@@ -12,7 +12,7 @@ $qstr = "fr_date=".$fr_date."&amp;to_date=".$to_date;
 $query_string = $qstr ? '?'.$qstr : '';
 ?>
 
-<form name="fvisit" id="fvisit" class="local_sch02 local_sch" method="get">
+<form name="fvisit" id="fvisit" class="local_sch03 local_sch" method="get">
 <div class="sch_last">
     <strong>기간별검색</strong>
     <input type="text" name="fr_date" value="<?php echo $fr_date ?>" id="fr_date" class="frm_input" size="11" maxlength="10">

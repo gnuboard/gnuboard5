@@ -43,7 +43,7 @@ $(function(){
 
 <div class="local_ov01 local_ov">
     <?php echo $listall ?>
-    건수 <?php echo number_format($total_count) ?>개
+    <span class="btn_ov01"><span class="ov_txt">건수</span><span class="ov_num">  <?php echo number_format($total_count) ?>개</span></span>
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch02 local_sch" method="get">
@@ -54,7 +54,7 @@ $(function(){
     ~
     <input type="text" name="to_date" value="<?php echo $to_date ?>" id="to_date" class="frm_input" size="11" maxlength="10">
     <label for="to_date" class="sound_only">종료일</label>
-    <input type="submit" class="btn_submit" value="검색">
+    <input type="submit" class="btn_sch2" value="검색">
 </div>
 </form>
 
@@ -87,8 +87,8 @@ $(function(){
 
     <tr>
         <td class="td_num"><?php echo $rank ?></td>
-        <td><?php echo $word ?></td>
-        <td class="td_numbig"><?php echo $row['cnt'] ?></td>
+        <td class="td_left"><?php echo $word ?></td>
+        <td class="td_num"><?php echo $row['cnt'] ?></td>
     </tr>
 
     <?php

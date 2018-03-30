@@ -70,13 +70,13 @@ else
 
 <div class="local_ov01 local_ov">
     <?php echo $listall ?>
-    전체 <?php echo number_format($total_count) ?> 건
+    <span class="btn_ov01"><span class="ov_txt">전체 </span><span class="ov_num"> <?php echo number_format($total_count) ?> 건 </span></span>
     <?php
     if (isset($mb['mb_id']) && $mb['mb_id']) {
-        echo '&nbsp;(' . $mb['mb_id'] .' 님 포인트 합계 : ' . number_format($mb['mb_point']) . '점)';
+        echo '&nbsp;<span class="btn_ov01"><span class="ov_txt">' . $mb['mb_id'] .' 님 포인트 합계 </span><span class="ov_num"> ' . number_format($mb['mb_point']) . '점</span></span>';
     } else {
         $row2 = sql_fetch(" select sum(po_point) as sum_point from {$g5['point_table']} ");
-        echo '&nbsp;(전체 합계 '.number_format($row2['sum_point']).'점)';
+        echo '&nbsp;<span class="btn_ov01"><span class="ov_txt">전체 합계</span><span class="ov_num">'.number_format($row2['sum_point']).'점 </span></span>';
     }
     ?>
 </div>
@@ -149,13 +149,13 @@ else
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['po_content'] ?> 내역</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
-        <td class="td_mbid"><a href="?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
-        <td class="td_mbname"><?php echo get_text($row2['mb_name']); ?></td>
-        <td class="td_name sv_use"><div><?php echo $mb_nick ?></div></td>
-        <td class="td_pt_log"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
+        <td class="td_left"><a href="?sfl=mb_id&amp;stx=<?php echo $row['mb_id'] ?>"><?php echo $row['mb_id'] ?></a></td>
+        <td class="td_left"><?php echo get_text($row2['mb_name']); ?></td>
+        <td class="td_left sv_use"><div><?php echo $mb_nick ?></div></td>
+        <td class="td_left"><?php echo $link1 ?><?php echo $row['po_content'] ?><?php echo $link2 ?></td>
         <td class="td_num td_pt"><?php echo number_format($row['po_point']) ?></td>
         <td class="td_datetime"><?php echo $row['po_datetime'] ?></td>
-        <td class="td_date<?php echo $expr; ?>">
+        <td class="td_datetime2<?php echo $expr; ?>">
             <?php if ($row['po_expired'] == 1) { ?>
             만료<?php echo substr(str_replace('-', '', $row['po_expire_date']), 2); ?>
             <?php } else echo $row['po_expire_date'] == '9999-12-31' ? '&nbsp;' : $row['po_expire_date']; ?>
@@ -173,8 +173,8 @@ else
     </table>
 </div>
 
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+<div class="btn_fixed_top">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
 </div>
 
 </form>
@@ -222,7 +222,7 @@ else
     </div>
 
     <div class="btn_confirm01 btn_confirm">
-        <input type="submit" value="확인" class="btn_submit">
+        <input type="submit" value="확인" class="btn_submit btn">
     </div>
 
     </form>

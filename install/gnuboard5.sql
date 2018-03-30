@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS `g5_board` (
   `bo_use_email` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_cert` enum('','cert','adult','hp-cert','hp-adult') NOT NULL DEFAULT '',
   `bo_use_sns` tinyint(4) NOT NULL DEFAULT '0',
+  `bo_use_captcha` tinyint(4) NOT NULL DEFAULT '0',
   `bo_sort_field` varchar(255) NOT NULL DEFAULT '',
   `bo_1_subj` varchar(255) NOT NULL DEFAULT '',
   `bo_2_subj` varchar(255) NOT NULL DEFAULT '',
@@ -255,6 +256,9 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_member_icon_size` int(11) NOT NULL DEFAULT '0',
   `cf_member_icon_width` int(11) NOT NULL DEFAULT '0',
   `cf_member_icon_height` int(11) NOT NULL DEFAULT '0',
+  `cf_member_img_size` int(11) NOT NULL DEFAULT '0',
+  `cf_member_img_width` int(11) NOT NULL DEFAULT '0',
+  `cf_member_img_height` int(11) NOT NULL DEFAULT '0',
   `cf_login_minutes` int(11) NOT NULL DEFAULT '0',
   `cf_image_extension` varchar(255) NOT NULL DEFAULT '',
   `cf_flash_extension` varchar(255) NOT NULL DEFAULT '',
@@ -291,11 +295,24 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_icode_server_ip` varchar(255) NOT NULL DEFAULT '',
   `cf_icode_server_port` varchar(255) NOT NULL DEFAULT '',
   `cf_googl_shorturl_apikey` varchar(255) NOT NULL DEFAULT '',
+  `cf_social_login_use` tinyint(4) NOT NULL DEFAULT '0',
+  `cf_social_servicelist` varchar(255) NOT NULL DEFAULT '',
+  `cf_payco_clientid` varchar(100) NOT NULL DEFAULT '',
+  `cf_payco_secret` varchar(100) NOT NULL DEFAULT '',
   `cf_facebook_appid` varchar(255) NOT NULL,
   `cf_facebook_secret` varchar(255) NOT NULL,
   `cf_twitter_key` varchar(255) NOT NULL,
   `cf_twitter_secret` varchar(255) NOT NULL,
+  `cf_google_clientid` varchar(100) NOT NULL DEFAULT '',
+  `cf_google_secret` varchar(100) NOT NULL DEFAULT '',
+  `cf_naver_clientid` varchar(100) NOT NULL DEFAULT '',
+  `cf_naver_secret` varchar(100) NOT NULL DEFAULT '',
+  `cf_kakao_rest_key` varchar(100) NOT NULL DEFAULT '',
+  `cf_kakao_client_secret` varchar(100) NOT NULL DEFAULT '',
   `cf_kakao_js_apikey` varchar(255) NOT NULL,
+  `cf_captcha` varchar(100) NOT NULL DEFAULT '',
+  `cf_recaptcha_site_key` varchar(100) NOT NULL DEFAULT '',
+  `cf_recaptcha_secret_key` varchar(100) NOT NULL DEFAULT '',
   `cf_1_subj` varchar(255) NOT NULL DEFAULT '',
   `cf_2_subj` varchar(255) NOT NULL DEFAULT '',
   `cf_3_subj` varchar(255) NOT NULL DEFAULT '',
@@ -825,6 +842,30 @@ CREATE TABLE IF NOT EXISTS `g5_faq_master` (
   `fm_order` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`fm_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_member_social_profiles`
+--
+
+DROP TABLE IF EXISTS `g5_member_social_profiles`;
+CREATE TABLE IF NOT EXISTS `g5_member_social_profiles` (
+  `mp_no` int(11) NOT NULL AUTO_INCREMENT,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `provider` varchar(50) NOT NULL DEFAULT '',
+  `object_sha` varchar(45) NOT NULL DEFAULT '',
+  `identifier` varchar(255) NOT NULL DEFAULT '',
+  `profileurl` varchar(255) NOT NULL DEFAULT '',
+  `photourl` varchar(255) NOT NULL DEFAULT '',
+  `displayname` varchar(150) NOT NULL DEFAULT '',
+  `description` varchar(255) NOT NULL DEFAULT '',
+  `mp_register_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `mp_latest_day` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  UNIQUE KEY `mp_no` (`mp_no`),
+  KEY `mb_id` (`mb_id`),
+  KEY `provider` (`provider`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

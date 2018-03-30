@@ -3,6 +3,7 @@
 /* COMMON */
 body,#smart_editor2,#smart_editor2 p,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 ul,#smart_editor2 ol,#smart_editor2 li,#smart_editor2 dl,#smart_editor2 dt,#smart_editor2 dd,#smart_editor2 table,#smart_editor2 th,#smart_editor2 td,#smart_editor2 form,#smart_editor2 fieldset,#smart_editor2 legend,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 button,#smart_editor2 select{margin:0;padding:0}
 #smart_editor2,#smart_editor2 h1,#smart_editor2 h2,#smart_editor2 h3,#smart_editor2 h4,#smart_editor2 h5,#smart_editor2 h6,#smart_editor2 input,#smart_editor2 textarea,#smart_editor2 select,#smart_editor2 table,#smart_editor2 button{font-family:'돋움',Dotum,Helvetica,sans-serif;font-size:12px;color:#666}
+#smart_editor2{background:#fff}
 #smart_editor2 span,#smart_editor2 em{font-size:12px}
 #smart_editor2 em,#smart_editor2 address{font-style:normal}
 #smart_editor2 img,#smart_editor2 fieldset{border:0}

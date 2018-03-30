@@ -125,10 +125,10 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
             <select name="hp_list" id="hp_list" size="5"></select>
 
             <div id="recv_add">
-                <label for="hp_name">이름</label>
-                <input type="text" name="hp_name" id="hp_name" class="frm_input" size="11" maxlength="20" onkeypress="if(event.keyCode==13) document.getElementById('hp_number').focus();"><br>
-                <label for="hp_number">번호</label>
-                <input type="text" name="hp_number" id="hp_number" class="frm_input" size="11" maxlength="20" onkeypress="if(event.keyCode==13) hp_add()">
+                <label for="hp_name" class="sound_only">이름</label>
+                <input type="text" name="hp_name" id="hp_name" class="frm_input" size="11" maxlength="20" onkeypress="if(event.keyCode==13) document.getElementById('hp_number').focus();" placeholder="이름"><br>
+                <label for="hp_number" class="sound_only">번호</label>
+                <input type="text" name="hp_number" id="hp_number" class="frm_input" size="11" maxlength="20" onkeypress="if(event.keyCode==13) hp_add()" placeholder="번호">
                 <button type="button" onclick="hp_add()">추가</button><br>
             </div>
         </div>
@@ -182,9 +182,9 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
     <div id="send_book">
         <h2>휴대폰번호 목록</h2>
         <div id="book_tab">
-            <a href="#book_group" id="book_group">그룹</a>
-            <a href="#book_person" id="book_person">개인</a>
-            <a href="#book_level" id="book_level">권한</a>
+            <a href="#book_group" id="book_group" class="btn btn_02">그룹</a>
+            <a href="#book_person" id="book_person" class="btn btn_02">개인</a>
+            <a href="#book_level" id="book_level" class="btn btn_02">권한</a>
         </div>
 
         <div id="num_book"></div>

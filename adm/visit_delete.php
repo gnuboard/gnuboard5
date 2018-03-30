@@ -19,7 +19,7 @@ $now_year = (int)substr(G5_TIME_YMD, 0, 4);
     접속자 로그를 삭제할 년도와 방법을 선택해주십시오.
 </div>
 
-<form name="fvisitdelete" class="local_sch02 local_sch" method="post" action="./visit_delete_update.php" onsubmit="return form_submit(this);">
+<form name="fvisitdelete" class="visit_del" method="post" action="./visit_delete_update.php" onsubmit="return form_submit(this);">
     <div>
         <label for="year" class="sound_only">년도선택</label>
         <select name="year" id="year">
@@ -49,7 +49,7 @@ $now_year = (int)substr(G5_TIME_YMD, 0, 4);
             <option value="specific">선택년월의 자료삭제</option>
         </select>
     </div>
-    <div class="sch_last">
+    <div class="visit_del_bt">
         <label for="pass">관리자 비밀번호<strong class="sound_only"> 필수</strong></label>
         <input type="password" name="pass" id="pass" class="frm_input required">
         <input type="submit" value="확인" class="btn_submit">
