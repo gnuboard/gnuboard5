@@ -129,7 +129,7 @@ switch ($day) {
 <div id="wr_cont">
     <form>
     <select name="bo_table">
-    <option value="">전체게시판</a>
+    <option value="">전체게시판</option>
     <?php
     $sql = " select bo_table, bo_subject from {$g5['board_table']} order by bo_count_write desc ";
     $result = sql_query($sql);
@@ -173,7 +173,6 @@ if (empty($line1) || empty($line2)) {
 } else {
 ?>
 <div id="chart1" style="height:500px; width:100%;"></div>
-<div>
 <script>
 $(document).ready(function(){
     var line1 = [<?php echo implode($line1, ','); ?>];
@@ -204,7 +203,7 @@ $(document).ready(function(){
 <?php
 }
 ?>
-
+</div>
 <?php
 include_once ('./admin.tail.php');
 ?>

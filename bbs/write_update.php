@@ -193,7 +193,9 @@ if ($w == '' || $w == 'u') {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-if ($is_guest && !chk_captcha()) {
+$is_use_captcha = ((($board['bo_use_captcha'] && $w !== 'u') || $is_guest) && !$is_admin) ? 1 : 0;
+
+if ($is_use_captcha && !chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 

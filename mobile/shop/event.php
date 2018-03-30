@@ -15,6 +15,8 @@ if ($is_admin)
     echo '<div class="sev_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin">이벤트 관리</a></div>';
 ?>
 
+<div id="sev_list">
+
 <!-- 이벤트 시작 { -->
 <?php
 // 상단 HTML
@@ -30,6 +32,7 @@ if ($skin) {
     $skin = preg_replace('#\.+/#', '', $skin);
     $ev['ev_skin'] = $skin;
 }
+
 
 define('G5_SHOP_CSS_URL', G5_MSHOP_SKIN_URL);
 
@@ -70,8 +73,9 @@ else
 {
     echo '<div align="center">'.$ev['ev_mobile_skin'].' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
 }
-?>
 
+
+?>
 <?php
 $qstr .= 'skin='.$skin.'&amp;ev_id='.$ev_id.'&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
 echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page=");
@@ -82,6 +86,7 @@ echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['SCRI
 echo '<div id="sev_thtml">'.conv_content($ev['ev_tail_html'], 1).'</div>';
 ?>
 <!-- } 이벤트 끝 -->
+</div>
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');

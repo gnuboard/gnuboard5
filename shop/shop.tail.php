@@ -19,14 +19,17 @@ $admin = get_admin("super");
 </div>
 
 <div id="ft">
-    <div>
-        <a href="<?php echo G5_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img2" alt="처음으로"></a>
-        <ul>
+    <div class="ft_wr">
+        <ul class="ft_ul">
             <li><a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=company">회사소개</a></li>
             <li><a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=provision">서비스이용약관</a></li>
             <li><a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=privacy">개인정보처리방침</a></li>
+            <li><a href="<?php echo get_device_change_url(); ?>">모바일버전</a></li>
         </ul>
-        <p>
+        
+        <a href="<?php echo G5_SHOP_URL; ?>/" id="ft_logo"><img src="<?php echo G5_DATA_URL; ?>/common/logo_img2" alt="처음으로"></a>
+
+        <div class="ft_info">
             <span><b>회사명</b> <?php echo $default['de_admin_company_name']; ?></span>
             <span><b>주소</b> <?php echo $default['de_admin_company_addr']; ?></span><br>
             <span><b>사업자 등록번호</b> <?php echo $default['de_admin_company_saupja_no']; ?></span>
@@ -39,9 +42,26 @@ $admin = get_admin("super");
 
             <?php if ($default['de_admin_buga_no']) echo '<span><b>부가통신사업신고번호</b> '.$default['de_admin_buga_no'].'</span>'; ?><br>
             Copyright &copy; 2001-2013 <?php echo $default['de_admin_company_name']; ?>. All Rights Reserved.
-        </p>
-        <a href="#" id="ft_totop">상단으로</a>
+        </div>
+
+        <div class="ft_cs">
+            <h2>고객센터</h2>
+            <strong>02-123-1234</strong>
+            <p>월-금 am 9:00 - pm 05:00<br>점심시간 : am 12:00 - pm 01:00</p>
+        </div>
+        <button type="button" id="top_btn"><i class="fa fa-arrow-up" aria-hidden="true"></i><span class="sound_only">상단으로</span></button>
+        <script>
+        
+        $(function() {
+            $("#top_btn").on("click", function() {
+                $("html, body").animate({scrollTop:0}, '500');
+                return false;
+            });
+        });
+        </script>
     </div>
+
+
 </div>
 
 <?php
@@ -55,6 +75,7 @@ if ($config['cf_analytics']) {
 
 <script src="<?php echo G5_JS_URL; ?>/sns.js"></script>
 <!-- } 하단 끝 -->
+
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');

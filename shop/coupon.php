@@ -33,19 +33,10 @@ $result = sql_query($sql);
 
 <!-- 쿠폰 내역 시작 { -->
 <div id="coupon" class="new_win">
-    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?php echo $g5['title'] ?></h1>
 
-    <div class="tbl_wrap tbl_head01">
-        <table>
-        <thead>
-        <tr>
-            <th scope="col">쿠폰명</th>
-            <th scope="col">적용대상</th>
-            <th scope="col">할인금액</th>
-            <th scope="col">사용기한</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="new_win_con list_01">
+        <ul>
         <?php
         $cp_count = 0;
         for($i=0; $row=sql_fetch_array($result); $i++) {
@@ -73,23 +64,26 @@ $result = sql_query($sql);
 
             $cp_count++;
         ?>
-        <tr>
-            <td><?php echo $row['cp_subject']; ?></td>
-            <td><?php echo $cp_target; ?></td>
-            <td class="td_numbig"><?php echo $cp_price; ?></td>
-            <td class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
-        </tr>
+        <li>
+            <div>
+                <span class="cou_tit"><?php echo $row['cp_subject']; ?></span>
+                <span class="cou_pri"><?php echo $cp_price; ?></span>
+            </div>
+            <div>
+                <span class="cou_target"><?php echo $cp_target; ?></span>
+                <span class="cou_date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></span>
+            </div>
+        </li>
         <?php
         }
 
         if(!$cp_count)
-            echo '<tr><td colspan="4" class="empty_table">사용할 수 있는 쿠폰이 없습니다.</td></tr>';
+            echo '<li class="empty_li">사용할 수 있는 쿠폰이 없습니다.</li>';
         ?>
-        </tbody>
-        </table>
+        </ul>
     </div>
 
-    <div class="win_btn"><button type="button" onclick="window.close();">창닫기</button></div>
+    <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
 </div>
 
 <?php

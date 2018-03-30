@@ -6,7 +6,11 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
-<a href="<?php echo $itemuse_form; ?>" class="qa_wr itemuse_form " onclick="return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+
+<div id="sit_use_wbtn">
+    <a href="<?php echo $itemuse_form; ?>" class="qa_wr itemuse_form " onclick="return false;">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
+    <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기</a>
+</div>
 
 <!-- 상품 사용후기 시작 { -->
 <div id="sit_use_list">
@@ -34,12 +38,12 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
     ?>
 
         <li class="sit_use_li">
-            <button type="button" class="sit_use_li_title"><b><?php echo $is_num; ?>.</b> <?php echo $is_subject; ?></button>
+            <button type="button" class="sit_use_li_title"><?php echo $is_subject; ?></button>
             <dl class="sit_use_dl">
                 <dt>작성자</dt>
                 <dd><?php echo $is_name; ?></dd>
                 <dt>작성일</dt>
-                <dd><?php echo $is_time; ?></dd>
+                <dd><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $is_time; ?></dd>
                 <dt>선호도<dt>
                 <dd class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개"></dd>
             </dl>
@@ -84,10 +88,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 <?php
 echo itemuse_page($config['cf_mobile_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
 ?>
-
-<div id="sit_use_wbtn">
-    <a href="<?php echo $itemuse_list; ?>" id="itemuse_list" class="btn01">더보기 +</a>
-</div>
 
 <script>
 $(function(){

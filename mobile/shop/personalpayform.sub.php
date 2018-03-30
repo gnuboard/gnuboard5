@@ -13,10 +13,10 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
     ?>
 </div>
 
-<div id="sod_frm">
+<div id="m_pv_sod_frm">
     <form name="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
     <input type="hidden" name="pp_id" value="<?php echo $pp['pp_id']; ?>">
-    <section id="sod_frm_orderer">
+    <section id="m_sod_frm_orderer">
         <h2>개인결제정보</h2>
 
         <div class="odf_tbl">

@@ -40,7 +40,7 @@ if($this->total_count > 0) {
         }
 
         if ($this->href) {
-            echo '</a><span class="best_icon">베스트상품</span></div>'.PHP_EOL;
+            echo '</a><span class="best_icon">BEST</span></div>'.PHP_EOL;
         }
 
         if ($this->view_it_id) {

@@ -50,11 +50,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $colspan = 9;
 ?>
-
+<div class="local_ov">
+    <span class="btn_ov01"><span class="ov_txt">전체 </span><span class="ov_num"> <?php echo number_format($total_count) ?> 개</span></span>
+</div>
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
-<span>
-    전체 <?php echo number_format($total_count) ?> 개
-</span>
+
 <select name="sfl" title="검색대상">
     <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
     <option value="cp_subject"<?php echo get_selected($_GET['sfl'], "cp_subject"); ?>>쿠폰이름</option>
@@ -65,9 +65,7 @@ $colspan = 9;
 <input type="submit" class="btn_submit" value="검색">
 </form>
 
-<div class="btn_add01 btn_add">
-    <a href="./couponform.php" id="coupon_add">쿠폰 추가</a>
-</div>
+
 
 <form name="fcouponlist" id="fcouponlist" method="post" action="./couponlist_delete.php" onsubmit="return fcouponlist_submit(this);">
 <input type="hidden" name="sst" value="<?php echo $sst; ?>">
@@ -140,13 +138,13 @@ $colspan = 9;
         </td>
         <td><?php echo $cp_method; ?></td>
         <td><?php echo $row['cp_id']; ?></td>
-        <td><?php echo $row['cp_subject']; ?></td>
+        <td class="td_left"><?php echo $row['cp_subject']; ?></td>
         <td><?php echo $cp_target; ?></td>
         <td class="td_name sv_use"><div><?php echo $row['mb_id']; ?></div></td>
         <td class="td_datetime"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></td>
         <td class="td_cntsmall"><?php echo number_format($used_count); ?></td>
-        <td class="td_mngsmall">
-            <a href="./couponform.php?w=u&amp;cp_id=<?php echo $row['cp_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['cp_id']; ?> </span>수정</a>
+        <td class="td_mng td_mng_s">
+            <a href="./couponform.php?w=u&amp;cp_id=<?php echo $row['cp_id']; ?>&amp;<?php echo $qstr; ?>" class="btn btn_03"><span class="sound_only"><?php echo $row['cp_id']; ?> </span>수정</a>
         </td>
     </tr>
 
@@ -159,9 +157,9 @@ $colspan = 9;
     </tbody>
     </table>
 </div>
-
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+<div class="btn_fixed_top">
+     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
+   <a href="./couponform.php" id="coupon_add" class="btn btn_01">쿠폰 추가</a> 
 </div>
 
 </form>

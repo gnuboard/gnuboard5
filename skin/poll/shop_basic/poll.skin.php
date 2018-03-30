@@ -8,22 +8,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 <!-- 설문조사 시작 { -->
 <form name="fpoll" action="<?php echo G5_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
 <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
-<input type="hidden" name="skin_dir" value="<?php echo $skin_dir ?>">
+<input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
 <section id="poll">
     <header>
-        <h2>설문조사</h2>
-        <?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin">설문조사 관리</a><?php }  ?>
-        <p><?php echo $po['po_subject'] ?></p>
+        <h2><i class="fa fa-bar-chart" aria-hidden="true"></i> 설문조사</h2>
+        <?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin">설문관리</a><?php }  ?>
     </header>
-    <ul>
-        <?php for ($i=1; $i<=9 && $po["po_poll{$i}"]; $i++) {  ?>
-        <li><input type="radio" name="gb_poll" value="<?php echo $i ?>" id="gb_poll_<?php echo $i ?>"> <label for="gb_poll_<?php echo $i ?>"><?php echo $po['po_poll'.$i] ?></label></li>
-        <?php }  ?>
-    </ul>
-    <footer>
-        <input type="submit" value="투표하기">
-        <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=$skin_dir" ?>" target="_blank" onclick="poll_result(this.href); return false;">결과보기</a>
-    </footer>
+    <div class="poll_con">
+        <p><?php echo $po['po_subject'] ?></p>
+        <ul>
+            <?php for ($i=1; $i<=9 && $po["po_poll{$i}"]; $i++) {  ?>
+            <li><input type="radio" name="gb_poll" value="<?php echo $i ?>" id="gb_poll_<?php echo $i ?>"> <label for="gb_poll_<?php echo $i ?>"><?php echo $po['po_poll'.$i] ?></label></li>
+            <?php }  ?>
+        </ul>
+        <div id="poll_btn">
+            <input type="submit" value="투표하기" class="btn_poll btn_b02">
+            <a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;" class="btn_result btn_b01">결과보기</a>
+        </div>
+    </div>
 </section>
 </form>
 
@@ -48,8 +50,8 @@ function fpoll_submit(f)
         return false;
     }
 
-    var new_win = window.open("about:blank", "win_poll", "width=616,height=500,scrollbars=yes,resizable=yes"); 
-    f.target = "win_poll"; 
+    var new_win = window.open("about:blank", "win_poll", "width=616,height=500,scrollbars=yes,resizable=yes");
+    f.target = "win_poll";
 
     return true;
 }

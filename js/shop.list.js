@@ -44,7 +44,7 @@ $.fn.listType = function(type)
         this.addClass("sct sct_40");
 
         var list_top_pad = 20;
-        var list_right_pad = 10;
+        var list_right_pad = 20;
         var list_bottom_pad = 20;
         var list_real_width = this.outerWidth();
         var list_left_pad, list_width, list_height;
@@ -56,16 +56,16 @@ $.fn.listType = function(type)
             img_width = $(this).find(".sct_img img").width();
             img_height = $(this).find(".sct_img img").height();
 
-            list_left_pad = img_width + 10;
+            list_left_pad = img_width + 20;
             list_width = list_real_width - list_right_pad - list_left_pad;
-            list_height = img_height - list_top_pad - list_bottom_pad;
+            list_height = img_height +2;
 
             $(this).css({
                 paddingTop : list_top_pad+"px",
                 paddingRight: list_right_pad+"px",
                 paddingBottom: list_bottom_pad+"px",
                 paddingLeft: list_left_pad+"px",
-                width: list_width+"px",
+                //width: list_width+"px",
                 height: list_height+"px"
             });
         });

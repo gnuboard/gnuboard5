@@ -11,10 +11,25 @@ if (!$mb_id || !$mb_password)
 
 $mb = get_member($mb_id);
 
+//소셜 로그인추가 체크
+
+$is_social_login = false;
+$is_social_password_check = false;
+
+// 소셜 로그인이 맞는지 체크하고 해당 값이 맞는지 체크합니다.
+if(function_exists('social_is_login_check')){
+    $is_social_login = social_is_login_check();
+
+    //패스워드를 체크할건지 결정합니다.
+    //소셜로그인일때는 체크하지 않고, 계정을 연결할때는 체크합니다.
+    $is_social_password_check = social_is_login_password_check($mb_id);
+}
+
+//소셜 로그인이 맞다면 패스워드를 체크하지 않습니다.
 // 가입된 회원이 아니다. 비밀번호가 틀리다. 라는 메세지를 따로 보여주지 않는 이유는
 // 회원아이디를 입력해 보고 맞으면 또 비밀번호를 입력해보는 경우를 방지하기 위해서입니다.
 // 불법사용자의 경우 회원아이디가 틀린지, 비밀번호가 틀린지를 알기까지는 많은 시간이 소요되기 때문입니다.
-if (!$mb['mb_id'] || !check_password($mb_password, $mb['mb_password'])) {
+if (!$is_social_password_check && (!$mb['mb_id'] || !check_password($mb_password, $mb['mb_password'])) ) {
     alert('가입된 회원아이디가 아니거나 비밀번호가 틀립니다.\\n비밀번호는 대소문자를 구분합니다.');
 }
 
@@ -30,7 +45,8 @@ if ($mb['mb_leave_date'] && $mb['mb_leave_date'] <= date("Ymd", G5_SERVER_TIME))
     alert('탈퇴한 아이디이므로 접근하실 수 없습니다.\n탈퇴일 : '.$date);
 }
 
-if ($config['cf_use_email_certify'] && !preg_match("/[1-9]/", $mb['mb_email_certify'])) {
+// 메일인증 설정이 되어 있다면
+if ( is_use_email_certify() && !preg_match("/[1-9]/", $mb['mb_email_certify'])) {
     $ckey = md5($mb['mb_ip'].$mb['mb_datetime']);
     confirm("{$mb['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다. 다른 메일주소로 변경하여 인증하시려면 취소를 클릭하시기 바랍니다.", G5_URL, G5_BBS_URL.'/register_email.php?mb_id='.$mb_id.'&ckey='.$ckey);
 }
@@ -77,14 +93,42 @@ if ($url) {
         $split= "?";
 
     // $_POST 배열변수에서 아래의 이름을 가지지 않은 것만 넘김
+    $post_check_keys = array('mb_id', 'mb_password', 'x', 'y', 'url');
+    
+    //소셜 로그인 추가
+    if($is_social_login){
+        $post_check_keys[] = 'provider';
+    }
+
     foreach($_POST as $key=>$value) {
-        if ($key != 'mb_id' && $key != 'mb_password' && $key != 'x' && $key != 'y' && $key != 'url') {
+        if ($key && !in_array($key, $post_check_keys)) {
             $link .= "$split$key=$value";
             $split = "&amp;";
         }
     }
+
 } else  {
     $link = G5_URL;
+}
+
+//소셜 로그인 추가
+if(function_exists('social_login_success_after')){
+    // 로그인 성공시 소셜 데이터를 기존의 데이터와 비교하여 바뀐 부분이 있으면 업데이트 합니다.
+    $link = social_login_success_after($mb, $link);
+    social_login_session_clear(1);
+}
+
+//영카트 회원 장바구니 처리
+if(function_exists('set_cart_id')){
+    $member = $mb;
+
+    // 보관기간이 지난 상품 삭제
+    cart_item_clean();
+    set_cart_id('');
+    $s_cart_id = get_session('ss_cart_id');
+    // 선택필드 초기화
+    $sql = " update {$g5['g5_shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
+    sql_query($sql);
 }
 
 goto_url($link);

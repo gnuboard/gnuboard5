@@ -8,14 +8,11 @@ $hresult = sql_query($hsql);
 if(sql_num_rows($hresult)) {
     // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
     add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">', 0);
+    add_javascript('<script src="'.G5_JS_URL.'/jquery.bxslider.js"></script>', 10);
 ?>
-<div class="sct_wrap">
-    <header>
-        <h2>EVENT</h2>
-        <p class="sct_wrap_hdesc"><?php echo $config['cf_title']; ?> 이벤트 모음</p>
-    </header>
-
-    <ul id="sev">
+<div id="sev">
+    <h2>이벤트</h2>
+    <ul class="sev_slide">
     <?php
     for ($i=0; $row=sql_fetch_array($hresult); $i++)
     {
@@ -43,6 +40,27 @@ if(sql_num_rows($hresult)) {
     ?>
     </ul>
 </div>
+
+<script>
+$(document).ready(function(){
+    $('.sev_slide').bxSlider({
+        speed:800,
+        slideWidth: 320,
+        pager:true,
+        controls:false,
+        minSlides:1,
+        maxSlides: 4,
+        slideMargin: 5,
+        onSliderLoad: function(){ 
+            $(".sev_slide").css("visibility", "visible");
+        }
+    });
+});
+
+</script>
+
+
 <?php
 }
 ?>
+

@@ -203,7 +203,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             ?>
             <tr>
                 <?php if($k == 0) { ?>
-                <td rowspan="<?php echo $rowspan; ?>">
+                <td rowspan="<?php echo $rowspan; ?>" class="td_left">
                     <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?></a>
                     <?php if($od['od_tax_flag'] && $row['ct_notax']) echo '[비과세상품]'; ?>
                 </td>
@@ -212,7 +212,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <input type="checkbox" id="sit_sel_<?php echo $i; ?>" name="it_sel[]">
                 </td>
                 <?php } ?>
-                <td>
+                <td class="td_left">
                     <label for="ct_chk_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['ct_option']); ?></label>
                     <input type="checkbox" name="ct_chk[<?php echo $chk_cnt; ?>]" id="ct_chk_<?php echo $chk_cnt; ?>" value="<?php echo $chk_cnt; ?>" class="sct_sel_<?php echo $i; ?>">
                     <input type="hidden" name="ct_id[<?php echo $chk_cnt; ?>]" value="<?php echo $opt['ct_id']; ?>">
@@ -223,10 +223,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                     <label for="ct_qty_<?php echo $chk_cnt; ?>" class="sound_only"><?php echo get_text($opt['ct_option']); ?> 수량</label>
                     <input type="text" name="ct_qty[<?php echo $chk_cnt; ?>]" id="ct_qty_<?php echo $chk_cnt; ?>" value="<?php echo $opt['ct_qty']; ?>" required class="frm_input required" size="5">
                 </td>
-                <td class="td_num"><?php echo number_format($opt_price); ?></td>
-                <td class="td_num"><?php echo number_format($ct_price['stotal']); ?></td>
-                <td class="td_num"><?php echo number_format($opt['cp_price']); ?></td>
-                <td class="td_num"><?php echo number_format($ct_point['stotal']); ?></td>
+                <td class="td_num_right "><?php echo number_format($opt_price); ?></td>
+                <td class="td_num_right"><?php echo number_format($ct_price['stotal']); ?></td>
+                <td class="td_num_right"><?php echo number_format($opt['cp_price']); ?></td>
+                <td class=" td_num_right"><?php echo number_format($ct_point['stotal']); ?></td>
                 <td class="td_sendcost_by"><?php echo $ct_send_cost; ?></td>
                 <td class="td_mngsmall"><?php echo get_yn($opt['ct_point_use']); ?></td>
                 <td class="td_mngsmall"><?php echo get_yn($opt['ct_stock_use']); ?></td>
@@ -246,14 +246,14 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <p>
             <input type="hidden" name="chk_cnt" value="<?php echo $chk_cnt; ?>">
             <strong>주문 및 장바구니 상태 변경</strong>
-            <input type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value">
-            <input type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value">
-            <input type="submit" name="ct_status" value="준비" onclick="document.pressed=this.value">
-            <input type="submit" name="ct_status" value="배송" onclick="document.pressed=this.value">
-            <input type="submit" name="ct_status" value="완료" onclick="document.pressed=this.value">
-            <input type="submit" name="ct_status" value="취소" onclick="document.pressed=this.value">
-            <input type="submit" name="ct_status" value="반품" onclick="document.pressed=this.value">
-            <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value">
+            <input type="submit" name="ct_status" value="주문" onclick="document.pressed=this.value" class="btn_02 color_01">
+            <input type="submit" name="ct_status" value="입금" onclick="document.pressed=this.value" class="btn_02 color_02">
+            <input type="submit" name="ct_status" value="준비" onclick="document.pressed=this.value" class="btn_02 color_03">
+            <input type="submit" name="ct_status" value="배송" onclick="document.pressed=this.value" class="btn_02 color_04">
+            <input type="submit" name="ct_status" value="완료" onclick="document.pressed=this.value" class="btn_02 color_05">
+            <input type="submit" name="ct_status" value="취소" onclick="document.pressed=this.value" class="btn_02 color_06">
+            <input type="submit" name="ct_status" value="반품" onclick="document.pressed=this.value" class="btn_02 color_06">
+            <input type="submit" name="ct_status" value="품절" onclick="document.pressed=this.value" class="btn_02 color_06">
         </p>
     </div>
 
@@ -784,7 +784,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 <tr>
                     <th scope="row"><label for="od_refund_price">결제취소/환불 금액</label></th>
                     <td>
-                        <input type="text" name="od_refund_price" value="<?php echo $od['od_refund_price']; ?>" class="frm_input" size="10"> 원
+                        <input type="text" name="od_refund_price" value="<?php echo $od['od_refund_price']; ?>" id="od_refund_price" class="frm_input" size="10"> 원
                     </td>
                 </tr>
                 <tr>
@@ -833,14 +833,14 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     <div class="btn_confirm01 btn_confirm">
-        <input type="submit" value="결제/배송내역 수정" class="btn_submit">
+        <input type="submit" value="결제/배송내역 수정" class="btn_submit btn">
         <?php if($od['od_status'] == '주문' && $od['od_misu'] > 0) { ?>
-        <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add">개인결제추가</a>
+        <a href="./personalpayform.php?popup=yes&amp;od_id=<?php echo $od_id; ?>" id="personalpay_add" class="btn btn_02">개인결제추가</a>
         <?php } ?>
         <?php if($od['od_misu'] < 0 && ($od['od_receipt_price'] - $od['od_refund_price']) > 0 && ($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == 'KAKAOPAY')) { ?>
-        <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel"><?php echo $od['od_settle_case']; ?> 부분취소</a>
+        <a href="./orderpartcancel.php?od_id=<?php echo $od_id; ?>" id="orderpartcancel" class="btn btn_02"><?php echo $od['od_settle_case']; ?> 부분취소</a>
         <?php } ?>
-        <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
+        <a href="./orderlist.php?<?php echo $qstr; ?>" class="btn btn_02">목록</a>
     </div>
     </form>
 </section>
@@ -870,7 +870,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     <div class="btn_confirm01 btn_confirm">
-        <input type="submit" value="메모 수정" class="btn_submit">
+        <input type="submit" value="메모 수정" class="btn_submit btn">
     </div>
 
     </form>
@@ -1004,8 +1004,8 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     </div>
 
     <div class="btn_confirm01 btn_confirm">
-        <input type="submit" value="주문자/배송지 정보 수정" class="btn_submit">
-        <a href="./orderlist.php?<?php echo $qstr; ?>">목록</a>
+        <input type="submit" value="주문자/배송지 정보 수정" class="btn_submit btn ">
+        <a href="./orderlist.php?<?php echo $qstr; ?>" class="btn">목록</a>
     </div>
 
     </form>

@@ -45,9 +45,9 @@ if($od['od_pg'] == 'lg') {
         <ul id="sod_list_inq" class="sod_list">
             <?php
             for($i=0; $row=sql_fetch_array($result); $i++) {
-                $image_width = 50;
-                $image_height = 50;
-                $image = get_it_image($row['it_id'], 50, 50, '', '', $row['it_name']);
+                $image_width = 80;
+                $image_height = 80;
+                $image = get_it_image($row['it_id'], 80, 80, '', '', $row['it_name']);
 
                 // 옵션항목
                 $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
@@ -88,39 +88,44 @@ if($od['od_pg'] == 'lg') {
                 }
             ?>
             <li class="sod_li">
-                <div class="li_name_od">
+                <div class="li_name">
                     <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><strong><?php echo $row['it_name']; ?></strong></a>
                 </div>
-            <?php
-                for($k=0; $opt=sql_fetch_array($res); $k++) {
-                    if($opt['io_type'])
-                        $opt_price = $opt['io_price'];
-                    else
-                        $opt_price = $opt['ct_price'] + $opt['io_price'];
+                <?php
+                    for($k=0; $opt=sql_fetch_array($res); $k++) {
+                        if($opt['io_type'])
+                            $opt_price = $opt['io_price'];
+                        else
+                            $opt_price = $opt['ct_price'] + $opt['io_price'];
 
-                    $sell_price = $opt_price * $opt['ct_qty'];
-                    $point = $opt['ct_point'] * $opt['ct_qty'];
-            ?>
-                <div class="li_opt"><?php echo get_text($opt['ct_option']); ?></div>
+                        $sell_price = $opt_price * $opt['ct_qty'];
+                        $point = $opt['ct_point'] * $opt['ct_qty'];
+                ?>
+                <div class="li_op_wr">
+                    <div class="li_opt"><?php echo get_text($opt['ct_option']); ?></div>
+                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="total_img"><?php echo $image; ?></a>
+                    <span class="prqty_stat"><span class="sound_only">상태</span><?php echo $opt['ct_status']; ?></span>
+
+
+                </div>
                 <div class="li_prqty">
                     <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
                     <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
                     <span class="prqty_sc li_prqty_sp"><span>배송비 </span><?php echo $ct_send_cost; ?></span>
-                    <span class="prqty_stat li_prqty_sp"><span>상태 </span><?php echo $opt['ct_status']; ?></span>
-                </div>
-                <div class="li_total" style="padding-left:<?php echo $image_width + 10; ?>px;height:auto !important;height:<?php echo $image_height; ?>px;min-height:<?php echo $image_height; ?>px">
-                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="total_img"><?php echo $image; ?></a>
-                    <span class="total_price total_span"><span>주문금액 </span><?php echo number_format($sell_price); ?></span>
-                    <span class="total_point total_span"><span>적립포인트 </span><?php echo number_format($point); ?></span>
-                </div>
-            <?php
-                    $tot_point       += $point;
+                    <span class="total_point li_prqty_sp"><span>적립포인트 </span><?php echo number_format($point); ?></span>
 
-                    $st_count1++;
-                    if($opt['ct_status'] == '주문')
-                        $st_count2++;
-                }
-            ?>
+                </div>
+                <div class="li_total">
+                    <span class="total_price total_span"><span>주문금액 </span><?php echo number_format($sell_price); ?></span>
+                </div>
+                <?php
+                        $tot_point       += $point;
+
+                        $st_count1++;
+                        if($opt['ct_status'] == '주문')
+                            $st_count2++;
+                    }
+                ?>
 
             </li>
             <?php
@@ -134,7 +139,6 @@ if($od['od_pg'] == 'lg') {
 
         <div id="sod_sts_wrap">
             <span class="sound_only">상품 상태 설명</span>
-            <button type="button" id="sod_sts_explan_open" class="btn_frmline">상태설명보기</button>
             <div id="sod_sts_explan">
                 <dl id="sod_fin_legend">
                     <dt>주문</dt>
@@ -148,8 +152,9 @@ if($od['od_pg'] == 'lg') {
                     <dt>완료</dt>
                     <dd>상품 배송이 완료 되었습니다.</dd>
                 </dl>
-                <button type="button" id="sod_sts_explan_close" class="btn_frmline">상태설명닫기</button>
             </div>
+            <div class="btn_wr"><button type="button" id="sod_sts_explan_open">상태설명보기</button></div>
+
         </div>
 
         <?php
@@ -158,47 +163,49 @@ if($od['od_pg'] == 'lg') {
                         - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon']
                         - $od['od_cancel_price'];
         ?>
+        <div class="sod_ta_wr">
+            <dl id="m_sod_bsk_tot">
+                <dt class="sod_bsk_dvr">주문총액</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_price']); ?> 원</strong></dd>
 
-        <dl id="sod_bsk_tot">
-            <dt class="sod_bsk_dvr">주문총액</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_price']); ?> 원</strong></dd>
+                <?php if($od['od_cart_coupon'] > 0) { ?>
+                <dt class="sod_bsk_dvr">상품할인</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_coupon']); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if($od['od_cart_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">상품할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_coupon']); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if($od['od_coupon'] > 0) { ?>
+                <dt class="sod_bsk_dvr">결제할인</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_coupon']); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if($od['od_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">결제할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_coupon']); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if ($od['od_send_cost'] > 0) { ?>
+                <dt class="sod_bsk_dvr">배송비</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_cost']); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if ($od['od_send_cost'] > 0) { ?>
-            <dt class="sod_bsk_dvr">배송비</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_cost']); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if($od['od_send_coupon'] > 0) { ?>
+                <dt class="sod_bsk_dvr">배송비할인</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_coupon']); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if($od['od_send_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">배송비할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_coupon']); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if ($od['od_send_cost2'] > 0) { ?>
+                <dt class="sod_bsk_dvr">추가배송비</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_cost2']); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if ($od['od_send_cost2'] > 0) { ?>
-            <dt class="sod_bsk_dvr">추가배송비</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_cost2']); ?> 원</strong></dd>
-            <?php } ?>
+                <?php if ($od['od_cancel_price'] > 0) { ?>
+                <dt class="sod_bsk_dvr">취소금액</dt>
+                <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cancel_price']); ?> 원</strong></dd>
+                <?php } ?>
 
-            <?php if ($od['od_cancel_price'] > 0) { ?>
-            <dt class="sod_bsk_dvr">취소금액</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cancel_price']); ?> 원</strong></dd>
-            <?php } ?>
+                <dt class="sod_bsk_point">적립포인트</dt>
+                <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
 
-            <dt class="sod_bsk_cnt">총계</dt>
-            <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원</strong></dd>
+                <dt class="sod_bsk_cnt">총계</dt>
+                <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원</strong></dd>
 
-            <dt class="sod_bsk_point">포인트</dt>
-            <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
-        </dl>
+            </dl>
+        </div>
     </section>
 
     <div id="sod_fin_view">
@@ -606,6 +613,12 @@ if($od['od_pg'] == 'lg') {
             <li id="alrdy">
                 결제액
                 <strong><?php echo $wanbul; ?></strong>
+                <?php if( $od['od_receipt_point'] ){    //포인트로 결제한 내용이 있으면 ?>
+                <div class="right">
+                    <p><span class="title"><i class="fa fa-angle-right" aria-hidden="true"></i> 포인트 결제</span><?php echo number_format($od['od_receipt_point']); ?> 점</p>
+                    <p><span class="title"><i class="fa fa-angle-right" aria-hidden="true"></i> 실결제</span><?php echo number_format($od['od_receipt_price']); ?> 원</p>
+                </div>
+                <?php } ?>
             </li>
         </ul>
     </section>
@@ -624,8 +637,8 @@ if($od['od_pg'] == 'lg') {
             <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
             <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
-            <label for="cancel_memo">취소사유</label>
-            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" maxlength="100">
+            <label for="cancel_memo" class="sound_only">취소사유</label>
+            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" maxlength="100" placeholder="취소사유">
             <input type="submit" value="확인" class="btn_frmline">
 
             </form>

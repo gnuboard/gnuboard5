@@ -9,7 +9,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 ?>
 
-<div class="local_sch02 local_sch">
+<div class="local_sch03 local_sch">
 
     <div>
         <form name="forderprint" action="./orderprintresult.php" onsubmit="return forderprintcheck(this);" autocomplete="off">
@@ -76,8 +76,8 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 </div>
 
-<div class="btn_add01 btn_add">
-    <a href="./orderlist.php" class="btn_add01 btn_add_optional">주문내역</a>
+<div class="btn_fixed_top">
+    <a href="./orderlist.php" class="btn_01 btn ">주문내역</a>
 </div>
 
 <div class="local_desc01 local_desc">

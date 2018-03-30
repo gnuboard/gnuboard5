@@ -65,7 +65,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
     ?>
 </section>
 
-<section class="couponzone_list" id="point_coupon">
+<section class="couponzone_list" id="coupon_point">
     <h2>포인트 쿠폰</h2>
     <p>보유하신 <?php echo $default['de_admin_company_name']; ?> 회원 포인트를 쿠폰으로 교환하실 수 있습니다.</p>
 

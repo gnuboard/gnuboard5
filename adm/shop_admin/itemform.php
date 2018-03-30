@@ -131,12 +131,6 @@ $pg_anchor ='<ul class="anchor">
 </ul>
 ';
 
-$frm_submit = '<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./itemlist.php?'.$qstr.'">목록</a>';
-if($it_id)
-    $frm_submit .= PHP_EOL.'<a href="'.G5_SHOP_URL.'/item.php?it_id='.$it_id.'" class="btn_frmline">상품보기</a>';
-$frm_submit .= '</div>';
 
 // 쿠폰적용안함 설정 필드 추가
 if(!sql_query(" select it_nocoupon from {$g5['g5_shop_item_table']} limit 1", false)) {
@@ -218,7 +212,6 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_skin">
     <h2 class="h2_frm">스킨설정</h2>
@@ -230,14 +223,11 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>스킨설정</caption>
-        <colgroup>
-            <col class="grid_4">
-            <col>
-        </colgroup>
+      
         <tbody>
         <tr>
             <th scope="row"><label for="it_skin">PC용 스킨</label></th>
-            <td colspan="3">
+            <td>
                 <?php echo get_skin_select('shop', 'it_skin', 'it_skin', $it['it_skin']); ?>
             </td>
             <td class="td_grpset">
@@ -249,7 +239,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
         </tr>
         <tr>
             <th scope="row"><label for="it_mobile_skin">모바일용 스킨</label></th>
-            <td colspan="3">
+            <td>
                 <?php echo get_mobile_skin_select('shop', 'it_mobile_skin', 'it_mobile_skin', $it['it_mobile_skin']); ?>
             </td>
             <td class="td_grpset">
@@ -264,7 +254,6 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_ini">
     <h2 class="h2_frm">기본정보</h2>
@@ -485,7 +474,6 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_compact">
     <h2 class="h2_frm">상품요약정보</h2>
@@ -511,7 +499,6 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
     <div id="sit_compact_fields"><?php include_once(G5_ADMIN_PATH.'/shop_admin/iteminfo.php'); ?></div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <script>
 $(function(){
@@ -1112,7 +1099,6 @@ $(function(){
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_sendcost">
     <h2 class="h2_frm">배송비</h2>
@@ -1269,7 +1255,6 @@ $(function(){
     </script>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_img">
     <h2 class="h2_frm">이미지</h2>
@@ -1313,7 +1298,6 @@ $(function(){
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_relation" class="srel">
     <h2 class="h2_frm">관련상품</h2>
@@ -1464,7 +1448,6 @@ $(function(){
 
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_event" class="srel">
     <h2 class="h2_frm">관련이벤트</h2>
@@ -1579,7 +1562,6 @@ $(function(){
 
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_optional">
     <h2 class="h2_frm">상세설명설정</h2>
@@ -1639,7 +1621,6 @@ $(function(){
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_sitfrm_extra">
     <h2>여분필드 설정</h2>
@@ -1691,7 +1672,11 @@ $(function(){
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
+<div class="btn_fixed_top">
+    <a href="./itemlist.php?<?php echo $qstr; ?>" class="btn btn_02">목록</a>
+    <a href="<?php echo G5_SHOP_URL ;?>/item.php?it_id=<?php echo $it_id ;?>" class="btn_02  btn">상품보기</a>
+    <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
+</div>
 </form>
 
 

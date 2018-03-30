@@ -24,33 +24,28 @@ include_once(G5_PATH.'/head.sub.php');
     <input type="hidden" name="token" value="<?php echo $token; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
 
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <colgroup>
-            <col class="grid_3">
-            <col>
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="row"><label for="to_email">추천받는 분 E-mail</label></th>
-            <td><input type="email" name="to_email" id="to_email" required class="frm_input"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="subject">제목</label></th>
-            <td><input type="text" name="subject" id="subject" required class="frm_input"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="content">내용</label></th>
-            <td><textarea name="content" id="content" required></textarea></td>
-        </tr>
-        </tbody>
-        </table>
-    </div>
+    <div class="new_win_con form_01">
+        <ul>
+            <li>
+                <label for="to_email" class="sound_only">추천받는 분 E-mail</label>
+                <input type="email" name="to_email" id="to_email" required class="frm_input full_input" placeholder="추천받는 분 E-mail">
+            </li>
+            <li>
+                <label for="subject" class="sound_only">제목</label>
+                <input type="text" name="subject" id="subject" required class="frm_input full_input" placeholder="제목">
+            </li>
+            <li>
+                <label for="content" class="sound_only">내용</label>
+                <textarea name="content" id="content" required  placeholder="내용"></textarea>
+            </li>
+        </ul>
 
+    </div>
     <div class="win_btn">
         <input type="submit" id="btn_submit" value="보내기" class="btn_submit">
-        <a href="javascript:window.close();">창닫기</a>
+        <a href="javascript:window.close();" class="btn_close">창닫기</a>
     </div>
+
     </form>
 
 </div>

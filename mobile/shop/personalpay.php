@@ -6,7 +6,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 ?>
 
 <!-- 상품 목록 시작 { -->
-<div id="sct">
+<div id="sct_pv">
 
     <?php
     // 리스트 유형별로 출력

@@ -3,13 +3,14 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
+add_javascript('<script src="'.G5_JS_URL.'/jquery.bxslider.js"></script>', 10);
 ?>
 
 <?php
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
 
-    if ($i==0) echo '<aside id="sbn_side" class="sbn"><h2>쇼핑몰 배너</h2><ul>'.PHP_EOL;
+    if ($i==0) echo '<aside id="sbn_side" class="sbn"><h2>쇼핑몰 배너</h2><ul class="sb_bn">'.PHP_EOL;
     //print_r2($row);
     // 테두리 있는지
     $bn_border  = ($row['bn_border']) ? ' class="sbn_border"' : '';;
@@ -33,5 +34,18 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         echo '</li>'.PHP_EOL;
     }
 }
-if ($i>0) echo '</ul></aside>'.PHP_EOL;
+if ($i>0) {
+    echo '</ul></aside>'.PHP_EOL;
 ?>
+
+<script>
+$(document).ready(function(){
+    $('.sbn .sb_bn').show().bxSlider({
+        speed:800,
+        pager:false,
+
+    });
+});
+
+</script>
+<?php }     //end if $i ?>

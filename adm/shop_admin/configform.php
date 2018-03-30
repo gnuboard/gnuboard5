@@ -26,11 +26,6 @@ $pg_anchor = '<ul class="anchor">
 <li><a href="#anc_scf_sms">SMS설정</a></li>
 </ul>';
 
-$frm_submit = '<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="'.G5_SHOP_URL.'">쇼핑몰</a>
-</div>';
-
 // 무이자 할부 사용설정 필드 추가
 if(!isset($default['de_card_noint_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
@@ -108,7 +103,7 @@ if(!isset($default['de_samsung_pay_use'])) {
                     ADD `de_samsung_pay_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_easy_pay_use` ", true);
 }
 
-// 이니시스 
+// 이니시스
 if(!isset($default['de_inicis_cartpoint_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_inicis_cartpoint_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_samsung_pay_use` ", true);
@@ -246,7 +241,6 @@ if(!isset($default['de_listtype_list_skin'])) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_scf_skin">
     <h2 class="h2_frm">스킨설정</h2>
@@ -258,20 +252,16 @@ if(!isset($default['de_listtype_list_skin'])) {
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>스킨설정</caption>
-        <colgroup>
-            <col class="grid_4">
-            <col>
-        </colgroup>
         <tbody>
         <tr>
             <th scope="row"><label for="de_shop_skin">PC용 스킨</label></th>
-            <td colspan="3">
+            <td>
                 <?php echo get_skin_select('shop', 'de_shop_skin', 'de_shop_skin', $default['de_shop_skin'], 'required'); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="de_shop_mobile_skin">모바일용 스킨</label></th>
-            <td colspan="3">
+            <td>
                 <?php echo get_mobile_skin_select('shop', 'de_shop_mobile_skin', 'de_shop_mobile_skin', $default['de_shop_mobile_skin'], 'required'); ?>
             </td>
         </tr>
@@ -280,7 +270,7 @@ if(!isset($default['de_listtype_list_skin'])) {
     </div>
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="get_shop_skin">테마 스킨설정 가져오기</button></div>', $frm_submit); ?>
+<button type="button" class="get_shop_skin">테마 스킨설정 가져오기</button>
 
 <section id="anc_scf_index">
     <h2 class="h2_frm">쇼핑몰 초기화면</h2>
@@ -295,10 +285,6 @@ if(!isset($default['de_listtype_list_skin'])) {
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>쇼핑몰 초기화면 설정</caption>
-        <colgroup>
-            <col class="grid_4">
-            <col>
-        </colgroup>
         <tbody>
         <tr>
             <th scope="row">히트상품출력</th>
@@ -400,7 +386,7 @@ if(!isset($default['de_listtype_list_skin'])) {
     </div>
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="shop_pc_index">테마설정 가져오기</button></div>', $frm_submit); ?>
+<button type="button" class="shop_pc_index">테마설정 가져오기</button>
 
 <section id="anc_mscf_index">
     <h2 class="h2_frm">모바일 쇼핑몰 초기화면 설정</h2>
@@ -519,7 +505,7 @@ if(!isset($default['de_listtype_list_skin'])) {
     </div>
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="shop_mobile_index">테마설정 가져오기</button></div>', $frm_submit); ?>
+<button type="button" class="shop_mobile_index">테마설정 가져오기</button>
 
 <section id ="anc_scf_payment">
     <h2 class="h2_frm">결제설정</h2>
@@ -699,7 +685,7 @@ if(!isset($default['de_listtype_list_skin'])) {
             </th>
             <td>
                 <?php echo help("NHN KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 NHN KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
-                <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input pg_input" size="3" maxlength="3"> 영대문자, 숫자 혼용 3자리
+                <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input code_input" size="2" maxlength="3"> 영대문자, 숫자 혼용 3자리
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld">
@@ -716,7 +702,7 @@ if(!isset($default['de_listtype_list_skin'])) {
             </th>
             <td>
                 <?php echo help("LG유플러스에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 LG유플러스에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 LG유플러스 상점아이디와 동일합니다."); ?>
-                <span class="sitecode">si_</span> <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid']; ?>" id="cf_lg_mid" class="frm_input pg_input" size="10" maxlength="20"> 영문자, 숫자 혼용
+                <span class="sitecode">si_</span> <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid']; ?>" id="cf_lg_mid" class="frm_input code_input" size="10" maxlength="20"> 영문자, 숫자 혼용
             </td>
         </tr>
         <tr class="pg_info_fld lg_info_fld">
@@ -729,11 +715,11 @@ if(!isset($default['de_listtype_list_skin'])) {
         <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
             <th scope="row">
                 <label for="de_inicis_mid">KG이니시스 상점아이디</label><br>
-                <a href="http://sir.kr/main/service/inicis_pg.php" target="_blank" id="scf_lgreg" class="kg_btn">KG이니시스 서비스신청하기</a>
+                <a href="http://sir.kr/main/service/inicis_pg.php" target="_blank" id="scf_kgreg" class="kg_btn">KG이니시스 서비스신청하기</a>
             </th>
             <td>
                 <?php echo help("KG이니시스로 부터 발급 받으신 상점아이디(MID) 10자리 중 SIR 을 제외한 나머지 7자리를 입력 합니다.\n만약, 상점아이디가 SIR로 시작하지 않는다면 계약담당자에게 변경 요청을 해주시기 바랍니다. (Tel. 02-3430-5858) 예) SIRpaytest"); ?>
-                <span class="sitecode">SIR</span> <input type="text" name="de_inicis_mid" value="<?php echo $default['de_inicis_mid']; ?>" id="de_inicis_mid" class="frm_input pg_input" size="10" maxlength="10"> 영문소문자(숫자포함 가능)
+                <span class="sitecode">SIR</span> <input type="text" name="de_inicis_mid" value="<?php echo $default['de_inicis_mid']; ?>" id="de_inicis_mid" class="frm_input code_input" size="10" maxlength="10"> 영문소문자(숫자포함 가능)
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
@@ -762,7 +748,7 @@ if(!isset($default['de_listtype_list_skin'])) {
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
             <th scope="row">
-                <label for="de_inicis_lpay_use">KG이니시스 L.pay</label>
+                <label for="de_inicis_lpay_use">KG이니시스 L.pay 사용</label>
             </th>
             <td>
                 <?php echo help("체크시 KG이니시스 L.pay를 사용합니다. <br >실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 키패스워드, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
@@ -785,7 +771,7 @@ if(!isset($default['de_listtype_list_skin'])) {
             </th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점아이디(MID) 10자리 중 첫 KHSIR과 끝 m 을 제외한 영문4자리를 입력 합니다. 예) KHSIRtestm"); ?>
-                <span class="sitecode">KHSIR</span> <input type="text" name="de_kakaopay_mid" value="<?php echo $default['de_kakaopay_mid']; ?>" id="de_kakaopay_mid" class="frm_input pg_input" size="5" maxlength="4"> <span class="sitecode">m</span>
+                <span class="sitecode">KHSIR</span> <input type="text" name="de_kakaopay_mid" value="<?php echo $default['de_kakaopay_mid']; ?>" id="de_kakaopay_mid" class="frm_input code_input" size="5" maxlength="4"> <span class="sitecode">m</span>
             </td>
         </tr>
         <tr class="kakao_info_fld">
@@ -885,7 +871,7 @@ if(!isset($default['de_listtype_list_skin'])) {
                 <?php echo help("에스크로 결제를 사용하시려면, 반드시 결제대행사 상점 관리자 페이지에서 에스크로 서비스를 신청하신 후 사용하셔야 합니다.\n에스크로 사용시 배송과의 연동은 되지 않으며 에스크로 결제만 지원됩니다."); ?>
                     <input type="radio" name="de_escrow_use" value="0" <?php echo $default['de_escrow_use']==0?"checked":""; ?> id="de_escrow_use1">
                     <label for="de_escrow_use1">일반결제 사용</label>
-                    <input type="radio" name="de_escrow_use" value="1"<?php echo $default['de_escrow_use']==1?"checked":""; ?> id="de_escrow_use2">
+                    <input type="radio" name="de_escrow_use" value="1" <?php echo $default['de_escrow_use']==1?"checked":""; ?> id="de_escrow_use2">
                     <label for="de_escrow_use2"> 에스크로결제 사용</label>
             </td>
         </tr>
@@ -956,7 +942,6 @@ if(!isset($default['de_listtype_list_skin'])) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_scf_delivery">
     <h2 >배송설정</h2>
@@ -1032,7 +1017,6 @@ if(!isset($default['de_listtype_list_skin'])) {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_scf_etc">
     <h2 class="h2_frm">기타 설정</h2>
@@ -1351,7 +1335,7 @@ if(!isset($default['de_listtype_list_skin'])) {
     </div>
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="shop_etc">테마설정 가져오기</button></div>', $frm_submit); ?>
+<button type="button" class="shop_etc">테마설정 가져오기</button>
 
 <?php if (file_exists($logo_img) || file_exists($logo_img2) || file_exists($mobile_logo_img) || file_exists($mobile_logo_img2)) { ?>
 <script>
@@ -1525,7 +1509,7 @@ function byte_check(el_cont, el_byte)
          <?php if ($userinfo['payment'] == 'A') { ?>
         <tr>
             <th scope="row">충전 잔액</th>
-            <td colspan="3">
+            <td>
                 <?php echo number_format($userinfo['coin']); ?> 원.
                 <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $config['cf_icode_id']; ?>&amp;icode_passwd=<?php echo $config['cf_icode_pw']; ?>" target="_blank" class="btn_frmline" onclick="window.open(this.href,'icode_payment', 'scrollbars=1,resizable=1'); return false;">충전하기</a>
             </td>
@@ -1575,7 +1559,11 @@ function byte_check(el_cont, el_byte)
 
 </section>
 
-<?php echo $frm_submit; ?>
+
+<div class="btn_fixed_top">
+    <a href=" <?php echo G5_SHOP_URL; ?>" class="btn btn_02">쇼핑몰</a>
+    <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
+</div>
 
 </form>
 

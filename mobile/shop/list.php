@@ -110,10 +110,21 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
     $skin_file = is_include_path_check($skin_dir.'/'.$ca['ca_mobile_skin']) ? $skin_dir.'/'.$ca['ca_mobile_skin'] : $skin_dir.'/list.10.skin.php';
 
     if (file_exists($skin_file)) {
+
+        echo '<div id="sct_sortlst">';
+
         $sort_skin = $skin_dir.'/list.sort.skin.php';
         if(!is_file($sort_skin))
             $sort_skin = G5_MSHOP_SKIN_PATH.'/list.sort.skin.php';
         include $sort_skin;
+    
+            // 상품 보기 타입 변경 버튼
+        $sub_skin = $skin_dir.'/list.sub.skin.php';
+        if(!is_file($sub_skin))
+            $sub_skin = G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
+        include $sub_skin;
+
+        echo '</div>';
 
         // 총몇개
         $items = $ca['ca_mobile_list_mod'] * $ca['ca_mobile_list_row'];
@@ -131,9 +142,10 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
         $list->set_order_by($order_by);
         $list->set_from_record($from_record);
         $list->set_view('it_img', true);
-        $list->set_view('it_id', false);
+        $list->set_view('it_id', true);
         $list->set_view('it_name', true);
         $list->set_view('it_price', true);
+        $list->set_view('sns', true);
         echo $list->run();
 
         // where 된 전체 상품수
@@ -154,7 +166,7 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
     <div class="li_more">
         <p id="item_load_msg"><img src="<?php echo G5_SHOP_CSS_URL; ?>/img/loading.gif" alt="로딩이미지" ><br>잠시만 기다려주세요.</p>
         <div class="li_more_btn">
-            <button type="button" id="btn_more_item" data-url="<?php echo $ajax_url; ?>" data-page="<?php echo $page; ?>">MORE ITEM +</button>
+            <button type="button" id="btn_more_item" data-url="<?php echo $ajax_url; ?>" data-page="<?php echo $page; ?>">더보기 +</button>
         </div>
     </div>
     <?php } ?>

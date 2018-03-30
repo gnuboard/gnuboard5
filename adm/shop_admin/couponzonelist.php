@@ -42,18 +42,16 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 $colspan = 9;
 ?>
 
+<div class="local_ov">
+    <span class="btn_ov01"><span class="ov_txt">전체 </span><span class="ov_num"> <?php echo number_format($total_count) ?> 개</span></span>
+</div>
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
-<span>
-    전체 <?php echo number_format($total_count) ?> 개
-</span>
+
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
 <input type="submit" class="btn_submit" value="검색">
 </form>
 
-<div class="btn_add01 btn_add">
-    <a href="./couponzoneform.php" id="coupon_add">쿠폰 추가</a>
-</div>
 
 <form name="fcouponlist" id="fcouponzonelist" method="post" action="./couponzonelist_delete.php" onsubmit="return fcouponzonelist_submit(this);">
 <input type="hidden" name="stx" value="<?php echo $stx; ?>">
@@ -127,15 +125,15 @@ $colspan = 9;
             <input type="hidden" id="cz_id_<?php echo $i; ?>" name="cz_id[<?php echo $i; ?>]" value="<?php echo $row['cz_id']; ?>">
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">
         </td>
-        <td><?php echo get_text($row['cz_subject']); ?></td>
+        <td class="td_left"><?php echo get_text($row['cz_subject']); ?></td>
         <td class="td_type"><?php echo $cz_type; ?></td>
         <td class="td_type"><?php echo $cp_method; ?></td>
         <td class="td_odrnum2"><?php echo $cp_price; ?></td>
         <td  class="td_type">다운로드 후 <?php echo $row['cz_period']; ?>일</td>
         <td class="td_num"><?php echo number_format($row['cz_download']); ?></td>
         <td class="td_datetime"><?php echo substr($row['cz_start'], 2, 8); ?> ~ <?php echo substr($row['cz_end'], 2, 8); ?></td>
-        <td class="td_mngsmall">
-            <a href="./couponzoneform.php?w=u&amp;cz_id=<?php echo $row['cz_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo get_text($row['cz_subject']); ?> </span>수정</a>
+        <td class="td_mng td_mng_s">
+            <a href="./couponzoneform.php?w=u&amp;cz_id=<?php echo $row['cz_id']; ?>&amp;<?php echo $qstr; ?>" class="btn btn_03"><span class="sound_only"><?php echo get_text($row['cz_subject']); ?> </span>수정</a>
         </td>
     </tr>
 
@@ -149,8 +147,9 @@ $colspan = 9;
     </table>
 </div>
 
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+<div class="btn_fixed_top">
+     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
+   <a href="./couponzoneform.php" id="coupon_add" class="btn btn_01">쿠폰 추가</a>
 </div>
 
 </form>

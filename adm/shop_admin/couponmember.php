@@ -44,7 +44,7 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
         <input type="text" name="mb_name" id="mb_name" value="<?php echo $mb_name; ?>" class="frm_input required" required size="20">
         <input type="submit" value="검색" class="btn_frmline">
     </div>
-    <div class="tbl_head01 tbl_wrap">
+    <div class="tbl_head01 tbl_wrap new_win_con">
         <table>
         <caption>검색결과</caption>
         <thead>
@@ -60,8 +60,8 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
         ?>
         <tr>
             <td class="td_mbname"><?php echo get_text($row['mb_name']); ?></td>
-            <td><?php echo $row['mb_id']; ?></td>
-            <td class="scp_find_select"><button type="button" class="btn_frmline" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button></td>
+            <td class="td_left"><?php echo $row['mb_id']; ?></td>
+            <td class="scp_find_select td_mng td_mng_s"><button type="button" class="btn btn_03" onclick="sel_member_id('<?php echo $row['mb_id']; ?>');">선택</button></td>
         </tr>
         <?php
         }
@@ -76,8 +76,8 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
 
     <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr1.'&amp;page='); ?>
 
-    <div class="btn_confirm01 btn_confirm">
-        <button type="button" onclick="window.close();">닫기</button>
+    <div class="btn_confirm01 btn_confirm win_btn">
+        <button type="button" onclick="window.close();" class="btn_close btn">닫기</button>
     </div>
 </div>
 

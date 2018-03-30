@@ -84,11 +84,6 @@ $pg_anchor ='<ul class="anchor">
 if ($w == 'u') $pg_anchor .= '<li><a href="#frm_etc">기타설정</a></li>';
 $pg_anchor .= '</ul>';
 
-$frm_submit = '<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./categorylist.php?'.$qstr.'">목록</a>
-</div>';
-
 // 쿠폰 적용 불가 설정 필드 추가
 if(!sql_query(" select ca_nocoupon from {$g5['g5_shop_category_table']} limit 1 ", false)) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_category_table']}`
@@ -198,13 +193,13 @@ else {
         </tr>
         <tr>
             <th scope="row"><label for="ca_skin_dir">PC용 스킨명</label></th>
-            <td colspan="3">
+            <td>
                 <?php echo get_skin_select('shop', 'ca_skin_dir', 'ca_skin_dir', $ca['ca_skin_dir']); ?>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="ca_mobile_skin_dir">모바일용 스킨명</label></th>
-            <td colspan="3">
+            <td>
                 <?php echo get_mobile_skin_select('shop', 'ca_mobile_skin_dir', 'ca_mobile_skin_dir', $ca['ca_mobile_skin_dir']); ?>
             </td>
         </tr>
@@ -333,9 +328,9 @@ else {
         </tbody>
         </table>
     </div>
+    <button type="button" class="shop_category btn_02 btn">테마설정 가져오기</button>
 </section>
 
-<?php echo preg_replace('#</div>$#i', '<button type="button" class="shop_category">테마설정 가져오기</button></div>', $frm_submit); ?>
 
 <section id="anc_scatefrm_optional">
     <h2 class="h2_frm">선택 입력</h2>
@@ -396,7 +391,6 @@ else {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <section id="anc_scatefrm_extra">
     <h2>여분필드 설정</h2>
@@ -425,7 +419,6 @@ else {
     </div>
 </section>
 
-<?php echo $frm_submit; ?>
 
 <?php if ($w == "u") { ?>
 <section id="frm_etc">
@@ -452,9 +445,12 @@ else {
         </table>
     </div>
 </section>
-<?php echo $frm_submit; ?>
-<?php } ?>
 
+<?php } ?>
+<div class="btn_fixed_top">
+    <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
+    <a href="./categorylist.php?'.$qstr.'" class="btn_02 btn">목록</a>
+</div>
 </form>
 
 <script>

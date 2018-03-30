@@ -40,15 +40,15 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
             if ($row['it_tel_inq']) $out_cd = 'tel_inq';
 
-            $image = get_it_image($row['it_id'], 50, 50);
+            $image = get_it_image($row['it_id'], 70, 70);
     ?>
 
         <li>
-                <div class="wish_img"><?php echo $image; ?></div>
-                <div class="wish_info">
-                    <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo stripslashes($row['it_name']); ?></a>
-                    <span class="info_date">보관일 <?php echo substr($row['wi_time'], 2, 8); ?></span>
-                </div>
+            <div class="wish_img"><a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $image; ?></a></div>
+            <div class="wish_info">
+                <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $row['it_id']; ?>" class="wish_prd"><?php echo stripslashes($row['it_name']); ?></a>
+                <span class="info_date"> <?php echo substr($row['wi_time'], 2, 17); ?></span>
+            
                 <div class="wish_chk">
                     <?php
                     // 품절검사
@@ -65,7 +65,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
                     <input type="hidden" name="io_value[<?php echo $row['it_id']; ?>][0]" value="<?php echo $row['it_name']; ?>">
                     <input type="hidden"   name="ct_qty[<?php echo $row['it_id']; ?>][0]" value="1">
                 </div>
-                <span class="wish_del"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>">삭제</a></span>
+                <span class="wish_del"><a href="<?php echo G5_SHOP_URL; ?>/wishupdate.php?w=d&amp;wi_id=<?php echo $row['wi_id']; ?>"><i class="fa fa-trash" aria-hidden="true"></i><span class="sound_only">삭제</span></a></span>
+            </div>
 
         </li>
         <?php
@@ -77,8 +78,8 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
 
     <div id="sod_ws_act">
-        <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">BUY NOW</button>
-        <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">CART</button>
+        <button type="submit" class="btn02" onclick="return fwishlist_check(document.fwishlist,'direct_buy');">바로구매</button>
+        <button type="submit" class="btn01" onclick="return fwishlist_check(document.fwishlist,'');">장바구니</button>
 
     </div>
     </form>

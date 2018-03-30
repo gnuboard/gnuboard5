@@ -1,0 +1,12 @@
+@charset "utf-8";
+
+/* 최근게시물 스킨 (latest) */
+.lt {position:relative;margin:40px 10px 20px;text-align:center}
+.lt h2{text-align:center;font-size:1.25em;display:inline-block;padding-bottom:5px;margin: 0 0 10px;border-bottom:2px solid #000;}
+.lt ul {margin:0 0 10px;padding:0;list-style:none;border-bottom:1px solid #ccc}
+.lt li{text-align:left;background:#fff;margin:0 0 1px;padding:10px }
+.lt a {display:block;padding:5px 0;color:#000;text-decoration:none}
+.lt li i{color:#9da4bc}
+.lt li .fa-heart{color:#ff0000}
+.lt li .new_icon{display:inline-block;padding: 0 3px;line-height:15px ;font-size:0.92em;color:#fff;background:#c56bed}
+.lt li .cnt_cmt{color:#48a3d5}

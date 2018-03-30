@@ -52,7 +52,7 @@ $colspan = 10;
 ?>
 
 <div class="local_ov01 local_ov">
-    전체 <?php echo number_format($total_count) ?> 건
+   <span class="btn_ov01"><span class="ov_txt">전체 </span><span class="ov_num">  <?php echo number_format($total_count) ?> 건 </span></span> 
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
@@ -85,8 +85,8 @@ $colspan = 10;
         <th scope="col">PG</th>
         <th scope="col">주문자</th>
         <th scope="col">주문자전화</th>
-        <th scope="col">받는분</a></th>
-        <th scope="col">주문금액</a></th>
+        <th scope="col">받는분</th>
+        <th scope="col">주문금액</th>
         <th scope="col">결제방법</th>
         <th scope="col">주문일시</th>
         <th scope="col">관리</th>
@@ -129,9 +129,9 @@ $colspan = 10;
         <td class="td_price"><?php echo number_format($ct['price']); ?></td>
         <td class="td_center"><?php echo $data['od_settle_case']; ?></td>
         <td class="td_time"><?php echo $row['dt_time']; ?></td>
-        <td class="td_mngsmall">
-            <a href="./inorderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
-            <a href="./inorderformupdate.php?w=d&amp;od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm(this);"><span class="sound_only"><?php echo $row['od_id']; ?> </span>삭제</a>
+        <td class="td_mng td_mng_m">
+            <a href="./inorderform.php?od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" class="btn btn_03"><span class="sound_only"><?php echo $row['od_id']; ?> </span>보기</a>
+            <a href="./inorderformupdate.php?w=d&amp;od_id=<?php echo $row['od_id']; ?>&amp;<?php echo $qstr; ?>" onclick="return delete_confirm(this);" class="btn btn_02"><span class="sound_only"><?php echo $row['od_id']; ?> </span>삭제</a>
         </td>
     </tr>
 
@@ -145,8 +145,8 @@ $colspan = 10;
     </table>
 </div>
 
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+<div class="btn_fixed_top">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
 </div>
 
 </form>

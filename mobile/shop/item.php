@@ -125,11 +125,16 @@ if(!$it['it_use'] || $it['it_tel_inq'] || $is_soldout)
     $is_orderable = false;
 
 if($is_orderable) {
-    // 선택 옵션
-    $option_item = get_item_options($it['it_id'], $it['it_option_subject']);
+    if(defined('G5_THEME_USE_OPTIONS_TRTD') && G5_THEME_USE_OPTIONS_TRTD){
+        $option_item = get_item_options($it['it_id'], $it['it_option_subject'], '');
+        $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject'], '');
+    } else {
+        // 선택 옵션 ( 기존의 tr td 태그로 가져오려면 'div' 를 '' 로 바꾸거나 또는 지워주세요 )
+        $option_item = get_item_options($it['it_id'], $it['it_option_subject'], 'div');
 
-    // 추가 옵션
-    $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject']);
+        // 추가 옵션 ( 기존의 tr td 태그로 가져오려면 'div' 를 '' 로 바꾸거나 또는 지워주세요 )
+        $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject'], 'div');
+    }
 
     // 상품 선택옵션 수
     $option_count = 0;

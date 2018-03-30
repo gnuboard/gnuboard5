@@ -7,6 +7,24 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
 
+<?php if ($default['de_rel_list_use']) { ?>
+<!-- 관련상품 시작 { -->
+<section id="sit_rel">
+    <h2>관련상품</h2>
+    <?php
+    $rel_skin_file = $skin_dir.'/'.$default['de_rel_list_skin'];
+    if(!is_file($rel_skin_file))
+        $rel_skin_file = G5_SHOP_SKIN_PATH.'/'.$default['de_rel_list_skin'];
+
+    $sql = " select b.* from {$g5['g5_shop_item_relation_table']} a left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
+    $list = new item_list($rel_skin_file, $default['de_rel_list_mod'], 0, $default['de_rel_img_width'], $default['de_rel_img_height']);
+    $list->set_query($sql);
+    echo $list->run();
+    ?>
+</section>
+<!-- } 관련상품 끝 -->
+<?php } ?>
+
 <!-- 상품 정보 시작 { -->
 <section id="sit_inf">
     <h2>상품 정보</h2>
@@ -107,27 +125,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 <!-- } 교환/반품 끝 -->
 <?php } ?>
 
-<?php if ($default['de_rel_list_use']) { ?>
-<!-- 관련상품 시작 { -->
-<section id="sit_rel">
-    <h2>관련상품</h2>
-    <?php echo pg_anchor('rel'); ?>
-
-    <div class="sct_wrap">
-        <?php
-        $rel_skin_file = $skin_dir.'/'.$default['de_rel_list_skin'];
-        if(!is_file($rel_skin_file))
-            $rel_skin_file = G5_SHOP_SKIN_PATH.'/'.$default['de_rel_list_skin'];
-
-        $sql = " select b.* from {$g5['g5_shop_item_relation_table']} a left join {$g5['g5_shop_item_table']} b on (a.it_id2=b.it_id) where a.it_id = '{$it['it_id']}' and b.it_use='1' ";
-        $list = new item_list($rel_skin_file, $default['de_rel_list_mod'], 0, $default['de_rel_img_width'], $default['de_rel_img_height']);
-        $list->set_query($sql);
-        echo $list->run();
-        ?>
-    </div>
-</section>
-<!-- } 관련상품 끝 -->
-<?php } ?>
 
 <script>
 $(window).on("load", function() {

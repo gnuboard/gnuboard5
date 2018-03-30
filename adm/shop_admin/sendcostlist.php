@@ -63,7 +63,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                 <input type="hidden" id="sc_id_<?php echo $i; ?>" name="sc_id[<?php echo $i; ?>]" value="<?php echo $row['sc_id']; ?>">
                 <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">
             </td>
-            <td><?php echo $row['sc_name']; ?></td>
+            <td class="td_left"><?php echo $row['sc_name']; ?></td>
             <td class="td_postalbig"><?php echo $row['sc_zip1'].' ~ '.$row['sc_zip2']; ?></td>
             <td class="td_sendcost_add"><?php echo number_format($row['sc_price']); ?></td>
         </tr>
@@ -78,7 +78,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </div>
 
     <div class="btn_list01 btn_list">
-        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+        <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn_frmline">
     </div>
 
     </form>
@@ -125,7 +125,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </div>
 
     <div class="btn_confirm01 btn_confirm">
-        <input type="submit" value="확인" class="btn_submit">
+        <input type="submit" value="확인" class="btn_submit btn">
     </div>
 
     </form>

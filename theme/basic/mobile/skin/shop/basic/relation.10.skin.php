@@ -25,7 +25,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
         if ($this->css) {
             echo "<ul id=\"sct_wrap\" class=\"{$this->css}\">\n";
         } else {
-            echo "<ul id=\"sct_wrap\" class=\"sct sct_10\">\n";
+            echo "<ul id=\"sct_wrap\" class=\"srl_10\">\n";
         }
     }
 
@@ -37,7 +37,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     echo "<li class=\"sct_li{$li_clear}\"$li_width_style>\n";
 
     if ($this->href) {
-        echo "<div class=\"sct_img\"><a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
+        echo "<div class=\"sct_img\"><a href=\"{$this->href}{$row['it_id']}\">\n";
     }
 
     if ($this->view_it_img) {
@@ -54,7 +54,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->href) {
-        echo "<div class=\"sct_txt\"><a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
+        echo "<a href=\"{$this->href}{$row['it_id']}\" class=\"sct_txt\">\n";
     }
 
     if ($this->view_it_name) {
@@ -62,7 +62,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     }
 
     if ($this->href) {
-        echo "</a></div>\n";
+        echo "</a>\n";
     }
 
     if ($this->view_it_price) {

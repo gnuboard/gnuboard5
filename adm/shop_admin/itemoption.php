@@ -192,7 +192,7 @@ if($po_run) {
 </div>
 
 <div class="btn_list01 btn_list">
-    <input type="button" value="선택삭제" id="sel_option_delete">
+    <input type="button" value="선택삭제" id="sel_option_delete" class="btn btn_02">
 </div>
 
 <fieldset>

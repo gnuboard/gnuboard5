@@ -57,7 +57,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
-    <?php echo $total_count; ?>건
+    <span class="btn_ov01"><span class="ov_txt">전체 </span><span class="ov_num"> <?php echo $total_count; ?>건</span></span>
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
@@ -112,7 +112,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $num; ?></td>
-        <td>
+        <td class="td_left">
             <a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str($row['it_name'],30); ?></a>
         </td>
         <td class="td_num"><?php echo $row['it_id_cnt']; ?></td>

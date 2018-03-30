@@ -8,6 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 <!-- 쇼핑몰 카테고리 시작 { -->
 <nav id="gnb">
     <h2>쇼핑몰 카테고리</h2>
+    <button type="button" id="menu_open"><i class="fa fa-bars" aria-hidden="true"></i> 카테고리</button>
     <ul id="gnb_1dul">
         <?php
         // 1단계 분류 판매 가능한 것만

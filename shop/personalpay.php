@@ -18,7 +18,7 @@ include_once('./_head.php');
     $list_file = G5_SHOP_SKIN_PATH.'/personalpay.skin.php';
     if (file_exists($list_file)) {
 
-        $list_mod   = 3;
+        $list_mod   = 4;
         $list_row   = 5;
         $img_width  = 230;
         $img_height = 230;

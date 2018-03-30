@@ -28,9 +28,9 @@ $result = sql_query($sql);
 
 <!-- 쿠폰 내역 시작 { -->
 <div id="scp_list" class="new_win">
-    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><i class="fa fa-newspaper-o" aria-hidden="true"></i> <?php echo $g5['title'] ?></h1>
 
-    <div class="win_desc">
+    <div class="list_01">
         <ul>
         <?php
         $cp_count = 0;
@@ -53,20 +53,20 @@ $result = sql_query($sql);
             }
 
             if($row['cp_type'])
-                $cp_price = $row['cp_price'].'%';
+                $cp_price = '<strong>'.$row['cp_price'].'</strong> %';
             else
-                $cp_price = number_format($row['cp_price']).'원';
+                $cp_price = '<strong>'.number_format($row['cp_price']).'</strong> 원';
 
             $cp_count++;
         ?>
         <li>
-            <div class="li_title"><?php echo $row['cp_subject']; ?></div>
             <div class="li_pd">
+                <div class="li_title"><?php echo $row['cp_subject']; ?></div>
                 <span class="pd_price"><?php echo $cp_price; ?></span>
-                <span class="pd_date"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></span>
             </div>
             <div class="li_target">
                 <?php echo $cp_target; ?>
+                <span class="pd_date"><?php echo substr($row['cp_start'], 2, 8); ?> ~ <?php echo substr($row['cp_end'], 2, 8); ?></span>
             </div>
         </li>
         <?php
@@ -78,7 +78,7 @@ $result = sql_query($sql);
         </ul>
     </div>
 
-    <div class="win_btn"><button type="button" onclick="window.close();">창닫기</button></div>
+    <div class="win_btn"><button type="button" onclick="window.close();" class="btn_close">창닫기</button></div>
 </div>
 
 <?php

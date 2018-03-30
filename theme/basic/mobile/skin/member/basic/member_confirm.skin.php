@@ -30,10 +30,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     </form>
 
-    <div class="btn_confirm">
-        <a href="<?php echo G5_URL ?>">메인으로 돌아가기</a>
-    </div>
-
 </div>
 
 <script>

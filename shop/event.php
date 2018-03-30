@@ -51,10 +51,14 @@ define('G5_SHOP_CSS_URL', G5_SHOP_SKIN_URL);
 $list_file = G5_SHOP_SKIN_PATH."/{$ev['ev_skin']}";
 if (file_exists($list_file))
 {
+    
+    echo '<div id="sct_sortlst">';
     include G5_SHOP_SKIN_PATH.'/list.sort.skin.php';
 
     // 상품 보기 타입 변경 버튼
     include G5_SHOP_SKIN_PATH.'/list.sub.skin.php';
+
+    echo '</div>';
 
     // 총몇개 = 한줄에 몇개 * 몇줄
     $items = $ev['ev_list_mod'] * $ev['ev_list_row'];

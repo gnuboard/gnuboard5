@@ -80,7 +80,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
-    등록된 상품 <?php echo $total_count; ?>건
+    <span class="btn_ov01"><span class="ov_txt">등록된 상품</span><span class="ov_num"> <?php echo $total_count; ?>건</span></span>
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
@@ -117,12 +117,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 </form>
 
-<div class="btn_add01 btn_add">
-    <a href="./itemform.php">상품등록</a>
-    <a href="./itemexcel.php" onclick="return excelform(this.href);" target="_blank">상품일괄등록</a>
-</div>
-
-<form name="fitemlistupdate" method="post" action="./itemlistupdate.php" onsubmit="return fitemlist_submit(this);" autocomplete="off">
+<form name="fitemlistupdate" method="post" action="./itemlistupdate.php" onsubmit="return fitemlist_submit(this);" autocomplete="off" id="fitemlistupdate">
 <input type="hidden" name="sca" value="<?php echo $sca; ?>">
 <input type="hidden" name="sst" value="<?php echo $sst; ?>">
 <input type="hidden" name="sod" value="<?php echo $sod; ?>">
@@ -130,7 +125,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 <input type="hidden" name="stx" value="<?php echo $stx; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 
-<div class="tbl_head02 tbl_wrap">
+<div class="tbl_head01 tbl_wrap">
     <table>
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
@@ -180,7 +175,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <input type="hidden" name="it_id[<?php echo $i; ?>]" value="<?php echo $row['it_id']; ?>">
             <?php echo $row['it_id']; ?>
         </td>
-        <td colspan="5">
+        <td colspan="5" class="td_sort">
             <label for="ca_id_<?php echo $i; ?>" class="sound_only"><?php echo get_text($row['it_name']); ?> 기본분류</label>
             <select name="ca_id[<?php echo $i; ?>]" id="ca_id_<?php echo $i; ?>">
                 <?php echo conv_selected_option($ca_list, $row['ca_id']); ?>
@@ -194,38 +189,38 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
                 <?php echo conv_selected_option($ca_list, $row['ca_id3']); ?>
             </select>
         </td>
-        <td rowspan="3" class="td_mngsmall">
+        <td rowspan="3" class="td_num">
             <label for="order_<?php echo $i; ?>" class="sound_only">순서</label>
-            <input type="text" name="it_order[<?php echo $i; ?>]" value="<?php echo $row['it_order']; ?>" id="order_<?php echo $i; ?>" class="frm_input" size="3">
+            <input type="text" name="it_order[<?php echo $i; ?>]" value="<?php echo $row['it_order']; ?>" id="order_<?php echo $i; ?>" class="tbl_input" size="3">
         </td>
-        <td rowspan="3" class="td_chk">
+        <td rowspan="3">
             <label for="use_<?php echo $i; ?>" class="sound_only">판매여부</label>
             <input type="checkbox" name="it_use[<?php echo $i; ?>]" <?php echo ($row['it_use'] ? 'checked' : ''); ?> value="1" id="use_<?php echo $i; ?>">
         </td>
-        <td rowspan="3" class="td_chk">
+        <td rowspan="3">
             <label for="soldout_<?php echo $i; ?>" class="sound_only">품절</label>
             <input type="checkbox" name="it_soldout[<?php echo $i; ?>]" <?php echo ($row['it_soldout'] ? 'checked' : ''); ?> value="1" id="soldout_<?php echo $i; ?>">
         </td>
         <td rowspan="3" class="td_num"><?php echo $row['it_hit']; ?></td>
-        <td rowspan="3" class="td_mng">
-            <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>수정</a>
-            <a href="./itemcopy.php?it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>" class="itemcopy" target="_blank"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>복사</a>
-            <a href="<?php echo $href; ?>"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>보기</a>
+        <td rowspan="3" class="td_mng td_mng_s">
+            <a href="./itemform.php?w=u&amp;it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>&amp;<?php echo $qstr; ?>" class="btn btn_03"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>수정</a>
+            <a href="./itemcopy.php?it_id=<?php echo $row['it_id']; ?>&amp;ca_id=<?php echo $row['ca_id']; ?>" class="itemcopy btn btn_02" target="_blank"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>복사</a>
+            <a href="<?php echo $href; ?>" class="btn btn_02"><span class="sound_only"><?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?> </span>보기</a>
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">
         <td rowspan="2" class="td_img"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?></a></td>
         <td headers="th_pc_title" rowspan="2" class="td_input">
             <label for="name_<?php echo $i; ?>" class="sound_only">상품명</label>
-            <input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" id="name_<?php echo $i; ?>" required class="frm_input required" size="30">
+            <input type="text" name="it_name[<?php echo $i; ?>]" value="<?php echo htmlspecialchars2(cut_str($row['it_name'],250, "")); ?>" id="name_<?php echo $i; ?>" required class="tbl_input required" size="30">
         </td>
         <td headers="th_amt" class="td_numbig td_input">
             <label for="price_<?php echo $i; ?>" class="sound_only">판매가격</label>
-            <input type="text" name="it_price[<?php echo $i; ?>]" value="<?php echo $row['it_price']; ?>" id="price_<?php echo $i; ?>" class="frm_input sit_amt" size="7">
+            <input type="text" name="it_price[<?php echo $i; ?>]" value="<?php echo $row['it_price']; ?>" id="price_<?php echo $i; ?>" class="tbl_input sit_amt" size="7">
         </td>
         <td headers="th_camt" class="td_numbig td_input">
             <label for="cust_price_<?php echo $i; ?>" class="sound_only">시중가격</label>
-            <input type="text" name="it_cust_price[<?php echo $i; ?>]" value="<?php echo $row['it_cust_price']; ?>" id="cust_price_<?php echo $i; ?>" class="frm_input sit_camt" size="7">
+            <input type="text" name="it_cust_price[<?php echo $i; ?>]" value="<?php echo $row['it_cust_price']; ?>" id="cust_price_<?php echo $i; ?>" class="tbl_input sit_camt" size="7">
         </td>
         <td headers="th_skin" class="td_numbig td_input">
             <label for="it_skin_<?php echo $i; ?>" class="sound_only">PC 스킨</label>
@@ -236,7 +231,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         <td headers="th_pt" class="td_numbig td_input"><?php echo $it_point; ?></td>
         <td headers="th_qty" class="td_numbig td_input">
             <label for="stock_qty_<?php echo $i; ?>" class="sound_only">재고</label>
-            <input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" id="stock_qty_<?php echo $i; ?>" class="frm_input sit_qty" size="7">
+            <input type="text" name="it_stock_qty[<?php echo $i; ?>]" value="<?php echo $row['it_stock_qty']; ?>" id="stock_qty_<?php echo $i; ?>" class="tbl_input sit_qty" size="7">
         </td>
         <td headers="th_mskin" class="td_numbig td_input">
             <label for="it_mobile_skin_<?php echo $i; ?>" class="sound_only">모바일 스킨</label>
@@ -252,10 +247,13 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     </table>
 </div>
 
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value">
+<div class="btn_fixed_top">
+
+    <a href="./itemform.php" class="btn btn_01">상품등록</a>
+    <a href="./itemexcel.php" onclick="return excelform(this.href);" target="_blank" class="btn btn_02">상품일괄등록</a>
+    <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
     <?php if ($is_admin == 'super') { ?>
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
     <?php } ?>
 </div>
 <!-- <div class="btn_confirm01 btn_confirm">

@@ -7,7 +7,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
 <!-- 쇼핑몰 커뮤니티 시작 { -->
 <aside id="scomm">
-    <h2>쇼핑몰 커뮤니티</h2>
+    <h2>커뮤니티</h2>
 
     <ul>
 
@@ -16,7 +16,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
     $hresult = sql_query($hsql);
     for ($i=0; $row=sql_fetch_array($hresult); $i++)
     {
-        echo '<li><a href="'.G5_BBS_URL.'/board.php?bo_table='.$row['bo_table'].'">'.$row['bo_subject'].'</a></li>'.PHP_EOL;
+        echo '<li><i class="fa fa-angle-right" aria-hidden="true"></i> <a href="'.G5_BBS_URL.'/board.php?bo_table='.$row['bo_table'].'">'.$row['bo_subject'].'</a></li>'.PHP_EOL;
     }
 
     if ($i==0)

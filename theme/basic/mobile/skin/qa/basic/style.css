@@ -1,5 +1,4 @@
 @charset "utf-8";
-/* SIR 지운아빠 */
 
 /* ### 기본 스타일 커스터마이징 시작 ### */
 
@@ -63,24 +62,27 @@
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 게시판 목록 */
-#bo_list #list_chk {padding:0 10px 10px}
-#bo_list .ul_wrap ul {margin:0;padding:0;border-top:1px solid #e9e9e9;list-style:none}
-#bo_list .ul_wrap li {position:relative;padding:8px 10px;border-bottom:1px solid #e9e9e9}
-#bo_list .ul_wrap li.bo_adm {padding:8px 10px 8px 30px}
-#bo_list .ul_wrap a {display:block;padding:0 0 10px}
-#bo_list .ul_wrap .li_chk {position:absolute;top:8px;left:10px}
-#bo_list .ul_wrap .li_info span {display:inline-block;margin:0 5px 0 0;vertical-align:middle}
-#bo_list .ul_wrap .li_stat {position:absolute;bottom:8px;right:10px}
+#bo_list #list_chk {padding:0 10px }
+
+#bo_list .li_stat{float:right;display:inline-block;height:25px;padding:0 10px;border-radius:15px;margin-top:3px}
+#bo_list .txt_rdy{border:1px solid #ff63ab;color:#ff63ab;line-height:23px}
+#bo_list .txt_done{background:#ff63ab;color:#fff;line-height:25px}
+
+#bo_list .li_title{display: block;font-weight: bold;margin: 5px 0;}
+#bo_list .li_title strong{color: #3ca1ff !important;font-weight: normal;text-decoration: none;font-size: 0.92em;}
+#bo_list .li_info{border-top: 1px solid #eee;margin: 10px 0 0;line-height: 28px;color: #666;position: relative;padding-top: 3px;} 
+#bo_list .li_info:after {display:block;visibility:hidden;clear:both;content:""}#bo_list .profile_img img{border-radius:50%;}
+#bo_list .li_sbj{display: block;font-weight: bold;margin: 5px 0;font-size: 1.083em;}
 
 #bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
-#bo_cate ul {margin:5px 10px;padding-left:1px;zoom:1}
-#bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_cate li {float:left;margin-bottom:-1px;width:25%}
-#bo_cate a {display:block;position:relative;margin-left:-1px;padding:5px 0;border:1px solid #ddd;background:#f7f7f7;color:#888;text-align:center;text-decoration:none;letter-spacing:-0.1em}
-#bo_cate a:focus,
-#bo_cate a:hover,
-#bo_cate a:active {text-decoration:none}
-#bo_cate #bo_cate_on {z-index:2;border:1px solid #565e60;background:#fff;color:#565e60;font-weight:bold}
+#bo_cate ul {margin: 10px;padding-left:1px;zoom:1}
+#bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""} 
+#bo_cate li{display:inline-block;float:left;margin:3px 5px 3px 0}
+#bo_cate a {display:block;line-height:24px;padding:0 10px;border-radius:13px;background:#fff;}
+#bo_cate #bo_cate_on {background:#4162ff;color:#fff;
+-webkit-box-shadow:0 0 5px  rgba(65,98,255,0.8);
+-moz-box-shadow:0 0 5px  rgba(65,98,255,0.8);
+box-shadow: 0 0 8px  rgba(65,98,255,0.8);}
 
 /* 관리자일 때 */
 #bo_list_admin th label {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -115,6 +117,8 @@
 #bo_list .cnt_cmt {display:inline-block;margin:0 0 0 3px;font-weight:bold}
 
 #bo_sch {margin-bottom:10px;padding-top:5px;text-align:center}
+#bo_sch .btn_submit{width:40px;height:40px}
+
 
 /* 게시판 쓰기 */
 #bo_w #wr_email, #bo_w #wr_homepage, #bo_w #wr_subject {width:100%}
@@ -123,20 +127,25 @@
 #char_count_wrp {margin:5px 0 0;text-align:right}
 #char_count {font-weight:bold}
 
-#qa_email {width:50%}
 #qa_subject {width:100%}
 
 /* 게시판 읽기 */
 #bo_v {margin-bottom:15px;padding-bottom:15px}
+#bo_v .bo_v_wr{background:#fff;margin:10px;border-radius:5px;padding:15px;
+-webkit-box-shadow: 0 1px 4px #cbd1df;
+-moz-box-shadow: 0 1px 4px #cbd1df;
+box-shadow: 0 1px 4px #cbd1df;}
 
 #bo_v_table {margin:0 0 5px;padding:0 10px;color:#999;font-size:0.9em;font-weight:bold}
 
-#bo_v_title {padding:0 10px 10px;font-size:1.2em}
+#bo_v_title {padding:0 0 10px;font-size:1.2em}
+#bo_v_title span{display:block;font-size:11px;color:#4162ff}
 
-#bo_v_info {padding:0 10px 10px;border-bottom:1px solid #ddd}
+#bo_v_info {padding:0 0 10px;border-bottom:1px solid #eee;position:relative;}
 #bo_v_info h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
-#bo_v_info {}
-#bo_v_info strong {display:inline-block;margin:0 0 0 5px;font-weight:normal}
+#bo_v_info strong {display:inline-block;margin:0 ;font-weight:normal}
+#bo_v_info .info_date{position:absolute;top:0;right:0;color:#777}
+#bo_v_info .profile_img img{border-radius:50%}
 
 #bo_v_file {}
 #bo_v_file h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
@@ -154,13 +163,13 @@
 #bo_v_link a:focus, #bo_v_link a:hover, #bo_v_link a:active {text-decoration:none}
 .bo_v_link_cnt {display:inline-block;margin:0 10px}
 
-#bo_v_contact {border-bottom:1px solid #ddd}
+#bo_v_contact {border-bottom:1px solid #eee}
 #bo_v_contact h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
-#bo_v_contact dl {margin:0;padding:0;list-style:none}
+#bo_v_contact dl {margin:0;padding:5px 0;color:#666;list-style:none}
 #bo_v_contact dl:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_v_contact dt, #bo_v_contact dd {float:left;margin:0;border-bottom:1px solid #eee;background:#f5f6fa}
-#bo_v_contact dt {clear:both;padding:8px 0 8px 10%;width:20%;font-weight:bold}
-#bo_v_contact dd {padding:8px 0;width:70%}
+#bo_v_contact dt, #bo_v_contact dd {float:left;margin:0}
+#bo_v_contact dt {clear:both;padding:3px 0 ;width:30px;text-align:center;font-weight:bold}
+#bo_v_contact dd {padding:3px 0;width:80%}
 
 #bo_v_top {margin:0 0 10px;padding:10px}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
@@ -177,7 +186,7 @@
 .bo_v_com {float:right}
 .bo_v_com li {float:left;margin-left:5px}
 
-#bo_v_atc {padding:0 10px;min-height:100px}
+#bo_v_atc {padding:10px 0;min-height:100px}
 #bo_v_atc_title {margin:0;padding:0;height:0;overflow:hidden}
 
 #bo_v_img {margin:0 0 10px;width:100%;overflow:hidden;zoom:1}
@@ -200,17 +209,30 @@
 
 #bo_v_addq {margin:0 0 30px;text-align:right}
 
-#bo_v_ans {margin:0 10px 30px;padding:30px 0 0;border-top:1px solid #e9e9e9}
-#bo_v_ans h2 {display:inline-block;vertical-align:middle;font-size:1.2em}
-#bo_v_ans #ans_datetime {margin:10px 0;color:#999}
-#bo_v_ans #ans_con {margin:0 0 10px;line-height:1.8em}
+#bo_v_ans {}
+#bo_v_ans h2 {font-size:1.2em;margin:10px}
+#bo_v_ans h2 span{display:block}
+#bo_v_ans h2 .tit_rpl{display:inline-block;font-size:11px;padding:0 5px;line-height:23px;font-weight:normal;background:#646982;color:#fff;}
+#bo_v_ans #ans_datetime {padding:5px 0 10px;border-bottom:1px solid #eee;color:#777}
+#bo_v_ans #ans_con {margin:10px 0 ;line-height:1.8em}
 #bo_v_ans #ans_add {text-align:right}
 #bo_v_ans #ans_msg {padding:40px 0;background:#f2f5f9;text-align:center}
+#bo_v_ans .btn_submit{width:100%;height:40px;border-radius:5px}
+#bo_v_ans .btn_confirm{margin:0 10px}
 
-#bo_v_rel {margin:0 0 30px;padding:30px 0 0;border-top:1px solid #e9e9e9}
+#bo_v_rel {}
 #bo_v_rel h2 {margin:0 10px 10px;font-size:1.2em}
+#bo_v_rel .li_stat{float:right;display:inline-block;height:25px;padding:0 10px;border-radius:15px;margin-top:3px}
+#bo_v_rel .txt_rdy{border:1px solid #ff63ab;color:#ff63ab;line-height:23px}
+#bo_v_rel .txt_done{background:#ff63ab;color:#fff;line-height:25px}
 
-#bo_v form {padding-top:15px}
+#bo_v_rel .li_title{display: block;font-weight: bold;margin: 5px 0;}
+#bo_v_rel .li_title strong{color: #3ca1ff !important;font-weight: normal;text-decoration: none;font-size: 0.92em;}
+#bo_v_rel .li_info{border-top: 1px solid #eee;margin: 10px 0 0;line-height: 28px;color: #666;position: relative;padding-top: 3px;} 
+#bo_v_rel .li_info:after {display:block;visibility:hidden;clear:both;content:""}#bo_list .profile_img img{border-radius:50%;}
+#bo_v_rel .li_sbj{display: block;font-weight: bold;margin: 5px 0;font-size: 1.083em;}
+
+
 
 /* 게시판 댓글 */
 #bo_vc {margin:0 0 5px;padding:15px 15px 5px;border-top:1px solid #cfded8;border-bottom:1px solid #cfded8;background:#f7f7f7}
@@ -245,3 +267,8 @@
 #bo_vc_sns input {margin:0 0 0 5px}
 
 #bo_vc form {padding:0}
+
+#bo_w .bo_w_flie .lb_icon{position:absolute;top:0px;left:0px;border-radius:3px 0 0 3px;height:38px;line-height:38px;width:40px;background:#eee;text-align:center}
+#bo_w .bo_w_flie .frm_file{padding-left:50px;}
+#bo_w .bo_w_flie .file_wr{border:1px solid #ccc;background:#fff;color:#000;vertical-align:middle;border-radius:3px;padding:5px;height:40px;margin:0}
+#bo_w .bo_w_flie .frm_input{margin:5px 0 0 }

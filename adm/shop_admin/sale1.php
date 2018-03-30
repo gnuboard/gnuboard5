@@ -9,7 +9,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 ?>
 
-<div class="local_sch02 local_sch">
+<div class="local_sch03 local_sch">
 
     <div>
         <form name="frm_sale_today" action="./sale1today.php" method="get">

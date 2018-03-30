@@ -31,9 +31,9 @@ include_once(G5_PATH.'/head.sub.php');
         <input type="file" name="excelfile" id="excelfile">
     </div>
 
-    <div class="btn_confirm01 btn_confirm">
-        <input type="submit" value="상품 엑셀파일 등록" class="btn_submit">
-        <button type="button" onclick="window.close();">닫기</button>
+    <div class="win_btn btn_confirm">
+        <input type="submit" value="상품 엑셀파일 등록" class="btn_submit btn">
+        <button type="button" onclick="window.close();" class="btn_close btn">닫기</button>
     </div>
 
     </form>

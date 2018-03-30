@@ -14,36 +14,37 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <fieldset id="login_fs">
         <legend>회원로그인</legend>
-        <label for="login_id" class="login_id">회원아이디<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="mb_id" id="login_id" required class="frm_input required" size="20" maxLength="20">
-        <label for="login_pw" class="login_pw">비밀번호<strong class="sound_only"> 필수</strong></label>
-        <input type="password" name="mb_password" id="login_pw" required class="frm_input required" size="20" maxLength="20">
+        <label for="login_id" class="sound_only">회원아이디<strong class="sound_only"> 필수</strong></label>
+        <input type="text" name="mb_id" id="login_id" required class="frm_input required" size="20" maxLength="20" placeholder="아이디">
+        <label for="login_pw" class="sound_only">비밀번호<strong class="sound_only"> 필수</strong></label>
+        <input type="password" name="mb_password" id="login_pw" required class="frm_input required" size="20" maxLength="20" placeholder="비밀번호">
         <input type="submit" value="로그인" class="btn_submit">
         <input type="checkbox" name="auto_login" id="login_auto_login">
         <label for="login_auto_login">자동로그인</label>
     </fieldset>
 
+    <?php
+    // 소셜로그인 사용시 소셜로그인 버튼
+    @include_once(get_social_skin_path().'/social_login.skin.php');
+    ?>
+
     <aside id="login_info">
         <h2>회원로그인 안내</h2>
-        <p>
-            회원아이디 및 비밀번호가 기억 안나실 때는 아이디/비밀번호 찾기를 이용하십시오.<br>
-            아직 회원이 아니시라면 회원으로 가입 후 이용해 주십시오.
-        </p>
-        <div>
-            <a href="<?php echo G5_BBS_URL ?>/password_lost.php" target="_blank" id="login_password_lost" class="btn02">아이디 비밀번호 찾기</a>
-            <a href="./register.php" class="btn01">회원 가입</a>
+            <a href="<?php echo G5_BBS_URL ?>/password_lost.php" target="_blank" id="login_password_lost">아이디 비밀번호 찾기</a>
+            <a href="./register.php">회원 가입</a>
         </div>
     </aside>
 
     </form>
 
+    
     <?php // 쇼핑몰 사용시 여기부터 ?>
     <?php if ($default['de_level_sell'] == 1) { // 상품구입 권한 ?>
 
         <!-- 주문하기, 신청하기 -->
         <?php if (preg_match("/orderform.php/", $url)) { ?>
 
-    <section id="mb_login_notmb">
+    <section id="mb_login_notmb" class="mbskin">
         <h2>비회원 구매</h2>
 
         <p>
@@ -58,7 +59,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <input type="checkbox" id="agree" value="1">
 
         <div class="btn_confirm">
-            <a href="javascript:guest_submit(document.flogin);" class="btn02">비회원으로 구매하기</a>
+            <a href="javascript:guest_submit(document.flogin);" class="btn_submit">비회원으로 구매하기</a>
         </div>
 
         <script>
@@ -78,35 +79,35 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </script>
     </section>
 
-        <?php } else if (preg_match("/orderinquiry.php$/", $url)) { ?>
+    <?php } else if (preg_match("/orderinquiry.php$/", $url)) { ?>
+    <div class="mbskin" id="mb_login_od_wr">
+        <h2>비회원 주문조회 </h2>
 
-    <fieldset id="mb_login_od">
-        <legend>비회원 주문조회</legend>
+        <fieldset id="mb_login_od">
+            <legend>비회원 주문조회</legend>
 
-        <form name="forderinquiry" method="post" action="<?php echo urldecode($url); ?>" autocomplete="off">
+            <form name="forderinquiry" method="post" action="<?php echo urldecode($url); ?>" autocomplete="off">
 
-        <label for="od_id" class="od_id">주문서번호<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="od_id" value="<?php echo $od_id; ?>" id="od_id" required class="frm_input required" size="20">
-        <label for="id_pwd" class="od_pwd">비밀번호<strong class="sound_only"> 필수</strong></label>
-        <input type="password" name="od_pwd" size="20" id="od_pwd" required class="frm_input required">
-        <input type="submit" value="확인" class="btn_submit">
+            <label for="od_id" class="od_id sound_only">주문서번호<strong class="sound_only"> 필수</strong></label>
+            <input type="text" name="od_id" value="<?php echo $od_id; ?>" id="od_id" required class="frm_input required" size="20" placeholder="주문서번호">
+            <label for="id_pwd" class="od_pwd sound_only" >비밀번호<strong class="sound_only"> 필수</strong></label>
+            <input type="password" name="od_pwd" size="20" id="od_pwd" required class="frm_input required" placeholder="비밀번호">
+            <input type="submit" value="확인" class="btn_submit">
 
-        </form>
-    </fieldset>
+            </form>
+        </fieldset>
 
-    <section id="mb_login_odinfo">
-        <h2>비회원 주문조회 안내</h2>
-        <p>메일로 발송해드린 주문서의 <strong>주문번호</strong> 및 주문 시 입력하신 <strong>비밀번호</strong>를 정확히 입력해주십시오.</p>
-    </section>
+        <section id="mb_login_odinfo">
+            <p>메일로 발송해드린 주문서의 <strong>주문번호</strong> 및 주문 시 입력하신 <strong>비밀번호</strong>를 정확히 입력해주십시오.</p>
+        </section>
 
-        <?php } ?>
+    </div>
+    <?php } ?>
 
     <?php } ?>
     <?php // 쇼핑몰 사용시 여기까지 반드시 복사해 넣으세요 ?>
 
-    <div class="btn_confirm">
-        <a href="<?php echo G5_URL ?>/">메인으로 돌아가기</a>
-    </div>
+    </form>
 
 </div>
 

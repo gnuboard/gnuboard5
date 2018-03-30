@@ -60,7 +60,7 @@ $colspan = 10;
 
 <div class="local_ov01 local_ov">
     <?php echo $listall ?>
-    전체그룹 <?php echo number_format($total_count) ?>개
+    <span class="btn_ov01"><span class="ov_txt">전체그룹</span><span class="ov_num">  <?php echo number_format($total_count) ?>개</span></span>
 </div>
 
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
@@ -71,16 +71,10 @@ $colspan = 10;
     <option value="gr_admin"<?php echo get_selected($_GET['sfl'], "gr_admin"); ?>>그룹관리자</option>
 </select>
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-<input type="text" name="stx" value="<?php echo $stx ?>" required class="required frm_input">
+<input type="text" name="stx" id="stx" value="<?php echo $stx ?>" required class="required frm_input">
 <input type="submit" value="검색" class="btn_submit">
-</fieldset>
 </form>
 
-<?php if ($is_admin == 'super') { ?>
-<div class="btn_add01 btn_add sort_with">
-    <a href="./boardgroup_form.php" id="bo_gr_add">게시판그룹 추가</a>
-</div>
-<?php } ?>
 
 <form name="fboardgrouplist" id="fboardgrouplist" action="./boardgroup_list_update.php" onsubmit="return fboardgrouplist_submit(this);" method="post">
 <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -122,7 +116,7 @@ $colspan = 10;
         $sql2 = " select count(*) as cnt from {$g5['board_table']} where gr_id = '{$row['gr_id']}' ";
         $row2 = sql_fetch($sql2);
 
-        $s_upd = '<a href="./boardgroup_form.php?'.$qstr.'&amp;w=u&amp;gr_id='.$row['gr_id'].'">수정</a>';
+        $s_upd = '<a href="./boardgroup_form.php?'.$qstr.'&amp;w=u&amp;gr_id='.$row['gr_id'].'" class="btn_03 btn">수정</a>';
 
         $bg = 'bg'.($i%2);
     ?>
@@ -133,28 +127,28 @@ $colspan = 10;
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['gr_subject'] ?> 그룹</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
-        <td class="td_grid"><a href="<?php echo G5_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
+        <td class="td_left"><a href="<?php echo G5_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
         <td class="td_input">
             <label for="gr_subject_<?php echo $i; ?>" class="sound_only">그룹제목</label>
-            <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" class="frm_input">
+            <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" class="tbl_input">
         </td>
         <td class="td_mng td_input">
         <?php if ($is_admin == 'super'){ ?>
             <label for="gr_admin_<?php echo $i; ?>" class="sound_only">그룹관리자</label>
-            <input type="text" name="gr_admin[<?php echo $i ?>]" value="<?php echo $row['gr_admin'] ?>" id="gr_admin_<?php echo $i ?>" class="frm_input" size="10" maxlength="20">
+            <input type="text" name="gr_admin[<?php echo $i ?>]" value="<?php echo $row['gr_admin'] ?>" id="gr_admin_<?php echo $i ?>" class="tbl_input" size="10" maxlength="20">
         <?php }else{ ?>
             <input type="hidden" name="gr_admin[<?php echo $i ?>]" value="<?php echo $row['gr_admin'] ?>"><?php echo $row['gr_admin'] ?>
         <?php } ?>
         </td>
-        <td class="td_numsmall"><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?php echo $row['gr_id'] ?>"><?php echo $row2['cnt'] ?></a></td>
-        <td class="td_chk">
+        <td class="td_num"><a href="./board_list.php?sfl=a.gr_id&amp;stx=<?php echo $row['gr_id'] ?>"><?php echo $row2['cnt'] ?></a></td>
+        <td class="td_numsmall">
              <label for="gr_use_access_<?php echo $i; ?>" class="sound_only">접근회원 사용</label>
             <input type="checkbox" name="gr_use_access[<?php echo $i ?>]" <?php echo $row['gr_use_access']?'checked':'' ?> value="1" id="gr_use_access_<?php echo $i ?>">
         </td>
-        <td class="td_numsmall"><a href="./boardgroupmember_list.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row1['cnt'] ?></a></td>
-        <td class="td_chk">
+        <td class="td_num"><a href="./boardgroupmember_list.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row1['cnt'] ?></a></td>
+        <td class="td_numsmall">
             <label for="gr_order_<?php echo $i; ?>" class="sound_only">메인메뉴 출력순서</label>
-            <input type="text" name="gr_order[<?php echo $i ?>]" value="<?php echo $row['gr_order'] ?>" id="gr_order_<?php echo $i ?>" class="frm_input" size="2">
+            <input type="text" name="gr_order[<?php echo $i ?>]" value="<?php echo $row['gr_order'] ?>" id="gr_order_<?php echo $i ?>" class="tbl_input" size="2">
         </td>
         <td class="td_mng">
             <label for="gr_device_<?php echo $i; ?>" class="sound_only">접속기기</label>
@@ -164,7 +158,7 @@ $colspan = 10;
                 <option value="mobile"<?php echo get_selected($row['gr_device'], 'mobile'); ?>>모바일</option>
             </select>
         </td>
-        <td class="td_mngsmall"><?php echo $s_upd ?></td>
+        <td class="td_mng td_mng_s"><?php echo $s_upd ?></td>
     </tr>
 
     <?php
@@ -175,10 +169,10 @@ $colspan = 10;
     </table>
 </div>
 
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정">
-    <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제">
-    <a href="./boardgroup_form.php">게시판그룹 추가</a>
+<div class="btn_fixed_top">
+    <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택수정" class="btn btn_02">
+    <input type="submit" name="act_button" onclick="document.pressed=this.value" value="선택삭제" class="btn btn_02">
+    <a href="./boardgroup_form.php" class="btn btn_01">게시판그룹 추가</a>
 </div>
 </form>
 

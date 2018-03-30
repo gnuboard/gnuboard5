@@ -6,27 +6,24 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
     <!-- 상세검색 항목 시작 { -->
     <div id="ssch_frm">
+        <h2><span><strong><?php echo $q; ?></strong> 검색결과</span> (총 <strong><?php echo $total_count; ?></strong> 건 )</h2>
         <form name="frmdetailsearch">
         <input type="hidden" name="qsort" id="qsort" value="<?php echo $qsort ?>">
         <input type="hidden" name="qorder" id="qorder" value="<?php echo $qorder ?>">
         <input type="hidden" name="qcaid" id="qcaid" value="<?php echo $qcaid ?>">
         <div>
-            <strong>검색범위</strong>
+            <strong class="sound_only">검색범위</strong>
             <input type="checkbox" name="qname" id="ssch_qname" <?php echo $qname_check?'checked="checked"':'';?>> <label for="ssch_qname">상품명</label>
             <input type="checkbox" name="qexplan" id="ssch_qexplan" <?php echo $qexplan_check?'checked="checked"':'';?>> <label for="ssch_qexplan"><span class="sound_only">상품</span>설명</label>
-            <input type="checkbox" name="qid" id="ssch_qid" <?php echo $qid_check?'checked="checked"':'';?>> <label for="ssch_qid"><span class="sound_only">상품</span>코드</label>
-            <input type="checkbox" name="qbasic" id="ssch_qbasic" value="1" <?php echo $qbasic_check?'checked="checked"':'';?>> <label for="ssch_qbasic">기본설명</label><br>
-        </div>
-        <div>
-            <strong>상품가격 (원)</strong>
+            <input type="checkbox" name="qbasic" id="ssch_qbasic" value="1" <?php echo $qbasic_check?'checked="checked"':'';?>> <label for="ssch_qbasic">기본설명</label>
+            <input type="checkbox" name="qid" id="ssch_qid" <?php echo $qid_check?'checked="checked"':'';?>> <label for="ssch_qid"><span class="sound_only">상품</span>코드</label><br>
+            <strong class="sound_only">상품가격 (원)</strong>
             <label for="ssch_qfrom" class="sound_only">최소 가격</label>
-            <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" id="ssch_qfrom" class="frm_input"> ~
+            <input type="text" name="qfrom" value="<?php echo $qfrom; ?>" id="ssch_qfrom" class="ssch_input" size="5"> 원 ~
             <label for="ssch_qto" class="sound_only">최대 가격</label>
-            <input type="text" name="qto" value="<?php echo $qto; ?>" id="ssch_qto" class="frm_input"> 까지<br>
-        </div>
-        <div>
-            <label for="ssch_q" class="ssch_lbl">검색어</label>
-            <input type="text" name="q" value="<?php echo $q; ?>" id="ssch_q" class="frm_input" maxlength="30">
+            <input type="text" name="qto" value="<?php echo $qto; ?>" id="ssch_qto" class="ssch_input" size="5"> 원<br>
+            <label for="ssch_q" class="ssch_lbl sound_only">검색어</label>
+            <input type="text" name="q" value="<?php echo $q; ?>" id="ssch_q" class="ssch_input" maxlength="30">
             <input type="submit" value="검색" class="btn_submit">
         </div>
         <p>
@@ -35,18 +32,6 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </p>
         </form>
 
-        <ul id="ssch_sort">
-            <li><a href="#" class="btn01" onclick="set_sort('it_sum_qty', 'desc'); return false;">판매많은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_price', 'asc'); return false;">낮은가격순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_price', 'desc'); return false;">높은가격순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_use_avg', 'desc'); return false;">평점높은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_use_cnt', 'desc'); return false;">후기많은순</a></li>
-            <li><a href="#" class="btn01" onclick="set_sort('it_update_time', 'desc'); return false;">최근등록순</a></li>
-        </ul>
-
-        <div id="ssch_ov">
-            검색 결과 <b><?php echo $total_count; ?></b>건
-        </div>
     </div>
     <!-- } 상세검색 항목 끝 -->
 
@@ -64,6 +49,22 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
         </ul>
     </div>
     <!-- } 검색된 분류 끝 -->
+    <!--  상품 정렬 선택 { -->
+    <div id="ssch_sort">
+        <button type="button" class="btn_sort"><i class="fa fa-arrows-v" aria-hidden="true"></i> 상품정렬</button>
+
+        <ul>
+
+            <li><a href="#" onclick="set_sort('it_sum_qty', 'desc'); return false;">판매많은순</a></li>
+            <li><a href="#" onclick="set_sort('it_price', 'asc'); return false;">낮은가격순</a></li>
+            <li><a href="#" onclick="set_sort('it_price', 'desc'); return false;">높은가격순</a></li>
+            <li><a href="#" onclick="set_sort('it_use_avg', 'desc'); return false;">평점높은순</a></li>
+            <li><a href="#" onclick="set_sort('it_use_cnt', 'desc'); return false;">후기많은순</a></li>
+            <li><a href="#" onclick="set_sort('it_update_time', 'desc'); return false;">최근등록순</a></li>
+        </ul>
+
+        </div>
+    <!-- } 상품 정렬 선택  -->
 
     <!-- 검색결과 시작 { -->
     <div>
@@ -124,4 +125,15 @@ function set_ca_id(qcaid)
     f.qcaid.value = qcaid;
     f.submit();
 }
+
+jQuery(function($){
+    $(".btn_sort").click(function(){
+        $("#ssch_sort ul").show();
+    });
+    $(document).mouseup(function (e){
+        var container = $("#ssch_sort ul");
+        if( container.has(e.target).length === 0)
+        container.hide();
+    });
+});
 </script>

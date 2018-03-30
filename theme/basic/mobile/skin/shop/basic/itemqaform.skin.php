@@ -15,43 +15,36 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
     <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
     <input type="hidden" name="is_mobile_shop" value="1">
 
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <colgroup>
-            <col class="grid_2">
-            <col>
-        </colgroup>
-        <tbody>
-        <tr>
-            <th scope="row">옵션</th>
-            <td>
+    <div class="form_01">
+       
+        <ul>
+            <li>
+                <span class="sound_only">옵션</span>
                 <input type="checkbox" name="iq_secret" id="iq_secret" value="1" <?php echo $chk_secret; ?>>
                 <label for="iq_secret">비밀글</label>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="iq_email">이메일</label></th>
-            <td><input type="email" name="iq_email" id="iq_email" value="<?php echo get_text($qa['iq_email']); ?>" class="frm_input" size="30"> 이메일을 입력하시면 답변 등록 시 답변이 이메일로 전송됩니다.</td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="iq_hp">휴대폰</label></th>
-            <td><input type="text" name="iq_hp" id="iq_hp" value="<?php echo get_text($qa['iq_hp']); ?>" class="frm_input" size="20"> 휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="iq_subject">제목</label></th>
-            <td><input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input" minlength="2" maxlength="250"></td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="iq_question">질문</label></th>
-            <td><?php echo $editor_html; ?></td>
-        </tr>
-        </tbody>
-        </table>
+            </li>
+            <li>
+                <label for="iq_email" class="sound_only">이메일</label>
+                <input type="email" name="iq_email" id="iq_email" value="<?php echo get_text($qa['iq_email']); ?>" class="frm_input full_input" size="30" placeholder="이메일"> <span class="frm_info ">이메일을 입력하시면 답변 등록 시 답변이 이메일로 전송됩니다.</span>
+            </li>
+            <li>
+                <label for="iq_hp" class="sound_only">휴대폰</label>
+                <input type="text" name="iq_hp" id="iq_hp" value="<?php echo get_text($qa['iq_hp']); ?>" class="frm_input full_input" size="20" placeholder="휴대폰"> <span class="frm_info ">휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</span>
+            </li>
+            <li>
+                <label for="iq_subject" class="sound_only">제목</label>
+                <input type="text" name="iq_subject" value="<?php echo get_text($qa['iq_subject']); ?>" id="iq_subject" required class="required frm_input full_input" minlength="2" maxlength="250" placeholder="제목">
+            </li>
+            <li>
+                <label for="iq_question" class="sound_only">질문</label>
+                <?php echo $editor_html; ?>
+            </li>
+        </ul>
     </div>
 
     <div class="win_btn">
         <input type="submit" value="작성완료" class="btn_submit">
-        <button type="button" onclick="self.close();">닫기</button>
+        <button type="button" onclick="self.close();" class="btn_close">닫기</button>
     </div>
     </form>
 </div>

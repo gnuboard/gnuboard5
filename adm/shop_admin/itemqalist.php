@@ -57,7 +57,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
-    전체 문의내역 <?php echo $total_count; ?>건
+    <span class="btn_ov01"><span class="ov_txt"> 전체 문의내역</span><span class="ov_num"> <?php echo $total_count; ?>건</span></span>
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
@@ -100,7 +100,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 <input type="hidden" name="stx" value="<?php echo $stx; ?>">
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 
-<div class="tbl_head01 tbl_wrap">
+<div class="tbl_head01 tbl_wrap" id="itemqalist">
     <table>
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
@@ -134,20 +134,25 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
             <input type="hidden" name="iq_id[<?php echo $i; ?>]" value="<?php echo $row['iq_id']; ?>">
         </td>
-        <td><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str($row['it_name'],30); ?></a></td>
-        <td>
-            <a href="#" class="qa_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo get_text($row['iq_subject']); ?></a>
+        <td class="td_left"><a href="<?php echo $href; ?>"><?php echo get_it_image($row['it_id'], 50, 50); ?> <?php echo cut_str($row['it_name'],30); ?></a></td>
+        <td class="td_left">
+            <a href="#" class="qa_href" onclick="return false;" target="<?php echo $i; ?>"><?php echo get_text($row['iq_subject']); ?> <span class="tit_op">열기</span></a>
             <div id="qa_div<?php echo $i; ?>" class="qa_div" style="display:none;">
-                <strong>문의내용</strong><br>
-                <?php echo $iq_question; ?>
-                <strong>답변</strong><br>
+                <div class="qa_q">
+                    <strong>문의내용</strong>
+                    
+                    <?php echo $iq_question; ?>
+                </div>
+                <div class="qa_a">
+                <strong>답변</strong>
                 <?php echo $iq_answer; ?>
+                </div>
             </div>
         </td>
         <td class="td_name"><?php echo $name; ?></td>
         <td class="td_boolean"><?php echo $answer; ?></td>
-        <td class="td_mngsmall">
-            <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>"><span class="sound_only"><?php echo get_text($row['iq_subject']); ?> </span>수정</a>
+        <td class="td_mng td_mng_s">
+            <a href="./itemqaform.php?w=u&amp;iq_id=<?php echo $row['iq_id']; ?>&amp;<?php echo $qstr; ?>" class="btn btn_03"><span class="sound_only"><?php echo get_text($row['iq_subject']); ?> </span>수정</a>
         </td>
     </tr>
     <?php
@@ -160,8 +165,8 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     </table>
 </div>
 
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
+<div class="btn_fixed_top">
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
 </div>
 </form>
 

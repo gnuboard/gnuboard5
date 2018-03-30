@@ -136,9 +136,9 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </table>
 </div>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./newwinlist.php">목록</a>
+<div class="btn_fixed_top">
+    <a href="./newwinlist.php" class=" btn btn_02">목록</a>
+    <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
 </div>
 </form>
 

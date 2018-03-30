@@ -47,28 +47,28 @@ if(defined('G5_THEME_SHOP_PATH')) {
 
             switch($row['od_status']) {
                 case '주문':
-                    $od_status = '입금확인중';
+                    $od_status = '<span class="status_01">입금확인중</span>';
                     break;
                 case '입금':
-                    $od_status = '입금완료';
+                    $od_status = '<span class="status_02">입금완료</span>';
                     break;
                 case '준비':
-                    $od_status = '상품준비중';
+                    $od_status = '<span class="status_03">상품준비중</span>';
                     break;
                 case '배송':
-                    $od_status = '상품배송';
+                    $od_status = '<span class="status_04">상품배송</span>';
                     break;
                 case '완료':
-                    $od_status = '배송완료';
+                    $od_status = '<span class="status_05">배송완료</span>';
                     break;
                 default:
-                    $od_status = '주문취소';
+                    $od_status = '<span class="status_06">주문취소</span>';
                     break;
             }
 
             $od_invoice = '';
             if($row['od_delivery_company'] && $row['od_invoice'])
-                $od_invoice = get_text($row['od_delivery_company']).' '.get_text($row['od_invoice']);
+                $od_invoice = '<span class="inv_inv"><i class="fa fa-truck" aria-hidden="true"></i> <strong>'.get_text($row['od_delivery_company']).'</strong> '.get_text($row['od_invoice']).'</span>';
 
             $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
         ?>
@@ -85,8 +85,8 @@ if(defined('G5_THEME_SHOP_PATH')) {
                 <?php echo display_price($row['od_receipt_price']); ?>
             </div>
             <div class="inquiry_inv">
+                <?php echo $od_invoice; ?>
                 <span class="inv_status"><?php echo $od_status; ?></span>
-                <span class="inv_inv"><?php echo $od_invoice; ?></span>
             </div>
         </li>
 

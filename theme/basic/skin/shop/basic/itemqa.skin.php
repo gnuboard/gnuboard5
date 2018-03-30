@@ -11,6 +11,11 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 <section id="sit_qa_list">
     <h3>등록된 상품문의</h3>
 
+    <div id="sit_qa_wbtn">
+        <a href="<?php echo $itemqa_form; ?>" class="btn02 itemqa_form">상품문의 쓰기<span class="sound_only"> 새 창</span></a>
+        <a href="<?php echo $itemqa_list; ?>" id="itemqa_list" class="btn01">더보기</a>
+    </div>
+
     <?php
     $thumbnail_width = 500;
     $iq_num     = $total_count - ($page - 1) * $rows;
@@ -48,7 +53,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             $iq_style = 'sit_qaa_done';
             $is_answer = true;
         } else {
-            $iq_stats = '답변전';
+            $iq_stats = '답변대기';
             $iq_style = 'sit_qaa_yet';
             $iq_answer = '답변이 등록되지 않았습니다.';
             $is_answer = false;
@@ -58,25 +63,25 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
     ?>
 
         <li class="sit_qa_li">
-            <button type="button" class="sit_qa_li_title"><b><?php echo $iq_num; ?>.</b> <?php echo $iq_subject; ?></button>
+            <button type="button" class="sit_qa_li_title"><span class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></span><?php echo $iq_subject; ?></button>
             <dl class="sit_qa_dl">
                 <dt>작성자</dt>
                 <dd><?php echo $iq_name; ?></dd>
                 <dt>작성일</dt>
-                <dd><?php echo $iq_time; ?></dd>
-                <dt>상태</dt>
-                <dd class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></dd>
+                <dd><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $iq_time; ?></dd>
             </dl>
 
             <div id="sit_qa_con_<?php echo $i; ?>" class="sit_qa_con">
                 <div class="sit_qa_p">
                     <div class="sit_qa_qaq">
-                        <strong>문의내용</strong><br>
+                        <strong class="sound_only">문의내용</strong>
+                        <span class="qa_alp">Q</span>
                         <?php echo $iq_question; // 상품 문의 내용 ?>
                     </div>
                     <?php if(!$is_secret) { ?>
                     <div class="sit_qa_qaa">
-                        <strong>답변</strong><br>
+                        <strong class="sound_only">답변</strong>
+                        <span class="qa_alp">A</span>
                         <?php echo $iq_answer; ?>
                     </div>
                     <?php } ?>
@@ -107,11 +112,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 echo itemqa_page($config['cf_write_pages'], $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", "");
 ?>
 
-<div id="sit_qa_wbtn">
-    <!-- <a href="javascript:itemqawin('it_id=<?php echo $it_id; ?>');">상품문의 쓰기<span class="sound_only"> 새 창</span></a> -->
-    <a href="<?php echo $itemqa_form; ?>" class="btn02 itemqa_form">상품문의 쓰기<span class="sound_only"> 새 창</span></a>
-    <a href="<?php echo $itemqa_list; ?>" id="itemqa_list" class="btn01">더보기</a>
-</div>
 
 <script>
 $(function(){

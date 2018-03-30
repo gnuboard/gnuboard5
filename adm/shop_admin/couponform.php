@@ -151,9 +151,9 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
     </table>
 </div>
 
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" value="확인" class="btn_submit" accesskey="s">
-    <a href="./couponlist.php">목록</a>
+<div class="btn_fixed_top">
+    <a href="./couponlist.php" class="btn btn_02">목록</a>
+    <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
 </div>
 
 </form>

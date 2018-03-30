@@ -21,14 +21,14 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
 <div class="local_ov01 local_ov">
-    등록된 배너 <?php echo $total_count; ?>개
+    <span class="btn_ov01"><span class="ov_txt"> 등록된 배너 </span><span class="ov_num"> <?php echo $total_count; ?>개</span></span>
 </div>
 
-<div class="btn_add01 btn_add">
-    <a href="./bannerform.php">배너추가</a>
+<div class="btn_fixed_top">
+    <a href="./bannerform.php" class="btn_01 btn">배너추가</a>
 </div>
 
-<div class="tbl_head02 tbl_wrap">
+<div class="tbl_head01 tbl_wrap">
     <table>
     <caption><?php echo $g5['title']; ?> 목록</caption>
     <thead>
@@ -67,9 +67,8 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
                 $width = $size[0];
 
             $bn_img = "";
-            if ($row['bn_url'] && $row['bn_url'] != "http://")
-                $bn_img .= '<a href="'.$row['bn_url'].'" '.$bn_new_win.'>';
-            $bn_img .= '<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$width.'" alt="'.$row['bn_alt'].'"></a>';
+           
+            $bn_img .= '<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$width.'" alt="'.$row['bn_alt'].'">';
         }
 
         switch($row['bn_device']) {
@@ -98,9 +97,9 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
         <td headers="th_end" class="td_datetime"><?php echo $bn_end_time; ?></td>
         <td headers="th_odr" class="td_num"><?php echo $row['bn_order']; ?></td>
         <td headers="th_hit" class="td_num"><?php echo $row['bn_hit']; ?></td>
-        <td headers="th_mng" class="td_mngsmall">
-            <a href="./bannerform.php?w=u&amp;bn_id=<?php echo $row['bn_id']; ?>">수정</a></li>
-            <a href="./bannerformupdate.php?w=d&amp;bn_id=<?php echo $row['bn_id']; ?>" onclick="return delete_confirm(this);">삭제</a>
+        <td headers="th_mng" class="td_mng td_mns_m">
+            <a href="./bannerform.php?w=u&amp;bn_id=<?php echo $row['bn_id']; ?>" class="btn btn_03">수정</a>
+            <a href="./bannerformupdate.php?w=d&amp;bn_id=<?php echo $row['bn_id']; ?>" onclick="return delete_confirm(this);" class="btn btn_02">삭제</a>
         </td>
     </tr>
     <tr class="<?php echo $bg; ?>">

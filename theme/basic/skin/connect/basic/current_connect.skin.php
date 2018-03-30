@@ -6,16 +6,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$connect_skin_url.'/style.css">',
 ?>
 
 <!-- 현재접속자 목록 시작 { -->
-<div class="tbl_head01 tbl_wrap">
-    <table id="current_connect_tbl">
-    <thead>
-    <tr>
-        <th scope="col">번호</th>
-        <th scope="col">이름</th>
-        <th scope="col">위치</th>
-    </tr>
-    </thead>
-    <tbody>
+<div id="current_connect">
+    <ul>
     <?php
     for ($i=0; $i<count($list); $i++) {
         //$location = conv_content($list[$i]['lo_location'], 0);
@@ -24,18 +16,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$connect_skin_url.'/style.css">',
         // 이 조건문은 가능한 변경하지 마십시오.
         if ($list[$i]['lo_url'] && $is_admin == 'super') $display_location = "<a href=\"".$list[$i]['lo_url']."\">".$location."</a>";
         else $display_location = $location;
+
+        $classes = array();
+        if( $i && ($i % 4 == 0) ){
+            $classes[] = 'box_clear';
+        }
     ?>
-        <tr>
-            <td class="td_num"><?php echo $list[$i]['num'] ?></td>
-            <td class="td_name"><?php echo $list[$i]['name'] ?></td>
-            <td><?php echo $display_location ?></td>
-        </tr>
+        <li class="<?php echo implode(' ', $classes); ?>">
+            <div class="inner">
+                <span class="crt_num"><?php echo $list[$i]['num'] ?></span>
+                <span class="crt_name"><?php echo get_member_profile_img($list[$i]['mb_id']); ?><br><?php echo $list[$i]['name'] ?></span>
+                <span class="crt_lct"><?php echo $display_location ?></span>
+            </div>
+        </li>
     <?php
     }
     if ($i == 0)
-        echo "<tr><td colspan=\"3\" class=\"empty_table\">현재 접속자가 없습니다.</td></tr>";
+        echo "<li class=\"empty_li\">현재 접속자가 없습니다.</li>";
     ?>
-    </tbody>
-    </table>
+    </ul>
 </div>
 <!-- } 현재접속자 목록 끝 -->

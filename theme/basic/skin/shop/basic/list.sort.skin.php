@@ -19,23 +19,23 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
     <h2>상품 정렬</h2>
 
     <!-- <ul>
-        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=asc" class="btn01">낮은가격순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=desc" class="btn01">높은가격순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_name&amp;sortodr=asc" class="btn01">상품명순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type1&amp;sortodr=desc" class="btn01">히트상품</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type2&amp;sortodr=desc" class="btn01">추천상품</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type3&amp;sortodr=desc" class="btn01">최신상품</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type4&amp;sortodr=desc" class="btn01">인기상품</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_type5&amp;sortodr=desc" class="btn01">할인상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=asc">낮은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=desc">높은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_name&amp;sortodr=asc">상품명순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type1&amp;sortodr=desc">히트상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type2&amp;sortodr=desc">추천상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type3&amp;sortodr=desc">최신상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type4&amp;sortodr=desc">인기상품</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_type5&amp;sortodr=desc">할인상품</a></li>
     </ul> -->
 
     <ul id="ssch_sort">
-        <li><a href="<?php echo $sct_sort_href; ?>it_sum_qty&amp;sortodr=desc" class="btn01">판매많은순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=asc" class="btn01">낮은가격순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=desc" class="btn01">높은가격순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_use_avg&amp;sortodr=desc" class="btn01">평점높은순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_use_cnt&amp;sortodr=desc" class="btn01">후기많은순</a></li>
-        <li><a href="<?php echo $sct_sort_href; ?>it_update_time&amp;sortodr=desc" class="btn01">최근등록순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_sum_qty&amp;sortodr=desc">판매많은순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=asc">낮은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_price&amp;sortodr=desc">높은가격순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_use_avg&amp;sortodr=desc">평점높은순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_use_cnt&amp;sortodr=desc">후기많은순</a></li>
+        <li><a href="<?php echo $sct_sort_href; ?>it_update_time&amp;sortodr=desc">최근등록순</a></li>
     </ul>
 </section>
 <!-- } 상품 정렬 선택 끝 -->

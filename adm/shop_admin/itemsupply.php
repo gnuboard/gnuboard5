@@ -153,7 +153,7 @@ if($ps_run) {
 </div>
 
 <div class="btn_list01 btn_list">
-    <button type="button" id="sel_supply_delete">선택삭제</button>
+    <button type="button" id="sel_supply_delete" class="btn btn_02">선택삭제</button>
 </div>
 
 <fieldset>

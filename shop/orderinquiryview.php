@@ -74,20 +74,20 @@ if($od['od_pg'] == 'lg') {
                     order by ct_id ";
         $result = sql_query($sql);
         ?>
-        <div class="tbl_head02 tbl_wrap">
+        <div class="tbl_head03 tbl_wrap">
             <table>
             <thead>
             <tr>
                 <th scope="col" rowspan="2">이미지</th>
                 <th scope="col" colspan="7" id="th_itname">상품명</th>
             </tr>
-            <tr>
+            <tr class="th_line">
                 <th scope="col" id="th_itopt">옵션명</th>
                 <th scope="col" id="th_itqty">수량</th>
                 <th scope="col" id="th_itprice">판매가</th>
                 <th scope="col" id="th_itsum">소계</th>
-                <th scope="col" id="th_itpt">포인트</th>
-                <th scope="col" id="th_itpt">배송비</th>
+                <th scope="col" id="th_itpt">적립포인트</th>
+                <th scope="col" id="th_itsd">배송비</th>
                 <th scope="col" id="th_itst">상태</th>
             </tr>
             </thead>
@@ -147,16 +147,16 @@ if($od['od_pg'] == 'lg') {
             ?>
             <tr>
                 <td rowspan="<?php echo $rowspan; ?>" class="td_imgsmall"><?php echo $image; ?></td>
-                <td headers="th_itname" colspan="7"><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $row['it_name']; ?></a></td>
+                <td headers="th_itname" colspan="7" class="td_bdno"><a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><?php echo $row['it_name']; ?></a></td>
             </tr>
             <?php } ?>
             <tr>
-                <td headers="th_itopt"><?php echo get_text($opt['ct_option']); ?></td>
+                <td headers="th_itopt" class="td_bdno"><?php echo get_text($opt['ct_option']); ?></td>
                 <td headers="th_itqty" class="td_mngsmall"><?php echo number_format($opt['ct_qty']); ?></td>
-                <td headers="th_itprice" class="td_numbig"><?php echo number_format($opt_price); ?></td>
-                <td headers="th_itsum" class="td_numbig"><?php echo number_format($sell_price); ?></td>
-                <td headers="th_itpt" class="td_num"><?php echo number_format($point); ?></td>
-                <td headers="th_itpt" class="td_dvr"><?php echo $ct_send_cost; ?></td>
+                <td headers="th_itprice" class="td_numbig text_right"><?php echo number_format($opt_price); ?></td>
+                <td headers="th_itsum" class="td_numbig text_right"><?php echo number_format($sell_price); ?></td>
+                <td headers="th_itpt" class="td_numbig text_right"><?php echo number_format($point); ?></td>
+                <td headers="th_itsd" class="td_dvr"><?php echo $ct_send_cost; ?></td>
                 <td headers="th_itst" class="td_mngsmall"><?php echo $opt['ct_status']; ?></td>
             </tr>
             <?php
@@ -175,79 +175,36 @@ if($od['od_pg'] == 'lg') {
             </tbody>
             </table>
         </div>
-
+        
         <div id="sod_sts_wrap">
             <span class="sound_only">상품 상태 설명</span>
             <button type="button" id="sod_sts_explan_open" class="btn_frmline">상태설명보기</button>
             <div id="sod_sts_explan">
                 <dl id="sod_fin_legend">
                     <dt>주문</dt>
-                    <dd>주문이 접수되었습니다.</dd>
+                    <dd>주문이 접수되었습니다.
                     <dt>입금</dt>
-                    <dd>입금(결제)이 완료 되었습니다.</dd>
+                    <dd>입금(결제)이 완료 되었습니다.
                     <dt>준비</dt>
-                    <dd>상품 준비 중입니다.</dd>
+                    <dd>상품 준비 중입니다.
                     <dt>배송</dt>
-                    <dd>상품 배송 중입니다.</dd>
+                    <dd>상품 배송 중입니다.
                     <dt>완료</dt>
-                    <dd>상품 배송이 완료 되었습니다.</dd>
+                    <dd>상품 배송이 완료 되었습니다.
                 </dl>
                 <button type="button" id="sod_sts_explan_close" class="btn_frmline">상태설명닫기</button>
             </div>
         </div>
-
+    
+    </section>
+    <div class="sod_left">
+        <h2>결제/배송 정보</h2>
         <?php
         // 총계 = 주문상품금액합계 + 배송비 - 상품할인 - 결제할인 - 배송비할인
         $tot_price = $od['od_cart_price'] + $od['od_send_cost'] + $od['od_send_cost2']
                         - $od['od_cart_coupon'] - $od['od_coupon'] - $od['od_send_coupon']
                         - $od['od_cancel_price'];
-        ?>
 
-        <dl id="sod_bsk_tot">
-            <dt class="sod_bsk_dvr">주문총액</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_price']); ?> 원</strong></dd>
-
-            <?php if($od['od_cart_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">개별상품 쿠폰할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cart_coupon']); ?> 원</strong></dd>
-            <?php } ?>
-
-            <?php if($od['od_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">주문금액 쿠폰할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_coupon']); ?> 원</strong></dd>
-            <?php } ?>
-
-            <?php if ($od['od_send_cost'] > 0) { ?>
-            <dt class="sod_bsk_dvr">배송비</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_cost']); ?> 원</strong></dd>
-            <?php } ?>
-
-            <?php if($od['od_send_coupon'] > 0) { ?>
-            <dt class="sod_bsk_dvr">배송비 쿠폰할인</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_coupon']); ?> 원</strong></dd>
-            <?php } ?>
-
-            <?php if ($od['od_send_cost2'] > 0) { ?>
-            <dt class="sod_bsk_dvr">추가배송비</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_send_cost2']); ?> 원</strong></dd>
-            <?php } ?>
-
-            <?php if ($od['od_cancel_price'] > 0) { ?>
-            <dt class="sod_bsk_dvr">취소금액</dt>
-            <dd class="sod_bsk_dvr"><strong><?php echo number_format($od['od_cancel_price']); ?> 원</strong></dd>
-            <?php } ?>
-
-            <dt class="sod_bsk_cnt">총계</dt>
-            <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?> 원</strong></dd>
-
-            <dt class="sod_bsk_point">포인트</dt>
-            <dd class="sod_bsk_point"><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
-        </dl>
-    </section>
-
-    <div id="sod_fin_view">
-        <h2>결제/배송 정보</h2>
-        <?php
         $receipt_price  = $od['od_receipt_price']
                         + $od['od_receipt_point'];
         $cancel_price   = $od['od_cancel_price'];
@@ -311,10 +268,6 @@ if($od['od_pg'] == 'lg') {
 
             <div class="tbl_head01 tbl_wrap">
                 <table>
-                <colgroup>
-                    <col class="grid_3">
-                    <col>
-                </colgroup>
                 <tbody>
                 <tr>
                     <th scope="row">주문번호</th>
@@ -501,16 +454,12 @@ if($od['od_pg'] == 'lg') {
                 </table>
             </div>
         </section>
-
         <section id="sod_fin_orderer">
             <h3>주문하신 분</h3>
 
             <div class="tbl_head01 tbl_wrap">
                 <table>
-                <colgroup>
-                    <col class="grid_3">
-                    <col>
-                </colgroup>
+
                 <tbody>
                 <tr>
                     <th scope="row">이 름</th>
@@ -542,10 +491,7 @@ if($od['od_pg'] == 'lg') {
 
             <div class="tbl_head01 tbl_wrap">
                 <table>
-                <colgroup>
-                    <col class="grid_3">
-                    <col>
-                </colgroup>
+          
                 <tbody>
                 <tr>
                     <th scope="row">이 름</th>
@@ -591,10 +537,7 @@ if($od['od_pg'] == 'lg') {
 
             <div class="tbl_head01 tbl_wrap">
                 <table>
-                <colgroup>
-                    <col class="grid_3">
-                    <col>
-                </colgroup>
+   
                 <tbody>
                 <?php
                 if ($od['od_invoice'] && $od['od_delivery_company'])
@@ -629,56 +572,123 @@ if($od['od_pg'] == 'lg') {
         </section>
     </div>
 
-    <section id="sod_fin_tot">
-        <h2>결제합계</h2>
-
-        <ul>
-            <li>
-                총 구매액
-                <strong><?php echo display_price($tot_price); ?></strong>
+    <div class="sod_right">
+        <ul id="sod_bsk_tot">
+            <li class="sod_bsk_dvr">
+                <span>주문총액</span>
+                <strong><?php echo number_format($od['od_cart_price']); ?> 원</strong>
             </li>
-            <?php
-            if ($misu_price > 0) {
-            echo '<li>';
-            echo '미결제액'.PHP_EOL;
-            echo '<strong>'.display_price($misu_price).'</strong>';
-            echo '</li>';
-            }
-            ?>
-            <li id="alrdy">
-                결제액
-                <strong><?php echo $wanbul; ?></strong>
+            <?php if($od['od_cart_coupon'] > 0) { ?>
+            <li class="sod_bsk_dvr">
+                <span>개별상품 쿠폰할인</span>
+                <strong><?php echo number_format($od['od_cart_coupon']); ?> 원</strong>
+                
+            </li>
+            <?php } ?>
+            <?php if($od['od_coupon'] > 0) { ?>
+            <li class="sod_bsk_dvr">
+                <span>주문금액 쿠폰할인</span>
+                <strong><?php echo number_format($od['od_coupon']); ?> 원</strong>
+                
+            </li>
+            <?php } ?>
+            <?php if ($od['od_send_cost'] > 0) { ?>
+            <li class="sod_bsk_dvr">
+                <span>배송비</span>
+                <strong><?php echo number_format($od['od_send_cost']); ?> 원</strong>
+                
+            </li>
+            <?php } ?>
+            <?php if($od['od_send_coupon'] > 0) { ?>
+            <li class="sod_bsk_dvr">
+                <span>배송비 쿠폰할인</span>
+                <strong><?php echo number_format($od['od_send_coupon']); ?> 원</strong>
+                
+            </li>
+            <?php } ?>
+            <?php if ($od['od_send_cost2'] > 0) { ?>
+            <li class="sod_bsk_dvr">
+                <span>추가배송비</span>
+                <strong><?php echo number_format($od['od_send_cost2']); ?> 원</strong>
+            </li>
+            <?php } ?>
+            <?php if ($od['od_cancel_price'] > 0) { ?>
+            <li class="sod_bsk_dvr">
+                <span>취소금액</span>
+                <strong><?php echo number_format($od['od_cancel_price']); ?> 원</strong>
+                
+            </li>
+            <?php } ?>
+            <li class="sod_bsk_cnt">
+                <span>총계</span>
+                <strong><?php echo number_format($tot_price); ?> 원</strong>
+            </li>
+            <li class="sod_bsk_point">
+                <span>적립포인트</span>
+                <strong><?php echo number_format($tot_point); ?> 점</strong>
             </li>
         </ul>
-    </section>
+        
+        <section id="sod_fin_tot">
+            <h2>결제합계</h2>
 
-    <section id="sod_fin_cancel">
-        <h2>주문취소</h2>
-        <?php
-        // 취소한 내역이 없다면
-        if ($cancel_price == 0) {
-            if ($custom_cancel) {
-        ?>
-        <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
+            <ul>
+                <li>
+                    총 구매액
+                    <strong><?php echo display_price($tot_price); ?></strong>
+                </li>
+                <?php
+                if ($misu_price > 0) {
+                echo '<li>';
+                echo '미결제액'.PHP_EOL;
+                echo '<strong>'.display_price($misu_price).'</strong>';
+                echo '</li>';
+                }
+                ?>
+                <li id="alrdy">
+                    결제액
+                    <strong><?php echo $wanbul; ?></strong>
+                    <?php if( $od['od_receipt_point'] ){    //포인트로 결제한 내용이 있으면 ?>
+                    <div class="right">
+                        <p><span class="title"><i class="fa fa-angle-right" aria-hidden="true"></i> 포인트 결제</span><?php echo number_format($od['od_receipt_point']); ?> 점</p>
+                        <p><span class="title"><i class="fa fa-angle-right" aria-hidden="true"></i> 실결제</span><?php echo number_format($od['od_receipt_price']); ?> 원</p>
+                    </div>
+                    <?php } ?>
+                </li>
+            </ul>
+        </section>
 
-        <div id="sod_fin_cancelfrm">
-            <form method="post" action="./orderinquirycancel.php" onsubmit="return fcancel_check(this);">
-            <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
-            <input type="hidden" name="token"  value="<?php echo $token; ?>">
+        <section id="sod_fin_cancel">
+            <h2>주문취소</h2>
+            <?php
+            // 취소한 내역이 없다면
+            if ($cancel_price == 0) {
+                if ($custom_cancel) {
+            ?>
+            <button type="button" onclick="document.getElementById('sod_fin_cancelfrm').style.display='block';">주문 취소하기</button>
 
-            <label for="cancel_memo">취소사유</label>
-            <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" size="40" maxlength="100">
-            <input type="submit" value="확인" class="btn_frmline">
+            <div id="sod_fin_cancelfrm">
+                <form method="post" action="./orderinquirycancel.php" onsubmit="return fcancel_check(this);">
+                <input type="hidden" name="od_id"  value="<?php echo $od['od_id']; ?>">
+                <input type="hidden" name="token"  value="<?php echo $token; ?>">
 
-            </form>
-        </div>
-        <?php
-            }
-        } else {
-        ?>
-        <p>주문 취소, 반품, 품절된 내역이 있습니다.</p>
-        <?php } ?>
-    </section>
+                <label for="cancel_memo" class="sound_only">취소사유</label>
+                <input type="text" name="cancel_memo" id="cancel_memo" required class="frm_input required" size="40" maxlength="100" placeholder="취소사유">
+                <input type="submit" value="확인" class="btn_frmline">
+
+                </form>
+            </div>
+            <?php
+                }
+            } else {
+            ?>
+            <p>주문 취소, 반품, 품절된 내역이 있습니다.</p>
+            <?php } ?>
+        </section>
+    </div>
+
+
+   
 
     <?php if ($od['od_settle_case'] == '가상계좌' && $od['od_misu'] > 0 && $default['de_card_test'] && $is_admin && $od['od_pg'] == 'kcp') {
     preg_match("/\s{1}([^\s]+)\s?/", $od['od_bank_account'], $matchs);

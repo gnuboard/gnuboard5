@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-if (!$board['bo_use_sns']) die('');
+if (!$board['bo_use_sns']) return;
 ?>
 
 <ul id="bo_vc_sns">
@@ -30,17 +30,16 @@ if ($config['cf_facebook_appid']) {
         }
     }
 
-    echo '<li>';
+    echo '<li class="sns_li_f '.($facebook_user?'':'sns_li_off').'">';
     if ($facebook_user) {
         echo '<img src="'.G5_SNS_URL.'/icon/facebook.png" id="facebook_icon">';
         echo '<label for="" class="sound_only">페이스북 동시 등록</label>';
         echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" '.(get_cookie('ck_facebook_checked')?'checked':'').' value="1">';
     } else {
         $facebook_url = $facebook->getLoginUrl(array("redirect_uri"=>G5_SNS_URL."/facebook/callback.php", "scope"=>"publish_stream,read_stream,offline_access", "display"=>"popup"));
-
-        echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G5_SNS_URL.'/icon/facebook'.($facebook_user?'':'_off').'.png" id="facebook_icon"></a>';
-        echo '<label for="" class="sound_only">페이스북 동시 등록</label>';
         echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" disabled value="1">';
+        echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G5_SNS_URL.'/icon/facebook.png" id="facebook_icon" width="20"></a>';
+        echo '<label for="" class="sound_only">페이스북 동시 등록</label>';
         echo '<script>$(function(){ $(document).on("click", "#facebook_url", function(){ window.open(this.href, "facebook_url", "width=600,height=250"); }); });</script>';
     }
     echo '</li>';
@@ -90,15 +89,15 @@ if ($config['cf_twitter_key']) {
         }
     }
 
-    echo '<li>';
+    echo '<li class="sns_li_t '.($twitter_user?'':'sns_li_off').'">';
     if ($twitter_user) {
         echo '<img src="'.G5_SNS_URL.'/icon/twitter.png" id="twitter_icon">';
         echo '<label for="" class="sound_only">트위터 동시 등록</label>';
         echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" '.(get_cookie('ck_twitter_checked')?'checked':'').' value="1">';
     } else {
-        echo '<a href="'.$twitter_url.'" id="twitter_url" onclick="return false;"><img src="'.G5_SNS_URL.'/icon/twitter'.($twitter_user?'':'_off').'.png" id="twitter_icon"></a>';
         echo '<label for="" class="sound_only">트위터 동시 등록</label>';
         echo '<input type="checkbox" name="twitter_checked" id="twitter_checked" disabled value="1">';
+        echo '<a href="'.$twitter_url.'" id="twitter_url" onclick="return false;" "><img src="'.G5_SNS_URL.'/icon/twitter.png" id="twitter_icon" width="20"></a>';
         echo '<script>$(function(){ $(document).on("click", "#twitter_url", function(){ window.open(this.href, "twitter_url", "width=600,height=250"); }); });</script>';
     }
     echo '</li>';

@@ -132,17 +132,17 @@ $result = sql_query($sql);
     <tfoot>
     <tr>
         <td>합 계</td>
-        <td><?php echo number_format($tot['ordercount']); ?></td>
-        <td><?php echo number_format($tot['orderprice']); ?></td>
-        <td><?php echo number_format($tot['ordercoupon']); ?></td>
-        <td><?php echo number_format($tot['receiptbank']); ?></td>
-        <td><?php echo number_format($tot['receiptvbank']); ?></td>
-        <td><?php echo number_format($tot['receiptiche']); ?></td>
-        <td><?php echo number_format($tot['receiptcard']); ?></td>
-        <td><?php echo number_format($tot['receipthp']); ?></td>
-        <td><?php echo number_format($tot['receiptpoint']); ?></td>
-        <td><?php echo number_format($tot['ordercancel']); ?></td>
-        <td><?php echo number_format($tot['misu']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['ordercount']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['orderprice']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['ordercoupon']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['receiptbank']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['receiptvbank']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['receiptiche']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['receiptcard']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['receipthp']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['receiptpoint']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['ordercancel']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['misu']); ?></td>
     </tr>
     </tfoot>
     </table>

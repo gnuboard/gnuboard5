@@ -46,7 +46,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
     ?>
 
     <div class="win_btn">
-        <button type="button" onclick="javascript:window.close();">창닫기</button>
+        <button type="button" onclick="javascript:window.close();" class="btn_close">창닫기</button>
     </div>
 </div>
 

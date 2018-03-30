@@ -20,7 +20,8 @@ $count = sql_num_rows($result);
 ?>
 
 <!-- 쿠폰선택 시작 { -->
-<div id="sc_coupon_frm">
+<div id="sc_coupon_frm" class="od_coupon">
+    <h3>배송비쿠폰</h3>
     <?php if($count > 0) { ?>
     <div class="tbl_head02 tbl_wrap">
         <table>
@@ -74,7 +75,7 @@ $count = sql_num_rows($result);
     }
     ?>
     <div class="btn_confirm">
-        <button type="button" id="sc_coupon_close" class="btn_submit">닫기</button>
+        <button type="button" id="sc_coupon_close" class="btn_close"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
     </div>
 </div>
 <!-- } 쿠폰선택 끝 -->

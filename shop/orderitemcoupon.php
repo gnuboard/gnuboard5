@@ -41,7 +41,8 @@ $count = sql_num_rows($result);
 ?>
 
 <!-- 쿠폰 선택 시작 { -->
-<div id="cp_frm">
+<div id="cp_frm" class="od_coupon">
+    <h3>쿠폰선택</h3>
     <?php if($count > 0) { ?>
     <div class="tbl_head02 tbl_wrap">
         <table>
@@ -78,7 +79,7 @@ $count = sql_num_rows($result);
                 <?php echo get_text($row['cp_subject']); ?>
             </td>
             <td class="td_numbig"><?php echo number_format($dc); ?></td>
-            <td class="td_mngsmall"><button type="button" class="cp_apply btn_frmline">적용</button></td>
+            <td class="td_mngsmall"><button type="button" class="cp_apply">적용</button></td>
         </tr>
         <?php
         }
@@ -92,7 +93,7 @@ $count = sql_num_rows($result);
     }
     ?>
     <div class="btn_confirm">
-        <button type="button" id="cp_close" class="btn_submit">닫기</button>
+        <button type="button" id="cp_close" class="btn_close"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
     </div>
 </div>
 <!-- } 쿠폰 선택 끝 -->

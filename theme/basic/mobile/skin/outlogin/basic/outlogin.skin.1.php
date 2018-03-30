@@ -11,16 +11,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
     <form name="foutlogin" action="<?php echo $outlogin_action_url ?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
     <fieldset>
         <input type="hidden" name="url" value="<?php echo $outlogin_url ?>">
-        <input type="text" name="mb_id" id="ol_id" placeholder="회원아이디(필수)" required class="required" maxlength="20">
-        <input type="password" id="ol_pw" name="mb_password" placeholder="비밀번호(필수)" required class="required" maxlength="20">
-        <input type="submit" id="ol_submit" value="로그인">
+        <input type="text" name="mb_id" id="ol_id" placeholder="아이디" required maxlength="20">
+        <input type="password" id="ol_pw" name="mb_password" placeholder="비밀번호" required  maxlength="20">
         <div id="ol_svc">
             <input type="checkbox" id="auto_login" name="auto_login" value="1">
             <label for="auto_login" id="auto_login_label">자동로그인</label>
+
+        </div>
+        <input type="submit" id="ol_submit" value="로그인" class="btn_submit">
+        <div class="ol_before_btn">
             <a href="<?php echo G5_BBS_URL ?>/register.php"><b>회원가입</b></a>
             <a href="<?php echo G5_BBS_URL ?>/password_lost.php" id="ol_password_lost">정보찾기</a>
         </div>
     </fieldset>
+
+    <?php
+    // 소셜로그인 사용시 소셜로그인 버튼
+    @include_once(get_social_skin_path().'/social_outlogin.skin.1.php');
+    ?>
+
     </form>
 </aside>
 

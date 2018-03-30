@@ -133,6 +133,7 @@ while($row = sql_fetch_array($result)){
     $categorys[] = $row;
 }
 
+$q = get_text($q);
 $search_skin = G5_SHOP_SKIN_PATH.'/search.skin.php';
 
 if(!file_exists($search_skin)) {

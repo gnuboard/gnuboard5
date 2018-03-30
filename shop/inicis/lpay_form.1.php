@@ -118,9 +118,6 @@ function make_signature(frm)
 }
 
 function paybtn(f) {
-
-    console.log( f.id );
-
     INIStdPay.pay(f.id);
 }
 </script>

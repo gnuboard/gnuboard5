@@ -17,19 +17,21 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     <!-- } 카테고리 끝 -->
     <?php } ?>
 
+    <?php if ($admin_href || $write_href) { ?>
+    <ul class="btn_top top">
+        <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin"><i class="fa fa-user-circle" aria-hidden="true"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+        <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02"><i class="fa fa-pencil" aria-hidden="true"></i> 문의등록</a></li><?php } ?>
+    </ul>
+    <?php } ?>
+
      <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div class="bo_fx">
-        <div id="bo_list_total">
+        <div id="bo_list_total" class="sound_only">
             <span>Total <?php echo number_format($total_count) ?>건</span>
             <?php echo $page ?> 페이지
         </div>
 
-        <?php if ($admin_href || $write_href) { ?>
-        <ul class="btn_bo_user">
-            <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin">관리자</a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02">문의등록</a></li><?php } ?>
-        </ul>
-        <?php } ?>
+
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
 
@@ -40,12 +42,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
     <?php if ($is_checkbox) { ?>
     <div id="list_chk">
-        <label for="chkall" class="sound_only">게시물 전체</label>
         <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+        <label for="chkall">게시물 전체선택</label>
     </div>
     <?php } ?>
 
-    <div class="ul_wrap ul_01">
+    <div class="list_01">
         <ul>
             <?php
             for ($i=0; $i<count($list); $i++) {
@@ -58,18 +60,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 </div>
                 <?php } ?>
                 <div class="li_title">
-                    <a href="<?php echo $list[$i]['view_href']; ?>">
-                        <strong><?php echo $list[$i]['category']; ?></strong>
-                        <?php echo $list[$i]['subject']; ?>
+                    <strong><?php echo $list[$i]['category']; ?></strong>
+                    <a href="<?php echo $list[$i]['view_href']; ?>" class="li_sbj">
+                        <?php echo $list[$i]['subject']; ?><span> <?php echo $list[$i]['icon_file']; ?></span>
                     </a>
                 </div>
                 <div class="li_info">
-                    <span><?php echo $list[$i]['num']; ?></span>
                     <span><?php echo $list[$i]['name']; ?></span>
-                    <span><?php echo $list[$i]['date']; ?></span>
-                    <span><?php echo $list[$i]['icon_file']; ?></span>
+                    <span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['date']; ?></span>
+                    
+                    <div class="li_stat <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '<i class="fa fa-check-circle" aria-hidden="true"></i> 답변완료' : '<i class="fa fa-times-circle" aria-hidden="true"></i> 답변대기'); ?></div>
+
                 </div>
-                <div class="li_stat <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></div>
             </li>
             <?php
             }
@@ -86,10 +88,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         </ul>
         <?php } ?>
 
-        <ul class="btn_bo_user">
-            <?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn_b01">목록</a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02">문의등록</a></li><?php } ?>
-        </ul>
+        
     </div>
     </form>
 </div>

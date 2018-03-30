@@ -20,7 +20,7 @@ $list_row   = $default['de_mobile_listtype_list_row'];   // 한 페이지에 몇
 $img_width  = $default['de_mobile_listtype_img_width'];  // 출력이미지 폭
 $img_height = $default['de_mobile_listtype_img_height']; // 출력이미지 높이
 ?>
-
+<div id="listtype"> 
 <?php
 // 상품 출력순서가 있다면
 $order_by = ' it_order, it_id desc ';
@@ -68,7 +68,7 @@ else
     echo '<div align="center">'.$skin.' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
 }
 ?>
-
+</div>
 <?php
 $qstr .= '&amp;type='.$type.'&amp;sort='.$sort;
 echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page=");

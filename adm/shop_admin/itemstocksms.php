@@ -72,7 +72,8 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <div class="local_ov01 local_ov">
     <?php echo $listall; ?>
-    전체 <?php echo number_format($total_count); ?>건, 미전송 <?php echo number_format($unsend_count); ?>건
+     <span class="btn_ov01"><span class="ov_txt">전체 </span><span class="ov_num"> <?php echo number_format($total_count); ?>건</span></span>  
+     <span class="btn_ov01"><span class="ov_txt">미전송 </span><span class="ov_num"><?php echo number_format($unsend_count); ?>건</span></span>  
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
@@ -88,7 +89,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 </select>
 
 <label for="search" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-<input type="text" name="search" value="<?php echo $search; ?>" required class="frm_input required">
+<input type="text" name="search" id="search" value="<?php echo $search; ?>" required class="frm_input required">
 <input type="submit" value="검색" class="btn_submit">
 
 </form>
@@ -138,7 +139,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i; ?>">
             <input type="hidden" name="ss_id[<?php echo $i; ?>]" value="<?php echo $row['ss_id']; ?>">
         </td>
-        <td><?php echo $it_name; ?></td>
+        <td class="td_left"><?php echo $it_name; ?></td>
         <td class="td_telbig"><?php echo $row['ss_hp']; ?></td>
         <td class="td_stat"><?php echo ($row['ss_send'] ? '전송완료' : '전송전'); ?></td>
         <td class="td_datetime"><?php echo (is_null_time($row['ss_send_time']) ? '' : $row['ss_send_time']); ?></td>
@@ -153,14 +154,12 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     </table>
 </div>
 
-<?php if ($is_admin == 'super') { ?>
-<div class="btn_list01 btn_list">
-    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value">
-</div>
-<?php } ?>
-
-<div class="btn_confirm01 btn_confirm">
-    <input type="submit" name="act_button" value="선택SMS전송" class="btn_submit" onclick="document.pressed=this.value">
+    
+<div class="btn_fixed_top">
+    <?php if ($is_admin == 'super') { ?>
+    <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
+    <?php } ?>
+    <input type="submit" name="act_button" value="선택SMS전송" class="btn_submit btn" onclick="document.pressed=this.value">
 </div>
 </form>
 

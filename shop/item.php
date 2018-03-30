@@ -111,11 +111,13 @@ if(!is_file($nav_skin))
     $nav_skin = G5_SHOP_SKIN_PATH.'/navigation.skin.php';
 include $nav_skin;
 
-// 이 분류에 속한 하위분류 출력
-$cate_skin = $skin_dir.'/listcategory.skin.php';
-if(!is_file($cate_skin))
-    $cate_skin = G5_SHOP_SKIN_PATH.'/listcategory.skin.php';
-include $cate_skin;
+if(defined('G5_THEME_USE_ITEM_CATEGORY') && G5_THEME_USE_ITEM_CATEGORY){
+    // 이 분류에 속한 하위분류 출력
+    $cate_skin = $skin_dir.'/listcategory.skin.php';
+    if(!is_file($cate_skin))
+        $cate_skin = G5_SHOP_SKIN_PATH.'/listcategory.skin.php';
+    include $cate_skin;
+}
 
 if ($is_admin) {
     echo '<div class="sit_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
@@ -182,9 +184,9 @@ if($default['de_rel_list_use']) {
 // 소셜 관련
 $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
 $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$it['it_id'];
-$sns_share_links .= get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_fb_s.png').' ';
-$sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_twt_s.png').' ';
-$sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_goo_s.png');
+$sns_share_links .= get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/facebook.png').' ';
+$sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/twitter.png').' ';
+$sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/gplus.png');
 
 // 상품품절체크
 if(G5_SOLDOUT_CHECK)
@@ -196,11 +198,16 @@ if(!$it['it_use'] || $it['it_tel_inq'] || $is_soldout)
     $is_orderable = false;
 
 if($is_orderable) {
-    // 선택 옵션
-    $option_item = get_item_options($it['it_id'], $it['it_option_subject']);
+    if(defined('G5_THEME_USE_OPTIONS_TRTD') && G5_THEME_USE_OPTIONS_TRTD){
+        $option_item = get_item_options($it['it_id'], $it['it_option_subject'], '');
+        $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject'], '');
+    } else {
+        // 선택 옵션 ( 기존의 tr td 태그로 가져오려면 'div' 를 '' 로 바꾸거나 또는 지워주세요 )
+        $option_item = get_item_options($it['it_id'], $it['it_option_subject'], 'div');
 
-    // 추가 옵션
-    $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject']);
+        // 추가 옵션 ( 기존의 tr td 태그로 가져오려면 'div' 를 '' 로 바꾸거나 또는 지워주세요 )
+        $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject'], 'div');
+    }
 
     // 상품 선택옵션 수
     $option_count = 0;
@@ -227,9 +234,6 @@ function pg_anchor($anc_id) {
         <li><a href="#sit_qa" <?php if ($anc_id == 'qa') echo 'class="sanchor_on"'; ?>>상품문의 <span class="item_qa_count"><?php echo $item_qa_count; ?></span></a></li>
         <?php if ($default['de_baesong_content']) { ?><li><a href="#sit_dvr" <?php if ($anc_id == 'dvr') echo 'class="sanchor_on"'; ?>>배송정보</a></li><?php } ?>
         <?php if ($default['de_change_content']) { ?><li><a href="#sit_ex" <?php if ($anc_id == 'ex') echo 'class="sanchor_on"'; ?>>교환정보</a></li><?php } ?>
-        <?php if($default['de_rel_list_use']) { ?>
-        <li><a href="#sit_rel" <?php if ($anc_id == 'rel') echo 'class="sanchor_on"'; ?>>관련상품 <span class="item_relation_count"><?php echo $item_relation_count; ?></span></a></li>
-        <?php } ?>
     </ul>
 <?php
 }

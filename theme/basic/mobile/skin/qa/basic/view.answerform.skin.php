@@ -7,7 +7,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     if($is_admin) // 관리자이면 답변등록
     {
     ?>
-    <h2>답변등록</h2>
+    <h2 class="ans_frm_h2">답변등록</h2>
 
     <form name="fanswer" method="post" action="./qawrite_update.php" autocomplete="off">
     <input type="hidden" name="qa_id" value="<?php echo $view['qa_id']; ?>">
@@ -29,27 +29,23 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     echo $option_hidden;
     ?>
 
-    <div class="tbl_frm01 tbl_wrap">
-        <table>
-        <tbody>
-        <?php if ($option) { ?>
-        <tr>
-            <th scope="row">옵션</th>
-            <td><?php echo $option; ?></td>
-        </tr>
-        <?php } ?>
-        <tr>
-            <th><label for="qa_subject">제목</label></th>
-            <td><input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required" size="50" maxlength="255"></td>
-        </tr>
-        <tr>
-        <th scope="row"><label for="qa_content">내용<strong class="sound_only">필수</strong></label></th>
-            <td class="wr_content">
+    <div class="form_01">
+        <ul>
+            <?php if ($option) { ?>
+            <li>
+                <span class="sound_only">옵션</span>
+                <?php echo $option; ?>
+            </li>
+            <?php } ?>
+            <li>
+                <label for="qa_subject" class="sound_only">제목</label>
+                <input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required" size="50" maxlength="255" placeholder="제목">
+            </li>
+            <li>
+                <label for="qa_content" class="sound_only">내용<strong>필수</strong></label>
                 <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
-            </td>
-        </tr>
-        </tbody>
-        </table>
+            </li>
+        </ul>
     </div>
 
     <div class="btn_confirm">

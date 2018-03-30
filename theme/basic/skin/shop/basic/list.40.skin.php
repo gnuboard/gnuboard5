@@ -31,8 +31,8 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
     $list_right_pad = 10;
     $list_bottom_pad = 20;
     $list_left_pad = $this->img_width + 10;
-    $list_real_width = 740;
-    $list_width = $list_real_width - $list_right_pad - $list_left_pad;
+    //$list_real_width = 740;
+    //$list_width = $list_real_width - $list_right_pad - $list_left_pad;
     $list_height = $this->img_height - $list_top_pad - $list_bottom_pad;
 
     echo "<li class=\"sct_li{$sct_last}\" style=\"padding:{$list_top_pad}px {$list_right_pad}px {$list_bottom_pad}px {$list_left_pad}px;width:{$list_width}px;height:{$list_height}px\">\n";

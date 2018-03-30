@@ -104,7 +104,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_id"><a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>?sfl=vi_ip&amp;stx=<?php echo $ip; ?>"><?php echo $ip; ?></a></td>
-        <td><?php echo $link.$title; ?></a></td>
+        <td class="td_left"><?php echo $link.$title; ?><?php echo $link ? '</a>' : ''; ?></td>
         <td class="td_idsmall td_category1"><?php echo $brow; ?></td>
         <td class="td_idsmall td_category3"><?php echo $os; ?></td>
         <td class="td_idsmall td_category2"><?php echo $device; ?></td>
