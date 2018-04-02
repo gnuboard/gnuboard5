@@ -15,7 +15,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 </script>
 <?php } ?>
 
-<!-- 메인상품진열 10 시작 { -->
+<!-- 메인상품진열 30 시작 { -->
 <?php
 $li_width = intval(100 / $this->list_mod);
 $li_width_style = ' style="width:'.$li_width.'%;"';
@@ -95,4 +95,4 @@ if ($i > 0) echo "</ul>\n";
 
 if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
-<!-- } 상품진열 10 끝 -->
+<!-- } 상품진열 30 끝 -->

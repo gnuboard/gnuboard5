@@ -142,7 +142,7 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
         $list->set_order_by($order_by);
         $list->set_from_record($from_record);
         $list->set_view('it_img', true);
-        $list->set_view('it_id', true);
+        $list->set_view('it_id', false);
         $list->set_view('it_name', true);
         $list->set_view('it_price', true);
         $list->set_view('sns', true);
@@ -161,7 +161,7 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
     if($i > 0 && $total_count > $items) {
         $qstr1 .= 'ca_id='.$ca_id;
         $qstr1 .='&sort='.$sort.'&sortodr='.$sortodr;
-        $ajax_url = G5_SHOP_URL.'/ajax.list.php?'.$qstr1;
+        $ajax_url = G5_SHOP_URL.'/ajax.list.php?'.$qstr1.'&use_sns=1';
     ?>
     <div class="li_more">
         <p id="item_load_msg"><img src="<?php echo G5_SHOP_CSS_URL; ?>/img/loading.gif" alt="로딩이미지" ><br>잠시만 기다려주세요.</p>

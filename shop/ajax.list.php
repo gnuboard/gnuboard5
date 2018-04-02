@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/json.lib.php');
 
+define('G5_IS_SHOP_AJAX_LIST', true);
+
 $data = array();
 
 $sql = " select *
@@ -60,6 +62,9 @@ $list->set_view('it_img', true);
 $list->set_view('it_id', false);
 $list->set_view('it_name', true);
 $list->set_view('it_price', true);
+if(isset($use_sns) && $use_sns){
+    $list->set_view('sns', true);
+}
 echo $list->run();
 
 $content = ob_get_contents();

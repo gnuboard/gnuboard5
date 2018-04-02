@@ -100,6 +100,10 @@
 .sct_20 .sct_txt{font-weight:bold;font-size:1.083em;margin:0px 10px 5px;line-height:1.5em}
 .sct_20 .sct_cost{margin:5px 10px}
 .sct_20 .sct_sns{margin:10px 10px}
+.sct_20 .li_wr.is_view_type_list{padding-left:130px;height:130px}
+.sct_20 .li_wr.is_view_type_list .sct_img{width:130px}
+.sct_20 .li_wr.is_view_type_list .sct_img a{display:block}
+.sct_20 .li_wr.is_view_type_list img{width:100%;height:auto}
 
 /* 상품 목록 스킨 30 */
 .sct_30 .sct_li{;width:100%;margin:5px 0; text-align:left;width:100%;float:left}
