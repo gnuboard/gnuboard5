@@ -39,7 +39,10 @@ define('G5_SOCIAL_USE_POPUP', ! is_mobile() );  // 모바일에서는 팝업사�
 define('G5_SOCIAL_DELETE_DAY', 0);
 
 // 메일 인증관련, false 이면 메일인증을 받지 않고 로그인됩니다. true 이고 기본환경설정에서 메일인증설정이 활성화 되어 있는 경우 메일인증을 받아야만 로그인 됩니다.
-define('G5_SOCIAL_CERTIFY_MAIL', false );
+define('G5_SOCIAL_CERTIFY_MAIL', false);
+
+// 소셜 DEBUG 관련 설정, 기본값은 false, true 로 설정시 data/tmp/social_anystring.log 파일이 생성됩니다.
+define('G5_SOCIAL_IS_DEBUG', false);
 
 include_once(G5_SOCIAL_LOGIN_PATH.'/includes/functions.php');
 ?>

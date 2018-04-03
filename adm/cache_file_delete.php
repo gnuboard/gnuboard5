@@ -5,6 +5,11 @@ include_once('./_common.php');
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.', G5_URL);
 
+@include_once('./safe_check.php');
+if(function_exists('social_log_file_delete')){
+    social_log_file_delete();
+}
+
 $g5['title'] = '캐시파일 일괄삭제';
 include_once('./admin.head.php');
 ?>
