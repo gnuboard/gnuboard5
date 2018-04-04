@@ -127,7 +127,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             }
 
             if ($i == 0)
-                echo '<li class="empty_list">보관 내역이 없습니다.</list>';
+                echo '<li class="empty_list">보관 내역이 없습니다.</li>';
             ?>
         </ul>
          <a href="<?php echo G5_SHOP_URL; ?>/wishlist.php" class="btn_more">더보기</a>
