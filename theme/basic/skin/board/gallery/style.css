@@ -204,7 +204,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .autosave_del{background:url(./img/close_btn.png) no-repeat 50% 50%;text-indent:-999px;overflow:hidden;height:20px;width:20px;}
 
 /* 게시판 읽기 */
-#bo_v {margin-bottom:20px;padding:20px;background:#fff}
+#bo_v {margin-bottom:20px;padding:20px;background:#fff;box-sizing:border-box}
 
 #bo_v_table {position:absolute;top:0;right:16px;margin:0;padding:0 5px;height:25px;background:#ff3061;color:#fff;font-weight:bold;line-height:2.2em}
 

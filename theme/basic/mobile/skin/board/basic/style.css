@@ -101,6 +101,10 @@ box-shadow: 0 0 8px  rgba(65,98,255,0.8);}
 #bo_sch .sch_input{height:38px;border:0;padding:0;background-color:transparent;float:left;width:60%;padding:0 40px 0 10px}
 #bo_sch .sch_btn{height:38px;position:absolute;top:0;right:0;border:0;width:40px;background:none;font-size:15px}
 
+.view_is_list.btn_top{position:relative;z-index:auto;top:0;left:0}
+.view_is_list{margin:8px 10px 0;height:50px;padding:10px;line-height:30px;border-radius:3px;border-bottom:1px solid #ccc;background:#fff;color:#333;text-align:right}
+.view_is_list li{display:inline-block}
+
 #bo_list{margin:10px 0}
 
 /* 게시판 쓰기 */
