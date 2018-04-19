@@ -39,6 +39,7 @@ $pg_anchor = '<ul class="anchor">
                     <li>입점 안내 : <a href="http://join.shopping.naver.com/join/intro.nhn" target="_blank">http://join.shopping.naver.com/join/intro.nhn</a></li>
                     <li>전체상품 URL : <a href="<?php echo G5_SHOP_URL; ?>/price/naver.php" target="_blank"><?php echo G5_SHOP_URL; ?>/price/naver.php</a></li>
                     <li>요약상품 URL : <a href="<?php echo G5_SHOP_URL; ?>/price/naver_summary.php" target="_blank"><?php echo G5_SHOP_URL; ?>/price/naver_summary.php</a></li>
+                </ul>
             </dd>
             <dt><a href="http://shopping.daum.net/" target="_blank">다음 쇼핑하우</a></dt>
             <dd>
