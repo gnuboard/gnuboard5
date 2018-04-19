@@ -177,7 +177,7 @@ else // 장바구니에 담기
 
         // 옵션정보를 얻어서 배열에 저장
         $opt_list = array();
-        $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' order by io_no asc ";
+        $sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '$it_id' and io_use = 1 order by io_no asc ";
         $result = sql_query($sql);
         $lst_count = 0;
         for($k=0; $row=sql_fetch_array($result); $k++) {
