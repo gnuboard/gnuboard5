@@ -29,6 +29,17 @@ if($_POST['cz_type'] && !$_POST['cz_point'])
 if(!$_POST['cz_period'])
     alert('쿠폰사용기한을 입력해 주십시오.');
 
+if( isset($_FILES['cp_img']) && !empty($_FILES['cp_img']['name']) ){
+    if( !preg_match('/\.(gif|jpe?g|bmp|png)$/i', $_FILES['cp_img']['name']) ){
+        alert("이미지 파일만 업로드 할수 있습니다.");
+    }
+
+    $timg = @getimagesize($_FILES['cp_img']['tmp_name']);
+    if ($timg['2'] < 1 || $timg['2'] > 16){
+        alert("이미지 파일만 업로드 할수 있습니다.");
+    }
+}
+
 if($_POST['cp_method'] == 0 && !$_POST['cp_target'])
     alert('적용상품을 입력해 주십시오.');
 
