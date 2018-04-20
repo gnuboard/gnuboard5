@@ -68,8 +68,8 @@ $mb = get_member($memo['me_'.$unkind.'_mb_id']);
 $list_link = './memo.php?kind='.$kind;
 
 if(isset($page) && $page){
-    $prev_link .= '&amp;page='.(int) $page;
-    $next_link .= '&amp;page='.(int) $page;
+    $prev_link .= $prev_link ? '&amp;page='.(int) $page : '';
+    $next_link .= $next_link ? '&amp;page='.(int) $page : '';
     $list_link .= '&amp;page='.(int) $page;
 }
 

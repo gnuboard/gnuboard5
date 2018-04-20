@@ -193,6 +193,7 @@ box-shadow: 0 1px 3px #eee;
 .memo_view_date{text-align:right;color:#555;font-style:italic}
 .memo_view_date strong{font-weight:normal}
 #memo_view .btn_b02{float:right}
+#memo_view .btn_b02.reply_btn{margin-left:4px}
 #memo_view p {padding:10px;border-top:1px solid #ddd;min-height:150px;height:auto !important;height:150px;background:#fff;line-height:1.8em}
 
 #memo_write textarea {height:100px}
