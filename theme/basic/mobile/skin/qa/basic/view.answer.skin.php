@@ -9,7 +9,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         <i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $answer['qa_datetime']; ?>
     </div>
     <div id="ans_con">
-        <?php echo conv_content($answer['qa_content'], $answer['qa_html']); ?>
+        <?php echo get_view_thumbnail(conv_content($answer['qa_content'], $answer['qa_html']), $qaconfig['qa_image_width']); ?>
     </div>
 
     <div id="ans_add">

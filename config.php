@@ -5,7 +5,7 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.3.1');
+define('G5_GNUBOARD_VER', '5.3.1.2');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -152,7 +152,7 @@ define('G5_DIR_PERMISSION',  0755); // 디렉토리 생성시 퍼미션
 define('G5_FILE_PERMISSION', 0644); // 파일 생성시 퍼미션
 
 // 모바일 인지 결정 $_SERVER['HTTP_USER_AGENT']
-define('G5_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|[^A]skt|nokia|blackberry|android|sony');
+define('G5_MOBILE_AGENT',   'phone|samsung|lgtel|mobile|[^A]skt|nokia|blackberry|BB10|android|sony');
 
 // SMTP
 // lib/mailer.lib.php 에서 사용
