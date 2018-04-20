@@ -215,6 +215,7 @@ box-shadow: 0 1px 4px #cbd1df;}
 #bo_v_ans h2 .tit_rpl{display:inline-block;font-size:11px;padding:0 5px;line-height:23px;font-weight:normal;background:#646982;color:#fff;}
 #bo_v_ans #ans_datetime {padding:5px 0 10px;border-bottom:1px solid #eee;color:#777}
 #bo_v_ans #ans_con {margin:10px 0 ;line-height:1.8em}
+#bo_v_ans #ans_con img{max-width:100%;height:auto}
 #bo_v_ans #ans_add {text-align:right}
 #bo_v_ans #ans_msg {padding:40px 0;background:#f2f5f9;text-align:center}
 #bo_v_ans .btn_submit{width:100%;height:40px;border-radius:5px}

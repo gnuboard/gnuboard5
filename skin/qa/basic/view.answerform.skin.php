@@ -41,7 +41,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 <label for="qa_subject" class="sound_only">제목</label>
                 <input type="text" name="qa_subject" value="" id="qa_subject" required class="frm_input required full_input" size="50" maxlength="255" placeholder="제목">
             </li>
-            <li>
+            <li class="qa_content_wrap <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
                 <label for="qa_content" class="sound_only">내용<strong>필수</strong></label>
                 <span class="wr_content">
                     <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>

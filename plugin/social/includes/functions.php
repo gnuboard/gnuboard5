@@ -278,7 +278,12 @@ function social_build_provider_config($provider){
         );
 
     if( function_exists('social_extends_get_keys') ){
-        $setting["providers"][$provider] = social_extends_get_keys($provider);
+        $setting['providers'][$provider] = social_extends_get_keys($provider);
+    }
+
+    if(defined('G5_SOCIAL_IS_DEBUG') && G5_SOCIAL_IS_DEBUG){
+        $setting['debug_mode'] = true;
+        $setting['debug_file'] = G5_DATA_PATH.'/tmp/social_'.md5($_SERVER['SERVER_SOFTWARE'].$_SERVER['SERVER_ADDR']).'_'.date('ymd').'.log';
     }
 
     return $setting;

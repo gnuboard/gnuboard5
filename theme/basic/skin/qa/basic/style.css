@@ -270,6 +270,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_v_ans h2 span{display:inline-block;font-size:11px;background:#555;border-radius:5px;height:22px;line-height:22px;;padding:0 5px;color:#fff;font-weight:normal}
 #bo_v_ans #ans_datetime {padding:0 10px 10px;font-size:0.92em;;background:#eee;;color:#666;font-style:italic}
 #bo_v_ans #ans_con {margin:0 0 10px;padding:15px;line-height:1.8em}
+#bo_v_ans #ans_con img{max-width:100%;height:auto}
 #bo_v_ans #ans_add {text-align:right;padding:15px;}
 #ans_msg {padding:40px 0;background:#f2f5f9;text-align:center}
 #bo_v_ans .add_qa{position:absolute;top:10px;right:10px;background:#f57b8a;color:#fff}
@@ -320,7 +321,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_w .bo_w_info:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_w .bo_w_info .frm_input{float:left;width:33%}
 #bo_w #wr_password{margin:0 0.5%}
-#bo_w .qa_content_wrap.smarteditor2 iframe{background:#fff}
+.qa_content_wrap.smarteditor2 iframe{background:#fff}
 #bo_w .bo_w_tit{position:relative}
 #bo_w .bo_w_tit .frm_input{padding-right:120px;}
 #bo_w .bo_w_tit #btn_autosave{position:absolute;top:5px;right:5px;line-height:30px;height:30px;}

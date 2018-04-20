@@ -325,7 +325,7 @@ box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
 .frm_input {height:40px;}
 .full_input{width:100%}
 .half_input{width:49.5%}
-.tbl_frm01 textarea {width:100%;height:100px}
+.tbl_frm01 textarea, .write_div textarea {width:100%;height:100px}
 .tbl_frm01 a {text-decoration:none}
 .tbl_frm01 .frm_file {display:block;margin-bottom:5px}
 .tbl_frm01 .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
