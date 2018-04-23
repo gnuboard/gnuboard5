@@ -3418,6 +3418,14 @@ function is_use_email_certify(){
     return $config['cf_use_email_certify'];
 }
 
+function get_real_client_ip(){
+
+    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+
+    return $_SERVER['REMOTE_ADDR'];
+}
+
 function get_call_func_cache($func, $args=array()){
     
     static $cache = array();
