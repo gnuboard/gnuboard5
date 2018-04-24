@@ -122,7 +122,10 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
         $sub_skin = $skin_dir.'/list.sub.skin.php';
         if(!is_file($sub_skin))
             $sub_skin = G5_MSHOP_SKIN_PATH.'/list.sub.skin.php';
-        include $sub_skin;
+
+        if(is_file($sub_skin)){
+            include $sub_skin;
+        }
 
         echo '</div>';
 
