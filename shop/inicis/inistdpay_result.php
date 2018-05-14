@@ -197,7 +197,12 @@ try {
         echo "<br/>";
         echo "####인증실패####";
 
-        echo "<pre>" . var_dump($_REQUEST) . "</pre>";
+        ob_start();
+        var_dump($_REQUEST);
+        $debug_msg = ob_get_contents();
+        ob_clean();
+
+        echo "<pre>" . strip_tags($debug_msg) . "</pre>";
     }
 } catch (Exception $e) {
     $s = $e->getMessage() . ' (오류코드:' . $e->getCode() . ')';
