@@ -12,7 +12,7 @@ jQuery(function($){
         
         if(!val) {
             alert(item+"을(를) 선택해 주십시오.");
-            return;
+            return false;
         }
 
         var info = val.split(",");
@@ -36,7 +36,7 @@ jQuery(function($){
 
         if(add_exec) {
             if(same_option_check(option))
-                return;
+                return false;
 
             add_sel_option(1, id, option, price, stock);
         }
