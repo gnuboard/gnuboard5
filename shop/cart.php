@@ -265,7 +265,7 @@ $(function() {
 });
 
 function fsubmit_check(f) {
-    if($("input[name^=ct_chk]:checked").size() < 1) {
+    if($("input[name^=ct_chk]:checked").length < 1) {
         alert("구매하실 상품을 하나이상 선택해 주십시오.");
         return false;
     }
@@ -279,7 +279,7 @@ function form_check(act) {
 
     if (act == "buy")
     {
-        if($("input[name^=ct_chk]:checked").size() < 1) {
+        if($("input[name^=ct_chk]:checked").length < 1) {
             alert("주문하실 상품을 하나이상 선택해 주십시오.");
             return false;
         }
@@ -294,7 +294,7 @@ function form_check(act) {
     }
     else if (act == "seldelete")
     {
-        if($("input[name^=ct_chk]:checked").size() < 1) {
+        if($("input[name^=ct_chk]:checked").length < 1) {
             alert("삭제하실 상품을 하나이상 선택해 주십시오.");
             return false;
         }
