@@ -2,6 +2,8 @@
 // 코멘트 삭제
 include_once('./_common.php');
 
+$comment_id = (int) $comment_id;
+
 $delete_comment_token = get_session('ss_delete_comment_'.$comment_id.'_token');
 set_session('ss_delete_comment_'.$comment_id.'_token', '');
 

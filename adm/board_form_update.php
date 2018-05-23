@@ -17,6 +17,15 @@ if (!$_POST['bo_subject']) { alert('게시판 제목을 입력하세요.'); }
 $_POST['bo_include_head'] = preg_replace("#[\\\]+$#", "", substr($_POST['bo_include_head'], 0, 255));
 $_POST['bo_include_tail'] = preg_replace("#[\\\]+$#", "", substr($_POST['bo_include_tail'], 0, 255));
 
+// 관리자가 자동등록방지를 사용해야 할 경우
+if ($board && ($board['bo_include_head'] !== $_POST['bo_include_head'] || $board['bo_include_tail'] !== $_POST['bo_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+    include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+
+    if (!chk_captcha()) {
+        alert('자동등록방지 숫자가 틀렸습니다.');
+    }
+}
+
 if ($file = $_POST['bo_include_head']) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
@@ -425,6 +434,9 @@ if ($all_fields) {
 }
 
 delete_cache_latest($bo_table);
+
+if(function_exists('get_admin_captcha_by'))
+    get_admin_captcha_by('remove');
 
 goto_url("./board_form.php?w=u&bo_table={$bo_table}&amp;{$qstr}");
 ?>

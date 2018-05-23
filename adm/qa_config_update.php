@@ -10,6 +10,17 @@ check_admin_token();
 
 $error_msg = '';
 
+$qaconfig = get_qa_config();
+
+// 관리자가 자동등록방지를 사용해야 할 경우
+if ($board && ($qaconfig['qa_include_head'] !== $_POST['qa_include_head'] || $qaconfig['qa_include_tail'] !== $_POST['qa_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+    include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+
+    if (!chk_captcha()) {
+        alert('자동등록방지 숫자가 틀렸습니다.');
+    }
+}
+
 if( $qa_include_head ){
     $file_ext = pathinfo($qa_include_head, PATHINFO_EXTENSION);
 
@@ -74,6 +85,9 @@ $sql = " update {$g5['qa_config_table']}
                 qa_4                    = '{$_POST['qa_4']}',
                 qa_5                    = '{$_POST['qa_5']}' ";
 sql_query($sql);
+
+if(function_exists('get_admin_captcha_by'))
+    get_admin_captcha_by('remove');
 
 if($error_msg){
     alert($error_msg, './qa_config.php');

@@ -67,11 +67,18 @@ if (!get_session($ss_name))
         insert_point($member['mb_id'], $board['bo_download_point'], "{$board['bo_subject']} $wr_id 파일 다운로드", $bo_table, $wr_id, "다운로드");
     }
 
+    set_session($ss_name, TRUE);
+}
+
+// 이미 다운로드 받은 파일인지를 검사한 후 다운로드 카운트 증가 ( SIR 그누위즈 님 코드 제안 )
+$ss_name = 'ss_down_'.$bo_table.'_'.$wr_id.'_'.$no;
+if (!get_session($ss_name))
+{
     // 다운로드 카운트 증가
     $sql = " update {$g5['board_file_table']} set bf_download = bf_download + 1 where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
     sql_query($sql);
-
-    set_session($ss_name, TRUE);
+    // 다운로드 카운트를 증가시키고 세션을 생성
+    $_SESSION[$ss_name] = true;
 }
 
 $g5['title'] = '다운로드 &gt; '.conv_subject($write['wr_subject'], 255);
