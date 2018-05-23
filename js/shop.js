@@ -1,6 +1,7 @@
 var option_add = false;
 var supply_add = false;
 var isAndroid = (navigator.userAgent.toLowerCase().indexOf("android") > -1);
+var isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
 $(function() {
     // 선택옵션
@@ -43,7 +44,9 @@ $(function() {
             option_add = true;
         });
     } else {
-        $(document).on("mouseup", "select.it_option", function() {
+        var it_option_events = isSafari ? "mousedown" : "mouseup";
+
+        $(document).on(it_option_events, "select.it_option", function(e) {
             option_add = true;
         });
     }
@@ -145,7 +148,9 @@ $(function() {
             supply_add = true;
         });
     } else {
-        $(document).on("mouseup", "select.it_supply", function() {
+        var it_supply_events = isSafari ? "mousedown" : "mouseup";
+        
+        $(document).on(it_supply_events, "select.it_supply", function(e) {
             supply_add = true;
         });
     }
