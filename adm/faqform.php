@@ -5,6 +5,9 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
+$fm_id = (int) $fm_id;
+$fa_id = isset($fa_id) ? (int) $fa_id : 0;
+
 $sql = " select * from {$g5['faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 

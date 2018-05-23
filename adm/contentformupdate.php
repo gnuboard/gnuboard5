@@ -12,6 +12,23 @@ else
 
 check_admin_token();
 
+if ($w == "" || $w == "u")
+{
+    if(preg_match("/[^a-z0-9_]/i", $co_id)) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
+
+    $sql = " select * from {$g5['content_table']} where co_id = '$co_id' ";
+    $co_row = sql_fetch($sql);
+}
+
+// 관리자가 자동등록방지를 사용해야 할 경우
+if (($co_row['co_include_head'] !== $_POST['co_include_head'] || $co_row['co_include_tail'] !== $_POST['co_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+    include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+
+    if (!chk_captcha()) {
+        alert('자동등록방지 숫자가 틀렸습니다.');
+    }
+}
+
 @mkdir(G5_DATA_PATH."/content", G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH."/content", G5_DIR_PERMISSION);
 
@@ -21,17 +38,19 @@ if ($co_timg_del)  @unlink(G5_DATA_PATH."/content/{$co_id}_t");
 $error_msg = '';
 
 if( $co_include_head ){
-    $purl = parse_url($co_include_head);
-    $file = $purl['path'];
-    if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
+
+    $file_ext = pathinfo($co_include_head, PATHINFO_EXTENSION);
+
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) ) {
         alert('상단 파일 경로의 확장자는 php, html 만 허용합니다.');
     }
 }
 
 if( $co_include_tail ){
-    $purl = parse_url($co_include_tail);
-    $file = $purl['path'];
-    if (!preg_match("/\.(php|htm['l']?)$/i", $file)) {
+
+    $file_ext = pathinfo($co_include_tail, PATHINFO_EXTENSION);
+
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) ) {
         alert('하단 파일 경로의 확장자는 php, html 만 허용합니다.');
     }
 }
@@ -58,11 +77,7 @@ $sql_common = " co_include_head     = '$co_include_head',
 
 if ($w == "")
 {
-    //if(eregi("[^a-z0-9_]", $co_id)) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
-    if(preg_match("/[^a-z0-9_]/i", $co_id)) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
-
-    $sql = " select co_id from {$g5['content_table']} where co_id = '$co_id' ";
-    $row = sql_fetch($sql);
+    $row = $co_row;
     if ($row['co_id'])
         alert("이미 같은 ID로 등록된 내용이 있습니다.");
 
@@ -86,6 +101,9 @@ else if ($w == "d")
     $sql = " delete from {$g5['content_table']} where co_id = '$co_id' ";
     sql_query($sql);
 }
+
+if(function_exists('get_admin_captcha_by'))
+    get_admin_captcha_by('remove');
 
 if ($w == "" || $w == "u")
 {

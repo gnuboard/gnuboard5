@@ -4,7 +4,7 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], "w");
 
-check_token();
+check_admin_token();
 
 if($atype == "del"){
     $count = count($_POST['fo_no']);
@@ -14,7 +14,7 @@ if($atype == "del"){
     for ($i=0; $i<$count; $i++)
     {
         // 실제 번호를 넘김
-        $fo_no = $_POST['fo_no'][$i];
+        $fo_no = (int) $_POST['fo_no'][$i];
         if (!trim($fo_no)) continue;
 
         $res = sql_fetch("select * from {$g5['sms5_form_table']} where fo_no='$fo_no'");

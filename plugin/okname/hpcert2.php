@@ -1,7 +1,10 @@
 <?php
 include_once('./_common.php');
-include_once('./hpcert.config.php');
+//include_once('./hpcert.config.php');
 
+// KISA 취약점 내용(KVE-2018-0291) hpcert1.php의 $cmd 함수에 대한 인자 값은 hpcert_config.php 파일에서 설정되나, 이를 다른 페이지에서 포함한 뒤 호출할 시 임의 값 설정 가능
+// 이에 include_once 를 include 로 수정함
+include('./hpcert.config.php');
 /**************************************************************************
     파일명 : safe_hs_cert3.php
 
