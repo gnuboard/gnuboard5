@@ -18,6 +18,7 @@ if( preg_match("/[^0-9]/", $fr_date) ) $fr_date = '';
 if( preg_match("/[^0-9]/", $to_date) ) $to_date = '';
 
 if ($sort1 == "") $sort1 = "it_id_cnt";
+if (!in_array($sort1, array('mb_id', 'it_id', 'wi_time', 'wi_ip'))) $sort1 = "it_id_cnt";
 if ($sort2 == "" || $sort2 != "asc") $sort2 = "desc";
 
 $sql  = " select a.it_id,

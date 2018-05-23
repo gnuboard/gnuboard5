@@ -27,6 +27,7 @@ if ($sel_ca_id != "") {
 
 if ($sel_field == "")  $sel_field = "b.it_name";
 if ($sort1 == "") $sort1 = "a.io_stock_qty";
+if (!in_array($sort1, array('b.it_name', 'a.io_stock_qty', 'a.io_use'))) $sort1 = "a.io_stock_qty";
 if ($sort2 == "") $sort2 = "asc";
 
 $sql_common = "  from {$g5['g5_shop_item_option_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id ) ";

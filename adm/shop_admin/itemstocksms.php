@@ -33,6 +33,7 @@ if ($search != "") {
 
 if ($sel_field == "")  $sel_field = "it_it";
 if ($sort1 == "") $sort1 = "ss_send";
+if (!in_array($sort1, array('it_id', 'ss_hp', 'ss_send', 'ss_send_time', 'ss_datetime'))) $sort1 = "ss_send";
 if ($sort2 == "" || $sort2 != "desc") $sort2 = "asc";
 
 $doc = strip_tags($doc);

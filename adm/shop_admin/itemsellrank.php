@@ -11,6 +11,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 if (!$to_date) $to_date = date("Ymd", time());
 
 if ($sort1 == "") $sort1 = "ct_status_sum";
+if (!in_array($sort1, array('ct_status_1', 'ct_status_2', 'ct_status_3', 'ct_status_4', 'ct_status_5', 'ct_status_6', 'ct_status_7', 'ct_status_8', 'ct_status_9', 'ct_status_sum'))) $sort1 = "ct_status_sum";
 if ($sort2 == "" || $sort2 != "asc") $sort2 = "desc";
 
 $doc = strip_tags($doc);

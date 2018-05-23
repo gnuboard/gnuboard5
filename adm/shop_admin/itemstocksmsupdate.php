@@ -102,8 +102,6 @@ if ($_POST['act_button'] == "선택SMS전송") {
 
     auth_check($auth[$sub_menu], 'd');
 
-    check_token();
-
     for ($i=0; $i<count($_POST['chk']); $i++) {
         // 실제 번호를 넘김
         $k = $_POST['chk'][$i];

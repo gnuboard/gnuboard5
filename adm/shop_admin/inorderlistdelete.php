@@ -6,7 +6,7 @@ check_demo();
 
 auth_check($auth[$sub_menu], 'd');
 
-check_token();
+check_admin_token();
 
 $count = count($_POST['chk']);
 if(!$count)
