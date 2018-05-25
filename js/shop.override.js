@@ -69,7 +69,7 @@ jQuery(function($){
                     if(parseInt(price) >= 0)
                         opt_prc = "+"+number_format(String(price))+"원";
                     else
-                        opt_prc = +number_format(String(price))+"원";
+                        opt_prc = number_format(String(price))+"원";
 
                     opt += "<li class=\""+li_class+"\">";
                     opt += "<input type=\"hidden\" name=\"io_type["+item_code+"][]\" value=\""+type+"\">";
