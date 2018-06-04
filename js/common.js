@@ -344,6 +344,18 @@ var win_memo = function(href) {
 }
 
 /**
+ * 쪽지 창
+ **/
+var check_goto_new = function(href, event) {
+    if( !(typeof g5_is_mobile != "undefined" && g5_is_mobile) ){
+        if (window.opener && window.opener.document && window.opener.document.getElementById) {
+            event.preventDefault ? event.preventDefault() : (event.returnValue = false);
+            window.opener.document.location.href = href;
+        }
+    }
+}
+
+/**
  * 메일 창
  **/
 var win_email = function(href) {
