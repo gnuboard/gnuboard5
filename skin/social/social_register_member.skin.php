@@ -23,7 +23,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
     <form id="fregisterform" name="fregisterform" action="<?php echo $register_action_url; ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="url" value="<?php echo $urlencode; ?>">
-    <input type="hidden" name="mb_name" value="<?php echo $user_nick; ?>" >
+    <input type="hidden" name="mb_name" value="<?php echo $user_name ? $user_name : $user_nick ?>" >
     <input type="hidden" name="provider" value="<?php echo $provider_name;?>" >
     <input type="hidden" name="action" value="register">
 

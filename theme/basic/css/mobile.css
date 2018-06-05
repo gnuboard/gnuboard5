@@ -45,8 +45,8 @@ ul{list-style:none}
 #logo img{vertical-align:middle;max-height:100%;width:auto}
 #gnb_open {position:absolute;top:10px;left:10px;padding:0 10px;height:30px;width:30px;border:0;background-size:70%;color:#fff;background:none; font-size: 16px;}
 #gnb {display:none;background:#262626;position:fixed;top:0;left:0;z-index:99999;height:100%;overflow-y:auto;width:300px;
--webkit-box-shadow:0 0 5px  rgba(55,55,5,0.4));
--moz-box-shadow:0 0 5px  rgba(55,55,5,0.4));
+-webkit-box-shadow:0 0 5px  rgba(55,55,5,0.4);
+-moz-box-shadow:0 0 5px  rgba(55,55,5,0.4);
 box-shadow: 0 0 5px  rgba(55,55,5,0.4);}
 
 #gnb a {display:block;color:#efefef}
@@ -70,8 +70,8 @@ box-shadow: 0 0 5px  rgba(55,55,5,0.4);}
 
 #user_btn {position:absolute;top:10px;right:10px;padding:0 10px;height:30px;width:30px;border:0;;color:#fff;font-size:16px;background:none;letter-spacing:-0.1em}
 #user_menu{display:none;position:fixed;top:0;right:0;height:100%;;overflow-y:auto;width:320px;z-index:9999;background:#fff;text-align:center;
--webkit-box-shadow:0 0 5px  rgba(55,55,5,0.4));
--moz-box-shadow:0 0 5px  rgba(55,55,5,0.4));
+-webkit-box-shadow:0 0 5px  rgba(55,55,5,0.4);
+-moz-box-shadow:0 0 5px  rgba(55,55,5,0.4);
 box-shadow: 0 0 5px  rgba(55,55,5,0.4);}
 #user_close {display:block;margin:0;height:50px;width:100%;border:0;background:url(../img/mobile/btn_close.png) no-repeat right 50%  
 #222;background-size:25px;color:#fff;text-indent:-999999999px;overflow:hidden}
@@ -102,8 +102,8 @@ box-shadow: 0 0 5px  rgba(100,100,100,0.2);}
 #container {position:relative;min-height:300px}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 #container_title {font-size:1.2em;font-weight:bold;height:50px;padding:10px;line-height:30px;background:#fff;color:#333;
--webkit-box-shadow: 0 0 5px rgba(55,55,5,0.4));
--moz-box-shadow: 0 0 5px rgba(55,55,5,0.4));
+-webkit-box-shadow: 0 0 5px rgba(55,55,5,0.4);
+-moz-box-shadow: 0 0 5px rgba(55,55,5,0.4);
 box-shadow: 0 0 5px rgba(55,55,5,0.4);
 }
 .top{position:relative}
@@ -150,8 +150,8 @@ box-shadow: 0 0 5px rgba(55,55,5,0.4);
 /* 캡챠 자동등록(입력)방지 기본 -pc */
 #captcha {position:relative}
 #captcha legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden;}
-#captcha #captcha_img {;height:40px;border:1px solid #898989;;vertical-align:top;padding:0;margin:0}
-#captcha #captcha_mp3 {;margin:0;padding:0;width:40px;height:40px;border:0;background:transparent;vertical-align:middle;overflow:hidden;cursor:pointer;width:40px;height:40px;background:url('../../../img/captcha2.png') no-repeat;text-indent:-999px;;border-radius:3px}
+#captcha #captcha_img {height:40px;border:1px solid #898989;;vertical-align:top;padding:0;margin:0}
+#captcha #captcha_mp3 {margin:0;padding:0;width:40px;height:40px;border:0;background:transparent;vertical-align:middle;overflow:hidden;cursor:pointer;width:40px;height:40px;background:url('../../../img/captcha2.png') no-repeat;text-indent:-999px;;border-radius:3px}
 #captcha #captcha_reload {margin:0;padding:0;width:40px;height:40px;border:0;background:transparent;vertical-align:middle;overflow:hidden;cursor:pointer;background:url('../../../img/captcha2.png') no-repeat  0 -40px;text-indent:-999px;border-radius:3px}
 #captcha #captcha_key {margin:0 0 0 3px;padding:0 5px;width:90px;height:40px;border:1px solid #ccc;background:#fff;font-size:1.333em;font-weight:bold;text-align:center;border-radius:3px;vertical-align:top}
 #captcha #captcha_info {display:block;margin:3px 0 5px ;font-size:0.95em;letter-spacing:-0.1em}
@@ -188,7 +188,7 @@ a.btn02 {display:inline-block;border:1px solid #3b3c3f;background:#4b545e;color:
 a.btn02:focus, .btn02:hover {text-decoration:none}
 button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f;background:#4b545e;color:#fff;text-decoration:none}
 .btn_confirm {text-align:center} /* 서식단계 진행 */
-.btn_submit {;border:0;background:#ff506a;color:#fff;cursor:pointer;border-radius:3px}
+.btn_submit {border:0;background:#ff506a;color:#fff;cursor:pointer;border-radius:3px}
 fieldset .btn_submit {}
 a.btn_cancel {display:inline-block;background:#ddd;color:#444;text-decoration:none;vertical-align:middle}
 button.btn_cancel {display:inline-block;;border:1px solid #ccc;background:#fafafa;color:#000;vertical-align:top;text-decoration:none}

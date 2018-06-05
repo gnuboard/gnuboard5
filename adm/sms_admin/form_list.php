@@ -13,6 +13,8 @@ $g5['title'] = "이모티콘 관리";
 
 if ($page < 1) $page = 1;
 
+$fg_no = isset($fg_no) ? (int) $fg_no : '';
+
 if (is_numeric($fg_no))
     $sql_group = " and fg_no='$fg_no' ";
 else

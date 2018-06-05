@@ -101,7 +101,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 
 <?php if ($is_admin) { ?>
 <div class="sir_bw02 sir_bw">
-    <button type="submit" onclick="document.pressed=this.value" class="btn_b01 btn"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button>
+    <button type="submit" onclick="document.pressed=this.title" title="선택삭제" class="btn_b01 btn"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button>
 </div>
 <?php } ?>
 </form>
