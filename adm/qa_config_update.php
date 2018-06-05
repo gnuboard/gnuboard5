@@ -24,16 +24,16 @@ if ($board && ($qaconfig['qa_include_head'] !== $_POST['qa_include_head'] || $qa
 if( $qa_include_head ){
     $file_ext = pathinfo($qa_include_head, PATHINFO_EXTENSION);
 
-    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) ) {
-        alert('상단 파일 경로의 확장자는 php, html 만 허용합니다.');
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $qa_include_head) ) {
+        alert('상단 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
     }
 }
 
 if( $qa_include_tail ){
     $file_ext = pathinfo($qa_include_tail, PATHINFO_EXTENSION);
 
-    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) ) {
-        alert('하단 파일 경로의 확장자는 php, html 만 허용합니다.');
+    if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $qa_include_tail) ) {
+        alert('하단 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
     }
 }
 
