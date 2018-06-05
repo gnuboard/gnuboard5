@@ -151,7 +151,7 @@ else // 장바구니에 담기
             $sum_qty = 0;
             for($k=0; $k<$opt_count; $k++) {
                 if($_POST['io_type'][$it_id][$k] == 0)
-                    $sum_qty += $_POST['ct_qty'][$it_id][$k];
+                    $sum_qty += (int) $_POST['ct_qty'][$it_id][$k];
             }
 
             if($it['it_buy_min_qty'] > 0 && $sum_qty < $it['it_buy_min_qty'])
@@ -213,7 +213,7 @@ else // 장바구니에 담기
                 $sum_qty = $row['cnt'];
 
                 // 재고 구함
-                $ct_qty = $_POST['ct_qty'][$it_id][$k];
+                $ct_qty = (int) $_POST['ct_qty'][$it_id][$k];
                 if(!$io_id)
                     $it_stock_qty = get_it_stock_qty($it_id);
                 else
@@ -261,7 +261,7 @@ else // 장바구니에 담기
                 continue;
 
             $io_price = $opt_list[$io_type][$io_id]['price'];
-            $ct_qty = $_POST['ct_qty'][$it_id][$k];
+            $ct_qty = (int) $_POST['ct_qty'][$it_id][$k];
 
             // 구매가격이 음수인지 체크
             if($io_type) {
@@ -318,8 +318,11 @@ else // 장바구니에 담기
                 $ct_send_cost = 2; // 무료
             else if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
                 $ct_send_cost = 1; // 착불
+            
+            $io_value = sql_real_escape_string($io_value);
+            $remote_addr = get_real_client_ip();
 
-            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '".addslashes($it['it_name'])."', '{$it['it_sc_type']}', '{$it['it_sc_method']}', '{$it['it_sc_price']}', '{$it['it_sc_minimum']}', '{$it['it_sc_qty']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G5_TIME_YMDHIS."', '$REMOTE_ADDR', '$ct_send_cost', '$sw_direct', '$ct_select', '$ct_select_time' )";
+            $sql .= $comma."( '$tmp_cart_id', '{$member['mb_id']}', '{$it['it_id']}', '".addslashes($it['it_name'])."', '{$it['it_sc_type']}', '{$it['it_sc_method']}', '{$it['it_sc_price']}', '{$it['it_sc_minimum']}', '{$it['it_sc_qty']}', '쇼핑', '{$it['it_price']}', '$point', '0', '0', '$io_value', '$ct_qty', '{$it['it_notax']}', '$io_id', '$io_type', '$io_price', '".G5_TIME_YMDHIS."', '$remote_addr', '$ct_send_cost', '$sw_direct', '$ct_select', '$ct_select_time' )";
             $comma = ' , ';
             $ct_count++;
         }
