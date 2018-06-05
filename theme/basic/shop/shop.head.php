@@ -131,8 +131,8 @@ $(function (){
 
         <?php include_once(G5_SHOP_SKIN_PATH.'/boxcategory.skin.php'); // 상품분류 ?>
         <?php include_once(G5_THEME_SHOP_PATH.'/category.php'); // 분류 ?>
-        <?php if($default['de_type5_list_use']) { ?>
-        <!-- 할인상품 시작 { -->
+        <?php if($default['de_type4_list_use']) { ?>
+        <!-- 인기상품 시작 { -->
         <section class="sale_prd">
             <h2><a href="<?php echo G5_SHOP_URL; ?>/listtype.php?type=4">인기상품</a></h2>
             <?php
@@ -148,7 +148,7 @@ $(function (){
             echo $list->run();
             ?>
         </section>
-        <!-- } 할인상품 끝 -->
+        <!-- } 인기상품 끝 -->
         <?php } ?>
 
         <!-- 커뮤니티 최신글 시작 { -->
