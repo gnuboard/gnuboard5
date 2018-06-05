@@ -3478,7 +3478,7 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
 
-            if( preg_match('/\/data\/(file|editor)\/[A-Za-z0-9_]{1,20}\//', $path) ){
+            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $path) ){
                 return false;
             }
         }

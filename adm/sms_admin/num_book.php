@@ -14,6 +14,7 @@ $g5['title'] = "휴대폰번호 관리";
 if ($page < 1) $page = 1;
 
 $bg_no = isset($bg_no) ? (int) $bg_no : 0;
+$st = isset($st) ? preg_replace('/[^a-z0-9]/i', '', $st) : '';
 
 if (is_numeric($bg_no))
     $sql_group = " and bg_no='$bg_no' ";
