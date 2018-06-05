@@ -250,12 +250,12 @@ box-shadow: inset 0 2px 5px rgb(33, 135, 202);}
 #bo_v_top {zoom:1}
 #bo_v_top:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_top h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#bo_v_top ul ;padding:0;list-style:none;word-break:break-all}
+#bo_v_top ul {padding:0;list-style:none;word-break:break-all}
 
 #bo_v_bot {zoom:1}
 #bo_v_bot:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_bot h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#bo_v_bot ul {;padding:0;list-style:none}
+#bo_v_bot ul {padding:0;list-style:none}
 
 .bo_v_com {margin:20px 0;float:right}
 .bo_v_com li {float:left;margin-left:5px}
