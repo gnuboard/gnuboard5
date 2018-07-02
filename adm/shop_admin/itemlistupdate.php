@@ -19,6 +19,10 @@ if ($_POST['act_button'] == "선택수정") {
         // 실제 번호를 넘김
         $k = $_POST['chk'][$i];
 
+        if( ! $_POST['ca_id'][$k]) {
+            alert("기본분류는 반드시 선택해야 합니다.");
+        }
+
         $sql = "update {$g5['g5_shop_item_table']}
                    set ca_id          = '{$_POST['ca_id'][$k]}',
                        ca_id2         = '{$_POST['ca_id2'][$k]}',
