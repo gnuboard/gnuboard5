@@ -350,7 +350,8 @@ var check_goto_new = function(href, event) {
     if( !(typeof g5_is_mobile != "undefined" && g5_is_mobile) ){
         if (window.opener && window.opener.document && window.opener.document.getElementById) {
             event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            window.opener.document.location.href = href;
+            window.open(href);
+            //window.opener.document.location.href = href;
         }
     }
 }
@@ -359,7 +360,7 @@ var check_goto_new = function(href, event) {
  * 메일 창
  **/
 var win_email = function(href) {
-    var new_win = window.open(href, 'win_email', 'left=100,top=100,width=600,height=580,scrollbars=0');
+    var new_win = window.open(href, 'win_email', 'left=100,top=100,width=600,height=580,scrollbars=1');
     new_win.focus();
 }
 
