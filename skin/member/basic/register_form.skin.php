@@ -200,7 +200,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 </span>
 
                 <?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
-                <img src="<?php echo $mb_img_url ?>" alt="회원아이콘">
+                <img src="<?php echo $mb_img_url ?>" alt="회원이미지">
                 <input type="checkbox" name="del_mb_img" value="1" id="del_mb_img">
                 <label for="del_mb_img">삭제</label>
                 <?php }  ?>
