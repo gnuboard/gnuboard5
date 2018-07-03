@@ -5,7 +5,13 @@ include_once('./_common.php');
 auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = 'FAQ 상세관리';
-if ($fm_subject) $g5['title'] .= ' : '.$fm_subject;
+if ($fm_subject){
+    $fm_subject = clean_xss_tags(strip_tags($fm_subject));
+    $g5['title'] .= ' : '.$fm_subject;
+}
+
+$fm_id = (int) $fm_id;
+
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $sql = " select * from {$g5['faq_master_table']} where fm_id = '$fm_id' ";
