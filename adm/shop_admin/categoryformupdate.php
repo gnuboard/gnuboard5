@@ -3,15 +3,41 @@ $sub_menu = '400200';
 include_once('./_common.php');
 
 if ($file = $_POST['ca_include_head']) {
-    if (!preg_match("/\.(php|htm[l]?)$/i", $file)) {
+    $file_ext = pathinfo($file, PATHINFO_EXTENSION);
+
+    if (! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || !preg_match("/\.(php|htm[l]?)$/i", $file)) {
         alert("상단 파일 경로가 php, html 파일이 아닙니다.");
     }
 }
 
 if ($file = $_POST['ca_include_tail']) {
-    if (!preg_match("/\.(php|htm[l]?)$/i", $file)) {
+    $file_ext = pathinfo($file, PATHINFO_EXTENSION);
+
+    if (! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || !preg_match("/\.(php|htm[l]?)$/i", $file)) {
         alert("하단 파일 경로가 php, html 파일이 아닙니다.");
     }
+}
+
+if( isset($_POST['ca_id']) ){
+    $ca_id = preg_replace('/[^0-9a-z]/i', '', $ca_id);
+    $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
+    $ca = sql_fetch($sql);
+
+    if (($ca['ca_include_head'] !== $_POST['ca_include_head'] || $ca['ca_include_tail'] !== $_POST['ca_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+        include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+
+        if (!chk_captcha()) {
+            alert('자동등록방지 숫자가 틀렸습니다.');
+        }
+    }
+}
+
+if(!is_include_path_check($_POST['ca_include_head'], 1)) {
+    alert('상단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
+}
+
+if(!is_include_path_check($_POST['ca_include_tail'], 1)) {
+    alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
 if ($w == "u" || $w == "d")
@@ -152,6 +178,9 @@ else if ($w == "d")
     $sql = " delete from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
     sql_query($sql);
 }
+
+if(function_exists('get_admin_captcha_by'))
+    get_admin_captcha_by('remove');
 
 if ($w == "" || $w == "u")
 {
