@@ -3288,12 +3288,12 @@ class str_encrypt
             $result .= $char;
         }
 
-        return base64_encode($result);
+        return strtr(base64_encode($result) , '+/=', '._-');
     }
 
     function decrypt($str) {
         $result = '';
-        $str    = base64_decode($str);
+        $str    = base64_decode(strtr($str, '._-', '+/='));
         $length = strlen($str);
 
         for($i=0; $i<$length; $i++) {
