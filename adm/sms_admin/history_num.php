@@ -27,7 +27,7 @@ $vnum = $total_count - (($page-1) * $page_size);
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<form name="search_form" method="get" action="<?echo $_SERVER['SCRIPT_NAME']?>" class="local_sch01 local_sch" >
+<form name="search_form" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" class="local_sch01 local_sch" >
 <label for="st" class="sound_only">검색대상</label>
 <select name="st" id="st">
     <option value="hs_name"<?php echo get_selected('hs_name', $st); ?>>이름</option>

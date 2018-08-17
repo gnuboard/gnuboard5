@@ -103,7 +103,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?php echo $list[$i]['comment_cnt']; ?><span class="sound_only">개</span><?php } ?>
                     </a>
                     <?php
-                    // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
                     // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
 
                     if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];

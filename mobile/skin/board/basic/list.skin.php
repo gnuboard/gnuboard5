@@ -76,7 +76,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <?php if ($list[$i]['is_notice']) { ?><strong class="notice_icon"><i class="fa fa-volume-up" aria-hidden="true"></i>공지</strong><?php } ?> 
                         <?php echo $list[$i]['subject'] ?>
                         <?php
-                        // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
                         // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
 
                         if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
