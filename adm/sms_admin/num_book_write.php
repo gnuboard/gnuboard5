@@ -43,12 +43,12 @@ include_once(G5_ADMIN_PATH."/admin.head.php");
 ?>
 
 <form name="book_form" id="book_form" method="post" action="./num_book_update.php">
-<input type="hidden" name="w" value="<?php echo $w?>">
-<input type="hidden" name="page" value="<?php echo $page?>">
-<input type="hidden" name="ap" value="<?php echo $ap?>">
+<input type="hidden" name="w" value="<?php echo get_sanitize_input($w); ?>">
+<input type="hidden" name="page" value="<?php echo get_sanitize_input($page); ?>">
+<input type="hidden" name="ap" value="<?php echo get_sanitize_input($ap); ?>">
 <input type="hidden" name="bk_no" value="<?php echo $write['bk_no']?>">
 <input type="hidden" name="mb_id" id="mb_id" value="<?php echo $write['mb_id']?>">
-<input type="hidden" name="get_bg_no" value="<?php echo $bg_no?>">
+<input type="hidden" name="get_bg_no" value="<?php echo get_sanitize_input($bg_no); ?>">
 
 <div class="tbl_frm01 tbl_wrap">
     <table>
@@ -187,14 +187,12 @@ function book_submit(){
                     if($check_msg.size()> 0)
                         $check_msg.remove();
 
-//                    $("#exist_msg").text("<?php echo $exist_msg_2; ?>");
                     is_submit = true;
                 } else {
                     if($check_msg.size() < 1)
                         $("input#bk_hp").after("<div id=\"hp_check_el\"><h3>이 번호를 쓰는 회원 정보</h3><ul></ul></div>");
 
                     $("#hp_check_el").find("ul").html( list_text );
-//                    $("#exist_msg").html("<?php echo $exist_msg_1 ?>");
 
                     if(confirm("회원 정보에 중복 휴대폰 번호가 있습니다.수정하실 경우 회원정보에 반영되지 않습니다.\n수정하시겠습니까?"))
                         is_submit = true;
