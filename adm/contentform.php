@@ -49,9 +49,11 @@ if ($w == "u")
 else
 {
     $html_title .= ' 입력';
-    $co['co_html'] = 2;
-    $co['co_skin'] = 'basic';
-    $co['co_mobile_skin'] = 'basic';
+    $co = array(
+        'co_html' => 2,
+        'co_skin' => 'basic',
+        'co_mobile_skin' => 'basic'
+        );
 }
 
 include_once (G5_ADMIN_PATH.'/admin.head.php');

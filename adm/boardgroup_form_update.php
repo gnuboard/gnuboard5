@@ -16,7 +16,9 @@ if (!preg_match("/^([A-Za-z0-9_]{1,10})$/", $_POST['gr_id']))
 
 if (!$gr_subject) alert('그룹 제목을 입력하세요.');
 
-$sql_common = " gr_subject = '{$_POST['gr_subject']}',
+$gr_subject = isset($_POST['gr_subject']) ? strip_tags($_POST['gr_subject']) : '';
+
+$sql_common = " gr_subject = '{$gr_subject}',
                 gr_device = '{$_POST['gr_device']}',
                 gr_admin  = '{$_POST['gr_admin']}',
                 gr_1_subj = '{$_POST['gr_1_subj']}',

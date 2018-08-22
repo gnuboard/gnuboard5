@@ -30,7 +30,7 @@ if ($w == 'u' && is_numeric($bk_no)) {
     $g5['title'] .= '수정';
 }
 else  {
-    $write['bg_no'] = $bg_no;
+    $write = array('bg_no' => (int) $bg_no);
     $g5['title'] .= '추가';
 }
 
@@ -74,7 +74,7 @@ include_once(G5_ADMIN_PATH."/admin.head.php");
     </tr>
     <tr>
         <th scope="row"><label for="bk_name">이름<strong class="sound_only"> 필수</strong></label></th>
-        <td><input type="text" name="bk_name" id="bk_name" maxlength="50" value="<?php echo $write['bk_name']?>" required class="frm_input required"></td>
+        <td><input type="text" name="bk_name" id="bk_name" maxlength="50" value="<?php echo get_sanitize_input($write['bk_name']); ?>" required class="frm_input required"></td>
     </tr>
     <tr>
         <th scope="row"><label for="bk_hp">휴대폰번호<strong class="sound_only"> 필수</strong></label></th>

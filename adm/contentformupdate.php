@@ -20,6 +20,7 @@ if ($w == "" || $w == "u")
     $co_row = sql_fetch($sql);
 }
 
+$co_subject = strip_tags($co_subject);
 $co_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_head, 0, 255));
 $co_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_tail, 0, 255));
 

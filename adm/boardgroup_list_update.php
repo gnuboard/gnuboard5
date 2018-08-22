@@ -19,10 +19,11 @@ for ($i=0; $i<$count; $i++)
 {
     $k     = $_POST['chk'][$i];
     $gr_id = $_POST['group_id'][$k];
+    $gr_subject = strip_tags($_POST['gr_subject'][$k]);
 
     if($_POST['act_button'] == '선택수정') {
         $sql = " update {$g5['group_table']}
-                    set gr_subject    = '{$_POST['gr_subject'][$k]}',
+                    set gr_subject    = '{$gr_subject}',
                         gr_device     = '{$_POST['gr_device'][$k]}',
                         gr_admin      = '{$_POST['gr_admin'][$k]}',
                         gr_use_access = '{$_POST['gr_use_access'][$k]}',

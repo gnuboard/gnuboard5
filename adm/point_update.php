@@ -6,9 +6,9 @@ auth_check($auth[$sub_menu], 'w');
 
 check_admin_token();
 
-$mb_id = $_POST['mb_id'];
-$po_point = $_POST['po_point'];
-$po_content = $_POST['po_content'];
+$mb_id = strip_tags($_POST['mb_id']);
+$po_point = strip_tags($_POST['po_point']);
+$po_content = strip_tags($_POST['po_content']);
 $expire = preg_replace('/[^0-9]/', '', $_POST['po_expire_term']);
 
 $mb = get_member($mb_id);

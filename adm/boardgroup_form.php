@@ -12,7 +12,7 @@ $sound_only = '';
 if ($w == '') {
     $gr_id_attr = 'required';
     $sound_only = '<strong class="sound_only"> 필수</strong>';
-    $gr['gr_use_access'] = 0;
+    $gr = array('gr_use_access' => 0);
     $html_title .= ' 생성';
 } else if ($w == 'u') {
     $gr_id_attr = 'readonly';
