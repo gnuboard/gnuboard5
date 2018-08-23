@@ -161,7 +161,7 @@ box-shadow: 0 1px 3px #eee;
 #find_info #mb_email{margin:10px 0;}
 
 /* 로그인 */
-#mb_login {}
+#mb_login {margin-bottom:50px}
 #login_fs{padding:0 50px}
 #mb_login #login_fs .frm_input{margin:0 0 10px}
 #mb_login #login_fs .btn_submit {margin:0 0 20px}
@@ -171,12 +171,12 @@ box-shadow: 0 1px 3px #eee;
 #mb_login #login_info a{display:inline-block;width:50%;float:left}
 #login_password_lost{border-right:1px solid #ddd}
 
-#mb_login_notmb{margin:30px auto;padding:20px 30px }
+#mb_login_notmb{margin:30px auto;padding:20px 30px;margin-top:0;padding:20px 30px 0;border-top:1px solid #ddd}
 #mb_login_notmb h2{font-size:1.25em;margin:20px 0 10px}
 #guest_privacy{border:1px solid #ccc;text-align:left;line-height:1.6em;color:#666;background:#fafafa;padding:10px;height:150px;margin:10px 0;overflow-y:auto}
 #mb_login_notmb .btn_submit{display:block;text-align:center;line-height:45px}
 
-#mb_login_od_wr{margin:30px auto;padding:20px 30px }
+#mb_login_od_wr{margin:30px auto;padding:20px 30px;margin-top:0;padding:20px 30px 0;border-top:1px solid #ddd}
 #mb_login_od_wr h2{font-size:1.25em;margin:20px 0 10px}
 #mb_login_od_wr .frm_input{margin:10px 0 0 }
 #mb_login_od_wr p{background:#f3f3f3;margin:20px 0 0 ;padding:15px 20px;line-height:1.5em}

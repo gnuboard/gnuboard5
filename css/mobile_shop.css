@@ -691,7 +691,7 @@ box-shadow: 0 0 8px rgba(65,98,255,0.8);}
 #mb_login .btn_submit{background:#34b5a1 !important}
 #bo_list,#bo_cate{margin-top:10px !important}
 #fregisterform{margin:10px}
-#bo_w .btn_submit{padding:8px 7px}
+#bo_w .btn_submit, #bo_w a.btn_cancel{padding:8px 7px}
 #bo_w {padding:10px}
 #fqalist {padding:0 10px}
 #sit_sms_new #sms_agree{padding:10px 20px !important}

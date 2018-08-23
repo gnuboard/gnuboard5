@@ -45,7 +45,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <!-- 주문하기, 신청하기 -->
         <?php if (preg_match("/orderform.php/", $url)) { ?>
 
-    <section id="mb_login_notmb" class="mbskin">
+    <section id="mb_login_notmb">
         <h2>비회원 구매</h2>
 
         <p>
@@ -81,7 +81,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     </section>
 
     <?php } else if (preg_match("/orderinquiry.php$/", $url)) { ?>
-    <div class="mbskin" id="mb_login_od_wr">
+    <div id="mb_login_od_wr">
         <h2>비회원 주문조회 </h2>
 
         <fieldset id="mb_login_od">
