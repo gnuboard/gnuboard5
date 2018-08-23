@@ -13,6 +13,7 @@ else
 
 check_admin_token();
 
+$nw_subject = isset($_POST['nw_subject']) ? strip_tags($_POST['nw_subject']) : '';
 
 $sql_common = " nw_division = '{$_POST['nw_division']}',
                 nw_device = '{$_POST['nw_device']}',
@@ -23,7 +24,7 @@ $sql_common = " nw_division = '{$_POST['nw_division']}',
                 nw_top = '{$_POST['nw_top']}',
                 nw_height = '{$_POST['nw_height']}',
                 nw_width = '{$_POST['nw_width']}',
-                nw_subject = '{$_POST['nw_subject']}',
+                nw_subject = '{$nw_subject}',
                 nw_content = '{$_POST['nw_content']}',
                 nw_content_html = '{$_POST['nw_content_html']}' ";
 

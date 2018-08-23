@@ -114,7 +114,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                        
                     </a>
                     <?php
-                    // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
                     // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
                     if (isset($list[$i]['icon_file'])) echo rtrim($list[$i]['icon_file']);
                     if (isset($list[$i]['icon_link'])) echo rtrim($list[$i]['icon_link']);

@@ -12,8 +12,11 @@ $error_msg = '';
 
 $qaconfig = get_qa_config();
 
+$qa_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_head, 0, 255));
+$qa_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_tail, 0, 255));
+
 // 관리자가 자동등록방지를 사용해야 할 경우
-if ($board && ($qaconfig['qa_include_head'] !== $_POST['qa_include_head'] || $qaconfig['qa_include_tail'] !== $_POST['qa_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+if ($board && ($qaconfig['qa_include_head'] !== $qa_include_head || $qaconfig['qa_include_tail'] !== $qa_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
     include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
     if (!chk_captcha()) {

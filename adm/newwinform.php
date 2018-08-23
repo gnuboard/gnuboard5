@@ -125,7 +125,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row"><label for="nw_subject">팝업 제목<strong class="sound_only"> 필수</strong></label></th>
         <td>
-            <input type="text" name="nw_subject" value="<?php echo stripslashes($nw['nw_subject']) ?>" id="nw_subject" required class="frm_input required" size="80">
+            <input type="text" name="nw_subject" value="<?php echo get_sanitize_input($nw['nw_subject']); ?>" id="nw_subject" required class="frm_input required" size="80">
         </td>
     </tr>
     <tr>

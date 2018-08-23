@@ -3284,7 +3284,7 @@ class str_encrypt
     function __construct($salt='')
     {
         if(!$salt)
-            $this->salt = md5(preg_replace('/[^0-9A-Za-z]/', substr(G5_MYSQL_USER, -1), G5_MYSQL_PASSWORD));
+            $this->salt = md5(preg_replace('/[^0-9A-Za-z]/', substr(G5_MYSQL_USER, -1), $_SERVER['SERVER_SOFTWARE'].$_SERVER['DOCUMENT_ROOT']));
         else
             $this->salt = $salt;
 
@@ -3303,12 +3303,12 @@ class str_encrypt
             $result .= $char;
         }
 
-        return base64_encode($result);
+        return strtr(base64_encode($result) , '+/=', '._-');
     }
 
     function decrypt($str) {
         $result = '';
-        $str    = base64_decode($str);
+        $str    = base64_decode(strtr($str, '._-', '+/='));
         $length = strlen($str);
 
         for($i=0; $i<$length; $i++) {
@@ -3453,7 +3453,7 @@ function is_include_path_check($path='', $is_input='')
     if( $path ){
         if ($is_input){
 
-            if( stripos($path, 'php://') !== false || stripos($path, 'zlib://') !== false || stripos($path, 'bzip2://') !== false || stripos($path, 'zip://') !== false || stripos($path, 'data:text/') !== false || stripos($path, 'data://') !== false ){
+            if( stripos($path, 'php:') !== false || stripos($path, 'zlib:') !== false || stripos($path, 'bzip2:') !== false || stripos($path, 'zip:') !== false || stripos($path, 'data:') !== false || stripos($path, 'phar:') !== false ){
                 return false;
             }
 
@@ -3493,7 +3493,7 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
 
-            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $path) ){
+            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', str_replace('\\', '/', $path)) ){
                 return false;
             }
         }

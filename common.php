@@ -626,6 +626,7 @@ if(!empty($extend_file) && is_array($extend_file)) {
     foreach($extend_file as $file) {
         include_once(G5_EXTEND_PATH.'/'.$file);
     }
+    unset($file);
 }
 unset($extend_file);
 
