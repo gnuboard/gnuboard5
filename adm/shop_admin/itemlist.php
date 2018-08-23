@@ -84,7 +84,6 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 </div>
 
 <form name="flist" class="local_sch01 local_sch">
-<input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="save_stx" value="<?php echo $stx; ?>">
 
 <label for="sca" class="sound_only">분류선택</label>
