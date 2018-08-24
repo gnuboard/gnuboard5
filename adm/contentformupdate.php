@@ -20,8 +20,12 @@ if ($w == "" || $w == "u")
     $co_row = sql_fetch($sql);
 }
 
+$co_subject = strip_tags($co_subject);
+$co_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_head, 0, 255));
+$co_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_tail, 0, 255));
+
 // 관리자가 자동등록방지를 사용해야 할 경우
-if (($co_row['co_include_head'] !== $_POST['co_include_head'] || $co_row['co_include_tail'] !== $_POST['co_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+if (($co_row['co_include_head'] !== $co_include_head || $co_row['co_include_tail'] !== $co_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
     include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
     if (!chk_captcha()) {

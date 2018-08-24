@@ -153,7 +153,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </section>
     <?php } ?>
 
-    <?php if(isset($view['link'][1]) && $view['link'][1]) { ?>
+    <?php if(array_filter($view['link'])) { ?>
     <!-- 관련링크 시작 { -->
     <section id="bo_v_link">
         <h2>관련링크</h2>

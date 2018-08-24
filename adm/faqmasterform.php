@@ -21,6 +21,7 @@ if ($w == "u")
 else
 {
     $html_title .= ' 입력';
+    $fm = array();
 }
 
 $g5['title'] = $html_title.' 관리';

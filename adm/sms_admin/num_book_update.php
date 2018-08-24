@@ -21,6 +21,8 @@ if ($w=='u') // 업데이트
     if (!strlen(trim($bk_name)))
         alert('이름을 입력해주세요');
 
+    $bk_name = strip_tags($bk_name);
+
     if ($bk_hp == '')
         alert('휴대폰번호만 입력 가능합니다.');
 /*
