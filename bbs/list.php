@@ -175,6 +175,8 @@ if ($is_search_bbs) {
     $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 }
 
+@include_once("{$board_skin_path}/mutation.list.head.php");
+
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);
