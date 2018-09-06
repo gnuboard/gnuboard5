@@ -2,24 +2,22 @@
 if (!defined('_GNUBOARD_')) exit;
 
 // 짧은 주소 형식으로 만들어서 가져온다.
-function get_pretty_url($folder, $no='', $query_string='')
+function get_pretty_url($folder, $no='', $query_string='', $action='')
 {
     global $g5, $config;
 
     $config['cf_bbs_rewrite'] = 1;
 
-    /*
     static $boards = array();
 
     if( ! $boards ){
-        $sql = " select bo_table from {$gml['board_table']} ";
+        $sql = " select bo_table from {$g5['board_table']} ";
         $result = sql_query($sql);
 
         while ($row = sql_fetch_array($result)) {
             $boards[] = $row['bo_table'];
         }
     }
-    */
 
 	// use shortten url
 	if($config['cf_bbs_rewrite']) {
@@ -27,7 +25,9 @@ function get_pretty_url($folder, $no='', $query_string='')
 			$url = G5_URL. '/'. $folder;
 			if($no) {
 				$url .= '/'. $no;
-			}
+			} else if($action) {
+                $url .= '/'. $action;
+            }
 
 		} else {
             $url = G5_URL. '/'.$folder;

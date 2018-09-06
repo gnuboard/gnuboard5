@@ -61,13 +61,16 @@ if (isset($next['wr_id']) && $next['wr_id']) {
 
 // 쓰기 링크
 $write_href = '';
-if ($member['mb_level'] >= $board['bo_write_level'])
-    $write_href = './write.php?bo_table='.$bo_table;
+if ($member['mb_level'] >= $board['bo_write_level']) {
+    $write_href = get_pretty_url($bo_table, '', '', 'write');
+}
 
 // 답변 링크
 $reply_href = '';
-if ($member['mb_level'] >= $board['bo_reply_level'])
-    $reply_href = './write.php?w=r&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr;
+if ($member['mb_level'] >= $board['bo_reply_level']) {
+    //$reply_href = './write.php?w=r&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr;
+    $reply_href = get_pretty_url($bo_table, '', 'wr_id='.$wr_id.$qstr, 'write');
+}
 
 // 수정, 삭제 링크
 $update_href = $delete_href = '';
