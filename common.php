@@ -123,6 +123,8 @@ $board  = array();
 $group  = array();
 $g5     = array();
 
+include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
+include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
 
 //==============================================================================
 // 공통
@@ -636,6 +638,8 @@ header('Last-Modified: ' . $gmnow);
 header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
+
+start_event('common_header');
 
 $html_process = new html_process();
 ?>
