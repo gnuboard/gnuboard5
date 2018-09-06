@@ -46,7 +46,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         else if ($row['bn_url'] && $row['bn_url'] != 'http://') {
             $banner .= '<a href="'.G5_SHOP_URL.'/bannerhit.php?bn_id='.$row['bn_id'].'"'.$bn_new_win.'>';
         }
-        echo $banner.'<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$size[0].'" alt="'.$row['bn_alt'].'"'.$bn_border.'>';
+        echo $banner.'<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$size[0].'" alt="'.get_text($row['bn_alt']).'"'.$bn_border.'>';
         if($banner)
             echo '</a>'.PHP_EOL;
         echo '</li>'.PHP_EOL;

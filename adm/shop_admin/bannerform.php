@@ -74,7 +74,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="bn_alt">이미지 설명</label></th>
         <td>
             <?php echo help("img 태그의 alt, title 에 해당되는 내용입니다.\n배너에 마우스를 오버하면 이미지의 설명이 나옵니다."); ?>
-            <input type="text" name="bn_alt" value="<?php echo $bn['bn_alt']; ?>" id="bn_alt" class="frm_input" size="80">
+            <input type="text" name="bn_alt" value="<?php echo get_text($bn['bn_alt']); ?>" id="bn_alt" class="frm_input" size="80">
         </td>
     </tr>
     <tr>

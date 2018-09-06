@@ -68,7 +68,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 
             $bn_img = "";
            
-            $bn_img .= '<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$width.'" alt="'.$row['bn_alt'].'">';
+            $bn_img .= '<img src="'.G5_DATA_URL.'/banner/'.$row['bn_id'].'" width="'.$width.'" alt="'.get_text($row['bn_alt']).'">';
         }
 
         switch($row['bn_device']) {

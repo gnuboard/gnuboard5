@@ -35,6 +35,7 @@ if( $bn_bimg || $bn_bimg_name ){
 }
 
 $bn_url = clean_xss_tags($bn_url);
+$bn_alt = function_exists('clean_xss_attributes') ? clean_xss_attributes(strip_tags($bn_alt)) : strip_tags($bn_alt);
 
 if ($w=="")
 {
