@@ -7,6 +7,8 @@ set_session('P_TID',  '');
 set_session('P_AMT',  '');
 set_session('P_HASH', '');
 
+$oid = preg_replace('/[^0-9a-z_-]/i', '', $oid);
+
 $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
 $row = sql_fetch($sql);
 

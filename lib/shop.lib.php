@@ -2245,7 +2245,7 @@ function get_shop_order_data($od_id, $type='item')
 {
     global $g5;
     
-    $od_id = clean_xss_tags($od_id);
+    $od_id = preg_replace('/[^0-9a-z_-]/i', '', clean_xss_tags($od_id));
 
     if( $type == 'personal' ){
         $row = sql_fetch("select * from {$g5['g5_shop_personalpay_table']} where pp_id = $od_id ", false);
