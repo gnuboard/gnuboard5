@@ -127,7 +127,7 @@ $colspan = 10;
             <label for="chk_<?php echo $i; ?>" class="sound_only"><?php echo $row['gr_subject'] ?> 그룹</label>
             <input type="checkbox" name="chk[]" value="<?php echo $i ?>" id="chk_<?php echo $i ?>">
         </td>
-        <td class="td_left"><a href="<?php echo G5_BBS_URL ?>/group.php?gr_id=<?php echo $row['gr_id'] ?>"><?php echo $row['gr_id'] ?></a></td>
+        <td class="td_left"><a href="<?php echo get_pretty_url(G5_GROUP_DIR, $row['gr_id']); ?>"><?php echo $row['gr_id'] ?></a></td>
         <td class="td_input">
             <label for="gr_subject_<?php echo $i; ?>" class="sound_only">그룹제목</label>
             <input type="text" name="gr_subject[<?php echo $i ?>]" value="<?php echo get_text($row['gr_subject']) ?>" id="gr_subject_<?php echo $i ?>" class="tbl_input">

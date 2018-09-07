@@ -1,12 +1,12 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+include_once(dirname(__FILE__) .'/URI/uri.class.php');
+
 // 짧은 주소 형식으로 만들어서 가져온다.
 function get_pretty_url($folder, $no='', $query_string='', $action='')
 {
     global $g5, $config;
-
-    $config['cf_bbs_rewrite'] = 1;
 
     static $boards = array();
 
@@ -68,4 +68,11 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
 	return $url;
 }
 
+function short_url_clean($url, $add_qry=''){
+    if( class_exists('G5_URI') ){
+        return G5_URI::getInstance()->url_clean($url, $add_qry);
+    }
+
+    return $url;
+}
 ?>

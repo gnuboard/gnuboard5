@@ -60,6 +60,9 @@ define('G5_PHPMAILER_DIR',  'PHPMailer');
 define('G5_SESSION_DIR',    'session');
 define('G5_THEME_DIR',      'theme');
 
+define('G5_GROUP_DIR',      'group');
+define('G5_CONTENT_DIR',    'content');
+
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G5_DOMAIN) {
     define('G5_URL', G5_DOMAIN);

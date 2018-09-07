@@ -5,7 +5,7 @@ include_once(G5_PATH.'/head.sub.php');
 
 if (!$is_member)
 {
-    $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+    $href = './login.php?'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id));
     echo '<script> alert(\'회원만 접근 가능합니다.\'); top.location.href = \''.str_replace('&amp;', '&', $href).'\'; </script>';
     exit;
 }
@@ -31,7 +31,7 @@ if ($row['cnt'])
     <noscript>
     <p>이미 스크랩하신 글 입니다.</p>
     <a href="./scrap.php">스크랩 확인하기</a>
-    <a href="./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'">돌아가기</a>
+    <a href="'.get_pretty_url($bo_table, $wr_id).'">돌아가기</a>
     </noscript>';
     exit;
 }
