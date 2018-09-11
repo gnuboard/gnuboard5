@@ -409,9 +409,15 @@ if ($bo_table) {
         set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
         $write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
-        //$comment_table = $g5['write_prefix'] . $bo_table . $g5['comment_suffix']; // 코멘트 테이블 전체이름
-        if (isset($wr_id) && $wr_id)
+
+        if (isset($wr_id) && $wr_id) {
             $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
+        } else if (isset($wr_unique) && $wr_unique) {
+            $write = sql_fetch(" select * from $write_table where wr_unique = '$wr_unique' ", false);
+            if( isset($write['wr_id']) ){
+                $wr_id = $write['wr_id'];
+            }
+        }
     }
 }
 

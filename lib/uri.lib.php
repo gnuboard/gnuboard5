@@ -75,4 +75,61 @@ function short_url_clean($url, $add_qry=''){
 
     return $url;
 }
+
+function generate_seo_url($string, $wordLimit = 0){
+    $separator = '-';
+    
+    if($wordLimit != 0){
+        $wordArr = explode(' ', $string);
+        $string = implode(' ', array_slice($wordArr, 0, $wordLimit));
+    }
+
+    $quoteSeparator = preg_quote($separator, '#');
+
+    $trans = array(
+        '&.+?;'                    => '',
+        '[^\w\d _-]'            => '',
+        '\s+'                    => $separator,
+        '('.$quoteSeparator.')+'=> $separator
+    );
+
+    $string = strip_tags($string);
+    foreach ($trans as $key => $val){
+        $string = preg_replace('#'.$key.'#i'.(UTF8_ENABLED ? 'u' : ''), $val, $string);
+    }
+
+    $string = strtolower($string);
+
+    return trim(trim($string, $separator));
+}
+
+function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
+    global $g5;
+
+    if( $type === 'bbs' ){
+        $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '$seo_title' AND wr_id != '$sql_id' limit 1";
+        $row = sql_fetch($sql);
+    } else {
+        return $seo_title;
+    }
+
+    if ($row['wr_seo_title'])
+        return 'is_exists';
+    else
+        return '';
+}
+
+function exist_seo_url_recursive($type, $seo_title, $write_table, $sql_id=0){
+    static $count = 0;
+
+    $seo_title_add = ($count > 0) ? utf8_strcut($seo_title, 255 - (strlen($count)+1)) )."-$count" : $seo_title;
+
+    if( ! exist_seo_url($seo_title, $write_table, $sql_id) ){
+        return $seo_title_add;
+    }
+    
+    $count++;
+    return exist_seo_url_recursive($mb_id);
+}
+
 ?>

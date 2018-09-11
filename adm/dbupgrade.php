@@ -74,6 +74,22 @@ if( isset($g5['social_profile_table']) && !sql_query(" DESC {$g5['social_profile
     $is_check = true;
 }
 
+$sql = " select bo_table from {$g5['board_table']} ";
+$result = sql_query($sql);
+
+while ($row = sql_fetch_array($result)) {
+    $write_table = $g5['write_prefix'] . $row['bo_table']; // 게시판 테이블 전체이름
+
+    $row = sql_fetch("select * from {$write_table} limit 1");
+
+    if(! isset($row['wr_unique'])){
+        sql_query("ALTER TABLE `{$write_table}`
+                    ADD `wr_seo_title` varchar(255) NOT NULL DEFAULT '' AFTER `wr_content`,
+                    ADD INDEX `wr_seo_title` (`wr_seo_title`);
+        ", true);
+    }
+}
+
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
 ?>
 
