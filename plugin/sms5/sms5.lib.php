@@ -267,7 +267,7 @@ if($config['cf_sms_type'] == 'LMS') {
 
             $fsocket = fsockopen($this->socket_host,$this->socket_port, $errno, $errstr, 2);
             if (!$fsocket) return false;
-            set_time_limit(300);
+            set_time_limit(60);
 
             foreach($this->Data as $puts) {
                 fputs($fsocket, $puts);
@@ -436,9 +436,9 @@ if($config['cf_sms_type'] == 'LMS') {
                 exit;
             }
 
-            $fsocket=fsockopen($this->SMS_Server,$this->SMS_Port);
+            $fsocket=fsockopen($this->SMS_Server,$this->SMS_Port, $errno, $errstr, 2);
             if (!$fsocket) return false;
-            set_time_limit(300);
+            set_time_limit(60);
 
             ## php4.3.10일경우
             ## zend 최신버전으로 업해주세요..
