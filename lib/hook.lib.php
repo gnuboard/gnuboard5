@@ -15,7 +15,7 @@ function get_hook_class(){
     return null;
 }
 
-function put_event($tag, $func, $priority=GML_HOOK_DEFAULT_PRIORITY, $args=0){
+function put_event($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
     global $gml;
 
     if( $hook = get_hook_class() ){

@@ -189,7 +189,7 @@ $ip = "";
 $is_ip_view = $board['bo_use_ip_view'];
 if ($is_admin) {
     $is_ip_view = true;
-    if (array_key_exists('wr_ip', $write)) {
+    if ($write && array_key_exists('wr_ip', $write)) {
         $ip = $write['wr_ip'];
     }
 } else {

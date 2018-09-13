@@ -211,6 +211,8 @@ if ($w == '' || $w == 'r') {
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
     alert('제목을 입력하여 주십시오.');
 
+$wr_seo_title = exist_seo_url_recursive('bbs', generate_seo_url($wr_subject), $write_table, $wr_id);
+
 if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
@@ -251,6 +253,7 @@ if ($w == '' || $w == 'r') {
                      wr_option = '$html,$secret,$mail',
                      wr_subject = '$wr_subject',
                      wr_content = '$wr_content',
+                     wr_seo_title = '$wr_seo_title',
                      wr_link1 = '$wr_link1',
                      wr_link2 = '$wr_link2',
                      wr_link1_hit = 0,
@@ -372,6 +375,7 @@ if ($w == '' || $w == 'r') {
                      wr_option = '{$html},{$secret},{$mail}',
                      wr_subject = '{$wr_subject}',
                      wr_content = '{$wr_content}',
+                     wr_seo_title = '$wr_seo_title',
                      wr_link1 = '{$wr_link1}',
                      wr_link2 = '{$wr_link2}',
                      mb_id = '{$mb_id}',

@@ -335,10 +335,12 @@ function get_dirsize($dir)
 // 게시물 정보($write_row)를 출력하기 위하여 $list로 가공된 정보를 복사 및 가공
 function get_list($write_row, $board, $skin_url, $subject_len=40)
 {
-    global $g5, $config;
+    global $g5, $config, $g5_object;
     global $qstr, $page;
 
     //$t = get_microtime();
+
+    $g5_object->set('bbs', $write_row['wr_id'], $write_row, $board['bo_table']);
 
     // 배열전체를 복사
     $list = $write_row;
@@ -682,13 +684,51 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     return $str;
 }
 
-
 // 게시판 테이블에서 하나의 행을 읽음
-function get_write($write_table, $wr_id)
+function get_write($write_table, $wr_id, $is_cache=false)
 {
-    return sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
+    global $g5, $g5_object;
+
+    $wr_bo_table = preg_replace('/^'.preg_quote($g5['write_prefix']).'/i', '', $write_table);
+
+    $write = $g5_object->get('bbs', $wr_id, $wr_bo_table);
+
+    if( !$write ){
+        $sql = " select * from {$write_table} where wr_id = '{$wr_id}' ";
+        $write = sql_fetch($sql);
+
+        $g5_object->set('bbs', $wr_id, $write, $wr_bo_table);
+    }
+
+    return $write;
 }
 
+// 게시판 테이블에서 하나의 행을 읽음
+function get_write_by_field($write_table, $where_field='', $where_value='', $is_cache=false)
+{
+    global $g5, $g5_object;
+
+    if( ! in_array($where_field, array('wr_id', 'wr_num', 'wr_reply', 'wr_parent', 'wr_is_comment', 'ca_name', 'wr_option', 'wr_subject', 'wr_content', 'wr_seo_title', 'wr_link1', 'wr_link2', 'wr_hit', 'wr_good', 'wr_nogood', 'mb_id', 'wr_name', 'wr_email', 'wr_homepage', 'wr_datetime', 'wr_ip', 'wr_1', 'wr_2', 'wr_3', 'wr_4', 'wr_5', 'wr_6', 'wr_7', 'wr_8', 'wr_9', 'wr_10')) ){
+        return '';
+    }
+    
+    $where_value = strip_tags($where_value);
+    $key = md5($write_table.'|'.$where_field.'|'.$where_value);
+
+    if( $is_cache && isset($cache[$key]) ){
+        return $cache[$key];
+    }
+
+    $sql = " select * from {$write_table} where $where_field = '".sql_real_escape_string($where_value)."' ";
+
+    $cache[$key] = sql_fetch($sql);
+
+    $wr_bo_table = preg_replace('/^'.preg_quote($g5['write_prefix']).'/i', '', $write_table);
+
+    $g5_object->set('bbs', $cache[$key]['wr_id'], $cache[$key], $wr_bo_table);
+
+    return $cache[$key];
+}
 
 // 게시판의 다음글 번호를 얻는다.
 function get_next_num($table)
@@ -702,20 +742,45 @@ function get_next_num($table)
 
 
 // 그룹 설정 테이블에서 하나의 행을 읽음
-function get_group($gr_id)
+function get_group($gr_id, $is_cache=false)
 {
     global $g5;
 
-    return sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
+    static $cache = array();
+
+    $gr_id = preg_replace('/[^a-z0-9_]/i', '', $gr_id);
+    $key = md5($gr_id);
+
+    if( $is_cache && isset($cache[$key]) ){
+        return $cache[$key];
+    }
+
+    $sql = " select * from {$g5['group_table']} where gr_id = '$gr_id' ";
+
+    $cache[$key] = apply_replace('get_group', sql_fetch($sql), $gr_id, $is_cache);
+
+    return $cache[$key];
 }
 
 
 // 회원 정보를 얻는다.
-function get_member($mb_id, $fields='*')
+function get_member($mb_id, $fields='*', $is_cache=false)
 {
     global $g5;
 
-    return sql_fetch(" select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ");
+    static $cache = array();
+
+    $key = md5($fields);
+
+    if( $is_cache && isset($cache[$mb_id]) && isset($cache[$mb_id][$key]) ){
+        return $cache[$mb_id][$key];
+    }
+
+    $sql = " select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ";
+
+    $cache[$mb_id][$key] = apply_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
+
+    return $cache[$mb_id][$key];
 }
 
 
@@ -1482,7 +1547,7 @@ function sql_set_charset($charset, $link=null)
 // mysql connect resource 지정 - 명랑폐인님 제안
 function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 {
-    global $g5;
+    global $g5, $g5_debug;
 
     if(!$link)
         $link = $g5['connect_db'];
@@ -1494,6 +1559,10 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
+
+    $is_debug = get_permission_debug_show();
+    
+    $start_time = $is_debug ? get_microtime() : 0;
 
     if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
         if ($error) {
@@ -1507,6 +1576,15 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         } else {
             $result = @mysql_query($sql, $link);
         }
+    }
+
+    if($result && $is_debug) {
+        // 여기에 실행한 sql문을 화면에 표시하는 로직 넣기
+        $g5_debug['sql'][] = array(
+            'sql' => $sql,
+            'start_time' => $start_time,
+            'end_time' => get_microtime(),
+            );
     }
 
     return $result;
@@ -1994,6 +2072,16 @@ function is_utf8($str)
 // 출처 : https://www.google.co.kr/search?q=utf8_strcut&aq=f&oq=utf8_strcut&aqs=chrome.0.57j0l3.826j0&sourceid=chrome&ie=UTF-8
 function utf8_strcut( $str, $size, $suffix='...' )
 {
+    if( function_exists('mb_strlen') && function_exists('mb_substr') ){
+        
+        if(mb_strlen($str)<=$size) {
+            return $str;
+        } else {
+            $str = mb_substr($str, 0, $size, 'utf-8');
+            $str .= $suffix;
+        }
+
+    } else {
         $substr = substr( $str, 0, $size * 2 );
         $multi_size = preg_match_all( '/[\x80-\xff]/', $substr, $multi_chars );
 
@@ -2005,8 +2093,9 @@ function utf8_strcut( $str, $size, $suffix='...' )
             $str = preg_replace( '/(([\x80-\xff]{3})*?)([\x80-\xff]{0,2})$/', '$1', $str );
             $str .= $suffix;
         }
+    }
 
-        return $str;
+    return $str;
 }
 
 
@@ -2670,10 +2759,16 @@ function get_qa_config($fld='*')
 {
     global $g5;
 
-    $sql = " select $fld from {$g5['qa_config_table']} ";
-    $row = sql_fetch($sql);
+    static $cache = array();
 
-    return $row;
+    if( $is_cache && !empty($cache) ){
+        return $cache;
+    }
+
+    $sql = " select * from {$g5['qa_config_table']} ";
+    $cache = apply_replace('get_qa_config', sql_fetch($sql));
+
+    return $cache;
 }
 
 // get_sock 함수 대체

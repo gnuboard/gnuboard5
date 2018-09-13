@@ -2,29 +2,36 @@
 if (!defined('_GNUBOARD_')) exit;
 
 include_once(dirname(__FILE__) .'/URI/uri.class.php');
+include_once(dirname(__FILE__) .'/URI/obj.class.php');
 
 // 짧은 주소 형식으로 만들어서 가져온다.
 function get_pretty_url($folder, $no='', $query_string='', $action='')
 {
     global $g5, $config;
 
-    static $boards = array();
-
-    if( ! $boards ){
-        $sql = " select bo_table from {$g5['board_table']} ";
-        $result = sql_query($sql);
-
-        while ($row = sql_fetch_array($result)) {
-            $boards[] = $row['bo_table'];
-        }
-    }
+    $boards = get_board_names();
 
 	// use shortten url
 	if($config['cf_bbs_rewrite']) {
 		if(in_array($folder, $boards)) {
+
 			$url = G5_URL. '/'. $folder;
 			if($no) {
-				$url .= '/'. $no;
+
+                if( $config['cf_bbs_rewrite'] > 1 ){
+
+                    $get_write = get_write( $g5['write_prefix'].$folder, $no , true);
+
+                    if( $get_write['wr_seo_title'] ){
+                        $url .= '/'. urlencode($get_write['wr_seo_title']).'/';
+                    } else {
+                        $url .= '/'. $no;
+                    }
+
+                } else {
+                    $url .= '/'. $no;
+                }
+
 			} else if($action) {
                 $url .= '/'. $action;
             }
@@ -76,6 +83,10 @@ function short_url_clean($url, $add_qry=''){
     return $url;
 }
 
+function correct_goto_url($url){
+    return $url.'/';
+}
+
 function generate_seo_url($string, $wordLimit = 0){
     $separator = '-';
     
@@ -95,7 +106,7 @@ function generate_seo_url($string, $wordLimit = 0){
 
     $string = strip_tags($string);
     foreach ($trans as $key => $val){
-        $string = preg_replace('#'.$key.'#i'.(UTF8_ENABLED ? 'u' : ''), $val, $string);
+        $string = preg_replace('#'.$key.'#iu', $val, $string);
     }
 
     $string = strtolower($string);
@@ -106,14 +117,18 @@ function generate_seo_url($string, $wordLimit = 0){
 function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
     global $g5;
 
+    $exists_title = '';
     if( $type === 'bbs' ){
-        $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '$seo_title' AND wr_id != '$sql_id' limit 1";
+        $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
         $row = sql_fetch($sql);
+
+        $exists_title = $row['wr_seo_title'];
+
     } else {
         return $seo_title;
     }
 
-    if ($row['wr_seo_title'])
+    if ($exists_title)
         return 'is_exists';
     else
         return '';
@@ -122,14 +137,19 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
 function exist_seo_url_recursive($type, $seo_title, $write_table, $sql_id=0){
     static $count = 0;
 
-    $seo_title_add = ($count > 0) ? utf8_strcut($seo_title, 255 - (strlen($count)+1)) )."-$count" : $seo_title;
+    $seo_title_add = ($count > 0) ? utf8_strcut($seo_title, 255 - ($count+1), '')."-$count" : $seo_title;
 
-    if( ! exist_seo_url($seo_title, $write_table, $sql_id) ){
+    if( ! exist_seo_url($type, $seo_title_add, $write_table, $sql_id) ){
         return $seo_title_add;
     }
     
     $count++;
-    return exist_seo_url_recursive($mb_id);
+
+    if( $count > 253 ){
+        return $seo_title_add;
+    }
+
+    return exist_seo_url_recursive($type, $seo_title, $write_table, $sql_id);
 }
 
 ?>

@@ -94,6 +94,8 @@ class G5_URI {
    }
 
    public function url_clean($stringurl, $add_qry='') {
+        global $config, $g5;
+
         $stringurl = str_replace('&amp;', '&', $stringurl);
 		$url=parse_url($stringurl);
 		$strurl = basename($url['path'],".php");
@@ -115,6 +117,16 @@ class G5_URI {
             if( !isset($vars[$key]) || empty($vars[$key]) ) continue;
             $add = '';
             $s[$key] = $vars[$key];
+        }
+
+        if( $config['cf_bbs_rewrite'] > 1 && (isset($s['wr_id']) && $s['wr_id']) && (isset($s['bo_table']) && $s['bo_table']) ){
+            $get_write = get_write( get_write_table_name($s['bo_table']), $s['wr_id'], true);
+            
+            if( $get_write['wr_seo_title'] ){
+                unset($s['wr_id']);
+                $s['wr_seo_title'] = $get_write['wr_seo_title'].'/';
+            }
+
         }
 
         $fragment = isset($url['fragment']) ? '#'.$url['fragment'] : '';

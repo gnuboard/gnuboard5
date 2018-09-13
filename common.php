@@ -122,9 +122,14 @@ $member = array();
 $board  = array();
 $group  = array();
 $g5     = array();
+$g5_debug = array('php'=>array(),'sql'=>array());
 
 include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
+include_once(G5_LIB_PATH.'/get_data.lib.php');    
 include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
+include_once(G5_LIB_PATH.'/cache.lib.php');
+
+$g5_object = new G5_object_store();
 
 //==============================================================================
 // 공통
@@ -214,7 +219,7 @@ ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 //------------------------------------------------------------------------------
 // 기본환경설정
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
-$config = sql_fetch(" select * from {$g5['config_table']} ");
+$config = get_config();
 
 define('G5_HTTP_BBS_URL',  https_url(G5_BBS_DIR, false));
 define('G5_HTTPS_BBS_URL', https_url(G5_BBS_DIR, true));
@@ -404,16 +409,16 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
 $write = array();
 $write_table = "";
 if ($bo_table) {
-    $board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '$bo_table' ");
+    $board = get_board_db($bo_table);
     if ($board['bo_table']) {
         set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
         $write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
 
         if (isset($wr_id) && $wr_id) {
-            $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
-        } else if (isset($wr_unique) && $wr_unique) {
-            $write = sql_fetch(" select * from $write_table where wr_unique = '$wr_unique' ", false);
+            $write = get_write($write_table, $wr_id);
+        } else if (isset($wr_seo_title) && $wr_seo_title) {
+            $write = get_write_by_field($write_table, 'wr_seo_title', $wr_seo_title);
             if( isset($write['wr_id']) ){
                 $wr_id = $write['wr_id'];
             }
@@ -422,7 +427,7 @@ if ($bo_table) {
 }
 
 if ($gr_id) {
-    $group = sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
+    $group = get_group($gr_id);
 }
 
 
