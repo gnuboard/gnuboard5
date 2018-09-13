@@ -11,6 +11,10 @@ header('Pragma: no-cache'); // HTTP/1.0
 
 include_once ('../config.php');
 include_once ('../lib/common.lib.php');
+include_once('../lib/hook.lib.php');    // hook 함수 파일
+include_once('../lib/get_data.lib.php');    
+include_once('../lib/uri.lib.php');    // URL 함수 파일
+include_once('../lib/cache.lib.php');
 
 if( ! function_exists('safe_install_string_check') ){
     function safe_install_string_check( $str ) {

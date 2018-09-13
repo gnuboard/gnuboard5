@@ -82,11 +82,13 @@ while ($row = sql_fetch_array($result)) {
 
     $row = sql_fetch("select * from {$write_table} limit 1");
 
-    if(! isset($row['wr_unique'])){
+    if( $row && ! isset($row['wr_seo_title'])){
         sql_query("ALTER TABLE `{$write_table}`
                     ADD `wr_seo_title` varchar(255) NOT NULL DEFAULT '' AFTER `wr_content`,
                     ADD INDEX `wr_seo_title` (`wr_seo_title`);
-        ", true);
+        ", false);
+
+        $is_check = true;
     }
 }
 
