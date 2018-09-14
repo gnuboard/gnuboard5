@@ -190,8 +190,14 @@ for($i=0; $i<$count; $i++) {
 
         // 구매가격이 음수인지 체크
         if($io_type) {
-            if((int)$io_price <= 0)
+            /*  // 구매금액이 0원 이하일 경우
+            if((int)$io_price <= 0) {
                 return_error2json('구매금액이 음수 또는 0원인 상품은 구매할 수 없습니다.');
+            }
+            */
+            if((int)$io_price < 0) {
+                return_error2json('구매금액이 0원 미만인 상품은 구매할 수 없습니다.');
+            }
         } else {
             if((int)$it_price + (int)$io_price <= 0)
                 return_error2json('구매금액이 음수 또는 0원인 상품은 구매할 수 없습니다.');
