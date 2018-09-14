@@ -45,38 +45,39 @@ $is_iis = !$is_apache && (stripos($_SERVER['SERVER_SOFTWARE'], 'microsoft-iis') 
 
     <div class="server_rewrite_info">
         <div class="is_apache">
-            <pre>
-                # nginx configuration
 
-                location /g54/ {
-                  if (!-e $request_filename){
-                    rewrite ^/g54/rss/([0-9a-zA-Z_]+)$ /g54/bbs/rss.php?bo_table=$1 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)$ /g54/bbs/board.php?bo_table=$1&rewrite=1 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)/([^/]+)/$ /g54/bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)/write$ /g54/bbs/write.php?bo_table=$1&rewrite=1 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)/p([0-9]+)$ /g54/bbs/board.php?bo_table=$1&page=$2 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)/([0-9]+)$ /g54/bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;
-                  }
-                }
-            </pre>
+# apache configuration
+<pre>
+
+RewriteEngine On
+RewriteBase /
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^rss/([0-9a-zA-Z_]+)$  bbs/rss.php?bo_table=$1        [L]
+RewriteRule ^([0-9a-zA-Z_]+)$  bbs/board.php?bo_table=$1&rewrite=1      [QSA,L]
+RewriteRule ^([0-9a-zA-Z_]+)/([^/]+)/$ bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1      [QSA,L]
+RewriteRule ^([0-9a-zA-Z_]+)/write$  bbs/write.php?bo_table=$1&rewrite=1    [QSA,L]
+RewriteRule ^([0-9a-zA-Z_]+)/p([0-9]+)$  bbs/board.php?bo_table=$1&page=$2    [QSA,L]
+RewriteRule ^([0-9a-zA-Z_]+)/([0-9]+)$  bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1  [QSA,L]
+</pre>
         </div>
 
         <div class="is_nginx">
 
-            <pre>
-                # nginx configuration
+# nginx configuration
+<pre>
 
-                location /g54/ {
-                  if (!-e $request_filename){
-                    rewrite ^/g54/rss/([0-9a-zA-Z_]+)$ /g54/bbs/rss.php?bo_table=$1 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)$ /g54/bbs/board.php?bo_table=$1&rewrite=1 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)/([^/]+)/$ /g54/bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)/write$ /g54/bbs/write.php?bo_table=$1&rewrite=1 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)/p([0-9]+)$ /g54/bbs/board.php?bo_table=$1&page=$2 break;
-                    rewrite ^/g54/([0-9a-zA-Z_]+)/([0-9]+)$ /g54/bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;
-                  }
-                }
-            </pre>
+if (!-e $request_filename){
+    rewrite ^/g54/rss/([0-9a-zA-Z_]+)$ /g54/bbs/rss.php?bo_table=$1 break;
+    rewrite ^/g54/([0-9a-zA-Z_]+)$ /g54/bbs/board.php?bo_table=$1&rewrite=1 break;
+    rewrite ^/g54/([0-9a-zA-Z_]+)/([^/]+)/$ /g54/bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;
+    rewrite ^/g54/([0-9a-zA-Z_]+)/write$ /g54/bbs/write.php?bo_table=$1&rewrite=1 break;
+    rewrite ^/g54/([0-9a-zA-Z_]+)/p([0-9]+)$ /g54/bbs/board.php?bo_table=$1&page=$2 break;
+    rewrite ^/g54/([0-9a-zA-Z_]+)/([0-9]+)$ /g54/bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;
+}
+</pre>
         </div>
 
     </div>
