@@ -122,9 +122,9 @@ class SMS {
 	}
 
 	function Send () {
-		$fp=@fsockopen(trim($this->SMS_Server),trim($this->SMS_Port));
+		$fp=@fsockopen(trim($this->SMS_Server),trim($this->SMS_Port), $errno, $errstr, 2);
 		if (!$fp) return false;
-		set_time_limit(300);
+		set_time_limit(60);
 
 		## php4.3.10일경우
         ## zend 최신버전으로 업해주세요..

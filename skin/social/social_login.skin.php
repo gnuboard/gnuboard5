@@ -69,7 +69,7 @@ add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css
                     var newWin = window.open(
                         pop_url, 
                         "social_sing_on", 
-                        "location=0,status=0,scrollbars=0,width=600,height=500"
+                        "location=0,status=0,scrollbars=1,width=600,height=500"
                     );
 
                     if(!newWin || newWin.closed || typeof newWin.closed=='undefined')

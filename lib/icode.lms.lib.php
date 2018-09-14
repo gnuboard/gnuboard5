@@ -119,7 +119,7 @@ class LMS {
 	function Send() {
 		$fsocket = fsockopen($this->socket_host,$this->socket_port, $errno, $errstr, 2);
 		if (!$fsocket) return false;
-		set_time_limit(300);
+		set_time_limit(60);
 
 		foreach($this->Data as $puts) {
 			fputs($fsocket, $puts);
