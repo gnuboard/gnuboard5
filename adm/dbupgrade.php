@@ -80,9 +80,10 @@ $result = sql_query($sql);
 while ($row = sql_fetch_array($result)) {
     $write_table = $g5['write_prefix'] . $row['bo_table']; // 게시판 테이블 전체이름
 
-    $row = sql_fetch("select * from {$write_table} limit 1");
-
-    if( $row && ! isset($row['wr_seo_title'])){
+    $sql = " SHOW COLUMNS FROM {$write_table} LIKE 'wr_seo_title' ";
+    $row = sql_fetch($sql);
+    
+    if( !$row ){
         sql_query("ALTER TABLE `{$write_table}`
                     ADD `wr_seo_title` varchar(255) NOT NULL DEFAULT '' AFTER `wr_content`,
                     ADD INDEX `wr_seo_title` (`wr_seo_title`);
