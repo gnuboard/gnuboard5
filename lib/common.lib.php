@@ -2678,7 +2678,7 @@ function get_qa_config($fld='*')
 
 // get_sock 함수 대체
 if (!function_exists("get_sock")) {
-    function get_sock($url)
+    function get_sock($url, $timeout=30)
     {
         // host 와 uri 를 분리
         //if (ereg("http://([a-zA-Z0-9_\-\.]+)([^<]*)", $url, $res))
@@ -2689,7 +2689,7 @@ if (!function_exists("get_sock")) {
         }
 
         // 80번 포트로 소캣접속 시도
-        $fp = fsockopen ($host, 80, $errno, $errstr, 30);
+        $fp = fsockopen ($host, 80, $errno, $errstr, $timeout);
         if (!$fp)
         {
             //die("$errstr ($errno)\n");
@@ -2893,6 +2893,14 @@ function clean_xss_tags($str)
     return $str;
 }
 
+// XSS 어트리뷰트 태그 제거
+function clean_xss_attributes($str)
+{
+    $str = preg_replace('#(onabort|onactivate|onafterprint|onafterupdate|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditfocus|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onblur|onbounce|oncellchange|onchange|onclick|oncontextmenu|oncontrolselect|oncopy|oncut|ondataavaible|ondatasetchanged|ondatasetcomplete|ondblclick|ondeactivate|ondrag|ondragdrop|ondragend|ondragenter|ondragleave|ondragover|ondragstart|ondrop|onerror|onerrorupdate|onfilterupdate|onfinish|onfocus|onfocusin|onfocusout|onhelp|onkeydown|onkeypress|onkeyup|onlayoutcomplete|onload|onlosecapture|onmousedown|onmouseenter|onmouseleave|onmousemove|onmoveout|onmouseover|onmouseup|onmousewheel|onmove|onmoveend|onmovestart|onpaste|onpropertychange|onreadystatechange|onreset|onresize|onresizeend|onresizestart|onrowexit|onrowsdelete|onrowsinserted|onscroll|onselect|onselectionchange|onselectstart|onstart|onstop|onsubmit|onunload)\\s*=\\s*\\\?".*?"#is', '', $str);
+
+    return $str;
+}
+
 // unescape nl 얻기
 function conv_unescape_nl($str)
 {
@@ -2990,7 +2998,7 @@ function replace_filename($name)
 // 아이코드 사용자정보
 function get_icode_userinfo($id, $pass)
 {
-    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$id.'&userpw='.$pass);
+    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$id.'&userpw='.$pass, 2);
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드

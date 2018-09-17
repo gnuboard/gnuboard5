@@ -17,6 +17,9 @@ if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
     echo "<div class=\"inner_btn\"><a href=\"./\">뒤로가기</a></div></div>".PHP_EOL;
     exit;
 }
+
+$tmp_str = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
+$ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].$_SERVER['DOCUMENT_ROOT']);
 ?>
 
 
@@ -85,6 +88,7 @@ if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
 
     <table class="ins_frm">
     <caption>최고관리자 정보입력</caption>
+    <input type="hidden" name="ajax_token" value="<?php echo $ajax_token; ?>" >
     <colgroup>
         <col style="width:150px">
         <col>
@@ -127,6 +131,7 @@ if (!isset($_POST['agree']) || $_POST['agree'] != '동의함') {
     </div>
 </div>
 
+<script src="../js/jquery-1.8.3.min.js"></script>
 <script>
 function frm_install_submit(f)
 {
@@ -185,6 +190,29 @@ function frm_install_submit(f)
     if(/^[a-z][a-z0-9]/i.test(f.admin_id.value) == false) {
         alert('최고관리자 회원 ID는 첫자는 반드시 영문자 그리고 영문자와 숫자로만 만드셔야 합니다.');
         f.admin_id.focus();
+        return false;
+    }
+    
+    if (window.jQuery) {
+
+        var jqxhr = jQuery.post( "ajax.install.check.php", $(f).serialize(), function(data) {
+            
+            if( data.error ){
+                alert(data.error);
+            } else if( data.exists ) {
+                if( confirm(data.exists) ){
+                    f.submit();
+                }
+            } else if( data.success ) {
+                f.submit();
+            }
+
+        }, "json");
+
+        jqxhr.fail(function(xhr) {
+            alert( xhr.responseText );
+        });
+
         return false;
     }
 

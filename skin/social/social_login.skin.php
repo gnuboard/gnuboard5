@@ -53,7 +53,7 @@ add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css
         <?php if( social_service_check('payco') ) {     //페이코 로그인을 사용한다면 ?>
         <a href="<?php echo $self_url;?>?provider=payco&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-payco" title="페이코">
             <span class="ico"></span>
-            <span class="txt">페이코 로그인</span>
+            <span class="txt">페이코<i> 로그인</i></span>
         </a>
         <?php }     //end if ?>
 
@@ -69,7 +69,7 @@ add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css
                     var newWin = window.open(
                         pop_url, 
                         "social_sing_on", 
-                        "location=0,status=0,scrollbars=0,width=600,height=500"
+                        "location=0,status=0,scrollbars=1,width=600,height=500"
                     );
 
                     if(!newWin || newWin.closed || typeof newWin.closed=='undefined')
