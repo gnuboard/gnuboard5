@@ -25,31 +25,31 @@ add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css
             <?php if( social_service_check('naver') ) {     //네이버 로그인을 사용한다면 ?>
             <a href="<?php echo $self_url;?>?provider=naver&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-naver" title="네이버">
                 <span class="ico"></span>
-                <span class="txt">네이버으로 회원가입하기</span>
+                <span class="txt">네이버로 회원가입하기</span>
             </a>
             <?php }     //end if ?>
             <?php if( social_service_check('kakao') ) {     //카카오 로그인을 사용한다면 ?>
             <a href="<?php echo $self_url;?>?provider=kakao&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-kakao" title="카카오">
                 <span class="ico"></span>
-                <span class="txt">카카오로 회원가입하기</i></span>
+                <span class="txt">카카오로 회원가입하기</span>
             </a>
             <?php }     //end if ?>
             <?php if( social_service_check('facebook') ) {     //페이스북 로그인을 사용한다면 ?>
             <a href="<?php echo $self_url;?>?provider=facebook&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-facebook" title="페이스북">
                 <span class="ico"></span>
-                <span class="txt">페이스북로 회원가입하기</i></span>
+                <span class="txt">페이스북로 회원가입하기</span>
             </a>
             <?php }     //end if ?>
             <?php if( social_service_check('google') ) {     //구글 로그인을 사용한다면 ?>
             <a href="<?php echo $self_url;?>?provider=google&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-google" title="구글">
                 <span class="ico"></span>
-                <span class="txt">구글+로 회원가입하기</i></span>
+                <span class="txt">구글+로 회원가입하기</span>
             </a>
             <?php }     //end if ?>
             <?php if( social_service_check('twitter') ) {     //트위터 로그인을 사용한다면 ?>
             <a href="<?php echo $self_url;?>?provider=twitter&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-twitter" title="트위터">
                 <span class="ico"></span>
-                <span class="txt">트위터로 회원가입하기</i></span>
+                <span class="txt">트위터로 회원가입하기</span>
             </a>
             <?php }     //end if ?>
             <?php if( social_service_check('payco') ) {     //페이코 로그인을 사용한다면 ?>
@@ -71,7 +71,7 @@ add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css
                         var newWin = window.open(
                             pop_url, 
                             "social_sing_on", 
-                            "location=0,status=0,scrollbars=0,width=600,height=500"
+                            "location=0,status=0,scrollbars=1,width=600,height=500"
                         );
 
                         if(!newWin || newWin.closed || typeof newWin.closed=='undefined')
