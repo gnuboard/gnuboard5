@@ -7,6 +7,9 @@ $is_nginx = (stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false);
 
 $is_iis = !$is_apache && (stripos($_SERVER['SERVER_SOFTWARE'], 'microsoft-iis') !== false);
 
+$get_path_url = parse_url( G5_URL );
+
+$base_path = isset($get_path_url['path']) ? $get_path_url['path'].'/' : '/';
 ?>
 <section id="anc_cf_url">
     <h2 class="h2_frm">짧은 주소 설정</h2>
@@ -48,9 +51,9 @@ $is_iis = !$is_apache && (stripos($_SERVER['SERVER_SOFTWARE'], 'microsoft-iis') 
 
 # apache configuration
 <pre>
-
+<IfModule mod_rewrite.c>
 RewriteEngine On
-RewriteBase /
+RewriteBase <?php echo $base_path; ?>
 
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
@@ -61,6 +64,7 @@ RewriteRule ^([0-9a-zA-Z_]+)/([^/]+)/$ bbs/board.php?bo_table=$1&wr_seo_title=$2
 RewriteRule ^([0-9a-zA-Z_]+)/write$  bbs/write.php?bo_table=$1&rewrite=1    [QSA,L]
 RewriteRule ^([0-9a-zA-Z_]+)/p([0-9]+)$  bbs/board.php?bo_table=$1&page=$2    [QSA,L]
 RewriteRule ^([0-9a-zA-Z_]+)/([0-9]+)$  bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1  [QSA,L]
+</IfModule>
 </pre>
         </div>
 
@@ -70,12 +74,12 @@ RewriteRule ^([0-9a-zA-Z_]+)/([0-9]+)$  bbs/board.php?bo_table=$1&wr_id=$2&rewri
 <pre>
 
 if (!-e $request_filename){
-    rewrite ^/g54/rss/([0-9a-zA-Z_]+)$ /g54/bbs/rss.php?bo_table=$1 break;
-    rewrite ^/g54/([0-9a-zA-Z_]+)$ /g54/bbs/board.php?bo_table=$1&rewrite=1 break;
-    rewrite ^/g54/([0-9a-zA-Z_]+)/([^/]+)/$ /g54/bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;
-    rewrite ^/g54/([0-9a-zA-Z_]+)/write$ /g54/bbs/write.php?bo_table=$1&rewrite=1 break;
-    rewrite ^/g54/([0-9a-zA-Z_]+)/p([0-9]+)$ /g54/bbs/board.php?bo_table=$1&page=$2 break;
-    rewrite ^/g54/([0-9a-zA-Z_]+)/([0-9]+)$ /g54/bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>rss/([0-9a-zA-Z_]+)$ /g54/bbs/rss.php?bo_table=$1 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)$ /g54/bbs/board.php?bo_table=$1&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/([^/]+)/$ /g54/bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/write$ /g54/bbs/write.php?bo_table=$1&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/p([0-9]+)$ /g54/bbs/board.php?bo_table=$1&page=$2 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/([0-9]+)$ /g54/bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;
 }
 </pre>
         </div>
