@@ -69,14 +69,15 @@ if ($member['mb_level'] >= $board['bo_write_level']) {
 $reply_href = '';
 if ($member['mb_level'] >= $board['bo_reply_level']) {
     //$reply_href = './write.php?w=r&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr;
-    $reply_href = get_pretty_url($bo_table, '', 'wr_id='.$wr_id.$qstr, 'write');
+    $reply_href = get_pretty_url($bo_table, '', 'w=r&amp;wr_id='.$wr_id.$qstr, 'write');
 }
 
 // 수정, 삭제 링크
 $update_href = $delete_href = '';
 // 로그인중이고 자신의 글이라면 또는 관리자라면 비밀번호를 묻지 않고 바로 수정, 삭제 가능
 if (($member['mb_id'] && ($member['mb_id'] === $write['mb_id'])) || $is_admin) {
-    $update_href = G5_BBS_URL.'/write.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
+    //$update_href = G5_BBS_URL.'/write.php?w=u&amp;bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr;
+    $update_href = get_pretty_url($bo_table, '', 'w=u&amp;wr_id='.$wr_id.'&amp;page='.$page.$qstr, 'write');
     set_session('ss_delete_token', $token = uniqid(time()));
     $delete_href = G5_BBS_URL.'/delete.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;token='.$token.'&amp;page='.$page.urldecode($qstr);
 }

@@ -3,21 +3,27 @@ if (!defined('_GNUBOARD_')) exit;
 
 Class G5_object_store {
     public $writes = array();
-    
+    public $contents = array();
+
 	function get($type, $key, $group ='default') {
 
         switch ($type) {
             case 'bbs':
-                if( $this->exists('bbs', $key, $group) ){
-                    if ( is_object($this->writes[$group][$key]) )
-                        return clone $this->writes[$group][$key];
-                    else
-                        return $this->writes[$group][$key];
-                }
-                return false;
+                $datas = $this->writes;
+                break;
+            case 'content' :
+                $datas = $this->contents;
                 break;
         }
 
+        if( $this->exists($type, $key, $group) ){
+            if ( is_object($datas[$group][$key]) )
+                return clone $datas[$group][$key];
+            else
+                return $datas[$group][$key];
+        }
+
+        return false;
 	}
 
 	function exists($type, $key, $group = 'default' ) {
@@ -27,6 +33,9 @@ Class G5_object_store {
         switch ($type) {
             case 'bbs':
                 $datas = $this->writes;
+                break;
+            case 'content':
+                $datas = $this->contents;
                 break;
         }
 
@@ -41,6 +50,9 @@ Class G5_object_store {
             case 'bbs':
                 $this->writes[$group][$key] = $data;
                 break;
+            case 'content':
+                $this->contents[$group][$key] = $data;
+                break;
         }
 
 	}
@@ -48,13 +60,18 @@ Class G5_object_store {
     function delete($key, $group='default') {
         switch ($type) {
             case 'bbs':
-                if ( ! $this->exists('bbs', $key, $group) )
-                    return false;
-
-                unset( $this->writes[$group][$key] );
-                return true;
+                $datas = $this->writes;
+                break;
+            case 'content':
+                $datas = $this->contents;
                 break;
         }
+
+        if ( ! $this->exists('bbs', $key, $group) )
+            return false;
+
+        unset( $datas[$group][$key] );
+        return true;
     }
 
 }   //end Class

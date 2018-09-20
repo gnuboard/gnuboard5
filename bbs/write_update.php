@@ -211,7 +211,7 @@ if ($w == '' || $w == 'r') {
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
     alert('제목을 입력하여 주십시오.');
 
-$wr_seo_title = exist_seo_url_recursive('bbs', generate_seo_url($wr_subject), $write_table, $wr_id);
+$wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($wr_subject), $write_table, $wr_id);
 
 if ($w == '' || $w == 'r') {
 

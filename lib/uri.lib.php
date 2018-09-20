@@ -10,48 +10,65 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
     global $g5, $config;
 
     $boards = get_board_names();
+    $segments = array();
+    $url = $add_query = '';
 
 	// use shortten url
 	if($config['cf_bbs_rewrite']) {
-		if(in_array($folder, $boards)) {
+        
+        $segments[0] = G5_URL;
 
-			$url = G5_URL. '/'. $folder;
+        if( $folder === 'content' && $no ){     // 내용관리
+            
+            $segments[1] = $folder;
+
+            if( $config['cf_bbs_rewrite'] > 1 ){
+
+                $get_content = get_content_db( $no , true);
+                $segments[2] = $get_content['co_seo_title'] ? urlencode($get_content['co_seo_title']).'/' : urlencode($no);
+
+            } else {
+                $segments[2] = urlencode($no);
+            }
+
+        } else if(in_array($folder, $boards)) {     // 게시판
+
+			$segments[1] = $folder;
+
 			if($no) {
 
                 if( $config['cf_bbs_rewrite'] > 1 ){
 
                     $get_write = get_write( $g5['write_prefix'].$folder, $no , true);
-
-                    if( $get_write['wr_seo_title'] ){
-                        $url .= '/'. urlencode($get_write['wr_seo_title']).'/';
-                    } else {
-                        $url .= '/'. $no;
-                    }
+                    
+                    $segments[2] = $get_write['wr_seo_title'] ? urlencode($get_write['wr_seo_title']).'/' : urlencode($no);
 
                 } else {
-                    $url .= '/'. $no;
+                    $segments[2] = urlencode($no);
                 }
 
 			} else if($action) {
-                $url .= '/'. $action;
+                $segments[2] = urlencode($action);
             }
 
 		} else {
-            $url = G5_URL. '/'.$folder;
+            $segments[1] = $folder;
 			if($no) {
 				$no_array = explode("=", $no);
 				$no_value = end($no_array);
-				$url .= '/'. $no_value;
+                $segments[2] = urlencode($no_value);
 			}
 		}
+
         if($query_string) {
             // If the first character of the query string is '&', replace it with '?'.
             if(substr($query_string, 0, 1) == '&') {
-                $url .= preg_replace("/\&amp;/", "?", $query_string, 1);
+                $add_query = preg_replace("/\&amp;/", "?", $query_string, 1);
             } else {
-                $url .= '?'. $query_string;
+                $add_query = '?'. $query_string;
             }
         }
+
 	} else { // don't use shortten url
 		if(in_array($folder, $boards)) {
 			$url = G5_BBS_URL. '/board.php?bo_table='. $folder;
@@ -70,9 +87,11 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
                 $url .= ($no ? '?' : '&amp;'). $query_string;
 			}
 		}
+
+        $segments[0] = $url;
 	}
 
-	return $url;
+	return implode('/', $segments).$add_query;
 }
 
 function short_url_clean($url, $add_qry=''){
@@ -87,7 +106,7 @@ function correct_goto_url($url){
     return $url.'/';
 }
 
-function generate_seo_url($string, $wordLimit = 0){
+function generate_seo_title($string, $wordLimit=G5_SEO_TITEL_WORD_CUT){
     $separator = '-';
     
     if($wordLimit != 0){
@@ -105,6 +124,11 @@ function generate_seo_url($string, $wordLimit = 0){
     );
 
     $string = strip_tags($string);
+
+    if( function_exists('mb_convert_encoding') ){
+        $string = mb_convert_encoding($string, 'UTF-8', 'UTF-8');
+    }
+
     foreach ($trans as $key => $val){
         $string = preg_replace('#'.$key.'#iu', $val, $string);
     }
@@ -118,11 +142,23 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
     global $g5;
 
     $exists_title = '';
+    $sql_id = preg_replace('/[^a-z0-9_]/i', '', $sql_id);
+
     if( $type === 'bbs' ){
         $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
+
         $row = sql_fetch($sql);
+        
+        echo $sql;
 
         $exists_title = $row['wr_seo_title'];
+
+    } else if ( $type === 'content' ){
+
+        $sql = "select co_seo_title FROM {$write_table} WHERE co_seo_title = '".sql_real_escape_string($seo_title)."' AND co_id <> '$sql_id' limit 1";
+        $row = sql_fetch($sql);
+
+        $exists_title = $row['co_seo_title'];
 
     } else {
         return $seo_title;
@@ -134,7 +170,7 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
         return '';
 }
 
-function exist_seo_url_recursive($type, $seo_title, $write_table, $sql_id=0){
+function exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id=0){
     static $count = 0;
 
     $seo_title_add = ($count > 0) ? utf8_strcut($seo_title, 255 - ($count+1), '')."-$count" : $seo_title;
@@ -149,7 +185,7 @@ function exist_seo_url_recursive($type, $seo_title, $write_table, $sql_id=0){
         return $seo_title_add;
     }
 
-    return exist_seo_url_recursive($type, $seo_title, $write_table, $sql_id);
+    return exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id);
 }
 
 ?>

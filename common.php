@@ -418,7 +418,7 @@ if ($bo_table) {
         if (isset($wr_id) && $wr_id) {
             $write = get_write($write_table, $wr_id);
         } else if (isset($wr_seo_title) && $wr_seo_title) {
-            $write = get_write_by_field($write_table, 'wr_seo_title', $wr_seo_title);
+            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', $wr_seo_title);
             if( isset($write['wr_id']) ){
                 $wr_id = $write['wr_id'];
             }

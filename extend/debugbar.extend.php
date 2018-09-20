@@ -14,7 +14,7 @@ function show_debug_bar() {
     }
 
     $memory_usage = function_exists( 'memory_get_peak_usage' ) ? memory_get_peak_usage() : memory_get_usage();
-    $php_run_time = get_microtime()-$gml_debug['begin_time'];
+    $php_run_time = get_microtime()-$g5_debug['php']['begin_time'];
 
     include_once( G5_PLUGIN_PATH.'/debugbar/debugbar.php' );
 }

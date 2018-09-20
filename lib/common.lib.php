@@ -703,33 +703,6 @@ function get_write($write_table, $wr_id, $is_cache=false)
     return $write;
 }
 
-// 게시판 테이블에서 하나의 행을 읽음
-function get_write_by_field($write_table, $where_field='', $where_value='', $is_cache=false)
-{
-    global $g5, $g5_object;
-
-    if( ! in_array($where_field, array('wr_id', 'wr_num', 'wr_reply', 'wr_parent', 'wr_is_comment', 'ca_name', 'wr_option', 'wr_subject', 'wr_content', 'wr_seo_title', 'wr_link1', 'wr_link2', 'wr_hit', 'wr_good', 'wr_nogood', 'mb_id', 'wr_name', 'wr_email', 'wr_homepage', 'wr_datetime', 'wr_ip', 'wr_1', 'wr_2', 'wr_3', 'wr_4', 'wr_5', 'wr_6', 'wr_7', 'wr_8', 'wr_9', 'wr_10')) ){
-        return '';
-    }
-    
-    $where_value = strip_tags($where_value);
-    $key = md5($write_table.'|'.$where_field.'|'.$where_value);
-
-    if( $is_cache && isset($cache[$key]) ){
-        return $cache[$key];
-    }
-
-    $sql = " select * from {$write_table} where $where_field = '".sql_real_escape_string($where_value)."' ";
-
-    $cache[$key] = sql_fetch($sql);
-
-    $wr_bo_table = preg_replace('/^'.preg_quote($g5['write_prefix']).'/i', '', $write_table);
-
-    $g5_object->set('bbs', $cache[$key]['wr_id'], $cache[$key], $wr_bo_table);
-
-    return $cache[$key];
-}
-
 // 게시판의 다음글 번호를 얻는다.
 function get_next_num($table)
 {
@@ -2246,11 +2219,7 @@ function delete_cache_latest($bo_table)
         return;
     }
 
-    $files = glob(G5_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
-    if (is_array($files)) {
-        foreach ($files as $filename)
-            unlink($filename);
-    }
+    g5_delete_cache_by_prefix('latest-'.$bo_table.'-');
 }
 
 // 게시판 첨부파일 썸네일 삭제
@@ -2534,6 +2503,8 @@ class html_process {
             }
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $links);
+            
+            $links = apply_replace('html_process_css_files', $links);
 
             foreach($links as $link) {
                 if(!trim($link[1]))
@@ -2560,6 +2531,8 @@ class html_process {
             }
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $scripts);
+            
+            $scripts = apply_replace('html_process_script_files', $scripts);
 
             foreach($scripts as $js) {
                 if(!trim($js[1]))
@@ -2588,6 +2561,17 @@ class html_process {
         if($javascript)
             $nl = "\n";
         $buffer = preg_replace('#(</head>[^<]*<body[^>]*>)#', "$javascript{$nl}$1", $buffer);
+        
+        $meta_tag = apply_replace('html_process_add_meta', '');
+        
+        if( $meta_tag ){
+            /*
+            </title>content<body>
+            전에 메타태그가 위치 하도록 하게 한다.
+            */
+            $nl = "\n";
+            $buffer = preg_replace('#(<title[^>]*>.*?</title>)#', "$meta_tag{$nl}$1", $buffer);
+        }
 
         return $buffer;
     }
@@ -3269,22 +3253,19 @@ function clean_query_string($query, $amp=true)
     return $str;
 }
 
-function get_device_change_url()
-{
+function get_params_merge_url($params){
     $p = @parse_url(G5_URL);
     $href = $p['scheme'].'://'.$p['host'];
     if(isset($p['port']) && $p['port'])
         $href .= ':'.$p['port'];
-    $href .= $_SERVER['SCRIPT_NAME'];
 
+    if( $tmp = explode('?', $_SERVER['REQUEST_URI']) ){
+        if( isset($tmp[0]) && $tmp[0] )
+            $href .= $tmp[0];
+    }
     $q = array();
-    $device = 'device='.(G5_IS_MOBILE ? 'pc' : 'mobile');
-
     if($_SERVER['QUERY_STRING']) {
         foreach($_GET as $key=>$val) {
-            if($key == 'device')
-                continue;
-
             $key = strip_tags($key);
             $val = strip_tags($val);
 
@@ -3293,14 +3274,23 @@ function get_device_change_url()
         }
     }
 
-    if(!empty($q)) {
-        $query = http_build_query($q, '', '&amp;');
-        $href .= '?'.$query.'&amp;'.$device;
-    } else {
-        $href .= '?'.$device;
+    if( is_array($params) ){
+        $q = array_merge($q, $params);
     }
 
+    $query = http_build_query($q, '', '&amp;');
+    $href .= '?'.$query;
+
     return $href;
+}
+
+function get_device_change_url()
+{
+    $q = array();
+    $device = (G5_IS_MOBILE ? 'pc' : 'mobile');
+    $q['device'] = $device;
+
+    return get_params_merge_url($q);
 }
 
 // 스킨 path
