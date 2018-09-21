@@ -188,4 +188,73 @@ function exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id=0){
     return exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id);
 }
 
+function get_mod_rewrite_rules($return_string=false){
+
+    $get_path_url = parse_url( G5_URL );
+
+    $base_path = isset($get_path_url['path']) ? $get_path_url['path'].'/' : '/';
+
+    $rules = array();
+    
+    $rules[] = '#### '.G5_VERSION.' rewrite BOF #####';
+    $rules[] = '<IfModule mod_rewrite.c>';
+    $rules[] = 'RewriteEngine On';
+    $rules[] = 'RewriteBase '.$base_path;
+    $rules[] = 'RewriteCond %{REQUEST_FILENAME} !-f';
+    $rules[] = 'RewriteCond %{REQUEST_FILENAME} !-d';
+    $rules[] = 'RewriteRule ^content/([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/content.php?co_id=$1&rewrite=1  [L]';
+    $rules[] = 'RewriteRule ^content/([^/]+)/$  '.G5_BBS_DIR.'/content.php?co_seo_title=$1&rewrite=1      [QSA,L]';
+    $rules[] = 'RewriteRule ^rss/([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/rss.php?bo_table=$1        [L]';
+    $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/board.php?bo_table=$1&rewrite=1      [QSA,L]';
+    $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/([^/]+)/$ '.G5_BBS_DIR.'/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1      [QSA,L]';
+    $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/write$  '.G5_BBS_DIR.'/write.php?bo_table=$1&rewrite=1    [QSA,L]';
+    $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/p([0-9]+)$  '.G5_BBS_DIR.'/board.php?bo_table=$1&page=$2    [QSA,L]';
+    $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/([0-9]+)$  '.G5_BBS_DIR.'/board.php?bo_table=$1&wr_id=$2&rewrite=1  [QSA,L]';
+    $rules[] = '</IfModule>';
+    $rules[] = '#### '.G5_VERSION.' rewrite EOF #####';
+
+    return $return_string ? implode('\n', $rules) : $rules;
+}
+
+function update_rewrite_rules(){
+
+    $is_apache = (stripos($_SERVER['SERVER_SOFTWARE'], 'apache') !== false);
+
+    if($is_apache){
+        $save_path = G5_PATH.'/.htaccess';
+
+        if( (!file_exists($save_path) && is_writable(G5_PATH)) || is_writable($save_path) ){
+
+            $rules = get_mod_rewrite_rules();
+
+            $bof_str = $rules[0];
+            $eof_str = end($rules);
+
+            if( file_exists($save_path) ){
+                $code = file_get_contents($save_path);
+                
+                if( $code && strpos($code, $bof_str) !== false && strpos($code, $eof_str) !== false ){
+                    return true;
+                }
+            }
+
+            $fp = fopen($save_path, "ab");
+            flock( $fp, LOCK_EX );
+            
+            $rewrite_str = implode("\n", $rules);
+            
+            fwrite( $fp, "\n" );
+            fwrite( $fp, $rewrite_str );
+            fwrite( $fp, "\n" );
+
+            flock( $fp, LOCK_UN );
+            fclose($fp);
+            
+            return true;
+        }
+    }
+
+    return false;
+
+}
 ?>
