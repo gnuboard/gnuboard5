@@ -10,6 +10,7 @@ if (!in_array($sort1, array('a.it_id', 'it_name'))) $sort1 = "a.it_id";
 $sel_field = strip_tags($sel_field);
 $sel_ca_id = get_search_string($sel_ca_id);
 $search = get_search_string($search);
+$ev_title = isset($ev_title) ? strip_tags($ev_title) : '';
 
 $g5['title'] = '이벤트일괄처리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
