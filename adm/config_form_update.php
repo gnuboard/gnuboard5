@@ -184,5 +184,7 @@ if( isset($_POST['cf_bbs_rewrite']) ){
 
 start_event('admin_config_form_update');
 
+update_rewrite_rules();
+
 goto_url('./config_form.php', false);
 ?>

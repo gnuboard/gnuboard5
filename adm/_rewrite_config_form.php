@@ -7,9 +7,22 @@ $is_nginx = (stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false);
 
 $is_iis = !$is_apache && (stripos($_SERVER['SERVER_SOFTWARE'], 'microsoft-iis') !== false);
 
+$is_write_file = false;
+
+if ( $is_nginx ){
+    $is_write_file = false;
+} else if ( $is_apache && ((!file_exists(G5_PATH.'/.htaccess') && is_writable($home_path)) || is_writable(G5_PATH.'/.htaccess')) ){
+    $is_write_file = true;
+}
+
 $get_path_url = parse_url( G5_URL );
 
 $base_path = isset($get_path_url['path']) ? $get_path_url['path'].'/' : '/';
+
+// add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal.css">', 11);
+add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal-default-theme.css">', 12);
+add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
 ?>
 <section id="anc_cf_url">
     <h2 class="h2_frm">짧은 주소 설정</h2>
@@ -18,6 +31,14 @@ $base_path = isset($get_path_url['path']) ? $get_path_url['path'].'/' : '/';
         <p>
             게시판과 컨텐츠 페이지에 짧은 URL 을 사용합니다.
         </p>
+    </div>
+
+    <div>
+        <?php if ( $is_apache && !$is_write_file ){ ?>
+            <button type="button" data-remodal-target="modal_apache">Apache 설정 보기</button>
+        <?php } else if ( $is_nginx ) { ?>
+            <button type="button" data-remodal-target="modal_nginx">Nginx 설정 보기</button>
+        <?php } ?>
     </div>
 
     <div class="tbl_frm01 tbl_wrap">
@@ -47,41 +68,34 @@ $base_path = isset($get_path_url['path']) ? $get_path_url['path'].'/' : '/';
     </div>
 
     <div class="server_rewrite_info">
-        <div class="is_apache">
+        <div class="is_rewrite remodal" data-remodal-id="modal_apache" role="dialog" aria-labelledby="modalApache" aria-describedby="modal1Desc">
 
-# apache configuration
-<pre>
-<IfModule mod_rewrite.c>
-RewriteEngine On
-RewriteBase <?php echo $base_path; ?>
+        <button type="button" class="connect-close" data-remodal-action="close">
+            <i class="fa fa-close"></i>
+            <span class="txt">닫기</span>
+        </button>
 
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-
-RewriteRule ^rss/([0-9a-zA-Z_]+)$  bbs/rss.php?bo_table=$1        [L]
-RewriteRule ^([0-9a-zA-Z_]+)$  bbs/board.php?bo_table=$1&rewrite=1      [QSA,L]
-RewriteRule ^([0-9a-zA-Z_]+)/([^/]+)/$ bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1      [QSA,L]
-RewriteRule ^([0-9a-zA-Z_]+)/write$  bbs/write.php?bo_table=$1&rewrite=1    [QSA,L]
-RewriteRule ^([0-9a-zA-Z_]+)/p([0-9]+)$  bbs/board.php?bo_table=$1&page=$2    [QSA,L]
-RewriteRule ^([0-9a-zA-Z_]+)/([0-9]+)$  bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1  [QSA,L]
-</IfModule>
-</pre>
+        <h4 class="copy_title">아래 코드를 복사하여 .htaccess 파일에 붙여넣기 하여 주세요.</h4>
+            <textarea readonly="readonly" rows="10">
+            <?php echo get_mod_rewrite_rules(true); ?>
+            </textarea>
         </div>
 
-        <div class="is_nginx">
+        <div class="is_rewrite remodal" data-remodal-id="modal_nginx" role="dialog" aria-labelledby="modalNginx" aria-describedby="modal2Desc">
 
-# nginx configuration
-<pre>
-
+<h4 class="copy_title">아래 코드를 복사하여 nginx 설정 파일에 적용해 주세요.</h4>
+<textarea readonly="readonly" rows="10">
 if (!-e $request_filename){
-    rewrite ^<?php echo $base_path; ?>rss/([0-9a-zA-Z_]+)$ /g54/bbs/rss.php?bo_table=$1 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)$ /g54/bbs/board.php?bo_table=$1&rewrite=1 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/([^/]+)/$ /g54/bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/write$ /g54/bbs/write.php?bo_table=$1&rewrite=1 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/p([0-9]+)$ /g54/bbs/board.php?bo_table=$1&page=$2 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/([0-9]+)$ /g54/bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>content/([0-9a-zA-Z_]+)$ <?php echo $base_path; ?>bbs/content.php?co_id=$1&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>content/([^/]+)/$ <?php echo $base_path; ?>bbs/content.php?co_seo_title=$1&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>rss/([0-9a-zA-Z_]+)$ <?php echo $base_path; ?>bbs/rss.php?bo_table=$1 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)$ <?php echo $base_path; ?>bbs/board.php?bo_table=$1&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/([^/]+)/$ <?php echo $base_path; ?>bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/write$ <?php echo $base_path; ?>bbs/write.php?bo_table=$1&rewrite=1 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/p([0-9]+)$ <?php echo $base_path; ?>bbs/board.php?bo_table=$1&page=$2 break;
+    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/([0-9]+)$ <?php echo $base_path; ?>bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;
 }
-</pre>
+</textarea>
         </div>
 
     </div>
