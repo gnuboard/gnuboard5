@@ -714,6 +714,8 @@ function get_group($gr_id)
 function get_member($mb_id, $fields='*')
 {
     global $g5;
+    
+    $mb_id = preg_replace("/[^0-9a-z_]+/i", "", $mb_id);
 
     return sql_fetch(" select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ");
 }

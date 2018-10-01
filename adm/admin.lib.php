@@ -489,6 +489,19 @@ if (isset($stx))  $arr_query[] = 'stx='.$stx;
 if (isset($page)) $arr_query[] = 'page='.$page;
 $qstr = implode("&amp;", $arr_query);
 
+if ( isset($_REQUEST) && $_REQUEST ){
+    if( admin_referer_check(true) ){
+
+        foreach( $_REQUEST as $key=>$value ){
+            if( $value && preg_match('/<\s?[^\>]*\/?\s?>/i', $value) && preg_match('/script.*?\/script/ius', $value) ){
+                alert('요청 쿼리에 잘못된 스크립트문장이 있습니다.\\nXSS 공격일수도 있습니다.');
+                die();
+            }
+        }
+
+    }
+}
+
 // 관리자에서는 추가 스크립트는 사용하지 않는다.
 //$config['cf_add_script'] = '';
 ?>
