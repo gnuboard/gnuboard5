@@ -253,6 +253,12 @@ if(!sql_query(" DESC {$g5['social_profile_table']} ", false)) {
                 ) ", true);
 }
 
+// 짧은 URL 주소를 사용 여부 필드 추가
+if (!isset($config['cf_bbs_rewrite'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_bbs_rewrite` tinyint(4) NOT NULL DEFAULT '0' AFTER `cf_link_target` ", true);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -264,6 +270,7 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_board">게시판기본</a></li>
     <li><a href="#anc_cf_join">회원가입</a></li>
     <li><a href="#anc_cf_cert">본인확인</a></li>
+    <li><a href="#anc_cf_url">짧은주소</a></li>
     <li><a href="#anc_cf_mail">기본메일환경</a></li>
     <li><a href="#anc_cf_article_mail">글작성메일</a></li>
     <li><a href="#anc_cf_join_mail">가입메일</a></li>
@@ -881,6 +888,9 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
+<?php
+include_once('_rewrite_config_form.php');
+?>
 
 <section id="anc_cf_mail">
     <h2 class="h2_frm">기본 메일 환경 설정</h2>

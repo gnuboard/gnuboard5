@@ -335,10 +335,12 @@ function get_dirsize($dir)
 // 게시물 정보($write_row)를 출력하기 위하여 $list로 가공된 정보를 복사 및 가공
 function get_list($write_row, $board, $skin_url, $subject_len=40)
 {
-    global $g5, $config;
+    global $g5, $config, $g5_object;
     global $qstr, $page;
 
     //$t = get_microtime();
+
+    $g5_object->set('bbs', $write_row['wr_id'], $write_row, $board['bo_table']);
 
     // 배열전체를 복사
     $list = $write_row;
@@ -405,9 +407,9 @@ function get_list($write_row, $board, $skin_url, $subject_len=40)
         $list['icon_link'] = '<i class="fa fa-link" aria-hidden="true"></i> ';
 
     // 분류명 링크
-    $list['ca_name_href'] = G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;sca='.urlencode($list['ca_name']);
+    $list['ca_name_href'] = get_pretty_url($board['bo_table'], '', 'sca='.urlencode($list['ca_name']));
 
-    $list['href'] = G5_BBS_URL.'/board.php?bo_table='.$board['bo_table'].'&amp;wr_id='.$list['wr_id'].$qstr;
+    $list['href'] = get_pretty_url($board['bo_table'], $list['wr_id'], $qstr);
     $list['comment_href'] = $list['href'];
 
     $list['icon_new'] = '';
@@ -682,13 +684,24 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     return $str;
 }
 
-
 // 게시판 테이블에서 하나의 행을 읽음
-function get_write($write_table, $wr_id)
+function get_write($write_table, $wr_id, $is_cache=false)
 {
-    return sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
-}
+    global $g5, $g5_object;
 
+    $wr_bo_table = preg_replace('/^'.preg_quote($g5['write_prefix']).'/i', '', $write_table);
+
+    $write = $g5_object->get('bbs', $wr_id, $wr_bo_table);
+
+    if( !$write ){
+        $sql = " select * from {$write_table} where wr_id = '{$wr_id}' ";
+        $write = sql_fetch($sql);
+
+        $g5_object->set('bbs', $wr_id, $write, $wr_bo_table);
+    }
+
+    return $write;
+}
 
 // 게시판의 다음글 번호를 얻는다.
 function get_next_num($table)
@@ -702,22 +715,47 @@ function get_next_num($table)
 
 
 // 그룹 설정 테이블에서 하나의 행을 읽음
-function get_group($gr_id)
+function get_group($gr_id, $is_cache=false)
 {
     global $g5;
 
-    return sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
+    static $cache = array();
+
+    $gr_id = preg_replace('/[^a-z0-9_]/i', '', $gr_id);
+    $key = md5($gr_id);
+
+    if( $is_cache && isset($cache[$key]) ){
+        return $cache[$key];
+    }
+
+    $sql = " select * from {$g5['group_table']} where gr_id = '$gr_id' ";
+
+    $cache[$key] = apply_replace('get_group', sql_fetch($sql), $gr_id, $is_cache);
+
+    return $cache[$key];
 }
 
 
 // 회원 정보를 얻는다.
-function get_member($mb_id, $fields='*')
+function get_member($mb_id, $fields='*', $is_cache=false)
 {
     global $g5;
     
     $mb_id = preg_replace("/[^0-9a-z_]+/i", "", $mb_id);
 
-    return sql_fetch(" select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ");
+    static $cache = array();
+
+    $key = md5($fields);
+
+    if( $is_cache && isset($cache[$mb_id]) && isset($cache[$mb_id][$key]) ){
+        return $cache[$mb_id][$key];
+    }
+
+    $sql = " select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ";
+
+    $cache[$mb_id][$key] = apply_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
+
+    return $cache[$mb_id][$key];
 }
 
 
@@ -1259,7 +1297,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         if(!$bo_table)
             return $name;
 
-        $tmp_name = '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;sca='.$sca.'&amp;sfl=wr_name,1&amp;stx='.$name.'" title="'.$name.' 이름으로 검색" class="sv_guest" rel="nofollow" onclick="return false;">'.$name.'</a>';
+        $tmp_name = '<a href="'.get_pretty_url($bo_table, '', 'sca='.$sca.'&amp;sfl=wr_name,1&amp;stx='.$name).'" title="'.$name.' 이름으로 검색" class="sv_guest" rel="nofollow" onclick="return false;">'.$name.'</a>';
         $title_mb_id = '[비회원]';
     }
 
@@ -1277,9 +1315,9 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
     if($bo_table) {
         if($mb_id)
-            $str2 .= "<a href=\"".G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id."\">아이디로 검색</a>\n";
+            $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id)."\">아이디로 검색</a>\n";
         else
-            $str2 .= "<a href=\"".G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name."\">이름으로 검색</a>\n";
+            $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name)."\">이름으로 검색</a>\n";
     }
     if($mb_id)
         $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\" class=\"link_new_page\" onclick=\"check_goto_new(this.href, event);\">전체게시물</a>\n";
@@ -1484,7 +1522,7 @@ function sql_set_charset($charset, $link=null)
 // mysql connect resource 지정 - 명랑폐인님 제안
 function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
 {
-    global $g5;
+    global $g5, $g5_debug;
 
     if(!$link)
         $link = $g5['connect_db'];
@@ -1496,6 +1534,10 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     $sql = preg_replace("#^select.*from.*[\s\(]+union[\s\)]+.*#i ", "select 1", $sql);
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
+
+    $is_debug = get_permission_debug_show();
+    
+    $start_time = $is_debug ? get_microtime() : 0;
 
     if(function_exists('mysqli_query') && G5_MYSQLI_USE) {
         if ($error) {
@@ -1509,6 +1551,15 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         } else {
             $result = @mysql_query($sql, $link);
         }
+    }
+
+    if($result && $is_debug) {
+        // 여기에 실행한 sql문을 화면에 표시하는 로직 넣기
+        $g5_debug['sql'][] = array(
+            'sql' => $sql,
+            'start_time' => $start_time,
+            'end_time' => get_microtime(),
+            );
     }
 
     return $result;
@@ -1996,6 +2047,16 @@ function is_utf8($str)
 // 출처 : https://www.google.co.kr/search?q=utf8_strcut&aq=f&oq=utf8_strcut&aqs=chrome.0.57j0l3.826j0&sourceid=chrome&ie=UTF-8
 function utf8_strcut( $str, $size, $suffix='...' )
 {
+    if( function_exists('mb_strlen') && function_exists('mb_substr') ){
+        
+        if(mb_strlen($str)<=$size) {
+            return $str;
+        } else {
+            $str = mb_substr($str, 0, $size, 'utf-8');
+            $str .= $suffix;
+        }
+
+    } else {
         $substr = substr( $str, 0, $size * 2 );
         $multi_size = preg_match_all( '/[\x80-\xff]/', $substr, $multi_chars );
 
@@ -2007,8 +2068,9 @@ function utf8_strcut( $str, $size, $suffix='...' )
             $str = preg_replace( '/(([\x80-\xff]{3})*?)([\x80-\xff]{0,2})$/', '$1', $str );
             $str .= $suffix;
         }
+    }
 
-        return $str;
+    return $str;
 }
 
 
@@ -2159,11 +2221,7 @@ function delete_cache_latest($bo_table)
         return;
     }
 
-    $files = glob(G5_DATA_PATH.'/cache/latest-'.$bo_table.'-*');
-    if (is_array($files)) {
-        foreach ($files as $filename)
-            unlink($filename);
-    }
+    g5_delete_cache_by_prefix('latest-'.$bo_table.'-');
 }
 
 // 게시판 첨부파일 썸네일 삭제
@@ -2447,6 +2505,8 @@ class html_process {
             }
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $links);
+            
+            $links = apply_replace('html_process_css_files', $links);
 
             foreach($links as $link) {
                 if(!trim($link[1]))
@@ -2473,6 +2533,8 @@ class html_process {
             }
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $scripts);
+            
+            $scripts = apply_replace('html_process_script_files', $scripts);
 
             foreach($scripts as $js) {
                 if(!trim($js[1]))
@@ -2501,6 +2563,17 @@ class html_process {
         if($javascript)
             $nl = "\n";
         $buffer = preg_replace('#(</head>[^<]*<body[^>]*>)#', "$javascript{$nl}$1", $buffer);
+        
+        $meta_tag = apply_replace('html_process_add_meta', '');
+        
+        if( $meta_tag ){
+            /*
+            </title>content<body>
+            전에 메타태그가 위치 하도록 하게 한다.
+            */
+            $nl = "\n";
+            $buffer = preg_replace('#(<title[^>]*>.*?</title>)#', "$meta_tag{$nl}$1", $buffer);
+        }
 
         return $buffer;
     }
@@ -2672,10 +2745,16 @@ function get_qa_config($fld='*')
 {
     global $g5;
 
-    $sql = " select $fld from {$g5['qa_config_table']} ";
-    $row = sql_fetch($sql);
+    static $cache = array();
 
-    return $row;
+    if( $is_cache && !empty($cache) ){
+        return $cache;
+    }
+
+    $sql = " select * from {$g5['qa_config_table']} ";
+    $cache = apply_replace('get_qa_config', sql_fetch($sql));
+
+    return $cache;
 }
 
 // get_sock 함수 대체
@@ -3176,22 +3255,19 @@ function clean_query_string($query, $amp=true)
     return $str;
 }
 
-function get_device_change_url()
-{
+function get_params_merge_url($params){
     $p = @parse_url(G5_URL);
     $href = $p['scheme'].'://'.$p['host'];
     if(isset($p['port']) && $p['port'])
         $href .= ':'.$p['port'];
-    $href .= $_SERVER['SCRIPT_NAME'];
 
+    if( $tmp = explode('?', $_SERVER['REQUEST_URI']) ){
+        if( isset($tmp[0]) && $tmp[0] )
+            $href .= $tmp[0];
+    }
     $q = array();
-    $device = 'device='.(G5_IS_MOBILE ? 'pc' : 'mobile');
-
     if($_SERVER['QUERY_STRING']) {
         foreach($_GET as $key=>$val) {
-            if($key == 'device')
-                continue;
-
             $key = strip_tags($key);
             $val = strip_tags($val);
 
@@ -3200,14 +3276,23 @@ function get_device_change_url()
         }
     }
 
-    if(!empty($q)) {
-        $query = http_build_query($q, '', '&amp;');
-        $href .= '?'.$query.'&amp;'.$device;
-    } else {
-        $href .= '?'.$device;
+    if( is_array($params) ){
+        $q = array_merge($q, $params);
     }
 
+    $query = http_build_query($q, '', '&amp;');
+    $href .= '?'.$query;
+
     return $href;
+}
+
+function get_device_change_url()
+{
+    $q = array();
+    $device = (G5_IS_MOBILE ? 'pc' : 'mobile');
+    $q['device'] = $device;
+
+    return get_params_merge_url($q);
 }
 
 // 스킨 path

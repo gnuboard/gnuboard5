@@ -10,9 +10,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     $filename = $alt = "";
     $edt = false;
 
-    $sql = " select bf_file, bf_content from {$g5['board_file_table']}
-                where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_type between '1' and '3' order by bf_no limit 0, 1 ";
-    $row = sql_fetch($sql);
+    $row = get_thumbnail_find_cache($bo_table, $wr_id, 'file');
 
     if($row['bf_file']) {
         $filename = $row['bf_file'];

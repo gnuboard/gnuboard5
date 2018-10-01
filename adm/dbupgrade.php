@@ -74,6 +74,57 @@ if( isset($g5['social_profile_table']) && !sql_query(" DESC {$g5['social_profile
     $is_check = true;
 }
 
+// 게시판 짧은 주소
+$sql = " select bo_table from {$g5['board_table']} ";
+$result = sql_query($sql);
+
+while ($row = sql_fetch_array($result)) {
+    $write_table = $g5['write_prefix'] . $row['bo_table']; // 게시판 테이블 전체이름
+
+    $sql = " SHOW COLUMNS FROM {$write_table} LIKE 'wr_seo_title' ";
+    $row = sql_fetch($sql);
+    
+    if( !$row ){
+        sql_query("ALTER TABLE `{$write_table}`
+                    ADD `wr_seo_title` varchar(255) NOT NULL DEFAULT '' AFTER `wr_content`,
+                    ADD INDEX `wr_seo_title` (`wr_seo_title`);
+        ", false);
+
+        $is_check = true;
+    }
+}
+
+// 내용 관리 짧은 주소
+$sql = " SHOW COLUMNS FROM `{$g5['content_table']}` LIKE 'co_seo_title' ";
+$row = sql_fetch($sql);
+
+if( !$row ){
+    sql_query("ALTER TABLE `{$g5['content_table']}`
+                ADD `co_seo_title` varchar(255) NOT NULL DEFAULT '' AFTER `co_content`,
+                ADD INDEX `co_seo_title` (`co_seo_title`);
+    ", false);
+
+    $is_check = true;
+}
+
+$sql = "select * from {$g5['content_table']} limit 100 ";
+$result = sql_query($sql);
+
+while ($row = sql_fetch_array($result)) {
+
+    if( ! $row['co_seo_title']){
+        
+        $co_seo_title = exist_seo_title_recursive('content', generate_seo_title($row['co_subject']), $g5['content_table'], $row['co_id']);
+        
+        $sql = " update {$g5['content_table']}
+                    set co_seo_title = '$co_seo_title'
+                  where co_id = '{$row['co_id']}' ";
+        sql_query($sql);
+
+    }
+
+}
+
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
 ?>
 

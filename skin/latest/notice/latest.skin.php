@@ -7,7 +7,7 @@ add_javascript('<script src="'.G5_JS_URL.'/jquery.bxslider.js"></script>', 10);
 ?>
 
 <div class="notice">
-    <h2><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><i class="fa fa-bullhorn" aria-hidden="true"></i><span class="sound_only"><?php echo $bo_subject ?></span></a></h2>
+    <h2><a href="<?php echo get_pretty_url($bo_table); ?>"><i class="fa fa-bullhorn" aria-hidden="true"></i><span class="sound_only"><?php echo $bo_subject ?></span></a></h2>
     <ul>
     <?php for ($i=0; $i<count($list); $i++) {  ?>
         <li>

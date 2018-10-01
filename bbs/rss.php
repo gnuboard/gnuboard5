@@ -47,8 +47,8 @@ echo '<?xml version="1.0" encoding="utf-8" ?>'."\n";
 ?>
 <rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
 <channel>
-<title><?php echo specialchars_replace($config['cf_title'].' &gt; '.$subj1.' &gt; '.$subj2) ?></title>
-<link><?php echo specialchars_replace(G5_BBS_URL.'/board.php?bo_table='.$bo_table) ?></link>
+<title><?php echo specialchars_replace($config['cf_title'].' &gt; '.$subj1.' &gt; '.$subj2); ?></title>
+<link><?php echo specialchars_replace(get_pretty_url($bo_table)); ?></link>
 <description>테스트 버전 0.2 (2004-04-26)</description>
 <language>ko</language>
 
@@ -69,8 +69,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 ?>
 
 <item>
-<title><?php echo specialchars_replace($row['wr_subject']) ?></title>
-<link><?php echo specialchars_replace(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$row['wr_id']) ?></link>
+<title><?php echo specialchars_replace($row['wr_subject']); ?></title>
+<link><?php echo specialchars_replace(get_pretty_url($bo_table, $wr_id)); ?></link>
 <description><![CDATA[<?php echo $file ?><?php echo conv_content($row['wr_content'], $html) ?>]]></description>
 <dc:creator><?php echo specialchars_replace($row['wr_name']) ?></dc:creator>
 <?php

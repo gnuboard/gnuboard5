@@ -8,7 +8,7 @@ if(!defined('G5_IS_ADMIN') && defined('G5_THEME_PATH') && is_file(G5_THEME_PATH.
     return;
 }
 
-$begin_time = get_microtime();
+$g5_debug['php']['begin_time'] = $begin_time = get_microtime();
 
 if (!isset($g5['title'])) {
     $g5['title'] = $config['cf_title'];

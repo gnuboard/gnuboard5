@@ -29,6 +29,9 @@ if (PHP_VERSION >= '5.1.0') {
 define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
+//디버깅 상수
+define('G5_DEBUG', true);
+
 /*
 www.sir.kr 과 sir.kr 도메인은 서로 다른 도메인으로 인식합니다. 쿠키를 공유하려면 .sir.kr 과 같이 입력하세요.
 이곳에 입력이 없다면 www 붙은 도메인과 그렇지 않은 도메인은 쿠키를 공유하지 않으므로 로그인이 풀릴 수 있습니다.
@@ -59,6 +62,9 @@ define('G5_SYNDI_DIR',      'syndi');
 define('G5_PHPMAILER_DIR',  'PHPMailer');
 define('G5_SESSION_DIR',    'session');
 define('G5_THEME_DIR',      'theme');
+
+define('G5_GROUP_DIR',      'group');
+define('G5_CONTENT_DIR',    'content');
 
 // URL 은 브라우저상에서의 경로 (도메인으로 부터의)
 if (G5_DOMAIN) {
@@ -146,6 +152,9 @@ define('G5_NUMERIC',         8); // 숫자
 define('G5_HANGUL',         16); // 한글
 define('G5_SPACE',          32); // 공백
 define('G5_SPECIAL',        64); // 특수문자
+
+// SEO TITLE 문단 길이
+define('G5_SEO_TITEL_WORD_CUT', 8);        // SEO TITLE 문단 길이
 
 // 퍼미션
 define('G5_DIR_PERMISSION',  0755); // 디렉토리 생성시 퍼미션

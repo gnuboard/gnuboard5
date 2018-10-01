@@ -211,6 +211,8 @@ if ($w == '' || $w == 'r') {
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
     alert('제목을 입력하여 주십시오.');
 
+$wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($wr_subject), $write_table, $wr_id);
+
 if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
@@ -251,6 +253,7 @@ if ($w == '' || $w == 'r') {
                      wr_option = '$html,$secret,$mail',
                      wr_subject = '$wr_subject',
                      wr_content = '$wr_content',
+                     wr_seo_title = '$wr_seo_title',
                      wr_link1 = '$wr_link1',
                      wr_link2 = '$wr_link2',
                      wr_link1_hit = 0,
@@ -304,10 +307,10 @@ if ($w == '' || $w == 'r') {
     }
 }  else if ($w == 'u') {
     if (get_session('ss_bo_table') != $_POST['bo_table'] || get_session('ss_wr_id') != $_POST['wr_id']) {
-        alert('올바른 방법으로 수정하여 주십시오.', G5_BBS_URL.'/board.php?bo_table='.$bo_table);
+        alert('올바른 방법으로 수정하여 주십시오.', get_pretty_url($bo_table));
     }
 
-    $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+    $return_url = get_pretty_url($bo_table, $wr_id);
 
     if ($is_admin == 'super') // 최고관리자 통과
         ;
@@ -372,6 +375,7 @@ if ($w == '' || $w == 'r') {
                      wr_option = '{$html},{$secret},{$mail}',
                      wr_subject = '{$wr_subject}',
                      wr_content = '{$wr_content}',
+                     wr_seo_title = '$wr_seo_title',
                      wr_link1 = '{$wr_link1}',
                      wr_link2 = '{$wr_link2}',
                      mb_id = '{$mb_id}',
@@ -655,7 +659,7 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
     $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
 
-    $link_url = G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr;
+    $link_url = get_pretty_url($bo_table, $wr_id, $qstr);
 
     include_once(G5_LIB_PATH.'/mailer.lib.php');
 
@@ -698,8 +702,12 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
 delete_cache_latest($bo_table);
 
+$redirect_url = apply_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+
+start_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+
 if ($file_upload_msg)
-    alert($file_upload_msg, G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
+    alert($file_upload_msg, $redirect_url);
 else
-    goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
+    goto_url($redirect_url);
 ?>
