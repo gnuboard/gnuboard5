@@ -208,12 +208,11 @@ function get_mod_rewrite_rules($return_string=false){
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/board.php?bo_table=$1&rewrite=1      [QSA,L]';
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/([^/]+)/$ '.G5_BBS_DIR.'/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1      [QSA,L]';
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/write$  '.G5_BBS_DIR.'/write.php?bo_table=$1&rewrite=1    [QSA,L]';
-    $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/p([0-9]+)$  '.G5_BBS_DIR.'/board.php?bo_table=$1&page=$2    [QSA,L]';
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/([0-9]+)$  '.G5_BBS_DIR.'/board.php?bo_table=$1&wr_id=$2&rewrite=1  [QSA,L]';
     $rules[] = '</IfModule>';
     $rules[] = '#### '.G5_VERSION.' rewrite EOF #####';
 
-    return $return_string ? implode('\n', $rules) : $rules;
+    return $return_string ? implode("\n", $rules) : $rules;
 }
 
 function update_rewrite_rules(){

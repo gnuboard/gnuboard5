@@ -34,10 +34,10 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
     </div>
 
     <div>
-        <?php if ( $is_apache && !$is_write_file ){ ?>
-            <button type="button" data-remodal-target="modal_apache">Apache 설정 보기</button>
+        <?php if ( $is_apache ){ ?>
+            <button type="button" data-remodal-target="modal_apache" class="btn btn_03">Apache 설정 코드 보기</button>
         <?php } else if ( $is_nginx ) { ?>
-            <button type="button" data-remodal-target="modal_nginx">Nginx 설정 보기</button>
+            <button type="button" data-remodal-target="modal_nginx" class="btn btn_03">Nginx 설정 코드 보기</button>
         <?php } ?>
     </div>
 
@@ -75,10 +75,12 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
             <span class="txt">닫기</span>
         </button>
 
-        <h4 class="copy_title">아래 코드를 복사하여 .htaccess 파일에 붙여넣기 하여 주세요.</h4>
-            <textarea readonly="readonly" rows="10">
-            <?php echo get_mod_rewrite_rules(true); ?>
-            </textarea>
+        <h4 class="copy_title">.htaccess 파일에 적용할 코드입니다.
+        <?php if( ! $is_write_file ) { ?> 
+        <br>아래 코드를 복사하여 .htaccess 파일에 붙여넣기 하여 주세요.
+        <?php } ?>
+        </h4>
+            <textarea readonly="readonly" rows="10"><?php echo get_mod_rewrite_rules(true); ?></textarea>
         </div>
 
         <div class="is_rewrite remodal" data-remodal-id="modal_nginx" role="dialog" aria-labelledby="modalNginx" aria-describedby="modal2Desc">
