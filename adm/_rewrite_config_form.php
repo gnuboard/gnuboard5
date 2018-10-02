@@ -33,7 +33,7 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
         </p>
     </div>
 
-    <div>
+    <div class="server_config_views">
         <?php if ( $is_apache ){ ?>
             <button type="button" data-remodal-target="modal_apache" class="btn btn_03">Apache 설정 코드 보기</button>
         <?php } else if ( $is_nginx ) { ?>
@@ -59,7 +59,7 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
                 $checked = ((int) $config['cf_bbs_rewrite'] === (int) $k) ? 'checked' : '';
         ?>
             <tr>
-                <td><input name="cf_bbs_rewrite" id="cf_bbs_rewrite_<?php echo $k; ?>" type="radio" value="<?php echo $k; ?>" <?php echo $checked;?> ><label for="cf_bbs_rewrite_<?php echo $k; ?>"><?php echo $v['label']; ?></label></td>
+                <td><input name="cf_bbs_rewrite" id="cf_bbs_rewrite_<?php echo $k; ?>" type="radio" value="<?php echo $k; ?>" <?php echo $checked;?> ><label for="cf_bbs_rewrite_<?php echo $k; ?>" class="rules_label"><?php echo $v['label']; ?></label></td>
                 <td><?php echo $v['url']; ?></td>
             </tr>
         <?php }     //end foreach ?>

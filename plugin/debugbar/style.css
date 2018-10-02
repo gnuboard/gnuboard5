@@ -1,4 +1,4 @@
-.debug_bar_wrap{display:block;position:relative;z-index:80;height:32px;background-color:#1ABC9C}
+.debug_bar_wrap{clear:both;display:block;position:relative;z-index:80;height:32px;background-color:#1ABC9C}
 .debug_bar_content{display:none;position:absolute;z-index:81;width:100%;top:32px;min-height:300px;overflow:hidden;background:#fff;overflow-y:scroll;box-sizing:content-box;border-top:thin solid gray}
 .debug_bar_text_group{position:relative;padding:0 20px 0 120px;line-height:32px;}
 .debug_bar_btn_group{position:absolute;top:0;left:1em;line-height:32px;text-align:left}
