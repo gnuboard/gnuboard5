@@ -188,6 +188,29 @@ function exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id=0){
     return exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id);
 }
 
+function get_nginx_conf_rules($return_string=false){
+
+    $get_path_url = parse_url( G5_URL );
+
+    $base_path = isset($get_path_url['path']) ? $get_path_url['path'].'/' : '/';
+
+    $rules = array();
+    
+    $rules[] = '#### '.G5_VERSION.' url rules BOF #####';
+    $rules[] = 'if (!-e $request_filename){';
+    $rules[] = "rewrite ^{$base_path}content/([0-9a-zA-Z_]+)$ {$base_path}bbs/content.php?co_id=$1&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}content/([^/]+)/$ {$base_path}bbs/content.php?co_seo_title=$1&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}rss/([0-9a-zA-Z_]+)$ {$base_path}bbs/rss.php?bo_table=$1 break;";
+    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)$ {$base_path}bbs/board.php?bo_table=$1&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/write$ {$base_path}bbs/write.php?bo_table=$1&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/([^/]+)/$ {$base_path}bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/([0-9]+)$ {$base_path}bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;";
+    $rules[] = '}';
+    $rules[] = '#### '.G5_VERSION.' url rules EOF #####';
+
+    return $return_string ? implode("\n", $rules) : $rules;
+}
+
 function get_mod_rewrite_rules($return_string=false){
 
     $get_path_url = parse_url( G5_URL );

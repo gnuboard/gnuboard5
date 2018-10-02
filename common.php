@@ -125,7 +125,7 @@ $g5     = array();
 $g5_debug = array('php'=>array(),'sql'=>array());
 
 include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
-include_once(G5_LIB_PATH.'/get_data.lib.php');    
+include_once(G5_LIB_PATH.'/get_data.lib.php');    // 데이타 가져오는 함수 모음
 include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
 include_once(G5_LIB_PATH.'/cache.lib.php');
 

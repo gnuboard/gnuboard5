@@ -70,34 +70,27 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
     <div class="server_rewrite_info">
         <div class="is_rewrite remodal" data-remodal-id="modal_apache" role="dialog" aria-labelledby="modalApache" aria-describedby="modal1Desc">
 
-        <button type="button" class="connect-close" data-remodal-action="close">
-            <i class="fa fa-close"></i>
-            <span class="txt">닫기</span>
-        </button>
+            <button type="button" class="connect-close" data-remodal-action="close">
+                <i class="fa fa-close"></i>
+                <span class="txt">닫기</span>
+            </button>
 
-        <h4 class="copy_title">.htaccess 파일에 적용할 코드입니다.
-        <?php if( ! $is_write_file ) { ?> 
-        <br>아래 코드를 복사하여 .htaccess 파일에 붙여넣기 하여 주세요.
-        <?php } ?>
-        </h4>
+            <h4 class="copy_title">.htaccess 파일에 적용할 코드입니다.
+            <?php if( ! $is_write_file ) { ?> 
+            <br>아래 코드를 복사하여 .htaccess 파일에 붙여넣기 하여 주세요.
+            <?php } ?>
+            </h4>
             <textarea readonly="readonly" rows="10"><?php echo get_mod_rewrite_rules(true); ?></textarea>
         </div>
 
         <div class="is_rewrite remodal" data-remodal-id="modal_nginx" role="dialog" aria-labelledby="modalNginx" aria-describedby="modal2Desc">
 
-<h4 class="copy_title">아래 코드를 복사하여 nginx 설정 파일에 적용해 주세요.</h4>
-<textarea readonly="readonly" rows="10">
-if (!-e $request_filename){
-    rewrite ^<?php echo $base_path; ?>content/([0-9a-zA-Z_]+)$ <?php echo $base_path; ?>bbs/content.php?co_id=$1&rewrite=1 break;
-    rewrite ^<?php echo $base_path; ?>content/([^/]+)/$ <?php echo $base_path; ?>bbs/content.php?co_seo_title=$1&rewrite=1 break;
-    rewrite ^<?php echo $base_path; ?>rss/([0-9a-zA-Z_]+)$ <?php echo $base_path; ?>bbs/rss.php?bo_table=$1 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)$ <?php echo $base_path; ?>bbs/board.php?bo_table=$1&rewrite=1 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/([^/]+)/$ <?php echo $base_path; ?>bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/write$ <?php echo $base_path; ?>bbs/write.php?bo_table=$1&rewrite=1 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/p([0-9]+)$ <?php echo $base_path; ?>bbs/board.php?bo_table=$1&page=$2 break;
-    rewrite ^<?php echo $base_path; ?>([0-9a-zA-Z_]+)/([0-9]+)$ <?php echo $base_path; ?>bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;
-}
-</textarea>
+            <button type="button" class="connect-close" data-remodal-action="close">
+                <i class="fa fa-close"></i>
+                <span class="txt">닫기</span>
+            </button>
+            <h4 class="copy_title">아래 코드를 복사하여 nginx 설정 파일에 적용해 주세요.</h4>
+            <textarea readonly="readonly" rows="10"><?php echo get_nginx_conf_rules(true); ?></textarea>
         </div>
 
     </div>
