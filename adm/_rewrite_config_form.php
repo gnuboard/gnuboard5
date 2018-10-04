@@ -76,8 +76,8 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
             </button>
 
             <h4 class="copy_title">.htaccess 파일에 적용할 코드입니다.
-            <?php if( ! $is_write_file ) { ?> 
-            <br>아래 코드를 복사하여 .htaccess 파일에 붙여넣기 하여 주세요.
+            <?php if( ! $is_write_file ) { ?>
+            <br>자동으로 .htaccess 파일을 수정 할수 있는 권한이 없습니다.<br>아래 코드를 복사하여 .htaccess 파일이 없다면 생성 후에, 아래 내용을 복사 붙여넣기 해 주세요.
             <?php } ?>
             </h4>
             <textarea readonly="readonly" rows="10"><?php echo get_mod_rewrite_rules(true); ?></textarea>
