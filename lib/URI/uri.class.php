@@ -84,49 +84,56 @@ class G5_URI {
         return $links;
    }
 
-   public function makeClean($stringurl) {
+   public function makeClean($string_url) {
 		/* convert normal URL query string to clean URL */
-		$url=parse_url($stringurl);
+		$url=parse_url($string_url);
 		$strurl = basename($url['path'],".php");
 		$qstring = parse_str($url['query'],$vars);
 		while(list($k,$v) = each($vars)) $strurl .= "/".$v;
 		return $strurl;
    }
 
-   public function url_clean($stringurl, $add_qry='') {
+   public function url_clean($string_url, $add_qry='') {
         global $config, $g5;
 
-        $stringurl = str_replace('&amp;', '&', $stringurl);
-		$url=parse_url($stringurl);
-		$strurl = basename($url['path'],".php");
+        $string_url = str_replace('&amp;', '&', $string_url);
+		$url=parse_url($string_url);
+		$page_name = basename($url['path'],".php");
+        
+        $array_page_names = apply_replace('url_clean_page_names', array('board', 'write'));
 
-        if( ! in_array($strurl, array('board', 'view_comment.page')) ){   //게시판이 아니면 리턴
-            return $stringurl;
+        if( strpos($string_url, G5_BBS_URL) === false || ! in_array($page_name, $array_page_names) ){   //게시판이 아니면 리턴
+            return $string_url;
         }
 
         $return_url = '';
-		$qstring = parse_str($url['query'],$vars);
+		$qstring = parse_str($url['query'], $vars);
 
         // 예) Array ( [scheme] => http [host] => sir.kr [path] => /bbs/board.php [query] => wr_id=1110870&bo_table=cm_free&cpage=1 [fragment] => c_1110946 )
-        //while(list($k,$v) = each($vars)) $strurl .= "/".$v;
+        //while(list($k,$v) = each($vars)) $page_name .= "/".$v;
+        
+        if( $page_name === 'write' ){
+            $vars['action'] = 'write';
+            $allow_param_keys = array('bo_table'=>'', 'action'=>'');
+        } else {
+            $allow_param_keys = array('bo_table'=>'', 'wr_id'=>'');
+        }
 
-        $tmp = array('bo_table'=>'', 'wr_id'=>'');
         $s = array();
 
-        foreach( $tmp as $key=>$v ){
+        foreach( $allow_param_keys as $key=>$v ){
             if( !isset($vars[$key]) || empty($vars[$key]) ) continue;
             $add = '';
             $s[$key] = $vars[$key];
         }
 
-        if( $config['cf_bbs_rewrite'] > 1 && (isset($s['wr_id']) && $s['wr_id']) && (isset($s['bo_table']) && $s['bo_table']) ){
+        if( $config['cf_bbs_rewrite'] > 1 && $page_name === 'board' && (isset($s['wr_id']) && $s['wr_id']) && (isset($s['bo_table']) && $s['bo_table']) ){
             $get_write = get_write( get_write_table_name($s['bo_table']), $s['wr_id'], true);
             
             if( $get_write['wr_seo_title'] ){
                 unset($s['wr_id']);
                 $s['wr_seo_title'] = $get_write['wr_seo_title'].'/';
             }
-
         }
 
         $fragment = isset($url['fragment']) ? '#'.$url['fragment'] : '';
@@ -134,17 +141,17 @@ class G5_URI {
         $host = G5_URL;
 
         if( isset($url['host']) ){
+
+            $array_file_paths = apply_replace('url_clean_page_paths', array('/'.G5_BBS_DIR.'/board.php', '/'.G5_BBS_DIR.'/write.php'));
+
             $str_path = isset($url['path']) ? $url['path'] : '';
-            $http = 'http://';
-            if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {
-                $http = 'https://';
-            }
-            $host = $http.$url['host'].str_replace('/'.G5_BBS_DIR.'/board.php', '', $str_path);
+            $http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://';
+            $host = $http.$url['host'].str_replace($array_file_paths, '', $str_path);
         }
 
         $add_param = '';
 
-        if( $result = array_diff_key($vars, $tmp ) ){
+        if( $result = array_diff_key($vars, $allow_param_keys ) ){
             $add_param = '?'.http_build_query($result,'','&amp;');
         }
 
@@ -152,8 +159,8 @@ class G5_URI {
             $add_param .= $add_param ? '&amp;'.$add_qry : '?'.$add_qry;
         }
 
-        while(list($k,$v) = each($s)) $return_url .= "/".$v;
-        
+        while(list($k,$v) = each($s)) $return_url .= '/'.$v;
+
 		return $host.$return_url.$add_param.$fragment;
    }
 }
