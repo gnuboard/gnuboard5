@@ -426,6 +426,25 @@ function admin_referer_check($return=false)
     }
 }
 
+function admin_check_xss_params($params){
+
+    if( ! $params ) return;
+
+    foreach( $params as $key=>$value ){
+
+        if ( empty($value) ) continue;
+
+        if( is_array($value) ){
+            admin_check_xss_params($params);
+        } else if ( preg_match('/<\s?[^\>]*\/?\s?>/i', $value) && preg_match('/script.*?\/script/ius', $value) ){
+            alert('요청 쿼리에 잘못된 스크립트문장이 있습니다.\\nXSS 공격일수도 있습니다.');
+            die();
+        }
+    }
+
+    return;
+}
+
 // 접근 권한 검사
 if (!$member['mb_id'])
 {
@@ -488,6 +507,12 @@ if (isset($sfl))  $arr_query[] = 'sfl='.$sfl;
 if (isset($stx))  $arr_query[] = 'stx='.$stx;
 if (isset($page)) $arr_query[] = 'page='.$page;
 $qstr = implode("&amp;", $arr_query);
+
+if ( isset($_REQUEST) && $_REQUEST ){
+    if( admin_referer_check(true) ){
+        admin_check_xss_params($_REQUEST);
+    }
+}
 
 // 관리자에서는 추가 스크립트는 사용하지 않는다.
 //$config['cf_add_script'] = '';

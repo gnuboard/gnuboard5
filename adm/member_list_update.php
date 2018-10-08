@@ -29,19 +29,19 @@ if ($_POST['act_button'] == "선택수정") {
             $msg .= $mb['mb_id'].' : 로그인 중인 관리자는 수정 할 수 없습니다.\\n';
         } else {
             if($_POST['mb_certify'][$k])
-                $mb_adult = $_POST['mb_adult'][$k];
+                $mb_adult = (int) $_POST['mb_adult'][$k];
             else
                 $mb_adult = 0;
 
             $sql = " update {$g5['member_table']}
-                        set mb_level = '{$_POST['mb_level'][$k]}',
-                            mb_intercept_date = '{$_POST['mb_intercept_date'][$k]}',
-                            mb_mailling = '{$_POST['mb_mailling'][$k]}',
-                            mb_sms = '{$_POST['mb_sms'][$k]}',
-                            mb_open = '{$_POST['mb_open'][$k]}',
-                            mb_certify = '{$_POST['mb_certify'][$k]}',
+                        set mb_level = '".sql_real_escape_string($_POST['mb_level'][$k])."',
+                            mb_intercept_date = '".sql_real_escape_string($_POST['mb_intercept_date'][$k])."',
+                            mb_mailling = '".sql_real_escape_string($_POST['mb_mailling'][$k])."',
+                            mb_sms = '".sql_real_escape_string($_POST['mb_sms'][$k])."',
+                            mb_open = '".sql_real_escape_string($_POST['mb_open'][$k])."',
+                            mb_certify = '".sql_real_escape_string($_POST['mb_certify'][$k])."',
                             mb_adult = '{$mb_adult}'
-                        where mb_id = '{$_POST['mb_id'][$k]}' ";
+                        where mb_id = '".sql_real_escape_string($_POST['mb_id'][$k])."' ";
             sql_query($sql);
         }
     }
