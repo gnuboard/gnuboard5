@@ -714,6 +714,8 @@ function get_group($gr_id)
 function get_member($mb_id, $fields='*')
 {
     global $g5;
+    
+    $mb_id = preg_replace("/[^0-9a-z_]+/i", "", $mb_id);
 
     return sql_fetch(" select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ");
 }
@@ -2068,13 +2070,13 @@ function abs_ip2long($ip='')
 
 function get_selected($field, $value)
 {
-    return ($field==$value) ? ' selected="selected"' : '';
+    return ($field===$value) ? ' selected="selected"' : '';
 }
 
 
 function get_checked($field, $value)
 {
-    return ($field==$value) ? ' checked="checked"' : '';
+    return ($field===$value) ? ' checked="checked"' : '';
 }
 
 

@@ -22,7 +22,7 @@ $sql_common = " from {$g5['faq_table']} where fm_id = '$fm_id' ";
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
 $row = sql_fetch($sql);
-$total_count = $row[cnt];
+$total_count = $row['cnt'];
 
 $sql = "select * $sql_common order by fa_order , fa_id ";
 $result = sql_query($sql);
@@ -60,7 +60,7 @@ $result = sql_query($sql);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $row1 = sql_fetch(" select COUNT(*) as cnt from {$g5['faq_table']} where fm_id = '{$row['fm_id']}' ");
-        $cnt = $row1[cnt];
+        $cnt = $row1['cnt'];
 
         $s_mod = icon("수정", "");
         $s_del = icon("삭제", "");
