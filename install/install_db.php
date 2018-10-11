@@ -176,7 +176,7 @@ sql_query($sql, true, $dblink);
 // 관리자 회원가입
 $sql = " insert into `{$table_prefix}member`
             set mb_id = '$admin_id',
-                 mb_password = PASSWORD('$admin_pass'),
+                 mb_password = '".get_encrypt_string($admin_pass)."',
                  mb_name = '$admin_name',
                  mb_nick = '$admin_name',
                  mb_email = '$admin_email',
