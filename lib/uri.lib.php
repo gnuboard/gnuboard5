@@ -257,6 +257,30 @@ function exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id=0){
     return exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id);
 }
 
+function seo_title_update($write_table, $wr_id, $type='bbs'){
+    
+    global $g5;
+
+    if( $type === 'bbs' ){
+        $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
+
+        $row = sql_fetch($sql);
+        
+        echo $sql;
+
+        $exists_title = $row['wr_seo_title'];
+
+    } else if ( $type === 'content' ){
+
+        $sql = "select co_seo_title FROM {$write_table} WHERE co_seo_title = '".sql_real_escape_string($seo_title)."' AND co_id <> '$sql_id' limit 1";
+        $row = sql_fetch($sql);
+
+        $exists_title = $row['co_seo_title'];
+
+    }
+
+}
+
 function get_nginx_conf_rules($return_string=false){
 
     $get_path_url = parse_url( G5_URL );

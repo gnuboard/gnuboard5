@@ -13,6 +13,10 @@ if($co_seo_title){
     $co = get_content_db($co_id);
 }
 
+if( ! (isset($co['co_seo_title']) && $co['co_seo_title']) && $co['co_id'] ){
+    seo_title_update($g5['content_table'], $co['co_id'], 'content');
+}
+
 if (G5_IS_MOBILE) {
     include_once(G5_MOBILE_PATH.'/content.php');
     return;
