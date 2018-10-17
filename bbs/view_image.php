@@ -4,7 +4,13 @@ include_once('./_common.php');
 $g5['title'] = '이미지 크게보기';
 include_once(G5_PATH.'/head.sub.php');
 
-$filename = preg_replace('/[^A-Za-z0-9 _ .-]/', '', $_GET['fn']);
+$filename = preg_replace('/[^A-Za-z0-9 _ .-\/]/', '', $_GET['fn']);
+
+$extension = pathinfo($filename, PATHINFO_EXTENSION);
+
+if ( ! preg_match('/(jpg|jpeg|png|gif|bmp)$/i', $extension) ){
+    alert_close('확장자가 이미지인것만 요청할수 있습니다.');
+}
 
 if(strpos($filename, 'data/editor')) {
     $editor_file = strstr($filename, 'editor');
