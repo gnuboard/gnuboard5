@@ -15,7 +15,8 @@ if ($default['de_card_test']) {
         $default['de_inicis_sign_key'] = 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS';
     }
 
-    $stdpay_js_url = 'https://stdpay.inicis.com/stdjs/INIStdPay.js';
+    // 테스트 결제 URL
+    $stdpay_js_url = 'https://stgstdpay.inicis.com/stdjs/INIStdPay.js';
 }
 else {
     if( !defined('G5_MOBILE_INICIS_SETTLE') ){
@@ -30,7 +31,8 @@ else {
         // 일반결제
         $useescrow = '';
     }
-
+    
+    // 실 결제 URL
     $stdpay_js_url = 'https://stdpay.inicis.com/stdjs/INIStdPay.js';
 }
 
