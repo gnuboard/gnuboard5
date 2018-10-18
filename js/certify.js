@@ -1,6 +1,11 @@
 // 본인확인 인증창 호출
-function certify_win_open(type, url)
+function certify_win_open(type, url, event)
 {
+
+    if (typeof event == "undefined") {
+        event = window.event;
+    }
+
     if(type == 'kcb-ipin')
     {
         var popupWindow = window.open( url, "kcbPop", "left=200, top=100, status=0, width=450, height=550" );
