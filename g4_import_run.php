@@ -71,6 +71,7 @@ document.onkeydown = noRefresh ;
 <?php
 flush();
 
+$g4 = array();
 // g4의 confing.php
 require('./'.$g4_config_file);
 

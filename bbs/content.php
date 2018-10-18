@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$co_id = preg_replace('/[^a-z0-9_]/i', '', $co_id);
+
 //dbconfig파일에 $g5['content_table'] 배열변수가 있는지 체크
 if( !isset($g5['content_table']) ){
     die('<meta charset="utf-8">관리자 모드에서 게시판관리->내용 관리를 먼저 확인해 주세요.');
