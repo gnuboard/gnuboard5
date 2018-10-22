@@ -257,28 +257,31 @@ function exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id=0){
     return exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id);
 }
 
-function seo_title_update($write_table, $wr_id, $type='bbs'){
+function seo_title_update($db_table, $pk_id, $type='bbs'){
     
     global $g5;
 
+    $pk_id = (int) $pk_id;
+
     if( $type === 'bbs' ){
-        $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
 
-        $row = sql_fetch($sql);
-        
-        echo $sql;
+        $write = get_write($db_table, $pk_id, true);
+        if( ! $write['wr_seo_title'] && $co['wr_subject'] ){
+            $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($write['wr_subject']), $db_table, $pk_id);
 
-        $exists_title = $row['wr_seo_title'];
-
+            $sql = " update `{$db_table}` set wr_seo_title = '{$wr_seo_title}' where wr_id = '{$pk_id}' ";
+            sql_query($sql);
+        }
     } else if ( $type === 'content' ){
 
-        $sql = "select co_seo_title FROM {$write_table} WHERE co_seo_title = '".sql_real_escape_string($seo_title)."' AND co_id <> '$sql_id' limit 1";
-        $row = sql_fetch($sql);
+        $co = get_content_db($pk_id, true);
+        if( ! $co['co_seo_title'] && $co['co_subject'] ){
+            $co_seo_title = exist_seo_title_recursive('content', generate_seo_title($co['co_subject']), $db_table, $pk_id);
 
-        $exists_title = $row['co_seo_title'];
-
+            $sql = " update `{$db_table}` set co_seo_title = '{$co_seo_title}' where co_id = '{$pk_id}' ";
+            sql_query($sql);
+        }
     }
-
 }
 
 function get_nginx_conf_rules($return_string=false){

@@ -186,6 +186,8 @@ if ($w == '') {
 
     // 게시판 테이블 생성
     $file = file('./sql_write.sql');
+    $file = get_db_create_replace($file);
+
     $sql = implode($file, "\n");
 
     $create_table = $g5['write_prefix'] . $bo_table;
