@@ -4,6 +4,7 @@ if (!defined('_GNUBOARD_')) exit;
 Class G5_object_store {
     public $writes = array();
     public $contents = array();
+    public $etcs = array();
 
 	function get($type, $key, $group ='default') {
 
@@ -13,6 +14,9 @@ Class G5_object_store {
                 break;
             case 'content' :
                 $datas = $this->contents;
+                break;
+            default :
+                $datas = $this->etcs;
                 break;
         }
 
@@ -37,6 +41,9 @@ Class G5_object_store {
             case 'content':
                 $datas = $this->contents;
                 break;
+            default :
+                $datas = $this->etcs;
+                break;
         }
 
         return isset($datas[$group]) && ( isset($datas[$group][$key]) || array_key_exists($key, $datas[$group]) );
@@ -53,6 +60,9 @@ Class G5_object_store {
             case 'content':
                 $this->contents[$group][$key] = $data;
                 break;
+            default :
+                $datas = $this->etcs[$group][$key] = $data;
+                break;
         }
 
 	}
@@ -64,6 +74,9 @@ Class G5_object_store {
                 break;
             case 'content':
                 $datas = $this->contents;
+                break;
+            default :
+                $datas = $this->etcs;
                 break;
         }
 

@@ -13,6 +13,10 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
     $segments = array();
     $url = $add_query = '';
 
+    if( $url = apply_replace('get_pretty_url', $url, $folder, $no, $query_string, $action) ){
+        return $url;
+    }
+
 	// use shortten url
 	if($config['cf_bbs_rewrite']) {
         
@@ -286,7 +290,7 @@ function seo_title_update($db_table, $pk_id, $type='bbs'){
 
 function get_nginx_conf_rules($return_string=false){
 
-    $get_path_url = parse_url( G5_URL );
+    $get_path_url = parse_url(G5_URL);
 
     $base_path = isset($get_path_url['path']) ? $get_path_url['path'].'/' : '/';
 
@@ -294,6 +298,11 @@ function get_nginx_conf_rules($return_string=false){
     
     $rules[] = '#### '.G5_VERSION.' url rules BOF #####';
     $rules[] = 'if (!-e $request_filename){';
+
+    if( $add_rules = apply_replace('add_nginx_conf_rules', '', $get_path_url, $base_path, $return_string) ){
+        $rules[] = $add_rules;
+    }
+
     $rules[] = "rewrite ^{$base_path}content/([0-9a-zA-Z_]+)$ {$base_path}bbs/content.php?co_id=$1&rewrite=1 break;";
     $rules[] = "rewrite ^{$base_path}content/([^/]+)/$ {$base_path}bbs/content.php?co_seo_title=$1&rewrite=1 break;";
     $rules[] = "rewrite ^{$base_path}rss/([0-9a-zA-Z_]+)$ {$base_path}bbs/rss.php?bo_table=$1 break;";
@@ -309,7 +318,7 @@ function get_nginx_conf_rules($return_string=false){
 
 function get_mod_rewrite_rules($return_string=false){
 
-    $get_path_url = parse_url( G5_URL );
+    $get_path_url = parse_url(G5_URL);
 
     $base_path = isset($get_path_url['path']) ? $get_path_url['path'].'/' : '/';
 
@@ -321,6 +330,11 @@ function get_mod_rewrite_rules($return_string=false){
     $rules[] = 'RewriteBase '.$base_path;
     $rules[] = 'RewriteCond %{REQUEST_FILENAME} !-f';
     $rules[] = 'RewriteCond %{REQUEST_FILENAME} !-d';
+
+    if( $add_rules = apply_replace('add_mod_rewrite_rules', '', $get_path_url, $base_path, $return_string) ){
+        $rules[] = $add_rules;
+    }
+
     $rules[] = 'RewriteRule ^content/([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/content.php?co_id=$1&rewrite=1  [L]';
     $rules[] = 'RewriteRule ^content/([^/]+)/$  '.G5_BBS_DIR.'/content.php?co_seo_title=$1&rewrite=1      [QSA,L]';
     $rules[] = 'RewriteRule ^rss/([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/rss.php?bo_table=$1        [L]';
