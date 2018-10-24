@@ -219,7 +219,6 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
 
     if( $type === 'bbs' ){
         $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
-
         $row = sql_fetch($sql);
 
         $exists_title = $row['wr_seo_title'];
@@ -326,8 +325,9 @@ function get_mod_rewrite_rules($return_string=false){
     $rules[] = '<IfModule mod_rewrite.c>';
     $rules[] = 'RewriteEngine On';
     $rules[] = 'RewriteBase '.$base_path;
-    $rules[] = 'RewriteCond %{REQUEST_FILENAME} !-f';
-    $rules[] = 'RewriteCond %{REQUEST_FILENAME} !-d';
+    $rules[] = 'RewriteCond %{REQUEST_FILENAME} -f [OR]';
+    $rules[] = 'RewriteCond %{REQUEST_FILENAME} -d';
+    $rules[] = 'RewriteRule ^ - [L]';
 
     if( $add_rules = apply_replace('add_mod_rewrite_rules', '', $get_path_url, $base_path, $return_string) ){
         $rules[] = $add_rules;

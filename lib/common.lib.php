@@ -1523,6 +1523,15 @@ function sql_set_charset($charset, $link=null)
         mysql_query(" set names {$charset} ", $link);
 }
 
+function sql_data_seek($result, $offset=0)
+{
+    if ( ! $result ) return;
+
+    if(function_exists('mysqli_set_charset') && G5_MYSQLI_USE)
+        mysqli_data_seek($result, $offset);
+    else
+        mysql_data_seek($result, $offset);
+}
 
 // mysqli_query 와 mysqli_error 를 한꺼번에 처리
 // mysql connect resource 지정 - 명랑폐인님 제안
