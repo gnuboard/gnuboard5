@@ -86,7 +86,7 @@ while ($row = sql_fetch_array($result)) {
     
     if( !$row ){
         sql_query("ALTER TABLE `{$write_table}`
-                    ADD `wr_seo_title` varchar(255) NOT NULL DEFAULT '' AFTER `wr_content`,
+                    ADD `wr_seo_title` varchar(200) NOT NULL DEFAULT '' AFTER `wr_content`,
                     ADD INDEX `wr_seo_title` (`wr_seo_title`);
         ", false);
 
@@ -100,7 +100,7 @@ $row = sql_fetch($sql);
 
 if( !$row ){
     sql_query("ALTER TABLE `{$g5['content_table']}`
-                ADD `co_seo_title` varchar(255) NOT NULL DEFAULT '' AFTER `co_content`,
+                ADD `co_seo_title` varchar(200) NOT NULL DEFAULT '' AFTER `co_content`,
                 ADD INDEX `co_seo_title` (`co_seo_title`);
     ", false);
 
@@ -124,6 +124,8 @@ while ($row = sql_fetch_array($result)) {
     }
 
 }
+
+$is_check = apply_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
 ?>

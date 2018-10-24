@@ -221,8 +221,6 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
         $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
 
         $row = sql_fetch($sql);
-        
-        echo $sql;
 
         $exists_title = $row['wr_seo_title'];
 
@@ -234,7 +232,7 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
         $exists_title = $row['co_seo_title'];
 
     } else {
-        return $seo_title;
+        return apply_replace('exist_check_seo_title', $seo_title, $type, $write_table, $sql_id);
     }
 
     if ($exists_title)
@@ -246,7 +244,7 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
 function exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id=0){
     static $count = 0;
 
-    $seo_title_add = ($count > 0) ? utf8_strcut($seo_title, 255 - ($count+1), '')."-$count" : $seo_title;
+    $seo_title_add = ($count > 0) ? utf8_strcut($seo_title, 200 - ($count+1), '')."-$count" : $seo_title;
 
     if( ! exist_seo_url($type, $seo_title_add, $write_table, $sql_id) ){
         return $seo_title_add;
@@ -254,7 +252,7 @@ function exist_seo_title_recursive($type, $seo_title, $write_table, $sql_id=0){
     
     $count++;
 
-    if( $count > 253 ){
+    if( $count > 198 ){
         return $seo_title_add;
     }
 
