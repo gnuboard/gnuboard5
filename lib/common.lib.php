@@ -3423,7 +3423,7 @@ function is_use_email_certify(){
 
 function get_real_client_ip(){
 
-    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
+    if( isset($_SERVER['HTTP_X_FORWARDED_FOR']) && filter_var($_SERVER['HTTP_X_FORWARDED_FOR'], FILTER_VALIDATE_IP) )
         return $_SERVER['HTTP_X_FORWARDED_FOR'];
 
     return $_SERVER['REMOTE_ADDR'];
