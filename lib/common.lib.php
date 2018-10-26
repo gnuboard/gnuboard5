@@ -3423,10 +3423,13 @@ function is_use_email_certify(){
 
 function get_real_client_ip(){
 
-    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    $real_ip = $_SERVER['REMOTE_ADDR'];
 
-    return $_SERVER['REMOTE_ADDR'];
+    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $_SERVER['HTTP_X_FORWARDED_FOR']) ){
+        $real_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+
+    return preg_replace('/[^0-9.]/', '', $real_ip);
 }
 
 function get_call_func_cache($func, $args=array()){
