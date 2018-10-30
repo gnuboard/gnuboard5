@@ -154,6 +154,8 @@ function alert($msg='', $url='', $error=true, $post=false)
 {
     global $g5, $config, $member;
     global $is_admin;
+    
+    start_event('alert', $msg, $url, $error, $post);
 
     $msg = $msg ? strip_tags($msg, '<br>') : '올바른 방법으로 이용해 주십시오.';
 
@@ -171,6 +173,8 @@ function alert_close($msg, $error=true)
 {
     global $g5;
     
+    start_event('alert_close', $msg, $error);
+
     $msg = strip_tags($msg, '<br>');
 
     $header = '';
@@ -247,7 +251,7 @@ function url_auto_link($str)
     $str = preg_replace("/\t_gt_\t/", "&gt;", $str);
     */
 
-    return $str;
+    return apply_replace('url_auto_link', $str);
 }
 
 
@@ -3410,6 +3414,20 @@ function check_vaild_callback($callback){
    }
 }
 
+function is_url_base64_encoded($s)
+{
+    $s_encode = strtr($s, '._-', '+/=');
+
+    if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s_encode)) return false;
+
+    $decoded = base64_decode($s_encode, true);
+    if(false === $decoded) return false;
+
+    if(base64_encode($decoded) != $s_encode) return false;
+
+    return true;
+}
+
 // 문자열 암복호화
 class str_encrypt
 {
@@ -3494,7 +3512,7 @@ function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_
         if( isset($member_cache[$mb_id]) ){
             $src = $member_cache[$mb_id];
         } else {
-            $member_img = G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_id.'.gif';
+            $member_img = G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.get_mb_icon_name($mb_id).'.gif';
             if (is_file($member_img)) {
                 $member_cache[$mb_id] = $src = str_replace(G5_DATA_PATH, G5_DATA_URL, $member_img);
             }

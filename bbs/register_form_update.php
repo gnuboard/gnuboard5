@@ -74,6 +74,8 @@ $mb_addr2       = clean_xss_tags($mb_addr2);
 $mb_addr3       = clean_xss_tags($mb_addr3);
 $mb_addr_jibeon = preg_match("/^(N|R)$/", $mb_addr_jibeon) ? $mb_addr_jibeon : '';
 
+start_event('register_form_update_before', $mb_id, $w);
+
 if ($w == '' || $w == 'u') {
 
     if ($msg = empty_mb_id($mb_id))         alert($msg, "", true, true); // alert($msg, $url, $error, $post);
@@ -145,6 +147,8 @@ if ($w == '' || $w == 'u') {
         // 회원정보의 메일을 이전 메일로 옮기고 아래에서 비교함
         $old_email = $member['mb_email'];
     }
+
+    start_event('register_form_update_valid', $w, $mb_id, $mb_nick, $mb_email);
 
     if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
     if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
@@ -265,8 +269,12 @@ if ($w == '') {
         include_once ('./register_form_update_mail1.php');
         $content = ob_get_contents();
         ob_end_clean();
+        
+        $content = apply_replace('register_form_update_mail_mb_content', $content, $mb_id);
 
         mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+
+        start_event('register_form_update_send_mb_mail', $config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content);
 
         // 메일인증을 사용하는 경우 가입메일에 인증 url이 있으므로 인증메일을 다시 발송되지 않도록 함
         if($config['cf_use_email_certify'])
@@ -275,14 +283,18 @@ if ($w == '') {
 
     // 최고관리자님께 메일 발송
     if ($config['cf_email_mb_super_admin']) {
-        $subject = '['.$config['cf_title'].'] '.$mb_nick .' 님께서 회원으로 가입하셨습니다.';
+        $subject = apply_replace('register_form_update_mail_admin_subject', '['.$config['cf_title'].'] '.$mb_nick .' 님께서 회원으로 가입하셨습니다.', $mb_id, $mb_nick);
 
         ob_start();
         include_once ('./register_form_update_mail2.php');
         $content = ob_get_contents();
         ob_end_clean();
+        
+        $content = apply_replace('register_form_update_mail_admin_content', $content, $mb_id);
 
         mailer($mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content, 1);
+
+        start_event('register_form_update_send_admin_mail', $mb_nick, $mb_email, $config['cf_admin_email'], $subject, $content);
     }
 
     // 메일인증 사용하지 않는 경우에만 로그인
@@ -484,8 +496,12 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     include_once ('./register_form_update_mail3.php');
     $content = ob_get_contents();
     ob_end_clean();
+    
+    $content = apply_replace('register_form_update_mail_certify_content', $content, $mb_id);
 
     mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+
+    start_event('register_form_update_send_certify_mail', $config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content);
 }
 
 
@@ -500,6 +516,8 @@ unset($_SESSION['ss_cert_adult']);
 
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
+
+start_event('register_form_update_after', $mb_id, $w);
 
 if ($w == '') {
     goto_url(G5_HTTP_BBS_URL.'/register_result.php');

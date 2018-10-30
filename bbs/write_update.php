@@ -127,6 +127,8 @@ for ($i=1; $i<=10; $i++) {
 
 @include_once($board_skin_path.'/write_update.head.skin.php');
 
+start_event('write_update_before', $board, $wr_id, $w, $qstr);
+
 if ($w == '' || $w == 'u') {
 
     // 외부에서 글을 등록할 수 있는 버그가 존재하므로 공지는 관리자만 등록이 가능해야 함
@@ -607,6 +609,8 @@ for ($i=0; $i<count($upload); $i++)
                          bf_type = '{$upload[$i]['image']['2']}',
                          bf_datetime = '".G5_TIME_YMDHIS."' ";
         sql_query($sql);
+
+        start_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
     }
 }
 

@@ -802,6 +802,7 @@ CREATE TABLE IF NOT EXISTS `g5_content` (
   `co_html` tinyint(4) NOT NULL DEFAULT '0',
   `co_subject` varchar(255) NOT NULL DEFAULT '',
   `co_content` longtext NOT NULL,
+  `co_seo_title` varchar(255) NOT NULL DEFAULT '',
   `co_mobile_content` longtext NOT NULL,
   `co_skin` varchar(255) NOT NULL DEFAULT '',
   `co_mobile_skin` varchar(255) NOT NULL DEFAULT '',
@@ -809,7 +810,8 @@ CREATE TABLE IF NOT EXISTS `g5_content` (
   `co_hit` int(11) NOT NULL DEFAULT '0',
   `co_include_head` varchar(255) NOT NULL,
   `co_include_tail` varchar(255) NOT NULL,
-  PRIMARY KEY (`co_id`)
+  PRIMARY KEY (`co_id`),
+  KEY `co_seo_title` (`co_seo_title`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

@@ -29,5 +29,7 @@ $sql = " delete from {$g5['memo_table']}
             and (me_recv_mb_id = '{$member['mb_id']}' or me_send_mb_id = '{$member['mb_id']}') ";
 sql_query($sql);
 
+start_event('memo_delete', $me_id, $row);
+
 goto_url('./memo.php?kind='.$kind);
 ?>

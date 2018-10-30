@@ -277,6 +277,73 @@ function get_db_create_replace($sql_str){
     return $sql_str;
 }
 
+function get_class_encrypt(){
+    static $cache;
+
+    if( $cache && is_object($obj) ){
+        return $cache;
+    }
+
+    $cache = apply_replace('get_class_encrypt', new str_encrypt());
+
+    return $cache;
+}
+
+function get_string_encrypt($str){
+
+    $new = get_class_encrypt();
+
+    $encrypt_str = $new->encrypt($str);
+
+    return $encrypt_str;
+}
+
+function get_bool_encrypt_encoded($str){
+    return apply_replace('get_bool_encrypt_encoded', is_url_base64_encoded($str), $str);
+}
+
+function get_string_check_decrypt($str, $field=''){
+
+    if( $field === 'mb_id' ){
+        $pattern = '/[^0-9a-z_]+/i';
+    } else {
+        $pattern = '/[^a-zA-Z0-9\/:@\.\+-s]/';
+    }
+
+    if( get_bool_encrypt_encoded($str) ){
+
+        if( $field === 'mb_id' ){
+            return preg_replace($pattern, '', get_string_decrypt($str));
+        }
+
+        return get_string_decrypt($str);
+    }
+
+    return preg_replace($pattern, '', strip_tags($str));
+}
+
+function get_string_decrypt($str){
+
+    $new = get_class_encrypt();
+
+    $decrypt_str = $new->decrypt($str);
+
+    return $decrypt_str;
+}
+
+function get_member_by_hash($mb_id='', $mb_hash=''){
+
+    global $is_admin;
+
+    if( $is_admin && $mb_id ){
+        return $mb_id;
+    } else if ( $mb_hash ){
+        return get_string_check_decrypt($mb_hash, 'mb_id');
+    }
+
+    return '';
+}
+
 function get_permission_debug_show(){
     global $member;
 
@@ -300,6 +367,15 @@ function get_check_mod_rewrite(){
     return $mod_rewrite;
 }
 
+function get_mb_icon_name($mb_id){
+
+    if( $icon_name = apply_replace('get_mb_icon_name', '', $mb_id) ){
+        return $icon_name;
+    }
+
+    return md5($mb_id);
+}
+
 // 생성되면 안되는 게시판명
 function get_bo_table_banned_word(){
 
@@ -310,6 +386,33 @@ function get_bo_table_banned_word(){
     }
 
     return apply_replace('get_bo_table_banned_word', $folders);
+}
+
+function get_add_mbhash_params($qstr, $board, $wr_id){
+
+    if( isset($_GET['mb_hash']) && is_url_base64_encoded($_GET['mb_hash']) ){
+        $qstr .= '&amp;mb_hash=' . strip_tags($_GET['mb_hash']);
+    }
+
+    return $qstr;
+}
+
+function get_board_sfl_select_options($sfl){
+
+    global $is_admin;
+
+    $str = '';
+    $str .= '<option value="wr_subject" '.get_selected($sfl, 'wr_subject', true).'>제목</option>';
+    $str .= '<option value="wr_content" '.get_selected($sfl, 'wr_content').'>내용</option>';
+    $str .= '<option value="wr_subject||wr_content" '.get_selected($sfl, 'wr_subject||wr_content').'>제목+내용</option>';
+    if ( $is_admin ){
+        $str .= '<option value="mb_id,1" '.get_selected($sfl, 'mb_id,1').'>회원아이디</option>';
+        $str .= '<option value="mb_id,0" '.get_selected($sfl, 'mb_id,0').'>회원아이디(코)</option>';
+    }
+    $str .= '<option value="wr_name,1" '.get_selected($sfl, 'wr_name,1').'>글쓴이</option>';
+    $str .= '<option value="wr_name,0" '.get_selected($sfl, 'wr_name,0').'>글쓴이(코)</option>';
+
+    return apply_replace('get_board_sfl_select_options', $str, $sfl);
 }
 
 // 읽지 않은 메모 갯수 반환

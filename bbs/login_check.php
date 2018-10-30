@@ -118,5 +118,7 @@ if(function_exists('social_login_success_after')){
     social_login_session_clear(1);
 }
 
+start_event('member_login_check', $mb, $link);
+
 goto_url($link);
 ?>

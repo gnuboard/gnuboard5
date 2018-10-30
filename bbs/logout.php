@@ -34,5 +34,7 @@ if ($url) {
     $link = G5_URL;
 }
 
+start_event('member_logout', $link);
+
 goto_url($link);
 ?>

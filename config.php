@@ -36,7 +36,8 @@ define('G5_DEBUG', true);
 define('G5_DB_ENGINE', '');
 
 // Set Databse table default Charset
-define('G5_DB_CHARSET', 'utf8mb4');
+// utf8, utf8mb4 등 지정 가능 기본값은 utf8
+define('G5_DB_CHARSET', 'utf8');
 
 /*
 www.sir.kr 과 sir.kr 도메인은 서로 다른 도메인으로 인식합니다. 쿠키를 공유하려면 .sir.kr 과 같이 입력하세요.
