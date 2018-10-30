@@ -117,7 +117,7 @@ include_once('./admin.head.php');
             <label for="gr_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
             <input type="text" name="gr_<?php echo $i ?>_subj" value="<?php echo get_text($group['gr_'.$i.'_subj']) ?>" id="gr_<?php echo $i ?>_subj" class="frm_input">
             <label for="gr_<?php echo $i ?>">여분필드 <?php echo $i ?> 내용</label>
-            <input type="text" name="gr_<?php echo $i ?>" value="<?php echo $gr['gr_'.$i] ?>" id="gr_<?php echo $i ?>" class="frm_input">
+            <input type="text" name="gr_<?php echo $i ?>" value="<?php echo get_sanitize_input($gr['gr_'.$i]); ?>" id="gr_<?php echo $i ?>" class="frm_input">
         </td>
     </tr>
     <?php } ?>
