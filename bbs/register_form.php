@@ -76,12 +76,14 @@ if ($w == "") {
 
     if ($_POST['mb_password']) {
         // 수정된 정보를 업데이트후 되돌아 온것이라면 비밀번호가 암호화 된채로 넘어온것임
-        if ($_POST['is_update'])
+        if ($_POST['is_update']) {
             $tmp_password = $_POST['mb_password'];
-        else
-            $tmp_password = get_encrypt_string($_POST['mb_password']);
+            $pass_check = ($member['mb_password'] === $tmp_password);
+        } else {
+            $pass_check = check_password($_POST['mb_password'], $member['mb_password']);
+        }
 
-        if ($member['mb_password'] != $tmp_password)
+        if (!$pass_check)
             alert('비밀번호가 틀립니다.');
     }
 

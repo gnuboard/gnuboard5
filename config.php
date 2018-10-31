@@ -183,6 +183,7 @@ define('G5_SMTP_PORT', '25');
 // 암호화 함수 지정
 // 사이트 운영 중 설정을 변경하면 로그인이 안되는 등의 문제가 발생합니다.
 // 5.4 버전 이전에는 sql_password 이 사용됨, 5.4 버전부터 기본이 create_hash 로 변경
+//define('G5_STRING_ENCRYPT_FUNCTION', 'sql_password');
 define('G5_STRING_ENCRYPT_FUNCTION', 'create_hash');
 define('G5_MYSQL_PASSWORD_LENGTH', 41);         // mysql password length 41, old_password 의 경우에는 16
 
