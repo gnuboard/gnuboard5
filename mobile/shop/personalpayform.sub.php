@@ -49,7 +49,7 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
         </div>
 
         <?php
-        $multi_settle == 0;
+        $multi_settle = 0;
         $checked = '';
 
         $escrow_title = "";

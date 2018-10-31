@@ -58,6 +58,8 @@ $util = new INIStdPayUtil();
 
 $timestamp = $util->getTimestamp();   // util에 의해서 자동생성
 
+// 이니시스에서 진행하는 무이자 이벤트 외 별도의 카드 무이자 설정이 필요한 경우 이니시스의 승인이 필요합니다.
+// 코드는 따로 입력해야 합니다. 예) $cardNoInterestQuota = '51-2:3:5,14-5:6,34-3:4';
 $cardNoInterestQuota = '';  // 카드 무이자 여부 설정(가맹점에서 직접 설정)
 $cardQuotaBase = '2:3:4:5:6:7:8:9:10:11:12';  // 가맹점에서 사용할 할부 개월수 설정
 

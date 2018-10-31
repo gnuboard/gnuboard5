@@ -96,6 +96,10 @@ $PAY_METHOD = array(
 //신용카드 포인트 결제에 관한 옵션 ( 신청해야 함 )
 $inicis_cardpoint = $default['de_inicis_cartpoint_use'] ? '&cp_yn=Y' : '';
 
+// 신용카드 상점 부담 무이자 옵션
+// 예) BC 2,3,6개월, 국민 3,6개월, 삼성 6,9개월 무이자 : 11-2:3:6^06-3:6^12-3:6:4
+//$inicis_cardpoint .= '';        // &merc_noint=Y&noint_quota=카드사코드-개월:개월^추가카드사코드-개월:개월:개월 형식으로 설정
+
 $noti_url   = G5_MSHOP_URL.'/inicis/settle_common.php';
 $next_url   = G5_MSHOP_URL.'/inicis/pay_approval.php';
 $return_url = G5_MSHOP_URL.'/inicis/pay_return.php?oid=';

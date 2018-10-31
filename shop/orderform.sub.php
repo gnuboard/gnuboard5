@@ -548,7 +548,7 @@ if($is_kakaopay_use) {
                 if (!$default['de_card_point'])
                     echo '<p id="sod_frm_pt_alert"><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
 
-                $multi_settle == 0;
+                $multi_settle = 0;
                 $checked = '';
 
                 $escrow_title = "";

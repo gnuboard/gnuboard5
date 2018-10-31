@@ -53,7 +53,7 @@ require_once(G5_SHOP_PATH.'/'.$default['de_pg_service'].'/orderform.1.php');
     <div class="sod_right" id="personal_pay">
         <h2>결제수단</h2>
         <?php
-        $multi_settle == 0;
+        $multi_settle = 0;
         $checked = '';
 
         $escrow_title = "";
