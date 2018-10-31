@@ -43,8 +43,8 @@ switch ($w) {
 
 include_once(G5_PATH.'/head.sub.php');
 
-//if ($board['bo_include_head']) { @include ($board['bo_include_head']); }
-//if ($board['bo_content_head']) { echo stripslashes($board['bo_content_head']); }
+//if ($board['bo_include_head'] && is_include_path_check($board['bo_content_head'])) { @include ($board['bo_include_head']); }
+//if ($board['bo_content_head']) { echo html_purifier(stripslashes($board['bo_content_head'])); }
 
 /* 비밀글의 제목을 가져옴 지운아빠 2013-01-29 */
 $sql = " select wr_subject from {$write_table}
@@ -57,8 +57,8 @@ $g5['title'] = get_text($row['wr_subject']);
 
 include_once($member_skin_path.'/password.skin.php');
 
-//if ($board['bo_content_tail']) { echo stripslashes($board['bo_content_tail']); }
-//if ($board['bo_include_tail']) { @include ($board['bo_include_tail']); }
+//if ($board['bo_content_tail']) { echo html_purifier(stripslashes($board['bo_content_tail'])); }
+//if ($board['bo_include_tail'] && is_include_path_check($board['bo_content_tail'])) { @include ($board['bo_include_tail']); }
 
 include_once(G5_PATH.'/tail.sub.php');
 ?>
