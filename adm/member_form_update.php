@@ -116,13 +116,13 @@ else if ($w == 'u')
         alert('이미 존재하는 이메일입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
 
     $mb_dir = substr($mb_id,0,2);
+    $mb_icon_img = get_mb_icon_name($mb_id).'.gif';
 
     // 회원 아이콘 삭제
     if ($del_mb_icon)
-        @unlink(G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif');
+        @unlink(G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_icon_img);
 
     $image_regex = "/(\.(gif|jpe?g|png))$/i";
-    $mb_icon_img = $mb_id.'.gif';
 
     // 아이콘 업로드
     if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {

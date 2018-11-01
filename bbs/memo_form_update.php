@@ -9,16 +9,21 @@ if (!chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
-$recv_list = explode(',', trim($_POST['me_recv_mb_id']));
+$recv_list = explode(',', trim($_POST['me_recv_mb_nicks']));
 $str_nick_list = '';
 $msg = '';
 $error_list  = array();
-$member_list = array();
+$member_list = array('id'=>array(), 'nick'=>array());
 
 start_event('memo_form_update_before', $recv_list);
 
 for ($i=0; $i<count($recv_list); $i++) {
-    $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list[$i]}' ");
+
+    $recv_nick = preg_replace('/\s+/', '', get_search_string($recv_list[$i]));
+    
+    $sql = " select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_nick = '".sql_real_escape_string($recv_nick)."' ";
+
+    $row = sql_fetch($sql);
     if ($row) {
         if ($is_admin || ($row['mb_open'] && (!$row['mb_leave_date'] || !$row['mb_intercept_date']))) {
             $member_list['id'][]   = $row['mb_id'];
@@ -43,6 +48,10 @@ $error_msg = implode(",", $error_list);
 
 if ($error_msg && !$is_admin)
     alert("회원아이디 '{$error_msg}' 은(는) 존재(또는 정보공개)하지 않는 회원아이디 이거나 탈퇴, 접근차단된 회원아이디 입니다.\\n쪽지를 발송하지 않았습니다.");
+
+if (! count($member_list['id'])){
+    alert('해당 회원이 존재하지 않습니다.');
+}
 
 if (!$is_admin) {
     if (count($member_list['id'])) {
@@ -88,6 +97,8 @@ if ($member_list) {
     $redirect_url = G5_HTTP_BBS_URL."/memo_form.php";
     
     start_event('memo_form_update_failed', $member_list, $redirect_url);
+    
+    exit;
 
     alert("회원아이디 오류 같습니다.", $redirect_url, false);
 }

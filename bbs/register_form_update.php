@@ -368,7 +368,7 @@ $mb_dir = G5_DATA_PATH.'/member/'.substr($mb_id,0,2);
 
 // 아이콘 삭제
 if (isset($_POST['del_mb_icon'])) {
-    @unlink($mb_dir.'/'.$mb_id.'.gif');
+    @unlink($mb_dir.'/'.get_mb_icon_name($mb_id).'.gif');
 }
 
 $msg = "";
@@ -376,7 +376,7 @@ $msg = "";
 // 아이콘 업로드
 $mb_icon = '';
 $image_regex = "/(\.(gif|jpe?g|png))$/i";
-$mb_icon_img = $mb_id.'.gif';
+$mb_icon_img = get_mb_icon_name($mb_id).'.gif';
 
 if (isset($_FILES['mb_icon']) && is_uploaded_file($_FILES['mb_icon']['tmp_name'])) {
     if (preg_match($image_regex, $_FILES['mb_icon']['name'])) {

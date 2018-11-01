@@ -598,7 +598,7 @@ function html_purifier($html)
 
 
 // 검색 구문을 얻는다.
-function get_sql_search($search_ca_name, $search_field, $search_text, $search_operator='and')
+function get_sql_search($search_ca_name, $search_field, $search_text, $search_operator='and', $mb_hashkey='')
 {
     global $g5;
 
@@ -609,7 +609,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     $search_text = strip_tags(($search_text));
     $search_text = trim(stripslashes($search_text));
 
-    if (!$search_text && $search_text !== '0') {
+    if (!$search_text && $search_text !== '0' && !$mb_hashkey) {
         if ($search_ca_name) {
             return $str;
         } else {
@@ -657,6 +657,11 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
             $str .= $op2;
             switch ($field[$k]) {
                 case "mb_id" :
+                    if( $is_admin ){
+                        $str .= " $field[$k] = '$s[$i]' ";
+                        $mb_hashkey = '';
+                    }
+                    break;
                 case "wr_name" :
                     $str .= " $field[$k] = '$s[$i]' ";
                     break;
@@ -687,6 +692,12 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
 
         $op1 = " $search_operator ";
     }
+
+    if ($mb_hashkey){
+        $str .= (preg_match('/[a-z]/i', $str) ? " $search_operator" : '' )." mb_id = '".get_string_check_decrypt($mb_hashkey, 'mb_id')."' ";
+        $not_comment = 1;
+    }
+
     $str .= " ) ";
     if ($not_comment)
         $str .= " and wr_is_comment = '0' ";
@@ -844,12 +855,19 @@ function is_admin($mb_id)
 {
     global $config, $group, $board;
 
-    if (!$mb_id) return;
+    if (!$mb_id) return '';
 
-    if ($config['cf_admin'] == $mb_id) return 'super';
-    if (isset($group['gr_admin']) && ($group['gr_admin'] == $mb_id)) return 'group';
-    if (isset($board['bo_admin']) && ($board['bo_admin'] == $mb_id)) return 'board';
-    return '';
+    $is_authority = '';
+
+    if ($config['cf_admin'] == $mb_id){
+        $is_authority = 'super';
+    } else if (isset($group['gr_admin']) && ($group['gr_admin'] == $mb_id)){
+        $is_authority = 'group';
+    } else if (isset($board['bo_admin']) && ($board['bo_admin'] == $mb_id)){
+        $is_authority = 'board';
+    }
+
+    return apply_replace('is_admin', $is_authority, $mb_id);
 }
 
 
@@ -1263,8 +1281,7 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     global $g5;
     global $bo_table, $sca, $is_admin, $member;
 
-    $email_enc = new str_encrypt();
-    $email = $email_enc->encrypt($email);
+    $email = get_string_encrypt($email);
     $homepage = set_http(clean_xss_tags($homepage));
 
     $name     = get_text($name, 0, true);
@@ -1272,18 +1289,27 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $homepage = get_text($homepage);
 
     $tmp_name = "";
+    $en_mb_id = $mb_id;
+
+    if( $is_admin ){
+        $mb_params = 'mb_id='.$mb_id;
+    } else {
+        $en_mb_id = get_string_encrypt($mb_id);
+        $mb_params = 'mb_hash='.$en_mb_id;
+    }
+
     if ($mb_id) {
         //$tmp_name = "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" rel="nofollow" target=\"_blank\" onclick=\"return false;\">$name</a>";
         $tmp_name = '<a href="'.G5_BBS_URL.'/profile.php?mb_id='.$mb_id.'" class="sv_member" title="'.$name.' 자기소개" target="_blank" rel="nofollow" onclick="return false;">';
 
         if ($config['cf_use_member_icon']) {
             $mb_dir = substr($mb_id,0,2);
-            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
+            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb_id).'.gif';
 
             if (file_exists($icon_file)) {
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
-                $icon_file_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.$mb_id.'.gif';
+                $icon_file_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb_id).'.gif';
                 $tmp_name .= '<span class="profile_img"><img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt=""></span>';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
@@ -1316,21 +1342,26 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $str2 = "<span class=\"sv\">\n";
     if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
+        $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?".$mb_params."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
     if($email)
-        $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
+        $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?".$mb_params."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
     if($homepage)
         $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
     if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
+        $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?".$mb_params."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
     if($bo_table) {
-        if($mb_id)
-            $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$mb_id)."\">아이디로 검색</a>\n";
-        else
+        if($mb_id) {
+            if( $is_admin ){
+                $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$en_mb_id)."\">아이디로 검색</a>\n";
+            } else {
+                $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;".$mb_params)."\">아이디로 검색</a>\n";
+            }
+        } else {
             $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name)."\">이름으로 검색</a>\n";
+        }
     }
     if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\" class=\"link_new_page\" onclick=\"check_goto_new(this.href, event);\">전체게시물</a>\n";
+        $str2 .= "<a href=\"".G5_BBS_URL."/new.php?".$mb_params."\" class=\"link_new_page\" onclick=\"check_goto_new(this.href, event);\">전체게시물</a>\n";
     if($is_admin == "super" && $mb_id) {
         $str2 .= "<a href=\"".G5_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
         $str2 .= "<a href=\"".G5_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";

@@ -10,9 +10,18 @@ if (!$member['mb_open'] && $is_admin != 'super' && $member['mb_id'] != $mb_id)
 
 $content = "";
 // 탈퇴한 회원에게 쪽지 보낼 수 없음
-if ($me_recv_mb_id)
+
+$mb_id = isset($mb_id) ? $mb_id : '';
+$mb_hash = isset($mb_hash) ? $mb_hash : '';
+$me_recv_mb_nicks = '';
+
+if ($mb_id || $mb_hash)
 {
+    $me_recv_mb_id = get_search_string(get_member_by_hash($mb_id, $mb_hash));
+
     $mb = get_member($me_recv_mb_id);
+    $me_recv_mb_nicks = $mb['mb_nick'];
+
     if (!$mb['mb_id'])
         alert_close('회원정보가 존재하지 않습니다.\\n\\n탈퇴하였을 수 있습니다.');
 

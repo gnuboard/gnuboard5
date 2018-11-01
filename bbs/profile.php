@@ -7,7 +7,11 @@ if (!$member['mb_id'])
 if (!$member['mb_open'] && $is_admin != 'super' && $member['mb_id'] != $mb_id)
     alert_close('자신의 정보를 공개하지 않으면 다른분의 정보를 조회할 수 없습니다.\\n\\n정보공개 설정은 회원정보수정에서 하실 수 있습니다.');
 
-$mb = get_member($mb_id);
+$mb_id = isset($mb_id) ? $mb_id : '';
+$mb_hash = isset($mb_hash) ? $mb_hash : '';
+
+$mb = get_member(get_search_string(get_member_by_hash($mb_id, $mb_hash)));
+
 if (!$mb['mb_id'])
     alert_close('회원정보가 존재하지 않습니다.\\n\\n탈퇴하였을 수 있습니다.');
 

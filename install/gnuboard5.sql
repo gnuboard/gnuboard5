@@ -515,11 +515,16 @@ CREATE TABLE IF NOT EXISTS `g5_member` (
 
 DROP TABLE IF EXISTS `g5_memo`;
 CREATE TABLE IF NOT EXISTS `g5_memo` (
-  `me_id` int(11) NOT NULL default '0',
+  `me_id` INT(11) NOT NULL AUTO_INCREMENT,
   `me_recv_mb_id` varchar(20) NOT NULL default '',
   `me_send_mb_id` varchar(20) NOT NULL default '',
   `me_send_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
   `me_read_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  `me_memo` text NOT NULL,
+  `me_send_id` INT(11) NOT NULL DEFAULT '0',
+  `me_type` ENUM('send','receive') NOT NULL DEFAULT 'receive',
+  `me_readed` TINYINT(4) NOT NULL DEFAULT '0',
+  `me_send_ip` VARCHAR(100) NOT NULL DEFAULT '',
   `me_memo` text NOT NULL,
   PRIMARY KEY  (`me_id`),
   KEY `me_recv_mb_id` (`me_recv_mb_id`)

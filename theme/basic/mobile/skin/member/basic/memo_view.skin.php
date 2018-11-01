@@ -43,7 +43,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </article>
 
         <div class="win_btn">
-            <?php if ($kind == 'recv') { ?><a href="./memo_form.php?me_recv_mb_id=<?php echo $mb['mb_id'] ?>&amp;me_id=<?php echo $memo['me_id'] ?>" class="btn_submit">답장</a><?php } ?>
+            <?php if ($kind == 'recv') { ?><a href="./memo_form.php?mb_hash=<?php echo get_string_encrypt($mb['mb_id']); ?>&amp;me_id=<?php echo $memo['me_id'] ?>" class="btn_submit">답장</a><?php } ?>
             <?php if($prev_link) { ?>
             <a href="<?php echo $prev_link ?>" class="btn_b03 btn">이전쪽지</a>
             <?php } ?>
