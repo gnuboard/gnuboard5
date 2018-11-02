@@ -154,7 +154,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </div>
 
     <div class="btn_top top write_div">
-        <a href="./board.php?bo_table=<?php echo $bo_table ?>" class="btn_cancel">취소</a>
+        <a href="<?php echo get_pretty_url($bo_table); ?>" class="btn_cancel">취소</a>
         <input type="submit" value="작성완료" id="btn_submit" class="btn_submit" accesskey="s">
     </div>
     </form>
