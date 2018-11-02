@@ -598,7 +598,7 @@ function html_purifier($html)
 
 
 // 검색 구문을 얻는다.
-function get_sql_search($search_ca_name, $search_field, $search_text, $search_operator='and', $mb_hashkey='')
+function get_sql_search($search_ca_name, $search_field, $search_text, $search_operator='and')
 {
     global $g5;
 
@@ -609,7 +609,7 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
     $search_text = strip_tags(($search_text));
     $search_text = trim(stripslashes($search_text));
 
-    if (!$search_text && $search_text !== '0' && !$mb_hashkey) {
+    if (!$search_text && $search_text !== '0') {
         if ($search_ca_name) {
             return $str;
         } else {
@@ -657,11 +657,6 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
             $str .= $op2;
             switch ($field[$k]) {
                 case "mb_id" :
-                    if( $is_admin ){
-                        $str .= " $field[$k] = '$s[$i]' ";
-                        $mb_hashkey = '';
-                    }
-                    break;
                 case "wr_name" :
                     $str .= " $field[$k] = '$s[$i]' ";
                     break;
@@ -692,12 +687,6 @@ function get_sql_search($search_ca_name, $search_field, $search_text, $search_op
 
         $op1 = " $search_operator ";
     }
-
-    if ($mb_hashkey){
-        $str .= (preg_match('/[a-z]/i', $str) ? " $search_operator" : '' )." mb_id = '".get_string_check_decrypt($mb_hashkey, 'mb_id')."' ";
-        $not_comment = 1;
-    }
-
     $str .= " ) ";
     if ($not_comment)
         $str .= " and wr_is_comment = '0' ";
@@ -1291,13 +1280,6 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $tmp_name = "";
     $en_mb_id = $mb_id;
 
-    if( $is_admin ){
-        $mb_params = 'mb_id='.$mb_id;
-    } else {
-        $en_mb_id = get_string_encrypt($mb_id);
-        $mb_params = 'mb_hash='.$en_mb_id;
-    }
-
     if ($mb_id) {
         //$tmp_name = "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" rel="nofollow" target=\"_blank\" onclick=\"return false;\">$name</a>";
         $tmp_name = '<a href="'.G5_BBS_URL.'/profile.php?mb_id='.$mb_id.'" class="sv_member" title="'.$name.' 자기소개" target="_blank" rel="nofollow" onclick="return false;">';
@@ -1342,26 +1324,22 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
 
     $str2 = "<span class=\"sv\">\n";
     if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?".$mb_params."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
+        $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
     if($email)
-        $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?".$mb_params."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
+        $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
     if($homepage)
         $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
     if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?".$mb_params."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
+        $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
     if($bo_table) {
         if($mb_id) {
-            if( $is_admin ){
-                $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$en_mb_id)."\">아이디로 검색</a>\n";
-            } else {
-                $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;".$mb_params)."\">아이디로 검색</a>\n";
-            }
+            $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$en_mb_id)."\">아이디로 검색</a>\n";
         } else {
             $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=wr_name,1&amp;stx=".$name)."\">이름으로 검색</a>\n";
         }
     }
     if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/new.php?".$mb_params."\" class=\"link_new_page\" onclick=\"check_goto_new(this.href, event);\">전체게시물</a>\n";
+        $str2 .= "<a href=\"".G5_BBS_URL."/new.php?mb_id=".$mb_id."\" class=\"link_new_page\" onclick=\"check_goto_new(this.href, event);\">전체게시물</a>\n";
     if($is_admin == "super" && $mb_id) {
         $str2 .= "<a href=\"".G5_ADMIN_URL."/member_form.php?w=u&amp;mb_id=".$mb_id."\" target=\"_blank\">회원정보변경</a>\n";
         $str2 .= "<a href=\"".G5_ADMIN_URL."/point_list.php?sfl=mb_id&amp;stx=".$mb_id."\" target=\"_blank\">포인트내역</a>\n";
@@ -3443,20 +3421,6 @@ function check_vaild_callback($callback){
    } else {
              return true;
    }
-}
-
-function is_url_base64_encoded($s)
-{
-    $s_encode = strtr($s, '._-', '+/=');
-
-    if (!preg_match('/^[a-zA-Z0-9\/\r\n+]*={0,2}$/', $s_encode)) return false;
-
-    $decoded = base64_decode($s_encode, true);
-    if(false === $decoded) return false;
-
-    if(base64_encode($decoded) != $s_encode) return false;
-
-    return true;
 }
 
 // 문자열 암복호화

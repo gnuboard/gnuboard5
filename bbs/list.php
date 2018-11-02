@@ -36,9 +36,9 @@ $stx = trim($stx);
 //검색인지 아닌지 구분하는 변수 초기화
 $is_search_bbs = false;
 
-if ($sca || $stx || $mb_hash || $stx === '0') {     //검색이면
+if ($sca || $stx || $stx === '0') {     //검색이면
     $is_search_bbs = true;      //검색구분변수 true 지정
-    $sql_search = get_sql_search($sca, $sfl, $stx, $sop, $mb_hash);
+    $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
 
     // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
     $sql = " select MIN(wr_num) as min_wr_num from {$write_table} ";
@@ -201,10 +201,6 @@ if($page_rows > 0) {
 }
 
 g5_latest_cache_data($board['bo_table'], $list);
-
-if( $mb_hash ){
-    $qstr.="&amp;mb_hash=$mb_hash";
-}
 
 $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
 

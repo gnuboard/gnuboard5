@@ -9,7 +9,7 @@ if (!chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
-$recv_list = explode(',', trim($_POST['me_recv_mb_nicks']));
+$recv_list = explode(',', trim($_POST['me_recv_mb_id']));
 $str_nick_list = '';
 $msg = '';
 $error_list  = array();
@@ -18,12 +18,7 @@ $member_list = array('id'=>array(), 'nick'=>array());
 start_event('memo_form_update_before', $recv_list);
 
 for ($i=0; $i<count($recv_list); $i++) {
-
-    $recv_nick = preg_replace('/\s+/', '', get_search_string($recv_list[$i]));
-    
-    $sql = " select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_nick = '".sql_real_escape_string($recv_nick)."' ";
-
-    $row = sql_fetch($sql);
+    $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list[$i]}' ");
     if ($row) {
         if ($is_admin || ($row['mb_open'] && (!$row['mb_leave_date'] || !$row['mb_intercept_date']))) {
             $member_list['id'][]   = $row['mb_id'];

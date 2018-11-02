@@ -20,34 +20,12 @@ else if ($view == "c")
 else
     $view = '';
 
-if(isset($mb_nick) && $mb_nick){    // 닉네임으로 요청한 경우
-    $mb_nick = get_search_string(strip_tags($mb_nick));
+$mb_id = isset($_GET['mb_id']) ? ($_GET['mb_id']) : '';
+$mb_id = substr(preg_replace('#[^a-z0-9_]#i', '', $mb_id), 0, 20);
 
-    $sql = "select mb_id from `{$g5['member_table']}` where mb_nick = '".sql_real_escape_string($mb_nick)."' ";
-    $mb = sql_fetch($sql);
-
-    if( $mb['mb_id'] ){
-        $mb_hash = get_string_encrypt($mb['mb_id']);
-    } else {
-        $sql_common .= " and 1 = 0 ";
-    }
+if ($mb_id) {
+    $sql_common .= " and a.mb_id = '{$mb_id}' ";
 }
-
-$mb_id = isset($_GET['mb_id']) ? substr(preg_replace('#[^a-z0-9_]#i', '', $_GET['mb_id']), 0, 20) : '';
-$mb_hash = isset($mb_hash) ? $mb_hash : '';
-$mb_nick = isset($mb_nick) ? $mb_nick : '';
-
-if ($is_admin && $mb_id) {
-    $sql_common .= " and a.mb_id = '".$mb_id."' ";
-} else if ($mb_hash){
-    $sql_common .= " and a.mb_id = '".get_string_check_decrypt($mb_hash, 'mb_id')."' ";
-
-    if ( ! $mb_nick ){
-        $mb = get_member( get_string_check_decrypt($mb_hash, 'mb_id') );
-        $mb_nick = $mb['mb_nick'];
-    }
-}
-
 $sql_order = " order by a.bn_id desc ";
 
 $sql = " select count(*) as cnt {$sql_common} ";
@@ -130,7 +108,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
     $list[$i]['wr_subject'] = $row2['wr_subject'];
 }
 
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;mb_hash=$mb_hash&amp;page=");
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "?gr_id=$gr_id&amp;view=$view&amp;mb_id=$mb_id&amp;page=");
 
 include_once($new_skin_path.'/new.skin.php');
 

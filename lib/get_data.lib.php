@@ -298,30 +298,6 @@ function get_string_encrypt($str){
     return $encrypt_str;
 }
 
-function get_bool_encrypt_encoded($str){
-    return apply_replace('get_bool_encrypt_encoded', is_url_base64_encoded($str), $str);
-}
-
-function get_string_check_decrypt($str, $field=''){
-
-    if( $field === 'mb_id' ){
-        $pattern = '/[^0-9a-z_]+/i';
-    } else {
-        $pattern = '/[^a-zA-Z0-9\/:@\.\+-s]/';
-    }
-
-    if( get_bool_encrypt_encoded($str) ){
-
-        if( $field === 'mb_id' ){
-            return preg_replace($pattern, '', get_string_decrypt($str));
-        }
-
-        return get_string_decrypt($str);
-    }
-
-    return preg_replace($pattern, '', strip_tags($str));
-}
-
 function get_string_decrypt($str){
 
     $new = get_class_encrypt();
@@ -329,19 +305,6 @@ function get_string_decrypt($str){
     $decrypt_str = $new->decrypt($str);
 
     return $decrypt_str;
-}
-
-function get_member_by_hash($mb_id='', $mb_hash=''){
-
-    global $is_admin;
-
-    if( $is_admin && $mb_id ){
-        return $mb_id;
-    } else if ( $mb_hash ){
-        return get_string_check_decrypt($mb_hash, 'mb_id');
-    }
-
-    return '';
 }
 
 function get_permission_debug_show(){
@@ -373,7 +336,7 @@ function get_mb_icon_name($mb_id){
         return $icon_name;
     }
 
-    return md5($mb_id);
+    return $mb_id;
 }
 
 // 생성되면 안되는 게시판명
@@ -386,15 +349,6 @@ function get_bo_table_banned_word(){
     }
 
     return apply_replace('get_bo_table_banned_word', $folders);
-}
-
-function get_add_mbhash_params($qstr, $board, $wr_id){
-
-    if( isset($_GET['mb_hash']) && is_url_base64_encoded($_GET['mb_hash']) ){
-        $qstr .= '&amp;mb_hash=' . strip_tags($_GET['mb_hash']);
-    }
-
-    return $qstr;
 }
 
 function get_board_sfl_select_options($sfl){

@@ -50,8 +50,6 @@ $sql = " select a.*, b.mb_id, b.mb_nick, b.mb_email, b.mb_homepage
             where a.me_{$kind}_mb_id = '{$member['mb_id']}' and a.me_type = '$kind'
             order by a.me_id desc limit $from_record, {$config['cf_page_rows']} ";
 
-echo $sql;
-
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
