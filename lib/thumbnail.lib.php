@@ -17,37 +17,36 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
         $filepath = G5_DATA_PATH.'/file/'.$bo_table;
         $alt = get_text($row['bf_content']);
     } else {
-        $write_table = $g5['write_prefix'].$bo_table;
-        $sql = " select wr_content from $write_table where wr_id = '$wr_id' ";
-        $write = sql_fetch($sql);
-        $matches = get_editor_image($write['wr_content'], false);
+        $write = get_thumbnail_find_cache($bo_table, $wr_id, 'content');
         $edt = true;
+        
+        if( $matches = get_editor_image($write['wr_content'], false) ){
+            for($i=0; $i<count($matches[1]); $i++)
+            {
+                // 이미지 path 구함
+                $p = parse_url($matches[1][$i]);
+                if(strpos($p['path'], '/'.G5_DATA_DIR.'/') != 0)
+                    $data_path = preg_replace('/^\/.*\/'.G5_DATA_DIR.'/', '/'.G5_DATA_DIR, $p['path']);
+                else
+                    $data_path = $p['path'];
 
-        for($i=0; $i<count($matches[1]); $i++)
-        {
-            // 이미지 path 구함
-            $p = parse_url($matches[1][$i]);
-            if(strpos($p['path'], '/'.G5_DATA_DIR.'/') != 0)
-                $data_path = preg_replace('/^\/.*\/'.G5_DATA_DIR.'/', '/'.G5_DATA_DIR, $p['path']);
-            else
-                $data_path = $p['path'];
+                $srcfile = G5_PATH.$data_path;
 
-            $srcfile = G5_PATH.$data_path;
+                if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
+                    $size = @getimagesize($srcfile);
+                    if(empty($size))
+                        continue;
 
-            if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
-                $size = @getimagesize($srcfile);
-                if(empty($size))
-                    continue;
+                    $filename = basename($srcfile);
+                    $filepath = dirname($srcfile);
 
-                $filename = basename($srcfile);
-                $filepath = dirname($srcfile);
+                    preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matches[0][$i], $malt);
+                    $alt = get_text($malt[1]);
 
-                preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matches[0][$i], $malt);
-                $alt = get_text($malt[1]);
-
-                break;
-            }
-        }
+                    break;
+                }
+            }   //end for
+        }   //end if
     }
 
     if(!$filename)

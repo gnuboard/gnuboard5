@@ -54,18 +54,20 @@ if (empty($wr['wr_id']))
 // 이 옵션을 사용 안 함으로 설정할 경우 어떤 스크립트도 실행 되지 않습니다.
 //if (!trim($_POST["wr_content"])) die ("내용을 입력하여 주십시오.");
 
+$post_wr_password = '';
 if ($is_member)
 {
     $mb_id = $member['mb_id'];
     // 4.00.13 - 실명 사용일때 댓글에 닉네임으로 입력되던 오류를 수정
     $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
-    $wr_password = $member['mb_password'];
+    $wr_password = '';
     $wr_email = addslashes($member['mb_email']);
     $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
 }
 else
 {
     $mb_id = '';
+    $post_wr_password = $wr_password;
     $wr_password = get_encrypt_string($wr_password);
 }
 
@@ -289,7 +291,7 @@ else if ($w == 'cu') // 댓글 수정
         if ($member['mb_id'] !== $comment['mb_id'])
             alert('자신의 글이 아니므로 수정할 수 없습니다.');
     } else {
-        if($comment['wr_password'] != $wr_password)
+        if( !($comment['mb_id'] === '' && $comment['wr_password'] && check_password($post_wr_password, $comment['wr_password'])) )
             alert('댓글을 수정할 권한이 없습니다.');
     }
 

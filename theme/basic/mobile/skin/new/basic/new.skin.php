@@ -16,7 +16,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
-    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" placeholder="검색어(필수)" required class="frm_input ">
+    <?php if ($is_admin) {  // 만약 관리자이면 회원 아이디로 검색 ?>
+    <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" placeholder="회원 아이디로 검색" required class="frm_input">
+    <?php } else {      // 일반 회원이거나 비회원이면 회원 닉네임으로 검색 ?>
+    <input type="text" name="mb_nick" value="<?php echo get_text($mb_nick); ?>" id="mb_id" placeholder="회원 닉네임으로 검색" required class="frm_input">
+    <?php } ?>
     <button type="submit" value="검색" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i></button>
     </form>
     <script>

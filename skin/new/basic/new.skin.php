@@ -22,9 +22,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         <option value="c">코멘트만
     </select>
     <label for="mb_id" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    <?php if ($is_admin) {  // 만약 관리자이면 회원 아이디로 검색 ?>
     <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" required class="frm_input" size="40">
+    <?php } else {      // 일반 회원이거나 비회원이면 회원 닉네임으로 검색 ?>
+    <input type="text" name="mb_nick" value="<?php echo get_text($mb_nick); ?>" id="mb_id" required class="frm_input" size="40">
+    <?php } ?>
     <button type="submit" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i> 검색</button>
-    <p>회원 아이디만 검색 가능</p>
+    <p><?php echo $is_admin ? '회원 아이디만 검색 가능' : '회원 닉네임만 검색 가능'; ?></p>
     </form>
     <script>
     /* 셀렉트 박스에서 자동 이동 해제
@@ -74,6 +78,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         $gr_subject = cut_str($list[$i]['gr_subject'], 20);
         $bo_subject = cut_str($list[$i]['bo_subject'], 20);
         $wr_subject = get_text(cut_str($list[$i]['wr_subject'], 80));
+        $board_url = get_pretty_url($list[$i]['bo_table']);
     ?>
     <tr>
         <?php if ($is_admin) { ?>
@@ -85,7 +90,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         </td>
         <?php } ?>
         <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
-        <td class="td_board"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>"><?php echo $bo_subject ?></a></td>
+        <td class="td_board"><a href="<?php echo $board_url; ?>"><?php echo $bo_subject ?></a></td>
         <td><a href="<?php echo $list[$i]['href'] ?>" class="new_tit"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
         <td class="td_name"><?php echo $list[$i]['name'] ?></td>
         <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>

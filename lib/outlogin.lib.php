@@ -36,9 +36,11 @@ function outlogin($skin_dir='basic')
 
     // 읽지 않은 쪽지가 있다면
     if ($is_member) {
-        $sql = " select count(*) as cnt from {$g5['memo_table']} where me_recv_mb_id = '{$member['mb_id']}' and me_read_datetime = '0000-00-00 00:00:00' ";
-        $row = sql_fetch($sql);
-        $memo_not_read = $row['cnt'];
+        if( isset($member['mb_memo_cnt']) ){
+            $memo_not_read = $member['mb_memo_cnt'];
+        } else {
+            $memo_not_read = get_memo_not_read($member['mb_id']);
+        }
 
         $is_auth = false;
         $sql = " select count(*) as cnt from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";

@@ -122,7 +122,29 @@ while ($row = sql_fetch_array($result)) {
         sql_query($sql);
 
     }
+}
 
+// 메모 테이블
+$sql = " SHOW COLUMNS FROM `{$g5['memo_table']}` LIKE 'me_send_id' ";
+$row = sql_fetch($sql);
+
+if( !$row ){
+    sql_query("ALTER TABLE `{$g5['memo_table']}`
+                ADD `me_send_id` INT(11) NOT NULL DEFAULT '0',
+                ADD `me_type` ENUM('send','recv') NOT NULL DEFAULT 'recv',
+                ADD `me_send_ip` VARCHAR(100) NOT NULL DEFAULT '',
+                CHANGE COLUMN `me_id` `me_id` INT(11) NOT NULL AUTO_INCREMENT;
+    ", false);
+
+    $is_check = true;
+}
+
+// 읽지 않은 메모 수 칼럼
+if(!isset($member['mb_memo_cnt'])) {
+    sql_query(" ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_memo_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_call`", true);
+
+    $is_check = true;
 }
 
 $is_check = apply_replace('admin_dbupgrade', $is_check);

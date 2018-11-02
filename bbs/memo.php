@@ -18,12 +18,15 @@ else if ($kind == 'send')
 else
     alert(''.$kind .'값을 넘겨주세요.');
 
-$sql = " select count(*) as cnt from {$g5['memo_table']} where me_{$kind}_mb_id = '{$member['mb_id']}' ";
+if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
+
+start_event('memo_list', $kind, $unkind, $page);
+
+$sql = " select count(*) as cnt from {$g5['memo_table']} where me_{$kind}_mb_id = '{$member['mb_id']}' and me_type = '$kind' ";
 $row = sql_fetch($sql);
 $total_count = $row['cnt'];
 
 $total_page  = ceil($total_count / $config['cf_page_rows']);  // 전체 페이지 계산
-if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 $from_record = ((int) $page - 1) * $config['cf_page_rows']; // 시작 열을 구함
 
 if ($kind == 'recv')
@@ -44,8 +47,11 @@ $list = array();
 $sql = " select a.*, b.mb_id, b.mb_nick, b.mb_email, b.mb_homepage
             from {$g5['memo_table']} a
             left join {$g5['member_table']} b on (a.me_{$unkind}_mb_id = b.mb_id)
-            where a.me_{$kind}_mb_id = '{$member['mb_id']}'
+            where a.me_{$kind}_mb_id = '{$member['mb_id']}' and a.me_type = '$kind'
             order by a.me_id desc limit $from_record, {$config['cf_page_rows']} ";
+
+echo $sql;
+
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {

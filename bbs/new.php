@@ -23,7 +23,7 @@ else
 if(isset($mb_nick) && $mb_nick){    // 닉네임으로 요청한 경우
     $mb_nick = get_search_string(strip_tags($mb_nick));
 
-    $sql = "select mb_id from `{$gml['member_table']}` where mb_nick = '".sql_real_escape_string($mb_nick)."' ";
+    $sql = "select mb_id from `{$g5['member_table']}` where mb_nick = '".sql_real_escape_string($mb_nick)."' ";
     $mb = sql_fetch($sql);
 
     if( $mb['mb_id'] ){
