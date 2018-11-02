@@ -293,7 +293,7 @@ function get_nginx_conf_rules($return_string=false){
 
     $rules = array();
     
-    $rules[] = '#### '.G5_VERSION.' url rules BOF #####';
+    $rules[] = '#### '.G5_VERSION.' nginx rules BEGIN #####';
     $rules[] = 'if (!-e $request_filename){';
 
     if( $add_rules = apply_replace('add_nginx_conf_rules', '', $get_path_url, $base_path, $return_string) ){
@@ -308,7 +308,7 @@ function get_nginx_conf_rules($return_string=false){
     $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/([^/]+)/$ {$base_path}bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;";
     $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/([0-9]+)$ {$base_path}bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;";
     $rules[] = '}';
-    $rules[] = '#### '.G5_VERSION.' url rules EOF #####';
+    $rules[] = '#### '.G5_VERSION.' nginx rules END #####';
 
     return $return_string ? implode("\n", $rules) : $rules;
 }
@@ -321,7 +321,7 @@ function get_mod_rewrite_rules($return_string=false){
 
     $rules = array();
     
-    $rules[] = '#### '.G5_VERSION.' rewrite BOF #####';
+    $rules[] = '#### '.G5_VERSION.' rewrite BEGIN #####';
     $rules[] = '<IfModule mod_rewrite.c>';
     $rules[] = 'RewriteEngine On';
     $rules[] = 'RewriteBase '.$base_path;
@@ -341,9 +341,34 @@ function get_mod_rewrite_rules($return_string=false){
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/write$  '.G5_BBS_DIR.'/write.php?bo_table=$1&rewrite=1    [QSA,L]';
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/([0-9]+)$  '.G5_BBS_DIR.'/board.php?bo_table=$1&wr_id=$2&rewrite=1  [QSA,L]';
     $rules[] = '</IfModule>';
-    $rules[] = '#### '.G5_VERSION.' rewrite EOF #####';
+    $rules[] = '#### '.G5_VERSION.' rewrite END #####';
 
     return $return_string ? implode("\n", $rules) : $rules;
+}
+
+function check_need_rewrite_rules(){
+    $is_apache = (stripos($_SERVER['SERVER_SOFTWARE'], 'apache') !== false);
+    
+    if($is_apache){
+        $save_path = G5_PATH.'/.htaccess';
+
+        if( !file_exists($save_path) ){
+            return true;
+        }
+
+        $rules = get_mod_rewrite_rules();
+
+        $bof_str = $rules[0];
+        $eof_str = end($rules);
+
+        $code = file_get_contents($save_path);
+        
+        if( strpos($code, $bof_str) === false || strpos($code, $eof_str) === false ){
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function update_rewrite_rules(){

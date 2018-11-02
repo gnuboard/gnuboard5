@@ -30,6 +30,9 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
     <div class="local_desc02 local_desc">
         <p>
             게시판과 컨텐츠 페이지에 짧은 URL 을 사용합니다.
+            <?php if( ! $is_write_file && check_need_rewrite_rules() ) {   // apache인 경우 ?>
+            <br>짧은 주소 사용시 아래 Apache 설정 코드를 참고하여 설정해 주세요.
+            <?php } ?>
         </p>
     </div>
 
@@ -77,7 +80,7 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
 
             <h4 class="copy_title">.htaccess 파일에 적용할 코드입니다.
             <?php if( ! $is_write_file ) { ?>
-            <br>자동으로 .htaccess 파일을 수정 할수 있는 권한이 없습니다.<br>아래 코드를 복사하여 .htaccess 파일이 없다면 생성 후에, 아래 내용을 복사 붙여넣기 해 주세요.
+            <br>자동으로 .htaccess 파일을 수정 할수 있는 권한이 없습니다.<br>.htaccess 파일이 없다면 생성 후에, 아래 코드가 없으면 코드를 복사하여 붙여넣기 해 주세요.
             <?php } ?>
             </h4>
             <textarea readonly="readonly" rows="10"><?php echo get_mod_rewrite_rules(true); ?></textarea>
