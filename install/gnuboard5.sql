@@ -525,7 +525,6 @@ CREATE TABLE IF NOT EXISTS `g5_memo` (
   `me_send_id` INT(11) NOT NULL DEFAULT '0',
   `me_type` ENUM('send','recv') NOT NULL DEFAULT 'recv',
   `me_send_ip` VARCHAR(100) NOT NULL DEFAULT '',
-  `me_memo` text NOT NULL,
   PRIMARY KEY  (`me_id`),
   KEY `me_recv_mb_id` (`me_recv_mb_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
