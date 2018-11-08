@@ -1,0 +1,17 @@
+@charset "utf-8";
+/* SIR 지운아빠 */
+
+/* 현재접속자 */
+#current_connect{margin:0;padding:5px;}
+#current_connect li {padding:5px;float:left;width:50%;text-align:center;}
+#current_connect li:nth-child(2n+1){clear:both}
+#current_connect .crt_name {padding:20px 0;display:block}
+#current_connect .crt_name img{ border-radius:50%;margin: 0 0 5px}
+#current_connect .crt_wr{background:#fff;position:relative;
+-webkit-box-shadow: 0 1px 4px #cbd1df;
+   -moz-box-shadow: 0 1px 4px #cbd1df;
+        box-shadow: 0 1px 4px #cbd1df;}
+#current_connect .crt_lct{display:block;text-align:center;border-top:1px solid #ddd;padding:10px 5px;line-height:1.4em}
+#current_connect .crt_lct a{color:#3ca1ff}
+#current_connect .crt_num{position:absolute;top:10px;left:10px;color:#777;font-weight:bold}
+#current_connect .empty_li{width:100%;padding:100px 0;color:#777}

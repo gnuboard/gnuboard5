@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+/* 새글 */
+#new_sch {margin:10px;border:1px solid #bdc2d8;background:#fff;position:relative}
+#new_sch select{float:left;width:50%;border:0;height:40px}
+#new_sch #view{border-left:1px solid #e2e2e2}
+#new_sch .frm_input {border:0;border-top:1px solid #e2e2e2;width:100% }
+#new_sch .btn_submit {position:absolute;bottom:0;right:0;width:40px;height:40px;background:none;color:#000;font-size:15px}
+#new_list .new_tit{display:block;font-weight:bold;margin:0 0 5px;font-size:1.083em}
+#new_list .new_date{float:right;color:#666;font-style:italic}
+#new_list .new_board{color:#3ca1ff}

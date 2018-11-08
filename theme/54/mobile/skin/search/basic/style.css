@@ -1,0 +1,43 @@
+@charset "utf-8";
+/* 전체검색결과 스킨 */
+#sch_res_detail {margin:10px;text-align:center}
+#sch_res_detail legend {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#sch_res_detail .sch_wr {position:relative;border:1px solid #bdc2d8;background:#fff;margin:0 0 5px}
+#sch_res_detail select{width:50%;float:left;height:40px;border:0}
+#sch_res_detail #sfl{border-left:1px solid #e2e2e2;}
+#sch_res_detail .frm_input {position:relative;width:100%;border:0;border-top:1px solid #e2e2e2;border-radius:0;clear:both}
+#sch_res_detail .btn_submit{position:absolute;bottom:0;right:0;width:40px;height:40px;background:none;color:#000;font-size:15px}
+
+#sch_res_ov {margin: 10px;padding:20px;background:#e4e4e4;text-align:center;zoom:1}
+#sch_res_ov:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_res_ov h2 {font-size:1.25em;margin:0 0 5px}
+#sch_res_ov dl {margin:0 0 5px;display:inline-block;;zoom:1}
+#sch_res_ov dt {display:inline-block}
+#sch_res_ov dd {display:inline-block;margin:0 2px 0 5px}
+#sch_res_ov p {margin:0;padding:0;color:#666;font-size:0.92em}
+
+#sch_res_board  {margin: 10px;padding-left:1px;zoom:1}
+#sch_res_board:after {display:block;visibility:hidden;clear:both;content:""}
+#sch_res_board li {display:inline-block;float:left;margin:3px 5px 3px 0}
+#sch_res_board a {display:block;line-height:24px;border-radius:13px;padding:0 10px;background:#fff}
+#sch_res_board .sch_on {background:#4162ff;color:#fff;
+-webkit-box-shadow:0 0 5px  rgba(65,98,255,0.8);
+-moz-box-shadow:0 0 5px  rgba(65,98,255,0.8);
+box-shadow: 0 0 8px  rgba(65,98,255,0.8);}
+
+
+.sch_res_list {margin:0 0 10px;padding:10px 0}
+.sch_res_list h2 {margin:0 0 10px;font-size:1.083m}
+.sch_res_list ul {margin:0;padding:0;list-style:none}
+.sch_res_list li {margin:0 0 10px;padding:0 10px 10px;border-bottom:1px solid #e9e9e9}
+.sch_res_list a {text-decoration:none}
+.sch_res_title {display:block;font-weight:bold;padding:10px 0;padding-right:30px;position:relative}
+.sch_res_info{line-height:28px;border-top:1px solid #eee;padding:3px 0 0;margin: 10px 0 0;color:#666 }
+.sch_res_info:after {display:block;visibility:hidden;clear:both;content:""}
+.sch_res_new{position:absolute;top:10px;right:0;font-size:0.92em;color:#777;width:20px;height:20px;line-height:20px;display:block;background:#eee;text-align:center}
+.sch_res_list p {margin:0 0 10px;line-height:1.4em;color:#777;font-size:0.92em}
+.sch_more {padding:0 0 30px;font-size:0.92em;text-align:right }
+.sch_more a{;color:#f2664f}
+.sch_more  i{font-size:13px}
+.sch_datetime{float:right;font-style:italic}
+.sch_res_info .profile_img img{border-radius:50%}

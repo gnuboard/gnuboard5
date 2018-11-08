@@ -1,0 +1,29 @@
+@charset "utf-8";
+.ol {position:relative;margin:0 0 10px;padding:20px;background:#292929;text-align:center;}
+.ol h2 {width:0;height:0;overflow:hidden}
+
+#ol_before{padding:20px 30px 30px}
+#ol_before input[type=text], #ol_before input[type=password] {width:100%;border:0;border-bottom:1px solid #434242;background:none;height:40px;;margin:0 0 10px;color:#fff}
+#ol_submit {width:100%;height:40px;border-radius:23px;font-weight:bold;font-size:1.083em; }
+#ol_svc {text-align:left;color:#dadada;font-size:0.92em;margin:5px 0 20px}
+.ol_before_btn{margin:15px 0 0;color:#aaa;line-height:1em}
+.ol_before_btn a{color:#fff;display:inline-block;width:50%;float:left}
+#ol_password_lost{border-left:1px solid #777}
+
+#ol_after_hd strong {display:block;color:#fff;}
+#ol_after_hd .btn_admin {display:block;padding:0 !important;text-align:center}
+#ol_after_hd .profile_img{display:inline-block;position:relative;margin:0 0 10px}
+#ol_after_hd  .profile_img img{border-radius:50%;}
+#ol_after_info{position:absolute;bottom:-5px;right:-5px;background:url(./img/icon_edit.png) no-repeat 50% 50% #292929;background-size:15px;width:30px;height:30px;text-indent:-9999px;overflow:hidden;border-radius:50%}
+
+#ol_after_private {margin:0;padding:0;list-style:none}
+#ol_after_private:after {display:block;visibility:hidden;clear:both;content:""}
+#ol_after_private li {float:left;width:33.333%}
+#ol_after_memo {background:url(./img/icon_memo.png) no-repeat 36px 22px #2c2d2e;background-size:19px}
+#ol_after_pt {background:url(./img/icon_point.png) no-repeat 38px 24px #313334;background-size:16px}
+#ol_after_scrap {background:url(./img/icon_scrap.png) no-repeat 38px 22px #2c2d2e;background-size:18px}
+#ol_after_private a {color:#fff;height:90px;display:block;padding-top:60px}
+
+#ol_after_btn {margin:15px 0}
+#ol_after_btn a{display:inline-block;padding:0 10px;line-height:25px;border-radius:15px;font-weight:bold}
+#ol_after_logout{background:#fff;color:#555}

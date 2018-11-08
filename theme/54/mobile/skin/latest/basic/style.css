@@ -1,0 +1,19 @@
+@charset "utf-8";
+
+/* 최근게시물 스킨 (latest) */
+.lt {position:relative;padding:15px 10px ;}
+.lt ul {margin:10px 0 0 ;padding:0;list-style:none}
+.lt .lt_title {display:inline-block;background: #4162ff;color: #fff;border-radius: 13px;line-height: 24px;padding: 0 10px;border-bottom:1px solid #ccc;}
+.lt .lt_more {position:absolute;top:5px;right:10px}
+.lt .cnt_cmt {display:inline-block;margin:0 5px 0 3px;}
+.lt .lt_info{border-top: 1px solid #eee;margin: 10px 0 0;line-height: 20px;color: #666;position: relative;padding-top: 10px;vertical-align:top}
+.lt .profile_img img{border-radius:50%;vertical-align:top}
+.lt .lt_tit{display: block;font-size: 1.083em;font-weight: bold;margin: 5px 0;}
+.lt li .fa-download{width:16px;height:16px;line-height:16px;background:#ecaa30;color:#fff;text-align:center;font-size:10px;border-radius:2px}
+.lt li .fa-link{width:16px;height:16px;line-height:16px;background:#2aa974;color:#fff;text-align:center;font-size:10px;border-radius:2px}
+.lt li .fa-heart{color:#ff0000;}
+.lt li .new_icon{display:inline-block;padding: 0 3px;line-height:16px ;font-size:0.833em;color:#fff;background:#c56bed}
+.lt .lt_tit .fa-heart{color: #fe4560;}
+.lt .lt_date{position:absolute;top:10px;right:0;color:#666;font-style:italic}
+.lt .comment_icon{background:url(./img/icon_comment.png) no-repeat 50% 50% ;display:inline-block;width:20px;height:28px;text-indent:-999px;overflow:hidden;vertical-align:top;background-size:70%;margin:0 0px 0 5px}
+.lt .empty_li{text-align:center;padding:40px 0;color:#777}

@@ -1,0 +1,10 @@
+@charset "utf-8";
+
+/* 인기검색어 */
+#popular {margin:30px 10px }
+#popular h2 {display:inline-block;background: #4162ff;color: #fff;border-radius: 13px;line-height: 24px;padding: 0 10px;margin:0 0 10px;
+-webkit-box-shadow: 0 0 5px rgba(65,98,255,0.8);
+-moz-box-shadow: 0 0 5px rgba(65,98,255,0.8);
+box-shadow: 0 0 8px rgba(65,98,255,0.8); }
+#popular a{display:inline-block;height:22px;line-height:22px;background:#b9bdd3;color:#fff;margin:2px 0;padding: 0 5px;border-radius:3px}
+#popular a:hover{background:#646982}
