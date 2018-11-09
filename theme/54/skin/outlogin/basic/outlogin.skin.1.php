@@ -7,7 +7,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
 
 <!-- 로그인 전 아웃로그인 시작 { -->
 <section id="ol_before" class="ol">
-    <h2>회원로그인</h2>
+	<div id="ol_be_cate">
+    	<h2><span class="sound_only">회원</span>로그인</h2>
+    	<a href="<?php echo G5_BBS_URL ?>/register.php" class="join">회원가입</a>
+    </div>
     <form name="foutlogin" action="<?php echo $outlogin_action_url ?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
     <fieldset>
         <div class="ol_wr">
@@ -24,7 +27,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
                 <label for="auto_login" id="auto_login_label">자동로그인</label>
             </div>
             <div id="ol_svc">
-                <a href="<?php echo G5_BBS_URL ?>/register.php"><b>회원가입</b></a> /
+                
                 <a href="<?php echo G5_BBS_URL ?>/password_lost.php" id="ol_password_lost">정보찾기</a>
             </div>
         </div>

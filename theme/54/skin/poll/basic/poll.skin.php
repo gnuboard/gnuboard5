@@ -11,7 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 <input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
 <section id="poll">
     <header>
-        <h2><i class="fa fa-bar-chart" aria-hidden="true"></i> 설문조사</h2>
+        <h2>설문조사</h2>
         <?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin">설문관리</a><?php }  ?>
     </header>
     <div class="poll_con">

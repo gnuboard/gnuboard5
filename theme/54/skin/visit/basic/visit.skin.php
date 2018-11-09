@@ -9,7 +9,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$visit_skin_url.'/style.css">', 0
 
 <!-- 접속자집계 시작 { -->
 <section id="visit">
-    <h2><i class="fa fa-users" aria-hidden="true"></i>  접속자집계</h2>
+    <h2>접속자집계</h2>
     <dl>
         <dt><span class="color_1"></span> 오늘</dt>
         <dd><strong class="color_1"><?php echo number_format($visit[1]) ?></strong></dd>

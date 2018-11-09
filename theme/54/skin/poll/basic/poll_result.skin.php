@@ -7,7 +7,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 
 <!-- 설문조사 결과 시작 { -->
 <div id="poll_result" class="new_win">
-    <h1 id="win_title"><i class="fa fa-bar-chart" aria-hidden="true"></i> <?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
     <div class="new_win_con">
         <!-- 설문조사 결과 그래프 시작 { -->
         <span class="poll_all">전체 <?php echo $nf_total_po_cnt ?>표</span>
