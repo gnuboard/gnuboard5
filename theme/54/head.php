@@ -27,6 +27,14 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     }
     ?>
     <div id="tnb">
+    	<div class="inner">
+			<ul id="hd_qnb">
+	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
+	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
+	            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" class="visit">접속자<strong class="visit-num"><?php echo connect('theme/basic'); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?></strong></a></li>
+	            <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
+	        </ul>
+		</div>
         <!-- <ul>
             <?php if ($is_member) {  ?>
 
@@ -41,12 +49,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php }  ?>
 
         </ul> -->
-  		<ul id="hd_qnb">
-            <li><a href="<?php echo G5_BBS_URL ?>/faq.php"><i class="fa fa-question" aria-hidden="true"></i><span>FAQ</span></a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php"><i class="fa fa-comments" aria-hidden="true"></i><span>1:1문의</span></a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/current_connect.php" class="visit"><i class="fa fa-users" aria-hidden="true"></i><span>접속자</span><strong class="visit-num"><?php echo connect('theme/basic'); // 현재 접속자수, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?></strong></a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/new.php"><i class="fa fa-history" aria-hidden="true"></i><span>새글</span></a></li>
-        </ul>
+  		
     </div>
     <div id="hd_wrapper">
 
@@ -55,7 +58,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         </div>
     
         <div class="hd_sch_wr">
-            <fieldset id="hd_sch" >
+            <fieldset id="hd_sch">
                 <legend>사이트 내 전체검색</legend>
                 <form name="fsearchbox" method="get" action="<?php echo G5_BBS_URL ?>/search.php" onsubmit="return fsearchbox_submit(this);">
                 <input type="hidden" name="sfl" value="wr_subject||wr_content">

@@ -7,7 +7,7 @@
 .bg-warning3{background:#fff8dc;border:1px solid #f1e4b2}
 
 /* SNS LOGIN */
-.login-sns{padding-bottom:10px;margin-top:5px;border: 1px solid #d2d9e6;border-bottom: 1px solid #c1ccda;clear:both;background:#fff;}
+.login-sns{margin-top:5px;border: 1px solid #d2d9e6;border-bottom: 1px solid #c1ccda;clear:both;background:#fff;}
 .login-sns h3{padding-top:10px;text-align:center;color:#777;font-weight:normal}
 .sns-wrap {margin:10px 0 0;text-align:center}
 .sns-icon {display:inline-block;vertical-align:middle;text-decoration:none}
@@ -65,8 +65,8 @@
 #sns_outlogin .sns-icon .ico {width:30px;height:30px}
 
 /*로그인 */
-#sns_login{border:0;margin-top:15px ;padding: 20px 50px 0;border-top:1px solid #edeaea}
-#sns_login h3{;padding:10px 0 0;text-align:left;font-weight:bold}
+#sns_login {border:0;margin-top:15px;border-top:1px solid #edeaea}
+#sns_login h3 {padding:10px 0 0;text-align:left;font-weight:bold}
 #sns_login .sns-icon{display:block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px}
 #sns_login .sns-naver{background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
 #sns_login .sns-kakao{background-color:#ffeb00;background-position:5px 5px;border-bottom:1px solid #e2c10a}
