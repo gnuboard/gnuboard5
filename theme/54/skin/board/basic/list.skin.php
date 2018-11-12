@@ -15,8 +15,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 <!-- 게시판 목록 시작 { -->
 <div id="bo_list" style="width:<?php echo $width; ?>">
 
+    <!-- 게시판 카테고리 시작 { -->
+    <?php if ($is_category) { ?>
+    <nav id="bo_cate">
+        <h2><?php echo $board['bo_subject'] ?> 카테고리</h2>
+        <ul id="bo_cate_ul">
+            <?php echo $category_option ?>
+        </ul>
+    </nav>
+    <?php } ?>
+    <!-- } 게시판 카테고리 끝 -->
 
-    <!-- 게시판 페이지 정보 및 버튼 시작 { -->
+	<!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
         <div id="bo_list_total">
             <span>Total <?php echo number_format($total_count) ?>건</span>
@@ -32,18 +42,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php } ?>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
-
-    <!-- 게시판 카테고리 시작 { -->
-    <?php if ($is_category) { ?>
-    <nav id="bo_cate">
-        <h2><?php echo $board['bo_subject'] ?> 카테고리</h2>
-        <ul id="bo_cate_ul">
-            <?php echo $category_option ?>
-        </ul>
-    </nav>
-    <?php } ?>
-    <!-- } 게시판 카테고리 끝 -->
-
+    
     <form name="fboardlist" id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
@@ -78,8 +77,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <tbody>
         <?php
         for ($i=0; $i<count($list); $i++) {
-         ?>
-        <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?>">
+        	if ($i%2==0) $lt_class = "even";
+        	else $lt_class = "";
+		?>
+        <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?>">
             <?php if ($is_checkbox) { ?>
             <td class="td_chk">
                 <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
@@ -89,7 +90,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <td class="td_num2">
             <?php
             if ($list[$i]['is_notice']) // 공지사항
-                echo '<strong class="notice_icon"><i class="fa fa-bullhorn" aria-hidden="true"></i><span class="sound_only">공지</span></strong>';
+                echo '<strong class="notice_icon">공지</strong>';
             else if ($wr_id == $list[$i]['wr_id'])
                 echo "<span class=\"bo_current\">열람중</span>";
             else
@@ -104,14 +105,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
                 <div class="bo_tit">
-                    
                     <a href="<?php echo $list[$i]['href'] ?>">
                         <?php echo $list[$i]['icon_reply'] ?>
                         <?php
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);
                          ?>
                         <?php echo $list[$i]['subject'] ?>
-                       
                     </a>
                     <?php
                     // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }

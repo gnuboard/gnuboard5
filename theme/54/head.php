@@ -179,7 +179,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                             if($k == 0)
                                 echo '<ul>'.PHP_EOL;
                         ?>
-                            <li><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>"><i class="fa fa-caret-right" aria-hidden="true"></i> <?php echo $row2['me_name'] ?></a></li>
+                            <li><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>"><?php echo $row2['me_name'] ?></a></li>
                         <?php
                         $k++;
                         }   //end foreach $row2
