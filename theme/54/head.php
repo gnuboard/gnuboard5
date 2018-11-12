@@ -35,21 +35,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 	            <li><a href="<?php echo G5_BBS_URL ?>/new.php">새글</a></li>
 	        </ul>
 		</div>
-        <!-- <ul>
-            <?php if ($is_member) {  ?>
-
-            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php"><i class="fa fa-cog" aria-hidden="true"></i> 정보수정</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a></li>
-            <?php if ($is_admin) {  ?>
-            <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>"><b><i class="fa fa-user-circle" aria-hidden="true"></i> 관리자</b></a></li>
-            <?php }  ?>
-            <?php } else {  ?>
-            <li><a href="<?php echo G5_BBS_URL ?>/register.php"><i class="fa fa-user-plus" aria-hidden="true"></i> 회원가입</a></li>
-            <li><a href="<?php echo G5_BBS_URL ?>/login.php"><b><i class="fa fa-sign-in" aria-hidden="true"></i> 로그인</b></a></li>
-            <?php }  ?>
-
-        </ul> -->
-  		
     </div>
     <div id="hd_wrapper">
 
@@ -100,6 +85,19 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 
             <?php echo popular('theme/basic'); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>
         </div>
+        <ul class="hd_login">        
+            <?php if ($is_member) {  ?>
+            <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php">정보수정</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a></li>
+            <?php if ($is_admin) {  ?>
+            <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>">관리자</a></li>
+            <?php }  ?>
+            <?php } else {  ?>
+            <li><a href="<?php echo G5_BBS_URL ?>/register.php">회원가입</a></li>
+            <li><a href="<?php echo G5_BBS_URL ?>/login.php">로그인</a></li>
+            <?php }  ?>
+
+        </ul>
     </div>
     
     <nav id="gnb">
@@ -200,16 +198,17 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 </ul>
                 <button type="button" class="gnb_close_btn"><i class="fa fa-times" aria-hidden="true"></i></button>
             </div>
+            <div id="gnb_all_bg"></div>
         </div>
     </nav>
     <script>
     
     $(function(){
         $(".gnb_menu_btn").click(function(){
-            $("#gnb_all").show();
+            $("#gnb_all, #gnb_all_bg").show();
         });
-        $(".gnb_close_btn").click(function(){
-            $("#gnb_all").hide();
+        $(".gnb_close_btn, #gnb_all_bg").click(function(){
+            $("#gnb_all, #gnb_all_bg").hide();
         });
     });
 
