@@ -13,14 +13,14 @@ if (G5_IS_MOBILE) {
         <?php echo poll('theme/basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
 
         <div class="latest_wr">
-		    <!--  사진 최신글2 { -->
+		    <!--  최신댓글 { -->
 		    <?php
 		    // 이 함수가 바로 최신글을 추출하는 역할을 합니다.
 		    // 사용방법 : latest(스킨, 게시판아이디, 출력라인, 글자수);
 		    // 테마의 스킨을 사용하려면 theme/basic 과 같이 지정
-		    echo latest('theme/side', 'gallery', 4, 23);
+		    echo latest('theme/comment', 'gallery', 4, 23);
 		    ?>
-		    <!-- } 사진 최신글2 끝 -->
+		    <!-- } 최신댓글 끝 -->    
 		</div>
     </div>
 </div>
