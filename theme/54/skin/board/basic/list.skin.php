@@ -35,9 +35,44 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
         <?php if ($rss_href || $write_href) { ?>
         <ul class="btn_bo_user">
-            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01 btn"><i class="fa fa-rss" aria-hidden="true"></i> RSS</a></li><?php } ?>
-            <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-user-circle" aria-hidden="true"></i> 관리자</a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02 btn"><i class="fa fa-pencil" aria-hidden="true"></i> 글쓰기</a></li><?php } ?>
+        	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01 btn"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
+            <li>
+            	<button class="btn_bo_sch btn_b01 btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
+            	<!-- 게시판 검색 시작 { -->
+			    <div class="bo_sch_wrap">				
+				    <fieldset class="bo_sch">
+				        <legend>게시물 검색</legend>
+				        <form name="fsearch" method="get">
+				        <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+				        <input type="hidden" name="sca" value="<?php echo $sca ?>">
+				        <input type="hidden" name="sop" value="and">
+				        <label for="sfl" class="sound_only">검색대상</label>
+				        <select name="sfl" id="sfl">
+				            <?php echo get_board_sfl_select_options($sfl); ?>
+				        </select>
+				        <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+				        <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력해주세요">
+				        <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+				        </form>
+				    </fieldset>
+				    <div class="bo_sch_bg"></div>
+			    </div>
+			    <!-- } 게시판 검색 끝 --> 
+            </li>
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+        	<?php if ($is_admin == 'super' || $is_auth) {  ?>
+        	<li>
+        		<button type="button" class="btn_more_opt btn_b01 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
+        		<?php if ($is_checkbox) { ?>	
+		        <ul class="more_opt">  
+		            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
+		            <li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value"><i class="fa fa-files-o" aria-hidden="true"></i> 선택복사</button></li>
+		            <li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value"><i class="fa fa-arrows" aria-hidden="true"></i> 선택이동</button></li>
+		        </ul>
+		        <?php } ?>
+        	</li>
+        	<?php }  ?>
         </ul>
         <?php } ?>
     </div>
@@ -140,38 +175,49 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <div class="bo_fx">
         <?php if ($list_href || $write_href) { ?>
         <ul class="btn_bo_user">
-            <?php if ($is_checkbox) { ?>
-            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_admin"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
-            <li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value" class="btn btn_admin"><i class="fa fa-files-o" aria-hidden="true"></i> 선택복사</button></li>
-            <li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value" class="btn btn_admin"><i class="fa fa-arrows" aria-hidden="true"></i> 선택이동</button></li>
-            <?php } ?>
-            <?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i> 목록</a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02 btn"><i class="fa fa-pencil" aria-hidden="true"></i> 글쓰기</a></li><?php } ?>
-        </ul>
+        	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+            <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01 btn"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
+            <li>
+            	<button class="btn_bo_sch btn_b01 btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
+            	<!-- 게시판 검색 시작 { -->
+			    <div class="bo_sch_wrap">				
+				    <fieldset class="bo_sch">
+				        <legend>게시물 검색</legend>
+				        <form name="fsearch" method="get">
+				        <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+				        <input type="hidden" name="sca" value="<?php echo $sca ?>">
+				        <input type="hidden" name="sop" value="and">
+				        <label for="sfl" class="sound_only">검색대상</label>
+				        <select name="sfl" id="sfl">
+				            <?php echo get_board_sfl_select_options($sfl); ?>
+				        </select>
+				        <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+				        <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력해주세요">
+				        <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+				        </form>
+				    </fieldset>
+				    <div class="bo_sch_bg"></div>
+			    </div>
+			    <!-- } 게시판 검색 끝 --> 
+            </li>
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+        	<?php if ($is_admin == 'super' || $is_auth) {  ?>
+        	<li>
+        		<button type="button" class="btn_more_opt btn_b01 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
+        		<?php if ($is_checkbox) { ?>	
+		        <ul class="more_opt">  
+		            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
+		            <li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value"><i class="fa fa-files-o" aria-hidden="true"></i> 선택복사</button></li>
+		            <li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value"><i class="fa fa-arrows" aria-hidden="true"></i> 선택이동</button></li>
+		        </ul>
+		        <?php } ?>
+        	</li>
+        	<?php }  ?>
+        </ul>	
         <?php } ?>
     </div>
-    <?php } ?>
-
+    <?php } ?>   
     </form>
-     
-       <!-- 게시판 검색 시작 { -->
-    <fieldset id="bo_sch">
-        <legend>게시물 검색</legend>
-
-        <form name="fsearch" method="get">
-        <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-        <input type="hidden" name="sca" value="<?php echo $sca ?>">
-        <input type="hidden" name="sop" value="and">
-        <label for="sfl" class="sound_only">검색대상</label>
-        <select name="sfl" id="sfl">
-            <?php echo get_board_sfl_select_options($sfl); ?>
-        </select>
-        <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력해주세요">
-        <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
-        </form>
-    </fieldset>
-    <!-- } 게시판 검색 끝 -->   
 </div>
 
 <?php if($is_checkbox) { ?>
@@ -247,6 +293,20 @@ function select_copy(sw) {
     f.action = "./move.php";
     f.submit();
 }
+
+// 게시판 리스트 관리자 옵션
+$(".btn_more_opt").on("click", function() {
+    $(".more_opt").toggle();
+})
+
+// 게시판 검색
+$(".btn_bo_sch").on("click", function() {
+    $(".bo_sch_wrap").toggle();
+})
+$('.bo_sch_bg').click(function(){
+    $('.bo_sch_wrap').hide();
+});
+
 </script>
 <?php } ?>
 <!-- } 게시판 목록 끝 -->
