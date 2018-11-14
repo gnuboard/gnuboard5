@@ -56,17 +56,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
         return true;
     }
     </script>
-    <span class="sch_rd">
-        <input type="radio" value="or" <?php echo ($sop == "or") ? "checked" : ""; ?> id="sop_or" name="sop">
-        <label for="sop_or">OR</label>
-        <input type="radio" value="and" <?php echo ($sop == "and") ? "checked" : ""; ?> id="sop_and" name="sop">
-        <label for="sop_and">AND</label>
-    </span>
+
+	<div class="switch_field ">
+		<input type="radio" value="and" <?php echo ($sop == "and") ? "checked" : ""; ?> id="sop_and" name="sop">
+    	<label for="sop_and">AND</label>
+		<input type="radio" value="or" <?php echo ($sop == "or") ? "checked" : ""; ?> id="sop_or" name="sop" >
+		<label for="sop_or">OR</label>
+	</div>
 </fieldset>
 </form>
 
 <div id="sch_result">
-
     <?php
     if ($stx) {
         if ($board_count) {

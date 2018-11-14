@@ -300,7 +300,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 .bo_v_snswr {position:relative;display:inline-block;margin-left:-1px}
 #bo_v_sns {display:none;position:absolute;top:-50px;left:50%;margin-left:-90px;width:180px;padding:0;list-style:none;zoom:1}
 #bo_v_sns:after {display:block;visibility:hidden;clear:both;content:""}
-#bo_v_sns:before {content: "";position: absolute;bottom: -7px;left: 84px;width: 0;height: 0;border-style: solid;border-width: 7px 6px 0 6px;border-color: #415b92 transparent transparent transparent}
+#bo_v_sns:before {content:"";position:absolute;bottom:-7px;left:84px;width: 0;height: 0;border-style: solid;border-width: 7px 6px 0 6px;border-color: #415b92 transparent transparent transparent}
 #bo_v_sns li {float:left;width:60px;text-align:center}
 #bo_v_sns li a {height:40px;padding:10px 0}
 #bo_v_sns li .sns_f {display:block;background:#415b92}

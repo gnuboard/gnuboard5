@@ -10,3 +10,6 @@
 #fnewlist .new_tit{font-weight:bold}
 #fnewlist .profile_img img{border-radius:50%}
 #fnewlist .td_date{font-style:italic}
+
+.td_group a {background:#edfbde;color:#8cc152;padding:3px 4px;border-radius:5px;font-weight:normal}
+.td_board a {background:#eeeaf8;color:#ac92ec;padding:3px 4px;border-radius:5px;font-weight:normal}
