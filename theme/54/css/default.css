@@ -396,7 +396,7 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .btn_submit {padding:0 20px;height:40px;font-weight:bold;font-size:1.083em;float:right}
 
 /* 검색결과 색상 */
-.sch_word {color:#00c4ac}
+.sch_word {color:#fff;background:#ff005a;padding:2px 5px 3px;line-height:18px;margin:0 2px}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}
@@ -417,13 +417,13 @@ box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}
 .sv_nojs .sv {display:block}
 
 /* 페이징 */
-.pg_wrap {clear:both;margin:30px 0}
+.pg_wrap {clear:both;float:left;display:inline-block}
 .pg_wrap:after {display:block;visibility:hidden;clear:both;content:""} 
 .pg {text-align:center}
 .pg_page, .pg_current {display:inline-block;vertical-align:middle;background:#eee;border:1px solid #eee}
 .pg a:focus, .pg a:hover {text-decoration:none}
 .pg_page {color:#959595;font-size:1.083em;height:30px;line-height:28px;padding:0 5px;min-width:30px;text-decoration:none;border-radius:3px}
-.pg_page:hover {background-color:#ddd}
+.pg_page:hover {background-color:#fafafa}
 .pg_start {text-indent:-999px;overflow:hidden;background:url('../img/btn_first.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
 .pg_prev {text-indent:-999px;overflow:hidden;background:url('../img/btn_prev.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
 .pg_end {text-indent:-999px;overflow:hidden;background:url('../img/btn_end.gif') no-repeat 50% 50% #eee;padding:0;border:1px solid #eee}
