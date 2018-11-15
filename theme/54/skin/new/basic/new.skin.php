@@ -49,6 +49,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 <input type="hidden" name="page"     value="<?php echo $page; ?>">
 <input type="hidden" name="pressed"  value="">
 
+<?php if ($is_admin) { ?>
+<div class="admin_new_btn">
+    <button type="submit" onclick="document.pressed=this.title" title="선택삭제" class="btn_b01 btn"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button>
+</div>
+<?php } ?>
 <div class="tbl_head01 tbl_wrap">
     <table>
     <thead>
@@ -99,8 +104,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
     </table>
 </div>
 
+<?php echo $write_pages ?>
+
 <?php if ($is_admin) { ?>
-<div class="sir_bw02 sir_bw">
+<div class="admin_new_btn">
     <button type="submit" onclick="document.pressed=this.title" title="선택삭제" class="btn_b01 btn"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button>
 </div>
 <?php } ?>
@@ -139,6 +146,4 @@ function fnew_submit(f)
 }
 </script>
 <?php } ?>
-
-<?php echo $write_pages ?>
 <!-- } 전체게시물 목록 끝 -->

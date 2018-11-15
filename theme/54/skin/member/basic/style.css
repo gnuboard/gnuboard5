@@ -31,29 +31,19 @@
 .mbskin a.btn_admin:focus, .mbskin a.btn_admin:hover {}
 
 /* 기본박스 */
-.mbskin {position: relative;margin:100px auto 0;border:1px solid #ddd;width:400px;background:#fff;text-align:center;
-}
-.mbskin:before,.mbskin:after {
-content:"";
-position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
--webkit-box-shadow:0 0 20px rgba(0,0,0,0.8);
-  -moz-box-shadow:0 0 20px rgba(0,0,0,0.8);
-       box-shadow:0 0 20px rgba(0,0,0,0.8);
--moz-border-radius:100px / 10px;
-     border-radius:100px / 10px}
+.mbskin {position:relative;margin:100px auto 0;border:1px solid #dde7e9;width:360px;background:#fff;text-align:center}
 .mbskin:after {right:10px;left:auto;
-    -webkit-transform:skew(8deg) rotate(3deg);
-       -moz-transform:skew(8deg) rotate(3deg);
-        -ms-transform:skew(8deg) rotate(3deg);
-         -o-transform:skew(8deg) rotate(3deg);
-            transform:skew(8deg) rotate(3deg)}
+  -webkit-transform:skew(8deg) rotate(3deg);
+    -moz-transform:skew(8deg) rotate(3deg);
+    -ms-transform:skew(8deg) rotate(3deg);
+     -o-transform:skew(8deg) rotate(3deg);
+      transform:skew(8deg) rotate(3deg)}
 .mbskin .frm_input {width:100%}
 .mbskin .btn_submit {width:100%;margin:10px 0 0;height:45px;font-weight:bold;font-size:1.25em}
-.mbskin  h1 {margin: 60px 0 30px;font-size: 2em}
+.mbskin h1 {margin:60px 0 30px;font-size:2em}
 
 
 /* 기본테이블 */
-
 .mbskin .tbl_head01 {}
 .mbskin .tbl_head01 caption {}
 .mbskin .tbl_head01 thead th {}
@@ -154,7 +144,11 @@ position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
 #reg_result .btn_confirm {margin:50px 0}
 #reg_result .reg_result_p {font-size:1.25em;margin:0 0 10px}
 #reg_result .reg_result_p strong {color:#3497d9}
-#reg_result .btn_submit {padding: 0 30px;font-weight:bold;height:40px;line-height:40px;display:inline-block;margin:30px 0 0 ;font-size:1.083em}
+#reg_result .btn_submit {padding:0 30px;font-weight:bold;height:40px;line-height:40px;display:inline-block;margin:30px 0 0 ;font-size:1.083em}
+
+.mb_log_cate h2 {width:50%;float:left;padding:20px 0;text-align:center}
+.mb_log_cate .join {width:50%;float:left;padding:20px 0;text-align:center;background:#f7f7f7;color:#6e6e6e}
+.mb_log_cate:after {display:block;visibility:hidden;clear:both;content:""}
 
 /* 아이디/비밀번호 찾기 */
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
@@ -163,14 +157,16 @@ position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
 
 /* 로그인 */
 #mb_login {}
-#login_fs {padding:0 50px}
+#mb_login h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#login_fs {padding:35px}
 #mb_login #login_fs .frm_input {margin:0 0 10px}
-#mb_login #login_fs .btn_submit {margin:0 0 20px}
-#mb_login #login_info {background:#f6f6f6;padding:25px 10px;border-top:1px solid #e8e8e8;margin:40px 0 0 }
-#mb_login #login_info:after {display:block;visibility:hidden;clear:both;content:""}
-#mb_login #login_info h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#mb_login #login_info a {display:inline-block;width:50%;float:left}
-#login_password_lost {border-right:1px solid #ddd}
+#mb_login #login_fs .btn_submit {margin:0 0 15px}
+
+#login_info {line-height:24px}
+#login_info:after {display:block;visibility:hidden;clear:both;content:""}
+#login_info .login_if_auto {float:left}
+#login_info .login_if_lpl {float:right}
+#login_password_lost {display:inline-block;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;padding:2px 5px;line-height:20px}
 
 #mb_login_notmb {margin:30px auto;padding:20px 30px}
 #mb_login_notmb h2 {font-size:1.25em;margin:20px 0 10px}
@@ -182,6 +178,14 @@ position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
 #mb_login_od_wr .frm_input {margin:10px 0 0}
 #mb_login_od_wr p {background:#f3f3f3;margin:20px 0 0;padding:15px 20px;line-height:1.5em}
 
+#mb_login #sns_login {margin-top:0;border-color:#edeaea;padding:25px}
+#mb_login #sns_login:after {display:block;visibility:hidden;clear:both;content:""}
+#mb_login #sns_login h3 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#mb_login #sns_login .sns-wrap {margin:0 !important}
+#mb_login #sns_login .sns-icon {width:49% !important;float:left !important}
+#mb_login #sns_login .sns-icon:nth-child(odd) {margin-right:2%}
+#mb_login #sns_login .txt {font-size:0.95em;padding-left:5px !important;border-left:0 !important}
+
 /* 쪽지 */
 .memo_list li {position:relative;padding:15px}
 .memo_li {float:left}
@@ -191,13 +195,11 @@ position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
 #memo_list .profile_img {position:relative;margin-right:15px}
 #memo_list .profile_img img {border-radius:50%;width:52px;height:52px}
 #memo_list .no_read {position:absolute;bottom:0;right:0;display:inline-block;background:#3a8afd;border:1px solid #e1edff;text-indent:-9999px;border-radius:10px;width:10px;height:10px;box-shadow:0 0 10px 3px #9ec3f9}
-#memo_list .no_read {
-  animation: blinker 1s linear infinite;
-}
+#memo_list .no_read {animation:blinker 1s linear infinite}
 
-@keyframes blinker {  
-  50% {opacity:0}
-}
+@keyframes blinker {
+	50% {opacity:0}
+	}
 
 #memo_list .memo_datetime {font-size:0.92em;color:#888d92}
 #memo_list .memo_del {position:absolute;right:15px;top:20px;padding:10px;color:#c7c9cb;font-size:1.4em}
@@ -209,7 +211,7 @@ position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
 #memo_view_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .memo_view_li {position:relative;padding:10px;float:left;width:50%}
 .memo_view_name strong,.memo_view_name .sv_wrap {font-weight:bold !important}
-/*.memo_view_subj {display: inline-block;height: 20px;line-height: 18px;border: 1px solid #3497d9;color: #3497d9;padding: 0 5px;border-radius: 15px;font-size: 11px}*/
+/*.memo_view_subj {display:inline-block;height:20px;line-height:18px;border:1px solid #3497d9;color:#3497d9;padding:0 5px;border-radius:15px;font-size:11px}*/
 .memo_view_li .profile_img img {border-radius:50%}
 .memo_view_date {text-align:right;color:#555}
 .memo_view_date strong {font-weight:normal}
@@ -222,27 +224,51 @@ position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
 #memo_write textarea {height:100px}
 
 /* 스크랩 */
-#scrap .scrap_tit {font-weight:bold;display:block;font-size:1.083em;margin-bottom:5px;line-height:1.3em}
-#scrap .scrap_cate { display:block;color:#3598db ;font-size:0.92em;float:left}
-#scrap .scrap_datetime {;color:#777;font-style:italic;float:right}
-#scrap .scrap_del {position:absolute;top:5px;right:10px;font-size:18px;color:#49857c}
-#scrap .scrap_del:hover {color:#98ca69}
-#scrap_do table {margin:0 0 10px;width:100%}
-#scrap_do textarea {height:100px}
-#scrap_do .scrap_tit {background:#f3f3f3;padding:10px 15px;font-size:1.083em;font-weight:bold}
-#scrap_do label {display:block;margin:0 0 5px;font-size:0.92em}
+#scrap li:after {display:block;visibility:hidden;clear:both;content:""}
+#scrap li {position:relative;padding:20px;border-bottom:1px solid #ececec}
+#scrap .scrap_tit {font-weight:bold;display:block;font-size:1.083em;margin-bottom:10px;line-height:1.3em}
+#scrap .scrap_cate {float:left;display:block;color:#ac92ec;background:#eeeaf8;padding:3px;border-radius:3px;font-size:0.92em;margin-right:10px}
+#scrap .scrap_datetime {color:#777;line-height:18px}
+#scrap .scrap_del {position:absolute;top:15px;right:15px;font-size:18px;color:#c7c9cb}
+#scrap .scrap_del:hover {color:#3a8afd}
+
+#scrap_do .new_win_con {padding:0 20px}
+#scrap_do textarea {width:100%;height:100px}
+#scrap_do .scrap_tit {margin-bottom:10px;background:#f3f3f3;padding:10px 15px;font-size:1.2em;font-weight:bold}
+#scrap_do label {display:block;margin:0 0 5px;font-size:1em}
+#scrap_do .win_btn:after {display:block;visibility:hidden;clear:both;content:""}
+#scrap .win_btn, #scrap_do .win_btn {margin:20px 0;text-align:center}
+#scrap_do .win_btn .btn_submit {float:inherit}
+#scrap_do .win_desc {margin:0 20px}
+
 /*포인트*/
-#point .point_top {line-height:15px;margin:0 0 5px}
-#point .point_top:after {display:block;visibility:hidden;clear:both;content:""}
-#point .point_tit {font-weight:bold;float:left;font-size:1.083em;display:block}
-#point .point_num {font-size:1.25em;color:#00c4ac;font-weight:bold;float:right}
-#point .point_date1 {float:left;color:#555;font-style:italic}
-#point .point_date {float:right;color:#555;font-style:italic}
-#point .txt_expired {color:#aaa}
-#point .point_all {background:#ae99da;border:0;border-bottom:2px solid #9781c5;color:#fff;font-weight:bold;font-size:1.083em}
-#point .point_all span,#point .point_status span {float:right}
-#point .point_status {background:#737373;border:0;color:#fff;font-weight:bold;font-size:1.083em}
-#point .point_status  span {margin-left:10px}
+#point {text-align:center}
+#point h1 {text-align:left}
+#point .point_all {margin:20px 20px 15px;border-radius:5px;background:#edf3fc;border:1px solid #d6e2f4;color:#485172;font-size:1.083em}
+#point .point_all:after {display:block;visibility:hidden;clear:both;content:""}
+#point .point_all li {float:left;width:50%;padding:20px;}
+#point .point_all li span {float:right;color:#485172;font-weight:bold}
+#point .point_all li:last-child {border-left:1px solid #d6e2f4;}
+#point .point_all .full_li {width:100%;border-bottom:1px solid #d6e2f4;text-align:left}
+#point .point_all .full_li span {color:#3a8afd;font-weight:bold;font-size:1.2em}
+
+.point_list {}
+.point_list li:first-child {border-top:1px solid #ececec}
+.point_list li {border-bottom:1px solid #ececec;background:#fff;padding:15px;list-style:none;position:relative}
+.point_list li:after {display:block;visibility:hidden;clear:both;content:""}
+
+.point_list .point_use {background:#f6f6f6}
+.point_list .point_use .point_num {font-size:1.25em;color:#707071;font-weight:bold;float:right}
+.point_list .point_num {font-size:1.25em;color:#3a8afd;font-weight:bold;position:absolute;right:15px;top:25px}
+.point_list .point_top {line-height:15px;margin:0 0 5px}
+.point_list .point_top:after {display:block;visibility:hidden;clear:both;content:""}
+.point_list .point_tit {font-weight:bold;float:left;font-size:1.083em;display:block}
+.point_list .point_date1 {float:left;color:#888d92}
+.point_list .point_date {float:left;color:#888d92}
+.point_list .txt_expired {color:#aaa}
+
+#point .pg_wrap {width:100%;float:inherit;text-align:center}
+#point .btn_close {margin:20px auto}
 
 /* 회원 비밀번호 확인 */
 #mb_confirm {}
@@ -268,16 +294,16 @@ position:absolute;z-index:-1;top:2%;bottom:0;left:10px;right:10px;
 /* 폼메일 */
 #formmail textarea {height:100px}
 #formmail .formmail_flie {position:relative}
-#formmail .formmail_flie .file_wr {border: 1px solid #ccc;background: #fff;color: #000;vertical-align: middle;border-radius: 3px;padding: 5px;height: 40px;margin: 0}
-#formmail .lb_icon {position: absolute;top: 1px;left: 1px;border-radius: 3px 0 0 3px;height: 38px;line-height: 38px;width: 40px;background: #eee;text-align: center;color: #888}
-#formmail .frm_file {padding-left: 50px}
-#formmail .frm_info {color: #3497d9;font-size: 0.92em}
+#formmail .formmail_flie .file_wr {border:1px solid #ccc;background:#fff;color:#000;vertical-align:middle;border-radius:3px;padding:5px;height:40px;margin:0}
+#formmail .lb_icon {position:absolute;top:1px;left:1px;border-radius:3px 0 0 3px;height:38px;line-height:38px;width:40px;background:#eee;text-align:center;color:#888}
+#formmail .frm_file {padding-left:50px}
+#formmail .frm_info {color:#3497d9;font-size:0.92em}
 
 /* 자기소개 */
 #profile h1 a {color:#fff}
 #profile table {margin-bottom:0}
 #profile table th {text-align:left;padding:10px;width:100px}
-#profile section {color: #2d4c7b;background: #eff9f9;padding: 10px;border: 1px solid #bfd4dc;margin: 10px 0}
+#profile section {color:#2d4c7b;background:#eff9f9;padding:10px;border:1px solid #bfd4dc;margin:10px 0}
 #profile h2 {margin:0 0 5px}
 #profile .profile_name {text-align:center;font-weight:bold}
 #profile .my_profile_img {display:block;margin:20px 0 5px}

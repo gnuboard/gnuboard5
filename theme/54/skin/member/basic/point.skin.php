@@ -6,15 +6,40 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 ?>
 
 <div id="point" class="new_win">
-    <h1 id="win_title"><i class="fa fa-database" aria-hidden="true"></i> <?php echo $g5['title'] ?></h1>
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
-    <div class="new_win_con list_01">
-        
-        <ul>
-            <li class="point_all">
-                보유포인트
-                <span><i class="fa fa-database" aria-hidden="true"></i> <?php echo number_format($member['mb_point']); ?></span>
-            </li>
+    <div class="new_win_con">
+        <ul class="point_all">
+        	<li class="full_li">
+        		보유포인트
+        		<span><?php echo number_format($member['mb_point']); ?></span>
+        	</li>
+        	<li>지급포인트<span>+ 10,500<?php // echo $sum_point1; ?></span></li>
+        	<li>사용포인트 <span>- 20,123<?php // echo $sum_point2; ?></span></li>
+		</ul>
+        <ul class="point_list">
+        	
+        	<!--****** 예시 ******-->
+        	
+        	<li><!-- 지급 -->
+        		<div class="point_top">
+					<span class="point_tit">자유게시판</span>
+                    <span class="point_num">+1</span>  
+				</div>
+				<span class="point_date1"><i class="fa fa-clock-o" aria-hidden="true"></i> 2018-11-15 15:11:24</span>        		
+        	</li>
+        	
+        	<li class="point_use"><!-- 차감 -->
+        		<div class="point_top">
+					<span class="point_tit">자유게시판</span>
+                    <span class="point_num">+1</span>  
+				</div>
+				<span class="point_date1"><i class="fa fa-clock-o" aria-hidden="true"></i> 2018-11-15 15:11:24</span>       		
+        	</li>
+        	
+        	<!--****** 예시 ******-->
+        	
+        	
             <?php
             $sum_point1 = $sum_point2 = $sum_point3 = 0;
 
@@ -43,7 +68,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <div class="point_top">
                     <span class="point_tit"><?php echo $po_content; ?></span>
                     <span class="point_num"><?php if ($point1) echo $point1; else echo $point2; ?></span>
-
                 </div>
                 <span class="point_date1"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $row['po_datetime']; ?></span>
                 <span class="point_date<?php echo $expr; ?>">
@@ -63,14 +87,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 $sum_point2 = number_format($sum_point2);
             }
             ?>
-        
-            <li class="point_status">
-                소계
-                <span><?php echo $sum_point1; ?></span>
-                <span><?php echo $sum_point2; ?></span>
-            </li>
         </ul>
-
     </div>
 
     <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;page='); ?>

@@ -50,6 +50,7 @@ border:1px solid #558ab7 !important;
 #hd_pop,
 #hd_wrapper,
 #tnb .inner,
+
 #gnb .gnb_wrap,
 #container_wr,
 #ft_wr {width:1200px}
@@ -258,7 +259,7 @@ button.btn02 {display:inline-block;margin:0;padding:7px;border:1px solid #3b3c3f
 
 .btn_submit {border:0;background:#3a8afd;color:#fff;cursor:pointer;border-radius:3px}
 .btn_submit:hover {background:#2375eb}
-.btn_close {border:1px solid #e7e9ec;cursor:pointer;border-radius:3px;background:#fff}
+.btn_close {border:1px solid #dcdcdc;cursor:pointer;border-radius:3px;background:#fff}
 
 a.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle}
 button.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle}
@@ -391,8 +392,8 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .new_win_con {margin:20px 0}
 .new_win .new_win_con:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .btn_confirm:after {display:block;visibility:hidden;clear:both;content:""}
-.new_win .win_btn {text-align:right}
-.new_win .btn_close {height:50px;width:50px;/*background:url(../img/close_btn.gif) no-repeat 50% 50%;border:0;text-indent:-999px;*/overflow:hidden;cursor:pointer}
+.new_win .win_btn {text-align:center}
+.new_win .btn_close {height:50px;width:60px;/*background:url(../img/close_btn.gif) no-repeat 50% 50%;border:0;text-indent:-999px;*/overflow:hidden;cursor:pointer}
 .new_win .btn_submit {padding:0 20px;height:40px;font-weight:bold;font-size:1.083em;float:right}
 
 /* 검색결과 색상 */
