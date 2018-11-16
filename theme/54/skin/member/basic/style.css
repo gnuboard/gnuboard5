@@ -187,41 +187,61 @@
 #mb_login #sns_login .txt {font-size:0.95em;padding-left:5px !important;border-left:0 !important}
 
 /* 쪽지 */
-.memo_list li {position:relative;padding:15px}
-.memo_li {float:left}
-#memo_list .memo_name {padding-top:5px}
-#memo_list .memo_name a,
-#memo_list .memo_name .sv_wrap {font-weight:bold}
-#memo_list .profile_img {position:relative;margin-right:15px}
-#memo_list .profile_img img {border-radius:50%;width:52px;height:52px}
-#memo_list .no_read {position:absolute;bottom:0;right:0;display:inline-block;background:#3a8afd;border:1px solid #e1edff;text-indent:-9999px;border-radius:10px;width:10px;height:10px;box-shadow:0 0 10px 3px #9ec3f9}
-#memo_list .no_read {animation:blinker 1s linear infinite}
+.memo_list {border-top:1px solid #ececec;}
+.memo_list li {border-bottom:1px solid #ececec;background:#fff;padding:10px 15px;list-style:none;position:relative}
+.memo_list li:after {display:block;visibility:hidden;clear:both;content:""}
+.memo_list li.read {background:#f6f6f6}
+.memo_list li.empty_li {text-align:center;padding:20px 0;color:#666}
+
+.memo_list .memo_li {float:left}
+.memo_list .profile_img {position:relative;margin-right:15px}
+.memo_list .profile_img img {border-radius:50%;width:52px;height:52px}
+.memo_list .memo_name {padding-top:5px}
+.memo_list .memo_name a,
+.memo_list .memo_name .sv_wrap {font-weight:bold}
+.memo_list .no_read {position:absolute;bottom:0;right:0;display:inline-block;background:#3a8afd;border:1px solid #e1edff;text-indent:-9999px;border-radius:10px;width:10px;height:10px;box-shadow:0 0 10px 3px #9ec3f9}
+.memo_list .no_read {animation:blinker 1s linear infinite}
 
 @keyframes blinker {
 	50% {opacity:0}
 	}
 
+#memo_list h1#win_title {padding:10px 10px 10px 20px}
 #memo_list .memo_datetime {font-size:0.92em;color:#888d92}
-#memo_list .memo_del {position:absolute;right:15px;top:20px;padding:10px;color:#c7c9cb;font-size:1.4em}
+#memo_list .memo_del {position:absolute;right:15px;top:15px;padding:10px;color:#c7c9cb;font-size:1.4em}
 #memo_list .memo_cnt {margin-top:5px;font-weight:normal;display:inline-block;font-size:1.2em}
 
-#memo_view_contents {margin:10px 0;border:1px solid #ddd}
+#memo_view_contents {margin-bottom:20px;border-top:1px solid #ececec;border-bottom:1px solid #ececec}
 #memo_view_contents h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#memo_view_ul {margin:0;border-bottom:1px solid #eee;list-style:none;background:#f3f3f3}
+#memo_view_ul {margin:0;list-style:none;background:#f6f6f6}
 #memo_view_ul:after {display:block;visibility:hidden;clear:both;content:""}
-.memo_view_li {position:relative;padding:10px;float:left;width:50%}
-.memo_view_name strong,.memo_view_name .sv_wrap {font-weight:bold !important}
-/*.memo_view_subj {display:inline-block;height:20px;line-height:18px;border:1px solid #3497d9;color:#3497d9;padding:0 5px;border-radius:15px;font-size:11px}*/
-.memo_view_li .profile_img img {border-radius:50%}
-.memo_view_date {text-align:right;color:#555}
-.memo_view_date strong {font-weight:normal}
+.memo_view_li {position:relative;/*padding:10px;float:left;width:50%*/}
 
-.memo_btn {background:pink;display:inline-block}
-#memo_view .btn_b02 {float:right}
-#memo_view .btn_b02.reply_btn {margin-left:4px}
-#memo_view p {padding:10px;border-top:1px solid #ddd;min-height:150px;height:auto !important;height:150px;background:#fff;line-height:1.8em}
+.memo_view_li .profile_img img {display:none}
+.memo_from {position:relative;background:#fff;border-bottom:1px solid #ececec;padding:15px 20px}
+.memo_from li {float:left}
+.memo_from li.memo_profile img {width:40px;height:40px;border-radius:50%}
+.memo_from li:first-child {margin-right:10px}
+.memo_from li.memo_view_nick {width:80%}
+.memo_from li.memo_view_nick a {font-weight:bold !important}
+.memo_from li.memo_view_date {display:block;color:#555;line-height:24px}
+.memo_from li.memo_op_btn {position:absolute}
+.memo_from li.list_btn {right:53px;}
+.memo_from li.del_btn {right:15px;padding}
+.memo_from:after {display:block;visibility:hidden;clear:both;content:""}
 
-#memo_write textarea {height:100px}
+.memo_btn {width:100%}
+.memo_btn a {display:inline-block;width:50%;font-size:1em;color:#888d92;padding:20px}
+.memo_btn a.btn_right {float:right;text-align:right}
+.memo_btn a i {font-size:1.2em;color:#acabab;vertical-align:bottom}
+
+#memo_view p {padding:10px;min-height:150px;height:auto !important;height:150px;background:#fff;line-height:1.8em}
+#memo_view textarea {height:100px}
+
+#memo_write .form_01 {padding:20px;border-top:1px solid #ececec}
+
+.reply_btn {display:inline-block;width:150px;height:50px;line-height:50px;padding:0 10px;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px;vertical-align:bottom;margin-right:5px}
+#memo_write .reply_btn {font-size:1em}
 
 /* 스크랩 */
 #scrap li:after {display:block;visibility:hidden;clear:both;content:""}

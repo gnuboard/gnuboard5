@@ -18,8 +18,22 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <li><a href="./memo_form.php">쪽지쓰기</a></li>
         </ul>
         
-        <div class="memo_list list_01">
+        <div class="memo_list">
             <ul>
+            	<!-- **** 예시 참고 후 삭제합니다 : 읽은쪽지 -->
+            	<li class="read">
+            		<div class="memo_li profile_img">
+	            		<?php echo get_member_profile_img($member['mb_id']); ?>
+	            	</div>
+	                <div class="memo_li memo_name">
+	                	<a href="<?php echo $list[$i]['view_href'] ?>">아리아나벤티</a> <span class="memo_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> 18-11-13 16:58</span>
+						<br>
+						<a href="<?php echo $list[$i]['view_href'] ?>" class="memo_cnt">읽은 쪽지입니다.</a>
+					</div>	
+					<a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;" class="memo_del"><i class="fa fa-trash-o" aria-hidden="true"></i> <span class="sound_only">삭제</span></a>
+            	</li>
+            	<!-- **** 예시 참고 후 삭제합니다 : 읽은쪽지 -->            	
+            	
 	            <?php for ($i=0; $i<count($list); $i++) {  ?>
 	            <li>
 	            	<div class="memo_li profile_img">
@@ -29,7 +43,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                <div class="memo_li memo_name">
 	                	<a href="<?php echo $list[$i]['view_href'] ?>"><?php echo $list[$i]['mb_nick'] ?></a> <span class="memo_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['send_datetime'] ?></span>
 						<br>
-						<span class="memo_cnt">쪽지 한줄 내용입니다.</span>
+						<a href="<?php echo $list[$i]['view_href'] ?>" class="memo_cnt">안 읽은 쪽지입니다. 쪽지 내용입니다.</a>
 					</div>	
 	                <?php// 쪽지 읽은 시간 echo $list[$i]['read_datetime'] ?>	
 					<a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;" class="memo_del"><i class="fa fa-trash-o" aria-hidden="true"></i> <span class="sound_only">삭제</span></a>

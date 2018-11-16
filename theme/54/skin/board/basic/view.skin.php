@@ -66,6 +66,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <section id="bo_v_atc">
         <h2 id="bo_v_atc_title">본문</h2>
+        <div id="bo_v_share">
+        	<?php include_once(G5_SNS_PATH."/view.sns.skin.php"); ?>
+	        <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn btn_b03" onclick="win_scrap(this.href); return false;"><i class="fa fa-bookmark" aria-hidden="true"></i> 스크랩</a><?php } ?>
+	    </div>
 
         <?php
         // 파일 출력
@@ -122,14 +126,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <!-- }  추천 비추천 끝 -->
     </section>
 
-    <div id="bo_v_share">
-        <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class="btn btn_b03" onclick="win_scrap(this.href); return false;"><i class="fa fa-thumb-tack" aria-hidden="true"></i> 스크랩</a><?php } ?>
-
-        <?php
-        include_once(G5_SNS_PATH."/view.sns.skin.php");
-        ?>
-    </div>
-
     <?php
     $cnt = 0;
     if ($view['file']['count']) {
@@ -151,11 +147,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
          ?>
             <li>
-                <i class="fa fa-download" aria-hidden="true"></i>
+               	<i class="fa fa-folder-open" aria-hidden="true"></i>
                 <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download">
-                    <strong><?php echo $view['file'][$i]['source'] ?></strong>
+                    <strong><?php echo $view['file'][$i]['source'] ?></strong> <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
                 </a>
-                <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
+                <br>
                 <span class="bo_v_file_cnt"><?php echo $view['file'][$i]['download'] ?>회 다운로드 | DATE : <?php echo $view['file'][$i]['datetime'] ?></span>
             </li>
         <?php
@@ -181,10 +177,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 $link = cut_str($view['link'][$i], 70);
             ?>
             <li>
-                <i class="fa fa-link" aria-hidden="true"></i> <a href="<?php echo $view['link_href'][$i] ?>" target="_blank">
-                    
+                <i class="fa fa-link" aria-hidden="true"></i>
+                <a href="<?php echo $view['link_href'][$i] ?>" target="_blank">
                     <strong><?php echo $link ?></strong>
                 </a>
+                <br>
                 <span class="bo_v_link_cnt"><?php echo $view['link_hit'][$i] ?>회 연결</span>
             </li>
             <?php
@@ -257,17 +254,17 @@ $(function() {
     $("#bo_v_atc").viewimageresize();
 
     //sns공유
-    $(".btn_share").click(function(){
-        $("#bo_v_sns").fadeIn();
-   
-    });
+    // $(".btn_share").click(function(){
+        // $("#bo_v_sns").fadeIn();
+//    
+    // });
 
-    $(document).mouseup(function (e) {
-        var container = $("#bo_v_sns");
-        if (!container.is(e.target) && container.has(e.target).length === 0){
-        container.css("display","none");
-        }	
-    });
+    // $(document).mouseup(function (e) {
+        // var container = $("#bo_v_sns");
+        // if (!container.is(e.target) && container.has(e.target).length === 0){
+        // container.css("display","none");
+        // }	
+    // });
 });
 
 function excute_good(href, $el, $tx)

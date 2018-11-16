@@ -384,10 +384,10 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .win_ul li a {display:block;padding:8px 0;color:#6794d3}
 .new_win .win_ul .selected {background:#3a8afd;border-color:#3a8afd;position:relative;z-index:5}
 .new_win .win_ul .selected a {color:#fff;font-weight:bold}
-.new_win .win_desc {position:relative;margin:10px;border-radius:5px;font-size:1.2em;background:#f2838f;color:#fff;line-height:50px;text-align:left;padding:0 20px}
+.new_win .win_desc {position:relative;margin:10px;border-radius:5px;font-size:1em;background:#f2838f;color:#fff;line-height:50px;text-align:left;padding:0 20px}
 .new_win .win_desc i {font-size:1.2em;vertical-align:baseline}
 .new_win .win_desc:after {content:"";position:absolute;left:0;top:0;width:4px;height:50px;background:#da4453;border-radius:3px 0 0 3px}
-.new_win .frm_info {font-size:0.92em;color:#3598db}
+.new_win .frm_info {font-size:0.92em;color:#919191}
 .new_win .win_total {float:right;display:inline-block;line-height:30px;font-weight:normal;font-size:0.75em;color:#3a8afd;background:#f6f6f6;padding:0 10px;border-radius:5px}
 .new_win .new_win_con {margin:20px 0}
 .new_win .new_win_con:after {display:block;visibility:hidden;clear:both;content:""}
