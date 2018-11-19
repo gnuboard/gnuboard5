@@ -11,8 +11,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 ?>
 
 <div id="bo_list">
-
-
      <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
         <div id="bo_list_total">
@@ -22,8 +20,38 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
         <?php if ($admin_href || $write_href) { ?>
         <ul class="btn_bo_user">
-            <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-user-circle" aria-hidden="true"></i> 관리자</a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02 btn"><i class="fa fa-pencil" aria-hidden="true"></i> 문의등록</a></li><?php } ?>
+        	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+        	<li>
+        		<button type="button" class="btn_bo_sch btn_b01 btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
+				<!-- 게시판 검색 시작 { -->
+			    <div class="bo_sch_wrap">
+				    <fieldset class="bo_sch">
+				    	<h3>검색</h3>
+				        <legend>게시물 검색</legend>
+				        <form name="fsearch" method="get">
+				        <input type="hidden" name="sca" value="<?php echo $sca ?>">
+				        <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+				        <div class="sch_bar">
+				       		<input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" id="stx" required class="sch_input" size="25" maxlength="15" placeholder=" 검색어를 입력해주세요">
+							<button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+				        </div>
+				        <button type="button" class="bo_sch_cls"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
+				        </form>
+				    </fieldset>
+			    	<div class="bo_sch_bg"></div>
+			    </div>
+			    <script>
+					// 게시판 검색
+					$(".btn_bo_sch").on("click", function() {
+					    $(".bo_sch_wrap").toggle();
+					})
+					$('.bo_sch_bg, .bo_sch_cls').click(function(){
+					    $('.bo_sch_wrap').hide();
+					});
+				</script>
+			    <!-- } 게시판 검색 끝 -->
+			</li>
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">문의등록</span></a></li><?php } ?>
         </ul>
         <?php } ?>
     </div>
@@ -84,7 +112,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             </td>
             <td class="td_name"><?php echo $list[$i]['name']; ?></td>
             <td class="td_date"><?php echo $list[$i]['date']; ?></td>
-            <td class="td_stat"><span class=" <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '<i class="fa fa-check-circle" aria-hidden="true"></i> 답변완료' : '<i class="fa fa-times-circle" aria-hidden="true"></i> 답변대기'); ?></span></td>
+            <td class="td_stat"><span class=" <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></span></td>
         </tr>
         <?php
         }
@@ -97,28 +125,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
     <div class="bo_fx">
         <ul class="btn_bo_user">
-            <?php if ($is_checkbox) { ?>
-            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_admin"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
+        	<?php if ($is_checkbox) { ?>
+            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_b01 btn_admin"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button></li>
             <?php } ?>
-            <?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i> 목록</a></li><?php } ?>
-            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02 btn"><i class="fa fa-pencil" aria-hidden="true"></i> 문의등록</a></li><?php } ?>
+            <?php if ($list_href) { ?><li><a href="<?php echo $list_href ?>" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li><?php } ?>
+            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">문의등록</span></a></li><?php } ?>
         </ul>
     </div>
     </form>
-
-    
-    <!-- 게시판 검색 시작 { -->
-    <fieldset id="bo_sch">
-        <legend>게시물 검색</legend>
-
-        <form name="fsearch" method="get">
-        <input type="hidden" name="sca" value="<?php echo $sca ?>">
-        <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-        <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" id="stx" required  class="sch_input" size="25" maxlength="15">
-        <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
-        </form>
-    </fieldset>
-    <!-- } 게시판 검색 끝 -->
 </div>
 
 <?php if($is_checkbox) { ?>

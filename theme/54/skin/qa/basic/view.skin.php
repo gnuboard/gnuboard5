@@ -38,8 +38,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         <?php } ?>
     </section>
 
-  
-
     <section id="bo_v_atc">
         <h2 id="bo_v_atc_title">본문</h2>
 
@@ -88,10 +86,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         </section>
         <!-- } 첨부파일 끝 -->
         <?php } ?>
-
     </section>
-
-
 
     <!-- 게시물 상단 버튼 시작 { -->
     <div id="bo_v_top">

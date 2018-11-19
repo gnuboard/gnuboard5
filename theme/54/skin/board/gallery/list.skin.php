@@ -32,10 +32,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
             <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01 btn"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
             <li>
-            	<button class="btn_bo_sch btn_b01 btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
+            	<button type="button" class="btn_bo_sch btn_b01 btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">게시판 검색</span></button>
             	<!-- 게시판 검색 시작 { -->
-			    <div class="bo_sch_wrap">				
+			    <div class="bo_sch_wrap">	
 				    <fieldset class="bo_sch">
+				    	<h3>검색</h3>
 				        <legend>게시물 검색</legend>
 				        <form name="fsearch" method="get">
 				        <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -46,12 +47,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 				            <?php echo get_board_sfl_select_options($sfl); ?>
 				        </select>
 				        <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-				        <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력해주세요">
-				        <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+				        <div class="sch_bar">
+							<input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required id="stx" class="sch_input" size="25" maxlength="20" placeholder="검색어를 입력해주세요">
+				        	<button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+						</div>
+						<button type="button" class="bo_sch_cls"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
 				        </form>
 				    </fieldset>
 				    <div class="bo_sch_bg"></div>
 			    </div>
+			    <script>
+					// 게시판 검색
+					$(".btn_bo_sch").on("click", function() {
+					    $(".bo_sch_wrap").toggle();
+					})
+					$('.bo_sch_bg, .bo_sch_cls').click(function(){
+					    $('.bo_sch_wrap').hide();
+					});
+				</script>
 			    <!-- } 게시판 검색 끝 --> 
             </li>
             <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
@@ -270,15 +283,6 @@ function select_copy(sw) {
 $(".btn_more_opt").on("click", function() {
     $(".more_opt").toggle();
 })
-
-// 게시판 검색
-$(".btn_bo_sch").on("click", function() {
-    $(".bo_sch_wrap").toggle();
-})
-$('.bo_sch_bg').click(function(){
-    $('.bo_sch_wrap').hide();
-});
-
 </script>
 <?php } ?>
 <!-- } 게시판 목록 끝 -->

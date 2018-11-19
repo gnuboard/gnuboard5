@@ -56,7 +56,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <?php if ($is_category) { ?>
     <div class="bo_w_select write_div">
-        <label for="ca_name"  class="sound_only">분류<strong>필수</strong></label>
+        <label for="ca_name" class="sound_only">분류<strong>필수</strong></label>
         <select name="ca_name" id="ca_name" required>
             <option value="">분류를 선택하세요</option>
             <?php echo $category_option ?>
@@ -65,29 +65,30 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php } ?>
 
     <div class="bo_w_info write_div">
-    <?php if ($is_name) { ?>
-        <label for="wr_name" class="sound_only">이름<strong>필수</strong></label>
-        <input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input required" placeholder="이름">
-    <?php } ?>
-
-    <?php if ($is_password) { ?>
-        <label for="wr_password" class="sound_only">비밀번호<strong>필수</strong></label>
-        <input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> class="frm_input <?php echo $password_required ?>" placeholder="비밀번호">
-    <?php } ?>
-
-    <?php if ($is_email) { ?>
-            <label for="wr_email" class="sound_only">이메일</label>
-            <input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input email " placeholder="이메일">
-    <?php } ?>
-    </div>
-
-    <?php if ($is_homepage) { ?>
-    <div class="write_div">
-        <label for="wr_homepage" class="sound_only">홈페이지</label>
-        <input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input full_input" size="50" placeholder="홈페이지">
-    </div>
-    <?php } ?>
-
+	    <?php if ($is_name) { ?>
+	        <label for="wr_name" class="sound_only">이름<strong>필수</strong></label>
+	        <input type="text" name="wr_name" value="<?php echo $name ?>" id="wr_name" required class="frm_input half_input required" placeholder="이름">
+	    <?php } ?>
+	
+	    <?php if ($is_password) { ?>
+	        <label for="wr_password" class="sound_only">비밀번호<strong>필수</strong></label>
+	        <input type="password" name="wr_password" id="wr_password" <?php echo $password_required ?> class="frm_input half_input <?php echo $password_required ?>" placeholder="비밀번호">
+	    <?php } ?>
+	
+	    <?php if ($is_email) { ?>
+			<label for="wr_email" class="sound_only">이메일</label>
+			<input type="text" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input half_input email " placeholder="이메일">
+	    <?php } ?>
+	    
+	
+	    <?php if ($is_homepage) { ?>
+	    <div class="write_div">
+	        <label for="wr_homepage" class="sound_only">홈페이지</label>
+	        <input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input half_input" size="50" placeholder="홈페이지">
+	    </div>
+	    <?php } ?>
+	</div>
+	
     <?php if ($option) { ?>
     <div class="write_div">
         <span class="sound_only">옵션</span>
@@ -140,7 +141,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
     <div class="bo_w_flie write_div">
         <div class="file_wr write_div">
-            <label for="bf_file_<?php echo $i+1 ?>" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #<?php echo $i+1 ?></span></label>
+            <label for="bf_file_<?php echo $i+1 ?>" class="lb_icon"><i class="fa fa-folder-open" aria-hidden="true"></i><span class="sound_only"> 파일 #<?php echo $i+1 ?></span></label>
             <input type="file" name="bf_file[]" id="bf_file_<?php echo $i+1 ?>" title="파일첨부 <?php echo $i+1 ?> : 용량 <?php echo $upload_max_filesize ?> 이하만 업로드 가능" class="frm_file ">
         </div>
         <?php if ($is_file_content) { ?>
@@ -163,10 +164,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </div>
     <?php } ?>
 
-
     <div class="btn_confirm write_div">
         <a href="<?php echo get_pretty_url($bo_table); ?>" class="btn_cancel btn">취소</a>
-        <input type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn">
+        <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
     </div>
     </form>
 

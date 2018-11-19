@@ -106,10 +106,10 @@ border:1px solid #558ab7 !important;
 /* 메인메뉴 */
 #gnb {position:relative;background:#fff}
 #gnb > h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#gnb .gnb_wrap {margin:0 auto;position:relative}
-#gnb #gnb_1dul {font-size:1.083em;padding:0;background:#fff;border-bottom:1px solid #e0e2e5;zoom:1}
+#gnb .gnb_wrap {margin:0 auto;position:relative;z-index:10}
+#gnb #gnb_1dul {font-size:1.083em;padding:0;border-bottom:1px solid #e0e2e5;zoom:1}
 #gnb ul:after {display:block;visibility:hidden;clear:both;content:""}
-#gnb .gnb_1dli {float:left;line-height:55px;padding:0 15px;background:#fff;position:relative}
+#gnb .gnb_1dli {float:left;line-height:55px;padding:0 15px;position:relative}
 #gnb .gnb_1dli:hover > a {color:#3a8afd;
 -webkit-transition:background-color 2s ease-out;
 -moz-transition:background-color 0.3s ease-out;
@@ -309,7 +309,7 @@ a.btn_admin,.btn_admin {display:inline-block;color:#d13f4a;text-decoration:none;
 .tbl_frm01 table {width:100%;border-collapse:collapse;border-spacing:0}
 .tbl_frm01 th {width:70px;padding:7px 13px;border:1px solid #e9e9e9;border-left:0;background:#f5f8f9;text-align:left}
 .tbl_frm01 td {padding:7px 10px;border-top:1px solid #e9e9e9;border-bottom:1px solid #e9e9e9;background:transparent}
-.wr_content textarea,.tbl_frm01 textarea,.form_01 textarea, .frm_input {border:1px solid #ccc;background:#fff;color:#000;vertical-align:middle;border-radius:3px;padding:5px;
+.wr_content textarea,.tbl_frm01 textarea,.form_01 textarea, .frm_input {border:1px solid #d0d3db;background:#fff;color:#000;vertical-align:middle;border-radius:3px;padding:5px;
 -webkit-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
 -moz-box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
 box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
