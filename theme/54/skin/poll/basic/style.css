@@ -34,19 +34,19 @@
 
 /* 설문조사 스킨 */
 #poll {border:1px solid #dde7e9;background:#f7f7f7;position:relative;border-radius:3px;margin-bottom:15px}
-#poll header {position:relative;border-bottom:1px solid #e8e8e8;padding:15px 20px}
-#poll header h2 {display:inline-block;float:left;font-size:1.167em;color:#000;line-height:28px}
-#poll header .btn_poll {float:right;display:inline-block;height:28px;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;padding:2px 5px;background:#fff}
+#poll header {position:relative;border-bottom:1px solid #e8e8e8;padding:15px}
 #poll header:after {display:block;visibility:hidden;clear:both;content:""}
+#poll header h2 {display:inline-block;float:left;font-size:1.167em;color:#000;line-height:28px}
+#poll header h2:after {display:block;visibility:hidden;clear:both;content:""}
+#poll header .btn_result {float:right;display:inline-block;line-height:20px;height:28px;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;padding:2px 5px;background:#fff}
+#poll header .btn_admin {float:right;margin-left:5px;line-height:28px;font-size:1.4em}
 #poll ul {padding:0 20px;list-style:none}
 #poll li {padding:5px 0}
 #poll .poll_con {}
 #poll .poll_con p {font-weight:bold;padding:15px 20px;color:#000;font-size:1.167em}
 #poll_btn {padding:10px 20px 20px;text-align:center}
 #poll_btn:after {display:block;visibility:hidden;clear:both;content:""}
-#poll_btn .btn_poll {display:inline-block;height:30px;line-height:28px;padding:0 10px;background:#3a8afd;border-radius:3px}
-#poll_btn .btn_result {display:block;height:40px;line-height:40px;padding:0 10px;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px}
-#poll_btn .btn_admin {display:block;height:40px;line-height:40px;padding:0 10px;font-weight:bold;background:#d13f4a;color:#fff;border-radius:3px;margin-bottom:5px}
+#poll_btn .btn_poll {display:block;width:100%;height:40px;line-height:40px;padding:0 10px;border:0;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px}
 
 /* 설문조사 결과 (새창) */
 #poll_result {}

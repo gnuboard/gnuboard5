@@ -47,7 +47,7 @@ $thumb_height = 150;
             //if ($list[$i]['icon_link']) echo " <i class=\"fa fa-link\" aria-hidden=\"true\"></i>" ;
 
             if ($list[$i]['comment_cnt'])  echo "
-            <span class=\"lt_cmt\">+ ".$list[$i]['wr_comment']."</span>";
+            <span class=\"lt_cmt\">".$list[$i]['wr_comment']."</span>";
 
             ?>
 

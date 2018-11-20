@@ -14,7 +14,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
         </span>
         <strong><?php echo $nick ?>님</strong>
         <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info">정보수정</a>
-        <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>" class="btn_admin btn_04">관리자</a><?php }  ?>
+        <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a><?php }  ?>
     </header>
     <ul id="ol_after_private">
     	<li>
@@ -32,7 +32,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
         <li>
             <a href="<?php echo G5_BBS_URL ?>/scrap.php" target="_blank" id="ol_after_scrap" class="win_scrap">
             	<i class="fa fa-thumb-tack" aria-hidden="true"></i>스크랩
-            	<strong class="scrap"></strong>
+            	<strong class="scrap">0</strong>
             </a>
         </li>
     </ul>

@@ -20,6 +20,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$visit_skin_url.'/style.css">', 0
         <dt><span class="color_4"></span> 전체</dt>
         <dd><strong class="color_4"><?php echo number_format($visit[4]) ?></strong></dd>
     </dl>
-    <?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/visit_list.php" class="btn_admin">상세보기</a><?php } ?>
+    <?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/visit_list.php" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a><?php } ?>
 </section>
 <!-- } 접속자집계 끝 -->

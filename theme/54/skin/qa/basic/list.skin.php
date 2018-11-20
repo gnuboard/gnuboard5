@@ -11,7 +11,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 ?>
 
 <div id="bo_list">
-     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
+	<?php if ($category_option) { ?>
+    <!-- 카테고리 시작 { -->
+    <nav id="bo_cate">
+        <h2><?php echo $qaconfig['qa_title'] ?> 카테고리</h2>
+        <ul id="bo_cate_ul">
+            <?php echo $category_option ?>
+        </ul>
+    </nav>
+    <!-- } 카테고리 끝 -->
+    <?php } ?>
+    
+	<!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
         <div id="bo_list_total">
             <span>Total <?php echo number_format($total_count) ?>건</span>
@@ -56,17 +67,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         <?php } ?>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
-
-    <?php if ($category_option) { ?>
-    <!-- 카테고리 시작 { -->
-    <nav id="bo_cate">
-        <h2><?php echo $qaconfig['qa_title'] ?> 카테고리</h2>
-        <ul id="bo_cate_ul">
-            <?php echo $category_option ?>
-        </ul>
-    </nav>
-    <!-- } 카테고리 끝 -->
-    <?php } ?>
 
     <form name="fqalist" id="fqalist" action="./qadelete.php" onsubmit="return fqalist_submit(this);" method="post">
     <input type="hidden" name="stx" value="<?php echo $stx; ?>">
@@ -122,7 +122,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         </tbody>
         </table>
     </div>
-
+	<!-- 페이지 -->
+	<?php echo $list_pages; ?>
+	<!-- 페이지 -->
+	
     <div class="bo_fx">
         <ul class="btn_bo_user">
         	<?php if ($is_checkbox) { ?>
@@ -140,10 +143,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 <p>자바스크립트를 사용하지 않는 경우<br>별도의 확인 절차 없이 바로 선택삭제 처리하므로 주의하시기 바랍니다.</p>
 </noscript>
 <?php } ?>
-
-<!-- 페이지 -->
-<?php echo $list_pages;  ?>
-
 
 <?php if ($is_checkbox) { ?>
 <script>

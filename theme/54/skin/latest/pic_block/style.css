@@ -29,6 +29,6 @@
 .pic_lt .empty_li {line-height:145px ;color:#666;text-align:center;padding:0}
 .pic_lt .empty_li:before {background:none;padding:0}
 
-.pic_lt .lt_cmt {color:#3a8afd;font-size:11px;padding:0 5px;font-weight:bold}
+.pic_lt .lt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
 .pic_lt .lt_more {position:absolute;top:11px;right:0;display:block;width:40px;line-height:25px;color:#3a8afd;border-radius:3px;text-align:center}
 .pic_lt .lt_more:hover {color:#777}

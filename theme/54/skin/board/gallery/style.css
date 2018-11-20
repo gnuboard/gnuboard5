@@ -73,7 +73,7 @@
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 게시판 목록 */
-#bo_cate {margin-bottom:28px}
+#bo_cate {margin:25px 0}
 #bo_cate h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #bo_cate ul {zoom:1}
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}

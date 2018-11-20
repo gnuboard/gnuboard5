@@ -31,16 +31,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     <div class="form_01">
         <ul>
             <?php if ($category_option) { ?>
-            <li>
+            <li class="bo_w_select write_div">
                 <label for="qa_category" class="sound_only">분류<strong>필수</strong></label>
                 <select name="qa_category" id="qa_category" required >
                     <option value="">분류를 선택하세요</option>
                     <?php echo $category_option ?>
                 </select>
-                
             </li>
             <?php } ?>
-
 
             <?php if ($is_email) { ?>
             <li class="bo_w_mail">
@@ -103,12 +101,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             </li>
         </ul>
     </div>
-
-    <div class="btn_confirm">
-        <a href="<?php echo $list_href; ?>" class="btn_cancel btn"><i class="fa fa-list" aria-hidden="true"></i> 목록</a>
-        <button type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn"><i class="fa fa-check" aria-hidden="true"></i> 작성완료 </button>
-
+    
+    <div class="btn_confirm write_div">
+        <a href="<?php echo $list_href; ?>" class="btn_cancel btn">취소</a>
+        <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
     </div>
+    
     </form>
 
     <script>

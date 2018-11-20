@@ -6,7 +6,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 ?>
 
 <!-- 회원가입약관 동의 시작 { -->
-<div>
+<div class="register">
 
     <?php
     // 소셜로그인 사용시 소셜로그인 버튼
@@ -65,7 +65,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     </div>
 	    
     <div class="btn_confirm">
-    	<button type="button" onclick="window.close();" class="btn_close">취소</button>
+    	<a href="<?php echo G5_URL ?>" class="btn_close">취소</a>
         <button type="submit" class="btn_submit">회원가입</button>
     </div>
 

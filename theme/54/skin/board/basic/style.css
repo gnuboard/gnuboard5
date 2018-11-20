@@ -108,7 +108,7 @@
 #bo_list .txt_expired {color:#ccc}
 #bo_list tbody tr:hover {border-left:2px solid #253dbe}
 
-#bo_cate {margin-bottom:28px}
+#bo_cate {margin:25px 0}
 #bo_cate h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #bo_cate ul {zoom:1}
 #bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -163,8 +163,8 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 #bo_list .bo_tit .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
 #bo_list .bo_tit .hot_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#ff0000;background:#ffb9b9;text-align:center;border-radius:2px;vertical-align:middle}
 #bo_list .bo_tit .fa-caret-right {color:#bbb}
-#bo_list .bo_tit .fa-download {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#daae37;background:#ffefb9;text-align:center;border-radius:2px;vertical-align:middle}
-#bo_list .bo_tit .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;vertical-align:middle}
+#bo_list .bo_tit .fa-download {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#daae37;background:#ffefb9;text-align:center;border-radius:2px;margin-left:5px;vertical-align:middle}
+#bo_list .bo_tit .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;margin-left:5px;vertical-align:middle}
 
 .bo_sch_wrap {display:none;width:100%;height:100%;position:fixed;top:0;left:0;z-index:999}
 .bo_sch {position:absolute;top:50%;left:50%;background:#fff;text-align:left;width:330px;max-height:300px;margin-left:-125px;margin-top:-180px;overflow-y:auto;border-radius:5px;-webkit-box-shadow:1px 1px 18px rgba(0,0,0,0.2);-moz-box-shadow:1px 1px 18px rgba(0,0,0,0.2);box-shadow:1px 1px 18px rgba(0,0,0,0.2);border:1px solid #dde7e9;background:#fff;border-radius:3px}
