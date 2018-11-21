@@ -1,5 +1,6 @@
 @charset "utf-8";
 
+/* 현재접속자 */
 #current_connect ul {margin:0 -10px 0;padding:0;list-style:none;zoom:1}
 #current_connect ul:after {display:block;visibility:hidden;clear:both;content:""}
 #current_connect li:after {display:block;visibility:hidden;clear:both;content:""}

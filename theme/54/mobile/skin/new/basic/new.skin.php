@@ -16,8 +16,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         <option value="w">원글만
         <option value="c">코멘트만
     </select>
+    <label for="mb_id" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="mb_id" value="<?php echo $mb_id ?>" id="mb_id" placeholder="검색어(필수)" required class="frm_input ">
-    <button type="submit" value="검색" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    <button type="submit" class="btn_submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    <p>회원 아이디만 검색 가능</p>
     </form>
     <script>
     function select_change()
@@ -31,7 +33,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 <!-- } 전체게시물 검색 끝 -->
 
 <!-- 전체게시물 목록 시작 { -->
-<div class="list_01" id="new_list">
+<div id="fnewlist" class="new_list">
     <ul>
 
     <?php
@@ -42,8 +44,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         $wr_subject = get_text(cut_str($list[$i]['wr_subject'], 80));
     ?>
     <li>
+    	<a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>" class="new_board"><?php echo $bo_subject ?></a>
         <a href="<?php echo $list[$i]['href'] ?>" class="new_tit"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a>
-        <a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>" class="new_board"><i class="fa fa-list-alt" aria-hidden="true"></i> <?php echo $bo_subject ?></a>
+        
         <span class="new_date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['datetime2'] ?></span>
     </li>
     <?php } ?>

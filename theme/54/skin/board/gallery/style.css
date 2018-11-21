@@ -160,7 +160,7 @@ box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}
 .bo_notice td a {font-weight:bold}
 .bo_notice .notice_icon {display:inline-block;line-height:25px;border-radius:5px;font-weight:bold;color:#f9267f}
 
-.more_opt {display:none;position:absolute;top:45px;right:0;background:#fff;border:1px solid #ecf0f1}
+.more_opt {display:none;position:absolute;top:45px;right:0;background:#fff;border:1px solid #ecf0f1;z-index:999}
 .more_opt:before {content:"";position:absolute;top:-8px;right:13px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #ecf0f1 transparent}
 .more_opt:after {content:"";position:absolute;top:-6px;right:13px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #fff transparent}
 .more_opt li {border-bottom:1px solid #f0f0f0;padding:10px 0;float:inherit;width:80px;margin:0}

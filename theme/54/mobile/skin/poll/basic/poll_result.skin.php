@@ -35,45 +35,33 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
                     <?php echo $list2[$i]['name'] ?>
                     <span class="poll_datetime"><?php echo $list2[$i]['datetime'] ?>
                     <span class="poll_cmt_del"><?php if ($list2[$i]['del']) { echo $list2[$i]['del']."<i class=\"fa fa-times-circle\" aria-hidden=\"true\"></i><span class=\"sound_only\">삭제</span></a>"; } ?></span></span>
-
                 </header>
                 <p>
                     <?php echo $list2[$i]['idea'] ?>
-                </p>
-                   
+                </p>  
             </article>
             <?php } ?>
 
             <?php if ($member['mb_level'] >= $po['po_level']) { ?>
-            <form name="fpollresult" method="post" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" autocomplete="off">
+            <form name="fpollresult" method="post" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" autocomplete="off" id="poll_other_q">
             <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
             <input type="hidden" name="w" value="">
             <input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
             <?php if ($is_member) { ?><input type="hidden" name="pc_name" value="<?php echo get_text(cut_str($member['mb_nick'],255)); ?>"><?php } ?>
-            <h3><?php echo $po_etc ?></h3>
-
-            <div class="tbl_frm01 tbl_wrap">
-                <table id="poll_result_wcmt">
-                <tbody>
-                <?php if ($is_guest) { ?>
-                <tr>
-                    <td><input type="text" name="pc_name" id="pc_name" class="frm_input full_input required" required placeholder="이름(필수)"></td>
-                </tr>
-                <?php } ?>
-                <tr>
-                    <td><input type="text" name="pc_idea" id="pc_idea" class="frm_input full_input required" required maxlength="100" placeholder="의견(필수)"></td>
-                </tr>
-                <?php if ($is_guest) { ?>
-                <tr>
-                    <td><?php echo captcha_html(); ?></td>
-                </tr>
-                <?php } ?>
-                </tbody>
-                </table>
-            </div>
-
-            <div class="btn_confirm">
-                <input type="submit" class="btn_submit" value="의견남기기">
+            <h3><span>기타의견</span><?php echo $po_etc ?></h3>
+            <div id="poll_result_wcmt">
+            <?php if ($is_guest) { ?>
+                <div>
+                	<label for="pc_name" class="sound_only">이름<strong>필수</strong></label>
+                    <input type="text" name="pc_name" id="pc_name" class="frm_input full_input required" required placeholder="의견을 입력해주세요">
+                </div>
+                <?php echo captcha_html(); ?>
+            <?php } ?>
+                <div>
+                	<label for="pc_name" class="sound_only">이름<strong>필수</strong></label>
+                    <input type="text" name="pc_idea" id="pc_idea" class="frm_input full_input required" required maxlength="100" placeholder=" 의견을 입력해주세요">
+                </div>
+				<button type="submit" class="btn_submit">의견남기기</button>
             </div>
             </form>
             <?php } ?>
@@ -81,7 +69,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
         </section>
         <?php } ?>
 
-        <aside id="poll_result_oth" class="list_01">
+        <aside id="poll_result_oth">
             <h2>다른 투표 결과 보기</h2>
             <ul>
                 <?php for ($i=0; $i<count($list3); $i++) {  ?>

@@ -5,6 +5,22 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 0);
 ?>
 
+<?php
+if ($stx) {
+    if ($board_count) {
+?>
+<section id="sch_res_ov">
+    <h2>전체검색 결과</h2>
+    <ul>
+        <li>게시판<strong><?php echo $board_count ?>개</strong></li>
+        <li>게시물<strong><?php echo number_format($total_count) ?>개</strong></li>
+        <li><?php echo number_format($page) ?>/<?php echo number_format($total_page) ?> 페이지 열람 중</li>
+    </ul>
+</section>
+<?php
+    }
+}
+?>
 <form name="fsearch" onsubmit="return fsearch_submit(this);" method="get">
 <input type="hidden" name="srows" value="<?php echo $srows ?>">
 <fieldset id="sch_res_detail">
@@ -69,25 +85,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     <?php
     if ($stx) {
         if ($board_count) {
-    ?>
-    <section id="sch_res_ov">
-        <h2><strong class="sch_word"><?php echo $stx ?></strong> 전체검색 결과</h2>
-        <dl>
-            <dt>게시판</dt>
-            <dd><strong><?php echo $board_count ?>개</strong></dd>
-            <dt>게시물</dt>
-            <dd><strong><?php echo number_format($total_count) ?>개</strong></dd>
-        </dl>
-        <p><?php echo number_format($page) ?>/<?php echo number_format($total_page) ?> 페이지 열람 중</p>
-    </section>
-    <?php
-        }
-    }
-    ?>
-
-    <?php
-    if ($stx) {
-        if ($board_count) {
      ?>
     <ul id="sch_res_board">
         <li><a href="?<?php echo $search_query ?>&amp;gr_id=<?php echo $gr_id ?>" <?php echo $sch_all ?>>전체게시판</a></li>
@@ -124,7 +121,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
             <li>
                 <div  class="sch_res_title">
                     <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>"><?php echo $comment_def ?><?php echo $list[$idx][$i]['subject'] ?></a>
-                    <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank" class="sch_res_new"><i class="fa fa-share-square-o" aria-hidden="true"></i><span class="sound_only">새창</span></a>
+                    <!-- <a href="<?php echo $list[$idx][$i]['href'] ?><?php echo $comment_href ?>" target="_blank" class="sch_res_new"><i class="fa fa-share-square-o" aria-hidden="true"></i><span class="sound_only">새창</span></a> -->
                 </div>
                 <p><?php echo $list[$idx][$i]['content'] ?></p>
                 <div class="sch_res_info">
@@ -134,9 +131,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
             </li>
         <?php }  ?>
         </ul>
-        <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><i class="fa fa-plus-circle" aria-hidden="true"></i> <strong><?php echo $bo_subject[$idx] ?></strong> 결과 더보기</a></div>
+        <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><strong><?php echo $bo_subject[$idx] ?></strong> 결과 더보기</a></div>
 
-        <hr>
     <?php }  ?>
 
     <?php if ($stx && $board_count) {  ?></section><?php }  ?>

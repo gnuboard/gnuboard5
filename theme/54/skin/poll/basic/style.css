@@ -80,7 +80,7 @@
 #poll_other_q {border:1px solid #eaeaea}
 #poll_other_q h3 {margin:0;font-size:1.25em;padding:10px;border-bottom:1px solid #eaeaea;text-align:left}
 #poll_other_q h3 span {background:#f7f8e3;color:#c97600;padding:3px;display:inline-block;border-radius:5px;margin-right:5px;font-weight:normal;font-size:0.8em}
-#poll_result_wcmt input{border:0;height:80px;padding:10px}
+#poll_result_wcmt input {border:0;height:80px;padding:10px}
 #poll_result_cmt .btn_submit {margin-top:10px;padding:0 20px;float:right}
 
 .poll_cmt_del {float:right}
