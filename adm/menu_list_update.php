@@ -23,8 +23,8 @@ for ($i=0; $i<$count; $i++)
 
     $code    = $_POST['code'][$i];
     $me_name = $_POST['me_name'][$i];
-    $me_link = $_POST['me_link'][$i];
-
+    $me_link = preg_match('/^javascript/i', $_POST['me_link'][$i]) ? G5_URL : strip_tags($_POST['me_link'][$i]);
+    
     if(!$code || !$me_name || !$me_link)
         continue;
 

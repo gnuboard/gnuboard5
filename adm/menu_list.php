@@ -196,6 +196,20 @@ function base_convert(number, frombase, tobase) {
 
 function fmenulist_submit(f)
 {
+
+    var me_links = document.getElementsByName('me_link[]');
+    var reg = /^javascript/; 
+
+	for (i=0; i<me_links.length; i++){
+        
+	    if( reg.test(me_links[i].value) ){ 
+        
+            alert('링크에 자바스크립트문을 입력할수 없습니다.');
+            me_links[i].focus();
+            return false;
+        }
+    }
+
     return true;
 }
 </script>
