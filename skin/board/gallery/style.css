@@ -55,7 +55,7 @@
 #bo_w .tbl_frm01 {}
 #bo_w .tbl_frm01 th {}
 #bo_w .tbl_frm01 td {}
-#bo_w .tbl_frm01 textarea, #bo_w tbl_frm01 .frm_input {}
+#bo_w .tbl_frm01 textarea, #bo_w .tbl_frm01 .frm_input {}
 #bo_w .tbl_frm01 textarea {}
 /*
 #bo_w .tbl_frm01 #captcha {}

@@ -2992,6 +2992,8 @@ function clean_xss_tags($str)
 {
     $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
 
+    $str = str_replace(array('<script>','</script>','<noscript>','</noscript>'), '', $str);
+
     return $str;
 }
 
