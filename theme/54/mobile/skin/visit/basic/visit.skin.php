@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$visit_skin_url.'/style.css">', 0
 ?>
 
 <aside id="visit">
-    <h2><i class="fa fa-user" aria-hidden="true"></i> 접속자집계</h2>
+    <h2>접속자집계</h2>
     <dl>
         <dt>오늘</dt>
         <dd><?php echo number_format($visit[1]) ?></dd>

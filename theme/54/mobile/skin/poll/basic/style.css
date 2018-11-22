@@ -33,7 +33,7 @@
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 설문조사 스킨 */
-#poll {background:#fff;border:1px solid #dde7e9;margin:30px 10px}
+#poll {background:#fff;border:1px solid #dde7e9;margin:15px 10px}
 #poll header {position:relative;padding:15px;border-bottom:1px solid #dde7e9;}
 #poll header:after {display:block;visibility:hidden;clear:both;content:""}
 #poll header h2 {display:inline-block;float:left;line-height:24px;font-size:1.2em}

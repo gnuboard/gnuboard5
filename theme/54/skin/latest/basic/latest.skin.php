@@ -31,7 +31,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
             if ($list[$i]['icon_link']) echo " <i class=\"fa fa-link\" aria-hidden=\"true\"></i>" ;
 
             if ($list[$i]['comment_cnt'])  echo "
-            <span class=\"lt_cmt\">".$list[$i]['comment_cnt']."</span>";
+            <span class=\"lt_cmt\"><span class=\"sound_only\">댓글</span>".$list[$i]['comment_cnt']."</span>";
 
             ?>
             <div class="lt_info">

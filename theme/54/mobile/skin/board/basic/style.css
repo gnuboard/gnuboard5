@@ -11,6 +11,7 @@
 #bo_list a.btn_admin {} /* 관리자 전용 버튼 */
 #bo_list a.btn_admin:focus, #bo_list a.btn_admin:hover {}
 .chk_all{margin:10px 0}
+
 /* 읽기 버튼 */
 #bo_v a.btn_b01 {}
 #bo_v a.btn_b01:focus, #bo_v .btn_b01:hover {}
