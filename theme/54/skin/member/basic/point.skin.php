@@ -19,7 +19,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 		</ul>
         <ul class="point_list">
         	
-        	<!--****** 예시 ******-->
+        	<!--****** 예시(모바일도) ******-->
         	
         	<li><!-- 지급 -->
         		<div class="point_top">

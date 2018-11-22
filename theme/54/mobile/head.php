@@ -30,7 +30,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 
         <div id="gnb" class="hd_div">
             <button type="button" id="gnb_close" class="hd_closer"><span class="sound_only">메뉴 </span>닫기</button>
-
+			<?php echo outlogin('theme/basic'); // 외부 로그인 ?>
             <ul id="gnb_1dul">
             <?php
             $sql = " select *
@@ -115,15 +115,11 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
         <button type="button" id="user_btn" class="hd_opener"><i class="fa fa-user" aria-hidden="true"></i><span class="sound_only">사용자메뉴</span></button>
         <div class="hd_div" id="user_menu">
             <button type="button" id="user_close" class="hd_closer"><span class="sound_only">메뉴 </span>닫기</button>
-
-            <?php echo outlogin('theme/basic'); // 외부 로그인 ?>
-
             <ul id="hd_nb">
                 <li class="hd_nb1"><a href="<?php echo G5_BBS_URL ?>/qalist.php" id="snb_qa"><i class="fa fa-comments" aria-hidden="true"></i><br>1:1문의</a></li>
                 <li class="hd_nb2"><a href="<?php echo G5_BBS_URL ?>/faq.php" id="snb_faq"><i class="fa fa-question-circle" aria-hidden="true"></i><br>FAQ</a></li>
                 <li class="hd_nb3"><a href="<?php echo G5_BBS_URL ?>/current_connect.php" id="snb_cnt"><i class="fa fa-users" aria-hidden="true"></i><br>접속자 <span><?php echo connect('theme/basic'); // 현재 접속자수 ?></span></a></li>
-                <li class="hd_nb4"><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new"><i class="fa fa-history" aria-hidden="true"></i><br>새글</a></li>
-                
+                <li class="hd_nb4"><a href="<?php echo G5_BBS_URL ?>/new.php" id="snb_new"><i class="fa fa-history" aria-hidden="true"></i><br>새글</a></li>   
             </ul>
 
             <div id="text_size">

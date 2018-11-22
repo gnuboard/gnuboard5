@@ -292,7 +292,7 @@
 .point_list .point_tit {font-weight:bold;float:left;font-size:1.083em;display:block}
 .point_list .point_date1 {float:left;color:#888d92}
 .point_list .point_date {float:left;color:#888d92}
-.point_list .txt_expired {color:#aaa}
+.point_list .txt_expired {color:red;margin-left:5px}
 
 #point .pg_wrap {width:100%;float:inherit;text-align:center}
 #point .btn_close {margin:20px auto}
