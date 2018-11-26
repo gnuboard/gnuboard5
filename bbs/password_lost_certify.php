@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// 봇의 메일 링크 크롤링을 방지합니다.
+if(function_exists('check_mail_bot')){ check_mail_bot($_SERVER['REMOTE_ADDR']); }
+
 // 오류시 공히 Error 라고 처리하는 것은 회원정보가 있는지? 비밀번호가 틀린지? 를 알아보려는 해킹에 대비한것
 
 $mb_no = trim($_GET['mb_no']);
