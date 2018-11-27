@@ -20,7 +20,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        </li>
 	        <li>
 	            <label for="wr_content">댓글작성</label>
-	            <td><textarea name="wr_content" id="wr_content"></textarea></td>
+	            <textarea name="wr_content" id="wr_content"></textarea>
 	        </li>
 	    </ul>
 	</div>

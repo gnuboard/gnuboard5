@@ -273,9 +273,9 @@
 #point h1 {text-align:left}
 #point .point_all {margin:20px 20px 15px;border-radius:5px;background:#edf3fc;border:1px solid #d6e2f4;color:#485172;font-size:1.083em}
 #point .point_all:after {display:block;visibility:hidden;clear:both;content:""}
-#point .point_all li {float:left;width:50%;padding:20px;}
+#point .point_all li {float:left;width:50%;padding:20px;text-align:left}
 #point .point_all li span {float:right;color:#485172;font-weight:bold}
-#point .point_all li:last-child {border-left:1px solid #d6e2f4;}
+#point .point_all li:last-child {border-left:1px solid #d6e2f4}
 #point .point_all .full_li {width:100%;border-bottom:1px solid #d6e2f4;text-align:left}
 #point .point_all .full_li span {color:#3a8afd;font-weight:bold;font-size:1.2em}
 
