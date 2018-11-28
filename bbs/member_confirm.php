@@ -24,9 +24,14 @@ include_once('./_head.sub.php');
 // url 체크
 check_url_host($url, '', G5_URL, true);
 
-if( preg_match('#^/{3,}#', $url) ){
-    $url = preg_replace('#^/{3,}#', '/', $url);
+if($url){
+    $url = preg_replace('#^/\\\{1,}#', '/', $url);
+
+    if( preg_match('#^/{3,}#', $url) ){
+        $url = preg_replace('#^/{3,}#', '/', $url);
+    }
 }
+
 
 $url = get_text($url);
 
