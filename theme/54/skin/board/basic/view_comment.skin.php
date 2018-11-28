@@ -50,6 +50,21 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 		                <?php if ($list[$i]['is_del']) { ?><li><a href="<?php echo $list[$i]['del_link']; ?>" onclick="return comment_delete();">삭제</a></li><?php } ?>
 		            </ul>
 	            </div>
+	            <script>
+					$(function() {			    
+				    // 댓글 옵션창 열기
+				    $(".btn_cm_opt").on("click", function(){
+				        $(this).parent("div").children(".bo_vc_act").show();
+				    });
+						
+				    // 댓글 옵션창 닫기
+				    $(document).mouseup(function (e){
+				        var container = $(".bo_vc_act");
+				        if( container.has(e.target).length === 0)
+				        container.hide();
+				    });
+				});
+				</script>
 	        </header>
 	
 	        <!-- 댓글 출력 -->
@@ -72,22 +87,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 	                $c_reply_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
 	                $c_edit_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
 				?>
-	            <script>
-					$(function() {			    
-				    // 댓글 옵션창 열기
-				    $(".btn_cm_opt").on("click", function(){
-				        $(this).parent("div").children(".bo_vc_act").show();
-				    });
-						
-				    // 댓글 옵션창 닫기
-				    $(document).mouseup(function (e){
-				        var container = $(".bo_vc_act");
-				        if( container.has(e.target).length === 0)
-				        container.hide();
-				    });
-				});
-					
-				</script>
 	            <?php } ?>
 	        </div>
 	        <span id="edit_<?php echo $comment_id ?>" class="bo_vc_w"></span><!-- 수정 -->

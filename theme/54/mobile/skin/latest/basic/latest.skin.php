@@ -22,7 +22,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 
                 // if ($list[$i]['link']['count']) { echo "[{$list[$i]['link']['count']}]"; }
                 // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
 
-            if ($list[$i]['icon_new']) echo " <span class=\"new_icon\">NEW</span>";
+            if ($list[$i]['icon_new']) echo " <span class=\"new_icon\">N</span>";
             if ($list[$i]['icon_file']) echo " <i class=\"fa fa-download\" aria-hidden=\"true\"></i>" ;
             if ($list[$i]['icon_link']) echo " <i class=\"fa fa-link\" aria-hidden=\"true\"></i>" ;
             if ($list[$i]['icon_hot']) echo " <i class=\"fa fa-heart\" aria-hidden=\"true\"></i>";

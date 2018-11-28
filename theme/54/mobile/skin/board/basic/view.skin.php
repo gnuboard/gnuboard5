@@ -12,9 +12,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 <ul class="btn_top top btn_bo_user"> 
 	<li><a href="#bo_vc" class="btn_b03 btn"><i class="fa fa-commenting" aria-hidden="true"></i><span class="sound_only">댓글</span></a></li>
     <li class="bo_share">
-    	<button type="button" class="btn_b03 btn"><i class="fa fa-share-alt" aria-hidden="true"></i><span class="sound_only">공유</span></button>
+    	<button type="button" class="btn_share_opt btn_b03 btn"><i class="fa fa-share-alt" aria-hidden="true"></i><span class="sound_only">공유</span></button>
     	<div id="bo_v_share">
-            <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href;  ?>" target="_blank" class=" btn_scrap" onclick="win_scrap(this.href); return false;"><i class="fa fa-thumb-tack" aria-hidden="true"></i> 스크랩</a><?php } ?>
+            <?php if ($scrap_href) { ?><a href="<?php echo $scrap_href; ?>" target="_blank" class=" btn_scrap" onclick="win_scrap(this.href); return false;"><i class="fa fa-thumb-tack" aria-hidden="true"></i><span class="sound_only">스크랩</span></a><?php } ?>
             <?php include_once(G5_SNS_PATH."/view.sns.skin.php"); ?>
         </div>	
     </li>
@@ -30,16 +30,22 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 	    	<?php if ($copy_href) { ?><li><a href="<?php echo $copy_href ?>" onclick="board_move(this.href); return false;"><i class="fa fa-files-o" aria-hidden="true"></i> 복사</a></li><?php } ?>
 	    	<?php if ($move_href) { ?><li><a href="<?php echo $move_href ?>" onclick="board_move(this.href); return false;"><i class="fa fa-arrows" aria-hidden="true"></i> 이동</a></li><?php } ?>
 	    	<?php if ($search_href) { ?><li><a href="<?php echo $search_href ?>">검색</a></li><?php } ?>
+	    	<li><a href="<?php echo $list_href ?>" class="btn_list"><i class="fa fa-list" aria-hidden="true"></i> 목록</a></li>
 		</ul>
-		<script>
-        // 게시판 글쓰기 관리자 옵션
-		$(".btn_more_opt").on("click", function() {
-		    $(".more_opt").toggle();
-		})
-		</script>
 		<?php $link_buttons = ob_get_contents(); ob_end_flush(); ?>
 	</li>
 </ul>
+<script>
+// 글쓰기 관리자 옵션
+$(".btn_more_opt").on("click", function() {
+    $(".more_opt").toggle();
+})
+
+// 게시글 공유
+$(".btn_share_opt").on("click", function() {
+    $("#bo_v_share").toggle();
+})
+</script>
 <article id="bo_v" style="width:<?php echo $width; ?>">
     <header>
         <h2 id="bo_v_title">
@@ -119,8 +125,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             if($board['bo_use_good'] || $board['bo_use_nogood']) {
         ?>
         <div id="bo_v_act">
-            <?php if($board['bo_use_good']) { ?><span class="bo_v_good"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><br><span class="sound_only">추천</span><strong><?php echo number_format($view['wr_good']) ?></strong></span><?php } ?>
-            <?php if($board['bo_use_nogood']) { ?><span class="bo_v_nogood"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i><br><span class="sound_only">비추천</span> <strong><?php echo number_format($view['wr_nogood']) ?></strong></span><?php } ?>
+            <?php if($board['bo_use_good']) { ?><span class="bo_v_good"><i class="fa fa-thumbs-o-up" aria-hidden="true"></i><span class="sound_only">추천</span><strong><?php echo number_format($view['wr_good']) ?></strong></span><?php } ?>
+            <?php if($board['bo_use_nogood']) { ?><span class="bo_v_nogood"><i class="fa fa-thumbs-o-down" aria-hidden="true"></i><span class="sound_only">비추천</span> <strong><?php echo number_format($view['wr_nogood']) ?></strong></span><?php } ?>
         </div>
         <?php
             }
@@ -195,10 +201,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <?php if ($prev_href || $next_href) { ?>
     <ul class="bo_v_nb">
-        <?php if ($prev_href) { ?><li class="bo_v_prev"><a href="<?php echo $prev_href ?>"><i class="fa fa-caret-left" aria-hidden="true"></i> 이전글</a></li><?php } ?>
-        <?php if ($next_href) { ?><li class="bo_v_next"><a href="<?php echo $next_href ?>">다음글 <i class="fa fa-caret-right" aria-hidden="true"></i></a></li><?php } ?>
-        <li><a href="<?php echo $list_href ?>" class="btn_list"><i class="fa fa-list" aria-hidden="true"></i> 목록</a></li>
-
+        <?php if ($prev_href) { ?><li class="bo_v_prev"><a href="<?php echo $prev_href ?>"><i class="fa fa-chevron-up" aria-hidden="true"></i><span class="sound_only">이전글</span> <?php echo $prev_wr_subject;?></a></li><?php } ?>
+        <?php if ($next_href) { ?><li class="bo_v_next"><a href="<?php echo $next_href ?>"><i class="fa fa-chevron-down" aria-hidden="true"></i><span class="sound_only">다음글</span> <?php echo $next_wr_subject;?></a></li><?php } ?>
     </ul>
     <?php } ?>
     <?php

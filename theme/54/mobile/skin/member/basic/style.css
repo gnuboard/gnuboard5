@@ -122,7 +122,7 @@
 .adress #reg_mb_zip {width:100%;position:relative}
 .adress .btn_frmline {position:absolute;top:8px;right:8px;height:40px;padding:0 10px}
 
-.chk_box {position:relative;}
+.chk_box {position:relative}
 .chk_box input[type="checkbox"] + label {padding-left:10px;color:#676e70}
 .chk_box input[type="checkbox"] + label:hover{color:#2172f8}
 .chk_box input[type="checkbox"] + label span {position:absolute;top:1px;left:0;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
@@ -293,7 +293,7 @@
 #point .btn_close {margin:20px auto}
 
 /* 회원 비밀번호 확인 */
-#mb_confirm {margin:30px 0}
+#mb_confirm {margin:30px 15px}
 #mb_confirm h1 {margin:0 0 15px;padding:0 10px;font-size:1.3em}
 #mb_confirm p {padding:15px 10px;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}
