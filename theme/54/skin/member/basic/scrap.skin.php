@@ -8,7 +8,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <!-- 스크랩 목록 시작 { -->
 <div id="scrap" class="new_win">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
-
     <ul>
         <?php for ($i=0; $i<count($list); $i++) {  ?>
         <li>

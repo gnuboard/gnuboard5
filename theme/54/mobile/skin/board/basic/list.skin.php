@@ -13,10 +13,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 <?php if ($rss_href || $write_href) { ?>
 <ul class="<?php echo isset($view) ? 'view_is_list btn_top' : 'btn_top top btn_bo_user';?>">
 	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-    <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b02 btn"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
+    <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b03 btn"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
     <?php if ($is_admin == 'super' || $is_auth) {  ?>
 	<li>
-		<button type="button" class="btn_more_opt btn_b02 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
+		<button type="button" class="btn_more_opt btn_b03 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
 		<?php if ($is_checkbox) { ?>	
         <ul class="more_opt">
             <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
@@ -60,18 +60,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <div class="list_01">
         <?php if ($is_checkbox) { ?>
-        <div class="all_chk">
-            <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
-            <label for="chkall"><span class="sound_only">현재 페이지 게시물 </span>전체선택</label>
+        <div class="all_chk chk_box">
+            <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);" class="selec_chk">
+            <label for="chkall">
+            	<span></span>
+            	<b class="sound_only">현재 페이지 게시물 </b> 전체선택
+            </label>
         </div>
         <?php } ?>
         <ul>
             <?php for ($i=0; $i<count($list); $i++) { ?>
             <li class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?>">
                 <?php if ($is_checkbox) { ?>
-                <div class="bo_chk">
-                    <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-                    <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
+                <div class="bo_chk chk_box">
+                    <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>" class="selec_chk">
+                    <label for="chk_wr_id_<?php echo $i ?>">
+                    	<span></span>
+                    	<b class="sound_only"><?php echo $list[$i]['subject'] ?></b>
+                    </label>   	
                 </div>
                 <?php } ?>
 

@@ -100,13 +100,13 @@ box-shadow:0 0 5px rgba(100,100,100,0.2)}
 #wrapper:after {display:block;visibility:hidden;clear:both;content:""}
 #container {position:relative;min-height:300px}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
-#container_title {font-size:1.2em;font-weight:bold;height:50px;padding:10px;line-height:30px;background:#fff;color:#333;
+#container_title {font-size:1.2em;font-weight:bold;height:50px;padding:10px 15px;line-height:30px;background:#fff;color:#333;
 -webkit-box-shadow:0 0 5px rgba(55,55,5,0.4);
 -moz-box-shadow:0 0 5px rgba(55,55,5,0.4);
 box-shadow:0 0 5px rgba(55,55,5,0.4);
 }
 .top {position:relative}
-.btn_top {position:absolute;top:0px;right:0px;z-index:999;padding:8px 0}
+.btn_top {position:absolute;top:0px;right:10px;z-index:999;padding:8px 0}
 .btn_top li {display:inline-block}
 .btn_top a,.btn_top button,.btn_top .btn_submit {/*line-height:30px;padding:0 10px;border-radius:3px*/}
 .btn_top .btn_cancel,.btn_top .btn_b01 {border:1px solid #aaa;background:none;color:#666;line-height:28px;background:#fff}
@@ -130,7 +130,7 @@ box-shadow:0 0 5px rgba(55,55,5,0.4);
 -moz-box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4);
 box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4)}
 #top_btn i {font-size:1.4em}
-#top_btn:hover {background:#3b8afb;color:#fff}
+#top_btn:hover {background:#3b8afb;border-color:#3b8afb;color:#fff}
 #device_change {display:block;line-height:40px;border-radius:5px;background:#302e2e;color:#777;font-size:1em;text-decoration:none;text-align:center}
 
 /* 게시물 선택복사 선택이동 */
@@ -201,26 +201,27 @@ a.btn_close {text-align:center;line-height:50px}
 
 a.btn_cancel {display:inline-block;background:#ddd;color:#444;text-decoration:none;vertical-align:middle}
 button.btn_cancel {display:inline-block;border:1px solid #ccc;background:#fafafa;color:#000;vertical-align:top;text-decoration:none}
-a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;border:0;background:#333;color:#fff;letter-spacing:-0.1em;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
+a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 5px;border:0;background:#fff;border:1px solid #3a8afd;color:#3a8afd;letter-spacing:-0.1em;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
 button.btn_frmline {font-size:1em}
 
 /* 게시판용 버튼 */
 a.btn_b01,.btn_b01 {display:inline-block;background:#3a8afd;color:#fff;border-radius:3px;padding:10px;border:0;text-decoration:none;vertical-align:middle}
 .btn_b01:hover, .btn_b01:hover {}
-a.btn_b02, .btn_b02 {display:inline-block;background:transparent;color:#fff/*bababa*/;border:1px solid #787878;border-radius:3px;padding:10px;text-decoration:none;vertical-align:middle}
+a.btn_b02, .btn_b02 {display:inline-block;background:transparent;color:#fff;border:1px solid #787878;border-radius:3px;padding:10px;text-decoration:none;vertical-align:middle}
 a.btn_b02:hover, .btn_b02:hover {}
-a.btn_b03, .btn_b03 {display:inline-block;line-height:28px;border:1px solid #ed6478;color:#ed6478;background:none;text-decoration:none;vertical-align:middle}
+a.btn_b03, .btn_b03 {display:inline-block;line-height:28px;border:0;background:transparent;color:#bababa;text-decoration:none;vertical-align:middle}
 a.btn_b03:hover, .btn_b03:hover {}
 a.btn_admin {display:inline-block;color:#d13f4a;font-size:1.4em;text-decoration:none;vertical-align:middle} /* 관리자 전용 버튼 */
 a.btn_admin:focus, a.btn_admin:hover {}
 .fix_btn {position:fixed;bottom:65px;right:15px;background:#3a8afd;width:50px;height:50px;color:#fff;text-align:center;border-radius:50% !important;font-size:1.8em;line-height:50px !important;-webkit-box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4);
 -moz-box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4);
 box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4)}
-a.btn,.btn {line-height:35px;height:35px;padding:0 5px;text-align:center;font-weight:bold;border:0;font-size:1.4em;
+a.btn,.btn {line-height:35px;width:30px;height:35px;padding:0 5px;text-align:center;font-weight:bold;border:0;font-size:1.4em;
 -webkit-transition:background-color 0.3s ease-out;
 -moz-transition:background-color 0.3s ease-out;
 -o-transition:background-color 0.3s ease-out;
 transition:background-color 0.3s ease-out}
+
 
 /* 기본테이블 */
 .tbl_wrap {margin:0 10px 10px}
@@ -256,10 +257,10 @@ transition:background-color 0.3s ease-out}
 
 /* 기본폼 */
 .form_01 .write_div {margin:5px 0;position:relative}
-.form_01 li {margin:5px 0;position:relative;list-style:none}
+.form_01 li {margin:0 0 10px;position:relative;list-style:none}
 .form_01 textarea, .frm_input {border:1px solid #d0d3db;background:#fff;color:#000;vertical-align:middle;padding:5px}
 .form_01 textarea {width:100%;height:100px}
-.frm_input {height:40px}
+.frm_input {height:45px}
 .full_input {width:100%} 
 .form_01 .frm_file {display:block;margin-bottom:5px;width:100%}
 .form_01 select {height:40px;border-radius:3px;background-color:#fff}

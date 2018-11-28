@@ -19,6 +19,7 @@
 .mbskin .win_btn a {}
 .mbskin .win_btn button {}
 .mbskin .win_btn input {}
+
 /* 게시판용 버튼 */
 .mbskin a.btn_b01 {}
 .mbskin a.btn_b01:focus, .mbskin .btn_b01:hover {}
@@ -93,18 +94,41 @@
 #fregister_private .tbl_head01 caption {position:absolute;font-size:0;line-height:0;overflow:hidden;top:0;color:#fff}
 
 /* 회원가입 입력 */
+#fregisterform .btn_confirm {text-align:center;margin:20px 0}
+#fregisterform .btn_confirm .btn_submit {width:49%;height:45px;padding:0 30px;font-weight:bold;font-size:1.083em}
+#fregisterform .btn_confirm .btn_cancel {width:49%;line-height:45px;height:45px;padding:0 30px;font-weight:bold;border-radius:3px;border:1px solid #dcdcdc;font-size:1.083em;background:#fff}
+
 #fregisterform #reg_mb_email, #fregisterform .frm_address {width:100%}
-#fregisterform textarea {width:100%;height:50px}
+#fregisterform textarea {width:100%;height:84px}
 #fregisterform #msg_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
-#fregisterform .frm_address {margin:5px 0 0}
+#fregisterform .frm_address,
+#fregisterform .password {margin:-1px 0 0}
+#fregisterform .password .frm_input {border-bottom:0}
 #fregisterform #mb_addr3 {display:block;margin:5px 0 0}
 #fregisterform #mb_addr_jibeon {display:block;margin:5px 0 0}
 #fregisterform .form_01 {margin-bottom:30px}
 #fregisterform .form_01 h2 {font-size:1.167em;margin:0 0 5px}
 #fregisterform .frm_label {display:block;font-size:1.083em;margin:15px 0 5px;color:#555}
-#fregisterform .btn_frmline {height:40px;padding:0 10px}
+#fregisterform .btn_frmline {height:30px;line-height:30px;padding:0 10px}
 #fregisterform .rgs_name_li button {margin:5px 0 0}
+#fregisterform .reg_mb_img_file {margin-bottom:30px}
 #fregisterform .reg_mb_img_file img {max-width:100%;height:auto}
+
+.filebox .fileName {display:inline-block;position:relative;width:100%;height:45px;padding-left:10px;margin-right:5px;line-height:30px;border: 1px solid #d0d3db;background-color:#fff;color:red;vertical-align:middle}
+.filebox .btn_file {display:inline-block;position:absolute;right:8px;top:8px;border:1px solid #3a8afd;border-radius:3px;width:70px;height:30px;color:#3a8afd;font-size:1em;line-height:30px;font-weight:bold;text-align:center;vertical-align:middle}
+.filebox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+.adress {background:red;width:100%}
+.adress #reg_mb_zip {width:100%;position:relative}
+.adress .btn_frmline {position:absolute;top:8px;right:8px;height:40px;padding:0 10px}
+
+.chk_box {position:relative;}
+.chk_box input[type="checkbox"] + label {padding-left:10px;color:#676e70}
+.chk_box input[type="checkbox"] + label:hover{color:#2172f8}
+.chk_box input[type="checkbox"] + label span {position:absolute;top:1px;left:0;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.chk_box input[type="checkbox"]:checked + label {color:#000}
+.chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+
 
 /* 회원가입 완료 */
 #reg_result {padding:20px 10px 10px}
