@@ -93,7 +93,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <?php echo $list[$i]['subject'] ?>
                         <?php
                         // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
-                        if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
+                        if ($list[$i]['icon_new']) echo "<span class=\"new_icon\">N<span class=\"sound_only\">새글</span></span>";
                         if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
                         if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
                         if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
@@ -107,7 +107,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 							<span class="sound_only">개</span>
                         </span>
                         <?php } ?>
-                        
                     </a>
                 </div>
 				<div class="bo_info">

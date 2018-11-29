@@ -63,25 +63,6 @@ $(".btn_share_opt").on("click", function() {
 	    </div>
     </header>
 
-    <!-- <div id="bo_v_top">
-        <?php
-        ob_start();
-         ?>
-        <ul class="bo_v_left">
-            <?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b01 btn"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> 수정</a></li><?php } ?>
-            <?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b01 btn" onclick="del(this.href); return false;"><i class="fa fa-trash-o" aria-hidden="true"></i> 삭제</a></li><?php } ?>
-            <?php if ($copy_href) { ?><li><a href="<?php echo $copy_href ?>" class="btn_admin btn" onclick="board_move(this.href); return false;"><i class="fa fa-files-o" aria-hidden="true"></i> 복사</a></li><?php } ?>
-            <?php if ($move_href) { ?><li><a href="<?php echo $move_href ?>" class="btn_admin btn" onclick="board_move(this.href); return false;"><i class="fa fa-arrows" aria-hidden="true"></i> 이동</a></li><?php } ?>
-            <?php if ($search_href) { ?><li><a href="<?php echo $search_href ?>" class="btn_b01 btn">검색</a></li><?php } ?>
-
-        </ul>
-
-        <?php
-        $link_buttons = ob_get_contents();
-        ob_end_flush();
-         ?>
-    </div> -->
-
     <section id="bo_v_atc">
         <h2 id="bo_v_atc_title">본문</h2>
 
@@ -142,7 +123,7 @@ $(".btn_share_opt").on("click", function() {
                 $cnt++;
         }
     }
-     ?>
+	?>
 
     <?php if($cnt) { ?>
     <section id="bo_v_file">
@@ -205,10 +186,11 @@ $(".btn_share_opt").on("click", function() {
         <?php if ($next_href) { ?><li class="bo_v_next"><a href="<?php echo $next_href ?>"><i class="fa fa-chevron-down" aria-hidden="true"></i><span class="sound_only">다음글</span> <?php echo $next_wr_subject;?></a></li><?php } ?>
     </ul>
     <?php } ?>
+    
     <?php
     // 코멘트 입출력
     include_once(G5_BBS_PATH.'/view_comment.php');
-     ?>
+	?>
 
 </article>
 

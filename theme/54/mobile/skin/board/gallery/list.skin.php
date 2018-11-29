@@ -9,10 +9,29 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 <script src="<?php echo G5_JS_URL; ?>/jquery.fancylist.js"></script>
 
 <?php if ($rss_href || $write_href) { ?>
-<ul class="<?php echo isset($view) ? 'view_is_list btn_top' : 'btn_top top';?>">
-    <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b01"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
-    <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin"><i class="fa fa-user-circle" aria-hidden="true"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-    <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b02"><i class="fa fa-pencil" aria-hidden="true"></i> 글쓰기</a></li><?php } ?>
+<ul class="<?php echo isset($view) ? 'view_is_list btn_top' : 'btn_top top btn_bo_user';?>">
+	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+    <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b03 btn"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
+    <?php if ($is_admin == 'super' || $is_auth) {  ?>
+	<li>
+		<button type="button" class="btn_more_opt btn_b03 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
+		<?php if ($is_checkbox) { ?>	
+        <ul class="more_opt">
+            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
+            <li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value"><i class="fa fa-files-o" aria-hidden="true"></i> 선택복사</button></li>
+            <li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value"><i class="fa fa-arrows" aria-hidden="true"></i> 선택이동</button></li>
+        </ul>
+        <?php } ?>
+
+        <script>
+        // 게시판 리스트 관리자 옵션
+		$(".btn_more_opt").on("click", function() {
+		    $(".more_opt").toggle();
+		})
+		</script>
+	</li>
+    <?php } ?>
+	<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="fix_btn"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
 </ul>
 <?php } ?>
 
@@ -27,11 +46,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </ul>
     </nav>
     <?php } ?>
-
-    <div class="sound_only">
-        <span>전체 <?php echo number_format($total_count) ?>건</span>
-        <?php echo $page ?> 페이지
-    </div>
 
     <form name="fboardlist"  id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -76,7 +90,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <a href="<?php echo $list[$i]['href'] ?>" class="gall_img">
                 <?php
                 if ($list[$i]['is_notice']) { // 공지사항 ?>
-                    <strong style="width:<?php echo $board['bo_mobile_gallery_width'] ?>px;height:<?php echo $board['bo_mobile_gallery_height'] ?>px">공지</strong>
+                    <strong class="gall_notice">공지</strong>
                 <?php
                 } else {
                     $thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], $board['bo_mobile_gallery_width'], $board['bo_mobile_gallery_height']);
@@ -84,7 +98,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     if($thumb['src']) {
                         $img_content = '<img src="'.$thumb['src'].'" alt="'.$thumb['alt'].'" width="'.$board['bo_mobile_gallery_width'].'" height="'.$board['bo_mobile_gallery_height'].'">';
                     } else {
-                        $img_content = '<span class="no-img">no image</span>';
+                        $img_content = '<span class="no_img"><i class="fa fa-picture-o" aria-hidden="true"></i></span>';
                     }
 
                     echo $img_content;
@@ -100,8 +114,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     <?php } ?>
                     <a href="<?php echo $list[$i]['href'] ?>" class="gall_li_tit">
                         <?php echo $list[$i]['subject'] ?>
-                        <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><?php echo $list[$i]['comment_cnt']; ?><span class="sound_only">개</span><?php } ?>
-                    </a>
+                        <?php if ($list[$i]['comment_cnt']) { ?>
+	                    <span class="bo_cmt">
+							<span class="sound_only">댓글</span>
+							<?php echo $list[$i]['comment_cnt']; ?>
+							<span class="sound_only">개</span>
+	                    </span>
+	                    <?php } ?>
+					</a>
                     <?php
                     // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
 
@@ -110,13 +130,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     //if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
                     //if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
                     //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
-                    ?>
-                    <span class="sound_only">작성자 </span><?php echo $list[$i]['name'] ?>
+                    ?> 
+                    
                     <div class="gall_info">
+                    	<span class="sound_only">작성자 </span><?php echo $list[$i]['name'] ?>
+                        <span class="sound_only">작성일 </span><span class="date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['datetime2'] ?></span>
                         <span class="sound_only">조회 </span><strong><i class="fa fa-eye" aria-hidden="true"></i> <?php echo $list[$i]['wr_hit'] ?></strong>
                         <?php if ($is_good) { ?><span class="sound_only">추천</span><strong><i class="fa fa-thumbs-o-up" aria-hidden="true"></i> <?php echo $list[$i]['wr_good'] ?></strong><?php } ?>
                         <?php if ($is_nogood) { ?><span class="sound_only">비추천</span><strong><i class="fa fa-thumbs-o-down" aria-hidden="true"></i> <?php echo $list[$i]['wr_nogood'] ?></strong><?php } ?>
-                        <span class="sound_only">작성일 </span><span class="date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['datetime2'] ?></span>
                     </div>
                 </div>
             </div>
@@ -139,7 +160,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </ul>
     </div>
     <?php } ?>
-
     </form>
 </div>
 
@@ -153,22 +173,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 <!-- 페이지 -->
 <?php echo $write_pages; ?>
 
+<div id="bo_list_total">
+    <span>전체 <?php echo number_format($total_count) ?>건</span>
+    <?php echo $page ?> 페이지
+</div>
+
 <fieldset id="bo_sch">
     <legend>게시물 검색</legend>
-
     <form name="fsearch" method="get">
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
     <input type="hidden" name="sop" value="and">
     <label for="sfl" class="sound_only">검색대상</label>
-    <select name="sfl">
+    <select name="sfl" id="sfl">
         <?php echo get_board_sfl_select_options($sfl); ?>
     </select>
-    <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어(필수)" required id="stx" class="sch_input" size="15" maxlength="20">
+    <input name="stx" value="<?php echo stripslashes($stx) ?>" placeholder="검색어를 입력하세요" required id="stx" class="sch_input" size="15" maxlength="20">
     <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i> <span class="sound_only">검색</span></button>
     </form>
 </fieldset>
-
 
 <?php if ($is_checkbox) { ?>
 <script>

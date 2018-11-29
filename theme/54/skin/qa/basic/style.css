@@ -71,10 +71,6 @@
 #bo_w .tbl_frm01 td {}
 #bo_w .tbl_frm01 textarea, #bo_w tbl_frm01 .frm_input {}
 #bo_w .tbl_frm01 textarea {}
-/*
-#bo_w .tbl_frm01 #captcha {}
-#bo_w .tbl_frm01 #captcha input {}
-*/
 #bo_w .tbl_frm01 a {}
 
 /* 필수입력 */
@@ -306,7 +302,7 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_v_ans #ans_datetime {padding:0 20px 20px;font-size:0.92em;background:#fff;border-bottom:1px solid #f1f1f1;color:#666}
 #bo_v_ans #ans_con {margin:0 0 10px;padding:15px;line-height:1.8em}
 #bo_v_ans #ans_con img {max-width:100%;height:auto}
-#bo_v_ans #ans_add {position:absolute;top:-10px;right:20px;text-align:right}
+#bo_v_ans #ans_add {position:absolute;top:-10px;right:15px;text-align:right}
 #bo_v_ans .more_add {display:none;position:relative;margin-top:10px;border:1px solid #b8bfc4;background:#fff}
 #bo_v_ans .more_add:before {content:"";position:absolute;top:-8px;right:5px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #b8bfc4 transparent}
 #bo_v_ans .more_add:after {content:"";position:absolute;top:-6px;right:5px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #fff transparent}

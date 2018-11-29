@@ -201,13 +201,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        </li>
 	        <?php } ?>
 
-	        <li class="chk_box">
+	        <li class="chk_box chk_li">
 	        	<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?> class="selec_chk">
 	            <label for="reg_mb_mailling">
 	            	<span></span>
 	            	<b class="sound_only">메일링서비스</b>
 	            </label>
-	            정보 메일을 받겠습니다.
+	            <span class="chk_li">정보 메일을 받겠습니다.</span>
 	        </li>
 
 	        <?php if ($config['cf_use_hp']) { ?>
@@ -217,18 +217,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            	<span></span>
 	            	<b class="sound_only">SMS 수신여부</b>
 	            </label>        
-	                휴대폰 문자메세지를 받겠습니다.
+	            <span class="chk_li">휴대폰 문자메세지를 받겠습니다.</span>
 	        </li>
 	        <?php } ?>
 
 	        <?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
-	        <li class="chk_box">
+	        <li class="chk_box chk_li">
 	            <input type="checkbox" name="mb_open" value="1" id="reg_mb_open" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> class="selec_chk">
 	      		<label for="reg_mb_open">
 	      			<span></span>
 	      			<b class="sound_only">정보공개</b>
 	      		</label>      
-	            다른분들이 나의 정보를 볼 수 있도록 합니다.
+	            <span class="chk_li">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>
 	            <span class="frm_info">
 	                정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
 	            </span>

@@ -43,8 +43,9 @@
 #bo_list .bo_subject .fa-download {width:16px;height:16px;line-height:16px;background:#ecaa30;color:#fff;text-align:center;font-size:10px;border-radius:2px}
 #bo_list .bo_subject .fa-link {width:16px;height:16px;line-height:16px;background:#2aa974;color:#fff;text-align:center;font-size:10px;border-radius:2px}
 #bo_list .bo_subject .fa-heart {color:#ff0000;text-align:center;font-size:10px;border-radius:2px}
-#bo_list .bo_subject .new_icon {display:inline-block;padding: 0 3px;line-height:16px ;font-size:0.833em;color:#fff;background:#c56bed}
-#bo_list .bo_tit .fa-lock {color:#666}
+#bo_list .bo_subject .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
+#bo_list .bo_subject .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
+
 
 #bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 #bo_cate ul {background:#fff;padding-left:1px;border-bottom:1px solid #d9dce3;zoom:1}
@@ -79,8 +80,6 @@
 #bo_list_total {margin:10px;text-align:center;padding:10px;text-align:center;background:#e3e7ec;color:#8b8b8b;border-radius:3px}
 
 .btn_bo_user > li {float:left;text-align:center;margin-left:5px}
-/*.btn_bo_adm {text-align:center}
-.btn_bo_adm li {display:inline-block}*/
 .btn_bo_adm button {border:0;padding:0 10px;background:#d13f4a;color:#fff;text-decoration:none;vertical-align:middle}
 .btn_more_opt {width:30px}
 .more_opt {display:none;position:absolute;top:50px;right:7px;background:#fff;border:1px solid #b8bfc4;z-index:999}
@@ -110,10 +109,9 @@
 #bo_v_sns li img {vertical-align:top}
 #bo_v_sns li span {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 
-
 .bo_cate_link {display:inline-block;background:#e2eaf6;padding:0 5px;line-height:20px;border-radius:5px;font-weight:bold;font-size:11px;color:#3ca1ff !important;text-decoration:none;/*font-size:0.92em*/} /* 글제목줄 분류스타일 */
 .bo_cnt {display:block;width:100%;font-size:1.083em;font-weight:bold;line-height:1.4em}
-.bo_cnt i {color: #8d96c2;font-size:12px}
+.bo_cnt i {color:#8d96c2;font-size:12px}
 .bo_cnt .fa-heart {color:#ff0000}
 .bo_chk {display:inline-block;float:left;margin-right:5px}
 
@@ -124,12 +122,6 @@
 .chk_box input[type="checkbox"] + label span {position:absolute;top:0;left:0;width:15px;height:15px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
 .chk_box input[type="checkbox"]:checked + label {color:#000}
 .chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
-.chk_box input[type="radio"] {position: absolute;top: 0;left: 0;width: 0;height: 0;opacity: 0; outline: 0;z-index: -1;overflow:hidden}
-.chk_box input[type="radio"] + label {position:relative;padding-left:23px;display:inline-block;color:#676e70}
-.chk_box input[type="radio"] + label span {position:absolute;top:0;left:0;width:15px;height:15px;display:block;background:#f7f8f9;border:1px solid #cdd6df;border-radius:50%}
-.chk_box input[type="radio"]:checked + label{color:#ff8080}
-.chk_box input[type="radio"]:checked + label span {border-color:#ea6060;}
-.chk_box input[type="radio"]:checked + label span:before{width:9px;height:9px;background:#ff8080;content:'';position:absolute;top:3px;left:3px;border-radius:50%;}
 .all_chk.chk_box input[type="checkbox"] + label span {top:18px;left:15px}
 
 .bo_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}

@@ -101,9 +101,9 @@ box-shadow:0 0 5px rgba(100,100,100,0.2)}
 #container {position:relative;min-height:300px}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 #container_title {font-size:1.2em;font-weight:bold;height:50px;padding:10px 15px;line-height:30px;background:#fff;color:#333;
--webkit-box-shadow:0 0 5px rgba(55,55,5,0.4);
--moz-box-shadow:0 0 5px rgba(55,55,5,0.4);
-box-shadow:0 0 5px rgba(55,55,5,0.4);
+-webkit-box-shadow:0 0 10px rgba(181, 181, 181, 0.4);
+-moz-box-shadow:0 0 10px rgba(181, 181, 181, 0.4);
+box-shadow:0 0 10px rgba(181, 181, 181, 0.4);
 }
 .top {position:relative}
 .btn_top {position:absolute;top:0px;right:10px;z-index:999;padding:8px 0}
