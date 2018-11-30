@@ -42,6 +42,16 @@
 #poll header .btn_admin {float:right;margin-left:5px;line-height:28px;font-size:1.4em}
 #poll ul {padding:0 20px;list-style:none}
 #poll li {padding:5px 0}
+
+.selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.chk_box {position:relative}
+.chk_box input[type="radio"] {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.chk_box input[type="radio"] + label {position:relative;padding-left:23px;display:inline-block;color:#676e70}
+.chk_box input[type="radio"] + label span {position:absolute;top:0;left:0;width:15px;height:15px;display:block;background:#f7f8f9;border:1px solid #cdd6df;border-radius:50%}
+.chk_box input[type="radio"]:checked + label {color:#3a8afd}
+.chk_box input[type="radio"]:checked + label span {border-color:#3a8afd}
+.chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#3a8afd;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
+
 #poll .poll_con {}
 #poll .poll_con p {font-weight:bold;padding:15px 20px;color:#000;font-size:1.167em}
 #poll_btn {padding:10px 20px 20px;text-align:center}

@@ -19,7 +19,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
         <p><?php echo $po['po_subject'] ?></p>
         <ul>
             <?php for ($i=1; $i<=9 && $po["po_poll{$i}"]; $i++) {  ?>
-            <li><input type="radio" name="gb_poll" value="<?php echo $i ?>" id="gb_poll_<?php echo $i ?>"> <label for="gb_poll_<?php echo $i ?>"><?php echo $po['po_poll'.$i] ?></label></li>
+            <li class="chk_box">
+	        	<input type="radio" name="gb_poll" value="<?php echo $i ?>" id="gb_poll_<?php echo $i ?>">
+	        	<label for="gb_poll_<?php echo $i ?>">
+	        		<span></span>
+	        		<?php echo $po['po_poll'.$i] ?>
+	        	</label>
+	        </li>
             <?php }  ?>
         </ul>
         <div id="poll_btn">

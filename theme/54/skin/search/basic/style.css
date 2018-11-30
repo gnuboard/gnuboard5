@@ -25,7 +25,6 @@ transition:all 0.1s ease-in-out}
 .switch_field label:first-of-type {border-radius:4px 0 0 4px;border-right:0}
 .switch_field label:last-of-type {border-radius:0 4px 4px 0}
 
-
 #sch_res_ov {text-align:center;zoom:1;height:55px;line-height:55px;background:#edf3fc;border-radius:5px;border:1px solid #d6e2f4;margin-bottom:15px;padding:0 20px}
 #sch_res_ov:after {display:block;visibility:hidden;clear:both;content:""}
 #sch_res_ov h2 {float:left;display:inline-block;font-size:1.25em;color:#293d58;font-weight:normal}

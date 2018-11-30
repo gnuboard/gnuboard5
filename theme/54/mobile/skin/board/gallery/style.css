@@ -128,7 +128,7 @@
 .chk_box input[type="checkbox"] + label span {position:absolute;top:0;left:0;width:15px;height:15px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
 .chk_box input[type="checkbox"]:checked + label {color:#000}
 .chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
-.chk_box input[type="radio"] {position: absolute;top: 0;left: 0;width: 0;height: 0;opacity: 0; outline: 0;z-index: -1;overflow:hidden}
+.chk_box input[type="radio"] {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index: -1;overflow:hidden}
 .chk_box input[type="radio"] + label {position:relative;padding-left:23px;display:inline-block;color:#676e70}
 .chk_box input[type="radio"] + label span {position:absolute;top:0;left:0;width:15px;height:15px;display:block;background:#f7f8f9;border:1px solid #cdd6df;border-radius:50%}
 .chk_box input[type="radio"]:checked + label{color:#ff8080}
@@ -140,7 +140,7 @@
 /* 갤러리 목록 */
 #bo_gall h2 {margin:0;padding:0;width:0;height:0;font-size:0;line-height:0;overflow:hidden}
 
-#bo_gall #gall_allchk {margin:0 10px}
+#bo_gall #gall_allchk {}
 
 #bo_gall #gall_ul {margin:10px 0 0;padding:0 10px;list-style:none}
 #bo_gall #gall_ul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -155,7 +155,7 @@
 
 #bo_gall .gall_li {float:left;;width:50%;padding:5px}
 #bo_gall .gall_li_wr {position:relative;}
-#bo_gall .gall_li_chk {display:inline-block;padding:5px;position:absolute;top:0;left:0}
+#bo_gall .gall_li_chk {display:inline-block;position:absolute;top:10px;left:10px}
 #bo_gall .gall_li:nth-child(2n+1) {clear:both}
 #bo_gall .gall_li .gall_img img{width:100%;height:auto}
 #bo_gall .gall_li .gall_img .no_img,

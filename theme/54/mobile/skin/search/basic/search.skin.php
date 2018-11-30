@@ -71,17 +71,16 @@ if ($stx) {
         }
         </script>
     </div>
-    <div>
+    <div class="switch_field chk_box">
         <input type="radio" value="or" <?php echo ($sop == "or") ? "checked" : ""; ?> id="sop_or" name="sop">
-        <label for="sop_or">OR</label>
+        <label for="sop_or"><span></span>OR</label>
         <input type="radio" value="and" <?php echo ($sop == "and") ? "checked" : ""; ?> id="sop_and" name="sop">
-        <label for="sop_and">AND</label>
+        <label for="sop_and"><span></span>AND</label>
     </div>
 </fieldset>
 </form>
 
 <div id="sch_result">
-
     <?php
     if ($stx) {
         if ($board_count) {
@@ -132,12 +131,9 @@ if ($stx) {
         <?php }  ?>
         </ul>
         <div class="sch_more"><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><strong><?php echo $bo_subject[$idx] ?></strong> 결과 더보기</a></div>
-
     <?php }  ?>
 
     <?php if ($stx && $board_count) {  ?></section><?php }  ?>
     </div>
-
     <?php echo $write_pages ?>
-
 </div>

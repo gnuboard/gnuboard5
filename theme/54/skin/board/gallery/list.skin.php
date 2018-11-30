@@ -19,7 +19,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </nav>
     <?php } ?>
 
-
     <!-- 게시판 페이지 정보 및 버튼 시작 { -->
     <div id="bo_btn_top">
         <div id="bo_list_total">
@@ -96,9 +95,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <input type="hidden" name="sw" value="">
 
     <?php if ($is_checkbox) { ?>
-    <div id="gall_allchk">
-        <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
-        <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+    <div id="gall_allchk" class="all_chk chk_box">
+        <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);" class="selec_chk">
+    	<label for="chkall">
+        	<span></span>
+        	<b class="sound_only">현재 페이지 게시물 </b> 전체선택
+        </label>
     </div>
     <?php } ?>
 
@@ -120,19 +122,23 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
          ?>
         <li class="<?php echo implode(' ', $classes); ?>">
             <div class="gall_box">
-                <div class="gall_chk">
-                <?php if ($is_checkbox) { ?>
-                <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-                <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
-                <?php } ?>
-                <span class="sound_only">
-                    <?php
-                    if ($wr_id == $list[$i]['wr_id'])
-                        echo "<span class=\"bo_current\">열람중</span>";
-                    else
-                        echo $list[$i]['num'];
-                     ?>
-                </span>
+                <div class="gall_chk chk_box">
+	                <?php if ($is_checkbox) { ?>
+					<input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>" class="selec_chk">
+	                <label for="chk_wr_id_<?php echo $i ?>">
+	                	<span></span>
+	                	<b class="sound_only"><?php echo $list[$i]['subject'] ?></b>
+	                </label>
+	                
+	                <?php } ?>
+	                <span class="sound_only">
+	                    <?php
+	                    if ($wr_id == $list[$i]['wr_id'])
+	                        echo "<span class=\"bo_current\">열람중</span>";
+	                    else
+	                        echo $list[$i]['num'];
+	                     ?>
+	                </span>
                 </div>
                 <div class="gall_con">
                     <div class="gall_img">
@@ -162,17 +168,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                         <?php } ?>
                         <a href="<?php echo $list[$i]['href'] ?>" class="bo_tit">
-                            <?php echo $list[$i]['subject'] ?>
-                            <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><span class="cnt_cmt"><?php echo $list[$i]['wr_comment']; ?></span><span class="sound_only">개</span><?php } ?>
+                            <?php echo $list[$i]['subject'] ?>                      
                             <?php
                             // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
-
-                            if (isset($list[$i]['icon_new'])) echo rtrim($list[$i]['icon_new']);
+                            if ($list[$i]['icon_new']) echo "<span class=\"new_icon\">N<span class=\"sound_only\">새글</span></span>";
                             if (isset($list[$i]['icon_hot'])) echo rtrim($list[$i]['icon_hot']);
                             //if (isset($list[$i]['icon_file'])) echo rtrim($list[$i]['icon_file']);
                             //if (isset($list[$i]['icon_link'])) echo rtrim($list[$i]['icon_link']);
                             if (isset($list[$i]['icon_secret'])) echo rtrim($list[$i]['icon_secret']);
 							?>
+							<?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><span class="cnt_cmt"><?php echo $list[$i]['wr_comment']; ?></span><span class="sound_only">개</span><?php } ?>
                          </a>
                          <span class="bo_cnt">게시글 내용입니다.최대56자입니다.게시글 내용입니다.게시글 내용입니다.게시글 내용입니다.게시글 내용입니다.</span>
                     </div>

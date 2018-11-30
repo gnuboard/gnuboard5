@@ -60,22 +60,27 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <h2>이미지 목록</h2>
 
     <?php if ($is_checkbox) { ?>
-    <div id="gall_allchk">
-        <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
-        <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+    <div id="gall_allchk" class="all_chk chk_box">
+        <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);" class="selec_chk">
+    	<label for="chkall">
+        	<span></span>
+        	<b class="sound_only">현재 페이지 게시물 </b> 전체선택
+        </label>
     </div>
     <?php } ?>
 
     <ul id="gall_ul">
-        <?php for ($i=0; $i<count($list); $i++) {
-        ?>
+        <?php for ($i=0; $i<count($list); $i++) { ?>
         <li class="gall_li <?php if ($wr_id == $list[$i]['wr_id']) { ?>gall_now<?php } ?>">
             <div class="gall_li_wr">
                 
                 <?php if ($is_checkbox) { ?>
-                <span class="gall_li_chk">
-                    <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-                    <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
+                <span class="gall_li_chk chk_box">
+                    <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>" class="selec_chk">
+                	<label for="chk_wr_id_<?php echo $i ?>">
+                		<span></span>
+                		<b class="sound_only"><?php echo $list[$i]['subject'] ?></b>
+                	</label>
                 </span>
                 <?php } ?>
                 <span class="sound_only">
@@ -145,21 +150,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php } ?>
         <?php if (count($list) == 0) { echo "<li class=\"empty_list\">게시물이 없습니다.</li>"; } ?>
     </ul>
-
-    <?php if ($list_href || $is_checkbox || $write_href) { ?>
-    <div class="bo_fx">
-        <ul class="btn_bo_adm">
-            <?php if ($list_href) { ?>
-            <li><a href="<?php echo $list_href ?>" class="btn_b01 btn"> 목록</a></li>
-            <?php } ?>
-            <?php if ($is_checkbox) { ?>
-            <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value" class="btn"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button></li>
-            <li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value" class="btn"><i class="fa fa-files-o" aria-hidden="true"></i><span class="sound_only">선택복사</span></button></li>
-            <li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value" class="btn"><i class="fa fa-arrows" aria-hidden="true"></i> <span class="sound_only">선택이동</span></button></li>
-            <?php } ?>
-        </ul>
-    </div>
-    <?php } ?>
     </form>
 </div>
 

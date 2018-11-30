@@ -264,18 +264,6 @@ $(function() {
 
     // 이미지 리사이즈
     $("#bo_v_atc").viewimageresize();
-
-    //sns공유
-    $(".btn_share").click(function(){
-    	$("#bo_v_sns").fadeIn();
-	});
-
-    $(document).mouseup(function (e) {
-		var container = $("#bo_v_sns");
-		if (!container.is(e.target) && container.has(e.target).length === 0){
-		container.css("display","none");
-		}	
-	});
 });
 
 function excute_good(href, $el, $tx)

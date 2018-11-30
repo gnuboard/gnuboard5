@@ -78,7 +78,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 		<strong class="bo_cate_link"><?php echo $list[$i]['category']; ?></strong>	
                 	</div>
                     <a href="<?php echo $list[$i]['view_href']; ?>" class="bo_subject">
-                        <?php echo $list[$i]['subject']; ?><span> <?php echo $list[$i]['icon_file']; ?></span>
+                        <?php echo $list[$i]['subject']; ?>
+                        <?php if ($list[$i]['icon_file']) echo " <i class=\"fa fa-download\" aria-hidden=\"true\"></i>" ; ?>
                     </a>
                 </div>
                 <div class="li_info">

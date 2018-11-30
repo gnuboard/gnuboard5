@@ -108,18 +108,21 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <thead>
         <tr>
             <?php if ($is_checkbox) { ?>
-            <th scope="col">
-                <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
-                <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+            <th scope="col" class="all_chk chk_box">
+            	<input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);" class="selec_chk">
+                <label for="chkall">
+                	<span></span>
+                	<b class="sound_only">현재 페이지 게시물  전체선택</b>
+				</label>
             </th>
             <?php } ?>
             <th scope="col">번호</th>
             <th scope="col">제목</th>
             <th scope="col">글쓴이</th>
-            <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회 <i class="fa fa-sort" aria-hidden="true"></i></a></th>
-            <?php if ($is_good) { ?><th scope="col"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천 <i class="fa fa-sort" aria-hidden="true"></i></a></th><?php } ?>
-            <?php if ($is_nogood) { ?><th scope="col"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?>비추천 <i class="fa fa-sort" aria-hidden="true"></i></a></th><?php } ?>
-            <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>날짜  <i class="fa fa-sort" aria-hidden="true"></i></a></th>
+            <th scope="col"><?php echo subject_sort_link('wr_hit', $qstr2, 1) ?>조회 </a></th>
+            <?php if ($is_good) { ?><th scope="col"><?php echo subject_sort_link('wr_good', $qstr2, 1) ?>추천 </a></th><?php } ?>
+            <?php if ($is_nogood) { ?><th scope="col"><?php echo subject_sort_link('wr_nogood', $qstr2, 1) ?>비추천 </a></th><?php } ?>
+            <th scope="col"><?php echo subject_sort_link('wr_datetime', $qstr2, 1) ?>날짜  </a></th>
         </tr>
         </thead>
         <tbody>
@@ -130,9 +133,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 		?>
         <tr class="<?php if ($list[$i]['is_notice']) echo "bo_notice"; ?> <?php echo $lt_class ?>">
             <?php if ($is_checkbox) { ?>
-            <td class="td_chk">
-                <label for="chk_wr_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject'] ?></label>
-                <input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>">
+            <td class="td_chk chk_box">
+				<input type="checkbox" name="chk_wr_id[]" value="<?php echo $list[$i]['wr_id'] ?>" id="chk_wr_id_<?php echo $i ?>" class="selec_chk">
+            	<label for="chk_wr_id_<?php echo $i ?>">
+            		<span></span>
+            		<b class="sound_only"><?php echo $list[$i]['subject'] ?></b>
+            	</label>
             </td>
             <?php } ?>
             <td class="td_num2">
@@ -149,7 +155,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <td class="td_subject" style="padding-left:<?php echo $list[$i]['reply'] ? (strlen($list[$i]['wr_reply'])*10) : '0'; ?>px">
                 <?php
                 if ($is_category && $list[$i]['ca_name']) {
-                 ?>
+				?>
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
                 <div class="bo_tit">

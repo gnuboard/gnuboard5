@@ -5,6 +5,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0);
 ?>
 
+<!-- 설문조사 시작 { -->
 <form name="fpoll" action="<?php echo G5_BBS_URL ?>/poll_update.php" onsubmit="return fpoll_submit(this);" method="post">
 <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
 <input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
@@ -19,7 +20,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 	    <ul>
 	        <?php for ($i=1; $i<=9 && $po["po_poll{$i}"]; $i++) { ?>
 	        <li class="chk_box">
-	        	<input type="radio" name="gb_poll" value="<?php echo $i ?>" id="gb_poll_<?php echo $i ?>" class="chk_box">
+	        	<input type="radio" name="gb_poll" value="<?php echo $i ?>" id="gb_poll_<?php echo $i ?>">
 	        	<label for="gb_poll_<?php echo $i ?>">
 	        		<span></span>
 	        		<?php echo $po['po_poll'.$i] ?>
@@ -71,3 +72,4 @@ function poll_result(url)
     win_poll(url);
 }
 </script>
+<!-- } 설문조사 끝 -->

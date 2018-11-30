@@ -38,3 +38,13 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .sch_more a {color:#3a8afd}
 .sch_datetime {}
 .sch_res_info .profile_img img {border-radius:50%}
+
+/* 인풀 옵션  */
+.selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.chk_box {position:relative}
+.chk_box input[type="radio"] {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.chk_box input[type="radio"] + label {position:relative;padding-left:23px;display:inline-block;color:#676e70}
+.chk_box input[type="radio"] + label span {position:absolute;top:0;left:0;width:15px;height:15px;display:block;background:#f7f8f9;border:1px solid #cdd6df;border-radius:50%}
+.chk_box input[type="radio"]:checked + label {color:#3a8afd}
+.chk_box input[type="radio"]:checked + label span {border-color:#3a8afd}
+.chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#3a8afd;content:'';position:absolute;top:3px;left:3px;border-radius:50%}

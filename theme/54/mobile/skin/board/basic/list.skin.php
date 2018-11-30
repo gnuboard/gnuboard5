@@ -90,6 +90,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     </div>
                     <a href="<?php echo $list[$i]['href'] ?>" class="bo_subject">
                         <?php echo $list[$i]['icon_reply']; ?>
+                        <?php if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret']; ?>
                         <?php echo $list[$i]['subject'] ?>
                         <?php
                         // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
@@ -97,7 +98,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
                         if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
                         if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
-                        if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
                         ?>
                         
                         <?php if ($list[$i]['comment_cnt']) { ?>

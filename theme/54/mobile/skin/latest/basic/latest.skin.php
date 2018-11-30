@@ -25,7 +25,6 @@ $thumb_height = 80;
 	    	
         <li>
             <?php
-            if ($list[$i]['icon_secret']) echo "<i class=\"fa fa-lock\" aria-hidden=\"true\"></i> ";
             //echo $list[$i]['icon_reply']." ";
             
             // ************* 이미지가 없을 경우 코드 자체 표시 안되게 해주세요 (적용된 css 때문에 레이아웃이 틀어짐) *************
@@ -34,6 +33,7 @@ $thumb_height = 80;
 			
 			
             echo "<a href=\"".$list[$i]['href']."\" class=\"lt_tit\">";
+			if ($list[$i]['icon_secret']) echo "<i class=\"fa fa-lock\" aria-hidden=\"true\"></i> ";
             if ($list[$i]['is_notice'])
                 echo "<strong>".$list[$i]['subject']."</strong>";
             else
@@ -49,7 +49,6 @@ $thumb_height = 80;
 			
 			if ($list[$i]['comment_cnt'])  echo "
             <span class=\"lt_cmt\"><span class=\"sound_only\">댓글</span>".$list[$i]['comment_cnt']."</span>";
-
             echo "</a>";
             ?>
            

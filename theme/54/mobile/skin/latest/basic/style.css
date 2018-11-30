@@ -23,8 +23,8 @@
 .lt li .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;vertical-align:middle}
 .lt li .hot_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#ff0000;background:#ffb9b9;text-align:center;border-radius:2px;vertical-align:middle}
 .lt li .fa-heart {color:#ff0000}
-.lt li .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
-.lt .lt_tit .fa-heart {color: #fe4560}
+.lt li .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.75em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
+.lt .lt_tit .fa-heart {color:#fe4560;margin-left:5px}
 
 .lt .comment_icon {background:url('./img/icon_comment.png') no-repeat 50% 50%;display:inline-block;width:20px;height:28px;text-indent:-999px;overflow:hidden;vertical-align:top;background-size:70%;margin:0 0px 0 5px}
 .lt .empty_li {text-align:center;padding:40px 0;color:#777}

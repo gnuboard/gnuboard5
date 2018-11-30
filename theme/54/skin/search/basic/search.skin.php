@@ -57,7 +57,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     }
     </script>
 
-	<div class="switch_field ">
+	<div class="switch_field">
 		<input type="radio" value="and" <?php echo ($sop == "and") ? "checked" : ""; ?> id="sop_and" name="sop">
     	<label for="sop_and">AND</label>
 		<input type="radio" value="or" <?php echo ($sop == "or") ? "checked" : ""; ?> id="sop_or" name="sop" >

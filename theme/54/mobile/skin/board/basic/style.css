@@ -40,11 +40,11 @@
 #bo_list .td_datetime {width:150px;text-align:center}
 #bo_list .td_mng {width:80px;text-align:center}
 #bo_list .notice_icon {display:inline-block;background:#fbe2e6;padding:0 5px;line-height:20px;border-radius:5px;font-weight:bold;font-size:11px;color:#f1364c}
-#bo_list .bo_subject .fa-download {width:16px;height:16px;line-height:16px;background:#ecaa30;color:#fff;text-align:center;font-size:10px;border-radius:2px}
-#bo_list .bo_subject .fa-link {width:16px;height:16px;line-height:16px;background:#2aa974;color:#fff;text-align:center;font-size:10px;border-radius:2px}
+#bo_list .bo_subject .fa-download {width:16px;line-height:16px;background:#ffefb9;color:#daae37;text-align:center;font-size:10px;border-radius:2px;vertical-align:baseline}
+#bo_list .bo_subject .fa-link {width:16px;line-height:16px;background:#edd3fd;color:#b451fd;text-align:center;font-size:10px;border-radius:2px;vertical-align:baseline}
 #bo_list .bo_subject .fa-heart {color:#ff0000;text-align:center;font-size:10px;border-radius:2px}
-#bo_list .bo_subject .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
-#bo_list .bo_subject .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
+#bo_list .bo_subject .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin:0 4px;font-weight:bold;vertical-align:middle}
+#bo_list .bo_subject .fa-lock {display:inline-block;line-height:16px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:baseline}
 
 
 #bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
@@ -124,13 +124,13 @@
 .chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .all_chk.chk_box input[type="checkbox"] + label span {top:18px;left:15px}
 
-.bo_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
+.bo_cmt {background:#e9eff5;color:#3a8afd;font-size:0.925em;height:16px;padding:0 5px;border-radius:2px;vertical-align:top;min-width:16px}
 
 .bo_subject {display:block;width:100%;padding:5px 0}
 .bo_current {color:#e8180c}
 .bo_info:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_info {position:relative;padding-top:5px;line-height:20px;color:#646464;vertical-align:top}
-.bo_info i {margin-left:5px}
+.bo_info i {margin-left:10px}
 .bo_info .comment_icon {background:url(./img/icon_comment.png) no-repeat 50% 50%;display:inline-block;width:20px;height:28px;text-indent:-999px;overflow:hidden;vertical-align:top;background-size:70%;margin:0 0px 0 5px}
 .bo_info .bo_date {}
 .bo_info .cnt_cmt {display:inline-block;margin: 0 5px 0 3px}

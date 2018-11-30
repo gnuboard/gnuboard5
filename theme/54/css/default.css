@@ -315,7 +315,7 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
 .frm_input {height:40px}
 
 .full_input {width:100%}
-.half_input {width:49%}
+.half_input {width:49.5%}
 .twopart_input {width:385px;margin-right:10px}
 .tbl_frm01 textarea, .write_div textarea {width:100%;height:100px}
 .tbl_frm01 a {text-decoration:none}
@@ -323,7 +323,7 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
 .tbl_frm01 .frm_info {display:block;padding:0 0 5px;line-height:1.4em}
 
 /*기본 리스트*/
-.list_01 ul {border-top:1px solid #ececec;}
+.list_01 ul {border-top:1px solid #ececec}
 .list_01 li {border-bottom:1px solid #ececec;background:#fff;padding:10px 15px;list-style:none;position:relative}
 .list_01 li:nth-child(odd) {background:#f6f6f6}
 .list_01 li:after {display:block;visibility:hidden;clear:both;content:""}
@@ -386,7 +386,7 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .win_desc:after {content:"";position:absolute;left:0;top:0;width:4px;height:50px;background:#da4453;border-radius:3px 0 0 3px}
 .new_win .frm_info {font-size:0.92em;color:#919191}
 .new_win .win_total {float:right;display:inline-block;line-height:30px;font-weight:normal;font-size:0.75em;color:#3a8afd;background:#f6f6f6;padding:0 10px;border-radius:5px}
-.new_win .new_win_con {margin:20px 0}
+.new_win .new_win_con {margin:20px 0;padding:0 15px}
 .new_win .new_win_con:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .btn_confirm:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .win_btn {text-align:center}

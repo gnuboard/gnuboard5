@@ -24,33 +24,29 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php
     $option = '';
     $option_hidden = '';
-    if ($is_notice || $is_html || $is_secret || $is_mail) {
+    if ($is_notice || $is_html || $is_secret || $is_mail) { 
         $option = '';
         if ($is_notice) {
-            $option .= "\n".'<input type="checkbox" id="notice" name="notice" value="1" '.$notice_checked.'>'."\n".'<label for="notice">공지</label>';
+            $option .= PHP_EOL.'<li class="chk_box"><input type="checkbox" id="notice" name="notice"  class="selec_chk" value="1" '.$notice_checked.'>'.PHP_EOL.'<label for="notice"><span></span>공지</label></li>';
         }
-
         if ($is_html) {
             if ($is_dhtml_editor) {
                 $option_hidden .= '<input type="hidden" value="html1" name="html">';
             } else {
-                $option .= "\n".'<input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="html">HTML</label>';
+                $option .= PHP_EOL.'<li class="chk_box"><input type="checkbox" id="html" name="html" onclick="html_auto_br(this);" class="selec_chk" value="'.$html_value.'" '.$html_checked.'>'.PHP_EOL.'<label for="html"><span></span>html</label></li>';
             }
         }
-
         if ($is_secret) {
             if ($is_admin || $is_secret==1) {
-                $option .= "\n".'<input type="checkbox" id="secret" name="secret" value="secret" '.$secret_checked.'>'."\n".'<label for="secret">비밀글</label>';
+                $option .= PHP_EOL.'<li class="chk_box"><input type="checkbox" id="secret" name="secret"  class="selec_chk" value="secret" '.$secret_checked.'>'.PHP_EOL.'<label for="secret"><span></span>비밀글</label></li>';
             } else {
                 $option_hidden .= '<input type="hidden" name="secret" value="secret">';
             }
         }
-
         if ($is_mail) {
-            $option .= "\n".'<input type="checkbox" id="mail" name="mail" value="mail" '.$recv_email_checked.'>'."\n".'<label for="mail">답변메일받기</label>';
+            $option .= PHP_EOL.'<li class="chk_box"><input type="checkbox" id="mail" name="mail"  class="selec_chk" value="mail" '.$recv_email_checked.'>'.PHP_EOL.'<label for="mail"><span></span>답변메일받기</label></li>';
         }
     }
-
     echo $option_hidden;
     ?>
 
@@ -92,7 +88,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <?php if ($option) { ?>
     <div class="write_div">
         <span class="sound_only">옵션</span>
+        <ul class="bo_v_option">
         <?php echo $option ?>
+        </ul>
     </div>
     <?php } ?>
 
