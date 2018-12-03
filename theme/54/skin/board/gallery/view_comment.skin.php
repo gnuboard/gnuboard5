@@ -81,21 +81,21 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             </ul>
         </div>
         <script>
-					$(function() {			    
-				    // 댓글 옵션창 열기
-				    $(".btn_cm_opt").on("click", function(){
-				        $(this).parent("div").children(".bo_vc_act").show();
-				    });
-						
-				    // 댓글 옵션창 닫기
-				    $(document).mouseup(function (e){
-				        var container = $(".bo_vc_act");
-				        if( container.has(e.target).length === 0)
-				        container.hide();
-				    });
-				});
-					
-				</script>
+			$(function() {			    
+		    // 댓글 옵션창 열기
+		    $(".btn_cm_opt").on("click", function(){
+		        $(this).parent("div").children(".bo_vc_act").show();
+		    });
+				
+		    // 댓글 옵션창 닫기
+		    $(document).mouseup(function (e){
+		        var container = $(".bo_vc_act");
+		        if( container.has(e.target).length === 0)
+		        container.hide();
+		    });
+		});
+			
+		</script>
     </article>
     <?php } ?>
     <?php if ($i == 0) { //댓글이 없다면 ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><?php } ?>
@@ -158,8 +158,10 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <?php } ?>
         </div>
         <div class="btn_confirm">
-            <input type="checkbox" name="wr_secret" value="secret" id="wr_secret">
-            <label for="wr_secret"><i class="fa fa-lock" aria-hidden="true"></i><span class="sound_only">비밀글사용</span></label>
+        	<span class="secret_cm">
+	            <input type="checkbox" name="wr_secret" value="secret" id="wr_secret">
+	            <label for="wr_secret">비밀글</label>
+            </span>
             <button type="submit" id="btn_submit" class="btn_submit">댓글등록</button>
         </div>
     </div>

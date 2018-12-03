@@ -385,10 +385,13 @@ box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 .bo_vc_w_info:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_w_info .frm_input {float:left;margin-right:5px}
 .bo_vc_w_info #captcha {padding-top:10px;display:block;clear:both}
-.bo_vc_w .btn_confirm {float:right;margin-top:10px}
+.bo_vc_w .btn_confirm {margin-top:10px}
 .bo_vc_w .btn_confirm label {display:inline-block;margin-right:10px;border-radius:3px;font-size:1.5em;text-align:center}
 .bo_vc_w .btn_submit {height:45px;padding:0 20px;border-radius:3px;font-weight:bold;font-size:1.083em}
+.bo_vc_w .btn_confirm .secret_cm label {font-size:1em !important}
 .bo_vc_w_wr:after {display:block;visibility:hidden;clear:both;content:""}
+.secret_cm {display:inline-block;float:left}
+
 
 #bo_vc_send_sns {display:inline-block;float:left}
 #bo_vc_sns {display:inline-block;margin:0;padding:0;list-style:none;zoom:1}
