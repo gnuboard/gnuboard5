@@ -59,9 +59,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
     <thead>
     <tr>
         <?php if ($is_admin) { ?>
-        <th scope="col">
-            <label for="all_chk" class="sound_only">목록 전체</label>
-            <input type="checkbox" id="all_chk">
+        <th scope="col" class="chk_box">
+        	<input type="checkbox" id="all_chk" class="selec_chk">
+            <label for="all_chk">
+            	<span></span>
+				<b class="sound_only">목록 전체</b>
+            </label>
         </th>
         <?php } ?>
         <th scope="col">그룹</th>
@@ -82,9 +85,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
     ?>
     <tr>
         <?php if ($is_admin) { ?>
-        <td class="td_chk">
-            <label for="chk_bn_id_<?php echo $i; ?>" class="sound_only"><?php echo $num?>번</label>
-            <input type="checkbox" name="chk_bn_id[]" value="<?php echo $i; ?>" id="chk_bn_id_<?php echo $i; ?>">
+        <td class="td_chk chk_box">
+            <input type="checkbox" name="chk_bn_id[]" value="<?php echo $i; ?>" id="chk_bn_id_<?php echo $i; ?>" class="selec_chk">
+            <label for="chk_bn_id_<?php echo $i; ?>">
+            	<span></span>
+            	<b class="sound_only"><?php echo $num?>번</b>
+            </label>
             <input type="hidden" name="bo_table[<?php echo $i; ?>]" value="<?php echo $list[$i]['bo_table']; ?>">
             <input type="hidden" name="wr_id[<?php echo $i; ?>]" value="<?php echo $list[$i]['wr_id']; ?>">
         </td>

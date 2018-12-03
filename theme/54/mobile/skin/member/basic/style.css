@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* ### 기본 스타일 커스터마이징 시작 ### */
-.mbskin {text-align:center}
+.mbskin {text-align:center;max-width:320px;margin:0 auto}
 .mbskin h1 {font-size:1.75em;margin:40px 0 25px}
 .mbskin p {padding-bottom:20px;border-bottom:1px solid #c8c8c8}
 .mbskin p strong {color:#4162ff;padding-bottom:5px;display:block;font-size:1.083em}
@@ -316,15 +316,25 @@
 
 /* 폼메일 */
 #formmail #subject {width:100%}
+#formmail .new_win_con {padding:20px}
 #formmail textarea {width:100%;height:100px}
 #formmail .frm_file {padding-left:50px}
 #formmail .file_wr {border:1px solid #ccc;background:#fff;color:#000;vertical-align:middle;border-radius:3px;padding:5px;height:40px}
-#formmail .lb_icon {position:absolute;top:0px;left:0px;border-radius:3px 0 0 3px;height:38px;line-height:38px;width:40px;overflow:hidden;text-indent:-999px;background:url(./img/icon_file.gif) no-repeat 50% 50% #eee}
+#formmail .lb_icon {position:absolute;top:1px;left:1px;border-radius:3px 0 0 3px;height:38px;line-height:38px;width:40px;background:#fff;text-align:center;color:#b2b2b2}
+
+.chk_box input[type="radio"] {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.chk_box input[type="radio"] + label {position:relative;padding-left:23px;display:inline-block;color:#676e70}
+.chk_box input[type="radio"] + label span {position:absolute;top:0;left:0;width:15px;height:15px;display:block;background:#f7f8f9;border:1px solid #cdd6df;border-radius:50%}
+.chk_box input[type="radio"]:checked + label {color:#3a8afd}
+.chk_box input[type="radio"]:checked + label span {border-color:#3a8afd}
+.chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#3a8afd;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
+
 
 /* 자기소개 */
 #profile section {margin:10px}
 #profile h2 {margin:0}
-#profile .sv_wrap a {color:#fdff2f}
+#profile .sv_wrap a {}
+#profile .profile_img img {border-radius:50%}
 #profile table {width:100%;border-collapse:collapse}
 #profile table th {background:#fff;padding:10px;width:90px;text-align:left;border-bottom:1px solid #eee}
 #profile table td {background:#fff;padding:10px;border-bottom:1px solid #eee}

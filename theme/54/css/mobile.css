@@ -208,7 +208,7 @@ button.btn_frmline {font-size:1em}
 /* 게시판용 버튼 */
 a.btn_b01,.btn_b01 {display:inline-block;background:#3a8afd;color:#fff;border-radius:3px;padding:10px;border:0;text-decoration:none;vertical-align:middle}
 .btn_b01:hover, .btn_b01:hover {}
-a.btn_b02, .btn_b02 {display:inline-block;background:transparent;color:#fff;border:1px solid #787878;border-radius:3px;padding:10px;text-decoration:none;vertical-align:middle}
+a.btn_b02, .btn_b02 {display:inline-block;background:transparent;color:#fff;border:0;border-radius:3px;padding:10px;text-decoration:none;vertical-align:middle}
 a.btn_b02:hover, .btn_b02:hover {}
 a.btn_b03, .btn_b03 {display:inline-block;line-height:28px;border:0;background:transparent;color:#bababa;text-decoration:none;vertical-align:middle}
 a.btn_b03:hover, .btn_b03:hover {}

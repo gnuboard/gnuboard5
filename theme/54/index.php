@@ -44,16 +44,16 @@ include_once(G5_THEME_PATH.'/head.php');
     ?>
     <!-- } 사진 최신글2 끝 -->
 </div>
+
 <div class="latest_wr">
 <!-- 최신글 시작 { -->
-
     <?php
     //  최신글
     $sql = " select bo_table
                 from `{$g5['board_table']}` a left join `{$g5['group_table']}` b on (a.gr_id=b.gr_id)
                 where a.bo_device <> 'mobile' ";
     if(!$is_admin)
-        $sql .= " and a.bo_use_cert = '' ";
+	$sql .= " and a.bo_use_cert = '' ";
     $sql .= " and a.bo_table not in ('notice', 'gallery') ";     //공지사항과 갤러리 게시판은 제외
     $sql .= " order by b.gr_order, a.bo_order ";
     $result = sql_query($sql);
