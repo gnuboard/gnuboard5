@@ -126,7 +126,7 @@
 
 .bo_cmt {background:#e9eff5;color:#3a8afd;font-size:0.925em;height:16px;padding:0 5px;border-radius:2px;vertical-align:top;min-width:16px}
 
-.bo_subject {display:block;width:100%;padding:5px 0}
+.bo_subject {display:block;width:100%;padding-bottom:5px}
 .bo_current {color:#e8180c}
 .bo_info:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_info {position:relative;padding-top:5px;line-height:20px;color:#646464;vertical-align:top}
