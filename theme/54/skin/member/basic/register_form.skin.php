@@ -79,9 +79,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                </div>
 	                <?php } ?>
 	                <?php if ($config['cf_cert_use']) { ?>
-	                <span class="frm_info">아이핀 본인확인 후에는 이름이 자동 입력되고 휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되어 수동으로 입력할수 없게 됩니다.</span>
+	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
+	                <span class="tooltip">아이핀 본인확인 후에는 이름이 자동 입력되고 휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되어 수동으로 입력할수 없게 됩니다.</span>
 	                <?php } ?>
-	
 	            </li>
 	            <?php if ($req_nick) {  ?>
 	            <li class="half_input left_input">
@@ -91,9 +91,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 						<span class="tooltip">공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br> 닉네임을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.</span>
 	                </label>
 	                
-	                    <input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>">
-	                    <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="frm_input required nospace full_input" size="10" maxlength="20" placeholder="닉네임">
-	                    <span id="msg_mb_nick"></span>	                
+                    <input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>">
+                    <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="frm_input required nospace full_input" size="10" maxlength="20" placeholder="닉네임">
+                    <span id="msg_mb_nick"></span>	                
 	            </li>
 	            <?php }  ?>
 	
@@ -101,7 +101,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                <label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong></label>
 	                
 	                <?php if ($config['cf_use_email_certify']) {  ?>
-	                <span class="frm_info">
+	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
+					<span class="tooltip">이미지 크기는 가
 	                    <?php if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; }  ?>
 	                    <?php if ($w=='u') { echo "E-mail 주소를 변경하시면 다시 인증하셔야 합니다."; }  ?>
 	                </span>
@@ -210,40 +211,47 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	            
 	            </li>
 	            <?php } ?>
-	        </ul>
-	        
-	        <ul class="mem_join_opt">
-	        	<li>
-	                <label for="reg_mb_mailling" class="frm_label">메일링서비스</label>
-	                <input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?>>
-	                정보 메일을 받겠습니다.
-	                
-	            </li>
+
+	            <li class="chk_box chk_li">
+		        	<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?> class="selec_chk">
+		            <label for="reg_mb_mailling">
+		            	<span></span>
+		            	<b class="sound_only">메일링서비스</b>
+		            </label>
+		            <span class="chk_li">정보 메일을 받겠습니다.</span>
+		        </li>
 	
-	            <?php if ($config['cf_use_hp']) {  ?>
-	            <li>
-	                <label for="reg_mb_sms" class="frm_label">SMS 수신여부</label>
-					<input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?>>
-	                    휴대폰 문자메세지를 받겠습니다.
-	                
-	            </li>
-	            <?php }  ?>
+				<?php if ($config['cf_use_hp']) { ?>
+		        <li class="chk_box chk_li">
+		            <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?> class="selec_chk">
+		        	<label for="reg_mb_sms">
+		            	<span></span>
+		            	<b class="sound_only">SMS 수신여부</b>
+		            </label>        
+		            <span class="chk_li">휴대폰 문자메세지를 받겠습니다.</span>
+		        </li>
+		        <?php } ?>
 	
-	            <?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능  ?>
-	            <li>
-	                <label for="reg_mb_open" class="frm_label">정보공개</label>
-	                <input type="hidden" name="mb_open_default" value="<?php echo $member['mb_open'] ?>">
-	                <input type="checkbox" name="mb_open" value="1" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> id="reg_mb_open">
-	                다른분들이 나의 정보를 볼 수 있도록 합니다.
-	                <span class="frm_info">
-	                    정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
-	                </span>                
-	            </li>
-	            <?php } else {  ?>
+		        <?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
+		        <li class="chk_box chk_li">
+		            <input type="checkbox" name="mb_open" value="1" id="reg_mb_open" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> class="selec_chk">
+		      		<label for="reg_mb_open">
+		      			<span></span>
+		      			<b class="sound_only">정보공개</b>
+		      		</label>      
+		            <span class="chk_li">다른분들이 나의 정보를 볼 수 있도록 합니다.</span>
+		            <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
+		            <span class="tooltip">
+		                정보공개를 바꾸시면 앞으로 <?php echo (int)$config['cf_open_modify'] ?>일 이내에는 변경이 안됩니다.
+		            </span>
+		            <input type="hidden" name="mb_open_default" value="<?php echo $member['mb_open'] ?>"> 
+		        </li>		        
+		        <?php } else { ?>
 	            <li>
 	                정보공개
 	                <input type="hidden" name="mb_open" value="<?php echo $member['mb_open'] ?>">
-	                <span class="frm_info">
+	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
+	                <span class="tooltip">
 	                    정보공개는 수정후 <?php echo (int)$config['cf_open_modify'] ?>일 이내, <?php echo date("Y년 m월 j일", isset($member['mb_open_date']) ? strtotime("{$member['mb_open_date']} 00:00:00")+$config['cf_open_modify']*86400:G5_SERVER_TIME+$config['cf_open_modify']*86400); ?> 까지는 변경이 안됩니다.<br>
 	                    이렇게 하는 이유는 잦은 정보공개 수정으로 인하여 쪽지를 보낸 후 받지 않는 경우를 막기 위해서 입니다.
 	                </span>

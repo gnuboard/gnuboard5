@@ -41,7 +41,6 @@
 #bo_list .tbl_head01 td {}
 #bo_list .tbl_head01 a {}
 #bo_list td.empty_table {}
-
 #bo_list tbody .even td {background:#fbfbfb}
 
 /* 읽기 내 테이블 */
@@ -88,6 +87,11 @@
 /* 게시판 목록 */
 #bo_list {position:relative;margin-bottom:20px}
 #bo_list:after {display:block;visibility:hidden;clear:both;content:""}
+
+#bo_list .rrrrr{background:pink}
+#bo_list .rrrrr:after {display:block;visibility:hidden;clear:both;content:""}
+
+
 #bo_list .td_board {width:120px;text-align:center}
 #bo_list .td_chk {width:30px;text-align:center}
 #bo_list .td_date {width:60px;text-align:center}
@@ -120,12 +124,12 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 /* 게시판 목록 공통 */
 .selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
 .chk_box {position:relative}
-.chk_box input[type="checkbox"] + label {color:#676e70}
+.chk_box input[type="checkbox"] + label {position:relative;color:#676e70}
 .chk_box input[type="checkbox"] + label:hover {color:#2172f8}
-.chk_box input[type="checkbox"] + label span {float:left;margin-left:5px;width:15px;height:15px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.chk_box input[type="checkbox"] + label span {float:left;width:15px;height:15px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
 .chk_box input[type="checkbox"]:checked + label {color:#000}
-.chk_box input[type="checkbox"]:checked + label span {margin-left:5px;background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
-.all_chk.chk_box input[type="checkbox"] + label span {margin-left:10px}
+.chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+
 
 #bo_btn_top {margin: 10px 0}
 #bo_btn_top:after {display:block;visibility:hidden;clear:both;content:""}
@@ -316,7 +320,7 @@ box-shadow:1px 1px 5px 0px hsl(232, 36%, 96%)}
 #bo_v_act .bo_v_good {display:inline-block;border:1px solid #dedede;width:70px;line-height:46px;border-radius:30px}
 #bo_v_act .bo_v_nogood {display:inline-block;border:1px solid #dedede;width:70px;line-height:46px;border-radius:30px}
 
-#bo_v_sns {padding:0;list-style:none;zoom:1}
+#bo_v_sns {padding:0;list-style:none;zoom:1;float:left;display:inline-block}
 #bo_v_sns:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_sns li {float:left;width:135px;margin-right:5px;text-align:left}
 #bo_v_sns li a {height:35px;line-height:35px;text-align:center;border-radius:5px;color:#fff;font-size:0.95em}

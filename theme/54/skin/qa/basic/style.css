@@ -44,6 +44,7 @@
 #bo_list .tbl_head01 td {}
 #bo_list .tbl_head01 a {}
 #bo_list td.empty_table {}
+#bo_list tbody .even td {background:#fbfbfb}
 
 /* 읽기 내 테이블 */
 #bo_v .tbl_head01 {}
@@ -375,4 +376,13 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_w .bo_w_mail {float:left;width:49.5%}
 #bo_w .bo_w_hp {float:right;width:49.5%}
 #bo_w .bo_w_sbj {clear:both}
-#bo_w .frm_info {color:#3497d9;margin:0 0 5px;display:inline-block;font-size:0.92em}
+#bo_w .frm_info {position:relative;line-height:18px;color:#3497d9;margin:10px 0;display:inline-block;font-size:1em}
+
+.selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.chk_box {position:relative}
+.chk_box input[type="checkbox"] + label {position:relative;padding-left:10px;color:#676e70}
+.chk_box input[type="checkbox"] + label:hover{color:#2172f8}
+.chk_box input[type="checkbox"] + label span {position:absolute;top:0;left:0;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.chk_box input[type="checkbox"]:checked + label {color:#000}
+.chk_box input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+

@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <div id="point" class="new_win">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
 
-    <div class="new_win_con">
+    <div class="new_win_con2">
         <ul class="point_all">
         	<li class="full_li">
         		보유포인트

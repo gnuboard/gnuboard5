@@ -88,7 +88,7 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 
 .selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
 .chk_box {position:relative}
-.chk_box input[type="checkbox"] + label {padding-left:20px;color:#676e70;vertical-align:baseline}
+.chk_box input[type="checkbox"] + label {position:relative;padding-left:20px;color:#676e70;vertical-align:baseline}
 .chk_box input[type="checkbox"] + label:hover{color:#2172f8}
 .chk_box input[type="checkbox"] + label span {position:absolute;top:10px;left:10px;width:15px;height:15px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
 .chk_box input[type="checkbox"]:checked + label {color:#000}
@@ -170,12 +170,15 @@ box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}
 .bo_notice td a {font-weight:bold}
 .bo_notice .notice_icon {display:inline-block;line-height:25px;border-radius:5px;font-weight:bold;color:#f9267f}
 
-.more_opt {display:none;position:absolute;top:45px;right:0;background:#fff;border:1px solid #ecf0f1;z-index:999}
-.more_opt:before {content:"";position:absolute;top:-8px;right:13px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #ecf0f1 transparent}
+.more_opt {display:none;position:absolute;top:45px;right:0;background:#fff;border:1px solid #b8bfc4;z-index:999}
+.more_opt:before {content:"";position:absolute;top:-8px;right:13px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #b8bfc4 transparent}
 .more_opt:after {content:"";position:absolute;top:-6px;right:13px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #fff transparent}
-.more_opt li {border-bottom:1px solid #f0f0f0;padding:10px 0;float:inherit;width:80px;margin:0}
-.more_opt li button {border:0;background:#fff;color:#bababa}
+.more_opt li {border-bottom:1px solid #f1f1f1;padding:10px;float:inherit;width:90px;margin:0;color:#6b757c;text-align:left}
+.more_opt li:last-child {border-bottom:0}
+.more_opt li button, .more_opt li a {width:100%;border:0;background:#fff;color:#6b757c}
+.more_opt li:hover a,
 .more_opt li:hover button {color:#000}
+.more_opt li i {float:right;line-height:20px}
 
 .td_num strong {color:#000}
 .bo_cate_link {display:inline-block;background:#e2eaf6;color:#3a8afd;font-weight:normal !important;height:20px;line-height:10px;padding:5px 8px;border-radius:5px;font-size:0.95em} /* 글제목줄 분류스타일 */
@@ -334,7 +337,7 @@ box-shadow:1px 1px 5px 0px hsl(232, 36%, 96%)}
 #bo_v_act .bo_v_good {display:inline-block;border:1px solid #dedede;width:70px;line-height:46px;border-radius:30px}
 #bo_v_act .bo_v_nogood {display:inline-block;border:1px solid #dedede;width:70px;line-height:46px;border-radius:30px}
 
-#bo_v_sns {padding:0;list-style:none;zoom:1}
+#bo_v_sns {padding:0;list-style:none;zoom:1;float:left;display:inline-block}
 #bo_v_sns:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_v_sns li {float:left;width:135px;margin-right:5px;text-align:left}
 #bo_v_sns li a {height:35px;line-height:35px;text-align:center;border-radius:5px;color:#fff;font-size:0.95em}

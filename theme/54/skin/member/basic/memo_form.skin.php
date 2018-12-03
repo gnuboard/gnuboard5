@@ -8,7 +8,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <!-- 쪽지 보내기 시작 { -->
 <div id="memo_write" class="new_win">
     <h1 id="win_title"><i class="fa fa-envelope-o" aria-hidden="true"></i> 쪽지 보내기</h1>
-    <div class="new_win_con">
+    <div class="new_win_con2">
         <ul class="win_ul">
             <li><a href="./memo.php?kind=recv">받은쪽지</a></li>
             <li><a href="./memo.php?kind=send">보낸쪽지</a></li>

@@ -16,17 +16,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	
 	<p>회원가입약관 및 개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.</p>
 	
-	<div id="fregister_chkall" class="chk_all">
-        <input type="checkbox" name="chk_all" id="chk_all">
-        <label for="chk_all">회원가입 약관에 모두 동의합니다</label>
+	<div id="fregister_chkall" class="chk_all fregister_agree">
+        <input type="checkbox" name="chk_all" id="chk_all" class="selec_chk">
+        <label for="chk_all"><span></span>회원가입 약관에 모두 동의합니다</label>
     </div>
     
     <section id="fregister_term">
         <h2>회원가입약관</h2>
         <textarea readonly><?php echo get_text($config['cf_stipulation']) ?></textarea>
         <fieldset class="fregister_agree">
-            <input type="checkbox" name="agree" value="1" id="agree11">
-            <label for="agree11" class="sound_only">회원가입약관의 내용에 동의합니다.</label>
+            <input type="checkbox" name="agree" value="1" id="agree11" class="selec_chk">
+            <label for="agree11"><span></span><b class="sound_only">회원가입약관의 내용에 동의합니다.</b></label>
         </fieldset>
     </section>
 
@@ -63,8 +63,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             </table>
         </div>
         <fieldset class="fregister_agree">
-        	<label for="agree21"><span class="sound_only">개인정보처리방침안내의 내용에 동의합니다.</span></label>
-            <input type="checkbox" name="agree2" value="1" id="agree21">
+            <input type="checkbox" name="agree2" value="1" id="agree21" class="selec_chk">
+            <label for="agree21"><span></span><b class="sound_only">개인정보처리방침안내의 내용에 동의합니다.</b></label>
        </fieldset>
     </section>
     

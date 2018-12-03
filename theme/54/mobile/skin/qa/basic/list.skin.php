@@ -71,8 +71,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                     </label>
                 </div>
                 <?php } ?>
-                
-                <!-- <div class="li_title"> -->
                 <div class="bo_cnt">
                 	<div>
                 		<strong class="bo_cate_link"><?php echo $list[$i]['category']; ?></strong>	

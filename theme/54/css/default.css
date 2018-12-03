@@ -331,12 +331,12 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075);
 .list_01 li.empty_li {text-align:center;padding:20px 0;color:#666}
 
 /*폼 리스트*/
-.form_01 h2 {margin:0 0 10px;font-size:1.167em}
+.form_01 h2 {font-size:1.167em}
 .form_01 li {margin-bottom:10px}
 .form_01 ul:after,
 .form_01 li:after {display:block;visibility:hidden;clear:both;content:""}
 .form_01 .left_input {float:left}
-.form_01 .margin_input {margin-right:2%}
+.form_01 .margin_input {margin-right:1%}
 .form_01 textarea {height:100px;width:100%}
 .form_01 .frm_label {display:inline-block;width:130px}
 
@@ -386,8 +386,9 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .win_desc:after {content:"";position:absolute;left:0;top:0;width:4px;height:50px;background:#da4453;border-radius:3px 0 0 3px}
 .new_win .frm_info {font-size:0.92em;color:#919191}
 .new_win .win_total {float:right;display:inline-block;line-height:30px;font-weight:normal;font-size:0.75em;color:#3a8afd;background:#f6f6f6;padding:0 10px;border-radius:5px}
-.new_win .new_win_con {margin:20px 0;padding:0 15px}
+.new_win .new_win_con {margin:20px 0;padding:20px}
 .new_win .new_win_con:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win .new_win_con2 {margin:20px 0}
 .new_win .btn_confirm:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .win_btn {text-align:center}
 .new_win .btn_close {height:50px;width:60px;overflow:hidden;cursor:pointer}

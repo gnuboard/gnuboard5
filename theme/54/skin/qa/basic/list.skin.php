@@ -67,21 +67,24 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         <?php } ?>
     </div>
     <!-- } 게시판 페이지 정보 및 버튼 끝 -->
-
+	
     <form name="fqalist" id="fqalist" action="./qadelete.php" onsubmit="return fqalist_submit(this);" method="post">
     <input type="hidden" name="stx" value="<?php echo $stx; ?>">
     <input type="hidden" name="sca" value="<?php echo $sca; ?>">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
-
+            
     <div class="tbl_head01 tbl_wrap">
         <table>
         <caption><?php echo $board['bo_subject'] ?> 목록</caption>
         <thead>
         <tr>
             <?php if ($is_checkbox) { ?>
-            <th scope="col">
-                <label for="chkall" class="sound_only">현재 페이지 게시물 전체</label>
-                <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);">
+            <th scope="col" class="all_chk chk_box">
+                <input type="checkbox" id="chkall" onclick="if (this.checked) all_checked(true); else all_checked(false);" class="selec_chk">
+            	<label for="chkall">
+                	<span></span>
+                	<b class="sound_only">현재 페이지 게시물  전체선택</b>
+                </label>
             </th>
             <?php } ?>
             <th scope="col">번호</th>
@@ -94,12 +97,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         <tbody>
         <?php
         for ($i=0; $i<count($list); $i++) {
+        	if ($i%2==0) $lt_class = "even";
+        	else $lt_class = "";
         ?>
-        <tr>
+        <tr class="<?php echo $lt_class ?>">
             <?php if ($is_checkbox) { ?>
-            <td class="td_chk">
-                <label for="chk_qa_id_<?php echo $i ?>" class="sound_only"><?php echo $list[$i]['subject']; ?></label>
-                <input type="checkbox" name="chk_qa_id[]" value="<?php echo $list[$i]['qa_id'] ?>" id="chk_qa_id_<?php echo $i ?>">
+            <td class="td_chk chk_box">
+            	<input type="checkbox" name="chk_qa_id[]" value="<?php echo $list[$i]['qa_id'] ?>" id="chk_qa_id_<?php echo $i ?>" class="selec_chk">
+                <label for="chk_qa_id_<?php echo $i ?>">
+            		<span></span>
+            		<b class="sound_only"><?php echo $list[$i]['subject'] ?></b>
+            	</label>
             </td>
             <?php } ?>
             <td class="td_num"><?php echo $list[$i]['num']; ?></td>
