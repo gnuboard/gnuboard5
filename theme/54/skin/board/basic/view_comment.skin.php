@@ -42,29 +42,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 	            <?php
 	            include(G5_SNS_PATH.'/view_comment_list.sns.skin.php');
 	            ?>
-	            <div class="bo_vl_opt">
-		            <button type="button" class="btn_cm_opt btn_b01 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">댓글 옵션</span></button>
-		        	<ul class="bo_vc_act">
-		                <?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;">답변</a></li><?php } ?>
-		                <?php if ($list[$i]['is_edit']) { ?><li><a href="<?php echo $c_edit_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;">수정</a></li><?php } ?>
-		                <?php if ($list[$i]['is_del']) { ?><li><a href="<?php echo $list[$i]['del_link']; ?>" onclick="return comment_delete();">삭제</a></li><?php } ?>
-		            </ul>
-	            </div>
-	            <script>
-					$(function() {			    
-				    // 댓글 옵션창 열기
-				    $(".btn_cm_opt").on("click", function(){
-				        $(this).parent("div").children(".bo_vc_act").show();
-				    });
-						
-				    // 댓글 옵션창 닫기
-				    $(document).mouseup(function (e){
-				        var container = $(".bo_vc_act");
-				        if( container.has(e.target).length === 0)
-				        container.hide();
-				    });
-				});
-				</script>
 	        </header>
 	
 	        <!-- 댓글 출력 -->
@@ -95,6 +72,29 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 	        <input type="hidden" value="<?php echo strstr($list[$i]['wr_option'],"secret") ?>" id="secret_comment_<?php echo $comment_id ?>">
 	        <textarea id="save_comment_<?php echo $comment_id ?>" style="display:none"><?php echo get_text($list[$i]['content1'], 0) ?></textarea>
 		</div>
+		<div class="bo_vl_opt">
+            <button type="button" class="btn_cm_opt btn_b01 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">댓글 옵션</span></button>
+        	<ul class="bo_vc_act">
+                <?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;">답변</a></li><?php } ?>
+                <?php if ($list[$i]['is_edit']) { ?><li><a href="<?php echo $c_edit_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;">수정</a></li><?php } ?>
+                <?php if ($list[$i]['is_del']) { ?><li><a href="<?php echo $list[$i]['del_link']; ?>" onclick="return comment_delete();">삭제</a></li><?php } ?>
+            </ul>
+        </div>
+        <script>
+			$(function() {			    
+		    // 댓글 옵션창 열기
+		    $(".btn_cm_opt").on("click", function(){
+		        $(this).parent("div").children(".bo_vc_act").show();
+		    });
+				
+		    // 댓글 옵션창 닫기
+		    $(document).mouseup(function (e){
+		        var container = $(".bo_vc_act");
+		        if( container.has(e.target).length === 0)
+		        container.hide();
+		    });
+		});
+		</script>
     </article>
     <?php } ?>
     <?php if ($i == 0) { //댓글이 없다면 ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><?php } ?>
