@@ -28,7 +28,7 @@ $thumb_height = 80;
             //echo $list[$i]['icon_reply']." ";
             
             // ************* 이미지가 없을 경우 코드 자체 표시 안되게 해주세요 (적용된 css 때문에 레이아웃이 틀어짐) *************
-            echo "<a href=\"<?php echo $list[$i]['href'] ?>\" class=\"lt_thumb\">".$img_content."</a> "; 
+            echo "<a href=\"".$list[$i]['href']."\" class=\"lt_thumb\">".$img_content."</a> "; 
 			// ************* 이미지가 없을 경우 코드 자체 표시 안되게 해주세요 (적용된 css 때문에 레이아웃이 틀어짐) *************
 			
 			
