@@ -178,6 +178,11 @@
 #bo_v_file li {padding:15px;position:relative;margin:10px 0;border:1px solid #dfdfdf}
 #bo_v_file li i {float:left;color:#b2b2b2;font-size:1.6em;margin-right:20px}
 #bo_v_file a {float:left;display:block;margin-right:10px;text-decoration:none;word-wrap:break-word;color:#000}
+
+@media (max-width:450px){
+	#bo_v_file a {float:inherit}
+}
+
 #bo_v_file a:focus, #bo_v_file li:hover a, #bo_v_file a:active {text-decoration:underline;color:#3a8afd}
 #bo_v_file img {float:left;margin:0 10px 0 0}
 #bo_v_file .bo_v_file_cnt {color:#b2b2b2;font-size:0.92em}
