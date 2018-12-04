@@ -374,21 +374,20 @@ box-shadow:1px 1px 5px 0px hsl(232, 36%, 96%)}
 .bo_vc_w h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 .bo_vc_w #char_cnt {display:block;margin:0 0 5px}
 .bo_vc_w textarea {border:1px solid #ccc;background:#fff;color:#000;vertical-align:middle;border-radius:3px;padding:5px;width:100%;height:120px;
--webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
--moz-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1)}
+-webkit-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1);
+-moz-box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1);
+box-shadow:inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 #wr_secret {}
 .bo_vc_w_info {margin:10px 0;float:left}
 .bo_vc_w_info:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_w_info .frm_input {float:left;margin-right:5px}
 .bo_vc_w_info #captcha {padding-top:10px;display:block;clear:both}
-.bo_vc_w .btn_confirm {margin-top:10px}
+.bo_vc_w .btn_confirm {clear:both;margin-top:10px}
 .bo_vc_w .btn_confirm label {display:inline-block;margin-right:10px;border-radius:3px;font-size:1.5em;text-align:center}
 .bo_vc_w .btn_submit {height:45px;padding:0 20px;border-radius:3px;font-weight:bold;font-size:1.083em}
 .bo_vc_w .btn_confirm .secret_cm label {font-size:1em !important}
 .bo_vc_w_wr:after {display:block;visibility:hidden;clear:both;content:""}
 .secret_cm {display:inline-block;float:left}
-
 
 #bo_vc_send_sns {display:inline-block;float:left}
 #bo_vc_sns {display:inline-block;margin:0;padding:0;list-style:none;zoom:1}
@@ -400,9 +399,8 @@ box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1)}
 #bo_vc_sns a {display:inline-block;padding:0 15px 0 5px}
 #bo_vc_sns input {margin:0 5px 0 0}
 
-
 /*글쓰기*/
-#bo_w .bo_v_option li {display:inline-block;float:left;text-align:left; margin:0 5px 0 0}
+#bo_w .bo_v_option li {display:inline-block;float:left;text-align:left;margin:0 5px 0 0}
 #bo_w .bo_v_option li label {vertical-align:baseline}
 #bo_w .bo_v_option .chk_box input[type="checkbox"] + label span {margin-left:0;margin-right:5px}
 #bo_w .write_div {margin:10px 0;position:relative}
