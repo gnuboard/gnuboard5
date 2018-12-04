@@ -119,7 +119,7 @@
 .fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .fregister_agree.chk_all input[type="checkbox"] + label span {top:18px}
 
-.chk_li {padding-left:10px}
+.chk_li {padding-left:20px}
 
 #sns_register .login-sns,
 #sns_register h2 {border:0 !important}

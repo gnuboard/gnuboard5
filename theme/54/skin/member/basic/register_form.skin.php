@@ -212,7 +212,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	            </li>
 	            <?php } ?>
 
-	            <li class="chk_box chk_li">
+	            <li class="chk_box">
 		        	<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?> class="selec_chk">
 		            <label for="reg_mb_mailling">
 		            	<span></span>
@@ -222,7 +222,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 		        </li>
 	
 				<?php if ($config['cf_use_hp']) { ?>
-		        <li class="chk_box chk_li">
+		        <li class="chk_box">
 		            <input type="checkbox" name="mb_sms" value="1" id="reg_mb_sms" <?php echo ($w=='' || $member['mb_sms'])?'checked':''; ?> class="selec_chk">
 		        	<label for="reg_mb_sms">
 		            	<span></span>
@@ -233,7 +233,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 		        <?php } ?>
 	
 		        <?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
-		        <li class="chk_box chk_li">
+		        <li class="chk_box">
 		            <input type="checkbox" name="mb_open" value="1" id="reg_mb_open" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> class="selec_chk">
 		      		<label for="reg_mb_open">
 		      			<span></span>
