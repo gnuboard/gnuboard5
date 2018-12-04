@@ -1,7 +1,7 @@
 @charset "utf-8";
 
 /* ### 기본 스타일 커스터마이징 시작 ### */
-.mbskin {text-align:center;max-width:320px;margin:0 auto}
+.mbskin {text-align:center;margin:20px auto}
 .mbskin h1 {font-size:1.75em;margin:40px 0 25px}
 .mbskin p {padding-bottom:20px;border-bottom:1px solid #c8c8c8}
 .mbskin p strong {color:#4162ff;padding-bottom:5px;display:block;font-size:1.083em}
@@ -299,7 +299,7 @@
 #point .btn_close {margin:20px auto}
 
 /* 회원 비밀번호 확인 */
-#mb_confirm {margin:30px auto}
+#mb_confirm {max-width:320px;margin:30px auto}
 #mb_confirm h1 {margin:0 0 15px;padding:0 10px;font-size:1.3em}
 #mb_confirm p {padding:15px 10px;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}

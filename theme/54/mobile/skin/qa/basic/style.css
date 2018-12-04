@@ -105,6 +105,8 @@
 .bo_chk {display:inline-block;float:left;margin-right:5px}
 
 .selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.chk_op {margin:10px 0}
+.chk_op label {vertical-align:baseline}
 .chk_box {position:relative}
 .chk_box input[type="checkbox"] + label {padding-left:20px;color:#676e70}
 .chk_box input[type="checkbox"] + label:hover {color:#2172f8}
@@ -139,11 +141,25 @@
 
 
 /* 게시판 쓰기 */
-#bo_w #wr_email, #bo_w #wr_homepage, #bo_w #wr_subject {width:100%}
-#char_count_desc {display:block;margin:0 0 5px;padding:0}
-#char_count_wrp {margin:5px 0 0;text-align:right}
-#char_count {font-weight:bold}
-#qa_subject {width:100%}
+#bo_w {padding:15px}
+#bo_w .bo_v_option li {display:inline-block;float:left;margin:0 5px 0 0}
+#bo_w .bo_v_option li label {vertical-align:baseline}
+#bo_w .bo_v_option:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_w .bo_w_select select {border:1px solid #d0d3db;background:#fff;width:100%}
+#bo_w .bo_w_link label {position:absolute;top:1px;left:1px;border-radius:3px 0 0 3px;width:45px;height:43px;line-height:43px;font-size:1.2em;text-align:center;color:#b2b2b2}
+#bo_w .bo_w_link .frm_input {padding-left:50px}
+#bo_w .bo_w_flie .lb_icon {position:absolute;top:0px;left:0px;border-radius:3px 0 0 3px;width:45px;height:43px;line-height:43px;font-size:1.2em;text-align:center;color:#b2b2b2}
+#bo_w .bo_w_flie .frm_file {padding-left:50px}
+#bo_w .bo_w_flie .file_wr {position:relative;color:#000;vertical-align:middle;margin:0}
+#bo_w .bo_w_flie .frm_input {margin:5px 0 0}
+
+.filebox .btn_file {display:inline-block;position:absolute;right:8px;top:8px;border:1px solid #3a8afd;border-radius:3px;width:60px;height:30px;color:#3a8afd;font-size:1em;line-height:30px;font-weight:bold;background:#fff;text-align:center;vertical-align:middle;cursor:pointer}
+.filebox .fileName {display:inline-block;position:relative;width:100%;height:45px;padding-left:45px;line-height:30px;border:1px solid #d0d3db;background-color:#fff;color:red;vertical-align:middle;border-radius:0}
+.filebox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+#bo_w .btn_confirm {text-align:center;margin:20px 0}
+#bo_w .btn_submit {width:49%;height:45px;padding:0 30px;font-weight:bold;font-size:1.083em}
+#bo_w .btn_cancel {width:49%;line-height:45px;height:45px;padding:0 30px;font-weight:bold;font-size:1.083em;background:#fff;border-radius:3px;border:1px solid #dcdcdc}
 
 /* 게시판 읽기 */
 #bo_v {padding:20px 0 0;background:#fff}
@@ -286,8 +302,3 @@
 #bo_vc_sns input {margin:0 0 0 5px}
 
 #bo_vc form {padding:0}
-
-#bo_w .bo_w_flie .lb_icon {position:absolute;top:0px;left:0px;border-radius:3px 0 0 3px;height:38px;line-height:38px;width:40px;background:#eee;text-align:center}
-#bo_w .bo_w_flie .frm_file {padding-left:50px}
-#bo_w .bo_w_flie .file_wr {border:1px solid #ccc;background:#fff;color:#000;vertical-align:middle;border-radius:3px;padding:5px;height:40px;margin:0}
-#bo_w .bo_w_flie .frm_input {margin:5px 0 0}

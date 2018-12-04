@@ -305,7 +305,7 @@
 #bo_vc_sns a {display:inline-block;padding:0 15px 0 5px}
 #bo_vc_sns input {margin:0 5px 0 0}
 
-/*글쓰기*/
+/* 게시판 쓰기 */
 #bo_w {padding:15px}
 #bo_w .bo_v_option li {display:inline-block;float:left;margin:0 5px 0 0}
 #bo_w .bo_v_option li label {vertical-align:baseline}
@@ -318,7 +318,7 @@
 #bo_w .bo_w_flie .file_wr {position:relative;color:#000;vertical-align:middle;margin:0}
 #bo_w .bo_w_flie .frm_input {margin:5px 0 0}
 
-.filebox .btn_file {display:inline-block;position:absolute;right:8px;top:8px;border:1px solid #3a8afd;border-radius:3px;width:60px;height:30px;color:#3a8afd;font-size:1em;line-height:30px;font-weight:bold;background:#fff;text-align:center;vertical-align:middle}
+.filebox .btn_file {display:inline-block;position:absolute;right:8px;top:8px;border:1px solid #3a8afd;border-radius:3px;width:60px;height:30px;color:#3a8afd;font-size:1em;line-height:30px;font-weight:bold;background:#fff;text-align:center;vertical-align:middle;cursor:pointer}
 .filebox .fileName {display:inline-block;position:relative;width:100%;height:45px;padding-left:45px;line-height:30px;border:1px solid #d0d3db;background-color:#fff;color:red;vertical-align:middle;border-radius:0}
 .filebox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
