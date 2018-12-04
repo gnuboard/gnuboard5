@@ -17,7 +17,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 <!-- 쪽지보기 시작 { -->
 <div id="memo_view" class="new_win">
     <h1 id="win_title"><?php echo $g5['title'] ?></h1>
-    <div class="new_win_con">
+    <div class="new_win_con2">
         <!-- 쪽지함 선택 시작 { -->
         <ul class="win_ul">
             <li class="<?php if ($kind == 'recv') {  ?>selected<?php }  ?>"><a href="./memo.php?kind=recv">받은쪽지</a></li>

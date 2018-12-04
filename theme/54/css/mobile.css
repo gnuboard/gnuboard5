@@ -315,16 +315,14 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .win_desc:after {content:"";position:absolute;left:0;top:0;width:4px;height:50px;background:#da4453;border-radius:3px 0 0 3px}
 
 .new_win .win_total {float:right;display:inline-block;line-height:30px;font-weight:normal;font-size:0.75em;color:#3a8afd;background:#f6f6f6;padding:0 10px;border-radius:5px}
-.new_win .new_win_con {margin:20px 0}
+.new_win .new_win_con {margin:20px 0;padding:20px}
 .new_win .new_win_con:after {display:block;visibility:hidden;clear:both;content:""}
+.new_win .new_win_con2 {margin:20px 0}
 
 .new_win .win_btn {clear:both;padding:10px 0 30px;text-align:center}
-.new_win .win_btn a {display:inline-block;height:40px;line-height:40px;font-weight:bold}
-/*.new_win .btn_close {display:inline-block;padding:0 10px;border:0;background:#c6c6d2;color:#666;text-decoration:none;font-weight:bold;height:40px;border-radius:3px;margin:10px 0}
-.new_win .btn_submit {width:100%;height:40px;line-height:40px;border-radius:3px;margin:0 0 20px;display:inline-block;font-weight:bold}*/
-
-.new_win .btn_close {height:50px;width:60px;overflow:hidden;cursor:pointer}
-.new_win .btn_submit {padding:0 20px;height:40px;font-weight:bold;font-size:1.083em;float:right}
+.new_win .win_btn a {display:inline-block;height:45px;line-height:40px;font-weight:bold}
+.new_win .btn_close {width:60px;height:45px;overflow:hidden;cursor:pointer}
+.new_win .btn_submit {padding:0 20px;height:45px;font-weight:bold;font-size:1.083em}
 
 /* 검색결과 색상 */
 .sch_word {color:#fff;background:#ff005a;padding:2px 4px;margin:0 2px}

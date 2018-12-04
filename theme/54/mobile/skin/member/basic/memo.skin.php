@@ -11,7 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     	<?php echo $g5['title'] ?>
     	<div class="win_total">전체 <?php echo $kind_title ?>쪽지 <?php echo $total_count ?>통<br></div>
     </h1>
-    <div class="new_win_con">
+    <div class="new_win_con2">
         <ul class="win_ul">
             <li class="<?php if ($kind == 'recv') {  ?>selected<?php }  ?>"><a href="./memo.php?kind=recv">받은쪽지</a></li>
             <li class="<?php if ($kind == 'send') {  ?>selected<?php }  ?>"><a href="./memo.php?kind=send">보낸쪽지</a></li>

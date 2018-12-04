@@ -152,27 +152,27 @@
 #reg_result .btn_confirm a {display:inline-block;padding:0 20px;height:40px;line-height:38px;border:1px solid #ed6478;color:#ed6478;border-radius:3px;font-weight:bold}
 
 /* 아이디/비밀번호 찾기 */
-/*#find_info #info_fs {margin:0 20px 10px}*/
 #find_info #info_fs p {margin:0 0 10px;line-height:1.5em;font-size:0.92em;color:#4162ff}
 #find_info #info_fs #mb_email {width:100%}
-#find_info #captcha {margin:5px 0 }
+#find_info #captcha {margin:5px 0}
 
 /* 로그인 */
 #mb_login {}
-#mb_login h1 {font-size:2em;text-align:center;margin:0 0 20px}
+#mb_login h1 {font-size:2em;text-align:center;margin:30px 0 20px}
 #mb_login h2 {margin:0}
 #mb_login p {padding:10px 0;line-height:1.5em}
 #mb_login #login_frm {position:relative;padding:20px}
-#mb_login #login_frm div {padding:10px 0;text-align:left}
+#mb_login #login_frm div {margin:10px 0;text-align:left}
 #mb_login .frm_input {width:100%;margin:5px 0}
-#mb_login .btn_submit {width:100%;border-radius:3px;height:40px;margin:5px 0 20px;font-size:1.083em;font-weight:bold}
+#mb_login #login_info label {padding-left:23px}
+#mb_login .btn_submit {width:100%;border-radius:3px;height:40px;margin:10px 0 0;font-size:1.083em;font-weight:bold}
 #mb_login .mb_login_join {padding:0 20px 20px}
 #mb_login .mb_login_join:after {display:block;visibility:hidden;clear:both;content:""}
 #mb_login .mb_login_join h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #mb_login .mb_login_join a {display:block;float:left;width:50%;color:#9d9d9d}
 #login_password_lost {border-right:1px solid #cdcdcd}
 
-#flogin {background:#fff;margin:20px 0;border-bottom:1px solid #ddd}
+#flogin {background:#fff;margin:20px 0}
 
 #mb_login_notmb {background:#fff;border-bottom:1px solid #ccc;padding:20px}
 #mb_login_notmb h2 {font-size:1.25em;padding:10px;background:#f3f3f3}
