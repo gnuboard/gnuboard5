@@ -66,7 +66,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 	        <?php
 	        $link_buttons = ob_get_contents();
 	        ob_end_flush();
-	         ?>
+			?>
 	    </div>
 	    <!-- } 게시물 상단 버튼 끝 -->
     </section>

@@ -111,8 +111,8 @@
 #bo_cate a {display:block;line-height:28px;padding:5px 15px;border-radius:30px;border:1px solid #d6e9ff;color:#6794d3}
 #bo_cate a:focus, #bo_cate a:hover, #bo_cate a:active {text-decoration:none;background:#3a8afd;color:#fff}
 #bo_cate #bo_cate_on {z-index:2;background:#3a8afd;color:#fff;font-weight:bold;border:1px solid #3a8afd;
--webkit-box-shadow: inset 0 2px 5px rgb(33, 135, 202);
--moz-box-shadow: inset 0 2px 5px rgb(33, 135, 202);
+-webkit-box-shadow:inset 0 2px 5px rgb(33, 135, 202);
+-moz-box-shadow:inset 0 2px 5px rgb(33, 135, 202);
 box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .td_subject img {margin-left:5px}
 
@@ -126,7 +126,7 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 
 
-#bo_btn_top {margin: 10px 0}
+#bo_btn_top {margin:10px 0}
 #bo_btn_top:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx {margin-bottom:5px;float:right;zoom:1}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
@@ -194,11 +194,11 @@ box-shadow:inset 0 1px 1px rgba(0, 0, 0, .075)}
 
 #autosave_wrapper {position:relative}
 #autosave_pop {display:none;z-index:10;position:absolute !important;top:34px;right:0;width:350px;height:auto !important;height:180px;max-height:180px;border:1px solid #565656;background:#fff;
--webkit-box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);
--moz-box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);
-box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2)}
-#autosave_pop:before {content: "";position: absolute;top: -8px;right: 45px;width: 0;height: 0;border-style: solid;border-width: 0 6px 8px 6px;border-color: transparent transparent #000 transparent}
-#autosave_pop:after {content: "";position: absolute;top: -7px;right: 45px;width: 0;height: 0;border-style: solid;border-width: 0 6px 8px 6px;border-color: transparent transparent #fff transparent}
+-webkit-box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2);
+-moz-box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2);
+box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}
+#autosave_pop:before {content:"";position:absolute;top:-8px;right:45px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #000 transparent}
+#autosave_pop:after {content:"";position:absolute;top:-7px;right:45px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #fff transparent}
 html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !important} /* overflow 미지원 기기 대응 */
 #autosave_pop strong {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #autosave_pop div {text-align:center;margin:0 !important}
@@ -238,8 +238,6 @@ html.no-overflowscrolling #autosave_pop {height:auto;max-height:10000px !importa
 #bo_v_info .guest {font-weight:bold}
 #bo_v_info .profile_img {display:none}
 #bo_v_info .sv_member {color:#000}
-#bo_v_info .if_view {display:inline-block;background:url(./img/icon_view.png) no-repeat 50% 50%;height:15px;width:20px;overflow:hidden;text-indent:-999px;vertical-align:middle;margin-right:3px}
-#bo_v_info .if_comment {display:inline-block;background:url(./img/icon_comment.png) no-repeat 50% 50%;height:15px;width:20px;overflow:hidden;text-indent:-999px;vertical-align:middle;margin-right:3px}
 #bo_v_info .if_date {margin:0;color:#888}
 
 #bo_v_file h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
@@ -341,7 +339,7 @@ box-shadow:1px 1px 5px 0px hsl(232, 36%, 96%)}
 .cmt_btn span.total:after {position:absolute;bottom:-17px;left:0;display:inline-block;background:#3a8afd;content:"";width:100%;height:2px}
 #bo_vc {}
 #bo_vc h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#bo_vc article {margin:20px 0;position:relative;border-bottom: 1px solid #f0f0f0}
+#bo_vc article {margin:20px 0;position:relative;border-bottom:1px solid #f0f0f0}
 #bo_vc article:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc article .profile_img img {border-radius:50%}
 #bo_vc article .pf_img {float:left;margin-right:10px}

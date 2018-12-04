@@ -36,7 +36,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 			    <div class="bo_sch_wrap">	
 				    <fieldset class="bo_sch">
 				    	<h3>검색</h3>
-				        <legend>게시물 검색</legend>
 				        <form name="fsearch" method="get">
 				        <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
 				        <input type="hidden" name="sca" value="<?php echo $sca ?>">
