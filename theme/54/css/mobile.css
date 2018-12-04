@@ -315,7 +315,7 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .win_desc:after {content:"";position:absolute;left:0;top:0;width:4px;height:50px;background:#da4453;border-radius:3px 0 0 3px}
 
 .new_win .win_total {float:right;display:inline-block;line-height:30px;font-weight:normal;font-size:0.75em;color:#3a8afd;background:#f6f6f6;padding:0 10px;border-radius:5px}
-.new_win .new_win_con {margin:20px 0;padding:20px}
+.new_win .new_win_con {padding:20px}
 .new_win .new_win_con:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .new_win_con2 {margin:20px 0}
 

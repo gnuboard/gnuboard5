@@ -258,7 +258,7 @@
 
 #memo_write .form_01 {padding:20px;border-top:1px solid #ececec}
 
-.reply_btn {display:inline-block;width:150px;height:50px;line-height:50px;padding:0 10px;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px;vertical-align:bottom;margin-right:5px}
+.reply_btn {display:inline-block;width:150px;height:45px;line-height:50px;padding:0 10px;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px;vertical-align:bottom;margin-right:5px}
 #memo_write .reply_btn {font-size:1em}
 
 /* 스크랩 */
@@ -355,7 +355,7 @@
 #profile h1 a {}
 #profile table {margin-bottom:0}
 #profile table th {text-align:left;padding:10px;width:100px}
-#profile section {color:#6794d3;background:#f6f6f6;padding:10px;border:1px solid #d6e9ff;margin:10px 0}
+#profile section {color:#6794d3;background:#fff;padding:10px;border:1px solid #eee;margin:10px 0}
 #profile h2 {margin:0 0 5px}
 #profile .profile_name {text-align:center;font-weight:bold}
 #profile .my_profile_img {display:block;margin:20px 0 5px}
