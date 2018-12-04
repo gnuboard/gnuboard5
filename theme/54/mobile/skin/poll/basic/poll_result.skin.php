@@ -14,15 +14,31 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
         <section id="poll_result_list">
             <h2><?php echo $po_subject ?> 결과</h2>
             <ol>
-            <?php for ($i=1; $i<=count($list); $i++) { ?>
-                <li>
-                    <span><?php echo $list[$i]['content'] ?></span>
-                    <span class="poll_percent"><?php echo number_format($list[$i]['rate'], 1) ?> %</span>
+            	<!-- *** 투표수가 가장 많은 것은 li이에 클래스 poll_1st를 붙여주세요 / 수정후 삭제 -->
+            	<li class="poll_1st">
+                    <span>현재 가장 높은 득표율</span>   
                     <div class="poll_result_graph">
-                        <span style="width:<?php echo number_format($list[$i]['rate'], 1) ?>%"><strong class="poll_cnt"><?php echo $list[$i]['cnt'] ?> 표</strong></span>
+                        <span style="width:90%"></span>
+                    </div>
+                    <div class="poll_numerical">
+                    	<strong class="poll_cnt">500 표</strong>
+                    	<span class="poll_percent">90 %</span>
                     </div>
                 </li>
-            <?php } ?>
+                <!-- *** 투표수가 가장 많은 것은 li이에 클래스 poll_1st를 붙여주세요 / 수정후 삭제 -->
+                
+            	<?php for ($i=1; $i<=count($list); $i++) {  ?>
+                <li>
+                    <span><?php echo $list[$i]['content'] ?></span>   
+                    <div class="poll_result_graph">
+                        <span style="width:<?php echo number_format($list[$i]['rate'], 1) ?>%"></span>
+                    </div>
+                    <div class="poll_numerical">
+                    	<strong class="poll_cnt"><?php echo $list[$i]['cnt'] ?> 표</strong>
+                    	<span class="poll_percent"><?php echo number_format($list[$i]['rate'], 1) ?> %</span>
+                    </div>
+                </li>
+            	<?php }  ?>
             </ol>
         </section>
 		<!-- } 설문조사 결과 그래프 끝 -->
@@ -46,29 +62,29 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
             </article>
             <?php } ?>
 
-            <?php if ($member['mb_level'] >= $po['po_level']) { ?>
-            <form name="fpollresult" method="post" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" autocomplete="off" id="poll_other_q">
+            <?php if ($member['mb_level'] >= $po['po_level']) {  ?>
+            <form name="fpollresult" action="./poll_etc_update.php" onsubmit="return fpollresult_submit(this);" method="post" autocomplete="off" id="poll_other_q">
             <input type="hidden" name="po_id" value="<?php echo $po_id ?>">
             <input type="hidden" name="w" value="">
             <input type="hidden" name="skin_dir" value="<?php echo urlencode($skin_dir); ?>">
-            <?php if ($is_member) { ?><input type="hidden" name="pc_name" value="<?php echo get_text(cut_str($member['mb_nick'],255)); ?>"><?php } ?>
-            <h3><span>기타의견</span><?php echo $po_etc ?></h3>
+            <?php if ($is_member) {  ?><input type="hidden" name="pc_name" value="<?php echo get_text(cut_str($member['mb_nick'],255)) ?>"><?php }  ?>
             <div id="poll_result_wcmt">
-            <?php if ($is_guest) { ?>
+            	<h3><span>기타의견</span><?php echo $po_etc ?></h3>
                 <div>
-                	<label for="pc_name" class="sound_only">이름<strong>필수</strong></label>
-                    <input type="text" name="pc_name" id="pc_name" class="frm_input full_input required" required placeholder="의견을 입력해주세요">
+                    <label for="pc_idea" class="sound_only">의견<strong>필수</strong></label>
+                    <input type="text" id="pc_idea" name="pc_idea" required class="full_input required" size="47" maxlength="100" placeholder="의견을 입력해주세요">
                 </div>
-                <?php echo captcha_html(); ?>
-            <?php } ?>
-                <div>
-                	<label for="pc_name" class="sound_only">이름<strong>필수</strong></label>
-                    <input type="text" name="pc_idea" id="pc_idea" class="frm_input full_input required" required maxlength="100" placeholder=" 의견을 입력해주세요">
-                </div>
-				<button type="submit" class="btn_submit">의견남기기</button>
             </div>
+            <?php if ($is_guest) {  ?>
+            <div class="poll_guest">
+                <label for="pc_name" class="sound_only">이름<strong>필수</strong></label>
+                <input type="text" name="pc_name" id="pc_name" required class="full_input required" size="20" placeholder="이름">
+            </div>
+        	<?php }  ?>
+            <?php echo captcha_html(); ?>
+			<button type="submit" class="btn_submit">의견남기기</button>           
             </form>
-            <?php } ?>
+            <?php }  ?>
 
         </section>
         <?php } ?>
