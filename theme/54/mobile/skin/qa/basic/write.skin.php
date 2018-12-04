@@ -21,18 +21,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     if ($is_dhtml_editor) {
         $option_hidden .= '<input type="hidden" name="qa_html" value="1">';
     } else {
-        $option .= "\n".'<input type="checkbox" id="qa_html" name="qa_html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="qa_html">html</label>';
+        $option .= "\n".'<input type="checkbox" id="qa_html" name="qa_html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.' class="selec_chk">'."\n".'<label for="qa_html"><span></span>html</label>';
     }
 
     echo $option_hidden;
-    ?>
-
+    ?>           	
     <div class="form_01">
         <ul>
             <?php if ($category_option) { ?>
             <li class="bo_w_select">
                 <label for="qa_category" class="sound_only">분류<strong>필수</strong></label>
-                <select name="qa_category" id="qa_category" required class="required" >
+                <select name="qa_category" id="qa_category" required class="required">
                     <option value="">선택하세요</option>
                     <?php echo $category_option ?>
                 </select>
@@ -42,7 +41,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             <?php if ($option) { ?>
             <li>
                 <span class="sound_only">옵션</span>
+                <div class="chk_op chk_box">
                 <?php echo $option; ?>
+                </div>
             </li>
             <?php } ?>
 
@@ -63,7 +64,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 <input type="text" name="qa_hp" value="<?php echo get_text($write['qa_hp']); ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_hp.' '; ?>frm_input full_input" size="30" placeholder="휴대폰">
                 <?php if($qaconfig['qa_use_sms']) { ?>
                 <div class="chk_op chk_box">
-                	<input type="checkbox" name="qa_sms_recv" value="1"  id="qa_sms_recv" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?> class="selec_chk">
+                	<input type="checkbox" name="qa_sms_recv" value="1" id="qa_sms_recv" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?> class="selec_chk">
                 	<label for="qa_sms_recv"><span></span>답변등록 SMS알림 수신</label>                  
                 </div>
                 <?php } ?>
