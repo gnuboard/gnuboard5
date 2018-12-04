@@ -161,13 +161,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         </a>
                     </div>
                     <div class="gall_text_href">
-                        <?php
-                        // echo $list[$i]['icon_reply']; 갤러리는 reply 를 사용 안 할 것 같습니다. - 지운아빠 2013-03-04
-                        if ($is_category && $list[$i]['ca_name']) {
-                         ?>
+                        <?php if ($is_category && $list[$i]['ca_name']) { ?>
                         <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                         <?php } ?>
                         <a href="<?php echo $list[$i]['href'] ?>" class="bo_tit">
+                            
+                            <?php // echo $list[$i]['icon_reply']; ?>
+                        	<!-- 갤러리 댓글기능 사용시 주석을 제거하세요. -->
+                        
                             <?php echo $list[$i]['subject'] ?>                      
                             <?php
                             // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }

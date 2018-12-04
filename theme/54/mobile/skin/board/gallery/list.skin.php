@@ -111,15 +111,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 ?>
                 </a>
                 <div class="gall_text_href">
-                    <?php
-                    if ($is_category && $list[$i]['ca_name']) {
-                    ?>
+                    <?php if ($is_category && $list[$i]['ca_name']) { ?>
                     <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                     <?php } ?>
                     <a href="<?php echo $list[$i]['href'] ?>" class="gall_li_tit">
                         
                         <?php // echo $list[$i]['icon_reply']; ?>
-                        <!-- 갤러리 댓글기능 사용시 주석을 제거하세요. -->
+                        <!-- 갤러리 답글기능 사용시 주석을 제거하세요. -->
                         
                         <?php if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret']; ?>
                         <?php echo $list[$i]['subject'] ?>
