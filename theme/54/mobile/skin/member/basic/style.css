@@ -126,7 +126,7 @@
 .chk_box input[type="checkbox"] + label span {position:absolute;top:1px;left:0;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
 .chk_box input[type="checkbox"]:checked + label {color:#000}
 .chk_box input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
-.chk_li {padding-left:5px;line-height:20px}
+.chk_li {padding-left:10px;line-height:20px}
 
 .selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
 .fregister_agree input[type="checkbox"] + label {color:#676e70}
@@ -299,7 +299,7 @@
 #point .btn_close {margin:20px auto}
 
 /* 회원 비밀번호 확인 */
-#mb_confirm {margin:30px 15px}
+#mb_confirm {margin:30px auto}
 #mb_confirm h1 {margin:0 0 15px;padding:0 10px;font-size:1.3em}
 #mb_confirm p {padding:15px 10px;border-bottom:1px solid #cfded8;border-bottom:0;background:#fff}
 #mb_confirm p strong {display:block}

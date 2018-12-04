@@ -200,7 +200,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        </li>
 	        <?php } ?>
 
-	        <li class="chk_box chk_li">
+	        <li class="chk_box">
 	        	<input type="checkbox" name="mb_mailling" value="1" id="reg_mb_mailling" <?php echo ($w=='' || $member['mb_mailling'])?'checked':''; ?> class="selec_chk">
 	            <label for="reg_mb_mailling">
 	            	<span></span>
@@ -221,7 +221,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        <?php } ?>
 
 	        <?php if (isset($member['mb_open_date']) && $member['mb_open_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_open_modify'] * 86400)) || empty($member['mb_open_date'])) { // 정보공개 수정일이 지났다면 수정가능 ?>
-	        <li class="chk_box chk_li">
+	        <li class="chk_box">
 	            <input type="checkbox" name="mb_open" value="1" id="reg_mb_open" <?php echo ($w=='' || $member['mb_open'])?'checked':''; ?> class="selec_chk">
 	      		<label for="reg_mb_open">
 	      			<span></span>

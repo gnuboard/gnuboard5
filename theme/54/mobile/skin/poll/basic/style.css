@@ -71,7 +71,7 @@
 #poll_result_list li {margin:20px 0;position:relative;list-style-position:inside}
 
 .poll_1st .poll_result_graph span {background:#3a8afd}
-.poll_result_graph {position:relative;width:90%;margin:5px 0;height:15px;background:#fff;border-radius:10px;-moz-box-shadow:inset 0px 2px 8px #dadada;-webkit-box-shadow:inset 0px 2px 8px #dadada;box-shadow:inset 0px 2px 8px #dadada}
+.poll_result_graph {position:relative;width:80%;margin:5px 0;height:15px;background:#fff;border-radius:10px;-moz-box-shadow:inset 0px 2px 8px #dadada;-webkit-box-shadow:inset 0px 2px 8px #dadada;box-shadow:inset 0px 2px 8px #dadada}
 .poll_result_graph span {position:absolute;top:0;left:0;height:15px;background:#8395b3;border-radius:10px 10px;white-space:nowrap}
 
 .poll_numerical {display:inline-block;position:absolute;top:0;right:0;text-align:center}
@@ -93,7 +93,7 @@
 #poll_result_wcmt input {border:0;height:80px;padding:10px}
 #poll_result_cmt .btn_submit {padding:0 20px;float:right}
 
-.poll_guest input {border: 1px solid #cfd4db;padding:10px;margin-bottom:10px;display:inline-block}
+.poll_guest input {border-radius:0;border:1px solid #cfd4db;padding:10px;margin-bottom:10px;display:inline-block}
 
 .poll_cmt_del {float:right}
 .poll_cmt_del a {display:inline-block;margin:0 0 5px 10px;color:#c7c9cb;font-size:15px}

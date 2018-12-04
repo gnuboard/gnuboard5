@@ -76,14 +76,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php if ($is_email) { ?>
         <div class="write_div">
             <label for="wr_email" class="sound_only">이메일</label>
-            <input type="email" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input full_input  email" maxlength="100" placeholder="이메일">
+            <input type="email" name="wr_email" value="<?php echo $email ?>" id="wr_email" class="frm_input full_input" email" maxlength="100" placeholder="이메일">
         </div>
         <?php } ?>
 
         <?php if ($is_homepage) { ?>
         <div class="write_div">
             <label for="wr_homepage" class="sound_only">홈페이지</label>
-            <input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input full_input " placeholder="홈페이지">
+            <input type="text" name="wr_homepage" value="<?php echo $homepage ?>" id="wr_homepage" class="frm_input full_input" placeholder="홈페이지">
         </div>
         <?php } ?>
 

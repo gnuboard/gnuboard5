@@ -269,7 +269,7 @@
 #bo_vc footer {zoom:1}
 #bo_vc footer:after {display:block;visibility:hidden;clear:both;content:""}
 
-.bo_vc_act {display:none;position:absolute;right:0;top:40px;width:58px;text-align:right;border:1px solid #b8bfc4;margin:0;list-style:none;background:#fff;zoom:1;z-index:9999}
+.bo_vc_act {display:none;position:absolute;right:0;top:40px;width:58px;text-align:center;border:1px solid #b8bfc4;margin:0;list-style:none;background:#fff;zoom:1;z-index:9999}
 .bo_vc_act:before {content:"";position:absolute;top:-8px;right:5px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #b8bfc4 transparent}
 .bo_vc_act:after {content:"";position:absolute;top:-6px;right:5px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #fff transparent}
 .bo_vc_act li {border-bottom:1px solid #f0f0f0}
@@ -319,7 +319,7 @@
 #bo_w .bo_w_flie .frm_input {margin:5px 0 0}
 
 .filebox .btn_file {display:inline-block;position:absolute;right:8px;top:8px;border:1px solid #3a8afd;border-radius:3px;width:60px;height:30px;color:#3a8afd;font-size:1em;line-height:30px;font-weight:bold;background:#fff;text-align:center;vertical-align:middle}
-.filebox .fileName {display:inline-block;position:relative;width:100%;height:45px;padding-left:45px;line-height:30px;border:1px solid #d0d3db;background-color:#fff;color:red;vertical-align:middle}
+.filebox .fileName {display:inline-block;position:relative;width:100%;height:45px;padding-left:45px;line-height:30px;border:1px solid #d0d3db;background-color:#fff;color:red;vertical-align:middle;border-radius:0}
 .filebox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
 
 #bo_w .btn_confirm {text-align:center;margin:20px 0}

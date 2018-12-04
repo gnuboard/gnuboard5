@@ -112,12 +112,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 </a>
                 <div class="gall_text_href">
                     <?php
-                    // echo $list[$i]['icon_reply']; 갤러리는 reply 를 사용 안 할 것 같습니다. - 지운아빠 2013-03-04
                     if ($is_category && $list[$i]['ca_name']) {
                     ?>
                     <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                     <?php } ?>
                     <a href="<?php echo $list[$i]['href'] ?>" class="gall_li_tit">
+                        
+                        <?php // echo $list[$i]['icon_reply']; ?>
+                        <!-- 갤러리 댓글기능 사용시 주석을 제거하세요. -->
+                        
+                        <?php if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret']; ?>
                         <?php echo $list[$i]['subject'] ?>
                         <?php if ($list[$i]['comment_cnt']) { ?>
 	                    <span class="bo_cmt">
@@ -126,17 +130,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 							<span class="sound_only">개</span>
 	                    </span>
 	                    <?php } ?>
-					</a>
-                    <?php
-                    // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
-
-                    if (isset($list[$i]['icon_new'])) echo $list[$i]['icon_new'];
-                    if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
-                    //if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
-                    //if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
-                    //if (isset($list[$i]['icon_secret'])) echo $list[$i]['icon_secret'];
-                    ?> 
-                    
+						<?php
+	                    // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }	
+	                    if ($list[$i]['icon_new']) echo "<span class=\"new_icon\">N<span class=\"sound_only\">새글</span></span>";
+	                    if (isset($list[$i]['icon_hot'])) echo $list[$i]['icon_hot'];
+	                    //if (isset($list[$i]['icon_file'])) echo $list[$i]['icon_file'];
+	                    //if (isset($list[$i]['icon_link'])) echo $list[$i]['icon_link'];
+	                    ?>
+					</a>                  
                     <div class="gall_info">
                     	<span class="sound_only">작성자 </span><?php echo $list[$i]['name'] ?>
                         <span class="sound_only">작성일 </span><span class="date"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['datetime2'] ?></span>
