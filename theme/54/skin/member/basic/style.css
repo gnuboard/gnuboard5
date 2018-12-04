@@ -179,9 +179,10 @@
 #mb_login #login_fs .frm_input {margin:0 0 10px}
 #mb_login #login_fs .btn_submit {margin:0 0 15px}
 
-#login_info {line-height:24px}
+#login_info {}
 #login_info:after {display:block;visibility:hidden;clear:both;content:""}
 #login_info .login_if_auto {float:left}
+#login_info .login_if_auto label {vertical-align:baseline;padding-left:5px}
 #login_info .login_if_lpl {float:right}
 #login_password_lost {display:inline-block;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;padding:2px 5px;line-height:20px}
 
@@ -204,7 +205,7 @@
 #mb_login #sns_login .txt {font-size:0.95em;padding-left:5px !important;border-left:0 !important}
 
 /* 쪽지 */
-.memo_list {border-top:1px solid #ececec;}
+.memo_list {border-top:1px solid #ececec}
 .memo_list li {border-bottom:1px solid #ececec;background:#fff;padding:10px 15px;list-style:none;position:relative}
 .memo_list li:after {display:block;visibility:hidden;clear:both;content:""}
 .memo_list li.read {background:#f6f6f6}
@@ -342,6 +343,12 @@
 .chk_box input[type="radio"]:checked + label {color:#3a8afd}
 .chk_box input[type="radio"]:checked + label span {border-color:#3a8afd}
 .chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#3a8afd;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
+.chk_box input[type="checkbox"] + label {position:relative;color:#676e70}
+.chk_box input[type="checkbox"] + label:hover {color:#2172f8}
+.chk_box input[type="checkbox"] + label span {float:left;width:15px;height:15px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.chk_box input[type="checkbox"]:checked + label {color:#000}
+.chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+.selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
 
 
 /* 자기소개 */

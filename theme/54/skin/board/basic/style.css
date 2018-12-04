@@ -87,11 +87,6 @@
 /* 게시판 목록 */
 #bo_list {position:relative;margin-bottom:20px}
 #bo_list:after {display:block;visibility:hidden;clear:both;content:""}
-
-#bo_list .rrrrr{background:pink}
-#bo_list .rrrrr:after {display:block;visibility:hidden;clear:both;content:""}
-
-
 #bo_list .td_board {width:120px;text-align:center}
 #bo_list .td_chk {width:30px;text-align:center}
 #bo_list .td_date {width:60px;text-align:center}

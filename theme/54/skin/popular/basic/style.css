@@ -3,7 +3,7 @@
 /* 인기검색어 */
 #popular {position:relative;margin:15px 0 0}
 #popular h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#popular .popular_inner {width:410px;height:20px;overflow:hidden}
+#popular .popular_inner {width:400px;height:20px;overflow:hidden}
 #popular ul {padding:0;margin:0}
 #popular ul:after {display:block;visibility:hidden;clear:both;content:""}
 #popular li {float:left;width:auto !important;height:18px;line-height:18px;padding-right:20px}
