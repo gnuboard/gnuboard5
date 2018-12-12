@@ -67,13 +67,17 @@ history.back();
     <form method="post" action="<?php echo $url ?>">
     <?php
     foreach($_POST as $key => $value) {
+        
+        $key = clean_xss_tags($url);
+        $value = clean_xss_tags($value);
+
         if(strlen($value) < 1)
             continue;
 
         if(preg_match("/pass|pwd|capt|url/", $key))
             continue;
     ?>
-    <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value ?>">
+    <input type="hidden" name="<?php echo htmlspecialchars($key); ?>" value="<?php echo htmlspecialchars($value); ?>">
     <?php
     }
     ?>
