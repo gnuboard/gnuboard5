@@ -2,6 +2,8 @@
 $sub_menu = '400810';
 include_once('./_common.php');
 
+$cz_id = (int) $cz_id;
+
 auth_check($auth[$sub_menu], "w");
 
 $g5['title'] = '쿠폰존 쿠폰관리';

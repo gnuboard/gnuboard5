@@ -6,7 +6,7 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-$it_id = trim($_GET['it_id']);
+$it_id = get_search_string(trim($_GET['it_id']));
 
 include_once(G5_LIB_PATH.'/iteminfo.lib.php');
 

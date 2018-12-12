@@ -12,7 +12,7 @@ if (!$is_member) {
     alert_close("사용후기는 회원만 작성 가능합니다.");
 }
 
-$w     = trim($_REQUEST['w']);
+$w     = preg_replace('/[^0-9a-z]/i', '', trim($_REQUEST['w']));
 $it_id = get_search_string(trim($_REQUEST['it_id']));
 $is_id = preg_replace('/[^0-9]/', '', trim($_REQUEST['is_id']));
 

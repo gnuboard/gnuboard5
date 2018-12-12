@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
 
-$it_id = $_GET['it_id'];
-$no = $_GET['no'];
+$it_id = get_search_string(trim($_GET['it_id']));
+$no = preg_replace('/[^0-9a-z]/i', '', $_GET['no']);
 
 $sql = " select it_id, it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
             from {$g5['g5_shop_item_table']} where it_id='$it_id' ";

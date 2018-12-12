@@ -2,7 +2,7 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/iteminfo.lib.php');
 
-$it_id = trim($_GET['it_id']);
+$it_id = get_search_string(trim($_GET['it_id']));
 
 // 분류사용, 상품사용하는 상품의 정보를 얻음
 $sql = " select a.*,

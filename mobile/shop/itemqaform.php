@@ -6,9 +6,9 @@ if (!$is_member) {
     alert_close("상품문의는 회원만 작성 가능합니다.");
 }
 
-$w     = trim($_REQUEST['w']);
-$it_id = trim($_REQUEST['it_id']);
-$iq_id = trim($_REQUEST['iq_id']);
+$w     = preg_replace('/[^0-9a-z]/i', '', trim($_REQUEST['w']));
+$it_id = get_search_string(trim($_REQUEST['it_id']));
+$iq_id = preg_replace('/[^0-9]/', '', trim($_REQUEST['iq_id']));
 
 // 상품정보체크
 $sql = " select it_id from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";

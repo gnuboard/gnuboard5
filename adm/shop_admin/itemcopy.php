@@ -2,6 +2,8 @@
 $sub_menu = '400300';
 include_once('./_common.php');
 
+$ca_id = preg_replace('/[^0-9a-z]/i', '', $ca_id);
+
 auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = '상품 복사';

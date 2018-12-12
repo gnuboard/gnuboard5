@@ -2,6 +2,9 @@
 $sub_menu = '500120';
 include_once('./_common.php');
 
+$fr_date = preg_replace('/[^0-9_\-]/', '', $fr_date);
+$to_date = preg_replace('/[^0-9_\-]/', '', $to_date);
+
 auth_check($auth[$sub_menu], "r");
 
 //print_r2($_GET); exit;

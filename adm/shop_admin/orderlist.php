@@ -22,6 +22,12 @@ $search = get_search_string($search);
 if(! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $fr_date) ) $fr_date = '';
 if(! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $to_date) ) $to_date = '';
 
+$od_misu = preg_replace('/[^0-9a-z]/i', '', $od_misu);
+$od_cancel_price = preg_replace('/[^0-9a-z]/i', '', $od_cancel_price);
+$od_refund_price = preg_replace('/[^0-9a-z]/i', '', $od_refund_price);
+$od_receipt_point = preg_replace('/[^0-9a-z]/i', '', $od_receipt_point);
+$od_coupon = preg_replace('/[^0-9a-z]/i', '', $od_coupon); 
+
 $sql_search = "";
 if ($search != "") {
     if ($sel_field != "") {

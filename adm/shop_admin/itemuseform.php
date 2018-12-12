@@ -3,6 +3,8 @@ $sub_menu = '400650';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
+$is_id = preg_replace('/[^0-9]/', '', $is_id);
+
 auth_check($auth[$sub_menu], "w");
 
 $sql = " select *

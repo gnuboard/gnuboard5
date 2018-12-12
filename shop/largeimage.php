@@ -6,7 +6,7 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-$it_id = $_GET['it_id'];
+$it_id = get_search_string(trim($_GET['it_id']));
 $no = $_GET['no'];
 
 $sql = " select it_id, it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
