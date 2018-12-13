@@ -764,6 +764,23 @@ function social_member_comfirm_redirect(){
     }
 }
 
+function social_is_edit_page($url=''){
+    global $is_member;
+
+    if( !$is_member ) return false;
+
+    if($url){
+        $p = @parse_url($url);
+        $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
+
+        if ( isset($p['host']) && ($p['host'] === $host) && preg_match('/register_form\.php$/i', $url) ){
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function social_is_login_password_check($mb_id){
     global $g5;
 
