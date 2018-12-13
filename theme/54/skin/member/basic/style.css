@@ -212,9 +212,11 @@
 .memo_list li.empty_li {text-align:center;padding:20px 0;color:#666}
 
 .memo_list .memo_li {float:left}
-.memo_list .profile_img {position:relative;margin-right:15px}
-.memo_list .profile_img img {border-radius:50%;width:52px;height:52px}
-.memo_list .memo_name {padding-top:5px}
+.memo_list .profile_big_img {position:relative;margin-right:15px}
+.memo_list .profile_big_img img {border-radius:50%;width:52px;height:52px}
+.memo_list .memo_li.memo_name {padding-top:5px;float:none}
+.memo_list .memo_preview a{display:block;margin-right:30px;padding-top:10px;font-weight:normal !important;font-size:1.2em}
+.memo_list .memo_preview a:hover{text-decoration:underline}
 .memo_list .memo_name a,
 .memo_list .memo_name .sv_wrap {font-weight:bold}
 .memo_list .no_read {position:absolute;bottom:0;right:0;display:inline-block;background:#3a8afd;border:1px solid #e1edff;text-indent:-9999px;border-radius:10px;width:10px;height:10px;box-shadow:0 0 10px 3px #9ec3f9}

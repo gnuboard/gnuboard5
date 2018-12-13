@@ -20,35 +20,25 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         
         <div class="memo_list">
             <ul>
-            	<!-- **** 예시 참고 후 삭제합니다 : 읽은쪽지 -->
-            	<li class="read">
-            		<div class="memo_li profile_img">
-	            		<?php echo get_member_profile_img($member['mb_id']); ?>
+	            <?php
+                for ($i=0; $i<count($list); $i++) {
+                $readed = (substr($list[$i]['me_read_datetime'],0,1) == 0) ? '' : 'read';
+                $memo_preview = utf8_strcut(strip_tags($list[$i]['me_memo']), 30, '..');
+                ?>
+	            <li class="<?php echo $readed; ?>">
+	            	<div class="memo_li profile_big_img">
+	            		<?php echo get_member_profile_img($list[$i]['mb_id']); ?>
+	            		<?php if (! $readed){ ?><span class="no_read">안 읽은 쪽지</span><?php } ?>
 	            	</div>
 	                <div class="memo_li memo_name">
-	                	<a href="<?php echo $list[$i]['view_href'] ?>">아리아나벤티</a> <span class="memo_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> 18-11-13 16:58</span>
-						<br>
-						<a href="<?php echo $list[$i]['view_href'] ?>" class="memo_cnt">읽은 쪽지입니다.</a>
+	                	<?php echo $list[$i]['name']; ?> <span class="memo_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['send_datetime']; ?></span>
+						<div class="memo_preview">
+						    <a href="<?php echo $list[$i]['view_href']; ?>"><?php echo $memo_preview; ?></a>
+                        </div>
 					</div>	
-					<a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;" class="memo_del"><i class="fa fa-trash-o" aria-hidden="true"></i> <span class="sound_only">삭제</span></a>
-            	</li>
-            	<!-- **** 예시 참고 후 삭제합니다 : 읽은쪽지 -->            	
-            	
-	            <?php for ($i=0; $i<count($list); $i++) {  ?>
-	            <li>
-	            	<div class="memo_li profile_img">
-	            		<?php echo get_member_profile_img($member['mb_id']); ?>
-	            		<span class="no_read">안 읽은 쪽지</span>
-	            	</div>
-	                <div class="memo_li memo_name">
-	                	<a href="<?php echo $list[$i]['view_href'] ?>"><?php echo $list[$i]['mb_nick'] ?></a> <span class="memo_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['send_datetime'] ?></span>
-						<br>
-						<a href="<?php echo $list[$i]['view_href'] ?>" class="memo_cnt">안 읽은 쪽지입니다. 쪽지 내용입니다.</a>
-					</div>	
-	                <?php// 쪽지 읽은 시간 echo $list[$i]['read_datetime'] ?>	
-					<a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;" class="memo_del"><i class="fa fa-trash-o" aria-hidden="true"></i> <span class="sound_only">삭제</span></a>
+					<a href="<?php echo $list[$i]['del_href']; ?>" onclick="del(this.href); return false;" class="memo_del"><i class="fa fa-trash-o" aria-hidden="true"></i> <span class="sound_only">삭제</span></a>
 	            </li>
-	            <?php }  ?>
+	            <?php } ?>
 	            <?php if ($i==0) { echo '<li class="empty_table">자료가 없습니다.</li>'; }  ?>
             </ul>
         </div>
