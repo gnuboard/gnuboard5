@@ -243,7 +243,7 @@ if (preg_match("/gecko|firefox/i", $_SERVER['HTTP_USER_AGENT'])) {
 // RSS 보기 사용에 체크가 되어 있어야 RSS 보기 가능 061106
 $rss_href = '';
 if ($board['bo_use_rss_view']) {
-    $rss_href = './rss.php?bo_table='.$bo_table;
+    $rss_href = G5_BBS_URL.'/rss.php?bo_table='.$bo_table;
 }
 
 $stx = get_text(stripslashes($stx));
