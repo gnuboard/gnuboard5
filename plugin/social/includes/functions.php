@@ -52,6 +52,10 @@ function get_social_callbackurl($provider, $no_domain=false){
         $base_url = '/'.ltrim(parse_url($base_url, PHP_URL_PATH), '/');
     }
 
+    if ( $provider === 'twitter' ){
+        return $base_url;
+    }
+
     $base_url = $base_url . ( strpos($base_url, '?') ? '&' : '?' ).G5_SOCIAL_LOGIN_DONE_PARAM.'='.$provider;
 
     return $base_url;
