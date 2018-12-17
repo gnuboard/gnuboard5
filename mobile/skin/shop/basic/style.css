@@ -87,7 +87,11 @@
 .sct_10 .sct_cost{margin:5px 10px }
 .sct_10 .sct_sns{margin:10px  5px}
 .sct_10 .sct_icon {margin:5px 10px }
-.sct_10 .sct_icon .shop_icon_4{padding: 0 5px;line-height:20px;position: absolute;top: 0;left: 0;background: #fb5861;color: #fff;font-size: 12px;border:0}
+.sct_10 .sct_icon .shop_icon_1 {}   /* 히트 아이콘 */
+.sct_10 .sct_icon .shop_icon_2 {}   /* 추천 아이콘 */
+.sct_10 .sct_icon .shop_icon_3 {}   /* 최신 아이콘 */
+.sct_10 .sct_icon .shop_icon_4{padding: 0 5px;line-height:20px;position: absolute;top: 0;left: 0;background: #fb5861;color: #fff;font-size: 12px;border:0}  /* BEST 아이콘 */
+.sct_10 .sct_icon .shop_icon_5 {}   /* 할인 아이콘 */
 .li_more{text-align:center}
 
 #item_load_msg{display:none}

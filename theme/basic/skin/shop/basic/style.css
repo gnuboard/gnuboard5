@@ -87,7 +87,11 @@
 .sct_noitem {padding:100px 0;text-align:center}
 .sct img {position:relative} /* 리스트뷰 갤러리뷰 변경 시 ie6,7 에서 이미지 사라지는 문제 해결하기 위해 */
 .shop_icon{display:inline-block;color:#fff;background:#a8aab1;line-height:20px;padding:0 5px;font-size:0.92em;margin:1px; }
-.shop_icon_4{background:#ff7575;}
+.shop_icon_1 {}     /* 히트 아이콘 */
+.shop_icon_2 {}     /* 추천 아이콘 */
+.shop_icon_3 {}     /* 최신 아이콘 */
+.shop_icon_4 {background:#ff7575}      /* BEST 아이콘 */
+.shop_icon_5 {}     /* 할인 아이콘 */
 .shop_icon_soldout{display:inline-block;color:#ff0000;font-style:italic;font-weight:bold;margin:2px}
 .shop_icon_coupon{background:#59d495}
 
@@ -123,7 +127,11 @@
 .sct_10 .sct_cost .sct_discount{display:block;color:#999;font-size:0.92em;text-decoration:line-through;}
 .sct_10 .sct_txt{display:block;margin:10px 0;font-size:1.167em;font-weight:bold}
 .sct_10 .sct_basic{color:#666;margin:5px 0}
-.sct_10 .shop_icon_4{position:absolute;top:10px;left:10px;width:50px;height:50px;line-height:50px;font-size:14px;border-radius:50%;font-weight:bold}
+.sct_10 .shop_icon_1 {}   /* 히트 아이콘 */
+.sct_10 .shop_icon_2 {}   /* 추천 아이콘 */
+.sct_10 .shop_icon_3 {}   /* 최신 아이콘 */
+.sct_10 .shop_icon_4{position:absolute;top:10px;left:10px;width:50px;height:50px;line-height:50px;font-size:14px;border-radius:50%;font-weight:bold}    /* BEST 아이콘 */
+.sct_10 .shop_icon_5 {}   /* 할인 아이콘 */
 
 /* 상품 목록 스킨 20 */
 .sct_20 .sct_li {position:relative;float:left;margin:0 25px 15px 0}
@@ -181,7 +189,11 @@
 .sct_40 .sct_rel_ul {margin:0;padding:0;list-style:none}
 .sct_40 .sct_rel_li {float:left;margin:0 0 0 10px}
 .sct_40 .sct_sns {padding:10px 0 0}
-.sct_40 .shop_icon_4{position:absolute;top:10px;left:10px;width:50px;height:50px;line-height:50px;font-size:14px;border-radius:50%;text-align:center;font-weight:bold}
+.sct_40 .shop_icon_1 {}     /* 히트 아이콘 */
+.sct_40 .shop_icon_2 {}     /* 추천 아이콘 */
+.sct_40 .shop_icon_3 {}     /* 최신 아이콘 */
+.sct_40 .shop_icon_4{position:absolute;top:10px;left:10px;width:50px;height:50px;line-height:50px;font-size:14px;border-radius:50%;text-align:center;font-weight:bold}      /* BEST 아이콘 */
+.sct_40 .shop_icon_5 {}     /* 할인 아이콘 */
 
 /* 개인결제 목록 */
 .sct_pv .sct_li {position:relative;float:left;margin:0 15px 15px 0}
@@ -257,7 +269,11 @@
 .smt_40 .sct_rel_ul {margin:0;padding:0;list-style:none}
 .smt_40 .sct_rel_li {float:left;margin:0 0 0 10px}
 .smt_40 .sct_sns {padding:10px 0 0}
-.smt_40 .shop_icon_4{position:absolute;top:10px;left:10px;width:50px;height:50px;line-height:50px;font-size:14px;border-radius:50%;text-align:center;font-weight:bold}
+.smt_40 .shop_icon_1 {}   /* 히트 아이콘 */
+.smt_40 .shop_icon_2 {}   /* 추천 아이콘 */
+.smt_40 .shop_icon_3 {}   /* 최신 아이콘 */
+.smt_40 .shop_icon_4{position:absolute;top:10px;left:10px;width:50px;height:50px;line-height:50px;font-size:14px;border-radius:50%;text-align:center;font-weight:bold}  /* BEST 아이콘 */
+.smt_40 .shop_icon_5 {}   /* 할인 아이콘 */
 
 /* 메인 상품 목록 스킨 50 */
 .smt_50 {position:relative}
