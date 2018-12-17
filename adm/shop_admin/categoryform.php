@@ -465,7 +465,7 @@ else {
 <?php } ?>
 <div class="btn_fixed_top">
     <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
-    <a href="./categorylist.php?'.$qstr.'" class="btn_02 btn">목록</a>
+    <a href="./categorylist.php?<?php echo $qstr; ?>" class="btn_02 btn">목록</a>
 </div>
 </form>
 
