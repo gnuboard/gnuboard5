@@ -2898,9 +2898,15 @@ function get_search_string($stx)
 // XSS 관련 태그 제거
 function clean_xss_tags($str)
 {
-    $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
-
-    $str = str_replace(array('<script>','</script>','<noscript>','</noscript>'), '', $str);
+    $str_len = strlen($str);
+    
+    while($i <= $str_len){
+        $result = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+        if((string)$result === (string)$str)
+            break;
+        $str = $result;
+        $i++;
+    }
 
     return $str;
 }
