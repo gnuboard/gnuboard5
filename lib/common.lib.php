@@ -2885,10 +2885,12 @@ function clean_xss_tags($str)
 {
     $str_len = strlen($str);
     
+    $i = 0;
     while($i <= $str_len){
         $result = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
-        if((string)$result === (string)$str)
-            break;
+
+        if((string)$result === (string)$str) break;
+
         $str = $result;
         $i++;
     }
