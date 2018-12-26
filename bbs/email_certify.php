@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+// 봇의 메일 링크 크롤링을 방지합니다.
+if(function_exists('check_mail_bot')){ check_mail_bot($_SERVER['REMOTE_ADDR']); }
+
 $mb_id  = trim($_GET['mb_id']);
 $mb_md5 = trim($_GET['mb_md5']);
 

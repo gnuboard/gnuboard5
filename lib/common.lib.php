@@ -2990,7 +2990,17 @@ function get_search_string($stx)
 // XSS 관련 태그 제거
 function clean_xss_tags($str)
 {
-    $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+    $str_len = strlen($str);
+    
+    $i = 0;
+    while($i <= $str_len){
+        $result = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+
+        if((string)$result === (string)$str) break;
+
+        $str = $result;
+        $i++;
+    }
 
     return $str;
 }
@@ -3575,6 +3585,27 @@ function get_real_client_ip(){
     }
 
     return preg_replace('/[^0-9.]/', '', $real_ip);
+}
+
+function check_mail_bot($ip=''){
+
+    //아이피를 체크하여 메일 크롤링을 방지합니다.
+    $check_ips = array('211.249.40.');
+    $bot_message = 'bot 으로 판단되어 중지합니다.';
+    
+    if($ip){
+        foreach( $check_ips as $c_ip ){
+            if( preg_match('/^'.preg_quote($c_ip).'/', $ip) ) {
+                die($bot_message);
+            }
+        }
+    }
+
+    // user agent를 체크하여 메일 크롤링을 방지합니다.
+    $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+    if ($user_agent === 'Carbon' || strpos($user_agent, 'BingPreview') !== false || strpos($user_agent, 'Slackbot') !== false) { 
+        die($bot_message);
+    } 
 }
 
 function get_call_func_cache($func, $args=array()){
