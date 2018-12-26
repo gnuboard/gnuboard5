@@ -9,14 +9,15 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 	        <i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $answer['qa_datetime']; ?>
 	    </div>
 	    
+        <?php if ( $answer_update_href || $answer_delete_href ){ ?>
 	    <div id="ans_add">
-	    	<button type="button" class="btn_more_add btn_more_opt btn_b01 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">답변 옵션</span></button>
+	    	<button type="button" class="btn_more_add btn_more_opt btn_b01 btn" title="답변 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">답변 옵션</span></button>
 			<ul class="more_add">
 				<?php if($answer_update_href) { ?>
-				<li><a href="<?php echo $answer_update_href; ?>" class="btn_b01 btn">답변수정</a></li>
+				<li><a href="<?php echo $answer_update_href; ?>" class="btn_b01 btn" title="답변수정">답변수정</a></li>
 				<?php } ?>
 				<?php if($answer_delete_href) { ?>
-				<li><a href="<?php echo $answer_delete_href; ?>" class="btn_b01 btn" onclick="del(this.href); return false;">답변삭제</a></li>
+				<li><a href="<?php echo $answer_delete_href; ?>" class="btn_b01 btn" onclick="del(this.href); return false;" title="답변삭제">답변삭제</a></li>
 				<?php } ?>	
 			</ul>
 			<script>
@@ -26,6 +27,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 				})
 			</script>
 	    </div>
+        <?php } ?>
 	</header>
 	
     <div id="ans_con">
@@ -34,5 +36,5 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 </section>
 <div class="bo_v_btn">
-	<a href="<?php echo $rewrite_href; ?>" class="add_qa">추가질문</a>  
+	<a href="<?php echo $rewrite_href; ?>" class="add_qa" title="추가질문">추가질문</a>  
 </div>

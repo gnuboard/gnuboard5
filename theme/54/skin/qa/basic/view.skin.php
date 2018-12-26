@@ -44,15 +44,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 			?>
 
 	        <ul class="bo_v_com">
-				<li><a href="<?php echo $list_href ?>" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li>
-	            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+				<li><a href="<?php echo $list_href ?>" class="btn_b01 btn" title="목록"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li>
+	            <?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="btn_b01 btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+                <?php if ($update_href || $delete_href) { ?>
 	        	<li>
-	        		<button type="button" class="btn_more_opt btn_b01 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 읽기 옵션</span></button>
+	        		<button type="button" class="btn_more_opt btn_b01 btn" title="게시판 읽기 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 읽기 옵션</span></button>
 	        		<ul class="more_opt">
-	        			<?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b01 btn">수정<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></li><?php } ?>
-	            		<?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b01 btn" onclick="del(this.href); return false;">삭제<i class="fa fa-trash-o" aria-hidden="true"></i></a></li><?php } ?>
+	        			<?php if ($update_href) { ?><li><a href="<?php echo $update_href ?>" class="btn_b01 btn" title="수정">수정<i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></li><?php } ?>
+	            		<?php if ($delete_href) { ?><li><a href="<?php echo $delete_href ?>" class="btn_b01 btn" onclick="del(this.href); return false;" title="삭제">삭제<i class="fa fa-trash-o" aria-hidden="true"></i></a></li><?php } ?>
 	        		</ul>
 	        	</li>
+                <?php } ?>
 	        </ul>
 	        <script>
 				// 게시판 리스트 옵션

@@ -321,7 +321,6 @@ box-shadow:1px 1px 5px 0px hsl(232, 36%, 96%)}
 #bo_v_sns li .sns_f {display:block;background:#3b5997}
 #bo_v_sns li .sns_t {display:block;background:#09aeee}
 #bo_v_sns li .sns_g {display:block;background:#ea4026}
-#bo_v_sns.show_kakao {width:240px;margin-left:-120px}
 #bo_v_sns li .sns_k {display:block;background:#fbe300}
 
 #bo_v_share {position:relative;padding:20px 0}

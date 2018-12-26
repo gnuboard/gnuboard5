@@ -13,26 +13,26 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
             <?php echo get_member_profile_img($member['mb_id']); ?>
         </span>
         <strong><?php echo $nick ?>님</strong>
-        <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info">정보수정</a>
-        <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a><?php }  ?>
+        <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info" title="정보수정">정보수정</a>
+        <?php if ($is_admin == 'super' || $is_auth) {  ?><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a><?php }  ?>
     </header>
     <ul id="ol_after_private">
     	<li>
             <a href="<?php echo G5_BBS_URL ?>/point.php" target="_blank" id="ol_after_pt" class="win_point">
 				<i class="fa fa-database" aria-hidden="true"></i>포인트
-				<strong><?php echo $point ?></strong>
+				<strong><?php echo $point; ?></strong>
             </a>
         </li>
         <li>
             <a href="<?php echo G5_BBS_URL ?>/memo.php" target="_blank" id="ol_after_memo" class="win_memo">
             	<i class="fa fa-envelope-o" aria-hidden="true"></i><span class="sound_only">안 읽은 </span>쪽지
-                <strong><?php echo $memo_not_read ?></strong>
+                <strong><?php echo $memo_not_read; ?></strong>
             </a>
         </li>
         <li>
             <a href="<?php echo G5_BBS_URL ?>/scrap.php" target="_blank" id="ol_after_scrap" class="win_scrap">
             	<i class="fa fa-thumb-tack" aria-hidden="true"></i>스크랩
-            	<strong class="scrap">0</strong>
+            	<strong class="scrap"><?php echo $mb_scrap_cnt; ?></strong>
             </a>
         </li>
     </ul>

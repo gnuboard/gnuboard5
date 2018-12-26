@@ -17,7 +17,7 @@ if ($board['bo_use_category']) {
     for ($i=0; $i<count($categories); $i++) {
         $category = trim($categories[$i]);
         if ($category=='') continue;
-        $category_option .= '<li><a href="'.($category_href."&amp;sca=".urlencode($category)).'"';
+        $category_option .= '<li><a href="'.(get_pretty_url($bo_table,'','sca='.urlencode($category))).'"';
         $category_msg = '';
         if ($category==$sca) { // 현재 선택된 카테고리라면
             $category_option .= ' id="bo_cate_on"';

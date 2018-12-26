@@ -34,7 +34,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <div class="memo_view_li memo_view_name">
                 	<ul class="memo_from">
                 		<li class="memo_profile">
-				            <?php echo get_member_profile_img($member['mb_id']); ?>
+				            <?php echo get_member_profile_img($mb['mb_id']); ?>
 				        </li>
 						<li class="memo_view_nick"><?php echo $nick ?></li>
 						<li class="memo_view_date"><span class="sound_only"><?php echo $kind_date ?>시간</span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $memo['me_send_datetime'] ?></li> 

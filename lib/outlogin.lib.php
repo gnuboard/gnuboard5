@@ -41,7 +41,8 @@ function outlogin($skin_dir='basic')
         } else {
             $memo_not_read = get_memo_not_read($member['mb_id']);
         }
-
+        
+        $mb_scrap_cnt = isset($member['mb_scrap_cnt']) ? (int) $member['mb_scrap_cnt'] : '';
         $is_auth = false;
         $sql = " select count(*) as cnt from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
@@ -51,7 +52,7 @@ function outlogin($skin_dir='basic')
 
     $outlogin_url        = login_url($urlencode);
     $outlogin_action_url = G5_HTTPS_BBS_URL.'/login_check.php';
-
+    
     ob_start();
     if ($is_member)
         include_once ($outlogin_skin_path.'/outlogin.skin.2.php');

@@ -203,9 +203,11 @@
 .memo_list li.empty_li {text-align:center;padding:20px 0;color:#666}
 
 .memo_list .memo_li {float:left}
-.memo_list .profile_img {position:relative;margin-right:15px}
-.memo_list .profile_img img {border-radius:50%;width:52px;height:52px}
-.memo_list .memo_name {padding-top:5px}
+.memo_list .profile_big_img {position:relative;margin-right:15px}
+.memo_list .profile_big_img img {border-radius:50%;width:52px;height:52px}
+.memo_list .memo_name {padding-top:5px;float:none}
+.memo_list .memo_preview a{display:block;margin-right:30px;padding-top:10px;font-weight:normal !important;font-size:1.2em}
+.memo_list .memo_preview a:hover{text-decoration:underline}
 .memo_list .memo_name a,
 .memo_list .memo_name .sv_wrap {font-weight:bold}
 .memo_list .no_read {position:absolute;bottom:0;right:0;display:inline-block;background:#3a8afd;border:1px solid #e1edff;text-indent:-9999px;border-radius:10px;width:10px;height:10px;box-shadow:0 0 10px 3px #9ec3f9}
@@ -276,9 +278,12 @@
 #point .point_all:after {display:block;visibility:hidden;clear:both;content:""}
 #point .point_all li {float:left;width:50%;padding:20px;text-align:left}
 #point .point_all li span {float:right;color:#485172;font-weight:bold}
-#point .point_all li:last-child {border-left:1px solid #d6e2f4}
-#point .point_all .full_li {width:100%;border-bottom:1px solid #d6e2f4;text-align:left}
+#point .point_all .full_li {width:100%;text-align:left}
 #point .point_all .full_li span {color:#3a8afd;font-weight:bold;font-size:1.2em}
+#point .point_status{background:#737373;border:0;color:#fff;font-weight:bold;font-size:1.083em;text-align:left}
+#point .point_status:after {display:block;visibility:hidden;clear:both;content:""}
+#point .point_status span{margin-left:10px;float:right}
+
 
 .point_list {margin-bottom:20px}
 .point_list li:first-child {border-top:1px solid #ececec}

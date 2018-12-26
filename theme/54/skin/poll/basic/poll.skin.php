@@ -12,7 +12,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
 <section id="poll">
     <header>
         <h2>설문조사</h2>
-		<?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">설문관리</span></a><?php }  ?>
+		<?php if ($is_admin == "super") {  ?><a href="<?php echo G5_ADMIN_URL ?>/poll_form.php?w=u&amp;po_id=<?php echo $po_id ?>" class="btn_admin" title="설문관리"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">설문관리</span></a><?php }  ?>
     	<a href="<?php echo G5_BBS_URL."/poll_result.php?po_id=$po_id&amp;skin_dir=".urlencode($skin_dir); ?>" target="_blank" onclick="poll_result(this.href); return false;" class="btn_result">결과보기</a>
     </header>
     <div class="poll_con">

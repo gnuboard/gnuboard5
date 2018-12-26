@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 var char_min = parseInt(<?php echo $comment_min ?>); // 최소
 var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 </script>
-<button type="button" class="cmt_btn"><span class="total"><b>댓글</b> 12</span><span class="cmt_more"></span></button>
+<button type="button" class="cmt_btn"><span class="total"><b>댓글</b> <?php echo $view['wr_comment']; ?></span><span class="cmt_more"></span></button>
 <!-- 댓글 시작 { -->
 <section id="bo_vc">
     <h2>댓글목록</h2>
@@ -27,10 +27,11 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 	?>
 
 	<article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
-        <div class="pf_img"><?php echo get_member_profile_img($view['mb_id']) ?></div>
+        <div class="pf_img"><?php echo get_member_profile_img($list[$i]['mb_id']); ?></div>
         
         <div class="cm_wrap">
-	        <header style="z-index:<?php echo $cmt_sv; ?>">
+
+            <header style="z-index:<?php echo $cmt_sv; ?>">
 	            <h2><?php echo get_text($list[$i]['wr_name']); ?>님의 <?php if ($cmt_depth) { ?><span class="sound_only">댓글의</span><?php } ?> 댓글</h2>
 	            <?php echo $list[$i]['name'] ?>
 	            <?php if ($is_ip_view) { ?>
