@@ -1,6 +1,14 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+$get_max_cnt = 0;
+
+if ((int) $total_po_cnt > 0){
+    foreach( $list as $k => $v ) {
+        $get_max_cnt = max( array( $get_max_cnt, $v['cnt'] ) );     // 가장 높은 투표수를 뽑습니다.
+    }
+}
+
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0);
 ?>
@@ -14,21 +22,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$poll_skin_url.'/style.css">', 0)
         <section id="poll_result_list">
             <h2><?php echo $po_subject ?> 결과</h2>
             <ol>
-            	<!-- *** 투표수가 가장 많은 것은 li이에 클래스 poll_1st를 붙여주세요 / 수정후 삭제 -->
-            	<li class="poll_1st">
-                    <span>현재 가장 높은 득표율</span>   
-                    <div class="poll_result_graph">
-                        <span style="width:90%"></span>
-                    </div>
-                    <div class="poll_numerical">
-                    	<strong class="poll_cnt">500 표</strong>
-                    	<span class="poll_percent">90 %</span>
-                    </div>
-                </li>
-                <!-- *** 투표수가 가장 많은 것은 li이에 클래스 poll_1st를 붙여주세요 / 수정후 삭제 -->
-                
-            	<?php for ($i=1; $i<=count($list); $i++) {  ?>
-                <li>
+            	<?php
+                for ($i=1; $i<=count($list); $i++) {
+                    // 가장 높은 투표수와 같으면 li 태그에 poll_1st 클래스가 붙습니다.
+                    $poll_1st_class = ($get_max_cnt && ((int) $list[$i]['cnt'] === (int) $get_max_cnt)) ? 'poll_1st' : '';
+                ?>
+                <li class="<?php echo $poll_1st_class; ?>">
                     <span><?php echo $list[$i]['content'] ?></span>   
                     <div class="poll_result_graph">
                         <span style="width:<?php echo number_format($list[$i]['rate'], 1) ?>%"></span>

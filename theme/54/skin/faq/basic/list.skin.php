@@ -105,7 +105,7 @@ if ($timg_src)
 
 <?php
 if ($admin_href)
-    echo '<div class="faq_admin"><a href="'.$admin_href.'" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">FAQ 수정</span></a></div>';
+    echo '<div class="faq_admin"><a href="'.$admin_href.'" class="btn_admin btn" title="FAQ 수정"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">FAQ 수정</span></a></div>';
 ?>
 
 <script src="<?php echo G5_JS_URL; ?>/viewimageresize.js"></script>
