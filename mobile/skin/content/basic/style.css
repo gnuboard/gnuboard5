@@ -7,5 +7,6 @@ webkit-box-shadow: 0 1px 4px #cbd1df;
        box-shadow: 0 1px 4px #cbd1df;}
 .ctt_admin {margin:0 5px;text-align:right}
 #ctt header h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#ctt_himg img, #ctt_timg img, #ctt_con img {max-width:100%;height:auto}
 #ctt_con {padding:10px 0}
 .ctt_img {text-align:center}
