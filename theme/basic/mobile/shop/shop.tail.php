@@ -17,13 +17,7 @@ $admin = get_admin("super");
         <?php
         if(G5_DEVICE_BUTTON_DISPLAY && G5_IS_MOBILE) { ?>
         <a href="<?php echo get_device_change_url(); ?>" id="device_change">PC 버전</a>
-        <?php
-        }
-
-        if ($config['cf_analytics']) {
-            echo $config['cf_analytics'];
-        }
-        ?>
+        <?php } ?>
     </div>
     <div id="ft_logo"><a href="<?php echo G5_SHOP_URL; ?>/"><img src="<?php echo G5_DATA_URL; ?>/common/mobile_logo_img2" alt="<?php echo $config['cf_title']; ?> 메인"></a></div>
     <p>
