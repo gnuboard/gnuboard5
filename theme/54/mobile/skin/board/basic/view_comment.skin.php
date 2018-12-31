@@ -10,7 +10,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 
 <!-- 댓글 리스트 -->
 <section id="bo_vc">
-    <h2 class="bo_vc_tit">댓글목록 <span>100</span></h2>
+    <h2 class="bo_vc_tit">댓글목록 <span><?php echo $view['wr_comment']; ?></span></h2>
     <?php
     for ($i=0; $i<count($list); $i++) {
         $comment_id = $list[$i]['wr_id'];

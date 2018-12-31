@@ -13,7 +13,7 @@
 .lt .lt_tit {display:block;font-size:1.2em;font-weight:bold;max-height:60px;overflow:hidden;padding-bottom:10px}
 .lt .lt_info {display:inline-block;position:relative;line-height:20px;color:#828282;font-size:0.925em;vertical-align:top}
 .lt .lt_date {color:#828282}
-.lt .owl-carousel{margin-top:1px}
+.lt .latest-sel{margin-top:1px}
 
 .lt .lt_more {position:absolute;top:15px;right:15px;color:#3a8afd;background:#fff;border:1px solid #d1d7e5;font-size:0.925em;border-radius:3px;padding:4px 5px}
 .lt .lt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
