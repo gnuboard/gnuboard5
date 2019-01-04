@@ -280,17 +280,18 @@
 #bo_v_act .bo_v_good {display:inline-block;border:1px solid #dedede;width:70px;line-height:46px;border-radius:30px}
 #bo_v_act .bo_v_nogood {display:inline-block;border:1px solid #dedede;width:70px;line-height:46px;border-radius:30px}
 
-
 /* 게시판 댓글 */
 #bo_vc {background:#f8f8f8;padding:15px}
 #bo_vc h2.bo_vc_tit {}
 #bo_vc h2 span {color:#3a8afd}
-#bo_vc article {margin:15px 0 0;padding:15px;background:#fff;border-bottom:1px solid #e4e4ec}
+#bo_vc article {}
+#bo_vc article .comment_inner{margin:15px 0 0;padding:15px;background:#fff;border-bottom:1px solid #e4e4ec}
 #bo_vc article h2 {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 #bo_vc header {position:relative;padding:0;line-height:20px;padding-right:18px}
 #bo_vc .profile_img {vertical-align:text-bottom}
 #bo_vc .profile_img img {width:23px;height:23px;border-radius:50%}
 #bo_vc header .bo_vl_opt {position:absolute;top:-5px;right:-8px}
+.comment_inner .bo_vc_w{margin-top:10px;padding-top:15px}
 
 #bo_vc .sv_member, #bo_vc .sv_guest {font-weight:bold}
 .bo_vc_hdinfo {display:inline-block;color:#777}

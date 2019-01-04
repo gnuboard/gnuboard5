@@ -8,30 +8,33 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
 <script src="<?php echo G5_JS_URL; ?>/jquery.fancylist.js"></script>
 
+<form name="fboardlist"  id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
+<input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
+<input type="hidden" name="sfl" value="<?php echo $sfl ?>">
+<input type="hidden" name="stx" value="<?php echo $stx ?>">
+<input type="hidden" name="spt" value="<?php echo $spt ?>">
+<input type="hidden" name="sst" value="<?php echo $sst ?>">
+<input type="hidden" name="sod" value="<?php echo $sod ?>">
+<input type="hidden" name="page" value="<?php echo $page ?>">
+<input type="hidden" name="sw" value="">
+
 <?php if ($rss_href || $write_href) { ?>
 <ul class="<?php echo isset($view) ? 'view_is_list btn_top' : 'btn_top top btn_bo_user';?>">
-	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
-    <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b03 btn"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
+	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
+    <?php if ($rss_href) { ?><li><a href="<?php echo $rss_href ?>" class="btn_b03 btn" title="RSS"><i class="fa fa-rss" aria-hidden="true"></i><span class="sound_only">RSS</span></a></li><?php } ?>
     <?php if ($is_admin == 'super' || $is_auth) {  ?>
 	<li>
-		<button type="button" class="btn_more_opt btn_b03 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
+		<button type="button" class="btn_more_opt btn_b03 btn is_list_btn" title="게시판 리스트 옵션"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">게시판 리스트 옵션</span></button>
 		<?php if ($is_checkbox) { ?>	
-        <ul class="more_opt">
+        <ul class="more_opt is_list_btn">
             <li><button type="submit" name="btn_submit" value="선택삭제" onclick="document.pressed=this.value"><i class="fa fa-trash-o" aria-hidden="true"></i> 선택삭제</button></li>
             <li><button type="submit" name="btn_submit" value="선택복사" onclick="document.pressed=this.value"><i class="fa fa-files-o" aria-hidden="true"></i> 선택복사</button></li>
             <li><button type="submit" name="btn_submit" value="선택이동" onclick="document.pressed=this.value"><i class="fa fa-arrows" aria-hidden="true"></i> 선택이동</button></li>
         </ul>
         <?php } ?>
-
-        <script>
-        // 게시판 리스트 관리자 옵션
-		$(".btn_more_opt").on("click", function() {
-		    $(".more_opt").toggle();
-		})
-		</script>
 	</li>
     <?php } ?>
-	<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="fix_btn"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
+	<?php if ($write_href) { ?><li><a href="<?php echo $write_href ?>" class="fix_btn write_btn" title="글쓰기"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sound_only">글쓰기</span></a></li><?php } ?>
 </ul>
 <?php } ?>
 
@@ -46,16 +49,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         </ul>
     </nav>
     <?php } ?>
-
-    <form name="fboardlist"  id="fboardlist" action="./board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
-    <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
-    <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
-    <input type="hidden" name="stx" value="<?php echo $stx ?>">
-    <input type="hidden" name="spt" value="<?php echo $spt ?>">
-    <input type="hidden" name="sst" value="<?php echo $sst ?>">
-    <input type="hidden" name="sod" value="<?php echo $sod ?>">
-    <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="sw" value="">
 
     <h2>이미지 목록</h2>
 
@@ -149,9 +142,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <?php } ?>
         <?php if (count($list) == 0) { echo "<li class=\"empty_list\">게시물이 없습니다.</li>"; } ?>
     </ul>
-    </form>
 </div>
 
+</form>
 
 <?php if($is_checkbox) { ?>
 <noscript>
@@ -221,7 +214,7 @@ function fboardlist_submit(f) {
             return false;
 
         f.removeAttribute("target");
-        f.action = "./board_list_update.php";
+        f.action = g5_bbs_url+"/board_list_update.php";
     }
 
     return true;
@@ -240,9 +233,22 @@ function select_copy(sw) {
 
     f.sw.value = sw;
     f.target = "move";
-    f.action = "./move.php";
+    f.action = g5_bbs_url+"/move.php";
     f.submit();
 }
+
+// 게시판 리스트 관리자 옵션
+jQuery(function($){
+    $(".btn_more_opt.is_list_btn").on("click", function(e) {
+        e.stopPropagation();
+        $(".more_opt.is_list_btn").toggle();
+    });
+    $(document).on("click", function (e) {
+        if(!$(e.target).closest('.is_list_btn').length) {
+            $(".more_opt.is_list_btn").hide();
+        }
+    });
+});
 </script>
 <?php } ?>
 <!-- 게시판 목록 끝 -->

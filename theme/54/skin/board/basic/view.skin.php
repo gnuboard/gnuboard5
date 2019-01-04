@@ -59,14 +59,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 	        <script>
 
             jQuery(function($){
-                // 게시판 리스트 관리자 옵션
+                // 게시판 보기 버튼 옵션
 				$(".btn_more_opt.is_view_btn").on("click", function(e) {
                     e.stopPropagation();
 				    $(".more_opt.is_view_btn").toggle();
 				})
 ;
                 $(document).on("click", function (e) {
-                    if(!$(e.target).closest('.is_list_btn').length) {
+                    if(!$(e.target).closest('.is_view_btn').length) {
                         $(".more_opt.is_view_btn").hide();
                     }
                 });

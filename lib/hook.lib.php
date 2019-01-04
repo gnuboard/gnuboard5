@@ -3,6 +3,19 @@ if (!defined('_GNUBOARD_')) exit;
 
 define('G5_HOOK_DEFAULT_PRIORITY', 8);
 
+if (!function_exists('get_called_class')) {
+    function get_called_class() {
+        $bt = debug_backtrace();
+        $lines = file($bt[1]['file']);
+        preg_match(
+            '/([a-zA-Z0-9\_]+)::'.$bt[1]['function'].'/',
+            $lines[$bt[1]['line']-1],
+            $matches
+        );
+        return $matches[1];
+    }
+}
+
 include_once(dirname(__FILE__) .'/Hook/hook.class.php');
 include_once(dirname(__FILE__) .'/Hook/hook.extends.class.php');
 
@@ -18,7 +31,7 @@ function get_hook_class(){
 function put_event($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
 
     if( $hook = get_hook_class() ){
-        $hook::addAction($tag, $func, $priority, $args);
+        $hook->addAction($tag, $func, $priority, $args);
     }
 }
 
@@ -48,14 +61,14 @@ function start_event($tag, $arg = ''){
           $args[] = func_get_arg($a);
         }
 
-        $hook::doAction($tag, $args, false);
+        $hook->doAction($tag, $args, false);
     }
 }
 
 function put_replace($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
 
     if( $hook = get_hook_class() ){
-        return $hook::addFilter($tag, $func, $priority, $args);
+        return $hook->addFilter($tag, $func, $priority, $args);
     }
 
     return null;
@@ -87,7 +100,7 @@ function apply_replace($tag, $arg = ''){
           $args[] = func_get_arg($a);
         }
 
-        return $hook::apply_filters($tag, $args, false);
+        return $hook->apply_filters($tag, $args, false);
     }
 
     return null;
@@ -96,7 +109,7 @@ function apply_replace($tag, $arg = ''){
 function delete_event($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY){
 
     if( $hook = get_hook_class() ){
-        return $hook::remove_action($tag, $func, $priority);
+        return $hook->remove_action($tag, $func, $priority);
     }
 
     return null;
@@ -105,7 +118,7 @@ function delete_event($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY){
 function delete_replace($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY){
 
     if( $hook = get_hook_class() ){
-        return $hook::remove_filter($tag, $func, $priority);
+        return $hook->remove_filter($tag, $func, $priority);
     }
 
     return null;
@@ -113,7 +126,7 @@ function delete_replace($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY){
 
 function get_hook_datas($type='', $is_callback=''){
     if( $hook = get_hook_class() ){
-        return $hook::get_properties($type, $is_callback);
+        return $hook->get_properties($type, $is_callback);
     }
 
     return null;
