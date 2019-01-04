@@ -11,5 +11,6 @@
 #popular li:first-child {border-left:0}
 #popular li a:hover {text-decoration:underline}
 
-#popular .bx-next {position:absolute;top:68%;right:0px;width:18px;height:18px;line-height:15px;text-align:center;border:1px solid #53555a;margin-top:-12px;color:#d3d2d2}
-#popular .bx-prev {position:absolute;top:68%;right:17px;width:18px;height:18px;line-height:15px;text-align:center;border:1px solid #53555a;margin-top:-12px;color:#d3d2d2}
+.popular_inner .popular_btns{display:none}
+.popular_btns .pp-next {position:absolute;top:68%;right:0px;width:18px;height:18px;line-height:15px;text-align:center;border:1px solid #53555a;margin-top:-12px;color:#d3d2d2}
+.popular_btns .pp-prev {position:absolute;top:68%;right:17px;width:18px;height:18px;line-height:15px;text-align:center;border:1px solid #53555a;margin-top:-12px;color:#d3d2d2}

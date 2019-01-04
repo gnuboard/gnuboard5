@@ -105,7 +105,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
     $k=0;
     for ($idx=$table_index, $k=0; $idx<count($search_table) && $k<$rows; $idx++) {
      ?>
-        <h2><a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>"><?php echo $bo_subject[$idx] ?> 게시판 내 결과</a></h2>
+        <h2><a href="<?php echo get_pretty_url($search_table[$idx], '', $search_query); ?>"><?php echo $bo_subject[$idx] ?> 게시판 내 결과</a></h2>
         <ul>
         <?php
         for ($i=0; $i<count($list[$idx]) && $k<$rows; $i++, $k++) {
