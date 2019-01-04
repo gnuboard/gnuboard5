@@ -129,7 +129,7 @@ include_once(G5_LIB_PATH.'/get_data.lib.php');    // 데이타 가져오는 함�
 include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
 include_once(G5_LIB_PATH.'/cache.lib.php');
 
-$g5_object = new G5_object_store();
+$g5_object = new G5_object_cache();
 
 //==============================================================================
 // 공통

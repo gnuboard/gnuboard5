@@ -1,7 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
-Class G5_object_store {
+Class G5_object_cache {
     public $writes = array();
     public $contents = array();
     public $etcs = array();
