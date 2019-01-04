@@ -14,7 +14,7 @@ else
 $url = clean_xss_tags($_GET['url']);
 
 //소셜 로그인 한 경우
-if( function_exists('social_member_comfirm_redirect') && (! $url || $url === 'register_form.php') ){    
+if( function_exists('social_member_comfirm_redirect') && (! $url || $url === 'register_form.php' || (function_exists('social_is_edit_page') && social_is_edit_page($url) ) ) ){    
     social_member_comfirm_redirect();
 }
 

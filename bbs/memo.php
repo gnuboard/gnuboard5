@@ -71,6 +71,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $send_datetime = substr($row['me_send_datetime'],2,14);
 
+    $list[$i]['mb_id'] = $mb_id;
     $list[$i]['name'] = $name;
     $list[$i]['send_datetime'] = $send_datetime;
     $list[$i]['read_datetime'] = $read_datetime;

@@ -1,0 +1,18 @@
+@charset "utf-8";
+
+/* 현재접속자 */
+#current_connect ul {margin:0;padding:0;list-style:none;zoom:1}
+#current_connect ul:after {display:block;visibility:hidden;clear:both;content:""}
+#current_connect li:after {display:block;visibility:hidden;clear:both;content:""}
+#current_connect li {position:relative;padding:18px 0;border-bottom:1px solid #ececec;min-height:1px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;margin-left:0}
+#current_connect li:first-child {border-top:1px solid #ececec}
+#current_connect .crt_num {float:left;line-height:45px;margin-right:20px;color:#777;font-weight:bold}
+#current_connect .crt_profile {float:left;margin-right:20px;line-height:45px}
+#current_connect .crt_profile > img {width:45px;height:45px;border-radius:50%}
+#current_connect .crt_info {float:left;margin-top:5px}
+#current_connect .crt_name {display:block}
+#current_connect .sv_member {font-weight:bold;line-height:20px;font-size:1.2em}
+#current_connect .profile_img {display:none}
+#current_connect .crt_lct {display:block}
+#current_connect .crt_lct a {color:#797979}
+#current_connect li.empty_li {width:100%;padding:200px 0;border:0;color:#666;text-align:center}
