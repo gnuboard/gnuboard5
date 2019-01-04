@@ -63,7 +63,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
              ?>
             <ul class="bo_vc_act">
                 <?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;" class="btn_b03">답변</a></li><?php } ?>
-                <?php if ($list[$i]['is_edit']) { ?><li><a href="<?php echo $c_edit_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;" class="btn_b03">수정</a></li><?php } ?>
+                <?php if (1==1) { ?><li><a href="<?php echo $c_edit_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;" class="btn_b03">수정</a></li><?php } ?>
                 <?php if ($list[$i]['is_del'])  { ?><li><a href="<?php echo $list[$i]['del_link'];  ?>" onclick="return comment_delete();" class="btn_b03">삭제</a></li><?php } ?>
             </ul>
             <?php } ?>

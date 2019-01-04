@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+#bo_cate {margin-bottom:28px}
+#bo_cate h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#bo_cate ul {zoom:1}
+#bo_cate ul:after {display:block;visibility:hidden;clear:both;content:""}
+#bo_cate li {display:inline-block;padding:2px}
+#bo_cate a {display:block;line-height:28px;padding:5px 15px;border-radius:30px;border:1px solid #d6e9ff;color:#6794d3}
+#bo_cate a:focus, #bo_cate a:hover, #bo_cate a:active {text-decoration:none;background:#3a8afd;color:#fff}
+#bo_cate #bo_cate_on {z-index:2;background:#3a8afd;color:#fff;font-weight:bold;border:1px solid #3a8afd;
+-webkit-box-shadow:inset 0 2px 5px rgb(33, 135, 202);
+-moz-box-shadow:inset 0 2px 5px rgb(33, 135, 202);
+box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
+
+#faq_wrap {margin:10px 0 30px}
+#faq_wrap h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
+.faq_admin {text-align:right}
+#faq_wrap ol {margin:0;padding:0;list-style:none}
+#faq_wrap li {border-bottom:1px solid #ececec;background:#fff;position:relative}
+#faq_wrap li:first-child {border-top:1px solid #ececec}
+#faq_wrap li h3 {min-height:50px;line-height:30px;padding:15px;padding-left:50px;position:relative}
+#faq_wrap li h3 .tit_btn {position:absolute;right:15px;top:15px;border:0;width:30px;height:30px;background:#fff;color:#c5cdd8;font-size:1.2em}
+#faq_wrap li h3 .tit_bg {display:inline-block;position:absolute;top:15px;left:15px;text-align:center;color:#000;font-size:1.6em}
+#faq_wrap li h3.faq_li_open a {color:#3a8afd}
+
+#faq_con .con_inner {display:none;padding:5px 5px 20px 50px}
+#faq_con .con_inner .tit_bg {display:inline-block;position:absolute;top:10px;left:10px;text-align:center;background:#777;color:#fff;border-radius:50%;width:30px;line-height:30px;height:30px}
+#faq_con .con_inner .closer_btn {position:absolute;right:15px;top:15px;border:0;width:30px;height:30px;background:#fff;color:#3a8afd;font-size:1.2em}
+
+#faq_sch {background:#f7f7f7;padding:30px;text-align:center;margin:0 0 10px}
+#faq_sch .sch_tit {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
+#faq_sch .frm_input {border:1px solid #d0d3db;width:300px;height:45px;border-radius:0;border-radius:3px}
+#faq_sch .btn_submit {padding:0 10px;height:45px;width:88px;font-size:1.083em;font-weight:bold;color:#fff;background:#434a54}

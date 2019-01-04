@@ -18,7 +18,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
     </div>
 
     <div id="ol_after_btn">
-        <?php if ($is_admin == 'super' || $is_auth) { ?><a href="<?php echo G5_ADMIN_URL ?>" class="btn_admin">관리자</a><?php } ?>
+        <?php if ($is_admin == 'super' || $is_auth) { ?><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>" class="btn_admin">관리자</a><?php } ?>
         <a href="<?php echo G5_BBS_URL ?>/logout.php" id="ol_after_logout">로그아웃</a>
     </div>
 

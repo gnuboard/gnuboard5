@@ -77,7 +77,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <td>
             <?php echo help('20자 이내의 영문자, 숫자, _ 만 가능합니다.'); ?>
             <input type="text" value="<?php echo $co['co_id']; ?>" name="co_id" id ="co_id" required <?php echo $readonly; ?> class="required <?php echo $readonly; ?> frm_input" size="20" maxlength="20">
-            <?php if ($w == 'u') { ?><a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=<?php echo $co_id; ?>" class="btn_frmline">내용확인</a><?php } ?>
+            <?php if ($w == 'u') { ?><a href="<?php echo get_pretty_url('content', $co_id); ?>" class="btn_frmline">내용확인</a><?php } ?>
         </td>
     </tr>
     <tr>

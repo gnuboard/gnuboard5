@@ -317,6 +317,8 @@ if($w == '' || $w == 'a' || $w == 'r') {
     sql_query($sql);
 }
 
+start_event('qawrite_update', $qa_id, $write, $w, $qaconfig);
+
 // SMS 알림
 if($config['cf_sms_use'] == 'icode' && $qaconfig['qa_use_sms']) {
     if($config['cf_sms_type'] == 'LMS') {

@@ -9,7 +9,7 @@ $thumb_height = 150;
 ?>
 
 <div class="pic_lt">
-    <h2 class="lat_title"><a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>"><?php echo $bo_subject ?></a></h2>
+    <h2 class="lat_title"><a href="<?php echo get_pretty_url($bo_table); ?>"><?php echo $bo_subject ?></a></h2>
     <ul>
     <?php
     for ($i=0; $i<count($list); $i++) {
@@ -62,6 +62,6 @@ $thumb_height = 150;
     <li class="empty_li">게시물이 없습니다.</li>
     <?php }  ?>
     </ul>
-    <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $bo_table ?>" class="lt_more"><span class="sound_only"><?php echo $bo_subject ?></span><i class="fa fa-plus" aria-hidden="true"></i><span class="sound_only"> 더보기</span></a>
+    <a href="<?php echo get_pretty_url($bo_table); ?>" class="lt_more"><span class="sound_only"><?php echo $bo_subject ?></span><i class="fa fa-plus" aria-hidden="true"></i><span class="sound_only"> 더보기</span></a>
 
 </div>

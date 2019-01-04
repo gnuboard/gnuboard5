@@ -4,6 +4,9 @@ include_once('../lib/json.lib.php');
 include_once('../lib/common.lib.php');    // 공통 라이브러리
 include_once('./install.function.php');    // 인스톨 과정 함수 모음
 
+include_once('../lib/hook.lib.php');    // hook 함수 파일
+include_once('../lib/get_data.lib.php');    // 데이타 가져오는 함수 모음
+
 $data_path = '../'.G5_DATA_DIR;
 
 // 파일이 존재한다면 설치할 수 없다.

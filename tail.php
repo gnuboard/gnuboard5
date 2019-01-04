@@ -37,9 +37,9 @@ if (G5_IS_MOBILE) {
 
     <div id="ft_wr">
         <div id="ft_link">
-            <a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=company">회사소개</a>
-            <a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=privacy">개인정보처리방침</a>
-            <a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=provision">서비스이용약관</a>
+            <a href="<?php echo get_pretty_url('content', 'company'); ?>">회사소개</a>
+            <a href="<?php echo get_pretty_url('content', 'privacy'); ?>">개인정보처리방침</a>
+            <a href="<?php echo get_pretty_url('content', 'provision'); ?>">서비스이용약관</a>
             <a href="<?php echo get_device_change_url(); ?>">모바일버전</a>
         </div>
         <div id="ft_catch"><img src="<?php echo G5_IMG_URL; ?>/ft_logo.png" alt="<?php echo G5_VERSION ?>"></div>

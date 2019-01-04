@@ -1,9 +1,6 @@
 <?php
 include_once('./_common.php');
 
-// 내용
-$sql = " select * from {$g5['content_table']} where co_id = '$co_id' ";
-$co = sql_fetch($sql);
 if (!$co['co_id'])
     alert('등록된 내용이 없습니다.');
 

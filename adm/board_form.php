@@ -185,7 +185,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php if ($w == '') { ?>
                     영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
                 <?php } else { ?>
-                    <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $board['bo_table'] ?>" class="btn_frmline">게시판 바로가기</a>
+                    <a href="<?php echo get_pretty_url($board['bo_table']) ?>" class="btn_frmline">게시판 바로가기</a>
                     <a href="./board_list.php?<?php echo $qstr;?>" class="btn_frmline">목록으로</a>
                 <?php } ?>
             </td>
@@ -1261,7 +1261,7 @@ $pg_anchor = '<ul class="anchor">
 <div class="btn_fixed_top">
     <?php if( $bo_table && $w ){ ?>
         <a href="./board_copy.php?bo_table=<?php echo $board['bo_table']; ?>" id="board_copy" target="win_board_copy" class=" btn_02 btn">게시판복사</a>
-        <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $board['bo_table']; ?>" class=" btn_02 btn">게시판 바로가기</a>
+        <a href="<?php echo get_pretty_url($board['bo_table']); ?>" class=" btn_02 btn">게시판 바로가기</a>
         <a href="./board_thumbnail_delete.php?bo_table=<?php echo $board['bo_table'].'&amp;'.$qstr;?>" onclick="return delete_confirm2('게시판 썸네일 파일을 삭제하시겠습니까?');" class="btn_02 btn">게시판 썸네일 삭제</a>
     <?php } ?>
     <input type="submit" value="확인" class="btn_submi btn btn_01" accesskey="s">

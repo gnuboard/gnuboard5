@@ -38,8 +38,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <li><a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=<?php echo G5_BBS_URL ?>/register_form.php"><i class="fa fa-cog" aria-hidden="true"></i> 정보수정</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i> 로그아웃</a></li>
             <?php if ($is_admin) {  ?>
-            <li class="tnb_admin"><a href="<?php echo G5_ADMIN_URL ?>"><b><i class="fa fa-user-circle" aria-hidden="true"></i> 관리자</b></a></li>
-            <?php }  ?>
+            <li class="tnb_admin"><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>"><b><i class="fa fa-user-circle" aria-hidden="true"></i> 관리자</b></a></li>
+            <?php } ?>
             <?php } else {  ?>
             <li><a href="<?php echo G5_BBS_URL ?>/register.php"><i class="fa fa-user-plus" aria-hidden="true"></i> 회원가입</a></li>
             <li><a href="<?php echo G5_BBS_URL ?>/login.php"><b><i class="fa fa-sign-in" aria-hidden="true"></i> 로그인</b></a></li>
@@ -165,7 +165,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                 }   //end foreach $row
 
                 if ($i == 0) {  ?>
-                    <li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
+                    <li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
                 <?php } ?>
             </ul>
             <div id="gnb_all">
@@ -198,7 +198,7 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     }   //end foreach $row
 
                     if ($i == 0) {  ?>
-                        <li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
+                        <li class="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo correct_goto_url(G5_ADMIN_URL); ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하실 수 있습니다.<?php } ?></li>
                     <?php } ?>
                 </ul>
                 <button type="button" class="gnb_close_btn"><i class="fa fa-times" aria-hidden="true"></i></button>

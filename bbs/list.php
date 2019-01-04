@@ -6,7 +6,7 @@ $is_category = false;
 $category_option = '';
 if ($board['bo_use_category']) {
     $is_category = true;
-    $category_href = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
+    $category_href = get_pretty_url($bo_table);
 
     $category_option .= '<li><a href="'.$category_href.'"';
     if ($sca=='')
@@ -17,7 +17,7 @@ if ($board['bo_use_category']) {
     for ($i=0; $i<count($categories); $i++) {
         $category = trim($categories[$i]);
         if ($category=='') continue;
-        $category_option .= '<li><a href="'.($category_href."&amp;sca=".urlencode($category)).'"';
+        $category_option .= '<li><a href="'.(get_pretty_url($bo_table,'','sca='.urlencode($category))).'"';
         $category_msg = '';
         if ($category==$sca) { // 현재 선택된 카테고리라면
             $category_option .= ' id="bo_cate_on"';
@@ -200,13 +200,15 @@ if($page_rows > 0) {
     }
 }
 
-$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, './board.php?bo_table='.$bo_table.$qstr.'&amp;page=');
+g5_latest_cache_data($board['bo_table'], $list);
+
+$write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, get_pretty_url($bo_table, '', $qstr.'&amp;page='));
 
 $list_href = '';
 $prev_part_href = '';
 $next_part_href = '';
 if ($is_search_bbs) {
-    $list_href = './board.php?bo_table='.$bo_table;
+    $list_href = get_pretty_url($bo_table);
 
     $patterns = array('#&amp;page=[0-9]*#', '#&amp;spt=[0-9\-]*#');
 
@@ -214,14 +216,14 @@ if ($is_search_bbs) {
     $prev_spt = $spt - $config['cf_search_part'];
     if (isset($min_spt) && $prev_spt >= $min_spt) {
         $qstr1 = preg_replace($patterns, '', $qstr);
-        $prev_part_href = './board.php?bo_table='.$bo_table.$qstr1.'&amp;spt='.$prev_spt.'&amp;page=1';
+        $prev_part_href = get_pretty_url($bo_table,0,$qstr1.'&amp;spt='.$prev_spt.'&amp;page=1');
         $write_pages = page_insertbefore($write_pages, '<a href="'.$prev_part_href.'" class="pg_page pg_prev">이전검색</a>');
     }
 
     $next_spt = $spt + $config['cf_search_part'];
     if ($next_spt < 0) {
         $qstr1 = preg_replace($patterns, '', $qstr);
-        $next_part_href = './board.php?bo_table='.$bo_table.$qstr1.'&amp;spt='.$next_spt.'&amp;page=1';
+        $next_part_href = get_pretty_url($bo_table,0,$qstr1.'&amp;spt='.$next_spt.'&amp;page=1');
         $write_pages = page_insertafter($write_pages, '<a href="'.$next_part_href.'" class="pg_page pg_end">다음검색</a>');
     }
 }
@@ -229,7 +231,7 @@ if ($is_search_bbs) {
 
 $write_href = '';
 if ($member['mb_level'] >= $board['bo_write_level']) {
-    $write_href = './write.php?bo_table='.$bo_table;
+    $write_href = short_url_clean(G5_BBS_URL.'/write.php?bo_table='.$bo_table);
 }
 
 $nobr_begin = $nobr_end = "";
@@ -241,7 +243,7 @@ if (preg_match("/gecko|firefox/i", $_SERVER['HTTP_USER_AGENT'])) {
 // RSS 보기 사용에 체크가 되어 있어야 RSS 보기 가능 061106
 $rss_href = '';
 if ($board['bo_use_rss_view']) {
-    $rss_href = './rss.php?bo_table='.$bo_table;
+    $rss_href = G5_BBS_URL.'/rss.php?bo_table='.$bo_table;
 }
 
 $stx = get_text(stripslashes($stx));
