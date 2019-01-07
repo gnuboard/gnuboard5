@@ -6,6 +6,8 @@ auth_check($auth[$sub_menu], "r");
 if(!count($_POST['chk_fg_no']))
     alert('이모티콘을 이동할 그룹을 한개 이상 선택해 주십시오.', $url);
 
+$fo_no_list = preg_replace('/[^a-zA-Z0-9\, ]/', '', $fo_no_list);
+
 $sql = "select * from {$g5['sms5_form_table']} where fo_no in ($fo_no_list) order by fo_no desc ";
 $result = sql_query($sql);
 $save = array();

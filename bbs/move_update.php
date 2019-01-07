@@ -125,7 +125,7 @@ while ($row = sql_fetch_array($result))
                         // 제이프로님 코드제안 적용
                         $copy_file_name = ($bo_table !== $move_bo_table) ? $row3['bf_file'] : $row2['wr_id'].'_copy_'.$insert_id.'_'.$row3['bf_file'];
                         @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$copy_file_name);
-                        @chmod($dst_dir/$row3['bf_file'], G5_FILE_PERMISSION);
+                        @chmod($dst_dir.'/'.$row3['bf_file'], G5_FILE_PERMISSION);
                     }
 
                     $sql = " insert into {$g5['board_file_table']}
