@@ -98,6 +98,7 @@ $sql = " insert into {$g5['board_table']}
                 bo_use_email = '{$board['bo_use_email']}',
                 bo_use_cert = '{$board['bo_use_cert']}',
                 bo_use_sns = '{$board['bo_use_sns']}',
+                bo_use_captcha = '{$board['bo_use_captcha']}',
                 bo_sort_field = '{$board['bo_sort_field']}',
                 bo_1_subj = '".addslashes($board['bo_1_subj'])."',
                 bo_2_subj = '".addslashes($board['bo_2_subj'])."',
