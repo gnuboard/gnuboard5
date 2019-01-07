@@ -176,6 +176,10 @@ function check_order_inicis_tmps(){
             }
         }
 
+        if( $default['de_pg_service'] == 'lg' && function_exists('check_log_folder') ){
+            check_log_folder(G5_LGXPAY_PATH.'/lgdacom/log');
+        }
+
         set_cookie('admin_visit_time', G5_SERVER_TIME, 3600);   //1시간 간격으로 체크
     }
 }   //end function check_order_inicis_tmps
