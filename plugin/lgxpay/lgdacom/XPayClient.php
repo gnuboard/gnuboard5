@@ -604,6 +604,10 @@ class XPayClient
 
 	function Log($msg, $level=LGD_LOG_FATAL)
 	{
+        if( !(defined('LGD_LOG_SAVE') && LGD_LOG_SAVE) ){
+            return;
+        }
+
 		if ($level > $this->config["log_level"])
 			return;
 		$err_msg = date("Y-m-d H:i:s")." [".$this->err_label[$level]."] [".$this->TX_ID."] ".$msg."\n";
