@@ -1,5 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
+@include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 // 최신글 추출
 // $cache_time 캐시 갱신시간
@@ -67,7 +68,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
             $list[$i]['first_file_thumb'] = (isset($row['wr_file']) && $row['wr_file']) ? get_board_file_db($bo_table, $row['wr_id'], 'bf_file, bf_content', "and bf_type between '1' and '3'", true) : array('bf_file'=>'', 'bf_content'=>'');
             $list[$i]['bo_table'] = $bo_table;
             // 썸네일 추가
-            if($options) {
+            if($options && is_string($options)) {
                 $options_arr = explode(',', $options);
                 $thumb_width = $options_arr[0];
                 $thumb_height = $options_arr[1];
