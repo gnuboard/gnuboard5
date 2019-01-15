@@ -8,6 +8,10 @@ $colspan = 10;
 $st = isset($st) ? strip_tags($st) : '';
 $ssv = isset($ssv) ? strip_tags($ssv) : '';
 
+if( $st && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
+    $st = '';
+}
+
 auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = "문자전송 상세내역";

@@ -31,8 +31,8 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     <form name="fboardmoveall" method="post" action="./number_move_update.php" onsubmit="return fboardmoveall_submit(this);">
     <input type="hidden" name="sw" value="<?php echo $sw ?>">
-    <input type="hidden" name="bk_no_list" value="<?php echo $bk_no_list ?>">
-    <input type="hidden" name="act" value="<?php echo $act ?>">
+    <input type="hidden" name="bk_no_list" value="<?php echo get_sanitize_input($bk_no_list); ?>">
+    <input type="hidden" name="act" value="<?php echo get_sanitize_input($act); ?>">
     <input type="hidden" name="url" value="<?php echo clean_xss_tags(strip_tags($_SERVER['HTTP_REFERER'])); ?>">
     <div class=" new_win_con"> 
         <div class="tbl_head01 tbl_wrap">
