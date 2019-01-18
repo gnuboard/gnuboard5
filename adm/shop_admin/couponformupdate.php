@@ -76,6 +76,9 @@ if($w == '') {
             if($j > 20)
                 die('Coupon ID Error');
         }
+
+        $j++;
+
     } while(1);
 
     $sql = " INSERT INTO {$g5['g5_shop_coupon_table']}
