@@ -60,7 +60,7 @@ for ($i=0; $i<count($member_list['id']); $i++) {
     $recv_mb_nick = get_text($member_list['nick'][$i]);
 
     // 쪽지 INSERT
-    $sql = " insert into {$g5['memo_table']} ( me_id, me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo ) values ( '$me_id', '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}' ) ";
+    $sql = " insert into {$g5['memo_table']} ( me_id, me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime ) values ( '$me_id', '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00' ) ";
     sql_query($sql);
 
     // 실시간 쪽지 알림 기능
