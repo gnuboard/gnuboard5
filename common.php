@@ -122,6 +122,7 @@ $member = array();
 $board  = array();
 $group  = array();
 $g5     = array();
+$qaconfig = array();
 $g5_debug = array('php'=>array(),'sql'=>array());
 
 include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
