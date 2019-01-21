@@ -16,6 +16,10 @@ if ($st && trim($sv))
 else
     $sql_search = "";
 
+if( isset($st) && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
+    $st = '';
+}
+
 $total_res = sql_fetch("select count(*) as cnt from {$g5['sms5_history_table']} where 1 $sql_search");
 $total_count = $total_res['cnt'];
 

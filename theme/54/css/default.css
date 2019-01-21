@@ -107,17 +107,19 @@ border:1px solid #558ab7 !important;
 #gnb .gnb_wrap {margin:0 auto;position:relative;z-index:10}
 #gnb #gnb_1dul {font-size:1.083em;padding:0;border-bottom:1px solid #e0e2e5;zoom:1}
 #gnb ul:after {display:block;visibility:hidden;clear:both;content:""}
-#gnb .gnb_1dli {float:left;line-height:55px;padding:0 15px;position:relative}
+#gnb .gnb_1dli {float:left;line-height:55px;padding:0px;position:relative}
 #gnb .gnb_1dli:hover > a {color:#3a8afd;
 -webkit-transition:background-color 2s ease-out;
 -moz-transition:background-color 0.3s ease-out;
 -o-transition:background-color 0.3s ease-out;
 transition:background-color 0.3s ease-out}
 
-.gnb_1dli .bg {display:inline-block;width:10px;height:10px;overflow:hidden;background:url(../img/gnb_bg2.gif) no-repeat 50% 50%;text-indent:-999px}
-.gnb_1da {display:inline-block;font-weight:bold;color:#080808;text-decoration:none}
+.gnb_1dli .bg {position:absolute;top:24px;right:8px;display:inline-block;width:10px;height:10px;overflow:hidden;background:url('../img/gnb_bg2.gif') no-repeat 50% 50%;text-indent:-999px}
+.gnb_1da {display:block;font-weight:bold;padding:0 15px;color:#080808;text-decoration:none}
+.gnb_1dli.gnb_al_li_plus .gnb_1da{padding-right:25px}
 .gnb_2dli:first-child {border:0}
-.gnb_2dul {display:none;position:absolute;top:56px;min-width:140px;border:1px solid #e0e2e5;border-top:0;padding:0;
+.gnb_2dul {display:none;position:absolute;top:54px;min-width:140px;padding-top:2px}
+.gnb_2dul .gnb_2dul_box {border:1px solid #e0e2e5;border-top:0;padding:0;
 -webkit-box-shadow:0px 1px 5px rgba(97, 97, 97, 0.2);
 -moz-box-shadow:0px 1px 5px rgba(97, 97, 97, 0.2);
 box-shadow:0px 1px 5px rgba(97, 97, 97, 0.2)}
@@ -150,7 +152,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #gnb_all .gnb_al_li .gnb_al_a {font-size:1.2em;display:block;position:relative;margin-bottom:10px;font-weight:bold;color:#3a8afd}
 #gnb_all .gnb_al_li li {line-height:2em}
 #gnb_all .gnb_al_li li a {color:#555}
-#gnb_all_bg {display:none;background:#292929b8;width:100%;height:100%;position:fixed;left:0;top:0;z-index:999}
+#gnb_all_bg {display:none;background:rgba(0,0,0,0.1);width:100%;height:100%;position:fixed;left:0;top:0;z-index:999}
 
 /* 중간 레이아웃 */
 #wrapper {}
@@ -158,7 +160,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #container_wr {z-index:5;margin:0 auto;height:100%;zoom:1}
 #aside {float:right;width:235px;padding:0;height:100%;margin:20px 0 20px 20px}
 
-#container {/*background:pink;*/z-index:4;position:relative;float:left;min-height:500px;height:auto !important;margin:20px 0;height:500px;font-size:1em;width:930px;zoom:1}
+#container {z-index:4;position:relative;float:left;min-height:500px;height:auto !important;margin:20px 0;height:500px;font-size:1em;width:930px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 #container_title {font-size:1.333em;margin:0 auto;font-weight:bold}
 #container_title span {margin:0 auto 10px;display:block;line-height:30px}
@@ -280,7 +282,7 @@ a.btn_admin,.btn_admin {display:inline-block;color:#d13f4a;text-decoration:none;
 
 
 /* 기본테이블 */
-.tbl_wrap table {width:100%;border-collapse:collapse;border-spacing:0 5px;border-top:1px solid #ececec;border-bottom:1px solid #ececec} 
+.tbl_wrap table {width:100%;border-collapse:collapse;border-spacing:0 5px;background:#fff;border-top:1px solid #ececec;border-bottom:1px solid #ececec} 
 .tbl_wrap caption {padding:10px 0;font-weight:bold;text-align:left}
 .tbl_head01 {margin:0 0 10px}
 .tbl_head01 caption {padding:0;font-size:0;line-height:0;overflow:hidden}
@@ -288,7 +290,7 @@ a.btn_admin,.btn_admin {display:inline-block;color:#d13f4a;text-decoration:none;
 .tbl_head01 thead th input {vertical-align:top} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
 .tbl_head01 tfoot th, .tbl_head01 tfoot td {padding:10px 0;border-top:1px solid #c1d1d5;border-bottom:1px solid #c1d1d5;background:#d7e0e2;text-align:center}
 .tbl_head01 tbody th {padding:8px 0;border-bottom:1px solid #e8e8e8}
-.tbl_head01 td {color:#666;background:#fff;padding:10px 5px;border-top:1px solid #ecf0f1;line-height:1.4em;height:60px;word-break:break-all}
+.tbl_head01 td {color:#666;padding:10px 5px;border-top:1px solid #ecf0f1;border-bottom:1px solid #ecf0f1;line-height:1.4em;height:60px;word-break:break-all}
 .tbl_head01 tbody tr:hover td {background:#fafafa}
 .tbl_head01 a:hover {text-decoration:underline}
 

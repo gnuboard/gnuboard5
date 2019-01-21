@@ -68,7 +68,7 @@ history.back();
     <?php
     foreach($_POST as $key => $value) {
         
-        $key = clean_xss_tags($url);
+        $key = clean_xss_tags($key);
         $value = clean_xss_tags($value);
 
         if(strlen($value) < 1)
