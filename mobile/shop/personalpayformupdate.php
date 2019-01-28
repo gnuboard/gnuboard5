@@ -21,10 +21,19 @@ $pp = sql_fetch($sql);
 if(!$pp['pp_id'])
     alert('개인결제 정보가 존재하지 않습니다.', G5_SHOP_URL.'/personalpay.php');
 
-if($pp['pp_tno'])
-    alert('이미 결제하신 개인결제 내역입니다.', G5_SHOP_URL);
-
 $hash_data = md5($_POST['pp_id'].$_POST['good_mny'].$pp['pp_time']);
+
+if($pp['pp_tno']){
+    if( $default['de_pg_service'] == 'inicis' && ($_POST['pp_id'] === get_session('ss_personalpay_id') && $hash_data === get_session('ss_personalpay_hash')) ){
+        $uid = md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']);
+        set_session('ss_personalpay_uid', $uid);
+
+        goto_url(G5_SHOP_URL.'/personalpayresult.php?pp_id='.$pp['pp_id'].'&amp;uid='.$uid);
+    } else {
+        alert('이미 결제하신 개인결제 내역입니다.', G5_SHOP_URL);
+    }
+}
+
 if($_POST['pp_id'] != get_session('ss_personalpay_id') || $hash_data != get_session('ss_personalpay_hash'))
     die('개인결제 정보가 올바르지 않습니다.');
 

@@ -49,12 +49,11 @@ if(isset($data['pp_id']) && $data['pp_id']) {   //개인결제
         if( in_array($key, array('pp_name', 'pp_email', 'pp_hp', 'pp_settle_case')) ){
 
             $var_datas[$key] = $value;
-
+            
+            $$key = $value;
         }
 
     }
-
-    @extract($var_datas);
 
     include_once(G5_SHOP_PATH.'/personalpayformupdate.php');
 
@@ -65,12 +64,11 @@ if(isset($data['pp_id']) && $data['pp_id']) {   //개인결제
         if( in_array($key, array('od_price', 'od_name', 'od_tel', 'od_hp', 'od_email', 'od_memo', 'od_settle_case', 'max_temp_point', 'od_temp_point', 'od_bank_account', 'od_deposit_name', 'od_test', 'od_ip', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon', 'od_b_zip', 'od_send_cost', 'od_send_cost2', 'od_hope_date')) ){
 
             $var_datas[$key] = $value;
-
+            
+            $$key = $value;
         }
 
     }
-
-    @extract($var_datas);
 
     $od_send_cost = (int) $_POST['od_send_cost'];
     $od_send_cost2 = (int) $_POST['od_send_cost2'];

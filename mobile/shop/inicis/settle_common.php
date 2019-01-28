@@ -53,6 +53,13 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
     $P_AUTH_NO  = $_POST['P_AUTH_NO'];
     $P_SRC_CODE = $_POST['P_SRC_CODE'];
 
+    include_once(G5_MSHOP_PATH.'/settle_inicis.inc.php');
+    
+    if(! ($default['de_pg_service'] === 'inicis' && $default['de_inicis_mid'] === $P_MID)){
+        echo "FAIL";
+        return;
+    }
+
     // 결과 incis log 테이블 기록
     if($P_TYPE == 'BANK' || $P_SRC_CODE == 'A') {
 
@@ -88,8 +95,6 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
         if( !$exist_order['cnt'] ){
             //주문정보를 insert 합니다.
             
-            include_once(G5_MSHOP_PATH.'/settle_inicis.inc.php');
-            
             $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = $P_OID ";
             $od = sql_fetch($sql);
             $data = unserialize(base64_decode($od['dt_data']));
@@ -117,8 +122,6 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
                         }
                     }
 
-                    extract($params);
-
                     $good_mny = $P_AMT;
                     $pp_name = clean_xss_tags($data['pp_name']);
                     $pp_email = clean_xss_tags($data['pp_email']);
@@ -144,7 +147,7 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
                     if( !$order_id ){
                         echo "FAIL";
                     } else {
-                        $sql = " delete from {$g5['g5_shop_inicis_log_table']} where (oid = '$P_OID' and P_TID = '$P_TID') OR substr(P_AUTH_DT, 1, 8) < '".date('Ymd', strtotime('-3 month', G5_SERVER_TIME))."' ";
+                        $sql = " delete from {$g5['g5_shop_inicis_log_table']} where (oid = '$P_OID' and P_TID = '$P_TID') OR substr(P_AUTH_DT, 1, 8) < '".date('Ymd', strtotime('-1 month', G5_SERVER_TIME))."' ";
                         sql_query( $sql , false);
                     }
                 }
@@ -211,8 +214,16 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
                     $_POST['P_VACT_BANK'] = $params['P_VACT_BANK'] = $PAY['P_FN_NM'];
                     $_POST['P_AUTH_NO'] = $params['P_AUTH_NO'] = $PAY['P_AUTH_NO'];
 
-                    extract($params);
+                    $check_keys = array('od_name', 'od_tel', 'od_pwd', 'od_hp', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon', 'od_email', 'ad_default', 'ad_subject', 'od_hope_date', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon', 'od_memo', 'od_settle_case', 'max_temp_point', 'od_temp_point', 'od_send_cost', 'od_send_cost2', 'od_bank_account', 'od_deposit_name', 'od_test', 'od_ip');
                     
+                    foreach($check_keys as $key){
+                        $$key = isset($params[$key]) ? $params[$key] : '';
+                    }
+                    
+                    $od_send_cost = (int) $od_send_cost;
+                    $od_send_cost2 = (int) $od_send_cost2;
+                    $ad_default = (int) $ad_default;
+
                     if( $od['mb_id'] ){
                         $is_member = true;
                         $member = get_member($od['mb_id']);
@@ -224,7 +235,7 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
                     if( !$order_id ){
                         echo "FAIL";
                     } else {
-                        $sql = " delete from {$g5['g5_shop_inicis_log_table']} where (oid = '$P_OID' and P_TID = '$P_TID') OR substr(P_AUTH_DT, 1, 8) < '".date('Ymd', strtotime('-3 month', G5_SERVER_TIME))."' ";
+                        $sql = " delete from {$g5['g5_shop_inicis_log_table']} where (oid = '$P_OID' and P_TID = '$P_TID') OR substr(P_AUTH_DT, 1, 8) < '".date('Ymd', strtotime('-1 month', G5_SERVER_TIME))."' ";
                         sql_query( $sql , false);
                     }
                 }

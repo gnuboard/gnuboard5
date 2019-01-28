@@ -278,6 +278,16 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 <?php if($od['od_test']) { ?>
 <div class="od_test_caution">주의) 이 주문은 테스트용으로 실제 결제가 이루어지지 않았으므로 절대 배송하시면 안됩니다.</div>
 <?php } ?>
+<?php if($od['od_pg'] === 'inicis' && !$od['od_test']) {
+    $sql = "select P_TID from {$g5['g5_shop_inicis_log_table']} where oid = '$od_id' and P_STATUS = 'cancel' ";
+    $tmp_row = sql_fetch($sql);
+    if($tmp_row['P_TID']){
+?>
+<div class="od_test_caution">주의) 이 주문은 결제취소된 내역이 있습니다. 이니시스 관리자 상점에서 반드시 재확인을 해 주세요.</div>
+<?php 
+    }   //end if
+}   //end if
+?>
 
 <section id="anc_sodr_pay">
     <h2 class="h2_frm">주문결제 내역</h2>
