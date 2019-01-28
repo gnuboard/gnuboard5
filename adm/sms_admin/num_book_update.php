@@ -12,6 +12,9 @@ $is_hp_exist = false;
 
 $bk_hp = get_hp($bk_hp);
 
+$bk_memo = strip_tags($bk_memo);
+$bk_name = strip_tags($bk_name);
+
 if ($w=='u') // 업데이트
 {
     if (!$bg_no) $bg_no = 0;
@@ -20,8 +23,6 @@ if ($w=='u') // 업데이트
 
     if (!strlen(trim($bk_name)))
         alert('이름을 입력해주세요');
-
-    $bk_name = strip_tags($bk_name);
 
     if ($bk_hp == '')
         alert('휴대폰번호만 입력 가능합니다.');
@@ -48,7 +49,7 @@ if ($w=='u') // 업데이트
             sql_query("update {$g5['sms5_book_group_table']} set bg_receipt = bg_receipt - 1, bg_reject = bg_reject + 1 where bg_no='$bg_no'");
     }
 
-    sql_query("update {$g5['sms5_book_table']} set bg_no='$bg_no', bk_name='$bk_name', bk_hp='$bk_hp', bk_receipt='$bk_receipt', bk_datetime='".G5_TIME_YMDHIS."', bk_memo='".addslashes($bk_memo)."' where bk_no='$bk_no'");
+    sql_query("update {$g5['sms5_book_table']} set bg_no='$bg_no', bk_name='".addslashes($bk_name)."', bk_hp='$bk_hp', bk_receipt='$bk_receipt', bk_datetime='".G5_TIME_YMDHIS."', bk_memo='".addslashes($bk_memo)."' where bk_no='$bk_no'");
     if ($res['mb_id']){ //만약에 mb_id가 있다면...
         // 휴대폰번호 중복체크
         $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$res['mb_id']}' and mb_hp = '{$bk_hp}' ";
