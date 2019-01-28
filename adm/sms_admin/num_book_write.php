@@ -121,7 +121,7 @@ include_once(G5_ADMIN_PATH."/admin.head.php");
     <tr>
         <th scope="row"><label for="bk_memo">메모</label></th>
         <td>
-            <textarea name="bk_memo" id="bk_memo"><?php echo $write['bk_memo']?></textarea>
+            <textarea name="bk_memo" id="bk_memo"><?php echo html_purifier($write['bk_memo']); ?></textarea>
         </td>
     </tr>
     </tbody>

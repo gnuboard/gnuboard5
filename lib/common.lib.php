@@ -288,6 +288,7 @@ function get_file($bo_table, $wr_id)
     while ($row = sql_fetch_array($result))
     {
         $no = $row['bf_no'];
+        $bf_content = $row['bf_content'] ? html_purifier($row['bf_content']) : '';
         $file[$no]['href'] = G5_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
         $file[$no]['download'] = $row['bf_download'];
         // 4.00.11 - 파일 path 추가
@@ -295,8 +296,8 @@ function get_file($bo_table, $wr_id)
         $file[$no]['size'] = get_filesize($row['bf_filesize']);
         $file[$no]['datetime'] = $row['bf_datetime'];
         $file[$no]['source'] = addslashes($row['bf_source']);
-        $file[$no]['bf_content'] = $row['bf_content'];
-        $file[$no]['content'] = get_text($row['bf_content']);
+        $file[$no]['bf_content'] = $bf_content;
+        $file[$no]['content'] = get_text($bf_content);
         //$file[$no]['view'] = view_file_link($row['bf_file'], $file[$no]['content']);
         $file[$no]['view'] = view_file_link($row['bf_file'], $row['bf_width'], $row['bf_height'], $file[$no]['content']);
         $file[$no]['file'] = $row['bf_file'];
