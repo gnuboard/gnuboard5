@@ -20,7 +20,7 @@ if ($stx != "") {
 
 $sql_common = " from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
-    $sql_common .= " $where ca_mb_id = '{$member['mb_id']}' ";
+    $sql_search .= " $where ca_mb_id = '{$member['mb_id']}' ";
 $sql_common .= $sql_search;
 
 
