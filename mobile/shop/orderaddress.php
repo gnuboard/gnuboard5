@@ -36,7 +36,7 @@ include_once(G5_PATH.'/head.sub.php');
                     <input type="text" name="ad_subject[<?php echo $i; ?>]" value="<?php echo $row['ad_subject']; ?>" class="ad_subject" maxlength="20">
                 </div>
                 <div class="addr_info">
-                    <div class="addr_name"><?php echo $row['ad_name']; ?></div>
+                    <div class="addr_name"><?php echo get_text($row['ad_name']); ?></div>
                     <div class="addr_addr"><?php echo print_address($row['ad_addr1'], $row['ad_addr2'], $row['ad_addr3'], $row['ad_jibeon']); ?></div>
                     <div class="addr_tel"><i class="fa fa-phone" aria-hidden="true"></i> <?php echo $row['ad_tel']; ?> / <i class="fa fa-mobile" aria-hidden="true"></i> <?php echo $row['ad_hp']; ?></div>
                 </div>
