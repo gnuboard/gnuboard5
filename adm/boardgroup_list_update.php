@@ -18,16 +18,16 @@ if(!$count)
 for ($i=0; $i<$count; $i++)
 {
     $k     = $_POST['chk'][$i];
-    $gr_id = $_POST['group_id'][$k];
-    $gr_subject = strip_tags($_POST['gr_subject'][$k]);
+    $gr_id = preg_replace('/[^a-z0-9_]/i', '', $_POST['group_id'][$k]);
+    $gr_subject = sql_real_escape_string(strip_tags($_POST['gr_subject'][$k]));
 
     if($_POST['act_button'] == '선택수정') {
         $sql = " update {$g5['group_table']}
                     set gr_subject    = '{$gr_subject}',
-                        gr_device     = '{$_POST['gr_device'][$k]}',
-                        gr_admin      = '{$_POST['gr_admin'][$k]}',
-                        gr_use_access = '{$_POST['gr_use_access'][$k]}',
-                        gr_order      = '{$_POST['gr_order'][$k]}'
+                        gr_device     = '".sql_real_escape_string($_POST['gr_device'][$k])."',
+                        gr_admin      = '".sql_real_escape_string($_POST['gr_admin'][$k])."',
+                        gr_use_access = '".sql_real_escape_string($_POST['gr_use_access'][$k])."',
+                        gr_order      = '".sql_real_escape_string($_POST['gr_order'][$k])."'
                   where gr_id         = '{$gr_id}' ";
         if ($is_admin != 'super')
             $sql .= " and gr_admin    = '{$_POST['gr_admin'][$k]}' ";
