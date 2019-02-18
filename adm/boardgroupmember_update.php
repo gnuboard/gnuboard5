@@ -48,7 +48,7 @@ else if ($w == 'd' || $w == 'ld')
     check_admin_token();
 
     for($i=0; $i<$count; $i++) {
-        $gm_id = $_POST['chk'][$i];
+        $gm_id = (int) $_POST['chk'][$i];
         $sql = " select * from {$g5['group_member_table']} where gm_id = '$gm_id' ";
         $gm = sql_fetch($sql);
         if (!$gm['gm_id']) {

@@ -53,8 +53,8 @@ $comment_reply = substr($write['wr_comment_reply'], 0, $len);
 $sql = " select count(*) as cnt from {$write_table}
             where wr_comment_reply like '{$comment_reply}%'
             and wr_id <> '{$comment_id}'
-            and wr_parent = '{$write[wr_parent]}'
-            and wr_comment = '{$write[wr_comment]}'
+            and wr_parent = '{$write['wr_parent']}'
+            and wr_comment = '{$write['wr_comment']}'
             and wr_is_comment = 1 ";
 $row = sql_fetch($sql);
 if ($row['cnt'] && !$is_admin)
