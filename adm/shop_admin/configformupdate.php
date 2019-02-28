@@ -33,6 +33,44 @@ if($_POST['de_pg_service'] == 'kcp' && !$_POST['de_card_test'] && ($_POST['de_ic
         alert('NHN KCP SITE KEY를 입력해 주십시오.');
 }
 
+$de_shop_skin = isset($_POST['de_shop_skin']) ? preg_replace('/(\.\.\/|\.\/|\.\.\\\|\.\\\)/', '', $_POST['de_shop_skin']) : 'basic';
+$de_shop_mobile_skin = isset($_POST['de_shop_mobile_skin']) ? preg_replace('/(\.\.\/|\.\/|\.\.\\\|\.\\\)/', '', $_POST['de_shop_mobile_skin']) : 'basic';
+
+$skins = get_skin_dir('shop');
+
+if(defined('G5_THEME_PATH') && $config['cf_theme']) {
+    $dirs = get_skin_dir('shop', G5_THEME_PATH.'/'.G5_SKIN_DIR);
+    if(!empty($dirs)) {
+        foreach($dirs as $dir) {
+            $skins[] = 'theme/'.$dir;
+        }
+    }
+}
+
+$mobile_skins = get_skin_dir('shop', G5_MOBILE_PATH.'/'.G5_SKIN_DIR);
+
+if(defined('G5_THEME_PATH') && $config['cf_theme']) {
+    $dirs = get_skin_dir('shop', G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR);
+    if(!empty($dirs)) {
+        foreach($dirs as $dir) {
+            $mobile_skins[] = 'theme/'.$dir;
+        }
+    }
+}
+
+$de_shop_skin = in_array($de_shop_skin, $skins) ? $de_shop_skin : 'basic';
+$de_shop_mobile_skin = in_array($de_shop_mobile_skin, $mobile_skins) ? $de_shop_mobile_skin : 'basic';
+
+$check_skin_keys = array('de_type1_list_skin', 'de_type2_list_skin', 'de_type3_list_skin', 'de_type4_list_skin', 'de_type5_list_skin', 'de_mobile_type1_list_skin', 'de_mobile_type2_list_skin', 'de_mobile_type3_list_skin', 'de_mobile_type4_list_skin', 'de_mobile_type5_list_skin', 'de_rel_list_skin', 'de_mobile_rel_list_skin', 'de_search_list_skin', 'de_mobile_search_list_skin', 'de_listtype_list_skin', 'de_mobile_listtype_list_skin');
+
+foreach($check_skin_keys as $key){
+    $skin_file = isset($_POST[$key]) ? $_POST[$key] : '';
+
+    if( $skin_file && ! preg_match('/^.*\.(php|htm|html)$/i', $skin_file) ){
+        alert('스킨 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
+    }
+}
+
 //
 // 영카트 default
 //
@@ -47,8 +85,8 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_admin_company_addr         = '{$_POST['de_admin_company_addr']}',
                 de_admin_info_name            = '{$_POST['de_admin_info_name']}',
                 de_admin_info_email           = '{$_POST['de_admin_info_email']}',
-                de_shop_skin                  = '{$_POST['de_shop_skin']}',
-                de_shop_mobile_skin           = '{$_POST['de_shop_mobile_skin']}',
+                de_shop_skin                  = '{$de_shop_skin}',
+                de_shop_mobile_skin           = '{$de_shop_mobile_skin}',
                 de_type1_list_use             = '{$_POST['de_type1_list_use']}',
                 de_type1_list_skin            = '{$_POST['de_type1_list_skin']}',
                 de_type1_list_mod             = '{$_POST['de_type1_list_mod']}',
