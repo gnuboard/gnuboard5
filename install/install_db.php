@@ -391,7 +391,7 @@ if($g5_shop_install) {
                     de_mobile_type3_img_height = '$mmimg_height',
                     de_mobile_type4_list_use = '1',
                     de_mobile_type4_list_skin = 'main.10.skin.php',
-                    de_mobile_type4_list_mod = '22',
+                    de_mobile_type4_list_mod = '2',
                     de_mobile_type4_list_row = '2',
                     de_mobile_type4_img_width = '$simg_width',
                     de_mobile_type4_img_height = '$simg_height',
