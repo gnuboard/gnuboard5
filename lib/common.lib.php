@@ -2982,6 +2982,9 @@ function member_delete($mb_id)
 
     // 아이콘 삭제
     @unlink(G5_DATA_PATH.'/member/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
+
+    // 프로필 이미지 삭제
+    @unlink(G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
 }
 
 // 이메일 주소 추출
