@@ -18,6 +18,10 @@ check_admin_token();
 // input vars 체크
 check_input_vars();
 
+$ca_id = isset($ca_id) ? preg_replace('/[^0-9a-z]/i', '', $ca_id) : '';
+$ca_id2 = isset($ca_id2) ? preg_replace('/[^0-9a-z]/i', '', $ca_id2) : '';
+$ca_id3 = isset($ca_id3) ? preg_replace('/[^0-9a-z]/i', '', $ca_id3) : '';
+
 // 파일정보
 if($w == "u") {
     $sql = " select it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
