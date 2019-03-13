@@ -16,8 +16,9 @@ for ($i=0; $i<$count; $i++)
 {
     // 실제 번호를 넘김
     $k = $_POST['chk'][$i];
+    $ccz_id = (int) $_POST['cz_id'][$k];
 
-    $sql = " delete from {$g5['g5_shop_coupon_zone_table']} where cz_id = '{$_POST['cz_id'][$k]}' ";
+    $sql = " delete from {$g5['g5_shop_coupon_zone_table']} where cz_id = '{$ccz_id}' ";
     sql_query($sql);
 }
 

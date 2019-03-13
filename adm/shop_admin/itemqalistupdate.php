@@ -17,8 +17,9 @@ if ($_POST['act_button'] == "선택삭제") {
     for ($i=0; $i<count($_POST['chk']); $i++) {
         // 실제 번호를 넘김
         $k = $_POST['chk'][$i];
+        $iiq_id = (int) $_POST['iq_id'][$k];
 
-        $sql = "delete from {$g5['g5_shop_item_qa_table']} where iq_id = '{$_POST['iq_id'][$k]}' ";
+        $sql = "delete from {$g5['g5_shop_item_qa_table']} where iq_id = '{$iiq_id}' ";
         sql_query($sql);
     }
 }

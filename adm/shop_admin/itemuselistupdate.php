@@ -21,23 +21,29 @@ if ($_POST['act_button'] == "선택수정") {
 for ($i=0; $i<count($_POST['chk']); $i++)
 {
     $k = $_POST['chk'][$i]; // 실제 번호를 넘김
+    $iit_id = isset($_POST['it_id'][$k]) ? preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$k]) : '';
+    $iis_id = isset($_POST['is_id'][$k]) ? (int) $_POST['is_id'][$k] : 0;
+    $iis_score = isset($_POST['is_score'][$k]) ? (int) $_POST['is_score'][$k] : 0;
+    $iis_confirm = isset($_POST['is_confirm'][$k]) ? (int) $_POST['is_confirm'][$k] : 0;
 
     if ($_POST['act_button'] == "선택수정")
     {
         $sql = "update {$g5['g5_shop_item_use_table']}
-                   set is_score   = '{$_POST['is_score'][$k]}',
-                       is_confirm = '{$_POST['is_confirm'][$k]}'
-                 where is_id      = '{$_POST['is_id'][$k]}' ";
+                   set is_score   = '{$iis_score}',
+                       is_confirm = '{$iis_confirm}'
+                 where is_id      = '{$iis_id}' ";
         sql_query($sql);
     }
     else if ($_POST['act_button'] == "선택삭제")
     {
-        $sql = "delete from {$g5['g5_shop_item_use_table']} where is_id = '{$_POST['is_id'][$k]}' ";
+        $sql = "delete from {$g5['g5_shop_item_use_table']} where is_id = '{$iis_id}' ";
         sql_query($sql);
     }
-
-    update_use_cnt($_POST['it_id'][$k]);
-    update_use_avg($_POST['it_id'][$k]);
+    
+    if($iit_id){
+        update_use_cnt($iit_id);
+        update_use_avg($iit_id);
+    }
 }
 
 goto_url("./itemuselist.php?sca=$sca&amp;sst=$sst&amp;sod=$sod&amp;sfl=$sfl&amp;stx=$stx&amp;page=$page");

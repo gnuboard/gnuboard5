@@ -12,12 +12,12 @@ check_admin_token();
 for ($i=0; $i<count($_POST['it_id']); $i++)
 {
     $sql = "update {$g5['g5_shop_item_option_table']}
-               set io_stock_qty    = '{$_POST['io_stock_qty'][$i]}',
-                   io_noti_qty     = '{$_POST['io_noti_qty'][$i]}',
-                   io_use = '{$_POST['io_use'][$i]}'
-             where it_id = '{$_POST['it_id'][$i]}'
-               and io_id = '{$_POST['io_id'][$i]}'
-               and io_type = '{$_POST['io_type'][$i]}' ";
+               set io_stock_qty    = '".sql_real_escape_string($_POST['io_stock_qty'][$i])."',
+                   io_noti_qty     = '".sql_real_escape_string($_POST['io_noti_qty'][$i])."',
+                   io_use = '".sql_real_escape_string($_POST['io_use'][$i])."'
+             where it_id = '".sql_real_escape_string($_POST['it_id'][$i])."'
+               and io_id = '".sql_real_escape_string($_POST['io_id'][$i])."'
+               and io_type = '".sql_real_escape_string($_POST['io_type'][$i])."' ";
     sql_query($sql);
 }
 
