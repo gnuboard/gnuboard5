@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$ev_id = (int) $ev_id;
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/event.php');
     return;
