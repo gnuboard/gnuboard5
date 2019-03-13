@@ -33,8 +33,8 @@ if($_POST['de_pg_service'] == 'kcp' && !$_POST['de_card_test'] && ($_POST['de_ic
         alert('NHN KCP SITE KEY를 입력해 주십시오.');
 }
 
-$de_shop_skin = isset($_POST['de_shop_skin']) ? preg_replace('/(\.\.\/|\.\/|\.\.\\\|\.\\\)/', '', $_POST['de_shop_skin']) : 'basic';
-$de_shop_mobile_skin = isset($_POST['de_shop_mobile_skin']) ? preg_replace('/(\.\.\/|\.\/|\.\.\\\|\.\\\)/', '', $_POST['de_shop_mobile_skin']) : 'basic';
+$de_shop_skin = isset($_POST['de_shop_skin']) ? preg_replace('#\.+(\/|\\\)#', '', $_POST['de_shop_skin']) : 'basic';
+$de_shop_mobile_skin = isset($_POST['de_shop_mobile_skin']) ? preg_replace('#\.+(\/|\\\)#', '', $_POST['de_shop_mobile_skin']) : 'basic';
 
 $skins = get_skin_dir('shop');
 
@@ -64,11 +64,7 @@ $de_shop_mobile_skin = in_array($de_shop_mobile_skin, $mobile_skins) ? $de_shop_
 $check_skin_keys = array('de_type1_list_skin', 'de_type2_list_skin', 'de_type3_list_skin', 'de_type4_list_skin', 'de_type5_list_skin', 'de_mobile_type1_list_skin', 'de_mobile_type2_list_skin', 'de_mobile_type3_list_skin', 'de_mobile_type4_list_skin', 'de_mobile_type5_list_skin', 'de_rel_list_skin', 'de_mobile_rel_list_skin', 'de_search_list_skin', 'de_mobile_search_list_skin', 'de_listtype_list_skin', 'de_mobile_listtype_list_skin');
 
 foreach($check_skin_keys as $key){
-    $skin_file = isset($_POST[$key]) ? $_POST[$key] : '';
-
-    if( $skin_file && ! preg_match('/^.*\.(php|htm|html)$/i', $skin_file) ){
-        alert('스킨 파일 경로의 확장자는 php, htm, html 만 허용합니다.');
-    }
+    $$key = $_POST[$key] = isset($_POST[$key]) ? preg_replace('#\.+(\/|\\\)#', '', $_POST[$key]) : '';
 }
 
 //
