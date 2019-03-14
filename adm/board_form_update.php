@@ -9,7 +9,10 @@ auth_check($auth[$sub_menu], 'w');
 
 check_admin_token();
 
-if (!$_POST['gr_id']) { alert('그룹 ID는 반드시 선택하세요.'); }
+$gr_id = isset($_POST['gr_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['gr_id']) : '';
+$bo_admin = isset($_POST['bo_admin']) ? preg_replace('/[^a-z0-9_\, \|\#]/i', '', $_POST['bo_admin']) : '';
+
+if (!$gr_id) { alert('그룹 ID는 반드시 선택하세요.'); }
 if (!$bo_table) { alert('게시판 TABLE명은 반드시 입력하세요.'); }
 if (!preg_match("/^([A-Za-z0-9_]{1,20})$/", $bo_table)) { alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)'); }
 if (!$_POST['bo_subject']) { alert('게시판 제목을 입력하세요.'); }
@@ -75,11 +78,11 @@ $str_bo_category_list = isset($_POST['bo_category_list']) ? preg_replace("/[\<\>
 $_POST['bo_subject'] = strip_tags($_POST['bo_subject']);
 $_POST['bo_mobile_subject'] = strip_tags($_POST['bo_mobile_subject']);
 
-$sql_common = " gr_id               = '{$_POST['gr_id']}',
+$sql_common = " gr_id               = '{$gr_id}',
                 bo_subject          = '{$_POST['bo_subject']}',
                 bo_mobile_subject   = '{$_POST['bo_mobile_subject']}',
                 bo_device           = '{$_POST['bo_device']}',
-                bo_admin            = '{$_POST['bo_admin']}',
+                bo_admin            = '{$bo_admin}',
                 bo_list_level       = '{$_POST['bo_list_level']}',
                 bo_read_level       = '{$_POST['bo_read_level']}',
                 bo_write_level      = '{$_POST['bo_write_level']}',

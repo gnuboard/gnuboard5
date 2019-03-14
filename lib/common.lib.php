@@ -3074,6 +3074,9 @@ function member_delete($mb_id)
 
     // 아이콘 삭제
     @unlink(G5_DATA_PATH.'/member/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
+
+    // 프로필 이미지 삭제
+    @unlink(G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
 }
 
 // 이메일 주소 추출
@@ -3630,7 +3633,7 @@ function get_call_func_cache($func, $args=array()){
     return $result;
 }
 
-// include 하는 경로에 data file 경로가 포함되어 있는지 체크합니다.
+// include 하는 경로에 data file 경로나 안전하지 않은 경로가 있는지 체크합니다.
 function is_include_path_check($path='', $is_input='')
 {
     if( $path ){
@@ -3639,6 +3642,14 @@ function is_include_path_check($path='', $is_input='')
             // 보안 목적 : rar wrapper 차단
 
             if( stripos($path, 'rar:') !== false || stripos($path, 'php:') !== false || stripos($path, 'zlib:') !== false || stripos($path, 'bzip2:') !== false || stripos($path, 'zip:') !== false || stripos($path, 'data:') !== false || stripos($path, 'phar:') !== false ){
+                return false;
+            }
+            
+            $replace_path = str_replace('\\', '/', $path);
+            $slash_count = substr_count(str_replace('\\', '/', $_SERVER['SCRIPT_NAME']), '/');
+            $peer_count = substr_count($replace_path, '../');
+
+            if ( $peer_count && $peer_count > $slash_count ){
                 return false;
             }
 
@@ -3678,7 +3689,10 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
 
-            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', str_replace('\\', '/', $path)) ){
+            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) ){
+                return false;
+            }
+            if( preg_match('/\.\.\//i', $replace_path) && preg_match('/plugin\//i', $replace_path) && preg_match('/okname\//i', $replace_path) ){
                 return false;
             }
         }
