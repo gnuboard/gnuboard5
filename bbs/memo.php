@@ -20,7 +20,7 @@ else
 
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 
-start_event('memo_list', $kind, $unkind, $page);
+run_event('memo_list', $kind, $unkind, $page);
 
 $sql = " select count(*) as cnt from {$g5['memo_table']} where me_{$kind}_mb_id = '{$member['mb_id']}' and me_type = '$kind' ";
 $row = sql_fetch($sql);

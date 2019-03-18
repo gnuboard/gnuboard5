@@ -341,7 +341,7 @@ delete_cache_latest($bo_table);
 
 $redirect_url = short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr['wr_parent'].'&amp;'.$qstr.'&amp;#c_'.$comment_id);
 
-start_event('comment_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+run_event('comment_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
 goto_url($redirect_url);
 ?>

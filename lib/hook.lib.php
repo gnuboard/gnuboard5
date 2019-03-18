@@ -28,14 +28,14 @@ function get_hook_class(){
     return null;
 }
 
-function put_event($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
+function add_event($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
 
     if( $hook = get_hook_class() ){
         $hook->addAction($tag, $func, $priority, $args);
     }
 }
 
-function start_event($tag, $arg = ''){
+function run_event($tag, $arg = ''){
 
     if( $hook = get_hook_class() ){
 
@@ -65,7 +65,7 @@ function start_event($tag, $arg = ''){
     }
 }
 
-function put_replace($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
+function add_replace($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
 
     if( $hook = get_hook_class() ){
         return $hook->addFilter($tag, $func, $priority, $args);
@@ -74,7 +74,7 @@ function put_replace($tag, $func, $priority=G5_HOOK_DEFAULT_PRIORITY, $args=0){
     return null;
 }
 
-function apply_replace($tag, $arg = ''){
+function run_replace($tag, $arg = ''){
 
     if( $hook = get_hook_class() ){
 

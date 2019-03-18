@@ -155,7 +155,7 @@ function alert($msg='', $url='', $error=true, $post=false)
     global $g5, $config, $member;
     global $is_admin;
     
-    start_event('alert', $msg, $url, $error, $post);
+    run_event('alert', $msg, $url, $error, $post);
 
     $msg = $msg ? strip_tags($msg, '<br>') : '올바른 방법으로 이용해 주십시오.';
 
@@ -173,7 +173,7 @@ function alert_close($msg, $error=true)
 {
     global $g5;
     
-    start_event('alert_close', $msg, $error);
+    run_event('alert_close', $msg, $error);
 
     $msg = strip_tags($msg, '<br>');
 
@@ -251,7 +251,7 @@ function url_auto_link($str)
     $str = preg_replace("/\t_gt_\t/", "&gt;", $str);
     */
 
-    return apply_replace('url_auto_link', $str);
+    return run_replace('url_auto_link', $str);
 }
 
 
@@ -741,7 +741,7 @@ function get_group($gr_id, $is_cache=false)
 
     $sql = " select * from {$g5['group_table']} where gr_id = '$gr_id' ";
 
-    $cache[$key] = apply_replace('get_group', sql_fetch($sql), $gr_id, $is_cache);
+    $cache[$key] = run_replace('get_group', sql_fetch($sql), $gr_id, $is_cache);
 
     return $cache[$key];
 }
@@ -764,7 +764,7 @@ function get_member($mb_id, $fields='*', $is_cache=false)
 
     $sql = " select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ";
 
-    $cache[$mb_id][$key] = apply_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
+    $cache[$mb_id][$key] = run_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
 
     return $cache[$mb_id][$key];
 }
@@ -857,7 +857,7 @@ function is_admin($mb_id)
         $is_authority = 'board';
     }
 
-    return apply_replace('is_admin', $is_authority, $mb_id);
+    return run_replace('is_admin', $is_authority, $mb_id);
 }
 
 
@@ -2543,7 +2543,7 @@ class html_process {
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $links);
             
-            $links = apply_replace('html_process_css_files', $links);
+            $links = run_replace('html_process_css_files', $links);
 
             foreach($links as $link) {
                 if(!trim($link[1]))
@@ -2571,7 +2571,7 @@ class html_process {
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $scripts);
             
-            $scripts = apply_replace('html_process_script_files', $scripts);
+            $scripts = run_replace('html_process_script_files', $scripts);
 
             foreach($scripts as $js) {
                 if(!trim($js[1]))
@@ -2789,7 +2789,7 @@ function get_qa_config($fld='*')
     }
 
     $sql = " select * from {$g5['qa_config_table']} ";
-    $cache = apply_replace('get_qa_config', sql_fetch($sql));
+    $cache = run_replace('get_qa_config', sql_fetch($sql));
 
     return $cache;
 }

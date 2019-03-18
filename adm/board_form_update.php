@@ -446,7 +446,7 @@ delete_cache_latest($bo_table);
 if(function_exists('get_admin_captcha_by'))
     get_admin_captcha_by('remove');
 
-start_event('admin_board_form_update', $bo_table, $w);
+run_event('admin_board_form_update', $bo_table, $w);
 
 goto_url("./board_form.php?w=u&bo_table={$bo_table}&amp;{$qstr}");
 ?>

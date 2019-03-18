@@ -1,8 +1,8 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-put_event('member_login_check', 'g54_userlogin_after', 10, 2);
-put_event('memo_list', 'g54_user_memo_insert', 10, 3);
+add_event('member_login_check', 'g54_userlogin_after', 10, 2);
+add_event('memo_list', 'g54_user_memo_insert', 10, 3);
 
 // 5.3 버전에서 
 function g54_userlogin_after($mb, $link){

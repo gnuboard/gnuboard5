@@ -6,14 +6,14 @@ function get_config($is_cache=false){
 
     static $cache = array();
 
-    $cache = apply_replace('get_config_cache', $cache, $is_cache);
+    $cache = run_replace('get_config_cache', $cache, $is_cache);
 
     if( $is_cache && !empty($cache) ){
         return $cache;
     }
 
     $sql = " select * from {$g5['config_table']} ";
-    $cache = apply_replace('get_config', sql_fetch($sql));
+    $cache = run_replace('get_config', sql_fetch($sql));
 
     return $cache;
 }
@@ -68,7 +68,7 @@ function get_board_db($bo_table, $is_cache=false){
 
     static $cache = array();
 
-    $cache = apply_replace('get_board_db_cache', $cache, $bo_table, $is_cache);
+    $cache = run_replace('get_board_db_cache', $cache, $bo_table, $is_cache);
 
     $key = md5($bo_table);
 
@@ -77,7 +77,7 @@ function get_board_db($bo_table, $is_cache=false){
         return $cache[$key];
     }
 
-    if( !($cache[$key] = apply_replace('get_board_db', array(), $bo_table)) ){
+    if( !($cache[$key] = run_replace('get_board_db', array(), $bo_table)) ){
 
         $sql = " select * from {$g5['board_table']} where bo_table = '$bo_table' ";
 
@@ -259,7 +259,7 @@ function get_db_charset($charset){
         $add_charset .= ' COLLATE utf8mb4_unicode_ci';
     }
 
-    return apply_replace('get_db_charset', $add_charset, $charset);
+    return run_replace('get_db_charset', $add_charset, $charset);
 }
 
 function get_db_create_replace($sql_str){
@@ -284,7 +284,7 @@ function get_class_encrypt(){
         return $cache;
     }
 
-    $cache = apply_replace('get_class_encrypt', new str_encrypt());
+    $cache = run_replace('get_class_encrypt', new str_encrypt());
 
     return $cache;
 }
@@ -315,7 +315,7 @@ function get_permission_debug_show(){
         $bool = true;
     }
 
-    return apply_replace('get_permission_debug_show', $bool, $member);
+    return run_replace('get_permission_debug_show', $bool, $member);
 }
 
 function get_check_mod_rewrite(){
@@ -332,7 +332,7 @@ function get_check_mod_rewrite(){
 
 function get_mb_icon_name($mb_id){
 
-    if( $icon_name = apply_replace('get_mb_icon_name', '', $mb_id) ){
+    if( $icon_name = run_replace('get_mb_icon_name', '', $mb_id) ){
         return $icon_name;
     }
 
@@ -348,7 +348,7 @@ function get_bo_table_banned_word(){
         $folders[] = basename($dir);
     }
 
-    return apply_replace('get_bo_table_banned_word', $folders);
+    return run_replace('get_bo_table_banned_word', $folders);
 }
 
 function get_board_sfl_select_options($sfl){
@@ -366,7 +366,7 @@ function get_board_sfl_select_options($sfl){
     $str .= '<option value="wr_name,1" '.get_selected($sfl, 'wr_name,1').'>글쓴이</option>';
     $str .= '<option value="wr_name,0" '.get_selected($sfl, 'wr_name,0').'>글쓴이(코)</option>';
 
-    return apply_replace('get_board_sfl_select_options', $str, $sfl);
+    return run_replace('get_board_sfl_select_options', $str, $sfl);
 }
 
 // 읽지 않은 메모 갯수 반환

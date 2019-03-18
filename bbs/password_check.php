@@ -13,7 +13,7 @@ if ($w == 's') {
     }
 
     if (!check_password($wr_password, $wr['wr_password'])) {
-        start_event('password_is_wrong', 'bbs', $wr);
+        run_event('password_is_wrong', 'bbs', $wr);
         alert('비밀번호가 틀립니다.');
     }
 
@@ -35,7 +35,7 @@ if ($w == 's') {
     }
 
     if (!check_password($wr_password, $wr['wr_password'])){
-        start_event('password_is_wrong', 'bbs', $wr);
+        run_event('password_is_wrong', 'bbs', $wr);
         alert('비밀번호가 틀립니다.');
     }
 

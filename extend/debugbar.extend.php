@@ -1,7 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-put_event('tail_sub', 'show_debug_bar');
+add_event('tail_sub', 'show_debug_bar');
 
 function show_debug_bar() {
 

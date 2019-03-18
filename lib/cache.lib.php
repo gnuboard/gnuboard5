@@ -76,7 +76,7 @@ function g5_delete_all_cache(){
         delete_cache_latest($board_table);
     }
 
-    start_event('adm_cache_delete', $board_tables);
+    run_event('adm_cache_delete', $board_tables);
 
 }
 

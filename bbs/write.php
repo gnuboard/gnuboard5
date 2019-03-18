@@ -31,7 +31,7 @@ if ($w == 'u' || $w == 'r') {
     }
 }
 
-start_event('bbs_write', $board, $wr_id, $w);
+run_event('bbs_write', $board, $wr_id, $w);
 
 if ($w == '') {
     if ($wr_id) {

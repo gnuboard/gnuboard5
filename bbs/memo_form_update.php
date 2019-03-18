@@ -15,7 +15,7 @@ $msg = '';
 $error_list  = array();
 $member_list = array('id'=>array(), 'nick'=>array());
 
-start_event('memo_form_update_before', $recv_list);
+run_event('memo_form_update_before', $recv_list);
 
 for ($i=0; $i<count($recv_list); $i++) {
     $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list[$i]}' ");
@@ -93,14 +93,14 @@ if ($member_list) {
     $redirect_url = G5_HTTP_BBS_URL."/memo.php?kind=send";
     $str_nick_list = implode(',', $member_list['nick']);
 
-    start_event('memo_form_update_after', $member_list, $str_nick_list, $redirect_url);
+    run_event('memo_form_update_after', $member_list, $str_nick_list, $redirect_url);
 
     alert($str_nick_list." 님께 쪽지를 전달하였습니다.", $redirect_url, false);
 } else {
 
     $redirect_url = G5_HTTP_BBS_URL."/memo_form.php";
     
-    start_event('memo_form_update_failed', $member_list, $redirect_url);
+    run_event('memo_form_update_failed', $member_list, $redirect_url);
     
     exit;
 

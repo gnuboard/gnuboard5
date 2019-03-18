@@ -192,7 +192,7 @@ if( isset($_POST['cf_bbs_rewrite']) ){
     g5_delete_all_cache();
 }
 
-start_event('admin_config_form_update');
+run_event('admin_config_form_update');
 
 update_rewrite_rules();
 

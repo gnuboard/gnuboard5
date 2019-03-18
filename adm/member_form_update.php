@@ -233,7 +233,7 @@ else if ($w == 'u')
 else
     alert('제대로 된 값이 넘어오지 않았습니다.');
 
-start_event('admin_member_form_update', $w, $mb_id);
+run_event('admin_member_form_update', $w, $mb_id);
 
 goto_url('./member_form.php?'.$qstr.'&amp;w=u&amp;mb_id='.$mb_id, false);
 ?>
