@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
-//include_once('./hpcert.config.php');
+
+if( isset($_REQUEST['exe']) && isset($exe) && $exe ){
+    die('bad request');
+}
 
 // KISA 취약점 내용(KVE-2018-0291) hpcert1.php의 $cmd 함수에 대한 인자 값은 hpcert_config.php 파일에서 설정되나, 이를 다른 페이지에서 포함한 뒤 호출할 시 임의 값 설정 가능
 // 이에 include_once 를 include 로 수정함
@@ -106,7 +109,7 @@ $phone_no = hyphen_hp_number($req_num);
 $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
 $row = sql_fetch($sql);
 if ($row['mb_id']) {
-    alert_close("입력하신 본인학인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
+    alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
 }
 
 // hash 데이터

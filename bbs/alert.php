@@ -35,6 +35,7 @@ $url = clean_xss_tags($url);
 if (!$url) $url = clean_xss_tags($_SERVER['HTTP_REFERER']);
 
 $url = preg_replace("/[\<\>\'\"\\\'\\\"\(\)]/", "", $url);
+$url = preg_replace('/\r\n|\r|\n|[^\x20-\x7e]/','', $url);
 
 // url 체크
 check_url_host($url, $msg);
@@ -48,11 +49,9 @@ if($error) {
 
 <script>
 alert("<?php echo $msg; ?>");
-//document.location.href = "<?php echo $url; ?>";
 <?php if ($url) { ?>
 document.location.replace("<?php echo str_replace('&amp;', '&', $url); ?>");
 <?php } else { ?>
-//alert('history.back();');
 history.back();
 <?php } ?>
 </script>
