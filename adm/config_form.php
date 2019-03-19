@@ -1419,6 +1419,10 @@ if($config['cf_cert_use']) {
         }
 
         echo module_exec_check($exe, 'okname');
+
+        if(is_dir(G5_OKNAME_PATH.'/log') && is_writable(G5_OKNAME_PATH.'/log') && function_exists('check_log_folder') ) {
+            check_log_folder(G5_OKNAME_PATH.'/log');
+        }
     }
 
     // kcp일 때

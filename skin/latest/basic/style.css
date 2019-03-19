@@ -6,7 +6,7 @@
 .lat .lat_title a{color:#253dbe;display:inline-block;position:relative}
 .lat .lat_title a:after{position:absolute;bottom:-1px;left:0;width:100%;height:2px;background:#253dbe;content:''}
 .lat ul{padding:15px 20px}
-.lat li {position:relative;line-height:18px;padding:3px 0;padding-right:50px;padding-left:10px;position:relative}
+.lat li {position:relative;line-height:18px;padding:3px 0;padding-right:50px;padding-left:10px}
 .lat li:before{position: absolute;top: 12px;left: 0px;width: 4px;height: 4px;background: #aaa;content: '';border-radius: 50%;}
 .lat li a:hover{color:#a22121}
 .lat li .fa-heart{color:#ff0000;}

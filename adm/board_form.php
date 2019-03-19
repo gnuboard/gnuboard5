@@ -918,7 +918,7 @@ $pg_anchor = '<ul class="anchor">
          <tr>
             <th scope="row"><label for="bo_insert_content">글쓰기 기본 내용</label></th>
             <td>
-                <textarea id="bo_insert_content" name="bo_insert_content" rows="5"><?php echo $board['bo_insert_content'] ?></textarea>
+                <textarea id="bo_insert_content" name="bo_insert_content" rows="5"><?php echo html_purifier($board['bo_insert_content']); ?></textarea>
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_insert_content" value="1" id="chk_grp_insert_content">

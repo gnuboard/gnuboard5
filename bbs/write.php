@@ -362,7 +362,7 @@ if (isset($write['wr_subject'])) {
 
 $content = '';
 if ($w == '') {
-    $content = $board['bo_insert_content'];
+    $content = html_purifier($board['bo_insert_content']);
 } else if ($w == 'r') {
     if (!strstr($write['wr_option'], 'html')) {
         $content = "\n\n\n &gt; "
