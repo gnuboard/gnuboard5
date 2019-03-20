@@ -129,8 +129,8 @@ $g5_debug = array('php'=>array(),'sql'=>array());
 
 include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
 include_once(G5_LIB_PATH.'/get_data.lib.php');    // 데이타 가져오는 함수 모음
+include_once(G5_LIB_PATH.'/cache.lib.php');     // cache 함수 및 object cache class 모음
 include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
-include_once(G5_LIB_PATH.'/cache.lib.php');
 
 $g5_object = new G5_object_cache();
 
@@ -421,7 +421,7 @@ if ($bo_table) {
         if (isset($wr_id) && $wr_id) {
             $write = get_write($write_table, $wr_id);
         } else if (isset($wr_seo_title) && $wr_seo_title) {
-            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', $wr_seo_title);
+            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', generate_seo_title($wr_seo_title));
             if( isset($write['wr_id']) ){
                 $wr_id = $write['wr_id'];
             }

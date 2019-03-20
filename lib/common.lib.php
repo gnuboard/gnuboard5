@@ -2601,7 +2601,7 @@ class html_process {
             $nl = "\n";
         $buffer = preg_replace('#(</head>[^<]*<body[^>]*>)#', "$javascript{$nl}$1", $buffer);
         
-        $meta_tag = apply_replace('html_process_add_meta', '');
+        $meta_tag = run_replace('html_process_add_meta', '');
         
         if( $meta_tag ){
             /*

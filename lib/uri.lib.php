@@ -2,7 +2,6 @@
 if (!defined('_GNUBOARD_')) exit;
 
 include_once(dirname(__FILE__) .'/URI/uri.class.php');
-include_once(dirname(__FILE__) .'/URI/obj.class.php');
 
 // 짧은 주소 형식으로 만들어서 가져온다.
 function get_pretty_url($folder, $no='', $query_string='', $action='')
