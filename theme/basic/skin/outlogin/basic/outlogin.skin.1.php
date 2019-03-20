@@ -7,7 +7,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
 
 <!-- 로그인 전 아웃로그인 시작 { -->
 <section id="ol_before" class="ol">
-    <h2>회원로그인</h2>
+	<div id="ol_be_cate">
+    	<h2><span class="sound_only">회원</span>로그인</h2>
+    	<a href="<?php echo G5_BBS_URL ?>/register.php" class="join">회원가입</a>
+    </div>
     <form name="foutlogin" action="<?php echo $outlogin_action_url ?>" onsubmit="return fhead_submit(this);" method="post" autocomplete="off">
     <fieldset>
         <div class="ol_wr">
@@ -19,18 +22,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
             <input type="submit" id="ol_submit" value="로그인" class="btn_b02">
         </div>
         <div class="ol_auto_wr"> 
-            <div id="ol_auto">
-                <input type="checkbox" name="auto_login" value="1" id="auto_login">
-                <label for="auto_login" id="auto_login_label">자동로그인</label>
+            <div id="ol_auto" class="chk_box">
+                <input type="checkbox" name="auto_login" value="1" id="auto_login" class="selec_chk">
+                <label for="auto_login" id="auto_login_label"><span></span>자동로그인</label>
             </div>
             <div id="ol_svc">
-                <a href="<?php echo G5_BBS_URL ?>/register.php"><b>회원가입</b></a> /
                 <a href="<?php echo G5_BBS_URL ?>/password_lost.php" id="ol_password_lost">정보찾기</a>
             </div>
         </div>
         <?php
         // 소셜로그인 사용시 소셜로그인 버튼
-        @include_once(get_social_skin_path().'/social_outlogin.skin.1.php');
+        @include_once(get_social_skin_path().'/social_login.skin.php');
         ?>
 
     </fieldset>

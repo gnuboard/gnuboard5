@@ -16,8 +16,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
 <!-- 쪽지보기 시작 { -->
 <div id="memo_view" class="new_win">
-    <h1 id="win_title"><i class="fa fa-envelope-o" aria-hidden="true"></i> <?php echo $g5['title'] ?></h1>
-    <div class="new_win_con">
+    <h1 id="win_title"><?php echo $g5['title'] ?></h1>
+    <div class="new_win_con2">
         <!-- 쪽지함 선택 시작 { -->
         <ul class="win_ul">
             <li class="<?php if ($kind == 'recv') {  ?>selected<?php }  ?>"><a href="./memo.php?kind=recv">받은쪽지</a></li>
@@ -30,34 +30,35 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <header>
                 <h2>쪽지 내용</h2>
             </header>
-            <ul id="memo_view_ul">
-                <li class="memo_view_li memo_view_name">
-                    <span class="memo_view_subj"><?php echo $kind_str ?>사람</span>
-                    <strong><?php echo $nick ?></strong>
-                </li>
-                <li class="memo_view_li memo_view_date">
-                    <span class="sound_only"><?php echo $kind_date ?>시간</span>
-                    <strong><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $memo['me_send_datetime'] ?></strong>
-                </li>
-            </ul>
+            <div id="memo_view_ul">
+                <div class="memo_view_li memo_view_name">
+                	<ul class="memo_from">
+                		<li class="memo_profile">
+				            <?php echo get_member_profile_img($mb['mb_id']); ?>
+				        </li>
+						<li class="memo_view_nick"><?php echo $nick ?></li>
+						<li class="memo_view_date"><span class="sound_only"><?php echo $kind_date ?>시간</span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $memo['me_send_datetime'] ?></li> 
+						<li class="memo_op_btn list_btn"><a href="<?php echo $list_link ?>" class="btn_b01 btn"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a></li>
+						<li class="memo_op_btn del_btn"><a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;" class="memo_del btn_b01 btn"><i class="fa fa-trash-o" aria-hidden="true"></i> <span class="sound_only">삭제</span></a></li>	
+					</ul>
+                    <div class="memo_btn">
+                    	<?php if($prev_link) {  ?>
+			            <a href="<?php echo $prev_link ?>" class="btn_left"><i class="fa fa-chevron-left" aria-hidden="true"></i> 이전쪽지</a>
+			            <?php }  ?>
+			            <?php if($next_link) {  ?>
+			            <a href="<?php echo $next_link ?>" class="btn_right">다음쪽지 <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+			            <?php }  ?>  
+                    </div>
+                </div>
+            </div>
             <p>
                 <?php echo conv_content($memo['me_memo'], 0) ?>
             </p>
         </article>
-
-
-        <div class="win_btn">
-            <?php if($prev_link) {  ?>
-            <a href="<?php echo $prev_link ?>" class="btn btn_b01"><i class="fa fa-angle-left" aria-hidden="true"></i> 이전쪽지</a>
-            <?php }  ?>
-            <?php if($next_link) {  ?>
-            <a href="<?php echo $next_link ?>" class="btn btn_b01">다음쪽지 <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-            <?php }  ?>
-
-            <a href="<?php echo $list_link ?>" class="btn btn_b01"><i class="fa fa-list" aria-hidden="true"></i> 목록</a>
-            <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
-            <?php if ($kind == 'recv') {  ?><a href="./memo_form.php?me_recv_mb_id=<?php echo $mb['mb_id'] ?>&amp;me_id=<?php echo $memo['me_id'] ?>" class="btn btn_b02 reply_btn">답장</a><?php }  ?>
-        </div>
+		<div class="win_btn">
+			<?php if ($kind == 'recv') {  ?><a href="./memo_form.php?me_recv_mb_id=<?php echo $mb['mb_id'] ?>&amp;me_id=<?php echo $memo['me_id'] ?>" class="reply_btn">답장</a><?php }  ?>
+			<button type="button" onclick="window.close();" class="btn_close">창닫기</button>
+    	</div>
     </div>
 </div>
 <!-- } 쪽지보기 끝 -->
