@@ -35,6 +35,7 @@ $url = clean_xss_tags($url);
 if (!$url) $url = clean_xss_tags($_SERVER['HTTP_REFERER']);
 
 $url = preg_replace("/[\<\>\'\"\\\'\\\"\(\)]/", "", $url);
+$url = preg_replace('/\r\n|\r|\n|[^\x20-\x7e]/','', $url);
 
 // url 체크
 check_url_host($url, $msg);
@@ -48,11 +49,9 @@ if($error) {
 
 <script>
 alert("<?php echo $msg; ?>");
-//document.location.href = "<?php echo $url; ?>";
 <?php if ($url) { ?>
 document.location.replace("<?php echo str_replace('&amp;', '&', $url); ?>");
 <?php } else { ?>
-//alert('history.back();');
 history.back();
 <?php } ?>
 </script>
@@ -67,13 +66,17 @@ history.back();
     <form method="post" action="<?php echo $url ?>">
     <?php
     foreach($_POST as $key => $value) {
+        
+        $key = clean_xss_tags($key);
+        $value = clean_xss_tags($value);
+
         if(strlen($value) < 1)
             continue;
 
         if(preg_match("/pass|pwd|capt|url/", $key))
             continue;
     ?>
-    <input type="hidden" name="<?php echo $key ?>" value="<?php echo $value ?>">
+    <input type="hidden" name="<?php echo htmlspecialchars($key); ?>" value="<?php echo htmlspecialchars($value); ?>">
     <?php
     }
     ?>

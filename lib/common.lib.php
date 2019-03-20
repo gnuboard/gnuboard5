@@ -155,7 +155,7 @@ function alert($msg='', $url='', $error=true, $post=false)
     global $g5, $config, $member;
     global $is_admin;
     
-    start_event('alert', $msg, $url, $error, $post);
+    run_event('alert', $msg, $url, $error, $post);
 
     $msg = $msg ? strip_tags($msg, '<br>') : '올바른 방법으로 이용해 주십시오.';
 
@@ -173,7 +173,7 @@ function alert_close($msg, $error=true)
 {
     global $g5;
     
-    start_event('alert_close', $msg, $error);
+    run_event('alert_close', $msg, $error);
 
     $msg = strip_tags($msg, '<br>');
 
@@ -251,7 +251,7 @@ function url_auto_link($str)
     $str = preg_replace("/\t_gt_\t/", "&gt;", $str);
     */
 
-    return apply_replace('url_auto_link', $str);
+    return run_replace('url_auto_link', $str);
 }
 
 
@@ -294,6 +294,7 @@ function get_file($bo_table, $wr_id)
     while ($row = sql_fetch_array($result))
     {
         $no = $row['bf_no'];
+        $bf_content = $row['bf_content'] ? html_purifier($row['bf_content']) : '';
         $file[$no]['href'] = G5_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
         $file[$no]['download'] = $row['bf_download'];
         // 4.00.11 - 파일 path 추가
@@ -301,8 +302,8 @@ function get_file($bo_table, $wr_id)
         $file[$no]['size'] = get_filesize($row['bf_filesize']);
         $file[$no]['datetime'] = $row['bf_datetime'];
         $file[$no]['source'] = addslashes($row['bf_source']);
-        $file[$no]['bf_content'] = $row['bf_content'];
-        $file[$no]['content'] = get_text($row['bf_content']);
+        $file[$no]['bf_content'] = $bf_content;
+        $file[$no]['content'] = get_text($bf_content);
         //$file[$no]['view'] = view_file_link($row['bf_file'], $file[$no]['content']);
         $file[$no]['view'] = view_file_link($row['bf_file'], $row['bf_width'], $row['bf_height'], $file[$no]['content']);
         $file[$no]['file'] = $row['bf_file'];
@@ -740,7 +741,7 @@ function get_group($gr_id, $is_cache=false)
 
     $sql = " select * from {$g5['group_table']} where gr_id = '$gr_id' ";
 
-    $cache[$key] = apply_replace('get_group', sql_fetch($sql), $gr_id, $is_cache);
+    $cache[$key] = run_replace('get_group', sql_fetch($sql), $gr_id, $is_cache);
 
     return $cache[$key];
 }
@@ -763,7 +764,7 @@ function get_member($mb_id, $fields='*', $is_cache=false)
 
     $sql = " select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ";
 
-    $cache[$mb_id][$key] = apply_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
+    $cache[$mb_id][$key] = run_replace('get_member', sql_fetch($sql), $mb_id, $fields, $is_cache);
 
     return $cache[$mb_id][$key];
 }
@@ -856,7 +857,7 @@ function is_admin($mb_id)
         $is_authority = 'board';
     }
 
-    return apply_replace('is_admin', $is_authority, $mb_id);
+    return run_replace('is_admin', $is_authority, $mb_id);
 }
 
 
@@ -2542,7 +2543,7 @@ class html_process {
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $links);
             
-            $links = apply_replace('html_process_css_files', $links);
+            $links = run_replace('html_process_css_files', $links);
 
             foreach($links as $link) {
                 if(!trim($link[1]))
@@ -2570,7 +2571,7 @@ class html_process {
 
             array_multisort($order, SORT_ASC, $index, SORT_ASC, $scripts);
             
-            $scripts = apply_replace('html_process_script_files', $scripts);
+            $scripts = run_replace('html_process_script_files', $scripts);
 
             foreach($scripts as $js) {
                 if(!trim($js[1]))
@@ -2600,7 +2601,7 @@ class html_process {
             $nl = "\n";
         $buffer = preg_replace('#(</head>[^<]*<body[^>]*>)#', "$javascript{$nl}$1", $buffer);
         
-        $meta_tag = apply_replace('html_process_add_meta', '');
+        $meta_tag = run_replace('html_process_add_meta', '');
         
         if( $meta_tag ){
             /*
@@ -2788,7 +2789,7 @@ function get_qa_config($fld='*')
     }
 
     $sql = " select * from {$g5['qa_config_table']} ";
-    $cache = apply_replace('get_qa_config', sql_fetch($sql));
+    $cache = run_replace('get_qa_config', sql_fetch($sql));
 
     return $cache;
 }
@@ -2990,9 +2991,17 @@ function get_search_string($stx)
 // XSS 관련 태그 제거
 function clean_xss_tags($str)
 {
-    $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+    $str_len = strlen($str);
+    
+    $i = 0;
+    while($i <= $str_len){
+        $result = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
 
-    $str = str_replace(array('<script>','</script>','<noscript>','</noscript>'), '', $str);
+        if((string)$result === (string)$str) break;
+
+        $str = $result;
+        $i++;
+    }
 
     return $str;
 }
@@ -3065,6 +3074,9 @@ function member_delete($mb_id)
 
     // 아이콘 삭제
     @unlink(G5_DATA_PATH.'/member/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
+
+    // 프로필 이미지 삭제
+    @unlink(G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
 }
 
 // 이메일 주소 추출
@@ -3621,13 +3633,23 @@ function get_call_func_cache($func, $args=array()){
     return $result;
 }
 
-// include 하는 경로에 data file 경로가 포함되어 있는지 체크합니다.
+// include 하는 경로에 data file 경로나 안전하지 않은 경로가 있는지 체크합니다.
 function is_include_path_check($path='', $is_input='')
 {
     if( $path ){
         if ($is_input){
+            // 장태진 @jtjisgod <jtjisgod@gmail.com> 추가
+            // 보안 목적 : rar wrapper 차단
 
-            if( stripos($path, 'php:') !== false || stripos($path, 'zlib:') !== false || stripos($path, 'bzip2:') !== false || stripos($path, 'zip:') !== false || stripos($path, 'data:') !== false || stripos($path, 'phar:') !== false ){
+            if( stripos($path, 'rar:') !== false || stripos($path, 'php:') !== false || stripos($path, 'zlib:') !== false || stripos($path, 'bzip2:') !== false || stripos($path, 'zip:') !== false || stripos($path, 'data:') !== false || stripos($path, 'phar:') !== false ){
+                return false;
+            }
+            
+            $replace_path = str_replace('\\', '/', $path);
+            $slash_count = substr_count(str_replace('\\', '/', $_SERVER['SCRIPT_NAME']), '/');
+            $peer_count = substr_count($replace_path, '../');
+
+            if ( $peer_count && $peer_count > $slash_count ){
                 return false;
             }
 
@@ -3667,7 +3689,10 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
 
-            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', str_replace('\\', '/', $path)) ){
+            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) ){
+                return false;
+            }
+            if( preg_match('/\.\.\//i', $replace_path) && preg_match('/plugin\//i', $replace_path) && preg_match('/okname\//i', $replace_path) ){
                 return false;
             }
         }

@@ -1,6 +1,10 @@
 <?php
 include_once('./_common.php');
 
+if( isset($_REQUEST['exe']) && isset($exe) && $exe ){
+    die('bad request');
+}
+
 // 금일 인증시도 회수 체크
 certify_count_check($member['mb_id'], 'ipin');
 

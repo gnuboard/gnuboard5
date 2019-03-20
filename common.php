@@ -29,20 +29,22 @@ for ($i=0; $i<$ext_cnt; $i++) {
 
 function g5_path()
 {
-    $chroot = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], dirname(__FILE__)));
-    $result['path'] = str_replace('\\', '/', $chroot.dirname(__FILE__));
-    $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $_SERVER['SCRIPT_NAME']);
-    $document_root = str_replace($tilde_remove, '', $_SERVER['SCRIPT_FILENAME']);
-    $pattern = '/' . preg_quote($document_root, '/') . '/i';
-    $root = preg_replace($pattern, '', $result['path']);
-    $port = ($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443) ? '' : ':'.$_SERVER['SERVER_PORT'];
-    $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://';
-    $user = str_replace(preg_replace($pattern, '', $_SERVER['SCRIPT_FILENAME']), '', $_SERVER['SCRIPT_NAME']);
-    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
-    if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host))
-        $host = preg_replace('/:[0-9]+$/', '', $host);
-    $host = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", '', $host);
-    $result['url'] = $http.$host.$port.$user.$root;
+    $chroot = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], dirname(__FILE__))); 
+    $result['path'] = str_replace('\\', '/', $chroot.dirname(__FILE__)); 
+    $server_script_name = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_NAME'])); 
+    $server_script_filename = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME'])); 
+    $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $server_script_name); 
+    $document_root = str_replace($tilde_remove, '', $server_script_filename); 
+    $pattern = '/' . preg_quote($document_root, '/') . '/i'; 
+    $root = preg_replace($pattern, '', $result['path']); 
+    $port = ($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443) ? '' : ':'.$_SERVER['SERVER_PORT']; 
+    $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://'; 
+    $user = str_replace(preg_replace($pattern, '', $server_script_filename), '', $server_script_name); 
+    $host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
+    if(isset($_SERVER['HTTP_HOST']) && preg_match('/:[0-9]+$/', $host)) 
+        $host = preg_replace('/:[0-9]+$/', '', $host); 
+    $host = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", '', $host); 
+    $result['url'] = $http.$host.$port.$user.$root; 
     return $result;
 }
 
@@ -122,14 +124,15 @@ $member = array();
 $board  = array();
 $group  = array();
 $g5     = array();
+$qaconfig = array();
 $g5_debug = array('php'=>array(),'sql'=>array());
 
 include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
 include_once(G5_LIB_PATH.'/get_data.lib.php');    // 데이타 가져오는 함수 모음
+include_once(G5_LIB_PATH.'/cache.lib.php');     // cache 함수 및 object cache class 모음
 include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
-include_once(G5_LIB_PATH.'/cache.lib.php');
 
-$g5_object = new G5_object_store();
+$g5_object = new G5_object_cache();
 
 //==============================================================================
 // 공통
@@ -418,7 +421,7 @@ if ($bo_table) {
         if (isset($wr_id) && $wr_id) {
             $write = get_write($write_table, $wr_id);
         } else if (isset($wr_seo_title) && $wr_seo_title) {
-            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', $wr_seo_title);
+            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', generate_seo_title($wr_seo_title));
             if( isset($write['wr_id']) ){
                 $wr_id = $write['wr_id'];
             }
@@ -650,7 +653,7 @@ header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
 
-start_event('common_header');
+run_event('common_header');
 
 $html_process = new html_process();
 ?>

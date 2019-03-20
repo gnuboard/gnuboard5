@@ -25,7 +25,7 @@ $(function() {
 </script>
 <![endif]-->
 
-<?php start_event('tail_sub'); ?>
+<?php run_event('tail_sub'); ?>
 
 </body>
 </html>

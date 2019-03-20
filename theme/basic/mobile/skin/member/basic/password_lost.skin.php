@@ -5,8 +5,9 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 ?>
 
+<!-- 회원정보 찾기 시작 { -->
 <div id="find_info" class="new_win">
-    <h1 id="win_title">아이디/비밀번호 찾기</h1>
+    <h1 id="win_title">아이디 / 비밀번호 찾기</h1>
     <div class="new_win_con">
         <form name="fpasswordlost" action="<?php echo $action_url ?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
         <fieldset id="info_fs">
@@ -16,14 +17,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             </p>
             <input type="email" id="mb_email" name="mb_email" placeholder="이메일주소(필수)" required class="frm_input email">
         </fieldset>
-
         <?php echo captcha_html(); ?>
-
-        <div class="win_btn">
-            <input type="submit" class="btn_submit" value="정보찾기">
-            <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
-        </div>
-        </form>
+		</form>
+	</div>
+    <div class="win_btn">
+        <button type="submit" class="btn_submit">정보찾기</button>
+        <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
     </div>
 </div>
 

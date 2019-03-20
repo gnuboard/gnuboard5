@@ -1,6 +1,7 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+include_once(dirname(__FILE__) .'/Cache/obj.class.php');
 include_once(dirname(__FILE__) .'/Cache/FileCache.class.php');
 
 function get_cachemanage_instance(){
@@ -76,7 +77,7 @@ function g5_delete_all_cache(){
         delete_cache_latest($board_table);
     }
 
-    start_event('adm_cache_delete', $board_tables);
+    run_event('adm_cache_delete', $board_tables);
 
 }
 

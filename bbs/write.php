@@ -31,7 +31,7 @@ if ($w == 'u' || $w == 'r') {
     }
 }
 
-start_event('bbs_write', $board, $wr_id, $w);
+run_event('bbs_write', $board, $wr_id, $w);
 
 if ($w == '') {
     if ($wr_id) {
@@ -364,7 +364,7 @@ if (isset($write['wr_subject'])) {
 
 $content = '';
 if ($w == '') {
-    $content = $board['bo_insert_content'];
+    $content = html_purifier($board['bo_insert_content']);
 } else if ($w == 'r') {
     if (!strstr($write['wr_option'], 'html')) {
         $content = "\n\n\n &gt; "

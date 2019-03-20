@@ -76,7 +76,7 @@ if ($msg)
     //echo '<script> alert("'.$msg.'"); </script>';
     alert($msg);
 
-start_event('admin_member_list_update', $_POST['act_button'], $mb_datas);
+run_event('admin_member_list_update', $_POST['act_button'], $mb_datas);
 
 goto_url('./member_list.php?'.$qstr);
 ?>

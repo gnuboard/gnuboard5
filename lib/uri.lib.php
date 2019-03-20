@@ -2,7 +2,6 @@
 if (!defined('_GNUBOARD_')) exit;
 
 include_once(dirname(__FILE__) .'/URI/uri.class.php');
-include_once(dirname(__FILE__) .'/URI/obj.class.php');
 
 // 짧은 주소 형식으로 만들어서 가져온다.
 function get_pretty_url($folder, $no='', $query_string='', $action='')
@@ -13,7 +12,7 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
     $segments = array();
     $url = $add_query = '';
 
-    if( $url = apply_replace('get_pretty_url', $url, $folder, $no, $query_string, $action) ){
+    if( $url = run_replace('get_pretty_url', $url, $folder, $no, $query_string, $action) ){
         return $url;
     }
 
@@ -108,7 +107,7 @@ function short_url_clean($string_url, $add_qry=''){
         $url=parse_url($string_url);
         $page_name = basename($url['path'],".php");
         
-        $array_page_names = apply_replace('url_clean_page_names', array('board', 'write'));
+        $array_page_names = run_replace('url_clean_page_names', array('board', 'write'));
 
         if( strpos($string_url, G5_BBS_URL) === false || ! in_array($page_name, $array_page_names) ){   //게시판이 아니면 리턴
             return $string_url;
@@ -150,7 +149,7 @@ function short_url_clean($string_url, $add_qry=''){
 
         if( isset($url['host']) ){
 
-            $array_file_paths = apply_replace('url_clean_page_paths', array('/'.G5_BBS_DIR.'/board.php', '/'.G5_BBS_DIR.'/write.php'));
+            $array_file_paths = run_replace('url_clean_page_paths', array('/'.G5_BBS_DIR.'/board.php', '/'.G5_BBS_DIR.'/write.php'));
 
             $str_path = isset($url['path']) ? $url['path'] : '';
             $http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://';
@@ -231,7 +230,7 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
         $exists_title = $row['co_seo_title'];
 
     } else {
-        return apply_replace('exist_check_seo_title', $seo_title, $type, $write_table, $sql_id);
+        return run_replace('exist_check_seo_title', $seo_title, $type, $write_table, $sql_id);
     }
 
     if ($exists_title)
@@ -296,7 +295,7 @@ function get_nginx_conf_rules($return_string=false){
     $rules[] = '#### '.G5_VERSION.' nginx rules BEGIN #####';
     $rules[] = 'if (!-e $request_filename){';
 
-    if( $add_rules = apply_replace('add_nginx_conf_rules', '', $get_path_url, $base_path, $return_string) ){
+    if( $add_rules = run_replace('add_nginx_conf_rules', '', $get_path_url, $base_path, $return_string) ){
         $rules[] = $add_rules;
     }
 
@@ -329,7 +328,7 @@ function get_mod_rewrite_rules($return_string=false){
     $rules[] = 'RewriteCond %{REQUEST_FILENAME} -d';
     $rules[] = 'RewriteRule ^ - [L]';
 
-    if( $add_rules = apply_replace('add_mod_rewrite_rules', '', $get_path_url, $base_path, $return_string) ){
+    if( $add_rules = run_replace('add_mod_rewrite_rules', '', $get_path_url, $base_path, $return_string) ){
         $rules[] = $add_rules;
     }
 

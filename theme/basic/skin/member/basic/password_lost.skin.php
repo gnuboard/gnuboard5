@@ -19,12 +19,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <input type="text" name="mb_email" id="mb_email" required class="required frm_input full_input email" size="30" placeholder="E-mail 주소">
         </fieldset>
         <?php echo captcha_html();  ?>
-        <input type="submit" value="확인" class="btn_submit">
-
+        </form>
     </div>
-    <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
-
-    </form>
+    <div class="win_btn">
+    	<button type="submit" class="btn_submit">확인</button>
+    	<button type="button" onclick="window.close();" class="btn_close">창닫기</button>  
+    </div>    
 </div>
 
 <script>

@@ -10,7 +10,7 @@ if( !isset($g5['content_table']) ){
 
 // 내용
 if($co_seo_title){
-    $co = get_content_by_field($g5['content_table'], 'content', 'co_seo_title', $co_seo_title);
+    $co = get_content_by_field($g5['content_table'], 'content', 'co_seo_title', generate_seo_title($co_seo_title));
     $co_id = $co['co_id'];
 } else {
     $co = get_content_db($co_id);

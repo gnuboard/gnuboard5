@@ -32,7 +32,7 @@ if (!$row['me_read_datetime'][0]) // 메모 받기전이면
     sql_query($sql);
 }
 
-start_event('memo_delete', $me_id, $row);
+run_event('memo_delete', $me_id, $row);
 
 goto_url('./memo.php?kind='.$kind);
 ?>

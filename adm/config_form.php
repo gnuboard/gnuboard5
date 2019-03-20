@@ -259,10 +259,16 @@ if (!isset($config['cf_bbs_rewrite'])) {
                     ADD `cf_bbs_rewrite` tinyint(4) NOT NULL DEFAULT '0' AFTER `cf_link_target` ", true);
 }
 
-// 읽지 않은 메모 수 칼럼
+// 읽지 않은 메모 수 칼럼 추가
 if(!isset($member['mb_memo_cnt'])) {
     sql_query(" ALTER TABLE `{$g5['member_table']}`
                 ADD `mb_memo_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_call`", true);
+}
+
+// 스크랩 읽은 수 추가
+if(!isset($member['mb_scrap_cnt'])) {
+    sql_query(" ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_scrap_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_cnt`", true);
 }
 
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
@@ -1435,6 +1441,10 @@ if($config['cf_cert_use']) {
         }
 
         echo module_exec_check($exe, 'okname');
+
+        if(is_dir(G5_OKNAME_PATH.'/log') && is_writable(G5_OKNAME_PATH.'/log') && function_exists('check_log_folder') ) {
+            check_log_folder(G5_OKNAME_PATH.'/log');
+        }
     }
 
     // kcp일 때
@@ -1452,15 +1462,28 @@ if($config['cf_cert_use']) {
         $log_path = G5_LGXPAY_PATH.'/lgdacom/log';
 
         if(!is_dir($log_path)) {
-            echo '<script>'.PHP_EOL;
-            echo 'alert("'.str_replace(G5_PATH.'/', '', G5_LGXPAY_PATH).'/lgdacom 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
-            echo '</script>'.PHP_EOL;
-        } else {
-            if(!is_writable($log_path)) {
+
+            if( is_writable(G5_LGXPAY_PATH.'/lgdacom/') ){
+                // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
+                @mkdir($log_path, G5_DIR_PERMISSION);
+                @chmod($log_path, G5_DIR_PERMISSION);
+            }
+
+            if(!is_dir($log_path)){
                 echo '<script>'.PHP_EOL;
-                echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
+                echo 'alert("'.str_replace(G5_PATH.'/', '', G5_LGXPAY_PATH).'/lgdacom 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
                 echo '</script>'.PHP_EOL;
             }
+        }
+
+        if(is_dir($log_path) && is_writable($log_path)) {
+            if( function_exists('check_log_folder') ){
+                check_log_folder($log_path);
+            }
+        } else if (is_dir($log_path)) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
         }
     }
 }

@@ -20,7 +20,7 @@ else
 
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 
-start_event('memo_list', $kind, $unkind, $page);
+run_event('memo_list', $kind, $unkind, $page);
 
 $sql = " select count(*) as cnt from {$g5['memo_table']} where me_{$kind}_mb_id = '{$member['mb_id']}' and me_type = '$kind' ";
 $row = sql_fetch($sql);
@@ -71,6 +71,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $send_datetime = substr($row['me_send_datetime'],2,14);
 
+    $list[$i]['mb_id'] = $mb_id;
     $list[$i]['name'] = $name;
     $list[$i]['send_datetime'] = $send_datetime;
     $list[$i]['read_datetime'] = $read_datetime;

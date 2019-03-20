@@ -13,6 +13,7 @@ if (!strstr($_SERVER['SCRIPT_NAME'], 'install.php')) {
 }
 
 $sv = isset($_REQUEST['sv']) ? get_search_string($_REQUEST['sv']) : '';
+$st = (isset($_REQUEST['st']) && $st) ? substr(get_search_string($_REQUEST['st']), 0, 12) : '';
 
 if( isset($token) ){
     $token = @htmlspecialchars(strip_tags($token), ENT_QUOTES);

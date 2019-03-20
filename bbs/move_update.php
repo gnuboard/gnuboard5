@@ -125,7 +125,7 @@ while ($row = sql_fetch_array($result))
                         // 제이프로님 코드제안 적용
                         $copy_file_name = ($bo_table !== $move_bo_table) ? $row3['bf_file'] : $row2['wr_id'].'_copy_'.$insert_id.'_'.$row3['bf_file'];
                         @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$copy_file_name);
-                        @chmod($dst_dir/$row3['bf_file'], G5_FILE_PERMISSION);
+                        @chmod($dst_dir.'/'.$row3['bf_file'], G5_FILE_PERMISSION);
                     }
 
                     $sql = " insert into {$g5['board_file_table']}
@@ -196,8 +196,10 @@ if ($sw == 'move')
 {
     for ($i=0; $i<count($save); $i++)
     {
-        for ($k=0; $k<count($save[$i]['bf_file']); $k++)
-            @unlink($save[$i]['bf_file'][$k]);
+        if( isset($save[$i]['bf_file']) && $save[$i]['bf_file'] ){
+            for ($k=0; $k<count($save[$i]['bf_file']); $k++)
+                @unlink($save[$i]['bf_file'][$k]);
+        }
 
         sql_query(" delete from $write_table where wr_parent = '{$save[$i]['wr_id']}' ");
         sql_query(" delete from {$g5['board_new_table']} where bo_table = '$bo_table' and wr_id = '{$save[$i]['wr_id']}' ");
@@ -210,7 +212,7 @@ $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.'
 $opener_href  = get_pretty_url($bo_table,'','&amp;page='.$page.'&amp;'.$qstr);
 $opener_href1 = str_replace('&amp;', '&', $opener_href);
 
-start_event('bbs_move_update', $bo_table, $chk_bo_table, $wr_id_list, $opener_href);
+run_event('bbs_move_update', $bo_table, $chk_bo_table, $wr_id_list, $opener_href);
 
 echo <<<HEREDOC
 <meta http-equiv="content-type" content="text/html; charset=utf-8">

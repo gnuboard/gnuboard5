@@ -101,6 +101,9 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
 $sql = " insert into {$g5['scrap_table']} ( mb_id, bo_table, wr_id, ms_datetime ) values ( '{$member['mb_id']}', '$bo_table', '$wr_id', '".G5_TIME_YMDHIS."' ) ";
 sql_query($sql);
 
+$sql = " update `{$g5['member_table']}` set mb_scrap_cnt = '".get_scrap_totals($member['mb_id'])."' where mb_id = '{$member['mb_id']}' ";
+sql_query($sql);
+
 delete_cache_latest($bo_table);
 
 echo <<<HEREDOC

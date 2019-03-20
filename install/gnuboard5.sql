@@ -492,6 +492,7 @@ CREATE TABLE IF NOT EXISTS `g5_member` (
   `mb_profile` text NOT NULL,
   `mb_memo_call` varchar(255) NOT NULL default '',
   `mb_memo_cnt` int(11) NOT NULL DEFAULT '0',
+  `mb_scrap_cnt` int(11) NOT NULL default '0',
   `mb_1` varchar(255) NOT NULL default '',
   `mb_2` varchar(255) NOT NULL default '',
   `mb_3` varchar(255) NOT NULL default '',

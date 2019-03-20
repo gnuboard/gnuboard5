@@ -100,7 +100,7 @@ class G5_URI {
 		$url=parse_url($string_url);
 		$page_name = basename($url['path'],".php");
         
-        $array_page_names = apply_replace('url_clean_page_names', array('board', 'write'));
+        $array_page_names = run_replace('url_clean_page_names', array('board', 'write'));
 
         if( strpos($string_url, G5_BBS_URL) === false || ! in_array($page_name, $array_page_names) ){   //게시판이 아니면 리턴
             return $string_url;
@@ -142,7 +142,7 @@ class G5_URI {
 
         if( isset($url['host']) ){
 
-            $array_file_paths = apply_replace('url_clean_page_paths', array('/'.G5_BBS_DIR.'/board.php', '/'.G5_BBS_DIR.'/write.php'));
+            $array_file_paths = run_replace('url_clean_page_paths', array('/'.G5_BBS_DIR.'/board.php', '/'.G5_BBS_DIR.'/write.php'));
 
             $str_path = isset($url['path']) ? $url['path'] : '';
             $http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://';

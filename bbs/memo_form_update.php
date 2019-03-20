@@ -15,7 +15,7 @@ $msg = '';
 $error_list  = array();
 $member_list = array('id'=>array(), 'nick'=>array());
 
-start_event('memo_form_update_before', $recv_list);
+run_event('memo_form_update_before', $recv_list);
 
 for ($i=0; $i<count($recv_list); $i++) {
     $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list[$i]}' ");
@@ -67,14 +67,14 @@ for ($i=0; $i<count($member_list['id']); $i++) {
     $recv_mb_nick = get_text($member_list['nick'][$i]);
 
     // 받는 회원 쪽지 INSERT
-    $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_type, me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}' , 'recv', '{$_SERVER['REMOTE_ADDR']}' ) ";
+    $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_type, me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00' , 'recv', '{$_SERVER['REMOTE_ADDR']}' ) ";
 
     sql_query($sql);
 
     if( $me_id = sql_insert_id() ){
 
         // 보내는 회원 쪽지 INSERT
-        $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_send_id, me_type , me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '$me_id', 'send', '{$_SERVER['REMOTE_ADDR']}' ) ";
+        $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_send_id, me_type , me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00', '$me_id', 'send', '{$_SERVER['REMOTE_ADDR']}' ) ";
         sql_query($sql);
 
     }
@@ -93,14 +93,14 @@ if ($member_list) {
     $redirect_url = G5_HTTP_BBS_URL."/memo.php?kind=send";
     $str_nick_list = implode(',', $member_list['nick']);
 
-    start_event('memo_form_update_after', $member_list, $str_nick_list, $redirect_url);
+    run_event('memo_form_update_after', $member_list, $str_nick_list, $redirect_url);
 
     alert($str_nick_list." 님께 쪽지를 전달하였습니다.", $redirect_url, false);
 } else {
 
     $redirect_url = G5_HTTP_BBS_URL."/memo_form.php";
     
-    start_event('memo_form_update_failed', $member_list, $redirect_url);
+    run_event('memo_form_update_failed', $member_list, $redirect_url);
     
     exit;
 

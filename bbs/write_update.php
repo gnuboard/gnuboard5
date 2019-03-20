@@ -127,7 +127,7 @@ for ($i=1; $i<=10; $i++) {
 
 @include_once($board_skin_path.'/write_update.head.skin.php');
 
-start_event('write_update_before', $board, $wr_id, $w, $qstr);
+run_event('write_update_before', $board, $wr_id, $w, $qstr);
 
 if ($w == '' || $w == 'u') {
 
@@ -553,7 +553,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         // 올라간 파일의 퍼미션을 변경합니다.
         chmod($dest_file, G5_FILE_PERMISSION);
 
-        $dest_file = apply_replace('write_update_upload_file', $dest_file, $board, $wr_id, $w);
+        $dest_file = run_replace('write_update_upload_file', $dest_file, $board, $wr_id, $w);
     }
 }
 
@@ -612,7 +612,7 @@ for ($i=0; $i<count($upload); $i++)
                          bf_datetime = '".G5_TIME_YMDHIS."' ";
         sql_query($sql);
 
-        start_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
+        run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
     }
 }
 
@@ -696,7 +696,7 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
     // 중복된 메일 주소는 제거
     $unique_email = array_unique($array_email);
-    $unique_email = apply_replace('write_update_mail_list', array_values($unique_email), $board, $wr_id);
+    $unique_email = run_replace('write_update_mail_list', array_values($unique_email), $board, $wr_id);
 
     for ($i=0; $i<count($unique_email); $i++) {
         mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
@@ -709,9 +709,9 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
 delete_cache_latest($bo_table);
 
-$redirect_url = apply_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
 
-start_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
 
 if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
