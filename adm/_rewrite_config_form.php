@@ -31,7 +31,7 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
         <p>
             게시판과 컨텐츠 페이지에 짧은 URL 을 사용합니다.
             <?php if( ! $is_write_file && check_need_rewrite_rules() ) {   // apache인 경우 ?>
-            <br>짧은 주소 사용시 아래 Apache 설정 코드를 참고하여 설정해 주세요.
+            <br><strong>짧은 주소 사용시 아래 Apache 설정 코드를 참고하여 설정해 주세요.</strong>
             <?php } ?>
         </p>
     </div>
