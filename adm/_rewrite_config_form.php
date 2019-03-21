@@ -21,7 +21,7 @@ if ( $is_use_nginx ){
 }
 
 if ( $is_use_apache ){
-    $is_write_file = (!file_exists(G5_PATH.'/.htaccess') && is_writable($home_path)) || is_writable(G5_PATH.'/.htaccess') ? true : false;
+    $is_write_file = (is_writable(G5_PATH) || (file_exists(G5_PATH.'/.htaccess') && is_writable(G5_PATH.'/.htaccess'))) ? true : false;
     $is_apache_need_rules = check_need_rewrite_rules();
     $is_apache_rewrite = function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules());
 }
@@ -41,10 +41,12 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
     <div class="local_desc02 local_desc">
         <p>
             게시판과 컨텐츠 페이지에 짧은 URL 을 사용합니다.
-            <?php if( ! $is_apache_rewrite ){ ?>
-            <br><strong>Apache 서버인 경우 rewrite_module 이 비활성화 되어 있으면 짧은 주소를 사용할수 없습니다.</strong>
-            <?php } else if( ! $is_write_file && $is_apache_need_rules ) {   // apache인 경우 ?>
-            <br><strong>짧은 주소 사용시 아래 Apache 설정 코드를 참고하여 설정해 주세요.</strong>
+            <?php if( $is_use_apache && ! $is_use_nginx ){ ?>
+                <?php if( ! $is_apache_rewrite ){ ?>
+                <br><strong>Apache 서버인 경우 rewrite_module 이 비활성화 되어 있으면 짧은 주소를 사용할수 없습니다.</strong>
+                <?php } else if( ! $is_write_file && $is_apache_need_rules ) {   // apache인 경우 ?>
+                <br><strong>짧은 주소 사용시 아래 Apache 설정 코드를 참고하여 설정해 주세요.</strong>
+                <?php } ?>
             <?php } ?>
         </p>
     </div>
