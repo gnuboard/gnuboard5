@@ -525,6 +525,8 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .is_rewrite .connect-close .txt {position:absolute;line-height:0;font-size:0;overflow:hidden}
 .is_rewrite textarea{width:99%;min-height:260px}
 .is_rewrite .copy_title{margin-top:15px;margin-bottom:10px;font-weight:bold;text-align:left}
+.is_rewrite .info-success{color:#155724}
+.is_rewrite .info-warning{color:#856404}
 
 /* 관리권한설정 */
 #add_admin fieldset {margin-top:20px;overflow:auto;padding:2px 6px;line-height:1.4;resize:vertical}

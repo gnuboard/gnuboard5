@@ -1,18 +1,29 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
-$is_apache = (stripos($_SERVER['SERVER_SOFTWARE'], 'apache') !== false);
+$is_use_apache = (stripos($_SERVER['SERVER_SOFTWARE'], 'apache') !== false);
 
-$is_nginx = (stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false);
+$is_use_nginx = (stripos($_SERVER['SERVER_SOFTWARE'], 'nginx') !== false);
 
-$is_iis = !$is_apache && (stripos($_SERVER['SERVER_SOFTWARE'], 'microsoft-iis') !== false);
+$is_use_iis = !$is_use_apache && (stripos($_SERVER['SERVER_SOFTWARE'], 'microsoft-iis') !== false);
 
 $is_write_file = false;
+$is_apache_need_rules = false;
+$is_apache_rewrite = false;
 
-if ( $is_nginx ){
+if( !($is_use_apache || $is_use_nginx || $is_use_iis) ){    // 셋다 아니면 다 출력시킨다.
+    $is_use_apache = true;
+    $is_use_nginx = true;
+}
+
+if ( $is_use_nginx ){
     $is_write_file = false;
-} else if ( $is_apache && ((!file_exists(G5_PATH.'/.htaccess') && is_writable($home_path)) || is_writable(G5_PATH.'/.htaccess')) ){
-    $is_write_file = true;
+}
+
+if ( $is_use_apache ){
+    $is_write_file = (!file_exists(G5_PATH.'/.htaccess') && is_writable($home_path)) || is_writable(G5_PATH.'/.htaccess') ? true : false;
+    $is_apache_need_rules = check_need_rewrite_rules();
+    $is_apache_rewrite = function_exists('apache_get_modules') && in_array('mod_rewrite', apache_get_modules());
 }
 
 $get_path_url = parse_url( G5_URL );
@@ -30,16 +41,19 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
     <div class="local_desc02 local_desc">
         <p>
             게시판과 컨텐츠 페이지에 짧은 URL 을 사용합니다.
-            <?php if( ! $is_write_file && check_need_rewrite_rules() ) {   // apache인 경우 ?>
+            <?php if( ! $is_apache_rewrite ){ ?>
+            <br><strong>Apache 서버인 경우 rewrite_module 이 비활성화 되어 있으면 짧은 주소를 사용할수 없습니다.</strong>
+            <?php } else if( ! $is_write_file && $is_apache_need_rules ) {   // apache인 경우 ?>
             <br><strong>짧은 주소 사용시 아래 Apache 설정 코드를 참고하여 설정해 주세요.</strong>
             <?php } ?>
         </p>
     </div>
 
     <div class="server_config_views">
-        <?php if ( $is_apache ){ ?>
+        <?php if ( $is_use_apache ){ ?>
             <button type="button" data-remodal-target="modal_apache" class="btn btn_03">Apache 설정 코드 보기</button>
-        <?php } else if ( $is_nginx ) { ?>
+        <?php } ?>
+        <?php if ( $is_use_nginx ) { ?>
             <button type="button" data-remodal-target="modal_nginx" class="btn btn_03">Nginx 설정 코드 보기</button>
         <?php } ?>
     </div>
@@ -79,8 +93,12 @@ add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
             </button>
 
             <h4 class="copy_title">.htaccess 파일에 적용할 코드입니다.
-            <?php if( ! $is_write_file ) { ?>
-            <br>자동으로 .htaccess 파일을 수정 할수 있는 권한이 없습니다.<br>.htaccess 파일이 없다면 생성 후에, 아래 코드가 없으면 코드를 복사하여 붙여넣기 해 주세요.
+            <?php if( ! $is_apache_rewrite ) { ?>
+            <br><span class="info-warning">Apache 서버인 경우 rewrite_module 이 비활성화 되어 있으면 짧은 주소를 사용할수 없습니다.</span>
+            <?php } else if ( ! $is_write_file && $is_apache_need_rules ) { ?>
+            <br><span class="info-warning">자동으로 .htaccess 파일을 수정 할수 있는 권한이 없습니다.<br>.htaccess 파일이 없다면 생성 후에, 아래 코드가 없으면 코드를 복사하여 붙여넣기 해 주세요.</span>
+            <?php } else if ( ! $is_apache_need_rules ){ ?>
+            <br><span class="info-success">정상적으로 적용된 상태입니다.</span>
             <?php } ?>
             </h4>
             <textarea readonly="readonly" rows="10"><?php echo get_mod_rewrite_rules(true); ?></textarea>
