@@ -12,10 +12,10 @@ if ( ! preg_match('/(jpg|jpeg|png|gif|bmp)$/i', $extension) ){
     alert_close('이미지 확장자가 아닙니다.');
 }
 
-if(strpos($filename, 'data/editor')) {
+if(strpos($filename, G5_DATA_DIR.'/editor')) {
     $editor_file = strstr($filename, 'editor');
     $filepath = G5_DATA_PATH.'/'.$editor_file;
-} else if(strpos($filename, 'data/qa')) {
+} else if(strpos($filename, G5_DATA_DIR.'/qa')) {
     $editor_file = strstr($filename, 'qa');
     $filepath = G5_DATA_PATH.'/'.$editor_file;
 } else {
