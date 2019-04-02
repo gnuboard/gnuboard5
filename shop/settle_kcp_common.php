@@ -17,6 +17,9 @@ if(!$default['de_card_test']) {
         case '203.238.36.161' :
         case '203.238.36.173' :
         case '203.238.36.178' :
+        case '103.215.144.173' :    //판교 IDC IP주소 2019년 4월 3일 추가
+        case '103.215.144.174' :    //판교 IDC IP주소 2019년 4월 3일 추가
+        case '103.215.145.30' :    //판교 IDC IP주소 2019년 4월 3일 추가
             break;
         default :
             $super_admin = get_admin('super');
