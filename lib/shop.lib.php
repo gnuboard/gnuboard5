@@ -2234,7 +2234,10 @@ function get_wishlist_count_by_item($it_id='')
 {
     global $g5;
 
-    $sql = "select count(a.it_id) as num from {$g5['g5_shop_wish_table']} a, {$g5['g5_shop_item_table']} b where a.it_id  = b.it_id";
+    if( !$it_id ) return 0;
+
+    $sql = "select count(a.it_id) as num from {$g5['g5_shop_wish_table']} a, {$g5['g5_shop_item_table']} b where a.it_id  = b.it_id and b.it_id = '$it_id'";
+
     $row = sql_fetch($sql);
 
     return (int) $row['num'];
