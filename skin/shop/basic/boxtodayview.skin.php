@@ -34,6 +34,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
         $it_name = get_text($rowx['it_name']);
         $img = get_it_image($tv_it_id, $tv_div['img_width'], $tv_div['img_height'], $tv_it_id, '', $it_name);
+        $it_price = get_price($rowx);
+        $print_price = is_int($it_price) ? number_format($it_price) : $it_price;
 
         if ($tv_tot_count == 0) echo '<ul id="stv_ul">'.PHP_EOL;
         echo '<li class="stv_item c'.$k.'">'.PHP_EOL;
@@ -44,9 +46,9 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         echo cut_str($it_name, 10, '').PHP_EOL;
         echo '</div>';
         echo '<div class="prd_cost">';
-        echo number_format(get_price($rowx)).PHP_EOL;
+        echo $print_price.PHP_EOL;
         echo '</div>'.PHP_EOL;
-         echo '</li>'.PHP_EOL;
+        echo '</li>'.PHP_EOL;
 
         $tv_tot_count++;
         $i++;
