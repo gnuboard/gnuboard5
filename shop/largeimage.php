@@ -7,7 +7,7 @@ if (G5_IS_MOBILE) {
 }
 
 $it_id = get_search_string(trim($_GET['it_id']));
-$no = $_GET['no'];
+$no = (isset($_GET['no']) && $_GET['no']) ? (int) $_GET['no'] : 1;
 
 $sql = " select it_id, it_name, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
             from {$g5['g5_shop_item_table']} where it_id='$it_id' ";
@@ -18,7 +18,7 @@ if(!$row['it_id'])
 
 $imagefile = G5_DATA_PATH.'/item/'.$row['it_img'.$no];
 $imagefileurl = G5_DATA_URL.'/item/'.$row['it_img'.$no];
-$size = getimagesize($imagefile);
+$size = @getimagesize($imagefile);
 
 $g5['title'] = "{$row['it_name']} ($it_id)";
 include_once(G5_PATH.'/head.sub.php');
