@@ -17,7 +17,7 @@
 
 /* 오늘 본 상품 */
 #stv{position:relative}
-#stv_pg {display:block;;text-align:center;margin:10px 0 0;line-height:20px}
+#stv_pg {display:block;text-align:center;margin:10px 0 0;line-height:20px}
 .stv_item {display:none;padding:0 9px;word-break:break-all}
 #up{position:absolute;bottom:0;left:0;background:url(img/btn_sb_prev.png) no-repeat 50% 50%;width:30px;height:20px;text-indent:-999px;overflow:hidden;border:1px solid #ccc;}
 #down{position:absolute;bottom:0;right:0;background:url(img/btn_sb_next.png) no-repeat 50% 50%;width:30px;height:20px;text-indent:-999px;overflow:hidden;border:1px solid #ccc;}
@@ -45,9 +45,9 @@
 #main_bn {border:1px solid #cdcdcd;position:relative;margin-bottom:20px}
 #main_bn .slide-wrap{display:none}
 #main_bn .slide-wrap img{max-width:100%;height:auto}
-#main_bn .bx-prev{position:absolute;top:50%;left:0;margin-top:-35px;z-index:99;background:url(img/btn_prev.png) no-repeat 50% 50%;width:50px;height:70px;;text-indent:-999px;overflow:hidden;opacity:0.6}
+#main_bn .bx-prev{position:absolute;top:50%;left:0;margin-top:-35px;z-index:99;background:url(img/btn_prev.png) no-repeat 50% 50%;width:50px;height:70px;text-indent:-999px;overflow:hidden;opacity:0.6}
 #main_bn .bx-prev:hover{opacity:1}
-#main_bn .bx-next{position:absolute;top:50%;right:0;margin-top:-35px;z-index:99;background:url(img/btn_next.png) no-repeat 50% 50%;width:50px;height:70px;;text-indent:-999px;overflow:hidden;opacity:0.6}
+#main_bn .bx-next{position:absolute;top:50%;right:0;margin-top:-35px;z-index:99;background:url(img/btn_next.png) no-repeat 50% 50%;width:50px;height:70px;text-indent:-999px;overflow:hidden;opacity:0.6}
 #main_bn .bx-next:hover{opacity:1}
 #main_bn #bx_pager {border-top:1px solid #cdcdcd}
 #main_bn #bx_pager ul:after {display:block;visibility:hidden;clear:both;content:""}
@@ -280,7 +280,7 @@
 .smt_50 li{margin-bottom:10px;position:relative;padding-left:60px;min-height:50px;}
 .smt_50 .sct_img{width:50px;position:absolute;top:0;left:0;}
 .smt_50 .sct_img img{width:100%;height:auto}
-.smt_50 .sct_rank{position:absolute;top:0;left:0;background:#fb5861;display:block;width:20px;height:20px;line-height:20px;color:#fff;text-align:center;;z-index:10;font-weight:bold}
+.smt_50 .sct_rank{position:absolute;top:0;left:0;background:#fb5861;display:block;width:20px;height:20px;line-height:20px;color:#fff;text-align:center;z-index:10;font-weight:bold}
 .smt_50 .sct_txt a{color:#555;display:block;margin:0 0 3px;line-height:1.4em}
 .smt_50 .sct_cost{font-weight:bold}
 
@@ -477,7 +477,7 @@
 #sit_use h2 {position:absolute;font-size:0;line-height:0;content:""}
 #sit_use h3 {position:absolute;font-size:0;line-height:0;content:""}
 
-.sit_use_top{background:#f8f7f7;position:relative;border:1px solid #dad8d8;margin:20px 0 15px;padding:20px 40px;;line-height:45px;min-height:90px;vertical-align:middle}
+.sit_use_top{background:#f8f7f7;position:relative;border:1px solid #dad8d8;margin:20px 0 15px;padding:20px 40px;line-height:45px;min-height:90px;vertical-align:middle}
 .sit_use_top h4{display:inline-block;font-size:1.5em;margin-right:15px}
 
 .sit_use_top .st_bg{background:#666}
@@ -562,7 +562,7 @@
 #sps_sch a {display:inline-block;padding:0 8px;height:40px;line-height:40px;vertical-align:top;border-radius:3px;background:#fff;color:#3059c7;font-weight:bold;border:1px solid #3059c7;text-decoration:none;}
 #sps_sch .sch_wr{border:1px solid #6d7892;border-radius:3px;display:inline-block}
 #sps_sch:after {display:block;visibility:hidden;clear:both;content:""}
-#sps_sch select{border:0;;margin:9px 5px ;height:20px;float:left;border-right:1px solid #ddd;}
+#sps_sch select{border:0;margin:9px 5px ;height:20px;float:left;border-right:1px solid #ddd;}
 #sps_sch .sch_input{height:38px;border:0;padding:0;background-color:transparent;float:left}
 #sps_sch .sch_btn{height:38px;float:left;background:none;border:0;width:40px;font-size:15px}*/
 
@@ -599,7 +599,7 @@
 #sqa_sch a {display:inline-block;padding:0 8px;height:40px;line-height:40px;vertical-align:top;border-radius:3px;background:#fff;color:#3059c7;font-weight:bold;border:1px solid #3059c7;text-decoration:none;}
 #sqa_sch .sch_wr{border:1px solid #6d7892;border-radius:3px;display:inline-block}
 #sqa_sch:after {display:block;visibility:hidden;clear:both;content:""}
-#sqa_sch select{border:0;;margin:9px 5px ;height:20px;float:left;border-right:1px solid #ddd;}
+#sqa_sch select{border:0;margin:9px 5px ;height:20px;float:left;border-right:1px solid #ddd;}
 #sqa_sch .sch_input{height:38px;border:0;padding:0;background-color:transparent;float:left}
 #sqa_sch .sch_btn{height:38px;float:left;background:none;border:0;width:40px;font-size:15px}*/
 
@@ -667,7 +667,7 @@
 .couponzone_list p{margin:0 0 5px;position:absolute;top:5px;right:0;color:#666}
 .couponzone_list ul{padding:0;margin:0;list-style:none}
 .couponzone_list ul:after {display:block;visibility:hidden;clear:both;content:""}
-.couponzone_list ul li{float:left;width:233px;border:1px solid #ddd;background:#fff;padding:15px;;margin:0 0 10px 10px;line-height:1.2em}
+.couponzone_list ul li{float:left;width:233px;border:1px solid #ddd;background:#fff;padding:15px;margin:0 0 10px 10px;line-height:1.2em}
 .couponzone_list ul li:nth-child(4n+1){clear:both;margin-left:0;}
 .couponzone_list ul li img{width:100%;height:auto}
 .couponzone_list ul li .coupon_img{}
@@ -675,7 +675,7 @@
 .couponzone_list ul li .coupon_date{margin: 5px 0px;font-size:0.92em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;color:#777}
 .couponzone_list ul li .coupon_target{margin: 5px 0px;font-size:0.92em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;color:#777}
 .couponzone_list ul li .coupon_target a{color:#777;text-decoration:underline}
-.couponzone_list ul li .coupon_point{margin: 5px 0px;font-size:0.92em;;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;color:#777}
+.couponzone_list ul li .coupon_point{margin: 5px 0px;font-size:0.92em;text-overflow:ellipsis;overflow:hidden;white-space:nowrap;color:#777}
 .couponzone_list ul li .coupon_btn{margin:10px 0 0;text-align:center}
 .couponzone_list ul li .coupon_btn .btn02{width:100%;height:35px;line-height:35px;border-color:#d50c0c;color:#d50c0c;background:#fff;font-weight:bold;}
 .couponzone_list ul li .coupon_btn .btn02:hover{background:#d50c0c;color:#fff}
