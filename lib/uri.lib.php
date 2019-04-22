@@ -332,9 +332,9 @@ function get_mod_rewrite_rules($return_string=false){
         $rules[] = $add_rules;
     }
 
-    $rules[] = 'RewriteRule ^content/([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/content.php?co_id=$1&rewrite=1  [L]';
+    $rules[] = 'RewriteRule ^content/([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/content.php?co_id=$1&rewrite=1  [QSA,L]';
     $rules[] = 'RewriteRule ^content/([^/]+)/$  '.G5_BBS_DIR.'/content.php?co_seo_title=$1&rewrite=1      [QSA,L]';
-    $rules[] = 'RewriteRule ^rss/([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/rss.php?bo_table=$1        [L]';
+    $rules[] = 'RewriteRule ^rss/([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/rss.php?bo_table=$1        [QSA,L]';
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)$  '.G5_BBS_DIR.'/board.php?bo_table=$1&rewrite=1      [QSA,L]';
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/([^/]+)/$ '.G5_BBS_DIR.'/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1      [QSA,L]';
     $rules[] = 'RewriteRule ^([0-9a-zA-Z_]+)/write$  '.G5_BBS_DIR.'/write.php?bo_table=$1&rewrite=1    [QSA,L]';
