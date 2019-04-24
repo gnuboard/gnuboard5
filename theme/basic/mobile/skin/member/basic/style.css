@@ -175,6 +175,7 @@
 #flogin {background:#fff;margin:20px 0}
 
 #mb_login_notmb {background:#fff;border-bottom:1px solid #ccc;padding:20px}
+#mb_login_notmb .chk_box input[type="checkbox"] + label{padding-left:20px}
 #mb_login_notmb h2 {font-size:1.25em;padding:10px;background:#f3f3f3}
 #mb_login_notmb p {border:0;padding:0;margin:10px;color:#}
 #guest_privacy p {border:1px solid #ddd;background:#fff;color:#666;min-height:20px;height:200px;padding:10px;text-align:left;overflow-y:auto;margin:10px 0}
