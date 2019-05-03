@@ -15,7 +15,7 @@ $mode = substr(strip_tags($_GET['mode']), 0, 20);
 if(!in_array($mode, $arr_mode))
     $mode = 'index';
 
-if(G5_COMMUNITY_USE === false || $mode == 'shop' || $mode == 'ca_list' || $mode == 'item')
+if((defined('G5_COMMUNITY_USE') && G5_COMMUNITY_USE === false) || $mode == 'shop' || $mode == 'ca_list' || $mode == 'item')
     define('_SHOP_', true);
 
 $qstr_index   = '&amp;mode=index';
@@ -150,7 +150,7 @@ require_once(G5_PATH.'/head.sub.php');
         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_list; ?>">게시글 리스트</a></li>
         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_view; ?>">게시글 보기</a></li>
         <?php if(defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
-        <?php if(G5_COMMUNITY_USE) { ?>
+        <?php if(defined('G5_COMMUNITY_USE') == false || G5_COMMUNITY_USE) { ?>
         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_shop; ?>">쇼핑몰</a></li>
         <?php } ?>
         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_ca_list; ?>">상품리스트</a></li>

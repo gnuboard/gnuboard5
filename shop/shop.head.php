@@ -28,7 +28,7 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
     <div id="tnb">
         <h3>회원메뉴</h3>
         <ul>
-            <?php if(G5_COMMUNITY_USE) { ?>
+            <?php if(defined('G5_COMMUNITY_USE') == false || G5_COMMUNITY_USE) { ?>
             <li class="tnb_left tnb_shop"><a href="<?php echo G5_SHOP_URL; ?>/"><i class="fa fa-shopping-bag" aria-hidden="true"></i> 쇼핑몰</a></li>
             <li class="tnb_left tnb_community"><a href="<?php echo G5_URL; ?>/"><i class="fa fa-home" aria-hidden="true"></i> 커뮤니티</a></li>
             <?php } ?>
