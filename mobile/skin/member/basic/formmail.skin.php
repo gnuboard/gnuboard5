@@ -16,7 +16,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <input type="hidden" name="fmail" value="<?php echo $member['mb_email'] ?>">
     <?php } ?>
 
-    <div class="form_01">
+    <div class="form_01 new_win_con">
         <h2 class="sound_only">메일쓰기</h2>
         <ul>
             <?php if (!$is_member) { ?>
@@ -33,39 +33,45 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <label for="subject" class="sound_only">제목<strong>필수</strong></label>
                 <input type="text" name="subject" id="subject" required class="frm_input required" placeholder="제목">
             </li>
-            <li>
-                형식
+            <li class="chk_box">
+                <span class="sound_only">형식</span>
+                <input type="radio" name="type" value="0" id="type_text" checked>
+                <label for="type_text"><span></span>TEXT</label>
                 
-                    <input type="radio" name="type" value="0" id="type_text" checked> <label for="type_text">TEXT</label>
-                    <input type="radio" name="type" value="1" id="type_html"> <label for="type_html">HTML</label>
-                    <input type="radio" name="type" value="2" id="type_both"> <label for="type_both">TEXT+HTML</label>
+                <input type="radio" name="type" value="1" id="type_html">
+                <label for="type_html"><span></span>HTML</label>
                 
+                <input type="radio" name="type" value="2" id="type_both">
+                <label for="type_both"><span></span>TEXT+HTML</label>
             </li>
             <li>
                 <label for="content" class="sound_only">내용<strong>필수</strong></label>
                 <textarea name="content" id="content" required class="required" placeholder="내용"></textarea>
             </li>
-            <li class="file_wr">
-                <label for="file1" class="lb_icon">첨부 1</label>
-                <input type="file" name="file1" id="file1" class="frm_file">
+            
+            <li class="formmail_flie">
+                <div class="file_wr">
+                    <label for="file1" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 첨부 파일 1</span></label>
+                    <input type="file" name="file1"  id="file1"  class="frm_file full_input">
+               </div>
+               <div class="frm_info">첨부 파일은 누락될 수 있으므로 메일을 보낸 후 파일이 첨부 되었는지 반드시 확인해 주시기 바랍니다.</div>   
             </li>
-            <li class="file_wr">
-                <label for="file2" class="lb_icon">첨부 2</label>
-                <input type="file" name="file2" id="file2" class="frm_file">
-            </li>
+            <li class="formmail_flie">
+                <div class="file_wr">
+                    <label for="file2" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 첨부 파일 2</span></label>
+                    <input type="file" name="file2" id="file2" class="frm_file full_input">
+                </div>
+            </li>            
             <li>
-                자동등록방지
+                <span class="sound_only">자동등록방지</span>
                 <?php echo captcha_html(); ?>
             </li>
         </ul>
-
         <div class="win_btn">
-            <input type="submit" value="메일발송" id="btn_submit" class="btn_submit">
+        	<button type="submit" id="btn_submit" class="btn_b02 reply_btn">메일발송</button>
             <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
         </div>
     </div>
-
-
     </form>
 </div>
 

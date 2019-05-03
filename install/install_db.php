@@ -13,6 +13,11 @@ include_once ('../config.php');
 include_once ('../lib/common.lib.php');
 include_once('./install.function.php');    // 인스톨 과정 함수 모음
 
+include_once('../lib/hook.lib.php');    // hook 함수 파일
+include_once('../lib/get_data.lib.php');    
+include_once('../lib/uri.lib.php');    // URL 함수 파일
+include_once('../lib/cache.lib.php');
+
 $title = G5_VERSION." 설치 완료 3/3";
 include_once ('./install.inc.php');
 
@@ -57,7 +62,7 @@ if (!$select_db) {
 }
 
 $mysql_set_mode = 'false';
-sql_set_charset('utf8', $dblink);
+sql_set_charset(G5_DB_CHARSET, $dblink);
 $result = sql_query(" SELECT @@sql_mode as mode ", true, $dblink);
 $row = sql_fetch_array($result);
 if($row['mode']) {
@@ -82,7 +87,10 @@ $file = preg_replace('/`g5_([^`]+`)/', '`'.$table_prefix.'$1', $file);
 $f = explode(';', $file);
 for ($i=0; $i<count($f); $i++) {
     if (trim($f[$i]) == '') continue;
-    sql_query($f[$i], true, $dblink);
+
+    $sql = get_db_create_replace($f[$i]);
+
+    sql_query($sql, true, $dblink);
 }
 // 테이블 생성 ------------------------------------
 ?>
@@ -176,7 +184,7 @@ sql_query($sql, true, $dblink);
 // 관리자 회원가입
 $sql = " insert into `{$table_prefix}member`
             set mb_id = '$admin_id',
-                 mb_password = PASSWORD('$admin_pass'),
+                 mb_password = '".get_encrypt_string($admin_pass)."',
                  mb_name = '$admin_name',
                  mb_nick = '$admin_name',
                  mb_email = '$admin_email',
@@ -190,9 +198,9 @@ $sql = " insert into `{$table_prefix}member`
 sql_query($sql, true, $dblink);
 
 // 내용관리 생성
-sql_query(" insert into `{$table_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>' ", true, $dblink);
-sql_query(" insert into `{$table_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 처리방침', co_content= '<p align=center><b>개인정보 처리방침에 대한 내용을 입력하십시오.</b></p>' ", true, $dblink);
-sql_query(" insert into `{$table_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>' ", true, $dblink);
+sql_query(" insert into `{$table_prefix}content` set co_id = 'company', co_html = '1', co_subject = '회사소개', co_seo_title = '".generate_seo_title('회사소개')."', co_content= '<p align=center><b>회사소개에 대한 내용을 입력하십시오.</b></p>' ", true, $dblink);
+sql_query(" insert into `{$table_prefix}content` set co_id = 'privacy', co_html = '1', co_subject = '개인정보 처리방침', co_seo_title = '".generate_seo_title('개인정보 처리방침')."', co_content= '<p align=center><b>개인정보 처리방침에 대한 내용을 입력하십시오.</b></p>' ", true, $dblink);
+sql_query(" insert into `{$table_prefix}content` set co_id = 'provision', co_html = '1', co_subject = '서비스 이용약관', co_seo_title = '".generate_seo_title('서비스 이용약관')."', co_content= '<p align=center><b>서비스 이용약관에 대한 내용을 입력하십시오.</b></p>' ", true, $dblink);
 
 // FAQ Master
 sql_query(" insert into `{$table_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ", true, $dblink);
@@ -279,6 +287,8 @@ for ($i=0; $i<count($tmp_bo_table); $i++)
 
     // 게시판 테이블 생성
     $file = file("../adm/sql_write.sql");
+    $file = get_db_create_replace($file);
+
     $sql = implode($file, "\n");
 
     $create_table = $table_prefix.'write_' . $tmp_bo_table[$i];

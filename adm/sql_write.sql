@@ -10,6 +10,7 @@ CREATE TABLE `__TABLE_NAME__` (
   `wr_option` set('html1','html2','secret','mail') NOT NULL,
   `wr_subject` varchar(255) NOT NULL,
   `wr_content` text NOT NULL,
+  `wr_seo_title` varchar(255) NOT NULL DEFAULT '',
   `wr_link1` text NOT NULL,
   `wr_link2` text NOT NULL,
   `wr_link1_hit` int(11) NOT NULL DEFAULT '0',
@@ -39,6 +40,7 @@ CREATE TABLE `__TABLE_NAME__` (
   `wr_9` varchar(255) NOT NULL,
   `wr_10` varchar(255) NOT NULL,
   PRIMARY KEY (`wr_id`),
+  KEY `wr_seo_title` (`wr_seo_title`),
   KEY `wr_num_reply_parent` (`wr_num`,`wr_reply`,`wr_parent`),
   KEY `wr_is_comment` (`wr_is_comment`,`wr_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;

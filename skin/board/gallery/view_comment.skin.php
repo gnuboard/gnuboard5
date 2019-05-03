@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 var char_min = parseInt(<?php echo $comment_min ?>); // 최소
 var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 </script>
-<button type="button" class="cmt_btn"><i class="fa fa-commenting-o" aria-hidden="true"></i> 댓글목록</button>
+<button type="button" class="cmt_btn"><span class="total"><b>댓글</b> <?php echo $view['wr_comment']; ?></span><span class="cmt_more"></span></button>
 <!-- 댓글 시작 { -->
 <section id="bo_vc">
     <h2>댓글목록</h2>
@@ -24,56 +24,79 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         */
         $comment = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $comment);
         $cmt_sv = $cmt_amt - $i + 1; // 댓글 헤더 z-index 재설정 ie8 이하 사이드뷰 겹침 문제 해결
-     ?>
+	?>
 
-    <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
-        <header style="z-index:<?php echo $cmt_sv; ?>">
-            <h2><?php echo get_text($list[$i]['wr_name']); ?>님의 <?php if ($cmt_depth) { ?><span class="sound_only">댓글의</span><?php } ?> 댓글</h2>
-            <?php echo $list[$i]['name'] ?>
-            <?php if ($is_ip_view) { ?>
-            <span class="sound_only">아이피</span>
-            <span>(<?php echo $list[$i]['ip']; ?>)</span>
-            <?php } ?>
-            <span class="sound_only">작성일</span>
-            <span class="bo_vc_hdinfo"><i class="fa fa-clock-o" aria-hidden="true"></i> <time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
-            <?php
-            include(G5_SNS_PATH.'/view_comment_list.sns.skin.php');
-            ?>
-        </header>
+	<article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-top-color:#e0e0e0"<?php } ?>>
+        <div class="pf_img"><?php echo get_member_profile_img($list[$i]['mb_id']) ?></div>
+        
+        <div class="cm_wrap">
 
-        <!-- 댓글 출력 -->
-        <div class="cmt_contents">
-            <p>
-                <?php if (strstr($list[$i]['wr_option'], "secret")) { ?><img src="<?php echo $board_skin_url; ?>/img/icon_secret.gif" alt="비밀글"><?php } ?>
-                <?php echo $comment ?>
-            </p>
-            <?php if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
-                $query_string = clean_query_string($_SERVER['QUERY_STRING']);
-
-                if($w == 'cu') {
-                    $sql = " select wr_id, wr_content, mb_id from $write_table where wr_id = '$c_id' and wr_is_comment = '1' ";
-                    $cmt = sql_fetch($sql);
-                    if (!($is_admin || ($member['mb_id'] == $cmt['mb_id'] && $cmt['mb_id'])))
-                        $cmt['wr_content'] = '';
-                    $c_wr_content = $cmt['wr_content'];
-                }
-
-                $c_reply_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
-                $c_edit_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
-             ?>
-            <ul class="bo_vc_act">
-                <?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;" class="btn_b03">답변</a></li><?php } ?>
-                <?php if ($list[$i]['is_edit']) { ?><li><a href="<?php echo $c_edit_href;  ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;" class="btn_b03">수정</a></li><?php } ?>
-                <?php if ($list[$i]['is_del'])  { ?><li><a href="<?php echo $list[$i]['del_link'];  ?>" onclick="return comment_delete();" class="btn_b03">삭제</a></li><?php } ?>
+            <header style="z-index:<?php echo $cmt_sv; ?>">
+	            <h2><?php echo get_text($list[$i]['wr_name']); ?>님의 <?php if ($cmt_depth) { ?><span class="sound_only">댓글의</span><?php } ?> 댓글</h2>
+	            <?php echo $list[$i]['name'] ?>
+	            <?php if ($is_ip_view) { ?>
+	            <span class="sound_only">아이피</span>
+	            <span>(<?php echo $list[$i]['ip']; ?>)</span>
+	            <?php } ?>
+	            <span class="sound_only">작성일</span>
+	            <span class="bo_vc_hdinfo"><i class="fa fa-clock-o" aria-hidden="true"></i> <time datetime="<?php echo date('Y-m-d\TH:i:s+09:00', strtotime($list[$i]['datetime'])) ?>"><?php echo $list[$i]['datetime'] ?></time></span>
+	            <?php
+	            include(G5_SNS_PATH.'/view_comment_list.sns.skin.php');
+	            ?>
+	        </header>
+	
+	        <!-- 댓글 출력 -->
+	        <div class="cmt_contents">
+	            <p>
+	                <?php if (strstr($list[$i]['wr_option'], "secret")) { ?><img src="<?php echo $board_skin_url; ?>/img/icon_secret.gif" alt="비밀글"><?php } ?>
+	                <?php echo $comment ?>
+	            </p>
+	            <?php if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
+	                $query_string = clean_query_string($_SERVER['QUERY_STRING']);
+	
+	                if($w == 'cu') {
+	                    $sql = " select wr_id, wr_content, mb_id from $write_table where wr_id = '$c_id' and wr_is_comment = '1' ";
+	                    $cmt = sql_fetch($sql);
+	                    if (!($is_admin || ($member['mb_id'] == $cmt['mb_id'] && $cmt['mb_id'])))
+	                        $cmt['wr_content'] = '';
+	                    $c_wr_content = $cmt['wr_content'];
+	                }
+	
+	                $c_reply_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
+	                $c_edit_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
+				?>            
+	            <?php } ?>
+	        </div>
+	        <span id="edit_<?php echo $comment_id ?>" class="bo_vc_w"></span><!-- 수정 -->
+	        <span id="reply_<?php echo $comment_id ?>" class="bo_vc_w"></span><!-- 답변 -->
+	
+	        <input type="hidden" value="<?php echo strstr($list[$i]['wr_option'],"secret") ?>" id="secret_comment_<?php echo $comment_id ?>">
+	        <textarea id="save_comment_<?php echo $comment_id ?>" style="display:none"><?php echo get_text($list[$i]['content1'], 0) ?></textarea>
+		</div>
+		<div class="bo_vl_opt">
+            <button type="button" class="btn_cm_opt btn_b01 btn"><i class="fa fa-ellipsis-v" aria-hidden="true"></i><span class="sound_only">댓글 옵션</span></button>
+        	<ul class="bo_vc_act">
+                <?php if ($list[$i]['is_reply']) { ?><li><a href="<?php echo $c_reply_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'c'); return false;">답변</a></li><?php } ?>
+                <?php if ($list[$i]['is_edit']) { ?><li><a href="<?php echo $c_edit_href; ?>" onclick="comment_box('<?php echo $comment_id ?>', 'cu'); return false;">수정</a></li><?php } ?>
+                <?php if ($list[$i]['is_del']) { ?><li><a href="<?php echo $list[$i]['del_link']; ?>" onclick="return comment_delete();">삭제</a></li><?php } ?>
             </ul>
-            <?php } ?>
         </div>
-        <span id="edit_<?php echo $comment_id ?>" class="bo_vc_w"></span><!-- 수정 -->
-        <span id="reply_<?php echo $comment_id ?>" class="bo_vc_w"></span><!-- 답변 -->
-
-        <input type="hidden" value="<?php echo strstr($list[$i]['wr_option'],"secret") ?>" id="secret_comment_<?php echo $comment_id ?>">
-        <textarea id="save_comment_<?php echo $comment_id ?>" style="display:none"><?php echo get_text($list[$i]['content1'], 0) ?></textarea>
-
+        <script>
+			$(function() {			    
+		    // 댓글 옵션창 열기
+		    $(".btn_cm_opt").on("click", function(){
+		        $(this).parent("div").children(".bo_vc_act").show();
+		    });
+				
+		    // 댓글 옵션창 닫기
+		    $(document).mouseup(function (e){
+		        var container = $(".bo_vc_act");
+		        if( container.has(e.target).length === 0)
+		        container.hide();
+		    });
+		});
+			
+		</script>
     </article>
     <?php } ?>
     <?php if ($i == 0) { //댓글이 없다면 ?><p id="bo_vc_empty">등록된 댓글이 없습니다.</p><?php } ?>
@@ -121,7 +144,7 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <label for="wr_name" class="sound_only">이름<strong> 필수</strong></label>
             <input type="text" name="wr_name" value="<?php echo get_cookie("ck_sns_name"); ?>" id="wr_name" required class="frm_input required" size="25" placeholder="이름">
             <label for="wr_password" class="sound_only">비밀번호<strong> 필수</strong></label>
-            <input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="25"  placeholder="비밀번호">
+            <input type="password" name="wr_password" id="wr_password" required class="frm_input required" size="25" placeholder="비밀번호">
             <?php
             }
             ?>
@@ -136,9 +159,11 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
             <?php } ?>
         </div>
         <div class="btn_confirm">
-            <input type="checkbox" name="wr_secret" value="secret" id="wr_secret">
-            <label for="wr_secret"><i class="fa fa-lock" aria-hidden="true"></i><span class="sound_only">비밀글사용</span></label>
-            <input type="submit" id="btn_submit" class="btn_submit" value="댓글등록">
+            <span class="secret_cm chk_box">
+	            <input type="checkbox" name="wr_secret" value="secret" id="wr_secret" class="selec_chk">
+	            <label for="wr_secret"><span></span>비밀글</label>
+            </span>
+            <button type="submit" id="btn_submit" class="btn_submit">댓글등록</button>
         </div>
     </div>
     </form>

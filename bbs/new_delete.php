@@ -143,5 +143,7 @@ foreach ($save_bo_table as $key=>$value) {
     delete_cache_latest($value);
 }
 
+run_event('bbs_new_delete', $chk_bn_id, $save_bo_table);
+
 goto_url("new.php?sfl=$sfl&stx=$stx&page=$page");
 ?>

@@ -15,7 +15,7 @@ if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
 
 // 다운로드 차감일 때 비회원은 다운로드 불가
 if($board['bo_download_point'] < 0 && $is_guest)
-    alert('다운로드 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+    alert('다운로드 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id)));
 
 $sql = " select bf_source, bf_file from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
 $file = sql_fetch($sql);
@@ -38,7 +38,7 @@ if ($member['mb_level'] < $board['bo_download_level']) {
     if ($member['mb_id'])
         alert($alert_msg);
     else
-        alert($alert_msg.'\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id));
+        alert($alert_msg.'\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id)));
 }
 
 $filepath = G5_DATA_PATH.'/file/'.$bo_table.'/'.$file['bf_file'];

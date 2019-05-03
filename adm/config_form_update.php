@@ -69,6 +69,7 @@ $sql = " update {$g5['config_table']}
                 cf_add_meta = '{$_POST['cf_add_meta']}',
                 cf_syndi_token = '{$_POST['cf_syndi_token']}',
                 cf_syndi_except = '{$_POST['cf_syndi_except']}',
+                cf_bbs_rewrite = '{$_POST['cf_bbs_rewrite']}',
                 cf_member_skin = '{$_POST['cf_member_skin']}',
                 cf_use_homepage = '{$_POST['cf_use_homepage']}',
                 cf_req_homepage = '{$_POST['cf_req_homepage']}',
@@ -186,6 +187,14 @@ $sql = " update {$g5['config_table']}
 sql_query($sql);
 
 //sql_query(" OPTIMIZE TABLE `$g5[config_table]` ");
+
+if( isset($_POST['cf_bbs_rewrite']) ){
+    g5_delete_all_cache();
+}
+
+run_event('admin_config_form_update');
+
+update_rewrite_rules();
 
 goto_url('./config_form.php', false);
 ?>

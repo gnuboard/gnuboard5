@@ -192,6 +192,8 @@ if ($w == '') {
 
     // 게시판 테이블 생성
     $file = file('./sql_write.sql');
+    $file = get_db_create_replace($file);
+
     $sql = implode($file, "\n");
 
     $create_table = $g5['write_prefix'] . $bo_table;
@@ -443,6 +445,8 @@ delete_cache_latest($bo_table);
 
 if(function_exists('get_admin_captcha_by'))
     get_admin_captcha_by('remove');
+
+run_event('admin_board_form_update', $bo_table, $w);
 
 goto_url("./board_form.php?w=u&bo_table={$bo_table}&amp;{$qstr}");
 ?>

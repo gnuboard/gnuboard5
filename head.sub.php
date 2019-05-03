@@ -8,7 +8,7 @@ if(!defined('G5_IS_ADMIN') && defined('G5_THEME_PATH') && is_file(G5_THEME_PATH.
     return;
 }
 
-$begin_time = get_microtime();
+$g5_debug['php']['begin_time'] = $begin_time = get_microtime();
 
 if (!isset($g5['title'])) {
     $g5['title'] = $config['cf_title'];
@@ -78,7 +78,8 @@ var g5_cookie_domain = "<?php echo G5_COOKIE_DOMAIN ?>";
 var g5_admin_url = "<?php echo G5_ADMIN_URL; ?>";
 <?php } ?>
 </script>
-<script src="<?php echo G5_JS_URL ?>/jquery-1.8.3.min.js"></script>
+<script src="<?php echo G5_JS_URL ?>/jquery-1.12.4.min.js"></script>
+<script src="<?php echo G5_JS_URL ?>/jquery-migrate-1.4.1.min.js"></script>
 <script src="<?php echo G5_JS_URL ?>/jquery.menu.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script src="<?php echo G5_JS_URL ?>/common.js?ver=<?php echo G5_JS_VER; ?>"></script>
 <script src="<?php echo G5_JS_URL ?>/wrest.js?ver=<?php echo G5_JS_VER; ?>"></script>

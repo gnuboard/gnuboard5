@@ -489,7 +489,7 @@ function admin_check_xss_params($params){
 // 접근 권한 검사
 if (!$member['mb_id'])
 {
-    alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode(G5_ADMIN_URL));
+    alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode(correct_goto_url(G5_ADMIN_URL)));
 }
 else if ($is_admin != 'super')
 {

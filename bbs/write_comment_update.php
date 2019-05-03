@@ -54,18 +54,20 @@ if (empty($wr['wr_id']))
 // 이 옵션을 사용 안 함으로 설정할 경우 어떤 스크립트도 실행 되지 않습니다.
 //if (!trim($_POST["wr_content"])) die ("내용을 입력하여 주십시오.");
 
+$post_wr_password = '';
 if ($is_member)
 {
     $mb_id = $member['mb_id'];
     // 4.00.13 - 실명 사용일때 댓글에 닉네임으로 입력되던 오류를 수정
     $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
-    $wr_password = $member['mb_password'];
+    $wr_password = '';
     $wr_email = addslashes($member['mb_email']);
     $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
 }
 else
 {
     $mb_id = '';
+    $post_wr_password = $wr_password;
     $wr_password = get_encrypt_string($wr_password);
 }
 
@@ -205,7 +207,7 @@ if ($w == 'c') // 댓글 입력
 
         $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
         // 4.00.15 - 메일로 보내는 댓글의 바로가기 링크 수정
-        $link_url = G5_BBS_URL."/board.php?bo_table=".$bo_table."&amp;wr_id=".$wr_id."&amp;".$qstr."#c_".$comment_id;
+        $link_url = get_pretty_url($bo_table, $wr_id, $qstr."#c_".$comment_id);
 
         include_once(G5_LIB_PATH.'/mailer.lib.php');
 
@@ -289,7 +291,7 @@ else if ($w == 'cu') // 댓글 수정
         if ($member['mb_id'] !== $comment['mb_id'])
             alert('자신의 글이 아니므로 수정할 수 없습니다.');
     } else {
-        if($comment['wr_password'] != $wr_password)
+        if( !($comment['mb_id'] === '' && $comment['wr_password'] && check_password($post_wr_password, $comment['wr_password'])) )
             alert('댓글을 수정할 권한이 없습니다.');
     }
 
@@ -337,5 +339,9 @@ else if ($w == 'cu') // 댓글 수정
 
 delete_cache_latest($bo_table);
 
-goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr['wr_parent'].'&amp;'.$qstr.'&amp;#c_'.$comment_id);
+$redirect_url = short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr['wr_parent'].'&amp;'.$qstr.'&amp;#c_'.$comment_id);
+
+run_event('comment_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+
+goto_url($redirect_url);
 ?>

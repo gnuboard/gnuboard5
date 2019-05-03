@@ -90,7 +90,7 @@ if($_POST['js'] == "on") {
 
     if (!$is_member)
     {
-        $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+        $href = './login.php?'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id));
 
         alert('회원만 가능합니다.', $href);
     }
@@ -144,7 +144,7 @@ if($_POST['js'] == "on") {
             else
                 $status = '비추천';
 
-            $href = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+            $href = get_pretty_url($bo_table, $wr_id);
 
             alert("이 글을 $status 하셨습니다.", '', false);
         }

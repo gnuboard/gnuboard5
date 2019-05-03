@@ -131,7 +131,7 @@ $colspan = 15;
         </td>
         <td>
             <input type="hidden" name="board_table[<?php echo $i ?>]" value="<?php echo $row['bo_table'] ?>">
-            <a href="<?php echo G5_BBS_URL ?>/board.php?bo_table=<?php echo $row['bo_table'] ?>"><?php echo $row['bo_table'] ?></a>
+            <a href="<?php echo get_pretty_url($row['bo_table']) ?>"><?php echo $row['bo_table'] ?></a>
         </td>
         <td>
             <label for="bo_skin_<?php echo $i; ?>" class="sound_only">스킨</label>

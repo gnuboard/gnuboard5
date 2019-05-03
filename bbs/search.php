@@ -172,7 +172,7 @@ if ($stx) {
         for ($i=0; $row=sql_fetch_array($result); $i++) {
             // 검색어까지 링크되면 게시판 부하가 일어남
             $list[$idx][$i] = $row;
-            $list[$idx][$i]['href'] = './board.php?bo_table='.$search_table[$idx].'&amp;wr_id='.$row['wr_parent'];
+            $list[$idx][$i]['href'] = get_pretty_url($search_table[$idx], $row['wr_parent']);
 
             if ($row['wr_is_comment'])
             {

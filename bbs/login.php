@@ -31,5 +31,7 @@ if (!file_exists($login_file))
 
 include_once($member_skin_path.'/login.skin.php');
 
+run_event('member_login_tail', $login_url, $login_action_url, $member_skin_path, $url);
+
 include_once('./_tail.sub.php');
 ?>

@@ -13,7 +13,10 @@ $recv_list = explode(',', trim($_POST['me_recv_mb_id']));
 $str_nick_list = '';
 $msg = '';
 $error_list  = array();
-$member_list = array();
+$member_list = array('id'=>array(), 'nick'=>array());
+
+run_event('memo_form_update_before', $recv_list);
+
 for ($i=0; $i<count($recv_list); $i++) {
     $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list[$i]}' ");
     if ($row) {
@@ -41,6 +44,10 @@ $error_msg = implode(",", $error_list);
 if ($error_msg && !$is_admin)
     alert("회원아이디 '{$error_msg}' 은(는) 존재(또는 정보공개)하지 않는 회원아이디 이거나 탈퇴, 접근차단된 회원아이디 입니다.\\n쪽지를 발송하지 않았습니다.");
 
+if (! count($member_list['id'])){
+    alert('해당 회원이 존재하지 않습니다.');
+}
+
 if (!$is_admin) {
     if (count($member_list['id'])) {
         $point = (int)$config['cf_memo_send_point'] * count($member_list['id']);
@@ -59,12 +66,21 @@ for ($i=0; $i<count($member_list['id']); $i++) {
     $recv_mb_id   = $member_list['id'][$i];
     $recv_mb_nick = get_text($member_list['nick'][$i]);
 
-    // 쪽지 INSERT
-    $sql = " insert into {$g5['memo_table']} ( me_id, me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime ) values ( '$me_id', '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00' ) ";
+    // 받는 회원 쪽지 INSERT
+    $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_type, me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00' , 'recv', '{$_SERVER['REMOTE_ADDR']}' ) ";
+
     sql_query($sql);
 
+    if( $me_id = sql_insert_id() ){
+
+        // 보내는 회원 쪽지 INSERT
+        $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_send_id, me_type , me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00', '$me_id', 'send', '{$_SERVER['REMOTE_ADDR']}' ) ";
+        sql_query($sql);
+
+    }
+
     // 실시간 쪽지 알림 기능
-    $sql = " update {$g5['member_table']} set mb_memo_call = '{$member['mb_id']}' where mb_id = '$recv_mb_id' ";
+    $sql = " update {$g5['member_table']} set mb_memo_call = '{$member['mb_id']}', mb_memo_cnt = '".get_memo_not_read($recv_mb_id)."' where mb_id = '$recv_mb_id' ";
     sql_query($sql);
 
     if (!$is_admin) {
@@ -73,9 +89,21 @@ for ($i=0; $i<count($member_list['id']); $i++) {
 }
 
 if ($member_list) {
+
+    $redirect_url = G5_HTTP_BBS_URL."/memo.php?kind=send";
     $str_nick_list = implode(',', $member_list['nick']);
-    alert($str_nick_list." 님께 쪽지를 전달하였습니다.", G5_HTTP_BBS_URL."/memo.php?kind=send", false);
+
+    run_event('memo_form_update_after', $member_list, $str_nick_list, $redirect_url);
+
+    alert($str_nick_list." 님께 쪽지를 전달하였습니다.", $redirect_url, false);
 } else {
-    alert("회원아이디 오류 같습니다.", G5_HTTP_BBS_URL."/memo_form.php", false);
+
+    $redirect_url = G5_HTTP_BBS_URL."/memo_form.php";
+    
+    run_event('memo_form_update_failed', $member_list, $redirect_url);
+    
+    exit;
+
+    alert("회원아이디 오류 같습니다.", $redirect_url, false);
 }
 ?>
