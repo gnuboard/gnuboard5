@@ -20,12 +20,17 @@ function g54_return_invalid_password($bool, $type, $wr){
 function g54_check_bbs_password($type, $wr, $qstr){
     if($type === 'bbs' && $wr['wr_password'] && isset($_POST['wr_password'])) {
 
-        global $bo_table;
+        global $bo_table, $w;
 
         if(G5_STRING_ENCRYPT_FUNCTION === 'create_hash' && strlen($wr['wr_password']) === G5_MYSQL_PASSWORD_LENGTH) {
             if( sql_password($_POST['wr_password']) === $wr['wr_password'] ){
-                $ss_name = 'ss_secret_'.$bo_table.'_'.$wr['wr_num'];
-                set_session($ss_name, TRUE);
+                if ($w == 's') {
+                    $ss_name = 'ss_secret_'.$bo_table.'_'.$wr['wr_num'];
+                    set_session($ss_name, TRUE);
+                } else if ($w == 'sc'){
+                    $ss_name = 'ss_secret_comment_'.$bo_table.'_'.$wr['wr_id'];
+                    set_session($ss_name, TRUE);
+                }
                 goto_url(G5_HTTP_BBS_URL.'/board.php?'.$qstr);
             }
         }
