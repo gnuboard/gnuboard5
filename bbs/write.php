@@ -312,7 +312,8 @@ if ($w == '') {
     if (!$is_admin) {
         if (!($is_member && $member['mb_id'] === $write['mb_id'])) {
             if (!check_password($wr_password, $write['wr_password'])) {
-                alert('비밀번호가 틀립니다.');
+                $is_wrong = run_replace('invalid_password', false, 'write', $write);
+                if(!$is_wrong) alert('비밀번호가 틀립니다.');
             }
         }
     }
