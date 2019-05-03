@@ -10,6 +10,9 @@ header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV
 if (!defined('G5_SET_TIME_LIMIT')) define('G5_SET_TIME_LIMIT', 0);
 @set_time_limit(G5_SET_TIME_LIMIT);
 
+if( version_compare( PHP_VERSION, '5.2.17' , '<' ) ){
+    die(sprintf('PHP 5.2.17 or higher required. Your PHP version is %s', PHP_VERSION));
+}
 
 //==========================================================================================================================
 // extract($_GET); 명령으로 인해 page.php?_POST[var1]=data1&_POST[var2]=data2 와 같은 코드가 _POST 변수로 사용되는 것을 막음

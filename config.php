@@ -5,7 +5,7 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.3.2.7');
+define('G5_GNUBOARD_VER', '5.4.0');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -29,14 +29,14 @@ if (PHP_VERSION >= '5.1.0') {
 define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
-//디버깅 상수
-define('G5_DEBUG', true);
+// 디버깅 상수, 실제 서버운영시 false 로 설정해 주제요.
+define('G5_DEBUG', false);
 
 // Set Databse table default engine is Databse default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.
 define('G5_DB_ENGINE', '');
 
 // Set Databse table default Charset
-// utf8, utf8mb4 등 지정 가능 기본값은 utf8
+// utf8, utf8mb4 등 지정 가능 기본값은 utf8, 설치전에 utf8mb4 으로 수정시 모든 테이블에 이모지 입력이 가능합니다. utf8mb4 는 mysql 또는 mariadb 5.5 버전 이상을 요구합니다.
 define('G5_DB_CHARSET', 'utf8');
 
 /*

@@ -79,7 +79,11 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
 				$url .= '&amp;wr_id='. $no;
 			}
 			if($query_string) {
-				$url .= '&amp;'. $query_string;
+                if(substr($query_string, 0, 1) !== '&') {
+                    $url .= '&amp;';
+                }
+
+				$url .= $query_string;
 			}
 		} else {
 			$url = G5_BBS_URL. '/'.$folder.'.php';
@@ -266,7 +270,7 @@ function seo_title_update($db_table, $pk_id, $type='bbs'){
     if( $type === 'bbs' ){
 
         $write = get_write($db_table, $pk_id, true);
-        if( ! $write['wr_seo_title'] && $co['wr_subject'] ){
+        if( ! $write['wr_seo_title'] && $write['wr_subject'] ){
             $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($write['wr_subject']), $db_table, $pk_id);
 
             $sql = " update `{$db_table}` set wr_seo_title = '{$wr_seo_title}' where wr_id = '{$pk_id}' ";
