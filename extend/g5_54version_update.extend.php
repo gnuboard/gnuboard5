@@ -17,8 +17,8 @@ function g54_return_invalid_password($bool, $type, $wr){
     return $bool;
 }
 
-function g54_check_bbs_password($type, $wr, $qstr){
-    if($type === 'bbs' && $wr['wr_password'] && isset($_POST['wr_password'])) {
+function g54_check_bbs_password($type, $wr, $qstr=''){
+    if($type === 'bbs' && (isset($wr['wr_password']) && $wr['wr_password']) && isset($_POST['wr_password'])) {
 
         global $bo_table, $w;
 
@@ -31,7 +31,7 @@ function g54_check_bbs_password($type, $wr, $qstr){
                     $ss_name = 'ss_secret_comment_'.$bo_table.'_'.$wr['wr_id'];
                     set_session($ss_name, TRUE);
                 }
-                goto_url(G5_HTTP_BBS_URL.'/board.php?'.$qstr);
+                goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?'.$qstr));
             }
         }
     }

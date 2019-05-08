@@ -157,7 +157,8 @@ function short_url_clean($string_url, $add_qry=''){
 
             $str_path = isset($url['path']) ? $url['path'] : '';
             $http = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 'https://' : 'http://';
-            $host = $http.$url['host'].str_replace($array_file_paths, '', $str_path);
+            $port = (isset($url['port']) && ($url['port']!==80 || $url['port']!==443)) ? ':'.$url['port'] : '';
+            $host = $http.$url['host'].$port.str_replace($array_file_paths, '', $str_path);
         }
 
         $add_param = '';

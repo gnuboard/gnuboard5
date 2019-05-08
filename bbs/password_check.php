@@ -47,5 +47,5 @@ if ($w == 's') {
 } else
     alert('w 값이 제대로 넘어오지 않았습니다.');
 
-goto_url(G5_HTTP_BBS_URL.'/board.php?'.$qstr);
+goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?'.$qstr));
 ?>
