@@ -309,13 +309,13 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     <tr>
         <th scope="row">상단내용</th>
         <td>
-            <?php echo editor_html('ev_head_html', get_text($ev['ev_head_html'], 0)); ?>
+            <?php echo editor_html('ev_head_html', get_text(html_purifier($ev['ev_head_html']), 0)); ?>
         </td>
     </tr>
     <tr>
         <th scope="row">하단내용</th>
         <td>
-            <?php echo editor_html('ev_tail_html', get_text($ev['ev_tail_html'], 0)); ?>
+            <?php echo editor_html('ev_tail_html', get_text(html_purifier($ev['ev_tail_html']), 0)); ?>
         </td>
     </tr>
     </tbody>

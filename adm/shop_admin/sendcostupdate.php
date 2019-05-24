@@ -18,11 +18,11 @@ if($w == 'd') {
     for($i=0; $i<$count; $i++) {
         $k = $_POST['chk'][$i];
 
-        $sc_id = $_POST['sc_id'][$k];
+        $sc_id = (int) $_POST['sc_id'][$k];
         sql_query(" delete from {$g5['g5_shop_sendcost_table']} where sc_id = '$sc_id' ");
     }
 } else {
-    $sc_name = trim($_POST['sc_name']);
+    $sc_name = trim(strip_tags($_POST['sc_name']));
     $sc_zip1 = preg_replace('/[^0-9]/', '', $_POST['sc_zip1']);
     $sc_zip2 = preg_replace('/[^0-9]/', '', $_POST['sc_zip2']);
     $sc_price = preg_replace('/[^0-9]/', '', $_POST['sc_price']);

@@ -55,7 +55,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         </p>
 
         <div id="guest_privacy">
-            <?php echo $default['de_guest_privacy']; ?>
+            <?php echo conv_content($default['de_guest_privacy'], $config['cf_editor']); ?>
         </div>
 
         <label for="agree">개인정보수집에 대한 내용을 읽었으며 이에 동의합니다.</label>

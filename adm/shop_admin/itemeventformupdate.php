@@ -26,6 +26,7 @@ $skin_regex_patten = "^list.[0-9]+\.skin\.php";
 
 $ev_skin = (preg_match("/$skin_regex_patten/", $ev_skin) && file_exists(G5_SHOP_SKIN_PATH.'/'.$ev_skin)) ? $ev_skin : ''; 
 $ev_mobile_skin = (preg_match("/$skin_regex_patten/", $ev_mobile_skin) && file_exists(G5_MSHOP_SKIN_PATH.'/'.$ev_mobile_skin)) ? $ev_mobile_skin : ''; 
+$ev_subject = strip_tags($ev_subject);
 
 $sql_common = " set ev_skin             = '$ev_skin',
                     ev_mobile_skin      = '$ev_mobile_skin',

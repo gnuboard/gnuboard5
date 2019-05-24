@@ -8,6 +8,25 @@ check_admin_token();
 
 $_POST = array_map('trim', $_POST);
 
+$check_sanitize_keys = array(
+'cp_subject',       // 쿠폰이름
+'cp_method',        // 쿠폰종류
+'cp_target',        // 적용상품
+'mb_id',            // 회원아이디
+'cp_start',         // 사용시작일
+'cp_end',           // 사용종료일
+'cp_type',          // 쿠폰타입
+'cp_price',         // 할인금액
+'cp_type',          // 할인금액타입
+'cp_trunc',         // 절사금액
+'cp_minimum',       // 최소주문금액
+'cp_maximum',       // 최대할인금액
+);
+
+foreach( $check_sanitize_keys as $key ){
+    $$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags($_POST[$key]) : '';
+}
+
 if(!$_POST['cp_subject'])
     alert('쿠폰이름을 입력해 주십시오.');
 

@@ -17,7 +17,7 @@ for ($i=0; $i<$count; $i++)
     // 실제 번호를 넘김
     $k = $_POST['chk'][$i];
 
-    $sql = " delete from {$g5['g5_shop_coupon_table']} where cp_id = '{$_POST['cp_id'][$k]}' ";
+    $sql = " delete from {$g5['g5_shop_coupon_table']} where cp_id = '".preg_replace('/[^a-z0-9_\-]/i', '', $_POST['cp_id'][$k])."' ";
     sql_query($sql);
 }
 
