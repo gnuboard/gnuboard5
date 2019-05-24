@@ -30,18 +30,18 @@ if ($_POST['act_button'] == "선택수정") {
         }
 
         $sql = " update {$g5['board_table']}
-                    set gr_id               = '".sql_real_escape_string($_POST['gr_id'][$k])."',
-                        bo_subject          = '".sql_real_escape_string($_POST['bo_subject'][$k])."',
-                        bo_device           = '".sql_real_escape_string($_POST['bo_device'][$k])."',
-                        bo_skin             = '".sql_real_escape_string($_POST['bo_skin'][$k])."',
-                        bo_mobile_skin      = '".sql_real_escape_string($_POST['bo_mobile_skin'][$k])."',
-                        bo_read_point       = '".sql_real_escape_string($_POST['bo_read_point'][$k])."',
-                        bo_write_point      = '".sql_real_escape_string($_POST['bo_write_point'][$k])."',
-                        bo_comment_point    = '".sql_real_escape_string($_POST['bo_comment_point'][$k])."',
-                        bo_download_point   = '".sql_real_escape_string($_POST['bo_download_point'][$k])."',
-                        bo_use_search       = '".sql_real_escape_string($_POST['bo_use_search'][$k])."',
-                        bo_use_sns          = '".sql_real_escape_string($_POST['bo_use_sns'][$k])."',
-                        bo_order            = '".sql_real_escape_string($_POST['bo_order'][$k])."'
+                    set gr_id               = '".sql_real_escape_string(strip_tags($_POST['gr_id'][$k]))."',
+                        bo_subject          = '".sql_real_escape_string(strip_tags($_POST['bo_subject'][$k]))."',
+                        bo_device           = '".sql_real_escape_string(strip_tags($_POST['bo_device'][$k]))."',
+                        bo_skin             = '".sql_real_escape_string(strip_tags($_POST['bo_skin'][$k]))."',
+                        bo_mobile_skin      = '".sql_real_escape_string(strip_tags($_POST['bo_mobile_skin'][$k]))."',
+                        bo_read_point       = '".sql_real_escape_string(strip_tags($_POST['bo_read_point'][$k]))."',
+                        bo_write_point      = '".sql_real_escape_string(strip_tags($_POST['bo_write_point'][$k]))."',
+                        bo_comment_point    = '".sql_real_escape_string(strip_tags($_POST['bo_comment_point'][$k]))."',
+                        bo_download_point   = '".sql_real_escape_string(strip_tags($_POST['bo_download_point'][$k]))."',
+                        bo_use_search       = '".sql_real_escape_string(strip_tags($_POST['bo_use_search'][$k]))."',
+                        bo_use_sns          = '".sql_real_escape_string(strip_tags($_POST['bo_use_sns'][$k]))."',
+                        bo_order            = '".sql_real_escape_string(strip_tags($_POST['bo_order'][$k]))."'
                   where bo_table            = '".sql_real_escape_string($_POST['board_table'][$k])."' ";
 
         sql_query($sql);

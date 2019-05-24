@@ -3416,7 +3416,7 @@ function get_head_title($title){
     global $g5;
 
     if( isset($g5['board_title']) && $g5['board_title'] ){
-        $title = $g5['board_title'];
+        $title = strip_tags(get_text($g5['board_title']));
     }
 
     return $title;
@@ -3547,7 +3547,7 @@ function is_include_path_check($path='', $is_input='')
             if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) ){
                 return false;
             }
-            if( preg_match('/\.\.\//i', $replace_path) && preg_match('/plugin\//i', $replace_path) && preg_match('/okname\//i', $replace_path) ){
+            if( (preg_match('/\.\.\//i', $replace_path) || preg_match('/^\/.*/i', $replace_path)) && preg_match('/plugin\//i', $replace_path) && preg_match('/okname\//i', $replace_path) ){
                 return false;
             }
         }
