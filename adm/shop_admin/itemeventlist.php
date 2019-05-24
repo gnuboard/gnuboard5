@@ -7,7 +7,7 @@ auth_check($auth[$sub_menu], "r");
 $ev_id = preg_replace('/[^0-9]/', '', $ev_id);
 $sort1 = strip_tags($sort1);
 if (!in_array($sort1, array('a.it_id', 'it_name'))) $sort1 = "a.it_id";
-$sel_field = strip_tags($sel_field);
+$sel_field = in_array($sel_field, array('a.it_id', 'it_name')) ? strip_tags($sel_field) : 'it_name';
 $sel_ca_id = get_search_string($sel_ca_id);
 $search = get_search_string($search);
 $ev_title = isset($ev_title) ? strip_tags($ev_title) : '';
@@ -26,10 +26,6 @@ if ($search != "") {
 
 if ($sel_ca_id != "") {
     $sql_search .= " $where ca_id like '$sel_ca_id%' ";
-}
-
-if ($sel_field == "")  {
-    $sel_field = "it_name";
 }
 
 $sql_common = " from {$g5['g5_shop_item_table']} a

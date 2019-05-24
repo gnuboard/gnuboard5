@@ -270,6 +270,40 @@ if(($it_point_type == 1 || $it_point_type == 2) && $it_point > 99)
     alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
 
 $it_name = strip_tags(trim($_POST['it_name']));
+
+// KVE-2019-0708
+$check_sanitize_keys = array(
+'it_order',             // 출력순서
+'it_maker',             // 제조사
+'it_origin',            // 원산지
+'it_brand',             // 브랜드
+'it_model',             // 모델
+'it_tel_inq',           // 전화문의
+'it_use',               // 판매가능
+'it_nocoupon',          // 쿠폰적용안함
+'ec_mall_pid',          // 네이버쇼핑 상품ID
+'it_sell_email',        // 판매자 e-mail
+'it_price',             // 판매가격
+'it_cust_price',        // 시중가격
+'it_point_type',        // 포인트 유형
+'it_point',             // 포인트
+'it_supply_point',      // 추가옵션상품 포인트
+'it_soldout',           // 상품품절
+'it_stock_sms',         // 재입고SMS 알림
+'it_stock_qty',         // 재고수량
+'it_noti_qty',          // 재고 통보수량
+'it_buy_min_qty',       // 최소구매수량
+'it_notax',             // 상품과세 유형
+'it_sc_type',           // 배송비 유형
+'it_sc_method',         // 배송비 결제
+'it_sc_price',          // 기본배송비
+'it_sc_minimum',        // 배송비 상세조건
+);
+
+foreach( $check_sanitize_keys as $key ){
+    $$key = isset($_POST[$key]) ? strip_tags($_POST[$key]) : '';
+}
+
 if ($it_name == "")
     alert("상품명을 입력해 주십시오.");
 

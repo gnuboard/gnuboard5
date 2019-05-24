@@ -296,7 +296,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
             <th scope="row"><label for="it_basic">기본설명</label></th>
             <td>
                 <?php echo help("상품명 하단에 상품에 대한 추가적인 설명이 필요한 경우에 입력합니다. HTML 입력도 가능합니다."); ?>
-                <input type="text" name="it_basic" value="<?php echo get_text($it['it_basic']); ?>" id="it_basic" class="frm_input" size="95">
+                <input type="text" name="it_basic" value="<?php echo get_text(html_purifier($it['it_basic'])); ?>" id="it_basic" class="frm_input" size="95">
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_basic" value="1" id="chk_ca_it_basic">
@@ -461,7 +461,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
         </tr>
         <tr>
             <th scope="row"><label for="it_shop_memo">상점메모</label></th>
-            <td><textarea name="it_shop_memo" id="it_shop_memo"><?php echo $it['it_shop_memo']; ?></textarea></td>
+            <td><textarea name="it_shop_memo" id="it_shop_memo"><?php echo html_purifier($it['it_shop_memo']); ?></textarea></td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_shop_memo" value="1" id="chk_ca_it_shop_memo">
                 <label for="chk_ca_it_shop_memo">분류적용</label>
