@@ -1867,19 +1867,23 @@ function get_item_sendcost2($it_id, $price, $qty)
     else
     {
         if($it['it_sc_type'] > 1) {
-            if($it['it_sc_type'] == 2) { // 조건부무료
-                if($price >= $it['it_sc_minimum'])
-                    $sendcost = 0;
-                else
+            if($it['it_sc_method'] == 1){  // 배송비 결제 설정이 착불인 경우
+                $sendcost = -1;
+            } else {    // 배송비 결제 설정이 선불 또는 사용자선택인 경우
+                if($it['it_sc_type'] == 2) { // 조건부무료
+                    if($price >= $it['it_sc_minimum'])
+                        $sendcost = 0;
+                    else
+                        $sendcost = $it['it_sc_price'];
+                } else if($it['it_sc_type'] == 3) { // 유료배송
                     $sendcost = $it['it_sc_price'];
-            } else if($it['it_sc_type'] == 3) { // 유료배송
-                $sendcost = $it['it_sc_price'];
-            } else { // 수량별 부과
-                if(!$it['it_sc_qty'])
-                    $it['it_sc_qty'] = 1;
+                } else { // 수량별 부과
+                    if(!$it['it_sc_qty'])
+                        $it['it_sc_qty'] = 1;
 
-                $q = ceil((int)$qty / (int)$it['it_sc_qty']);
-                $sendcost = (int)$it['it_sc_price'] * $q;
+                    $q = ceil((int)$qty / (int)$it['it_sc_qty']);
+                    $sendcost = (int)$it['it_sc_price'] * $q;
+                }
             }
         } else if($it['it_sc_type'] == 1) { // 무료배송
             $sendcost = 0;
