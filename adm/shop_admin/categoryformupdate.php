@@ -40,6 +40,14 @@ if(!is_include_path_check($_POST['ca_include_tail'], 1)) {
     alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
+$check_keys = array('ca_skin_dir', 'ca_mobile_skin_dir', 'ca_skin', 'ca_mobile_skin'); 
+
+foreach( $check_keys as $key ){
+    if( isset($$key) && preg_match('#\.+(\/|\\\)#', $$key) ){
+        alert('스킨명 또는 경로에 포함시킬수 없는 문자열이 있습니다.');
+    }
+}
+
 if ($w == "u" || $w == "d")
     check_demo();
 
