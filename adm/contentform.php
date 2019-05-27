@@ -104,6 +104,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <?php echo get_mobile_skin_select('content', 'co_mobile_skin', 'co_mobile_skin', $co['co_mobile_skin'], 'required'); ?>
         </td>
     </tr>
+    <!--
     <tr>
         <th scope="row"><label for="co_tag_filter_use">태그 필터링 사용</label></th>
         <td>
@@ -114,6 +115,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             </select>
         </td>
     </tr>
+    -->
     <tr>
         <th scope="row"><label for="co_include_head">상단 파일 경로</label></th>
         <td>
