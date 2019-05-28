@@ -2752,6 +2752,11 @@ function module_exec_check($exe, $type)
         } else {
             // 바이너리 파일인지
             if($is_linux) {
+
+                if ( !function_exists('exec') ) {
+                    alert('exec 함수실행이 불가능하므로 사용할수 없습니다.');
+                }
+
                 $search = false;
                 $isbinary = true;
                 $executable = true;
