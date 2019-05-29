@@ -406,8 +406,8 @@ tfoot th {}
 #anc_bo_extra label {display:inline-block;width:100px}
 #anc_bo_extra input {margin-right:10px}
 
-/* 게시판 여분필드 값 input style 로빈아빠님 제안 */
-#anc_bo_extra input.extra-value-input {width:calc(100% - 370px);}
+/* 환경설정 및 게시판 여분필드 값 input style 로빈아빠님 제안 */
+#anc_bo_extra input.extra-value-input, #anc_cf_extra input.extra-value-input{width:calc(100% - 370px);}
 
 /* 접속자집계 목록 */
 .tbl_visit_list td {text-align:center}

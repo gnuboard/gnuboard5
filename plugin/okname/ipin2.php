@@ -1,8 +1,14 @@
 <?php
 include_once('./_common.php');
 
-if( isset($_REQUEST['exe']) && isset($exe) && $exe ){
-    die('bad request');
+$check_arrays = array('exe', 'keypath', 'memid', 'EndPointURL', 'cpubkey', 'csig', 'encdata', 'logpath', 'option');
+
+foreach($check_arrays as $key){
+    if( isset($_REQUEST[$key]) && $_REQUEST[$key] ){
+        die('bad request');
+    }
+
+    $$key = '';
 }
 
 include('./ipin.config.php');

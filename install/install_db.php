@@ -33,6 +33,10 @@ if (isset($_POST['g5_install']))
 $g5_shop_prefix = $_POST['g5_shop_prefix'];
 $g5_shop_install= $_POST['g5_shop_install'];
 
+if (preg_match("/[^0-9a-z_]+/i", $admin_id)) {
+    die('<div class="ins_inner"><p>관리자 아이디는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
+}
+
 $dblink = sql_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db);
 if (!$dblink) {
 ?>

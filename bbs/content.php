@@ -26,6 +26,8 @@ if ($co['co_include_head'] && is_include_path_check($co['co_include_head']))
 else
     include_once('./_head.php');
 
+// KVE-2019-0828 취약점 내용
+$co['co_tag_filter_use'] = 1;
 $str = conv_content($co['co_content'], $co['co_html'], $co['co_tag_filter_use']);
 
 // $src 를 $dst 로 변환

@@ -1,8 +1,14 @@
 <?php
 include_once('./_common.php');
 
-if( isset($_REQUEST['exe']) && isset($exe) && $exe ){
-    die('bad request');
+$check_arrays = array('exe', 'keypath', 'memid', 'reserved1', 'reserved2', 'EndPointURL', 'logpath', 'option');
+
+foreach($check_arrays as $key){
+    if( isset($_REQUEST[$key]) && $_REQUEST[$key] ){
+        die('bad request');
+    }
+
+    $$key = '';
 }
 
 // 금일 인증시도 회수 체크
