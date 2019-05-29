@@ -41,6 +41,7 @@ do {
         if($j > 20)
             die(json_encode(array('error' => 'Coupon ID Error')));
     }
+    $j++;
 } while(1);
 
 $cp = array_map('addslashes', $cp);
