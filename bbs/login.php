@@ -8,7 +8,7 @@ if( function_exists('social_check_login_before') ){
 $g5['title'] = '로그인';
 include_once('./_head.sub.php');
 
-$url = $_GET['url'];
+$url = strip_tags($_GET['url']);
 
 // url 체크
 check_url_host($url);

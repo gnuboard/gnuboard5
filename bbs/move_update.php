@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$act = isset($act) ? strip_tags($act) : '';
+
 // 게시판 관리자 이상 복사, 이동 가능
 if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
     alert_close('게시판 관리자 이상 접근이 가능합니다.');
