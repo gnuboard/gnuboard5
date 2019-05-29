@@ -23,6 +23,8 @@ $g5['sms5_book_group_table']      = $g5['sms5_prefix'] . 'book_group';
 $g5['sms5_form_table']            = $g5['sms5_prefix'] . 'form';
 $g5['sms5_form_group_table']      = $g5['sms5_prefix'] . 'form_group';
 
+$sms5 = array();
+
 if (!empty($config['cf_sms_use'])) {
 
     $sms5 = sql_fetch("select * from {$g5['sms5_config_table']} ", false);

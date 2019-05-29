@@ -128,7 +128,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                          </a>
                     </div>
                     <div class="gall_name">
-                        <span class="sound_only">작성자 </span><?php echo $list[$i]['name'] ?>
+                        <span class="sound_only">작성자 </span><span class="profile_img"><?php echo $list[$i]['name'] ?></span>
                     </div>
                     <div class="gall_info">
                         <span class="sound_only">조회 </span><i class="fa fa-eye" aria-hidden="true"></i> <?php echo $list[$i]['wr_hit'] ?>

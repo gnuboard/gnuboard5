@@ -1317,7 +1317,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 <label for="cf_<?php echo $i ?>_subj">여분필드<?php echo $i ?> 제목</label>
                 <input type="text" name="cf_<?php echo $i ?>_subj" value="<?php echo get_text($config['cf_'.$i.'_subj']) ?>" id="cf_<?php echo $i ?>_subj" class="frm_input" size="30">
                 <label for="cf_<?php echo $i ?>">여분필드<?php echo $i ?> 값</label>
-                <input type="text" name="cf_<?php echo $i ?>" value="<?php echo get_sanitize_input($config['cf_'.$i]); ?>" id="cf_<?php echo $i ?>" class="frm_input" size="30">
+                <input type="text" name="cf_<?php echo $i ?>" value="<?php echo get_sanitize_input($config['cf_'.$i]); ?>" id="cf_<?php echo $i ?>" class="frm_input extra-value-input" size="30">
             </td>
         </tr>
         <?php } ?>

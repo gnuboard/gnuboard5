@@ -21,8 +21,8 @@ for ($i=0; $i<$count; $i++)
 {
     $_POST = array_map_deep('trim', $_POST);
 
-    $code    = $_POST['code'][$i];
-    $me_name = $_POST['me_name'][$i];
+    $code    = strip_tags($_POST['code'][$i]);
+    $me_name = strip_tags($_POST['me_name'][$i]);
     $me_link = (preg_match('/^javascript/i', $_POST['me_link'][$i]) || preg_match('/script:/i', $_POST['me_link'][$i])) ? G5_URL : strip_tags($_POST['me_link'][$i]);
     
     if(!$code || !$me_name || !$me_link)
@@ -59,10 +59,10 @@ for ($i=0; $i<$count; $i++)
                 set me_code         = '$me_code',
                     me_name         = '$me_name',
                     me_link         = '$me_link',
-                    me_target       = '{$_POST['me_target'][$i]}',
-                    me_order        = '{$_POST['me_order'][$i]}',
-                    me_use          = '{$_POST['me_use'][$i]}',
-                    me_mobile_use   = '{$_POST['me_mobile_use'][$i]}' ";
+                    me_target       = '".sql_real_escape_string(strip_tags($_POST['me_target'][$i]))."',
+                    me_order        = '".sql_real_escape_string(strip_tags($_POST['me_order'][$i]))."',
+                    me_use          = '".sql_real_escape_string(strip_tags($_POST['me_use'][$i]))."',
+                    me_mobile_use   = '".sql_real_escape_string(strip_tags($_POST['me_mobile_use'][$i]))."' ";
     sql_query($sql);
 }
 
