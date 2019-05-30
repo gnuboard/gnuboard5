@@ -32,7 +32,7 @@ $check_keys = array('cf_lg_mid', 'cf_lg_mert_key', 'cf_cert_kcb_cd', 'cf_cert_kc
 
 foreach( $check_keys as $key ){
     if ( isset($_POST[$key]) && $_POST[$key] ){
-        $_POST[$key] = preg_replace('/[^a-z0-9_\-]/i', '', $_POST[$key]);
+        $_POST[$key] = preg_replace('/[^a-z0-9_\-\.]/i', '', $_POST[$key]);
     }
 }
 
