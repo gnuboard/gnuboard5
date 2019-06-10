@@ -47,7 +47,6 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
         $board = get_board_db($bo_table, true);
 
         $bo_subject = get_text($board['bo_subject']);
-        $board['bo_use_sideview'] = 0;  // not use sideview
 
         $tmp_write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
         $sql = " select * from {$tmp_write_table} where wr_is_comment = 0 order by wr_num limit 0, {$rows} ";
