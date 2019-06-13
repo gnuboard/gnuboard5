@@ -42,7 +42,7 @@ $is_dhtml_editor = false;
 if ($config['cf_editor'] && (!is_mobile() || defined('G5_IS_MOBILE_DHTML_USE') && G5_IS_MOBILE_DHTML_USE)) {
     $is_dhtml_editor = true;
 }
-$editor_html = editor_html('is_content', get_text($use['is_content'], 0), $is_dhtml_editor);
+$editor_html = editor_html('is_content', get_text(html_purifier($use['is_content']), 0), $is_dhtml_editor);
 $editor_js = '';
 $editor_js .= get_editor_js('is_content', $is_dhtml_editor);
 $editor_js .= chk_editor_js('is_content', $is_dhtml_editor);

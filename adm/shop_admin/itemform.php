@@ -440,11 +440,11 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
         </tr>
         <tr>
             <th scope="row">상품설명</th>
-            <td colspan="2"> <?php echo editor_html('it_explan', get_text($it['it_explan'], 0)); ?></td>
+            <td colspan="2"> <?php echo editor_html('it_explan', get_text(html_purifier($it['it_explan']), 0)); ?></td>
         </tr>
         <tr>
             <th scope="row">모바일 상품설명</th>
-            <td colspan="2"> <?php echo editor_html('it_mobile_explan', get_text($it['it_mobile_explan'], 0)); ?></td>
+            <td colspan="2"> <?php echo editor_html('it_mobile_explan', get_text(html_purifier($it['it_mobile_explan']), 0)); ?></td>
         </tr>
         <tr>
             <th scope="row"><label for="it_sell_email">판매자 e-mail</label></th>
@@ -1578,7 +1578,7 @@ $(function(){
         <tbody>
         <tr>
             <th scope="row">상품상단내용</th>
-            <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_head_html', get_text($it['it_head_html'], 0)); ?></td>
+            <td><?php echo help("상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_head_html', get_text(html_purifier($it['it_head_html']), 0)); ?></td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_head_html" value="1" id="chk_ca_it_head_html">
                 <label for="chk_ca_it_head_html">분류적용</label>
@@ -1588,7 +1588,7 @@ $(function(){
         </tr>
         <tr>
             <th scope="row">상품하단내용</th>
-            <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_tail_html', get_text($it['it_tail_html'], 0)); ?></td>
+            <td><?php echo help("상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_tail_html', get_text(html_purifier($it['it_tail_html']), 0)); ?></td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_tail_html" value="1" id="chk_ca_it_tail_html">
                 <label for="chk_ca_it_tail_html">분류적용</label>
@@ -1598,7 +1598,7 @@ $(function(){
         </tr>
         <tr>
             <th scope="row">모바일 상품상단내용</th>
-            <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_head_html', get_text($it['it_mobile_head_html'], 0)); ?></td>
+            <td><?php echo help("모바일 상품상세설명 페이지 상단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_head_html', get_text(html_purifier($it['it_mobile_head_html']), 0)); ?></td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_mobile_head_html" value="1" id="chk_ca_it_mobile_head_html">
                 <label for="chk_ca_it_mobile_head_html">분류적용</label>
@@ -1608,7 +1608,7 @@ $(function(){
         </tr>
         <tr>
             <th scope="row">모바일 상품하단내용</th>
-            <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_tail_html', get_text($it['it_mobile_tail_html'], 0)); ?></td>
+            <td><?php echo help("모바일 상품상세설명 페이지 하단에 출력하는 HTML 내용입니다."); ?><?php echo editor_html('it_mobile_tail_html', get_text(html_purifier($it['it_mobile_tail_html']), 0)); ?></td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_ca_it_mobile_tail_html" value="1" id="chk_ca_it_mobile_tail_html">
                 <label for="chk_ca_it_mobile_tail_html">분류적용</label>
