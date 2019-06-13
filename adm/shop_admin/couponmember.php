@@ -12,8 +12,10 @@ include_once(G5_PATH.'/head.sub.php');
 $sql_common = " from {$g5['member_table']} ";
 $sql_where = " where mb_id <> '{$config['cf_admin']}' and mb_leave_date = '' and mb_intercept_date ='' ";
 
-if($_GET['mb_name'])
-    $sql_where .= " and mb_name like '%$mb_name%' ";
+if($mb_name){
+    $mb_name = strip_tags($mb_name);
+    $sql_where .= " and mb_name like '%".sql_real_escape_string($mb_name)."%' ";
+}
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common . $sql_where;
@@ -32,7 +34,7 @@ $sql = " select mb_id, mb_name
             limit $from_record, $rows ";
 $result = sql_query($sql);
 
-$qstr1 = 'mb_name='.$_GET['mb_name'];
+$qstr1 = 'mb_name='.urlencode($mb_name);
 ?>
 
 <div id="sch_member_frm" class="new_win scp_new_win">
@@ -41,7 +43,7 @@ $qstr1 = 'mb_name='.$_GET['mb_name'];
     <form name="fmember" method="get">
     <div id="scp_list_find">
         <label for="mb_name">회원이름</label>
-        <input type="text" name="mb_name" id="mb_name" value="<?php echo $mb_name; ?>" class="frm_input required" required size="20">
+        <input type="text" name="mb_name" id="mb_name" value="<?php echo get_text($mb_name); ?>" class="frm_input required" required size="20">
         <input type="submit" value="검색" class="btn_frmline">
     </div>
     <div class="tbl_head01 tbl_wrap new_win_con">
