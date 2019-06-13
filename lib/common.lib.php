@@ -2902,13 +2902,17 @@ function get_search_string($stx)
 }
 
 // XSS 관련 태그 제거
-function clean_xss_tags($str)
+function clean_xss_tags($str, $check_entities=0)
 {
     $str_len = strlen($str);
     
     $i = 0;
     while($i <= $str_len){
         $result = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+        
+        if( $check_entities ){
+            $result = str_replace(array('&colon;', '&lpar;', '&rpar;', '&NewLine;', '&Tab;'), '', $result);
+        }
 
         if((string)$result === (string)$str) break;
 
@@ -3436,7 +3440,7 @@ function get_head_title($title){
     global $g5;
 
     if( isset($g5['board_title']) && $g5['board_title'] ){
-        $title = strip_tags(get_text($g5['board_title']));
+        $title = strip_tags($g5['board_title']);
     }
 
     return $title;
@@ -3512,6 +3516,11 @@ function get_call_func_cache($func, $args=array()){
 function is_include_path_check($path='', $is_input='')
 {
     if( $path ){
+
+        if( strlen($path) > 255 ){
+            return false;
+        }
+
         if ($is_input){
             // 장태진 @jtjisgod <jtjisgod@gmail.com> 추가
             // 보안 목적 : rar wrapper 차단
@@ -3570,11 +3579,14 @@ function is_include_path_check($path='', $is_input='')
             if( (preg_match('/\.\.\//i', $replace_path) || preg_match('/^\/.*/i', $replace_path)) && preg_match('/plugin\//i', $replace_path) && preg_match('/okname\//i', $replace_path) ){
                 return false;
             }
+            if( substr_count($replace_path, './') > 5 ){
+                return false;
+            }
         }
 
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         
-        if($extension && preg_match('/(jpg|jpeg|png|gif|bmp|conf)$/i', $extension)) {
+        if($extension && preg_match('/(jpg|jpeg|png|gif|bmp|conf|php\-x)$/i', $extension)) {
             return false;
         }
     }

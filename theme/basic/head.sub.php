@@ -13,8 +13,8 @@ else {
     $g5_head_title .= " | ".$config['cf_title'];
 }
 
-$g5['title'] = strip_tags(get_text($g5['title']));
-$g5_head_title = strip_tags(get_text($g5_head_title));
+$g5['title'] = strip_tags($g5['title']);
+$g5_head_title = strip_tags($g5_head_title);
 
 // 현재 접속자
 // 게시판 제목에 ' 포함되면 오류 발생

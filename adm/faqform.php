@@ -54,11 +54,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row">질문</th>
-        <td><?php echo editor_html('fa_subject', get_text($fa['fa_subject'], 0)); ?></td>
+        <td><?php echo editor_html('fa_subject', get_text(html_purifier($fa['fa_subject']), 0)); ?></td>
     </tr>
     <tr>
         <th scope="row">답변</th>
-        <td><?php echo editor_html('fa_content', get_text($fa['fa_content'], 0)); ?></td>
+        <td><?php echo editor_html('fa_content', get_text(html_purifier($fa['fa_content']), 0)); ?></td>
     </tr>
     </tbody>
     </table>
