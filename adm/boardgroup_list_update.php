@@ -19,7 +19,8 @@ for ($i=0; $i<$count; $i++)
 {
     $k     = $_POST['chk'][$i];
     $gr_id = preg_replace('/[^a-z0-9_]/i', '', $_POST['group_id'][$k]);
-    $gr_subject = sql_real_escape_string(strip_tags($_POST['gr_subject'][$k]));
+    $gr_subject = is_array($_POST['gr_subject']) ? strip_tags($_POST['gr_subject'][$k]) : '';
+    $gr_admin = is_array($_POST['gr_admin']) ? strip_tags($_POST['gr_admin'][$k]) : '';
 
     if($_POST['act_button'] == '선택수정') {
         $sql = " update {$g5['group_table']}
@@ -30,7 +31,7 @@ for ($i=0; $i<$count; $i++)
                         gr_order      = '".sql_real_escape_string($_POST['gr_order'][$k])."'
                   where gr_id         = '{$gr_id}' ";
         if ($is_admin != 'super')
-            $sql .= " and gr_admin    = '{$_POST['gr_admin'][$k]}' ";
+            $sql .= " and gr_admin    = '{$gr_admin}' ";
         sql_query($sql);
     } else if($_POST['act_button'] == '선택삭제') {
         $row = sql_fetch(" select count(*) as cnt from {$g5['board_table']} where gr_id = '$gr_id' ");

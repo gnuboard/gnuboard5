@@ -3425,7 +3425,7 @@ function get_head_title($title){
     global $g5;
 
     if( isset($g5['board_title']) && $g5['board_title'] ){
-        $title = strip_tags(get_text($g5['board_title']));
+        $title = strip_tags($g5['board_title']);
     }
 
     return $title;
