@@ -3501,6 +3501,11 @@ function get_call_func_cache($func, $args=array()){
 function is_include_path_check($path='', $is_input='')
 {
     if( $path ){
+
+        if( strlen($path) > 255 ){
+            return false;
+        }
+
         if ($is_input){
             // 장태진 @jtjisgod <jtjisgod@gmail.com> 추가
             // 보안 목적 : rar wrapper 차단
@@ -3559,11 +3564,14 @@ function is_include_path_check($path='', $is_input='')
             if( (preg_match('/\.\.\//i', $replace_path) || preg_match('/^\/.*/i', $replace_path)) && preg_match('/plugin\//i', $replace_path) && preg_match('/okname\//i', $replace_path) ){
                 return false;
             }
+            if( substr_count($replace_path, './') > 5 ){
+                return false;
+            }
         }
 
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         
-        if($extension && preg_match('/(jpg|jpeg|png|gif|bmp|conf)$/i', $extension)) {
+        if($extension && preg_match('/(jpg|jpeg|png|gif|bmp|conf|php\-x)$/i', $extension)) {
             return false;
         }
     }
