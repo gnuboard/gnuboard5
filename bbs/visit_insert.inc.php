@@ -13,8 +13,8 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
     $remote_addr = escape_trim($_SERVER['REMOTE_ADDR']);
     $referer = "";
     if (isset($_SERVER['HTTP_REFERER']))
-        $referer = escape_trim(clean_xss_tags($_SERVER['HTTP_REFERER']));
-    $user_agent  = escape_trim(clean_xss_tags($_SERVER['HTTP_USER_AGENT']));
+        $referer = escape_trim(clean_xss_tags(strip_tags($_SERVER['HTTP_REFERER'])));
+    $user_agent  = escape_trim(clean_xss_tags(strip_tags($_SERVER['HTTP_USER_AGENT'])));
     $vi_browser = '';
     $vi_os = '';
     $vi_device = '';

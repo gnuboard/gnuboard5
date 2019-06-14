@@ -29,9 +29,11 @@ if ($_POST['act_button'] == "선택수정") {
                 alert('최고관리자가 아닌 경우 다른 관리자의 게시판('.$board_table[$k].')은 수정이 불가합니다.');
         }
 
+        $p_bo_subject = is_array($_POST['bo_subject']) ? strip_tags($_POST['bo_subject'][$k]) : '';
+
         $sql = " update {$g5['board_table']}
                     set gr_id               = '".sql_real_escape_string(strip_tags($_POST['gr_id'][$k]))."',
-                        bo_subject          = '".sql_real_escape_string(strip_tags($_POST['bo_subject'][$k]))."',
+                        bo_subject          = '".$p_bo_subject."',
                         bo_device           = '".sql_real_escape_string(strip_tags($_POST['bo_device'][$k]))."',
                         bo_skin             = '".sql_real_escape_string(strip_tags($_POST['bo_skin'][$k]))."',
                         bo_mobile_skin      = '".sql_real_escape_string(strip_tags($_POST['bo_mobile_skin'][$k]))."',
