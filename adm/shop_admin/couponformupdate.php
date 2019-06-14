@@ -55,6 +55,10 @@ if(!$_POST['cp_price']) {
         alert('할인금액을 입력해 주십시오.');
 }
 
+if( (int) $_POST['cp_price'] < 0 ){
+    alert('할인금액 또는 할인비율은 음수를 입력할수 없습니다.');
+}
+
 if($_POST['cp_type'] && ($_POST['cp_price'] < 1 || $_POST['cp_price'] > 99))
     alert('할인비율을은 1과 99사이 값으로 입력해 주십시오.');
 

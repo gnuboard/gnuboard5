@@ -56,7 +56,7 @@ if ($error != "")
 $i_price     = (int)$_POST['od_price'];
 $i_send_cost  = (int)$_POST['od_send_cost'];
 $i_send_cost2  = (int)$_POST['od_send_cost2'];
-$i_send_coupon  = (int)$_POST['od_send_coupon'];
+$i_send_coupon  = abs((int)$_POST['od_send_coupon']);
 $i_temp_point = (int)$_POST['od_temp_point'];
 
 
