@@ -304,13 +304,13 @@ function get_nginx_conf_rules($return_string=false){
         $rules[] = $add_rules;
     }
 
-    $rules[] = "rewrite ^{$base_path}content/([0-9a-zA-Z_]+)$ {$base_path}bbs/content.php?co_id=$1&rewrite=1 break;";
-    $rules[] = "rewrite ^{$base_path}content/([^/]+)/$ {$base_path}bbs/content.php?co_seo_title=$1&rewrite=1 break;";
-    $rules[] = "rewrite ^{$base_path}rss/([0-9a-zA-Z_]+)$ {$base_path}bbs/rss.php?bo_table=$1 break;";
-    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)$ {$base_path}bbs/board.php?bo_table=$1&rewrite=1 break;";
-    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/write$ {$base_path}bbs/write.php?bo_table=$1&rewrite=1 break;";
-    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/([^/]+)/$ {$base_path}bbs/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;";
-    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/([0-9]+)$ {$base_path}bbs/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}content/([0-9a-zA-Z_]+)$ {$base_path}".G5_BBS_DIR."/content.php?co_id=$1&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}content/([^/]+)/$ {$base_path}".G5_BBS_DIR."/content.php?co_seo_title=$1&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}rss/([0-9a-zA-Z_]+)$ {$base_path}".G5_BBS_DIR."/rss.php?bo_table=$1 break;";
+    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)$ {$base_path}".G5_BBS_DIR."/board.php?bo_table=$1&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/write$ {$base_path}".G5_BBS_DIR."/write.php?bo_table=$1&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/([^/]+)/$ {$base_path}".G5_BBS_DIR."/board.php?bo_table=$1&wr_seo_title=$2&rewrite=1 break;";
+    $rules[] = "rewrite ^{$base_path}([0-9a-zA-Z_]+)/([0-9]+)$ {$base_path}".G5_BBS_DIR."/board.php?bo_table=$1&wr_id=$2&rewrite=1 break;";
     $rules[] = '}';
     $rules[] = '#### '.G5_VERSION.' nginx rules END #####';
 

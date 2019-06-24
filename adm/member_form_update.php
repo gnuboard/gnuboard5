@@ -120,6 +120,28 @@ else if ($w == 'u')
     if ($row['mb_id'])
         alert('이미 존재하는 이메일입니다.\\nＩＤ : '.$row['mb_id'].'\\n이름 : '.$row['mb_name'].'\\n닉네임 : '.$row['mb_nick'].'\\n메일 : '.$row['mb_email']);
 
+    if ($mb_password)
+        $sql_password = " , mb_password = '".get_encrypt_string($mb_password)."' ";
+    else
+        $sql_password = "";
+
+    if ($passive_certify)
+        $sql_certify = " , mb_email_certify = '".G5_TIME_YMDHIS."' ";
+    else
+        $sql_certify = "";
+
+    $sql = " update {$g5['member_table']}
+                set {$sql_common}
+                     {$sql_password}
+                     {$sql_certify}
+                where mb_id = '{$mb_id}' ";
+    sql_query($sql);
+}
+else
+    alert('제대로 된 값이 넘어오지 않았습니다.');
+
+if( $w == '' || $w == 'u' ){
+
     $mb_dir = substr($mb_id,0,2);
     $mb_icon_img = get_mb_icon_name($mb_id).'.gif';
 
@@ -212,26 +234,7 @@ else if ($w == 'u')
             }
         }
     }
-
-    if ($mb_password)
-        $sql_password = " , mb_password = '".get_encrypt_string($mb_password)."' ";
-    else
-        $sql_password = "";
-
-    if ($passive_certify)
-        $sql_certify = " , mb_email_certify = '".G5_TIME_YMDHIS."' ";
-    else
-        $sql_certify = "";
-
-    $sql = " update {$g5['member_table']}
-                set {$sql_common}
-                     {$sql_password}
-                     {$sql_certify}
-                where mb_id = '{$mb_id}' ";
-    sql_query($sql);
 }
-else
-    alert('제대로 된 값이 넘어오지 않았습니다.');
 
 run_event('admin_member_form_update', $w, $mb_id);
 
