@@ -92,7 +92,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처�
             }
 
             $title = str_replace(array("<", ">"), array("&lt;", "&gt;"), $referer);
-            $link = '<a href="'.$row['vi_referer'].'" target="_blank" title="'.$title.'">';
+            $link = '<a href="'.get_text($row['vi_referer']).'" target="_blank" title="'.$title.'">';
         }
 
         if ($is_admin == 'super')

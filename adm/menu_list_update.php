@@ -20,9 +20,11 @@ $count = count($_POST['code']);
 for ($i=0; $i<$count; $i++)
 {
     $_POST = array_map_deep('trim', $_POST);
+    
+    $_POST['me_link'][$i] = is_array($_POST['me_link']) ? clean_xss_tags($_POST['me_link'][$i], 1) : '';
 
-    $code    = strip_tags($_POST['code'][$i]);
-    $me_name = strip_tags($_POST['me_name'][$i]);
+    $code    = is_array($_POST['code']) ? strip_tags($_POST['code'][$i]) : '';
+    $me_name = is_array($_POST['me_name']) ? strip_tags($_POST['me_name'][$i]) : '';
     $me_link = (preg_match('/^javascript/i', $_POST['me_link'][$i]) || preg_match('/script:/i', $_POST['me_link'][$i])) ? G5_URL : strip_tags($_POST['me_link'][$i]);
     
     if(!$code || !$me_name || !$me_link)
@@ -56,9 +58,9 @@ for ($i=0; $i<$count; $i++)
 
     // 메뉴 등록
     $sql = " insert into {$g5['menu_table']}
-                set me_code         = '$me_code',
-                    me_name         = '$me_name',
-                    me_link         = '$me_link',
+                set me_code         = '".$me_code."',
+                    me_name         = '".$me_name."',
+                    me_link         = '".$me_link."',
                     me_target       = '".sql_real_escape_string(strip_tags($_POST['me_target'][$i]))."',
                     me_order        = '".sql_real_escape_string(strip_tags($_POST['me_order'][$i]))."',
                     me_use          = '".sql_real_escape_string(strip_tags($_POST['me_use'][$i]))."',

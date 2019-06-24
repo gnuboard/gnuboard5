@@ -73,7 +73,7 @@ $result = sql_query($sql);
             }
 
             $title = str_replace(array('<', '>', '&'), array("&lt;", "&gt;", "&amp;"), $referer);
-            $link = '<a href="'.$row['vi_referer'].'" target="_blank">';
+            $link = '<a href="'.get_text($row['vi_referer']).'" target="_blank">';
             $link = str_replace('&', "&amp;", $link);
             $link2 = '</a>';
         }

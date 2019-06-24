@@ -35,6 +35,7 @@ if(!sql_query(" select co_skin from {$g5['content_table']} limit 1 ", false)) {
 
 $html_title = "내용";
 $g5['title'] = $html_title.' 관리';
+$readonly = '';
 
 if ($w == "u")
 {
