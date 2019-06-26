@@ -86,7 +86,7 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
     <section id="anc_spp_info">
         <h2 class="h2_frm">주문 정보</h2>
         <?php if($popup != 'yes') echo $pg_anchor; ?>
-        <div class="local_desc02 local_desc">
+        <div class="local_desc">
             <p>주문 관련 기본 정보입니다.</p>
         </div>
 
@@ -236,8 +236,12 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
             </table>
         </div>
     </section>
+    <?php } ?>
 
-    <div class="btn_fixed_top">
+    <?php
+    $btn_class = (isset($popup) && $popup === 'yes') ? 'btn_win' : 'btn_fixed_top';
+    ?>
+    <div class="<?php echo $btn_class; ?>">
         <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
         <?php if($popup == 'yes') { ?>
         <button type="button" onclick="self.close();" class="btn btn_02">닫기</button>
@@ -248,7 +252,6 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
         <a href="./personalpayformupdate.php?w=d&amp;pp_id=<?php echo $pp['pp_id']; ?>" onclick="return delete_confirm(this);" class="btn btn_02">삭제</a>
         <?php } ?>
     </div>
-    <?php } ?>
 
 <?php echo $wrp_tag_end; ?>
 </form>
