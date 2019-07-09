@@ -4,10 +4,36 @@ include_once('./_common.php');
 
 auth_check($auth[$sub_menu], "r");
 
+$bn_position = (isset($_GET['bn_position']) && in_array($_GET['bn_position'], array('메인', '왼쪽'))) ? $_GET['bn_position'] : '';
+$bn_device = (isset($_GET['bn_device']) && in_array($_GET['bn_device'], array('pc', 'mobile'))) ? $_GET['bn_device'] : 'both';
+$bn_time = (isset($_GET['bn_time']) && in_array($_GET['bn_time'], array('ing', 'end'))) ? $_GET['bn_time'] : '';
+
+$where = ' where ';
+$sql_search = '';
+
+if ( $bn_position ){
+    $sql_search .= " $where bn_position = '$bn_position' ";
+    $where = ' and ';
+    $qstr .= "&amp;bn_position=$bn_position";
+}
+
+if ( $bn_device && $bn_device !== 'both' ){
+    $sql_search .= " $where bn_device = '$bn_device' ";
+    $where = ' and ';
+    $qstr .= "&amp;bn_device=$bn_device";
+}
+
+if ( $bn_time ){
+    $sql_search .= ($bn_time === 'ing') ? " $where '".G5_TIME_YMDHIS."' between bn_begin_time and bn_end_time " : " $where bn_end_time < '".G5_TIME_YMDHIS."' ";
+    $where = ' and ';
+    $qstr .= "&amp;bn_time=$bn_time";
+}
+
 $g5['title'] = '배너관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $sql_common = " from {$g5['g5_shop_banner_table']} ";
+$sql_common .= $sql_search;
 
 // 테이블의 전체 레코드수만 얻음
 $sql = " select count(*) as cnt " . $sql_common;
@@ -21,7 +47,34 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 ?>
 
 <div class="local_ov01 local_ov">
-    <span class="btn_ov01"><span class="ov_txt"> 등록된 배너 </span><span class="ov_num"> <?php echo $total_count; ?>개</span></span>
+    <span class="btn_ov01"><span class="ov_txt"> <?php echo ($sql_search) ? '검색' : '등록'; ?>된 배너 </span><span class="ov_num"> <?php echo $total_count; ?>개</span></span>
+
+    <form name="flist" class="local_sch01 local_sch">
+    <input type="hidden" name="page" value="<?php echo $page; ?>">
+
+    <label for="bn_position" class="sound_only">검색</label>
+    <select name="bn_position" id="bn_position">
+        <option value=""<?php echo get_selected($bn_position, '', true); ?>>위치 전체</option>
+        <option value="메인"<?php echo get_selected($bn_position, '메인', true); ?>>메인</option>
+        <option value="왼쪽"<?php echo get_selected($bn_position, '왼쪽', true); ?>>왼쪽</option>
+    </select>
+
+    <select name="bn_device" id="bn_device">
+        <option value="both"<?php echo get_selected($bn_device, 'both', true); ?>>PC와 모바일</option>
+        <option value="pc"<?php echo get_selected($bn_device, 'pc'); ?>>PC</option>
+        <option value="mobile"<?php echo get_selected($bn_device, 'mobile'); ?>>모바일</option>
+    </select>
+
+    <select name="bn_time" id="bn_time">
+        <option value=""<?php echo get_selected($bn_time, '', true); ?>>배너 시간 전체</option>
+        <option value="ing"<?php echo get_selected($bn_time, 'ing'); ?>>진행중인 배너</option>
+        <option value="end"<?php echo get_selected($bn_time, 'end'); ?>>종료된 배너</option>
+    </select>
+
+    <input type="submit" value="검색" class="btn_submit">
+
+    </form>
+
 </div>
 
 <div class="btn_fixed_top">
@@ -48,7 +101,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
     </thead>
     <tbody>
     <?php
-    $sql = " select * from {$g5['g5_shop_banner_table']}
+    $sql = " select * from {$g5['g5_shop_banner_table']} $sql_search
           order by bn_order, bn_id desc
           limit $from_record, $rows  ";
     $result = sql_query($sql);
@@ -123,7 +176,7 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page="); ?>
 
 <script>
-$(function() {
+jQuery(function($) {
     $(".sbn_img_view").on("click", function() {
         $(this).closest(".td_img_view").find(".sbn_image").slideToggle();
     });
