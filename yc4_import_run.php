@@ -1,6 +1,12 @@
 <?php
 include_once('./_common.php');
 
+$g4 = array();
+
+if( isset($_REQUEST['g4']) || isset($_GET['g4']) || isset($_POST['g4']) ){
+    die('잘못된 요청입니다');
+}
+
 ob_end_clean();
 
 include_once(G5_LIB_PATH.'/connect.lib.php');
@@ -177,6 +183,14 @@ document.onkeydown = noRefresh ;
         // yc4의 confing.php, shop.config.php
         require($g4_config_file);
         require($shop_config_file);
+
+        if( $g4 && is_array($g4) ){
+           foreach($g4 as $k=>$v){
+               if( preg_match('/_table$/i', $k) ){
+                    $g4[$k] = preg_replace('/[^0-9A-Za-z_]/', '', $v);
+               }
+           }
+        }
 
         if(preg_replace('/[^a-z]/', '', strtolower($g4['charset'])) == 'euckr')
             $is_euckr = true;
