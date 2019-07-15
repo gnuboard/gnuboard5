@@ -48,6 +48,9 @@ foreach( $check_keys as $key ){
     }
 }
 
+$ca_include_head = $_POST['ca_include_head'];
+$ca_include_tail = $_POST['ca_include_tail'];
+
 if ($w == "u" || $w == "d")
     check_demo();
 

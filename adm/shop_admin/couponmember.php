@@ -13,7 +13,7 @@ $sql_common = " from {$g5['member_table']} ";
 $sql_where = " where mb_id <> '{$config['cf_admin']}' and mb_leave_date = '' and mb_intercept_date ='' ";
 
 if($mb_name){
-    $mb_name = strip_tags($mb_name);
+    $mb_name = preg_replace('/\!\?\*$#<>()\[\]\{\}/i', '', strip_tags($mb_name));
     $sql_where .= " and mb_name like '%".sql_real_escape_string($mb_name)."%' ";
 }
 
