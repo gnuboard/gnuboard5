@@ -134,7 +134,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$search_skin_url.'/style.css">', 
             </li>
         <?php }  ?>
         </ul>
-        <a href="./board.php?bo_table=<?php echo $search_table[$idx] ?>&amp;<?php echo $search_query ?>" class="sch_more">더보기</a>
+        <a href="<?php echo get_pretty_url($search_table[$idx], '', $search_query); ?>" class="sch_more">더보기</a>
     <?php }  ?>
     <?php if ($stx && $board_count) {  ?></section><?php }  ?>
 
