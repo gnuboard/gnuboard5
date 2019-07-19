@@ -11,7 +11,7 @@ foreach($check_arrays as $key){
     $$key = '';
 }
 
-include('./ipin.config.php');
+require('./ipin.config.php');
 
 //아이핀팝업에서 조회한 PERSONALINFO이다.
 @$encPsnlInfo = $_POST["encPsnlInfo"];

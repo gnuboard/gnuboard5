@@ -87,7 +87,7 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
         $lf = '';
         for ($k=0; $k<count($notice_array); $k++) {
             if ((int)$write['wr_id'] != (int)$notice_array[$k])
-                $bo_notice .= $nl.$notice_array[$k];
+                $bo_notice .= $lf.$notice_array[$k];
 
             if($bo_notice)
                 $lf = ',';
@@ -117,7 +117,7 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
 
         // 코멘트 삭제
         if (!delete_point($write['mb_id'], $bo_table, $comment_id, '코멘트')) {
-            insert_point($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write[wr_parent]}-{$comment_id} 코멘트삭제");
+            insert_point($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_parent']}-{$comment_id} 코멘트삭제");
         }
 
         // 코멘트 삭제
