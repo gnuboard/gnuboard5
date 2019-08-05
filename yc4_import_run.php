@@ -181,8 +181,8 @@ document.onkeydown = noRefresh ;
         flush();
 
         // yc4의 confing.php, shop.config.php
-        require($g4_config_file);
-        require($shop_config_file);
+        require("./".$g4_config_file);
+        require("./".$shop_config_file);
 
         if( $g4 && is_array($g4) ){
            foreach($g4 as $k=>$v){
