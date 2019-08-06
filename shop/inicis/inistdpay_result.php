@@ -85,7 +85,7 @@ try {
             $resultMap = json_decode($authResultString, true);
 
             $tid = $resultMap['tid'];
-            $oid = $resultMap['MOID'];
+            $oid = preg_replace('/[^A-Za-z0-9\-_]/', '', $resultMap['MOID']);
 
             /*************************  결제보안 추가 2016-05-18 START ****************************/
             $secureMap['mid']       = $mid;                         //mid
