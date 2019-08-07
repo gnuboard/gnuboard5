@@ -28,8 +28,8 @@ $payReqMap = $_SESSION['PAYREQ_MAP'];//결제 요청시, Session에 저장했던
 </head>
 <body onload="setLGDResult()">
 <?php
-  $LGD_RESPCODE = $_POST['LGD_RESPCODE'];
-  $LGD_RESPMSG 	= $_POST['LGD_RESPMSG'];
+  $LGD_RESPCODE = clean_xss_tags(strip_tags($_POST['LGD_RESPCODE']));
+  $LGD_RESPMSG 	= clean_xss_tags(strip_tags($_POST['LGD_RESPMSG']));
   $LGD_PAYKEY	= '';
 
   $payReqMap['LGD_RESPCODE'] = $LGD_RESPCODE;

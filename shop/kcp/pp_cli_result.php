@@ -63,13 +63,13 @@ require_once(G5_SHOP_PATH.'/settle_kcp.inc.php');
     $mod_mny    = $_POST[ "mod_mny"    ];                             // 변경 요청 금액
     $rem_mny    = $_POST[ "rem_mny"    ];                             // 변경처리 이전 금액
     /* = -------------------------------------------------------------------------- = */
-    $res_cd     = $_POST[ "res_cd"     ];                             // 응답코드
-    $res_msg    = $_POST[ "res_msg"    ];                             // 응답메시지
-    $cash_no    = $_POST[ "cash_no"    ];                             // 현금영수증 거래번호
-    $receipt_no = $_POST[ "receipt_no" ];                             // 현금영수증 승인번호
-    $app_time   = $_POST[ "app_time"   ];                             // 승인시간(YYYYMMDDhhmmss)
-    $reg_stat   = $_POST[ "reg_stat"   ];                             // 등록 상태 코드
-    $reg_desc   = $_POST[ "reg_desc"   ];                             // 등록 상태 설명
+    $res_cd     = clean_xss_tags(strip_tags($_POST[ "res_cd"     ]));                             // 응답코드
+    $res_msg    = clean_xss_tags(strip_tags($_POST[ "res_msg"    ]));                             // 응답메시지
+    $cash_no    = clean_xss_tags(strip_tags($_POST[ "cash_no"    ]));                             // 현금영수증 거래번호
+    $receipt_no = clean_xss_tags(strip_tags($_POST[ "receipt_no" ]));                             // 현금영수증 승인번호
+    $app_time   = clean_xss_tags(strip_tags($_POST[ "app_time"   ]));                             // 승인시간(YYYYMMDDhhmmss)
+    $reg_stat   = clean_xss_tags(strip_tags($_POST[ "reg_stat"   ]));                             // 등록 상태 코드
+    $reg_desc   = clean_xss_tags(strip_tags($_POST[ "reg_desc"   ]));                             // 등록 상태 설명
     /* ============================================================================== */
 
     $req_tx_name = "";
