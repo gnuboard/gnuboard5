@@ -466,13 +466,20 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
     $upload[$i]['image'][0] = '';
     $upload[$i]['image'][1] = '';
     $upload[$i]['image'][2] = '';
+    $upload[$i]['fileurl'] = '';
+    $upload[$i]['thumburl'] = '';
+    $upload[$i]['storage'] = '';
 
     // 삭제에 체크가 되어있다면 파일을 삭제합니다.
     if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
         $upload[$i]['del_check'] = true;
 
-        $row = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-        @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+        $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+
+        $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
+        if( file_exists($delete_file) ){
+            @unlink($delete_file);
+        }
         // 썸네일삭제
         if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
             delete_board_thumbnail($bo_table, $row['bf_file']);
@@ -524,8 +531,12 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         // 4.00.11 - 글답변에서 파일 업로드시 원글의 파일이 삭제되는 오류를 수정
         if ($w == 'u') {
             // 존재하는 파일이 있다면 삭제합니다.
-            $row = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-            @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+            $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
+
+            $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
+            if( file_exists($delete_file) ){
+                @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+            }
             // 이미지파일이면 썸네일삭제
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
                 delete_board_thumbnail($bo_table, $row['bf_file']);
@@ -554,6 +565,7 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         chmod($dest_file, G5_FILE_PERMISSION);
 
         $dest_file = run_replace('write_update_upload_file', $dest_file, $board, $wr_id, $w);
+        $upload[$i] = run_replace('write_update_upload_array', $upload[$i], $dest_file, $board, $wr_id, $w);
     }
 }
 
@@ -575,6 +587,9 @@ for ($i=0; $i<count($upload); $i++)
                         set bf_source = '{$upload[$i]['source']}',
                              bf_file = '{$upload[$i]['file']}',
                              bf_content = '{$bf_content[$i]}',
+                             bf_fileurl = '{$upload[$i]['fileurl']}',
+                             bf_thumburl = '{$upload[$i]['thumburl']}',
+                             bf_storage = '{$upload[$i]['storage']}',
                              bf_filesize = '{$upload[$i]['filesize']}',
                              bf_width = '{$upload[$i]['image']['0']}',
                              bf_height = '{$upload[$i]['image']['1']}',
@@ -604,6 +619,9 @@ for ($i=0; $i<count($upload); $i++)
                          bf_source = '{$upload[$i]['source']}',
                          bf_file = '{$upload[$i]['file']}',
                          bf_content = '{$bf_content[$i]}',
+                         bf_fileurl = '{$upload[$i]['fileurl']}',
+                         bf_thumburl = '{$upload[$i]['thumburl']}',
+                         bf_storage = '{$upload[$i]['storage']}',
                          bf_download = 0,
                          bf_filesize = '{$upload[$i]['filesize']}',
                          bf_width = '{$upload[$i]['image']['0']}',

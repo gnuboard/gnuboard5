@@ -98,7 +98,10 @@ for ($i=$chk_count-1; $i>=0; $i--)
             $result2 = sql_query($sql2);
             while ($row2 = sql_fetch_array($result2)) {
                 // 파일삭제
-                @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '',$row2['bf_file']));
+                $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '',$row2['bf_file']), $row2);
+                if( file_exists($delete_file) ){
+                    @unlink($delete_file);
+                }
 
                 // 썸네일삭제
                 if(preg_match("/\.({$config['cf_image_extension']})$/i", $row2['bf_file'])) {

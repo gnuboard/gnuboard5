@@ -1176,6 +1176,10 @@ class UploadHandler
                     $image_width_height = $this->get_image_size($file_path);
                     $file->width = $image_width_height[0];
                     $file->height = $image_width_height[1];
+
+                    if( function_exists('run_replace') ){
+                        $file->url = run_replace('get_editor_upload_url', $file->url, $file_path, $file);
+                    }
                 } else {    //로빈아빠님이 알려주심, 이미지 업로드 체크
                     unlink($file_path);
                     $file->error = $this->get_error_message('accept_file_types');
@@ -1441,6 +1445,11 @@ class UploadHandler
             if( substr($file_name, 0 , 32) != $this->get_file_passname() ) continue;    //session_id() 와 비교하여 틀리면 지우지 않음
             $file_path = $this->get_upload_path($file_name);
             $success = is_file($file_path) && $file_name[0] !== '.' && unlink($file_path);
+
+            if( function_exists('run_event') ){
+                run_event('delete_editor_file', $file_path, $success);
+            }
+
             if ($success) {
                 foreach($this->options['image_versions'] as $version => $options) {
                     if (!empty($version)) {

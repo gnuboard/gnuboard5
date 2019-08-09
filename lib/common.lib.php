@@ -310,6 +310,9 @@ function get_file($bo_table, $wr_id)
         $file[$no]['image_width'] = $row['bf_width'] ? $row['bf_width'] : 640;
         $file[$no]['image_height'] = $row['bf_height'] ? $row['bf_height'] : 480;
         $file[$no]['image_type'] = $row['bf_type'];
+        $file[$no]['bf_fileurl'] = $row['bf_fileurl'];
+        $file[$no]['bf_thumburl'] = $row['bf_thumburl'];
+        $file[$no]['bf_storage'] = $row['bf_storage'];
         $file['count']++;
     }
 

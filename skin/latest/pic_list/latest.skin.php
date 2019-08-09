@@ -4,8 +4,8 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 0);
-$thumb_width = 210;
-$thumb_height = 150;
+$thumb_width = 297;
+$thumb_height = 212;
 ?>
 
 <div class="pic_li_lt">

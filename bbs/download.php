@@ -17,7 +17,7 @@ if (!get_session('ss_view_'.$bo_table.'_'.$wr_id))
 if($board['bo_download_point'] < 0 && $is_guest)
     alert('다운로드 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.'&amp;'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id)));
 
-$sql = " select bf_source, bf_file from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
+$sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$no' ";
 $file = sql_fetch($sql);
 if (!$file['bf_file'])
     alert_close('파일 정보가 존재하지 않습니다.');
@@ -47,8 +47,11 @@ if ($member['mb_level'] < $board['bo_download_level']) {
 
 $filepath = G5_DATA_PATH.'/file/'.$bo_table.'/'.$file['bf_file'];
 $filepath = addslashes($filepath);
-if (!is_file($filepath) || !file_exists($filepath))
+$file_exist_check = (!is_file($filepath) || !file_exists($filepath)) ? false : true;
+
+if ( false === run_replace('download_file_exist_check', $file_exist_check, $file) ){
     alert('파일이 존재하지 않습니다.');
+}
 
 // 사용자 코드 실행
 @include_once($board_skin_path.'/download.skin.php');
@@ -100,6 +103,8 @@ if(preg_match("/[\xA1-\xFE][\xA1-\xFE]/", $file['bf_source'])){
 $original = urlencode($file['bf_source']);
 
 @include_once($board_skin_path.'/download.tail.skin.php');
+
+run_event('download_file_header', $file, $file_exist_check);
 
 if(preg_match("/msie/i", $_SERVER['HTTP_USER_AGENT']) && preg_match("/5\.5/", $_SERVER['HTTP_USER_AGENT'])) {
     header("content-type: doesn/matter");
