@@ -51,9 +51,9 @@ else
 
 
 // 다음 쪽지
-$sql = " select * from {$g5[memo_table]}
+$sql = " select * from {$g5['memo_table']}
             where me_id < '{$me_id}'
-            and me_{$kind}_mb_id = '{$member[mb_id]}'
+            and me_{$kind}_mb_id = '{$member['mb_id']}'
             order by me_id desc
             limit 1 ";
 $next = sql_fetch($sql);
