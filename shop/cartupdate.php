@@ -43,6 +43,13 @@ if($act == "buy")
         if($ct_chk) {
             $it_id = $_POST['it_id'][$i];
 
+            // 본인인증, 성인인증체크
+            if(!$is_admin) {
+                $msg = shop_member_cert_check($it_id, 'item');
+                if($msg)
+                    alert($msg, G5_SHOP_URL);
+            }
+
             // 주문 상품의 재고체크
             $sql = " select ct_qty, it_name, ct_option, io_id, io_type
                         from {$g5['g5_shop_cart_table']}
@@ -135,6 +142,13 @@ else // 장바구니에 담기
         for($k=0; $k<$opt_count; $k++) {
             if ($_POST['ct_qty'][$it_id][$k] < 1)
                 alert('수량은 1 이상 입력해 주십시오.');
+        }
+
+        // 본인인증, 성인인증체크
+        if(!$is_admin) {
+            $msg = shop_member_cert_check($it_id, 'item');
+            if($msg)
+                alert($msg, G5_SHOP_URL);
         }
 
         // 상품정보
