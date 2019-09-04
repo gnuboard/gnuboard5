@@ -1,6 +1,17 @@
 <?php
 include_once('./_common.php');
-include_once('./ipin.config.php');
+
+$check_arrays = array('exe', 'keypath', 'memid', 'EndPointURL', 'cpubkey', 'csig', 'encdata', 'logpath', 'option');
+
+foreach($check_arrays as $key){
+    if( isset($_REQUEST[$key]) && $_REQUEST[$key] ){
+        die('bad request');
+    }
+
+    $$key = '';
+}
+
+require('./ipin.config.php');
 
 //아이핀팝업에서 조회한 PERSONALINFO이다.
 @$encPsnlInfo = $_POST["encPsnlInfo"];

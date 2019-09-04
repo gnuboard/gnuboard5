@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$co_id = preg_replace('/[^a-z0-9_]/i', '', $co_id);
+
 //dbconfig파일에 $g5['content_table'] 배열변수가 있는지 체크
 if( !isset($g5['content_table']) ){
     die('<meta charset="utf-8">관리자 모드에서 게시판관리->내용 관리를 먼저 확인해 주세요.');
@@ -24,6 +26,8 @@ if ($co['co_include_head'] && is_include_path_check($co['co_include_head']))
 else
     include_once('./_head.php');
 
+// KVE-2019-0828 취약점 내용
+$co['co_tag_filter_use'] = 1;
 $str = conv_content($co['co_content'], $co['co_html'], $co['co_tag_filter_use']);
 
 // $src 를 $dst 로 변환

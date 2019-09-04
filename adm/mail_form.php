@@ -10,6 +10,8 @@ $html_title = '회원메일';
 if ($w == 'u') {
     $html_title .= '수정';
     $readonly = ' readonly';
+    
+    $ma_id = (int) $ma_id;
 
     $sql = " select * from {$g5['mail_table']} where ma_id = '{$ma_id}' ";
     $ma = sql_fetch($sql);
@@ -44,7 +46,7 @@ include_once('./admin.head.php');
     </tr>
     <tr>
         <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>
-        <td><?php echo editor_html("ma_content", get_text($ma['ma_content'], 0)); ?></td>
+        <td><?php echo editor_html("ma_content", get_text(html_purifier($ma['ma_content']), 0)); ?></td>
     </tr>
     </tbody>
     </table>

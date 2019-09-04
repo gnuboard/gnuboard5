@@ -350,7 +350,8 @@ var check_goto_new = function(href, event) {
     if( !(typeof g5_is_mobile != "undefined" && g5_is_mobile) ){
         if (window.opener && window.opener.document && window.opener.document.getElementById) {
             event.preventDefault ? event.preventDefault() : (event.returnValue = false);
-            window.opener.document.location.href = href;
+            window.open(href);
+            //window.opener.document.location.href = href;
         }
     }
 }
@@ -359,7 +360,7 @@ var check_goto_new = function(href, event) {
  * 메일 창
  **/
 var win_email = function(href) {
-    var new_win = window.open(href, 'win_email', 'left=100,top=100,width=600,height=580,scrollbars=0');
+    var new_win = window.open(href, 'win_email', 'left=100,top=100,width=600,height=580,scrollbars=1');
     new_win.focus();
 }
 
@@ -439,8 +440,10 @@ var win_zip = function(frm_name, frm_zip, frm_addr1, frm_addr2, frm_addr3, frm_j
         if(of[frm_jibeon] !== undefined){
             of[frm_jibeon].value = data.userSelectedType;
         }
-
-        of[frm_addr2].focus();
+        
+        setTimeout(function(){
+            of[frm_addr2].focus();
+        } , 100);
     };
 
     switch(zip_case) {

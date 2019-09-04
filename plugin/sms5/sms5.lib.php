@@ -164,8 +164,8 @@ if($config['cf_sms_type'] == 'LMS') {
         }
 
         function Init() {
-            $this->Data     = "";   // 발송하기 위한 패킷내용이 배열로 들어간다.
-            $this->Result   = "";   // 발송결과값이 배열로 들어간다.
+            $this->Data     = array();   // 발송하기 위한 패킷내용이 배열로 들어간다.
+            $this->Result   = array();   // 발송결과값이 배열로 들어간다.
         }
 
         function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
@@ -260,14 +260,14 @@ if($config['cf_sms_type'] == 'LMS') {
                     $this->Result[] = "$phone:$code";
                     $this->Log[] = $puts;
                 }
-                $this->Data = "";
+                $this->Data = array();
                 return true;
                 exit;
             }
 
             $fsocket = fsockopen($this->socket_host,$this->socket_port, $errno, $errstr, 2);
             if (!$fsocket) return false;
-            set_time_limit(300);
+            set_time_limit(60);
 
             foreach($this->Data as $puts) {
                 fputs($fsocket, $puts);
@@ -284,7 +284,7 @@ if($config['cf_sms_type'] == 'LMS') {
             }
 
             fclose($fsocket);
-            $this->Data = "";
+            $this->Data = array();
             return true;
         }
     }
@@ -431,14 +431,14 @@ if($config['cf_sms_type'] == 'LMS') {
                     $this->Result[] = "$phone:$code";
                     $this->Log[] = $puts;
                 }
-                $this->Data = "";
+                $this->Data = array();
                 return true;
                 exit;
             }
 
-            $fsocket=fsockopen($this->SMS_Server,$this->SMS_Port);
+            $fsocket=fsockopen($this->SMS_Server,$this->SMS_Port, $errno, $errstr, 2);
             if (!$fsocket) return false;
-            set_time_limit(300);
+            set_time_limit(60);
 
             ## php4.3.10일경우
             ## zend 최신버전으로 업해주세요..
@@ -463,7 +463,7 @@ if($config['cf_sms_type'] == 'LMS') {
                 if ($count++%1000 == 0) sleep(5);
             }
             fclose($fsocket);
-            $this->Data = "";
+            $this->Data = array();
             return true;
         }
     }

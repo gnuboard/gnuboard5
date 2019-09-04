@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$act = isset($act) ? strip_tags($act) : '';
+
 // 게시판 관리자 이상 복사, 이동 가능
 if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
     alert_close('게시판 관리자 이상 접근이 가능합니다.');
@@ -125,7 +127,7 @@ while ($row = sql_fetch_array($result))
                         // 제이프로님 코드제안 적용
                         $copy_file_name = ($bo_table !== $move_bo_table) ? $row3['bf_file'] : $row2['wr_id'].'_copy_'.$insert_id.'_'.$row3['bf_file'];
                         @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$copy_file_name);
-                        @chmod($dst_dir/$row3['bf_file'], G5_FILE_PERMISSION);
+                        @chmod($dst_dir.'/'.$copy_file_name, G5_FILE_PERMISSION);
                     }
 
                     $sql = " insert into {$g5['board_file_table']}
@@ -196,8 +198,14 @@ if ($sw == 'move')
 {
     for ($i=0; $i<count($save); $i++)
     {
-        for ($k=0; $k<count($save[$i]['bf_file']); $k++)
-            @unlink($save[$i]['bf_file'][$k]);
+        if( isset($save[$i]['bf_file']) && $save[$i]['bf_file'] ){
+            for ($k=0; $k<count($save[$i]['bf_file']); $k++) {
+                @unlink($save[$i]['bf_file'][$k]);
+
+                // 썸네일 파일 삭제, 먼지손 님 코드 제안
+                delete_board_thumbnail($bo_table, basename($save[$i]['bf_file'][$k]));
+            }
+        }
 
         sql_query(" delete from $write_table where wr_parent = '{$save[$i]['wr_id']}' ");
         sql_query(" delete from {$g5['board_new_table']} where bo_table = '$bo_table' and wr_id = '{$save[$i]['wr_id']}' ");

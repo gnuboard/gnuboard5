@@ -6,6 +6,8 @@ auth_check($auth[$sub_menu], "r");
 if(!count($_POST['chk_bg_no']))
     alert('번호를 '.$act.'할 그룹을 한개 이상 선택해 주십시오.', $url);
 
+$bk_no_list = preg_replace('/[^a-zA-Z0-9\, ]/', '', $bk_no_list);
+
 $sql = "select * from {$g5['sms5_book_table']} where bk_no in ($bk_no_list) order by bk_no desc ";
 $result = sql_query($sql);
 $save = array();

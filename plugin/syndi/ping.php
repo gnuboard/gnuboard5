@@ -29,7 +29,7 @@ $feed_updated = date('Y-m-d\TH:i:s\+09:00', G5_SERVER_TIME);
 $find         = array('&amp;', '&nbsp;'); # 찾아서
 $replace      = array('&', ' '); # 바꾼다
 
-$content      = str_replace( $find, $replace, $write['wr_content'] );
+$content      = str_replace( $find, $replace, html_purifier($write['wr_content']) );
 $summary      = str_replace( $find, $replace, strip_tags($write['wr_content']) );
 
 Header("Content-type: text/xml");

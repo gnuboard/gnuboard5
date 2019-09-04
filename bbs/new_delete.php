@@ -87,7 +87,7 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
         $lf = '';
         for ($k=0; $k<count($notice_array); $k++) {
             if ((int)$write['wr_id'] != (int)$notice_array[$k])
-                $bo_notice .= $nl.$notice_array[$k];
+                $bo_notice .= $lf.$notice_array[$k];
 
             if($bo_notice)
                 $lf = ',';
@@ -117,7 +117,7 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
 
         // 코멘트 삭제
         if (!delete_point($write['mb_id'], $bo_table, $comment_id, '코멘트')) {
-            insert_point($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write[wr_parent]}-{$comment_id} 코멘트삭제");
+            insert_point($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_parent']}-{$comment_id} 코멘트삭제");
         }
 
         // 코멘트 삭제
@@ -128,7 +128,7 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
         $row = sql_fetch($sql);
 
         // 원글의 코멘트 숫자를 감소
-        sql_query(" update $write_table set wr_comment = wr_comment - 1, wr_last = '$row[wr_last]' where wr_id = '{$write['wr_parent']}' ");
+        sql_query(" update $write_table set wr_comment = wr_comment - 1, wr_last = '{$row['wr_last']}' where wr_id = '{$write['wr_parent']}' ");
 
         // 코멘트 숫자 감소
         sql_query(" update {$g5['board_table']} set bo_count_comment = bo_count_comment - 1 where bo_table = '$bo_table' ");

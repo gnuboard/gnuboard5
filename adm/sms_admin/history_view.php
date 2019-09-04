@@ -8,6 +8,10 @@ $colspan = 10;
 $st = isset($st) ? strip_tags($st) : '';
 $ssv = isset($ssv) ? strip_tags($ssv) : '';
 
+if( $st && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
+    $st = '';
+}
+
 auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = "문자전송 상세내역";
@@ -127,22 +131,22 @@ function all_send()
     <tr>
         <td><?php echo $re_vnum--?></td>
         <!-- <td><input type=checkbox></td> -->
-        <!-- <td><?php echo $res[wr_message]; ?></span></td>-->
-        <!-- <td><?php echo $res[wr_reply]; ?></td>-->
+        <!-- <td><?php echo $res['wr_message']; ?></span></td>-->
+        <!-- <td><?php echo $res['wr_reply']; ?></td>-->
         <td><?php echo $res['wr_datetime']?></td>
         <td><?php echo number_format($res['wr_total'])?></td>
         <td><?php echo number_format($res['wr_success'])?></td>
         <td><?php echo number_format($res['wr_failure'])?></td>
         <td class="td_mng">
             <a href="./history_view.php?page=<?php echo $page?>&amp;st=<?php echo $st?>&amp;sv=<?php echo $sv?>&amp;wr_no=<?php echo $res['wr_no']?>&amp;wr_renum=<?php echo $res['wr_renum']?>" class="btn btn_03">수정</a>
-            <!-- <a href="./history_del.php?page=<?php echo $page?>&amp;st=<?php echo $st?>&amp;sv=<?php echo $sv?>&amp;wr_no=<?php echo $res[wr_no]?>&amp;wr_renum=<?php echo $res[wr_renum]?>">삭제</a> -->
+            <!-- <a href="./history_del.php?page=<?php echo $page?>&amp;st=<?php echo $st?>&amp;sv=<?php echo $sv?>&amp;wr_no=<?php echo $res['wr_no']?>&amp;wr_renum=<?php echo $res['wr_renum']?>">삭제</a> -->
         </td>
     </tr>
     <?php } ?>
     </tbody>
     </table>
-    <?php } ?>
     </div>
+    <?php } ?>
 
     <?php
     if( $write['wr_memo'] ){

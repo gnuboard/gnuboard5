@@ -5,8 +5,9 @@ if(!$config['cf_cert_use'] || $config['cf_cert_ipin'] != 'kcb')
     alert('기본환경설정에서 KCB 아이핀 본인확인 서비스로 설정해 주십시오.');
 
 // key 디렉토리 체크
-include_once('./key_dir_check.php');
+require_once('./key_dir_check.php');
 
+$exe = '';
 // 실행모듈
 if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
     if(PHP_INT_MAX == 2147483647) // 32-bit

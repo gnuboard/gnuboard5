@@ -11,7 +11,7 @@ if (!chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
-$email = trim($_POST['mb_email']);
+$email = get_email_address(trim($_POST['mb_email']));
 
 if (!$email)
     alert_close('메일주소 오류입니다.');

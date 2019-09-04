@@ -117,7 +117,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             <?php echo $list[$i]['subject'] ?>
                             <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><span class="cnt_cmt">+ <?php echo $list[$i]['wr_comment']; ?></span><span class="sound_only">개</span><?php } ?>
                             <?php
-                            // if ($list[$i]['link']['count']) { echo '['.$list[$i]['link']['count']}.']'; }
                             // if ($list[$i]['file']['count']) { echo '<'.$list[$i]['file']['count'].'>'; }
 
                             if (isset($list[$i]['icon_new'])) echo rtrim($list[$i]['icon_new']);
@@ -129,7 +128,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                          </a>
                     </div>
                     <div class="gall_name">
-                        <span class="sound_only">작성자 </span><span class="profile_img"><?php echo $list[$i]['name'] ?>
+                        <span class="sound_only">작성자 </span><span class="profile_img"><?php echo $list[$i]['name'] ?></span>
                     </div>
                     <div class="gall_info">
                         <span class="sound_only">조회 </span><i class="fa fa-eye" aria-hidden="true"></i> <?php echo $list[$i]['wr_hit'] ?>

@@ -11,8 +11,8 @@ if ($w == 'u') // 업데이트
         // 실제 번호를 넘김
         $k = $_POST['chk'][$i];
         $fg_no = (int) $_POST['fg_no'][$k];
-        $fg_name = strip_tags($_POST['fg_name'][$k]);
-        $fg_member = strip_tags($_POST['fg_member'][$k]);
+        $fg_name = isset($_POST['fg_name'][$k]) ? addslashes(strip_tags($_POST['fg_name'][$k])) : '';
+        $fg_member = isset($_POST['fg_member'][$k]) ? addslashes(strip_tags($_POST['fg_member'][$k])) : '';
 
         if (!is_numeric($fg_no))
             alert('그룹 고유번호가 없습니다.');
@@ -83,7 +83,7 @@ else // 등록
     if (!strlen(trim($fg_name)))
         alert('그룹명을 입력해주세요');
 
-    $fg_name = strip_tags($fg_name);
+    $fg_name = addslashes(strip_tags($fg_name));
 
     $res = sql_fetch("select fg_name from {$g5['sms5_form_group_table']} where fg_name = '$fg_name'");
     if ($res)

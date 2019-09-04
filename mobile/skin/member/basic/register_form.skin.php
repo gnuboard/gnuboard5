@@ -52,7 +52,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             if($config['cf_cert_use']) {
                 if($config['cf_cert_ipin'])
                     echo '<button type="button" id="win_ipin_cert" class="btn_frmline btn">아이핀 본인확인</button>'.PHP_EOL;
-                if($config['cf_cert_hp'] && $config['cf_cert_hp'] != 'lg')
+                if($config['cf_cert_hp'])
                     echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>'.PHP_EOL;
 
                 echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
@@ -106,7 +106,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <?php if ($config['cf_use_homepage']) { ?>
         <li>
             <label for="reg_mb_homepage" class="sound_only">홈페이지<?php if ($config['cf_req_homepage']){ ?><strong>필수</strong><?php } ?></label>
-            <input type="url" name="mb_homepage" value="<?php echo get_text($member['mb_homepage']) ?>" id="reg_mb_homepage" class="frm_input full_input <?php echo $config['cf_req_homepage']?"required":""; ?>" maxlength="255" <?php echo $config['cf_req_homepage']?"required":""; ?> placeholder="홈페이지">
+            <input type="text" name="mb_homepage" value="<?php echo get_text($member['mb_homepage']) ?>" id="reg_mb_homepage" class="frm_input full_input <?php echo $config['cf_req_homepage']?"required":""; ?>" maxlength="255" <?php echo $config['cf_req_homepage']?"required":""; ?> placeholder="홈페이지">
         </li>
         <?php } ?>
 
@@ -272,19 +272,19 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
         <?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
         // 아이핀인증
-        $("#win_ipin_cert").click(function() {
+        $("#win_ipin_cert").click(function(e) {
             if(!cert_confirm())
                 return false;
 
             var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php";
-            certify_win_open('kcb-ipin', url);
+            certify_win_open('kcb-ipin', url, e);
             return;
         });
 
         <?php } ?>
         <?php if($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
         // 휴대폰인증
-        $("#win_hp_cert").click(function() {
+        $("#win_hp_cert").click(function(e) {
             if(!cert_confirm())
                 return false;
 
@@ -298,6 +298,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                     $cert_url = G5_KCPCERT_URL.'/kcpcert_form.php';
                     $cert_type = 'kcp-hp';
                     break;
+                case 'lg':
+                    $cert_url = G5_LGXPAY_URL.'/AuthOnlyReq.php';
+                    $cert_type = 'lg-hp';
+                    break;
                 default:
                     echo 'alert("기본환경설정에서 휴대폰 본인확인 설정을 해주십시오");';
                     echo 'return false;';
@@ -305,7 +309,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             }
             ?>
 
-            certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>");
+            certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>", e);
             return;
         });
         <?php } ?>

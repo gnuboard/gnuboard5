@@ -165,6 +165,8 @@ $_SESSION['lgd_certify'] = $payReqMap;
 <input type="hidden" name="LGD_ENCODING" value="UTF-8"/>
 <?php
 foreach ($payReqMap as $key => $value) {
+    $key = htmlspecialchars(strip_tags($key), ENT_QUOTES);
+    $value = htmlspecialchars(strip_tags($value), ENT_QUOTES);
     echo "<input type='hidden' name='$key' id='$key' value='$value'/>".PHP_EOL;
 }
 ?>

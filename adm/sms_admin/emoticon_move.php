@@ -12,7 +12,7 @@ $g5['title'] = '이모티콘그룹 이동';
 include_once(G5_PATH.'/head.sub.php');
 
 $list = array();    //배열 변수 초기화
-$fo_no_list = isset($_POST['fo_no']) ? implode(',', $_POST['fo_no']) : '';
+$fo_no_list = isset($_POST['fo_no']) ? clean_xss_tags(strip_tags(implode(',', $_POST['fo_no']))) : '';
 
 $sql = " select * from {$g5['sms5_form_group_table']} order by fg_no ";
 $result = sql_query($sql);

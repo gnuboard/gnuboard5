@@ -288,6 +288,7 @@ function get_file($bo_table, $wr_id)
     while ($row = sql_fetch_array($result))
     {
         $no = $row['bf_no'];
+        $bf_content = $row['bf_content'] ? html_purifier($row['bf_content']) : '';
         $file[$no]['href'] = G5_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
         $file[$no]['download'] = $row['bf_download'];
         // 4.00.11 - 파일 path 추가
@@ -295,8 +296,8 @@ function get_file($bo_table, $wr_id)
         $file[$no]['size'] = get_filesize($row['bf_filesize']);
         $file[$no]['datetime'] = $row['bf_datetime'];
         $file[$no]['source'] = addslashes($row['bf_source']);
-        $file[$no]['bf_content'] = $row['bf_content'];
-        $file[$no]['content'] = get_text($row['bf_content']);
+        $file[$no]['bf_content'] = $bf_content;
+        $file[$no]['content'] = get_text($bf_content);
         //$file[$no]['view'] = view_file_link($row['bf_file'], $file[$no]['content']);
         $file[$no]['view'] = view_file_link($row['bf_file'], $row['bf_width'], $row['bf_height'], $file[$no]['content']);
         $file[$no]['file'] = $row['bf_file'];
@@ -714,6 +715,8 @@ function get_group($gr_id)
 function get_member($mb_id, $fields='*')
 {
     global $g5;
+    
+    $mb_id = preg_replace("/[^0-9a-z_]+/i", "", $mb_id);
 
     return sql_fetch(" select $fields from {$g5['member_table']} where mb_id = TRIM('$mb_id') ");
 }
@@ -2068,13 +2071,21 @@ function abs_ip2long($ip='')
 
 function get_selected($field, $value)
 {
-    return ($field==$value) ? ' selected="selected"' : '';
+    if( is_int($value) ){
+        return ((int) $field===$value) ? ' selected="selected"' : '';
+    }
+
+    return ($field===$value) ? ' selected="selected"' : '';
 }
 
 
 function get_checked($field, $value)
 {
-    return ($field==$value) ? ' checked="checked"' : '';
+    if( is_int($value) ){
+        return ((int) $field===$value) ? ' checked="checked"' : '';
+    }
+
+    return ($field===$value) ? ' checked="checked"' : '';
 }
 
 
@@ -2107,7 +2118,7 @@ function get_uniqid()
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
-        $key = date('ymdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
+        $key = date('YmdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
 
         $result = sql_query(" insert into {$g5['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
         if ($result) break; // 쿼리가 정상이면 빠진다.
@@ -2678,7 +2689,7 @@ function get_qa_config($fld='*')
 
 // get_sock 함수 대체
 if (!function_exists("get_sock")) {
-    function get_sock($url)
+    function get_sock($url, $timeout=30)
     {
         // host 와 uri 를 분리
         //if (ereg("http://([a-zA-Z0-9_\-\.]+)([^<]*)", $url, $res))
@@ -2689,7 +2700,7 @@ if (!function_exists("get_sock")) {
         }
 
         // 80번 포트로 소캣접속 시도
-        $fp = fsockopen ($host, 80, $errno, $errstr, 30);
+        $fp = fsockopen ($host, 80, $errno, $errstr, $timeout);
         if (!$fp)
         {
             //die("$errstr ($errno)\n");
@@ -2741,6 +2752,11 @@ function module_exec_check($exe, $type)
         } else {
             // 바이너리 파일인지
             if($is_linux) {
+
+                if ( !function_exists('exec') ) {
+                    alert('exec 함수실행이 불가능하므로 사용할수 없습니다.');
+                }
+
                 $search = false;
                 $isbinary = true;
                 $executable = true;
@@ -2871,9 +2887,31 @@ function get_search_string($stx)
 }
 
 // XSS 관련 태그 제거
-function clean_xss_tags($str)
+function clean_xss_tags($str, $check_entities=0)
 {
-    $str = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+    $str_len = strlen($str);
+    
+    $i = 0;
+    while($i <= $str_len){
+        $result = preg_replace('#</*(?:applet|b(?:ase|gsound|link)|embed|frame(?:set)?|i(?:frame|layer)|l(?:ayer|ink)|meta|object|s(?:cript|tyle)|title|xml)[^>]*+>#i', '', $str);
+        
+        if( $check_entities ){
+            $result = str_replace(array('&colon;', '&lpar;', '&rpar;', '&NewLine;', '&Tab;'), '', $result);
+        }
+
+        if((string)$result === (string)$str) break;
+
+        $str = $result;
+        $i++;
+    }
+
+    return $str;
+}
+
+// XSS 어트리뷰트 태그 제거
+function clean_xss_attributes($str)
+{
+    $str = preg_replace('#(onabort|onactivate|onafterprint|onafterupdate|onbeforeactivate|onbeforecopy|onbeforecut|onbeforedeactivate|onbeforeeditfocus|onbeforepaste|onbeforeprint|onbeforeunload|onbeforeupdate|onblur|onbounce|oncellchange|onchange|onclick|oncontextmenu|oncontrolselect|oncopy|oncut|ondataavaible|ondatasetchanged|ondatasetcomplete|ondblclick|ondeactivate|ondrag|ondragdrop|ondragend|ondragenter|ondragleave|ondragover|ondragstart|ondrop|onerror|onerrorupdate|onfilterupdate|onfinish|onfocus|onfocusin|onfocusout|onhelp|onkeydown|onkeypress|onkeyup|onlayoutcomplete|onload|onlosecapture|onmousedown|onmouseenter|onmouseleave|onmousemove|onmoveout|onmouseover|onmouseup|onmousewheel|onmove|onmoveend|onmovestart|onpaste|onpropertychange|onreadystatechange|onreset|onresize|onresizeend|onresizestart|onrowexit|onrowsdelete|onrowsinserted|onscroll|onselect|onselectionchange|onselectstart|onstart|onstop|onsubmit|onunload)\\s*=\\s*\\\?".*?"#is', '', $str);
 
     return $str;
 }
@@ -2938,6 +2976,9 @@ function member_delete($mb_id)
 
     // 아이콘 삭제
     @unlink(G5_DATA_PATH.'/member/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
+
+    // 프로필 이미지 삭제
+    @unlink(G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.$mb_id.'.gif');
 }
 
 // 이메일 주소 추출
@@ -2975,7 +3016,7 @@ function replace_filename($name)
 // 아이코드 사용자정보
 function get_icode_userinfo($id, $pass)
 {
-    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$id.'&userpw='.$pass);
+    $res = get_sock('http://www.icodekorea.com/res/userinfo.php?userid='.$id.'&userpw='.$pass, 2);
     $res = explode(';', $res);
     $userinfo = array(
         'code'      => $res[0], // 결과코드
@@ -3269,7 +3310,7 @@ class str_encrypt
     function __construct($salt='')
     {
         if(!$salt)
-            $this->salt = md5(preg_replace('/[^0-9A-Za-z]/', substr(G5_MYSQL_USER, -1), G5_MYSQL_PASSWORD));
+            $this->salt = md5(preg_replace('/[^0-9A-Za-z]/', substr(G5_MYSQL_USER, -1), $_SERVER['SERVER_SOFTWARE'].$_SERVER['DOCUMENT_ROOT']));
         else
             $this->salt = $salt;
 
@@ -3288,12 +3329,12 @@ class str_encrypt
             $result .= $char;
         }
 
-        return base64_encode($result);
+        return strtr(base64_encode($result) , '+/=', '._-');
     }
 
     function decrypt($str) {
         $result = '';
-        $str    = base64_decode($str);
+        $str    = base64_decode(strtr($str, '._-', '+/='));
         $length = strlen($str);
 
         for($i=0; $i<$length; $i++) {
@@ -3384,7 +3425,7 @@ function get_head_title($title){
     global $g5;
 
     if( isset($g5['board_title']) && $g5['board_title'] ){
-        $title = $g5['board_title'];
+        $title = strip_tags($g5['board_title']);
     }
 
     return $title;
@@ -3405,10 +3446,34 @@ function is_use_email_certify(){
 
 function get_real_client_ip(){
 
-    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']))
-        return $_SERVER['HTTP_X_FORWARDED_FOR'];
+    $real_ip = $_SERVER['REMOTE_ADDR'];
 
-    return $_SERVER['REMOTE_ADDR'];
+    if(isset($_SERVER['HTTP_X_FORWARDED_FOR']) && preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}\z/', $_SERVER['HTTP_X_FORWARDED_FOR']) ){
+        $real_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+    }
+
+    return preg_replace('/[^0-9.]/', '', $real_ip);
+}
+
+function check_mail_bot($ip=''){
+
+    //아이피를 체크하여 메일 크롤링을 방지합니다.
+    $check_ips = array('211.249.40.');
+    $bot_message = 'bot 으로 판단되어 중지합니다.';
+    
+    if($ip){
+        foreach( $check_ips as $c_ip ){
+            if( preg_match('/^'.preg_quote($c_ip).'/', $ip) ) {
+                die($bot_message);
+            }
+        }
+    }
+
+    // user agent를 체크하여 메일 크롤링을 방지합니다.
+    $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+    if ($user_agent === 'Carbon' || strpos($user_agent, 'BingPreview') !== false || strpos($user_agent, 'Slackbot') !== false) { 
+        die($bot_message);
+    } 
 }
 
 function get_call_func_cache($func, $args=array()){
@@ -3432,13 +3497,28 @@ function get_call_func_cache($func, $args=array()){
     return $result;
 }
 
-// include 하는 경로에 data file 경로가 포함되어 있는지 체크합니다.
+// include 하는 경로에 data file 경로나 안전하지 않은 경로가 있는지 체크합니다.
 function is_include_path_check($path='', $is_input='')
 {
     if( $path ){
-        if ($is_input){
 
-            if( stripos($path, 'php://') !== false || stripos($path, 'zlib://') !== false || stripos($path, 'bzip2://') !== false || stripos($path, 'zip://') !== false || stripos($path, 'data:text/') !== false || stripos($path, 'data://') !== false ){
+        if( strlen($path) > 255 ){
+            return false;
+        }
+
+        if ($is_input){
+            // 장태진 @jtjisgod <jtjisgod@gmail.com> 추가
+            // 보안 목적 : rar wrapper 차단
+
+            if( stripos($path, 'rar:') !== false || stripos($path, 'php:') !== false || stripos($path, 'zlib:') !== false || stripos($path, 'bzip2:') !== false || stripos($path, 'zip:') !== false || stripos($path, 'data:') !== false || stripos($path, 'phar:') !== false || stripos($path, 'file:') !== false ){
+                return false;
+            }
+            
+            $replace_path = str_replace('\\', '/', $path);
+            $slash_count = substr_count(str_replace('\\', '/', $_SERVER['SCRIPT_NAME']), '/');
+            $peer_count = substr_count($replace_path, '../');
+
+            if ( $peer_count && $peer_count > $slash_count ){
                 return false;
             }
 
@@ -3478,14 +3558,20 @@ function is_include_path_check($path='', $is_input='')
                 return false;
             }
 
-            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $path) ){
+            if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) ){
+                return false;
+            }
+            if( (preg_match('/\.\.\//i', $replace_path) || preg_match('/^\/.*/i', $replace_path)) && preg_match('/plugin\//i', $replace_path) && preg_match('/okname\//i', $replace_path) ){
+                return false;
+            }
+            if( substr_count($replace_path, './') > 5 ){
                 return false;
             }
         }
 
         $extension = pathinfo($path, PATHINFO_EXTENSION);
         
-        if($extension && preg_match('/(jpg|jpeg|png|gif|bmp|conf)$/i', $extension)) {
+        if($extension && preg_match('/(jpg|jpeg|png|gif|bmp|conf|php\-x)$/i', $extension)) {
             return false;
         }
     }

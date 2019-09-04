@@ -379,6 +379,47 @@ function get_sanitize_input($s, $is_html=false){
     return $s;
 }
 
+function check_log_folder($log_path){
+
+    if( is_writable($log_path) ){
+
+        // 아파치 서버인 경우 웹에서 해당 폴더 접근 막기
+        $htaccess_file = $log_path.'/.htaccess';
+        if ( !file_exists( $htaccess_file ) ) {
+            if ( $handle = @fopen( $htaccess_file, 'w' ) ) {
+                fwrite( $handle, 'Order deny,allow' . "\n" );
+                fwrite( $handle, 'Deny from all' . "\n" );
+                fclose( $handle );
+            }
+        }
+        
+        // 아파치 서버인 경우 해당 디렉토리 파일 목록 안보이게 하기
+        $index_file = $log_path . '/index.php';
+        if ( !file_exists( $index_file ) ) {
+            if ( $handle = @fopen( $index_file, 'w' ) ) {
+                fwrite( $handle, '' );
+                fclose( $handle );
+            }
+        }
+    }
+    
+    // txt 파일과 log 파일을 조회하여 30일이 지난 파일은 삭제합니다.
+    $txt_files = glob($log_path.'/*.txt');
+    $log_files = glob($log_path.'/*.log');
+    
+    $del_files = array_merge($txt_files, $log_files);
+
+    if( $del_files && is_array($del_files) ){
+        foreach ($del_files as $del_file) {
+            $filetime = filemtime($del_file);
+            // 30일이 지난 파일을 삭제
+            if($filetime && $filetime < (G5_SERVER_TIME - 2592000)) {
+                @unlink($del_file);
+            }
+        }
+    }
+}
+
 // POST로 넘어온 토큰과 세션에 저장된 토큰 비교
 function check_admin_token()
 {
@@ -424,6 +465,25 @@ function admin_referer_check($return=false)
             alert($msg, G5_URL);
         }
     }
+}
+
+function admin_check_xss_params($params){
+
+    if( ! $params ) return;
+
+    foreach( $params as $key=>$value ){
+
+        if ( empty($value) ) continue;
+
+        if( is_array($value) ){
+            admin_check_xss_params($value);
+        } else if ( preg_match('/<\s?[^\>]*\/?\s?>/i', $value) && (preg_match('/script.*?\/script/ius', $value) || preg_match('/[onload|onerror]=.*/ius', $value)) ){
+            alert('요청 쿼리에 잘못된 스크립트문장이 있습니다.\\nXSS 공격일수도 있습니다.');
+            die();
+        }
+    }
+
+    return;
 }
 
 // 접근 권한 검사
@@ -488,6 +548,12 @@ if (isset($sfl))  $arr_query[] = 'sfl='.$sfl;
 if (isset($stx))  $arr_query[] = 'stx='.$stx;
 if (isset($page)) $arr_query[] = 'page='.$page;
 $qstr = implode("&amp;", $arr_query);
+
+if ( isset($_REQUEST) && $_REQUEST ){
+    if( admin_referer_check(true) ){
+        admin_check_xss_params($_REQUEST);
+    }
+}
 
 // 관리자에서는 추가 스크립트는 사용하지 않는다.
 //$config['cf_add_script'] = '';

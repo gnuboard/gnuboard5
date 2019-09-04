@@ -20,8 +20,14 @@ if ($w == "" || $w == "u")
     $co_row = sql_fetch($sql);
 }
 
+$co_id = preg_replace('/[^a-z0-9_]/i', '', $co_id);
+$co_subject = strip_tags($co_subject);
+$co_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_head, 0, 255));
+$co_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_tail, 0, 255));
+$co_tag_filter_use = isset($_POST['co_tag_filter_use']) ? (int) $_POST['co_tag_filter_use'] : 1;
+
 // 관리자가 자동등록방지를 사용해야 할 경우
-if (($co_row['co_include_head'] !== $_POST['co_include_head'] || $co_row['co_include_tail'] !== $_POST['co_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+if (($co_row['co_include_head'] !== $co_include_head || $co_row['co_include_tail'] !== $co_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
     include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
     if (!chk_captcha()) {
@@ -55,12 +61,12 @@ if( $co_include_tail ){
     }
 }
 
-if( $co_include_head && ! is_include_path_check($co_include_head) ){
+if( $co_include_head && ! is_include_path_check($co_include_head, 1) ){
     $co_include_head = '';
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 상단 파일 경로에 포함시킬수 없습니다.';
 }
 
-if( $co_include_tail && ! is_include_path_check($co_include_tail) ){
+if( $co_include_tail && ! is_include_path_check($co_include_tail, 1) ){
     $co_include_tail = '';
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.';
 }

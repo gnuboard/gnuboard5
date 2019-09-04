@@ -9,16 +9,19 @@ auth_check($auth[$sub_menu], 'w');
 
 check_admin_token();
 
-if (!$_POST['gr_id']) { alert('그룹 ID는 반드시 선택하세요.'); }
+$gr_id = isset($_POST['gr_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['gr_id']) : '';
+$bo_admin = isset($_POST['bo_admin']) ? preg_replace('/[^a-z0-9_\, \|\#]/i', '', $_POST['bo_admin']) : '';
+
+if (!$gr_id) { alert('그룹 ID는 반드시 선택하세요.'); }
 if (!$bo_table) { alert('게시판 TABLE명은 반드시 입력하세요.'); }
 if (!preg_match("/^([A-Za-z0-9_]{1,20})$/", $bo_table)) { alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)'); }
 if (!$_POST['bo_subject']) { alert('게시판 제목을 입력하세요.'); }
 
-$_POST['bo_include_head'] = preg_replace("#[\\\]+$#", "", substr($_POST['bo_include_head'], 0, 255));
-$_POST['bo_include_tail'] = preg_replace("#[\\\]+$#", "", substr($_POST['bo_include_tail'], 0, 255));
+$bo_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($bo_include_head, 0, 255));
+$bo_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($bo_include_tail, 0, 255));
 
 // 관리자가 자동등록방지를 사용해야 할 경우
-if ($board && ($board['bo_include_head'] !== $_POST['bo_include_head'] || $board['bo_include_tail'] !== $_POST['bo_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+if ($board && ($board['bo_include_head'] !== $bo_include_head || $board['bo_include_tail'] !== $bo_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
     include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
     if (!chk_captcha()) {
@@ -26,7 +29,7 @@ if ($board && ($board['bo_include_head'] !== $_POST['bo_include_head'] || $board
     }
 }
 
-if ($file = $_POST['bo_include_head']) {
+if ($file = $bo_include_head) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
     if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $file) ) {
@@ -35,7 +38,7 @@ if ($file = $_POST['bo_include_head']) {
     $_POST['bo_include_head'] = $file;
 }
 
-if ($file = $_POST['bo_include_tail']) {
+if ($file = $bo_include_tail) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
     if( ! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || ! preg_match('/^.*\.(php|htm|html)$/i', $file) ) {
@@ -44,11 +47,11 @@ if ($file = $_POST['bo_include_tail']) {
     $_POST['bo_include_tail'] = $file;
 }
 
-if(!is_include_path_check($_POST['bo_include_head'], 1)) {
+if(!is_include_path_check($bo_include_head, 1)) {
     alert('상단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
-if(!is_include_path_check($_POST['bo_include_tail'], 1)) {
+if(!is_include_path_check($bo_include_tail, 1)) {
     alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
@@ -72,11 +75,14 @@ $bo_category_list = str_replace($src_char, $dst_char, $bo_category_list);
 //https://github.com/gnuboard/gnuboard5/commit/f5f4925d4eb28ba1af728e1065fc2bdd9ce1da58 에 따른 조치
 $str_bo_category_list = isset($_POST['bo_category_list']) ? preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $_POST['bo_category_list']) : '';
 
-$sql_common = " gr_id               = '{$_POST['gr_id']}',
+$_POST['bo_subject'] = strip_tags($_POST['bo_subject']);
+$_POST['bo_mobile_subject'] = strip_tags($_POST['bo_mobile_subject']);
+
+$sql_common = " gr_id               = '{$gr_id}',
                 bo_subject          = '{$_POST['bo_subject']}',
                 bo_mobile_subject   = '{$_POST['bo_mobile_subject']}',
                 bo_device           = '{$_POST['bo_device']}',
-                bo_admin            = '{$_POST['bo_admin']}',
+                bo_admin            = '{$bo_admin}',
                 bo_list_level       = '{$_POST['bo_list_level']}',
                 bo_read_level       = '{$_POST['bo_read_level']}',
                 bo_write_level      = '{$_POST['bo_write_level']}',
@@ -125,8 +131,8 @@ $sql_common = " gr_id               = '{$_POST['gr_id']}',
 
 // 최고 관리자인 경우에만 수정가능
 if ($is_admin === 'super'){
-$sql_common .= " bo_include_head     = '{$_POST['bo_include_head']}',
-                bo_include_tail     = '{$_POST['bo_include_tail']}',
+$sql_common .= " bo_include_head     = '".$bo_include_head."',
+                bo_include_tail     = '".$bo_include_tail."',
                 bo_content_head     = '{$_POST['bo_content_head']}',
                 bo_content_tail     = '{$_POST['bo_content_tail']}',
                 bo_mobile_content_head     = '{$_POST['bo_mobile_content_head']}',

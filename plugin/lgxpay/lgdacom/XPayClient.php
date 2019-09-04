@@ -143,7 +143,7 @@ class XPayClient
         // log_dir 재설정
         $this->config["log_dir"] = $home_dir."/log";
 
-		$this->log_file = $this->config["log_dir"] . "/log_" . date("Ymd") . ".log";
+		$this->log_file = $this->config["log_dir"] . "/log_" . date("Ymd") . '_' . substr(md5(mt_rand()), 0, 12) . ".log";
 		// make log directory if does not exist
 		if (!file_exists($this->config["log_dir"])) {
 			mkdir($this->config["log_dir"], "0777", true);
@@ -604,6 +604,10 @@ class XPayClient
 
 	function Log($msg, $level=LGD_LOG_FATAL)
 	{
+        if( !(defined('LGD_LOG_SAVE') && LGD_LOG_SAVE) ){
+            return;
+        }
+
 		if ($level > $this->config["log_level"])
 			return;
 		$err_msg = date("Y-m-d H:i:s")." [".$this->err_label[$level]."] [".$this->TX_ID."] ".$msg."\n";

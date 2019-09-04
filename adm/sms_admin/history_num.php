@@ -11,6 +11,10 @@ $g5['title'] = "문자전송 내역 (번호별)";
 
 if ($page < 1) $page = 1;
 
+if( isset($st) && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
+    $st = '';
+}
+
 if ($st && trim($sv))
     $sql_search = " and $st like '%$sv%' ";
 else
@@ -27,7 +31,7 @@ $vnum = $total_count - (($page-1) * $page_size);
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
-<form name="search_form" method="get" action="<?echo $_SERVER['SCRIPT_NAME']?>" class="local_sch01 local_sch" >
+<form name="search_form" method="get" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>" class="local_sch01 local_sch" >
 <label for="st" class="sound_only">검색대상</label>
 <select name="st" id="st">
     <option value="hs_name"<?php echo get_selected('hs_name', $st); ?>>이름</option>

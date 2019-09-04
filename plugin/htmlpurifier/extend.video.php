@@ -24,6 +24,7 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 			if (strstr($html, '<iframe')) {
 				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/www\.youtube\.com\/embed\/([^"]*)[^>]*>(.*?)?\/iframe>/i', array($this, 'trust_url_match'), $html);
 				$html = preg_replace_callback('/<iframe.*?src="https?:\/\/player\.vimeo.com\/video\/([^"]*)[^>]*>(.*?)?\/iframe>/i', array($this, 'trust_url_match'), $html);
+                $html = preg_replace_callback('/<iframe.*?src="https?:\/\/www\.facebook.com\/plugins\/([^"]*)[^>]*>(.*?)?\/iframe>/i', array($this, 'trust_url_match'), $html);
 				//$html = preg_replace('#<iframe#i', '<img class="Iframevideo"', $html);
 				//$html = preg_replace('#</iframe>#i', '</img>', $html);
 			}
@@ -62,9 +63,10 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 			// Domain Whitelist
 			$youTubeMatch = preg_match('#src="https?://www.youtube(-nocookie)?.com/#i', $matches[1]);
 			$vimeoMatch = preg_match('#src="https?://player.vimeo.com/#i', $matches[1]);
-			if ($youTubeMatch || $vimeoMatch) {
+            $fackbookMatch = preg_match('#src="https?://www.facebook.com/#i', $matches[1]);
+			if ($youTubeMatch || $vimeoMatch || $fackbookMatch) {
 				$extra = ' frameborder="0"';
-				if ($youTubeMatch) {
+				if ($youTubeMatch || $fackbookMatch) {
 					$extra .= ' allowfullscreen';
 				} elseif ($vimeoMatch) {
 					$extra .= ' webkitAllowFullScreen mozallowfullscreen allowFullScreen';

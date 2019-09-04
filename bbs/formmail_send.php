@@ -12,14 +12,13 @@ if (!$is_member && $config['cf_formmail_is_member'])
 $email_enc = new str_encrypt();
 $to = $email_enc->decrypt($to);
 
-if (substr_count($to, "@") > 1)
-    alert_close('한번에 한사람에게만 메일을 발송할 수 있습니다.');
-
-
 if (!chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
+if (!preg_match("/([0-9a-zA-Z_-]+)@([0-9a-zA-Z_-]+)\.([0-9a-zA-Z_-]+)/", $to)){
+    alert_close('E-mail 주소가 형식에 맞지 않아서, 메일을 보낼수 없습니다.');
+}
 
 $file = array();
 for ($i=1; $i<=$attach; $i++) {
