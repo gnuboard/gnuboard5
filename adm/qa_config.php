@@ -306,7 +306,7 @@ if(!isset($qaconfig['qa_include_head'])) {
         <tr>
             <th scope="row"><label for="qa_insert_content">글쓰기 기본 내용</label></th>
             <td>
-                <textarea id="qa_insert_content" name="qa_insert_content" rows="5"><?php echo $qaconfig['qa_insert_content'] ?></textarea>
+                <textarea id="qa_insert_content" name="qa_insert_content" rows="5"><?php echo html_purifier($qaconfig['qa_insert_content']); ?></textarea>
             </td>
         </tr>
         <?php for ($i=1; $i<=5; $i++) { ?>

@@ -50,6 +50,8 @@ if( $qa_include_tail && ! is_include_path_check($qa_include_tail, 1) ){
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.';
 }
 
+$_POST['qa_title'] = strip_tags($_POST['qa_title']);
+
 $sql = " update {$g5['qa_config_table']}
             set qa_title                = '{$_POST['qa_title']}',
                 qa_category             = '{$_POST['qa_category']}',
