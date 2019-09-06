@@ -24,11 +24,38 @@ $bo_v_sns_class = $config['cf_kakao_js_apikey'] ? 'show_kakao' : '';
 ?>
 
 <?php if($config['cf_kakao_js_apikey']) { ?>
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<script src="<?php echo G5_JS_URL; ?>/kakaolink.js"></script>
-<script>
-    // 사용할 앱의 Javascript 키를 설정해 주세요.
-    Kakao.init("<?php echo $config['cf_kakao_js_apikey']; ?>");
+<script src="//developers.kakao.com/sdk/js/kakao.min.js" charset="utf-8"></script>
+<script src="<?php echo G5_JS_URL; ?>/kakaolink.js" charset="utf-8"></script>
+<script type='text/javascript'>
+    //<![CDATA[
+        // 사용할 앱의 Javascript 키를 설정해 주세요.
+        Kakao.init("<?php echo $config['cf_kakao_js_apikey']; ?>");
+
+        function Kakao_sendLink() {
+            var webUrl = location.protocol+"<?php echo '//'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']; ?>",
+                imageUrl = $("#bo_v_img").find("img").attr("src") || $(".view_image").find("img").attr("src") || '';
+
+            Kakao.Link.sendDefault({
+                objectType: 'feed',
+                content: {
+                    title: "<?php echo str_replace(array('%27', '&#034;' , '\"'), '', strip_tags($view['subject'])); ?>",
+                    description: "<?php echo preg_replace('/\r\n|\r|\n/','', strip_tags(get_text(cut_str(strip_tags($view['wr_content']), 200), 1))); ?>",
+                    imageUrl: imageUrl,
+                    link: {
+                        mobileWebUrl: webUrl,
+                        webUrl: webUrl
+                    }
+                },
+                buttons: [{
+                    title: '자세히 보기',
+                    link: {
+                        mobileWebUrl: webUrl,
+                        webUrl: webUrl
+                    }
+                }]
+            });
+        }
+    //]]>
 </script>
 <?php } ?>
 <div class="bo_v_snswr">
@@ -39,7 +66,7 @@ $bo_v_sns_class = $config['cf_kakao_js_apikey'] ? 'show_kakao' : '';
     <li><a href="<?php echo $facebook_url; ?>" target="_blank" class="sns_f"><img src="<?php echo G5_SNS_URL; ?>/icon/facebook.png" alt="페이스북으로 보내기" width="20"></a></li>
     <li><a href="<?php echo $gplus_url; ?>" target="_blank" class="sns_g"><img src="<?php echo G5_SNS_URL; ?>/icon/gplus.png" alt="구글플러스로 보내기" width="20"></a></li>
     <?php if($config['cf_kakao_js_apikey']) { ?>
-    <li><a href="javascript:kakaolink_send('<?php echo str_replace(array('%27', '\''), '', $sns_msg); ?>', '<?php echo urlencode('http://'.$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']); ?>');" class="sns_k" ><img src="<?php echo G5_SNS_URL; ?>/icon/kakaotalk.png" alt="카카오톡으로 보내기" width="20"></a></li>
+    <li><a href="javascript:Kakao_sendLink();" class="sns_k" ><img src="<?php echo G5_SNS_URL; ?>/icon/kakaotalk.png" alt="카카오톡으로 보내기" width="20"></a></li>
     <?php } ?>
 </ul>
 </div>
