@@ -83,8 +83,8 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
 function get_file_thumbnail($file){
     
     if( ! is_array($file) ) return '';
-    
-    if( $contents = run_replace('get_file_thumbnail_tags', '', $file) ){
+
+    if( preg_match('/(\.jpg|\.jpeg|\.gif|\.png|\.bmp)$/i', $file['file']) && $contents = run_replace('get_file_thumbnail_tags', '', $file) ){
         return $contents;
     } else if ($file['view']) {
         return get_view_thumbnail($file['view']);
