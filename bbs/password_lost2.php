@@ -21,9 +21,9 @@ $row = sql_fetch($sql);
 if ($row['cnt'] > 1)
     alert('동일한 메일주소가 2개 이상 존재합니다.\\n\\n관리자에게 문의하여 주십시오.');
 
-$sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime from {$g5['member_table']} where mb_email = '$email' ";
+$sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime, mb_leave_date from {$g5['member_table']} where mb_email = '$email' ";
 $mb = sql_fetch($sql);
-if (!$mb['mb_id'])
+if (!$mb['mb_id'] || $mb['mb_leave_date'])
     alert('존재하지 않는 회원입니다.');
 else if (is_admin($mb['mb_id']))
     alert('관리자 아이디는 접근 불가합니다.');
