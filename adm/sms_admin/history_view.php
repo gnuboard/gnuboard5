@@ -12,6 +12,10 @@ if( $st && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
     $st = '';
 }
 
+if( $sst && !in_array($sst, array('mb_id', 'bk_no', 'hs_name', 'hs_hp', 'hs_datetime', 'hs_flag', 'hs_code', 'hs_memo', 'hs_log')) ){
+    $sst = '';
+}
+
 auth_check($auth[$sub_menu], "r");
 
 $g5['title'] = "문자전송 상세내역";
@@ -22,7 +26,7 @@ if (!is_numeric($wr_no))
 if ($spage < 1) $spage = 1;
 
 if ($sst && trim($ssv))
-    $sql_search = " and $sst like '%$ssv%' ";
+    $sql_search = " and $sst like '%".sql_real_escape_string($ssv)."%' ";
 else
     $sql_search = "";
 
