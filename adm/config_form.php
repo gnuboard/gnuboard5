@@ -1089,7 +1089,7 @@ include_once('_rewrite_config_form.php');
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_kakao" value="kakao" <?php echo option_array_checked('kakao', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_kakao">카카오 로그인을 사용합니다</label>
                     <div>
-                    <h3>카카오 웹 Redirect Path</h3>
+                    <h3>카카오 로그인 Redirect URI</h3>
                     <p><?php echo get_social_callbackurl('kakao', true); ?></p>
                     </div>
                 </div>

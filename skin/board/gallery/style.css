@@ -103,6 +103,7 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 #bo_gall .gall_li {}
 #bo_gall .gall_li .gall_chk {position:absolute;top:0;left:0;padding:5px}
 #bo_gall .gall_box {position:relative;margin:0 0 50px 0;border-radius:0 0 2px 2px}
+#bo_gall .gall_con {position:relative}
 
 .gall_row .col-gn-0,.gall_row .col-gn-1,.gall_row .col-gn-2,.gall_row .col-gn-3,.gall_row .col-gn-4,.gall_row .col-gn-5,.gall_row .col-gn-6,.gall_row .col-gn-7,.gall_row .col-gn-8,.gall_row .col-gn-9,.gall_row .col-gn-10 {position:relative;min-height:1px;padding-left:10px;*padding-left:0;padding-right:10px;*padding-right:0;float:left;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box;margin-left:0}
 .gall_row .col-gn-0,.latest_row .col-gn-1 {width:100%}
@@ -147,7 +148,7 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 #bo_gall .gall_info .gall_date,
 #bo_gall .gall_info .gall_view {display:inline-block;margin-left:10px;color:#777}
 
-#bo_gall .gall_option {position:absolute;top:170px;left:10px}
+#bo_gall .gall_option {position:absolute;top:10px;right:10px}
 #bo_gall .gall_option strong {background:#fff;padding:5px 10px;border-radius:30px;-webkit-box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2);
 -moz-box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2);
 box-shadow:2px 2px 3px 0px rgba(0,0,0,0.2)}

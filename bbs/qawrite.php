@@ -67,7 +67,7 @@ if(is_file($skin_file)) {
 
     $content = '';
     if ($w == '') {
-        $content = $qaconfig['qa_insert_content'];
+        $content = html_purifier($qaconfig['qa_insert_content']);
     } else if($w == 'r') {
         if($is_dhtml_editor)
             $content = '<div><br><br><br>====== 이전 답변내용 =======<br></div>';
