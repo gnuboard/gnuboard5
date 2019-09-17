@@ -74,10 +74,13 @@ while($res = sql_fetch_array($qry))
     ";
 }
 
-$arr_ajax_msg['error'] = "";
-$arr_ajax_msg['list_text'] = $list_text;
-$arr_ajax_msg['page'] = $page;
-$arr_ajax_msg['total_count'] = $total_count;
-$arr_ajax_msg['total_page'] = $total_page;
+$arr_ajax_msg = array(
+'error'=>'',
+'list_text'=>$list_text,
+'page'=>$page,
+'total_count'=>$total_count,
+'total_page'=>$total_page
+);
+
 die( json_encode($arr_ajax_msg) );
 ?>
