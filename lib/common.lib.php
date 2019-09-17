@@ -707,7 +707,7 @@ function get_write($write_table, $wr_id, $is_cache=false)
 
     $write = $g5_object->get('bbs', $wr_id, $wr_bo_table);
 
-    if( !$write ){
+    if( !$write || $is_cache == false ){
         $sql = " select * from {$write_table} where wr_id = '{$wr_id}' ";
         $write = sql_fetch($sql);
 

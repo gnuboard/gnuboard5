@@ -424,6 +424,9 @@ if ($w == '' || $w == 'r') {
 
     $bo_notice = board_notice($board['bo_notice'], $wr_id, $notice);
     sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
+
+    // 글을 수정한 경우에는 제목이 달라질수도 있으니 static variable 를 새로고침합니다.
+    $write = get_write( $write_table, $wr['wr_id'], false);
 }
 
 // 게시판그룹접근사용을 하지 않아야 하고 비회원 글읽기가 가능해야 하며 비밀글이 아니어야 합니다.
