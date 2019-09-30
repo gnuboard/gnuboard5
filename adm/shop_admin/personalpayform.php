@@ -112,7 +112,7 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
             </tr>
             <tr>
                 <th scope="row"><label for="pp_content">내용</label></th>
-                <td><textarea name="pp_content" id="pp_content" rows="8"><?php echo $pp['pp_content']; ?></textarea></td>
+                <td><textarea name="pp_content" id="pp_content" rows="8"><?php echo html_purifier($pp['pp_content']); ?></textarea></td>
             </tr>
             </tbody>
             </table>
