@@ -40,7 +40,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 </div>
 
 <script>
-$(function(){
+jQuery(function($){
     $("#login_auto_login").click(function(){
         if (this.checked) {
             this.checked = confirm("자동로그인을 사용하시면 다음부터 회원아이디와 비밀번호를 입력하실 필요가 없습니다.\n\n공공장소에서는 개인정보가 유출될 수 있으니 사용을 자제하여 주십시오.\n\n자동로그인을 사용하시겠습니까?");
@@ -50,7 +50,10 @@ $(function(){
 
 function flogin_submit(f)
 {
-    return true;
+    if( $( document.body ).triggerHandler( 'login_sumit', [f, 'flogin'] ) !== false ){
+        return true;
+    }
+    return false;
 }
 </script>
 <!-- } 로그인 끝 -->

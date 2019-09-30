@@ -441,6 +441,8 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
     <?php
         }   //end if
     }   //end if
+
+    run_event('admin_member_form_add', $mb, $w, 'table');
     ?>
 
     <?php for ($i=1; $i<=10; $i++) { ?>
@@ -476,7 +478,8 @@ function fmember_submit(f)
     return true;
 }
 </script>
-
 <?php
+run_event('admin_member_form_after', $mb, $w);
+
 include_once('./admin.tail.php');
 ?>

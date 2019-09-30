@@ -5,6 +5,8 @@ if (!defined('_GNUBOARD_')) exit;
 function outlogin($skin_dir='basic')
 {
     global $config, $member, $g5, $urlencode, $is_admin, $is_member;
+    
+    $is_auth = false;
 
     if (array_key_exists('mb_nick', $member)) {
         $nick  = get_text(cut_str($member['mb_nick'], $config['cf_cut_name']));
@@ -43,7 +45,6 @@ function outlogin($skin_dir='basic')
         }
         
         $mb_scrap_cnt = isset($member['mb_scrap_cnt']) ? (int) $member['mb_scrap_cnt'] : '';
-        $is_auth = false;
         $sql = " select count(*) as cnt from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
         if ($row['cnt'])
@@ -61,6 +62,6 @@ function outlogin($skin_dir='basic')
     $content = ob_get_contents();
     ob_end_clean();
 
-    return $content;
+    return run_replace('outlogin_content', $content, $is_auth, $outlogin_url, $outlogin_action_url);
 }
 ?>
