@@ -65,6 +65,7 @@
  * @note			2012.07.09	PHP ini 파일 error display setting 추가
  * @buildno			    5036
  * @note			2014.12.09	add gather parameter tid, type
+ * @note			20151113	주문번호 거래조회 추가
  */
 ini_set('error_reporting', E_ALL ^ E_NOTICE);
 ini_set('display_errors', 'Off');
@@ -72,8 +73,8 @@ ini_set('display_errors', 'Off');
 /* GLOBAL */
 define("PROGRAM", "INIPHP");
 define("LANG", "PHP");
-define("VERSION", "5036");
-define("BUILDDATE", "141209");
+define("VERSION", "NV5053");
+define("BUILDDATE", "20190404");
 define("TID_LEN", 40);
 define("MAX_KEY_LEN", 24);
 define("MAX_IV_LEN", 8);
@@ -93,14 +94,14 @@ define("INFO", 5);
 define("DEBUG", 7);
 
 /* SERVER INFO */
-define("PG_HOST", "pg.inicis.com");
-define("DRPG_HOST", "drpg.inicis.com");
+define("PG_HOST", "formpg.inicis.com");
 define("PG_IP", "203.238.37.3");
-define("DRPG_IP", "211.219.96.180");
+define("KSPG_IP", "39.115.212.10");
 define("PG_PORT", 34049);
 define("G_SERVER", "gthr.inicis.com");
 define("G_CGI", "/cgi-bin/g.cgi");
 define("G_PORT", 80);
+
 
 define("OK", "0");
 
@@ -224,7 +225,6 @@ define("TYPE_ESCROW_CNF", "confirm"); //구매확인/거절(플러그인)
 define("TYPE_ESCROW_DNY", "deny");  //위에서 처리됨,의미없음
 define("TYPE_ESCROW_DNY_CNF", "dcnf");
 
-
 //------------------------------------------------------
 //PayMethod(서비스별, TX)
 //------------------------------------------------------
@@ -322,6 +322,8 @@ define("TX_CANCELREASON", "CancelReason");      //2012-10-19 취소사유코드 
 define("TX_REFUNDACCTNUM", "RefundAcctNum");
 define("TX_REFUNDBANKCODE", "RefundBankCode");
 define("TX_REFUNDACCTNAME", "RefundAcctName");
+define("TX_REFUNDFLGREMIT", "RefundFlgRemit");
+
 //PartCancelInfo
 define("TX_PRTC_TID", "PRTC_TID");
 define("TX_PRTC_PRICE", "PRTC_Price");
@@ -359,6 +361,7 @@ define("TX_CSHR_SUBAPPLPRICE1", "CSHR_SubApplPrice1");
 define("TX_CSHR_SUBSERVICEPRICE1", "CSHR_SubServicePrice1");
 //거래조회(12.04.20)
 define("TX_INQR_TID", "INQR_TID");
+define("TX_INQR_OID", "INQR_OID");
 //서브몰하위가맹점등록(14.03.06)
 define("TX_OPENREG_TID", "OrgTID");
 define("TX_OPENREG_MID", "MID");
@@ -492,6 +495,7 @@ define("ISP_PURCHASECODE", "ISP_PurchaseCode");
 define("ACCT_APPLDATE", "ACCT_ApplDate");
 define("ACCT_APPLTIME", "ACCT_ApplTime");
 define("ACCT_APPLNUM", "ACCT_ApplNum");
+
 //HPP
 define("HPP_APPLDATE", "HPP_ApplDate");
 define("HPP_APPLTIME", "HPP_ApplTime");

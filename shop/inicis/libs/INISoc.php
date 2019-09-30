@@ -37,7 +37,7 @@ class INISocket {
         return false;
     }
 
-    function INISocket($host) {
+    function __construct($host) {
         $this->family = AF_INET;
         $this->type = SOCK_STREAM;
         $this->protocol = SOL_TCP;
@@ -52,7 +52,7 @@ class INISocket {
     function DNSLookUP() {
         $starttime = GetMicroTime();
         $ip = @gethostbyname($this->host);
-        if ($ip) {
+        if ($ip == PG_IP || $ip == KSPG_IP) {
             $this->ip = $ip;
         } else {
             $this->error("Hostname " . $this->host . " could not be resolved");

@@ -113,6 +113,13 @@ class INIpay50 {
             return $this->MakeChkFake();
         }
 
+
+        //TID 인입 기반 거래의 경우 TID 를 기록함
+        $temp_request = array_change_key_case($this->m_REQUEST, CASE_LOWER);
+        if(isset($temp_request['tid'])){
+        	$this->m_Log->WriteLog(INFO, "INPUT TID > ".$temp_request['tid']);
+        }
+        
         /* -------------------------------------------------- */
         //Generate TID
         /* -------------------------------------------------- */
@@ -227,70 +234,79 @@ class INIpay50 {
         $this->m_Log->WriteLog(INFO, "MAKE HEAD OK");
         //$this->m_Log->WriteLog( INFO, "MAKE HEAD OK[".$head."]" );
 
-        $this->m_Log->WriteLog(INFO, "MSG_TO_PG:[" . $this->m_Data->m_sMsg . "]");
+        $this->m_Log->WriteLog(DEBUG, "MSG_TO_PG:[" . $this->m_Data->m_sMsg . "]");
 
+        
         /* -------------------------------------------------- */
         //소켓생성
         /* -------------------------------------------------- */
-        //DRPG 셋팅, added 07.11.15
-        //취소시-PG설정 변경(도메인->IP), edited 10.09.09
-        if ($this->m_type == TYPE_SECUREPAY) {
-            if ($this->m_REQUEST["pgn"] == "")
-                $host = $this->m_Data->m_PG1;
-            else
-                $host = $this->m_REQUEST["pgn"];
+        
+        //플러그인 에스크로 결제 구분 설정
+        $is_plugin_escrow = FALSE;
+        if($this->m_type == TYPE_ESCROW && ($this->m_Data->m_EscrowType == TYPE_ESCROW_CNF || $this->m_Data->m_EscrowType == TYPE_ESCROW_DNY)) $is_plugin_escrow = TRUE;
+        
+        
+        if($this->m_REQUEST["pgn"] != "") {
+        	$host = $this->m_REQUEST["pgn"];
+        } else {
+        	if ($this->m_type == TYPE_SECUREPAY || $is_plugin_escrow == TRUE) {		//plugin
+        		$host = $this->m_Data->m_PG1;
+        	} else if ($this->m_cancelRC == 1){			//원거래없음
+        		$host = KSPG_IP;
+        	} else {
+        		$host = PG_HOST;
+        	}
         }
-        else {
-            if ($this->m_REQUEST["pgn"] == "") {
-                if ($this->m_cancelRC == 1)
-                    $host = DRPG_IP;
-                else
-                    $host = PG_IP;
-            } else
-                $host = $this->m_REQUEST["pgn"];
-        }
-
+        
         $this->m_Socket = new INISocket($host);
+        
+        //1차 NSLOOKUP FAIL
         if (($rtv = $this->m_Socket->DNSLookup()) != OK) {
-            $err_msg = "[" . $host . "]DNS LOOKUP 실패(MAIN)" . $this->m_Socket->getErr();
+            $err_msg = "[" . $host . "] 1차 DNS LOOKUP 실패" . $this->m_Socket->getErr();
             $this->m_Log->WriteLog(ERROR, $err_msg);
             $this->MakeTXErrMsg($rtv, $err_msg);
-            if ($this->m_type == TYPE_SECUREPAY) { //PI일경우, PI가 내려주는 pg1ip로!
+            
+            if ($this->m_type == TYPE_SECUREPAY || $is_plugin_escrow == TRUE) {
                 $this->m_Socket->ip = $this->m_Data->m_PG1IP;
             } else {
-                if ($this->m_cancelRC == 1)
-                    $this->m_Socket->ip = DRPG_IP;
-                else
-                    $this->m_Socket->ip = PG_IP;
+                if ($this->m_cancelRC == 1) $this->m_Socket->ip = KSPG_IP;
+                else $this->m_Socket->ip = PG_IP;
             }
         }
-        $this->m_Log->WriteLog(INFO, "DNS LOOKUP OK(" . $this->m_Socket->host . ":" . $this->m_Socket->ip . ":" . $this->m_Socket->port . ") laptime:" . $this->m_Socket->dns_laptime);
+        
+        $this->m_Log->WriteLog(INFO, "DNS LOOKUP OK(" . $this->m_Socket->host . ", " . $this->m_Socket->ip . ":" . $this->m_Socket->port . ") laptime:" . $this->m_Socket->dns_laptime);
+        
         if (($rtv = $this->m_Socket->open()) != OK) {
             $this->m_Socket->close();
 
             //PG2로 전환
-            $err_msg = "[" . $host . "소켓연결오류(MAIN)::PG2로 전환";
+            $err_msg = "[" . $host."(". $this->m_Socket->ip .") 소켓연결오류(1차):: 2차 연결시도";
             $this->m_Log->WriteLog(ERROR, $err_msg);
             $this->MakeTXErrMsg($rtv, $err_msg);
-            if ($this->m_type == TYPE_SECUREPAY) {
+            if ($this->m_type == TYPE_SECUREPAY || $is_plugin_escrow == TRUE) {
                 $host = $this->m_Data->m_PG2;
             } else {
-                $host = DRPG_HOST;
+            	$host = $this->m_Socket->ip == PG_IP ? KSPG_IP:PG_IP;
             }
+            
             $this->m_Socket = new INISocket($host);
-            if (($rtv = $this->m_Socket->DNSLookup()) != OK) {
-                $err_msg = "[" . $host . "]DNS LOOKUP 실패(MAIN)" . $this->m_Socket->getErr();
-                $this->m_Log->WriteLog(ERROR, $err_msg);
-                $this->MakeTXErrMsg($rtv, $err_msg);
-                if ($this->m_type == TYPE_SECUREPAY) { //PI일경우, PI가 내려주는 pg2ip로!
-                    $this->m_Socket->ip = $this->m_Data->m_PG2IP;
-                } else {
-                    $this->m_Socket->ip = DRPG_IP;
-                }
+            
+            //SECUREPAY만 2차 NSLOOKUP 진행, 이외는 IP통신
+            if ($this->m_type == TYPE_SECUREPAY || $is_plugin_escrow == TRUE) {
+            	if (($rtv = $this->m_Socket->DNSLookup()) != OK) {
+            		$err_msg = "[" . $host . "] 2차 DNS LOOKUP 실패" . $this->m_Socket->getErr();
+            		$this->m_Log->WriteLog(ERROR, $err_msg);
+            		$this->MakeTXErrMsg($rtv, $err_msg);
+            		$this->m_Socket->ip = $this->m_Data->m_PG2IP;
+            	}
+            } else {
+            	$this->m_Socket->ip = $host;
             }
-            $this->m_Log->WriteLog(INFO, "DNS LOOKUP OK(" . $this->m_Socket->host . ":" . $this->m_Socket->ip . ":" . $this->m_Socket->port . ") laptime:" . $this->m_Socket->dns_laptime);
+            
+            $this->m_Log->WriteLog(INFO, "DNS LOOKUP OK(" . $this->m_Socket->host . ", " . $this->m_Socket->ip . ":" . $this->m_Socket->port . ") laptime:" . $this->m_Socket->dns_laptime);
+            
             if (($rtv = $this->m_Socket->open()) != OK) {
-                $err_msg = "[" . $host . "소켓연결오류(MAIN)::" . $this->m_Socket->getErr();
+                $err_msg = "[" . $host . "소켓연결오류(2차)::" . $this->m_Socket->getErr();
                 $this->m_Log->WriteLog(ERROR, $err_msg);
                 $this->MakeTXErrMsg($rtv, $err_msg);
                 $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
@@ -449,17 +465,6 @@ class INIpay50 {
         $this->m_Log->CloseLog($this->GetResult(NM_RESULTMSG));
         $this->m_Crypto->FreeAllKey();
         $this->m_Socket->close();
-
-        /* -------------------------------------------------- */
-        //취소실패-원거래없음시에 DRPG로 재시도
-        //2008.04.01
-        /* -------------------------------------------------- */
-        if ($this->GetResult(NM_RESULTCODE) == "01" && ($this->m_type == TYPE_CANCEL || $this->m_type == TYPE_INQUIRY) && $this->m_cancelRC == 0) {
-            if (intval($this->GetResult(NM_ERRORCODE)) > 400000 && substr($this->GetResult(NM_ERRORCODE), 3, 3) == "623") {
-                $this->m_cancelRC = 1;
-                $this->startAction();
-            }
-        }
 
         return;
     }

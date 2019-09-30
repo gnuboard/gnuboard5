@@ -106,7 +106,7 @@ class INILog {
     var $mkey;
     var $mergelog;
 
-    function INILog($request) {
+    function __construct($request) {
         $this->debug_msg = array("", "CRITICAL", "ERROR", "NOTICE", "4", "INFO", "6", "DEBUG", "8");
         $this->debug_mode = $request["debug"];
         $this->type = $request["type"];
@@ -132,7 +132,7 @@ class INILog {
         $this->handle = fopen($logfile, "a+");
         if (!$this->handle)
             return false;
-        $this->WriteLog(INFO, "START " . PROGRAM . " " . $this->type . " (V" . VERSION . "-" . BUILDDATE . ")(OS:" . php_uname('s') . php_uname('r') . ",PHP:" . phpversion() . ")");
+        $this->WriteLog(INFO, "START " . PROGRAM . " " . $this->type . " (" . VERSION . "-" . BUILDDATE . ")(OS:" . php_uname('s') . php_uname('r') . ",PHP:" . phpversion() . ")");
         return true;
     }
 
@@ -218,7 +218,7 @@ class INIData {
     var $m_RESULT = array();  //Encrypted 필드 hash table
     var $m_RESULT2 = array(); //PG Added Entity
 
-    function INIData($request, $request2) {
+    function __construct($request, $request2) {
         $this->m_Xml = NULL;
 
         $this->m_REQUEST = $request;
@@ -274,8 +274,8 @@ class INIData {
         }
         $this->m_sPayMethod = $this->m_REQUEST["paymethod"];
 
-        $this->m_TXVersion = sprintf("%-4.4s", VERSION) .
-                sprintf("B%-6.6s", BUILDDATE) .
+        $this->m_TXVersion = sprintf("%-6.6s", VERSION) .
+                sprintf("B%-8.8s", BUILDDATE) .
                 sprintf("%-5.5s", $this->m_Type) .
                 sprintf("%-10.10s", php_uname('s')) .
                 sprintf("%-3.3s", "PHP") . //modulescript
@@ -488,7 +488,7 @@ class INIData {
         //make XML
         $xml = new XML();
         if ($this->m_Type == TYPE_FORMPAY) {
-            
+        	
         } else if ($this->m_Type == TYPE_RECEIPT) {
             $PI = $xml->add_node("", PAYMENTINFO);
             $PM = $xml->add_node($PI, PAYMENT);
@@ -515,6 +515,12 @@ class INIData {
             $CD = $xml->add_node($CI, TX_CANCELTID, $this->m_REQUEST["tid"]);
             $CD = $xml->add_node($CI, TX_CANCELMSG, $this->m_REQUEST["cancelmsg"], array("urlencode" => "1"));
             $CD = $xml->add_node($CI, TX_CANCELREASON, $this->m_REQUEST["cancelcode"]);
+            
+            //휴대폰 익월환불 추가
+            $CD = $xml->add_node($CI, TX_REFUNDACCTNUM, $this->m_REQUEST["racctnum"]);
+            $CD = $xml->add_node($CI, TX_REFUNDBANKCODE, $this->m_REQUEST["rbankcode"]);
+            $CD = $xml->add_node($CI, TX_REFUNDACCTNAME, $this->m_REQUEST["racctname"], array("urlencode" => "1"));
+            
             $this->AddUserDefinedEntity(CANCELINFO, "", $xml, $CI);
         } else if ($this->m_Type == TYPE_REPAY) {
             //PartCancelInfo(ROOT)
@@ -598,10 +604,14 @@ class INIData {
             $CD = $xml->add_node($CI, TX_REFUNDACCTNUM, $this->m_REQUEST["racctnum"]);
             $CD = $xml->add_node($CI, TX_REFUNDBANKCODE, $this->m_REQUEST["rbankcode"]);
             $CD = $xml->add_node($CI, TX_REFUNDACCTNAME, $this->m_REQUEST["racctname"], array("urlencode" => "1"));
+            $CD = $xml->add_node($CI, TX_REFUNDFLGREMIT, $this->m_REQUEST["refundflgremit"]);
+            
+            
             $this->AddUserDefinedEntity(CANCELINFO, "", $xml, $CI);
         } else if ($this->m_Type == TYPE_INQUIRY) {
             $CI = $xml->add_node("", INQUIRYINFO);
             $CD = $xml->add_node($CI, TX_INQR_TID, $this->m_REQUEST["tid"]);
+            $CD = $xml->add_node($CI, TX_INQR_OID, $this->m_REQUEST["oid"], array("urlencode" => "1"));
             //$this->AddUserDefinedEntity( INQUIRYINFO, "", $xml, $CI );
         } else if ($this->m_Type == TYPE_OPENSUB) {
             $OI = $xml->add_node("", OPENSUBINFO);
@@ -831,7 +841,7 @@ class INIData {
             }
             //장바구니 기능 추가(2010.04.13) [END]
             $this->AddUserDefinedEntity(OPENSUBINFO, "", $xml, $OI);
-        }
+        }        
         //ReservedInfo
         $RI = $xml->add_node($root, RESERVEDINFO);
         $RD = $xml->add_node($RI, TX_MRESERVED1, $this->m_REQUEST["mreserved1"]);
@@ -1085,12 +1095,16 @@ class INICrypto {
     var $pgpubkeyid = NULL;
     var $mprivkeyid = NULL;
     var $mkey;
+    var $encMethod = "mcrypt";
 
-    function INICrypto($request) {
+    function __construct($request) {
         $this->homedir = $request["inipayhome"];
         $this->mid = $request["mid"];
         $this->admin = $request["admin"];
         $this->mkey = $request["mkey"];
+        if(isset($request['encMethod']) && !empty($request['encMethod'])){
+        	$this->encMethod = strtolower($request['encMethod']);
+        }
     }
 
     function LoadPGPubKey(&$pg_pubcert_SN) {
@@ -1212,13 +1226,17 @@ class INICrypto {
     }
 
     function SymmEncrypt($src_data, &$enc_data, $key, $iv) {
-        $size = mcrypt_get_block_size(MCRYPT_3DES, MCRYPT_MODE_CBC);
-        $src_data = $this->pkcs5_pad($src_data, $size);
-        $cipher = mcrypt_module_open(MCRYPT_3DES, '', MCRYPT_MODE_CBC, '');
-        mcrypt_generic_init($cipher, $key, $iv);
-        $enc_data = mcrypt_generic($cipher, $src_data);
-        mcrypt_generic_deinit($cipher);
-        mcrypt_module_close($cipher);
+    	if($this->encMethod == "openssl"){	//php version >= 5.3
+    		$enc_data = openssl_encrypt($src_data, "DES-EDE3-CBC", $key, OPENSSL_RAW_DATA, $iv);
+    	} else {
+	        $size = mcrypt_get_block_size(MCRYPT_3DES, MCRYPT_MODE_CBC);
+	        $src_data = $this->pkcs5_pad($src_data, $size);
+	        $cipher = mcrypt_module_open(MCRYPT_3DES, '', MCRYPT_MODE_CBC, '');
+	        mcrypt_generic_init($cipher, $key, $iv);
+	        $enc_data = mcrypt_generic($cipher, $src_data);
+	        mcrypt_generic_deinit($cipher);
+	        mcrypt_module_close($cipher);
+    	}
 
         if (!$enc_data)
             return ENC_FINAL_ERR;
@@ -1228,11 +1246,15 @@ class INICrypto {
     }
 
     function SymmDecrypt($enc_data, &$dec_data, $key, $iv) {
-        $cipher = mcrypt_module_open(MCRYPT_3DES, '', MCRYPT_MODE_CBC, '');
-        mcrypt_generic_init($cipher, $key, $iv);
-        $dec_data = mdecrypt_generic($cipher, $enc_data);
-        mcrypt_generic_deinit($cipher);
-        mcrypt_module_close($cipher);
+    	if($this->encMethod == "openssl"){
+	        $dec_data = openssl_decrypt($enc_data, "DES-EDE3-CBC", $key, OPENSSL_RAW_DATA, $iv);
+    	} else {
+    		$cipher = mcrypt_module_open(MCRYPT_3DES, '', MCRYPT_MODE_CBC, '');
+    		mcrypt_generic_init($cipher, $key, $iv);
+    		$dec_data = mdecrypt_generic($cipher, $enc_data);
+    		mcrypt_generic_deinit($cipher);
+    		mcrypt_module_close($cipher);
+    	}
 
         if (!$dec_data)
             return false;
@@ -1275,7 +1297,7 @@ class INICrypto {
             $chr = $string{$i};
             $ord = ord($chr);
             if ($ord < 10)
-                $string{$i} = "";
+                $string{$i} = " ";
             else
                 $string{$i} = $chr;
         }
@@ -1336,4 +1358,3 @@ class INICrypto {
 
 }
 ?>
-

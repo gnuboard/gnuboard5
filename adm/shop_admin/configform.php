@@ -1790,12 +1790,6 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
             echo '</script>'.PHP_EOL;
         }
 
-        if (!function_exists('mcrypt_module_open')) {
-            echo '<script>'.PHP_EOL;
-            echo 'alert("MCRYPT 관련 함수를 사용할 수 없습니다.\n서버 관리자에게 문의해 주십시오.");'.PHP_EOL;
-            echo '</script>'.PHP_EOL;
-        }
-
         $log_path = G5_SHOP_PATH.'/inicis/log';
 
         if(!is_dir($log_path)) {

@@ -186,7 +186,7 @@ class XML {
      */
     //modify by ddaemiri, 2007.05.28
     //load_file -> load_xml로 파일 및 string 으로 모두 입력받을 수 있음.
-    function XML($file = "") {
+    function __construct($file = "") {
         // Check whether a file was given.
         if (!empty($file)) {
             // Load the XML file.
@@ -207,6 +207,17 @@ class XML {
      * @see       handle_start_element(), handle_end_element(),
      *            handle_character_data()
      */
+    function remove_ctrl($string) {
+    	for ($i = 0; $i < strlen($string); $i++) {
+    		$chr = $string{$i};
+    		$ord = ord($chr);
+    		if ($ord < 10)
+    			$string{$i} = " ";
+    		else
+    			$string{$i} = $chr;
+    	}
+    	return trim($string);
+    }
     //modify by ddaemiri, 2007.05.28
     //load_file -> load_xml로 파일 및 string 으로 모두 입력받을 수 있음.
     function load_xml($file, $str) {
@@ -216,7 +227,7 @@ class XML {
             if ($str == "")
                 $content = implode("", file($file));
             else
-                $content = $str;
+                $content = $this->remove_ctrl($str);
 
             // Check whether content has been read.
             if (!empty($content)) {
@@ -1273,7 +1284,7 @@ class XML {
                 }
 
                 // Perform an axis action.
-                $contexts = call_user_method($method, $this, $axis, $context);
+                $contexts = call_user_func(array($this, $method), $axis, $context);
 
                 // Check whether there are predicates.
                 if (count($axis["predicate"]) > 0) {
@@ -1331,7 +1342,7 @@ class XML {
         }
 
         // Return the result of the function.
-        return call_user_method($method, $this, $node, $arguments);
+        return call_user_func(array($this, $method), $axis, $context);
     }
 
     /**
@@ -3092,21 +3103,9 @@ class XML {
             // Read all arguments.
             $arguments = func_get_args();
 
-            // Create a new string for the inserting command.
-            $command = "\$message = sprintf(\$message, ";
-
-            // Run through the array of arguments.
-            for ($i = 1; $i < sizeof($arguments); $i++) {
-                // Add the number of the argument to the command.
-                $command .= "\$arguments[" . $i . "], ";
-            }
-
-            // Replace the last separator.
-            //$command = eregi_replace(", $", ");", $command);
-            $command = preg_replace("/, $/i", ");", $command);
-
-            // Execute the command.
-            eval($command);
+            //보안 이슈로 eval 함수 제거 20161011 jhkim
+          	array_shift($arguments);
+            $message = vsprintf($message, $arguments);
         }
 
         // Display the error message.

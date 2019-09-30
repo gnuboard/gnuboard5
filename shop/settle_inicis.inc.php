@@ -54,6 +54,10 @@ $inipay = new INIpay50;
 $inipay->SetField("inipayhome", G5_SHOP_PATH.'/inicis'); // 이니페이 홈디렉터리(상점수정 필요)
 $inipay->SetField("debug", "false");
 
+if( ! function_exists('mcrypt_encrypt')) {      // mcrypt 관련 함수가 없다면 취소시 openssl로 합니다.
+    $inipay->SetField("encMethod", "openssl");
+}
+
 $util = new INIStdPayUtil();
 
 $timestamp = $util->getTimestamp();   // util에 의해서 자동생성
