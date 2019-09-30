@@ -4,6 +4,8 @@ include_once('./_common.php');
 
 check_admin_token();
 
+$od_shop_memo = strip_tags($od_shop_memo);
+
 if($_POST['mod_type'] == 'info') {
     $od_zip1   = substr($_POST['od_zip'], 0, 3);
     $od_zip2   = substr($_POST['od_zip'], 3);

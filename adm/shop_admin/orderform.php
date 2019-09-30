@@ -876,7 +876,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 
     <div class="tbl_wrap">
         <label for="od_shop_memo" class="sound_only">상점메모</label>
-        <textarea name="od_shop_memo" id="od_shop_memo" rows="8"><?php echo stripslashes($od['od_shop_memo']); ?></textarea>
+        <textarea name="od_shop_memo" id="od_shop_memo" rows="8"><?php echo html_purifier(stripslashes($od['od_shop_memo'])); ?></textarea>
     </div>
 
     <div class="btn_confirm01 btn_confirm">
