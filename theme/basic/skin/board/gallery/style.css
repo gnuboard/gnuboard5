@@ -91,6 +91,8 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .chk_box input[type="checkbox"] + label {position:relative;padding-left:20px;color:#676e70;vertical-align:baseline}
 .chk_box input[type="checkbox"] + label:hover{color:#2172f8}
 .chk_box input[type="checkbox"] + label span {position:absolute;top:10px;left:10px;width:15px;height:15px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.write_div .chk_box input[type="checkbox"] + label, .bo_vc_w .chk_box input[type="checkbox"] + label {padding-left:20px}
+.write_div .chk_box input[type="checkbox"] + label span, .bo_vc_w .chk_box input[type="checkbox"] + label span {position:absolute;top:2px;left:0;width:15px;height:15px;display:block;margin:0;background:#fff;border:1px solid #d0d4df;border-radius:3px}
 .chk_box input[type="checkbox"]:checked + label {color:#000}
 .chk_box input[type="checkbox"]:checked + label span {background:url(./img/chk.png) no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .all_chk.chk_box input[type="checkbox"] + label span {top:0;left:0}
