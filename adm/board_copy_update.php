@@ -160,6 +160,8 @@ if ($copy_case == 'schema_data_both') {
         }
     }
     $d->close();
+    
+    run_event('admin_board_copy_file', $bo_table, $target_table);
 
     // 글복사
     $sql = " insert into {$g5['write_prefix']}$target_table select * from {$g5['write_prefix']}$bo_table ";
@@ -181,6 +183,9 @@ if ($copy_case == 'schema_data_both') {
 
 if (count($file_copy)) {
     for ($i=0; $i<count($file_copy); $i++) {
+
+        $file_copy[$i] = run_replace('admin_copy_update_file', $file_copy[$i], $file_copy[$i]['bf_file'], $bo_table, $target_table);
+
         $sql = " insert into {$g5['board_file_table']}
                     set bo_table = '$target_table',
                          wr_id = '{$file_copy[$i]['wr_id']}',
@@ -189,11 +194,15 @@ if (count($file_copy)) {
                          bf_file = '{$file_copy[$i]['bf_file']}',
                          bf_download = '{$file_copy[$i]['bf_download']}',
                          bf_content = '".addslashes($file_copy[$i]['bf_content'])."',
+                         bf_fileurl = '".addslashes($file_copy[$i]['bf_fileurl'])."',
+                         bf_thumburl = '".addslashes($file_copy[$i]['bf_thumburl'])."',
+                         bf_storage = '".addslashes($file_copy[$i]['bf_storage'])."',
                          bf_filesize = '{$file_copy[$i]['bf_filesize']}',
                          bf_width = '{$file_copy[$i]['bf_width']}',
                          bf_height = '{$file_copy[$i]['bf_height']}',
                          bf_type = '{$file_copy[$i]['bf_type']}',
                          bf_datetime = '{$file_copy[$i]['bf_datetime']}' ";
+
         sql_query($sql, false);
     }
 }

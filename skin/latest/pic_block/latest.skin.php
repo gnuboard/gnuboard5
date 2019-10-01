@@ -23,7 +23,7 @@ $thumb_height = 150;
     }
     $img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" >';
     ?>
-        <li>
+        <li class="galley_li">
             <a href="<?php echo $list[$i]['href'] ?>" class="lt_img"><?php echo $img_content; ?></a>
             <?php
             if ($list[$i]['icon_secret']) echo "<i class=\"fa fa-lock\" aria-hidden=\"true\"></i><span class=\"sound_only\">비밀글</span> ";

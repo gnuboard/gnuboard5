@@ -44,6 +44,7 @@ if( ! $mb_nick || ! $mb_name ){
     $tmp = explode('@', $mb_email);
     $mb_nick = $mb_nick ? $mb_nick : $tmp[0];
     $mb_name = $mb_name ? $mb_name : $tmp[0];
+    $mb_nick = exist_mb_nick_recursive($mb_nick, '');
 }
 
 if( ! isset($mb_password) || ! $mb_password ){

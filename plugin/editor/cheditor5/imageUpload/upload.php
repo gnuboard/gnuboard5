@@ -117,9 +117,14 @@ try {
 } catch (Exception $e) {
 }
 
-$rdata = sprintf('{"fileUrl": "%s/%s", "filePath": "%s", "fileName": "%s", "fileSize": "%d" }',
-	SAVE_URL,
-	$filename,
+$file_url = SAVE_URL.'/'.$filename;
+
+if( function_exists('run_replace') ){
+    $file_url = run_replace('get_editor_upload_url', $file_url, $savefile, array());
+}
+
+$rdata = sprintf('{"fileUrl": "%s", "filePath": "%s", "fileName": "%s", "fileSize": "%d" }',
+	$file_url,
 	$savefile,
 	$filename,
 	$filesize );

@@ -40,14 +40,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
 </section>
 
 <script>
-$omi = $('#ol_id');
-$omp = $('#ol_pw');
-$omi_label = $('#ol_idlabel');
-$omi_label.addClass('ol_idlabel');
-$omp_label = $('#ol_pwlabel');
-$omp_label.addClass('ol_pwlabel');
+jQuery(function($) {
 
-$(function() {
+    var $omi = $('#ol_id'),
+        $omp = $('#ol_pw'),
+        $omi_label = $('#ol_idlabel'),
+        $omp_label = $('#ol_pwlabel');
+
+    $omi_label.addClass('ol_idlabel');
+    $omp_label.addClass('ol_pwlabel');
 
     $("#auto_login").click(function(){
         if ($(this).is(":checked")) {
@@ -59,7 +60,10 @@ $(function() {
 
 function fhead_submit(f)
 {
-    return true;
+    if( $( document.body ).triggerHandler( 'outlogin1', [f, 'foutlogin'] ) !== false ){
+        return true;
+    }
+    return false;
 }
 </script>
 <!-- } 로그인 전 아웃로그인 끝 -->

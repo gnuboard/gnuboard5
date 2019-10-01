@@ -310,6 +310,9 @@ function get_file($bo_table, $wr_id)
         $file[$no]['image_width'] = $row['bf_width'] ? $row['bf_width'] : 640;
         $file[$no]['image_height'] = $row['bf_height'] ? $row['bf_height'] : 480;
         $file[$no]['image_type'] = $row['bf_type'];
+        $file[$no]['bf_fileurl'] = $row['bf_fileurl'];
+        $file[$no]['bf_thumburl'] = $row['bf_thumburl'];
+        $file[$no]['bf_storage'] = $row['bf_storage'];
         $file['count']++;
     }
 
@@ -704,7 +707,7 @@ function get_write($write_table, $wr_id, $is_cache=false)
 
     $write = $g5_object->get('bbs', $wr_id, $wr_bo_table);
 
-    if( !$write ){
+    if( !$write || $is_cache == false ){
         $sql = " select * from {$write_table} where wr_id = '{$wr_id}' ";
         $write = sql_fetch($sql);
 
@@ -3706,10 +3709,13 @@ function is_include_path_check($path='', $is_input='')
             if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) ){
                 return false;
             }
-            if( (preg_match('/\.\.\//i', $replace_path) || preg_match('/^\/.*/i', $replace_path)) && preg_match('/plugin\//i', $replace_path) && preg_match('/okname\//i', $replace_path) ){
+            if( preg_match('/'.G5_PLUGIN_DIR.'\//i', $replace_path) && (preg_match('/'.G5_OKNAME_DIR.'\//i', $replace_path) || preg_match('/'.G5_KCPCERT_DIR.'\//i', $replace_path) || preg_match('/'.G5_LGXPAY_DIR.'\//i', $replace_path)) ){
                 return false;
             }
             if( substr_count($replace_path, './') > 5 ){
+                return false;
+            }
+            if( defined('G5_SHOP_DIR') && preg_match('/'.G5_SHOP_DIR.'\//i', $replace_path) && preg_match('/kcp\//i', $replace_path) ){
                 return false;
             }
         }

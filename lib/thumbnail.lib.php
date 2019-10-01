@@ -7,7 +7,7 @@ if (!defined('_GNUBOARD_')) exit;
 function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=false, $crop_mode='center', $is_sharpen=false, $um_value='80/0.5/3')
 {
     global $g5, $config;
-    $filename = $alt = "";
+    $filename = $alt = $data_path = '';
     $edt = false;
 
     $row = get_thumbnail_find_cache($bo_table, $wr_id, 'file');
@@ -45,12 +45,18 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
 
                     break;
                 }
+
+                $filename = run_replace('get_editor_filename', $filename, $p);
             }   //end for
         }   //end if
     }
 
     if(!$filename)
         return false;
+
+    if( $thumbnail_info = run_replace('get_list_thumbnail_info', array(), array('bo_table'=>$bo_table, 'wr_id'=>$wr_id, 'data_path'=>$data_path, 'edt'=>$edt, 'filename'=>$filename, 'filepath'=>$filepath, 'thumb_width'=>$thumb_width, 'thumb_height'=>$thumb_height, 'is_create'=>$is_create, 'is_crop'=>$is_crop, 'crop_mode'=>$crop_mode, 'is_sharpen'=>$is_sharpen, 'um_value'=>$um_value)) ){
+        return $thumbnail_info;
+    }
 
     $tname = thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create, $is_crop, $crop_mode, $is_sharpen, $um_value);
 
@@ -71,6 +77,20 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     $thumb = array("src"=>$src, "ori"=>$ori, "alt"=>$alt);
 
     return $thumb;
+}
+
+// 게시글보기 파일 썸네일 리턴
+function get_file_thumbnail($file){
+    
+    if( ! is_array($file) ) return '';
+
+    if( preg_match('/(\.jpg|\.jpeg|\.gif|\.png|\.bmp)$/i', $file['file']) && $contents = run_replace('get_file_thumbnail_tags', '', $file) ){
+        return $contents;
+    } else if ($file['view']) {
+        return get_view_thumbnail($file['view']);
+    }
+
+    return $file['view'];
 }
 
 // 게시글보기 썸네일 생성

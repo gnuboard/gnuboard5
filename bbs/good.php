@@ -1,10 +1,12 @@
 <?php
 include_once('./_common.php');
 
+run_event('bbs_good_before', $bo_table, $wr_id, $good);
+
 @include_once($board_skin_path.'/good.head.skin.php');
 
 // 자바스크립트 사용가능할 때
-if($_POST['js'] == "on") {
+if(isset($_POST['js']) && $_POST['js'] === "on") {
     $error = $count = "";
 
     function print_result($error, $count)
@@ -150,6 +152,8 @@ if($_POST['js'] == "on") {
         }
     }
 }
+
+run_event('bbs_good_after', $bo_table, $wr_id, $good);
 
 @include_once($board_skin_path.'/good.tail.skin.php');
 ?>
