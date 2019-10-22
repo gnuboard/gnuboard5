@@ -15,7 +15,7 @@
 .lt .lt_date {color:#828282}
 .lt .latest-sel{margin-top:1px}
 
-.lt .lt_more {position:absolute;top:15px;right:15px;color:#3a8afd;background:#fff;border:1px solid #d1d7e5;font-size:0.925em;border-radius:3px;padding:4px 5px}
+.lt .lt_more {position:absolute;top:15px;right:15px;color:#3a8afd;background:#fff;border:1px solid #d1d7e5;font-size:0.925em;border-radius:3px;padding:4px 5px;z-index:1}
 .lt .lt_cmt {background:#e9eff5;color:#3a8afd;font-size:11px;height:16px;line-height:16px;padding:0 5px;border-radius:3px;vertical-align:middle}
 
 .lt .profile_img img {border-radius:50%;vertical-align:top}
