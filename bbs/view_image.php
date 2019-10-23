@@ -34,9 +34,9 @@ if(run_replace('exists_view_image', $file_exists, $filepath, $editor_file)) {
     $height = (isset($size[1]) && $size[1]) ? (int) $size[1] : 0;
 
     if($editor_file)
-        $fileurl = G5_DATA_URL.'/'.$editor_file;
+        $fileurl = run_replace('get_editor_content_url', G5_DATA_URL.'/'.$editor_file);
     else
-        $fileurl = G5_DATA_URL.'/file/'.$bo_table.'/'.$filename;
+        $fileurl = run_replace('get_file_board_url', G5_DATA_URL.'/file/'.$bo_table.'/'.$filename, $bo_table);
 
     $img_attr = ($width && $height) ? 'width="'.$width.'" height="'.$height.'"' : '';
 
