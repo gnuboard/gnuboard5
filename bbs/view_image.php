@@ -23,57 +23,87 @@ if(strpos($filename, G5_DATA_DIR.'/editor')) {
     $filepath = G5_DATA_PATH.'/file/'.$bo_table.'/'.$filename;
 }
 
-if(is_file($filepath)) {
-    $size = @getimagesize($filepath);
+$file_exists = (is_file($filepath) && file_exists($filepath)) ? 1 : 0;
+
+if(run_replace('exists_view_image', $file_exists, $filepath, $editor_file)) {
+    $size = $file_exists ? run_replace('get_view_imagesize', @getimagesize($filepath), $filepath, $editor_file) : array();
     if(empty($size))
         alert_close('이미지 파일이 아닙니다.');
 
-    $width = $size[0];
-    $height = $size[1];
+    $width = (isset($size[0]) && $size[0]) ? (int) $size[0] : 0;
+    $height = (isset($size[1]) && $size[1]) ? (int) $size[1] : 0;
 
     if($editor_file)
-        $fileurl = G5_DATA_URL.'/'.$editor_file;
+        $fileurl = run_replace('get_editor_content_url', G5_DATA_URL.'/'.$editor_file);
     else
-        $fileurl = G5_DATA_URL.'/file/'.$bo_table.'/'.$filename;
+        $fileurl = run_replace('get_file_board_url', G5_DATA_URL.'/file/'.$bo_table.'/'.$filename, $bo_table);
 
-    $img = '<img src="'.$fileurl.'" alt="" width="'.$width.'" height="'.$height.'" class="draggable" style="position:relative;top:0;left:0;cursor:move;">';
+    $img_attr = ($width && $height) ? 'width="'.$width.'" height="'.$height.'"' : '';
+
+    $img = '<img src="'.$fileurl.'" alt="" '.$img_attr.' class="draggable" style="position:relative;top:0;left:0;cursor:move;">';
 } else {
     alert_close('파일이 존재하지 않습니다.');
 }
 ?>
 
-<div><?php echo $img ?></div>
+<div class="bbs-view-image"><?php echo $img ?></div>
 
 <script>
-var win_w = <?php echo $width ?>;
-var win_h = <?php echo $height ?> + 70;
-var win_l = (screen.width - win_w) / 2;
-var win_t = (screen.height - win_h) / 2;
 
-if(win_w > screen.width) {
-    win_l = 0;
-    win_w = screen.width - 20;
+jQuery(function($){
 
-    if(win_h > screen.height) {
-        win_t = 0;
-        win_h = screen.height - 40;
-    }
-}
+$.fn.imgLoad = function(callback) {
+    return this.each(function() {
+        if (callback) {
+            if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
+                callback.apply(this);
+            }
+            else {
+                $(this).on('load', function(){
+                    callback.apply(this);
+                });
+            }
+        }
+    });
+};
 
-if(win_h > screen.height) {
-    win_t = 0;
-    win_h = screen.height - 40;
+    $(".bbs-view-image img").imgLoad(function(){
 
-    if(win_w > screen.width) {
-        win_w = screen.width - 20;
-        win_l = 0;
-    }
-}
+        var win_w = <?php echo $width ?>;
+        var win_h = <?php echo $height ?> + 70;
 
-window.moveTo(win_l, win_t);
-window.resizeTo(win_w, win_h);
+        if( !win_w || !win_h ){
+            win_w = $(this).width();
+            win_h = $(this).height();
+        }
 
-$(function() {
+        var win_l = (screen.width - win_w) / 2;
+        var win_t = (screen.height - win_h) / 2;
+
+        if(win_w > screen.width) {
+            win_l = 0;
+            win_w = screen.width - 20;
+
+            if(win_h > screen.height) {
+                win_t = 0;
+                win_h = screen.height - 40;
+            }
+        }
+
+        if(win_h > screen.height) {
+            win_t = 0;
+            win_h = screen.height - 40;
+
+            if(win_w > screen.width) {
+                win_w = screen.width - 20;
+                win_l = 0;
+            }
+        }
+
+        window.moveTo(win_l, win_t);
+        window.resizeTo(win_w, win_h);
+    });
+
     var is_draggable = false;
     var x = y = 0;
     var pos_x = pos_y = 0;

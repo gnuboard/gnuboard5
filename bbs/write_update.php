@@ -333,7 +333,7 @@ if ($w == '' || $w == 'r') {
             alert('자신의 글이 아니므로 수정할 수 없습니다.', $return_url);
     } else {
         if ($write['mb_id'])
-            alert('로그인 후 수정하세요.', './login.php?url='.urlencode($return_url));
+            alert('로그인 후 수정하세요.', G5_BBS_URL.'/login.php?url='.urlencode($return_url));
     }
 
     if ($member['mb_id']) {
