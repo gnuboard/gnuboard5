@@ -92,7 +92,7 @@ if(isset($_POST['js']) && $_POST['js'] === "on") {
 
     if (!$is_member)
     {
-        $href = './login.php?'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id));
+        $href = G5_BBS_URL.'/login.php?'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id));
 
         alert('회원만 가능합니다.', $href);
     }
