@@ -21,7 +21,8 @@ function get_microtime()
 function get_paging($write_pages, $cur_page, $total_page, $url, $add="")
 {
     //$url = preg_replace('#&amp;page=[0-9]*(&amp;page=)$#', '$1', $url);
-    $url = preg_replace('#&amp;page=[0-9]*#', '', $url) . '&amp;page=';
+    $url = preg_replace('#(&amp;)?page=[0-9]*#', '', $url);
+	$url .= substr($url, -1) === '?' ? 'page=' : '&amp;page=';
 
     $str = '';
     if ($cur_page > 1) {
