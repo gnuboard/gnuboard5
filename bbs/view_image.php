@@ -25,7 +25,7 @@ if(strpos($filename, G5_DATA_DIR.'/editor')) {
 
 $file_exists = (is_file($filepath) && file_exists($filepath)) ? 1 : 0;
 
-if(run_replace('exists_view_image', $file_exists, $filepath, $editor_file)) {
+if($file_exists = run_replace('exists_view_image', $file_exists, $filepath, $editor_file)) {
     $size = $file_exists ? run_replace('get_view_imagesize', @getimagesize($filepath), $filepath, $editor_file) : array();
     if(empty($size))
         alert_close('이미지 파일이 아닙니다.');

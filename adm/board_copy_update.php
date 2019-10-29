@@ -15,6 +15,11 @@ if (!preg_match('/[A-Za-z0-9_]{1,20}/', $target_table)) {
     alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)');
 }
 
+// 게시판명이 금지된 단어로 되어 있으면
+if ( $w == '' && in_array($target_table, get_bo_table_banned_word()) ){
+    alert('입력한 게시판 TABLE명을 사용할수 없습니다. 다른 이름으로 입력해 주세요.');
+}
+
 $row = sql_fetch(" select count(*) as cnt from {$g5['board_table']} where bo_table = '$target_table' ");
 if ($row['cnt'])
     alert($target_table.'은(는) 이미 존재하는 게시판 테이블명 입니다.\\n복사할 테이블명으로 사용할 수 없습니다.');

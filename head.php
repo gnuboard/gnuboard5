@@ -110,31 +110,8 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <ul id="gnb_1dul">
                 <li class="gnb_1dli gnb_mnal"><button type="button" class="gnb_menu_btn" title="전체메뉴"><i class="fa fa-bars" aria-hidden="true"></i><span class="sound_only">전체메뉴열기</span></button></li>
                 <?php
-                $sql = " select *
-                            from {$g5['menu_table']}
-                            where me_use = '1'
-                              and length(me_code) = '2'
-                            order by me_order, me_id ";
-                $result = sql_query($sql, false);
-                $gnb_zindex = 999; // gnb_1dli z-index 값 설정용
-                $menu_datas = array();
-
-                for ($i=0; $row=sql_fetch_array($result); $i++) {
-                    $menu_datas[$i] = $row;
-
-                    $sql2 = " select *
-                                from {$g5['menu_table']}
-                                where me_use = '1'
-                                  and length(me_code) = '4'
-                                  and substring(me_code, 1, 2) = '{$row['me_code']}'
-                                order by me_order, me_id ";
-                    $result2 = sql_query($sql2);
-                    for ($k=0; $row2=sql_fetch_array($result2); $k++) {
-                        $menu_datas[$i]['sub'][$k] = $row2;
-                    }
-
-                }
-
+				$menu_datas = get_menu_db(0, true);
+				$gnb_zindex = 999; // gnb_1dli z-index 값 설정용
                 $i = 0;
                 foreach( $menu_datas as $row ){
                     if( empty($row) ) continue;

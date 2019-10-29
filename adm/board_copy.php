@@ -58,6 +58,19 @@ include_once(G5_PATH.'/head.sub.php');
 <script>
 function fboardcopy_check(f)
 {
+    <?php
+    if(!$w){
+    $js_array = get_bo_table_banned_word();
+    echo "var banned_array = ". json_encode($js_array) . ";\n";
+    }
+    ?>
+
+    // 게시판명이 금지된 단어로 되어 있으면
+    if( (typeof banned_array != 'undefined') && jQuery.inArray(f.target_table.value, banned_array) !== -1 ){
+        alert("입력한 게시판 TABLE명을 사용할수 없습니다. 다른 이름으로 입력해 주세요.");
+        return false;
+    }
+
     if (f.bo_table.value == f.target_table.value) {
         alert("원본 테이블명과 복사할 테이블명이 달라야 합니다.");
         return false;
