@@ -88,6 +88,48 @@ function get_board_db($bo_table, $is_cache=false){
     return $cache[$key];
 }
 
+function get_menu_db($use_mobile=0, $is_cache=false){
+    global $g5;
+
+    static $cache = array();
+    
+	$cache = run_replace('get_menu_db_cache', $cache, $use_mobile, $is_cache);
+	
+	$key = md5($use_mobile);
+
+    if( $is_cache && isset($cache[$key]) ){
+        return $cache[$key];
+    }
+	
+	$where = $use_mobile ? "me_mobile_use = '1'" : "me_use = '1'";
+
+	if( !($cache[$key] = run_replace('get_menu_db', array(), $use_mobile)) ){
+		$sql = " select *
+					from {$g5['menu_table']}
+					where $where
+					  and length(me_code) = '2'
+					order by me_order, me_id ";
+		$result = sql_query($sql, false);
+
+		for ($i=0; $row=sql_fetch_array($result); $i++) {
+			$cache[$key][$i] = $row;
+
+			$sql2 = " select *
+						from {$g5['menu_table']}
+						where $where
+						  and length(me_code) = '4'
+						  and substring(me_code, 1, 2) = '{$row['me_code']}'
+						order by me_order, me_id ";
+			$result2 = sql_query($sql2);
+			for ($k=0; $row2=sql_fetch_array($result2); $k++) {
+				$cache[$key][$i]['sub'][$k] = $row2;
+			}
+		}
+	}
+
+	return $cache[$key];
+}
+
 // 게시판 테이블에서 하나의 행을 읽음
 function get_content_by_field($write_table, $type='bbs', $where_field='', $where_value='', $is_cache=false)
 {

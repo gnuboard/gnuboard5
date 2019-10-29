@@ -38,40 +38,32 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
 			<?php echo outlogin('basic'); // 외부 로그인 ?>
             <ul id="gnb_1dul">
             <?php
-            $sql = " select *
-                        from {$g5['menu_table']}
-                        where me_mobile_use = '1'
-                          and length(me_code) = '2'
-                        order by me_order, me_id ";
-            $result = sql_query($sql, false);
-
-            for($i=0; $row=sql_fetch_array($result); $i++) {
+            $menu_datas = get_menu_db(1, true);
+			$i = 0;
+			foreach( $menu_datas as $row ){
+				if( empty($row) ) continue;
             ?>
                 <li class="gnb_1dli">
                     <a href="<?php echo $row['me_link']; ?>" target="_<?php echo $row['me_target']; ?>" class="gnb_1da"><?php echo $row['me_name'] ?></a>
                     <?php
-                    $sql2 = " select *
-                                from {$g5['menu_table']}
-                                where me_mobile_use = '1'
-                                  and length(me_code) = '4'
-                                  and substring(me_code, 1, 2) = '{$row['me_code']}'
-                                order by me_order, me_id ";
-                    $result2 = sql_query($sql2);
-
-                    for ($k=0; $row2=sql_fetch_array($result2); $k++) {
+                    $k = 0;
+                    foreach( (array) $row['sub'] as $row2 ){
+						if( empty($row2) ) continue;
                         if($k == 0)
                             echo '<button type="button" class="btn_gnb_op"><span class="sound_only">하위분류</span></button><ul class="gnb_2dul">'.PHP_EOL;
                     ?>
                         <li class="gnb_2dli"><a href="<?php echo $row2['me_link']; ?>" target="_<?php echo $row2['me_target']; ?>" class="gnb_2da"><span></span><?php echo $row2['me_name'] ?></a></li>
                     <?php
-                    }
+					$k++;
+                    }	//end foreach $row2
 
                     if($k > 0)
                         echo '</ul>'.PHP_EOL;
                     ?>
                 </li>
             <?php
-            }
+			$i++;
+            }	//end foreach $row
 
             if ($i == 0) {  ?>
                 <li id="gnb_empty">메뉴 준비 중입니다.<?php if ($is_admin) { ?> <br><a href="<?php echo G5_ADMIN_URL; ?>/menu_list.php">관리자모드 &gt; 환경설정 &gt; 메뉴설정</a>에서 설정하세요.<?php } ?></li>
