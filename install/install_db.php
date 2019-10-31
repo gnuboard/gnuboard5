@@ -282,7 +282,7 @@ for ($i=0; $i<count($tmp_bo_table); $i++)
     sql_query($sql, true, $dblink);
 
     // 게시판 테이블 생성
-    $file = file("../adm/sql_write.sql");
+    $file = file("../".G5_ADMIN_DIR."/sql_write.sql");
     $sql = implode($file, "\n");
 
     $create_table = $table_prefix.'write_' . $tmp_bo_table[$i];
