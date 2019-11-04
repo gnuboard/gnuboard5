@@ -38,7 +38,7 @@ function g5_path()
     $server_script_filename = preg_replace('/\/+/', '/', str_replace('\\', '/', $_SERVER['SCRIPT_FILENAME'])); 
     $tilde_remove = preg_replace('/^\/\~[^\/]+(.*)$/', '$1', $server_script_name); 
     $document_root = str_replace($tilde_remove, '', $server_script_filename); 
-    $pattern = '/' . preg_quote($document_root, '/') . '/i'; 
+    $pattern = '/.*?' . preg_quote($document_root, '/') . '/i';
     $root = preg_replace($pattern, '', $result['path']); 
     $port = ($_SERVER['SERVER_PORT'] == 80 || $_SERVER['SERVER_PORT'] == 443) ? '' : ':'.$_SERVER['SERVER_PORT']; 
     $http = 'http' . ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ? 's' : '') . '://'; 
