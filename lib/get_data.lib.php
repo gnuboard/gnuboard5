@@ -112,6 +112,9 @@ function get_menu_db($use_mobile=0, $is_cache=false){
 		$result = sql_query($sql, false);
 
 		for ($i=0; $row=sql_fetch_array($result); $i++) {
+			
+			$row['ori_me_link'] = $row['me_link'];
+			$row['me_link'] = short_url_clean($row['me_link']);
 			$cache[$key][$i] = $row;
 
 			$sql2 = " select *
@@ -122,6 +125,8 @@ function get_menu_db($use_mobile=0, $is_cache=false){
 						order by me_order, me_id ";
 			$result2 = sql_query($sql2);
 			for ($k=0; $row2=sql_fetch_array($result2); $k++) {
+				$row2['ori_me_link'] = $row2['me_link'];
+				$row2['me_link'] = short_url_clean($row2['me_link']);
 				$cache[$key][$i]['sub'][$k] = $row2;
 			}
 		}
