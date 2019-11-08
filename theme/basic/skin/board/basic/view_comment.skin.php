@@ -62,8 +62,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
 	                    $c_wr_content = $cmt['wr_content'];
 	                }
 	
-	                $c_reply_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
-	                $c_edit_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
+	                $c_reply_href = short_url_clean(G5_BBS_URL.'/board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w');
+	                $c_edit_href = short_url_clean(G5_BBS_URL.'/board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w');
 				?>
 	            <?php } ?>
 	        </div>
