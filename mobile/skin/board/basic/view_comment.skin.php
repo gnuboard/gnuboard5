@@ -20,6 +20,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         // if (strstr($list[$i]['wr_option'], "secret"))
             // $str = $str;
 		$str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $str);
+		$c_reply_href = short_url_clean(G5_BBS_URL.'/board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w');
+		$c_edit_href = short_url_clean(G5_BBS_URL.'/board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w');
     ?>
     <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-bottom-color:#f8f8f8"<?php } ?>>
         <div class="comment_inner">
@@ -76,9 +78,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                             $cmt['wr_content'] = '';
                         $c_wr_content = $cmt['wr_content'];
                     }
-
-                    $c_reply_href = short_url_clean(G5_BBS_URL.'/board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w');
-                    $c_edit_href = short_url_clean(G5_BBS_URL.'/board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w');
                 ?>
                 <?php } ?>
             </div>
