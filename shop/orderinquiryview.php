@@ -260,6 +260,10 @@ if($od['od_pg'] == 'lg') {
         } else if($od['od_settle_case'] == '가상계좌' || $od['od_settle_case'] == '계좌이체') {
             $app_no_subj = '거래번호';
             $app_no = $od['od_tno'];
+			
+			if( function_exists('shop_is_taxsave') && $misu_price == 0 && shop_is_taxsave($od, true) === 2 ){
+				$disp_receipt = true;
+			}
         }
         ?>
 
@@ -347,7 +351,7 @@ if($od['od_pg'] == 'lg') {
                         <?php
                         }
 
-                        if($od['od_settle_case'] == '신용카드' || is_inicis_order_pay($od['od_settle_case']) )
+                        if($od['od_settle_case'] == '신용카드' || is_inicis_order_pay($od['od_settle_case']) || (shop_is_taxsave($od, true) && $misu_price == 0) )
                         {
                             if($od['od_pg'] == 'lg') {
                                 require_once G5_SHOP_PATH.'/settle_lg.inc.php';
@@ -401,7 +405,7 @@ if($od['od_pg'] == 'lg') {
                 }
 
                 // 현금영수증 발급을 사용하는 경우에만
-                if ($default['de_taxsave_use']) {
+                if (function_exists('shop_is_taxsave') && shop_is_taxsave($od)) {
                     // 미수금이 없고 현금일 경우에만 현금영수증을 발급 할 수 있습니다.
                     if ($misu_price == 0 && $od['od_receipt_price'] && ($od['od_settle_case'] == '무통장' || $od['od_settle_case'] == '계좌이체' || $od['od_settle_case'] == '가상계좌')) {
                 ?>

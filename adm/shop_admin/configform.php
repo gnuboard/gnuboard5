@@ -156,6 +156,12 @@ if(!isset($default['de_listtype_list_skin'])) {
                     ADD `de_mobile_listtype_img_width` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_listtype_list_row`,
                     ADD `de_mobile_listtype_img_height` int(11) NOT NULL DEFAULT '0' AFTER `de_mobile_listtype_img_width` ", true);
 }
+
+// 현금영수증 발급 조건 추가
+if(!isset($default['de_taxsave_types'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_taxsave_types` set('account','vbank','transfer') NOT NULL DEFAULT 'account' AFTER `de_taxsave_use` ", true);
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -615,6 +621,28 @@ if(!isset($default['de_listtype_list_skin'])) {
                     <option value="0" <?php echo get_selected($default['de_taxsave_use'], 0); ?>>사용안함</option>
                     <option value="1" <?php echo get_selected($default['de_taxsave_use'], 1); ?>>사용</option>
                 </select>
+            </td>
+        </tr>
+		<?php
+		$account_checked = $vbank_checked = $transfer_checked = '';
+
+		if (strstr($default['de_taxsave_types'], 'account')) {
+			$account_checked = 'checked="checked"';
+		}
+		if (strstr($default['de_taxsave_types'], 'vbank')) {
+			$vbank_checked = 'checked="checked"';
+		}
+		if (strstr($default['de_taxsave_types'], 'transfer')) {
+			$transfer_checked = 'checked="checked"';
+		}
+		?>
+        <tr id="de_taxsave_types" class="de_taxsave_types">
+            <th scope="row">현금영수증<br>적용수단</th>
+            <td>
+                <?php echo help("현금영수증 발급 사용일 경우 해당됩니다.<br>현금 영수증 발급은 무통장입금, 가상계좌, 실시간계좌에만 적용됩니다.<br>아래 체크된 수단에 한해서 회원이 직접 주문 보기 페이지에서 현금영수증을 발급 받을수 있습니다.<br>!!! 만약 PG사 상점관리자에서 가상계좌 또는 실시간계좌이체가 자동으로 현금영수증이 발급되는 경우이면, 아래 가상계좌와 실시간계좌이체 체크박스를 해제하여 사용해 주세요.( 중복으로 발급되는 것을 막기 위함입니다. )", 50); ?>
+                <input type="checkbox" id="de_taxsave_types_account" name="de_taxsave_types_account" value="account" <?php echo $account_checked; ?> > <label for="de_taxsave_types_account" disabled>무통장입금</label><br>
+				<input type="checkbox" id="de_taxsave_types_vbank" name="de_taxsave_types_vbank" value="vbank" <?php echo $vbank_checked; ?> > <label for="de_taxsave_types_vbank">가상계좌</label><br>
+				<input type="checkbox" id="de_taxsave_types_transfer" name="de_taxsave_types_transfer" value="transfer" <?php echo $transfer_checked; ?> > <label for="de_taxsave_types_transfer">실시간계좌이체</label>
             </td>
         </tr>
         <tr>
@@ -1696,6 +1724,20 @@ $(function() {
             }
         });
     });
+
+	$(document).on("change", "#de_taxsave_use", function(e){
+		var $val = $(this).val();
+		
+		if( parseInt($val) > 0 ){
+			$("#de_taxsave_types").show();
+		} else {
+			$("#de_taxsave_types").hide();
+		}
+	});
+	
+	// 현금영수증 발급수단 중 무통장입금은 무조건 체크처리
+	document.getElementById("de_taxsave_types_account").checked = true;
+	document.getElementById("de_taxsave_types_account").disabled = true;
 });
 </script>
 

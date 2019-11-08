@@ -71,6 +71,16 @@ foreach($check_skin_keys as $key){
     }
 }
 
+// 현금영수증 발급수단
+$de_taxsave_types = 'account';	// 무통장
+
+if(isset($_POST['de_taxsave_types_vbank']) && $_POST['de_taxsave_types_vbank']){	//가상계좌
+	$de_taxsave_types .= ',vbank';
+}
+if(isset($_POST['de_taxsave_types_transfer']) && $_POST['de_taxsave_types_transfer']){		//실시간계좌이체
+	$de_taxsave_types .= ',transfer';
+}
+
 //KVE-2019-0689, KVE-2019-0691, KVE-2019-0694
 $check_sanitize_keys = array(
 'de_admin_company_name',        //회사명
@@ -132,7 +142,7 @@ $check_sanitize_keys = array(
 'de_card_use',                  //신용카드 결제사용
 'de_card_noint_use',            //신용카드 무이자할부사용
 'de_easy_pay_use',              //PG사 간편결제 버튼 사용
-'de_taxsave_use',               //현금영수증 발끕사용
+'de_taxsave_use',               //현금영수증 발급사용
 'cf_use_point',                 //포인트 사용
 'de_settle_min_point',          //결제 최소포인트
 'de_settle_max_point',          //최대 결제포인트
@@ -384,6 +394,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_admin_buga_no              = '{$de_admin_buga_no}',
                 de_vbank_use                  = '{$de_vbank_use}',
                 de_taxsave_use                = '{$de_taxsave_use}',
+				de_taxsave_types              = '{$de_taxsave_types}',
                 de_guest_privacy              = '{$_POST['de_guest_privacy']}',
                 de_hp_use                     = '{$de_hp_use}',
                 de_escrow_use                 = '{$de_escrow_use}',

@@ -31,6 +31,10 @@ if($tx == 'personalpay') {
     if (!$od)
         die('<p id="scash_empty">주문서가 존재하지 않습니다.</p>');
 
+	if ( ! $is_admin && ! (shop_is_taxsave($od)) ){
+		die('해당 주문은 현금영수증을 발급할수 없습니다.');
+	}
+
     $goods = get_goods($od['od_id']);
     $goods_name = $goods['full_name'];
     $amt_tot = (int)($od['od_receipt_price'] - $od['od_refund_price']);

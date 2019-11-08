@@ -364,6 +364,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_admin_buga_no` varchar(255) NOT NULL DEFAULT '',  
   `de_vbank_use` varchar(255) NOT NULL DEFAULT '',
   `de_taxsave_use` tinyint(4) NOT NULL,
+  `de_taxsave_types` set('account','vbank','transfer') NOT NULL DEFAULT 'account',
   `de_guest_privacy` text NOT NULL,
   `de_hp_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_escrow_use` tinyint(4) NOT NULL DEFAULT '0',

@@ -2392,6 +2392,31 @@ function get_itemuselist_thumbnail($it_id, $contents, $thumb_width, $thumb_heigh
     return $img;
 }
 
+function shop_is_taxsave($od, $is_view_receipt=false){
+	global $default, $is_memeber;
+
+	$od_pay_type = '';
+
+	if( $od['od_settle_case'] == '무통장' ){
+		$od_pay_type = 'account';
+	} else if ( $od['od_settle_case'] == '계좌이체' ) {
+		$od_pay_type = 'vbank';
+	} else if ( $od['od_settle_case'] == '가상계좌' ) {
+		$od_pay_type = 'transfer';
+	}
+
+	// 아직 현금영수증 받기전 상태일때만
+	if( $default['de_taxsave_use'] && ! $od['od_cash'] && strstr( $default['de_taxsave_types'], $od_pay_type ) ){
+		return 1;
+	}
+	
+	if( $is_view_receipt && ! $od['od_cash'] && in_array($od['od_settle_case'], array('계좌이체', '가상계좌')) && ! strstr( $default['de_taxsave_types'], $od_pay_type ) ){
+		return 2;
+	}
+
+	return 0;
+}
+
 // 장바구니 상품삭제
 function cart_item_clean()
 {
