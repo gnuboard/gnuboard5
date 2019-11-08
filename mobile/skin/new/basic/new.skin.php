@@ -46,7 +46,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
         $wr_subject = get_text(cut_str($list[$i]['wr_subject'], 80));
     ?>
     <li>
-    	<a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>" class="new_board"><?php echo $bo_subject ?></a>
+    	<a href="<?php echo get_pretty_url($list[$i]['bo_table']); ?>" class="new_board"><?php echo $bo_subject ?></a>
         <a href="<?php echo $list[$i]['href'] ?>" class="new_tit"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a>
         <div class="new_info">
         	<span class="sound_only">작성자</span><?php echo $list[$i]['name'] ?>

@@ -20,6 +20,8 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         // if (strstr($list[$i]['wr_option'], "secret"))
             // $str = $str;
 		$str = preg_replace("/\[\<a\s.*href\=\"(http|https|ftp|mms)\:\/\/([^[:space:]]+)\.(mp3|wma|wmv|asf|asx|mpg|mpeg)\".*\<\/a\>\]/i", "<script>doc_write(obj_movie('$1://$2.$3'));</script>", $str);
+		$c_reply_href = $comment_common_url.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
+		$c_edit_href = $comment_common_url.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
     ?>
     <article id="c_<?php echo $comment_id ?>" <?php if ($cmt_depth) { ?>style="margin-left:<?php echo $cmt_depth ?>px;border-bottom-color:#f8f8f8"<?php } ?>>
         <div class="comment_inner">
@@ -67,8 +69,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                 </p>
 
                 <?php if($list[$i]['is_reply'] || $list[$i]['is_edit'] || $list[$i]['is_del']) {
-                    $query_string = clean_query_string($_SERVER['QUERY_STRING']);
-
                     if($w == 'cu') {
                         $sql = " select wr_id, wr_content, mb_id from $write_table where wr_id = '$c_id' and wr_is_comment = '1' ";
                         $cmt = sql_fetch($sql);
@@ -76,9 +76,6 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
                             $cmt['wr_content'] = '';
                         $c_wr_content = $cmt['wr_content'];
                     }
-
-                    $c_reply_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=c#bo_vc_w';
-                    $c_edit_href = './board.php?'.$query_string.'&amp;c_id='.$comment_id.'&amp;w=cu#bo_vc_w';
                 ?>
                 <?php } ?>
             </div>
