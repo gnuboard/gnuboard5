@@ -118,7 +118,7 @@ function short_url_clean($string_url, $add_qry=''){
         }
 
         $return_url = '';
-        $qstring = parse_str($url['query'], $vars);
+        parse_str($url['query'], $vars);
 
         // 예) Array ( [scheme] => http [host] => sir.kr [path] => /bbs/board.php [query] => wr_id=1110870&bo_table=cm_free&cpage=1 [fragment] => c_1110946 )
         //while(list($k,$v) = each($vars)) $page_name .= "/".$v;
@@ -134,7 +134,7 @@ function short_url_clean($string_url, $add_qry=''){
 
         foreach( $allow_param_keys as $key=>$v ){
             if( !isset($vars[$key]) || empty($vars[$key]) ) continue;
-            $add = '';
+
             $s[$key] = $vars[$key];
         }
 
@@ -143,7 +143,7 @@ function short_url_clean($string_url, $add_qry=''){
             
             if( $get_write['wr_seo_title'] ){
                 unset($s['wr_id']);
-                $s['wr_seo_title'] = $get_write['wr_seo_title'].'/';
+                $s['wr_seo_title'] = urlencode($get_write['wr_seo_title']).'/';
             }
         }
 
@@ -180,7 +180,12 @@ function short_url_clean($string_url, $add_qry=''){
 }
 
 function correct_goto_url($url){
-    return $url.'/';
+
+    if( substr($url, -1) !== '/' ){
+		return $url.'/';
+	}
+
+	return $url;
 }
 
 function generate_seo_title($string, $wordLimit=G5_SEO_TITEL_WORD_CUT){
