@@ -4,6 +4,10 @@ include_once('./_common.php');
 
 check_admin_token();
 
+if( isset($_POST['pp_name']) ){
+	$_POST['pp_name'] = strip_tags($_POST['pp_name']);
+}
+
 if($w == 'd') {
     auth_check($auth[$sub_menu], 'd');
 

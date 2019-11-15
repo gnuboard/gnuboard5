@@ -13,6 +13,8 @@ if(!$pp['pp_id'])
 if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.');
 
+$pp['pp_name'] = strip_tags($pp['pp_name']);
+
 $g5['title'] = $pp['pp_name'].'님 개인결제';
 
 if(G5_IS_MOBILE)

@@ -115,7 +115,7 @@ $colspan = 10;
             <input type="hidden" id="pp_id_<?php echo $i; ?>" name="pp_id[<?php echo $i; ?>]" value="<?php echo $row['pp_id']; ?>">
             <input type="checkbox" id="chk_<?php echo $i; ?>" name="chk[]" value="<?php echo $i; ?>" title="내역선택">
         </td>
-        <td class="td_left"><?php echo $row['pp_name']; ?></td>
+        <td class="td_left"><?php echo get_text($row['pp_name']); ?></td>
         <td class="td_odrnum3"><?php echo $od_id; ?></td>
         <td class="td_numsum"><?php echo number_format($row['pp_price']); ?></td>
         <td class="td_numincome"><?php echo number_format($row['pp_receipt_price']); ?></td>
