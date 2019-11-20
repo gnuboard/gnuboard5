@@ -50,6 +50,8 @@ function get_board_names(){
     global $g5;
 
     static $boards = array();
+	
+	$boards = run_replace('get_board_names_cache', $boards);
 
     if( ! $boards ){
         $sql = " select bo_table from {$g5['board_table']} ";
