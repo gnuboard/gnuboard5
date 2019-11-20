@@ -2404,14 +2404,16 @@ function shop_is_taxsave($od, $is_view_receipt=false){
 	} else if ( $od['od_settle_case'] == '가상계좌' ) {
 		$od_pay_type = 'transfer';
 	}
-
-	if( $default['de_taxsave_use'] && strstr( $default['de_taxsave_types'], $od_pay_type ) ){
-		return 1;
-	}
 	
-	// 아직 현금영수증 받기전 상태일때만
-	if( $is_view_receipt && ! $od['od_cash'] && in_array($od['od_settle_case'], array('계좌이체', '가상계좌')) && ! strstr( $default['de_taxsave_types'], $od_pay_type ) ){
-		return 2;
+	if( $od_pay_type ) {
+		if( $default['de_taxsave_use'] && strstr( $default['de_taxsave_types'], $od_pay_type ) ){
+			return 1;
+		}
+		
+		// 아직 현금영수증 받기전 상태일때만
+		if( $is_view_receipt && ! $od['od_cash'] && in_array($od['od_settle_case'], array('계좌이체', '가상계좌')) && ! strstr( $default['de_taxsave_types'], $od_pay_type ) ){
+			return 2;
+		}
 	}
 
 	return 0;
