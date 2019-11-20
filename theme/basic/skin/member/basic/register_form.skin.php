@@ -468,10 +468,10 @@ function fregisterform_submit(f)
     return true;
 }
 
-$(function(){
+jQuery(function($){
 	//tooltip
     $(".tooltip_icon").click(function(){
-        $(this).next(".tooltip").fadeIn(400);
+        $(this).next(".tooltip").fadeIn(400).css("display","inline-block");
     }).mouseout(function(){
         $(this).next(".tooltip").fadeOut();
     });

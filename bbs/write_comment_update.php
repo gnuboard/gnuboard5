@@ -20,6 +20,8 @@ if (substr_count($wr_content, "&#") > 50) {
 $w = $_POST["w"];
 $wr_name  = trim($_POST['wr_name']);
 $wr_email = '';
+$reply_array = array();
+
 if (!empty($_POST['wr_email']))
     $wr_email = get_email_address(trim($_POST['wr_email']));
 
@@ -85,9 +87,7 @@ if ($w == 'c') // 댓글 입력
     // 댓글 답변
     if ($comment_id)
     {
-        $sql = " select wr_id, wr_parent, wr_comment, wr_comment_reply from $write_table
-                    where wr_id = '$comment_id' ";
-        $reply_array = sql_fetch($sql);
+        $reply_array = get_write($write_table, $comment_id, true);
         if (!$reply_array['wr_id'])
             alert('답변할 댓글이 없습니다.\\n\\n답변하는 동안 댓글이 삭제되었을 수 있습니다.');
 
@@ -341,7 +341,7 @@ delete_cache_latest($bo_table);
 
 $redirect_url = short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr['wr_parent'].'&amp;'.$qstr.'&amp;#c_'.$comment_id);
 
-run_event('comment_update_after', $board, $wr_id, $w, $qstr, $redirect_url, $comment_id);
+run_event('comment_update_after', $board, $wr_id, $w, $qstr, $redirect_url, $comment_id, $reply_array);
 
 goto_url($redirect_url);
 ?>

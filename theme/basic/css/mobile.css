@@ -215,7 +215,7 @@ a.btn_b03, .btn_b03 {display:inline-block;line-height:28px;border:0;background:t
 a.btn_b03:hover, .btn_b03:hover {}
 a.btn_admin {display:inline-block;color:#d13f4a;font-size:1.4em;text-decoration:none;vertical-align:middle} /* 관리자 전용 버튼 */
 a.btn_admin:focus, a.btn_admin:hover {}
-.fix_btn {position:fixed;bottom:65px;right:15px;background:#3a8afd;width:50px;height:50px;color:#fff;text-align:center;border-radius:50% !important;font-size:1.8em;line-height:50px !important;-webkit-box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4);
+.fix_btn {position:fixed;z-index:99;bottom:65px;right:15px;background:#3a8afd;width:50px;height:50px;color:#fff;text-align:center;border-radius:50% !important;font-size:1.8em;line-height:50px !important;-webkit-box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4);
 -moz-box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4);
 box-shadow:1px 2px 5px rgba(191, 191, 191, 0.4)}
 a.btn,.btn {line-height:35px;width:30px;height:35px;padding:0 5px;text-align:center;font-weight:bold;border:0;font-size:1.4em;
