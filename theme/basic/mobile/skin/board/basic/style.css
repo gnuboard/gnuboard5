@@ -110,6 +110,7 @@
 #bo_v_sns li span {position:absolute;font-size:0;text-indent:-9999em;line-height:0;overflow:hidden}
 
 .bo_cate_link {display:inline-block;background:#e2eaf6;padding:0 5px;line-height:20px;border-radius:5px;font-weight:bold;font-size:11px;color:#3ca1ff !important;text-decoration:none;/*font-size:0.92em*/} /* 글제목줄 분류스타일 */
+.bo_cate_ico {margin-bottom:5px}
 .bo_cnt {display:block;width:100%;font-size:1.083em;font-weight:bold;line-height:1.4em}
 .bo_cnt i {color:#8d96c2;font-size:12px}
 .bo_cnt .fa-heart {color:#ff0000}
