@@ -470,9 +470,9 @@ function fregisterform_submit(f)
 
 jQuery(function($){
 	//tooltip
-    $(".tooltip_icon").click(function(){
+    $(document).on("click", ".tooltip_icon", function(e){
         $(this).next(".tooltip").fadeIn(400).css("display","inline-block");
-    }).mouseout(function(){
+    }).on("mouseout", ".tooltip_icon", function(e){
         $(this).next(".tooltip").fadeOut();
     });
 });

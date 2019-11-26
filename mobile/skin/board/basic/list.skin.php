@@ -75,7 +75,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 <?php } ?>
 
                 <div class="bo_cnt">
-                	<?php if ($list[$i]['is_notice']) { ?>
+                	<?php if ($list[$i]['is_notice'] || ($is_category && $list[$i]['ca_name'])) { ?>
                 	<div class="bo_cate_ico">
                 		<?php if ($list[$i]['is_notice']) { ?><strong class="notice_icon">공지</strong><?php } ?>
 	                    <?php if ($is_category && $list[$i]['ca_name']) { ?>       

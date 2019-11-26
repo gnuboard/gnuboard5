@@ -83,6 +83,8 @@ if(isset($_POST['js']) && $_POST['js'] === "on") {
             $row = sql_fetch($sql);
 
             $count = $row['count'];
+			
+			run_event('bbs_increase_good_json', $bo_table, $wr_id, $good);
 
             print_result($error, $count);
         }
@@ -147,6 +149,8 @@ if(isset($_POST['js']) && $_POST['js'] === "on") {
                 $status = '비추천';
 
             $href = get_pretty_url($bo_table, $wr_id);
+			
+			run_event('bbs_increase_good_html', $bo_table, $wr_id, $good, $href);
 
             alert("이 글을 $status 하셨습니다.", '', false);
         }

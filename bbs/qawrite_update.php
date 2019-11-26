@@ -14,6 +14,7 @@ $msg = array();
 
 // 1:1문의 설정값
 $qaconfig = get_qa_config();
+$qa_id = isset($qa_id) ? (int) $qa_id : 0;
 
 if(trim($qaconfig['qa_category'])) {
     if($w != 'a') {
