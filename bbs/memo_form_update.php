@@ -76,7 +76,8 @@ for ($i=0; $i<count($member_list['id']); $i++) {
         // 보내는 회원 쪽지 INSERT
         $sql = " insert into {$g5['memo_table']} ( me_recv_mb_id, me_send_mb_id, me_send_datetime, me_memo, me_read_datetime, me_send_id, me_type , me_send_ip ) values ( '$recv_mb_id', '{$member['mb_id']}', '".G5_TIME_YMDHIS."', '{$_POST['me_memo']}', '0000-00-00 00:00:00', '$me_id', 'send', '{$_SERVER['REMOTE_ADDR']}' ) ";
         sql_query($sql);
-
+		
+		$member_list['me_id'][$i] = $me_id;
     }
 
     // 실시간 쪽지 알림 기능
@@ -93,16 +94,14 @@ if ($member_list) {
     $redirect_url = G5_HTTP_BBS_URL."/memo.php?kind=send";
     $str_nick_list = implode(',', $member_list['nick']);
 
-    run_event('memo_form_update_after', $member_list, $str_nick_list, $redirect_url);
+    run_event('memo_form_update_after', $member_list, $str_nick_list, $redirect_url, $_POST['me_memo']);
 
     alert($str_nick_list." 님께 쪽지를 전달하였습니다.", $redirect_url, false);
 } else {
 
     $redirect_url = G5_HTTP_BBS_URL."/memo_form.php";
     
-    run_event('memo_form_update_failed', $member_list, $redirect_url);
-    
-    exit;
+    run_event('memo_form_update_failed', $member_list, $redirect_url, $_POST['me_memo']);
 
     alert("회원아이디 오류 같습니다.", $redirect_url, false);
 }
