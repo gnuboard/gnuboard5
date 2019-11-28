@@ -210,7 +210,7 @@ if($od['od_pg'] == 'lg') {
         $cancel_price   = $od['od_cancel_price'];
 
         $misu = true;
-        $misu_price = $tot_price - $receipt_price - $cancel_price;
+        $misu_price = $tot_price - $receipt_price;
 
         if ($misu_price == 0 && ($od['od_cart_price'] > $od['od_cancel_price'])) {
             $wanbul = " (완불)";
