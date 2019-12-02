@@ -6,8 +6,16 @@ if ($w == 's') {
 
     $wr = get_write($write_table, $wr_id);
 
-    if (!check_password($wr_password, $wr['wr_password']))
+    if( !$wr['wr_password'] && $wr['mb_id'] ){
+        if ( $mb = get_member($wr['mb_id']) ){
+            $wr['wr_password'] = $mb['mb_password'];
+        }
+    }
+
+    if (!check_password($wr_password, $wr['wr_password'])) {
+        run_event('password_is_wrong', 'bbs', $wr, $qstr);
         alert('비밀번호가 틀립니다.');
+    }
 
     // 세션에 아래 정보를 저장. 하위번호는 비밀번호없이 보아야 하기 때문임.
     //$ss_name = 'ss_secret.'_'.$bo_table.'_'.$wr_id';
@@ -20,8 +28,16 @@ if ($w == 's') {
 
     $wr = get_write($write_table, $wr_id);
 
-    if (!check_password($wr_password, $wr['wr_password']))
+    if( !$wr['wr_password'] && $wr['mb_id'] ){
+        if ( $mb = get_member($wr['mb_id']) ){
+            $wr['wr_password'] = $mb['mb_password'];
+        }
+    }
+
+    if (!check_password($wr_password, $wr['wr_password'])){
+        run_event('password_is_wrong', 'bbs', $wr, $qstr);
         alert('비밀번호가 틀립니다.');
+    }
 
     // 세션에 아래 정보를 저장. 하위번호는 비밀번호없이 보아야 하기 때문임.
     $ss_name = 'ss_secret_comment_'.$bo_table.'_'.$wr['wr_id'];
@@ -31,5 +47,5 @@ if ($w == 's') {
 } else
     alert('w 값이 제대로 넘어오지 않았습니다.');
 
-goto_url(G5_HTTP_BBS_URL.'/board.php?'.$qstr);
+goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?'.$qstr));
 ?>

@@ -17,6 +17,11 @@ if (!$bo_table) { alert('게시판 TABLE명은 반드시 입력하세요.'); }
 if (!preg_match("/^([A-Za-z0-9_]{1,20})$/", $bo_table)) { alert('게시판 TABLE명은 공백없이 영문자, 숫자, _ 만 사용 가능합니다. (20자 이내)'); }
 if (!$_POST['bo_subject']) { alert('게시판 제목을 입력하세요.'); }
 
+// 게시판명이 금지된 단어로 되어 있으면
+if ( $w == '' && in_array($bo_table, get_bo_table_banned_word()) ){
+    alert('입력한 게시판 TABLE명을 사용할수 없습니다. 다른 이름으로 입력해 주세요.');
+}
+
 $bo_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($bo_include_head, 0, 255));
 $bo_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($bo_include_tail, 0, 255));
 
@@ -192,6 +197,8 @@ if ($w == '') {
 
     // 게시판 테이블 생성
     $file = file('./sql_write.sql');
+    $file = get_db_create_replace($file);
+
     $sql = implode($file, "\n");
 
     $create_table = $g5['write_prefix'] . $bo_table;
@@ -443,6 +450,8 @@ delete_cache_latest($bo_table);
 
 if(function_exists('get_admin_captcha_by'))
     get_admin_captcha_by('remove');
+
+run_event('admin_board_form_update', $bo_table, $w);
 
 goto_url("./board_form.php?w=u&bo_table={$bo_table}&amp;{$qstr}");
 ?>

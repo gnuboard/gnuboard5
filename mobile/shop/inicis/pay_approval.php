@@ -107,45 +107,89 @@ if($_REQUEST['P_STATUS'] != '00') {
     set_session('P_HASH', $hash);
 }
 
-$g5['title'] = 'KG 이니시스 결제';
-$g5['body_script'] = ' onload="setPAYResult();"';
-include_once(G5_PATH.'/head.sub.php');
+$params = array();
 
-$exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_AUTH_NO', 'P_HPP_CORP', 'P_APPL_NUM', 'P_VACT_NUM', 'P_VACT_NAME', 'P_VACT_BANK', 'P_CARD_ISSUER', 'P_UNAME');
+//개인결제
+if(isset($data['pp_id']) && !empty($data['pp_id'])) {
+    // 개인결제 정보
+    $pp_check = false;
+    $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$PAY['P_OID']}' and pp_tno = '{$PAY['P_TID']}' and pp_use = '1' ";
+    $pp = sql_fetch($sql);
 
-echo '<form name="forderform" method="post" action="'.$order_action_url.'" autocomplete="off">'.PHP_EOL;
+    if( !$pp['pp_tno'] && $data['pp_id'] == $oid ){
+        $res_cd = $PAY['P_STATUS'];
+        $pp_id = $oid;
 
-echo make_order_field($data, $exclude);
+        $exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_VACT_BANK', 'LGD_PAYKEY', 'pp_id', 'good_mny', 'pp_name', 'pp_email', 'pp_hp', 'pp_settle_case');
 
-echo '<input type="hidden" name="res_cd"        value="'.$PAY['P_STATUS'].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_HASH"        value="'.$hash.'">'.PHP_EOL;
-echo '<input type="hidden" name="P_TYPE"        value="'.$PAY['P_TYPE'].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_AUTH_DT"     value="'.$PAY['P_AUTH_DT'].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_AUTH_NO"     value="'.$PAY['P_AUTH_NO'].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_HPP_CORP"    value="'.$PAY['P_HPP_CORP'].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_APPL_NUM"    value="'.$PAY['P_APPL_NUM'].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_VACT_NUM"    value="'.$PAY['P_VACT_NUM'].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_VACT_NAME"   value="'.iconv_utf8($PAY['P_VACT_NAME']).'">'.PHP_EOL;
-echo '<input type="hidden" name="P_VACT_BANK"   value="'.$BANK_CODE[$PAY['P_VACT_BANK_CODE']].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_CARD_ISSUER" value="'.$CARD_CODE[$PAY['P_CARD_ISSUER_CODE']].'">'.PHP_EOL;
-echo '<input type="hidden" name="P_UNAME"       value="'.iconv_utf8($PAY['P_UNAME']).'">'.PHP_EOL;
+        foreach($data as $key=>$v) {
+            if( !in_array($key, $exclude) ){
+                $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($v));
+            }
+        }
 
-echo '</form>'.PHP_EOL;
-?>
+        $good_mny = $PAY['P_AMT'];
+        $pp_name = clean_xss_tags($data['pp_name']);
+        $pp_email = clean_xss_tags($data['pp_email']);
+        $pp_hp = clean_xss_tags($data['pp_hp']);
+        $pp_settle_case = clean_xss_tags($data['pp_settle_case']);
 
-<div id="show_progress">
-    <span style="display:block; text-align:center;margin-top:120px"><img src="<?php echo G5_MOBILE_URL; ?>/shop/img/loading.gif" alt=""></span>
-    <span style="display:block; text-align:center;margin-top:10px; font-size:14px">주문완료 중입니다. 잠시만 기다려 주십시오.</span>
-</div>
+        $_POST['P_HASH'] = $hash;
+        $_POST['P_AUTH_NO'] = $PAY['P_AUTH_NO'];
+        $_POST['pp_id'] = $PAY['P_OID'];
+        $_POST['good_mny'] = $PAY['P_AMT'];
 
-<script type="text/javascript">
-function setPAYResult() {
-    setTimeout( function() {
-        document.forderform.submit();
-    }, 300);
+        $_POST['P_TYPE'] = $PAY['P_TYPE'];
+        $_POST['P_AUTH_DT'] = $PAY['P_AUTH_DT'];
+        $_POST['P_AUTH_NO'] = $PAY['P_AUTH_NO'];
+        $_POST['P_HPP_CORP'] = $PAY['P_HPP_CORP'];
+        $_POST['P_APPL_NUM'] = $PAY['P_APPL_NUM'];
+        $_POST['P_VACT_NUM'] = $PAY['P_VACT_NUM'];
+        $_POST['P_VACT_NAME'] = iconv_utf8($PAY['P_VACT_NAME']);
+        $_POST['P_VACT_BANK'] = $BANK_CODE[$PAY['P_VACT_BANK_CODE']];
+        $_POST['P_CARD_ISSUER'] = $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']];
+        $_POST['P_UNAME'] = iconv_utf8($PAY['P_UNAME']);
+
+        include_once( G5_MSHOP_PATH.'/personalpayformupdate.php' );
+    }
+
+} else {
+    // 상점 결제
+    $exclude = array('res_cd', 'P_HASH', 'P_TYPE', 'P_AUTH_DT', 'P_VACT_BANK', 'P_AUTH_NO');
+
+    foreach($data as $key=>$value) {
+        if(!empty($exclude) && in_array($key, $exclude))
+            continue;
+
+        if(is_array($value)) {
+            foreach($value as $k=>$v) {
+                $_POST[$key][$k] = $params[$key][$k] = clean_xss_tags(strip_tags($v));
+            }
+        } else {
+            $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
+        }
+    }
+
+    $res_cd = $_POST['res_cd'] = $PAY['P_STATUS'];
+    $P_HASH = $_POST['P_HASH'] = $hash;
+    $P_TYPE = $_POST['P_TYPE'] = $PAY['P_TYPE'];
+    $P_AUTH_DT = $_POST['P_AUTH_DT'] = $PAY['P_AUTH_DT'];
+    $P_AUTH_NO = $_POST['P_AUTH_NO'] = $PAY['P_AUTH_NO'];
+    $P_HPP_CORP = $_POST['P_HPP_CORP'] = $PAY['P_HPP_CORP'];
+    $P_APPL_NUM = $_POST['P_APPL_NUM'] = $PAY['P_APPL_NUM'];
+    $P_VACT_NUM = $_POST['P_VACT_NUM'] = $PAY['P_VACT_NUM'];
+    $P_VACT_NAME = $_POST['P_VACT_NAME'] = iconv_utf8($PAY['P_VACT_NAME']);
+    $P_VACT_BANK = $_POST['P_VACT_BANK'] = $BANK_CODE[$PAY['P_VACT_BANK_CODE']];
+    $P_CARD_ISSUER = $_POST['P_CARD_ISSUER'] = $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']];
+    $P_UNAME = $_POST['P_UNAME'] = iconv_utf8($PAY['P_UNAME']);
+
+    $check_keys = array('od_name', 'od_tel', 'od_pwd', 'od_hp', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon', 'od_email', 'ad_default', 'ad_subject', 'od_hope_date', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon', 'od_memo', 'od_settle_case', 'max_temp_point', 'od_temp_point', 'od_send_cost', 'od_send_cost2', 'od_bank_account', 'od_deposit_name', 'od_test', 'od_ip');
+
+    foreach($check_keys as $key){
+        $$key = isset($params[$key]) ? $params[$key] : '';
+    }
+
+    include_once( G5_MSHOP_PATH.'/orderformupdate.php' );
 }
-</script>
-
-<?php
-include_once(G5_PATH.'/tail.sub.php');
+exit;
 ?>

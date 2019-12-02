@@ -45,9 +45,9 @@ if($od['od_pg'] == 'lg') {
         <ul id="sod_list_inq" class="sod_list">
             <?php
             for($i=0; $row=sql_fetch_array($result); $i++) {
-                $image_width = 80;
-                $image_height = 80;
-                $image = get_it_image($row['it_id'], 80, 80, '', '', $row['it_name']);
+                $image_width = 65;
+                $image_height = 65;
+                $image = get_it_image($row['it_id'], 65, 65, '', '', $row['it_name']);
 
                 // 옵션항목
                 $sql = " select ct_id, it_name, ct_option, ct_qty, ct_price, ct_point, ct_status, io_type, io_price
@@ -88,9 +88,7 @@ if($od['od_pg'] == 'lg') {
                 }
             ?>
             <li class="sod_li">
-                <div class="li_name">
-                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>"><strong><?php echo $row['it_name']; ?></strong></a>
-                </div>
+
                 <?php
                     for($k=0; $opt=sql_fetch_array($res); $k++) {
                         if($opt['io_type'])
@@ -101,13 +99,16 @@ if($od['od_pg'] == 'lg') {
                         $sell_price = $opt_price * $opt['ct_qty'];
                         $point = $opt['ct_point'] * $opt['ct_qty'];
                 ?>
+
                 <div class="li_op_wr">
-                    <div class="li_opt"><?php echo get_text($opt['ct_option']); ?></div>
-                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="total_img"><?php echo $image; ?></a>
+                    <div class="li_name">
+                        <a href="<?php echo shop_item_url($row['it_id']); ?>"><strong><?php echo $row['it_name']; ?></strong></a>
+                    </div>
+                    <a href="<?php echo shop_item_url($row['it_id']); ?>" class="total_img"><?php echo $image; ?></a>
                     <span class="prqty_stat"><span class="sound_only">상태</span><?php echo $opt['ct_status']; ?></span>
 
-
                 </div>
+                <div class="sod_opt"><span class="opt_name"><?php echo get_text($opt['ct_option']); ?></span></div>
                 <div class="li_prqty">
                     <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($opt_price); ?></span>
                     <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($opt['ct_qty']); ?></span>
@@ -279,10 +280,6 @@ if($od['od_pg'] == 'lg') {
 
             <div  class="odf_tbl">
                 <table>
-                <colgroup>
-                    <col class="grid_2">
-                    <col>
-                </colgroup>
                 <tbody>
                 <tr>
                     <th scope="row">주문번호</th>
@@ -475,10 +472,7 @@ if($od['od_pg'] == 'lg') {
 
             <div  class="odf_tbl">
                 <table>
-                <colgroup>
-                    <col class="grid_2">
-                    <col>
-                </colgroup>
+           
                 <tbody>
                 <tr>
                     <th scope="row">이 름</th>
@@ -511,10 +505,7 @@ if($od['od_pg'] == 'lg') {
 
             <div  class="odf_tbl">
                 <table>
-                <colgroup>
-                    <col class="grid_2">
-                    <col>
-                </colgroup>
+   
                 <tbody>
                 <tr>
                     <th scope="row">이 름</th>
@@ -560,10 +551,7 @@ if($od['od_pg'] == 'lg') {
 
             <div  class="odf_tbl">
                 <table>
-                <colgroup>
-                    <col class="grid_2">
-                    <col>
-                </colgroup>
+
                 <tbody>
                 <?php
                 if ($od['od_invoice'] && $od['od_delivery_company'])
@@ -587,7 +575,7 @@ if($od['od_pg'] == 'lg') {
                 {
                 ?>
                 <tr>
-                    <td class="empty_table" colspan="2">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
+                    <td class="empty_table">아직 배송하지 않았거나 배송정보를 입력하지 못하였습니다.</td>
                 </tr>
                 <?php
                 }
@@ -664,10 +652,7 @@ if($od['od_pg'] == 'lg') {
         <form method="post" action="http://devadmin.kcp.co.kr/Modules/Noti/TEST_Vcnt_Noti_Proc.jsp" target="_blank">
         <table>
         <caption>모의입금처리</caption>
-        <colgroup>
-            <col class="grid_2">
-            <col>
-        </colgroup>
+
         <tbody>
         <tr>
             <th scope="col"><label for="e_trade_no">KCP 거래번호</label></th>

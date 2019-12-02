@@ -38,8 +38,6 @@ if ($sort != '')
 else
     $order_by = 'it_order, it_id desc';
 
-echo $sql;
-
 if (!$skin || preg_match('#\.+[\\\/]#', $skin))
     $skin = $default['de_listtype_list_skin'];
 else

@@ -9,19 +9,17 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 <div id="sit_qa_write" class="new_win">
     <h1 id="win_title">상품문의 쓰기</h1>
 
-    <form name="fitemqa" method="post" action="./itemqaformupdate.php" onsubmit="return fitemqa_submit(this);" autocomplete="off">
+    <form name="fitemqa" method="post" action="<?php echo G5_SHOP_URL;?>/itemqaformupdate.php" onsubmit="return fitemqa_submit(this);" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w; ?>">
     <input type="hidden" name="it_id" value="<?php echo $it_id; ?>">
     <input type="hidden" name="iq_id" value="<?php echo $iq_id; ?>">
 
     <div class="form_01 new_win_con">
-      
         <ul>
-            <li>
+            <li class="chk_box">
                 <strong class="sound_only">옵션</strong>
-                <input type="checkbox" name="iq_secret" id="iq_secret" value="1" <?php echo $chk_secret; ?>>
-                <label for="iq_secret">비밀글</label>
-                
+                <input type="checkbox" name="iq_secret" id="iq_secret" value="1" <?php echo $chk_secret; ?> class="selec_chk">
+                <label for="iq_secret"><span></span>비밀글</label> 
             </li>
             <li>
                 <div class="form_left">
@@ -32,7 +30,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
                 <div class="form_right">
                     <label for="iq_hp" class="sound_only">휴대폰</label>
                     <input type="text" name="iq_hp" id="iq_hp" value="<?php echo get_text($qa['iq_hp']); ?>" class="frm_input full_input" size="20" placeholder="휴대폰"><br>
-                    <span class="frm_info">휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다. </span>
+                    <span class="frm_info">휴대폰번호를 입력하시면 답변 등록 시 답변등록 알림이 SMS로 전송됩니다.</span>
                 </div>
             </li>
             <li>
@@ -46,11 +44,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         </ul>
         
         <div class="win_btn">
-            <input type="submit" value="작성완료" class="btn_submit">
+            <button type="submit" class="btn_submit">작성완료</button>
             <button type="button" onclick="self.close();" class="btn_close">닫기</button>
         </div>
     </div>
-
     </form>
 </div>
 

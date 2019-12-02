@@ -117,6 +117,8 @@ jQuery(function($){
 
                     price_calculate();
 
+                    $("#sit_sel_option").trigger("add_sit_sel_option", [opt]);
+
                 } else {
 
                     cached_function.apply(this, arguments); // use .apply() to call it
@@ -158,7 +160,8 @@ jQuery(function($){
                     });
 
                     $("#sit_tot_price").empty().html("<span>총 금액 </span><strong>"+number_format(String(total))+"</strong> 원");
-
+                    
+                    $("#sit_tot_price").trigger("price_calculate", [total]);
                 } else {
                     cached_function.apply(this, arguments); // use .apply() to call it
                 }

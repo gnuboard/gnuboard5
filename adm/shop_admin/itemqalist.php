@@ -120,7 +120,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
         $row['iq_subject'] = cut_str($row['iq_subject'], 30, "...");
-        $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $href = shop_item_url($row['it_id']);
         $name = get_sideview($row['mb_id'], get_text($row['iq_name']), $row['mb_email'], $row['mb_homepage']);
         $answer = $row['iq_answer'] ? 'Y' : '&nbsp;';
         $iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), 300);

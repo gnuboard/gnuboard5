@@ -13,6 +13,11 @@ include_once ('../config.php');
 include_once ('../lib/common.lib.php');
 include_once('./install.function.php');    // 인스톨 과정 함수 모음
 
+include_once('../lib/hook.lib.php');    // hook 함수 파일
+include_once('../lib/get_data.lib.php');    
+include_once('../lib/uri.lib.php');    // URL 함수 파일
+include_once('../lib/cache.lib.php');
+
 $title = G5_VERSION." 설치 완료 3/3";
 include_once ('./install.inc.php');
 
@@ -66,7 +71,7 @@ if (!$select_db) {
 }
 
 $mysql_set_mode = 'false';
-sql_set_charset('utf8', $dblink);
+sql_set_charset(G5_DB_CHARSET, $dblink);
 $result = sql_query(" SELECT @@sql_mode as mode ", true, $dblink);
 $row = sql_fetch_array($result);
 if($row['mode']) {
@@ -96,7 +101,10 @@ if($g5_install || !$result) {
     $f = explode(';', $file);
     for ($i=0; $i<count($f); $i++) {
         if (trim($f[$i]) == '') continue;
-        sql_query($f[$i], true, $dblink);
+
+        $sql = get_db_create_replace($f[$i]);
+
+        sql_query($sql, true, $dblink);
     }
 }
 
@@ -109,7 +117,10 @@ if($g5_shop_install) {
     $f = explode(';', $file);
     for ($i=0; $i<count($f); $i++) {
         if (trim($f[$i]) == '') continue;
-        sql_query($f[$i], true, $dblink);
+
+        $sql = get_db_create_replace($f[$i]);
+
+        sql_query($sql, true, $dblink);
     }
 }
 // 테이블 생성 ------------------------------------
@@ -307,6 +318,8 @@ if($g5_install || !$result) {
 
         // 게시판 테이블 생성
         $file = file("../".G5_ADMIN_DIR."/sql_write.sql");
+        $file = get_db_create_replace($file);
+
         $sql = implode($file, "\n");
 
         $create_table = $table_prefix.'write_' . $tmp_bo_table[$i];
@@ -321,14 +334,18 @@ if($g5_install || !$result) {
 
 if($g5_shop_install) {
     // 이미지 사이즈
-    $ssimg_width = 130;
-    $ssimg_height = 130;
-    $simg_width = 230;
-    $simg_height = 230;
-    $mimg_width = 400;
-    $mimg_height = 400;
-    $mmimg_width = 400;
-    $mmimg_height = 200;
+    $ssimg_width = 160;
+    $ssimg_height = 160;
+    $simg_width = 215;
+    $simg_height = 215;
+    $mimg_width = 230;
+    $mimg_height = 230;
+    $mmimg_width = 300;
+    $mmimg_height = 300;
+    $msimg_width = 80;
+    $msimg_height = 80;
+    $list_img_width = 225;
+    $list_img_height = 225;
 
     // default 설정 (쇼핑몰 설정)
     $sql = " insert into `{$g5_shop_prefix}default`
@@ -347,64 +364,64 @@ if($g5_shop_install) {
                     de_shop_mobile_skin = 'basic',
                     de_type1_list_use = '1',
                     de_type1_list_skin = 'main.10.skin.php',
-                    de_type1_list_mod = '4',
-                    de_type1_list_row = '2',
-                    de_type1_img_width = '$simg_width',
-                    de_type1_img_height = '$simg_height',
+                    de_type1_list_mod = '5',
+                    de_type1_list_row = '1',
+                    de_type1_img_width = '$ssimg_width',
+                    de_type1_img_height = '$ssimg_height',
                     de_type2_list_use = '1',
-                    de_type2_list_skin = 'main.10.skin.php',
+                    de_type2_list_skin = 'main.20.skin.php',
                     de_type2_list_mod = '4',
-                    de_type2_list_row = '2',
+                    de_type2_list_row = '1',
                     de_type2_img_width = '$simg_width',
                     de_type2_img_height = '$simg_height',
                     de_type3_list_use = '1',
                     de_type3_list_skin = 'main.40.skin.php',
                     de_type3_list_mod = '4',
-                    de_type3_list_row = '2',
+                    de_type3_list_row = '1',
                     de_type3_img_width = '$simg_width',
                     de_type3_img_height = '$simg_height',
                     de_type4_list_use = '1',
                     de_type4_list_skin = 'main.50.skin.php',
-                    de_type4_list_mod = '1',
-                    de_type4_list_row = '5',
+                    de_type4_list_mod = '5',
+                    de_type4_list_row = '1',
                     de_type4_img_width = '$simg_width',
                     de_type4_img_height = '$simg_height',
                     de_type5_list_use = '1',
-                    de_type5_list_skin = 'main.10.skin.php',
+                    de_type5_list_skin = 'main.30.skin.php',
                     de_type5_list_mod = '4',
-                    de_type5_list_row = '2',
+                    de_type5_list_row = '1',
                     de_type5_img_width = '$simg_width',
                     de_type5_img_height = '$simg_height',
                     de_mobile_type1_list_use = '1',
-                    de_mobile_type1_list_skin = 'main.10.skin.php',
+                    de_mobile_type1_list_skin = 'main.30.skin.php',
                     de_mobile_type1_list_mod = '2',
-                    de_mobile_type1_list_row = '2',
-                    de_mobile_type1_img_width = '$simg_width',
-                    de_mobile_type1_img_height = '$simg_height',
+                    de_mobile_type1_list_row = '4',
+                    de_mobile_type1_img_width = '$mimg_width',
+                    de_mobile_type1_img_height = '$mimg_height',
                     de_mobile_type2_list_use = '1',
-                    de_mobile_type2_list_skin = 'main.20.skin.php',
-                    de_mobile_type2_list_mod = '3',
+                    de_mobile_type2_list_skin = 'main.10.skin.php',
+                    de_mobile_type2_list_mod = '2',
                     de_mobile_type2_list_row = '2',
-                    de_mobile_type2_img_width = '$ssimg_width',
-                    de_mobile_type2_img_height = '$ssimg_height',
+                    de_mobile_type2_img_width = '$mimg_width',
+                    de_mobile_type2_img_height = '$mimg_height',
                     de_mobile_type3_list_use = '1',
-                    de_mobile_type3_list_skin = 'main.30.skin.php',
-                    de_mobile_type3_list_mod = '1',
-                    de_mobile_type3_list_row = '8',
+                    de_mobile_type3_list_skin = 'main.10.skin.php',
+                    de_mobile_type3_list_mod = '2',
+                    de_mobile_type3_list_row = '4',
                     de_mobile_type3_img_width = '$mmimg_width',
                     de_mobile_type3_img_height = '$mmimg_height',
                     de_mobile_type4_list_use = '1',
-                    de_mobile_type4_list_skin = 'main.10.skin.php',
+                    de_mobile_type4_list_skin = 'main.20.skin.php',
                     de_mobile_type4_list_mod = '2',
                     de_mobile_type4_list_row = '2',
-                    de_mobile_type4_img_width = '$simg_width',
-                    de_mobile_type4_img_height = '$simg_height',
+                    de_mobile_type4_img_width = '$msimg_width',
+                    de_mobile_type4_img_height = '$msimg_height',
                     de_mobile_type5_list_use = '1',
                     de_mobile_type5_list_skin = 'main.10.skin.php',
                     de_mobile_type5_list_mod = '2',
                     de_mobile_type5_list_row = '2',
-                    de_mobile_type5_img_width = '$simg_width',
-                    de_mobile_type5_img_height = '$simg_height',
+                    de_mobile_type5_img_width = '$mimg_width',
+                    de_mobile_type5_img_height = '$mimg_height',
                     de_bank_use = '1',
                     de_bank_account = 'OO은행 12345-67-89012 예금주명',
                     de_vbank_use = '0',
@@ -433,32 +450,32 @@ if($g5_shop_install) {
                     de_mobile_rel_list_use = '1',
                     de_mobile_rel_list_skin = 'relation.10.skin.php',
                     de_mobile_rel_list_mod = '3',
-                    de_mobile_rel_img_width = '$simg_width',
-                    de_mobile_rel_img_height = '$simg_height',
+                    de_mobile_rel_img_width = '$mimg_width',
+                    de_mobile_rel_img_height = '$mimg_height',
                     de_search_list_skin = 'list.10.skin.php',
-                    de_search_img_width = '$simg_width',
-                    de_search_img_height = '$simg_height',
-                    de_search_list_mod = '4',
+                    de_search_img_width = '$list_img_width',
+                    de_search_img_height = '$list_img_height',
+                    de_search_list_mod = '5',
                     de_search_list_row = '5',
                     de_mobile_search_list_skin = 'list.10.skin.php',
-                    de_mobile_search_img_width = '$simg_width',
-                    de_mobile_search_img_height = '$simg_height',
-                    de_mobile_search_list_mod = '3',
+                    de_mobile_search_img_width = '$mimg_width',
+                    de_mobile_search_img_height = '$mimg_height',
+                    de_mobile_search_list_mod = '2',
                     de_mobile_search_list_row = '5',
                     de_listtype_list_skin = 'list.10.skin.php',
-                    de_listtype_img_width = '$simg_width',
-                    de_listtype_img_height = '$simg_height',
-                    de_listtype_list_mod = '4',
+                    de_listtype_img_width = '$list_img_width',
+                    de_listtype_img_height = '$list_img_height',
+                    de_listtype_list_mod = '5',
                     de_listtype_list_row = '5',
                     de_mobile_listtype_list_skin = 'list.10.skin.php',
-                    de_mobile_listtype_img_width = '$simg_width',
-                    de_mobile_listtype_img_height = '$simg_height',
-                    de_mobile_listtype_list_mod = '3',
+                    de_mobile_listtype_img_width = '$mimg_width',
+                    de_mobile_listtype_img_height = '$mimg_height',
+                    de_mobile_listtype_list_mod = '2',
                     de_mobile_listtype_list_row = '5',
-                    de_simg_width = '$simg_width',
-                    de_simg_height = '$simg_height',
-                    de_mimg_width = '$mimg_width',
-                    de_mimg_height = '$mimg_height',
+                    de_simg_width = '$mimg_width',
+                    de_simg_height = '$mimg_height',
+                    de_mimg_width = '$mmimg_width',
+                    de_mimg_height = '$mmimg_height',
                     de_item_use_use = '1',
                     de_level_sell = '1',
                     de_code_dup_use = '1',
@@ -586,6 +603,7 @@ if($g5_shop_install) {
     fwrite($f, "\$g5['g5_shop_personalpay_table'] = G5_SHOP_TABLE_PREFIX.'personalpay'; // 개인결제 정보 테이블\n");
     fwrite($f, "\$g5['g5_shop_order_address_table'] = G5_SHOP_TABLE_PREFIX.'order_address'; // 배송지이력 정보 테이블\n");
     fwrite($f, "\$g5['g5_shop_item_stocksms_table'] = G5_SHOP_TABLE_PREFIX.'item_stocksms'; // 재입고SMS 알림 정보 테이블\n");
+    fwrite($f, "\$g5['g5_shop_post_log_table'] = G5_SHOP_TABLE_PREFIX.'order_post_log'; // 주문요청 로그 테이블\n");
     fwrite($f, "\$g5['g5_shop_order_data_table'] = G5_SHOP_TABLE_PREFIX.'order_data'; // 모바일 결제정보 임시저장 테이블\n");
     fwrite($f, "\$g5['g5_shop_inicis_log_table'] = G5_SHOP_TABLE_PREFIX.'inicis_log'; // 이니시스 모바일 계좌이체 로그 테이블\n");
 }

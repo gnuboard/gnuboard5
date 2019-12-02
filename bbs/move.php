@@ -156,5 +156,6 @@ function fboardmoveall_submit(f)
 </script>
 
 <?php
+run_event('move_html_footer');
 include_once(G5_PATH.'/tail.sub.php');
 ?>

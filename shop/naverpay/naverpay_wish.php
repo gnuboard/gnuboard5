@@ -14,8 +14,7 @@ for($i=0; $i<$count; $i++) {
     $it_id = $_POST['it_id'][$i];
 
     // 상품정보
-    $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-    $it = sql_fetch($sql);
+    $it = get_shop_item($it_id, true);
     if(!$it['it_id'])
         alert_close('상품정보가 존재하지 않습니다.');
 
@@ -24,7 +23,7 @@ for($i=0; $i<$count; $i++) {
     $description = urlencode($it['it_basic']);
     $price       = get_price($it);
     $image       = urlencode(get_naverpay_item_image_url($it_id));
-    $item_url    = urlencode(G5_SHOP_URL.'/item.php?it_id='.$it_id);
+    $item_url    = urlencode(shop_item_url($it_id));
 
     $item .= '&ITEM_ID='.$id;
     if($it['ec_mall_pid'])

@@ -24,7 +24,7 @@ if ($w == "" || $w == "u") {
 if($is_mobile_shop)
     $url = './iteminfo.php?it_id='.$it_id.'&info=qa';
 else
-    $url = "./item.php?it_id=$it_id&_=".get_token()."#sit_qa";
+    $url = shop_item_url($it_id)."?_=".get_token()."#sit_qa";
 
 if ($w == "")
 {

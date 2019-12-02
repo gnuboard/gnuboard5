@@ -60,34 +60,34 @@ $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정
         if ($default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use']) {
         echo '<fieldset id="sod_frm_paysel">';
         echo '<legend>결제방법 선택</legend>';
-       echo '<ul>';
+		echo '<ul class="pay_way chk_box">';
         }
 
         // 가상계좌 사용
         if ($default['de_vbank_use']) {
             $multi_settle++;
-            echo '<li><input type="radio" id="pp_settle_vbank" name="pp_settle_case" value="가상계좌" '.$checked.'> <label for="pp_settle_vbank">'.$escrow_title.'가상계좌</label></li>'.PHP_EOL;
+            echo '<li><input type="radio" id="pp_settle_vbank" name="pp_settle_case" value="가상계좌" '.$checked.'> <label for="pp_settle_vbank"><span></span>'.$escrow_title.'가상계좌</label></li>'.PHP_EOL;
             $checked = '';
         }
 
         // 계좌이체 사용
         if ($default['de_iche_use']) {
             $multi_settle++;
-            echo '<li><input type="radio" id="pp_settle_iche" name="pp_settle_case" value="계좌이체" '.$checked.'> <label for="pp_settle_iche">'.$escrow_title.'계좌이체</label></li>'.PHP_EOL;
+            echo '<li><input type="radio" id="pp_settle_iche" name="pp_settle_case" value="계좌이체" '.$checked.'> <label for="pp_settle_iche"><span></span>'.$escrow_title.'계좌이체</label></li>'.PHP_EOL;
             $checked = '';
         }
 
         // 휴대폰 사용
         if ($default['de_hp_use']) {
             $multi_settle++;
-            echo '<li><input type="radio" id="pp_settle_hp" name="pp_settle_case" value="휴대폰" '.$checked.'> <label for="pp_settle_hp">휴대폰</label></li>'.PHP_EOL;
+            echo '<li><input type="radio" id="pp_settle_hp" name="pp_settle_case" value="휴대폰" '.$checked.'> <label for="pp_settle_hp"><span></span>휴대폰</label></li>'.PHP_EOL;
             $checked = '';
         }
 
         // 신용카드 사용
         if ($default['de_card_use']) {
             $multi_settle++;
-            echo '<li><input type="radio" id="pp_settle_card" name="pp_settle_case" value="신용카드" '.$checked.'> <label for="pp_settle_card">신용카드</label></li>'.PHP_EOL;
+            echo '<li><input type="radio" id="pp_settle_card" name="pp_settle_case" value="신용카드" '.$checked.'> <label for="pp_settle_card"><span></span>신용카드</label></li>'.PHP_EOL;
             $checked = '';
         }
 

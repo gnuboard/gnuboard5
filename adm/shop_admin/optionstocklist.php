@@ -129,7 +129,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
-        $href = G5_SHOP_URL."/item.php?it_id={$row['it_id']}";
+        $href = shop_item_url($row['it_id']);
 
         $sql1 = " select SUM(ct_qty) as sum_qty
                     from {$g5['g5_shop_cart_table']}

@@ -149,7 +149,7 @@ if($ev_id) {
     </thead>
     <tbody>
     <?php for ($i=0; $row=sql_fetch_array($result); $i++) {
-        $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $href = shop_item_url($row['it_id']);
 
         $sql = " select ev_id from {$g5['g5_shop_event_item_table']}
                   where it_id = '{$row['it_id']}'

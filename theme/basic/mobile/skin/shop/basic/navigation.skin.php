@@ -20,7 +20,7 @@ if ($ca_id)
             $sct_bg = 'sct_bg';
         else $sct_bg = '';
 
-        $str .= $bar.'<a href="./list.php?ca_id='.$code.'" class="'.$sct_here.' '.$sct_bg.'">'.$row['ca_name'].'</a>';
+        $str .= $bar.'<a href="'.shop_category_url($code).'" class="'.$sct_here.' '.$sct_bg.'">'.$row['ca_name'].'</a>';
     }
 }
 else

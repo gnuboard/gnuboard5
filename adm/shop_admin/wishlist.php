@@ -106,7 +106,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         // $s_mod = icon("수정", "./itemqaform.php?w=u&amp;iq_id={$row['iq_id']}&amp;$qstr");
         // $s_del = icon("삭제", "javascript:del('./itemqaupdate.php?w=d&amp;iq_id={$row['iq_id']}&amp;$qstr');");
 
-        $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $href = shop_item_url($row['it_id']);
         $num = $rank + $i + 1;
 
         $bg = 'bg'.($i%2);

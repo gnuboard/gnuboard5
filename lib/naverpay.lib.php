@@ -34,7 +34,7 @@ class naverpay_register
         $diff_cost = 0;
 
         foreach($keys as $it_id) {
-            $it = sql_fetch(" select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ");
+            $it = get_shop_item($it_id, true);
             if(!$it['it_id'])
                 continue;
 
@@ -192,8 +192,7 @@ function get_naverpay_item_image_url($it_id)
 {
     global $g5;
 
-    $sql = " select it_id, it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10 from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-    $row = sql_fetch($sql);
+    $row = get_shop_item($it_id, true);
 
     if(!$row['it_id'])
         return '';
@@ -233,8 +232,7 @@ function get_naverpay_item_stock($it_id)
 {
     global $g5;
 
-    $sql = " select it_id, it_stock_qty, it_use, it_soldout from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-    $it = sql_fetch($sql);
+    $it = get_shop_item($it_id, true);
     if(!$it['it_id'] || !$it['it_use'] || $it['it_soldout'])
         return 0;
 

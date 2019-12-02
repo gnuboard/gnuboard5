@@ -60,7 +60,7 @@ $qstr .= ($qstr ? '&amp;' : '').'sca='.$sca;
     <tbody>
     <tr>
         <th scope="row">상품명</th>
-        <td><a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $is['it_id']; ?>"><?php echo $is['it_name']; ?></a></td>
+        <td><a href="<?php echo shop_item_url($is['it_id']); ?>"><?php echo $is['it_name']; ?></a></td>
     </tr>
     <tr>
         <th scope="row">이름</th>

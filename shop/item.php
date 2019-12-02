@@ -7,18 +7,23 @@ if (G5_IS_MOBILE) {
 }
 
 $it_id = get_search_string(trim($_GET['it_id']));
+$it_seo_title = isset($it_seo_title) ? $it_seo_title : '';
 
-include_once(G5_LIB_PATH.'/iteminfo.lib.php');
+$it = get_shop_item_with_category($it_id, $it_seo_title);
+$it_id = $it['it_id'];
 
-// 분류사용, 상품사용하는 상품의 정보를 얻음
-$sql = " select a.*, b.ca_name, b.ca_use from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id ";
-$it = sql_fetch($sql);
+if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
+    shop_seo_title_update($row['it_id']);
+}
+
 if (!$it['it_id'])
     alert('자료가 없습니다.');
 if (!($it['ca_use'] && $it['it_use'])) {
     if (!$is_admin)
         alert('현재 판매가능한 상품이 아닙니다.');
 }
+
+include_once(G5_LIB_PATH.'/iteminfo.lib.php');
 
 // 분류 테이블에서 분류 상단, 하단 코드를 얻음
 $sql = " select ca_skin_dir, ca_include_head, ca_include_tail, ca_cert_use, ca_adult_use from {$g5['g5_shop_category_table']} where ca_id = '{$it['ca_id']}' ";
@@ -120,7 +125,7 @@ if(defined('G5_THEME_USE_ITEM_CATEGORY') && G5_THEME_USE_ITEM_CATEGORY){
 }
 
 if ($is_admin) {
-    echo '<div class="sit_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin">상품 관리</a></div>';
+    echo '<div class="sit_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemform.php?w=u&amp;it_id='.$it_id.'" class="btn_admin btn" title="상품 관리"><span class="sound_only">상품 관리</span><i class="fa fa-cog fa-spin fa-fw"></i></a></div>';
 }
 ?>
 
@@ -133,14 +138,15 @@ echo '<div id="sit_hhtml">'.conv_content($it['it_head_html'], 1).'</div>';
 if (G5_HTTPS_DOMAIN)
     $action_url = G5_HTTPS_DOMAIN.'/'.G5_SHOP_DIR.'/cartupdate.php';
 else
-    $action_url = './cartupdate.php';
+    $action_url = G5_SHOP_URL.'/cartupdate.php';
+
 
 // 이전 상품보기
 $sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id > '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id asc limit 1 ";
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $prev_title = '이전상품<span class="sound_only"> '.$row['it_name'].'</span>';
-    $prev_href = '<a href="./item.php?it_id='.$row['it_id'].'" id="siblings_prev">';
+    $prev_href = '<a href="'.get_pretty_url('shop', $row['it_id']).'" id="siblings_prev">';
     $prev_href2 = '</a>'.PHP_EOL;
 } else {
     $prev_title = '';
@@ -153,7 +159,7 @@ $sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id < '$
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $next_title = '다음 상품<span class="sound_only"> '.$row['it_name'].'</span>';
-    $next_href = '<a href="./item.php?it_id='.$row['it_id'].'" id="siblings_next">';
+    $next_href = '<a href="'.get_pretty_url('shop', $row['it_id']).'" id="siblings_next">';
     $next_href2 = '</a>'.PHP_EOL;
 } else {
     $next_title = '';
@@ -183,7 +189,7 @@ if($default['de_rel_list_use']) {
 
 // 소셜 관련
 $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
-$sns_url  = G5_SHOP_URL.'/item.php?it_id='.$it['it_id'];
+$sns_url  = shop_item_url($it['it_id']);
 $sns_share_links .= get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/facebook.png').' ';
 $sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/twitter.png').' ';
 $sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/gplus.png');
@@ -203,10 +209,10 @@ if($is_orderable) {
         $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject'], '');
     } else {
         // 선택 옵션 ( 기존의 tr td 태그로 가져오려면 'div' 를 '' 로 바꾸거나 또는 지워주세요 )
-        $option_item = get_item_options($it['it_id'], $it['it_option_subject'], 'div');
+        $option_item = get_item_options($it['it_id'], $it['it_option_subject'], 'div', 1);
 
         // 추가 옵션 ( 기존의 tr td 태그로 가져오려면 'div' 를 '' 로 바꾸거나 또는 지워주세요 )
-        $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject'], 'div');
+        $supply_item = get_item_supply($it['it_id'], $it['it_supply_subject'], 'div', 1);
     }
 
     // 상품 선택옵션 수

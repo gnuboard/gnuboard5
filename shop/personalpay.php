@@ -18,10 +18,10 @@ include_once('./_head.php');
     $list_file = G5_SHOP_SKIN_PATH.'/personalpay.skin.php';
     if (file_exists($list_file)) {
 
-        $list_mod   = 4;
+        $list_mod   = 5;
         $list_row   = 5;
-        $img_width  = 230;
-        $img_height = 230;
+        $img_width  = 225;
+        $img_height = 225;
 
         $sql_common = " from {$g5['g5_shop_personalpay_table']}
                         where pp_use = '1'

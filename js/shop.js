@@ -52,16 +52,21 @@ $(function() {
     }
 
     $(document).on("change", "select.it_option", function() {
-        var sel_count = $("select.it_option").size();
-        var idx = $("select.it_option").index($(this));
-        var val = $(this).val();
-        var it_id = $("input[name='it_id[]']").val();
+        var sel_count = $("select.it_option").size(),
+            idx = $("select.it_option").index($(this)),
+            val = $(this).val(),
+            it_id = $("input[name='it_id[]']").val(),
+            post_url = (typeof g5_shop_url !== "undefined") ? g5_shop_url+"/itemoption.php" : "./itemoption.php",
+            $this = $(this),
+            op_0_title = $this.find("option:eq(0)").text();
 
         // 선택값이 없을 경우 하위 옵션은 disabled
         if(val == "") {
             $("select.it_option:gt("+idx+")").val("").attr("disabled", true);
             return;
         }
+
+        $this.trigger("select_it_option_change", [$this]);
 
         // 하위선택옵션로드
         if(sel_count > 1 && (idx + 1) < sel_count) {
@@ -82,8 +87,8 @@ $(function() {
             }
 
             $.post(
-                "./itemoption.php",
-                { it_id: it_id, opt_id: opt_id, idx: idx, sel_count: sel_count },
+                post_url,
+                { it_id: it_id, opt_id: opt_id, idx: idx, sel_count: sel_count, op_title : op_0_title },
                 function(data) {
                     $("select.it_option").eq(idx+1).empty().html(data).attr("disabled", false);
 
@@ -92,6 +97,8 @@ $(function() {
                         var idx2 = idx + 1;
                         $("select.it_option:gt("+idx2+")").val("").attr("disabled", true);
                     }
+
+                    $this.trigger("select_it_option_post", [$this, idx, sel_count, data]);
                 }
             );
         } else if((idx + 1) == sel_count) { // 선택옵션처리
@@ -168,10 +175,11 @@ $(function() {
 
     // 수량변경 및 삭제
     $(document).on("click", "#sit_sel_option li button", function() {
-        var mode = $(this).text();
-        var this_qty, max_qty = 9999, min_qty = 1;
-        var $el_qty = $(this).closest("li").find("input[name^=ct_qty]");
-        var stock = parseInt($(this).closest("li").find("input.io_stock").val());
+        var $this = $(this),
+            mode = $this.text(),
+            this_qty, max_qty = 9999, min_qty = 1,
+            $el_qty = $(this).closest("li").find("input[name^=ct_qty]"),
+            stock = parseInt($(this).closest("li").find("input.io_stock").val());
 
         switch(mode) {
             case "증가":
@@ -187,6 +195,7 @@ $(function() {
                 }
 
                 $el_qty.val(this_qty);
+                $this.trigger("sit_sel_option_success", [$this, mode, this_qty]);
                 price_calculate();
                 break;
 
@@ -197,6 +206,7 @@ $(function() {
                     alert("최소 구매수량은 "+number_format(String(min_qty))+" 입니다.");
                 }
                 $el_qty.val(this_qty);
+                $this.trigger("sit_sel_option_success", [$this, mode, this_qty]);
                 price_calculate();
                 break;
 
@@ -214,6 +224,8 @@ $(function() {
                     }
 
                     if(del_exec) {
+                        // 지우기전에 호출해야 trigger 를 호출해야 합니다.
+                        $this.trigger("sit_sel_option_success", [$this, mode, ""]);
                         $el.closest("li").remove();
                         price_calculate();
                     } else {
@@ -231,25 +243,32 @@ $(function() {
 
     // 수량직접입력
     $(document).on("keyup", "input[name^=ct_qty]", function() {
-        var val= $(this).val();
+        var $this = $(this),
+            val= $this.val(),
+            force_val = 0;
 
         if(val != "") {
             if(val.replace(/[0-9]/g, "").length > 0) {
                 alert("수량은 숫자만 입력해 주십시오.");
-                $(this).val(1);
+                force_val = 1;
+                $(this).val(force_val);
             } else {
                 var d_val = parseInt(val);
                 if(d_val < 1 || d_val > 9999) {
                     alert("수량은 1에서 9999 사이의 값으로 입력해 주십시오.");
-                    $(this).val(1);
+                    force_val = 1;
+                    $(this).val(force_val);
                 } else {
                     var stock = parseInt($(this).closest("li").find("input.io_stock").val());
                     if(d_val > stock) {
                         alert("재고수량 보다 많은 수량을 구매할 수 없습니다.");
-                        $(this).val(stock);
+                        force_val = stock;
+                        $(this).val(force_val);
                     }
                 }
             }
+            
+            $this.trigger("change_option_qty", [$this, val, force_val]);
 
             price_calculate();
         }
@@ -415,6 +434,8 @@ function add_sel_option(type, id, option, price, stock)
     }
 
     price_calculate();
+
+    $("#sit_sel_option").trigger("add_sit_sel_option", [opt]);
 }
 
 // 동일선택옵션있는지
@@ -460,6 +481,8 @@ function price_calculate()
     });
 
     $("#sit_tot_price").empty().html("<span>총 금액 :</span> "+number_format(String(total))+"원");
+
+    $("#sit_tot_price").trigger("price_calculate", [total]);
 }
 
 // php chr() 대응

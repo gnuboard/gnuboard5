@@ -25,6 +25,7 @@ define('G5_DELIVERY_COMPANY',
     .'(호남택배^http://www.honamlogis.co.kr/04estimate/songjang_list.php?c_search1=^031-376-6070)'
 );
 
+include_once(G5_LIB_PATH.'/shop.data.lib.php');
 include_once(G5_LIB_PATH.'/shop.lib.php');
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
@@ -69,4 +70,13 @@ define('G5_CART_STOCK_LIMIT', 3);
 // 아이코드 코인 최소금액 설정
 // 코인 잔액이 설정 금액보다 작을 때는 주문시 SMS 발송 안함
 define('G5_ICODE_COIN', 100);
+
+include_once(G5_LIB_PATH.'/shop.uri.lib.php');
+
+add_replace('get_pretty_url', 'add_pretty_shop_url', 10, 5);
+add_replace('false_short_url_clean', 'shop_short_url_clean', 10, 4);
+add_replace('add_nginx_conf_rules', 'add_shop_nginx_conf_rules', 10, 3);
+add_replace('add_mod_rewrite_rules', 'add_shop_mod_rewrite_rules', 10, 3);
+add_replace('admin_dbupgrade', 'add_shop_admin_dbupgrade', 10, 3);
+add_replace('exist_check_seo_title', 'shop_exist_check_seo_title', 10, 4);
 ?>

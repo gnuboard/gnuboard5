@@ -100,7 +100,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     $str .= "{$lt}mapid{$gt}{$row['it_id']}".PHP_EOL;
     $str .= "{$lt}price{$gt}{$row['it_price']}".PHP_EOL;
     $str .= "{$lt}pname{$gt}{$row['it_name']}".PHP_EOL;
-    $str .= "{$lt}pgurl{$gt}$shop_url/item.php?it_id={$row['it_id']}".PHP_EOL;
+    $str .= "{$lt}pgurl{$gt}".shop_item_url($row['it_id']).PHP_EOL;
     $str .= "{$lt}igurl{$gt}$img_url".PHP_EOL;
     $str .= "{$lt}cate1{$gt}$cate1".PHP_EOL;
     $str .= "{$lt}caid1{$gt}$caid1".PHP_EOL;

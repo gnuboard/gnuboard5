@@ -2,9 +2,9 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
-$itemqa_list = "./itemqalist.php";
-$itemqa_form = "./itemqaform.php?it_id=".$it_id;
-$itemqa_formupdate = "./itemqaformupdate.php?it_id=".$it_id;
+$itemqa_list = G5_SHOP_URL."/itemqalist.php";
+$itemqa_form = G5_SHOP_URL."/itemqaform.php?it_id=".$it_id;
+$itemqa_formupdate = G5_SHOP_URL."/itemqaformupdate.php?it_id=".$it_id;
 
 $sql_common = " from `{$g5['g5_shop_item_qa_table']}` where it_id = '{$it_id}' ";
 

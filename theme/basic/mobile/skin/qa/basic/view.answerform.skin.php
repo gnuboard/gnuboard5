@@ -7,7 +7,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     if($is_admin) // 관리자이면 답변등록
     {
     ?>
-    <h2 class="ans_frm_h2">답변등록</h2>
+    <h2>답변등록</h2>
 
     <form name="fanswer" method="post" action="./qawrite_update.php" autocomplete="off">
     <input type="hidden" name="qa_id" value="<?php echo $view['qa_id']; ?>">

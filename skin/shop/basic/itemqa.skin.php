@@ -12,7 +12,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
     <h3>등록된 상품문의</h3>
 
     <div id="sit_qa_wbtn">
-        <a href="<?php echo $itemqa_form; ?>" class="btn02 itemqa_form">상품문의 쓰기<span class="sound_only"> 새 창</span></a>
+        <a href="<?php echo $itemqa_form; ?>" class="btn02 itemqa_form">상품문의 쓰기<span class="sound_only">새 창</span></a>
         <a href="<?php echo $itemqa_list; ?>" id="itemqa_list" class="btn01">더보기</a>
     </div>
 
@@ -65,10 +65,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         <li class="sit_qa_li">
             <button type="button" class="sit_qa_li_title"><span class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></span><?php echo $iq_subject; ?></button>
             <dl class="sit_qa_dl">
-                <dt>작성자</dt>
-                <dd><?php echo $iq_name; ?></dd>
-                <dt>작성일</dt>
-                <dd><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $iq_time; ?></dd>
+                <dt>작성자/작성일</dt>
+                <dd><?php echo $iq_name; ?><span class="st_bg"></span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $iq_time; ?></dd>
             </dl>
 
             <div id="sit_qa_con_<?php echo $i; ?>" class="sit_qa_con">
@@ -91,8 +89,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
                 <div class="sit_qa_cmd">
                     <a href="<?php echo $itemqa_form."&amp;iq_id={$row['iq_id']}&amp;w=u"; ?>" class="itemqa_form btn01" onclick="return false;">수정</a>
                     <a href="<?php echo $itemqa_formupdate."&amp;iq_id={$row['iq_id']}&amp;w=d&amp;hash={$hash}"; ?>" class="itemqa_delete btn01">삭제</a>
-                    <!-- <button type="button" onclick="javascript:itemqa_update(<?php echo $i; ?>);" class="btn01">수정</button>
-                    <button type="button" onclick="javascript:itemqa_delete(fitemqa_password<?php echo $i; ?>, <?php echo $i; ?>);" class="btn01">삭제</button> -->
                 </div>
                 <?php } ?>
             </div>
@@ -109,9 +105,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 </section>
 
 <?php
-echo itemqa_page($config['cf_write_pages'], $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", "");
+echo itemqa_page($config['cf_write_pages'], $page, $total_page, G5_SHOP_URL."/itemqa.php?it_id=$it_id&amp;page=", "");
 ?>
-
 
 <script>
 $(function(){

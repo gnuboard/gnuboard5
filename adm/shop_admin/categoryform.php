@@ -163,7 +163,7 @@ else {
             <?php } else { ?>
                 <input type="hidden" name="ca_id" value="<?php echo $ca['ca_id']; ?>">
                 <span class="frm_ca_id"><?php echo $ca['ca_id']; ?></span>
-                <a href="<?php echo G5_SHOP_URL; ?>/list.php?ca_id=<?php echo $ca_id; ?>" class="btn_frmline">미리보기</a>
+                <a href="<?php echo shop_category_url($ca_id); ?>" class="btn_frmline">미리보기</a>
                 <a href="./categoryform.php?ca_id=<?php echo $ca_id; ?>&amp;<?php echo $qstr; ?>" class="btn_frmline">하위분류 추가</a>
                 <a href="./itemlist.php?sca=<?php echo $ca['ca_id']; ?>" class="btn_frmline">상품리스트</a>
             <?php } ?>

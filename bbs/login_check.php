@@ -29,7 +29,10 @@ if(function_exists('social_is_login_check')){
 // 가입된 회원이 아니다. 비밀번호가 틀리다. 라는 메세지를 따로 보여주지 않는 이유는
 // 회원아이디를 입력해 보고 맞으면 또 비밀번호를 입력해보는 경우를 방지하기 위해서입니다.
 // 불법사용자의 경우 회원아이디가 틀린지, 비밀번호가 틀린지를 알기까지는 많은 시간이 소요되기 때문입니다.
-if (!$is_social_password_check && (!$mb['mb_id'] || !check_password($mb_password, $mb['mb_password'])) ) {
+if (!$is_social_password_check && (!$mb['mb_id'] || !login_password_check($mb, $mb_password, $mb['mb_password'])) ) {
+
+    run_event('password_is_wrong', 'login', $mb);
+
     alert('가입된 회원아이디가 아니거나 비밀번호가 틀립니다.\\n비밀번호는 대소문자를 구분합니다.');
 }
 
@@ -50,6 +53,8 @@ if ( is_use_email_certify() && !preg_match("/[1-9]/", $mb['mb_email_certify'])) 
     $ckey = md5($mb['mb_ip'].$mb['mb_datetime']);
     confirm("{$mb['mb_email']} 메일로 메일인증을 받으셔야 로그인 가능합니다. 다른 메일주소로 변경하여 인증하시려면 취소를 클릭하시기 바랍니다.", G5_URL, G5_BBS_URL.'/register_email.php?mb_id='.$mb_id.'&ckey='.$ckey);
 }
+
+run_event('login_session_before', $mb, $is_social_login);
 
 @include_once($member_skin_path.'/login_check.skin.php');
 
@@ -100,6 +105,8 @@ if ($url) {
         $post_check_keys[] = 'provider';
     }
 
+    $post_check_keys = run_replace('login_check_post_check_keys', $post_check_keys, $link, $is_social_login);
+
     foreach($_POST as $key=>$value) {
         if ($key && !in_array($key, $post_check_keys)) {
             $link .= "$split$key=$value";
@@ -130,6 +137,8 @@ if(function_exists('set_cart_id')){
     $sql = " update {$g5['g5_shop_cart_table']} set ct_select = '0' where od_id = '$s_cart_id' ";
     sql_query($sql);
 }
+
+run_event('member_login_check', $mb, $link, $is_social_login);
 
 goto_url($link);
 ?>

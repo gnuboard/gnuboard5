@@ -126,8 +126,13 @@ while ($row = sql_fetch_array($result))
                         // 원본파일을 복사하고 퍼미션을 변경
                         // 제이프로님 코드제안 적용
                         $copy_file_name = ($bo_table !== $move_bo_table) ? $row3['bf_file'] : $row2['wr_id'].'_copy_'.$insert_id.'_'.$row3['bf_file'];
-                        @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$copy_file_name);
-                        @chmod($dst_dir.'/'.$copy_file_name, G5_FILE_PERMISSION);
+                        $is_exist_file = is_file($src_dir.'/'.$row3['bf_file']) && file_exists($src_dir.'/'.$row3['bf_file']);
+                        if( $is_exist_file ){
+                            @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$copy_file_name);
+                            @chmod($dst_dir.'/'.$row3['bf_file'], G5_FILE_PERMISSION);
+                        }
+
+                        $row3 = run_replace('bbs_move_update_file', $row3, $copy_file_name, $bo_table, $move_bo_table, $insert_id);
                     }
 
                     $sql = " insert into {$g5['board_file_table']}
@@ -138,6 +143,9 @@ while ($row = sql_fetch_array($result))
                                      bf_file = '$copy_file_name',
                                      bf_download = '{$row3['bf_download']}',
                                      bf_content = '".addslashes($row3['bf_content'])."',
+                                     bf_fileurl = '".addslashes($row3['bf_fileurl'])."',
+                                     bf_thumburl = '".addslashes($row3['bf_thumburl'])."',
+                                     bf_storage = '".addslashes($row3['bf_storage'])."',
                                      bf_filesize = '{$row3['bf_filesize']}',
                                      bf_width = '{$row3['bf_width']}',
                                      bf_height = '{$row3['bf_height']}',
@@ -200,7 +208,11 @@ if ($sw == 'move')
     {
         if( isset($save[$i]['bf_file']) && $save[$i]['bf_file'] ){
             for ($k=0; $k<count($save[$i]['bf_file']); $k++) {
-                @unlink($save[$i]['bf_file'][$k]);
+                $del_file = $save[$i]['bf_file'][$k];
+
+                if ( is_file($del_file) && file_exists($del_file) ){
+                    @unlink($del_file);
+                }
 
                 // 썸네일 파일 삭제, 먼지손 님 코드 제안
                 delete_board_thumbnail($bo_table, basename($save[$i]['bf_file'][$k]));
@@ -215,8 +227,10 @@ if ($sw == 'move')
 }
 
 $msg = '해당 게시물을 선택한 게시판으로 '.$act.' 하였습니다.';
-$opener_href  = './board.php?bo_table='.$bo_table.'&amp;page='.$page.'&amp;'.$qstr;
+$opener_href  = get_pretty_url($bo_table,'','&amp;page='.$page.'&amp;'.$qstr);
 $opener_href1 = str_replace('&amp;', '&', $opener_href);
+
+run_event('bbs_move_update', $bo_table, $chk_bo_table, $wr_id_list, $opener_href);
 
 echo <<<HEREDOC
 <meta http-equiv="content-type" content="text/html; charset=utf-8">

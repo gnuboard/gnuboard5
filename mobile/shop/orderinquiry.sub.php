@@ -76,17 +76,19 @@ if(defined('G5_THEME_SHOP_PATH')) {
         <li>
             <div class="inquiry_idtime">
                 <a href="<?php echo G5_SHOP_URL; ?>/orderinquiryview.php?od_id=<?php echo $row['od_id']; ?>&amp;uid=<?php echo $uid; ?>" class="idtime_link"><?php echo $row['od_id']; ?></a>
-                <span class="idtime_time"><?php echo substr($row['od_time'],2,8); ?></span>
+                <span class="idtime_time"><?php echo substr($row['od_time'],2,25); ?></span>
             </div>
             <div class="inquiry_name">
                 <?php echo $ct_name; ?>
             </div>
-            <div class="inquiry_price">
-                <?php echo display_price($row['od_receipt_price']); ?>
+            <div class="inq_wr">
+                <div class="inquiry_price">
+                    <?php echo display_price($row['od_receipt_price']); ?>
+                </div>
+                <div class="inv_status"><?php echo $od_status; ?></div>
             </div>
             <div class="inquiry_inv">
                 <?php echo $od_invoice; ?>
-                <span class="inv_status"><?php echo $od_status; ?></span>
             </div>
         </li>
 

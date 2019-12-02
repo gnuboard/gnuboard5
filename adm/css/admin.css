@@ -27,6 +27,7 @@ a:link, a:visited {color:#000;text-decoration:none}
 
 h2{font-size: 1.083em;font-weight: bold;margin:10px 0}
 
+#wrapper {min-height:480px}
 /* 레이아웃 */
 #hd h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #hd_top{position:fixed;top:0;left:0;width:100%;height:50px;background:#3f51b5;z-index:1000}
@@ -522,8 +523,20 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 /* 환경설정 */
 .cf_cert_hide {display:none}
 
+.server_config_views {margin-bottom:10px}
+.rules_label {margin-left:5px;vertical-align:middle}
+
+.is_rewrite .connect-close {position:absolute;top:10px;right:10px;margin:0;padding:0;width:30px;height:30px;border:0;background:transparent;color:#383838;cursor:pointer;font-size:15px}
+.is_rewrite .connect-close:hover {color:#ff5191}
+.is_rewrite .connect-close .fa {margin:0 0 0 1px}
+.is_rewrite .connect-close .txt {position:absolute;line-height:0;font-size:0;overflow:hidden}
+.is_rewrite textarea{width:99%;min-height:260px}
+.is_rewrite .copy_title{margin-top:15px;margin-bottom:10px;font-weight:bold;text-align:left}
+.is_rewrite .info-success{color:#155724}
+.is_rewrite .info-warning{color:#856404}
+
 /* 관리권한설정 */
-#add_admin fieldset {margin-top:20px}
+#add_admin fieldset {margin-top:20px;overflow:auto;padding:2px 6px;line-height:1.4;resize:vertical}
 
 /* 메일 테스트 */
 

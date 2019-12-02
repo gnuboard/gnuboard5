@@ -25,8 +25,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 <response>
 <?php
 foreach($itemIds as $it_id) {
-    $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-    $it = sql_fetch($sql);
+    $it = get_shop_item($it_id, true);
     if(!$it['it_id'])
         continue;
 
@@ -60,7 +59,7 @@ foreach($itemIds as $it_id) {
 <name><![CDATA[<?php echo $it['ec_mall_pid']; ?>]]></name>
 <?php } ?>
 <name><![CDATA[<?php echo $name; ?>]]></name>
-<url><?php echo G5_SHOP_URL.'/item.php?it_id='.$it_id; ?></url>
+<url><?php echo shop_item_url($it_id); ?></url>
 <description><![CDATA[<?php echo $description; ?>]]></description>
 <image><?php echo $image; ?></image>
 <thumb><?php echo $image; ?></thumb>

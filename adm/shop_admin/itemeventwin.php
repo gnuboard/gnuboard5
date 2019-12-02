@@ -33,7 +33,7 @@ include_once(G5_PATH.'/head.sub.php');
         $result = sql_query($sql);
         for ($i=0; $row=sql_fetch_array($result); $i++)
         {
-            $href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+            $href = shop_item_url($row['it_id']);
         ?>
         <tr>
             <td>

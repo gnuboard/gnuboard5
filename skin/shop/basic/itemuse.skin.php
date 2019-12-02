@@ -13,16 +13,15 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
     <div class="sit_use_top">
         <?php if ($star_score) { ?>
-        <h4>고객 평점</h4>
+        <h4>구매고객 총평점 <span>(총 <strong><?php echo $total_count; ?></strong> 건 상품평 기준)</span></h4>
         <img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $star_score?>.png" alt="" class="sit_star">
-        <span class="st_bg "></span>
-        총 <strong><?php echo $total_count; ?></strong> 건 사용후기
         <?php } ?>
         <div id="sit_use_wbtn">
             <a href="<?php echo $itemuse_form; ?>" class="btn02 itemuse_form">사용후기 쓰기<span class="sound_only"> 새 창</span></a>
             <a href="<?php echo $itemuse_list; ?>" class="btn01 itemuse_list">더보기</a>
         </div>
     </div>
+    
     <?php
     $thumbnail_width = 500;
 
@@ -45,21 +44,20 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
     ?>
 
         <li class="sit_use_li">
-                <div class="sit_use_tit"><?php echo $is_subject; ?></div>
-                <button type="button" class="sit_use_li_title">내용보기 <i class="fa fa-caret-down" aria-hidden="true"></i></button>
-                <dl class="sit_use_dl">
-                    <dt>평점<dt>
-                    <dd class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개" width="85"></dd>
-                    <dt>작성자</dt>
-                    <dd><?php echo $is_name; ?></dd>
-                    <dt>작성일</dt>
-                    <dd><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $is_time; ?></dd>
-                </dl>
+			<span class="sit_thum"><?php echo get_itemuselist_thumbnail($row['it_id'], $row['is_content'], 100, 100); ?></span> 
+            <dl class="sit_use_dl">
+                <dt>평점<dt>
+                <dd class="sit_use_star"><img src="<?php echo G5_SHOP_URL; ?>/img/s_star<?php echo $is_star; ?>.png" alt="별<?php echo $is_star; ?>개" width="85"></dd>
+                <dt></dt>
+                <dd class="sit_use_tit"><?php echo $is_subject; ?></dd>
+                <dt>작성자/작성일</dt>
+                <dd><?php echo $is_name; ?><span class="st_bg"></span><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $is_time; ?></dd>
+            </dl>
+			<button type="button" class="sit_use_li_title">내용보기 <i class="fa fa-caret-down" aria-hidden="true"></i></button>
 
             <div id="sit_use_con_<?php echo $i; ?>" class="sit_use_con">
                 <div class="sit_use_p">
-                    <?php echo $is_content; // 사용후기 내용 ?>
-                  
+                    <?php echo $is_content; // 사용후기 내용 ?> 
                 </div>
 
                 <?php if ($is_admin || $row['mb_id'] == $member['mb_id']) { ?>
@@ -95,7 +93,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 </section>
 
 <?php
-echo itemuse_page($config['cf_write_pages'], $page, $total_page, "./itemuse.php?it_id=$it_id&amp;page=", "");
+echo itemuse_page($config['cf_write_pages'], $page, $total_page, G5_SHOP_URL."/itemuse.php?it_id=$it_id&amp;page=", "");
 ?>
 
 <script>

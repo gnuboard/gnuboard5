@@ -3,6 +3,8 @@ include_once('./_common.php');
 
 define("_ORDERINQUIRY_", true);
 
+$order_info = array();
+$request_pwd = $od_pwd;
 $od_pwd = get_encrypt_string($od_pwd);
 
 // 회원인 경우
@@ -12,7 +14,19 @@ if ($is_member)
 }
 else if ($od_id && $od_pwd) // 비회원인 경우 주문서번호와 비밀번호가 넘어왔다면
 {
-    $sql_common = " from {$g5['g5_shop_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
+    if( defined('G5_MYSQL_PASSWORD_LENGTH') && strlen($od_pwd) === G5_MYSQL_PASSWORD_LENGTH ) {
+        $sql_common = " from {$g5['g5_shop_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
+    } else {
+        $sql_common = " from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
+
+        $order_info = get_shop_order_data($od_id);
+        if (!check_password($request_pwd, $order_info['od_pwd'])) {
+            run_event('password_is_wrong', 'shop', $order_info);
+            alert('주문이 존재하지 않습니다.');
+            exit;
+        }
+
+    }
 }
 else // 그렇지 않다면 로그인으로 가기
 {
@@ -43,8 +57,15 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 // 비회원 주문확인의 경우 바로 주문서 상세조회로 이동
 if (!$is_member)
 {
-    $sql = " select od_id, od_time, od_ip from {$g5['g5_shop_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
-    $row = sql_fetch($sql);
+    if( defined('G5_MYSQL_PASSWORD_LENGTH') && strlen($od_pwd) === G5_MYSQL_PASSWORD_LENGTH ) {
+        $sql = " select od_id, od_time, od_ip from {$g5['g5_shop_order_table']} where od_id = '$od_id' and od_pwd = '$od_pwd' ";
+        $row = sql_fetch($sql);
+    } else if( $order_info ){
+        if (check_password($request_pwd, $order_info['od_pwd'])) {
+            $row = $order_info;
+        }
+    }
+
     if ($row['od_id']) {
         $uid = md5($row['od_id'].$row['od_time'].$row['od_ip']);
         set_session('ss_orderview_uid', $uid);

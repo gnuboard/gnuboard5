@@ -10,6 +10,9 @@ header('P3P: CP="ALL CURa ADMa DEVa TAIa OUR BUS IND PHY ONL UNI PUR FIN COM NAV
 if (!defined('G5_SET_TIME_LIMIT')) define('G5_SET_TIME_LIMIT', 0);
 @set_time_limit(G5_SET_TIME_LIMIT);
 
+if( version_compare( PHP_VERSION, '5.2.17' , '<' ) ){
+    die(sprintf('PHP 5.2.17 or higher required. Your PHP version is %s', PHP_VERSION));
+}
 
 //==========================================================================================================================
 // extract($_GET); 명령으로 인해 page.php?_POST[var1]=data1&_POST[var2]=data2 와 같은 코드가 _POST 변수로 사용되는 것을 막음
@@ -125,6 +128,14 @@ $board  = array();
 $group  = array();
 $g5     = array();
 $qaconfig = array();
+$g5_debug = array('php'=>array(),'sql'=>array());
+
+include_once(G5_LIB_PATH.'/hook.lib.php');    // hook 함수 파일
+include_once(G5_LIB_PATH.'/get_data.lib.php');    // 데이타 가져오는 함수 모음
+include_once(G5_LIB_PATH.'/cache.lib.php');     // cache 함수 및 object cache class 모음
+include_once(G5_LIB_PATH.'/uri.lib.php');    // URL 함수 파일
+
+$g5_object = new G5_object_cache();
 
 //==============================================================================
 // 공통
@@ -140,7 +151,7 @@ if (file_exists($dbconfig_file)) {
     // mysql connect resource $g5 배열에 저장 - 명랑폐인님 제안
     $g5['connect_db'] = $connect_db;
 
-    sql_set_charset('utf8', $connect_db);
+    sql_set_charset(G5_DB_CHARSET, $connect_db);
     if(defined('G5_MYSQL_SET_MODE') && G5_MYSQL_SET_MODE) sql_query("SET SESSION sql_mode = ''");
     if (defined('G5_TIMEZONE')) sql_query(" set time_zone = '".G5_TIMEZONE."'");
 } else {
@@ -214,7 +225,7 @@ ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 //------------------------------------------------------------------------------
 // 기본환경설정
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
-$config = sql_fetch(" select * from {$g5['config_table']} ");
+$config = get_config();
 
 define('G5_HTTP_BBS_URL',  https_url(G5_BBS_DIR, false));
 define('G5_HTTPS_BBS_URL', https_url(G5_BBS_DIR, true));
@@ -404,19 +415,25 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
 $write = array();
 $write_table = "";
 if ($bo_table) {
-    $board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '$bo_table' ");
+    $board = get_board_db($bo_table);
     if ($board['bo_table']) {
         set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
         $write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
-        //$comment_table = $g5['write_prefix'] . $bo_table . $g5['comment_suffix']; // 코멘트 테이블 전체이름
-        if (isset($wr_id) && $wr_id)
-            $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
+
+        if (isset($wr_id) && $wr_id) {
+            $write = get_write($write_table, $wr_id);
+        } else if (isset($wr_seo_title) && $wr_seo_title) {
+            $write = get_content_by_field($write_table, 'bbs', 'wr_seo_title', generate_seo_title($wr_seo_title));
+            if( isset($write['wr_id']) ){
+                $wr_id = $write['wr_id'];
+            }
+        }
     }
 }
 
 if ($gr_id) {
-    $group = sql_fetch(" select * from {$g5['group_table']} where gr_id = '$gr_id' ");
+    $group = get_group($gr_id);
 }
 
 
@@ -643,6 +660,8 @@ header('Last-Modified: ' . $gmnow);
 header('Cache-Control: no-store, no-cache, must-revalidate'); // HTTP/1.1
 header('Cache-Control: pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
 header('Pragma: no-cache'); // HTTP/1.0
+
+run_event('common_header');
 
 $html_process = new html_process();
 ?>

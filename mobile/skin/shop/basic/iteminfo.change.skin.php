@@ -6,7 +6,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 ?>
 
 <h1 id="win_title">교환/반품</h1>
-
 <div class="win_desc">
     <?php echo conv_content($default['de_change_content'], 1); ?>
 </div>

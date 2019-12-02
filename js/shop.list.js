@@ -59,15 +59,17 @@ $.fn.listType = function(type)
             list_left_pad = img_width + 20;
             list_width = list_real_width - list_right_pad - list_left_pad;
             list_height = img_height +2;
-
-            $(this).css({
-                paddingTop : list_top_pad+"px",
-                paddingRight: list_right_pad+"px",
-                paddingBottom: list_bottom_pad+"px",
-                paddingLeft: list_left_pad+"px",
-                //width: list_width+"px",
-                height: list_height+"px"
-            });
+            
+            if( $(this).attr("data-css") !== "nocss" ){
+                $(this).css({
+                    paddingTop : list_top_pad+"px",
+                    paddingRight: list_right_pad+"px",
+                    paddingBottom: list_bottom_pad+"px",
+                    paddingLeft: list_left_pad+"px",
+                    //width: list_width+"px",
+                    height: list_height+"px"
+                });
+            }
         });
 
         $("button.sct_lst_list span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");

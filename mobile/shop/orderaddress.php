@@ -17,9 +17,9 @@ include_once(G5_PATH.'/head.sub.php');
 
 <form name="forderaddress" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
 <div id="sod_addr" class="new_win">
-    <h1 id="win_title"><i class="fa fa-address-book-o" aria-hidden="true"></i> 배송지 목록</h1>
+    <h1 id="win_title">배송지 목록</h1>
 
-    <div class=" list_01" >
+    <div class="list_01">
         <ul>
             <?php
             $sep = chr(30);
@@ -28,10 +28,10 @@ include_once(G5_PATH.'/head.sub.php');
                 $addr = get_text($addr);
             ?>
             <li>
-                <div class="addr_title">
+                <div class="addr_title chk_box">
                     <input type="hidden" name="ad_id[<?php echo $i; ?>]" value="<?php echo $row['ad_id'];?>">
-                    <label for="chk_<?php echo $i;?>" class="sound_only">배송지선택</label>
-                    <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>" class="ad_chk">
+                    <input type="checkbox" name="chk[]" value="<?php echo $i;?>" id="chk_<?php echo $i;?>" class="ad_chk selec_chk">
+                    <label for="chk_<?php echo $i;?>"><span></span><strong class="sound_only">배송지선택</strong></label>
                     <label for="ad_subject<?php echo $i;?>" class="sound_only">배송지명</label>
                     <input type="text" name="ad_subject[<?php echo $i; ?>]" value="<?php echo $row['ad_subject']; ?>" class="ad_subject" maxlength="20">
                 </div>

@@ -8,6 +8,13 @@ $it_id  = preg_replace($pattern, '', $_POST['it_id']);
 $opt_id = addslashes(sql_real_escape_string(preg_replace(G5_OPTION_ID_FILTER, '', $_POST['opt_id'])));
 $idx    = preg_replace('#[^0-9]#', '', $_POST['idx']);
 $sel_count = preg_replace('#[^0-9]#', '', $_POST['sel_count']);
+$op_title = isset($_POST['op_title']) ? strip_tags($_POST['op_title']) : '';
+
+$it = get_shop_item($it_id, true);
+
+if( !$it ){
+    die('');
+}
 
 /*
 옵션명 비슷한 부분 오류 수정
@@ -22,7 +29,16 @@ $sql = " select * from {$g5['g5_shop_item_option_table']}
                 order by io_no asc ";
 $result = sql_query($sql);
 
-$str = '<option value="">선택</option>';
+$option_title = '선택';
+
+if( $op_title && ($op_title !== $option_title) && $it['it_option_subject'] ){
+    $array_tmps = explode(',', $it['it_option_subject']);
+    if( isset($array_tmps[$idx+1]) && $array_tmps[$idx+1] ){
+        $option_title = $array_tmps[$idx+1];
+    }
+}
+
+$str = '<option value="">'.$option_title.'</option>';
 $opt = array();
 
 for($i=0; $row=sql_fetch_array($result); $i++) {

@@ -65,6 +65,10 @@ if(!defined('_THEME_PREVIEW_')) {
     }
 }
 
+if( !isset($g5['g5_shop_post_log_table']) || !$g5['g5_shop_post_log_table'] ){
+    $g5['g5_shop_post_log_table'] = G5_SHOP_TABLE_PREFIX.'order_post_log'; // 주문요청 로그 테이블
+}
+
 // 옵션 ID 특수문자 필터링 패턴
 define('G5_OPTION_ID_FILTER', '/[\'\"\\\'\\\"]/');
 

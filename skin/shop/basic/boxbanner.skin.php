@@ -1,4 +1,4 @@
-<?php
+    <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
@@ -34,18 +34,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         echo '</li>'.PHP_EOL;
     }
 }
-if ($i>0) {
-    echo '</ul></aside>'.PHP_EOL;
+if ($i>0) echo '</ul></aside>'.PHP_EOL;
 ?>
 
 <script>
 $(document).ready(function(){
-    $('.sbn .sb_bn').show().bxSlider({
+    $('.sb_bn').show().bxSlider({
         speed:800,
-        pager:false,
+        pager:true,
 
     });
 });
-
 </script>
-<?php }     //end if $i ?>

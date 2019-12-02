@@ -7,30 +7,20 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
 <div id="sit_pvi_nw" class="new_win">
     <h1 id="win_title">상품 이미지 새창 보기</h1>
-
     <div id="sit_pvi_nwbig">
         <?php
         $thumbnails = array();
-        for($i=1; $i<=10; $i++) {
-            if(!$row['it_img'.$i])
-                continue;
-
-            $file = G5_DATA_PATH.'/item/'.$row['it_img'.$i];
-            if(is_file($file)) {
-                // 썸네일
-                $thumb = get_it_thumbnail($row['it_img'.$i], 60, 60);
-                $thumbnails[$i] = $thumb;
-                $imageurl = G5_DATA_URL.'/item/'.$row['it_img'.$i];
+        $images = get_item_images_info($row, $size, 60, 60);       // 숫자값은 썸네일 width, height
+        
+        foreach((array) $images as $i=>$imgs){
+            $thumbnails[$i] = $imgs['thumb'];
         ?>
         <span>
             <a href="javascript:window.close();">
-                <img src="<?php echo $imageurl; ?>" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>" alt="<?php echo $row['it_name']; ?>" id="largeimage_<?php echo $i; ?>">
+                <?php echo $imgs['imagehtml']; ?>
             </a>
         </span>
-        <?php
-            }
-        }
-        ?>
+        <?php } ?>
     </div>
 
     <?php
@@ -44,22 +34,54 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         echo '</ul>';
     }
     ?>
-
     <div class="win_btn">
         <button type="button" onclick="javascript:window.close();" class="btn_close">창닫기</button>
     </div>
 </div>
 
 <script>
-// 창 사이즈 조절
-$(window).on("load", function() {
-    var w = <?php echo $size[0]; ?> + 50;
+jQuery(function($){
+
+$.fn.imgLoad = function(callback) {
+    return this.each(function() {
+        if (callback) {
+            if (this.complete || /*for IE 10-*/ $(this).height() > 0) {
+                callback.apply(this);
+            }
+            else {
+                $(this).on('load', function(){
+                    callback.apply(this);
+                });
+            }
+        }
+    });
+};
+
+function largeimage_load(image_width){
+    var w = image_width + 50;
     var h = $("#sit_pvi_nw").outerHeight(true) + $("#sit_pvi_nw h1").outerHeight(true);
     window.resizeTo(w, h);
-});
+}
 
-$(function(){
     $("#sit_pvi_nwbig span:eq("+<?php echo ($no - 1); ?>+")").addClass("visible");
+
+    // 창 사이즈 조절
+    <?php if( isset($size[0]) && $size[0] ){ ?>
+    $(window).on("load", function() {
+        largeimage_load(<?php echo $size[0]; ?>);
+    });
+    <?php } else { ?>
+        var is_load_end = false;
+        $("#sit_pvi_nwbig img").imgLoad(function(){
+            $(this).css({'max-width': '800px', 'height':'auto'});
+            var image_width = $(this).width();
+
+            if( image_width && ! is_load_end ){
+                largeimage_load( image_width );
+                is_load_end = true;
+            }
+        });
+    <?php } ?>
 
     // 이미지 미리보기
     $(".img_thumb").bind("mouseover focus", function(){

@@ -56,7 +56,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
             $iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), $thumbnail_width);
         }
 
-        $it_href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $it_href = shop_item_url($row['it_id']);
 
         if ($row['iq_answer'])
         {
@@ -74,42 +74,39 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         if ($i == 0) echo '<ol>';
     ?>
     <li>
-
         <div class="sqa_img">
             <a href="<?php echo $it_href; ?>">
-                <?php echo get_it_image($row['it_id'], 70, 70); ?>
+                <?php echo get_it_image($row['it_id'], 60, 60); ?>
                 <span><?php echo $row['it_name']; ?></span>
-
             </a>
         </div>
 
         <section class="sqa_section">
             <h2><span class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></span> <?php echo $iq_subject; ?></h2>
-
-            <dl class="sqa_dl">
-                <dt>작성자</dt>
-                <dd><i class="fa fa-user" aria-hidden="true"></i> <?php echo get_text($row['iq_name']); ?></dd>
-                <dt>작성일</dt>
-                <dd><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo substr($row['iq_time'],2,8); ?></dd>
-            </dl>
-
-            <div id="sqa_con_<?php echo $i; ?>" class="sqa_con" style="display:none;">
-                <div class="sit_qa_qaq">
-                    <strong class="sound_only">문의내용</strong>
-                    <span class="qa_alp">Q</span>
-                    <?php echo $iq_question; // 상품 문의 내용 ?>
-                </div>
-                <?php if(!$is_secret) { ?>
-                <div class="sit_qa_qaa">
-                     <strong class="sound_only">답변</strong>
-                    <span class="qa_alp">A</span>
-                    <?php echo $iq_answer; ?>
-                </div>
-                <?php } ?>
+            <div class="sqa_info">
+                <span class="sound_only">작성자</span>
+                <span class="sqa_if_wt"><?php echo get_text($row['iq_name']); ?></span>
+                <span class="sound_only">작성일</span>
+                <span><?php echo substr($row['iq_time'],2,8); ?></span>
             </div>
-            <div class="sqa_con_btn"><button class="sqa_con_<?php echo $i; ?>">내용보기 <i class="fa fa-caret-down" aria-hidden="true"></i></button></div>
-
         </section>
+  
+        <div id="sqa_con_<?php echo $i; ?>" class="sqa_con" style="display:none;">
+            <div class="sit_qa_qaq">
+                <strong class="sound_only">문의내용</strong>
+                <span class="qa_alp">Q</span>
+                <?php echo $iq_question; // 상품 문의 내용 ?>
+            </div>
+            <?php if(!$is_secret) { ?>
+            <div class="sit_qa_qaa">
+                 <strong class="sound_only">답변</strong>
+                <span class="qa_alp">A</span>
+                <?php echo $iq_answer; ?>
+            </div>
+            <?php } ?>
+        </div>
+        
+		<div class="sqa_con_btn"><button class="sqa_con_<?php echo $i; ?>"><span class="sound_only">내용보기</span><i class="fa fa-chevron-down" aria-hidden="true"></i></button></div>
 
     </li>
     <?php
@@ -130,9 +127,9 @@ $(function(){
         var $con = $(this).parent().prev();
         if($con.is(":visible")) {
             $con.slideUp();
-            $(this).html("내용보기 <i class=\"fa fa-caret-down\" aria-hidden=\"true\"></i>");
+            $(this).html("<span class=\"sound_only\">내용보기</span> <i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i>");
         } else {
-            $(".sps_con_btn button").html("내용보기 <i class=\"fa fa-caret-down\" aria-hidden=\"true\"></i>");
+            $(".sps_con_btn button").html("<span class=\"sound_only\">내용보기</span><i class=\"fa fa-chevron-down\"></i>");
             $("div[id^=sps_con]:visible").hide();
             $con.slideDown(
                 function() {
@@ -140,7 +137,7 @@ $(function(){
                     $con.viewimageresize2();
                 }
             );
-            $(this).html("내용닫기 <i class=\"fa fa-caret-up\" aria-hidden=\"true\"></i>");
+            $(this).html("<span class=\"sound_only\">내용닫기</span><i class=\"fa fa-chevron-up\" aria-hidden=\"true\"></i>");
         }
     });
 });

@@ -16,7 +16,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 
     <?php
     $thumbnail_width = 500;
-    $iq_num     = $total_count - ($page - 1) * $rows;
+    $iq_num = $total_count - ($page - 1) * $rows;
 
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
@@ -107,9 +107,8 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 </div>
 
 <?php
-echo itemqa_page($config['cf_mobile_pages'], $page, $total_page, "./itemqa.php?it_id=$it_id&amp;page=", "");
+echo itemqa_page($config['cf_mobile_pages'], $page, $total_page, G5_SHOP_URL."/itemqa.php?it_id=$it_id&amp;page=", "");
 ?>
-
 
 <script>
 $(function(){

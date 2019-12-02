@@ -8,14 +8,23 @@ if( !isset($g5['content_table']) ){
     die('<meta charset="utf-8">관리자 모드에서 게시판관리->내용 관리를 먼저 확인해 주세요.');
 }
 
+// 내용
+if($co_seo_title){
+    $co = get_content_by_field($g5['content_table'], 'content', 'co_seo_title', generate_seo_title($co_seo_title));
+    $co_id = $co['co_id'];
+} else {
+    $co = get_content_db($co_id);
+}
+
+if( ! (isset($co['co_seo_title']) && $co['co_seo_title']) && $co['co_id'] ){
+    seo_title_update($g5['content_table'], $co['co_id'], 'content');
+}
+
 if (G5_IS_MOBILE) {
     include_once(G5_MOBILE_PATH.'/content.php');
     return;
 }
 
-// 내용
-$sql = " select * from {$g5['content_table']} where co_id = '$co_id' ";
-$co = sql_fetch($sql);
 if (!$co['co_id'])
     alert('등록된 내용이 없습니다.');
 
@@ -71,7 +80,7 @@ $content_skin_url  = get_skin_url('content', $co['co_skin']);
 $skin_file = $content_skin_path.'/content.skin.php';
 
 if ($is_admin)
-    echo '<div class="ctt_admin"><a href="'.G5_ADMIN_URL.'/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin btn">내용 수정</a></div>';
+    echo '<div class="ctt_admin"><a href="'.G5_ADMIN_URL.'/contentform.php?w=u&amp;co_id='.$co_id.'" class="btn_admin btn"><span class="sound_only">내용 수정</span><i class="fa fa-cog fa-spin fa-fw"></i></a></div>';
 ?>
 
 <?php

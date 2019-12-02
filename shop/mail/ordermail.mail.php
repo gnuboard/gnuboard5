@@ -39,7 +39,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         <tbody>
         <?php for ($h=0; $h<count($cart_list); $h++) { ?>
         <tr>
-            <td style="<?php echo $td_st; ?>"><a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $cart_list[$h]['it_id']; ?>" target="_blank" style="text-decoration:none"><?php echo $cart_list[$h]['it_name']; ?></a></td>
+            <td style="<?php echo $td_st; ?>"><a href="<?php echo shop_item_url($cart_list[$h]['it_id']); ?>" target="_blank" style="text-decoration:none"><?php echo $cart_list[$h]['it_name']; ?></a></td>
             <td style="<?php echo $td_st; ?>;text-align:center"><?php echo $cart_list[$h]['it_opt']; ?></td>
             <td style="<?php echo $td_st; ?>;text-align:center"><?php echo $cart_list[$h]['ct_status']; ?></td>
         </tr>

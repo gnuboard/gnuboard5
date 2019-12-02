@@ -85,7 +85,7 @@ $sel_options = array();
 $sup_options = array();
 
 if($_POST['naverpay_form'] == 'item.php')
-    $back_uri = '/item.php?it_id='.$_POST['it_id'][0];
+    $back_uri = shop_item_url($_POST['it_id'][0]);
 else if($_POST['naverpay_form'] == 'cart.php')
     $back_uri = '/cart.php';
 else
@@ -106,8 +106,7 @@ for($i=0; $i<$count; $i++) {
     }
 
     // 상품정보
-    $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-    $it = sql_fetch($sql);
+    $it = get_shop_item($it_id, true);
     if(!$it['it_id'])
         return_error2json('상품정보가 존재하지 않습니다.');
 

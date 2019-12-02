@@ -45,8 +45,7 @@ else if ($w == "u")
             alert("\'{$member['mb_id']}\' 님께서 수정 할 권한이 없는 상품입니다.");
     }
 
-    $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-    $it = sql_fetch($sql);
+    $it = get_shop_item($it_id);
 
     if(!$it)
         alert('상품정보가 존재하지 않습니다.');
@@ -279,7 +278,7 @@ if(!sql_query(" select it_skin from {$g5['g5_shop_item_table']} limit 1", false)
                 <?php } else { ?>
                     <input type="hidden" name="it_id" value="<?php echo $it['it_id']; ?>">
                     <span class="frm_ca_id"><?php echo $it['it_id']; ?></span>
-                    <a href="<?php echo G5_SHOP_URL; ?>/item.php?it_id=<?php echo $it_id; ?>" class="btn_frmline">상품확인</a>
+                    <a href="<?php echo shop_item_url($it_id); ?>" class="btn_frmline">상품확인</a>
                     <a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/itemuselist.php?sfl=a.it_id&amp;stx=<?php echo $it_id; ?>" class="btn_frmline">사용후기</a>
                     <a href="<?php echo G5_ADMIN_URL; ?>/shop_admin/itemqalist.php?sfl=a.it_id&amp;stx=<?php echo $it_id; ?>" class="btn_frmline">상품문의</a>
                 <?php } ?>
@@ -1275,15 +1274,17 @@ $(function(){
                 <input type="file" name="it_img<?php echo $i; ?>" id="it_img<?php echo $i; ?>">
                 <?php
                 $it_img = G5_DATA_PATH.'/item/'.$it['it_img'.$i];
-                if(is_file($it_img) && $it['it_img'.$i]) {
-                    $size = @getimagesize($it_img);
+                $it_img_exists = run_replace('shop_item_image_exists', (is_file($it_img) && file_exists($it_img)), $it, $i);
+
+                if($it_img_exists) {
                     $thumb = get_it_thumbnail($it['it_img'.$i], 25, 25);
+                    $img_tag = run_replace('shop_item_image_tag', '<img src="'.G5_DATA_URL.'/item/'.$it['it_img'.$i].'" class="shop_item_preview_image" >', $it, $i);
                 ?>
                 <label for="it_img<?php echo $i; ?>_del"><span class="sound_only">이미지 <?php echo $i; ?> </span>파일삭제</label>
                 <input type="checkbox" name="it_img<?php echo $i; ?>_del" id="it_img<?php echo $i; ?>_del" value="1">
                 <span class="sit_wimg_limg<?php echo $i; ?>"><?php echo $thumb; ?></span>
                 <div id="limg<?php echo $i; ?>" class="banner_or_img">
-                    <img src="<?php echo G5_DATA_URL; ?>/item/<?php echo $it['it_img'.$i]; ?>" alt="" width="<?php echo $size[0]; ?>" height="<?php echo $size[1]; ?>">
+                    <?php echo $img_tag; ?>
                     <button type="button" class="sit_wimg_close">닫기</button>
                 </div>
                 <script>
@@ -1674,7 +1675,7 @@ $(function(){
 
 <div class="btn_fixed_top">
     <a href="./itemlist.php?<?php echo $qstr; ?>" class="btn btn_02">목록</a>
-    <a href="<?php echo G5_SHOP_URL ;?>/item.php?it_id=<?php echo $it_id ;?>" class="btn_02  btn">상품보기</a>
+    <a href="<?php echo shop_item_url($it_id); ?>" class="btn_02  btn">상품보기</a>
     <input type="submit" value="확인" class="btn_submit btn" accesskey="s">
 </div>
 </form>

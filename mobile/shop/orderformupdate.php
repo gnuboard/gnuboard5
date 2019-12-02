@@ -16,6 +16,8 @@ if( $default['de_pg_service'] == 'inicis' && get_session('ss_order_id') ){
     }
 }
 
+if(function_exists('add_order_post_log')) add_order_post_log('init');
+
 $page_return_url = G5_SHOP_URL.'/orderform.php';
 if(get_session('ss_direct'))
     $page_return_url .= '?sw_direct=1';
@@ -38,8 +40,10 @@ if (get_session('ss_direct'))
 else
     $tmp_cart_id = get_session('ss_cart_id');
 
-if (get_cart_count($tmp_cart_id) == 0)// 장바구니에 담기
+if (get_cart_count($tmp_cart_id) == 0) {    // 장바구니에 담기
+    if(function_exists('add_order_post_log')) add_order_post_log('장바구니가 비어 있습니다.');
     alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G5_SHOP_URL.'/cart.php');
+}
 
 $error = "";
 // 장바구니 상품 재고 검사
@@ -66,12 +70,15 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $error .= "{$row['ct_option']} 의 재고수량이 부족합니다. 현재고수량 : $it_stock_qty 개\\n\\n";
 }
 
-if($i == 0)
+if($i == 0) {
+    if(function_exists('add_order_post_log')) add_order_post_log('장바구니가 비어 있습니다.');
     alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G5_SHOP_URL.'/cart.php');
+}
 
 if ($error != "")
 {
     $error .= "다른 고객님께서 {$od_name}님 보다 먼저 주문하신 경우입니다. 불편을 끼쳐 죄송합니다.";
+    if(function_exists('add_order_post_log')) add_order_post_log($error);
     alert($error, $page_return_url);
 }
 
@@ -201,6 +208,7 @@ if($is_member) {
 }
 
 if ((int)($row['od_price'] - $tot_cp_price) !== $i_price) {
+    if(function_exists('add_order_post_log')) add_order_post_log('쿠폰금액 최종 계산 Error.');
     die("Error.");
 }
 
@@ -243,6 +251,7 @@ if($is_member && $send_cost > 0) {
 }
 
 if ((int)($send_cost - $tot_sc_cp_price) !== (int)($i_send_cost - $i_send_coupon)) {
+    if(function_exists('add_order_post_log')) add_order_post_log('배송비 최종 계산 Error..');
     die("Error..");
 }
 
@@ -257,8 +266,11 @@ if(!$tmp['sc_id'])
     $send_cost2 = 0;
 else
     $send_cost2 = (int)$tmp['sc_price'];
-if($send_cost2 !== $i_send_cost2)
+
+if($send_cost2 !== $i_send_cost2) {
+    if(function_exists('add_order_post_log')) add_order_post_log('추가배송비 최종 계산 Error...');
     die("Error...");
+}
 
 // 결제포인트가 상이함
 // 회원이면서 포인트사용이면
@@ -279,13 +291,17 @@ if ($is_member && $config['cf_use_point'])
     }
 }
 
-if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_point'])
+if (($i_temp_point > (int)$temp_point || $i_temp_point < 0) && $config['cf_use_point']) {
+    if(function_exists('add_order_post_log')) add_order_post_log('포인트 최종 계산 Error....');
     die("Error....");
+}
 
 if ($od_temp_point)
 {
-    if ($member['mb_point'] < $od_temp_point)
+    if ($member['mb_point'] < $od_temp_point) {
+        if(function_exists('add_order_post_log')) add_order_post_log('회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.');
         alert('회원님의 포인트가 부족하여 포인트로 결제 할 수 없습니다.', $page_return_url);
+    }
 }
 
 $i_price = $i_price + $i_send_cost + $i_send_cost2 - $i_temp_point - $i_send_coupon;
@@ -493,7 +509,8 @@ if($tno) {
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
                 break;
         }
-
+        
+        if(function_exists('add_order_post_log')) add_order_post_log($cancel_msg);
         die("Receipt Amount Error");
     }
 }
@@ -507,6 +524,7 @@ else
 $od_id = get_session('ss_order_id');
 
 if( !$od_id ){
+    if(function_exists('add_order_post_log')) add_order_post_log('주문번호가 없습니다.');
     die("주문번호가 없습니다.");
 }
 
@@ -631,6 +649,7 @@ if(!$result) {
     $error = 'order';
     include G5_SHOP_PATH.'/ordererrormail.php';
 
+    if(function_exists('add_order_post_log')) add_order_post_log($cancel_msg);
     // 주문삭제
     sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ", false);
 
@@ -680,6 +699,7 @@ if(!$result) {
     $error = 'status';
     include G5_SHOP_PATH.'/ordererrormail.php';
 
+    if(function_exists('add_order_post_log')) add_order_post_log($cancel_msg);
     // 주문삭제
     sql_query(" delete from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 
@@ -875,6 +895,7 @@ if( $od_pg == 'inicis' && $od_tno ){
     sql_query($sql, false);
 }
 
+if(function_exists('add_order_post_log')) add_order_post_log('', 'delete');
 
 // 주문번호제거
 set_session('ss_order_id', '');

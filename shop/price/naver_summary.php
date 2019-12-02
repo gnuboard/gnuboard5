@@ -79,7 +79,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 포인트
     $it_point = get_item_point($row);
 
-    $item_link = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    $item_link = shop_item_url($row['it_id']);
 
     // 상태
     $class = 'U';

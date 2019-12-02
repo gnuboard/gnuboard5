@@ -6,26 +6,26 @@ check_demo();
 
 auth_check($auth[$sub_menu], 'r');
 
+$g5['title'] = '글,댓글 현황';
+include_once ('./admin.head.php');
+
 // http://www.jqplot.com/
-add_stylesheet('<link rel="stylesheet" href="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.css">', 0);
-add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.js"></script>', 0);
-add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>', 0);
-add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>', 0);
-add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.pointLabels.min.js"></script>', 0);
-add_javascript('<!--[if lt IE 9]><script src="'.G5_PLUGIN_URL.'/jqplot/excanvas.js"></script><![endif]-->', 0);
+add_stylesheet('<link rel="stylesheet" href="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.css">', 1);
+add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.js"></script>', 1);
+add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>', 1);
+add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>', 1);
+add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/plugins/jqplot.pointLabels.min.js"></script>', 1);
+add_javascript('<!--[if lt IE 9]><script src="'.G5_PLUGIN_URL.'/jqplot/excanvas.js"></script><![endif]-->', 1);
 
 if (!($graph == 'line' || $graph == 'bar'))
     $graph = 'line';
 
 if ($graph == 'bar') {
     // 바 타입으로 사용하는 코드입니다.
-    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.barRenderer.min.js"></script>', 0);
-    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.categoryAxisRenderer.min.js"></script>', 0);
-    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.pointLabels.min.js"></script>', 0);
+    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.barRenderer.min.js"></script>', 1);
+    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.categoryAxisRenderer.min.js"></script>', 1);
+    add_javascript('<script src="'.G5_PLUGIN_URL.'/jqplot/jqplot.pointLabels.min.js"></script>', 1);
 }
-
-$g5['title'] = '글,댓글 현황';
-include_once ('./admin.head.php');
 
 $period_array = array(
     '오늘'=>array('시간', 0),

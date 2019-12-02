@@ -24,7 +24,7 @@ $g5['title'] = $ev['ev_subject'];
 include_once('./_head.php');
 
 if ($is_admin)
-    echo '<div class="sev_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin">이벤트 관리</a></div>';
+    echo '<div class="sev_admin"><a href="'.G5_ADMIN_URL.'/shop_admin/itemeventform.php?w=u&amp;ev_id='.$ev['ev_id'].'" class="btn_admin btn"><span class="sound_only">이벤트 관리</span><i class="fa fa-cog fa-spin fa-fw"></i></a></div>';
 ?>
 
 <script>

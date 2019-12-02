@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_category` (
 DROP TABLE IF EXISTS `g5_shop_coupon`;
 CREATE TABLE IF NOT EXISTS `g5_shop_coupon` (
   `cp_no` INT(11) NOT NULL AUTO_INCREMENT,
-  `cp_id` VARCHAR(255) NOT NULL DEFAULT '',
+  `cp_id` VARCHAR(100) NOT NULL DEFAULT '',
   `cp_subject` VARCHAR(255) NOT NULL DEFAULT '',
   `cp_method` TINYINT(4) NOT NULL DEFAULT '0',  
   `cp_target` VARCHAR(255) NOT NULL DEFAULT '',
@@ -163,8 +163,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_coupon` (
 DROP TABLE IF EXISTS `g5_shop_coupon_log`;
 CREATE TABLE IF NOT EXISTS `g5_shop_coupon_log` (
   `cl_id` int(11) NOT NULL AUTO_INCREMENT,
-  `cp_id` varchar(255) NOT NULL DEFAULT '',
-  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `cp_id` varchar(100) NOT NULL DEFAULT '',
+  `mb_id` varchar(100) NOT NULL DEFAULT '',
   `od_id` bigint(20) NOT NULL,
   `cp_price` int(11) NOT NULL DEFAULT '0',
   `cl_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
@@ -442,6 +442,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   `it_skin` varchar(255) NOT NULL DEFAULT '',
   `it_mobile_skin` varchar(255) NOT NULL DEFAULT '',
   `it_name` varchar(255) NOT NULL DEFAULT '',
+  `it_seo_title` varchar(200) NOT NULL DEFAULT '',
   `it_maker` varchar(255) NOT NULL DEFAULT '',
   `it_origin` varchar(255) NOT NULL DEFAULT '',
   `it_brand` varchar(255) NOT NULL DEFAULT '',
@@ -527,6 +528,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item` (
   PRIMARY KEY (`it_id`),
   KEY `ca_id` (`ca_id`),
   KEY `it_name` (`it_name`),
+  KEY `it_seo_title` (`it_seo_title`),
   KEY `it_order` (`it_order`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -834,6 +836,24 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item_stocksms` (
   `ss_ip` varchar(25) NOT NULL DEFAULT '',
   PRIMARY KEY (`ss_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g5_shop_order_post_log`
+--
+
+DROP TABLE IF EXISTS `g5_shop_order_post_log`;
+CREATE TABLE IF NOT EXISTS `g5_shop_order_post_log` (
+  `oid` bigint(20) unsigned NOT NULL,
+  `mb_id` varchar(255) NOT NULL DEFAULT '',
+  `post_data` text NOT NULL,
+  `ol_code` varchar(255) NOT NULL DEFAULT '',
+  `ol_msg` varchar(255) NOT NULL DEFAULT '',
+  `ol_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `ol_ip` varchar(25) NOT NULL DEFAULT '',
+  PRIMARY KEY (`oid`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 

@@ -34,6 +34,10 @@ if( $file_arr[1] !== che_get_file_passname() ){
 $filepath = SAVE_DIR . '/' . $filesrc;
 $r = false;
 
+if( function_exists('run_event') ){
+    run_event('delete_editor_file', $filepath, $r);
+}
+
 if (file_exists($filepath)) {
 	$r = unlink($filepath);
 	if ($r) {

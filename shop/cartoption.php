@@ -75,6 +75,7 @@ if($option_2) {
 ?>
 
 <div id="sit_sel_option">
+	<h3>선택옵션</h3>
     <ul id="sit_opt_added">
         <?php
         for($i=0; $row=sql_fetch_array($result); $i++) {
@@ -120,7 +121,7 @@ if($option_2) {
 <div id="sit_tot_price"></div>
 
 <div class="btn_confirm">
-    <input type="submit" value="선택사항적용" class="btn_submit">
+    <button type="submit" class="btn_submit">확인</button>
     <button type="button" id="mod_option_close" class="btn_close"><i class="fa fa-times" aria-hidden="true"></i><span class="sound_only">닫기</span></button>
 </div>
 </form>

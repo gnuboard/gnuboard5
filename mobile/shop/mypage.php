@@ -15,38 +15,33 @@ $g5['title'] = '마이페이지';
 include_once(G5_MSHOP_PATH.'/_head.php');
 
 // 쿠폰
-$cp_count = 0;
-$sql = " select cp_id
-            from {$g5['g5_shop_coupon_table']}
-            where mb_id IN ( '{$member['mb_id']}', '전체회원' )
-              and cp_start <= '".G5_TIME_YMD."'
-              and cp_end >= '".G5_TIME_YMD."' ";
-$res = sql_query($sql);
-
-for($k=0; $cp=sql_fetch_array($res); $k++) {
-    if(!is_used_coupon($member['mb_id'], $cp['cp_id']))
-        $cp_count++;
-}
+$cp_count = get_shop_member_coupon_count($member['mb_id'], true);
 ?>
 
 <div id="smb_my">
-
     <section id="smb_my_ov">
         <h2>회원정보 개요</h2>
         <div class="my_name">
-            <img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20"> <strong><?php echo $member['mb_id'] ? $member['mb_name'] : '비회원'; ?></strong>님
+            <span class="profile_img">
+            	<img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20">
+            	<a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php" class="my_info_modi"><span class="sound_only">정보수정</span><i class="fa fa-cog" aria-hidden="true"></i></a>	
+            </span>
+            <strong><?php echo $member['mb_id'] ? $member['mb_name'] : '비회원'; ?>님</strong>
+            <a href="<?php echo G5_BBS_URL; ?>/point.php" target="_blank" class="win_point"><strong><?php echo number_format($member['mb_point']); ?></strong> 포인트</a>
             <ul class="smb_my_act">
                 <?php if ($is_admin == 'super') { ?><li><a href="<?php echo G5_ADMIN_URL; ?>/" class="btn_admin">관리자</a></li><?php } ?>
-                <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php" class="btn01">정보수정</a></li>
-                <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=member_leave.php" onclick="return member_leave();" class="btn01">회원탈퇴</a></li>
+				<li><a href="<?php echo G5_BBS_URL ?>/logout.php" class="btn_logout">로그아웃</a></li>
             </ul>
         </div>
         <ul class="my_pocou">
-            <li  class="my_cou">보유쿠폰<a href="<?php echo G5_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><?php echo number_format($cp_count); ?></a></li>
-            <li class="my_point">보유포인트
-            <a href="<?php echo G5_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?>점</a></li>
-
+        	<li class="my_cou"><a href="<?php echo G5_SHOP_URL; ?>/coupon.php" target="_blank" class="win_coupon"><i class="fa fa-ticket" aria-hidden="true"></i> 쿠폰 <span><?php echo number_format($cp_count); ?></span></a></li>
+        	<li class="my_memo"><a href="<?php echo G5_BBS_URL ?>/memo.php" target="_blank" class="win_memo"><i class="fa fa-envelope-o" aria-hidden="true"></i>  쪽지<span><?php echo $memo_not_read ?></span></a></li>
         </ul>
+        
+        <div class="my_ov_btn">
+        	<button type="button" class="btn_op_area">내정보<span class="sound_only">상세보기</span><i class="fa fa-chevron-down" aria-hidden="true"></i></button>
+        </div>
+        
         <div class="my_info">
             <div class="my_info_wr">
                 <strong>연락처</strong>
@@ -64,22 +59,22 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
             <strong>회원가입일시</strong>
                 <span><?php echo $member['mb_datetime']; ?></span>
             </div>
-            <div class="my_info_wr ov_addr">
+            <div class="my_info_wr">
                 <strong>주소</strong>
                 <span><?php echo sprintf("(%s%s)", $member['mb_zip1'], $member['mb_zip2']).' '.print_address($member['mb_addr1'], $member['mb_addr2'], $member['mb_addr3'], $member['mb_addr_jibeon']); ?></span>
             </div>
+            <div class="my_info_wr ov_addr">
+            	<a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=member_leave.php" onclick="return member_leave();">회원탈퇴</a>
+            </div>
         </div>
-        <div class="my_ov_btn"><button type="button" class="btn_op_area"><i class="fa fa-caret-down" aria-hidden="true"></i><span class="sound_only">상세정보 보기</span></button></div>
 
     </section>
 
-    <script>
-    
-        $(".btn_op_area").on("click", function() {
-            $(".my_info").toggle();
-            $(".fa-caret-down").toggleClass("fa-caret-up")
-        });
-
+    <script> 
+    $(".btn_op_area").on("click", function() {
+        $(".my_info").toggle();
+        $(".fa-chevron-down").toggleClass("fa-caret-up")
+    });
     </script>
 
     <section id="smb_my_od">
@@ -95,8 +90,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     </section>
 
     <section id="smb_my_wish" class="wishlist">
-        <h2><a href="<?php echo G5_SHOP_URL; ?>/wishlist.php">최근 위시리스트</a></h2>
-
+        <h2><a href="<?php echo G5_SHOP_URL; ?>/wishlist.php">위시리스트</a></h2>
         <ul>
             <?php
             $sql = " select *
@@ -117,10 +111,13 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
 
             <li>
                 <div class="wish_img"><?php echo $image; ?></div>
+                <!-- 상품명, 날짜를 노출하려면 주석을 지우세요. -->
+                <!--
                 <div class="wish_info">
-                    <a href="./item.php?it_id=<?php echo $row['it_id']; ?>" class="info_link"><?php echo stripslashes($row['it_name']); ?></a>
+                    <a href="<?php echo get_shop_item($row['it_id'], true); ?>" class="info_link"><?php echo stripslashes($row['it_name']); ?></a>
                      <span class="info_date"><?php echo substr($row['wi_time'], 2, 8); ?></span>
                 </div>
+                -->
             </li>
 
             <?php

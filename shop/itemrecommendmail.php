@@ -28,8 +28,7 @@ if ($_POST["token"] && get_session("ss_token") == $_POST["token"]) {
 }
 
 // 상품
-$sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-$it = sql_fetch($sql);
+$it = get_shop_item($it_id, true);
 if (!$it['it_id'])
     alert("등록된 상품이 아닙니다.");
 

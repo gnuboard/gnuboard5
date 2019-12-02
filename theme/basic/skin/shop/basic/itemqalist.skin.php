@@ -11,9 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
 <form method="get" action="<?php echo $_SERVER['SCRIPT_NAME']; ?>">
 <div id="sqa_sch">
-    <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>">전체보기</a>
-    <div class="sch_wr">
-    <label for="sfl" class="sound_only">검색항목<strong class="sound_only"> 필수</strong></label>
+    <label for="sfl" class="sound_only">검색항목 필수</label>
     <select name="sfl" id="sfl" required>
         <option value="">선택</option>
         <option value="b.it_name"    <?php echo get_selected($sfl, "b.it_name", true); ?>>상품명</option>
@@ -23,18 +21,17 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         <option value="a.iq_name"    <?php echo get_selected($sfl, "a.iq_name"); ?>>작성자명</option>
         <option value="a.mb_id"      <?php echo get_selected($sfl, "a.mb_id"); ?>>작성자아이디</option>
     </select>
-
-    <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
-    <input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class=" sch_input">
-    <button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
+	<div class="sch_wr">
+    	<label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
+    	<input type="text" name="stx" value="<?php echo $stx; ?>" id="stx" required class="sch_input">
+    	<button type="submit" value="검색" class="sch_btn"><i class="fa fa-search" aria-hidden="true"></i><span class="sound_only">검색</span></button>
     </div>
+    <a href="<?php echo $_SERVER['SCRIPT_NAME']; ?>">전체보기</a>
 </div>
 </form>
 
 <div id="sqa">
-
     <!-- <p><?php echo $config['cf_title']; ?> 전체 상품문의 목록입니다.</p> -->
-
     <?php
     $thumbnail_width = 500;
     $num = $total_count - ($page - 1) * $rows;
@@ -57,7 +54,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
             $iq_question = get_view_thumbnail(conv_content($row['iq_question'], 1), $thumbnail_width);
         }
 
-        $it_href = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $it_href = shop_item_url($row['it_id']);
 
         if ($row['iq_answer'])
         {
@@ -75,23 +72,22 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
         if ($i == 0) echo '<ol>';
     ?>
     <li>
-
         <div class="sqa_img">
             <a href="<?php echo $it_href; ?>">
-                <?php echo get_it_image($row['it_id'], 100, 100); ?>
+                <?php echo get_it_image($row['it_id'], 50, 50); ?>
                 <span><?php echo $row['it_name']; ?></span>
             </a>
         </div>
 
         <section class="sqa_section">
-            <h2><span class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></span><?php echo $iq_subject; ?></h2>
-
+            <h2><?php echo $iq_subject; ?></h2>
+			<span class="<?php echo $iq_style; ?>"><?php echo $iq_stats; ?></span>
+			
             <dl class="sqa_dl">
                 <dt class="sound_only">작성자</dt>
                 <dd><i class="fa fa-user" aria-hidden="true"></i> <?php echo $row['iq_name']; ?></dd>
                 <dt class="sound_only">작성일</dt>
                 <dd><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo substr($row['iq_time'],0,10); ?></dd>
-
             </dl>
 
             <div id="sqa_con_<?php echo $i; ?>" class="sqa_con" style="display:none;">

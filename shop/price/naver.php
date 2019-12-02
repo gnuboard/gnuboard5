@@ -79,7 +79,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
     // 포인트
     $it_point = get_item_point($row);
 
-    $item_link = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+    $item_link = shop_item_url($row['it_id']);
 
     echo "\n{$row['it_id']}{$tab}{$row['it_name']}{$tab}{$row['it_price']}{$tab}{$item_link}{$tab}{$img_url}{$tab}{$cate1}{$tab}{$cate2}{$tab}{$cate3}{$tab}{$cate4}{$tab}{$row['it_model']}{$tab}{$row['it_brand']}{$tab}{$row['it_maker']}{$tab}{$row['it_origin']}{$tab}{$it_point}{$tab}{$delivery}";
 }

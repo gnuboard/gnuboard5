@@ -1,4 +1,4 @@
-<?php
+ <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 require_once(G5_SHOP_PATH.'/settle_'.$default['de_pg_service'].'.inc.php');
@@ -21,7 +21,7 @@ if($is_kakaopay_use) {
 ?>
 
 <form name="forderform" id="forderform" method="post" action="<?php echo $order_action_url; ?>" autocomplete="off">
-<div id="sod_frm">
+<div id="sod_frm" class="sod_frm_pc">
     <!-- 주문상품 확인 시작 { -->
     <div class="tbl_head03 tbl_wrap od_prd_list">
         <table id="sod_list">
@@ -256,34 +256,38 @@ if($is_kakaopay_use) {
                 <table>
                 <tbody>
                 <tr>
-                    <th scope="row"><label for="od_name">이름<strong class="sound_only"> 필수</strong></label></th>
+                    <th scope="col"><label for="od_name">이름<strong class="sound_only"> 필수</strong></label></th>
+                    <th scope="col">
+                    	<?php if (!$is_member) { // 비회원이면 ?>
+                        <label for="od_pwd">비밀번호</label>
+                    	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
+                        <span class="tooltip">영,숫자 3~20자 (주문서 조회시 필요)</span> 
+                        <?php } ?>
+                    </th>
+                </tr>
+                <tr>
                     <td><input type="text" name="od_name" value="<?php echo get_text($member['mb_name']); ?>" id="od_name" required class="frm_input required" maxlength="20"></td>
+                    <td><?php if (!$is_member) { // 비회원이면 ?><input type="password" name="od_pwd" id="od_pwd" required class="frm_input required" maxlength="20"><?php } ?></td>
                 </tr>
 
-                <?php if (!$is_member) { // 비회원이면 ?>
                 <tr>
-                    <th scope="row"><label for="od_pwd">비밀번호</label></th>
-                    <td>
-                        <span class="frm_info">영,숫자 3~20자 (주문서 조회시 필요)</span>
-                        <input type="password" name="od_pwd" id="od_pwd" required class="frm_input required" maxlength="20">
-                    </td>
+                    <th scope="col"><label for="od_tel">전화번호<strong class="sound_only"> 필수</strong></label></th>
+                    <th scope="col"><label for="od_hp">핸드폰</label></th>
                 </tr>
-                <?php } ?>
-
                 <tr>
-                    <th scope="row"><label for="od_tel">전화번호<strong class="sound_only"> 필수</strong></label></th>
                     <td><input type="text" name="od_tel" value="<?php echo get_text($member['mb_tel']); ?>" id="od_tel" required class="frm_input required" maxlength="20"></td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_hp">핸드폰</label></th>
                     <td><input type="text" name="od_hp" value="<?php echo get_text($member['mb_hp']); ?>" id="od_hp" class="frm_input" maxlength="20"></td>
                 </tr>
                 <tr>
-                    <th scope="row">주소</th>
-                    <td>
-                        <label for="od_zip" class="sound_only">우편번호<strong class="sound_only"> 필수</strong></label>
-                        <input type="text" name="od_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="od_zip" required class="frm_input required" size="8" maxlength="6" placeholder="우편번호">
-                        <button type="button" class="btn_address" onclick="win_zip('forderform', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon');">주소 검색</button><br>
+                    <th scope="col" colspan="2">주소</th>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    	<div class="addr">
+                        	<label for="od_zip" class="sound_only">우편번호<strong class="sound_only"> 필수</strong></label>
+                        	<input type="text" name="od_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="od_zip" required class="frm_input required" size="8" maxlength="6" placeholder="우편번호">
+                        	<button type="button" class="btn_address" onclick="win_zip('forderform', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon');">주소 검색</button><br>
+                        </div>
                         <input type="text" name="od_addr1" value="<?php echo get_text($member['mb_addr1']) ?>" id="od_addr1" required class="frm_input frm_address required" size="60" placeholder="기본주소">
                         <label for="od_addr1" class="sound_only">기본주소<strong class="sound_only"> 필수</strong></label><br>
                         <input type="text" name="od_addr2" value="<?php echo get_text($member['mb_addr2']) ?>" id="od_addr2" class="frm_input frm_address" size="60" placeholder="상세주소">
@@ -295,8 +299,10 @@ if($is_kakaopay_use) {
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_email">E-mail<strong class="sound_only"> 필수</strong></label></th>
-                    <td><input type="text" name="od_email" value="<?php echo $member['mb_email']; ?>" id="od_email" required class="frm_input required" size="35" maxlength="100"></td>
+                    <th scope="col" colspan="2"><label for="od_email">E-mail<strong class="sound_only"> 필수</strong></label></th>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="text" name="od_email" value="<?php echo $member['mb_email']; ?>" id="od_email" required class="frm_input required" size="35" maxlength="100"></td>
                 </tr>
 
                 <?php if ($default['de_hope_date_use']) { // 배송희망일 사용 ?>
@@ -327,9 +333,7 @@ if($is_kakaopay_use) {
             <h2>받으시는 분</h2>
 
             <div class="tbl_frm01 tbl_wrap">
-                <table>
-                <tbody>
-                <?php
+            	<?php
                 if($is_member) {
                     // 배송지 이력
                     $addr_list = '';
@@ -337,7 +341,7 @@ if($is_kakaopay_use) {
 
                     // 주문자와 동일
                     $addr_list .= '<input type="radio" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
-                    $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
+                    $addr_list .= '<label for="ad_sel_addr_same"><span></span>주문자와 동일</label>'.PHP_EOL;
 
                     // 기본배송지
                     $sql = " select *
@@ -347,8 +351,9 @@ if($is_kakaopay_use) {
                     $row = sql_fetch($sql);
                     if($row['ad_id']) {
                         $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_addr3'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
+                        
                         $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.get_text($val1).'" id="ad_sel_addr_def">'.PHP_EOL;
-                        $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
+                        $addr_list .= '<label for="ad_sel_addr_def"><span></span>기본배송지</label>'.PHP_EOL;
                     }
 
                     // 최근배송지
@@ -361,54 +366,66 @@ if($is_kakaopay_use) {
                     $result = sql_query($sql);
                     for($i=0; $row=sql_fetch_array($result); $i++) {
                         $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_addr3'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
-                        $val2 = '<label for="ad_sel_addr_'.($i+1).'">최근배송지('.($row['ad_subject'] ? get_text($row['ad_subject']) : get_text($row['ad_name'])).')</label>';
+                        $val2 = '<label for="ad_sel_addr_'.($i+1).'"><span></span>최근배송지('.($row['ad_subject'] ? get_text($row['ad_subject']) : get_text($row['ad_name'])).')</label>';
                         $addr_list .= '<input type="radio" name="ad_sel_addr" value="'.get_text($val1).'" id="ad_sel_addr_'.($i+1).'"> '.PHP_EOL.$val2.PHP_EOL;
                     }
 
                     $addr_list .= '<input type="radio" name="ad_sel_addr" value="new" id="od_sel_addr_new">'.PHP_EOL;
-                    $addr_list .= '<label for="od_sel_addr_new">신규배송지</label>'.PHP_EOL;
+                    $addr_list .= '<label for="od_sel_addr_new"><span></span>신규배송지</label>'.PHP_EOL;
 
                     $addr_list .='<a href="'.G5_SHOP_URL.'/orderaddress.php" id="order_address" class="btn_frmline">배송지목록</a>';
                 } else {
                     // 주문자와 동일
                     $addr_list .= '<input type="checkbox" name="ad_sel_addr" value="same" id="ad_sel_addr_same">'.PHP_EOL;
-                    $addr_list .= '<label for="ad_sel_addr_same">주문자와 동일</label>'.PHP_EOL;
+                    $addr_list .= '<label for="ad_sel_addr_same"><span></span>주문자와 동일</label>'.PHP_EOL;
                 }
                 ?>
-                <tr>
-                    <th scope="row">배송지선택</th>
-                    <td>
+                <div class="choice_place">
+                    <span class="choice_tit">배송지선택</span>
+                    <span class="chk_box">
                         <?php echo $addr_list; ?>
-                    </td>
-                </tr>
-                <?php if($is_member) { ?>
+                    </span>
+                </div>
+                
+                <table>
+                <tbody>
+                
                 <tr>
-                    <th scope="row"><label for="ad_subject">배송지명</label></th>
-                    <td>
-                        <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
-                        <input type="checkbox" name="ad_default" id="ad_default" value="1">
-                        <label for="ad_default">기본배송지로 설정</label>
-                    </td>
+                    <th scope="col"><label for="od_b_name">이름<strong class="sound_only"> 필수</strong></label></th>
+                    <th scope="col"><?php if($is_member) { ?><label for="ad_subject">배송지명</label><?php } ?></th> 
                 </tr>
-                <?php } ?>
+                
                 <tr>
-                    <th scope="row"><label for="od_b_name">이름<strong class="sound_only"> 필수</strong></label></th>
+
                     <td><input type="text" name="od_b_name" id="od_b_name" required class="frm_input required" maxlength="20"></td>
+                    <td>
+                        <?php if($is_member) { ?>
+                        <input type="text" name="ad_subject" id="ad_subject" class="frm_input" maxlength="20">
+                        <div class="ad_choice chk_box">
+	                        <input type="checkbox" name="ad_default" id="ad_default" value="1" class="selec_chk">
+	                        <label for="ad_default"><span></span><b>기본배송지로 설정</b></label>
+                        </div> 
+                        <?php } ?>
+                    </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_b_tel">전화번호<strong class="sound_only"> 필수</strong></label></th>
+                    <th scope="col"><label for="od_b_tel">전화번호<strong class="sound_only"> 필수</strong></label></th>
+                    <th scope="col"><label for="od_b_hp">핸드폰</label></th>
+                </tr>
+                <tr>
                     <td><input type="text" name="od_b_tel" id="od_b_tel" required class="frm_input required" maxlength="20"></td>
-                </tr>
-                <tr>
-                    <th scope="row"><label for="od_b_hp">핸드폰</label></th>
                     <td><input type="text" name="od_b_hp" id="od_b_hp" class="frm_input" maxlength="20"></td>
                 </tr>
                 <tr>
-                    <th scope="row">주소</th>
-                    <td id="sod_frm_addr">
-                        <label for="od_b_zip" class="sound_only">우편번호<strong class="sound_only"> 필수</strong></label>
-                        <input type="text" name="od_b_zip" id="od_b_zip" required class="frm_input required" size="8" maxlength="6" placeholder="우편번호">
-                        <button type="button" class="btn_address" onclick="win_zip('forderform', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon');">주소 검색</button><br>
+                    <th scope="col" colspan="2">주소</th>
+                </tr>
+                <tr>
+                    <td id="sod_frm_addr" colspan="2">
+                    	<div class="addr">
+                        	<label for="od_b_zip" class="sound_only">우편번호<strong class="sound_only"> 필수</strong></label>
+                        	<input type="text" name="od_b_zip" id="od_b_zip" required class="frm_input required" size="8" maxlength="6" placeholder="우편번호">
+                        	<button type="button" class="btn_address" onclick="win_zip('forderform', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon');">주소 검색</button><br>
+                        </div>
                         <input type="text" name="od_b_addr1" id="od_b_addr1" required class="frm_input frm_address required" size="60" placeholder="기본주소">
                         <label for="od_b_addr1" class="sound_only">기본주소<strong> 필수</strong></label><br>
                         <input type="text" name="od_b_addr2" id="od_b_addr2" class="frm_input frm_address" size="60" placeholder="상세주소">
@@ -420,8 +437,10 @@ if($is_kakaopay_use) {
                     </td>
                 </tr>
                 <tr>
-                    <th scope="row"><label for="od_memo">전하실말씀</label></th>
-                    <td><textarea name="od_memo" id="od_memo"></textarea></td>
+                    <th scope="col" colspan="2"><label for="od_memo">전하실말씀</label></th>
+                </tr>
+                <tr>
+                    <td colspan="2"><textarea name="od_memo" id="od_memo"></textarea></td>
                 </tr>
                 </tbody>
                 </table>
@@ -433,7 +452,7 @@ if($is_kakaopay_use) {
     <div class="sod_right">
         <!-- 주문상품 합계 시작 { -->
         <div id="sod_bsk_tot">
-            <ul>
+            <ul class="sod_info">
                 <li class="sod_bsk_sell">
                     <span>주문</span>
                     <strong><?php echo number_format($tot_sell_price); ?></strong>원
@@ -446,258 +465,309 @@ if($is_kakaopay_use) {
                     <span>배송비</span>
                     <strong><?php echo number_format($send_cost); ?></strong>원
                 </li>
-                <li class="sod_bsk_point">
-                    <span>포인트</span>
-                    <strong><?php echo number_format($tot_point); ?></strong>점
-                </li>
-               <li class="sod_bsk_cnt">
+			</ul>
+			<ul class="sod_info_bt">
+                <li class="sod_bsk_cnt">
                     <span>총계</span>
                     <?php $tot_price = $tot_sell_price + $send_cost; // 총계 = 주문상품금액합계 + 배송비 ?>
-                    <strong id="ct_tot_price"><?php echo number_format($tot_price); ?></strong>원
+                    <strong id="ct_tot_price"><?php echo number_format($tot_price); ?> 원</strong>
                 </li>
+                <li class="sod_bsk_point">
+                    <span>포인트</span>
+                    <strong><?php echo number_format($tot_point); ?> 점</strong>
+                </li>
+           </ul>
 
-            </ul>
-        </div>
-        <!-- } 주문상품 합계 끝 -->
-
-
-        <!-- 결제정보 입력 시작 { -->
-        <?php
-        $oc_cnt = $sc_cnt = 0;
-        if($is_member) {
-            // 주문쿠폰
-            $sql = " select cp_id
-                        from {$g5['g5_shop_coupon_table']}
-                        where mb_id IN ( '{$member['mb_id']}', '전체회원' )
-                          and cp_method = '2'
-                          and cp_start <= '".G5_TIME_YMD."'
-                          and cp_end >= '".G5_TIME_YMD."'
-                          and cp_minimum <= '$tot_sell_price' ";
-            $res = sql_query($sql);
-
-            for($k=0; $cp=sql_fetch_array($res); $k++) {
-                if(is_used_coupon($member['mb_id'], $cp['cp_id']))
-                    continue;
-
-                $oc_cnt++;
-            }
-
-            if($send_cost > 0) {
-                // 배송비쿠폰
-                $sql = " select cp_id
-                            from {$g5['g5_shop_coupon_table']}
-                            where mb_id IN ( '{$member['mb_id']}', '전체회원' )
-                              and cp_method = '3'
-                              and cp_start <= '".G5_TIME_YMD."'
-                              and cp_end >= '".G5_TIME_YMD."'
-                              and cp_minimum <= '$tot_sell_price' ";
-                $res = sql_query($sql);
-
-                for($k=0; $cp=sql_fetch_array($res); $k++) {
-                    if(is_used_coupon($member['mb_id'], $cp['cp_id']))
-                        continue;
-
-                    $sc_cnt++;
-                }
-            }
-        }
-        ?>
-
-        <section id="sod_frm_pay">
-            <h2>결제정보</h2>
-
-            <div class="pay_tbl">
-                <table>
-                <tbody>
-                <?php if($oc_cnt > 0) { ?>
-                <tr>
-                    <th scope="row">주문할인</th>
-                    <td>
-                        <strong id="od_cp_price">0</strong>원
-                        <input type="hidden" name="od_cp_id" value="">
-                        <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
-                    </td>
-                </tr>
-                <?php } ?>
-                <?php if($sc_cnt > 0) { ?>
-                <tr>
-                    <th scope="row">배송비할인</th>
-                    <td>
-                        <strong id="sc_cp_price">0</strong>원
-                        <input type="hidden" name="sc_cp_id" value="">
-                        <button type="button" id="sc_coupon_btn" class="btn_frmline">쿠폰적용</button>
-                    </td>
-                </tr>
-                <?php } ?>
-
-                <tr>
-                    <th>추가배송비</th>
-                    <td><strong id="od_send_cost2">0</strong>원<br>(지역에 따라 추가되는 도선료 등의 배송비입니다.)</td>
-                </tr>
-                </tbody>
-                </table>
+            <div class="sod_info_option">
+            	<?php
+		        $oc_cnt = $sc_cnt = 0;
+		        if($is_member) {
+		            // 주문쿠폰
+		            $sql = " select cp_id
+		                        from {$g5['g5_shop_coupon_table']}
+		                        where mb_id IN ( '{$member['mb_id']}', '전체회원' )
+		                          and cp_method = '2'
+		                          and cp_start <= '".G5_TIME_YMD."'
+		                          and cp_end >= '".G5_TIME_YMD."'
+		                          and cp_minimum <= '$tot_sell_price' ";
+		            $res = sql_query($sql);
+		
+		            for($k=0; $cp=sql_fetch_array($res); $k++) {
+		                if(is_used_coupon($member['mb_id'], $cp['cp_id']))
+		                    continue;
+		
+		                $oc_cnt++;
+		            }
+		
+		            if($send_cost > 0) {
+		                // 배송비쿠폰
+		                $sql = " select cp_id
+		                            from {$g5['g5_shop_coupon_table']}
+		                            where mb_id IN ( '{$member['mb_id']}', '전체회원' )
+		                              and cp_method = '3'
+		                              and cp_start <= '".G5_TIME_YMD."'
+		                              and cp_end >= '".G5_TIME_YMD."'
+		                              and cp_minimum <= '$tot_sell_price' ";
+		                $res = sql_query($sql);
+		
+		                for($k=0; $cp=sql_fetch_array($res); $k++) {
+		                    if(is_used_coupon($member['mb_id'], $cp['cp_id']))
+		                        continue;
+		
+		                    $sc_cnt++;
+		                }
+		            }
+		        }
+		        ?>
+		        
+            	<h2>결제옵션</h2>
+				<ul>
+	                <?php if($oc_cnt > 0) { ?>
+	                <li>
+	                    <span class="sod_ifop_tit">주문할인
+	                    	<input type="hidden" name="od_cp_id" value="">
+	                        <button type="button" id="od_coupon_btn" class="btn_frmline">쿠폰적용</button>
+	                    </span>
+	                    <div class="sod_ifop_t">
+	                        <strong id="od_cp_price">0</strong>원
+	                    </div>
+	                </li>
+	                <?php } ?>
+	                <?php if($sc_cnt > 0) { ?>
+	                <li>
+	                    <span class="sod_ifop_tit">배송비할인
+	                        <input type="hidden" name="sc_cp_id" value="">
+	                        <button type="button" id="sc_coupon_btn" class="btn_frmline">쿠폰적용</button>
+	                    </span>
+	                    <div class="sod_ifop_t">
+	                    	<strong id="sc_cp_price">0</strong>원
+	                    </div>
+	                </li>
+	                <?php } ?>
+	
+	                <li>
+	                    <div class="sod_ifop_tit">추가배송비
+	                    	<button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
+	                    	<span class="tooltip">(지역에 따라 추가되는 도선료 등의 배송비입니다.)</span>
+	                    </div>
+	                    <div class="sod_ifop_t"><strong id="od_send_cost2">0</strong>원</div>
+	                </li>
+				</ul>
             </div>
             <div id="od_tot_price">
                 <span>총 주문금액</span>
                 <strong class="print_price"><?php echo number_format($tot_price); ?></strong>원
             </div>
+        </div>
+        <!-- } 주문상품 합계 끝 -->
 
-            <div id="od_pay_sl">
-                <h3>결제수단</h3>
-                <?php
-                if (!$default['de_card_point'])
-                    echo '<p id="sod_frm_pt_alert"><strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
 
-                $multi_settle = 0;
-                $checked = '';
-
-                $escrow_title = "";
-                if ($default['de_escrow_use']) {
-                    $escrow_title = "에스크로<br>";
-                }
-
-                if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || $default['de_inicis_lpay_use']) {
-                    echo '<fieldset id="sod_frm_paysel">';
-                    echo '<legend>결제방법 선택</legend>';
-                }
-
-                // 카카오페이
-                if($is_kakaopay_use) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_kakaopay" name="od_settle_case" value="KAKAOPAY" '.$checked.'> <label for="od_settle_kakaopay" class="kakaopay_icon lb_icon">KAKAOPAY</label>'.PHP_EOL;
-                    $checked = '';
-                }
-
-                // 무통장입금 사용
-                if ($default['de_bank_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_bank" name="od_settle_case" value="무통장" '.$checked.'> <label for="od_settle_bank" class="lb_icon bank_icon">무통장입금</label>'.PHP_EOL;
-                    $checked = '';
-                }
-
-                // 가상계좌 사용
-                if ($default['de_vbank_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_vbank" name="od_settle_case" value="가상계좌" '.$checked.'> <label for="od_settle_vbank" class="lb_icon vbank_icon">'.$escrow_title.'가상계좌</label>'.PHP_EOL;
-                    $checked = '';
-                }
-
-                // 계좌이체 사용
-                if ($default['de_iche_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_iche" name="od_settle_case" value="계좌이체" '.$checked.'> <label for="od_settle_iche" class="lb_icon iche_icon">'.$escrow_title.'계좌이체</label>'.PHP_EOL;
-                    $checked = '';
-                }
-
-                // 휴대폰 사용
-                if ($default['de_hp_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_hp" name="od_settle_case" value="휴대폰" '.$checked.'> <label for="od_settle_hp" class="lb_icon hp_icon">휴대폰</label>'.PHP_EOL;
-                    $checked = '';
-                }
-
-                // 신용카드 사용
-                if ($default['de_card_use']) {
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" '.$checked.'> <label for="od_settle_card" class="lb_icon card_icon">신용카드</label>'.PHP_EOL;
-                    $checked = '';
-                }
-
-                // PG 간편결제
-                if($default['de_easy_pay_use']) {
-                    switch($default['de_pg_service']) {
-                        case 'lg':
-                            $pg_easy_pay_name = 'PAYNOW';
-                            break;
-                        case 'inicis':
-                            $pg_easy_pay_name = 'KPAY';
-                            break;
-                        default:
-                            $pg_easy_pay_name = 'PAYCO';
-                            break;
-                    }
-
-                    $multi_settle++;
-                    echo '<input type="radio" id="od_settle_easy_pay" name="od_settle_case" value="간편결제" '.$checked.'> <label for="od_settle_easy_pay" class="'.$pg_easy_pay_name.' lb_icon">'.$pg_easy_pay_name.'</label>'.PHP_EOL;
-                    $checked = '';
-                }
-
-                //이니시스 Lpay
-                if($default['de_inicis_lpay_use']) {
-                    echo '<input type="radio" id="od_settle_inicislpay" data-case="lpay" name="od_settle_case" value="lpay" '.$checked.'> <label for="od_settle_inicislpay" class="inicis_lpay lb_icon">L.pay</label>'.PHP_EOL;
-                    $checked = '';
-                }
-
-                $temp_point = 0;
-                // 회원이면서 포인트사용이면
-                if ($is_member && $config['cf_use_point'])
+        <!-- 포인트정보 입력 시작 { -->
+		<?php
+		$temp_point = 0;
+            // 회원이면서 포인트사용이면
+            if ($is_member && $config['cf_use_point'])
+            {
+                // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
+                if ($member['mb_point'] >= $default['de_settle_min_point'])
                 {
-                    // 포인트 결제 사용 포인트보다 회원의 포인트가 크다면
-                    if ($member['mb_point'] >= $default['de_settle_min_point'])
-                    {
-                        $temp_point = (int)$default['de_settle_max_point'];
+                    $temp_point = (int)$default['de_settle_max_point'];
 
-                        if($temp_point > (int)$tot_sell_price)
-                            $temp_point = (int)$tot_sell_price;
+                    if($temp_point > (int)$tot_sell_price)
+                        $temp_point = (int)$tot_sell_price;
 
-                        if($temp_point > (int)$member['mb_point'])
-                            $temp_point = (int)$member['mb_point'];
+                    if($temp_point > (int)$member['mb_point'])
+                        $temp_point = (int)$member['mb_point'];
 
-                        $point_unit = (int)$default['de_settle_point_unit'];
-                        $temp_point = (int)((int)($temp_point / $point_unit) * $point_unit);
-                ?>
-                <div class="sod_frm_point">
-                    <div>
-                        <label for="od_temp_point">사용 포인트(<?php echo $point_unit; ?>점 단위)</label>
+                    $point_unit = (int)$default['de_settle_point_unit'];
+                    $temp_point = (int)((int)($temp_point / $point_unit) * $point_unit);
+            ?>
+            <div id="sod_point">
+				<h2>
+					<span class="point_tit">
+						포인트사용
+					<label for="od_temp_point">(<?php echo $point_unit; ?>점 단위)</label>
+					</span>
+                    <span class="point_ipt">
                         <input type="hidden" name="max_temp_point" value="<?php echo $temp_point; ?>">
-                        <input type="text" name="od_temp_point" value="0" id="od_temp_point"  size="7"> 점
-                    </div>
-                    <div id="sod_frm_pt">
-                        <span><strong>보유포인트</strong><?php echo display_point($member['mb_point']); ?></span>
-                        <span class="max_point_box"><strong>최대 사용 가능 포인트</strong><em id="use_max_point"><?php echo display_point($temp_point); ?></em></span>
-                    </div>
+                        <input type="text" name="od_temp_point" value="0" id="od_temp_point" size="7"> 점
+                    </span>
+                </h2>
+                <div id="sod_frm_pt">
+                    <strong>보유포인트</strong><span class="my_point_box"><?php echo display_point($member['mb_point']); ?></span>
+                    <strong>최대 사용 가능 포인트</strong><span class="max_point_box"><em id="use_max_point"><?php echo display_point($temp_point); ?></em></span>
                 </div>
-                <?php
-                    $multi_settle++;
-                    }
-                }
-
-                if ($default['de_bank_use']) {
-                    // 은행계좌를 배열로 만든후
-                    $str = explode("\n", trim($default['de_bank_account']));
-                    if (count($str) <= 1)
-                    {
-                        $bank_account = '<input type="hidden" name="od_bank_account" value="'.$str[0].'">'.$str[0].PHP_EOL;
-                    }
-                    else
-                    {
-                        $bank_account = '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
-                        $bank_account .= '<option value="">선택하십시오.</option>';
-                        for ($i=0; $i<count($str); $i++)
-                        {
-                            //$str[$i] = str_replace("\r", "", $str[$i]);
-                            $str[$i] = trim($str[$i]);
-                            $bank_account .= '<option value="'.$str[$i].'">'.$str[$i].'</option>'.PHP_EOL;
-                        }
-                        $bank_account .= '</select>'.PHP_EOL;
-                    }
-                    echo '<div id="settle_bank" style="display:none">';
-                    echo '<label for="od_bank_account" class="sound_only">입금할 계좌</label>';
-                    echo $bank_account;
-                    echo '<br><label for="od_deposit_name">입금자명</label> ';
-                    echo '<input type="text" name="od_deposit_name" id="od_deposit_name" size="10" maxlength="20">';
-                    echo '</div>';
-                }
-
-                if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || $default['de_inicis_lpay_use'] ) {
-                    echo '</fieldset>';
-                }
-
-                if ($multi_settle == 0)
-                    echo '<p>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</p>';
-                ?>
             </div>
-        </section>
+            <?php
+                $multi_settle++;
+                }
+            }
+		?>
+
+		<!-- } 포인트정보 입력 끝 -->
+		
+		<!-- 결제정보 입력 시작 { -->
+        <div id="sod_frm_pay">
+            <h2>결제수단</h2>
+            <?php
+            if (!$default['de_card_point'])
+                echo '<p class="tooltip_txt"><i class="fa fa-info-circle" aria-hidden="true"></i> <strong>무통장입금</strong> 이외의 결제 수단으로 결제하시는 경우 포인트를 적립해드리지 않습니다.</p>';
+
+            $multi_settle = 0;
+            $checked = '';
+
+            $escrow_title = "";
+            if ($default['de_escrow_use']) {
+                $escrow_title = "에스크로<br>";
+            }
+
+            if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || $default['de_inicis_lpay_use']) {
+                echo '<fieldset id="sod_frm_paysel">';
+                echo '<legend>결제방법 선택</legend>';
+            }
+			?>
+			
+			<ul class="pay_way chk_box">
+				<li>
+				<?php
+	            // 카카오페이
+	            if($is_kakaopay_use) {
+	                $multi_settle++;
+	                echo '<input type="radio" id="od_settle_kakaopay" name="od_settle_case" value="KAKAOPAY" '.$checked.'> <label for="od_settle_kakaopay" class="lb_icon"><span></span><b class="kakaopay_icon">KAKAOPAY</b></label>'.PHP_EOL;
+	                $checked = '';
+	            }
+				?>
+				</li>
+				
+				<li>
+				<?php
+	            // 무통장입금 사용
+	            if ($default['de_bank_use']) {
+	                $multi_settle++;
+	                echo '<input type="radio" id="od_settle_bank" name="od_settle_case" value="무통장" '.$checked.'> <label for="od_settle_bank" class="lb_icon"><span></span>무통장입금</label>'.PHP_EOL;
+	                $checked = '';
+	            }
+				?>
+				</li>
+				
+				<li>
+				<?php
+	            // 가상계좌 사용
+	            if ($default['de_vbank_use']) {
+	                $multi_settle++;
+	                echo '<input type="radio" id="od_settle_vbank" name="od_settle_case" value="가상계좌" '.$checked.'> <label for="od_settle_vbank" class="lb_icon"><span></span>'.$escrow_title.'가상계좌</label>'.PHP_EOL;
+	                $checked = '';
+	            }
+				?>
+				</li>
+				
+				<li>
+				<?php
+	            // 계좌이체 사용
+	            if ($default['de_iche_use']) {
+	                $multi_settle++;
+	                echo '<input type="radio" id="od_settle_iche" name="od_settle_case" value="계좌이체" '.$checked.'> <label for="od_settle_iche" class="lb_icon"><span></span>'.$escrow_title.'계좌이체</label>'.PHP_EOL;
+	                $checked = '';
+	            }
+				?>
+				</li>
+				
+				<li>
+				<?php
+	            // 휴대폰 사용
+	            if ($default['de_hp_use']) {
+	                $multi_settle++;
+	                echo '<input type="radio" id="od_settle_hp" name="od_settle_case" value="휴대폰" '.$checked.'> <label for="od_settle_hp" class="lb_icon"><span></span>휴대폰</label>'.PHP_EOL;
+	                $checked = '';
+	            }
+				?>
+				</li>
+				
+				<li>
+				<?php
+	            // 신용카드 사용
+	            if ($default['de_card_use']) {
+	                $multi_settle++;
+	                echo '<input type="radio" id="od_settle_card" name="od_settle_case" value="신용카드" '.$checked.'> <label for="od_settle_card" class="lb_icon"><span></span>신용카드</label>'.PHP_EOL;
+	                $checked = '';
+	            }
+				?>
+				</li>
+				
+				<li>
+				<?php
+	            // PG 간편결제
+	            if($default['de_easy_pay_use']) {
+	                switch($default['de_pg_service']) {
+	                    case 'lg':
+	                        $pg_easy_pay_name = 'PAYNOW';
+	                        break;
+	                    case 'inicis':
+	                        $pg_easy_pay_name = 'KPAY';
+	                        break;
+	                    default:
+	                        $pg_easy_pay_name = 'PAYCO';
+	                        break;
+	                }
+	
+	                $multi_settle++;
+	                echo '<input type="radio" id="od_settle_easy_pay" name="od_settle_case" value="간편결제" '.$checked.'> <label for="od_settle_easy_pay" class="lb_icon"><span></span><b class="'.$pg_easy_pay_name.'">'.$pg_easy_pay_name.'</b></label>'.PHP_EOL;
+	                $checked = '';
+	            }
+				?>
+				</li>
+				
+				<li>
+				<?php
+	            //이니시스 Lpay
+	            if($default['de_inicis_lpay_use']) {
+	                echo '<input type="radio" id="od_settle_inicislpay" data-case="lpay" name="od_settle_case" value="lpay" '.$checked.'> <label for="od_settle_inicislpay" class="lb_icon"><span></span><b class="inicis_lpay">L.pay</b></label>'.PHP_EOL;
+	                $checked = '';
+	            }
+				?>
+				</li>
+			</ul>
+
+			<?php
+            if ($default['de_bank_use']) {
+                // 은행계좌를 배열로 만든후
+                $str = explode("\n", trim($default['de_bank_account']));
+                if (count($str) <= 1)
+                {
+                    $bank_account = '<input type="hidden" name="od_bank_account" value="'.$str[0].'">'.$str[0].PHP_EOL;
+                }
+                else
+                {
+                    $bank_account = '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
+                    $bank_account .= '<option value="">선택하십시오.</option>';
+                    for ($i=0; $i<count($str); $i++)
+                    {
+                        //$str[$i] = str_replace("\r", "", $str[$i]);
+                        $str[$i] = trim($str[$i]);
+                        $bank_account .= '<option value="'.$str[$i].'">'.$str[$i].'</option>'.PHP_EOL;
+                    }
+                    $bank_account .= '</select>'.PHP_EOL;
+                }
+                echo '<ul id="settle_bank" style="display:none">';
+				echo '<li>';
+                echo '<label for="od_bank_account">은행선택</label>';
+                echo $bank_account;
+				echo '</li>';
+				echo '<li>';
+                echo '<label for="od_deposit_name">입금자명</label> ';
+                echo '<input type="text" name="od_deposit_name" id="od_deposit_name" size="10" maxlength="20">';
+                echo '</li>';
+                echo '</ul>';
+            }
+			
+            if ($is_kakaopay_use || $default['de_bank_use'] || $default['de_vbank_use'] || $default['de_iche_use'] || $default['de_card_use'] || $default['de_hp_use'] || $default['de_easy_pay_use'] || $default['de_inicis_lpay_use'] ) {
+                echo '</fieldset>';
+            }
+
+            if ($multi_settle == 0)
+                echo '<p>결제할 방법이 없습니다.<br>운영자에게 알려주시면 감사하겠습니다.</p>';
+            ?>
+        </div>
         <!-- } 결제 정보 입력 끝 -->
 
         <?php
@@ -716,7 +786,6 @@ if($is_kakaopay_use) {
         }
         ?>
     </div>
-
 </div>
 </form>
 
@@ -729,6 +798,24 @@ if( $default['de_inicis_lpay_use'] ){   //이니시스 L.pay 사용시
 var zipcode = "";
 var form_action_url = "<?php echo $order_action_url; ?>";
 
+function od_coupon_close(){
+    var $coupon_frm = jQuery("#od_coupon_frm");
+    if ( $coupon_frm.parent(".od_coupon_wrap").length ){
+        $coupon_frm.parent(".od_coupon_wrap").remove();
+    } else {
+        $coupon_frm.remove();
+    }
+}
+
+function cp_form_close(){
+    var $cp_frm = jQuery("#cp_frm");
+    if ( $cp_frm.parent(".od_coupon_wrap").length ){
+        $cp_frm.parent(".od_coupon_wrap").remove();
+    } else {
+        $cp_frm.remove();
+    }
+}
+
 $(function() {
     var $cp_btn_el;
     var $cp_row_el;
@@ -736,7 +823,7 @@ $(function() {
     $(".cp_btn").click(function() {
         $cp_btn_el = $(this);
         $cp_row_el = $(this).closest("tr");
-        $("#cp_frm").remove();
+        cp_form_close();
         var it_id = $cp_btn_el.closest("tr").find("input[name^=it_id]").val();
 
         $.post(
@@ -747,7 +834,11 @@ $(function() {
             }
         );
     });
-
+	
+	$(document).on("click", "#cp_close", function() {
+        $(".od_coupon, .od_coupon_wrap").remove();
+    });
+	
     $(document).on("click", ".cp_apply", function() {
         var $el = $(this).closest("tr");
         var cp_id = $el.find("input[name='f_cp_id[]']").val();
@@ -783,7 +874,7 @@ $(function() {
                 return false;
             } else {
                 coupon_cancel($cp_dup_el);
-                $("#cp_frm").remove();
+                cp_form_close();
                 $cp_dup_el.find(".cp_btn").text("적용").focus();
                 $cp_dup_el.find(".cp_cancel").remove();
             }
@@ -801,27 +892,27 @@ $(function() {
         $cp_row_el.find("input[name^=cp_price]").val(price);
 
         calculate_total_price();
-        $("#cp_frm").remove();
+        cp_form_close();
         $cp_btn_el.text("변경").focus();
         if(!$cp_row_el.find(".cp_cancel").size())
             $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel\">취소</button>");
     });
 
     $(document).on("click", "#cp_close", function() {
-        $("#cp_frm").remove();
+        cp_form_close();
         $cp_btn_el.focus();
     });
 
     $(document).on("click", ".cp_cancel", function() {
         coupon_cancel($(this).closest("tr"));
         calculate_total_price();
-        $("#cp_frm").remove();
+        cp_form_close();
         $(this).closest("tr").find(".cp_btn").text("적용").focus();
         $(this).remove();
     });
 
     $("#od_coupon_btn").click(function() {
-        $("#od_coupon_frm").remove();
+        od_coupon_close();
         var $this = $(this);
         var price = parseInt($("input[name=org_od_price]").val()) - parseInt($("input[name=item_coupon]").val());
         if(price <= 0) {
@@ -868,14 +959,14 @@ $(function() {
         $("#od_cp_price").text(number_format(String(price)));
         $("#sc_cp_price").text(0);
         calculate_order_price();
-        $("#od_coupon_frm").remove();
+        od_coupon_close();
         $("#od_coupon_btn").text("변경").focus();
         if(!$("#od_coupon_cancel").size())
             $("#od_coupon_btn").after("<button type=\"button\" id=\"od_coupon_cancel\" class=\"cp_cancel\">취소</button>");
     });
 
     $(document).on("click", "#od_coupon_close", function() {
-        $("#od_coupon_frm").remove();
+        od_coupon_close();
         $("#od_coupon_btn").focus();
     });
 
@@ -889,7 +980,7 @@ $(function() {
         $("#od_cp_price").text(0);
         $("#sc_cp_price").text(0);
         calculate_order_price();
-        $("#od_coupon_frm").remove();
+        od_coupon_close();
         $("#od_coupon_btn").text("쿠폰적용").focus();
         $(this).remove();
         $("#sc_coupon_btn").text("쿠폰적용");
@@ -1562,4 +1653,13 @@ $(function(){
     $("#od_hope_date").datepicker({ changeMonth: true, changeYear: true, dateFormat: "yy-mm-dd", showButtonPanel: true, yearRange: "c-99:c+99", minDate: "+<?php echo (int)$default['de_hope_date_after']; ?>d;", maxDate: "+<?php echo (int)$default['de_hope_date_after'] + 6; ?>d;" });
 });
 <?php } ?>
+
+$(function(){
+	//tooltip
+    $(".tooltip_icon").click(function(){
+        $(this).next(".tooltip").fadeIn(400);
+    }).mouseout(function(){
+        $(this).next(".tooltip").fadeOut();
+    });
+});
 </script>

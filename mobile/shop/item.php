@@ -3,16 +3,15 @@ include_once('./_common.php');
 include_once(G5_LIB_PATH.'/iteminfo.lib.php');
 
 $it_id = get_search_string(trim($_GET['it_id']));
+$it_seo_title = isset($it_seo_title) ? $it_seo_title : '';
 
-// 분류사용, 상품사용하는 상품의 정보를 얻음
-$sql = " select a.*,
-                b.ca_name,
-                b.ca_use
-           from {$g5['g5_shop_item_table']} a,
-                {$g5['g5_shop_category_table']} b
-          where a.it_id = '$it_id'
-            and a.ca_id = b.ca_id ";
-$it = sql_fetch($sql);
+$it = get_shop_item_with_category($it_id, $it_seo_title);
+$it_id = $it['it_id'];
+
+if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
+    shop_seo_title_update($row['it_id']);
+}
+
 if (!$it['it_id'])
     alert('자료가 없습니다.');
 if (!($it['ca_use'] && $it['it_use'])) {
@@ -69,7 +68,7 @@ $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $prev_title = '이전상품 <span>'.$row['it_name'].'</span>';
-    $prev_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'" id="siblings_prev">';
+    $prev_href = '<a href="'.shop_item_url($row['it_id']).'" id="siblings_prev">';
     $prev_href2 = '</a>';
 } else {
     $prev_title = '';
@@ -87,7 +86,7 @@ $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
 $row = sql_fetch($sql);
 if ($row['it_id']) {
     $next_title = '다음 상품 <span>'.$row['it_name'].'</span>';
-    $next_href = '<a href="'.G5_SHOP_URL.'/item.php?it_id='.$row['it_id'].'" id="siblings_next">';
+    $next_href = '<a href="'.shop_item_url($row['it_id']).'" id="siblings_next">';
     $next_href2 = '</a>';
 } else {
     $next_title = '';
@@ -117,7 +116,7 @@ if ($default['de_mobile_rel_list_use']) {
 
 // 상품품절체크
 if(G5_SOLDOUT_CHECK)
-    $is_soldout = is_soldout($it['it_id']);
+    $is_soldout = is_soldout($it['it_id'], true);
 
 // 주문가능체크
 $is_orderable = true;

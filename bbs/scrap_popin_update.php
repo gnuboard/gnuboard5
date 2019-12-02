@@ -5,7 +5,7 @@ include_once(G5_PATH.'/head.sub.php');
 
 if (!$is_member)
 {
-    $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+    $href = './login.php?'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id));
     echo '<script> alert(\'회원만 접근 가능합니다.\'); top.location.href = \''.str_replace('&amp;', '&', $href).'\'; </script>';
     exit;
 }
@@ -31,7 +31,7 @@ if ($row['cnt'])
     <noscript>
     <p>이미 스크랩하신 글 입니다.</p>
     <a href="./scrap.php">스크랩 확인하기</a>
-    <a href="./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'">돌아가기</a>
+    <a href="'.get_pretty_url($bo_table, $wr_id).'">돌아가기</a>
     </noscript>';
     exit;
 }
@@ -99,6 +99,9 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
 }
 
 $sql = " insert into {$g5['scrap_table']} ( mb_id, bo_table, wr_id, ms_datetime ) values ( '{$member['mb_id']}', '$bo_table', '$wr_id', '".G5_TIME_YMDHIS."' ) ";
+sql_query($sql);
+
+$sql = " update `{$g5['member_table']}` set mb_scrap_cnt = '".get_scrap_totals($member['mb_id'])."' where mb_id = '{$member['mb_id']}' ";
 sql_query($sql);
 
 delete_cache_latest($bo_table);

@@ -31,27 +31,25 @@ if (!$exists) {
 
         $str .= '<li>';
         if ($cnt) {
-            $str .= '<a href="./list.php?ca_id='.$row['ca_id'].'" class="sct_ct_parent '.$sct_ct_here.'">'.$row['ca_name'].'</a>';
+            $str .= '<a href="'.shop_category_url($row['ca_id']).'" class="sct_ct_parent '.$sct_ct_here.'">'.$row['ca_name'].'</a>';
             $sql2 = " select ca_id, ca_name from {$g5['g5_shop_category_table']} where ca_id like '{$row['ca_id']}%' and ca_use = '1' and length(ca_id) = $len4 order by ca_order, ca_id ";
             $result2 = sql_query($sql2);
             $k=0;
             while ($row2=sql_fetch_array($result2)) {
-                $str .= '<a href="./list.php?ca_id='.$row2['ca_id'].'">'.$row2['ca_name'].'</a>';
+                $str .= '<a href="'.shop_category_url($row2['ca_id']).'">'.$row2['ca_name'].'</a>';
                 $k++;
             }
         } else {
-            $str .= '<a href="./list.php?ca_id='.$row['ca_id'].'" class="sct_ct_parent '.$sct_ct_here.'">'.$row['ca_name'].'</a>';
+            $str .= '<a href="'.shop_category_url($row['ca_id']).'" class="sct_ct_parent '.$sct_ct_here.'">'.$row['ca_name'].'</a>';
         }
         $str .= '</li>';
         $exists = true;
     }
 }
 
-
 if ($exists) {
-
     // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-    add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
+    add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
 <!-- 상품분류 2 시작 { -->

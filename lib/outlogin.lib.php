@@ -5,6 +5,8 @@ if (!defined('_GNUBOARD_')) exit;
 function outlogin($skin_dir='basic')
 {
     global $config, $member, $g5, $urlencode, $is_admin, $is_member;
+    
+    $is_auth = false;
 
     if (array_key_exists('mb_nick', $member)) {
         $nick  = get_text(cut_str($member['mb_nick'], $config['cf_cut_name']));
@@ -36,11 +38,13 @@ function outlogin($skin_dir='basic')
 
     // 읽지 않은 쪽지가 있다면
     if ($is_member) {
-        $sql = " select count(*) as cnt from {$g5['memo_table']} where me_recv_mb_id = '{$member['mb_id']}' and me_read_datetime = '0000-00-00 00:00:00' ";
-        $row = sql_fetch($sql);
-        $memo_not_read = $row['cnt'];
-
-        $is_auth = false;
+        if( isset($member['mb_memo_cnt']) ){
+            $memo_not_read = $member['mb_memo_cnt'];
+        } else {
+            $memo_not_read = get_memo_not_read($member['mb_id']);
+        }
+        
+        $mb_scrap_cnt = isset($member['mb_scrap_cnt']) ? (int) $member['mb_scrap_cnt'] : '';
         $sql = " select count(*) as cnt from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
         $row = sql_fetch($sql);
         if ($row['cnt'])
@@ -49,7 +53,7 @@ function outlogin($skin_dir='basic')
 
     $outlogin_url        = login_url($urlencode);
     $outlogin_action_url = G5_HTTPS_BBS_URL.'/login_check.php';
-
+    
     ob_start();
     if ($is_member)
         include_once ($outlogin_skin_path.'/outlogin.skin.2.php');
@@ -58,6 +62,6 @@ function outlogin($skin_dir='basic')
     $content = ob_get_contents();
     ob_end_clean();
 
-    return $content;
+    return run_replace('outlogin_content', $content, $is_auth, $outlogin_url, $outlogin_action_url);
 }
 ?>

@@ -14,14 +14,14 @@ while ($row=sql_fetch_array($result)) {
 
     $row2 = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where (ca_id like '{$row['ca_id']}%' or ca_id2 like '{$row['ca_id']}%' or ca_id3 like '{$row['ca_id']}%') and it_use = '1'  ");
 
-    $str .= '<li><a href="./list.php?ca_id='.$row['ca_id'].'">'.$row['ca_name'].' ('.$row2['cnt'].')</a></li>';
+    $str .= '<li><a href="'.shop_category_url($row['ca_id']).'">'.$row['ca_name'].' ('.$row2['cnt'].')</a></li>';
     $exists = true;
 }
 
 if ($exists) {
 
     // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-    add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
+    add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
 <!-- 상품분류 1 시작 { -->

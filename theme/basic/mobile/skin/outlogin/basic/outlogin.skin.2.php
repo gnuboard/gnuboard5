@@ -12,31 +12,34 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
     <div id="ol_after_hd">
         <span class="profile_img">
             <?php echo get_member_profile_img($member['mb_id']); ?>
-            <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info" title="정보수정">정보수정</a>
+            <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" id="ol_after_info"><i class="fa fa-cog fa-3x fa-fw"></i><span class="sound_only">정보수정</span></a>
         </span>
         <strong><?php echo $nick ?>님</strong>
-    </div>
-
-    <div id="ol_after_btn">
-        <?php if ($is_admin == 'super' || $is_auth) { ?><a href="<?php echo G5_ADMIN_URL ?>" class="btn_admin">관리자</a><?php } ?>
-        <a href="<?php echo G5_BBS_URL ?>/logout.php" id="ol_after_logout">로그아웃</a>
+        <div id="ol_after_btn">
+	        <?php if ($is_admin == 'super' || $is_auth) { ?><a href="<?php echo G5_ADMIN_URL ?>" class="btn_admin"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a><?php } ?>
+	        <a href="<?php echo G5_BBS_URL ?>/logout.php" id="ol_after_logout">로그아웃</a>
+	    </div>
     </div>
 
     <ul id="ol_after_private">
         <li id="ol_after_memo">
             <a href="<?php echo G5_BBS_URL ?>/memo.php" target="_blank">
-                <span class="sound_only">안 읽은 쪽지</span>
+            	<i class="fa fa-envelope-o" aria-hidden="true"></i>
+                <span class="sound_only">안 읽은</span>쪽지
                 <strong><?php echo $memo_not_read ?></strong>
             </a>
         </li>
         <li id="ol_after_pt">
             <a href="<?php echo G5_BBS_URL ?>/point.php" target="_blank">
-                <span class="sound_only"> 포인트</span>
+                <i class="fa fa-database" aria-hidden="true"></i>
+                포인트
                 <strong><?php echo $point ?></strong>
             </a>
         </li>
         <li id="ol_after_scrap">
-            <a href="<?php echo G5_BBS_URL ?>/scrap.php" target="_blank">스크랩</a>
+            <a href="<?php echo G5_BBS_URL ?>/scrap.php" target="_blank">
+				<i class="fa fa-thumb-tack" aria-hidden="true"></i>스크랩
+            </a>
         </li>
     </ul>
 

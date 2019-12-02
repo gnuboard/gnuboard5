@@ -2,10 +2,11 @@
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
+add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
 add_javascript('<script src="'.G5_JS_URL.'/jquery.bxslider.js"></script>', 10);
 ?>
-<!-- 상품진열 10 시작 { -->
+
+<!-- 관련상품 10 시작 { -->
 <?php
 for ($i=1; $row=sql_fetch_array($result); $i++) {
     if ($this->list_mod >= 2) { // 1줄 이미지 : 2개 이상
@@ -76,7 +77,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($this->view_sns) {
         $sns_top = $this->img_height + 10;
-        $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $sns_url  = shop_item_url($row['it_id']);
         $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
         echo "<div class=\"sct_sns\" style=\"top:{$sns_top}px\">";
         echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_fb_s.png');
@@ -92,14 +93,14 @@ if ($i > 1) echo "</ul>\n";
 
 if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
-<!-- } 상품진열 10 끝 -->
+<!-- } 관련상품 10 끝 -->
 <script>
 $(document).ready(function(){
     $('.scr_10').bxSlider({
-        slideWidth: 160,
-        minSlides: 5,
-        maxSlides: 5,
-        slideMargin: 20,
+        slideWidth:175,
+        minSlides:6,
+        maxSlides:6,
+        slideMargin:20,
         pager:false
     });
 });

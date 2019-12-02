@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+define('IS_SHOP_SEARCH', true);
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/search.php');
     return;

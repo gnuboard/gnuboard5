@@ -42,10 +42,9 @@ $cart_count = sql_num_rows($result);
     <form name="frmcartlist" id="sod_bsk_list" class="2017_renewal_itemform" method="post" action="<?php echo $cart_action_url; ?>">
 
     <?php if($cart_count) { ?>
-    <div id="sod_chk">
-        <label for="ct_all" class="sound_only">상품 전체</label>
-        <input type="checkbox" name="ct_all" value="1" id="ct_all" checked>
-        전체상품 선택
+    <div id="sod_chk" class="chk_box">
+        <input type="checkbox" name="ct_all" value="1" id="ct_all" class="selec_chk" checked>
+        <label for="ct_all"><span></span>상품 전체</label>
     </div>
     <?php } ?>
 
@@ -70,10 +69,10 @@ $cart_count = sql_num_rows($result);
                 $continue_ca_id = $row['ca_id'];
             }
 
-            $a1 = '<a href="./item.php?it_id='.$row['it_id'].'"><strong>';
+            $a1 = '<a href="'.shop_item_url($row['it_id']).'"><strong>';
             $a2 = '</strong></a>';
-            $image_width = 80;
-            $image_height = 80;
+            $image_width = 65;
+            $image_height = 65;
             $image = get_it_image($row['it_id'], $image_width, $image_height);
 
             $it_name = $a1 . stripslashes($row['it_name']) . $a2;
@@ -112,20 +111,17 @@ $cart_count = sql_num_rows($result);
         <li class="sod_li">
             <input type="hidden" name="it_id[<?php echo $i; ?>]"    value="<?php echo $row['it_id']; ?>">
             <input type="hidden" name="it_name[<?php echo $i; ?>]"  value="<?php echo get_text($row['it_name']); ?>">
-       
-            <div class="li_name">
-                <span class="li_chk">
-                    <label for="ct_chk_<?php echo $i; ?>" class="sound_only">상품선택</label>
-                    <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>" checked>
-                </span>
-                <?php echo $it_name; ?>
-                
-            </div>
+
             <div class="li_op_wr">
+                <div class="li_chk chk_box">
+                    <input type="checkbox" name="ct_chk[<?php echo $i; ?>]" value="1" id="ct_chk_<?php echo $i; ?>" class="selec_chk" checked>
+                    <label for="ct_chk_<?php echo $i; ?>"><span></span><b class="sound_only">상품선택</b></label>
+                </div> 
+                <div class="li_name"><?php echo $it_name; ?></div>
                 <div class="total_img"><?php echo $image; ?></div>
-                <div class="sod_opt"><?php echo $it_options; ?></div>
                 <div class="li_mod"><?php echo $mod_options; ?></div>
-            </div>
+            </div> 
+            <div class="sod_opt"><?php echo $it_options; ?></div>
             <div class="li_prqty">
                 <span class="prqty_price li_prqty_sp"><span>판매가 </span><?php echo number_format($row['ct_price']); ?></span>
                 <span class="prqty_qty li_prqty_sp"><span>수량 </span><?php echo number_format($sum['qty']); ?></span>
@@ -133,8 +129,6 @@ $cart_count = sql_num_rows($result);
                 <span class="total_point li_prqty_sp"><span>적립포인트 </span><strong><?php echo number_format($sum['point']); ?></strong></span>
             </div>
              <div class="total_price total_span"><span>소계 </span><strong><?php echo number_format($sell_price); ?></strong>원</div>
-
-
         </li>
 
         <?php
@@ -156,7 +150,6 @@ $cart_count = sql_num_rows($result);
         <button type="button" onclick="return form_check('alldelete');" class="btn01">비우기</button>
     </div>
 
-
     <?php if ($i == 0) { ?>
     <div class="go_shopping"><a href="<?php echo G5_SHOP_URL; ?>/" class="btn01">쇼핑 계속하기</a></div>
     <?php } else { ?>
@@ -174,6 +167,8 @@ $cart_count = sql_num_rows($result);
         <?php if ($tot_price > 0) { ?>
         <dt>포인트</dt>
         <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
+        <dt class="sod_bsk_dvr">배송비</dt>
+        <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
         <dt class="sod_bsk_cnt">총계</dt>
         <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?></strong> 원</dd>
         <?php } ?>
@@ -181,22 +176,19 @@ $cart_count = sql_num_rows($result);
     <?php } ?>
 
     <div id="sod_bsk_act" class="btn_confirm">
-
+        <div class="total">총계 <strong class="total_cnt"><?php echo number_format($tot_price); ?>원</strong>
+        </div>
         <input type="hidden" name="url" value="<?php echo G5_SHOP_URL; ?>/orderform.php">
         <input type="hidden" name="act" value="">
         <input type="hidden" name="records" value="<?php echo $i; ?>">
         <button type="button" onclick="return form_check('buy');" class="btn_submit">주문하기</button>
-
+    </div>
+    <?php } ?>
         <?php if ($naverpay_button_js) { ?>
         <div class="naverpay-cart"><?php echo $naverpay_request_js.$naverpay_button_js; ?></div>
         <?php } ?>
     </div>
-    <?php } ?>
-
-
-    </div>
     </form>
-
 </div>
 
 <script>
@@ -214,7 +206,7 @@ $(function() {
             { it_id: it_id },
             function(data) {
                 $("#mod_option_frm").remove();
-                $this.after("<div id=\"mod_option_frm\"></div>");
+                $this.after("<div id=\"mod_option_frm\"></div><div class=\"mod_option_bg\"></div>");
                 $("#mod_option_frm").html(data);
                 price_calculate();
             }
@@ -231,7 +223,7 @@ $(function() {
 
     // 옵션수정 닫기
     $(document).on("click", "#mod_option_close", function() {
-        $("#mod_option_frm").remove();
+        $("#mod_option_frm, .mod_option_bg").remove();
         $("#win_mask, .window").hide();
         $(".mod_options").eq(close_btn_idx).focus();
     });

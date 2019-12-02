@@ -19,8 +19,16 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 
 
 <!-- 상품진열 20 시작 { -->
 <?php
-for ($i=1; $row=sql_fetch_array($result); $i++) {
+$i=0;
+foreach((array) $list as $row){
+
+    if( empty($row) ) continue;
+    $i++;
+
     $sct_last = '';
+    $item_link_href = shop_item_url($row['it_id']);
+    $star_score = $row['it_use_avg'] ? (int) get_star($row['it_use_avg']) : '';
+
     if($i>1 && $i%$this->list_mod == 0)
         $sct_last = ' sct_last'; // 줄 마지막
 
@@ -38,10 +46,10 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "<ul class=\"sct_ul\">\n";
     }
 
-    echo "<li class=\"sct_li{$sct_last}\" style=\"width:{$this->img_width}px\">";
+    echo "<li class=\"sct_li{$sct_last}\">";
 
     if ($this->href) {
-        echo "<div class=\"sct_img\"><a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
+        echo "<div class=\"sct_img\"><a href=\"{$item_link_href}\" class=\"sct_a\">\n";
     }
 
     if ($this->view_it_img) {
@@ -52,16 +60,12 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "</a></div>\n";
     }
 
-    if ($this->view_it_icon) {
-        echo "<div class=\"sct_icon\">".item_icon($row)."</div>\n";
-    }
-
     if ($this->view_it_id) {
         echo "<div class=\"sct_id\">&lt;".stripslashes($row['it_id'])."&gt;</div>\n";
     }
 
     if ($this->href) {
-        echo "<div class=\"sct_txt\"><a href=\"{$this->href}{$row['it_id']}\" class=\"sct_a\">\n";
+        echo "<div class=\"sct_txt\"><a href=\"{$item_link_href}\" class=\"sct_a\">\n";
     }
 
     if ($this->view_it_name) {
@@ -81,7 +85,7 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
         echo "<div class=\"sct_cost\">\n";
 
         if ($this->view_it_cust_price && $row['it_cust_price']) {
-            echo "<strike>".display_price($row['it_cust_price'])."</strike>\n";
+            echo "<span class=\"sct_dict\">".display_price($row['it_cust_price'])."</span>\n";
         }
 
         if ($this->view_it_price) {
@@ -94,24 +98,28 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 
     if ($this->view_sns) {
         $sns_top = $this->img_height + 10;
-        $sns_url  = G5_SHOP_URL.'/item.php?it_id='.$row['it_id'];
+        $sns_url  = $item_link_href;
         $sns_title = get_text($row['it_name']).' | '.get_text($config['cf_title']);
         echo "<div class=\"sct_sns\" style=\"top:{$sns_top}px\">";
-        echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_fb_s.png');
-        echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_twt_s.png');
-        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/sns_goo_s.png');
+        echo get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/facebook.png');
+        echo get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/twitter.png');
+        echo get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/gplus.png');
         echo "</div>\n";
     }
-
+	
+	if ($this->view_it_icon) {
+        echo "<div class=\"sct_icon\">".item_icon($row)."</div>\n";
+    }
+	
     echo "</li>\n";
 }
 
-if ($i > 1) {
+if ($i >= 1) {
     echo "</ul>\n";
     echo "</div>\n";
 }
 
-if($i == 1) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
+if($i == 0) echo "<p class=\"sct_noitem\">등록된 상품이 없습니다.</p>\n";
 ?>
 
 <script>

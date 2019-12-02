@@ -11,8 +11,7 @@ $it_id = get_search_string(trim($_REQUEST['it_id']));
 $iq_id = preg_replace('/[^0-9]/', '', trim($_REQUEST['iq_id']));
 
 // 상품정보체크
-$sql = " select it_id from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-$row = sql_fetch($sql);
+$row = get_shop_item($it_id, true);
 if(!$row['it_id'])
     alert_close('상품정보가 존재하지 않습니다.');
 

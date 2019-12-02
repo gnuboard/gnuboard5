@@ -13,14 +13,14 @@ while ($row=sql_fetch_array($result)) {
         $sct_ct_here = 'sct_ct_here';
     else
         $sct_ct_here = '';
-    $str .= '<li><a href="./list.php?ca_id='.$row['ca_id'].'" class="'.$sct_ct_here.'">'.$row['ca_name'].'</a></li>';
+    $str .= '<li><a href="'.shop_category_url($row['ca_id']).'" class="'.$sct_ct_here.'">'.$row['ca_name'].'</a></li>';
     $exists = true;
 }
 
 if ($exists) {
 
     // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-    add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0);
+    add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_SKIN_URL.'/style.css">', 0);
 ?>
 
 <!-- 상품분류 3 시작 { -->

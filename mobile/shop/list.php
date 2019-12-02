@@ -154,6 +154,7 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
         $list->set_view('it_name', true);
         $list->set_view('it_price', true);
         $list->set_view('sns', true);
+        $list->set_view('it_icon', true);
         echo $list->run();
 
         // where 된 전체 상품수

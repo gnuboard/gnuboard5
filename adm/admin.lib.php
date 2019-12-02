@@ -486,10 +486,41 @@ function admin_check_xss_params($params){
     return;
 }
 
+function admin_menu_find_by($call, $search_key){
+    global $menu;
+    
+    static $cache_menu = array();
+    
+    if( empty($cache_menu) ){
+        foreach( $menu as $k1=>$arr1 ){
+
+            if (empty($arr1) ) continue;
+            foreach( $arr1 as $k2=>$arr2 ){
+                if (empty($arr2) ) continue;
+
+                $menu_key = isset($arr2[3]) ? $arr2[3] : '';
+                if (empty($menu_key) ) continue;
+
+                $cache_menu[$menu_key] = array(
+                    'sub_menu'=>$arr2[0],
+                    'title'=>$arr2[1],
+                    'link'=>$arr2[2],
+                    );
+            }
+        }
+    }
+
+    if( isset($cache_menu[$call]) && isset($cache_menu[$call][$search_key]) ){
+        return$cache_menu[$call][$search_key];
+    }
+
+    return '';
+}
+
 // 접근 권한 검사
 if (!$member['mb_id'])
 {
-    alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode(G5_ADMIN_URL));
+    alert('로그인 하십시오.', G5_BBS_URL.'/login.php?url=' . urlencode(correct_goto_url(G5_ADMIN_URL)));
 }
 else if ($is_admin != 'super')
 {
@@ -540,6 +571,11 @@ foreach($menu_files as $file){
     include_once($file);
 }
 @ksort($amenu);
+
+$amenu = run_replace('admin_amenu', $amenu);
+if( isset($menu) && $menu ){
+    $menu = run_replace('admin_menu', $menu); 
+}
 
 $arr_query = array();
 if (isset($sst))  $arr_query[] = 'sst='.$sst;
