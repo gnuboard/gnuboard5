@@ -127,6 +127,8 @@ for ($i=1; $i<=10; $i++) {
 
 @include_once($board_skin_path.'/write_update.head.skin.php');
 
+run_event('write_update_before', $board, $wr_id, $w, $qstr);
+
 if ($w == '' || $w == 'u') {
 
     // 외부에서 글을 등록할 수 있는 버그가 존재하므로 공지는 관리자만 등록이 가능해야 함
@@ -211,12 +213,14 @@ if ($w == '' || $w == 'r') {
 if (!isset($_POST['wr_subject']) || !trim($_POST['wr_subject']))
     alert('제목을 입력하여 주십시오.');
 
+$wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($wr_subject), $write_table, $wr_id);
+
 if ($w == '' || $w == 'r') {
 
     if ($member['mb_id']) {
         $mb_id = $member['mb_id'];
         $wr_name = addslashes(clean_xss_tags($board['bo_use_name'] ? $member['mb_name'] : $member['mb_nick']));
-        $wr_password = $member['mb_password'];
+        $wr_password = '';
         $wr_email = addslashes($member['mb_email']);
         $wr_homepage = addslashes(clean_xss_tags($member['mb_homepage']));
     } else {
@@ -251,6 +255,7 @@ if ($w == '' || $w == 'r') {
                      wr_option = '$html,$secret,$mail',
                      wr_subject = '$wr_subject',
                      wr_content = '$wr_content',
+                     wr_seo_title = '$wr_seo_title',
                      wr_link1 = '$wr_link1',
                      wr_link2 = '$wr_link2',
                      wr_link1_hit = 0,
@@ -304,10 +309,10 @@ if ($w == '' || $w == 'r') {
     }
 }  else if ($w == 'u') {
     if (get_session('ss_bo_table') != $_POST['bo_table'] || get_session('ss_wr_id') != $_POST['wr_id']) {
-        alert('올바른 방법으로 수정하여 주십시오.', G5_BBS_URL.'/board.php?bo_table='.$bo_table);
+        alert('올바른 방법으로 수정하여 주십시오.', get_pretty_url($bo_table));
     }
 
-    $return_url = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+    $return_url = get_pretty_url($bo_table, $wr_id);
 
     if ($is_admin == 'super') // 최고관리자 통과
         ;
@@ -328,7 +333,7 @@ if ($w == '' || $w == 'r') {
             alert('자신의 글이 아니므로 수정할 수 없습니다.', $return_url);
     } else {
         if ($write['mb_id'])
-            alert('로그인 후 수정하세요.', './login.php?url='.urlencode($return_url));
+            alert('로그인 후 수정하세요.', G5_BBS_URL.'/login.php?url='.urlencode($return_url));
     }
 
     if ($member['mb_id']) {
@@ -372,6 +377,7 @@ if ($w == '' || $w == 'r') {
                      wr_option = '{$html},{$secret},{$mail}',
                      wr_subject = '{$wr_subject}',
                      wr_content = '{$wr_content}',
+                     wr_seo_title = '$wr_seo_title',
                      wr_link1 = '{$wr_link1}',
                      wr_link2 = '{$wr_link2}',
                      mb_id = '{$mb_id}',
@@ -418,6 +424,9 @@ if ($w == '' || $w == 'r') {
 
     $bo_notice = board_notice($board['bo_notice'], $wr_id, $notice);
     sql_query(" update {$g5['board_table']} set bo_notice = '{$bo_notice}' where bo_table = '{$bo_table}' ");
+
+    // 글을 수정한 경우에는 제목이 달라질수도 있으니 static variable 를 새로고침합니다.
+    $write = get_write( $write_table, $wr['wr_id'], false);
 }
 
 // 게시판그룹접근사용을 하지 않아야 하고 비회원 글읽기가 가능해야 하며 비밀글이 아니어야 합니다.
@@ -460,13 +469,20 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
     $upload[$i]['image'][0] = '';
     $upload[$i]['image'][1] = '';
     $upload[$i]['image'][2] = '';
+    $upload[$i]['fileurl'] = '';
+    $upload[$i]['thumburl'] = '';
+    $upload[$i]['storage'] = '';
 
     // 삭제에 체크가 되어있다면 파일을 삭제합니다.
     if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
         $upload[$i]['del_check'] = true;
 
-        $row = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
-        @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+        $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
+
+        $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
+        if( file_exists($delete_file) ){
+            @unlink($delete_file);
+        }
         // 썸네일삭제
         if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
             delete_board_thumbnail($bo_table, $row['bf_file']);
@@ -518,8 +534,12 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
         // 4.00.11 - 글답변에서 파일 업로드시 원글의 파일이 삭제되는 오류를 수정
         if ($w == 'u') {
             // 존재하는 파일이 있다면 삭제합니다.
-            $row = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-            @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+            $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
+
+            $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
+            if( file_exists($delete_file) ){
+                @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+            }
             // 이미지파일이면 썸네일삭제
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
                 delete_board_thumbnail($bo_table, $row['bf_file']);
@@ -546,6 +566,9 @@ for ($i=0; $i<count($_FILES['bf_file']['name']); $i++) {
 
         // 올라간 파일의 퍼미션을 변경합니다.
         chmod($dest_file, G5_FILE_PERMISSION);
+
+        $dest_file = run_replace('write_update_upload_file', $dest_file, $board, $wr_id, $w);
+        $upload[$i] = run_replace('write_update_upload_array', $upload[$i], $dest_file, $board, $wr_id, $w);
     }
 }
 
@@ -567,6 +590,9 @@ for ($i=0; $i<count($upload); $i++)
                         set bf_source = '{$upload[$i]['source']}',
                              bf_file = '{$upload[$i]['file']}',
                              bf_content = '{$bf_content[$i]}',
+                             bf_fileurl = '{$upload[$i]['fileurl']}',
+                             bf_thumburl = '{$upload[$i]['thumburl']}',
+                             bf_storage = '{$upload[$i]['storage']}',
                              bf_filesize = '{$upload[$i]['filesize']}',
                              bf_width = '{$upload[$i]['image']['0']}',
                              bf_height = '{$upload[$i]['image']['1']}',
@@ -596,6 +622,9 @@ for ($i=0; $i<count($upload); $i++)
                          bf_source = '{$upload[$i]['source']}',
                          bf_file = '{$upload[$i]['file']}',
                          bf_content = '{$bf_content[$i]}',
+                         bf_fileurl = '{$upload[$i]['fileurl']}',
+                         bf_thumburl = '{$upload[$i]['thumburl']}',
+                         bf_storage = '{$upload[$i]['storage']}',
                          bf_download = 0,
                          bf_filesize = '{$upload[$i]['filesize']}',
                          bf_width = '{$upload[$i]['image']['0']}',
@@ -603,6 +632,8 @@ for ($i=0; $i<count($upload); $i++)
                          bf_type = '{$upload[$i]['image']['2']}',
                          bf_datetime = '".G5_TIME_YMDHIS."' ";
         sql_query($sql);
+
+        run_event('write_update_file_insert', $bo_table, $wr_id, $upload[$i], $w);
     }
 }
 
@@ -655,7 +686,7 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
     $subject = '['.$config['cf_title'].'] '.$board['bo_subject'].' 게시판에 '.$str.'글이 올라왔습니다.';
 
-    $link_url = G5_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.'&amp;'.$qstr;
+    $link_url = get_pretty_url($bo_table, $wr_id, $qstr);
 
     include_once(G5_LIB_PATH.'/mailer.lib.php');
 
@@ -686,7 +717,8 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
     // 중복된 메일 주소는 제거
     $unique_email = array_unique($array_email);
-    $unique_email = array_values($unique_email);
+    $unique_email = run_replace('write_update_mail_list', array_values($unique_email), $board, $wr_id);
+
     for ($i=0; $i<count($unique_email); $i++) {
         mailer($wr_name, $wr_email, $unique_email[$i], $subject, $content, 1);
     }
@@ -698,8 +730,12 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
 
 delete_cache_latest($bo_table);
 
+$redirect_url = run_replace('write_update_move_url', short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr), $board, $wr_id, $w, $qstr, $file_upload_msg);
+
+run_event('write_update_after', $board, $wr_id, $w, $qstr, $redirect_url);
+
 if ($file_upload_msg)
-    alert($file_upload_msg, G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
+    alert($file_upload_msg, $redirect_url);
 else
-    goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id.$qstr);
+    goto_url($redirect_url);
 ?>

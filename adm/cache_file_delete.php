@@ -10,6 +10,8 @@ if(function_exists('social_log_file_delete')){
     social_log_file_delete();
 }
 
+run_event('adm_cache_file_delete_before');
+
 $g5['title'] = '캐시파일 일괄삭제';
 include_once('./admin.head.php');
 ?>
@@ -31,6 +33,9 @@ $cnt=0;
 echo '<ul class="session_del">'.PHP_EOL;
 
 $files = glob(G5_DATA_PATH.'/cache/latest-*');
+$content_files = glob(G5_DATA_PATH.'/cache/content-*');
+
+$files = array_merge($files, $content_files);
 if (is_array($files)) {
     foreach ($files as $cache_file) {
         $cnt++;
@@ -43,6 +48,8 @@ if (is_array($files)) {
             echo PHP_EOL;
     }
 }
+
+run_event('adm_cache_file_delete');
 
 echo '<li>완료됨</li></ul>'.PHP_EOL;
 echo '<div class="local_desc01 local_desc"><p><strong>최신글 캐시파일 '.$cnt.'건 삭제 완료됐습니다.</strong><br>프로그램의 실행을 끝마치셔도 좋습니다.</p></div>'.PHP_EOL;

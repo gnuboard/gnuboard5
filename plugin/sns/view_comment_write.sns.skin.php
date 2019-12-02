@@ -7,47 +7,6 @@ if (!$board['bo_use_sns']) return;
 <ul id="bo_vc_sns">
 <?php
 //============================================================================
-// 페이스북
-//----------------------------------------------------------------------------
-if ($config['cf_facebook_appid']) {
-    $facebook_user = get_session("ss_facebook_user");
-    if (!$facebook_user) {
-        include_once(G5_SNS_PATH."/facebook/src/facebook.php");
-        $facebook = new Facebook(array(
-            'appId'  => $config['cf_facebook_appid'],
-            'secret' => $config['cf_facebook_secret']
-        ));
-
-        $facebook_user = $facebook->getUser();
-
-        if ($facebook_user) {
-            try {
-                $facebook_user_profile = $facebook->api('/me');
-            } catch (FacebookApiException $e) {
-                error_log($e);
-                $facebook_user = null;
-            }
-        }
-    }
-
-    echo '<li class="sns_li_f '.($facebook_user?'':'sns_li_off').'">';
-    if ($facebook_user) {
-        echo '<img src="'.G5_SNS_URL.'/icon/facebook.png" id="facebook_icon">';
-        echo '<label for="" class="sound_only">페이스북 동시 등록</label>';
-        echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" '.(get_cookie('ck_facebook_checked')?'checked':'').' value="1">';
-    } else {
-        $facebook_url = $facebook->getLoginUrl(array("redirect_uri"=>G5_SNS_URL."/facebook/callback.php", "scope"=>"publish_stream,read_stream,offline_access", "display"=>"popup"));
-        echo '<input type="checkbox" name="facebook_checked" id="facebook_checked" disabled value="1">';
-        echo '<a href="'.$facebook_url.'" id="facebook_url" onclick="return false;"><img src="'.G5_SNS_URL.'/icon/facebook.png" id="facebook_icon" width="20"></a>';
-        echo '<label for="" class="sound_only">페이스북 동시 등록</label>';
-        echo '<script>$(function(){ $(document).on("click", "#facebook_url", function(){ window.open(this.href, "facebook_url", "width=600,height=250"); }); });</script>';
-    }
-    echo '</li>';
-}
-//============================================================================
-
-
-//============================================================================
 // 트위터
 //----------------------------------------------------------------------------
 if ($config['cf_twitter_key']) {
