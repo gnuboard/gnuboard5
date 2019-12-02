@@ -21,18 +21,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     if ($is_dhtml_editor) {
         $option_hidden .= '<input type="hidden" name="qa_html" value="1">';
     } else {
-        $option .= "\n".'<input type="checkbox" id="qa_html" name="qa_html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.'>'."\n".'<label for="qa_html">html</label>';
+        $option .= "\n".'<input type="checkbox" id="qa_html" name="qa_html" onclick="html_auto_br(this);" value="'.$html_value.'" '.$html_checked.' class="selec_chk">'."\n".'<label for="qa_html"><span></span>html</label>';
     }
 
     echo $option_hidden;
-    ?>
-
+    ?>           	
     <div class="form_01">
         <ul>
             <?php if ($category_option) { ?>
-            <li>
+            <li class="bo_w_select">
                 <label for="qa_category" class="sound_only">분류<strong>필수</strong></label>
-                <select name="qa_category" id="qa_category" required class="required" >
+                <select name="qa_category" id="qa_category" required class="required">
                     <option value="">선택하세요</option>
                     <?php echo $category_option ?>
                 </select>
@@ -42,7 +41,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             <?php if ($option) { ?>
             <li>
                 <span class="sound_only">옵션</span>
+                <div class="chk_op chk_box">
                 <?php echo $option; ?>
+                </div>
             </li>
             <?php } ?>
 
@@ -50,8 +51,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             <li>
                 <label for="qa_email" class="sound_only">이메일</label>
                 <input type="email" name="qa_email" value="<?php echo get_text($write['qa_email']); ?>" id="qa_email" <?php echo $req_email; ?> class="<?php echo $req_email.' '; ?>frm_input full_input email" maxlength="100" placeholder="이메일">
-                <input type="checkbox" name="qa_email_recv" value="1" id="qa_email_recv" <?php if($write['qa_email_recv']) echo 'checked="checked"'; ?>>
-                <label for="qa_email_recv">답변받기</label>
+                <div class="chk_op chk_box">
+					<input type="checkbox" name="qa_email_recv" value="1" id="qa_email_recv" <?php if($write['qa_email_recv']) echo 'checked="checked"'; ?> class="selec_chk">
+                	<label for="qa_email_recv"><span></span>답변받기</label>                  
+                </div>
             </li>
             <?php } ?>
 
@@ -60,14 +63,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 <label for="qa_hp" class="sound_only">휴대폰</label>
                 <input type="text" name="qa_hp" value="<?php echo get_text($write['qa_hp']); ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_hp.' '; ?>frm_input full_input" size="30" placeholder="휴대폰">
                 <?php if($qaconfig['qa_use_sms']) { ?>
-                <input type="checkbox" name="qa_sms_recv" value="1" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?>> 답변등록 SMS알림 수신
+                <div class="chk_op chk_box">
+                	<input type="checkbox" name="qa_sms_recv" value="1" id="qa_sms_recv" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?> class="selec_chk">
+                	<label for="qa_sms_recv"><span></span>답변등록 SMS알림 수신</label>                  
+                </div>
                 <?php } ?>
             </li>
             <?php } ?>
 
-            <li>
+            <li class="bo_w_tit">
                 <label for="qa_subject" class="sound_only">제목<strong>필수</strong></label>
-                <input type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required class="frm_input required" maxlength="255" placeholder="제목">
+                <input type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required class="frm_input full_input required" maxlength="255" placeholder="제목">
             </li>
 
             <li>
@@ -78,21 +84,23 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             </li>
 
             <li class="bo_w_flie">
-                <div class="file_wr">
-                    <span class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only">파일 #1</span></span>
-                    <input type="file" name="bf_file[1]" title="파일첨부 1 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
-                    <?php if($w == 'u' && $write['qa_file1']) { ?>
-                    <input type="checkbox" id="bf_file_del1" name="bf_file_del[1]" value="1"> <label for="bf_file_del1"><?php echo $write['qa_source1']; ?> 파일 삭제</label>
-                    <?php } ?>
+                <div class="file_wr filebox">
+                	<input type="text" class="fileName" readonly="readonly" placeholder="파일을 첨부하세요">
+                    <label for="bf_file[1]"><i class="fa fa-download lb_icon" aria-hidden="true"></i><span class="sound_only">파일 #1</span><span class="btn_file">파일첨부</span></label>
+                    <input type="file" name="bf_file[1]" id="bf_file[1]" title="파일첨부 1 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file uploadBtn">
+                	<?php if($w == 'u' && $write['qa_file1']) { ?>
+                		<input type="checkbox" id="bf_file_del1" name="bf_file_del[1]" value="1">
+                		<label for="bf_file_del1"><?php echo $write['qa_source1']; ?> 파일 삭제</label>
+                	<?php } ?>
                 </div>
-            </li>
-
-            <li class="bo_w_flie">
-                <div class="file_wr">
-                    <span class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only">파일 #2</span></span>
-                    <input type="file" name="bf_file[2]" title="파일첨부 2 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
+				<br>
+                <div class="file_wr filebox">
+                	<input type="text" class="fileName" readonly="readonly" placeholder="파일을 첨부하세요">
+                    <label for="bf_file[2]"><i class="fa fa-download lb_icon" aria-hidden="true"></i><span class="sound_only">파일 #2</span><span class="btn_file">파일첨부</span></label>
+                    <input type="file" name="bf_file[2]" id="bf_file[2]" title="파일첨부 2 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file uploadBtn">
                     <?php if($w == 'u' && $write['qa_file2']) { ?>
-                    <input type="checkbox" id="bf_file_del2" name="bf_file_del[2]" value="1"> <label for="bf_file_del2"><?php echo $write['qa_source2']; ?> 파일 삭제</label>
+                    <input type="checkbox" id="bf_file_del2" name="bf_file_del[2]" value="1">
+                    <label for="bf_file_del2"><?php echo $write['qa_source2']; ?> 파일 삭제</label>
                     <?php } ?>
                 </div>
             </li>
@@ -100,9 +108,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
         </ul>
     </div>
 
-    <div class="btn_top top">
-        <a href="<?php echo $list_href; ?>" class="btn_cancel"><i class="fa fa-list" aria-hidden="true"></i><span class="sound_only">목록</span></a>
-        <button type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit"><i class="fa fa-pencil" aria-hidden="true"></i> 작성완료</button>
+    <div class="btn_confirm">
+        <a href="<?php echo $list_href; ?>" class="btn_cancel">취소</a>
+        <button type="submit" id="btn_submit" accesskey="s" class="btn_submit">작성완료</button>
     </div>
     </form>
 
@@ -169,6 +177,15 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 
         return true;
     }
+    var uploadFile = $('.filebox .uploadBtn');
+	uploadFile.on('change', function(){
+		if(window.FileReader){
+			var filename = $(this)[0].files[0].name;
+		} else {
+			var filename = $(this).val().split('/').pop().split('\\').pop();
+		}
+		$(this).siblings('.fileName').val(filename);
+	});
     </script>
 </section>
 <!-- } 게시물 작성/수정 끝 -->

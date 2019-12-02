@@ -15,8 +15,9 @@ include_once(G5_MOBILE_PATH.'/head.php');
 $sql = " select bo_table
             from `{$g5['board_table']}` a left join `{$g5['group_table']}` b on (a.gr_id=b.gr_id)
             where a.bo_device <> 'pc' ";
-if(!$is_admin)
+if(!$is_admin) {
     $sql .= " and a.bo_use_cert = '' ";
+}
 $sql .= " order by b.gr_order, a.bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
@@ -25,7 +26,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
     // 사용방법
     // latest(스킨, 게시판아이디, 출력라인, 글자수);
-    echo latest('basic', $row['bo_table'], 5, 25);
+    echo latest('basic', $row['bo_table'], 12, 25);
 }
 ?>
 <!-- 메인화면 최신글 끝 -->

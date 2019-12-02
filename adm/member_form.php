@@ -240,9 +240,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             <input type="file" name="mb_icon" id="mb_icon">
             <?php
             $mb_dir = substr($mb['mb_id'],0,2);
-            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+            $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb['mb_id']).'.gif';
             if (file_exists($icon_file)) {
-                $icon_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+                $icon_url = str_replace(G5_DATA_PATH, G5_DATA_URL, $icon_file);
                 echo '<img src="'.$icon_url.'" alt="">';
                 echo '<input type="checkbox" id="del_mb_icon" name="del_mb_icon" value="1">삭제';
             }
@@ -256,9 +256,9 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             <input type="file" name="mb_img" id="mb_img">
             <?php
             $mb_dir = substr($mb['mb_id'],0,2);
-            $icon_file = G5_DATA_PATH.'/member_image/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+            $icon_file = G5_DATA_PATH.'/member_image/'.$mb_dir.'/'.get_mb_icon_name($mb['mb_id']).'.gif';
             if (file_exists($icon_file)) {
-                $icon_url = G5_DATA_URL.'/member_image/'.$mb_dir.'/'.$mb['mb_id'].'.gif';
+                $icon_url = str_replace(G5_DATA_PATH, G5_DATA_URL, $icon_file);
                 echo '<img src="'.$icon_url.'" alt="">';
                 echo '<input type="checkbox" id="del_mb_img" name="del_mb_img" value="1">삭제';
             }
@@ -441,6 +441,8 @@ this.form.mb_intercept_date.value=this.form.mb_intercept_date.defaultValue; }">
     <?php
         }   //end if
     }   //end if
+
+    run_event('admin_member_form_add', $mb, $w, 'table');
     ?>
 
     <?php for ($i=1; $i<=10; $i++) { ?>
@@ -476,7 +478,8 @@ function fmember_submit(f)
     return true;
 }
 </script>
-
 <?php
+run_event('admin_member_form_after', $mb, $w);
+
 include_once('./admin.tail.php');
 ?>

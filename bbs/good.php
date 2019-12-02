@@ -1,10 +1,12 @@
 <?php
 include_once('./_common.php');
 
+run_event('bbs_good_before', $bo_table, $wr_id, $good);
+
 @include_once($board_skin_path.'/good.head.skin.php');
 
 // 자바스크립트 사용가능할 때
-if($_POST['js'] == "on") {
+if(isset($_POST['js']) && $_POST['js'] === "on") {
     $error = $count = "";
 
     function print_result($error, $count)
@@ -81,6 +83,8 @@ if($_POST['js'] == "on") {
             $row = sql_fetch($sql);
 
             $count = $row['count'];
+			
+			run_event('bbs_increase_good_json', $bo_table, $wr_id, $good);
 
             print_result($error, $count);
         }
@@ -90,7 +94,7 @@ if($_POST['js'] == "on") {
 
     if (!$is_member)
     {
-        $href = './login.php?'.$qstr.'&amp;url='.urlencode('./board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id);
+        $href = G5_BBS_URL.'/login.php?'.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id));
 
         alert('회원만 가능합니다.', $href);
     }
@@ -144,12 +148,16 @@ if($_POST['js'] == "on") {
             else
                 $status = '비추천';
 
-            $href = './board.php?bo_table='.$bo_table.'&amp;wr_id='.$wr_id;
+            $href = get_pretty_url($bo_table, $wr_id);
+			
+			run_event('bbs_increase_good_html', $bo_table, $wr_id, $good, $href);
 
             alert("이 글을 $status 하셨습니다.", '', false);
         }
     }
 }
+
+run_event('bbs_good_after', $bo_table, $wr_id, $good);
 
 @include_once($board_skin_path.'/good.tail.skin.php');
 ?>

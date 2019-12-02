@@ -7,7 +7,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$connect_skin_url.'/style.css">',
 
 <div id="current_connect">
     <ul>
-
     <?php
     for ($i=0; $i<count($list); $i++) {
         $location = conv_content($list[$i]['lo_location'], 0);
@@ -17,10 +16,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$connect_skin_url.'/style.css">',
         else $display_location = $location;
     ?>
         <li>
-            <div class="crt_wr">
-                <span class="crt_num"><?php echo $list[$i]['num'] ?></span>
-                <span class="crt_name"><?php echo get_member_profile_img($list[$i]['mb_id']); ?><br><?php echo $list[$i]['name'] ?></span>
-                <span class="crt_lct"><?php echo $display_location ?></span>
+            <span class="crt_num"><?php echo $list[$i]['num'] ?></span>
+            <span class="crt_profile"><?php echo get_member_profile_img($list[$i]['mb_id']); ?></span>
+            <div class="crt_info">
+            	<span class="crt_name"><?php echo $list[$i]['name'] ?></span>
+            	<span class="crt_lct"><?php echo $display_location ?></span>  
             </div>
         </li>
     <?php

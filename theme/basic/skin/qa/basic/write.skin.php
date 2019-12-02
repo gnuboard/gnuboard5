@@ -31,42 +31,38 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     <div class="form_01">
         <ul>
             <?php if ($category_option) { ?>
-            <li>
+            <li class="bo_w_select write_div">
                 <label for="qa_category" class="sound_only">분류<strong>필수</strong></label>
                 <select name="qa_category" id="qa_category" required >
                     <option value="">분류를 선택하세요</option>
                     <?php echo $category_option ?>
                 </select>
-                
             </li>
             <?php } ?>
 
-
             <?php if ($is_email) { ?>
-            <li class="bo_w_mail">
+            <li class="bo_w_mail chk_box">
                 <label for="qa_email" class="sound_only">이메일</label>
                 <input type="text" name="qa_email" value="<?php echo get_text($write['qa_email']); ?>" id="qa_email" <?php echo $req_email; ?> class="<?php echo $req_email.' '; ?>frm_input full_input email" size="50" maxlength="100" placeholder="이메일">
-                <input type="checkbox" name="qa_email_recv" id="qa_email_recv" value="1" <?php if($write['qa_email_recv']) echo 'checked="checked"'; ?>>
-                <label for="qa_email_recv" class="frm_info">답변받기</label>
-            
-            </li>
+                <input type="checkbox" name="qa_email_recv" id="qa_email_recv" value="1" <?php if($write['qa_email_recv']) echo 'checked="checked"'; ?> class="selec_chk">
+                <label for="qa_email_recv" class="frm_info"><span></span>답변받기</label>
+            </li/>
             <?php } ?>
 
             <?php if ($is_hp) { ?>
-            <li class="bo_w_hp">
+            <li class="bo_w_hp chk_box">
                 <label for="qa_hp" class="sound_only">휴대폰</label>
                 <input type="text" name="qa_hp" value="<?php echo get_text($write['qa_hp']); ?>" id="qa_hp" <?php echo $req_hp; ?> class="<?php echo $req_hp.' '; ?>frm_input full_input" size="30" placeholder="휴대폰">
                 <?php if($qaconfig['qa_use_sms']) { ?>
-                <input type="checkbox" name="qa_sms_recv" id="qa_sms_recv" value="1" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?>> <label for="qa_sms_recv" class="frm_info">답변등록 SMS알림 수신</label>
+                <input type="checkbox" name="qa_sms_recv" id="qa_sms_recv" value="1" <?php if($write['qa_sms_recv']) echo 'checked="checked"'; ?>  class="selec_chk">
+                <label for="qa_sms_recv" class="frm_info"><span></span>답변등록 SMS알림 수신</label>
                 <?php } ?>
             </li>
             <?php } ?>
 
             <li class="bo_w_sbj">
                 <label for="qa_subject" class="sound_only">제목<strong class="sound_only">필수</strong></label>
-                
-                    <input type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">
-                
+				<input type="text" name="qa_subject" value="<?php echo get_text($write['qa_subject']); ?>" id="qa_subject" required class="frm_input full_input required" size="50" maxlength="255" placeholder="제목">        
             </li>
 
             <li class="qa_content_wrap <?php echo $is_dhtml_editor ? $config['cf_editor'] : ''; ?>">
@@ -103,12 +99,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             </li>
         </ul>
     </div>
-
-    <div class="btn_confirm">
-        <a href="<?php echo $list_href; ?>" class="btn_cancel btn"><i class="fa fa-list" aria-hidden="true"></i> 목록</a>
-        <button type="submit" value="작성완료" id="btn_submit" accesskey="s" class="btn_submit btn"><i class="fa fa-check" aria-hidden="true"></i> 작성완료 </button>
-
+    
+    <div class="btn_confirm write_div">
+        <a href="<?php echo $list_href; ?>" class="btn_cancel btn">취소</a>
+        <button type="submit" id="btn_submit" accesskey="s" class="btn_submit btn">작성완료</button>
     </div>
+    
     </form>
 
     <script>

@@ -10,6 +10,10 @@ if (!count($_POST['chk'])) {
 
 check_admin_token();
 
+$act_button = isset($_POST['act_button']) ? strip_tags($_POST['act_button']) : '';
+$chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? $_POST['chk'] : array();
+$board_table = (isset($_POST['board_table']) && is_array($_POST['board_table'])) ? $_POST['board_table'] : array();
+
 if ($_POST['act_button'] == "선택수정") {
 
     auth_check($auth[$sub_menu], 'w');
@@ -73,6 +77,8 @@ if ($_POST['act_button'] == "선택수정") {
 
 
 }
+
+run_event('admin_board_list_update', $act_button, $chk, $board_table, $qstr);
 
 goto_url('./board_list.php?'.$qstr);
 ?>

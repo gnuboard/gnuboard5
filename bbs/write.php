@@ -31,6 +31,8 @@ if ($w == 'u' || $w == 'r') {
     }
 }
 
+run_event('bbs_write', $board, $wr_id, $w);
+
 if ($w == '') {
     if ($wr_id) {
         alert('글쓰기에는 \$wr_id 값을 사용하지 않습니다.', G5_BBS_URL.'/board.php?bo_table='.$bo_table);
@@ -40,7 +42,7 @@ if ($w == '') {
         if ($member['mb_id']) {
             alert('글을 쓸 권한이 없습니다.');
         } else {
-            alert("글을 쓸 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.", './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
+            alert("글을 쓸 권한이 없습니다.\\n회원이시라면 로그인 후 이용해 보십시오.", G5_BBS_URL.'/login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
         }
     }
 
@@ -62,7 +64,7 @@ if ($w == '') {
         if ($member['mb_id']) {
             alert('글을 수정할 권한이 없습니다.');
         } else {
-            alert('글을 수정할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
+            alert('글을 수정할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
         }
     }
 
@@ -95,7 +97,7 @@ if ($w == '') {
         if ($member['mb_id'])
             alert('글을 답변할 권한이 없습니다.');
         else
-            alert('답변글을 작성할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', './login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
+            alert('답변글을 작성할 권한이 없습니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?'.$qstr.'&amp;url='.urlencode($_SERVER['SCRIPT_NAME'].'?bo_table='.$bo_table));
     }
 
     $tmp_point = isset($member['mb_point']) ? $member['mb_point'] : 0;
@@ -310,7 +312,8 @@ if ($w == '') {
     if (!$is_admin) {
         if (!($is_member && $member['mb_id'] === $write['mb_id'])) {
             if (!check_password($wr_password, $write['wr_password'])) {
-                alert('비밀번호가 틀립니다.');
+                $is_wrong = run_replace('invalid_password', false, 'write', $write);
+                if(!$is_wrong) alert('비밀번호가 틀립니다.');
             }
         }
     }

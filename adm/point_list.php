@@ -131,7 +131,7 @@ else
 
         $link1 = $link2 = '';
         if (!preg_match("/^\@/", $row['po_rel_table']) && $row['po_rel_table']) {
-            $link1 = '<a href="'.G5_BBS_URL.'/board.php?bo_table='.$row['po_rel_table'].'&amp;wr_id='.$row['po_rel_id'].'" target="_blank">';
+            $link1 = '<a href="'.get_pretty_url($row['po_rel_table'], $row['po_rel_id']).'" target="_blank">';
             $link2 = '</a>';
         }
 

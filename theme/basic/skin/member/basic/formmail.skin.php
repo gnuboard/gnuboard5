@@ -34,11 +34,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <label for="subject" class="sound_only">제목<strong>필수</strong></label>
                 <input type="text" name="subject" id="subject" required class="frm_input full_input required"  placeholder="제목">
             </li>
-            <li>
+            <li class="chk_box">
                 <span class="sound_only">형식</span>
-                <input type="radio" name="type" value="0" id="type_text" checked> <label for="type_text">TEXT</label>
-                <input type="radio" name="type" value="1" id="type_html"> <label for="type_html">HTML</label>
-                <input type="radio" name="type" value="2" id="type_both"> <label for="type_both">TEXT+HTML</label>
+                <input type="radio" name="type" value="0" id="type_text" checked>
+                <label for="type_text"><span></span>TEXT</label>
+                
+                <input type="radio" name="type" value="1" id="type_html">
+                <label for="type_html"><span></span>HTML</label>
+                
+                <input type="radio" name="type" value="2" id="type_both">
+                <label for="type_both"><span></span>TEXT+HTML</label>
             </li>
             <li>
                 <label for="content" class="sound_only">내용<strong>필수</strong></label>
@@ -49,8 +54,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                     <label for="file1" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 첨부 파일 1</span></label>
                     <input type="file" name="file1"  id="file1"  class="frm_file full_input">
                </div>
-               <div class="frm_info">첨부 파일은 누락될 수 있으므로 메일을 보낸 후 파일이 첨부 되었는지 반드시 확인해 주시기 바랍니다.</div>
-                
+               <div class="frm_info">첨부 파일은 누락될 수 있으므로 메일을 보낸 후 파일이 첨부 되었는지 반드시 확인해 주시기 바랍니다.</div>   
             </li>
             <li class="formmail_flie">
                 <div class="file_wr">
@@ -64,7 +68,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             </li>
         </ul>
         <div class="win_btn">
-            <input type="submit" value="메일발송" id="btn_submit" class="btn_submit">
+        	<button type="submit" id="btn_submit" class="btn_b02 reply_btn">메일발송</button>
             <button type="button" onclick="window.close();" class="btn_close">창닫기</button>
         </div>
     </div>
