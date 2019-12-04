@@ -6,13 +6,14 @@ include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 0);
 $thumb_width = 297;
 $thumb_height = 212;
+$list_count = (is_array($list) && $list) ? count($list) : 0;
 ?>
 
 <div class="pic_li_lt">
     <h2 class="lat_title"><a href="<?php echo get_pretty_url($bo_table); ?>"><?php echo $bo_subject ?></a></h2>
     <ul>
     <?php
-    for ($i=0; $i<count($list); $i++) {
+    for ($i=0; $i<$list_count; $i++) {
         
         $img_link_html = '';
         
@@ -63,7 +64,7 @@ $thumb_height = 212;
             </div>
         </li>
     <?php }  ?>
-    <?php if (count($list) == 0) { //게시물이 없을 때  ?>
+    <?php if ($list_count == 0) { //게시물이 없을 때  ?>
     <li class="empty_li">게시물이 없습니다.</li>
     <?php }  ?>
     </ul>

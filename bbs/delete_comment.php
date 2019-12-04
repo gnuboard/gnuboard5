@@ -88,5 +88,5 @@ delete_cache_latest($bo_table);
 
 run_event('bbs_delete_comment', $comment_id, $board);
 
-goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr);
+goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr));
 ?>
