@@ -10,7 +10,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
 add_stylesheet('<link rel="stylesheet" href="'.$latest_skin_url.'/style.css">', 0);
 $thumb_width = 138;
 $thumb_height = 80;
-$list_count = count($list);
+$list_count = (is_array($list) && $list) ? count($list) : 0;
 $divisor_count = 4;
 $start_page_num = $list_count ? '1' : '0';
 $is_show_next_prev = ($list_count > 4) ? 1 : 0;

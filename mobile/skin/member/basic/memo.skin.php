@@ -35,7 +35,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 						    <a href="<?php echo $list[$i]['view_href'] ?>"><?php echo $memo_preview; ?></a>
                         </div>
 					</div>	
-	                <?php// 쪽지 읽은 시간 echo $list[$i]['read_datetime'] ?>	
+	                <?php /* 쪽지 읽은 시간 echo $list[$i]['read_datetime']; */ ?>	
 					<a href="<?php echo $list[$i]['del_href'] ?>" onclick="del(this.href); return false;" class="memo_del"><i class="fa fa-trash-o" aria-hidden="true"></i> <span class="sound_only">삭제</span></a>
 	            </li>
 	            <?php }  ?>
