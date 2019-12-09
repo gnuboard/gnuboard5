@@ -8,24 +8,25 @@ if ($is_admin != 'super')
 
 $board = array();
 $save_bo_table = array();
+$save_wr_id = array();
 
 for($i=0;$i<count($_POST['chk_bn_id']);$i++)
 {
     // 실제 번호를 넘김
     $k = $_POST['chk_bn_id'][$i];
 
-    $bo_table = $_POST['bo_table'][$k];
-    $wr_id    = $_POST['wr_id'][$k];
+    $bo_table = isset($_POST['bo_table'][$k]) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['bo_table'][$k]) : '';
+    $wr_id    = isset($_POST['wr_id'][$k]) ? preg_replace('/[^0-9]/i', '', $_POST['wr_id'][$k]) : 0;
 
-    $save_bo_table[] = $bo_table;
+    $save_bo_table[$i] = $bo_table;
+	$save_wr_id[$i] = $wr_id;
 
     $write_table = $g5['write_prefix'].$bo_table;
 
     if ($board['bo_table'] != $bo_table)
         $board = sql_fetch(" select bo_subject, bo_write_point, bo_comment_point, bo_notice from {$g5['board_table']} where bo_table = '$bo_table' ");
 
-    $sql = " select * from $write_table where wr_id = '$wr_id' ";
-    $write = sql_fetch($sql);
+    $write = get_write($write_table, $wr_id);
     if (!$write) continue;
 
     // 원글 삭제
@@ -138,12 +139,11 @@ for($i=0;$i<count($_POST['chk_bn_id']);$i++)
     }
 }
 
-$save_bo_table = array_unique($save_bo_table);
 foreach ($save_bo_table as $key=>$value) {
     delete_cache_latest($value);
 }
 
-run_event('bbs_new_delete', $chk_bn_id, $save_bo_table);
+run_event('bbs_new_delete', $chk_bn_id, $save_bo_table, $save_wr_id);
 
 goto_url("new.php?sfl=$sfl&stx=$stx&page=$page");
 ?>
