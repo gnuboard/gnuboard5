@@ -51,10 +51,10 @@ foreach((array) $list as $row){
         echo "</a>\n";
     }
     
-    // 할인율 표시 ( 전화문의가 아니며 판매가격 과 시중가격 이 있을때 표시 (A-B)/A*100 )
+    // 할인율 표시 ( 전화문의가 아니며 판매가격 과 시중가격 이 있을때 표시 (시중가격-판매가격)/시중가격*100 )
     if ($row['it_cust_price'] && $row['it_price'] && !$row['it_tel_inq']) {
 
-        $sale_per = round( (get_price($row)/$row['it_cust_price']) * 100 , 1).'%';
+        $sale_per = round( (((int) $row['it_cust_price'] - get_price($row))/$row['it_cust_price']) * 100 , 1).'%';
 
         echo '<span class="sct_disc">'.$sale_per.'</span>'.PHP_EOL;
     }
