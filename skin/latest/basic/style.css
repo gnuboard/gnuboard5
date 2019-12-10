@@ -17,6 +17,8 @@
 .lat li .fa-download {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#daae37;background:#ffefb9;text-align:center;border-radius:2px;vertical-align:middle}
 .lat li .fa-link {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#b451fd;background:#edd3fd;text-align:center;border-radius:2px;vertical-align:middle}
 
+.lat .profile_img img{border-radius:50%}
+
 .lt_info {padding:10px 0}
 .lt_info .lt_nick {}
 .lt_info .lt_date {color:#888}
