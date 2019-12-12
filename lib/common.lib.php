@@ -1625,6 +1625,29 @@ function sql_fetch_array($result)
     return $row;
 }
 
+// 쿼리를 실행한 후 결과값에서 모든행을 얻는다.
+function sql_fetch_all($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
+{
+    global $g5;
+
+    if(!$link)
+        $link = $g5['connect_db'];
+
+    $rows = array();
+
+    $result = sql_query($sql, $error, $link);
+    while(($row =  sql_fetch_array($result)) != null) {
+	if(function_exists('mysqli_fetch_assoc') && G5_MYSQLI_USE)
+            $row = @mysqli_fetch_assoc($result);
+        else
+            $row = @mysql_fetch_assoc($result);
+	    
+        $rows[] = $row;
+    }
+
+    return $rows    ;
+}
+
 
 // $result에 대한 메모리(memory)에 있는 내용을 모두 제거한다.
 // sql_free_result()는 결과로부터 얻은 질의 값이 커서 많은 메모리를 사용할 염려가 있을 때 사용된다.
