@@ -88,5 +88,7 @@ if($_POST['set_default_skin'] == 1) {
     }
 }
 
+run_event('adm_theme_update', $theme, $_POST['set_default_skin']);
+
 die('');
 ?>

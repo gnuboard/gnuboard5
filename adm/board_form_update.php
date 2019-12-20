@@ -76,9 +76,9 @@ $f = @fopen($file, 'w');
 // 분류에 & 나 = 는 사용이 불가하므로 2바이트로 바꾼다.
 $src_char = array('&', '=');
 $dst_char = array('＆', '〓');
-$bo_category_list = str_replace($src_char, $dst_char, $bo_category_list);
+$bo_category_list = isset($_POST['bo_category_list']) ? str_replace($src_char, $dst_char, $_POST['bo_category_list']) : '';
 //https://github.com/gnuboard/gnuboard5/commit/f5f4925d4eb28ba1af728e1065fc2bdd9ce1da58 에 따른 조치
-$str_bo_category_list = isset($_POST['bo_category_list']) ? preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $_POST['bo_category_list']) : '';
+$str_bo_category_list = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $bo_category_list);
 
 $_POST['bo_subject'] = strip_tags($_POST['bo_subject']);
 $_POST['bo_mobile_subject'] = strip_tags($_POST['bo_mobile_subject']);
@@ -289,7 +289,7 @@ if (is_checked('chk_grp_write_point'))          $grp_fields .= " , bo_write_poin
 if (is_checked('chk_grp_comment_point'))        $grp_fields .= " , bo_comment_point = '{$bo_comment_point}' ";
 if (is_checked('chk_grp_download_point'))       $grp_fields .= " , bo_download_point = '{$bo_download_point}' ";
 if (is_checked('chk_grp_category_list')) {
-    $grp_fields .= " , bo_category_list = '{$bo_category_list}' ";
+    $grp_fields .= " , bo_category_list = '{$str_bo_category_list}' ";
     $grp_fields .= " , bo_use_category = '{$bo_use_category}' ";
 }
 if (is_checked('chk_grp_use_sideview'))         $grp_fields .= " , bo_use_sideview = '{$bo_use_sideview}' ";
@@ -378,7 +378,7 @@ if (is_checked('chk_all_write_point'))          $all_fields .= " , bo_write_poin
 if (is_checked('chk_all_comment_point'))        $all_fields .= " , bo_comment_point = '{$bo_comment_point}' ";
 if (is_checked('chk_all_download_point'))       $all_fields .= " , bo_download_point = '{$bo_download_point}' ";
 if (is_checked('chk_all_category_list')) {
-    $all_fields .= " , bo_category_list = '{$bo_category_list}' ";
+    $all_fields .= " , bo_category_list = '{$str_bo_category_list}' ";
     $all_fields .= " , bo_use_category = '{$bo_use_category}' ";
 }
 if (is_checked('chk_all_use_sideview'))         $all_fields .= " , bo_use_sideview = '{$bo_use_sideview}' ";
