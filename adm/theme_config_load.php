@@ -73,7 +73,7 @@ if($type == 'board') {
     if($i == 0)
         $data['error'] = '적용할 기본환경 회원스킨 설정이 없습니다.';
 } else if($type == 'shop_skin') {
-    $keys = array('de_shop_skin', 'de_shop_mobile_skin');
+    $keys = run_replace('theme_config_load_keys', array('de_shop_skin', 'de_shop_mobile_skin'), $type);
 
     $tconfig = get_theme_config_value($config['cf_theme'], implode(',', $keys));
 
@@ -97,7 +97,8 @@ if($type == 'board') {
         $keys[] = 'de_type'.$i.'_img_width';
         $keys[] = 'de_type'.$i.'_img_height';
     }
-
+	
+	$keys = run_replace('theme_config_load_keys', $keys, $type);
     $tconfig = get_theme_config_value($config['cf_theme'], implode(',', $keys));
 
     $i = 0;
@@ -120,7 +121,8 @@ if($type == 'board') {
         $keys[] = 'de_mobile_type'.$i.'_img_width';
         $keys[] = 'de_mobile_type'.$i.'_img_height';
     }
-
+	
+	$keys = run_replace('theme_config_load_keys', $keys, $type);
     $tconfig = get_theme_config_value($config['cf_theme'], implode(',', $keys));
 
     $i = 0;
@@ -134,7 +136,7 @@ if($type == 'board') {
     if($i == 0)
         $data['error'] = '적용할 테마 설정이 없습니다.';
 } else if($type == 'shop_etc') {
-    $keys = array('de_rel_list_use', 'de_rel_list_skin', 'de_rel_list_mod', 'de_rel_img_width', 'de_rel_img_height', 'de_mobile_rel_list_use', 'de_mobile_rel_list_skin', 'de_mobile_rel_list_mod', 'de_mobile_rel_img_width', 'de_mobile_rel_img_height', 'de_search_list_skin', 'de_search_list_mod', 'de_search_list_row', 'de_search_img_width', 'de_search_img_height', 'de_mobile_search_list_skin', 'de_mobile_search_list_mod', 'de_mobile_search_list_row', 'de_mobile_search_img_width', 'de_mobile_search_img_height', 'de_mimg_width', 'de_mimg_height');
+    $keys = run_replace('theme_config_load_keys', array('de_rel_list_use', 'de_rel_list_skin', 'de_rel_list_mod', 'de_rel_img_width', 'de_rel_img_height', 'de_mobile_rel_list_use', 'de_mobile_rel_list_skin', 'de_mobile_rel_list_mod', 'de_mobile_rel_img_width', 'de_mobile_rel_img_height', 'de_search_list_skin', 'de_search_list_mod', 'de_search_list_row', 'de_search_img_width', 'de_search_img_height', 'de_mobile_search_list_skin', 'de_mobile_search_list_mod', 'de_mobile_search_list_row', 'de_mobile_search_img_width', 'de_mobile_search_img_height', 'de_mimg_width', 'de_mimg_height', 'de_listtype_list_mod', 'de_listtype_list_row', 'de_mobile_listtype_list_mod', 'de_mobile_listtype_list_row'), $type);
 
     $tconfig = get_theme_config_value($config['cf_theme'], implode(',', $keys));
 
@@ -149,7 +151,7 @@ if($type == 'board') {
     if($i == 0)
         $data['error'] = '적용할 테마 설정이 없습니다.';
 } else if($type == 'shop_event') {
-    $keys = array('ev_skin', 'ev_img_width', 'ev_img_height', 'ev_list_mod', 'ev_list_row', 'ev_mobile_skin', 'ev_mobile_img_width', 'ev_mobile_img_height', 'ev_mobile_list_mod', 'ev_mobile_list_row');
+    $keys = run_replace('theme_config_load_keys', array('ev_skin', 'ev_img_width', 'ev_img_height', 'ev_list_mod', 'ev_list_row', 'ev_mobile_skin', 'ev_mobile_img_width', 'ev_mobile_img_height', 'ev_mobile_list_mod', 'ev_mobile_list_row'), $type);
 
     $tconfig = get_theme_config_value($config['cf_theme'], implode(',', $keys));
 
@@ -164,7 +166,7 @@ if($type == 'board') {
     if($i == 0)
         $data['error'] = '적용할 테마 설정이 없습니다.';
 } else if($type == 'shop_category') {
-    $keys = array('ca_skin', 'ca_img_width', 'ca_img_height', 'ca_list_mod', 'ca_list_row', 'ca_mobile_skin', 'ca_mobile_img_width', 'ca_mobile_img_height', 'ca_mobile_list_mod', 'ca_mobile_list_row');
+    $keys = run_replace('theme_config_load_keys', array('ca_skin', 'ca_img_width', 'ca_img_height', 'ca_list_mod', 'ca_list_row', 'ca_mobile_skin', 'ca_mobile_img_width', 'ca_mobile_img_height', 'ca_mobile_list_mod', 'ca_mobile_list_row'), $type);
 
     $tconfig = get_theme_config_value($config['cf_theme'], implode(',', $keys));
 
