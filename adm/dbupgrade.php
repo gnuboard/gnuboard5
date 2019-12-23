@@ -161,6 +161,22 @@ if( !$row ) {
     $is_check = true;
 }
 
+// 임시저장 테이블이 없을 경우 생성
+if(!sql_query(" DESC {$g5['g5_shop_post_log_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_post_log_table']}` (
+                  `oid` bigint(20) unsigned NOT NULL,
+                  `mb_id` varchar(255) NOT NULL DEFAULT '',
+                  `post_data` text NOT NULL,
+                  `ol_code` varchar(255) NOT NULL DEFAULT '',
+                  `ol_msg` varchar(255) NOT NULL DEFAULT '',
+                  `ol_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  `ol_ip` varchar(25) NOT NULL DEFAULT '',
+                  PRIMARY KEY (`oid`)
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8; ", true);
+
+	$is_check = true;
+}
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';
