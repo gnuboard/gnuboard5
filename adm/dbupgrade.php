@@ -147,6 +147,22 @@ if(!isset($member['mb_memo_cnt'])) {
     $is_check = true;
 }
 
+// 스크랩 읽은 수 추가
+if(!isset($member['mb_scrap_cnt'])) {
+    sql_query(" ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_scrap_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_cnt`", true);
+
+	$is_check = true;
+}
+
+// 짧은 URL 주소를 사용 여부 필드 추가
+if (!isset($config['cf_bbs_rewrite'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_bbs_rewrite` tinyint(4) NOT NULL DEFAULT '0' AFTER `cf_link_target` ", true);
+
+	$is_check = true;
+}
+
 // 파일테이블에 추가 칼럼
 
 $sql = " SHOW COLUMNS FROM `{$g5['board_file_table']}` LIKE 'bf_fileurl' ";
