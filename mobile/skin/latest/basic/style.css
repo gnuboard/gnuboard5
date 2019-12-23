@@ -30,7 +30,13 @@
 .lt .comment_icon {background:url('./img/icon_comment.png') no-repeat 50% 50%;display:inline-block;width:20px;height:28px;text-indent:-999px;overflow:hidden;vertical-align:top;background-size:70%;margin:0 0px 0 5px}
 .lt .empty_li {text-align:center;padding:40px 0;color:#777}
 
-.lt .owl-carousel .owl-item .profile_img img{width:auto}
+.lt .owl-carousel .owl-item .profile_img img{width:auto;display:inline}
+
+.tooltipster-content .sv a{display:block;padding:0 10px;line-height:30px;font-weight:normal;color:#bbb}
+.tooltipster-content .sv a:hover{background:#000;color:#fff}
+.tooltipster-sidetip.tooltipster-sir .tooltipster-content{padding:0}
+.tooltipster-sidetip.tooltipster-sir .tooltipster-box{border:0 none;background:#333;border-radius:0}
+.tooltipster-sidetip.tooltipster-sir.tooltipster-bottom .tooltipster-arrow-border, .tooltipster-sidetip.tooltipster-sir.tooltipster-bottom .tooltipster-arrow-background{border-bottom-color:#333}
 
 .lt_page {background:#fff;text-align:center;padding:10px 15px;line-height:25px;border-bottom:1px solid #e5ecee}
 .lt_page button {display:inline-block;background:#fff;width:25px;height:25px;border:1px solid #dbdee6;text-align:center;color:#cdcdce}
