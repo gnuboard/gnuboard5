@@ -339,7 +339,6 @@ a.btn_frmline, button.btn_frmline {display:inline-block;width:128px;padding:0 5p
 a.btn_frmline {}
 button.btn_frmline {font-size:1em}
 a.btn_frmline {line-height:24px}
-button.btn_frmline {font-size:1em}
 
 /* 게시판용 버튼 */
 a.btn_b01,.btn_b01 {display:inline-block;color:#bababa;text-decoration:none;vertical-align:middle;border:0;background:transparent}
