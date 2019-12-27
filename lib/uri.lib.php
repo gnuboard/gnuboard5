@@ -119,9 +119,11 @@ function short_url_clean($string_url, $add_qry=''){
 
         $return_url = '';
         parse_str($url['query'], $vars);
-
+		
+		/*
         // 예) Array ( [scheme] => http [host] => sir.kr [path] => /bbs/board.php [query] => wr_id=1110870&bo_table=cm_free&cpage=1 [fragment] => c_1110946 )
-        //while(list($k,$v) = each($vars)) $page_name .= "/".$v;
+		foreach($vars as $k => $v) { $page_name .= "/".$v; }
+		*/
         
         if( $page_name === 'write' ){
             $vars['action'] = 'write';
@@ -173,8 +175,8 @@ function short_url_clean($string_url, $add_qry=''){
         if( $add_qry ){
             $add_param .= $add_param ? '&amp;'.$add_qry : '?'.$add_qry;
         }
-
-        while(list($k,$v) = each($s)) $return_url .= '/'.$v;
+		
+		foreach($s as $k => $v) { $return_url .= '/'.$v; }
 
         return $host.$return_url.$add_param.$fragment;
     }
