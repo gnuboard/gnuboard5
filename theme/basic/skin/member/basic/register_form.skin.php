@@ -98,15 +98,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            <?php }  ?>
 	
 	            <li>
-	                <label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong></label>
+	                <label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong>
 	                
 	                <?php if ($config['cf_use_email_certify']) {  ?>
 	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
-					<span class="tooltip">이미지 크기는 가
+					<span class="tooltip">
 	                    <?php if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; }  ?>
 	                    <?php if ($w=='u') { echo "E-mail 주소를 변경하시면 다시 인증하셔야 합니다."; }  ?>
 	                </span>
-	                <?php }  ?>
+	                <?php } ?>
+					</label>
 	                <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
 	                <input type="text" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail">
 	            
