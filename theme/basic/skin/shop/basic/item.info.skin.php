@@ -42,7 +42,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 	            <?php if ($it['it_explan']) { // 상품 상세설명 ?>
 	            <h3>상품 상세설명</h3>
 	            <div id="sit_inf_explan">
-	                <?php echo ($it['it_mobile_explan'] ? conv_content($it['it_mobile_explan'], 1) : conv_content($it['it_explan'], 1)); ?>
+	                <?php echo conv_content($it['it_explan'], 1); ?>
 	            </div>
 	            <?php } ?>
 	
