@@ -184,7 +184,9 @@ else // 장바구니에 담기
                               and ct_status = '쇼핑' ";
                 $row4 = sql_fetch($sql4);
 
-                if(($sum_qty + $row4['ct_sum']) > $it['it_buy_max_qty'])
+				$option_sum_qty = ( $act === 'optionmod' ) ? $sum_qty : $sum_qty + $row4['ct_sum'];
+
+                if(($option_sum_qty) > $it['it_buy_max_qty'])
                     alert($it['it_name'].'의 선택옵션 개수 총합 '.number_format($it['it_buy_max_qty']).'개 이하로 주문해 주십시오.', './cart.php');
             }
         }

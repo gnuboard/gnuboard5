@@ -72,7 +72,7 @@ $mshop_categories = get_shop_category_array(true);
                                             echo '<ul class="sub_cate sub_cate3">'.PHP_EOL;
                                     ?>
                                         <li>
-                                            <a href="<?php echo $mshop_ca_href.$mshop_ca_row4['ca_id']; ?>"><?php echo get_text($mshop_ca_row4['ca_name']); ?></a>
+                                            <a href="<?php echo shop_category_url($mshop_ca_row4['ca_id']); ?>"><?php echo get_text($mshop_ca_row4['ca_name']); ?></a>
                                             <?php
                                             $mshop_ca_res5 = sql_query(get_mshop_category($mshop_ca_row4['ca_id'], 10));
                                             if(sql_num_rows($mshop_ca_res5))
@@ -83,7 +83,7 @@ $mshop_categories = get_shop_category_array(true);
                                                     echo '<ul class="sub_cate sub_cate4">'.PHP_EOL;
                                             ?>
                                                 <li>
-                                                    <a href="<?php echo $mshop_ca_href.$mshop_ca_row5['ca_id']; ?>"><?php echo get_text($mshop_ca_row5['ca_name']); ?></a>
+                                                    <a href="<?php echo shop_category_url($mshop_ca_row5['ca_id']); ?>"><?php echo get_text($mshop_ca_row5['ca_name']); ?></a>
                                                 </li>
                                             <?php
                                             }
