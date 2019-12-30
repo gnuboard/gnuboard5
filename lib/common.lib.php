@@ -1631,10 +1631,15 @@ function sql_fetch_array($result)
 // 단, 결과 값은 스크립트(script) 실행부가 종료되면서 메모리에서 자동적으로 지워진다.
 function sql_free_result($result)
 {
-    if(function_exists('mysqli_free_result') && G5_MYSQLI_USE)
-        return mysqli_free_result($result);
-    else
-        return mysql_free_result($result);
+    if(function_exists('mysqli_free_result') && G5_MYSQLI_USE) {
+	if(is_resource($result) {   
+            return mysqli_free_result($result);
+	}
+    } else {
+	if(is_resource($result) {    
+            return mysql_free_result($result);
+	}
+    }
 }
 
 
@@ -1649,7 +1654,7 @@ function sql_password($value)
 
 
 function sql_insert_id($link=null)
-{
+{    
     global $g5;
 
     if(!$link)
