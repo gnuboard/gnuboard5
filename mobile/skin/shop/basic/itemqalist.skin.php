@@ -129,8 +129,7 @@ $(function(){
             $con.slideUp();
             $(this).html("<span class=\"sound_only\">내용보기</span> <i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i>");
         } else {
-            $(".sps_con_btn button").html("<span class=\"sound_only\">내용보기</span><i class=\"fa fa-chevron-down\"></i>");
-            $("div[id^=sps_con]:visible").hide();
+            $("div[id^=sqa_con]:visible").hide();
             $con.slideDown(
                 function() {
                     // 이미지 리사이즈

@@ -129,8 +129,7 @@ $(function(){
             $con.slideUp();
             $(this).html("내용보기 <i class=\"fa fa-caret-down\" aria-hidden=\"true\"></i>");
         } else {
-            $(".sps_con_btn button").html("내용보기 <i class=\"fa fa-caret-down\" aria-hidden=\"true\"></i>");
-            $("div[id^=sps_con]:visible").hide();
+            $("div[id^=sqa_con]:visible").hide();
             $con.slideDown(
                 function() {
                     // 이미지 리사이즈

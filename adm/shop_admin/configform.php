@@ -273,6 +273,10 @@ if(!isset($default['de_taxsave_types'])) {
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>스킨설정</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
         <tbody>
         <tr>
             <th scope="row"><label for="de_shop_skin">PC용 스킨</label></th>
@@ -306,6 +310,10 @@ if(!isset($default['de_taxsave_types'])) {
     <div class="tbl_frm01 tbl_wrap">
         <table>
         <caption>쇼핑몰 초기화면 설정</caption>
+        <colgroup>
+            <col class="grid_4">
+            <col>
+        </colgroup>
         <tbody>
         <tr>
             <th scope="row">히트상품출력</th>

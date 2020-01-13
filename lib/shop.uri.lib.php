@@ -1,34 +1,37 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
-function shop_type_url($type){
+function shop_type_url($type, $add_param=''){
     global $config;
 
     if( $config['cf_bbs_rewrite'] ){
-        return get_pretty_url('shop', 'type-'.$type);
+        return get_pretty_url('shop', 'type-'.$type, $add_param);
     }
-
-    return G5_SHOP_URL.'/listtype.php?type='.urlencode($type);
+	
+	$add_params = $add_param ? '&'.$add_param : '';
+    return G5_SHOP_URL.'/listtype.php?type='.urlencode($type).$add_params;
 }
 
-function shop_item_url($it_id){
+function shop_item_url($it_id, $add_param=''){
     global $config;
 
     if( $config['cf_bbs_rewrite'] ){
-        return get_pretty_url('shop', $it_id);
+        return get_pretty_url('shop', $it_id, $add_param);
     }
-
-    return G5_SHOP_URL.'/item.php?it_id='.urlencode($it_id);
+	
+	$add_params = $add_param ? '&'.$add_param : '';
+    return G5_SHOP_URL.'/item.php?it_id='.urlencode($it_id).$add_params;
 }
 
-function shop_category_url($ca_id){
+function shop_category_url($ca_id, $add_param=''){
     global $config;
 
     if( $config['cf_bbs_rewrite'] ){
-        return get_pretty_url('shop', 'list-'.$ca_id);
+        return get_pretty_url('shop', 'list-'.$ca_id, $add_param);
     }
-
-    return G5_SHOP_URL.'/list.php?ca_id='.urlencode($ca_id);
+	
+	$add_params = $add_param ? '&'.$add_param : '';
+    return G5_SHOP_URL.'/list.php?ca_id='.urlencode($ca_id).$add_params;
 }
 
 function add_pretty_shop_url($url, $folder, $no='', $query_string='', $action=''){
