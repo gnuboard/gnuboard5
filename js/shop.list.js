@@ -20,7 +20,7 @@ $.fn.listType = function(type)
     });
 
     // 버튼의 class on class 제거
-    $("button.sct_lst_view span").removeClass("sct_lst_on").html("");
+    $("button.sct_lst_view").removeClass("sct_lst_on").find("span").removeClass("sct_lst_on").find("b").remove();
 
     if(type == "gallery") {
         this.removeClass("sct sct_40");
@@ -36,7 +36,7 @@ $.fn.listType = function(type)
             }
         });
 
-        $("button.sct_lst_gallery span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
+        $("button.sct_lst_gallery").addClass("sct_lst_on").find("span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
     } else {
         if(this.data("class")) {
             this.removeAttr("class");
@@ -72,7 +72,7 @@ $.fn.listType = function(type)
             }
         });
 
-        $("button.sct_lst_list span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
+		$("button.sct_lst_list").addClass("sct_lst_on").find("span").addClass("sct_lst_on").html("<b class=\"sound_only\"> 선택됨</b>");
     }
 
     set_cookie("ck_itemlist"+itemlist_ca_id+"_type", type, 1, g5_cookie_domain);
