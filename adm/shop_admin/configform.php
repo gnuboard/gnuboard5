@@ -12,6 +12,8 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
 }
 
+check_log_folder(G5_SHOP_PATH.'/inicis/key', false);
+
 $g5['title'] = '쇼핑몰설정';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
@@ -176,6 +178,10 @@ if(!sql_query(" DESC {$g5['g5_shop_post_log_table']} ", false)) {
 if(!isset($default['de_taxsave_types'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_taxsave_types` set('account','vbank','transfer') NOT NULL DEFAULT 'account' AFTER `de_taxsave_use` ", true);
+}
+
+if( function_exists('pg_setting_check') ){
+	pg_setting_check(true);
 }
 ?>
 
@@ -1624,11 +1630,68 @@ function fconfig_check(f)
     <?php echo get_editor_js('de_baesong_content'); ?>
     <?php echo get_editor_js('de_change_content'); ?>
     <?php echo get_editor_js('de_guest_privacy'); ?>
+	
+	var msg = "",
+		pg_msg = "";
 
-    return true;
+	if( f.de_pg_service.value == "kcp" ){
+		if( f.de_kcp_mid.value && f.de_kcp_site_key.value && parseInt(f.de_card_test.value) > 0 ){
+			pg_msg = "NHN KCP";
+		}
+	} else if ( f.de_pg_service.value == "lg" ) {
+		if( f.cf_lg_mid.value && f.cf_lg_mert_key.value && parseInt(f.de_card_test.value) > 0 ){
+			pg_msg = "LG유플러스";
+		}
+	} else if ( f.de_pg_service.value == "inicis" ) {
+		if( f.de_inicis_mid.value && f.de_inicis_sign_key.value && parseInt(f.de_card_test.value) > 0 ){
+			pg_msg = "KG이니시스";
+		}
+	}
+
+	if( pg_msg ){
+		msg += "(주의!) "+pg_msg+" 결제의 결제 설정이 현재 테스트결제 로 되어 있습니다.\n쇼핑몰 운영중이면 반드시 실결제로 설정하여 운영하셔야 합니다.\n실결제로 변경하려면 결제설정 탭 -> 결제 테스트에서 실결제를 선택해 주세요.\n정말로 테스트결제로 설정하시겠습니까?";
+	}
+
+	if( msg ){
+		if (confirm(msg)){
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return true;
+	}
 }
 
 $(function() {
+
+	$(document).ready(function () {
+
+		function hash_goto_scroll(hash=""){
+			var $elem = hash ? $("#"+hash) : $('#' + window.location.hash.replace('#', ''));
+			if($elem.length) {
+
+				var admin_head_height = $("#hd_top").height() + $("#container_title").height() + 30;
+
+				$('html, body').animate({
+					scrollTop: ($elem.offset().top - admin_head_height) + 'px'
+				}, 500, 'swing');
+			}
+		}
+
+		hash_goto_scroll();
+		
+		$(document).on("click", ".pg_test_conf_link", function(e){
+			e.preventDefault();
+
+			var str_hash = this.href.split("#")[1];
+
+			if( str_hash ){
+				hash_goto_scroll(str_hash);
+			}
+		});
+	});
+
     //$(".pg_info_fld").hide();
     $(".pg_vbank_url").hide();
     <?php if($default['de_pg_service']) { ?>

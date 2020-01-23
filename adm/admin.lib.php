@@ -379,7 +379,7 @@ function get_sanitize_input($s, $is_html=false){
     return $s;
 }
 
-function check_log_folder($log_path){
+function check_log_folder($log_path, $is_delete=true){
 
     if( is_writable($log_path) ){
 
@@ -403,21 +403,26 @@ function check_log_folder($log_path){
         }
     }
     
-    // txt 파일과 log 파일을 조회하여 30일이 지난 파일은 삭제합니다.
-    $txt_files = glob($log_path.'/*.txt');
-    $log_files = glob($log_path.'/*.log');
-    
-    $del_files = array_merge($txt_files, $log_files);
+	if( $is_delete ) {
+		try {
+			// txt 파일과 log 파일을 조회하여 30일이 지난 파일은 삭제합니다.
+			$txt_files = glob($log_path.'/*.txt');
+			$log_files = glob($log_path.'/*.log');
+			
+			$del_files = array_merge($txt_files, $log_files);
 
-    if( $del_files && is_array($del_files) ){
-        foreach ($del_files as $del_file) {
-            $filetime = filemtime($del_file);
-            // 30일이 지난 파일을 삭제
-            if($filetime && $filetime < (G5_SERVER_TIME - 2592000)) {
-                @unlink($del_file);
-            }
-        }
-    }
+			if( $del_files && is_array($del_files) ){
+				foreach ($del_files as $del_file) {
+					$filetime = filemtime($del_file);
+					// 30일이 지난 파일을 삭제
+					if($filetime && $filetime < (G5_SERVER_TIME - 2592000)) {
+						@unlink($del_file);
+					}
+				}
+			}
+		} catch(Exception $e) {
+		}
+	}
 }
 
 // POST로 넘어온 토큰과 세션에 저장된 토큰 비교
