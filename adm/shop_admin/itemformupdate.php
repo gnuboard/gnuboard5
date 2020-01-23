@@ -218,7 +218,7 @@ if($option_count) {
     // 옵션명
     $opt1_cnt = $opt2_cnt = $opt3_cnt = 0;
     for($i=0; $i<$option_count; $i++) {
-        $_POST['opt_id'][$i] = preg_replace(G5_OPTION_ID_FILTER, '', $_POST['opt_id'][$i]);
+        $_POST['opt_id'][$i] = preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($_POST['opt_id'][$i]));
 
         $opt_val = explode(chr(30), $_POST['opt_id'][$i]);
         if($opt_val[0])
@@ -246,7 +246,7 @@ if($supply_count) {
     // 추가옵션명
     $arr_spl = array();
     for($i=0; $i<$supply_count; $i++) {
-        $_POST['spl_id'][$i] = preg_replace(G5_OPTION_ID_FILTER, '', $_POST['spl_id'][$i]);
+        $_POST['spl_id'][$i] = preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($_POST['spl_id'][$i]));
 
         $spl_val = explode(chr(30), $_POST['spl_id'][$i]);
         if(!in_array($spl_val[0], $arr_spl))
