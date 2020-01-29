@@ -216,16 +216,37 @@ ini_set("session.gc_divisor", 100); // session.gc_divisor는 session.gc_probabil
 session_set_cookie_params(0, '/');
 ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 
-@session_start();
-//==============================================================================
-
-
 //==============================================================================
 // 공용 변수
 //------------------------------------------------------------------------------
 // 기본환경설정
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
 $config = get_config();
+
+// 본인인증 또는 쇼핑몰 사용시에만 secure; SameSite=None 가 추가한다.
+if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) ) {
+	// Chrome 80 버전부터 아래 이슈 대응
+	// https://developers-kr.googleblog.com/2020/01/developers-get-ready-for-new.html?fbclid=IwAR0wnJFGd6Fg9_WIbQPK3_FxSSpFLqDCr9bjicXdzy--CCLJhJgC9pJe5ss
+	if(!function_exists('session_start_samesite')) {
+		function session_start_samesite($options = array())
+		{
+			$res = @session_start($options);
+			$headers = headers_list();
+			foreach ($headers as $header) {
+				if (!preg_match('~^Set-Cookie: PHPSESSID=~', $header)) continue;
+				$header = preg_replace('~; secure(; HttpOnly)?$~', '', $header) . '; secure; SameSite=None';
+				header($header, false);
+				break;
+			}
+			return $res;
+		}
+	}
+
+	session_start_samesite();
+} else {
+	@session_start();
+}
+//==============================================================================
 
 define('G5_HTTP_BBS_URL',  https_url(G5_BBS_DIR, false));
 define('G5_HTTPS_BBS_URL', https_url(G5_BBS_DIR, true));
