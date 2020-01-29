@@ -113,7 +113,7 @@ function short_url_clean($string_url, $add_qry=''){
         
         $array_page_names = run_replace('url_clean_page_names', array('board', 'write', 'content'));
 
-        if( strpos($string_url, G5_BBS_URL) === false || ! in_array($page_name, $array_page_names) ){   //게시판이 아니면 리턴
+        if( stripos(preg_replace('/^https?:/i', '', $string_url), preg_replace('/^https?:/i', '', G5_BBS_URL)) === false || ! in_array($page_name, $array_page_names) ){   //게시판이 아니면 리턴
             return run_replace('false_short_url_clean', $string_url, $url, $page_name, $array_page_names);
         }
 

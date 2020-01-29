@@ -49,8 +49,9 @@ transition:all 0.1s ease-in-out}
 box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 
 .sch_res_list {position:relative;margin-bottom:10px}
+.sch_res_list .search_board_result{position:relative}
 .sch_res_list h2 {margin:0 0 15px;font-size:1.2em}
-.sch_res_list ul {margin:0;padding:0;list-style:none;border-top:1px solid #ececec}
+.sch_res_list ul {margin:0 0 20px 0;padding:0;list-style:none;border-top:1px solid #ececec}
 .sch_res_list li {border-bottom:1px solid #ececec;background:#fff;position:relative}
 .sch_res_list .sch_tit {display:block;padding:20px 0 10px}
 .sch_res_list .pop_a {display:inline-block;background:#e8eeef;color:#6f777f;border-radius:50%;text-align:center;width:26px;height:26px;line-height:26px}
@@ -60,4 +61,4 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 .sch_res_list .sch_info:after {display:block;visibility:hidden;clear:both;content:""}
 .sch_res_list .profile_img img {border-radius:50%}
 .sch_res_list .sch_datetime {margin-left:5px}
-.sch_more {position:absolute;right:0;top:0;text-align:right;margin:10px 0 30px;color:#3a8afd}
+.sch_more {position:absolute;right:0;top:5px;text-align:right;font-weight:normal;color:#3a8afd}

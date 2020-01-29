@@ -151,7 +151,7 @@ if(!$view['qa_type']) {
                     </a>
                 </div>
                 <div class="li_info">
-                    <span class="li_stat <?php echo ($list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($rel_list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></span>
+                    <span class="li_stat <?php echo ($rel_list[$i]['qa_status'] ? 'txt_done' : 'txt_rdy'); ?>"><?php echo ($rel_list[$i]['qa_status'] ? '답변완료' : '답변대기'); ?></span>
                     <span class="li_date"><?php echo $rel_list[$i]['date']; ?></span>
                 </div>
             </li>

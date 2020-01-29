@@ -108,7 +108,7 @@ function get_ajax_token()
 }
 
 $(function() {
-    $(document).on("click", "form input:submit", function() {
+    $(document).on("click", "form input:submit, form button:submit", function() {
         var f = this.form;
         var token = get_ajax_token();
 
