@@ -12,6 +12,12 @@ $error_msg = '';
 
 $qaconfig = get_qa_config();
 
+$check_keys = array('qa_title', 'qa_category', 'qa_skin', 'qa_mobile_skin', 'qa_use_email', 'qa_req_email', 'qa_use_hp', 'qa_req_hp', 'qa_use_sms', 'qa_send_number', 'qa_admin_hp', 'qa_admin_email', 'qa_subject_len', 'qa_mobile_subject_len', 'qa_page_rows', 'qa_mobile_page_rows', 'qa_image_width', 'qa_upload_size');
+
+foreach($check_keys as $key){
+	$$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags($_POST[$key]) : '';
+}
+
 $qa_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_head, 0, 255));
 $qa_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_tail, 0, 255));
 
@@ -49,8 +55,6 @@ if( $qa_include_tail && ! is_include_path_check($qa_include_tail, 1) ){
     $qa_include_tail = '';
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.';
 }
-
-$_POST['qa_title'] = strip_tags($_POST['qa_title']);
 
 $sql = " update {$g5['qa_config_table']}
             set qa_title                = '{$_POST['qa_title']}',
