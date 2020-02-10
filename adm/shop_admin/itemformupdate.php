@@ -601,7 +601,8 @@ if($all_fields) {
     sql_query(" update {$g5['g5_shop_item_table']} set it_name = it_name {$all_fields} ");
 }
 
-if( function_exists('shop_seo_title_update') ) shop_seo_title_update($it_id);
+$is_seo_title_edit = $w ? true : false;
+if( function_exists('shop_seo_title_update') ) shop_seo_title_update($it_id, $is_seo_title_edit);
 
 run_event('shop_admin_itemformupdate', $it_id, $w);
 

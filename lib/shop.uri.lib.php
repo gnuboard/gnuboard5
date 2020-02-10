@@ -208,15 +208,16 @@ function shop_exist_check_seo_title($seo_title, $type, $shop_item_table, $it_id)
     return '';
 }
 
-function shop_seo_title_update($it_id){
+function shop_seo_title_update($it_id, $is_edit=false){
     global $g5;
 
-    $item = get_shop_item($it_id, true);
+	$shop_item_cache = $is_edit ? false : true;
+    $item = get_shop_item($it_id, $shop_item_cache);
 
-    if( ! $item['it_seo_title'] && $item['it_name'] ){
+    if( (! $item['it_seo_title'] || $is_edit) && $item['it_name'] ){
         $it_seo_title = exist_seo_title_recursive('shop', generate_seo_title($item['it_name']), $g5['g5_shop_item_table'], $item['it_id']);
 
-        if( $it_seo_title ){
+        if( isset($item['it_seo_title']) && $it_seo_title !== $item['it_seo_title'] ){
             $sql = " update `{$g5['g5_shop_item_table']}` set it_seo_title = '{$it_seo_title}' where it_id = '{$item['it_id']}' ";
             sql_query($sql);
         }

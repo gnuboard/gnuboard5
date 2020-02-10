@@ -53,6 +53,8 @@ if ($_POST['act_button'] == "선택수정") {
                  where it_id   = '".preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$k])."' ";
 
         sql_query($sql);
+
+		if( function_exists('shop_seo_title_update') ) shop_seo_title_update(preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$k]), true);
     }
 } else if ($_POST['act_button'] == "선택삭제") {
 
