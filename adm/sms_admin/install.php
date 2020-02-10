@@ -53,6 +53,7 @@ eval("\$file = \"$file\";");
 $f = explode(";", $file);
 for ($i=0; $i<count($f); $i++) {
     if (trim($f[$i]) == "") continue;
+	$f[$i] = get_db_create_replace($f[$i]);
     sql_query($f[$i]) or die(mysqli_error());
 }
 // 테이블 생성 ------------------------------------
