@@ -1930,7 +1930,7 @@ function is_soldout($it_id, $is_cache=false)
 
     static $cache = array();
 
-    $it_id = preg_replace('/[^a-z0-9_]/i', '', $it_id);
+    $it_id = preg_replace('/[^a-z0-9_\-]/i', '', $it_id);
     $key = md5($it_id);
 
     if( $is_cache && isset($cache[$key]) ){
