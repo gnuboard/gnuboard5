@@ -229,7 +229,8 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
     global $g5;
 
     $exists_title = '';
-    $sql_id = preg_replace('/[^a-z0-9_]/i', '', $sql_id);
+    $sql_id = preg_replace('/[^a-z0-9_\-]/i', '', $sql_id);
+	// 영카트 상품코드의 경우 - 하이픈이 들어가야 함
 
     if( $type === 'bbs' ){
         $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
