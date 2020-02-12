@@ -28,7 +28,7 @@ $check_sanitize_keys = array(
 );
 
 foreach( $check_sanitize_keys as $key ){
-    $$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags($_POST[$key]) : '';
+    $$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
 }
 
 if(!$_POST['cz_subject'])

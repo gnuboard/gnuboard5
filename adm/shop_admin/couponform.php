@@ -52,7 +52,7 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
     <tr>
         <th scope="row"><label for="cp_subject">쿠폰이름</label></th>
         <td>
-            <input type="text" name="cp_subject" value="<?php echo stripslashes($cp['cp_subject']); ?>" id="cp_subject" required class="required frm_input" size="50">
+            <input type="text" name="cp_subject" value="<?php echo get_sanitize_input($cp['cp_subject']); ?>" id="cp_subject" required class="required frm_input" size="50">
         </td>
     </tr>
     <tr>
