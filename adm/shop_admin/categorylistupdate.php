@@ -10,7 +10,7 @@ check_admin_token();
 
 for ($i=0; $i<count($_POST['ca_id']); $i++)
 {
-    $str_ca_mb_id = isset($_POST['ca_mb_id'][$i]) ? strip_tags($_POST['ca_mb_id'][$i]) : '';
+    $str_ca_mb_id = isset($_POST['ca_mb_id'][$i]) ? strip_tags(clean_xss_attributes($_POST['ca_mb_id'][$i])) : '';
 
     if ($str_ca_mb_id)
     {

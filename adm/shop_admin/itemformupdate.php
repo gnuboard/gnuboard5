@@ -269,7 +269,7 @@ $it_info_value = addslashes(serialize($value_array));
 if(($it_point_type == 1 || $it_point_type == 2) && $it_point > 99)
     alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
 
-$it_name = strip_tags(trim($_POST['it_name']));
+$it_name = strip_tags(clean_xss_attributes(trim($_POST['it_name'])));
 
 // KVE-2019-0708
 $check_sanitize_keys = array(
@@ -326,7 +326,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_type5            = '$it_type5',
                 it_basic            = '$it_basic',
                 it_explan           = '$it_explan',
-                it_explan2          = '".strip_tags(trim($_POST['it_explan']))."',
+                it_explan2          = '".strip_tags(trim(clean_xss_attributes($_POST['it_explan'])))."',
                 it_mobile_explan    = '$it_mobile_explan',
                 it_cust_price       = '$it_cust_price',
                 it_price            = '$it_price',

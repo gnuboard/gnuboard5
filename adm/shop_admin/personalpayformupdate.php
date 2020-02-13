@@ -5,7 +5,7 @@ include_once('./_common.php');
 check_admin_token();
 
 if( isset($_POST['pp_name']) ){
-	$_POST['pp_name'] = strip_tags($_POST['pp_name']);
+	$_POST['pp_name'] = strip_tags(clean_xss_attributes($_POST['pp_name']));
 }
 
 if($w == 'd') {

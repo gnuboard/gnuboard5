@@ -22,7 +22,7 @@ if($w == 'd') {
         sql_query(" delete from {$g5['g5_shop_sendcost_table']} where sc_id = '$sc_id' ");
     }
 } else {
-    $sc_name = trim(strip_tags($_POST['sc_name']));
+    $sc_name = trim(strip_tags(clean_xss_attributes($_POST['sc_name'])));
     $sc_zip1 = preg_replace('/[^0-9]/', '', $_POST['sc_zip1']);
     $sc_zip2 = preg_replace('/[^0-9]/', '', $_POST['sc_zip2']);
     $sc_price = preg_replace('/[^0-9]/', '', $_POST['sc_price']);
