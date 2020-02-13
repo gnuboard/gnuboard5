@@ -21,7 +21,7 @@ if ($w == "" || $w == "u")
 }
 
 $co_id = preg_replace('/[^a-z0-9_]/i', '', $co_id);
-$co_subject = strip_tags($co_subject);
+$co_subject = strip_tags(clean_xss_attributes($co_subject));
 $co_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_head, 0, 255));
 $co_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_tail, 0, 255));
 $co_tag_filter_use = isset($_POST['co_tag_filter_use']) ? (int) $_POST['co_tag_filter_use'] : 1;
