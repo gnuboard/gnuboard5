@@ -18,7 +18,7 @@ check_admin_token();
 if ($fm_himg_del)  @unlink(G5_DATA_PATH."/faq/{$fm_id}_h");
 if ($fm_timg_del)  @unlink(G5_DATA_PATH."/faq/{$fm_id}_t");
 
-$fm_subject = strip_tags($fm_subject);
+$fm_subject = strip_tags(clean_xss_attributes($fm_subject));
 
 $sql_common = " set fm_subject = '$fm_subject',
                     fm_head_html = '$fm_head_html',

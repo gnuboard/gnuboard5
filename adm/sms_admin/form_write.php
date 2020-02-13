@@ -48,7 +48,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row"><label for="fo_name">제목<strong class="sound_only"> 필수</strong></label></th>
-        <td><input type="text" name="fo_name" id="fo_name" required value="<?php echo $write['fo_name']?>" class="frm_input required" size="70"></td>
+        <td><input type="text" name="fo_name" id="fo_name" required value="<?php echo get_sanitize_input($write['fo_name']); ?>" class="frm_input required" size="70"></td>
     </tr>
     <tr>
         <th scope="row">메세지</th>

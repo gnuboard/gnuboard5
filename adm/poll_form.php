@@ -37,7 +37,7 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="po_subject">투표 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="po_subject" value="<?php echo $po['po_subject'] ?>" id="po_subject" required class="required frm_input" size="80" maxlength="125"></td>
+        <td><input type="text" name="po_subject" value="<?php echo get_sanitize_input($po['po_subject']); ?>" id="po_subject" required class="required frm_input" size="80" maxlength="125"></td>
     </tr>
 
     <?php

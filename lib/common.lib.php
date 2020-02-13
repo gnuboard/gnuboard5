@@ -3574,7 +3574,7 @@ function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_
             // 프로필 이미지가 없을때 기본 이미지
             $no_profile_img = (defined('G5_THEME_NO_PROFILE_IMG') && G5_THEME_NO_PROFILE_IMG) ? G5_THEME_NO_PROFILE_IMG : G5_NO_PROFILE_IMG;
             $tmp = array();
-            preg_match( '/src="([^"]*)"/i', $foo, $tmp );
+            preg_match( '/src="([^"]*)"/i', $no_profile_img, $tmp );
             $no_profile_cache = $src = isset($tmp[1]) ? $tmp[1] : G5_IMG_URL.'/no_profile.gif';
         }
     }
