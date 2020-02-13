@@ -7,6 +7,8 @@ while ($res = sql_fetch_array($qry)) array_push($group, $res);
 
 $res = sql_fetch("select count(*) as cnt from `{$g5['sms5_form_table']}` where fg_no=0");
 $no_count = $res['cnt'];
+
+$fg_no = isset($fg_no) ? (int) $fg_no : '';
 ?>
 
 <form name="emo_frm">
