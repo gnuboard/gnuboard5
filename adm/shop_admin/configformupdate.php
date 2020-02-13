@@ -232,7 +232,7 @@ $check_sanitize_keys = array(
 );
 
 foreach( $check_sanitize_keys as $key ){
-    $$key = isset($_POST[$key]) ? strip_tags($_POST[$key]) : '';
+    $$key = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
 }
 
 //

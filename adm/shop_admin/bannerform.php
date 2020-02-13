@@ -81,7 +81,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <th scope="row"><label for="bn_url">링크</label></th>
         <td>
             <?php echo help("배너클릭시 이동하는 주소입니다."); ?>
-            <input type="text" name="bn_url" size="80" value="<?php echo $bn['bn_url']; ?>" id="bn_url" class="frm_input">
+            <input type="text" name="bn_url" size="80" value="<?php echo get_sanitize_input($bn['bn_url']); ?>" id="bn_url" class="frm_input">
         </td>
     </tr>
     <tr>

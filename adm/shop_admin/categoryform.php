@@ -184,9 +184,9 @@ else {
             <th scope="row"><?php if ($is_admin == 'super') { ?><label for="ca_mb_id"><?php } ?>관리 회원아이디<?php if ($is_admin == 'super') { ?></label><?php } ?></th>
             <td>
                 <?php if ($is_admin == 'super') { ?>
-                    <input type="text" name="ca_mb_id" value="<?php echo $ca['ca_mb_id']; ?>" id="ca_mb_id" class="frm_input" maxlength="20">
+                    <input type="text" name="ca_mb_id" value="<?php echo get_sanitize_input($ca['ca_mb_id']); ?>" id="ca_mb_id" class="frm_input" maxlength="20">
                 <?php } else { ?>
-                    <input type="hidden" name="ca_mb_id" value="<?php echo $ca['ca_mb_id']; ?>">
+                    <input type="hidden" name="ca_mb_id" value="<?php echo get_sanitize_input($ca['ca_mb_id']); ?>">
                     <?php echo $ca['ca_mb_id']; ?>
                 <?php } ?>
             </td>
@@ -306,7 +306,7 @@ else {
             <th scope="row"><label for="ca_sell_email">판매자 E-mail</label></th>
             <td>
                 <?php echo help("운영자와 판매자가 다른 경우에 사용합니다.\n이 분류에 속한 상품을 등록할 경우에 기본값으로 입력됩니다."); ?>
-                <input type="text" name="ca_sell_email" size="40" value="<?php echo $ca['ca_sell_email']; ?>" id="ca_sell_email" class="frm_input">
+                <input type="text" name="ca_sell_email" size="40" value="<?php echo get_sanitize_input($ca['ca_sell_email']); ?>" id="ca_sell_email" class="frm_input">
             </td>
         </tr>
         <tr>

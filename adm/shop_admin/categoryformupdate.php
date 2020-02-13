@@ -48,6 +48,11 @@ foreach( $check_keys as $key ){
     }
 }
 
+$check_str_keys = array('ca_name', 'ca_mb_id', 'ca_sell_email');
+foreach( $check_str_keys as $key ){
+    $$key = $_POST[$key] = strip_tags(clean_xss_attributes($_POST[$key]));
+}
+
 $ca_include_head = $_POST['ca_include_head'];
 $ca_include_tail = $_POST['ca_include_tail'];
 
