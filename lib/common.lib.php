@@ -116,11 +116,13 @@ function goto_url($url)
 // 세션변수 생성
 function set_session($session_name, $value)
 {
+	global $g5;
+
 	static $check_cookie = null;
 	
 	if( $check_cookie === null ){
 		$cookie_session_name = session_name();
-		if( ! ($cookie_session_name && isset($_COOKIE[$cookie_session_name]) && $_COOKIE[$cookie_session_name]) && ! headers_sent() ){
+		if( ! isset($g5['session_cookie_samesite']) && ! ($cookie_session_name && isset($_COOKIE[$cookie_session_name]) && $_COOKIE[$cookie_session_name]) && ! headers_sent() ){
 			@session_regenerate_id(false);
 		}
 

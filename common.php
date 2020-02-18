@@ -306,12 +306,14 @@ if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) 
 	if(!function_exists('session_start_samesite')) {
 		function session_start_samesite($options = array())
 		{
+            global $g5;
+    
 			$res = @session_start($options);
 			
-			// IE 브라우저 또는 엣지브라우저 일때는 secure; SameSite=None 을 설정하지 않습니다.
-			if( preg_match('/Edge/i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~MSIE|Internet Explorer~i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~Trident/7.0(; Touch)?; rv:11.0~',$_SERVER['HTTP_USER_AGENT']) ){
-				return $res;
-			}
+            // IE 브라우저 또는 엣지브라우저 일때는 secure; SameSite=None, http 환경에서는 설정하지 않습니다.
+            if( preg_match('/Edge/i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~MSIE|Internet Explorer~i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~Trident/7.0(; Touch)?; rv:11.0~',$_SERVER['HTTP_USER_AGENT']) || ! (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ){
+                return $res;
+            }
 
 			$headers = headers_list();
 			krsort($headers);
@@ -319,6 +321,7 @@ if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) 
 				if (!preg_match('~^Set-Cookie: PHPSESSID=~', $header)) continue;
 				$header = preg_replace('~; secure(; HttpOnly)?$~', '', $header) . '; secure; SameSite=None';
 				header($header, false);
+                $g5['session_cookie_samesite'] = 'none';
 				break;
 			}
 			return $res;

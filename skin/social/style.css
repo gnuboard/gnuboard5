@@ -7,7 +7,7 @@
 .bg-warning3 {background:#fff8dc;border:1px solid #f1e4b2}
 
 /* SNS LOGIN */
-.login-sns {margin-top:5px;border:1px solid #dde7e9;border-bottom:1px solid #dde7e9;clear:both;background:#fff}
+.login-sns {padding-bottom:10px;margin-top:5px;border:1px solid #dde7e9;border-bottom:1px solid #dde7e9;clear:both;background:#fff}
 .login-sns h3 {padding-top:10px;text-align:center;color:#777;font-weight:normal}
 .sns-wrap {margin:10px 0 0;text-align:center}
 .sns-icon {display:inline-block;vertical-align:middle;text-decoration:none}
