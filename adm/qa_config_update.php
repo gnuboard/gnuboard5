@@ -15,7 +15,7 @@ $qaconfig = get_qa_config();
 $check_keys = array('qa_title', 'qa_category', 'qa_skin', 'qa_mobile_skin', 'qa_use_email', 'qa_req_email', 'qa_use_hp', 'qa_req_hp', 'qa_use_sms', 'qa_send_number', 'qa_admin_hp', 'qa_admin_email', 'qa_subject_len', 'qa_mobile_subject_len', 'qa_page_rows', 'qa_mobile_page_rows', 'qa_image_width', 'qa_upload_size');
 
 foreach($check_keys as $key){
-	$$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags($_POST[$key]) : '';
+	$$key = $_POST[$key] = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
 }
 
 $qa_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($qa_include_head, 0, 255));

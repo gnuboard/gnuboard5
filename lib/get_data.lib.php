@@ -329,7 +329,7 @@ function get_db_create_replace($sql_str){
 function get_class_encrypt(){
     static $cache;
 
-    if( $cache && is_object($obj) ){
+    if( $cache && is_object($cache) ){
         return $cache;
     }
 

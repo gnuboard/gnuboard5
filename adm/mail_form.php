@@ -42,7 +42,7 @@ include_once('./admin.head.php');
     <tbody>
     <tr>
         <th scope="row"><label for="ma_subject">메일 제목<strong class="sound_only">필수</strong></label></th>
-        <td><input type="text" name="ma_subject" value="<?php echo $ma['ma_subject'] ?>" id="ma_subject" required class="required frm_input" size="100"></td>
+        <td><input type="text" name="ma_subject" value="<?php echo get_sanitize_input($ma['ma_subject']); ?>" id="ma_subject" required class="required frm_input" size="100"></td>
     </tr>
     <tr>
         <th scope="row"><label for="ma_content">메일 내용<strong class="sound_only">필수</strong></label></th>

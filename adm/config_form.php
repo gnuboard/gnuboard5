@@ -321,7 +321,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tbody>
         <tr>
             <th scope="row"><label for="cf_title">홈페이지 제목<strong class="sound_only">필수</strong></label></th>
-            <td colspan="3"><input type="text" name="cf_title" value="<?php echo $config['cf_title'] ?>" id="cf_title" required class="required frm_input" size="40"></td>
+            <td colspan="3"><input type="text" name="cf_title" value="<?php echo get_sanitize_input($config['cf_title']); ?>" id="cf_title" required class="required frm_input" size="40"></td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_admin">최고관리자<strong class="sound_only">필수</strong></label></th>

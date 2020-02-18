@@ -19,8 +19,8 @@ for ($i=0; $i<$count; $i++)
 {
     $k     = $_POST['chk'][$i];
     $gr_id = preg_replace('/[^a-z0-9_]/i', '', $_POST['group_id'][$k]);
-    $gr_subject = is_array($_POST['gr_subject']) ? strip_tags($_POST['gr_subject'][$k]) : '';
-    $gr_admin = is_array($_POST['gr_admin']) ? strip_tags($_POST['gr_admin'][$k]) : '';
+    $gr_subject = is_array($_POST['gr_subject']) ? strip_tags(clean_xss_attributes($_POST['gr_subject'][$k])) : '';
+    $gr_admin = is_array($_POST['gr_admin']) ? strip_tags(clean_xss_attributes($_POST['gr_admin'][$k])) : '';
 
     if($_POST['act_button'] == '선택수정') {
         $sql = " update {$g5['group_table']}

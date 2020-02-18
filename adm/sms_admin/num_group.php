@@ -129,7 +129,7 @@ function num_group_submit(f)
             <select name="select_bg_no_999" id="select_bg_no_999" onchange="move(<?php echo $no_group['bg_no']?>, '<?php echo $no_group['bg_name']?>', this);" >
                 <option value=""></option>
                 <?php for ($i=0; $i<count($group); $i++) { ?>
-                <option value="<?php echo $group[$i]['bg_no']?>"> <?php echo $group[$i]['bg_name']?> </option>
+                <option value="<?php echo $group[$i]['bg_no']?>"> <?php echo get_sanitize_input($group[$i]['bg_name']); ?> </option>
                 <?php } ?>
             </select>
         </td>
@@ -150,7 +150,7 @@ function num_group_submit(f)
         </td>
         <td>
             <label for="bg_name_<?php echo $i; ?>" class="sound_only">그룹명</label>
-            <input type="text" name="bg_name[<?php echo $i; ?>]" value="<?php echo $group[$i]['bg_name']?>" id="bg_name_<?php echo $i; ?>" class="frm_input">
+            <input type="text" name="bg_name[<?php echo $i; ?>]" value="<?php echo get_sanitize_input($group[$i]['bg_name']); ?>" id="bg_name_<?php echo $i; ?>" class="frm_input">
         </td>
         <td class="td_num"><?php echo number_format($group[$i]['bg_count'])?></td>
         <td class="td_num"><?php echo number_format($group[$i]['bg_member'])?></td>

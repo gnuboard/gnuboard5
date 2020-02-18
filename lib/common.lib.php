@@ -116,11 +116,13 @@ function goto_url($url)
 // 세션변수 생성
 function set_session($session_name, $value)
 {
+	global $g5;
+
 	static $check_cookie = null;
 	
 	if( $check_cookie === null ){
 		$cookie_session_name = session_name();
-		if( ! ($cookie_session_name && isset($_COOKIE[$cookie_session_name]) && $_COOKIE[$cookie_session_name]) && ! headers_sent() ){
+		if( ! isset($g5['session_cookie_samesite']) && ! ($cookie_session_name && isset($_COOKIE[$cookie_session_name]) && $_COOKIE[$cookie_session_name]) && ! headers_sent() ){
 			@session_regenerate_id(false);
 		}
 
@@ -3559,7 +3561,7 @@ function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_
             // 프로필 이미지가 없을때 기본 이미지
             $no_profile_img = (defined('G5_THEME_NO_PROFILE_IMG') && G5_THEME_NO_PROFILE_IMG) ? G5_THEME_NO_PROFILE_IMG : G5_NO_PROFILE_IMG;
             $tmp = array();
-            preg_match( '/src="([^"]*)"/i', $foo, $tmp );
+            preg_match( '/src="([^"]*)"/i', $no_profile_img, $tmp );
             $no_profile_cache = $src = isset($tmp[1]) ? $tmp[1] : G5_IMG_URL.'/no_profile.gif';
         }
     }

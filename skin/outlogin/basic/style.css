@@ -8,6 +8,7 @@
 .ol form {padding:20px}
 .ol a.btn_admin {display:inline-block;padding:0 10px;height:25px;text-decoration:none;line-height:25px;vertical-align:middle} /* 관리자 전용 버튼 */
 .ol a.btn_admin:focus, .ol a.btn_admin:hover {text-decoration:none}
+.ol .login-sns{padding-bottom:0px}
 
 #ol_before {}
 #ol_before:after {display:block;visibility:hidden;clear:both;content:""}

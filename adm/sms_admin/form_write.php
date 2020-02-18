@@ -6,6 +6,8 @@ auth_check($auth[$sub_menu], "w");
 
 $g5['title'] = "이모티콘 ";
 
+$fg_no = isset($fg_no) ? (int) $fg_no : '';
+
 if ($w == 'u' && is_numeric($fo_no)) {
     $write = sql_fetch("select * from {$g5['sms5_form_table']} where fo_no='$fo_no'");
     $g5['title'] .= '수정';
@@ -48,7 +50,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row"><label for="fo_name">제목<strong class="sound_only"> 필수</strong></label></th>
-        <td><input type="text" name="fo_name" id="fo_name" required value="<?php echo $write['fo_name']?>" class="frm_input required" size="70"></td>
+        <td><input type="text" name="fo_name" id="fo_name" required value="<?php echo get_sanitize_input($write['fo_name']); ?>" class="frm_input required" size="70"></td>
     </tr>
     <tr>
         <th scope="row">메세지</th>

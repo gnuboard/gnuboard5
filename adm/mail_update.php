@@ -10,7 +10,7 @@ auth_check($auth[$sub_menu], 'w');
 check_admin_token();
 
 $ma_id = isset($_POST['ma_id']) ? (int) $_POST['ma_id'] : 0;
-$ma_subject = isset($_POST['ma_subject']) ? strip_tags($_POST['ma_subject']) : '';
+$ma_subject = isset($_POST['ma_subject']) ? strip_tags(clean_xss_attributes($_POST['ma_subject'])) : '';
 
 if ($w == '')
 {
