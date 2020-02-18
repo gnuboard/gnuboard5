@@ -1,9 +1,23 @@
 <?php
 include_once('./_common.php');
 
+$co_id = preg_replace('/[^a-z0-9_]/i', '', $co_id);
+
 //dbconfig파일에 $g5['content_table'] 배열변수가 있는지 체크
 if( !isset($g5['content_table']) ){
     die('<meta charset="utf-8">관리자 모드에서 게시판관리->내용 관리를 먼저 확인해 주세요.');
+}
+
+// 내용
+if($co_seo_title){
+    $co = get_content_by_field($g5['content_table'], 'content', 'co_seo_title', generate_seo_title($co_seo_title));
+    $co_id = $co['co_id'];
+} else {
+    $co = get_content_db($co_id);
+}
+
+if( ! (isset($co['co_seo_title']) && $co['co_seo_title']) && $co['co_id'] ){
+    seo_title_update($g5['content_table'], $co['co_id'], 'content');
 }
 
 if (G5_IS_MOBILE) {
@@ -11,9 +25,6 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-// 내용
-$sql = " select * from {$g5['content_table']} where co_id = '$co_id' ";
-$co = sql_fetch($sql);
 if (!$co['co_id'])
     alert('등록된 내용이 없습니다.');
 
@@ -24,6 +35,8 @@ if ($co['co_include_head'] && is_include_path_check($co['co_include_head']))
 else
     include_once('./_head.php');
 
+// KVE-2019-0828 취약점 내용
+$co['co_tag_filter_use'] = 1;
 $str = conv_content($co['co_content'], $co['co_html'], $co['co_tag_filter_use']);
 
 // $src 를 $dst 로 변환

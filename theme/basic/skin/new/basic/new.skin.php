@@ -49,14 +49,22 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
 <input type="hidden" name="page"     value="<?php echo $page; ?>">
 <input type="hidden" name="pressed"  value="">
 
+<?php if ($is_admin) { ?>
+<div class="admin_new_btn">
+    <button type="submit" onclick="document.pressed=this.title" title="선택삭제" class="btn_b01 btn"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button>
+</div>
+<?php } ?>
 <div class="tbl_head01 tbl_wrap">
     <table>
     <thead>
     <tr>
         <?php if ($is_admin) { ?>
-        <th scope="col">
-            <label for="all_chk" class="sound_only">목록 전체</label>
-            <input type="checkbox" id="all_chk">
+        <th scope="col" class="chk_box">
+        	<input type="checkbox" id="all_chk" class="selec_chk">
+            <label for="all_chk">
+            	<span></span>
+				<b class="sound_only">목록 전체</b>
+            </label>
         </th>
         <?php } ?>
         <th scope="col">그룹</th>
@@ -77,20 +85,23 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
     ?>
     <tr>
         <?php if ($is_admin) { ?>
-        <td class="td_chk">
-            <label for="chk_bn_id_<?php echo $i; ?>" class="sound_only"><?php echo $num?>번</label>
-            <input type="checkbox" name="chk_bn_id[]" value="<?php echo $i; ?>" id="chk_bn_id_<?php echo $i; ?>">
+        <td class="td_chk chk_box">
+            <input type="checkbox" name="chk_bn_id[]" value="<?php echo $i; ?>" id="chk_bn_id_<?php echo $i; ?>" class="selec_chk">
+            <label for="chk_bn_id_<?php echo $i; ?>">
+            	<span></span>
+            	<b class="sound_only"><?php echo $num?>번</b>
+            </label>
             <input type="hidden" name="bo_table[<?php echo $i; ?>]" value="<?php echo $list[$i]['bo_table']; ?>">
             <input type="hidden" name="wr_id[<?php echo $i; ?>]" value="<?php echo $list[$i]['wr_id']; ?>">
         </td>
         <?php } ?>
         <td class="td_group"><a href="./new.php?gr_id=<?php echo $list[$i]['gr_id'] ?>"><?php echo $gr_subject ?></a></td>
-        <td class="td_board"><a href="./board.php?bo_table=<?php echo $list[$i]['bo_table'] ?>"><?php echo $bo_subject ?></a></td>
+        <td class="td_board"><a href="<?php echo get_pretty_url($list[$i]['bo_table']); ?>"><?php echo $bo_subject ?></a></td>
         <td><a href="<?php echo $list[$i]['href'] ?>" class="new_tit"><?php echo $list[$i]['comment'] ?><?php echo $wr_subject ?></a></td>
         <td class="td_name"><?php echo $list[$i]['name'] ?></td>
         <td class="td_date"><?php echo $list[$i]['datetime2'] ?></td>
     </tr>
-    <?php }  ?>
+    <?php } ?>
 
     <?php if ($i == 0)
         echo '<tr><td colspan="'.$colspan.'" class="empty_table">게시물이 없습니다.</td></tr>';
@@ -99,8 +110,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$new_skin_url.'/style.css">', 0);
     </table>
 </div>
 
+<?php echo $write_pages ?>
+
 <?php if ($is_admin) { ?>
-<div class="sir_bw02 sir_bw">
+<div class="admin_new_btn">
     <button type="submit" onclick="document.pressed=this.title" title="선택삭제" class="btn_b01 btn"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">선택삭제</span></button>
 </div>
 <?php } ?>
@@ -139,6 +152,4 @@ function fnew_submit(f)
 }
 </script>
 <?php } ?>
-
-<?php echo $write_pages ?>
 <!-- } 전체게시물 목록 끝 -->

@@ -4,6 +4,9 @@ include_once('../lib/json.lib.php');
 include_once('../lib/common.lib.php');    // 공통 라이브러리
 include_once('./install.function.php');    // 인스톨 과정 함수 모음
 
+include_once('../lib/hook.lib.php');    // hook 함수 파일
+include_once('../lib/get_data.lib.php');    // 데이타 가져오는 함수 모음
+
 $data_path = '../'.G5_DATA_DIR;
 
 // 파일이 존재한다면 설치할 수 없다.
@@ -16,7 +19,7 @@ $mysql_host  = safe_install_string_check($_POST['mysql_host'], 'json');
 $mysql_user  = safe_install_string_check($_POST['mysql_user'], 'json');
 $mysql_pass  = safe_install_string_check($_POST['mysql_pass'], 'json');
 $mysql_db    = safe_install_string_check($_POST['mysql_db'], 'json');
-$table_prefix= safe_install_string_check($_POST['table_prefix']);
+$table_prefix= safe_install_string_check(preg_replace('/[^a-zA-Z0-9_]/', '_', $_POST['table_prefix']));
 
 $tmp_str = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
 $ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].$_SERVER['DOCUMENT_ROOT']);

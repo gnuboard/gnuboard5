@@ -48,8 +48,8 @@ function get_social_callbackurl($provider, $no_domain=false){
 
     $base_url = G5_SOCIAL_LOGIN_BASE_URL;
 
-    if( $provider === 'kakao' && $no_domain ){
-        $base_url = '/'.ltrim(parse_url($base_url, PHP_URL_PATH), '/');
+    if ( $provider === 'twitter' ){
+        return $base_url;
     }
 
     $base_url = $base_url . ( strpos($base_url, '?') ? '&' : '?' ).G5_SOCIAL_LOGIN_DONE_PARAM.'='.$provider;
@@ -762,6 +762,23 @@ function social_member_comfirm_redirect(){
         set_session('ss_social_provider', '');
         alert('잘못된 요청입니다.', G5_URL);
     }
+}
+
+function social_is_edit_page($url=''){
+    global $is_member;
+
+    if( !$is_member ) return false;
+
+    if($url){
+        $p = @parse_url($url);
+        $host = preg_replace('/:[0-9]+$/', '', $_SERVER['HTTP_HOST']);
+
+        if ( isset($p['host']) && ($p['host'] === $host) && preg_match('/register_form\.php$/i', $url) ){
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function social_is_login_password_check($mb_id){

@@ -53,8 +53,8 @@ $comment_reply = substr($write['wr_comment_reply'], 0, $len);
 $sql = " select count(*) as cnt from {$write_table}
             where wr_comment_reply like '{$comment_reply}%'
             and wr_id <> '{$comment_id}'
-            and wr_parent = '{$write[wr_parent]}'
-            and wr_comment = '{$write[wr_comment]}'
+            and wr_parent = '{$write['wr_parent']}'
+            and wr_comment = '{$write['wr_comment']}'
             and wr_is_comment = 1 ";
 $row = sql_fetch($sql);
 if ($row['cnt'] && !$is_admin)
@@ -86,5 +86,7 @@ sql_query(" delete from {$g5['board_new_table']} where bo_table = '{$bo_table}' 
 
 delete_cache_latest($bo_table);
 
-goto_url(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr);
+run_event('bbs_delete_comment', $comment_id, $board);
+
+goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr));
 ?>

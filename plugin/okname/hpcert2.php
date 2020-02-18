@@ -1,10 +1,19 @@
 <?php
 include_once('./_common.php');
-//include_once('./hpcert.config.php');
+
+$check_arrays = array('exe', 'keypath', 'memId', 'endPointURL', 'endPointUrl', 'logPath');
+
+foreach($check_arrays as $key){
+    if( isset($_REQUEST[$key]) && $_REQUEST[$key] ){
+        die('bad request');
+    }
+
+    $$key = '';
+}
 
 // KISA 취약점 내용(KVE-2018-0291) hpcert1.php의 $cmd 함수에 대한 인자 값은 hpcert_config.php 파일에서 설정되나, 이를 다른 페이지에서 포함한 뒤 호출할 시 임의 값 설정 가능
-// 이에 include_once 를 include 로 수정함
-include('./hpcert.config.php');
+// 이에 include_once 를 require 로 수정함
+require('./hpcert.config.php');
 /**************************************************************************
     파일명 : safe_hs_cert3.php
 
@@ -12,15 +21,15 @@ include('./hpcert.config.php');
 **************************************************************************/
 
 /* 공통 리턴 항목 */
-//$idcfMbrComCd           =   $_POST['idcf_mbr_com_cd'];      // 고객사코드
+//$idcfMbrComCd           =   $_REQUEST['idcf_mbr_com_cd'];      // 고객사코드
 $idcfMbrComCd           =   $memId;
-$hsCertSvcTxSeqno       =   $_POST['hs_cert_svc_tx_seqno']; // 거래번호
-$rqstSiteNm             =   $_POST['rqst_site_nm'];         // 접속도메인
-$hsCertRqstCausCd       =   $_POST['hs_cert_rqst_caus_cd']; // 인증요청사유코드 2byte  (00:회원가입, 01:성인인증, 02:회원정보수정, 03:비밀번호찾기, 04:상품구매, 99:기타)
+$hsCertSvcTxSeqno       =   $_REQUEST['hs_cert_svc_tx_seqno']; // 거래번호
+$rqstSiteNm             =   $_REQUEST['rqst_site_nm'];         // 접속도메인
+$hsCertRqstCausCd       =   $_REQUEST['hs_cert_rqst_caus_cd']; // 인증요청사유코드 2byte  (00:회원가입, 01:성인인증, 02:회원정보수정, 03:비밀번호찾기, 04:상품구매, 99:기타)
 
-$resultCd               =   $_POST['result_cd'];            // 결과코드
-$resultMsg              =   $_POST['result_msg'];           // 결과메세지
-$certDtTm               =   $_POST['cert_dt_tm'];           // 인증일시
+$resultCd               =   $_REQUEST['result_cd'];            // 결과코드
+$resultMsg              =   $_REQUEST['result_msg'];           // 결과메세지
+$certDtTm               =   $_REQUEST['cert_dt_tm'];           // 인증일시
 
 if($resultCd != 'B000') {
     alert_close('휴대폰 본인확인 중 오류가 발생했습니다. 오류코드 : '.$resultCd.'\\n\\n문의는 코리아크레딧뷰로 고객센터 02-708-1000 로 해주십시오.');
@@ -29,15 +38,15 @@ if($resultCd != 'B000') {
 /**************************************************************************
  * 모듈 호출    ; 생년월일 본인 확인서비스 결과 데이터를 복호화한다.
  **************************************************************************/
-$encInfo = $_POST['encInfo'];
+$encInfo = $_REQUEST['encInfo'];
 if(preg_match('~[^0-9a-zA-Z+/=]~', $encInfo, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 //KCB서버 공개키
-$WEBPUBKEY = trim($_POST['WEBPUBKEY']);
+$WEBPUBKEY = trim($_REQUEST['WEBPUBKEY']);
 if(preg_match('~[^0-9a-zA-Z+/=]~', $WEBPUBKEY, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 //KCB서버 서명값
-$WEBSIGNATURE = trim($_POST['WEBSIGNATURE']);
+$WEBSIGNATURE = trim($_REQUEST['WEBSIGNATURE']);
 if(preg_match('~[^0-9a-zA-Z+/=]~', $WEBSIGNATURE, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 // ########################################################################
@@ -106,7 +115,7 @@ $phone_no = hyphen_hp_number($req_num);
 $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
 $row = sql_fetch($sql);
 if ($row['mb_id']) {
-    alert_close("입력하신 본인학인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
+    alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
 }
 
 // hash 데이터

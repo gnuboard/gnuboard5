@@ -35,6 +35,7 @@ if(!sql_query(" select co_skin from {$g5['content_table']} limit 1 ", false)) {
 
 $html_title = "내용";
 $g5['title'] = $html_title.' 관리';
+$readonly = '';
 
 if ($w == "u")
 {
@@ -77,7 +78,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
         <td>
             <?php echo help('20자 이내의 영문자, 숫자, _ 만 가능합니다.'); ?>
             <input type="text" value="<?php echo $co['co_id']; ?>" name="co_id" id ="co_id" required <?php echo $readonly; ?> class="required <?php echo $readonly; ?> frm_input" size="20" maxlength="20">
-            <?php if ($w == 'u') { ?><a href="<?php echo G5_BBS_URL; ?>/content.php?co_id=<?php echo $co_id; ?>" class="btn_frmline">내용확인</a><?php } ?>
+            <?php if ($w == 'u') { ?><a href="<?php echo get_pretty_url('content', $co_id); ?>" class="btn_frmline">내용확인</a><?php } ?>
         </td>
     </tr>
     <tr>
@@ -86,11 +87,11 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
     </tr>
     <tr>
         <th scope="row">내용</th>
-        <td><?php echo editor_html('co_content', get_text($co['co_content'], 0)); ?></td>
+        <td><?php echo editor_html('co_content', get_text(html_purifier($co['co_content']), 0)); ?></td>
     </tr>
     <tr>
         <th scope="row">모바일 내용</th>
-        <td><?php echo editor_html('co_mobile_content', get_text($co['co_mobile_content'], 0)); ?></td>
+        <td><?php echo editor_html('co_mobile_content', get_text(html_purifier($co['co_mobile_content']), 0)); ?></td>
     </tr>
     <tr>
         <th scope="row"><label for="co_skin">스킨 디렉토리<strong class="sound_only">필수</strong></label></th>
@@ -104,16 +105,18 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <?php echo get_mobile_skin_select('content', 'co_mobile_skin', 'co_mobile_skin', $co['co_mobile_skin'], 'required'); ?>
         </td>
     </tr>
+    <!--
     <tr>
         <th scope="row"><label for="co_tag_filter_use">태그 필터링 사용</label></th>
         <td>
             <?php echo help("내용에서 iframe 등의 태그를 사용하려면 사용안함으로 선택해 주십시오."); ?>
             <select name="co_tag_filter_use" id="co_tag_filter_use">
-                <option value="1"<?php echo get_selected(1, $co['co_tag_filter_use']); ?>>사용함</option>
-                <option value="0"<?php echo get_selected(0, $co['co_tag_filter_use']); ?>>사용안함</option>
+                <option value="1"<?php echo get_selected($co['co_tag_filter_use'], 1); ?>>사용함</option>
+                <option value="0"<?php echo get_selected($co['co_tag_filter_use'], 0); ?>>사용안함</option>
             </select>
         </td>
     </tr>
+    -->
     <tr>
         <th scope="row"><label for="co_include_head">상단 파일 경로</label></th>
         <td>

@@ -253,6 +253,24 @@ if(!sql_query(" DESC {$g5['social_profile_table']} ", false)) {
                 ) ", true);
 }
 
+// 짧은 URL 주소를 사용 여부 필드 추가
+if (!isset($config['cf_bbs_rewrite'])) {
+    sql_query(" ALTER TABLE `{$g5['config_table']}`
+                    ADD `cf_bbs_rewrite` tinyint(4) NOT NULL DEFAULT '0' AFTER `cf_link_target` ", true);
+}
+
+// 읽지 않은 메모 수 칼럼 추가
+if(!isset($member['mb_memo_cnt'])) {
+    sql_query(" ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_memo_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_call`", true);
+}
+
+// 스크랩 읽은 수 추가
+if(!isset($member['mb_scrap_cnt'])) {
+    sql_query(" ALTER TABLE `{$g5['member_table']}`
+                ADD `mb_scrap_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_cnt`", true);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -264,6 +282,7 @@ $pg_anchor = '<ul class="anchor">
     <li><a href="#anc_cf_board">게시판기본</a></li>
     <li><a href="#anc_cf_join">회원가입</a></li>
     <li><a href="#anc_cf_cert">본인확인</a></li>
+    <li><a href="#anc_cf_url">짧은주소</a></li>
     <li><a href="#anc_cf_mail">기본메일환경</a></li>
     <li><a href="#anc_cf_article_mail">글작성메일</a></li>
     <li><a href="#anc_cf_join_mail">가입메일</a></li>
@@ -881,6 +900,9 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     </div>
 </section>
 
+<?php
+include_once('_rewrite_config_form.php');
+?>
 
 <section id="anc_cf_mail">
     <h2 class="h2_frm">기본 메일 환경 설정</h2>
@@ -1067,7 +1089,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <input type="checkbox" name="cf_social_servicelist[]" id="check_social_kakao" value="kakao" <?php echo option_array_checked('kakao', $config['cf_social_servicelist']); ?> >
                     <label for="check_social_kakao">카카오 로그인을 사용합니다</label>
                     <div>
-                    <h3>카카오 웹 Redirect Path</h3>
+                    <h3>카카오 로그인 Redirect URI</h3>
                     <p><?php echo get_social_callbackurl('kakao', true); ?></p>
                     </div>
                 </div>
@@ -1317,7 +1339,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 <label for="cf_<?php echo $i ?>_subj">여분필드<?php echo $i ?> 제목</label>
                 <input type="text" name="cf_<?php echo $i ?>_subj" value="<?php echo get_text($config['cf_'.$i.'_subj']) ?>" id="cf_<?php echo $i ?>_subj" class="frm_input" size="30">
                 <label for="cf_<?php echo $i ?>">여분필드<?php echo $i ?> 값</label>
-                <input type="text" name="cf_<?php echo $i ?>" value="<?php echo $config['cf_'.$i] ?>" id="cf_<?php echo $i ?>" class="frm_input" size="30">
+                <input type="text" name="cf_<?php echo $i ?>" value="<?php echo get_sanitize_input($config['cf_'.$i]); ?>" id="cf_<?php echo $i ?>" class="frm_input extra-value-input" size="30">
             </td>
         </tr>
         <?php } ?>
@@ -1419,6 +1441,10 @@ if($config['cf_cert_use']) {
         }
 
         echo module_exec_check($exe, 'okname');
+
+        if(is_dir(G5_OKNAME_PATH.'/log') && is_writable(G5_OKNAME_PATH.'/log') && function_exists('check_log_folder') ) {
+            check_log_folder(G5_OKNAME_PATH.'/log');
+        }
     }
 
     // kcp일 때
@@ -1436,15 +1462,28 @@ if($config['cf_cert_use']) {
         $log_path = G5_LGXPAY_PATH.'/lgdacom/log';
 
         if(!is_dir($log_path)) {
-            echo '<script>'.PHP_EOL;
-            echo 'alert("'.str_replace(G5_PATH.'/', '', G5_LGXPAY_PATH).'/lgdacom 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
-            echo '</script>'.PHP_EOL;
-        } else {
-            if(!is_writable($log_path)) {
+
+            if( is_writable(G5_LGXPAY_PATH.'/lgdacom/') ){
+                // 디렉토리가 없다면 생성합니다. (퍼미션도 변경하구요.)
+                @mkdir($log_path, G5_DIR_PERMISSION);
+                @chmod($log_path, G5_DIR_PERMISSION);
+            }
+
+            if(!is_dir($log_path)){
                 echo '<script>'.PHP_EOL;
-                echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
+                echo 'alert("'.str_replace(G5_PATH.'/', '', G5_LGXPAY_PATH).'/lgdacom 폴더 안에 log 폴더를 생성하신 후 쓰기권한을 부여해 주십시오.\n> mkdir log\n> chmod 707 log");'.PHP_EOL;
                 echo '</script>'.PHP_EOL;
             }
+        }
+
+        if(is_dir($log_path) && is_writable($log_path)) {
+            if( function_exists('check_log_folder') ){
+                check_log_folder($log_path);
+            }
+        } else if (is_dir($log_path)) {
+            echo '<script>'.PHP_EOL;
+            echo 'alert("'.str_replace(G5_PATH.'/', '',$log_path).' 폴더에 쓰기권한을 부여해 주십시오.\n> chmod 707 log");'.PHP_EOL;
+            echo '</script>'.PHP_EOL;
         }
     }
 }

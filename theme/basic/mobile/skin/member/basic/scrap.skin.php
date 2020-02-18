@@ -10,10 +10,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
     <ul id="scrap_ul" class="list_01">
         <?php for ($i=0; $i<count($list); $i++) { ?>
-        <li>
-            <a href="<?php echo $list[$i]['opener_href'] ?>" target="_blank" class="scrap_board" onclick="opener.document.location.href='<?php echo $list[$i]['opener_href'] ?>'; return false;"><i class="fa fa-list-alt" aria-hidden="true"></i> <?php echo $list[$i]['bo_subject'] ?></a>
-            <a href="<?php echo $list[$i]['opener_href_wr_id'] ?>" target="_blank" class="scrap_link" onclick="opener.document.location.href='<?php echo $list[$i]['opener_href_wr_id'] ?>'; return false;"><?php echo $list[$i]['subject'] ?></a>
-            <a href="<?php echo $list[$i]['del_href']; ?>" class="scrap_del" onclick="del(this.href); return false;">삭제</a>
+		<li>
+            <a href="<?php echo $list[$i]['opener_href_wr_id'] ?>" target="_blank" class="scrap_tit" onclick="opener.document.location.href='<?php echo $list[$i]['opener_href_wr_id'] ?>'; return false;"><?php echo $list[$i]['subject'] ?></a>
+            <a href="<?php echo $list[$i]['opener_href'] ?>" class="scrap_cate" target="_blank" onclick="opener.document.location.href='<?php echo $list[$i]['opener_href'] ?>'; return false;"><?php echo $list[$i]['bo_subject'] ?></a>
+            <span class="scrap_datetime"><i class="fa fa-clock-o" aria-hidden="true"></i> <?php echo $list[$i]['ms_datetime'] ?></span>
+            <a href="<?php echo $list[$i]['del_href'];  ?>" onclick="del(this.href); return false;" class="scrap_del"><i class="fa fa-trash-o" aria-hidden="true"></i><span class="sound_only">삭제</span></a>
         </li>
         <?php } ?>
         <?php if ($i == 0) echo "<li class=\"empty_list\">자료가 없습니다.</li>"; ?>

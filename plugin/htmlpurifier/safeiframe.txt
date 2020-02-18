@@ -4,6 +4,7 @@ www.youtube(?:-nocookie)?.com/
 serviceapi.rmcnmv.naver.com/
 videofarm.daum.net/
 player.vimeo.com/
+www.google.com/
 maps.google.com/
 play.afreeca.com/
 v.nate.com/
@@ -12,3 +13,4 @@ w.soundcloud.com/
 www.facebook.com/
 kakaotv.daum.net/
 v.afree.ca/
+play-tv.kakao.com/

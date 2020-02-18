@@ -7,53 +7,56 @@ if (!defined('_GNUBOARD_')) exit;
 function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_create=false, $is_crop=false, $crop_mode='center', $is_sharpen=false, $um_value='80/0.5/3')
 {
     global $g5, $config;
-    $filename = $alt = "";
+    $filename = $alt = $data_path = '';
     $edt = false;
 
-    $sql = " select bf_file, bf_content from {$g5['board_file_table']}
-                where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_type between '1' and '3' order by bf_no limit 0, 1 ";
-    $row = sql_fetch($sql);
+    $row = get_thumbnail_find_cache($bo_table, $wr_id, 'file');
 
     if($row['bf_file']) {
         $filename = $row['bf_file'];
         $filepath = G5_DATA_PATH.'/file/'.$bo_table;
         $alt = get_text($row['bf_content']);
     } else {
-        $write_table = $g5['write_prefix'].$bo_table;
-        $sql = " select wr_content from $write_table where wr_id = '$wr_id' ";
-        $write = sql_fetch($sql);
-        $matches = get_editor_image($write['wr_content'], false);
+        $write = get_thumbnail_find_cache($bo_table, $wr_id, 'content');
         $edt = true;
+        
+        if( $matches = get_editor_image($write['wr_content'], false) ){
+            for($i=0; $i<count($matches[1]); $i++)
+            {
+                // 이미지 path 구함
+                $p = parse_url($matches[1][$i]);
+                if(strpos($p['path'], '/'.G5_DATA_DIR.'/') != 0)
+                    $data_path = preg_replace('/^\/.*\/'.G5_DATA_DIR.'/', '/'.G5_DATA_DIR, $p['path']);
+                else
+                    $data_path = $p['path'];
 
-        for($i=0; $i<count($matches[1]); $i++)
-        {
-            // 이미지 path 구함
-            $p = parse_url($matches[1][$i]);
-            if(strpos($p['path'], '/'.G5_DATA_DIR.'/') != 0)
-                $data_path = preg_replace('/^\/.*\/'.G5_DATA_DIR.'/', '/'.G5_DATA_DIR, $p['path']);
-            else
-                $data_path = $p['path'];
+                $srcfile = G5_PATH.$data_path;
 
-            $srcfile = G5_PATH.$data_path;
+                if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
+                    $size = @getimagesize($srcfile);
+                    if(empty($size))
+                        continue;
 
-            if(preg_match("/\.({$config['cf_image_extension']})$/i", $srcfile) && is_file($srcfile)) {
-                $size = @getimagesize($srcfile);
-                if(empty($size))
-                    continue;
+                    $filename = basename($srcfile);
+                    $filepath = dirname($srcfile);
 
-                $filename = basename($srcfile);
-                $filepath = dirname($srcfile);
+                    preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matches[0][$i], $malt);
+                    $alt = get_text($malt[1]);
 
-                preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matches[0][$i], $malt);
-                $alt = get_text($malt[1]);
+                    break;
+                }
 
-                break;
-            }
-        }
+                $filename = run_replace('get_editor_filename', $filename, $p);
+            }   //end for
+        }   //end if
     }
 
     if(!$filename)
         return false;
+    
+    if( $thumbnail_info = run_replace('get_list_thumbnail_info', array(), array('bo_table'=>$bo_table, 'wr_id'=>$wr_id, 'data_path'=>$data_path, 'edt'=>$edt, 'filename'=>$filename, 'filepath'=>$filepath, 'thumb_width'=>$thumb_width, 'thumb_height'=>$thumb_height, 'is_create'=>$is_create, 'is_crop'=>$is_crop, 'crop_mode'=>$crop_mode, 'is_sharpen'=>$is_sharpen, 'um_value'=>$um_value)) ){
+        return $thumbnail_info;
+    }
 
     $tname = thumbnail($filename, $filepath, $filepath, $thumb_width, $thumb_height, $is_create, $is_crop, $crop_mode, $is_sharpen, $um_value);
 
@@ -74,6 +77,20 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     $thumb = array("src"=>$src, "ori"=>$ori, "alt"=>$alt);
 
     return $thumb;
+}
+
+// 게시글보기 파일 썸네일 리턴
+function get_file_thumbnail($file){
+    
+    if( ! is_array($file) ) return '';
+
+    if( preg_match('/(\.jpg|\.jpeg|\.gif|\.png|\.bmp)$/i', $file['file']) && $contents = run_replace('get_file_thumbnail_tags', '', $file) ){
+        return $contents;
+    } else if ($file['view']) {
+        return get_view_thumbnail($file['view']);
+    }
+
+    return $file['view'];
 }
 
 // 게시글보기 썸네일 생성
@@ -185,7 +202,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
         }
     }
 
-    return $contents;
+    return run_replace('get_view_thumbnail', $contents);
 }
 
 function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_height, $is_create, $is_crop=false, $crop_mode='center', $is_sharpen=false, $um_value='80/0.5/3')

@@ -57,6 +57,8 @@ $payReqMap = $_SESSION['lgd_certify'];//결제 요청시, Session에 저장했�
 <form method="post" name="LGD_RETURNINFO" id="LGD_RETURNINFO">
 <?php
 	  foreach ($payReqMap as $key => $value) {
+        $key = htmlspecialchars(strip_tags($key));
+        $value = htmlspecialchars(strip_tags($value));
       echo "<input type='hidden' name='$key' id='$key' value='$value'>";
     }
 ?>

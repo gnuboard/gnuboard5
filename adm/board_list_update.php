@@ -10,6 +10,10 @@ if (!count($_POST['chk'])) {
 
 check_admin_token();
 
+$act_button = isset($_POST['act_button']) ? strip_tags($_POST['act_button']) : '';
+$chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? $_POST['chk'] : array();
+$board_table = (isset($_POST['board_table']) && is_array($_POST['board_table'])) ? $_POST['board_table'] : array();
+
 if ($_POST['act_button'] == "선택수정") {
 
     auth_check($auth[$sub_menu], 'w');
@@ -29,19 +33,21 @@ if ($_POST['act_button'] == "선택수정") {
                 alert('최고관리자가 아닌 경우 다른 관리자의 게시판('.$board_table[$k].')은 수정이 불가합니다.');
         }
 
+        $p_bo_subject = is_array($_POST['bo_subject']) ? strip_tags($_POST['bo_subject'][$k]) : '';
+
         $sql = " update {$g5['board_table']}
-                    set gr_id               = '".sql_real_escape_string($_POST['gr_id'][$k])."',
-                        bo_subject          = '".sql_real_escape_string($_POST['bo_subject'][$k])."',
-                        bo_device           = '".sql_real_escape_string($_POST['bo_device'][$k])."',
-                        bo_skin             = '".sql_real_escape_string($_POST['bo_skin'][$k])."',
-                        bo_mobile_skin      = '".sql_real_escape_string($_POST['bo_mobile_skin'][$k])."',
-                        bo_read_point       = '".sql_real_escape_string($_POST['bo_read_point'][$k])."',
-                        bo_write_point      = '".sql_real_escape_string($_POST['bo_write_point'][$k])."',
-                        bo_comment_point    = '".sql_real_escape_string($_POST['bo_comment_point'][$k])."',
-                        bo_download_point   = '".sql_real_escape_string($_POST['bo_download_point'][$k])."',
-                        bo_use_search       = '".sql_real_escape_string($_POST['bo_use_search'][$k])."',
-                        bo_use_sns          = '".sql_real_escape_string($_POST['bo_use_sns'][$k])."',
-                        bo_order            = '".sql_real_escape_string($_POST['bo_order'][$k])."'
+                    set gr_id               = '".sql_real_escape_string(strip_tags($_POST['gr_id'][$k]))."',
+                        bo_subject          = '".$p_bo_subject."',
+                        bo_device           = '".sql_real_escape_string(strip_tags($_POST['bo_device'][$k]))."',
+                        bo_skin             = '".sql_real_escape_string(strip_tags($_POST['bo_skin'][$k]))."',
+                        bo_mobile_skin      = '".sql_real_escape_string(strip_tags($_POST['bo_mobile_skin'][$k]))."',
+                        bo_read_point       = '".sql_real_escape_string(strip_tags($_POST['bo_read_point'][$k]))."',
+                        bo_write_point      = '".sql_real_escape_string(strip_tags($_POST['bo_write_point'][$k]))."',
+                        bo_comment_point    = '".sql_real_escape_string(strip_tags($_POST['bo_comment_point'][$k]))."',
+                        bo_download_point   = '".sql_real_escape_string(strip_tags($_POST['bo_download_point'][$k]))."',
+                        bo_use_search       = '".sql_real_escape_string(strip_tags($_POST['bo_use_search'][$k]))."',
+                        bo_use_sns          = '".sql_real_escape_string(strip_tags($_POST['bo_use_sns'][$k]))."',
+                        bo_order            = '".sql_real_escape_string(strip_tags($_POST['bo_order'][$k]))."'
                   where bo_table            = '".sql_real_escape_string($_POST['board_table'][$k])."' ";
 
         sql_query($sql);
@@ -71,6 +77,8 @@ if ($_POST['act_button'] == "선택수정") {
 
 
 }
+
+run_event('admin_board_list_update', $act_button, $chk, $board_table, $qstr);
 
 goto_url('./board_list.php?'.$qstr);
 ?>

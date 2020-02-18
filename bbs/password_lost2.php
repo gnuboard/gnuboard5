@@ -11,7 +11,7 @@ if (!chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
-$email = trim($_POST['mb_email']);
+$email = get_email_address(trim($_POST['mb_email']));
 
 if (!$email)
     alert_close('메일주소 오류입니다.');
@@ -21,9 +21,9 @@ $row = sql_fetch($sql);
 if ($row['cnt'] > 1)
     alert('동일한 메일주소가 2개 이상 존재합니다.\\n\\n관리자에게 문의하여 주십시오.');
 
-$sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime from {$g5['member_table']} where mb_email = '$email' ";
+$sql = " select mb_no, mb_id, mb_name, mb_nick, mb_email, mb_datetime, mb_leave_date from {$g5['member_table']} where mb_email = '$email' ";
 $mb = sql_fetch($sql);
-if (!$mb['mb_id'])
+if (!$mb['mb_id'] || $mb['mb_leave_date'])
     alert('존재하지 않는 회원입니다.');
 else if (is_admin($mb['mb_id']))
     alert('관리자 아이디는 접근 불가합니다.');
@@ -70,6 +70,8 @@ $content .= '</div>';
 $content .= '</div>';
 
 mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb['mb_email'], $subject, $content, 1);
+
+run_event('password_lost2_after', $mb, $mb_nonce, $mb_lost_certify);
 
 alert_close($email.' 메일로 회원아이디와 비밀번호를 인증할 수 있는 메일이 발송 되었습니다.\\n\\n메일을 확인하여 주십시오.');
 ?>

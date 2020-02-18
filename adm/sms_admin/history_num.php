@@ -11,6 +11,10 @@ $g5['title'] = "문자전송 내역 (번호별)";
 
 if ($page < 1) $page = 1;
 
+if( isset($st) && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
+    $st = '';
+}
+
 if ($st && trim($sv))
     $sql_search = " and $st like '%$sv%' ";
 else

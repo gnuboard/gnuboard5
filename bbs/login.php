@@ -8,7 +8,7 @@ if( function_exists('social_check_login_before') ){
 $g5['title'] = '로그인';
 include_once('./_head.sub.php');
 
-$url = $_GET['url'];
+$url = strip_tags($_GET['url']);
 
 // url 체크
 check_url_host($url);
@@ -30,6 +30,8 @@ if (!file_exists($login_file))
     $member_skin_path   = G5_SKIN_PATH.'/member/basic';
 
 include_once($member_skin_path.'/login.skin.php');
+
+run_event('member_login_tail', $login_url, $login_action_url, $member_skin_path, $url);
 
 include_once('./_tail.sub.php');
 ?>

@@ -76,7 +76,7 @@ $colspan = 7;
         <td class="td_category<?php echo $sub_menu_class; ?>">
             <input type="hidden" name="code[]" value="<?php echo substr($row['me_code'], 0, 2) ?>">
             <label for="me_name_<?php echo $i; ?>" class="sound_only"><?php echo $sub_menu_info; ?> 메뉴<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="me_name[]" value="<?php echo $me_name; ?>" id="me_name_<?php echo $i; ?>" required class="required tbl_input full_input">
+            <input type="text" name="me_name[]" value="<?php echo get_sanitize_input($me_name); ?>" id="me_name_<?php echo $i; ?>" required class="required tbl_input full_input">
         </td>
         <td>
             <label for="me_link_<?php echo $i; ?>" class="sound_only">링크<strong class="sound_only"> 필수</strong></label>
@@ -196,6 +196,20 @@ function base_convert(number, frombase, tobase) {
 
 function fmenulist_submit(f)
 {
+
+    var me_links = document.getElementsByName('me_link[]');
+    var reg = /^javascript/; 
+
+	for (i=0; i<me_links.length; i++){
+        
+	    if( reg.test(me_links[i].value) ){ 
+        
+            alert('링크에 자바스크립트문을 입력할수 없습니다.');
+            me_links[i].focus();
+            return false;
+        }
+    }
+
     return true;
 }
 </script>
