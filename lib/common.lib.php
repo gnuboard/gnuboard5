@@ -1801,7 +1801,7 @@ function get_table_define($table, $crlf="\n")
 
     $schema_create .= $crlf . ') ENGINE=MyISAM DEFAULT CHARSET=utf8';
 
-    return $schema_create;
+    return get_db_create_replace($schema_create);
 } // end of the 'PMA_getTableDef()' function
 
 
