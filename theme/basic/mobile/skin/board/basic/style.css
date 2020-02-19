@@ -299,7 +299,7 @@
 .bo_vc_w_wr:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_vc_w .bo_vc_secret {display:block}
 
-#bo_vc_send_sns {display:block;float:left}
+#bo_vc_send_sns {display:block;margin-bottom:10px}
 #bo_vc_sns {display:block;margin:0;padding:0;list-style:none;zoom:1}
 #bo_vc_sns:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_vc_sns li {float:left;margin:0 5px 0 0}
