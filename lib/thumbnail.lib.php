@@ -306,8 +306,11 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         if(!$thumb_height) {
             $thumb_height = round(($thumb_width * $size[1]) / $size[0]);
         } else {
-            if($size[0] < $thumb_width || $size[1] < $thumb_height)
+            if($crop_mode === 'center' && ($size[0] > $thumb_width || $size[1] > $thumb_height)){
+                $is_large = true;
+            } else if($size[0] < $thumb_width || $size[1] < $thumb_height) {
                 $is_large = false;
+            }
         }
     } else {
         if($thumb_height) {
