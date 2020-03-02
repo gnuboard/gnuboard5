@@ -7,10 +7,11 @@ check_admin_token();
 $od_shop_memo = strip_tags($od_shop_memo);
 
 if($_POST['mod_type'] == 'info') {
-    $od_zip1   = substr($_POST['od_zip'], 0, 3);
-    $od_zip2   = substr($_POST['od_zip'], 3);
-    $od_b_zip1 = substr($_POST['od_b_zip'], 0, 3);
-    $od_b_zip2 = substr($_POST['od_b_zip'], 3);
+    $od_zip1   = preg_replace('/[^0-9]/', '', substr($_POST['od_zip'], 0, 3));
+    $od_zip2   = preg_replace('/[^0-9]/', '', substr($_POST['od_zip'], 3));
+    $od_b_zip1 = preg_replace('/[^0-9]/', '', substr($_POST['od_b_zip'], 0, 3));
+    $od_b_zip2 = preg_replace('/[^0-9]/', '', substr($_POST['od_b_zip'], 3));
+    $od_email = strip_tags(clean_xss_attributes($od_email));
 
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_name = '$od_name',
@@ -32,6 +33,7 @@ if($_POST['mod_type'] == 'info') {
                     od_b_addr2 = '$od_b_addr2',
                     od_b_addr3 = '$od_b_addr3',
                     od_b_addr_jibeon = '$od_b_addr_jibeon' ";
+
     if ($default['de_hope_date_use'])
         $sql .= " , od_hope_date = '$od_hope_date' ";
 } else {
