@@ -3022,6 +3022,9 @@ function clean_xss_tags($str, $check_entities=0)
         if( $check_entities ){
             $result = str_replace(array('&colon;', '&lpar;', '&rpar;', '&NewLine;', '&Tab;'), '', $result);
         }
+        
+        $result = preg_replace('#([^\p{L}]|^)(?:javascript|jar|applescript|vbscript|vbs|wscript|jscript|behavior|mocha|livescript|view-source)\s*:(?:.*?([/\\\;()\'">]|$))#ius',
+                '$1$2', $result);
 
         if((string)$result === (string)$str) break;
 
@@ -3695,10 +3698,10 @@ function is_include_path_check($path='', $is_input='')
             // 장태진 @jtjisgod <jtjisgod@gmail.com> 추가
             // 보안 목적 : rar wrapper 차단
 
-            if( stripos($path, 'rar:') !== false || stripos($path, 'php:') !== false || stripos($path, 'zlib:') !== false || stripos($path, 'bzip2:') !== false || stripos($path, 'zip:') !== false || stripos($path, 'data:') !== false || stripos($path, 'phar:') !== false || stripos($path, 'file:') !== false ){
+            if( stripos($path, 'rar:') !== false || stripos($path, 'php:') !== false || stripos($path, 'zlib:') !== false || stripos($path, 'bzip2:') !== false || stripos($path, 'zip:') !== false || stripos($path, 'data:') !== false || stripos($path, 'phar:') !== false || stripos($path, 'file:') !== false || stripos($path, '://') !== false ){
                 return false;
             }
-            
+
             $replace_path = str_replace('\\', '/', $path);
             $slash_count = substr_count(str_replace('\\', '/', $_SERVER['SCRIPT_NAME']), '/');
             $peer_count = substr_count($replace_path, '../');
@@ -3765,6 +3768,10 @@ function is_include_path_check($path='', $is_input='')
     }
 
     return true;
+}
+
+function filter_input_include_path($path){
+    return str_replace('//', '/', $path);
 }
 
 function option_array_checked($option, $arr=array()){

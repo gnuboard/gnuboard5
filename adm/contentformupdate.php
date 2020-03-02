@@ -71,6 +71,11 @@ if( $co_include_tail && ! is_include_path_check($co_include_tail, 1) ){
     $error_msg = '/data/file/ 또는 /data/editor/ 포함된 문자를 하단 파일 경로에 포함시킬수 없습니다.';
 }
 
+if( function_exists('filter_input_include_path') ){
+    $co_include_head = filter_input_include_path($co_include_head);
+    $co_include_tail = filter_input_include_path($co_include_tail);
+}
+
 $co_seo_title = exist_seo_title_recursive('content', generate_seo_title($co_subject), $g5['content_table'], $co_id);
 
 $sql_common = " co_include_head     = '$co_include_head',
