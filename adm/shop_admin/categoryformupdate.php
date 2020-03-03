@@ -56,6 +56,11 @@ foreach( $check_str_keys as $key ){
 $ca_include_head = $_POST['ca_include_head'];
 $ca_include_tail = $_POST['ca_include_tail'];
 
+if( function_exists('filter_input_include_path') ){
+    $ca_include_head = filter_input_include_path($ca_include_head);
+    $ca_include_tail = filter_input_include_path($ca_include_tail);
+}
+
 if ($w == "u" || $w == "d")
     check_demo();
 
