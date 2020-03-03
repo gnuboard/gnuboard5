@@ -68,15 +68,17 @@ $result = sql_query($sql);
         $num = $i + 1;
 
         $bg = 'bg'.($i%2);
+
+        $fa_subject = conv_content($row['fa_subject'], 1);
     ?>
 
     <tr class="<?php echo $bg; ?>">
         <td class="td_num"><?php echo $num; ?></td>
-        <td class="td_left"><?php echo stripslashes($row['fa_subject']); ?></td>
+        <td class="td_left"><?php echo $fa_subject; ?></td>
         <td class="td_num"><?php echo $row['fa_order']; ?></td>
         <td class="td_mng td_mng_m">
-            <a href="./faqform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" class="btn btn_03"><span class="sound_only"><?php echo stripslashes($row['fa_subject']); ?> </span>수정</a>
-            <a href="./faqformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" onclick="return delete_confirm(this);" class="btn btn_02"><span class="sound_only"><?php echo stripslashes($row['fa_subject']); ?> </span>삭제</a>
+            <a href="./faqform.php?w=u&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" class="btn btn_03"><span class="sound_only"><?php echo $fa_subject; ?> </span>수정</a>
+            <a href="./faqformupdate.php?w=d&amp;fm_id=<?php echo $row['fm_id']; ?>&amp;fa_id=<?php echo $row['fa_id']; ?>" onclick="return delete_confirm(this);" class="btn btn_02"><span class="sound_only"><?php echo $fa_subject; ?> </span>삭제</a>
         </td>
     </tr>
 
