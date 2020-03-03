@@ -12,10 +12,13 @@ set_session("ss_cert_no",   "");
 set_session("ss_cert_hash", "");
 set_session("ss_cert_type", "");
 
+$is_social_login_modify = false;
+
 if( $provider && function_exists('social_nonce_is_valid') ){   //모바일로 소셜 연결을 했다면
     if( social_nonce_is_valid(get_session("social_link_token"), $provider) ){  //토큰값이 유효한지 체크
         $w = 'u';   //회원 수정으로 처리
         $_POST['mb_id'] = $member['mb_id'];
+        $is_social_login_modify = true;
     }
 }
 
@@ -75,8 +78,14 @@ if ($w == "") {
     // 수정 후 다시 이 폼으로 돌아오기 위해 임시로 저장해 놓음
     set_session("ss_tmp_password", $_POST[mb_password]);
     */
+    
+    if($_POST['mb_id'] && ! (isset($_POST['mb_password']) && $_POST['mb_password'])){
+        if( ! $is_social_login_modify ){
+            alert('비밀번호를 입력해 주세요.');
+        }
+    }
 
-    if ($_POST['mb_password']) {
+    if (isset($_POST['mb_password'])) {
         // 수정된 정보를 업데이트후 되돌아 온것이라면 비밀번호가 암호화 된채로 넘어온것임
         if ($_POST['is_update']) {
             $tmp_password = $_POST['mb_password'];

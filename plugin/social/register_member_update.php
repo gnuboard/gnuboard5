@@ -53,6 +53,7 @@ if( ! isset($mb_password) || ! $mb_password ){
 
 }
 
+if ($msg = valid_mb_id($mb_id))         alert($msg, "", true, true);
 if ($msg = empty_mb_name($mb_name))       alert($msg, "", true, true);
 if ($msg = empty_mb_nick($mb_nick))     alert($msg, "", true, true);
 if ($msg = empty_mb_email($mb_email))   alert($msg, "", true, true);
@@ -67,6 +68,10 @@ if ($msg = prohibit_mb_email($mb_email))alert($msg, "", true, true);
 if ($msg = exist_mb_id($mb_id))     alert($msg);
 if ($msg = exist_mb_nick($mb_nick, $mb_id))     alert($msg, "", true, true);
 if ($msg = exist_mb_email($mb_email, $mb_id))   alert($msg, "", true, true);
+
+if( $mb = get_member($mb_id) ){
+    alert("이미 등록된 회원이 존재합니다.", G5_URL);
+}
 
 $data = array(
 'mb_id' =>  $mb_id,
