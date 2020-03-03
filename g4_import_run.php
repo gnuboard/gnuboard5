@@ -337,7 +337,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     // 게시판 테이블 생성
     $bo_table = $row['bo_table'];
     $file = file(G5_ADMIN_PATH.'/sql_write.sql');
-    $sql = implode($file, "\n");
+    $sql = implode("\n", $file);
 
     $create_table = $g5['write_prefix'] . $bo_table;
 

@@ -204,7 +204,7 @@ if ($w == '') {
     $file = file('./sql_write.sql');
     $file = get_db_create_replace($file);
 
-    $sql = implode($file, "\n");
+    $sql = implode("\n", $file);
 
     $create_table = $g5['write_prefix'] . $bo_table;
 

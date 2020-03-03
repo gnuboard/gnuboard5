@@ -67,8 +67,14 @@ class FileCache
 		{
 			return FALSE;
 		}
-
-		$data = unserialize(file_get_contents( $cache_file_path ));
+        
+        try{
+            $file_contents = file_get_contents($cache_file_path);
+            $file_ex = explode("\n\n", $file_contents);
+            $data = unserialize(base64_decode($file_ex[1]));
+        } catch(Exception $e){
+            $data = array('ttl'=>1, 'time'=>time() - 1000);
+        }
 
 		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
 		{
@@ -135,7 +141,10 @@ class FileCache
 			'data'		=> $data
 		);
 
-		if ($this->write_file($cache_file_path, serialize($contents)))
+        $cache_content = "<?php if (!defined('_GNUBOARD_')) exit; ?>\n\n";
+        $cache_content .= base64_encode(serialize($contents));
+
+		if ($this->write_file($cache_file_path, $cache_content))
 		{
 			chmod($cache_file_path, G5_FILE_PERMISSION);
 			return TRUE;
@@ -167,7 +176,7 @@ class FileCache
         if ($ttl !== null) {
             $expire = time() + $ttl;
         }
-        return serialize(array($data, $expire));
+        return base64_encode(serialize(array($data, $expire)));
     }
 
     /**
@@ -181,7 +190,7 @@ class FileCache
      */
     public function decode($data)
     {
-        return unserialize($data);
+        return unserialize(base64_decode($data));
     }
 }
 ?>
