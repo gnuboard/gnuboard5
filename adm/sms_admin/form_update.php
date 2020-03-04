@@ -4,8 +4,8 @@ include_once("./_common.php");
 
 auth_check($auth[$sub_menu], "w");
 
-$fo_name = isset($fo_name) ? strip_tags($fo_name) : '';
-$fo_content = isset($fo_content) ? strip_tags($fo_content) : '';
+$fo_name = isset($fo_name) ? strip_tags(clean_xss_attributes($fo_name)) : '';
+$fo_content = isset($fo_content) ? strip_tags(clean_xss_attributes($fo_content)) : '';
 
 $g5['title'] = "이모티콘 업데이트";
 

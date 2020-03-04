@@ -60,6 +60,11 @@ if(!is_include_path_check($bo_include_tail, 1)) {
     alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
+if( function_exists('filter_input_include_path') ){
+    $bo_include_head = filter_input_include_path($bo_include_head);
+    $bo_include_tail = filter_input_include_path($bo_include_tail);
+}
+
 $board_path = G5_DATA_PATH.'/file/'.$bo_table;
 
 // 게시판 디렉토리 생성
@@ -80,8 +85,8 @@ $bo_category_list = isset($_POST['bo_category_list']) ? str_replace($src_char, $
 //https://github.com/gnuboard/gnuboard5/commit/f5f4925d4eb28ba1af728e1065fc2bdd9ce1da58 에 따른 조치
 $str_bo_category_list = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $bo_category_list);
 
-$_POST['bo_subject'] = strip_tags($_POST['bo_subject']);
-$_POST['bo_mobile_subject'] = strip_tags($_POST['bo_mobile_subject']);
+$_POST['bo_subject'] = strip_tags(clean_xss_attributes($_POST['bo_subject']));
+$_POST['bo_mobile_subject'] = strip_tags(clean_xss_attributes($_POST['bo_mobile_subject']));
 
 $sql_common = " gr_id               = '{$gr_id}',
                 bo_subject          = '{$_POST['bo_subject']}',
@@ -199,7 +204,7 @@ if ($w == '') {
     $file = file('./sql_write.sql');
     $file = get_db_create_replace($file);
 
-    $sql = implode($file, "\n");
+    $sql = implode("\n", $file);
 
     $create_table = $g5['write_prefix'] . $bo_table;
 

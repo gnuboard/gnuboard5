@@ -26,7 +26,7 @@ if(!$_POST['cf_cert_use']) {
 
 $cf_social_servicelist = !empty($_POST['cf_social_servicelist']) ? implode(',', $_POST['cf_social_servicelist']) : '';
 
-$_POST['cf_title'] = strip_tags($_POST['cf_title']);
+$_POST['cf_title'] = strip_tags(clean_xss_attributes($_POST['cf_title']));
 
 $check_keys = array('cf_lg_mid', 'cf_lg_mert_key', 'cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret');
 

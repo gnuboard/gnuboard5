@@ -40,7 +40,7 @@ foreach( $_POST as $key=>$value ){
     if( empty($value) ) continue;
 
     if( in_array($key, $check_keys) ) {
-        $_POST[$key] = strip_tags($value);
+        $_POST[$key] = strip_tags(clean_xss_attributes($value));
     }
 }
 

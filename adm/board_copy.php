@@ -31,7 +31,7 @@ include_once(G5_PATH.'/head.sub.php');
             </tr>
             <tr>
                 <th scope="col"><label for="target_subject">게시판 제목<strong class="sound_only">필수</strong></label></th>
-                <td><input type="text" name="target_subject" value="[복사본] <?php echo $board['bo_subject'] ?>" id="target_subject" required class="required frm_input" maxlength="120"></td>
+                <td><input type="text" name="target_subject" value="[복사본] <?php echo get_sanitize_input($board['bo_subject']); ?>" id="target_subject" required class="required frm_input" maxlength="120"></td>
             </tr>
             <tr>
                 <th scope="col">복사 유형</th>
