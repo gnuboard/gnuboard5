@@ -26,6 +26,9 @@ sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$tmp_bo_tab
 // 게시판 테이블 DROP
 sql_query(" drop table {$g5['write_prefix']}{$tmp_bo_table} ", FALSE);
 
+// 좋아요 테이블에서 기록 삭제
+sql_query(" delete from {$g5['board_good_table']} where bo_table = '{$tmp_bo_table}' ");
+
 delete_cache_latest($tmp_bo_table);
 
 // 게시판 폴더 전체 삭제
