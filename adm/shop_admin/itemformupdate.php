@@ -304,6 +304,8 @@ foreach( $check_sanitize_keys as $key ){
     $$key = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
 }
 
+$it_basic = preg_replace('#<script(.*?)>(.*?)<\/script>#is', '', $it_basic);
+
 if ($it_name == "")
     alert("상품명을 입력해 주십시오.");
 

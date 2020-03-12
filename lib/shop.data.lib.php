@@ -15,7 +15,8 @@ function get_shop_item($it_id, $is_cache=false, $add_query=''){
 
         $g5_object->set('shop', $it_id, $item, $add_query_key);
     }
-
+    
+    $item['it_basic'] = conv_content($item['it_basic'], 1);
     return $item;
 }
 
@@ -29,7 +30,10 @@ function get_shop_item_with_category($it_id, $seo_title='', $add_query=''){
         $sql = " select a.*, b.ca_name, b.ca_use from {$g5['g5_shop_item_table']} a, {$g5['g5_shop_category_table']} b where a.it_id = '$it_id' and a.ca_id = b.ca_id $add_query";
     }
     
-    return sql_fetch($sql);
+    $item = sql_fetch($sql);
+    $item['it_basic'] = conv_content($item['it_basic'], 1);
+
+    return $item;
 }
 
 function get_shop_navigation_data($is_cache, $ca_id, $ca_id2='', $ca_id3=''){

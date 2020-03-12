@@ -319,7 +319,8 @@ class item_list
                 if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
                     shop_seo_title_update($row['it_id']);
                 }
-
+                
+                $row['it_basic'] = conv_content($row['it_basic'], 1);
                 $list[] = $row;
             }
 
