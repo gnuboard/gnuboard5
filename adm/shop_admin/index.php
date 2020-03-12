@@ -1,10 +1,10 @@
 <?php
-$sub_menu = '400000';
+$sub_menu = '400010';
 include_once('./_common.php');
 
 $max_limit = 7; // 몇행 출력할 것인지?
 
-$g5['title'] = ' 쇼핑몰관리';
+$g5['title'] = ' 쇼핑몰현황';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $pg_anchor = '<ul class="anchor sidx_anchor">

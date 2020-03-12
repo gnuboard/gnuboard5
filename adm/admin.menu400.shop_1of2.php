@@ -3,6 +3,7 @@ if (!defined('G5_USE_SHOP') || !G5_USE_SHOP) return;
 
 $menu['menu400'] = array (
     array('400000', '쇼핑몰관리', G5_ADMIN_URL.'/shop_admin/', 'shop_config'),
+    array('400010', '쇼핑몰현황', G5_ADMIN_URL.'/shop_admin/', 'shop_index'),
     array('400100', '쇼핑몰설정', G5_ADMIN_URL.'/shop_admin/configform.php', 'scf_config'),
     array('400400', '주문내역', G5_ADMIN_URL.'/shop_admin/orderlist.php', 'scf_order', 1),
     array('400440', '개인결제관리', G5_ADMIN_URL.'/shop_admin/personalpaylist.php', 'scf_personalpay', 1),
