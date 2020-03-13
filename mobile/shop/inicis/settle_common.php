@@ -42,7 +42,7 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
     $P_AUTH_DT  = $_POST['P_AUTH_DT'];
     $P_STATUS   = $_POST['P_STATUS'];
     $P_TYPE     = $_POST['P_TYPE'];
-    $P_OID      = $_POST['P_OID'];
+    $P_OID      = preg_replace("/[ #\&\+%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i", "", $_POST['P_OID']);
     $P_FN_CD1   = $_POST['P_FN_CD1'];
     $P_FN_CD2   = $_POST['P_FN_CD2'];
     $P_FN_NM    = $_POST['P_FN_NM'];
@@ -96,7 +96,7 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
         if( !$exist_order['cnt'] ){
             //주문정보를 insert 합니다.
             
-            $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = $P_OID ";
+            $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$P_OID' ";
             $od = sql_fetch($sql);
             $data = unserialize(base64_decode($od['dt_data']));
 
