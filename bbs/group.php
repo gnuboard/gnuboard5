@@ -39,7 +39,7 @@ $sql .= " order by bo_order ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++) {
     $lt_style = "";
-    if ($i%2==1) $lt_style = "margin-left:2%";
+    if ($i%3 !== 0) $lt_style = "margin-left:2%";
     else $lt_style = "";
 ?>
     <div style="float:left;<?php echo $lt_style ?>"  class="lt_wr">

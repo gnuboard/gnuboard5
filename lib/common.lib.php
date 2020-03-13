@@ -2594,7 +2594,7 @@ class html_process {
                 if(!trim($js[1]))
                     continue;
 
-                $js[1] = preg_replace('#\.js([\'\"]?>)$#i', '.js?ver='.G5_JS_VER.'$1', $js[1]);
+                $js[1] = preg_replace('#\.js([\'\"]?>)<\/script>$#i', '.js?ver='.G5_JS_VER.'$1</script>', $js[1]);
 
                 $javascript .= $php_eol.$js[1];
                 $php_eol = PHP_EOL;
