@@ -8,8 +8,8 @@ if(!$code)
 
 $sql = " select sc_id, sc_price
             from {$g5['g5_shop_sendcost_table']}
-            where sc_zip1 <= $code
-              and sc_zip2 >= $code ";
+            where sc_zip1 <= '$code'
+              and sc_zip2 >= '$code' ";
 $row = sql_fetch($sql);
 
 if(!$row['sc_id'])
