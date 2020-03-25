@@ -161,9 +161,9 @@ function add_menu_list(name, link, code)
     list += "</td>";
     list += "<td class=\"td_mngsmall\">";
     <?php if($new == 'new') { ?>
-    list += "<button type=\"button\" class=\"btn_add_submenu btn\">추가</button>";
+    list += "<button type=\"button\" class=\"btn_add_submenu btn_03\">추가</button>";
     <?php } ?>
-    list += "<button type=\"button\" class=\"btn_del_menu btn\">삭제</button>";
+    list += "<button type=\"button\" class=\"btn_del_menu btn_02\">삭제</button>";
     list += "</td>";
     list += "</tr>";
 
