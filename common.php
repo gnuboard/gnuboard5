@@ -220,7 +220,7 @@ if( ! class_exists('XenoPostToForm') ){
 	class XenoPostToForm
 	{
 		public static function check() {
-			return !isset($_COOKIE['PHPSESSID']) && count($_POST) && ((isset($_SERVER['HTTP_REFERER']) && !preg_match('~^https://'.preg_quote($_SERVER['HTTP_HOST'], '~').'/~', $_SERVER['HTTP_REFERER']) || (! $_SERVER['HTTP_REFERER'] && isset($_POST['P_NOTI'])) ));
+			return !isset($_COOKIE['PHPSESSID']) && count($_POST) && ((isset($_SERVER['HTTP_REFERER']) && !preg_match('~^https://'.preg_quote($_SERVER['HTTP_HOST'], '~').'/~', $_SERVER['HTTP_REFERER']) || ! isset($_SERVER['HTTP_REFERER']) ));
 		}
 
 		public static function submit($posts) {
