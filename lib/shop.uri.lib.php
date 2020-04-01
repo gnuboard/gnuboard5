@@ -156,7 +156,7 @@ function add_shop_nginx_conf_rules($rules, $get_path_url, $base_path, $return_st
 
     $add_rules[] = "rewrite ^{$base_path}shop/list-([0-9a-z]+)$ {$base_path}".G5_SHOP_DIR."/list.php?ca_id=$1&rewrite=1 break;";
     $add_rules[] = "rewrite ^{$base_path}shop/type-([0-9a-z]+)$ {$base_path}".G5_SHOP_DIR."/listtype.php?type=$1&rewrite=1 break;";
-    $add_rules[] = "rewrite ^{$base_path}shop/([0-9a-zA-Z_]+)$ {$base_path}".G5_SHOP_DIR."/item.php?it_id=$1&rewrite=1 break;";
+    $add_rules[] = "rewrite ^{$base_path}shop/([0-9a-zA-Z_\-]+)$ {$base_path}".G5_SHOP_DIR."/item.php?it_id=$1&rewrite=1 break;";
     $add_rules[] = "rewrite ^{$base_path}shop/([^/]+)/$ {$base_path}".G5_SHOP_DIR."/item.php?it_seo_title=$1&rewrite=1 break;";
 
     return implode("\n", $add_rules).$rules;
@@ -169,7 +169,7 @@ function add_shop_mod_rewrite_rules($rules, $get_path_url, $base_path, $return_s
     
     $add_rules[] = 'RewriteRule ^shop/list-([0-9a-z]+)$  '.G5_SHOP_DIR.'/list.php?ca_id=$1&rewrite=1  [QSA,L]';
     $add_rules[] = 'RewriteRule ^shop/type-([0-9a-z]+)$  '.G5_SHOP_DIR.'/listtype.php?type=$1&rewrite=1  [QSA,L]';
-    $add_rules[] = 'RewriteRule ^shop/([0-9a-zA-Z_]+)$  '.G5_SHOP_DIR.'/item.php?it_id=$1&rewrite=1  [QSA,L]';
+    $add_rules[] = 'RewriteRule ^shop/([0-9a-zA-Z_\-]+)$  '.G5_SHOP_DIR.'/item.php?it_id=$1&rewrite=1  [QSA,L]';
     $add_rules[] = 'RewriteRule ^shop/([^/]+)/$  '.G5_SHOP_DIR.'/item.php?it_seo_title=$1&rewrite=1  [QSA,L]';
 
     return implode("\n", $add_rules).$rules;
