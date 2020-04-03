@@ -746,6 +746,10 @@ function get_next_num($table)
 function get_group($gr_id, $is_cache=false)
 {
     global $g5;
+    
+    if( is_array($gr_id) ){
+        return array();
+    }
 
     static $cache = array();
 
