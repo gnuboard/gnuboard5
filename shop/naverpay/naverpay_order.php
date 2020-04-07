@@ -201,22 +201,25 @@ for($i=0; $i<$count; $i++) {
             if((int)$it_price + (int)$io_price <= 0)
                 return_error2json('구매금액이 음수 또는 0원인 상품은 구매할 수 없습니다.');
         }
+        
+        $ct_send_cost = 0;
+        if($ct_send_cost != 1) {  //
+            if( $is_cart && !empty($_POST['ct_send_cost'][$it_id][$k]) ){
 
-        if( $is_cart && !empty($_POST['ct_send_cost'][$it_id][$k]) ){
+                $ct_send_cost = $_POST['ct_send_cost'][$it_id][$k];
 
-            $ct_send_cost = $_POST['ct_send_cost'][$it_id][$k];
+            } else {
+                // 배송비결제
+                if($it['it_sc_type'] == 1)
+                    $ct_send_cost = 2; // 무료
+                else if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
+                    $ct_send_cost = 1; // 착불
+            }
 
-        } else {
-            // 배송비결제
-            if($it['it_sc_type'] == 1)
+            // 조건부 무료배송시 착불일 경우 ( 야수님이 알려주심 )
+            if ($it['it_sc_type'] === 2 && $ct_send_cost === 1 && ((int)$io_price + (int)$it_price) * $ct_qty >= $it['it_sc_minimum'] ){
                 $ct_send_cost = 2; // 무료
-            else if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1)
-                $ct_send_cost = 1; // 착불
-        }
-
-        // 조건부 무료배송시 착불일 경우 ( 야수님이 알려주심 )
-        if ($it['it_sc_type'] === 2 && $ct_send_cost === 1 && ((int)$io_price + (int)$it_price) * $ct_qty >= $it['it_sc_minimum'] ){
-            $ct_send_cost = 2; // 무료
+            }
         }
 
         // 옵션정보배열에 저장

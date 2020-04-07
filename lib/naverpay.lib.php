@@ -38,7 +38,7 @@ class naverpay_register
             if(!$it['it_id'])
                 continue;
 
-            if($it['it_sc_method'] == 1) { // 착불
+            if($it['it_sc_type'] > 1 && $it['it_sc_method'] == 1) { // 착불
                 $cnt++;
                 continue;
             }
