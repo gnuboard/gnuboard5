@@ -22,6 +22,7 @@
 .sms5_box {position:relative;padding:10px;border-radius:5px;background:#fbec99}
 .sms5_box .box_ico {position:absolute;top:20px;left:-7px;width:7px;height:13px;background:url('../img/box_ico.gif') no-repeat}
 .sms5_box .box_txt {border:0;background:transparent;word-break:break-all;resize:none;overflow:hidden}
+.sms5_box textarea.box_txt.is_overview{overflow:visible;min-height:130px}
 .sms5_box .box_square {width:100px;height:90px}
 
 #write_wrap {z-index:9}

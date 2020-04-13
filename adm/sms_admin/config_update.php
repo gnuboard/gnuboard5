@@ -15,6 +15,7 @@ if(!check_vaild_callback($cf_phone))
     alert('회신번호가 올바르지 않습니다.');
 
 $userinfo = get_icode_userinfo($cf_icode_id, $cf_icode_pw);
+$cf_icode_server_port = isset($cf_icode_server_port) ? preg_replace('/[^0-9]/', '', $cf_icode_server_port) : '7295';
 
 if ($userinfo['code'] == '202')
     alert('아이코드 아이디와 패스워드가 맞지 않습니다.');
@@ -33,10 +34,12 @@ sql_query($sql);
 // 아이코드 설정
 $sql = " update {$g5['config_table']}
             set cf_sms_use              = '$cf_sms_use',
+                cf_sms_type             = '$cf_sms_type',
                 cf_icode_id             = '$cf_icode_id',
                 cf_icode_pw             = '$cf_icode_pw',
                 cf_icode_server_ip      = '$cf_icode_server_ip',
-                cf_icode_server_port    = '$cf_icode_server_port' ";
+                cf_icode_server_port    = '$cf_icode_server_port',
+                cf_icode_token_key      = '$cf_icode_token_key'";
 sql_query($sql);
 
 goto_url("./config.php");

@@ -60,8 +60,8 @@ function re_send()
     if (!confirm('전송에 실패한 SMS 를 재전송 하시겠습니까?'))
         return;
 
-    act = window.open('sms_ing.php', 'act', 'width=300, height=200');
-    act.focus();
+    //act = window.open('sms_ing.php', 'act', 'width=300, height=200');
+    //act.focus();
 
     location.href = './history_send.php?w=f&page=<?php echo $page?>&st=<?php echo  $st?>&sv=<?php echo $sv?>&wr_no=<?php echo $wr_no?>&wr_renum=<?php echo $wr_renum?>';
     <?php } ?>
@@ -104,7 +104,7 @@ function all_send()
 
     <div id="con_sms" class="sms5_box">
         <span class="box_ico"></span>
-        <textarea class="box_txt" readonly><?php echo $write['wr_message'];?></textarea>
+        <textarea class="box_txt is_overview" readonly><?php echo $write['wr_message'];?></textarea>
     </div>
 
     <?php if ($write['wr_re_total'] && !$wr_renum) { ?>

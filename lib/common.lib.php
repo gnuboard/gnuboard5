@@ -746,6 +746,10 @@ function get_next_num($table)
 function get_group($gr_id, $is_cache=false)
 {
     global $g5;
+    
+    if( is_array($gr_id) ){
+        return array();
+    }
 
     static $cache = array();
 
@@ -3634,6 +3638,36 @@ function get_head_title($title){
     return $title;
 }
 
+function is_sms_send($is_type=''){
+    global $config;
+    
+    $is_sms_send = false;
+    
+    // 토큰키를 사용한다면
+    if(isset($config['cf_icode_token_key']) && $config['cf_icode_token_key']){
+        $is_sms_send = true;
+    } else if($config['cf_icode_id'] && $config['cf_icode_pw']) {
+        // 충전식일 경우 잔액이 있는지 체크
+
+        $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
+
+        if($userinfo['code'] == 0) {
+            if($userinfo['payment'] == 'C') { // 정액제
+                $is_sms_send = true;
+            } else {
+                $minimum_coin = 100;
+                if(defined('G5_ICODE_COIN'))
+                    $minimum_coin = intval(G5_ICODE_COIN);
+
+                if((int)$userinfo['coin'] >= $minimum_coin)
+                    $is_sms_send = true;
+            }
+        }
+    }
+
+    return $is_sms_send;
+}
+
 function is_use_email_certify(){
     global $config;
 
@@ -3727,12 +3761,12 @@ function is_include_path_check($path='', $is_input='')
 
             try {
                 // whether $path is unix or not
-                $unipath = strlen($path)==0 || $path{0}!='/';
+                $unipath = strlen($path)==0 || substr($path, 0, 1) != '/';
                 $unc = substr($path,0,2)=='\\\\'?true:false;
                 // attempts to detect if path is relative in which case, add cwd
                 if(strpos($path,':') === false && $unipath && !$unc){
                     $path=getcwd().DIRECTORY_SEPARATOR.$path;
-                    if($path{0}=='/'){
+                    if(substr($path, 0, 1) == '/'){
                         $unipath = false;
                     }
                 }
