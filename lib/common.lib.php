@@ -3623,6 +3623,36 @@ function get_head_title($title){
     return $title;
 }
 
+function is_sms_send($is_type=''){
+    global $config;
+    
+    $is_sms_send = false;
+    
+    // 토큰키를 사용한다면
+    if(isset($config['cf_icode_token_key']) && $config['cf_icode_token_key']){
+        $is_sms_send = true;
+    } else if($config['cf_icode_id'] && $config['cf_icode_pw']) {
+        // 충전식일 경우 잔액이 있는지 체크
+
+        $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
+
+        if($userinfo['code'] == 0) {
+            if($userinfo['payment'] == 'C') { // 정액제
+                $is_sms_send = true;
+            } else {
+                $minimum_coin = 100;
+                if(defined('G5_ICODE_COIN'))
+                    $minimum_coin = intval(G5_ICODE_COIN);
+
+                if((int)$userinfo['coin'] >= $minimum_coin)
+                    $is_sms_send = true;
+            }
+        }
+    }
+
+    return $is_sms_send;
+}
+
 function is_use_email_certify(){
     global $config;
 
