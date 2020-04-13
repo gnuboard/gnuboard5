@@ -36,6 +36,8 @@ foreach( $check_keys as $key ){
     }
 }
 
+$_POST['cf_icode_server_port'] = isset($_POST['cf_icode_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_icode_server_port']) : '7295';
+
 $sql = " update {$g5['config_table']}
             set cf_title = '{$_POST['cf_title']}',
                 cf_admin = '{$_POST['cf_admin']}',
@@ -143,6 +145,7 @@ $sql = " update {$g5['config_table']}
                 cf_sms_type = '{$_POST['cf_sms_type']}',
                 cf_icode_id = '{$_POST['cf_icode_id']}',
                 cf_icode_pw = '{$_POST['cf_icode_pw']}',
+                cf_icode_token_key = '{$_POST['cf_icode_token_key']}',
                 cf_icode_server_ip = '{$_POST['cf_icode_server_ip']}',
                 cf_icode_server_port = '{$_POST['cf_icode_server_port']}',
                 cf_googl_shorturl_apikey = '{$_POST['cf_googl_shorturl_apikey']}',

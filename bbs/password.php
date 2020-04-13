@@ -3,6 +3,10 @@ include_once('./_common.php');
 
 $g5['title'] = '비밀번호 입력';
 
+if( isset($comment_id) ){
+    $comment_id = (int) $comment_id;
+}
+
 switch ($w) {
     case 'u' :
         $action = G5_HTTP_BBS_URL.'/write.php';
