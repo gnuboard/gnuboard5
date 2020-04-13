@@ -209,7 +209,7 @@
 .sct_10 .sct_basic {margin-bottom:5px;color:#6e7f88}
 .sct_10 .sct_bottom {position:relative;min-height:20px}
 .sct_10 .sct_cost {margin:5px 0 10px;font-size:1.25em;font-weight:bold}
-.sct_10 .sct_dict {display:none;text-decoration:line-through;font-weight:normal;font-size:0.85em;color:#858a8d}
+.sct_10 .sct_dict {display:block;text-decoration:line-through;font-weight:normal;font-size:0.85em;color:#858a8d}
 
 .sct_10 .sct_sns_wrap {display:none;width:100%;height:100%;position:fixed;top:0;left:0;z-index:999}
 .sct_10 .sct_sns {position:absolute;top:50%;left:50%;background:#fff;text-align:center;width:245px;max-height:300px;margin-left:-125px;margin-top:-180px;overflow-y:auto;border-radius:5px;-webkit-box-shadow:1px 1px 18px rgba(0,0,0,0.2);-moz-box-shadow: 1px 1px 18px rgba(0,0,0,0.2);box-shadow: 1px 1px 18px rgba(0,0,0,0.2);border:1px solid #dde7e9;background:#fff;border-radius:3px}  
