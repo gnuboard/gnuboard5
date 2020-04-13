@@ -463,7 +463,7 @@ if ($bo_table) {
     }
 }
 
-if ($gr_id && is_string($gr_id)) {
+if ($gr_id && !is_array($gr_id)) {
     $group = get_group($gr_id);
 }
 
