@@ -3085,6 +3085,22 @@ function clean_xss_attributes($str)
     return $str;
 }
 
+function clean_relative_paths($path){
+    $path_len = strlen($path);
+    
+    $i = 0;
+    while($i <= $path_len){
+        $result = str_replace('../', '', str_replace('\\', '/', $path));
+
+        if((string)$result === (string)$path) break;
+
+        $path = $result;
+        $i++;
+    }
+
+    return $path;
+}
+
 // unescape nl 얻기
 function conv_unescape_nl($str)
 {

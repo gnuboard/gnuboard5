@@ -61,7 +61,7 @@ $ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].$_SERVER['DOCUMENT_ROOT']);
         <th scope="row"><label for="table_prefix">TABLE명 접두사</label></th>
         <td>
             <input name="table_prefix" type="text" value="g5_" id="table_prefix">
-            <span>가능한 변경하지 마십시오.</span>
+            <span>TABLE명 접두사는 영문자, 숫자, _ 만 입력 가능합니다.</span>
         </td>
     </tr>
     <tr>

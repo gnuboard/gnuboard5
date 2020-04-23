@@ -101,6 +101,7 @@
 #bo_list .td_numbig {width:80px;text-align:center}
 #bo_list .txt_active {color:#5d910b}
 #bo_list .txt_expired {color:#ccc}
+#bo_list tbody tr {border-left:2px solid transparent}
 #bo_list tbody tr:hover {border-left:2px solid #253dbe}
 
 #bo_cate {margin:25px 0}
