@@ -82,6 +82,7 @@ if (!isset($board['bo_use_captcha'])) {
 
 $required = "";
 $readonly = "";
+$sound_only = "";
 if ($w == '') {
 
     $html_title .= ' 생성';
