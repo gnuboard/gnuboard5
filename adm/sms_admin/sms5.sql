@@ -149,7 +149,7 @@ CREATE TABLE `{$g5['sms5_write_table']}` (
   `wr_no` int(11) NOT NULL default '1',
   `wr_renum` int(11) NOT NULL default '0',
   `wr_reply` varchar(255) NOT NULL default '',
-  `wr_message` varchar(255) NOT NULL default '',
+  `wr_message` text NOT NULL,
   `wr_booking` datetime NOT NULL default '0000-00-00 00:00:00',
   `wr_total` int(11) NOT NULL default '0',
   `wr_re_total` int(11) NOT NULL default '0',
