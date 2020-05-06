@@ -13,6 +13,12 @@ define('G5_SMS5_ADMIN_DIR',        'sms_admin');
 define('G5_SMS5_ADMIN_PATH',       G5_ADMIN_PATH.'/'.G5_SMS5_ADMIN_DIR);
 define('G5_SMS5_ADMIN_URL',        G5_ADMIN_URL.'/'.G5_SMS5_ADMIN_DIR);
 
+define('ICODE_JSON_SOCKET_HOST', '211.172.232.124');
+define('ICODE_JSON_SOCKET_PORT', '9201');
+
+define('G5_ICODE_LMS_MAX_LENGTH', 1500);    // 구버전 LMS 최대길이
+define('G5_ICODE_JSON_MAX_LENGTH', 2000);   // JSON 버전 LMS 최대길이
+
 // SMS 테이블명
 $g5['sms5_prefix']                = 'sms5_';
 $g5['sms5_config_table']          = $g5['sms5_prefix'] . 'config';

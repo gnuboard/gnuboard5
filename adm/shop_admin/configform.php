@@ -180,6 +180,13 @@ if(!isset($default['de_taxsave_types'])) {
                     ADD `de_taxsave_types` set('account','vbank','transfer') NOT NULL DEFAULT 'account' AFTER `de_taxsave_use` ", true);
 }
 
+// 아이코드 토큰키 추가
+if( ! isset($config['cf_icode_token_key']) ){
+    $sql = "ALTER TABLE `{$g5['config_table']}` 
+            ADD COLUMN `cf_icode_token_key` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_server_port`; ";
+    sql_query($sql, false);
+}
+
 if( function_exists('pg_setting_check') ){
 	pg_setting_check(true);
 }
@@ -1444,6 +1451,10 @@ function byte_check(el_cont, el_byte)
     var ch = '';
     var limit_num = (jQuery("#cf_sms_type").val() == "LMS") ? 1500 : 80;
 
+    if( $("input[name='cf_icode_token_key']").length && $("input[name='cf_icode_token_key']").val() && jQuery("#cf_sms_type").val() == "LMS" ){
+        limit_num = 2000;
+    }
+
     for (i=0; i<cont.value.length; i++) {
         ch = cont.value.charAt(i);
         if (escape(ch).length > 4) {
@@ -1524,22 +1535,22 @@ function byte_check(el_cont, el_byte)
                 <input type="text" name="de_sms_hp" value="<?php echo $default['de_sms_hp']; ?>" id="de_sms_hp" class="frm_input" size="20">
             </td>
         </tr>
-        <tr>
-            <th scope="row"><label for="cf_icode_id">아이코드 회원아이디</label></th>
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_icode_id">아이코드 회원아이디<br>(구버전)</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 회원아이디를 입력합니다."); ?>
                 <input type="text" name="cf_icode_id" value="<?php echo $config['cf_icode_id']; ?>" id="cf_icode_id" class="frm_input" size="20">
             </td>
         </tr>
-        <tr>
-            <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호</label></th>
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호<br>(구버전)</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 비밀번호를 입력합니다."); ?>
                 <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" class="frm_input" id="cf_icode_pw">
             </td>
         </tr>
-        <tr>
-            <th scope="row">요금제</th>
+        <tr class="icode_old_version" <?php if(!(isset($userinfo['payment']) && $userinfo['payment'])){ echo 'cf_tr_hide'; } ?>">
+            <th scope="row">요금제<br>(구버전)</th>
             <td>
                 <input type="hidden" name="cf_icode_server_ip" value="<?php echo $config['cf_icode_server_ip']; ?>">
                 <?php
@@ -1556,15 +1567,8 @@ function byte_check(el_cont, el_byte)
                 ?>
             </td>
         </tr>
-        <tr>
-            <th scope="row">아이코드 SMS 신청<br>회원가입</th>
-            <td>
-                <?php echo help("아래 링크에서 회원가입 하시면 문자 건당 16원에 제공 받을 수 있습니다."); ?>
-                <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
-            </td>
-        </tr>
-         <?php if ($userinfo['payment'] == 'A') { ?>
-        <tr>
+        <?php if ($userinfo['payment'] == 'A') { ?>
+        <tr class="icode_old_version">
             <th scope="row">충전 잔액</th>
             <td>
                 <?php echo number_format($userinfo['coin']); ?> 원.
@@ -1572,6 +1576,23 @@ function byte_check(el_cont, el_byte)
             </td>
         </tr>
         <?php } ?>
+        <tr class="icode_json_version">
+            <th scope="row"><label for="cf_icode_token_key">아이코드 토큰키<br>(JSON버전)</label></th>
+            <td>
+                <?php echo help("아이코드 JSON 버전의 경우 아이코드 토큰키를 입력시 실행됩니다.<br>SMS 전송유형을 LMS로 설정시 90바이트 이내는 SMS, 90 ~ 2000 바이트는 LMS 그 이상은 절삭 되어 LMS로 발송됩니다."); ?>
+                <input type="text" name="cf_icode_token_key" value="<?php echo $config['cf_icode_token_key']; ?>" id="cf_icode_token_key" class="frm_input" size="40">
+                <?php echo help("아이코드 사이트 -> 토큰키관리 메뉴에서 생성한 토큰키를 입력합니다."); ?>
+                <br>
+                서버아이피 : <?php echo $_SERVER['SERVER_ADDR']; ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">아이코드 SMS 신청<br>회원가입</th>
+            <td>
+                <?php echo help("아래 링크에서 회원가입 하시면 문자 건당 16원에 제공 받을 수 있습니다."); ?>
+                <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
+            </td>
+        </tr>
          </tbody>
         </table>
     </div>

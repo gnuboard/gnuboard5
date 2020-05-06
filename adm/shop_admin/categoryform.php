@@ -5,6 +5,8 @@ include_once(G5_EDITOR_LIB);
 
 auth_check($auth[$sub_menu], "w");
 
+$ca_id = isset($ca_id) ? preg_replace('/[^0-9a-z]/i', '', $ca_id) : '';
+
 $sql_common = " from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
     $sql_common .= " where ca_mb_id = '{$member['mb_id']}' ";

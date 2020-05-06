@@ -22,21 +22,26 @@ if($is_guest) {
 
 $filepath = G5_DATA_PATH.'/qa/'.$file['qa_file'.$no];
 $filepath = addslashes($filepath);
-if (!is_file($filepath) || !file_exists($filepath))
+$file_exist_check = (!is_file($filepath) || !file_exists($filepath)) ? false : true;
+
+if ( false === run_replace('qa_download_file_exist_check', $file_exist_check, $file) ){
     alert('파일이 존재하지 않습니다.');
+}
 
 $g5['title'] = '다운로드 &gt; '.conv_subject($file['qa_subject'], 255);
+
+run_event('qa_download_file_header', $file, $file_exist_check);
 
 $original = urlencode($file['qa_source'.$no]);
 
 if(preg_match("/msie/i", $_SERVER['HTTP_USER_AGENT']) && preg_match("/5\.5/", $_SERVER['HTTP_USER_AGENT'])) {
     header("content-type: doesn/matter");
-    header("content-length: ".filesize("$filepath"));
+    header("content-length: ".filesize($filepath));
     header("content-disposition: attachment; filename=\"$original\"");
     header("content-transfer-encoding: binary");
 } else {
     header("content-type: file/unknown");
-    header("content-length: ".filesize("$filepath"));
+    header("content-length: ".filesize($filepath));
     header("content-disposition: attachment; filename=\"$original\"");
     header("content-description: php generated data");
 }

@@ -726,25 +726,7 @@ include_once(G5_SHOP_PATH.'/ordermail2.inc.php');
 // SMS BEGIN --------------------------------------------------------
 // 주문고객과 쇼핑몰관리자에게 SMS 전송
 if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])) {
-    $is_sms_send = false;
-
-    // 충전식일 경우 잔액이 있는지 체크
-    if($config['cf_icode_id'] && $config['cf_icode_pw']) {
-        $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
-
-        if($userinfo['code'] == 0) {
-            if($userinfo['payment'] == 'C') { // 정액제
-                $is_sms_send = true;
-            } else {
-                $minimum_coin = 100;
-                if(defined('G5_ICODE_COIN'))
-                    $minimum_coin = intval(G5_ICODE_COIN);
-
-                if((int)$userinfo['coin'] >= $minimum_coin)
-                    $is_sms_send = true;
-            }
-        }
-    }
+    $is_sms_send = (function_exists('is_sms_send')) ? is_sms_send('orderformupdate') : false;
 
     if($is_sms_send) {
         $sms_contents = array($default['de_sms_cont2'], $default['de_sms_cont3']);
@@ -797,7 +779,7 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
                 if($port_setting !== false) {
                     $SMS = new LMS;
                     $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
-
+                    
                     for($s=0; $s<count($sms_messages); $s++) {
                         $strDest     = array();
                         $strDest[]   = $sms_messages[$s]['recv'];

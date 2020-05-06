@@ -535,6 +535,10 @@ td.td_grpset {width:160px;border-left:1px solid #e9ecee;text-align:center}
 .is_rewrite .info-success{color:#155724}
 .is_rewrite .info-warning{color:#856404}
 
+.icode_old_version th{background-color:#FFFCED}
+.icode_json_version th{background-color:#F6F1FF}
+.cf_tr_hide {display:none}
+
 /* 관리권한설정 */
 #add_admin fieldset {margin-top:20px;overflow:auto;padding:2px 6px;line-height:1.4;resize:vertical}
 

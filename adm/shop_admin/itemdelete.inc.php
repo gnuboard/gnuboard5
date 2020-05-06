@@ -19,7 +19,7 @@ if (!function_exists("itemdelete")) {
         // 상품 이미지 삭제
         $dir_list = array();
         for($i=1; $i<=10; $i++) {
-            $file = G5_DATA_PATH.'/item/'.$it['it_img'.$i];
+            $file = G5_DATA_PATH.'/item/'.clean_relative_paths($it['it_img'.$i]);
             if(is_file($file) && $it['it_img'.$i]) {
                 @unlink($file);
                 $dir = dirname($file);
@@ -78,9 +78,9 @@ if (!function_exists("itemdelete")) {
             else
                 $data_path = $p['path'];
 
-            $destfile = G5_PATH.$data_path;
+            $destfile = G5_PATH.clean_relative_paths($data_path);
 
-            if(is_file($destfile))
+            if(is_file($destfile) && preg_match('/(\.(gif|jpe?g|png))$/i', $destfile))
                 @unlink($destfile);
         }
 
@@ -95,9 +95,9 @@ if (!function_exists("itemdelete")) {
             else
                 $data_path = $p['path'];
 
-            $destfile = G5_PATH.$data_path;
+            $destfile = G5_PATH.clean_relative_paths($data_path);
 
-            if(is_file($destfile))
+            if(is_file($destfile) && preg_match('/(\.(gif|jpe?g|png))$/i', $destfile))
                 @unlink($destfile);
         }
         //------------------------------------------------------------------------

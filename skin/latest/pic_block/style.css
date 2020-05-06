@@ -10,7 +10,7 @@
 .pic_lt ul:after {display:block;visibility:hidden;clear:both;content:""}
 .pic_lt ul {margin: 0 -10px}
 .pic_lt li {float:left;width:25%;padding:0 10px}
-.pic_lt li.galley_li:nth-child(4n+1) {clear: both!important}
+.pic_lt li.gallery_li:nth-child(4n+1) {clear: both!important}
 .pic_lt li .lt_img {margin:5px 0;display:block}
 .pic_lt li .lt_img img {width:100%;height:auto}
 .pic_lt li a:hover {color:#a22121}

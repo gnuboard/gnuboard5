@@ -26,6 +26,7 @@ if ($_FILES['mobile_logo_img']['name']) upload_file($_FILES['mobile_logo_img']['
 if ($_FILES['mobile_logo_img2']['name']) upload_file($_FILES['mobile_logo_img2']['tmp_name'], "mobile_logo_img2", G5_DATA_PATH."/common");
 
 $de_kcp_mid = substr($_POST['de_kcp_mid'],0,3);
+$cf_icode_server_port = isset($cf_icode_server_port) ? preg_replace('/[^0-9]/', '', $cf_icode_server_port) : '7295';
 
 // kcp 전자결제를 사용할 때 site key 입력체크
 if($_POST['de_pg_service'] == 'kcp' && !$_POST['de_card_test'] && ($_POST['de_iche_use'] || $_POST['de_vbank_use'] || $_POST['de_hp_use'] || $_POST['de_card_use'])) {
@@ -428,6 +429,7 @@ $sql = " update {$g5['config_table']}
                 cf_icode_pw             = '{$cf_icode_pw}',
                 cf_icode_server_ip      = '{$_POST['cf_icode_server_ip']}',
                 cf_icode_server_port    = '{$_POST['cf_icode_server_port']}',
+                cf_icode_token_key      = '{$cf_icode_token_key}',
                 cf_lg_mid               = '{$cf_lg_mid}',
                 cf_lg_mert_key          = '{$cf_lg_mert_key}' ";
 sql_query($sql);
