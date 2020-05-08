@@ -12,13 +12,13 @@ if(!in_array($theme, $theme_dir))
     die('선택하신 테마가 설치되어 있지 않습니다.');
 
 $info = get_theme_info($theme);
+$name = get_text($info['theme_name']);
 
 if($info['screenshot'])
     $screenshot = '<img src="'.$info['screenshot'].'" alt="'.$name.'">';
 else
     $screenshot = '<img src="'.G5_ADMIN_URL.'/img/theme_img.jpg" alt="">';
 
-$name = get_text($info['theme_name']);
 if($info['theme_uri']) {
     $name = '<a href="'.set_http($info['theme_uri']).'" target="_blank" class="thdt_home">'.$name.'</a>';
 }
