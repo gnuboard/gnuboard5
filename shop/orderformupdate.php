@@ -318,7 +318,6 @@ else if ($od_settle_case == "계좌이체")
     $od_receipt_price   = $amount;
     $od_receipt_point   = $i_temp_point;
     $od_receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $app_time);
-    $od_bank_account    = $od_settle_case;
     $od_deposit_name    = $od_name;
     $od_bank_account    = $bank_name;
     $pg_price           = $amount;
