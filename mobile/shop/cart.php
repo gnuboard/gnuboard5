@@ -167,8 +167,6 @@ $cart_count = sql_num_rows($result);
         <?php if ($tot_price > 0) { ?>
         <dt>포인트</dt>
         <dd><strong><?php echo number_format($tot_point); ?> 점</strong></dd>
-        <dt class="sod_bsk_dvr">배송비</dt>
-        <dd class="sod_bsk_dvr"><strong><?php echo number_format($send_cost); ?> 원</strong></dd>
         <dt class="sod_bsk_cnt">총계</dt>
         <dd class="sod_bsk_cnt"><strong><?php echo number_format($tot_price); ?></strong> 원</dd>
         <?php } ?>
