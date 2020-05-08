@@ -33,6 +33,10 @@ $admin_pass  = $_POST['admin_pass'];
 $admin_name  = $_POST['admin_name'];
 $admin_email = $_POST['admin_email'];
 
+if (preg_match("/[^0-9a-z_]+/i", $table_prefix) ) {
+    die('<div class="ins_inner"><p>TABLE명 접두사는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
+}
+
 if (preg_match("/[^0-9a-z_]+/i", $admin_id)) {
     die('<div class="ins_inner"><p>관리자 아이디는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
 }
@@ -340,10 +344,10 @@ $f = @fopen($file, 'a');
 
 fwrite($f, "<?php\n");
 fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
-fwrite($f, "define('G5_MYSQL_HOST', '{$mysql_host}');\n");
-fwrite($f, "define('G5_MYSQL_USER', '{$mysql_user}');\n");
-fwrite($f, "define('G5_MYSQL_PASSWORD', '{$mysql_pass}');\n");
-fwrite($f, "define('G5_MYSQL_DB', '{$mysql_db}');\n");
+fwrite($f, "define('G5_MYSQL_HOST', '".addcslashes($mysql_host, "\\'")."');\n");
+fwrite($f, "define('G5_MYSQL_USER', '".addcslashes($mysql_user, "\\'")."');\n");
+fwrite($f, "define('G5_MYSQL_PASSWORD', '".addcslashes($mysql_pass, "\\'")."');\n");
+fwrite($f, "define('G5_MYSQL_DB', '".addcslashes($mysql_db, "\\'")."');\n");
 fwrite($f, "define('G5_MYSQL_SET_MODE', {$mysql_set_mode});\n\n");
 fwrite($f, "define('G5_TABLE_PREFIX', '{$table_prefix}');\n\n");
 fwrite($f, "\$g5['write_prefix'] = G5_TABLE_PREFIX.'write_'; // 게시판 테이블명 접두사\n\n");

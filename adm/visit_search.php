@@ -11,6 +11,11 @@ include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
 $colspan = 6;
 $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'">처음</a>'; //페이지 처음으로 (초기화용도)
+$sql_search = '';
+
+if(isset($sfl) && $sfl && !in_array($sfl, array('vi_ip','vi_date','vi_time','vi_referer','vi_agent','vi_browser','vi_os','vi_device')) ) {
+    $sfl = '';
+}
 ?>
 
 <div class="local_sch local_sch01">
