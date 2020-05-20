@@ -2556,18 +2556,18 @@ function add_order_post_log($msg='', $code='error'){
     }
 }
 
-//이니시스의 삼성페이 또는 L.pay 결제가 활성화 되어 있는지 체크합니다.
+//이니시스의 삼성페이 또는 L.pay 결제 또는 카카오페이 가 활성화 되어 있는지 체크합니다.
 function is_inicis_simple_pay(){
     global $default;
 
-    if ( $default['de_samsung_pay_use'] || $default['de_inicis_lpay_use'] ){
+    if ( $default['de_samsung_pay_use'] || $default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'] ){
         return true;
     }
 
     return false;
 }
 
-//이니시스의 취소된 주문인지 또는 삼성페이 또는 L.pay 결제인지 확인합니다.
+//이니시스의 취소된 주문인지 또는 삼성페이 또는 L.pay 또는 이니시스 카카오페이 결제인지 확인합니다.
 function is_inicis_order_pay($type){
     global $default, $g5;
 
@@ -2582,7 +2582,7 @@ function is_inicis_order_pay($type){
         }
     }
 
-    if( in_array($type, array('삼성페이', 'lpay') ) ){
+    if( in_array($type, array('삼성페이', 'lpay', 'inicis_kakaopay') ) ){
         return true;
     }
 
@@ -2613,10 +2613,16 @@ function get_item_images_info($it, $size=array(), $image_width, $image_height){
 }
 
 //결제방식 이름을 체크하여 치환 대상인 문자열은 따로 리턴합니다.
-function check_pay_name_replace($payname){
+function check_pay_name_replace($payname, $od=array()){
 
     if( $payname === 'lpay' ){
         return 'L.pay';
+    } else if($payname === 'inicis_kakaopay'){
+        return '카카오페이(KG이니시스)';
+    } else if($payname === '신용카드'){
+        if(isset($od['od_bank_account']) && $od['od_bank_account'] === '카카오머니'){
+            return $payname.'(카카오페이)';
+        }
     }
 
     return $payname;

@@ -618,6 +618,12 @@ if($is_kakaopay_use) {
             $checked = '';
         }
 
+        //이니시스 카카오페이
+        if($default['de_inicis_kakaopay_use']) {
+            echo '<li><input type="radio" id="od_settle_inicis_kakaopay" data-case="inicis_kakaopay" name="od_settle_case" value="inicis_kakaopay" '.$checked.'> <label for="od_settle_inicis_kakaopay" title="KG 이니시스 카카오페이" class="inicis_kakaopay">KG 이니시스 카카오페이</label></li>'.PHP_EOL;
+            $checked = '';
+        }
+
         echo '</ul>';
 
         $temp_point = 0;
@@ -1215,7 +1221,7 @@ function pay_approval()
 
     var form_order_method = '';
 
-    if( settle_method == "삼성페이" || settle_method == "lpay" ){
+    if( settle_method == "삼성페이" || settle_method == "lpay" || settle_method == "inicis_kakaopay" ){
         form_order_method = 'samsungpay';
     }
 
@@ -1303,6 +1309,12 @@ function pay_approval()
             case "lpay":
                 paymethod = "wcard";
                 f.P_RESERVED.value = f.P_RESERVED.value.replace("&useescrow=Y", "")+"&d_lpay=Y";
+                //f.DEF_RESERVED.value = f.DEF_RESERVED.value.replace("&useescrow=Y", "");
+                f.P_SKIP_TERMS.value = "Y"; //약관을 skip 해야 제대로 실행됨
+                break;
+            case "inicis_kakaopay":
+                paymethod = "wcard";
+                f.P_RESERVED.value = f.P_RESERVED.value.replace("&useescrow=Y", "")+"&d_kakaopay=Y";
                 //f.DEF_RESERVED.value = f.DEF_RESERVED.value.replace("&useescrow=Y", "");
                 f.P_SKIP_TERMS.value = "Y"; //약관을 skip 해야 제대로 실행됨
                 break;

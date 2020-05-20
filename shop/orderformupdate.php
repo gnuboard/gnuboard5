@@ -3,7 +3,7 @@ include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 //이니시스 lpay 요청으로 왔다면 $default['de_pg_service'] 값을 이니시스로 변경합니다.
-if( $od_settle_case == 'lpay' ){
+if( in_array($od_settle_case, array('lpay', 'inicis_kakaopay')) ){
     $default['de_pg_service'] = 'inicis';
 }
 
@@ -400,7 +400,7 @@ else if ($od_settle_case == "신용카드")
     if($od_misu == 0)
         $od_status      = '입금';
 }
-else if ($od_settle_case == "간편결제" || ($od_settle_case == "lpay" && $default['de_pg_service'] === 'inicis') )
+else if ($od_settle_case == "간편결제" || (($od_settle_case == "lpay" || $od_settle_case == "inicis_kakaopay") && $default['de_pg_service'] === 'inicis') )
 {
     switch($default['de_pg_service']) {
         case 'lg':

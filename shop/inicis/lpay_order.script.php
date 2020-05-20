@@ -1,8 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
-//삼성페이 또는 L.pay 사용시에만 해당함
-if( ! $default['de_inicis_lpay_use'] || ('inicis' == $default['de_pg_service']) ){    //PG가 이니시스인 경우 아래 내용 사용 안함
+//삼성페이 또는 L.pay 또는 이니시스 카카오페이 사용시에만 해당함
+if( ! ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use']) || ('inicis' == $default['de_pg_service']) ){    //PG가 이니시스인 경우 아래 내용 사용 안함
     return;
 }
 ?>
@@ -12,13 +12,16 @@ jQuery(function($){
         var pf = document.forderform;
 
         $(pf).on("form_sumbit_order_samsungpay", inicis_pay_form_submit);
-
+        
         function inicis_pay_form_submit(){
             var $form = $(this),
                 pf = $form[0],
-                inicis_pay_form = document.inicis_pay_form;
+                inicis_pay_form = document.inicis_pay_form,
+                inicis_settle_case = jQuery("input[name='od_settle_case']:checked").val();
+            
+            console.log( inicis_settle_case );
 
-            inicis_pay_form.gopaymethod.value = "onlylpay";
+            inicis_pay_form.gopaymethod.value = (inicis_settle_case === "inicis_kakaopay") ? "onlykakaopay" : "onlylpay";
             inicis_pay_form.acceptmethod.value = "cardonly";
             
             inicis_pay_form.price.value = inicis_pay_form.good_mny.value = pf.good_mny.value;

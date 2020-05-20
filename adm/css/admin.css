@@ -677,6 +677,10 @@ ul.de_pg_tab li.tab-current a{background:#2CC185;color:#fff}
 
 #sodr_list .list_escrow {display:block;color:#80bc0d;text-align:center}
 #sodr_list .list_test {display:block;text-align:center;color:#ff3061}
+#sodr_list .odrpay {max-width:50px}
+
+.local_sch03.local_sch [data-tooltip-text]:hover {position:relative}
+.local_sch03.local_sch [data-tooltip-text]:hover:after{line-height:20px;background-color:#000;background-color:rgba(0,0,0,0.8);-webkit-box-shadow:0 0 3px 1px rgba(50,50,50,0.4);-moz-box-shadow:0 0 3px 1px rgba(50,50,50,0.4);box-shadow:0 0 3px 1px rgba(50,50,50,0.4);-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;color:#FFF;font-size:11px;content:attr(data-tooltip-text);white-space: pre;margin-bottom:10px;top:130%;left:0;padding:7px 12px;position:absolute;max-width:500px;word-wrap:break-word;z-index:9999}
 
 /* 주문내역 수정 */
 .sodr_nonpay {color:#ff6600}

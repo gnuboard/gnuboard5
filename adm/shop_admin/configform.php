@@ -117,6 +117,12 @@ if(!isset($default['de_inicis_lpay_use'])) {
                     ADD `de_inicis_lpay_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_samsung_pay_use` ", true);
 }
 
+// 이니시스 kakaopay 사용여부 필드 추가
+if(!isset($default['de_inicis_kakaopay_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_inicis_kakaopay_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_inicis_lpay_use` ", true);
+}
+
 // 카카오페이 필드 추가
 if(!isset($default['de_kakaopay_mid'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
@@ -817,6 +823,15 @@ if( function_exists('pg_setting_check') ){
             <td>
                 <?php echo help("체크시 KG이니시스 L.pay를 사용합니다. <br >실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 키패스워드, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_inicis_lpay_use" value="1" id="de_inicis_lpay_use"<?php echo $default['de_inicis_lpay_use']?' checked':''; ?>> <label for="de_inicis_lpay_use">사용</label>
+            </td>
+        </tr>
+        <tr class="pg_info_fld inicis_info_fld">
+            <th scope="row">
+                <label for="de_inicis_kakaopay_use">KG이니시스 카카오페이 사용</label>
+            </th>
+            <td>
+                <?php echo help("체크시 KG이니시스 결제의 카카오페이를 사용합니다. <br>주문서 화면에 카카오페이(KG 이니시스 결제) 아이콘 이 출력됩니다. <br>실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 키패스워드, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
+                <input type="checkbox" name="de_inicis_kakaopay_use" value="1" id="de_inicis_kakaopay_use"<?php echo $default['de_inicis_kakaopay_use']?' checked':''; ?>> <label for="de_inicis_kakaopay_use">사용</label>
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">

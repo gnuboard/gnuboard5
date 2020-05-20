@@ -2,7 +2,7 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-//삼성페이 또는 lpay 요청으로 왔다면 현재 삼성페이 또는 lpay는 이니시스 밖에 없으므로 $default['de_pg_service'] 값을 이니시스로 변경한다.
+//삼성페이 또는 lpay 또는 이니시스 카카오페이 요청으로 왔다면 현재 삼성페이 또는 lpay 또는 이니시스 카카오페이는 이니시스 밖에 없으므로 $default['de_pg_service'] 값을 이니시스로 변경한다.
 if( is_inicis_order_pay($od_settle_case) && !empty($_POST['P_HASH']) ){
     $default['de_pg_service'] = 'inicis';
 }
@@ -446,7 +446,7 @@ else if ($od_settle_case == "간편결제")
     if($od_misu == 0)
         $od_status      = '입금';
 }
-else if ( is_inicis_order_pay($od_settle_case) )    //이니시스의 삼성페이 또는 L.pay
+else if ( is_inicis_order_pay($od_settle_case) )    //이니시스의 삼성페이 또는 L.pay 또는 이니시스 카카오페이
 {
     // 이니시스에서만 지원
     include G5_MSHOP_PATH.'/inicis/pay_result.php';

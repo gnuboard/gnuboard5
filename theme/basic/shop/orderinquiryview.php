@@ -415,7 +415,7 @@ if($od['od_pg'] == 'lg') {
 	            </li>
 	            <li>
 	                <strong>결제방식</strong>
-	                <span><?php echo ($easy_pay_name ? $easy_pay_name.'('.$od['od_settle_case'].')' : check_pay_name_replace($od['od_settle_case']) ); ?></span>
+	                <span><?php echo ($easy_pay_name ? $easy_pay_name.'('.$od['od_settle_case'].')' : check_pay_name_replace($od['od_settle_case'], $od) ); ?></span>
 	            </li>
 	            <li>
 	                <strong>결제금액</strong>

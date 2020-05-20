@@ -31,7 +31,9 @@ jQuery(function($){
 
             paymethod = "wcard";
 
-            if( typeof settle_method != "undefined" && settle_method == "lpay" ){   // L.pay 로 결제하는 경우
+            if( typeof settle_method != "undefined" && settle_method == "inicis_kakaopay" ){   // L.pay 로 결제하는 경우
+                samsungpayform.P_RESERVED.value = samsungpayform.P_RESERVED.value.replace("&useescrow=Y", "")+"&d_kakaopay=Y";
+            } else if( typeof settle_method != "undefined" && settle_method == "lpay" ){   // L.pay 로 결제하는 경우
                 samsungpayform.P_RESERVED.value = samsungpayform.P_RESERVED.value.replace("&useescrow=Y", "")+"&d_lpay=Y";
             } else {    // 그 외에는 삼성페이로 인식
                 samsungpayform.P_RESERVED.value = samsungpayform.P_RESERVED.value.replace("&useescrow=Y", "")+"&d_samsungpay=Y";

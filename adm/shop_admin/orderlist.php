@@ -69,7 +69,11 @@ if ($od_status) {
 }
 
 if ($od_settle_case) {
-    $where[] = " od_settle_case = '$od_settle_case' ";
+    if( $od_settle_case === '간편결제' ) {
+        $where[] = " od_settle_case in ('간편결제', '삼성페이', 'lpay', 'inicis_kakaopay') ";
+    } else {
+        $where[] = " od_settle_case = '$od_settle_case' ";
+    }
 }
 
 if ($od_misu) {
@@ -217,7 +221,7 @@ if( function_exists('pg_setting_check') ){
     <input type="radio" name="od_settle_case" value="신용카드" id="od_settle_case06" <?php echo get_checked($od_settle_case, '신용카드');  ?>>
     <label for="od_settle_case06">신용카드</label>
     <input type="radio" name="od_settle_case" value="간편결제" id="od_settle_case07" <?php echo get_checked($od_settle_case, '간편결제');  ?>>
-    <label for="od_settle_case07">PG간편결제</label>
+    <label for="od_settle_case07" data-tooltip-text="NHN_KCP 간편결제 : PAYCO &#xa;LG유플러스 간편결제 : PAYNOW &#xa;KG 이니시스 간편결제 : KPAY, 삼성페이, LPAY, 카카오페이(KG이니시스)">PG간편결제</label>
     <input type="radio" name="od_settle_case" value="KAKAOPAY" id="od_settle_case08" <?php echo get_checked($od_settle_case, 'KAKAOPAY');  ?>>
     <label for="od_settle_case08">KAKAOPAY</label>
 </div>
@@ -299,7 +303,7 @@ if( function_exists('pg_setting_check') ){
         $s_receipt_way = $s_br = "";
         if ($row['od_settle_case'])
         {
-            $s_receipt_way = $row['od_settle_case'];
+            $s_receipt_way = check_pay_name_replace($row['od_settle_case'], $row);
             $s_br = '<br />';
 
             // 간편결제
@@ -315,7 +319,7 @@ if( function_exists('pg_setting_check') ){
                         $s_receipt_way = 'PAYCO';
                         break;
                     default:
-                        $s_receipt_way = $row['od_settle_case'];
+                        $s_receipt_way = check_pay_name_replace($row['od_settle_case'], $row);
                         break;
                 }
             }

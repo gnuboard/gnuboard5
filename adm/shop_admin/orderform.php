@@ -310,7 +310,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     //$amount['미수'] = $amount['order'] - $amount['receipt'] - $amount['coupon'];
 
     // 결제방법
-    $s_receipt_way = $od['od_settle_case'];
+    $s_receipt_way = check_pay_name_replace($od['od_settle_case'], $od);
 
     if($od['od_settle_case'] == '간편결제') {
         switch($od['od_pg']) {
@@ -324,7 +324,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 $s_receipt_way = 'PAYCO';
                 break;
             default:
-                $s_receipt_way = $row['od_settle_case'];
+                $s_receipt_way = check_pay_name_replace($row['od_settle_case'], $od);
                 break;
         }
     }
