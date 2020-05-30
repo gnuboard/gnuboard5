@@ -3837,4 +3837,31 @@ function option_array_checked($option, $arr=array()){
 
     return $checked;
 }
-?>
+
+
+
+/**
+ * Class g5_pdo
+ *
+ * usage example
+ * $pdo = new g5_pdo();
+ * $stmt = $pdo->prepare("SELECT * from g5_member where mb_id = :id AND mb_no = :no LIMIT :count");
+ * $stmt->execute([
+ * 'id' => 'admin',
+ * 'no' => 1,
+ * 'count'=> 1,
+ * ]);
+ * $result = $stmt->fetchAll();
+ * var_dump($result);
+ */
+class g5_pdo extends PDO {
+    function __construct(){
+        $dsn = "mysql:host=".G5_MYSQL_HOST.";port=3306;charset=".G5_DB_CHARSET.";dbname=".G5_MYSQL_DB;
+        $options = array(
+            PDO::ATTR_ERRMODE =>PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_EMULATE_PREPARES => false,
+            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET sql_mode="TRADITIONAL,ANSI";'
+        );
+        parent::__construct($dsn, G5_MYSQL_USER, G5_MYSQL_PASSWORD, $options);
+    }
+}
