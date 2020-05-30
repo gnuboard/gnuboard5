@@ -37,7 +37,7 @@ define('G5_DB_ENGINE', '');
 
 // Set Databse table default Charset
 // utf8, utf8mb4 등 지정 가능 기본값은 utf8, 설치전에 utf8mb4 으로 수정시 모든 테이블에 이모지 입력이 가능합니다. utf8mb4 는 mysql 또는 mariadb 5.5 버전 이상을 요구합니다.
-define('G5_DB_CHARSET', 'utf8');
+define('G5_DB_CHARSET', 'utf8mb4');
 
 /*
 www.sir.kr 과 sir.kr 도메인은 서로 다른 도메인으로 인식합니다. 쿠키를 공유하려면 .sir.kr 과 같이 입력하세요.

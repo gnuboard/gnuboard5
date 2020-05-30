@@ -69,6 +69,37 @@ if (!$select_db) {
     exit;
 }
 
+$result = sql_query("show charset like 'utf8mb4';", true, $dblink);
+$is_db_utfmb4_support = false;
+if(sql_fetch_array($result)){
+    $is_db_utfmb4_support  = true;
+}
+sql_free_result($result);
+
+if($is_db_utfmb4_support !== true){
+    ?>
+
+    <div class="ins_inner">
+        <p>현재 DB는 utf8mb4 charset을 지원하지 않습니다.</p>
+        <p>MySQL 5.5 이상 또는 MariaDB 5.5 이상으로 업그레이드 하시기 바랍니다.
+            <br>
+            부득이 한 경우 config.php 파일의
+            <br>
+            define('G5_DB_CHARSET', 'utf8mb4'); 을
+            <br>
+            define('G5_DB_CHARSET', 'utf8'); 으로 변경해 주세요. (단 이 경우 이모지를 사용할 수 없음.)
+            <br>
+        </p>
+        <div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div>
+    </div>
+
+    <?php
+    include_once ('./install.inc2.php');
+    exit;
+}
+
+
+
 $mysql_set_mode = 'false';
 sql_set_charset(G5_DB_CHARSET, $dblink);
 $result = sql_query(" SELECT @@sql_mode as mode ", true, $dblink);
