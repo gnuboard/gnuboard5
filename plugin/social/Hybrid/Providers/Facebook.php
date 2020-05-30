@@ -45,7 +45,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model_OAuth2 {
 	 */
 	function loginBegin() {
         
-        $token = md5(uniqid(mt_rand(), true));
+        $token = get_random_hex_string(32);
         Hybrid_Auth::storage()->set('fb_auth_nonce', $token);
 
         $parameters = array(

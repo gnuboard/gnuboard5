@@ -34,7 +34,7 @@ $is_exists_email = $user_email ? exist_mb_email($user_email, '') : false;
 $user_name = isset($user_profile->username) ? $user_profile->username : ''; 
 
 // 불법접근을 막도록 토큰생성
-$token = md5(uniqid(rand(), true));
+$token = get_random_hex_string(32);
 set_session("ss_token", $token);
 
 $g5['title'] = '소셜 회원 가입 - '.social_get_provider_service_name($provider_name);

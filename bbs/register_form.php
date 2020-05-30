@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/register.lib.php');
 run_event('register_form_before');
 
 // 불법접근을 막도록 토큰생성
-$token = md5(uniqid(rand(), true));
+$token = get_random_hex_string(32);
 set_session("ss_token", $token);
 set_session("ss_cert_no",   "");
 set_session("ss_cert_hash", "");

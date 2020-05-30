@@ -2045,14 +2045,14 @@ function bad_tag_convert($code)
 // 토큰 생성
 function _token()
 {
-    return md5(uniqid(rand(), true));
+    return get_random_hex_string(32);
 }
 
 
 // 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
 function get_token()
 {
-    $token = md5(uniqid(rand(), true));
+    $token = get_random_hex_string(32);
     set_session('ss_token', $token);
 
     return $token;
@@ -3559,7 +3559,7 @@ class str_encrypt
 // 불법접근을 막도록 토큰을 생성하면서 토큰값을 리턴
 function get_write_token($bo_table)
 {
-    $token = md5(uniqid(rand(), true));
+    $token = get_random_hex_string(32);
     set_session('ss_write_'.$bo_table.'_token', $token);
 
     return $token;

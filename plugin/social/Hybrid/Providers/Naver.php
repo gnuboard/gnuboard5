@@ -226,9 +226,6 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
     }
 
     private function generate_state_token() {
-        $mt = microtime();
-        $rand = mt_rand();
-
-        return md5($mt . $rand);
+        return get_random_hex_string(32);
     }
 }

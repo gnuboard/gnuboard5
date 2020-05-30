@@ -260,7 +260,7 @@ if ($w == '') {
 
         // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
         if ($config['cf_use_email_certify']) {
-            $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+            $mb_md5 = get_random_hex_string(32);
             sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
             $certify_href = G5_BBS_URL.'/email_certify.php?mb_id='.$mb_id.'&amp;mb_md5='.$mb_md5;
         }
@@ -486,7 +486,7 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
     $subject = '['.$config['cf_title'].'] 인증확인 메일입니다.';
 
     // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
-    $mb_md5 = md5(pack('V*', rand(), rand(), rand(), rand()));
+    $mb_md5 = get_random_hex_string(32);
 
     sql_query(" update {$g5['member_table']} set mb_email_certify2 = '$mb_md5' where mb_id = '$mb_id' ");
 
