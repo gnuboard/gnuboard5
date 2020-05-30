@@ -3837,4 +3837,61 @@ function option_array_checked($option, $arr=array()){
 
     return $checked;
 }
-?>
+
+function get_random_hex_string($length = 32){
+
+    $bytes = intval(($length+1)/2);
+    $is_secure = false;
+
+    if(version_compare(PHP_VERSION, '7.0.0') >= 0 &&
+        function_exists('random_bytes')){
+        try
+        {
+            $random_bytes = random_bytes($bytes);
+            $is_secure = true;
+        }
+        catch(Exception $ex){
+            $is_secure = false;
+        }
+    }
+
+    if($is_secure == false
+        &&version_compare(PHP_VERSION, '5.3.0') >= 0
+        &&function_exists('openssl_random_pseudo_bytes')){
+        $random_bytes = openssl_random_pseudo_bytes($length, $crypto_strong);
+        if($crypto_strong === true){
+            $is_secure = true;
+        }
+    }
+
+    if($is_secure == false
+        && strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN'
+        && is_readable('/dev/urandom')){
+        $fp = fopen('/dev/urandom','rb');
+        stream_set_read_buffer($fp, 0);
+        $random_bytes = fread($fp, $bytes);
+        $is_secure = true;
+    }
+
+    if($is_secure){
+        return substr(bin2hex($random_bytes), 0, $length);
+    }
+    else{
+        $entropy = '';
+        $entropy .= session_id();
+        $entropy .= posix_getpid();
+        $entropy .= rand();
+        $entropy .= mt_rand();
+        $entropy .= uniqid('', true);
+        $entropy .= json_encode($_SERVER);
+        $entropy .= json_encode($_COOKIE);
+        $random_string = '';
+        $i=mt_rand();
+        while(strlen($random_string) < $length){
+            $i++;
+            $random_string .= hash('SHA256', $entropy.$random_string.$i);
+        }
+        return substr($random_string, 0, $length);
+    }
+
+}
