@@ -6,6 +6,10 @@ include_once(G5_PATH.'/head.sub.php');
 
 $filename = preg_replace('/[^A-Za-z0-9 _ .\-\/]/', '', $_GET['fn']);
 
+if(function_exists('clean_relative_paths')){
+    $filename = clean_relative_paths($filename);
+}
+
 $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
 if ( ! preg_match('/(jpg|jpeg|png|gif|bmp)$/i', $extension) ){

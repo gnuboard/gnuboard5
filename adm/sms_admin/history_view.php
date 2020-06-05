@@ -4,6 +4,7 @@ include_once("./_common.php");
 
 $spage_size = 20;
 $colspan = 10;
+$re_text = '';
 
 $st = isset($st) ? strip_tags($st) : '';
 $ssv = isset($ssv) ? strip_tags($ssv) : '';
