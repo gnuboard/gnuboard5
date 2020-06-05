@@ -26,7 +26,7 @@ $mysql_db    = safe_install_string_check($_POST['mysql_db'], 'json');
 $table_prefix= safe_install_string_check(preg_replace('/[^a-zA-Z0-9_]/', '_', $_POST['table_prefix']));
 
 $tmp_str = isset($_SERVER['SERVER_SOFTWARE']) ? $_SERVER['SERVER_SOFTWARE'] : '';
-$ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].$_SERVER['DOCUMENT_ROOT']);
+$ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].dirname(dirname(__FILE__).'/'));
 
 $bool_ajax_token = ($ajax_token == $_POST['ajax_token']) ? true : false;
 

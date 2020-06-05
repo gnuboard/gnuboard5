@@ -1466,10 +1466,14 @@ if($config['cf_cert_use']) {
 
     // kcp일 때
     if($config['cf_cert_hp'] == 'kcp') {
-        if(PHP_INT_MAX == 2147483647) // 32-bit
-            $exe = G5_KCPCERT_PATH . '/bin/ct_cli';
-        else
-            $exe = G5_KCPCERT_PATH . '/bin/ct_cli_x64';
+        if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            if(PHP_INT_MAX == 2147483647) // 32-bit
+                $exe = G5_KCPCERT_PATH . '/bin/ct_cli';
+            else
+                $exe = G5_KCPCERT_PATH . '/bin/ct_cli_x64';
+        } else {
+            $exe = G5_KCPCERT_PATH . '/bin/ct_cli_exe.exe';
+        }
 
         echo module_exec_check($exe, 'ct_cli');
     }
