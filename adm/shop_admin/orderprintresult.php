@@ -64,12 +64,15 @@ if ($csv == 'csv')
     header('Content-Disposition: attachment; filename="orderlist-' . date("ymd", time()) . '.csv"');
     header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
     header('Pragma: public');
+
     //echo "우편번호,주소,이름,전화1,전화2,상품명,수량,비고,전하실말씀\n";
     echo iconv('utf-8', 'euc-kr', "우편번호,주소,이름,전화1,전화2,상품명,수량,선택사항,배송비,상품코드,주문번호,운송장번호,전하실말씀\n");
 
     $save_it_id = '';
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
+        $pull_address = iconv('UTF-8', 'UHC', print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']));
+
         $row = array_map('iconv_euckr', $row);
 
         if($save_it_id != $row['it_id']) {
@@ -108,7 +111,7 @@ if ($csv == 'csv')
         }
 
         echo '"\''.$row['od_b_zip1'].$row['od_b_zip2'].'"\''.',';
-        echo '"'.print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']).'"'.',';
+        echo '"'.$pull_address.'"'.',';
         echo '"'.$row['od_b_name'].'"'.',';
         //echo '"'.multibyte_digit((string)$row[od_b_tel]).'"'.',';
         //echo '"'.multibyte_digit((string)$row[od_b_hp]).'"'.',';
@@ -210,10 +213,12 @@ if ($csv == 'xls')
             $ct_send_cost = iconv_euckr($ct_send_cost);
         }
 
+        $pull_address = iconv('UTF-8', 'UHC', print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']));
+
         $row = array_map('iconv_euckr', $row);
 
         $worksheet->write($i, 0, ' '.$row['od_b_zip1'].$row['od_b_zip2']);
-        $worksheet->write($i, 1, print_address($row['od_b_addr1'], $row['od_b_addr2'], $row['od_b_addr3'], $row['od_b_addr_jibeon']));
+        $worksheet->write($i, 1, $pull_address);
         $worksheet->write($i, 2, $row['od_b_name']);
         $worksheet->write($i, 3, ' '.$row['od_b_tel']);
         $worksheet->write($i, 4, ' '.$row['od_b_hp']);
