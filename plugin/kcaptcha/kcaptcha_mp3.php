@@ -37,7 +37,7 @@ function make_mp3()
 
     set_session("ss_captcha_save", $number);
 
-    return G5_URL.'/'.$mp3_file;
+    return G5_DATA_URL.'/'.$mp3_file;
 }
 
 echo make_mp3();
