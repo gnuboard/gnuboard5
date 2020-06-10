@@ -43,5 +43,7 @@ if( str_replace('-', '', G5_TIME_YMD) !== get_session('adm_auth_update') ){
     set_session('adm_auth_update', str_replace('-', '', G5_TIME_YMD));
 }
 
+run_event('adm_auth_update', $mb);
+
 goto_url('./auth_list.php?'.$qstr);
 ?>
