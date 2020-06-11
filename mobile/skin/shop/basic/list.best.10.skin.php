@@ -13,6 +13,8 @@ if($this->total_count > 0) {
     $slide_btn = '<button type="button" class="bst_sl">'.$k.'번째 리스트</button>';
 
     for ($i=0; $row=sql_fetch_array($result); $i++) {
+        $is_soldout = is_soldout($row['it_id'], true);   // 품절인지 체크
+
         if($i == 0) {
             echo '<script src="'.G5_JS_URL.'/swipe.js"></script>'.PHP_EOL;
             echo '<section id="best_item">'.PHP_EOL;
@@ -40,7 +42,15 @@ if($this->total_count > 0) {
         }
 
         if ($this->href) {
-            echo '</a></div>'.PHP_EOL;
+            echo '</a>';
+
+            if ($this->view_it_icon) {
+                // 품절
+                if ($is_soldout) {
+                    echo '<span class="shop_icon_soldout"><span class="soldout_txt">SOLD OUT</span></span>';
+                }
+            }
+            echo '</div>'.PHP_EOL;
         }
 
         if ($this->view_it_id) {

@@ -15,6 +15,7 @@ foreach((array) $list as $row){
 
     $item_link_href = shop_item_url($row['it_id']);
     $star_score = $row['it_use_avg'] ? (int) get_star($row['it_use_avg']) : '';
+    $is_soldout = is_soldout($row['it_id'], true);   // 품절인지 체크
 
     if ($this->list_mod >= 2) { // 1줄 이미지 : 2개 이상
         if ($i%$this->list_mod == 0) $sct_last = 'sct_last'; // 줄 마지막
@@ -46,6 +47,13 @@ foreach((array) $list as $row){
 
     if ($this->href) {
         echo "</a>\n";
+    }
+
+	if ($this->view_it_icon) {
+        // 품절
+        if ($is_soldout) {
+            echo '<span class="shop_icon_soldout h160"><span class="soldout_txt">SOLD OUT</span></span>';
+        }
     }
 
     echo "</div>\n";

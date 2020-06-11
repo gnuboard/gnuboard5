@@ -30,6 +30,7 @@ foreach((array) $list as $row){
 
     $item_link_href = shop_item_url($row['it_id']);
     $star_score = $row['it_use_avg'] ? (int) get_star($row['it_use_avg']) : '';
+    $is_soldout = is_soldout($row['it_id'], true);   // 품절인지 체크
 
     if ($i == 0) {
         if ($this->css) {
@@ -56,7 +57,15 @@ foreach((array) $list as $row){
     }
 
     if ($this->href) {
-        echo "</a></div>\n";
+        echo "</a>";
+
+        if ($this->view_it_icon) {
+            // 품절
+            if ($is_soldout) {
+                echo '<span class="shop_icon_soldout"><span class="soldout_txt">SOLD OUT</span></span>';
+            }
+        }
+        echo "</div>\n";
     }
 
     echo "<div class=\"sct_txt_wr\">\n";

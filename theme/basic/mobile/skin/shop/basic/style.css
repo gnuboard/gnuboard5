@@ -90,7 +90,7 @@
 .sct_10 {margin:10px}
 .sct_10 .sct_li {float:left;text-align:left;padding:5px;margin-bottom:10px}
 .sct_10 .sct_li .li_wr {position:relative}
-.sct_10 .sct_img {margin-bottom:10px;font-size:0}
+.sct_10 .sct_img {position:relative;margin-bottom:10px;font-size:0}
 .sct_10 .sct_img img {width:100%;height:auto}
 .sct_10 .sct_clear {clear:both}
 .sct_10 .sct_id {margin:5px 0;font-size:0.92em;color:#666}
@@ -107,6 +107,9 @@
 .sct_10 .sct_sns img {width:24px}
 .sct_10 .sct_sns_bg {background:rgba(0,0,0,0.1);width:100%;height:100%}
 .sct_10 .sct_sns_cls {position:absolute;right:0;top:0;color:#b5b8bb;border:0;padding:12px 15px;font-size:16px;background:#fff;margin:0;height:50px}
+
+.li_wr .sct_img{position:relative}
+.shop_icon_soldout {position:absolute;z-index:1;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);justify-content:center;display:flex;align-items:center;text-align:center;color:#fff;font-size:18px;font-weight:bold;letter-spacing:1px}
 
 .sct_10 .sct_icon {margin:0 0 10px}
 .li_more {text-align:center}
