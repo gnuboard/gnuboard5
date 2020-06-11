@@ -28,6 +28,8 @@ for ($i=0; $i<$count; $i++)
 
     $sql = " delete from {$g5['auth_table']} where mb_id = '".$mb_id."' and au_menu = '".$au_menu."' ";
     sql_query($sql);
+
+    run_event('adm_auth_delete_member', $mb_id, $au_menu);
 }
 
 goto_url('./auth_list.php?'.$qstr);
