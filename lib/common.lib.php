@@ -773,7 +773,8 @@ function get_member($mb_id, $fields='*', $is_cache=false)
 {
     global $g5;
     
-    $mb_id = preg_replace("/[^0-9a-z_]+/i", "", $mb_id);
+    if (preg_match("/[^0-9a-z_]+/i", $mb_id))
+        return array();
 
     static $cache = array();
 
