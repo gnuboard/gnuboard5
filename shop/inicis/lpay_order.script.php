@@ -18,8 +18,6 @@ jQuery(function($){
                 pf = $form[0],
                 inicis_pay_form = document.inicis_pay_form,
                 inicis_settle_case = jQuery("input[name='od_settle_case']:checked").val();
-            
-            console.log( inicis_settle_case );
 
             inicis_pay_form.gopaymethod.value = (inicis_settle_case === "inicis_kakaopay") ? "onlykakaopay" : "onlylpay";
             inicis_pay_form.acceptmethod.value = "cardonly";

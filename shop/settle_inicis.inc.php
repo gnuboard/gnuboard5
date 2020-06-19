@@ -72,7 +72,7 @@ $inicis_cardpoint = $default['de_inicis_cartpoint_use'] ? ':cardpoint' : '';   /
 $acceptmethod = 'HPP(2):no_receipt:vbank('.date('Ymd', strtotime("+3 days", G5_SERVER_TIME)).'):below1000'.$useescrow.$inicis_cardpoint;
 
 /* 기타 */
-$siteDomain = G5_HTTPS_SHOP_URL.'/inicis'; //가맹점 도메인 입력
+$siteDomain = G5_SHOP_URL.'/inicis'; //가맹점 도메인 입력
 // 페이지 URL에서 고정된 부분을 적는다.
 // Ex) returnURL이 http://localhost:8082/demo/INIpayStdSample/INIStdPayReturn.php 라면
 //                 http://localhost:8082/demo/INIpayStdSample 까지만 기입한다.
