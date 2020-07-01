@@ -109,5 +109,7 @@ if (!function_exists("itemdelete")) {
     }
 }
 
+run_event('shop_admin_delete_item_file', $it_id);
+
 itemdelete($it_id);
 ?>
