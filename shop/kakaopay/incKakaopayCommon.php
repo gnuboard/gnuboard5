@@ -1,43 +1,59 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
-//인증,결제 및 웹 경로
-$CNSPAY_WEB_SERVER_URL = 'https://kmpay.lgcns.com:8443';
-$targetUrl = 'https://kmpay.lgcns.com:8443';
-$msgName = '/merchant/requestDealApprove.dev';
-$CnsPayDealRequestUrl = 'https://pg.cnspay.co.kr:443';
+// 카카오페이를 사용하지 않을 경우 return;
+if( ! $default['de_kakaopay_enckey'] ) return;
 
-if ($default['de_card_test']) {
-    $MID = 'cnstest25m';
-    $merchantEncKey = '10a3189211e1dfc6';
-    $merchantHashKey = '10a3189211e1dfc6';
-    $cancelPwd = '123456';
-    //가맹점서명키
-    $merchantKey = '33F49GnCMS1mFYlGXisbUDzVf2ATWCl9k3R++d5hDd3Frmuos/XLx8XhXpe+LDYAbpGKZYSwtlyyLOtS/8aD7A==';
-} else {
-    $MID = 'KHSIR'.$default['de_kakaopay_mid'].'m';
-    $merchantEncKey = trim($default['de_kakaopay_enckey']);
-    $merchantHashKey = trim($default['de_kakaopay_hashkey']);
-    $cancelPwd = trim($default['de_kakaopay_cancelpwd']);
-    //가맹점서명키
-    $merchantKey = trim($default['de_kakaopay_key']);
+if( !isset($is_mobile_order) ){
+    $is_mobile_order = is_mobile();
 }
 
-//버전
-$phpVersion = 'PLP-0.1.1.3';
+if( $is_mobile_order ){
+    include_once(G5_MSHOP_PATH.'/settle_inicis.inc.php');
 
-//로그 경로
-$LogDir = G5_SHOP_PATH.'/kakaopay/log';
+    if ( $default['de_card_test']) {
+        if ($default['de_escrow_use'] == 1) {
+            $default['de_kakaopay_mid'] = 'iniescrow0';
+            $default['de_kakaopay_cancelpwd'] = '1111';
+        } else {
+            $default['de_kakaopay_mid'] = 'INIpayTest';
+            $default['de_kakaopay_cancelpwd'] = '1111';
+        }
+    } else {
+        $default['de_kakaopay_mid'] = 'SIRK'.$default['de_kakaopay_mid'];
+    }
 
-// TXN_ID를 가져오기 위해 세팅
-$ediDate = date("YmdHis");  // 전문생성일시
+    $noti_url   = G5_SHOP_URL.'/kakaopay/mobile_settle_common.php';
+    $next_url   = G5_SHOP_URL.'/kakaopay/mobile_pay_approval.php';
+    $return_url = G5_SHOP_URL.'/kakaopay/mobile_pay_return.php?oid=';
 
-$_REQUEST['PayMethod'] = 'KAKAOPAY';
-$_REQUEST['CERTIFIED_FLAG'] = 'CN';
-$_REQUEST['AuthFlg'] = '10';
-$_REQUEST['currency'] = 'KRW';
-$_REQUEST['MID'] = $MID;
-$_REQUEST['merchantEncKey'] = $merchantEncKey;
-$_REQUEST['merchantHashKey'] = $merchantHashKey;
-$_REQUEST['requestDealApproveUrl'] = $targetUrl.$msgName;
+    return;
+}
+
+include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
+
+if ($default['de_card_test']) {
+    if ($default['de_escrow_use'] == 1) {
+        $default['de_kakaopay_mid'] = 'iniescrow0';
+        $default['de_kakaopay_key'] = 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS';
+        $default['de_kakaopay_cancelpwd'] = '1111';
+    } else {
+        $default['de_kakaopay_mid'] = 'INIpayTest';
+        $default['de_kakaopay_key'] = 'SU5JTElURV9UUklQTEVERVNfS0VZU1RS';
+        $default['de_kakaopay_cancelpwd'] = '1111';
+    }
+    
+    if( !(isset($stdpay_js_url) && $stdpay_js_url) ){
+        $stdpay_js_url = 'https://stgstdpay.inicis.com/stdjs/INIStdPay.js';
+    }
+} else {
+    $default['de_kakaopay_mid'] = 'SIRK'.$default['de_kakaopay_mid'];
+
+    // 실 결제 URL
+    if( !(isset($stdpay_js_url) && $stdpay_js_url) ){
+        $stdpay_js_url = 'https://stdpay.inicis.com/stdjs/INIStdPay.js';
+    }
+}
+
+$returnUrl = G5_SHOP_URL.'/kakaopay/inicis_kk_return.php';
 ?>

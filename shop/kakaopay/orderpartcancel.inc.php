@@ -5,65 +5,62 @@ if($od['od_pg'] != 'KAKAOPAY') return;
 
 include_once(G5_SHOP_PATH.'/settle_kakaopay.inc.php');
 
-include_once(G5_SHOP_PATH.'/kakaopay/incKakaopayCommon.php');
-include_once(G5_SHOP_PATH.'/kakaopay/lgcns_CNSpay.php');
+$vat_mny       = round((int)$tax_mny / 1.1);
 
-$CancelNo                      = (int)$od['od_casseqno'] + 1;
-$vat_mny                       = round((int)$tax_mny / 1.1);
+$currency      = 'WON';
+$oldtid        = $od['od_tno'];
+$price         = (int)$tax_mny + (int)$free_mny;
+$confirm_price = (int)$od['od_receipt_price'] - (int)$od['od_refund_price'] - $price;
+$buyeremail    = $od['od_email'];
+$tax           = (int)$tax_mny - $vat_mny;
+$taxfree       = (int)$free_mny;
 
-$_REQUEST['TID']               = $od['od_tno'];
-$_REQUEST['Amt']               = (int)$tax_mny + (int)$free_mny;
-$_REQUEST['CancelMsg']         = $mod_memo;
-$_REQUEST['PartialCancelCode'] = 1;
-$_REQUEST['CheckRemainAmt']    = (int)$od['od_receipt_price'] - (int)$od['od_refund_price'];
-$_REQUEST['CancelNo']          = $CancelNo;
-$_REQUEST['SupplyAmt']         = ((int)$tax_mny + (int)$free_mny - $vat_mny);
-$_REQUEST['GoodsVat']          = $vat_mny;
-$_REQUEST['ServiceAmt']        = 0;
+/***********************
+ * 3. 재승인 정보 설정 *
+ ***********************/
+$inipay->SetField("type",          "repay");                         // 고정 (절대 수정 불가)
+$inipay->SetField("pgid",          "INIphpRPAY");                    // 고정 (절대 수정 불가)
+$inipay->SetField("subpgip",       "203.238.3.10");                  // 고정
+$inipay->SetField("mid",           $default['de_kakaopay_mid']);       // 상점아이디
+$inipay->SetField("admin",         $default['de_kakaopay_cancelpwd']); //비대칭 사용키 키패스워드
+$inipay->SetField("oldtid",        $oldtid);                         // 취소할 거래의 거래아이디
+$inipay->SetField("currency",      $currency);                       // 화폐단위
+$inipay->SetField("price",         $price);                          // 취소금액
+$inipay->SetField("confirm_price", $confirm_price);                  // 승인요청금액
+$inipay->SetField("buyeremail",    $buyeremail);                     // 구매자 이메일 주소
+$inipay->SetField("tax",           $tax);                            // 부가세금액
+$inipay->SetField("taxfree",       $taxfree);                        // 비과세금액
+
+/******************
+ * 4. 재승인 요청 *
+ ******************/
+$inipay->startAction();
 
 
-// 로그 저장 위치 지정
-$connector = new CnsPayWebConnector($LogDir);
-$connector->CnsActionUrl($CnsPayDealRequestUrl);
-$connector->CnsPayVersion($phpVersion);
-$connector->setRequestData($_REQUEST);
-$connector->addRequestData("actionType", "CL0");
-$connector->addRequestData("CancelPwd", $cancelPwd);
-$connector->addRequestData("CancelIP", $_SERVER['REMOTE_ADDR']);
+/*******************************************************************
+ * 5. 재승인 결과                                                  *
+ *                                                                 *
+ * 신거래번호 : $inipay->getResult('TID')                                     *
+ * 결과코드 : $inipay->getResult('ResultCode') ("00"이면 재승인 성공)         *
+ * 결과내용 : $inipay->getResult('ResultMsg') (재승인결과에 대한 설명)        *
+ * 원거래 번호 : $inipay->getResult('PRTC_TID')                                *
+ * 최종결제 금액 : $inipay->getResult('PRTC_Remains')                              *
+ * 부분취소 금액 : $inipay->getResult('PRTC_Price')                          *
+ * 부분취소,재승인 구분값 : $inipay->getResult('PRTC_Type')              *
+ *                          ("0" : 재승인, "1" : 부분취소)         *
+ * 부분취소(재승인) 요청횟수 : $inipay->getResult('PRTC_Cnt')           *
+ *******************************************************************/
 
-//가맹점키 셋팅 (MID 별로 틀림)
-$connector->addRequestData("EncodeKey", $merchantKey);
-
-// 4. CNSPAY Lite 서버 접속하여 처리
-$connector->requestAction();
-
-// 5. 결과 처리
-$resultCode = $connector->getResultData("ResultCode"); 	// 결과코드 (정상 :2001(취소성공), 2002(취소진행중), 그 외 에러)
-$resultMsg = $connector->getResultData("ResultMsg");   	// 결과메시지
-$cancelAmt = $connector->getResultData("CancelAmt");   	// 취소금액
-$cancelDate = $connector->getResultData("CancelDate"); 	// 취소일
-$cancelTime = $connector->getResultData("CancelTime");   	// 취소시간
-$payMethod = $connector->getResultData("PayMethod");   // 취소 결제수단
-$mid = 	$connector->getResultData("MID");             		// 가맹점 ID
-$tid = $connector->getResultData("TID");               		// TID
-$errorCD = $connector->getResultData("ErrorCD");        	// 상세 에러코드
-$errorMsg = $connector->getResultData("ErrorMsg");      	// 상세 에러메시지
-$authDate = $cancelDate . $cancelTime;						// 거래시간
-$ccPartCl = $connector->getResultData("CcPartCl");         	// 부분취소 가능여부 (0:부분취소불가, 1:부분취소가능)
-$stateCD = $connector->getResultData("StateCD");         	// 거래상태코드 (0: 승인, 1:전취소, 2:후취소)
-$authDate = $connector->makeDateString($authDate);
-$errorMsg = iconv("euc-kr", "utf-8", $errorMsg);
-$resultMsg = iconv("euc-kr", "utf-8", $resultMsg);
-
-if($resultCode == "2001" || $resultCode == "2002") {
-    $mod_mny = (int)$tax_mny + (int)$free_mny;
+ if($inipay->getResult('ResultCode') == '00') {
+     // 환불금액기록
+    $tno      = $inipay->getResult('PRTC_TID');
+    $re_price = $inipay->getResult('PRTC_Price');
 
     $sql = " update {$g5['g5_shop_order_table']}
-                set od_refund_price = od_refund_price + '$mod_mny',
-                    od_shop_memo = concat(od_shop_memo, \"$mod_memo\"),
-                    od_casseqno = '$CancelNo'
+                set od_refund_price = od_refund_price + '$re_price',
+                    od_shop_memo = concat(od_shop_memo, \"$mod_memo\")
                 where od_id = '{$od['od_id']}'
-                  and od_tno = '{$od['od_tno']}' ";
+                  and od_tno = '$tno' ";
     sql_query($sql);
 
     // 미수금 등의 정보 업데이트
@@ -76,7 +73,7 @@ if($resultCode == "2001" || $resultCode == "2002") {
                     od_free_mny = '{$info['od_free_mny']}'
                 where od_id = '$od_id' ";
     sql_query($sql);
-} else {
-    alert($resultMsg . ' 코드 : ' . $resultCode);
-}
+ } else {
+     alert(iconv_utf8($inipay->GetResult("ResultMsg")).' 코드 : '.$inipay->GetResult("ResultCode"));
+ }
 ?>

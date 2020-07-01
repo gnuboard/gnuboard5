@@ -196,6 +196,10 @@ if( ! isset($config['cf_icode_token_key']) ){
 if( function_exists('pg_setting_check') ){
 	pg_setting_check(true);
 }
+
+if(!$default['de_kakaopay_cancelpwd']){
+    $default['de_kakaopay_cancelpwd'] = '1111';
+}
 ?>
 
 <form name="fconfig" action="./configformupdate.php" onsubmit="return fconfig_check(this)" method="post" enctype="MULTIPART/FORM-DATA">
@@ -845,40 +849,42 @@ if( function_exists('pg_setting_check') ){
         </tr>
         <tr class="kakao_info_fld">
             <th scope="row">
-                <label for="de_kakaopay_mid">카카오페이 상점MID</label>
-                <a href="http://sir.kr/main/service/kakaopay.php" target="_blank" class="kakao_btn">카카오페이 서비스신청하기</a>
+                <label for="de_kakaopay_mid">카카오페이 상점아이디<br>( KG이니시스 )</label>
+                <a href="http://sir.kr/main/service/kakaopay.php?kk=yc5" target="_blank" class="kakao_btn">카카오페이 서비스신청하기</a>
             </th>
             <td>
-                <?php echo help("카카오페이로 부터 발급 받으신 상점아이디(MID) 10자리 중 첫 KHSIR과 끝 m 을 제외한 영문4자리를 입력 합니다. 예) KHSIRtestm"); ?>
-                <span class="sitecode">KHSIR</span> <input type="text" name="de_kakaopay_mid" value="<?php echo $default['de_kakaopay_mid']; ?>" id="de_kakaopay_mid" class="frm_input code_input" size="5" maxlength="4"> <span class="sitecode">m</span>
+                <?php echo help("KG이니시스로 부터 카카오페이 간편결제만 사용용도로 발급 받으신 상점아이디(MID) 10자리 중 SIRK 을 제외한 나머지 6자리를 입력 합니다."); ?>
+                <span class="sitecode">SIRK</span> <input type="text" name="de_kakaopay_mid" value="<?php echo $default['de_kakaopay_mid']; ?>" id="de_kakaopay_mid" class="frm_input code_input" size="10" maxlength="7">
             </td>
         </tr>
         <tr class="kakao_info_fld">
-            <th scope="row"><label for="de_kakaopay_key">카카오페이 상점키</label></th>
+            <th scope="row"><label for="de_kakaopay_key">카카오페이 상점키<br>( KG이니시스 )</label></th>
             <td>
-                <?php echo help("카카오페이로 부터 발급 받으신 상점 서명키를 입력합니다."); ?>
+                <?php echo help("SIRK****** 아이디로 KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\nKG이니시스 상점관리자 > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
                 <input type="text" name="de_kakaopay_key" value="<?php echo $default['de_kakaopay_key']; ?>" id="de_kakaopay_key" class="frm_input" size="100">
             </td>
         </tr>
         <tr class="kakao_info_fld">
-            <th scope="row"><label for="de_kakaopay_enckey">카카오페이 상점 EncKey</label></th>
+            <th scope="row"><label for="de_kakaopay_cancelpwd">카카오페이 키패스워드<br>( KG이니시스 )</label></th>
             <td>
-                <?php echo help("카카오페이로 부터 발급 받으신 상점 인증 전용 EncKey를 입력합니다."); ?>
-                <input type="text" name="de_kakaopay_enckey" value="<?php echo $default['de_kakaopay_enckey']; ?>" id="de_kakaopay_enckey" class="frm_input" size="20">
+                <?php echo help("SIRK****** 아이디로 KG이니시스에서 발급받은 4자리 상점 키패스워드를 입력합니다.\nKG이니시스 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
+                <input type="text" name="de_kakaopay_cancelpwd" value="<?php echo $default['de_kakaopay_cancelpwd']; ?>" id="de_kakaopay_cancelpwd" class="frm_input" size="20">
             </td>
         </tr>
         <tr class="kakao_info_fld">
+            <th scope="row">
+                <label for="de_kakaopay_enckey">카카오페이 사용</label>
+            </th>
+            <td>
+                <?php echo help("체크시 카카오페이 (KG 이니시스)를 사용합니다. <br >KG 이니시스의 SIRK****** 아이디를 받은 상점만 해당됩니다.", 50); ?>
+                <input type="checkbox" name="de_kakaopay_enckey" value="1" id="de_kakaopay_enckey"<?php echo $default['de_kakaopay_enckey']?' checked':''; ?>> <label for="de_kakaopay_enckey">사용</label>
+            </td>
+        </tr>
+        <tr class="kakao_info_fld" style="display:none">
             <th scope="row"><label for="de_kakaopay_hashkey">카카오페이 상점 HashKey</label></th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점 인증 전용 HashKey를 입력합니다."); ?>
                 <input type="text" name="de_kakaopay_hashkey" value="<?php echo $default['de_kakaopay_hashkey']; ?>" id="de_kakaopay_hashkey" class="frm_input" size="20">
-            </td>
-        </tr>
-        <tr class="kakao_info_fld">
-            <th scope="row"><label for="de_kakaopay_cancelpwd">카카오페이 결제취소 비밀번호</label></th>
-            <td>
-                <?php echo help("카카오페이 상점관리자에서 설정하신 취소 비밀번호를 입력합니다.<br>입력하신 비밀번호와 상점관리자에서 설정하신 비밀번호가 일치하지 않으면 취소가 되지 않습니다."); ?>
-                <input type="text" name="de_kakaopay_cancelpwd" value="<?php echo $default['de_kakaopay_cancelpwd']; ?>" id="de_kakaopay_cancelpwd" class="frm_input" size="20">
             </td>
         </tr>
         <tr class="naver_info_fld">

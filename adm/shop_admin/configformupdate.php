@@ -237,6 +237,14 @@ foreach( $check_sanitize_keys as $key ){
     $$key = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
 }
 
+$warning_msg = '';
+
+if( $de_kakaopay_enckey && ($de_pg_service === 'inicis' || $de_inicis_lpay_use || $de_inicis_kakaopay_use) ){
+    
+    $warning_msg = 'KG 이니시스 결제 또는 L.pay 또는 KG이니시스 카카오페이를 사용시 결제모듈 중복문제로 카카오페이를 활성화 할수 없습니다. \\n\\n카카오페이 사용을 비활성화 합니다.';
+    $de_kakaopay_enckey = '';
+}
+
 //
 // 영카트 default
 //
@@ -436,5 +444,9 @@ $sql = " update {$g5['config_table']}
                 cf_lg_mert_key          = '{$cf_lg_mert_key}' ";
 sql_query($sql);
 
-goto_url("./configform.php");
+if( $warning_msg ){
+    alert($warning_msg, "./configform.php");
+} else {
+    goto_url("./configform.php");
+}
 ?>
