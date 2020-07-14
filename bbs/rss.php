@@ -70,7 +70,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 <item>
 <title><?php echo specialchars_replace($row['wr_subject']); ?></title>
-<link><?php echo specialchars_replace(get_pretty_url($bo_table, $wr_id)); ?></link>
+<link><?php echo specialchars_replace(get_pretty_url($bo_table, $row['wr_id'])); ?></link>
 <description><![CDATA[<?php echo $file ?><?php echo conv_content($row['wr_content'], $html) ?>]]></description>
 <dc:creator><?php echo specialchars_replace($row['wr_name']) ?></dc:creator>
 <?php
