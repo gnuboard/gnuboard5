@@ -121,7 +121,7 @@ if($w == '') {
     $cp = sql_fetch($sql);
 
     if(!$cp['cz_id'])
-        alert('쿠폰정보가 존해하지 않습니다.', './couponzonelist.php');
+        alert('쿠폰정보가 존재하지 않습니다.', './couponzonelist.php');
 
     if ($_POST['cp_img_del'] && $cp['cz_file']) {
         @unlink(G5_DATA_PATH."/coupon/{$cp['cz_file']}");
