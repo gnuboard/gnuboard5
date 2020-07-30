@@ -7,7 +7,7 @@ CREATE TABLE `__TABLE_NAME__` (
   `wr_comment` int(11) NOT NULL DEFAULT '0',
   `wr_comment_reply` varchar(5) NOT NULL,
   `ca_name` varchar(255) NOT NULL,
-  `wr_option` set('html1','html2','secret','mail') NOT NULL,
+  `wr_option` set('html1','html2','secret','mail', 'markdown') NOT NULL,
   `wr_subject` varchar(255) NOT NULL,
   `wr_content` text NOT NULL,
   `wr_seo_title` varchar(255) NOT NULL DEFAULT '',
