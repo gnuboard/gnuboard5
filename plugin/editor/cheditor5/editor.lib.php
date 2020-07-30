@@ -11,7 +11,7 @@ function editor_html($id, $content, $is_dhtml_editor=true)
         $is_dhtml_editor && $content && 
         (
         (!$w && (isset($board['bo_insert_content']) && !empty($board['bo_insert_content'])))
-        || ($w == 'u' && isset($write['wr_option']) && strpos($write['wr_option'], 'html') === false )
+        || ($w == 'u' && isset($write['wr_option']) && strpos($write['wr_option'], 'html') === false && strpos($write['wr_option'], 'markdown') === false )
         )
     ){       //글쓰기 기본 내용 처리
         if( preg_match('/\r|\n/', $content) && $content === strip_tags($content, '<a><strong><b>') ) {  //textarea로 작성되고, html 내용이 없다면
