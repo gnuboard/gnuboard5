@@ -131,7 +131,7 @@ $payReqMap['LGD_PAYKEY']             = "";
 
 $_SESSION['PAYREQ_MAP'] = $payReqMap;
 
-$g5['title'] = 'LG 유플러스 eCredit서비스 결제';
+$g5['title'] = '토스페이먼츠 eCredit서비스 결제';
 $g5['body_script'] = ' onload="launchCrossPlatform();"';
 include_once(G5_PATH.'/head.sub.php');
 ?>
