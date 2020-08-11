@@ -84,6 +84,8 @@ if (!isset($board['bo_select_editor'])) {
     sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_select_editor` VARCHAR(50) NOT NULL DEFAULT '' AFTER `bo_use_dhtml_editor` ");
 }
 
+run_event('adm_board_form_before', $board, $w);
+
 $required = "";
 $readonly = "";
 $sound_only = "";
