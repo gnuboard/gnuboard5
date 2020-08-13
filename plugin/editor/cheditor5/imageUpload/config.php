@@ -1,10 +1,6 @@
 <?php
 include_once("_common.php");
 
-if( strpos($config['cf_editor'], 'cheditor5') === false ){
-    exit;
-}
-
 define("CHE_UPLOAD_IMG_CHECK", 1);  // 이미지 파일을 썸네일 할수 있는지 여부를 체크합니다. ( 해당 파일이 이미지 파일인지 체크합니다. 1이면 사용, 0이면 사용 안함 )
 
 // ---------------------------------------------------------------------------
