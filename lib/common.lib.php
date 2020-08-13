@@ -611,7 +611,7 @@ function html_purifier($html)
     //유튜브, 비메오 전체화면 가능하게 하기
     $config->set('Filter.Custom', array(new HTMLPurifier_Filter_Iframevideo()));
     $purifier = new HTMLPurifier($config);
-    return $purifier->purify($html);
+    return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
 }
 
 
@@ -773,7 +773,8 @@ function get_member($mb_id, $fields='*', $is_cache=false)
 {
     global $g5;
     
-    $mb_id = preg_replace("/[^0-9a-z_]+/i", "", $mb_id);
+    if (preg_match("/[^0-9a-z_]+/i", $mb_id))
+        return array();
 
     static $cache = array();
 
@@ -2317,6 +2318,8 @@ function delete_editor_thumbnail($contents)
 {
     if(!$contents)
         return;
+    
+    run_event('delete_editor_thumbnail_before', $contents);
 
     // $contents 중 img 태그 추출
     $matchs = get_editor_image($contents);
@@ -2337,6 +2340,8 @@ function delete_editor_thumbnail($contents)
                 unlink($filename);
         }
     }
+
+    run_event('delete_editor_thumbnail_after', $contents, $matchs);
 }
 
 // 1:1문의 첨부파일 썸네일 삭제

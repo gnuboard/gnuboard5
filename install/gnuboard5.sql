@@ -47,6 +47,7 @@ CREATE TABLE IF NOT EXISTS `g5_board` (
   `bo_use_file_content` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_secret` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_dhtml_editor` tinyint(4) NOT NULL DEFAULT '0',
+  `bo_select_editor` varchar(50) NOT NULL DEFAULT '',
   `bo_use_rss_view` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_good` tinyint(4) NOT NULL DEFAULT '0',
   `bo_use_nogood` tinyint(4) NOT NULL DEFAULT '0',

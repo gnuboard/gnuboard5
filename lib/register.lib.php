@@ -86,7 +86,7 @@ function exist_mb_nick($reg_mb_nick, $reg_mb_id)
 function reserve_mb_nick($reg_mb_nick)
 {
     global $config;
-    if (preg_match("/[\,]?{$reg_mb_nick}/i", $config['cf_prohibit_id']))
+    if (preg_match("/[\,]?".preg_quote($reg_mb_nick)."/i", $config['cf_prohibit_id']))
         return "이미 예약된 단어로 사용할 수 없는 닉네임 입니다.";
     else
         return "";

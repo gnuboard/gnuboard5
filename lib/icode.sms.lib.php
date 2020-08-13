@@ -237,6 +237,7 @@ class SMS {
             fclose($fp);
         }
 		$this->Data=array();
+        return true;
 	}
 }
 ?>
