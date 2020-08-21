@@ -52,7 +52,7 @@ if ($w=="")
                     bn_new_win    = '$bn_new_win',
                     bn_begin_time = '$bn_begin_time',
                     bn_end_time   = '$bn_end_time',
-                    bn_time       = '$now',
+                    bn_time       = '".G5_TIME_YMDHIS."',
                     bn_hit        = '0',
                     bn_order      = '$bn_order' ";
     sql_query($sql);
@@ -70,6 +70,7 @@ else if ($w=="u")
                     bn_new_win    = '$bn_new_win',
                     bn_begin_time = '$bn_begin_time',
                     bn_end_time   = '$bn_end_time',
+                    bn_time       = '".G5_TIME_YMDHIS."',
                     bn_order      = '$bn_order'
               where bn_id = '$bn_id' ";
     sql_query($sql);
