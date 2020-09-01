@@ -544,12 +544,14 @@ $(function(){
     });
 
     // 상품리스트 닫기
-    $(".orderitemlist-x").on("click", function() {
+    $("#sodr_list").on("click", "#orderitemlist-x", function(e) {
         $("#orderitemlist").remove();
     });
 
-    $("body").on("click", function() {
-        $("#orderitemlist").remove();
+    $("body").on("click", function(e) {
+        if ($(e.target).closest("#orderitemlist").length === 0){
+            $("#orderitemlist").remove();
+        }
     });
 
     // 엑셀배송처리창
