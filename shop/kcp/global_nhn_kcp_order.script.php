@@ -51,11 +51,17 @@ jQuery(function($){
             
             $("input,select,textarea", this).each(
                 function(index){
-                    var $clone_el = $(this).clone()
+                    var $clone_el = $(this).clone(),
                         clone_el_name = $clone_el.attr("name"),
                         clone_name_attr = "[name='"+clone_el_name+"']";
                     
-                    if( clone_el_name && ! (/^(LGD_|CST_|it_price|cp_price|requestByJs|timestamp|signature|returnUrl|mKey|charset|payViewType|closeUrl|popupUrl|quotabase|tax)/i.test(clone_el_name)) ){
+                    if( $clone_el.prop("type") == "radio" || $clone_el.prop("type") == "checkbox" ){
+                        if( $clone_el.attr("checked") != "checked" ){
+                            clone_el_name = "";
+                        }
+                    }
+
+                    if( clone_el_name && ! (/^(LGD_|CST_|it_price|cp_price|requestByJs|timestamp|signature|returnUrl|mKey|charset|payViewType|closeUrl|popupUrl|quotabase|tax|od_settle_case)/i.test(clone_el_name)) ){
                         if( $(nhnkcp_pay_form).find(clone_name_attr).length ){
                             $(nhnkcp_pay_form).find(clone_name_attr).val( $clone_el.val() );
                         } else {
