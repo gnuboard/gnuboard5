@@ -18,8 +18,12 @@ if(!($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'
 <input type="hidden" name="buyr_mail"     value="">
 <input type="hidden" name="settle_method" value="">
 <input type="hidden" name="payco_direct"   value="">      <!-- PAYCO 결제창 호출 -->
+<input type="hidden" name="naverpay_direct" value="A" >    <!-- NAVERPAY 결제창 호출 -->
+<input type="hidden" name="kakaopay_direct" value="A" >    <!-- KAKAOPAY 결제창 호출 -->
 <!-- 주문번호 -->
 <input type="hidden" name="ordr_idxx" value="<?php echo $od_id; ?>">
+<!-- 인증수단(영문 소문자) * 반드시 대소문자 구분 -->
+<input type="hidden" name="ActionResult" value="">
 <!-- 결제등록 키 -->
 <input type="hidden" name="approval_key" id="approval">
 <!-- 수취인이름 -->

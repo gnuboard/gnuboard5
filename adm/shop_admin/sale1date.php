@@ -27,6 +27,7 @@ function print_line($save)
         <td class="td_numincome"><?php echo number_format($save['receiptvbank']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptiche']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptcard']); ?></td>
+        <td class="td_numincome"><?php echo number_format($save['receipteasy']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receipthp']); ?></td>
         <td class="td_numincome"><?php echo number_format($save['receiptpoint']); ?></td>
         <td class="td_numcancel1"><?php echo number_format($save['ordercancel']); ?></td>
@@ -65,6 +66,7 @@ $result = sql_query($sql);
         <th scope="col">가상계좌</th>
         <th scope="col">계좌이체</th>
         <th scope="col">카드입금</th>
+        <th scope="col">간편결제</th>
         <th scope="col">휴대폰</th>
         <th scope="col">포인트입금</th>
         <th scope="col">주문취소</th>
@@ -119,10 +121,15 @@ $result = sql_query($sql);
             $tot['receiptcard']    += $row['od_receipt_price'];
         $tot['receiptpoint']  += $row['od_receipt_point'];
         $tot['misu']           += $row['od_misu'];
+
+        if(in_array($row['od_settle_case'], array('간편결제', 'KAKAOPAY', 'lpay', 'inicis_payco', 'inicis_kakaopay', '삼성페이'))) {
+            $save['receipteasy'] += $row['od_receipt_price'];
+            $tot['receipteasy'] += $row['od_receipt_price'];
+        }
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="12" class="empty_table">자료가 없습니다.</td></tr>';
+        echo '<tr><td colspan="13" class="empty_table">자료가 없습니다.</td></tr>';
     } else {
         print_line($save);
     }
@@ -138,6 +145,7 @@ $result = sql_query($sql);
         <td class="td_num_right"><?php echo number_format($tot['receiptvbank']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['receiptiche']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['receiptcard']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['receipteasy']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['receipthp']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['receiptpoint']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['ordercancel']); ?></td>

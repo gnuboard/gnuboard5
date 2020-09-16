@@ -47,7 +47,7 @@ $g_conf_site_cd = $default['de_kcp_mid'];
 $g_conf_site_key = $default['de_kcp_site_key'];
 
 // 테스트 결제 때 PAYCO site_cd, site_key 재설정
-if($default['de_card_test'] && ($_POST['settle_method'] == '간편결제' || $_POST['od_settle_case'] == '간편결제')) {
+if($default['de_card_test'] && (($_POST['settle_method'] == '간편결제' || $_POST['od_settle_case'] == '간편결제') && (isset($_POST['payco_direct']) && $_POST['payco_direct'] === 'Y') )) {
     $g_conf_site_cd = 'S6729';
     $g_conf_site_key = '';
 }

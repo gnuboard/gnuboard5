@@ -2287,6 +2287,20 @@ function get_shop_order_data($od_id, $type='item')
     return $row;
 }
 
+function is_use_easypay($payname=''){
+    global $default;
+
+    $de_easy_pay_service_array = (isset($default['de_easy_pay_services']) && $default['de_easy_pay_services']) ? explode(',', $default['de_easy_pay_services']) : array();
+
+    if($payname === 'global_nhnkcp' && $de_easy_pay_service_array && ('kcp' !== $default['de_pg_service'])){      // NHN_KCP 외 타PG 사용시
+        if( in_array('global_nhnkcp_naverpay', $de_easy_pay_service_array) && ($default['de_card_test'] || (!$default['de_card_test'] && $default['de_kcp_mid'] && $default['de_kcp_site_key']) ) ){
+            return true;
+        }
+    }
+
+    return false;
+}
+
 function exists_inicis_shop_order($oid, $pp=array(), $od_time='', $od_ip='')
 {
 
@@ -2613,7 +2627,7 @@ function get_item_images_info($it, $size=array(), $image_width, $image_height){
 }
 
 //결제방식 이름을 체크하여 치환 대상인 문자열은 따로 리턴합니다.
-function check_pay_name_replace($payname, $od=array()){
+function check_pay_name_replace($payname, $od=array(), $is_client=0){
 
     if( $payname === 'lpay' ){
         return 'L.pay';
@@ -2622,6 +2636,23 @@ function check_pay_name_replace($payname, $od=array()){
     } else if($payname === '신용카드'){
         if(isset($od['od_bank_account']) && $od['od_bank_account'] === '카카오머니'){
             return $payname.'(카카오페이)';
+        }
+    } else if($payname === '간편결제'){
+
+        $add_str = $is_client ? '('.$payname.')' : '';
+
+        if( isset($od['od_pg']) && $od['od_pg'] === 'lg' ){
+            return 'PAYNOW';
+        } else if( isset($od['od_pg']) && $od['od_pg'] === 'inicis' ){
+            return 'KPAY';
+        } else if( isset($od['od_pg']) && $od['od_pg'] === 'kcp' ){
+            if( isset($od['od_other_pay_type']) && $od['od_other_pay_type'] === 'OT16' ){
+                return '네이버페이_NHNKCP'.$add_str;
+            } else if( isset($od['od_other_pay_type']) && ($od['od_other_pay_type'] === 'OT13' || $od['od_other_pay_type'] === 'NHNKCP_KAKAOMONEY') ){
+                return '카카오페이_NHNKCP'.$add_str;
+            }
+
+            return 'PAYCO'.$add_str;
         }
     }
 

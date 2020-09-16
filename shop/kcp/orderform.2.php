@@ -12,6 +12,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="site_cd"         value="<?php echo $default['de_kcp_mid']; ?>">
     <input type="hidden" name="site_name"       value="<?php echo $g_conf_site_name; ?>">
     <input type="hidden" name="def_site_cd"     value="<?php echo $default['de_kcp_mid']; ?>">
+
     <!-- <input type="hidden" name="KCP_PAY_MODULE"  value="kcp_web" > -->
 <?php
     /*
@@ -38,6 +39,8 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <input type="hidden" name="rcvr_add2"     value="">
 
     <input type="hidden" name="payco_direct"   value="">      <!-- PAYCO 결제창 호출 -->
+    <input type="hidden" name="naverpay_direct" value="A" >    <!-- NAVERPAY 결제창 호출 -->
+    <input type="hidden" name="kakaopay_direct" value="A" >    <!-- KAKAOPAY 결제창 호출 -->
 
     <input type="hidden" name="quotaopt"    value="12">
 

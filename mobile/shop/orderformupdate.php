@@ -7,6 +7,11 @@ if( is_inicis_order_pay($od_settle_case) && !empty($_POST['P_HASH']) ){
     $default['de_pg_service'] = 'inicis';
 }
 
+// 타 PG 사용시 NHN KCP 네이버페이로 결제 요청이 왔다면 $default['de_pg_service'] 값을 kcp 로 변경합니다.
+if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') && isset($_POST['enc_data']) && $_POST['enc_data'] && isset($_POST['site_cd']) && isset($_POST['nhnkcp_pay_case']) && $_POST['nhnkcp_pay_case'] === "naverpay"){
+    $default['de_pg_service'] = 'kcp';
+}
+
 if( $default['de_pg_service'] == 'inicis' && get_session('ss_order_id') ){
     if( $exist_order = get_shop_order_data(get_session('ss_order_id')) ){    //이미 상품이 주문되었다면 리다이렉트
         if($exist_order['od_tno']){
@@ -44,6 +49,18 @@ if (get_cart_count($tmp_cart_id) == 0) {    // 장바구니에 담기
     if(function_exists('add_order_post_log')) add_order_post_log('장바구니가 비어 있습니다.');
     alert('장바구니가 비어 있습니다.\\n\\n이미 주문하셨거나 장바구니에 담긴 상품이 없는 경우입니다.', G5_SHOP_URL.'/cart.php');
 }
+
+$sql = "select * from {$g5['g5_shop_order_table']} limit 1";
+$check_tmp = sql_fetch($sql);
+
+if(!isset($check_tmp['od_other_pay_type'])){
+    $sql = "ALTER TABLE `{$g5['g5_shop_order_table']}` 
+            ADD COLUMN `od_other_pay_type` VARCHAR(100) NOT NULL DEFAULT '' AFTER `od_settle_case`; ";
+    sql_query($sql, false);
+}
+
+// 변수 초기화
+$od_other_pay_type = '';
 
 $error = "";
 // 장바구니 상품 재고 검사
@@ -616,6 +633,7 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 od_mobile         = '1',
                 od_ip             = '$REMOTE_ADDR',
                 od_settle_case    = '$od_settle_case',
+                od_other_pay_type = '$od_other_pay_type',
                 od_test           = '{$default['de_card_test']}'
                 ";
 $result = sql_query($sql, false);

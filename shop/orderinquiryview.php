@@ -237,19 +237,6 @@ if($od['od_pg'] == 'lg') {
             $app_no_subj = '승인번호';
             $app_no = $od['od_app_no'];
             $disp_bank = false;
-            switch($od['od_pg']) {
-                case 'lg':
-                    $easy_pay_name = 'PAYNOW';
-                    break;
-                case 'inicis':
-                    $easy_pay_name = 'KPAY';
-                    break;
-                case 'kcp':
-                    $easy_pay_name = 'PAYCO';
-                    break;
-                default:
-                    break;
-            }
         } else if($od['od_settle_case'] == '휴대폰') {
             $app_no_subj = '휴대폰번호';
             $app_no = $od['od_bank_account'];
@@ -281,7 +268,7 @@ if($od['od_pg'] == 'lg') {
                 </tr>
                 <tr>
                     <th scope="row">결제방식</th>
-                    <td><?php echo ($easy_pay_name ? $easy_pay_name.'('.$od['od_settle_case'].')' : check_pay_name_replace($od['od_settle_case'], $od) ); ?></td>
+                    <td><?php echo check_pay_name_replace($od['od_settle_case'], $od, 1); ?></td>
                 </tr>
                 <tr>
                     <th scope="row">결제금액</th>
@@ -299,7 +286,7 @@ if($od['od_pg'] == 'lg') {
                 }
 
                 // 승인번호, 휴대폰번호, 거래번호
-                if($app_no_subj)
+                if($app_no_subj && $app_no)
                 {
                 ?>
                 <tr>

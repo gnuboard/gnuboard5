@@ -269,6 +269,16 @@ if ( $req_tx == "pay" )
             $card_bin_type_01 = $c_PayPlus->mf_get_res_data( "card_bin_type_01" ); // 카드구분1
             $card_bin_type_02 = $c_PayPlus->mf_get_res_data( "card_bin_type_02" ); // 카드구분2
             $card_mny = $c_PayPlus->mf_get_res_data( "card_mny" ); // 카드결제금액
+            $od_other_pay_type = $c_PayPlus->mf_get_res_data( "card_other_pay_type" ); // 간편결제유형
+
+            $kcp_pay_method = $c_PayPlus->mf_get_res_data( "pay_method" ); // 카카오페이 결제수단
+            // 카드 코드는 PACA, 카카오머니 코드는 PAKM
+
+            if( $kcp_pay_method == "PAKM" ){    // 카카오머니
+                $card_mny = $kakaomny_mny = $c_PayPlus->mf_get_res_data( "kakaomny_mny" );
+                $app_time = $app_kakaomny_time = $c_PayPlus->mf_get_res_data( "app_kakaomny_time" );
+                $od_other_pay_type = 'NHNKCP_KAKAOMONEY';
+            }
 
             /* = -------------------------------------------------------------- = */
             /* =   05-1.1. 복합결제(포인트+신용카드) 승인 결과 처리               = */

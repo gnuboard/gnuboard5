@@ -82,6 +82,16 @@ if(isset($_POST['de_taxsave_types_transfer']) && $_POST['de_taxsave_types_transf
 	$de_taxsave_types .= ',transfer';
 }
 
+// NHN_KCP 간편결제 체크
+$de_easy_pay_services = '';
+if(isset($_POST['de_easy_pays'])){
+    $tmps = array();
+    foreach( (array) $_POST['de_easy_pays'] as $v ){
+        $tmps[] = preg_replace('/[^0-9a-z_\-]/i', '', $v);
+    }
+    $de_easy_pay_services = implode(",", $tmps);
+}
+
 //KVE-2019-0689, KVE-2019-0691, KVE-2019-0694
 $check_sanitize_keys = array(
 'de_admin_company_name',        //회사명
@@ -356,6 +366,7 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_card_test                  = '{$de_card_test}',
                 de_card_use                   = '{$de_card_use}',
                 de_easy_pay_use               = '{$de_easy_pay_use}',
+                de_easy_pay_services          = '{$de_easy_pay_services}',
                 de_samsung_pay_use            = '{$de_samsung_pay_use}',
                 de_inicis_lpay_use            = '{$de_inicis_lpay_use}',
                 de_inicis_kakaopay_use        = '{$de_inicis_kakaopay_use}',

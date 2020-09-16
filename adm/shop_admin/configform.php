@@ -193,8 +193,15 @@ if( ! isset($config['cf_icode_token_key']) ){
     sql_query($sql, false);
 }
 
+// PG 간편결제 추가 ( NHN_KCP 네이버페이, 카카오페이 )
+if( ! isset($default['de_easy_pay_services']) ){
+    $sql = "ALTER TABLE `{$g5['g5_shop_default_table']}` 
+            ADD COLUMN `de_easy_pay_services` VARCHAR(255) NOT NULL DEFAULT '' AFTER `de_easy_pay_use`; ";
+    sql_query($sql, false);
+}
+
 if( function_exists('pg_setting_check') ){
-	pg_setting_check(true);
+    pg_setting_check(true);
 }
 
 if(!$default['de_kakaopay_cancelpwd']){
@@ -669,26 +676,26 @@ if(!$default['de_kakaopay_cancelpwd']){
                 </select>
             </td>
         </tr>
-		<?php
-		$account_checked = $vbank_checked = $transfer_checked = '';
+        <?php
+        $account_checked = $vbank_checked = $transfer_checked = '';
 
-		if (strstr($default['de_taxsave_types'], 'account')) {
-			$account_checked = 'checked="checked"';
-		}
-		if (strstr($default['de_taxsave_types'], 'vbank')) {
-			$vbank_checked = 'checked="checked"';
-		}
-		if (strstr($default['de_taxsave_types'], 'transfer')) {
-			$transfer_checked = 'checked="checked"';
-		}
-		?>
+        if (strstr($default['de_taxsave_types'], 'account')) {
+            $account_checked = 'checked="checked"';
+        }
+        if (strstr($default['de_taxsave_types'], 'vbank')) {
+            $vbank_checked = 'checked="checked"';
+        }
+        if (strstr($default['de_taxsave_types'], 'transfer')) {
+            $transfer_checked = 'checked="checked"';
+        }
+        ?>
         <tr id="de_taxsave_types" class="de_taxsave_types">
             <th scope="row">현금영수증<br>적용수단</th>
             <td>
                 <?php echo help("현금영수증 발급 사용일 경우 해당됩니다.<br>현금 영수증 발급은 무통장입금, 가상계좌, 실시간계좌에만 적용됩니다.<br>아래 체크된 수단에 한해서 회원이 직접 주문 보기 페이지에서 현금영수증을 발급 받을수 있습니다.<br>!!! 만약 PG사 상점관리자에서 가상계좌 또는 실시간계좌이체가 자동으로 현금영수증이 발급되는 경우이면, 아래 가상계좌와 실시간계좌이체 체크박스를 해제하여 사용해 주세요.( 중복으로 발급되는 것을 막기 위함입니다. )", 50); ?>
                 <input type="checkbox" id="de_taxsave_types_account" name="de_taxsave_types_account" value="account" <?php echo $account_checked; ?> > <label for="de_taxsave_types_account" disabled>무통장입금</label><br>
-				<input type="checkbox" id="de_taxsave_types_vbank" name="de_taxsave_types_vbank" value="vbank" <?php echo $vbank_checked; ?> > <label for="de_taxsave_types_vbank">가상계좌</label><br>
-				<input type="checkbox" id="de_taxsave_types_transfer" name="de_taxsave_types_transfer" value="transfer" <?php echo $transfer_checked; ?> > <label for="de_taxsave_types_transfer">실시간계좌이체</label>
+                <input type="checkbox" id="de_taxsave_types_vbank" name="de_taxsave_types_vbank" value="vbank" <?php echo $vbank_checked; ?> > <label for="de_taxsave_types_vbank">가상계좌</label><br>
+                <input type="checkbox" id="de_taxsave_types_transfer" name="de_taxsave_types_transfer" value="transfer" <?php echo $transfer_checked; ?> > <label for="de_taxsave_types_transfer">실시간계좌이체</label>
             </td>
         </tr>
         <tr>
@@ -767,6 +774,22 @@ if(!$default['de_kakaopay_cancelpwd']){
             <td>
                 <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 NHN KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
                 <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="36" maxlength="25">
+            </td>
+        </tr>
+        <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="de_kcp_easy_pays">NHN KCP 간편결제</label></th>
+            <td>
+                <?php echo help("체크시 NHN KCP 간편결제들을 활성화 합니다.\nNHN_KCP > 네이버페이, 카카오페이는 테스트결제가 되지 않습니다."); ?>
+                <input type="checkbox" id="de_easy_nhnkcp_payco" name="de_easy_pays[]" value="nhnkcp_payco" <?php if(stripos($default['de_easy_pay_services'], 'nhnkcp_payco') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nhnkcp_payco" disabled>PAYCO (페이코)</label><br>
+                <input type="checkbox" id="de_easy_nhnkcp_naverpay" name="de_easy_pays[]" value="nhnkcp_naverpay" <?php if(stripos($default['de_easy_pay_services'], 'nhnkcp_naverpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nhnkcp_naverpay">NAVERPAY (네이버페이)</label><br>
+                <input type="checkbox" id="de_easy_nhnkcp_kakaopay" name="de_easy_pays[]" value="nhnkcp_kakaopay" <?php if(stripos($default['de_easy_pay_services'], 'nhnkcp_kakaopay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_easy_nhnkcp_kakaopay">KAKAOPAY (카카오페이)</label>
+            </td>
+        </tr>
+        <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="de_global_nhnkcp_naverpay">NHN KCP 네이버페이 사용</label></th>
+            <td>
+                <?php echo help("체크시 타 PG (토스페이먼츠, KG 이니시스) 사용중일때도 NHN_KCP 를 통한 네이버페이 간편결제를 사용할수 있습니다.\n실결제시 반드시 결제대행사 NHN_KCP 항목에 KCP SITE CODE와 NHN KCP SITE KEY를 입력해야 합니다."); ?>
+                <input type="checkbox" id="de_global_nhnkcp_naverpay" name="de_easy_pays[]" value="global_nhnkcp_naverpay" <?php if(stripos($default['de_easy_pay_services'], 'global_nhnkcp_naverpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_global_nhnkcp_naverpay">NAVERPAY (네이버페이)</label><br>
             </td>
         </tr>
         <tr class="pg_info_fld lg_info_fld" id="lg_info_anchor">
@@ -1672,67 +1695,73 @@ function fconfig_check(f)
     <?php echo get_editor_js('de_baesong_content'); ?>
     <?php echo get_editor_js('de_change_content'); ?>
     <?php echo get_editor_js('de_guest_privacy'); ?>
-	
-	var msg = "",
-		pg_msg = "";
+    
+    var msg = "",
+        pg_msg = "";
 
-	if( f.de_pg_service.value == "kcp" ){
-		if( f.de_kcp_mid.value && f.de_kcp_site_key.value && parseInt(f.de_card_test.value) > 0 ){
-			pg_msg = "NHN KCP";
-		}
-	} else if ( f.de_pg_service.value == "lg" ) {
-		if( f.cf_lg_mid.value && f.cf_lg_mert_key.value && parseInt(f.de_card_test.value) > 0 ){
-			pg_msg = "토스페이먼츠";
-		}
-	} else if ( f.de_pg_service.value == "inicis" ) {
-		if( f.de_inicis_mid.value && f.de_inicis_sign_key.value && parseInt(f.de_card_test.value) > 0 ){
-			pg_msg = "KG이니시스";
-		}
-	}
+    if( f.de_pg_service.value == "kcp" ){
+        if( f.de_kcp_mid.value && f.de_kcp_site_key.value && parseInt(f.de_card_test.value) > 0 ){
+            pg_msg = "NHN KCP";
+        }
+    } else if ( f.de_pg_service.value == "lg" ) {
+        if( f.cf_lg_mid.value && f.cf_lg_mert_key.value && parseInt(f.de_card_test.value) > 0 ){
+            pg_msg = "토스페이먼츠";
+        }
+    } else if ( f.de_pg_service.value == "inicis" ) {
+        if( f.de_inicis_mid.value && f.de_inicis_sign_key.value && parseInt(f.de_card_test.value) > 0 ){
+            pg_msg = "KG이니시스";
+        }
+    }
 
-	if( pg_msg ){
-		msg += "(주의!) "+pg_msg+" 결제의 결제 설정이 현재 테스트결제 로 되어 있습니다.\n쇼핑몰 운영중이면 반드시 실결제로 설정하여 운영하셔야 합니다.\n실결제로 변경하려면 결제설정 탭 -> 결제 테스트에서 실결제를 선택해 주세요.\n정말로 테스트결제로 설정하시겠습니까?";
-	}
+    if( pg_msg ){
+        msg += "(주의!) "+pg_msg+" 결제의 결제 설정이 현재 테스트결제 로 되어 있습니다.\n쇼핑몰 운영중이면 반드시 실결제로 설정하여 운영하셔야 합니다.\n실결제로 변경하려면 결제설정 탭 -> 결제 테스트에서 실결제를 선택해 주세요.\n정말로 테스트결제로 설정하시겠습니까?";
+    }
 
-	if( msg ){
-		if (confirm(msg)){
-			return true;
-		} else {
-			return false;
-		}
-	} else {
-		return true;
-	}
+    if( msg ){
+        if (confirm(msg)){
+            return true;
+        } else {
+            return false;
+        }
+    } else {
+        return true;
+    }
 }
 
 $(function() {
 
-	$(document).ready(function () {
+    $(document).ready(function () {
+        
+        $("#de_global_nhnkcp_naverpay").on("click", function(e){
+            if ( $(this).prop('checked') ) {
+                $("#de_easy_nhnkcp_naverpay").prop('checked', true);
+            }
+        });
 
-		function hash_goto_scroll(hash=""){
-			var $elem = hash ? $("#"+hash) : $('#' + window.location.hash.replace('#', ''));
-			if($elem.length) {
+        function hash_goto_scroll(hash=""){
+            var $elem = hash ? $("#"+hash) : $('#' + window.location.hash.replace('#', ''));
+            if($elem.length) {
 
-				var admin_head_height = $("#hd_top").height() + $("#container_title").height() + 30;
+                var admin_head_height = $("#hd_top").height() + $("#container_title").height() + 30;
 
-				$('html, body').animate({
-					scrollTop: ($elem.offset().top - admin_head_height) + 'px'
-				}, 500, 'swing');
-			}
-		}
+                $('html, body').animate({
+                    scrollTop: ($elem.offset().top - admin_head_height) + 'px'
+                }, 500, 'swing');
+            }
+        }
 
-		hash_goto_scroll();
-		
-		$(document).on("click", ".pg_test_conf_link", function(e){
-			e.preventDefault();
+        hash_goto_scroll();
+        
+        $(document).on("click", ".pg_test_conf_link", function(e){
+            e.preventDefault();
 
-			var str_hash = this.href.split("#")[1];
+            var str_hash = this.href.split("#")[1];
 
-			if( str_hash ){
-				hash_goto_scroll(str_hash);
-			}
-		});
-	});
+            if( str_hash ){
+                hash_goto_scroll(str_hash);
+            }
+        });
+    });
 
     //$(".pg_info_fld").hide();
     $(".pg_vbank_url").hide();
@@ -1853,19 +1882,19 @@ $(function() {
         });
     });
 
-	$(document).on("change", "#de_taxsave_use", function(e){
-		var $val = $(this).val();
-		
-		if( parseInt($val) > 0 ){
-			$("#de_taxsave_types").show();
-		} else {
-			$("#de_taxsave_types").hide();
-		}
-	});
-	
-	// 현금영수증 발급수단 중 무통장입금은 무조건 체크처리
-	document.getElementById("de_taxsave_types_account").checked = true;
-	document.getElementById("de_taxsave_types_account").disabled = true;
+    $(document).on("change", "#de_taxsave_use", function(e){
+        var $val = $(this).val();
+        
+        if( parseInt($val) > 0 ){
+            $("#de_taxsave_types").show();
+        } else {
+            $("#de_taxsave_types").hide();
+        }
+    });
+    
+    // 현금영수증 발급수단 중 무통장입금은 무조건 체크처리
+    document.getElementById("de_taxsave_types_account").checked = true;
+    document.getElementById("de_taxsave_types_account").disabled = true;
 });
 </script>
 

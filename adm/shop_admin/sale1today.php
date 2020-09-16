@@ -41,6 +41,7 @@ $result = sql_query($sql);
         <th scope="col">가상계좌</th>
         <th scope="col">계좌이체</th>
         <th scope="col">카드입금</th>
+        <th scope="col">간편결제</th>
         <th scope="col">휴대폰</th>
         <th scope="col">포인트입금</th>
         <th scope="col">주문취소</th>
@@ -58,7 +59,7 @@ $result = sql_query($sql);
             $href = '<a href="./orderlist.php?sel_field=mb_id&amp;search='.$row['mb_id'].'">';
         }
 
-        $receipt_bank = $receipt_card = $receipt_vbank = $receipt_iche = $receipt_hp = 0;
+        $receipt_bank = $receipt_card = $receipt_vbank = $receipt_iche = $receipt_easy = $receipt_hp = 0;
         if($row['od_settle_case'] == '무통장')
             $receipt_bank = $row['od_receipt_price'];
         if($row['od_settle_case'] == '가상계좌')
@@ -69,7 +70,9 @@ $result = sql_query($sql);
             $receipt_hp = $row['od_receipt_price'];
         if($row['od_settle_case'] == '신용카드')
             $receipt_card = $row['od_receipt_price'];
-
+        if(in_array($row['od_settle_case'], array('간편결제', 'KAKAOPAY', 'lpay', 'inicis_payco', 'inicis_kakaopay', '삼성페이'))) {
+            $receipt_easy = $row['od_receipt_price'];
+        }
     ?>
         <tr>
             <td class="td_alignc"><a href="./orderform.php?od_id=<?php echo $row['od_id']; ?>"><?php echo $row['od_id']; ?></a></td>
@@ -80,6 +83,7 @@ $result = sql_query($sql);
             <td class="td_numincome"><?php echo number_format($receipt_vbank); ?></td>
             <td class="td_numincome"><?php echo number_format($receipt_iche); ?></td>
             <td class="td_numincome"><?php echo number_format($receipt_card); ?></td>
+            <td class="td_numincome"><?php echo number_format($receipt_easy); ?></td>
             <td class="td_numincome"><?php echo number_format($receipt_hp); ?></td>
             <td class="td_numincome"><?php echo number_format($row['od_receipt_point']); ?></td>
             <td class="td_numcancel1"><?php echo number_format($row['od_cancel_price']); ?></td>
@@ -93,13 +97,14 @@ $result = sql_query($sql);
         $tot['receipt_vbank'] += $receipt_vbank;
         $tot['receipt_iche']  += $receipt_iche;
         $tot['receipt_card']  += $receipt_card;
+        $tot['receipt_easy']  += $receipt_easy;
         $tot['receipt_hp']    += $receipt_hp;
         $tot['receipt_point'] += $row['od_receipt_point'];
         $tot['misu']          += $row['od_misu'];
     }
 
     if ($i == 0) {
-        echo '<tr><td colspan="12" class="empty_table">자료가 없습니다</td></tr>';
+        echo '<tr><td colspan="13" class="empty_table">자료가 없습니다</td></tr>';
     }
     ?>
     </tbody>
@@ -112,6 +117,7 @@ $result = sql_query($sql);
         <td class="td_num_right"><?php echo number_format($tot['receipt_vbank']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['receipt_iche']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['receipt_card']); ?></td>
+        <td class="td_num_right"><?php echo number_format($tot['receipt_easy']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['receipt_hp']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['receipt_point']); ?></td>
         <td class="td_num_right"><?php echo number_format($tot['ordercancel']); ?></td>

@@ -201,6 +201,16 @@
                 $app_no    = $c_PayPlus->mf_get_res_data( "app_no"    ); // 승인 번호
                 $noinf     = $c_PayPlus->mf_get_res_data( "noinf"     ); // 무이자 여부 ( 'Y' : 무이자 )
                 $quota     = $c_PayPlus->mf_get_res_data( "quota"     ); // 할부 개월 수
+                $od_other_pay_type = $c_PayPlus->mf_get_res_data( "card_other_pay_type" ); // 간편결제유형
+
+                $kcp_pay_method = $c_PayPlus->mf_get_res_data( "pay_method" ); // 카카오페이 결제수단
+                // 카드 코드는 PACA, 카카오머니 코드는 PAKM
+
+                if( $kcp_pay_method == "PAKM" ){    // 카카오머니
+                    $card_mny = $kakaomny_mny = $c_PayPlus->mf_get_res_data( "kakaomny_mny" );
+                    $app_time = $app_kakaomny_time = $c_PayPlus->mf_get_res_data( "app_kakaomny_time" );
+                    $od_other_pay_type = 'NHNKCP_KAKAOMONEY';
+                }
             }
 
 	/* = -------------------------------------------------------------------------- = */
