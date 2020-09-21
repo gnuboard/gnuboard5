@@ -87,11 +87,11 @@ $sup_options = array();
 if($_POST['naverpay_form'] == 'item.php')
     $back_uri = shop_item_url($_POST['it_id'][0]);
 else if($_POST['naverpay_form'] == 'cart.php')
-    $back_uri = '/cart.php';
+    $back_uri = G5_SHOP_URL.'/cart.php';
 else
     $back_uri = '';
 
-define('NAVERPAY_BACK_URL', G5_SHOP_URL.$back_uri);
+define('NAVERPAY_BACK_URL', $back_uri);
 
 for($i=0; $i<$count; $i++) {
     $it_id = preg_replace($pattern, '', $_POST['it_id'][$i]);
