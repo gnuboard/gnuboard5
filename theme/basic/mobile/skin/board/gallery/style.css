@@ -158,7 +158,7 @@
 #bo_gall .gall_li_wr {position:relative;}
 #bo_gall .gall_li_chk {display:inline-block;position:absolute;top:10px;left:10px}
 #bo_gall .gall_li:nth-child(2n+1) {clear:both}
-#bo_gall .gall_li .gall_img img{width:100%;height:auto}
+#bo_gall .gall_li .gall_img img, #bo_gall .gall_li .gall_img video{width:100%;height:auto}
 #bo_gall .gall_li .gall_img .no_img,
 #bo_gall .gall_li .gall_notice {display:block;background:#eaeaea;color:#d0d0d0;font-size:3em;text-align:center;padding:25% 0}
 

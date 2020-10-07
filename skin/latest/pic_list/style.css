@@ -12,7 +12,7 @@
 .pic_li_lt li {border-bottom:1px solid #e5ecee;margin-bottom:10px}
 .pic_li_lt li .lt_img {display:none}
 .pic_li_lt li:first-child .lt_img {display:block;margin:0 0 10px;display:block}
-.pic_li_lt li:first-child .lt_img img {width:100%;height:auto}
+.pic_li_lt li:first-child .lt_img img, .pic_li_lt li .lt_img video {width:100%;height:auto}
 .pic_li_lt li .pic_li_tit {font-weight:bold;font-size:1.2em;line-height:20px;vertical-align:middle}
 
 .pic_li_lt li .fa-heart {color:#ff0000}

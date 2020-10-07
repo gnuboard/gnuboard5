@@ -38,7 +38,7 @@ $is_show_next_prev = ($list_count > 4) ? 1 : 0;
                 //echo $list[$i]['icon_reply']." ";
                 
                 if( $img_content ){
-                    echo "<a href=\"".$list[$i]['href']."\" class=\"lt_thumb\">".$img_content."</a> ";
+                    echo "<a href=\"".$list[$i]['href']."\" class=\"lt_thumb\">".run_replace('thumb_image_tag', $img_content, $thumb)."</a> ";
                 }
                 
                 echo "<a href=\"".$list[$i]['href']."\" class=\"lt_tit\">";
