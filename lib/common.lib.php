@@ -754,6 +754,7 @@ function get_group($gr_id, $is_cache=false)
     static $cache = array();
 
     $gr_id = preg_replace('/[^a-z0-9_]/i', '', $gr_id);
+    $cache = run_replace('get_group_db_cache', $cache, $gr_id, $is_cache);
     $key = md5($gr_id);
 
     if( $is_cache && isset($cache[$key]) ){

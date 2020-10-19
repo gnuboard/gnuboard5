@@ -70,11 +70,10 @@ function get_board_db($bo_table, $is_cache=false){
 
     static $cache = array();
 
+    $bo_table = preg_replace('/[^a-z0-9_]/i', '', $bo_table);
     $cache = run_replace('get_board_db_cache', $cache, $bo_table, $is_cache);
-
     $key = md5($bo_table);
 
-    $bo_table = preg_replace('/[^a-z0-9_]/i', '', $bo_table);
     if( $is_cache && isset($cache[$key]) ){
         return $cache[$key];
     }
