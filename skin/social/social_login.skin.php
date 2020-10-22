@@ -14,7 +14,7 @@ if( G5_SOCIAL_USE_POPUP ) {
     $self_url = G5_SOCIAL_LOGIN_URL.'/popup.php';
 }
 
-add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css">', 10);
+add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css?ver='.G5_CSS_VER.'">', 10);
 ?>
 
 <div id="sns_login" class="login-sns sns-wrap-32 sns-wrap-over">

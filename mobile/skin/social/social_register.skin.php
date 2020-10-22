@@ -15,7 +15,7 @@ if( G5_SOCIAL_USE_POPUP ) {
 }
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css">', 10);
+add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css?ver='.G5_CSS_VER.'">', 10);
 ?>
 <div>
     <div class="login-sns sns-wrap-32 sns-wrap-over" id="sns_register">
