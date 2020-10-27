@@ -221,7 +221,7 @@ ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 //------------------------------------------------------------------------------
 // 기본환경설정
 // 기본적으로 사용하는 필드만 얻은 후 상황에 따라 필드를 추가로 얻음
-$config = get_config();
+$config = get_config(true);
 
 // 본인인증 또는 쇼핑몰 사용시에만 secure; SameSite=None 로 설정합니다.
 if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) ) {
@@ -442,7 +442,7 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
 $write = array();
 $write_table = "";
 if ($bo_table) {
-    $board = get_board_db($bo_table);
+    $board = get_board_db($bo_table, true);
     if ($board['bo_table']) {
         set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
@@ -465,7 +465,7 @@ if ($bo_table) {
 }
 
 if ($gr_id && !is_array($gr_id)) {
-    $group = get_group($gr_id);
+    $group = get_group($gr_id, true);
 }
 
 if ($config['cf_editor']) {

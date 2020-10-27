@@ -611,7 +611,7 @@ function html_purifier($html)
     //유튜브, 비메오 전체화면 가능하게 하기
     $config->set('Filter.Custom', array(new HTMLPurifier_Filter_Iframevideo()));
     $purifier = new HTMLPurifier($config);
-    return $purifier->purify($html);
+    return run_replace('html_purifier_result', $purifier->purify($html), $purifier, $html);
 }
 
 
@@ -754,6 +754,7 @@ function get_group($gr_id, $is_cache=false)
     static $cache = array();
 
     $gr_id = preg_replace('/[^a-z0-9_]/i', '', $gr_id);
+    $cache = run_replace('get_group_db_cache', $cache, $gr_id, $is_cache);
     $key = md5($gr_id);
 
     if( $is_cache && isset($cache[$key]) ){
@@ -1403,7 +1404,8 @@ function view_file_link($file, $width, $height, $content='')
         $attr = '';
 
     if (preg_match("/\.({$config['cf_image_extension']})$/i", $file)) {
-        $img = '<a href="'.G5_BBS_URL.'/view_image.php?bo_table='.$board['bo_table'].'&amp;fn='.urlencode($file).'" target="_blank" class="view_image">';
+        $attr_href = run_replace('thumb_view_image_href', G5_BBS_URL.'/view_image.php?bo_table='.$board['bo_table'].'&amp;fn='.urlencode($file), $file, $board['bo_table'], $width, $height, $content);
+        $img = '<a href="'.$attr_href.'" target="_blank" class="view_image">';
         $img .= '<img src="'.G5_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'" '.$attr.'>';
         $img .= '</a>';
 
@@ -2318,6 +2320,8 @@ function delete_editor_thumbnail($contents)
 {
     if(!$contents)
         return;
+    
+    run_event('delete_editor_thumbnail_before', $contents);
 
     // $contents 중 img 태그 추출
     $matchs = get_editor_image($contents);
@@ -2338,6 +2342,8 @@ function delete_editor_thumbnail($contents)
                 unlink($filename);
         }
     }
+
+    run_event('delete_editor_thumbnail_after', $contents, $matchs);
 }
 
 // 1:1문의 첨부파일 썸네일 삭제

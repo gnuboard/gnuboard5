@@ -100,7 +100,8 @@ if(preg_match("/[\xA1-\xFE][\xA1-\xFE]/", $file['bf_source'])){
 }
 */
 
-$original = urlencode($file['bf_source']);
+//$original = urlencode($file['bf_source']);
+$original = rawurlencode($file['bf_source']);
 
 @include_once($board_skin_path.'/download.tail.skin.php');
 
@@ -114,7 +115,8 @@ if(preg_match("/msie/i", $_SERVER['HTTP_USER_AGENT']) && preg_match("/5\.5/", $_
 } else if (preg_match("/Firefox/i", $_SERVER['HTTP_USER_AGENT'])){
     header("content-type: file/unknown");
     header("content-length: ".filesize($filepath));
-    header("content-disposition: attachment; filename=\"".basename($file['bf_source'])."\"");
+    //header("content-disposition: attachment; filename=\"".basename($file['bf_source'])."\"");
+    header("content-disposition: attachment; filename=\"".$original."\"");
     header("content-description: php generated data");
 } else {
     header("content-type: file/unknown");

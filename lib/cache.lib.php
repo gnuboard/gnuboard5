@@ -52,10 +52,10 @@ function g5_set_cache($key, $save_data, $ttl = null){
     }
 }
 
-function g5_get_cache($key){
+function g5_get_cache($key, $expired_time=0){
 
     if( $cache = get_cachemanage_instance() ){
-        return $cache->get($key);
+        return $cache->get($key, $expired_time);
     }
     
     return false;

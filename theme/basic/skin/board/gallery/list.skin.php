@@ -120,7 +120,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                                 $img_content = '<span class="no_image">no image</span>';
                             }
 
-                            echo $img_content;
+                            echo run_replace('thumb_image_tag', $img_content, $thumb);
                         }
                          ?>
                         </a>
