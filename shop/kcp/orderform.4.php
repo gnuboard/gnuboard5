@@ -5,11 +5,9 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <!-- 에스크로 안내 시작 { -->
 <section id="sod_frm_escrow">
     <h2>에스크로 안내</h2>
-    <form name="escrow_foot" method="post" action="http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp">
-    <input type="hidden" name="site_cd" value="<?php echo $default['de_kcp_mid']; ?>">
     <table>
     <tr>
-        <td><img src="<?php echo G5_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></td>
+        <td><a href="http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp?site_cd=<?php echo $default['de_kcp_mid']; ?>" class="nhnkcp_escrow_popup" data-sitecd="<?php echo $default['de_kcp_mid']; ?>" target="_blank"><img src="<?php echo G5_SHOP_URL; ?>/img/marks_escrow/escrow_foot.gif" width="290" height="92" border="0" usemap="#Map"></a></td>
     </tr>
     <tr>
         <td>
@@ -29,20 +27,36 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     <map name="Map" id="Map">
     <area shape="rect" coords="5,62,74,83" href="javascript:escrow_foot_check()" alt="가입사실확인">
     </map>
-    </form>
 </section>
 
 <script>
+jQuery("#sod_frm_escrow .nhnkcp_escrow_popup").on("click", function(e){
+    e.preventDefault();
+    escrow_foot_check();
+});
+
 function escrow_foot_check()
 {
     var status  = "width=500 height=450 menubar=no,scrollbars=no,resizable=no,status=no";
-    var obj     = window.open('', 'escrow_foot_pop', status);
+    var obj     = window.open("", "escrow_foot_pop", status);
 
-    document.escrow_foot.method = "post";
-    document.escrow_foot.target = "escrow_foot_pop";
-    document.escrow_foot.action = "http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp";
+    var newForm = jQuery("<form>", {
+        "id": "nhnkcp_escrow_form_popup",
+        "action": "http://admin.kcp.co.kr/Modules/escrow/kcp_pop.jsp?site_cd=SR001",
+        "target": "escrow_foot_pop",
+        "method": "post"
+    }).append(jQuery("<input>", {
+        "name": "site_cd",
+        "value": jQuery("#sod_frm_escrow .nhnkcp_escrow_popup").attr("data-sitecd"),
+        "type": "hidden"
+    }));
 
-    document.escrow_foot.submit();
+    if( ! jQuery("#nhnkcp_escrow_form_popup").length ){
+        newForm.hide().appendTo("body").submit();
+    } else {
+        jQuery("#nhnkcp_escrow_form_popup").submit();
+    }
+
 }
 </script>
 <!-- } 에스크로 안내 끝 -->
