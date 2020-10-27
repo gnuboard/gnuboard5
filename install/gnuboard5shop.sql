@@ -665,6 +665,7 @@ CREATE TABLE IF NOT EXISTS `g5_shop_order` (
   `od_status` varchar(255) NOT NULL DEFAULT '',  
   `od_hope_date` date NOT NULL DEFAULT '0000-00-00',  
   `od_settle_case` varchar(255) NOT NULL DEFAULT '',
+  `od_other_pay_type` varchar(100) NOT NULL DEFAULT '',
   `od_test` tinyint(4) NOT NULL DEFAULT '0',
   `od_mobile` tinyint(4) NOT NULL DEFAULT '0',
   `od_pg` varchar(255) NOT NULL DEFAULT '',

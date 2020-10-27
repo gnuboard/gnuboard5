@@ -27,7 +27,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
                 $thumb['alt'] = '이미지가 없습니다.';
             }
             $img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" >';
-            $img_link_html = '<a href="'.$list[$i]['href'].'" class="lt_img" >'.$img_content.'</a>';
+            $img_link_html = '<a href="'.$list[$i]['href'].'" class="lt_img" >'.run_replace('thumb_image_tag', $img_content, $thumb).'</a>';
         }
     ?>
         <li>

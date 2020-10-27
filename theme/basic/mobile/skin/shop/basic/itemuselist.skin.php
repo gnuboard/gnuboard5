@@ -81,7 +81,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
 	            			<div class="review_summ">
 	            				<?php echo get_itemuselist_thumbnail($row['it_id'], $row['is_content'], 50, 50); ?>
 	            				<p>
-	            					<span>상품명입니다.</span>
+	            					<span><?php echo get_text($row['is_subject']); ?></span>
 	            					<span class="sound_only">평가점수</span><img src="<?php echo G5_URL; ?>/shop/img/s_star<?php echo $star; ?>.png" alt="별<?php echo $star; ?>개" width="80">
 	            				</p>
 	            			</div>

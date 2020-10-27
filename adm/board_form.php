@@ -77,8 +77,14 @@ if (!isset($board['bo_mobile_subject'])) {
 }
 
 if (!isset($board['bo_use_captcha'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_captcha` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_sns` ");
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_captcha` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_sns` ", false);
 }
+
+if (!isset($board['bo_select_editor'])) {
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_select_editor` VARCHAR(50) NOT NULL DEFAULT '' AFTER `bo_use_dhtml_editor` ", false);
+}
+
+run_event('adm_board_form_before', $board, $w);
 
 $required = "";
 $readonly = "";
@@ -480,6 +486,27 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_grp_use_dhtml_editor">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_dhtml_editor" value="1" id="chk_all_use_dhtml_editor">
                 <label for="chk_all_use_dhtml_editor">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="bo_select_editor">게시판 에디터 선택</label></th>
+            <td>
+                <?php echo help('게시판에 사용할 에디터를 설정합니다. 스킨에 따라 적용되지 않을 수 있습니다.') ?>
+                <select name="bo_select_editor" id="bo_select_editor">
+                <?php
+                $arr = get_skin_dir('', G5_EDITOR_PATH);
+                for ($i=0; $i<count($arr); $i++) {
+                    if ($i == 0) echo "<option value=\"\">기본환경설정의 에디터 사용</option>";
+                    echo "<option value=\"".$arr[$i]."\"".get_selected($board['bo_select_editor'], $arr[$i]).">".$arr[$i]."</option>\n";
+                }
+                ?>
+                </select>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_grp_select_editor" value="1" id="chk_grp_select_editor">
+                <label for="chk_grp_select_editor">그룹적용</label>
+                <input type="checkbox" name="chk_all_select_editor" value="1" id="chk_all_select_editor">
+                <label for="chk_all_select_editor">전체적용</label>
             </td>
         </tr>
         <tr>

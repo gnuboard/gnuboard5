@@ -198,11 +198,13 @@ a.btn_submit{background:#ff4081;color:#fff}
 .btn_frmline{display:inline-block;background:#9eacc6;color:#fff;height:35px;border:0;border-radius:5px;padding:0 10px}
 a.btn_frmline{display:inline-block;background:#9eacc6;color:#fff;height:35px;line-height:33px;border-radius:5px;padding:0 10px;text-decoration:none !important}
 .btn_ov01{display:inline-block;line-height:30px;height:30px;font-size:0.92em;vertical-align:top}
-.btn_ov01:after{display:block;visibility:hidden;clear :both;content:""}
 .btn_ov01 .ov_txt{float:left;background:#9eacc6;color:#fff;border-radius:5px 0 0 5px;padding:0 5px}
 .btn_ov01 .ov_num{float:left;background:#ededed;color:#666;border-radius:0 5px 5px 0;padding:0 5px}
 a.btn_ov02,a.ov_listall{display:inline-block;line-height:30px;height:30px;font-size:0.92em;background:#565e8c;color:#fff;vertical-align:top;border-radius:5px;padding:0 7px }
 a.btn_ov02:hover,a.ov_listall:hover{background:#3f51b5}
+
+.local_ov01.local_ov [data-tooltip-text]:hover {position:relative}
+.local_ov01.local_ov [data-tooltip-text]:hover:after{line-height:20px;background-color:#000;background-color:rgba(0,0,0,0.8);-webkit-box-shadow:0 0 3px 1px rgba(50,50,50,0.4);-moz-box-shadow:0 0 3px 1px rgba(50,50,50,0.4);box-shadow:0 0 3px 1px rgba(50,50,50,0.4);-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;color:#FFF;font-size:11px;content:attr(data-tooltip-text);white-space: pre;margin-bottom:10px;top:130%;left:0;padding:7px 12px;position:absolute;max-width:500px;word-wrap:break-word;z-index:9999}
 
 /*form*/
 .sound_only {display:inline-block !important;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;width:1px !important;height:1px !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}

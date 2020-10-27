@@ -40,10 +40,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     /* =   01. 지불 요청 정보 설정                                                  = */
     /* = -------------------------------------------------------------------------- = */
 	$req_tx         = $_POST[ "req_tx"         ]; // 요청 종류
-	$tran_cd        = $_POST[ "tran_cd"        ]; // 처리 종류
+	$tran_cd        = preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "tran_cd"        ]); // 처리 종류
 	/* = -------------------------------------------------------------------------- = */
 	$cust_ip        = getenv( "REMOTE_ADDR"    ); // 요청 IP
-	$ordr_idxx      = $_POST[ "ordr_idxx"      ]; // 쇼핑몰 주문번호
+	$ordr_idxx      = preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "ordr_idxx"      ]); // 쇼핑몰 주문번호
 	$good_name      = addslashes($_POST[ "good_name"]); // 상품명
 	$good_mny       = $_POST[ "good_mny"       ]; // 결제 총금액
 	/* = -------------------------------------------------------------------------- = */
@@ -269,6 +269,16 @@ if ( $req_tx == "pay" )
             $card_bin_type_01 = $c_PayPlus->mf_get_res_data( "card_bin_type_01" ); // 카드구분1
             $card_bin_type_02 = $c_PayPlus->mf_get_res_data( "card_bin_type_02" ); // 카드구분2
             $card_mny = $c_PayPlus->mf_get_res_data( "card_mny" ); // 카드결제금액
+            $od_other_pay_type = $c_PayPlus->mf_get_res_data( "card_other_pay_type" ); // 간편결제유형
+
+            $kcp_pay_method = $c_PayPlus->mf_get_res_data( "pay_method" ); // 카카오페이 결제수단
+            // 카드 코드는 PACA, 카카오머니 코드는 PAKM
+
+            if( $kcp_pay_method == "PAKM" ){    // 카카오머니
+                $card_mny = $kakaomny_mny = $c_PayPlus->mf_get_res_data( "kakaomny_mny" );
+                $app_time = $app_kakaomny_time = $c_PayPlus->mf_get_res_data( "app_kakaomny_time" );
+                $od_other_pay_type = 'NHNKCP_KAKAOMONEY';
+            }
 
             /* = -------------------------------------------------------------- = */
             /* =   05-1.1. 복합결제(포인트+신용카드) 승인 결과 처리               = */

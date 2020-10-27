@@ -35,6 +35,16 @@ if ($_POST['act_button'] == "선택수정") {
         $p_it_use = is_array($_POST['it_use']) ? strip_tags($_POST['it_use'][$k]) : '';
         $p_it_soldout = is_array($_POST['it_soldout']) ? strip_tags($_POST['it_soldout'][$k]) : '';
         $p_it_order = is_array($_POST['it_order']) ? strip_tags($_POST['it_order'][$k]) : '';
+        $p_it_id = preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$k]);
+
+        if ($is_admin != 'super') {     // 최고관리자가 아니면 체크
+            $sql = "select a.it_id, b.ca_mb_id from {$g5['g5_shop_item_table']} a , {$g5['g5_shop_category_table']} b where (a.ca_id = b.ca_id) and a.it_id = '$p_it_id'";
+            $checks = sql_fetch($sql);
+
+            if( ! $checks['ca_mb_id'] || $checks['ca_mb_id'] !== $member['mb_id'] ){
+                continue;
+            }
+        }
 
         $sql = "update {$g5['g5_shop_item_table']}
                    set ca_id          = '".sql_real_escape_string($p_ca_id)."',
@@ -50,11 +60,11 @@ if ($_POST['act_button'] == "선택수정") {
                        it_soldout     = '".sql_real_escape_string($p_it_soldout)."',
                        it_order       = '".sql_real_escape_string($p_it_order)."',
                        it_update_time = '".G5_TIME_YMDHIS."'
-                 where it_id   = '".preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$k])."' ";
+                 where it_id   = '".$p_it_id."' ";
 
         sql_query($sql);
 
-		if( function_exists('shop_seo_title_update') ) shop_seo_title_update(preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$k]), true);
+		if( function_exists('shop_seo_title_update') ) shop_seo_title_update($p_it_id, true);
     }
 } else if ($_POST['act_button'] == "선택삭제") {
 

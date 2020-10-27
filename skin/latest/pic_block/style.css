@@ -12,7 +12,7 @@
 .pic_lt li {float:left;width:25%;padding:0 10px}
 .pic_lt li.gallery_li:nth-child(4n+1) {clear: both!important}
 .pic_lt li .lt_img {margin:5px 0;display:block}
-.pic_lt li .lt_img img {width:100%;height:auto}
+.pic_lt li .lt_img img, .pic_lt li .lt_img video {width:100%;height:auto}
 .pic_lt li a:hover {color:#a22121}
 .pic_lt li .fa-heart {color:#ff0000}
 .pic_lt li .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}

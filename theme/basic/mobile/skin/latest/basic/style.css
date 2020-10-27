@@ -9,7 +9,7 @@
 .lt ul li:after {display:block;visibility:hidden;clear:both;content:""}
 .lt ul li:hover a.lt_tit {color:#3a8afd}
 .lt .lt_thumb {display:inline-block;float:left;margin-right:10px}
-.lt .lt_thumb img {width:138px;height:auto;overflow:hidden}
+.lt .lt_thumb img, .lt .lt_thumb video {width:138px !important;height:auto;overflow:hidden}
 .lt .lt_tit {display:block;font-size:1.2em;font-weight:bold;max-height:60px;overflow:hidden;padding-bottom:10px}
 .lt .lt_info {display:inline-block;position:relative;line-height:20px;color:#828282;font-size:0.925em;vertical-align:top}
 .lt .lt_date {color:#828282}

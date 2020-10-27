@@ -110,6 +110,8 @@ function get_view_thumbnail($contents, $thumb_width=0)
     for($i=0; $i<count($matches[1]); $i++) {
 
         $img = $matches[1][$i];
+        $img_tag = isset($matches[0][$i]) ? $matches[0][$i] : '';
+
         preg_match("/src=[\'\"]?([^>\'\"]+[^>\'\"]+)/i", $img, $m);
         $src = $m[1];
         preg_match("/style=[\"\']?([^\"\'>]+)/i", $img, $m);
@@ -161,15 +163,21 @@ function get_view_thumbnail($contents, $thumb_width=0)
                 }
             }
 
-            // 원본 width가 thumb_width보다 작다면
-            if($size[0] <= $thumb_width)
-                continue;
-
             // Animated GIF 체크
             $is_animated = false;
             if($size[2] == 1) {
                 $is_animated = is_animated_gif($srcfile);
+
+                if($replace_content = run_replace('thumbnail_is_animated_gif_content', '', $contents, $srcfile, $is_animated, $img_tag, $data_path, $size)){
+
+                    $contents = $replace_content;
+                    continue;
+                }
             }
+
+            // 원본 width가 thumb_width보다 작다면
+            if($size[0] <= $thumb_width)
+                continue;
 
             // 썸네일 높이
             $thumb_height = round(($thumb_width * $size[1]) / $size[0]);
@@ -190,12 +198,12 @@ function get_view_thumbnail($contents, $thumb_width=0)
             } else {
                 $thumb_tag = '<img src="'.G5_URL.str_replace($filename, $thumb_file, $data_path).'" alt="'.$alt.'"/>';
             }
-
+            
             // $img_tag에 editor 경로가 있으면 원본보기 링크 추가
-            $img_tag = $matches[0][$i];
             if(strpos($img_tag, G5_DATA_DIR.'/'.G5_EDITOR_DIR) && preg_match("/\.({$config['cf_image_extension']})$/i", $filename)) {
                 $imgurl = str_replace(G5_URL, "", $src);
-                $thumb_tag = '<a href="'.G5_BBS_URL.'/view_image.php?fn='.urlencode($imgurl).'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
+                $attr_href = run_replace('thumb_view_image_href', G5_BBS_URL.'/view_image.php?fn='.urlencode($imgurl), $filename, '', $width, $height, $alt);
+                $thumb_tag = '<a href="'.$attr_href.'" target="_blank" class="view_image">'.$thumb_tag.'</a>';
             }
 
             $contents = str_replace($img_tag, $thumb_tag, $contents);
@@ -687,8 +695,19 @@ and the roundoff errors in the Gaussian blur process, are welcome.
 }
 
 function is_animated_gif($filename) {
-    if(!($fh = @fopen($filename, 'rb')))
+
+    static $cache = array();
+    $key = md5($filename);
+
+    if( isset($cache[$key]) ){
+        return $cache[$key];
+    }
+
+    if(!($fh = @fopen($filename, 'rb'))){
+        $cache[$key] = false;
         return false;
+    }
+
     $count = 0;
     // 출처 : http://www.php.net/manual/en/function.imagecreatefromgif.php#104473
     // an animated gif contains multiple "frames", with each frame having a
@@ -705,6 +724,11 @@ function is_animated_gif($filename) {
    }
 
     fclose($fh);
-    return $count > 1;
+
+    $cache[$key] = ($count > 1) ? true : false;
+
+    run_event('is_animated_gif_after', $filename, $cache[$key]);
+
+    return $cache[$key];
 }
 ?>

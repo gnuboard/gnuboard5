@@ -336,10 +336,6 @@ if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) 
 
 define('G5_HTTP_BBS_URL',  https_url(G5_BBS_DIR, false));
 define('G5_HTTPS_BBS_URL', https_url(G5_BBS_DIR, true));
-if ($config['cf_editor'])
-    define('G5_EDITOR_LIB', G5_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
-else
-    define('G5_EDITOR_LIB', G5_LIB_PATH."/editor.lib.php");
 
 define('G5_CAPTCHA_DIR',    !empty($config['cf_captcha']) ? $config['cf_captcha'] : 'kcaptcha');
 define('G5_CAPTCHA_URL',    G5_PLUGIN_URL.'/'.G5_CAPTCHA_DIR);
@@ -537,12 +533,22 @@ if ($bo_table) {
             }
         }
     }
+    
+    // 게시판에서 
+    if (isset($board['bo_select_editor']) && $board['bo_select_editor']){
+        $config['cf_editor'] = $board['bo_select_editor'];
+    }
 }
 
 if ($gr_id && !is_array($gr_id)) {
     $group = get_group($gr_id);
 }
 
+if ($config['cf_editor']) {
+    define('G5_EDITOR_LIB', G5_EDITOR_PATH."/{$config['cf_editor']}/editor.lib.php");
+} else {
+    define('G5_EDITOR_LIB', G5_LIB_PATH."/editor.lib.php");
+}
 
 // 회원, 비회원 구분
 $is_member = $is_guest = false;
@@ -735,7 +741,6 @@ include_once(G5_BBS_PATH.'/visit_insert.inc.php');
 
 // 일정 기간이 지난 DB 데이터 삭제 및 최적화
 include_once(G5_BBS_PATH.'/db_table.optimize.php');
-
 
 // common.php 파일을 수정할 필요가 없도록 확장합니다.
 $extend_file = array();

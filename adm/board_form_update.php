@@ -114,6 +114,7 @@ $sql_common = " gr_id               = '{$gr_id}',
                 bo_use_file_content = '{$_POST['bo_use_file_content']}',
                 bo_use_secret       = '{$_POST['bo_use_secret']}',
                 bo_use_dhtml_editor = '{$_POST['bo_use_dhtml_editor']}',
+                bo_select_editor    = '{$_POST['bo_select_editor']}',
                 bo_use_rss_view     = '{$_POST['bo_use_rss_view']}',
                 bo_use_good         = '{$_POST['bo_use_good']}',
                 bo_use_nogood       = '{$_POST['bo_use_nogood']}',
@@ -301,6 +302,7 @@ if (is_checked('chk_grp_use_sideview'))         $grp_fields .= " , bo_use_sidevi
 if (is_checked('chk_grp_use_file_content'))     $grp_fields .= " , bo_use_file_content = '{$bo_use_file_content}' ";
 if (is_checked('chk_grp_use_secret'))           $grp_fields .= " , bo_use_secret = '{$bo_use_secret}' ";
 if (is_checked('chk_grp_use_dhtml_editor'))     $grp_fields .= " , bo_use_dhtml_editor = '{$bo_use_dhtml_editor}' ";
+if (is_checked('chk_grp_select_editor'))        $grp_fields .= " , bo_select_editor = '{$bo_select_editor}' ";
 if (is_checked('chk_grp_use_rss_view'))         $grp_fields .= " , bo_use_rss_view = '{$bo_use_rss_view}' ";
 if (is_checked('chk_grp_use_good'))             $grp_fields .= " , bo_use_good = '{$bo_use_good}' ";
 if (is_checked('chk_grp_use_nogood'))           $grp_fields .= " , bo_use_nogood = '{$bo_use_nogood}' ";
@@ -390,6 +392,7 @@ if (is_checked('chk_all_use_sideview'))         $all_fields .= " , bo_use_sidevi
 if (is_checked('chk_all_use_file_content'))     $all_fields .= " , bo_use_file_content = '{$bo_use_file_content}' ";
 if (is_checked('chk_all_use_secret'))           $all_fields .= " , bo_use_secret = '{$bo_use_secret}' ";
 if (is_checked('chk_all_use_dhtml_editor'))     $all_fields .= " , bo_use_dhtml_editor = '{$bo_use_dhtml_editor}' ";
+if (is_checked('chk_all_select_editor'))        $all_fields .= " , bo_select_editor = '{$bo_select_editor}' ";
 if (is_checked('chk_all_use_rss_view'))         $all_fields .= " , bo_use_rss_view = '{$bo_use_rss_view}' ";
 if (is_checked('chk_all_use_good'))             $all_fields .= " , bo_use_good = '{$bo_use_good}' ";
 if (is_checked('chk_all_use_nogood'))           $all_fields .= " , bo_use_nogood = '{$bo_use_nogood}' ";

@@ -1,5 +1,10 @@
 <?php
     include_once('./_common.php');
+
+@header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
+@header('Pragma: no-cache'); // HTTP 1.0.
+@header('Expires: 0'); // Proxies.
+
     /* ============================================================================== */
     /* =   PAGE : 결제 요청 PAGE                                                    = */
     /* = -------------------------------------------------------------------------- = */
@@ -63,6 +68,8 @@
     $comm_free_mny   = $_POST["comm_free_mny"   ]; // 비과세금액
 
     $payco_direct    = $_POST["payco_direct"    ]; // PAYCO 결제창 호출
+    $naverpay_direct    = $_POST["naverpay_direct"]; // NAVERPAY 결제창 호출
+    $kakaopay_direct    = $_POST["kakaopay_direct"]; // KAKAOPAY 결제창 호출
 
 	/*
      * 기타 파라메터 추가 부분 - Start -
@@ -82,6 +89,9 @@
         $rcvr_add1 = iconv('euc-kr', 'utf-8', $rcvr_add1);
         $rcvr_add2 = iconv('euc-kr', 'utf-8', $rcvr_add2);
     }
+    
+    // 에스크로 변수 ( 간편결제의 경우 N 으로 변경 )
+    $escw_used = 'Y';
 
     switch($settle_method)
     {
@@ -104,6 +114,7 @@
         case '간편결제':
             $pay_method = 'CARD';
             $ActionResult = 'card';
+            $escw_used = 'N';
             break;
         default:
             $pay_method = '';
@@ -155,8 +166,11 @@
 
         layer_cont_obj.style.display = "none";
         layer_receipt_obj.style.display = "block";
-
-        v_frm.target = "frm_receipt";
+        
+        // 네이버페이면 반드시 페이지전환 방식이어야 하며, 그 외에는 iframe 방식으로 한다.
+        if(!(typeof v_frm.naverpay_direct !== "undefined" && v_frm.naverpay_direct.value === 1)) {      // 네이버페이가 아니면
+            v_frm.target = "frm_receipt";
+        }
         v_frm.action = PayUrl;
 
 		if(v_frm.Ret_URL.value == "")
@@ -252,7 +266,15 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 //echo '<input type="hidden" name="ipgm_date" value="'.$ipgm_date.'">';
 ?>
 
+<?php if($payco_direct){ ?>
 <input type="hidden" name="payco_direct"   value="<?php echo $payco_direct; ?>">      <!-- PAYCO 결제창 호출 -->
+<?php } ?>
+<?php if($naverpay_direct){ ?>
+<input type="hidden" name="naverpay_direct"   value="<?php echo $naverpay_direct; ?>">      <!-- 네이버페이 결제창 호출 -->
+<?php } ?>
+<?php if($kakaopay_direct){ ?>
+<input type="hidden" name="kakaopay_direct"   value="<?php echo $kakaopay_direct; ?>">      <!-- 카카오페이 결제창 호출 -->
+<?php } ?>
 
 <!-- 필수 사항 -->
 
@@ -278,7 +300,7 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <!-- 인증시 필요한 파라미터(변경불가)-->
 <input type="hidden" name="ActionResult" value="<?php echo $ActionResult; ?>">
 <!-- 에스크로 사용유무 에스크로 사용 업체(가상계좌만 해당)는 Y로 세팅 해주시기 바랍니다.-->
-<input type="hidden" name="escw_used"  value="Y">
+<input type="hidden" name="escw_used"  value="<?php echo $escw_used; ?>">
 <!-- 에스크로 결제처리모드 -->
 <input type="hidden" name="pay_mod"   value="<?php echo ($default['de_escrow_use']?'O':'N'); ?>">
 <!-- 수취인이름 -->

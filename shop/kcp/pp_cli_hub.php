@@ -62,7 +62,7 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
     $req_tx     = $_POST[ "req_tx"     ];                             // 요청 종류
     $trad_time  = $_POST[ "trad_time"  ];                             // 원거래 시각
     /* = -------------------------------------------------------------------------- = */
-    $ordr_idxx  = $_POST[ "ordr_idxx"  ];                             // 주문 번호
+    $ordr_idxx  = preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "ordr_idxx"  ]);                             // 주문 번호
     $buyr_name  = $_POST[ "buyr_name"  ];                             // 주문자 이름
     $buyr_tel1  = $_POST[ "buyr_tel1"  ];                             // 주문자 전화번호
     $buyr_mail  = $_POST[ "buyr_mail"  ];                             // 주문자 E-Mail
@@ -95,6 +95,7 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 
     $buyr_name = iconv("utf-8", "cp949", $buyr_name);
     $good_name = iconv("utf-8", "cp949", $good_name);
+    $tx_cd = '';
 
     /* ============================================================================== */
     /* =   02. 인스턴스 생성 및 초기화                                              = */

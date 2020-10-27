@@ -19,10 +19,8 @@ include_once('./admin.head.php');
 
         <ul>
             <li><a href="http://sir.kr/main/service/p_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_01.jpg" alt="KCP 신용카드 전자결제 신청하기"></a></li>
-            <li ><a href="http://sir.kr/main/service/lg_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_02.jpg" alt="LG유플러스 신용카드 전자결제 신청하기"></a></li>
+            <li ><a href="http://sir.kr/main/service/lg_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_02.jpg?v2" alt="토스페이먼츠 전자결제 신청하기"></a></li>
             <li class="last"><a href="http://sir.kr/main/service/inicis_pg.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_06.jpg" alt="KG 이니시스 전자결제 신청하기"></a></li>
-
-
         </ul>
     </div>
     <div class="sevice_1 svc_phone">
@@ -31,7 +29,7 @@ include_once('./admin.head.php');
 
         <ul>
             <li><a href="http://sir.kr/main/service/p_cert.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_01.jpg" alt="KCP 휴대폰 본인확인 신청하기"></a></li>
-            <li><a href="http://sir.kr/main/service/lg_cert.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_02.jpg" alt="유플러스 휴대폰 본인확인 신청하기"></a></li>
+            <li><a href="http://sir.kr/main/service/lg_cert.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_02.jpg?v2" alt="유플러스 휴대폰 본인확인 신청하기"></a></li>
             <li class="last"><a href="http://sir.kr/main/service/b_cert.php" target="_blank"><img src="<?php echo G5_ADMIN_URL ?>/img/svc_btn_03.jpg" alt="오케이네임 휴대폰대체인증 신청하기"></a></li>
 
         </ul>

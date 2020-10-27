@@ -312,23 +312,6 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     // 결제방법
     $s_receipt_way = check_pay_name_replace($od['od_settle_case'], $od);
 
-    if($od['od_settle_case'] == '간편결제') {
-        switch($od['od_pg']) {
-            case 'lg':
-                $s_receipt_way = 'PAYNOW';
-                break;
-            case 'inicis':
-                $s_receipt_way = 'KPAY';
-                break;
-            case 'kcp':
-                $s_receipt_way = 'PAYCO';
-                break;
-            default:
-                $s_receipt_way = check_pay_name_replace($row['od_settle_case'], $od);
-                break;
-        }
-    }
-
     if ($od['od_receipt_point'] > 0)
         $s_receipt_way .= "+포인트";
     ?>

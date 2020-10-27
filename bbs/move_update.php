@@ -27,6 +27,8 @@ $sql = " select distinct wr_num from $write_table where wr_id in ({$wr_id_list})
 $result = sql_query($sql);
 while ($row = sql_fetch_array($result))
 {
+    $save[$cnt]['wr_contents'] = array();
+
     $wr_num = $row['wr_num'];
     for ($i=0; $i<count($_POST['chk_bo_table']); $i++)
     {
@@ -52,6 +54,8 @@ while ($row = sql_fetch_array($result))
         $result2 = sql_query($sql2);
         while ($row2 = sql_fetch_array($result2))
         {
+            $save[$cnt]['wr_contents'][] = $row2['wr_content'];
+
             $nick = cut_str($member['mb_nick'], $config['cf_cut_name']);
             if (!$row2['wr_is_comment'] && $config['cf_use_copy_log']) {
                 if(strstr($row2['wr_option'], 'html')) {
@@ -210,15 +214,19 @@ if ($sw == 'move')
     {
         if( isset($save[$i]['bf_file']) && $save[$i]['bf_file'] ){
             for ($k=0; $k<count($save[$i]['bf_file']); $k++) {
-                $del_file = $save[$i]['bf_file'][$k];
+                $del_file = run_replace('delete_file_path', clean_relative_paths($save[$i]['bf_file'][$k]), $save[$i]);
 
                 if ( is_file($del_file) && file_exists($del_file) ){
                     @unlink($del_file);
                 }
-
+                
                 // 썸네일 파일 삭제, 먼지손 님 코드 제안
                 delete_board_thumbnail($bo_table, basename($save[$i]['bf_file'][$k]));
             }
+        }
+        
+        for ($k=0; $k<count($save[$i]['wr_contents']); $k++){
+            delete_editor_thumbnail($save[$i]['wr_contents'][$k]);
         }
 
         sql_query(" delete from $write_table where wr_parent = '{$save[$i]['wr_id']}' ");

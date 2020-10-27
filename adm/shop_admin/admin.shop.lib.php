@@ -136,6 +136,14 @@ function pg_setting_check($is_print=false){
 		}
 	}
 
+    if( function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') ){
+        if(!extension_loaded('soap') || !class_exists('SOAPClient')) {
+            $msg .= '<script>'.PHP_EOL;
+            $msg .= 'alert("PHP SOAP 확장모듈이 설치되어 있지 않습니다.\n모바일 쇼핑몰 결제 때 사용되오니 SOAP 확장 모듈을 설치하여 주십시오.\nNHN_KCP (네이버페이) 모바일결제가 되지 않습니다.");'.PHP_EOL;
+            $msg .= '</script>'.PHP_EOL;
+        }
+    }
+
 	if( $pg_msg ){
 		$pg_test_conf_link = G5_ADMIN_URL.'/shop_admin/configform.php#de_card_test1';
 		$msg .= '<div class="admin_pg_notice od_test_caution">(주의!) '.$pg_msg.' 결제의 결제 설정이 현재 테스트결제 로 되어 있습니다.<br>테스트결제시 실제 결제가 되지 않으므로, 쇼핑몰 운영중이면 반드시 실결제로 설정하여 운영하셔야 합니다.<br>아래 링크를 클릭하여 실결제로 설정하여 운영해 주세요.<br><a href="'.$pg_test_conf_link.'" class="pg_test_conf_link">'.$pg_test_conf_link.'</a></div>';

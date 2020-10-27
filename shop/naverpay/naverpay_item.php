@@ -56,7 +56,7 @@ foreach($itemIds as $it_id) {
 ?>
 <item id="<?php echo $id; ?>">
 <?php if($it['ec_mall_pid']) { ?>
-<name><![CDATA[<?php echo $it['ec_mall_pid']; ?>]]></name>
+<mall_pid><![CDATA[<?php echo $it['ec_mall_pid']; ?>]]></mall_pid>
 <?php } ?>
 <name><![CDATA[<?php echo $name; ?>]]></name>
 <url><?php echo shop_item_url($it_id); ?></url>
