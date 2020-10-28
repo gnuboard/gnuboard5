@@ -167,10 +167,13 @@
         layer_cont_obj.style.display = "none";
         layer_receipt_obj.style.display = "block";
         
+        v_frm.target = "frm_receipt";
+
         // 네이버페이면 반드시 페이지전환 방식이어야 하며, 그 외에는 iframe 방식으로 한다.
-        if(!(typeof v_frm.naverpay_direct !== "undefined" && v_frm.naverpay_direct.value === 1)) {      // 네이버페이가 아니면
-            v_frm.target = "frm_receipt";
+        if(typeof v_frm.naverpay_direct !== "undefined" && v_frm.naverpay_direct.value == "Y") {
+            v_frm.target = "";
         }
+
         v_frm.action = PayUrl;
 
 		if(v_frm.Ret_URL.value == "")
