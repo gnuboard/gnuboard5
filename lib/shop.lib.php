@@ -2469,6 +2469,101 @@ function shop_is_taxsave($od, $is_view_receipt=false){
 	return 0;
 }
 
+// 장바구니 금액 체크 $is_price_update 가 true 이면 장바구니 가격 업데이트한다. 
+function before_check_cart_price($s_cart_id, $is_ct_select_condition=false, $is_price_update=false, $is_item_cache=false){
+    global $g5, $default, $config;
+
+    if( !$s_cart_id ){
+        return;
+    }
+
+    $select_where_add = '';
+
+    if( $is_ct_select_condition ){
+        $select_where_add = " and ct_select = '0' ";
+    }
+
+    $sql = " select * from `{$g5['g5_shop_cart_table']}` where od_id = '$s_cart_id' {$select_where_add} ";
+
+    $result = sql_query($sql);
+    $check_need_update = false;
+    
+    for ($i=0; $row=sql_fetch_array($result); $i++){
+        if( ! $row['it_id'] ) continue;
+
+        $it_id = $row['it_id'];
+        $it = get_shop_item($it_id, $is_item_cache);
+        
+        $update_querys = array();
+
+        if(!$it['it_id'])
+            continue;
+        
+        if( $it['it_price'] !== $row['ct_price'] ){
+            // 장바구니 테이블 상품 가격과 상품 테이블의 상품 가격이 다를경우
+            $update_querys['ct_price'] = $it['it_price'];
+        }
+
+        if( $row['io_id'] ){
+            $io_sql = " select * from {$g5['g5_shop_item_option_table']} where it_id = '{$it['it_id']}' and io_id = '{$row['io_id']}' ";
+            $io_infos = sql_fetch( $io_sql );
+
+            if( $io_infos['io_type'] ){
+                $this_io_type = $io_infos['io_type'];
+            }
+            if( $io_infos['io_id'] && $io_infos['io_price'] !== $row['io_price'] ){
+                // 장바구니 테이블 옵션 가격과 상품 옵션테이블의 옵션 가격이 다를경우
+                $update_querys['io_price'] = $io_infos['io_price'];
+            }
+        }
+
+        // 포인트
+        $compare_point = 0;
+        if($config['cf_use_point']) {
+
+            // DB 에 io_type 이 1이면 상품추가옵션이며, 0이면 상품선택옵션이다
+            if($row['io_type'] == 0) {
+                $compare_point = get_item_point($it, $row['io_id']);
+            } else {
+                $compare_point = $it['it_supply_point'];
+            }
+
+            if($compare_point < 0)
+                $compare_point = 0;
+        }
+        
+        if((int) $row['ct_point'] !== (int) $compare_point){
+            // 장바구니 테이블 적립 포인트와 상품 테이블의 적립 포인트가 다를경우
+            $update_querys['ct_point'] = $compare_point;
+        }
+
+        if( $update_querys ){
+            $check_need_update = true;
+        }
+
+        // 장바구니에 담긴 금액과 실제 상품 금액에 차이가 있고, $is_price_update 가 true 인 경우 장바구니 금액을 업데이트 합니다. 
+        if( $is_price_update && $update_querys ){
+            $conditions = array();
+
+            foreach ($update_querys as $column => $value) {
+                $conditions[] = "`{$column}` = '{$value}'";
+            }
+
+            if( $col_querys = implode(',', $conditions) ) {
+                $sql_query = "update `{$g5['g5_shop_cart_table']}` set {$col_querys} where it_id = '{$it['it_id']}' and od_id = '$s_cart_id' and ct_id =  '{$row['ct_id']}' ";
+                sql_query($sql_query, false);
+            }
+        }
+    }
+
+    // 장바구니에 담긴 금액과 실제 상품 금액에 차이가 있다면
+    if( $check_need_update ){
+        return false;
+    }
+
+    return true;
+}
+
 // 장바구니 상품삭제
 function cart_item_clean()
 {

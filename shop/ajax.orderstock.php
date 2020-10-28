@@ -37,6 +37,10 @@ if($cart_stock_limit > 0) {
         die("주문 요청 때까지 ".$cart_stock_limit."시간 이상 경과되어 주문 상품이 초기화 됐습니다.\n\n 장바구니에서 주문하실 상품을 다시 확인해 주십시오.");
 }
 
+if (function_exists('before_check_cart_price')) {
+    if(! before_check_cart_price($tmp_cart_id) ) die("장바구니 금액에 변동사항이 있습니다.\n장바구니를 다시 확인해 주세요.");
+}
+
 // 재고체크
 $sql = " select *
             from {$g5['g5_shop_cart_table']}

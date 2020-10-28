@@ -15,6 +15,10 @@ sql_query($sql);
 
 $cart_action_url = G5_SHOP_URL.'/cartupdate.php';
 
+if(function_exists('before_check_cart_price')) {
+    before_check_cart_price($s_cart_id, true, true, true);
+}
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/cart.php');
     return;
