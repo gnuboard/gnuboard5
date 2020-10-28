@@ -27,7 +27,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
         <h2>회원정보 개요</h2>
         
         <div class="smb_me">
-	        <strong class="my_ov_name"><img src="<?php echo G5_THEME_IMG_URL ;?>/no_profile.gif" alt="프로필이미지"><br><?php echo $member['mb_name']; ?></strong><br>
+	        <strong class="my_ov_name"><?php echo get_member_profile_img($member['mb_id']); ?><br><?php echo $member['mb_name']; ?></strong><br>
 	        <a href="<?php echo G5_BBS_URL ?>/member_confirm.php?url=register_form.php" class="smb_info">정보수정</a>
 	        <a href="<?php echo G5_BBS_URL ?>/logout.php">로그아웃</a>
         </div>

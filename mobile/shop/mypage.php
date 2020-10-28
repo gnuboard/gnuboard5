@@ -23,7 +23,7 @@ $cp_count = get_shop_member_coupon_count($member['mb_id'], true);
     <section id="smb_my_ov">
         <h2>회원정보 개요</h2>
         <div class="my_name">
-            <img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지" width="20"> <strong><?php echo $member['mb_id'] ? $member['mb_name'] : '비회원'; ?></strong>님
+            <?php echo get_member_profile_img($member['mb_id']); ?> <strong><?php echo $member['mb_id'] ? $member['mb_name'] : '비회원'; ?></strong>님
             <ul class="smb_my_act">
                 <?php if ($is_admin == 'super') { ?><li><a href="<?php echo G5_ADMIN_URL; ?>/" class="btn_admin">관리자</a></li><?php } ?>
                 <li><a href="<?php echo G5_BBS_URL; ?>/member_confirm.php?url=register_form.php" class="btn01">정보수정</a></li>

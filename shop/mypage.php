@@ -43,7 +43,7 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
     <!-- 회원정보 개요 시작 { -->
     <section id="smb_my_ov">
         <h2>회원정보 개요</h2>
-        <strong class="my_ov_name"><img src="<?php echo G5_IMG_URL ;?>/no_profile.gif" alt="프로필이미지"> <?php echo $member['mb_name']; ?></strong>
+        <strong class="my_ov_name"><?php echo get_member_profile_img($member['mb_id']); ?> <?php echo $member['mb_name']; ?></strong>
         <dl class="cou_pt">
             <dt>보유포인트</dt>
             <dd><a href="<?php echo G5_BBS_URL; ?>/point.php" target="_blank" class="win_point"><?php echo number_format($member['mb_point']); ?></a> 점</dd>
