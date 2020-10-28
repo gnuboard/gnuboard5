@@ -9,7 +9,7 @@ $socials = social_get_provider_service_name('', 'all');
 
 $session_id = session_id();
 
-add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css">', 10);
+add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css?ver='.G5_CSS_VER.'">', 10);
 ?>
 
 <li>

@@ -1183,7 +1183,7 @@ include_once('_rewrite_config_form.php');
         <tr>
             <th scope="row"><label for="cf_kakao_rest_key">카카오 REST API 키</label></th>
             <td>
-                <input type="text" name="cf_kakao_rest_key" value="<?php echo $config['cf_kakao_rest_key'] ?>" id="cf_kakao_rest_key" class="frm_input" size="40"> <a href="https://developers.kakao.com/apps/new" target="_blank" class="btn_frmline">앱 등록하기</a>
+                <input type="text" name="cf_kakao_rest_key" value="<?php echo $config['cf_kakao_rest_key'] ?>" id="cf_kakao_rest_key" class="frm_input" size="40"> <a href="https://developers.kakao.com/product/kakaoLogin" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
             <th scope="row"><label for="cf_kakao_client_secret">카카오 Client Secret</label></th>
             <td>
