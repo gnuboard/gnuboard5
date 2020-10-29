@@ -44,7 +44,7 @@
 #bo_list .bo_subject .fa-link {width:16px;line-height:16px;background:#edd3fd;color:#b451fd;text-align:center;font-size:10px;border-radius:2px;vertical-align:baseline}
 #bo_list .bo_subject .fa-heart {color:#ff0000;text-align:center;font-size:10px;border-radius:2px}
 #bo_list .bo_subject .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin:0 4px;font-weight:bold;vertical-align:middle}
-#bo_list .bo_subject .fa-lock {display:inline-block;line-height:16px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:baseline}
+#bo_list .bo_subject .fa-lock {display:inline-block;line-height:16px;width:16px;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:baseline}
 
 
 #bo_cate h2 {width:0;height:0;font-size:0;line-height:0;overflow:hidden}
@@ -77,7 +77,7 @@
 .bo_fx {margin-bottom:5px;padding:0 10px}
 .bo_fx:after {display:block;visibility:hidden;clear:both;content:""}
 .bo_fx ul {margin:0;padding:0;list-style:none}
-#bo_list_total {margin:10px;text-align:center;padding:10px;text-align:center;background:#e3e7ec;color:#8b8b8b;border-radius:3px}
+#bo_list_total {margin:10px;padding:10px;text-align:center;background:#e3e7ec;color:#8b8b8b;border-radius:3px}
 
 .btn_bo_user > li {float:left;text-align:center;margin-left:5px}
 .btn_bo_adm button {border:0;padding:0 10px;background:#d13f4a;color:#fff;text-decoration:none;vertical-align:middle}
@@ -142,7 +142,7 @@
 #bo_sch:after {display:block;visibility:hidden;clear:both;content:""}
 #bo_sch legend {position:absolute;margin:0;padding:0;font-size:0;line-height:0;text-indent:-9999em;overflow:hidden}
 #bo_sch select {border:0;height:38px;border-right:1px solid #f8f8f8;float:left;width:30%}
-#bo_sch .sch_input {height:38px;border:0;padding:0;background-color:transparent;float:left;width:70%;padding:0 40px 0 10px}
+#bo_sch .sch_input {height:38px;border:0;background-color:transparent;float:left;width:70%;padding:0 40px 0 10px}
 #bo_sch .sch_btn {height:38px;position:absolute;top:0;right:0;border:0;width:40px;background:none;font-size:15px}
 
 .view_is_list.btn_top {position:relative;z-index:auto;top:0;left:0}
@@ -165,7 +165,7 @@
 #bo_v_table {padding:10px;color:#999;font-size:0.9em;font-weight:bold}
 
 #bo_v_title {}
-.bo_v_cate {display:inline-block;background:#e2eaf6;color:#3a8afd;border-radius:13px;line-height:20px;border-radius:5px;padding:0 5px;font-weight:bold}
+.bo_v_cate {display:inline-block;background:#e2eaf6;color:#3a8afd;line-height:20px;border-radius:5px;padding:0 5px;font-weight:bold}
 .bo_v_tit {display:block;font-size:1.5em;margin:10px 0 0}
 
 #bo_v_info {padding:15px 0;color:#8e8e8e;line-height:20px}
