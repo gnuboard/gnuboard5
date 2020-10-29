@@ -127,5 +127,22 @@ if(function_exists('social_login_success_after')){
 
 run_event('member_login_check', $mb, $link, $is_social_login);
 
+// 관리자로 로그인시 DATA 폴더의 쓰기 권한이 있는지 체크합니다. 쓰기 권한이 없으면 로그인을 못합니다.
+if( is_admin($mb['mb_id']) && is_dir(G5_DATA_PATH.'/tmp/') ){
+    $tmp_data_file = G5_DATA_PATH.'/tmp/tmp-write-test-'.time();
+    $tmp_data_check = @fopen($tmp_data_file, 'w');
+    if($tmp_data_check){
+        if(! @fwrite($tmp_data_check, G5_URL)){
+            $tmp_data_check = false;
+        }
+    }
+    @fclose($tmp_data_check);
+    @unlink($tmp_data_file);
+
+    if(! $tmp_data_check){
+        alert("data 폴더에 쓰기권한이 없거나 또는 웹하드 용량이 없는 경우\\n로그인을 못할수도 있으니, 용량 체크 및 쓰기 권한을 확인해 주세요.", $link);
+    }
+}
+
 goto_url($link);
 ?>
