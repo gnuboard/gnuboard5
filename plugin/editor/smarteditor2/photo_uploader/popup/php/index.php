@@ -24,7 +24,7 @@ if( !function_exists('json_encode') ) {
 $ym = date('ym', G5_SERVER_TIME);
 
 $data_dir = G5_DATA_PATH.'/editor/'.$ym.'/';
-$data_url = G5_DATA_URL.'/editor/'.$ym.'/';
+$data_url = '/data/editor/'.$ym.'/';
 
 @mkdir($data_dir, G5_DIR_PERMISSION);
 @chmod($data_dir, G5_DIR_PERMISSION);
