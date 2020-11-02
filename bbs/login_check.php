@@ -6,6 +6,8 @@ $g5['title'] = "로그인 검사";
 $mb_id       = trim($_POST['mb_id']);
 $mb_password = trim($_POST['mb_password']);
 
+run_event('member_login_check_before', $mb_id);
+
 if (!$mb_id || !$mb_password)
     alert('회원아이디나 비밀번호가 공백이면 안됩니다.');
 
