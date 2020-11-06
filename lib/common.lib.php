@@ -330,7 +330,7 @@ function get_file($bo_table, $wr_id)
         $file['count']++;
     }
 
-    return $file;
+    return run_replace('get_files', $file, $bo_table, $wr_id);
 }
 
 
