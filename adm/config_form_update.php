@@ -38,6 +38,24 @@ foreach( $check_keys as $key ){
 
 $_POST['cf_icode_server_port'] = isset($_POST['cf_icode_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_icode_server_port']) : '7295';
 
+if(isset($_POST['cf_intercept_ip']) && $_POST['cf_intercept_ip']){
+
+    $pattern = explode("\n", trim($_POST['cf_intercept_ip']));
+    for ($i=0; $i<count($pattern); $i++) {
+        $pattern[$i] = trim($pattern[$i]);
+        if (empty($pattern[$i]))
+            continue;
+
+        $pattern[$i] = str_replace(".", "\.", $pattern[$i]);
+        $pattern[$i] = str_replace("+", "[0-9\.]+", $pattern[$i]);
+        $pat = "/^{$pattern[$i]}$/";
+
+        if( preg_match($pat, $_SERVER['REMOTE_ADDR']) ){
+            alert("현재 접속 IP : ".$_SERVER['REMOTE_ADDR']." 가 차단될수 있기 때문에, 다른 IP를 입력해 주세요.");
+        }
+    }
+}
+
 $sql = " update {$g5['config_table']}
             set cf_title = '{$_POST['cf_title']}',
                 cf_admin = '{$_POST['cf_admin']}',
