@@ -2330,7 +2330,7 @@ function delete_editor_thumbnail($contents)
     run_event('delete_editor_thumbnail_before', $contents);
 
     // $contents 중 img 태그 추출
-    $matchs = get_editor_image($contents);
+    $matchs = get_editor_image($contents, false);
 
     if(!$matchs)
         return;
@@ -2338,8 +2338,8 @@ function delete_editor_thumbnail($contents)
     for($i=0; $i<count($matchs[1]); $i++) {
         // 이미지 path 구함
         $imgurl = @parse_url($matchs[1][$i]);
-        $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
-
+        $srcfile = dirname(G5_PATH).$imgurl['path'];
+        if(! preg_match('/(\.jpe?g|\.gif|\.png)$/i', $srcfile)) continue;
         $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
         $filepath = dirname($srcfile);
         $files = glob($filepath.'/thumb-'.$filename.'*');
