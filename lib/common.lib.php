@@ -1606,14 +1606,18 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
         }
     }
 
+    $end_time = $is_debug ? get_microtime() : 0;
+
     if($result && $is_debug) {
         // 여기에 실행한 sql문을 화면에 표시하는 로직 넣기
         $g5_debug['sql'][] = array(
             'sql' => $sql,
             'start_time' => $start_time,
-            'end_time' => get_microtime(),
+            'end_time' => $end_time,
             );
     }
+
+    run_event('sql_query_after', $result, $sql, $start_time, $end_time);
 
     return $result;
 }

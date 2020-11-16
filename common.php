@@ -225,36 +225,36 @@ $config = get_config(true);
 
 // 본인인증 또는 쇼핑몰 사용시에만 secure; SameSite=None 로 설정합니다.
 if( $config['cf_cert_use'] || (defined('G5_YOUNGCART_VER') && G5_YOUNGCART_VER) ) {
-	// Chrome 80 버전부터 아래 이슈 대응
-	// https://developers-kr.googleblog.com/2020/01/developers-get-ready-for-new.html?fbclid=IwAR0wnJFGd6Fg9_WIbQPK3_FxSSpFLqDCr9bjicXdzy--CCLJhJgC9pJe5ss
-	if(!function_exists('session_start_samesite')) {
-		function session_start_samesite($options = array())
-		{
+    // Chrome 80 버전부터 아래 이슈 대응
+    // https://developers-kr.googleblog.com/2020/01/developers-get-ready-for-new.html?fbclid=IwAR0wnJFGd6Fg9_WIbQPK3_FxSSpFLqDCr9bjicXdzy--CCLJhJgC9pJe5ss
+    if(!function_exists('session_start_samesite')) {
+        function session_start_samesite($options = array())
+        {
             global $g5;
-    
-			$res = @session_start($options);
-			
+
+            $res = @session_start($options);
+
             // IE 브라우저 또는 엣지브라우저 또는 IOS 모바일과 http환경에서는 secure; SameSite=None을 설정하지 않습니다.
             if( preg_match('/Edge/i', $_SERVER['HTTP_USER_AGENT']) || preg_match('/(iPhone|iPod|iPad).*AppleWebKit.*Safari/i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~MSIE|Internet Explorer~i', $_SERVER['HTTP_USER_AGENT']) || preg_match('~Trident/7.0(; Touch)?; rv:11.0~',$_SERVER['HTTP_USER_AGENT']) || ! (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') ){
                 return $res;
             }
 
-			$headers = headers_list();
-			krsort($headers);
-			foreach ($headers as $header) {
-				if (!preg_match('~^Set-Cookie: PHPSESSID=~', $header)) continue;
-				$header = preg_replace('~; secure(; HttpOnly)?$~', '', $header) . '; secure; SameSite=None';
-				header($header, false);
+            $headers = headers_list();
+            krsort($headers);
+            foreach ($headers as $header) {
+                if (!preg_match('~^Set-Cookie: PHPSESSID=~', $header)) continue;
+                $header = preg_replace('~; secure(; HttpOnly)?$~', '', $header) . '; secure; SameSite=None';
+                header($header, false);
                 $g5['session_cookie_samesite'] = 'none';
-				break;
-			}
-			return $res;
-		}
-	}
+                break;
+            }
+            return $res;
+        }
+    }
 
-	session_start_samesite();
+    session_start_samesite();
 } else {
-	@session_start();
+    @session_start();
 }
 //==============================================================================
 
