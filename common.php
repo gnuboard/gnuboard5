@@ -98,11 +98,14 @@ function sql_escape_string($str)
 // SQL Injection 등으로 부터 보호를 위해 sql_escape_string() 적용
 //------------------------------------------------------------------------------
 // magic_quotes_gpc 에 의한 backslashes 제거
-if (get_magic_quotes_gpc()) {
-    $_POST    = array_map_deep('stripslashes',  $_POST);
-    $_GET     = array_map_deep('stripslashes',  $_GET);
-    $_COOKIE  = array_map_deep('stripslashes',  $_COOKIE);
-    $_REQUEST = array_map_deep('stripslashes',  $_REQUEST);
+// magic_quotes_gpc 함수는 php 5.4 이후 사용되지 않습니다.
+if( version_compare( PHP_VERSION, '5.4' , '<' ) ) {
+    if (get_magic_quotes_gpc()) {
+        $_POST = array_map_deep('stripslashes', $_POST);
+        $_GET = array_map_deep('stripslashes', $_GET);
+        $_COOKIE = array_map_deep('stripslashes', $_COOKIE);
+        $_REQUEST = array_map_deep('stripslashes', $_REQUEST);
+    }
 }
 
 // sql_escape_string 적용
