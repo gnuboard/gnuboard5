@@ -105,11 +105,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     </span>
                 </div>
                 <div class="gall_con">
-                    <div class="gall_img" style="height:<?php echo $board['bo_gallery_height']; ?>px;max-height:<?php echo $board['bo_gallery_height']; ?>px">
+                    <div class="gall_img" style="<?php if ($board['bo_gallery_height'] > 0) echo 'height:'.$board['bo_gallery_height'].'px;max-height:'.$board['bo_gallery_height'].'px'; ?>">
                         <a href="<?php echo $list[$i]['href'] ?>">
                         <?php
                         if ($list[$i]['is_notice']) { // 공지사항  ?>
-                            <span class="is_notice">공지</span>
+                            <span class="is_notice" style="<?php if ($board['bo_gallery_height'] > 0) echo 'line-height:'.$board['bo_gallery_height'].'px'; ?>">공지</span>
                         <?php } else {
                             $thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
 

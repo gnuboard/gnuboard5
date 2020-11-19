@@ -55,7 +55,7 @@ box-shadow:inset 0 2px 5px rgb(33, 135, 202)}
 #bo_gall .gall_img {border-bottom:1px solid #eee;text-align:center;overflow:hidden}
 #bo_gall .gall_img a,#bo_gall .gall_img .no_image,#bo_gall .gall_img .is_notice {display:block}
 #bo_gall .gall_img img, #bo_gall .gall_img video {max-width:100%;height:auto !important}
-#bo_gall .gall_img span {display:inline-block;background:#eaeaea;text-align:center;line-height:200px;text-transform:uppercase;font-weight:bold;font-size:1.25em;color:#777}
+#bo_gall .gall_img span {display:inline-block;background:#eaeaea;text-align:center;text-transform:uppercase;font-weight:bold;font-size:1.25em;color:#777}
 
 #bo_gall .gall_text_href {margin:10px 0}
 #bo_gall .gall_text_href a {font-weight:bold}
