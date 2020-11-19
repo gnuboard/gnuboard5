@@ -188,7 +188,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	                <?php if ($w == 'u' && file_exists($mb_icon_path)) {  ?>
 	                <img src="<?php echo $mb_icon_url ?>" alt="회원아이콘">
 	                <input type="checkbox" name="del_mb_icon" value="1" id="del_mb_icon">
-	                <label for="del_mb_icon">삭제</label>
+	                <label for="del_mb_icon" class="inline">삭제</label>
 	                <?php }  ?>
 	            
 	            </li>
@@ -207,7 +207,7 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	                <?php if ($w == 'u' && file_exists($mb_img_path)) {  ?>
 	                <img src="<?php echo $mb_img_url ?>" alt="회원이미지">
 	                <input type="checkbox" name="del_mb_img" value="1" id="del_mb_img">
-	                <label for="del_mb_img">삭제</label>
+	                <label for="del_mb_img" class="inline">삭제</label>
 	                <?php }  ?>
 	            
 	            </li>
