@@ -215,14 +215,20 @@ class UploadHandler
             substr($_SERVER['SCRIPT_NAME'],0, strrpos($_SERVER['SCRIPT_NAME'], '/'));
     }
 
-    protected function get_user_id() {
-        @session_start();
-        return session_id();
+    protected function get_user_id($is_add=true) {
+        global $member;
+
+        if(session_id() == '') {
+            @session_start();
+        }
+        
+        $add_str = ($is_add && isset($member['mb_id']) && $member['mb_id']) ? $member['mb_id'] : '';
+        return session_id().$add_str;
     }
 
     protected function get_user_path() {
         if ($this->options['user_dirs']) {
-            return $this->get_user_id().'/';
+            return $this->get_user_id(false).'/';
         }
         return '';
     }
