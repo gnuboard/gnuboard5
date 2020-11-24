@@ -83,6 +83,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             if( $wr_id && $wr_id == $list[$i]['wr_id'] ){
                 $classes[] = 'gall_now';
             }
+
+            $line_height_style = ($board['bo_gallery_height'] > 0) ? 'line-height:'.$board['bo_gallery_height'].'px' : '';
          ?>
         <li class="<?php echo implode(' ', $classes); ?>">
             <div class="gall_box">
@@ -109,14 +111,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         <a href="<?php echo $list[$i]['href'] ?>">
                         <?php
                         if ($list[$i]['is_notice']) { // 공지사항  ?>
-                            <span class="is_notice" style="<?php if ($board['bo_gallery_height'] > 0) echo 'line-height:'.$board['bo_gallery_height'].'px'; ?>">공지</span>
+                            <span class="is_notice" style="<?php echo $line_height_style; ?>">공지</span>
                         <?php } else {
                             $thumb = get_list_thumbnail($board['bo_table'], $list[$i]['wr_id'], $board['bo_gallery_width'], $board['bo_gallery_height'], false, true);
 
                             if($thumb['src']) {
                                 $img_content = '<img src="'.$thumb['src'].'" alt="'.$thumb['alt'].'" >';
                             } else {
-                                $img_content = '<span class="no_image">no image</span>';
+                                $img_content = '<span class="no_image" style="'.$line_height_style.'">no image</span>';
                             }
 
                             echo run_replace('thumb_image_tag', $img_content, $thumb);
