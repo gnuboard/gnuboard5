@@ -130,6 +130,13 @@ while($row = sql_fetch_array($result)){
 
 $search_skin = G5_MSHOP_SKIN_PATH.'/search.skin.php';
 
+$list_file = G5_MSHOP_SKIN_PATH.'/'.$default['de_mobile_search_list_skin'];
+if (file_exists($list_file) && is_include_path_check($list_file)) {
+    define('G5_SHOP_CSS_URL', G5_MSHOP_SKIN_URL);
+    $list = new item_list($list_file, $default['de_mobile_search_list_mod'], $default['de_mobile_search_list_row'], $default['de_mobile_search_img_width'], $default['de_mobile_search_img_height']);
+    $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
+}
+
 if(!file_exists($search_skin)) {
     echo str_replace(G5_PATH.'/', '', $search_skin).' 스킨 파일이 존재하지 않습니다.';
 } else {

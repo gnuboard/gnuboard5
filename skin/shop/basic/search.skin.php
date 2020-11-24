@@ -42,11 +42,10 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 	    <div id="ssch_cate">
 	        <ul>
 	        <?php
-	        $sql = " select b.ca_id, b.ca_name, count(*) as cnt $sql_common $sql_where group by b.ca_id order by b.ca_id ";
-	        $result = sql_query($sql);
-	        $total_cnt = 0;
+            $total_cnt = 0;
 	        echo '<li><a href="#" onclick="set_ca_id(\'\'); return false;">전체분류 <span>('.$total_cnt.')</span></a></li>'.PHP_EOL;
-	        for ($i=0; $row=sql_fetch_array($result); $i++) {
+	        foreach((array) $categorys as $row){
+                if( empty($row) ) continue;
 	            echo "<li><a href=\"#\" onclick=\"set_ca_id('{$row['ca_id']}'); return false;\">{$row['ca_name']} (".$row['cnt'].")</a></li>\n";
 	            $total_cnt += $row['cnt'];
 	        }
@@ -69,11 +68,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <div>
         <?php
         // 리스트 유형별로 출력
-        $list_file = G5_SHOP_SKIN_PATH.'/'.$default['de_search_list_skin'];
-        if (file_exists($list_file)) {
-            define('G5_SHOP_CSS_URL', G5_SHOP_SKIN_URL);
-            $list = new item_list($list_file, $default['de_search_list_mod'], $default['de_search_list_row'], $default['de_search_img_width'], $default['de_search_img_height']);
-            $list->set_query(" select * $sql_common $sql_where {$order_by} limit $from_record, $items ");
+        if (isset($list) && is_object($list) && method_exists($list, 'run')) {
             $list->set_is_page(true);
             $list->set_view('it_img', true);
             $list->set_view('it_name', true);
