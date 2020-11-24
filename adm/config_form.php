@@ -1129,7 +1129,7 @@ include_once('_rewrite_config_form.php');
                     <label for="check_social_payco">페이코 로그인을 사용합니다</label>
                     <div>
                     <h3>페이코 CallbackURL</h3>
-                    <p><?php echo get_social_callbackurl('payco'); ?></p>
+                    <p><?php echo get_social_callbackurl('payco', false, true); ?></p>
                     </div>
                 </div>
             </td>
@@ -1157,7 +1157,7 @@ include_once('_rewrite_config_form.php');
         <tr>
             <th scope="row"><label for="cf_twitter_key">트위터 컨슈머 Key</label></th>
             <td>
-                <input type="text" name="cf_twitter_key" value="<?php echo $config['cf_twitter_key'] ?>" id="cf_twitter_key" class="frm_input" size="40"> <a href="https://dev.twitter.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
+                <input type="text" name="cf_twitter_key" value="<?php echo $config['cf_twitter_key'] ?>" id="cf_twitter_key" class="frm_input" size="40"> <a href="https://developer.twitter.com/en/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
             <th scope="row"><label for="cf_twitter_secret">트위터 컨슈머 Secret</label></th>
             <td>
@@ -1434,6 +1434,26 @@ $(function(){
 
 function fconfigform_submit(f)
 {
+    var current_user_ip = "<?php echo $_SERVER['REMOTE_ADDR']; ?>";
+    var cf_intercept_ip_val = f.cf_intercept_ip.value;
+
+    if( cf_intercept_ip_val && current_user_ip ){
+        var cf_intercept_ips = cf_intercept_ip_val.split("\n");
+
+        for(var i=0; i < cf_intercept_ips.length; i++){
+            if ( cf_intercept_ips[i].trim() ) {
+                cf_intercept_ips[i] = cf_intercept_ips[i].replace(".", "\.");
+                cf_intercept_ips[i] = cf_intercept_ips[i].replace("+", "[0-9\.]+");
+                
+                var re = new RegExp(cf_intercept_ips[i]);
+                if ( re.test(current_user_ip) ){
+                    alert("현재 접속 IP : "+ current_user_ip +" 가 차단될수 있기 때문에, 다른 IP를 입력해 주세요.");
+                    return false;
+                }
+            }
+        }
+    }
+
     f.action = "./config_form_update.php";
     return true;
 }

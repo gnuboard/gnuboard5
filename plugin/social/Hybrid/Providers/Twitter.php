@@ -2,8 +2,8 @@
 
 /* !
  * HybridAuth
- * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
- * (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
+ * https://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
+ * (c) 2009-2012, HybridAuth authors | https://hybridauth.sourceforge.net/licenses.html
  */
 
 /**
@@ -127,7 +127,7 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1 {
 		$this->user->profile->description = (property_exists($response, 'description')) ? $response->description : "";
 		$this->user->profile->firstName = (property_exists($response, 'name')) ? $response->name : "";
 		$this->user->profile->photoURL = (property_exists($response, 'profile_image_url')) ? (str_replace('_normal', '', $response->profile_image_url)) : "";
-		$this->user->profile->profileURL = (property_exists($response, 'screen_name')) ? ("http://twitter.com/" . $response->screen_name) : "";
+		$this->user->profile->profileURL = (property_exists($response, 'screen_name')) ? ("https://twitter.com/" . $response->screen_name) : "";
 		$this->user->profile->webSiteURL = (property_exists($response, 'url')) ? $response->url : "";
 		$this->user->profile->region = (property_exists($response, 'location')) ? $response->location : "";
 		if($includeEmail) $this->user->profile->email = (property_exists($response, 'email')) ? $response->email : "";
@@ -174,7 +174,7 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1 {
 
 					$uc->identifier = (property_exists($item, 'id')) ? $item->id : "";
 					$uc->displayName = (property_exists($item, 'name')) ? $item->name : "";
-					$uc->profileURL = (property_exists($item, 'screen_name')) ? ("http://twitter.com/" . $item->screen_name) : "";
+					$uc->profileURL = (property_exists($item, 'screen_name')) ? ("https://twitter.com/" . $item->screen_name) : "";
 					$uc->photoURL = (property_exists($item, 'profile_image_url')) ? $item->profile_image_url : "";
 					$uc->description = (property_exists($item, 'description')) ? $item->description : "";
 
@@ -254,7 +254,7 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1 {
 
 			$ua->user->identifier = (property_exists($item->user, 'id')) ? $item->user->id : "";
 			$ua->user->displayName = (property_exists($item->user, 'name')) ? $item->user->name : "";
-			$ua->user->profileURL = (property_exists($item->user, 'screen_name')) ? ("http://twitter.com/" . $item->user->screen_name) : "";
+			$ua->user->profileURL = (property_exists($item->user, 'screen_name')) ? ("https://twitter.com/" . $item->user->screen_name) : "";
 			$ua->user->photoURL = (property_exists($item->user, 'profile_image_url')) ? $item->user->profile_image_url : "";
 
 			$activities[] = $ua;

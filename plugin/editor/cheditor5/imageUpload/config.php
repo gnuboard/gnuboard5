@@ -30,8 +30,14 @@ define("SAVE_DIR", $data_dir);
 define("SAVE_URL", $data_url);
 
 function che_get_user_id() {
-    @session_start();
-    return session_id();
+    global $member;
+
+    if(session_id() == '') {
+        @session_start();
+    }
+
+    $add_str = (isset($member['mb_id']) && $member['mb_id']) ? $member['mb_id'] : '';
+    return session_id().$add_str;
 }
 
 function che_get_file_passname(){
