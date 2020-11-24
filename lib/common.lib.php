@@ -330,7 +330,7 @@ function get_file($bo_table, $wr_id)
         $file['count']++;
     }
 
-    return $file;
+    return run_replace('get_files', $file, $bo_table, $wr_id);
 }
 
 
@@ -1313,9 +1313,10 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
             $icon_file = G5_DATA_PATH.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb_id).'.gif';
 
             if (file_exists($icon_file)) {
+                $icon_filemtile = (defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) ? '?'.filemtime($icon_file) : '';
                 $width = $config['cf_member_icon_width'];
                 $height = $config['cf_member_icon_height'];
-                $icon_file_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb_id).'.gif';
+                $icon_file_url = G5_DATA_URL.'/member/'.$mb_dir.'/'.get_mb_icon_name($mb_id).'.gif'.$icon_filemtile;
                 $tmp_name .= '<span class="profile_img"><img src="'.$icon_file_url.'" width="'.$width.'" height="'.$height.'" alt=""></span>';
 
                 if ($config['cf_use_member_icon'] == 2) // 회원아이콘+이름
@@ -1655,6 +1656,8 @@ function sql_fetch_array($result)
 // 단, 결과 값은 스크립트(script) 실행부가 종료되면서 메모리에서 자동적으로 지워진다.
 function sql_free_result($result)
 {
+    if(!is_resource($result)) return;
+
     if(function_exists('mysqli_free_result') && G5_MYSQLI_USE)
         return mysqli_free_result($result);
     else
@@ -2328,7 +2331,7 @@ function delete_editor_thumbnail($contents)
     run_event('delete_editor_thumbnail_before', $contents);
 
     // $contents 중 img 태그 추출
-    $matchs = get_editor_image($contents);
+    $matchs = get_editor_image($contents, false);
 
     if(!$matchs)
         return;
@@ -2336,8 +2339,8 @@ function delete_editor_thumbnail($contents)
     for($i=0; $i<count($matchs[1]); $i++) {
         // 이미지 path 구함
         $imgurl = @parse_url($matchs[1][$i]);
-        $srcfile = $_SERVER['DOCUMENT_ROOT'].$imgurl['path'];
-
+        $srcfile = dirname(G5_PATH).$imgurl['path'];
+        if(! preg_match('/(\.jpe?g|\.gif|\.png)$/i', $srcfile)) continue;
         $filename = preg_replace("/\.[^\.]+$/i", "", basename($srcfile));
         $filepath = dirname($srcfile);
         $files = glob($filepath.'/thumb-'.$filename.'*');
@@ -3624,6 +3627,9 @@ function get_member_profile_img($mb_id='', $width='', $height='', $alt='profile_
         } else {
             $member_img = G5_DATA_PATH.'/member_image/'.substr($mb_id,0,2).'/'.get_mb_icon_name($mb_id).'.gif';
             if (is_file($member_img)) {
+                if(defined('G5_USE_MEMBER_IMAGE_FILETIME') && G5_USE_MEMBER_IMAGE_FILETIME) {
+                    $member_img .= '?'.filemtime($member_img);
+                }
                 $member_cache[$mb_id] = $src = str_replace(G5_DATA_PATH, G5_DATA_URL, $member_img);
             }
         }
@@ -3828,7 +3834,7 @@ function is_include_path_check($path='', $is_input='')
             if( preg_match('/\/data\/(file|editor|qa|cache|member|member_image|session|tmp)\/[A-Za-z0-9_]{1,20}\//i', $replace_path) ){
                 return false;
             }
-            if( preg_match('/'.G5_PLUGIN_DIR.'\//i', $replace_path) && (preg_match('/'.G5_OKNAME_DIR.'\//i', $replace_path) || preg_match('/'.G5_KCPCERT_DIR.'\//i', $replace_path) || preg_match('/'.G5_LGXPAY_DIR.'\//i', $replace_path)) ){
+            if( preg_match('/'.G5_PLUGIN_DIR.'\//i', $replace_path) && (preg_match('/'.G5_OKNAME_DIR.'\//i', $replace_path) || preg_match('/'.G5_KCPCERT_DIR.'\//i', $replace_path) || preg_match('/'.G5_LGXPAY_DIR.'\//i', $replace_path)) || (preg_match('/search\.skin\.php/i', $replace_path) ) ){
                 return false;
             }
             if( substr_count($replace_path, './') > 5 ){

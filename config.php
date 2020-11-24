@@ -5,16 +5,14 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.4.3');
+define('G5_GNUBOARD_VER', '5.4.3.1');
 define('G5_YOUNGCART_VER', '5.4.3');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
 
-if (PHP_VERSION >= '5.1.0') {
-    //if (function_exists("date_default_timezone_set")) date_default_timezone_set("Asia/Seoul");
-    date_default_timezone_set("Asia/Seoul");
-}
+// 기본 시간대 설정
+date_default_timezone_set("Asia/Seoul");
 
 /********************
     경로 상수

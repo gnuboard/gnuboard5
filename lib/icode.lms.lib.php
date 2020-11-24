@@ -56,8 +56,8 @@ class LMS {
 	}
 
 	function Init() {
-		$this->Data		= "";	// 발송하기 위한 패킷내용이 배열로 들어간다.
-		$this->Result	= "";	// 발송결과값이 배열로 들어간다.
+		$this->Data		= array();	// 발송하기 위한 패킷내용이 배열로 들어간다.
+		$this->Result	= array();	// 발송결과값이 배열로 들어간다.
 	}
 
 	function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
