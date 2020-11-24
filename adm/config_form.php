@@ -1129,7 +1129,7 @@ include_once('_rewrite_config_form.php');
                     <label for="check_social_payco">페이코 로그인을 사용합니다</label>
                     <div>
                     <h3>페이코 CallbackURL</h3>
-                    <p><?php echo get_social_callbackurl('payco'); ?></p>
+                    <p><?php echo get_social_callbackurl('payco', false, true); ?></p>
                     </div>
                 </div>
             </td>

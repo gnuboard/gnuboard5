@@ -44,11 +44,11 @@ function get_social_convert_id($identifier, $service)
     return strtolower($service).'_'.hash('adler32', md5($identifier));
 }
 
-function get_social_callbackurl($provider, $no_domain=false){
+function get_social_callbackurl($provider, $no_domain=false, $no_params=false){
 
     $base_url = G5_SOCIAL_LOGIN_BASE_URL;
 
-    if ( $provider === 'twitter' ){
+    if ( $provider === 'twitter' || ($provider === 'payco' && $no_params) ){
         return $base_url;
     }
 
@@ -332,9 +332,12 @@ function social_extends_get_keys($provider){
                     "keys" => array("id" => $config['cf_google_clientid'],
                     "secret" => $config['cf_google_secret']),
                     "redirect_uri" => get_social_callbackurl('google'),
+                    "scope"   => "https://www.googleapis.com/auth/userinfo.profile "."https://www.googleapis.com/auth/userinfo.email",
+                    /*
                     "scope"   => "https://www.googleapis.com/auth/plus.login ". // optional
                                     "https://www.googleapis.com/auth/plus.me ". // optional
                                     "https://www.googleapis.com/auth/plus.profile.emails.read", // optional
+                    */
                     //"access_type"     => "offline",   // optional
                     //"approval_prompt" => "force",     // optional
                 );
