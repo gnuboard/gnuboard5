@@ -74,6 +74,7 @@ $sql = " insert into {$g5['board_table']}
                 bo_use_ip_view = '{$board['bo_use_ip_view']}',
                 bo_use_list_view = '{$board['bo_use_list_view']}',
                 bo_use_list_content = '{$board['bo_use_list_content']}',
+                bo_use_list_file = '{$board['bo_use_list_file']}',
                 bo_table_width = '{$board['bo_table_width']}',
                 bo_subject_len = '{$board['bo_subject_len']}',
                 bo_mobile_subject_len = '{$board['bo_mobile_subject_len']}',
