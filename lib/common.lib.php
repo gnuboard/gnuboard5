@@ -3353,6 +3353,11 @@ function clean_query_string($query, $amp=true)
         $q = array();
 
         foreach($out as $key=>$val) {
+            if(($key && is_array($key)) || ($val && is_array($val))){
+                $q[$key] = $val;
+                continue;
+            }
+
             $key = strip_tags(trim($key));
             $val = trim($val);
 
@@ -3426,33 +3431,41 @@ function clean_query_string($query, $amp=true)
     return $str;
 }
 
-function get_params_merge_url($params){
-    $p = @parse_url(G5_URL);
-    $href = $p['scheme'].'://'.$p['host'];
-    if(isset($p['port']) && $p['port'])
-        $href .= ':'.$p['port'];
-
-    if( $tmp = explode('?', $_SERVER['REQUEST_URI']) ){
-        if( isset($tmp[0]) && $tmp[0] )
+function get_params_merge_url($params, $url=''){
+    $str_url = $url ? $url : G5_URL;
+    $p = @parse_url($str_url);
+    $href = (isset($p['scheme']) ? "{$p['scheme']}://" : '')
+        . (isset($p['user']) ? $p['user']
+        . (isset($p['pass']) ? ":{$p['pass']}" : '').'@' : '')
+        . (isset($p['host']) ? $p['host'] : '')
+        . ((isset($p['path']) && $url) ? $p['path'] : '')
+        . ((isset($p['port']) && $p['port']) ? ":{$p['port']}" : '');
+    
+    $ori_params = '';
+    if( $url ){
+        $ori_params = !empty($p['query']) ? $p['query'] : '';
+    } else if( $tmp = explode('?', $_SERVER['REQUEST_URI']) ){
+        if( isset($tmp[0]) && $tmp[0] ) {
             $href .= $tmp[0];
-    }
-    $q = array();
-    if($_SERVER['QUERY_STRING']) {
-        foreach($_GET as $key=>$val) {
-            $key = strip_tags($key);
-            $val = strip_tags($val);
-
-            if($key && $val)
-                $q[$key] = $val;
+            $ori_params = $tmp[1];
+        }
+        if( $freg = strstr($ori_params, '#') ) {
+            $p['fragment'] = preg_replace('/^#/', '', $freg);
         }
     }
-
-    if( is_array($params) ){
+    
+    $q = array();
+    if( $ori_params ){
+        parse_str( $ori_params, $q );
+    }
+    
+    if( is_array($params) && $params ){
         $q = array_merge($q, $params);
     }
 
     $query = http_build_query($q, '', '&amp;');
-    $href .= '?'.$query;
+    $qc = (strpos( $href, '?' ) !== false) ? '&amp;' : '?';
+    $href .= $qc.$query.(isset($p['fragment']) ? "#{$p['fragment']}" : '');
 
     return $href;
 }
