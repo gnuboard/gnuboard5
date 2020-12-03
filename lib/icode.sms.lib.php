@@ -67,8 +67,8 @@ class SMS {
 	}
 
 	function Init() {
-		$this->Data = "";
-		$this->Result = "";
+		$this->Data = array();
+		$this->Result = array();
 	}
 
 	function Add($dest, $callBack, $Caller, $msg, $rsvTime="") {
