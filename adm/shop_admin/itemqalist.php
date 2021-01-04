@@ -2,7 +2,7 @@
 $sub_menu = '400660';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '상품문의';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -205,4 +205,3 @@ $(function(){
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

@@ -10,6 +10,7 @@ $g5['title'] = $qaconfig['qa_title'];
 include_once('./qahead.php');
 
 $skin_file = $qa_skin_path.'/list.skin.php';
+$is_auth = $is_admin ? true : false;
 
 $category_option = '';
 if ($qaconfig['qa_category']) {
@@ -121,4 +122,3 @@ if(is_file($skin_file)) {
 }
 
 include_once('./qatail.php');
-?>

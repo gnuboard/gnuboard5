@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 $ca_id = preg_replace('/[^0-9a-z]/i', '', $ca_id);
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '상품 복사';
 include_once(G5_PATH.'/head.sub.php');
@@ -52,4 +52,3 @@ function _copy(link)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

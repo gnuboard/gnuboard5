@@ -2,11 +2,19 @@
 $sub_menu = "900600";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $g5['title'] = "이모티콘 ";
 
-$fg_no = isset($fg_no) ? (int) $fg_no : '';
+$fo_no = isset($_REQUEST['fo_no']) ? (int) $_REQUEST['fo_no'] : 0;
+$fg_no = isset($_REQUEST['fg_no']) ? (int) $_REQUEST['fg_no'] : '';
+
+$write = array(
+'fg_no'=>null,
+'fo_no'=>null,
+'fo_name'=>'',
+'fo_content'=>''
+);
 
 if ($w == 'u' && is_numeric($fo_no)) {
     $write = sql_fetch("select * from {$g5['sms5_form_table']} where fo_no='$fo_no'");
@@ -14,6 +22,7 @@ if ($w == 'u' && is_numeric($fo_no)) {
 }
 else  {
     $write['fg_no'] = $fg_no;
+    $write['fo_no'] = $fo_no;
     $g5['title'] .= '추가';
 }
 
@@ -23,7 +32,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 <form name="book_form" method="post" action="form_update.php">
 <input type="hidden" name="w" value="<?php echo $w?>">
 <input type="hidden" name="page" value="<?php echo $page?>">
-<input type="hidden" name="fo_no" value="<?php echo $write['fo_no']?>">
+<input type="hidden" name="fo_no" value="<?php echo $write['fo_no']; ?>">
 <input type="hidden" name="get_fg_no" value="<?php echo $fg_no?>">
 
     <div class="tbl_frm01 tbl_wrap">
@@ -232,4 +241,3 @@ $(function(){
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

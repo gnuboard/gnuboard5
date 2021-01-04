@@ -23,4 +23,3 @@ $content .= '<p>'.$sql.'</p><p>'.sql_error_info().'<p>error file : '.$_SERVER['S
 mailer($od_name, $od_email, $config['cf_admin_email'], $subject, $content, 1);
 
 unset($error);
-?>

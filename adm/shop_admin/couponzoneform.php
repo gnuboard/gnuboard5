@@ -2,9 +2,24 @@
 $sub_menu = '400810';
 include_once('./_common.php');
 
-$cz_id = (int) $cz_id;
+$cz_id = isset($_REQUEST['cz_id']) ? (int) $_REQUEST['cz_id'] : 0;
+$cp = array(
+'cp_method'=>'',
+'cz_subject'=>'',
+'cp_target'=>'',
+'cp_price'=>'',
+'cp_trunc'=>'',
+'cp_type'=>'',
+'mb_id'=>'',
+'cz_type'=>'',
+'cz_point'=>'',
+'cp_price'=>'',
+'cz_file'=>'',
+'cp_minimum'=>'',
+'cp_maximum'=>'',
+);
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $g5['title'] = '쿠폰존 쿠폰관리';
 
@@ -304,4 +319,3 @@ function form_check(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

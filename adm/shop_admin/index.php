@@ -280,6 +280,7 @@ function get_max_value($arr)
             $option_noti = (int)$row['cnt'];
 
             // SMS 정보
+            $userinfo = array('coin'=>0);
             if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                 $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
             }
@@ -341,10 +342,11 @@ function get_max_value($arr)
         <tbody>
         <?php
         $case = array('신용카드', '계좌이체', '가상계좌', '무통장', '휴대폰', '포인트', '쿠폰');
-
+        
+        $val_cnt = 0;
         foreach($case as $val)
         {
-            $val_cnt ++;
+            $val_cnt++;
         ?>
         <tr>
             <th scope="row" id="th_val_<?php echo $val_cnt; ?>" class="td_category"><?php echo $val; ?></th>
@@ -539,4 +541,3 @@ function graph_draw()
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

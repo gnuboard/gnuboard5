@@ -1,6 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+$q = isset($_GET['q']) ? clean_xss_tags($_GET['q'], 1, 1) : '';
+
 if(defined('G5_THEME_PATH')) {
     require_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
     return;
@@ -120,4 +122,4 @@ include_once(G5_LIB_PATH.'/latest.lib.php');
     }
 ?>
 <div id="container" class="<?php echo implode(' ', $container_class); ?>">
-    <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><h1 id="container_title"><a href="javascript:history.back()" class="btn_back"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="sound_only">뒤로</span></a> <?php echo $g5['title'] ?></h1><?php } ?>
+    <?php if ((!$bo_table || $w == 's' ) && !defined('_INDEX_')) { ?><h1 id="container_title"><a href="javascript:history.back()" class="btn_back"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="sound_only">뒤로</span></a> <?php echo $g5['title'] ?></h1><?php }

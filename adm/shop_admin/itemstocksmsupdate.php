@@ -6,25 +6,27 @@ check_demo();
 
 check_admin_token();
 
-if (!count($_POST['chk'])) {
+$count_post_chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
+
+if (! $count_post_chk) {
     alert($_POST['act_button']." 하실 항목을 하나 이상 체크하세요.");
 }
 
 if ($_POST['act_button'] == "선택SMS전송") {
 
-    auth_check($auth[$sub_menu], 'w');
+    auth_check_menu($auth, $sub_menu, 'w');
 
     $sms_messages = array();
 
-    for ($i=0; $i<count($_POST['chk']); $i++) {
+    for ($i=0; $i<$count_post_chk; $i++) {
 
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
-        $sss_id = (int) $_POST['ss_id'][$k];
+        $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
+        $ss_id = isset($_POST['ss_id'][$k]) ? (int) $_POST['ss_id'][$k] : 0;
 
         $sql = " select a.ss_id, a.ss_hp, a.ss_send, b.it_id, b.it_name
                     from {$g5['g5_shop_item_stocksms_table']} a left join {$g5['g5_shop_item_table']} b on ( a.it_id = b.it_id )
-                    where a.ss_id = '$sss_id' ";
+                    where a.ss_id = '$ss_id' ";
         $row = sql_fetch($sql);
 
         if(!$row['ss_id'] || !$row['it_id'] || $row['ss_send'])
@@ -44,7 +46,7 @@ if ($_POST['act_button'] == "선택SMS전송") {
         $sql = " update {$g5['g5_shop_item_stocksms_table']}
                     set ss_send = '1',
                         ss_send_time = '".G5_TIME_YMDHIS."'
-                    where ss_id = '{$sss_id}' ";
+                    where ss_id = '{$ss_id}' ";
         sql_query($sql);
     }
 
@@ -101,14 +103,14 @@ if ($_POST['act_button'] == "선택SMS전송") {
     if ($is_admin != 'super')
         alert('자료의 삭제는 최고관리자만 가능합니다.');
 
-    auth_check($auth[$sub_menu], 'd');
+    auth_check_menu($auth, $sub_menu, 'd');
 
-    for ($i=0; $i<count($_POST['chk']); $i++) {
+    for ($i=0; $i<$count_post_chk; $i++) {
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
-        $sss_id = (int) $_POST['ss_id'][$k];
+        $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
+        $ss_id = isset($_POST['ss_id'][$k]) ? (int) $_POST['ss_id'][$k] : 0;
 
-        $sql = " delete from {$g5['g5_shop_item_stocksms_table']} where ss_id = '{$sss_id}' ";
+        $sql = " delete from {$g5['g5_shop_item_stocksms_table']} where ss_id = '{$ss_id}' ";
         sql_query($sql);
     }
 }
@@ -118,4 +120,3 @@ $qstr1 = 'sel_field='.$sel_field.'&amp;search='.$search;
 $qstr = $qstr1.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;page='.$page;
 
 goto_url('./itemstocksms.php?'.$qstr);
-?>

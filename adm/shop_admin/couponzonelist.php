@@ -2,7 +2,7 @@
 $sub_menu = '400810';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $sql_common = " from {$g5['g5_shop_coupon_zone_table']} ";
 
@@ -175,4 +175,3 @@ function fcouponzonelist_submit(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

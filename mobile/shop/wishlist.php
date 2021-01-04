@@ -33,7 +33,7 @@ include_once(G5_MSHOP_PATH.'/_head.php');
             $out_cd = '';
             $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
             $tmp = sql_fetch($sql);
-            if($tmp['cnt'])
+            if(isset($tmp['cnt']) && $tmp['cnt'])
                 $out_cd = 'no';
 
             $it_price = get_price($row);
@@ -133,4 +133,3 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

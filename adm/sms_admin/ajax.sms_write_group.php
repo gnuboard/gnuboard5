@@ -4,7 +4,7 @@ include_once("./_common.php");
 
 $colspan = 3;
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $no_group = sql_fetch("select * from {$g5['sms5_book_group_table']} where bg_no=1");
 

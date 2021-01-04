@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$od_id = isset($od_id) ? preg_replace('/[^A-Za-z0-9\-_]/', '', strip_tags($od_id)) : 0;
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
 
 if( isset($_GET['ini_noti']) && !isset($_GET['uid']) ){
     goto_url(G5_SHOP_URL.'/orderinquiry.php');
@@ -16,11 +16,14 @@ if (!$is_member) {
         alert("직접 링크로는 주문서 조회가 불가합니다.\\n\\n주문조회 화면을 통하여 조회하시기 바랍니다.", G5_SHOP_URL);
 }
 
+$tot_point = 0;
+
 $sql = "select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 if($is_member && !$is_admin)
     $sql .= " and mb_id = '{$member['mb_id']}' ";
 $od = sql_fetch($sql);
-if (!$od['od_id'] || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
+
+if (! (isset($od['od_id']) && $od['od_id']) || (!$is_member && md5($od['od_id'].$od['od_time'].$od['od_ip']) != get_session('ss_orderview_uid'))) {
     alert("조회하실 주문서가 없습니다.", G5_SHOP_URL);
 }
 
@@ -766,4 +769,3 @@ function fcancel_check(f)
 
 <?php
 include_once('./_tail.php');
-?>

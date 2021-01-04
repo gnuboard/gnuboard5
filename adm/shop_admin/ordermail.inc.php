@@ -9,13 +9,13 @@ if ($od_send_mail)
 {
     $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
 
-    $addmemo = nl2br(stripslashes($addmemo));
+    $addmemo = isset($addmemo) ? nl2br(stripslashes($addmemo)) : '';
 
-    unset($cart_list);
-    unset($card_list);
-    unset($bank_list);
-    unset($point_list);
-    unset($delivery_list);
+    $cart_list = array();
+    $card_list = array();
+    $bank_list = array();
+    $point_list = array();
+    $delivery_list = array();
 
     $sql = " select *
                from {$g5['g5_shop_cart_table']}
@@ -106,4 +106,3 @@ if ($od_send_mail)
         mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $email, $title, $content, 1);
     }
 }
-?>

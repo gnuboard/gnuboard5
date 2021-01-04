@@ -32,17 +32,23 @@ function print_menu2($key, $no='')
 {
     global $menu, $auth_menu, $is_admin, $auth, $g5, $sub_menu;
 
-    $str .= "<ul>";
+    $str = "<ul>";
     for($i=1; $i<count($menu[$key]); $i++)
     {
+        if( ! isset($menu[$key][$i]) ){
+            continue;
+        }
+
         if ($is_admin != 'super' && (!array_key_exists($menu[$key][$i][0],$auth) || !strstr($auth[$menu[$key][$i][0]], 'r')))
             continue;
+        
+        $gnb_grp_div = $gnb_grp_style = '';
 
-        if (($menu[$key][$i][4] == 1 && $gnb_grp_style == false) || ($menu[$key][$i][4] != 1 && $gnb_grp_style == true)) $gnb_grp_div = 'gnb_grp_div';
-        else $gnb_grp_div = '';
+        if (isset($menu[$key][$i][4])){
+            if (($menu[$key][$i][4] == 1 && $gnb_grp_style == false) || ($menu[$key][$i][4] != 1 && $gnb_grp_style == true)) $gnb_grp_div = 'gnb_grp_div';
 
-        if ($menu[$key][$i][4] == 1) $gnb_grp_style = 'gnb_grp_style';
-        else $gnb_grp_style = '';
+            if ($menu[$key][$i][4] == 1) $gnb_grp_style = 'gnb_grp_style';
+        }
 
         $current_class = '';
 

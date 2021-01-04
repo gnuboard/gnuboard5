@@ -2,9 +2,15 @@
 $sub_menu = '400440';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $g5['title'] = '개인결제 관리';
+
+$pp_id = isset($_REQUEST['pp_id']) ? safe_replace_regex($_REQUEST['pp_id'], 'pp_id') : '';
+$popup = isset($_REQUEST['popup']) ? clean_xss_tags($_REQUEST['popup'], 1, 1) : '';
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
+
+$pp = array('pp_name'=>'', 'pp_price'=>0, 'od_id'=>'', 'pp_content'=>'', 'pp_settle_case'=>'', 'pp_receipt_time'=>'', 'pp_receipt_price'=>0, 'pp_shop_memo'=>'');
 
 if ($w == 'u') {
     $html_title = '개인결제 수정';
@@ -275,4 +281,3 @@ if($popup == 'yes') {
 } else {
     include_once (G5_ADMIN_PATH.'/admin.tail.php');
 }
-?>

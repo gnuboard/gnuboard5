@@ -3,8 +3,8 @@ include_once('./_common.php');
 
 $g5['title'] = "로그인 검사";
 
-$mb_id       = trim($_POST['mb_id']);
-$mb_password = trim($_POST['mb_password']);
+$mb_id       = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
+$mb_password = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '';
 
 run_event('member_login_check_before', $mb_id);
 
@@ -31,7 +31,7 @@ if(function_exists('social_is_login_check')){
 // 가입된 회원이 아니다. 비밀번호가 틀리다. 라는 메세지를 따로 보여주지 않는 이유는
 // 회원아이디를 입력해 보고 맞으면 또 비밀번호를 입력해보는 경우를 방지하기 위해서입니다.
 // 불법사용자의 경우 회원아이디가 틀린지, 비밀번호가 틀린지를 알기까지는 많은 시간이 소요되기 때문입니다.
-if (!$is_social_password_check && (!$mb['mb_id'] || !login_password_check($mb, $mb_password, $mb['mb_password'])) ) {
+if (!$is_social_password_check && (! (isset($mb['mb_id']) && $mb['mb_id']) || !login_password_check($mb, $mb_password, $mb['mb_password'])) ) {
 
     run_event('password_is_wrong', 'login', $mb);
 
@@ -75,7 +75,7 @@ if($config['cf_use_point']) {
 
 // 3.26
 // 아이디 쿠키에 한달간 저장
-if ($auto_login) {
+if (isset($auto_login) && $auto_login) {
     // 3.27
     // 자동로그인 ---------------------------
     // 쿠키 한달간 저장
@@ -160,4 +160,3 @@ if( is_admin($mb['mb_id']) && is_dir(G5_DATA_PATH.'/tmp/') ){
 }
 
 goto_url($link);
-?>

@@ -2,7 +2,9 @@
 $sub_menu = '400410';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
+
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
 
 $g5['title'] = "미완료주문 내역";
 include_once(G5_ADMIN_PATH.'/admin.head.php');
@@ -33,7 +35,7 @@ $tot_cp_price = 0;
 if($od['mb_id']) {
     // 상품쿠폰
     $tot_it_cp_price = $tot_od_cp_price = 0;
-    $it_cp_cnt = count($data['cp_id']);
+    $it_cp_cnt = (isset($data['cp_id']) && is_array($data['cp_id'])) ? count($data['cp_id']) : 0;
     $arr_it_cp_prc = array();
     for($i=0; $i<$it_cp_cnt; $i++) {
         $cid = $data['cp_id'][$i];
@@ -44,7 +46,7 @@ if($od['mb_id']) {
                       and mb_id IN ( '{$od['mb_id']}', '전체회원' )
                       and cp_method IN ( 0, 1 ) ";
         $cp = sql_fetch($sql);
-        if(!$cp['cp_id'])
+        if(! (isset($cp['cp_id']) && $cp['cp_id']))
             continue;
 
         // 사용한 쿠폰인지
@@ -96,7 +98,7 @@ if($od['mb_id']) {
     $tot_od_price -= $tot_it_cp_price;
 
     // 주문쿠폰
-    if($data['od_cp_id']) {
+    if(isset($data['od_cp_id']) && $data['od_cp_id']) {
         $sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g5['g5_shop_coupon_table']}
                     where cp_id = '{$data['od_cp_id']}'
@@ -163,10 +165,10 @@ if($od['mb_id'] && $od_send_cost > 0) {
 }
 
 // 추가배송비
-$od_send_cost2 = (int)$data['od_send_cost2'];
+$od_send_cost2 = isset($data['od_send_cost2']) ? (int) $data['od_send_cost2'] : 0;
 
 // 포인트
-$od_temp_point = (int)$data['od_temp_point'];
+$od_temp_point = isset($data['od_temp_point']) ? (int) $data['od_temp_point'] : 0;
 
 $order_price   = $tot_od_price + $od_send_cost + $od_send_cost2 - $tot_sc_cp_price - $od_temp_point;
 
@@ -258,7 +260,7 @@ $pg_anchor = '<ul class="anchor">
                 $ct_point['stotal'] = $opt['ct_point'] * $opt['ct_qty'];
 
                 if($k == 0)
-                    $opt_cp_price = (int)$arr_it_cp_prc[$row['it_id']];
+                    $opt_cp_price = isset($arr_it_cp_prc[$row['it_id']]) ? (int) $arr_it_cp_prc[$row['it_id']] : 0;
                 else
                     $opt_cp_price = 0;
             ?>
@@ -266,7 +268,7 @@ $pg_anchor = '<ul class="anchor">
                 <?php if($k == 0) { ?>
                 <td rowspan="<?php echo $rowspan; ?>">
                     <?php echo $image; ?> <?php echo stripslashes($row['it_name']); ?>
-                    <?php if($od['od_tax_flag'] && $row['ct_notax']) echo '[비과세상품]'; ?>
+                    <?php if(isset($od['od_tax_flag']) && $od['od_tax_flag'] && $row['ct_notax']) echo '[비과세상품]'; ?>
                 </td>
                 <?php } ?>
                 <td><?php echo $opt['ct_option']; ?></td>
@@ -570,4 +572,3 @@ function del_confirm()
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

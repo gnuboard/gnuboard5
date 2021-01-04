@@ -4,35 +4,29 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
 // 대표전화번호 유효성 체크
-if(!check_vaild_callback($_POST['de_admin_company_tel']))
+if(! (isset($_POST['de_admin_company_tel']) && check_vaild_callback($_POST['de_admin_company_tel'])) )
     alert('대표전화번호를 올바르게 입력해 주세요.');
 
 // 로그인을 바로 이 주소로 하는 경우 쇼핑몰설정값이 사라지는 현상을 방지
 if (!$_POST['de_admin_company_owner']) goto_url("./configform.php");
 
-if ($_POST['logo_img_del'])  @unlink(G5_DATA_PATH."/common/logo_img");
-if ($_POST['logo_img_del2'])  @unlink(G5_DATA_PATH."/common/logo_img2");
-if ($_POST['mobile_logo_img_del'])  @unlink(G5_DATA_PATH."/common/mobile_logo_img");
-if ($_POST['mobile_logo_img_del2'])  @unlink(G5_DATA_PATH."/common/mobile_logo_img2");
+if (! empty($_POST['logo_img_del']))  @unlink(G5_DATA_PATH."/common/logo_img");
+if (! empty($_POST['logo_img_del2']))  @unlink(G5_DATA_PATH."/common/logo_img2");
+if (! empty($_POST['mobile_logo_img_del']))  @unlink(G5_DATA_PATH."/common/mobile_logo_img");
+if (! empty($_POST['mobile_logo_img_del2']))  @unlink(G5_DATA_PATH."/common/mobile_logo_img2");
 
 if ($_FILES['logo_img']['name']) upload_file($_FILES['logo_img']['tmp_name'], "logo_img", G5_DATA_PATH."/common");
 if ($_FILES['logo_img2']['name']) upload_file($_FILES['logo_img2']['tmp_name'], "logo_img2", G5_DATA_PATH."/common");
 if ($_FILES['mobile_logo_img']['name']) upload_file($_FILES['mobile_logo_img']['tmp_name'], "mobile_logo_img", G5_DATA_PATH."/common");
 if ($_FILES['mobile_logo_img2']['name']) upload_file($_FILES['mobile_logo_img2']['tmp_name'], "mobile_logo_img2", G5_DATA_PATH."/common");
 
-$de_kcp_mid = substr($_POST['de_kcp_mid'],0,3);
+$de_kcp_mid = isset($_POST['de_kcp_mid']) ? substr($_POST['de_kcp_mid'], 0, 3) : '';
 $cf_icode_server_port = isset($cf_icode_server_port) ? preg_replace('/[^0-9]/', '', $cf_icode_server_port) : '7295';
-
-// kcp 전자결제를 사용할 때 site key 입력체크
-if($_POST['de_pg_service'] == 'kcp' && !$_POST['de_card_test'] && ($_POST['de_iche_use'] || $_POST['de_vbank_use'] || $_POST['de_hp_use'] || $_POST['de_card_use'])) {
-    if(trim($_POST['de_kcp_site_key']) == '')
-        alert('NHN KCP SITE KEY를 입력해 주십시오.');
-}
 
 $de_shop_skin = isset($_POST['de_shop_skin']) ? preg_replace('#\.+(\/|\\\)#', '', $_POST['de_shop_skin']) : 'basic';
 $de_shop_mobile_skin = isset($_POST['de_shop_mobile_skin']) ? preg_replace('#\.+(\/|\\\)#', '', $_POST['de_shop_mobile_skin']) : 'basic';
@@ -244,10 +238,16 @@ $check_sanitize_keys = array(
 );
 
 foreach( $check_sanitize_keys as $key ){
-    $$key = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
+    $$key = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
 }
 
 $warning_msg = '';
+
+// kcp 전자결제를 사용할 때 site key 입력체크
+if($de_pg_service == 'kcp' && ! $de_card_test && ($de_iche_use || $de_vbank_use || $de_hp_use || $de_card_use)) {
+    if(! trim($de_kcp_site_key))
+        alert('NHN KCP SITE KEY를 입력해 주십시오.');
+}
 
 if( $de_kakaopay_enckey && ($de_pg_service === 'inicis' || $de_inicis_lpay_use || $de_inicis_kakaopay_use) ){
     
@@ -460,4 +460,3 @@ if( $warning_msg ){
 } else {
     goto_url("./configform.php");
 }
-?>

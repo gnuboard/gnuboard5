@@ -4,67 +4,23 @@ include_once('./_common.php');
 include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 define("_ORDERMAIL_", true);
 
 $sms_count = 0;
 $sms_messages = array();
 
-if($_FILES['excelfile']['tmp_name']) {
+if(isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) {
     $file = $_FILES['excelfile']['tmp_name'];
 
-    include_once(G5_LIB_PATH.'/Excel/reader.php');
+    include_once(G5_LIB_PATH.'/PHPExcel/IOFactory.php');
 
-    $data = new Spreadsheet_Excel_Reader();
+    $objPHPExcel = PHPExcel_IOFactory::load($file);
+    $sheet = $objPHPExcel->getSheet(0);
 
-    // Set output Encoding.
-    $data->setOutputEncoding('UTF-8');
-
-    /***
-    * if you want you can change 'iconv' to mb_convert_encoding:
-    * $data->setUTFEncoder('mb');
-    *
-    **/
-
-    /***
-    * By default rows & cols indeces start with 1
-    * For change initial index use:
-    * $data->setRowColOffset(0);
-    *
-    **/
-
-
-
-    /***
-    *  Some function for formatting output.
-    * $data->setDefaultFormat('%.2f');
-    * setDefaultFormat - set format for columns with unknown formatting
-    *
-    * $data->setColumnFormat(4, '%.3f');
-    * setColumnFormat - set format for column (apply only to number fields)
-    *
-    **/
-
-    $data->read($file);
-
-    /*
-
-
-     $data->sheets[0]['numRows'] - count rows
-     $data->sheets[0]['numCols'] - count columns
-     $data->sheets[0]['cells'][$i][$j] - data from $i-row $j-column
-
-     $data->sheets[0]['cellsInfo'][$i][$j] - extended info about cell
-
-        $data->sheets[0]['cellsInfo'][$i][$j]['type'] = "date" | "number" | "unknown"
-            if 'type' == "unknown" - use 'raw' value, because  cell contain value with format '0.00';
-        $data->sheets[0]['cellsInfo'][$i][$j]['raw'] = value if cell without format
-        $data->sheets[0]['cellsInfo'][$i][$j]['colspan']
-        $data->sheets[0]['cellsInfo'][$i][$j]['rowspan']
-    */
-
-    error_reporting(E_ALL ^ E_NOTICE);
+    $num_rows = $sheet->getHighestRow();
+    $highestColumn = $sheet->getHighestColumn();
 
     $fail_od_id = array();
     $total_count = 0;
@@ -72,12 +28,17 @@ if($_FILES['excelfile']['tmp_name']) {
     $succ_count = 0;
 
     // $i 사용시 ordermail.inc.php의 $i 때문에 무한루프에 빠짐
-    for ($k = 2; $k <= $data->sheets[0]['numRows']; $k++) {
+    for ($k = 2; $k <= $num_rows; $k++) {
         $total_count++;
 
-        $od_id               = addslashes(trim($data->sheets[0]['cells'][$k][1]));
-        $od_delivery_company = addslashes($data->sheets[0]['cells'][$k][9]);
-        $od_invoice          = addslashes($data->sheets[0]['cells'][$k][10]);
+        $rowData = $sheet->rangeToArray('A' . $k . ':' . $highestColumn . $k,
+                                            NULL,
+                                            TRUE,
+                                            FALSE);
+
+        $od_id               = isset($rowData[0][0]) ? addslashes(trim($rowData[0][0])) : '';
+        $od_delivery_company = isset($rowData[0][8]) ? addslashes($rowData[0][8]) : '';
+        $od_invoice          = isset($rowData[0][9]) ? addslashes($rowData[0][9]) : '';
 
         if(!$od_id || !$od_delivery_company || !$od_invoice) {
             $fail_count++;
@@ -108,9 +69,13 @@ if($_FILES['excelfile']['tmp_name']) {
         change_status($od_id, '준비', '배송');
 
         $succ_count++;
+        
+        $send_sms = isset($_POST['send_sms']) ? clean_xss_tags($_POST['send_sms'], 1, 1) : '';
+        $od_send_mail = isset($_POST['od_send_mail']) ? clean_xss_tags($_POST['od_send_mail'], 1, 1) : '';
+        $send_escrow = isset($_POST['send_escrow']) ? clean_xss_tags($_POST['send_escrow'], 1, 1) : '';
 
         // SMS
-        if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'] && $default['de_sms_use5']) {
+        if($config['cf_sms_use'] == 'icode' && $send_sms && $default['de_sms_use5']) {
             $sms_contents = conv_sms_contents($od_id, $default['de_sms_cont5']);
             if($sms_contents) {
                 $receive_number = preg_replace("/[^0-9]/", "", $od['od_hp']);	// 수신자번호
@@ -122,11 +87,11 @@ if($_FILES['excelfile']['tmp_name']) {
         }
 
         // 메일
-        if($config['cf_email_use'] && $_POST['od_send_mail'])
+        if($config['cf_email_use'] && $od_send_mail)
             include './ordermail.inc.php';
 
         // 에스크로 배송
-        if($_POST['send_escrow'] && $od['od_tno'] && $od['od_escrow']) {
+        if($send_escrow && $od['od_tno'] && $od['od_escrow']) {
             $escrow_tno  = $od['od_tno'];
             $escrow_numb = $od_invoice;
             $escrow_corp = $od_delivery_company;
@@ -217,4 +182,3 @@ include_once(G5_PATH.'/head.sub.php');
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

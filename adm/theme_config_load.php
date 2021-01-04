@@ -6,7 +6,7 @@ include_once(G5_LIB_PATH.'/json.lib.php');
 $data = array();
 $data['error'] = '';
 
-$data['error'] = auth_check($auth[$sub_menu], 'w', true);
+$data['error'] = auth_check_menu($auth, $sub_menu, 'w', true);
 if($data['error'])
     die(json_encode($data));
 
@@ -183,4 +183,3 @@ if($type == 'board') {
 }
 
 die(json_encode($data));
-?>

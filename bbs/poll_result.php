@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
+$po_id   = isset($_REQUEST['po_id']) ? (int) $_REQUEST['po_id'] : '';
+
 $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$po_id}' ");
 if (!$po['po_id'])
     alert('설문조사 정보가 없습니다.');
@@ -15,9 +17,11 @@ $po_subject = $po['po_subject'];
 
 $max = 1;
 $total_po_cnt = 0;
-for ($i=1; $i<=9; $i++) {
+$poll_max_count = 9;
+
+for ($i=1; $i<=$poll_max_count; $i++) {
     $poll = $po['po_poll'.$i];
-    if ($poll == '') break;
+    if (! $poll) break;
 
     $count = $po['po_cnt'.$i];
     $total_po_cnt += $count;
@@ -29,12 +33,14 @@ $nf_total_po_cnt = number_format($total_po_cnt);
 
 $list = array();
 
-for ($i=1; $i<=9; $i++) {
+for ($i=1; $i<=$poll_max_count; $i++) {
     $poll = $po['po_poll'.$i];
-    if ($poll == '') { break; }
+    if (! $poll) { break; }
 
     $list[$i]['content'] = $poll;
     $list[$i]['cnt'] = $po['po_cnt'.$i];
+    $list[$i]['rate'] = 0;
+
     if ($total_po_cnt > 0)
         $list[$i]['rate'] = ($list[$i]['cnt'] / $total_po_cnt) * 100;
 
@@ -112,4 +118,3 @@ if (!file_exists($poll_skin_path.'/poll_result.skin.php')) die('skin error');
 include_once ($poll_skin_path.'/poll_result.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

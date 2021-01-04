@@ -79,4 +79,3 @@ $result = sql_query($sql);
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

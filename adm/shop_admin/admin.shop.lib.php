@@ -218,5 +218,4 @@ function check_order_inicis_tmps(){
 
         set_cookie('admin_visit_time', G5_SERVER_TIME, 3600);   //1시간 간격으로 체크
     }
-}   //end function check_order_inicis_tmps
-?>
+}   //end function check_order_inicis_tmps;

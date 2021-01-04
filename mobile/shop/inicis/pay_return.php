@@ -7,7 +7,7 @@ set_session('P_TID',  '');
 set_session('P_AMT',  '');
 set_session('P_HASH', '');
 
-$oid = preg_replace('/[^0-9a-z_-]/i', '', $oid);
+$oid = isset($_REQUEST['oid']) ? preg_replace('/[^0-9a-z_\-]/i', '', $_REQUEST['oid']) : '';
 
 $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
 $row = sql_fetch($sql);
@@ -41,7 +41,7 @@ if(isset($data['pp_id']) && $data['pp_id']) {
 $sql = " select * from {$g5['g5_shop_inicis_log_table']} where oid = '$oid' ";
 $row = sql_fetch($sql);
 
-if(!$row['oid'])
+if(! (isset($row['oid']) && $row['oid']))
     alert('결제 정보가 존재하지 않습니다.\\n\\n올바른 방법으로 이용해 주십시오.', $page_return_url);
 
 if($row['P_STATUS'] != '00')
@@ -93,4 +93,3 @@ function setPAYResult() {
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

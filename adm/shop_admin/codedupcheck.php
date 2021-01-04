@@ -18,4 +18,3 @@ else if ($ca_id)
 }
 
 echo '{ "code": "' . $code . '", "name": "' . $name . '" }';
-?>

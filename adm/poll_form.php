@@ -2,9 +2,15 @@
 $sub_menu = "200900";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 $po_id = isset($po_id) ? (int) $po_id : 0;
+$po = array(
+'po_subject'=>'',
+'po_etc'=>'',
+'po_level'=>'',
+'po_point'=>'',
+);
 
 $html_title = '투표';
 if ($w == '')
@@ -48,7 +54,8 @@ include_once('./admin.head.php');
             $sound_only = '<strong class="sound_only">필수</strong>';
         }
 
-        $po_poll = get_text($po['po_poll'.$i]);
+        $po_poll = isset($po['po_poll'.$i]) ? get_text($po['po_poll'.$i]) : '';
+        $po_cnt = isset($po['po_cnt'.$i]) ? get_text($po['po_cnt'.$i]) : 0;
     ?>
 
     <tr>
@@ -56,7 +63,7 @@ include_once('./admin.head.php');
         <td>
             <input type="text" name="po_poll<?php echo $i ?>" value="<?php echo $po_poll ?>" id="po_poll<?php echo $i ?>" <?php echo $required ?> class="frm_input <?php echo $required ?>" maxlength="125">
             <label for="po_cnt<?php echo $i ?>">항목 <?php echo $i ?> 투표수</label>
-            <input type="text" name="po_cnt<?php echo $i ?>" value="<?php echo $po['po_cnt'.$i] ?>" id="po_cnt<?php echo $i ?>" class="frm_input" size="3">
+            <input type="text" name="po_cnt<?php echo $i ?>" value="<?php echo $po_cnt; ?>" id="po_cnt<?php echo $i ?>" class="frm_input" size="3">
        </td>
     </tr>
 
@@ -112,4 +119,3 @@ include_once('./admin.head.php');
 
 <?php
 include_once('./admin.tail.php');
-?>

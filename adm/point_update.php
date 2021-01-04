@@ -2,14 +2,14 @@
 $sub_menu = "200200";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 check_admin_token();
 
-$mb_id = strip_tags(clean_xss_attributes($_POST['mb_id']));
-$po_point = strip_tags(clean_xss_attributes($_POST['po_point']));
-$po_content = strip_tags(clean_xss_attributes($_POST['po_content']));
-$expire = preg_replace('/[^0-9]/', '', $_POST['po_expire_term']);
+$mb_id = isset($_POST['mb_id']) ? strip_tags(clean_xss_attributes($_POST['mb_id'])) : '';
+$po_point = isset($_POST['po_point']) ? strip_tags(clean_xss_attributes($_POST['po_point'])) : 0;
+$po_content = isset($_POST['po_content']) ? strip_tags(clean_xss_attributes($_POST['po_content'])) : '';
+$expire = isset($_POST['po_expire_term']) ? preg_replace('/[^0-9]/', '', $_POST['po_expire_term']) : '';
 
 $mb = get_member($mb_id);
 
@@ -22,4 +22,3 @@ if (($po_point < 0) && ($po_point * (-1) > $mb['mb_point']))
 insert_point($mb_id, $po_point, $po_content, '@passive', $mb_id, $member['mb_id'].'-'.uniqid(''), $expire);
 
 goto_url('./point_list.php?'.$qstr);
-?>

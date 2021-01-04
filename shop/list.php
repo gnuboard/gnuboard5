@@ -1,6 +1,9 @@
 <?php
 include_once('./_common.php');
 
+$ca_id = isset($_REQUEST['ca_id']) ? safe_replace_regex($_REQUEST['ca_id'], 'ca_id') : '';
+$skin = isset($_REQUEST['skin']) ? safe_replace_regex($_REQUEST['skin'], 'skin') : '';
+
 // 상품 리스트에서 다른 필드로 정렬을 하려면 아래의 배열 코드에서 해당 필드를 추가하세요.
 if( isset($sort) && ! in_array($sort, array('it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time')) ){
     $sort='';
@@ -13,7 +16,7 @@ if (G5_IS_MOBILE) {
 
 $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' and ca_use = '1'  ";
 $ca = sql_fetch($sql);
-if (!$ca['ca_id'])
+if (! (isset($ca['ca_id']) && $ca['ca_id']))
     alert('등록된 분류가 없습니다.');
 
 // 테마미리보기 스킨 등의 변수 재설정
@@ -145,15 +148,11 @@ var itemlist_ca_id = "<?php echo $ca_id; ?>";
     {
         echo '<div class="sct_nofile">'.str_replace(G5_PATH.'/', '', $skin_file).' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
     }
-    ?>
 
-    <?php
-    $qstr1 .= 'ca_id='.$ca_id;
+    $qstr1 = 'ca_id='.$ca_id;
     $qstr1 .='&amp;sort='.$sort.'&amp;sortodr='.$sortodr;
     echo get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr1.'&amp;page=');
-    ?>
 
-    <?php
     // 하단 HTML
     echo '<div id="sct_thtml">'.conv_content($ca['ca_tail_html'], 1).'</div>';
 
@@ -168,4 +167,3 @@ else
     include_once(G5_SHOP_PATH.'/_tail.php');
 
 echo "\n<!-- {$ca['ca_skin']} -->\n";
-?>

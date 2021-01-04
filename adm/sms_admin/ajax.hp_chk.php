@@ -10,11 +10,13 @@ if( !function_exists('json_encode') ) {
     }
 }
 
-ajax_auth_check($auth[$sub_menu], "r");
+ajax_auth_check_menu($auth, $sub_menu, "r");
 
 $err = '';
 $arr_ajax_msg = array();
 $exist_hplist = array();
+
+$bk_hp = isset($_REQUEST['bk_hp']) ? clean_xss_tags($_REQUEST['bk_hp'], 1, 1) : '';
 
 if( !$bk_hp )
     $err = '휴대폰번호를 입력해 주십시오.';
@@ -47,5 +49,3 @@ $arr_ajax_msg['error'] = $err;
 $arr_ajax_msg['exist'] = $exist_hplist;
 
 die( json_encode($arr_ajax_msg) );
-
-?>

@@ -190,4 +190,3 @@ class PayService extends  SoapClient
         return  $this->approveResponse->return;
     }
 }
-?>

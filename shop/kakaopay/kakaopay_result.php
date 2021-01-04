@@ -26,4 +26,3 @@ if( isset($_REQUEST['P_STATUS']) && isset($_REQUEST['P_TID']) && isset($_REQUEST
 
 include G5_SHOP_PATH.'/kakaopay/pc_pay_result.php';
 return;
-?>

@@ -104,7 +104,7 @@ if (!$is_search_bbs) {
 
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         $list[$i]['is_notice'] = true;
-
+        $list[$i]['num'] = 0;
         $i++;
         $notice_count++;
 
@@ -253,4 +253,3 @@ if ($board['bo_use_rss_view']) {
 
 $stx = get_text(stripslashes($stx));
 include_once($board_skin_path.'/list.skin.php');
-?>

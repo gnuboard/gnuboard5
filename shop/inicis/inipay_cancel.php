@@ -61,4 +61,3 @@ if($cancelFlag == "true")
         $inipay->MakeTXErrMsg(MERCHANT_DB_ERR,"Merchant DB FAIL");
     }
 }
-?>

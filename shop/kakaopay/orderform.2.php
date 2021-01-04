@@ -17,4 +17,3 @@ if($is_kakaopay_use) {
 
 <?php
 }
-?>

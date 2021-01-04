@@ -4,6 +4,8 @@ include_once(G5_LIB_PATH.'/json.lib.php');
 
 define('G5_IS_SHOP_AJAX_LIST', true);
 
+$ca_id = isset($_REQUEST['ca_id']) ? safe_replace_regex($_REQUEST['ca_id'], 'ca_id') : '';
+
 $data = array();
 
 $sql = " select *
@@ -75,4 +77,3 @@ $data['error'] = '';
 $data['page']  = $page;
 
 die(json_encode($data));
-?>

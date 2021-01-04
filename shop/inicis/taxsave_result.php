@@ -12,6 +12,8 @@ include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
  * Copyright (C) 2006 Inicis, Co. All rights reserved.
  */
 
+$companynumber = isset($_REQUEST['companynumber']) ? clean_xss_tags($_REQUEST['companynumber'], 1, 1) : '';
+
 if($tx == 'personalpay') {
     $od = sql_fetch(" select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$od_id' ");
     if (!$od)
@@ -190,4 +192,3 @@ function showreceipt() // 현금 영수증 출력
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

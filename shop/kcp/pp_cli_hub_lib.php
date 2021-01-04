@@ -288,4 +288,3 @@ class   C_PAYPLUS_CLI_T
       return  $rt;
     }
 }
-?>

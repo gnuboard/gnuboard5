@@ -341,4 +341,4 @@ var char_max = parseInt(<?php echo $comment_max ?>); // 최대
         });
     });
     </script>
-    <?php } ?>
+    <?php }

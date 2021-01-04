@@ -273,4 +273,3 @@ function form_check(act) {
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

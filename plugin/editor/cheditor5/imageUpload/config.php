@@ -68,6 +68,3 @@ function che_replace_filename($filename){
 
     return $file_arr[0].'_'.$passname.'_'.$random_str.'.'.$ext;
 }
-
-// ---------------------------------------------------------------------------
-?>

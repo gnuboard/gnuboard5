@@ -39,4 +39,4 @@ function paybtn(f) {
     INIStdPay.pay(f.id);
 }
 </script>
-<?php } ?>
+<?php }

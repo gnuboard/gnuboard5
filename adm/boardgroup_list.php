@@ -2,7 +2,7 @@
 $sub_menu = "300200";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 if (!isset($group['gr_device'])) {
     // 게시판 그룹 사용 필드 추가
@@ -10,7 +10,7 @@ if (!isset($group['gr_device'])) {
     // pc : pc 전용 사용
     // mobile : mobile 전용 사용
     // none : 사용 안함
-    sql_query(" ALTER TABLE  `{$g5['board_group_table']}` ADD  `gr_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
+    sql_query(" ALTER TABLE  `{$g5['group_table']}` ADD  `gr_device` ENUM(  'both',  'pc',  'mobile' ) NOT NULL DEFAULT  'both' AFTER  `gr_subject` ", false);
 }
 
 $sql_common = " from {$g5['group_table']} ";
@@ -66,9 +66,9 @@ $colspan = 10;
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl" id="sfl">
-    <option value="gr_subject"<?php echo get_selected($_GET['sfl'], "gr_subject"); ?>>제목</option>
-    <option value="gr_id"<?php echo get_selected($_GET['sfl'], "gr_id"); ?>>ID</option>
-    <option value="gr_admin"<?php echo get_selected($_GET['sfl'], "gr_admin"); ?>>그룹관리자</option>
+    <option value="gr_subject"<?php echo get_selected($sfl, "gr_subject"); ?>>제목</option>
+    <option value="gr_id"<?php echo get_selected($sfl, "gr_id"); ?>>ID</option>
+    <option value="gr_admin"<?php echo get_selected($sfl, "gr_admin"); ?>>그룹관리자</option>
 </select>
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" id="stx" value="<?php echo $stx ?>" required class="required frm_input">
@@ -208,4 +208,3 @@ function fboardgrouplist_submit(f)
 
 <?php
 include_once('./admin.tail.php');
-?>

@@ -5,6 +5,8 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 if (!$is_member)
     alert_close('회원만 메일을 발송할 수 있습니다.');
 
+$it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
+
 // 스팸으로 인한 코드 수정 060809
 //if (substr_count($to_email, "@") > 3) alert("최대 3명까지만 메일을 발송할 수 있습니다.");
 if (substr_count($to_email, "@") > 1) alert('메일 주소는 하나씩만 입력해 주십시오.');
@@ -19,7 +21,7 @@ if ($recommendmail_count > 3)
 set_session('ss_recommendmail_count', $recommendmail_count);
 
 // 세션에 저장된 토큰과 폼값으로 넘어온 토큰을 비교하여 틀리면 메일을 발송할 수 없다.
-if ($_POST["token"] && get_session("ss_token") == $_POST["token"]) {
+if (isset($_POST["token"]) && get_session("ss_token") === $_POST["token"]) {
     // 맞으면 세션을 지워 다시 입력폼을 통해서 들어오도록 한다.
     set_session("ss_token", "");
 } else {
@@ -29,11 +31,11 @@ if ($_POST["token"] && get_session("ss_token") == $_POST["token"]) {
 
 // 상품
 $it = get_shop_item($it_id, true);
-if (!$it['it_id'])
+if (! (isset($it['it_id']) && $it['it_id']))
     alert("등록된 상품이 아닙니다.");
 
-$subject = stripslashes($subject);
-$content = nl2br(stripslashes($content));
+$subject = isset($_POST['subject']) ? stripslashes($_POST['subject']) : '';
+$content = isset($_POST['content']) ? nl2br(stripslashes($_POST['content'])) : '';
 
 $from_name = get_text($member['mb_name']);
 $from_email = $member['mb_email'];

@@ -1,14 +1,15 @@
 <?php
 include_once('./_common.php');
 
-$g5['title'] = '주문번호 '.$od_id.' 현금영수증 발행';
-include_once(G5_PATH.'/head.sub.php');
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
+$tx = isset($_REQUEST['tx']) ? clean_xss_tags($_REQUEST['tx'], 1, 1) : '';
 
 if (!$od_id){
     alert('주문번호가 누락되었습니다.');
 }
 
-$od_id = preg_replace('/[^a-z0-9_-]/i', '', $od_id);
+$g5['title'] = '주문번호 '.$od_id.' 현금영수증 발행';
+include_once(G5_PATH.'/head.sub.php');
 
 if($tx == 'personalpay') {
     $od = sql_fetch(" select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$od_id' ");
@@ -58,4 +59,3 @@ if(!$dir)
 include_once(G5_SHOP_PATH.'/'.$dir.'/taxsave_form.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

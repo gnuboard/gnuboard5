@@ -2,7 +2,7 @@
 $sub_menu = '500210';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '가격비교사이트';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -55,4 +55,3 @@ $pg_anchor = '<ul class="anchor">
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

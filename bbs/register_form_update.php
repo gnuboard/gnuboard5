@@ -24,18 +24,18 @@ if (!chk_captcha()) {
 if($w == 'u')
     $mb_id = isset($_SESSION['ss_mb_id']) ? trim($_SESSION['ss_mb_id']) : '';
 else if($w == '')
-    $mb_id = trim($_POST['mb_id']);
+    $mb_id = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
 else
     alert('잘못된 접근입니다', G5_URL);
 
 if(!$mb_id)
     alert('회원아이디 값이 없습니다. 올바른 방법으로 이용해 주십시오.');
 
-$mb_password    = trim($_POST['mb_password']);
-$mb_password_re = trim($_POST['mb_password_re']);
-$mb_name        = trim($_POST['mb_name']);
-$mb_nick        = trim($_POST['mb_nick']);
-$mb_email       = trim($_POST['mb_email']);
+$mb_password    = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '';
+$mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re']) : '';
+$mb_name        = isset($_POST['mb_name']) ? trim($_POST['mb_name']) : '';
+$mb_nick        = isset($_POST['mb_name']) ? trim($_POST['mb_nick']) : '';
+$mb_email       = isset($_POST['mb_name']) ? trim($_POST['mb_email']) : '';
 $mb_sex         = isset($_POST['mb_sex'])           ? trim($_POST['mb_sex'])         : "";
 $mb_birth       = isset($_POST['mb_birth'])         ? trim($_POST['mb_birth'])       : "";
 $mb_homepage    = isset($_POST['mb_homepage'])      ? trim($_POST['mb_homepage'])    : "";
@@ -127,7 +127,8 @@ if ($w == '' || $w == 'u') {
 
         // 본인확인 체크
         if($config['cf_cert_use'] && $config['cf_cert_req']) {
-            if(trim($_POST['cert_no']) != $_SESSION['ss_cert_no'] || !$_SESSION['ss_cert_no'])
+            $post_cert_no = isset($_POST['cert_no']) ? trim($_POST['cert_no']) : '';
+            if($post_cert_no !== get_session('ss_cert_no') || ! get_session('ss_cert_no'))
                 alert("회원가입을 위해서는 본인확인을 해주셔야 합니다.");
         }
 
@@ -161,9 +162,9 @@ if ($w == '' || $w == 'u') {
 //  본인확인
 //---------------------------------------------------------------
 $mb_hp = hyphen_hp_number($mb_hp);
-if($config['cf_cert_use'] && $_SESSION['ss_cert_type'] && $_SESSION['ss_cert_dupinfo']) {
+if($config['cf_cert_use'] && get_session('ss_cert_type') && get_session('ss_cert_dupinfo')) {
     // 중복체크
-    $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$_SESSION['ss_cert_dupinfo']}' ";
+    $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
     $row = sql_fetch($sql);
     if ($row['mb_id']) {
         alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
@@ -171,17 +172,17 @@ if($config['cf_cert_use'] && $_SESSION['ss_cert_type'] && $_SESSION['ss_cert_dup
 }
 
 $sql_certify = '';
-$md5_cert_no = $_SESSION['ss_cert_no'];
-$cert_type = $_SESSION['ss_cert_type'];
+$md5_cert_no = get_session('ss_cert_no');
+$cert_type = get_session('ss_cert_type');
 if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
     // 해시값이 같은 경우에만 본인확인 값을 저장한다.
-    if ($_SESSION['ss_cert_hash'] == md5($mb_name.$cert_type.$_SESSION['ss_cert_birth'].$md5_cert_no)) {
+    if (get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) {
         $sql_certify .= " , mb_hp = '{$mb_hp}' ";
         $sql_certify .= " , mb_certify  = '{$cert_type}' ";
-        $sql_certify .= " , mb_adult = '{$_SESSION['ss_cert_adult']}' ";
-        $sql_certify .= " , mb_birth = '{$_SESSION['ss_cert_birth']}' ";
-        $sql_certify .= " , mb_sex = '{$_SESSION['ss_cert_sex']}' ";
-        $sql_certify .= " , mb_dupinfo = '{$_SESSION['ss_cert_dupinfo']}' ";
+        $sql_certify .= " , mb_adult = '".get_session('ss_cert_adult')."' ";
+        $sql_certify .= " , mb_birth = '".get_session('ss_cert_birth')."' ";
+        $sql_certify .= " , mb_sex = '".get_session('ss_cert_sex')."' ";
+        $sql_certify .= " , mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
         if($w == 'u')
             $sql_certify .= " , mb_name = '{$mb_name}' ";
     } else {
@@ -304,7 +305,7 @@ if ($w == '') {
     set_session('ss_mb_reg', $mb_id);
 
 } else if ($w == 'u') {
-    if (!trim($_SESSION['ss_mb_id']))
+    if (!trim(get_session('ss_mb_id')))
         alert('로그인 되어 있지 않습니다.');
 
     if (trim($_POST['mb_id']) != $mb_id)
@@ -553,11 +554,11 @@ if($w == '' && $default['de_member_reg_coupon_use'] && $default['de_member_reg_c
 // 사용자 코드 실행
 @include_once ($member_skin_path.'/register_form_update.tail.skin.php');
 
-unset($_SESSION['ss_cert_type']);
-unset($_SESSION['ss_cert_no']);
-unset($_SESSION['ss_cert_hash']);
-unset($_SESSION['ss_cert_birth']);
-unset($_SESSION['ss_cert_adult']);
+if(isset($_SESSION['ss_cert_type'])) unset($_SESSION['ss_cert_type']);
+if(isset($_SESSION['ss_cert_no'])) unset($_SESSION['ss_cert_no']);
+if(isset($_SESSION['ss_cert_hash'])) unset($_SESSION['ss_cert_hash']);
+if(isset($_SESSION['ss_cert_hash'])) unset($_SESSION['ss_cert_birth']);
+if(isset($_SESSION['ss_cert_hash'])) unset($_SESSION['ss_cert_adult']);
 
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
@@ -595,4 +596,3 @@ if ($w == '') {
         </html>';
     }
 }
-?>

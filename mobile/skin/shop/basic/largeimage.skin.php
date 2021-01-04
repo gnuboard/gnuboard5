@@ -73,7 +73,7 @@ function fit_width()
     var sw = $(window).width();
     var $img = $("#sit_pvi_nwbig span img");
 
-    if($img.size() < 1)
+    if($img.length < 1)
         return;
 
     $img.each(function() {

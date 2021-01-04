@@ -12,4 +12,3 @@ $output['signature'] = array(
 );
 
 echo json_encode($output);
-?>

@@ -8,4 +8,3 @@ if(defined('G5_COMMUNITY_USE') && G5_COMMUNITY_USE === false) {
 
     define('_SHOP_', true);
 }
-?>

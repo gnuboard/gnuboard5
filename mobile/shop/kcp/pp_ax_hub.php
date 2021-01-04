@@ -23,33 +23,31 @@
     /* = -------------------------------------------------------------------------- = */
     /* =   환경 설정 파일 Include END                                               = */
     /* ============================================================================== */
-?>
 
-<?php
     /* ============================================================================== */
     /* =   01. 지불 요청 정보 설정                                                  = */
     /* = -------------------------------------------------------------------------- = */
-	$req_tx         = $_POST[ "req_tx"         ]; // 요청 종류
-	$tran_cd        = preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "tran_cd"        ]); // 처리 종류
+	$req_tx         = isset($_POST["req_tx"]) ? $_POST["req_tx"] : ''; // 요청 종류
+	$tran_cd        = isset($_POST["tran_cd"]) ? preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST["tran_cd"]) : ''; // 처리 종류
 	/* = -------------------------------------------------------------------------- = */
 	$cust_ip        = getenv( "REMOTE_ADDR"    ); // 요청 IP
-	$ordr_idxx      = preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "ordr_idxx"      ]); // 쇼핑몰 주문번호
-	$good_name      = addslashes($_POST[ "good_name"      ]); // 상품명
-	$good_mny       = $_POST[ "good_mny"       ]; // 결제 총금액
+	$ordr_idxx      = isset($_POST["ordr_idxx"]) ? preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST["ordr_idxx"]) : ''; // 쇼핑몰 주문번호
+	$good_name      = isset($_POST["good_name"]) ? addslashes($_POST["good_name"]) : ''; // 상품명
+	$good_mny       = isset($_POST["good_mny"]) ? $_POST["good_mny"] : ''; // 결제 총금액
 	/* = -------------------------------------------------------------------------- = */
     $res_cd         = "";                         // 응답코드
     $res_msg        = "";                         // 응답메시지
-    $tno            = $_POST[ "tno"            ]; // KCP 거래 고유 번호
+    $tno            = isset($_POST["tno"]) ? $_POST["tno"] : ''; // KCP 거래 고유 번호
     /* = -------------------------------------------------------------------------- = */
-    $buyr_name      = addslashes($_POST[ "buyr_name"      ]); // 주문자명
-    $buyr_tel1      = $_POST[ "buyr_tel1"      ]; // 주문자 전화번호
-    $buyr_tel2      = $_POST[ "buyr_tel2"      ]; // 주문자 핸드폰 번호
-    $buyr_mail      = $_POST[ "buyr_mail"      ]; // 주문자 E-mail 주소
+    $buyr_name      = isset($_POST["buyr_name"]) ? addslashes($_POST["buyr_name"]) : ''; // 주문자명
+    $buyr_tel1      = isset($_POST["buyr_tel1"]) ? $_POST["buyr_tel1"] : ''; // 주문자 전화번호
+    $buyr_tel2      = isset($_POST["buyr_tel2"]) ? $_POST["buyr_tel2"] : ''; // 주문자 핸드폰 번호
+    $buyr_mail      = isset($_POST["buyr_mail"]) ? $_POST["buyr_mail"] : ''; // 주문자 E-mail 주소
     /* = -------------------------------------------------------------------------- = */
-    $mod_type       = $_POST[ "mod_type"       ]; // 변경TYPE VALUE 승인취소시 필요
-    $mod_desc       = $_POST[ "mod_desc"       ]; // 변경사유
+    $mod_type       = isset($_POST["mod_type"]) ? $_POST["mod_type"] : ''; // 변경TYPE VALUE 승인취소시 필요
+    $mod_desc       = isset($_POST["mod_desc"]) ? $_POST["mod_desc"] : ''; // 변경사유
     /* = -------------------------------------------------------------------------- = */
-    $use_pay_method = $_POST[ "use_pay_method" ]; // 결제 방법
+    $use_pay_method = isset($_POST["use_pay_method"]) ? $_POST["use_pay_method"] : ''; // 결제 방법
     $bSucc          = "";                         // 업체 DB 처리 성공 여부
     /* = -------------------------------------------------------------------------- = */
 	$app_time       = "";                         // 승인시간 (모든 결제 수단 공통)
@@ -84,10 +82,10 @@
 	$tk_van_code    = "";                         // 발급사 코드
 	$tk_app_no      = "";                         // 상품권 승인 번호
 	/* = -------------------------------------------------------------------------- = */
-    $cash_yn        = $_POST[ "cash_yn"        ]; // 현금영수증 등록 여부
+    $cash_yn        = isset($_POST["cash_yn"]) ? $_POST["cash_yn"] : ''; // 현금영수증 등록 여부
     $cash_authno    = "";                         // 현금 영수증 승인 번호
-    $cash_tr_code   = $_POST[ "cash_tr_code"   ]; // 현금 영수증 발행 구분
-    $cash_id_info   = $_POST[ "cash_id_info"   ]; // 현금 영수증 등록 번호
+    $cash_tr_code   = isset($_POST["cash_tr_code"]) ? $_POST["cash_tr_code"] : ''; // 현금 영수증 발행 구분
+    $cash_id_info   = isset($_POST["cash_id_info"]) ? $_POST["cash_id_info"] : ''; // 현금 영수증 등록 번호
     /* ============================================================================== */
 
     /* ============================================================================== */
@@ -112,7 +110,10 @@
     /* = -------------------------------------------------------------------------- = */
     if ( $req_tx == "pay" )
     {
-            $c_PayPlus->mf_set_encx_data( $_POST[ "enc_data" ], $_POST[ "enc_info" ] );
+        $post_enc_data = isset($_POST["enc_data"]) ? $_POST["enc_data"] : '';
+        $post_enc_info = isset($_POST["enc_info"]) ? $_POST["enc_info"] : '';
+
+        $c_PayPlus->mf_set_encx_data( $post_enc_data, $post_enc_info );
     }
 
     /* = -------------------------------------------------------------------------- = */
@@ -282,5 +283,4 @@
 	}
 	/* = -------------------------------------------------------------------------- = */
     /* =   05. 승인 결과 처리 END                                                   = */
-    /* ============================================================================== */
-?>
+    /* ============================================================================== */;

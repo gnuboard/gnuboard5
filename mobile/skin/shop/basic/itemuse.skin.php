@@ -30,7 +30,6 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_MSHOP_SKIN_URL.'/style.css">',
         $is_reply_subject = !empty($row['is_reply_subject']) ? conv_subject($row['is_reply_subject'],50,"…") : '';
         $is_reply_content = !empty($row['is_reply_content']) ? get_view_thumbnail(conv_content($row['is_reply_content'], 1), $thumbnail_width) : '';
         $is_time    = substr($row['is_time'], 2, 8);
-        $is_href    = './itemuselist.php?bo_table=itemuse&amp;wr_id='.$row['wr_id'];
 
         $hash = md5($row['is_id'].$row['is_time'].$row['is_ip']);
 

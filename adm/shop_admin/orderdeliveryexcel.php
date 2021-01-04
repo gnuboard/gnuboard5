@@ -2,7 +2,7 @@
 $sub_menu = '400400';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 // 주문정보
 $sql = " select *
@@ -15,7 +15,11 @@ $result = sql_query($sql);
 if(!@sql_num_rows($result))
     alert_close('배송처리할 주문 내역이 없습니다.');
 
-function column_char($i) { return chr( 65 + $i ); }
+if(! function_exists('column_char')) {
+    function column_char($i) {
+        return chr( 65 + $i );
+    }
+}
 
 if (phpversion() >= '5.2.0') {
     include_once(G5_LIB_PATH.'/PHPExcel.php');
@@ -24,6 +28,7 @@ if (phpversion() >= '5.2.0') {
     $widths  = array(18, 15, 15, 15, 15, 15, 15, 50, 20, 20);
     $header_bgcolor = 'FFABCDEF';
     $last_char = column_char(count($headers) - 1);
+    $rows = array();
 
     for($i=1; $row=sql_fetch_array($result); $i++) {
         $rows[] = 
@@ -97,4 +102,3 @@ if (phpversion() >= '5.2.0') {
     fpassthru($fh);
     unlink($fname);
 }
-?>

@@ -388,4 +388,3 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 <?php
 // locale 설정 초기화
 setlocale(LC_CTYPE, '');
-?>

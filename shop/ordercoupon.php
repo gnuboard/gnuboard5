@@ -4,7 +4,7 @@ include_once('./_common.php');
 if($is_guest)
     exit;
 
-$price = (int)preg_replace('#[^0-9]#', '', $_POST['price']);
+$price = isset($_POST['price']) ? preg_replace('#[^0-9]#', '', $_POST['price']) : 0;
 
 if($price <= 0)
     die('상품금액이 0원이므로 쿠폰을 사용할 수 없습니다.');

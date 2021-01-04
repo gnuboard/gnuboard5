@@ -175,11 +175,12 @@ class naverpay_register
             $shipping .= '&SHIPPING_ADDITIONAL_PRICE='.urlencode(SHIPPING_ADDITIONAL_PRICE);
 
         if($item) {
+            $na_co_val = isset($_COOKIE['NA_CO']) ? urlencode($_COOKIE['NA_CO']) : '';
             $query .= 'SHOP_ID='.urlencode($default['de_naverpay_mid']);
             $query .= '&CERTI_KEY='.urlencode($default['de_naverpay_cert_key']);
             $query .= $shipping;
             $query .= '&BACK_URL='.urlencode(NAVERPAY_BACK_URL);
-            $query .= '&NAVER_INFLOW_CODE='.urlencode($_COOKIE['NA_CO']);
+            $query .= '&NAVER_INFLOW_CODE='.$na_co_val;
             $query .= $item;
             $query .= '&TOTAL_PRICE='.$total;
         }
@@ -332,4 +333,3 @@ function return_error2json($str, $fld='error')
 
     die(json_encode($data));
 }
-?>

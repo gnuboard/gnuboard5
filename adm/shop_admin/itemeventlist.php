@@ -2,15 +2,15 @@
 $sub_menu = '500310';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-$ev_id = preg_replace('/[^0-9]/', '', $ev_id);
-$sort1 = strip_tags($sort1);
-if (!in_array($sort1, array('a.it_id', 'it_name'))) $sort1 = "a.it_id";
-$sel_field = in_array($sel_field, array('a.it_id', 'it_name')) ? strip_tags($sel_field) : 'it_name';
-$sel_ca_id = get_search_string($sel_ca_id);
-$search = get_search_string($search);
-$ev_title = isset($ev_title) ? strip_tags($ev_title) : '';
+$ev_id = isset($_GET['ev_id']) ? preg_replace('/[^0-9]/', '', $_GET['ev_id']) : '';
+$sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('a.it_id', 'it_name'))) ? $_GET['sort1'] : 'a.it_id';
+$sort2 = (isset($_GET['sort2']) && in_array($_GET['sort2'], array('desc', 'asc'))) ? $_GET['sort2'] : 'desc';
+$sel_field = (isset($_GET['sel_field']) && in_array($_GET['sel_field'], array('a.it_id', 'it_name')) ) ? $_GET['sel_field'] : 'it_name';
+$sel_ca_id = isset($_GET['sel_ca_id']) ? get_search_string($_GET['sel_ca_id']) : '';
+$search = isset($_GET['search']) ? get_search_string($_GET['search']) : '';
+$ev_title = isset($ev_title) ? clean_xss_tags($ev_title, 1, 1) : '';
 
 $g5['title'] = '이벤트일괄처리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -213,4 +213,3 @@ function fitemeventlistupdatecheck(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

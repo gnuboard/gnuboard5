@@ -10,4 +10,3 @@ include_once(G5_ADMIN_PATH.'/admin.lib.php');
 include_once('./admin.shop.lib.php');
 
 check_order_inicis_tmps();
-?>

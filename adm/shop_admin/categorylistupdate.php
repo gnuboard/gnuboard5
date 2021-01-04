@@ -4,11 +4,13 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
-for ($i=0; $i<count($_POST['ca_id']); $i++)
+$post_ca_id_count = (isset($_POST['ca_id']) && is_array($_POST['ca_id'])) ? count($_POST['ca_id']) : 0;
+
+for ($i=0; $i<$post_ca_id_count; $i++)
 {
     $str_ca_mb_id = isset($_POST['ca_mb_id'][$i]) ? strip_tags(clean_xss_attributes($_POST['ca_mb_id'][$i])) : '';
 
@@ -61,28 +63,35 @@ for ($i=0; $i<count($_POST['ca_id']); $i++)
     }
     
     $p_ca_name = is_array($_POST['ca_name']) ? strip_tags(clean_xss_attributes($_POST['ca_name'][$i])) : '';
+    
+    $posts = array();
 
+    $check_keys = array('ca_mb_id', 'ca_id', 'ca_use', 'ca_list_mod', 'ca_cert_use', 'ca_adult_use', 'ca_skin', 'ca_mobile_skin', 'ca_skin_dir', 'ca_mobile_skin_dir', 'ca_img_width', 'ca_img_height', 'ca_list_row', 'ca_mobile_list_mod', 'ca_mobile_list_row');
+
+    foreach($check_keys as $key){
+        $posts[$key] = (isset($_POST[$key]) && isset($_POST[$key][$i])) ? $_POST[$key][$i] : '';
+    }
+    
     $sql = " update {$g5['g5_shop_category_table']}
                 set ca_name             = '".$p_ca_name."',
-                    ca_mb_id            = '".sql_real_escape_string(strip_tags(clean_xss_attributes($_POST['ca_mb_id'][$i])))."',
-                    ca_use              = '".sql_real_escape_string(strip_tags($_POST['ca_use'][$i]))."',
-                    ca_list_mod         = '".sql_real_escape_string(strip_tags($_POST['ca_list_mod'][$i]))."',
-                    ca_cert_use         = '".sql_real_escape_string(strip_tags($_POST['ca_cert_use'][$i]))."',
-                    ca_adult_use        = '".sql_real_escape_string(strip_tags($_POST['ca_adult_use'][$i]))."',
-                    ca_skin             = '".sql_real_escape_string(strip_tags($_POST['ca_skin'][$i]))."',
-                    ca_mobile_skin      = '".sql_real_escape_string(strip_tags($_POST['ca_mobile_skin'][$i]))."',
-                    ca_skin_dir         = '".sql_real_escape_string(strip_tags($_POST['ca_skin_dir'][$i]))."',
-                    ca_mobile_skin_dir  = '".sql_real_escape_string(strip_tags($_POST['ca_mobile_skin_dir'][$i]))."',
-                    ca_img_width        = '".sql_real_escape_string(strip_tags($_POST['ca_img_width'][$i]))."',
-                    ca_img_height       = '".sql_real_escape_string(strip_tags($_POST['ca_img_height'][$i]))."',
-                    ca_list_row         = '".sql_real_escape_string(strip_tags($_POST['ca_list_row'][$i]))."',
-                    ca_mobile_list_mod  = '".sql_real_escape_string(strip_tags($_POST['ca_mobile_list_mod'][$i]))."',
-                    ca_mobile_list_row  = '".sql_real_escape_string(strip_tags($_POST['ca_mobile_list_row'][$i]))."'
-              where ca_id = '".sql_real_escape_string($_POST['ca_id'][$i])."' ";
+                    ca_mb_id            = '".sql_real_escape_string(strip_tags(clean_xss_attributes($posts['ca_mb_id'])))."',
+                    ca_use              = '".sql_real_escape_string(strip_tags($posts['ca_use']))."',
+                    ca_list_mod         = '".sql_real_escape_string(strip_tags($posts['ca_list_mod']))."',
+                    ca_cert_use         = '".sql_real_escape_string(strip_tags($posts['ca_cert_use']))."',
+                    ca_adult_use        = '".sql_real_escape_string(strip_tags($posts['ca_adult_use']))."',
+                    ca_skin             = '".sql_real_escape_string(strip_tags($posts['ca_skin']))."',
+                    ca_mobile_skin      = '".sql_real_escape_string(strip_tags($posts['ca_mobile_skin']))."',
+                    ca_skin_dir         = '".sql_real_escape_string(strip_tags($posts['ca_skin_dir']))."',
+                    ca_mobile_skin_dir  = '".sql_real_escape_string(strip_tags($posts['ca_mobile_skin_dir']))."',
+                    ca_img_width        = '".sql_real_escape_string(strip_tags($posts['ca_img_width']))."',
+                    ca_img_height       = '".sql_real_escape_string(strip_tags($posts['ca_img_height']))."',
+                    ca_list_row         = '".sql_real_escape_string(strip_tags($posts['ca_list_row']))."',
+                    ca_mobile_list_mod  = '".sql_real_escape_string(strip_tags($posts['ca_mobile_list_mod']))."',
+                    ca_mobile_list_row  = '".sql_real_escape_string(strip_tags($posts['ca_mobile_list_row']))."'
+              where ca_id = '".sql_real_escape_string($posts['ca_id'])."' ";
 
     sql_query($sql);
 
 }
 
 goto_url("./categorylist.php?$qstr");
-?>

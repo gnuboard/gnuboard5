@@ -54,7 +54,7 @@ class INIpay50 {
     /* -------------------------------------------------- */
 
     function GetResult($name) { //Default Entity
-        $result = $this->m_RESULT[$name];
+        $result = isset($this->m_RESULT[$name]) ? $this->m_RESULT[$name] : '';
         if ($result == "")
             $result = $this->m_Data->GetXMLData($name);
         if ($result == "")
@@ -246,7 +246,7 @@ class INIpay50 {
         if($this->m_type == TYPE_ESCROW && ($this->m_Data->m_EscrowType == TYPE_ESCROW_CNF || $this->m_Data->m_EscrowType == TYPE_ESCROW_DNY)) $is_plugin_escrow = TRUE;
         
         
-        if($this->m_REQUEST["pgn"] != "") {
+        if(isset($this->m_REQUEST["pgn"]) && $this->m_REQUEST["pgn"] != "") {
         	$host = $this->m_REQUEST["pgn"];
         } else {
         	if ($this->m_type == TYPE_SECUREPAY || $is_plugin_escrow == TRUE) {		//plugin
@@ -733,5 +733,3 @@ class INIpay50 {
     }
 
 }
-
-?>

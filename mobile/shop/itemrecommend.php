@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
+
 if (!$is_member)
     alert_close('회원만 메일을 발송할 수 있습니다.');
 
@@ -9,7 +11,7 @@ $token = md5(uniqid(rand(), true));
 set_session("ss_token", $token);
 
 $it = get_shop_item($it_id, true);
-if (!$it['it_name'])
+if (! (isset($it['it_name']) && $it['it_name']))
     alert_close("등록된 상품이 아닙니다.");
 
 $g5['title'] =  $it['it_name'].' - 추천하기';
@@ -58,4 +60,3 @@ function fitemrecommend_check(f)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

@@ -107,4 +107,3 @@ if ($is_member) { // 회원이라면 로그인 중이라는 메세지를 출력�
     echo '<div id="hd_login_msg">'.$sr_admin_msg.get_text($member['mb_nick']).'님 로그인 중 ';
     echo '<a href="'.G5_BBS_URL.'/logout.php">로그아웃</a></div>';
 }
-?>

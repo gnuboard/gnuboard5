@@ -5,6 +5,10 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 if( !(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')) ){
     return;
 }
+
+$param_opt_1 = isset($_REQUEST['param_opt_1']) ? clean_xss_tags($_REQUEST['param_opt_1'], 1, 1) : '';
+$param_opt_2 = isset($_REQUEST['param_opt_2']) ? clean_xss_tags($_REQUEST['param_opt_2'], 1, 1) : '';
+$param_opt_3 = isset($_REQUEST['param_opt_3']) ? clean_xss_tags($_REQUEST['param_opt_3'], 1, 1) : '';
 ?>
 
 <!-- 거래등록 하는 kcp 서버와 통신을 위한 스크립트-->
@@ -49,9 +53,9 @@ if( !(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')) ){
 <!-- 배송소요기간 -->
 <input type="hidden" name="deli_term" value="03">
 <!-- 기타 파라메터 추가 부분 - Start - -->
-<input type="hidden" name="param_opt_1"  value="<?php echo $param_opt_1; ?>"/>
-<input type="hidden" name="param_opt_2"  value="<?php echo $param_opt_2; ?>"/>
-<input type="hidden" name="param_opt_3"  value="<?php echo $param_opt_3; ?>"/>
+<input type="hidden" name="param_opt_1"  value="<?php echo get_text($param_opt_1); ?>"/>
+<input type="hidden" name="param_opt_2"  value="<?php echo get_text($param_opt_2); ?>"/>
+<input type="hidden" name="param_opt_3"  value="<?php echo get_text($param_opt_3); ?>"/>
 <input type="hidden" name="disp_tax_yn"  value="N">
 <!-- 기타 파라메터 추가 부분 - End - -->
 <!-- 화면 크기조정 부분 - Start - -->

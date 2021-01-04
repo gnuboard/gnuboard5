@@ -4,11 +4,13 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
-for ($i=0; $i<count($_POST['it_id']); $i++)
+$post_it_id_count = (isset($_POST['it_id']) && is_array($_POST['it_id'])) ? count($_POST['it_id']) : 0;
+
+for ($i=0; $i<$post_it_id_count; $i++)
 {
-    $iit_id = preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$i]);
+    $iit_id = isset($_POST['it_id'][$i]) ? preg_replace('/[^a-z0-9_\-]/i', '', $_POST['it_id'][$i]) : '';
 
     $sql = " delete from {$g5['g5_shop_event_item_table']}
               where ev_id = '$ev_id'
@@ -26,4 +28,3 @@ for ($i=0; $i<count($_POST['it_id']); $i++)
 }
 
 goto_url('./itemeventlist.php?ev_id='.$ev_id.'&amp;sort1='.$sort1.'&amp;sort2='.$sort2.'&amp;sel_ca_id='.$sel_ca_id.'&amp;sel_field='.$sel_field.'&amp;search='.$search.'&amp;page='.$page);
-?>

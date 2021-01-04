@@ -89,4 +89,3 @@ $payReqMap['LGD_PAYKEY']                = '';
 $_SESSION['PAYREQ_MAP'] = $payReqMap;
 
 die(json_encode(array('LGD_HASHDATA' => $LGD_HASHDATA, 'error' => '')));
-?>

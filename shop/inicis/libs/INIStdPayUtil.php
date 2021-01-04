@@ -17,7 +17,7 @@ class INIStdPayUtil {
 
         $milliseconds = round(microtime(true) * 1000);
         $tempValue1 = round($milliseconds / 1000);  //max integer 자릿수가 9이므로 뒤 3자리를 뺀다
-        $tempValue2 = round(microtime(false) * 1000); //뒤 3자리를 저장
+        $tempValue2 = round((float) microtime(false) * 1000); //뒤 3자리를 저장
         switch (strlen($tempValue2)) {
             case '3':
                 break;
@@ -122,4 +122,3 @@ class INIStdPayUtil {
 	}
 
 }
-?>

@@ -2,6 +2,8 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/thumbnail.lib.php');
 
+$it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
+
 $itemqa_list = G5_SHOP_URL."/itemqalist.php";
 $itemqa_form = G5_SHOP_URL."/itemqaform.php?it_id=".$it_id;
 $itemqa_formupdate = G5_SHOP_URL."/itemqaformupdate.php?it_id=".$it_id;
@@ -28,4 +30,3 @@ if(!file_exists($itemqa_skin)) {
 } else {
     include_once($itemqa_skin);
 }
-?>

@@ -1,6 +1,8 @@
 <?php
 if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
+$q = isset($_GET['q']) ? clean_xss_tags($_GET['q'], 1, 1) : '';
+
 if(G5_IS_MOBILE) {
     include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
     return;

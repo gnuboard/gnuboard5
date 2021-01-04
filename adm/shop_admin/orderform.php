@@ -5,11 +5,27 @@ include_once('./_common.php');
 $cart_title3 = '주문번호';
 $cart_title4 = '배송완료';
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $g5['title'] = "주문 내역 수정";
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 
+$fr_date = isset($_REQUEST['fr_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['fr_date']) : '';
+$to_date = isset($_REQUEST['to_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['to_date']) : '';
+$od_status = isset($_REQUEST['od_status']) ? clean_xss_tags($_REQUEST['od_status'], 1, 1) : '';
+$od_settle_case = isset($_REQUEST['od_settle_case']) ? clean_xss_tags($_REQUEST['od_settle_case'], 1, 1) : '';
+$od_misu = isset($_REQUEST['od_misu']) ? clean_xss_tags($_REQUEST['od_misu'], 1, 1) : '';
+$od_cancel_price = isset($_REQUEST['od_cancel_price']) ? clean_xss_tags($_REQUEST['od_cancel_price'], 1, 1) : '';
+$od_refund_price = isset($_REQUEST['od_refund_price']) ? clean_xss_tags($_REQUEST['od_refund_price'], 1, 1) : '';
+$od_receipt_point = isset($_REQUEST['od_receipt_point']) ? clean_xss_tags($_REQUEST['od_receipt_point'], 1, 1) : '';
+$od_coupon = isset($_REQUEST['od_coupon']) ? clean_xss_tags($_REQUEST['od_coupon'], 1, 1) : '';
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
+$od_escrow = isset($_REQUEST['od_escrow']) ? clean_xss_tags($_REQUEST['od_escrow'], 1, 1) : ''; 
+
+$sort1 = isset($_REQUEST['sort1']) ? clean_xss_tags($_REQUEST['sort1'], 1, 1) : '';
+$sort2 = isset($_REQUEST['sort2']) ? clean_xss_tags($_REQUEST['sort2'], 1, 1) : '';
+$sel_field = isset($_REQUEST['sel_field']) ? clean_xss_tags($_REQUEST['sel_field'], 1, 1) : '';
+$search = isset($_REQUEST['search']) ? get_search_string($_REQUEST['search']) : '';
 
 // 완료된 주문에 포인트를 적립한다.
 save_order_point("완료");
@@ -281,7 +297,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 <?php if($od['od_pg'] === 'inicis' && !$od['od_test']) {
     $sql = "select P_TID from {$g5['g5_shop_inicis_log_table']} where oid = '$od_id' and P_STATUS = 'cancel' ";
     $tmp_row = sql_fetch($sql);
-    if($tmp_row['P_TID']){
+    if(isset($tmp_row['P_TID']) && $tmp_row['P_TID']){
 ?>
 <div class="od_test_caution">주의) 이 주문은 결제취소된 내역이 있습니다. 이니시스 관리자 상점에서 반드시 재확인을 해 주세요.</div>
 <?php 
@@ -645,7 +661,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                 {
                     // 은행계좌를 배열로 만든후
                     $str = explode("\n", $default['de_bank_account']);
-                    $bank_account .= '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
+                    $bank_account = '<select name="od_bank_account" id="od_bank_account">'.PHP_EOL;
                     $bank_account .= '<option value="">선택하십시오</option>'.PHP_EOL;
                     for ($i=0; $i<count($str); $i++) {
                         $str[$i] = str_replace("\r", "", $str[$i]);
@@ -1062,8 +1078,8 @@ function form_submit(f)
     <?php if($od['od_settle_case'] == '신용카드' || $od['od_settle_case'] == 'KAKAOPAY' || $od['od_settle_case'] == '간편결제' || ($od['od_pg'] == 'inicis' && is_inicis_order_pay($od['od_settle_case']) )) { ?>
     if(status == "취소" || status == "반품" || status == "품절") {
         var $ct_chk = $("input[name^=ct_chk]");
-        var chk_cnt = $ct_chk.size();
-        var chked_cnt = $ct_chk.filter(":checked").size();
+        var chk_cnt = $ct_chk.length;
+        var chked_cnt = $ct_chk.filter(":checked").length;
         <?php if($od['od_pg'] == 'KAKAOPAY') { ?>
         var cancel_pg = "카카오페이";
         <?php } else { ?>
@@ -1125,4 +1141,3 @@ function chk_receipt_price()
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

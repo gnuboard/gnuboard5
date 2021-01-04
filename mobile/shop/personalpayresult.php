@@ -314,4 +314,3 @@ if($pp['pp_pg'] == 'lg') {
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

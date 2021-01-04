@@ -75,4 +75,3 @@ if(sql_num_rows($hresult)) {
 </div>
 <?php
 }
-?>

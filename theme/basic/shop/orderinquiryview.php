@@ -704,4 +704,3 @@ function fcancel_check(f)
 
 <?php
 include_once('./_tail.php');
-?>

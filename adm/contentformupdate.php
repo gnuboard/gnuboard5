@@ -6,25 +6,27 @@ if ($w == "u" || $w == "d")
     check_demo();
 
 if ($w == 'd')
-    auth_check($auth[$sub_menu], "d");
+    auth_check_menu($auth, $sub_menu, "d");
 else
-    auth_check($auth[$sub_menu], "w");
+    auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
 if ($w == "" || $w == "u")
 {
-    if(preg_match("/[^a-z0-9_]/i", $co_id)) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
+    if(isset($_POST['co_id']) && preg_match("/[^a-z0-9_]/i", $_POST['co_id'])) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
 
     $sql = " select * from {$g5['content_table']} where co_id = '$co_id' ";
     $co_row = sql_fetch($sql);
 }
 
-$co_id = preg_replace('/[^a-z0-9_]/i', '', $co_id);
+$co_id = isset($_POST['co_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['co_id']) : '';
 $co_subject = strip_tags(clean_xss_attributes($co_subject));
 $co_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_head, 0, 255));
 $co_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_tail, 0, 255));
 $co_tag_filter_use = isset($_POST['co_tag_filter_use']) ? (int) $_POST['co_tag_filter_use'] : 1;
+$co_himg_del = (isset($_POST['co_himg_del']) && $_POST['co_himg_del']) ? 1 : 0;
+$co_timg_del = (isset($_POST['co_timg_del']) && $_POST['co_timg_del']) ? 1 : 0;
 
 // 관리자가 자동등록방지를 사용해야 할 경우
 if (($co_row['co_include_head'] !== $co_include_head || $co_row['co_include_tail'] !== $co_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
@@ -146,4 +148,3 @@ else
 {
     goto_url("./contentlist.php");
 }
-?>

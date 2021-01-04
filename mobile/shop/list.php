@@ -190,4 +190,3 @@ var g5_shop_url = "<?php echo G5_SHOP_URL; ?>";
 include_once(G5_MSHOP_PATH.'/_tail.php');
 
 echo "\n<!-- {$ca['ca_mobile_skin']} -->\n";
-?>

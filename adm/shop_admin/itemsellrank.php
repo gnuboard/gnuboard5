@@ -2,23 +2,20 @@
 $sub_menu = '500100';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '상품판매순위';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
-if (!$to_date) $to_date = date("Ymd", time());
+$fr_date = (isset($_GET['fr_date']) && preg_match("/[0-9]/", $_GET['fr_date'])) ? $_GET['fr_date'] : '';
+$to_date = (isset($_GET['to_date']) && preg_match("/[0-9]/", $_GET['to_date'])) ? $_GET['to_date'] : date("Ymd", time());
 
-if ($sort1 == "") $sort1 = "ct_status_sum";
-if (!in_array($sort1, array('ct_status_1', 'ct_status_2', 'ct_status_3', 'ct_status_4', 'ct_status_5', 'ct_status_6', 'ct_status_7', 'ct_status_8', 'ct_status_9', 'ct_status_sum'))) $sort1 = "ct_status_sum";
-if ($sort2 == "" || $sort2 != "asc") $sort2 = "desc";
+$doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
+$sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('ct_status_1', 'ct_status_2', 'ct_status_3', 'ct_status_4', 'ct_status_5', 'ct_status_6', 'ct_status_7', 'ct_status_8', 'ct_status_9', 'ct_status_sum'))) ? $_GET['sort1'] : 'ct_status_sum';
+$sort2 = (isset($_GET['sort2']) && in_array($_GET['sort2'], array('desc', 'asc'))) ? $_GET['sort2'] : 'desc';
 
-$doc = strip_tags($doc);
-$sort1 = strip_tags($sort1);
-
-if( preg_match("/[^0-9]/", $fr_date) ) $fr_date = '';
-if( preg_match("/[^0-9]/", $to_date) ) $to_date = '';
+$sel_ca_id = isset($_GET['sel_ca_id']) ? get_search_string($_GET['sel_ca_id']) : '';
 
 $sql  = " select a.it_id,
                  b.*,
@@ -180,4 +177,3 @@ $(function() {
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

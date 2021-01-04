@@ -21,9 +21,7 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     /* = -------------------------------------------------------------------------- = */
     /* =   환경 설정 파일 Include END                                               = */
     /* ============================================================================== */
-?>
 
-<?php
     /* ============================================================================== */
     /* =   POST 형식 체크부분                                                       = */
     /* = -------------------------------------------------------------------------- = */
@@ -33,34 +31,32 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
         exit;
     }
     /* ============================================================================== */
-?>
 
-<?php
     /* ============================================================================== */
     /* =   01. 지불 요청 정보 설정                                                  = */
     /* = -------------------------------------------------------------------------- = */
-	$req_tx         = $_POST[ "req_tx"         ]; // 요청 종류
-	$tran_cd        = preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "tran_cd"        ]); // 처리 종류
+	$req_tx         = isset($_POST['req_tx']) ? $_POST['req_tx'] : ''; // 요청 종류
+	$tran_cd        = isset($_POST['tran_cd']) ? preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST['tran_cd']) : ''; // 처리 종류
 	/* = -------------------------------------------------------------------------- = */
 	$cust_ip        = getenv( "REMOTE_ADDR"    ); // 요청 IP
-	$ordr_idxx      = preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "ordr_idxx"      ]); // 쇼핑몰 주문번호
-	$good_name      = addslashes($_POST[ "good_name"]); // 상품명
-	$good_mny       = $_POST[ "good_mny"       ]; // 결제 총금액
+	$ordr_idxx      = isset($_POST['ordr_idxx']) ? preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST['ordr_idxx']) : ''; // 쇼핑몰 주문번호
+	$good_name      = isset($_POST['good_name']) ? addslashes($_POST['good_name']) : ''; // 상품명
+	$good_mny       = isset($_POST['good_mny']) ? (int) $_POST['good_mny'] : 0; // 결제 총금액
 	/* = -------------------------------------------------------------------------- = */
     $res_cd         = "";                         // 응답코드
     $res_msg        = "";                         // 응답메시지
 	$res_en_msg     = "";                         // 응답 영문 메세지
-    $tno            = $_POST[ "tno"            ]; // KCP 거래 고유 번호
+    $tno            = isset($_POST['tno']) ? $_POST['tno'] : ''; // KCP 거래 고유 번호
     /* = -------------------------------------------------------------------------- = */
-    $buyr_name      = addslashes($_POST[ "buyr_name"]); // 주문자명
-    $buyr_tel1      = $_POST[ "buyr_tel1"      ]; // 주문자 전화번호
-    $buyr_tel2      = $_POST[ "buyr_tel2"      ]; // 주문자 핸드폰 번호
-    $buyr_mail      = $_POST[ "buyr_mail"      ]; // 주문자 E-mail 주소
+    $buyr_name      = isset($_POST['buyr_name']) ? addslashes($_POST['buyr_name']) : ''; // 주문자명
+    $buyr_tel1      = isset($_POST['buyr_tel1']) ? $_POST['buyr_tel1'] : ''; // 주문자 전화번호
+    $buyr_tel2      = isset($_POST['buyr_tel2']) ? $_POST['buyr_tel2'] : ''; // 주문자 핸드폰 번호
+    $buyr_mail      = isset($_POST['buyr_mail']) ? $_POST['buyr_mail'] : ''; // 주문자 E-mail 주소
     /* = -------------------------------------------------------------------------- = */
-    $mod_type       = $_POST[ "mod_type"       ]; // 변경TYPE VALUE 승인취소시 필요
-    $mod_desc       = $_POST[ "mod_desc"       ]; // 변경사유
+    $mod_type       = isset($_POST['mod_type']) ? $_POST['mod_type'] : ''; // 변경TYPE VALUE 승인취소시 필요
+    $mod_desc       = isset($_POST['mod_desc']) ? $_POST['mod_desc'] : ''; // 변경사유
     /* = -------------------------------------------------------------------------- = */
-    $use_pay_method = $_POST[ "use_pay_method" ]; // 결제 방법
+    $use_pay_method = isset($_POST['use_pay_method']) ? $_POST['use_pay_method'] : ''; // 결제 방법
     $bSucc          = "";                         // 업체 DB 처리 성공 여부
     /* = -------------------------------------------------------------------------- = */
 	$app_time       = "";                         // 승인시간 (모든 결제 수단 공통)
@@ -99,29 +95,29 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 	$commid         = "";                         // 통신사 코드
 	$mobile_no      = "";                         // 휴대폰 번호
 	/* = -------------------------------------------------------------------------- = */
-	$shop_user_id   = $_POST[ "shop_user_id"   ]; // 가맹점 고객 아이디
+	$shop_user_id   = isset($_POST['shop_user_id']) ? $_POST['shop_user_id'] : ''; // 가맹점 고객 아이디
 	$tk_van_code    = "";                         // 발급사 코드
 	$tk_app_no      = "";                         // 상품권 승인 번호
 	/* = -------------------------------------------------------------------------- = */
-    $cash_yn        = $_POST[ "cash_yn"        ]; // 현금영수증 등록 여부
+    $cash_yn        = isset($_POST['cash_yn']) ? $_POST['cash_yn'] : ''; // 현금영수증 등록 여부
     $cash_authno    = "";                         // 현금 영수증 승인 번호
-    $cash_tr_code   = $_POST[ "cash_tr_code"   ]; // 현금 영수증 발행 구분
-    $cash_id_info   = $_POST[ "cash_id_info"   ]; // 현금 영수증 등록 번호
+    $cash_tr_code   = isset($_POST['cash_tr_code']) ? $_POST['cash_tr_code'] : ''; // 현금 영수증 발행 구분
+    $cash_id_info   = isset($_POST['cash_id_info']) ? $_POST['cash_id_info'] : ''; // 현금 영수증 등록 번호
     /* ============================================================================== */
     /* =   01-1. 에스크로 지불 요청 정보 설정                                       = */
     /* = -------------------------------------------------------------------------- = */
-    $escw_used      = $_POST[  "escw_used"     ]; // 에스크로 사용 여부
-    $pay_mod        = $_POST[  "pay_mod"       ]; // 에스크로 결제처리 모드
-    $deli_term      = $_POST[  "deli_term"     ]; // 배송 소요일
-    $bask_cntx      = $_POST[  "bask_cntx"     ]; // 장바구니 상품 개수
-    $good_info      = $_POST[  "good_info"     ]; // 장바구니 상품 상세 정보
-    $rcvr_name      = addslashes($_POST[  "rcvr_name"]); // 수취인 이름
-    $rcvr_tel1      = $_POST[  "rcvr_tel1"     ]; // 수취인 전화번호
-    $rcvr_tel2      = $_POST[  "rcvr_tel2"     ]; // 수취인 휴대폰번호
-    $rcvr_mail      = $_POST[  "rcvr_mail"     ]; // 수취인 E-Mail
-    $rcvr_zipx      = $_POST[  "rcvr_zipx"     ]; // 수취인 우편번호
-    $rcvr_add1      = addslashes($_POST[  "rcvr_add1"]); // 수취인 주소
-    $rcvr_add2      = addslashes($_POST[  "rcvr_add2"]); // 수취인 상세주소
+    $escw_used      = isset($_POST['escw_used']) ? $_POST['escw_used'] : ''; // 에스크로 사용 여부
+    $pay_mod        = isset($_POST['pay_mod']) ? $_POST['pay_mod'] : ''; // 에스크로 결제처리 모드
+    $deli_term      = isset($_POST['deli_term']) ? $_POST['deli_term'] : ''; // 배송 소요일
+    $bask_cntx      = isset($_POST['bask_cntx']) ? $_POST['bask_cntx'] : 0; // 장바구니 상품 개수
+    $good_info      = isset($_POST['good_info']) ? $_POST['good_info'] : ''; // 장바구니 상품 상세 정보
+    $rcvr_name      = isset($_POST['rcvr_name']) ? addslashes($_POST['rcvr_name']) : ''; // 수취인 이름
+    $rcvr_tel1      = isset($_POST['rcvr_tel1']) ? $_POST['rcvr_tel1'] : ''; // 수취인 전화번호
+    $rcvr_tel2      = isset($_POST['rcvr_tel2']) ? $_POST['rcvr_tel2'] : ''; // 수취인 휴대폰번호
+    $rcvr_mail      = isset($_POST['rcvr_mail']) ? $_POST['rcvr_mail'] : ''; // 수취인 E-Mail
+    $rcvr_zipx      = isset($_POST['rcvr_zipx']) ? $_POST['rcvr_zipx'] : ''; // 수취인 우편번호
+    $rcvr_add1      = isset($_POST['rcvr_add1']) ? addslashes($_POST['rcvr_add1']) : ''; // 수취인 주소
+    $rcvr_add2      = isset($_POST['rcvr_add2']) ? addslashes($_POST['rcvr_add2']) : ''; // 수취인 상세주소
 	$escw_yn		= "";						  // 에스크로 여부
 
     /* ============================================================================== */
@@ -150,8 +146,11 @@ if ( $req_tx == "pay" )
 {
         /* 1004원은 실제로 업체에서 결제하셔야 될 원 금액을 넣어주셔야 합니다. 결제금액 유효성 검증 */
         $c_PayPlus->mf_set_ordr_data( "ordr_mony",  $good_mny );
+        
+        $post_enc_data = isset($_POST['enc_data']) ? $_POST['enc_data'] : '';
+        $post_enc_info = isset($_POST['enc_info']) ? $_POST['enc_info'] : '';
 
-        $c_PayPlus->mf_set_encx_data( $_POST[ "enc_data" ], $_POST[ "enc_info" ] );
+        $c_PayPlus->mf_set_encx_data( $post_enc_data, $post_enc_info );
 }
 
 /* = -------------------------------------------------------------------------- = */
@@ -181,16 +180,22 @@ else if ($req_tx = "mod_escrow")
 
     if ($mod_type == "STE1")													// 상태변경 타입이 [배송요청]인 경우
     {
-        $c_PayPlus->mf_set_modx_data( "deli_numb",   $_POST[ "deli_numb" ] );   // 운송장 번호
-        $c_PayPlus->mf_set_modx_data( "deli_corp",   $_POST[ "deli_corp" ] );   // 택배 업체명
+        $post_deli_numb = isset($_POST['deli_numb']) ? $_POST['deli_numb'] : '';
+        $post_deli_corp = isset($_POST['deli_corp']) ? $_POST['deli_corp'] : '';
+
+        $c_PayPlus->mf_set_modx_data( "deli_numb",   $post_deli_numb );   // 운송장 번호
+        $c_PayPlus->mf_set_modx_data( "deli_corp",   $post_deli_corp );   // 택배 업체명
     }
     else if ($mod_type == "STE2" || $mod_type == "STE4") // 상태변경 타입이 [즉시취소] 또는 [취소]인 계좌이체, 가상계좌의 경우
     {
         if ($vcnt_yn == "Y")
         {
-            $c_PayPlus->mf_set_modx_data( "refund_account",   $_POST[ "refund_account" ] );      // 환불수취계좌번호
-            $c_PayPlus->mf_set_modx_data( "refund_nm",        $_POST[ "refund_nm"      ] );      // 환불수취계좌주명
-            $c_PayPlus->mf_set_modx_data( "bank_code",        $_POST[ "bank_code"      ] );      // 환불수취은행코드
+            $post_refund_account = isset($_POST['refund_account']) ? $_POST['refund_account'] : '';
+            $post_refund_nm = isset($_POST['refund_nm']) ? $_POST['refund_nm'] : '';
+            $post_bank_code = isset($_POST['bank_code']) ? $_POST['bank_code'] : '';
+            $c_PayPlus->mf_set_modx_data( "refund_account",   $post_refund_account );      // 환불수취계좌번호
+            $c_PayPlus->mf_set_modx_data( "refund_nm",        $post_refund_nm );      // 환불수취계좌주명
+            $c_PayPlus->mf_set_modx_data( "bank_code",        $post_bank_code );      // 환불수취은행코드
         }
     }
 }
@@ -368,5 +373,4 @@ if ( $req_tx == "pay" )
 
 /* = -------------------------------------------------------------------------- = */
 /* =   05. 승인 결과 처리 END                                                   = */
-/* ============================================================================== */
-?>
+/* ============================================================================== */;

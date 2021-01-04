@@ -1,10 +1,13 @@
 <?php
 include_once('./_common.php');
 
+$it_id = isset($_POST['it_id']) ? safe_replace_regex($_POST['it_id'], 'it_id') : '';
+$ss_hp = isset($_POST['ss_hp']) ? $_POST['ss_hp'] : '';
+
 // 상품정보
 $it = get_shop_item($it_id, true);
 
-if(!$it['it_id'])
+if(! (isset($it['it_id']) && $it['it_id']))
     alert_close('상품정보가 존재하지 않습니다.');
 
 if(!$it['it_soldout'] || !$it['it_stock_sms'])
@@ -37,4 +40,3 @@ $sql = " insert into {$g5['g5_shop_item_stocksms_table']}
 sql_query($sql);
 
 alert_close('재입고SMS 알림 요청 등록이 완료됐습니다.');
-?>

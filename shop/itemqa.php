@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
+
 if( !isset($it) && !get_session("ss_tv_idx") ){
     if( !headers_sent() ){  //헤더를 보내기 전이면 검색엔진에서 제외합니다.
         echo '<meta name="robots" content="noindex, nofollow">';
@@ -84,4 +86,3 @@ if(!file_exists($itemqa_skin)) {
 } else {
     include_once($itemqa_skin);
 }
-?>

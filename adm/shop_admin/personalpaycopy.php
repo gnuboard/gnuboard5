@@ -2,7 +2,7 @@
 $sub_menu = '400440';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 $g5['title'] = '개인결제 복사';
 include_once(G5_PATH.'/head.sub.php');
@@ -65,4 +65,3 @@ function form_check(f)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

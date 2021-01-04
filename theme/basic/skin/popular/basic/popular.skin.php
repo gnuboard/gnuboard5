@@ -29,7 +29,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
     </div>
 </section>
 
-<?php if ($list && is_array($list)) { //게시물이 있다면 ?>
+<?php if (isset($list) && $list && is_array($list)) { //게시물이 있다면 ?>
 <script>
 jQuery(function($){
     

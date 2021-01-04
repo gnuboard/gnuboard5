@@ -21,12 +21,12 @@ if( ! $user_profile ){
 $is_exists_social_account = social_before_join_check(G5_URL);
 
 $sm_id = $user_profile->sid;
-$mb_id = trim($_POST['mb_id']);
-$mb_password    = trim($_POST['mb_password']);
-$mb_password_re = trim($_POST['mb_password_re']);
-$mb_nick        = trim(strip_tags($_POST['mb_nick']));
-$mb_email       = trim($_POST['mb_email']);
-$mb_name        = clean_xss_tags(trim(strip_tags($_POST['mb_name'])));
+$mb_id = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
+$mb_password    = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '';
+$mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re']) : '';
+$mb_nick        = isset($_POST['mb_nick']) ? trim(strip_tags($_POST['mb_nick'])) : '';
+$mb_email       = isset($_POST['mb_email']) ? trim($_POST['mb_email']) : '';
+$mb_name        = isset($_POST['mb_name']) ? clean_xss_tags(trim(strip_tags($_POST['mb_name']))) : '';
 $mb_email       = get_email_address($mb_email);
 
 // 이름, 닉네임에 utf-8 이외의 문자가 포함됐다면 오류
@@ -238,4 +238,3 @@ if($result) {
     alert('회원 가입 오류!', G5_URL );
 
 }
-?>

@@ -137,4 +137,3 @@ function member_leave()
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

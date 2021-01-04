@@ -2,10 +2,10 @@
 $sub_menu = '400800';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
-$sch_target = substr(preg_replace('/[^a-zA-Z0-9]/', '', strip_tags($_GET['sch_target'])), 0, 1);
-$sch_word   = clean_xss_tags(strip_tags($_GET['sch_word']));
+$sch_target = isset($_GET['sch_target']) ? substr(preg_replace('/[^a-zA-Z0-9]/', '', strip_tags($_GET['sch_target'])), 0, 1) : '';
+$sch_word   = isset($_GET['sch_word']) ? clean_xss_tags(strip_tags($_GET['sch_word'])) : '';
 
 if($_GET['sch_target'] == 1) {
     $html_title = '분류';
@@ -125,4 +125,3 @@ function sel_target_id(id)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

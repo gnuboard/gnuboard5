@@ -146,4 +146,3 @@ function not_buy_nc()
     return false;
 }
 //]]></script>'.PHP_EOL;
-?>

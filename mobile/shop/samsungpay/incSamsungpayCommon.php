@@ -7,4 +7,3 @@ if( ! is_inicis_simple_pay() || ('inicis' == $default['de_pg_service']) ){    //
 }
 
 include_once(G5_MSHOP_PATH.'/settle_inicis.inc.php');
-?>

@@ -4,9 +4,72 @@ include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 include_once(G5_LIB_PATH.'/iteminfo.lib.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $html_title = "상품 ";
+
+$it = array(
+'it_id'=>'',
+'it_skin'=>'',
+'it_mobile_skin'=>'',
+'it_name'=>'',
+'it_basic'=>'',
+'it_order'=>0,
+'it_type1'=>0,
+'it_type2'=>0,
+'it_type3'=>0,
+'it_type4'=>0,
+'it_type5'=>0,
+'it_brand'=>'',
+'it_model'=>'',
+'it_tel_inq'=>0,
+'it_use'=>0,
+'it_nocoupon'=>0,
+'ec_mall_pid'=>'',
+'it_mobile_explan'=>'',
+'it_sell_email'=>'',
+'it_shop_memo'=>'',
+'it_info_gubun'=>'',
+'it_explan'=>'',
+'it_point_type'=>0,
+'it_cust_price'=>0,
+'it_option_subject'=>'',
+'it_price'=>0,
+'it_point'=>0,
+'it_supply_point'=>0,
+'it_soldout'=>0,
+'it_stock_sms'=>0,
+'it_stock_qty'=>0,
+'it_noti_qty'=>0,
+'it_buy_min_qty'=>0,
+'it_buy_max_qty'=>0,
+'it_notax'=>0,
+'it_supply_subject'=>'',
+'it_sc_type'=>0,
+'it_sc_method'=>0,
+'it_sc_price'=>0,
+'it_sc_minimum'=>0,
+'it_sc_qty'=>0,
+'it_img1'=>'',
+'it_img2'=>'',
+'it_img3'=>'',
+'it_img4'=>'',
+'it_img5'=>'',
+'it_img6'=>'',
+'it_img7'=>'',
+'it_img8'=>'',
+'it_img9'=>'',
+'it_img10'=>'',
+'it_head_html'=>'',
+'it_tail_html'=>'',
+'it_mobile_head_html'=>'',
+'it_mobile_tail_html'=>'',
+);
+
+for($i=0;$i<=10;$i++){
+    $it['it_'.$i.'_subj'] = '';
+    $it['it_'.$i] = '';
+}
 
 if ($w == "")
 {
@@ -21,7 +84,7 @@ if ($w == "")
     {
         $sql = " select ca_id from {$g5['g5_shop_category_table']} order by ca_order, ca_id limit 1 ";
         $row = sql_fetch($sql);
-        if (!$row['ca_id'])
+        if (! (isset($row['ca_id']) && $row['ca_id']))
             alert("등록된 분류가 없습니다. 우선 분류를 등록하여 주십시오.", './categorylist.php');
         $it['ca_id'] = $row['ca_id'];
     }
@@ -50,7 +113,7 @@ else if ($w == "u")
     if(!$it)
         alert('상품정보가 존재하지 않습니다.');
 
-    if (!$ca_id)
+    if (! (isset($ca_id) && $ca_id))
         $ca_id = $it['ca_id'];
 
     $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
@@ -711,7 +774,7 @@ $(function(){
                     <tr>
                         <th scope="row">
                             <label for="opt1_subject">옵션1</label>
-                            <input type="text" name="opt1_subject" value="<?php echo $opt_subject[0]; ?>" id="opt1_subject" class="frm_input" size="15">
+                            <input type="text" name="opt1_subject" value="<?php echo isset($opt_subject[0]) ? $opt_subject[0] : ''; ?>" id="opt1_subject" class="frm_input" size="15">
                         </th>
                         <td>
                             <label for="opt1"><b>옵션1 항목</b></label>
@@ -721,7 +784,7 @@ $(function(){
                     <tr>
                         <th scope="row">
                             <label for="opt2_subject">옵션2</label>
-                            <input type="text" name="opt2_subject" value="<?php echo $opt_subject[1]; ?>" id="opt2_subject" class="frm_input" size="15">
+                            <input type="text" name="opt2_subject" value="<?php echo isset($opt_subject[1]) ? $opt_subject[1] : ''; ?>" id="opt2_subject" class="frm_input" size="15">
                         </th>
                         <td>
                             <label for="opt2"><b>옵션2 항목</b></label>
@@ -731,7 +794,7 @@ $(function(){
                      <tr>
                         <th scope="row">
                             <label for="opt3_subject">옵션3</label>
-                            <input type="text" name="opt3_subject" value="<?php echo $opt_subject[2]; ?>" id="opt3_subject" class="frm_input" size="15">
+                            <input type="text" name="opt3_subject" value="<?php echo isset($opt_subject[2]) ? $opt_subject[2] : ''; ?>" id="opt3_subject" class="frm_input" size="15">
                         </th>
                         <td>
                             <label for="opt3"><b>옵션3 항목</b></label>
@@ -814,7 +877,7 @@ $(function(){
                     // 선택삭제
                     $(document).on("click", "#sel_option_delete", function() {
                         var $el = $("input[name='opt_chk[]']:checked");
-                        if($el.size() < 1) {
+                        if($el.length < 1) {
                             alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
                             return false;
                         }
@@ -824,7 +887,7 @@ $(function(){
 
                     // 일괄적용
                     $(document).on("click", "#opt_value_apply", function() {
-                        if($(".opt_com_chk:checked").size() < 1) {
+                        if($(".opt_com_chk:checked").length < 1) {
                             alert("일괄 수정할 항목을 하나이상 체크해 주십시오.");
                             return false;
                         }
@@ -836,7 +899,7 @@ $(function(){
                         var $el = $("input[name='opt_chk[]']:checked");
 
                         // 체크된 옵션이 있으면 체크된 것만 적용
-                        if($el.size() > 0) {
+                        if($el.length > 0) {
                             var $tr;
                             $el.each(function() {
                                 $tr = $(this).closest("tr");
@@ -1020,7 +1083,7 @@ $(function(){
                     // 선택삭제
                     $(document).on("click", "#sel_supply_delete", function() {
                         var $el = $("input[name='spl_chk[]']:checked");
-                        if($el.size() < 1) {
+                        if($el.length < 1) {
                             alert("삭제하려는 옵션을 하나 이상 선택해 주십시오.");
                             return false;
                         }
@@ -1030,7 +1093,7 @@ $(function(){
 
                     // 일괄적용
                     $(document).on("click", "#spl_value_apply", function() {
-                        if($(".spl_com_chk:checked").size() < 1) {
+                        if($(".spl_com_chk:checked").length < 1) {
                             alert("일괄 수정할 항목을 하나이상 체크해 주십시오.");
                             return false;
                         }
@@ -1042,7 +1105,7 @@ $(function(){
                         var $el = $("input[name='spl_chk[]']:checked");
 
                         // 체크된 옵션이 있으면 체크된 것만 적용
-                        if($el.size() > 0) {
+                        if($el.length > 0) {
                             var $tr;
                             $el.each(function() {
                                 $tr = $(this).closest("tr");
@@ -1382,7 +1445,7 @@ $(function(){
                     }
 
                     var cont = "<li>"+$li.html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
-                    var count = $("#reg_relation li").size();
+                    var count = $("#reg_relation li").length;
 
                     if(count > 0) {
                         $("#reg_relation li:last").after(cont);
@@ -1399,7 +1462,7 @@ $(function(){
 
                     $(this).closest("li").remove();
 
-                    var count = $("#reg_relation li").size();
+                    var count = $("#reg_relation li").length;
                     if(count < 1)
                         $("#reg_relation").html("<p>선택된 상품이 없습니다.</p>");
                 });
@@ -1501,7 +1564,7 @@ $(function(){
                     }
 
                     var cont = "<li>"+$li.html().replace("add_event", "del_event").replace("추가", "삭제")+"</li>";
-                    var count = $("#reg_event_list li").size();
+                    var count = $("#reg_event_list li").length;
 
                     if(count > 0) {
                         $("#reg_event_list li:last").after(cont);
@@ -1516,7 +1579,7 @@ $(function(){
 
                     $(this).closest("li").remove();
 
-                    var count = $("#reg_event_list li").size();
+                    var count = $("#reg_event_list li").length;
                     if(count < 1)
                         $("#reg_event_list").html("<p>선택된 이벤트가 없습니다.</p>");
                 });
@@ -1864,4 +1927,3 @@ categorychange(document.fitemform);
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

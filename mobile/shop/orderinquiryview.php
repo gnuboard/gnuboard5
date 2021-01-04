@@ -711,4 +711,3 @@ function fcancel_check(f)
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

@@ -7,8 +7,11 @@ set_session('P_TID',  '');
 set_session('P_AMT',  '');
 set_session('P_HASH', '');
 
-$oid  = trim($_REQUEST['P_NOTI']);
-$p_req_url = trim($_REQUEST['P_REQ_URL']);
+$oid  = isset($_REQUEST['P_NOTI']) ? trim($_REQUEST['P_NOTI']) : '';
+$p_req_url = isset($_REQUEST['P_REQ_URL']) ? trim($_REQUEST['P_REQ_URL']) : '';
+$p_status = isset($_REQUEST['P_STATUS']) ? trim($_REQUEST['P_STATUS']) : '';
+$p_tid = isset($_REQUEST['P_TID']) ? trim($_REQUEST['P_TID']) : '';
+$p_rmesg1 = isset($_REQUEST['P_RMESG1']) ? trim($_REQUEST['P_RMESG1']) : '';
 
 if( ! $p_req_url || !preg_match('/^https\:\/\//i', $p_req_url)){
     alert("잘못된 요청 URL 입니다.");
@@ -25,7 +28,7 @@ if(isset($data['pp_id']) && $data['pp_id']) {
 } else {
     $order_action_url = G5_HTTPS_MSHOP_URL.'/orderformupdate.php';
     $page_return_url  = G5_SHOP_URL.'/orderform.php';
-    if($_SESSION['ss_direct'])
+    if(get_session('ss_direct'))
         $page_return_url .= '?sw_direct=1';
 
     // 장바구니가 비어있는가?
@@ -72,17 +75,17 @@ if(isset($data['pp_id']) && $data['pp_id']) {
     }
 }
 
-if($_REQUEST['P_STATUS'] != '00') {
-    alert('오류 : '.iconv_utf8($_REQUEST['P_RMESG1']).' 코드 : '.$_REQUEST['P_STATUS'], $page_return_url);
+if($p_status !== '00') {
+    alert('오류 : '.iconv_utf8($p_rmesg1).' 코드 : '.$p_status, $page_return_url);
 } else {
     $post_data = array(
         'P_MID' => $default['de_inicis_mid'],
-        'P_TID' => $_REQUEST['P_TID']
+        'P_TID' => $p_tid
     );
 
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_PORT, 443);
-    curl_setopt($ch, CURLOPT_URL, $_REQUEST['P_REQ_URL']);
+    curl_setopt($ch, CURLOPT_URL, $p_req_url);
     curl_setopt($ch, CURLOPT_POST, 1);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $post_data);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -128,27 +131,26 @@ if(isset($data['pp_id']) && !empty($data['pp_id'])) {
             }
         }
 
-        $good_mny = $PAY['P_AMT'];
+        $good_mny = isset($PAY['P_AMT']) ? $PAY['P_AMT'] : 0;
         $pp_name = clean_xss_tags($data['pp_name']);
         $pp_email = clean_xss_tags($data['pp_email']);
         $pp_hp = clean_xss_tags($data['pp_hp']);
         $pp_settle_case = clean_xss_tags($data['pp_settle_case']);
 
         $_POST['P_HASH'] = $hash;
-        $_POST['P_AUTH_NO'] = $PAY['P_AUTH_NO'];
-        $_POST['pp_id'] = $PAY['P_OID'];
-        $_POST['good_mny'] = $PAY['P_AMT'];
+        $_POST['P_AUTH_NO'] = isset($PAY['P_AUTH_NO']) ? $PAY['P_AUTH_NO'] : '';
+        $_POST['pp_id'] = isset($PAY['P_OID']) ? $PAY['P_OID'] : '';
+        $_POST['good_mny'] = isset($PAY['P_AMT']) ? $PAY['P_AMT'] : 0;
 
-        $_POST['P_TYPE'] = $PAY['P_TYPE'];
-        $_POST['P_AUTH_DT'] = $PAY['P_AUTH_DT'];
-        $_POST['P_AUTH_NO'] = $PAY['P_AUTH_NO'];
-        $_POST['P_HPP_CORP'] = $PAY['P_HPP_CORP'];
-        $_POST['P_APPL_NUM'] = $PAY['P_APPL_NUM'];
-        $_POST['P_VACT_NUM'] = $PAY['P_VACT_NUM'];
-        $_POST['P_VACT_NAME'] = iconv_utf8($PAY['P_VACT_NAME']);
-        $_POST['P_VACT_BANK'] = $BANK_CODE[$PAY['P_VACT_BANK_CODE']];
-        $_POST['P_CARD_ISSUER'] = $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']];
-        $_POST['P_UNAME'] = iconv_utf8($PAY['P_UNAME']);
+        $_POST['P_TYPE'] = isset($PAY['P_TYPE']) ? $PAY['P_TYPE'] : '';
+        $_POST['P_AUTH_DT'] = isset($PAY['P_AUTH_DT']) ? $PAY['P_AUTH_DT'] : '';
+        $_POST['P_HPP_CORP'] = isset($PAY['P_HPP_CORP']) ? $PAY['P_HPP_CORP'] : '';
+        $_POST['P_APPL_NUM'] = isset($PAY['P_APPL_NUM']) ? $PAY['P_APPL_NUM'] : '';
+        $_POST['P_VACT_NUM'] = isset($PAY['P_VACT_NUM']) ? $PAY['P_VACT_NUM'] : '';
+        $_POST['P_VACT_NAME'] = isset($PAY['P_VACT_NAME']) ? iconv_utf8($PAY['P_VACT_NAME']) : '';
+        $_POST['P_VACT_BANK'] = (isset($PAY['P_VACT_BANK_CODE']) && isset($BANK_CODE[$PAY['P_VACT_BANK_CODE']])) ? $BANK_CODE[$PAY['P_VACT_BANK_CODE']] : '';
+        $_POST['P_CARD_ISSUER'] = isset($CARD_CODE[$PAY['P_CARD_ISSUER_CODE']]) ? $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']] : '';
+        $_POST['P_UNAME'] = isset($PAY['P_UNAME']) ? iconv_utf8($PAY['P_UNAME']) : '';
 
         include_once( G5_MSHOP_PATH.'/personalpayformupdate.php' );
     }
@@ -170,18 +172,18 @@ if(isset($data['pp_id']) && !empty($data['pp_id'])) {
         }
     }
 
-    $res_cd = $_POST['res_cd'] = $PAY['P_STATUS'];
+    $res_cd = $_POST['res_cd'] = isset($PAY['P_STATUS']) ? $PAY['P_STATUS'] : '';
     $P_HASH = $_POST['P_HASH'] = $hash;
-    $P_TYPE = $_POST['P_TYPE'] = $PAY['P_TYPE'];
-    $P_AUTH_DT = $_POST['P_AUTH_DT'] = $PAY['P_AUTH_DT'];
-    $P_AUTH_NO = $_POST['P_AUTH_NO'] = $PAY['P_AUTH_NO'];
-    $P_HPP_CORP = $_POST['P_HPP_CORP'] = $PAY['P_HPP_CORP'];
-    $P_APPL_NUM = $_POST['P_APPL_NUM'] = $PAY['P_APPL_NUM'];
-    $P_VACT_NUM = $_POST['P_VACT_NUM'] = $PAY['P_VACT_NUM'];
-    $P_VACT_NAME = $_POST['P_VACT_NAME'] = iconv_utf8($PAY['P_VACT_NAME']);
-    $P_VACT_BANK = $_POST['P_VACT_BANK'] = $BANK_CODE[$PAY['P_VACT_BANK_CODE']];
-    $P_CARD_ISSUER = $_POST['P_CARD_ISSUER'] = $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']];
-    $P_UNAME = $_POST['P_UNAME'] = iconv_utf8($PAY['P_UNAME']);
+    $P_TYPE = $_POST['P_TYPE'] = isset($PAY['P_TYPE']) ? $PAY['P_TYPE'] : '';
+    $P_AUTH_DT = $_POST['P_AUTH_DT'] = isset($PAY['P_AUTH_DT']) ? $PAY['P_AUTH_DT'] : '';
+    $P_AUTH_NO = $_POST['P_AUTH_NO'] = isset($PAY['P_AUTH_NO']) ? $PAY['P_AUTH_NO'] : '';
+    $P_HPP_CORP = $_POST['P_HPP_CORP'] = isset($PAY['P_HPP_CORP']) ? $PAY['P_HPP_CORP'] : '';
+    $P_APPL_NUM = $_POST['P_APPL_NUM'] = isset($PAY['P_APPL_NUM']) ? $PAY['P_APPL_NUM'] : '';
+    $P_VACT_NUM = $_POST['P_VACT_NUM'] = isset($PAY['P_VACT_NUM']) ? $PAY['P_VACT_NUM'] : '';
+    $P_VACT_NAME = $_POST['P_VACT_NAME'] = isset($PAY['P_VACT_NAME']) ? iconv_utf8($PAY['P_VACT_NAME']) : '';
+    $P_VACT_BANK = $_POST['P_VACT_BANK'] = (isset($PAY['P_VACT_BANK_CODE']) && isset($BANK_CODE[$PAY['P_VACT_BANK_CODE']])) ? $BANK_CODE[$PAY['P_VACT_BANK_CODE']] : '';
+    $P_CARD_ISSUER = $_POST['P_CARD_ISSUER'] = isset($CARD_CODE[$PAY['P_CARD_ISSUER_CODE']]) ? $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']] : '';
+    $P_UNAME = $_POST['P_UNAME'] = isset($PAY['P_UNAME']) ? iconv_utf8($PAY['P_UNAME']) : '';
 
     $check_keys = array('od_name', 'od_tel', 'od_pwd', 'od_hp', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon', 'od_email', 'ad_default', 'ad_subject', 'od_hope_date', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon', 'od_memo', 'od_settle_case', 'max_temp_point', 'od_temp_point', 'od_send_cost', 'od_send_cost2', 'od_bank_account', 'od_deposit_name', 'od_test', 'od_ip');
 
@@ -192,4 +194,3 @@ if(isset($data['pp_id']) && !empty($data['pp_id'])) {
     include_once( G5_MSHOP_PATH.'/orderformupdate.php' );
 }
 exit;
-?>

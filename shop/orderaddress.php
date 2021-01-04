@@ -4,6 +4,8 @@ include_once('./_common.php');
 if(!$is_member)
     alert_close('회원이시라면 회원로그인 후 이용해 주십시오.');
 
+$ad_id = isset($_REQUEST['ad_id']) ? (int) $_REQUEST['ad_id'] : 0;
+
 if($w == 'd') {
     $sql = " delete from {$g5['g5_shop_order_address_table']} where mb_id = '{$member['mb_id']}' and ad_id = '$ad_id' ";
     sql_query($sql);
@@ -173,4 +175,3 @@ $(function() {
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

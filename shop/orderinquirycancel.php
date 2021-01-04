@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
+
 // 세션에 저장된 토큰과 폼으로 넘어온 토큰을 비교하여 틀리면 에러
 if ($token && get_session("ss_token") == $token) {
     // 맞으면 세션을 지워 다시 입력폼을 통해서 들어오도록 한다.
@@ -12,7 +14,7 @@ if ($token && get_session("ss_token") == $token) {
 
 $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' and mb_id = '{$member['mb_id']}' ");
 
-if (!$od['od_id']) {
+if (! (isset($od['od_id']) && $od['od_id'])) {
     alert("존재하는 주문이 아닙니다.");
 }
 
@@ -156,4 +158,3 @@ if ($od['od_receipt_point'] > 0)
     insert_point($member['mb_id'], $od['od_receipt_point'], "주문번호 $od_id 본인 취소");
 
 goto_url(G5_SHOP_URL."/orderinquiryview.php?od_id=$od_id&amp;uid=$uid");
-?>

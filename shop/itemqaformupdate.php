@@ -5,13 +5,18 @@ if (!$is_member) {
     alert_close("상품문의는 회원만 작성이 가능합니다.");
 }
 
-$iq_id = (int) trim($_REQUEST['iq_id']);
-$iq_subject = trim($_POST['iq_subject']);
-$iq_question = trim($_POST['iq_question']);
+$iq_id = isset($_REQUEST['iq_id']) ? (int) $_REQUEST['iq_id'] : 0;
+$iq_subject = isset($_POST['iq_subject']) ? trim($_POST['iq_subject']) : '';
+$iq_question = isset($_POST['iq_question']) ? trim($_POST['iq_question']) : '';
 $iq_question = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $iq_question);
-$iq_answer = trim($_POST['iq_answer']);
-$hash = trim($_REQUEST['hash']);
+$iq_answer = isset($_POST['iq_answer']) ? trim($_POST['iq_answer']) : '';
+$hash = isset($_REQUEST['hash']) ? trim($_REQUEST['hash']) : '';
 $get_editor_img_mode = $config['cf_editor'] ? false : true;
+
+$iq_secret = isset($_POST['iq_secret']) ? (int) $_POST['iq_secret'] : 0;
+$iq_email = isset($_POST['iq_email']) ? clean_xss_tags($_POST['iq_email'], 1, 1) : '';
+$iq_hp = isset($_POST['iq_hp']) ? clean_xss_tags($_POST['iq_hp'], 1, 1) : '';
+$is_mobile_shop = isset($_REQUEST['is_mobile_shop']) ? (int) $_REQUEST['is_mobile_shop'] : 0;
 
 if ($w == "" || $w == "u") {
     $iq_name     = addslashes(strip_tags($member['mb_name']));
@@ -39,7 +44,7 @@ if ($w == "")
                    iq_subject  = '$iq_subject',
                    iq_question = '$iq_question',
                    iq_time = '".G5_TIME_YMDHIS."',
-                   iq_ip = '$REMOTE_ADDR' ";
+                   iq_ip = '".$_SERVER['REMOTE_ADDR']."' ";
     sql_query($sql);
 
     $alert_msg = '상품문의가 등록 되었습니다.';
@@ -102,7 +107,9 @@ else if ($w == "d")
 
     $imgs = get_editor_image($row['iq_answer'], $get_editor_img_mode);
 
-    for($i=0;$i<count($imgs[1]);$i++) {
+    $imgs_count = (isset($imgs[1]) && is_array($imgs[1])) ? count($imgs[1]) : 0;
+
+    for($i=0;$i<$imgs_count;$i++) {
         $p = parse_url($imgs[1][$i]);
         if(strpos($p['path'], "/data/") != 0)
             $data_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
@@ -128,4 +135,3 @@ if($w == 'd')
     alert($alert_msg, $url);
 else
     alert_opener($alert_msg, $url);
-?>

@@ -90,7 +90,8 @@ class INISocket {
 
         $read = array($this->hnd);
         $write = array($this->hnd);
-        $rtv = @socket_select($read, $write, $except = NULL, TIMEOUT_CONNECT);
+        $except = NULL;
+        $rtv = @socket_select($read, $write, $except, TIMEOUT_CONNECT);
         if ($rtv == 0) { //TIMEOUT
             $this->error();
             socket_close($this->hnd);
@@ -125,8 +126,10 @@ class INISocket {
         }
 
         $vWrite = array($this->hnd);
+        $vRead = null;
+        $vExcept = null;
 
-        while (($rtv = @socket_select($vRead = null, $vWrite, $vExcept = null, TIMEOUT_WRITE)) === FALSE);
+        while (($rtv = @socket_select($vRead, $vWrite, $vExcept, TIMEOUT_WRITE)) === FALSE);
 
         if ($rtv == 0) {
             $this->error();
@@ -157,7 +160,10 @@ class INISocket {
         $read = array($this->hnd);
         $buf = null;
         while ($nleft > 0) {
-            $rtv = @socket_select($read, $write = NULL, $except = NULL, TIMEOUT_READ);
+            $write = null;
+            $except = null;
+
+            $rtv = @socket_select($read, $write, $except, TIMEOUT_READ);
             if ($rtv == 0) {
                 $this->error();
                 return SOCK_TIMEO_ERR;
@@ -218,5 +224,3 @@ class INISocket {
     }
 
 }
-
-?>

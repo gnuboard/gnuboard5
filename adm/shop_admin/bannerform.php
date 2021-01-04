@@ -2,9 +2,18 @@
 $sub_menu = '500500';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
-$bn_id = preg_replace('/[^0-9]/', '', $bn_id);
+$bn_id = isset($_REQUEST['bn_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['bn_id']) : 0;
+$bn = array(
+'bn_id'=>0,
+'bn_alt'=>'',
+'bn_device'=>'',
+'bn_position'=>'',
+'bn_border'=>'',
+'bn_new_win'=>'',
+'bn_order'=>''
+);
 
 $html_title = '배너';
 $g5['title'] = $html_title.'관리';
@@ -163,4 +172,3 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

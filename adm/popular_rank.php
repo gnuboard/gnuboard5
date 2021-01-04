@@ -2,7 +2,10 @@
 $sub_menu = "300400";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
+
+$fr_date = isset($_REQUEST['fr_date']) ? $_REQUEST['fr_date'] : '';
+$to_date = isset($_REQUEST['to_date']) ? $_REQUEST['to_date'] : '';
 
 if (empty($fr_date) || ! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $fr_date) ) $fr_date = G5_TIME_YMD;
 if (empty($to_date) || ! preg_match("/^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$/", $to_date) ) $to_date = G5_TIME_YMD;
@@ -64,7 +67,7 @@ $(function(){
 <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
 <input type="hidden" name="stx" value="<?php echo $stx ?>">
 <input type="hidden" name="page" value="<?php echo $page ?>">
-<input type="hidden" name="token" value="<?php echo $token ?>">
+<input type="hidden" name="token" value="<?php echo isset($token) ? $token : ''; ?>">
 
 <div class="tbl_head01 tbl_wrap">
     <table>
@@ -105,8 +108,5 @@ $(function(){
 
 <?php
 echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page=");
-?>
 
-<?php
 include_once('./admin.tail.php');
-?>

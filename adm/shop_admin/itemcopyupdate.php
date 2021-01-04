@@ -2,7 +2,7 @@
 $sub_menu = '400300';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
@@ -162,4 +162,3 @@ sql_query($sql);
 $qstr = "ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx)."&amp;save_stx=".urlencode($save_stx);
 
 goto_url("itemlist.php?$qstr");
-?>

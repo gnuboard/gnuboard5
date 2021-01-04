@@ -2,10 +2,10 @@
 $sub_menu = '500110';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-$fr_year = preg_replace('/[^0-9]/i', '', $fr_year);
-$to_year = preg_replace('/[^0-9]/i', '', $to_year);
+$fr_year = isset($_REQUEST['fr_year']) ? preg_replace('/[^0-9 :_\-]/i', '', $_REQUEST['fr_year']) : '';
+$to_year = isset($_REQUEST['to_year']) ? preg_replace('/[^0-9 :_\-]/i', '', $_REQUEST['to_year']) : '';
 
 $g5['title'] = $fr_year.' ~ '.$to_year.' 연간 매출현황';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -70,8 +70,9 @@ $result = sql_query($sql);
     </thead>
     <tbody>
     <?php
-    unset($save);
-    unset($tot);
+    $save = array('ordercount'=>0, 'orderprice'=>0, 'ordercancel'=>0, 'ordercoupon'=>0, 'receiptbank'=>0, 'receiptvbank'=>0, 'receiptiche'=>0, 'receipthp'=>0, 'receiptcard'=>0, 'receiptpoint'=>0, 'misu'=>0, 'receipteasy'=>0);
+    $tot = array('ordercount'=>0, 'orderprice'=>0, 'ordercancel'=>0, 'ordercoupon'=>0, 'receiptbank'=>0, 'receiptvbank'=>0, 'receiptiche'=>0, 'receipthp'=>0, 'receiptcard'=>0, 'receiptpoint'=>0, 'misu'=>0, 'receipteasy'=>0);
+
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         if ($i == 0)
@@ -79,7 +80,7 @@ $result = sql_query($sql);
 
         if ($save['od_date'] != $row['od_date']) {
             print_line($save);
-            unset($save);
+            $save = array('ordercount'=>0, 'orderprice'=>0, 'ordercancel'=>0, 'ordercoupon'=>0, 'receiptbank'=>0, 'receiptvbank'=>0, 'receiptiche'=>0, 'receipthp'=>0, 'receiptcard'=>0, 'receiptpoint'=>0, 'misu'=>0, 'receipteasy'=>0);
             $save['od_date'] = $row['od_date'];
         }
 
@@ -152,4 +153,3 @@ $result = sql_query($sql);
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

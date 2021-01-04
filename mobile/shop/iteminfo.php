@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
 
-$it_id = get_search_string(trim($_GET['it_id']));
-$info = preg_replace('/[^0-9a-z]/i', '', $_GET['info']);
+$it_id = isset($_GET['it_id']) ? get_search_string(trim($_GET['it_id'])) : '';
+$info = isset($_GET['info']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['info']) : '';
 
 // 분류사용, 상품사용하는 상품의 정보를 얻음
 $sql = " select a.*,
@@ -84,4 +84,3 @@ switch($info) {
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

@@ -2,14 +2,14 @@
 $sub_menu = '400500';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-$doc = strip_tags($doc);
-$sort1 = strip_tags($sort1);
-$sort2 = in_array($sort2, array('desc', 'asc')) ? $sort2 : 'desc';
-$sel_ca_id = get_search_string($sel_ca_id);
-$sel_field = get_search_string($sel_field);
-$search = get_search_string($search);
+$doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
+$sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('b.it_name', 'a.io_stock_qty', 'a.io_use'))) ? $_GET['sort1'] : '';
+$sort2 = (isset($_GET['sort2']) && in_array($_GET['sort2'], array('desc', 'asc'))) ? $_GET['sort2'] : 'asc';
+$sel_ca_id = isset($_GET['sel_ca_id']) ? get_search_string($_GET['sel_ca_id']) : '';
+$sel_field = (isset($_GET['sel_field']) && in_array($_GET['sel_field'], array('b.it_name', 'a.it_id')) ) ? $_GET['sel_field'] : '';
+$search = isset($_GET['search']) ? get_search_string($_GET['search']) : '';
 
 $g5['title'] = '상품옵션재고관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -50,7 +50,8 @@ $sql  = " select a.it_id,
                  a.io_noti_qty,
                  a.io_use,
                  b.it_name,
-                 b.it_option_subject
+                 b.it_option_subject,
+                 b.ca_id
            $sql_common
           order by $sort1 $sort2
           limit $from_record, $rows ";
@@ -228,4 +229,3 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

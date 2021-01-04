@@ -4,8 +4,9 @@ include_once('./_common.php');
 define("_ORDERINQUIRY_", true);
 
 $order_info = array();
-$request_pwd = $od_pwd;
-$od_pwd = get_encrypt_string($od_pwd);
+$request_pwd = isset($_POST['od_pwd']) ? $_POST['od_pwd'] : '';
+$od_pwd = get_encrypt_string($request_pwd);
+$od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
 
 // 회원인 경우
 if ($is_member)
@@ -90,4 +91,3 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

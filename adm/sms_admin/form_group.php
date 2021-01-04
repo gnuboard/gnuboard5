@@ -4,7 +4,7 @@ include_once("./_common.php");
 
 $colspan = 5;
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "이모티콘 그룹";
 
@@ -67,8 +67,8 @@ function grouplist_submit(f)
 
 </script>
 
-<form name="group<?php echo $res['fg_no']?>" method="post" action="./form_group_update.php" class="local_sch03 local_sch">
-<input type="hidden" name="fg_no" value="<?php echo $res['fg_no']?>">
+<form name="group<?php echo isset($res['fg_no']) ? $res['fg_no'] : ''; ?>" method="post" action="./form_group_update.php" class="local_sch03 local_sch">
+<input type="hidden" name="fg_no" value="<?php echo isset($res['fg_no']) ? $res['fg_no'] : ''; ?>">
 <div>
     <label for="fg_name">그룹명<strong class="sound_only"> 필수</strong></label>
     <input type="text" id="fg_name" name="fg_name" required class="required frm_input">
@@ -83,7 +83,7 @@ function grouplist_submit(f)
     <p>그룹명순으로 정렬됩니다.</p>
 </div>
 
-<form name="group<?php echo $group[$i]['fg_no']?>" method="post" action="./form_group_update.php" onsubmit="return grouplist_submit(this);">
+<form name="group<?php echo isset($group[$i]['fg_no']) ? $group[$i]['fg_no'] : ''; ?>" method="post" action="./form_group_update.php" onsubmit="return grouplist_submit(this);">
 <input type="hidden" name="w" value="u">
 
 <div class="tbl_head01 tbl_wrap">
@@ -174,4 +174,3 @@ function grouplist_submit(f)
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

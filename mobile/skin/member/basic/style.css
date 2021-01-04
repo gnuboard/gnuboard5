@@ -177,7 +177,7 @@
 #mb_login_notmb {background:#fff;border-bottom:1px solid #ccc;padding:20px}
 #mb_login_notmb h2 {font-size:1.25em;padding:10px;background:#f3f3f3}
 #mb_login_notmb p {border:0;padding:0;margin:10px;color:#}
-#guest_privacy p {border:1px solid #ddd;background:#fff;color:#666;min-height:20px;height:200px;padding:10px;text-align:left;overflow-y:auto;margin:10px 0}
+#guest_privacy {border:1px solid #ccc;text-align:left;line-height:1.6em;color:#666;background:#fafafa;padding:10px;height:200px;margin:10px 0;overflow-y:auto}
 #mb_login_notmb .btn_submit {width:100%;display:block;height:40px;line-height:40px}
 
 #mb_login_od_wr {background:#fff;border-bottom:1px solid #ccc;padding:20px}

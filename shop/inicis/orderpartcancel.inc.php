@@ -76,4 +76,3 @@ $inipay->startAction();
  } else {
      alert(iconv_utf8($inipay->GetResult("ResultMsg")).' 코드 : '.$inipay->GetResult("ResultCode"));
  }
-?>

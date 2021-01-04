@@ -230,6 +230,14 @@ function get_member_id_select($name, $level, $selected="", $event="")
     return $str;
 }
 
+// php8 버전 호환 권한 검사 함수
+function auth_check_menu($auth, $sub_menu, $attr, $return=false) {
+
+    $check_auth = isset($auth[$sub_menu]) ? $auth[$sub_menu] : '';
+    return auth_check($check_auth, $attr, $return);
+
+}
+
 // 권한 검사
 function auth_check($auth, $attr, $return=false)
 {
@@ -440,7 +448,7 @@ function check_admin_token()
 // 관리자 페이지 referer 체크
 function admin_referer_check($return=false)
 {
-    $referer = trim($_SERVER['HTTP_REFERER']);
+    $referer = isset($_SERVER['HTTP_REFERER']) ? trim($_SERVER['HTTP_REFERER']) : '';
     if(!$referer) {
         $msg = '정보가 올바르지 않습니다.';
 
@@ -516,7 +524,7 @@ function admin_menu_find_by($call, $search_key){
     }
 
     if( isset($cache_menu[$call]) && isset($cache_menu[$call][$search_key]) ){
-        return$cache_menu[$call][$search_key];
+        return $cache_menu[$call][$search_key];
     }
 
     return '';
@@ -556,7 +564,11 @@ if (get_session('ss_mb_key') !== $admin_key) {
     alert_close('정상적으로 로그인하여 접근하시기 바랍니다.');
 }
 
-@ksort($auth);
+if(isset($auth) && is_array($auth)) {
+    @ksort($auth);
+} else {
+    $auth = array();
+}
 
 // 가변 메뉴
 unset($auth_menu);
@@ -598,4 +610,3 @@ if ( isset($_REQUEST) && $_REQUEST ){
 
 // 관리자에서는 추가 스크립트는 사용하지 않는다.
 //$config['cf_add_script'] = '';
-?>

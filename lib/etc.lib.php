@@ -11,4 +11,3 @@ function write_log($file, $log) {
     fwrite($fp, $msg);
     fclose($fp);
 }
-?>

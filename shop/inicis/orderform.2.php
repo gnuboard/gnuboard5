@@ -76,4 +76,4 @@ no_receipt : 은행계좌이체시 현금영수증 발행여부 체크박스 비
 <?php if($default['de_tax_flag_use']) { ?>
 <input type="hidden" name="tax"         value="<?php echo $comm_vat_mny; ?>">
 <input type="hidden" name="taxfree"     value="<?php echo $comm_free_mny; ?>">
-<?php } ?>
+<?php }

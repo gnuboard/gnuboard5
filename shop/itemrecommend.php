@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/itemrecommend.php');
     return;
@@ -67,4 +69,3 @@ function fitemrecommend_check(f)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

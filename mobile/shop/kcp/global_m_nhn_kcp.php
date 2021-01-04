@@ -7,4 +7,3 @@ if( !(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')) ){
 }
 
 include_once(G5_MSHOP_PATH.'/settle_kcp.inc.php');
-?>

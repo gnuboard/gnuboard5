@@ -88,4 +88,3 @@ if ($config['cf_sms_use']) {
         }
     }
 }
-?>

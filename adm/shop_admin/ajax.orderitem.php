@@ -2,9 +2,9 @@
 $sub_menu = '400400';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-$od_id = $_POST['od_id'];
+$od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : 0;
 
 $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);

@@ -3,9 +3,32 @@ $sub_menu = '400200';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
-$ca_id = isset($ca_id) ? preg_replace('/[^0-9a-z]/i', '', $ca_id) : '';
+$ca_id = isset($_GET['ca_id']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['ca_id']) : '';
+$ca = array(
+'ca_skin_dir'=>'',
+'ca_mobile_skin_dir'=>'',
+'ca_name'=>'',
+'ca_order'=>'',
+'ca_mb_id'=>'',
+'ca_skin_dir'=>'',
+'ca_cert_use'=>0,
+'ca_adult_use'=>0,
+'ca_sell_email'=>'',
+'ca_nocoupon'=>0,
+'ca_include_head'=>'',
+'ca_include_tail'=>'',
+'ca_head_html'=>'',
+'ca_tail_html'=>'',
+'ca_mobile_head_html'=>'',
+'ca_mobile_tail_html'=>'',
+);
+
+for($i=0;$i<=10;$i++){
+    $ca['ca_'.$i.'_subj'] = '';
+    $ca['ca_'.$i] = '';
+}
 
 $sql_common = " from {$g5['g5_shop_category_table']} ";
 if ($is_admin != 'super')
@@ -69,7 +92,7 @@ else if ($w == "u")
 {
     $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
     $ca = sql_fetch($sql);
-    if (!$ca['ca_id'])
+    if (! (isset($ca['ca_id']) && $ca['ca_id']))
         alert("자료가 없습니다.");
 
     $html_title = $ca['ca_name'] . " 수정";
@@ -617,4 +640,3 @@ jQuery(function($){
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

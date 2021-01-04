@@ -144,4 +144,3 @@ if(!file_exists($search_skin)) {
 }
 
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

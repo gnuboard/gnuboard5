@@ -2,7 +2,7 @@
 $sub_menu = '400440';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 $_POST = array_map('trim', $_POST);
 
@@ -51,4 +51,3 @@ self.close();
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

@@ -492,7 +492,10 @@ $(function(){
         }
     });
    
-    $('#slide-counter').append('<span class="total-slides">'+slider.getSlideCount()+'</span>');
+    try {
+        $('#slide-counter').append('<span class="total-slides">'+slider.getSlideCount()+'</span>');
+    } catch (error) {
+    }
 
     $('a.pager-prev').click(function () {
         var current = slider.getCurrentSlide();
@@ -555,7 +558,7 @@ function fsubmit_check(f)
         return false;
     }
 
-    if($(".sit_opt_list").size() < 1) {
+    if($(".sit_opt_list").length < 1) {
         alert("상품의 선택옵션을 선택해 주십시오.");
         return false;
     }
@@ -627,7 +630,7 @@ function fitem_submit(f)
         return false;
     }
 
-    if($(".sit_opt_list").size() < 1) {
+    if($(".sit_opt_list").length < 1) {
         alert("상품의 선택옵션을 선택해 주십시오.");
         return false;
     }

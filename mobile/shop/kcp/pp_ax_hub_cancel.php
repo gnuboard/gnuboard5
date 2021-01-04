@@ -51,4 +51,3 @@ if ( $req_tx == "pay" )
 
 // locale 설정 초기화
 setlocale(LC_CTYPE, '');
-?>

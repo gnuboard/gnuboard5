@@ -75,4 +75,3 @@ if(isset($data['pp_id']) && $data['pp_id']) {   //개인결제
 
     include_once(G5_SHOP_PATH.'/orderformupdate.php');
 }
-?>

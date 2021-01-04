@@ -150,4 +150,3 @@ if ($LGD_HASHDATA2 == $LGD_HASHDATA) {      //해쉬값 검증이 성공하면
 }
 
 echo $resultMSG;
-?>

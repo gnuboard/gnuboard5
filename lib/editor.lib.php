@@ -24,4 +24,3 @@ function chk_editor_js($id)
 {
     return "if (!{$id}_editor.value) { alert(\"내용을 입력해 주십시오.\"); {$id}_editor.focus(); return false; }\n";
 }
-?>

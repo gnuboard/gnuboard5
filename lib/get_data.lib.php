@@ -82,8 +82,11 @@ function get_board_db($bo_table, $is_cache=false){
 
         $sql = " select * from {$g5['board_table']} where bo_table = '$bo_table' ";
 
-        $cache[$key] = sql_fetch($sql);
+        $board = sql_fetch($sql);
+        
+        $board_defaults = array('bo_table'=>'', 'bo_skin'=>'', 'bo_mobile_skin'=>'', 'bo_upload_count' => 0, 'bo_use_dhtml_editor'=>'', 'bo_subject'=>'', 'bo_image_width'=>0);
 
+        $cache[$key] = array_merge($board_defaults, (array) $board);
     }
 
     return $cache[$key];
@@ -116,6 +119,7 @@ function get_menu_db($use_mobile=0, $is_cache=false){
 			
 			$row['ori_me_link'] = $row['me_link'];
 			$row['me_link'] = short_url_clean($row['me_link']);
+            $row['sub'] = isset($row['sub']) ? $row['sub'] : array();
 			$cache[$key][$i] = $row;
 
 			$sql2 = " select *
@@ -474,4 +478,3 @@ function get_scrap_totals($mb_id=''){
 
     return $row['cnt'];
 }
-?>

@@ -2,7 +2,7 @@
 $sub_menu = '500300';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '이벤트관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -86,4 +86,3 @@ function itemeventwin(ev_id)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

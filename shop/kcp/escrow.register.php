@@ -38,4 +38,3 @@ $res_msg = $c_PayPlus->m_res_msg; // 결과 메시지
 
 // locale 설정 초기화
 setlocale(LC_CTYPE, '');
-?>

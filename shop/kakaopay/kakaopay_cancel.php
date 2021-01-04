@@ -84,4 +84,3 @@ if($cancelFlag == "true")
         $pg_res_msg = iconv_utf8($res_msg);
     }
 }
-?>

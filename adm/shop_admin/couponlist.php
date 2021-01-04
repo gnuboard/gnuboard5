@@ -2,7 +2,7 @@
 $sub_menu = '400800';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $sql_common = " from {$g5['g5_shop_coupon_table']} ";
 
@@ -56,9 +56,9 @@ $colspan = 9;
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
 
 <select name="sfl" title="검색대상">
-    <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
-    <option value="cp_subject"<?php echo get_selected($_GET['sfl'], "cp_subject"); ?>>쿠폰이름</option>
-    <option value="cp_id"<?php echo get_selected($_GET['sfl'], "cp_id"); ?>>쿠폰코드</option>
+    <option value="mb_id"<?php echo get_selected($sfl, "mb_id"); ?>>회원아이디</option>
+    <option value="cp_subject"<?php echo get_selected($sfl, "cp_subject"); ?>>쿠폰이름</option>
+    <option value="cp_id"<?php echo get_selected($sfl, "cp_id"); ?>>쿠폰코드</option>
 </select>
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
@@ -185,4 +185,3 @@ function fcouponlist_submit(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

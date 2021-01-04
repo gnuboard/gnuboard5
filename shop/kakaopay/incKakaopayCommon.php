@@ -56,4 +56,3 @@ if ($default['de_card_test']) {
 }
 
 $returnUrl = G5_SHOP_URL.'/kakaopay/inicis_kk_return.php';
-?>

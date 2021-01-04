@@ -2,7 +2,7 @@
 $sub_menu = '400650';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '사용후기';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -214,4 +214,3 @@ $(function(){
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

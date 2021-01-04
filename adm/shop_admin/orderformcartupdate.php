@@ -2,11 +2,11 @@
 $sub_menu = '400400';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
-$ct_chk_count = count($_POST['ct_chk']);
+$ct_chk_count = isset($_POST['ct_chk']) ? count($_POST['ct_chk']) : 0;
 if(!$ct_chk_count)
     alert('처리할 자료를 하나 이상 선택해 주십시오.');
 
@@ -19,14 +19,19 @@ if (in_array($_POST['ct_status'], $status_normal) || in_array($_POST['ct_status'
     alert('변경할 상태가 올바르지 않습니다.');
 }
 
+$search = isset($_REQUEST['search']) ? get_search_string($_REQUEST['search']) : '';
+$sort1 = isset($_REQUEST['sort1']) ? clean_xss_tags($_REQUEST['sort1'], 1, 1) : '';
+$sort2 = isset($_REQUEST['sort2']) ? clean_xss_tags($_REQUEST['sort2'], 1, 1) : '';
+$sel_field = isset($_REQUEST['sel_field']) ? clean_xss_tags($_REQUEST['sel_field'], 1, 1) : '';
+
 $mod_history = '';
-$cnt = count($_POST['ct_id']);
+$cnt = (isset($_POST['ct_id']) && is_array($_POST['ct_id'])) ? count($_POST['ct_id']) : 0;
 $arr_it_id = array();
 
 for ($i=0; $i<$cnt; $i++)
 {
-    $k = $_POST['ct_chk'][$i];
-    $ct_id = $_POST['ct_id'][$k];
+    $k = isset($_POST['ct_chk'][$i]) ? (int) $_POST['ct_chk'][$i] : 0;
+    $ct_id = isset($_POST['ct_id'][$k]) ? (int) $_POST['ct_id'][$k] : 0;
 
     if(!$ct_id)
         continue;
@@ -37,7 +42,7 @@ for ($i=0; $i<$cnt; $i++)
         continue;
 
     // 수량이 변경됐다면
-    $ct_qty = $_POST['ct_qty'][$k];
+    $ct_qty = isset($_POST['ct_qty'][$k]) ? (int) $_POST['ct_qty'][$k] : 0;
     if($ct['ct_qty'] != $ct_qty) {
         $diff_qty = $ct['ct_qty'] - $ct_qty;
 
@@ -273,7 +278,8 @@ if (in_array($_POST['ct_status'], $status_cancel)) {
                         $c_PayPlus = new C_PP_CLI_T;
 
                         $c_PayPlus->mf_clear();
-
+                        
+                        $ordr_idxx = $od['od_id'];
                         $tno = $od['od_tno'];
                         $tran_cd = '00200000';
                         $cancel_msg = iconv_euckr('쇼핑몰 운영자 승인 취소');
@@ -344,7 +350,7 @@ if ($mod_history) { // 주문변경 히스토리 기록
 if($cancel_change) {
     $sql .= " , od_status = '취소' "; // 주문상품 모두 취소, 반품, 품절이면 주문 취소
 } else {
-    if (in_array($_POST['ct_status'], $status_normal)) { // 정상인 주문상태만 기록
+    if (isset($_POST['ct_status']) && in_array($_POST['ct_status'], $status_normal)) { // 정상인 주문상태만 기록
         $sql .= " , od_status = '{$_POST['ct_status']}' ";
     }
 }
@@ -367,4 +373,3 @@ if($pg_cancel == 1 && $pg_res_cd && $pg_res_msg) {
     else
         goto_url($url);
 }
-?>

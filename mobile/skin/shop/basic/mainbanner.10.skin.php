@@ -115,4 +115,3 @@ jQuery(function($){
 </script>
 <?php
 }
-?>

@@ -3,7 +3,7 @@ $sub_menu = '400660';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $sql = " select *
            from {$g5['g5_shop_item_qa_table']} a
@@ -93,4 +93,3 @@ function fitemqaform_submit(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

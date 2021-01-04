@@ -15,55 +15,60 @@ require_once ( "INIXml.php" );
 /* ----------------------------------------------------- */
 extract($_POST);
 extract($_GET);
+
+$paymethod = isset($paymethod) ? preg_replace('/[^0-9a-z_\-]/i', '', $paymethod) : '';
+
 switch ($paymethod) {
-    case(Card):    // 신용카드
+    case('Card'):    // 신용카드
         $pgid = "CARD";
         break;
-    case(Account):   // 은행 계좌 이체
+    case('Account'):   // 은행 계좌 이체
         $pgid = "ACCT";
         break;
-    case(DirectBank): // 실시간 계좌 이체
+    case('DirectBank'): // 실시간 계좌 이체
         $pgid = "DBNK";
         break;
-    case(OCBPoint):  // OCB
+    case('OCBPoint'):  // OCB
         $pgid = "OCBP";
         break;
-    case(VCard):    // ISP 결제
+    case('VCard'):    // ISP 결제
         $pgid = "ISP_";
         break;
-    case(HPP):     // 휴대폰 결제
+    case('HPP'):     // 휴대폰 결제
         $pgid = "HPP_";
         break;
-    case(ArsBill):   // 700 전화결제
+    case('ArsBill'):   // 700 전화결제
         $pgid = "ARSB";
         break;
-    case(PhoneBill):  // PhoneBill 결제(받는 전화)
+    case('PhoneBill'):  // PhoneBill 결제(받는 전화)
         $pgid = "PHNB";
         break;
-    case(Ars1588Bill):// 1588 전화결제
+    case('Ars1588Bill'):// 1588 전화결제
         $pgid = "1588";
         break;
-    case(VBank):    // 가상계좌 이체
+    case('VBank'):    // 가상계좌 이체
         $pgid = "VBNK";
         break;
-    case(Culture):   // 문화상품권 결제
+    case('Culture'):   // 문화상품권 결제
         $pgid = "CULT";
         break;
-    case(CMS):     // CMS 결제
+    case('CMS'):     // CMS 결제
         $pgid = "CMS_";
         break;
-    case(AUTH):    // 신용카드 유효성 검사
+    case('AUTH'):    // 신용카드 유효성 검사
         $pgid = "AUTH";
         break;
-    case(INIcard):   // 네티머니 결제
+    case('INIcard'):   // 네티머니 결제
         $pgid = "INIC";
         break;
-    case(MDX):     // 몬덱스카드
+    case('MDX'):     // 몬덱스카드
         $pgid = "MDX_";
         break;
     default:         // 상기 지불수단 외 추가되는 지불수단의 경우 기본으로 paymethod가 4자리로 넘어온다.
         $pgid = $paymethod;
 }
+
+$quotainterest = isset($quotainterest) ? $quotainterest : '';
 
 if ($quotainterest == "1") {
     $interest = "(무이자할부)";
@@ -78,7 +83,7 @@ function Base64Encode($str) {
 }
 
 function GetMicroTime() {
-    list($usec, $sec) = explode(" ", microtime(true));
+    list($usec, $sec) = explode(" ", microtime());
     return (float) $usec + (float) $sec;
 }
 
@@ -110,11 +115,11 @@ class INILog {
         $this->debug_msg = array("", "CRITICAL", "ERROR", "NOTICE", "4", "INFO", "6", "DEBUG", "8");
         $this->debug_mode = $request["debug"];
         $this->type = $request["type"];
-        $this->log = $request["log"];
+        $this->log = isset($request["log"]) ? $request["log"] : '';
         $this->homedir = $request["inipayhome"];
         $this->mid = $request["mid"];
         $this->starttime = GetMicroTime();
-        $this->mergelog = $request["mergelog"];
+        $this->mergelog = isset($request["mergelog"]) ? $request["mergelog"] : '';
     }
 
     function StartLog() {
@@ -272,7 +277,7 @@ class INIData {
             $this->m_sCmd = CMD_REQ_PAY;
             $this->m_sCrypto = FLAG_CRYPTO_3DES;
         }
-        $this->m_sPayMethod = $this->m_REQUEST["paymethod"];
+        $this->m_sPayMethod = isset($this->m_REQUEST["paymethod"]) ? $this->m_REQUEST["paymethod"] : '';
 
         $this->m_TXVersion = sprintf("%-6.6s", VERSION) .
                 sprintf("B%-8.8s", BUILDDATE) .
@@ -511,15 +516,21 @@ class INIData {
               $PD = $xml->add_node($CS,		TX_CSHR_SUBSERVICEPRICE1, $this->m_REQUEST[""]		);
              */
         } else if ($this->m_Type == TYPE_CANCEL) {
+            $cancelcode = isset($this->m_REQUEST["cancelcode"]) ? $this->m_REQUEST["cancelcode"] : '';
+
             $CI = $xml->add_node("", CANCELINFO);
             $CD = $xml->add_node($CI, TX_CANCELTID, $this->m_REQUEST["tid"]);
             $CD = $xml->add_node($CI, TX_CANCELMSG, $this->m_REQUEST["cancelmsg"], array("urlencode" => "1"));
-            $CD = $xml->add_node($CI, TX_CANCELREASON, $this->m_REQUEST["cancelcode"]);
+            $CD = $xml->add_node($CI, TX_CANCELREASON, $cancelcode);
             
+            $node_racctnum = isset($this->m_REQUEST["racctnum"]) ? $this->m_REQUEST["racctnum"] : '';
+            $node_rbankcode = isset($this->m_REQUEST["rbankcode"]) ? $this->m_REQUEST["rbankcode"] : '';
+            $node_racctname = isset($this->m_REQUEST["racctname"]) ? $this->m_REQUEST["racctname"] : '';
+
             //휴대폰 익월환불 추가
-            $CD = $xml->add_node($CI, TX_REFUNDACCTNUM, $this->m_REQUEST["racctnum"]);
-            $CD = $xml->add_node($CI, TX_REFUNDBANKCODE, $this->m_REQUEST["rbankcode"]);
-            $CD = $xml->add_node($CI, TX_REFUNDACCTNAME, $this->m_REQUEST["racctname"], array("urlencode" => "1"));
+            $CD = $xml->add_node($CI, TX_REFUNDACCTNUM, $node_racctnum);
+            $CD = $xml->add_node($CI, TX_REFUNDBANKCODE, $node_rbankcode);
+            $CD = $xml->add_node($CI, TX_REFUNDACCTNAME, $node_racctname, array("urlencode" => "1"));
             
             $this->AddUserDefinedEntity(CANCELINFO, "", $xml, $CI);
         } else if ($this->m_Type == TYPE_REPAY) {
@@ -644,10 +655,13 @@ class INIData {
         $this->m_sHead .= sprintf("%20s", $this->m_TXPGPubSN);
         $this->m_sHead .= sprintf("%4s", $this->m_sCmd);
         $this->m_sHead .= sprintf("%10s", $this->m_REQUEST["mid"]);
-        if ($this->m_Type == TYPE_RECEIPT)
-            $this->m_sHead .= sprintf("%20s", $this->m_REQUEST["cr_price"]);
-        else
-            $this->m_sHead .= sprintf("%20s", $this->m_REQUEST["price"]);
+        if ($this->m_Type == TYPE_RECEIPT) {
+            $cr_price = isset($this->m_REQUEST["cr_price"]) ? $this->m_REQUEST["cr_price"] : 0;
+            $this->m_sHead .= sprintf("%20s", $cr_price);
+        } else {
+            $price = isset($this->m_REQUEST["price"]) ? $this->m_REQUEST["price"] : 0;
+            $this->m_sHead .= sprintf("%20s", $price);
+        }
         $this->m_sHead .= sprintf("%40s", $this->m_REQUEST["tid"]);
 
         $this->m_sMsg = $this->m_sHead . $this->m_sBody . $this->m_sTail;
@@ -699,24 +713,27 @@ class INIData {
             //GoodsInfo
             //장바구니 기능 추가(2010.04.13)
             //==goodscnt가 없을 경우(장바구니 기능이 아닐경우) 기본 값 1로 설정
-            $tGoodCnt = ($this->m_REQUEST["goodscnt"] != null && (int) $this->m_REQUEST["goodscnt"] > 0 ) ? $this->m_REQUEST["goodscnt"] : 1;
+            $tGoodCnt = (isset($this->m_REQUEST["goodscnt"]) && (int) $this->m_REQUEST["goodscnt"] > 0 ) ? $this->m_REQUEST["goodscnt"] : 1;
+
+            $request_oid = isset($this->m_REQUEST["oid"]) ? $this->m_REQUEST["oid"] : '';
+            $request_taxfree = isset($this->m_REQUEST["taxfree"]) ? $this->m_REQUEST["taxfree"] : '';
 
             $GI = $xml->add_node($root, GOODSINFO);
             //장바구니 기능 추가(2010.04.13) 
             //==TX_GOOSCNT는  $tGoodCnt로 부터 입력
             //$GP = $xml->add_node($GI,		TX_GOOSCNT, 		"1"															);
             $GP = $xml->add_node($GI, TX_GOOSCNT, $tGoodCnt);
-            $GP = $xml->add_node($GI, TX_MOID, $this->m_REQUEST["oid"], array("urlencode" => "1"));
+            $GP = $xml->add_node($GI, TX_MOID, $request_oid, array("urlencode" => "1"));
             $GP = $xml->add_node($GI, TX_CURRENCY, $this->m_REQUEST["currency"]);
             $GP = $xml->add_node($GI, TX_TAX, $this->m_REQUEST["tax"]);
-            $GP = $xml->add_node($GI, TX_TAXFREE, $this->m_REQUEST["taxfree"]);
+            $GP = $xml->add_node($GI, TX_TAXFREE, $request_taxfree);
             $this->AddUserDefinedEntity(GOODSINFO, "", $xml, $GI);
 
             //장바구니 기능 추가(2010.04.13) [START]
             //==장바구니 XML 전문 추가
             $iGoodCnt = 1;
             while ($iGoodCnt <= $tGoodCnt) {
-                if ($this->m_REQUEST["smid_" . $iGoodCnt] != "" && strlen($this->m_REQUEST["smid_" . $iGoodCnt]) > 0) {
+                if (isset($this->m_REQUEST["smid_" . $iGoodCnt]) && strlen($this->m_REQUEST["smid_" . $iGoodCnt]) > 0) {
                     $GS = $xml->add_node($GI, GOODS);
                     $GD = $xml->add_node($GS, TX_SMID, $this->m_REQUEST["smid_" . $iGoodCnt]);
                     $GD = $xml->add_node($GS, TX_GOODSNAME, $this->m_REQUEST["goodsname_" . $iGoodCnt], array("urlencode" => "1"));
@@ -739,6 +756,16 @@ class INIData {
                 $iGoodCnt++;
             }
             //장바구니 기능 추가(2010.04.13) [END]
+            
+            $request_parentemail = isset($this->m_REQUEST["parentemail"]) ? $this->m_REQUEST["parentemail"] : '';
+            $request_recvname = isset($this->m_REQUEST["recvname"]) ? $this->m_REQUEST["recvname"] : '';
+            $request_recvtel = isset($this->m_REQUEST["recvtel"]) ? $this->m_REQUEST["recvtel"] : '';
+            $request_recvmsg = isset($this->m_REQUEST["recvmsg"]) ? $this->m_REQUEST["recvmsg"] : '';
+            $request_recvaddr = isset($this->m_REQUEST["recvaddr"]) ? $this->m_REQUEST["recvaddr"] : '';
+            $request_recvpostnum = isset($this->m_REQUEST["recvpostnum"]) ? $this->m_REQUEST["recvpostnum"] : '';
+            $request_joincard = isset($this->m_REQUEST["joincard"]) ? $this->m_REQUEST["joincard"] : '';
+            $request_joinexpire = isset($this->m_REQUEST["joinexpire"]) ? $this->m_REQUEST["joinexpire"] : '';
+            $request_mailorder = isset($this->m_REQUEST["mailorder"]) ? $this->m_REQUEST["mailorder"] : '';
 
             $this->AddUserDefinedEntity(GOODSINFO, GOODS, $xml, $GS);
             //BuyerInfo
@@ -746,20 +773,20 @@ class INIData {
             $BP = $xml->add_node($BI, TX_BUYERNAME, $this->m_REQUEST["buyername"], array("urlencode" => "1"));
             $BP = $xml->add_node($BI, TX_BUYERTEL, $this->m_REQUEST["buyertel"]);
             $BP = $xml->add_node($BI, TX_BUYEREMAIL, $this->m_REQUEST["buyeremail"], array("urlencode" => "1"));
-            $BP = $xml->add_node($BI, TX_PARENTEMAIL, $this->m_REQUEST["parentemail"], array("urlencode" => "1"));
-            $BP = $xml->add_node($BI, TX_RECVNAME, $this->m_REQUEST["recvname"], array("urlencode" => "1"));
-            $BP = $xml->add_node($BI, TX_RECVTEL, $this->m_REQUEST["recvtel"], array("urlencode" => "1"));
-            $BP = $xml->add_node($BI, TX_RECVMSG, $this->m_REQUEST["recvmsg"], array("urlencode" => "1"));
-            $BP = $xml->add_node($BI, TX_RECVADDR, $this->m_REQUEST["recvaddr"], array("urlencode" => "1"));
-            $BP = $xml->add_node($BI, TX_RECVPOSTNUM, $this->m_REQUEST["recvpostnum"], array("urlencode" => "1"));
+            $BP = $xml->add_node($BI, TX_PARENTEMAIL, $request_parentemail, array("urlencode" => "1"));
+            $BP = $xml->add_node($BI, TX_RECVNAME, $request_recvname, array("urlencode" => "1"));
+            $BP = $xml->add_node($BI, TX_RECVTEL, $request_recvtel, array("urlencode" => "1"));
+            $BP = $xml->add_node($BI, TX_RECVMSG, $request_recvmsg, array("urlencode" => "1"));
+            $BP = $xml->add_node($BI, TX_RECVADDR, $request_recvaddr, array("urlencode" => "1"));
+            $BP = $xml->add_node($BI, TX_RECVPOSTNUM, $request_recvpostnum, array("urlencode" => "1"));
             $this->AddUserDefinedEntity(BUYERINFO, "", $xml, $BI);
             //PaymentInfo
             $PI = $xml->add_node($root, PAYMENTINFO);
             $PM = $xml->add_node($PI, PAYMENT);
             $PD = $xml->add_node($PM, TX_PAYMETHOD, $this->m_REQUEST["paymethod"]);
-            $PD = $xml->add_node($PM, TX_JOINCARD, $this->m_REQUEST["joincard"]);
-            $PD = $xml->add_node($PM, TX_JOINEXPIRE, $this->m_REQUEST["joinexpire"]);
-            $PD = $xml->add_node($PM, TX_MAILORDER, $this->m_REQUEST["mailorder"]);
+            $PD = $xml->add_node($PM, TX_JOINCARD, $request_joincard);
+            $PD = $xml->add_node($PM, TX_JOINEXPIRE, $request_joinexpire);
+            $PD = $xml->add_node($PM, TX_MAILORDER, $request_mailorder);
             if ($this->m_Type == TYPE_SECUREPAY) {
                 $PD = $xml->add_node($PM, TX_SESSIONKEY, $this->m_REQUEST["sessionkey"]);
                 $PD = $xml->add_node($PM, TX_ENCRYPTED, $this->m_REQUEST["encrypted"], array("urlencode" => "1"));
@@ -841,30 +868,39 @@ class INIData {
             }
             //장바구니 기능 추가(2010.04.13) [END]
             $this->AddUserDefinedEntity(OPENSUBINFO, "", $xml, $OI);
-        }        
+        }
+
+        $node_mreserved1 = isset($this->m_REQUEST["mreserved1"]) ? $this->m_REQUEST["mreserved1"] : '';
+        $node_mreserved2 = isset($this->m_REQUEST["mreserved2"]) ? $this->m_REQUEST["mreserved2"] : '';
+        $node_mreserved3 = isset($this->m_REQUEST["mreserved3"]) ? $this->m_REQUEST["mreserved3"] : '';
+        $node_language = isset($this->m_REQUEST["language"]) ? $this->m_REQUEST["language"] : '';
+        $node_url = isset($this->m_REQUEST["url"]) ? $this->m_REQUEST["url"] : '';
+        $node_id_customer = isset($this->m_REQUEST["id_customer"]) ? $this->m_REQUEST["id_customer"] : '';
+        $node_id_regnum = isset($this->m_REQUEST["id_regnum"]) ? $this->m_REQUEST["id_regnum"] : '';
+
         //ReservedInfo
         $RI = $xml->add_node($root, RESERVEDINFO);
-        $RD = $xml->add_node($RI, TX_MRESERVED1, $this->m_REQUEST["mreserved1"]);
-        $RD = $xml->add_node($RI, TX_MRESERVED2, $this->m_REQUEST["mreserved2"]);
-        $RD = $xml->add_node($RI, TX_MRESERVED3, $this->m_REQUEST["mreserved3"]);
+        $RD = $xml->add_node($RI, TX_MRESERVED1, $node_mreserved1);
+        $RD = $xml->add_node($RI, TX_MRESERVED2, $node_mreserved2);
+        $RD = $xml->add_node($RI, TX_MRESERVED3, $node_mreserved3);
         $this->AddUserDefinedEntity(RESERVEDINFO, "", $xml, $RI);
 
         //ManageInfo
         $MI = $xml->add_node($root, MANAGEINFO);
-        $MD = $xml->add_node($MI, TX_LANGUAGE, $this->m_REQUEST["language"]);
-        $MD = $xml->add_node($MI, TX_URL, $this->m_REQUEST["url"], array("urlencode" => "1"));
+        $MD = $xml->add_node($MI, TX_LANGUAGE, $node_language);
+        $MD = $xml->add_node($MI, TX_URL, $node_url, array("urlencode" => "1"));
         $MD = $xml->add_node($MI, TX_TXVERSION, $this->m_TXVersion);
         //delete UIP(2009.01.21)
         //$MD = $xml->add_node($MI, 	TX_TXUSERIP,  	$this->m_REQUEST["uip"]     		);
-        $MD = $xml->add_node($MI, TX_TXUSERID, $this->m_REQUEST["id_customer"], array("urlencode" => "1"));
-        $MD = $xml->add_node($MI, TX_TXREGNUM, $this->m_REQUEST["id_regnum"]);
+        $MD = $xml->add_node($MI, TX_TXUSERID, $node_id_customer, array("urlencode" => "1"));
+        $MD = $xml->add_node($MI, TX_TXREGNUM, $node_id_regnum);
 
         //Ack, rn
         if ($this->m_Type == TYPE_SECUREPAY || $this->m_Type == TYPE_OCBSAVE ||
                 $this->m_Type == TYPE_FORMPAY || $this->m_Type == TYPE_RECEIPT
         ) {
             $MD = $xml->add_node($MI, TX_ACK, "1");
-            if ($this->m_REQUEST["rn"] != "")
+            if (isset($this->m_REQUEST["rn"]) && $this->m_REQUEST["rn"])
                 $MD = $xml->add_node($MI, TX_RN, $this->m_REQUEST["rn"]);
         }
         $this->AddUserDefinedEntity(MANAGEINFO, "", $xml, $MI);
@@ -908,7 +944,7 @@ class INIData {
         $this->m_Xml = $xml->xml_node;
 
         //GOODSINFO
-        $this->m_RESULT[NM_MOID] = $this->GetXMLData(MOID);
+        $this->m_RESULT[NM_MOID] = $this->GetXMLData('MOID');
 
         //PAYMENTINFO
         //기타지불수단이 paymethod를 주지 않아 임시로 요청 Paymethod로 대체
@@ -916,13 +952,14 @@ class INIData {
         $this->m_RESULT[NM_PAYMETHOD] = $this->m_sPayMethod;
 
         $ResultCode = $this->GetXMLData("ResultCode");
+
         //if( substr($ResultCode,2, 4) == "0000" )
         if (strcmp(substr($ResultCode, 2, 4), "0000") == 0) {
             $this->m_RESULT[NM_RESULTCODE] = "00";
             $this->m_RESULT[NM_RESULTMSG] = $this->GetXMLData("ResultMsg");
         } else {
             $this->m_RESULT[NM_RESULTCODE] = "01";
-            $this->m_RESULT[NM_ERRORCODE] = $ResultCode;
+            $this->m_RESULT['NM_ERRORCODE'] = $ResultCode;
             $this->m_RESULT[NM_RESULTMSG] = "[" . $ResultCode . "|" . $this->GetXMLData("ResultMsg") . "]";
         }
         $encrypted = $this->GetXMLData("Encrypted");
@@ -1036,7 +1073,7 @@ class INIData {
     function GTHR($err_code, $err_msg) {
         //Set
         $data["mid"] = $this->m_REQUEST["mid"];
-        $data["paymethod"] = $this->m_REQUEST["paymethod"];
+        $data["paymethod"] = isset($this->m_REQUEST["paymethod"]) ? $this->m_REQUEST["paymethod"] : '';
         //delete UIP(2009.01.21)
         //$data["user_ip"] = $this->m_REQUEST["uip"];
         $data["tx_version"] = $this->m_TXVersion;
@@ -1063,20 +1100,24 @@ class INIData {
     }
 
     function ParsePIEncrypted() {
-        parse_str($this->m_REQUEST["encrypted"]);
-        $this->m_PIPGPubSN = $CertVer;
-        $this->m_PG1 = $pg1;
-        $this->m_PG2 = $pg2;
-        $this->m_PG1IP = $pg1ip;
-        $this->m_PG2IP = $pg2ip;
+        $output = array();
+        if( isset($this->m_REQUEST["encrypted"]) ) {
+            parse_str($this->m_REQUEST["encrypted"], $output);
+        }
+        $this->m_PIPGPubSN = isset($output['CertVer']) ? $output['CertVer'] : '';
+        $this->m_PG1 = isset($output['pg1']) ? $output['pg1'] : '';
+        $this->m_PG2 = isset($output['pg2']) ? $output['pg2'] : '';
+        $this->m_PG1IP = isset($output['pg1ip']) ? $output['pg1ip'] : '';
+        $this->m_PG2IP = isset($output['pg2ip']) ? $output['pg2ip'] : '';
     }
 
     // Xpath로 안가져온다. 한달을 헛지랄 했다!!
     // added by ddaemiri, 2007.09.03
     function GetXMLData($node) {
-        $content = $this->m_Xml[$node . "[1]"]["text"];
-        if ($this->m_Xml[$node . "[1]"]["attr"]["urlencode"] == "1")
+        $content = isset($this->m_Xml[$node . "[1]"]["text"]) ? $this->m_Xml[$node . "[1]"]["text"] : '';
+        if (isset($this->m_Xml[$node . "[1]"]["attr"]["urlencode"]) && $this->m_Xml[$node . "[1]"]["attr"]["urlencode"] == "1")
             $content = urldecode($content);
+
         return $content;
     }
 
@@ -1101,7 +1142,7 @@ class INICrypto {
         $this->homedir = $request["inipayhome"];
         $this->mid = $request["mid"];
         $this->admin = $request["admin"];
-        $this->mkey = $request["mkey"];
+        $this->mkey = isset($request["mkey"]) ? $request["mkey"] : '';
         if(isset($request['encMethod']) && !empty($request['encMethod'])){
         	$this->encMethod = strtolower($request['encMethod']);
         }
@@ -1294,12 +1335,12 @@ class INICrypto {
 
     function remove_ctrl($string) {
         for ($i = 0; $i < strlen($string); $i++) {
-            $chr = $string{$i};
+            $chr = $string[$i];
             $ord = ord($chr);
             if ($ord < 10)
-                $string{$i} = " ";
+                $string[$i] = " ";
             else
-                $string{$i} = $chr;
+                $string[$i] = $chr;
         }
         return trim($string);
     }
@@ -1310,7 +1351,7 @@ class INICrypto {
     }
 
     function pkcs5_unpad($text) {
-        $pad = ord($text{strlen($text) - 1});
+        $pad = ord($text[strlen($text) - 1]);
         if ($pad > strlen($text))
             return false;
         if (strspn($text, chr($pad), strlen($text) - $pad) != $pad)
@@ -1357,4 +1398,3 @@ class INICrypto {
     }
 
 }
-?>

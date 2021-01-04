@@ -14,7 +14,7 @@ set_session("ss_cert_type", "");
 
 $is_social_login_modify = false;
 
-if( $provider && function_exists('social_nonce_is_valid') ){   //모바일로 소셜 연결을 했다면
+if( isset($_REQUEST['provider']) && $_REQUEST['provider']  && function_exists('social_nonce_is_valid') ){   //모바일로 소셜 연결을 했다면
     if( social_nonce_is_valid(get_session("social_link_token"), $provider) ){  //토큰값이 유효한지 체크
         $w = 'u';   //회원 수정으로 처리
         $_POST['mb_id'] = $member['mb_id'];
@@ -87,7 +87,7 @@ if ($w == "") {
 
     if (isset($_POST['mb_password'])) {
         // 수정된 정보를 업데이트후 되돌아 온것이라면 비밀번호가 암호화 된채로 넘어온것임
-        if ($_POST['is_update']) {
+        if (isset($_POST['is_update']) && $_POST['is_update']) {
             $tmp_password = $_POST['mb_password'];
             $pass_check = ($member['mb_password'] === $tmp_password);
         } else {
@@ -144,8 +144,8 @@ $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) &
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
 
-$agree  = preg_replace('#[^0-9]#', '', $agree);
-$agree2 = preg_replace('#[^0-9]#', '', $agree2);
+$agree  = isset($_REQUEST['agree']) ? preg_replace('#[^0-9]#', '', $_REQUEST['agree']) : '';
+$agree2 = isset($_REQUEST['agree2']) ? preg_replace('#[^0-9]#', '', $_REQUEST['agree2']) : '';
 
 // add_javascript('js 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 if ($config['cf_use_addr'])
@@ -156,4 +156,3 @@ include_once($member_skin_path.'/register_form.skin.php');
 run_event('register_form_after', $w, $agree, $agree2);
 
 include_once('./_tail.php');
-?>

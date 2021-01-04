@@ -2,7 +2,20 @@
 $sub_menu = '400800';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
+
+$cp_id = isset($_REQUEST['cp_id']) ? clean_xss_tags($_REQUEST['cp_id'], 1, 1) : '';
+$cp = array(
+'cp_method'=>'',
+'cp_subject'=>'',
+'cp_target'=>'',
+'mb_id'=>'',
+'cp_type'=>'',
+'cp_price'=>'',
+'cp_trunc'=>'',
+'cp_minimum'=>'',
+'cp_maximum'=>'',
+);
 
 $g5['title'] = '쿠폰관리';
 
@@ -280,4 +293,3 @@ function form_check(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

@@ -1,9 +1,12 @@
 <?php
 include_once('./_common.php');
+$naverpay_button_js = '';
 include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 
 // 보관기간이 지난 상품 삭제
 cart_item_clean();
+
+$sw_direct = isset($_REQUEST['sw_direct']) ? (int) $_REQUEST['sw_direct'] : 0;
 
 // cart id 설정
 set_cart_id($sw_direct);
@@ -65,6 +68,7 @@ include_once('./_head.php');
         <?php
         $tot_point = 0;
         $tot_sell_price = 0;
+        $send_cost = 0;
 
         // $s_cart_id 로 현재 장바구니 자료 쿼리
         $sql = " select a.ct_id,
@@ -310,4 +314,3 @@ function form_check(act) {
 
 <?php
 include_once('./_tail.php');
-?>

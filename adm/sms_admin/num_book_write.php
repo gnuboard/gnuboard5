@@ -3,8 +3,11 @@ $sub_menu = "900800";
 include_once("./_common.php");
 
 $colspan = 4;
+$bk_no = isset($_REQUEST['bk_no']) ? (int) $_REQUEST['bk_no'] : 0;
+$bg_no = isset($_REQUEST['bg_no']) ? (int) $_REQUEST['bg_no'] : 0;
+$ap = isset($_REQUEST['ap']) ? clean_xss_tags($_REQUEST['ap'], 1, 1) : '';
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "휴대폰번호 ";
 
@@ -184,12 +187,12 @@ function book_submit(){
                 var $check_msg = $("#hp_check_el");
 
                 if( !list_text ){ // 중복 휴대폰 번호가 없다면 submit
-                    if($check_msg.size()> 0)
+                    if($check_msg.length > 0)
                         $check_msg.remove();
 
                     is_submit = true;
                 } else {
-                    if($check_msg.size() < 1)
+                    if($check_msg.length < 1)
                         $("input#bk_hp").after("<div id=\"hp_check_el\"><h3>이 번호를 쓰는 회원 정보</h3><ul></ul></div>");
 
                     $("#hp_check_el").find("ul").html( list_text );
@@ -211,4 +214,3 @@ function book_submit(){
 </script>
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

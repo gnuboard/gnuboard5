@@ -1,7 +1,7 @@
 <?php
 include_once('./_common.php');
 
-$type = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $_REQUEST['type']);
+$type = isset($_REQUEST['type']) ? preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $_REQUEST['type']) : '';
 if ($type == 1)      $g5['title'] = '히트상품';
 else if ($type == 2) $g5['title'] = '추천상품';
 else if ($type == 3) $g5['title'] = '최신상품';
@@ -76,4 +76,3 @@ echo get_paging($config['cf_mobile_pages'], $page, $total_page, "{$_SERVER['SCRI
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

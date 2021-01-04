@@ -114,10 +114,10 @@ ob_start();
 
             $point      = $sum['point'];
             $sell_price = $sum['price'];
-
+            
+            $cp_button = '';
             // 쿠폰
             if($is_member) {
-                $cp_button = '';
                 $cp_count = 0;
 
                 $sql = " select cp_id
@@ -288,7 +288,7 @@ if($is_kakaopay_use) {
             <ul>
                 <li>
                     <label for="od_name">이름<strong class="sound_only"> 필수</strong></label>
-                    <input type="text" name="od_name" value="<?php echo get_text($member['mb_name']); ?>" id="od_name" required class="frm_input required" maxlength="20">
+                    <input type="text" name="od_name" value="<?php echo isset($member['mb_name']) ? get_text($member['mb_name']) : ''; ?>" id="od_name" required class="frm_input required" maxlength="20">
                 </li>
 
                 <?php if (!$is_member) { // 비회원이면 ?>
@@ -355,9 +355,9 @@ if($is_kakaopay_use) {
         <div class="odf_list">
             <ul>
                 <?php
+                $addr_list = '';
                 if($is_member) {
                     // 배송지 이력
-                    $addr_list = '';
                     $sep = chr(30);
 
                     // 주문자와 동일
@@ -370,7 +370,7 @@ if($is_kakaopay_use) {
                                 where mb_id = '{$member['mb_id']}'
                                   and ad_default = '1' ";
                     $row = sql_fetch($sql);
-                    if($row['ad_id']) {
+                    if(isset($row['ad_id']) && $row['ad_id']) {
                         $val1 = $row['ad_name'].$sep.$row['ad_tel'].$sep.$row['ad_hp'].$sep.$row['ad_zip1'].$sep.$row['ad_zip2'].$sep.$row['ad_addr1'].$sep.$row['ad_addr2'].$sep.$row['ad_addr3'].$sep.$row['ad_jibeon'].$sep.$row['ad_subject'];
                         $addr_list .= '<br><input type="radio" name="ad_sel_addr" value="'.get_text($val1).'" id="ad_sel_addr_def">'.PHP_EOL;
                         $addr_list .= '<label for="ad_sel_addr_def">기본배송지</label>'.PHP_EOL;
@@ -848,7 +848,7 @@ $(function() {
         calculate_total_price();
         $("#cp_frm").remove();
         $cp_btn_el.text("변경").addClass("cp_mod").focus();
-        if(!$cp_row_el.find(".cp_cancel").size())
+        if(!$cp_row_el.find(".cp_cancel").length)
             $cp_btn_el.after("<button type=\"button\" class=\"cp_cancel\">취소</button>");
     });
 
@@ -915,7 +915,7 @@ $(function() {
         calculate_order_price();
         $("#od_coupon_frm").remove();
         $("#od_coupon_btn").text("변경").focus();
-        if(!$("#od_coupon_cancel").size())
+        if(!$("#od_coupon_cancel").length)
             $("#od_coupon_btn").after("<button type=\"button\" id=\"od_coupon_cancel\" class=\"cp_cancel1\">취소</button>");
     });
 
@@ -974,7 +974,7 @@ $(function() {
         calculate_order_price();
         $("#sc_coupon_frm").remove();
         $("#sc_coupon_btn").text("변경").focus();
-        if(!$("#sc_coupon_cancel").size())
+        if(!$("#sc_coupon_cancel").length)
             $("#sc_coupon_btn").after("<button type=\"button\" id=\"sc_coupon_cancel\" class=\"cp_cancel1\">취소</button>");
     });
 
@@ -1102,7 +1102,7 @@ function calculate_total_price()
     <?php if($oc_cnt > 0) { ?>
     $("input[name=od_cp_id]").val("");
     $("#od_cp_price").text(0);
-    if($("#od_coupon_cancel").size()) {
+    if($("#od_coupon_cancel").length) {
         $("#od_coupon_btn").text("쿠폰적용");
         $("#od_coupon_cancel").remove();
     }
@@ -1110,7 +1110,7 @@ function calculate_total_price()
     <?php if($sc_cnt > 0) { ?>
     $("input[name=sc_cp_id]").val("");
     $("#sc_cp_price").text(0);
-    if($("#sc_coupon_cancel").size()) {
+    if($("#sc_coupon_cancel").length) {
         $("#sc_coupon_btn").text("쿠폰적용");
         $("#sc_coupon_cancel").remove();
     }
@@ -1199,7 +1199,7 @@ function calculate_tax()
         }
     });
 
-    if($("input[name=od_temp_point]").size())
+    if($("input[name=od_temp_point]").length)
         temp_point = parseInt($("input[name=od_temp_point]").val()) || 0;
 
     tot_mny += (send_cost + send_cost2 - od_coupon - send_coupon - temp_point);

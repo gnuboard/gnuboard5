@@ -6,11 +6,25 @@ include_once('./_common.php');
 
 check_admin_token();
 
-for ($i=0; $i<count($_POST['chk']); $i++)
+$count_post_chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
+
+$sort1 = isset($_POST['sort1']) ? clean_xss_tags($_POST['sort1'], 1, 1) : '';
+$sort2 = isset($_POST['sort2']) ? clean_xss_tags($_POST['sort2'], 1, 1) : '';
+$sel_field = isset($_POST['sel_field']) ? clean_xss_tags($_POST['sel_field'], 1, 1) : '';
+$od_status = isset($_POST['od_status']) ? clean_xss_tags($_POST['od_status'], 1, 1) : '';
+$od_settle_case = isset($_POST['od_settle_case']) ? clean_xss_tags($_POST['od_settle_case'], 1, 1) : '';
+$od_misu = isset($_POST['od_misu']) ? clean_xss_tags($_POST['od_misu'], 1, 1) : '';
+$od_cancel_price = isset($_POST['od_cancel_price']) ? clean_xss_tags($_POST['od_cancel_price'], 1, 1) : '';
+$od_receipt_price = isset($_POST['od_receipt_price']) ? clean_xss_tags($_POST['od_receipt_price'], 1, 1) : '';
+$od_receipt_point = isset($_POST['od_receipt_point']) ? clean_xss_tags($_POST['od_receipt_point'], 1, 1) : '';
+$od_receipt_coupon = isset($_POST['od_receipt_coupon']) ? clean_xss_tags($_POST['od_receipt_coupon'], 1, 1) : '';
+$search = isset($_POST['search']) ? get_search_string($_POST['search']) : '';
+
+for ($i=0; $i<$count_post_chk; $i++)
 {
     // 실제 번호를 넘김
-    $k     = $_POST['chk'][$i];
-    $od_id = $_POST['od_id'][$k];
+    $k     = isset($_POST['chk'][$i]) ? $_POST['chk'][$i] : 0;
+    $od_id = isset($_POST['od_id'][$k]) ? safe_replace_regex($_POST['od_id'][$k], 'od_id') : '';
 
     $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
     if (!$od) continue;
@@ -41,4 +55,3 @@ $qstr .= "&amp;od_receipt_point=$od_receipt_point";
 $qstr .= "&amp;od_receipt_coupon=$od_receipt_coupon";
 
 goto_url("./orderlist.php?$qstr");
-?>

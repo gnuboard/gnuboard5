@@ -18,4 +18,3 @@ function show_debug_bar() {
 
     include_once( G5_PLUGIN_PATH.'/debugbar/debugbar.php' );
 }
-?>

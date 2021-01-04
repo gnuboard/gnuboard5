@@ -259,6 +259,7 @@
 #bo_v_ans #ans_msg {padding:40px 0;background:#f2f5f9;text-align:center}
 #bo_v_ans .btn_submit {width:100%;height:40px;border-radius:5px}
 #bo_v_ans .btn_confirm {margin:0 10px}
+#bo_v_ans form{padding:1em}
 
 #bo_v_rel {}
 #bo_v_rel h2 {margin:0 10px 10px;font-size:1.2em}

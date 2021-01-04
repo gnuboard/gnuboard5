@@ -2,7 +2,17 @@
 $sub_menu = '400200';
 include_once('./_common.php');
 
-if ($file = $_POST['ca_include_head']) {
+auth_check_menu($auth, $sub_menu, "w");
+
+$ca_include_head = isset($_POST['ca_include_head']) ? trim($_POST['ca_include_head']) : '';
+$ca_include_tail = isset($_POST['ca_include_tail']) ? trim($_POST['ca_include_tail']) : '';
+$ca_id = isset($_REQUEST['ca_id']) ? preg_replace('/[^0-9a-z]/i', '', $_REQUEST['ca_id']) : '';
+
+if( ! $ca_id ){
+    alert('', G5_SHOP_URL);
+}
+
+if ($file = $ca_include_head) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
     if (! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || !preg_match("/\.(php|htm[l]?)$/i", $file)) {
@@ -10,7 +20,7 @@ if ($file = $_POST['ca_include_head']) {
     }
 }
 
-if ($file = $_POST['ca_include_tail']) {
+if ($file = $ca_include_tail) {
     $file_ext = pathinfo($file, PATHINFO_EXTENSION);
 
     if (! $file_ext || ! in_array($file_ext, array('php', 'htm', 'html')) || !preg_match("/\.(php|htm[l]?)$/i", $file)) {
@@ -18,12 +28,11 @@ if ($file = $_POST['ca_include_tail']) {
     }
 }
 
-if( isset($_POST['ca_id']) ){
-    $ca_id = preg_replace('/[^0-9a-z]/i', '', $ca_id);
+if( $ca_id ){
     $sql = " select * from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
     $ca = sql_fetch($sql);
 
-    if (($ca['ca_include_head'] !== $_POST['ca_include_head'] || $ca['ca_include_tail'] !== $_POST['ca_include_tail']) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+    if ($ca && ($ca['ca_include_head'] !== $ca_include_head || $ca['ca_include_tail'] !== $ca_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
         include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
         if (!chk_captcha()) {
@@ -32,11 +41,55 @@ if( isset($_POST['ca_id']) ){
     }
 }
 
-if(!is_include_path_check($_POST['ca_include_head'], 1)) {
+$check_str_keys = array(
+'ca_order'=>'int',
+'ca_img_width'=>'int',
+'ca_img_height'=>'int',
+'ca_name'=>'str',
+'ca_mb_id'=>'str',
+'ca_nocoupon'=>'str',
+'ca_mobile_skin_dir'=>'str',
+'ca_skin'=>'str',
+'ca_mobile_skin'=>'str',
+'ca_list_mod'=>'int',
+'ca_list_row'=>'int',
+'ca_mobile_img_width'=>'int',
+'ca_mobile_img_height'=>'int',
+'ca_mobile_list_mod'=>'int',
+'ca_mobile_list_row'=>'int',
+'ca_sell_email'=>'str',
+'ca_use'=>'int',
+'ca_stock_qty'=>'int',
+'ca_explan_html'=>'int',
+'ca_cert_use'=>'int',
+'ca_adult_use'=>'int',
+'ca_skin_dir'=>'str'
+);
+
+for($i=0;$i<=10;$i++){
+    $check_str_keys['ca_'.$i.'_subj'] = 'str';
+    $check_str_keys['ca_'.$i] = 'str';
+}
+
+foreach( $check_str_keys as $key=>$val ){
+    if( $val === 'int' ){
+        $value = isset($_POST[$key]) ? (int) $_POST[$key] : 0;
+    } else {
+        $value = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+    }
+    $$key = $_POST[$key] = $value;
+}
+
+$ca_head_html = isset($_POST['ca_head_html']) ? $_POST['ca_head_html'] : '';
+$ca_tail_html = isset($_POST['ca_tail_html']) ? $_POST['ca_tail_html'] : '';
+$ca_mobile_head_html = isset($_POST['ca_mobile_head_html']) ? $_POST['ca_mobile_head_html'] : '';
+$ca_mobile_tail_html = isset($_POST['ca_mobile_tail_html']) ? $_POST['ca_mobile_tail_html'] : '';
+
+if(!is_include_path_check($ca_include_head, 1)) {
     alert('상단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
-if(!is_include_path_check($_POST['ca_include_tail'], 1)) {
+if(!is_include_path_check($ca_include_tail, 1)) {
     alert('하단 파일 경로에 포함시킬수 없는 문자열이 있습니다.');
 }
 
@@ -48,14 +101,6 @@ foreach( $check_keys as $key ){
     }
 }
 
-$check_str_keys = array('ca_name', 'ca_mb_id', 'ca_sell_email');
-foreach( $check_str_keys as $key ){
-    $$key = $_POST[$key] = strip_tags(clean_xss_attributes($_POST[$key]));
-}
-
-$ca_include_head = $_POST['ca_include_head'];
-$ca_include_tail = $_POST['ca_include_tail'];
-
 if( function_exists('filter_input_include_path') ){
     $ca_include_head = filter_input_include_path($ca_include_head);
     $ca_include_tail = filter_input_include_path($ca_include_tail);
@@ -64,7 +109,7 @@ if( function_exists('filter_input_include_path') ){
 if ($w == "u" || $w == "d")
     check_demo();
 
-auth_check($auth[$sub_menu], "d");
+auth_check_menu($auth, $sub_menu, "d");
 
 check_admin_token();
 
@@ -158,7 +203,7 @@ else if ($w == "u")
     sql_query($sql);
 
     // 하위분류를 똑같은 설정으로 반영
-    if ($sub_category) {
+    if (isset($_POST['sub_category']) && $_POST['sub_category']) {
         $len = strlen($ca_id);
         $sql = " update {$g5['g5_shop_category_table']}
                     set $sql_common
@@ -209,4 +254,3 @@ if ($w == "" || $w == "u")
 } else {
     goto_url("./categorylist.php?$qstr");
 }
-?>

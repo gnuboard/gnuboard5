@@ -6,4 +6,3 @@ if($default['de_kakaopay_enckey']) {
     $is_kakaopay_use = true;
     require_once(G5_SHOP_PATH.'/kakaopay/incKakaopayCommon.php');
 }
-?>

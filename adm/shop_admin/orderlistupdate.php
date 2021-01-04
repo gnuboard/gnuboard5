@@ -13,15 +13,32 @@ define("_ORDERMAIL_", true);
 $sms_count = 0;
 $sms_messages = array();
 
-for ($i=0; $i<count($_POST['chk']); $i++)
+$count_post_chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
+$send_sms = isset($_POST['send_sms']) ? clean_xss_tags($_POST['send_sms'], 1, 1) : '';
+$od_send_mail = isset($_POST['od_send_mail']) ? clean_xss_tags($_POST['od_send_mail'], 1, 1) : '';
+$send_escrow = isset($_POST['send_escrow']) ? clean_xss_tags($_POST['send_escrow'], 1, 1) : '';
+
+$sort1 = isset($_POST['sort1']) ? clean_xss_tags($_POST['sort1'], 1, 1) : '';
+$sort2 = isset($_POST['sort2']) ? clean_xss_tags($_POST['sort2'], 1, 1) : '';
+$sel_field = isset($_POST['sel_field']) ? clean_xss_tags($_POST['sel_field'], 1, 1) : '';
+$od_status = isset($_POST['od_status']) ? clean_xss_tags($_POST['od_status'], 1, 1) : '';
+$od_settle_case = isset($_POST['od_settle_case']) ? clean_xss_tags($_POST['od_settle_case'], 1, 1) : '';
+$od_misu = isset($_POST['od_misu']) ? clean_xss_tags($_POST['od_misu'], 1, 1) : '';
+$od_cancel_price = isset($_POST['od_cancel_price']) ? clean_xss_tags($_POST['od_cancel_price'], 1, 1) : '';
+$od_receipt_price = isset($_POST['od_receipt_price']) ? clean_xss_tags($_POST['od_receipt_price'], 1, 1) : '';
+$od_receipt_point = isset($_POST['od_receipt_point']) ? clean_xss_tags($_POST['od_receipt_point'], 1, 1) : '';
+$od_receipt_coupon = isset($_POST['od_receipt_coupon']) ? clean_xss_tags($_POST['od_receipt_coupon'], 1, 1) : '';
+$search = isset($_POST['search']) ? get_search_string($_POST['search']) : '';
+
+for ($i=0; $i<$count_post_chk; $i++)
 {
     // 실제 번호를 넘김
-    $k     = $_POST['chk'][$i];
-    $od_id = $_POST['od_id'][$k];
+    $k     = isset($_POST['chk'][$i]) ? $_POST['chk'][$i] : 0;
+    $od_id = isset($_POST['od_id'][$k]) ? safe_replace_regex($_POST['od_id'][$k], 'od_id') : '';
 
-    $invoice      = $_POST['od_invoice'][$k];
-    $invoice_time = $_POST['od_invoice_time'][$k];
-    $delivery_company = $_POST['od_delivery_company'][$k];
+    $invoice      = isset($_POST['od_invoice'][$k]) ? clean_xss_tags($_POST['od_invoice'][$k], 1, 1) : '';
+    $invoice_time = isset($_POST['od_invoice_time'][$k]) ? safe_replace_regex($_POST['od_invoice_time'][$k], 'time') : '';
+    $delivery_company = isset($_POST['od_delivery_company'][$k]) ? clean_xss_tags($_POST['od_delivery_company'][$k], 1, 1) : '';
 
     $od = sql_fetch(" select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ");
     if (!$od) continue;
@@ -30,18 +47,18 @@ for ($i=0; $i<count($_POST['chk']); $i++)
     //echo $od_id . "<br>";
 
     $current_status = $od['od_status'];
-    $change_status  = $_POST['od_status'];
+    $change_status  = isset($_POST['od_status']) ? clean_xss_tags($_POST['od_status'], 1, 1) : '';
 
     switch ($current_status)
     {
         case '주문' :
-            if ($change_status != '입금') continue;
-            if ($od['od_settle_case'] != '무통장') continue;
+            if ($change_status != '입금') continue 2;
+            if ($od['od_settle_case'] != '무통장') continue 2;
             change_status($od_id, '주문', '입금');
             order_update_receipt($od_id);
 
             // SMS
-            if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'] && $default['de_sms_use4']) {
+            if($config['cf_sms_use'] == 'icode' && $send_sms && $default['de_sms_use4']) {
                 $sms_contents = conv_sms_contents($od_id, $default['de_sms_cont4']);
                 if($sms_contents) {
                     $receive_number = preg_replace("/[^0-9]/", "", $od['od_hp']);	// 수신자번호
@@ -53,18 +70,18 @@ for ($i=0; $i<count($_POST['chk']); $i++)
             }
 
             // 메일
-            if($config['cf_email_use'] && $_POST['od_send_mail'])
+            if($config['cf_email_use'] && $od_send_mail)
                 include './ordermail.inc.php';
 
             break;
 
         case '입금' :
-            if ($change_status != '준비') continue;
+            if ($change_status != '준비') continue 2;
             change_status($od_id, '입금', '준비');
             break;
 
         case '준비' :
-            if ($change_status != '배송') continue;
+            if ($change_status != '배송') continue 2;
 
             $delivery['invoice'] = $invoice;
             $delivery['invoice_time'] = $invoice_time;
@@ -74,7 +91,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
             change_status($od_id, '준비', '배송');
 
             // SMS
-            if($config['cf_sms_use'] == 'icode' && $_POST['send_sms'] && $default['de_sms_use5']) {
+            if($config['cf_sms_use'] == 'icode' && $send_sms && $default['de_sms_use5']) {
                 $sms_contents = conv_sms_contents($od_id, $default['de_sms_cont5']);
                 if($sms_contents) {
                     $receive_number = preg_replace("/[^0-9]/", "", $od['od_hp']);	// 수신자번호
@@ -86,11 +103,11 @@ for ($i=0; $i<count($_POST['chk']); $i++)
             }
 
             // 메일
-            if($config['cf_email_use'] && $_POST['od_send_mail'])
+            if($config['cf_email_use'] && $od_send_mail)
                 include './ordermail.inc.php';
 
             // 에스크로 배송
-            if($_POST['send_escrow'] && $od['od_tno'] && $od['od_escrow']) {
+            if($send_escrow && $od['od_tno'] && $od['od_escrow']) {
                 $escrow_tno  = $od['od_tno'];
                 $escrow_numb = $invoice;
                 $escrow_corp = $delivery_company;
@@ -101,7 +118,7 @@ for ($i=0; $i<count($_POST['chk']); $i++)
             break;
 
         case '배송' :
-            if ($change_status != '완료') continue;
+            if ($change_status != '완료') continue 2;
             change_status($od_id, '배송', '완료');
 
             // 완료인 경우에만 상품구입 합계수량을 상품테이블에 저장한다.
@@ -204,4 +221,3 @@ $qstr .= "&amp;od_receipt_coupon=$od_receipt_coupon";
 //exit;
 
 goto_url("./orderlist.php?$qstr");
-?>

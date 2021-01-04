@@ -2,15 +2,16 @@
 include_once('./_common.php');
 
 $ps_run = false;
+$post_it_id = isset($_POST['it_id']) ? safe_replace_regex($_POST['it_id'], 'it_id') : '';
 
-if($it['it_id']) {
+if(isset($it['it_id']) && $it['it_id']) {
     $sql = " select * from {$g5['g5_shop_item_option_table']} where io_type = '1' and it_id = '{$it['it_id']}' order by io_no asc ";
     $result = sql_query($sql);
     if(sql_num_rows($result))
         $ps_run = true;
 } else if(!empty($_POST)) {
-    $subject_count = count($_POST['subject']);
-    $supply_count = count($_POST['supply']);
+    $subject_count = (isset($_POST['subject']) && is_array($_POST['subject'])) ? count($_POST['subject']) : 0;
+    $supply_count = (isset($_POST['supply']) && is_array($_POST['supply'])) ? count($_POST['supply']) : 0;
 
     if(!$subject_count || !$supply_count) {
         echo '추가옵션명과 추가옵션항목을 입력해 주십시오.';
@@ -41,7 +42,7 @@ if($ps_run) {
     </thead>
     <tbody>
     <?php
-    if($it['it_id']) {
+    if(isset($it['it_id']) && $it['it_id']) {
         for($i=0; $row=sql_fetch_array($result); $i++) {
             $spl_id = $row['io_id'];
             $spl_val = explode(chr(30), $spl_id);
@@ -84,12 +85,12 @@ if($ps_run) {
         } // for
     } else {
         for($i=0; $i<$subject_count; $i++) {
-            $spl_subject = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['subject'][$i])));
-            $spl_val = explode(',', preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['supply'][$i]))));
+            $spl_subject = isset($_POST['subject'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['subject'][$i]))) : '';
+            $spl_val = isset($_POST['supply'][$i]) ? explode(',', preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['supply'][$i])))) : '';
             $spl_count = count($spl_val);
 
             for($j=0; $j<$spl_count; $j++) {
-                $spl = strip_tags(trim($spl_val[$j]));
+                $spl = isset($spl_val[$j]) ? strip_tags(trim($spl_val[$j])) : '';
                 if($spl_subject && strlen($spl)) {
                     $spl_id = $spl_subject.chr(30).$spl;
                     $spl_price = 0;
@@ -98,10 +99,10 @@ if($ps_run) {
                     $spl_use = 1;
 
                     // 기존에 설정된 값이 있는지 체크
-                    if($_POST['w'] == 'u') {
+                    if(isset($_POST['w']) && $_POST['w'] === 'u') {
                         $sql = " select io_price, io_stock_qty, io_noti_qty, io_use
                                     from {$g5['g5_shop_item_option_table']}
-                                    where it_id = '{$_POST['it_id']}'
+                                    where it_id = '{$post_it_id}'
                                       and io_id = '$spl_id'
                                       and io_type = '1' ";
                         $row = sql_fetch($sql);
@@ -177,4 +178,3 @@ if($ps_run) {
 </fieldset>
 <?php
 }
-?>

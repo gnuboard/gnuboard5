@@ -2,7 +2,9 @@
 $sub_menu = '400800';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
+
+$mb_name = isset($_REQUEST['mb_name']) ? clean_xss_tags($_REQUEST['mb_name'], 1, 1) : '';
 
 $html_title = '회원검색';
 
@@ -95,4 +97,3 @@ function sel_member_id(id)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

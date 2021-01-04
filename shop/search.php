@@ -152,4 +152,3 @@ if(!file_exists($search_skin)) {
 }
 
 include_once('./_tail.php');
-?>

@@ -9,8 +9,9 @@ if (G5_IS_MOBILE) {
 define("_ORDERINQUIRY_", true);
 
 $order_info = array();
-$request_pwd = $od_pwd;
-$od_pwd = get_encrypt_string($od_pwd);
+$request_pwd = isset($_POST['od_pwd']) ? $_POST['od_pwd'] : '';
+$od_pwd = get_encrypt_string($request_pwd);
+$od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
 
 // 회원인 경우
 if ($is_member)
@@ -95,4 +96,3 @@ include_once('./_head.php');
 
 <?php
 include_once('./_tail.php');
-?>

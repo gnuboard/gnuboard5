@@ -11,6 +11,8 @@ $sql = " delete from {$g5['g5_shop_order_data_table']} where dt_type = '1' and d
 sql_query($sql);
 */
 
+$od_settle_case = isset($_POST['od_settle_case']) ? clean_xss_tags($_POST['od_settle_case'], 1, 1) : '';
+
 if(isset($_POST['pp_id']) && $_POST['pp_id']) {
     $od_id   = get_session('ss_personalpay_id');
     $cart_id = 0;
@@ -66,4 +68,3 @@ $sql = " insert into {$g5['g5_shop_order_data_table']}
 sql_query($sql);
 
 die('');
-?>

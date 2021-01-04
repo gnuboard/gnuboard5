@@ -115,6 +115,10 @@ for($k=0; $cp=sql_fetch_array($res); $k++) {
                 for ($i=0; $row = sql_fetch_array($result); $i++)
                 {
                     $image = get_it_image($row['it_id'], 100, 100, true);
+
+                    $sql = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' ";
+                    $tmp = sql_fetch($sql);
+                    $out_cd = (isset($tmp['cnt']) && $tmp['cnt']) ? 'no' : '';
                 ?>
 
                 <li>
@@ -215,4 +219,3 @@ function fwishlist_check(f, act)
 
 <?php
 include_once("./_tail.php");
-?>

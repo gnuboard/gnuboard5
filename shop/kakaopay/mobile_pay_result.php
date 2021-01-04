@@ -38,4 +38,3 @@ switch($pay_type) {
 set_session('P_TID',  '');
 set_session('P_AMT',  '');
 set_session('P_HASH', '');
-?>

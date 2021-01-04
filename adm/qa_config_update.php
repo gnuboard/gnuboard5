@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 check_admin_token();
 
@@ -108,4 +108,3 @@ if($error_msg){
 } else {
     goto_url('./qa_config.php');
 }
-?>

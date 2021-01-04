@@ -3,7 +3,8 @@ include_once('./_common.php');
 include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 include_once(G5_LIB_PATH.'/naverpay.lib.php');
 
-$count = count($_POST['it_id']);
+$count = (isset($_POST['it_id']) && is_array($_POST['it_id'])) ? count($_POST['it_id']) : 0;
+
 if ($count < 1)
     alert_close('찜하실 상품을 선택하여 주십시오.');
 
@@ -11,11 +12,11 @@ $query = '';
 $item  = '';
 
 for($i=0; $i<$count; $i++) {
-    $it_id = $_POST['it_id'][$i];
+    $it_id = isset($_POST['it_id']) ? $_POST['it_id'][$i] : '';
 
     // 상품정보
     $it = get_shop_item($it_id, true);
-    if(!$it['it_id'])
+    if(! (isset($it['it_id']) && $it['it_id']))
         alert_close('상품정보가 존재하지 않습니다.');
 
     $id          = urlencode($it['it_id']);
@@ -52,6 +53,8 @@ if ($nc_sock) {
     fwrite($nc_sock, "\r\n");
     fwrite($nc_sock, $query."\r\n");
     fwrite($nc_sock, "\r\n");
+
+    $headers = $bodys = '';
 
     // get header
     while(!feof($nc_sock)) {
@@ -108,4 +111,4 @@ document.frm.target = "_top";
 document.frm.submit();
 </script>
 </html>
-<?php } ?>
+<?php }

@@ -1,5 +1,5 @@
 <?php
-    include_once('./_common.php');
+include_once('./_common.php');
 
 @header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
 @header('Pragma: no-cache'); // HTTP 1.0.
@@ -17,8 +17,7 @@
     /* = -------------------------------------------------------------------------- = */
     /* =   Copyright (c)  2010.05   KCP Inc.   All Rights Reserved.                 = */
     /* ============================================================================== */
-?>
-<?php
+
 	/* ============================================================================== */
     /* =   환경 설정 파일 Include                                                   = */
     /* = -------------------------------------------------------------------------- = */
@@ -27,56 +26,54 @@
     /* = -------------------------------------------------------------------------- = */
 
      include_once(G5_MSHOP_PATH.'/settle_kcp.inc.php');       // 환경설정 파일 include
-?>
-<?php
+
     /* = -------------------------------------------------------------------------- = */
     /* =   환경 설정 파일 Include END                                               = */
     /* ============================================================================== */
-?>
-<?php
+
     /* kcp와 통신후 kcp 서버에서 전송되는 결제 요청 정보*/
-    $req_tx          = $_POST[ "req_tx"         ]; // 요청 종류
-    $res_cd          = $_POST[ "res_cd"         ]; // 응답 코드
-    $tran_cd         = $_POST[ "tran_cd"        ]; // 트랜잭션 코드
-    $ordr_idxx       = $_POST[ "ordr_idxx"      ]; // 쇼핑몰 주문번호
-    $good_name       = $_POST[ "good_name"      ]; // 상품명
-    $good_mny        = $_POST[ "good_mny"       ]; // 결제 총금액
-    $buyr_name       = $_POST[ "buyr_name"      ]; // 주문자명
-    $buyr_tel1       = $_POST[ "buyr_tel1"      ]; // 주문자 전화번호
-    $buyr_tel2       = $_POST[ "buyr_tel2"      ]; // 주문자 핸드폰 번호
-    $buyr_mail       = $_POST[ "buyr_mail"      ]; // 주문자 E-mail 주소
-    $use_pay_method  = $_POST[ "use_pay_method" ]; // 결제 방법
-    $enc_info        = $_POST[ "enc_info"       ]; // 암호화 정보
-    $enc_data        = $_POST[ "enc_data"       ]; // 암호화 데이터
-	$rcvr_name		 = $_POST[ "rcvr_name"		]; // 수취인 이름
-	$rcvr_tel1		 = $_POST[ "rcvr_tel1"		]; // 수취인 전화번호
-	$rcvr_tel2		 = $_POST[ "rcvr_tel2"		]; // 수취인 휴대폰번호
-	$rcvr_mail		 = $_POST[ "rcvr_mail"		]; // 수취인 E-Mail
-	$rcvr_zipx		 = $_POST[ "rcvr_zipx"		]; // 수취인 우편번호
-	$rcvr_add1		 = $_POST[ "rcvr_add1"		]; // 수취인 주소
-	$rcvr_add2		 = $_POST[ "rcvr_add2"		]; // 수취인 상세주소
+    $req_tx          = isset($_POST["req_tx"]) ? $_POST["req_tx"] : ''; // 요청 종류
+    $res_cd          = isset($_POST["res_cd"]) ? $_POST["res_cd"] : ''; // 응답 코드
+    $tran_cd         = isset($_POST["tran_cd"]) ? $_POST["tran_cd"] : ''; // 트랜잭션 코드
+    $ordr_idxx       = isset($_POST["ordr_idxx"]) ? $_POST["ordr_idxx"] : ''; // 쇼핑몰 주문번호
+    $good_name       = isset($_POST["good_name"]) ? $_POST["good_name"] : ''; // 상품명
+    $good_mny        = isset($_POST["good_mny"]) ? $_POST["good_mny"] : ''; // 결제 총금액
+    $buyr_name       = isset($_POST["buyr_name"]) ? $_POST["buyr_name"] : ''; // 주문자명
+    $buyr_tel1       = isset($_POST["buyr_tel1"]) ? $_POST["buyr_tel1"] : ''; // 주문자 전화번호
+    $buyr_tel2       = isset($_POST["buyr_tel2"]) ? $_POST["buyr_tel2"] : ''; // 주문자 핸드폰 번호
+    $buyr_mail       = isset($_POST["buyr_mail"]) ? $_POST["buyr_mail"] : ''; // 주문자 E-mail 주소
+    $use_pay_method  = isset($_POST["use_pay_method"]) ? $_POST["use_pay_method"] : ''; // 결제 방법
+    $enc_info        = isset($_POST["enc_info"]) ? $_POST["enc_info"] : ''; // 암호화 정보
+    $enc_data        = isset($_POST["enc_data"]) ? $_POST["enc_data"] : ''; // 암호화 데이터
+	$rcvr_name		 = isset($_POST["rcvr_name"]) ? $_POST["rcvr_name"] : ''; // 수취인 이름
+	$rcvr_tel1		 = isset($_POST["rcvr_tel1"]) ? $_POST["rcvr_tel1"] : ''; // 수취인 전화번호
+	$rcvr_tel2		 = isset($_POST["rcvr_tel2"]) ? $_POST["rcvr_tel2"] : ''; // 수취인 휴대폰번호
+	$rcvr_mail		 = isset($_POST["rcvr_mail"]) ? $_POST["rcvr_mail"] : ''; // 수취인 E-Mail
+	$rcvr_zipx		 = isset($_POST["rcvr_zipx"]) ? $_POST["rcvr_zipx"] : ''; // 수취인 우편번호
+	$rcvr_add1		 = isset($_POST["rcvr_add1"]) ? $_POST["rcvr_add1"] : ''; // 수취인 주소
+	$rcvr_add2		 = isset($_POST["rcvr_add2"]) ? $_POST["rcvr_add2"] : ''; // 수취인 상세주소
 
     /* 주문폼에서 전송되는 정보 */
     $ipgm_date       = isset($_POST['ipgm_date']) ? $_POST['ipgm_date'] : ''; // 입금마감일
-    $settle_method   = $_POST[ "settle_method"  ]; // 결제방법
-    $good_info       = $_POST[ "good_info"      ]; // 에스크로 상품정보
-    $bask_cntx       = $_POST[ "bask_cntx"      ]; // 장바구니 상품수
-    $tablet_size     = $_POST[ "tablet_size"    ]; // 모바일기기 화면비율
+    $settle_method   = isset($_POST["settle_method"]) ? $_POST["settle_method"] : ''; // 결제방법
+    $good_info       = isset($_POST["good_info"]) ? $_POST["good_info"] : ''; // 에스크로 상품정보
+    $bask_cntx       = isset($_POST["bask_cntx"]) ? $_POST["bask_cntx"] : ''; // 장바구니 상품수
+    $tablet_size     = isset($_POST["tablet_size"]) ? $_POST["tablet_size"] : ''; // 모바일기기 화면비율
 
-    $comm_tax_mny    = $_POST[ "comm_tax_mny"   ]; // 과세금액
-    $comm_vat_mny    = $_POST[ "comm_vat_mny"   ]; // 부가세
-    $comm_free_mny   = $_POST["comm_free_mny"   ]; // 비과세금액
+    $comm_tax_mny    = isset($_POST["comm_tax_mny"]) ? $_POST["comm_tax_mny"] : ''; // 과세금액
+    $comm_vat_mny    = isset($_POST["comm_vat_mny"]) ? $_POST["comm_vat_mny"] : ''; // 부가세
+    $comm_free_mny   = isset($_POST["comm_free_mny"]) ? $_POST["comm_free_mny"] : ''; // 비과세금액
 
-    $payco_direct    = $_POST["payco_direct"    ]; // PAYCO 결제창 호출
-    $naverpay_direct    = $_POST["naverpay_direct"]; // NAVERPAY 결제창 호출
-    $kakaopay_direct    = $_POST["kakaopay_direct"]; // KAKAOPAY 결제창 호출
+    $payco_direct    = isset($_POST["payco_direct"]) ? $_POST["payco_direct"] : ''; // PAYCO 결제창 호출
+    $naverpay_direct = isset($_POST["naverpay_direct"]) ? $_POST["naverpay_direct"] : ''; // NAVERPAY 결제창 호출
+    $kakaopay_direct = isset($_POST["kakaopay_direct"]) ? $_POST["kakaopay_direct"] : ''; // KAKAOPAY 결제창 호출
 
 	/*
      * 기타 파라메터 추가 부분 - Start -
      */
-    $param_opt_1     = $_POST[ "param_opt_1"    ]; // 기타 파라메터 추가 부분
-    $param_opt_2     = $_POST[ "param_opt_2"    ]; // 기타 파라메터 추가 부분
-    $param_opt_3     = $_POST[ "param_opt_3"    ]; // 기타 파라메터 추가 부분
+    $param_opt_1     = isset($_POST["param_opt_1"]) ? $_POST["param_opt_1"] : ''; // 기타 파라메터 추가 부분
+    $param_opt_2     = isset($_POST["param_opt_2"]) ? $_POST["param_opt_2"] : ''; // 기타 파라메터 추가 부분
+    $param_opt_3     = isset($_POST["param_opt_3"]) ? $_POST["param_opt_3"] : ''; // 기타 파라메터 추가 부분
     /*
      * 기타 파라메터 추가 부분 - End -
      */
@@ -327,9 +324,9 @@ if($enc_data != '' && $enc_info != '' && $tran_cd != '') {
 <!-- 배송소요기간 -->
 <input type="hidden" name="deli_term" value="03">
 <!-- 기타 파라메터 추가 부분 - Start - -->
-<input type="hidden" name="param_opt_1"	 value="<?php echo $param_opt_1; ?>"/>
-<input type="hidden" name="param_opt_2"	 value="<?php echo $param_opt_2; ?>"/>
-<input type="hidden" name="param_opt_3"	 value="<?php echo $param_opt_3; ?>"/>
+<input type="hidden" name="param_opt_1"	 value="<?php echo get_text($param_opt_1); ?>"/>
+<input type="hidden" name="param_opt_2"	 value="<?php echo get_text($param_opt_2); ?>"/>
+<input type="hidden" name="param_opt_3"	 value="<?php echo get_text($param_opt_3); ?>"/>
 <input type="hidden" name="disp_tax_yn"  value="N">
 <!-- 기타 파라메터 추가 부분 - End - -->
 <!-- 화면 크기조정 부분 - Start - -->

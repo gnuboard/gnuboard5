@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], 'd');
+auth_check_menu($auth, $sub_menu, 'd');
 
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
@@ -57,4 +57,3 @@ $row = sql_fetch($sql);
 $total_count2 = $row['cnt'];
 
 alert('총 '.number_format($total_count).'건 중 '.number_format($total_count - $total_count2).'건 삭제 완료', './visit_delete.php');
-?>

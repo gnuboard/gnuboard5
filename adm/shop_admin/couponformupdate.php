@@ -2,7 +2,7 @@
 $sub_menu = '400800';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
@@ -21,6 +21,7 @@ $check_sanitize_keys = array(
 'cp_trunc',         // 절사금액
 'cp_minimum',       // 최소주문금액
 'cp_maximum',       // 최대할인금액
+'chk_all_mb'        // 전체회원 체크
 );
 
 foreach( $check_sanitize_keys as $key ){
@@ -264,4 +265,3 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
 }
 
 goto_url('./couponlist.php');
-?>

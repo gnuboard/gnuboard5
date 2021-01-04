@@ -76,4 +76,3 @@ foreach($itemIds as $it_id) {
 <?php
 }
 echo('</response>');
-?>

@@ -18,4 +18,3 @@ if(defined('G5_VISIT_BROWSCAP_USE') && G5_VISIT_BROWSCAP_USE && is_file(G5_DATA_
     $vi_os = $info->Platform;
     $vi_device = $info->Device_Type;
 }
-?>

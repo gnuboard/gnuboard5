@@ -7,4 +7,3 @@ if( ! ($default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use']) || 
 }
 
 include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
-?>

@@ -3,9 +3,9 @@ $sub_menu = '400650';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-$is_id = preg_replace('/[^0-9]/', '', $is_id);
+$is_id = isset($_GET['is_id']) ? preg_replace('/[^0-9]/', '', $_GET['is_id']) : 0;
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $sql = " select *
            from {$g5['g5_shop_item_use_table']} a
@@ -118,4 +118,3 @@ function fitemuseform_submit(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

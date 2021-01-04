@@ -557,4 +557,3 @@ $item_info = array(
         )
     ),
 );
-?>

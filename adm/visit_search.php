@@ -3,7 +3,7 @@ $sub_menu = '200810';
 include_once('./_common.php');
 include_once(G5_PATH.'/lib/visit.lib.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 $g5['title'] = '접속자검색';
 include_once('./admin.head.php');
@@ -122,6 +122,7 @@ if(isset($sfl) && $sfl && !in_array($sfl, array('vi_ip','vi_date','vi_time','vi_
 </div>
 
 <?php
+$domain = isset($domain) ? $domain : '';
 $pagelist = get_paging($config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME'].'?'.$qstr.'&amp;domain='.$domain.'&amp;page=');
 if ($pagelist) {
     echo $pagelist;
@@ -151,4 +152,3 @@ function fvisit_submit(f)
 
 <?php
 include_once('./admin.tail.php');
-?>

@@ -5,15 +5,17 @@ if (!$is_member) {
     alert_close("사용후기는 회원만 작성이 가능합니다.");
 }
 
-$it_id       = trim($_REQUEST['it_id']);
-$is_subject  = trim($_POST['is_subject']);
-$is_content  = trim($_POST['is_content']);
+$it_id       = isset($_POST['it_id']) ? safe_replace_regex($_POST['it_id'], 'it_id') : '';
+$is_subject  = isset($_POST['is_subject']) ? trim($_POST['is_subject']) : '';
+$is_content  = isset($_POST['is_content']) ? trim($_POST['is_content']) : '';
 $is_content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $is_content);
-$is_name     = trim($_POST['is_name']);
-$is_password = trim($_POST['is_password']);
-$is_score    = (int)$_POST['is_score'] > 5 ? 0 : (int)$_POST['is_score'];
+$is_name     = isset($_POST['is_name']) ? trim($_POST['is_name']) : '';
+$is_password = isset($_POST['is_password']) ? trim($_POST['is_password']) : '';
+$is_score    = isset($_POST['is_score']) ? (int) $_POST['is_score'] : 0;
+$is_score    = ($is_score > 5) ? 0 : $is_score;
 $get_editor_img_mode = $config['cf_editor'] ? false : true;
-$is_id       = (int) trim($_REQUEST['is_id']);
+$is_id       = isset($_REQUEST['is_id']) ? (int) $_REQUEST['is_id'] : 0;
+$is_mobile_shop = isset($_REQUEST['is_mobile_shop']) ? (int) $_REQUEST['is_mobile_shop'] : 0;
 
 // 사용후기 작성 설정에 따른 체크
 check_itemuse_write($it_id, $member['mb_id']);
@@ -130,4 +132,3 @@ if($w == 'd')
     alert($alert_msg, $url);
 else
     alert_opener($alert_msg, $url);
-?>

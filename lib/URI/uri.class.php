@@ -164,4 +164,3 @@ class G5_URI {
 		return $host.$return_url.$add_param.$fragment;
    }
 }
-?>

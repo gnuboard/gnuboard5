@@ -209,12 +209,12 @@ class XML {
      */
     function remove_ctrl($string) {
     	for ($i = 0; $i < strlen($string); $i++) {
-    		$chr = $string{$i};
+    		$chr = $string[$i];
     		$ord = ord($chr);
     		if ($ord < 10)
-    			$string{$i} = " ";
+    			$string[$i] = " ";
     		else
-    			$string{$i} = $chr;
+    			$string[$i] = $chr;
     	}
     	return trim($string);
     }
@@ -333,11 +333,12 @@ class XML {
 
         // Now open the tag.
         $xml .= "<" . $this->nodes[$root]["name"];
-
+            
+        $count_root_attributes = (isset($this->nodes[$root]["attributes"]) && is_array($this->nodes[$root]["attributes"])) ? count($this->nodes[$root]["attributes"]) : 0;
         // Check whether there are attributes for this node.
-        if (count($this->nodes[$root]["attributes"]) > 0) {
+        if ($count_root_attributes > 0) {
             // Run through all attributes.
-            foreach ($this->nodes[$root]["attributes"] as $key => $value) {
+            foreach ((array) $this->nodes[$root]["attributes"] as $key => $value) {
                 // Check whether this attribute is highlighted.
                 if (in_array($root . "/attribute::" . $key, $highlight)) {
                     // Add the highlight code to the XML data.
@@ -450,7 +451,9 @@ class XML {
         $path = $context . "/" . $name;
 
         // Set the relative context and the position.
-        $position = ++$this->ids[$path];
+
+        $othis_ids_path = isset($this->ids[$path]) ? (int) $this->ids[$path] : 0;
+        $position = ++$othis_ids_path;
         $relative = $name . "[" . $position . "]";
 
         // Calculate the full path.
@@ -462,7 +465,8 @@ class XML {
 
         // Calculate the position for the following and preceding axis
         // detection.
-        $this->nodes[$fullpath]["document-position"] = $this->nodes[$context]["document-position"] + 1;
+        $othis_document_position = isset($this->nodes[$context]["document-position"]) ? (int) $this->nodes[$context]["document-position"] : 0;
+        $this->nodes[$fullpath]["document-position"] = $othis_document_position + 1;
 
         // Save the information about the node.
         $this->nodes[$fullpath]["name"] = $name;
@@ -470,7 +474,7 @@ class XML {
         $this->nodes[$fullpath]["parent"] = $context;
 
         // Add this element to the element count array.
-        if (!$this->nodes[$context]["children"][$name]) {
+        if (! (isset($this->nodes[$context]["children"][$name]) && $this->nodes[$context]["children"][$name])) {
             // Set the default name.
             $this->nodes[$context]["children"][$name] = 1;
         } else {
@@ -907,7 +911,8 @@ class XML {
         $arr = preg_split("/[\/]+/", $this->path, -1, PREG_SPLIT_NO_EMPTY);
         //edited by ddaemiri. libexpat은 \n을 분리자로 인식
         //$this->xml_node[$arr[count($arr)-1]]["text"] = addslashes(trim($text));
-        $this->xml_node[$arr[count($arr) - 1]]["text"] = $this->xml_node[$arr[count($arr) - 1]]["text"] . addslashes(trim($text));
+        $othis_count_text = isset($this->xml_node[$arr[count($arr) - 1]]["text"]) ? $this->xml_node[$arr[count($arr) - 1]]["text"] : '';
+        $this->xml_node[$arr[count($arr) - 1]]["text"] = $othis_count_text . addslashes(trim($text));
     }
 
     /**
@@ -3133,5 +3138,3 @@ class XML {
     }
 
 }
-
-?>

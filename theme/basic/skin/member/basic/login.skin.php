@@ -87,7 +87,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <form name="forderinquiry" method="post" action="<?php echo urldecode($url); ?>" autocomplete="off">
 
             <label for="od_id" class="od_id sound_only">주문서번호<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="od_id" value="<?php echo $od_id; ?>" id="od_id" required class="frm_input required" size="20" placeholder="주문서번호">
+            <input type="text" name="od_id" value="<?php echo get_text($od_id); ?>" id="od_id" required class="frm_input required" size="20" placeholder="주문서번호">
             <label for="od_pwd" class="od_pwd sound_only">비밀번호 <strong>필수</strong></label>
             <input type="password" name="od_pwd" size="20" id="od_pwd" required class="frm_input required" placeholder="비밀번호">
             <button type="submit" class="btn_submit">확인</button>

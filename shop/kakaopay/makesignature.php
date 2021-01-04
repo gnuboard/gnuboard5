@@ -34,4 +34,3 @@ $params = "oid=" . $orderNumber . "&price=" . $price . "&timestamp=" . $timestam
 $sign = hash("sha256", $params);
 
 die(json_encode(array('error'=>'', 'mKey'=>$mKey, 'timestamp'=>$timestamp, 'sign'=>$sign)));
-?>

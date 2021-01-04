@@ -16,7 +16,10 @@ function get_shop_item($it_id, $is_cache=false, $add_query=''){
         $g5_object->set('shop', $it_id, $item, $add_query_key);
     }
     
-    $item['it_basic'] = conv_content($item['it_basic'], 1);
+    if( isset($item['it_basic']) ) {
+        $item['it_basic'] = conv_content($item['it_basic'], 1);
+    }
+
     return $item;
 }
 
@@ -31,7 +34,10 @@ function get_shop_item_with_category($it_id, $seo_title='', $add_query=''){
     }
     
     $item = sql_fetch($sql);
-    $item['it_basic'] = conv_content($item['it_basic'], 1);
+
+    if( isset($item['it_basic']) ) {
+        $item['it_basic'] = conv_content($item['it_basic'], 1);
+    }
 
     return $item;
 }
@@ -201,10 +207,10 @@ function get_shop_item_options($it_id, $subject, $no)
             $opt_id = explode(chr(30), $row['io_id']);
 
             for($k=0; $k<$subj_count; $k++) {
-                if(!is_array($options[$k]))
+                if(! (isset($options[$k]) && is_array($options[$k])))
                     $options[$k] = array();
 
-                if($opt_id[$k] && !in_array($opt_id[$k], $options[$k]))
+                if(isset($opt_id[$k]) && $opt_id[$k] && !in_array($opt_id[$k], $options[$k]))
                     $options[$k][] = $opt_id[$k];
             }
         }
@@ -259,4 +265,3 @@ function get_shop_item_options($it_id, $subject, $no)
 
     return $str;
 }
-?>

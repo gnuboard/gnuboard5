@@ -5,9 +5,9 @@ include_once('./_common.php');
 check_demo();
 
 if ($w == 'd')
-    auth_check($auth[$sub_menu], "d");
+    auth_check_menu($auth, $sub_menu, "d");
 else
-    auth_check($auth[$sub_menu], "w");
+    auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
@@ -85,4 +85,3 @@ if ($w == "u")
 else {
     alert();
 }
-?>

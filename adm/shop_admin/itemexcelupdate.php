@@ -6,67 +6,29 @@ include_once('./_common.php');
 set_time_limit ( 0 );
 ini_set('memory_limit', '50M');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 function only_number($n)
 {
     return preg_replace('/[^0-9]/', '', $n);
 }
 
-if($_FILES['excelfile']['tmp_name']) {
+$is_upload_file = (isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) ? 1 : 0;
+
+if( ! $is_upload_file){
+    alert("엑셀 파일을 업로드해 주세요.");
+}
+
+if($is_upload_file) {
     $file = $_FILES['excelfile']['tmp_name'];
 
-    include_once(G5_LIB_PATH.'/Excel/reader.php');
+    include_once(G5_LIB_PATH.'/PHPExcel/IOFactory.php');
 
-    $data = new Spreadsheet_Excel_Reader();
+    $objPHPExcel = PHPExcel_IOFactory::load($file);
+    $sheet = $objPHPExcel->getSheet(0);
 
-    // Set output Encoding.
-    $data->setOutputEncoding('UTF-8');
-
-    /***
-    * if you want you can change 'iconv' to mb_convert_encoding:
-    * $data->setUTFEncoder('mb');
-    *
-    **/
-
-    /***
-    * By default rows & cols indeces start with 1
-    * For change initial index use:
-    * $data->setRowColOffset(0);
-    *
-    **/
-
-
-
-    /***
-    *  Some function for formatting output.
-    * $data->setDefaultFormat('%.2f');
-    * setDefaultFormat - set format for columns with unknown formatting
-    *
-    * $data->setColumnFormat(4, '%.3f');
-    * setColumnFormat - set format for column (apply only to number fields)
-    *
-    **/
-
-    $data->read($file);
-
-    /*
-
-
-     $data->sheets[0]['numRows'] - count rows
-     $data->sheets[0]['numCols'] - count columns
-     $data->sheets[0]['cells'][$i][$j] - data from $i-row $j-column
-
-     $data->sheets[0]['cellsInfo'][$i][$j] - extended info about cell
-
-        $data->sheets[0]['cellsInfo'][$i][$j]['type'] = "date" | "number" | "unknown"
-            if 'type' == "unknown" - use 'raw' value, because  cell contain value with format '0.00';
-        $data->sheets[0]['cellsInfo'][$i][$j]['raw'] = value if cell without format
-        $data->sheets[0]['cellsInfo'][$i][$j]['colspan']
-        $data->sheets[0]['cellsInfo'][$i][$j]['rowspan']
-    */
-
-    error_reporting(E_ALL ^ E_NOTICE);
+    $num_rows = $sheet->getHighestRow();
+    $highestColumn = $sheet->getHighestColumn();
 
     $dup_it_id = array();
     $fail_it_id = array();
@@ -75,51 +37,56 @@ if($_FILES['excelfile']['tmp_name']) {
     $fail_count = 0;
     $succ_count = 0;
 
-    for ($i = 3; $i <= $data->sheets[0]['numRows']; $i++) {
+    for ($i = 3; $i <= $num_rows; $i++) {
         $total_count++;
 
-        $j = 1;
+        $j = 0;
 
-        $it_id              = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $ca_id              = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $ca_id2             = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $ca_id3             = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_name            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_maker           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_origin          = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_brand           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_model           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_type1           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_type2           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_type3           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_type4           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_type5           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_basic           = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_explan          = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_mobile_explan   = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_cust_price      = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_price           = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_tel_inq         = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_point           = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_point_type      = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_sell_email      = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_use             = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_stock_qty       = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_noti_qty        = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_buy_min_qty     = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_buy_max_qty     = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_notax           = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_order           = addslashes(only_number($data->sheets[0]['cells'][$i][$j++]));
-        $it_img1            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img2            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img3            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img4            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img5            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img6            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img7            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img8            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img9            = addslashes($data->sheets[0]['cells'][$i][$j++]);
-        $it_img10           = addslashes($data->sheets[0]['cells'][$i][$j++]);
+        $rowData = $sheet->rangeToArray('A' . $i . ':' . $highestColumn . $i,
+                                            NULL,
+                                            TRUE,
+                                            FALSE);
+
+        $it_id              = addslashes($rowData[0][$j++]);
+        $ca_id              = addslashes($rowData[0][$j++]);
+        $ca_id2             = addslashes($rowData[0][$j++]);
+        $ca_id3             = addslashes($rowData[0][$j++]);
+        $it_name            = addslashes($rowData[0][$j++]);
+        $it_maker           = addslashes($rowData[0][$j++]);
+        $it_origin          = addslashes($rowData[0][$j++]);
+        $it_brand           = addslashes($rowData[0][$j++]);
+        $it_model           = addslashes($rowData[0][$j++]);
+        $it_type1           = addslashes($rowData[0][$j++]);
+        $it_type2           = addslashes($rowData[0][$j++]);
+        $it_type3           = addslashes($rowData[0][$j++]);
+        $it_type4           = addslashes($rowData[0][$j++]);
+        $it_type5           = addslashes($rowData[0][$j++]);
+        $it_basic           = addslashes($rowData[0][$j++]);
+        $it_explan          = addslashes($rowData[0][$j++]);
+        $it_mobile_explan   = addslashes($rowData[0][$j++]);
+        $it_cust_price      = addslashes(only_number($rowData[0][$j++]));
+        $it_price           = addslashes(only_number($rowData[0][$j++]));
+        $it_tel_inq         = addslashes($rowData[0][$j++]);
+        $it_point           = addslashes(only_number($rowData[0][$j++]));
+        $it_point_type      = addslashes(only_number($rowData[0][$j++]));
+        $it_sell_email      = addslashes($rowData[0][$j++]);
+        $it_use             = addslashes($rowData[0][$j++]);
+        $it_stock_qty       = addslashes(only_number($rowData[0][$j++]));
+        $it_noti_qty        = addslashes(only_number($rowData[0][$j++]));
+        $it_buy_min_qty     = addslashes(only_number($rowData[0][$j++]));
+        $it_buy_max_qty     = addslashes(only_number($rowData[0][$j++]));
+        $it_notax           = addslashes(only_number($rowData[0][$j++]));
+        $it_order           = addslashes(only_number($rowData[0][$j++]));
+        $it_img1            = addslashes($rowData[0][$j++]);
+        $it_img2            = addslashes($rowData[0][$j++]);
+        $it_img3            = addslashes($rowData[0][$j++]);
+        $it_img4            = addslashes($rowData[0][$j++]);
+        $it_img5            = addslashes($rowData[0][$j++]);
+        $it_img6            = addslashes($rowData[0][$j++]);
+        $it_img7            = addslashes($rowData[0][$j++]);
+        $it_img8            = addslashes($rowData[0][$j++]);
+        $it_img9            = addslashes($rowData[0][$j++]);
+        $it_img10           = addslashes($rowData[0][$j++]);
         $it_explan2         = strip_tags(trim($it_explan));
 
         if(!$it_id || !$ca_id || !$it_name) {
@@ -130,7 +97,7 @@ if($_FILES['excelfile']['tmp_name']) {
         // it_id 중복체크
         $sql2 = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
         $row2 = sql_fetch($sql2);
-        if($row2['cnt']) {
+        if(isset($row2['cnt']) && $row2['cnt']) {
             $fail_it_id[] = $it_id;
             $dup_it_id[] = $it_id;
             $dup_count++;
@@ -141,7 +108,7 @@ if($_FILES['excelfile']['tmp_name']) {
         // 기본분류체크
         $sql2 = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
         $row2 = sql_fetch($sql2);
-        if(!$row2['cnt']) {
+        if(! (isset($row2['cnt']) && $row2['cnt'])) {
             $fail_it_id[] = $it_id;
             $fail_count++;
             continue;
@@ -190,6 +157,7 @@ if($_FILES['excelfile']['tmp_name']) {
                          it_img8 = '$it_img8',
                          it_img9 = '$it_img9',
                          it_img10 = '$it_img10' ";
+
         sql_query($sql);
 
         $succ_count++;
@@ -234,4 +202,3 @@ include_once(G5_PATH.'/head.sub.php');
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

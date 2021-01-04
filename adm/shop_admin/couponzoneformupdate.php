@@ -2,7 +2,7 @@
 $sub_menu = '400810';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
@@ -151,4 +151,3 @@ if($_FILES['cp_img']['tmp_name']) {
 }
 
 goto_url('./couponzonelist.php?'.$qstr);
-?>

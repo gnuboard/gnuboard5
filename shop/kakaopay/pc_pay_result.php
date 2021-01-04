@@ -212,4 +212,3 @@ try {
 if( !$inicis_pay_result ){
     die("<br><br>결제 에러가 일어났습니다. 에러 이유는 위와 같습니다.");
 }
-?>

@@ -56,4 +56,3 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

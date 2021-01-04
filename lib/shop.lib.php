@@ -411,12 +411,13 @@ function get_it_image($it_id, $width, $height=0, $anchor=false, $img_id='', $img
         return '';
 
     $filename = $thumb = $img = '';
-
+    
+    $img_width = 0;
     for($i=1;$i<=10; $i++) {
         $file = G5_DATA_PATH.'/item/'.$row['it_img'.$i];
         if(is_file($file) && $row['it_img'.$i]) {
             $size = @getimagesize($file);
-            if($size[2] < 1 || $size[2] > 3)
+            if(! isset($size[2]) || $size[2] < 1 || $size[2] > 3)
                 continue;
 
             $filename = basename($file);
@@ -972,10 +973,10 @@ function get_item_options($it_id, $subject, $is_div='', $is_first_option_title='
             $opt_id = explode(chr(30), $row['io_id']);
 
             for($k=0; $k<$subj_count; $k++) {
-                if(!is_array($options[$k]))
+                if(! (isset($options[$k]) && is_array($options[$k])))
                     $options[$k] = array();
 
-                if($opt_id[$k] && !in_array($opt_id[$k], $options[$k]))
+                if(isset($opt_id[$k]) && $opt_id[$k] && !in_array($opt_id[$k], $options[$k]))
                     $options[$k][] = $opt_id[$k];
             }
         }
@@ -1103,7 +1104,7 @@ function get_item_supply($it_id, $subject, $is_div='', $is_first_option_title=''
 
     // 옵션항목 만들기
     for($i=0; $i<$subj_count; $i++) {
-        $opt = $options[$subj[$i]];
+        $opt = (isset($subj[$i]) && isset($options[$subj[$i]])) ? $options[$subj[$i]] : array();
         $opt_count = count($opt);
         if($opt_count) {
             $seq = $i + 1;
@@ -1509,6 +1510,7 @@ function get_sns_share_link($sns, $url, $title, $img)
     if(!$sns)
         return '';
 
+    $str = '';
     switch($sns) {
         case 'facebook':
             $str = '<a href="https://www.facebook.com/sharer/sharer.php?u='.urlencode($url).'&amp;p='.urlencode($title).'" class="share-facebook" target="_blank"><img src="'.$img.'" alt="페이스북에 공유"></a>';
@@ -1614,7 +1616,7 @@ function get_order_info($od_id)
 
         $tot_od_price = $cart_price - $cart_coupon;
 
-        if($cp['cp_id']) {
+        if(isset($cp['cp_id']) && $cp['cp_id']) {
             $dc = 0;
 
             if($cp['cp_minimum'] <= $tot_od_price) {
@@ -1643,7 +1645,7 @@ function get_order_info($od_id)
                       and a.cp_method = '3' ";
         $cp = sql_fetch($sql);
 
-        if($cp['cp_id']) {
+        if(isset($cp['cp_id']) && $cp['cp_id']) {
             $dc = 0;
             if($cp['cp_minimum'] <= $tot_od_price) {
                 if($cp['cp_type']) {
@@ -2101,7 +2103,7 @@ function get_delivery_inquiry($company, $invoice, $class='')
     }
 
     $str = '';
-    if($com && $url) {
+    if(isset($com) && $com && isset($url) && $url) {
         $str .= '<a href="'.$url.$invoice.'" target="_blank"';
         if($class)
             $str .= ' class="'.$class.'"';
@@ -2408,7 +2410,7 @@ function get_itemuse_thumb($contents, $thumb_width, $thumb_height, $is_create=fa
             $filepath = dirname($srcfile);
 
             preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matches[0][$i], $malt);
-            $alt = get_text($malt[1]);
+            $alt = isset($malt[1]) ? get_text($malt[1]) : '';
 
             break;
         }
@@ -2686,7 +2688,7 @@ function is_inicis_order_pay($type){
 
         $row = sql_fetch($sql);
 
-        if( $row['P_TID'] ){
+        if(isset($row['P_TID']) && $row['P_TID']){
             alert("이미 취소된 주문입니다.", G5_SHOP_URL);
         }
     }
@@ -2770,5 +2772,4 @@ function is_coupon_downloaded($mb_id, $cz_id)
 
 //==============================================================================
 // 쇼핑몰 라이브러리 모음 끝
-//==============================================================================
-?>
+//==============================================================================;

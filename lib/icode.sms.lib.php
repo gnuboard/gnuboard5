@@ -240,4 +240,3 @@ class SMS {
         return true;
 	}
 }
-?>

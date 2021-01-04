@@ -32,4 +32,3 @@ for ($i=1; $row=sql_fetch_array($result); $i++) {
 if ($i > 1) echo "</ul>\n";
 
 if($i == 1) echo "<p class=\"sct_noitem\">등록된 개인결제가 없습니다.</p>\n";
-?>

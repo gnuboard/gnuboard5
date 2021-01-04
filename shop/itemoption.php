@@ -3,11 +3,11 @@ include_once('./_common.php');
 
 $pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#';
 
-$it_id  = preg_replace($pattern, '', $_POST['it_id']);
-//$opt_id = preg_replace($pattern, '', $_POST['opt_id']);
-$opt_id = addslashes(sql_real_escape_string(preg_replace(G5_OPTION_ID_FILTER, '', $_POST['opt_id'])));
-$idx    = preg_replace('#[^0-9]#', '', $_POST['idx']);
-$sel_count = preg_replace('#[^0-9]#', '', $_POST['sel_count']);
+$it_id  = isset($_POST['it_id']) ? preg_replace($pattern, '', $_POST['it_id']) : '';
+//$opt_id = isset($_POST['opt_id']) ? preg_replace($pattern, '', $_POST['opt_id']) : '';
+$opt_id = isset($_POST['opt_id']) ? addslashes(sql_real_escape_string(preg_replace(G5_OPTION_ID_FILTER, '', $_POST['opt_id']))) : '';
+$idx    = isset($_POST['idx']) ? preg_replace('#[^0-9]#', '', $_POST['idx']) : 0;
+$sel_count = isset($_POST['sel_count']) ? preg_replace('#[^0-9]#', '', $_POST['sel_count']) : 0;
 $op_title = isset($_POST['op_title']) ? strip_tags($_POST['op_title']) : '';
 
 $it = get_shop_item($it_id, true);
@@ -80,4 +80,3 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
 }
 
 echo $str;
-?>

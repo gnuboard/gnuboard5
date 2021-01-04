@@ -56,4 +56,4 @@ function jsf__pay( form )
     }
 }
 </script>
-<?php } ?>
+<?php }

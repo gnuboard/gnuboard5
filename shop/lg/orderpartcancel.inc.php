@@ -97,4 +97,3 @@ if ($xpay->TX()) {
 
     alert('결제 부분취소 요청이 실패하였습니다.\\n\\n'.$xpay->Response_Code().' : '.$xpay->Response_Msg());
 }
-?>

@@ -75,6 +75,8 @@ class KCAPTCHA{
         $odd=mt_rand(0,1);
         if($odd==0) $odd=-1;
         for($i=0;$i<$length;$i++){
+
+            if( ! isset($this->keystring[$i]) ) continue;
             $m=$font_metrics[$this->keystring[$i]];
 
             $y=(($i%2)*$fluctuation_amplitude - $fluctuation_amplitude/2)*$odd
@@ -240,7 +242,7 @@ function captcha_html($class="captcha")
     if(is_mobile())
         $class .= ' m_captcha';
 
-    $html .= "\n".'<script>var g5_captcha_url  = "'.G5_CAPTCHA_URL.'";</script>';
+    $html = "\n".'<script>var g5_captcha_url  = "'.G5_CAPTCHA_URL.'";</script>';
     //$html .= "\n".'<script>var g5_captcha_path = "'.G5_CAPTCHA_PATH.'";</script>';
     $html .= "\n".'<script src="'.G5_CAPTCHA_URL.'/kcaptcha.js"></script>';
     $html .= "\n".'<fieldset id="captcha" class="'.$class.'">';
@@ -280,4 +282,3 @@ function chk_captcha()
     }
     return true;
 }
-?>

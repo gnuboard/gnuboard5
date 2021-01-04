@@ -2,9 +2,10 @@
 $sub_menu = '400610';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-$doc = strip_tags($doc);
+$doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
+$sfl = in_array($sfl, array('it_name', 'it_id')) ? $sfl : '';
 
 $g5['title'] = '상품유형관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -66,7 +67,8 @@ $sql  = " select it_id,
                  it_type2,
                  it_type3,
                  it_type4,
-                 it_type5
+                 it_type5,
+                 ca_id
           $sql_common
           $sql_order
           limit $from_record, $rows ";
@@ -191,4 +193,3 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

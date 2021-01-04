@@ -691,5 +691,3 @@ class writeexcel_format {
     }
 
 }
-
-?>

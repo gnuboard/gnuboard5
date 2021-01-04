@@ -5,7 +5,11 @@ include_once("./_common.php");
 $page_size = 10;
 $colspan = 5;
 
-auth_check($auth[$sub_menu], "r");
+$bg_no = isset($_REQUEST['bg_no']) ? (int) $_REQUEST['bg_no'] : 0;
+$ap = isset($_REQUEST['ap']) ? (int) $_REQUEST['ap'] : 0;
+$no_hp = isset($_REQUEST['no_hp']) ? clean_xss_tags($_REQUEST['no_hp'], 1, 1) : '';
+
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "휴대폰번호 관리";
 

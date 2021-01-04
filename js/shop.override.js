@@ -88,25 +88,25 @@ jQuery(function($){
                     opt += "<button type=\"button\" class=\"sit_opt_del\"><i class=\"fa fa-times\" aria-hidden=\"true\"></i><span class=\"sound_only\">삭제</span></button></div>";
                     opt += "</li>";
 
-                    if($("#sit_sel_option > ul").size() < 1) {
+                    if($("#sit_sel_option > ul").length < 1) {
                         $("#sit_sel_option").html("<ul id=\"sit_opt_added\"></ul>");
                         $("#sit_sel_option > ul").html(opt);
                     } else{
                         if(type) {
-                            if($("#sit_sel_option .sit_spl_list").size() > 0) {
+                            if($("#sit_sel_option .sit_spl_list").length > 0) {
                                 $("#sit_sel_option .sit_spl_list:last").after(opt);
                             } else {
-                                if($("#sit_sel_option .sit_opt_list").size() > 0) {
+                                if($("#sit_sel_option .sit_opt_list").length > 0) {
                                     $("#sit_sel_option .sit_opt_list:last").after(opt);
                                 } else {
                                     $("#sit_sel_option > ul").html(opt);
                                 }
                             }
                         } else {
-                            if($("#sit_sel_option .sit_opt_list").size() > 0) {
+                            if($("#sit_sel_option .sit_opt_list").length > 0) {
                                 $("#sit_sel_option .sit_opt_list:last").after(opt);
                             } else {
-                                if($("#sit_sel_option .sit_spl_list").size() > 0) {
+                                if($("#sit_sel_option .sit_spl_list").length > 0) {
                                     $("#sit_sel_option .sit_spl_list:first").before(opt);
                                 } else {
                                     $("#sit_sel_option > ul").html(opt);

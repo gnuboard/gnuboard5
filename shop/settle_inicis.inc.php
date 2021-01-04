@@ -1,6 +1,8 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+$useescrow = '';
+
 if ($default['de_card_test']) {
     if ($default['de_escrow_use'] == 1) {
         // 에스크로결제 테스트
@@ -144,4 +146,3 @@ $PAY_METHOD = array(
     'HPP'        => '휴대폰',
     'VBank'      => '가상계좌'
 );
-?>

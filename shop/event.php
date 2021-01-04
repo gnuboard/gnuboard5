@@ -1,7 +1,9 @@
 <?php
 include_once('./_common.php');
 
-$ev_id = (int) $ev_id;
+$ev_id = isset($_GET['ev_id']) ? (int) $_GET['ev_id'] : 0;
+$skin = isset($_GET['skin']) ? clean_xss_tags($_GET['skin'], 1, 1) : '';
+$ca_id = isset($_GET['ca_id']) ? clean_xss_tags($_GET['ca_id'], 1, 1) : '';
 
 // 상품 리스트에서 다른 필드로 정렬을 하려면 아래의 배열 코드에서 해당 필드를 추가하세요.
 if( isset($sort) && ! in_array($sort, array('it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time')) ){
@@ -17,7 +19,7 @@ $sql = " select * from {$g5['g5_shop_event_table']}
           where ev_id = '$ev_id'
             and ev_use = 1 ";
 $ev = sql_fetch($sql);
-if (!$ev['ev_id'])
+if (! (isset($ev['ev_id']) && $ev['ev_id']))
     alert('등록된 이벤트가 없습니다.');
 
 $g5['title'] = $ev['ev_subject'];
@@ -116,4 +118,3 @@ if (file_exists($timg))
 
 <?php
 include_once('./_tail.php');
-?>

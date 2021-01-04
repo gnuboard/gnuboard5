@@ -3,7 +3,9 @@ $sub_menu = '300600';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
+
+$co_id = isset($_REQUEST['co_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['co_id']) : '';
 
 // 상단, 하단 파일경로 필드 추가
 if(!sql_query(" select co_include_head from {$g5['content_table']} limit 1 ", false)) {
@@ -51,6 +53,13 @@ else
 {
     $html_title .= ' 입력';
     $co = array(
+        'co_id' => '',
+        'co_subject' => '',
+        'co_content' => '',
+        'co_mobile_content' => '',
+        'co_include_head' => '',
+        'co_include_tail' => '',
+        'co_tag_filter_use' => 1,
         'co_html' => 2,
         'co_skin' => 'basic',
         'co_mobile_skin' => 'basic'
@@ -153,6 +162,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <input type="file" name="co_himg" id="co_himg">
             <?php
             $himg = G5_DATA_PATH.'/content/'.$co['co_id'].'_h';
+            $himg_str = '';
             if (file_exists($himg)) {
                 $size = @getimagesize($himg);
                 if($size[0] && $size[0] > 750)
@@ -177,6 +187,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <input type="file" name="co_timg" id="co_timg">
             <?php
             $timg = G5_DATA_PATH.'/content/'.$co['co_id'].'_t';
+            $timg_str = '';
             if (file_exists($timg)) {
                 $size = @getimagesize($timg);
                 if($size[0] && $size[0] > 750)
@@ -285,4 +296,3 @@ function frmcontentform_check(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

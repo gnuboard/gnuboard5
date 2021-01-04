@@ -4,26 +4,26 @@ include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 include_once(G5_LIB_PATH.'/naverpay.lib.php');
 
 $pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#';
+$post_naverpay_form = isset($_POST['naverpay_form']) ? clean_xss_tags($_POST['naverpay_form']) : '';
 
 $is_collect = false;    //착불체크 변수 초기화
 $is_prepay = false;     //선불체크 변수 초기화
 $is_cart = false;       //장바구니 체크 변수 초기화
 
-if($_POST['naverpay_form'] == 'cart.php') {
-    if(!count($_POST['ct_chk']))
+if($post_naverpay_form == 'cart.php') {
+    if(! (isset($_POST['ct_chk']) && is_array($_POST['ct_chk']) && count($_POST['ct_chk'])))
         return_error2json('구매하실 상품을 하나이상 선택해 주십시오.');
 
     $s_cart_id = get_session('ss_cart_id');
-    $fldcnt = count($_POST['it_id']);
+    $fldcnt = (isset($_POST['it_id']) && is_array($_POST['it_id'])) ? count($_POST['it_id']) : 0;
     $items = array();
 
     for($i=0; $i<$fldcnt; $i++) {
-        $ct_chk = $_POST['ct_chk'][$i];
+        $ct_chk = isset($_POST['ct_chk'][$i]) ? $_POST['ct_chk'][$i] : '';
+        $it_id = isset($_POST['it_id'][$i]) ? preg_replace($pattern, '', $_POST['it_id'][$i]) : '';
 
-        if(!$ct_chk)
+        if(!$ct_chk || !$it_id)
             continue;
-
-        $it_id = preg_replace($pattern, '', $_POST['it_id'][$i]);
 
         // 장바구니 상품
         $sql = " select ct_id, it_id, ct_option, io_id, io_type, ct_qty, ct_send_cost, it_sc_type from {$g5['g5_shop_cart_table']} where od_id = '$s_cart_id' and it_id = '$it_id' and ct_status = '쇼핑' order by ct_id asc ";
@@ -76,7 +76,7 @@ if( $is_cart && $is_prepay && $is_collect ){
 }
 */
 
-$count = count($_POST['it_id']);
+$count = (isset($_POST['it_id']) && is_array($_POST['it_id'])) ? count($_POST['it_id']) : 0;
 if ($count < 1)
     return_error2json('구매하실 상품을 선택하여 주십시오.');
 
@@ -84,9 +84,9 @@ $itm_ids     = array();
 $sel_options = array();
 $sup_options = array();
 
-if($_POST['naverpay_form'] == 'item.php')
-    $back_uri = shop_item_url($_POST['it_id'][0]);
-else if($_POST['naverpay_form'] == 'cart.php')
+if($post_naverpay_form == 'item.php')
+    $back_uri = isset($_POST['it_id'][0]) ? shop_item_url($_POST['it_id'][0]) : '';
+else if($post_naverpay_form == 'cart.php')
     $back_uri = G5_SHOP_URL.'/cart.php';
 else
     $back_uri = '';
@@ -94,8 +94,10 @@ else
 define('NAVERPAY_BACK_URL', $back_uri);
 
 for($i=0; $i<$count; $i++) {
-    $it_id = preg_replace($pattern, '', $_POST['it_id'][$i]);
-    $opt_count = count($_POST['io_id'][$it_id]);
+    $it_id = isset($_POST['it_id'][$i]) ? preg_replace($pattern, '', $_POST['it_id'][$i]) : '';
+    $opt_count = (isset($_POST['io_id'][$it_id]) && is_array($_POST['io_id'][$it_id])) ? count($_POST['io_id'][$it_id]) : 0;
+    
+    if( ! $it_id) continue;
 
     if($opt_count && $_POST['io_type'][$it_id][0] != 0)
         return_error2json('상품의 선택옵션을 선택해 주십시오.');
@@ -107,7 +109,8 @@ for($i=0; $i<$count; $i++) {
 
     // 상품정보
     $it = get_shop_item($it_id, true);
-    if(!$it['it_id'])
+
+    if(! (isset($it['it_id']) && $it['it_id']))
         return_error2json('상품정보가 존재하지 않습니다.');
 
     if(!$it['it_use'] || $it['it_soldout'] || $it['it_tel_inq'])
@@ -148,13 +151,12 @@ for($i=0; $i<$count; $i++) {
     //  재고 검사
     //--------------------------------------------------------
     for($k=0; $k<$opt_count; $k++) {
-        $io_id = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['io_id'][$it_id][$k])));
-        $io_type = (int) $_POST['io_type'][$it_id][$k];
-        $io_value = $_POST['io_value'][$it_id][$k];
-       
+        $io_id = isset($_POST['io_id'][$it_id][$k]) ? preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['io_id'][$it_id][$k]))) : '';
+        $io_type = isset($_POST['io_type'][$it_id][$k]) ? (int) $_POST['io_type'][$it_id][$k] : 0;
+        $io_value = isset($_POST['io_value'][$it_id][$k]) ? (int) $_POST['io_value'][$it_id][$k] : 0;
 
         // 재고 구함
-        $ct_qty = (int) $_POST['ct_qty'][$it_id][$k];
+        $ct_qty = isset($_POST['ct_qty'][$it_id][$k]) ? (int) $_POST['ct_qty'][$it_id][$k] : 0;
         if(!$io_id)
             $it_stock_qty = get_it_stock_qty($it_id);
         else
@@ -170,9 +172,9 @@ for($i=0; $i<$count; $i++) {
     $itm_ids[] = $it_id;
 
     for($k=0; $k<$opt_count; $k++) {
-        $io_id = preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['io_id'][$it_id][$k])));
-        $io_type = (int) $_POST['io_type'][$it_id][$k];
-        $io_value = $_POST['io_value'][$it_id][$k];
+        $io_id = isset($_POST['io_id'][$it_id][$k]) ? preg_replace(G5_OPTION_ID_FILTER, '', trim(stripslashes($_POST['io_id'][$it_id][$k]))) : '';
+        $io_type = isset($_POST['io_type'][$it_id][$k]) ? (int) $_POST['io_type'][$it_id][$k] : 0;
+        $io_value = isset($_POST['io_value'][$it_id][$k]) ? $_POST['io_value'][$it_id][$k] : '';
 
         // 선택옵션정보가 존재하는데 선택된 옵션이 없으면 건너뜀
         if($lst_count && $io_id == '')
@@ -182,8 +184,8 @@ for($i=0; $i<$count; $i++) {
         if($io_id && !$opt_list[$io_type][$io_id]['use'])
             continue;
 
-        $io_price = $opt_list[$io_type][$io_id]['price'];
-        $ct_qty = (int) $_POST['ct_qty'][$it_id][$k];
+        $io_price = isset($opt_list[$io_type][$io_id]['price']) ? $opt_list[$io_type][$io_id]['price'] : 0;
+        $ct_qty = isset($_POST['ct_qty'][$it_id][$k]) ? (int) $_POST['ct_qty'][$it_id][$k] : 0;
 
         $it_price = get_price($it);
 
@@ -250,6 +252,8 @@ if ($nc_sock) {
     fwrite($nc_sock, "\r\n");
     fwrite($nc_sock, $query."\r\n");
     fwrite($nc_sock, "\r\n");
+    
+    $headers = $bodys = '';
 
     // get header
     while(!feof($nc_sock)) {
@@ -284,4 +288,3 @@ if ($nc_sock) {
 
 if($resultCode == 200)
     die(json_encode(array('error'=>'', 'ORDER_ID'=>$orderId, 'SHOP_ID'=>$default['de_naverpay_mid'], 'TOTAL_PRICE'=>$totalPrice)));
-?>

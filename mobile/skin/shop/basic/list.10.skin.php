@@ -186,4 +186,4 @@ jQuery(function($){
 	});
 });
 </script>
-<?php } ?>
+<?php }

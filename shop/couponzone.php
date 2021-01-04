@@ -31,4 +31,3 @@ if (is_file($skin_file)) {
 }
 
 include_once(G5_SHOP_PATH.'/_tail.php');
-?>

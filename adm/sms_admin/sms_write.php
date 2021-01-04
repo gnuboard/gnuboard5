@@ -2,7 +2,11 @@
 $sub_menu = "900300";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
+
+$wr_no = isset($_REQUEST['wr_no']) ? (int) $_REQUEST['wr_no'] : 0;
+$bk_no = isset($_REQUEST['bk_no']) ? (int) $_REQUEST['bk_no'] : 0;
+$fo_no = isset($_REQUEST['fo_no']) ? (int) $_REQUEST['fo_no'] : 0;
 
 $g5['title'] = "문자 보내기";
 
@@ -10,7 +14,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <div class="local_ov01 local_ov">
-    회원정보 최근 업데이트 : <?php echo $sms5['cf_datetime']?>
+    회원정보 최근 업데이트 : <?php echo isset($sms5['cf_datetime']) ? $sms5['cf_datetime'] : ''; ?>
 </div>
 
 <?php
@@ -114,7 +118,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
 
         <div id="write_reply">
             <label for="wr_reply">회신<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20" readonly="readonly">
+            <input type="text" name="wr_reply" value="<?php echo isset($sms5['cf_phone']) ? get_sanitize_input($sms5['cf_phone']) : ''; ?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20" readonly="readonly">
         </div>
 
         <div id="write_recv" class="write_inner">
@@ -832,4 +836,3 @@ var sms_obj={
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

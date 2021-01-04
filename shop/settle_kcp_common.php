@@ -56,11 +56,11 @@ if(!$default['de_card_test']) {
     /* ============================================================================== */
     /* =   02. 공통 통보 데이터 받기                                                = */
     /* = -------------------------------------------------------------------------- = */
-    $site_cd      = $_POST [ "site_cd"  ];                 // 사이트 코드
-    $tno          = $_POST [ "tno"      ];                 // KCP 거래번호
-    $order_no     = $_POST [ "order_no" ];                 // 주문번호
-    $tx_cd        = $_POST [ "tx_cd"    ];                 // 업무처리 구분 코드
-    $tx_tm        = $_POST [ "tx_tm"    ];                 // 업무처리 완료 시간
+    $site_cd      = isset($_POST["site_cd"]) ? $_POST["site_cd"] : '';                 // 사이트 코드
+    $tno          = isset($_POST["tno"]) ? $_POST["tno"] : '';                 // KCP 거래번호
+    $order_no     = isset($_POST["order_no"]) ? $_POST["order_no"] : '';                 // 주문번호
+    $tx_cd        = isset($_POST["tx_cd"]) ? $_POST["tx_cd"] : '';                 // 업무처리 구분 코드
+    $tx_tm        = isset($_POST["tx_tm"]) ? $_POST["tx_tm"] : '';                 // 업무처리 완료 시간
     /* = -------------------------------------------------------------------------- = */
     $ipgm_name    = "";                                    // 주문자명
     $remitter     = "";                                    // 입금자명
@@ -85,13 +85,13 @@ if(!$default['de_card_test']) {
     /* = -------------------------------------------------------------------------- = */
     if ( $tx_cd == "TX00" )
     {
-        $ipgm_name = $_POST[ "ipgm_name" ];                // 주문자명
-        $remitter  = $_POST[ "remitter"  ];                // 입금자명
-        $ipgm_mnyx = $_POST[ "ipgm_mnyx" ];                // 입금 금액
-        $bank_code = $_POST[ "bank_code" ];                // 은행코드
-        $account   = $_POST[ "account"   ];                // 가상계좌 입금계좌번호
-        $op_cd     = $_POST[ "op_cd"     ];                // 처리구분 코드
-        $noti_id   = $_POST[ "noti_id"   ];                // 통보 아이디
+        $ipgm_name = isset($_POST["ipgm_name"]) ? $_POST["ipgm_name"] : '';                // 주문자명
+        $remitter  = isset($_POST["remitter"]) ? $_POST["remitter"] : '';                // 입금자명
+        $ipgm_mnyx = isset($_POST["ipgm_mnyx"]) ? $_POST["ipgm_mnyx"] : '';                // 입금 금액
+        $bank_code = isset($_POST["bank_code"]) ? $_POST["bank_code"] : '';                // 은행코드
+        $account   = isset($_POST["account"]) ? $_POST["account"] : '';                // 가상계좌 입금계좌번호
+        $op_cd     = isset($_POST["op_cd"]) ? $_POST["op_cd"] : '';                // 처리구분 코드
+        $noti_id   = isset($_POST["noti_id"]) ? $_POST["noti_id"] : '';                // 통보 아이디
     }
 
     /* = -------------------------------------------------------------------------- = */
@@ -99,9 +99,9 @@ if(!$default['de_card_test']) {
     /* = -------------------------------------------------------------------------- = */
     else if ( $tx_cd == "TX01" )
     {
-        $refund_nm  = $_POST[ "refund_nm"  ];              // 환불계좌주명
-        $refund_mny = $_POST[ "refund_mny" ];              // 환불금액
-        $bank_code  = $_POST[ "bank_code"  ];              // 은행코드
+        $refund_nm  = isset($_POST["refund_nm"]) ? $_POST["refund_nm"] : '';              // 환불계좌주명
+        $refund_mny = isset($_POST["refund_mny"]) ? $_POST["refund_mny"] : '';              // 환불금액
+        $bank_code  = isset($_POST["bank_code"]) ? $_POST["bank_code"] : '';              // 은행코드
     }
 
     /* = -------------------------------------------------------------------------- = */
@@ -109,11 +109,11 @@ if(!$default['de_card_test']) {
     /* = -------------------------------------------------------------------------- = */
     else if ( $tx_cd == "TX02" )
     {
-        $st_cd = $_POST[ "st_cd" ];                        // 구매확인 코드
+        $st_cd = isset($_POST["st_cd"]) ? $_POST["st_cd"] : '';                        // 구매확인 코드
 
         if ( $st_cd == "N" )                               // 구매확인 상태가 구매취소인 경우
         {
-            $can_msg = $_POST[ "can_msg" ];                // 구매취소 사유
+            $can_msg = isset($_POST["can_msg"]) ? $_POST["can_msg"] : '';                // 구매취소 사유
         }
     }
 
@@ -122,8 +122,8 @@ if(!$default['de_card_test']) {
     /* = -------------------------------------------------------------------------- = */
     else if ( $tx_cd == "TX03" )
     {
-        $waybill_no   = $_POST[ "waybill_no"   ];          // 운송장 번호
-        $waybill_corp = $_POST[ "waybill_corp" ];          // 택배 업체명
+        $waybill_no   = isset($_POST["waybill_no"]) ? $_POST["waybill_no"] : '';          // 운송장 번호
+        $waybill_corp = isset($_POST["waybill_corp"]) ? $_POST["waybill_corp"] : '';          // 택배 업체명
     }
     /* ============================================================================== */
 

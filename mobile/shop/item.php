@@ -2,18 +2,20 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/iteminfo.lib.php');
 
-$it_id = get_search_string(trim($_GET['it_id']));
+$it_id = isset($_GET['it_id']) ? get_search_string(trim($_GET['it_id'])) : '';
 $it_seo_title = isset($it_seo_title) ? $it_seo_title : '';
 
 $it = get_shop_item_with_category($it_id, $it_seo_title);
 $it_id = $it['it_id'];
 
+if (! (isset($it['it_id']) && $it['it_id'])) {
+    alert('자료가 없습니다.');
+}
+
 if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
     shop_seo_title_update($row['it_id']);
 }
 
-if (!$it['it_id'])
-    alert('자료가 없습니다.');
 if (!($it['ca_use'] && $it['it_use'])) {
     if (!$is_admin)
         alert('판매가능한 상품이 아닙니다.');
@@ -66,7 +68,7 @@ $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
           order by it_id asc
           limit 1 ";
 $row = sql_fetch($sql);
-if ($row['it_id']) {
+if (isset($row['it_id']) && $row['it_id']) {
     $prev_title = '이전상품 <span>'.$row['it_name'].'</span>';
     $prev_href = '<a href="'.shop_item_url($row['it_id']).'" id="siblings_prev">';
     $prev_href2 = '</a>';
@@ -84,7 +86,7 @@ $sql = " select it_id, it_name from {$g5['g5_shop_item_table']}
           order by it_id desc
           limit 1 ";
 $row = sql_fetch($sql);
-if ($row['it_id']) {
+if (isset($row['it_id']) && $row['it_id']) {
     $next_title = '다음 상품 <span>'.$row['it_name'].'</span>';
     $next_href = '<a href="'.shop_item_url($row['it_id']).'" id="siblings_next">';
     $next_href2 = '</a>';
@@ -189,6 +191,7 @@ if($ca_dir_check) {
 define('G5_SHOP_CSS_URL', str_replace(G5_PATH, G5_URL, $skin_dir));
 
 $g5['title'] = $it['it_name'].' &gt; '.$it['ca_name'];
+$naverpay_button_js = '';
 
 include_once(G5_MSHOP_PATH.'/_head.php');
 include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
@@ -222,4 +225,3 @@ else
 echo conv_content($it['it_mobile_tail_html'], 1);
 
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

@@ -1,7 +1,7 @@
 $.fn.listType = function(type)
 {
     var $el = this.find("li.sct_li");
-    var count = $el.size();
+    var count = $el.length;
     if(count < 1)
         return;
 

@@ -1,9 +1,6 @@
 <?php
 include_once('./_common.php');
 
-//$sfl = trim($_REQUEST['sfl']);
-//$stx = trim($_REQUEST['stx']);
-
 $g5['title'] = '상품후기';
 include_once(G5_MSHOP_PATH.'/_head.php');
 
@@ -64,4 +61,3 @@ if(!file_exists($itemuselist_skin)) {
 }
 
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

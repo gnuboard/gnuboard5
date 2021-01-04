@@ -2,14 +2,14 @@
 $sub_menu = '400620';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-$doc = strip_tags($doc);
-$sort1 = in_array($sort1, array('it_id', 'it_name', 'it_stock_qty', 'it_use', 'it_soldout', 'it_stock_sms')) ? $sort1 : '';
-$sort2 = in_array($sort2, array('desc', 'asc')) ? $sort2 : 'desc';
-$sel_ca_id = get_search_string($sel_ca_id);
-$sel_field = get_search_string($sel_field);
-$search = get_search_string($search);
+$doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
+$sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('it_id', 'it_name', 'it_stock_qty', 'it_use', 'it_soldout', 'it_stock_sms'))) ? $_GET['sort1'] : '';
+$sort2 = (isset($_GET['sort2']) && in_array($_GET['sort2'], array('desc', 'asc'))) ? $_GET['sort2'] : 'desc';
+$sel_field = (isset($_GET['sel_field']) && in_array($_GET['sel_field'], array('it_id', 'it_name', 'it_stock_qty', 'it_use', 'it_soldout', 'it_stock_sms')) ) ? $_GET['sel_field'] : '';
+$sel_ca_id = isset($_GET['sel_ca_id']) ? get_search_string($_GET['sel_ca_id']) : '';
+$search = isset($_GET['search']) ? get_search_string($_GET['search']) : '';
 
 $g5['title'] = '상품재고관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -48,7 +48,8 @@ $sql  = " select it_id,
                  it_stock_qty,
                  it_stock_sms,
                  it_noti_qty,
-                 it_soldout
+                 it_soldout,
+                 ca_id
            $sql_common
           order by $sort1 $sort2
           limit $from_record, $rows ";
@@ -214,4 +215,3 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

@@ -13,4 +13,3 @@ $menu['menu500'] = array (
     array('500140', '보관함현황', G5_ADMIN_URL.'/shop_admin/wishlist.php', 'sst_wish'),
     array('500210', '가격비교사이트', G5_ADMIN_URL.'/shop_admin/price.php', 'sst_compare', 1)
 );
-?>

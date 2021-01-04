@@ -2,13 +2,16 @@
 $sub_menu = '400200';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '분류관리';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 
 $where = " where ";
 $sql_search = "";
+
+$sfl = in_array($sfl, array('ca_name', 'ca_id', 'ca_mb_id')) ? $sfl : '';
+
 if ($stx != "") {
     if ($sfl != "") {
         $sql_search .= " $where $sfl like '%$stx%' ";
@@ -62,9 +65,9 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
 
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl" id="sfl">
-    <option value="ca_name"<?php echo get_selected($_GET['sfl'], "ca_name", true); ?>>분류명</option>
-    <option value="ca_id"<?php echo get_selected($_GET['sfl'], "ca_id", true); ?>>분류코드</option>
-    <option value="ca_mb_id"<?php echo get_selected($_GET['sfl'], "ca_mb_id", true); ?>>회원아이디</option>
+    <option value="ca_name"<?php echo get_selected($sfl, "ca_name", true); ?>>분류명</option>
+    <option value="ca_id"<?php echo get_selected($sfl, "ca_id", true); ?>>분류코드</option>
+    <option value="ca_mb_id"<?php echo get_selected($sfl, "ca_mb_id", true); ?>>회원아이디</option>
 </select>
 
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
@@ -107,6 +110,7 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
     </thead>
     <tbody>
     <?php
+    $s_add = $s_vie = $s_upd = $s_del = '';
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         $level = strlen($row['ca_id']) / 2 - 1;
@@ -284,4 +288,3 @@ $(function() {
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

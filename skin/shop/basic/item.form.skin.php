@@ -398,7 +398,7 @@ function fsubmit_check(f)
         return false;
     }
 
-    if($(".sit_opt_list").size() < 1) {
+    if($(".sit_opt_list").length < 1) {
         alert("상품의 선택옵션을 선택해 주십시오.");
         return false;
     }
@@ -470,7 +470,7 @@ function fitem_submit(f)
         return false;
     }
 
-    if($(".sit_opt_list").size() < 1) {
+    if($(".sit_opt_list").length < 1) {
         alert("상품의 선택옵션을 선택해 주십시오.");
         return false;
     }

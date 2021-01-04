@@ -4,33 +4,65 @@ include_once('./_common.php');
 include_once('./admin.shop.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
+$od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') : '';
+
+$search = isset($_REQUEST['search']) ? get_search_string($_REQUEST['search']) : '';
+$sort1 = isset($_REQUEST['sort1']) ? clean_xss_tags($_REQUEST['sort1'], 1, 1) : '';
+$sort2 = isset($_REQUEST['sort2']) ? clean_xss_tags($_REQUEST['sort2'], 1, 1) : '';
+$sel_field = isset($_REQUEST['sel_field']) ? clean_xss_tags($_REQUEST['sel_field'], 1, 1) : '';
+
+$check_keys = array(
+'od_deposit_name',
+'od_bank_account',
+'od_receipt_time',
+'od_receipt_price',
+'od_receipt_point',
+'od_refund_price',
+'od_delivery_company',
+'od_invoice',
+'od_invoice_time',
+'od_send_cost',
+'od_send_cost2',
+'od_tno',
+'od_escrow',
+'od_send_mail'
+);
+
+$posts = array();
+
+foreach($check_keys as $key){
+    $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+}
+
+$od_send_mail = $posts['od_send_mail'];
+
 $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od  = sql_fetch($sql);
-if(!$od['od_id'])
+if(! (isset($od['od_id']) && $od['od_id']))
     alert('주문자료가 존재하지 않습니다.');
 
-if ($od_receipt_time) {
-    if (check_datetime($od_receipt_time) == false)
+if ($posts['od_receipt_time']) {
+    if (check_datetime($posts['od_receipt_time']) == false)
         alert('결제일시 오류입니다.');
 }
 
 // 결제정보 반영
 $sql = " update {$g5['g5_shop_order_table']}
-            set od_deposit_name    = '{$_POST['od_deposit_name']}',
-                od_bank_account    = '{$_POST['od_bank_account']}',
-                od_receipt_time    = '{$_POST['od_receipt_time']}',
-                od_receipt_price   = '{$_POST['od_receipt_price']}',
-                od_receipt_point   = '{$_POST['od_receipt_point']}',
-                od_refund_price    = '{$_POST['od_refund_price']}',
-                od_delivery_company= '{$_POST['od_delivery_company']}',
-                od_invoice         = '{$_POST['od_invoice']}',
-                od_invoice_time    = '{$_POST['od_invoice_time']}',
-                od_send_cost       = '{$_POST['od_send_cost']}',
-                od_send_cost2      = '{$_POST['od_send_cost2']}'
+            set od_deposit_name    = '{$posts['od_deposit_name']}',
+                od_bank_account    = '{$posts['od_bank_account']}',
+                od_receipt_time    = '{$posts['od_receipt_time']}',
+                od_receipt_price   = '{$posts['od_receipt_price']}',
+                od_receipt_point   = '{$posts['od_receipt_point']}',
+                od_refund_price    = '{$posts['od_refund_price']}',
+                od_delivery_company= '{$posts['od_delivery_company']}',
+                od_invoice         = '{$posts['od_invoice']}',
+                od_invoice_time    = '{$posts['od_invoice_time']}',
+                od_send_cost       = '{$posts['od_send_cost']}',
+                od_send_cost2      = '{$posts['od_send_cost2']}'
             where od_id = '$od_id' ";
 sql_query($sql);
 
@@ -51,16 +83,16 @@ if($info['od_misu'] == 0 && $od['od_status'] == '주문')
 
 // 배송정보가 있으면 주문상태 배송으로 변경
 $order_status = array('입금', '준비');
-if($_POST['od_delivery_company'] && $_POST['od_invoice'] && in_array($od['od_status'], $order_status))
+if($posts['od_delivery_company'] && $posts['od_invoice'] && in_array($od['od_status'], $order_status))
 {
     $od_status = '배송';
     $cart_status = true;
 }
 
 // 미수금액
-$od_misu = ( $od['od_cart_price'] - $od['od_cancel_price'] + $_POST['od_send_cost'] + $_POST['od_send_cost2'] )
+$od_misu = ( $od['od_cart_price'] - $od['od_cancel_price'] + (int) $posts['od_send_cost'] + (int) $posts['od_send_cost2'] )
            - ( $od['od_cart_coupon'] + $od['od_coupon'] + $od['od_send_coupon'] )
-           - ( $_POST['od_receipt_price'] + $_POST['od_receipt_point'] - $_POST['od_refund_price'] );
+           - ( (int) $posts['od_receipt_price'] + (int) $posts['od_receipt_point'] - (int) $posts['od_refund_price'] );
 
 // 미수금 정보 등 반영
 $sql = " update {$g5['g5_shop_order_table']}
@@ -131,11 +163,11 @@ include "./ordersms.inc.php";
 
 
 // 에스크로 배송처리
-if($_POST['od_tno'] && $_POST['od_escrow'] == 1)
+if($posts['od_tno'] && $posts['od_escrow'] == 1)
 {
-    $escrow_tno  = $_POST['od_tno'];
-    $escrow_corp = $_POST['od_delivery_company'];
-    $escrow_numb = $_POST['od_invoice'];
+    $escrow_tno  = $posts['od_tno'];
+    $escrow_corp = $posts['od_delivery_company'];
+    $escrow_numb = $posts['od_invoice'];
 
     include(G5_SHOP_PATH.'/'.$od['od_pg'].'/escrow.register.php');
 }
@@ -144,4 +176,3 @@ if($_POST['od_tno'] && $_POST['od_escrow'] == 1)
 $qstr = "sort1=$sort1&amp;sort2=$sort2&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page";
 
 goto_url("./orderform.php?od_id=$od_id&amp;$qstr");
-?>

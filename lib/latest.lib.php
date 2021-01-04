@@ -48,6 +48,10 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
 
         $board = get_board_db($bo_table, true);
 
+        if( ! $board ){
+            return '';
+        }
+
         $bo_subject = get_text($board['bo_subject']);
 
         $tmp_write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
@@ -82,6 +86,8 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
                 //     $img_content = '<img src="'. G5_IMG_URL.'/no_img.png'.'" alt="'.$thumb['alt'].'" width="'.$thumb_width.'" height="'.$thumb_height.'" class="no_img">';
                 }
             }
+
+            if(! isset($list[$i]['icon_file'])) $list[$i]['icon_file'] = '';
         }
         g5_latest_cache_data($bo_table, $list);
 
@@ -106,4 +112,3 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
 
     return $content;
 }
-?>

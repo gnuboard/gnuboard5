@@ -46,7 +46,7 @@ jQuery(function ($) {
         var id = "";
         var value, info, sel_opt, item, price, stock, run_error = false;
         var option = sep = "";
-        var count = $sel.size();
+        var count = $sel.length;
 
         if(count > 0) {
             $sel.each(function(index) {
@@ -241,7 +241,7 @@ jQuery(function ($) {
     $(document).on("change", "select.it_option", function() {
         var $frm = $(this).closest("form");
         var $sel = $frm.find("select.it_option");
-        var sel_count = $sel.size();
+        var sel_count = $sel.length;
         var idx = $sel.index($(this));
         var val = $(this).val();
         var it_id = $frm.find("input[name='it_id[]']").val();

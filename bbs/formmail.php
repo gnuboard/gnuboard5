@@ -53,4 +53,3 @@ $type_checked[$type] = 'checked';
 include_once($member_skin_path.'/formmail.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

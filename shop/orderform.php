@@ -7,7 +7,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
 // 주문상품 재고체크 js 파일
 add_javascript('<script src="'.G5_JS_URL.'/shop.order.js"></script>', 0);
 
-$sw_direct = preg_replace('/[^a-z0-9_]/i', '', $sw_direct);
+$sw_direct = isset($_REQUEST['sw_direct']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['sw_direct']) : '';
 
 // 모바일 주문인지
 $is_mobile_order = is_mobile();
@@ -35,6 +35,8 @@ $s_cart_id = $tmp_cart_id;
 if($default['de_pg_service'] == 'inicis' || $default['de_inicis_lpay_use'] || $default['de_inicis_kakaopay_use'])
     set_session('ss_order_inicis_id', $od_id);
 
+$tot_price = 0;
+
 $g5['title'] = '주문서 작성';
 
 if(G5_IS_MOBILE)
@@ -60,4 +62,3 @@ if(G5_IS_MOBILE)
     include_once(G5_MSHOP_PATH.'/_tail.php');
 else
     include_once(G5_SHOP_PATH.'/_tail.php');
-?>

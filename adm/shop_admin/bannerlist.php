@@ -2,7 +2,7 @@
 $sub_menu = '500500';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $bn_position = (isset($_GET['bn_position']) && in_array($_GET['bn_position'], array('메인', '왼쪽'))) ? $_GET['bn_position'] : '';
 $bn_device = (isset($_GET['bn_device']) && in_array($_GET['bn_device'], array('pc', 'mobile'))) ? $_GET['bn_device'] : 'both';
@@ -185,4 +185,3 @@ jQuery(function($) {
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

@@ -23,28 +23,27 @@ include_once ('./install.inc.php');
 
 //print_r($_POST); exit;
 
-$mysql_host  = safe_install_string_check($_POST['mysql_host']);
-$mysql_user  = safe_install_string_check($_POST['mysql_user']);
-$mysql_pass  = safe_install_string_check($_POST['mysql_pass']);
-$mysql_db    = safe_install_string_check($_POST['mysql_db']);
-$table_prefix= safe_install_string_check($_POST['table_prefix']);
-$admin_id    = $_POST['admin_id'];
-$admin_pass  = $_POST['admin_pass'];
-$admin_name  = $_POST['admin_name'];
-$admin_email = $_POST['admin_email'];
-$g5_install = 0;
-if (isset($_POST['g5_install']))
-    $g5_install  = $_POST['g5_install'];
-$g5_shop_prefix = safe_install_string_check($_POST['g5_shop_prefix']);
-$g5_shop_install= $_POST['g5_shop_install'];
+$mysql_host  = isset($_POST['mysql_host']) ? safe_install_string_check($_POST['mysql_host']) : '';
+$mysql_user  = isset($_POST['mysql_user']) ? safe_install_string_check($_POST['mysql_user']) : '';
+$mysql_pass  = isset($_POST['mysql_pass']) ? safe_install_string_check($_POST['mysql_pass']) : '';
+$mysql_db    = isset($_POST['mysql_db']) ? safe_install_string_check($_POST['mysql_db']) : '';
+$table_prefix= isset($_POST['table_prefix']) ? safe_install_string_check($_POST['table_prefix']) : '';
+$admin_id    = isset($_POST['admin_id']) ? $_POST['admin_id'] : '';
+$admin_pass  = isset($_POST['admin_pass']) ? $_POST['admin_pass'] : '';
+$admin_name  = isset($_POST['admin_name']) ? $_POST['admin_name'] : '';
+$admin_email = isset($_POST['admin_email']) ? $_POST['admin_email'] : '';
 
-if (preg_match("/[^0-9a-z_]+/i", $table_prefix) || preg_match("/[^0-9a-z_]+/i", $g5_shop_prefix)) {
+if (preg_match("/[^0-9a-z_]+/i", $table_prefix) ) {
     die('<div class="ins_inner"><p>TABLE명 접두사는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
 }
 
 if (preg_match("/[^0-9a-z_]+/i", $admin_id)) {
     die('<div class="ins_inner"><p>관리자 아이디는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
 }
+
+$g5_install = isset($_POST['g5_install']) ? (int) $_POST['g5_install'] : 0;
+$g5_shop_prefix = isset($_POST['g5_shop_prefix']) ? safe_install_string_check($_POST['g5_shop_prefix']) : 'yc5_';
+$g5_shop_install = isset($_POST['g5_shop_install']) ? (int) $_POST['g5_shop_install'] : 0;
 
 $dblink = sql_connect($mysql_host, $mysql_user, $mysql_pass, $mysql_db);
 if (!$dblink) {
@@ -664,4 +663,3 @@ if($g5_shop_install) {
 
 <?php
 include_once ('./install.inc2.php');
-?>

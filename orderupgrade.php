@@ -143,4 +143,3 @@ if(!sql_query(" select cz_id from {$g5['g5_shop_coupon_table']} limit 1 ", false
 echo '<p>테이블 업그레이드 완료!</p>';
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

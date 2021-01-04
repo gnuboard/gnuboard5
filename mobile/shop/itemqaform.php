@@ -6,13 +6,13 @@ if (!$is_member) {
     alert_close("상품문의는 회원만 작성 가능합니다.");
 }
 
-$w     = preg_replace('/[^0-9a-z]/i', '', trim($_REQUEST['w']));
-$it_id = get_search_string(trim($_REQUEST['it_id']));
-$iq_id = preg_replace('/[^0-9]/', '', trim($_REQUEST['iq_id']));
+$w     = isset($_REQUEST['w']) ? preg_replace('/[^0-9a-z]/i', '', trim($_REQUEST['w'])) : '';
+$it_id = isset($_REQUEST['it_id']) ? get_search_string(trim($_REQUEST['it_id'])) : '';
+$iq_id = isset($_REQUEST['iq_id']) ? preg_replace('/[^0-9]/', '', trim($_REQUEST['iq_id'])) : 0;
 
 // 상품정보체크
 $row = get_shop_item($it_id, true);
-if(!$row['it_id'])
+if(! (isset($row['it_id']) && $row['it_id']))
     alert_close('상품정보가 존재하지 않습니다.');
 
 $chk_secret = '';
@@ -60,4 +60,3 @@ if(!file_exists($itemqaform_skin)) {
 }
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

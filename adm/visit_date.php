@@ -2,7 +2,10 @@
 $sub_menu = "200800";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
+
+$fr_date = isset($_REQUEST['fr_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['fr_date']) : G5_TIME_YMD;
+$to_date = isset($_REQUEST['to_date']) ? preg_replace('/[^0-9 :\-]/i', '', $_REQUEST['to_date']) : G5_TIME_YMD;
 
 $g5['title'] = '일별 접속자집계';
 include_once('./visit.sub.php');
@@ -11,6 +14,8 @@ $colspan = 4;
 
 $max = 0;
 $sum_count = 0;
+$arr = array();
+
 $sql = " select vs_date, vs_count as cnt
             from {$g5['visit_sum_table']}
             where vs_date between '{$fr_date}' and '{$to_date}'
@@ -83,4 +88,3 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 <?php
 include_once('./admin.tail.php');
-?>

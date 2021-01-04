@@ -6,18 +6,20 @@ if (G5_IS_MOBILE) {
     return;
 }
 
-$it_id = get_search_string(trim($_GET['it_id']));
+$it_id = isset($_GET['it_id']) ? get_search_string(trim($_GET['it_id'])) : '';
 $it_seo_title = isset($it_seo_title) ? $it_seo_title : '';
 
 $it = get_shop_item_with_category($it_id, $it_seo_title);
+
+if (! (isset($it['it_id']) && $it['it_id']))
+    alert('자료가 없습니다.');
+
 $it_id = $it['it_id'];
 
 if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
     shop_seo_title_update($row['it_id']);
 }
 
-if (!$it['it_id'])
-    alert('자료가 없습니다.');
 if (!($it['ca_use'] && $it['it_use'])) {
     if (!$is_admin)
         alert('현재 판매가능한 상품이 아닙니다.');
@@ -144,7 +146,7 @@ else
 // 이전 상품보기
 $sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id > '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id asc limit 1 ";
 $row = sql_fetch($sql);
-if ($row['it_id']) {
+if (isset($row['it_id']) && $row['it_id']) {
     $prev_title = '이전상품<span class="sound_only"> '.$row['it_name'].'</span>';
     $prev_href = '<a href="'.get_pretty_url('shop', $row['it_id']).'" id="siblings_prev">';
     $prev_href2 = '</a>'.PHP_EOL;
@@ -157,7 +159,7 @@ if ($row['it_id']) {
 // 다음 상품보기
 $sql = " select it_id, it_name from {$g5['g5_shop_item_table']} where it_id < '$it_id' and SUBSTRING(ca_id,1,4) = '".substr($it['ca_id'],0,4)."' and it_use = '1' order by it_id desc limit 1 ";
 $row = sql_fetch($sql);
-if ($row['it_id']) {
+if (isset($row['it_id']) && $row['it_id']) {
     $next_title = '다음 상품<span class="sound_only"> '.$row['it_name'].'</span>';
     $next_href = '<a href="'.get_pretty_url('shop', $row['it_id']).'" id="siblings_next">';
     $next_href2 = '</a>'.PHP_EOL;
@@ -190,7 +192,7 @@ if($default['de_rel_list_use']) {
 // 소셜 관련
 $sns_title = get_text($it['it_name']).' | '.get_text($config['cf_title']);
 $sns_url  = shop_item_url($it['it_id']);
-$sns_share_links .= get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/facebook.png').' ';
+$sns_share_links = get_sns_share_link('facebook', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/facebook.png').' ';
 $sns_share_links .= get_sns_share_link('twitter', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/twitter.png').' ';
 $sns_share_links .= get_sns_share_link('googleplus', $sns_url, $sns_title, G5_SHOP_SKIN_URL.'/img/gplus.png');
 
@@ -244,6 +246,7 @@ function pg_anchor($anc_id) {
 <?php
 }
 
+$naverpay_button_js = '';
 include_once(G5_SHOP_PATH.'/settle_naverpay.inc.php');
 ?>
 
@@ -278,4 +281,3 @@ if ($ca['ca_include_tail'] && is_include_path_check($ca['ca_include_tail']))
     @include_once($ca['ca_include_tail']);
 else
     include_once(G5_SHOP_PATH.'/_tail.php');
-?>

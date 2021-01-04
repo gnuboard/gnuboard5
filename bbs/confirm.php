@@ -5,12 +5,15 @@ include_once(G5_PATH.'/head.sub.php');
 $pattern1 = "/[\<\>\'\"\\\'\\\"\(\)]/";
 $pattern2 = "/\r\n|\r|\n|[^\x20-\x7e]/";
 
-$url1 = preg_replace($pattern1, "", clean_xss_tags($url1, 1));
+$url1 = isset($url1) ? preg_replace($pattern1, "", clean_xss_tags($url1, 1)) : '';
 $url1 = preg_replace($pattern2, "", $url1);
-$url2 = preg_replace($pattern1, "", clean_xss_tags($url2, 1));
+$url2 = isset($url2) ? preg_replace($pattern1, "", clean_xss_tags($url2, 1)) : '';
 $url2 = preg_replace($pattern2, "", $url2);
-$url3 = preg_replace($pattern1, "", clean_xss_tags($url3, 1));
+$url3 = isset($url3) ? preg_replace($pattern1, "", clean_xss_tags($url3, 1)) : '';
 $url3 = preg_replace($pattern2, "", $url3);
+
+$msg = isset($msg) ? $msg : '';
+$header = isset($header) ? $msg : '';
 
 // url 체크
 check_url_host($url1);
@@ -47,4 +50,3 @@ if (confirm(conf)) {
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

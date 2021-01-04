@@ -144,4 +144,3 @@ class ReCaptcha_GNU
         return $recaptchaResponse;
     }
 }
-?>

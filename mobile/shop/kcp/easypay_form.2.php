@@ -32,4 +32,4 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 <input type="hidden" name="comm_tax_mny"      value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
 <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세     -->
 <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
-<?php } ?>
+<?php }

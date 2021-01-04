@@ -48,7 +48,7 @@ $ft_a_st = 'display:block;padding:30px 0;background:#484848;color:#fff;text-alig
         </table>
         <?php } // end if ?>
 
-        <?php if (count($card_list)) { ?>
+        <?php if (isset($card_list) && is_array($card_list) && $card_list) { ?>
         <table style="<?php echo $cont_st; ?>">
         <caption style="<?php echo $caption_st; ?>">신용카드 결제 확인</caption>
         <colgroup>

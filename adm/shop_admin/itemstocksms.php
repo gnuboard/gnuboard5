@@ -2,7 +2,7 @@
 $sub_menu = '500400';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '재입고SMS 알림';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -24,15 +24,11 @@ if(!sql_query(" select ss_id from {$g5['g5_shop_item_stocksms_table']} limit 1",
                 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ", true);
 }
 
-$doc = strip_tags($doc);
-$sort1 = strip_tags($sort1);
-$sel_field = strip_tags($sel_field);
-$search = get_search_string($search);
-
-$sel_field = in_array($sel_field, array('it_id', 'ss_hp', 'ss_send')) ? $sel_field : 'it_id';
-if ($sort1 == "") $sort1 = "ss_send";
-if (!in_array($sort1, array('it_id', 'ss_hp', 'ss_send', 'ss_send_time', 'ss_datetime'))) $sort1 = "ss_send";
-if ($sort2 == "" || $sort2 != "desc") $sort2 = "asc";
+$doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
+$sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('it_id', 'ss_hp', 'ss_send', 'ss_send_time', 'ss_datetime'))) ? $_GET['sort1'] : 'ss_send';
+$sort2 = (isset($_GET['sort2']) && in_array($_GET['sort2'], array('desc', 'asc'))) ? $_GET['sort2'] : 'asc';
+$sel_field = (isset($_GET['sel_field']) && in_array($_GET['sel_field'], array('it_id', 'ss_hp', 'ss_send')) ) ? $_GET['sel_field'] : 'it_id';
+$search = isset($_GET['search']) ? get_search_string($_GET['search']) : '';
 
 $sql_search = " where 1 ";
 if ($search != "") {
@@ -186,4 +182,3 @@ function fitemstocksms_submit(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

@@ -1,12 +1,12 @@
 <?php
 include_once('./_common.php');
 
-$it_id = get_search_string(trim($_GET['it_id']));
-$no = preg_replace('/[^0-9a-z]/i', '', $_GET['no']);
+$it_id = isset($_GET['it_id']) ? get_search_string(trim($_GET['it_id'])) : '';
+$no = isset($_GET['no']) ? preg_replace('/[^0-9a-z]/i', '', $_GET['no']) : '';
 
 $row = get_shop_item($it_id, true);
 
-if(!$row['it_id'])
+if(! (isset($row['it_id']) && $row['it_id']))
     alert_close('상품정보가 존재하지 않습니다.');
 
 $imagefile = G5_DATA_PATH.'/item/'.$row['it_img'.$no];
@@ -24,4 +24,3 @@ else
     echo '<p>'.str_replace(G5_PATH.'/', '', $skin).'파일이 존재하지 않습니다.</p>';
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

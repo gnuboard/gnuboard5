@@ -2,12 +2,14 @@
 $sub_menu = '400400';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
+
+$od_id = isset($_REQUEST['od_id']) ? safe_replace_regex($_REQUEST['od_id'], 'od_id') : '';
 
 $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 
-if(!$od['od_id'])
+if(! (isset($od['od_id']) && $od['od_id']))
     alert_close('주문정보가 존해하지 않습니다.');
 
 if($od['od_pg'] == 'inicis' && $od['od_settle_case'] == '계좌이체')
@@ -103,4 +105,3 @@ function form_check(f)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

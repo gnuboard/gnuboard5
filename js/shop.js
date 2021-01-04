@@ -8,7 +8,7 @@ $(function() {
     /* 가상커서 ctrl keyup 이베트 대응 */
     /*
     $(document).on("keyup", "select.it_option", function(e) {
-        var sel_count = $("select.it_option").size();
+        var sel_count = $("select.it_option").length;
         var idx = $("select.it_option").index($(this));
         var code = e.keyCode;
         var val = $(this).val();
@@ -25,7 +25,7 @@ $(function() {
 
     /* 키보드 접근 후 옵션 선택 Enter keydown 이벤트 대응 */
     $(document).on("keydown", "select.it_option", function(e) {
-        var sel_count = $("select.it_option").size();
+        var sel_count = $("select.it_option").length;
         var idx = $("select.it_option").index($(this));
         var code = e.keyCode;
         var val = $(this).val();
@@ -52,7 +52,7 @@ $(function() {
     }
 
     $(document).on("change", "select.it_option", function() {
-        var sel_count = $("select.it_option").size(),
+        var sel_count = $("select.it_option").length,
             idx = $("select.it_option").index($(this)),
             val = $(this).val(),
             it_id = $("input[name='it_id[]']").val(),
@@ -215,10 +215,10 @@ $(function() {
                     var $el = $(this).closest("li");
                     var del_exec = true;
 
-                    if($("#sit_sel_option .sit_spl_list").size() > 0) {
+                    if($("#sit_sel_option .sit_spl_list").length > 0) {
                         // 선택옵션이 하나이상인지
                         if($el.hasClass("sit_opt_list")) {
-                            if($(".sit_opt_list").size() <= 1)
+                            if($(".sit_opt_list").length <= 1)
                                 del_exec = false;
                         }
                     }
@@ -406,25 +406,25 @@ function add_sel_option(type, id, option, price, stock)
     opt += "<button type=\"button\" class=\"sit_opt_del btn_frmline\">삭제</button></div>";
     opt += "</li>";
 
-    if($("#sit_sel_option > ul").size() < 1) {
+    if($("#sit_sel_option > ul").length < 1) {
         $("#sit_sel_option").html("<ul id=\"sit_opt_added\"></ul>");
         $("#sit_sel_option > ul").html(opt);
     } else{
         if(type) {
-            if($("#sit_sel_option .sit_spl_list").size() > 0) {
+            if($("#sit_sel_option .sit_spl_list").length > 0) {
                 $("#sit_sel_option .sit_spl_list:last").after(opt);
             } else {
-                if($("#sit_sel_option .sit_opt_list").size() > 0) {
+                if($("#sit_sel_option .sit_opt_list").length > 0) {
                     $("#sit_sel_option .sit_opt_list:last").after(opt);
                 } else {
                     $("#sit_sel_option > ul").html(opt);
                 }
             }
         } else {
-            if($("#sit_sel_option .sit_opt_list").size() > 0) {
+            if($("#sit_sel_option .sit_opt_list").length > 0) {
                 $("#sit_sel_option .sit_opt_list:last").after(opt);
             } else {
-                if($("#sit_sel_option .sit_spl_list").size() > 0) {
+                if($("#sit_sel_option .sit_spl_list").length > 0) {
                     $("#sit_sel_option .sit_spl_list:first").before(opt);
                 } else {
                     $("#sit_sel_option > ul").html(opt);

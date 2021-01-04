@@ -3,9 +3,18 @@ $sub_menu = '500300';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
-$ev_id = preg_replace('/[^0-9]/', '', $ev_id);
+$ev_id = isset($_REQUEST['ev_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['ev_id']) : '';
+$ev = array(
+'ev_subject'=>'',
+'ev_subject_strong'=>'',
+'ev_id'=>'',
+'ev_head_html'=>'',
+'ev_tail_html'=>''
+);
+
+$res_item = null;
 
 $html_title = "이벤트";
 $g5['title'] = $html_title.' 관리';
@@ -232,6 +241,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                 <span class="srel_pad"></span>
                 <div id="reg_item_list" class="srel_sel">
                     <?php
+                    if( $res_item ) {
                     for($i=0; $row=sql_fetch_array($res_item); $i++) {
                         $it_name = get_it_image($row['it_id'], 50, 50).' '.$row['it_name'];
 
@@ -244,8 +254,8 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
                             <div class="list_item_btn"><button type="button" class="del_item btn_frmline">삭제</button></div>
                         </li>
                     <?php
-                    }
-
+                    }   // end for
+                    }   // end if
                     if($i > 0)
                         echo '</ul>';
                     else
@@ -392,7 +402,7 @@ $(function() {
         }
 
         var cont = "<li>"+$li.html().replace("add_item", "del_item").replace("추가", "삭제")+"</li>";
-        var count = $("#reg_item_list li").size();
+        var count = $("#reg_item_list li").length;
 
         if(count > 0) {
             $("#reg_item_list li:last").after(cont);
@@ -409,7 +419,7 @@ $(function() {
 
         $(this).closest("li").remove();
 
-        var count = $("#reg_item_list li").size();
+        var count = $("#reg_item_list li").length;
         if(count < 1)
             $("#reg_item_list").html("<p>등록된 상품이 없습니다.</p>");
     });
@@ -444,4 +454,3 @@ function feventform_check(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

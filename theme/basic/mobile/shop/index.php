@@ -118,4 +118,3 @@ include_once(G5_THEME_MSHOP_PATH.'/shop.head.php');
 
 <?php
 include_once(G5_THEME_MSHOP_PATH.'/shop.tail.php');
-?>

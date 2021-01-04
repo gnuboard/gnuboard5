@@ -78,5 +78,3 @@ $('.sev_slide').bxSlider({
 </script>
 <?php
 }
-?>
-

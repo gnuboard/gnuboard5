@@ -79,4 +79,3 @@ if ($od_send_cost)
 // 추가배송비가 있다면 총계에 더한다
 if ($od_send_cost2)
     $ttotal_price += $od_send_cost2;
-?>

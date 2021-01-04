@@ -201,7 +201,7 @@ function shop_exist_check_seo_title($seo_title, $type, $shop_item_table, $it_id)
     $sql = "select it_seo_title FROM {$shop_item_table} WHERE it_seo_title = '".sql_real_escape_string($seo_title)."' AND it_id <> '$it_id' limit 1";
     $row = sql_fetch($sql, false);
 
-    if( $row['it_seo_title'] ){
+    if( isset($row['it_seo_title']) && $row['it_seo_title'] ){
         return 'is_exists';
     }
 
@@ -223,4 +223,3 @@ function shop_seo_title_update($it_id, $is_edit=false){
         }
     }
 }
-?>

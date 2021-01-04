@@ -109,7 +109,7 @@ function short_url_clean($string_url, $add_qry=''){
 
         $string_url = str_replace('&amp;', '&', $string_url);
         $url=parse_url($string_url);
-        $page_name = basename($url['path'],".php");
+        $page_name = isset($url['path']) ? basename($url['path'],".php") : '';
 
         $array_page_names = run_replace('url_clean_page_names', array('board', 'write', 'content'));
 
@@ -236,14 +236,14 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
         $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
         $row = sql_fetch($sql);
 
-        $exists_title = $row['wr_seo_title'];
+        $exists_title = isset($row['wr_seo_title']) ? $row['wr_seo_title'] : '';
 
     } else if ( $type === 'content' ){
 
         $sql = "select co_seo_title FROM {$write_table} WHERE co_seo_title = '".sql_real_escape_string($seo_title)."' AND co_id <> '$sql_id' limit 1";
         $row = sql_fetch($sql);
 
-        $exists_title = $row['co_seo_title'];
+        $exists_title = isset($row['co_seo_title']) ? $row['co_seo_title'] : '';
 
     } else {
         return run_replace('exist_check_seo_title', $seo_title, $type, $write_table, $sql_id);
@@ -427,4 +427,3 @@ function update_rewrite_rules(){
     return false;
 
 }
-?>

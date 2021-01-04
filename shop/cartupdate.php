@@ -6,6 +6,8 @@ include_once('./_common.php');
 // 보관기간이 지난 상품 삭제
 cart_item_clean();
 
+$sw_direct = (isset($_REQUEST['sw_direct']) && $_REQUEST['sw_direct']) ? 1 : 0;
+
 // cart id 설정
 set_cart_id($sw_direct);
 
@@ -21,6 +23,9 @@ if (!$tmp_cart_id)
 }
 
 $tmp_cart_id = preg_replace('/[^a-z0-9_\-]/i', '', $tmp_cart_id);
+$act = isset($_POST['act']) ? clean_xss_tags($_POST['act'], 1, 1) : '';
+$post_ct_chk = (isset($_POST['ct_chk']) && is_array($_POST['ct_chk'])) ? $_POST['ct_chk'] : array();
+$post_it_ids = (isset($_POST['it_id']) && is_array($_POST['it_id'])) ? $_POST['it_id'] : array();
 
 // 레벨(권한)이 상품구입 권한보다 작다면 상품을 구입할 수 없음.
 if ($member['mb_level'] < $default['de_level_sell'])
@@ -30,18 +35,20 @@ if ($member['mb_level'] < $default['de_level_sell'])
 
 if($act == "buy")
 {
-    if(!count($_POST['ct_chk']))
+    if(!count($post_ct_chk))
         alert("주문하실 상품을 하나이상 선택해 주십시오.");
 
     // 선택필드 초기화
     $sql = " update {$g5['g5_shop_cart_table']} set ct_select = '0' where od_id = '$tmp_cart_id' ";
     sql_query($sql);
 
-    $fldcnt = count($_POST['it_id']);
+    $fldcnt = count($post_it_ids);
     for($i=0; $i<$fldcnt; $i++) {
-        $ct_chk = $_POST['ct_chk'][$i];
+        $ct_chk = isset($post_ct_chk[$i]) ? 1 : 0;
         if($ct_chk) {
-            $it_id = $_POST['it_id'][$i];
+            $it_id = isset($post_it_ids[$i]) ? safe_replace_regex($post_it_ids[$i], 'it_id') : '';
+            
+            if( !$it_id ) continue;
 
             // 본인인증, 성인인증체크
             if(!$is_admin) {
@@ -108,39 +115,49 @@ else if ($act == "alldelete") // 모두 삭제이면
 }
 else if ($act == "seldelete") // 선택삭제
 {
-    if(!count($_POST['ct_chk']))
+    if(!count($post_ct_chk))
         alert("삭제하실 상품을 하나이상 선택해 주십시오.");
 
-    $fldcnt = count($_POST['it_id']);
+    $fldcnt = count($post_it_ids);
     for($i=0; $i<$fldcnt; $i++) {
-        $ct_chk = $_POST['ct_chk'][$i];
+        $ct_chk = isset($post_ct_chk[$i]) ? 1 : 0;
         if($ct_chk) {
-            $it_id = $_POST['it_id'][$i];
-            $sql = " delete from {$g5['g5_shop_cart_table']} where it_id = '$it_id' and od_id = '$tmp_cart_id' ";
-            sql_query($sql);
+            $it_id = isset($post_it_ids[$i]) ? safe_replace_regex($post_it_ids[$i], 'it_id') : '';
+            if( $it_id ){
+                $sql = " delete from {$g5['g5_shop_cart_table']} where it_id = '$it_id' and od_id = '$tmp_cart_id' ";
+                sql_query($sql);
+            }
         }
     }
 }
 else // 장바구니에 담기
 {
-    $count = count($_POST['it_id']);
+    $count = count($post_it_ids);
     if ($count < 1)
         alert('장바구니에 담을 상품을 선택하여 주십시오.');
 
     $ct_count = 0;
+    $post_chk_it_id = (isset($_POST['chk_it_id']) && is_array($_POST['chk_it_id'])) ? $_POST['chk_it_id'] : array();
+    $post_io_ids = (isset($_POST['io_id']) && is_array($_POST['io_id'])) ? $_POST['io_id'] : array();
+    $post_io_types = (isset($_POST['io_type']) && is_array($_POST['io_type'])) ? $_POST['io_type'] : array();
+    $post_ct_qtys = (isset($_POST['ct_qty']) && is_array($_POST['ct_qty'])) ? $_POST['ct_qty'] : array();
+
     for($i=0; $i<$count; $i++) {
         // 보관함의 상품을 담을 때 체크되지 않은 상품 건너뜀
-        if($act == 'multi' && !$_POST['chk_it_id'][$i])
+        if($act == 'multi' && ! (isset($post_chk_it_id[$i]) && $post_chk_it_id[$i]))
             continue;
 
-        $it_id = $_POST['it_id'][$i];
-        $opt_count = count($_POST['io_id'][$it_id]);
+        $it_id = isset($post_it_ids[$i]) ? safe_replace_regex($post_it_ids[$i], 'it_id') : '';
 
-        if($opt_count && $_POST['io_type'][$it_id][0] != 0)
+        if( !$it_id ) continue;
+
+        $opt_count = (isset($post_io_ids[$it_id]) && is_array($post_io_ids[$it_id])) ? count($post_io_ids[$it_id]) : 0;
+
+        if($opt_count && isset($post_io_types[$it_id][0]) && $post_io_types[$it_id][0] != 0)
             alert('상품의 선택옵션을 선택해 주십시오.');
 
         for($k=0; $k<$opt_count; $k++) {
-            if ($_POST['ct_qty'][$it_id][$k] < 1)
+            if (isset($post_ct_qtys[$it_id][$k]) && $post_ct_qtys[$it_id][$k] < 1)
                 alert('수량은 1 이상 입력해 주십시오.');
         }
 
@@ -213,9 +230,9 @@ else // 장바구니에 담기
         // 이미 주문폼에 있는 같은 상품의 수량합계를 구한다.
         if($sw_direct) {
             for($k=0; $k<$opt_count; $k++) {
-                $io_id = preg_replace(G5_OPTION_ID_FILTER, '', $_POST['io_id'][$it_id][$k]);
-                $io_type = preg_replace('#[^01]#', '', $_POST['io_type'][$it_id][$k]);
-                $io_value = $_POST['io_value'][$it_id][$k];
+                $io_id = isset($_POST['io_id'][$it_id][$k]) ? preg_replace(G5_OPTION_ID_FILTER, '', $_POST['io_id'][$it_id][$k]) : '';
+                $io_type = isset($_POST['io_type'][$it_id][$k]) ? preg_replace('#[^01]#', '', $_POST['io_type'][$it_id][$k]) : '';
+                $io_value = isset($_POST['io_value'][$it_id][$k]) ? $_POST['io_value'][$it_id][$k] : '';
 
                 $sql = " select SUM(ct_qty) as cnt from {$g5['g5_shop_cart_table']}
                           where od_id <> '$tmp_cart_id'
@@ -229,7 +246,7 @@ else // 장바구니에 담기
                 $sum_qty = $row['cnt'];
 
                 // 재고 구함
-                $ct_qty = (int) $_POST['ct_qty'][$it_id][$k];
+                $ct_qty = isset($_POST['ct_qty'][$it_id][$k]) ? (int) $_POST['ct_qty'][$it_id][$k] : 0;
                 if(!$io_id)
                     $it_stock_qty = get_it_stock_qty($it_id);
                 else
@@ -264,9 +281,9 @@ else // 장바구니에 담기
                     VALUES ";
 
         for($k=0; $k<$opt_count; $k++) {
-            $io_id = preg_replace(G5_OPTION_ID_FILTER, '', $_POST['io_id'][$it_id][$k]);
-            $io_type = preg_replace('#[^01]#', '', $_POST['io_type'][$it_id][$k]);
-            $io_value = $_POST['io_value'][$it_id][$k];
+            $io_id = isset($_POST['io_id'][$it_id][$k]) ? preg_replace(G5_OPTION_ID_FILTER, '', $_POST['io_id'][$it_id][$k]) : '';
+            $io_type = isset($_POST['io_type'][$it_id][$k]) ? preg_replace('#[^01]#', '', $_POST['io_type'][$it_id][$k]) : '';
+            $io_value = isset($_POST['io_value'][$it_id][$k]) ? $_POST['io_value'][$it_id][$k] : '';
 
             // 선택옵션정보가 존재하는데 선택된 옵션이 없으면 건너뜀
             if($lst_count && $io_id == '')
@@ -276,8 +293,8 @@ else // 장바구니에 담기
             if($io_id && !$opt_list[$io_type][$io_id]['use'])
                 continue;
 
-            $io_price = $opt_list[$io_type][$io_id]['price'];
-            $ct_qty = (int) $_POST['ct_qty'][$it_id][$k];
+            $io_price = isset($opt_list[$io_type][$io_id]['price']) ? $opt_list[$io_type][$io_id]['price'] : 0;
+            $ct_qty = isset($_POST['ct_qty'][$it_id][$k]) ? (int) $_POST['ct_qty'][$it_id][$k] : 0;
 
             // 구매가격이 음수인지 체크
             if($io_type) {
@@ -296,7 +313,7 @@ else // 장바구니에 담기
                           and io_id = '$io_id'
                           and ct_status = '쇼핑' ";
             $row2 = sql_fetch($sql2);
-            if($row2['ct_id']) {
+            if(isset($row2['ct_id']) && $row2['ct_id']) {
                 // 재고체크
                 $tmp_ct_qty = $row2['ct_qty'];
                 if(!$io_id)
@@ -328,6 +345,8 @@ else // 장바구니에 담기
                 if($point < 0)
                     $point = 0;
             }
+            
+            $ct_send_cost = 0;
 
             // 배송비결제
             if($it['it_sc_type'] == 1)
@@ -364,4 +383,3 @@ else
 {
     goto_url(G5_SHOP_URL.'/cart.php');
 }
-?>

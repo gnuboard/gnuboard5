@@ -65,5 +65,4 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
 $g_conf_site_name = $default['de_admin_company_name'];
 $g_conf_log_level = '3';           // 변경불가
 $g_conf_gw_port   = '8090';        // 포트번호(변경불가)
-$module_type      = '01';          // 변경불가
-?>
+$module_type      = '01';          // 변경불가;

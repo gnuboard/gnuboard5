@@ -37,22 +37,22 @@ if($PGIP == "211.219.96.165" || $PGIP == "118.129.210.25" || $PGIP == "183.109.7
     $P_SRC_CODE;        // 앱연동 결제구분
 
 
-    $P_TID      = $_POST['P_TID'];
-    $P_MID      = $_POST['P_MID'];
-    $P_AUTH_DT  = $_POST['P_AUTH_DT'];
-    $P_STATUS   = $_POST['P_STATUS'];
-    $P_TYPE     = $_POST['P_TYPE'];
-    $P_OID      = preg_replace("/[ #\&\+%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i", "", $_POST['P_OID']);
-    $P_FN_CD1   = $_POST['P_FN_CD1'];
-    $P_FN_CD2   = $_POST['P_FN_CD2'];
-    $P_FN_NM    = $_POST['P_FN_NM'];
-    $P_AMT      = $_POST['P_AMT'];
-    $P_UNAME    = $_POST['P_UNAME'];
-    $P_RMESG1   = $_POST['P_RMESG1'];
-    $P_RMESG2   = $_POST['P_RMESG2'];
-    $P_NOTI     = $_POST['P_NOTI'];
-    $P_AUTH_NO  = $_POST['P_AUTH_NO'];
-    $P_SRC_CODE = $_POST['P_SRC_CODE'];
+    $P_TID      = isset($_POST['P_TID']) ? $_POST['P_TID'] : '';
+    $P_MID      = isset($_POST['P_MID']) ? $_POST['P_MID'] : '';
+    $P_AUTH_DT  = isset($_POST['P_AUTH_DT']) ? $_POST['P_AUTH_DT'] : '';
+    $P_STATUS   = isset($_POST['P_STATUS']) ? $_POST['P_STATUS'] : '';
+    $P_TYPE     = isset($_POST['P_TYPE']) ? $_POST['P_TYPE'] : '';
+    $P_OID      = isset($_POST['P_OID']) ? preg_replace("/[ #\&\+%@=\/\\\:;,\.'\"\^`~|\!\?\*$#<>()\[\]\{\}]/i", "", $_POST['P_OID']) : '';
+    $P_FN_CD1   = isset($_POST['P_FN_CD1']) ? $_POST['P_FN_CD1'] : '';
+    $P_FN_CD2   = isset($_POST['P_FN_CD2']) ? $_POST['P_FN_CD2'] : '';
+    $P_FN_NM    = isset($_POST['P_FN_NM']) ? $_POST['P_FN_NM'] : '';
+    $P_AMT      = isset($_POST['P_AMT']) ? $_POST['P_AMT'] : '';
+    $P_UNAME    = isset($_POST['P_UNAME']) ? $_POST['P_UNAME'] : '';
+    $P_RMESG1   = isset($_POST['P_RMESG1']) ? $_POST['P_RMESG1'] : '';
+    $P_RMESG2   = isset($_POST['P_RMESG2']) ? $_POST['P_RMESG2'] : '';
+    $P_NOTI     = isset($_POST['P_NOTI']) ? $_POST['P_NOTI'] : '';
+    $P_AUTH_NO  = isset($_POST['P_AUTH_NO']) ? $_POST['P_AUTH_NO'] : '';
+    $P_SRC_CODE = isset($_POST['P_SRC_CODE']) ? $_POST['P_SRC_CODE'] : '';
 
     include_once(G5_MSHOP_PATH.'/settle_inicis.inc.php');
     
@@ -389,4 +389,3 @@ function writeLog($msg)
     fclose($fp);
     return 1;
 }
-?>

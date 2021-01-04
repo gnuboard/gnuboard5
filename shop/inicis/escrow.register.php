@@ -112,4 +112,3 @@ $inipay->startAction();
  $resultMsg  = $inipay->GetResult("ResultMsg");          // 결과내용 (지불결과에 대한 설명)
  $dlv_date   = $inipay->GetResult("DLV_Date");
  $dlv_time   = $inipay->GetResult("DLV_Time");
-?>

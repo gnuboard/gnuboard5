@@ -75,7 +75,7 @@ define("PROGRAM", "INIPHP");
 define("LANG", "PHP");
 define("VERSION", "NV5053");
 define("BUILDDATE", "20190404");
-define("TID_LEN", 40);
+if( ! defined('TID_LEN')) define("TID_LEN", 40);
 define("MAX_KEY_LEN", 24);
 define("MAX_IV_LEN", 8);
 
@@ -135,7 +135,6 @@ define("TXPGPUBSN_LEN", 20);
 define("CMD_LEN", 4);
 define("MID_LEN", 10);
 define("TOTPRICE_LEN", 20);
-define("TID_LEN", 40);
 
 
 //------------------------------------------------------
@@ -672,4 +671,3 @@ define("NULL_ESCROWMSG_ERR", "TX6001");
 define("NULL_FIELD_REFUNDACCTNUM", "TX9245");
 define("NULL_FIELD_REFUNDBANKCODE", "TX9243");
 define("NULL_FIELD_REFUNDACCTNAME", "TX9244");
-?>

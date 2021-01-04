@@ -1,13 +1,13 @@
 <?php
 include_once('./_common.php');
 
-$ev_id = (int) $ev_id;
+$ev_id = isset($_GET['ev_id']) ? (int) $_GET['ev_id'] : 0;
 
 $sql = " select * from {$g5['g5_shop_event_table']}
           where ev_id = '$ev_id'
             and ev_use = 1 ";
 $ev = sql_fetch($sql);
-if (!$ev['ev_id'])
+if (! (isset($ev['ev_id']) && $ev['ev_id']))
     alert('등록된 이벤트가 없습니다.');
 
 $g5['title'] = $ev['ev_subject'];
@@ -92,4 +92,3 @@ echo '<div id="sev_thtml">'.conv_content($ev['ev_tail_html'], 1).'</div>';
 
 <?php
 include_once(G5_MSHOP_PATH.'/_tail.php');
-?>

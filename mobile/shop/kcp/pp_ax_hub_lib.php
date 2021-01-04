@@ -238,11 +238,12 @@
     /* -------------------------------------------------------------------- */
     function  mf_get_res_data( $name )
     {
-      return  $this->m_res_data[ $name ];
+      return  isset($this->m_res_data[$name]) ? $this->m_res_data[$name] : '';
     }
 
     function  mf_get_payx_data()
     {
+        $my_data = '';
       if ( $this->m_payx_common != "" || $this->m_payx_card != "" )
       {
         $my_data  = "payx_data=";
@@ -283,7 +284,7 @@
 
       $exec_cmd = array_shift( $arg );
 
-      while ( list(,$i) = each($arg) )
+      foreach($arg as $i)
       {
         $exec_cmd .= " " . escapeshellarg( $i );
       }
@@ -293,4 +294,3 @@
       return  $rt;
     }
   }
-?>

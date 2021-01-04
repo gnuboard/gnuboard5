@@ -3,9 +3,15 @@ $sub_menu = '100310';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
-$nw_id = preg_replace('/[^0-9]/', '', $nw_id);
+$nw_id = isset($_REQUEST['nw_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['nw_id']) : 0;
+$nw = array(
+'nw_begin_time'=>'',
+'nw_end_time'=>'',
+'nw_subject'=>'',
+'nw_content'=>'',
+);
 
 $html_title = "팝업레이어";
 
@@ -18,7 +24,7 @@ if ($w == "u")
     $html_title .= " 수정";
     $sql = " select * from {$g5['new_win_table']} where nw_id = '$nw_id' ";
     $nw = sql_fetch($sql);
-    if (!$nw['nw_id']) alert("등록된 자료가 없습니다.");
+    if (! (isset($nw['nw_id']) && $nw['nw_id'])) alert("등록된 자료가 없습니다.");
 }
 else
 {
@@ -163,4 +169,3 @@ function frmnewwin_check(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

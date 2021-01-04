@@ -2,24 +2,20 @@
 $sub_menu = '500140';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '보관함현황';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
 include_once(G5_PLUGIN_PATH.'/jquery-ui/datepicker.php');
 
-if (!$to_date) $to_date = date("Ymd", time());
+$fr_date = (isset($_GET['fr_date']) && preg_match("/[0-9]/", $_GET['fr_date'])) ? $_GET['fr_date'] : '';
+$to_date = (isset($_GET['to_date']) && preg_match("/[0-9]/", $_GET['to_date'])) ? $_GET['to_date'] : '';
 
-$doc = strip_tags($doc);
-$sort1 = strip_tags($sort1);
-$sel_ca_id = get_search_string($sel_ca_id);
+$doc = isset($_GET['doc']) ? clean_xss_tags($_GET['doc'], 1, 1) : '';
+$sort1 = (isset($_GET['sort1']) && in_array($_GET['sort1'], array('mb_id', 'it_id', 'wi_time', 'wi_ip'))) ? $_GET['sort1'] : 'it_id_cnt';
+$sort2 = (isset($_GET['sort2']) && in_array($_GET['sort2'], array('desc', 'asc'))) ? $_GET['sort2'] : 'desc';
 
-if( preg_match("/[^0-9]/", $fr_date) ) $fr_date = '';
-if( preg_match("/[^0-9]/", $to_date) ) $to_date = '';
-
-if ($sort1 == "") $sort1 = "it_id_cnt";
-if (!in_array($sort1, array('mb_id', 'it_id', 'wi_time', 'wi_ip'))) $sort1 = "it_id_cnt";
-if ($sort2 == "" || $sort2 != "asc") $sort2 = "desc";
+$sel_ca_id = isset($_GET['sel_ca_id']) ? get_search_string($_GET['sel_ca_id']) : '';
 
 $sql  = " select a.it_id,
                  b.it_name,
@@ -150,4 +146,3 @@ $(function() {
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

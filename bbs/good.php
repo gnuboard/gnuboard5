@@ -160,4 +160,3 @@ if(isset($_POST['js']) && $_POST['js'] === "on") {
 run_event('bbs_good_after', $bo_table, $wr_id, $good);
 
 @include_once($board_skin_path.'/good.tail.skin.php');
-?>

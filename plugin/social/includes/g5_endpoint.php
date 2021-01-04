@@ -28,5 +28,3 @@ class G5_Hybrid_Authentication {
     }
 
 }
-
-?>

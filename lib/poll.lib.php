@@ -45,4 +45,3 @@ function poll($skin_dir='basic', $po_id=false)
 
     return $content;
 }
-?>

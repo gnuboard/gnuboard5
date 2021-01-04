@@ -2,7 +2,7 @@
 $sub_menu = '500110';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '매출현황';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -70,4 +70,3 @@ $(function() {
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

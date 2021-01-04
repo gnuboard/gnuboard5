@@ -2,21 +2,26 @@
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-if($default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
+$pp_id = $_POST['pp_id'] = isset($_POST['pp_id']) ? preg_replace('/[^0-9]/', '', $_POST['pp_id']) : 0;
+$good_mny = $_POST['good_mny'] = isset($_POST['good_mny']) ? preg_replace('/[^0-9]/', '', $_POST['good_mny']) : 0;
+$post_lgd_paykey = isset($_POST['LGD_PAYKEY']) ? $_POST['LGD_PAYKEY'] : '';
+$pp_deposit_name = '';
+
+if($default['de_pg_service'] == 'lg' && ! $post_lgd_paykey)
     alert('결제등록 요청 후 결제해 주십시오.');
 
 // 개인결제 정보
 $pp_check = false;
-$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['pp_id']}' and pp_use = '1' ";
+$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$pp_id}' and pp_use = '1' ";
 $pp = sql_fetch($sql);
-if(!$pp['pp_id'])
+if(! (isset($pp['pp_id']) && $pp['pp_id']))
     alert('개인결제 정보가 존재하지 않습니다.');
 
 if($pp['pp_tno'])
     alert('이미 결제하신 개인결제 내역입니다.');
 
-$hash_data = md5($_POST['pp_id'].$_POST['good_mny'].$pp['pp_time']);
-if($_POST['pp_id'] != get_session('ss_personalpay_id') || $hash_data != get_session('ss_personalpay_hash'))
+$hash_data = md5($pp_id.$good_mny.$pp['pp_time']);
+if($pp_id != get_session('ss_personalpay_id') || $hash_data != get_session('ss_personalpay_hash'))
     die('개인결제 정보가 올바르지 않습니다.');
 
 

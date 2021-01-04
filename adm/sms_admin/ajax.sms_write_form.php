@@ -10,7 +10,9 @@ if( !function_exists('json_encode') ) {
     }
 }
 
-ajax_auth_check($auth[$sub_menu], "r");
+ajax_auth_check_menu($auth, $sub_menu, "r");
+
+$fg_no = isset($_REQUEST['fg_no']) ? preg_replace('/[^0-9]/i', '', $_REQUEST['fg_no']) : '';
 
 $page_size = 6;
 
@@ -83,4 +85,3 @@ $arr_ajax_msg = array(
 );
 
 die( json_encode($arr_ajax_msg) );
-?>

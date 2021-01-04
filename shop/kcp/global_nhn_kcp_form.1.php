@@ -93,7 +93,7 @@ function jsf__pay( form )
 ?>
     <input type="hidden" name="pay_method"  value="">
     <input type="hidden" name="ordr_idxx"   value="<?php echo $od_id; ?>">
-    <input type="hidden" name="good_name"   value="<?php echo $goods; ?>">
+    <input type="hidden" name="good_name"   value="<?php echo isset($goods) ? get_text($goods) : ''; ?>">
     <input type="hidden" name="good_mny"    value="<?php echo $tot_price; ?>">
     <input type="hidden" name="buyr_name"   value="">
     <input type="hidden" name="buyr_mail"   value="">
@@ -186,7 +186,7 @@ function jsf__pay( form )
     <input type="hidden" name="deli_term" value="03">
 
     <!-- 장바구니 상품 개수 : 장바구니에 담겨있는 상품의 개수를 입력 -->
-    <input type="hidden" name="bask_cntx" value="<?php echo (int)$goods_count + 1; ?>">
+    <input type="hidden" name="bask_cntx" value="<?php echo isset($goods_count) ? ((int) $goods_count + 1) : 0; ?>">
 
     <!-- 장바구니 상품 상세 정보 (자바 스크립트 샘플(create_goodInfo()) 참고) -->
     <input type="hidden" name="good_info" value="">
@@ -257,9 +257,9 @@ if($default['de_tax_flag_use']) {
        (good_mny = comm_tax_mny + comm_vat_mny + comm_free_mny) */
 ?>
     <input type="hidden" name="tax_flag"          value="TG03">     <!-- 변경불가    -->
-    <input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
-    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
-    <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
+    <input type="hidden" name="comm_tax_mny"	  value="">         <!-- 과세금액    -->
+    <input type="hidden" name="comm_vat_mny"      value="">         <!-- 부가세	    -->
+    <input type="hidden" name="comm_free_mny"     value="">        <!-- 비과세 금액 -->
 <?php
 }
 ?>

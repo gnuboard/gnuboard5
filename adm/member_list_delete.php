@@ -4,7 +4,7 @@ include_once("./_common.php");
 
 check_demo();
 
-auth_check($auth[$sub_menu], "d");
+auth_check_menu($auth, $sub_menu, "d");
 
 check_admin_token();
 
@@ -34,4 +34,3 @@ if ($msg)
     echo "<script type='text/javascript'> alert('$msg'); </script>";
 
 goto_url("./member_list.php?$qstr");
-?>

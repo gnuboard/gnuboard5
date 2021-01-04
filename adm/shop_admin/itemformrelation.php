@@ -2,7 +2,7 @@
 $sub_menu = '400300';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $ca_id = trim($ca_id);
 $it_name = trim(strip_tags($it_name));
@@ -45,4 +45,3 @@ else
     $list = '<p>등록된 상품이 없습니다.';
 
 echo $list;
-?>

@@ -115,7 +115,7 @@ if($this->total_count > 0) {
         var $btns = this.find(""+cfg.buttons+"");
 
         var idx = cfg.startSlide;
-        var count = $slides.size();
+        var count = $slides.length;
         var width, outerW;
 
         if(count < 1)
@@ -180,4 +180,3 @@ $(function() {
 
 <?php
 }
-?>

@@ -4,6 +4,9 @@ include_once('./_common.php');
 if (!$is_member)
     goto_url(G5_BBS_URL."/login.php?url=".urlencode(G5_SHOP_URL."/mypage.php"));
 
+// 읽지 않은 쪽지수
+$memo_not_read = isset($member['mb_memo_cnt']) ? (int) $member['mb_memo_cnt'] : 0;
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/mypage.php');
     return;
@@ -155,4 +158,3 @@ function member_leave()
 
 <?php
 include_once("./_tail.php");
-?>

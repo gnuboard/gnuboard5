@@ -2,10 +2,22 @@
 $sub_menu = '500110';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-$date = preg_replace('/[^0-9]/i', '', $date);
-
+$date = isset($_GET['date']) ? preg_replace('/[^0-9]/i', '', $_GET['date']) : '';
+$tot = array(
+'orderprice'=>0,
+'coupon'=>0,
+'receipt_bank'=>0,
+'receipt_vbank'=>0,
+'receipt_iche'=>0,
+'receipt_card'=>0,
+'receipt_easy'=>0,
+'receipt_hp'=>0,
+'receipt_point'=>0,
+'ordercancel'=>0,
+'misu'=>0,
+);
 $date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $date);
 
 $g5['title'] = "$date 일 매출현황";
@@ -50,7 +62,6 @@ $result = sql_query($sql);
     </thead>
     <tbody>
     <?php
-    unset($tot);
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         if ($row['mb_id'] == '') { // 비회원일 경우는 주문자로 링크
@@ -129,4 +140,3 @@ $result = sql_query($sql);
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

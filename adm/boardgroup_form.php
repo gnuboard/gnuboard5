@@ -2,17 +2,24 @@
 $sub_menu = "300200";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 if ($is_admin != 'super' && $w == '') alert('최고관리자만 접근 가능합니다.');
 
 $html_title = '게시판그룹';
 $gr_id_attr = '';
 $sound_only = '';
+
+if( ! isset($group['gr_id']) ){
+    $group['gr_id'] = '';
+    $group['gr_subject'] = '';
+    $group['gr_device'] = '';
+}
+
 if ($w == '') {
     $gr_id_attr = 'required';
     $sound_only = '<strong class="sound_only"> 필수</strong>';
-    $gr = array('gr_use_access' => 0);
+    $gr = array('gr_use_access' => 0, 'gr_admin'=>'');
     $html_title .= ' 생성';
 } else if ($w == 'u') {
     $gr_id_attr = 'readonly';
@@ -115,9 +122,9 @@ include_once('./admin.head.php');
         <th scope="row">여분필드<?php echo $i ?></th>
         <td class="td_extra">
             <label for="gr_<?php echo $i ?>_subj">여분필드 <?php echo $i ?> 제목</label>
-            <input type="text" name="gr_<?php echo $i ?>_subj" value="<?php echo get_text($group['gr_'.$i.'_subj']) ?>" id="gr_<?php echo $i ?>_subj" class="frm_input">
+            <input type="text" name="gr_<?php echo $i ?>_subj" value="<?php echo isset($group['gr_'.$i.'_subj']) ? get_text($group['gr_'.$i.'_subj']) : ''; ?>" id="gr_<?php echo $i ?>_subj" class="frm_input">
             <label for="gr_<?php echo $i ?>">여분필드 <?php echo $i ?> 내용</label>
-            <input type="text" name="gr_<?php echo $i ?>" value="<?php echo get_sanitize_input($gr['gr_'.$i]); ?>" id="gr_<?php echo $i ?>" class="frm_input">
+            <input type="text" name="gr_<?php echo $i ?>" value="<?php echo isset($gr['gr_'.$i]) ? get_sanitize_input($gr['gr_'.$i]) : ''; ?>" id="gr_<?php echo $i ?>" class="frm_input">
         </td>
     </tr>
     <?php } ?>
@@ -149,4 +156,3 @@ function fboardgroup_check(f)
 
 <?php
 include_once ('./admin.tail.php');
-?>

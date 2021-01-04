@@ -51,4 +51,3 @@ $configPath             = G5_LGXPAY_PATH.'/lgdacom';                            
  * 가상계좌(무통장) 결제 연동을 하시는 경우 아래 LGD_CASNOTEURL 을 설정하여 주시기 바랍니다.
  */
 $LGD_CASNOTEURL     = G5_SHOP_URL.'/settle_lg_common.php';
-?>

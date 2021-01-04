@@ -42,6 +42,10 @@ if(!isset($check_tmp['od_other_pay_type'])){
 // 변수 초기화
 $od_other_pay_type = '';
 
+$od_temp_point = isset($_POST['od_temp_point']) ? (int) $_POST['od_temp_point'] : 0;
+$od_hope_date = isset($_POST['od_hope_date']) ? clean_xss_tags($_POST['od_hope_date'], 1, 1) : '';
+$ad_default = ! empty($_POST['ad_default']) ? (int) $_POST['ad_default'] : 0;
+
 $error = "";
 // 장바구니 상품 재고 검사
 $sql = " select it_id,
@@ -79,12 +83,11 @@ if ($error != "")
     alert($error);
 }
 
-$i_price     = (int)$_POST['od_price'];
-$i_send_cost  = (int)$_POST['od_send_cost'];
-$i_send_cost2  = (int)$_POST['od_send_cost2'];
-$i_send_coupon  = abs((int)$_POST['od_send_coupon']);
-$i_temp_point = (int)$_POST['od_temp_point'];
-
+$i_price     = isset($_POST['od_price']) ? (int) $_POST['od_price'] : 0;
+$i_send_cost  = isset($_POST['od_send_cost']) ? (int) $_POST['od_send_cost'] : 0;
+$i_send_cost2  = isset($_POST['od_send_cost2']) ? (int) $_POST['od_send_cost2'] : 0;
+$i_send_coupon  = isset($_POST['od_send_coupon']) ? abs((int) $_POST['od_send_coupon']) : 0;
+$i_temp_point = isset($_POST['od_temp_point']) ? (int) $_POST['od_temp_point'] : 0;
 
 // 주문금액이 상이함
 $sql = " select SUM(IF(io_type = 1, (io_price * ct_qty), ((ct_price + io_price) * ct_qty))) as od_price,
@@ -96,15 +99,14 @@ $cart_count = $row['cart_count'];
 $tot_od_price = $tot_ct_price;
 
 // 쿠폰금액계산
-$tot_cp_price = 0;
+$tot_cp_price = $tot_it_cp_price = $tot_od_cp_price = 0;
 if($is_member) {
     // 상품쿠폰
-    $tot_it_cp_price = $tot_od_cp_price = 0;
-    $it_cp_cnt = count($_POST['cp_id']);
+    $it_cp_cnt = (isset($_POST['cp_id']) && is_array($_POST['cp_id'])) ? count($_POST['cp_id']) : 0;
     $arr_it_cp_prc = array();
     for($i=0; $i<$it_cp_cnt; $i++) {
-        $cid = $_POST['cp_id'][$i];
-        $it_id = $_POST['it_id'][$i];
+        $cid = isset($_POST['cp_id'][$i]) ? clean_xss_tags($_POST['cp_id'][$i], 1, 1) : '';
+        $it_id = isset($_POST['it_id'][$i]) ? safe_replace_regex($_POST['it_id'][$i], 'it_id') : '';
         $sql = " select cp_id, cp_method, cp_target, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g5['g5_shop_coupon_table']}
                     where cp_id = '$cid'
@@ -113,7 +115,7 @@ if($is_member) {
                       and cp_end >= '".G5_TIME_YMD."'
                       and cp_method IN ( 0, 1 ) ";
         $cp = sql_fetch($sql);
-        if(!$cp['cp_id'])
+        if(! (isset($cp['cp_id']) && $cp['cp_id']))
             continue;
 
         // 사용한 쿠폰인지
@@ -169,7 +171,7 @@ if($is_member) {
     $tot_od_price -= $tot_it_cp_price;
 
     // 주문쿠폰
-    if($_POST['od_cp_id']) {
+    if(isset($_POST['od_cp_id']) && $_POST['od_cp_id']) {
         $sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g5['g5_shop_coupon_table']}
                     where cp_id = '{$_POST['od_cp_id']}'
@@ -215,7 +217,7 @@ $send_cost = get_sendcost($tmp_cart_id);
 $tot_sc_cp_price = 0;
 if($is_member && $send_cost > 0) {
     // 배송쿠폰
-    if($_POST['sc_cp_id']) {
+    if(isset($_POST['sc_cp_id']) && $_POST['sc_cp_id']) {
         $sql = " select cp_id, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum
                     from {$g5['g5_shop_coupon_table']}
                     where cp_id = '{$_POST['sc_cp_id']}'
@@ -259,10 +261,10 @@ $od_b_zip2  = substr($od_b_zip, 3);
 $zipcode = $od_b_zip;
 $sql = " select sc_id, sc_price from {$g5['g5_shop_sendcost_table']} where sc_zip1 <= '$zipcode' and sc_zip2 >= '$zipcode' ";
 $tmp = sql_fetch($sql);
-if(!$tmp['sc_id'])
+if(! (isset($tmp['sc_id']) && $tmp['sc_id']))
     $send_cost2 = 0;
 else
-    $send_cost2 = (int)$tmp['sc_price'];
+    $send_cost2 = (int) $tmp['sc_price'];
 
 if($send_cost2 !== $i_send_cost2){
     if(function_exists('add_order_post_log')) add_order_post_log('추가배송비 최종 계산 Error...');
@@ -347,6 +349,7 @@ else if ($od_settle_case == "가상계좌")
     switch($default['de_pg_service']) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_result.php';
+            $od_receipt_time = '0000-00-00 00:00:00';
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
@@ -467,6 +470,10 @@ $od_pg = $default['de_pg_service'];
 if($od_settle_case == 'KAKAOPAY')
     $od_pg = 'KAKAOPAY';
 
+$tno = isset($tno) ? $tno : '';
+$od_receipt_time = isset($od_receipt_time) ? $od_receipt_time : '';
+$od_app_no = isset($od_app_no) ? $od_app_no : '';
+
 // 주문금액과 결제금액이 일치하는지 체크
 if($tno) {
     if((int)$order_price !== (int)$pg_price) {
@@ -498,13 +505,13 @@ if($tno) {
 if ($is_member)
     $od_pwd = $member['mb_password'];
 else
-    $od_pwd = get_encrypt_string($_POST['od_pwd']);
+    $od_pwd = isset($_POST['od_pwd']) ? get_encrypt_string($_POST['od_pwd']) : get_encrypt_string(mt_rand());
 
 // 주문번호를 얻는다.
 $od_id = get_session('ss_order_id');
 
 $od_escrow = 0;
-if($escw_yn == 'Y')
+if(isset($escw_yn) && $escw_yn === 'Y')
     $od_escrow = 1;
 
 // 복합과세 금액
@@ -512,9 +519,9 @@ $od_tax_mny = round($i_price / 1.1);
 $od_vat_mny = $i_price - $od_tax_mny;
 $od_free_mny = 0;
 if($default['de_tax_flag_use']) {
-    $od_tax_mny = (int)$_POST['comm_tax_mny'];
-    $od_vat_mny = (int)$_POST['comm_vat_mny'];
-    $od_free_mny = (int)$_POST['comm_free_mny'];
+    $od_tax_mny = isset($_POST['comm_tax_mny']) ? (int) $_POST['comm_tax_mny'] : 0;
+    $od_vat_mny = isset($_POST['comm_vat_mny']) ? (int) $_POST['comm_vat_mny'] : 0;
+    $od_free_mny = isset($_POST['comm_free_mny']) ? (int) $_POST['comm_free_mny'] : 0;
 }
 
 $od_email         = get_email_address($od_email);
@@ -687,11 +694,11 @@ $od_memo = nl2br(htmlspecialchars2(stripslashes($od_memo))) . "&nbsp;";
 
 // 쿠폰사용내역기록
 if($is_member) {
-    $it_cp_cnt = count($_POST['cp_id']);
+    $it_cp_cnt = (isset($_POST['cp_id']) && is_array($_POST['cp_id'])) ? count($_POST['cp_id']) : 0;
     for($i=0; $i<$it_cp_cnt; $i++) {
-        $cid = $_POST['cp_id'][$i];
-        $cp_it_id = $_POST['it_id'][$i];
-        $cp_prc = (int)$arr_it_cp_prc[$cp_it_id];
+        $cid = isset($_POST['cp_id'][$i]) ? clean_xss_tags($_POST['cp_id'][$i], 1, 1) : '';
+        $cp_it_id = isset($_POST['it_id'][$i]) ? clean_xss_tags($_POST['it_id'][$i], 1, 1) : '';
+        $cp_prc = isset($arr_it_cp_prc[$cp_it_id]) ? (int) $arr_it_cp_prc[$cp_it_id] : 0;
 
         if(trim($cid)) {
             $sql = " insert into {$g5['g5_shop_coupon_log_table']}
@@ -704,7 +711,6 @@ if($is_member) {
         }
 
         // 쿠폰사용금액 cart에 기록
-        $cp_prc = (int)$arr_it_cp_prc[$cp_it_id];
         $sql = " update {$g5['g5_shop_cart_table']}
                     set cp_price = '$cp_prc'
                     where od_id = '$od_id'
@@ -715,7 +721,7 @@ if($is_member) {
         sql_query($sql);
     }
 
-    if($_POST['od_cp_id']) {
+    if(isset($_POST['od_cp_id']) && $_POST['od_cp_id']) {
         $sql = " insert into {$g5['g5_shop_coupon_log_table']}
                     set cp_id       = '{$_POST['od_cp_id']}',
                         mb_id       = '{$member['mb_id']}',
@@ -725,7 +731,7 @@ if($is_member) {
         sql_query($sql);
     }
 
-    if($_POST['sc_cp_id']) {
+    if(isset($_POST['sc_cp_id']) && $_POST['sc_cp_id']) {
         $sql = " insert into {$g5['g5_shop_coupon_log_table']}
                     set cp_id       = '{$_POST['sc_cp_id']}',
                         mb_id       = '{$member['mb_id']}',
@@ -878,9 +884,9 @@ if($is_member) {
         sql_query($sql);
     }
 
-    $ad_subject = clean_xss_tags($ad_subject);
+    $ad_subject = isset($_POST['ad_subject']) ? clean_xss_tags($_POST['ad_subject']) : '';
 
-    if($row['ad_id']){
+    if(isset($row['ad_id']) && $row['ad_id']){
         $sql = " update {$g5['g5_shop_order_address_table']}
                       set ad_default = '$ad_default',
                           ad_subject = '$ad_subject',
@@ -908,7 +914,6 @@ if($is_member) {
 
 goto_url(G5_SHOP_URL.'/orderinquiryview.php?od_id='.$od_id.'&amp;uid='.$uid);
 ?>
-
 <html>
     <head>
         <title>주문정보 기록</title>

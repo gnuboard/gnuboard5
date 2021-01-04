@@ -2,7 +2,7 @@
 $sub_menu = '500120';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '주문내역출력';
 include_once (G5_ADMIN_PATH.'/admin.head.php');
@@ -107,4 +107,3 @@ function forderprintcheck(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

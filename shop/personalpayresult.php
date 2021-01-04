@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$pp_id = isset($_REQUEST['pp_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['pp_id']) : 0;
+
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/personalpayresult.php');
     return;
@@ -8,7 +10,7 @@ if (G5_IS_MOBILE) {
 
 $sql = "select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
 $pp = sql_fetch($sql);
-if (!$pp['pp_id'] || (md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']) != get_session('ss_personalpay_uid'))) {
+if (! (isset($pp['pp_id']) && $pp['pp_id']) || (md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']) != get_session('ss_personalpay_uid'))) {
     alert("조회하실 개인결제 내역이 없습니다.", G5_SHOP_URL);
 }
 
@@ -316,4 +318,3 @@ if($pp['pp_pg'] == 'lg') {
 
 <?php
 include_once('./_tail.php');
-?>

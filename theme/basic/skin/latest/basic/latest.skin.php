@@ -28,7 +28,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
             // if ($list[$i]['file']['count']) { echo "<{$list[$i]['file']['count']}>"; }
 
             echo $list[$i]['icon_reply']." ";
-           	if ($list[$i]['icon_file']) echo " <i class=\"fa fa-download\" aria-hidden=\"true\"></i>" ;
+           	if (isset($list[$i]['icon_file']) && $list[$i]['icon_file']) echo " <i class=\"fa fa-download\" aria-hidden=\"true\"></i>" ;
             if ($list[$i]['icon_link']) echo " <i class=\"fa fa-link\" aria-hidden=\"true\"></i>" ;
 
             if ($list[$i]['comment_cnt'])  echo "

@@ -8,7 +8,7 @@ if ($is_admin != 'super')
 $g5['title'] = '메뉴 추가';
 include_once(G5_PATH.'/head.sub.php');
 
-$code = isset($code) ? preg_replace('/[^0-9a-zA-Z]/', '', strip_tags($code)) : '';
+$code = isset($_GET['code']) ? preg_replace('/[^0-9a-zA-Z]/', '', $_GET['code']) : '';
 
 // 코드
 if($new == 'new' || !$code) {
@@ -174,10 +174,10 @@ function add_menu_list(name, link, code)
     else
         $menu_last = $menulist.find("tr.menu_list:last");
 
-	if($menu_last.size() > 0) {
+	if($menu_last.length > 0) {
         $menu_last.after(list);
     } else {
-        if($menulist.find("#empty_menu_list").size() > 0)
+        if($menulist.find("#empty_menu_list").length > 0)
             $menulist.find("#empty_menu_list").remove();
 
         $menulist.find("table tbody").append(list);
@@ -194,4 +194,3 @@ function add_menu_list(name, link, code)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

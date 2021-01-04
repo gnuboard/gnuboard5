@@ -124,19 +124,19 @@ try {
                 $app_time   = $resultMap['applDate'].$resultMap['applTime'];
                 $pay_method = $resultMap['payMethod'];
                 $pay_type   = $PAY_METHOD[$pay_method];
-                $depositor  = $resultMap['VACT_InputName'];
+                $depositor  = isset($resultMap['VACT_InputName']) ? $resultMap['VACT_InputName'] : '';
                 $commid     = '';
-                $mobile_no  = $resultMap['HPP_Num'];
-                $app_no     = $resultMap['applNum'];
-                $card_name  = $CARD_CODE[$resultMap['CARD_Code']];
+                $mobile_no  = isset($resultMap['HPP_Num']) ? $resultMap['HPP_Num'] : '';
+                $app_no     = isset($resultMap['applNum']) ? $resultMap['applNum'] : '';
+                $card_name  = isset($resultMap['CARD_Code']) ? $CARD_CODE[$resultMap['CARD_Code']] : '';
                 switch($pay_type) {
                     case '계좌이체':
-                        $bank_name = $BANK_CODE[$resultMap['ACCT_BankCode']];
+                        $bank_name = isset($BANK_CODE[$resultMap['ACCT_BankCode']]) ? $BANK_CODE[$resultMap['ACCT_BankCode']] : '';
                         if ($default['de_escrow_use'] == 1)
                             $escw_yn         = 'Y';
                         break;
                     case '가상계좌':
-                        $bankname  = $BANK_CODE[$resultMap['VACT_BankCode']];
+                        $bankname  = isset($BANK_CODE[$resultMap['VACT_BankCode']]) ? $BANK_CODE[$resultMap['VACT_BankCode']] : '';
                         $account   = $resultMap['VACT_Num'].' '.$resultMap['VACT_Name'];
                         $app_no    = $resultMap['VACT_Num'];
                         if ($default['de_escrow_use'] == 1)
@@ -212,4 +212,3 @@ try {
 if( !$inicis_pay_result ){
     die("<br><br>결제 에러가 일어났습니다. 에러 이유는 위와 같습니다.");
 }
-?>

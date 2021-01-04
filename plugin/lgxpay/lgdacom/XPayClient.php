@@ -1,25 +1,26 @@
 <?php
 class XPayClient
 {
-	var $ch;
-	var $debug = false;
-	var	$bTest = false;
-	var $error_msg;
-	var $home_dir;
-	var $mode;
-	var $TX_ID;
-	var	$MID;
-	var $Auth_Code;
-	var $config;
-	var $Post = array();
-	var	$response_json;
-	var $response_array;
-	var $response_code;
-	var $response_msg;
-	var	$log_file;
-	var $err_label = array("FATAL","ERROR","WARN ","INFO ","DEBUG");
-	var $INFO = array("LGD_TXID","LGD_AUTHCODE","LGD_MID","LGD_OID","LGD_TXNAME","LGD_PAYKEY","LGD_RESPCODE","LGD_RESPMSG");
-	var $DEBUG = array("LGD_TXID","LGD_AUTHCODE","LGD_MID","LGD_TID","LGD_OID","LGD_PAYTYPE","LGD_PAYDATE","LGD_TXNAME","LGD_PAYKEY","LGD_RESPCODE","LGD_RESPMSG");
+	public $ch = null;
+	public $debug = false;
+	public $bTest = false;
+	public $error_msg = null;
+	public $home_dir = null;
+	public $mode = null;
+	public $TX_ID = null;
+	public $MID = null;
+	public $Auth_Code = null;
+	public $config = array();
+	public $Post = array();
+	public $response_json = null;
+	public $response_array = array();
+	public $response_code = null;
+	public $response_msg = null;
+	public $log_file  = null;
+	public $err_label = array("FATAL","ERROR","WARN ","INFO ","DEBUG");
+	public $INFO = array("LGD_TXID","LGD_AUTHCODE","LGD_MID","LGD_OID","LGD_TXNAME","LGD_PAYKEY","LGD_RESPCODE","LGD_RESPMSG");
+	public $DEBUG = array("LGD_TXID","LGD_AUTHCODE","LGD_MID","LGD_TID","LGD_OID","LGD_PAYTYPE","LGD_PAYDATE","LGD_TXNAME","LGD_PAYKEY","LGD_RESPCODE","LGD_RESPMSG");
+
 	function IsAcceptLog($ParamName,$LogLevel)
 	{
 	    if(LGD_LOG_DEBUG == $LogLevel)
@@ -32,7 +33,8 @@ class XPayClient
 		}
 	    return false;
 	}
-	function XPayClient($home_dir,$mode="real")
+
+	public function __construct($home_dir,$mode="real")
 	{
 		if(!function_exists('json_decode'))
 		{
@@ -232,7 +234,8 @@ class XPayClient
 	function Gen_TX_ID($MID)
 	{
 		$now = date("YmdHis");
-		$header = $MID . "-" . $this->config['server_id'] . $now;
+        $server_id = isset($this->config['server_id']) ? $this->config['server_id'] : '';
+		$header = $MID . "-" . $server_id . $now;
 		$tx_id = $header . sha1($header.$this->Get_Unique());
 		return $tx_id;
 	}
@@ -330,11 +333,11 @@ class XPayClient
 		$strReportMsg = "";
 		if ($bRollbackOnError) 
 		{
-			if ($this->config['auto_rollback'] == 0) $bRollbackOnError = false;
+			if (isset($this->config['auto_rollback']) && $this->config['auto_rollback'] == 0) $bRollbackOnError = false;
 		}
 		
-		if ($this->bTest) $url = $this->config['test_url'];
-		else $url = $this->config['url'];
+		if ($this->bTest) $url = isset($this->config['test_url']) ? $this->config['test_url'] : '';
+		else $url = isset($this->config['url']) ? $this->config['url'] : '';
 		
 		$Protocol = parse_url($url, PHP_URL_SCHEME);
 		if($Protocol == "") 
@@ -352,7 +355,8 @@ class XPayClient
 		}
 		if($bCheckURL == true)
 		{
-		    $result = $this->send_post_data($url, $this->Post, null, $this->config['timeout']);
+            $pay_timeout = isset($this->config['timeout']) ? (int) $this->config['timeout'] : 0;
+		    $result = $this->send_post_data($url, $this->Post, null, $pay_timeout);
 		}
 		else
 		{
@@ -578,8 +582,10 @@ class XPayClient
 	}
 	function Response($name, $index=0)
 	{
-		if ($this->config['output_UTF8'] == 1) return ($this->response_array["LGD_RESPONSE"][$index][$name]);
-		else return (iconv("utf-8", "euc-kr", $this->response_array["LGD_RESPONSE"][$index][$name]));
+        $response_val = isset($this->response_array["LGD_RESPONSE"][$index][$name]) ? $this->response_array["LGD_RESPONSE"][$index][$name] : '';
+
+		if ($this->config['output_UTF8'] == 1) return $response_val;
+		else return (iconv("utf-8", "euc-kr", $response_val));
 	}
 	function Log($msg, $level=LGD_LOG_FATAL)
 	{
@@ -996,10 +1002,9 @@ class XPayClient
 	*/
 	function pkcs5_unpad($text) 
 	{ 
-		$pad = ord($text{strlen($text)-1}); 
+		$pad = ord($text[strlen($text)-1]); 
 		if ($pad > strlen($text)) return false; 
 		if (strspn($text, chr($pad), strlen($text) - $pad) != $pad) return false; 
 		return substr($text, 0, -1 * $pad); 
 	}
 }
-?>

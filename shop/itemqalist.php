@@ -71,4 +71,3 @@ if(!file_exists($itemqalist_skin)) {
 }
 
 include_once('./_tail.php');
-?>

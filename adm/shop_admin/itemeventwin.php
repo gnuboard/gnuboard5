@@ -2,7 +2,7 @@
 $sub_menu = '500300';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $sql = " select ev_subject from {$g5['g5_shop_event_table']} where ev_id = '$ev_id' ";
 $ev = sql_fetch($sql);
@@ -62,4 +62,3 @@ include_once(G5_PATH.'/head.sub.php');
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

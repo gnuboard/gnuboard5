@@ -28,8 +28,8 @@ $payReqMap = $_SESSION['PAYREQ_MAP'];//결제 요청시, Session에 저장했던
 </head>
 <body onload="setLGDResult()">
 <?php
-  $LGD_RESPCODE = clean_xss_tags(strip_tags($_POST['LGD_RESPCODE']));
-  $LGD_RESPMSG 	= clean_xss_tags(strip_tags($_POST['LGD_RESPMSG']));
+  $LGD_RESPCODE = isset($_POST['LGD_RESPCODE']) ? clean_xss_tags(strip_tags($_POST['LGD_RESPCODE'])) : '';
+  $LGD_RESPMSG 	= isset($_POST['LGD_RESPMSG']) ? clean_xss_tags(strip_tags($_POST['LGD_RESPMSG'])) : '';
   $LGD_PAYKEY	= '';
 
   $payReqMap['LGD_RESPCODE'] = $LGD_RESPCODE;
@@ -40,7 +40,7 @@ $payReqMap = $_SESSION['PAYREQ_MAP'];//결제 요청시, Session에 저장했던
 	  $payReqMap['LGD_PAYKEY'] = $LGD_PAYKEY;
   }
   else{
-	  echo "LGD_RESPCODE:" + $LGD_RESPCODE + " ,LGD_RESPMSG:" + $LGD_RESPMSG; //인증 실패에 대한 처리 로직 추가
+	  echo "LGD_RESPCODE:" . $LGD_RESPCODE . " ,LGD_RESPMSG:" . $LGD_RESPMSG; //인증 실패에 대한 처리 로직 추가
   }
 ?>
 <form method="post" name="LGD_RETURNINFO" id="LGD_RETURNINFO">

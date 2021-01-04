@@ -2,16 +2,14 @@
 include_once('./_common.php');
 
 // 상품 리스트에서 다른 필드로 정렬을 하려면 아래의 배열 코드에서 해당 필드를 추가하세요.
-if( isset($sort) && ! in_array($sort, array('it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time')) ){
-    $sort='';
-}
+$sort = (isset($_REQUEST['sort']) && in_array($_REQUEST['sort'], array('it_sum_qty', 'it_price', 'it_use_avg', 'it_use_cnt', 'it_update_time'))) ? $_REQUEST['sort'] : '';
+$type = isset($_REQUEST['type']) ? preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $_REQUEST['type']) : '';
 
 if (G5_IS_MOBILE) {
     include_once(G5_MSHOP_PATH.'/listtype.php');
     return;
 }
 
-$type = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\s]/", "", $_REQUEST['type']);
 if ($type == 1)      $g5['title'] = '히트상품';
 else if ($type == 2) $g5['title'] = '추천상품';
 else if ($type == 3) $g5['title'] = '최신상품';
@@ -28,9 +26,7 @@ $list_row   = $default['de_listtype_list_row'];   // 한 페이지에 몇라인�
 
 $img_width  = $default['de_listtype_img_width'];  // 출력이미지 폭
 $img_height = $default['de_listtype_img_height']; // 출력이미지 높이
-?>
 
-<?php
 // 상품 출력순서가 있다면
 $order_by = ' it_order, it_id desc ';
 if ($sort != '')
@@ -38,6 +34,7 @@ if ($sort != '')
 else
     $order_by = 'it_order, it_id desc';
 
+$skin = isset($skin) ? $skin : '';
 if (!$skin || preg_match('#\.+[\\\/]#', $skin))
     $skin = $default['de_listtype_list_skin'];
 else
@@ -82,13 +79,8 @@ else
 {
     echo '<div align="center">'.$skin.' 파일을 찾을 수 없습니다.<br>관리자에게 알려주시면 감사하겠습니다.</div>';
 }
-?>
 
-<?php
 $qstr .= '&amp;type='.$type.'&amp;sort='.$sort;
 echo get_paging($config['cf_write_pages'], $page, $total_page, "{$_SERVER['SCRIPT_NAME']}?$qstr&amp;page=");
-?>
 
-<?php
 include_once('./_tail.php');
-?>

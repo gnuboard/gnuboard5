@@ -188,4 +188,4 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     	<h2 id="container_title" class="top" title="<?php echo get_text($g5['title']); ?>">
     		<a href="javascript:history.back();"><i class="fa fa-chevron-left" aria-hidden="true"></i><span class="sound_only">뒤로가기</span></a> <?php echo get_head_title($g5['title']); ?>
     	</h2>
-    <?php } ?>
+    <?php }

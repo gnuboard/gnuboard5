@@ -1,7 +1,7 @@
 <?php
 include_once("./_common.php");
 
-$bn_id = (int) $bn_id;
+$bn_id = isset($_GET['bn_id']) ? (int) $_GET['bn_id'] : 0;
 
 $sql = " select bn_id, bn_url from {$g5['g5_shop_banner_table']} where bn_id = '$bn_id' ";
 $row = sql_fetch($sql);
@@ -21,4 +21,3 @@ if ($_COOKIE['ck_bn_id'] != $bn_id)
 $url = clean_xss_tags($row['bn_url']);
 
 goto_url($url);
-?>

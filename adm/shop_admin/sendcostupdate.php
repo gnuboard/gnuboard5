@@ -4,28 +4,28 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
-$w = $_POST['w'];
+$w = isset($_POST['w']) ? $_POST['w'] : '';
 
 if($w == 'd') {
-    $count = count($_POST['chk']);
+    $count = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
     if(!$count)
         alert('삭제하실 항목을 하나이상 선택해 주십시오.');
 
     for($i=0; $i<$count; $i++) {
-        $k = $_POST['chk'][$i];
+        $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
 
-        $sc_id = (int) $_POST['sc_id'][$k];
+        $sc_id = isset($_POST['sc_id'][$i]) ? (int) $_POST['sc_id'][$k] : 0;
         sql_query(" delete from {$g5['g5_shop_sendcost_table']} where sc_id = '$sc_id' ");
     }
 } else {
-    $sc_name = trim(strip_tags(clean_xss_attributes($_POST['sc_name'])));
-    $sc_zip1 = preg_replace('/[^0-9]/', '', $_POST['sc_zip1']);
-    $sc_zip2 = preg_replace('/[^0-9]/', '', $_POST['sc_zip2']);
-    $sc_price = preg_replace('/[^0-9]/', '', $_POST['sc_price']);
+    $sc_name = isset($_POST['sc_name']) ? trim(strip_tags(clean_xss_attributes($_POST['sc_name']))) : '';
+    $sc_zip1 = isset($_POST['sc_zip1']) ? preg_replace('/[^0-9]/', '', $_POST['sc_zip1']) : '';
+    $sc_zip2 = isset($_POST['sc_zip2']) ? preg_replace('/[^0-9]/', '', $_POST['sc_zip2']) : '';
+    $sc_price = isset($_POST['sc_price']) ? preg_replace('/[^0-9]/', '', $_POST['sc_price']) : '';
 
     if(!$sc_name)
         alert('지역명을 입력해 주십시오.');
@@ -44,4 +44,3 @@ if($w == 'd') {
 }
 
 goto_url('./sendcostlist.php?page='.$page);
-?>

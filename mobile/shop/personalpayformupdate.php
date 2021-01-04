@@ -4,27 +4,38 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
 
+$post_tran_cd = isset($_POST['tran_cd']) ? $_POST['tran_cd'] : '';
+$post_enc_info = isset($_POST['enc_info']) ? $_POST['enc_info'] : '';
+$post_enc_data = isset($_POST['enc_data']) ? $_POST['enc_data'] : '';
+
+$post_lgd_paykey = isset($_POST['LGD_PAYKEY']) ? $_POST['LGD_PAYKEY'] : '';
+
+$post_p_hash = isset($_POST['P_HASH']) ? $_POST['P_HASH'] : '';
+
+$pp_id = isset($_POST['pp_id']) ? preg_replace('/[^0-9]/', '', $_POST['pp_id']) : 0;
+$good_mny = isset($_POST['good_mny']) ? preg_replace('/[^0-9]/', '', $_POST['good_mny']) : 0;
+
 // 결제등록 완료 체크
-if($default['de_pg_service'] == 'kcp' && ($_POST['tran_cd'] == '' || $_POST['enc_info'] == '' || $_POST['enc_data'] == ''))
+if($default['de_pg_service'] == 'kcp' && ($post_tran_cd === '' || $post_enc_info === '' || $post_enc_data === ''))
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
-if($default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY'])
+if($default['de_pg_service'] == 'lg' && ! $post_lgd_paykey)
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
-if($default['de_pg_service'] == 'inicis' && !$_POST['P_HASH'])
+if($default['de_pg_service'] == 'inicis' && ! $post_p_hash)
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
 // 개인결제 정보
 $pp_check = false;
-$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$_POST['pp_id']}' and pp_use = '1' ";
+$sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$pp_id}' and pp_use = '1' ";
 $pp = sql_fetch($sql);
-if(!$pp['pp_id'])
+if(! (isset($pp['pp_id']) && $pp['pp_id']))
     alert('개인결제 정보가 존재하지 않습니다.', G5_SHOP_URL.'/personalpay.php');
 
-$hash_data = md5($_POST['pp_id'].$_POST['good_mny'].$pp['pp_time']);
+$hash_data = md5($pp_id.$good_mny.$pp['pp_time']);
 
 if($pp['pp_tno']){
-    if( $default['de_pg_service'] == 'inicis' && ($_POST['pp_id'] === get_session('ss_personalpay_id') && $hash_data === get_session('ss_personalpay_hash')) ){
+    if( $default['de_pg_service'] == 'inicis' && ($pp_id === get_session('ss_personalpay_id') && $hash_data === get_session('ss_personalpay_hash')) ){
         $uid = md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']);
         set_session('ss_personalpay_uid', $uid);
 
@@ -34,7 +45,7 @@ if($pp['pp_tno']){
     }
 }
 
-if($_POST['pp_id'] != get_session('ss_personalpay_id') || $hash_data != get_session('ss_personalpay_hash'))
+if($pp_id !== get_session('ss_personalpay_id') || $hash_data !== get_session('ss_personalpay_hash'))
     die('개인결제 정보가 올바르지 않습니다.');
 
 if ($pp_settle_case == "계좌이체")
@@ -254,4 +265,3 @@ if( $is_noti_pay ){
 }
 
 goto_url(G5_SHOP_URL.'/personalpayresult.php?pp_id='.$pp['pp_id'].'&amp;uid='.$uid);
-?>

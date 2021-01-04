@@ -6,9 +6,9 @@ if ($w == "u" || $w == "d")
     check_demo();
 
 if ($w == '' || $w == 'u')
-    auth_check($auth[$sub_menu], "w");
+    auth_check_menu($auth, $sub_menu, "w");
 else if ($w == 'd')
-    auth_check($auth[$sub_menu], "d");
+    auth_check_menu($auth, $sub_menu, "d");
 
 check_admin_token();
 
@@ -18,9 +18,9 @@ check_admin_token();
 // input vars 체크
 check_input_vars();
 
-$ca_id = isset($ca_id) ? preg_replace('/[^0-9a-z]/i', '', $ca_id) : '';
-$ca_id2 = isset($ca_id2) ? preg_replace('/[^0-9a-z]/i', '', $ca_id2) : '';
-$ca_id3 = isset($ca_id3) ? preg_replace('/[^0-9a-z]/i', '', $ca_id3) : '';
+$ca_id = isset($_POST['ca_id']) ? preg_replace('/[^0-9a-z]/i', '', $_POST['ca_id']) : '';
+$ca_id2 = isset($_POST['ca_id2']) ? preg_replace('/[^0-9a-z]/i', '', $_POST['ca_id2']) : '';
+$ca_id3 = isset($_POST['ca_id3']) ? preg_replace('/[^0-9a-z]/i', '', $_POST['ca_id3']) : '';
 
 if ($is_admin != 'super') {     // 최고관리자가 아니면 체크
     $sql = "select b.ca_mb_id from {$g5['g5_shop_item_table']} a , {$g5['g5_shop_category_table']} b where (a.ca_id = b.ca_id) and a.it_id = '$it_id'";
@@ -31,6 +31,7 @@ if ($is_admin != 'super') {     // 최고관리자가 아니면 체크
     }
 }
 
+$it_img1 = $it_img2 = $it_img3 = $it_img4 = $it_img5 = $it_img6 = $it_img7 = $it_img8 = $it_img9 = $it_img10 = '';
 // 파일정보
 if($w == "u") {
     $sql = " select it_img1, it_img2, it_img3, it_img4, it_img5, it_img6, it_img7, it_img8, it_img9, it_img10
@@ -51,6 +52,10 @@ if($w == "u") {
 }
 
 $it_img_dir = G5_DATA_PATH.'/item';
+
+for($i=0;$i<=10;$i++){
+    ${'it_img'.$i.'_del'} = ! empty($_POST['it_img1_del']) ? 1 : 0;
+}
 
 // 파일삭제
 if ($it_img1_del) {
@@ -223,18 +228,21 @@ sql_query(" delete from {$g5['g5_shop_event_item_table']} where it_id = '$it_id'
 sql_query(" delete from {$g5['g5_shop_item_option_table']} where io_type = '0' and it_id = '$it_id' "); // 기존선택옵션삭제
 
 $option_count = (isset($_POST['opt_id']) && is_array($_POST['opt_id'])) ? count($_POST['opt_id']) : array();
+$it_option_subject = '';
+$it_supply_subject = '';
+
 if($option_count) {
     // 옵션명
     $opt1_cnt = $opt2_cnt = $opt3_cnt = 0;
     for($i=0; $i<$option_count; $i++) {
-        $_POST['opt_id'][$i] = preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($_POST['opt_id'][$i]));
+        $post_opt_id = isset($_POST['opt_id'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($_POST['opt_id'][$i])) : '';
 
-        $opt_val = explode(chr(30), $_POST['opt_id'][$i]);
-        if($opt_val[0])
+        $opt_val = explode(chr(30), $post_opt_id);
+        if(isset($opt_val[0]) && $opt_val[0])
             $opt1_cnt++;
-        if($opt_val[1])
+        if(isset($opt_val[1]) && $opt_val[1])
             $opt2_cnt++;
-        if($opt_val[2])
+        if(isset($opt_val[2]) && $opt_val[2])
             $opt3_cnt++;
     }
 
@@ -255,9 +263,9 @@ if($supply_count) {
     // 추가옵션명
     $arr_spl = array();
     for($i=0; $i<$supply_count; $i++) {
-        $_POST['spl_id'][$i] = preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($_POST['spl_id'][$i]));
+        $post_spl_id = isset($_POST['spl_id'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', strip_tags($_POST['spl_id'][$i])) : '';
 
-        $spl_val = explode(chr(30), $_POST['spl_id'][$i]);
+        $spl_val = explode(chr(30), $post_spl_id);
         if(!in_array($spl_val[0], $arr_spl))
             $arr_spl[] = $spl_val[0];
     }
@@ -267,9 +275,10 @@ if($supply_count) {
 
 // 상품요약정보
 $value_array = array();
-for($i=0; $i<count($_POST['ii_article']); $i++) {
-    $key = $_POST['ii_article'][$i];
-    $val = $_POST['ii_value'][$i];
+$count_ii_article = (isset($_POST['ii_article']) && is_array($_POST['ii_article'])) ? count($_POST['ii_article']) : 0;
+for($i=0; $i<$count_ii_article; $i++) {
+    $key = isset($_POST['ii_article'][$i]) ? $_POST['ii_article'][$i] : '';
+    $val = isset($_POST['ii_value'][$i]) ? $_POST['ii_value'][$i] : '';
     $value_array[$key] = $val;
 }
 $it_info_value = addslashes(serialize($value_array));
@@ -278,7 +287,7 @@ $it_info_value = addslashes(serialize($value_array));
 if(($it_point_type == 1 || $it_point_type == 2) && $it_point > 99)
     alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
 
-$it_name = strip_tags(clean_xss_attributes(trim($_POST['it_name'])));
+$it_name = isset($_POST['it_name']) ? strip_tags(clean_xss_attributes(trim($_POST['it_name']))) : '';
 
 // KVE-2019-0708
 $check_sanitize_keys = array(
@@ -314,6 +323,7 @@ foreach( $check_sanitize_keys as $key ){
 }
 
 $it_basic = preg_replace('#<script(.*?)>(.*?)<\/script>#is', '', $it_basic);
+$it_explan = isset($_POST['it_explan']) ? $_POST['it_explan'] : '';
 
 if ($it_name == "")
     alert("상품명을 입력해 주십시오.");
@@ -337,7 +347,7 @@ $sql_common = " ca_id               = '$ca_id',
                 it_type5            = '$it_type5',
                 it_basic            = '$it_basic',
                 it_explan           = '$it_explan',
-                it_explan2          = '".strip_tags(trim(clean_xss_attributes($_POST['it_explan'])))."',
+                it_explan2          = '".strip_tags(trim(clean_xss_attributes($it_explan)))."',
                 it_mobile_explan    = '$it_mobile_explan',
                 it_cust_price       = '$it_cust_price',
                 it_price            = '$it_price',
@@ -404,7 +414,7 @@ $sql_common = " ca_id               = '$ca_id',
 
 if ($w == "")
 {
-    $it_id = $_POST['it_id'];
+    $it_id = isset($_POST['it_id']) ? $_POST['it_id'] : '';
 
     if (!trim($it_id)) {
         alert('상품 코드가 없으므로 상품을 추가하실 수 없습니다.');

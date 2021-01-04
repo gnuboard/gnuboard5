@@ -6,8 +6,8 @@ if($is_guest)
 
 // 상품정보
 $pattern = '#[/\'\"%=*\#\(\)\|\+\&\!\$~\{\}\[\]`;:\?\^\,]#';
-$it_id  = preg_replace($pattern, '', $_POST['it_id']);
-$sw_direct = $_POST['sw_direct'];
+$it_id  = isset($_POST['it_id']) ? preg_replace($pattern, '', $_POST['it_id']) : '';
+$sw_direct = isset($_POST['sw_direct']) ? clean_xss_tags($_POST['sw_direct'], 1, 1) : '';
 $it = get_shop_item($it_id, true);
 
 // 상품 총 금액

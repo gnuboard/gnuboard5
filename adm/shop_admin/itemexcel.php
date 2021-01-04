@@ -2,7 +2,7 @@
 $sub_menu = '400300';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $g5['title'] = '엑셀파일로 상품 일괄 등록';
 include_once(G5_PATH.'/head.sub.php');
@@ -42,4 +42,3 @@ include_once(G5_PATH.'/head.sub.php');
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

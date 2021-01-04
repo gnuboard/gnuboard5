@@ -2,10 +2,10 @@
 $sub_menu = '500110';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-$fr_date = preg_replace('/[^0-9]/i', '', $fr_date);
-$to_date = preg_replace('/[^0-9]/i', '', $to_date);
+$fr_date = isset($_REQUEST['fr_date']) ? preg_replace('/[^0-9 :_\-]/i', '', $_REQUEST['fr_date']) : '';
+$to_date = isset($_REQUEST['to_date']) ? preg_replace('/[^0-9 :_\-]/i', '', $_REQUEST['to_date']) : '';
 
 $fr_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $fr_date);
 $to_date = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3", $to_date);
@@ -75,8 +75,9 @@ $result = sql_query($sql);
     </thead>
     <tbody>
     <?php
-    unset($save);
-    unset($tot);
+    $save = array('ordercount'=>0, 'orderprice'=>0, 'ordercancel'=>0, 'ordercoupon'=>0, 'receiptbank'=>0, 'receiptvbank'=>0, 'receiptiche'=>0, 'receipthp'=>0, 'receiptcard'=>0, 'receiptpoint'=>0, 'misu'=>0, 'receipteasy'=>0);
+    $tot = array('ordercount'=>0, 'orderprice'=>0, 'ordercancel'=>0, 'ordercoupon'=>0, 'receiptbank'=>0, 'receiptvbank'=>0, 'receiptiche'=>0, 'receipthp'=>0, 'receiptcard'=>0, 'receiptpoint'=>0, 'misu'=>0, 'receipteasy'=>0);
+
     for ($i=0; $row=sql_fetch_array($result); $i++)
     {
         if ($i == 0)
@@ -84,7 +85,7 @@ $result = sql_query($sql);
 
         if ($save['od_date'] != $row['od_date']) {
             print_line($save);
-            unset($save);
+            $save = array('ordercount'=>0, 'orderprice'=>0, 'ordercancel'=>0, 'ordercoupon'=>0, 'receiptbank'=>0, 'receiptvbank'=>0, 'receiptiche'=>0, 'receipthp'=>0, 'receiptcard'=>0, 'receiptpoint'=>0, 'misu'=>0, 'receipteasy'=>0);
             $save['od_date'] = $row['od_date'];
         }
 
@@ -157,4 +158,3 @@ $result = sql_query($sql);
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

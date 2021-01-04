@@ -166,9 +166,8 @@ function get_cookie($cookie_name)
 // 경고메세지를 경고창으로
 function alert($msg='', $url='', $error=true, $post=false)
 {
-    global $g5, $config, $member;
-    global $is_admin;
-    
+    global $g5, $config, $member, $is_member, $is_admin, $board;
+
     run_event('alert', $msg, $url, $error, $post);
 
     $msg = $msg ? strip_tags($msg, '<br>') : '올바른 방법으로 이용해 주십시오.';
@@ -185,7 +184,7 @@ function alert($msg='', $url='', $error=true, $post=false)
 // 경고메세지 출력후 창을 닫음
 function alert_close($msg, $error=true)
 {
-    global $g5;
+    global $g5, $config, $member, $is_member, $is_admin, $board;
     
     run_event('alert_close', $msg, $error);
 
@@ -202,7 +201,7 @@ function alert_close($msg, $error=true)
 // confirm 창
 function confirm($msg, $url1='', $url2='', $url3='')
 {
-    global $g5;
+    global $g5, $config, $member, $is_member, $is_admin, $board;
 
     if (!$msg) {
         $msg = '올바른 방법으로 이용해 주십시오.';
@@ -300,14 +299,14 @@ function get_filesize($size)
 // 게시글에 첨부된 파일을 얻는다. (배열로 반환)
 function get_file($bo_table, $wr_id)
 {
-    global $g5, $qstr;
+    global $g5, $qstr, $board;
 
     $file['count'] = 0;
     $sql = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' order by bf_no ";
     $result = sql_query($sql);
     while ($row = sql_fetch_array($result))
     {
-        $no = $row['bf_no'];
+        $no = (int) $row['bf_no'];
         $bf_content = $row['bf_content'] ? html_purifier($row['bf_content']) : '';
         $file[$no]['href'] = G5_BBS_URL."/download.php?bo_table=$bo_table&amp;wr_id=$wr_id&amp;no=$no" . $qstr;
         $file[$no]['download'] = $row['bf_download'];
@@ -763,7 +762,8 @@ function get_group($gr_id, $is_cache=false)
 
     $sql = " select * from {$g5['group_table']} where gr_id = '$gr_id' ";
 
-    $cache[$key] = run_replace('get_group', sql_fetch($sql), $gr_id, $is_cache);
+    $group = run_replace('get_group', sql_fetch($sql), $gr_id, $is_cache);
+    $cache[$key] = array_merge(array('gr_device'=>'', 'gr_subject'=>''), (array) $group);
 
     return $cache[$key];
 }
@@ -1252,13 +1252,13 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
                       and po_rel_action = '$rel_action' ";
         $row = sql_fetch($sql);
 
-        if($row['po_point'] < 0) {
+        if(isset($row['po_point']) && $row['po_point'] < 0) {
             $mb_id = $row['mb_id'];
             $po_point = abs($row['po_point']);
 
             delete_use_point($mb_id, $po_point);
         } else {
-            if($row['po_use_point'] > 0) {
+            if(isset($row['po_use_point']) && $row['po_use_point'] > 0) {
                 insert_use_point($row['mb_id'], $row['po_use_point'], $row['po_id']);
             }
         }
@@ -1270,11 +1270,13 @@ function delete_point($mb_id, $rel_table, $rel_id, $rel_action)
                        and po_rel_action = '$rel_action' ", false);
 
         // po_mb_point에 반영
-        $sql = " update {$g5['point_table']}
-                    set po_mb_point = po_mb_point - '{$row['po_point']}'
-                    where mb_id = '$mb_id'
-                      and po_id > '{$row['po_id']}' ";
-        sql_query($sql);
+        if(isset($row['po_point'])) {
+            $sql = " update {$g5['point_table']}
+                        set po_mb_point = po_mb_point - '{$row['po_point']}'
+                        where mb_id = '$mb_id'
+                          and po_id > '{$row['po_id']}' ";
+            sql_query($sql);
+        }
 
         // 포인트 내역의 합을 구하고
         $sum_point = get_point_sum($mb_id);
@@ -1391,7 +1393,7 @@ function view_file_link($file, $width, $height, $content='')
     $ids++;
 
     // 파일의 폭이 게시판설정의 이미지폭 보다 크다면 게시판설정 폭으로 맞추고 비율에 따라 높이를 계산
-    if ($width > $board['bo_image_width'] && $board['bo_image_width'])
+    if ($board && $width > $board['bo_image_width'] && $board['bo_image_width'])
     {
         $rate = $board['bo_image_width'] / $width;
         $width = $board['bo_image_width'];
@@ -1404,7 +1406,7 @@ function view_file_link($file, $width, $height, $content='')
     else
         $attr = '';
 
-    if (preg_match("/\.({$config['cf_image_extension']})$/i", $file)) {
+    if (preg_match("/\.({$config['cf_image_extension']})$/i", $file) && isset($board['bo_table'])) {
         $attr_href = run_replace('thumb_view_image_href', G5_BBS_URL.'/view_image.php?bo_table='.$board['bo_table'].'&amp;fn='.urlencode($file), $file, $board['bo_table'], $width, $height, $content);
         $img = '<a href="'.$attr_href.'" target="_blank" class="view_image">';
         $img .= '<img src="'.G5_DATA_URL.'/file/'.$board['bo_table'].'/'.urlencode($file).'" alt="'.$content.'" '.$attr.'>';
@@ -1749,7 +1751,7 @@ function get_table_define($table, $crlf="\n")
     global $g5;
 
     // For MySQL < 3.23.20
-    $schema_create .= 'CREATE TABLE ' . $table . ' (' . $crlf;
+    $schema_create = 'CREATE TABLE ' . $table . ' (' . $crlf;
 
     $sql = 'SHOW FIELDS FROM ' . $table;
     $result = sql_query($sql);
@@ -1799,7 +1801,7 @@ function get_table_define($table, $crlf="\n")
     } // end while
     sql_free_result($result);
 
-    while (list($x, $columns) = @each($index)) {
+    foreach((array) $index as $x => $columns){
         $schema_create     .= ',' . $crlf;
         if ($x == 'PRIMARY') {
             $schema_create .= '    PRIMARY KEY (';
@@ -1810,7 +1812,7 @@ function get_table_define($table, $crlf="\n")
         } else {
             $schema_create .= '    KEY ' . $x . ' (';
         }
-        $schema_create     .= implode($columns, ', ') . ')';
+        $schema_create     .= implode(', ', $columns) . ')';
     } // end while
 
     $schema_create .= $crlf . ') ENGINE=MyISAM DEFAULT CHARSET=utf8';
@@ -2239,7 +2241,7 @@ function get_uniqid()
     sql_query(" LOCK TABLE {$g5['uniqid_table']} WRITE ");
     while (1) {
         // 년월일시분초에 100분의 1초 두자리를 추가함 (1/100 초 앞에 자리가 모자르면 0으로 채움)
-        $key = date('YmdHis', time()) . str_pad((int)(microtime()*100), 2, "0", STR_PAD_LEFT);
+        $key = date('YmdHis', time()) . str_pad((int)((float)microtime()*100), 2, "0", STR_PAD_LEFT);
 
         $result = sql_query(" insert into {$g5['uniqid_table']} set uq_id = '$key', uq_ip = '{$_SERVER['REMOTE_ADDR']}' ", false);
         if ($result) break; // 쿼리가 정상이면 빠진다.
@@ -2717,32 +2719,9 @@ function board_notice($bo_notice, $wr_id, $insert=false)
 function googl_short_url($longUrl)
 {
     global $config;
-
-    // Get API key from : http://code.google.com/apis/console/
-    // URL Shortener API ON
-    $apiKey = $config['cf_googl_shorturl_apikey'];
-
-    $postData = array('longUrl' => $longUrl);
-    $jsonData = json_encode($postData);
-
-    $curlObj = curl_init();
-
-    curl_setopt($curlObj, CURLOPT_URL, 'https://www.googleapis.com/urlshortener/v1/url?key='.$apiKey);
-    curl_setopt($curlObj, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($curlObj, CURLOPT_SSL_VERIFYPEER, 0);
-    curl_setopt($curlObj, CURLOPT_HEADER, 0);
-    curl_setopt($curlObj, CURLOPT_HTTPHEADER, array('Content-type:application/json'));
-    curl_setopt($curlObj, CURLOPT_POST, 1);
-    curl_setopt($curlObj, CURLOPT_POSTFIELDS, $jsonData);
-
-    $response = curl_exec($curlObj);
-
-    //change the response json string to object
-    $json = json_decode($response);
-
-    curl_close($curlObj);
-
-    return $json->id;
+    
+    // 구글 짧은 주소는 서비스가 종료 되었습니다.
+    return function_exists('run_replace') ? run_replace('googl_short_url', $longUrl) : $longUrl;
 }
 
 
@@ -2813,7 +2792,7 @@ function certify_count_check($mb_id, $type)
 }
 
 // 1:1문의 설정로드
-function get_qa_config($fld='*')
+function get_qa_config($fld='*', $is_cache=false)
 {
     global $g5;
 
@@ -2840,6 +2819,8 @@ if (!function_exists("get_sock")) {
             $host = $res[1];
             $get  = $res[2];
         }
+        
+        $header = '';
 
         // 80번 포트로 소캣접속 시도
         $fp = fsockopen ($host, 80, $errno, $errstr, $timeout);
@@ -3044,8 +3025,16 @@ function get_search_string($stx)
 }
 
 // XSS 관련 태그 제거
-function clean_xss_tags($str, $check_entities=0)
+function clean_xss_tags($str, $check_entities=0, $is_remove_tags=0, $cur_str_len=0)
 {
+    if( $is_remove_tags ){
+        $str = strip_tags($str);
+    }
+
+    if( $cur_str_len ){
+        $str = utf8_strcut($str, $cur_str_len, '');
+    }
+
     $str_len = strlen($str);
     
     $i = 0;
@@ -3188,7 +3177,7 @@ function get_email_address($email)
 {
     preg_match("/[0-9a-z._-]+@[a-z0-9._-]{4,}/i", $email, $matches);
 
-    return $matches[0];
+    return isset($matches[0]) ? $matches[0] : '';
 }
 
 // 파일명에서 특수문자 제거
@@ -3368,6 +3357,11 @@ function clean_query_string($query, $amp=true)
         $q = array();
 
         foreach($out as $key=>$val) {
+            if(($key && is_array($key)) || ($val && is_array($val))){
+                $q[$key] = $val;
+                continue;
+            }
+
             $key = strip_tags(trim($key));
             $val = trim($val);
 
@@ -3441,33 +3435,41 @@ function clean_query_string($query, $amp=true)
     return $str;
 }
 
-function get_params_merge_url($params){
-    $p = @parse_url(G5_URL);
-    $href = $p['scheme'].'://'.$p['host'];
-    if(isset($p['port']) && $p['port'])
-        $href .= ':'.$p['port'];
-
-    if( $tmp = explode('?', $_SERVER['REQUEST_URI']) ){
-        if( isset($tmp[0]) && $tmp[0] )
+function get_params_merge_url($params, $url=''){
+    $str_url = $url ? $url : G5_URL;
+    $p = @parse_url($str_url);
+    $href = (isset($p['scheme']) ? "{$p['scheme']}://" : '')
+        . (isset($p['user']) ? $p['user']
+        . (isset($p['pass']) ? ":{$p['pass']}" : '').'@' : '')
+        . (isset($p['host']) ? $p['host'] : '')
+        . ((isset($p['path']) && $url) ? $p['path'] : '')
+        . ((isset($p['port']) && $p['port']) ? ":{$p['port']}" : '');
+    
+    $ori_params = '';
+    if( $url ){
+        $ori_params = !empty($p['query']) ? $p['query'] : '';
+    } else if( $tmp = explode('?', $_SERVER['REQUEST_URI']) ){
+        if( isset($tmp[0]) && $tmp[0] ) {
             $href .= $tmp[0];
-    }
-    $q = array();
-    if($_SERVER['QUERY_STRING']) {
-        foreach($_GET as $key=>$val) {
-            $key = strip_tags($key);
-            $val = strip_tags($val);
-
-            if($key && $val)
-                $q[$key] = $val;
+            $ori_params = isset($tmp[1]) ? $tmp[1] : '';
+        }
+        if( $freg = strstr($ori_params, '#') ) {
+            $p['fragment'] = preg_replace('/^#/', '', $freg);
         }
     }
-
-    if( is_array($params) ){
+    
+    $q = array();
+    if( $ori_params ){
+        parse_str( $ori_params, $q );
+    }
+    
+    if( is_array($params) && $params ){
         $q = array_merge($q, $params);
     }
 
     $query = http_build_query($q, '', '&amp;');
-    $href .= '?'.$query;
+    $qc = (strpos( $href, '?' ) !== false) ? '&amp;' : '?';
+    $href .= $qc.$query.(isset($p['fragment']) ? "#{$p['fragment']}" : '');
 
     return $href;
 }
@@ -3717,6 +3719,15 @@ function is_use_email_certify(){
     return $config['cf_use_email_certify'];
 }
 
+function safe_replace_regex($str, $str_case=''){
+
+    if($str_case === 'time'){
+        return preg_replace('/[^0-9 _\-:]/i', '', $str);
+    }
+
+    return preg_replace('/[^0-9a-z_\-]/i', '', $str);
+}
+
 function get_real_client_ip(){
 
     $real_ip = $_SERVER['REMOTE_ADDR'];
@@ -3872,4 +3883,3 @@ function option_array_checked($option, $arr=array()){
 
     return $checked;
 }
-?>

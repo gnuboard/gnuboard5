@@ -47,4 +47,4 @@ if(!($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'
 document.getElementById("show_req_btn").style.display = "none";
 document.getElementById("show_pay_btn").style.display = "";
 </script>
-<?php } ?>
+<?php }

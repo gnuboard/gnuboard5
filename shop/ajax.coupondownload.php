@@ -5,7 +5,7 @@ include_once(G5_LIB_PATH.'/json.lib.php');
 if(!$member['mb_id'])
     die(json_encode(array('error' => '회원 로그인 후 이용해 주십시오.')));
 
-$cz_id = preg_replace('#[^0-9]#', '', $_GET['cz_id']);
+$cz_id = isset($_GET['cz_id']) ? preg_replace('#[^0-9]#', '', $_GET['cz_id']) : 0;
 
 if(!$cz_id)
     die(json_encode(array('error' => '올바른 방법으로 이용해 주십시오.')));
@@ -67,4 +67,3 @@ if($result && $cp['cz_type'])
 sql_query(" update {$g5['g5_shop_coupon_zone_table']} set cz_download = cz_download + 1 where cz_id = '$cz_id' ");
 
 die(json_encode(array('error' => '')));
-?>

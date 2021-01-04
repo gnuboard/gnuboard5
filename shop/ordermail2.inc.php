@@ -90,5 +90,4 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     mailer($config['cf_admin_email_name'], $config['cf_admin_email'],  $row['it_sell_email'], $subject, $content, 1);
 }
-//==============================================================================
-?>
+//==============================================================================;
