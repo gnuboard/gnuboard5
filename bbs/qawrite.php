@@ -13,6 +13,8 @@ if($is_guest)
     alert('회원이시라면 로그인 후 이용해 보십시오.', './login.php?url='.urlencode(G5_BBS_URL.'/qalist.php'));
 
 $qaconfig = get_qa_config();
+$token = _token();
+set_session('ss_qa_write_token', $token);
 
 $g5['title'] = $qaconfig['qa_title'];
 include_once('./qahead.php');

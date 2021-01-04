@@ -2549,6 +2549,7 @@ class html_process {
         // 현재접속자 처리
         $tmp_sql = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
         $tmp_row = sql_fetch($tmp_sql);
+        $http_host = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME']; 
 
         if ($tmp_row['cnt']) {
             $tmp_sql = " update {$g5['login_table']} set mb_id = '{$member['mb_id']}', lo_datetime = '".G5_TIME_YMDHIS."', lo_location = '{$g5['lo_location']}', lo_url = '{$g5['lo_url']}' where lo_ip = '{$_SERVER['REMOTE_ADDR']}' ";
@@ -2613,8 +2614,9 @@ class html_process {
             foreach($scripts as $js) {
                 if(!trim($js[1]))
                     continue;
-
-                $js[1] = preg_replace('#\.js([\'\"]?>)<\/script>$#i', '.js?ver='.G5_JS_VER.'$1</script>', $js[1]);
+                
+                $add_version_str = (stripos($js[1], $http_host) !== false) ? '?ver='.G5_JS_VER : '';
+                $js[1] = preg_replace('#\.js([\'\"]?>)<\/script>$#i', '.js'.$add_version_str.'$1</script>', $js[1]);
 
                 $javascript .= $php_eol.$js[1];
                 $php_eol = PHP_EOL;

@@ -862,7 +862,8 @@ class XPayClient
 	{
 		curl_close($this->ch);
 	}
-		function GetTimeStamp()
+
+    function GetTimeStamp()
 	{
 		$Result = "";
 		$Result = date("YmdHis");

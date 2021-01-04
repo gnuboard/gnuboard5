@@ -12,6 +12,15 @@ if($is_guest)
 
 $msg = array();
 
+$write_token = get_session('ss_qa_write_token');
+set_session('ss_qa_write_token', '');
+
+$token = isset($_POST['token']) ? clean_xss_tags($_POST['token'], 1, 1) : '';
+
+//모든 회원의 토큰을 검사합니다.
+if (!($token && $write_token === $token))
+    alert('토큰 에러로 삭제 불가합니다.');
+
 // 1:1문의 설정값
 $qaconfig = get_qa_config();
 $qa_id = isset($_POST['qa_id']) ? (int) $_POST['qa_id'] : 0;
