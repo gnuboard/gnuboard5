@@ -6,6 +6,12 @@ if($is_guest)
 
 $qaconfig = get_qa_config();
 
+$token = '';
+if( $is_admin ){
+    $token = _token();
+    set_session('ss_qa_delete_token', $token);
+}
+
 $g5['title'] = $qaconfig['qa_title'];
 include_once('./qahead.php');
 
@@ -13,6 +19,7 @@ $skin_file = $qa_skin_path.'/list.skin.php';
 $is_auth = $is_admin ? true : false;
 
 $category_option = '';
+
 if ($qaconfig['qa_category']) {
     $category_href = G5_BBS_URL.'/qalist.php';
 

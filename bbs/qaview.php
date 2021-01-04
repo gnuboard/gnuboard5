@@ -10,6 +10,9 @@ if($is_guest)
 $qaconfig = get_qa_config();
 $content = '';
 
+$token = _token();
+set_session('ss_qa_delete_token', $token);
+
 $g5['title'] = $qaconfig['qa_title'];
 include_once('./qahead.php');
 
@@ -110,9 +113,9 @@ if(is_file($skin_file)) {
             $update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$view['qa_id'].$qstr;
     }
     */
+
     if(($view['qa_type'] && $is_admin) || (!$view['qa_type'] && $view['qa_status'] == 0)) {
         $update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$view['qa_id'].$qstr;
-        set_session('ss_qa_delete_token', $token = uniqid(time()));
         $delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$view['qa_id'].'&amp;token='.$token.$qstr;
     }
 
@@ -129,7 +132,7 @@ if(is_file($skin_file)) {
 
         if($is_admin) {
             $answer_update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$answer['qa_id'].$qstr;
-            $answer_delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$answer['qa_id'].$qstr;
+            $answer_delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$answer['qa_id'].'&amp;token='.$token.$qstr;
         }
     }
 
