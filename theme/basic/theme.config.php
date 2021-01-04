@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // 테마가 지원하는 장치 설정 pc, mobile
 // 선언하지 않거나 값을 지정하지 않으면 그누보드5의 설정을 따른다.
 // G5_SET_DEVICE 상수 설정 보다 우선 적용됨
-define('G5_THEME_DEVICE', '');
+if(! defined('G5_THEME_DEVICE')) define('G5_THEME_DEVICE', '');
 
 $theme_config = array();
 
@@ -35,4 +35,3 @@ $theme_config = array(
     'qa_skin'                   => 'basic', // 1:1문의 스킨
     'qa_mobile_skin'            => 'basic'  // 1:1문의 모바일 스킨
 );
-?>

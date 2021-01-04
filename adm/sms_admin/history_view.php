@@ -6,8 +6,12 @@ $spage_size = 20;
 $colspan = 10;
 $re_text = '';
 
-$st = isset($st) ? strip_tags($st) : '';
-$ssv = isset($ssv) ? strip_tags($ssv) : '';
+$st = isset($_REQUEST['st']) ? clean_xss_tags($_REQUEST['st'], 1, 1) : '';
+$ssv = isset($_REQUEST['ssv']) ? clean_xss_tags($_REQUEST['ssv'], 1, 1) : '';
+$wr_no = isset($_REQUEST['wr_no']) ? (int) $_REQUEST['wr_no'] : 0;
+$wr_renum = isset($_REQUEST['wr_renum']) ? (int) $_REQUEST['wr_renum'] : 0;
+$spage = isset($_REQUEST['spage']) ? (int) $_REQUEST['spage'] : 0;
+$line = 0;
 
 if( $st && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
     $st = '';
@@ -17,7 +21,7 @@ if( $sst && !in_array($sst, array('mb_id', 'bk_no', 'hs_name', 'hs_hp', 'hs_date
     $sst = '';
 }
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "문자전송 상세내역";
 
@@ -262,4 +266,3 @@ function all_send()
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

@@ -87,4 +87,3 @@ $date = date('r', strtotime($date));
 
 echo '</channel>'."\n";
 echo '</rss>'."\n";
-?>

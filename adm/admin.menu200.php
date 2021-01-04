@@ -9,4 +9,3 @@ $menu['menu200'] = array (
     array('200200', '포인트관리', G5_ADMIN_URL.'/point_list.php', 'mb_point'),
     array('200900', '투표관리', G5_ADMIN_URL.'/poll_list.php', 'mb_poll')
 );
-?>

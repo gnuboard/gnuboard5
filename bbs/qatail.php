@@ -12,4 +12,3 @@ if (G5_IS_MOBILE) {
     else
         include ('./_tail.php');
 }
-?>

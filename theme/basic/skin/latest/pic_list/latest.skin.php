@@ -20,7 +20,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
         if( $i === 0 ) {
             $thumb = get_list_thumbnail($bo_table, $list[$i]['wr_id'], $thumb_width, $thumb_height, false, true);
 
-            if($thumb['src']) {
+            if(isset($thumb['src']) && $thumb['src']) {
                 $img = $thumb['src'];
             } else {
                 $img = G5_IMG_URL.'/no_img.png';

@@ -33,4 +33,3 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 
 <?php
 include_once(G5_MOBILE_PATH.'/tail.php');
-?>

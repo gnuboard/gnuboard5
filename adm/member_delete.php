@@ -4,11 +4,11 @@ include_once("./_common.php");
 
 check_demo();
 
-auth_check($auth[$sub_menu], "d");
+auth_check_menu($auth, $sub_menu, "d");
 
-$mb = get_member($_POST['mb_id']);
+$mb = isset($_POST['mb_id']) ? get_member($_POST['mb_id']) : array();
 
-if (!$mb['mb_id'])
+if (! (isset($mb['mb_id']) && $mb['mb_id']))
     alert("회원자료가 존재하지 않습니다.");
 else if ($member['mb_id'] == $mb['mb_id'])
     alert("로그인 중인 관리자는 삭제 할 수 없습니다.");
@@ -26,4 +26,3 @@ if ($url)
     goto_url("{$url}?$qstr&amp;w=u&amp;mb_id=$mb_id");
 else
     goto_url("./member_list.php?$qstr");
-?>

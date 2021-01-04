@@ -7,7 +7,9 @@ if (!$member['mb_id'])
 if ($is_admin == 'super')
     alert('최고 관리자는 탈퇴할 수 없습니다');
 
-if (!($_POST['mb_password'] && check_password($_POST['mb_password'], $member['mb_password'])))
+$post_mb_password = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '';
+
+if (!($post_mb_password && check_password($post_mb_password, $member['mb_password'])))
     alert('비밀번호가 틀립니다.');
 
 // 회원탈퇴일을 저장
@@ -27,4 +29,3 @@ if(function_exists('social_member_link_delete')){
 }
 
 alert(''.$member['mb_nick'].'님께서는 '. date("Y년 m월 d일") .'에 회원에서 탈퇴 하셨습니다.', $url);
-?>

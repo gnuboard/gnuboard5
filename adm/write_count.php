@@ -4,10 +4,13 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 $g5['title'] = '글,댓글 현황';
 include_once ('./admin.head.php');
+
+$graph = isset($_GET['graph']) ? clean_xss_tags($_GET['graph'], 1, 1) : '';
+$period = isset($_GET['period']) ? clean_xss_tags($_GET['period'], 1, 1) : '';
 
 // http://www.jqplot.com/
 add_stylesheet('<link rel="stylesheet" href="'.G5_PLUGIN_URL.'/jqplot/jquery.jqplot.css">', 1);
@@ -74,6 +77,8 @@ if ($period == '오늘') {
 $sql_bo_table = '';
 if ($bo_table)
     $sql_bo_table = "and bo_table = '$bo_table'";
+
+$line1 = $line2 = array();
 
 switch ($day) {
     case '시간' :
@@ -175,8 +180,8 @@ if (empty($line1) || empty($line2)) {
 <div id="chart1" style="height:500px; width:100%;"></div>
 <script>
 $(document).ready(function(){
-    var line1 = [<?php echo implode($line1, ','); ?>];
-    var line2 = [<?php echo implode($line2, ','); ?>];
+    var line1 = [<?php echo implode(',', $line1); ?>];
+    var line2 = [<?php echo implode(',', $line2); ?>];
     var plot1 = $.jqplot ('chart1', [line1, line2], {
             seriesDefaults: {
                 <?php if ($graph == 'bar') { ?>
@@ -206,4 +211,3 @@ $(document).ready(function(){
 </div>
 <?php
 include_once ('./admin.tail.php');
-?>

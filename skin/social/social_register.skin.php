@@ -43,7 +43,7 @@ add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css
             <?php if( social_service_check('google') ) {     //구글 로그인을 사용한다면 ?>
             <a href="<?php echo $self_url;?>?provider=google&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-google" title="구글">
                 <span class="ico"></span>
-                <span class="txt">Sign in with Google</span>
+                <span class="txt">구글로 회원가입하기</span>
             </a>
             <?php }     //end if ?>
             <?php if( social_service_check('twitter') ) {     //트위터 로그인을 사용한다면 ?>

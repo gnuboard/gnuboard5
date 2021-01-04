@@ -69,4 +69,3 @@ echo '<div class="local_desc01 local_desc"><p><strong>썸네일 '.$cnt.'건의 �
 
 <?php
 include_once('./admin.tail.php');
-?>

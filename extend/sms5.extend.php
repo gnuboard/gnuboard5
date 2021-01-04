@@ -29,7 +29,7 @@ $g5['sms5_book_group_table']      = $g5['sms5_prefix'] . 'book_group';
 $g5['sms5_form_table']            = $g5['sms5_prefix'] . 'form';
 $g5['sms5_form_group_table']      = $g5['sms5_prefix'] . 'form_group';
 
-$sms5 = array();
+$sms5 = array('cf_skin'=>'', 'cf_datetime'=>'', 'cf_phone'=>'');
 
 if (!empty($config['cf_sms_use'])) {
 
@@ -45,4 +45,3 @@ if (!empty($config['cf_sms_use'])) {
         $g5['sms5_demo_send'] = true;
     }
 }
-?>

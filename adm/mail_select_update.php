@@ -2,7 +2,7 @@
 $sub_menu = "200300";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 $html_title = '회원메일 발송';
 
@@ -26,14 +26,12 @@ echo "</span>";
 
 <?php
 include_once('./admin.tail.php');
-?>
 
-<?php
 flush();
 ob_flush();
 
-$ma_id = trim($_POST['ma_id']);
-$select_member_list = trim($_POST['ma_list']);
+$ma_id = isset($_POST['ma_id']) ? (int) $_POST['ma_id'] : 0;
+$select_member_list = isset($_POST['ma_list']) ? trim($_POST['ma_list']) : '';
 
 //print_r2($_POST); EXIT;
 $member_list = explode("\n", conv_unescape_nl($select_member_list));

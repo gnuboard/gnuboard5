@@ -6,7 +6,7 @@ $w = $_POST['w'];
 if ($w == 'u' || $w == 'd')
     check_demo();
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 check_admin_token();
 
@@ -100,4 +100,3 @@ if ($w == 'd')
     goto_url('./poll_list.php?'.$qstr);
 else
     goto_url('./poll_form.php?w=u&po_id='.$po_id.'&amp;'.$qstr);
-?>

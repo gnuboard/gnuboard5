@@ -2,7 +2,7 @@
 $sub_menu = "900300";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
@@ -24,8 +24,15 @@ if ( ! (($config['cf_icode_id'] && $config['cf_icode_pw']) || $config['cf_icode_
     alert('아이코드 설정값이 존재하지 않습니다.');
 }
 
-$wr_reply   = preg_replace('#[^0-9\-]#', '', trim($wr_reply));
-$wr_message = clean_xss_tags(trim($wr_message));
+$wr_reply   = isset($_REQUEST['wr_reply']) ? preg_replace('#[^0-9\-]#', '', trim($_REQUEST['wr_reply'])) : '';
+$wr_message = isset($_REQUEST['wr_message']) ? clean_xss_tags(trim($_REQUEST['wr_message'])) : '';
+$send_list = isset($_REQUEST['send_list']) ? clean_xss_tags(trim($_REQUEST['send_list']), 1, 1) : '';
+
+$wr_by = isset($_REQUEST['wr_by']) ? clean_xss_tags(trim($_REQUEST['wr_by']), 1, 1) : '';
+$wr_bm = isset($_REQUEST['wr_bm']) ? clean_xss_tags(trim($_REQUEST['wr_bm']), 1, 1) : '';
+$wr_bd = isset($_REQUEST['wr_bd']) ? clean_xss_tags(trim($_REQUEST['wr_bd']), 1, 1) : '';
+$wr_bh = isset($_REQUEST['wr_bh']) ? clean_xss_tags(trim($_REQUEST['wr_bh']), 1, 1) : '';
+$wr_bi = isset($_REQUEST['wr_bi']) ? clean_xss_tags(trim($_REQUEST['wr_bi']), 1, 1) : '';
 
 if (!$wr_reply)
     win_close_alert('회신 번호를 숫자, - 로 입력해주세요.');
@@ -360,4 +367,3 @@ location.href = 'history_view.php?wr_no=<?php echo $wr_no?>';
 </script>
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

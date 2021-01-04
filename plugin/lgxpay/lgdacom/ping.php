@@ -45,4 +45,3 @@
         echo "response code = " . $xpay->Response_Code() . "<br>";
         echo "response msg = " . $xpay->Response_Msg() . "<p>";
     }
-?>

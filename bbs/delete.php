@@ -9,6 +9,8 @@ if (!($token && $delete_token == $token))
 
 //$wr = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
 
+$count_write = $count_comment = 0;
+
 @include_once($board_skin_path.'/delete.head.skin.php');
 
 if ($is_admin == 'super') // 최고관리자 통과
@@ -141,4 +143,3 @@ delete_cache_latest($bo_table);
 run_event('bbs_delete', $write, $board);
 
 goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;page='.$page.$qstr));
-?>

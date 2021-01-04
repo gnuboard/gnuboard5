@@ -25,4 +25,3 @@ include_once ('./admin.head.php');
 run_event('admin_get_page_'.$call, $arr_query, $token);
 
 include_once ('./admin.tail.php');
-?>

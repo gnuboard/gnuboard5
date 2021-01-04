@@ -97,4 +97,3 @@ function get_os($agent)
 
     return $s;
 }
-?>

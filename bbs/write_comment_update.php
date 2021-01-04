@@ -6,7 +6,7 @@ include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 // 토큰체크
 $comment_token = trim(get_session('ss_comment_token'));
 set_session('ss_comment_token', '');
-if(!trim($_POST['token']) || !$comment_token || $comment_token != $_POST['token'])
+if(empty($_POST['token']) || !$comment_token || $comment_token != $_POST['token'])
     alert('올바른 방법으로 이용해 주십시오.');
 
 // 090710
@@ -15,15 +15,30 @@ if (substr_count($wr_content, "&#") > 50) {
     exit;
 }
 
-@include_once($board_skin_path.'/write_comment_update.head.skin.php');
-
-$w = $_POST["w"];
-$wr_name  = trim($_POST['wr_name']);
-$wr_email = '';
+$w = isset($_POST['w']) ? clean_xss_tags($_POST['w']) : '';
+$wr_name  = isset($_POST['wr_name']) ? clean_xss_tags(trim($_POST['wr_name'])) : '';
+$wr_secret = isset($_POST['wr_secret']) ? clean_xss_tags($_POST['wr_secret']) : '';
+$wr_email = $wr_subject = '';
 $reply_array = array();
+
+$wr_1 = isset($_POST['wr_1']) ? $_POST['wr_1'] : '';
+$wr_2 = isset($_POST['wr_2']) ? $_POST['wr_2'] : '';
+$wr_3 = isset($_POST['wr_3']) ? $_POST['wr_3'] : '';
+$wr_4 = isset($_POST['wr_4']) ? $_POST['wr_4'] : '';
+$wr_5 = isset($_POST['wr_5']) ? $_POST['wr_5'] : '';
+$wr_6 = isset($_POST['wr_6']) ? $_POST['wr_6'] : '';
+$wr_7 = isset($_POST['wr_7']) ? $_POST['wr_7'] : '';
+$wr_8 = isset($_POST['wr_8']) ? $_POST['wr_8'] : '';
+$wr_9 = isset($_POST['wr_9']) ? $_POST['wr_9'] : '';
+$wr_10 = isset($_POST['wr_10']) ? $_POST['wr_10'] : '';
+$wr_facebook_user = isset($_POST['wr_facebook_user']) ? clean_xss_tags($_POST['wr_facebook_user'], 1, 1) : '';
+$wr_twitter_user = isset($_POST['wr_twitter_user']) ? clean_xss_tags($_POST['wr_twitter_user'], 1, 1) : '';
+$wr_homepage = isset($_POST['wr_homepage']) ? clean_xss_tags($_POST['wr_homepage'], 1, 1) : '';
 
 if (!empty($_POST['wr_email']))
     $wr_email = get_email_address(trim($_POST['wr_email']));
+
+@include_once($board_skin_path.'/write_comment_update.head.skin.php');
 
 // 비회원의 경우 이름이 누락되는 경우가 있음
 if ($is_guest) {
@@ -42,7 +57,7 @@ else
 
 // 세션의 시간 검사
 // 4.00.15 - 댓글 수정시 연속 게시물 등록 메시지로 인한 오류 수정
-if ($w == 'c' && $_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']) && !$is_admin)
+if ($w == 'c' && !$is_admin && isset($_SESSION['ss_datetime']) && $_SESSION['ss_datetime'] >= (G5_SERVER_TIME - $config['cf_delay_sec']))
     alert('너무 빠른 시간내에 게시물을 연속해서 올릴 수 없습니다.');
 
 set_session('ss_datetime', G5_SERVER_TIME);
@@ -325,11 +340,11 @@ else if ($w == 'cu') // 댓글 수정
                      wr_7 = '$wr_7',
                      wr_8 = '$wr_8',
                      wr_9 = '$wr_9',
-                     wr_10 = '$wr_10',
-                     wr_option = '$wr_option'
+                     wr_10 = '$wr_10'
                      $sql_ip
                      $sql_secret
               where wr_id = '$comment_id' ";
+
     sql_query($sql);
 }
 
@@ -344,4 +359,3 @@ $redirect_url = short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table
 run_event('comment_update_after', $board, $wr_id, $w, $qstr, $redirect_url, $comment_id, $reply_array);
 
 goto_url($redirect_url);
-?>

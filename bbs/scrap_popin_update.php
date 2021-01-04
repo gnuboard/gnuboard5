@@ -36,7 +36,7 @@ if ($row['cnt'])
     exit;
 }
 
-$wr_content = trim($_POST['wr_content']);
+$wr_content = isset($_POST['wr_content']) ? trim($_POST['wr_content']) : '';
 
 // 덧글이 넘어오고 코멘트를 쓸 권한이 있다면
 if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
@@ -118,4 +118,3 @@ echo <<<HEREDOC
 <a href="./scrap.php">스크랩 확인하기</a>
 </noscript>
 HEREDOC;
-?>

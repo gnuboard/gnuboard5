@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$ms_id = isset($_REQUEST['ms_id']) ? (int) $_REQUEST['ms_id'] : 0;
+
 if (!$is_member)
     alert('회원만 이용하실 수 있습니다.');
 
@@ -11,4 +13,3 @@ $sql = " update `{$g5['member_table']}` set mb_scrap_cnt = '".get_scrap_totals($
 sql_query($sql);
 
 goto_url('./scrap.php?page='.$page);
-?>

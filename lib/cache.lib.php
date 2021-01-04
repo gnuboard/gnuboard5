@@ -92,4 +92,3 @@ function g5_delete_cache_by_prefix($key){
 
     return ($files) ? true : false;
 }
-?>

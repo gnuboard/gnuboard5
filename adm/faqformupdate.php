@@ -6,11 +6,17 @@ if ($w == "u" || $w == "d")
     check_demo();
 
 if ($w == 'd')
-    auth_check($auth[$sub_menu], "d");
+    auth_check_menu($auth, $sub_menu, "d");
 else
-    auth_check($auth[$sub_menu], "w");
+    auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
+
+$fm_id = isset($_POST['fm_id']) ? (int) $_POST['fm_id'] : 0;
+$fa_subject = isset($_POST['fa_subject']) ? $_POST['fa_subject'] : '';
+$fa_content = isset($_POST['fa_content']) ? $_POST['fa_content'] : '';
+$fa_order = isset($_POST['fa_order']) ? (int) $_POST['fa_order'] : 0;
+$fa_id = isset($_POST['fa_id']) ? (int) $_POST['fa_id'] : 0;
 
 $sql_common = " fa_subject = '$fa_subject',
                 fa_content = '$fa_content',
@@ -42,4 +48,3 @@ if ($w == 'd')
     goto_url("./faqlist.php?fm_id=$fm_id");
 else
     goto_url("./faqform.php?w=u&amp;fm_id=$fm_id&amp;fa_id=$fa_id");
-?>

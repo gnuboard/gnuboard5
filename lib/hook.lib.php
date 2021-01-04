@@ -131,4 +131,3 @@ function get_hook_datas($type='', $is_callback=''){
 
     return null;
 }
-?>

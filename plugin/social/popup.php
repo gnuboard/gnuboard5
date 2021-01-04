@@ -41,4 +41,3 @@ if( isset( $_REQUEST["redirect_to_idp"] ) ){
     social_login_session_clear(1);
     social_return_from_provider_page( $provider_name, '', '', '', '' );
 }
-?>

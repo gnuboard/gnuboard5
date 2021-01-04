@@ -14,4 +14,3 @@ if (G5_IS_MOBILE) {
     }
     echo html_purifier(stripslashes($board['bo_content_head']));
 }
-?>

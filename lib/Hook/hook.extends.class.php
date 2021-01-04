@@ -159,6 +159,4 @@ Class GML_Hook extends Hook {
     }
 }
 
-// end  Hook Class
-
-?>
+// end  Hook Class;

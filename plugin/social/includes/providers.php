@@ -240,5 +240,3 @@ $social_providers_config = array(
 		"cat"               => "misc",
 	),
 );
-
-?>

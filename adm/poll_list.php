@@ -2,7 +2,7 @@
 $sub_menu = "200900";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 $sql_common = " from {$g5['poll_table']} ";
 
@@ -59,7 +59,7 @@ $colspan = 7;
 <div class="sch_last">
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
-        <option value="po_subject"<?php echo get_selected($_GET['sfl'], "po_subject"); ?>>제목</option>
+        <option value="po_subject"<?php echo get_selected($sfl, "po_subject"); ?>>제목</option>
     </select>
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
@@ -155,4 +155,3 @@ $(function() {
 
 <?php
 include_once ('./admin.tail.php');
-?>

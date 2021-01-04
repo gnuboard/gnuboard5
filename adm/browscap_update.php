@@ -21,4 +21,3 @@ $browscap->cacheFilename = 'browscap_cache.php';
 $browscap->updateCache();
 
 die('');
-?>

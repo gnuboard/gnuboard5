@@ -47,6 +47,12 @@ function sms5_sub_paging($write_pages, $cur_page, $total_page, $url, $add="", $s
         return "";
 }
 
+// php8 버전 호환 권한 검사 함수
+function ajax_auth_check_menu($auth, $sub_menu, $attr){
+    $check_auth = isset($auth[$sub_menu]) ? $auth[$sub_menu] : '';
+    return ajax_auth_check($check_auth, $attr);
+}
+
 // 권한 검사
 function ajax_auth_check($auth, $attr)
 {
@@ -92,7 +98,7 @@ if ( ! function_exists('get_hp')) {
         $hp = str_replace('-', '', trim($hp));
         $hp = preg_replace("/^(01[016789])([0-9]{3,4})([0-9]{4})$/", $preg, $hp);
 
-        if ($g5['sms5_demo'])
+        if (isset($g5['sms5_demo']) && $g5['sms5_demo'])
             $hp = '0100000000';
 
         return $hp;
@@ -167,7 +173,7 @@ if($config['cf_sms_type'] == 'LMS') {
         function Send() {
             global $g5;
 
-            if ($g5['sms5_demo_send']) {
+            if (isset($g5['sms5_demo_send']) && $g5['sms5_demo_send']) {
                 foreach($this->Data as $puts) {
                     if (rand(0,10)) {
                         $phone = substr($puts,26,11);
@@ -445,4 +451,3 @@ if($config['cf_sms_type'] == 'LMS') {
         }
     }
 }
-?>

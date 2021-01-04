@@ -2,7 +2,7 @@
 $sub_menu = "100100";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
@@ -304,6 +304,7 @@ $pg_anchor = '<ul class="anchor">
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
+$userinfo = array('payment'=>'');
 if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
 }
@@ -569,14 +570,14 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td colspan="3">
                 <?php if (!function_exists('curl_init')) echo help('<b>경고) curl이 지원되지 않아 네이버 신디케이션을 사용할수 없습니다.</b>'); ?>
                 <?php echo help('네이버 신디케이션 연동키(token)을 입력하면 네이버 신디케이션을 사용할 수 있습니다.<br>연동키는 <a href="http://webmastertool.naver.com/" target="_blank"><u>네이버 웹마스터도구</u></a> -> 네이버 신디케이션에서 발급할 수 있습니다.') ?>
-                <input type="text" name="cf_syndi_token" value="<?php echo $config['cf_syndi_token'] ?>" id="cf_syndi_token" class="frm_input" size="70">
+                <input type="text" name="cf_syndi_token" value="<?php echo get_sanitize_input($config['cf_syndi_token']); ?>" id="cf_syndi_token" class="frm_input" size="70">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_syndi_except">네이버 신디케이션 제외게시판</label></th>
             <td colspan="3">
                 <?php echo help('네이버 신디케이션 수집에서 제외할 게시판 아이디를 | 로 구분하여 입력하십시오. 예) notice|adult<br>참고로 그룹접근사용 게시판, 글읽기 권한 2 이상 게시판, 비밀글은 신디케이션 수집에서 제외됩니다.') ?>
-                <input type="text" name="cf_syndi_except" value="<?php echo $config['cf_syndi_except'] ?>" id="cf_syndi_except" class="frm_input" size="70">
+                <input type="text" name="cf_syndi_except" value="<?php echo get_sanitize_input($config['cf_syndi_except']); ?>" id="cf_syndi_except" class="frm_input" size="70">
             </td>
         </tr>
         </tbody>
@@ -1530,4 +1531,3 @@ if($config['cf_cert_use']) {
 }
 
 include_once ('./admin.tail.php');
-?>

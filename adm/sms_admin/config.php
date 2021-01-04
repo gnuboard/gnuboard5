@@ -2,7 +2,7 @@
 $sub_menu = "900100";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "SMS 기본설정";
 
@@ -25,7 +25,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw'])
 if (!$config['cf_icode_id'])
     $config['cf_icode_id'] = 'sir_';
 
-if (!$sms5['cf_skin'])
+if (! (isset($sms5['cf_skin']) && $sms5['cf_skin']))
     $sms5['cf_skin'] = 'basic';
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
@@ -117,7 +117,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
         <th scope="row"><label for="cf_phone">회신번호<strong class="sound_only"> 필수</strong></label></th>
         <td>
             <?php echo help("회신받을 휴대폰 번호를 입력하세요. 회신번호는 발신번호로 사전등록된 번호와 동일해야 합니다.<br>예) 010-123-4567"); ?>
-            <input type="text" name="cf_phone" value="<?php echo $sms5['cf_phone']; ?>" id="cf_phone" required class="frm_input required" size="13">
+            <input type="text" name="cf_phone" value="<?php echo isset($sms5['cf_phone']) ? get_sanitize_input($sms5['cf_phone']) : ''; ?>" id="cf_phone" required class="frm_input required" size="13">
         </td>
     </tr>
     </tbody>
@@ -145,4 +145,3 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

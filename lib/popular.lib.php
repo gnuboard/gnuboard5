@@ -48,4 +48,3 @@ function popular($skin_dir='basic', $pop_cnt=7, $date_cnt=3)
 
     return $content;
 }
-?>

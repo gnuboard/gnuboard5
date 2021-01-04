@@ -11,8 +11,9 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     $edt = false;
 
     $row = get_thumbnail_find_cache($bo_table, $wr_id, 'file');
+    $empty_array = array('src'=>'', 'ori'=>'', 'alt'=>'');
 
-    if($row['bf_file']) {
+    if(isset($row['bf_file']) && $row['bf_file']) {
         $filename = $row['bf_file'];
         $filepath = G5_DATA_PATH.'/file/'.$bo_table;
         $alt = get_text($row['bf_content']);
@@ -41,7 +42,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
                     $filepath = dirname($srcfile);
 
                     preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $matches[0][$i], $malt);
-                    $alt = get_text($malt[1]);
+                    $alt = isset($malt[1]) ? get_text($malt[1]) : '';
 
                     break;
                 }
@@ -52,7 +53,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
     }
 
     if(!$filename)
-        return false;
+        return $empty_array;
     
     if( $thumbnail_info = run_replace('get_list_thumbnail_info', array(), array('bo_table'=>$bo_table, 'wr_id'=>$wr_id, 'data_path'=>$data_path, 'edt'=>$edt, 'filename'=>$filename, 'filepath'=>$filepath, 'thumb_width'=>$thumb_width, 'thumb_height'=>$thumb_height, 'is_create'=>$is_create, 'is_crop'=>$is_crop, 'crop_mode'=>$crop_mode, 'is_sharpen'=>$is_sharpen, 'um_value'=>$um_value)) ){
         return $thumbnail_info;
@@ -71,7 +72,7 @@ function get_list_thumbnail($bo_table, $wr_id, $thumb_width, $thumb_height, $is_
             $src = G5_DATA_URL.'/file/'.$bo_table.'/'.$tname;
         }
     } else {
-        return false;
+        return $empty_array;
     }
 
     $thumb = array("src"=>$src, "ori"=>$ori, "alt"=>$alt);
@@ -113,15 +114,15 @@ function get_view_thumbnail($contents, $thumb_width=0)
         $img_tag = isset($matches[0][$i]) ? $matches[0][$i] : '';
 
         preg_match("/src=[\'\"]?([^>\'\"]+[^>\'\"]+)/i", $img, $m);
-        $src = $m[1];
+        $src = isset($m[1]) ? $m[1] : '';
         preg_match("/style=[\"\']?([^\"\'>]+)/i", $img, $m);
-        $style = $m[1];
+        $style = isset($m[1]) ? $m[1] : '';
         preg_match("/width:\s*(\d+)px/", $style, $m);
-        $width = $m[1];
+        $width = isset($m[1]) ? $m[1] : '';
         preg_match("/height:\s*(\d+)px/", $style, $m);
-        $height = $m[1];
+        $height = isset($m[1]) ? $m[1] : '';
         preg_match("/alt=[\"\']?([^\"\']*)[\"\']?/", $img, $m);
-        $alt = get_text($m[1]);
+        $alt = isset($m[1]) ? get_text($m[1]) : '';
 
         // 이미지 path 구함
         $p = parse_url($src);
@@ -731,4 +732,3 @@ function is_animated_gif($filename) {
 
     return $cache[$key];
 }
-?>

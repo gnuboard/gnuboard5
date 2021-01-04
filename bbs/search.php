@@ -228,7 +228,7 @@ $group_select = '<label for="gr_id" class="sound_only">게시판 그룹선택</l
 $sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
-    $group_select .= "<option value=\"".$row['gr_id']."\"".get_selected($_GET['gr_id'], $row['gr_id']).">".$row['gr_subject']."</option>";
+    $group_select .= "<option value=\"".$row['gr_id']."\"".get_selected($gr_id, $row['gr_id']).">".$row['gr_subject']."</option>";
 $group_select .= '</select>';
 
 if (!$sfl) $sfl = 'wr_subject';
@@ -237,4 +237,3 @@ if (!$sop) $sop = 'or';
 include_once($search_skin_path.'/search.skin.php');
 
 include_once('./_tail.php');
-?>

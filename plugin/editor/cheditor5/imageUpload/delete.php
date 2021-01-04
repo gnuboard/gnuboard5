@@ -49,5 +49,3 @@ if (file_exists($filepath)) {
 }
 
 echo $r ? true : false;
-
-?>

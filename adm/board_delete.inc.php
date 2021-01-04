@@ -33,4 +33,3 @@ delete_cache_latest($tmp_bo_table);
 
 // 게시판 폴더 전체 삭제
 rm_rf(G5_DATA_PATH.'/file/'.$tmp_bo_table);
-?>

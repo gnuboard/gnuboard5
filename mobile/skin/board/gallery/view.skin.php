@@ -85,8 +85,8 @@ jQuery(function($){
         if($v_img_count) {
             echo "<div id=\"bo_v_img\">\n";
 
-            for ($i=0; $i<=count($view['file']); $i++) {
-                echo get_file_thumbnail($view['file'][$i]);
+            foreach($view['file'] as $view_file) {
+                echo get_file_thumbnail($view_file);
             }
             echo "</div>\n";
 		}
@@ -126,8 +126,8 @@ jQuery(function($){
     </section>
     
     <?php
+    $cnt = 0;
     if ($view['file']['count']) {
-        $cnt = 0;
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
                 $cnt++;

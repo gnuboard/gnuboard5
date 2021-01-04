@@ -5,11 +5,13 @@ include_once('./_common.php');
 $page_size = 20;
 $colspan = 10;
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "문자전송 내역 (번호별)";
 
 if ($page < 1) $page = 1;
+
+$line = 0;
 
 if( isset($st) && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
     $st = '';
@@ -108,4 +110,3 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

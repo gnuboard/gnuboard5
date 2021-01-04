@@ -71,4 +71,3 @@ for ($i=0; $i<$count; $i++)
 run_event('admin_menu_list_update');
 
 goto_url('./menu_list.php');
-?>

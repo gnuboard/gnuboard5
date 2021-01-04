@@ -80,5 +80,4 @@ if($config['cf_cert_use'] == 2) {
 // ########################################################################
 // # 리턴 URL 설정
 // ########################################################################
-$returnUrl = escapeshellarg(G5_OKNAME_URL.'/hpcert2.php');          // 본인인증 완료후 리턴될 URL (도메인 포함 full path)
-?>
+$returnUrl = escapeshellarg(G5_OKNAME_URL.'/hpcert2.php');          // 본인인증 완료후 리턴될 URL (도메인 포함 full path);

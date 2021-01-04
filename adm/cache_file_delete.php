@@ -57,4 +57,3 @@ echo '<div class="local_desc01 local_desc"><p><strong>최신글 캐시파일 '.$
 
 <?php
 include_once('./admin.tail.php');
-?>

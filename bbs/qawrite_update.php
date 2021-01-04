@@ -12,9 +12,18 @@ if($is_guest)
 
 $msg = array();
 
+$write_token = get_session('ss_qa_write_token');
+set_session('ss_qa_write_token', '');
+
+$token = isset($_POST['token']) ? clean_xss_tags($_POST['token'], 1, 1) : '';
+
+//모든 회원의 토큰을 검사합니다.
+if (!($token && $write_token === $token))
+    alert('토큰 에러로 삭제 불가합니다.');
+
 // 1:1문의 설정값
 $qaconfig = get_qa_config();
-$qa_id = isset($qa_id) ? (int) $qa_id : 0;
+$qa_id = isset($_POST['qa_id']) ? (int) $_POST['qa_id'] : 0;
 
 if(trim($qaconfig['qa_category'])) {
     if($w != 'a') {
@@ -57,8 +66,7 @@ if (!empty($msg)) {
     alert($msg);
 }
 
-if($qa_hp)
-    $qa_hp = preg_replace('/[^0-9\-]/', '', strip_tags($qa_hp));
+$qa_hp = isset($_POST['qa_hp']) ? preg_replace('/[^0-9\-]/', '', $_POST['qa_hp']) : '';
 
 // 090710
 if (substr_count($qa_content, '&#') > 50) {
@@ -71,6 +79,13 @@ $upload_max_filesize = ini_get('upload_max_filesize');
 if (empty($_POST)) {
     alert("파일 또는 글내용의 크기가 서버에서 설정한 값을 넘어 오류가 발생하였습니다.\\npost_max_size=".ini_get('post_max_size')." , upload_max_filesize=".$upload_max_filesize."\\n게시판관리자 또는 서버관리자에게 문의 바랍니다.");
 }
+
+$qa_type = 0;
+$qa_parent = 0;
+$qa_related = 0;
+$qa_email_recv = (isset($_POST['qa_email_recv']) && $_POST['qa_email_recv']) ? 1 : 0;
+$qa_sms_recv = (isset($_POST['qa_sms_recv']) && $_POST['qa_sms_recv']) ? 1 : 0;
+$qa_status = 0;
 
 for ($i=1; $i<=5; $i++) {
     $var = "qa_$i";
@@ -115,7 +130,7 @@ if($w == 'u' || $w == 'a' || $w == 'r') {
 
 // 파일개수 체크
 $file_count   = 0;
-$upload_count = count($_FILES['bf_file']['name']);
+$upload_count = isset($_FILES['bf_file']['name']) ? count($_FILES['bf_file']['name']) : 0;
 
 for ($i=1; $i<=$upload_count; $i++) {
     if($_FILES['bf_file']['name'][$i] && is_uploaded_file($_FILES['bf_file']['tmp_name'][$i]))
@@ -134,7 +149,7 @@ $chars_array = array_merge(range(0,9), range('a','z'), range('A','Z'));
 // 가변 파일 업로드
 $file_upload_msg = '';
 $upload = array();
-for ($i=1; $i<=count($_FILES['bf_file']['name']); $i++) {
+for ($i=1; $i<=$upload_count; $i++) {
     $upload[$i]['file']     = '';
     $upload[$i]['source']   = '';
     $upload[$i]['del_check'] = false;
@@ -234,6 +249,11 @@ if($w == '' || $w == 'a' || $w == 'r') {
         $qa_status = 1;
     }
 
+    $insert_qa_file1 = isset($upload[1]['file']) ? $upload[1]['file'] : '';
+    $insert_qa_source1 = isset($upload[1]['source']) ? $upload[1]['source'] : '';
+    $insert_qa_file2 = isset($upload[2]['file']) ? $upload[2]['file'] : '';
+    $insert_qa_source2 = isset($upload[2]['source']) ? $upload[2]['source'] : '';
+
     $sql = " insert into {$g5['qa_content_table']}
                 set qa_num          = '$qa_num',
                     mb_id           = '{$member['mb_id']}',
@@ -250,10 +270,10 @@ if($w == '' || $w == 'a' || $w == 'r') {
                     qa_subject      = '$qa_subject',
                     qa_content      = '$qa_content',
                     qa_status       = '$qa_status',
-                    qa_file1        = '{$upload[1]['file']}',
-                    qa_source1      = '{$upload[1]['source']}',
-                    qa_file2        = '{$upload[2]['file']}',
-                    qa_source2      = '{$upload[2]['source']}',
+                    qa_file1        = '{$insert_qa_file1}',
+                    qa_source1      = '{$insert_qa_source1}',
+                    qa_file2        = '{$insert_qa_file2}',
+                    qa_source2      = '{$insert_qa_source2}',
                     qa_ip           = '{$_SERVER['REMOTE_ADDR']}',
                     qa_datetime     = '".G5_TIME_YMDHIS."',
                     qa_1            = '$qa_1',
@@ -451,4 +471,3 @@ if ($file_upload_msg)
     alert($file_upload_msg, $result_url);
 else
     goto_url($result_url);
-?>

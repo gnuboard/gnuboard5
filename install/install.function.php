@@ -1,6 +1,26 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
+if( ! function_exists('array_map_deep') ){
+    // multi-dimensional array에 사용자지정 함수적용
+    function array_map_deep($fn, $array)
+    {
+        if(is_array($array)) {
+            foreach($array as $key => $value) {
+                if(is_array($value)) {
+                    $array[$key] = array_map_deep($fn, $value);
+                } else {
+                    $array[$key] = call_user_func($fn, $value);
+                }
+            }
+        } else {
+            $array = call_user_func($fn, $array);
+        }
+
+        return $array;
+    }
+}
+
 if( ! function_exists('safe_install_string_check') ){
     function safe_install_string_check( $str, $is_json=false ) {
         $is_check = false;
@@ -23,7 +43,7 @@ if( ! function_exists('safe_install_string_check') ){
             die($msg);
         }
 
-        return $str;
+        return array_map_deep('stripslashes', $str);
     }
 }
 
@@ -37,4 +57,3 @@ if( ! function_exists('install_json_msg') ){
         return json_encode(array('error'=>$error_msg, 'success'=>$success_msg, 'exists'=>$exists_msg));
     }
 }
-?>

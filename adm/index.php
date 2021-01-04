@@ -100,11 +100,6 @@ $colspan = 12;
             $mb_nick = get_sideview($row['mb_id'], get_text($row['mb_nick']), $row['mb_email'], $row['mb_homepage']);
 
             $mb_id = $row['mb_id'];
-            if ($row['mb_leave_date'])
-                $mb_id = $mb_id;
-            else if ($row['mb_intercept_date'])
-                $mb_id = $mb_id;
-
         ?>
         <tr>
             <td class="td_mbid"><?php echo $mb_id ?></td>
@@ -138,7 +133,7 @@ $sql_common = " from {$g5['board_new_table']} a, {$g5['board_table']} b, {$g5['g
 
 if ($gr_id)
     $sql_common .= " and b.gr_id = '$gr_id' ";
-if ($view) {
+if (isset($view) && $view) {
     if ($view == 'w')
         $sql_common .= " and a.wr_id = a.wr_parent ";
     else if ($view == 'c')
@@ -315,4 +310,3 @@ $colspan = 7;
 
 <?php
 include_once ('./admin.tail.php');
-?>

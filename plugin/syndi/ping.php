@@ -62,4 +62,3 @@ echo "<entry>\n";
     echo "<category term=\"{$bo_table}\" label=\"{$link_title}\" />\n";
 echo "</entry>\n";
 echo "</feed>";
-?>
