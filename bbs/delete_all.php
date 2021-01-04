@@ -14,7 +14,7 @@ $tmp_array = array();
 if ($wr_id) // 건별삭제
     $tmp_array[0] = $wr_id;
 else // 일괄삭제
-    $tmp_array = $_POST['chk_wr_id'];
+    $tmp_array = (isset($_POST['chk_wr_id']) && is_array($_POST['chk_wr_id'])) ? $_POST['chk_wr_id'] : array();
 
 $chk_count = count($tmp_array);
 
@@ -162,4 +162,3 @@ delete_cache_latest($bo_table);
 run_event('bbs_delete_all', $tmp_array, $board);
 
 goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;page='.$page.$qstr));
-?>

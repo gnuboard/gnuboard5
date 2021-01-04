@@ -3,7 +3,10 @@
 $sub_menu = "900500";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
+
+$fg_no = isset($_REQUEST['fg_no']) ? (int) $_REQUEST['fg_no'] : 0;
+$move_no = isset($_REQUEST['move_no']) ? (int) $_REQUEST['move_no'] : 0;
 
 if ($fg_no) 
 {
@@ -27,4 +30,3 @@ $group = sql_fetch("select * from {$g5['sms5_form_group_table']} where fg_no = '
 sql_query("update {$g5['sms5_form_table']} set fg_no = '$move_no', fg_member = '{$group['fg_member']}' where fg_no = '$fg_no'");
 
 goto_url('./form_group.php');
-?>

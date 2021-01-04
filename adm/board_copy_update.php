@@ -4,12 +4,12 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 check_admin_token();
 
-$target_table   = trim($_POST['target_table']);
-$target_subject = trim($_POST['target_subject']);
+$target_table   = isset($_POST['target_table']) ? trim($_POST['target_table']) : '';
+$target_subject = isset($_POST['target_subject']) ? trim($_POST['target_subject']) : '';
 
 $target_subject = strip_tags(clean_xss_attributes($target_subject));
 
@@ -221,4 +221,3 @@ delete_cache_latest($target_table);
 echo "<script>opener.document.location.reload();</script>";
 
 alert("복사에 성공 했습니다.", './board_copy.php?bo_table='.$bo_table.'&amp;'.$qstr);
-?>

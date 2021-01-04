@@ -14,4 +14,3 @@ function social_log_file_delete($second=0){
         }
     }
 }
-?>

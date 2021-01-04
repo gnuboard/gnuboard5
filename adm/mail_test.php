@@ -7,7 +7,7 @@ if (!$config['cf_email_use'])
 
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 check_demo();
 
@@ -17,6 +17,7 @@ $name = get_text($member['mb_name']);
 $nick = $member['mb_nick'];
 $mb_id = $member['mb_id'];
 $email = $member['mb_email'];
+$ma_id = isset($_REQUEST['ma_id']) ? (int) $_REQUEST['ma_id'] : 0;
 
 $sql = "select ma_subject, ma_content from {$g5['mail_table']} where ma_id = '{$ma_id}' ";
 $ma = sql_fetch($sql);
@@ -36,4 +37,3 @@ $content = $content . '<p>더 이상 정보 수신을 원치 않으시면 [<a hr
 mailer($config['cf_title'], $member['mb_email'], $member['mb_email'], $subject, $content, 1);
 
 alert($member['mb_nick'].'('.$member['mb_email'].')님께 테스트 메일을 발송하였습니다. 확인하여 주십시오.');
-?>

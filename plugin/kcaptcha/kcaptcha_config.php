@@ -49,4 +49,3 @@ $background_color = array(255, 255, 255);
 $jpeg_quality = 90;
 
 $wave = true;
-?>

@@ -7,10 +7,13 @@ if ($is_admin != 'super')
 
 admin_referer_check();
 
-$theme = trim($_POST['theme']);
+$theme = isset($_POST['theme']) ? trim($_POST['theme']) : '';
+$post_type = isset($_POST['type']) ? clean_xss_tags($_POST['type'], 1, 1) : '';
+$post_set_default_skin = isset($_POST['set_default_skin']) ? clean_xss_tags($_POST['set_default_skin'], 1, 1) : '';
+
 $theme_dir = get_theme_dir();
 
-if($_POST['type'] == 'reset') {
+if($post_type == 'reset') {
     $sql = " update {$g5['config_table']} set cf_theme = '' ";
     sql_query($sql);
     die('');
@@ -24,7 +27,7 @@ $sql = " update {$g5['config_table']} set cf_theme = '$theme' ";
 sql_query($sql);
 
 // 테마 설정 스킨 적용
-if($_POST['set_default_skin'] == 1) {
+if($post_set_default_skin == 1) {
     $keys = 'set_default_skin, cf_member_skin, cf_mobile_member_skin, cf_new_skin, cf_mobile_new_skin, cf_search_skin, cf_mobile_search_skin, cf_connect_skin, cf_mobile_connect_skin, cf_faq_skin, cf_mobile_faq_skin, qa_skin, qa_mobile_skin';
 
     $tconfig = get_theme_config_value($theme, $keys);
@@ -68,7 +71,6 @@ if($_POST['set_default_skin'] == 1) {
     }
 }
 
-run_event('adm_theme_update', $theme, $_POST['set_default_skin']);
+run_event('adm_theme_update', $theme, $post_set_default_skin);
 
 die('');
-?>

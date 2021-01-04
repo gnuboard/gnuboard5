@@ -45,4 +45,3 @@ define('G5_SOCIAL_CERTIFY_MAIL', false);
 define('G5_SOCIAL_IS_DEBUG', false);
 
 include_once(G5_SOCIAL_LOGIN_PATH.'/includes/functions.php');
-?>

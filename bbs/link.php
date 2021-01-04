@@ -3,6 +3,8 @@ include_once('./_common.php');
 
 $html_title = '링크 &gt; '.conv_subject($write['wr_subject'], 255);
 
+$no = isset($_REQUEST['no']) ? preg_replace('/[^0-9]/i', '', $_REQUEST['no']) : '';
+
 if (!($bo_table && $wr_id && $no))
     alert_close('값이 제대로 넘어오지 않았습니다.');
 
@@ -24,4 +26,3 @@ if (empty($_SESSION[$ss_name]))
 }
 
 goto_url(set_http($write['wr_link'.$no]));
-?>

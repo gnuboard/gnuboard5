@@ -10,9 +10,9 @@
  * http://www.opensource.org/licenses/MIT
  */
 include_once("./_common.php");
-@include_once("./JSON.php");
 
 if( !function_exists('json_encode') ) {
+    @include_once("./JSON.php");
     function json_encode($data) {
         $json = new Services_JSON();
         return( $json->encode($data) );

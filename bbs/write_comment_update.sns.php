@@ -10,7 +10,7 @@ set_cookie('ck_twitter_checked' , false, 86400*31);
 // 페이스북
 //----------------------------------------------------------------------------
 $wr_facebook_user = "";
-if ($_POST['facebook_checked']) {
+if (! empty($_POST['facebook_checked'])) {
     include_once(G5_SNS_PATH."/facebook/src/facebook.php");
 
     $facebook = new Facebook(array(
@@ -48,7 +48,7 @@ if ($_POST['facebook_checked']) {
 // 트위터
 //----------------------------------------------------------------------------
 $wr_twitter_user = "";
-if ($_POST['twitter_checked']) {
+if (! empty($_POST['twitter_checked'])) {
     include_once(G5_SNS_PATH."/twitter/twitteroauth/twitteroauth.php");
     include_once(G5_SNS_PATH."/twitter/twitterconfig.php");
 
@@ -68,5 +68,4 @@ if ($_POST['twitter_checked']) {
 
     $wr_twitter_user = get_session("ss_twitter_user");
 }
-//============================================================================
-?>
+//============================================================================;

@@ -2,7 +2,7 @@
 $sub_menu = '100410';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 $g5['title'] = 'DB 업그레이드';
 include_once('./admin.head.php');
@@ -190,4 +190,3 @@ $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '
 
 <?php
 include_once ('./admin.tail.php');
-?>

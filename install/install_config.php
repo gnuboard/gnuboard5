@@ -203,4 +203,3 @@ function frm_install_submit(f)
 
 <?php
 include_once ('./install.inc2.php');
-?>

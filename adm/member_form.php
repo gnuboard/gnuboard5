@@ -2,7 +2,46 @@
 $sub_menu = "200100";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
+
+$mb = array(
+'mb_certify' => null,
+'mb_adult' => null,
+'mb_sms' => null,
+'mb_intercept_date' => null,
+'mb_id' => null,
+'mb_name' => null,
+'mb_nick' => null,
+'mb_point' => null,
+'mb_email' => null,
+'mb_homepage' => null,
+'mb_hp' => null,
+'mb_tel' => null,
+'mb_zip1' => null,
+'mb_zip2' => null,
+'mb_addr1' => null,
+'mb_addr2' => null,
+'mb_addr3' => null,
+'mb_addr_jibeon' => null,
+'mb_signature' => null,
+'mb_profile' => null,
+'mb_memo' => null,
+'mb_leave_date' => null,
+'mb_1' => null,
+'mb_2' => null,
+'mb_3' => null,
+'mb_4' => null,
+'mb_5' => null,
+'mb_6' => null,
+'mb_7' => null,
+'mb_8' => null,
+'mb_9' => null,
+'mb_10' => null,
+);
+
+$sound_only = '';
+$required_mb_id_class = '';
+$required_mb_password = '';
 
 if ($w == '')
 {
@@ -26,7 +65,6 @@ else if ($w == 'u')
         alert('자신보다 권한이 높거나 같은 회원은 수정할 수 없습니다.');
 
     $required_mb_id = 'readonly';
-    $required_mb_password = '';
     $html_title = '수정';
 
     $mb['mb_name'] = get_text($mb['mb_name']);
@@ -482,4 +520,3 @@ function fmember_submit(f)
 run_event('admin_member_form_after', $mb, $w);
 
 include_once('./admin.tail.php');
-?>

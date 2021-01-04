@@ -1,14 +1,16 @@
 <?php
 include_once('./_common.php');
 
+$po_id = isset($_POST['po_id']) ? preg_replace('/[^0-9]/', '', $_POST['po_id']) : 0;
+
 $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$_POST['po_id']}' ");
-if (!$po['po_id'])
+if (! (isset($po['po_id']) && $po['po_id']))
     alert('po_id 값이 제대로 넘어오지 않았습니다.');
 
 if ($member['mb_level'] < $po['po_level'])
     alert_close('권한 '.$po['po_level'].' 이상 회원만 투표에 참여하실 수 있습니다.');
 
-$gb_poll = preg_replace('/[^0-9]/', '', $gb_poll);
+$gb_poll = isset($_POST['gb_poll']) ? preg_replace('/[^0-9]/', '', $_POST['gb_poll']) : 0;
 if(!$gb_poll)
     alert_close('항목을 선택하세요.');
 
@@ -35,7 +37,8 @@ if($is_member) {
     }
 }
 
-$result_url = G5_BBS_URL."/poll_result.php?po_id=$po_id&skin_dir={$_POST['skin_dir']}";
+$post_skin_dir = isset($_POST['skin_dir']) ? clean_xss_tags($_POST['skin_dir'], 1, 1) : '';
+$result_url = G5_BBS_URL."/poll_result.php?po_id=$po_id&skin_dir={$post_skin_dir}";
 
 // 없다면 선택한 투표항목을 1증가 시키고 ip, id를 저장
 if (!($search_ip || $search_mb_id)) {
@@ -50,7 +53,7 @@ if (!($search_ip || $search_mb_id)) {
 
     sql_query($sql);
 } else {
-    alert($po['po_subject'].'에 이미 참여하셨습니다.', $result_url);
+    alert(addcslashes($po['po_subject'], '"\\/').'에 이미 참여하셨습니다.', $result_url);
 }
 
 if (!$search_mb_id)
@@ -58,4 +61,3 @@ if (!$search_mb_id)
 
 //goto_url($g5['bbs_url'].'/poll_result.php?po_id='.$po_id.'&amp;skin_dir='.$skin_dir);
 goto_url($result_url);
-?>

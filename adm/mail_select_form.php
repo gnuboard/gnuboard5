@@ -5,7 +5,9 @@ include_once('./_common.php');
 if (!$config['cf_email_use'])
     alert('환경설정에서 \'메일발송 사용\'에 체크하셔야 메일을 발송할 수 있습니다.');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
+
+$ma_id = isset($_GET['ma_id']) ? (int) $_GET['ma_id'] : 0;
 
 $sql = " select * from {$g5['mail_table']} where ma_id = '$ma_id' ";
 $ma = sql_fetch($sql);
@@ -26,14 +28,18 @@ $last_option = explode('||', $ma['ma_last_option']);
 for ($i=0; $i<count($last_option); $i++) {
     $option = explode('=', $last_option[$i]);
     // 동적변수
-    $var = $option[0];
-    $$var = $option[1];
+    $var = isset($option[0]) ? $option[0] : '';
+    if( isset($option[1]) ) $$var = $option[1];
 }
 
 if (!isset($mb_id1)) $mb_id1 = 1;
 if (!isset($mb_level_from)) $mb_level_from = 1;
 if (!isset($mb_level_to)) $mb_level_to = 10;
 if (!isset($mb_mailling)) $mb_mailling = 1;
+
+$mb_id1_from = isset($mb_id1_from) ? clean_xss_tags($mb_id1_from, 1, 1, 30) : '';
+$mb_id1_to = isset($mb_id1_to) ? clean_xss_tags($mb_id1_to, 1, 1, 30) : '';
+$mb_email = isset($mb_email) ? clean_xss_tags($mb_email, 1, 1, 100) : '';
 
 $g5['title'] = '회원메일발송';
 include_once('./admin.head.php');
@@ -55,15 +61,15 @@ include_once('./admin.head.php');
         <td>
             <input type="radio" name="mb_id1" value="1" id="mb_id1_all" <?php echo $mb_id1?"checked":""; ?>> <label for="mb_id1_all">전체</label>
             <input type="radio" name="mb_id1" value="0" id="mb_id1_section" <?php echo !$mb_id1?"checked":""; ?>> <label for="mb_id1_section">구간</label>
-            <input type="text" name="mb_id1_from" value="<?php echo $mb_id1_from ?>" id="mb_id1_from" title="시작구간" class="frm_input"> 에서
-            <input type="text" name="mb_id1_to" value="<?php echo $mb_id1_to ?>" id="mb_id1_to" title="종료구간" class="frm_input"> 까지
+            <input type="text" name="mb_id1_from" value="<?php echo get_sanitize_input($mb_id1_from); ?>" id="mb_id1_from" title="시작구간" class="frm_input"> 에서
+            <input type="text" name="mb_id1_to" value="<?php echo get_sanitize_input($mb_id1_to); ?>" id="mb_id1_to" title="종료구간" class="frm_input"> 까지
         </td>
     </tr>
     <tr>
         <th scope="row"><label for="mb_email">E-mail</label></th>
         <td>
             <?php echo help("메일 주소에 단어 포함 (예 : @".preg_replace('#^(www[^\.]*\.){1}#', '', $_SERVER['HTTP_HOST']).")") ?>
-            <input type="text" name="mb_email" value="<?php echo $mb_email ?>" id="mb_email" class="frm_input" size="50">
+            <input type="text" name="mb_email" value="<?php echo get_sanitize_input($mb_email); ?>" id="mb_email" class="frm_input" size="50">
         </td>
     </tr>
     <tr>
@@ -119,4 +125,3 @@ include_once('./admin.head.php');
 
 <?php
 include_once('./admin.tail.php');
-?>

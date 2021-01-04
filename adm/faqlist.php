@@ -2,11 +2,11 @@
 $sub_menu = '300700';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = 'FAQ 상세관리';
-if ($fm_subject){
-    $fm_subject = clean_xss_tags(strip_tags($fm_subject));
+if (isset($_REQUEST['fm_subject'])){
+    $fm_subject = clean_xss_tags($_REQUEST['fm_subject'], 1, 1, 255);
     $g5['title'] .= ' : '.$fm_subject;
 }
 
@@ -97,4 +97,3 @@ $result = sql_query($sql);
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

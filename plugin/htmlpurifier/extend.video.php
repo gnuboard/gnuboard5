@@ -78,4 +78,3 @@ if( !class_exists('HTMLPurifier_Filter_Iframevideo') ){
 		}
 	}
 }
-?>

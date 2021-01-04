@@ -8,8 +8,8 @@ run_event('password_lost_certify_before');
 
 // 오류시 공히 Error 라고 처리하는 것은 회원정보가 있는지? 비밀번호가 틀린지? 를 알아보려는 해킹에 대비한것
 
-$mb_no = preg_replace('#[^0-9]#', '', trim($_GET['mb_no']));
-$mb_nonce = trim($_GET['mb_nonce']);
+$mb_no = isset($_GET['mb_no']) ? preg_replace('#[^0-9]#', '', trim($_GET['mb_no'])) : 0;
+$mb_nonce = isset($_GET['mb_nonce']) ? trim($_GET['mb_nonce']) : '';
 
 // 회원아이디가 아닌 회원고유번호로 회원정보를 구한다.
 $sql = " select mb_id, mb_lost_certify from {$g5['member_table']} where mb_no = '$mb_no' ";
@@ -32,4 +32,3 @@ if ($mb_nonce === substr($mb['mb_lost_certify'], 0, 32)) {
 else {
     die("Error");
 }
-?>

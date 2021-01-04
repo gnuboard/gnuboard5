@@ -15,7 +15,7 @@ $tmp_array = array();
 if ($qa_id) // 건별삭제
     $tmp_array[0] = $qa_id;
 else // 일괄삭제
-    $tmp_array = $_POST['chk_qa_id'];
+    $tmp_array = (isset($_POST['chk_qa_id']) && is_array($_POST['chk_qa_id'])) ? $_POST['chk_qa_id'] : array();
 
 $count = count($tmp_array);
 if(!$count)
@@ -80,4 +80,3 @@ for($i=0; $i<$count; $i++) {
 }
 
 goto_url(G5_BBS_URL.'/qalist.php'.preg_replace('/^&amp;/', '?', $qstr));
-?>

@@ -24,4 +24,3 @@ $from_record = ($page - 1) * $rows; // 시작 열을 구함
 include_once($member_skin_path.'/point.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

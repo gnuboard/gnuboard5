@@ -180,4 +180,3 @@ function exist_mb_hp($reg_mb_hp, $reg_mb_id)
     else
         return "";
 }
-?>

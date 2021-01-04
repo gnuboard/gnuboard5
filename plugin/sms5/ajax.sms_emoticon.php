@@ -13,12 +13,13 @@ $page_size = 9;
 
 if (!$page) $page = 1;
 
-if (is_numeric($fg_no)) 
+$fg_no = isset($_REQUEST['fg_no']) ? (int) $_REQUEST['fg_no'] : 0;
+$sv = isset($_REQUEST['sv']) ? get_search_string($_REQUEST['sv']) : '';
+
+if ($fg_no) 
     $sql_group = " and fg_no='$fg_no' ";
 else
     $sql_group = "";
-
-$sv = isset($sv) ? get_search_string($sv) : '';
 
 if ($st == 'all') {
     $sql_search = "and (fo_name like '%{$sv}%' or fo_content like '%{$sv}%')";
@@ -72,4 +73,3 @@ $arr_ajax_msg = array(
 );
 
 die( json_encode($arr_ajax_msg) );
-?>

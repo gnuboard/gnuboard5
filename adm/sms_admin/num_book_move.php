@@ -11,12 +11,12 @@ if ($sw == 'move'){
     alert('sw 값이 제대로 넘어오지 않았습니다.');
 }
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = '번호그룹 ' . $act;
 include_once(G5_PATH.'/head.sub.php');
 
-$bk_no_list = implode(',', $_POST['bk_no']);
+$bk_no_list = isset($_POST['bk_no']) ? implode(',', $_POST['bk_no']) : '';
 
 $sql = " select * from {$g5['sms5_book_group_table']} order by bg_no ";
 $result = sql_query($sql);
@@ -125,4 +125,3 @@ function fboardmoveall_submit(f)
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

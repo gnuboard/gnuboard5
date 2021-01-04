@@ -4,9 +4,9 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 if ($w == '')
 {
-    $po_id   = $_POST['po_id'];
-    $pc_name = $_POST['pc_name'];
-    $pc_idea = $_POST['pc_idea'];
+    $po_id   = isset($_POST['po_id']) ? (int) $_POST['po_id'] : '';
+    $pc_name = isset($_POST['pc_name']) ? clean_xss_tags($_POST['pc_name'], 1, 1) : '';
+    $pc_idea = isset($_POST['pc_idea']) ? clean_xss_tags($_POST['pc_idea'], 1, 1) : '';
 
     $po = sql_fetch(" select * from {$g5['poll_table']} where po_id = '{$po_id}' ");
     if (!$po['po_id'])
@@ -56,4 +56,3 @@ else if ($w == 'd')
 }
 
 goto_url('./poll_result.php?po_id='.$po_id.'&amp;skin_dir='.$skin_dir);
-?>

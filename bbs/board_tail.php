@@ -14,4 +14,3 @@ if (G5_IS_MOBILE) {
         include_once(G5_BBS_PATH.'/_tail.php');
     }
 }
-?>

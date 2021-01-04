@@ -323,5 +323,3 @@ class Hook
         return array();
     }
 }
-
-?>

@@ -7,5 +7,4 @@ define('SMARTEDITOR_UPLOAD_RESIZE', 0);  // 스마트에디터 업로드 이미�
 define('SMARTEDITOR_UPLOAD_MAX_WIDTH', 1200);  // 스마트에디터 업로드 이미지 리사이즈 제한 width
 define('SMARTEDITOR_UPLOAD_MAX_HEIGHT', 2800);  // 스마트에디터 업로드 이미지 리사이즈 제한 height
 define('SMARTEDITOR_UPLOAD_SIZE_LIMIT', 20);  // 스마트에디터 업로드 사이즈 제한 ( 기본 20MB )
-define('SMARTEDITOR_UPLOAD_IMAGE_QUALITY', 98);  // 썸네일 이미지 JPG, PNG 압축률
-?>
+define('SMARTEDITOR_UPLOAD_IMAGE_QUALITY', 98);  // 썸네일 이미지 JPG, PNG 압축률;

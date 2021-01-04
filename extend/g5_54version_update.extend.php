@@ -67,4 +67,3 @@ function g54_user_memo_insert($kind, $unkind, $page=1){
     }
 
 }
-?>

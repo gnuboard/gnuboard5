@@ -11,7 +11,7 @@ else
     $urlencode = urlencode($_SERVER[REQUEST_URI]);
 */
 
-$url = clean_xss_tags($_GET['url']);
+$url = isset($_GET['url']) ? clean_xss_tags($_GET['url']) : '';
 
 //소셜 로그인 한 경우
 if( function_exists('social_member_comfirm_redirect') && (! $url || $url === 'register_form.php' || (function_exists('social_is_edit_page') && social_is_edit_page($url) ) ) ){    
@@ -38,4 +38,3 @@ $url = get_text($url);
 include_once($member_skin_path.'/member_confirm.skin.php');
 
 include_once('./_tail.sub.php');
-?>

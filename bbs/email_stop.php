@@ -1,6 +1,8 @@
 <?php
 include_once('./_common.php');
 
+$mb_id = isset($_REQUEST['mb_id']) ? clean_xss_tags($_REQUEST['mb_id'], 1, 1) : '';
+
 $sql = " select mb_id, mb_email, mb_datetime from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 $row = sql_fetch($sql);
 if (!$row['mb_id'])
@@ -16,4 +18,3 @@ if ($mb_md5) {
 }
 
 alert('제대로 된 값이 넘어오지 않았습니다.', G5_URL);
-?>

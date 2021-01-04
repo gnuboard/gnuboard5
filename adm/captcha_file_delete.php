@@ -50,4 +50,3 @@ echo '<div class="local_desc01 local_desc"><p><strong>캡챠파일 '.$cnt.'건�
 
 <?php
 include_once('./admin.tail.php');
-?>

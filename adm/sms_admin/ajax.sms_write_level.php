@@ -10,7 +10,7 @@ if( !function_exists('json_encode') ) {
     }
 }
 
-ajax_auth_check($auth[$sub_menu], "r");
+ajax_auth_check_menu($auth, $sub_menu, "r");
 
 $lev = array();
 
@@ -26,6 +26,7 @@ while ($row = sql_fetch_array($qry))
     $lev[$row['mb_level']] = $row['cnt'];
 }
 $str_json = array();
+$line = 0;
 $tmp_str = '';
 $tmp_str .= '
 <div class="tbl_head01 tbl_wrap">
@@ -54,4 +55,3 @@ $tmp_str .= '
 
 $str_json['html'] = $tmp_str;
 echo json_encode($str_json);
-?>

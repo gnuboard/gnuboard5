@@ -200,4 +200,3 @@ class FileCache
         return unserialize(base64_decode($data));
     }
 }
-?>

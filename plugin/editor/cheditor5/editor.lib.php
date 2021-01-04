@@ -161,4 +161,3 @@ if(!function_exists('ft_nonce_generate_hash')){
 		return $o;
     }
 }
-?>

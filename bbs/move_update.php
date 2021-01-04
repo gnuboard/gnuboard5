@@ -2,6 +2,7 @@
 include_once('./_common.php');
 
 $act = isset($act) ? strip_tags($act) : '';
+$count_chk_bo_table = (isset($_POST['chk_bo_table']) && is_array($_POST['chk_bo_table'])) ? count($_POST['chk_bo_table']) : 0;
 
 // 게시판 관리자 이상 복사, 이동 가능
 if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
@@ -10,7 +11,7 @@ if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
 if ($sw != 'move' && $sw != 'copy')
     alert('sw 값이 제대로 넘어오지 않았습니다.');
 
-if(!count($_POST['chk_bo_table']))
+if(! $count_chk_bo_table)
     alert('게시물을 '.$act.'할 게시판을 한개 이상 선택해 주십시오.', $url);
 
 // 원본 파일 디렉토리
@@ -21,7 +22,7 @@ $save_count_write = 0;
 $save_count_comment = 0;
 $cnt = 0;
 
-$wr_id_list = preg_replace('/[^0-9\,]/', '', $_POST['wr_id_list']);
+$wr_id_list = isset($_POST['wr_id_list']) ? preg_replace('/[^0-9\,]/', '', $_POST['wr_id_list']) : '';
 
 $sql = " select distinct wr_num from $write_table where wr_id in ({$wr_id_list}) order by wr_id ";
 $result = sql_query($sql);
@@ -30,9 +31,9 @@ while ($row = sql_fetch_array($result))
     $save[$cnt]['wr_contents'] = array();
 
     $wr_num = $row['wr_num'];
-    for ($i=0; $i<count($_POST['chk_bo_table']); $i++)
+    for ($i=0; $i<$count_chk_bo_table; $i++)
     {
-        $move_bo_table = preg_replace('/[^a-z0-9_]/i', '', $_POST['chk_bo_table'][$i]);
+        $move_bo_table = isset($_POST['chk_bo_table'][$i]) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['chk_bo_table'][$i]) : '';
 
         // 취약점 18-0075 참고
         $sql = "select * from {$g5['board_table']} where bo_table = '".sql_real_escape_string($move_bo_table)."' ";
@@ -256,4 +257,3 @@ window.close();
 <a href="$opener_href">돌아가기</a>
 </noscript>
 HEREDOC;
-?>

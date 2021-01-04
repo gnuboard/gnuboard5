@@ -52,4 +52,3 @@ function attach_file($filename, $tmp_name)
     $tmpfile = array("name" => $filename, "path" => $dest_file);
     return $tmpfile;
 }
-?>

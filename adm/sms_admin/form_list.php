@@ -5,7 +5,7 @@ include_once("./_common.php");
 $page_size = 12;
 $colspan = 2;
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $token = get_token();
 
@@ -13,7 +13,7 @@ $g5['title'] = "이모티콘 관리";
 
 if ($page < 1) $page = 1;
 
-$fg_no = isset($fg_no) ? (int) $fg_no : '';
+$fg_no = isset($_REQUEST['fg_no']) ? (int) $_REQUEST['fg_no'] : 0;
 
 if (is_numeric($fg_no))
     $sql_group = " and fg_no='$fg_no' ";
@@ -238,4 +238,3 @@ function select_copy(sw, f) {
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

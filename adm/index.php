@@ -138,7 +138,7 @@ $sql_common = " from {$g5['board_new_table']} a, {$g5['board_table']} b, {$g5['g
 
 if ($gr_id)
     $sql_common .= " and b.gr_id = '$gr_id' ";
-if ($view) {
+if (isset($view) && $view) {
     if ($view == 'w')
         $sql_common .= " and a.wr_id = a.wr_parent ";
     else if ($view == 'c')
@@ -315,4 +315,3 @@ $colspan = 7;
 
 <?php
 include_once ('./admin.tail.php');
-?>

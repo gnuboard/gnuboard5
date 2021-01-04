@@ -349,5 +349,3 @@ class writeexcel_olewriter {
     }
 
 }
-
-?>

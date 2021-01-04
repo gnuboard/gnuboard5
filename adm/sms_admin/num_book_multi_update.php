@@ -2,13 +2,15 @@
 $sub_menu = "900800";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $g5['title'] = "전화번호부";
 
-for ($i=0; $i<count($_POST['bk_no']); $i++) 
+$post_bk_no = (isset($_POST['bk_no']) && is_array($_POST['bk_no'])) ? $_POST['bk_no'] : array();
+
+for ($i=0; $i<count($post_bk_no); $i++) 
 {
-    $bk_no = $_POST['bk_no'][$i];
+    $bk_no = $post_bk_no[$i];
     if (!trim($bk_no)) continue;
 
     $res = sql_fetch("select * from {$g5['sms5_book_table']} where bk_no='$bk_no'");
@@ -60,4 +62,3 @@ if( $str_query ){
     $str_query = '?'.$str_query;
 }
 goto_url('./num_book.php'.$str_query);
-?>

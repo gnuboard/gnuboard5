@@ -41,22 +41,22 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
         // 오늘
         $sql = " select vs_count as cnt from {$g5['visit_sum_table']} where vs_date = '".G5_TIME_YMD."' ";
         $row = sql_fetch($sql);
-        $vi_today = $row['cnt'];
+        $vi_today = isset($row['cnt']) ? $row['cnt'] : 0;
 
         // 어제
         $sql = " select vs_count as cnt from {$g5['visit_sum_table']} where vs_date = DATE_SUB('".G5_TIME_YMD."', INTERVAL 1 DAY) ";
         $row = sql_fetch($sql);
-        $vi_yesterday = $row['cnt'];
+        $vi_yesterday = isset($row['cnt']) ? $row['cnt'] : 0;
 
         // 최대
         $sql = " select max(vs_count) as cnt from {$g5['visit_sum_table']} ";
         $row = sql_fetch($sql);
-        $vi_max = $row['cnt'];
+        $vi_max = isset($row['cnt']) ? $row['cnt'] : 0;
 
         // 전체
         $sql = " select sum(vs_count) as total from {$g5['visit_sum_table']} ";
         $row = sql_fetch($sql);
-        $vi_sum = $row['total'];
+        $vi_sum = isset($row['total']) ? $row['total'] : 0;
 
         $visit = '오늘:'.$vi_today.',어제:'.$vi_yesterday.',최대:'.$vi_max.',전체:'.$vi_sum;
 
@@ -66,4 +66,3 @@ if (get_cookie('ck_visit_ip') != $_SERVER['REMOTE_ADDR'])
         sql_query(" update {$g5['config_table']} set cf_visit = '{$visit}' ");
     }
 }
-?>

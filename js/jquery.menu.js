@@ -89,7 +89,7 @@ function menu_rearrange(el)
         $gnb_1dli = $(".gnb_1dli:eq("+i+")");
         w1 = $gnb_1dli.outerWidth();
 
-        if($gnb_1dli.find(".gnb_2dul").size())
+        if($gnb_1dli.find(".gnb_2dul").length)
             w2 = $gnb_1dli.find(".gnb_2dli > a").outerWidth(true);
         else
             w2 = w1;

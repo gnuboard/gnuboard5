@@ -9,9 +9,10 @@ check_write_token($bo_table);
 $g5['title'] = '게시글 저장';
 
 $msg = array();
+$uid = isset($_POST['uid']) ? preg_replace('/[^0-9]/', '', $_POST['uid']) : 0;
 
 if($board['bo_use_category']) {
-    $ca_name = trim($_POST['ca_name']);
+    $ca_name = isset($_POST['ca_name']) ? trim($_POST['ca_name']) : '';
     if(!$ca_name) {
         $msg[] = '<strong>분류</strong>를 선택하세요.';
     } else {
@@ -76,6 +77,11 @@ if (empty($_POST)) {
 }
 
 $notice_array = explode(",", $board['bo_notice']);
+$wr_password = isset($_POST['wr_password']) ? $_POST['wr_password'] : '';
+$bf_content = isset($_POST['bf_content']) ? (array) $_POST['bf_content'] : array();
+$_POST['html'] = isset($_POST['html']) ? clean_xss_tags($_POST['html'], 1, 1) : '';
+$_POST['secret'] = isset($_POST['secret']) ? clean_xss_tags($_POST['secret'], 1, 1) : '';
+$_POST['mail'] = isset($_POST['mail']) ? clean_xss_tags($_POST['mail'], 1, 1) : '';
 
 if ($w == 'u' || $w == 'r') {
     $wr = get_write($write_table, $wr_id);
@@ -537,14 +543,16 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             if ($w == 'u') {
                 // 존재하는 파일이 있다면 삭제합니다.
                 $row = sql_fetch(" select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '$wr_id' and bf_no = '$i' ");
-
-                $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
-                if( file_exists($delete_file) ){
-                    @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
-                }
-                // 이미지파일이면 썸네일삭제
-                if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
-                    delete_board_thumbnail($bo_table, $row['bf_file']);
+                
+                if(isset($row['bf_file']) && $row['bf_file']){
+                    $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row['bf_file']), $row);
+                    if( file_exists($delete_file) ){
+                        @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row['bf_file']);
+                    }
+                    // 이미지파일이면 썸네일삭제
+                    if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['bf_file'])) {
+                        delete_board_thumbnail($bo_table, $row['bf_file']);
+                    }
                 }
             }
 
@@ -578,9 +586,11 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
 // 나중에 테이블에 저장하는 이유는 $wr_id 값을 저장해야 하기 때문입니다.
 for ($i=0; $i<count($upload); $i++)
 {
-    if (!get_magic_quotes_gpc()) {
-        $upload[$i]['source'] = addslashes($upload[$i]['source']);
-    }
+    $upload[$i]['source'] = sql_real_escape_string($upload[$i]['source']);
+    $bf_content[$i] = isset($bf_content[$i]) ? sql_real_escape_string($bf_content[$i]) : '';
+    $bf_width = isset($upload[$i]['image'][0]) ? (int) $upload[$i]['image'][0] : 0;
+    $bf_height = isset($upload[$i]['image'][1]) ? (int) $upload[$i]['image'][1] : 0;
+    $bf_type = isset($upload[$i]['image'][2]) ? (int) $upload[$i]['image'][2] : 0;
 
     $row = sql_fetch(" select count(*) as cnt from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
     if ($row['cnt'])
@@ -597,9 +607,9 @@ for ($i=0; $i<count($upload); $i++)
                              bf_thumburl = '{$upload[$i]['thumburl']}',
                              bf_storage = '{$upload[$i]['storage']}',
                              bf_filesize = '".(int)$upload[$i]['filesize']."',
-                             bf_width = '".(int)$upload[$i]['image'][0]."',
-                             bf_height = '".(int)$upload[$i]['image'][1]."',
-                             bf_type = '".(int)$upload[$i]['image'][2]."',
+                             bf_width = '".$bf_width."',
+                             bf_height = '".$bf_height."',
+                             bf_type = '".$bf_type."',
                              bf_datetime = '".G5_TIME_YMDHIS."'
                       where bo_table = '{$bo_table}'
                                 and wr_id = '{$wr_id}'
@@ -630,9 +640,9 @@ for ($i=0; $i<count($upload); $i++)
                          bf_storage = '{$upload[$i]['storage']}',
                          bf_download = 0,
                          bf_filesize = '".(int)$upload[$i]['filesize']."',
-                         bf_width = '".(int)$upload[$i]['image'][0]."',
-                         bf_height = '".(int)$upload[$i]['image'][1]."',
-                         bf_type = '".(int)$upload[$i]['image'][2]."',
+                         bf_width = '".$bf_width."',
+                         bf_height = '".$bf_height."',
+                         bf_type = '".$bf_type."',
                          bf_datetime = '".G5_TIME_YMDHIS."' ";
         sql_query($sql);
 
@@ -741,4 +751,3 @@ if ($file_upload_msg)
     alert($file_upload_msg, $redirect_url);
 else
     goto_url($redirect_url);
-?>

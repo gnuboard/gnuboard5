@@ -6,7 +6,7 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 check_admin_token();
 
@@ -21,18 +21,21 @@ if(!$count)
 
 for ($i=0; $i<$count; $i++)
 {
-    $k     = $post_chk[$i];
+    $k     = isset($post_chk[$i]) ? (int) $post_chk[$i] : 0;
     $gr_id = preg_replace('/[^a-z0-9_]/i', '', $post_group_id[$k]);
-    $gr_subject = is_array($_POST['gr_subject']) ? strip_tags(clean_xss_attributes($_POST['gr_subject'][$k])) : '';
-    $gr_admin = is_array($_POST['gr_admin']) ? strip_tags(clean_xss_attributes($_POST['gr_admin'][$k])) : '';
+    $gr_subject = isset($_POST['gr_subject'][$k]) ? strip_tags(clean_xss_attributes($_POST['gr_subject'][$k])) : '';
+    $gr_admin = isset($_POST['gr_admin'][$k]) ? strip_tags(clean_xss_attributes($_POST['gr_admin'][$k])) : '';
+    $gr_device = isset($_POST['gr_device'][$k]) ? clean_xss_tags($_POST['gr_device'][$k], 1, 1, 10) : '';
+    $gr_use_access = isset($_POST['gr_use_access'][$k]) ? (int) $_POST['gr_use_access'][$k] : 0;
+    $gr_order = isset($_POST['gr_order'][$k]) ? (int) $_POST['gr_order'][$k] : 0;
 
     if($act_button == '선택수정') {
         $sql = " update {$g5['group_table']}
                     set gr_subject    = '{$gr_subject}',
-                        gr_device     = '".sql_real_escape_string($_POST['gr_device'][$k])."',
-                        gr_admin      = '".sql_real_escape_string($_POST['gr_admin'][$k])."',
-                        gr_use_access = '".sql_real_escape_string($_POST['gr_use_access'][$k])."',
-                        gr_order      = '".sql_real_escape_string($_POST['gr_order'][$k])."'
+                        gr_device     = '".sql_real_escape_string($gr_device)."',
+                        gr_admin      = '".sql_real_escape_string($gr_admin)."',
+                        gr_use_access = '".$gr_use_access."',
+                        gr_order      = '".$gr_order."'
                   where gr_id         = '{$gr_id}' ";
         if ($is_admin != 'super')
             $sql .= " and gr_admin    = '{$gr_admin}' ";
@@ -53,4 +56,3 @@ for ($i=0; $i<$count; $i++)
 run_event('admin_boardgroup_list_update', $act_button, $chk, $post_group_id, $qstr);
 
 goto_url('./boardgroup_list.php?'.$qstr);
-?>
