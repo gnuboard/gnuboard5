@@ -1739,7 +1739,7 @@ $(function() {
             }
         });
 
-        function hash_goto_scroll(hash=""){
+        function hash_goto_scroll(hash){
             var $elem = hash ? $("#"+hash) : $('#' + window.location.hash.replace('#', ''));
             if($elem.length) {
 
@@ -1773,11 +1773,11 @@ $(function() {
     $(".kcp_info_fld").show();
     $("#kcp_vbank_url").show();
     <?php } ?>
-    $(".de_pg_tab").on("click", "a", function(e){
+    $(document).on("click", ".de_pg_tab a", function(e){
 
         var pg = $(this).attr("data-value"),
             class_name = "tab-current";
-        
+
         $("#de_pg_service").val(pg);
         $(this).parent("li").addClass(class_name).siblings().removeClass(class_name);
 
