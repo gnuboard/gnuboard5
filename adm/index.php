@@ -100,11 +100,6 @@ $colspan = 12;
             $mb_nick = get_sideview($row['mb_id'], get_text($row['mb_nick']), $row['mb_email'], $row['mb_homepage']);
 
             $mb_id = $row['mb_id'];
-            if ($row['mb_leave_date'])
-                $mb_id = $mb_id;
-            else if ($row['mb_intercept_date'])
-                $mb_id = $mb_id;
-
         ?>
         <tr>
             <td class="td_mbid"><?php echo $mb_id ?></td>
