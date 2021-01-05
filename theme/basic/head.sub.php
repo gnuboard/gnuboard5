@@ -9,8 +9,8 @@ if (!isset($g5['title'])) {
     $g5_head_title = $g5['title'];
 }
 else {
-    $g5_head_title = $g5['title']; // 상태바에 표시될 제목
-    $g5_head_title .= " | ".$config['cf_title'];
+    // 상태바에 표시될 제목
+    $g5_head_title = implode(' | ', array_filter(array($g5['title'], $config['cf_title'])));
 }
 
 $g5['title'] = strip_tags($g5['title']);
