@@ -5,6 +5,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
 ?>
 
+<form name="fqalist" id="fqalist" action="./qadelete.php" onsubmit="return fqalist_submit(this);" method="post">
+<input type="hidden" name="stx" value="<?php echo $stx; ?>">
+<input type="hidden" name="sca" value="<?php echo $sca; ?>">
+<input type="hidden" name="page" value="<?php echo $page; ?>">
+<input type="hidden" name="token" value="<?php echo get_text($token); ?>">
+
 <?php if ($admin_href || $write_href) { ?>
 <ul class="btn_top top btn_bo_user">
     <?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
@@ -40,12 +46,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     </nav>
     <!-- } 카테고리 끝 -->
     <?php } ?>
-
-    <form name="fqalist" id="fqalist" action="./qadelete.php" onsubmit="return fqalist_submit(this);" method="post">
-    <input type="hidden" name="stx" value="<?php echo $stx; ?>">
-    <input type="hidden" name="sca" value="<?php echo $sca; ?>">
-    <input type="hidden" name="page" value="<?php echo $page; ?>">
-    <input type="hidden" name="token" value="<?php echo get_text($token); ?>">
 
     <?php if ($is_checkbox) { ?>
     <div class="all_chk chk_box">
@@ -93,8 +93,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
             <?php if ($i == 0) { echo '<li class="empty_list">게시물이 없습니다.</li>'; } ?>
         </ul>
     </div>
-    </form>
 </div>
+</form>
 
 <?php if($is_checkbox) { ?>
 <noscript>
