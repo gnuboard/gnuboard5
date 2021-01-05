@@ -14,13 +14,13 @@ check_admin_token();
 
 if ($w == "" || $w == "u")
 {
-    if(isset($_POST['co_id']) && preg_match("/[^a-z0-9_]/i", $_POST['co_id'])) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
+    if(isset($_REQUEST['co_id']) && preg_match("/[^a-z0-9_]/i", $_REQUEST['co_id'])) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
 
     $sql = " select * from {$g5['content_table']} where co_id = '$co_id' ";
     $co_row = sql_fetch($sql);
 }
 
-$co_id = isset($_POST['co_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['co_id']) : '';
+$co_id = isset($_REQUEST['co_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['co_id']) : '';
 $co_subject = strip_tags(clean_xss_attributes($co_subject));
 $co_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_head, 0, 255));
 $co_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_tail, 0, 255));
