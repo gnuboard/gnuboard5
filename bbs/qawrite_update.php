@@ -19,7 +19,7 @@ $token = isset($_POST['token']) ? clean_xss_tags($_POST['token'], 1, 1) : '';
 
 //모든 회원의 토큰을 검사합니다.
 if (!($token && $write_token === $token))
-    alert('토큰 에러로 삭제 불가합니다.');
+    alert('올바른 방법으로 이용해 주십시오.');
 
 // 1:1문의 설정값
 $qaconfig = get_qa_config();
