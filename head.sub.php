@@ -16,7 +16,7 @@ if (!isset($g5['title'])) {
 }
 else {
     // 상태바에 표시될 제목
-    $g5_head_title = implode(' | ', array_filter(array('', $config['cf_title'])));
+    $g5_head_title = implode(' | ', array_filter(array($g5['title'], $config['cf_title'])));
 }
 
 $g5['title'] = strip_tags($g5['title']);
