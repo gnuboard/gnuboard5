@@ -12,6 +12,8 @@ else
 
 check_admin_token();
 
+$co_row = array('co_id'=>'', 'co_include_head'=>'', 'co_include_tail'=>'');
+
 if ($w == "" || $w == "u")
 {
     if(isset($_REQUEST['co_id']) && preg_match("/[^a-z0-9_]/i", $_REQUEST['co_id'])) alert("ID 는 영문자, 숫자, _ 만 가능합니다.");
@@ -21,15 +23,20 @@ if ($w == "" || $w == "u")
 }
 
 $co_id = isset($_REQUEST['co_id']) ? preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['co_id']) : '';
-$co_subject = strip_tags(clean_xss_attributes($co_subject));
-$co_include_head = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_head, 0, 255));
-$co_include_tail = preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($co_include_tail, 0, 255));
+$co_subject = isset($_POST['co_subject']) ? strip_tags(clean_xss_attributes($_POST['co_subject'])) : '';
+$co_include_head = isset($_POST['co_include_head']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['co_include_head'], 0, 255)) : '';
+$co_include_tail = isset($_POST['co_include_tail']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['co_include_tail'], 0, 255)) : '';
 $co_tag_filter_use = isset($_POST['co_tag_filter_use']) ? (int) $_POST['co_tag_filter_use'] : 1;
 $co_himg_del = (isset($_POST['co_himg_del']) && $_POST['co_himg_del']) ? 1 : 0;
 $co_timg_del = (isset($_POST['co_timg_del']) && $_POST['co_timg_del']) ? 1 : 0;
+$co_html = isset($_POST['co_html']) ? (int) $_POST['co_html'] : 0;
+$co_content = isset($_POST['co_content']) ? $_POST['co_content'] : '';
+$co_mobile_content = isset($_POST['co_mobile_content']) ? $_POST['co_mobile_content'] : '';
+$co_skin = isset($_POST['co_skin']) ? clean_xss_tags($_POST['co_skin'], 1, 1) : '';
+$co_mobile_skin = isset($_POST['co_mobile_skin']) ? clean_xss_tags($_POST['co_mobile_skin'], 1, 1) : '';
 
 // 관리자가 자동등록방지를 사용해야 할 경우
-if (($co_row['co_include_head'] !== $co_include_head || $co_row['co_include_tail'] !== $co_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+if ((( isset($co_row['co_include_head']) && $co_row['co_include_head'] !== $co_include_head ) || ( isset($co_row['co_include_tail']) && $co_row['co_include_tail'] !== $co_include_tail )) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
     include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
     if (!chk_captcha()) {
@@ -94,7 +101,7 @@ $sql_common = " co_include_head     = '$co_include_head',
 if ($w == "")
 {
     $row = $co_row;
-    if ($row['co_id'])
+    if (isset($row['co_id']) && $row['co_id'])
         alert("이미 같은 ID로 등록된 내용이 있습니다.");
 
     $sql = " insert {$g5['content_table']}
