@@ -25,7 +25,7 @@ else {
 
     $count_chk_wr_id = (isset($_POST['chk_wr_id']) && is_array($_POST['chk_wr_id'])) ? count($_POST['chk_wr_id']) : 0;
 
-    for ($i=0; $i<count($count_chk_wr_id); $i++) {
+    for ($i=0; $i<$count_chk_wr_id; $i++) {
         $wr_id_val = isset($_POST['chk_wr_id'][$i]) ? preg_replace('/[^0-9]/', '', $_POST['chk_wr_id'][$i]) : 0;
         $wr_id_list .= $comma . $wr_id_val;
         $comma = ',';

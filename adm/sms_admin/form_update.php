@@ -7,6 +7,7 @@ auth_check_menu($auth, $sub_menu, "w");
 $fo_name = isset($_REQUEST['fo_name']) ? strip_tags(clean_xss_attributes($_REQUEST['fo_name'])) : '';
 $fo_content = isset($_REQUEST['fo_content']) ? strip_tags(clean_xss_attributes($_REQUEST['fo_content'])) : '';
 $fo_receipt = isset($_REQUEST['fo_receipt']) ? clean_xss_tags($_REQUEST['fo_receipt'], 1, 1) : '';
+$get_fg_no = '';
 
 $g5['title'] = "이모티콘 업데이트";
 
