@@ -34,7 +34,7 @@ if ($st == 'all') {
 }
 
 $total_res = sql_fetch("select count(*) as cnt from {$g5['sms5_form_table']} where 1 $sql_group $sql_search");
-$total_count = $total_res['cnt'];
+$total_count = isset($total_res['cnt']) ? $total_res['cnt'] : 0;
 
 $total_page = (int)($total_count/$page_size) + ($total_count%$page_size==0 ? 0 : 1);
 $page_start = $page_size * ( $page - 1 );
@@ -46,7 +46,7 @@ $qry = sql_query("select * from {$g5['sms5_form_group_table']} order by fg_name"
 while ($res = sql_fetch_array($qry)) array_push($group, $res);
 
 $res = sql_fetch("select count(*) as cnt from {$g5['sms5_form_table']} where fg_no=0");
-$no_count = $res['cnt'];
+$no_count = isset($res['cnt']) ? $res['cnt'] : 0;
 
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
@@ -146,6 +146,7 @@ function multi_update(sel)
 <form name="emoticonlist" id="emoticonlist" method="post" action="./form_multi_update.php" onsubmit="return emoticonlist_submit(this);" >
 <input type="hidden" name="page" value="<?php echo $page; ?>">
 <input type="hidden" name="token" value="<?php echo $token; ?>">
+<input type="hidden" name="fg_no" value="<?php echo $fg_no; ?>">
 <input type="hidden" name="sw" value="">
 <input type="hidden" name="atype" value="del">
 <ul id="sms5_preset" class="sms5_box">
@@ -234,7 +235,7 @@ function select_copy(sw, f) {
 }
 </script>
 
-<?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME']."?fg_no=$fg_no&amp;st=$st&amp;sv=$sv&amp;page="); ?>
-
 <?php
+echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, $_SERVER['SCRIPT_NAME']."?fg_no=$fg_no&amp;st=$st&amp;sv=$sv&amp;page=");
+
 include_once(G5_ADMIN_PATH.'/admin.tail.php');

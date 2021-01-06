@@ -242,18 +242,16 @@ $opener_href  = get_pretty_url($bo_table,'','&amp;page='.$page.'&amp;'.$qstr);
 $opener_href1 = str_replace('&amp;', '&', $opener_href);
 
 run_event('bbs_move_update', $bo_table, $chk_bo_table, $wr_id_list, $opener_href);
-
-echo <<<HEREDOC
+?>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <script>
-alert("$msg");
-opener.document.location.href = "$opener_href1";
+alert("<?php echo $msg; ?>");
+opener.document.location.href = "<?php echo $opener_href1; ?>";
 window.close();
 </script>
 <noscript>
 <p>
-    "$msg"
+    <?php echo $msg; ?>
 </p>
-<a href="$opener_href">돌아가기</a>
+<a href="<?php echo $opener_href; ?>">돌아가기</a>
 </noscript>
-HEREDOC;
