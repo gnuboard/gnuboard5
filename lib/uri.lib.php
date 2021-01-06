@@ -28,7 +28,7 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
             if( $config['cf_bbs_rewrite'] > 1 ){
 
                 $get_content = get_content_db( $no , true);
-                $segments[2] = $get_content['co_seo_title'] ? urlencode($get_content['co_seo_title']).'/' : urlencode($no);
+                $segments[2] = (isset($get_content['co_seo_title']) && $get_content['co_seo_title']) ? urlencode($get_content['co_seo_title']).'/' : urlencode($no);
 
             } else {
                 $segments[2] = urlencode($no);
@@ -44,7 +44,7 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
 
                 $get_write = get_write( $g5['write_prefix'].$folder, $no , true);
 
-                $segments[2] = $get_write['wr_seo_title'] ? urlencode($get_write['wr_seo_title']).'/' : urlencode($no);
+                $segments[2] = (isset($get_write['wr_seo_title']) && $get_write['wr_seo_title']) ? urlencode($get_write['wr_seo_title']).'/' : urlencode($no);
 
                 } else {
                     $segments[2] = urlencode($no);
@@ -282,7 +282,7 @@ function seo_title_update($db_table, $pk_id, $type='bbs'){
     if( $type === 'bbs' ){
 
         $write = get_write($db_table, $pk_id, true);
-        if( ! $write['wr_seo_title'] && $write['wr_subject'] ){
+        if( ! (isset($write['wr_seo_title']) && $write['wr_seo_title']) && (isset($write['wr_subject']) && $write['wr_subject']) ){
             $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($write['wr_subject']), $db_table, $pk_id);
 
             $sql = " update `{$db_table}` set wr_seo_title = '{$wr_seo_title}' where wr_id = '{$pk_id}' ";
@@ -291,7 +291,7 @@ function seo_title_update($db_table, $pk_id, $type='bbs'){
     } else if ( $type === 'content' ){
 
         $co = get_content_db($pk_id, true);
-        if( ! $co['co_seo_title'] && $co['co_subject'] ){
+        if( ! (isset($co['co_seo_title']) && $co['co_seo_title']) && (isset($co['co_subject']) && $co['co_subject']) ){
             $co_seo_title = exist_seo_title_recursive('content', generate_seo_title($co['co_subject']), $db_table, $pk_id);
 
             $sql = " update `{$db_table}` set co_seo_title = '{$co_seo_title}' where co_id = '{$pk_id}' ";

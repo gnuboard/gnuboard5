@@ -8,6 +8,7 @@ check_admin_token();
 
 $post_fo_no = (isset($_POST['fo_no']) && is_array($_POST['fo_no'])) ? $_POST['fo_no'] : array();
 $atype = isset($_POST['atype']) ? clean_xss_tags($_POST['atype'], 1, 1) : '';
+$fg_no = isset($_POST['fg_no']) ? (int) $_POST['fg_no'] : 0;
 
 if($atype == "del"){
     $count = count($post_fo_no);
@@ -27,4 +28,4 @@ if($atype == "del"){
         sql_query("update {$g5['sms5_form_group_table']} set fg_count = fg_count - 1 where fg_no='{$res['fg_no']}'");
     }
 }
-goto_url('./form_list.php');
+goto_url('./form_list.php?fg_no='.$fg_no);

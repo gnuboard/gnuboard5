@@ -184,7 +184,7 @@ function get_theme_config_value($dir, $key='*')
         } else {
             $keys = array_map('trim', explode(',', $key));
             foreach($keys as $v) {
-                $tconfig[$v] = trim($theme_config[$v]);
+                $tconfig[$v] = isset($theme_config[$v]) ? trim($theme_config[$v]) : '';
             }
         }
     }

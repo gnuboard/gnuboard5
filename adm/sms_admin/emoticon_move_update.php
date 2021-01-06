@@ -1,4 +1,5 @@
 <?php
+$sub_menu = "900600";
 include_once('./_common.php');
 
 auth_check_menu($auth, $sub_menu, "r");
@@ -46,18 +47,16 @@ if ($sw == 'move')
 
 $msg = '해당 이모티콘을 선택한 그룹으로 이동 하였습니다.';
 $opener_href = './form_list.php?page='.$page;
-
-echo <<<HEREDOC
+?>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <script>
-alert("$msg");
-opener.document.location.href = "$opener_href";
+alert("<?php echo $msg; ?>");
+opener.document.location.href = "<?php echo $opener_href; ?>";
 window.close();
 </script>
 <noscript>
 <p>
-    "$msg"
+    <?php echo $msg; ?>
 </p>
-<a href="$opener_href">돌아가기</a>
+<a href="<?php echo $opener_href; ?>">돌아가기</a>
 </noscript>
-HEREDOC;

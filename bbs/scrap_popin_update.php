@@ -11,7 +11,7 @@ if (!$is_member)
 }
 
 // 게시글 존재하는지
-if(!$write['wr_id'])
+if(! (isset($write['wr_id']) && $write['wr_id']))
     alert_close('스크랩하시려는 게시글이 존재하지 않습니다.');
 
 $sql = " select count(*) as cnt from {$g5['scrap_table']}
@@ -19,7 +19,7 @@ $sql = " select count(*) as cnt from {$g5['scrap_table']}
             and bo_table = '$bo_table'
             and wr_id = '$wr_id' ";
 $row = sql_fetch($sql);
-if ($row['cnt'])
+if (isset($row['cnt']) && $row['cnt'])
 {
     echo '
     <script>
@@ -43,7 +43,7 @@ if ($wr_content && ($member['mb_level'] >= $board['bo_comment_level']))
 {
     $wr = get_write($write_table, $wr_id);
     // 원글이 존재한다면
-    if ($wr['wr_id'])
+    if (isset($wr['wr_id']) && $wr['wr_id'])
     {
 
         // 세션의 시간 검사
@@ -105,11 +105,10 @@ $sql = " update `{$g5['member_table']}` set mb_scrap_cnt = '".get_scrap_totals($
 sql_query($sql);
 
 delete_cache_latest($bo_table);
-
-echo <<<HEREDOC
+?>
 <script>
-    if (confirm('이 글을 스크랩 하였습니다.\\n\\n지금 스크랩을 확인하시겠습니까?'))
-        document.location.href = './scrap.php';
+    if (confirm("이 글을 스크랩 하였습니다.\n\n지금 스크랩을 확인하시겠습니까?"))
+        document.location.href = "./scrap.php";
     else
         window.close();
 </script>
@@ -117,4 +116,3 @@ echo <<<HEREDOC
 <p>이 글을 스크랩 하였습니다.</p>
 <a href="./scrap.php">스크랩 확인하기</a>
 </noscript>
-HEREDOC;
