@@ -34,8 +34,8 @@ if(!$mb_id)
 $mb_password    = isset($_POST['mb_password']) ? trim($_POST['mb_password']) : '';
 $mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re']) : '';
 $mb_name        = isset($_POST['mb_name']) ? trim($_POST['mb_name']) : '';
-$mb_nick        = isset($_POST['mb_name']) ? trim($_POST['mb_nick']) : '';
-$mb_email       = isset($_POST['mb_name']) ? trim($_POST['mb_email']) : '';
+$mb_nick        = isset($_POST['mb_nick']) ? trim($_POST['mb_nick']) : '';
+$mb_email       = isset($_POST['mb_email']) ? trim($_POST['mb_email']) : '';
 $mb_sex         = isset($_POST['mb_sex'])           ? trim($_POST['mb_sex'])         : "";
 $mb_birth       = isset($_POST['mb_birth'])         ? trim($_POST['mb_birth'])       : "";
 $mb_homepage    = isset($_POST['mb_homepage'])      ? trim($_POST['mb_homepage'])    : "";
