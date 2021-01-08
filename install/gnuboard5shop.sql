@@ -847,14 +847,15 @@ CREATE TABLE IF NOT EXISTS `g5_shop_item_stocksms` (
 
 DROP TABLE IF EXISTS `g5_shop_order_post_log`;
 CREATE TABLE IF NOT EXISTS `g5_shop_order_post_log` (
+  `log_id` int(11) NOT NULL AUTO_INCREMENT,
   `oid` bigint(20) unsigned NOT NULL,
   `mb_id` varchar(255) NOT NULL DEFAULT '',
   `post_data` text NOT NULL,
   `ol_code` varchar(255) NOT NULL DEFAULT '',
-  `ol_msg` varchar(255) NOT NULL DEFAULT '',
+  `ol_msg` text NOT NULL,
   `ol_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `ol_ip` varchar(25) NOT NULL DEFAULT '',
-  PRIMARY KEY (`oid`)
+  PRIMARY KEY (`log_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

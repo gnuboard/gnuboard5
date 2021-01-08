@@ -20,14 +20,14 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') && $post
 
 if( $default['de_pg_service'] == 'inicis' && get_session('ss_order_id') ){
     if( $exist_order = get_shop_order_data(get_session('ss_order_id')) ){    //이미 상품이 주문되었다면 리다이렉트
-        if($exist_order['od_tno']){
+        if(isset($exist_order['od_tno']) && $exist_order['od_tno']){
             exists_inicis_shop_order(get_session('ss_order_id'), array(), $exist_order['od_time'], $exist_order['od_ip']);
             exit;
         }
     }
 }
 
-if(function_exists('add_order_post_log')) add_order_post_log('init');
+if(function_exists('add_order_post_log')) add_order_post_log('init', 'init');
 
 $page_return_url = G5_SHOP_URL.'/orderform.php';
 if(get_session('ss_direct'))
@@ -649,10 +649,22 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 ";
 $result = sql_query($sql, false);
 
+// 정말로 insert 가 되었는지 한번더 체크한다.
+$exists_sql = "select od_id, od_tno, od_ip from {$g5['g5_shop_order_table']} where od_id = '$od_id'";
+$exists_order = sql_fetch($exists_sql);
+
+if(! $result && (isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
+    if(isset($exists_order['od_tno']) && $exists_order['od_tno']){
+        //이미 상품이 주문되었다면 리다이렉트
+        exists_inicis_shop_order($od_id, array(), $exists_order['od_time'], $REMOTE_ADDR);
+        goto_url(G5_SHOP_URL);
+    }
+}
+
 // 주문정보 입력 오류시 결제 취소
-if(!$result) {
+if(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
     if($tno) {
-        $cancel_msg = '주문정보 입력 오류';
+        $cancel_msg = '주문정보 입력 오류 : '.$sql;
         switch($od_pg) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';

@@ -12,7 +12,7 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') && isset
     $default['de_pg_service'] = 'kcp';
 }
 
-if(function_exists('add_order_post_log')) add_order_post_log('init');
+if(function_exists('add_order_post_log')) add_order_post_log('init', 'init');
 
 if(($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') && $default['de_pg_service'] == 'lg' && !$_POST['LGD_PAYKEY']){
     if(function_exists('add_order_post_log')) add_order_post_log('결제등록 요청 후 주문해 주십시오.');
@@ -603,10 +603,14 @@ $sql = " insert {$g5['g5_shop_order_table']}
                 ";
 $result = sql_query($sql, false);
 
+// 정말로 insert 가 되었는지 한번더 체크한다.
+$exists_sql = "select od_id, od_tno, od_ip from {$g5['g5_shop_order_table']} where od_id = '$od_id'";
+$exists_order = sql_fetch($exists_sql);
+
 // 주문정보 입력 오류시 결제 취소
-if(!$result) {
+if(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
     if($tno) {
-        $cancel_msg = '주문정보 입력 오류';
+        $cancel_msg = '주문정보 입력 오류 : '.$sql;
         switch($od_pg) {
             case 'lg':
                 include G5_SHOP_PATH.'/lg/xpay_cancel.php';
