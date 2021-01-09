@@ -2,7 +2,7 @@
 $sub_menu = '100310';
 include_once('./_common.php');
 
-$nw_id = isset($_POST['nw_id']) ? preg_replace('/[^0-9]/', '', $_POST['nw_id']) : 0;
+$nw_id = isset($_REQUEST['nw_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['nw_id']) : 0;
 
 if ($w == "u" || $w == "d")
     check_demo();
