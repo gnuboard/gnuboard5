@@ -15,7 +15,7 @@ check_admin_token();
 @mkdir(G5_DATA_PATH."/faq", G5_DIR_PERMISSION);
 @chmod(G5_DATA_PATH."/faq", G5_DIR_PERMISSION);
 
-$fm_id = isset($_POST['fm_id']) ? (int) $_POST['fm_id'] : 0;
+$fm_id = isset($_REQUEST['fm_id']) ? (int) $_REQUEST['fm_id'] : 0;
 $fm_himg_del = isset($_POST['fm_himg_del']) ? (int) $_POST['fm_himg_del'] : 0;
 $fm_timg_del = isset($_POST['fm_timg_del']) ? (int) $_POST['fm_timg_del'] : 0;
 $fm_subject = isset($_POST['fm_subject']) ? strip_tags(clean_xss_attributes($_POST['fm_subject'])) : '';
