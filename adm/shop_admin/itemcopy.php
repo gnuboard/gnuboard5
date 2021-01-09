@@ -2,7 +2,8 @@
 $sub_menu = '400300';
 include_once('./_common.php');
 
-$ca_id = preg_replace('/[^0-9a-z]/i', '', $ca_id);
+$ca_id = isset($_REQUEST['ca_id']) ? preg_replace('/[^0-9a-z]/i', '', $_REQUEST['ca_id']) : '';
+$it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
 
 auth_check_menu($auth, $sub_menu, "r");
 

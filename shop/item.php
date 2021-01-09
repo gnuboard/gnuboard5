@@ -205,6 +205,8 @@ $is_orderable = true;
 if(!$it['it_use'] || $it['it_tel_inq'] || $is_soldout)
     $is_orderable = false;
 
+$option_item = $supply_item = '';
+
 if($is_orderable) {
     if(defined('G5_THEME_USE_OPTIONS_TRTD') && G5_THEME_USE_OPTIONS_TRTD){
         $option_item = get_item_options($it['it_id'], $it['it_option_subject'], '');

@@ -6,23 +6,28 @@ auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
+$ca_id = isset($_REQUEST['ca_id']) ? preg_replace('/[^0-9a-z]/i', '', $_REQUEST['ca_id']) : '';
+$it_id = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
+
 if ($is_admin != "super")
     alert("최고관리자만 접근 가능합니다.");
 
 if (!trim($it_id))
 	alert("복사할 상품코드가 없습니다.");
 
-$t_it_id = preg_replace("/[A-Za-z0-9\-_]/", "", $new_it_id);
-if($t_it_id)
+if(isset($_POST['new_it_id']) && preg_match('/[^A-Za-z0-9\-_]+/', $_POST['new_it_id']))
     alert("상품코드는 영문자, 숫자, -, _ 만 사용할 수 있습니다.");
 
+$new_it_id = isset($_REQUEST['new_it_id']) ? preg_replace("/[^A-Za-z0-9\-_]/", "", $_REQUEST['new_it_id']) : '';
+
+if( ! $new_it_id ) alert('상품코드를 입력해 주세요.');
+
 $row = sql_fetch(" select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$new_it_id' ");
-if ($row['cnt'])
+if (isset($row['cnt']) && $row['cnt'])
     alert('이미 존재하는 상품코드 입니다.');
 
 $sql = " select * from {$g5['g5_shop_item_table']} where it_id = '$it_id' limit 1 ";
 $cp = sql_fetch($sql);
-
 
 // 상품테이블의 필드가 추가되어도 수정하지 않도록 필드명을 추출하여 insert 퀴리를 생성한다. (상품코드만 새로운것으로 대체)
 $sql_common = "";
@@ -50,9 +55,10 @@ sql_query($opt_sql);
 // html 에디터로 첨부된 이미지 파일 복사
 if($cp['it_explan']) {
     $matchs = get_editor_image($cp['it_explan'], false);
+    $count_matchs = (isset($matchs[1]) && is_array($matchs[1])) ? count($matchs[1]) : 0;
 
     // 파일의 경로를 얻어 복사
-    for($i=0;$i<count($matchs[1]);$i++) {
+    for($i=0;$i<$count_matchs;$i++) {
         $p = parse_url($matchs[1][$i]);
         if(strpos($p['path'], "/data/") != 0)
             $src_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
@@ -76,9 +82,10 @@ if($cp['it_explan']) {
 
 if($cp['it_mobile_explan']) {
     $matchs = get_editor_image($cp['it_mobile_explan'], false);
+    $count_matchs = (isset($matchs[1]) && is_array($matchs[1])) ? count($matchs[1]) : 0;
 
     // 파일의 경로를 얻어 복사
-    for($i=0;$i<count($matchs[1]);$i++) {
+    for($i=0;$i<$count_matchs;$i++) {
         $p = parse_url($matchs[1][$i]);
         if(strpos($p['path'], "/data/") != 0)
             $src_path = preg_replace("/^\/.*\/data/", "/data", $p['path']);
@@ -159,6 +166,6 @@ $sql = " update {$g5['g5_shop_item_table']}
             where it_id = '$new_it_id' ";
 sql_query($sql);
 
-$qstr = "ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx)."&amp;save_stx=".urlencode($save_stx);
+$qstr = "ca_id=$ca_id&amp;sfl=$sfl&amp;sca=$sca&amp;page=$page&amp;stx=".urlencode($stx);
 
 goto_url("itemlist.php?$qstr");

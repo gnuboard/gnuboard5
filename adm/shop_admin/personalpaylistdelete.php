@@ -8,7 +8,7 @@ auth_check_menu($auth, $sub_menu, 'd');
 
 check_admin_token();
 
-$count = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) ? 0;
+$count = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
 if(!$count)
     alert('선택삭제 하실 항목을 하나이상 선택해 주세요.');
 

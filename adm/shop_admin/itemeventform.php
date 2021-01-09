@@ -26,7 +26,7 @@ if ($w == "u")
 
     $sql = " select * from {$g5['g5_shop_event_table']} where ev_id = '$ev_id' ";
     $ev = sql_fetch($sql);
-    if (!$ev['ev_id'])
+    if (! (isset($ev['ev_id']) && $ev['ev_id']))
         alert("등록된 자료가 없습니다.");
 
     // 등록된 이벤트 상품

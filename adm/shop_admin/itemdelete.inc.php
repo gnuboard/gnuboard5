@@ -68,8 +68,9 @@ if (!function_exists("itemdelete")) {
         // HTML 내용에서 에디터에 올라간 이미지의 경로를 얻어 삭제함
         //------------------------------------------------------------------------
         $imgs = get_editor_image($it['it_explan'], false);
+        $count_imgs = (isset($imgs[1]) && is_array($imgs[1])) ? count($imgs[1]) : 0;
 
-        for($i=0;$i<count($imgs[1]);$i++) {
+        for($i=0;$i<$count_imgs;$i++) {
             $p = parse_url($imgs[1][$i]);
             if(strpos($p['path'], "/data/editor/") === false)
                 continue;
@@ -85,8 +86,9 @@ if (!function_exists("itemdelete")) {
         }
 
         $imgs = get_editor_image($it['it_mobile_explan'], false);
+        $count_imgs = (isset($imgs[1]) && is_array($imgs[1])) ? count($imgs[1]) : 0;
 
-        for($i=0;$i<count($imgs[1]);$i++) {
+        for($i=0;$i<$count_imgs;$i++) {
             $p = parse_url($imgs[1][$i]);
             if(strpos($p['path'], "/data/editor/") === false)
                 continue;

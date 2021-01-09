@@ -43,7 +43,8 @@ $result = sql_query($sql);
     <?php
     for ($i=0; $row=sql_fetch_array($result); $i++) {
 
-        $href = "";
+        $href = '';
+        $href_close = '';
         $sql = " select count(ev_id) as cnt from {$g5['g5_shop_event_item_table']} where ev_id = '{$row['ev_id']}' ";
         $ev = sql_fetch($sql);
         if ($ev['cnt']) {
