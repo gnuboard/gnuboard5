@@ -28,7 +28,7 @@ if (!$board['bo_use_list_view']) {
     $sql = " select wr_id, wr_subject, wr_datetime from {$write_table} where wr_is_comment = 0 and wr_num = '{$write['wr_num']}' and wr_reply < '{$write['wr_reply']}' {$sql_search} order by wr_num desc, wr_reply desc limit 1 ";
     $prev = sql_fetch($sql);
     // 위의 쿼리문으로 값을 얻지 못했다면
-    if (isset($prev['wr_id']) && !$prev['wr_id'])     {
+    if (! (isset($prev['wr_id']) && $prev['wr_id'])) {
         $sql = " select wr_id, wr_subject, wr_datetime from {$write_table} where wr_is_comment = 0 and wr_num < '{$write['wr_num']}' {$sql_search} order by wr_num desc, wr_reply desc limit 1 ";
         $prev = sql_fetch($sql);
     }
@@ -37,7 +37,7 @@ if (!$board['bo_use_list_view']) {
     $sql = " select wr_id, wr_subject, wr_datetime from {$write_table} where wr_is_comment = 0 and wr_num = '{$write['wr_num']}' and wr_reply > '{$write['wr_reply']}' {$sql_search} order by wr_num, wr_reply limit 1 ";
     $next = sql_fetch($sql);
     // 위의 쿼리문으로 값을 얻지 못했다면
-    if (isset($next['wr_id']) && !$next['wr_id']) {
+    if (! (isset($next['wr_id']) && $next['wr_id'])) {
         $sql = " select wr_id, wr_subject, wr_datetime from {$write_table} where wr_is_comment = 0 and wr_num > '{$write['wr_num']}' {$sql_search} order by wr_num, wr_reply limit 1 ";
         $next = sql_fetch($sql);
     }
