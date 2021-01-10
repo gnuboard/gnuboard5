@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 check_demo();
 
-$w = isset($_POST['w']) ? $_POST['w'] : '';
+$w = isset($_REQUEST['w']) ? $_REQUEST['w'] : '';
 
 if ($w == 'd')
     auth_check_menu($auth, $sub_menu, "d");
@@ -18,7 +18,7 @@ check_admin_token();
 
 $bn_bimg      = isset($_FILES['bn_bimg']['tmp_name']) ? $_FILES['bn_bimg']['tmp_name'] : '';
 $bn_bimg_name = isset($_FILES['bn_bimg']['name']) ? $_FILES['bn_bimg']['name'] : '';
-$bn_id = isset($_POST['bn_id']) ? preg_replace('/[^0-9]/', '', $_POST['bn_id']) : 0;
+$bn_id = isset($_REQUEST['bn_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['bn_id']) : 0;
 $bn_bimg_del = (isset($_POST['bn_bimg_del']) && $_POST['bn_bimg_del']) ? preg_replace('/[^0-9]/', '', $_POST['bn_id']) : 0;
 $bn_url = isset($_POST['bn_url']) ? strip_tags(clean_xss_attributes($bn_url)) : '';
 $bn_alt = isset($_POST['bn_alt']) ? strip_tags(clean_xss_attributes($bn_alt)) : '';
