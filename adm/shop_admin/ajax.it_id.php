@@ -7,7 +7,7 @@ if (preg_match("/[^\w\-]/", $it_id)) { // \w : 0-9 A-Z a-z _
 }
 
 $row = get_shop_item($it_id, true);
-if ($row['it_name']) {
+if (isset($row['it_name']) && $row['it_name']) {
     $it_name = addslashes($row['it_name']);
     die("{\"error\":\"이미 등록된 상품코드 입니다.\\n\\n상품명 : {$it_name}\"}");
 }

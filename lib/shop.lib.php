@@ -662,9 +662,11 @@ function it_img_upload($srcfile, $filename, $dir)
     $filename = preg_replace( $pattern, "", $filename);
 
     $filename = preg_replace_callback(
-                          "/[가-힣]+/",
-                          create_function('$matches', 'return base64_encode($matches[0]);'),
-                          $filename);
+        "/[가-힣]+/",
+        function($matches) {
+            return isset($matches[0]) ? base64_encode($matches[0]) : '';
+        },
+        $filename);
 
     $filename = preg_replace( $pattern, "", $filename);
     $prepend = '';
