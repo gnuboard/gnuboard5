@@ -19,17 +19,17 @@ $sel_ca_id = isset($_REQUEST['sel_ca_id']) ? clean_xss_tags($_REQUEST['sel_ca_id
 // 재고 일괄수정
 for ($i=0; $i<$count_post_it_id; $i++)
 {
-    $it_stock_qty = isset($_POST['it_stock_qty'][$i]) ? (int) $_POST['it_stock_qty'][$i] : 0;
-    $it_noti_qty = isset($_POST['it_noti_qty'][$i]) ? (int) $_POST['it_noti_qty'][$i] : 0;
-    $it_use = isset($_POST['it_use'][$i]) ? (int) $_POST['it_use'][$i] : 0;
+    $io_stock_qty = isset($_POST['io_stock_qty'][$i]) ? (int) $_POST['io_stock_qty'][$i] : 0;
+    $io_noti_qty = isset($_POST['io_noti_qty'][$i]) ? (int) $_POST['io_noti_qty'][$i] : 0;
+    $io_use = isset($_POST['io_use'][$i]) ? (int) $_POST['io_use'][$i] : 0;
     $it_id = isset($_POST['it_id'][$i]) ? safe_replace_regex($_POST['it_id'][$i], 'it_id') : '';
     $io_id = isset($_POST['io_id'][$i]) ? preg_replace(G5_OPTION_ID_FILTER, '', $_POST['io_id'][$i]) : '';
     $io_type = isset($_POST['io_type'][$i]) ? (int) $_POST['io_type'][$i] : 0;
 
     $sql = "update {$g5['g5_shop_item_option_table']}
-               set io_stock_qty    = '".$it_stock_qty."',
-                   io_noti_qty     = '".$it_noti_qty."',
-                   io_use = '".$it_use."'
+               set io_stock_qty    = '".$io_stock_qty."',
+                   io_noti_qty     = '".$io_noti_qty."',
+                   io_use = '".$io_use."'
              where it_id = '".$it_id."'
                and io_id = '".sql_real_escape_string($io_id)."'
                and io_type = '".$io_type."' ";
