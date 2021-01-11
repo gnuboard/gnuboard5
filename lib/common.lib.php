@@ -2044,12 +2044,14 @@ function bad_tag_convert($code)
     global $view;
     global $member, $is_admin;
 
-    if ($is_admin && $member['mb_id'] != $view['mb_id']) {
+    if ($is_admin && $member['mb_id'] !== $view['mb_id']) {
         //$code = preg_replace_callback("#(\<(embed|object)[^\>]*)\>(\<\/(embed|object)\>)?#i",
         // embed 또는 object 태그를 막지 않는 경우 필터링이 되도록 수정
         $code = preg_replace_callback("#(\<(embed|object)[^\>]*)\>?(\<\/(embed|object)\>)?#i",
-                    create_function('$matches', 'return "<div class=\"embedx\">보안문제로 인하여 관리자 아이디로는 embed 또는 object 태그를 볼 수 없습니다. 확인하시려면 관리권한이 없는 다른 아이디로 접속하세요.</div>";'),
-                    $code);
+            function($matches) {
+                return "<div class=\"embedx\">보안문제로 인하여 관리자 아이디로는 embed 또는 object 태그를 볼 수 없습니다. 확인하시려면 관리권한이 없는 다른 아이디로 접속하세요.</div>";
+            },
+            $code);
     }
 
     return preg_replace("/\<([\/]?)(script|iframe|form)([^\>]*)\>?/i", "&lt;$1$2$3&gt;", $code);
