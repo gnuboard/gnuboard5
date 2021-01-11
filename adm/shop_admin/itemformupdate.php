@@ -23,10 +23,14 @@ $ca_id2 = isset($_POST['ca_id2']) ? preg_replace('/[^0-9a-z]/i', '', $_POST['ca_
 $ca_id3 = isset($_POST['ca_id3']) ? preg_replace('/[^0-9a-z]/i', '', $_POST['ca_id3']) : '';
 
 if ($is_admin != 'super') {     // 최고관리자가 아니면 체크
-    $sql = "select b.ca_mb_id from {$g5['g5_shop_item_table']} a , {$g5['g5_shop_category_table']} b where (a.ca_id = b.ca_id) and a.it_id = '$it_id'";
+    if( $w === '' ){
+        $sql = "select ca_mb_id from {$g5['g5_shop_category_table']} where ca_id = '$ca_id'";
+    } else {
+        $sql = "select b.ca_mb_id from {$g5['g5_shop_item_table']} a , {$g5['g5_shop_category_table']} b where (a.ca_id = b.ca_id) and a.it_id = '$it_id'";
+    }
     $checks = sql_fetch($sql);
 
-    if( ! $checks['ca_mb_id'] || $checks['ca_mb_id'] !== $member['mb_id'] ){
+    if( ! (isset($checks['ca_mb_id']) && $checks['ca_mb_id']) || $checks['ca_mb_id'] !== $member['mb_id'] ){
         alert("해당 분류의 관리회원이 아닙니다.");
     }
 }
@@ -316,6 +320,11 @@ $check_sanitize_keys = array(
 'it_sc_method',         // 배송비 결제
 'it_sc_price',          // 기본배송비
 'it_sc_minimum',        // 배송비 상세조건
+'it_type1',             // 상품유형(히트)
+'it_type2',             // 상품유형(추천)
+'it_type3',             // 상품유형(신상품)
+'it_type4',             // 상품유형(인기)
+'it_type5',             // 상품유형(할인)
 );
 
 foreach( $check_sanitize_keys as $key ){
@@ -640,7 +649,6 @@ echo "<meta http-equiv=\"content-type\" content=\"text/html; charset=utf-8\">";
 ?>
 <script>
     if (confirm("계속 입력하시겠습니까?"))
-        //location.href = "<?php echo "./itemform.php?it_id=$it_id&amp;sort1=$sort1&amp;sort2=$sort2&amp;sel_ca_id=$sel_ca_id&amp;sel_field=$sel_field&amp;search=$search&amp;page=$page"?>";
         location.href = "<?php echo "./itemform.php?".str_replace('&amp;', '&', $qstr); ?>";
     else
         location.href = "<?php echo "./itemlist.php?".str_replace('&amp;', '&', $qstr); ?>";
