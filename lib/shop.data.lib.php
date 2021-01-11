@@ -20,6 +20,10 @@ function get_shop_item($it_id, $is_cache=false, $add_query=''){
         $item['it_basic'] = conv_content($item['it_basic'], 1);
     }
 
+    if( ! isset($item['it_id']) ){
+        $item['it_id'] = '';
+    }
+
     return $item;
 }
 
