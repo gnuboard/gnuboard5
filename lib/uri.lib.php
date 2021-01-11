@@ -91,7 +91,7 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
                 $url .= ($folder === 'content') ? '?co_id='. $no : '?'. $no;
             }
             if($query_string) {
-                $url .= ($no ? '?' : '&amp;'). $query_string;
+                $url .= (!$no ? '?' : '&amp;'). $query_string;
             }
         }
 
