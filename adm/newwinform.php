@@ -11,6 +11,7 @@ $nw = array(
 'nw_end_time'=>'',
 'nw_subject'=>'',
 'nw_content'=>'',
+'nw_division'=>'',
 );
 
 $html_title = "팝업레이어";
