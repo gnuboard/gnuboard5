@@ -136,7 +136,7 @@ function grouplist_submit(f)
         </td>
         <td class="td_left">
             <label for="fg_name_<?php echo $i; ?>" class="sound_only">그룹명</label>
-            <input type="text" name="fg_name[<?php echo $i; ?>]" value="<?php echo $group[$i]['fg_name']?>" id="fg_name_<?php echo $i; ?>" class="frm_input">
+            <input type="text" name="fg_name[<?php echo $i; ?>]" value="<?php echo get_sanitize_input($group[$i]['fg_name']); ?>" id="fg_name_<?php echo $i; ?>" class="frm_input">
             <input type="checkbox" name="fg_member[<?php echo $i; ?>]" value="1" id="fg_member_<?php echo $i; ?>" <?php if ($group[$i]['fg_member']) echo 'checked';?>>
             <label for="fg_member_<?php echo $i; ?>">회원</label>
         </td>
