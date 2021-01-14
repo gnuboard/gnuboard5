@@ -661,12 +661,7 @@ function it_img_upload($srcfile, $filename, $dir)
     $filename = preg_replace("/\s+/", "", $filename);
     $filename = preg_replace( $pattern, "", $filename);
 
-    $filename = preg_replace_callback(
-        "/[가-힣]+/",
-        function($matches) {
-            return isset($matches[0]) ? base64_encode($matches[0]) : '';
-        },
-        $filename);
+    $filename = preg_replace_callback("/[가-힣]+/", '_callback_it_img_upload', $filename);
 
     $filename = preg_replace( $pattern, "", $filename);
     $prepend = '';
@@ -694,6 +689,9 @@ function it_img_upload($srcfile, $filename, $dir)
     return $file;
 }
 
+function _callback_it_img_upload($matches){
+    return isset($matches[0]) ? base64_encode($matches[0]) : '';
+}
 
 // 파일을 업로드 함
 function upload_file($srcfile, $destfile, $dir)
