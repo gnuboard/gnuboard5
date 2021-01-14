@@ -344,6 +344,7 @@ if ($od_settle_case == "무통장")
         $od_status      = '입금';
         $od_receipt_time = G5_TIME_YMDHIS;
     }
+    $tno = $od_receipt_time = $od_app_no = '';
 }
 else if ($od_settle_case == "계좌이체")
 {
@@ -395,6 +396,7 @@ else if ($od_settle_case == "가상계좌")
     $od_deposit_name    = $depositor;
     $pg_price           = $amount;
     $od_misu            = $i_price - $od_receipt_price;
+    $od_receipt_time    = '';
 }
 else if ($od_settle_case == "휴대폰")
 {

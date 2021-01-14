@@ -16,7 +16,7 @@ try {
     //#####################
     // 인증이 성공일 경우만
     //#####################
-    if (strcmp('0000', $_REQUEST['resultCode']) == 0) {
+    if (isset($_REQUEST['resultCode']) && strcmp('0000', $_REQUEST['resultCode']) == 0) {
 
         //############################################
         // 1.전문 필드 값 설정(***가맹점 개발수정***)
@@ -100,13 +100,13 @@ try {
             $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
             $row = sql_fetch($sql);
 
-            $data = unserialize(base64_decode($row['dt_data']));
+            $data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
 
             if(isset($data['pp_id']) && $data['pp_id']) {
                 $page_return_url  = G5_SHOP_URL.'/personalpayform.php?pp_id='.$data['pp_id'];
             } else {
                 $page_return_url  = G5_SHOP_URL.'/orderform.php';
-                if($_SESSION['ss_direct'])
+                if(get_session('ss_direct'))
                     $page_return_url .= '?sw_direct=1';
             }
 

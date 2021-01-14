@@ -41,7 +41,7 @@ if($default['de_tax_flag_use']) {
 
 <input type="hidden" name="version" value="1.0" >
 <input type="hidden" name="mid" value="<?php echo $default['de_kakaopay_mid']; ?>">
-<input type="hidden" name="goodname" value="<?php echo $goods; ?>">
+<input type="hidden" name="goodname" value="<?php echo isset($goods) ? get_text($goods) : ''; ?>">
 <input type="hidden" name="oid" value="<?php echo $od_id; ?>">
 <input type="hidden" name="price" value="<?php echo $tot_price; ?>" >
 <input type="hidden" name="currency" value="WON" >
