@@ -58,7 +58,7 @@ if($w == "u") {
 $it_img_dir = G5_DATA_PATH.'/item';
 
 for($i=0;$i<=10;$i++){
-    ${'it_img'.$i.'_del'} = ! empty($_POST['it_img1_del']) ? 1 : 0;
+    ${'it_img'.$i.'_del'} = ! empty($_POST['it_img'.$i.'_del']) ? 1 : 0;
 }
 
 // 파일삭제
