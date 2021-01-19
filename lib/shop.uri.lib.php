@@ -50,7 +50,7 @@ function add_pretty_shop_url($url, $folder, $no='', $query_string='', $action=''
 
         if( $config['cf_bbs_rewrite'] > 1 && ! preg_match('/^(list|type)\-([^\/]+)/i', $no) ){
             $item = get_shop_item($no, true);
-            $segments[2] = $item['it_seo_title'] ? urlencode($item['it_seo_title']).'/' : urlencode($no);
+            $segments[2] = (isset($item['it_seo_title']) && $item['it_seo_title']) ? urlencode($item['it_seo_title']).'/' : urlencode($no);
         } else {
             $segments[2] = urlencode($no);
         }

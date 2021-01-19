@@ -5,7 +5,7 @@ if (!$is_member) {
     alert_close("사용후기는 회원만 작성이 가능합니다.");
 }
 
-$it_id       = isset($_POST['it_id']) ? safe_replace_regex($_POST['it_id'], 'it_id') : '';
+$it_id       = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
 $is_subject  = isset($_POST['is_subject']) ? trim($_POST['is_subject']) : '';
 $is_content  = isset($_POST['is_content']) ? trim($_POST['is_content']) : '';
 $is_content = preg_replace('#<script(.*?)>(.*?)</script>#is', '', $is_content);

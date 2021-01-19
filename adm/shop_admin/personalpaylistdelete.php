@@ -16,7 +16,7 @@ for ($i=0; $i<$count; $i++)
 {
     // 실제 번호를 넘김
     $k = isset($_POST['chk'][$i]) ? (int) $_POST['chk'][$i] : 0;
-    $ppp_id = isset($_POST['pp_id'][$i]) ? (int) $_POST['pp_id'][$k] : 0;
+    $ppp_id = isset($_POST['pp_id'][$i]) ? preg_replace('/[^0-9]/', '', $_POST['pp_id'][$k]) : 0;
 
     $sql = " delete from {$g5['g5_shop_personalpay_table']} where pp_id = '{$ppp_id}' ";
     sql_query($sql);

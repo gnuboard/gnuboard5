@@ -6,7 +6,7 @@ $it_id = isset($_GET['it_id']) ? get_search_string(trim($_GET['it_id'])) : '';
 $it_seo_title = isset($it_seo_title) ? $it_seo_title : '';
 
 $it = get_shop_item_with_category($it_id, $it_seo_title);
-$it_id = $it['it_id'];
+$it_id = $_REQUEST['it_id'] = $it['it_id'];
 
 if (! (isset($it['it_id']) && $it['it_id'])) {
     alert('자료가 없습니다.');

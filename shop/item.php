@@ -14,7 +14,7 @@ $it = get_shop_item_with_category($it_id, $it_seo_title);
 if (! (isset($it['it_id']) && $it['it_id']))
     alert('자료가 없습니다.');
 
-$it_id = $it['it_id'];
+$it_id = $_REQUEST['it_id'] = $it['it_id'];
 
 if( isset($row['it_seo_title']) && ! $row['it_seo_title'] ){
     shop_seo_title_update($row['it_id']);

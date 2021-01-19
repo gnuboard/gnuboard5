@@ -5,6 +5,7 @@ if (!$is_member) {
     alert_close("상품문의는 회원만 작성이 가능합니다.");
 }
 
+$it_id       = isset($_REQUEST['it_id']) ? safe_replace_regex($_REQUEST['it_id'], 'it_id') : '';
 $iq_id = isset($_REQUEST['iq_id']) ? (int) $_REQUEST['iq_id'] : 0;
 $iq_subject = isset($_POST['iq_subject']) ? trim($_POST['iq_subject']) : '';
 $iq_question = isset($_POST['iq_question']) ? trim($_POST['iq_question']) : '';
