@@ -10,7 +10,6 @@ $board = array('bo_table'=>'');
 $save_bo_table = array();
 $save_wr_id = array();
 $count_chk_bn_id = (isset($_POST['chk_bn_id']) && is_array($_POST['chk_bn_id'])) ? count($_POST['chk_bn_id']) : 0;
-$count_write = 0;
 
 for($i=0;$i<$count_chk_bn_id;$i++)
 {
@@ -19,6 +18,8 @@ for($i=0;$i<$count_chk_bn_id;$i++)
 
     $bo_table = isset($_POST['bo_table'][$k]) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['bo_table'][$k]) : '';
     $wr_id    = isset($_POST['wr_id'][$k]) ? preg_replace('/[^0-9]/i', '', $_POST['wr_id'][$k]) : 0;
+    
+    $count_write = $count_comment = 0;
 
     $save_bo_table[$i] = $bo_table;
 	$save_wr_id[$i] = $wr_id;
