@@ -74,6 +74,7 @@
 .more_opt {display:none;position:absolute;top:50px;right:7px;background:#fff;border:1px solid #b8bfc4;z-index:999}
 .more_opt:before {content:"";position:absolute;top:-8px;right:6px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #b8bfc4 transparent}
 .more_opt:after {content:"";position:absolute;top:-6px;right:6px;width:0;height:0;border-style:solid;border-width:0 6px 8px 6px;border-color:transparent transparent #fff transparent}
+.more_opt.is_list_btn{width:90px}
 .more_opt li {display:block;border-bottom:1px solid #f1f1f1;padding:10px;margin:0;color:#6b757c;text-align:left}
 .more_opt li:last-child {border-bottom:0}
 .more_opt li button, .more_opt li a {width:100%;border:0;background:#fff;color:#6b757c}
@@ -157,7 +158,7 @@
 #bo_gall .gall_li_wr {position:relative;}
 #bo_gall .gall_li_chk {display:inline-block;position:absolute;top:10px;left:10px}
 #bo_gall .gall_li:nth-child(2n+1) {clear:both}
-#bo_gall .gall_li .gall_img img{width:100%;height:auto}
+#bo_gall .gall_li .gall_img img, #bo_gall .gall_li .gall_img video{width:100%;height:auto}
 #bo_gall .gall_li .gall_img .no_img,
 #bo_gall .gall_li .gall_notice {display:block;background:#eaeaea;color:#d0d0d0;font-size:3em;text-align:center;padding:25% 0}
 

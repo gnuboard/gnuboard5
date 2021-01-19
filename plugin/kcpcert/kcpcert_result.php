@@ -100,11 +100,15 @@ if( $cert_enc_use == "Y" )
 
         if ( $ct_cert->check_valid_hash ( $home_dir , $dn_hash , $veri_str ) != "1" )
         {
-            // 검증 실패시 처리 영역
-            if(PHP_INT_MAX == 2147483647) // 32-bit
-                $bin_exe = '/bin/ct_cli';
-            else
-                $bin_exe = '/bin/ct_cli_x64';
+            if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+                // 검증 실패시 처리 영역
+                if(PHP_INT_MAX == 2147483647) // 32-bit
+                    $bin_exe = '/bin/ct_cli';
+                else
+                    $bin_exe = '/bin/ct_cli_x64';
+            } else {
+                $bin_exe = '/bin/ct_cli_exe.exe';
+            }
 
             echo "dn_hash 변조 위험있음 (".G5_KCPCERT_PATH.$bin_exe." 파일에 실행권한이 있는지 확인하세요.)";
             exit;
@@ -132,6 +136,13 @@ if( $cert_enc_use == "Y" )
         $di_url         = urldecode( $ct_cert->mf_get_key_value("di"         ) );   // DI 중복가입 확인값
         $dec_res_cd     = $ct_cert->mf_get_key_value("res_cd"     );                // 암호화된 결과코드
         $dec_mes_msg    = $ct_cert->mf_get_key_value("res_msg"    );                // 암호화된 결과메시지
+
+        if(strtoupper(substr(PHP_OS, 0, 3)) === 'WIN' && function_exists('mb_detect_encoding') ){
+            if( mb_detect_encoding($user_name, 'EUC-KR') === 'EUC-KR' ){
+                $user_name = iconv_utf8($user_name);
+                $dec_mes_msg = iconv_utf8($dec_mes_msg);
+            }
+        }
 
         // 정상인증인지 체크
         if(!$phone_no)
@@ -227,4 +238,3 @@ $(function() {
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

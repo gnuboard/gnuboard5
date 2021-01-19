@@ -17,18 +17,18 @@ function make_mp3()
     }
 
     $ip = sprintf("%u", ip2long($_SERVER['REMOTE_ADDR']));
-    $mp3_file = 'data/cache/kcaptcha-'.$ip.'_'.G5_SERVER_TIME.'.mp3';
+    $mp3_file = 'cache/kcaptcha-'.$ip.'_'.G5_SERVER_TIME.'.mp3';
 
     $contents = '';
     foreach ($mp3s as $mp3) {
         $contents .= file_get_contents($mp3);
     }
 
-    file_put_contents(G5_PATH.'/'.$mp3_file, $contents);
+    file_put_contents(G5_DATA_PATH.'/'.$mp3_file, $contents);
 
     // 지난 캡챠 파일 삭제
     if (rand(0,99) == 0) {
-        foreach (glob(G5_PATH.'/data/cache/kcaptcha-*.mp3') as $file) {
+        foreach (glob(G5_DATA_PATH.'/cache/kcaptcha-*.mp3') as $file) {
             if (filemtime($file) + 86400 < G5_SERVER_TIME) {
                 @unlink($file);
             }
@@ -37,8 +37,7 @@ function make_mp3()
 
     set_session("ss_captcha_save", $number);
 
-    return G5_URL.'/'.$mp3_file;
+    return G5_DATA_URL.'/'.$mp3_file;
 }
 
 echo make_mp3();
-?>

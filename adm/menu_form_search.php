@@ -4,6 +4,8 @@ include_once('./_common.php');
 if ($is_admin != 'super')
     die('최고관리자만 접근 가능합니다.');
 
+$type = isset($_REQUEST['type']) ? preg_replace('/[^0-9a-z_]/i', '', $_REQUEST['type']) : '';
+
 switch($type) {
     case 'group':
         $sql = " select gr_id as id, gr_subject as subject
@@ -24,9 +26,7 @@ switch($type) {
         $sql = '';
         break;
 }
-?>
 
-<?php
 if($sql) {
     $result = sql_query($sql);
 
@@ -123,4 +123,4 @@ if($sql) {
     <button type="button" id="add_manual" class="btn_submit btn">추가</button>
     <button type="button" class="btn_02 btn" onclick="window.close();">창닫기</button>
 </div>
-<?php } ?>
+<?php } // end if;

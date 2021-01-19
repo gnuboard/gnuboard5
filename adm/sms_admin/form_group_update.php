@@ -2,16 +2,18 @@
 $sub_menu = "900500";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
+
+$post_cnk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? $_POST['chk'] : array();
 
 if ($w == 'u') // 업데이트
 {
-    for ($i=0; $i<count($_POST['chk']); $i++)
+    for ($i=0; $i<count($post_cnk); $i++)
     {
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
-        $fg_no = (int) $_POST['fg_no'][$k];
-        $fg_name = isset($_POST['fg_name'][$k]) ? addslashes(strip_tags($_POST['fg_name'][$k])) : '';
+        $k = $post_cnk[$i];
+        $fg_no = isset($_POST['fg_no'][$k]) ? (int) $_POST['fg_no'][$k] : 0;
+        $fg_name = isset($_POST['fg_name'][$k]) ? addslashes(strip_tags(clean_xss_attributes($_POST['fg_name'][$k]))) : '';
         $fg_member = isset($_POST['fg_member'][$k]) ? addslashes(strip_tags($_POST['fg_member'][$k])) : '';
 
         if (!is_numeric($fg_no))
@@ -34,11 +36,11 @@ if ($w == 'u') // 업데이트
 }
 else if ($w == 'de') // 그룹삭제
 {
-    for ($i=0; $i<count($_POST['chk']); $i++)
+    for ($i=0; $i<count($post_cnk); $i++)
     {
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
-        $fg_no = (int) $_POST['fg_no'][$k];
+        $k = $post_cnk[$i];
+        $fg_no = isset($_POST['fg_no'][$k]) ? (int) $_POST['fg_no'][$k] : 0;
 
         if (!is_numeric($fg_no))
             alert('그룹 고유번호가 없습니다.');
@@ -53,11 +55,11 @@ else if ($w == 'de') // 그룹삭제
 }
 else if ($w == 'em') 
 {
-    for ($i=0; $i<count($_POST['chk']); $i++)
+    for ($i=0; $i<count($post_cnk); $i++)
     {
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
-        $fg_no = (int) $_POST['fg_no'][$k];
+        $k = $post_cnk[$i];
+        $fg_no = isset($_POST['fg_no'][$k]) ? (int) $_POST['fg_no'][$k] : 0;
 
         if ($fg_no == 'no') $fg_no = 0;
 
@@ -80,10 +82,10 @@ else if ($w == 'no')
 }
 else // 등록
 {
+    $fg_name = isset($_POST['fg_name']) ? addslashes(strip_tags(clean_xss_attributes($_POST['fg_name']))) : '';
+
     if (!strlen(trim($fg_name)))
         alert('그룹명을 입력해주세요');
-
-    $fg_name = addslashes(strip_tags($fg_name));
 
     $res = sql_fetch("select fg_name from {$g5['sms5_form_group_table']} where fg_name = '$fg_name'");
     if ($res)
@@ -93,4 +95,3 @@ else // 등록
 }
 
 goto_url('./form_group.php');
-?>

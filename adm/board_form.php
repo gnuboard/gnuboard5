@@ -3,7 +3,7 @@ $sub_menu = "300100";
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 $sql = " select count(*) as cnt from {$g5['group_table']} ";
 $row = sql_fetch($sql);
@@ -11,6 +11,8 @@ if (!$row['cnt'])
     alert('게시판그룹이 한개 이상 생성되어야 합니다.', './boardgroup_form.php');
 
 $html_title = '게시판';
+$reaonly = '';
+$required_valid = '';
 
 if (!isset($board['bo_device'])) {
     // 게시판 사용 필드 추가
@@ -77,11 +79,69 @@ if (!isset($board['bo_mobile_subject'])) {
 }
 
 if (!isset($board['bo_use_captcha'])) {
-    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_captcha` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_sns` ");
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_use_captcha` TINYINT NOT NULL DEFAULT '0' AFTER `bo_use_sns` ", false);
 }
+
+if (!isset($board['bo_select_editor'])) {
+    sql_query(" ALTER TABLE `{$g5['board_table']}` ADD `bo_select_editor` VARCHAR(50) NOT NULL DEFAULT '' AFTER `bo_use_dhtml_editor` ", false);
+}
+
+$board_default = array(
+'bo_mobile_subject'=>'',
+'bo_device'=>'',
+'bo_use_category'=>0,
+'bo_category_list'=>'',
+'bo_admin'=>'',
+'bo_list_level'=>0,
+'bo_read_level'=>0,
+'bo_write_level'=>0,
+'bo_reply_level'=>0,
+'bo_comment_level'=>0,
+'bo_link_level'=>0,
+'bo_upload_level'=>0,
+'bo_download_level'=>0,
+'bo_html_level'=>0,
+'bo_use_sideview'=>0,
+'bo_select_editor'=>'',
+'bo_use_rss_view'=>0,
+'bo_use_good'=>0,
+'bo_use_nogood'=>0,
+'bo_use_name'=>0,
+'bo_use_signature'=>0,
+'bo_use_ip_view'=>0,
+'bo_use_list_content'=>0,
+'bo_use_list_file'=>0,
+'bo_use_list_view'=>0,
+'bo_use_email'=>0,
+'bo_use_file_content'=>0,
+'bo_use_cert'=>'',
+'bo_write_min'=>0,
+'bo_write_max'=>0,
+'bo_comment_min'=>0,
+'bo_comment_max'=>0,
+'bo_use_sns'=>0,
+'bo_order'=>0,
+'bo_use_captcha'=>0,
+'bo_content_head'=>'',
+'bo_content_tail'=>'',
+'bo_mobile_content_head'=>'',
+'bo_mobile_content_tail'=>'',
+'bo_insert_content'=>'',
+'bo_sort_field'=>'',
+);
+
+for($i=0;$i<=10;$i++){
+    $board_default['bo_'.$i.'_subj'] = '';
+    $board_default['bo_'.$i] = '';
+}
+
+$board = array_merge($board_default, $board);
+
+run_event('adm_board_form_before', $board, $w);
 
 $required = "";
 $readonly = "";
+$sound_only = "";
 if ($w == '') {
 
     $html_title .= ' 생성';
@@ -181,7 +241,7 @@ $pg_anchor = '<ul class="anchor">
         <tr>
             <th scope="row"><label for="bo_table">TABLE<?php echo $sound_only ?></label></th>
             <td colspan="2">
-                <input type="text" name="bo_table" value="<?php echo $board['bo_table'] ?>" id="bo_table" <?php echo $required ?> <?php echo $readonly ?> class="frm_input <?php echo $reaonly ?> <?php echo $required ?> <?php echo $required_valid ?>" maxlength="20">
+                <input type="text" name="bo_table" value="<?php echo $board['bo_table'] ?>" id="bo_table" <?php echo $required ?> <?php echo $readonly ?> class="frm_input <?php echo $readonly ?> <?php echo $required ?> <?php echo $required_valid ?>" maxlength="20">
                 <?php if ($w == '') { ?>
                     영문자, 숫자, _ 만 가능 (공백없이 20자 이내)
                 <?php } else { ?>
@@ -479,6 +539,27 @@ $pg_anchor = '<ul class="anchor">
                 <label for="chk_grp_use_dhtml_editor">그룹적용</label>
                 <input type="checkbox" name="chk_all_use_dhtml_editor" value="1" id="chk_all_use_dhtml_editor">
                 <label for="chk_all_use_dhtml_editor">전체적용</label>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row"><label for="bo_select_editor">게시판 에디터 선택</label></th>
+            <td>
+                <?php echo help('게시판에 사용할 에디터를 설정합니다. 스킨에 따라 적용되지 않을 수 있습니다.') ?>
+                <select name="bo_select_editor" id="bo_select_editor">
+                <?php
+                $arr = get_skin_dir('', G5_EDITOR_PATH);
+                for ($i=0; $i<count($arr); $i++) {
+                    if ($i == 0) echo "<option value=\"\">기본환경설정의 에디터 사용</option>";
+                    echo "<option value=\"".$arr[$i]."\"".get_selected($board['bo_select_editor'], $arr[$i]).">".$arr[$i]."</option>\n";
+                }
+                ?>
+                </select>
+            </td>
+            <td class="td_grpset">
+                <input type="checkbox" name="chk_grp_select_editor" value="1" id="chk_grp_select_editor">
+                <label for="chk_grp_select_editor">그룹적용</label>
+                <input type="checkbox" name="chk_all_select_editor" value="1" id="chk_all_select_editor">
+                <label for="chk_all_select_editor">전체적용</label>
             </td>
         </tr>
         <tr>
@@ -1412,4 +1493,3 @@ function fboardform_submit(f)
 
 <?php
 include_once ('./admin.tail.php');
-?>

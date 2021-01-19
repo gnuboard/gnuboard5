@@ -16,18 +16,20 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
     for ($i=0; $i<$list_count; $i++) {
         
         $img_link_html = '';
+
+        $wr_href = get_pretty_url($bo_table, $list[$i]['wr_id']);
         
         if( $i === 0 ) {
             $thumb = get_list_thumbnail($bo_table, $list[$i]['wr_id'], $thumb_width, $thumb_height, false, true);
 
-            if($thumb['src']) {
+            if(isset($thumb['src']) && $thumb['src']) {
                 $img = $thumb['src'];
             } else {
                 $img = G5_IMG_URL.'/no_img.png';
                 $thumb['alt'] = '이미지가 없습니다.';
             }
             $img_content = '<img src="'.$img.'" alt="'.$thumb['alt'].'" >';
-            $img_link_html = '<a href="'.$list[$i]['href'].'" class="lt_img" >'.$img_content.'</a>';
+            $img_link_html = '<a href="'.$wr_href.'" class="lt_img" >'.run_replace('thumb_image_tag', $img_content, $thumb).'</a>';
         }
     ?>
         <li>
@@ -35,7 +37,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
             <?php
             if ($list[$i]['icon_secret']) echo "<i class=\"fa fa-lock\" aria-hidden=\"true\"></i><span class=\"sound_only\">비밀글</span> ";
  
-            echo "<a href=\"".$list[$i]['href']."\" class=\"pic_li_tit\"> ";
+            echo "<a href=\"".$wr_href."\" class=\"pic_li_tit\"> ";
             if ($list[$i]['is_notice'])
                 echo "<strong>".$list[$i]['subject']."</strong>";
             else

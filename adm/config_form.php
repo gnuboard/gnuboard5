@@ -2,7 +2,7 @@
 $sub_menu = "100100";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 if ($is_admin != 'super')
     alert('최고관리자만 접근 가능합니다.');
@@ -271,6 +271,13 @@ if(!isset($member['mb_scrap_cnt'])) {
                 ADD `mb_scrap_cnt` int(11) NOT NULL DEFAULT '0' AFTER `mb_memo_cnt`", true);
 }
 
+// 아이코드 토큰키 추가
+if( ! isset($config['cf_icode_token_key']) ){
+    $sql = "ALTER TABLE `{$g5['config_table']}` 
+            ADD COLUMN `cf_icode_token_key` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_server_port`; ";
+    sql_query($sql, false);
+}
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -297,6 +304,7 @@ $pg_anchor = '<ul class="anchor">
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
+$userinfo = array('payment'=>'');
 if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
 }
@@ -562,14 +570,14 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td colspan="3">
                 <?php if (!function_exists('curl_init')) echo help('<b>경고) curl이 지원되지 않아 네이버 신디케이션을 사용할수 없습니다.</b>'); ?>
                 <?php echo help('네이버 신디케이션 연동키(token)을 입력하면 네이버 신디케이션을 사용할 수 있습니다.<br>연동키는 <a href="http://webmastertool.naver.com/" target="_blank"><u>네이버 웹마스터도구</u></a> -> 네이버 신디케이션에서 발급할 수 있습니다.') ?>
-                <input type="text" name="cf_syndi_token" value="<?php echo $config['cf_syndi_token'] ?>" id="cf_syndi_token" class="frm_input" size="70">
+                <input type="text" name="cf_syndi_token" value="<?php echo isset($config['cf_syndi_token']) ? get_sanitize_input($config['cf_syndi_token']) : ''; ?>" id="cf_syndi_token" class="frm_input" size="70">
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_syndi_except">네이버 신디케이션 제외게시판</label></th>
             <td colspan="3">
                 <?php echo help('네이버 신디케이션 수집에서 제외할 게시판 아이디를 | 로 구분하여 입력하십시오. 예) notice|adult<br>참고로 그룹접근사용 게시판, 글읽기 권한 2 이상 게시판, 비밀글은 신디케이션 수집에서 제외됩니다.') ?>
-                <input type="text" name="cf_syndi_except" value="<?php echo $config['cf_syndi_except'] ?>" id="cf_syndi_except" class="frm_input" size="70">
+                <input type="text" name="cf_syndi_except" value="<?php echo isset($config['cf_syndi_except']) ? get_sanitize_input($config['cf_syndi_except']) : ''; ?>" id="cf_syndi_except" class="frm_input" size="70">
             </td>
         </tr>
         </tbody>
@@ -1122,7 +1130,7 @@ include_once('_rewrite_config_form.php');
                     <label for="check_social_payco">페이코 로그인을 사용합니다</label>
                     <div>
                     <h3>페이코 CallbackURL</h3>
-                    <p><?php echo get_social_callbackurl('payco'); ?></p>
+                    <p><?php echo get_social_callbackurl('payco', false, true); ?></p>
                     </div>
                 </div>
             </td>
@@ -1150,7 +1158,7 @@ include_once('_rewrite_config_form.php');
         <tr>
             <th scope="row"><label for="cf_twitter_key">트위터 컨슈머 Key</label></th>
             <td>
-                <input type="text" name="cf_twitter_key" value="<?php echo $config['cf_twitter_key'] ?>" id="cf_twitter_key" class="frm_input" size="40"> <a href="https://dev.twitter.com/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
+                <input type="text" name="cf_twitter_key" value="<?php echo $config['cf_twitter_key'] ?>" id="cf_twitter_key" class="frm_input" size="40"> <a href="https://developer.twitter.com/en/apps" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
             <th scope="row"><label for="cf_twitter_secret">트위터 컨슈머 Secret</label></th>
             <td>
@@ -1176,7 +1184,7 @@ include_once('_rewrite_config_form.php');
         <tr>
             <th scope="row"><label for="cf_kakao_rest_key">카카오 REST API 키</label></th>
             <td>
-                <input type="text" name="cf_kakao_rest_key" value="<?php echo $config['cf_kakao_rest_key'] ?>" id="cf_kakao_rest_key" class="frm_input" size="40"> <a href="https://developers.kakao.com/apps/new" target="_blank" class="btn_frmline">앱 등록하기</a>
+                <input type="text" name="cf_kakao_rest_key" value="<?php echo $config['cf_kakao_rest_key'] ?>" id="cf_kakao_rest_key" class="frm_input" size="40"> <a href="https://developers.kakao.com/product/kakaoLogin" target="_blank" class="btn_frmline">앱 등록하기</a>
             </td>
             <th scope="row"><label for="cf_kakao_client_secret">카카오 Client Secret</label></th>
             <td>
@@ -1257,29 +1265,29 @@ include_once('_rewrite_config_form.php');
         <tr>
             <th scope="row"><label for="cf_sms_type">SMS 전송유형</label></th>
             <td>
-                <?php echo help("전송유형을 SMS로 선택하시면 최대 80바이트까지 전송하실 수 있으며<br>LMS로 선택하시면 90바이트 이하는 SMS로, 그 이상은 1500바이트까지 LMS로 전송됩니다.<br>요금은 건당 SMS는 16원, LMS는 48원입니다."); ?>
+                <?php echo help("전송유형을 SMS로 선택하시면 최대 80바이트까지 전송하실 수 있으며<br>LMS로 선택하시면 90바이트 이하는 SMS로, 그 이상은 ".G5_ICODE_LMS_MAX_LENGTH."바이트까지 LMS로 전송됩니다.<br>요금은 건당 SMS는 16원, LMS는 48원입니다."); ?>
                 <select id="cf_sms_type" name="cf_sms_type">
                     <option value="" <?php echo get_selected($config['cf_sms_type'], ''); ?>>SMS</option>
                     <option value="LMS" <?php echo get_selected($config['cf_sms_type'], 'LMS'); ?>>LMS</option>
                 </select>
             </td>
         </tr>
-        <tr>
-            <th scope="row"><label for="cf_icode_id">아이코드 회원아이디</label></th>
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_icode_id">아이코드 회원아이디<br>(구버전)</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 회원아이디를 입력합니다."); ?>
                 <input type="text" name="cf_icode_id" value="<?php echo $config['cf_icode_id']; ?>" id="cf_icode_id" class="frm_input" size="20">
             </td>
         </tr>
-        <tr>
-            <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호</label></th>
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호<br>(구버전)</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 비밀번호를 입력합니다."); ?>
                 <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" id="cf_icode_pw" class="frm_input">
             </td>
         </tr>
-        <tr>
-            <th scope="row">요금제</th>
+        <tr class="icode_old_version <?php if(!(isset($userinfo['payment']) && $userinfo['payment'])){ echo 'cf_tr_hide'; } ?>">
+            <th scope="row">요금제<br>(구버전)</th>
             <td>
                 <input type="hidden" name="cf_icode_server_ip" value="<?php echo $config['cf_icode_server_ip']; ?>">
                 <?php
@@ -1296,21 +1304,31 @@ include_once('_rewrite_config_form.php');
                 ?>
             </td>
         </tr>
-        <tr>
-            <th scope="row">아이코드 SMS 신청<br>회원가입</th>
-            <td>
-                <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
-            </td>
-        </tr>
-         <?php if ($userinfo['payment'] == 'A') { ?>
-        <tr>
-            <th scope="row">충전 잔액</th>
+        <?php if ($userinfo['payment'] == 'A') { ?>
+        <tr class="icode_old_version">
+            <th scope="row">충전 잔액<br>(구버전)</th>
             <td>
                 <?php echo number_format($userinfo['coin']); ?> 원.
                 <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $config['cf_icode_id']; ?>&amp;icode_passwd=<?php echo $config['cf_icode_pw']; ?>" target="_blank" class="btn_frmline">충전하기</a>
             </td>
         </tr>
         <?php } ?>
+        <tr class="icode_json_version">
+            <th scope="row"><label for="cf_icode_token_key">아이코드 토큰키<br>(JSON버전)</label></th>
+            <td>
+                <?php echo help("아이코드 JSON 버전의 경우 아이코드 토큰키를 입력시 실행됩니다.<br>SMS 전송유형을 LMS로 설정시 90바이트 이내는 SMS, 90 ~ 2000 바이트는 LMS 그 이상은 절삭 되어 LMS로 발송됩니다."); ?>
+                <input type="text" name="cf_icode_token_key" value="<?php echo isset($config['cf_icode_token_key']) ? get_sanitize_input($config['cf_icode_token_key']) : ''; ?>" id="cf_icode_token_key" class="frm_input" size="40">
+                <?php echo help("아이코드 사이트 -> 토큰키관리 메뉴에서 생성한 토큰키를 입력합니다."); ?>
+                <br>
+                서버아이피 : <?php echo $_SERVER['SERVER_ADDR']; ?>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">아이코드 SMS 신청<br>회원가입</th>
+            <td>
+                <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
+            </td>
+        </tr>
         </tbody>
         </table>
     </div>
@@ -1417,6 +1435,26 @@ $(function(){
 
 function fconfigform_submit(f)
 {
+    var current_user_ip = "<?php echo $_SERVER['REMOTE_ADDR']; ?>";
+    var cf_intercept_ip_val = f.cf_intercept_ip.value;
+
+    if( cf_intercept_ip_val && current_user_ip ){
+        var cf_intercept_ips = cf_intercept_ip_val.split("\n");
+
+        for(var i=0; i < cf_intercept_ips.length; i++){
+            if ( cf_intercept_ips[i].trim() ) {
+                cf_intercept_ips[i] = cf_intercept_ips[i].replace(".", "\.");
+                cf_intercept_ips[i] = cf_intercept_ips[i].replace("+", "[0-9\.]+");
+                
+                var re = new RegExp(cf_intercept_ips[i]);
+                if ( re.test(current_user_ip) ){
+                    alert("현재 접속 IP : "+ current_user_ip +" 가 차단될수 있기 때문에, 다른 IP를 입력해 주세요.");
+                    return false;
+                }
+            }
+        }
+    }
+
     f.action = "./config_form_update.php";
     return true;
 }
@@ -1449,10 +1487,14 @@ if($config['cf_cert_use']) {
 
     // kcp일 때
     if($config['cf_cert_hp'] == 'kcp') {
-        if(PHP_INT_MAX == 2147483647) // 32-bit
-            $exe = G5_KCPCERT_PATH . '/bin/ct_cli';
-        else
-            $exe = G5_KCPCERT_PATH . '/bin/ct_cli_x64';
+        if(strtoupper(substr(PHP_OS, 0, 3)) !== 'WIN') {
+            if(PHP_INT_MAX == 2147483647) // 32-bit
+                $exe = G5_KCPCERT_PATH . '/bin/ct_cli';
+            else
+                $exe = G5_KCPCERT_PATH . '/bin/ct_cli_x64';
+        } else {
+            $exe = G5_KCPCERT_PATH . '/bin/ct_cli_exe.exe';
+        }
 
         echo module_exec_check($exe, 'ct_cli');
     }
@@ -1489,4 +1531,3 @@ if($config['cf_cert_use']) {
 }
 
 include_once ('./admin.tail.php');
-?>

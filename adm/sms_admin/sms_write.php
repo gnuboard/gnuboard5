@@ -2,7 +2,11 @@
 $sub_menu = "900300";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
+
+$wr_no = isset($_REQUEST['wr_no']) ? (int) $_REQUEST['wr_no'] : 0;
+$bk_no = isset($_REQUEST['bk_no']) ? (int) $_REQUEST['bk_no'] : 0;
+$fo_no = isset($_REQUEST['fo_no']) ? (int) $_REQUEST['fo_no'] : 0;
 
 $g5['title'] = "문자 보내기";
 
@@ -10,7 +14,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
 <div class="local_ov01 local_ov">
-    회원정보 최근 업데이트 : <?php echo $sms5['cf_datetime']?>
+    회원정보 최근 업데이트 : <?php echo isset($sms5['cf_datetime']) ? $sms5['cf_datetime'] : ''; ?>
 </div>
 
 <?php
@@ -114,7 +118,7 @@ if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
 
         <div id="write_reply">
             <label for="wr_reply">회신<strong class="sound_only"> 필수</strong></label>
-            <input type="text" name="wr_reply" value="<?php echo $sms5['cf_phone']?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20" readonly="readonly">
+            <input type="text" name="wr_reply" value="<?php echo isset($sms5['cf_phone']) ? get_sanitize_input($sms5['cf_phone']) : ''; ?>" id="wr_reply" required class="frm_input required" size="17" maxlength="20" readonly="readonly">
         </div>
 
         <div id="write_recv" class="write_inner">
@@ -266,8 +270,8 @@ function sms5_chk_send(f)
 
         w = document.body.clientWidth/2 - 200;
         h = document.body.clientHeight/2 - 100;
-        act = window.open('sms_ing.php', 'act', 'width=300, height=200, left=' + w + ', top=' + h);
-        act.focus();
+        //act = window.open('sms_ing.php', 'act', 'width=300, height=200, left=' + w + ', top=' + h);
+        //act.focus();
 
         f.send_list.value = list;
         return true;
@@ -407,6 +411,7 @@ function byte_check(wr_message, sms_bytes)
     var conts = document.getElementById(wr_message);
     var bytes = document.getElementById(sms_bytes);
     var max_bytes = document.getElementById("sms_max_bytes");
+    var lms_max_length = <?php echo G5_ICODE_LMS_MAX_LENGTH;?>
 
     var i = 0;
     var cnt = 0;
@@ -427,14 +432,14 @@ function byte_check(wr_message, sms_bytes)
 
     <?php if($config['cf_sms_type'] == 'LMS') { ?>
     if(cnt > 90)
-        max_bytes.innerHTML = 1500;
+        max_bytes.innerHTML = lms_max_length;
     else
         max_bytes.innerHTML = 90;
 
-    if (cnt > 1500)
+    if (cnt > lms_max_length)
     {
-        exceed = cnt - 1500;
-        alert('메시지 내용은 1500바이트를 넘을수 없습니다.\n\n작성하신 메세지 내용은 '+ exceed +'byte가 초과되었습니다.\n\n초과된 부분은 자동으로 삭제됩니다.');
+        exceed = cnt - lms_max_length;
+        alert('메시지 내용은 '+ lms_max_length +'바이트를 넘을수 없습니다.\n\n작성하신 메세지 내용은 '+ exceed +'byte가 초과되었습니다.\n\n초과된 부분은 자동으로 삭제됩니다.');
         var tcnt = 0;
         var xcnt = 0;
         var tmp = conts.value;
@@ -447,7 +452,7 @@ function byte_check(wr_message, sms_bytes)
                 tcnt += 1;
             }
 
-            if (tcnt > 1500) {
+            if (tcnt > lms_max_length) {
                 tmp = tmp.substring(0,i);
                 break;
             } else {
@@ -831,4 +836,3 @@ var sms_obj={
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

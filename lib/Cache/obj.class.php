@@ -87,6 +87,4 @@ Class G5_object_cache {
         return true;
     }
 
-}   //end Class
-
-?>
+}   //end Class;

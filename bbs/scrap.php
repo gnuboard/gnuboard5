@@ -57,4 +57,3 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 include_once($member_skin_path.'/scrap.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

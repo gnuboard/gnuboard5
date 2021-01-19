@@ -3,7 +3,9 @@ $sub_menu = "200300";
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
+
+$ma_id = isset($_REQUEST['ma_id']) ? (int) $_REQUEST['ma_id'] : 0;
 
 $se = sql_fetch("select ma_subject, ma_content from {$g5['mail_table']} where ma_id = '{$ma_id}' ");
 

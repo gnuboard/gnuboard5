@@ -25,4 +25,3 @@
     $xpay->Init_TX($LGD_MID);
 
     echo "patch result = ".$xpay->Patch("lgdacom.conf");
-?>

@@ -39,7 +39,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     </div>
 
     <div class="btn_confirm">
-        <a href="<?php echo G5_URL ?>/"">메인으로</a>
+        <a href="<?php echo G5_URL ?>/">메인으로</a>
     </div>
 
 </div>

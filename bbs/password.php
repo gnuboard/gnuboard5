@@ -3,6 +3,8 @@ include_once('./_common.php');
 
 $g5['title'] = '비밀번호 입력';
 
+$comment_id = isset($_REQUEST['comment_id']) ? preg_replace('/[^0-9]/', '', $_REQUEST['comment_id']) : 0;
+
 switch ($w) {
     case 'u' :
         $action = G5_HTTP_BBS_URL.'/write.php';
@@ -61,4 +63,3 @@ include_once($member_skin_path.'/password.skin.php');
 //if ($board['bo_include_tail'] && is_include_path_check($board['bo_content_tail'])) { @include ($board['bo_include_tail']); }
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

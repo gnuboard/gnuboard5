@@ -2,6 +2,7 @@
 include_once('./_common.php');
 
 $act = isset($act) ? strip_tags($act) : '';
+$count_chk_bo_table = (isset($_POST['chk_bo_table']) && is_array($_POST['chk_bo_table'])) ? count($_POST['chk_bo_table']) : 0;
 
 // 게시판 관리자 이상 복사, 이동 가능
 if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
@@ -10,7 +11,7 @@ if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
 if ($sw != 'move' && $sw != 'copy')
     alert('sw 값이 제대로 넘어오지 않았습니다.');
 
-if(!count($_POST['chk_bo_table']))
+if(! $count_chk_bo_table)
     alert('게시물을 '.$act.'할 게시판을 한개 이상 선택해 주십시오.', $url);
 
 // 원본 파일 디렉토리
@@ -21,16 +22,18 @@ $save_count_write = 0;
 $save_count_comment = 0;
 $cnt = 0;
 
-$wr_id_list = preg_replace('/[^0-9\,]/', '', $_POST['wr_id_list']);
+$wr_id_list = isset($_POST['wr_id_list']) ? preg_replace('/[^0-9\,]/', '', $_POST['wr_id_list']) : '';
 
 $sql = " select distinct wr_num from $write_table where wr_id in ({$wr_id_list}) order by wr_id ";
 $result = sql_query($sql);
 while ($row = sql_fetch_array($result))
 {
+    $save[$cnt]['wr_contents'] = array();
+
     $wr_num = $row['wr_num'];
-    for ($i=0; $i<count($_POST['chk_bo_table']); $i++)
+    for ($i=0; $i<$count_chk_bo_table; $i++)
     {
-        $move_bo_table = preg_replace('/[^a-z0-9_]/i', '', $_POST['chk_bo_table'][$i]);
+        $move_bo_table = isset($_POST['chk_bo_table'][$i]) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['chk_bo_table'][$i]) : '';
 
         // 취약점 18-0075 참고
         $sql = "select * from {$g5['board_table']} where bo_table = '".sql_real_escape_string($move_bo_table)."' ";
@@ -52,6 +55,8 @@ while ($row = sql_fetch_array($result))
         $result2 = sql_query($sql2);
         while ($row2 = sql_fetch_array($result2))
         {
+            $save[$cnt]['wr_contents'][] = $row2['wr_content'];
+
             $nick = cut_str($member['mb_nick'], $config['cf_cut_name']);
             if (!$row2['wr_is_comment'] && $config['cf_use_copy_log']) {
                 if(strstr($row2['wr_option'], 'html')) {
@@ -192,6 +197,8 @@ while ($row = sql_fetch_array($result))
 
         sql_query(" update {$g5['board_table']} set bo_count_write = bo_count_write + '$count_write' where bo_table = '$move_bo_table' ");
         sql_query(" update {$g5['board_table']} set bo_count_comment = bo_count_comment + '$count_comment' where bo_table = '$move_bo_table' ");
+        
+        run_event('bbs_move_copy', $row2, $move_bo_table, $insert_id, $next_wr_num, $sw);
 
         delete_cache_latest($move_bo_table);
     }
@@ -208,15 +215,19 @@ if ($sw == 'move')
     {
         if( isset($save[$i]['bf_file']) && $save[$i]['bf_file'] ){
             for ($k=0; $k<count($save[$i]['bf_file']); $k++) {
-                $del_file = $save[$i]['bf_file'][$k];
+                $del_file = run_replace('delete_file_path', clean_relative_paths($save[$i]['bf_file'][$k]), $save[$i]);
 
                 if ( is_file($del_file) && file_exists($del_file) ){
                     @unlink($del_file);
                 }
-
+                
                 // 썸네일 파일 삭제, 먼지손 님 코드 제안
                 delete_board_thumbnail($bo_table, basename($save[$i]['bf_file'][$k]));
             }
+        }
+        
+        for ($k=0; $k<count($save[$i]['wr_contents']); $k++){
+            delete_editor_thumbnail($save[$i]['wr_contents'][$k]);
         }
 
         sql_query(" delete from $write_table where wr_parent = '{$save[$i]['wr_id']}' ");
@@ -231,19 +242,16 @@ $opener_href  = get_pretty_url($bo_table,'','&amp;page='.$page.'&amp;'.$qstr);
 $opener_href1 = str_replace('&amp;', '&', $opener_href);
 
 run_event('bbs_move_update', $bo_table, $chk_bo_table, $wr_id_list, $opener_href);
-
-echo <<<HEREDOC
+?>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <script>
-alert("$msg");
-opener.document.location.href = "$opener_href1";
+alert("<?php echo $msg; ?>");
+opener.document.location.href = "<?php echo $opener_href1; ?>";
 window.close();
 </script>
 <noscript>
 <p>
-    "$msg"
+    <?php echo $msg; ?>
 </p>
-<a href="$opener_href">돌아가기</a>
+<a href="<?php echo $opener_href; ?>">돌아가기</a>
 </noscript>
-HEREDOC;
-?>

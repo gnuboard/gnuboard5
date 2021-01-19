@@ -2,10 +2,12 @@
 $sub_menu = "900600";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
-$fo_name = isset($fo_name) ? strip_tags(clean_xss_attributes($fo_name)) : '';
-$fo_content = isset($fo_content) ? strip_tags(clean_xss_attributes($fo_content)) : '';
+$fo_name = isset($_REQUEST['fo_name']) ? strip_tags(clean_xss_attributes($_REQUEST['fo_name'])) : '';
+$fo_content = isset($_REQUEST['fo_content']) ? strip_tags(clean_xss_attributes($_REQUEST['fo_content'])) : '';
+$fo_receipt = isset($_REQUEST['fo_receipt']) ? clean_xss_tags($_REQUEST['fo_receipt'], 1, 1) : '';
+$get_fg_no = '';
 
 $g5['title'] = "이모티콘 업데이트";
 
@@ -78,4 +80,3 @@ else // 등록
 
 $go_url = './form_list.php?page='.$page.'&amp;fg_no='.$get_fg_no;
 goto_url($go_url);
-?>

@@ -160,7 +160,7 @@ $pagelist = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_w
 echo $pagelist;
 ?>
 
-<form name="fauthlist2" id="fauthlist2" action="./auth_update.php" method="post" autocomplete="off">
+<form name="fauthlist2" id="fauthlist2" action="./auth_update.php" method="post" autocomplete="off" onsubmit="return fauth_add_submit(this);">
 <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
 <input type="hidden" name="stx" value="<?php echo $stx ?>">
 <input type="hidden" name="sst" value="<?php echo $sst ?>">
@@ -218,6 +218,17 @@ echo $pagelist;
                 <label for="d">d (삭제)</label>
             </td>
         </tr>
+        <tr>
+            <th scope="row">자동등록방지</th>
+            <td>
+                <?php
+                include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
+                $captcha_html = captcha_html();
+                $captcha_js   = chk_captcha_js();
+                echo $captcha_html;
+                ?>
+            </td>
+        </tr>
         </tbody>
         </table>
     </div>
@@ -230,6 +241,13 @@ echo $pagelist;
 </form>
 
 <script>
+function fauth_add_submit(f){
+    
+    <?php echo $captcha_js; // 캡챠 사용시 자바스크립트에서 입력된 캡챠를 검사함  ?>
+
+    return true;
+}
+
 function fauthlist_submit(f)
 {
     if (!is_checked("chk[]")) {
@@ -249,4 +267,3 @@ function fauthlist_submit(f)
 
 <?php
 include_once ('./admin.tail.php');
-?>

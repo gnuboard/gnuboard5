@@ -72,4 +72,3 @@ if(($total_count - $cnt) == 0 || $total_count == 0)
     echo '<div class="check_processing"></div><p>변환완료</p>';
 else
     echo '<p>총 '.number_format($total_count).'건 중 '.number_format($cnt).'건 변환완료<br><br>접속로그를 추가로 변환하시려면 아래 업데이트 버튼을 클릭해 주세요.</p><button type="button" id="run_update">업데이트</button>';
-?>

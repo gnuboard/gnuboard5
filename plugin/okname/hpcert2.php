@@ -23,13 +23,13 @@ require('./hpcert.config.php');
 /* 공통 리턴 항목 */
 //$idcfMbrComCd           =   $_REQUEST['idcf_mbr_com_cd'];      // 고객사코드
 $idcfMbrComCd           =   $memId;
-$hsCertSvcTxSeqno       =   $_REQUEST['hs_cert_svc_tx_seqno']; // 거래번호
-$rqstSiteNm             =   $_REQUEST['rqst_site_nm'];         // 접속도메인
-$hsCertRqstCausCd       =   $_REQUEST['hs_cert_rqst_caus_cd']; // 인증요청사유코드 2byte  (00:회원가입, 01:성인인증, 02:회원정보수정, 03:비밀번호찾기, 04:상품구매, 99:기타)
+$hsCertSvcTxSeqno       =   isset($_REQUEST['hs_cert_svc_tx_seqno']) ? $_REQUEST['hs_cert_svc_tx_seqno'] : ''; // 거래번호
+$rqstSiteNm             =   isset($_REQUEST['rqst_site_nm']) ? $_REQUEST['rqst_site_nm'] : '';         // 접속도메인
+$hsCertRqstCausCd       =   isset($_REQUEST['hs_cert_rqst_caus_cd']) ? $_REQUEST['hs_cert_rqst_caus_cd'] : ''; // 인증요청사유코드 2byte  (00:회원가입, 01:성인인증, 02:회원정보수정, 03:비밀번호찾기, 04:상품구매, 99:기타)
 
-$resultCd               =   $_REQUEST['result_cd'];            // 결과코드
-$resultMsg              =   $_REQUEST['result_msg'];           // 결과메세지
-$certDtTm               =   $_REQUEST['cert_dt_tm'];           // 인증일시
+$resultCd               =   isset($_REQUEST['result_cd']) ? $_REQUEST['result_cd'] : '';            // 결과코드
+$resultMsg              =   isset($_REQUEST['result_msg']) ? $_REQUEST['result_msg'] : '';           // 결과메세지
+$certDtTm               =   isset($_REQUEST['cert_dt_tm']) ? $_REQUEST['cert_dt_tm'] : '';           // 인증일시
 
 if($resultCd != 'B000') {
     alert_close('휴대폰 본인확인 중 오류가 발생했습니다. 오류코드 : '.$resultCd.'\\n\\n문의는 코리아크레딧뷰로 고객센터 02-708-1000 로 해주십시오.');
@@ -38,15 +38,15 @@ if($resultCd != 'B000') {
 /**************************************************************************
  * 모듈 호출    ; 생년월일 본인 확인서비스 결과 데이터를 복호화한다.
  **************************************************************************/
-$encInfo = $_REQUEST['encInfo'];
+$encInfo = isset($_REQUEST['encInfo']) ? $_REQUEST['encInfo'] : '';
 if(preg_match('~[^0-9a-zA-Z+/=]~', $encInfo, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 //KCB서버 공개키
-$WEBPUBKEY = trim($_REQUEST['WEBPUBKEY']);
+$WEBPUBKEY = isset($_REQUEST['WEBPUBKEY']) ? trim($_REQUEST['WEBPUBKEY']) : '';
 if(preg_match('~[^0-9a-zA-Z+/=]~', $WEBPUBKEY, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 //KCB서버 서명값
-$WEBSIGNATURE = trim($_REQUEST['WEBSIGNATURE']);
+$WEBSIGNATURE = isset($_REQUEST['WEBSIGNATURE']) ? trim($_REQUEST['WEBSIGNATURE']) : '';
 if(preg_match('~[^0-9a-zA-Z+/=]~', $WEBSIGNATURE, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 // ########################################################################
@@ -155,4 +155,3 @@ $(function() {
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

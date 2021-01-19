@@ -11,12 +11,12 @@
 .pic_li_lt ul:after {display:block;visibility:hidden;clear:both;content:""}
 .pic_li_lt li {border-bottom:1px solid #e5ecee;margin-bottom:10px}
 .pic_li_lt li .lt_img {display:none}
-.pic_li_lt li:first-child .lt_img {display:block;margin:0 0 10px;display:block}
-.pic_li_lt li:first-child .lt_img img {width:100%;height:auto}
+.pic_li_lt li:first-child .lt_img {display:block;margin:0 0 10px;}
+.pic_li_lt li:first-child .lt_img img, .pic_li_lt li .lt_img video {width:100%;height:auto}
 .pic_li_lt li .pic_li_tit {font-weight:bold;font-size:1.2em;line-height:20px;vertical-align:middle}
 
 .pic_li_lt li .fa-heart {color:#ff0000}
-.pic_li_lt li .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
+.pic_li_lt li .fa-lock {display:inline-block;line-height:14px;width:16px;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}
 .pic_li_lt li .new_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#23db79;background:#b9ffda;text-align:center;border-radius:2px;margin-left:2px;font-weight:bold;vertical-align:middle}
 .pic_li_lt li .hot_icon {display:inline-block;width:16px;line-height:16px;font-size:0.833em;color:#ff0000;background:#ffb9b9;text-align:center;border-radius:2px;vertical-align:middle}
 .pic_li_lt li .fa-caret-right {color:#bbb}

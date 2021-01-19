@@ -9,7 +9,7 @@ if (!chk_captcha()) {
     alert('자동등록방지 숫자가 틀렸습니다.');
 }
 
-$recv_list = explode(',', trim($_POST['me_recv_mb_id']));
+$recv_list = isset($_POST['me_recv_mb_id']) ? explode(',', trim($_POST['me_recv_mb_id'])) : array();
 $str_nick_list = '';
 $msg = '';
 $error_list  = array();
@@ -20,7 +20,7 @@ run_event('memo_form_update_before', $recv_list);
 for ($i=0; $i<count($recv_list); $i++) {
     $row = sql_fetch(" select mb_id, mb_nick, mb_open, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$recv_list[$i]}' ");
     if ($row) {
-        if ($is_admin || ($row['mb_open'] && (!$row['mb_leave_date'] || !$row['mb_intercept_date']))) {
+        if ($is_admin || ($row['mb_open'] && (!$row['mb_leave_date'] && !$row['mb_intercept_date']))) {
             $member_list['id'][]   = $row['mb_id'];
             $member_list['nick'][] = $row['mb_nick'];
         } else {
@@ -105,4 +105,3 @@ if ($member_list) {
 
     alert("회원아이디 오류 같습니다.", $redirect_url, false);
 }
-?>

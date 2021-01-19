@@ -49,4 +49,3 @@ function chk_captcha(){
 
     return false;
 }
-?>

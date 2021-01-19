@@ -340,8 +340,16 @@ if ($w == '') {
     }
 
     $file = get_file($bo_table, $wr_id);
-    if($file_count < $file['count'])
+    if($file_count < $file['count']) {
         $file_count = $file['count'];
+    }
+
+    for($i=0;$i<$file_count;$i++){
+        if(! isset($file[$i])) {
+            $file[$i] = array('file'=>null, 'source'=>null, 'size'=>null);
+        }
+    }
+
 } else if ($w == 'r') {
     if (strstr($write['wr_option'], 'secret')) {
         $is_secret = true;
@@ -355,8 +363,8 @@ if ($w == '') {
     }
 }
 
-set_session('ss_bo_table', $_REQUEST['bo_table']);
-set_session('ss_wr_id', $_REQUEST['wr_id']);
+set_session('ss_bo_table', $bo_table);
+set_session('ss_wr_id', $wr_id);
 
 $subject = "";
 if (isset($write['wr_subject'])) {
@@ -434,4 +442,3 @@ include_once ($board_skin_path.'/write.skin.php');
 include_once('./board_tail.php');
 @include_once ($board_skin_path.'/write.tail.skin.php');
 include_once(G5_PATH.'/tail.sub.php');
-?>

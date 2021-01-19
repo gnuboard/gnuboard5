@@ -6,17 +6,20 @@ include_once('./_common.php');
 if ($is_admin != 'super')
     alert("최고관리자만 접근이 가능합니다.");
 
-$board = array();
+$board = array('bo_table'=>'');
 $save_bo_table = array();
 $save_wr_id = array();
+$count_chk_bn_id = (isset($_POST['chk_bn_id']) && is_array($_POST['chk_bn_id'])) ? count($_POST['chk_bn_id']) : 0;
 
-for($i=0;$i<count($_POST['chk_bn_id']);$i++)
+for($i=0;$i<$count_chk_bn_id;$i++)
 {
     // 실제 번호를 넘김
-    $k = $_POST['chk_bn_id'][$i];
+    $k = isset($_POST['chk_bn_id'][$i]) ? (int) $_POST['chk_bn_id'][$i] : 0;
 
     $bo_table = isset($_POST['bo_table'][$k]) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['bo_table'][$k]) : '';
     $wr_id    = isset($_POST['wr_id'][$k]) ? preg_replace('/[^0-9]/i', '', $_POST['wr_id'][$k]) : 0;
+    
+    $count_write = $count_comment = 0;
 
     $save_bo_table[$i] = $bo_table;
 	$save_wr_id[$i] = $wr_id;
@@ -146,4 +149,3 @@ foreach ($save_bo_table as $key=>$value) {
 run_event('bbs_new_delete', $chk_bn_id, $save_bo_table, $save_wr_id);
 
 goto_url("new.php?sfl=$sfl&stx=$stx&page=$page");
-?>

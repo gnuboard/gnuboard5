@@ -5,7 +5,7 @@ include_once("./_common.php");
 $page_size = 20;
 $colspan = 11;
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "문자전송 내역";
 
@@ -23,7 +23,7 @@ $total_page = (int)($total_count/$page_size) + ($total_count%$page_size==0 ? 0 :
 $page_start = $page_size * ( $page - 1 );
 
 $vnum = $total_count - (($page-1) * $page_size);
-
+$line = 0;
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 ?>
 
@@ -68,7 +68,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
     while($res = sql_fetch_array($qry)) {
         $bg = 'bg'.($line++%2);
         $tmp_wr_memo = @unserialize($res['wr_memo']);
-        $dupli_count = $tmp_wr_memo['total'] ? $tmp_wr_memo['total'] : 0;
+        $dupli_count = (isset($tmp_wr_memo['total']) && $tmp_wr_memo['total']) ? (int) $tmp_wr_memo['total'] : 0;
     ?>
     <tr class="<?php echo $bg; ?>">
         <td class="td_numsmall"><?php echo $vnum--?></td>
@@ -95,4 +95,3 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

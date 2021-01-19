@@ -176,6 +176,8 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
     $g5['title'] = $g5['board_title'].' '.$page.' 페이지';
 }
 
+$is_auth = $is_admin ? true : false;
+
 include_once(G5_PATH.'/head.sub.php');
 
 $width = $board['bo_table_width'];
@@ -241,4 +243,3 @@ include_once(G5_BBS_PATH.'/board_tail.php');
 echo "\n<!-- 사용스킨 : ".(G5_IS_MOBILE ? $board['bo_mobile_skin'] : $board['bo_skin'])." -->\n";
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

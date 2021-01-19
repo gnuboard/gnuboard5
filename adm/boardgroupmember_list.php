@@ -2,7 +2,7 @@
 $sub_menu = "300200";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 $gr = get_group($gr_id);
 if (!$gr['gr_id']) {
@@ -59,7 +59,7 @@ $colspan = 7;
 <input type="hidden" name="gr_id" value="<?php echo $gr_id ?>">
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl" id="sfl">
-    <option value="a.mb_id"<?php echo get_selected($_GET['sfl'], "a.mb_id") ?>>회원아이디</option>
+    <option value="a.mb_id"<?php echo get_selected($sfl, "a.mb_id") ?>>회원아이디</option>
 </select>
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
@@ -153,4 +153,3 @@ function fboardgroupmember_submit(f)
 
 <?php
 include_once('./admin.tail.php');
-?>

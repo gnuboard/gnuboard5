@@ -107,7 +107,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
              ?>
                 <li>
                     <i class="fa fa-download" aria-hidden="true"></i>
-                    <a href="<?php echo $view['download_href'][$i];  ?>" class="view_file_download">
+                    <a href="<?php echo $view['download_href'][$i];  ?>" class="view_file_download" download>
                         <strong><?php echo $view['download_source'][$i] ?></strong>
                     </a>
                 </li>

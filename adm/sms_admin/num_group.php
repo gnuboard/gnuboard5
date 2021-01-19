@@ -2,7 +2,7 @@
 $sub_menu = "900700";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "휴대폰번호 그룹";
 
@@ -77,8 +77,8 @@ function num_group_submit(f)
     <span class="btn_ov01"><span class="ov_txt">건수</span><span class="ov_num"> <?php echo $total_count; ?>건 </span></span>
 </div>
 
-<form name="group<?php echo $res['bg_no']?>" method="get" action="./num_group_update.php" class="local_sch02 local_sch">
-<input type="hidden" name="bg_no" value="<?php echo $res['bg_no']?>">
+<form name="group<?php echo isset($res['bg_no']) ? $res['bg_no'] : ''; ?>" method="get" action="./num_group_update.php" class="local_sch02 local_sch">
+<input type="hidden" name="bg_no" value="<?php echo isset($res['bg_no']) ? $res['bg_no'] : ''; ?>">
 
 <div>
     <label for="bg_name" class="sound_only">그룹추가<strong class="sound_only"> 필수</strong></label>
@@ -186,4 +186,3 @@ function num_group_submit(f)
 </form>
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

@@ -9,7 +9,7 @@ set_session('ss_memo_delete_token', $token = uniqid(time()));
 $g5['title'] = '내 쪽지함';
 include_once(G5_PATH.'/head.sub.php');
 
-$kind = $kind ? clean_xss_tags(strip_tags($kind)) : 'recv';
+$kind = isset($_GET['kind']) ? clean_xss_tags($_GET['kind'], 0, 1) : 'recv';
 
 if ($kind == 'recv')
     $unkind = 'send';
@@ -84,4 +84,3 @@ $write_pages = get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['c
 include_once($member_skin_path.'/memo.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

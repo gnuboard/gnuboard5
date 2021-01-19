@@ -28,7 +28,8 @@ $is_show_next_prev = ($list_count > 4) ? 1 : 0;
             $thumb = get_list_thumbnail($bo_table, $list[$i]['wr_id'], $thumb_width, $thumb_height, false, true);
             $img = $thumb['src'] ? $thumb['src'] : '';
             $img_content = $img ? '<img src="'.$img.'" alt="'.$thumb['alt'].'" >' : '';
-            
+            $wr_href = get_pretty_url($bo_table, $list[$i]['wr_id']);
+
             $echo_ul = ( $i && (($i % $divisor_count) === 0) ) ? '</ul><ul class="item">'.PHP_EOL : '';
 
             echo $echo_ul;
@@ -38,10 +39,10 @@ $is_show_next_prev = ($list_count > 4) ? 1 : 0;
                 //echo $list[$i]['icon_reply']." ";
                 
                 if( $img_content ){
-                    echo "<a href=\"".$list[$i]['href']."\" class=\"lt_thumb\">".$img_content."</a> ";
+                    echo "<a href=\"".$wr_href."\" class=\"lt_thumb\">".run_replace('thumb_image_tag', $img_content, $thumb)."</a> ";
                 }
                 
-                echo "<a href=\"".$list[$i]['href']."\" class=\"lt_tit\">";
+                echo "<a href=\"".$wr_href."\" class=\"lt_tit\">";
                 if ($list[$i]['icon_secret']) echo "<i class=\"fa fa-lock\" aria-hidden=\"true\"></i> ";
                 if ($list[$i]['is_notice'])
                     echo "<strong>".$list[$i]['subject']."</strong>";

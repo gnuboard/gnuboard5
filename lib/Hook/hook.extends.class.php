@@ -87,6 +87,9 @@ Class GML_Hook extends Hook {
 
         foreach ($filters as $priority) {
             foreach ($priority as $filter) {
+                if( isset($args[0]) ){
+                    $args[0] = $value;
+                }
                 $replace = $that->runAction($filter, $args);
 
                 if( ! is_null($replace) ) {
@@ -156,6 +159,4 @@ Class GML_Hook extends Hook {
     }
 }
 
-// end  Hook Class
-
-?>
+// end  Hook Class;

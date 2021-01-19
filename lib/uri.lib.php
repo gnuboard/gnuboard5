@@ -16,19 +16,19 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
         return $url;
     }
 
-	// use shortten url
-	if($config['cf_bbs_rewrite']) {
-        
+    // use shortten url
+    if($config['cf_bbs_rewrite']) {
+
         $segments[0] = G5_URL;
 
         if( $folder === 'content' && $no ){     // 내용관리
-            
+
             $segments[1] = $folder;
 
             if( $config['cf_bbs_rewrite'] > 1 ){
 
                 $get_content = get_content_db( $no , true);
-                $segments[2] = $get_content['co_seo_title'] ? urlencode($get_content['co_seo_title']).'/' : urlencode($no);
+                $segments[2] = (isset($get_content['co_seo_title']) && $get_content['co_seo_title']) ? urlencode($get_content['co_seo_title']).'/' : urlencode($no);
 
             } else {
                 $segments[2] = urlencode($no);
@@ -36,32 +36,32 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
 
         } else if(in_array($folder, $boards)) {     // 게시판
 
-			$segments[1] = $folder;
+            $segments[1] = $folder;
 
-			if($no) {
+            if($no) {
 
                 if( $config['cf_bbs_rewrite'] > 1 ){
 
-                    $get_write = get_write( $g5['write_prefix'].$folder, $no , true);
-                    
-                    $segments[2] = $get_write['wr_seo_title'] ? urlencode($get_write['wr_seo_title']).'/' : urlencode($no);
+                $get_write = get_write( $g5['write_prefix'].$folder, $no , true);
+
+                $segments[2] = (isset($get_write['wr_seo_title']) && $get_write['wr_seo_title']) ? urlencode($get_write['wr_seo_title']).'/' : urlencode($no);
 
                 } else {
                     $segments[2] = urlencode($no);
                 }
 
-			} else if($action) {
+            } else if($action) {
                 $segments[2] = urlencode($action);
             }
 
-		} else {
+        } else {
             $segments[1] = $folder;
-			if($no) {
-				$no_array = explode("=", $no);
-				$no_value = end($no_array);
+            if($no) {
+                $no_array = explode("=", $no);
+                $no_value = end($no_array);
                 $segments[2] = urlencode($no_value);
-			}
-		}
+            }
+        }
 
         if($query_string) {
             // If the first character of the query string is '&', replace it with '?'.
@@ -72,33 +72,33 @@ function get_pretty_url($folder, $no='', $query_string='', $action='')
             }
         }
 
-	} else { // don't use shortten url
-		if(in_array($folder, $boards)) {
-			$url = G5_BBS_URL. '/board.php?bo_table='. $folder;
-			if($no) {
-				$url .= '&amp;wr_id='. $no;
-			}
-			if($query_string) {
+    } else { // don't use shortten url
+        if(in_array($folder, $boards)) {
+            $url = G5_BBS_URL. '/board.php?bo_table='. $folder;
+            if($no) {
+                $url .= '&amp;wr_id='. $no;
+            }
+            if($query_string) {
                 if(substr($query_string, 0, 1) !== '&') {
                     $url .= '&amp;';
                 }
 
-				$url .= $query_string;
-			}
-		} else {
-			$url = G5_BBS_URL. '/'.$folder.'.php';
+                $url .= $query_string;
+            }
+        } else {
+            $url = G5_BBS_URL. '/'.$folder.'.php';
             if($no) {
-				$url .= ($folder === 'content') ? '?co_id='. $no : '?'. $no;
-			}
+                $url .= ($folder === 'content') ? '?co_id='. $no : '?'. $no;
+            }
             if($query_string) {
-                $url .= ($no ? '?' : '&amp;'). $query_string;
-			}
-		}
+                $url .= (!$no ? '?' : '&amp;'). $query_string;
+            }
+        }
 
         $segments[0] = $url;
-	}
+    }
 
-	return implode('/', $segments).$add_query;
+    return implode('/', $segments).$add_query;
 }
 
 function short_url_clean($string_url, $add_qry=''){
@@ -109,8 +109,8 @@ function short_url_clean($string_url, $add_qry=''){
 
         $string_url = str_replace('&amp;', '&', $string_url);
         $url=parse_url($string_url);
-        $page_name = basename($url['path'],".php");
-        
+        $page_name = isset($url['path']) ? basename($url['path'],".php") : '';
+
         $array_page_names = run_replace('url_clean_page_names', array('board', 'write', 'content'));
 
         if( stripos(preg_replace('/^https?:/i', '', $string_url), preg_replace('/^https?:/i', '', G5_BBS_URL)) === false || ! in_array($page_name, $array_page_names) ){   //게시판이 아니면 리턴
@@ -119,19 +119,19 @@ function short_url_clean($string_url, $add_qry=''){
 
         $return_url = '';
         parse_str($url['query'], $vars);
-		
-		/*
+
+        /*
         // 예) Array ( [scheme] => http [host] => sir.kr [path] => /bbs/board.php [query] => wr_id=1110870&bo_table=cm_free&cpage=1 [fragment] => c_1110946 )
-		foreach($vars as $k => $v) { $page_name .= "/".$v; }
-		*/
-        
+        foreach($vars as $k => $v) { $page_name .= "/".$v; }
+        */
+
         if( $page_name === 'write' ){
             $vars['action'] = 'write';
             $allow_param_keys = array('bo_table'=>'', 'action'=>'');
         } else if( $page_name === 'content' ){
-			$vars['action'] = 'content';
-			$allow_param_keys = array('action'=>'', 'co_id'=>'');
-		} else {
+            $vars['action'] = 'content';
+            $allow_param_keys = array('action'=>'', 'co_id'=>'');
+        } else {
             $allow_param_keys = array('bo_table'=>'', 'wr_id'=>'');
         }
 
@@ -145,7 +145,7 @@ function short_url_clean($string_url, $add_qry=''){
 
         if( $config['cf_bbs_rewrite'] > 1 && $page_name === 'board' && (isset($s['wr_id']) && $s['wr_id']) && (isset($s['bo_table']) && $s['bo_table']) ){
             $get_write = get_write( get_write_table_name($s['bo_table']), $s['wr_id'], true);
-            
+
             if( $get_write['wr_seo_title'] ){
                 unset($s['wr_id']);
                 $s['wr_seo_title'] = urlencode($get_write['wr_seo_title']).'/';
@@ -175,8 +175,8 @@ function short_url_clean($string_url, $add_qry=''){
         if( $add_qry ){
             $add_param .= $add_param ? '&amp;'.$add_qry : '?'.$add_qry;
         }
-		
-		foreach($s as $k => $v) { $return_url .= '/'.$v; }
+
+        foreach($s as $k => $v) { $return_url .= '/'.$v; }
 
         return $host.$return_url.$add_param.$fragment;
     }
@@ -236,14 +236,14 @@ function exist_seo_url($type, $seo_title, $write_table, $sql_id=0){
         $sql = "select wr_seo_title FROM {$write_table} WHERE wr_seo_title = '".sql_real_escape_string($seo_title)."' AND wr_id <> '$sql_id' limit 1";
         $row = sql_fetch($sql);
 
-        $exists_title = $row['wr_seo_title'];
+        $exists_title = isset($row['wr_seo_title']) ? $row['wr_seo_title'] : '';
 
     } else if ( $type === 'content' ){
 
         $sql = "select co_seo_title FROM {$write_table} WHERE co_seo_title = '".sql_real_escape_string($seo_title)."' AND co_id <> '$sql_id' limit 1";
         $row = sql_fetch($sql);
 
-        $exists_title = $row['co_seo_title'];
+        $exists_title = isset($row['co_seo_title']) ? $row['co_seo_title'] : '';
 
     } else {
         return run_replace('exist_check_seo_title', $seo_title, $type, $write_table, $sql_id);
@@ -282,7 +282,7 @@ function seo_title_update($db_table, $pk_id, $type='bbs'){
     if( $type === 'bbs' ){
 
         $write = get_write($db_table, $pk_id, true);
-        if( ! $write['wr_seo_title'] && $write['wr_subject'] ){
+        if( ! (isset($write['wr_seo_title']) && $write['wr_seo_title']) && (isset($write['wr_subject']) && $write['wr_subject']) ){
             $wr_seo_title = exist_seo_title_recursive('bbs', generate_seo_title($write['wr_subject']), $db_table, $pk_id);
 
             $sql = " update `{$db_table}` set wr_seo_title = '{$wr_seo_title}' where wr_id = '{$pk_id}' ";
@@ -291,7 +291,7 @@ function seo_title_update($db_table, $pk_id, $type='bbs'){
     } else if ( $type === 'content' ){
 
         $co = get_content_db($pk_id, true);
-        if( ! $co['co_seo_title'] && $co['co_subject'] ){
+        if( ! (isset($co['co_seo_title']) && $co['co_seo_title']) && (isset($co['co_subject']) && $co['co_subject']) ){
             $co_seo_title = exist_seo_title_recursive('content', generate_seo_title($co['co_subject']), $db_table, $pk_id);
 
             $sql = " update `{$db_table}` set co_seo_title = '{$co_seo_title}' where co_id = '{$pk_id}' ";
@@ -427,4 +427,3 @@ function update_rewrite_rules(){
     return false;
 
 }
-?>

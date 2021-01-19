@@ -3,11 +3,11 @@ $sub_menu = '300700';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $html_title = 'FAQ';
 
-$fm_id = preg_replace('/[^0-9]/', '', $fm_id);
+$fm_id = isset($_GET['fm_id']) ? preg_replace('/[^0-9]/', '', $_GET['fm_id']) : 0;
 
 if ($w == "u")
 {
@@ -21,7 +21,7 @@ if ($w == "u")
 else
 {
     $html_title .= ' 입력';
-    $fm = array();
+    $fm = array('fm_order'=>'', 'fm_subject'=>'', 'fm_id'=>0, 'fm_head_html'=> '', 'fm_tail_html'=> '', 'fm_mobile_head_html' => '', 'fm_mobile_tail_html' => '');
 }
 
 $g5['title'] = $html_title.' 관리';
@@ -72,6 +72,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <input type="file" name="fm_himg" id="fm_himg">
             <?php
             $himg = G5_DATA_PATH.'/faq/'.$fm['fm_id'].'_h';
+            $himg_str = '';
             if (file_exists($himg)) {
                 $size = @getimagesize($himg);
                 if($size[0] && $size[0] > 750)
@@ -96,6 +97,7 @@ include_once (G5_ADMIN_PATH.'/admin.head.php');
             <input type="file" name="fm_timg" id="fm_timg">
             <?php
             $timg = G5_DATA_PATH.'/faq/'.$fm['fm_id'].'_t';
+            $timg_str = '';
             if (file_exists($timg)) {
                 $size = @getimagesize($timg);
                 if($size[0] && $size[0] > 750)
@@ -163,4 +165,3 @@ function frmfaqmasterform_check(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

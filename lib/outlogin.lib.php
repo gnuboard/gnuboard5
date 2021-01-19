@@ -64,4 +64,3 @@ function outlogin($skin_dir='basic')
 
     return run_replace('outlogin_content', $content, $is_auth, $outlogin_url, $outlogin_action_url);
 }
-?>

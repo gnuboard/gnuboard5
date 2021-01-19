@@ -8,4 +8,3 @@ if( isset($token) ){
 }
 
 run_event('admin_common');
-?>

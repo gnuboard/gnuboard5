@@ -165,33 +165,9 @@ function set_cookie(name, value, expirehours, domain)
 // 쿠키 얻음
 function get_cookie(name)
 {
-    var find_sw = false;
-    var start, end;
-    var i = 0;
-
-    for (i=0; i<= document.cookie.length; i++)
-    {
-        start = i;
-        end = start + name.length;
-
-        if(document.cookie.substring(start, end) == name)
-        {
-            find_sw = true
-            break
-        }
-    }
-
-    if (find_sw == true)
-    {
-        start = end + 1;
-        end = document.cookie.indexOf(";", start);
-
-        if(end < start)
-            end = document.cookie.length;
-
-        return unescape(document.cookie.substring(start, end));
-    }
-    return "";
+	var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+	if (match) return unescape(match[2]);
+	return "";
 }
 
 // 쿠키 지움
@@ -559,10 +535,12 @@ function font_resize(id, rmv_class, add_class, othis)
 {
     var $el = $("#"+id);
 
-    $el.removeClass(rmv_class).addClass(add_class);
+	if((typeof rmv_class !== "undefined" && rmv_class) || (typeof add_class !== "undefined" && add_class)){
+		$el.removeClass(rmv_class).addClass(add_class);
 
-    set_cookie("ck_font_resize_rmv_class", rmv_class, 1, g5_cookie_domain);
-    set_cookie("ck_font_resize_add_class", add_class, 1, g5_cookie_domain);
+		set_cookie("ck_font_resize_rmv_class", rmv_class, 1, g5_cookie_domain);
+		set_cookie("ck_font_resize_add_class", add_class, 1, g5_cookie_domain);
+	}
 
     if(typeof othis !== "undefined"){
         $(othis).addClass('select').siblings().removeClass('select');

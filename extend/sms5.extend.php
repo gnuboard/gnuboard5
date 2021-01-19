@@ -13,6 +13,12 @@ define('G5_SMS5_ADMIN_DIR',        'sms_admin');
 define('G5_SMS5_ADMIN_PATH',       G5_ADMIN_PATH.'/'.G5_SMS5_ADMIN_DIR);
 define('G5_SMS5_ADMIN_URL',        G5_ADMIN_URL.'/'.G5_SMS5_ADMIN_DIR);
 
+define('ICODE_JSON_SOCKET_HOST', '211.172.232.124');
+define('ICODE_JSON_SOCKET_PORT', '9201');
+
+define('G5_ICODE_LMS_MAX_LENGTH', 1500);    // 구버전 LMS 최대길이
+define('G5_ICODE_JSON_MAX_LENGTH', 2000);   // JSON 버전 LMS 최대길이
+
 // SMS 테이블명
 $g5['sms5_prefix']                = 'sms5_';
 $g5['sms5_config_table']          = $g5['sms5_prefix'] . 'config';
@@ -23,7 +29,7 @@ $g5['sms5_book_group_table']      = $g5['sms5_prefix'] . 'book_group';
 $g5['sms5_form_table']            = $g5['sms5_prefix'] . 'form';
 $g5['sms5_form_group_table']      = $g5['sms5_prefix'] . 'form_group';
 
-$sms5 = array();
+$sms5 = array('cf_skin'=>'', 'cf_datetime'=>'', 'cf_phone'=>'');
 
 if (!empty($config['cf_sms_use'])) {
 
@@ -39,4 +45,3 @@ if (!empty($config['cf_sms_use'])) {
         $g5['sms5_demo_send'] = true;
     }
 }
-?>

@@ -185,7 +185,7 @@ class UploadHandler
                 $this->head();
                 break;
             case 'GET':
-                if( $_GET['del'] ){
+                if( isset($_GET['del']) && $_GET['del'] ){
                     $this->delete();
                 } else { 
                     $this->get();
@@ -215,14 +215,20 @@ class UploadHandler
             substr($_SERVER['SCRIPT_NAME'],0, strrpos($_SERVER['SCRIPT_NAME'], '/'));
     }
 
-    protected function get_user_id() {
-        @session_start();
-        return session_id();
+    protected function get_user_id($is_add=true) {
+        global $member;
+
+        if(session_id() == '') {
+            @session_start();
+        }
+        
+        $add_str = ($is_add && isset($member['mb_id']) && $member['mb_id']) ? $member['mb_id'] : '';
+        return session_id().$add_str;
     }
 
     protected function get_user_path() {
         if ($this->options['user_dirs']) {
-            return $this->get_user_id().'/';
+            return $this->get_user_id(false).'/';
         }
         return '';
     }
@@ -361,16 +367,19 @@ class UploadHandler
 
     function get_config_bytes($val) {
         $val = trim($val);
-        $last = strtolower($val[strlen($val)-1]);
+        $val_strlen = strlen($val)-1;
+        $last = isset($val[$val_strlen]) ? strtolower($val[$val_strlen]) : '';
+
+        $bytes = (int) preg_replace('/[^0-9]/', '', $val);
         switch($last) {
             case 'g':
-                $val *= 1024;
+                $bytes *= 1024;
             case 'm':
-                $val *= 1024;
+                $bytes *= 1024;
             case 'k':
-                $val *= 1024;
+                $bytes *= 1024;
         }
-        return $this->fix_integer_overflow($val);
+        return $this->fix_integer_overflow($bytes);
     }
 
     protected function validate($uploaded_file, $file, $error, $index) {
@@ -460,13 +469,14 @@ class UploadHandler
         );
     }
 
-    protected function get_unique_filename($file_path, $name, $size, $type, $error,
-            $index, $content_range) {
+    protected function get_unique_filename($file_path, $name, $size, $type, $error, $index, $content_range) {
         while(is_dir($this->get_upload_path($name))) {
             $name = $this->upcount_name($name);
         }
+
+        $content_range_byte = isset($content_range[1]) ? (int) $content_range[1] : 0;
         // Keep an existing filename if this is part of a chunked upload:
-        $uploaded_bytes = $this->fix_integer_overflow(intval($content_range[1]));
+        $uploaded_bytes = $this->fix_integer_overflow($content_range_byte);
         while(is_file($this->get_upload_path($name))) {
             if ($uploaded_bytes === $this->get_file_size(
                     $this->get_upload_path($name))) {
@@ -477,8 +487,7 @@ class UploadHandler
         return $name;
     }
 
-    protected function trim_file_name($file_path, $name, $size, $type, $error,
-            $index, $content_range) {
+    protected function trim_file_name($file_path, $name, $size, $type, $error, $index, $content_range) {
         // Remove path information and dots around the filename, to prevent uploading
         // into different directories or replacing hidden system files.
         // Also remove control characters and spaces (\x00..\x20) around the filename:
@@ -492,7 +501,7 @@ class UploadHandler
                 preg_match('/^image\/(gif|jpe?g|png)/', $type, $matches)) {
             $name .= '.'.$matches[1];
         }
-        if (function_exists('exif_imagetype')) {
+        if (function_exists('exif_imagetype') && $file_path) {
             switch(@exif_imagetype($file_path)){
                 case IMAGETYPE_JPEG:
                     $extensions = array('jpg', 'jpeg');
@@ -518,12 +527,10 @@ class UploadHandler
         return $name;
     }
 
-    protected function get_file_name($file_path, $name, $size, $type, $error,
-            $index, $content_range) {
+    protected function get_file_name($file_path, $name, $size, $type, $error, $index, $content_range) {
         return $this->get_unique_filename(
             $file_path,
-            $this->trim_file_name($file_path, $name, $size, $type, $error,
-                $index, $content_range),
+            $this->trim_file_name($file_path, $name, $size, $type, $error, $index, $content_range),
             $size,
             $type,
             $error,
@@ -1060,6 +1067,8 @@ class UploadHandler
 
     protected function reprocessImage($file_path, $callback)
     {
+        if( ! $file_path ) return;
+
         // Extracting mime type using getimagesize
         try {
             $image_info = getimagesize($file_path);
@@ -1100,11 +1109,9 @@ class UploadHandler
         return true;
     }
 
-    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
-            $index = null, $content_range = null) {
+    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error, $index = null, $content_range = null) {
         $file = new \stdClass();
-        $file->oriname = $this->get_file_name($uploaded_file, $name, $size, $type, $error,
-            $index, $content_range);
+        $file->oriname = $this->get_file_name($uploaded_file, $name, $size, $type, $error, $index, $content_range);
         
         $filename_ext = pathinfo($name, PATHINFO_EXTENSION);
         $file->name = $this->get_file_passname().'_'.str_replace(".", "_", $this->get_microtime()).".".$filename_ext;

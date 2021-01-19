@@ -2,7 +2,7 @@
 $sub_menu = "200820";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 $g5['title'] = '접속자로그삭제';
 include_once('./admin.head.php');
@@ -92,4 +92,3 @@ function form_submit(f)
 
 <?php
 include_once('./admin.tail.php');
-?>

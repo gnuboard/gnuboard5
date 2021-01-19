@@ -118,13 +118,30 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_PLUGIN_URL.'/debugbar/style.cs
                             $is_print = $rowspan;
                             
                             foreach($datas as $data){
+                                
+                                $print_function = '';
+
+                                if( $data['function'] && is_array($data['function']) ){
+                                    foreach( (array) $data['function'] as $key=>$fn_name ){
+                                        $str_delimiter = '';
+                                        if($key) $str_delimiter = ' :: ';
+                                        
+                                        if( is_object($fn_name) ){
+                                            $fn_name = get_class($fn_name);
+                                        }
+
+                                        $print_function .= $str_delimiter.(string) $fn_name;
+                                    }
+                                } else {
+                                    $print_function = $data['function'];
+                                }
                         ?>
                         <tr>
                             <?php if ($is_print){ ?>
                             <td scope="row" data-label="event_tag" <?php echo $rowspan; ?>><?php echo $tag.' <span class="hook_count">('.$count.')</span>'; ?></td>
                             <?php } ?>
                             <td data-label="event_function">
-                                <?php echo $data['function']; ?>
+                                <?php echo $print_function; ?>
                             </td>
                             <td data-label="인수의 수"><?php echo $data['arguments']; ?></td>
                             <td data-label="우선 순위"><?php echo $data['priority']; ?></td>
@@ -194,13 +211,30 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_PLUGIN_URL.'/debugbar/style.cs
                             $is_print = $rowspan;
                             
                             foreach($datas as $data){
+                                
+                                $print_function = '';
+
+                                if( $data['function'] && is_array($data['function']) ){
+                                    foreach( (array) $data['function'] as $key=>$fn_name ){
+                                        $str_delimiter = '';
+                                        if($key) $str_delimiter = ' :: ';
+                                        
+                                        if( is_object($fn_name) ){
+                                            $fn_name = get_class($fn_name);
+                                        }
+
+                                        $print_function .= $str_delimiter.(string) $fn_name;
+                                    }
+                                } else {
+                                    $print_function = $data['function'];
+                                }
                         ?>
                         <tr>
                             <?php if ($is_print){ ?>
                             <td scope="row" data-label="replace_tag" <?php echo $rowspan; ?>><?php echo $tag.' <span class="hook_count">('.$count.')</span>'; ?></td>
                             <?php } ?>
                             <td data-label="replace_function">
-                                <?php echo $data['function']; ?>
+                                <?php echo $print_function; ?>
                             </td>
                             <td data-label="인수의 수"><?php echo $data['arguments']; ?></td>
                             <td data-label="우선 순위"><?php echo $data['priority']; ?></td>

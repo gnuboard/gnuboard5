@@ -72,6 +72,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     <input type="hidden" name="stx" value="<?php echo $stx; ?>">
     <input type="hidden" name="sca" value="<?php echo $sca; ?>">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="token" value="<?php echo get_text($token); ?>">
             
     <div class="tbl_head01 tbl_wrap">
         <table>

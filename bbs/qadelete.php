@@ -4,18 +4,21 @@ include_once('./_common.php');
 if($is_guest)
     alert('회원이시라면 로그인 후 이용해 주십시오.', G5_URL);
 
+$token = isset($_REQUEST['token']) ? clean_xss_tags($_REQUEST['token'], 1, 1) : '';
+$qa_id = isset($_REQUEST['qa_id']) ? (int) $_REQUEST['qa_id'] : 0;
+
 $delete_token = get_session('ss_qa_delete_token');
 set_session('ss_qa_delete_token', '');
 
-//관리자가 아닌경우에는 토큰을 검사합니다.
-if (!$is_admin && !($token && $delete_token == $token))
+//모든 회원의 토큰을 검사합니다.
+if (!($token && $delete_token === $token))
     alert('토큰 에러로 삭제 불가합니다.');
 
 $tmp_array = array();
 if ($qa_id) // 건별삭제
     $tmp_array[0] = $qa_id;
 else // 일괄삭제
-    $tmp_array = $_POST['chk_qa_id'];
+    $tmp_array = (isset($_POST['chk_qa_id']) && is_array($_POST['chk_qa_id'])) ? $_POST['chk_qa_id'] : array();
 
 $count = count($tmp_array);
 if(!$count)
@@ -80,4 +83,3 @@ for($i=0; $i<$count; $i++) {
 }
 
 goto_url(G5_BBS_URL.'/qalist.php'.preg_replace('/^&amp;/', '?', $qstr));
-?>

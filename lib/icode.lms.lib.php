@@ -4,12 +4,19 @@ if (!defined('_GNUBOARD_')) exit;
 // 요금제에 따른 port 구분
 function get_icode_port_type($id, $pw)
 {
+    global $config;
+    
+    // 토큰키를 사용한다면 true 로 리턴
+    if( isset($config['cf_icode_token_key']) && $config['cf_icode_token_key'] ){
+        return 1;
+    }
+
     $userinfo = get_icode_userinfo($id, $pw);
 
     if($userinfo['payment'] == 'A') { // 충전제
         return 1;
     } else if($userinfo['payment'] == 'C') { // 정액제
-        return 1;
+        return 2;
     } else {
         return false;
     }
@@ -28,47 +35,90 @@ class LMS {
 	var $socket_portcode;
 	var $Data = array();
 	var $Result = array();
+    var $icode_key;
 
 	// SMS 서버 접속
 	function SMS_con($host, $id, $pw, $portcode) {
-		$this->socket_host	    = $host;
+        global $config;
+        
+        // 토큰키를 사용한다면
+        if(isset($config['cf_icode_token_key']) && $config['cf_icode_token_key']){
+            $this->icode_key = $config['cf_icode_token_key'];
+            $this->socket_host = ICODE_JSON_SOCKET_HOST;
+            $this->socket_port = ICODE_JSON_SOCKET_PORT;
+        } else {
+            $this->socket_host	    = $host;
+        }
+
 		$this->socket_portcode	= $portcode;
 		$this->icode_id		    = FillSpace($id, 10);
 		$this->icode_pw		    = FillSpace($pw, 10);
 	}
 
 	function Init() {
-		$this->Data		= "";	// 발송하기 위한 패킷내용이 배열로 들어간다.
-		$this->Result	= "";	// 발송결과값이 배열로 들어간다.
+		$this->Data		= array();	// 발송하기 위한 패킷내용이 배열로 들어간다.
+		$this->Result	= array();	// 발송결과값이 배열로 들어간다.
 	}
 
 	function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
+        global $config;
 
 		// 문자 타입별 Port 설정.
 		$sendType = strlen($strData) > 90 ? 1 : 0; // 0: SMS / 1: LMS
+        $is_use_json = false;
 
-		/* 개발 완료 후 아래 포트를 rand 함수를 이용하는 라인으로 변경 바랍니다.*/
+        // 토큰키를 사용한다면
+        if( isset($config['cf_icode_token_key']) && $config['cf_icode_token_key'] === $this->icode_key ){
+            
+            // 개행치환
+            $strData = preg_replace("/\r\n/","\n",$strData);
+            $strData = preg_replace("/\r/","\n",$strData);
 
-		// 충전식
-		if ($this->socket_portcode == 1) {
-				if($sendType && $sendType == 1) {
-					//$this->socket_port = 8200;		// LMS
-					$this->socket_port=(int)rand(8200,8201);	// LMS
-				} else {
-					//$this->socket_port = 6295;		// SMS
-					$this->socket_port=(int)rand(6295,6297);	// SMS
-				}
-		}
-		// 정액제
-		else {
-			if($sendType && $sendType == 1) {
-				//$this->socket_port = 8300; //	LMS
-				$this->socket_port=(int)rand(8300,8301); //	LMS
-			} else {
-				//$this->socket_port = 6291; //	SMS
-				$this->socket_port=(int)rand(6291,6293); //	SMS
-			}
-		}
+            $checks = array('msg'=>$strData, 'subject'=>$strSubject);
+            $tmps = array();
+
+            foreach( $checks as $k=>$v ){
+
+                // 문자 내용이 euc-kr 인지 체크합니다.
+                $enc = mb_detect_encoding($v, array('EUC-KR', 'UTF-8'));
+
+                // 문자 내용이 euc-kr 이면 json_encode 에서 깨지기 때문에 utf-8 로 변환합니다.
+                $tmps[$k] = ($enc === 'EUC-KR') ? iconv_utf8($v) : $v;
+            }
+
+            $strData = $tmps['msg'];
+            $strSubject = $tmps['subject'];
+
+            // 문자 타입별 Port 설정.
+            $sendType = strlen($strData)>90 ? 1 : 0; // 0: SMS / 1: LMS
+            if($sendType==0) $strSubject = "";
+            
+            $is_use_json = true;
+
+        } else {
+            /* 개발 완료 후 아래 포트를 rand 함수를 이용하는 라인으로 변경 바랍니다.*/
+
+            // 충전식
+            if ($this->socket_portcode == 1) {
+                    if($sendType && $sendType == 1) {
+                        //$this->socket_port = 8200;		// LMS
+                        $this->socket_port=(int)rand(8200,8201);	// LMS
+                    } else {
+                        //$this->socket_port = 6295;		// SMS
+                        $this->socket_port=(int)rand(6295,6297);	// SMS
+                    }
+            }
+            // 정액제
+            else {
+                if($sendType && $sendType == 1) {
+                    //$this->socket_port = 8300; //	LMS
+                    $this->socket_port=(int)rand(8300,8301); //	LMS
+                } else {
+                    //$this->socket_port = 6291; //	SMS
+                    $this->socket_port=(int)rand(6291,6293); //	SMS
+                }
+            }
+        }
 
 		$strCallBack	= FillSpace($strCallBack, 11);       // 회신번호
 		$strDate			= FillSpace($strDate, 12);           // 즉시(12byte 공백), 예약전송(YmdHi)
@@ -88,9 +138,9 @@ class LMS {
 			$strSubject = str_replace(">", "]", $strSubject);
 
 			$strSubject = FillSpace($strSubject,30);
-			$strData	= FillSpace(CutChar($strData,1500),1500);
+			$strData	= $is_use_json ? CutCharUtf8($strData, G5_ICODE_JSON_MAX_LENGTH) : FillSpace(CutChar($strData, G5_ICODE_LMS_MAX_LENGTH), G5_ICODE_LMS_MAX_LENGTH);
 		} else if (!$strURL) {
-			$strData	= FillSpace(CutChar($strData,90),90);
+			$strData	= $is_use_json ? CutCharUtf8($strData, G5_ICODE_JSON_MAX_LENGTH) : FillSpace(CutChar($strData,90),90);
 			$strCaller  = FillSpace($strCaller,10);
 		} else {
 			$strURL		= FillSpace($strURL,50);
@@ -102,39 +152,85 @@ class LMS {
 
 		for ($i=0; $i<$nCount; $i++) {
 
-			$strDest[$i] = FillSpace($strDest[$i],11);
-			if ($sendType && $sendType == 1) {
-				$this->Data[$i]	= '01144 '.$this->icode_id.$this->icode_pw.$strDest[$i].$strCallBack.$strSubject.$strDate.$strData;
-			} else if (!$strURL) {
-				$this->Data[$i]	= '01144 '.$this->icode_id.$this->icode_pw.$strDest[$i].$strCallBack.$strCaller.$strDate.$strData;
-			} else {
-				$strData = FillSpace(CheckCallCenter($strURL, $strDest[$i], $strData),80);
-				$this->Data[$i]	= '05173 '.$this->icode_id.$this->icode_pw.$strDest[$i].$strCallBack.$strURL.$strDate.$strData;
-			}
+            if($is_use_json) {
+                $strDest[$i] = $strDest[$i];
+                $list = array(
+                    "key" => $this->icode_key, 
+                    "tel" => $strDest[$i],
+                    "cb" => $strCallBack,
+                    "msg" => $strData,
+                    "title" => $strSubject?$strSubject:"",
+                    "date" => $strDate?$strDate:""
+                );
+                $packet = json_encode($list);
+
+                if( !$packet ){ // json_encode가 잘못되었으면 보내지 않습니다.
+                    continue;
+                }
+                $this->Data[$i]    = '06'.str_pad(strlen($packet), 4, "0", STR_PAD_LEFT).$packet;
+            } else {
+                $strDest[$i] = FillSpace($strDest[$i],11);
+                if ($sendType && $sendType == 1) {
+                    $this->Data[$i]	= '01144 '.$this->icode_id.$this->icode_pw.$strDest[$i].$strCallBack.$strSubject.$strDate.$strData;
+                } else if (!$strURL) {
+                    $this->Data[$i]	= '01144 '.$this->icode_id.$this->icode_pw.$strDest[$i].$strCallBack.$strCaller.$strDate.$strData;
+                } else {
+                    $strData = FillSpace(CheckCallCenter($strURL, $strDest[$i], $strData),80);
+                    $this->Data[$i]	= '05173 '.$this->icode_id.$this->icode_pw.$strDest[$i].$strCallBack.$strURL.$strDate.$strData;
+                }
+            }
 		}
 		return true;
 	}
 
 
 	function Send() {
-		$fsocket = fsockopen($this->socket_host,$this->socket_port, $errno, $errstr, 2);
-		if (!$fsocket) return false;
-		set_time_limit(60);
+        global $config;
 
-		foreach($this->Data as $puts) {
-			fputs($fsocket, $puts);
-			while(!$gets) { $gets = fgets($fsocket,30); }
-			$dest = substr($puts,26,11);
-			if (substr($gets,0,19) == "0223  00".$dest) {
-				$this->Result[] = $dest.":".substr($gets,19,10);
-			} else {
-				$this->Result[$dest] = $dest.":Error(".substr($gets,6,2).")";
-			}
-			$gets = "";
-		}
+        // 토큰키를 사용한다면
+        if( isset($config['cf_icode_token_key']) && $config['cf_icode_token_key'] === $this->icode_key ){
+            $fsocket = @fsockopen($this->socket_host,$this->socket_port, $errno, $errstr, 2);
+            if (!$fsocket) return false;
+            set_time_limit(300);
 
-		fclose($fsocket);
-		$this->Data = "";
+            foreach($this->Data as $puts) {
+                fputs($fsocket, $puts);
+                while(!$gets) { $gets = fgets($fsocket,32); }
+                $json = json_decode(substr($puts,6), true);
+
+                $dest = $json["tel"];
+                if (substr($gets,0,20) == "0225  00".FillSpace($dest,12)) {
+                    $this->Result[] = $dest.":".substr($gets,20,11);
+
+                } else {
+                    $this->Result[$dest] = $dest.":Error(".substr($gets,6,2).")";
+                    if(substr($gets,6,2) >= "80") break;
+                }
+                $gets = "";
+            }
+
+            fclose($fsocket);
+        } else {
+            $fsocket = @fsockopen($this->socket_host,$this->socket_port, $errno, $errstr, 2);
+            if (!$fsocket) return false;
+            set_time_limit(300);
+
+            foreach($this->Data as $puts) {
+                fputs($fsocket, $puts);
+                while(!$gets) { $gets = fgets($fsocket,30); }
+                $dest = substr($puts,26,11);
+                if (substr($gets,0,19) == "0223  00".$dest) {
+                    $this->Result[] = $dest.":".substr($gets,19,10);
+                } else {
+                    $this->Result[$dest] = $dest.":Error(".substr($gets,6,2).")";
+                }
+                $gets = "";
+            }
+
+            fclose($fsocket);
+        }
+
+		$this->Data = array();
 		return true;
 	}
 }
@@ -168,6 +264,24 @@ function CutChar($word, $cut) {
 	return $word;
 }
 
+function CutCharUtf8($word, $cut) {
+  preg_match_all('/[\xE0-\xFF][\x80-\xFF]{2}|./', $word, $match); // target for BMP
+
+  $m = $match[0];
+  $slen = strlen($word); // length of source string
+  if ($slen <= $cut) return $word;
+  
+  $ret = array();
+  $count = 0;
+  for ($i=0; $i < $cut; $i++) {
+      $count += (strlen($m[$i]) > 1)?2:1;
+      if ($count > $cut) break;
+      $ret[] = $m[$i];
+  }
+
+  return join('', $ret);
+}
+
 /**
 * 수신번호의 값이 정확한 값인지 확인합니다.
 *
@@ -182,7 +296,6 @@ function CheckCommonTypeDest($strDest, $nCount) {
 			return "수신번호오류";
 	}
 }
-
 
 /**
 * 회신번호 유효성 여부조회 *
@@ -246,4 +359,3 @@ function CheckCallCenter($url, $dest, $data) {
 			return CutChar($data,80);	break;
 	}
 }
-?>

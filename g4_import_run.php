@@ -22,7 +22,7 @@ if(get_session('tables_copied') == 'done')
 if($is_admin != 'super')
     alert('최고관리자로 로그인 후 실행해 주십시오.', G5_URL);
 
-$g4_config_file = trim($_POST['file_path']);
+$g4_config_file = isset($_POST['file_path']) ? trim($_POST['file_path']) : '';
 
 if(!$g4_config_file)
     alert('config.php 파일의 경로를 입력해 주십시오.');
@@ -90,7 +90,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     // 중복체크
     $sql2 = " select count(*) as cnt from {$g5['member_table']} where mb_id = '{$row['mb_id']}' ";
     $row2 = sql_fetch($sql2);
-    if($row2['cnt'])
+    if(isset($row2['cnt']) && $row2['cnt'])
         continue;
 
     $comma = '';
@@ -148,7 +148,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     // 중복체크
     $sql2 = " select count(*) as cnt from {$g5['login_table']} where lo_ip = '{$row['lo_ip']}' ";
     $row2 = sql_fetch($sql2);
-    if($row2['cnt'])
+    if(isset($row2['cnt']) && $row2['cnt'])
         continue;
 
     $comma = '';
@@ -240,7 +240,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     // 중복체크
     $sql2 = " select count(*) as cnt from {$g5['group_table']} where gr_id = '{$row['gr_id']}' ";
     $row2 = sql_fetch($sql2);
-    if($row2['cnt'])
+    if(isset($row2['cnt']) && $row2['cnt'])
         continue;
 
     $comma = '';
@@ -274,7 +274,7 @@ for($i=0; $row=sql_fetch_array($result); $i++) {
     // 중복체크
     $sql2 = " select count(*) as cnt from {$g5['board_table']} where bo_table = '{$row['bo_table']}' ";
     $row2 = sql_fetch($sql2);
-    if($row2['cnt'])
+    if(isset($row2['cnt']) && $row2['cnt'])
         continue;
 
     $comma = '';
@@ -435,4 +435,3 @@ set_session('tables_copied', 'done');
 
 <?php
 include_once(G5_PATH.'/tail.php');
-?>

@@ -22,6 +22,7 @@
 .sms5_box {position:relative;padding:10px;border-radius:5px;background:#fbec99}
 .sms5_box .box_ico {position:absolute;top:20px;left:-7px;width:7px;height:13px;background:url('../img/box_ico.gif') no-repeat}
 .sms5_box .box_txt {border:0;background:transparent;word-break:break-all;resize:none;overflow:hidden}
+.sms5_box textarea.box_txt.is_overview{overflow:visible;min-height:130px}
 .sms5_box .box_square {width:100px;height:90px}
 
 #write_wrap {z-index:9}
@@ -125,7 +126,7 @@
 
 /* 휴대폰번호 파일 */
 #sms5_fileup_frm {margin:0 0 10px;padding:0 0;border-bottom:1px solid #e9e9e9}
-#sms5_fileup_frm div {padding:5px 0;;border-bottom:1px solid #f4f4f4}
+#sms5_fileup_frm div {padding:5px 0;border-bottom:1px solid #f4f4f4}
 #sms5_fileup_frm div.sch_last {margin:0;border:0}
 #sms5_fileup_frm strong {display:inline-block;width:80px}
 #sms5_fileup_frm strong.sch_long {width:160px}

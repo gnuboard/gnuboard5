@@ -2,7 +2,7 @@
 // 코멘트 삭제
 include_once('./_common.php');
 
-$comment_id = (int) $comment_id;
+$comment_id = isset($_REQUEST['comment_id']) ? (int) $_REQUEST['comment_id'] : 0;
 
 $delete_comment_token = get_session('ss_delete_comment_'.$comment_id.'_token');
 set_session('ss_delete_comment_'.$comment_id.'_token', '');
@@ -89,4 +89,3 @@ delete_cache_latest($bo_table);
 run_event('bbs_delete_comment', $comment_id, $board);
 
 goto_url(short_url_clean(G5_HTTP_BBS_URL.'/board.php?bo_table='.$bo_table.'&amp;wr_id='.$write['wr_parent'].'&amp;page='.$page. $qstr));
-?>

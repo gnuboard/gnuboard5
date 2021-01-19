@@ -44,8 +44,20 @@ class SMS {
 	var $SMS_Port;
 	var $Data = array();
 	var $Result = array();
+    var $icode_key;
+    var $socket_port;
+    var $socket_host;
 
 	function SMS_con($sms_server,$sms_id,$sms_pw,$port) {
+        global $config;
+
+        // 토큰키를 사용한다면
+        if(isset($config['cf_icode_token_key']) && $config['cf_icode_token_key']){
+            $this->icode_key = $config['cf_icode_token_key'];
+            $this->socket_host = ICODE_JSON_SOCKET_HOST;
+            $this->socket_port = ICODE_JSON_SOCKET_PORT;
+        }
+
 		$this->ID=$sms_id;		// 계약 후 지정
 		$this->PWD=$sms_pw;		// 계약 후 지정
 		$this->SMS_Server=$sms_server;
@@ -55,30 +67,87 @@ class SMS {
 	}
 
 	function Init() {
-		$this->Data = "";
-		$this->Result = "";
+		$this->Data = array();
+		$this->Result = array();
 	}
 
 	function Add($dest, $callBack, $Caller, $msg, $rsvTime="") {
-        global $g5;
+        global $g5, $config;
 
-		// 내용 검사 1
-		$Error = CheckCommonType($dest, $rsvTime);
-		if ($Error) return $Error;
-		// 내용 검사 2
-		//if ( eregi("[^0-9]",$callBack) ) return "회신 전화번호가 잘못되었습니다";
-		if ( preg_match("/[^0-9]/i",$callBack) ) return "회신 전화번호가 잘못되었습니다";
+        // 토큰키를 사용한다면
+        if( isset($config['cf_icode_token_key']) && $config['cf_icode_token_key'] === $this->icode_key ){
 
-        $msg=cut_char($msg,80); // 80자 제한
-		// 보낼 내용을 배열에 집어넣기
-		$dest = spacing($dest,11);
-		$callBack = spacing($callBack,11);
-		$Caller = spacing($Caller,10);
-		$rsvTime = spacing($rsvTime,12);
-		$msg = spacing($msg,80);
+            // 내용 검사 1
+            $Error = CheckCommonType($dest, $rsvTime);
+            if ($Error) return $Error;
+            if ( preg_match("/[^0-9]/i",$callBack) ) return "회신 전화번호가 잘못되었습니다";
 
-		$this->Data[] = '01144 '.$this->ID.$this->PWD.$dest.$callBack.$Caller.$rsvTime.$msg;
-		return "";
+            // 개행치환
+            $msg = preg_replace("/\r\n/", "\n", $msg);
+            $msg = preg_replace("/\r/", "\n", $msg);
+            // 90byte 이내는 SMS, 90 ~ 2000 byte 는 LMS 그 이상은 절삭 되어 LMS로 발송
+            // SMS 이기 때문에 90byte 이내로 합니다.
+            $msg=cut_char($msg, 90);
+            $msg = spacing($msg, 90);
+
+            // 한글 깨진것이 있는지 체크합니다.
+            if( preg_match('/^([\x00-\x7e]|.{2})*/', $msg, $z) ){
+                $msg = $z[0];
+            }
+
+            // 문자 내용이 euc-kr 인지 체크합니다.
+            $enc = mb_detect_encoding($msg, array('EUC-KR', 'UTF-8'));
+
+            // 문자 내용이 euc-kr 이면 json_encode 에서 깨지기 때문에  utf-8 로 변환합니다.
+            if($enc === 'EUC-KR'){
+                $msg = iconv_utf8($msg);
+            }
+            
+            // 보낼 내용을 배열에 집어넣기
+            $dest = spacing($dest,11);
+            $callBack = spacing($callBack,11);
+            $Caller = spacing($Caller,10);
+            $rsvTime = $rsvTime ? spacing($rsvTime,12) : '';
+
+            $list = array(
+                "key" => $this->icode_key, 
+                "tel" => $dest,
+                "cb" => $callBack,
+                "msg" => $msg,
+                "title" => "",      //SMS 의 경우 타이틀을 지정할수 없습니다.
+                "date" => $rsvTime
+            );
+
+            $packet = json_encode($list);
+
+            if( !$packet ){ // json_encode가 잘못되었으면 보내지 않습니다.
+                return "json_encode error";
+            }
+            $this->Data[]    = '06'.str_pad(strlen($packet), 4, "0", STR_PAD_LEFT).$packet;
+
+            return ''; 
+
+        } else {
+            // 기존 OLD SMS
+
+            // 내용 검사 1
+            $Error = CheckCommonType($dest, $rsvTime);
+            if ($Error) return $Error;
+            // 내용 검사 2
+            //if ( eregi("[^0-9]",$callBack) ) return "회신 전화번호가 잘못되었습니다";
+            if ( preg_match("/[^0-9]/i",$callBack) ) return "회신 전화번호가 잘못되었습니다";
+
+            $msg=cut_char($msg,80); // 80자 제한
+            // 보낼 내용을 배열에 집어넣기
+            $dest = spacing($dest,11);
+            $callBack = spacing($callBack,11);
+            $Caller = spacing($Caller,10);
+            $rsvTime = spacing($rsvTime,12);
+            $msg = spacing($msg,80);
+
+            $this->Data[] = '01144 '.$this->ID.$this->PWD.$dest.$callBack.$Caller.$rsvTime.$msg;
+            return "";
+        }
 	}
 
 	function AddURL($dest, $callBack, $URL, $msg, $rsvTime="") {
@@ -121,26 +190,53 @@ class SMS {
 		return "";
 	}
 
-	function Send () {
-		$fp=@fsockopen(trim($this->SMS_Server),trim($this->SMS_Port), $errno, $errstr, 2);
-		if (!$fp) return false;
-		set_time_limit(60);
+    function Send() {
+        global $config;
 
-		## php4.3.10일경우
-        ## zend 최신버전으로 업해주세요..
-        ## 또는 122번째 줄을 $this->Data as $tmp => $puts 로 변경해 주세요.
+        // 토큰키를 사용한다면
+        if( isset($config['cf_icode_token_key']) && $config['cf_icode_token_key'] === $this->icode_key ){
+            $fsocket = @fsockopen(trim($this->socket_host),trim($this->socket_port), $errno, $errstr, 2);
+            if (!$fsocket) return false;
+            set_time_limit(300);
 
-		foreach($this->Data as $puts) {
-			$dest = substr($puts,26,11);
-			fputs($fp,$puts);
-			while(!$gets) { $gets=fgets($fp,30); }
-			if (substr($gets,0,19)=="0223  00".$dest) $this->Result[]=$dest.":".substr($gets,19,10);
-			else $this->Result[$dest]=$dest.":Error";
-			$gets="";
-		}
-		fclose($fp);
-		$this->Data="";
-		return true;
+            foreach($this->Data as $puts) {
+                fputs($fsocket, $puts);
+                while(!$gets) { $gets = fgets($fsocket,32); }
+                $json = json_decode(substr($puts,6), true);
+
+                $dest = $json["tel"];
+                if (substr($gets,0,20) == "0225  00".spacing($dest,12)) {
+                    $this->Result[] = $dest.":".substr($gets,20,11);
+
+                } else {
+                    $this->Result[$dest] = $dest.":Error(".substr($gets,6,2).")";
+                    if(substr($gets,6,2) >= "80") break;
+                }
+                $gets = "";
+            }
+            fclose($fsocket);
+
+        } else {
+
+            $fp=@fsockopen(trim($this->SMS_Server),trim($this->SMS_Port));
+            if (!$fp) return false;
+            set_time_limit(300);
+
+            ## php4.3.10일경우
+            ## zend 최신버전으로 업해주세요..
+            ## 또는 122번째 줄을 $this->Data as $tmp => $puts 로 변경해 주세요.
+
+            foreach($this->Data as $puts) {
+                $dest = substr($puts,26,11);
+                fputs($fp,$puts);
+                while(!$gets) { $gets=fgets($fp,30); }
+                if (substr($gets,0,19)=="0223  00".$dest) $this->Result[]=$dest.":".substr($gets,19,10);
+                else $this->Result[$dest]=$dest.":Error";
+                $gets="";
+            }
+            fclose($fp);
+        }
+		$this->Data=array();
+        return true;
 	}
 }
-?>

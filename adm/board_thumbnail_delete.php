@@ -2,7 +2,7 @@
 $sub_menu = '300100';
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 if(!$board['bo_table'])
     alert('존재하지 않는 게시판입니다.');
@@ -49,4 +49,3 @@ if(is_dir($dir)) {
 
 <?php
 include_once('./admin.tail.php');
-?>

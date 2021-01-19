@@ -5,7 +5,7 @@ include_once("./_common.php");
 $page_size = 20;
 $colspan = 9;
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $token = get_token();
 
@@ -13,12 +13,12 @@ $g5['title'] = "휴대폰번호 관리";
 
 if ($page < 1) $page = 1;
 
-$bg_no = isset($bg_no) ? (int) $bg_no : 0;
-$st = isset($st) ? preg_replace('/[^a-z0-9]/i', '', $st) : '';
+$bg_no = isset($_REQUEST['bg_no']) ? preg_replace('/[^0-9]/i', '', $_REQUEST['bg_no']) : '';
+$st = isset($_REQUEST['st']) ? preg_replace('/[^a-z0-9]/i', '', $_REQUEST['st']) : '';
 
 $sql_korean = $sql_group = $sql_search = $sql_no_hp = '';
 
-if (is_numeric($bg_no))
+if (is_numeric($bg_no) && $bg_no)
     $sql_group = " and bg_no='$bg_no' ";
 else
     $sql_group = "";
@@ -32,6 +32,9 @@ if ($st == 'all') {
 } else {
     $sql_search = '';
 }
+
+$ap = isset($_GET['ap']) ? (int) $_GET['ap'] : 0;
+$no_hp = isset($_GET['no_hp']) ? preg_replace('/[^0-9a-z_]/i', '', $_GET['no_hp']) : 0;
 
 if ($ap > 0)
     $sql_korean = korean_index('bk_name', $ap-1);
@@ -104,7 +107,7 @@ function no_hp_click(val)
 </script>
 
 <div class="local_ov01 local_ov">
-    <span class="btn_ov01"><span class="ov_txt">업데이트 </span><span class="ov_num"><?php echo $sms5['cf_datetime']?></span></span>
+    <span class="btn_ov01"><span class="ov_txt">업데이트 </span><span class="ov_num"><?php echo isset($sms5['cf_datetime']) ? $sms5['cf_datetime'] : ''; ?></span></span>
     <span class="btn_ov01"><span class="ov_txt"> 건수  </span><span class="ov_num"><?php echo number_format($total_count)?>명</span></span>
     <span class="btn_ov01"><span class="ov_txt"> 회원  </span><span class="ov_num"> <?php echo number_format($member_count)?>명</span></span>
     <span class="btn_ov01"><span class="ov_txt"> 비회원  </span><span class="ov_num"> <?php echo number_format($no_member_count)?>명</span></span>
@@ -263,4 +266,3 @@ function select_copy(sw, f) {
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

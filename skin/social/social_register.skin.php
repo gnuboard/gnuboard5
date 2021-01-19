@@ -15,7 +15,7 @@ if( G5_SOCIAL_USE_POPUP ) {
 }
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
-add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css">', 10);
+add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css?ver='.G5_CSS_VER.'">', 10);
 ?>
 <div>
 
@@ -43,7 +43,7 @@ add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css
             <?php if( social_service_check('google') ) {     //구글 로그인을 사용한다면 ?>
             <a href="<?php echo $self_url;?>?provider=google&amp;url=<?php echo $urlencode;?>" class="sns-icon social_link sns-google" title="구글">
                 <span class="ico"></span>
-                <span class="txt">구글+로 회원가입하기</span>
+                <span class="txt">구글로 회원가입하기</span>
             </a>
             <?php }     //end if ?>
             <?php if( social_service_check('twitter') ) {     //트위터 로그인을 사용한다면 ?>

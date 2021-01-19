@@ -11,4 +11,3 @@ if($error)
 $token = get_admin_token();
 
 die(json_encode(array('error'=>'', 'token'=>$token, 'url'=>'')));
-?>

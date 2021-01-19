@@ -2,7 +2,9 @@
 $sub_menu = "900400";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
+
+$wr_no = isset($_REQUEST['wr_no']) ? (int) $_REQUEST['wr_no'] : 0;
 
 $g5['title'] = "문자전송중";
 
@@ -224,10 +226,9 @@ if($config['cf_sms_type'] == 'LMS') {
 
 ?>
 <script>
-act = window.open('sms_ing.php', 'act', 'width=300, height=200');
-act.close();
+//act = window.open('sms_ing.php', 'act', 'width=300, height=200');
+//act.close();
 location.href = 'history_view.php?wr_no=<?php echo $wr_no?>&wr_renum=<?php echo $new_wr_renum?>';
 </script>
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

@@ -14,15 +14,15 @@ foreach($check_arrays as $key){
 require('./ipin.config.php');
 
 //아이핀팝업에서 조회한 PERSONALINFO이다.
-@$encPsnlInfo = $_REQUEST["encPsnlInfo"];
+@$encPsnlInfo = isset($_REQUEST["encPsnlInfo"]) ? $_REQUEST["encPsnlInfo"] : '';
 if(preg_match('~[^0-9a-zA-Z+/=]~', $encPsnlInfo, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 //KCB서버 공개키
-@$WEBPUBKEY = trim($_REQUEST["WEBPUBKEY"]);
+@$WEBPUBKEY = isset($_REQUEST["WEBPUBKEY"]) ? trim($_REQUEST["WEBPUBKEY"]) : '';
 if(preg_match('~[^0-9a-zA-Z+/=]~', $WEBPUBKEY, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 //KCB서버 서명값
-@$WEBSIGNATURE = trim($_REQUEST["WEBSIGNATURE"]);
+@$WEBSIGNATURE = isset($_REQUEST["WEBSIGNATURE"]) ? trim($_REQUEST["WEBSIGNATURE"]) : '';
 if(preg_match('~[^0-9a-zA-Z+/=]~', $WEBSIGNATURE, $match)) {echo "입력 값 확인이 필요합니다"; exit;}
 
 //아이핀 서버와 통신을 위한 키파일 생성
@@ -121,4 +121,3 @@ $(function() {
 
 <?php
 include_once(G5_PATH.'/tail.sub.php');
-?>

@@ -2,6 +2,7 @@
 include_once('./_common.php');
 
 $call = isset($_REQUEST['call']) ?  strtolower(preg_replace('/[^a-z0-9_]/i', '', $_REQUEST['call'])) : '';
+$token = isset($_REQUEST['token']) ? clean_xss_tags($_REQUEST['token'], 1, 1) : '';
 
 if( ! $call ){
     return;
@@ -25,4 +26,3 @@ include_once ('./admin.head.php');
 run_event('admin_get_page_'.$call, $arr_query, $token);
 
 include_once ('./admin.tail.php');
-?>

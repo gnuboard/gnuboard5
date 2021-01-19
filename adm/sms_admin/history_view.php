@@ -4,9 +4,14 @@ include_once("./_common.php");
 
 $spage_size = 20;
 $colspan = 10;
+$re_text = '';
 
-$st = isset($st) ? strip_tags($st) : '';
-$ssv = isset($ssv) ? strip_tags($ssv) : '';
+$st = isset($_REQUEST['st']) ? clean_xss_tags($_REQUEST['st'], 1, 1) : '';
+$ssv = isset($_REQUEST['ssv']) ? clean_xss_tags($_REQUEST['ssv'], 1, 1) : '';
+$wr_no = isset($_REQUEST['wr_no']) ? (int) $_REQUEST['wr_no'] : 0;
+$wr_renum = isset($_REQUEST['wr_renum']) ? (int) $_REQUEST['wr_renum'] : 0;
+$spage = isset($_REQUEST['spage']) ? (int) $_REQUEST['spage'] : 0;
+$line = 0;
 
 if( $st && !in_array($st, array('hs_name', 'hs_hp', 'bk_no')) ){
     $st = '';
@@ -16,7 +21,7 @@ if( $sst && !in_array($sst, array('mb_id', 'bk_no', 'hs_name', 'hs_hp', 'hs_date
     $sst = '';
 }
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
 $g5['title'] = "문자전송 상세내역";
 
@@ -60,8 +65,8 @@ function re_send()
     if (!confirm('전송에 실패한 SMS 를 재전송 하시겠습니까?'))
         return;
 
-    act = window.open('sms_ing.php', 'act', 'width=300, height=200');
-    act.focus();
+    //act = window.open('sms_ing.php', 'act', 'width=300, height=200');
+    //act.focus();
 
     location.href = './history_send.php?w=f&page=<?php echo $page?>&st=<?php echo  $st?>&sv=<?php echo $sv?>&wr_no=<?php echo $wr_no?>&wr_renum=<?php echo $wr_renum?>';
     <?php } ?>
@@ -104,7 +109,7 @@ function all_send()
 
     <div id="con_sms" class="sms5_box">
         <span class="box_ico"></span>
-        <textarea class="box_txt" readonly><?php echo $write['wr_message'];?></textarea>
+        <textarea class="box_txt is_overview" readonly><?php echo $write['wr_message'];?></textarea>
     </div>
 
     <?php if ($write['wr_re_total'] && !$wr_renum) { ?>
@@ -261,4 +266,3 @@ function all_send()
 
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>

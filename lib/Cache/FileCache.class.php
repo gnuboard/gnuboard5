@@ -33,9 +33,9 @@ class FileCache
      *
      * @param string $id
      */
-	public function get($id)
+	public function get($id, $expired_time=0)
 	{
-		$data = $this->_get($id);
+		$data = $this->_get($id, $expired_time);
 		return is_array($data) ? $data['data'] : FALSE;
 	}
 
@@ -59,7 +59,7 @@ class FileCache
 
     }
 
-	protected function _get($id)
+	protected function _get($id, $expired_time=0)
 	{
         $cache_file_path = $this->get_cache_file_path($id);
 
@@ -68,19 +68,26 @@ class FileCache
 			return FALSE;
 		}
         
+        $server_time = defined('G5_SERVER_TIME') ? G5_SERVER_TIME : time();
+
         try{
             $file_contents = file_get_contents($cache_file_path);
             $file_ex = explode("\n\n", $file_contents);
             $data = unserialize(base64_decode($file_ex[1]));
         } catch(Exception $e){
-            $data = array('ttl'=>1, 'time'=>time() - 1000);
+            $data = array('ttl'=>1, 'time'=> $server_time - 1000);
         }
-
-		if ($data['ttl'] > 0 && time() > $data['time'] + $data['ttl'])
+        
+		if ($data['ttl'] > 0 && $server_time > $data['time'] + $data['ttl'])
 		{
 			unlink( $cache_file_path );
 			return FALSE;
 		}
+
+        if ($data['time'] && $expired_time && $data['time'] < ($server_time - $expired_time)){
+            unlink( $cache_file_path );
+            return FALSE;
+        }
 
 		return $data;
 	}
@@ -193,4 +200,3 @@ class FileCache
         return unserialize(base64_decode($data));
     }
 }
-?>

@@ -44,11 +44,11 @@ function get_social_convert_id($identifier, $service)
     return strtolower($service).'_'.hash('adler32', md5($identifier));
 }
 
-function get_social_callbackurl($provider, $no_domain=false){
+function get_social_callbackurl($provider, $no_domain=false, $no_params=false){
 
     $base_url = G5_SOCIAL_LOGIN_BASE_URL;
 
-    if ( $provider === 'twitter' ){
+    if ( $provider === 'twitter' || ($provider === 'payco' && $no_params) ){
         return $base_url;
     }
 
@@ -86,7 +86,7 @@ function social_login_get_provider_adapter( $provider )
 		include_once G5_SOCIAL_LOGIN_PATH . "/Hybrid/Auth.php";
 	}
 
-    if( ! is_object($g5['hybrid_auth']) ){
+    if( ! (isset($g5['hybrid_auth']) && is_object($g5['hybrid_auth'])) ){
         $setting = social_build_provider_config($provider);
         $g5['hybrid_auth'] = new Hybrid_Auth( $setting );
     }
@@ -121,7 +121,7 @@ function social_before_join_check($url=''){
 
             $row = sql_fetch($sql);
 
-            if( $row['provider'] ){
+            if( isset($row['provider']) && $row['provider'] ){
                 $is_exist = true;
 
                 $time = time() - (86400 * (int) G5_SOCIAL_DELETE_DAY);
@@ -322,7 +322,7 @@ function social_extends_get_keys($provider){
                     "keys" => array("id" => $config['cf_facebook_appid'], "secret" => $config['cf_facebook_secret']),
                     "display"   =>  "popup",
                     "redirect_uri" => get_social_callbackurl('facebook'),
-                    "scope"   => array('email'), // optional
+                    "scope"   => 'email', // optional
                     "trustForwarded" => false
                 );
 
@@ -332,9 +332,12 @@ function social_extends_get_keys($provider){
                     "keys" => array("id" => $config['cf_google_clientid'],
                     "secret" => $config['cf_google_secret']),
                     "redirect_uri" => get_social_callbackurl('google'),
+                    "scope"   => "https://www.googleapis.com/auth/userinfo.profile "."https://www.googleapis.com/auth/userinfo.email",
+                    /*
                     "scope"   => "https://www.googleapis.com/auth/plus.login ". // optional
                                     "https://www.googleapis.com/auth/plus.me ". // optional
                                     "https://www.googleapis.com/auth/plus.profile.emails.read", // optional
+                    */
                     //"access_type"     => "offline",   // optional
                     //"approval_prompt" => "force",     // optional
                 );
@@ -356,7 +359,7 @@ function social_extends_get_keys($provider){
                 );
     }
 
-    return $r[$provider];
+    return isset($r[$provider]) ? $r[$provider] : array();
 }
 
 function social_escape_request($request){
@@ -491,7 +494,7 @@ function social_check_login_before($p_service=''){
         {
             $get_error = social_get_error_msg( $e->getCode() );
 
-            if( is_object( $adapter ) ){
+            if( isset($adapter) && is_object( $adapter ) ){
                 $adapter->logout();
             }
 
@@ -1026,7 +1029,7 @@ function social_get_nonce($key=''){
 
         $setting = social_build_provider_config($key);
         try{
-            return sha1($setting['providers'][$key]['secret']);
+            return isset($setting['providers'][$key]['secret']) ? sha1($setting['providers'][$key]['secret']) : '';
         } catch(Exception $e) {
             return '';
         }
@@ -1058,4 +1061,3 @@ function social_nonce_generate_hash( $action='' , $user='', $provider = '' ){
     $i = ceil( time() / ( social_get_nonce('d') / 2 ) );
     return md5( $i . $action . $user . social_get_nonce($provider) );
 }
-?>

@@ -65,4 +65,3 @@ if (!defined('_GNUBOARD_')) exit;
 </html>
 <?php
 die();
-?>

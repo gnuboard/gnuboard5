@@ -16,7 +16,7 @@ $result = sql_query($sql, false);
 for ($i=0; $nw=sql_fetch_array($result); $i++)
 {
     // 이미 체크 되었다면 Continue
-    if ($_COOKIE["hd_pops_{$nw['nw_id']}"])
+    if (isset($_COOKIE["hd_pops_{$nw['nw_id']}"]) && $_COOKIE["hd_pops_{$nw['nw_id']}"])
         continue;
 ?>
 

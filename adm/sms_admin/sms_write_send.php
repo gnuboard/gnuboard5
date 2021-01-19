@@ -2,14 +2,37 @@
 $sub_menu = "900300";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_admin_token();
 
+$result = sql_query("describe `{$g5['sms5_write_table']}`");
+while ($row = sql_fetch_array($result)){
+    if( $row['Field'] === 'wr_message' && $row['Type'] === 'varchar(255)' ){
+        sql_query("ALTER TABLE `{$g5['sms5_write_table']}` MODIFY wr_message TEXT NOT NULL;", false);
+        break;
+    }
+}
+
 $g5['title'] = "문자전송중";
 
-$wr_reply   = preg_replace('#[^0-9\-]#', '', trim($wr_reply));
-$wr_message = clean_xss_tags(trim($wr_message));
+if ($config['cf_sms_use'] != 'icode') {
+    alert('기본환경설정에서 icode sms 사용이 비활성화 되어 있습니다.');
+}
+
+if ( ! (($config['cf_icode_id'] && $config['cf_icode_pw']) || $config['cf_icode_token_key']) ) {
+    alert('아이코드 설정값이 존재하지 않습니다.');
+}
+
+$wr_reply   = isset($_REQUEST['wr_reply']) ? preg_replace('#[^0-9\-]#', '', trim($_REQUEST['wr_reply'])) : '';
+$wr_message = isset($_REQUEST['wr_message']) ? clean_xss_tags(trim($_REQUEST['wr_message'])) : '';
+$send_list = isset($_REQUEST['send_list']) ? clean_xss_tags(trim($_REQUEST['send_list']), 1, 1) : '';
+
+$wr_by = isset($_REQUEST['wr_by']) ? clean_xss_tags(trim($_REQUEST['wr_by']), 1, 1) : '';
+$wr_bm = isset($_REQUEST['wr_bm']) ? clean_xss_tags(trim($_REQUEST['wr_bm']), 1, 1) : '';
+$wr_bd = isset($_REQUEST['wr_bd']) ? clean_xss_tags(trim($_REQUEST['wr_bd']), 1, 1) : '';
+$wr_bh = isset($_REQUEST['wr_bh']) ? clean_xss_tags(trim($_REQUEST['wr_bh']), 1, 1) : '';
+$wr_bi = isset($_REQUEST['wr_bi']) ? clean_xss_tags(trim($_REQUEST['wr_bi']), 1, 1) : '';
 
 if (!$wr_reply)
     win_close_alert('회신 번호를 숫자, - 로 입력해주세요.');
@@ -94,12 +117,12 @@ while ($row = array_shift($send_list))
                 $hp = get_hp($item[$i][1], 0);
                 $name = $item[$i][0];
 
-                if(!$hp) continue;
+                if(!$hp) continue 2;
 
                 if ($wr_overlap && array_overlap($hps, $hp)) {
                     $overlap++;
                     array_push( $duplicate_data['hp'], $row['bk_hp'] );
-                    continue;
+                    continue 2;
                 }
 
                 array_push($list, array('bk_hp' => $hp, 'bk_name' => $name));
@@ -111,12 +134,12 @@ while ($row = array_shift($send_list))
                 $row = sql_fetch("select * from {$g5['sms5_book_table']} where bk_no='$item[$i]'");
                 $row['bk_hp'] = get_hp($row['bk_hp'], 0);
 
-                if(!$row['bk_hp']) continue;
+                if(!$row['bk_hp']) continue 2;
 
                 if ($wr_overlap && array_overlap($hps, $row['bk_hp'])) {
                     $overlap++;
                     array_push( $duplicate_data['hp'], $row['bk_hp'] );
-                    continue;
+                    continue 2;
                 }
                 array_push($list, $row);
                 array_push($hps, $row['bk_hp']);
@@ -141,14 +164,11 @@ if ($wr_by && $wr_bm && $wr_bd && $wr_bh && $wr_bi) {
     $booking = '';
 }
 
-if ($config['cf_sms_use'] != 'icode') {
-    alert('기본환경설정에서 icode sms 사용이 비활성화 되어 있습니다.');
-}
-
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 $reply = str_replace('-', '', trim($wr_reply));
-$wr_message = conv_unescape_nl($wr_message);
+$db_wr_message = conv_unescape_nl($wr_message);
+$wr_message = conv_unescape_nl(stripslashes($wr_message));
 
 $SMS = new SMS5;
 
@@ -186,7 +206,7 @@ if($config['cf_sms_type'] == 'LMS') {
 
             if($result) {
                 $result = $SMS->Send();
-
+                
                 if ($result) //SMS 서버에 접속했습니다.
                 {
                     foreach ($SMS->Result as $result)
@@ -242,7 +262,7 @@ if($config['cf_sms_type'] == 'LMS') {
             }
         }
 
-        sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum=0, wr_reply='$wr_reply', wr_message='$wr_message', wr_success='$wr_success', wr_failure='$wr_failure', wr_memo='$str_serialize', wr_booking='$wr_booking', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
+        sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum=0, wr_reply='$wr_reply', wr_message='$db_wr_message', wr_success='$wr_success', wr_failure='$wr_failure', wr_memo='$str_serialize', wr_booking='$wr_booking', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
     }
 } else {
     $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
@@ -260,7 +280,7 @@ if($config['cf_sms_type'] == 'LMS') {
             else
                 $wr_no = 1;
 
-            sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum=0, wr_reply='$wr_reply', wr_message='$wr_message', wr_booking='$wr_booking', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
+            sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum=0, wr_reply='$wr_reply', wr_message='$db_wr_message', wr_booking='$wr_booking', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
 
             $wr_success = 0;
             $wr_failure = 0;
@@ -324,11 +344,16 @@ if($config['cf_sms_type'] == 'LMS') {
 
 function win_close_alert($msg) {
 
-    $html = "<script>
-    act = window.open('sms_ing.php', 'act', 'width=300, height=200');
-    act.close();
-    alert('$msg');
-    history.back();</script>";
+    $html = "<script>".PHP_EOL;
+    //$html .= "act = window.open('sms_ing.php', 'act', 'width=300, height=200');".PHP_EOL;
+    //$html .= "act.close();".PHP_EOL;
+    $html .= "alert('$msg');
+        if ('referrer' in document) {
+            window.location = document.referrer;
+        } else {
+            window.history.back();
+        }
+    </script>";
 
     echo $html;
     exit;
@@ -336,10 +361,9 @@ function win_close_alert($msg) {
 
 ?>
 <script>
-act = window.open('sms_ing.php', 'act', 'width=300, height=200');
-act.close();
+//act = window.open('sms_ing.php', 'act', 'width=300, height=200');
+//act.close();
 location.href = 'history_view.php?wr_no=<?php echo $wr_no?>';
 </script>
 <?php
 include_once(G5_ADMIN_PATH.'/admin.tail.php');
-?>
