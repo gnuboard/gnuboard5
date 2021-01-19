@@ -346,7 +346,7 @@ else // 장바구니에 담기
                     $point = 0;
             }
             
-            $ct_send_cost = 0;
+            $ct_send_cost = isset($_REQUEST['ct_send_cost']) ? (int) $_REQUEST['ct_send_cost'] : 0;
 
             // 배송비결제
             if($it['it_sc_type'] == 1)
