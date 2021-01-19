@@ -16,6 +16,12 @@ function mailer($fname, $fmail, $to, $subject, $content, $type=0, $file="", $cc=
     if ($type != 1)
         $content = nl2br($content);
 
+    $result = run_replace('mailer', $fname, $fmail, $to, $subject, $content, $type, $file, $cc, $bcc);
+    
+    if( isset($result['return']) ){
+        return $result['return'];
+    }
+
     $mail = new PHPMailer(); // defaults to using php "mail()"
     if (defined('G5_SMTP') && G5_SMTP) {
         $mail->IsSMTP(); // telling the class to use SMTP
