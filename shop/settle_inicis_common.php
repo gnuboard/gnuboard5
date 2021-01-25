@@ -64,7 +64,7 @@ if( $PG_IP == "203.238.37.3" || $PG_IP == "203.238.37.15" || $PG_IP == "203.238.
                             pp_receipt_time     = '$receipt_time'
                         where pp_id = '$no_oid'
                           and pp_app_no = '$no_vacct' ";
-            sql_query($sql, false);
+            $result = sql_query($sql, false);
 
             if($row['od_id']) {
                 // 주문서 UPDATE
