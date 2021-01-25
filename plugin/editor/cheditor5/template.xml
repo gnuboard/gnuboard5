@@ -10,7 +10,7 @@
             <![CDATA[
                 <div class="cheditor-container">
                     <div id="toolbar" style="padding:4px;height:47px"></div>
-                    <div id="editWrapper" class="cheditor-editarea-wrapper">
+                    <div id="editWrapper" class="cheditor-editarea-wrapper" style="clear:left">
                         <iframe frameborder="0" class="cheditor-editarea"></iframe>
                         <textarea class="cheditor-editarea-text-content" spellcheck="false"></textarea>
                     </div>
@@ -73,6 +73,18 @@
             </Button>
         </Group>
         <Group name="Edit">
+            <Button name="Copy" tooltip="복사하기">
+                <Attribute class="cheditor-tb-bg" width="24" height="23" check="1">
+                    <Icon position="64" width="16" class="cheditor-tb-icon" margin="4px" />
+                    <Execution method="doCmd" value="Copy" />
+                </Attribute>
+            </Button>
+            <Button name="Cut" tooltip="오려두기">
+                <Attribute class="cheditor-tb-bg" width="23" height="23" check="1">
+                    <Icon position="80" width="16" class="cheditor-tb-icon" />
+                    <Execution method="doCmd" value="Cut" />
+                </Attribute>
+            </Button>
             <Button name="Paste" tooltip="텍스트로 붙이기">
                 <Attribute class="cheditor-tb-bg" width="23" height="23">
                     <Icon position="96" width="16" class="cheditor-tb-icon" />

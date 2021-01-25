@@ -1,9 +1,9 @@
 // ================================================================
-//                       CHEditor 5.1.9.3
+//                       CHEditor 5.1.9.3-p4
 // ----------------------------------------------------------------
 // Homepage: http://www.chcode.com
 // EMail: support@chcode.com
-// Copyright (c) 1997-2016 CHSOFT
+// Copyright (c) 1997-2020 CHSOFT
 // ================================================================
 var GB = {
     colors: ['#000000','#313131','#434343','#535353','#666666','#999999','#a0a0a0','#b5b5b5','#c0c0c0','#dcdcdc','#eeeeee','#ffffff',
@@ -517,7 +517,7 @@ function setConfig() {
         useModifyTable      : true,
         useMap              : true,
         useTextBlock        : true,
-        useFullScreen       : true,
+        useFullScreen       : false,
         usePageBreak        : false
     },
     base, elem, i, editorUri, locationAbs;
@@ -557,9 +557,9 @@ function setConfig() {
     this.currentRS = {};
     this.resizeEditor = {};
     this.setFullScreenMode = false;
-    this.modalElementZIndex = 1001;
+    this.modalElementZIndex = 10001;
     this.config = config;
-    this.templateFile = 'template.xml';
+    this.templateFile = this.undefined(this.browser.mobile) ? 'template.xml' : 'template-mobile.xml';
     this.templatePath = config.editorPath + this.templateFile;
     this.W3CRange = !(this.undefined(window.getSelection));
     this.inputForm = 'textAreaId';
@@ -1082,31 +1082,10 @@ cheditor.prototype = {
             showError('현재 브라우저에서 ' + self.templateFile + ' 파일을 사용할 수 없습니다.');
         }
     },
-/*
-    getCDATASection : function (node) {
-        var elem, data;
-        if (node.hasChildNodes()) {
-            elem = node.firstChild;
-            while (elem && elem.nodeType !== GB.node.cdata_section) {
-                elem = elem.nextSibling;
-            }
-            if (elem && elem.nodeType === GB.node.cdata_section) {
-                data = elem.data;
-                data = data.replace(/\n/g, '');
-                data = data.replace(/(\s+?)<([^>]*)>/g, '<$2>');
-                data = this.trimSpace(data);
-                return data;
-            }
-        }
-        return null;
-    },
-*/
+
     getCDATASection : function (node) {
         var text = node.textContent || node.text;
-        text = text.replace(/\n/g, '');
-        text = text.replace(/(\s+?)<([^>]*)>/g, '<$2>');
-        text = this.trimSpace(text);
-        return text;
+        return this.trimSpace(text.replace(/\n/g, '').replace(/(\s+?)<([^>]*)>/g, '<$2>'));
     },
 
     setToolbarBgPosition : function (elem, attr) {
@@ -2044,7 +2023,7 @@ cheditor.prototype = {
         container.style.width = self.config.editorWidth;
         self.cheditor.container = container;
     },
-/*
+
     loadTemplate : function (xmlDoc) {
         var self = this,
             tmpl = xmlDoc.getElementsByTagName('Template').item(0),
@@ -2090,55 +2069,6 @@ cheditor.prototype = {
         self.cheditor.htmlEditable.style.height = '1px';
         self.cheditor.htmlEditable.style.visibility = 'hidden';
         container.appendChild(self.cheditor.htmlEditable);
-    },
-*/
-
-    loadTemplate : function (xmlDoc) {
-        var cdata, container, dragHandle, html, modalFrame, popupWindow, tmpDiv, tmpl, toolbar;
-        tmpl = xmlDoc.getElementsByTagName('Template').item(0);
-        if (!tmpl) {
-            throw 'Template 노드를 설정할 수 없습니다.';
-        }
-        cdata = tmpl.getElementsByTagName('Container').item(0).getElementsByTagName('Html').item(0);
-        if (!cdata) {
-            throw 'XML CDATA 오류';
-        }
-        html = this.getCDATASection(cdata);
-        tmpDiv = document.createElement('div');
-        tmpDiv.innerHTML = html;
-        container = tmpDiv.firstChild;
-
-        toolbar = tmpl.getElementsByTagName('Toolbar').item(0);
-        this.createEditorElement(container, toolbar);
-
-        cdata = tmpl.getElementsByTagName('PopupWindow').item(0).getElementsByTagName('Html').item(0);
-        if (!cdata) {
-            throw 'XML CDATA 오류';
-        }
-        html = this.getCDATASection(cdata);
-        tmpDiv.innerHTML = html;
-        popupWindow = tmpDiv.firstChild;
-        this.cheditor.popupElem = popupWindow;
-
-        dragHandle = popupWindow.firstChild;
-        this.cheditor.dragHandle = dragHandle;
-        this.cheditor.popupTitle = dragHandle.getElementsByTagName('label')[0];
-        this.cheditor.popupFrameWrapper = dragHandle.nextSibling;
-        container.appendChild(popupWindow);
-
-        modalFrame = document.createElement('div');
-        modalFrame.className = 'cheditor-modalPopupTransparent';
-        this.cheditor.modalBackground = modalFrame;
-        this.cheditor.modalBackground.id = 'popupModalBackground';
-        this.cheditor.modalBackground.className = 'cheditor-popupModalBackground';
-        container.parentNode.insertBefore(modalFrame, container);
-
-        this.cheditor.htmlEditable = document.createElement('iframe');
-        this.cheditor.htmlEditable.style.display = 'none';
-        this.cheditor.htmlEditable.style.width = '1px';
-        this.cheditor.htmlEditable.style.height = '1px';
-        this.cheditor.htmlEditable.style.visibility = 'hidden';
-        container.appendChild(this.cheditor.htmlEditable);
     },
 
     imageEvent : function (img, action) {
@@ -5063,7 +4993,12 @@ cheditor.prototype = {
         if (!(this.undefined(GB.popupWindow[popupName]))) {
             var popup = GB.popupWindow[popupName];
             if (popupName === 'ImageUpload' && window.File && window.FileReader && window.FileList && window.Blob) {
-                popup.tmpl = 'image.html5.html';
+                if (this.browser.mobile) {
+                    popup.tmpl = 'image.html5.m.html';
+                    popup.width = 450; // 팝업 윈도우 가로 폭 크기(px)
+                } else {
+                    popup.tmpl = 'image.html5.html';
+                }
             }
             this.popupWinLoad(popup);
         } else {

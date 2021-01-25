@@ -11,15 +11,15 @@
 .imageListWrapperHtml5, .imageListWrapper, .dragOver {
 	background-color: #fff;
 	position: absolute;
-    height: 295px;
-    width: 522px;
+    height: 250px;
+    width: 255px;
     overflow-y: scroll;
     border-radius: 4px;
-	border: 1px red solid;
+	border: 2px #66b2ff solid;
 }
-.imageListWrapperHtml5 {
+/* .imageListWrapperHtml5 {
     border: 2px #66b2ff dashed;
-}
+} */
 .imageListWrapper {
     border: 1px #aaa solid;
     box-shadow: 0 0 3px #aaa;
@@ -29,7 +29,7 @@
 }
 #imageInfoBox {
     position: absolute;
-	left: 548px;
+	left: 300px;
 }
 .imageInfoTitle {
     text-align: center;
@@ -133,15 +133,4 @@ body {
     line-height: 1em;
     font-family: 'Malgun Gothic', gulim, tahoma, helvetica;
     font-size: 12px;
-}
-
-.webgl_logo_wrapper {
-	text-align: center;
-	margin-top: 40px;
-	border-top: #cccccc 1px solid;
-}
-.webgl_logo_wrapper img {
-	width: 50px;
-	height: 50px;
-	vertical-align: middle;
 }
