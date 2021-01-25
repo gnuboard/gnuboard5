@@ -82,6 +82,18 @@ if( !isset($g5['g5_shop_post_log_table']) || !$g5['g5_shop_post_log_table'] ){
 // 옵션 ID 특수문자 필터링 패턴
 define('G5_OPTION_ID_FILTER', '/[\'\"\\\'\\\"]/');
 
+if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {
+    // 토스페이먼츠 현금영수증 실결제 URL 상수
+    define('SHOP_TOSSPAYMENTS_CASHRECEIPT_REAL_JS', 'https://pgweb.tosspayments.com/WEB_SERVER/js/receipt_link.js');
+    // 토스페이먼츠 현금영수증 테스트 URL 상수
+    define('SHOP_TOSSPAYMENTS_CASHRECEIPT_TEST_JS', 'https://pgweb.tosspayments.com:7085/WEB_SERVER/js/receipt_link.js');
+} else {
+    // 토스페이먼츠 현금영수증 실결제 URL 상수
+    define('SHOP_TOSSPAYMENTS_CASHRECEIPT_REAL_JS', 'http://pgweb.tosspayments.com/WEB_SERVER/js/receipt_link.js');
+    // 토스페이먼츠 현금영수증 테스트 URL 상수
+    define('SHOP_TOSSPAYMENTS_CASHRECEIPT_TEST_JS', 'http://pgweb.tosspayments.com:7085/WEB_SERVER/js/receipt_link.js');
+}
+
 /*
 // 주문상태 상수
 define('G5_OD_STATUS_ORDER'     , '입금확인중');

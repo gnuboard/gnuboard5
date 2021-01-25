@@ -3,7 +3,7 @@ include_once('./_common.php');
 
 $sql = "select * from {$g5['g5_shop_personalpay_table']} where pp_id = '$pp_id' ";
 $pp = sql_fetch($sql);
-if (!$pp['pp_id'] || (md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']) != get_session('ss_personalpay_uid'))) {
+if (! (isset($pp['pp_id']) && $pp['pp_id']) || (md5($pp['pp_id'].$pp['pp_time'].$_SERVER['REMOTE_ADDR']) != get_session('ss_personalpay_uid'))) {
     if( isset($_GET['ini_noti']) && $pp['pp_tno'] ){
         alert("해당 개인결제는 정상적으로 결제되었습니다.", G5_SHOP_URL."/personalpay.php");
     } else {
@@ -20,9 +20,9 @@ include_once(G5_MSHOP_PATH.'/_head.php');
 // LG 현금영수증 JS
 if($pp['pp_pg'] == 'lg') {
     if($default['de_card_test']) {
-    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    echo '<script language="JavaScript" src="'.SHOP_TOSSPAYMENTS_CASHRECEIPT_TEST_JS.'"></script>'.PHP_EOL;
     } else {
-        echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+        echo '<script language="JavaScript" src="'.SHOP_TOSSPAYMENTS_CASHRECEIPT_REAL_JS.'"></script>'.PHP_EOL;
     }
 }
 ?>

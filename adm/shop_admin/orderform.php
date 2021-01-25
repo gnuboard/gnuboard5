@@ -36,7 +36,7 @@ save_order_point("완료");
 //------------------------------------------------------------------------------
 $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
-if (!$od['od_id']) {
+if (! (isset($od['od_id']) && $od['od_id'])) {
     alert("해당 주문번호로 주문서가 존재하지 않습니다.");
 }
 
@@ -101,9 +101,9 @@ if(!sql_query(" select od_pg from {$g5['g5_shop_order_table']} limit 1 ", false)
 // LG 현금영수증 JS
 if($od['od_pg'] == 'lg') {
     if($default['de_card_test']) {
-    echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr:7085/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+    echo '<script language="JavaScript" src="'.SHOP_TOSSPAYMENTS_CASHRECEIPT_TEST_JS.'"></script>'.PHP_EOL;
     } else {
-        echo '<script language="JavaScript" src="http://pgweb.uplus.co.kr/WEB_SERVER/js/receipt_link.js"></script>'.PHP_EOL;
+        echo '<script language="JavaScript" src="'.SHOP_TOSSPAYMENTS_CASHRECEIPT_REAL_JS.'"></script>'.PHP_EOL;
     }
 }
 
