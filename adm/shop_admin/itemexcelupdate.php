@@ -47,7 +47,8 @@ if($is_upload_file) {
                                             TRUE,
                                             FALSE);
 
-        $it_id              = addslashes($rowData[0][$j++]);
+        $it_id              = (string) $rowData[0][$j++];
+        $it_id              = preg_match('/[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)/', $it_id) ? addslashes(sprintf("%.0f", $it_id)) : preg_replace('/[^0-9a-z_\-]/i', '', $it_id);
         $ca_id              = addslashes($rowData[0][$j++]);
         $ca_id2             = addslashes($rowData[0][$j++]);
         $ca_id3             = addslashes($rowData[0][$j++]);
