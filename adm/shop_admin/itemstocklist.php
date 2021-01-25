@@ -139,8 +139,9 @@ $listall = '<a href="'.$_SERVER['SCRIPT_NAME'].'" class="ov_listall">전체목�
         // 선택옵션이 있을 경우 주문대기 수량 계산하지 않음
         $sql2 = " select count(*) as cnt from {$g5['g5_shop_item_option_table']} where it_id = '{$row['it_id']}' and io_type = '0' and io_use = '1' ";
         $row2 = sql_fetch($sql2);
+        $wait_qty = 0;
 
-        if(!$row2['cnt']) {
+        if(! (isset($row2['cnt']) && $row2['cnt'])) {
             $sql1 = " select SUM(ct_qty) as sum_qty
                         from {$g5['g5_shop_cart_table']}
                        where it_id = '{$row['it_id']}'

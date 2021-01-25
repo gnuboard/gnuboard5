@@ -471,6 +471,9 @@ function get_it_thumbnail($img, $width, $height=0, $id='', $is_crop=false)
     if(is_file($file))
         $size = @getimagesize($file);
 
+    if (! (isset($size) && is_array($size))) 
+        return '';
+
     if($size[2] < 1 || $size[2] > 3)
         return '';
 
