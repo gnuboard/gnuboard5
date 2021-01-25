@@ -10,15 +10,15 @@ require_once(G5_SHOP_PATH.'/settle_lg.inc.php');
  *
  * 기본정보를 변경하여 주시기 바랍니다.(파라미터 전달시 POST를 사용하세요)
  */
-$LGD_OID                    = $_POST['LGD_OID'];                //주문번호(상점정의 유니크한 주문번호를 입력하세요)
-$LGD_AMOUNT                 = $_POST['LGD_AMOUNT'];             //결제금액("," 를 제외한 결제금액을 입력하세요)
-$LGD_TIMESTAMP              = $_POST['LGD_TIMESTAMP'];          //타임스탬프
-$LGD_BUYER                  = $_POST['LGD_BUYER'];              //구매자명
-$LGD_PRODUCTINFO            = $_POST['LGD_PRODUCTINFO'];        //상품명
-$LGD_BUYEREMAIL             = $_POST['LGD_BUYEREMAIL'];         //구매자 이메일
-$LGD_CUSTOM_FIRSTPAY        = $_POST['LGD_CUSTOM_FIRSTPAY'];    //상점정의 초기결제수단
+$LGD_OID                    = isset($_POST['LGD_OID']) ? $_POST['LGD_OID'] : '';                //주문번호(상점정의 유니크한 주문번호를 입력하세요)
+$LGD_AMOUNT                 = isset($_POST['LGD_AMOUNT']) ? $_POST['LGD_AMOUNT'] : 0;             //결제금액("," 를 제외한 결제금액을 입력하세요)
+$LGD_TIMESTAMP              = isset($_POST['LGD_TIMESTAMP']) ? $_POST['LGD_TIMESTAMP'] : '';          //타임스탬프
+$LGD_BUYER                  = isset($_POST['LGD_BUYER']) ? $_POST['LGD_BUYER'] : '';              //구매자명
+$LGD_PRODUCTINFO            = isset($_POST['LGD_PRODUCTINFO']) ? $_POST['LGD_PRODUCTINFO'] : '';        //상품명
+$LGD_BUYEREMAIL             = isset($_POST['LGD_BUYEREMAIL']) ? $_POST['LGD_BUYEREMAIL'] : '';         //구매자 이메일
+$LGD_CUSTOM_FIRSTPAY        = isset($_POST['LGD_CUSTOM_FIRSTPAY']) ? $_POST['LGD_CUSTOM_FIRSTPAY'] : '';    //상점정의 초기결제수단
 $LGD_CUSTOM_SKIN            = 'red';                            //상점정의 결제창 스킨
-$LGD_CUSTOM_USABLEPAY       = $_POST['LGD_CUSTOM_USABLEPAY'];   //디폴트 결제수단 (해당 필드를 보내지 않으면 결제수단 선택 UI 가 노출됩니다.)
+$LGD_CUSTOM_USABLEPAY       = isset($_POST['LGD_CUSTOM_USABLEPAY']) ? $_POST['LGD_CUSTOM_USABLEPAY'] : '';   //디폴트 결제수단 (해당 필드를 보내지 않으면 결제수단 선택 UI 가 노출됩니다.)
 $LGD_WINDOW_VER             = '2.5';                            //결제창 버젼정보
 $LGD_WINDOW_TYPE            = $LGD_WINDOW_TYPE;                 //결제창 호출방식 (수정불가)
 $LGD_CUSTOM_SWITCHINGTYPE   = $LGD_CUSTOM_SWITCHINGTYPE;        //신용카드 카드사 인증 페이지 연동 방식 (수정불가)

@@ -1,4 +1,6 @@
 <?php
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
 // LG유플러스 공통 설정
 require_once(G5_SHOP_PATH.'/settle_lg.inc.php');
 
@@ -20,7 +22,7 @@ require_once(G5_SHOP_PATH.'/settle_lg.inc.php');
  *  (단, 최종 금액체크를 원하시는 경우 금액체크 부분 주석을 제거 하시면 됩니다.)
  *************************************************
  */
-$LGD_PAYKEY                 = $_POST['LGD_PAYKEY'];
+$LGD_PAYKEY                 = isset($_POST['LGD_PAYKEY']) ? $_POST['LGD_PAYKEY'] : '';
 
 $xpay = new XPay($configPath, $CST_PLATFORM);
 
