@@ -4,9 +4,9 @@
         <title>CHEditor</title>
 		<meta name="robots" content="noindex, nofollow" />
 		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" type="text/css" href="../css/imageupload.css" />
+		<link rel="stylesheet" type="text/css" href="../css/imageupload.m.css" />
 		<script src="js/dialog.js" type="text/javascript"></script>
-        <script src="js/image.html5.js" type="text/javascript"></script>
+        <script src="js/image.html5.m.js" type="text/javascript"></script>
 	</head>
     <body>
 		<div id="uploadWindow">
@@ -18,8 +18,7 @@
                          onchange="selectedFiles(event)" style="vertical-align: middle; visibility: hidden; width: 0px"/>
                     <img id="fileSelectButton" src="../icons/imageUpload/add.gif" alt="image button" onclick="inputImageUpload.click()"
                          style="vertical-align: middle; margin-left: -5px; cursor: pointer"/>
-                    <span style="vertical-align: middle">(사진을 점선 안으로 끌어 놓을 수 있습니다.)</span>
-                    <span style="left:555px; top:5px;position:absolute;"><span id="imageCount">0</span>장 / 최대 <span id="maxImageNum"></span>장 사진</span>
+                    <span style="left:308px; top:5px;position:absolute;"><span id="imageCount">0</span>장 / 최대 <span id="maxImageNum"></span>장 사진</span>
                 </div>
                 <div id="imageListWrapper" class="imageListWrapperHtml5"></div>
                 <div id="imageInfoBox">
@@ -65,13 +64,12 @@
                             <div style="margin-top:5px;font-size: 12px">
                                 <input type="checkbox" name="use_spacer" value="1" checked="checked" />사진 여백 넣기
                             </div>
-                            <div id="webgl_logo_wrapper" class="webgl_logo_wrapper"></div>
                         </form>
                     </div>
 				</div>
 			</div>
  			<div class="clear"></div>
- 			<div style="text-align:center;top:348px;width:100%;position:absolute;" id="buttonWrapper"></div>
+ 			<div style="text-align:center;top:310px;width:100%;position:absolute;" id="buttonWrapper"></div>
 		</div>
 		<div id="dragDropContent"></div>
         <div id="removeImageButton" class="removeButton" style="width:13px;height:13px"></div>

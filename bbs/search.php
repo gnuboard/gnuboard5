@@ -151,7 +151,7 @@ if ($stx) {
     for ($i=0; $i<count($search_table); $i++) {
         if ($from_record < $search_table_count[$i]) {
             $table_index = $i;
-            $from_record = $from_record - $search_table_count[$i-1];
+            $from_record = $from_record - ($i > 0 ? $search_table_count[$i-1] : 0);
             break;
         }
     }
@@ -183,7 +183,7 @@ if ($stx) {
             }
 
             // 비밀글은 검색 불가
-            if (strstr($row['wr_option'].$row2['wr_option'], 'secret'))
+            if (strstr($row['wr_option'].(isset($row2['wr_option']) ? $row2['wr_option'] : ''), 'secret'))
                 $row['wr_content'] = '[비밀글 입니다.]';
 
             $subject = get_text($row['wr_subject']);

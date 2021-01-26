@@ -37,7 +37,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
 
     if(G5_USE_CACHE) {
         $cache_file_name = "latest-{$bo_table}-{$skin_dir}-{$rows}-{$subject_len}-".g5_cache_secret_key();
-        $caches = g5_get_cache($cache_file_name, $time_unit * $cache_time);
+        $caches = g5_get_cache($cache_file_name, (int) $time_unit * (int) $cache_time);
         $cache_list = isset($caches['list']) ? $caches['list'] : array();
         g5_latest_cache_data($bo_table, $cache_list);
     }
@@ -98,7 +98,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
                 'bo_subject' => sql_escape_string($bo_subject),
             );
 
-            g5_set_cache($cache_file_name, $caches, $time_unit * $cache_time);
+            g5_set_cache($cache_file_name, $caches, (int) $time_unit * (int) $cache_time);
         }
     } else {
         $list = $cache_list;
