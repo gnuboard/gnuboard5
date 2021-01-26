@@ -21,9 +21,9 @@ if (!$gr_subject) alert('그룹 제목을 입력하세요.');
 $posts = array();
 
 $check_keys = array(
-'gr_subject',
-'gr_device',
-'gr_admin'
+'gr_subject'=>'',
+'gr_device'=>'',
+'gr_admin'=>'',
 );
 
 for($i=1;$i<=10;$i++){
@@ -31,7 +31,7 @@ for($i=1;$i<=10;$i++){
     $check_keys['gr_'.$i] = isset($_POST['gr_'.$i]) ? $_POST['gr_'.$i] : '';
 }
 
-foreach( $check_keys as $key ){
+foreach( $check_keys as $key=>$value ){
     if( $key === 'gr_subject' ){
         $posts[$key] = isset($_POST[$key]) ? strip_tags(clean_xss_attributes($_POST[$key])) : '';
     } else {
