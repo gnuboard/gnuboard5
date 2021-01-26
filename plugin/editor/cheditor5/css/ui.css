@@ -14,6 +14,8 @@ a.cheditor-tag-path-elem:hover {
     border-top: 1px #ccc solid;
     position: relative;
     text-align: left;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
 }
 .cheditor-tb-wrapper {
     border-right: 1px #ccc solid;
@@ -21,11 +23,10 @@ a.cheditor-tag-path-elem:hover {
     border-bottom: 1px #ccc solid;
     position: relative;
     display: block;
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
     background-color: #f0f0f0;
-    zoom:1;
-    height:auto ! important;
 }
-.cheditor-tb-wrapper:after{display:block;visibility:hidden;clear:both;content:""}
 .cheditor-tb-wrapper-readonly {
     border-right: 1px #ccc solid;
     border-left: 1px #ccc solid;
@@ -423,6 +424,8 @@ a.cheditor-tag-path-elem:hover {
     box-shadow: 0 0 10px #bbb;
     padding: 0;
     overflow: hidden;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
 }
 .cheditor-popup-cmd-button {
     width: 64px;
@@ -437,6 +440,8 @@ a.cheditor-tag-path-elem:hover {
     padding: 10px;
     border: none;
     text-align: center;
+    -webkit-box-sizing: content-box;
+    box-sizing: content-box;
 }
 
 .cheditor-popup-cframe iframe {

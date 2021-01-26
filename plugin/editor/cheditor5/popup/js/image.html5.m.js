@@ -35,7 +35,7 @@ var activeImage = null,
     tmpTop = 0,
     uploadImagePath = '',
     uploadMaxNumber = 12,
-    uploadScript,
+    uploadScript;
     useWebGL = false;
 
 if (ArrayBuffer && !ArrayBuffer.prototype.slice) {
@@ -223,7 +223,7 @@ function showContents() {
     spacerNo = 1, i, imgBox, theImg, lastSpacer;
 
     for (i = 0; i < uploadMaxNumber; i++) {
-        if (i > 0 && i % 4 === 0) {
+        if (i > 0 && i % 2 === 0) {
             imageListWrapper.appendChild(spacer(spacerNo++));
         }
 
@@ -1525,7 +1525,7 @@ function init(dialog) {
         { alt: "", img: 'cancel.gif', cmd: closeWindow, hspace: 2 }
     ];
 
-    dlg.setDialogHeight(370);
+    dlg.setDialogHeight(340);
     dlg.showButton(button);
     showContents();
     initGallery();

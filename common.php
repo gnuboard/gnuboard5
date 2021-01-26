@@ -57,6 +57,10 @@ include_once($g5_path['path'].'/config.php');   // 설정 파일
 
 unset($g5_path);
 
+// IIS 에서 SERVER_ADDR 서버변수가 없다면
+if(! isset($_SERVER['SERVER_ADDR'])) {
+    $_SERVER['SERVER_ADDR'] = isset($_SERVER['LOCAL_ADDR']) ? $_SERVER['LOCAL_ADDR'] : '';
+}
 
 // multi-dimensional array에 사용자지정 함수적용
 function array_map_deep($fn, $array)
