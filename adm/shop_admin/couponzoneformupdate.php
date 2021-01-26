@@ -120,10 +120,10 @@ if($w == '') {
     $sql = " select * from {$g5['g5_shop_coupon_zone_table']} where cz_id = '$cz_id' ";
     $cp = sql_fetch($sql);
 
-    if(!$cp['cz_id'])
+    if(! (isset($cp['cz_id']) && $cp['cz_id']))
         alert('쿠폰정보가 존재하지 않습니다.', './couponzonelist.php');
 
-    if ($_POST['cp_img_del'] && $cp['cz_file']) {
+    if ((isset($_POST['cp_img_del']) && $_POST['cp_img_del']) && $cp['cz_file']) {
         @unlink(G5_DATA_PATH."/coupon/{$cp['cz_file']}");
         $cp['cz_file'] = '';
     }
