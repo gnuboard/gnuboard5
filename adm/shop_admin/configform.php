@@ -841,7 +841,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <a href="http://sir.kr/main/service/samsungpay.php" target="_blank" class="kg_btn">삼성페이 서비스신청하기</a>
             </th>
             <td>
-                <?php echo help("체크시 KG이니시스 삼성페이를 사용합니다.( 모바일 결제시 주문화면에 삼성페이 버튼이 출력됩니다. ) <br >실결제시 반드시 결제대행사 KG이니시스 항목에 상점 아이디와 키패스워드를 입력해 주세요.", 50); ?>
+                <?php echo help("KG이니시스와 별도로 <strong>삼성페이 사용 계약을 하신 경우</strong>에만 체크해주세요. (모바일 주문서 결제수단에 삼성페이가 노출됩니다.) <br >실결제시 반드시 결제대행사 KG이니시스 항목에 상점 아이디와 키패스워드를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_samsung_pay_use" value="1" id="de_samsung_pay_use"<?php echo $default['de_samsung_pay_use']?' checked':''; ?>> <label for="de_samsung_pay_use">사용</label>
             </td>
         </tr>
@@ -859,7 +859,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <label for="de_inicis_kakaopay_use">KG이니시스 카카오페이 사용</label>
             </th>
             <td>
-                <?php echo help("체크시 KG이니시스 결제의 카카오페이를 사용합니다. <br>주문서 화면에 카카오페이(KG 이니시스 결제) 아이콘 이 출력됩니다. <br>실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 키패스워드, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
+                <?php echo help("체크시 KG이니시스 결제의 카카오페이를 사용합니다. 주문서 결제수단에 카카오페이가 노출됩니다. <br>실결제시 반드시 결제대행사 KG이니시스 항목의 상점 정보( 아이디, 키패스워드, 웹결제 사인키 )를 입력해 주세요.", 50); ?>
                 <input type="checkbox" name="de_inicis_kakaopay_use" value="1" id="de_inicis_kakaopay_use"<?php echo $default['de_inicis_kakaopay_use']?' checked':''; ?>> <label for="de_inicis_kakaopay_use">사용</label>
             </td>
         </tr>
