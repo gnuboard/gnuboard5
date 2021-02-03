@@ -30,7 +30,10 @@ $arr_it_id = array();
 
 for ($i=0; $i<$cnt; $i++)
 {
-    $k = isset($_POST['ct_chk'][$i]) ? (int) $_POST['ct_chk'][$i] : 0;
+    $k = isset($_POST['ct_chk'][$i]) ? (int) $_POST['ct_chk'][$i] : '';
+
+    if($k === '') continue;
+
     $ct_id = isset($_POST['ct_id'][$k]) ? (int) $_POST['ct_id'][$k] : 0;
 
     if(!$ct_id)
@@ -38,7 +41,7 @@ for ($i=0; $i<$cnt; $i++)
 
     $sql = " select * from {$g5['g5_shop_cart_table']} where od_id = '$od_id' and ct_id  = '$ct_id' ";
     $ct = sql_fetch($sql);
-    if(!$ct['ct_id'])
+    if(! (isset($ct['ct_id']) && $ct['ct_id']))
         continue;
 
     // 수량이 변경됐다면
