@@ -59,6 +59,7 @@ if (!$dblink) {
     exit;
 }
 
+$g5['connect_db'] = $dblink;
 $select_db = sql_select_db($mysql_db, $dblink);
 if (!$select_db) {
 ?>
@@ -225,6 +226,7 @@ if($g5_install || !$result) {
                      mb_level = '10',
                      mb_mailling = '1',
                      mb_open = '1',
+                     mb_nick_date = '".G5_TIME_YMDHIS."',
                      mb_email_certify = '".G5_TIME_YMDHIS."',
                      mb_datetime = '".G5_TIME_YMDHIS."',
                      mb_ip = '{$_SERVER['REMOTE_ADDR']}'

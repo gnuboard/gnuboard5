@@ -8,6 +8,8 @@ function get_cachemanage_instance(){
     static $instance = null;
     
     if( ! (defined('G5_USE_CACHE') && G5_USE_CACHE) ) return $instance;
+    
+    $instance = run_replace('get_cachemanage_instance', $instance);
 
     if( $instance === null ){
         $options = array(
@@ -48,14 +50,22 @@ function g5_latest_cache_data($bo_table, $cache_list=array(), $find_wr_id=0){
 function g5_set_cache($key, $save_data, $ttl = null){
 
     if( $cache = get_cachemanage_instance() ){
-        $cache->save($key, $save_data, $ttl);
+        run_event('g5_set_cache_event', $cache, $key, $save_data, $ttl);
+        
+        if( (is_object($cache) && get_class($cache) === 'FileCache') ){
+            $cache->save($key, $save_data, $ttl);
+        }
     }
 }
 
 function g5_get_cache($key, $expired_time=0){
 
     if( $cache = get_cachemanage_instance() ){
-        return $cache->get($key, $expired_time);
+        if( (is_object($cache) && get_class($cache) === 'FileCache') ){
+            return $cache->get($key, $expired_time);
+        }
+
+        return run_replace('g5_get_cache_replace', false, $cache, $key, $expired_time);
     }
     
     return false;
@@ -82,13 +92,21 @@ function g5_delete_all_cache(){
 }
 
 function g5_delete_cache_by_prefix($key){
-    $files = glob(G5_DATA_PATH.'/cache/'.$key.'*');
 
-    foreach( (array) $files as $filename){
-        if(empty($filename)) continue;
+    $cache = get_cachemanage_instance();
+    $files = null;
 
-        unlink($filename);
+    if( (is_object($instance) && get_class($instance) === 'FileCache') ) {
+        $files = glob(G5_DATA_PATH.'/cache/'.$key.'*');
+
+        foreach( (array) $files as $filename){
+            if(empty($filename)) continue;
+
+            unlink($filename);
+        }
     }
+
+    $files = run_replace('g5_delete_cache_by_prefix', $files, $key);
 
     return ($files) ? true : false;
 }
