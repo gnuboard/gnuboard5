@@ -96,7 +96,7 @@ function g5_delete_cache_by_prefix($key){
     $cache = get_cachemanage_instance();
     $files = null;
 
-    if( (is_object($instance) && get_class($instance) === 'FileCache') ) {
+    if( (is_object($cache) && get_class($cache) === 'FileCache') ) {
         $files = glob(G5_DATA_PATH.'/cache/'.$key.'*');
 
         foreach( (array) $files as $filename){
@@ -106,7 +106,7 @@ function g5_delete_cache_by_prefix($key){
         }
     }
 
-    $files = run_replace('g5_delete_cache_by_prefix', $files, $key);
+    $files = run_replace('g5_delete_cache_by_prefix', $files, $key, $cache);
 
     return ($files) ? true : false;
 }
