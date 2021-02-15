@@ -52,8 +52,8 @@ if(sql_num_rows($hresult)) {
             echo '<span class="ev_prd_price">'.display_price(get_price($row2), $row2['it_tel_inq']).'</span></div>'.PHP_EOL;
             echo '</li>'.PHP_EOL;
         }
-		echo '<li><a href="'.$href.'" class="sev_more">더보기</a></li>'.PHP_EOL;
         if($k > 1) {
+            echo '<li><a href="'.$href.'" class="sev_more">더보기</a></li>'.PHP_EOL;
             echo '</ul>'.PHP_EOL;
         }
 

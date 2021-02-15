@@ -31,10 +31,12 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/owlcarousel/owl.carou
      
 	<div id="tnb">
     	<div class="inner">
+            <?php if(defined('G5_COMMUNITY_USE') && G5_COMMUNITY_USE) { ?>
     		<ul id="hd_define">
     			<li><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
     			<li class="active"><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
     		</ul>
+            <?php } ?>
 			<ul id="hd_qnb">
 	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
 	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">1:1문의</a></li>
