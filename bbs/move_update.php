@@ -193,12 +193,12 @@ while ($row = sql_fetch_array($result))
                 $save[$cnt]['wr_id'] = $row2['wr_parent'];
 
             $cnt++;
+
+            run_event('bbs_move_copy', $row2, $move_bo_table, $insert_id, $next_wr_num, $sw);
         }
 
         sql_query(" update {$g5['board_table']} set bo_count_write = bo_count_write + '$count_write' where bo_table = '$move_bo_table' ");
         sql_query(" update {$g5['board_table']} set bo_count_comment = bo_count_comment + '$count_comment' where bo_table = '$move_bo_table' ");
-        
-        run_event('bbs_move_copy', $row2, $move_bo_table, $insert_id, $next_wr_num, $sw);
 
         delete_cache_latest($move_bo_table);
     }
