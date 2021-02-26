@@ -9,7 +9,7 @@ $od_id = isset($_POST['od_id']) ? safe_replace_regex($_POST['od_id'], 'od_id') :
 $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 
-if(!$od['od_id'])
+if(! ($od['od_id'] && $od['od_id']))
     die('<div>주문정보가 존재하지 않습니다.</div>');
 
 // 상품목록
@@ -100,6 +100,7 @@ $result = sql_query($sql);
                     $opt_price = $opt['ct_price'] + $opt['io_price'];
 
                 // 소계
+                $opt['ct_point'] = isset($opt['ct_point']) ? (int) $opt['ct_point'] : 0;
                 $ct_price['stotal'] = $opt_price * $opt['ct_qty'];
                 $ct_point['stotal'] = $opt['ct_point'] * $opt['ct_qty'];
             ?>
