@@ -29,7 +29,7 @@ foreach((array) $list as $row){
         if ($this->css) {
             echo "<ul class=\"{$this->css}\">\n";
         } else {
-            echo "<ul class=\"sct smt_40 owl-carousel\">\n";
+            echo "<ul class=\"sct smt_40 owl-carousel\" data-value=\"".$this->list_mod."\">\n";
         }
     }
 

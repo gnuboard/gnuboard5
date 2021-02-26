@@ -39,14 +39,20 @@ include_once(G5_THEME_SHOP_PATH.'/shop.head.php');
 <!-- } 히트상품 끝 -->
 <script>
 //히트상품
-$(function(){    
+$(function(){
+    var hit_smt_val = parseInt($('#idx_hit .smt_40').attr("data-value"));
+    
+    if(! hit_smt_val){
+        hit_smt_val = 5;
+    }
+
 	$('#idx_hit .smt_40').owlCarousel({
 	    loop:true,
 	    nav:true,
 	    autoplay:true,
         autoplayHoverPause:true,
 	    responsive:{
-	        1000:{items:5}
+	        1000:{items: hit_smt_val}
 	    }
 	})
 });
