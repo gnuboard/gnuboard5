@@ -15,7 +15,12 @@ $posts = array();
 $check_keys = array('is_subject', 'is_content', 'is_confirm', 'is_reply_subject', 'is_reply_content', 'is_id');
 
 foreach($check_keys as $key){
-    $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+
+    if( in_array($key, array('is_content', 'is_reply_content')) ){
+        $posts[$key] = isset($_POST[$key]) ? $_POST[$key] : '';
+    } else {
+        $posts[$key] = isset($_POST[$key]) ? clean_xss_tags($_POST[$key], 1, 1) : '';
+    }
 }
 
 if ($w == "u")
