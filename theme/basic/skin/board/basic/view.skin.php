@@ -161,7 +161,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
          ?>
             <li>
                	<i class="fa fa-folder-open" aria-hidden="true"></i>
-                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download" download>
+                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download">
                     <strong><?php echo $view['file'][$i]['source'] ?></strong> <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)
                 </a>
                 <br>

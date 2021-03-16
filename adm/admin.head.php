@@ -131,7 +131,7 @@ function imageview(id, w, h)
             foreach($amenu as $key=>$value) {
                 $href1 = $href2 = '';
 
-                if ($menu['menu'.$key][0][2]) {
+                if (isset($menu['menu'.$key][0][2]) && $menu['menu'.$key][0][2]) {
                     $href1 = '<a href="'.$menu['menu'.$key][0][2].'" class="gnb_1da">';
                     $href2 = '</a>';
                 } else {

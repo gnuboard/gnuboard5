@@ -11,7 +11,7 @@ if( ! $call ){
 if( ! $is_admin ){
 	$sql = " select count(*) as cnt from {$g5['auth_table']} where mb_id = '{$member['mb_id']}' ";
 	$row = sql_fetch($sql);
-	if ( ! $row['cnt']) {
+	if (! (isset($row['cnt']) && $row['cnt'])) {
 		return;
 	}
 }
