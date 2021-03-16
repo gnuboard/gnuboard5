@@ -130,7 +130,20 @@ while ($row = sql_fetch_array($result))
                     {
                         // 원본파일을 복사하고 퍼미션을 변경
                         // 제이프로님 코드제안 적용
-                        $copy_file_name = ($bo_table !== $move_bo_table) ? $row3['bf_file'] : $row2['wr_id'].'_copy_'.$insert_id.'_'.$row3['bf_file'];
+
+                        $copy_file_name = $row3['bf_file'];
+
+                        if($bo_table === $move_bo_table){
+                            if(preg_match('/_copy(\d+)?_(\d+)_/', $copy_file_name, $match)){
+
+                                $number = isset($match[1]) ? (int) $match[1] : 0;
+                                $replace_str = '_copy'.($number + 1).'_'.$insert_id.'_';
+                                $copy_file_name = preg_replace('/_copy(\d+)?_(\d+)_/', $replace_str, $copy_file_name);
+                            } else {
+                                $copy_file_name = $row2['wr_id'].'_copy_'.$insert_id.'_'.$row3['bf_file'];
+                            }
+                        }
+
                         $is_exist_file = is_file($src_dir.'/'.$row3['bf_file']) && file_exists($src_dir.'/'.$row3['bf_file']);
                         if( $is_exist_file ){
                             @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$copy_file_name);
