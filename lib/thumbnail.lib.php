@@ -227,7 +227,7 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         return;
 
     $size = @getimagesize($source_file);
-    if($size[2] < 1 || $size[2] > 3) // gif, jpg, png 에 대해서만 적용
+    if(!isset($size[2]) || $size[2] < 1 || $size[2] > 3) // gif, jpg, png 에 대해서만 적용
         return;
 
     if (!is_dir($target_path)) {

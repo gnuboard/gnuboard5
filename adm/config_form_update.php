@@ -162,7 +162,11 @@ foreach( $check_keys as $k => $v ){
     if( $v === 'int' ){
         $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? (int) $_POST[$k] : 0;
     } else {
-        $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? $_POST[$k] : '';
+        if(in_array($k, array('cf_analytics', 'cf_add_meta', 'cf_add_script', 'cf_stipulation', 'cf_privacy'))){
+            $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? $_POST[$k] : '';
+        } else {
+            $posts[$key] = $_POST[$k] = isset($_POST[$k]) ? strip_tags(clean_xss_attributes($_POST[$k])) : '';
+        }
     }
 }
 
