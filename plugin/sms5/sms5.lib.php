@@ -162,10 +162,15 @@ if($config['cf_sms_type'] == 'LMS') {
         var $Log = array();
 
         function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
-            // EUC-KR로 변환
-            $strCaller  = iconv_euckr($strCaller);
-            $strSubject = iconv_euckr($strSubject);
-            $strData    = iconv_euckr($strData);
+            global $config;
+
+            // 아이코드 JSON 모듈은 UTF-8 을 사용하며, sms 또는 lms 는 euc-kr 로 사용한다.
+            if(! (isset($config['cf_icode_token_key']) && $config['cf_icode_token_key'])){
+                // EUC-KR로 변환
+                $strCaller  = iconv_euckr($strCaller);
+                $strSubject = iconv_euckr($strSubject);
+                $strData    = iconv_euckr($strData);
+            }
 
             return parent::Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate, $nCount);
         }
