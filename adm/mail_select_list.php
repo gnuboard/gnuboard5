@@ -2,7 +2,7 @@
 $sub_menu = "200300";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 $ma_last_option = "";
 
@@ -118,4 +118,3 @@ include_once('./admin.head.php');
 
 <?php
 include_once('./admin.tail.php');
-?>

@@ -18,13 +18,13 @@ function certify_win_open(type, url, event)
     }
     else if(type == 'kcp-hp')
     {
-        if($("input[name=veri_up_hash]").size() < 1)
+        if($("input[name=veri_up_hash]").length < 1)
                 $("input[name=cert_no]").after('<input type="hidden" name="veri_up_hash" value="">');
 
         if( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 )
         {
             var $frm = $(event.target.form);
-            if($("#kcp_cert").size() < 1) {
+            if($("#kcp_cert").length < 1) {
                 $frm.wrap('<div id="cert_info"></div>');
 
                 $("#cert_info").append('<form name="form_temp" method="post">');
@@ -66,7 +66,7 @@ function certify_win_open(type, url, event)
             var $frm = $(event.target.form),
                 lgu_cert = "lgu_cert";
 
-            if($("#lgu_cert").size() < 1) {
+            if($("#lgu_cert").length < 1) {
                 $frm.wrap('<div id="cert_info"></div>');
 
                 $("#cert_info").append('<form name="form_temp" method="post">');

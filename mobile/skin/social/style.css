@@ -65,12 +65,13 @@
 /*로그인 */
 #sns_login {border:0;margin-top:15px;padding:0; border-top:1px solid #edeaea}
 #sns_login h3 {padding:0;font-weight:bold;color:#888;text-align:center}
-#sns_login .sns-icon {display:block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px}
+#sns_login .sns-icon {position:relative;display:block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px}
 #sns_login .sns-naver {background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
 #sns_login .sns-kakao {background-color:#ffeb00;background-position:5px 5px;border-bottom:1px solid #e2c10a}
 #sns_login .sns-kakao {color:#3c1e1e}
 #sns_login .sns-facebook {background-color:#3b579d;background-position:5px 5px;border-bottom:1px solid #28458f}
-#sns_login .sns-google {background-color:#db4a3a;background-position:5px 5px;border-bottom:1px solid #c03121}
+#sns_login .sns-google {background-color:#4285F4;background-position:5px 5px;border-bottom:1px solid #3567c6}
+#sns_login .sns-google .ico {position:absolute;top:3px;left:3px;width:33px;height:33px;background:url('./img/sns_gp_s.png') no-repeat center center;background-color:#fff;background-size:28px 28px!important;border-radius:2px}
 #sns_login .sns-twitter {background-color:#1ea1f2;background-position:5px 5px;border-bottom:1px solid #1e82c0}
 #sns_login .sns-payco {background-color:#df0b00;background-position:5px 5px;border-bottom:1px solid #9d0800}
 #sns_login .txt {text-align:left;padding-left:10px;border-left:1px solid rgba(0,0,0,0.1);display:block;font-weight:bold}
@@ -80,13 +81,14 @@
 #sns_register h2 {font-size:1.167em;text-align:left;padding:15px 20px;border-bottom:1px solid #dbdbdb}
 #sns_register .sns-wrap:after {display:block;visibility:hidden;clear:both;content:""}
 #sns_register .sns-wrap {display:inline-block;padding:20px;vertical-align:top;margin:0}
-#sns_register .sns-icon {display:inline-block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px;float:left}
+#sns_register .sns-icon {position:relative;display:inline-block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px;float:left}
 #sns_register .sns-icon:nth-child(3n+1) {clear:both}
 #sns_register .sns-naver {background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
 #sns_register .sns-kakao {background-color:#ffeb00;background-position:5px 5px;border-bottom:1px solid #e2c10a}
 #sns_register .sns-kakao {color:#3c1e1e}
 #sns_register .sns-facebook {background-color:#3b579d;background-position:5px 5px;border-bottom:1px solid #28458f}
-#sns_register .sns-google {background-color:#db4a3a;background-position:5px 5px;border-bottom:1px solid #c03121}
+#sns_register .sns-google {background-color:#4285F4;background-position:5px 5px;border-bottom:1px solid #3567c6}
+#sns_register .sns-google .ico {position:absolute;top:3px;left:3px;width:33px;height:33px;background:url('./img/sns_gp_s.png') no-repeat center center;background-color:#fff;background-size:28px 28px!important;border-radius:2px}
 #sns_register .sns-twitter {background-color:#1ea1f2;background-position:5px 5px;border-bottom:1px solid #1e82c0}
 #sns_register .sns-payco {background-color:#df0b00;background-position:5px 5px;border-bottom:1px solid #9d0800}
 #sns_register .txt {display:block;padding-left:10px;border-left:1px solid rgba(0,0,0,0.1);font-weight:bold}

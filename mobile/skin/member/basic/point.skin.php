@@ -18,13 +18,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         <ul class="point_list">
             <?php
             $sum_point1 = $sum_point2 = $sum_point3 = 0;
-
-            $sql = " select *
-                        {$sql_common}
-                        {$sql_order}
-                        limit {$from_record}, {$rows} ";
-            $result = sql_query($sql);
-            for ($i=0; $row=sql_fetch_array($result); $i++) {
+            
+            $i = 0;
+            foreach((array) $list as $row){
                 $point1 = $point2 = 0;
                 $point_use_class = '';
                 if ($row['po_point'] > 0) {
@@ -55,7 +51,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 </span>
             </li>
             <?php
-            }
+                $i++;
+            }   // end foreach
 
             if ($i == 0)
                 echo '<li class="empty_list">자료가 없습니다.</li>';

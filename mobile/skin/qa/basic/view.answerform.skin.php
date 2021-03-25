@@ -9,12 +9,13 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
     ?>
     <h2>답변등록</h2>
 
-    <form name="fanswer" method="post" action="./qawrite_update.php" autocomplete="off">
+    <form name="fanswer" method="post" action="./qawrite_update.php" onsubmit="return fwrite_submit(this);" autocomplete="off">
     <input type="hidden" name="qa_id" value="<?php echo $view['qa_id']; ?>">
     <input type="hidden" name="w" value="a">
     <input type="hidden" name="sca" value="<?php echo $sca ?>">
     <input type="hidden" name="stx" value="<?php echo $stx; ?>">
     <input type="hidden" name="page" value="<?php echo $page; ?>">
+    <input type="hidden" name="token" value="<?php echo $token ?>">
     <?php
     $option = '';
     $option_hidden = '';
@@ -103,6 +104,23 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 f.qa_content.focus();
             return false;
         }
+
+        $.ajax({
+            type: "POST",
+            url: g5_bbs_url+"/ajax.write.token.php",
+            data: { 'token_case' : 'qa_write' },
+            cache: false,
+            async: false,
+            dataType: "json",
+            success: function(data) {
+                if (typeof data.token !== "undefined") {
+                    token = data.token;
+                    if(typeof f.token === "undefined")
+                        $(f).prepend('<input type="hidden" name="token" value="">');
+                    $(f).find("input[name=token]").val(token);
+                }
+            }
+        });
 
         document.getElementById("btn_submit").disabled = "disabled";
 

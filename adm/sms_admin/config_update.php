@@ -2,13 +2,22 @@
 $sub_menu = "900100";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 check_demo();
 
 check_admin_token();
 
 $g5['title'] = "SMS 기본설정";
+
+$cf_phone = isset($_REQUEST['cf_phone']) ? clean_xss_tags($_REQUEST['cf_phone'], 1, 1) : '';
+$cf_sms_use = isset($_REQUEST['cf_sms_use']) ? clean_xss_tags($_REQUEST['cf_sms_use'], 1, 1) : '';
+$cf_sms_type = isset($_REQUEST['cf_sms_type']) ? clean_xss_tags($_REQUEST['cf_sms_type'], 1, 1) : '';
+$cf_icode_id = isset($_REQUEST['cf_icode_id']) ? clean_xss_tags($_REQUEST['cf_icode_id'], 1, 1) : '';
+$cf_icode_pw = isset($_REQUEST['cf_icode_pw']) ? clean_xss_tags($_REQUEST['cf_icode_pw'], 1, 1) : '';
+$cf_icode_server_ip = isset($_REQUEST['cf_icode_server_ip']) ? clean_xss_tags($_REQUEST['cf_icode_server_ip'], 1, 1) : '';
+$cf_icode_server_port = isset($_REQUEST['cf_icode_server_port']) ? clean_xss_tags($_REQUEST['cf_icode_server_port'], 1, 1) : '';
+$cf_icode_token_key = isset($_REQUEST['cf_icode_token_key']) ? clean_xss_tags($_REQUEST['cf_icode_token_key'], 1, 1) : '';
 
 // 회신번호 체크
 if(!check_vaild_callback($cf_phone))
@@ -43,4 +52,3 @@ $sql = " update {$g5['config_table']}
 sql_query($sql);
 
 goto_url("./config.php");
-?>

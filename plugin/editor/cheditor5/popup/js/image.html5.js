@@ -1,6 +1,7 @@
 // ================================================================
 //                           CHEditor 5
 // ================================================================
+
 var activeImage = null,
     browser = null,
     button,
@@ -29,14 +30,160 @@ var activeImage = null,
     offsetX_marker = -3,
     offsetY_marker = -3,
     readyToMove = false,
-    selectedFilesNum = 0,
     showThumbnailSize = { width: 120, height: 90 },
     tmpLeft = 0,
     tmpTop = 0,
     uploadImagePath = '',
     uploadMaxNumber = 12,
-    uploadScript;
-//  deleteScript;
+    uploadScript,
+    useWebGL = false;
+
+if (ArrayBuffer && !ArrayBuffer.prototype.slice) {
+    ArrayBuffer.prototype.slice = function (start, end) {
+        var len = this.byteLength;
+        start || isFinite(start) && 0 < start && start < len || (start = 0);
+        end || (isFinite(end && start < end && end < len) || (end = len - 1));
+        return new DataView(this, start, end).buffer;
+    };
+}
+
+function GLScale(options) {
+    if (!(this instanceof GLScale)) {
+        return new GLScale(options);
+    }
+    this.precompile(options);
+    return this.scale.bind(this);
+}
+
+GLScale.prototype.precompile = function (options) {
+    var ctxOptions, vertex, fragment, resolutionLocation, positionLocation;
+
+    this.canvas = document.createElement('canvas');
+    this.canvas.width = options.width;
+    this.canvas.height = options.height;
+
+    ctxOptions = {preserveDrawingBuffer: true};
+    this.gl = this.canvas.getContext('webgl', ctxOptions) || this.canvas.getContext('experimental-webgl', ctxOptions);
+
+    if (!this.gl) {
+        throw new Error('Could not initialize webgl context');
+    }
+
+    vertex = GLScale.compileShader(this.gl, GLScale.Hermite.vertex, this.gl.VERTEX_SHADER);
+    fragment = GLScale.compileShader(this.gl, GLScale.Hermite.fragment, this.gl.FRAGMENT_SHADER);
+
+    this.program = GLScale.createProgram(this.gl, vertex, fragment);
+    this.gl.useProgram(this.program);
+
+    this.gl.bindTexture(this.gl.TEXTURE_2D, this.gl.createTexture());
+
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_S, this.gl.CLAMP_TO_EDGE);
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_WRAP_T, this.gl.CLAMP_TO_EDGE);
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MIN_FILTER, this.gl.NEAREST);
+    this.gl.texParameteri(this.gl.TEXTURE_2D, this.gl.TEXTURE_MAG_FILTER, this.gl.NEAREST);
+
+    resolutionLocation = this.gl.getUniformLocation(this.program, 'u_resolution');
+    this.gl.uniform2f(resolutionLocation, options.width, options.height);
+
+    this.gl.bindBuffer(this.gl.ARRAY_BUFFER, this.gl.createBuffer());
+    positionLocation = this.gl.getAttribLocation(this.program, 'a_position');
+    this.gl.enableVertexAttribArray(positionLocation);
+    this.gl.vertexAttribPointer(positionLocation, 2, this.gl.FLOAT, false, 0, 0);
+};
+
+GLScale.prototype.scale = function (image, cb) {
+    var srcResolutionLocation;
+    if (typeof image === 'string') {
+        return this.loadImage(image, function (err, image) {
+            if (!err) {
+                return this.scale(image, cb);
+            }
+        });
+    }
+
+    this.gl.texImage2D(this.gl.TEXTURE_2D, 0, this.gl.RGBA, this.gl.RGBA, this.gl.UNSIGNED_BYTE, image);
+
+    srcResolutionLocation = this.gl.getUniformLocation(this.program, 'u_srcResolution');
+    this.gl.uniform2f(srcResolutionLocation, image.width, image.height);
+
+    this.setRectangle(0, 0, image.width, image.height);
+    this.gl.drawArrays(this.gl.TRIANGLES, 0, 6);
+    this.gl.finish();
+
+    if (cb) {
+        cb(this.canvas);
+    }
+    return this;
+};
+
+GLScale.prototype.setRectangle = function (x, y, width, height) {
+    var x1 = x,
+        x2 = x + width,
+        y1 = y,
+        y2 = y + height;
+
+    this.gl.bufferData(this.gl.ARRAY_BUFFER, new Float32Array([
+        x1, y1,
+        x2, y1,
+        x1, y2,
+        x1, y2,
+        x2, y1,
+        x2, y2
+    ]), this.gl.STATIC_DRAW);
+};
+
+GLScale.loadImage = function (url, cb) {
+    var image = new Image();
+    image.onload = cb.bind(this, null, image);
+    image.onerror = cb.bind(this);
+    image.src = url;
+    return this;
+};
+GLScale.prototype.loadImage = GLScale.loadImage;
+
+GLScale.toBlob = (function toBlob() {
+    var CanvasPrototype = window.HTMLCanvasElement.prototype;
+
+    if (CanvasPrototype.toBlob) {
+        return CanvasPrototype.toBlob;
+    }
+
+    return function (callback, type, quality) {
+        var binStr = atob(this.toDataURL(type, quality).split(',')[1]),
+            len = binStr.length,
+            arr = new Uint8Array(len), i = 0;
+
+        for (; i < len; i++) {
+            arr[i] = binStr.charCodeAt(i);
+        }
+        callback(new Blob([arr], {type: type || 'image/png'}));
+    };
+})();
+
+GLScale.compileShader = function (gl, shaderSource, shaderType) {
+    var shader = gl.createShader(shaderType);
+    
+    gl.shaderSource(shader, shaderSource);
+    gl.compileShader(shader);
+    
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+        throw new Error('Could not compile shader: ' + gl.getShaderInfoLog(shader));
+    }
+    return shader;
+};
+
+GLScale.createProgram = function (gl, vertexShader, fragmentShader) {
+    var program = gl.createProgram();
+
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        throw new Error('Program failed to link: ' + gl.getProgramInfoLog (program));
+    }
+    return program;
+};
 
 function createInsertionMaker() {
     var wrapper = document.getElementById('insertionMarker'),
@@ -76,7 +223,7 @@ function showContents() {
     spacerNo = 1, i, imgBox, theImg, lastSpacer;
 
     for (i = 0; i < uploadMaxNumber; i++) {
-        if (i > 0 && ((i % 4) === 0)) {
+        if (i > 0 && i % 4 === 0) {
             imageListWrapper.appendChild(spacer(spacerNo++));
         }
 
@@ -89,7 +236,7 @@ function showContents() {
         imgBox.appendChild(theImg);
 
         imageListWrapper.appendChild(imgBox);
-        if (i === (uploadMaxNumber - 1)) {
+        if (i === uploadMaxNumber - 1) {
             lastSpacer = spacer(spacerNo);
             lastSpacer.style.height = "7px";
             imageListWrapper.appendChild(lastSpacer);
@@ -130,7 +277,7 @@ function getTopPos(inputObj) {
     inputObj = inputObj.offsetParent;
     while (inputObj) {
         if (inputObj.tagName.toLowerCase() !== 'html') {
-            returnValue += (inputObj.offsetTop - inputObj.scrollTop);
+            returnValue += inputObj.offsetTop - inputObj.scrollTop;
             if (browser.msie) {
                 returnValue += inputObj.clientTop;
             }
@@ -182,7 +329,7 @@ function reOrder() {
         imgBox[i].className = 'imageBox';
         imgBox[i].firstChild.className = 'imageBox_theImage';
 
-        if (imgNum > 0 && (imgNum % 4) === 0) {
+        if (imgNum > 0 && imgNum % 4 === 0) {
             breakline.push(imgBox[i].id);
         }
 
@@ -199,28 +346,6 @@ function reOrder() {
     }
 }
 
-function img_delete_post(el){
-    if( el.firstChild.tagName.toLowerCase() === 'img' ){
-        var src = el.firstChild.getAttribute('src'),
-            filesrc = src.replace(/^.*[\\\/]/, ''),
-            data = "filesrc="+filesrc;
-
-        var xhr = new XMLHttpRequest();
-        xhr.open('POST', deleteScript, true);
-        //Send the proper header information along with the request
-        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-
-        xhr.addEventListener("error", function (evt) {
-            try {
-                console.log("파일 전송 중 오류: " + evt.target.error.code);
-            } catch(ex) {
-            }
-        }, false);
-
-        xhr.send(data);
-    }
-}
-
 function showDelete() {
     var self = this, btn;
 
@@ -231,7 +356,7 @@ function showDelete() {
     getDivCoordinates();
     self.className = 'imageBox_theImage_over';
     btn = document.getElementById('removeImageButton');
-    btn.style.left = (showThumbnailSize.width - parseInt(btn.style.width, 10) - 1) + 'px';
+    btn.style.left = showThumbnailSize.width - parseInt(btn.style.width, 10) - 1 + 'px';
     btn.style.top = '-1px';
 
     self.appendChild(btn);
@@ -250,7 +375,6 @@ function showDelete() {
         var images = self.getElementsByTagName('img'), i, moveobj, target;
 
         for (i = 0; i < images.length; i++) {
-            img_delete_post(self);
             self.removeChild(images[i]);
         }
 
@@ -279,6 +403,7 @@ function showDelete() {
         this.style.display = 'none';
         document.body.appendChild(ev.target);
         oEditor.removeEvent(self, 'mouseover', showDelete);
+        self.removeAttribute('title');
     };
 }
 
@@ -318,16 +443,16 @@ function imgComplete(img, imgSize, boxId) {
 
     if (imgSize.width > showThumbnailSize.width || imgSize.height > showThumbnailSize.height) {
         if (imgSize.width > imgSize.height) {
-            resizeW = (imgSize.width > showThumbnailSize.width) ? showThumbnailSize.width : imgSize.width;
-            resizeH = Math.round((imgSize.height * resizeW) / imgSize.width);
+            resizeW = imgSize.width > showThumbnailSize.width ? showThumbnailSize.width : imgSize.width;
+            resizeH = Math.round(imgSize.height * resizeW / imgSize.width);
         } else {
-            resizeH = (imgSize.height > showThumbnailSize.height) ? showThumbnailSize.height : imgSize.height;
-            resizeW = Math.round((imgSize.width * resizeH) / imgSize.height);
+            resizeH = imgSize.height > showThumbnailSize.height ? showThumbnailSize.height : imgSize.height;
+            resizeW = Math.round(imgSize.width * resizeH / imgSize.height);
         }
 
         if (resizeH > showThumbnailSize.height) {
-            resizeH = (imgSize.height > showThumbnailSize.height) ? showThumbnailSize.height : imgSize.height;
-            resizeW = Math.round((imgSize.width * resizeH) / imgSize.height);
+            resizeH = imgSize.height > showThumbnailSize.height ? showThumbnailSize.height : imgSize.height;
+            resizeW = Math.round(imgSize.width * resizeH / imgSize.height);
         }
 
     } else {
@@ -357,6 +482,7 @@ function imgComplete(img, imgSize, boxId) {
     }
 
     elem.style.backgroundImage = "url('" + uploadImagePath + "/dot.gif')";
+    setElemTitle(elem, imgSize.width, imgSize.height);
     oEditor.addEvent(elem, 'mouseover', showDelete);
     elem.onmouseout = function () {
         this.className = 'imageBox_theImage';
@@ -366,26 +492,30 @@ function imgComplete(img, imgSize, boxId) {
     setImageCount();
 }
 
+function setElemTitle(elem, width, height) {
+    elem.setAttribute('title', 'Width: ' + width + 'px, Height: ' + height + 'px');
+}
+
 function showUploadWindow() {
     // ----------------------------------------------------------------------------------
     var uploadWindow  = document.getElementById("uploadWindow"),
         uploadWindowWidth = 700,
         winWidth, el, i, j, imgBox, img;
 
-    if (!(oEditor.undefined(window.innerWidth))) {
+    if (!oEditor.undefined(window.innerWidth)) {
         winWidth  = window.innerWidth;
     } else if (document.documentElement &&
-        (!(oEditor.undefined(document.documentElement.clientWidth))) &&
+        !oEditor.undefined(document.documentElement.clientWidth) &&
              document.documentElement.clientWidth !== 0) {
         winWidth = document.documentElement.clientWidth;
-    } else if (document.body && (!(oEditor.undefined(document.body.clientWidth)))) {
+    } else if (document.body && !oEditor.undefined(document.body.clientWidth)) {
         winWidth = document.body.clientWidth;
     } else {
         alert('현재 브라우저를 지원하지 않습니다.');
         return;
     }
 
-    uploadWindow.style.left = winWidth / 2 - (uploadWindowWidth / 2) + 'px';
+    uploadWindow.style.left = winWidth / 2 - uploadWindowWidth / 2 + 'px';
     uploadWindow.style.display = "block";
     uploadWindow.style.width = uploadWindowWidth + 'px';
 
@@ -401,11 +531,9 @@ function showUploadWindow() {
                 if (imgBox.className !== 'imageBox_theImage') {
                     continue;
                 }
-
-                if (imgBox.firstChild && (imgBox.firstChild.src === modifyImages[i])) {
+                if (imgBox.firstChild && imgBox.firstChild.src === modifyImages[i]) {
                     break;
                 }
-
                 if (imgBox.firstChild === null) {
                     img = new Image();
                     img.src = modifyImages[i];
@@ -439,11 +567,11 @@ function removeImages() {
             remove = img.getElementsByTagName('img');
 
             for (j = 0; j < remove.length; j++) {
-                img_delete_post(img);
                 img.removeChild(remove[j]);
             }
 
             img.parentNode.className = 'imageBox';
+            img.removeAttribute('title');
             oEditor.removeEvent(img, 'mouseover', showDelete);
         }
     }
@@ -491,7 +619,7 @@ function startMoveTimer() {
 
     if (moveTimer >= 0 && moveTimer < 10) {
         moveTimer++;
-        setTimeout('startMoveTimer()', 8);
+        setTimeout(startMoveTimer(), 8);
     }
 
     if (moveTimer === 5) {
@@ -524,7 +652,7 @@ function getMouseButtn(e) {
 
     if (code) {
         if (browser.msie && browser.version < 9) {
-            code = code === 1 ? 0 : (code === 4 ? 1 : code);
+            code = code === 1 ? 0 : code === 4 ? 1 : code;
         }
     }
 
@@ -644,9 +772,9 @@ function dragDropMove(e) {
         }
 
         if (divXPositions[prop] < leftPos &&
-         (divXPositions[prop] + divWidth[prop] * 0.7) > leftPos &&
+         divXPositions[prop] + divWidth[prop] * 0.7 > leftPos &&
           divYPositions[prop] < topPos &&
-         (divYPositions[prop] + divWidth[prop]) > topPos) {
+         divYPositions[prop] + divWidth[prop] > topPos) {
             if (browser.msie) {
                 offsetX = offsetX_marker;
                 offsetY = offsetY_marker;
@@ -912,8 +1040,8 @@ DoUpload.prototype = {
                 offset += 2;
 
                 for (i = 0; i < tags; i++) {
-                    if (view.getUint16(offset + (i * 12), little) === 0x0112) {
-                        return view.getUint16(offset + (i * 12) + 8, little);
+                    if (view.getUint16(offset + i * 12, little) === 0x0112) {
+                        return view.getUint16(offset + i * 12 + 8, little);
                     }
                 }
             } else if ((marker & 0xff00) !== 0xff00) {
@@ -951,62 +1079,140 @@ DoUpload.prototype = {
     },
 
     imageResize : function (image, filetype, resizeWidth, orientation, addWaterMark) {
-        var canvas = document.createElement("canvas"),
-            width = image.width,
-            height = image.height,
-            bitmapData, ctx, rotateImg, rotateW, rotateH, angle, step, offcanvas, offctx, dHeight, dWidth;
+        var canvas, source_w = image.width, source_h = image.height,
+            resize_h, resize_w, ratio_w, ratio_h, ratio_w_half, ratio_h_half,
+            source_img, resize_img, source_data, resize_data, j, i,
+            x2, weight, weights, weights_alpha, gx_a, gx_b, gx_g, gx_r, center_x, center_y, x_start, x_stop,
+            y_start, y_stop, y, dy, part_w, x, dx, w, pos_x,
+            ctx, gl, imageData = null;
 
-
-
-        // 카메라를 돌려서 찍은 경우, 높이를 가로 사이즈로 정한 다음 리사이징 처리. 이 경우, 파일 크기와 처리 속도가
-        // 증가한다.
-
-        // if (orientation === 6 || orientation === 8) {
-        //     var ratio = resizeWidth / height;
-        //     dHeight = height * ratio;
-        //     dWidth = width * ratio;
-        // } else {
-        dHeight = Math.ceil(resizeWidth / width * height);
-        dWidth = resizeWidth;
-        // }
-
-        canvas.width = dWidth;
-        canvas.height = dHeight;
-        ctx = canvas.getContext("2d");
-
-        step = Math.ceil(Math.log(image.width / resizeWidth) / Math.log(2));
-
-        if (step > 1) {
-            offcanvas = document.createElement('canvas');
-            offctx = offcanvas.getContext('2d');
-            offcanvas.width = width / 2;
-            offcanvas.height = height / 2;
-
-            offctx.drawImage(image, 0, 0, offcanvas.width, offcanvas.height);
-            offctx.drawImage(offcanvas, 0, 0, offcanvas.width / 2, offcanvas.height / 2);
-            ctx.drawImage(offcanvas, 0, 0, offcanvas.width / 2, offcanvas.height / 2, 0, 0, dWidth, dHeight);
-        } else {
-            ctx.drawImage(image, 0, 0, dWidth, dHeight);
-        }
-
-        if (orientation === 6 || orientation === 8 || orientation === 3) {
-            angle = orientation === 6 ? Math.PI / 2 : (orientation === 8 ? -Math.PI / 2 : 180 * Math.PI / 2);
-            bitmapData = canvas.toDataURL(filetype, oEditor.config.imgJpegQuality);
-
-            rotateImg = new Image();
-            rotateImg.src = bitmapData;
-            rotateW = orientation !== 3 ? dHeight : dWidth;
-            rotateH = orientation !== 3 ? dWidth : dHeight;
-
-            canvas.width = rotateW;
-            canvas.height = rotateH;
-
+        // 카메라 로테이션 보정
+        if (orientation > 0) {
+            canvas = document.createElement("canvas");
+            canvas.width = source_w;
+            canvas.height = source_h;
+            ctx = canvas.getContext("2d");
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.save();
-            ctx.translate(canvas.width / 2, canvas.height / 2);
-            ctx.rotate(angle);
-            ctx.drawImage(rotateImg, -dWidth / 2, -dHeight / 2);
+
+            switch (orientation) {
+                case 2 :
+                    ctx.translate(-1, 0, 0, 1, canvas.width, 0); break;
+                case 3 :
+                    ctx.translate(-1, 0, 0, -1, canvas.width, canvas.height); break;
+                case 4 :
+                    ctx.translate(1, 0, 0, -1, 0, canvas.height); break;
+                case 5 :
+                    ctx.translate(0, 1, 1, 0, 0, 0); break;
+                case 6 :
+                    ctx.translate(0, 1, -1, 0, canvas.height, 0); break;
+                case 7 :
+                    ctx.translate(0, -1, -1, 0, canvas.height, canvas.width); break;
+                case 8 :
+                    ctx.translate(0, -1, 1, 0, 0, canvas.width); break;
+                default: break;
+            }
+
+            ctx.drawImage(image, 0, 0);
+            imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
             ctx.restore();
+            source_w = canvas.width;
+            source_h = canvas.height;
+        }
+
+        if (source_w > resizeWidth) {
+            resize_w = resizeWidth;
+            resize_h = Math.ceil(resize_w / source_w * source_h);
+
+            try {
+                gl = GLScale({
+                    width: resize_w, height: resize_h
+                });
+                gl(imageData || image, function (gl_canvas) {
+                    canvas = gl_canvas;
+                });
+            } catch (ignore) {
+                canvas = document.createElement("canvas");
+                ctx = canvas.getContext("2d");
+                canvas.width = source_w;
+                canvas.height = source_h;
+
+                if (imageData) {
+                    ctx.putImageData(imageData, 0, 0);
+                } else {
+                    ctx.drawImage(image, 0, 0);
+                }
+
+                ratio_w = source_w / resize_w;
+                ratio_h = source_h / resize_h;
+                ratio_w_half = Math.ceil(ratio_w / 2);
+                ratio_h_half = Math.ceil(ratio_h / 2);
+                source_img = ctx.getImageData(0, 0, source_w, source_h);
+                resize_img = ctx.createImageData(resize_w, resize_h);
+                source_data = source_img.data;
+                resize_data = resize_img.data;
+
+                for (j = 0; j < resize_h; j++) {
+                    for (i = 0; i < resize_w; i++) {
+                        x2 = (i + j * resize_w) * 4;
+                        weight = weights = weights_alpha = 0;
+                        gx_r = gx_g = gx_b = gx_a = 0;
+                        center_y = (j + 0.5) * ratio_h;
+
+                        x_start = Math.floor(i * ratio_w);
+                        x_stop = Math.ceil((i + 1) * ratio_w);
+                        y_start = Math.floor(j * ratio_h);
+                        y_stop = Math.ceil((j + 1) * ratio_h);
+
+                        x_stop = Math.min(x_stop, source_w);
+                        y_stop = Math.min(y_stop, source_h);
+
+                        for (y = y_start; y < y_stop; y++) {
+                            dy = Math.abs(center_y - (y + 0.5)) / ratio_h_half;
+                            center_x = (i + 0.5) * ratio_w;
+                            part_w = dy * dy;
+
+                            for (x = x_start; x < x_stop; x++) {
+                                dx = Math.abs(center_x - (x + 0.5)) / ratio_w_half;
+                                w = Math.sqrt(part_w + dx * dx);
+                                if (w >= 1) {
+                                    continue;
+                                }
+                                // Hermite 필터
+                                weight = 2 * w * w * w - 3 * w * w + 1;
+                                pos_x = 4 * (x + y * source_w);
+                                // 알파 채널
+                                gx_a += weight * source_data[pos_x + 3];
+                                weights_alpha += weight;
+
+                                if (source_data[pos_x + 3] < 255) {
+                                    weight = weight * source_data[pos_x + 3] / 250;
+                                }
+
+                                gx_r += weight * source_data[pos_x];
+                                gx_g += weight * source_data[pos_x + 1];
+                                gx_b += weight * source_data[pos_x + 2];
+                                weights += weight;
+                            }
+                        }
+                        resize_data[x2] = gx_r / weights;
+                        resize_data[x2 + 1] = gx_g / weights;
+                        resize_data[x2 + 2] = gx_b / weights;
+                        resize_data[x2 + 3] = gx_a / weights_alpha;
+                    }
+                }
+                canvas.width = resize_w;
+                canvas.height = resize_h;
+                ctx.putImageData(resize_img, 0, 0);
+            }
+            
+        } else {
+            canvas = document.createElement("canvas"),
+            canvas.width = source_w; canvas.height = source_h;
+            ctx = canvas.getContext("2d");
+            ctx.drawImage(image, 0, 0);
+            resize_h = source_h;
+            resize_w = source_w;
         }
 
         if (this.reader.watermark && addWaterMark) {
@@ -1014,14 +1220,15 @@ DoUpload.prototype = {
             ctx.drawImage(this.reader.watermark,
                 canvas.width - this.reader.watermark.width, canvas.height - this.reader.watermark.height);
         }
+        
         return canvas.toDataURL(filetype, oEditor.config.imgJpegQuality);
     },
 
     canvasToBlob : function (bitmapData, mimetype) {
-        var raw = atob(bitmapData.split(',')[1]),
+        var i = 0,
             intArray = [],
             len = bitmapData.length,
-            i = 0;
+            raw = atob(bitmapData.split(',')[1]);
 
         for (; i < len; i++) {
             intArray.push(raw.charCodeAt(i));
@@ -1030,8 +1237,7 @@ DoUpload.prototype = {
     },
 
     makeThumbnail : function (image, type, name, orientation) {
-        var canvas = document.createElement("canvas"),
-            width,
+        var width,
             xhr = new XMLHttpRequest(),
             data = new FormData(),
             bitmapData, file;
@@ -1041,11 +1247,10 @@ DoUpload.prototype = {
 
         bitmapData = this.imageResize(image, type, width, orientation);
         file = this.canvasToBlob(bitmapData, type);
-
         data.append(inputFileName, file, 'thumb_' + name); // RFC Level 2
 
         xhr.addEventListener("loadend", function () {
-
+            // loadend
         }, false);
 
         xhr.addEventListener("error", function () {
@@ -1060,20 +1265,19 @@ DoUpload.prototype = {
             filename = evt.target.file.name,
             filetype = evt.target.file.type,
             file = evt.target.file,
-            blob, image, orientation = 1;
+            blob, image, orientation = 1, slice = 64 * 1024;
+
+        if (slice > file.size - 1) {
+            slice = file.size;
+        }
 
         if (evt.target.readyState === FileReader.DONE) {
             blob = new self.MyBlob(self.NewBlob(evt.target.result, filetype));
-            try {
-                orientation = self.getOrientation(evt.target.result.slice(0, 64 * 1024));
-            } catch(err) {
+            orientation = self.getOrientation(evt.target.result.slice(0, slice));
 
-            }
             image = new Image();
-
             image.onload = function () {
                 var bitmapData = null,
-                    canvas = document.createElement("canvas"),
                     data = new FormData(),
                     fileFormat,
                     imgBox = file.boxElem,
@@ -1083,7 +1287,7 @@ DoUpload.prototype = {
 
                 xhr.open('POST', uploadScript, true);
 
-                if (imageResizeWidth > 0 && this.width > imageResizeWidth) {
+                if (imageResizeWidth > 0) {
                     bitmapData = self.imageResize(this, filetype, imageResizeWidth, orientation, true);
                     file = self.canvasToBlob(bitmapData, filetype);
                 }
@@ -1099,7 +1303,7 @@ DoUpload.prototype = {
                 }
 
                 xhr.addEventListener("error", function (evt) {
-                    alert("파일 전송 중 오류: " + evt.target.error.code);
+                    alert("파일 전송 중 오류: " + evt.toString());
                 }, false);
 
                 xhr.addEventListener("loadend", function onLoadendImageHandler(xhrevt) {
@@ -1132,7 +1336,6 @@ DoUpload.prototype = {
                                 height: img.height,
                                 width: img.width
                             };
-
                             imageCompletedList[imgBox.id] = imgInfo;
                             imgComplete(this, imgInfo, imgBox.id);
                             imgBox.appendChild(img);
@@ -1263,13 +1466,14 @@ function setResizeWidth() {
             imageResizeWidth = value;
         } else {
             imageResizeInput.value = '';
+            imageResizeWidth = oEditor.config.imgMaxWidth;
             imageResizeInput.setAttribute('placeholder', oEditor.config.imgMaxWidth.toString());
         }
     }
 }
 
 function init(dialog) {
-    var dlg, i, elem, input, select, value, name;
+    var dlg, i, elem, input, select, value, name, xhr_f, xhr_v, tmpcanvas, glicon;
 
     oEditor = this;
     oEditor.dialog = dialog;
@@ -1279,14 +1483,12 @@ function init(dialog) {
     uploadImagePath = oEditor.config.iconPath + 'imageUpload';
     uploadMaxNumber = oEditor.config.imgUploadNumber;
     uploadScript = oEditor.config.editorPath + 'imageUpload/upload.php';
-    deleteScript = oEditor.config.editorPath + 'imageUpload/delete.php';
     imageListWrapper = document.getElementById("imageListWrapper");
-
-    imageResizeWidth = oEditor.config.imgMaxWidth;
     imageResizeInput = document.getElementById('idResizeWidth');
     select = document.getElementById('idResizeSelectBox');
 
-    if (imageResizeWidth > 0) {
+    if (oEditor.config.imgMaxWidth > 0) {
+        imageResizeWidth = oEditor.config.imgMaxWidth;
         for (i = 0; i < oEditor.config.imgResizeValue.length; i++) {
             name = value = oEditor.config.imgResizeValue[i];
             if (value > oEditor.config.imgMaxWidth) {
@@ -1300,6 +1502,9 @@ function init(dialog) {
         select.onchange = function () {
             if (this.value < 0) {
                 document.getElementById('idUserInputWrapper').style.display = '';
+                imageResizeInput.value = '';
+                imageResizeWidth = oEditor.config.imgMaxWidth;
+                imageResizeInput.focus();
             } else {
                 document.getElementById('idUserInputWrapper').style.display = 'none';
                 imageResizeWidth = this.value;
@@ -1326,7 +1531,6 @@ function init(dialog) {
     initGallery();
     showUploadWindow();
     createInsertionMaker();
-    selectedFilesNum = 0;
 
     oEditor.addEvent(imageListWrapper, 'dragover', dragOver);
     oEditor.addEvent(imageListWrapper, 'dragleave', dragOut);
@@ -1343,6 +1547,38 @@ function init(dialog) {
 
     if (browser.mobile) {
         input = document.getElementById('inputImageUpload');
-        input.setAttribute('capture', 'gallery');
+        input.setAttribute('capture', 'filesystem');
     }
+
+    tmpcanvas = document.createElement('canvas');
+    if (tmpcanvas.getContext('webgl', {preserveDrawingBuffer: true}) ||
+        tmpcanvas.getContext('experimental-webgl', {preserveDrawingBuffer: true}))
+    {
+        useWebGL = true;
+        GLScale.Hermite = { vertex: '', fragment: '' };
+        xhr_v = new XMLHttpRequest();
+        xhr_f = new XMLHttpRequest();
+        xhr_f.open('POST', 'js/fragment-shader.glsl', true);
+        xhr_f.addEventListener("load", function (evt) {
+            if (evt.target.status === 200) {
+                GLScale.Hermite.fragment = this.responseText;
+            } else {
+                useWebGL = false;
+            }
+        });
+        xhr_v.open('POST', 'js/vertex-shader.glsl', true);
+        xhr_v.addEventListener("load", function (evt) {
+            if (evt.target.status === 200) {
+                GLScale.Hermite.vertex = this.responseText;
+            } else {
+                useWebGL = false;
+            }
+        });
+        xhr_f.send();
+        xhr_v.send();
+    }
+    glicon = new Image();
+    glicon.className = 'webgl_logo';
+    glicon.src = uploadImagePath + (useWebGL ? "/webgl.png" : "/webgl-off.png");
+    document.getElementById('webgl_logo_wrapper').appendChild(glicon);
 }

@@ -3,8 +3,8 @@ include_once('./_common.php');
 include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
-$mb_id = substr(clean_xss_tags($_POST['mb_id']), 0, 20);
-$mb_email = get_email_address(trim($_POST['mb_email']));
+$mb_id = isset($_POST['mb_id']) ? substr(clean_xss_tags($_POST['mb_id']), 0, 20) : '';
+$mb_email = isset($_POST['mb_email']) ? get_email_address(trim($_POST['mb_email'])) : '';
 
 if(!$mb_id || !$mb_email)
     alert('올바른 방법으로 이용해 주십시오.', G5_URL);
@@ -48,4 +48,3 @@ $sql = " update {$g5['member_table']} set mb_email = '$mb_email' where mb_id = '
 sql_query($sql);
 
 alert("인증메일을 {$mb_email} 메일로 다시 보내 드렸습니다.\\n\\n잠시후 {$mb_email} 메일을 확인하여 주십시오.", G5_URL);
-?>

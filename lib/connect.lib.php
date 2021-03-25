@@ -38,4 +38,3 @@ function connect($skin_dir='basic')
 
     return $content;
 }
-?>

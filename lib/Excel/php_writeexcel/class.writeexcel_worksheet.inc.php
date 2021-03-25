@@ -2964,5 +2964,3 @@ function insert_bitmap() {
     }
 
 }
-
-?>

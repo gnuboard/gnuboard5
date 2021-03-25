@@ -1117,4 +1117,3 @@ class XPayClient
 		curl_close($this->ch);
 	}
 }
-?>

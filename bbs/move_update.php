@@ -2,6 +2,7 @@
 include_once('./_common.php');
 
 $act = isset($act) ? strip_tags($act) : '';
+$count_chk_bo_table = (isset($_POST['chk_bo_table']) && is_array($_POST['chk_bo_table'])) ? count($_POST['chk_bo_table']) : 0;
 
 // 게시판 관리자 이상 복사, 이동 가능
 if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
@@ -10,7 +11,7 @@ if ($is_admin != 'board' && $is_admin != 'group' && $is_admin != 'super')
 if ($sw != 'move' && $sw != 'copy')
     alert('sw 값이 제대로 넘어오지 않았습니다.');
 
-if(!count($_POST['chk_bo_table']))
+if(! $count_chk_bo_table)
     alert('게시물을 '.$act.'할 게시판을 한개 이상 선택해 주십시오.', $url);
 
 // 원본 파일 디렉토리
@@ -21,7 +22,7 @@ $save_count_write = 0;
 $save_count_comment = 0;
 $cnt = 0;
 
-$wr_id_list = preg_replace('/[^0-9\,]/', '', $_POST['wr_id_list']);
+$wr_id_list = isset($_POST['wr_id_list']) ? preg_replace('/[^0-9\,]/', '', $_POST['wr_id_list']) : '';
 
 $sql = " select distinct wr_num from $write_table where wr_id in ({$wr_id_list}) order by wr_id ";
 $result = sql_query($sql);
@@ -30,9 +31,9 @@ while ($row = sql_fetch_array($result))
     $save[$cnt]['wr_contents'] = array();
 
     $wr_num = $row['wr_num'];
-    for ($i=0; $i<count($_POST['chk_bo_table']); $i++)
+    for ($i=0; $i<$count_chk_bo_table; $i++)
     {
-        $move_bo_table = preg_replace('/[^a-z0-9_]/i', '', $_POST['chk_bo_table'][$i]);
+        $move_bo_table = isset($_POST['chk_bo_table'][$i]) ? preg_replace('/[^a-z0-9_]/i', '', $_POST['chk_bo_table'][$i]) : '';
 
         // 취약점 18-0075 참고
         $sql = "select * from {$g5['board_table']} where bo_table = '".sql_real_escape_string($move_bo_table)."' ";
@@ -129,7 +130,20 @@ while ($row = sql_fetch_array($result))
                     {
                         // 원본파일을 복사하고 퍼미션을 변경
                         // 제이프로님 코드제안 적용
-                        $copy_file_name = ($bo_table !== $move_bo_table) ? $row3['bf_file'] : $row2['wr_id'].'_copy_'.$insert_id.'_'.$row3['bf_file'];
+
+                        $copy_file_name = $row3['bf_file'];
+
+                        if($bo_table === $move_bo_table){
+                            if(preg_match('/_copy(\d+)?_(\d+)_/', $copy_file_name, $match)){
+
+                                $number = isset($match[1]) ? (int) $match[1] : 0;
+                                $replace_str = '_copy'.($number + 1).'_'.$insert_id.'_';
+                                $copy_file_name = preg_replace('/_copy(\d+)?_(\d+)_/', $replace_str, $copy_file_name);
+                            } else {
+                                $copy_file_name = $row2['wr_id'].'_copy_'.$insert_id.'_'.$row3['bf_file'];
+                            }
+                        }
+
                         $is_exist_file = is_file($src_dir.'/'.$row3['bf_file']) && file_exists($src_dir.'/'.$row3['bf_file']);
                         if( $is_exist_file ){
                             @copy($src_dir.'/'.$row3['bf_file'], $dst_dir.'/'.$copy_file_name);
@@ -192,12 +206,12 @@ while ($row = sql_fetch_array($result))
                 $save[$cnt]['wr_id'] = $row2['wr_parent'];
 
             $cnt++;
+
+            run_event('bbs_move_copy', $row2, $move_bo_table, $insert_id, $next_wr_num, $sw);
         }
 
         sql_query(" update {$g5['board_table']} set bo_count_write = bo_count_write + '$count_write' where bo_table = '$move_bo_table' ");
         sql_query(" update {$g5['board_table']} set bo_count_comment = bo_count_comment + '$count_comment' where bo_table = '$move_bo_table' ");
-        
-        run_event('bbs_move_copy', $row2, $move_bo_table, $insert_id, $next_wr_num, $sw);
 
         delete_cache_latest($move_bo_table);
     }
@@ -241,19 +255,16 @@ $opener_href  = get_pretty_url($bo_table,'','&amp;page='.$page.'&amp;'.$qstr);
 $opener_href1 = str_replace('&amp;', '&', $opener_href);
 
 run_event('bbs_move_update', $bo_table, $chk_bo_table, $wr_id_list, $opener_href);
-
-echo <<<HEREDOC
+?>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <script>
-alert("$msg");
-opener.document.location.href = "$opener_href1";
+alert("<?php echo $msg; ?>");
+opener.document.location.href = "<?php echo $opener_href1; ?>";
 window.close();
 </script>
 <noscript>
 <p>
-    "$msg"
+    <?php echo $msg; ?>
 </p>
-<a href="$opener_href">돌아가기</a>
+<a href="<?php echo $opener_href; ?>">돌아가기</a>
 </noscript>
-HEREDOC;
-?>

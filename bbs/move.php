@@ -1,9 +1,11 @@
 <?php
 include_once('./_common.php');
 
-if ($sw == 'move')
+$sw = isset($_REQUEST['sw']) ? clean_xss_tags($_REQUEST['sw'], 1, 1) : '';
+
+if ($sw === 'move')
     $act = '이동';
-else if ($sw == 'copy')
+else if ($sw === 'copy')
     $act = '복사';
 else
     alert('sw 값이 제대로 넘어오지 않았습니다.');
@@ -20,8 +22,12 @@ if ($wr_id)
     $wr_id_list = $wr_id;
 else {
     $comma = '';
-    for ($i=0; $i<count($_POST['chk_wr_id']); $i++) {
-        $wr_id_list .= $comma . $_POST['chk_wr_id'][$i];
+
+    $count_chk_wr_id = (isset($_POST['chk_wr_id']) && is_array($_POST['chk_wr_id'])) ? count($_POST['chk_wr_id']) : 0;
+
+    for ($i=0; $i<$count_chk_wr_id; $i++) {
+        $wr_id_val = isset($_POST['chk_wr_id'][$i]) ? preg_replace('/[^0-9]/', '', $_POST['chk_wr_id'][$i]) : 0;
+        $wr_id_list .= $comma . $wr_id_val;
         $comma = ',';
     }
 }
@@ -158,4 +164,3 @@ function fboardmoveall_submit(f)
 <?php
 run_event('move_html_footer');
 include_once(G5_PATH.'/tail.sub.php');
-?>

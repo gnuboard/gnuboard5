@@ -60,4 +60,3 @@ HEREDOC;
 include_once($member_skin_path.'/scrap_popin.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

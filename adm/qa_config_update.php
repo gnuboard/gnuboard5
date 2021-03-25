@@ -4,7 +4,7 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 check_admin_token();
 
@@ -61,9 +61,17 @@ if( function_exists('filter_input_include_path') ){
     $qa_include_tail = filter_input_include_path($qa_include_tail);
 }
 
+// 분류에 & 나 = 는 사용이 불가하므로 2바이트로 바꾼다.
+$src_char = array('&', '=');
+$dst_char = array('＆', '〓');
+$qa_category = str_replace($src_char, $dst_char, $_POST['qa_category']);
+
+//https://github.com/gnuboard/gnuboard5/commit/f5f4925d4eb28ba1af728e1065fc2bdd9ce1da58 에 따른 조치
+$qa_category = preg_replace("/[\<\>\'\"\\\'\\\"\%\=\(\)\/\^\*]/", "", $qa_category);
+
 $sql = " update {$g5['qa_config_table']}
             set qa_title                = '{$_POST['qa_title']}',
-                qa_category             = '{$_POST['qa_category']}',
+                qa_category             = '{$qa_category}',
                 qa_skin                 = '{$_POST['qa_skin']}',
                 qa_mobile_skin          = '{$_POST['qa_mobile_skin']}',
                 qa_use_email            = '{$_POST['qa_use_email']}',
@@ -108,4 +116,3 @@ if($error_msg){
 } else {
     goto_url('./qa_config.php');
 }
-?>

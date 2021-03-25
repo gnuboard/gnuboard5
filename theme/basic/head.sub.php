@@ -9,8 +9,8 @@ if (!isset($g5['title'])) {
     $g5_head_title = $g5['title'];
 }
 else {
-    $g5_head_title = $g5['title']; // 상태바에 표시될 제목
-    $g5_head_title .= " | ".$config['cf_title'];
+    // 상태바에 표시될 제목
+    $g5_head_title = implode(' | ', array_filter(array($g5['title'], $config['cf_title'])));
 }
 
 $g5['title'] = strip_tags($g5['title']);
@@ -92,4 +92,3 @@ if ($is_member) { // 회원이라면 로그인 중이라는 메세지를 출력�
     echo '<div id="hd_login_msg">'.$sr_admin_msg.get_text($member['mb_nick']).'님 로그인 중 ';
     echo '<a href="'.G5_BBS_URL.'/logout.php">로그아웃</a></div>';
 }
-?>

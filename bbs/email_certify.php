@@ -4,8 +4,8 @@ include_once('./_common.php');
 // 봇의 메일 링크 크롤링을 방지합니다.
 if(function_exists('check_mail_bot')){ check_mail_bot($_SERVER['REMOTE_ADDR']); }
 
-$mb_id  = trim($_GET['mb_id']);
-$mb_md5 = trim($_GET['mb_md5']);
+$mb_id  = isset($_GET['mb_id']) ? trim($_GET['mb_id']) : '';
+$mb_md5 = isset($_GET['mb_md5']) ? trim($_GET['mb_md5']) : '';
 
 $sql = " select mb_id, mb_email_certify2, mb_leave_date, mb_intercept_date from {$g5['member_table']} where mb_id = '{$mb_id}' ";
 $row = sql_fetch($sql);
@@ -34,4 +34,3 @@ if ($mb_md5)
 }
 
 alert('제대로 된 값이 넘어오지 않았습니다.', G5_URL);
-?>

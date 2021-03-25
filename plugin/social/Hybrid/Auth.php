@@ -21,7 +21,7 @@ class Hybrid_Auth {
 	 * Configuration array
 	 * @var array
 	 */
-	public static $config = array();
+	public static $config = array('providers'=>null);
 
 	/**
 	 * Auth cache
@@ -295,7 +295,7 @@ class Hybrid_Auth {
 	public static function getConnectedProviders() {
 		$idps = array();
 
-		foreach (Hybrid_Auth::$config["providers"] as $idpid => $params) {
+		foreach ((array) Hybrid_Auth::$config["providers"] as $idpid => $params) {
 			if (Hybrid_Auth::isConnectedWith($idpid)) {
 				$idps[] = $idpid;
 			}

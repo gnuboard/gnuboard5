@@ -15,7 +15,7 @@ $list_count = (is_array($list) && $list) ? count($list) : 0;
         <li>
             <span class="cm_lt_nick"><?php echo get_member_profile_img($member['mb_id']); ?></span>
             <div class="cm_lt_info">
-            	<a href="<?php echo $list[$i]['href']; ?>" class="over"><?php echo $list[$i]['subject']; ?></a>
+            	<a href="<?php echo get_pretty_url($bo_table, $list[$i]['wr_id']); ?>" class="over"><?php echo $list[$i]['subject']; ?></a>
 				<br>
 				<span class="lt_nick"><?php echo $list[$i]['name'] ?></span>
             	<span class="lt_date"><?php echo $list[$i]['datetime2'] ?></span>              

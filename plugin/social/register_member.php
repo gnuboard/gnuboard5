@@ -26,6 +26,11 @@ $user_nick = social_relace_nick($user_profile->displayName);
 $user_email = isset($user_profile->emailVerified) ? $user_profile->emailVerified : $user_profile->email;
 $user_id = $user_profile->sid ? preg_replace("/[^0-9a-z_]+/i", "", $user_profile->sid) : get_social_convert_id($user_profile->identifier, $provider_name);
 
+if(! $user_nick) {
+    $tmp = explode('_', $user_id);
+    $user_nick = $tmp[1];
+}
+
 //$is_exists_id = exist_mb_id($user_id);
 //$is_exists_name = exist_mb_nick($user_nick, '');
 $user_id = exist_mb_id_recursive($user_id);
@@ -46,8 +51,8 @@ $login_action_url = G5_HTTPS_BBS_URL."/login_check.php";
 $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) && $member['mb_nick_date'] <= date("Y-m-d", G5_SERVER_TIME - ($config['cf_nick_modify'] * 86400)));
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
+$login_url = '';
 
 include_once(get_social_skin_path().'/social_register_member.skin.php');
 
 include_once(G5_BBS_PATH.'/_tail.php');
-?>

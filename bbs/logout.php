@@ -37,4 +37,3 @@ if ($url) {
 run_event('member_logout', $link);
 
 goto_url($link);
-?>

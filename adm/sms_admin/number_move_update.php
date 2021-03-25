@@ -1,12 +1,14 @@
 <?php
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], "r");
+auth_check_menu($auth, $sub_menu, "r");
 
-if(!count($_POST['chk_bg_no']))
+$post_chk_bg_no = isset($_POST['chk_bg_no']) ? $_POST['chk_bg_no'] : array();
+
+if(!count($post_chk_bg_no))
     alert('번호를 '.$act.'할 그룹을 한개 이상 선택해 주십시오.', $url);
 
-$bk_no_list = preg_replace('/[^a-zA-Z0-9\, ]/', '', $bk_no_list);
+$bk_no_list = isset($_POST['bk_no_list']) ? preg_replace('/[^a-zA-Z0-9\, ]/', '', $_POST['bk_no_list']) : '';
 
 $sql = "select * from {$g5['sms5_book_table']} where bk_no in ($bk_no_list) order by bk_no desc ";
 $result = sql_query($sql);
@@ -16,9 +18,9 @@ $save_group = array();
 for ($kk=0;$row = sql_fetch_array($result);$kk++)
 {
     $bk_no = $row['bk_no'];
-    for ($i=0; $i<count($_POST['chk_bg_no']); $i++)
+    for ($i=0; $i<count($post_chk_bg_no); $i++)
     {
-        $bg_no = $_POST['chk_bg_no'][$i];
+        $bg_no = $post_chk_bg_no[$i];
         if( !$bg_no ) continue;
 
         $sql = " insert into {$g5['sms5_book_table']}
@@ -83,4 +85,3 @@ window.close();
 <a href="$opener_href">돌아가기</a>
 </noscript>
 HEREDOC;
-?>

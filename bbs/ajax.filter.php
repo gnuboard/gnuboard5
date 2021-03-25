@@ -1,8 +1,8 @@
 <?php
 include_once('./_common.php');
 
-$subject = strip_tags($_POST['subject']);
-$content = strip_tags($_POST['content']);
+$subject = isset($_POST['subject']) ? strip_tags($_POST['subject']) : '';
+$content = isset($_POST['content']) ? strip_tags($_POST['content']) : '';
 
 //$filter = explode(",", strtolower(trim($config['cf_filter'])));
 // strtolower 에 의한 한글 변형으로 아래 코드로 대체 (곱슬최씨님이 알려 주셨습니다.)
@@ -28,4 +28,3 @@ for ($i=0; $i<count($filter); $i++) {
 }
 
 die("{\"subject\":\"$subj\",\"content\":\"$cont\"}");
-?>

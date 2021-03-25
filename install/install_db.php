@@ -23,15 +23,15 @@ include_once ('./install.inc.php');
 
 //print_r($_POST); exit;
 
-$mysql_host  = safe_install_string_check($_POST['mysql_host']);
-$mysql_user  = safe_install_string_check($_POST['mysql_user']);
-$mysql_pass  = safe_install_string_check($_POST['mysql_pass']);
-$mysql_db    = safe_install_string_check($_POST['mysql_db']);
-$table_prefix= safe_install_string_check($_POST['table_prefix']);
-$admin_id    = $_POST['admin_id'];
-$admin_pass  = $_POST['admin_pass'];
-$admin_name  = $_POST['admin_name'];
-$admin_email = $_POST['admin_email'];
+$mysql_host  = isset($_POST['mysql_host']) ? safe_install_string_check($_POST['mysql_host']) : '';
+$mysql_user  = isset($_POST['mysql_user']) ? safe_install_string_check($_POST['mysql_user']) : '';
+$mysql_pass  = isset($_POST['mysql_pass']) ? safe_install_string_check($_POST['mysql_pass']) : '';
+$mysql_db    = isset($_POST['mysql_db']) ? safe_install_string_check($_POST['mysql_db']) : '';
+$table_prefix= isset($_POST['table_prefix']) ? safe_install_string_check($_POST['table_prefix']) : '';
+$admin_id    = isset($_POST['admin_id']) ? $_POST['admin_id'] : '';
+$admin_pass  = isset($_POST['admin_pass']) ? $_POST['admin_pass'] : '';
+$admin_name  = isset($_POST['admin_name']) ? $_POST['admin_name'] : '';
+$admin_email = isset($_POST['admin_email']) ? $_POST['admin_email'] : '';
 
 if (preg_match("/[^0-9a-z_]+/i", $table_prefix) ) {
     die('<div class="ins_inner"><p>TABLE명 접두사는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
@@ -55,6 +55,7 @@ if (!$dblink) {
     exit;
 }
 
+$g5['connect_db'] = $dblink;
 $select_db = sql_select_db($mysql_db, $dblink);
 if (!$select_db) {
 ?>
@@ -199,6 +200,7 @@ $sql = " insert into `{$table_prefix}member`
                  mb_level = '10',
                  mb_mailling = '1',
                  mb_open = '1',
+                 mb_nick_date = '".G5_TIME_YMDHIS."',
                  mb_email_certify = '".G5_TIME_YMDHIS."',
                  mb_datetime = '".G5_TIME_YMDHIS."',
                  mb_ip = '{$_SERVER['REMOTE_ADDR']}'
@@ -427,4 +429,3 @@ fclose($f);
 
 <?php
 include_once ('./install.inc2.php');
-?>

@@ -57,6 +57,10 @@ include_once($g5_path['path'].'/config.php');   // 설정 파일
 
 unset($g5_path);
 
+// IIS 에서 SERVER_ADDR 서버변수가 없다면
+if(! isset($_SERVER['SERVER_ADDR'])) {
+    $_SERVER['SERVER_ADDR'] = isset($_SERVER['LOCAL_ADDR']) ? $_SERVER['LOCAL_ADDR'] : '';
+}
 
 // multi-dimensional array에 사용자지정 함수적용
 function array_map_deep($fn, $array)
@@ -98,7 +102,7 @@ function sql_escape_string($str)
 // SQL Injection 등으로 부터 보호를 위해 sql_escape_string() 적용
 //------------------------------------------------------------------------------
 // magic_quotes_gpc 에 의한 backslashes 제거
-if (get_magic_quotes_gpc()) {
+if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
     $_POST    = array_map_deep('stripslashes',  $_POST);
     $_GET     = array_map_deep('stripslashes',  $_GET);
     $_COOKIE  = array_map_deep('stripslashes',  $_COOKIE);
@@ -123,10 +127,11 @@ $_REQUEST = array_map_deep(G5_ESCAPE_FUNCTION,  $_REQUEST);
 // 완두콩님이 알려주신 보안관련 오류 수정
 // $member 에 값을 직접 넘길 수 있음
 $config = array();
-$member = array();
-$board  = array();
-$group  = array();
+$member = array('mb_id'=>'', 'mb_level'=> 1, 'mb_name'=> '', 'mb_point'=> 0, 'mb_certify'=>'', 'mb_email'=>'', 'mb_open'=>'', 'mb_homepage'=>'', 'mb_tel'=>'', 'mb_hp'=>'', 'mb_zip1'=>'', 'mb_zip2'=>'', 'mb_addr1'=>'', 'mb_addr2'=>'', 'mb_addr3'=>'', 'mb_addr_jibeon'=>'', 'mb_signature'=>'', 'mb_profile'=>'');
+$board  = array('bo_table'=>'', 'bo_skin'=>'', 'bo_mobile_skin'=>'', 'bo_upload_count' => 0, 'bo_use_dhtml_editor'=>'', 'bo_subject'=>'', 'bo_image_width'=>0);
+$group  = array('gr_device'=>'', 'gr_subject'=>'');
 $g5     = array();
+if( version_compare( phpversion(), '8.0.0', '>=' ) ) { $g5 = array('title'=>''); }
 $qaconfig = array();
 $g5_debug = array('php'=>array(),'sql'=>array());
 
@@ -353,7 +358,7 @@ if (isset($_REQUEST['wr_id'])) {
     $wr_id = 0;
 }
 
-if (isset($_REQUEST['bo_table'])) {
+if (isset($_REQUEST['bo_table']) && ! is_array($_REQUEST['bo_table'])) {
     $bo_table = preg_replace('/[^a-z0-9_]/i', '', trim($_REQUEST['bo_table']));
     $bo_table = substr($bo_table, 0, 20);
 } else {
@@ -384,7 +389,7 @@ if (isset($_REQUEST['gr_id'])) {
 
 
 // 자동로그인 부분에서 첫로그인에 포인트 부여하던것을 로그인중일때로 변경하면서 코드도 대폭 수정하였습니다.
-if ($_SESSION['ss_mb_id']) { // 로그인중이라면
+if (isset($_SESSION['ss_mb_id']) && $_SESSION['ss_mb_id']) { // 로그인중이라면
     $member = get_member($_SESSION['ss_mb_id']);
 
     // 차단된 회원이면 ss_mb_id 초기화
@@ -410,7 +415,7 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
 
         $tmp_mb_id = substr(preg_replace("/[^a-zA-Z0-9_]*/", "", $tmp_mb_id), 0, 20);
         // 최고관리자는 자동로그인 금지
-        if (strtolower($tmp_mb_id) != strtolower($config['cf_admin'])) {
+        if (strtolower($tmp_mb_id) !== strtolower($config['cf_admin'])) {
             $sql = " select mb_password, mb_intercept_date, mb_leave_date, mb_email_certify from {$g5['member_table']} where mb_id = '{$tmp_mb_id}' ";
             $row = sql_fetch($sql);
             if($row['mb_password']){
@@ -440,10 +445,10 @@ if ($_SESSION['ss_mb_id']) { // 로그인중이라면
 
 
 $write = array();
-$write_table = "";
+$write_table = '';
 if ($bo_table) {
     $board = get_board_db($bo_table, true);
-    if ($board['bo_table']) {
+    if (isset($board['bo_table']) && $board['bo_table']) {
         set_cookie("ck_bo_table", $board['bo_table'], 86400 * 1);
         $gr_id = $board['gr_id'];
         $write_table = $g5['write_prefix'] . $bo_table; // 게시판 테이블 전체이름
@@ -477,7 +482,7 @@ if ($config['cf_editor']) {
 // 회원, 비회원 구분
 $is_member = $is_guest = false;
 $is_admin = '';
-if ($member['mb_id']) {
+if (isset($member['mb_id']) && $member['mb_id']) {
     $is_member = true;
     $is_admin = is_admin($member['mb_id']);
     $member['mb_dir'] = substr($member['mb_id'],0,2);
@@ -530,7 +535,7 @@ if ($is_admin != 'super') {
 
 // 테마경로
 if(defined('_THEME_PREVIEW_') && _THEME_PREVIEW_ === true)
-    $config['cf_theme'] = trim($_GET['theme']);
+    $config['cf_theme'] = isset($_GET['theme']) ? trim($_GET['theme']) : '';
 
 if(isset($config['cf_theme']) && trim($config['cf_theme'])) {
     $theme_path = G5_PATH.'/'.G5_THEME_DIR.'/'.$config['cf_theme'];
@@ -600,9 +605,9 @@ if(defined('G5_SET_DEVICE') && $set_device) {
 // G5_MOBILE_AGENT : config.php 에서 선언
 //------------------------------------------------------------------------------
 if (G5_USE_MOBILE && $set_device) {
-    if ($_REQUEST['device']=='pc')
+    if (isset($_REQUEST['device']) && $_REQUEST['device']=='pc')
         $is_mobile = false;
-    else if ($_REQUEST['device']=='mobile')
+    else if (isset($_REQUEST['device']) && $_REQUEST['device']=='mobile')
         $is_mobile = true;
     else if (isset($_SESSION['ss_is_mobile']))
         $is_mobile = $_SESSION['ss_is_mobile'];
@@ -616,7 +621,7 @@ $_SESSION['ss_is_mobile'] = $is_mobile;
 define('G5_IS_MOBILE', $is_mobile);
 define('G5_DEVICE_BUTTON_DISPLAY', $set_device);
 if (G5_IS_MOBILE) {
-    $g5['mobile_path'] = G5_PATH.'/'.$g5['mobile_dir'];
+    $g5['mobile_path'] = G5_PATH.'/'.G5_MOBILE_DIR;
 }
 //==============================================================================
 
@@ -695,4 +700,3 @@ header('Pragma: no-cache'); // HTTP/1.0
 run_event('common_header');
 
 $html_process = new html_process();
-?>

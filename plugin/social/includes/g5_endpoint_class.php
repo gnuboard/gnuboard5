@@ -29,4 +29,3 @@ class G5_Hybrid_Endpoint extends Hybrid_Endpoint
         die();
     }
 }
-?>

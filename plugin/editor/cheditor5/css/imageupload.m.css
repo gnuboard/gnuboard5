@@ -1,0 +1,136 @@
+#uploadWindow {
+    display: none;
+}
+
+.clear { clear: both; }
+
+#container {
+	padding: 0;
+}
+
+.imageListWrapperHtml5, .imageListWrapper, .dragOver {
+	background-color: #fff;
+	position: absolute;
+    height: 250px;
+    width: 255px;
+    overflow-y: scroll;
+    border-radius: 4px;
+	border: 2px #66b2ff solid;
+}
+/* .imageListWrapperHtml5 {
+    border: 2px #66b2ff dashed;
+} */
+.imageListWrapper {
+    border: 1px #aaa solid;
+    box-shadow: 0 0 3px #aaa;
+}
+.dragOver {
+    border: 2px #ff3399 dashed;
+}
+#imageInfoBox {
+    position: absolute;
+	left: 300px;
+}
+.imageInfoTitle {
+    text-align: center;
+    background-color: #e0e0e0;
+    width: 130px;
+    font-family: "Malgun Gothic",gulim;
+    font-weight: bold;
+    font-size: 12px;
+}
+.imageInfoTitle span {
+    display: inline-block;
+    margin-top: -1px;
+    line-height: 22px;
+}
+.remove-button {
+	width: 93px;
+	height: 22px;
+	cursor: pointer;
+	vertical-align: middle;
+}
+.imageBox, .imageBoxHighlighted {
+	width: 120px;
+	height: 90px;
+	margin: 3px 3px;
+	float: left;
+}
+.imageBox_theImage,.imageBox_theImage_over {
+	width: 100%;
+	height: 100%;
+    position: relative;
+    display: block;
+    background-color: #fff;
+}
+.imageBox .imageBox_theImage{
+	border: 1px solid #e0e0e0;
+	background-image: url('../icons/dot.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+.imageBox .imageBox_theImage_over {
+	border: 1px solid #a0a0a0;
+	background-image: url('../icons/dot.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+    cursor: pointer;
+}
+.imageBoxHighlighted .imageBox_theImage {
+	border: 1px solid #ff6600;
+}
+.imageBoxHighlighted .imageBox_theImage_over {
+	border: 1px solid #ff6600;
+	background-image: url('../icons/dot.gif');
+	background-position: center center;
+	background-repeat: no-repeat;
+}
+
+.removeButton, .removeButton_over {
+	display: none;
+	position: absolute;
+	cursor: pointer;
+    background-image: url(../icons/imageUpload/cross-small.png);
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+.removeButton {
+    border: 1px solid #a0a0a0;
+}
+.removeButton_over {
+    border: 1px solid #808080;
+}
+#insertionMarker {
+	height: 102px;
+	width: 6px;
+	position: absolute;
+	display: none;
+}
+
+#insertionMarker img {
+	float: left;
+}
+	
+#dragDropContent{
+	position: absolute;
+	z-index: 10;
+	display: none;
+}
+
+.button {
+    width: 64px;
+    height: 22px;
+    margin: 0 2px;
+    cursor: pointer;
+    vertical-align: middle;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+    background-color: #fff;
+    line-height: 1em;
+    font-family: 'Malgun Gothic', gulim, tahoma, helvetica;
+    font-size: 12px;
+}

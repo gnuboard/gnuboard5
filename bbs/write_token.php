@@ -10,4 +10,3 @@ set_session('ss_write_'.$bo_table.'_token', '');
 $token = get_write_token($bo_table);
 
 die(json_encode(array('error'=>'', 'token'=>$token, 'url'=>'')));
-?>

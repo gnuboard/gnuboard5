@@ -2,10 +2,12 @@
 $sub_menu = "300200";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'w');
+auth_check_menu($auth, $sub_menu, 'w');
 
 $mb = get_member($mb_id);
-if (!$mb['mb_id'])
+$token = isset($token) ? $token : '';
+
+if (! (isset($mb['mb_id']) && $mb['mb_id']))
     alert('존재하지 않는 회원입니다.');
 
 $g5['title'] = '접근가능그룹';
@@ -51,7 +53,7 @@ $colspan = 4;
 <input type="hidden" name="sfl" value="<?php echo $sfl ?>" id="sfl">
 <input type="hidden" name="stx" value="<?php echo $stx ?>" id="stx">
 <input type="hidden" name="page" value="<?php echo $page ?>" id="page">
-<input type="hidden" name="token" value="<?php echo $token ?>" id="token">
+<input type="hidden" name="token" value="<?php echo get_sanitize_input($token); ?>" id="token">
 <input type="hidden" name="mb_id" value="<?php echo $mb['mb_id'] ?>" id="mb_id">
 <input type="hidden" name="w" value="d" id="w">
 
@@ -129,4 +131,3 @@ function boardgroupmember_form_check(f)
 
 <?php
 include_once('./admin.tail.php');
-?>

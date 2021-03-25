@@ -56,4 +56,3 @@ include_once(G5_PATH.'/head.sub.php');
 alert_close('메일을 정상적으로 발송하였습니다.');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

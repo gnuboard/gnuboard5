@@ -9,6 +9,8 @@ if (!$member['mb_open'] && $is_admin != 'super' && $member['mb_id'] != $mb_id)
     alert_close("자신의 정보를 공개하지 않으면 다른분에게 쪽지를 보낼 수 없습니다. 정보공개 설정은 회원정보수정에서 하실 수 있습니다.");
 
 $content = "";
+$me_recv_mb_id = isset($_GET['me_recv_mb_id']) ? clean_xss_tags($_GET['me_recv_mb_id'], 1, 1) : '';
+
 // 탈퇴한 회원에게 쪽지 보낼 수 없음
 if ($me_recv_mb_id)
 {
@@ -39,4 +41,3 @@ $memo_action_url = G5_HTTPS_BBS_URL."/memo_form_update.php";
 include_once($member_skin_path.'/memo_form.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

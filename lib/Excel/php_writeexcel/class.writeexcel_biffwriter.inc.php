@@ -205,5 +205,3 @@ class writeexcel_biffwriter {
     }
 
 }
-
-?>

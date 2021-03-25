@@ -20,4 +20,3 @@ if( isset($token) ){
 }
 
 add_stylesheet('<link rel="stylesheet" href="'.G5_SMS5_ADMIN_URL.'/css/sms5.css">', 0);
-?>

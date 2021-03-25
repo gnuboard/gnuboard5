@@ -83,8 +83,8 @@ jQuery(function($){
         if($v_img_count) {
             echo "<div id=\"bo_v_img\">\n";
 
-            for ($i=0; $i<=count($view['file']); $i++) {
-                echo get_file_thumbnail($view['file'][$i]);
+            foreach($view['file'] as $view_file) {
+                echo get_file_thumbnail($view_file);
             }
             echo "</div>\n";
 		}
@@ -124,8 +124,8 @@ jQuery(function($){
     </section>
     
     <?php
+    $cnt = 0;
     if ($view['file']['count']) {
-        $cnt = 0;
         for ($i=0; $i<count($view['file']); $i++) {
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view'])
                 $cnt++;
@@ -143,7 +143,7 @@ jQuery(function($){
             if (isset($view['file'][$i]['source']) && $view['file'][$i]['source'] && !$view['file'][$i]['view']) {
          ?>
             <li>
-                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download" download>
+                <a href="<?php echo $view['file'][$i]['href'];  ?>" class="view_file_download">
                     <i class="fa fa-download" aria-hidden="true"></i>
                     <strong><?php echo $view['file'][$i]['source'] ?></strong>
                     <?php echo $view['file'][$i]['content'] ?> (<?php echo $view['file'][$i]['size'] ?>)

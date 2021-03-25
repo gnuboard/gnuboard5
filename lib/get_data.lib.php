@@ -82,8 +82,11 @@ function get_board_db($bo_table, $is_cache=false){
 
         $sql = " select * from {$g5['board_table']} where bo_table = '$bo_table' ";
 
-        $cache[$key] = sql_fetch($sql);
+        $board = sql_fetch($sql);
+        
+        $board_defaults = array('bo_table'=>'', 'bo_skin'=>'', 'bo_mobile_skin'=>'', 'bo_upload_count' => 0, 'bo_use_dhtml_editor'=>'', 'bo_subject'=>'', 'bo_image_width'=>0);
 
+        $cache[$key] = array_merge($board_defaults, (array) $board);
     }
 
     return $cache[$key];
@@ -93,47 +96,48 @@ function get_menu_db($use_mobile=0, $is_cache=false){
     global $g5;
 
     static $cache = array();
-    
-	$cache = run_replace('get_menu_db_cache', $cache, $use_mobile, $is_cache);
-	
-	$key = md5($use_mobile);
+
+    $cache = run_replace('get_menu_db_cache', $cache, $use_mobile, $is_cache);
+
+    $key = md5($use_mobile);
 
     if( $is_cache && isset($cache[$key]) ){
         return $cache[$key];
     }
-	
-	$where = $use_mobile ? "me_mobile_use = '1'" : "me_use = '1'";
 
-	if( !($cache[$key] = run_replace('get_menu_db', array(), $use_mobile)) ){
-		$sql = " select *
-					from {$g5['menu_table']}
-					where $where
-					  and length(me_code) = '2'
-					order by me_order, me_id ";
-		$result = sql_query($sql, false);
+    $where = $use_mobile ? "me_mobile_use = '1'" : "me_use = '1'";
 
-		for ($i=0; $row=sql_fetch_array($result); $i++) {
-			
-			$row['ori_me_link'] = $row['me_link'];
-			$row['me_link'] = short_url_clean($row['me_link']);
-			$cache[$key][$i] = $row;
+    if( !($cache[$key] = run_replace('get_menu_db', array(), $use_mobile)) ){
+        $sql = " select *
+                from {$g5['menu_table']}
+                where $where
+                and length(me_code) = '2'
+                order by me_order, me_id ";
+        $result = sql_query($sql, false);
 
-			$sql2 = " select *
-						from {$g5['menu_table']}
-						where $where
-						  and length(me_code) = '4'
-						  and substring(me_code, 1, 2) = '{$row['me_code']}'
-						order by me_order, me_id ";
-			$result2 = sql_query($sql2);
-			for ($k=0; $row2=sql_fetch_array($result2); $k++) {
-				$row2['ori_me_link'] = $row2['me_link'];
-				$row2['me_link'] = short_url_clean($row2['me_link']);
-				$cache[$key][$i]['sub'][$k] = $row2;
-			}
-		}
-	}
+        for ($i=0; $row=sql_fetch_array($result); $i++) {
 
-	return $cache[$key];
+            $row['ori_me_link'] = $row['me_link'];
+            $row['me_link'] = short_url_clean($row['me_link']);
+            $row['sub'] = isset($row['sub']) ? $row['sub'] : array();
+            $cache[$key][$i] = $row;
+
+            $sql2 = " select *
+                    from {$g5['menu_table']}
+                    where $where
+                    and length(me_code) = '4'
+                    and substring(me_code, 1, 2) = '{$row['me_code']}'
+                    order by me_order, me_id ";
+            $result2 = sql_query($sql2);
+            for ($k=0; $row2=sql_fetch_array($result2); $k++) {
+                $row2['ori_me_link'] = $row2['me_link'];
+                $row2['me_link'] = short_url_clean($row2['me_link']);
+                $cache[$key][$i]['sub'][$k] = $row2;
+            }
+        }
+    }
+
+    return $cache[$key];
 }
 
 // 게시판 테이블에서 하나의 행을 읽음
@@ -461,7 +465,7 @@ function get_memo_not_read($mb_id, $add_where='')
     $sql = " SELECT count(*) as cnt FROM {$g5['memo_table']} WHERE me_recv_mb_id = '$mb_id' and me_type= 'recv' and me_read_datetime like '0%' $add_where ";
     $row = sql_fetch($sql, false);
 
-    return $row['cnt'];
+    return isset($row['cnt']) ? $row['cnt'] : 0;
 }
 
 function get_scrap_totals($mb_id=''){
@@ -472,6 +476,5 @@ function get_scrap_totals($mb_id=''){
     $sql = " select count(*) as cnt from {$g5['scrap_table']} where 1=1 $add_where";
     $row = sql_fetch($sql, false);
 
-    return $row['cnt'];
+    return isset($row['cnt']) ? $row['cnt'] : 0;
 }
-?>

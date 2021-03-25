@@ -2,7 +2,7 @@
 $sub_menu = "200200";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 $sql_common = " from {$g5['point_table']} ";
 
@@ -84,8 +84,8 @@ else
 <form name="fsearch" id="fsearch" class="local_sch01 local_sch" method="get">
 <label for="sfl" class="sound_only">검색대상</label>
 <select name="sfl" id="sfl">
-    <option value="mb_id"<?php echo get_selected($_GET['sfl'], "mb_id"); ?>>회원아이디</option>
-    <option value="po_content"<?php echo get_selected($_GET['sfl'], "po_content"); ?>>내용</option>
+    <option value="mb_id"<?php echo get_selected($sfl, "mb_id"); ?>>회원아이디</option>
+    <option value="po_content"<?php echo get_selected($sfl, "po_content"); ?>>내용</option>
 </select>
 <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
@@ -190,7 +190,7 @@ else
     <input type="hidden" name="sst" value="<?php echo $sst ?>">
     <input type="hidden" name="sod" value="<?php echo $sod ?>">
     <input type="hidden" name="page" value="<?php echo $page ?>">
-    <input type="hidden" name="token" value="<?php echo $token ?>">
+    <input type="hidden" name="token" value="<?php echo isset($token) ? $token : ''; ?>">
 
     <div class="tbl_frm01 tbl_wrap">
         <table>
@@ -249,4 +249,3 @@ function fpointlist_submit(f)
 
 <?php
 include_once ('./admin.tail.php');
-?>

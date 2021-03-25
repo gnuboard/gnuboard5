@@ -151,7 +151,7 @@ if ($stx) {
     for ($i=0; $i<count($search_table); $i++) {
         if ($from_record < $search_table_count[$i]) {
             $table_index = $i;
-            $from_record = $from_record - $search_table_count[$i-1];
+            $from_record = $from_record - ($i > 0 ? $search_table_count[$i-1] : 0);
             break;
         }
     }
@@ -183,7 +183,7 @@ if ($stx) {
             }
 
             // 비밀글은 검색 불가
-            if (strstr($row['wr_option'].$row2['wr_option'], 'secret'))
+            if (strstr($row['wr_option'].(isset($row2['wr_option']) ? $row2['wr_option'] : ''), 'secret'))
                 $row['wr_content'] = '[비밀글 입니다.]';
 
             $subject = get_text($row['wr_subject']);
@@ -228,7 +228,7 @@ $group_select = '<label for="gr_id" class="sound_only">게시판 그룹선택</l
 $sql = " select gr_id, gr_subject from {$g5['group_table']} order by gr_id ";
 $result = sql_query($sql);
 for ($i=0; $row=sql_fetch_array($result); $i++)
-    $group_select .= "<option value=\"".$row['gr_id']."\"".get_selected($_GET['gr_id'], $row['gr_id']).">".$row['gr_subject']."</option>";
+    $group_select .= "<option value=\"".$row['gr_id']."\"".get_selected($gr_id, $row['gr_id']).">".$row['gr_subject']."</option>";
 $group_select .= '</select>';
 
 if (!$sfl) $sfl = 'wr_subject';
@@ -237,4 +237,3 @@ if (!$sop) $sop = 'or';
 include_once($search_skin_path.'/search.skin.php');
 
 include_once('./_tail.php');
-?>

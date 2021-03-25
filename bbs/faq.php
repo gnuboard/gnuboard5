@@ -13,11 +13,11 @@ $result = sql_query($sql);
 while ($row=sql_fetch_array($result))
 {
     $key = $row['fm_id'];
-    if (!$fm_id) $fm_id = $key;
+    if (!isset($fm_id)) $fm_id = $key;
     $faq_master_list[$key] = $row;
 }
 
-if ($fm_id){
+if (isset($fm_id) && $fm_id){
     $qstr .= '&amp;fm_id=' . $fm_id; // 마스터faq key_id
 }
 
@@ -95,4 +95,3 @@ if(is_file($skin_file)) {
 }
 
 include_once('./_tail.php');
-?>

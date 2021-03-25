@@ -66,4 +66,3 @@ if($captcha_mp3 && is_array($captcha_mp3)) {
 if(isset($config['cf_optimize_date'])) {
     sql_query(" update {$g5['config_table']} set cf_optimize_date = '".G5_TIME_YMD."' ");
 }
-?>

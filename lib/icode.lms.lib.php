@@ -56,8 +56,8 @@ class LMS {
 	}
 
 	function Init() {
-		$this->Data		= "";	// 발송하기 위한 패킷내용이 배열로 들어간다.
-		$this->Result	= "";	// 발송결과값이 배열로 들어간다.
+		$this->Data		= array();	// 발송하기 위한 패킷내용이 배열로 들어간다.
+		$this->Result	= array();	// 발송결과값이 배열로 들어간다.
 	}
 
 	function Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate="", $nCount) {
@@ -65,6 +65,7 @@ class LMS {
 
 		// 문자 타입별 Port 설정.
 		$sendType = strlen($strData) > 90 ? 1 : 0; // 0: SMS / 1: LMS
+        $is_use_json = false;
 
         // 토큰키를 사용한다면
         if( isset($config['cf_icode_token_key']) && $config['cf_icode_token_key'] === $this->icode_key ){
@@ -358,4 +359,3 @@ function CheckCallCenter($url, $dest, $data) {
 			return CutChar($data,80);	break;
 	}
 }
-?>

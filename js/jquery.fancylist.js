@@ -18,7 +18,7 @@
         var $element = this.find(cfg.element);
         var $this = this;
 
-        if($element.size() < 1)
+        if($element.length < 1)
             return;
 
         function item_arrange()

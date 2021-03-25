@@ -47,4 +47,3 @@ for ($i=0; $row=sql_fetch_array($result); $i++) {
 </div>
 <?php
 include_once(G5_THEME_PATH.'/tail.php');
-?>

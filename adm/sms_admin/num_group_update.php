@@ -2,16 +2,18 @@
 $sub_menu = "900700";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+$post_chk = (isset($_POST['chk']) && is_array($_POST['chk'])) ? $_POST['chk'] : array();
+
+auth_check_menu($auth, $sub_menu, "w");
 
 if ($w == 'u') // 업데이트
 {
-    for ($i=0; $i<count($_POST['chk']); $i++)
+    for ($i=0; $i<count($post_chk); $i++)
     {
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
-        $bg_no = (int) $_POST['bg_no'][$k];
-        $bg_name = strip_tags(clean_xss_attributes($_POST['bg_name'][$k]));
+        $k = $post_chk[$i];
+        $bg_no = isset($_POST['bg_no'][$k]) ? (int) $_POST['bg_no'][$k] : 0;
+        $bg_name = isset($_POST['bg_name'][$k]) ? strip_tags(clean_xss_attributes($_POST['bg_name'][$k])) : '';
 
         if (!is_numeric($bg_no))
             alert('그룹 고유번호가 없습니다.');
@@ -32,11 +34,11 @@ if ($w == 'u') // 업데이트
 }
 else if ($w == 'de') // 그룹삭제
 {
-    for ($i=0; $i<count($_POST['chk']); $i++)
+    for ($i=0; $i<count($post_chk); $i++)
     {
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
-        $bg_no = (int) $_POST['bg_no'][$k];
+        $k = $post_chk[$i];
+        $bg_no = isset($_POST['bg_no'][$k]) ? (int) $_POST['bg_no'][$k] : 0;
 
         if (!is_numeric($bg_no))
             alert('그룹 고유번호가 없습니다.');
@@ -51,11 +53,11 @@ else if ($w == 'de') // 그룹삭제
 }
 else if ($w == 'em') // 비우기
 {
-    for ($i=0; $i<count($_POST['chk']); $i++)
+    for ($i=0; $i<count($post_chk); $i++)
     {
         // 실제 번호를 넘김
-        $k = $_POST['chk'][$i];
-        $bg_no = (int) $_POST['bg_no'][$k];
+        $k = $post_chk[$i];
+        $bg_no = isset($_POST['bg_no'][$k]) ? (int) $_POST['bg_no'][$k] : 0;
 
         sql_query("update {$g5['sms5_book_group_table']} set bg_count = 0, bg_member = 0, bg_nomember = 0, bg_receipt = 0, bg_reject = 0 where bg_no='$bg_no'");
         sql_query("delete from {$g5['sms5_book_table']} where bg_no='$bg_no'");
@@ -63,7 +65,7 @@ else if ($w == 'em') // 비우기
 }
 else // 등록
 {
-    $bg_name = strip_tags(clean_xss_attributes($bg_name));
+    $bg_name = isset($_POST['bg_name']) ? strip_tags(clean_xss_attributes($_POST['bg_name'])) : '';
 
     if (!strlen(trim($bg_name)))
         alert('그룹명을 입력해주세요');
@@ -76,4 +78,3 @@ else // 등록
 }
 
 goto_url('./num_group.php');
-?>

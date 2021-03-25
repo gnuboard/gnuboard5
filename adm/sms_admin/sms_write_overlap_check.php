@@ -2,11 +2,13 @@
 $sub_menu = "900300";
 include_once("./_common.php");
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
 $list = $hps = array();
 
 $overlap = 0;
+
+$send_list = isset($_REQUEST['send_list']) ? clean_xss_tags($_REQUEST['send_list'], 1, 1) : '';
 
 if( !$send_list ){
     die("넘어온 데이터 값이 없습니다.");
@@ -66,4 +68,3 @@ if ($overlap)
     die("중복되는 휴대폰번호가 $overlap 건 있습니다. ");
 else
     die("중복되는 휴대폰번호가 없습니다. ");
-?>

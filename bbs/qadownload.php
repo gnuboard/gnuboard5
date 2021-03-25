@@ -4,7 +4,7 @@ include_once('./_common.php');
 // clean the output buffer
 ob_end_clean();
 
-$no = (int)$no;
+$no = isset($_REQUEST['no']) ? (int) $_REQUEST['no'] : 0;
 
 // 쿠키에 저장된 ID값과 넘어온 ID값을 비교하여 같지 않을 경우 오류 발생
 // 다른곳에서 링크 거는것을 방지하기 위한 코드
@@ -72,4 +72,3 @@ while(!feof($fp)) {
 }
 fclose ($fp);
 flush();
-?>

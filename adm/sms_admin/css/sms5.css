@@ -126,7 +126,7 @@
 
 /* 휴대폰번호 파일 */
 #sms5_fileup_frm {margin:0 0 10px;padding:0 0;border-bottom:1px solid #e9e9e9}
-#sms5_fileup_frm div {padding:5px 0;;border-bottom:1px solid #f4f4f4}
+#sms5_fileup_frm div {padding:5px 0;border-bottom:1px solid #f4f4f4}
 #sms5_fileup_frm div.sch_last {margin:0;border:0}
 #sms5_fileup_frm strong {display:inline-block;width:80px}
 #sms5_fileup_frm strong.sch_long {width:160px}

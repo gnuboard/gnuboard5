@@ -2,7 +2,7 @@
 $sub_menu = "300300";
 include_once('./_common.php');
 
-auth_check($auth[$sub_menu], 'r');
+auth_check_menu($auth, $sub_menu, 'r');
 
 // 체크된 자료 삭제
 if (isset($_POST['chk']) && is_array($_POST['chk'])) {
@@ -79,8 +79,8 @@ var list_delete_php = 'popular_list.php';
 <div class="sch_last">
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
-        <option value="pp_word"<?php echo get_selected($_GET['sfl'], "pp_word"); ?>>검색어</option>
-        <option value="pp_date"<?php echo get_selected($_GET['sfl'], "pp_date"); ?>>등록일</option>
+        <option value="pp_word"<?php echo get_selected($sfl, "pp_word"); ?>>검색어</option>
+        <option value="pp_date"<?php echo get_selected($sfl, "pp_date"); ?>>등록일</option>
     </select>
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?php echo $stx ?>" id="stx" required class="required frm_input">
@@ -94,7 +94,7 @@ var list_delete_php = 'popular_list.php';
 <input type="hidden" name="sfl" value="<?php echo $sfl ?>">
 <input type="hidden" name="stx" value="<?php echo $stx ?>">
 <input type="hidden" name="page" value="<?php echo $page ?>">
-<input type="hidden" name="token" value="<?php echo $token ?>">
+<input type="hidden" name="token" value="<?php echo isset($token) ? $token : ''; ?>">
 
 <div class="tbl_head01 tbl_wrap">
     <table>
@@ -168,4 +168,3 @@ $(function() {
 
 <?php
 include_once('./admin.tail.php');
-?>

@@ -3,15 +3,17 @@ $sub_menu = '300700';
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-auth_check($auth[$sub_menu], "w");
+auth_check_menu($auth, $sub_menu, "w");
 
-$fm_id = (int) $fm_id;
-$fa_id = isset($fa_id) ? (int) $fa_id : 0;
+$fm_id = isset($_GET['fm_id']) ? (int) $_GET['fm_id'] : 0;
+$fa_id = isset($_GET['fa_id']) ? (int) $_GET['fa_id'] : 0;
 
 $sql = " select * from {$g5['faq_master_table']} where fm_id = '$fm_id' ";
 $fm = sql_fetch($sql);
 
 $html_title = 'FAQ '.$fm['fm_subject'];
+
+$fa = array('fa_id'=>0, 'fm_id'=>0, 'fa_subject'=>'', 'fa_content'=>'', 'fa_order'=>0);
 
 if ($w == "u")
 {
@@ -98,4 +100,3 @@ function frmfaqform_check(f)
 
 <?php
 include_once (G5_ADMIN_PATH.'/admin.tail.php');
-?>

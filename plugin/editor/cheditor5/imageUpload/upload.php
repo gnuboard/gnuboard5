@@ -130,4 +130,3 @@ $rdata = sprintf('{"fileUrl": "%s", "filePath": "%s", "fileName": "%s", "fileSiz
 	$filesize );
 
 echo $rdata;
-?>

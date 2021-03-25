@@ -11,7 +11,7 @@ if(!$theme || !in_array($theme, $theme_dir))
 $info = get_theme_info($theme);
 
 $arr_mode = array('index', 'list', 'view');
-$mode = substr(strip_tags($_GET['mode']), 0, 20);
+$mode = isset($_GET['mode']) ? substr(strip_tags($_GET['mode']), 0, 20) : '';
 if(!in_array($mode, $arr_mode))
     $mode = 'index';
 
@@ -115,4 +115,3 @@ require_once(G5_PATH.'/head.sub.php');
 
 <?php
 require_once(G5_PATH.'/tail.sub.php');
-?>

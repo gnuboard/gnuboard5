@@ -33,4 +33,3 @@ $mb_profile = $mb['mb_profile'] ? conv_content($mb['mb_profile'],0) : '소개 �
 include_once($member_skin_path.'/profile.skin.php');
 
 include_once(G5_PATH.'/tail.sub.php');
-?>

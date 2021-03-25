@@ -74,4 +74,3 @@ mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb['mb_email'
 run_event('password_lost2_after', $mb, $mb_nonce, $mb_lost_certify);
 
 alert_close($email.' 메일로 회원아이디와 비밀번호를 인증할 수 있는 메일이 발송 되었습니다.\\n\\n메일을 확인하여 주십시오.');
-?>

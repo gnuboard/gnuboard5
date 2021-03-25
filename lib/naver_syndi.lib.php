@@ -51,4 +51,3 @@ function naver_syndi_ping($bo_table, $wr_id)
 
     return $response;
 }
-?>

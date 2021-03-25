@@ -4,11 +4,11 @@ include_once('./_common.php');
 
 check_demo();
 
-auth_check($auth[$sub_menu], 'd');
+auth_check_menu($auth, $sub_menu, 'd');
 
 check_admin_token();
 
-$count = count($_POST['chk']);
+$count = (isset($_POST['chk']) && is_array($_POST['chk'])) ? count($_POST['chk']) : 0;
 if(!$count)
     alert($_POST['act_button'].' 하실 항목을 하나 이상 체크하세요.');
 
@@ -58,4 +58,3 @@ for ($i=0; $i<$count; $i++)
 }
 
 goto_url('./point_list.php?'.$qstr);
-?>
