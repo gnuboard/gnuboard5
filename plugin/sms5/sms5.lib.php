@@ -427,10 +427,6 @@ if($config['cf_sms_type'] == 'LMS') {
                 if (!$fsocket) return false;
                 set_time_limit(300);
 
-                ## php4.3.10일경우
-                ## zend 최신버전으로 업해주세요..
-                ## 또는 69번째 줄을 $this->Data as $tmp => $puts 로 변경해 주세요.
-
                 foreach($this->Data as $puts) {
                     $dest = substr($puts,26,11);
                     fputs($fsocket, $puts);
