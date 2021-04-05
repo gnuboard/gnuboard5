@@ -53,7 +53,7 @@ if(isset($it['it_id']) && $it['it_id']) {
         <td>
             <input type="hidden" name="ii_article[]" value="<?php echo $el_name; ?>">
             <?php if ($el_example != "") echo help($el_example); ?>
-            <input type="text" name="ii_value[]" value="<?php echo $el_value; ?>" id="ii_article_<?php echo $el_name; ?>" required class="frm_input required" />
+            <input type="text" name="ii_value[]" value="<?php echo get_text($el_value); ?>" id="ii_article_<?php echo $el_name; ?>" required class="frm_input required" />
         </td>
         <?php if ($el_no == 0) { ?>
         <td rowspan="<?php echo $el_length; ?>" class="td_grpset">

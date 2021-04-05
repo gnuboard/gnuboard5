@@ -235,6 +235,7 @@ $check_sanitize_keys = array(
 'de_sms_use5',                  //SMS 상품배송시 고객님께 발송
 'cf_icode_server_ip',           // 아이코드 ip
 'cf_icode_server_port',         // 아이코드 port
+'cf_icode_token_key',           // 아이코드 토큰키 (JSON버전)
 );
 
 foreach( $check_sanitize_keys as $key ){
