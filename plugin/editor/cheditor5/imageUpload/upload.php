@@ -69,6 +69,8 @@ if( !$is_editor_upload ){
     exit;
 }
 
+run_event('cheditor_photo_upload', $data_dir, $data_url);
+
 //----------------------------------------------------------------------------
 //
 //

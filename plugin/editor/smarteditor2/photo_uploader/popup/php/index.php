@@ -40,6 +40,8 @@ if( isset($_GET['_nonce']) && ft_nonce_is_valid( $_GET['_nonce'] , 'smarteditor'
 }
 
 if( $is_editor_upload ) {
+    
+    run_event('smarteditor_photo_upload', $data_dir, $data_url);
 
     require('UploadHandler.php');
     $options = array(
