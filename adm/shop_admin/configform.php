@@ -357,13 +357,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type1_list_skin']); ?>
                 </select>
                 <label for="de_type1_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_type1_list_mod" value="<?php echo $default['de_type1_list_mod']; ?>" id="de_type1_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_type1_list_mod" value="<?php echo get_sanitize_input($default['de_type1_list_mod']); ?>" id="de_type1_list_mod" class="frm_input" size="3">
                 <label for="de_type1_list_row">출력할 줄 수</label>
-                <input type="text" name="de_type1_list_row" value="<?php echo $default['de_type1_list_row']; ?>" id="de_type1_list_row" class="frm_input" size="3">
+                <input type="text" name="de_type1_list_row" value="<?php echo get_sanitize_input($default['de_type1_list_row']); ?>" id="de_type1_list_row" class="frm_input" size="3">
                 <label for="de_type1_img_width">이미지 폭</label>
-                <input type="text" name="de_type1_img_width" value="<?php echo $default['de_type1_img_width']; ?>" id="de_type1_img_width" class="frm_input" size="3">
+                <input type="text" name="de_type1_img_width" value="<?php echo get_sanitize_input($default['de_type1_img_width']); ?>" id="de_type1_img_width" class="frm_input" size="3">
                 <label for="de_type1_img_height">이미지 높이</label>
-                <input type="text" name="de_type1_img_height" value="<?php echo $default['de_type1_img_height']; ?>" id="de_type1_img_height" class="frm_input" size="3">
+                <input type="text" name="de_type1_img_height" value="<?php echo get_sanitize_input($default['de_type1_img_height']); ?>" id="de_type1_img_height" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -376,13 +376,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type2_list_skin']); ?>
                 </select>
                 <label for="de_type2_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_type2_list_mod" value="<?php echo $default['de_type2_list_mod']; ?>" id="de_type2_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_type2_list_mod" value="<?php echo get_sanitize_input($default['de_type2_list_mod']); ?>" id="de_type2_list_mod" class="frm_input" size="3">
                 <label for="de_type2_list_row">출력할 줄 수</label>
-                <input type="text" name="de_type2_list_row" value="<?php echo $default['de_type2_list_row']; ?>" id="de_type2_list_row" class="frm_input" size="3">
+                <input type="text" name="de_type2_list_row" value="<?php echo get_sanitize_input($default['de_type2_list_row']); ?>" id="de_type2_list_row" class="frm_input" size="3">
                 <label for="de_type2_img_width">이미지 폭</label>
-                <input type="text" name="de_type2_img_width" value="<?php echo $default['de_type2_img_width']; ?>" id="de_type2_img_width" class="frm_input" size="3">
+                <input type="text" name="de_type2_img_width" value="<?php echo get_sanitize_input($default['de_type2_img_width']); ?>" id="de_type2_img_width" class="frm_input" size="3">
                 <label for="de_type2_img_height">이미지 높이</label>
-                <input type="text" name="de_type2_img_height" value="<?php echo $default['de_type2_img_height']; ?>" id="de_type2_img_height" class="frm_input" size="3">
+                <input type="text" name="de_type2_img_height" value="<?php echo get_sanitize_input($default['de_type2_img_height']); ?>" id="de_type2_img_height" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -395,13 +395,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type3_list_skin']); ?>
                 </select>
                 <label for="de_type3_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_type3_list_mod" value="<?php echo $default['de_type3_list_mod']; ?>" id="de_type3_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_type3_list_mod" value="<?php echo get_sanitize_input($default['de_type3_list_mod']); ?>" id="de_type3_list_mod" class="frm_input" size="3">
                 <label for="de_type3_list_row">출력할 줄 수</label>
-                <input type="text" name="de_type3_list_row" value="<?php echo $default['de_type3_list_row']; ?>" id="de_type3_list_row" class="frm_input" size="3">
+                <input type="text" name="de_type3_list_row" value="<?php echo get_sanitize_input($default['de_type3_list_row']); ?>" id="de_type3_list_row" class="frm_input" size="3">
                 <label for="de_type3_img_width">이미지 폭</label>
-                <input type="text" name="de_type3_img_width" value="<?php echo $default['de_type3_img_width']; ?>" id="de_type3_img_width" class="frm_input" size="3">
+                <input type="text" name="de_type3_img_width" value="<?php echo get_sanitize_input($default['de_type3_img_width']); ?>" id="de_type3_img_width" class="frm_input" size="3">
                 <label for="de_type3_img_height">이미지 높이</label>
-                <input type="text" name="de_type3_img_height" value="<?php echo $default['de_type3_img_height']; ?>" id="de_type3_img_height" class="frm_input" size="3">
+                <input type="text" name="de_type3_img_height" value="<?php echo get_sanitize_input($default['de_type3_img_height']); ?>" id="de_type3_img_height" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -414,13 +414,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type4_list_skin']); ?>
                 </select>
                 <label for="de_type4_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_type4_list_mod" value="<?php echo $default['de_type4_list_mod']; ?>" id="de_type4_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_type4_list_mod" value="<?php echo get_sanitize_input($default['de_type4_list_mod']); ?>" id="de_type4_list_mod" class="frm_input" size="3">
                 <label for="de_type4_list_row">출력할 줄 수</label>
-                <input type="text" name="de_type4_list_row" value="<?php echo $default['de_type4_list_row']; ?>" id="de_type4_list_row" class="frm_input" size="3">
+                <input type="text" name="de_type4_list_row" value="<?php echo get_sanitize_input($default['de_type4_list_row']); ?>" id="de_type4_list_row" class="frm_input" size="3">
                 <label for="de_type4_img_width">이미지 폭</label>
-                <input type="text" name="de_type4_img_width" value="<?php echo $default['de_type4_img_width']; ?>" id="de_type4_img_width" class="frm_input" size="3">
+                <input type="text" name="de_type4_img_width" value="<?php echo get_sanitize_input($default['de_type4_img_width']); ?>" id="de_type4_img_width" class="frm_input" size="3">
                 <label for="de_type4_img_height">이미지 높이</label>
-                <input type="text" name="de_type4_img_height" value="<?php echo $default['de_type4_img_height']; ?>" id="de_type4_img_height" class="frm_input" size="3">
+                <input type="text" name="de_type4_img_height" value="<?php echo get_sanitize_input($default['de_type4_img_height']); ?>" id="de_type4_img_height" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -433,13 +433,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_type5_list_skin']); ?>
                 </select>
                 <label for="de_type5_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_type5_list_mod" value="<?php echo $default['de_type5_list_mod']; ?>" id="de_type5_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_type5_list_mod" value="<?php echo get_sanitize_input($default['de_type5_list_mod']); ?>" id="de_type5_list_mod" class="frm_input" size="3">
                 <label for="de_type5_list_row">출력할 줄 수</label>
-                <input type="text" name="de_type5_list_row" value="<?php echo $default['de_type5_list_row']; ?>" id="de_type5_list_row" class="frm_input" size="3">
+                <input type="text" name="de_type5_list_row" value="<?php echo get_sanitize_input($default['de_type5_list_row']); ?>" id="de_type5_list_row" class="frm_input" size="3">
                 <label for="de_type5_img_width">이미지 폭</label>
-                <input type="text" name="de_type5_img_width" value="<?php echo $default['de_type5_img_width']; ?>" id="de_type5_img_width" class="frm_input" size="3">
+                <input type="text" name="de_type5_img_width" value="<?php echo get_sanitize_input($default['de_type5_img_width']); ?>" id="de_type5_img_width" class="frm_input" size="3">
                 <label for="de_type5_img_height">이미지 높이</label>
-                <input type="text" name="de_type5_img_height" value="<?php echo $default['de_type5_img_height']; ?>" id="de_type5_img_height" class="frm_input" size="3">
+                <input type="text" name="de_type5_img_height" value="<?php echo get_sanitize_input($default['de_type5_img_height']); ?>" id="de_type5_img_height" class="frm_input" size="3">
             </td>
         </tr>
         </tbody>
@@ -477,13 +477,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type1_list_skin']); ?>
                 </select>
                 <label for="de_mobile_type1_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_mobile_type1_list_mod" value="<?php echo $default['de_mobile_type1_list_mod']; ?>" id="de_mobile_type1_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type1_list_mod" value="<?php echo get_sanitize_input($default['de_mobile_type1_list_mod']); ?>" id="de_mobile_type1_list_mod" class="frm_input" size="3">
                  <label for="de_mobile_type1_list_row">출력할 줄 수</label>
-                <input type="text" name="de_mobile_type1_list_row" value="<?php echo $default['de_mobile_type1_list_row']; ?>" id="de_mobile_type1_list_row" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type1_list_row" value="<?php echo get_sanitize_input($default['de_mobile_type1_list_row']); ?>" id="de_mobile_type1_list_row" class="frm_input" size="3">
                 <label for="de_mobile_type1_img_width">이미지 폭</label>
-                <input type="text" name="de_mobile_type1_img_width" value="<?php echo $default['de_mobile_type1_img_width']; ?>" id="de_mobile_type1_img_width" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type1_img_width" value="<?php echo get_sanitize_input($default['de_mobile_type1_img_width']); ?>" id="de_mobile_type1_img_width" class="frm_input" size="3">
                 <label for="de_mobile_type1_img_height">이미지 높이</label>
-                <input type="text" name="de_mobile_type1_img_height" value="<?php echo $default['de_mobile_type1_img_height']; ?>" id="de_mobile_type1_img_height" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type1_img_height" value="<?php echo get_sanitize_input($default['de_mobile_type1_img_height']); ?>" id="de_mobile_type1_img_height" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -495,13 +495,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type2_list_skin']); ?>
                 </select>
                 <label for="de_mobile_type2_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_mobile_type2_list_mod" value="<?php echo $default['de_mobile_type2_list_mod']; ?>" id="de_mobile_type2_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type2_list_mod" value="<?php echo get_sanitize_input($default['de_mobile_type2_list_mod']); ?>" id="de_mobile_type2_list_mod" class="frm_input" size="3">
                  <label for="de_mobile_type2_list_row">출력할 줄 수</label>
-                <input type="text" name="de_mobile_type2_list_row" value="<?php echo $default['de_mobile_type2_list_row']; ?>" id="de_mobile_type2_list_row" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type2_list_row" value="<?php echo get_sanitize_input($default['de_mobile_type2_list_row']); ?>" id="de_mobile_type2_list_row" class="frm_input" size="3">
                 <label for="de_mobile_type2_img_width">이미지 폭</label>
-                <input type="text" name="de_mobile_type2_img_width" value="<?php echo $default['de_mobile_type2_img_width']; ?>" id="de_mobile_type2_img_width" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type2_img_width" value="<?php echo get_sanitize_input($default['de_mobile_type2_img_width']); ?>" id="de_mobile_type2_img_width" class="frm_input" size="3">
                 <label for="de_mobile_type2_img_height">이미지 높이</label>
-                <input type="text" name="de_mobile_type2_img_height" value="<?php echo $default['de_mobile_type2_img_height']; ?>" id="de_mobile_type2_img_height" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type2_img_height" value="<?php echo get_sanitize_input($default['de_mobile_type2_img_height']); ?>" id="de_mobile_type2_img_height" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -514,13 +514,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type3_list_skin']); ?>
                 </select>
                 <label for="de_mobile_type3_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_mobile_type3_list_mod" value="<?php echo $default['de_mobile_type3_list_mod']; ?>" id="de_mobile_type3_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type3_list_mod" value="<?php echo get_sanitize_input($default['de_mobile_type3_list_mod']); ?>" id="de_mobile_type3_list_mod" class="frm_input" size="3">
                  <label for="de_mobile_type3_list_row">출력할 줄 수</label>
-                <input type="text" name="de_mobile_type3_list_row" value="<?php echo $default['de_mobile_type3_list_row']; ?>" id="de_mobile_type3_list_row" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type3_list_row" value="<?php echo get_sanitize_input($default['de_mobile_type3_list_row']); ?>" id="de_mobile_type3_list_row" class="frm_input" size="3">
                 <label for="de_mobile_type3_img_width">이미지 폭</label>
-                <input type="text" name="de_mobile_type3_img_width" value="<?php echo $default['de_mobile_type3_img_width']; ?>" id="de_mobile_type3_img_width" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type3_img_width" value="<?php echo get_sanitize_input($default['de_mobile_type3_img_width']); ?>" id="de_mobile_type3_img_width" class="frm_input" size="3">
                 <label for="de_mobile_type3_img_height">이미지 높이</label>
-                <input type="text" name="de_mobile_type3_img_height" value="<?php echo $default['de_mobile_type3_img_height']; ?>" id="de_mobile_type3_img_height" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type3_img_height" value="<?php echo get_sanitize_input($default['de_mobile_type3_img_height']); ?>" id="de_mobile_type3_img_height" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -533,13 +533,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type4_list_skin']); ?>
                 </select>
                 <label for="de_mobile_type4_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_mobile_type4_list_mod" value="<?php echo $default['de_mobile_type4_list_mod']; ?>" id="de_mobile_type4_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type4_list_mod" value="<?php echo get_sanitize_input($default['de_mobile_type4_list_mod']); ?>" id="de_mobile_type4_list_mod" class="frm_input" size="3">
                  <label for="de_mobile_type4_list_row">출력할 줄 수</label>
-                <input type="text" name="de_mobile_type4_list_row" value="<?php echo $default['de_mobile_type4_list_row']; ?>" id="de_mobile_type4_list_row" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type4_list_row" value="<?php echo get_sanitize_input($default['de_mobile_type4_list_row']); ?>" id="de_mobile_type4_list_row" class="frm_input" size="3">
                 <label for="de_mobile_type4_img_width">이미지 폭</label>
-                <input type="text" name="de_mobile_type4_img_width" value="<?php echo $default['de_mobile_type4_img_width']; ?>" id="de_mobile_type4_img_width" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type4_img_width" value="<?php echo get_sanitize_input($default['de_mobile_type4_img_width']); ?>" id="de_mobile_type4_img_width" class="frm_input" size="3">
                 <label for="de_mobile_type4_img_height">이미지 높이</label>
-                <input type="text" name="de_mobile_type4_img_height" value="<?php echo $default['de_mobile_type4_img_height']; ?>" id="de_mobile_type4_img_height" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type4_img_height" value="<?php echo get_sanitize_input($default['de_mobile_type4_img_height']); ?>" id="de_mobile_type4_img_height" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -552,13 +552,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^main.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_type5_list_skin']); ?>
                 </select>
                 <label for="de_mobile_type5_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_mobile_type5_list_mod" value="<?php echo $default['de_mobile_type5_list_mod']; ?>" id="de_mobile_type5_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type5_list_mod" value="<?php echo get_sanitize_input($default['de_mobile_type5_list_mod']); ?>" id="de_mobile_type5_list_mod" class="frm_input" size="3">
                  <label for="de_mobile_type5_list_row">출력할 줄 수</label>
-                <input type="text" name="de_mobile_type5_list_row" value="<?php echo $default['de_mobile_type5_list_row']; ?>" id="de_mobile_type5_list_row" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type5_list_row" value="<?php echo get_sanitize_input($default['de_mobile_type5_list_row']); ?>" id="de_mobile_type5_list_row" class="frm_input" size="3">
                 <label for="de_mobile_type5_img_width">이미지 폭</label>
-                <input type="text" name="de_mobile_type5_img_width" value="<?php echo $default['de_mobile_type5_img_width']; ?>" id="de_mobile_type5_img_width" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type5_img_width" value="<?php echo get_sanitize_input($default['de_mobile_type5_img_width']); ?>" id="de_mobile_type5_img_width" class="frm_input" size="3">
                 <label for="de_mobile_type5_img_height">이미지 높이</label>
-                <input type="text" name="de_mobile_type5_img_height" value="<?php echo $default['de_mobile_type5_img_height']; ?>" id="de_mobile_type5_img_height" class="frm_input" size="3">
+                <input type="text" name="de_mobile_type5_img_height" value="<?php echo get_sanitize_input($default['de_mobile_type5_img_height']); ?>" id="de_mobile_type5_img_height" class="frm_input" size="3">
             </td>
         </tr>
         </tbody>
@@ -711,14 +711,14 @@ if(!$default['de_kakaopay_cancelpwd']){
             <th scope="row"><label for="de_settle_min_point">결제 최소포인트</label></th>
             <td>
                 <?php echo help("회원의 포인트가 설정값 이상일 경우만 주문시 결제에 사용할 수 있습니다.\n포인트 사용을 하지 않는 경우에는 의미가 없습니다."); ?>
-                <input type="text" name="de_settle_min_point" value="<?php echo $default['de_settle_min_point']; ?>" id="de_settle_min_point" class="frm_input" size="10"> 점
+                <input type="text" name="de_settle_min_point" value="<?php echo get_sanitize_input($default['de_settle_min_point']); ?>" id="de_settle_min_point" class="frm_input" size="10"> 점
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="de_settle_max_point">최대 결제포인트</label></th>
             <td>
                 <?php echo help("주문 결제시 최대로 사용할 수 있는 포인트를 설정합니다.\n포인트 사용을 하지 않는 경우에는 의미가 없습니다."); ?>
-                <input type="text" name="de_settle_max_point" value="<?php echo $default['de_settle_max_point']; ?>" id="de_settle_max_point" class="frm_input" size="10"> 점
+                <input type="text" name="de_settle_max_point" value="<?php echo get_sanitize_input($default['de_settle_max_point']); ?>" id="de_settle_max_point" class="frm_input" size="10"> 점
             </td>
         </tr>
         <tr>
@@ -746,7 +746,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             <th scope="row"><label for="de_point_days">주문완료 포인트</label></th>
             <td>
                 <?php echo help("주문자가 회원일 경우에만 주문완료시 포인트를 지급합니다. 주문취소, 반품 등을 고려하여 포인트를 지급할 적당한 기간을 입력하십시오. (기본값은 7일)\n0일로 설정하는 경우에는 주문완료와 동시에 포인트를 지급합니다."); ?>
-                주문 완료 <input type="text" name="de_point_days" value="<?php echo $default['de_point_days']; ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 지급
+                주문 완료 <input type="text" name="de_point_days" value="<?php echo get_sanitize_input($default['de_point_days']); ?>" id="de_point_days" class="frm_input" size="2"> 일 이후에 포인트를 지급
             </td>
         </tr>
         <tr>
@@ -768,14 +768,14 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("NHN KCP 에서 받은 SR 로 시작하는 영대문자, 숫자 혼용 총 5자리 중 SR 을 제외한 나머지 3자리 SITE CODE 를 입력하세요.\n만약, 사이트코드가 SR로 시작하지 않는다면 NHN KCP에 사이트코드 변경 요청을 하십시오. 예) SR9A3"); ?>
-                <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo $default['de_kcp_mid']; ?>" id="de_kcp_mid" class="frm_input code_input" size="2" maxlength="3"> 영대문자, 숫자 혼용 3자리
+                <span class="sitecode">SR</span> <input type="text" name="de_kcp_mid" value="<?php echo get_sanitize_input($default['de_kcp_mid']); ?>" id="de_kcp_mid" class="frm_input code_input" size="2" maxlength="3"> 영대문자, 숫자 혼용 3자리
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld">
             <th scope="row"><label for="de_kcp_site_key">NHN KCP SITE KEY</label></th>
             <td>
                 <?php echo help("25자리 영대소문자와 숫자 - 그리고 _ 로 이루어 집니다. SITE KEY 발급 NHN KCP 전화: 1544-8660\n예) 1Q9YRV83gz6TukH8PjH0xFf__"); ?>
-                <input type="text" name="de_kcp_site_key" value="<?php echo $default['de_kcp_site_key']; ?>" id="de_kcp_site_key" class="frm_input" size="36" maxlength="25">
+                <input type="text" name="de_kcp_site_key" value="<?php echo get_sanitize_input($default['de_kcp_site_key']); ?>" id="de_kcp_site_key" class="frm_input" size="36" maxlength="25">
             </td>
         </tr>
         <tr class="pg_info_fld kcp_info_fld">
@@ -801,14 +801,14 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("토스페이먼츠에서 받은 si_ 로 시작하는 상점 ID를 입력하세요.\n만약, 상점 ID가 si_로 시작하지 않는다면 토스페이먼츠에 사이트코드 변경 요청을 하십시오. 예) si_lguplus\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 토스페이먼츠 상점아이디와 동일합니다."); ?>
-                <span class="sitecode">si_</span> <input type="text" name="cf_lg_mid" value="<?php echo $config['cf_lg_mid']; ?>" id="cf_lg_mid" class="frm_input code_input" size="10" maxlength="20"> 영문자, 숫자 혼용
+                <span class="sitecode">si_</span> <input type="text" name="cf_lg_mid" value="<?php echo get_sanitize_input($config['cf_lg_mid']); ?>" id="cf_lg_mid" class="frm_input code_input" size="10" maxlength="20"> 영문자, 숫자 혼용
             </td>
         </tr>
         <tr class="pg_info_fld lg_info_fld">
             <th scope="row"><label for="cf_lg_mert_key">토스페이먼츠 MERT KEY</label></th>
             <td>
                 <?php echo help("토스페이먼츠 상점MertKey는 상점관리자 -> 계약정보 -> 상점정보관리에서 확인하실 수 있습니다.\n예) 95160cce09854ef44d2edb2bfb05f9f3\n<a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_cert\">기본환경설정 &gt; 본인확인</a> 설정의 토스페이먼츠 MERT KEY와 동일합니다."); ?>
-                <input type="text" name="cf_lg_mert_key" value="<?php echo $config['cf_lg_mert_key']; ?>" id="cf_lg_mert_key" class="frm_input " size="36" maxlength="50">
+                <input type="text" name="cf_lg_mert_key" value="<?php echo get_sanitize_input($config['cf_lg_mert_key']); ?>" id="cf_lg_mert_key" class="frm_input " size="36" maxlength="50">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld" id="inicis_info_anchor">
@@ -825,14 +825,14 @@ if(!$default['de_kakaopay_cancelpwd']){
             <th scope="row"><label for="de_inicis_admin_key">KG이니시스 키패스워드</label></th>
             <td>
                 <?php echo help("KG이니시스에서 발급받은 4자리 상점 키패스워드를 입력합니다.\nKG이니시스 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
-                <input type="text" name="de_inicis_admin_key" value="<?php echo $default['de_inicis_admin_key']; ?>" id="de_inicis_admin_key" class="frm_input" size="5" maxlength="4">
+                <input type="text" name="de_inicis_admin_key" value="<?php echo get_sanitize_input($default['de_inicis_admin_key']); ?>" id="de_inicis_admin_key" class="frm_input" size="5" maxlength="4">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
             <th scope="row"><label for="de_inicis_sign_key">KG이니시스 웹결제 사인키</label></th>
             <td>
                 <?php echo help("KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\nKG이니시스 상점관리자 > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
-                <input type="text" name="de_inicis_sign_key" value="<?php echo $default['de_inicis_sign_key']; ?>" id="de_inicis_sign_key" class="frm_input" size="40" maxlength="50">
+                <input type="text" name="de_inicis_sign_key" value="<?php echo get_sanitize_input($default['de_inicis_sign_key']); ?>" id="de_inicis_sign_key" class="frm_input" size="40" maxlength="50">
             </td>
         </tr>
         <tr class="pg_info_fld inicis_info_fld">
@@ -879,21 +879,21 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("KG이니시스로 부터 카카오페이 간편결제만 사용용도로 발급 받으신 상점아이디(MID) 10자리 중 SIRK 을 제외한 나머지 6자리를 입력 합니다."); ?>
-                <span class="sitecode">SIRK</span> <input type="text" name="de_kakaopay_mid" value="<?php echo $default['de_kakaopay_mid']; ?>" id="de_kakaopay_mid" class="frm_input code_input" size="10" maxlength="7">
+                <span class="sitecode">SIRK</span> <input type="text" name="de_kakaopay_mid" value="<?php echo get_sanitize_input($default['de_kakaopay_mid']); ?>" id="de_kakaopay_mid" class="frm_input code_input" size="10" maxlength="7">
             </td>
         </tr>
         <tr class="kakao_info_fld">
             <th scope="row"><label for="de_kakaopay_key">카카오페이 상점키<br>( KG이니시스 )</label></th>
             <td>
                 <?php echo help("SIRK****** 아이디로 KG이니시스에서 발급받은 웹결제 사인키를 입력합니다.\nKG이니시스 상점관리자 > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
-                <input type="text" name="de_kakaopay_key" value="<?php echo $default['de_kakaopay_key']; ?>" id="de_kakaopay_key" class="frm_input" size="100">
+                <input type="text" name="de_kakaopay_key" value="<?php echo get_sanitize_input($default['de_kakaopay_key']); ?>" id="de_kakaopay_key" class="frm_input" size="100">
             </td>
         </tr>
         <tr class="kakao_info_fld">
             <th scope="row"><label for="de_kakaopay_cancelpwd">카카오페이 키패스워드<br>( KG이니시스 )</label></th>
             <td>
                 <?php echo help("SIRK****** 아이디로 KG이니시스에서 발급받은 4자리 상점 키패스워드를 입력합니다.\nKG이니시스 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
-                <input type="text" name="de_kakaopay_cancelpwd" value="<?php echo $default['de_kakaopay_cancelpwd']; ?>" id="de_kakaopay_cancelpwd" class="frm_input" size="20">
+                <input type="text" name="de_kakaopay_cancelpwd" value="<?php echo get_sanitize_input($default['de_kakaopay_cancelpwd']); ?>" id="de_kakaopay_cancelpwd" class="frm_input" size="20">
             </td>
         </tr>
         <tr class="kakao_info_fld">
@@ -909,7 +909,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             <th scope="row"><label for="de_kakaopay_hashkey">카카오페이 상점 HashKey</label></th>
             <td>
                 <?php echo help("카카오페이로 부터 발급 받으신 상점 인증 전용 HashKey를 입력합니다."); ?>
-                <input type="text" name="de_kakaopay_hashkey" value="<?php echo $default['de_kakaopay_hashkey']; ?>" id="de_kakaopay_hashkey" class="frm_input" size="20">
+                <input type="text" name="de_kakaopay_hashkey" value="<?php echo get_sanitize_input($default['de_kakaopay_hashkey']); ?>" id="de_kakaopay_hashkey" class="frm_input" size="20">
             </td>
         </tr>
         <tr class="naver_info_fld">
@@ -919,7 +919,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("네이버페이 가맹점 아이디를 입력합니다."); ?>
-                <input type="text" name="de_naverpay_mid" value="<?php echo $default['de_naverpay_mid']; ?>" id="de_naverpay_mid" class="frm_input" size="20" maxlength="50">
+                <input type="text" name="de_naverpay_mid" value="<?php echo get_sanitize_input($default['de_naverpay_mid']); ?>" id="de_naverpay_mid" class="frm_input" size="20" maxlength="50">
              </td>
         </tr>
         <tr class="naver_info_fld">
@@ -928,7 +928,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("네이버페이 가맹점 인증키를 입력합니다."); ?>
-                <input type="text" name="de_naverpay_cert_key" value="<?php echo $default['de_naverpay_cert_key']; ?>" id="de_naverpay_cert_key" class="frm_input" size="50" maxlength="100">
+                <input type="text" name="de_naverpay_cert_key" value="<?php echo get_sanitize_input($default['de_naverpay_cert_key']); ?>" id="de_naverpay_cert_key" class="frm_input" size="50" maxlength="100">
              </td>
         </tr>
         <tr class="naver_info_fld">
@@ -937,7 +937,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("네이버페이 버튼 인증키를 입력합니다."); ?>
-                <input type="text" name="de_naverpay_button_key" value="<?php echo $default['de_naverpay_button_key']; ?>" id="de_naverpay_button_key" class="frm_input" size="50" maxlength="100">
+                <input type="text" name="de_naverpay_button_key" value="<?php echo get_sanitize_input($default['de_naverpay_button_key']); ?>" id="de_naverpay_button_key" class="frm_input" size="50" maxlength="100">
              </td>
         </tr>
         <tr class="naver_info_fld">
@@ -956,7 +956,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("네이버페이 결제테스트를 위한 테스트 회원 아이디를 입력합니다. 네이버페이 검수 과정에서 필요합니다."); ?>
-                <input type="text" name="de_naverpay_mb_id" value="<?php echo $default['de_naverpay_mb_id']; ?>" id="de_naverpay_mb_id" class="frm_input" size="20" maxlength="20">
+                <input type="text" name="de_naverpay_mb_id" value="<?php echo get_sanitize_input($default['de_naverpay_mb_id']); ?>" id="de_naverpay_mb_id" class="frm_input" size="20" maxlength="20">
              </td>
         </tr>
         <tr class="naver_info_fld">
@@ -972,7 +972,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("네이버페이를 통한 결제 때 구매자에게 보여질 추가배송비 내용을 입력합니다.<br>예) 제주도 3,000원 추가, 제주도 외 도서·산간 지역 5,000원 추가"); ?>
-                <input type="text" name="de_naverpay_sendcost" value="<?php echo $default['de_naverpay_sendcost']; ?>" id="de_naverpay_sendcost" class="frm_input" size="70">
+                <input type="text" name="de_naverpay_sendcost" value="<?php echo get_sanitize_input($default['de_naverpay_sendcost']); ?>" id="de_naverpay_sendcost" class="frm_input" size="70">
              </td>
         </tr>
         <tr>
@@ -1088,13 +1088,13 @@ if(!$default['de_kakaopay_cancelpwd']){
             <th scope="row"><label for="de_send_cost_limit">배송비상한가</label></th>
             <td>
                 <?php echo help("배송비유형이 '금액별차등'일 경우에만 해당되며 배송비상한가를 여러개 두고자 하는 경우는 <b>;</b> 로 구분합니다.\n\n예를 들어 20000원 미만일 경우 4000원, 30000원 미만일 경우 3000원 으로 사용할 경우에는 배송비상한가를 20000;30000 으로 입력하고 배송비를 4000;3000 으로 입력합니다."); ?>
-                <input type="text" name="de_send_cost_limit" value="<?php echo $default['de_send_cost_limit']; ?>" size="40" class="frm_input" id="de_send_cost_limit"> 원
+                <input type="text" name="de_send_cost_limit" value="<?php echo get_sanitize_input($default['de_send_cost_limit']); ?>" size="40" class="frm_input" id="de_send_cost_limit"> 원
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="de_send_cost_list">배송비</label></th>
             <td>
-                <input type="text" name="de_send_cost_list" value="<?php echo $default['de_send_cost_list']; ?>" size="40" class="frm_input" id="de_send_cost_list"> 원
+                <input type="text" name="de_send_cost_list" value="<?php echo get_sanitize_input($default['de_send_cost_list']); ?>" size="40" class="frm_input" id="de_send_cost_list"> 원
             </td>
         </tr>
         <tr>
@@ -1111,7 +1111,7 @@ if(!$default['de_kakaopay_cancelpwd']){
              <th scope="row"><label for="de_hope_date_after">희망배송일지정</label></th>
             <td>
                 <?php echo help("오늘을 포함하여 설정한 날 이후부터 일주일 동안을 달력 형식으로 노출하여 선택할수 있도록 합니다."); ?>
-                <input type="text" name="de_hope_date_after" value="<?php echo $default['de_hope_date_after']; ?>" id="de_hope_date_after" class="frm_input" size="5"> 일
+                <input type="text" name="de_hope_date_after" value="<?php echo get_sanitize_input($default['de_hope_date_after']); ?>" id="de_hope_date_after" class="frm_input" size="5"> 일
             </td>
         </tr>
         <tr>
@@ -1149,11 +1149,11 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^relation.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_rel_list_skin']); ?>
                 </select>
                 <label for="de_rel_img_width">이미지폭</label>
-                <input type="text" name="de_rel_img_width" value="<?php echo $default['de_rel_img_width']; ?>" id="de_rel_img_width" class="frm_input" size="3">
+                <input type="text" name="de_rel_img_width" value="<?php echo get_sanitize_input($default['de_rel_img_width']); ?>" id="de_rel_img_width" class="frm_input" size="3">
                 <label for="de_rel_img_height">이미지높이</label>
-                <input type="text" name="de_rel_img_height" value="<?php echo $default['de_rel_img_height']; ?>" id="de_rel_img_height" class="frm_input" size="3">
+                <input type="text" name="de_rel_img_height" value="<?php echo get_sanitize_input($default['de_rel_img_height']); ?>" id="de_rel_img_height" class="frm_input" size="3">
                 <label for="de_rel_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_rel_list_mod" value="<?php echo $default['de_rel_list_mod']; ?>" id="de_rel_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_rel_list_mod" value="<?php echo get_sanitize_input($default['de_rel_list_mod']); ?>" id="de_rel_list_mod" class="frm_input" size="3">
                 <label for="de_rel_list_use">출력</label>
                 <input type="checkbox" name="de_rel_list_use" value="1" id="de_rel_list_use" <?php echo $default['de_rel_list_use']?"checked":""; ?>>
             </td>
@@ -1167,11 +1167,11 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^relation.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_rel_list_skin']); ?>
                 </select>
                 <label for="de_mobile_rel_img_width">이미지폭</label>
-                <input type="text" name="de_mobile_rel_img_width" value="<?php echo $default['de_mobile_rel_img_width']; ?>" id="de_mobile_rel_img_width" class="frm_input" size="3">
+                <input type="text" name="de_mobile_rel_img_width" value="<?php echo get_sanitize_input($default['de_mobile_rel_img_width']); ?>" id="de_mobile_rel_img_width" class="frm_input" size="3">
                 <label for="de_mobile_rel_img_height">이미지높이</label>
-                <input type="text" name="de_mobile_rel_img_height" value="<?php echo $default['de_mobile_rel_img_height']; ?>" id="de_mobile_rel_img_height" class="frm_input" size="3">
+                <input type="text" name="de_mobile_rel_img_height" value="<?php echo get_sanitize_input($default['de_mobile_rel_img_height']); ?>" id="de_mobile_rel_img_height" class="frm_input" size="3">
                 <label for="de_mobile_rel_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_mobile_rel_list_mod" value="<?php echo $default['de_mobile_rel_list_mod']; ?>" id="de_mobile_rel_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_mobile_rel_list_mod" value="<?php echo get_sanitize_input($default['de_mobile_rel_list_mod']); ?>" id="de_mobile_rel_list_mod" class="frm_input" size="3">
                 <label for="de_mobile_rel_list_use">출력</label>
                 <input type="checkbox" name="de_mobile_rel_list_use" value="1" id="de_mobile_rel_list_use" <?php echo $default['de_mobile_rel_list_use']?"checked":""; ?>>
             </td>
@@ -1184,13 +1184,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_search_list_skin']); ?>
                 </select>
                 <label for="de_search_img_width">이미지폭</label>
-                <input type="text" name="de_search_img_width" value="<?php echo $default['de_search_img_width']; ?>" id="de_search_img_width" class="frm_input" size="3">
+                <input type="text" name="de_search_img_width" value="<?php echo get_sanitize_input($default['de_search_img_width']); ?>" id="de_search_img_width" class="frm_input" size="3">
                 <label for="de_search_img_height">이미지높이</label>
-                <input type="text" name="de_search_img_height" value="<?php echo $default['de_search_img_height']; ?>" id="de_search_img_height" class="frm_input" size="3">
+                <input type="text" name="de_search_img_height" value="<?php echo get_sanitize_input($default['de_search_img_height']); ?>" id="de_search_img_height" class="frm_input" size="3">
                 <label for="de_search_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_search_list_mod" value="<?php echo $default['de_search_list_mod']; ?>" id="de_search_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_search_list_mod" value="<?php echo get_sanitize_input($default['de_search_list_mod']); ?>" id="de_search_list_mod" class="frm_input" size="3">
                 <label for="de_search_list_row">출력할 줄 수</label>
-                <input type="text" name="de_search_list_row" value="<?php echo $default['de_search_list_row']; ?>" id="de_search_list_row" class="frm_input" size="3">
+                <input type="text" name="de_search_list_row" value="<?php echo get_sanitize_input($default['de_search_list_row']); ?>" id="de_search_list_row" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -1201,13 +1201,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_search_list_skin']); ?>
                 </select>
                 <label for="de_mobile_search_img_width">이미지폭</label>
-                <input type="text" name="de_mobile_search_img_width" value="<?php echo $default['de_mobile_search_img_width']; ?>" id="de_mobile_search_img_width" class="frm_input" size="3">
+                <input type="text" name="de_mobile_search_img_width" value="<?php echo get_sanitize_input($default['de_mobile_search_img_width']); ?>" id="de_mobile_search_img_width" class="frm_input" size="3">
                 <label for="de_mobile_search_img_height">이미지높이</label>
-                <input type="text" name="de_mobile_search_img_height" value="<?php echo $default['de_mobile_search_img_height']; ?>" id="de_mobile_search_img_height" class="frm_input" size="3">
+                <input type="text" name="de_mobile_search_img_height" value="<?php echo get_sanitize_input($default['de_mobile_search_img_height']); ?>" id="de_mobile_search_img_height" class="frm_input" size="3">
                 <label for="de_mobile_search_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_mobile_search_list_mod" value="<?php echo $default['de_mobile_search_list_mod']; ?>" id="de_mobile_search_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_mobile_search_list_mod" value="<?php echo get_sanitize_input($default['de_mobile_search_list_mod']); ?>" id="de_mobile_search_list_mod" class="frm_input" size="3">
                 <label for="de_mobile_search_list_row">출력할 줄 수</label>
-                <input type="text" name="de_mobile_search_list_row" value="<?php echo $default['de_mobile_search_list_row']; ?>" id="de_mobile_search_list_row" class="frm_input" size="3">
+                <input type="text" name="de_mobile_search_list_row" value="<?php echo get_sanitize_input($default['de_mobile_search_list_row']); ?>" id="de_mobile_search_list_row" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -1218,13 +1218,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_SHOP_SKIN_PATH, $default['de_listtype_list_skin']); ?>
                 </select>
                 <label for="de_listtype_img_width">이미지폭</label>
-                <input type="text" name="de_listtype_img_width" value="<?php echo $default['de_listtype_img_width']; ?>" id="de_listtype_img_width" class="frm_input" size="3">
+                <input type="text" name="de_listtype_img_width" value="<?php echo get_sanitize_input($default['de_listtype_img_width']); ?>" id="de_listtype_img_width" class="frm_input" size="3">
                 <label for="de_listtype_img_height">이미지높이</label>
-                <input type="text" name="de_listtype_img_height" value="<?php echo $default['de_listtype_img_height']; ?>" id="de_listtype_img_height" class="frm_input" size="3">
+                <input type="text" name="de_listtype_img_height" value="<?php echo get_sanitize_input($default['de_listtype_img_height']); ?>" id="de_listtype_img_height" class="frm_input" size="3">
                 <label for="de_listtype_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_listtype_list_mod" value="<?php echo $default['de_listtype_list_mod']; ?>" id="de_listtype_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_listtype_list_mod" value="<?php echo get_sanitize_input($default['de_listtype_list_mod']); ?>" id="de_listtype_list_mod" class="frm_input" size="3">
                 <label for="de_listtype_list_row">출력할 줄 수</label>
-                <input type="text" name="de_listtype_list_row" value="<?php echo $default['de_listtype_list_row']; ?>" id="de_listtype_list_row" class="frm_input" size="3">
+                <input type="text" name="de_listtype_list_row" value="<?php echo get_sanitize_input($default['de_listtype_list_row']); ?>" id="de_listtype_list_row" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -1235,13 +1235,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <?php echo get_list_skin_options("^list.[0-9]+\.skin\.php", G5_MSHOP_SKIN_PATH, $default['de_mobile_listtype_list_skin']); ?>
                 </select>
                 <label for="de_mobile_listtype_img_width">이미지폭</label>
-                <input type="text" name="de_mobile_listtype_img_width" value="<?php echo $default['de_mobile_listtype_img_width']; ?>" id="de_mobile_listtype_img_width" class="frm_input" size="3">
+                <input type="text" name="de_mobile_listtype_img_width" value="<?php echo get_sanitize_input($default['de_mobile_listtype_img_width']); ?>" id="de_mobile_listtype_img_width" class="frm_input" size="3">
                 <label for="de_mobile_listtype_img_height">이미지높이</label>
-                <input type="text" name="de_mobile_listtype_img_height" value="<?php echo $default['de_mobile_listtype_img_height']; ?>" id="de_mobile_listtype_img_height" class="frm_input" size="3">
+                <input type="text" name="de_mobile_listtype_img_height" value="<?php echo get_sanitize_input($default['de_mobile_listtype_img_height']); ?>" id="de_mobile_listtype_img_height" class="frm_input" size="3">
                 <label for="de_mobile_listtype_list_mod">1줄당 이미지 수</label>
-                <input type="text" name="de_mobile_listtype_list_mod" value="<?php echo $default['de_mobile_listtype_list_mod']; ?>" id="de_mobile_listtype_list_mod" class="frm_input" size="3">
+                <input type="text" name="de_mobile_listtype_list_mod" value="<?php echo get_sanitize_input($default['de_mobile_listtype_list_mod']); ?>" id="de_mobile_listtype_list_mod" class="frm_input" size="3">
                 <label for="de_mobile_listtype_list_row">출력할 줄 수</label>
-                <input type="text" name="de_mobile_listtype_list_row" value="<?php echo $default['de_mobile_listtype_list_row']; ?>" id="de_mobile_listtype_list_row" class="frm_input" size="3">
+                <input type="text" name="de_mobile_listtype_list_row" value="<?php echo get_sanitize_input($default['de_mobile_listtype_list_row']); ?>" id="de_mobile_listtype_list_row" class="frm_input" size="3">
             </td>
         </tr>
         <tr>
@@ -1249,10 +1249,10 @@ if(!$default['de_kakaopay_cancelpwd']){
             <td>
                 <?php echo help("분류리스트에서 보여지는 사이즈를 설정하시면 됩니다. 분류관리의 출력 이미지폭, 높이의 기본값으로 사용됩니다. 높이를 0 으로 설정하시면 폭에 비례하여 높이를 썸네일로 생성합니다."); ?>
                 <label for="de_simg_width"><span class="sound_only">이미지(소) </span>폭</label>
-                <input type="text" name="de_simg_width" value="<?php echo $default['de_simg_width']; ?>" id="de_simg_width" class="frm_input" size="5"> 픽셀
+                <input type="text" name="de_simg_width" value="<?php echo get_sanitize_input($default['de_simg_width']); ?>" id="de_simg_width" class="frm_input" size="5"> 픽셀
                 /
                 <label for="de_simg_height"><span class="sound_only">이미지(소) </span>높이</label>
-                <input type="text" name="de_simg_height" value="<?php echo $default['de_simg_height']; ?>" id="de_simg_height" class="frm_input" size="5"> 픽셀
+                <input type="text" name="de_simg_height" value="<?php echo get_sanitize_input($default['de_simg_height']); ?>" id="de_simg_height" class="frm_input" size="5"> 픽셀
             </td>
         </tr>
         <tr>
@@ -1260,10 +1260,10 @@ if(!$default['de_kakaopay_cancelpwd']){
             <td>
                 <?php echo help("상품상세보기에서 보여지는 상품이미지의 사이즈를 픽셀로 설정합니다. 높이를 0 으로 설정하시면 폭에 비례하여 높이를 썸네일로 생성합니다."); ?>
                 <label for="de_mimg_width"><span class="sound_only">이미지(중) </span>폭</label>
-                <input type="text" name="de_mimg_width" value="<?php echo $default['de_mimg_width']; ?>" id="de_mimg_width" class="frm_input" size="5"> 픽셀
+                <input type="text" name="de_mimg_width" value="<?php echo get_sanitize_input($default['de_mimg_width']); ?>" id="de_mimg_width" class="frm_input" size="5"> 픽셀
                 /
                 <label for="de_mimg_height"><span class="sound_only">이미지(중) </span>높이</label>
-                <input type="text" name="de_mimg_height" value="<?php echo $default['de_mimg_height']; ?>" id="de_mimg_height" class="frm_input" size="5"> 픽셀
+                <input type="text" name="de_mimg_height" value="<?php echo get_sanitize_input($default['de_mimg_height']); ?>" id="de_mimg_height" class="frm_input" size="5"> 픽셀
             </td>
         </tr>
         <tr>
@@ -1400,7 +1400,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             <th scope="row"><label for="de_cart_keep_term">장바구니 보관기간</label></th>
             <td>
                  <?php echo help("장바구니 상품의 보관 기간을 설정하십시오."); ?>
-                <input type="text" name="de_cart_keep_term" value="<?php echo $default['de_cart_keep_term']; ?>" id="de_cart_keep_term" class="frm_input" size="5"> 일
+                <input type="text" name="de_cart_keep_term" value="<?php echo get_sanitize_input($default['de_cart_keep_term']); ?>" id="de_cart_keep_term" class="frm_input" size="5"> 일
             </td>
         </tr>
         <tr>
@@ -1417,11 +1417,11 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <label for="de_member_reg_coupon_use">쿠폰발행</label>
                 <input type="checkbox" name="de_member_reg_coupon_use" value="1" id="de_member_reg_coupon_use"<?php echo $default['de_member_reg_coupon_use']?' checked':''; ?>>
                 <label for="de_member_reg_coupon_price">쿠폰할인금액</label>
-                <input type="text" name="de_member_reg_coupon_price" value="<?php echo $default['de_member_reg_coupon_price']; ?>" id="de_member_reg_coupon_price" class="frm_input" size="10"> 원
+                <input type="text" name="de_member_reg_coupon_price" value="<?php echo get_sanitize_input($default['de_member_reg_coupon_price']); ?>" id="de_member_reg_coupon_price" class="frm_input" size="10"> 원
                 <label for="de_member_reg_coupon_minimum">주문최소금액</label>
-                <input type="text" name="de_member_reg_coupon_minimum" value="<?php echo $default['de_member_reg_coupon_minimum']; ?>" id="de_member_reg_coupon_minimum" class="frm_input" size="10"> 원이상
+                <input type="text" name="de_member_reg_coupon_minimum" value="<?php echo get_sanitize_input($default['de_member_reg_coupon_minimum']); ?>" id="de_member_reg_coupon_minimum" class="frm_input" size="10"> 원이상
                 <label for="de_member_reg_coupon_term">쿠폰유효기간</label>
-                <input type="text" name="de_member_reg_coupon_term" value="<?php echo $default['de_member_reg_coupon_term']; ?>" id="de_member_reg_coupon_term" class="frm_input" size="5"> 일
+                <input type="text" name="de_member_reg_coupon_term" value="<?php echo get_sanitize_input($default['de_member_reg_coupon_term']); ?>" id="de_member_reg_coupon_term" class="frm_input" size="5"> 일
             </td>
         </tr>
         <tr>
@@ -1578,27 +1578,27 @@ function byte_check(el_cont, el_byte)
             <th scope="row"><label for="de_sms_hp">관리자 휴대폰번호</label></th>
             <td>
                 <?php echo help("주문서작성시 쇼핑몰관리자가 문자메세지를 받아볼 번호를 숫자만으로 입력하세요. 예) 0101234567"); ?>
-                <input type="text" name="de_sms_hp" value="<?php echo $default['de_sms_hp']; ?>" id="de_sms_hp" class="frm_input" size="20">
+                <input type="text" name="de_sms_hp" value="<?php echo get_sanitize_input($default['de_sms_hp']); ?>" id="de_sms_hp" class="frm_input" size="20">
             </td>
         </tr>
         <tr class="icode_old_version">
             <th scope="row"><label for="cf_icode_id">아이코드 회원아이디<br>(구버전)</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 회원아이디를 입력합니다."); ?>
-                <input type="text" name="cf_icode_id" value="<?php echo $config['cf_icode_id']; ?>" id="cf_icode_id" class="frm_input" size="20">
+                <input type="text" name="cf_icode_id" value="<?php echo get_sanitize_input($config['cf_icode_id']); ?>" id="cf_icode_id" class="frm_input" size="20">
             </td>
         </tr>
         <tr class="icode_old_version">
             <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호<br>(구버전)</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 비밀번호를 입력합니다."); ?>
-                <input type="password" name="cf_icode_pw" value="<?php echo $config['cf_icode_pw']; ?>" class="frm_input" id="cf_icode_pw">
+                <input type="password" name="cf_icode_pw" value="<?php echo get_sanitize_input($config['cf_icode_pw']); ?>" class="frm_input" id="cf_icode_pw">
             </td>
         </tr>
         <tr class="icode_old_version" <?php if(!(isset($userinfo['payment']) && $userinfo['payment'])){ echo 'cf_tr_hide'; } ?>">
             <th scope="row">요금제<br>(구버전)</th>
             <td>
-                <input type="hidden" name="cf_icode_server_ip" value="<?php echo $config['cf_icode_server_ip']; ?>">
+                <input type="hidden" name="cf_icode_server_ip" value="<?php echo get_sanitize_input($config['cf_icode_server_ip']); ?>">
                 <?php
                     if ($userinfo['payment'] == 'A') {
                        echo '충전제';
@@ -1626,7 +1626,7 @@ function byte_check(el_cont, el_byte)
             <th scope="row"><label for="cf_icode_token_key">아이코드 토큰키<br>(JSON버전)</label></th>
             <td>
                 <?php echo help("아이코드 JSON 버전의 경우 아이코드 토큰키를 입력시 실행됩니다.<br>SMS 전송유형을 LMS로 설정시 90바이트 이내는 SMS, 90 ~ 2000 바이트는 LMS 그 이상은 절삭 되어 LMS로 발송됩니다."); ?>
-                <input type="text" name="cf_icode_token_key" value="<?php echo $config['cf_icode_token_key']; ?>" id="cf_icode_token_key" class="frm_input" size="40">
+                <input type="text" name="cf_icode_token_key" value="<?php echo get_sanitize_input($config['cf_icode_token_key']); ?>" id="cf_icode_token_key" class="frm_input" size="40">
                 <?php echo help("아이코드 사이트 -> 토큰키관리 메뉴에서 생성한 토큰키를 입력합니다."); ?>
                 <br>
                 서버아이피 : <?php echo $_SERVER['SERVER_ADDR']; ?>

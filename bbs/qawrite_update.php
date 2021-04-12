@@ -157,7 +157,7 @@ for ($i=1; $i<=$upload_count; $i++) {
     // 삭제에 체크가 되어있다면 파일을 삭제합니다.
     if (isset($_POST['bf_file_del'][$i]) && $_POST['bf_file_del'][$i]) {
         $upload[$i]['del_check'] = true;
-        @unlink(G5_DATA_PATH.'/qa/'.$write['qa_file'.$i]);
+        @unlink(G5_DATA_PATH.'/qa/'.clean_relative_paths($write['qa_file'.$i]));
         // 썸네일삭제
         if(preg_match("/\.({$config['cf_image_extension']})$/i", $write['qa_file'.$i])) {
             delete_qa_thumbnail($write['qa_file'.$i]);
@@ -204,7 +204,7 @@ for ($i=1; $i<=$upload_count; $i++) {
 
         if ($w == 'u') {
             // 존재하는 파일이 있다면 삭제합니다.
-            @unlink(G5_DATA_PATH.'/qa/'.$write['qa_file'.$i]);
+            @unlink(G5_DATA_PATH.'/qa/'.clean_relative_paths($write['qa_file'.$i]));
             // 이미지파일이면 썸네일삭제
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $write['qa_file'.$i])) {
                 delete_qa_thumbnail($row['qa_file'.$i]);
@@ -244,7 +244,7 @@ if($w == '' || $w == 'a' || $w == 'r') {
         $qa_num = $write['qa_num'];
         $qa_parent = $write['qa_id'];
         $qa_related = $write['qa_related'];
-        $qa_category = $write['qa_category'];
+        $qa_category = addslashes($write['qa_category']);
         $qa_type = 1;
         $qa_status = 1;
     }

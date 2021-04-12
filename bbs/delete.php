@@ -111,7 +111,7 @@ while ($row = sql_fetch_array($result))
     }
 }
 
-// 게시글 삭제
+// 게시글과 댓글 삭제
 sql_query(" delete from $write_table where wr_parent = '{$write['wr_id']}' ");
 
 // 최근게시물 삭제

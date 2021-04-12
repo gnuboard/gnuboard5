@@ -26,6 +26,11 @@ $user_nick = social_relace_nick($user_profile->displayName);
 $user_email = isset($user_profile->emailVerified) ? $user_profile->emailVerified : $user_profile->email;
 $user_id = $user_profile->sid ? preg_replace("/[^0-9a-z_]+/i", "", $user_profile->sid) : get_social_convert_id($user_profile->identifier, $provider_name);
 
+if(! $user_nick) {
+    $tmp = explode('_', $user_id);
+    $user_nick = $tmp[1];
+}
+
 //$is_exists_id = exist_mb_id($user_id);
 //$is_exists_name = exist_mb_nick($user_nick, '');
 $user_id = exist_mb_id_recursive($user_id);

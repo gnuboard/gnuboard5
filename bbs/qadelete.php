@@ -45,7 +45,7 @@ for($i=0; $i<$count; $i++) {
 
     // 첨부파일 삭제
     for($k=1; $k<=2; $k++) {
-        @unlink(G5_DATA_PATH.'/qa/'.$row['qa_file'.$k]);
+        @unlink(G5_DATA_PATH.'/qa/'.clean_relative_paths($row['qa_file'.$k]));
         // 썸네일삭제
         if(preg_match("/\.({$config['cf_image_extension']})$/i", $row['qa_file'.$k])) {
             delete_qa_thumbnail($row['qa_file'.$k]);
@@ -60,7 +60,7 @@ for($i=0; $i<$count; $i++) {
         $row2 = sql_fetch(" select qa_content, qa_file1, qa_file2 from {$g5['qa_content_table']} where qa_parent = '$qa_id' ");
         // 첨부파일 삭제
         for($k=1; $k<=2; $k++) {
-            @unlink(G5_DATA_PATH.'/qa/'.$row2['qa_file'.$k]);
+            @unlink(G5_DATA_PATH.'/qa/'.clean_relative_paths($row2['qa_file'.$k]));
             // 썸네일삭제
             if(preg_match("/\.({$config['cf_image_extension']})$/i", $row2['qa_file'.$k])) {
                 delete_qa_thumbnail($row2['qa_file'.$k]);

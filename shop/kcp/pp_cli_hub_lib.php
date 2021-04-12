@@ -16,6 +16,7 @@ class   C_PAYPLUS_CLI_T
     var   $m_escw_data;
     var   $m_modx_data;
     var   $m_encx_data;
+    var   $m_encx_info;
 
     /* -------------------------------------------------------------------- */
     /* -   처리 결과 값                                                   - */
@@ -37,6 +38,7 @@ class   C_PAYPLUS_CLI_T
         $this->m_escw_data="";
         $this->m_modx_data="";
         $this->m_encx_data="";
+        $this->m_encx_info="";
     }
 
     function  mf_init( $mode )
@@ -278,7 +280,7 @@ class   C_PAYPLUS_CLI_T
 
       $exec_cmd = array_shift( $arg );
 
-      while ( list(,$i) = each($arg) )
+      foreach((array) $arg as $key=>$i)
       {
         $exec_cmd .= " " . escapeshellarg( $i );
       }

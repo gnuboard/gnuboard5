@@ -21,7 +21,11 @@ for ($i=0; $i<$count; $i++)
 {
     $_POST = array_map_deep('trim', $_POST);
     
-    $_POST['me_link'][$i] = is_array($_POST['me_link']) ? clean_xss_tags(clean_xss_attributes($_POST['me_link'][$i], 1)) : '';
+    if(preg_match('/^javascript/i', preg_replace('/[ ]{1,}|[\t]/', '', $_POST['me_link'][$i]))){
+        $_POST['me_link'][$i] = G5_URL;
+    }
+
+    $_POST['me_link'][$i] = is_array($_POST['me_link']) ? clean_xss_tags(clean_xss_attributes(preg_replace('/[ ]{2,}|[\t]/', '', $_POST['me_link'][$i]), 1)) : '';
 
     $code    = is_array($_POST['code']) ? strip_tags($_POST['code'][$i]) : '';
     $me_name = is_array($_POST['me_name']) ? strip_tags($_POST['me_name'][$i]) : '';

@@ -21,10 +21,10 @@ if ($w == "d")
 }
 else
 {
-    $it_id = isset($_POST['it_id']) ? $_POST['it_id'] : null;
+    $it_id = isset($_REQUEST['it_id']) ? $_REQUEST['it_id'] : null;
 
     if(is_array($it_id))
-        $it_id = $_POST['it_id'][0];
+        $it_id = $_REQUEST['it_id'][0];
 
     $it_id = safe_replace_regex($it_id, 'it_id');
 
@@ -41,7 +41,7 @@ else
     // 상품정보 체크
     $row = get_shop_item($it_id, true);
 
-    if(!$row['it_id'])
+    if(! (isset($row['it_id']) && $row['it_id']))
         alert('상품정보가 존재하지 않습니다.', G5_SHOP_URL);
 
     $sql = " select wi_id from {$g5['g5_shop_wish_table']}

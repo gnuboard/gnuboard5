@@ -59,36 +59,36 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
     /* ============================================================================== */
     /* =   01. 요청 정보 설정                                                       = */
     /* = -------------------------------------------------------------------------- = */
-    $req_tx     = $_POST[ "req_tx"     ];                             // 요청 종류
-    $trad_time  = $_POST[ "trad_time"  ];                             // 원거래 시각
+    $req_tx     = isset($_POST["req_tx"]) ? $_POST["req_tx"] : '';                             // 요청 종류
+    $trad_time  = isset($_POST["trad_time"]) ? $_POST["trad_time"] : '';                             // 원거래 시각
     /* = -------------------------------------------------------------------------- = */
-    $ordr_idxx  = preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "ordr_idxx"  ]);                             // 주문 번호
-    $buyr_name  = $_POST[ "buyr_name"  ];                             // 주문자 이름
-    $buyr_tel1  = $_POST[ "buyr_tel1"  ];                             // 주문자 전화번호
-    $buyr_mail  = $_POST[ "buyr_mail"  ];                             // 주문자 E-Mail
-    $good_name  = $_POST[ "good_name"  ];                             // 상품 정보
-    $comment    = $_POST[ "comment"    ];                             // 비고
+    $ordr_idxx  = isset($_POST["ordr_idxx"]) ? preg_replace('/[^0-9A-Za-z_\-\.]/i', '', $_POST[ "ordr_idxx"  ]) : '';                             // 주문 번호
+    $buyr_name  = isset($_POST["buyr_name"]) ? $_POST["buyr_name"] : '';                             // 주문자 이름
+    $buyr_tel1  = isset($_POST["buyr_tel1"]) ? $_POST["buyr_tel1"] : '';                             // 주문자 전화번호
+    $buyr_mail  = isset($_POST["buyr_mail"]) ? $_POST["buyr_mail"] : '';                             // 주문자 E-Mail
+    $good_name  = isset($_POST["good_name"]) ? $_POST["good_name"] : '';                             // 상품 정보
+    $comment    = isset($_POST["comment"]) ? $_POST["comment"] : '';                             // 비고
     /* = -------------------------------------------------------------------------- = */
-    $corp_type     = $_POST[ "corp_type"      ];                      // 사업장 구분
-    $corp_tax_type = $_POST[ "corp_tax_type"  ];                      // 과세/면세 구분
-    $corp_tax_no   = $_POST[ "corp_tax_no"    ];                      // 발행 사업자 번호
-    $corp_nm       = $_POST[ "corp_nm"        ];                      // 상호
-    $corp_owner_nm = $_POST[ "corp_owner_nm"  ];                      // 대표자명
-    $corp_addr     = $_POST[ "corp_addr"      ];                      // 사업장 주소
-    $corp_telno    = $_POST[ "corp_telno"     ];                      // 사업장 대표 연락처
+    $corp_type     = isset($_POST["corp_type"]) ? $_POST["corp_type"] : '';                      // 사업장 구분
+    $corp_tax_type = isset($_POST["corp_tax_type"]) ? $_POST["corp_tax_type"] : '';                      // 과세/면세 구분
+    $corp_tax_no   = isset($_POST["corp_tax_no"]) ? $_POST["corp_tax_no"] : '';                      // 발행 사업자 번호
+    $corp_nm       = isset($_POST["corp_nm"]) ? $_POST["corp_nm"] : '';                      // 상호
+    $corp_owner_nm = isset($_POST["corp_owner_nm"]) ? $_POST["corp_owner_nm"] : '';                      // 대표자명
+    $corp_addr     = isset($_POST["corp_addr"]) ? $_POST["corp_addr"] : '';                      // 사업장 주소
+    $corp_telno    = isset($_POST["corp_telno"]) ? $_POST["corp_telno"] : '';                      // 사업장 대표 연락처
     /* = -------------------------------------------------------------------------- = */
-    $tr_code    = $_POST[ "tr_code"    ];                             // 발행용도
-    $id_info    = $_POST[ "id_info"    ];                             // 신분확인 ID
-    $amt_tot    = $_POST[ "amt_tot"    ];                             // 거래금액 총 합
-    $amt_sup    = $_POST[ "amt_sup"    ];                             // 공급가액
-    $amt_svc    = $_POST[ "amt_svc"    ];                             // 봉사료
-    $amt_tax    = $_POST[ "amt_tax"    ];                             // 부가가치세
+    $tr_code    = isset($_POST["tr_code"]) ? $_POST["tr_code"] : '';                             // 발행용도
+    $id_info    = isset($_POST["id_info"]) ? $_POST["id_info"] : '';                             // 신분확인 ID
+    $amt_tot    = isset($_POST["amt_tot"]) ? $_POST["amt_tot"] : '';                             // 거래금액 총 합
+    $amt_sup    = isset($_POST["amt_sup"]) ? $_POST["amt_sup"] : '';                             // 공급가액
+    $amt_svc    = isset($_POST["amt_svc"]) ? $_POST["amt_svc"] : '';                             // 봉사료
+    $amt_tax    = isset($_POST["amt_tax"]) ? $_POST["amt_tax"] : '';                             // 부가가치세
     /* = -------------------------------------------------------------------------- = */
-    $mod_type   = $_POST[ "mod_type"   ];                             // 변경 타입
-    $mod_value  = $_POST[ "mod_value"  ];                             // 변경 요청 거래번호
-    $mod_gubn   = $_POST[ "mod_gubn"   ];                             // 변경 요청 거래번호 구분
-    $mod_mny    = $_POST[ "mod_mny"    ];                             // 변경 요청 금액
-    $rem_mny    = $_POST[ "rem_mny"    ];                             // 변경처리 이전 금액
+    $mod_type   = isset($_POST["mod_type"]) ? $_POST["mod_type"] : '';                             // 변경 타입
+    $mod_value  = isset($_POST["mod_value"]) ? $_POST["mod_value"] : '';                             // 변경 요청 거래번호
+    $mod_gubn   = isset($_POST["mod_gubn"]) ? $_POST["mod_gubn"] : '';                             // 변경 요청 거래번호 구분
+    $mod_mny    = isset($_POST["mod_mny"]) ? $_POST["mod_mny"] : '';                             // 변경 요청 금액
+    $rem_mny    = isset($_POST["rem_mny"]) ? $_POST["rem_mny"] : '';                             // 변경처리 이전 금액
     /* = -------------------------------------------------------------------------- = */
     $cust_ip    = getenv( "REMOTE_ADDR" );                            // 요청 IP
     /* ============================================================================== */
@@ -104,7 +104,7 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
     $c_PayPlus->mf_clear();
     /* ============================================================================== */
 
-
+    $rcpt_data_set = $corp_data_set = null;
     /* ============================================================================== */
     /* =   03. 처리 요청 정보 설정, 실행                                            = */
     /* = -------------------------------------------------------------------------- = */

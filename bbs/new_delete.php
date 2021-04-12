@@ -53,9 +53,17 @@ for($i=0;$i<$count_chk_bn_id;$i++)
                 // 업로드된 파일이 있다면 파일삭제
                 $sql2 = " select * from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ";
                 $result2 = sql_query($sql2);
-                while ($row2 = sql_fetch_array($result2))
-                    @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row2['bf_file']);
+                while ($row2 = sql_fetch_array($result2)){
 
+                    $delete_file = run_replace('delete_file_path', G5_DATA_PATH.'/file/'.$bo_table.'/'.str_replace('../', '', $row2['bf_file']), $row2);
+                    if( file_exists($delete_file) ){
+                        @unlink(G5_DATA_PATH.'/file/'.$bo_table.'/'.$row2['bf_file']);
+                    }
+                    // 이미지파일이면 썸네일삭제
+                    if(preg_match("/\.({$config['cf_image_extension']})$/i", $row2['bf_file'])) {
+                        delete_board_thumbnail($bo_table, $row2['bf_file']);
+                    }
+                }
                 // 파일테이블 행 삭제
                 sql_query(" delete from {$g5['board_file_table']} where bo_table = '$bo_table' and wr_id = '{$row['wr_id']}' ");
 
@@ -63,9 +71,9 @@ for($i=0;$i<$count_chk_bn_id;$i++)
             }
             else
             {
-                // 코멘트 포인트 삭제
-                if (!delete_point($row['mb_id'], $bo_table, $row['wr_id'], '코멘트'))
-                    insert_point($row['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_id']}-{$row['wr_id']} 코멘트삭제");
+                // 댓글 포인트 삭제
+                if (!delete_point($row['mb_id'], $bo_table, $row['wr_id'], '댓글'))
+                    insert_point($row['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_id']}-{$row['wr_id']} 댓글삭제");
 
                 $count_comment++;
             }
@@ -120,8 +128,8 @@ for($i=0;$i<$count_chk_bn_id;$i++)
         $comment_reply = substr($write['wr_comment_reply'], 0, $len);
 
         // 코멘트 삭제
-        if (!delete_point($write['mb_id'], $bo_table, $comment_id, '코멘트')) {
-            insert_point($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_parent']}-{$comment_id} 코멘트삭제");
+        if (!delete_point($write['mb_id'], $bo_table, $comment_id, '댓글')) {
+            insert_point($write['mb_id'], $board['bo_comment_point'] * (-1), "{$board['bo_subject']} {$write['wr_parent']}-{$comment_id} 댓글삭제");
         }
 
         // 코멘트 삭제

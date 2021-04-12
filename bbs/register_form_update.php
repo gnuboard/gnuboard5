@@ -557,8 +557,8 @@ if($w == '' && $default['de_member_reg_coupon_use'] && $default['de_member_reg_c
 if(isset($_SESSION['ss_cert_type'])) unset($_SESSION['ss_cert_type']);
 if(isset($_SESSION['ss_cert_no'])) unset($_SESSION['ss_cert_no']);
 if(isset($_SESSION['ss_cert_hash'])) unset($_SESSION['ss_cert_hash']);
-if(isset($_SESSION['ss_cert_hash'])) unset($_SESSION['ss_cert_birth']);
-if(isset($_SESSION['ss_cert_hash'])) unset($_SESSION['ss_cert_adult']);
+if(isset($_SESSION['ss_cert_birth'])) unset($_SESSION['ss_cert_birth']);
+if(isset($_SESSION['ss_cert_adult'])) unset($_SESSION['ss_cert_adult']);
 
 if ($msg)
     echo '<script>alert(\''.$msg.'\');</script>';
