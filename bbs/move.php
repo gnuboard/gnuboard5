@@ -41,6 +41,9 @@ else if ($is_admin == 'board')
     $sql .= " and a.bo_admin = '{$member['mb_id']}' ";
 $sql .= " order by a.gr_id, a.bo_order, a.bo_table ";
 $result = sql_query($sql);
+
+$list = array();
+
 for ($i=0; $row=sql_fetch_array($result); $i++)
 {
     $list[$i] = $row;
