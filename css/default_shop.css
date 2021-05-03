@@ -51,12 +51,6 @@ border:1px solid #558ab7 !important;
 #container_wr,
 #ft_wr {width:1200px}
 
-/*safari*/
-input, textarea {
- -webkit-appearance:none;
- -webkit-border-radius:0;
-}
-
 /* 팝업레이어 */
 #hd_pop {z-index:1000;position:relative;margin:0 auto;width:1200px;height:0}
 #hd_pop h2 {position:absolute;font-size:0;line-height:0;overflow:hidden}
