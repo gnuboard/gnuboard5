@@ -221,6 +221,23 @@ ini_set("session.gc_divisor", 100); // session.gc_divisor는 session.gc_probabil
 session_set_cookie_params(0, '/');
 ini_set("session.cookie_domain", G5_COOKIE_DOMAIN);
 
+function chrome_domain_session_name(){
+    // 크롬90버전대부터 아래 도메인을 포함된 주소로 접속시 특정조건에서 세션이 생성 안되는 문제가 있을수 있다.
+    $domain_array=array(
+    '.cafe24.com',  // 카페24호스팅
+    '.dothome.co.kr',     // 닷홈호스팅
+    '.phps.kr',     // 스쿨호스팅
+    '.maru.net',    // 마루호스팅
+    );
+
+    if(preg_match('/('.implode('|', $domain_array).')/i', $_SERVER['HTTP_HOST'])){  // 위의 도메인주소를 포함한 url접속시 기본세션이름을 변경한다.
+        if(! defined('G5_SESSION_NAME')) define('G5_SESSION_NAME', 'G5PHPSESSID');
+        @session_name(G5_SESSION_NAME);
+    }
+}
+
+chrome_domain_session_name();
+
 //==============================================================================
 // 공용 변수
 //------------------------------------------------------------------------------
