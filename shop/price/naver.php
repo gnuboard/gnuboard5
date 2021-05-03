@@ -38,7 +38,7 @@ $tab = "\t";
 
 ob_start();
 
-echo "id{$tab}title{$tab}price_pc{$tab}link{$tab}image_link{$tab}category_name1{$tab}category_name2{$tab}category_name3{$tab}category_name4{$tab}model_number{$tab}brand{$tab}maker{$tab}origin{$tab}point{$tab}shipping";
+echo "id{$tab}title{$tab}price_pc{$tab}link{$tab}image_link{$tab}category_name1{$tab}category_name2{$tab}category_name3{$tab}category_name4{$tab}brand{$tab}maker{$tab}origin{$tab}point{$tab}review_count{$tab}shipping{$tab}class{$tab}update_time";
 
 $sql =" select * from {$g5['g5_shop_item_table']} where it_use = '1' and it_soldout = '0' and it_tel_inq = '0' and it_price > '0' order by ca_id";
 $result = sql_query($sql);
@@ -81,7 +81,20 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
 
     $item_link = shop_item_url($row['it_id']);
 
-    echo "\n{$row['it_id']}{$tab}{$row['it_name']}{$tab}{$row['it_price']}{$tab}{$item_link}{$tab}{$img_url}{$tab}{$cate1}{$tab}{$cate2}{$tab}{$cate3}{$tab}{$cate4}{$tab}{$row['it_model']}{$tab}{$row['it_brand']}{$tab}{$row['it_maker']}{$tab}{$row['it_origin']}{$tab}{$it_point}{$tab}{$delivery}";
+    // 상태
+    $class = 'U';
+    $stock_qty = get_it_stock_qty($row['it_id']);
+
+    if(substr($row['it_time'], 0, 10) == G5_TIME_YMD && $row['it_update_time'] >= $row['it_time'])
+    $class = 'I';
+
+    if($row['it_soldout'] || $stock_qty < 0)
+    $class = 'D';
+
+    // 리뷰 카운트
+    $review_count = (int) $row['it_use_cnt'];
+
+    echo "\n{$row['it_id']}{$tab}{$row['it_name']}{$tab}{$row['it_price']}{$tab}{$item_link}{$tab}{$img_url}{$tab}{$cate1}{$tab}{$cate2}{$tab}{$cate3}{$tab}{$cate4}{$tab}{$row['it_brand']}{$tab}{$row['it_maker']}{$tab}{$row['it_origin']}{$tab}{$it_point}{$tab}{$review_count}{$tab}{$delivery}{$tab}{$class}{$tab}{$row['it_update_time']}";
 }
 
 $content = ob_get_contents();
