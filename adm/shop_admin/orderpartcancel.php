@@ -10,7 +10,7 @@ $sql = " select * from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
 $od = sql_fetch($sql);
 
 if(! (isset($od['od_id']) && $od['od_id']))
-    alert_close('주문정보가 존해하지 않습니다.');
+    alert_close('주문정보가 존재하지 않습니다.');
 
 if($od['od_pg'] == 'inicis' && $od['od_settle_case'] == '계좌이체')
     alert_close('KG이니시스는 신용카드만 부분취소가 가능합니다.');
