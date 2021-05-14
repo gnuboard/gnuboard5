@@ -61,7 +61,7 @@ if( (int) $_POST['cp_price'] < 0 ){
 }
 
 if($_POST['cp_type'] && ($_POST['cp_price'] < 1 || $_POST['cp_price'] > 99))
-    alert('할인비율을은 1과 99사이 값으로 입력해 주십시오.');
+    alert('할인비율을 1과 99사이 값으로 입력해 주십시오.');
 
 if($_POST['cp_method'] == 0) {
     $sql = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$cp_target' and it_nocoupon = '0' ";
