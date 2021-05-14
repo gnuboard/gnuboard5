@@ -1025,7 +1025,7 @@ $(function() {
         $("#show_pay_btn").css("display", "inline");
     });
 
-    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay,#od_settle_kakaopay,#od_settle_samsungpay").bind("click", function() {
+    $("#od_settle_iche,#od_settle_card,#od_settle_vbank,#od_settle_hp,#od_settle_easy_pay,#od_settle_kakaopay,#od_settle_samsungpay,#od_settle_nhnkcp_payco,#od_settle_nhnkcp_naverpay,#od_settle_nhnkcp_kakaopay,#od_settle_inicislpay,#od_settle_inicis_kakaopay").bind("click", function() {
         $("#settle_bank").hide();
         $("#show_req_btn").css("display", "inline");
         $("#show_pay_btn").css("display", "none");
