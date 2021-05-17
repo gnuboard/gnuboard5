@@ -794,6 +794,13 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <input type="checkbox" id="de_global_nhnkcp_naverpay" name="de_easy_pays[]" value="global_nhnkcp_naverpay" <?php if(stripos($default['de_easy_pay_services'], 'global_nhnkcp_naverpay') !== false){ echo 'checked="checked"'; } ?> > <label for="de_global_nhnkcp_naverpay">NAVERPAY (네이버페이)</label><br>
             </td>
         </tr>
+        <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="used_nhnkcp_naverpay_point">NHN KCP 네이버페이<br>포인트결제 사용</label></th>
+            <td>
+                <?php echo help("체크시 NHN_KCP 를 통한 네이버페이 결제시 네이버페이 포인트결제가 활성화 됩니다.\n체크를 했는데도 [DR02] 실결제시 가맹점 설정정보가 올바르지 않습니다 라고 메시지가 뜬다면, 체크를 해제하고 NHN_KCP 에 위에서 설정한 KCP SITE CODE 로 네이버페이 포인트 결제가 가능한지 문의해 주세요."); ?>
+                <input type="checkbox" id="used_nhnkcp_naverpay_point" name="de_easy_pays[]" value="used_nhnkcp_naverpay_point" <?php if(stripos($default['de_easy_pay_services'], 'used_nhnkcp_naverpay_point') !== false){ echo 'checked="checked"'; } ?> > <label for="used_nhnkcp_naverpay_point">NAVERPAY POINT (네이버페이 포인트 사용)</label><br>
+            </td>
+        </tr>
         <tr class="pg_info_fld lg_info_fld" id="lg_info_anchor">
             <th scope="row">
                 <label for="cf_lg_mid">토스페이먼츠 상점아이디</label><br>
