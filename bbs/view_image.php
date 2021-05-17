@@ -104,6 +104,12 @@ $.fn.imgLoad = function(callback) {
             }
         }
 
+        if(win_w < screen.width) {
+            if(window.outerWidth){
+                win_w = win_w + (window.outerWidth - (document.documentElement.clientWidth || window.innerWidth));
+            }
+        }
+
         window.moveTo(win_l, win_t);
         window.resizeTo(win_w, win_h);
     });

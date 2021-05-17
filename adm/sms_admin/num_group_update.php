@@ -65,7 +65,7 @@ else if ($w == 'em') // 비우기
 }
 else // 등록
 {
-    $bg_name = isset($_POST['bg_name']) ? strip_tags(clean_xss_attributes($_POST['bg_name'])) : '';
+    $bg_name = isset($_REQUEST['bg_name']) ? strip_tags(clean_xss_attributes($_REQUEST['bg_name'])) : '';
 
     if (!strlen(trim($bg_name)))
         alert('그룹명을 입력해주세요');
