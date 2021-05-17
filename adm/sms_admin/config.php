@@ -17,6 +17,9 @@ if( ! isset($config['cf_icode_token_key']) ){
     $config['cf_icode_token_key'] = '';
 }
 
+// 배열코드 초기화
+$userinfo = array('payment'=>'', 'coin'=>'');
+
 if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw'])
 {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);

@@ -61,7 +61,7 @@ for ($i=0; $i<count($member_list); $i++)
         $content = preg_replace("/{회원아이디}/", $mb_id, $content);
         $content = preg_replace("/{이메일}/", $to_email, $content);
 
-        $content = $content . "<hr size=0><p><span style='font-size:9pt; font-familye:굴림'>▶ 더 이상 정보 수신을 원치 않으시면 [<a href='".G5_BBS_URL."/email_stop.php?mb_id={$mb_id}&amp;mb_md5={$mb_md5}' target='_blank'>수신거부</a>] 해 주십시오.</span></p>";
+        $content = $content . "<hr size=0><p><span style='font-size:9pt; font-family:굴림'>▶ 더 이상 정보 수신을 원치 않으시면 [<a href='".G5_BBS_URL."/email_stop.php?mb_id={$mb_id}&amp;mb_md5={$mb_md5}' target='_blank'>수신거부</a>] 해 주십시오.</span></p>";
 
         mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $to_email, $subject, $content, 1);
 
