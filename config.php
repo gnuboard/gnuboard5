@@ -28,7 +28,7 @@ date_default_timezone_set("Asia/Seoul");
 define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
-// 디버깅 상수, 실제 서버운영시 false 로 설정해 주제요.
+// 디버깅 상수, 실제 서버운영시 false 로 설정해 주세요.
 define('G5_DEBUG', false);
 
 // Set Databse table default engine is Databse default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.
