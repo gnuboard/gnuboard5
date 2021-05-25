@@ -1306,6 +1306,8 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $tmp_name = "";
     $en_mb_id = $mb_id;
 
+    $mb_recv_status = true;
+
     if ($mb_id) {
         //$tmp_name = "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" class=\"sv_member\" title=\"$name 자기소개\" rel="nofollow" target=\"_blank\" onclick=\"return false;\">$name</a>";
         $tmp_name = '<a href="'.G5_BBS_URL.'/profile.php?mb_id='.$mb_id.'" class="sv_member" title="'.$name.' 자기소개" target="_blank" rel="nofollow" onclick="return false;">';
@@ -1338,6 +1340,10 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
         $tmp_name .= '</a>';
 
         $title_mb_id = '['.$mb_id.']';
+
+        $mb_status_check = get_member($mb_id, ' mb_leave_date, mb_intercept_date ');
+        if ($mb_status_check['mb_leave_date'] || $mb_status_check['mb_intercept_date'])
+            $mb_recv_status = false;
     } else {
         if(!$bo_table)
             return $name;
@@ -1350,14 +1356,16 @@ function get_sideview($mb_id, $name='', $email='', $homepage='')
     $str .= $tmp_name."\n";
 
     $str2 = "<span class=\"sv\">\n";
-    if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
-    if($email)
-        $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
-    if($homepage)
-        $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
-    if($mb_id)
-        $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
+    if ($mb_recv_status == true || $is_admin) {
+        if($mb_id)
+            $str2 .= "<a href=\"".G5_BBS_URL."/memo_form.php?me_recv_mb_id=".$mb_id."\" onclick=\"win_memo(this.href); return false;\">쪽지보내기</a>\n";
+        if($email)
+            $str2 .= "<a href=\"".G5_BBS_URL."/formmail.php?mb_id=".$mb_id."&amp;name=".urlencode($name)."&amp;email=".$email."\" onclick=\"win_email(this.href); return false;\">메일보내기</a>\n";
+        if($mb_id)
+            $str2 .= "<a href=\"".G5_BBS_URL."/profile.php?mb_id=".$mb_id."\" onclick=\"win_profile(this.href); return false;\">자기소개</a>\n";
+        if($homepage)
+            $str2 .= "<a href=\"".$homepage."\" target=\"_blank\">홈페이지</a>\n";
+    }
     if($bo_table) {
         if($mb_id) {
             $str2 .= "<a href=\"".get_pretty_url($bo_table, '', "sca=".$sca."&amp;sfl=mb_id,1&amp;stx=".$en_mb_id)."\">아이디로 검색</a>\n";
