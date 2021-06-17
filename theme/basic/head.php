@@ -35,7 +35,9 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
             <?php if(G5_COMMUNITY_USE) { ?>
     		<ul id="hd_define">
     			<li class="active"><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
+                <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
     			<li><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
+                <?php } ?>
     		</ul>
             <?php } ?>
 			<ul id="hd_qnb">
