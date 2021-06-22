@@ -226,8 +226,18 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     if(!is_file($source_file)) // 원본 파일이 없다면
         return;
 
+
     $size = @getimagesize($source_file);
-    if(!isset($size[2]) || $size[2] < 1 || $size[2] > 3) // gif, jpg, png 에 대해서만 적용
+
+    $extensions = array(1 => 'gif', 2 => 'jpg', 3 => 'png', 18 => 'webp');
+    $file_ext = $extensions[$size[2]]; // 파일 확장자
+
+    // gif, jpg, png, webp 에 대해서만 적용
+    // if ( !(isset($size[2]) && ($size[2] == 1 || $size[2] == 2 || $size[2] == 3 || $size[2] == 18)) ) 
+    //     return;
+
+    // $extensions 배열에 없는 확장자 라면 썸네일 만들지 않음
+    if (!in_array($file_ext, $extensions))
         return;
 
     if (!is_dir($target_path)) {
@@ -240,16 +250,19 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         return '';
 
     // Animated GIF는 썸네일 생성하지 않음
-    if($size[2] == 1) {
+    if($file_ext === 'gif') {
         if(is_animated_gif($source_file))
+            return basename($source_file);
+    } else if ($file_ext === 'webp') {
+        if(is_animated_webp($source_file))
             return basename($source_file);
     }
 
-    $ext = array(1 => 'gif', 2 => 'jpg', 3 => 'png');
 
     $thumb_filename = preg_replace("/\.[^\.]+$/i", "", $filename); // 확장자제거
-    $thumb_file = "$target_path/thumb-{$thumb_filename}_{$thumb_width}x{$thumb_height}.".$ext[$size[2]];
-
+    // $thumb_file = "$target_path/thumb-{$thumb_filename}_{$thumb_width}x{$thumb_height}.".$ext[$size[2]];
+    $thumb_file = "$target_path/thumb-{$thumb_filename}_{$thumb_width}x{$thumb_height}.".$file_ext;
+    
     $thumb_time = @filemtime($thumb_file);
     $source_time = @filemtime($source_file);
 
@@ -263,10 +276,10 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
     $src = null;
     $degree = 0;
 
-    if ($size[2] == 1) {
+    if ($file_ext === 'gif') {
         $src = @imagecreatefromgif($source_file);
         $src_transparency = @imagecolortransparent($src);
-    } else if ($size[2] == 2) {
+    } else if ($file_ext === 'jpg') {
         $src = @imagecreatefromjpeg($source_file);
 
         if(function_exists('exif_read_data')) {
@@ -298,8 +311,11 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
                 }
             }
         }
-    } else if ($size[2] == 3) {
+    } else if ($file_ext === 'png') {
         $src = @imagecreatefrompng($source_file);
+        @imagealphablending($src, true);
+    } else if ($file_ext === 'webp') {
+        $src = @imagecreatefromwebp($source_file);
         @imagealphablending($src, true);
     } else {
         return;
@@ -363,10 +379,10 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 
             $dst = imagecreatetruecolor($dst_w, $dst_h);
 
-            if($size[2] == 3) {
+            if($file_ext === 'png') {
                 imagealphablending($dst, false);
                 imagesavealpha($dst, true);
-            } else if($size[2] == 1) {
+            } else if($file_ext === 'gif') {
                 $palletsize = imagecolorstotal($src);
                 if($src_transparency >= 0 && $src_transparency < $palletsize) {
                     $transparent_color   = imagecolorsforindex($src, $src_transparency);
@@ -391,12 +407,12 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
                 }
             }
 
-            if($size[2] == 3) {
+            if($file_ext === 'png') {
                 $bgcolor = imagecolorallocatealpha($dst, 0, 0, 0, 127);
                 imagefill($dst, 0, 0, $bgcolor);
                 imagealphablending($dst, false);
                 imagesavealpha($dst, true);
-            } else if($size[2] == 1) {
+            } else if($file_ext === 'gif') {
                 $palletsize = imagecolorstotal($src);
                 if($src_transparency >= 0 && $src_transparency < $palletsize) {
                     $transparent_color   = imagecolorsforindex($src, $src_transparency);
@@ -474,12 +490,12 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
             }
         }
 
-        if($size[2] == 3) {
+        if($file_ext === 'png') {
             $bgcolor = imagecolorallocatealpha($dst, 0, 0, 0, 127);
             imagefill($dst, 0, 0, $bgcolor);
             imagealphablending($dst, false);
             imagesavealpha($dst, true);
-        } else if($size[2] == 1) {
+        } else if($file_ext === 'gif') {
             $palletsize = imagecolorstotal($src);
             if($src_transparency >= 0 && $src_transparency < $palletsize) {
                 $transparent_color   = imagecolorsforindex($src, $src_transparency);
@@ -502,22 +518,24 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
         UnsharpMask($dst, $val[0], $val[1], $val[2]);
     }
 
-    if($size[2] == 1) {
+    if($file_ext === 'gif') {
         imagegif($dst, $thumb_file);
-    } else if($size[2] == 3) {
+    } else if($file_ext === 'png') {
         if(!defined('G5_THUMB_PNG_COMPRESS'))
             $png_compress = 5;
         else
             $png_compress = G5_THUMB_PNG_COMPRESS;
 
         imagepng($dst, $thumb_file, $png_compress);
-    } else {
+    } else if ($file_ext === 'jpg') {
         if(!defined('G5_THUMB_JPG_QUALITY'))
             $jpg_quality = 90;
         else
             $jpg_quality = G5_THUMB_JPG_QUALITY;
 
         imagejpeg($dst, $thumb_file, $jpg_quality);
+    } else if ($file_ext === 'webp') {
+        imagewebp($dst, $thumb_file);
     }
 
     chmod($thumb_file, G5_FILE_PERMISSION); // 추후 삭제를 위하여 파일모드 변경
@@ -693,6 +711,22 @@ and the roundoff errors in the Gaussian blur process, are welcome.
 
     return true;
 
+}
+
+// 움직이는 webp 파일인지 검사한다.
+// 출처) https://stackoverflow.com/questions/45190469/how-to-identify-whether-webp-image-is-static-or-animated?answertab=votes#tab-top
+function is_animated_webp($filename) {
+    $contents = file_get_contents($filename);
+    $where = strpos($contents, "ANMF");
+    if ($where !== false){
+        // animated
+        $is_animated = true;
+    }
+    else{
+        // non animated
+        $is_animated = false;
+    }
+    return $is_animated;
 }
 
 function is_animated_gif($filename) {

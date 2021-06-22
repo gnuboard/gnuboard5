@@ -22,7 +22,7 @@ jQuery(function ($) {
         dreg_area : '#drag_area',
         dreg_area_list : '#drag_area > ul',
         progress_bar : '#progress .progress-bar',
-        filter : /^(image\/bmp|image\/gif|image\/jpg|image\/jpeg|image\/png)$/i,
+        filter : /^(image\/bmp|image\/gif|image\/jpg|image\/jpeg|image\/png|image\/webp)$/i,
         files : [],
         file_limit : 10, //한번에 올릴수 파일갯수 제한
         imgw : 100,
@@ -102,8 +102,7 @@ jQuery(function ($) {
                         
                     }
                     if (!index) {
-                        node
-                            .prepend('<br>')
+                        node.prepend('<br>')
                             .prepend($img);
                         if(size_text){
                             node.append('<br>')
