@@ -1062,7 +1062,7 @@ $pg_anchor = '<ul class="anchor">
             <th scope="row"><label for="bo_gallery_cols">갤러리 이미지 수<strong class="sound_only">필수</strong></label></th>
             <td>
                 <?php echo help('갤러리 형식의 게시판 목록에서 이미지를 한줄에 몇장씩 보여 줄 것인지를 설정하는 값') ?>
-                <?php echo get_member_level_select('bo_gallery_cols', 1, 10, $board['bo_gallery_cols']); ?>
+                <input type="text" name="bo_gallery_cols" value="<?php echo $board['bo_gallery_cols'] ?>" id="bo_gallery_cols" required class="required numeric frm_input" size="4">
             </td>
             <td class="td_grpset">
                 <input type="checkbox" name="chk_grp_gallery_cols" value="1" id="chk_grp_gallery_cols">
