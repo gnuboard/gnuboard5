@@ -1092,7 +1092,7 @@ class UploadHandler
               //throw new Exception("Invalid image MIME type");
               return false;
             }
-
+            
             $image_from_file = self::$MIME_TYPES_PROCESSORS[$mime_type][0];
             $image_to_file = self::$MIME_TYPES_PROCESSORS[$mime_type][1];
 
@@ -1101,7 +1101,7 @@ class UploadHandler
             // https://stackoverflow.com/questions/61394477/php-e-error-gd-webp-cannot-allocate-temporary-buffer
             // 움직이는 webp 이미지나 큰사이즈의 webp 이미지에 대한 해결 방안은 아직 없는 것 같다
             $reprocessed_image = @$image_from_file($file_path);
-            // error_log("\$image_from_file = '$image_from_file',  \$image_to_file = '$image_to_file', \$reprocessed_image = '$reprocessed_image' ");
+            // error_log("\$image_from_file = '$image_from_file',  \$image_to_file = '$image_to_file', \$reprocessed_image = '$reprocessed_image', \$file_path ='$file_path' ");
 
             if (!$reprocessed_image) {
               //throw new Exception("Unable to create reprocessed image from file");

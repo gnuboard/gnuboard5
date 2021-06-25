@@ -85,7 +85,7 @@ function get_file_thumbnail($file){
     
     if( ! is_array($file) ) return '';
 
-    if( preg_match('/(\.jpg|\.jpeg|\.gif|\.png|\.bmp)$/i', $file['file']) && $contents = run_replace('get_file_thumbnail_tags', '', $file) ){
+    if( preg_match('/(\.jpg|\.jpeg|\.gif|\.png|\.bmp|\.webp)$/i', $file['file']) && $contents = run_replace('get_file_thumbnail_tags', '', $file) ){
         return $contents;
     } else if ($file['view']) {
         return get_view_thumbnail($file['view']);
@@ -107,6 +107,8 @@ function get_view_thumbnail($contents, $thumb_width=0)
 
     if(empty($matches))
         return $contents;
+
+    // $extensions = array(1=>'gif', 2=>'jpg', 3=>'png', 18=>'webp');
 
     for($i=0; $i<count($matches[1]); $i++) {
 
@@ -138,8 +140,12 @@ function get_view_thumbnail($contents, $thumb_width=0)
             if(empty($size))
                 continue;
 
+            // $file_ext = $extensions[$size[2]];
+            $file_ext = G5_IMAGE_EXTENSIONS[$size[2]];
+            if (!$file_ext) continue;
+
             // jpg 이면 exif 체크
-            if($size[2] == 2 && function_exists('exif_read_data')) {
+            if( $file_ext === 'jpg' && function_exists('exif_read_data')) {
                 $degree = 0;
                 $exif = @exif_read_data($srcfile);
                 if(!empty($exif['Orientation'])) {
@@ -166,7 +172,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
 
             // Animated GIF 체크
             $is_animated = false;
-            if($size[2] == 1) {
+            if($file_ext === 'gif') {
                 $is_animated = is_animated_gif($srcfile);
 
                 if($replace_content = run_replace('thumbnail_is_animated_gif_content', '', $contents, $srcfile, $is_animated, $img_tag, $data_path, $size)){
@@ -229,16 +235,18 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 
     $size = @getimagesize($source_file);
 
-    $extensions = array(1 => 'gif', 2 => 'jpg', 3 => 'png', 18 => 'webp');
-    $file_ext = $extensions[$size[2]]; // 파일 확장자
+    // $extensions = array(1 => 'gif', 2 => 'jpg', 3 => 'png', 18 => 'webp');
+    // $file_ext = $extensions[$size[2]]; // 파일 확장자
+    $file_ext = G5_IMAGE_EXTENSIONS[$size[2]];
+    if (!$file_ext) return;
 
     // gif, jpg, png, webp 에 대해서만 적용
     // if ( !(isset($size[2]) && ($size[2] == 1 || $size[2] == 2 || $size[2] == 3 || $size[2] == 18)) ) 
     //     return;
 
     // $extensions 배열에 없는 확장자 라면 썸네일 만들지 않음
-    if (!in_array($file_ext, $extensions))
-        return;
+    // if (!in_array($file_ext, $extensions))
+    //     return;
 
     if (!is_dir($target_path)) {
         @mkdir($target_path, G5_DIR_PERMISSION);
