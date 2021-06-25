@@ -9,7 +9,7 @@ test.php
 log
 g5_tree
 cheditor5.*/
-ckeditor*/
+!ckeditor*/
 log/
 g5_tree/
 .vscode/
