@@ -437,6 +437,11 @@ function fileFilterError(file) {
        "gif, png, jpg, webp 사진 파일만 전송할 수 있습니다.");
 }
 
+function explorerFileFilterError(file) {
+    alert("선택하신 '" + file + "' 파일은 전송할 수 없습니다.\n" +
+       "익스플로러 10 이하의 환경에서는 gif, png, jpg 사진 파일만 \n전송할 수 있습니다.");
+}
+
 function imgComplete(img, imgSize, boxId) {
     var resizeW, resizeH, M, elem;
     img.setAttribute("border", '0');
@@ -962,7 +967,13 @@ DoUpload.prototype = {
             file = files[i];
 
             if (!file.type.match(fileTypeRe)) {
-                fileFilterError(file.name);
+                // 엣지(ie 11)를 제외한 ie브라우저인지 체크
+                var agent = navigator.userAgent.toLowerCase();
+                if ( !(navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1) && (agent.indexOf("msie") != -1) ) {
+                    explorerFileFilterError(file.name);
+                } else {
+                    FileFilterError(file.name);
+                }
                 continue;
             }
             this.list.push(file);
