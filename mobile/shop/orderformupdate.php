@@ -18,6 +18,11 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') && $post
     $default['de_pg_service'] = 'kcp';
 }
 
+// 타 PG 사용시 휴대폰 결제가 kcp로 결제 요청이 왔다면 pg사 변경
+if($default['de_pg_service'] != 'kcp' && $default['de_global_nhnkcp_hp_use'] == 1 && $_POST['od_settle_case'] == '휴대폰'){
+    $default['de_pg_service'] = 'kcp';
+}
+
 if( $default['de_pg_service'] == 'inicis' && get_session('ss_order_id') ){
     if( $exist_order = get_shop_order_data(get_session('ss_order_id')) ){    //이미 상품이 주문되었다면 리다이렉트
         if(isset($exist_order['od_tno']) && $exist_order['od_tno']){

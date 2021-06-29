@@ -11,6 +11,10 @@ if( in_array($od_settle_case, array('lpay', 'inicis_kakaopay')) ){
 if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') && isset($_POST['enc_data']) && $_POST['enc_data'] && isset($_POST['site_cd']) && isset($_POST['nhnkcp_pay_case']) && $_POST['nhnkcp_pay_case'] === "naverpay"){
     $default['de_pg_service'] = 'kcp';
 }
+// 타 PG 사용시 휴대폰 결제가 kcp로 결제 요청이 왔다면 pg사 변경
+if($default['de_pg_service'] != 'kcp' && $default['de_global_nhnkcp_hp_use'] && $_POST['od_settle_case'] == '휴대폰'){
+    $default['de_pg_service'] = 'kcp';
+}
 
 if(function_exists('add_order_post_log')) add_order_post_log('init', 'init');
 

@@ -384,7 +384,8 @@ CREATE TABLE IF NOT EXISTS `g5_shop_default` (
   `de_member_reg_coupon_use` tinyint(4) NOT NULL DEFAULT '0',
   `de_member_reg_coupon_term` int(11) NOT NULL DEFAULT '0',
   `de_member_reg_coupon_price` int(11) NOT NULL DEFAULT '0',
-  `de_member_reg_coupon_minimum` int(11) NOT NULL DEFAULT '0'
+  `de_member_reg_coupon_minimum` int(11) NOT NULL DEFAULT '0',
+  `de_global_nhnkcp_hp_use` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

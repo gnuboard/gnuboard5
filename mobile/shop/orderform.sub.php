@@ -12,6 +12,11 @@ if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // �
     require_once(G5_MSHOP_PATH.'/kcp/global_m_nhn_kcp.php');
 }
 
+if($default['de_pg_service'] != 'kcp' && $default['de_global_nhnkcp_hp_use'] == 1){    
+    include_once(G5_MSHOP_PATH.'/settle_kcp.inc.php');
+    require_once(G5_MSHOP_PATH.'/kcp/global_m_hp_form.php');
+}
+
 $tablet_size = "1.0"; // 화면 사이즈 조정 - 기기화면에 맞게 수정(갤럭시탭,아이패드 - 1.85, 스마트폰 - 1.0)
 
 // 개인결제번호제거
@@ -770,6 +775,10 @@ if( is_inicis_simple_pay() ){   //삼성페이 사용시
 if(function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp')){  // 타 PG 사용시 NHN KCP 네이버페이 사용이 설정되어 있다면
     require_once(G5_MSHOP_PATH.'/kcp/m_order.script.php');
 }
+
+if($default['de_pg_service'] != 'kcp' && $default['de_global_nhnkcp_hp_use'] == 1){    
+    require_once(G5_MSHOP_PATH.'/kcp/global_m_hp_order.script.php');
+}
 ?>
 <script>
 var zipcode = "";
@@ -1280,6 +1289,13 @@ function pay_approval()
             form_order_method = 'nhnkcp_naverpay';
         }
     }
+
+    <?php if($default['de_pg_service'] != 'kcp' && $default['de_global_nhnkcp_hp_use'] == 1) { ?>
+        if(settle_method == "휴대폰") {
+            global_m_hp_form_submit(pf);
+            return false;
+        }
+    <?php } ?>
 
     if( jQuery(pf).triggerHandler("form_sumbit_order_"+form_order_method) !== false ) {
         <?php if($default['de_pg_service'] == 'kcp') { ?>

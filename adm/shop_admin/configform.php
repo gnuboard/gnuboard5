@@ -58,6 +58,12 @@ if(!isset($default['de_member_reg_coupon_minimum'])) {
                     ADD `de_member_reg_coupon_minimum` int(11) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_price` ", true);
 }
 
+// kcp 휴대폰 결제관련 필드 추가
+if(!isset($default['de_global_nhnkcp_hp_use'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_global_nhnkcp_hp_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_member_reg_coupon_minimum` ", true);
+}
+
 // lg 결제관련 필드 추가
 if(!isset($default['de_pg_service'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
@@ -799,6 +805,13 @@ if(!$default['de_kakaopay_cancelpwd']){
             <td>
                 <?php echo help("체크시 NHN_KCP 를 통한 네이버페이 결제시 네이버페이 포인트결제가 활성화 됩니다.\n체크를 했는데도 [DR02] 실결제시 가맹점 설정정보가 올바르지 않습니다 라고 메시지가 뜬다면, 체크를 해제하고 NHN_KCP 에 위에서 설정한 KCP SITE CODE 로 네이버페이 포인트 결제가 가능한지 문의해 주세요."); ?>
                 <input type="checkbox" id="used_nhnkcp_naverpay_point" name="de_easy_pays[]" value="used_nhnkcp_naverpay_point" <?php if(stripos($default['de_easy_pay_services'], 'used_nhnkcp_naverpay_point') !== false){ echo 'checked="checked"'; } ?> > <label for="used_nhnkcp_naverpay_point">NAVERPAY POINT (네이버페이 포인트 사용)</label><br>
+            </td>
+        </tr>
+        <tr class="pg_info_fld kcp_info_fld">
+            <th scope="row"><label for="de_global_nhnkcp_naverpay">NHN KCP 휴대폰결제 사용</label></th>
+            <td>
+                <?php echo help("체크시 타 PG (토스페이먼츠, KG 이니시스) 사용중일때도 NHN_KCP 를 통한 휴대폰 결제를 사용할수 있습니다.\n실결제시 반드시 결제대행사 NHN_KCP 항목에 KCP SITE CODE와 NHN KCP SITE KEY를 입력해야 합니다."); ?>
+                <input type="checkbox" id="de_kcp_hp_use" name="de_global_nhnkcp_hp_use" value="1" <?php if($default['de_global_nhnkcp_hp_use'] != 0){ echo 'checked="checked"'; } ?> > <label for="de_kcp_hp_use">사용</label><br>
             </td>
         </tr>
         <tr class="pg_info_fld lg_info_fld" id="lg_info_anchor">

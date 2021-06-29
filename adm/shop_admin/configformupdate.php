@@ -236,6 +236,7 @@ $check_sanitize_keys = array(
 'cf_icode_server_ip',           // 아이코드 ip
 'cf_icode_server_port',         // 아이코드 port
 'cf_icode_token_key',           // 아이코드 토큰키 (JSON버전)
+'de_global_nhnkcp_hp_use',                 // 타 PG KCP 휴대폰 결제 사용
 );
 
 foreach( $check_sanitize_keys as $key ){
@@ -436,7 +437,8 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_member_reg_coupon_use      = '{$de_member_reg_coupon_use}',
                 de_member_reg_coupon_term     = '{$de_member_reg_coupon_term}',
                 de_member_reg_coupon_price    = '{$de_member_reg_coupon_price}',
-                de_member_reg_coupon_minimum  = '{$de_member_reg_coupon_minimum}'
+                de_member_reg_coupon_minimum  = '{$de_member_reg_coupon_minimum}',                
+                de_global_nhnkcp_hp_use       = '{$de_global_nhnkcp_hp_use}'
                 ";
 sql_query($sql);
 
