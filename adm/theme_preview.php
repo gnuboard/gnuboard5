@@ -30,7 +30,7 @@ $qstr_device  = '&amp;mode='.$mode.'&amp;device='.(G5_IS_MOBILE ? 'pc' : 'mobile
 $sql = " select bo_table, wr_parent from {$g5['board_new_table']} order by bn_id desc limit 1 ";
 $row = sql_fetch($sql);
 $bo_table = $row['bo_table'];
-$board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '$bo_table' ");
+$board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '{$bo_table}' ");
 $write_table = $g5['write_prefix'] . $bo_table;
 
 // theme.config.php 미리보기 게시판 스킨이 설정돼 있다면
@@ -172,7 +172,7 @@ require_once(G5_PATH.'/head.sub.php');
             break;
         case 'view':
             $wr_id = $row['wr_parent'];
-            $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
+            $write = sql_fetch(" select * from {$write_table} where wr_id = '{$wr_id}' ");
             include(G5_BBS_PATH.'/board.php');
             break;
         case 'shop':
