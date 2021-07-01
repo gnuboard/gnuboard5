@@ -218,6 +218,10 @@ if ($w == "" || $w == "u")
     @set_cookie("ck_origin", stripslashes($it_origin), time() + 86400*31);
 }
 
+// 관련상품을 삭제한 뒤에 경고가 노출되어 등록, 수정 없이 관련상품만 삭제될 수 있는 오류 수정 (squared2님,210617)
+// 포인트 비율 값 체크
+if(($it_point_type == 1 || $it_point_type == 2) && ($it_point < 0  || $it_point > 99))
+    alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
 
 // 관련상품을 우선 삭제함
 sql_query(" delete from {$g5['g5_shop_item_relation_table']} where it_id = '$it_id' ");
@@ -286,10 +290,6 @@ for($i=0; $i<$count_ii_article; $i++) {
     $value_array[$key] = $val;
 }
 $it_info_value = addslashes(serialize($value_array));
-
-// 포인트 비율 값 체크
-if(($it_point_type == 1 || $it_point_type == 2) && $it_point > 99)
-    alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
 
 $it_name = isset($_POST['it_name']) ? strip_tags(clean_xss_attributes(trim($_POST['it_name']))) : '';
 
