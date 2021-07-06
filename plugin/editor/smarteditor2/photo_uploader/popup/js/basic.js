@@ -85,8 +85,11 @@ jQuery(function ($) {
             data.context = $('<li/>').addClass("sort_list").appendTo(this.dreg_area_list);
             $.each(data.files, function (index, file) {
                 if (!preload && !othis.filter.test(file.type)) {
+                    var agent = navigator.userAgent.toLowerCase();
+                    var msg = '';
+                    msg = (agent.indexOf('trident') != -1 || agent.indexOf("msie") != -1)? "익스플로러 환경에서는 gif, png, jpg 파일만 \n전송할 수 있습니다.":"이미지만 허용합니다.";
                     data.context.remove();
-                    alert('이미지만 허용합니다.');
+                    alert(msg);
                     return true;
                 }
                 var node = $('<div/>')

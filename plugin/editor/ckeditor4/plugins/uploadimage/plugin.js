@@ -69,10 +69,16 @@
 			if ( !uploadUrl ) {
 				return;
 			}
-
-			// Handle images which are available in the dataTransfer.
-			fileTools.addUploadWidget( editor, 'uploadimage', {
-				supportedTypes: /image\/(jpeg|png|gif|bmp|webp)/,
+			var supportedType = '';
+			var agent = navigator.userAgent.toLowerCase();
+			if (agent.indexOf('trident') != -1 || agent.indexOf("msie") != -1) {
+				supportedType = '';				
+			} else {
+				supportedType = /image\/(jpeg|png|gif|bmp|webp)/;
+			}	
+			// Handle images which are available in the dataTransfer.			
+			fileTools.addUploadWidget( editor, 'uploadimage', {						
+				supportedTypes: supportedType,
 
 				uploadUrl: uploadUrl,
 				fileDialog: fileDialog,
@@ -107,8 +113,14 @@
 
 			editor.on("fileUploadRequest", function( evt ) {
 				// 이미지 업로드 시작 체크
-				if(typeof(editor_chk_upload) != "undefined") {
-					editor_chk_upload = false;
+				var fileLoader = evt.data.fileLoader;
+				if(fileLoader.file.type.match(/image\/(jpeg|png|gif|bmp|webp)/) == null){
+					this.showNotification('익스플로러 환경에서는 jpg / gif / png 파일만 업로드 가능합니다.','warning');
+					return false;
+				}else {					
+					if(typeof(editor_chk_upload) != "undefined") {
+						editor_chk_upload = false;
+					}
 				}
 			});
 
@@ -124,7 +136,6 @@
 					img.setAttribute( 'src', res.url );
 					if(typeof(res.width) != 'undefined')	img.setAttribute( 'width', res.width );
 					if(typeof(res.height) != 'undefined')	img.setAttribute( 'height', res.height );
-
 					editor.insertElement(img);
 
 					uploadType = '';	// 구분값 초기화
