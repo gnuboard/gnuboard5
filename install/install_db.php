@@ -241,8 +241,11 @@ if($g5_install || !$result) {
     // FAQ Master
     sql_query(" insert into `{$table_prefix}faq_master` set fm_id = '1', fm_subject = '자주하시는 질문' ", true, $dblink);
 
-    $tmp_gr_id = defined('G5_YOUNGCART_VER') ? 'shop' : 'community';
-    $tmp_gr_subject = defined('G5_YOUNGCART_VER') ? '쇼핑몰' : '커뮤니티';
+    // 그누보드, 영카트 통합으로 인하여 게시판그룹을 커뮤니티(community)로 생성 (NaviGator님,210624)
+    // $tmp_gr_id = defined('G5_YOUNGCART_VER') ? 'shop' : 'community';
+    // $tmp_gr_subject = defined('G5_YOUNGCART_VER') ? '쇼핑몰' : '커뮤니티';
+    $tmp_gr_id = 'community';
+    $tmp_gr_subject = '커뮤니티';
 
     // 게시판 그룹 생성
     sql_query(" insert into `{$table_prefix}group` set gr_id = '$tmp_gr_id', gr_subject = '$tmp_gr_subject' ", true, $dblink);

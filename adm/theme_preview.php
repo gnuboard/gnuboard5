@@ -30,7 +30,7 @@ $qstr_device  = '&amp;mode='.$mode.'&amp;device='.(G5_IS_MOBILE ? 'pc' : 'mobile
 $sql = " select bo_table, wr_parent from {$g5['board_new_table']} order by bn_id desc limit 1 ";
 $row = sql_fetch($sql);
 $bo_table = $row['bo_table'];
-$board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '$bo_table' ");
+$board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '{$bo_table}' ");
 $write_table = $g5['write_prefix'] . $bo_table;
 
 // theme.config.php 미리보기 게시판 스킨이 설정돼 있다면
@@ -100,29 +100,31 @@ for($i=1; $i<=5; $i++) {
 $default['de_mimg_width']  = (isset($tconfig['de_mimg_width']) && $tconfig['de_mimg_width']) ? $tconfig['de_mimg_width'] : $default['de_mimg_width'];
 $default['de_mimg_height'] = (isset($tconfig['de_mimg_height']) && $tconfig['de_mimg_height']) ? $tconfig['de_mimg_height'] : $default['de_mimg_height'];
 
-// 테마 경로 설정
-if(defined('G5_THEME_PATH')) {
-    define('G5_THEME_SHOP_PATH',   G5_THEME_PATH.'/'.G5_SHOP_DIR);
-    define('G5_THEME_SHOP_URL',    G5_THEME_URL.'/'.G5_SHOP_DIR);
-    define('G5_THEME_MSHOP_PATH',  G5_THEME_PATH.'/'.G5_MOBILE_DIR.'/'.G5_SHOP_DIR);
-    define('G5_THEME_MSHOP_URL',   G5_THEME_URL.'/'.G5_MOBILE_DIR.'/'.G5_SHOP_DIR);
-}
+if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
+    // 테마 경로 설정
+    if(defined('G5_THEME_PATH')) {
+        define('G5_THEME_SHOP_PATH',   G5_THEME_PATH.'/'.G5_SHOP_DIR);
+        define('G5_THEME_SHOP_URL',    G5_THEME_URL.'/'.G5_SHOP_DIR);
+        define('G5_THEME_MSHOP_PATH',  G5_THEME_PATH.'/'.G5_MOBILE_DIR.'/'.G5_SHOP_DIR);
+        define('G5_THEME_MSHOP_URL',   G5_THEME_URL.'/'.G5_MOBILE_DIR.'/'.G5_SHOP_DIR);
+    }
 
-// 스킨 경로 설정
-if(preg_match('#^theme/(.+)$#', $default['de_shop_skin'], $match)) {
-    define('G5_SHOP_SKIN_PATH',  G5_THEME_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1]);
-    define('G5_SHOP_SKIN_URL',   G5_THEME_URL .'/'.G5_SKIN_DIR.'/shop/'.$match[1]);
-} else {
-    define('G5_SHOP_SKIN_PATH',  G5_PATH.'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_skin']);
-    define('G5_SHOP_SKIN_URL',   G5_URL .'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_skin']);
-}
+    // 스킨 경로 설정
+    if(preg_match('#^theme/(.+)$#', $default['de_shop_skin'], $match)) {
+        define('G5_SHOP_SKIN_PATH',  G5_THEME_PATH.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$match[1]);
+        define('G5_SHOP_SKIN_URL',   G5_THEME_URL .'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$match[1]);
+    } else {
+        define('G5_SHOP_SKIN_PATH',  G5_PATH.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$default['de_shop_skin']);
+        define('G5_SHOP_SKIN_URL',   G5_URL .'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$default['de_shop_skin']);
+    }
 
-if(preg_match('#^theme/(.+)$#', $default['de_shop_mobile_skin'], $match)) {
-    define('G5_MSHOP_SKIN_PATH', G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$match[1]);
-    define('G5_MSHOP_SKIN_URL',  G5_THEME_URL .'/'.G5_MOBILE_DIR.'/'.G5_SKIN_DIR.'/shop/'.$match[1]);
-} else {
-    define('G5_MSHOP_SKIN_PATH', G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin']);
-    define('G5_MSHOP_SKIN_URL',  G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/shop/'.$default['de_shop_mobile_skin']);
+    if(preg_match('#^theme/(.+)$#', $default['de_shop_mobile_skin'], $match)) {
+        define('G5_MSHOP_SKIN_PATH', G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$match[1]);
+        define('G5_MSHOP_SKIN_URL',  G5_THEME_URL .'/'.G5_MOBILE_DIR.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$match[1]);
+    } else {
+        define('G5_MSHOP_SKIN_PATH', G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$default['de_shop_mobile_skin']);
+        define('G5_MSHOP_SKIN_URL',  G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$default['de_shop_mobile_skin']);
+    }
 }
 
 $conf = sql_fetch(" select cf_theme from {$g5['config_table']} ");
@@ -170,7 +172,7 @@ require_once(G5_PATH.'/head.sub.php');
             break;
         case 'view':
             $wr_id = $row['wr_parent'];
-            $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
+            $write = sql_fetch(" select * from {$write_table} where wr_id = '{$wr_id}' ");
             include(G5_BBS_PATH.'/board.php');
             break;
         case 'shop':

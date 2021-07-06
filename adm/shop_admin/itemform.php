@@ -1843,8 +1843,10 @@ function fitemformcheck(f)
 
     if(f.it_point_type.value == "1" || f.it_point_type.value == "2") {
         var point = parseInt(f.it_point.value);
-        if(point > 99) {
+        if(point < 0 || point > 99) {
             alert("포인트 비율을 0과 99 사이의 값으로 입력해 주십시오.");
+            f.it_point.focus();
+            f.it_point.select();
             return false;
         }
     }
