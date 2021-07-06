@@ -12,6 +12,7 @@ $content = '';
 
 $token = _token();
 set_session('ss_qa_delete_token', $token);
+set_session('ss_qa_write_token', $token);
 
 $g5['title'] = $qaconfig['qa_title'];
 include_once('./qahead.php');

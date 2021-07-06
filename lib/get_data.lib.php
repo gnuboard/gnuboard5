@@ -294,7 +294,7 @@ function get_thumbnail_find_cache($bo_table, $wr_id, $wr_key){
         return get_write($write_table, $wr_id, true);
     }
 
-    return get_board_file_db($bo_table, $wr_id, 'bf_file, bf_content', "and bf_type between '1' and '3'", true);
+    return get_board_file_db($bo_table, $wr_id, 'bf_file, bf_content', "and bf_type in (1, 2, 3, 18) ", true);
 }
 
 function get_write_table_name($bo_table){
