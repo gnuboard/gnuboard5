@@ -5,7 +5,10 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.4.5.5');
+define('G5_GNUBOARD_VER', '5.4.10');
+// 그누보드5.4.5.5 버전과 영카트5.4.5.5.1 버전을 합쳐서 그누보드5.4.6 버전에서 시작함 (kagla-210617)
+// G5_YOUNGCART_VER 이 상수를 사용하는 곳이 있으므로 주석 처리 해제함
+define('G5_YOUNGCART_VER', '5.4.5.5.1');
 
 // 이 상수가 정의되지 않으면 각각의 개별 페이지는 별도로 실행될 수 없음
 define('_GNUBOARD_', true);
@@ -27,7 +30,7 @@ date_default_timezone_set("Asia/Seoul");
 define('G5_DOMAIN', '');
 define('G5_HTTPS_DOMAIN', '');
 
-// 디버깅 상수, 실제 서버운영시 false 로 설정해 주제요.
+// 디버깅 상수, 실제 서버운영시 false 로 설정해 주세요.
 define('G5_DEBUG', false);
 
 // Set Databse table default engine is Databse default_storage_engine, If you want to use MyISAM or InnoDB, change to MyISAM or InnoDB.

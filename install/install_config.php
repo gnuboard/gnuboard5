@@ -64,6 +64,25 @@ $ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].dirname(dirname(__FILE__).'/'
             <span>TABLE명 접두사는 영문자, 숫자, _ 만 입력 가능합니다.</span>
         </td>
     </tr>
+    <tr>
+        <th scope="row"><label for="">쇼핑몰TABLE명 접두사</label></th>
+        <td>
+            <span>쇼핑몰TABLE명 접두사는 영문자, 숫자, _ 만 입력 가능합니다.</span>
+            <input name="g5_shop_prefix" type="text" value="g5_shop_" id="g5_shop_prefix">
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for=""><?php echo G5_VERSION; ?> 재설치</label></th>
+        <td>
+            <input name="g5_install" type="checkbox" value="1" id="g5_install">재설치
+        </td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="">쇼핑몰설치</label></th>
+        <td>
+            <input name="g5_shop_install" type="checkbox" value="1" id="g5_shop_install" checked="checked">설치
+        </td>
+    </tr>
     </tbody>
     </table>
 

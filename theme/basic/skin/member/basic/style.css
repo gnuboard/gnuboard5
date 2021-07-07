@@ -188,12 +188,12 @@
 #login_info .login_if_lpl {float:right}
 #login_password_lost {display:inline-block;border:1px solid #d5d9dd;color:#3a8afd;border-radius:2px;padding:2px 5px;line-height:20px}
 
-#mb_login_notmb {margin:30px auto;padding:20px 30px}
+#mb_login_notmb {margin:30px auto;padding:20px 30px;border: 1px solid #dde7e9}
 #mb_login_notmb h2 {font-size:1.25em;margin:20px 0 10px}
 #guest_privacy {border:1px solid #ccc;text-align:left;line-height:1.6em;color:#666;background:#fafafa;padding:10px;height:150px;margin:10px 0;overflow-y:auto}
 #mb_login_notmb .btn_submit {display:block;text-align:center;line-height:45px}
 
-#mb_login_od_wr {margin:30px auto;padding:20px 30px}
+#mb_login_od_wr {margin:30px auto;padding:20px 30px;border: 1px solid #dde7e9}
 #mb_login_od_wr h2 {font-size:1.25em;margin:20px 0 10px}
 #mb_login_od_wr .frm_input {margin:10px 0 0}
 #mb_login_od_wr p {background:#f3f3f3;margin:20px 0 0;padding:15px 20px;line-height:1.5em}

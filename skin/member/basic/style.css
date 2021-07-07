@@ -91,6 +91,7 @@
 
 /* ### 기본 스타일 커스터마이징 끝 ### */
 /* 회원가입 약관 */
+
 .register {margin:0 auto}
 .register:after {display:block;visibility:hidden;clear:both;content:""}
 .register .btn_confirm .btn_submit,

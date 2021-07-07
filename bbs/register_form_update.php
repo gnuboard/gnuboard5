@@ -506,6 +506,51 @@ if ($config['cf_use_email_certify'] && $old_email != $mb_email) {
 }
 
 
+// 신규회원 쿠폰발생
+if($w == '' && $default['de_member_reg_coupon_use'] && $default['de_member_reg_coupon_term'] > 0 && $default['de_member_reg_coupon_price'] > 0) {
+    $j = 0;
+    $create_coupon = false;
+
+    do {
+        $cp_id = get_coupon_id();
+
+        $sql3 = " select count(*) as cnt from {$g5['g5_shop_coupon_table']} where cp_id = '$cp_id' ";
+        $row3 = sql_fetch($sql3);
+
+        if(!$row3['cnt']) {
+            $create_coupon = true;
+            break;
+        } else {
+            if($j > 20)
+                break;
+        }
+    } while(1);
+
+    if($create_coupon) {
+        $cp_subject = '신규 회원가입 축하 쿠폰';
+        $cp_method = 2;
+        $cp_target = '';
+        $cp_start = G5_TIME_YMD;
+        $cp_end = date("Y-m-d", (G5_SERVER_TIME + (86400 * ((int)$default['de_member_reg_coupon_term'] - 1))));
+        $cp_type = 0;
+        $cp_price = $default['de_member_reg_coupon_price'];
+        $cp_trunc = 1;
+        $cp_minimum = $default['de_member_reg_coupon_minimum'];
+        $cp_maximum = 0;
+
+        $sql = " INSERT INTO {$g5['g5_shop_coupon_table']}
+                    ( cp_id, cp_subject, cp_method, cp_target, mb_id, cp_start, cp_end, cp_type, cp_price, cp_trunc, cp_minimum, cp_maximum, cp_datetime )
+                VALUES
+                    ( '$cp_id', '$cp_subject', '$cp_method', '$cp_target', '$mb_id', '$cp_start', '$cp_end', '$cp_type', '$cp_price', '$cp_trunc', '$cp_minimum', '$cp_maximum', '".G5_TIME_YMDHIS."' ) ";
+
+        $res = sql_query($sql, false);
+
+        if($res)
+            set_session('ss_member_reg_coupon', 1);
+    }
+}
+
+
 // 사용자 코드 실행
 @include_once ($member_skin_path.'/register_form_update.tail.skin.php');
 

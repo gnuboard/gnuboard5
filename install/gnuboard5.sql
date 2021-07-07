@@ -891,6 +891,7 @@ CREATE TABLE IF NOT EXISTS `g5_member_social_profiles` (
 DROP TABLE IF EXISTS `g5_new_win`;
 CREATE TABLE IF NOT EXISTS `g5_new_win` (
   `nw_id` int(11) NOT NULL AUTO_INCREMENT,
+  `nw_division` varchar(10) NOT NULL DEFAULT 'both',
   `nw_device` varchar(10) NOT NULL DEFAULT 'both',
   `nw_begin_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `nw_end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',

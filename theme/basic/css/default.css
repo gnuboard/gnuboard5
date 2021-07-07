@@ -86,6 +86,14 @@ border:1px solid #558ab7 !important;
 #hd_sch #sch_stx {float:left;width:385px;height:45px;padding-left:10px;border-radius:30px 0 0 30px;background:#2c2c2c;border:0;border-right:0;font-size:1.25em;color:#fff}
 #hd_sch #sch_submit {float:left;width:60px;height:45px;border:0;background:#2c2c2c;color:#fff;border-radius:0 30px 30px 0;cursor:pointer;font-size:16px}
 
+#hd_define {float:left}
+#hd_define:after {display:block;visibility:hidden;clear:both;content:""}
+#hd_define li {float:left;font-size:1.083em;line-height:14px;border-right:1px solid #4a4a4a;position:relative;text-align:center;margin:15px 10px 15px 0;padding-right:10px}
+#hd_define li:last-child {padding-right:0;margin-right:0;border-right:0}
+#hd_define li a {display:inline-block;color:#919191}
+#hd_define li.active a {color:#fff}
+
+
 #hd_qnb {float:right;text-align:right}
 #hd_qnb:after {display:block;visibility:hidden;clear:both;content:""}
 #hd_qnb li {float:left;font-size:1.083em;line-height:14px;border-right:1px solid #4a4a4a;position:relative;text-align:center;margin:15px 10px 15px 0;padding-right:10px}

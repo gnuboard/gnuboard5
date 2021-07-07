@@ -101,13 +101,6 @@ function sql_escape_string($str)
 //==============================================================================
 // SQL Injection 등으로 부터 보호를 위해 sql_escape_string() 적용
 //------------------------------------------------------------------------------
-// magic_quotes_gpc 에 의한 backslashes 제거
-if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) {
-    $_POST    = array_map_deep('stripslashes',  $_POST);
-    $_GET     = array_map_deep('stripslashes',  $_GET);
-    $_COOKIE  = array_map_deep('stripslashes',  $_COOKIE);
-    $_REQUEST = array_map_deep('stripslashes',  $_REQUEST);
-}
 
 // sql_escape_string 적용
 $_POST    = array_map_deep(G5_ESCAPE_FUNCTION,  $_POST);
@@ -237,6 +230,86 @@ function chrome_domain_session_name(){
 }
 
 chrome_domain_session_name();
+
+if( ! class_exists('XenoPostToForm') ){
+    class XenoPostToForm
+    {
+        public static function check() {
+            $cookie_session_name = (defined('G5_SESSION_NAME') && G5_SESSION_NAME) ? G5_SESSION_NAME : 'PHPSESSID'; 
+
+            return !isset($_COOKIE[$cookie_session_name]) && count($_POST) && ((isset($_SERVER['HTTP_REFERER']) && !preg_match('~^https://'.preg_quote($_SERVER['HTTP_HOST'], '~').'/~', $_SERVER['HTTP_REFERER']) || ! isset($_SERVER['HTTP_REFERER']) ));
+        }
+
+        public static function submit($posts) {
+            echo '<html><head><meta charset="UTF-8"></head><body>';
+            echo '<form id="f" name="f" method="post">';
+            echo self::makeInputArray($posts);
+            echo '</form>';
+            echo '<script>';
+            echo 'document.f.submit();';
+            echo '</script></body></html>';
+            exit;
+        }
+
+        public static function makeInputArray($posts) {
+            $res = array();
+            foreach($posts as $k => $v) {
+                $res[] = self::makeInputArray_($k, $v);
+            }
+            return implode('', $res);
+        }
+
+        private static function makeInputArray_($k, $v) {
+            if(is_array($v)) {
+                $res = array();
+                foreach($v as $i => $j) {
+                    $res[] = self::makeInputArray_($k.'['.htmlspecialchars($i).']', $j);
+                }
+                return implode('', $res);
+            }
+            return '<input type="hidden" name="'.$k.'" value="'.htmlspecialchars($v).'" />';
+        }
+    }
+}
+
+if( !function_exists('shop_check_is_pay_page') ){
+    function shop_check_is_pay_page(){
+        $shop_dir = 'shop';
+        $mobile_dir = G5_MOBILE_DIR;
+
+        // PG 결제사의 리턴페이지 목록들
+        $pg_checks_pages = array(
+            $shop_dir.'/inicis/INIStdPayReturn.php',	// 영카트 5.2.9.5 이하에서 사용됨, 그 이상버전에서는 파일 삭제됨
+            $shop_dir.'/inicis/inistdpay_return.php',	// 영카트 5.2.9.6 이상에서 사용됨
+            $mobile_dir.'/'.$shop_dir.'/inicis/pay_return.php',
+            $mobile_dir.'/'.$shop_dir.'/inicis/pay_approval.php',
+            $shop_dir.'/lg/returnurl.php',
+            $mobile_dir.'/'.$shop_dir.'/lg/returnurl.php',
+            $mobile_dir.'/'.$shop_dir.'/lg/xpay_approval.php',
+            $mobile_dir.'/'.$shop_dir.'/kcp/order_approval_form.php',
+            $shop_dir.'/kakaopay/inicis_kk_return.php',     // 이니시스 카카오페이 (SIRK 로 시작하는 아이디 전용)
+        );
+
+        $server_script_name = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
+
+        // PG 결제사의 리턴페이지이면
+        foreach( $pg_checks_pages as $pg_page ){
+            if( preg_match('~'.preg_quote($pg_page).'$~i', $server_script_name) ){
+                return true;
+            }
+        }
+
+        return false;
+    }
+}
+
+// PG 결제시에 세션이 없으면 내 호출페이지를 다시 호출하여 쿠키 PHPSESSID를 살려내어 세션값을 정상적으로 불러오게 합니다.
+// 위와 같이 코드를 전부 한페이지에 넣은 이유는 이전 버전 사용자들이 패치시 어려울수 있으므로 한페이지에 코드를 다 넣었습니다.
+if(XenoPostToForm::check()) {
+    if ( shop_check_is_pay_page() ){	// PG 결제 리턴페이지에서만 사용
+        XenoPostToForm::submit($_POST); // session_start(); 하기 전에
+    }
+}
 
 //==============================================================================
 // 공용 변수
@@ -572,6 +645,11 @@ if(isset($config['cf_theme']) && trim($config['cf_theme'])) {
 // 테마 설정 로드
 if(defined('G5_THEME_PATH') && is_file(G5_THEME_PATH.'/theme.config.php'))
     include_once(G5_THEME_PATH.'/theme.config.php');
+
+
+// 쇼핑몰 설정
+if (defined('G5_USE_SHOP') && G5_USE_SHOP)
+    include_once(G5_PATH.'/shop.config.php');
 
 //=====================================================================================
 // 사용기기 설정

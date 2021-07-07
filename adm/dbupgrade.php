@@ -177,6 +177,34 @@ if( !$row ) {
     $is_check = true;
 }
 
+// 임시저장 테이블이 없을 경우 생성
+if(!sql_query(" DESC {$g5['g5_shop_post_log_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['g5_shop_post_log_table']}` (
+                  `log_id` int(11) NOT NULL AUTO_INCREMENT,
+                  `oid` bigint(20) unsigned NOT NULL,
+                  `mb_id` varchar(255) NOT NULL DEFAULT '',
+                  `post_data` text NOT NULL,
+                  `ol_code` varchar(255) NOT NULL DEFAULT '',
+                  `ol_msg` text NOT NULL,
+                  `ol_datetime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  `ol_ip` varchar(25) NOT NULL DEFAULT '',
+                  PRIMARY KEY (`log_id`)
+                ) ENGINE=MyISAM DEFAULT CHARSET=utf8; ", true);
+
+	$is_check = true;
+}
+
+$result = sql_query("describe `{$g5['g5_shop_post_log_table']}`");
+while ($row = sql_fetch_array($result)){
+    if( $row['Field'] === 'ol_msg' && $row['Type'] === 'varchar(255)' ){
+        sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` MODIFY ol_msg TEXT NOT NULL;", false);
+        sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` DROP PRIMARY KEY;", false);
+        sql_query("ALTER TABLE `{$g5['g5_shop_post_log_table']}` ADD `log_id` int(11) NOT NULL AUTO_INCREMENT, ADD PRIMARY KEY (`log_id`);", false);
+        $is_check = true;
+        break;
+    }
+}
+
 $is_check = run_replace('admin_dbupgrade', $is_check);
 
 $db_upgrade_msg = $is_check ? 'DB 업그레이드가 완료되었습니다.' : '더 이상 업그레이드 할 내용이 없습니다.<br>현재 DB 업그레이드가 완료된 상태입니다.';

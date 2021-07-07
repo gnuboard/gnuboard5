@@ -62,7 +62,7 @@ if ($w == "") {
 
 } else if ($w == 'u') {
 
-    if ($is_admin)
+    if ($is_admin == 'super')
         alert('관리자의 회원정보는 관리자 화면에서 수정해 주십시오.', G5_URL);
 
     if (!$is_member)
