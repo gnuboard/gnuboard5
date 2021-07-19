@@ -147,6 +147,9 @@ if((int)$pp['pp_price'] !== (int)$pg_price) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_cancel.php';
             break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
             break;
