@@ -11,8 +11,6 @@ if (!$row['cnt'])
     alert('게시판그룹이 한개 이상 생성되어야 합니다.', './boardgroup_form.php');
 
 $html_title = '게시판';
-$reaonly = '';
-$required_valid = '';
 
 if (!isset($board['bo_device'])) {
     // 게시판 사용 필드 추가
@@ -142,6 +140,7 @@ run_event('adm_board_form_before', $board, $w);
 $required = "";
 $readonly = "";
 $sound_only = "";
+$required_valid = "";
 if ($w == '') {
 
     $html_title .= ' 생성';
