@@ -532,7 +532,7 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             // image type
             if ( preg_match("/\.({$config['cf_image_extension']})$/i", $filename) ||
                  preg_match("/\.({$config['cf_flash_extension']})$/i", $filename) ) {
-                if ($timg['2'] < 1 || $timg['2'] > 16)
+                if ($timg['2'] < 1 || $timg['2'] > 18)
                     continue;
             }
             //=================================================================

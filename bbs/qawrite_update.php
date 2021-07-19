@@ -197,7 +197,8 @@ for ($i=1; $i<=$upload_count; $i++) {
         // image type
         if ( preg_match("/\.({$config['cf_image_extension']})$/i", $filename) ||
              preg_match("/\.({$config['cf_flash_extension']})$/i", $filename) ) {
-            if ($timg['2'] < 1 || $timg['2'] > 16)
+            // webp 파일의 type 이 18 이므로 업로드가 가능하도록 수정
+            if ($timg['2'] < 1 || $timg['2'] > 18)
                 continue;
         }
         //=================================================================
