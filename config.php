@@ -235,5 +235,3 @@ if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {   //https 통신일때
 } else {  //http 통신일때 daum 주소 js
     define('G5_POSTCODE_JS', '<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>');
 }
-
-define('G5_IMAGE_EXTENSIONS', array(1=>'gif', 2=>'jpg', 3=>'png', 18=>'webp'));

@@ -140,8 +140,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
             if(empty($size))
                 continue;
 
-            // $file_ext = $extensions[$size[2]];
-            $file_ext = G5_IMAGE_EXTENSIONS[$size[2]];
+            $file_ext = $extensions[$size[2]];
             if (!$file_ext) continue;
 
             // jpg 이면 exif 체크
@@ -235,9 +234,8 @@ function thumbnail($filename, $source_path, $target_path, $thumb_width, $thumb_h
 
     $size = @getimagesize($source_file);
 
-    // $extensions = array(1 => 'gif', 2 => 'jpg', 3 => 'png', 18 => 'webp');
-    // $file_ext = $extensions[$size[2]]; // 파일 확장자
-    $file_ext = G5_IMAGE_EXTENSIONS[$size[2]];
+    $extensions = array(1 => 'gif', 2 => 'jpg', 3 => 'png', 18 => 'webp');
+    $file_ext = $extensions[$size[2]]; // 파일 확장자
     if (!$file_ext) return;
 
     // gif, jpg, png, webp 에 대해서만 적용
