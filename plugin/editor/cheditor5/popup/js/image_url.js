@@ -54,7 +54,7 @@ function chkImgFormat (url)
 {
     var imageName = getFilename(url);
     var allowSubmit = false;
-    var extArray = [".gif", ".jpg", ".jpeg", ".png"];
+    var extArray = [".gif", ".jpg", ".jpeg", ".png", ".webp"];
 
     extArray.join(" ");
     if (imageName === "") {
@@ -72,7 +72,7 @@ function chkImgFormat (url)
     }
 
     if (!allowSubmit) {
-        alert("사진은 GIF, JPG, PNG 형식만 넣을 수 있습니다.");
+        alert("사진은 GIF, JPG, PNG, WEBP 형식만 넣을 수 있습니다.");
         return false;
     }
 

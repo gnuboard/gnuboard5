@@ -26,4 +26,4 @@ for ($i=0; $i<count($filter); $i++) {
     }
 }
 
-die("{\"subject\":\"$subj\",\"content\":\"$cont\"}");
+die("{\"subject\":\"{$subj}\",\"content\":\"{$cont}\"}");

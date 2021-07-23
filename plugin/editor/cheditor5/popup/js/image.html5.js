@@ -14,7 +14,7 @@ var activeImage = null,
     dragDropDiv,
     eventDiff_x = 0,
     eventDiff_y = 0,
-    fileTypeRe = /^image\/(png|jpeg|gif)$/i,
+    fileTypeRe = /^image\/(png|jpeg|gif|webp)$/i,
     geckoOffsetX_marker = -3,
     geckoOffsetY_marker = -1,
     imageCompleted = 0,
@@ -434,7 +434,12 @@ function startUpload(list) {
 
 function fileFilterError(file) {
     alert("선택하신 '" + file + "' 파일은 전송할 수 없습니다.\n" +
-       "gif, png, jpg 사진 파일만 전송할 수 있습니다.");
+       "gif, png, jpg, webp 사진 파일만 전송할 수 있습니다.");
+}
+
+function explorerFileFilterError(file) {
+    alert("선택하신 '" + file + "' 파일은 전송할 수 없습니다.\n" +
+       "익스플로러 환경에서는 gif, png, jpg 사진 파일만 \n전송할 수 있습니다.");
 }
 
 function imgComplete(img, imgSize, boxId) {
@@ -962,7 +967,13 @@ DoUpload.prototype = {
             file = files[i];
 
             if (!file.type.match(fileTypeRe)) {
-                fileFilterError(file.name);
+                // 엣지를 제외한 ie브라우저인지 체크
+                var agent = navigator.userAgent.toLowerCase();
+                if (agent.indexOf('trident') != -1 || agent.indexOf("msie") != -1) {
+                    explorerFileFilterError(file.name);
+                } else {
+                    FileFilterError(file.name);
+                }
                 continue;
             }
             this.list.push(file);

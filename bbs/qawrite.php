@@ -79,7 +79,8 @@ if(is_file($skin_file)) {
         else
             $content = "\n\n\n\n====== 이전 답변내용 =======\n";
 
-        $content .= get_text($write['qa_content'], 0);
+        // KISA 취약점 권고사항 Stored XSS (210624)
+        $content .= get_text(html_purifier($write['qa_content']), 0);
     } else {
         //$content = get_text($write['qa_content'], 0);
         
