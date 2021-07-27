@@ -5,7 +5,7 @@
 ********************/
 
 define('G5_VERSION', '그누보드5');
-define('G5_GNUBOARD_VER', '5.4.13');
+define('G5_GNUBOARD_VER', '5.4.13.1');
 // 그누보드5.4.5.5 버전과 영카트5.4.5.5.1 버전을 합쳐서 그누보드5.4.6 버전에서 시작함 (kagla-210617)
 // G5_YOUNGCART_VER 이 상수를 사용하는 곳이 있으므로 주석 처리 해제함
 define('G5_YOUNGCART_VER', '5.4.5.5.1');
