@@ -1531,7 +1531,7 @@ if($config['cf_cert_use']) {
 }
 
 if (stripos($config['cf_image_extension'], "webp") !== false) {
-    if (!file_exists("imagewebp")) {
+    if (!function_exists("imagewebp")) {
         echo '<script>'.PHP_EOL;
         echo 'alert("이 서버는 webp 이미지를 지원하고 있지 않습니다.\n이미지 업로드 확장자에서 webp 확장자를 제거해 주십시오.\n제거하지 않으면 이미지와 관련된 오류가 발생할 수 있습니다.");'.PHP_EOL;
         echo 'document.getElementById("cf_image_extension").focus();'.PHP_EOL;
