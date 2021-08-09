@@ -108,7 +108,7 @@ function get_view_thumbnail($contents, $thumb_width=0)
     if(empty($matches))
         return $contents;
 
-    // $extensions = array(1=>'gif', 2=>'jpg', 3=>'png', 18=>'webp');
+    $extensions = array(1=>'gif', 2=>'jpg', 3=>'png', 18=>'webp');
 
     for($i=0; $i<count($matches[1]); $i++) {
 
