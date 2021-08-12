@@ -14,6 +14,7 @@ if(!sql_query(" DESCRIBE {$g5['new_win_table']} ", false)) {
     } else {
        $query_cp = sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['new_win_table']}` (
                       `nw_id` int(11) NOT NULL AUTO_INCREMENT,
+                      `nw_division` varchar(10) NOT NULL DEFAULT 'both',
                       `nw_device` varchar(10) NOT NULL DEFAULT 'both',
                       `nw_begin_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
                       `nw_end_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',

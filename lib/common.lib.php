@@ -2913,6 +2913,21 @@ function module_exec_check($exe, $type)
                             }
                         }
                         break;
+                    case 'pp_cli':
+                        exec($exe.' -h 2>&1', $out, $return_var);
+
+                        if($return_var == 139) {
+                            $isbinary = false;
+                            break;
+                        }
+
+                        for($i=0; $i<count($out); $i++) {
+                            if(strpos($out[$i], 'CLIENT') !== false) {
+                                $search = true;
+                                break;
+                            }
+                        }
+                        break;
                     case 'okname':
                         exec($exe.' D 2>&1', $out, $return_var);
 

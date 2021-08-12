@@ -10,24 +10,31 @@ if(!$theme || !in_array($theme, $theme_dir))
 
 $info = get_theme_info($theme);
 
-$arr_mode = array('index', 'list', 'view');
+$arr_mode = array('index', 'list', 'view', 'shop', 'ca_list', 'item');
 $mode = isset($_GET['mode']) ? substr(strip_tags($_GET['mode']), 0, 20) : '';
+
 if(!in_array($mode, $arr_mode))
     $mode = 'index';
 
-$qstr_index  = '&amp;mode=index';
-$qstr_list   = '&amp;mode=list';
-$qstr_view   = '&amp;mode=view';
-$qstr_device = '&amp;mode='.$mode.'&amp;device='.(G5_IS_MOBILE ? 'pc' : 'mobile');
+if((defined('G5_COMMUNITY_USE') && G5_COMMUNITY_USE === false) || $mode == 'shop' || $mode == 'ca_list' || $mode == 'item')
+    define('_SHOP_', true);
+
+$qstr_index   = '&amp;mode=index';
+$qstr_list    = '&amp;mode=list';
+$qstr_view    = '&amp;mode=view';
+$qstr_shop    = '&amp;mode=shop';
+$qstr_ca_list = '&amp;mode=ca_list';
+$qstr_item    = '&amp;mode=item';
+$qstr_device  = '&amp;mode='.$mode.'&amp;device='.(G5_IS_MOBILE ? 'pc' : 'mobile');
 
 $sql = " select bo_table, wr_parent from {$g5['board_new_table']} order by bn_id desc limit 1 ";
 $row = sql_fetch($sql);
 $bo_table = $row['bo_table'];
-$board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '$bo_table' ");
+$board = sql_fetch(" select * from {$g5['board_table']} where bo_table = '{$bo_table}' ");
 $write_table = $g5['write_prefix'] . $bo_table;
 
 // theme.config.php 미리보기 게시판 스킨이 설정돼 있다면
-$tconfig = get_theme_config_value($theme, 'set_default_skin, preview_board_skin, preview_mobile_board_skin');
+$tconfig = get_theme_config_value($theme);
 if($mode == 'list' || $mode == 'view') {
     if($tconfig['preview_board_skin'])
         $board['bo_skin'] = preg_match('#^theme/.+$#', $tconfig['preview_board_skin']) ? $tconfig['preview_board_skin'] : 'theme/'.$tconfig['preview_board_skin'];
@@ -65,6 +72,61 @@ if (G5_IS_MOBILE) {
     $faq_skin_url       = get_skin_url('faq', $config['cf_faq_skin']);
 }
 
+// 쇼핑몰 스킨 재설정
+if($tconfig['de_shop_skin'])
+    $default['de_shop_skin'] = preg_match('#^theme/.+$#', $tconfig['de_shop_skin']) ? $tconfig['de_shop_skin'] : 'theme/'.$tconfig['de_shop_skin'];
+
+if($tconfig['de_shop_mobile_skin'])
+    $default['de_shop_mobile_skin'] = preg_match('#^theme/.+$#', $tconfig['de_shop_mobile_skin']) ? $tconfig['de_shop_mobile_skin'] : 'theme/'.$tconfig['de_shop_mobile_skin'];
+
+// 쇼핑몰초기화면 변수 재설정
+for($i=1; $i<=5; $i++) {
+    $default['de_type'.$i.'_list_use']          = (isset($tconfig['de_type'.$i.'_list_use']) && $tconfig['de_type'.$i.'_list_use']) ? $tconfig['de_type'.$i.'_list_use'] : $default['de_type'.$i.'_list_use'];
+    $default['de_type'.$i.'_list_skin']         = (isset($tconfig['de_type'.$i.'_list_skin']) && $tconfig['de_type'.$i.'_list_skin']) ? $tconfig['de_type'.$i.'_list_skin'] : $default['de_type'.$i.'_list_skin'];
+    $default['de_type'.$i.'_list_mod']          = (isset($tconfig['de_type'.$i.'_list_mod']) && $tconfig['de_type'.$i.'_list_mod']) ? $tconfig['de_type'.$i.'_list_mod'] : $default['de_type'.$i.'_list_mod'];
+    $default['de_type'.$i.'_list_row']          = (isset($tconfig['de_type'.$i.'_list_row']) && $tconfig['de_type'.$i.'_list_row']) ? $tconfig['de_type'.$i.'_list_row'] : $default['de_type'.$i.'_list_row'];
+    $default['de_type'.$i.'_img_width']         = (isset($tconfig['de_type'.$i.'_img_width']) && $tconfig['de_type'.$i.'_img_width']) ? $tconfig['de_type'.$i.'_img_width'] : $default['de_type'.$i.'_img_width'];
+    $default['de_type'.$i.'_img_height']        = (isset($tconfig['de_type'.$i.'_img_height']) && $tconfig['de_type'.$i.'_img_height']) ? $tconfig['de_type'.$i.'_img_height'] : $default['de_type'.$i.'_img_height'];
+
+    $default['de_mobile_type'.$i.'_list_use']   = (isset($tconfig['de_mobile_type'.$i.'_list_use']) && $tconfig['de_mobile_type'.$i.'_list_use']) ? $tconfig['de_mobile_type'.$i.'_list_use'] : $default['de_mobile_type'.$i.'_list_use'];
+    $default['de_mobile_type'.$i.'_list_skin']  = (isset($tconfig['de_mobile_type'.$i.'_list_skin']) && $tconfig['de_mobile_type'.$i.'_list_skin']) ? $tconfig['de_mobile_type'.$i.'_list_skin'] : $default['de_mobile_type'.$i.'_list_skin'];
+    $default['de_mobile_type'.$i.'_list_mod']   = (isset($tconfig['de_mobile_type'.$i.'_list_mod']) && $tconfig['de_mobile_type'.$i.'_list_mod']) ? $tconfig['de_mobile_type'.$i.'_list_mod'] : $default['de_mobile_type'.$i.'_list_mod'];
+    $default['de_mobile_type'.$i.'_list_row']   = (isset($tconfig['de_mobile_type'.$i.'_list_row']) && $tconfig['de_mobile_type'.$i.'_list_row']) ? $tconfig['de_mobile_type'.$i.'_list_row'] : $default['de_mobile_type'.$i.'_list_row'];
+    $default['de_mobile_type'.$i.'_img_width']  = (isset($tconfig['de_mobile_type'.$i.'_img_width']) && $tconfig['de_mobile_type'.$i.'_img_width']) ? $tconfig['de_mobile_type'.$i.'_img_width'] : $default['de_mobile_type'.$i.'_img_width'];
+    $default['de_mobile_type'.$i.'_img_height'] = (isset($tconfig['de_mobile_type'.$i.'_img_height']) && $tconfig['de_mobile_type'.$i.'_img_height']) ? $tconfig['de_mobile_type'.$i.'_img_height'] : $default['de_mobile_type'.$i.'_img_height'];
+}
+
+// 상품상세 이미지 사이즈 재설정
+$default['de_mimg_width']  = (isset($tconfig['de_mimg_width']) && $tconfig['de_mimg_width']) ? $tconfig['de_mimg_width'] : $default['de_mimg_width'];
+$default['de_mimg_height'] = (isset($tconfig['de_mimg_height']) && $tconfig['de_mimg_height']) ? $tconfig['de_mimg_height'] : $default['de_mimg_height'];
+
+if (defined('G5_USE_SHOP') && G5_USE_SHOP) {
+    // 테마 경로 설정
+    if(defined('G5_THEME_PATH')) {
+        define('G5_THEME_SHOP_PATH',   G5_THEME_PATH.'/'.G5_SHOP_DIR);
+        define('G5_THEME_SHOP_URL',    G5_THEME_URL.'/'.G5_SHOP_DIR);
+        define('G5_THEME_MSHOP_PATH',  G5_THEME_PATH.'/'.G5_MOBILE_DIR.'/'.G5_SHOP_DIR);
+        define('G5_THEME_MSHOP_URL',   G5_THEME_URL.'/'.G5_MOBILE_DIR.'/'.G5_SHOP_DIR);
+    }
+
+    // 스킨 경로 설정
+    if(preg_match('#^theme/(.+)$#', $default['de_shop_skin'], $match)) {
+        define('G5_SHOP_SKIN_PATH',  G5_THEME_PATH.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$match[1]);
+        define('G5_SHOP_SKIN_URL',   G5_THEME_URL .'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$match[1]);
+    } else {
+        define('G5_SHOP_SKIN_PATH',  G5_PATH.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$default['de_shop_skin']);
+        define('G5_SHOP_SKIN_URL',   G5_URL .'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$default['de_shop_skin']);
+    }
+
+    if(preg_match('#^theme/(.+)$#', $default['de_shop_mobile_skin'], $match)) {
+        define('G5_MSHOP_SKIN_PATH', G5_THEME_MOBILE_PATH.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$match[1]);
+        define('G5_MSHOP_SKIN_URL',  G5_THEME_URL .'/'.G5_MOBILE_DIR.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$match[1]);
+    } else {
+        define('G5_MSHOP_SKIN_PATH', G5_MOBILE_PATH.'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$default['de_shop_mobile_skin']);
+        define('G5_MSHOP_SKIN_URL',  G5_MOBILE_URL .'/'.G5_SKIN_DIR.'/'.G5_SHOP_DIR.'/'.$default['de_shop_mobile_skin']);
+    }
+}
+
 $conf = sql_fetch(" select cf_theme from {$g5['config_table']} ");
 $name = get_text($info['theme_name']);
 if($conf['cf_theme'] != $theme) {
@@ -90,6 +152,13 @@ require_once(G5_PATH.'/head.sub.php');
         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_index; ?>">인덱스 화면</a></li>
         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_list; ?>">게시글 리스트</a></li>
         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_view; ?>">게시글 보기</a></li>
+        <?php if(defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
+        <?php if(defined('G5_COMMUNITY_USE') == false || G5_COMMUNITY_USE) { ?>
+        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_shop; ?>">쇼핑몰</a></li>
+        <?php } ?>
+        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_ca_list; ?>">상품리스트</a></li>
+        <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_item; ?>">상품상세</a></li>
+        <?php } ?>
         <li><a href="./theme_preview.php?theme=<?php echo $theme.$qstr_device; ?>"><?php echo (G5_IS_MOBILE ? 'PC 버전' : '모바일 버전'); ?></a></li>
         <?php echo $btn_active; ?>
     </ul>
@@ -103,8 +172,23 @@ require_once(G5_PATH.'/head.sub.php');
             break;
         case 'view':
             $wr_id = $row['wr_parent'];
-            $write = sql_fetch(" select * from $write_table where wr_id = '$wr_id' ");
+            $write = sql_fetch(" select * from {$write_table} where wr_id = '{$wr_id}' ");
             include(G5_BBS_PATH.'/board.php');
+            break;
+        case 'shop':
+            include(G5_SHOP_PATH.'/index.php');
+            break;
+        case 'ca_list':
+            $sql = " select ca_id from {$g5['g5_shop_category_table']} where ca_use = '1' order by ca_id limit 1 ";
+            $tmp = sql_fetch($sql);
+            $ca_id = $tmp['ca_id'];
+            include(G5_SHOP_PATH.'/list.php');
+            break;
+        case 'item':
+            $sql = " select it_id from {$g5['g5_shop_item_table']} where it_use = '1' order by it_id desc limit 1 ";
+            $tmp = sql_fetch($sql);
+            $_GET['it_id'] = $tmp['it_id'];
+            include(G5_SHOP_PATH.'/item.php');
             break;
         default:
             include(G5_PATH.'/index.php');

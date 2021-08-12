@@ -22,6 +22,7 @@ include_once(G5_LIB_PATH.'/connect.lib.php');
 include_once(G5_LIB_PATH.'/popular.lib.php');
 ?>
 
+
 <!-- 상단 시작 { -->
 <div id="hd">
     <h1 id="hd_h1"><?php echo $g5['title'] ?></h1>
@@ -33,7 +34,15 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
     }
     ?>
     <div id="tnb">
-    	<div class="inner">
+        <div class="inner">
+            <?php if(defined('G5_COMMUNITY_USE') == false || G5_COMMUNITY_USE) { ?>
+    		<ul id="hd_define">
+    			<li class="active"><a href="<?php echo G5_URL ?>/">커뮤니티</a></li>
+                <?php if (defined('G5_USE_SHOP') && G5_USE_SHOP) { ?>
+    			<li><a href="<?php echo G5_SHOP_URL ?>/">쇼핑몰</a></li>
+                <?php } ?>
+    		</ul>
+            <?php } ?>
 			<ul id="hd_qnb">
 	            <li><a href="<?php echo G5_BBS_URL ?>/faq.php">FAQ</a></li>
 	            <li><a href="<?php echo G5_BBS_URL ?>/qalist.php">Q&A</a></li>
@@ -86,7 +95,6 @@ include_once(G5_LIB_PATH.'/popular.lib.php');
                     return true;
                 }
                 </script>
-
             </fieldset>
                 
             <?php echo popular(); // 인기검색어, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정  ?>

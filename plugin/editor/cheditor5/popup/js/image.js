@@ -335,7 +335,7 @@ function startUpload(count) {
 
 function fileFilterError(file) {
     alert("선택하신 '" + file + "' 파일은 전송할 수 없습니다.\n" +
-       "gif, png, jpg, 그림 파일만 전송할 수 있습니다.");
+       "gif, png, jpg, webp 그림 파일만 전송할 수 있습니다.");
 }
 
 function imgComplete(img, imgSize, boxId) {

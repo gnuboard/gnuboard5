@@ -516,6 +516,15 @@ var win_poll = function(href) {
 }
 
 /**
+ * 쿠폰
+ **/
+var win_coupon = function(href) {
+    var new_win = window.open(href, "win_coupon", "left=100,top=100,width=700, height=600, scrollbars=1");
+    new_win.focus();
+}
+
+
+/**
  * 스크린리더 미사용자를 위한 스크립트 - 지운아빠 2013-04-22
  * alt 값만 갖는 그래픽 링크에 마우스오버 시 title 값 부여, 마우스아웃 시 title 값 제거
  **/
@@ -609,6 +618,11 @@ $(function(){
         return false;
     });
     */
+
+    $(".win_coupon").click(function() {
+        win_coupon(this.href);
+        return false;
+    });
 
     // 사이드뷰
     var sv_hide = false;

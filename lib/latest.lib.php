@@ -70,7 +70,7 @@ function latest($skin_dir='', $bo_table, $rows=10, $subject_len=40, $cache_time=
             }
             $list[$i] = get_list($row, $board, $latest_skin_url, $subject_len);
 
-            $list[$i]['first_file_thumb'] = (isset($row['wr_file']) && $row['wr_file']) ? get_board_file_db($bo_table, $row['wr_id'], 'bf_file, bf_content', "and bf_type between '1' and '3'", true) : array('bf_file'=>'', 'bf_content'=>'');
+            $list[$i]['first_file_thumb'] = (isset($row['wr_file']) && $row['wr_file']) ? get_board_file_db($bo_table, $row['wr_id'], 'bf_file, bf_content', "and bf_type in (1, 2, 3, 18) ", true) : array('bf_file'=>'', 'bf_content'=>'');
             $list[$i]['bo_table'] = $bo_table;
             // 썸네일 추가
             if($options && is_string($options)) {

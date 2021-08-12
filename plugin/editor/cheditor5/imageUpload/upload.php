@@ -9,10 +9,11 @@ if( !function_exists('che_reprocessImage') ){
     function che_reprocessImage($file_path, $callback){
 
         $MIME_TYPES_PROCESSORS = array(
-            "image/gif"       => array("imagecreatefromgif", "imagegif"),
+            "image/gif"       => array("imagecreatefromgif",  "imagegif"),
             "image/jpg"       => array("imagecreatefromjpeg", "imagejpeg"),
             "image/jpeg"      => array("imagecreatefromjpeg", "imagejpeg"),
-            "image/png"       => array("imagecreatefrompng", "imagepng"),
+            "image/png"       => array("imagecreatefrompng",  "imagepng"),
+            "image/webp"      => array("imagecreatefromwebp", "imagewebp"),
             "image/bmp"       => array("imagecreatefromwbmp", "imagewbmp")
         );
 
@@ -84,6 +85,7 @@ switch ($type) {
 	case "jpeg":
 	case "gif":
 	case "png":
+    case "webp":
 		$found = true;
 }
 

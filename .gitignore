@@ -6,9 +6,14 @@ sirgle/
 test.php
 *.key
 *.sh
+log
+g5_tree
 cheditor5.*/
-ckeditor*/
+!ckeditor*/
 log/
 g5_tree/
 .vscode/
 naver*.html
+initests01/
+SIRsoft000/
+config.php
