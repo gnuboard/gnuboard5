@@ -44,7 +44,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                         <input type="hidden" name="sop" value="and">
                         <label for="sfl" class="sound_only">검색대상</label>
                         <select name="sfl" id="sfl">
-                            <?php echo get_board_sfl_select_options($sfl); ?>
+                            <?php echo get_qa_sfl_select_options($sfl); ?>
                         </select>
 				        <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
 				        <div class="sch_bar">

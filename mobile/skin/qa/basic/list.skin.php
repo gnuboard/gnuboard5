@@ -118,7 +118,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
     <input type="hidden" name="sop" value="and">
     <label for="sfl" class="sound_only">검색대상</label>
     <select name="sfl" id="sfl">
-        <?php echo get_board_sfl_select_options($sfl); ?>
+        <?php echo get_qa_sfl_select_options($sfl); ?>
     </select>
     <label for="stx" class="sound_only">검색어<strong class="sound_only"> 필수</strong></label>
     <input type="text" name="stx" value="<?php echo stripslashes($stx) ?>" required placeholder="검색어를 입력하세요" id="stx" class="sch_input" size="15" maxlength="15">
