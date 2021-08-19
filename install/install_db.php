@@ -9,6 +9,7 @@ header('Pragma: no-cache'); // HTTP/1.0
 @header('Content-Type: text/html; charset=utf-8');
 @header('X-Robots-Tag: noindex');
 
+$g5_path['path'] = '..';
 include_once ('../config.php');
 include_once ('../lib/common.lib.php');
 include_once('./install.function.php');    // 인스톨 과정 함수 모음
