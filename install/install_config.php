@@ -8,6 +8,7 @@ header('Pragma: no-cache'); // HTTP/1.0
 @header('Content-Type: text/html; charset=utf-8');
 @header('X-Robots-Tag: noindex');
 
+$g5_path['path'] = '..';
 include_once ('../config.php');
 $title = G5_VERSION." 초기환경설정 2/3";
 include_once ('./install.inc.php');

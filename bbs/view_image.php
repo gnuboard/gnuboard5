@@ -12,7 +12,7 @@ if(function_exists('clean_relative_paths')){
 
 $extension = pathinfo($filename, PATHINFO_EXTENSION);
 
-if ( ! preg_match('/(jpg|jpeg|png|gif|bmp)$/i', $extension) ){
+if ( ! preg_match('/(jpg|jpeg|png|gif|bmp|webp)$/i', $extension) ){
     alert_close('이미지 확장자가 아닙니다.');
 }
 

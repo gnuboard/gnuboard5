@@ -83,7 +83,7 @@ function get_skin_dir($skin, $skin_path=G5_SKIN_PATH)
 
     $dirname = $skin_path.'/'.$skin.'/';
     if(!is_dir($dirname))
-        return;
+        return array();
 
     $handle = opendir($dirname);
     while ($file = readdir($handle)) {

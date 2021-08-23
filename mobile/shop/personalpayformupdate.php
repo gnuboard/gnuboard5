@@ -147,6 +147,9 @@ if((int)$pp['pp_price'] !== (int)$pg_price) {
         case 'lg':
             include G5_SHOP_PATH.'/lg/xpay_cancel.php';
             break;
+        case 'inicis':
+            include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
             break;
@@ -209,7 +212,7 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
                 where od_id = '{$pp['od_id']}' ";
     $result = sql_query($sql, false);
 
-    // 결제정보 입력 오류시 kcp 결제 취소
+    // 결제정보 입력 오류시 결제 취소
     if(!$result) {
         $cancel_msg = '결제정보 입력 오류';
         switch($default['de_pg_service']) {
