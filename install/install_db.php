@@ -9,6 +9,7 @@ header('Pragma: no-cache'); // HTTP/1.0
 @header('Content-Type: text/html; charset=utf-8');
 @header('X-Robots-Tag: noindex');
 
+$g5_path['path'] = '..';
 include_once ('../config.php');
 include_once ('../lib/common.lib.php');
 include_once('./install.function.php');    // 인스톨 과정 함수 모음
@@ -141,6 +142,13 @@ $download_point = 0;
 //-------------------------------------------------------------------------------------------------
 // config 테이블 설정
 if($g5_install || !$result) {
+    // 기본 이미지 확장자를 설정하고
+    $image_extension = "gif|jpg|jpeg|png";
+    // 서버에서 webp 를 지원하면 확장자를 추가한다.
+    if (function_exists("imagewebp")) {
+        $image_extension .= "|webp";
+    }
+
     $sql = " insert into `{$table_prefix}config`
                 set cf_title = '".G5_VERSION."',
                     cf_theme = 'basic',
@@ -197,7 +205,7 @@ if($g5_install || !$result) {
                     cf_member_img_width = '60',
                     cf_member_img_height = '60',
                     cf_login_minutes = '10',
-                    cf_image_extension = 'gif|jpg|jpeg|png|webp',
+                    cf_image_extension = '{$image_extension}',
                     cf_flash_extension = 'swf',
                     cf_movie_extension = 'asx|asf|wmv|wma|mpg|mpeg|mov|avi|mp3',
                     cf_formmail_is_member = '1',

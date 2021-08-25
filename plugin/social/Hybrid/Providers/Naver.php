@@ -131,10 +131,10 @@ class Hybrid_Providers_Naver extends Hybrid_Provider_Model_OAuth2
         if( array_key_exists('birthday',$data) ){
             $tmp = explode("-",$data['birthday']);
             if( isset($tmp[0]) ){
-                $this->user->profile->birthDay = $tmp[0];
+                $this->user->profile->birthMonth = $tmp[0];
             }
             if( isset($tmp[1]) ){
-                $this->user->profile->birthMonth = $tmp[1];
+                $this->user->profile->birthDay = $tmp[1];
             }
         }
         $this->user->profile->email         = (array_key_exists('email',$data))?$data['email']:"";

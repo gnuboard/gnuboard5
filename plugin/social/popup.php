@@ -23,7 +23,7 @@ if( isset( $_REQUEST["redirect_to_idp"] ) ){
     $get_login_url = G5_BBS_URL."/login.php?url=".$urlencode;
 
     if( $content ){
-        //팝업으로 뜨웠다면 아래 
+        //팝업으로 띄웠다면 아래 코드를 실행
         ?>
         <script>
         if( window.opener ){

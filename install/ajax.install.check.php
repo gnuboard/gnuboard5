@@ -1,4 +1,5 @@
 <?php
+$g5_path['path'] = '..';
 include_once ('../config.php');
 include_once('../lib/json.lib.php');
 include_once('../lib/common.lib.php');    // 공통 라이브러리
