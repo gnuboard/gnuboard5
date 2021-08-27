@@ -167,7 +167,7 @@ if($config['cf_cert_use'] && get_session('ss_cert_type') && get_session('ss_cert
     $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
     $row = sql_fetch($sql);
     if ($row['mb_id']) {
-        alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
+        alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.");
     }
 }
 
