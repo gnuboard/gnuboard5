@@ -172,7 +172,7 @@ foreach( $check_keys as $k => $v ){
 
 // 본인확인을 사용할 경우 아이핀, 휴대폰인증 중 하나는 선택되어야 함
 if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'])
-    alert('본인확인을 위해 아이핀 또는 휴대폰 본인학인 서비스를 하나이상 선택해 주십시오');
+    alert('본인확인을 위해 아이핀 또는 휴대폰 본인확인 서비스를 하나이상 선택해 주십시오');
 
 if(!$_POST['cf_cert_use']) {
     $posts[$key] = $_POST['cf_cert_ipin'] = '';
