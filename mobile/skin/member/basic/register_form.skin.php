@@ -52,10 +52,13 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" placeholder="이름">
 	            <?php
 	            if($config['cf_cert_use']) {
-	                if($config['cf_cert_ipin'])
-	                    echo '<button type="button" id="win_ipin_cert" class="btn_frmline btn">아이핀 본인확인</button>'.PHP_EOL;
-	                if($config['cf_cert_hp'])
-	                    echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>'.PHP_EOL;
+                    // #TODO 조건 추가 필요
+                    // if($config['cf_cert_sa'])
+                        echo '<button type="button" id="win_sa_cert" class="btn_frmline">통합인증</button>'.PHP_EOL;
+                    if($config['cf_cert_hp'])
+                        echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>'.PHP_EOL;
+                    if($config['cf_cert_ipin'])
+                        echo '<button type="button" id="win_ipin_cert" class="btn_frmline btn">아이핀 본인확인</button>'.PHP_EOL;
 	
 	                echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
 	            }
@@ -67,9 +70,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                else
 	                    $mb_cert = '휴대폰';
 	            ?>
-	            <?php if ($config['cf_cert_use']) { ?>
-	            <span class="frm_info">아이핀 본인확인 후에는 이름이 자동 입력되고 휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되어 수동으로 입력할수 없게 됩니다.</span>
-	            <?php } ?>
 	            <div id="msg_certify">
 	                <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
 	            </div>
