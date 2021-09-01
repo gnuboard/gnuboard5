@@ -175,6 +175,10 @@
 #find_info p {line-height:1.5em}
 #find_info #mb_email {margin:10px 0}
 
+/* 비밀번호 재설정 */
+#pw_reset #info_fs {margin-bottom: 10px}
+#pw_reset .frm_input {margin:10px 0 0}
+
 /* 로그인 */
 #mb_login {}
 #mb_login h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}

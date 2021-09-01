@@ -1014,7 +1014,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .svc_card{background:url('../img/service_img1.jpg') no-repeat top center;margin-right:13px;}
 .svc_card ul li{width:33%;}
 .svc_phone {background:url('../img/service_img2.jpg') no-repeat top center;margin-right:13px;}
-.svc_phone ul li{width:33%;}
+.svc_phone ul li{width:50%;}
 .svc_ipin {background:url('../img/service_img3.jpg') no-repeat top center;}
 
 .service_2{padding-top:15px;clear:both}

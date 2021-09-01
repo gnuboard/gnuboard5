@@ -21,6 +21,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
         <div class="win_btn">
             <button type="submit" class="btn_submit">인증메일 보내기</button>
+            <!-- #TODO 조건 추가 필요 -->
+            <button type="submit" class="btn_close">본인인증으로 찾기</button>
         </div>
         </form>
     </div>
