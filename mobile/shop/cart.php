@@ -185,7 +185,6 @@ $cart_count = sql_num_rows($result);
         <?php if ($naverpay_button_js) { ?>
         <div class="naverpay-cart"><?php echo $naverpay_request_js.$naverpay_button_js; ?></div>
         <?php } ?>
-    </div>
     </form>
 </div>
 
