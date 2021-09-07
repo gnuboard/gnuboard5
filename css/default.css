@@ -402,6 +402,7 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 .new_win .new_win_con2 {margin:20px 0}
 .new_win .btn_confirm:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win .win_btn {text-align:center}
+.new_win .cert_btn {margin-bottom:30px;text-align:center}
 .new_win .btn_close {padding:0 20px;height:45px;overflow:hidden;cursor:pointer}
 .new_win .btn_submit {padding:0 20px;height:45px;font-weight:bold;font-size:1.083em}
 
