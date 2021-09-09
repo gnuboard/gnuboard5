@@ -862,15 +862,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_ipin">아이핀 본인확인</label></th>
-            <td class="cf_cert_service">
-                <select name="cf_cert_ipin" id="cf_cert_ipin">
-                    <?php echo option_selected("",    $config['cf_cert_ipin'], "사용안함"); ?>
-                    <?php echo option_selected("kcb", $config['cf_cert_ipin'], "코리아크레딧뷰로(KCB) 아이핀"); ?>
-                </select>
-            </td>
-        </tr>
-        <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_hp">휴대폰 본인확인</label></th>
             <td class="cf_cert_service">
                 <select name="cf_cert_hp" id="cf_cert_hp">
@@ -882,11 +873,20 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_ipin">아이핀 본인확인</label></th>
+            <td class="cf_cert_service">
+                <select name="cf_cert_ipin" id="cf_cert_ipin">
+                    <?php echo option_selected("",    $config['cf_cert_ipin'], "사용안함"); ?>
+                    <?php echo option_selected("kcb", $config['cf_cert_ipin'], "코리아크레딧뷰로(KCB) 아이핀"); ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증</label></th>
             <!-- #TODO -->
             <td class="cf_cert_service">
                 <span class="sitecode">MID</span>
-                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="20" maxlength="10"><br>
+                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="20" minlength="10" maxlength="10"><br>
                 <br>
                 <span class="sitecode">API Key</span>
                 <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="40">

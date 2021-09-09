@@ -53,10 +53,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	    <div class="tbl_frm01 tbl_wrap register_form_inner">
 	        <h2>개인정보 입력</h2>
 	        <ul>
-	            <li>
-	                <label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label>
-	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" size="10" placeholder="이름">
-	                <?php
+				<li>
+				<?php
 	                if($config['cf_cert_use']) {
 	                    if($config['cf_cert_sa'])							
 							echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline">토스 인증</button>'.PHP_EOL;
@@ -85,11 +83,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 								break;
 						}                 
 	                ?>
-	  
 	                <div id="msg_certify">
 	                    <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
 	                </div>
-	                <?php } ?>
+				<?php } ?>
+				</li>
+	            <li>
+	                <label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label>
+	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" size="10" placeholder="이름">
 	            </li>
 	            <?php if ($req_nick) {  ?>
 	            <li>
