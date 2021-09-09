@@ -53,16 +53,18 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	    <div class="tbl_frm01 tbl_wrap register_form_inner">
 	        <h2>개인정보 입력</h2>
 	        <ul>
-	            <li>
-	                <label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label>
-	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" size="10" placeholder="이름">
-	                <?php
+				<li>
+				<?php
 	                if($config['cf_cert_use']) {
 						// #TODO 조건 추가 필요
-						// if($config['cf_cert_sa'])
-							echo '<button type="button" id="win_sa_cert" class="btn_frmline">통합인증</button>'.PHP_EOL;
+	                    // if($config['cf_cert_sa']) {
+							echo '<button type="button" id="win_sa_toss" class="btn_frmline">토스 인증</button>'.PHP_EOL;
+							echo '<button type="button" id="win_sa_pass" class="btn_frmline">PASS 인증</button>'.PHP_EOL;
+							echo '<button type="button" id="win_sa_payco" class="btn_frmline">페이코 인증</button>'.PHP_EOL;
+							echo '<button type="button" id="win_sa_cert" class="btn_frmline">금융인증서</button>'.PHP_EOL;
+						// }
 						if($config['cf_cert_hp'])
-	                        echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>'.PHP_EOL;
+							echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>'.PHP_EOL;
 						if($config['cf_cert_ipin'])
 							echo '<button type="button" id="win_ipin_cert" class="btn_frmline">아이핀 본인확인</button>'.PHP_EOL;
 	
@@ -76,15 +78,14 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                    else
 	                        $mb_cert = '휴대폰';
 	                ?>
-	  
 	                <div id="msg_certify">
 	                    <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
 	                </div>
-	                <?php } ?>
-	                <?php if ($config['cf_cert_use']) { ?>
-	                <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
-	                <span class="tooltip">아이핀 본인확인 후에는 이름이 자동 입력되고 휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되어 수동으로 입력할수 없게 됩니다.</span>
-	                <?php } ?>
+				<?php } ?>
+				</li>
+	            <li>
+	                <label for="reg_mb_name">이름<strong class="sound_only">필수</strong></label>
+	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" size="10" placeholder="이름">
 	            </li>
 	            <?php if ($req_nick) {  ?>
 	            <li>
