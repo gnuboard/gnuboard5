@@ -194,6 +194,10 @@ $colspan = 16;
                 $mb_certify_case = '아이핀';
                 $mb_certify_val = '';
                 break;
+            case 'sa':
+                $mb_certify_case = '통합인증';
+                $mb_certify_val = '';
+                break;
             case 'admin':
                 $mb_certify_case = '관리자';
                 $mb_certify_val = 'admin';
