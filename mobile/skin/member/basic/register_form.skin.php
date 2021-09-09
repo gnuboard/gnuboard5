@@ -328,6 +328,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         var type;
 
         switch(val) {
+            case "sa":
+                type = "통합인증";
+                break;
             case "ipin":
                 type = "아이핀";
                 break;

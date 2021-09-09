@@ -9,7 +9,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
 <div class="register">
 <script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
-<?php if($config['cf_cert_use'] && ($config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
+<?php if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
 <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
 <?php } ?>
 
@@ -58,9 +58,11 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" size="10" placeholder="이름">
 	                <?php
 	                if($config['cf_cert_use']) {
-						// #TODO 조건 추가 필요
-	                    // if($config['cf_cert_sa'])
-							echo '<button type="button" id="win_sa_cert" class="btn_frmline">통합인증</button>'.PHP_EOL;
+	                    if($config['cf_cert_sa'])							
+							echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline">토스 인증</button>'.PHP_EOL;
+							echo '<button type="button" id="win_sa_pass_cert" class="btn_frmline">PASS 인증</button>'.PHP_EOL;
+							echo '<button type="button" id="win_sa_payco_cert" class="btn_frmline">페이코 인증</button>'.PHP_EOL;
+							echo '<button type="button" id="win_sa_payco_cert" class="btn_frmline">금융인증서</button>'.PHP_EOL;
 						if($config['cf_cert_hp'])
 							echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>'.PHP_EOL;
 						if($config['cf_cert_ipin'])
@@ -71,10 +73,17 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	                ?>
 	                <?php
 	                if ($config['cf_cert_use'] && $member['mb_certify']) {
-	                    if($member['mb_certify'] == 'ipin')
-	                        $mb_cert = '아이핀';
-	                    else
-	                        $mb_cert = '휴대폰';
+						switch  ($member['mb_certify']) {
+							case "sa": 
+								$mb_cert = "통합인증";
+								break;
+							case "ipin": 
+								$mb_cert = "아이핀";
+								break;
+							case "hp": 
+								$mb_cert = "휴대폰";
+								break;
+						}                 
 	                ?>
 	  
 	                <div id="msg_certify">
@@ -287,10 +296,47 @@ gif, jpg, png파일만 가능하며 용량 <?php echo number_format($config['cf_
 	</div>
 	</form>
 </div>
+<form name="saForm"> 
+	<input type="hidden" name="directAgency" value="">
+</form> 
 <script>
 $(function() {
     $("#reg_zip_find").css("display", "inline-block");
 
+	<?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
+	// TOSS 통합인증
+	$("#win_sa_toss_cert").click(function() {
+        if(!cert_confirm())
+            return false;
+
+		call_sa("TOSS", "<?php echo G5_KGCERT_URL; ?>/kg_request.php");
+        return;
+    });
+	// PASS 통합인증
+    $("#win_sa_pass_cert").click(function() {
+        if(!cert_confirm())
+            return false;
+
+		call_sa("PASS", "<?php echo G5_KGCERT_URL; ?>/kg_request.php");
+        return;
+    });
+    // PAYCO 통합인증
+    $("#win_sa_payco_cert").click(function() {
+        if(!cert_confirm())
+            return false;
+
+		call_sa("PAYCO", "<?php echo G5_KGCERT_URL; ?>/kg_request.php");
+        return;
+    });
+	// KFTC 통합인증
+    $("#win_sa_kftc_cert").click(function() {
+        if(!cert_confirm())
+            return false;
+
+		call_sa("KFTC", "<?php echo G5_KGCERT_URL; ?>/kg_request.php");
+        return;
+    });
+    <?php } ?>
     <?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
     // 아이핀인증
     $("#win_ipin_cert").click(function() {
