@@ -108,7 +108,7 @@
 #fregisterform .form_01 h2 {font-size:1.167em;margin:0 0 5px}
 #fregisterform .frm_label {display:block;font-size:1.083em;margin:15px 0 5px;color:#555}
 #fregisterform .btn_frmline {width:70px;height:30px;line-height:30px;padding:0 10px;font-weight:bold}
-#fregisterform .rgs_name_li button {margin:5px 0 0}
+#fregisterform .rgs_name_li button {margin:5px 0 0;width:auto}
 #fregisterform .reg_mb_img_file {margin-bottom:30px}
 #fregisterform .reg_mb_img_file img {max-width:100%;height:auto}
 
@@ -152,9 +152,15 @@
 #reg_result .btn_confirm a {display:inline-block;padding:0 20px;height:40px;line-height:38px;border:1px solid #ed6478;color:#ed6478;border-radius:3px;font-weight:bold}
 
 /* 아이디/비밀번호 찾기 */
+#find_info h3 {display:none;margin-bottom:30px;text-align:center;font-size:1.1em;}
+#find_info.cert h3 {display:block;}
 #find_info #info_fs p {margin:0 0 10px;line-height:1.5em;font-size:0.92em;color:#4162ff}
 #find_info #info_fs #mb_email {width:100%}
 #find_info #captcha {margin:5px 0}
+
+/* 비밀번호 재설정 */
+#pw_reset #info_fs {margin-bottom: 10px}
+#pw_reset .frm_input {margin:10px 0 0}
 
 /* 로그인 */
 #mb_login {}

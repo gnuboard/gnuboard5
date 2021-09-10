@@ -22,7 +22,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
         <input type="submit" id="ol_submit" value="로그인" class="btn_b02">
         <div id="ol_svc">
             <a href="<?php echo G5_BBS_URL ?>/register.php"><b>회원가입</b></a> /
-            <a href="<?php echo G5_BBS_URL ?>/password_lost.php" id="ol_password_lost">정보찾기</a>
+            <a href="<?php echo G5_BBS_URL ?>/password_lost.php">ID/PW 찾기</a>
         </div>
 
     </fieldset>

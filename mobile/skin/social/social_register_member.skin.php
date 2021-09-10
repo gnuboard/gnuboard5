@@ -43,7 +43,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
     <div class="toggle">
         <div class="toggle-title">
 		<span class="right_i"><i></i> 자세히보기</span>
-		<span class="title-name"><input type="checkbox" name="agree2" value="1" id="agree21"> <label for="agree21">개인정보처리방침안내</label></span>
+		<span class="title-name"><input type="checkbox" name="agree2" value="1" id="agree21"> <label for="agree21">개인정보 수집 및 이용</label></span>
         </div>
         <div class="toggle-inner">
             <p><?php echo conv_content($config['cf_privacy'], 0); ?></p>
@@ -134,7 +134,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
         }
 
         if (!f.agree2.checked) {
-            alert("개인정보처리방침안내의 내용에 동의하셔야 회원가입 하실 수 있습니다.");
+            alert("개인정보 수집 및 이용의 내용에 동의하셔야 회원가입 하실 수 있습니다.");
             f.agree2.focus();
             return false;
         }
