@@ -2782,6 +2782,9 @@ function certify_count_check($mb_id, $type)
     $row = sql_fetch($sql);
 
     switch($type) {
+        case 'sa' :
+            $cert = '통합인증';
+            break;
         case 'hp':
             $cert = '휴대폰';
             break;

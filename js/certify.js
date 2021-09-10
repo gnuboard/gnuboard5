@@ -100,6 +100,9 @@ function cert_confirm()
     var val = document.fregisterform.cert_type.value
 
     switch(val) {
+        case "sa":
+            type = "통합인증";
+            break;
         case "ipin":
             type = "아이핀";
             break;
@@ -114,4 +117,28 @@ function cert_confirm()
         return true;
     else
         return false;
+}
+
+function call_sa(directAgencys, url) {    
+    let window = popupCenter();
+    if(window != undefined && window != null) {
+        document.saForm.setAttribute("target", "sa_popup");
+        document.saForm.setAttribute("method", "post");
+        document.saForm.directAgency.value = directAgencys;
+        document.saForm.setAttribute("action", url);
+        document.saForm.submit();
+    }
+}    
+
+function popupCenter() {
+	let _width = 400;
+	let _height = 620;
+	var xPos = (document.body.offsetWidth/2) - (_width/2); // 가운데 정렬
+	xPos += window.screenLeft; // 듀얼 모니터일 때
+    if( navigator.userAgent.indexOf("Android") > - 1 || navigator.userAgent.indexOf("iPhone") > - 1 ) // 모바일일때
+    {
+        return window;
+    }else {    
+	    return window.open("", "sa_popup", "width="+_width+", height="+_height+", left="+xPos+", menubar=yes, status=yes, titlebar=yes, resizable=yes");
+    }
 }
