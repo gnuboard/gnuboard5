@@ -218,7 +218,7 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 
 /* 외부서비스 사이트코드 */
 .sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
-
+.sitecode.title {width:80px}
 
 .readonly {}
 

@@ -120,7 +120,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
 	                <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
 	                <input type="text" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail">
-	            
 	            </li>
 	
 	            <?php if ($config['cf_use_homepage']) {  ?>
