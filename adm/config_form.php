@@ -885,20 +885,12 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증</label></th>
             <!-- #TODO -->
             <td class="cf_cert_service">
-<<<<<<< HEAD
-                <span class="sitecode">MID</span>
-                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="20" minlength="10" maxlength="10"><br>
-                <br>
-                <span class="sitecode">API Key</span>
-                <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="40">
-=======
                 <span class="sitecode title">MID</span>
                 <span class="sitecode">SRA</span>
-                <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="20" minlength="7" maxlength="7"><br>
+                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="20" minlength="7" maxlength="7"><br>
                 <br>
                 <span class="sitecode title">API Key</span>
-                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="40">
->>>>>>> origin/inicis-cert-sa
+                <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="40">
             </td>
         </tr>
         <tr>
