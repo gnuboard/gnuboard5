@@ -849,7 +849,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <?php echo option_selected("1", $config['cf_cert_use'], "테스트"); ?>
                     <?php echo option_selected("2", $config['cf_cert_use'], "실서비스"); ?>
                 </select>
-                <input type="checkbox" name="cf_cert_find" id="cf_cert_find"><label for="cf_cert_find">아이디/비밀번호 찾기에 사용하기</label>
+                <input type="checkbox" name="cf_cert_find" id="cf_cert_find" value="1" <?php if($config['cf_cert_find'] == 1) { ?> checked <?php } ?>><label for="cf_cert_find">아이디/비밀번호 찾기에 사용하기</label>
             </td>
         </tr>
         <tr>
