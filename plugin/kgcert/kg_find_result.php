@@ -3,7 +3,7 @@
 
     $txId = $_POST['txId'];
     $mid  = substr($txId, 6, 10);
-
+    
     if ($_POST["resultCode"] === "0000") { 
 
         $data = array(
@@ -26,13 +26,10 @@
         $response = curl_exec($ch);
         curl_close($ch);
         $res_data = json_decode($response, true);
-        // -------------------- 결과 수신 -------------------------------------------
-        //  echo '<결과내역>'." '{$mid}' <br/><br/>";
-        //  echo $response;
 
         if($res_data['resultCode'] == "0000") {
 
-            @insert_cert_history($member['mb_id'], 'kg', 'sa'); // 인증성공 시 내역 기록
+            @insert_cert_history('@password_lost@', 'kg', 'sa'); // 인증성공 시 내역 기록
 
             $cert_type = 'sa';                                      // 인증타입
             $cert_no        = $res_data['txId'];                    // 이니시스 트랜잭션 ID
@@ -47,30 +44,15 @@
             $md5_ci = md5($ci . $ci);
             $phone_no = hyphen_hp_number($phone_no);
             $mb_dupinfo = $md5_ci;
-
-            $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
-            $row = sql_fetch($sql);
-            if ($row['mb_id']) {
-                alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
-            }
-
-            // hash 데이터
             
-            $md5_cert_no = md5($cert_no);
-            $hash_data   = md5($user_name.$cert_type.$birth_day.$md5_cert_no);
-
-            // 성인인증결과
-            $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
-            $adult = ((int)$birth_day <= (int)$adult_day) ? 1 : 0;
-
-            set_session("ss_cert_type",    $cert_type);
-            set_session("ss_cert_no",      $md5_cert_no);
-            set_session("ss_cert_hash",    $hash_data);
-            set_session("ss_cert_adult",   $adult);
-            set_session("ss_cert_birth",   $birth_day);
-            //set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F")); // 이니시스 통합인증은 성별정보 리턴 없음
-            set_session('ss_cert_dupinfo', $mb_dupinfo);       
-
+            $row = sql_fetch("select * from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}'");
+            if (!$row['mb_id']) {
+                $row = sql_fetch("select * from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_name ='{$user_name}' and mb_birth='{$birth_day}' and mb_hp='{$phone_no}'");
+                if(!$row['mb_id']){
+                    alert_close("인증하신 정보로 가입된 회원정보가 없습니다.");
+                    exit;
+                }
+            }
         }else{
             // 인증실패 curl의 인증실패 체크
             alert_close('코드 : '.$res_data['resultCode'].'  '.urldecode($res_data['resultMsg']));
@@ -85,24 +67,29 @@
     $g5['title'] = 'KG이니시스 통합인증 결과';
     include_once(G5_PATH.'/head.sub.php'); 
 ?>    
+<form name="mbFindForm">
+    <input type="hidden" name="mb_id" value="<?php echo $row["mb_id"]; ?>">    
+</form>
 <script>
-    jQuery(function($) {        
+    jQuery(function($) {
+        
         var $opener = window.opener;
+        var is_mobile = false;        
+        $opener.name="parentPage";
+
         if (typeof g5_is_mobile != "undefined" && g5_is_mobile ) {
             $opener = window.parent;
             is_mobile = true;
         } else {
             $opener = window.opener;
         }
-
-        // 인증정보
-        $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
-        $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>").attr("readonly", true);
-        $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
-        $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
+            
+        document.mbFindForm.target = "parentPage";
+        document.mbFindForm.action = "<?php echo G5_BBS_URL.'/password_reset.php'?>";
+        document.mbFindForm.submit();
 
         alert("본인인증이 완료되었습니다.");
-        window.close();
+        window.close();        
     });
 </script>
 <?php

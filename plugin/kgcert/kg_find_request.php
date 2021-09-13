@@ -51,8 +51,8 @@
 			<input type="hidden" name="mbId" value="<?php echo $member['mb_id'] ?>">
 			<input type="hidden" name="directAgency" value="<?php echo $_POST['directAgency']; ?>">
 
-			<input type="hidden" name="successUrl" value="<?php echo G5_KGCERT_URL; ?>/kg_result.php"> <!-- 필수 값 -->
-			<input type="hidden" name="failUrl" value="<?php echo G5_KGCERT_URL; ?>/kg_result.php"> <!-- 필수 값 -->
+			<input type="hidden" name="successUrl" value="<?php echo G5_KGCERT_URL; ?>/kg_find_result.php"> <!-- 필수 값 -->
+			<input type="hidden" name="failUrl" value="<?php echo G5_KGCERT_URL; ?>/kg_find_result.php"> <!-- 필수 값 -->
 			<!-- successUrl / failUrl 은 분리 하여 이용가능!-->
 		</form> 
 		<script>
