@@ -327,15 +327,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             return false;
         }
 
-        // 이름 검사
-        if (f.w.value == "") {
-            if (f.mb_name.value.length < 1) {
-                alert("이름을 입력하십시오.");
-                f.mb_name.focus();
-                return false;
-            }
-        }
-
         <?php if ($w == '' && $config['cf_cert_use'] && $config['cf_cert_req']) { ?>
             // 본인확인 체크
             if (f.cert_no.value == "") {
@@ -363,16 +354,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                 return false;
             }
         }
-
-        <?php if (($config['cf_use_hp'] || $config['cf_cert_hp']) && $config['cf_req_hp']) {  ?>
-            // 휴대폰번호 체크
-            var msg = reg_mb_hp_check();
-            if (msg) {
-                alert(msg);
-                f.reg_mb_hp.select();
-                return false;
-            }
-        <?php } ?>
 
         document.getElementById("btn_submit").disabled = "disabled";
 
