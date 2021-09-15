@@ -1,7 +1,5 @@
 // 본인확인 인증창 호출
-function certify_win_open(type, url, event)
-{
-
+function certify_win_open(type, url, event) {
     if (typeof event == "undefined") {
         event = window.event;
     }
@@ -94,10 +92,10 @@ function certify_win_open(type, url, event)
 }
 
 // 인증체크
-function cert_confirm()
-{
+function cert_confirm() {
+        
     var type;
-    var val = document.fregisterform.cert_type.value
+    var val = document.fregisterform.cert_type.value;
 
     switch(val) {
         case "sa":
@@ -119,18 +117,14 @@ function cert_confirm()
         return false;
 }
 
-function call_sa(directAgencys, url) {    
-    let window = popupCenter();
+function call_sa(url) {   
+    let window = popup_center();
     if(window != undefined && window != null) {
-        document.saForm.setAttribute("target", "sa_popup");
-        document.saForm.setAttribute("method", "post");
-        document.saForm.directAgency.value = directAgencys;
-        document.saForm.setAttribute("action", url);
-        document.saForm.submit();
+        window.location.href = url;
     }
-}    
+}
 
-function popupCenter() {
+function popup_center() {
 	let _width = 400;
 	let _height = 620;
 	var xPos = (document.body.offsetWidth/2) - (_width/2); // 가운데 정렬
