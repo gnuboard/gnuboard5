@@ -2,6 +2,8 @@
 	include_once('./_common.php');
 	global $g5;
 
+	if($_GET['directAgency'] == "KFTC") alert_close("서비스 준비중입니다.");
+
     $sql = "select MAX(cr_id) as max_cr_id from {$g5['cert_history_table']} limit 1";
     $res = sql_fetch($sql);
 	$max_cr_id = $res['max_cr_id'];
@@ -33,7 +35,17 @@
 		$plainText2 = hash("sha256",(string)$userName.(string)$mid.(string)$userPhone.(string)$mTxId.(string)$userBirth.(string)$reqSvcCd);
 		$userHash = $plainText2; 
 	}
-
+	switch($_GET['pageType']){		
+		case "register":
+			$resultPage = "/kg_result.php";
+		break;
+		case "find":
+			$resultPage = "/kg_find_result.php";
+		break;
+	}
+	
+	$resultUrl = G5_KGCERT_URL . $resultPage;
+	
 	$g5['title'] = 'KG이니시스 통합인증';
 	include_once(G5_PATH.'/head.sub.php'); 	
 ?>
@@ -49,10 +61,10 @@
 			<input type="hidden" name="userBirth" value="<?php echo $userBirth ?>">
 			<input type="hidden" name="userHash" value="<?php echo $userHash ?>">
 			<input type="hidden" name="mbId" value="<?php echo $member['mb_id'] ?>">
-			<input type="hidden" name="directAgency" value="<?php echo $_POST['directAgency']; ?>">
+			<input type="hidden" name="directAgency" value="<?php echo $_GET['directAgency']; ?>">
 
-			<input type="hidden" name="successUrl" value="<?php echo G5_KGCERT_URL; ?>/kg_result.php"> <!-- 필수 값 -->
-			<input type="hidden" name="failUrl" value="<?php echo G5_KGCERT_URL; ?>/kg_result.php"> <!-- 필수 값 -->
+			<input type="hidden" name="successUrl" value="<?php echo $resultUrl; ?>"> <!-- 필수 값 -->
+			<input type="hidden" name="failUrl" value="<?php echo $resultUrl; ?>"> <!-- 필수 값 -->
 			<!-- successUrl / failUrl 은 분리 하여 이용가능!-->
 		</form> 
 		<script>
