@@ -7,73 +7,7 @@
 .mbskin p strong {color:#4162ff;padding-bottom:5px;display:block;font-size:1.083em}
 
 /* 버튼 */
-.mbskin a.btn01 {}
-.mbskin a.btn01:focus, .mbskin a.btn01:hover {}
-.mbskin a.btn02 {}
-.mbskin a.btn02:focus, .mbskin .btn02:hover {}
-.mbskin .btn_confirm {} /* 서식단계 진행 */
 .mbskin .btn_submit {display:block;width:100%;height:40px;line-height:40px;padding:0 10px;border:0;font-weight:bold;background:#3a8afd;color:#fff;border-radius:3px}
-.mbskin .btn_cancel {}
-.mbskin .btn_frmline {} /* 우편번호검색버튼 등 */
-.mbskin .win_btn {} /* 새창용 */
-.mbskin .win_btn a {}
-.mbskin .win_btn button {}
-.mbskin .win_btn input {}
-
-/* 게시판용 버튼 */
-.mbskin a.btn_b01 {}
-.mbskin a.btn_b01:focus, .mbskin .btn_b01:hover {}
-.mbskin a.btn_b02 {}
-.mbskin a.btn_b02:focus, .mbskin .btn_b02:hover {}
-.mbskin a.btn_admin {} /* 관리자 전용 버튼 */
-.mbskin a.btn_admin:focus, .mbskin a.btn_admin:hover {}
-
-/* 기본테이블 */
-.mbskin .tbl_head01 {}
-.mbskin .tbl_head01 caption {}
-.mbskin .tbl_head01 thead th {}
-.mbskin .tbl_head01 thead a {}
-.mbskin .tbl_head01 thead th input {} /* middle 로 하면 게시판 읽기에서 목록 사용시 체크박스 라인 깨짐 */
-.mbskin .tbl_head01 tfoot th {}
-.mbskin .tbl_head01 tfoot td {}
-.mbskin .tbl_head01 tbody th {}
-.mbskin .tbl_head01 td {}
-.mbskin .tbl_head01 a {}
-.mbskin td.empty_table {}
-
-/* 폼 테이블 */
-.mb_skin table {}
-.mb_skin caption {}
-.mb_skin .frm_info {}
-.mb_skin .frm_file {}
-
-.mbskin .tbl_frm01 {}
-.mbskin .tbl_frm01 caption {}
-.mbskin .tbl_frm01 th {}
-.mbskin .tbl_frm01 td {}
-.mbskin .tbl_frm01 textarea, .mbskin .frm_input {}
-.mbskin .tbl_frm01 textarea {}
-/*
-.mbskin .tbl_frm01 #captcha {}
-.mbskin .tbl_frm01 #captcha input {}
-*/
-.mbskin .tbl_frm01 a {}
-
-.mbskin .required, .mbskin textarea.required {} /* 필수입력 */
-
-/* 테이블 항목별 정의 */
-.mbskin .td_board {}
-.mbskin .td_chk {}
-.mbskin .td_date {}
-.mbskin .td_datetime {}
-.mbskin .td_group {}
-.mbskin .td_mb_id {}
-.mbskin .td_mng {}
-.mbskin .td_name {}
-.mbskin .td_nick {}
-.mbskin .td_num {}
-.mbskin .td_numbig {}
-
 /* ### 기본 스타일 커스터마이징 끝 ### */
 
 /* 회원가입 공통 */
@@ -136,7 +70,6 @@
 .fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .fregister_agree.chk_all input[type="checkbox"] + label span {top:15px}
 
-
 /* 회원가입 완료 */
 #reg_result {padding:20px 10px 10px}
 #reg_result #result_email {margin:20px 0;padding:10px 50px;border-top:1px solid #eee;border-bottom:1px solid #eee;background:#fff;line-height:2em}
@@ -161,6 +94,26 @@
 /* 비밀번호 재설정 */
 #pw_reset #info_fs {margin-bottom: 10px}
 #pw_reset .frm_input {margin:10px 0 0}
+
+/* 기존 회원 본인인증 */
+#register_cert_reset section {position:relative;background:#fff;border-bottom:1px solid #e5e9f0;padding:15px}
+#register_cert_reset_chkall {position:relative;font-size:bold;text-align:left;background:#fff;padding:15px;border-top:1px solid #e5e9f0;border-bottom:1px solid #e5e9f0;border-radius:3px}
+#register_cert_reset h2 {text-align:left;padding-bottom:15px;line-height:1.7em;font-size:1.4em}
+#register_cert_reset textarea {display:block;width:100%;height:180px;padding:10px;background:#fbfbfb;border:1px solid #d1d7d8;line-height:1.5em;color:#555}
+#register_cert_reset p {position:relative;text-align:left;color:#fff;line-height:18px;padding:15px;font-size:1.1em;background:#f2838f;margin:15px;border-radius:5px}
+#register_cert_reset p:before {content:"";position:absolute;top:0;left:0;width:5px;height:100%;border-radius:5px 0 0 5px;background:#da4453}
+#register_cert_reset p i {font-size:1.2em;vertical-align:middle}
+#register_cert_reset .btn_confirm {margin:15px 10px}
+#register_cert_reset_private .tbl_head01 {margin:0}
+#register_cert_reset_private .tbl_head01 caption {position:absolute;font-size:0;line-height:0;overflow:hidden;top:0;color:#fff}
+.register_cert_reset_agree input[type="checkbox"] + label {color:#676e70}
+.register_cert_reset_agree input[type="checkbox"] + label:hover {color:#2172f8}
+.register_cert_reset_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.register_cert_reset_agree input[type="checkbox"]:checked + label {color:#000}
+.register_cert_reset_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+.register_cert_reset_agree.chk_all input[type="checkbox"] + label span {top:15px}
+
+#register_cert_reset #find_info {padding:30px 0}
 
 /* 로그인 */
 #mb_login {}
@@ -200,7 +153,6 @@
 #mb_login #sns_login .sns-icon {width:49% !important;float:left !important}
 #mb_login #sns_login .sns-icon:nth-child(odd) {margin-right:2%}
 #mb_login #sns_login .txt {font-size:0.95em;padding-left:5px !important;border-left:0 !important}
-
 
 /* 쪽지 */
 .memo_list {border-top:1px solid #ececec;}
@@ -338,7 +290,6 @@
 .chk_box input[type="radio"]:checked + label {color:#3a8afd}
 .chk_box input[type="radio"]:checked + label span {border-color:#3a8afd}
 .chk_box input[type="radio"]:checked + label span:before {width:7px;height:7px;background:#3a8afd;content:'';position:absolute;top:3px;left:3px;border-radius:50%}
-
 
 /* 자기소개 */
 #profile section {margin:10px}

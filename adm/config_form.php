@@ -1423,6 +1423,14 @@ $(function(){
                 break;
         }
     });
+
+    $("#cf_cert_find").on("click", function() {
+        if($(this).attr("checked")) {
+            let flag = confirm("휴대폰/아이핀 본인확인을 이용하시다가 통합인증을 이용하시는 경우, 기존 회원은 아이디/비밀번호 찾기에 사용할 수 없을 수 있습니다.\n\n그래도 사용하시겠습니까?");
+            $(this).attr("checked", flag);
+        };
+    });
+
     $("#cf_captcha").on("change", function(){
         if ($(this).val() == 'recaptcha' || $(this).val() == 'recaptcha_inv') {
             $("[class^='kcaptcha_']").hide();

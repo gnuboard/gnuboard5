@@ -4,28 +4,7 @@
 
 /* 게시판 버튼 */
 /* 목록 버튼 */
-#bo_list a.btn_b01 {}
-#bo_list a.btn_b01:focus, #bo_list .btn_b01:hover {}
-#bo_list a.btn_b02 {}
-#bo_list a.btn_b02:focus, #bo_list .btn_b02:hover {}
-#bo_list a.btn_admin {} /* 관리자 전용 버튼 */
-#bo_list a.btn_admin:focus, #bo_list a.btn_admin:hover {}
 .chk_all {margin:10px 0}
-
-/* 읽기 버튼 */
-#bo_v a.btn_b01 {}
-#bo_v a.btn_b01:focus, #bo_v .btn_b01:hover {}
-#bo_v a.btn_b02 {}
-#bo_v a.btn_b02:focus, #bo_v .btn_b02:hover {}
-#bo_v a.btn_admin {} /* 관리자 전용 버튼 */
-#bo_v a.btn_admin:focus, #bo_v a.btn_admin:hover {}
-
-/* 쓰기 버튼 */
-#bo_w .btn_confirm {} /* 서식단계 진행 */
-#bo_w .btn_submit {}
-#bo_w .btn_cancel {}
-#bo_w .btn_frmline {} /* 우편번호검색버튼 등 */
-
 
 /* 게시판 목록 */
 #bo_list .td_chk {width:30px;text-align:center}
