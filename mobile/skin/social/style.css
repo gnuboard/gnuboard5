@@ -80,7 +80,7 @@
 #sns_register {margin:0 0 10px;padding:0;text-align:center;background:#fff;border:1px solid #dbdbdb}
 #sns_register h2 {font-size:1.167em;text-align:left;padding:15px 20px;border-bottom:1px solid #dbdbdb}
 #sns_register .sns-wrap:after {display:block;visibility:hidden;clear:both;content:""}
-#sns_register .sns-wrap {display:inline-block;padding:20px;vertical-align:top;margin:0}
+#sns_register .sns-wrap {display:inline-block;width:100%;padding:20px;vertical-align:top;margin:0}
 #sns_register .sns-icon {position:relative;display:inline-block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px;float:left}
 #sns_register .sns-icon:nth-child(3n+1) {clear:both}
 #sns_register .sns-naver {background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
