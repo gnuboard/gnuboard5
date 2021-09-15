@@ -3,11 +3,14 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
-?>
+
+if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
+    <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>    
+<?php } ?>
 
 <!-- 회원정보 찾기 시작 { -->
 <!-- #TODO 본인인증 사용 시 아래 div에 cert 클래스 추가 -->
-<div id="find_info" class="new_win">
+<div id="find_info" class="new_win <?php if($config['cf_cert_use'] != 0 && $config['cf_cert_find'] != 0) { ?> cert <?php } ?>">
     <div class="new_win_con">
         <form name="fpasswordlost" action="<?php echo $action_url ?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
         <h3>이메일로 찾기</h3>
@@ -16,36 +19,126 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 회원가입 시 등록하신 이메일 주소를 입력해 주세요.<br>
                 해당 이메일로 아이디와 비밀번호 정보를 보내드립니다.
             </p>
-            <input type="email" id="mb_email" name="mb_email" placeholder="이메일주소(필수)" required class="frm_input email">
+            <label for="mb_email" class="sound_only">E-mail 주소<strong class="sound_only">필수</strong></label>
+            <input type="text" name="mb_email" id="mb_email" required class="required frm_input full_input email" size="30" placeholder="E-mail 주소">
         </fieldset>
-        <?php echo captcha_html(); ?>
+        <?php echo captcha_html();  ?>
 
         <div class="win_btn">
             <button type="submit" class="btn_submit">인증메일 보내기</button>
         </div>
-		</form>
-	</div>
-
+        </form>
+    </div>
+    <?php if($config['cf_cert_use'] != 0 && $config['cf_cert_find'] != 0) { ?> 
     <div class="new_win_con">
         <h3>본인인증으로 찾기</h3>
+        <?php if(!empty($config['cf_cert_sa'])) { ?>
         <div class="cert_btn">
-            <button type="submit" class="btn_close">토스 인증</button>
-            <button type="submit" class="btn_close">PASS 인증</button>
-            <button type="submit" class="btn_close">페이코 인증</button>
-            <button type="submit" class="btn_close">금융인증서</button>
+            <button type="button" id="win_sa_toss_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>
+            <button type="button" id="win_sa_pass_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>
+            <button type="button" id="win_sa_payco_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>
+            <button type="button" id="win_sa_kftc_cert" class="btn_close win_sa_cert" data-type="KFTC">금융인증서</button>
         </div>
+        <?php } if(!empty($config['cf_cert_hp']) || !empty($config['cf_cert_ipin'])) { ?>
         <div class="win_btn">
-            <button type="submit" class="btn_submit">휴대폰 본인확인</button>
-            <button type="submit" class="btn_submit">아이핀 본인확인</button>
+            <?php if(!empty($config['cf_cert_hp'])) { ?>
+            <button type="button" id="win_hp_cert" class="btn_submit">휴대폰 본인확인</button>
+            <?php } if(!empty($config['cf_cert_ipin'])) { ?>
+            <button type="button" id="win_ipin_cert" class="btn_submit">아이핀 본인확인</button>
+            <?php } ?>
         </div>
+        <?php } ?>
     </div>
+    <?php } ?>
 </div>
+<script>    
+$(function() {
+    $("#reg_zip_find").css("display", "inline-block");
+    var pageTypeParam = "pageType=find";
 
-<script>
+	<?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
+	// TOSS 통합인증
+	var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
+	var type = "";    
+    var params = "";
+    var request_url = "";
+    
+	
+	$(".win_sa_cert").click(function() {
+		type = $(this).data("type");
+		switch(type) {
+			case "TOSS" : 
+                params = "?directAgency=" + type + "&" + pageTypeParam;
+                request_url = url + params;
+				call_sa(request_url);
+				break;
+			case "PASS" :
+                params = "?directAgency=" + type + "&" + pageTypeParam;
+                request_url = url + params;
+				call_sa(request_url);
+				break;
+			case "PAYCO" :
+                params = "?directAgency=" + type + "&" + pageTypeParam;
+                request_url = url + params;
+				call_sa(request_url);
+				break;
+			case "KFTC" :
+                params = "?directAgency=" + type + "&" + pageTypeParam;
+                request_url = url + params;
+				call_sa(request_url);
+				break;
+			default : 
+			return;
+		}
+	});
+    <?php } ?>
+    <?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
+    // 아이핀인증
+    var params = "";
+    $("#win_ipin_cert").click(function() {
+        params = "?" + pageTypeParam;
+        var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php"+params;
+        certify_win_open('kcb-ipin', url);
+        return;
+    });
+
+    <?php } ?>
+    <?php if($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
+    // 휴대폰인증
+    var params = "";
+    $("#win_hp_cert").click(function() {
+        params = "?" + pageTypeParam;
+        <?php     
+        switch($config['cf_cert_hp']) {
+            case 'kcb':                
+                $cert_url = G5_OKNAME_URL.'/hpcert1.php';
+                $cert_type = 'kcb-hp';
+                break;
+            case 'kcp':
+                $cert_url = G5_KCPCERT_URL.'/kcpcert_form.php';
+                $cert_type = 'kcp-hp';
+                break;
+            case 'lg':
+                $cert_url = G5_LGXPAY_URL.'/AuthOnlyReq.php';
+                $cert_type = 'lg-hp';
+                break;
+            default:
+                echo 'alert("기본환경설정에서 휴대폰 본인확인 설정을 해주십시오");';
+                echo 'return false;';
+                break;
+        }
+        ?>
+        
+        certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>"+params);
+        return;
+    });
+    <?php } ?>
+});
 function fpasswordlost_submit(f)
 {
-    <?php echo chk_captcha_js(); ?>
+    <?php echo chk_captcha_js();  ?>
 
     return true;
 }
 </script>
+<!-- } 회원정보 찾기 끝 -->

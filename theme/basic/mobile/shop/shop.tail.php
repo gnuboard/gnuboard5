@@ -34,13 +34,7 @@ $admin = get_admin("super");
    <?php
     if(G5_DEVICE_BUTTON_DISPLAY && G5_IS_MOBILE) { ?>
     <a href="<?php echo get_device_change_url(); ?>" id="device_change">PC 버전</a>
-    <?php
-    }
-
-    if ($config['cf_analytics']) {
-        echo $config['cf_analytics'];
-    }
-    ?>
+    <?php } ?>
 </div>
 
 <?php
