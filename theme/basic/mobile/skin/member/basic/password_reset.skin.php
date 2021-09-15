@@ -8,17 +8,16 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
 <!-- 비밀번호 재설정 시작 { -->
 <div id="pw_reset" class="new_win">
     <div class="new_win_con">
-        <form name="fpasswordreset" action="" onsubmit="return fpasswordreset_submit(this);" method="post" autocomplete="off">
+        <form name="fpasswordreset" action="<?php echo $action_url; ?>" onsubmit="return fpasswordreset_submit(this);" method="post" autocomplete="off">
             <fieldset id="info_fs">
                 <p>새로운 비밀번호를 입력해주세요.</p>
                 <label for="mb_id" class="sound_only">아이디</label>
-                <input type="text" name="mb_id" id="mb_id" value="seeoya@naver.com" required class="required frm_input full_input email" size="30" placeholder="아이디" readonly>
+                <input type="text" name="mb_id" id="mb_id" value="<?php echo $_POST['mb_id']; ?>" required class="required frm_input full_input" size="30" placeholder="아이디" readonly>
                 <label for="mb_pw" class="sound_only">새 비밀번호<strong class="sound_only">필수</strong></label>
-                <input type="password" name="mb_pw" id="mb_pw" required class="required frm_input full_input" size="30" placeholder="새 비밀번호">
+                <input type="password" name="mb_password" id="mb_pw" required class="required frm_input full_input" size="30" placeholder="새 비밀번호">
                 <label for="mb_pw2" class="sound_only">새 비밀번호 확인<strong class="sound_only">필수</strong></label>
-                <input type="password" name="mb_pw2" id="mb_pw2" required class="required frm_input full_input" size="30" placeholder="새 비밀번호 확인">
+                <input type="password" name="mb_password_re" id="mb_pw2" required class="required frm_input full_input" size="30" placeholder="새 비밀번호 확인">
             </fieldset>
-
             <div class="win_btn">
                 <button type="submit" class="btn_submit">확인</button>
             </div>
