@@ -178,7 +178,8 @@ function no_hp_click(val)
     }
     $line = 0;
     $qry = sql_query("select * from {$g5['sms5_book_table']} where 1 $sql_group $sql_search $sql_korean $sql_no_hp order by bk_no desc limit $page_start, $page_size");
-    while($res = sql_fetch_array($qry))
+    // while($res = sql_fetch_array($qry))
+    for ($i=0; $res = sql_fetch_array($qry); $i++) 
     {
         $bg = 'bg'.($line++%2);
 

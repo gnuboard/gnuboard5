@@ -110,7 +110,7 @@ if ($w == '' || $w == 'u') {
     if ($msg = prohibit_mb_email($mb_email))alert($msg, "", true, true);
 
     // 휴대폰 필수입력일 경우 휴대폰번호 유효성 체크
-    if (($config['cf_use_hp'] || $config['cf_cert_hp']) && $config['cf_req_hp']) {
+    if ($config['cf_use_hp'] || ($config['cf_cert_hp'] || $config['cf_cert_sa']) && $config['cf_req_hp']) {
         if ($msg = valid_mb_hp($mb_hp))     alert($msg, "", true, true);
     }
 

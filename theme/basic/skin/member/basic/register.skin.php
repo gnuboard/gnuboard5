@@ -40,7 +40,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                 <tbody>
                 <tr>
                     <td>이용자 식별 및 본인여부 확인</td>
-                    <td>아이디, 이름, 비밀번호</td>
+                    <td>아이디, 이름, 비밀번호<?php echo ($config['cf_cert_use'])? ", 휴대전화번호, 생년월일, 암호화된 개인식별부호(CI)" : ""; ?></td>
                     <td>회원 탈퇴 시까지</td>
                 </tr>
                 <tr>

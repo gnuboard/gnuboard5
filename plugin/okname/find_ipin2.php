@@ -78,7 +78,7 @@ $field_name_IPIN_DEC = array(
 $mb_name = $field[6];
 $req_num = $field[7];
 $mb_birth = $field[11];
-$di = $field[0];
+$mb_dupinfo = $field[0];
 if(!empty($field[1])) { // 아이핀은 리턴받는 ci 데이터가 두가지인걸로 보아 개인별로 받는 곳이 다를 수도 있을것 같아서 추가함 2021-09-13 hjkim7153
     $ci = $field[1];
 }else if(!empty($field[2])) {
@@ -86,46 +86,44 @@ if(!empty($field[1])) { // 아이핀은 리턴받는 ci 데이터가 두가지�
 }else{
     alert_close('아이핀 본인확인 중 오류가 발생했습니다. (ci 정보 없음) 오류코드 : '.$resultCd.'\\n\\n문의는 코리아크레딧뷰로 고객센터 02-708-1000 로 해주십시오.');
 }
-$mb_dupinfo = md5($ci.$ci); // 통합인증 추가 후 ci로 변경
+$md5_ci = md5($ci.$ci);
 
-// 중복정보 체크
-$sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
-$row = sql_fetch($sql);
-if ($row['mb_id']) {
-    alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
+$row = sql_fetch("select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$md5_ci}'"); // ci데이터로 찾음
+if (!$row['mb_id']) { // ci로 등록된 계정이 없다면
+    $row = sql_fetch("select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}'"); // di데이터로 찾음
+    if(!$row['mb_id']) {
+        alert_close("인증하신 정보로 가입된 회원정보가 없습니다.");
+        exit;
+    }
 }
-
-// hash 데이터
-$cert_type = 'ipin';
-$md5_cert_no = md5($req_num);
-$hash_data   = md5($mb_name.$cert_type.$mb_birth.$md5_cert_no);
-
-// 성인인증결과
-$adult = $field[8] > 5 ? 1 : 0;
-
-set_session('ss_cert_type',    $cert_type);
-set_session('ss_cert_no',      $md5_cert_no);
-set_session('ss_cert_hash',    $hash_data);
-set_session('ss_cert_adult',   $adult);
-set_session('ss_cert_birth',   $mb_birth);
-set_session('ss_cert_sex',     ($field[9] == 1 ? 'M' : 'F'));
-set_session('ss_cert_dupinfo', $mb_dupinfo);
-
 $g5['title'] = 'KCB 아이핀 본인확인';
 include_once(G5_PATH.'/head.sub.php');
 ?>
 
+<form name="mbFindForm" method="POST">
+    <input type="hidden" name="mb_id" value="<?php echo $row["mb_id"]; ?>">    
+</form>
 <script>
-$(function() {
-    var $opener = window.opener;
+    jQuery(function($) {
+        
+        var $opener = window.opener;
+        var is_mobile = false;        
+        $opener.name="parentPage";
 
-    $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
-    $opener.$("input[name=mb_name]").val("<?php echo $mb_name; ?>").attr("readonly", true);
-    $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
+        if (typeof g5_is_mobile != "undefined" && g5_is_mobile ) {
+            $opener = window.parent;
+            is_mobile = true;
+        } else {
+            $opener = window.opener;
+        }
+            
+        document.mbFindForm.target = "parentPage";
+        document.mbFindForm.action = "<?php echo G5_BBS_URL.'/password_reset.php'?>";
+        document.mbFindForm.submit();
 
-    window.close();
-});
+        alert("본인인증이 완료되었습니다.");
+        window.close();        
+    });
 </script>
-
 <?php
 include_once(G5_PATH.'/tail.sub.php');
