@@ -658,7 +658,7 @@ for ($i=(int)$row['max_bf_no']; $i>=0; $i--)
     $row2 = sql_fetch(" select bf_file from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
 
     // 정보가 있다면 빠집니다.
-    if ($row2['bf_file']) break;
+    if (isset($row2['bf_file']) && $row2['bf_file']) break;
 
     // 그렇지 않다면 정보를 삭제합니다.
     sql_query(" delete from {$g5['board_file_table']} where bo_table = '{$bo_table}' and wr_id = '{$wr_id}' and bf_no = '{$i}' ");
@@ -725,8 +725,10 @@ if (!($w == 'u' || $w == 'cu') && $config['cf_email_use'] && $board['bo_use_emai
     }
 
     // 옵션에 메일받기가 체크되어 있고, 게시자의 메일이 있다면
-    if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
-        $array_email[] = $wr['wr_email'];
+    if (isset($wr['wr_option']) && isset($wr['wr_email'])) {
+        if (strstr($wr['wr_option'], 'mail') && $wr['wr_email'])
+            $array_email[] = $wr['wr_email'];
+    }
 
     // 중복된 메일 주소는 제거
     $unique_email = array_unique($array_email);

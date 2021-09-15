@@ -850,12 +850,14 @@ function get_admin($admin='super', $fields='*')
         $is = true;
     }
 
-    if (($is && !$mb['mb_id']) || $admin == 'group') {
+    // if (($is && !$mb['mb_id']) || $admin == 'group') {
+    if (($is && !isset($mb['mb_id'])) || $admin == 'group') {
         $mb = sql_fetch("select {$fields} from {$g5['member_table']} where mb_id in ('{$group['gr_admin']}') limit 1 ");
         $is = true;
     }
 
-    if (($is && !$mb['mb_id']) || $admin == 'super') {
+    // if (($is && !$mb['mb_id']) || $admin == 'super') {
+    if (($is && !isset($mb['mb_id'])) || $admin == 'super') {
         $mb = sql_fetch("select {$fields} from {$g5['member_table']} where mb_id in ('{$config['cf_admin']}') limit 1 ");
     }
 
