@@ -108,52 +108,48 @@ echo "리턴메시지        :$field[16] <br/>";
 $mb_name = $field[7];
 $req_num = $field[12];
 $mb_birth = $field[8];
-$di = $field[4];
+$mb_dupinfo = $field[4];
 $ci = $field[5];
-$mb_dupinfo = md5($ci.$ci); // 통합인증 추가 후 ci로 변경
+
 $phone_no = hyphen_hp_number($req_num);
+$md5_ci = md5($ci.$ci);
 
-// 중복정보 체크
-$sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
-$row = sql_fetch($sql);
-if ($row['mb_id']) {
-    alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
+$row = sql_fetch("select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$md5_ci}'"); // ci데이터로 찾음
+if (!$row['mb_id']) { // ci로 등록된 계정이 없다면
+    $row = sql_fetch("select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}'"); // di데이터로 찾음
+    if(!$row['mb_id']) {
+        alert_close("인증하신 정보로 가입된 회원정보가 없습니다.");
+        exit;
+    }
 }
-
-// hash 데이터
-$cert_type = 'hp';
-$md5_cert_no = md5($req_num);
-$hash_data   = md5($mb_name.$cert_type.$mb_birth.$md5_cert_no);
-
-// 성인인증결과
-$adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
-$adult = ((int)$mb_birth <= (int)$adult_day) ? 1 : 0;
-
-set_session('ss_cert_type',    $cert_type);
-set_session('ss_cert_no',      $md5_cert_no);
-set_session('ss_cert_hash',    $hash_data);
-set_session('ss_cert_adult',   $adult);
-set_session('ss_cert_birth',   $mb_birth);
-set_session('ss_cert_sex',     ($field[9] == 1 ? 'M' : 'F'));
-set_session('ss_cert_dupinfo', $mb_dupinfo);
 
 $g5['title'] = 'KCB 휴대폰 본인확인';
 include_once(G5_PATH.'/head.sub.php');
 ?>
-
+<form name="mbFindForm" method="POST">
+    <input type="hidden" name="mb_id" value="<?php echo $row["mb_id"]; ?>">    
+</form>
 <script>
-$(function() {
-    var $opener = window.opener;
+    jQuery(function($) {
+        
+        var $opener = window.opener;
+        var is_mobile = false;        
+        $opener.name="parentPage";
 
-    $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
-    $opener.$("input[name=mb_name]").val("<?php echo $mb_name; ?>").attr("readonly", true);
-    $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
-    $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
+        if (typeof g5_is_mobile != "undefined" && g5_is_mobile ) {
+            $opener = window.parent;
+            is_mobile = true;
+        } else {
+            $opener = window.opener;
+        }
+            
+        document.mbFindForm.target = "parentPage";
+        document.mbFindForm.action = "<?php echo G5_BBS_URL.'/password_reset.php'?>";
+        document.mbFindForm.submit();
 
-    alert("본인의 휴대폰번호로 확인 되었습니다.");
-    window.close();
-});
+        alert("본인인증이 완료되었습니다.");
+        window.close();        
+    });
 </script>
-
 <?php
 include_once(G5_PATH.'/tail.sub.php');
