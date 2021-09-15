@@ -82,7 +82,7 @@
 /*회원가입 */
 #sns_register {margin:0 0 10px;padding:0;text-align:center;border-radius:3px}
 #sns_register:after {display:block;visibility:hidden;clear:both;content:""}
-#sns_register h2 {float:left;display:inline-block;text-align:left;width:50%;height:56px;padding:0 20px;font-size:1.2em}
+#sns_register h2 {float:left;display:inline-block;text-align:left;width:50%;height:56px;padding:0 20px;font-size:1.2em;line-height: 4em;}
 #sns_register .sns-wrap {display:inline-block;float:left;width:50%;height:56px;line-height:53px;margin:0;text-align:right;padding:0 20px}
 #sns_register .sns-wrap:after {display:block;visibility:hidden;clear:both;content:""}
 #sns_register .sns-icon {display:inline-block;height:30px;line-height:30px;width:30px;margin:0 3px;text-align:right;color:#fff;border-radius:2px}
@@ -95,22 +95,22 @@
 #sns_register .sns-payco {background-color:#df0b00;background-position:0 0}
 #sns_register .txt {position:absolute;line-height:0;font-size:0;vertical-align:middle;overflow:hidden}
 
-/* 회원가입 약관 */
-.register {margin:0 auto}
-.register:after {display:block;visibility:hidden;clear:both;content:""}
-.register .btn_confirm .btn_submit,
-.register .btn_confirm .btn_close {float:left;height:50px !important;width:49.5%;font-weight:bold;font-size:1.083em}
-.register .btn_confirm {text-align:left}
-.register .btn_confirm .btn_submit {margin-left:1%}
 
-#fregister p {position:relative;text-align:center;color:#fff;height:50px;line-height:50px;font-size:1.1em;background:#f2838f;margin:0 0 10px;border-radius:5px;font-weight:bold}
-#fregister p:before {content:"";position:absolute;top:0;left:0;width:5px;height:50px;border-radius:5px 0 0 5px;background:#da4453}
-#fregister p i {font-size:1.2em;vertical-align:middle}
-#fregister section {margin:10px auto 15px;border:1px solid #dde7e9;position:relative;border-radius:3px}
+/* 회원가입 약관 */
+.social_register {margin:0 auto}
+.social_register:after {display:block;visibility:hidden;clear:both;content:""}
+.social_register .btn_confirm .btn_submit,
+.social_register .btn_confirm .btn_close {float:left;height:50px !important;width:49.5%;font-weight:bold;font-size:1.083em}
+.social_register .btn_confirm {text-align:left}
+.social_register .btn_confirm .btn_submit {margin-left:1%}
+
+#fregisterform p {position:relative;text-align:center;color:#fff;height:50px;line-height:50px;font-size:1.1em;background:#f2838f;margin:0 0 10px;border-radius:5px;font-weight:bold}
+#fregisterform p:before {content:"";position:absolute;top:0;left:0;width:5px;height:50px;border-radius:5px 0 0 5px;background:#da4453}
+#fregisterform p i {font-size:1.2em;vertical-align:middle}
+#fregisterform section {margin:10px auto 15px;border:1px solid #dde7e9;position:relative;border-radius:3px}
 #fregister_chkall {position:relative;text-align:center;background:#f5f7fa;line-height:50px;border:1px solid #e5e9f0;border-radius:3px;margin-bottom:15px}
-#fregister h2 {text-align:left;padding:20px;border-bottom:1px solid #dde7e9;font-size:1.2em}
-#fregister textarea {display:block;padding:20px;width:100%;height:150px;background:#fff;border:0;line-height:1.6em}
-#fregister .check {margin-top: 5px;}
+#fregisterform h2 {text-align:left;padding:20px;border-bottom:1px solid #dde7e9;font-size:1.2em}
+#fregisterform textarea {display:block;padding:20px;width:100%;height:150px;background:#fff;border:0;line-height:1.6em}
 #fregister_private {position:relative}
 #fregister_private div {padding:20px;background:#fff}
 #fregister_private table {width:100%;border-collapse:collapse;font-size:1em;}
