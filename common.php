@@ -232,7 +232,7 @@ function chrome_domain_session_name(){
     '.maru.net',    // 마루호스팅
     );
 
-    if(preg_match('/('.implode('|', $domain_array).')/i', $_SERVER['HTTP_HOST'])){  // 위의 도메인주소를 포함한 url접속시 기본세션이름을 변경한다.
+    if(isset($_SERVER['HTTP_HOST']) && preg_match('/('.implode('|', $domain_array).')/i', $_SERVER['HTTP_HOST'])){  // 위의 도메인주소를 포함한 url접속시 기본세션이름을 변경한다.
         if(! defined('G5_SESSION_NAME')) define('G5_SESSION_NAME', 'G5PHPSESSID');
         @session_name(G5_SESSION_NAME);
     }
