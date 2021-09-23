@@ -77,7 +77,7 @@ run_event('cheditor_photo_upload', $data_dir, $data_url);
 //
 $tempfile = $_FILES['file']['tmp_name'];
 $filename = $_FILES['file']['name'];
-
+$filename_len = strrpos($filename, ".");
 $type = substr($filename, strrpos($filename, ".")+1);
 $found = false;
 switch ($type) {
@@ -89,7 +89,7 @@ switch ($type) {
 		$found = true;
 }
 
-if ($found != true) {
+if ($found != true || $filename_len != 23) {
 	exit;
 }
 
