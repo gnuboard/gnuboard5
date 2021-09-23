@@ -182,7 +182,8 @@ if(isset($data['pp_id']) && !empty($data['pp_id'])) {
     $P_VACT_NUM = $_POST['P_VACT_NUM'] = isset($PAY['P_VACT_NUM']) ? $PAY['P_VACT_NUM'] : '';
     $P_VACT_NAME = $_POST['P_VACT_NAME'] = isset($PAY['P_VACT_NAME']) ? iconv_utf8($PAY['P_VACT_NAME']) : '';
     $P_VACT_BANK = $_POST['P_VACT_BANK'] = (isset($PAY['P_VACT_BANK_CODE']) && isset($BANK_CODE[$PAY['P_VACT_BANK_CODE']])) ? $BANK_CODE[$PAY['P_VACT_BANK_CODE']] : '';
-    $P_CARD_ISSUER = $_POST['P_CARD_ISSUER'] = isset($CARD_CODE[$PAY['P_CARD_ISSUER_CODE']]) ? $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']] : '';
+    // $P_CARD_ISSUER = $_POST['P_CARD_ISSUER'] = isset($CARD_CODE[$PAY['P_CARD_ISSUER_CODE']]) ? $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']] : '';
+    $P_CARD_ISSUER = $_POST['P_CARD_ISSUER'] = isset($CARD_CODE[$PAY['P_FN_CD1']]) ? $CARD_CODE[$PAY['P_FN_CD1']] : '';
     $P_UNAME = $_POST['P_UNAME'] = isset($PAY['P_UNAME']) ? iconv_utf8($PAY['P_UNAME']) : '';
 
     $check_keys = array('od_name', 'od_tel', 'od_pwd', 'od_hp', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon', 'od_email', 'ad_default', 'ad_subject', 'od_hope_date', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon', 'od_memo', 'od_settle_case', 'max_temp_point', 'od_temp_point', 'od_send_cost', 'od_send_cost2', 'od_bank_account', 'od_deposit_name', 'od_test', 'od_ip');
