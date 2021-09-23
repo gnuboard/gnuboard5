@@ -58,15 +58,33 @@ if(is_file($skin_file)) {
 
     $stx = trim($stx);
     if($stx) {
-        if (preg_match("/[a-zA-Z]/", $stx))
-            $sql_search .= " and ( INSTR(LOWER(qa_subject), LOWER('$stx')) > 0 or INSTR(LOWER(qa_content), LOWER('$stx')) > 0 )";
-        else
-            $sql_search .= " and ( INSTR(qa_subject, '$stx') > 0 or INSTR(qa_content, '$stx') > 0 ) ";
+        $sfl = trim($sfl);
+        if ($sfl) {
+            switch ($sfl) {
+                case "qa_subject" :
+                case "qa_content" :
+                case "qa_name" :
+                case "mb_id" :
+                    break;
+                default : 
+                    $sfl = "qa_subject";
+            }
+        } else {
+            $sfl = "qa_subject";
+        }
+        $sql_search .= " and (`{$sfl}` like '%{$stx}%') ";
     }
+    // $stx = trim($stx);
+    // if($stx) {
+    //     if (preg_match("/[a-zA-Z]/", $stx))
+    //         $sql_search .= " and ( INSTR(LOWER(qa_subject), LOWER('$stx')) > 0 or INSTR(LOWER(qa_content), LOWER('$stx')) > 0 )";
+    //     else
+    //         $sql_search .= " and ( INSTR(qa_subject, '$stx') > 0 or INSTR(qa_content, '$stx') > 0 ) ";
+    // }
 
     $sql_order = " order by qa_num ";
 
-    $sql = " select count(*) as cnt
+    $sql = " select count(*) as cnt 
                 $sql_common
                 $sql_search ";
     $row = sql_fetch($sql);
