@@ -52,10 +52,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	            if($config['cf_cert_use']) {
                     // #TODO 조건 추가 필요
                     if($config['cf_cert_sa']) {
-                        echo '<button type="button" id="win_sa_cert" class="btn_frmline btn win_sa_cert" data-type="TOSS">토스 인증</button>'.PHP_EOL;
-                        echo '<button type="button" id="win_sa_cert" class="btn_frmline btn win_sa_cert" data-type="PASS">PASS 인증</button>'.PHP_EOL;
-                        echo '<button type="button" id="win_sa_cert" class="btn_frmline btn win_sa_cert" data-type="PAYCO">페이코 인증</button>'.PHP_EOL;
-                        echo '<button type="button" id="win_sa_cert" class="btn_frmline btn win_sa_cert" data-type="KFTC">금융인증서</button>'.PHP_EOL;
+                        echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline btn win_sa_cert" data-type="TOSS">토스 인증</button>'.PHP_EOL;
+                        echo '<button type="button" id="win_sa_pass_cert" class="btn_frmline btn win_sa_cert" data-type="PASS">PASS 인증</button>'.PHP_EOL;
+                        echo '<button type="button" id="win_sa_payco_cert" class="btn_frmline btn win_sa_cert" data-type="PAYCO">페이코 인증</button>'.PHP_EOL;
+                        echo '<button type="button" id="win_sa_kftc_cert" class="btn_frmline btn win_sa_cert" data-type="KFTC">금융인증서</button>'.PHP_EOL;
                     }
                     if($config['cf_cert_hp'])
                         echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>'.PHP_EOL;
