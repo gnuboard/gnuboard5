@@ -47,7 +47,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                     <tbody>
                         <tr>
                             <td>이용자 식별 및 본인여부 확인</td>
-                            <td>아이디, 이름, 비밀번호<?php echo ($config['cf_cert_use']) ? ", 휴대전화번호, 생년월일, 암호화된 개인식별부호(CI)" : ""; ?></td>
+                            <td>아이디, 이름, 비밀번호<?php echo ($config['cf_cert_use']) ? ", 생년월일, 휴대폰 번호(본인인증 할 때만, 아이핀 제외), 암호화된 개인식별부호(CI)" : ""; ?></td>
                             <td>회원 탈퇴 시까지</td>
                         </tr>
                         <tr>
