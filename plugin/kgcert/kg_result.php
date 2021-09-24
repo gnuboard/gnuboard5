@@ -100,8 +100,12 @@
         $opener.$("input[name=mb_name]").val("<?php echo $user_name; ?>").attr("readonly", true);
         $opener.$("input[name=mb_hp]").val("<?php echo $phone_no; ?>").attr("readonly", true);
         $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
-
+        
         alert("본인인증이 완료되었습니다.");
+
+        if($opener.$("form[name=register_cert_reset]") != undefined){
+            $opener.$("form[name=register_cert_reset]").submit();
+        }   
         window.close();
     });
 </script>

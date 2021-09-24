@@ -232,6 +232,10 @@ $(function() {
 
     alert("본인의 휴대폰번호로 확인 되었습니다.");
 
+    if($opener.$("form[name=register_cert_reset]") != undefined){
+        $opener.$("form[name=register_cert_reset]").submit();
+    }
+
     window.close();
 });
 </script>
