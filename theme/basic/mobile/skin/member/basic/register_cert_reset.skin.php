@@ -4,10 +4,19 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css">', 0);
 ?>
-
+<?php if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
+<script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
+<?php } ?>
 <!-- 기존 회원 본인인증 시작 { -->
 <div class="register_cert_reset">
-    <form name="register_cert_reset" id="register_cert_reset" action="<?php echo $register_action_url ?>" onsubmit="return register_cert_reset_submit(this);" method="POST" autocomplete="off">
+    <form name="register_cert_reset" id="register_cert_reset" action="<?php echo $action_url ?>" onsubmit="return register_cert_reset_submit(this);" method="POST" autocomplete="off">
+    <input type="hidden" name="w" value="<?php echo $w ?>">
+	<input type="hidden" name="url" value="<?php echo $urlencode ?>">
+	<input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
+    <input type="hidden" name="mb_id" value="<?php echo $member['mb_id']; ?>">
+    <input type="hidden" name="mb_hp" value="<?php echo $member['mb_hp']; ?>">
+    <input type="hidden" name="mb_name" value="<?php echo $member['mb_name']; ?>">
+	<input type="hidden" name="cert_no" value="">
         <section id="register_cert_reset_private">
             <h2>추가 개인정보처리방침 안내</h2>
             <div>
@@ -24,7 +33,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                         <tbody>
                             <tr>
                                 <td>이용자 식별 및 본인여부 확인</td>
-                                <td>생년월일, 암호화된 개인식별부호(CI)</td>
+                                <td>생년월일<?php echo ($config['mb'])? ", 휴대폰 번호(아이핀 제외)" : ""; ?>, 암호화된 개인식별부호(CI)</td>
                                 <td>회원 탈퇴 시까지</td>
                             </tr>
                         </tbody>
@@ -40,7 +49,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
 
         <div id="find_info" class="new_win">
             <h3>본인인증으로 찾기</h3>
-            <div class="cert_btn">
+            <!-- <div class="cert_btn">
                 <button type="submit" class="btn_close">토스 인증</button>
                 <button type="submit" class="btn_close">PASS 인증</button>
                 <button type="submit" class="btn_close">페이코 인증</button>
@@ -49,14 +58,134 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
             <div class="win_btn">
                 <button type="submit" class="btn_submit">휴대폰 본인확인</button>
                 <button type="submit" class="btn_submit">아이핀 본인확인</button>
-            </div>
+            </div> -->
+            <?php
+            if ($config['cf_cert_use']) {
+                echo '<div class="cert_btn">';
+                if ($config['cf_cert_sa']) {                    
+                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="KFTC">금융인증서</button>' . PHP_EOL;
+                }
+                echo '</div>';
+                echo '<div class="win_btn">';
+                if ($config['cf_cert_hp'])
+                    echo '<button type="button" id="win_hp_cert" class="btn_submit">휴대폰 본인확인</button>' . PHP_EOL;
+                if ($config['cf_cert_ipin'])
+                    echo '<button type="button" id="win_ipin_cert" class="btn_submit">아이핀 본인확인</button>' . PHP_EOL;
+                echo '</div>';
+                echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>' . PHP_EOL;
+            }
+            ?>
         </div>
     </form>
 
     <script>
+        $(function() {
+            // 모두선택
+            // $("input[name=chk_all]").click(function() {
+            //     if ($(this).prop('checked')) {
+            //         $("input[name^=agree]").prop('checked', true);
+            //     } else {
+            //         $("input[name^=agree]").prop("checked", false);
+            //     }
+            // });
+
+            // $("#reg_zip_find").css("display", "inline-block");
+            var pageTypeParam = "pageType=register";
+            var f = document.register_cert_reset;
+
+            <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
+                // TOSS 통합인증
+                var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
+                var type = "";
+                var params = "";
+                var request_url = "";
+
+
+                $(".win_sa_cert").click(function() {
+                    if (!register_cert_reset_submit(f)) return false;
+                    //if (!cert_confirm()) return false;
+                    type = $(this).data("type");
+                    switch (type) {
+                        case "TOSS":
+                            params = "?directAgency=" + type + "&" + pageTypeParam;
+                            request_url = url + params;
+                            console.log(request_url);
+                            call_sa(request_url);
+                            break;
+                        case "PASS":
+                            params = "?directAgency=" + type + "&" + pageTypeParam;
+                            request_url = url + params;
+                            call_sa(request_url);
+                            break;
+                        case "PAYCO":
+                            params = "?directAgency=" + type + "&" + pageTypeParam;
+                            request_url = url + params;
+                            call_sa(request_url);
+                            break;
+                        case "KFTC":
+                            params = "?directAgency=" + type + "&" + pageTypeParam;
+                            request_url = url + params;
+                            call_sa(request_url);
+                            break;
+                        default:
+                            return;
+                    }
+                });
+            <?php } ?>
+            <?php if ($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
+                // 아이핀인증
+                var params = "";
+                $("#win_ipin_cert").click(function() {
+                    if (!register_cert_reset_submit(f)) return false;
+                    //if (!cert_confirm()) return false;
+                    params = "?" + pageTypeParam;
+                    var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php" + params;
+                    certify_win_open('kcb-ipin', url);
+                    return;
+                });
+
+            <?php } ?>
+            <?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
+                // 휴대폰인증
+                var params = "";
+                $("#win_hp_cert").click(function() {
+                    if (!register_cert_reset_submit(f)) return false;
+                    //if (!cert_confirm()) return false;
+                    params = "?" + pageTypeParam;
+                    <?php
+                    switch ($config['cf_cert_hp']) {
+                        case 'kcb':
+                            $cert_url = G5_OKNAME_URL.'/hpcert1.php';
+                            $cert_type = 'kcb-hp';
+                            break;
+                        case 'kcp':
+                            $cert_url = G5_KCPCERT_URL.'/kcpcert_form.php';
+                            $cert_type = 'kcp-hp';
+                            break;
+                        case 'lg':
+                            $cert_url = G5_LGXPAY_URL.'/AuthOnlyReq.php';
+                            $cert_type = 'lg-hp';
+                            break;
+                        default:
+                            echo 'alert("기본환경설정에서 휴대폰 본인확인 설정을 해주십시오");';
+                            echo 'return false;';
+                            break;
+                    }
+                    ?>
+
+                    certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>" + params);
+                    return;
+                });
+            <?php } ?>
+
+            //tooltip
+        });
         function register_cert_reset_submit(f) {
             if (!f.agree2.checked) {
-                alert("개인정보 수집 및 이용의 내용에 동의하셔야 회원가입 하실 수 있습니다.");
+                alert("개인정보 수집 및 이용의 내용에 인증을 진행 하실 수 있습니다.");
                 f.agree2.focus();
                 return false;
             }

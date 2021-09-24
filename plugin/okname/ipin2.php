@@ -123,6 +123,10 @@ $(function() {
     $opener.$("input[name=mb_name]").val("<?php echo $mb_name; ?>").attr("readonly", true);
     $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
 
+    if($opener.$("form[name=register_cert_reset]") != undefined){
+        $opener.$("form[name=register_cert_reset]").submit();
+    }
+
     window.close();
 });
 </script>

@@ -96,6 +96,10 @@ else
 
 // 본인확인방법
 switch($mb['mb_certify']) {
+    case 'sa':
+        $mb_certify_case = '통합인증';
+        $mb_certify_val = 'sa';
+        break;
     case 'hp':
         $mb_certify_case = '휴대폰';
         $mb_certify_val = 'hp';
