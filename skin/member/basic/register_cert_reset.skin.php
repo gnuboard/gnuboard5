@@ -63,10 +63,10 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
                 if ($config['cf_cert_sa']) {                    
-                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="KFTC">금융인증서</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_toss_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_pass_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_payco_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_kftc_cert" class="btn_close win_sa_cert" data-type="KFTC">금융인증서</button>' . PHP_EOL;
                 }
                 echo '</div>';
                 echo '<div class="win_btn">';

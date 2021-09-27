@@ -25,14 +25,18 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                         <caption>추가 개인정보처리방침 안내</caption>
                         <thead>
                             <tr>
-                                <th>목적</th>
+                                <th colspan="2">목적</th>
+                            </tr>
+                            <tr>
                                 <th>항목</th>
                                 <th>보유기간</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>이용자 식별 및 본인여부 확인</td>
+                                <td colspan="2">이용자 식별 및 본인여부 확인</td>
+                            </tr>
+                            <tr>
                                 <td>생년월일<?php echo ($config['mb'])? ", 휴대폰 번호(아이핀 제외)" : ""; ?>, 암호화된 개인식별부호(CI)</td>
                                 <td>회원 탈퇴 시까지</td>
                             </tr>
@@ -63,10 +67,10 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
                 if ($config['cf_cert_sa']) {                    
-                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_cert" class="btn_close win_sa_cert" data-type="KFTC">금융인증서</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_toss_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_pass_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_payco_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_kftc_cert" class="btn_close win_sa_cert" data-type="KFTC">금융인증서</button>' . PHP_EOL;
                 }
                 echo '</div>';
                 echo '<div class="win_btn">';

@@ -41,7 +41,7 @@
 #fregisterform .form_01 {margin-bottom:30px}
 #fregisterform .form_01 h2 {font-size:1.167em;margin:0 0 5px}
 #fregisterform .frm_label {display:block;font-size:1.083em;margin:15px 0 5px;color:#555}
-#fregisterform .btn_frmline {width:auto;height:30px;line-height:30px;padding:0 10px;font-weight:bold}
+#fregisterform .btn_frmline {margin-bottom:5px;width:auto;height:30px;line-height:30px;padding:0 10px;font-weight:bold}
 #fregisterform .rgs_name_li button {margin:5px 0 0;width:auto}
 #fregisterform .reg_mb_img_file {margin-bottom:30px}
 #fregisterform .reg_mb_img_file img {max-width:100%;height:auto}

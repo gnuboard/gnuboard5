@@ -118,7 +118,7 @@
 #register_cert_reset_private div {padding:20px;background:#fff}
 #register_cert_reset_private table {width:100%;border-collapse:collapse;font-size:1em;}
 #register_cert_reset_private table caption {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#register_cert_reset_private table th {background:#f7f7f9;width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf}
+#register_cert_reset_private table th {background:#f7f7f9;width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf;font-weight:bold;}
 #register_cert_reset_private table td {border:1px solid #e7e9ec;padding:10px;border-top:0}
 
 .register_cert_reset_agree {position:absolute;top:0;right:0}
