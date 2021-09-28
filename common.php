@@ -300,6 +300,7 @@ if( !function_exists('shop_check_is_pay_page') ){
             $mobile_dir.'/'.$shop_dir.'/kcp/order_approval_form.php',
             $shop_dir.'/kakaopay/inicis_kk_return.php',     // 이니시스 카카오페이 (SIRK 로 시작하는 아이디 전용)
             $plugin_dir."/kgcert/kg_result.php", // 이니시스 통합인증 모듈 2021-09-10 http <-> https 간 세션 공유 문제로 인해 추가
+            $plugin_dir."/kgcert/kg_find_result.php", // 이니시스 통합인증 모듈 2021-09-10 http <-> https 간 세션 공유 문제로 인해 추가
         );
 
         $server_script_name = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
@@ -792,7 +793,7 @@ if(!empty($extend_file) && is_array($extend_file)) {
 }
 unset($extend_file);
 
-if(!$is_admin && $is_member && !G5_CERT_IN_PROG && $config['cf_cert_use'] <> 0 && $config['cf_cert_req']) { // 본인인증이 필수일때
+if(!$is_admin && $is_member && (!defined("G5_CERT_IN_PROG") || !G5_CERT_IN_PROG) && $config['cf_cert_use'] <> 0 && $config['cf_cert_req']) { // 본인인증이 필수일때
     if ((empty($member['mb_certify']) || (!empty($member['mb_certify']) && strlen($member['mb_dupinfo']) == 64))) { // di로 인증되어 있거나 본인인증이 안된 계정일때
         goto_url(G5_BBS_URL."/member_cert_refresh.php");
     }

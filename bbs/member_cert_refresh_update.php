@@ -7,9 +7,11 @@ if (!($w == '' || $w == 'u')) {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
 
-if($w == '')
+if($w == '') {
     $mb_id = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
-else
+    $mb_name = isset($_POST['mb_name']) ? trim($_POST['mb_name']) : '';
+    $mb_hp = isset($_POST['mb_hp']) ? trim($_POST['mb_hp']) : '';
+} else
     alert('잘못된 접근입니다', G5_URL);
 
 if(!$mb_id)
@@ -23,7 +25,7 @@ if($config['cf_cert_use'] && get_session('ss_cert_type') && get_session('ss_cert
     // 중복체크
     $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
     $row = sql_fetch($sql);
-    if ($row['mb_id']) {
+    if (!empty($row['mb_id'])) {
         alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.");
     }
 }
@@ -41,8 +43,7 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
         $sql_certify .= " , mb_birth = '".get_session('ss_cert_birth')."' ";
         $sql_certify .= " , mb_sex = '".get_session('ss_cert_sex')."' ";
         $sql_certify .= " , mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
-        if($w == 'u')
-            $sql_certify .= " , mb_name = '{$mb_name}' ";
+        $sql_certify .= " , mb_name = '{$mb_name}' ";
     } else {
         $sql_certify .= " mb_hp = '{$mb_hp}' ";
         $sql_certify .= " , mb_certify  = '' ";

@@ -1,7 +1,6 @@
 <?php
 include_once('./_common.php');
-global $g5;
-$_POST['mb_id'];
+
 if($w == '')
     $mb_id = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
 else
@@ -23,6 +22,6 @@ $sql_password = "";
 if ($mb_password)
     $sql_password = "mb_password = '".get_encrypt_string($mb_password)."' ";
 
-sql_fetch("update {$g5['member_table']} set {$sql_password} where mb_id = '{$mb_id}'");
+sql_query("update {$g5['member_table']} set {$sql_password} where mb_id = '{$mb_id}'");
 
 goto_url(G5_BBS_URL.'/login.php');

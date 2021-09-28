@@ -9,10 +9,12 @@ setlocale(LC_CTYPE, 'ko_KR.euc-kr');
 switch($_GET['pageType']){ // 페이지 타입 체크
     case "register":
         $resultPage = "/kcpcert_result.php";
-    break;
+        break;
     case "find":
         $resultPage = "/find_kcpcert_result.php";
-    break;
+        break;
+    default:
+        alert_close('잘못된 접근입니다.');
 }
 
 // kcp 휴대폰인증파일

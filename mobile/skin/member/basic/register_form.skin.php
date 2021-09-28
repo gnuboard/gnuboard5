@@ -125,7 +125,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        <?php if ($config['cf_use_tel']) { ?>
 	        <li>
 	            <label for="reg_mb_tel" class="sound_only">전화번호<?php if ($config['cf_req_tel']) { ?><strong>필수</strong><?php } ?></label>
-	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호">
+	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && $member['mb_certify']) { echo "readonly"; } ?> maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호">
 	        </li>
 	        <?php } ?>
 	

@@ -1,7 +1,6 @@
 <?php
 	include_once('./_common.php');
-	global $g5;
-
+	
 	if($_GET['directAgency'] == "KFTC") alert_close("서비스 준비중입니다.");
 
     $sql = "select MAX(cr_id) as max_cr_id from {$g5['cert_history_table']} limit 1";
@@ -9,15 +8,15 @@
 	$max_cr_id = $res['max_cr_id'];
 	if(empty($max_cr_id)) $max_cr_id = 0;
 	
-	if($config['cf_cert_use'] == 2) { // 테스트 일때
+	if($config['cf_cert_use'] == 2) { // 실서비스 일때
+		$mid = 'SRA'.$config['cf_cert_kg_mid']; // 부여받은 MID(상점ID) 입력(영업담당자 문의)
+		$apiKey = $config['cf_cert_kg_cd'];   // 부여받은 MID 에 대한 apiKey
+		$mTxId ='SIR_'.$max_cr_id;
+		certify_count_check($member['mb_id'], 'sa'); // 금일 인증시도 횟수 체크
+	} else { // 테스트 일때
 		$mid = "INIiasTest";
 		$apiKey = "TGdxb2l3enJDWFRTbTgvREU3MGYwUT09";
 		$mTxId ='test_'.$max_cr_id;
-	} else {
-		$mid = 'SRA'.$config['cf_cert_kg_mid']; // 부여받은 MID(상점ID) 입력(영업담당자 문의)
-		$apiKey = $config['cf_cert_kg_cd'];   // 부여받은 MID 에 대한 apiKey
-		$mTxId ='SIR_'.$max_cr_id.$type;
-		certify_count_check($member['mb_id'], 'sa'); // 금일 인증시도 횟수 체크
 	}	
 	$reqSvcCd ='01';
 
@@ -26,6 +25,12 @@
 	$authHash = $plainText1;
 
 	$flgFixedUser = (!empty($member['mb_id']) && !empty($member['mb_name']) && !empty($member['mb_hp']) && !empty($member['mb_birth']))?  'Y' : 'N';  // 특정사용자 고정시 : Y 세팅및 아래 해시 데이터 생성
+
+	// php8버전 값체크 경고 때문에 필수값이 아닌 값이 없을수 있는 선택값들은 선언해주어야함
+	$userName = '';
+	$userPhone = '';
+	$userBirth = '';
+	$userHash = '';	
 
 	if($flgFixedUser == 'Y') {
 		$userName = $member['mb_name'];            // 사용자 이름
@@ -38,14 +43,15 @@
 	switch($_GET['pageType']){		
 		case "register":
 			$resultPage = "/kg_result.php";
-		break;
+			break;
 		case "find":
 			$resultPage = "/kg_find_result.php";
-		break;
+			break;
+		default:
+        	alert_close('잘못된 접근입니다.');
 	}
 	
 	$resultUrl = G5_KGCERT_URL . $resultPage;
-	
 	$g5['title'] = 'KG이니시스 통합인증';
 	include_once(G5_PATH.'/head.sub.php'); 	
 ?>

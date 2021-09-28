@@ -89,9 +89,9 @@ if(!empty($field[1])) { // 아이핀은 리턴받는 ci 데이터가 두가지�
 $md5_ci = md5($ci.$ci);
 
 $row = sql_fetch("select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$md5_ci}'"); // ci데이터로 찾음
-if (!$row['mb_id']) { // ci로 등록된 계정이 없다면
+if (empty($row['mb_id'])) { // ci로 등록된 계정이 없다면
     $row = sql_fetch("select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}'"); // di데이터로 찾음
-    if(!$row['mb_id']) {
+    if(empty($row['mb_id'])) {
         alert_close("인증하신 정보로 가입된 회원정보가 없습니다.");
         exit;
     }
