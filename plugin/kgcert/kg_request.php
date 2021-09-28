@@ -43,10 +43,12 @@
 	switch($_GET['pageType']){		
 		case "register":
 			$resultPage = "/kg_result.php";
-		break;
+			break;
 		case "find":
 			$resultPage = "/kg_find_result.php";
-		break;
+			break;
+		default:
+        	alert_close('잘못된 접근입니다.');
 	}
 	
 	$resultUrl = G5_KGCERT_URL . $resultPage;

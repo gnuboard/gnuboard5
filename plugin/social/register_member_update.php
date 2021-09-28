@@ -31,6 +31,7 @@ $mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re'
 $mb_nick        = isset($_POST['mb_nick']) ? trim(strip_tags($_POST['mb_nick'])) : '';
 $mb_email       = isset($_POST['mb_email']) ? trim($_POST['mb_email']) : '';
 $mb_name        = isset($_POST['mb_name']) ? clean_xss_tags(trim(strip_tags($_POST['mb_name']))) : '';
+$mb_hp          = isset($_POST['mb_hp']) ? trim($_POST['mb_hp']) : '';
 $mb_email       = get_email_address($mb_email);
 
 // 이름, 닉네임에 utf-8 이외의 문자가 포함됐다면 오류
@@ -106,7 +107,7 @@ if($config['cf_cert_use'] && $config['cf_cert_req']){
         // 중복체크
         $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
         $row = sql_fetch($sql);
-        if ($row['mb_id']) {
+        if (!empty($row['mb_id'])) {
             alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.");
         }
     }
@@ -123,8 +124,7 @@ if($config['cf_cert_use'] && $config['cf_cert_req']){
             $sql_certify .= " , mb_birth = '".get_session('ss_cert_birth')."' ";
             $sql_certify .= " , mb_sex = '".get_session('ss_cert_sex')."' ";
             $sql_certify .= " , mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
-            if($w == 'u')
-                $sql_certify .= " , mb_name = '{$mb_name}' ";
+            $sql_certify .= " , mb_name = '{$mb_name}' ";
         } else {
             $sql_certify .= " , mb_hp = '{$mb_hp}' ";
             $sql_certify .= " , mb_certify  = '' ";

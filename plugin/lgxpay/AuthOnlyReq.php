@@ -7,10 +7,12 @@ certify_count_check($member['mb_id'], 'hp');
 switch($_GET['pageType']){ // 페이지 타입 체크
     case "register":
         $resultPage = "/AuthOnlyRes.php";
-    break;
+        break;
     case "find":
         $resultPage = "/find_AuthOnlyRes.php";
-    break;
+        break;    
+    default:
+        alert_close('잘못된 접근입니다.');
 }
 
 /*
