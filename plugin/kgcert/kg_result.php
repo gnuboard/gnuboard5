@@ -50,7 +50,7 @@
 
             $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
             $row = sql_fetch($sql);
-            if ($row['mb_id']) {
+            if (!empty($row['mb_id'])) {
                 alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
             }
 
@@ -83,7 +83,7 @@
     }
 
     $g5['title'] = 'KG이니시스 통합인증 결과';
-    include_once(G5_PATH.'/head.sub.php'); 
+    include_once(G5_PATH.'/head.sub.php');
 ?>    
 <script>
     jQuery(function($) {        

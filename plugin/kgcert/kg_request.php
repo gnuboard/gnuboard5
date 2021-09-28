@@ -26,6 +26,12 @@
 
 	$flgFixedUser = (!empty($member['mb_id']) && !empty($member['mb_name']) && !empty($member['mb_hp']) && !empty($member['mb_birth']))?  'Y' : 'N';  // 특정사용자 고정시 : Y 세팅및 아래 해시 데이터 생성
 
+	// php8버전 값체크 경고 때문에 필수값이 아닌 값이 없을수 있는 선택값들은 선언해주어야함
+	$userName = '';
+	$userPhone = '';
+	$userBirth = '';
+	$userHash = '';	
+
 	if($flgFixedUser == 'Y') {
 		$userName = $member['mb_name'];            // 사용자 이름
 		$userPhone = preg_replace("/-/","" , $member['mb_hp']);   // 사용자 전화번호 하이픈만 제거
