@@ -30,7 +30,7 @@
         //  echo '<결과내역>'." '{$mid}' <br/><br/>";
         //  echo $response;
 
-        if($res_data['resultCode'] == "0000") {
+        if($res_data['resultCode'] === "0000") {
 
             @insert_cert_history($member['mb_id'], 'kg', 'sa'); // 인증성공 시 내역 기록
 
