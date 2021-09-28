@@ -136,7 +136,7 @@ set_session('ss_cert_adult',   $adult);
 set_session('ss_cert_birth',   $mb_birth);
 set_session('ss_cert_sex',     ($field[9] == 1 ? 'M' : 'F'));
 set_session('ss_cert_dupinfo', $mb_dupinfo);
-die;
+
 $g5['title'] = 'KCB 휴대폰 본인확인';
 include_once(G5_PATH.'/head.sub.php');
 ?>
