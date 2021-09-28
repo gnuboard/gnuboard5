@@ -33,7 +33,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                         <tbody>
                             <tr>
                                 <td>이용자 식별 및 본인여부 확인</td>
-                                <td>생년월일<?php echo ($config['mb'])? ", 휴대폰 번호(아이핀 제외)" : ""; ?>, 암호화된 개인식별부호(CI)</td>
+                                <td>생년월일<?php echo (empty($member['mb_dupinfo']))? ", 휴대폰 번호(아이핀 제외)" : ""; ?>, 암호화된 개인식별부호(CI)</td>
                                 <td>회원 탈퇴 시까지</td>
                             </tr>
                         </tbody>
