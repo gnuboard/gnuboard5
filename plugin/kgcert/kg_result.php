@@ -34,7 +34,7 @@
 
             @insert_cert_history($member['mb_id'], 'kg', 'sa'); // 인증성공 시 내역 기록
 
-            $cert_type = 'sa';                                      // 인증타입
+            $cert_type      = 'sa';                                 // 인증타입
             $cert_no        = $res_data['txId'];                    // 이니시스 트랜잭션 ID
             $phone_no       = $res_data['userPhone'];               // 전화번호
             $user_name      = $res_data['userName'];                // 이름
@@ -71,7 +71,7 @@
             //set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F")); // 이니시스 통합인증은 성별정보 리턴 없음
             set_session('ss_cert_dupinfo', $mb_dupinfo);       
 
-        }else{
+        } else {
             // 인증실패 curl의 인증실패 체크
             alert_close('코드 : '.$res_data['resultCode'].'  '.urldecode($res_data['resultMsg']));
             exit;

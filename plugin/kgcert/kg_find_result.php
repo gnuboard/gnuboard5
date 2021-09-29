@@ -27,11 +27,11 @@
         curl_close($ch);
         $res_data = json_decode($response, true);
 
-        if($res_data['resultCode'] == "0000") {
+        if($res_data['resultCode'] === "0000") {
 
             @insert_cert_history('@password_lost@', 'kg', 'sa'); // 인증성공 시 내역 기록
 
-            $cert_type = 'sa';                                      // 인증타입
+            $cert_type      = 'sa';                                 // 인증타입
             $cert_no        = $res_data['txId'];                    // 이니시스 트랜잭션 ID
             $phone_no       = $res_data['userPhone'];               // 전화번호
             $user_name      = $res_data['userName'];                // 이름
@@ -50,7 +50,7 @@
                 alert_close("인증하신 정보로 가입된 회원정보가 없습니다.");
                 exit;                
             }
-        }else{
+        } else {
             // 인증실패 curl의 인증실패 체크
             alert_close('코드 : '.$res_data['resultCode'].'  '.urldecode($res_data['resultMsg']));
             exit;
