@@ -883,7 +883,6 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         </tr>
         <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증</label></th>
-            <!-- #TODO -->
             <td class="cf_cert_service">
                 <span class="sitecode title">MID</span>
                 <span class="sitecode">SRA</span>

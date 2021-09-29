@@ -50,7 +50,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
             <li>
             <?php
 	            if($config['cf_cert_use']) {
-                    // #TODO 조건 추가 필요
                     if($config['cf_cert_sa']) {
                         echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline btn win_sa_cert" data-type="TOSS">토스 인증</button>'.PHP_EOL;
                         echo '<button type="button" id="win_sa_pass_cert" class="btn_frmline btn win_sa_cert" data-type="PASS">PASS 인증</button>'.PHP_EOL;
