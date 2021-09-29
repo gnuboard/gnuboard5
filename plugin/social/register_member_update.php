@@ -124,7 +124,8 @@ if($config['cf_cert_use'] && $config['cf_cert_req']){
             $sql_certify .= " , mb_birth = '".get_session('ss_cert_birth')."' ";
             $sql_certify .= " , mb_sex = '".get_session('ss_cert_sex')."' ";
             $sql_certify .= " , mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
-            $sql_certify .= " , mb_name = '{$mb_name}' ";
+            if($w == 'u')
+                $sql_certify .= " , mb_name = '{$mb_name}' ";
         } else {
             $sql_certify .= " , mb_hp = '{$mb_hp}' ";
             $sql_certify .= " , mb_certify  = '' ";
