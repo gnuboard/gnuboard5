@@ -107,29 +107,29 @@
 #pw_reset .frm_input {margin:10px 0 0}
 
 /* 기존 회원 본인인증 */
-#register_cert_reset p {position:relative;text-align:center;color:#fff;height:50px;line-height:50px;font-size:1.1em;background:#f2838f;margin:0 0 10px;border-radius:5px;font-weight:bold}
-#register_cert_reset p:before {content:"";position:absolute;top:0;left:0;width:5px;height:50px;border-radius:5px 0 0 5px;background:#da4453}
-#register_cert_reset p i {font-size:1.2em;vertical-align:middle}
-#register_cert_reset section {margin:10px auto 15px;border:1px solid #dde7e9;position:relative;border-radius:3px}
-#register_cert_reset_chkall {position:relative;text-align:center;background:#f5f7fa;line-height:50px;border:1px solid #e5e9f0;border-radius:3px;margin-bottom:15px}
-#register_cert_reset h2 {text-align:left;padding:20px;border-bottom:1px solid #dde7e9;font-size:1.2em}
-#register_cert_reset textarea {display:block;padding:20px;width:100%;height:150px;background:#fff;border:0;line-height:1.6em}
-#register_cert_reset_private {position:relative}
-#register_cert_reset_private div {padding:20px;background:#fff}
-#register_cert_reset_private table {width:100%;border-collapse:collapse;font-size:1em;}
-#register_cert_reset_private table caption {position:absolute;font-size:0;line-height:0;overflow:hidden}
-#register_cert_reset_private table th {background:#f7f7f9;width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf;font-weight:bold;}
-#register_cert_reset_private table td {border:1px solid #e7e9ec;padding:10px;border-top:0}
+#member_cert_refresh p {position:relative;text-align:center;color:#fff;height:50px;line-height:50px;font-size:1.1em;background:#f2838f;margin:0 0 10px;border-radius:5px;font-weight:bold}
+#member_cert_refresh p:before {content:"";position:absolute;top:0;left:0;width:5px;height:50px;border-radius:5px 0 0 5px;background:#da4453}
+#member_cert_refresh p i {font-size:1.2em;vertical-align:middle}
+#member_cert_refresh section {margin:10px auto 15px;border:1px solid #dde7e9;position:relative;border-radius:3px}
+#member_cert_refresh_chkall {position:relative;text-align:center;background:#f5f7fa;line-height:50px;border:1px solid #e5e9f0;border-radius:3px;margin-bottom:15px}
+#member_cert_refresh h2 {text-align:left;padding:20px;border-bottom:1px solid #dde7e9;font-size:1.2em}
+#member_cert_refresh textarea {display:block;padding:20px;width:100%;height:150px;background:#fff;border:0;line-height:1.6em}
+#member_cert_refresh_private {position:relative}
+#member_cert_refresh_private div {padding:20px;background:#fff}
+#member_cert_refresh_private table {width:100%;border-collapse:collapse;font-size:1em;}
+#member_cert_refresh_private table caption {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#member_cert_refresh_private table th {background:#f7f7f9;width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf;font-weight:bold;}
+#member_cert_refresh_private table td {border:1px solid #e7e9ec;padding:10px;border-top:0}
 
-.register_cert_reset_agree {position:absolute;top:0;right:0}
-.register_cert_reset_agree input[type="checkbox"] + label {color:#676e70}
-.register_cert_reset_agree input[type="checkbox"] + label:hover {color:#2172f8}
-.register_cert_reset_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
-.register_cert_reset_agree input[type="checkbox"]:checked + label {color:#000}
-.register_cert_reset_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
-.register_cert_reset_agree.chk_all input[type="checkbox"] + label span {top:18px}
+.member_cert_refresh_agree {position:absolute;top:0;right:0}
+.member_cert_refresh_agree input[type="checkbox"] + label {color:#676e70}
+.member_cert_refresh_agree input[type="checkbox"] + label:hover {color:#2172f8}
+.member_cert_refresh_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.member_cert_refresh_agree input[type="checkbox"]:checked + label {color:#000}
+.member_cert_refresh_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+.member_cert_refresh_agree.chk_all input[type="checkbox"] + label span {top:18px}
 
-#register_cert_reset #find_info {margin:50px 0}
+#member_cert_refresh #find_info {margin:50px 0}
 
 /* 로그인 */
 #mb_login {}

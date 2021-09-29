@@ -8,8 +8,8 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
 <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
 <?php } ?>
 <!-- 기존 회원 본인인증 시작 { -->
-<div class="register_cert_reset">
-    <form name="register_cert_reset" id="register_cert_reset" action="<?php echo $action_url ?>" onsubmit="return register_cert_reset_submit(this);" method="POST" autocomplete="off">
+<div class="member_cert_refresh">
+    <form name="register_cert_reset" id="member_cert_refresh" action="<?php echo $action_url ?>" onsubmit="return register_cert_reset_submit(this);" method="POST" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w ?>">
 	<input type="hidden" name="url" value="<?php echo $urlencode ?>">
 	<input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
@@ -17,7 +17,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
     <input type="hidden" name="mb_hp" value="<?php echo $member['mb_hp']; ?>">
     <input type="hidden" name="mb_name" value="<?php echo $member['mb_name']; ?>">
 	<input type="hidden" name="cert_no" value="">
-        <section id="register_cert_reset_private">
+        <section id="member_cert_refresh_private">
             <h2>추가 개인정보처리방침 안내</h2>
             <div>
                 <div class="tbl_head01 tbl_wrap">
@@ -45,7 +45,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                 </div>
             </div>
 
-            <fieldset class="register_cert_reset_agree">
+            <fieldset class="member_cert_refresh_agree">
                 <input type="checkbox" name="agree2" value="1" id="agree21" class="selec_chk">
                 <label for="agree21"><span></span><b class="sound_only">개인정보 수집 및 이용의 내용에 동의합니다.</b></label>
             </fieldset>
@@ -53,16 +53,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
 
         <div id="find_info" class="new_win">
             <h3>본인인증으로 찾기</h3>
-            <!-- <div class="cert_btn">
-                <button type="submit" class="btn_close">토스 인증</button>
-                <button type="submit" class="btn_close">PASS 인증</button>
-                <button type="submit" class="btn_close">페이코 인증</button>
-                <button type="submit" class="btn_close">금융인증서</button>
-            </div>
-            <div class="win_btn">
-                <button type="submit" class="btn_submit">휴대폰 본인확인</button>
-                <button type="submit" class="btn_submit">아이핀 본인확인</button>
-            </div> -->
+
             <?php
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
@@ -87,16 +78,6 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
 
     <script>
         $(function() {
-            // 모두선택
-            // $("input[name=chk_all]").click(function() {
-            //     if ($(this).prop('checked')) {
-            //         $("input[name^=agree]").prop('checked', true);
-            //     } else {
-            //         $("input[name^=agree]").prop("checked", false);
-            //     }
-            // });
-
-            // $("#reg_zip_find").css("display", "inline-block");
             var pageTypeParam = "pageType=register";
             var f = document.register_cert_reset;
 
@@ -139,6 +120,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                     }
                 });
             <?php } ?>
+
             <?php if ($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
                 // 아이핀인증
                 var params = "";
@@ -150,8 +132,8 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                     certify_win_open('kcb-ipin', url);
                     return;
                 });
-
             <?php } ?>
+
             <?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
                 // 휴대폰인증
                 var params = "";
@@ -184,9 +166,8 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                     return;
                 });
             <?php } ?>
-
-            //tooltip
         });
+        
         function register_cert_reset_submit(f) {
             if (!f.agree2.checked) {
                 alert("개인정보 수집 및 이용의 내용에 인증을 진행 하실 수 있습니다.");
