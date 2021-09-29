@@ -26,7 +26,7 @@
 
 	$flgFixedUser = (!empty($member['mb_id']) && !empty($member['mb_name']) && !empty($member['mb_hp']) && !empty($member['mb_birth']))?  'Y' : 'N';  // 특정사용자 고정시 : Y 세팅및 아래 해시 데이터 생성
 
-	// php8버전 값체크 경고 때문에 필수값이 아닌 값이 없을수 있는 선택값들은 선언해주어야함
+	// php8버전 값체크 경고 때문에 필수값이 아닌 값이 없을수 있는 선택값들은 초기화해주어야함
 	$userName = '';
 	$userPhone = '';
 	$userBirth = '';
@@ -40,7 +40,8 @@
 		$plainText2 = hash("sha256",(string)$userName.(string)$mid.(string)$userPhone.(string)$mTxId.(string)$userBirth.(string)$reqSvcCd);
 		$userHash = $plainText2; 
 	}
-	switch($_GET['pageType']){		
+
+	switch($_GET['pageType']) {		
 		case "register":
 			$resultPage = "/kg_result.php";
 			break;

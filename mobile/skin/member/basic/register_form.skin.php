@@ -133,7 +133,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        <li>
 	            <label for="reg_mb_hp" class="sound_only">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong>필수</strong><?php } ?></label>
 	            
-	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input full_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20" placeholder="휴대폰번호">
+	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo $required ?>	<?php echo ($config['cf_req_hp'] || ($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin"))?"required":""; ?> class="frm_input full_input <?php echo $required ?> <?php echo ($config['cf_req_hp'] || ($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin"))?"required":""; ?>" <?php if ($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin")) echo "readonly"; ?> maxlength="20" placeholder="휴대폰번호">
 	            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) { ?>
 	            <input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
 	            <?php } ?>
