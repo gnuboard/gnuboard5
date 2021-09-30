@@ -10,11 +10,12 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal.css">
 add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal-default-theme.css">', 12);
 add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css?ver='.G5_CSS_VER.'">', 13);
 add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
+add_javascript('<script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>', 14);
+if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
+    add_javascript('<script src="'.G5_JS_URL.'/certify.js?v='.G5_JS_VER.'"></script>', 15);
 
-$email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.다른 이메일을 입력해 주세요.' : '';
-if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
-    <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
-<?php } ?>
+$email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.다른 이메일을 입력해 주세요.' : ''; 
+?>
 
 <!-- 회원가입약관 동의 시작 { -->
 <div class="social_register">
@@ -78,7 +79,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         <!-- } 회원가입 약관 동의 끝 -->
 
         <!-- 회원정보 입력/수정 시작 { -->
-        <script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
 
         <!-- 새로가입 시작 -->
         <input type="hidden" name="w" value="<?php echo $w; ?>">
@@ -118,17 +118,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                         echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>' . PHP_EOL;
                     }
                     ?>
-                    <?php
-                    if ($config['cf_cert_use'] && $member['mb_certify']) {
-                        if ($member['mb_certify'] == 'ipin')
-                            $mb_cert = '아이핀';
-                        else
-                            $mb_cert = '휴대폰';
-                    ?>
-                        <div id="msg_certify">
-                            <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
-                        </div>
-                    <?php } ?>
                 </li>
                 <?php if ($req_nick) {  ?>
                     <li>
@@ -152,7 +141,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                     </span>
                     <?php }  ?>
                     <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
-                    <input type="text" name="mb_email" value="<?php echo isset($user_email) ? $user_email : ''; ?>" id="reg_mb_email" required class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail">
+                    <input type="text" name="mb_email" value="<?php echo isset($user_email) ? $user_email : ''; ?>" id="reg_mb_email" required <?php echo (isset($user_email) && $user_email != '' && !$is_exists_email)? "readonly":''; ?> class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail">
                     <div class="check"><?php echo $email_msg; ?></div>
                 </li>
             </ul>
@@ -224,13 +213,12 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         var pageTypeParam = "pageType=register";
 
         <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-            // TOSS 통합인증
+            // 이니시스 통합인증
             var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
             var type = "";
             var params = "";
             var request_url = "";
-
-
+            
             $(".win_sa_cert").click(function() {
                 if (!cert_confirm()) return false;
                 type = $(this).data("type");

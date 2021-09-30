@@ -3,13 +3,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css">', 0);
+if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
+    add_javascript('<script src="'.G5_JS_URL.'/certify.js?v='.G5_JS_VER.'"></script>', 0);
 ?>
-<?php if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
-<script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
-<?php } ?>
 <!-- 기존 회원 본인인증 시작 { -->
 <div class="member_cert_refresh">
-    <form name="register_cert_reset" id="member_cert_refresh" action="<?php echo $action_url ?>" onsubmit="return register_cert_reset_submit(this);" method="POST" autocomplete="off">
+    <form name="fcertrefreshform" id="member_cert_refresh" action="<?php echo $action_url ?>" onsubmit="return fcertrefreshform_submit(this);" method="POST" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w ?>">
 	<input type="hidden" name="url" value="<?php echo $urlencode ?>">
 	<input type="hidden" name="cert_type" value="<?php echo $member['mb_certify']; ?>">
@@ -25,14 +24,18 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                         <caption>추가 개인정보처리방침 안내</caption>
                         <thead>
                             <tr>
-                                <th>목적</th>
+                                <th colspan="2">목적</th>
+                            </tr>
+                            <tr>
                                 <th>항목</th>
                                 <th>보유기간</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>이용자 식별 및 본인여부 확인</td>
+                                <td colspan="2">이용자 식별 및 본인여부 확인</td>
+                            </tr>
+                            <tr>
                                 <td>생년월일<?php echo (empty($member['mb_dupinfo']))? ", 휴대폰 번호(아이핀 제외)" : ""; ?>, 암호화된 개인식별부호(CI)</td>
                                 <td>회원 탈퇴 시까지</td>
                             </tr>
@@ -49,7 +52,6 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
 
         <div id="find_info" class="new_win">
             <h3>본인인증으로 찾기</h3>
-            
             <?php
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
@@ -75,25 +77,22 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
     <script>
         $(function() {
             var pageTypeParam = "pageType=register";
-            var f = document.register_cert_reset;
+            var f = document.fcertrefreshform;
 
             <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-                // TOSS 통합인증
+                // 이니시스 통합인증
                 var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
                 var type = "";
                 var params = "";
                 var request_url = "";
 
-
                 $(".win_sa_cert").click(function() {
-                    if (!register_cert_reset_submit(f)) return false;
-                    //if (!cert_confirm()) return false;
+                    if (!fcertrefreshform_submit(f)) return false;
                     type = $(this).data("type");
                     switch (type) {
                         case "TOSS":
                             params = "?directAgency=" + type + "&" + pageTypeParam;
                             request_url = url + params;
-                            console.log(request_url);
                             call_sa(request_url);
                             break;
                         case "PASS":
@@ -121,8 +120,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                 // 아이핀인증
                 var params = "";
                 $("#win_ipin_cert").click(function() {
-                    if (!register_cert_reset_submit(f)) return false;
-                    //if (!cert_confirm()) return false;
+                    if (!fcertrefreshform_submit(f)) return false;
                     params = "?" + pageTypeParam;
                     var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php" + params;
                     certify_win_open('kcb-ipin', url);
@@ -134,8 +132,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
                 // 휴대폰인증
                 var params = "";
                 $("#win_hp_cert").click(function() {
-                    if (!register_cert_reset_submit(f)) return false;
-                    //if (!cert_confirm()) return false;
+                    if (!fcertrefreshform_submit(f)) return false;
                     params = "?" + pageTypeParam;
                     <?php
                     switch ($config['cf_cert_hp']) {
@@ -164,7 +161,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
             <?php } ?>
         });
         
-        function register_cert_reset_submit(f) {
+        function fcertrefreshform_submit(f) {
             if (!f.agree2.checked) {
                 alert("개인정보 수집 및 이용의 내용에 인증을 진행 하실 수 있습니다.");
                 f.agree2.focus();
