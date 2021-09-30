@@ -83,7 +83,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             </li>
 	        <li class="rgs_name_li">
 	            <label for="reg_mb_name" class="sound_only">이름<strong>필수</strong></label>
-	            <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" placeholder="이름">
+	            <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $name_readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $name_readonly ?>" placeholder="이름">
 	        </li>
 	        <?php if ($req_nick) { ?>
 	        <li>
@@ -127,9 +127,9 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 	
 	        <?php if ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_sa']))) {  ?>
 	        <li>
-	            <label for="reg_mb_hp" class="sound_only">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong>필수</strong><?php } ?></label>
-	            
-	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'] || (($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) &&(!empty($member['mb_certify']) && $member['mb_certify'] != "ipin")))?"required":""; ?> class="frm_input full_input <?php echo ($config['cf_req_hp'] || (($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin")))?"required":""; ?>" <?php if ($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin")) echo "readonly"; ?> maxlength="20" placeholder="휴대폰번호">
+                <label for="reg_mb_hp">휴대폰번호<?php if (!empty($hp_required)) { ?><strong class="sound_only">필수</strong><?php } ?></label>
+	                
+	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo $hp_required; ?> <?php echo $hp_readonly; ?> class="frm_input full_input <?php echo $hp_required; ?> <?php echo $hp_readonly; ?>" maxlength="20" placeholder="휴대폰번호">
 	            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) { ?>
 	            <input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
 	            <?php } ?>
@@ -293,7 +293,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         var type = "";    
         var params = "";
         var request_url = "";
-        
+
         $(".win_sa_cert").click(function() {
             if(!cert_confirm()) return false;
             type = $(this).data("type");
