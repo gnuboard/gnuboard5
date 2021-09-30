@@ -164,7 +164,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         
         function fcertrefreshform_submit(f) {
             if (!f.agree2.checked) {
-                alert("개인정보 수집 및 이용의 내용에 인증을 진행 하실 수 있습니다.");
+                alert("개인정보 수집 및 이용의 내용에 동의하셔야 인증을 진행하실 수 있습니다.");
                 f.agree2.focus();
                 return false;
             }
