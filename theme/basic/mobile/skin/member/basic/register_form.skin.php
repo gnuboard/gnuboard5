@@ -3,14 +3,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
+add_javascript('<script src="'.G5_JS_URL.'/jquery.register_form.js"></script>', 0);
+if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
+    add_javascript('<script src="'.G5_JS_URL.'/certify.js?v='.G5_JS_VER.'"></script>', 0);
 ?>
 
 <div class="register">
-    <script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
-    <?php if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
-    <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
-    <?php } ?>
-
     <form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w ?>">
     <input type="hidden" name="url" value="<?php echo $urlencode ?>">
@@ -131,7 +129,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        <li>
 	            <label for="reg_mb_hp" class="sound_only">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong>필수</strong><?php } ?></label>
 	            
-	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo $required ?>	<?php echo ($config['cf_req_hp'] || ($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin"))?"required":""; ?> class="frm_input full_input <?php echo $required ?> <?php echo ($config['cf_req_hp'] || ($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin"))?"required":""; ?>" <?php if ($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin")) echo "readonly"; ?> maxlength="20" placeholder="휴대폰번호">
+	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'] || (($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) &&(!empty($member['mb_certify']) && $member['mb_certify'] != "ipin")))?"required":""; ?> class="frm_input full_input <?php echo ($config['cf_req_hp'] || (($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin")))?"required":""; ?>" <?php if ($config['cf_cert_use'] <> 0 && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && (!empty($member['mb_certify']) && $member['mb_certify'] != "ipin")) echo "readonly"; ?> maxlength="20" placeholder="휴대폰번호">
 	            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) { ?>
 	            <input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
 	            <?php } ?>
@@ -290,13 +288,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         var pageTypeParam = "pageType=register";
 
         <?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-        // TOSS 통합인증
+        // 이니시스 통합인증
         var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
         var type = "";    
         var params = "";
         var request_url = "";
-
-
+        
         $(".win_sa_cert").click(function() {
             if(!cert_confirm()) return false;
             type = $(this).data("type");
