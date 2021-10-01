@@ -58,7 +58,7 @@
 .register_form_inner label {display:block;margin-bottom:10px;line-height:24px}
 .register_form_inner label.inline {display:inline}
 
-#fregisterform #msg_certify {margin:5px 0 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
+#fregisterform #msg_certify {margin:5px 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
 #fregisterform .frm_address {margin:5px 0 0}
 #fregisterform #mb_addr3 {display:inline-block;margin:5px 0 0;vertical-align:middle}
 #fregisterform #mb_addr_jibeon {display:block;margin:5px 0 0}
@@ -130,6 +130,8 @@
 .member_cert_refresh_agree.chk_all input[type="checkbox"] + label span {top:18px}
 
 #member_cert_refresh #find_info {margin:50px 0}
+#member_cert_refresh #find_info .find_btn {padding:10px 20px;background:#fff}
+#member_cert_refresh #find_info .find_btn > div {margin:10px 0}
 
 /* 로그인 */
 #mb_login {}
