@@ -23,7 +23,7 @@ for ($i=0; $row=sql_fetch_array($result); $i++)
         $banner = '';
         $size = getimagesize($bimg);
         echo '<li>'.PHP_EOL;
-        if ($row['bn_url'][0] == '#')
+        if (preg_match("/^#/", $row['bn_url']))
             $banner .= '<a href="'.$row['bn_url'].'">';
         else if ($row['bn_url'] && $row['bn_url'] != 'http://') {
             $banner .= '<a href="'.G5_SHOP_URL.'/bannerhit.php?bn_id='.$row['bn_id'].'"'.$bn_new_win.'>';

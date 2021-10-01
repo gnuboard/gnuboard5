@@ -7,15 +7,18 @@ $query = $_SERVER['QUERY_STRING'];
 $vars = array();
 
 foreach(explode('&', $query) as $pair) {
-    list($key, $value) = explode('=', $pair);
+    @list($key, $value) = explode('=', $pair);
     $key = urldecode($key);
     $value = preg_replace("/[^A-Za-z0-9\-_]/", "", urldecode($value));
     $vars[$key][] = $value;
 }
 
-$itemIds = $vars['ITEM_ID'];
+if (isset($vars['ITEM_ID'])) 
+    $itemIds = $vars['ITEM_ID'];
+else
+    $itemIds = array();
 
-if (count($itemIds) < 1) {
+if (is_null($itemIds) || count($itemIds) < 1) {
     exit('ITEM_ID 는 필수입니다.');
 }
 
