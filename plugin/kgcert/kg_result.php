@@ -103,8 +103,8 @@
         
         alert("본인인증이 완료되었습니다.");
 
-        if($opener.$("form[name=register_cert_reset]") != undefined){
-            $opener.$("form[name=register_cert_reset]").submit();
+        if($opener.$("form[name=fcertrefreshform]") != undefined){
+            $opener.$("form[name=fcertrefreshform]").submit();
         }   
         window.close();
     });
