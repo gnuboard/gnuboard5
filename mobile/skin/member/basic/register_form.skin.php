@@ -3,14 +3,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
+add_javascript('<script src="'.G5_JS_URL.'/jquery.register_form.js"></script>', 0);
+if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
+    add_javascript('<script src="'.G5_JS_URL.'/certify.js?v='.G5_JS_VER.'"></script>', 0);
 ?>
 
 <div class="register">
-    <script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>
-    <?php if($config['cf_cert_use'] && ($config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
-    <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>
-    <?php } ?>
-
     <form name="fregisterform" id="fregisterform" action="<?php echo $register_action_url ?>" onsubmit="return fregisterform_submit(this);" method="post" enctype="multipart/form-data" autocomplete="off">
     <input type="hidden" name="w" value="<?php echo $w ?>">
     <input type="hidden" name="url" value="<?php echo $urlencode ?>">
@@ -47,33 +45,46 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <div class="form_01">
         <h2>개인정보 입력</h2>
         <ul>
-	        <li class="rgs_name_li">
-	            <label for="reg_mb_name" class="sound_only">이름<strong>필수</strong></label>
-	            <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" placeholder="이름">
-	            <?php
+            <li>
+            <?php
 	            if($config['cf_cert_use']) {
-	                if($config['cf_cert_ipin'])
-	                    echo '<button type="button" id="win_ipin_cert" class="btn_frmline btn">아이핀 본인확인</button>'.PHP_EOL;
-	                if($config['cf_cert_hp'])
-	                    echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>'.PHP_EOL;
+                    if($config['cf_cert_sa']) {
+                        echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline btn win_sa_cert" data-type="TOSS">토스 인증</button>'.PHP_EOL;
+                        echo '<button type="button" id="win_sa_pass_cert" class="btn_frmline btn win_sa_cert" data-type="PASS">PASS 인증</button>'.PHP_EOL;
+                        echo '<button type="button" id="win_sa_payco_cert" class="btn_frmline btn win_sa_cert" data-type="PAYCO">페이코 인증</button>'.PHP_EOL;
+                        echo '<button type="button" id="win_sa_kftc_cert" class="btn_frmline btn win_sa_cert" data-type="KFTC">금융인증서</button>'.PHP_EOL;
+                    }
+                    if($config['cf_cert_hp'])
+                        echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>'.PHP_EOL;
+                    if($config['cf_cert_ipin'])
+                        echo '<button type="button" id="win_ipin_cert" class="btn_frmline btn">아이핀 본인확인</button>'.PHP_EOL;
 	
 	                echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
 	            }
 	            ?>
 	            <?php
 	            if ($config['cf_cert_use'] && $member['mb_certify']) {
-	                if($member['mb_certify'] == 'ipin')
-	                    $mb_cert = '아이핀';
-	                else
-	                    $mb_cert = '휴대폰';
+	                switch  ($member['mb_certify']) {
+                        case "sa": 
+                            $mb_cert = "통합인증";
+                            break;
+                        case "ipin": 
+                            $mb_cert = "아이핀";
+                            break;
+                        case "hp": 
+                            $mb_cert = "휴대폰";
+                            break;
+                    }    
 	            ?>
-	            <?php if ($config['cf_cert_use']) { ?>
-	            <span class="frm_info">아이핀 본인확인 후에는 이름이 자동 입력되고 휴대폰 본인확인 후에는 이름과 휴대폰번호가 자동 입력되어 수동으로 입력할수 없게 됩니다.</span>
-	            <?php } ?>
 	            <div id="msg_certify">
 	                <strong><?php echo $mb_cert; ?> 본인확인</strong><?php if ($member['mb_adult']) { ?> 및 <strong>성인인증</strong><?php } ?> 완료
 	            </div>
-	            <?php } ?>
+            <?php } ?>
+            </li>
+	        <li class="rgs_name_li">
+	            <label for="reg_mb_name" class="sound_only">이름<strong>필수</strong></label>
+	            <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $name_readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $name_readonly ?>" placeholder="이름">
+
 	        </li>
 	        <?php if ($req_nick) { ?>
 	        <li>
@@ -111,16 +122,16 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 	        <?php if ($config['cf_use_tel']) { ?>
 	        <li>
 	            <label for="reg_mb_tel" class="sound_only">전화번호<?php if ($config['cf_req_tel']) { ?><strong>필수</strong><?php } ?></label>
-	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호">
+	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && $member['mb_certify']) { echo "readonly"; } ?> maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호">
 	        </li>
 	        <?php } ?>
 	
-	        <?php if ($config['cf_use_hp'] || $config['cf_cert_hp']) {  ?>
+	        <?php if ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_sa']))) {  ?>
 	        <li>
-	            <label for="reg_mb_hp" class="sound_only">휴대폰번호<?php if ($config['cf_req_hp']) { ?><strong>필수</strong><?php } ?></label>
-	            
-	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo ($config['cf_req_hp'])?"required":""; ?> class="frm_input full_input <?php echo ($config['cf_req_hp'])?"required":""; ?>" maxlength="20" placeholder="휴대폰번호">
-	            <?php if ($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
+                <label for="reg_mb_hp">휴대폰번호<?php if (!empty($hp_required)) { ?><strong class="sound_only">필수</strong><?php } ?></label>
+	                
+                <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo $hp_required; ?> <?php echo $hp_readonly; ?> class="frm_input full_input <?php echo $hp_required; ?> <?php echo $hp_readonly; ?>" maxlength="20" placeholder="휴대폰번호">
+	            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) { ?>
 	            <input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
 	            <?php } ?>
 	            
@@ -275,28 +286,65 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
     <script>
     $(function() {
         $("#reg_zip_find").css("display", "inline-block");
+        var pageTypeParam = "pageType=register";
 
+        <?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
+        // 이니시스 통합인증
+        var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
+        var type = "";    
+        var params = "";
+        var request_url = "";
+        
+        $(".win_sa_cert").click(function() {
+            if(!cert_confirm()) return false;
+            type = $(this).data("type");
+            switch(type) {
+                case "TOSS" : 
+                    params = "?directAgency=" + type + "&" + pageTypeParam;
+                    request_url = url + params;
+                    call_sa(request_url);
+                    break;
+                case "PASS" :
+                    params = "?directAgency=" + type + "&" + pageTypeParam;
+                    request_url = url + params;
+                    call_sa(request_url);
+                    break;
+                case "PAYCO" :
+                    params = "?directAgency=" + type + "&" + pageTypeParam;
+                    request_url = url + params;
+                    call_sa(request_url);
+                    break;
+                case "KFTC" :
+                    params = "?directAgency=" + type + "&" + pageTypeParam;
+                    request_url = url + params;
+                    call_sa(request_url);
+                    break;
+                default : 
+                return;
+            }
+        });
+        <?php } ?>
         <?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>
         // 아이핀인증
-        $("#win_ipin_cert").click(function(e) {
-            if(!cert_confirm())
-                return false;
-
-            var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php";
-            certify_win_open('kcb-ipin', url, e);
+        var params = "";
+        $("#win_ipin_cert").click(function() {
+            if(!cert_confirm()) return false;
+            params = "?" + pageTypeParam;
+            var url = "<?php echo G5_OKNAME_URL; ?>/ipin1.php"+params;
+            certify_win_open('kcb-ipin', url);
             return;
         });
 
         <?php } ?>
         <?php if($config['cf_cert_use'] && $config['cf_cert_hp']) { ?>
         // 휴대폰인증
-        $("#win_hp_cert").click(function(e) {
-            if(!cert_confirm())
-                return false;
-
-            <?php
+        var params = "";
+        $("#win_hp_cert").click(function() {
+            if(!cert_confirm()) return false;
+            params = "?" + pageTypeParam;
+            <?php     
             switch($config['cf_cert_hp']) {
-                case 'kcb':
+                case 'kcb':                    
                     $cert_url = G5_OKNAME_URL.'/hpcert1.php';
                     $cert_type = 'kcb-hp';
                     break;
@@ -313,9 +361,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
                     echo 'return false;';
                     break;
             }
-            ?>
-
-            certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>", e);
+            ?>            
+            certify_win_open("<?php echo $cert_type; ?>", "<?php echo $cert_url; ?>"+params);
             return;
         });
         <?php } ?>
@@ -328,6 +375,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
         var type;
 
         switch(val) {
+            case "sa":
+                type = "통합인증";
+                break;
             case "ipin":
                 type = "아이핀";
                 break;

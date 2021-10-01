@@ -110,7 +110,7 @@ if ($w == '' || $w == 'u') {
     if ($msg = prohibit_mb_email($mb_email))alert($msg, "", true, true);
 
     // 휴대폰 필수입력일 경우 휴대폰번호 유효성 체크
-    if (($config['cf_use_hp'] || $config['cf_cert_hp']) && $config['cf_req_hp']) {
+    if ($config['cf_use_hp'] || ($config['cf_cert_hp'] || $config['cf_cert_sa']) && $config['cf_req_hp']) {
         if ($msg = valid_mb_hp($mb_hp))     alert($msg, "", true, true);
     }
 
@@ -166,8 +166,8 @@ if($config['cf_cert_use'] && get_session('ss_cert_type') && get_session('ss_cert
     // 중복체크
     $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
     $row = sql_fetch($sql);
-    if ($row['mb_id']) {
-        alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
+    if (!empty($row['mb_id'])) {
+        alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.");
     }
 }
 

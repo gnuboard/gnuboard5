@@ -321,6 +321,7 @@ box-shadow:0 1px 10px rgba(0,0,0,.1)}
 
 .new_win .win_btn {clear:both;padding:10px 0 30px;text-align:center}
 .new_win .win_btn a {display:inline-block;height:45px;line-height:40px;font-weight:bold}
+.new_win .cert_btn {text-align:center}
 .new_win .btn_close {width:60px;height:45px;overflow:hidden;cursor:pointer}
 .new_win .btn_submit {padding:0 20px;height:45px;font-weight:bold;font-size:1.083em}
 

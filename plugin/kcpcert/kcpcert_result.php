@@ -149,11 +149,11 @@ if( $cert_enc_use == "Y" )
             alert_close("정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.");
 
         $phone_no = hyphen_hp_number($phone_no);
-        $mb_dupinfo = $di;
+        $mb_dupinfo = md5($ci.$ci);
 
         $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
         $row = sql_fetch($sql);
-        if ($row['mb_id']) {
+        if (!empty($row['mb_id'])) {
             alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
         }
 
@@ -231,6 +231,10 @@ $(function() {
     }
 
     alert("본인의 휴대폰번호로 확인 되었습니다.");
+
+    if($opener.$("form[name=register_cert_reset]") != undefined){
+        $opener.$("form[name=register_cert_reset]").submit();
+    }
 
     window.close();
 });

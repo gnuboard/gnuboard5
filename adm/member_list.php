@@ -194,6 +194,10 @@ $colspan = 16;
                 $mb_certify_case = '아이핀';
                 $mb_certify_val = '';
                 break;
+            case 'sa':
+                $mb_certify_case = '통합인증';
+                $mb_certify_val = '';
+                break;
             case 'admin':
                 $mb_certify_case = '관리자';
                 $mb_certify_val = 'admin';
@@ -236,10 +240,12 @@ $colspan = 16;
             ?>
         </td>
         <td headers="mb_list_cert"  rowspan="2" class="td_mbcert">
-            <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" id="mb_certify_ipin_<?php echo $i; ?>" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>>
-            <label for="mb_certify_ipin_<?php echo $i; ?>">아이핀</label><br>
+            <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="sa" id="mb_certify_sa_<?php echo $i; ?>" <?php echo $row['mb_certify']=='sa'?'checked':''; ?>>
+            <label for="mb_certify_sa_<?php echo $i; ?>">통합인증</label><br>
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="hp" id="mb_certify_hp_<?php echo $i; ?>" <?php echo $row['mb_certify']=='hp'?'checked':''; ?>>
-            <label for="mb_certify_hp_<?php echo $i; ?>">휴대폰</label>
+            <label for="mb_certify_hp_<?php echo $i; ?>">휴대폰</label><br>
+            <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="ipin" id="mb_certify_ipin_<?php echo $i; ?>" <?php echo $row['mb_certify']=='ipin'?'checked':''; ?>>
+            <label for="mb_certify_ipin_<?php echo $i; ?>">아이핀</label>
         </td>
         <td headers="mb_list_mailc"><?php echo preg_match('/[1-9]/', $row['mb_email_certify'])?'<span class="txt_true">Yes</span>':'<span class="txt_false">No</span>'; ?></td>
         <td headers="mb_list_open">

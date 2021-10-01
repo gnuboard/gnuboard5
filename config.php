@@ -59,6 +59,7 @@ define('G5_MOBILE_DIR',     'mobile');
 define('G5_OKNAME_DIR',     'okname');
 
 define('G5_KCPCERT_DIR',    'kcpcert');
+define('G5_KGCERT_DIR',     'kgcert');
 define('G5_LGXPAY_DIR',     'lgxpay');
 
 define('G5_SNS_DIR',        'sns');
@@ -97,6 +98,7 @@ define('G5_PLUGIN_URL',     G5_URL.'/'.G5_PLUGIN_DIR);
 define('G5_EDITOR_URL',     G5_PLUGIN_URL.'/'.G5_EDITOR_DIR);
 define('G5_OKNAME_URL',     G5_PLUGIN_URL.'/'.G5_OKNAME_DIR);
 define('G5_KCPCERT_URL',    G5_PLUGIN_URL.'/'.G5_KCPCERT_DIR);
+define('G5_KGCERT_URL',     G5_PLUGIN_URL.'/'.G5_KGCERT_DIR);
 define('G5_LGXPAY_URL',     G5_PLUGIN_URL.'/'.G5_LGXPAY_DIR);
 define('G5_SNS_URL',        G5_PLUGIN_URL.'/'.G5_SNS_DIR);
 define('G5_SYNDI_URL',      G5_PLUGIN_URL.'/'.G5_SYNDI_DIR);
@@ -116,6 +118,7 @@ define('G5_EDITOR_PATH',    G5_PLUGIN_PATH.'/'.G5_EDITOR_DIR);
 define('G5_OKNAME_PATH',    G5_PLUGIN_PATH.'/'.G5_OKNAME_DIR);
 
 define('G5_KCPCERT_PATH',   G5_PLUGIN_PATH.'/'.G5_KCPCERT_DIR);
+define('G5_KGCERT_PATH',   G5_PLUGIN_PATH.'/'.G5_KGCERT_DIR);
 define('G5_LGXPAY_PATH',    G5_PLUGIN_PATH.'/'.G5_LGXPAY_DIR);
 
 define('G5_SNS_PATH',       G5_PLUGIN_PATH.'/'.G5_SNS_DIR);
@@ -132,6 +135,7 @@ define('G5_PHPMAILER_PATH', G5_PLUGIN_PATH.'/'.G5_PHPMAILER_DIR);
 //------------------------------------------------------------------------------
 define('G5_SET_DEVICE', 'both');
 
+// define('G5_CERT_IN_PROG', false); // 재인증페이지 리디렉션 사용여부
 define('G5_USE_MOBILE', true); // 모바일 홈페이지를 사용하지 않을 경우 false 로 설정
 define('G5_USE_CACHE',  true); // 최신글등에 cache 기능 사용 여부
 

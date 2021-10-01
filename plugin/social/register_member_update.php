@@ -3,6 +3,10 @@ include_once('./_common.php');
 include_once(G5_LIB_PATH.'/register.lib.php');
 include_once(G5_LIB_PATH.'/mailer.lib.php');
 
+if (!($w == '' || $w == 'u')) {
+    alert('w 값이 제대로 넘어오지 않았습니다.');
+}
+
 if( ! $config['cf_social_login_use'] ){
     alert('소셜 로그인을 사용하지 않습니다.', G5_URL);
 }
@@ -27,6 +31,7 @@ $mb_password_re = isset($_POST['mb_password_re']) ? trim($_POST['mb_password_re'
 $mb_nick        = isset($_POST['mb_nick']) ? trim(strip_tags($_POST['mb_nick'])) : '';
 $mb_email       = isset($_POST['mb_email']) ? trim($_POST['mb_email']) : '';
 $mb_name        = isset($_POST['mb_name']) ? clean_xss_tags(trim(strip_tags($_POST['mb_name']))) : '';
+$mb_hp          = isset($_POST['mb_hp']) ? trim($_POST['mb_hp']) : '';
 $mb_email       = get_email_address($mb_email);
 
 // 이름, 닉네임에 utf-8 이외의 문자가 포함됐다면 오류
@@ -93,6 +98,52 @@ $mb_mailling = (isset($_POST['mb_mailling']) && $_POST['mb_mailling']) ? 1 : 0;
 //회원 정보 공개
 $mb_open = (isset($_POST['mb_open']) && $_POST['mb_open']) ? 1 : 0;
 
+//===============================================================
+//  본인확인
+//---------------------------------------------------------------
+if($config['cf_cert_use'] && $config['cf_cert_req']){
+    $mb_hp = hyphen_hp_number($mb_hp);
+    if($config['cf_cert_use'] && get_session('ss_cert_type') && get_session('ss_cert_dupinfo')) {
+        // 중복체크
+        $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
+        $row = sql_fetch($sql);
+        if (!empty($row['mb_id'])) {
+            alert("입력하신 본인확인 정보로 가입된 내역이 존재합니다.");
+        }
+    }
+
+    $sql_certify = '';
+    $md5_cert_no = get_session('ss_cert_no');
+    $cert_type = get_session('ss_cert_type');
+    if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
+        // 해시값이 같은 경우에만 본인확인 값을 저장한다.
+        if (get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) {
+            $sql_certify .= " , mb_hp = '{$mb_hp}' ";
+            $sql_certify .= " , mb_certify  = '{$cert_type}' ";
+            $sql_certify .= " , mb_adult = '".get_session('ss_cert_adult')."' ";
+            $sql_certify .= " , mb_birth = '".get_session('ss_cert_birth')."' ";
+            $sql_certify .= " , mb_sex = '".get_session('ss_cert_sex')."' ";
+            $sql_certify .= " , mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
+            if($w == 'u')
+                $sql_certify .= " , mb_name = '{$mb_name}' ";
+        } else {
+            $sql_certify .= " , mb_hp = '{$mb_hp}' ";
+            $sql_certify .= " , mb_certify  = '' ";
+            $sql_certify .= " , mb_adult = 0 ";
+            $sql_certify .= " , mb_birth = '' ";
+            $sql_certify .= " , mb_sex = '' ";
+        }
+    } else {
+        if (get_session("ss_reg_mb_name") != $mb_name || get_session("ss_reg_mb_hp") != $mb_hp) {
+            $sql_certify .= " , mb_hp = '{$mb_hp}' ";
+            $sql_certify .= " , mb_certify = '' ";
+            $sql_certify .= " , mb_adult = 0 ";
+            $sql_certify .= " , mb_birth = '' ";
+            $sql_certify .= " , mb_sex = '' ";
+        }
+    }
+    //===============================================================
+}
 // 회원정보 입력
 $sql = " insert into {$g5['member_table']}
             set mb_id = '{$mb_id}',
@@ -110,8 +161,8 @@ $sql = " insert into {$g5['member_table']}
                 mb_mailling = '{$mb_mailling}',
                 mb_sms = '0',
                 mb_open = '{$mb_open}',
-                mb_open_date = '".G5_TIME_YMD."' ";
-
+                mb_open_date = '".G5_TIME_YMD."'
+                {$sql_certify} ";
 $result = sql_query($sql, false);
 
 if($result) {

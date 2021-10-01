@@ -96,6 +96,10 @@ else
 
 // 본인확인방법
 switch($mb['mb_certify']) {
+    case 'sa':
+        $mb_certify_case = '통합인증';
+        $mb_certify_val = 'sa';
+        break;
     case 'hp':
         $mb_certify_case = '휴대폰';
         $mb_certify_val = 'hp';
@@ -233,10 +237,12 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row">본인확인방법</th>
         <td colspan="3">
-            <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" <?php if($mb['mb_certify'] == 'ipin') echo 'checked="checked"'; ?>>
-            <label for="mb_certify_ipin">아이핀</label>
+            <input type="radio" name="mb_certify_case" value="sa" id="mb_certify_sa" <?php if($mb['mb_certify'] == 'sa') echo 'checked="checked"'; ?>>
+            <label for="mb_certify_sa">통합인증</label>
             <input type="radio" name="mb_certify_case" value="hp" id="mb_certify_hp" <?php if($mb['mb_certify'] == 'hp') echo 'checked="checked"'; ?>>
             <label for="mb_certify_hp">휴대폰</label>
+            <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" <?php if($mb['mb_certify'] == 'ipin') echo 'checked="checked"'; ?>>
+            <label for="mb_certify_ipin">아이핀</label>
         </td>
     </tr>
     <tr>

@@ -108,13 +108,15 @@ echo "리턴메시지        :$field[16] <br/>";
 $mb_name = $field[7];
 $req_num = $field[12];
 $mb_birth = $field[8];
-$mb_dupinfo = $field[4];
+$di = $field[4];
+$ci = $field[5];
+$mb_dupinfo = md5($ci.$ci); // 통합인증 추가 후 ci로 변경
 $phone_no = hyphen_hp_number($req_num);
 
 // 중복정보 체크
 $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
 $row = sql_fetch($sql);
-if ($row['mb_id']) {
+if (!empty($row['mb_id'])) {
     alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
 }
 
@@ -149,6 +151,11 @@ $(function() {
     $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
 
     alert("본인의 휴대폰번호로 확인 되었습니다.");
+
+    if($opener.$("form[name=register_cert_reset]") != undefined){
+        $opener.$("form[name=register_cert_reset]").submit();
+    }
+    
     window.close();
 });
 </script>

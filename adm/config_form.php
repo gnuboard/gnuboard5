@@ -272,12 +272,25 @@ if(!isset($member['mb_scrap_cnt'])) {
 }
 
 // 아이코드 토큰키 추가
-if( ! isset($config['cf_icode_token_key']) ){
+if(!isset($config['cf_icode_token_key']) ){
     $sql = "ALTER TABLE `{$g5['config_table']}` 
             ADD COLUMN `cf_icode_token_key` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_server_port`; ";
     sql_query($sql, false);
 }
-
+// 아이디/비밀번호 찾기에 본인확인 사용 여부 필드 추가
+if(!isset($config['cf_cert_find']) ){
+    $sql = "ALTER TABLE `{$g5['config_table']}` 
+            ADD COLUMN `cf_cert_find` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_cert_use`; ";
+    sql_query($sql, false);
+}
+// 통합인증 필드 추가
+if(!isset($config['cf_cert_sa']) ){
+    $sql = "ALTER TABLE `{$g5['config_table']}` 
+            ADD COLUMN `cf_cert_sa` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_hp`,
+            ADD COLUMN `cf_cert_kg_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_sa`,
+            ADD COLUMN `cf_cert_kg_mid` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kg_cd`; ";
+    sql_query($sql, false);
+}
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -836,14 +849,15 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <?php echo option_selected("1", $config['cf_cert_use'], "테스트"); ?>
                     <?php echo option_selected("2", $config['cf_cert_use'], "실서비스"); ?>
                 </select>
+                <input type="checkbox" name="cf_cert_find" id="cf_cert_find" value="1" <?php if($config['cf_cert_find'] == 1) { ?> checked <?php } ?>><label for="cf_cert_find">아이디/비밀번호 찾기에 사용하기</label>
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_ipin">아이핀 본인확인</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_sa">통합인증</label></th>
             <td class="cf_cert_service">
-                <select name="cf_cert_ipin" id="cf_cert_ipin">
-                    <?php echo option_selected("",    $config['cf_cert_ipin'], "사용안함"); ?>
-                    <?php echo option_selected("kcb", $config['cf_cert_ipin'], "코리아크레딧뷰로(KCB) 아이핀"); ?>
+                <select name="cf_cert_sa" id="cf_cert_sa">
+                    <?php echo option_selected("", $config['cf_cert_sa'], "사용안함"); ?>
+                    <?php echo option_selected("sa", $config['cf_cert_sa'], "KG이니시스 통합인증"); ?>
                 </select>
             </td>
         </tr>
@@ -856,6 +870,26 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
                     <?php echo option_selected("kcp", $config['cf_cert_hp'], "NHN KCP 휴대폰 본인확인"); ?>
                     <?php echo option_selected("lg",  $config['cf_cert_hp'], "LG유플러스 휴대폰 본인확인"); ?>
                 </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_ipin">아이핀 본인확인</label></th>
+            <td class="cf_cert_service">
+                <select name="cf_cert_ipin" id="cf_cert_ipin">
+                    <?php echo option_selected("",    $config['cf_cert_ipin'], "사용안함"); ?>
+                    <?php echo option_selected("kcb", $config['cf_cert_ipin'], "코리아크레딧뷰로(KCB) 아이핀"); ?>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증</label></th>
+            <td class="cf_cert_service">
+                <span class="sitecode title">MID</span>
+                <span class="sitecode">SRA</span>
+                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="20" minlength="7" maxlength="7"><br>
+                <br>
+                <span class="sitecode title">API Key</span>
+                <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="40">
             </td>
         </tr>
         <tr>
@@ -892,7 +926,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_limit">본인확인 이용제한</label></th>
             <td class="cf_cert_service">
-                <?php echo help('하루동안 아이핀과 휴대폰 본인확인 인증 이용회수를 제한할 수 있습니다.<br>회수제한은 실서비스에서 아이핀과 휴대폰 본인확인 인증에 개별 적용됩니다.<br>0 으로 설정하시면 회수제한이 적용되지 않습니다.'); ?>
+                <?php echo help('1일 단위 본인인증을 시도할 수 있는 최대횟수를 지정합니다. (0으로 설정 시 무한으로 인증시도 가능)<br>아이핀/휴대폰/통합인증에서 개별 적용됩니다.)'); ?>
                 <input type="text" name="cf_cert_limit" value="<?php echo (int) $config['cf_cert_limit']; ?>" id="cf_cert_limit" class="frm_input" size="3"> 회
             </td>
         </tr>
@@ -1388,6 +1422,14 @@ $(function(){
                 break;
         }
     });
+
+    $("#cf_cert_find").on("click", function() {
+        if($(this).attr("checked")) {
+            let flag = confirm("휴대폰/아이핀 본인확인을 이용하시다가 통합인증을 이용하시는 경우, 기존 회원은 아이디/비밀번호 찾기에 사용할 수 없을 수 있습니다.\n\n그래도 사용하시겠습니까?");
+            $(this).attr("checked", flag);
+        };
+    });
+
     $("#cf_captcha").on("change", function(){
         if ($(this).val() == 'recaptcha' || $(this).val() == 'recaptcha_inv') {
             $("[class^='kcaptcha_']").hide();
