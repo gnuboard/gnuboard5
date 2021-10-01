@@ -52,21 +52,21 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 	        <h2>개인정보 입력</h2>
 	        <ul>
 				<li>
-                    <!-- #TODO 조건 추가 -->
+					<?php if($config['cf_cert_use'] <> 0 && $config['cf_cert_req'] == 1) { ?>
                     <div id="msg_certify">
                         버튼을 눌러 <strong>본인인증</strong>을 진행해주세요. 이름/휴대폰 번호는 자동으로 입력됩니다.
                     </div>
-                    <?php
-	                if($config['cf_cert_use']) {
-	                    if($config['cf_cert_sa']) {
+                    <?php }
+	                if ($config['cf_cert_use']) {
+	                    if ($config['cf_cert_sa']) {
 							echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline win_sa_cert" data-type="TOSS">토스 인증</button>'.PHP_EOL;
 							echo '<button type="button" id="win_sa_pass_cert" class="btn_frmline win_sa_cert" data-type="PASS">PASS 인증</button>'.PHP_EOL;
 							echo '<button type="button" id="win_sa_payco_cert" class="btn_frmline win_sa_cert" data-type="PAYCO">페이코 인증</button>'.PHP_EOL;
 							echo '<button type="button" id="win_sa_kftc_cert" class="btn_frmline win_sa_cert" data-type="KFTC">금융인증서</button>'.PHP_EOL;
 						}
-						if($config['cf_cert_hp'])
+						if ($config['cf_cert_hp'])
 							echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>'.PHP_EOL;
-						if($config['cf_cert_ipin'])
+						if ($config['cf_cert_ipin'])
 							echo '<button type="button" id="win_ipin_cert" class="btn_frmline">아이핀 본인확인</button>'.PHP_EOL;
 	
 	                    echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
