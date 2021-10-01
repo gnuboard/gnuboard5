@@ -24,7 +24,8 @@
 	$plainText1 = hash("sha256",(string)$mid.(string)$mTxId.(string)$apiKey);
 	$authHash = $plainText1;
 
-	$flgFixedUser = (!empty($member['mb_id']) && !empty($member['mb_name']) && !empty($member['mb_hp']) && !empty($member['mb_birth']))?  'Y' : 'N';  // 특정사용자 고정시 : Y 세팅및 아래 해시 데이터 생성
+	//$flgFixedUser = (!empty($member['mb_id']) && !empty($member['mb_name']) && !empty($member['mb_hp']) && !empty($member['mb_birth']))?  'Y' : 'N';  // 특정사용자 고정시 : Y 세팅및 아래 해시 데이터 생성
+	$flgFixedUser = 'N'; // 특정사용자 구분하지 않기로 하여 수정
 
 	// php8버전 값체크 경고 때문에 필수값이 아닌 값이 없을수 있는 선택값들은 초기화해주어야함
 	$userName = '';
