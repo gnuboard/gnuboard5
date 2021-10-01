@@ -130,6 +130,8 @@
 .member_cert_refresh_agree.chk_all input[type="checkbox"] + label span {top:18px}
 
 #member_cert_refresh #find_info {margin:50px 0}
+#member_cert_refresh #find_info .find_btn {padding:10px 20px;background:#fff}
+#member_cert_refresh #find_info .find_btn > div {margin:10px 0}
 
 /* 로그인 */
 #mb_login {}

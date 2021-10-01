@@ -46,9 +46,10 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             </fieldset>
         </section>
 
-        <div id="find_info" class="new_win">
-            <h3>본인인증으로 찾기</h3>
+        <section id="find_info" class="new_win">
+            <h2>인증수단 선택하기</h2>
             
+            <div class="find_btn">
             <?php
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
@@ -68,7 +69,8 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                 echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>' . PHP_EOL;
             }
             ?>
-        </div>
+            </div>
+        </section>
     </form>
 
     <script>
