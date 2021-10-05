@@ -132,7 +132,7 @@ if(is_file($skin_file)) {
         $answer = sql_fetch($sql);
 
         if($is_admin) {
-            $answer_update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$answer['qa_id'].$qstr;
+            $answer_update_href = G5_BBS_URL.'/qawrite.php?w=au&amp;qa_id='.$answer['qa_id'].$qstr;
             $answer_delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$answer['qa_id'].'&amp;token='.$token.$qstr;
         }
     }

@@ -2,7 +2,7 @@
 include_once('./_common.php');
 include_once(G5_EDITOR_LIB);
 
-if($w != '' && $w != 'u' && $w != 'r') {
+if($w != '' && $w != 'u' && $w != 'au' && $w != 'r') {
     alert('올바른 방법으로 이용해 주십시오.');
 }
 
@@ -28,7 +28,7 @@ if(is_file($skin_file)) {
     $w == u : 수정
     ==========================*/
 
-    if($w == 'u' || $w == 'r') {
+    if($w == 'u' || $w != 'au' || $w == 'r') {
         $sql = " select * from {$g5['qa_content_table']} where qa_id = '$qa_id' ";
         if(!$is_admin) {
             $sql .= " and mb_id = '{$member['mb_id']}' ";
@@ -37,6 +37,18 @@ if(is_file($skin_file)) {
         $write = sql_fetch($sql);
 
         if($w == 'u') {
+            if(!$write['qa_id'])
+                alert('게시글이 존재하지 않습니다.\\n삭제되었거나 자신의 글이 아닌 경우입니다.');
+
+            if(!$is_admin) {
+                if($write['qa_type'] == 0 && $write['qa_status'] == 1)
+                    alert('답변이 등록된 문의글은 수정할 수 없습니다.');
+
+                if($write['mb_id'] != $member['mb_id'])
+                    alert('게시글을 수정할 권한이 없습니다.\\n\\n올바른 방법으로 이용해 주십시오.', G5_URL);
+            }
+        }
+        if($w == 'au') {
             if(!$write['qa_id'])
                 alert('게시글이 존재하지 않습니다.\\n삭제되었거나 자신의 글이 아닌 경우입니다.');
 
@@ -116,7 +128,7 @@ if(is_file($skin_file)) {
         if($w == '' || $w == 'r')
             $write['qa_email'] = $member['mb_email'];
 
-        if($w == 'u' && $is_admin && $write['qa_type'])
+        if($w == 'u' && $w == 'au' && $is_admin && $write['qa_type'])
             $is_email = false;
     }
 
@@ -131,7 +143,7 @@ if(is_file($skin_file)) {
         if($w == '' || $w == 'r')
             $write['qa_hp'] = $member['mb_hp'];
 
-        if($w == 'u' && $is_admin && $write['qa_type'])
+        if($w == 'u' && $w == 'au' && $is_admin && $write['qa_type'])
             $is_hp = false;
     }
 
