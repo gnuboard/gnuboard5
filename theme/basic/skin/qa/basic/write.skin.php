@@ -78,7 +78,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                 <?php echo $option; ?>
             </li>
             <?php } ?>
-
+            <?php if ($w == 'u') { ?>
             <li class="bo_w_flie">
                 <div class="file_wr">
                     <label for="bf_file_1" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #1</span></label>
@@ -98,6 +98,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                     <?php } ?>
                 </div>
             </li>
+            <?php } ?>
         </ul>
     </div>
     
