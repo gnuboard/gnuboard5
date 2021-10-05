@@ -46,11 +46,11 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         <h2>개인정보 입력</h2>
         <ul>
             <li>
-                <?php if($config['cf_cert_use'] <> 0 && $config['cf_cert_req'] == 1) { ?>
-                <div id="msg_certify">
-                    버튼을 눌러 <strong>본인인증</strong>을 진행해주세요.<br>이름/휴대폰 번호는 자동으로 입력됩니다.
-                </div>
-                <?php }
+                <?php if($config['cf_cert_use'] <> 0) { ?>
+                    <div id="msg_certify">
+                        버튼을 눌러 <strong>본인인증</strong>을 진행해주세요. <?php if($config['cf_cert_req'] == 1) { ?><br>이름/휴대폰 번호는 자동으로 입력됩니다.<?php } ?>
+                    </div>
+                    <?php }
 	            if ($config['cf_cert_use']) {
                     if ($config['cf_cert_sa']) {
                         echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline btn win_sa_cert" data-type="TOSS">토스 인증</button>'.PHP_EOL;

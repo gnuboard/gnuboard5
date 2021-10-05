@@ -102,9 +102,9 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
             <h2>개인정보 입력</h2>
             <ul>
                 <li>
-                    <?php if($config['cf_cert_use'] <> 0 && $config['cf_cert_req'] == 1) { ?>
+                    <?php if($config['cf_cert_use'] <> 0) { ?>
                     <div id="msg_certify">
-                        버튼을 눌러 <strong>본인인증</strong>을 진행해주세요.<br>이름/휴대폰 번호는 자동으로 입력됩니다.
+                        버튼을 눌러 <strong>본인인증</strong>을 진행해주세요. <?php if($config['cf_cert_req'] == 1) { ?><br>이름/휴대폰 번호는 자동으로 입력됩니다.<?php } ?>
                     </div>
                     <?php }
                     if ($config['cf_cert_use']) {
