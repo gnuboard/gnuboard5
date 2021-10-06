@@ -47,24 +47,27 @@ if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
                 <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
             </li>
             <li class="bo_w_flie">
-                <div class="file_wr">
-                    <label for="bf_file_1" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #1</span></label>
-                    <input type="file" name="bf_file[1]" id="bf_file_1" title="파일첨부 1 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
-                    <?php if($w == 'u' && $write['qa_file1']) { ?>
-                    <input type="checkbox" id="bf_file_del1" name="bf_file_del[1]" value="1"> <label for="bf_file_del1"><?php echo $write['qa_source1']; ?> 파일 삭제</label>
+                <div class="file_wr filebox">
+                	<input type="text" class="fileName" readonly="readonly" placeholder="파일을 첨부하세요">
+                    <label for="bf_file[1]"><i class="fa fa-download lb_icon" aria-hidden="true"></i><span class="sound_only">파일 #1</span><span class="btn_file">파일첨부</span></label>
+                    <input type="file" name="bf_file[1]" id="bf_file[1]" title="파일첨부 1 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file uploadBtn">
+                	<?php if($w == 'u' && $write['qa_file1']) { ?>
+                		<input type="checkbox" id="bf_file_del1" name="bf_file_del[1]" value="1">
+                		<label for="bf_file_del1"><?php echo $write['qa_source1']; ?> 파일 삭제</label>
+                	<?php } ?>
+                </div>
+				<br>
+                <div class="file_wr filebox">
+                	<input type="text" class="fileName" readonly="readonly" placeholder="파일을 첨부하세요">
+                    <label for="bf_file[2]"><i class="fa fa-download lb_icon" aria-hidden="true"></i><span class="sound_only">파일 #2</span><span class="btn_file">파일첨부</span></label>
+                    <input type="file" name="bf_file[2]" id="bf_file[2]" title="파일첨부 2 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file uploadBtn">
+                    <?php if($w == 'u' && $write['qa_file2']) { ?>
+                    <input type="checkbox" id="bf_file_del2" name="bf_file_del[2]" value="1">
+                    <label for="bf_file_del2"><?php echo $write['qa_source2']; ?> 파일 삭제</label>
                     <?php } ?>
                 </div>
             </li>
 
-            <li class="bo_w_flie">
-                <div class="file_wr">
-                    <label for="bf_file_2" class="lb_icon"><i class="fa fa-download" aria-hidden="true"></i><span class="sound_only"> 파일 #2</span></label>
-                    <input type="file" name="bf_file[2]" id="bf_file_2" title="파일첨부 2 :  용량 <?php echo $upload_max_filesize; ?> 이하만 업로드 가능" class="frm_file">
-                    <?php if($w == 'u' && $write['qa_file2']) { ?>
-                    <input type="checkbox" id="bf_file_del2" name="bf_file_del[2]" value="1"> <label for="bf_file_del2"><?php echo $write['qa_source2']; ?> 파일 삭제</label>
-                    <?php } ?>
-                </div>
-            </li>
         </ul>
     </div>
 
