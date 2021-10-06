@@ -132,7 +132,7 @@ if(is_file($skin_file)) {
         $answer = sql_fetch($sql);
 
         if($is_admin) {
-            $answer_update_href = G5_BBS_URL.'/qawrite.php?w=au&amp;qa_id='.$answer['qa_id'].$qstr;
+            $answer_update_href = G5_BBS_URL.'/qawrite.php?w=u&amp;qa_id='.$answer['qa_id'].$qstr;
             $answer_delete_href = G5_BBS_URL.'/qadelete.php?qa_id='.$answer['qa_id'].'&amp;token='.$token.$qstr;
         }
     }
@@ -172,6 +172,27 @@ if(is_file($skin_file)) {
             $view['download_href'][] = G5_BBS_URL.'/qadownload.php?qa_id='.$view['qa_id'].'&amp;no='.$i;
             $view['download_source'][] = $view['qa_source'.$i];
             $view['download_count']++;
+        }
+    }
+    // 답변 첨부파일
+    $answer['img_file'] = array();
+    $answer['download_href'] = array();
+    $answer['download_source'] = array();
+    $answer['img_count'] = 0;
+    $answer['download_count'] = 0;
+
+    for ($i=1; $i<=2; $i++) {
+        if(preg_match("/\.({$config['cf_image_extension']})$/i", $answer['qa_file'.$i])) {
+            $attr_href = run_replace('thumb_view_image_href', G5_BBS_URL.'/view_image.php?fn='.urlencode('/'.G5_DATA_DIR.'/qa/'.$answer['qa_file'.$i]), '/'.G5_DATA_DIR.'/qa/'.$answer['qa_file'.$i], '', '', '', '');
+            $answer['img_file'][] = '<a href="'.$attr_href.'" target="_blank" class="view_image"><img src="'.G5_DATA_URL.'/qa/'.$answer['qa_file'.$i].'"></a>';
+            $answer['img_count']++;
+            continue;
+        }
+
+        if ($answer['qa_file'.$i]) {
+            $answer['download_href'][] = G5_BBS_URL.'/qadownload.php?qa_id='.$answer['qa_id'].'&amp;no='.$i;
+            $answer['download_source'][] = $answer['qa_source'.$i];
+            $answer['download_count']++;
         }
     }
 

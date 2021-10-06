@@ -83,7 +83,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                     <?php echo $editor_html; // 에디터 사용시는 에디터로, 아니면 textarea 로 노출 ?>
                 </div>
             </li>
-            <?php if ($w == 'u') { ?>
             <li class="bo_w_flie">
                 <div class="file_wr filebox">
                 	<input type="text" class="fileName" readonly="readonly" placeholder="파일을 첨부하세요">
@@ -105,7 +104,6 @@ add_stylesheet('<link rel="stylesheet" href="'.$qa_skin_url.'/style.css">', 0);
                     <?php } ?>
                 </div>
             </li>
-            <?php } ?>
 
         </ul>
     </div>
