@@ -366,6 +366,25 @@ CREATE TABLE IF NOT EXISTS `g5_cert_history` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `g5_cert_history`
+--
+
+DROP TABLE IF EXISTS `g5_member_cert_history`;
+CREATE TABLE IF NOT EXISTS `g5_member_cert_history` (
+  `ch_id` int(11) NOT NULL auto_increment,
+  `mb_id` varchar(20) NOT NULL DEFAULT '',
+  `ch_name` varchar(255) NOT NULL DEFAULT '',
+  `ch_hp` varchar(255) NOT NULL DEFAULT '',
+  `ch_birth` varchar(255) NOT NULL DEFAULT '',
+  `ch_type` varchar(20) NOT NULL DEFAULT '',
+  `ch_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY (`ch_id`),
+  KEY `mb_id` (`mb_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `g5_group`
 --
 

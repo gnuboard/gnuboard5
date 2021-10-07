@@ -62,7 +62,13 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
 }
 
 $sql = "update {$g5['member_table']} set {$sql_certify} where mb_id = '{$mb_id}'";
-sql_query($sql);
+$result = sql_query($sql, false);
+
+if($result){
+    if(get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { 
+        insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
+    }
+}
 
 //===============================================================
 
