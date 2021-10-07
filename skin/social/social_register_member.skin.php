@@ -102,6 +102,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                         <?php }
                         if ($config['cf_cert_use']) {
                             if ($config['cf_cert_sa']) {
+                                echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline win_sa_cert" data-type="KAKAO">카카오 인증</button>'.PHP_EOL;
                                 echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline win_sa_cert" data-type="TOSS">토스 인증</button>'.PHP_EOL;
                                 echo '<button type="button" id="win_sa_pass_cert" class="btn_frmline win_sa_cert" data-type="PASS">PASS 인증</button>'.PHP_EOL;
                                 echo '<button type="button" id="win_sa_payco_cert" class="btn_frmline win_sa_cert" data-type="PAYCO">페이코 인증</button>'.PHP_EOL;
@@ -227,30 +228,9 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
             $(".win_sa_cert").click(function() {
                 if (!cert_confirm()) return false;
                 type = $(this).data("type");
-                switch (type) {
-                    case "TOSS":
-                        params = "?directAgency=" + type + "&" + pageTypeParam;
-                        request_url = url + params;
-                        call_sa(request_url);
-                        break;
-                    case "PASS":
-                        params = "?directAgency=" + type + "&" + pageTypeParam;
-                        request_url = url + params;
-                        call_sa(request_url);
-                        break;
-                    case "PAYCO":
-                        params = "?directAgency=" + type + "&" + pageTypeParam;
-                        request_url = url + params;
-                        call_sa(request_url);
-                        break;
-                    case "KFTC":
-                        params = "?directAgency=" + type + "&" + pageTypeParam;
-                        request_url = url + params;
-                        call_sa(request_url);
-                        break;
-                    default:
-                        return;
-                }
+                params = "?directAgency=" + type + "&" + pageTypeParam;
+                request_url = url + params;
+                call_sa(request_url);
             });
         <?php } ?>
         <?php if ($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>

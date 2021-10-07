@@ -33,6 +33,7 @@ if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] |
         <h3>본인인증으로 찾기</h3>
         <?php if(!empty($config['cf_cert_sa'])) { ?>
         <div class="cert_btn">
+            <button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="KAKAO">카카오 인증</button>
             <button type="button" id="win_sa_toss_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>
             <button type="button" id="win_sa_pass_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>
             <button type="button" id="win_sa_payco_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>
@@ -65,30 +66,9 @@ $(function() {
 	
 	$(".win_sa_cert").click(function() {
 		type = $(this).data("type");
-		switch(type) {
-			case "TOSS" : 
-                params = "?directAgency=" + type + "&" + pageTypeParam;
-                request_url = url + params;
-				call_sa(request_url);
-				break;
-			case "PASS" :
-                params = "?directAgency=" + type + "&" + pageTypeParam;
-                request_url = url + params;
-				call_sa(request_url);
-				break;
-			case "PAYCO" :
-                params = "?directAgency=" + type + "&" + pageTypeParam;
-                request_url = url + params;
-				call_sa(request_url);
-				break;
-			case "KFTC" :
-                params = "?directAgency=" + type + "&" + pageTypeParam;
-                request_url = url + params;
-				call_sa(request_url);
-				break;
-			default : 
-			return;
-		}
+		params = "?directAgency=" + type + "&" + pageTypeParam;
+        request_url = url + params;
+        call_sa(request_url);
 	});
     <?php } ?>
     <?php if($config['cf_cert_use'] && $config['cf_cert_ipin']) { ?>

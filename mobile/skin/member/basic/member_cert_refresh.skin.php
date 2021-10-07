@@ -57,7 +57,8 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             <?php
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
-                if ($config['cf_cert_sa']) {                    
+                if ($config['cf_cert_sa']) {
+                    echo '<button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="KAKAO">카카오 인증</button>' . PHP_EOL;
                     echo '<button type="button" id="win_sa_toss_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>' . PHP_EOL;
                     echo '<button type="button" id="win_sa_pass_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>' . PHP_EOL;
                     echo '<button type="button" id="win_sa_payco_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>' . PHP_EOL;
@@ -92,30 +93,10 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                 $(".win_sa_cert").click(function() {
                     if (!fcertrefreshform_submit(f)) return false;
                     type = $(this).data("type");
-                    switch (type) {
-                        case "TOSS":
-                            params = "?directAgency=" + type + "&" + pageTypeParam;
-                            request_url = url + params;
-                            call_sa(request_url);
-                            break;
-                        case "PASS":
-                            params = "?directAgency=" + type + "&" + pageTypeParam;
-                            request_url = url + params;
-                            call_sa(request_url);
-                            break;
-                        case "PAYCO":
-                            params = "?directAgency=" + type + "&" + pageTypeParam;
-                            request_url = url + params;
-                            call_sa(request_url);
-                            break;
-                        case "KFTC":
-                            params = "?directAgency=" + type + "&" + pageTypeParam;
-                            request_url = url + params;
-                            call_sa(request_url);
-                            break;
-                        default:
-                            return;
-                    }
+                    params = "?directAgency=" + type + "&" + pageTypeParam;
+                    request_url = url + params;
+                    call_sa(request_url);
+                    break;
                 });
             <?php } ?>
 
