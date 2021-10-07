@@ -101,7 +101,7 @@ $mb_open = (isset($_POST['mb_open']) && $_POST['mb_open']) ? 1 : 0;
 //===============================================================
 //  본인확인
 //---------------------------------------------------------------
-if($config['cf_cert_use'] && $config['cf_cert_req']){
+if($config['cf_cert_use']) {
     $mb_hp = hyphen_hp_number($mb_hp);
     if($config['cf_cert_use'] && get_session('ss_cert_type') && get_session('ss_cert_dupinfo')) {
         // 중복체크
@@ -166,7 +166,10 @@ $sql = " insert into {$g5['member_table']}
 $result = sql_query($sql, false);
 
 if($result) {
-
+  
+    if(get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { 
+        insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
+    }
     // 회원가입 포인트 부여
     insert_point($mb_id, $config['cf_register_point'], '회원가입 축하', '@member', $mb_id, '회원가입');
 

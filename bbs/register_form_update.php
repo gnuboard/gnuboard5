@@ -304,6 +304,10 @@ if ($w == '') {
 
     set_session('ss_mb_reg', $mb_id);
 
+    if(get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { 
+        insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 인서트시 내역 기록
+    }
+
 } else if ($w == 'u') {
     if (!trim(get_session('ss_mb_id')))
         alert('로그인 되어 있지 않습니다.');
@@ -361,6 +365,10 @@ if ($w == '') {
                     {$sql_certify}
               where mb_id = '$mb_id' ";
     sql_query($sql);
+
+    if(get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { 
+        insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
+    }
 }
 
 
