@@ -368,34 +368,39 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
         <th scope="row"><label for="mb_memo">메모</label></th>
         <td colspan="3"><textarea name="mb_memo" id="mb_memo"><?php echo $mb['mb_memo'] ?></textarea></td>
     </tr>
-    <?php 
-        $cnt = 0;
-        while ($row = sql_fetch_array($mb_cert_history)) {
-            $cnt++;
-            switch($row['ch_type']){
-                case 'sa':
-                    $cert_type = '통합인증';
-                    break;
-                case 'hp':
-                    $cert_type = '휴대폰';
-                    break;
-                case 'ipin':
-                    $cert_type = '아이핀';
-                    break;
-            }
-        
-    ?> 
-    <tr>       
-        <th scope="row"><?php if($cnt == 1) { ?><label for="mb_cert_history">본인인증 내역</label><?php } ?></th> 
-        <td><?php echo $row['mb_id']; ?></td>
-        <td><?php echo $row['ch_name']; ?></td>
-        <td><?php echo $row['ch_hp']; ?></td>
-        <td><?php echo $row['ch_birth']; ?></td>
-        <td><?php echo $cert_type; ?></td>
-        <td><?php echo $row['ch_datetime']; ?></td>
+    <tr>
+        <th scope="row"><label for="mb_cert_history">본인인증 내역</label></th> 
+        <td colspan="3">
+            <?php 
+            $cnt = 0;
+            while ($row = sql_fetch_array($mb_cert_history)) {
+                $cnt++;
+                switch($row['ch_type']){
+                    case 'sa':
+                        $cert_type = '통합인증';
+                        break;
+                    case 'hp':
+                        $cert_type = '휴대폰';
+                        break;
+                    case 'ipin':
+                        $cert_type = '아이핀';
+                        break;
+                }
+            ?>
+            <div>
+                [<?php echo $row['ch_datetime']; ?>]
+                <?php echo $row['mb_id']; ?> /
+                <?php echo $row['ch_name']; ?> /
+                <?php echo $row['ch_hp']; ?> /
+                <?php echo $cert_type; ?>
+            </div>
+            <?php } ?>
 
+            <?php if ($cnt == 0) { ?>
+                본인인증 내역이 없습니다.
+            <?php } ?>
+        </td>
     </tr>
-    <?php } ?>
 
     <?php if ($w == 'u') { ?>
     <tr>
