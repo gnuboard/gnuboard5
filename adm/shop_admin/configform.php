@@ -919,6 +919,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <input type="text" name="de_kakaopay_hashkey" value="<?php echo get_sanitize_input($default['de_kakaopay_hashkey']); ?>" id="de_kakaopay_hashkey" class="frm_input" size="20">
             </td>
         </tr>
+        <?php if (defined('G5_SHOP_DIRECT_NAVERPAY') && G5_SHOP_DIRECT_NAVERPAY) { ?>
         <tr class="naver_info_fld">
             <th scope="row">
                 <label for="de_naverpay_mid">네이버페이 가맹점 아이디</label>
@@ -982,6 +983,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <input type="text" name="de_naverpay_sendcost" value="<?php echo get_sanitize_input($default['de_naverpay_sendcost']); ?>" id="de_naverpay_sendcost" class="frm_input" size="70">
              </td>
         </tr>
+        <?php } // defined('G5_SHOP_DIRECT_NAVERPAY') ?>
         <tr>
             <th scope="row">에스크로 사용</th>
             <td>

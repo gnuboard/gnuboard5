@@ -1,5 +1,6 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+if (!defined('G5_SHOP_DIRECT_NAVERPAY') || !G5_SHOP_DIRECT_NAVERPAY) return;
 
 if(!$is_admin && !$default['de_card_test'] && $default['de_naverpay_test']) {
     if($default['de_naverpay_mb_id'] && ($is_guest || $member['mb_id'] != $default['de_naverpay_mb_id']))
