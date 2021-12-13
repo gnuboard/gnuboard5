@@ -259,33 +259,22 @@ include_once ('./admin.head.php');
 <div class="new_win">
     <h1><?php echo $g5['title']; ?></h1>
 
-    <div class="local_desc01 local_desc">
-        <p>상품등록을 완료했습니다.</p>
-    </div>
-
     <dl id="excelfile_result">
-        <dt>총상품수</dt>
+        <dt>총 데이터수</dt>
         <dd><?php echo number_format($total_count); ?></dd>
-        <dt>완료건수</dt>
+        <dt>등록 성공</dt>
         <dd><?php echo number_format($succ_count); ?></dd>
-        <dt>실패건수</dt>
+        <dt>등록 실패</dt>
         <dd><?php echo number_format($fail_count); ?></dd>
         <?php if($fail_count > 0) { ?>
-        <dt>실패상품코드</dt>
+        <dt>등록 실패 사유</dt>
         <dd><?php echo implode(', ', $fail_it_id); ?></dd>
-        <?php } ?>
-        <?php if($dup_count > 0) { ?>
-        <dt>상품코드중복건수</dt>
-        <dd><?php echo number_format($dup_count); ?></dd>
-        <dt>중복상품코드</dt>
-        <dd><?php echo implode(', ', $dup_it_id); ?></dd>
         <?php } ?>
     </dl>
 
     <div class="btn_win01 btn_win">
         <button type="button" onclick="window.close();">창닫기</button>
     </div>
-
 </div>
 
 <?php
