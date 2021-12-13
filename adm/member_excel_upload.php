@@ -31,7 +31,7 @@ include_once(G5_PATH.'/head.sub.php');
         </div>
 
         <div id="excelfile_upload" class="password">
-            <input type="password" name="" id="admin_password" class="frm_input" autocomplete="off" placeholder="최고관리자 패스워드" required>
+            <input type="password" name="admin_password" id="admin_password" class="frm_input" autocomplete="off" placeholder="최고관리자 패스워드" required>
         </div>
 
         <div class="win_btn btn_confirm">
