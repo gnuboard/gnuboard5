@@ -181,6 +181,7 @@ a.btn_submit{background:#ff4081;color:#fff}
 .btn_add01 a {display:inline-block;vertical-align:middle}btn_confirm
 .btn_add01 button {margin:0}
 
+.btn_excel, .btn_excel:link, .btn_excel:visited {background:#5CB909;color:#fff;}
 
 
 .td_mng a.btn,.td_mng a{display:inline-block;height:26px;line-height:26px;border:0;border-radius:3px;padding:0 8px;margin:1px;font-weight:normal}
@@ -804,6 +805,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 /* 상품 일괄 등록 */
 #excelfile_upload {margin:10px ;padding:20px;border:1px solid #e9e9e9;background:#fff}
 #excelfile_upload label {font-weight:bold}
+#excelfile_upload.password {text-align: center;}
 #excelfile_input {margin:0 0 20px;text-align:center}
 #excelfile_result {margin:0 20px 20px;border-bottom:1px solid #e9e9e9;zoom:1}
 #excelfile_result:after {display:block;visibility:hidden;clear:both;content:""}

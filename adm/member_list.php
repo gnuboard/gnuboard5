@@ -298,6 +298,9 @@ $colspan = 16;
 </div>
 
 <div class="btn_fixed_top">
+    <!-- #TODO 최고관리자일때만 -->
+    <a href="" download="" class="btn btn_excel download">액셀 다운로드</a>
+    <a href="./member_excel_upload.php" target="excel_upload" class="btn btn_excel upload">액셀 업로드</a>
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
     <?php if ($is_admin == 'super') { ?>
@@ -312,8 +315,14 @@ $colspan = 16;
 <?php echo get_paging(G5_IS_MOBILE ? $config['cf_mobile_pages'] : $config['cf_write_pages'], $page, $total_page, '?'.$qstr.'&amp;page='); ?>
 
 <script>
-function fmemberlist_submit(f)
-{
+$(function() {
+    $(".btn_excel.upload").click(function(){
+        window.open(this.href, "excel_upload", "left=100,top=100,width=550,height=450");
+        return false;
+    });
+})
+
+function fmemberlist_submit(f) {
     if (!is_checked("chk[]")) {
         alert(document.pressed+" 하실 항목을 하나 이상 선택하세요.");
         return false;
