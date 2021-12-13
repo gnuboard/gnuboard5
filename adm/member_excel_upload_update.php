@@ -2,6 +2,24 @@
 $sub_menu = '400300';
 include_once('./_common.php');
 
+function format_check($data, $format_code = '') {
+    if($format_code == '') return false;
+
+    return false;
+}
+
+function upload_error($code = '', $prefix = '') {
+    switch($code) {
+        case 'datetime':
+            $message = $prefix . " 날짜 입력오류";
+            break;
+        default:
+            return;
+    }
+
+    return $message;
+}
+
 try {
     // 엑셀 데이터가 많은 경우 대비 설정변경
     set_time_limit ( 0 );
@@ -31,22 +49,76 @@ try {
         $num_rows = $sheet->getHighestRow();
         $highestColumn = $sheet->getHighestColumn();
 
-        $dup_it_id = array();
-        $fail_it_id = array();
-        $dup_count = 0;
-        $total_count = 0;
-        $fail_count = 0;
-        $succ_count = 0;
-
-
-
-        $range_str = "A"."1".":".$highestColumn."1";
+        $range_str = "A"."3".":".$highestColumn.$num_rows;
         $datas = $sheet->rangeToArray($range_str, null, true, false);
 
-        print_r2($highestColumn);
+        $succ_count = 0;
+        $fail_count = 0;
+        $total_count = count($datas);
+
+        $total_array = array();
+        
+        foreach($datas as $key => $var) {
+            $insert_array = array();
+            $insert_array['row'] = $key + 3;
+            $insert_array['mb_id'] = $var[1];
+            $insert_array['mb_name'] = $var[2];
+            $insert_array['mb_nick'] = $var[3];
+
+            if( preg_match('/^\d+$/', $var[4]) == false) {
+                $insert_array['error_message'] = upload_error("datetime", '닉네임');
+            } else {
+                $insert_array['mb_nick_date'] = date('Y-m-d', ($var[4] - 25569) * 86400);
+            }
+
+            $insert_array['mb_level'] = $var[5];
+            $insert_array['status'] = $var[6];
+            $insert_array['mb_point'] = $var[7];
+            $insert_array['mb_email'] = $var[8];
+            $insert_array['mb_homepage'] = $var[9];
+            $insert_array['mb_hp'] = $var[10];
+            $insert_array['mb_tel'] = $var[11];
+            $insert_array['mb_certify'] = $var[12];
+            $insert_array['mb_adult'] = $var[13];
+            $insert_array['mb_email_certify'] = $var[14];
+            $insert_array['zip_code'] = $var[15];
+            $insert_array['mb_addr1'] = $var[16];
+            $insert_array['mb_addr2'] = $var[17];
+            $insert_array['mb_addr3'] = $var[18];
+            $insert_array['mb_addr_jibeon'] = $var[19];
+            $insert_array['mb_mailling'] = $var[20];
+            $insert_array['mb_sns'] = $var[21];
+            $insert_array['mb_open'] = $var[22];
+            $insert_array['mb_open_date'] = $var[23];
+            $insert_array['mb_signature'] = $var[24];
+            $insert_array['mb_profile'] = $var[25];
+            $insert_array['mb_memo'] = $var[26];
+            $insert_array['mb_datetime'] = $var[27];
+            $insert_array['mb_today_login'] = $var[28];
+            $insert_array['mb_ip'] = $var[29];
+            $insert_array['mb_leave_date'] = $var[30];
+            $insert_array['mb_intercept_date'] = $var[31];
+            $insert_array['mb_recommend'] = $var[32];
+            $insert_array['mb_1'] = $var[33];
+            $insert_array['mb_2'] = $var[34];
+            $insert_array['mb_3'] = $var[35];
+            $insert_array['mb_4'] = $var[36];
+            $insert_array['mb_5'] = $var[37];
+            $insert_array['mb_6'] = $var[38];
+            $insert_array['mb_7'] = $var[39];
+            $insert_array['mb_8'] = $var[40];
+            $insert_array['mb_9'] = $var[41];
+            $insert_array['mb_10'] = $var[42];
+
+            if(isset($insert_array['error_message']) == false) {
+                $insert_array['error_message'] = '';
+            }
+
+            array_push($total_array, $insert_array);
+        }
+
+        print_r2($total_array);
         exit;
-
-
 
 
         // for ($i = 3; $i <= $num_rows; $i++) {
