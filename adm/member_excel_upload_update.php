@@ -45,7 +45,7 @@ if ($is_upload_file) {
 
     $succ_count = 0;
     $fail_count = 0;
-    $total_count = count($datas);
+    $total_count = 0;
 
     $fail_array = array();
     
@@ -56,69 +56,72 @@ if ($is_upload_file) {
             $mb_id = addslashes($var[1]);
             $mb_name = addslashes($var[2]);
             $mb_nick = addslashes($var[3]);
-            $mb_nick_time = addslashes($var[4]);
+            $mb_nick_date = addslashes($var[4]);
             $mb_level = addslashes($var[5]);
             $status = addslashes($var[6]);
             $mb_point = addslashes($var[7]);
             $mb_email = addslashes($var[8]);
-            $mb_homepage = addcslashes($var[9]);
-            $mb_hp = addcslashes($var[10]);
-            $mb_tel = addcslashes($var[11]);
-            $mb_certify_text = addcslashes($var[12]);
-            $mb_adult = addcslashes($var[13]);
-            $mb_email_certify = addcslashes($var[14]);
-            $zip_code = addcslashes($var[15]);
-            $mb_addr1 = addcslashes($var[16]);
-            $mb_addr2 = addcslashes($var[17]);
-            $mb_addr3 = addcslashes($var[18]);
-            $mb_addr_jibeon = addcslashes($var[19]);
-            $mb_mailling = addcslashes($var[20]);
-            $mb_sns = addcslashes($var[21]);
-            $mb_open = addcslashes($var[22]);
-            $mb_open_date = addcslashes($var[23]);
-            $mb_signature = addcslashes($var[24]);
-            $mb_profile = addcslashes($var[25]);
-            $mb_memo = addcslashes($var[26]);
-            $mb_datetime = addcslashes($var[27]);
-            $mb_today_login = addcslashes($var[28]);
-            $mb_ip = addcslashes($var[29]);
-            $mb_leave_date = addcslashes($var[30]);
-            $mb_intercept_date = addcslashes($var[31]);
-            $mb_recommend = addcslashes($var[32]);
-            $mb_1 = addcslashes($var[33]);
-            $mb_2 = addcslashes($var[34]);
-            $mb_3 = addcslashes($var[35]);
-            $mb_4 = addcslashes($var[36]);
-            $mb_5 = addcslashes($var[37]);
-            $mb_6 = addcslashes($var[38]);
-            $mb_7 = addcslashes($var[39]);
-            $mb_8 = addcslashes($var[40]);
-            $mb_9 = addcslashes($var[41]);
-            $mb_10 = addcslashes($var[42]);
+            $mb_homepage = addslashes($var[9]);
+            $mb_hp_text = addslashes($var[10]);
+            $mb_tel = addslashes($var[11]);
+            $mb_certify_text = addslashes($var[12]);
+            $mb_adult = addslashes($var[13]);
+            $mb_email_certify = addslashes($var[14]);
+            $zip_code = addslashes($var[15]);
+            $mb_addr1 = addslashes($var[16]);
+            $mb_addr2 = addslashes($var[17]);
+            $mb_addr3 = addslashes($var[18]);
+            $mb_addr_jibeon_text = addslashes($var[19]);
+            $mb_mailling_text = addslashes($var[20]);
+            $mb_sms_text = addslashes($var[21]);
+            $mb_open_text = addslashes($var[22]);
+            $mb_open_date = addslashes($var[23]);
+            $mb_signature = addslashes($var[24]);
+            $mb_profile = addslashes($var[25]);
+            $mb_memo = addslashes($var[26]);
+            $mb_datetime = addslashes($var[27]);
+            $mb_today_login = addslashes($var[28]);
+            $mb_ip = addslashes($var[29]);
+            $mb_leave_date = addslashes($var[30]);
+            $mb_intercept_date = addslashes($var[31]);
+            $mb_recommend = addslashes($var[32]);
+            $mb_1 = addslashes($var[33]);
+            $mb_2 = addslashes($var[34]);
+            $mb_3 = addslashes($var[35]);
+            $mb_4 = addslashes($var[36]);
+            $mb_5 = addslashes($var[37]);
+            $mb_6 = addslashes($var[38]);
+            $mb_7 = addslashes($var[39]);
+            $mb_8 = addslashes($var[40]);
+            $mb_9 = addslashes($var[41]);
+            $mb_10 = addslashes($var[42]);
+
+            // 입력할 시간
+            $input_date = date('Y-m-d', time());
 
             // 아이디 유효성 체크
-            if (empty($mb_id)) throw new Exception("아이디 미입력 오류", $var);
-            $result = sql_fetch("SELECT count(*) as `cnt` FROM `{$member_table}` WHERE `mb_id` = \"{$var[1]}\"");
+            if (empty($mb_id)) throw new Exception("아이디 미입력 오류");
+            $result = sql_fetch("SELECT count(*) as `cnt` FROM `{$g5['member_table']}` WHERE `mb_id` = \"{$var[1]}\"");
             if ($result['cnt'] > 0) throw new Exception("아이디 중복 오류");
 
             // 이름 유효성 체크
-            if (empty($mb_name)) throw new Exception("이름 미입력 오류", $var);
+            if (empty($mb_name)) throw new Exception("이름 미입력 오류");
 
             // 닉네임 유효성 체크
-            if (empty_mb_nick($mb_nick) != "") throw new Exception("닉네임 미입력 오류", $var);
-            if (valid_mb_nick($mb_nick) != "") throw new Exception("닉네임 유효성 오류(공백없이 한글, 영문, 숫자)", $var);
-            if (count_mb_nick($mb_nick) != "") throw new Exception("닉네임 유효성 오류(한글 2글자, 영문 4글자 이상 입력)", $var);
-            if (exist_mb_nick($mb_nick, $mb_id) != "") throw new Exception("닉네임 중복 오류", $var);
-            if (reserve_mb_nick($mb_nick) != "") throw new Exception("예약어로 등록된 닉네임 등록 오류", $var);
+            if (empty_mb_nick($mb_nick) != "") throw new Exception("닉네임 미입력 오류");
+            if (valid_mb_nick($mb_nick) != "") throw new Exception("닉네임 유효성 오류(공백없이 한글, 영문, 숫자)");
+            if (count_mb_nick($mb_nick) != "") throw new Exception("닉네임 유효성 오류(한글 2글자, 영문 4글자 이상 입력)");
+            if (exist_mb_nick($mb_nick, $mb_id) != "") throw new Exception("닉네임 중복 오류");
+            if (reserve_mb_nick($mb_nick) != "") throw new Exception("예약어로 등록된 닉네임 등록 오류");
             
             if ($mb_nick_date == "") { 
                 $mb_nick_date = date('Y-m-d', time());
             } else {
                 if (preg_match('/^\d+$/', $mb_nick_date) == false) throw new Exception("닉네임 등록날짜 오류");
-                $mb_nick_date = date('Y-m-d', ($mb_nick_time - 25569) * 86400);
+                $mb_nick_date = date('Y-m-d', ($mb_nick_date - 25569) * 86400);
             }
 
-            if (empty($mb_level)) throw new Exception("회원 권한 미입력 오류", $var);
+            if (empty($mb_level)) throw new Exception("회원 권한 미입력 오류");
             if (preg_match('/^\d+$/', $mb_level) == false) throw new Exception("회원권한 유효성 오류(숫자만 입력)");
             if ($mb_level > 10 || $mb_level < 1) throw new Exception("회원권한 유효성 오류(회원권한은 1~10)");
 
@@ -126,16 +129,20 @@ if ($is_upload_file) {
             if (preg_match('/^\d+$/', $mb_point) == false) throw new Exception("포인트 유효성 오류(숫자만 입력)");
 
             // 이메일 유효성 체크
-            if (empty_mb_email($mb_email) != "") throw new Exception("닉네임 미입력 오류", $var);
+            if (empty_mb_email($mb_email) != "") throw new Exception("닉네임 미입력 오류");
             if (valid_mb_email($mb_email) != "") throw new Exception("이메일 유효성 오류(E-mail 주소 형식이 아님)");
             if (prohibit_mb_email($mb_email) != "") throw new Exception("금지 메일 도메인 입력 오류");
             if (exist_mb_email($mb_email, $mb_id) != "") throw new Exception("이메일 중복 오류");
 
-            if (!empty($mb_hp)) {
+            // 휴대폰번호 유효성 체크
+            $mb_hp = "";
+            if (!empty($mb_hp_text)) {
+                $mb_hp = hyphen_hp_number($mb_hp_text);
                 if (valid_mb_hp($mb_hp) != "") throw new Exception("휴대폰번호 유효성 오류");
                 if (exist_mb_hp($mb_hp, $mb_id) != "") throw new Exception("휴대폰번호 중복 오류");
             }
 
+            // 본인확인 유효성 체크
             $mb_certify = "";
             if ($mb_certify_text != "") {
                 switch ($mb_certify_text) {
@@ -154,149 +161,242 @@ if ($is_upload_file) {
                 }
             }
 
+            // 성인인증 유효성 검사
+            if (!empty($mb_adult)) {
+                if ($mb_adult != 'Y' && $mb_adult != 'N') throw new Exception("성인인증 입력값 오류");
+            } else {
+                $mb_adult = 'N';
+            }
+
+            // 메일일증 유효성 검사
+            if (!empty($mb_email_certify)) {
+                if ($mb_email_certify != 'Y' && $mb_email_certify != 'N') throw new Exception("메일인증 입력값 오류");
+            } else {
+                $mb_email_certify = 'N';
+            }
+
+            // 우편번호 유효성 검사
+            // 기본주소와 우편번호는 세트로 움직이므로 2가지 값을 함께 검사
+            // 우편번호, 기본주소, 상세주소는 하나이상의 공백이 생길시 모두 공백으로 처리 (2021-12-14)
+            if (empty($zip_code) || empty($mb_addr1) || empty($mb_addr2)) {
+                $mb_addr1 = "";
+                $mb_addr2 = "";
+                $mb_addr3 = "";
+                $mb_addr_jibeon = "";
+                $mb_zip1 = "";
+                $mb_zip2 = "";
+            } else {
+                if (preg_match('/^\d+$/', $zip_code) == false) throw new Exception("우편번호 유효성검사 오류");
+                $mb_zip1 = substr($zip_code, 0, 3);
+                $mb_zip2 = substr($zip_code, 3);
+
+                // 지번도 함께 처리
+                switch ($mb_addr_jibeon_text) {
+                    case 'Y':
+                        $mb_addr_jibeon = 'J';
+                        break;
+                    case 'N':
+                    default:
+                        $mb_addr_jibeon = "";
+                        break;
+                }
+            }
+
+            // 메일수신동의 검사
+            switch ($mb_mailling_text) {
+                case 'Y':
+                    $mb_mailling = 1;
+                    break;
+                case 'N':
+                default:
+                    $mb_mailling = 0;
+                    break;
+            }
+
+            // SMS수신동의 검사
+            switch ($mb_sms_text) {
+                case 'Y':
+                    $mb_sms = 1;
+                    break;
+                case 'N':
+                    $mb_sms = 0;
+                    break;
+                default:
+                    throw new Exception("SMS수신동의 입력값 오류 (Y or N)");
+                    break;
+            }
+
+            // 정보공개 검사
+            switch ($mb_open_text) {
+                case 'Y':
+                    $mb_open = 1;
+                    if (empty($mb_open_date)) {
+                        $mb_open_date = $input_date;
+                    } else {
+                        if (preg_match('/^\d+$/', $mb_open_date) == false) throw new Exception("정보공개일 날짜형식 오류");
+                        $mb_open_date = date('Y-m-d', ($mb_open_date - 25569) * 86400);
+                    }
+                    break;
+                case 'N':
+                    $mb_open = 0;
+                    break;
+                default:
+                    throw new Exception("정보공개 입력값 오류 (Y or N)");
+                    break;
+            }
+
+            // 회원가입일 검사
+            if (empty($mb_datetime)) {
+                $mb_datetime = $input_date;
+            } else {
+                if (preg_match('/^\d*(\.?\d*)$/', $mb_datetime) == false) throw new Exception("회원가입일 날짜형식 오류");
+                $mb_datetime = date('Y-m-d h:i:s', ($mb_datetime - 25569) * 86400);
+            }
+
+            // 최근접속일 검사
+            if (!empty($mb_today_login)) {
+                if (preg_match('/^\d*(\.?\d*)$/', $mb_today_login) == false) throw new Exception("최근접속일 날짜형식 오류");
+                $mb_today_login = date('Y-m-d h:i:s', ($mb_today_login - 25569) * 86400);
+            }
+
+            // IP 유효성 체크
+            if (!empty($mb_ip)) {
+                if (preg_match('/^[\d.]+$/', $mb_ip) == false || substr_count($mb_ip, ".") != 3) throw new Exception("올바르지 않은 IP형식");
+            }
+
+            // 탈퇴일자 유효성체크
+            if (!empty($mb_leave_date)) {
+                if (preg_match('/^\d+$/', $mb_leave_date) == false) throw new Exception("탈퇴일자 날짜형식 오류");
+            }
+
+            // 접근차단일자
+            if (!empty($mb_intercept_date)) {
+                if (preg_match('/^\d+$/', $mb_intercept_date) == false) throw new Exception("접근차단일자 날짜형식 오류");
+            }
+
+            // 추천인 체크
+            if (!empty($mb_recommend)) {
+                if($mb_id == $mb_recommend) throw new Exception("추천인과 회원아이디 동일 오류");
+                
+                $result = sql_fetch("SELECT * FROM `{$g5['member_table']}` WHERE `mb_id` = \"{$mb_recommend}\"");
+                if($result != false) {
+                    if(!empty($result['mb_leave_date']) || !empty($result['mb_intercept_date'])) throw new Exception("추천인의 회원상태 오류(탈퇴 or 차단)");
+                }
+            }
+
+            $sql = "INSERT INTO `{$g5['member_table']}` SET 
+                        `mb_id`             = '{$mb_id}',
+                        `mb_name`           = '{$mb_name}',
+                        `mb_nick`           = '{$mb_nick}',
+                        `mb_nick_date`      = '{$mb_nick_date}',
+                        `mb_level`          = '{$mb_level}',
+                        `mb_point`          = '{$mb_point}',
+                        `mb_email`          = '{$mb_email}',
+                        `mb_homepage`       = '{$mb_homepage}',
+                        `mb_hp`             = '{$mb_hp}',
+                        `mb_tel`            = '{$mb_tel}',
+                        `mb_certify`        = '{$mb_certify}',
+                        `mb_adult`          = '{$mb_adult}',
+                        `mb_email_certify`  = '{$mb_email_certify}',
+                        `mb_addr1`          = '{$mb_addr1}',
+                        `mb_addr2`          = '{$mb_addr2}',
+                        `mb_addr3`          = '{$mb_addr3}',
+                        `mb_addr_jibeon`    = '{$mb_addr_jibeon}',
+                        `mb_mailling`       = '{$mb_mailling}',
+                        `mb_sms`            = '{$mb_sms}',
+                        `mb_open`           = '{$mb_open}',
+                        `mb_open_date`      = '{$mb_open_date}',
+                        `mb_signature`      = '{$mb_signature}',
+                        `mb_profile`        = '{$mb_profile}',
+                        `mb_memo`           = '{$mb_memo}',
+                        `mb_datetime`       = '{$mb_datetime}',
+                        `mb_today_login`    = '{$mb_today_login}',
+                        `mb_ip`             = '{$mb_ip}',
+                        `mb_leave_date`     = '{$mb_leave_date}',
+                        `mb_intercept_date` = '{$mb_intercept_date}',
+                        `mb_recommend`      = '{$mb_recommend}',
+                        `mb_1`              = '{$mb_1}',
+                        `mb_2`              = '{$mb_2}',
+                        `mb_3`              = '{$mb_3}',
+                        `mb_4`              = '{$mb_4}',
+                        `mb_5`              = '{$mb_5}',
+                        `mb_6`              = '{$mb_6}',
+                        `mb_7`              = '{$mb_7}',
+                        `mb_8`              = '{$mb_8}',
+                        `mb_9`              = '{$mb_9}',
+                        `mb_10`             = '{$mb_10}'
+                        ";
+
+            $result = @sql_query($sql);
+            if($result == null || $result == false) throw new Exception("DB insert 오류");
+
+            $mb_no = sql_insert_id();
+
+            // ------------------------ 추천인 포인트 관련 추가 작업 -------------------
+            $sql = "";
+            // -----------------------------------------------------------------------
+
+            // -------------------------- 임시비밀번호 발급 프로세스 --------------------------------
+            $change_password = rand(100000, 999999);
+            $mb_lost_certify = get_encrypt_string($change_password);
+
+            // 어떠한 회원정보도 포함되지 않은 일회용 난수를 생성하여 인증에 사용
+            $mb_nonce = md5(pack('V*', rand(), rand(), rand(), rand()));
+
+            // 임시비밀번호와 난수를 mb_lost_certify 필드에 저장
+            $sql = " update {$g5['member_table']} set mb_lost_certify = '$mb_nonce $mb_lost_certify' where mb_id = '{$mb_id}' ";
+            sql_query($sql);
+
+            $href = G5_BBS_URL.'/password_lost_certify.php?mb_no='.$mb_no.'&amp;mb_nonce='.$mb_nonce;
+
+            $subject = "[".$config['cf_title']."] 임시비밀번호 발급 안내 메일입니다.";
+
+            $content = "";
+
+            $content .= '<div style="margin:30px auto;width:600px;border:10px solid #f7f7f7">';
+            $content .= '<div style="border:1px solid #dedede">';
+            $content .= '<h1 style="padding:30px 30px 0;background:#f7f7f7;color:#555;font-size:1.4em">';
+            $content .= '임시비밀번호 발급 안내';
+            $content .= '</h1>';
+            $content .= '<span style="display:block;padding:10px 30px 30px;background:#f7f7f7;text-align:right">';
+            $content .= '<a href="'.G5_URL.'" target="_blank">'.$config['cf_title'].'</a>';
+            $content .= '</span>';
+            $content .= '<p style="margin:20px 0 0;padding:30px 30px 30px;border-bottom:1px solid #eee;line-height:1.7em">';
+            $content .= addslashes($mb_name)." (".addslashes($mb_nick).")"." 회원님은 ".G5_TIME_YMDHIS." 에 임시 비밀번호가 발급되었습니다.<br>";
+            $content .= '저희 사이트는 계정등록과 관련하여 관리자라도 회원님의 비밀번호를 임의적으로 적용할 수 없기때문에, 임시비밀번호를 생성하여 안내 해드리고 있습니다.<br>';
+            $content .= '아래에서 임시비밀번호를 확인하신 후, <span style="color:#ff3061"><strong>비밀번호 변경</strong> 링크를 클릭 하십시오.</span><br>';
+            $content .= '비밀번호가 변경되었다는 인증 메세지가 출력되면, 홈페이지에서 회원아이디와 변경된 비밀번호를 입력하시고 로그인 하십시오.<br>';
+            $content .= '로그인 후에는 정보수정 메뉴에서 새로운 비밀번호로 변경해 주십시오.';
+            $content .= '</p>';
+            $content .= '<p style="margin:0;padding:30px 30px 30px;border-bottom:1px solid #eee;line-height:1.7em">';
+            $content .= '<span style="display:inline-block;width:100px">회원아이디</span> '.$mb_id.'<br>';
+            $content .= '<span style="display:inline-block;width:100px">변경될 비밀번호</span> <strong style="color:#ff3061">'.$change_password.'</strong>';
+            $content .= '</p>';
+            $content .= '<a href="'.$href.'" target="_blank" style="display:block;padding:30px 0;background:#484848;color:#fff;text-decoration:none;text-align:center">비밀번호 변경</a>';
+            $content .= '</div>';
+            $content .= '</div>';
+
+            mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+            // -------------------------------------------------------------------------------------------
+            
+            // 해당 event를 찾을 수 없음
+            // run_event('password_lost2_after', $mb, $mb_nonce, $mb_lost_certify);
+
+            $succ_count++;
         } catch(Exception $e) {
+            $data = array();
+            $fail_array[$key]['row'] = 'A'.($key + 3);
+            $fail_array[$key]['message'] = $e->getMessage();
 
+            $fail_count++;
         }
-        
 
-
-        // $sql = " INSERT INTzO {$m}"
-        // array_push($total_array, $insert_array);
+        $total_count++;
     }
-
-    print_r2($total_array);
-    exit;
-
-
-    // for ($i = 3; $i <= $num_rows; $i++) {
-    //     $total_count++;
-
-    //     $j = 0;
-
-    //     $rowData = $sheet->rangeToArray('A' . $i . ':' . $highestColumn . $i,
-    //                                         NULL,
-    //                                         TRUE,
-    //                                         FALSE);
-
-    //     $it_id              = (string) $rowData[0][$j++];
-    //     $it_id              = preg_match('/[-+]?[0-9]*\.?[0-9]+([eE][-+]?[0-9]+)/', $it_id) ? addslashes(sprintf("%.0f", $it_id)) : preg_replace('/[^0-9a-z_\-]/i', '', $it_id);
-    //     $ca_id              = addslashes($rowData[0][$j++]);
-    //     $ca_id2             = addslashes($rowData[0][$j++]);
-    //     $ca_id3             = addslashes($rowData[0][$j++]);
-    //     $it_name            = addslashes($rowData[0][$j++]);
-    //     $it_maker           = addslashes($rowData[0][$j++]);
-    //     $it_origin          = addslashes($rowData[0][$j++]);
-    //     $it_brand           = addslashes($rowData[0][$j++]);
-    //     $it_model           = addslashes($rowData[0][$j++]);
-    //     $it_type1           = addslashes($rowData[0][$j++]);
-    //     $it_type2           = addslashes($rowData[0][$j++]);
-    //     $it_type3           = addslashes($rowData[0][$j++]);
-    //     $it_type4           = addslashes($rowData[0][$j++]);
-    //     $it_type5           = addslashes($rowData[0][$j++]);
-    //     $it_basic           = addslashes($rowData[0][$j++]);
-    //     $it_explan          = addslashes($rowData[0][$j++]);
-    //     $it_mobile_explan   = addslashes($rowData[0][$j++]);
-    //     $it_cust_price      = addslashes(only_number($rowData[0][$j++]));
-    //     $it_price           = addslashes(only_number($rowData[0][$j++]));
-    //     $it_tel_inq         = addslashes($rowData[0][$j++]);
-    //     $it_point           = addslashes(only_number($rowData[0][$j++]));
-    //     $it_point_type      = addslashes(only_number($rowData[0][$j++]));
-    //     $it_sell_email      = addslashes($rowData[0][$j++]);
-    //     $it_use             = addslashes($rowData[0][$j++]);
-    //     $it_stock_qty       = addslashes(only_number($rowData[0][$j++]));
-    //     $it_noti_qty        = addslashes(only_number($rowData[0][$j++]));
-    //     $it_buy_min_qty     = addslashes(only_number($rowData[0][$j++]));
-    //     $it_buy_max_qty     = addslashes(only_number($rowData[0][$j++]));
-    //     $it_notax           = addslashes(only_number($rowData[0][$j++]));
-    //     $it_order           = addslashes(only_number($rowData[0][$j++]));
-    //     $it_img1            = addslashes($rowData[0][$j++]);
-    //     $it_img2            = addslashes($rowData[0][$j++]);
-    //     $it_img3            = addslashes($rowData[0][$j++]);
-    //     $it_img4            = addslashes($rowData[0][$j++]);
-    //     $it_img5            = addslashes($rowData[0][$j++]);
-    //     $it_img6            = addslashes($rowData[0][$j++]);
-    //     $it_img7            = addslashes($rowData[0][$j++]);
-    //     $it_img8            = addslashes($rowData[0][$j++]);
-    //     $it_img9            = addslashes($rowData[0][$j++]);
-    //     $it_img10           = addslashes($rowData[0][$j++]);
-    //     $it_explan2         = strip_tags(trim($it_explan));
-
-    //     if(!$it_id || !$ca_id || !$it_name) {
-    //         $fail_count++;
-    //         continue;
-    //     }
-
-    //     // it_id 중복체크
-    //     $sql2 = " select count(*) as cnt from {$g5['g5_shop_item_table']} where it_id = '$it_id' ";
-    //     $row2 = sql_fetch($sql2);
-    //     if(isset($row2['cnt']) && $row2['cnt']) {
-    //         $fail_it_id[] = $it_id;
-    //         $dup_it_id[] = $it_id;
-    //         $dup_count++;
-    //         $fail_count++;
-    //         continue;
-    //     }
-
-    //     // 기본분류체크
-    //     $sql2 = " select count(*) as cnt from {$g5['g5_shop_category_table']} where ca_id = '$ca_id' ";
-    //     $row2 = sql_fetch($sql2);
-    //     if(! (isset($row2['cnt']) && $row2['cnt'])) {
-    //         $fail_it_id[] = $it_id;
-    //         $fail_count++;
-    //         continue;
-    //     }
-
-    //     $sql = " INSERT INTO {$g5['g5_shop_item_table']}
-    //                  SET it_id = '$it_id',
-    //                      ca_id = '$ca_id',
-    //                      ca_id2 = '$ca_id2',
-    //                      ca_id3 = '$ca_id3',
-    //                      it_name = '$it_name',
-    //                      it_maker = '$it_maker',
-    //                      it_origin = '$it_origin',
-    //                      it_brand = '$it_brand',
-    //                      it_model = '$it_model',
-    //                      it_type1 = '$it_type1',
-    //                      it_type2 = '$it_type2',
-    //                      it_type3 = '$it_type3',
-    //                      it_type4 = '$it_type4',
-    //                      it_type5 = '$it_type5',
-    //                      it_basic = '$it_basic',
-    //                      it_explan = '$it_explan',
-    //                      it_explan2 = '$it_explan2',
-    //                      it_mobile_explan = '$it_mobile_explan',
-    //                      it_cust_price = '$it_cust_price',
-    //                      it_price = '$it_price',
-    //                      it_point = '$it_point',
-    //                      it_point_type = '$it_point_type',
-    //                      it_stock_qty = '$it_stock_qty',
-    //                      it_noti_qty = '$it_noti_qty',
-    //                      it_buy_min_qty = '$it_buy_min_qty',
-    //                      it_buy_max_qty = '$it_buy_max_qty',
-    //                      it_notax = '$it_notax',
-    //                      it_use = '$it_use',
-    //                      it_time = '".G5_TIME_YMDHIS."',
-    //                      it_ip = '{$_SERVER['REMOTE_ADDR']}',
-    //                      it_order = '$it_order',
-    //                      it_tel_inq = '$it_tel_inq',
-    //                      it_img1 = '$it_img1',
-    //                      it_img2 = '$it_img2',
-    //                      it_img3 = '$it_img3',
-    //                      it_img4 = '$it_img4',
-    //                      it_img5 = '$it_img5',
-    //                      it_img6 = '$it_img6',
-    //                      it_img7 = '$it_img7',
-    //                      it_img8 = '$it_img8',
-    //                      it_img9 = '$it_img9',
-    //                      it_img10 = '$it_img10' ";
-
-    //     sql_query($sql);
-
-    //     $succ_count++;
-    // }
 }
+
 $g5['title'] = '엑셀 회원 데이터 업로드 결과';
-include_once ('./admin.head.php');
+include_once(G5_PATH.'/head.sub.php');
 ?>
 
 <div class="new_win">
@@ -310,8 +410,10 @@ include_once ('./admin.head.php');
         <dt>등록 실패</dt>
         <dd><?php echo number_format($fail_count); ?></dd>
         <?php if($fail_count > 0) { ?>
-        <dt>등록 실패 사유</dt>
-        <dd><?php echo implode(', ', $fail_it_id); ?></dd>
+            <dt>등록 실패 사유</dt>
+            <?php foreach($fail_array as $key => $var) { ?>
+                <dd><?php echo $var['row'].' -> '.$var['message']; ?></dd>
+            <?php } ?>
         <?php } ?>
     </dl>
 
@@ -321,4 +423,4 @@ include_once ('./admin.head.php');
 </div>
 
 <?php
-include_once ('./admin.tail.php');
+include_once(G5_PATH.'/tail.sub.php');
