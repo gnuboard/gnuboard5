@@ -332,11 +332,12 @@ if ($is_upload_file) {
 
             $mb_no = sql_insert_id();
 
-            // ------------------------ 추천인 포인트 관련 추가 작업 -------------------
-            $sql = "";
-            // -----------------------------------------------------------------------
+            // 추천인 포인트 관련 프로세스
+            if ($config['cf_use_recommend'] && $config['cf_recommend_point'] > 0 && !empty($mb_recommend)) {
+                insert_point($mb_recommend, $config['cf_recommend_point'], $mb_id.'의 추천인', '@member', $mb_recommend, $mb_id.' 추천');
+            }
 
-            // -------------------------- 임시비밀번호 발급 프로세스 --------------------------------
+            // 임시 비밀번호 랜덤 생성
             $change_password = rand(100000, 999999);
             $mb_lost_certify = get_encrypt_string($change_password);
 
@@ -345,7 +346,9 @@ if ($is_upload_file) {
 
             // 임시비밀번호와 난수를 mb_lost_certify 필드에 저장
             $sql = " update {$g5['member_table']} set mb_lost_certify = '$mb_nonce $mb_lost_certify' where mb_id = '{$mb_id}' ";
-            sql_query($sql);
+            $result = @sql_query($sql);
+
+            if($result == null || $result == false) throw new Exception("임시비밀번호 저장 오류");
 
             $href = G5_BBS_URL.'/password_lost_certify.php?mb_no='.$mb_no.'&amp;mb_nonce='.$mb_nonce;
 
@@ -377,7 +380,6 @@ if ($is_upload_file) {
             $content .= '</div>';
 
             mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
-            // -------------------------------------------------------------------------------------------
             
             // 해당 event를 찾을 수 없음
             // run_event('password_lost2_after', $mb, $mb_nonce, $mb_lost_certify);
