@@ -1,5 +1,5 @@
 <?php
-$sub_menu = '400300';
+$sub_menu = '200100';
 include_once('./_common.php');
 include_once(G5_LIB_PATH.'/register.lib.php');
 
@@ -52,6 +52,10 @@ if ($is_upload_file) {
     foreach($datas as $key => $var) {
 
         try {
+
+            $null_array = array_filter($var);
+            if(empty($null_array)) continue;
+
             $insert_array = array();
             $mb_id = addslashes($var[1]);
             $mb_name = addslashes($var[2]);
@@ -336,6 +340,8 @@ if ($is_upload_file) {
             if ($config['cf_use_recommend'] && $config['cf_recommend_point'] > 0 && !empty($mb_recommend)) {
                 insert_point($mb_recommend, $config['cf_recommend_point'], $mb_id.'의 추천인', '@member', $mb_recommend, $mb_id.' 추천');
             }
+
+            include_once(G5_LIB_PATH.'/mailer.lib.php');
 
             // 임시 비밀번호 랜덤 생성
             $change_password = rand(100000, 999999);

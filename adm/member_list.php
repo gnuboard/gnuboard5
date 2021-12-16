@@ -299,14 +299,13 @@ $colspan = 16;
 
 <div class="btn_fixed_top">
     <!-- #TODO 최고관리자일때만 -->
-    <a href="" download="" class="btn btn_excel download">액셀 다운로드</a>
-    <a href="./member_excel_upload.php" target="excel_upload" class="btn btn_excel upload">액셀 업로드</a>
+    <a href="./member_excel_download.php" class="btn btn_excel download" onclick="return excel_down(f);" target="_blank">엑셀 다운로드</a>
+    <a href="./member_excel_upload.php" target="excel_upload" class="btn btn_excel upload">엑셀 업로드</a>
     <input type="submit" name="act_button" value="선택수정" onclick="document.pressed=this.value" class="btn btn_02">
     <input type="submit" name="act_button" value="선택삭제" onclick="document.pressed=this.value" class="btn btn_02">
     <?php if ($is_admin == 'super') { ?>
     <a href="./member_form.php" id="member_add" class="btn btn_01">회원추가</a>
     <?php } ?>
-
 </div>
 
 
@@ -321,6 +320,12 @@ $(function() {
         return false;
     });
 })
+
+function excel_down(f){ // 회원 엑셀 다운로드를 위하여 추가
+    f.action = "./memberexcel_down.php";
+    f.submit();
+    f.action = "";
+}
 
 function fmemberlist_submit(f) {
     if (!is_checked("chk[]")) {
