@@ -813,6 +813,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 #excelfile_result dd {float:left;margin:0;padding:10px 0;width:60%}
 #excelfile_result .result_done {color:#5d910b}
 #excelfile_result .result_fail {color:#ff3061}
+#excelfile_result .fail_log {width: 100%;}
 
 /* 상품옵션재고관리 */
 .sit_stock_qty_alert {color:#ff1133;font-weight:bold}

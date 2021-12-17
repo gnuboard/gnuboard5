@@ -418,9 +418,9 @@ include_once(G5_PATH.'/head.sub.php');
         <dt>등록 실패</dt>
         <dd><?php echo number_format($fail_count); ?></dd>
         <?php if($fail_count > 0) { ?>
-            <dt>등록 실패 사유</dt>
+            <dt class="fail_log">등록 실패 사유</dt>
             <?php foreach($fail_array as $key => $var) { ?>
-                <dd><?php echo $var['row'].' -> '.$var['message']; ?></dd>
+                <dd class="fail_log"><?php echo $var['row'].' -> '.$var['message']; ?></dd>
             <?php } ?>
         <?php } ?>
     </dl>
