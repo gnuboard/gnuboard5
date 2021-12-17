@@ -39,11 +39,8 @@ while($row = sql_fetch_array($result)) {
         $status = "정상";
     } else if(!empty($row['mb_leave_date'])) {
         $status = "탈퇴";
-    } else if(!empty($row['mb_intercept_date'])) {
-        $status = "차단";
     } else {
-        // 둘다 빈값이 아닌경우??
-        $status = "기타";
+        $status = "차단";
     }
 
     switch($row['mb_certify']) {

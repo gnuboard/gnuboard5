@@ -207,6 +207,12 @@ if ($is_upload_file) {
             }
 
             // 메일수신동의 검사
+            if(!empty($mb_mailling_text)) {
+                if($mb_mailling_text != 'Y' && $mb_mailling_text != 'N') throw new Exception("메일수신동의 입력값 오류");
+            } else {
+                $mb_mailling_text = 'N';
+            }
+
             switch ($mb_mailling_text) {
                 case 'Y':
                     $mb_mailling = 1;
@@ -218,17 +224,24 @@ if ($is_upload_file) {
             }
 
             // SMS수신동의 검사
+            if(!empty($mb_sms_text)) {
+                if($mb_sms_text != 'Y' && $mb_sms_text != 'N') throw new Exception("SMS수신동의 입력값 오류");
+            } else {
+                $mb_sms_text = 'N';
+            }
+
             switch ($mb_sms_text) {
                 case 'Y':
                     $mb_sms = 1;
                     break;
                 case 'N':
+                default:
                     $mb_sms = 0;
                     break;
-                default:
-                    throw new Exception("SMS수신동의 입력값 오류 (Y or N)");
-                    break;
             }
+
+            if(empty($mb_open)) throw new Exception("정보공개 미입력 오류");
+            if($mb_open != 'Y' && $mb_open != 'N') throw new Exception("정보공개 입력값 오류");
 
             // 정보공개 검사
             switch ($mb_open_text) {
@@ -242,10 +255,8 @@ if ($is_upload_file) {
                     }
                     break;
                 case 'N':
-                    $mb_open = 0;
-                    break;
                 default:
-                    throw new Exception("정보공개 입력값 오류 (Y or N)");
+                    $mb_open = 0;
                     break;
             }
 
@@ -285,6 +296,8 @@ if ($is_upload_file) {
                 $result = sql_fetch("SELECT * FROM `{$g5['member_table']}` WHERE `mb_id` = \"{$mb_recommend}\"");
                 if($result != false) {
                     if(!empty($result['mb_leave_date']) || !empty($result['mb_intercept_date'])) throw new Exception("추천인의 회원상태 오류(탈퇴 or 차단)");
+                } else {
+                    throw new Exception("추천인이 회원목록에 존재하지 않음");
                 }
             }
 
