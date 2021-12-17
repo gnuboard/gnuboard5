@@ -50,7 +50,6 @@ if ($is_upload_file) {
     $fail_array = array();
     
     foreach($datas as $key => $var) {
-
         try {
 
             $null_array = array_filter($var);
@@ -121,6 +120,7 @@ if ($is_upload_file) {
             if ($mb_nick_date == "") { 
                 $mb_nick_date = date('Y-m-d', time());
             } else {
+                print_r2($mb_nick_date);
                 if (preg_match('/^\d+$/', $mb_nick_date) == false) throw new Exception("닉네임 등록날짜 오류");
                 $mb_nick_date = date('Y-m-d', ($mb_nick_date - 25569) * 86400);
             }
@@ -240,8 +240,8 @@ if ($is_upload_file) {
                     break;
             }
 
-            if(empty($mb_open)) throw new Exception("정보공개 미입력 오류");
-            if($mb_open != 'Y' && $mb_open != 'N') throw new Exception("정보공개 입력값 오류");
+            if(empty($mb_open_text)) throw new Exception("정보공개 미입력 오류");
+            if($mb_open_text != 'Y' && $mb_open_text != 'N') throw new Exception("정보공개 입력값 오류");
 
             // 정보공개 검사
             switch ($mb_open_text) {
@@ -281,12 +281,14 @@ if ($is_upload_file) {
 
             // 탈퇴일자 유효성체크
             if (!empty($mb_leave_date)) {
-                if (preg_match('/^\d+$/', $mb_leave_date) == false) throw new Exception("탈퇴일자 날짜형식 오류");
+                if (preg_match('/^\d+$/', $mb_leave_date) == false) throw new Exception("탈퇴일자 날짜형식 오류(숫자만)");
+                if (strlen($mb_leave_date) != 8) throw new Exception("틸퇴일자 날짜형식 오류(YYmmdd)");
             }
 
             // 접근차단일자
             if (!empty($mb_intercept_date)) {
-                if (preg_match('/^\d+$/', $mb_intercept_date) == false) throw new Exception("접근차단일자 날짜형식 오류");
+                if (preg_match('/^\d+$/', $mb_intercept_date) == false) throw new Exception("접근차단일자 날짜형식 오류(숫자만)");
+                if (strlen($mb_intercept_date) != 8) throw new Exception("접근차단일자 날짜형식 오류(YYmmdd)");
             }
 
             // 추천인 체크
