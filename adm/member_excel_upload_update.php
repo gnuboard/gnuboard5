@@ -117,12 +117,16 @@ if ($is_upload_file) {
             if (exist_mb_nick($mb_nick, $mb_id) != "") throw new Exception("닉네임 중복 오류");
             if (reserve_mb_nick($mb_nick) != "") throw new Exception("예약어로 등록된 닉네임 등록 오류");
             
-            if ($mb_nick_date == "") { 
+            if (empty($mb_nick_date)) { 
                 $mb_nick_date = date('Y-m-d', time());
             } else {
-                print_r2($mb_nick_date);
-                if (preg_match('/^\d+$/', $mb_nick_date) == false) throw new Exception("닉네임 등록날짜 오류");
-                $mb_nick_date = date('Y-m-d', ($mb_nick_date - 25569) * 86400);
+                if(preg_match('/^\d+$/', $mb_nick_date) == true) {
+                    $mb_nick_date = date('Y-m-d', ($mb_nick_date - 25569) * 86400);
+                } else if(preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $mb_nick_date) == true) {
+                    // $mb_nick_date가 date format의 형식으로 들어오는 경우 skip
+                } else {
+                    throw new Exception("닉네임 등록날짜 오류");
+                }
             }
 
             if (empty($mb_level)) throw new Exception("회원 권한 미입력 오류");
@@ -148,7 +152,7 @@ if ($is_upload_file) {
 
             // 본인확인 유효성 체크
             $mb_certify = "";
-            if ($mb_certify_text != "") {
+            if (!empty($mb_certify_text)) {
                 switch ($mb_certify_text) {
                     case "관리자":
                         $mb_certify = "admin";
@@ -250,8 +254,13 @@ if ($is_upload_file) {
                     if (empty($mb_open_date)) {
                         $mb_open_date = $input_date;
                     } else {
-                        if (preg_match('/^\d+$/', $mb_open_date) == false) throw new Exception("정보공개일 날짜형식 오류");
-                        $mb_open_date = date('Y-m-d', ($mb_open_date - 25569) * 86400);
+                        if(preg_match('/^\d+$/', $mb_open_date) == true) {
+                            $mb_open_date = date('Y-m-d', ($mb_open_date - 25569) * 86400);
+                        } else if(preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $mb_open_date) == true) {
+                            // $mb_open_date가 date format의 형식으로 들어오는 경우 skip
+                        } else {
+                            throw new Exception("정보공개일 날짜형식 오류");
+                        }
                     }
                     break;
                 case 'N':
@@ -264,14 +273,24 @@ if ($is_upload_file) {
             if (empty($mb_datetime)) {
                 $mb_datetime = $input_date;
             } else {
-                if (preg_match('/^\d*(\.?\d*)$/', $mb_datetime) == false) throw new Exception("회원가입일 날짜형식 오류");
-                $mb_datetime = date('Y-m-d h:i:s', ($mb_datetime - 25569) * 86400);
+                if(preg_match('/^\d*(\.?\d*)$/', $mb_datetime) == true) {
+                    $mb_datetime = date('Y-m-d h:i:s', ($mb_datetime - 25569) * 86400);
+                } else if(preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2})\:([0-9]{2})\:([0-9]{2})$/", $mb_datetime) == true) {
+                    // $mb_datetime이 date format의 형식으로 들어오는 경우 skip
+                } else {
+                    throw new Exception("회원가입일 날짜형식 오류");
+                }
             }
 
             // 최근접속일 검사
             if (!empty($mb_today_login)) {
-                if (preg_match('/^\d*(\.?\d*)$/', $mb_today_login) == false) throw new Exception("최근접속일 날짜형식 오류");
-                $mb_today_login = date('Y-m-d h:i:s', ($mb_today_login - 25569) * 86400);
+                if(preg_match('/^\d*(\.?\d*)$/', $mb_today_login) == true) {
+                    $mb_today_login = date('Y-m-d h:i:s', ($mb_today_login - 25569) * 86400);
+                } else if(preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2})\:([0-9]{2})\:([0-9]{2})$/", $mb_today_login) == true) {
+                    // $mb_today_login이 date format의 형식으로 들어오는 경우 skip
+                } else {
+                    throw new Exception("최근접속일 날짜형식 오류");
+                }
             }
 
             // IP 유효성 체크
@@ -400,9 +419,8 @@ if ($is_upload_file) {
             $content .= '</div>';
             $content .= '</div>';
 
-            mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
+            $mail_result = mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $mb_email, $subject, $content, 1);
             
-            // 해당 event를 찾을 수 없음
             // run_event('password_lost2_after', $mb, $mb_nonce, $mb_lost_certify);
 
             $succ_count++;

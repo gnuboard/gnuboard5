@@ -137,14 +137,23 @@ foreach($headers as $key => $var) {
 
 foreach($rows as $key => $var) {
     foreach($var as $key2 => $var2) {
-        // $excel->getActiveSheet()->setCellValue(column_char($key2).($key+3), $var2);
         if(preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $var2)) {
-            $excel->getActiveSheet()->getStyle(column_char($key2).($key+3))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
+            if($var2 != '0000-00-00') {
+                $excel->getActiveSheet()->setCellValueExplicit(column_char($key2).($key+3), ceil(strtotime($var2)/86400) + 25569, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $excel->getActiveSheet()->getStyle(column_char($key2).($key+3))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
+            } else {
+                $excel->getActiveSheet()->setCellValue(column_char($key2).($key+3), $var2);
+            }
         } else if(preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2}) ([0-9]{2})\:([0-9]{2})\:([0-9]{2})$/", $var2)) {
-            $excel->getActiveSheet()->getStyle(column_char($key2).($key+3))->getNumberFormat()->setFormatCode("yyyy-mm-dd h:mm");
+            if($var2 != '0000-00-00 00:00:00') {
+                $excel->getActiveSheet()->setCellValueExplicit(column_char($key2).($key+3), (strtotime($var2)/86400) + 25569, PHPExcel_Cell_DataType::TYPE_NUMERIC);
+                $excel->getActiveSheet()->getStyle(column_char($key2).($key+3))->getNumberFormat()->setFormatCode("yyyy-mm-dd h:mm");
+            } else {
+                $excel->getActiveSheet()->setCellValue(column_char($key2).($key+3), $var2);
+            }
+        } else {
+            $excel->getActiveSheet()->setCellValue(column_char($key2).($key+3), $var2);
         }
-        $excel->getActiveSheet()->setCellValue(column_char($key2).($key+3), $var2);
-        
     }
 }
 
