@@ -59,7 +59,7 @@ define('G5_MOBILE_DIR',     'mobile');
 define('G5_OKNAME_DIR',     'okname');
 
 define('G5_KCPCERT_DIR',    'kcpcert');
-define('G5_KGCERT_DIR',     'kgcert');
+define('G5_INICERT_DIR',     'inicert');
 define('G5_LGXPAY_DIR',     'lgxpay');
 
 define('G5_SNS_DIR',        'sns');

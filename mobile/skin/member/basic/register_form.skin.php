@@ -295,7 +295,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 
         <?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
         // 이니시스 통합인증
-        var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
+        var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
         var type = "";    
         var params = "";
         var request_url = "";

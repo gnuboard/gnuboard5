@@ -44,10 +44,10 @@ if($flgFixedUser == 'Y') {
 
 switch($_GET['pageType']) {		
     case "register":
-        $resultPage = "/kg_result.php";
+        $resultPage = "/ini_result.php";
         break;
     case "find":
-        $resultPage = "/kg_find_result.php";
+        $resultPage = "/ini_find_result.php";
         break;
     default:
         alert_close('잘못된 접근입니다.');
