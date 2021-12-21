@@ -625,7 +625,7 @@ if(!$default['de_kakaopay_cancelpwd']){
         <tr id="inicis_vbank_url" class="pg_vbank_url">
             <th scope="row">KG이니시스 가상계좌 입금통보 URL</th>
             <td>
-                <?php echo help("KG이니시스 가상계좌 사용시 다음 주소를 <strong><a href=\"https://iniweb.inicis.com/\" target=\"_blank\">KG이니시스 관리자</a> &gt; 거래조회 &gt; 가상계좌 &gt; 입금통보방식선택 &gt; URL 수신 설정</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
+                <?php echo help("KG이니시스 가상계좌 사용시 다음 주소를 <strong><a href=\"https://iniweb.inicis.com/\" target=\"_blank\">KG이니시스 관리자</a> &gt; 거래내역 &gt; 가상계좌 &gt; 입금통보방식선택 &gt; URL 수신 설정</strong>에 넣으셔야 상점에 자동으로 입금 통보됩니다."); ?>
                 <?php echo G5_SHOP_URL; ?>/settle_inicis_common.php</td>
         </tr>
         <tr>
@@ -919,6 +919,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <input type="text" name="de_kakaopay_hashkey" value="<?php echo get_sanitize_input($default['de_kakaopay_hashkey']); ?>" id="de_kakaopay_hashkey" class="frm_input" size="20">
             </td>
         </tr>
+        <?php if (defined('G5_SHOP_DIRECT_NAVERPAY') && G5_SHOP_DIRECT_NAVERPAY) { ?>
         <tr class="naver_info_fld">
             <th scope="row">
                 <label for="de_naverpay_mid">네이버페이 가맹점 아이디</label>
@@ -982,6 +983,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                 <input type="text" name="de_naverpay_sendcost" value="<?php echo get_sanitize_input($default['de_naverpay_sendcost']); ?>" id="de_naverpay_sendcost" class="frm_input" size="70">
              </td>
         </tr>
+        <?php } // defined('G5_SHOP_DIRECT_NAVERPAY') ?>
         <tr>
             <th scope="row">에스크로 사용</th>
             <td>

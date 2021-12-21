@@ -161,7 +161,7 @@ define('G5_SPACE',          32); // 공백
 define('G5_SPECIAL',        64); // 특수문자
 
 // SEO TITLE 문단 길이
-define('G5_SEO_TITEL_WORD_CUT', 8);        // SEO TITLE 문단 길이
+define('G5_SEO_TITLE_WORD_CUT', 8);        // SEO TITLE 문단 길이
 
 // 퍼미션
 define('G5_DIR_PERMISSION',  0755); // 디렉토리 생성시 퍼미션

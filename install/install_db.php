@@ -529,6 +529,13 @@ for ($i=0; $i<count($dir_arr); $i++) {
     @chmod($dir_arr[$i], G5_DIR_PERMISSION);
 }
 
+// 게시판 디렉토리 생성 (작은별님,211206)
+for ($i=0; $i<count($tmp_bo_table); $i++) {
+    $board_dir = $data_path.'/file/'.$tmp_bo_table[$i];
+    @mkdir($board_dir, G5_DIR_PERMISSION);
+    @chmod($board_dir, G5_DIR_PERMISSION);
+}
+
 if($g5_shop_install) {
     $dir_arr = array (
         $data_path.'/banner',
@@ -633,10 +640,10 @@ fclose($f);
         <li>DB설정 파일 생성 완료 (<?php echo $file ?>)</li>
 
 <?php
-// data 디렉토리 및 하위 디렉토리에서는 .htaccess .htpasswd .php .phtml .html .htm .inc .cgi .pl 파일을 실행할수 없게함.
+// data 디렉토리 및 하위 디렉토리에서는 .htaccess .htpasswd .php .phtml .html .htm .inc .cgi .pl .phar 파일을 실행할수 없게함.
 $f = fopen($data_path.'/.htaccess', 'w');
 $str = <<<EOD
-<FilesMatch "\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp][Hh][Tt]|[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll])">
+<FilesMatch "\.(htaccess|htpasswd|[Pp][Hh][Pp]|[Pp][Hh][Tt]|[Pp]?[Hh][Tt][Mm][Ll]?|[Ii][Nn][Cc]|[Cc][Gg][Ii]|[Pp][Ll]|[Pp][Hh][Aa][Rr])">
 Order allow,deny
 Deny from all
 </FilesMatch>

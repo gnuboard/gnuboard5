@@ -94,6 +94,10 @@ if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS']=='on') {
     define('SHOP_TOSSPAYMENTS_CASHRECEIPT_TEST_JS', 'http://pgweb.tosspayments.com:7085/WEB_SERVER/js/receipt_link.js');
 }
 
+// 네이버페이를 신용카드 결제창에서 지원하고 있으므로 네이버에 직접신청하는 결제 기능을 미사용(false:기본설정) 합니다. (kagla,211019)
+// 네이버에서 직접신청 결제를 사용(true)하시는 경우 모든 문제를 직접 해결해 주셔야 합니다.
+define('G5_SHOP_DIRECT_NAVERPAY', false); // false 미사용(기본설정), true 사용
+
 /*
 // 주문상태 상수
 define('G5_OD_STATUS_ORDER'     , '입금확인중');

@@ -26,6 +26,7 @@ for ($i=0; $i<$count; $i++)
     }
 
     $_POST['me_link'][$i] = is_array($_POST['me_link']) ? clean_xss_tags(clean_xss_attributes(preg_replace('/[ ]{2,}|[\t]/', '', $_POST['me_link'][$i]), 1)) : '';
+    $_POST['me_link'][$i] = html_purifier($_POST['me_link'][$i]);
 
     $code    = is_array($_POST['code']) ? strip_tags($_POST['code'][$i]) : '';
     $me_name = is_array($_POST['me_name']) ? strip_tags($_POST['me_name'][$i]) : '';
