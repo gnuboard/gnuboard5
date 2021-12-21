@@ -104,18 +104,21 @@ if ($is_upload_file) {
 
             // 아이디 유효성 체크
             if (empty($mb_id)) throw new Exception("아이디 미입력 오류");
-            $result = sql_fetch("SELECT count(*) as `cnt` FROM `{$g5['member_table']}` WHERE `mb_id` = \"{$var[1]}\"");
-            if ($result['cnt'] > 0) throw new Exception("아이디 중복 오류");
+            if (exist_mb_id($mb_id) != "") throw new Exception("아이디 중복 오류");
+            if (valid_mb_id($mb_id) != "") throw new Exception("아이디 유효성 오류(영문자,숫자,_(언더바)만 가능)");
+            if (count_mb_id($mb_id) != "") throw new Exception("아이디 유효성 오류(3글자 이상 입력)");
+            if (reserve_mb_id($mb_id) != "") throw new Exception("아이디 유효성 오류(예약단어 불가)");
 
             // 이름 유효성 체크
-            if (empty($mb_name)) throw new Exception("이름 미입력 오류");
+            if (empty_mb_name($mb_name) != "") throw new Exception("이름 미입력 오류");
+            if (valid_mb_name($mb_name) != "") throw new Exception("이름 유효성 오류(공백없이 한글만 사용)");
 
             // 닉네임 유효성 체크
             if (empty_mb_nick($mb_nick) != "") throw new Exception("닉네임 미입력 오류");
+            if (exist_mb_nick($mb_nick, $mb_id) != "") throw new Exception("닉네임 중복 오류");
             if (valid_mb_nick($mb_nick) != "") throw new Exception("닉네임 유효성 오류(공백없이 한글, 영문, 숫자)");
             if (count_mb_nick($mb_nick) != "") throw new Exception("닉네임 유효성 오류(한글 2글자, 영문 4글자 이상 입력)");
-            if (exist_mb_nick($mb_nick, $mb_id) != "") throw new Exception("닉네임 중복 오류");
-            if (reserve_mb_nick($mb_nick) != "") throw new Exception("예약어로 등록된 닉네임 등록 오류");
+            if (reserve_mb_nick($mb_nick) != "") throw new Exception("닉네임 유효성 오류(예약단어 불가)");
             
             if (empty($mb_nick_date)) { 
                 $mb_nick_date = date('Y-m-d', time());
@@ -137,17 +140,17 @@ if ($is_upload_file) {
             if (preg_match('/^\d+$/', $mb_point) == false) throw new Exception("포인트 유효성 오류(숫자만 입력)");
 
             // 이메일 유효성 체크
-            if (empty_mb_email($mb_email) != "") throw new Exception("닉네임 미입력 오류");
-            if (valid_mb_email($mb_email) != "") throw new Exception("이메일 유효성 오류(E-mail 주소 형식이 아님)");
-            if (prohibit_mb_email($mb_email) != "") throw new Exception("금지 메일 도메인 입력 오류");
+            if (empty_mb_email($mb_email) != "") throw new Exception("이메일 미입력 오류");
             if (exist_mb_email($mb_email, $mb_id) != "") throw new Exception("이메일 중복 오류");
+            if (valid_mb_email($mb_email) != "") throw new Exception("이메일 유효성 오류(E-mail 주소 형식이 아님)");
+            if (prohibit_mb_email($mb_email) != "") throw new Exception("이메일 유효성 오류(금지 메일 도메인)");
 
             // 휴대폰번호 유효성 체크
             $mb_hp = "";
             if (!empty($mb_hp_text)) {
                 $mb_hp = hyphen_hp_number($mb_hp_text);
-                if (valid_mb_hp($mb_hp) != "") throw new Exception("휴대폰번호 유효성 오류");
                 if (exist_mb_hp($mb_hp, $mb_id) != "") throw new Exception("휴대폰번호 중복 오류");
+                if (valid_mb_hp($mb_hp) != "") throw new Exception("휴대폰번호 유효성 오류(휴대폰 번호 형식이 아님)");
             }
 
             // 본인확인 유효성 체크
