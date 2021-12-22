@@ -1,8 +1,6 @@
 <?php
 include_once('./_common.php');
 
-if($_GET['directAgency'] == "KFTC") alert_close("서비스 준비중입니다.");
-
 $sql = "select MAX(cr_id) as max_cr_id from {$g5['cert_history_table']} limit 1";
 $res = sql_fetch($sql);
 $max_cr_id = $res['max_cr_id'];
@@ -53,7 +51,7 @@ switch($_GET['pageType']) {
         alert_close('잘못된 접근입니다.');
 }
 
-$resultUrl = G5_KGCERT_URL . $resultPage;
+$resultUrl = G5_INICERT_URL . $resultPage;
 $g5['title'] = 'KG이니시스 통합인증';
 include_once(G5_PATH.'/head.sub.php'); 	
 ?>
