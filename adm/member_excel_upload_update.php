@@ -51,7 +51,6 @@ if ($is_upload_file) {
     
     foreach($datas as $key => $var) {
         try {
-
             $null_array = array_filter($var);
             if(empty($null_array)) continue;
 
@@ -68,8 +67,8 @@ if ($is_upload_file) {
             $mb_hp_text = addslashes($var[10]);
             $mb_tel = addslashes($var[11]);
             $mb_certify_text = addslashes($var[12]);
-            $mb_adult = addslashes($var[13]);
-            $mb_email_certify = addslashes($var[14]);
+            $mb_adult_text = addslashes($var[13]);
+            $mb_email_certify_text = addslashes($var[14]);
             $zip_code = addslashes($var[15]);
             $mb_addr1 = addslashes($var[16]);
             $mb_addr2 = addslashes($var[17]);
@@ -179,17 +178,26 @@ if ($is_upload_file) {
             }
 
             // 성인인증 유효성 검사
-            if (!empty($mb_adult) && $mb_certify_check == true) {
-                if ($mb_adult != 'Y' && $mb_adult != 'N') throw new Exception("성인인증 입력값 오류");
+            if (!empty($mb_adult_text) && $mb_certify_check == true) {
+                if ($mb_adult_text != 'Y' && $mb_adult_text != 'N') throw new Exception("성인인증 입력값 오류");
             } else {
-                $mb_adult = 'N';
+                $mb_adult_text = 'N';
+            }
+
+            switch($mb_adult_text) {
+                case 'Y':
+                    $mb_adult = 1;
+                    break;
+                case 'N':
+                    $mb_adult = 0;
+                    break;
             }
 
             // 메일일증 유효성 검사
-            if (!empty($mb_email_certify)) {
-                if ($mb_email_certify != 'Y' && $mb_email_certify != 'N') throw new Exception("메일인증 입력값 오류");
+            if (!empty($mb_email_certify_text)) {
+                if ($mb_email_certify_text != 'Y' && $mb_email_certify_text != 'N') throw new Exception("메일인증 입력값 오류");
             } else {
-                $mb_email_certify = 'N';
+                $mb_email_certify_text = 'N';
             }
 
             // 우편번호 유효성 검사
@@ -344,7 +352,6 @@ if ($is_upload_file) {
                         `mb_tel`            = '{$mb_tel}',
                         `mb_certify`        = '{$mb_certify}',
                         `mb_adult`          = '{$mb_adult}',
-                        `mb_email_certify`  = '{$mb_email_certify}',
                         `mb_addr1`          = '{$mb_addr1}',
                         `mb_addr2`          = '{$mb_addr2}',
                         `mb_addr3`          = '{$mb_addr3}',
