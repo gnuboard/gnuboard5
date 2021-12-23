@@ -23,7 +23,7 @@ $result = sql_query($sql);
 include_once(G5_LIB_PATH.'/PHPExcel.php');
 
 $headers = array('번호', '아이디', '이름', '닉네임', '닉네임 변경일', '회원권한', '상태', '포인트', 'E-mail', '홈페이지', '휴대폰번호', '전화번호', '본인확인', '성인인증', '메일인증', '우편번호', '기본주소', '상세주소', '참고항목', '지번', '메일 수신', 'SMS 수신', '정보 공개', '정보 공개일', '서명', '자기 소개', '메모', '회원가입일', '최근접속일', 'IP', '탈퇴일자', '접근차단일', '추천인', '여분필드1', '여분필드2', '여분필드3', '여분필드4', '여분필드5', '여분필드6', '여분필드7', '여분필드8', '여분필드9', '여분필드10');
-$widths = array(10, 10, 10, 10, 20, 10, 10, 10, 50, 10, 15, 15, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 30, 20, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
+$widths = array(10, 10, 10, 10, 20, 10, 10, 10, 50, 10, 15, 15, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 30, 30, 20, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10);
 
 $header_bgcolor = 'FFFFFF00';
 $last_char = column_char(count($headers) - 1);
@@ -128,7 +128,6 @@ foreach($red_font_cells as $var) {
 }
 
 $excel->getActiveSheet()->mergeCells("A1:${last_char}1");
-
 $excel->getActiveSheet()->setCellValue("A1", $message);
 
 foreach($headers as $key => $var) {
@@ -137,6 +136,7 @@ foreach($headers as $key => $var) {
 
 foreach($rows as $key => $var) {
     foreach($var as $key2 => $var2) {
+        if($headers[$key2])
         if(preg_match("/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/", $var2)) {
             if($var2 != '0000-00-00') {
                 $excel->getActiveSheet()->setCellValueExplicit(column_char($key2).($key+3), ceil(strtotime($var2)/86400) + 25569, PHPExcel_Cell_DataType::TYPE_NUMERIC);
@@ -152,23 +152,11 @@ foreach($rows as $key => $var) {
                 $excel->getActiveSheet()->setCellValue(column_char($key2).($key+3), $var2);
             }
         } else {
+            $excel->getActiveSheet()->getStyle(column_char($key2).($key+3))->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_TEXT);
             $excel->getActiveSheet()->setCellValue(column_char($key2).($key+3), $var2);
         }
     }
 }
-
-// print_r2($excel->getActiveSheet());
-// exit;
-
-
-// $excel->getActiveSheet()->fromArray($datas, null, 'A1');
-
-// print_r2($excel);
-
-// $excel->getActiveSheet()->getStyle('E3')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
-// $excel->getActiveSheet()->getStyle('X3')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
-// $excel->getActiveSheet()->getStyle('AB3')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME2);
-// $excel->getActiveSheet()->getStyle('AC3')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_TIME2);
 
 header("Content-Type: application/octet-stream");
 header("Content-Disposition: attachment; filename=\"memberlist-".date("ymd", time()).".xls\"");
