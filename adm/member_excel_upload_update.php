@@ -147,24 +147,30 @@ if ($is_upload_file) {
 
             // 휴대폰번호 유효성 체크
             $mb_hp = "";
+            $mb_hp_check = false;
             if (!empty($mb_hp_text)) {
                 $mb_hp = hyphen_hp_number($mb_hp_text);
                 if (exist_mb_hp($mb_hp, $mb_id) != "") throw new Exception("휴대폰번호 중복 오류");
                 if (valid_mb_hp($mb_hp) != "") throw new Exception("휴대폰번호 유효성 오류(휴대폰 번호 형식이 아님)");
+                $mb_hp_check = true;
             }
 
             // 본인확인 유효성 체크
             $mb_certify = "";
-            if (!empty($mb_certify_text)) {
+            $mb_certify_check = false;
+            if (!empty($mb_certify_text) && $mb_hp_check == true) {
                 switch ($mb_certify_text) {
                     case "관리자":
                         $mb_certify = "admin";
+                        $mb_certify_check = true;
                         break;
                     case "아이핀":
                         $mb_certify = "ipin";
+                        $mb_certify_check = true;
                         break;
                     case "휴대폰":
                         $mb_certify = "hp";
+                        $mb_certify_check = true;
                         break;
                     default:
                         $mb_certify = "";
@@ -173,7 +179,7 @@ if ($is_upload_file) {
             }
 
             // 성인인증 유효성 검사
-            if (!empty($mb_adult)) {
+            if (!empty($mb_adult) && $mb_certify_check == true) {
                 if ($mb_adult != 'Y' && $mb_adult != 'N') throw new Exception("성인인증 입력값 오류");
             } else {
                 $mb_adult = 'N';
