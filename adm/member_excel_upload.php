@@ -21,7 +21,7 @@ include_once(G5_PATH.'/head.sub.php');
 
             <p>
                 <!-- #TODO 다운로드 링크 추가 -->
-                <a href="" download="">샘플 다운로드</a>
+                <a href="<?php echo G5_URL; ?>/<?php echo G5_LIB_DIR; ?>/Excel/엑셀다운로드-회원-샘플.xls">샘플 다운로드</a>
             </p>
         </div>
 
