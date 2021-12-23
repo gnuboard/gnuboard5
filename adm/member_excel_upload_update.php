@@ -331,7 +331,7 @@ if ($is_upload_file) {
                         `mb_nick`           = '{$mb_nick}',
                         `mb_nick_date`      = '{$mb_nick_date}',
                         `mb_level`          = '{$mb_level}',
-                        `mb_point`          = '{$mb_point}',
+                        `mb_point`          = '0',
                         `mb_email`          = '{$mb_email}',
                         `mb_homepage`       = '{$mb_homepage}',
                         `mb_hp`             = '{$mb_hp}',
@@ -373,10 +373,21 @@ if ($is_upload_file) {
 
             $mb_no = sql_insert_id();
 
+            // 회원가입시 포인트 추가 관련 프로세스
+            if ($mb_point > 0) {
+                insert_point($mb_id, $mb_point, '포인트', '@member', $mb_id, '회원가입');
+            } else {
+                if($config['cf_register_point'] > 0) {
+                    insert_point($mb_id, $config['cf_register_point'], '회원가입 축하', '@member', $mb_id, '회원가입');
+                }
+            }
+
             // 추천인 포인트 관련 프로세스
             if ($config['cf_use_recommend'] && $config['cf_recommend_point'] > 0 && !empty($mb_recommend)) {
                 insert_point($mb_recommend, $config['cf_recommend_point'], $mb_id.'의 추천인', '@member', $mb_recommend, $mb_id.' 추천');
             }
+
+
 
             include_once(G5_LIB_PATH.'/mailer.lib.php');
 
