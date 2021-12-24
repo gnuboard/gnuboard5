@@ -23,6 +23,10 @@ if ($member['mb_level'] != 10) {
     alert("최고관리자만 이용가능합니다.");
 }
 
+if (!check_password($_POST['admin_password'], $member['mb_password'])) {
+    alert("비밀번호가 일치하지 않습니다.");
+}
+
 $is_upload_file = (isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) ? 1 : 0;
 
 if (!$is_upload_file){
@@ -455,7 +459,7 @@ if ($is_upload_file) {
             $succ_count++;
         } catch(Exception $e) {
             $data = array();
-            $fail_array[$key]['row'] = 'A'.($key + 3);
+            $fail_array[$key]['row'] = 'Line '.($key + 3);
             $fail_array[$key]['message'] = $e->getMessage();
 
             $fail_count++;
