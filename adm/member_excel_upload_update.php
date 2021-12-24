@@ -352,6 +352,8 @@ if ($is_upload_file) {
                         `mb_tel`            = '{$mb_tel}',
                         `mb_certify`        = '{$mb_certify}',
                         `mb_adult`          = '{$mb_adult}',
+                        `mb_zip1`           = '{$mb_zip1}',
+                        `mb_zip2`           = '{$mb_zip2}',
                         `mb_addr1`          = '{$mb_addr1}',
                         `mb_addr2`          = '{$mb_addr2}',
                         `mb_addr3`          = '{$mb_addr3}',
