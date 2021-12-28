@@ -78,11 +78,17 @@ for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
     
     // 선택적 입력 항목
     $item->addChild("g:g:condition", "new");
-    $item->addChild("adult", "no");
-    if(in_array(1, $category_array[$row['ca_id']])) {
-        $item->addChild("adult", "yes");
+
+    $cate_array = array($row['ca_id'], $row['ca_id2'], $row['ca_id3']);
+
+    $adult = "no";
+    foreach($cate_array as $key => $var) {
+        if(in_array(1, $category_array[$var])) {
+            $adult = "yes";
+        }
     }
-    
+
+    $item->addChild("adult", $adult);
 }
 
 header('Content-type: text/xml'); 
