@@ -10,9 +10,9 @@ $sql = "SELECT a.ca_id,
                 FROM `g5_shop_category` AS a";
 $result = sql_query($sql);
 
-$category_array = array();
+$category_adult_array = array();
 for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
-    $category_array[$row['ca_id']] = array( $row['ca_adult'],               // 자기자신 성인인증판단
+    $category_adult_array[$row['ca_id']] = array( $row['ca_adult'],               // 자기자신 성인인증판단
                                             $row['ca_adult_parent1'],       // 1depth 성인인증
                                             $row['ca_adult_parent2'],       // 2depth 성인인증 
                                             $row['ca_adult_parent3'],       // 3depth 성인인증
@@ -33,13 +33,10 @@ $link = $channel->addChild("link", G5_URL);
 $description = $channel->addChild("description", "몰?루");
 
 for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
-    $stock = "in_stock";
-    if($row['in_stock'] != null) {
-        if($row['in_stock'] <= 0) $stock = "out_of_stock";
-    }
+    if(empty($row['it_id'])) continue;
+    if(empty($row['it_name'])) continue;
     if(empty($row['it_img1'])) continue;
     if(!file_exists(G5_DATA_PATH.'/item/'.$row['it_img1'])) continue;
-
     $ext = explode('.', $row['it_img1'])[1];
 
     switch($ext) {
@@ -59,6 +56,11 @@ for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
     }
 
     if($ext_check == false) continue;
+
+    $stock = "in_stock";
+    if($row['in_stock'] != null) {
+        if($row['in_stock'] <= 0) $stock = "out_of_stock";
+    }
     
     $item = $channel->addChild("item");
     // 필수 입력 항목
@@ -83,7 +85,7 @@ for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
 
     $adult = "no";
     foreach($cate_array as $key => $var) {
-        if(in_array(1, $category_array[$var])) {
+        if(in_array(1, $category_adult_array[$var])) {
             $adult = "yes";
         }
     }
