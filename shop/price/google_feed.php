@@ -30,32 +30,23 @@ $xml->addAttribute("version", "2.0");
 $channel = $xml->addChild("channel");
 $title = $channel->addChild("title", "쇼핑몰피드");
 $link = $channel->addChild("link", G5_URL);
-$description = $channel->addChild("description", "몰?루");
+$description = $channel->addChild("description", "");
 
 for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
-    if(empty($row['it_id'])) continue;
-    if(empty($row['it_name'])) continue;
-    if(empty($row['it_img1'])) continue;
-    if(!file_exists(G5_DATA_PATH.'/item/'.$row['it_img1'])) continue;
-    $ext = explode('.', $row['it_img1'])[1];
+    $it_id = $row['it_id'];
+    $it_title = $row['it_name'];
+    $it_link = shop_item_url($row['it_id']);
+    $it_basic = strip_tags($row['it_basic']);
 
-    switch($ext) {
-        case "jpg":
-        case "jpeg":
-        case "webp":
-        case "png":
-        case "gif":
-        case "bmp":
-        case "tif":
-        case "tiff":
-            $ext_check = true;
-            break;
-        default:
-            $ext_check = false;
-            break;
+    $it_image = "";
+    for($i=1; $i<=10; $i++) {
+        $img = $row['it_img'.$i];
+        
+        if(empty($img)) continue;
+
+        $it_image = G5_DATA_URL."/item/".$img;
+        break;
     }
-
-    if($ext_check == false) continue;
 
     $stock = "in_stock";
     if($row['in_stock'] != null) {
@@ -64,11 +55,11 @@ for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
     
     $item = $channel->addChild("item");
     // 필수 입력 항목
-    $item->addChild("g:g:id", $row['it_id']);
-    $item->addChild("title", $row['it_name']);
-    $item->addChild("description", strip_tags($row['it_basic']));
-    $item->addChild("link", G5_SHOP_URL.'/item.php?it_id='.urlencode($row['it_id']));
-    $item->addChild("g:g:image_link", G5_DATA_URL.'/item/'.$row['it_img1']);
+    $item->addChild("g:g:id", $it_id);
+    $item->addChild("title", $it_title);
+    $item->addChild("description", $it_basic);
+    $item->addChild("link", $it_link);
+    $item->addChild("g:g:image_link", $it_image);
     $item->addChild("availability", $stock);
     
     if($row['it_cust_price'] != null && $row['it_cust_price'] > 0) {
