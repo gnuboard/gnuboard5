@@ -32,15 +32,15 @@ $title = $channel->addChild("title", "쇼핑몰피드");
 $link = $channel->addChild("link", G5_URL);
 $description = $channel->addChild("description", "");
 
-for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
+for ($i = 0; $row = sql_fetch_array($result); $i++) {
     $it_id = $row['it_id'];
     $it_title = $row['it_name'];
     $it_link = shop_item_url($row['it_id']);
     $it_basic = strip_tags($row['it_basic']);
 
     $it_image = "";
-    for($i=1; $i<=10; $i++) {
-        $img = $row['it_img'.$i];
+    for($j = 1; $j <= 10; $j++) {
+        $img = $row['it_img'.$j];
         
         if(empty($img)) continue;
 
