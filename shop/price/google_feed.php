@@ -3,11 +3,11 @@ include_once("./_common.php");
 
 $sql = "SELECT a.ca_id,
                 a.ca_adult_use AS ca_adult,
-                IF( SUBSTR(a.ca_id, 3) != \"\", (SELECT ca_adult_use FROM `g5_shop_category` WHERE ca_id = SUBSTR(a.ca_id, 3)), 0) AS ca_adult_parent1,
-                IF( SUBSTR(a.ca_id, 5) != \"\", (SELECT ca_adult_use FROM `g5_shop_category` WHERE ca_id = SUBSTR(a.ca_id, 5)), 0) AS ca_adult_parent2,
-                IF( SUBSTR(a.ca_id, 7) != \"\", (SELECT ca_adult_use FROM `g5_shop_category` WHERE ca_id = SUBSTR(a.ca_id, 7)), 0) AS ca_adult_parent3, 
-                IF( SUBSTR(a.ca_id, 9) != \"\", (SELECT ca_adult_use FROM `g5_shop_category` WHERE ca_id = SUBSTR(a.ca_id, 9)), 0) AS ca_adult_parent4
-                FROM `g5_shop_category` AS a";
+                IF( SUBSTR(a.ca_id, 3) != \"\", (SELECT ca_adult_use FROM `{$g5['g5_shop_category_table']}` WHERE ca_id = SUBSTR(a.ca_id, 3)), 0) AS ca_adult_parent1,
+                IF( SUBSTR(a.ca_id, 5) != \"\", (SELECT ca_adult_use FROM `{$g5['g5_shop_category_table']}` WHERE ca_id = SUBSTR(a.ca_id, 5)), 0) AS ca_adult_parent2,
+                IF( SUBSTR(a.ca_id, 7) != \"\", (SELECT ca_adult_use FROM `{$g5['g5_shop_category_table']}` WHERE ca_id = SUBSTR(a.ca_id, 7)), 0) AS ca_adult_parent3, 
+                IF( SUBSTR(a.ca_id, 9) != \"\", (SELECT ca_adult_use FROM `{$g5['g5_shop_category_table']}` WHERE ca_id = SUBSTR(a.ca_id, 9)), 0) AS ca_adult_parent4
+                FROM `{$g5['g5_shop_category_table']}` AS a";
 $result = sql_query($sql);
 
 $category_adult_array = array();
@@ -19,7 +19,7 @@ for ($i = 0; $row = sql_fetch_array($result); $i++ ) {
                                             $row['ca_adult_parent4']);      // 4depth 성인인증
 }
 
-$sql =" SELECT a.*, (SELECT MIN(`io_stock_qty`) FROM `g5_shop_item_option` WHERE `it_id` = a.`it_id` GROUP BY `it_id`) AS in_stock
+$sql =" SELECT a.*, (SELECT MIN(`io_stock_qty`) FROM `{$g5['g5_shop_item_option_table']}` WHERE `it_id` = a.`it_id` GROUP BY `it_id`) AS in_stock
         FROM `{$g5['g5_shop_item_table']}` as a
         where a.`it_use` = '1' and a.`it_soldout` = '0' and a.`it_tel_inq` = '0' and a.`it_price` > '0' order by a.`ca_id`";
 $result = sql_query($sql);
