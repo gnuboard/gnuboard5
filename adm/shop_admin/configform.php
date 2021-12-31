@@ -64,7 +64,6 @@ if(!isset($default['de_pg_service'])) {
                     ADD `de_pg_service` varchar(255) NOT NULL DEFAULT '' AFTER `de_sms_hp` ", true);
 }
 
-
 // inicis 필드 추가
 if(!isset($default['de_inicis_mid'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
@@ -110,6 +109,14 @@ if(!isset($default['de_samsung_pay_use'])) {
 if(!isset($default['de_inicis_cartpoint_use'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_inicis_cartpoint_use` tinyint(4) NOT NULL DEFAULT '0' AFTER `de_samsung_pay_use` ", true);
+}
+
+// 나이스페이 필드 추가
+if(!isset($default['de_nicepay_mid'])) {
+    sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
+                    ADD `de_nicepay_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_cartpoint_use`,
+                    ADD `de_nicepay_admin_key` varchar(255) NOT NULL default '' AFTER `de_nicepay_mid`,
+                    ADD `de_nicepay_sign_key` varchar(255) NOT NULL default '' AFTER `de_nicepay_admin_key` ", true);
 }
 
 // 이니시스 lpay 사용여부 필드 추가
@@ -758,6 +765,7 @@ if(!$default['de_kakaopay_cancelpwd']){
                     <li class="<?php if($default['de_pg_service'] == 'kcp') echo 'tab-current'; ?>"><a href="#kcp_info_anchor" data-value="kcp" title="NHN KCP 선택하기" >NHN KCP</a></li>
                     <li class="<?php if($default['de_pg_service'] == 'lg') echo 'tab-current'; ?>"><a href="#lg_info_anchor" data-value="lg" title="토스페이먼츠 선택하기">토스페이먼츠</a></li>
                     <li class="<?php if($default['de_pg_service'] == 'inicis') echo 'tab-current'; ?>"><a href="#inicis_info_anchor" data-value="inicis" title="KG이니시스 선택하기">KG이니시스</a></li>
+                    <li class="<?php if($default['de_pg_service'] == 'nicepay') echo 'tab-current'; ?>"><a href="#nicepay_info_anchor" data-value="nicepay" title="나이스페이 선택하기">나이스페이</a></li>
                 </ul>
             </td>
         </tr>
@@ -877,6 +885,30 @@ if(!$default['de_kakaopay_cancelpwd']){
             <td>
                 <?php echo help("신용카드 포인트 결제에 대해 이니시스와 계약을 맺은 상점에서만 적용하는 옵션입니다.<br>체크시 pc 결제에서는 신용카드 포인트 사용 여부에 대한 팝업창에 사용 버튼과 사용안함 버튼이 표기되어 결제하는 고객의 선택여부에 따라 신용카드 포인트 결제가 가능합니다.<br >모바일에서는 신용카드 포인트 사용이 가능합니다.", 50); ?>
                 <input type="checkbox" name="de_inicis_cartpoint_use" value="1" id="de_inicis_cartpoint_use"<?php echo $default['de_inicis_cartpoint_use']?' checked':''; ?>> <label for="de_inicis_cartpoint_use">사용</label>
+            </td>
+        </tr>
+        <tr class="pg_info_fld nicepay_info_fld" id="nicepay_info_anchor">
+            <th scope="row">
+                <label for="de_nicepay_mid">나이스페이 상점아이디</label><br>
+                <a href="http://sir.kr/main/service/nicepay_pg.php" target="_blank" id="scf_nicepayreg" class="nicepay_btn">나이스페이 신청하기</a>
+            </th>
+            <td>
+                <?php echo help("나이스로 부터 발급 받으신 상점아이디(MID) 10자리 중 SIR 을 제외한 나머지 7자리를 입력 합니다.\n만약, 상점아이디가 SIR로 시작하지 않는다면 계약담당자에게 변경 요청을 해주시기 바랍니다. (Tel. 02-3430-5858) 예) SIRpaytest"); ?>
+                <span class="sitecode">SIR</span> <input type="text" name="de_nicepay_mid" value="<?php echo $default['de_nicepay_mid']; ?>" id="de_nicepay_mid" class="frm_input code_input" size="10" maxlength="10"> 영문소문자(숫자포함 가능)
+            </td>
+        </tr>
+        <tr class="pg_info_fld nicepay_info_fld">
+            <th scope="row"><label for="de_nicepay_admin_key">나이스페이 키패스워드</label></th>
+            <td>
+                <?php echo help("나이스페이에서 발급받은 4자리 상점 키패스워드를 입력합니다.\n나이스페이 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
+                <input type="text" name="de_nicepay_admin_key" value="<?php echo get_sanitize_input($default['de_nicepay_admin_key']); ?>" id="de_nicepay_admin_key" class="frm_input" size="5" maxlength="4">
+            </td>
+        </tr>
+        <tr class="pg_info_fld nicepay_info_fld">
+            <th scope="row"><label for="de_nicepay_sign_key">나이스페이 웹결제 사인키</label></th>
+            <td>
+                <?php echo help("나이스페이에서 발급받은 웹결제 사인키를 입력합니다.\n나이스페이 상점관리자 > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
+                <input type="text" name="de_nicepay_sign_key" value="<?php echo get_sanitize_input($default['de_nicepay_sign_key']); ?>" id="de_nicepay_sign_key" class="frm_input" size="40" maxlength="50">
             </td>
         </tr>
         <tr class="kakao_info_fld">
