@@ -50,11 +50,7 @@ for ($i = 0; $row = sql_fetch_array($result); $i++) {
 
     $stock = "in_stock";
     if($row['it_stock_qty'] <= 0) {
-        if($row['in_stock'] > 0) {
-            $stock = "in_stock";
-        } else {
-            $stock = "out_of_stock";
-        }
+        $stock = "out_of_stock";
     } else {
         if($row['in_stock'] <= 0) $stock = "out_of_stock";
     }
