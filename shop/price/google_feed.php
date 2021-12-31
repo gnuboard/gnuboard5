@@ -62,7 +62,7 @@ for ($i = 0; $row = sql_fetch_array($result); $i++) {
     $item->addChild("description", $it_basic);
     $item->addChild("link", $it_link);
     $item->addChild("g:g:image_link", $it_image);
-    $item->addChild("availability", $stock);
+    $item->addChild("g:g:availability", $stock);
     
     if($row['it_cust_price'] != null && $row['it_cust_price'] > 0) {
         $item->addChild("g:g:price", sprintf('%.2fKRW', $row['it_cust_price']));
@@ -83,7 +83,7 @@ for ($i = 0; $row = sql_fetch_array($result); $i++) {
         }
     }
 
-    $item->addChild("adult", $adult);
+    $item->addChild("g:g:adult", $adult);
 }
 
 header('Content-type: text/xml'); 
