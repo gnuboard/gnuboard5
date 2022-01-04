@@ -46,8 +46,8 @@ $pg_anchor = '<ul class="anchor">
             <dd>
                 <ul>
                     <li>구글 Merchant Center : <a href="https://www.google.com/intl/ko_kr/retail/solutions/merchant-center" target="_blank">https://www.google.com/intl/ko_kr/retail/solutions/merchant-center</a></li>
-                    <li>파일 이름 : <a href="<?php echo G5_SHOP_URL; ?>/price/" target="_blank"><?php echo G5_SHOP_URL; ?>/price/</a></li>
-                    <li>파일 URL : <a href="<?php echo G5_SHOP_URL; ?>/price/" target="_blank"><?php echo G5_SHOP_URL; ?>/price/</a></li>
+                    <li>파일 이름 : google_feed.php</a></li>
+                    <li>파일 URL : <a href="<?php echo G5_SHOP_URL; ?>/price/google_feed.php" target="_blank"><?php echo G5_SHOP_URL; ?>/price/google_feed.php</a></li>
                 </ul>
             </dd>
             <dt>Feed 설명</dt>
