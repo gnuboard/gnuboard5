@@ -123,7 +123,7 @@ if (!empty($row['mb_id'])) {
 // hash 데이터
 $cert_type = 'hp';
 $md5_cert_no = md5($req_num);
-$hash_data   = md5($mb_name.$cert_type.$mb_birth.$md5_cert_no);
+$hash_data   = md5($mb_name.$cert_type.$mb_birth.$phone_no.$md5_cert_no);
 
 // 성인인증결과
 $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));

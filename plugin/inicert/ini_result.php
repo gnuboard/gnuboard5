@@ -46,6 +46,13 @@ if ($_POST["resultCode"] === "0000") {
         $md5_ci = md5($ci . $ci);
         $phone_no = hyphen_hp_number($phone_no);
         $mb_dupinfo = $md5_ci;
+        
+        // $sql = " select mb_dupinfo from {$g5['member_table']} where mb_id = '{$member['mb_id']}'";
+        // $row = sql_fetch($sql);
+
+        // if (!empty($row['mb_dupinfo'])) {
+        //     if($row['mb_dupinfo'] != $mb_dupinfo) alert_close("해당 계정은 이미 다른명의로 본인인증 되어있는 계정입니다.");
+        // }
 
         $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
         $row = sql_fetch($sql);
@@ -56,7 +63,7 @@ if ($_POST["resultCode"] === "0000") {
         // hash 데이터
         
         $md5_cert_no = md5($cert_no);
-        $hash_data   = md5($user_name.$cert_type.$birth_day.$md5_cert_no);
+        $hash_data   = md5($user_name.$cert_type.$birth_day.$phone_no.$md5_cert_no);
 
         // 성인인증결과
         $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));

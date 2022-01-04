@@ -140,7 +140,7 @@ if ($xpay->TX()) {
         // hash 데이터
         $cert_type = 'hp';
         $md5_cert_no = md5($cert_no);
-        $hash_data   = md5($user_name.$cert_type.$birth_day.$md5_cert_no);
+        $hash_data   = md5($user_name.$cert_type.$birth_day.$phone_no.$md5_cert_no);
 
         // 성인인증결과
         $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
