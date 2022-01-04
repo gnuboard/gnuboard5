@@ -1523,6 +1523,24 @@ function forderform_check(f)
                 f.gopaymethod.value = "무통장";
                 break;
         }
+        <?php } else if($default['de_pg_service'] == 'nicepay') { ?>
+        switch(settle_method){
+            case "계좌이체":
+                f.pay_method.value = "BANK";
+                break;
+            case "신용카드":
+                f.pay_method.value = "CARD";
+                break;
+            case "가상계좌":
+                f.pay_method.value = "VBANK";
+                break;
+            case "휴대폰":
+                f.pay_method.value = "CELLPHONE";
+                break;
+            default:
+                f.pay_method.value = "무통장";
+                break;
+        }
         <?php } ?>
 
         // 결제정보설정
@@ -1609,6 +1627,8 @@ function forderform_check(f)
         } else {
             f.submit();
         }
+        <?php } else if($default['de_pg_service'] == "nicepay") { ?>
+            f.BuyerName = f.od_name;
         <?php } ?>
     }
 
