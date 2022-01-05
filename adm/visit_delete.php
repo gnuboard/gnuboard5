@@ -13,6 +13,9 @@ $row = sql_fetch($sql);
 
 $min_year = (int)substr($row['min_date'], 0, 4);
 $now_year = (int)substr(G5_TIME_YMD, 0, 4);
+if (!$min_year) {
+    $min_year = $now_year;
+}
 ?>
 
 <div class="local_ov01 local_ov">

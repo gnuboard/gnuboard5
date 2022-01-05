@@ -102,11 +102,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                         <?php }
                         if ($config['cf_cert_use']) {
                             if ($config['cf_cert_sa']) {
-                                echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline win_sa_cert" data-type="KAKAO">카카오 인증</button>'.PHP_EOL;
-                                echo '<button type="button" id="win_sa_toss_cert" class="btn_frmline win_sa_cert" data-type="TOSS">토스 인증</button>'.PHP_EOL;
-                                echo '<button type="button" id="win_sa_pass_cert" class="btn_frmline win_sa_cert" data-type="PASS">PASS 인증</button>'.PHP_EOL;
-                                echo '<button type="button" id="win_sa_payco_cert" class="btn_frmline win_sa_cert" data-type="PAYCO">페이코 인증</button>'.PHP_EOL;
-                                echo '<button type="button" id="win_sa_kftc_cert" class="btn_frmline win_sa_cert" data-type="KFTC">금융인증서</button>'.PHP_EOL;
+                                echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline win_sa_cert" data-type="">통합 인증</button>'.PHP_EOL;
                             }
                             if ($config['cf_cert_hp'])
                                 echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>' . PHP_EOL;
@@ -220,7 +216,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
 
         <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
             // 이니시스 통합인증
-            var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
+            var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
             var type = "";
             var params = "";
             var request_url = "";

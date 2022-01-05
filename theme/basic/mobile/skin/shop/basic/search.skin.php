@@ -44,12 +44,12 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
     <div id="ssch_cate">
         <ul>
         <?php
+        echo '<li><a href="#" onclick="set_ca_id(\'\'); return false;">전체분류 <span>'.$total_count.'</span></a></li>'.PHP_EOL;
         $total_cnt = 0;
         foreach( $categorys as $row ){
             echo "<li><a href=\"#\" onclick=\"set_ca_id('{$row['ca_id']}'); return false;\">{$row['ca_name']} <span>".$row['cnt']."</span></a></li>\n";
             $total_cnt += $row['cnt'];
         }
-        echo '<li><a href="#" onclick="set_ca_id(\'\'); return false;">전체분류 <span>'.$total_cnt.'</span></a></li>'.PHP_EOL;
         ?>
         </ul>
     </div>

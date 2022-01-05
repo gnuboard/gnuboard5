@@ -55,13 +55,13 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
     }
 
     // 본인확인을 사용한다면
-    if ($config['cf_cert_use'] && !$is_admin) {
+    if ($board['bo_use_cert'] != '' && $config['cf_cert_use'] && !$is_admin) {
         // 인증된 회원만 가능
-        if (empty($board['bo_use_cert']) && $is_guest) {
+        if ($is_guest) {
             alert('이 게시판은 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
         }
 
-        if (!empty($board['bo_use_cert']) && strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
+        if (strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
             goto_url(G5_BBS_URL."/member_cert_refresh.php");
         }
 
@@ -144,13 +144,13 @@ if ((isset($wr_id) && $wr_id) || (isset($wr_seo_title) && $wr_seo_title)) {
     }
 
     // 본인확인을 사용한다면
-    if ($config['cf_cert_use'] && !$is_admin) {
+    if ($board['bo_use_cert'] != '' && $config['cf_cert_use'] && !$is_admin) {
         // 인증된 회원만 가능
-        if (empty($board['bo_use_cert']) && $is_guest) {
+        if ($is_guest) {
             alert('이 게시판은 본인확인 하신 회원님만 글읽기가 가능합니다.\\n\\n회원이시라면 로그인 후 이용해 보십시오.', G5_BBS_URL.'/login.php?wr_id='.$wr_id.$qstr.'&amp;url='.urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
         }
 
-        if (!empty($board['bo_use_cert']) && strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
+        if (strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
             goto_url(G5_BBS_URL."/member_cert_refresh.php");
         }
 

@@ -427,17 +427,19 @@ $sql = " update {$g5['g5_shop_default_table']}
                 de_kakaopay_enckey            = '{$de_kakaopay_enckey}',
                 de_kakaopay_hashkey           = '{$de_kakaopay_hashkey}',
                 de_kakaopay_cancelpwd         = '{$de_kakaopay_cancelpwd}',
-                de_naverpay_mid               = '{$de_naverpay_mid}',
-                de_naverpay_cert_key          = '{$de_naverpay_cert_key}',
-                de_naverpay_button_key        = '{$de_naverpay_button_key}',
-                de_naverpay_test              = '{$de_naverpay_test}',
-                de_naverpay_mb_id             = '{$de_naverpay_mb_id}',
-                de_naverpay_sendcost          = '{$de_naverpay_sendcost}',
                 de_member_reg_coupon_use      = '{$de_member_reg_coupon_use}',
                 de_member_reg_coupon_term     = '{$de_member_reg_coupon_term}',
                 de_member_reg_coupon_price    = '{$de_member_reg_coupon_price}',
                 de_member_reg_coupon_minimum  = '{$de_member_reg_coupon_minimum}'
                 ";
+if (defined('G5_SHOP_DIRECT_NAVERPAY') && G5_SHOP_DIRECT_NAVERPAY) {
+    $sql .= "  ,de_naverpay_mid               = '{$de_naverpay_mid}',
+                de_naverpay_cert_key          = '{$de_naverpay_cert_key}',
+                de_naverpay_button_key        = '{$de_naverpay_button_key}',
+                de_naverpay_test              = '{$de_naverpay_test}',
+                de_naverpay_mb_id             = '{$de_naverpay_mb_id}',
+                de_naverpay_sendcost          = '{$de_naverpay_sendcost}' ";
+}
 sql_query($sql);
 
 // 환경설정 > 포인트 사용

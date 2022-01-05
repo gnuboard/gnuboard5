@@ -58,11 +58,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
                 if ($config['cf_cert_sa']) {
-                    echo '<button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="KAKAO">카카오 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_toss_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_pass_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_payco_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>' . PHP_EOL;
-                    echo '<button type="button" id="win_sa_kftc_cert" class="btn_close win_sa_cert" data-type="KFTC">금융인증서</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="">통합 인증</button>' . PHP_EOL;
                 }
                 echo '</div>';
                 echo '<div class="win_btn">';
@@ -85,7 +81,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 
             <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
                 // 이니시스 통합인증
-                var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
+                var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
                 var type = "";
                 var params = "";
                 var request_url = "";

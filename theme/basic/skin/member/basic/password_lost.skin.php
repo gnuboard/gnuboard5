@@ -33,11 +33,7 @@ if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] |
         <h3>본인인증으로 찾기</h3>
         <?php if(!empty($config['cf_cert_sa'])) { ?>
         <div class="cert_btn">
-            <button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="KAKAO">카카오 인증</button>
-            <button type="button" id="win_sa_toss_cert" class="btn_close win_sa_cert" data-type="TOSS">토스 인증</button>
-            <button type="button" id="win_sa_pass_cert" class="btn_close win_sa_cert" data-type="PASS">PASS 인증</button>
-            <button type="button" id="win_sa_payco_cert" class="btn_close win_sa_cert" data-type="PAYCO">페이코 인증</button>
-            <button type="button" id="win_sa_kftc_cert" class="btn_close win_sa_cert" data-type="KFTC">금융인증서</button>
+            <button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="">통합 인증</button>
         </div>
         <?php } if(!empty($config['cf_cert_hp']) || !empty($config['cf_cert_ipin'])) { ?>
         <div class="win_btn">
@@ -58,7 +54,7 @@ $(function() {
 
 	<?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
 	// TOSS 통합인증
-	var url = "<?php echo G5_KGCERT_URL; ?>/kg_request.php";
+	var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
 	var type = "";    
     var params = "";
     var request_url = "";

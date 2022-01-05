@@ -2464,9 +2464,9 @@ function shop_is_taxsave($od, $is_view_receipt=false){
 	if( $od['od_settle_case'] == '무통장' ){
 		$od_pay_type = 'account';
 	} else if ( $od['od_settle_case'] == '계좌이체' ) {
-		$od_pay_type = 'vbank';
-	} else if ( $od['od_settle_case'] == '가상계좌' ) {
 		$od_pay_type = 'transfer';
+	} else if ( $od['od_settle_case'] == '가상계좌' ) {
+		$od_pay_type = 'vbank';
 	}
 	
 	if( $od_pay_type ) {

@@ -193,7 +193,7 @@ function correct_goto_url($url){
 	return $url;
 }
 
-function generate_seo_title($string, $wordLimit=G5_SEO_TITEL_WORD_CUT){
+function generate_seo_title($string, $wordLimit=G5_SEO_TITLE_WORD_CUT){
     $separator = '-';
     
     if($wordLimit != 0){

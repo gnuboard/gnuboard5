@@ -324,9 +324,7 @@ else if ($w == 'cu') // 댓글 수정
     if (!$is_admin)
         $sql_ip = " , wr_ip = '{$_SERVER['REMOTE_ADDR']}' ";
 
-    $sql_secret = "";
-    if ($wr_secret)
-        $sql_secret = " , wr_option = '$wr_secret' ";
+    $sql_secret = " , wr_option = '$wr_secret' ";
 
     $sql = " update $write_table
                 set wr_subject = '$wr_subject',
