@@ -15,8 +15,10 @@ if ($kind == 'recv')
     $unkind = 'send';
 else if ($kind == 'send')
     $unkind = 'recv';
-else
+else {
+    $kind = clean_xss_tags(trim($kind));
     alert(''.$kind .'값을 넘겨주세요.');
+}
 
 if ($page < 1) { $page = 1; } // 페이지가 없으면 첫 페이지 (1 페이지)
 
