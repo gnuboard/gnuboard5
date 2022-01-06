@@ -37,7 +37,7 @@ $cert_type = get_session('ss_cert_type');
 if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
     // 해시값이 같은 경우에만 본인확인 값을 저장한다.
     if ($cert_type == 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { // 아이핀일때 hash 값 체크 hp미포함
-        $sql_certify .= " , mb_hp = '{$mb_hp}' ";
+        $sql_certify .= " mb_hp = '{$mb_hp}' ";
         $sql_certify .= " , mb_certify  = '{$cert_type}' ";
         $sql_certify .= " , mb_adult = '".get_session('ss_cert_adult')."' ";
         $sql_certify .= " , mb_birth = '".get_session('ss_cert_birth')."' ";
@@ -45,7 +45,7 @@ if ($config['cf_cert_use'] && $cert_type && $md5_cert_no) {
         $sql_certify .= " , mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
         $sql_certify .= " , mb_name = '{$mb_name}' ";
     } else if($cert_type != 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$mb_hp.$md5_cert_no)) { // 통합인증, 휴대폰일때 hash 값 체크 hp포함
-        $sql_certify .= " , mb_hp = '{$mb_hp}' ";
+        $sql_certify .= " mb_hp = '{$mb_hp}' ";
         $sql_certify .= " , mb_certify  = '{$cert_type}' ";
         $sql_certify .= " , mb_adult = '".get_session('ss_cert_adult')."' ";
         $sql_certify .= " , mb_birth = '".get_session('ss_cert_birth')."' ";
