@@ -529,6 +529,13 @@ for ($i=0; $i<count($dir_arr); $i++) {
     @chmod($dir_arr[$i], G5_DIR_PERMISSION);
 }
 
+// 게시판 디렉토리 생성 (작은별님,211206)
+for ($i=0; $i<count($tmp_bo_table); $i++) {
+    $board_dir = $data_path.'/file/'.$tmp_bo_table[$i];
+    @mkdir($board_dir, G5_DIR_PERMISSION);
+    @chmod($board_dir, G5_DIR_PERMISSION);
+}
+
 if($g5_shop_install) {
     $dir_arr = array (
         $data_path.'/banner',

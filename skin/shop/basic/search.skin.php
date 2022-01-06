@@ -42,8 +42,8 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 	    <div id="ssch_cate">
 	        <ul>
 	        <?php
+	        echo '<li><a href="#" onclick="set_ca_id(\'\'); return false;">전체분류 <span>('.$total_count.')</span></a></li>'.PHP_EOL;
             $total_cnt = 0;
-	        echo '<li><a href="#" onclick="set_ca_id(\'\'); return false;">전체분류 <span>('.$total_cnt.')</span></a></li>'.PHP_EOL;
 	        foreach((array) $categorys as $row){
                 if( empty($row) ) continue;
 	            echo "<li><a href=\"#\" onclick=\"set_ca_id('{$row['ca_id']}'); return false;\">{$row['ca_name']} (".$row['cnt'].")</a></li>\n";
