@@ -161,6 +161,11 @@ $CARD_CODE = array(
     '33'    => '저축은행'
 );
 
-
+$PAY_METHOD = array(
+    'CARD'          => '신용카드',
+    'BANK'          => '계좌이체',
+    'VBANK'         => '가상계좌',
+    'CELLPHONE'     => '휴대폰',
+);
 
 ?>

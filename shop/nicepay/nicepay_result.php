@@ -73,19 +73,35 @@ try {
                     $page_return_url .= '?sw_direct=1';
             }
 
-            if ($paySuccess == false) throw new Exception(iconv('EUC-KR', 'UTF-8', $resultData['ResultMsg']), $resultData['ResultCode']);
+            if ($paySuccess != false) {
+                $tno        = $resultData['TID'];
+                $amount     = $resultData['Amt'];
+                $app_time   = $resultData['AuthDate'];
+                $pay_method = $resultData['payMethod'];
+                $pay_type   = $PAY_METHOD[$pay_method];
+                $depositor  = '';                       // 송금자명
+                $commid     = '';
+                $card_name  = isset($resultData['CardCode']) ? $CARD_CODE[$resultData['CardCode']] : '';
+                
+                switch($pay_type) {
+                    case '계좌이체':
+                        $bank_name = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
+                        if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
+                        break;
+                    case '가상계좌':
+                        $bank_name = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
+                        if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
+                        break;
+                    default:
+                        break;
+                }
 
-            print_r2($resultData);
-            exit;
-
-            $tno        = $resultData['TID'];
-            $amount     = $resultData['Amt'];
-            $app_time   = $resultData['AuthDate'];
-            $pay_method = $resultData['payMethod'];
-            // $pay_type   = $resultData[];
-            // $depositor  = $resultData[];
-            // $commid     = $resultData[];
-            
+                $nicepay_result = true;
+                
+            } else {
+                $s = '(오류코드:'.iconv('EUC-KR', 'UTF-8', $resultData['ResultCode']).') '.$resultData['ResultMsg'];
+                alert($s, $page_return_url);
+            }
         } catch (Exception $e) {
             $s = $e->getMessage() . ' (오류코드:' . $e->getCode() . ')';
             echo $s;
@@ -111,6 +127,6 @@ try {
     echo $s;
 }
 
-if( !$inicis_pay_result ){
+if( !$nicepay_result ){
     die("<br><br>결제 에러가 일어났습니다. 에러 이유는 위와 같습니다.");
 }
