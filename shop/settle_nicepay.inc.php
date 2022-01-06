@@ -2,12 +2,12 @@
 // if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if ($default['de_card_test']) {
-
     $default['de_nicepay_mid'] = 'nicepay00m';
-    // $default['de_nicepay_admin_key'] = '1111';
     $default['de_nicepay_sign_key'] = 'EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg==';
+    // $default['de_nicepay_admin_key'] = '1111';
+} else {
 }
-// else {
+    
 //     if( !defined('G5_MOBILE_nicepay_SETTLE') ){
 //         $default['de_nicepay_mid'] = "SIR".$default['de_nicepay_mid'];
 //     }
@@ -32,11 +32,11 @@ $siteDomain = G5_SHOP_URL.'/nicepay';
 $nicepay = new NicepayLite;
 
 $nicepay->m_NicepayHome = G5_SHOP_PATH."/nicepay/log";
-$nicepay->m_log = "false";
+$nicepay->m_log = "true";
+$nicepay->m_MID = $mid;
+$nicepay->m_MerchantKey = $signKey;
 
-$returnUrl  = $siteDomain.'nicepay_return.php';
-$closeUrl   = $siteDomain.'/close.php';
-$popupUrl   = $siteDomain.'/popup.php';
+$nicepay->requestProcess();
 
 $BANK_CODE = array(
     '001'   => '한국은행',

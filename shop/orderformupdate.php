@@ -327,6 +327,9 @@ else if ($od_settle_case == "계좌이체")
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
             $bank_name  = iconv("cp949", "utf-8", $bank_name);
@@ -355,6 +358,10 @@ else if ($od_settle_case == "가상계좌")
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             $od_app_no = $app_no;
             break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
+            $od_app_no = $app_no;
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
             $bankname   = iconv("cp949", "utf-8", $bankname);
@@ -379,6 +386,9 @@ else if ($od_settle_case == "휴대폰")
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
             break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
             break;
@@ -402,6 +412,9 @@ else if ($od_settle_case == "신용카드")
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -428,6 +441,9 @@ else if ($od_settle_case == "간편결제" || (($od_settle_case == "lpay" || $od
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inistdpay_result.php';
+            break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -491,6 +507,9 @@ if($tno) {
                 $_REQUEST['CancelMsg']         = $cancel_msg;
                 $_REQUEST['PartialCancelCode'] = 0;
                 include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
+                break;
+            case 'nicepay':
+                include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -625,6 +644,9 @@ if(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_
                 $_REQUEST['PartialCancelCode'] = 0;
                 include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
                 break;
+            case 'nicepay':
+                include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
+                break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
                 break;
@@ -671,6 +693,9 @@ if(!$result) {
                 $_REQUEST['CancelMsg']         = $cancel_msg;
                 $_REQUEST['PartialCancelCode'] = 0;
                 include G5_SHOP_PATH.'/kakaopay/kakaopay_cancel.php';
+                break;
+            case 'nicepay':
+                include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
