@@ -74,7 +74,12 @@ for($i=0;$i<=10;$i++){
 if ($w == "")
 {
     $html_title .= "입력";
-
+    // 분류체크를 먼저해야함 쿠키로 체크 하면 안됨 분류삭제시 쿠키를 삭제해주는 코드가 없기때문
+    $sql = " select ca_id from {$g5['g5_shop_category_table']} order by ca_order, ca_id limit 1 ";
+    $row = sql_fetch($sql);
+    if (! (isset($row['ca_id']) && $row['ca_id'])) {
+        alert("등록된 분류가 없습니다. 우선 분류를 등록하여 주십시오.", './categorylist.php');        
+    }
     // 옵션은 쿠키에 저장된 값을 보여줌. 다음 입력을 위한것임
     //$it[ca_id] = _COOKIE[ck_ca_id];
     $it['ca_id'] = get_cookie("ck_ca_id");
@@ -82,10 +87,10 @@ if ($w == "")
     $it['ca_id3'] = get_cookie("ck_ca_id3");
     if (!$it['ca_id'])
     {
-        $sql = " select ca_id from {$g5['g5_shop_category_table']} order by ca_order, ca_id limit 1 ";
-        $row = sql_fetch($sql);
-        if (! (isset($row['ca_id']) && $row['ca_id']))
-            alert("등록된 분류가 없습니다. 우선 분류를 등록하여 주십시오.", './categorylist.php');
+        // $sql = " select ca_id from {$g5['g5_shop_category_table']} order by ca_order, ca_id limit 1 ";
+        // $row = sql_fetch($sql);
+        // if (! (isset($row['ca_id']) && $row['ca_id']))
+        //     alert("등록된 분류가 없습니다. 우선 분류를 등록하여 주십시오.", './categorylist.php');
         $it['ca_id'] = $row['ca_id'];
     }
     //$it[it_maker]  = stripslashes($_COOKIE[ck_maker]);
