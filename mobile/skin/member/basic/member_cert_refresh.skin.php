@@ -92,7 +92,6 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                     params = "?directAgency=" + type + "&" + pageTypeParam;
                     request_url = url + params;
                     call_sa(request_url);
-                    break;
                 });
             <?php } ?>
 
