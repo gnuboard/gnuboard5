@@ -854,7 +854,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_find">회원정보찾기</label></th>
             <td class="cf_cert_service">
-                <input type="checkbox" name="cf_cert_find" id="cf_cert_find" value="1" <?php if($config['cf_cert_find'] == 1) { ?> checked <?php } ?>><label for="cf_cert_find">아이디/비밀번호 찾기에 사용하기</label>
+                <input type="checkbox" name="cf_cert_find" id="cf_cert_find" value="1" <?php if (isset($config['cf_cert_find']) && $config['cf_cert_find'] == 1) { ?> checked <?php } ?>><label for="cf_cert_find">아이디/비밀번호 찾기에 사용하기</label>
             </td>
         </tr>
         <tr>
@@ -887,14 +887,17 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증 MID</label></th>
             <td class="cf_cert_service">
-                <span class="sitecode title">MID</span>
                 <span class="sitecode">SRA</span>
-                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="20" minlength="7" maxlength="7"><br>
-                <br>
-                <span class="sitecode title">API Key</span>
-                <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="40">
+                <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="10" minlength="7" maxlength="7">
+                <a href="http://sir.kr/main/service/inicis_cert_form.php" target="_blank" class="btn_frmline">KG이니시스 통합인증 신청페이지</a>
+            </td>
+        </tr>
+        <tr>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증 API KEY</label></th>
+            <td class="cf_cert_service">
+                <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="40" minlength="32" maxlength="32">
             </td>
         </tr>
         <tr>
