@@ -346,10 +346,10 @@ $(function (){
 
 <div id="sit_tab">
     <ul class="tab_tit">
-        <li><button type="button" rel="#sit_inf" class="selected">상품정보</button></li>
-        <li><button type="button" rel="#sit_use">사용후기</button></li>
-        <li><button type="button" rel="#sit_qa">상품문의</button></li>
-        <li><button type="button" rel="#sit_dvex">배송/교환</button></li>
+        <li><button type="button" id="btn_sit_inf" rel="#sit_inf" class="selected">상품정보</button></li>
+        <li><button type="button" id="btn_sit_use" rel="#sit_use">사용후기</button></li>
+        <li><button type="button" id="btn_sit_qa" rel="#sit_qa">상품문의</button></li>
+        <li><button type="button" id="btn_sit_dvex" rel="#sit_dvex">배송/교환</button></li>
     </ul>
     <ul class="tab_con">
 
@@ -516,6 +516,11 @@ $(function(){
 
         return false;
     });
+
+    if (window.location.href.split("#").length > 1) {
+        let id = window.location.href.split("#")[1];
+        $("#btn_" + id).trigger("click");
+    };
 });
 
 // 상품보관
