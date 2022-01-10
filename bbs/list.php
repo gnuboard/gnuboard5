@@ -96,7 +96,7 @@ if (!$is_search_bbs) {
 
         $row = sql_fetch(" select * from {$write_table} where wr_id = '{$arr_notice[$k]}' ");
 
-        if (!$row['wr_id']) continue;
+        if (!isset($row['wr_id']) || !$row['wr_id']) continue;
 
         $notice_array[] = $row['wr_id'];
 
