@@ -79,17 +79,20 @@ try {
                 $app_time   = $resultData['AuthDate'];
                 $pay_method = $resultData['payMethod'];
                 $pay_type   = $PAY_METHOD[$pay_method];
-                $depositor  = '';                       // 송금자명
+                $depositor  = '';                                   // 송금자명
+                $app_no     = isset($resultMap['AuthCode']) ? $resultMap['AuthCode'] : '';
                 $commid     = '';
                 $card_name  = isset($resultData['CardCode']) ? $CARD_CODE[$resultData['CardCode']] : '';
                 
                 switch($pay_type) {
                     case '계좌이체':
                         $bank_name = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
+                        $rcpt_type  = $resultData['RcptType'];
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
                         break;
                     case '가상계좌':
-                        $bank_name = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
+                        $bank_name  = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
+                        $account    = $resultData['VbankNum'];
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
                         break;
                     default:
