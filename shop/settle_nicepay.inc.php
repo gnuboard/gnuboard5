@@ -4,7 +4,7 @@
 if ($default['de_card_test']) {
     $default['de_nicepay_mid'] = 'nicepay00m';
     $default['de_nicepay_sign_key'] = 'EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg==';
-    $default['de_nicepay_admin_key'] = '1111';
+    $default['de_nicepay_admin_key'] = '123456';
 }
 
 // 일반(0), 에스크로(1)
@@ -17,16 +17,6 @@ if ($default['de_escrow_use'] == 1) {
 //         $default['de_nicepay_mid'] = "SIR".$default['de_nicepay_mid'];
 //     }
 
-//     if ($default['de_escrow_use'] == 1) {
-//         // 에스크로결제
-//         $useescrow = ':useescrow';
-//     }
-//     else {
-//         // 일반결제
-//         $useescrow = '';
-//     }
-// }
-
 require_once(G5_SHOP_PATH."/nicepay/lib/NicepayLite.php");
 
 $mid = $default['de_nicepay_mid'];
@@ -36,9 +26,8 @@ $siteDomain = G5_SHOP_URL.'/nicepay';
 
 $nicepay = new NicepayLite();
 
-
-
 $nicepay->m_NicepayHome = G5_SHOP_PATH."/nicepay/log";
+$nicepay->m_charSet = "UTF8";
 $nicepay->m_log = "true";
 $nicepay->m_MID = $mid;
 $nicepay->m_MerchantKey = $signKey;

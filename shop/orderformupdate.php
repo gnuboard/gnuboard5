@@ -627,7 +627,7 @@ $exists_sql = "select od_id, od_tno, od_ip from {$g5['g5_shop_order_table']} whe
 $exists_order = sql_fetch($exists_sql);
 
 // 주문정보 입력 오류시 결제 취소
-if(!(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id))) {
+if(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_id'] === $od_id)) {
     if($tno) {
         $cancel_msg = '주문정보 입력 오류 : '.$sql;
         switch($od_pg) {

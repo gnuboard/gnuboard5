@@ -32,7 +32,4 @@ if($cancelFlag == "true") {
     // 부분 취소관련 코드 (0:전체취소, 1: 부분 취소)
     $nicepay->m_PartialCancelCode = 0;
     $nicepay->startAction();
-
-    var_dump($nicepay);
-    exit;
 }

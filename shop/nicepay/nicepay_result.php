@@ -35,7 +35,6 @@ try {
             $nicepay->m_TransType     = $_REQUEST['TransType'];             // 일반 or 에스크로
             $nicepay->startAction();
 
-
             $resultCode = $nicepay->m_ResultData["ResultCode"];
             $payMethod  = $nicepay->m_ResultData["PayMethod"];
 
@@ -100,7 +99,7 @@ try {
                 $nicepay_result = true;
                 
             } else {
-                $s = '(오류코드:'.iconv('EUC-KR', 'UTF-8', $resultData['ResultCode']).') '.$resultData['ResultMsg'];
+                $s = '(오류코드:'.$resultData['ResultCode'].') '.$resultData['ResultMsg'];
                 alert($s, $page_return_url);
             }
         } catch (Exception $e) {
