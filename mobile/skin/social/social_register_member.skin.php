@@ -109,7 +109,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                     <?php }
                     if ($config['cf_cert_use']) {
                         if ($config['cf_cert_sa']) {
-                            echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline win_sa_cert" data-type="">통합 인증</button>'.PHP_EOL;
+                            echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline btn win_sa_cert" data-type="">통합 인증</button>'.PHP_EOL;
                         }
                         if ($config['cf_cert_hp'])
                             echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>' . PHP_EOL;
