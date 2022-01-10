@@ -1,5 +1,6 @@
 <?php
-// header("Content-Type:text/html; charset=euc-kr;"); 
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+
 include_once('./_common.php');
 include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
 

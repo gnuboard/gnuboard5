@@ -4,8 +4,13 @@
 if ($default['de_card_test']) {
     $default['de_nicepay_mid'] = 'nicepay00m';
     $default['de_nicepay_sign_key'] = 'EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg==';
-    // $default['de_nicepay_admin_key'] = '1111';
-} else {
+    $default['de_nicepay_admin_key'] = '1111';
+}
+
+// 일반(0), 에스크로(1)
+$useescrow = "0";
+if ($default['de_escrow_use'] == 1) {
+    $useescrow = "1";
 }
     
 //     if( !defined('G5_MOBILE_nicepay_SETTLE') ){
@@ -29,12 +34,15 @@ $signKey = $default['de_nicepay_sign_key'];
 
 $siteDomain = G5_SHOP_URL.'/nicepay';
 
-$nicepay = new NicepayLite;
+$nicepay = new NicepayLite();
+
+
 
 $nicepay->m_NicepayHome = G5_SHOP_PATH."/nicepay/log";
 $nicepay->m_log = "true";
 $nicepay->m_MID = $mid;
 $nicepay->m_MerchantKey = $signKey;
+$nicepay->m_TransType = $useescrow;
 
 $nicepay->requestProcess();
 

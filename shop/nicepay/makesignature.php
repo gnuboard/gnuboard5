@@ -17,6 +17,6 @@ if(strlen($price) < 1)
   //*** 위변조 방지체크를 signature 생성 ***
   ediDate, mid, price, signkey 4개의 값을 연결하여 SHA-256 Hash로 값 생성
 */
-$sign = hash("sha256", $ediDate.$mid.$price.$signKey);
+$sign = bin2hex(hash("sha256", $ediDate.$mid.$price.$signKey, true));
 
 die(json_encode(array('error'=>'', 'EncryptData'=> $sign)));

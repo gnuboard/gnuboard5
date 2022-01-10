@@ -1526,19 +1526,19 @@ function forderform_check(f)
         <?php } else if($default['de_pg_service'] == 'nicepay') { ?>
         switch(settle_method){
             case "계좌이체":
-                f.payMethod.value = "BANK";
+                f.PayMethod.value = "BANK";
                 break;
             case "신용카드":
-                f.payMethod.value = "CARD";
+                f.PayMethod.value = "CARD";
                 break;
             case "가상계좌":
-                f.payMethod.value = "VBANK";
+                f.PayMethod.value = "VBANK";
                 break;
             case "휴대폰":
-                f.payMethod.value = "CELLPHONE";
+                f.PayMethod.value = "CELLPHONE";
                 break;
             default:
-                f.payMethod.value = "무통장";
+                f.PayMethod.value = "무통장";
                 break;
         }
         <?php } ?>
@@ -1643,7 +1643,7 @@ function forderform_check(f)
             f.RcvrZipx.value    = f.od_b_zip.value;
             f.RcvrAddr.value    = f.od_b_addr1.value + " " +f.od_b_addr2.value;
 
-            if(f.payMethod.value != "무통장") {
+            if(f.PayMethod.value != "무통장") {
             // 주문정보 임시저장
             var order_data = $(f).serialize();
             var save_result = "";
