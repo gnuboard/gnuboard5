@@ -208,7 +208,7 @@ a.btn_ov02:hover,a.ov_listall:hover{background:#3f51b5}
 
 /*form*/
 .sound_only {display:inline-block !important;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;width:1px !important;height:1px !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}
-.frm_input{height:35px;line-height:32px;border:1px solid #d5d5d5;}
+.frm_input{padding:0 5px;height:35px;line-height:32px;border:1px solid #d5d5d5;}
 .frm_input_full{width:100%}
 .required{background:url('../img/wrest.gif') top right no-repeat #fff !important}
 select{height:35px;line-height:32px;border:1px solid #d5d5d5;}
