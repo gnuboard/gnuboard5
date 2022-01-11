@@ -894,7 +894,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             </th>
             <td>
                 <?php echo help("나이스로 부터 발급 받으신 상점아이디(MID) 10자리 중 SIR 을 제외한 나머지 7자리를 입력 합니다.\n만약, 상점아이디가 SIR로 시작하지 않는다면 계약담당자에게 변경 요청을 해주시기 바랍니다. (Tel. 02-3430-5858) 예) SIRpaytest"); ?>
-                <span class="sitecode">SIR</span> <input type="text" name="de_nicepay_mid" value="<?php echo $default['de_nicepay_mid']; ?>" id="de_nicepay_mid" class="frm_input code_input" size="10" maxlength="10"> 영문소문자(숫자포함 가능)
+                <span class="sitecode">sir</span> <input type="text" name="de_nicepay_mid" value="<?php echo $default['de_nicepay_mid']; ?>" id="de_nicepay_mid" class="frm_input code_input" size="10" maxlength="10"> 영문소문자(숫자포함 가능)
             </td>
         </tr>
         <tr class="pg_info_fld nicepay_info_fld">

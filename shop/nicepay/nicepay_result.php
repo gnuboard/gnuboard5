@@ -47,6 +47,9 @@ try {
                 case "BANK":
                     if($resultCode == "4000") $paySuccess = true;
                     break;
+                case "VBANK":
+                    if($resultCode == "4100") $paySuccess = true;
+                    break;
                 case "CELLPHONE":
                     if($resultCode == "A000") $paySuccess = true;
                     break;
@@ -73,26 +76,26 @@ try {
                     $page_return_url .= '?sw_direct=1';
             }
 
-            if ($paySuccess != false) {
+            if ($paySuccess != false) { 
                 $tno        = $resultData['TID'];
                 $amount     = $resultData['Amt'];
                 $app_time   = $resultData['AuthDate'];
-                $pay_method = $resultData['payMethod'];
+                $pay_method = $resultData['PayMethod'];
                 $pay_type   = $PAY_METHOD[$pay_method];
-                $depositor  = '';                                   // 송금자명
-                $app_no     = isset($resultMap['AuthCode']) ? $resultMap['AuthCode'] : '';
+                $depositor  = isset($resultData['VbankAccountName']) ? $resultData['VbankAccountName'] : '';                                   // 송금자명
+                $app_no     = isset($resultData['AuthCode']) ? $resultData['AuthCode'] : '';
                 $commid     = '';
                 $card_name  = isset($resultData['CardCode']) ? $CARD_CODE[$resultData['CardCode']] : '';
-                
+            
                 switch($pay_type) {
                     case '계좌이체':
                         $bank_name = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
-                        $rcpt_type  = $resultData['RcptType'];
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
                         break;
                     case '가상계좌':
                         $bank_name  = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
-                        $account    = $resultData['VbankNum'];
+                        $account    = $resultData['VbankNum'].' '.$resultData['VbankAccountName'];
+                        $app_no     = $resultData['VbankNum'];
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
                         break;
                     default:

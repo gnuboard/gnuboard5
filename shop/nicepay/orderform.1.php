@@ -6,7 +6,7 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
     add_javascript('<script src="https://web.nicepay.co.kr/v3/webstd/js/nicepay-2.0.js" type="text/javascript"></script>')
 ?>
 
-<script>
+<script type="text/javascript">
 function make_signature(frm)
 {
     // 데이터 암호화 처리
@@ -24,7 +24,6 @@ function make_signature(frm)
         success: function(data) {
             if(data.error == "") {
                 frm.EncryptData.value = data.EncryptData;
-                console.log(data);
             } else {
                 alert(data.error);
                 result = false;

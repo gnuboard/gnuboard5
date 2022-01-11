@@ -12,10 +12,12 @@ $useescrow = "0";
 if ($default['de_escrow_use'] == 1) {
     $useescrow = "1";
 }
-    
-//     if( !defined('G5_MOBILE_nicepay_SETTLE') ){
-//         $default['de_nicepay_mid'] = "SIR".$default['de_nicepay_mid'];
-//     }
+
+// 현금 영수증 발행 사용 여부 확인
+$optionList = '';
+if($default['de_tax_flag_use']) {
+    $optionList = 'no_receipt';
+}
 
 require_once(G5_SHOP_PATH."/nicepay/lib/NicepayLite.php");
 

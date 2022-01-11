@@ -1636,6 +1636,8 @@ function forderform_check(f)
 
             f.BuyerName.value   = f.od_name.value;
             f.BuyerEmail.value  = f.od_email.value;
+            f.BuyerPostNo.value = f.od_zip.value;
+            f.BuyerAddr.value   = f.od_addr1.value + " " +f.od_addr2.value;
             f.BuyerTel.value    = f.od_hp.value ? f.od_hp.value : f.od_tel.value;
             
             f.RcvrName.value    = f.od_b_name.value;
@@ -1644,32 +1646,32 @@ function forderform_check(f)
             f.RcvrAddr.value    = f.od_b_addr1.value + " " +f.od_b_addr2.value;
 
             if(f.PayMethod.value != "무통장") {
-            // 주문정보 임시저장
-            var order_data = $(f).serialize();
-            var save_result = "";
-            $.ajax({
-                type: "POST",
-                data: order_data,
-                url: g5_url+"/shop/ajax.orderdatasave.php",
-                cache: false,
-                async: false,
-                success: function(data) {
-                    save_result = data;
+                // 주문정보 임시저장
+                var order_data = $(f).serialize();
+                var save_result = "";
+                $.ajax({
+                    type: "POST",
+                    data: order_data,
+                    url: g5_url+"/shop/ajax.orderdatasave.php",
+                    cache: false,
+                    async: false,
+                    success: function(data) {
+                        save_result = data;
+                    }
+                });
+
+                if(save_result) {
+                    alert(save_result);
+                    return false;
                 }
-            });
 
-            if(save_result) {
-                alert(save_result);
-                return false;
+                if(!make_signature(f))
+                    return false;
+
+                paybtn(f);
+            } else {
+                f.submit();
             }
-
-            if(!make_signature(f))
-                return false;
-
-            paybtn(f);
-        } else {
-            f.submit();
-        }
         <?php } ?>
     }
 

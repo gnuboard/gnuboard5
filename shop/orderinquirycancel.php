@@ -106,6 +106,30 @@ if($od['od_tno']) {
                 alert(iconv_utf8($res_msg).' 코드 : '.$res_cd);
             }
             break;
+        case 'nicepay':
+            include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
+            $cancel_msg = iconv_euckr('주문자 본인 취소-'.$cancel_memo);
+
+            $nicepay->m_ActionType      = "CLO";
+            $nicepay->m_CancelAmt       = $amount;
+            $nicepay->m_TID             = $od['od_tno'];
+            $nicepay->m_Moid            = $od['od_id'];
+            $nicepay->m_CancelMsg       = $cancel_msg;
+
+            if($default['de_nicepay_admin_key']) {
+                $nicepay->m_CancelPwd       = $default['de_nicepay_admin_key'];
+            }
+
+            $nicepay->m_PartialCancelCode = 0;
+            $nicepay->startAction();
+
+            $resultCode = $nicepay->m_ResultData['ResultCode'];
+            $resultMsg = $nicepay->m_ResultData['ResultMsg'];
+
+            if(!($resultCode == '2001' || $resultCode == '2211')) {
+                alert(iconv_utf8($resultMsg).' 코드 : '.$resultCode);
+            }
+            break;
         default:
             require_once('./settle_kcp.inc.php');
 
