@@ -98,7 +98,9 @@
 
 /* 아이디/비밀번호 찾기 */
 #find_info h3 {display:none;margin-bottom:30px;text-align:center;font-size:1.1em;}
+#find_info .new_win_con {background:#f7f7f7;}
 #find_info.cert .new_win_con {width:460px;float:left;}
+#find_info.cert .new_win_con:nth-child(2) {margin-left:10px;}
 #find_info.cert h3 {display:block;}
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
 #find_info p {line-height:1.5em}

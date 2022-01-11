@@ -95,10 +95,11 @@
 .tooltip {position:absolute;width:auto;color:#fff;background:#000;padding:10px;font-size:small;line-height:18px;display:none;z-index:9;font-weight:normal;margin-left:15px;margin-top:10px}
 .tooltip:before {content:"";position:absolute;top:0;left:-10px;width:0;height:0;border-style:solid;border-top:0px solid transparent;border-bottom:10px solid transparent;border-left:0;border-right:10px solid #000}
 
-
 /* 아이디/비밀번호 찾기 */
 #find_info h3 {display:none;margin-bottom:30px;text-align:center;font-size:1.1em;}
+#find_info .new_win_con {background:#f7f7f7;}
 #find_info.cert .new_win_con {width:460px;float:left;}
+#find_info.cert .new_win_con:nth-child(2) {margin-left:10px;}
 #find_info.cert h3 {display:block;}
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
 #find_info p {line-height:1.5em}
