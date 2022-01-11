@@ -40,7 +40,7 @@
 .fregister_agree {position:absolute;top:0;right:0}
 .fregister_agree input[type="checkbox"] + label {color:#676e70}
 .fregister_agree input[type="checkbox"] + label:hover {color:#2172f8}
-.fregister_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.fregister_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #999;border-radius:3px}
 .fregister_agree input[type="checkbox"]:checked + label {color:#000}
 .fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .fregister_agree.chk_all input[type="checkbox"] + label span {top:18px}
@@ -58,6 +58,8 @@
 .register_form_inner label {display:block;margin-bottom:10px;line-height:24px}
 .register_form_inner label.inline {display:inline}
 
+#fregisterform .cert_desc {color:#3a8afd;}
+#fregisterform .cert_req {margin-left:5px;line-height:35px;}
 #fregisterform #msg_certify {margin:5px 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
 #fregisterform .frm_address {margin:5px 0 0}
 #fregisterform #mb_addr3 {display:inline-block;margin:5px 0 0;vertical-align:middle}

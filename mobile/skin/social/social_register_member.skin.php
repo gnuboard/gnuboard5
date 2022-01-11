@@ -102,39 +102,36 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
             <h2>개인정보 입력</h2>
             <ul>
                 <li>
-                    <?php if($config['cf_cert_use'] <> 0) { ?>
-                    <div id="msg_certify">
-                        버튼을 눌러 <strong>본인인증</strong>을 진행해주세요. <?php if($config['cf_cert_req'] == 1) { ?><br>이름/휴대폰 번호는 자동으로 입력됩니다.<?php } ?>
-                    </div>
-                    <?php }
+                    <?php 
                     if ($config['cf_cert_use']) {
                         if ($config['cf_cert_sa']) {
-                            echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline btn win_sa_cert" data-type="">통합 인증</button>'.PHP_EOL;
+                            echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline btn win_sa_cert" data-type="">간편인증</button>'.PHP_EOL;
                         }
                         if ($config['cf_cert_hp'])
                             echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>' . PHP_EOL;
                         if ($config['cf_cert_ipin'])
                             echo '<button type="button" id="win_ipin_cert" class="btn_frmline btn">아이핀 본인확인</button>' . PHP_EOL;
 
+                        echo '<span class="cert_req">(필수)</span>';
                         echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>' . PHP_EOL;
                     }
                     ?>
                 </li>
                 <?php if ($req_nick) {  ?>
                     <li>
-                        <label for="reg_mb_nick" class="sound_only">닉네임<strong>필수</strong></label>
+                        <label for="reg_mb_nick" class="sound_only">닉네임 (필수)</label>
 
                         <span class="frm_info">
                             공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br>
                             닉네임을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.
                         </span>
                         <input type="hidden" name="mb_nick_default" value="<?php echo isset($user_nick) ? get_text($user_nick) : ''; ?>">
-                        <input type="text" name="mb_nick" value="<?php echo isset($user_nick) ? get_text($user_nick) : ''; ?>" id="reg_mb_nick" required class="frm_input required nospace full_input" size="10" maxlength="20" placeholder="닉네임">
+                        <input type="text" name="mb_nick" value="<?php echo isset($user_nick) ? get_text($user_nick) : ''; ?>" id="reg_mb_nick" required class="frm_input required nospace full_input" size="10" maxlength="20" placeholder="닉네임 (필수)">
                         <span id="msg_mb_nick"></span>
                     </li>
                 <?php }  ?>
                 <li>
-                    <label for="reg_mb_email" class="sound_only">E-mail<strong>필수</strong></label>
+                    <label for="reg_mb_email" class="sound_only">E-mail (필수)</label>
                     <?php if ($config['cf_use_email_certify']) {  ?>
                     <span class="frm_info">
                         <?php if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; }  ?>
@@ -142,7 +139,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                     </span>
                     <?php }  ?>
                     <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
-                    <input type="text" name="mb_email" value="<?php echo isset($user_email) ? $user_email : ''; ?>" id="reg_mb_email" required <?php echo (isset($user_email) && $user_email != '' && !$is_exists_email)? "readonly":''; ?> class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail">
+                    <input type="text" name="mb_email" value="<?php echo isset($user_email) ? $user_email : ''; ?>" id="reg_mb_email" required <?php echo (isset($user_email) && $user_email != '' && !$is_exists_email)? "readonly":''; ?> class="frm_input email full_input required" size="70" maxlength="100" placeholder="E-mail (필수)">
                     <div class="check"><?php echo $email_msg; ?></div>
                 </li>
             </ul>
@@ -187,9 +184,9 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
             </div>
 
             <div id="login_fs">
-                <label for="login_id" class="login_id">아이디<strong class="sound_only"> 필수</strong></label>
+                <label for="login_id" class="login_id">아이디 (필수)</label>
                 <span class="lg_id"><input type="text" name="mb_id" id="login_id" class="frm_input required" size="20" maxLength="20"></span>
-                <label for="login_pw" class="login_pw">비밀번호<strong class="sound_only"> 필수</strong></label>
+                <label for="login_pw" class="login_pw">비밀번호 (필수)</label>
                 <span class="lg_pw"><input type="password" name="mb_password" id="login_pw" class="frm_input required" size="20" maxLength="20"></span>
                 <br>
                 <input type="submit" value="연결하기" class="login_submit btn_submit">

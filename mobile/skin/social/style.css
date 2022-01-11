@@ -113,6 +113,7 @@
 #fregisterform .btn_confirm {text-align:center;margin:20px 0}
 #fregisterform .btn_confirm .btn_submit {width:49%;height:45px;padding:0 30px;font-weight:bold;font-size:1.083em}
 #fregisterform .btn_confirm .btn_cancel {width:49%;line-height:45px;height:45px;padding:0 30px;font-weight:bold;border-radius:3px;border:1px solid #dcdcdc;font-size:1.083em;background:#fff}
+#fregisterform .cert_req {margin-left:5px;line-height:28px;}
 
 #fregisterform #reg_mb_email, #fregisterform .frm_address {width:100%}
 #fregisterform textarea {width:100%;height:84px}
@@ -149,7 +150,7 @@
 .selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
 .fregister_agree input[type="checkbox"] + label {color:#676e70}
 .fregister_agree input[type="checkbox"] + label:hover {color:#2172f8}
-.fregister_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.fregister_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #999;border-radius:3px}
 .fregister_agree input[type="checkbox"]:checked + label {color:#000}
 .fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .fregister_agree.chk_all input[type="checkbox"] + label span {top:15px}
