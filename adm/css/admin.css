@@ -905,9 +905,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #515151;background:#484848;list-style:none;zoom:1}
 .new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win_ul li {float:left;margin-left:-1px}
-
 .new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
-
 
 .new_win_desc {margin:0 }
 .new_win .anchor {margin:0 0 5px}
@@ -918,11 +916,12 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .new_win .win_btn a {display:inline-block;padding:0 10px;height:30px;background:#4b545e;color:#fff;vertical-align:middle;line-height:2.4em}
 .new_win .win_btn a:focus, .new_win .win_btn a:hover {text-decoration:none}
 
-
 .new_win .local_sch, .new_win .local_cmd, .new_win .local_desc01, .new_win .local_desc02, .new_win .local_ov {margin:10px}
 
 .new_win_con{margin: 10px; background:#fff;padding:20px}
 .new_win_con .table_form table th{width:120px}
+
+.new_win .btn_confirm {text-align:center;}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}
