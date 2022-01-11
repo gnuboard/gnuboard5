@@ -212,7 +212,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
         var pageTypeParam = "pageType=register";
 
         <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-            // 이니시스 통합인증
+            // 이니시스 간편인증
             var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
             var type = "";
             var params = "";

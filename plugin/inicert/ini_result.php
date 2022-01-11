@@ -71,7 +71,7 @@ if ($_POST["resultCode"] === "0000") {
         set_session("ss_cert_hash",    $hash_data);
         set_session("ss_cert_adult",   $adult);
         set_session("ss_cert_birth",   $birth_day);
-        //set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F")); // 이니시스 통합인증은 성별정보 리턴 없음
+        //set_session("ss_cert_sex",     ($sex_code=="01"?"M":"F")); // 이니시스 간편인증은 성별정보 리턴 없음
         set_session('ss_cert_dupinfo', $mb_dupinfo);       
 
     } else {
@@ -85,7 +85,7 @@ if ($_POST["resultCode"] === "0000") {
     exit;
 }
 
-$g5['title'] = 'KG이니시스 통합인증 결과';
+$g5['title'] = 'KG이니시스 간편인증 결과';
 include_once(G5_PATH.'/head.sub.php');
 ?>    
 <script>

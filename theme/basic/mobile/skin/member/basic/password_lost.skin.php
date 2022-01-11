@@ -33,7 +33,7 @@ if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] |
         <h3>본인인증으로 찾기</h3>
         <?php if(!empty($config['cf_cert_sa'])) { ?>
         <div class="cert_btn">
-            <button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="">통합 인증</button>
+            <button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="">간편인증</button>
         </div>
         <?php } if(!empty($config['cf_cert_hp']) || !empty($config['cf_cert_ipin'])) { ?>
         <div class="win_btn">

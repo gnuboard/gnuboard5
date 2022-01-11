@@ -77,7 +77,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 	                if ($config['cf_cert_use'] && $member['mb_certify']) {
 						switch  ($member['mb_certify']) {
 							case "sa": 
-								$mb_cert = "통합인증";
+								$mb_cert = "간편인증";
 								break;
 							case "ipin": 
 								$mb_cert = "아이핀";
@@ -306,7 +306,7 @@ $(function() {
     var pageTypeParam = "pageType=register";
 
 	<?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-	// 이니시스 통합인증
+	// 이니시스 간편인증
 	var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
 	var type = "";    
     var params = "";

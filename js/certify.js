@@ -99,7 +99,7 @@ function cert_confirm() {
 
     switch(val) {
         case "sa":
-            type = "통합인증";
+            type = "간편인증";
             break;
         case "ipin":
             type = "아이핀";

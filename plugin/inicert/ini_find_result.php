@@ -61,7 +61,7 @@ if ($_POST["resultCode"] === "0000") {
     exit;
 }
 
-$g5['title'] = 'KG이니시스 통합인증 결과';
+$g5['title'] = 'KG이니시스 간편인증 결과';
 include_once(G5_PATH.'/head.sub.php'); 
 ?>
 <form name="mbFindForm" method="POST">

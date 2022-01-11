@@ -58,7 +58,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
                 if ($config['cf_cert_sa']) {
-                    echo '<button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="">통합 인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="">간편인증</button>' . PHP_EOL;
                 }
                 echo '</div>';
                 echo '<div class="win_btn">';
@@ -80,7 +80,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             var f = document.fcertrefreshform;
 
             <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-                // 이니시스 통합인증
+                // 이니시스 간편인증
                 var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
                 var type = "";
                 var params = "";
