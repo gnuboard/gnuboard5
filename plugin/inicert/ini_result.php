@@ -91,12 +91,6 @@ include_once(G5_PATH.'/head.sub.php');
 <script>
     jQuery(function($) {        
         var $opener = window.opener;
-        if (typeof g5_is_mobile != "undefined" && g5_is_mobile ) {
-            $opener = window.parent;
-            is_mobile = true;
-        } else {
-            $opener = window.opener;
-        }
 
         // 인증정보
         $opener.$("input[name=cert_type]").val("<?php echo $cert_type; ?>");
