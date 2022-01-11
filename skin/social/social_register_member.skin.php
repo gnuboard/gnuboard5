@@ -95,20 +95,17 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                 <h2>개인정보 입력</h2>
                 <ul>
                     <li>
-                        <?php if($config['cf_cert_use'] <> 0) { ?>
-                        <div id="msg_certify">
-                            버튼을 눌러 <strong>본인인증</strong>을 진행해주세요. <?php if($config['cf_cert_req'] == 1) { ?>이름/휴대폰 번호는 자동으로 입력됩니다.<?php } ?>
-                        </div>
-                        <?php }
+                        <?php 
                         if ($config['cf_cert_use']) {
                             if ($config['cf_cert_sa']) {
-                                echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline win_sa_cert" data-type="">통합 인증</button>'.PHP_EOL;
+                                echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline win_sa_cert" data-type="">간편인증</button>'.PHP_EOL;
                             }
                             if ($config['cf_cert_hp'])
                                 echo '<button type="button" id="win_hp_cert" class="btn_frmline">휴대폰 본인확인</button>' . PHP_EOL;
                             if ($config['cf_cert_ipin'])
                                 echo '<button type="button" id="win_ipin_cert" class="btn_frmline">아이핀 본인확인</button>' . PHP_EOL;
 
+                            echo '<span class="cert_req">(필수)</span>';
                             echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>' . PHP_EOL;
                         }
                         ?>
@@ -116,7 +113,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                     <?php if ($req_nick) {  ?>
                         <li>
                             <label for="reg_mb_nick">
-                                닉네임<strong class="sound_only">필수</strong>
+                                닉네임 (필수)
                                 <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
                                 <span class="tooltip">공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br> 닉네임을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.</span>
                             </label>
@@ -127,7 +124,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                         </li>
                     <?php }  ?>
                     <li>
-                        <label for="reg_mb_email">E-mail<strong class="sound_only">필수</strong>
+                        <label for="reg_mb_email">E-mail (필수)
 
                             <?php if ($config['cf_use_email_certify']) {  ?>
                                 <button type="button" class="tooltip_icon"><i class="fa fa-question-circle-o" aria-hidden="true"></i><span class="sound_only">설명보기</span></button>
@@ -188,9 +185,9 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
             </div>
 
             <div id="login_fs">
-                <label for="login_id" class="login_id">아이디<strong class="sound_only"> 필수</strong></label>
+                <label for="login_id" class="login_id">아이디 (필수)</label>
                 <span class="lg_id"><input type="text" name="mb_id" id="login_id" class="frm_input required" size="20" maxLength="20"></span>
-                <label for="login_pw" class="login_pw">비밀번호<strong class="sound_only"> 필수</strong></label>
+                <label for="login_pw" class="login_pw">비밀번호 (필수)</label>
                 <span class="lg_pw"><input type="password" name="mb_password" id="login_pw" class="frm_input required" size="20" maxLength="20"></span>
                 <br>
                 <input type="submit" value="연결하기" class="login_submit btn_submit">
@@ -215,7 +212,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
         var pageTypeParam = "pageType=register";
 
         <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-            // 이니시스 통합인증
+            // 이니시스 간편인증
             var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
             var type = "";
             var params = "";

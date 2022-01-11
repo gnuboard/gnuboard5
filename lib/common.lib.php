@@ -2824,7 +2824,7 @@ function certify_count_check($mb_id, $type)
 
     switch($type) {
         case 'sa' :
-            $cert = '통합인증';
+            $cert = '간편인증';
             break;
         case 'hp':
             $cert = '휴대폰';

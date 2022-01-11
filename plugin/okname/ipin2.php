@@ -86,7 +86,7 @@ if(!empty($field[1])) { // 아이핀은 리턴받는 ci 데이터가 두가지�
 }else{
     alert_close('아이핀 본인확인 중 오류가 발생했습니다. (ci 정보 없음) 오류코드 : '.$resultCd.'\\n\\n문의는 코리아크레딧뷰로 고객센터 02-708-1000 로 해주십시오.');
 }
-$mb_dupinfo = md5($ci.$ci); // 통합인증 추가 후 ci로 변경
+$mb_dupinfo = md5($ci.$ci); // 간편인증 추가 후 ci로 변경
 
 // 명의 변경 체크
 if (!empty($member['mb_certify']) && !empty($member['mb_dupinfo']) && strlen($member['mb_dupinfo']) != 64) { // 이미 인증된 계정중에 dupinfo가 di(64 length)가 아닐때

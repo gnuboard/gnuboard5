@@ -858,11 +858,11 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_sa">통합인증</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_sa">간편인증</label></th>
             <td class="cf_cert_service">
                 <select name="cf_cert_sa" id="cf_cert_sa">
                     <?php echo option_selected("", $config['cf_cert_sa'], "사용안함"); ?>
-                    <?php echo option_selected("sa", $config['cf_cert_sa'], "KG이니시스 통합인증"); ?>
+                    <?php echo option_selected("sa", $config['cf_cert_sa'], "KG이니시스 간편인증"); ?>
                 </select>
             </td>
         </tr>
@@ -887,7 +887,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증 MID</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 간편인증 MID</label></th>
             <td class="cf_cert_service">
                 <span class="sitecode">SRA</span>
                 <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="10" minlength="7" maxlength="7">
@@ -934,7 +934,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_limit">본인확인 이용제한</label></th>
             <td class="cf_cert_service">
-                <?php echo help('1일 단위 본인인증을 시도할 수 있는 최대횟수를 지정합니다. (0으로 설정 시 무한으로 인증시도 가능)<br>아이핀/휴대폰/통합인증에서 개별 적용됩니다.)'); ?>
+                <?php echo help('1일 단위 본인인증을 시도할 수 있는 최대횟수를 지정합니다. (0으로 설정 시 무한으로 인증시도 가능)<br>아이핀/휴대폰/간편인증에서 개별 적용됩니다.)'); ?>
                 <input type="text" name="cf_cert_limit" value="<?php echo (int) $config['cf_cert_limit']; ?>" id="cf_cert_limit" class="frm_input" size="3"> 회
             </td>
         </tr>
@@ -1433,7 +1433,7 @@ $(function(){
 
     $("#cf_cert_find").on("click", function() {
         if($(this).attr("checked")) {
-            let flag = confirm("휴대폰/아이핀 본인확인을 이용하시다가 통합인증을 이용하시는 경우, 기존 회원은 아이디/비밀번호 찾기에 사용할 수 없을 수 있습니다.\n\n그래도 사용하시겠습니까?");
+            let flag = confirm("휴대폰/아이핀 본인확인을 이용하시다가 간편인증을 이용하시는 경우, 기존 회원은 아이디/비밀번호 찾기에 사용할 수 없을 수 있습니다.\n\n그래도 사용하시겠습니까?");
             $(this).attr("checked", flag);
         };
     });
