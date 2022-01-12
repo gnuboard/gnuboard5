@@ -39,7 +39,6 @@ $nicepay->m_log = "true";
 $nicepay->m_MID = $mid;
 $nicepay->m_MerchantKey = $signKey;
 $nicepay->m_TransType = $useescrow;
-
 $nicepay->requestProcess();
 
 $BANK_CODE = array(

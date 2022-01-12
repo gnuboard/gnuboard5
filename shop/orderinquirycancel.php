@@ -107,11 +107,11 @@ if($od['od_tno']) {
             }
             break;
         case 'nicepay':
-            include_once(G5_SHOP_PATH.'/settle_inicis.inc.php');
-            $cancel_msg = iconv_euckr('주문자 본인 취소-'.$cancel_memo);
+            include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
+            $cancel_msg = '주문자 본인 취소-'.$cancel_memo;
 
             $nicepay->m_ActionType      = "CLO";
-            $nicepay->m_CancelAmt       = $amount;
+            $nicepay->m_CancelAmt       = $od['od_misu'];
             $nicepay->m_TID             = $od['od_tno'];
             $nicepay->m_Moid            = $od['od_id'];
             $nicepay->m_CancelMsg       = $cancel_msg;
@@ -127,8 +127,9 @@ if($od['od_tno']) {
             $resultMsg = $nicepay->m_ResultData['ResultMsg'];
 
             if(!($resultCode == '2001' || $resultCode == '2211')) {
-                alert(iconv_utf8($resultMsg).' 코드 : '.$resultCode);
+                alert($resultMsg.' 코드 : '.$resultCode);
             }
+
             break;
         default:
             require_once('./settle_kcp.inc.php');

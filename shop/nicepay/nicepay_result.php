@@ -89,11 +89,11 @@ try {
             
                 switch($pay_type) {
                     case '계좌이체':
-                        $bank_name = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
+                        $bankname = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
                         break;
                     case '가상계좌':
-                        $bank_name  = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
+                        $bankname  = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
                         $account    = $resultData['VbankNum'].' '.$resultData['VbankAccountName'];
                         $app_no     = $resultData['VbankNum'];
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';

@@ -73,16 +73,16 @@ $nicepay->startAction();
 /********************************************************************************
  * 발급 결과                                                    
  *
- * 결제 결과 코드   : $nicepay->m_ResultData('ResultCode') ("7001" 이면 발행 성공)
- * 결제 결과 메시지 : $nicepay->m_ResultData('ResultMsg') (현금영수증 발행 승인번호)
- * 거래번호         : $nicepay->m_ResultData('TID')
- * 상점ID           : $nicepay->m_ResultData('MID')
- * 승인날짜         : $nicepay->m_ResultData('AuthDate') (YYYYMMDDHHMMSS)
- * 승인코드         : $nicepay->m_ResultData('AuthCode')
+ * 결제 결과 코드   : $nicepay->m_ResultData['ResultCode'] ("7001" 이면 발행 성공)
+ * 결제 결과 메시지 : $nicepay->m_ResultData['ResultMsg'] (현금영수증 발행 승인번호)
+ * 거래번호         : $nicepay->m_ResultData['TID']
+ * 상점ID           : $nicepay->m_ResultData['MID']
+ * 승인날짜         : $nicepay->m_ResultData['AuthDate'] (YYYYMMDDHHMMSS)
+ * 승인코드         : $nicepay->m_ResultData['AuthCode']
  ********************************************************************************/
 
  // DB 반영
-if($nicepay->m_ResultData('ResultCode') == '7001') {
+if($nicepay->m_ResultData['ResultCode'] == '7001') {
     $cash_no = $nicepay->m_ResultData['AuthCode'];
 
     $cash = array();
