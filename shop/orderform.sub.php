@@ -1535,6 +1535,7 @@ function forderform_check(f)
                 f.PayMethod.value = "VBANK";
                 break;
             case "휴대폰":
+                f.TransType.value = 0;
                 f.PayMethod.value = "CELLPHONE";
                 break;
             default:

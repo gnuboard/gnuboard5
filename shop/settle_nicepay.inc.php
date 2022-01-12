@@ -1,10 +1,12 @@
 <?php
-// if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
+if (!defined("_GNUBOARD_")) exit; // 개별 페이지 접근 불가
 
 if ($default['de_card_test']) {
     $default['de_nicepay_mid'] = 'nicepay00m';
     $default['de_nicepay_sign_key'] = 'EYzu8jGGMfqaDEp76gSckuvnaHHu+bC4opsSN6lHv3b2lurNYkVXrZ7Z1AoqQnXI3eLuaUFyoRNC6FkrzVjceg==';
     $default['de_nicepay_admin_key'] = '123456';
+} else {
+    $default['de_nicepay_mid'] = 'sir'.$default['de_nicepay_mid'];
 }
 
 // 일반(0), 에스크로(1)
@@ -18,6 +20,9 @@ $optionList = '';
 if($default['de_tax_flag_use']) {
     $optionList = 'no_receipt';
 }
+
+// goodsCl에 실물여부에 관련된 값 적용 ( 1 : 실물, 0 : 컨텐츠 )
+$goodsCl = '0';
 
 require_once(G5_SHOP_PATH."/nicepay/lib/NicepayLite.php");
 
