@@ -17,7 +17,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
     <input type="hidden" name="mb_name" value="<?php echo $member['mb_name']; ?>">
 	<input type="hidden" name="cert_no" value="">
         <section id="member_cert_refresh_private">
-            <h2>추가 개인정보처리방침 안내</h2>
+            <h2>(필수) 추가 개인정보처리방침 안내</h2>
             <div>
                 <div class="tbl_head01 tbl_wrap">
                     <table>
