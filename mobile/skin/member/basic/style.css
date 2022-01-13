@@ -108,7 +108,7 @@
 #member_cert_refresh_private .tbl_head01 caption {position:absolute;font-size:0;line-height:0;overflow:hidden;top:0;color:#fff}
 .member_cert_refresh_agree input[type="checkbox"] + label {color:#676e70}
 .member_cert_refresh_agree input[type="checkbox"] + label:hover {color:#2172f8}
-.member_cert_refresh_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.member_cert_refresh_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #999;border-radius:3px}
 .member_cert_refresh_agree input[type="checkbox"]:checked + label {color:#000}
 .member_cert_refresh_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .member_cert_refresh_agree.chk_all input[type="checkbox"] + label span {top:15px}
