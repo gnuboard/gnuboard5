@@ -86,10 +86,10 @@ try {
                 $app_no     = isset($resultData['AuthCode']) ? $resultData['AuthCode'] : '';
                 $commid     = '';
                 $card_name  = isset($resultData['CardCode']) ? $CARD_CODE[$resultData['CardCode']] : '';
-            
+
                 switch($pay_type) {
                     case '계좌이체':
-                        $bankname = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
+                        $bank_name = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
                         break;
                     case '가상계좌':

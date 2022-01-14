@@ -16,10 +16,8 @@ if ($default['de_escrow_use'] == 1) {
 }
 
 // 현금 영수증 발행 사용 여부 확인
-$optionList = '';
-if($default['de_tax_flag_use']) {
-    $optionList = 'no_receipt';
-}
+// 기존 PG사들과의 동일한 구성을 위해 모듈내의 현금영수증 발행은 막음
+$optionList = 'no_receipt';
 
 // goodsCl에 실물여부에 관련된 값 적용 ( 1 : 실물, 0 : 컨텐츠 )
 $goodsCl = '0';

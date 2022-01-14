@@ -41,9 +41,6 @@ $ediDate = date('Ymdhis');
 <!-- 실물에 따라 0 or 1 -->
 <input type="hidden" name="GoodsCl"     value="<?php echo $goodsCl; ?>"/>                                                   <!--실물(1) 컨텐츠(0) -->
 
-<!-- <input type="hidden" name="mKey"        value=""> -->
-<!-- <input type="hidden" name="CharSet"     value="UTF-8"> -->
-
 <input type="hidden" name="good_mny"    value="<?php echo $tot_price; ?>">
 
 <input type="hidden" name="TransType"   value="<?php echo $useescrow; ?>">

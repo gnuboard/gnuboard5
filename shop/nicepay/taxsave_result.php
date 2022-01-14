@@ -54,16 +54,18 @@ $useopt   = $tr_code;
 * ReceiptTypeNo (식별값) 
 *****************************************/
 
-$nicepay->m_GoodsName           = $goodname; // 상품명
+$nicepay->m_ActionType          = 'PYO';
+$nicepay->m_PayMethod           = 'RECEIPT';
+$nicepay->m_GoodsName           = iconv_euckr($goodname); // 상품명
 $nicepay->m_Moid                = $od_id;
-$nicepay->m_BuyerName           = $buyername;
+$nicepay->m_BuyerName           = iconv_euckr($buyername);
+$nicepay->m_Amt                 = $amt_tot;
 $nicepay->m_ReceiptAmt          = $amt_tot;
 $nicepay->m_ReceiptSupplyAmt    = $amt_sup;
 $nicepay->m_ReceiptVAT          = $amt_tax;
 $nicepay->m_ReceiptServiceAmt   = $amt_svc;
 $nicepay->m_ReceiptType         = $useopt;
 $nicepay->m_ReceiptTypeNo       = $reg_num;
-
 
 /****************
  * 발급 요청 *
@@ -115,6 +117,13 @@ $g5['title'] = '현금영수증 발급';
 include_once(G5_PATH.'/head.sub.php');
 ?>
 
+<script>
+function showreceipt() // 현금 영수증 출력
+{
+    var showreceiptUrl = "https://npg.nicepay.co.kr/issue/IssueLoader.do?type=0&innerWin=Y&TID=<?php echo($nicepay->m_ResultData['TID']); ?>";
+    window.open(showreceiptUrl,"showreceipt","width=380,height=540, scrollbars=no,resizable=no");
+}
+</script>
 <div id="lg_req_tx" class="new_win">
     <h1 id="win_title">현금영수증 - 나이스페이</h1>
 
@@ -139,7 +148,7 @@ include_once(G5_PATH.'/head.sub.php');
         </tr>
         <tr>
             <th scope="row">현금영수증 승인번호</th>
-            <td><?php echo $nicepay->m_ResultData['ApplNum']; ?></td>
+            <td><?php echo $nicepay->m_ResultData['AuthCode']; ?></td>
         </tr>
         <tr>
             <th scope="row">승인시간</th>

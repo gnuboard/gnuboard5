@@ -623,6 +623,8 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                         } else if($od['od_pg'] == 'inicis') {
                             $cash = unserialize($od['od_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
+                        } else if($od['od_pg'] == 'nicepay') {
+                            $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&innerWin=Y&TID='.$od['od_tno'].'\',\'receipt\',\'width=430,height=700\')';
                         } else {
                             require G5_SHOP_PATH.'/settle_kcp.inc.php';
 
