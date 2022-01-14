@@ -120,7 +120,7 @@ include_once(G5_PATH.'/head.sub.php');
 <script>
 function showreceipt() // 현금 영수증 출력
 {
-    var showreceiptUrl = "https://npg.nicepay.co.kr/issue/IssueLoader.do?type=0&innerWin=Y&TID=<?php echo($nicepay->m_ResultData['TID']); ?>";
+    var showreceiptUrl = "https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&innerWin=Y&TID=<?php echo($nicepay->m_ResultData['TID']); ?>";
     window.open(showreceiptUrl,"showreceipt","width=380,height=540, scrollbars=no,resizable=no");
 }
 </script>
