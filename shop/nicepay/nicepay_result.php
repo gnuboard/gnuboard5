@@ -85,15 +85,17 @@ try {
                 $depositor  = isset($resultData['VbankAccountName']) ? $resultData['VbankAccountName'] : '';                                   // 송금자명
                 $app_no     = isset($resultData['AuthCode']) ? $resultData['AuthCode'] : '';
                 $commid     = '';
-                $card_name  = isset($resultData['CardCode']) ? $CARD_CODE[$resultData['CardCode']] : '';
+                $card_name  = isset($resultData['CardName']) ? $resultData['CardName'] : '';
 
                 switch($pay_type) {
                     case '계좌이체':
-                        $bank_name = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
+                        $bank_name = isset($resultData['BankName']) ? $resultData['BankName'] : '';
+                        // $bank_name = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
                         break;
                     case '가상계좌':
-                        $bankname  = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
+                        $bankname   = isset($resultData['VbankBankName']) ? $resultData['VbankBankName'] : '';
+                        // $bankname   = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
                         $account    = $resultData['VbankNum'].' '.$resultData['VbankAccountName'];
                         $app_no     = $resultData['VbankNum'];
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
