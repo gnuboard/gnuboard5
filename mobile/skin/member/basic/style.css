@@ -90,6 +90,7 @@
 #find_info #info_fs p {margin:0 0 10px;line-height:1.5em;font-size:0.92em;color:#4162ff}
 #find_info #info_fs #mb_email {width:100%}
 #find_info #captcha {margin:5px 0}
+#find_info .find_btn .btn_submit {margin:5px 0;width:100%;}
 
 /* 비밀번호 재설정 */
 #pw_reset #info_fs {margin-bottom: 10px}
