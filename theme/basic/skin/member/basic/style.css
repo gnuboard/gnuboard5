@@ -176,6 +176,7 @@
 
 /* 로그인 */
 #mb_login {}
+#mb_login .main_logo {display:block;margin:30px 0;}
 #mb_login h1 {position:absolute;font-size:0;line-height:0;overflow:hidden}
 #login_fs {padding:35px}
 #mb_login #login_fs .frm_input {margin:0 0 10px}

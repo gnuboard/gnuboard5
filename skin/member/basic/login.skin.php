@@ -7,6 +7,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 
 <!-- 로그인 시작 { -->
 <div id="mb_login" class="mbskin">
+    <a href="<?php echo G5_URL ?>" class="main_logo">
+        <img src="<?php echo G5_IMG_URL ?>/logo.png" alt="gnuboard5">
+    </a>
+
     <div class="mbskin_box">
         <h1><?php echo $g5['title'] ?></h1>
         <div class="mb_log_cate">

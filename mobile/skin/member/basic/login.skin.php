@@ -6,6 +6,10 @@ add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 
 ?>
 
 <div id="mb_login" class="mbskin">
+    <a href="<?php echo G5_URL ?>" class="main_logo">
+        <img src="<?php echo G5_IMG_URL ?>/m_logo.png" alt="gnuboard5">
+    </a>
+
     <h1><?php echo $g5['title'] ?></h1>
 
     <form name="flogin" action="<?php echo $login_action_url ?>" onsubmit="return flogin_submit(this);" method="post" id="flogin">
