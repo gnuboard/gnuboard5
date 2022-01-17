@@ -854,7 +854,8 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
         <tr>
             <th scope="row" class="cf_cert_service"><label for="cf_cert_find">회원정보찾기</label></th>
             <td class="cf_cert_service">
-                <input type="checkbox" name="cf_cert_find" id="cf_cert_find" value="1" <?php if (isset($config['cf_cert_find']) && $config['cf_cert_find'] == 1) { ?> checked <?php } ?>><label for="cf_cert_find">아이디/비밀번호 찾기에 사용하기</label>
+                <?php echo help('휴대폰/아이핀 본인확인을 이용하시다가 간편인증을 이용하시는 경우, 기존 회원은 아이디/비밀번호 찾기에 사용할 수 없을 수 있습니다.') ?>
+                <input type="checkbox" name="cf_cert_find" id="cf_cert_find" value="1" <?php if (isset($config['cf_cert_find']) && $config['cf_cert_find'] == 1) { ?> checked <?php } ?>><label for="cf_cert_find"> 아이디/비밀번호 찾기에 사용하기</label>
             </td>
         </tr>
         <tr>
@@ -1429,13 +1430,6 @@ $(function(){
                 $(".cf_cert_service").removeClass("cf_cert_hide");
                 break;
         }
-    });
-
-    $("#cf_cert_find").on("click", function() {
-        if($(this).attr("checked")) {
-            let flag = confirm("휴대폰/아이핀 본인확인을 이용하시다가 간편인증을 이용하시는 경우, 기존 회원은 아이디/비밀번호 찾기에 사용할 수 없을 수 있습니다.\n\n그래도 사용하시겠습니까?");
-            $(this).attr("checked", flag);
-        };
     });
 
     $("#cf_captcha").on("change", function(){
