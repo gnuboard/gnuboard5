@@ -194,7 +194,7 @@ if ($board['bo_use_cert'] != '' && $config['cf_cert_use'] && !$is_admin) {
     }
 
     if (strlen($member['mb_dupinfo']) == 64 && $member['mb_certify']) { // 본인 인증 된 계정 중에서 di로 저장 되었을 경우에만
-        goto_url(G5_BBS_URL."/member_cert_refresh.php");
+        goto_url(G5_BBS_URL."/member_cert_refresh.php?url=".urlencode(get_pretty_url($bo_table, $wr_id, $qstr)));
     }
 
     if ($board['bo_use_cert'] == 'cert' && !$member['mb_certify']) {            

@@ -28,7 +28,7 @@ add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css"
 <script>
 function fpasswordreset_submit(f) {
     if ($("#mb_pw").val() == $("#mb_pw2").val()) {
-        alert("비밀번호가 정상적으로 변경되었습니다.");
+        alert("비밀번호 변경되었습니다. 다시 로그인해 주세요.");
     } else {
         alert("새 비밀번호와 비밀번호 확인이 일치하지 않습니다.");
         return false;

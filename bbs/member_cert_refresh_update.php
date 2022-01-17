@@ -6,6 +6,7 @@ global $g5;
 if (!($w == '' || $w == 'u')) {
     alert('w 값이 제대로 넘어오지 않았습니다.');
 }
+$url = urldecode($url);
 
 if($w == '') {
     $mb_id = isset($_POST['mb_id']) ? trim($_POST['mb_id']) : '';
@@ -69,11 +70,13 @@ $sql = "update {$g5['member_table']} set {$sql_certify} where mb_id = '{$mb_id}'
 $result = sql_query($sql, false);
 
 if($result){
-    if(get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { 
+    if($cert_type == 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { // 아이핀일때 hash 값 체크 hp미포함)
+        insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
+    }else if($cert_type != 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$mb_hp.$md5_cert_no)) { // 통합인증, 휴대폰일때 hash 값 체크 hp포함
         insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
     }
 }
 
 //===============================================================
 
-goto_url(G5_URL);
+(empty($url))? goto_url(G5_URL) : goto_url($url);
