@@ -105,6 +105,7 @@
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
 #find_info p {line-height:1.5em}
 #find_info #mb_email {margin:10px 0}
+#find_info .find_btn .btn_submit {width:30%;word-break:keep-all;}
 
 /* 비밀번호 재설정 */
 #pw_reset #info_fs {margin-bottom: 10px}

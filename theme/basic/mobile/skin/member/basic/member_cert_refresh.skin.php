@@ -58,10 +58,8 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
                 if ($config['cf_cert_sa']) {
-                    echo '<button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="">간편인증</button>' . PHP_EOL;
+                    echo '<button type="button" id="win_sa_kakao_cert" class="btn_submit win_sa_cert" data-type="">간편인증</button>' . PHP_EOL;
                 }
-                echo '</div>';
-                echo '<div class="win_btn">';
                 if ($config['cf_cert_hp'])
                     echo '<button type="button" id="win_hp_cert" class="btn_submit">휴대폰 본인확인</button>' . PHP_EOL;
                 if ($config['cf_cert_ipin'])
