@@ -110,7 +110,7 @@ $req_num = $field[12];
 $mb_birth = $field[8];
 $di = $field[4];
 $ci = $field[5];
-$mb_dupinfo = md5($ci.$ci); // 통합인증 추가 후 ci로 변경
+$mb_dupinfo = md5($ci.$ci); // 간편인증 추가 후 ci로 변경
 $phone_no = hyphen_hp_number($req_num);
 
 // 명의 변경 체크

@@ -52,7 +52,7 @@ switch($_GET['pageType']) {
 }
 
 $resultUrl = G5_INICERT_URL . $resultPage;
-$g5['title'] = 'KG이니시스 통합인증';
+$g5['title'] = 'KG이니시스 간편인증';
 include_once(G5_PATH.'/head.sub.php'); 	
 ?>
     <form name="saForm">

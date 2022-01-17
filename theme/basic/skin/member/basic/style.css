@@ -40,7 +40,7 @@
 .fregister_agree {position:absolute;top:0;right:0}
 .fregister_agree input[type="checkbox"] + label {color:#676e70}
 .fregister_agree input[type="checkbox"] + label:hover {color:#2172f8}
-.fregister_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.fregister_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #999;border-radius:3px}
 .fregister_agree input[type="checkbox"]:checked + label {color:#000}
 .fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .fregister_agree.chk_all input[type="checkbox"] + label span {top:18px}
@@ -58,6 +58,8 @@
 .register_form_inner label {display:block;margin-bottom:10px;line-height:24px}
 .register_form_inner label.inline {display:inline}
 
+#fregisterform .cert_desc {color:#3a8afd;}
+#fregisterform .cert_req {margin-left:5px;line-height:35px;}
 #fregisterform #msg_certify {margin:5px 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
 #fregisterform .frm_address {margin:5px 0 0}
 #fregisterform #mb_addr3 {display:inline-block;margin:5px 0 0;vertical-align:middle}
@@ -93,14 +95,16 @@
 .tooltip {position:absolute;width:auto;color:#fff;background:#000;padding:10px;font-size:small;line-height:18px;display:none;z-index:9;font-weight:normal;margin-left:15px;margin-top:10px}
 .tooltip:before {content:"";position:absolute;top:0;left:-10px;width:0;height:0;border-style:solid;border-top:0px solid transparent;border-bottom:10px solid transparent;border-left:0;border-right:10px solid #000}
 
-
 /* 아이디/비밀번호 찾기 */
 #find_info h3 {display:none;margin-bottom:30px;text-align:center;font-size:1.1em;}
+#find_info .new_win_con {background:#f7f7f7;}
 #find_info.cert .new_win_con {width:460px;float:left;}
+#find_info.cert .new_win_con:nth-child(2) {margin-left:10px;}
 #find_info.cert h3 {display:block;}
 #find_info #mb_hp_label {display:inline-block;margin-left:10px}
 #find_info p {line-height:1.5em}
 #find_info #mb_email {margin:10px 0}
+#find_info .find_btn .btn_submit {width:30%;word-break:keep-all;}
 
 /* 비밀번호 재설정 */
 #pw_reset #info_fs {margin-bottom: 10px}
@@ -124,7 +128,7 @@
 .member_cert_refresh_agree {position:absolute;top:0;right:0}
 .member_cert_refresh_agree input[type="checkbox"] + label {color:#676e70}
 .member_cert_refresh_agree input[type="checkbox"] + label:hover {color:#2172f8}
-.member_cert_refresh_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.member_cert_refresh_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #999;border-radius:3px}
 .member_cert_refresh_agree input[type="checkbox"]:checked + label {color:#000}
 .member_cert_refresh_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
 .member_cert_refresh_agree.chk_all input[type="checkbox"] + label span {top:18px}

@@ -9,7 +9,7 @@ if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] |
 <?php } ?>
 
 <!-- 회원정보 찾기 시작 { -->
-<div id="find_info" class="new_win <?php if($config['cf_cert_use'] != 0 && $config['cf_cert_find'] != 0) { ?> cert <?php } ?>">
+<div id="find_info" class="new_win<?php if($config['cf_cert_use'] != 0 && $config['cf_cert_find'] != 0) { ?> cert<?php } ?>">
     <div class="new_win_con">
         <form name="fpasswordlost" action="<?php echo $action_url ?>" onsubmit="return fpasswordlost_submit(this);" method="post" autocomplete="off">
         <h3>이메일로 찾기</h3>
@@ -29,21 +29,19 @@ if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] |
         </form>
     </div>
     <?php if($config['cf_cert_use'] != 0 && $config['cf_cert_find'] != 0) { ?> 
-    <div class="new_win_con">
+    <div class="new_win_con find_btn">
         <h3>본인인증으로 찾기</h3>
-        <?php if(!empty($config['cf_cert_sa'])) { ?>
         <div class="cert_btn">
-            <button type="button" id="win_sa_kakao_cert" class="btn_close win_sa_cert" data-type="">통합 인증</button>
-        </div>
+        <?php if(!empty($config['cf_cert_sa'])) { ?>
+            <button type="button" id="win_sa_kakao_cert" class="btn_submit win_sa_cert" data-type="">간편인증</button>
         <?php } if(!empty($config['cf_cert_hp']) || !empty($config['cf_cert_ipin'])) { ?>
-        <div class="win_btn">
             <?php if(!empty($config['cf_cert_hp'])) { ?>
             <button type="button" id="win_hp_cert" class="btn_submit">휴대폰 본인확인</button>
             <?php } if(!empty($config['cf_cert_ipin'])) { ?>
             <button type="button" id="win_ipin_cert" class="btn_submit">아이핀 본인확인</button>
             <?php } ?>
-        </div>
         <?php } ?>
+        </div>
     </div>
     <?php } ?>
 </div>

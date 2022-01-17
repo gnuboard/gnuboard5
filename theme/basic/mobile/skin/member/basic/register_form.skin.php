@@ -26,18 +26,18 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         <h2>사이트 이용정보 입력</h2>
         <ul>
 	        <li>
-	            <label for="reg_mb_id" class="sound_only">아이디<strong>필수</strong></label>
-	            <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" minlength="3" maxlength="20" <?php echo $required ?> <?php echo $readonly ?> placeholder="아이디">
+	            <label for="reg_mb_id" class="sound_only">아이디 (필수)</label>
+	            <input type="text" name="mb_id" value="<?php echo $member['mb_id'] ?>" id="reg_mb_id" class="frm_input full_input <?php echo $required ?> <?php echo $readonly ?>" minlength="3" maxlength="20" <?php echo $required ?> <?php echo $readonly ?> placeholder="아이디 (필수)">
 	            <span id="msg_mb_id"></span>
 	            <span class="frm_info">영문자, 숫자, _ 만 입력 가능. 최소 3자이상 입력하세요.</span>
 	        </li>
 	        <li class="password">
-	            <label for="reg_mb_password" class="sound_only">비밀번호<strong>필수</strong></label>
-	            <input type="password" name="mb_password" id="reg_mb_password" class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" <?php echo $required ?> placeholder="비밀번호">
+	            <label for="reg_mb_password" class="sound_only">비밀번호 (필수)</label>
+	            <input type="password" name="mb_password" id="reg_mb_password" class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" <?php echo $required ?> placeholder="비밀번호 (필수)">
 	        </li>
 	        <li>
-	            <label for="reg_mb_password_re" class="sound_only">비밀번호 확인<strong>필수</strong></label>
-	            <input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" <?php echo $required ?>  placeholder="비밀번호확인">
+	            <label for="reg_mb_password_re" class="sound_only">비밀번호확인 (필수)</label>
+	            <input type="password" name="mb_password_re" id="reg_mb_password_re" class="frm_input full_input <?php echo $required ?>" minlength="3" maxlength="20" <?php echo $required ?>  placeholder="비밀번호확인 (필수)">
 	        </li>
         </ul>
     </div>
@@ -46,20 +46,24 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         <h2>개인정보 입력</h2>
         <ul>
             <li>
-                <?php if($config['cf_cert_use'] <> 0) { ?>
-                    <div id="msg_certify">
-                        버튼을 눌러 <strong>본인인증</strong>을 진행해주세요. <?php if($config['cf_cert_req'] == 1) { ?><br>이름/휴대폰 번호는 자동으로 입력됩니다.<?php } ?>
-                    </div>
-                    <?php }
+                <?php 
 	            if ($config['cf_cert_use']) {
+                    $desc_name = ' - 본인확인 시 자동입력';
+                    $desc_phone = ' - 본인확인 시 자동입력';
+
+                    if (!$config['cf_cert_sa'] && !$config['cf_cert_hp'] && $config['cf_cert_ipin']) {
+                        $desc_phone = '';
+                    }
+
                     if ($config['cf_cert_sa']) {
-                        echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline win_sa_cert" data-type="">통합 인증</button>'.PHP_EOL;
+                        echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline btn win_sa_cert" data-type="">간편인증</button>'.PHP_EOL;
                     }
                     if ($config['cf_cert_hp'])
                         echo '<button type="button" id="win_hp_cert" class="btn_frmline btn">휴대폰 본인확인</button>'.PHP_EOL;
                     if ($config['cf_cert_ipin'])
                         echo '<button type="button" id="win_ipin_cert" class="btn_frmline btn">아이핀 본인확인</button>'.PHP_EOL;
 	
+                    echo '<span class="cert_req">(필수)</span>';
 	                echo '<noscript>본인확인을 위해서는 자바스크립트 사용이 가능해야합니다.</noscript>'.PHP_EOL;
 	            }
 	            ?>
@@ -67,7 +71,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 	            if ($config['cf_cert_use'] && $member['mb_certify']) {
 	                switch  ($member['mb_certify']) {
                         case "sa": 
-                            $mb_cert = "통합인증";
+                            $mb_cert = "간편인증";
                             break;
                         case "ipin": 
                             $mb_cert = "아이핀";
@@ -83,25 +87,25 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             <?php } ?>
             </li>
 	        <li class="rgs_name_li">
-	            <label for="reg_mb_name" class="sound_only">이름<strong>필수</strong></label>
-	            <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $name_readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $name_readonly ?>" placeholder="이름">
+	            <label for="reg_mb_name" class="sound_only">이름 (필수)<?php echo $desc_name ?></label>
+	            <input type="text" id="reg_mb_name" name="mb_name" value="<?php echo get_text($member['mb_name']) ?>" <?php echo $required ?> <?php echo $name_readonly; ?> class="frm_input full_input <?php echo $required ?> <?php echo $name_readonly ?>" placeholder="이름 (필수)<?php echo $desc_name ?>">
 	        </li>
 	        <?php if ($req_nick) { ?>
 	        <li>
-	            <label for="reg_mb_nick" class="sound_only">닉네임<strong>필수</strong></label>
+	            <label for="reg_mb_nick" class="sound_only">닉네임 (필수)</label>
 	            
 	            <span class="frm_info">
 	                공백없이 한글,영문,숫자만 입력 가능 (한글2자, 영문4자 이상)<br>
 	                닉네임을 바꾸시면 앞으로 <?php echo (int)$config['cf_nick_modify'] ?>일 이내에는 변경 할 수 없습니다.
 	            </span>
 	            <input type="hidden" name="mb_nick_default" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>">
-	            <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="frm_input full_input required nospace" maxlength="20" placeholder="닉네임">
+	            <input type="text" name="mb_nick" value="<?php echo isset($member['mb_nick'])?get_text($member['mb_nick']):''; ?>" id="reg_mb_nick" required class="frm_input full_input required nospace" maxlength="20" placeholder="닉네임 (필수)">
 	            <span id="msg_mb_nick"></span>
 	        </li>
 	        <?php } ?>
 
 			<li>
-            	<label for="reg_mb_email" class="sound_only">E-mail<strong>필수</strong></label>
+            	<label for="reg_mb_email" class="sound_only">E-mail (필수)</label>
                 <?php if ($config['cf_use_email_certify']) {  ?>
                 <span class="frm_info">
                     <?php if ($w=='') { echo "E-mail 로 발송된 내용을 확인한 후 인증하셔야 회원가입이 완료됩니다."; }  ?>
@@ -109,28 +113,28 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                 </span>
                 <?php }  ?>
                 <input type="hidden" name="old_email" value="<?php echo $member['mb_email'] ?>">
-                <input type="email" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="frm_input email required" size="50" maxlength="100" placeholder="E-mail">
+                <input type="email" name="mb_email" value="<?php echo isset($member['mb_email'])?$member['mb_email']:''; ?>" id="reg_mb_email" required class="frm_input email required" size="50" maxlength="100" placeholder="E-mail (필수)">
 			</li>
 
 	        <?php if ($config['cf_use_homepage']) { ?>
 	        <li>
-	            <label for="reg_mb_homepage" class="sound_only">홈페이지<?php if ($config['cf_req_homepage']){ ?><strong>필수</strong><?php } ?></label>
-	            <input type="text" name="mb_homepage" value="<?php echo get_text($member['mb_homepage']) ?>" id="reg_mb_homepage" class="frm_input full_input <?php echo $config['cf_req_homepage']?"required":""; ?>" maxlength="255" <?php echo $config['cf_req_homepage']?"required":""; ?> placeholder="홈페이지">
+	            <label for="reg_mb_homepage" class="sound_only">홈페이지<?php if ($config['cf_req_homepage']){ ?> (필수)<?php } ?></label>
+	            <input type="text" name="mb_homepage" value="<?php echo get_text($member['mb_homepage']) ?>" id="reg_mb_homepage" class="frm_input full_input <?php echo $config['cf_req_homepage']?"required":""; ?>" maxlength="255" <?php echo $config['cf_req_homepage']?"required":""; ?> placeholder="홈페이지<?php if ($config['cf_req_homepage']){ ?> (필수)<?php } ?>">
 	        </li>
 	        <?php } ?>
 	
 	        <?php if ($config['cf_use_tel']) { ?>
 	        <li>
-	            <label for="reg_mb_tel" class="sound_only">전화번호<?php if ($config['cf_req_tel']) { ?><strong>필수</strong><?php } ?></label>
-	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호">
+	            <label for="reg_mb_tel" class="sound_only">전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?></label>
+	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?>">
 	        </li>
 	        <?php } ?>
 	
 	        <?php if ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_sa']))) {  ?>
 	        <li>
-                <label for="reg_mb_hp">휴대폰번호<?php if (!empty($hp_required)) { ?><strong class="sound_only">필수</strong><?php } ?></label>
+                <label for="reg_mb_hp" class="sound_only">휴대폰번호<?php if (!empty($hp_required)) { ?> (필수)<?php } ?><?php echo $desc_phone ?></label>
 	                
-	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo $hp_required; ?> <?php echo $hp_readonly; ?> class="frm_input full_input <?php echo $hp_required; ?> <?php echo $hp_readonly; ?>" maxlength="20" placeholder="휴대폰번호">
+	            <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo $hp_required; ?> <?php echo $hp_readonly; ?> class="frm_input full_input <?php echo $hp_required; ?> <?php echo $hp_readonly; ?>" maxlength="20" placeholder="휴대폰번호<?php if (!empty($hp_required)) { ?> (필수)<?php } ?><?php echo $desc_phone ?>">
 	            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) { ?>
 	            <input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
 	            <?php } ?>
@@ -141,13 +145,13 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 	        <?php if ($config['cf_use_addr']) { ?>
 	        <li>
 	        	<div class="adress">
-	            	<span class="frm_label sound_only">주소<?php if ($config['cf_req_addr']) { ?>필수<?php } ?></span>
-	            	<label for="reg_mb_zip" class="sound_only">우편번호<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
-	            	<input type="text" name="mb_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="reg_mb_zip" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="5" maxlength="6" placeholder="우편번호">
+	            	<span class="frm_label sound_only">주소<?php if ($config['cf_req_addr']) { ?> (필수)<?php } ?></span>
+	            	<label for="reg_mb_zip" class="sound_only">우편번호<?php echo $config['cf_req_addr']?' (필수)':''; ?></label>
+	            	<input type="text" name="mb_zip" value="<?php echo $member['mb_zip1'].$member['mb_zip2']; ?>" id="reg_mb_zip" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input <?php echo $config['cf_req_addr']?"required":""; ?>" size="5" maxlength="6" placeholder="우편번호<?php echo $config['cf_req_addr']?' (필수)':''; ?>">
 	            	<button type="button" class="btn_frmline" onclick="win_zip('fregisterform', 'mb_zip', 'mb_addr1', 'mb_addr2', 'mb_addr3', 'mb_addr_jibeon');">주소검색</button><br>
 	            </div>
-	            <label for="reg_mb_addr1" class="sound_only">주소<?php echo $config['cf_req_addr']?'<strong class="sound_only"> 필수</strong>':''; ?></label>
-	            <input type="text" name="mb_addr1" value="<?php echo get_text($member['mb_addr1']) ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50" placeholder="주소"><br>
+	            <label for="reg_mb_addr1" class="sound_only">주소<?php echo $config['cf_req_addr']?' (필수)':''; ?></label>
+	            <input type="text" name="mb_addr1" value="<?php echo get_text($member['mb_addr1']) ?>" id="reg_mb_addr1" <?php echo $config['cf_req_addr']?"required":""; ?> class="frm_input frm_address <?php echo $config['cf_req_addr']?"required":""; ?>" size="50" placeholder="주소<?php echo $config['cf_req_addr']?' (필수)':''; ?>"><br>
 	            <label for="reg_mb_addr2" class="sound_only">상세주소</label>
 	            <input type="text" name="mb_addr2" value="<?php echo get_text($member['mb_addr2']) ?>" id="reg_mb_addr2" class="frm_input frm_address" size="50" placeholder="상세주소">
 	            <br>
@@ -165,8 +169,8 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 		<ul>
 			<?php if ($config['cf_use_signature']) { ?>
 	        <li>
-	            <label for="reg_mb_signature" class="sound_only">서명<?php if ($config['cf_req_signature']){ ?><strong>필수</strong><?php } ?></label>
-	            <textarea name="mb_signature" id="reg_mb_signature" class="<?php echo $config['cf_req_signature']?"required":""; ?>" <?php echo $config['cf_req_signature']?"required":""; ?> placeholder="서명"><?php echo $member['mb_signature'] ?></textarea>
+	            <label for="reg_mb_signature" class="sound_only">서명<?php if ($config['cf_req_signature']){ ?> (필수)<?php } ?></label>
+	            <textarea name="mb_signature" id="reg_mb_signature" class="<?php echo $config['cf_req_signature']?"required":""; ?>" <?php echo $config['cf_req_signature']?"required":""; ?> placeholder="서명<?php if ($config['cf_req_signature']){ ?> (필수)<?php } ?>"><?php echo $member['mb_signature'] ?></textarea>
 	        </li>
 	        <?php } ?>
 	
@@ -289,7 +293,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         var pageTypeParam = "pageType=register";
 
         <?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-        // 이니시스 통합인증
+        // 이니시스 간편인증
         var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
         var type = "";    
         var params = "";
@@ -355,7 +359,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 
         switch(val) {
             case "sa":
-                type = "통합인증";
+                type = "간편인증";
                 break;
             case "ipin":
                 type = "아이핀";
