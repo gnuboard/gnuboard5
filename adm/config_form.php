@@ -278,6 +278,18 @@ if( ! isset($config['cf_icode_token_key']) ){
     sql_query($sql, false);
 }
 
+// popbill 관련 필드가 없을경우
+if(!isset($config['cf_popbill_co_no'])) {
+    sql_query("ALTER TABLE `{$g5['config_table']}`
+                ADD `cf_popbill_co_no` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_token_key`,
+                ADD `cf_popbill_id` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_popbill_co_no`,
+                ADD `cf_popbill_pw` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_popbill_id`,
+                ADD `cf_popbill_server_ip` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_pw`,
+                ADD `cf_popbill_server_port` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_server_ip`
+    ", true);
+ 
+
+
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
 if(!$config['cf_mobile_faq_skin']) $config['cf_mobile_faq_skin'] = "basic";
 
@@ -1259,6 +1271,8 @@ include_once('_rewrite_config_form.php');
                 <select id="cf_sms_use" name="cf_sms_use">
                     <option value="" <?php echo get_selected($config['cf_sms_use'], ''); ?>>사용안함</option>
                     <option value="icode" <?php echo get_selected($config['cf_sms_use'], 'icode'); ?>>아이코드</option>
+                    <!---popbill 옵션 추가--->
+                    <option value="icode" <?php echo get_selected($config['cf_sms_use'], 'popbill'); ?>>팝빌(popbill)</option>
                 </select>
             </td>
         </tr>
@@ -1321,6 +1335,28 @@ include_once('_rewrite_config_form.php');
                 <?php echo help("아이코드 사이트 -> 토큰키관리 메뉴에서 생성한 토큰키를 입력합니다."); ?>
                 <br>
                 서버아이피 : <?php echo $_SERVER['SERVER_ADDR']; ?>
+            </td>
+        </tr>
+        <!----popbill 기입내용 추가---->
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_popbill_co_no">팝빌 사업자번호</label></th>
+            <td>
+                <?php echo help("아이코드에서 사용하시는 사업자번호를 입력합니다."); ?>
+                <input type="text" name="cf_popbill_co_no" value="<?php echo get_sanitize_input($config['cf_popbill_co_no']); ?>" id="cf_popbill_co_no" class="frm_input" size="20">
+            </td>
+        </tr>
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_popbill_id">팝빌 회원아이디</label></th>
+            <td>
+                <?php echo help("아이코드에서 사용하시는 회원아이디를 입력합니다."); ?>
+                <input type="text" name="cf_popbill_id" value="<?php echo get_sanitize_input($config['cf_popbill_id']); ?>" id="cf_popbill_id" class="frm_input" size="20">
+            </td>
+        </tr>
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_popbill_pw">팝빌 비밀키</label></th>
+            <td>
+                <?php echo help("아이코드에서 사용하시는 비밀키를 입력합니다."); ?>
+                <input type="password" name="cf_popbill_pw" value="<?php echo get_sanitize_input($config['cf_popbill_pw']); ?>" id="cf_popbill_pw" class="frm_input" size="100">
             </td>
         </tr>
         <tr>
