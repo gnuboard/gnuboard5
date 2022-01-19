@@ -29,7 +29,7 @@ if ($_POST["resultCode"] === "0000") {
 
     if($res_data['resultCode'] === "0000") {
 
-        $cert_type      = 'sa';                                 // 인증타입
+        $cert_type      = 'simple';                                 // 인증타입
         $cert_no        = $res_data['txId'];                    // 이니시스 트랜잭션 ID
         $phone_no       = $res_data['userPhone'];               // 전화번호
         $user_name      = $res_data['userName'];                // 이름

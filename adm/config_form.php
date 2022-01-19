@@ -283,11 +283,19 @@ if(!isset($config['cf_cert_find']) ){
             ADD COLUMN `cf_cert_find` TINYINT(4) NOT NULL DEFAULT '0' AFTER `cf_cert_use`; ";
     sql_query($sql, false);
 }
-// 통합인증 필드 추가
-if(!isset($config['cf_cert_sa']) ){
+// 간편인증 필드 추가
+if(!isset($config['cf_cert_simple']) ){
     $sql = "ALTER TABLE `{$g5['config_table']}` 
-            ADD COLUMN `cf_cert_sa` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_hp`,
-            ADD COLUMN `cf_cert_kg_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_sa`,
+            ADD COLUMN `cf_cert_simple` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_hp`; ";
+    sql_query($sql, false);
+}
+if(!isset($config['cf_cert_kg_cd']) ){
+    $sql = "ALTER TABLE `{$g5['config_table']}`
+            ADD COLUMN `cf_cert_kg_cd` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_simple`; ";
+    sql_query($sql, false);
+}
+if(!isset($config['cf_cert_kg_mid']) ){
+    $sql = "ALTER TABLE `{$g5['config_table']}`
             ADD COLUMN `cf_cert_kg_mid` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_cert_kg_cd`; ";
     sql_query($sql, false);
 }
@@ -859,11 +867,11 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_sa">간편인증</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_simple">간편인증</label></th>
             <td class="cf_cert_service">
-                <select name="cf_cert_sa" id="cf_cert_sa">
-                    <?php echo option_selected("", $config['cf_cert_sa'], "사용안함"); ?>
-                    <?php echo option_selected("sa", $config['cf_cert_sa'], "KG이니시스 간편인증"); ?>
+                <select name="cf_cert_simple" id="cf_cert_simple">
+                    <?php echo option_selected("", $config['cf_cert_simple'], "사용안함"); ?>
+                    <?php echo option_selected("inicis", $config['cf_cert_simple'], "KG이니시스 간편인증"); ?>
                 </select>
             </td>
         </tr>
@@ -892,11 +900,11 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td class="cf_cert_service">
                 <span class="sitecode">SRA</span>
                 <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="10" minlength="7" maxlength="7">
-                <a href="http://sir.kr/main/service/inicis_cert_form.php" target="_blank" class="btn_frmline">KG이니시스 통합인증 신청페이지</a>
+                <a href="http://sir.kr/main/service/inicis_cert_form.php" target="_blank" class="btn_frmline">KG이니시스 간편인증 신청페이지</a>
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 통합인증 API KEY</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_kg_cd">KG이니시스 간편인증 API KEY</label></th>
             <td class="cf_cert_service">
                 <input type="text" name="cf_cert_kg_cd" value="<?php echo get_sanitize_input($config['cf_cert_kg_cd']); ?>" id="cf_cert_kg_cd" class="frm_input" size="40" minlength="32" maxlength="32">
             </td>

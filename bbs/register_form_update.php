@@ -110,7 +110,7 @@ if ($w == '' || $w == 'u') {
     if ($msg = prohibit_mb_email($mb_email))alert($msg, "", true, true);
 
     // 휴대폰 필수입력일 경우 휴대폰번호 유효성 체크
-    if ($config['cf_use_hp'] || ($config['cf_cert_hp'] || $config['cf_cert_sa']) && $config['cf_req_hp']) {
+    if ($config['cf_use_hp'] || ($config['cf_cert_hp'] || $config['cf_cert_simple']) && $config['cf_req_hp']) {
         if ($msg = valid_mb_hp($mb_hp))     alert($msg, "", true, true);
     }
 
@@ -310,7 +310,7 @@ if ($w == '') {
 
     if($cert_type == 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { // 아이핀일때 hash 값 체크 hp미포함)
         insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
-    }else if($cert_type != 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$mb_hp.$md5_cert_no)) { // 통합인증, 휴대폰일때 hash 값 체크 hp포함
+    }else if($cert_type != 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$mb_hp.$md5_cert_no)) { // 간편인증, 휴대폰일때 hash 값 체크 hp포함
         insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
     }
 
@@ -374,7 +374,7 @@ if ($w == '') {
 
     if($cert_type == 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$md5_cert_no)) { // 아이핀일때 hash 값 체크 hp미포함)
         insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
-    }else if($cert_type != 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$mb_hp.$md5_cert_no)) { // 통합인증, 휴대폰일때 hash 값 체크 hp포함
+    }else if($cert_type != 'ipin' && get_session('ss_cert_hash') == md5($mb_name.$cert_type.get_session('ss_cert_birth').$mb_hp.$md5_cert_no)) { // 간편인증, 휴대폰일때 hash 값 체크 hp포함
         insert_member_cert_history($mb_id, $mb_name, $mb_hp, get_session('ss_cert_birth'), get_session('ss_cert_type') ); // 본인인증 후 정보 수정 시 내역 기록
     }
 }

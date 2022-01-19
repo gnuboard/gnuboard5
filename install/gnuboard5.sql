@@ -288,7 +288,7 @@ CREATE TABLE IF NOT EXISTS `g5_config` (
   `cf_cert_find` tinyint(4) NOT NULL DEFAULT '0',
   `cf_cert_ipin` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_hp` varchar(255) NOT NULL DEFAULT '',
-  `cf_cert_sa` varchar(255) NOT NULL DEFAULT '',
+  `cf_cert_simple` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kg_cd` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kg_mid` varchar(255) NOT NULL DEFAULT '',
   `cf_cert_kcb_cd` varchar(255) NOT NULL DEFAULT '',

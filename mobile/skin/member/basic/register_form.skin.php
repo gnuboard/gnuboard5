@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 add_javascript('<script src="'.G5_JS_URL.'/jquery.register_form.js"></script>', 0);
-if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
+if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
     add_javascript('<script src="'.G5_JS_URL.'/certify.js?v='.G5_JS_VER.'"></script>', 0);
 ?>
 
@@ -51,11 +51,11 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
                     $desc_name = ' - 본인확인 시 자동입력';
                     $desc_phone = ' - 본인확인 시 자동입력';
 
-                    if (!$config['cf_cert_sa'] && !$config['cf_cert_hp'] && $config['cf_cert_ipin']) {
+                    if (!$config['cf_cert_simple'] && !$config['cf_cert_hp'] && $config['cf_cert_ipin']) {
                         $desc_phone = '';
                     }
 
-                    if($config['cf_cert_sa']) {
+                    if($config['cf_cert_simple']) {
                         echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline btn win_sa_cert" data-type="">간편인증</button>'.PHP_EOL;
                     }
                     if($config['cf_cert_hp'])
@@ -70,7 +70,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 	            <?php
 	            if ($config['cf_cert_use'] && $member['mb_certify']) {
 	                switch  ($member['mb_certify']) {
-                        case "sa": 
+                        case "simple": 
                             $mb_cert = "간편인증";
                             break;
                         case "ipin": 
@@ -127,16 +127,16 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
 	        <?php if ($config['cf_use_tel']) { ?>
 	        <li>
 	            <label for="reg_mb_tel" class="sound_only">전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?></label>
-	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && $member['mb_certify']) { echo "readonly"; } ?> maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?>">
+	            <input type="text" name="mb_tel" value="<?php echo get_text($member['mb_tel']) ?>" id="reg_mb_tel" class="frm_input full_input <?php echo $config['cf_req_tel']?"required":""; ?>" <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_simple']) && $member['mb_certify']) { echo "readonly"; } ?> maxlength="20" <?php echo $config['cf_req_tel']?"required":""; ?> placeholder="전화번호<?php if ($config['cf_req_tel']) { ?> (필수)<?php } ?>">
 	        </li>
 	        <?php } ?>
 	
-	        <?php if ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_sa']))) {  ?>
+	        <?php if ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_simple']))) {  ?>
 	        <li>
                 <label for="reg_mb_hp" class="sound_only">휴대폰번호<?php if (!empty($hp_required)) { ?> (필수)<?php } ?><?php echo $desc_phone ?></label>
 	                
                 <input type="text" name="mb_hp" value="<?php echo get_text($member['mb_hp']) ?>" id="reg_mb_hp" <?php echo $hp_required; ?> <?php echo $hp_readonly; ?> class="frm_input full_input <?php echo $hp_required; ?> <?php echo $hp_readonly; ?>" maxlength="20" placeholder="휴대폰번호<?php if (!empty($hp_required)) { ?> (필수)<?php } ?><?php echo $desc_phone ?>">
-	            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) { ?>
+	            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_simple'])) { ?>
 	            <input type="hidden" name="old_mb_hp" value="<?php echo get_text($member['mb_hp']) ?>">
 	            <?php } ?>
 	            
@@ -293,7 +293,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         $("#reg_zip_find").css("display", "inline-block");
         var pageTypeParam = "pageType=register";
 
-        <?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
+        <?php if($config['cf_cert_use'] && $config['cf_cert_simple']) { ?>
         // 이니시스 간편인증
         var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
         var type = "";    
@@ -359,7 +359,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
         var type;
 
         switch(val) {
-            case "sa":
+            case "simple":
                 type = "간편인증";
                 break;
             case "ipin":

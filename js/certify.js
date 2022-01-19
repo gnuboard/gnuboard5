@@ -98,7 +98,7 @@ function cert_confirm() {
     var val = document.fregisterform.cert_type.value;
 
     switch(val) {
-        case "sa":
+        case "simple":
             type = "간편인증";
             break;
         case "ipin":
