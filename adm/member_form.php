@@ -96,6 +96,10 @@ else
 
 // 본인확인방법
 switch($mb['mb_certify']) {
+    case 'simple':
+        $mb_certify_case = '간편인증';
+        $mb_certify_val = 'simple';
+        break;
     case 'hp':
         $mb_certify_case = '휴대폰';
         $mb_certify_val = 'hp';
@@ -169,6 +173,28 @@ if(!isset($mb['mb_email_certify2'])) {
     sql_query(" ALTER TABLE {$g5['member_table']} ADD `mb_email_certify2` varchar(255) NOT NULL DEFAULT '' AFTER `mb_email_certify` ", false);
 }
 
+// 본인인증 내역 테이블 정보가 dbconfig에 없으면 소셜 테이블 정의
+if( !isset($g5['member_cert_history']) ){
+    $g5['member_cert_history_table'] = G5_TABLE_PREFIX.'member_cert_history';
+}
+// 멤버 본인인증 정보 변경 내역 테이블 없을 경우 생성
+if(isset($g5['member_cert_history_table']) && !sql_query(" DESC {$g5['member_cert_history_table']} ", false)) {
+    sql_query(" CREATE TABLE IF NOT EXISTS `{$g5['member_cert_history_table']}` (
+                    `ch_id` int(11) NOT NULL auto_increment,
+                    `mb_id` varchar(20) NOT NULL DEFAULT '',
+                    `ch_name` varchar(255) NOT NULL DEFAULT '',
+                    `ch_hp` varchar(255) NOT NULL DEFAULT '',
+                    `ch_birth` varchar(255) NOT NULL DEFAULT '',
+                    `ch_type` varchar(20) NOT NULL DEFAULT '',
+                    `ch_datetime` datetime NOT NULL default '0000-00-00 00:00:00',
+                    PRIMARY KEY (`ch_id`),
+                    KEY `mb_id` (`mb_id`)
+                ) ", true);
+}
+
+$sql = "select * from {$g5['member_cert_history_table']} where mb_id = '{$mb_id}' order by ch_id asc";
+$mb_cert_history = sql_query($sql);
+
 if ($mb['mb_intercept_date']) $g5['title'] = "차단된 ";
 else $g5['title'] .= "";
 $g5['title'] .= '회원 '.$html_title;
@@ -233,10 +259,12 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row">본인확인방법</th>
         <td colspan="3">
-            <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" <?php if($mb['mb_certify'] == 'ipin') echo 'checked="checked"'; ?>>
-            <label for="mb_certify_ipin">아이핀</label>
+            <input type="radio" name="mb_certify_case" value="simple" id="mb_certify_sa" <?php if($mb['mb_certify'] == 'simple') echo 'checked="checked"'; ?>>
+            <label for="mb_certify_sa">간편인증</label>
             <input type="radio" name="mb_certify_case" value="hp" id="mb_certify_hp" <?php if($mb['mb_certify'] == 'hp') echo 'checked="checked"'; ?>>
             <label for="mb_certify_hp">휴대폰</label>
+            <input type="radio" name="mb_certify_case" value="ipin" id="mb_certify_ipin" <?php if($mb['mb_certify'] == 'ipin') echo 'checked="checked"'; ?>>
+            <label for="mb_certify_ipin">아이핀</label>
         </td>
     </tr>
     <tr>
@@ -339,6 +367,39 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row"><label for="mb_memo">메모</label></th>
         <td colspan="3"><textarea name="mb_memo" id="mb_memo"><?php echo $mb['mb_memo'] ?></textarea></td>
+    </tr>
+    <tr>
+        <th scope="row"><label for="mb_cert_history">본인인증 내역</label></th> 
+        <td colspan="3">
+            <?php 
+            $cnt = 0;
+            while ($row = sql_fetch_array($mb_cert_history)) {
+                $cnt++;
+                switch($row['ch_type']){
+                    case 'simple':
+                        $cert_type = '간편인증';
+                        break;
+                    case 'hp':
+                        $cert_type = '휴대폰';
+                        break;
+                    case 'ipin':
+                        $cert_type = '아이핀';
+                        break;
+                }
+            ?>
+            <div>
+                [<?php echo $row['ch_datetime']; ?>]
+                <?php echo $row['mb_id']; ?> /
+                <?php echo $row['ch_name']; ?> /
+                <?php echo $row['ch_hp']; ?> /
+                <?php echo $cert_type; ?>
+            </div>
+            <?php } ?>
+
+            <?php if ($cnt == 0) { ?>
+                본인인증 내역이 없습니다.
+            <?php } ?>
+        </td>
     </tr>
 
     <?php if ($w == 'u') { ?>

@@ -108,20 +108,27 @@ echo "리턴메시지        :$field[16] <br/>";
 $mb_name = $field[7];
 $req_num = $field[12];
 $mb_birth = $field[8];
-$mb_dupinfo = $field[4];
+$di = $field[4];
+$ci = $field[5];
+$mb_dupinfo = md5($ci.$ci); // 간편인증 추가 후 ci로 변경
 $phone_no = hyphen_hp_number($req_num);
+
+// 명의 변경 체크
+if (!empty($member['mb_certify']) && !empty($member['mb_dupinfo']) && strlen($member['mb_dupinfo']) != 64) { // 이미 인증된 계정중에 dupinfo가 di(64 length)가 아닐때
+    if($member['mb_dupinfo'] != $mb_dupinfo) alert_close("해당 계정은 이미 다른명의로 본인인증 되어있는 계정입니다.");
+}
 
 // 중복정보 체크
 $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
 $row = sql_fetch($sql);
-if ($row['mb_id']) {
+if (!empty($row['mb_id'])) {
     alert_close("입력하신 본인확인 정보로 가입된 내역이 존재합니다.\\n회원아이디 : ".$row['mb_id']);
 }
 
 // hash 데이터
 $cert_type = 'hp';
 $md5_cert_no = md5($req_num);
-$hash_data   = md5($mb_name.$cert_type.$mb_birth.$md5_cert_no);
+$hash_data   = md5($mb_name.$cert_type.$mb_birth.$phone_no.$md5_cert_no);
 
 // 성인인증결과
 $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
@@ -149,6 +156,11 @@ $(function() {
     $opener.$("input[name=cert_no]").val("<?php echo $md5_cert_no; ?>");
 
     alert("본인의 휴대폰번호로 확인 되었습니다.");
+
+    if($opener.$("form[name=fcertrefreshform]") != undefined){
+        $opener.$("form[name=fcertrefreshform]").submit();
+    }
+    
     window.close();
 });
 </script>

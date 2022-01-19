@@ -27,7 +27,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$outlogin_skin_url.'/style.css">'
                 <label for="auto_login" id="auto_login_label"><span></span>자동로그인</label>
             </div>
             <div id="ol_svc">
-                <a href="<?php echo G5_BBS_URL ?>/password_lost.php" id="ol_password_lost">정보찾기</a>
+                <a href="<?php echo G5_BBS_URL ?>/password_lost.php">ID/PW 찾기</a>
             </div>
         </div>
         <?php

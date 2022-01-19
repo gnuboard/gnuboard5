@@ -84,6 +84,9 @@ if ($xpay->TX()) {
         //인증요청 결과 성공 DB처리
         //echo "인증요청 결과 성공 DB처리하시기 바랍니다.<br>";
 
+        // 인증내역기록 인증 성공 즉시 로그를 남기는것으로 수정 2021-09-13
+        @insert_cert_history($member['mb_id'], 'lg', 'hp');
+
         $cert_no        = $xpay->Response('LGD_TID', 0);                      // LG 인증처리번호
         $comm_id        = $xpay->Response('LGD_FINANCECODE', 0);              // 이동통신사 코드
         $phone_no       = $xpay->Response('LGD_MOBILENUM', 0);                // 전화번호
@@ -124,8 +127,13 @@ if ($xpay->TX()) {
             alert_close("정상적인 인증이 아닙니다. 올바른 방법으로 이용해 주세요.");
 
         $phone_no = hyphen_hp_number($phone_no);
-        $mb_dupinfo = $di;
+        $mb_dupinfo = md5($ci.$ci);
 
+        // 명의 변경 체크
+        if (!empty($member['mb_certify']) && !empty($member['mb_dupinfo']) && strlen($member['mb_dupinfo']) != 64) { // 이미 인증된 계정중에 dupinfo가 di(64 length)가 아닐때
+            if($member['mb_dupinfo'] != $mb_dupinfo) alert_close("해당 계정은 이미 다른명의로 본인인증 되어있는 계정입니다.");
+        }
+        
         if($mb_dupinfo) {
             $sql = " select mb_id from {$g5['member_table']} where mb_id <> '{$member['mb_id']}' and mb_dupinfo = '{$mb_dupinfo}' ";
             $row = sql_fetch($sql);
@@ -137,7 +145,7 @@ if ($xpay->TX()) {
         // hash 데이터
         $cert_type = 'hp';
         $md5_cert_no = md5($cert_no);
-        $hash_data   = md5($user_name.$cert_type.$birth_day.$md5_cert_no);
+        $hash_data   = md5($user_name.$cert_type.$birth_day.$phone_no.$md5_cert_no);
 
         // 성인인증결과
         $adult_day = date("Ymd", strtotime("-19 years", G5_SERVER_TIME));
@@ -150,9 +158,6 @@ if ($xpay->TX()) {
         set_session("ss_cert_birth",   $birth_day);
         set_session("ss_cert_sex",     $mb_sex);
         set_session('ss_cert_dupinfo', $mb_dupinfo);
-
-        // 인증내역기록
-        @insert_cert_history($member['mb_id'], 'lg', 'hp');
 
     } else {
         //인증요청 결과 실패 DB처리
@@ -218,6 +223,11 @@ jQuery(function($) {
     }
 
     alert("본인의 휴대폰번호로 확인 되었습니다.");
+
+    if($opener.$("form[name=fcertrefreshform]") != undefined){
+        $opener.$("form[name=fcertrefreshform]").submit();
+    }
+    
     window.close();
 });
 </script>

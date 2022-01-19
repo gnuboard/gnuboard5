@@ -218,7 +218,7 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 
 /* 외부서비스 사이트코드 */
 .sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
-
+.sitecode.title {width:80px}
 
 .readonly {}
 
@@ -1000,7 +1000,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .service_wrap{ width:965px;margin:0 0 10px;overflow:hidden}
 .sevice_1{border:1px solid #ebe8e8;width:310px;float:left;border-radius:5px;text-align:center;margin-right:6px;}
 .sevice_1 .svc_img{padding:30px 0 0;}
-.sevice_1 h3{font-size:16px;margin:185px 0 10px;color:#525252}
+.sevice_1 h3{font-size:16px;margin:190px 0 10px;min-height:45px;color:#525252}
 .sevice_1 p{padding:20px;background:#f8f8f8;font-size:12px;text-align:left;color:#898989;line-height:18px}
 .sevice_1 ul {width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
 .sevice_1 ul li{list-style:none;float:left;border-right:1px solid #ebe8e8;}
@@ -1013,7 +1013,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .svc_card{background:url('../img/service_img1.jpg') no-repeat top center;margin-right:13px;}
 .svc_card ul li{width:33%;}
 .svc_phone {background:url('../img/service_img2.jpg') no-repeat top center;margin-right:13px;}
-.svc_phone ul li{width:33%;}
+.svc_phone ul li{width:50%;}
 .svc_ipin {background:url('../img/service_img3.jpg') no-repeat top center;}
 
 .service_2{padding-top:15px;clear:both}
