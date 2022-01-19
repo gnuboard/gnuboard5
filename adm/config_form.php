@@ -135,13 +135,19 @@ if (!isset($config['cf_syndi_except'])) {
                     ADD `cf_syndi_except` TEXT NOT NULL AFTER `cf_syndi_token` ", true);
 }
 
+// popbill 관련 필드가 없을경우 추가
 if(!isset($config['cf_sms_use'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_sms_use` varchar(255) NOT NULL DEFAULT '' AFTER `cf_cert_limit`,
                     ADD `cf_icode_id` varchar(255) NOT NULL DEFAULT '' AFTER `cf_sms_use`,
                     ADD `cf_icode_pw` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_id`,
                     ADD `cf_icode_server_ip` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_pw`,
-                    ADD `cf_icode_server_port` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_server_ip` ", true);
+                    ADD `cf_icode_server_port` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_server_ip`,
+                    ADD `cf_popbill_co_no` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_token_key`,
+                    ADD `cf_popbill_id` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_popbill_co_no`,
+                    ADD `cf_popbill_pw` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_popbill_id`,
+                    ADD `cf_popbill_server_ip` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_pw`,
+                    ADD `cf_popbill_server_port` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_server_ip`,", true);
 }
 
 if(!isset($config['cf_mobile_page_rows'])) {
@@ -278,16 +284,6 @@ if( ! isset($config['cf_icode_token_key']) ){
     sql_query($sql, false);
 }
 
-// popbill 관련 필드가 없을경우
-if(!isset($config['cf_popbill_co_no'])) {
-    sql_query("ALTER TABLE `{$g5['config_table']}`
-                ADD `cf_popbill_co_no` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_token_key`,
-                ADD `cf_popbill_id` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_popbill_co_no`,
-                ADD `cf_popbill_pw` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_popbill_id`,
-                ADD `cf_popbill_server_ip` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_pw`,
-                ADD `cf_popbill_server_port` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_server_ip`
-    ", true);
- 
 
 
 if(!$config['cf_faq_skin']) $config['cf_faq_skin'] = "basic";
@@ -315,6 +311,10 @@ $pg_anchor = '<ul class="anchor">
 
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
+
+//popbill ip, port 설정
+if (!$config['cf_popbill_server_ip'])   $config['cf_popbill_server_ip'] = '52.78.164.186';
+if (!$config['cf_popbill_server_port']) $config['cf_popbill_server_port'] = '443';
 
 $userinfo = array('payment'=>'');
 if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
@@ -1360,11 +1360,13 @@ include_once('_rewrite_config_form.php');
             </td>
         </tr>
         <tr>
-            <th scope="row">아이코드 SMS 신청<br>회원가입</th>
+            <th scope="row">SMS 신청<br>회원가입</th>
             <td>
                 <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
+                <a href="https://www.popbill.com/Member/Type" target="_blank" class="btn_frmline">팝빌 회원가입</a>
             </td>
         </tr>
+        
         </tbody>
         </table>
     </div>
