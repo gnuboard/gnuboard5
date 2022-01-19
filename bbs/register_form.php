@@ -144,8 +144,8 @@ $req_nick = !isset($member['mb_nick_date']) || (isset($member['mb_nick_date']) &
 $required = ($w=='') ? 'required' : '';
 $readonly = ($w=='u') ? 'readonly' : '';
 $name_readonly = ($w=='u' || ($config['cf_cert_use'] && $config['cf_cert_req']))? 'readonly' : '';
-$hp_required = ($config['cf_req_hp'] || (($config['cf_cert_use'] && $config['cf_cert_req']) && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && $member['mb_certify'] != "ipin")) ? 'required':'';
-$hp_readonly = (($config['cf_cert_use'] && $config['cf_cert_req']) && ($config['cf_cert_hp'] || $config['cf_cert_sa']) && $member['mb_certify'] != "ipin") ? 'readonly':'';
+$hp_required = ($config['cf_req_hp'] || (($config['cf_cert_use'] && $config['cf_cert_req']) && ($config['cf_cert_hp'] || $config['cf_cert_simple']) && $member['mb_certify'] != "ipin")) ? 'required':'';
+$hp_readonly = (($config['cf_cert_use'] && $config['cf_cert_req']) && ($config['cf_cert_hp'] || $config['cf_cert_simple']) && $member['mb_certify'] != "ipin") ? 'readonly':'';
 
 $agree  = isset($_REQUEST['agree']) ? preg_replace('#[^0-9]#', '', $_REQUEST['agree']) : '';
 $agree2 = isset($_REQUEST['agree2']) ? preg_replace('#[^0-9]#', '', $_REQUEST['agree2']) : '';

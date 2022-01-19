@@ -194,7 +194,7 @@ $colspan = 16;
                 $mb_certify_case = '아이핀';
                 $mb_certify_val = '';
                 break;
-            case 'sa':
+            case 'simple':
                 $mb_certify_case = '간편인증';
                 $mb_certify_val = '';
                 break;
@@ -240,7 +240,7 @@ $colspan = 16;
             ?>
         </td>
         <td headers="mb_list_cert"  rowspan="2" class="td_mbcert">
-            <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="sa" id="mb_certify_sa_<?php echo $i; ?>" <?php echo $row['mb_certify']=='sa'?'checked':''; ?>>
+            <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="simple" id="mb_certify_sa_<?php echo $i; ?>" <?php echo $row['mb_certify']=='simple'?'checked':''; ?>>
             <label for="mb_certify_sa_<?php echo $i; ?>">간편인증</label><br>
             <input type="radio" name="mb_certify[<?php echo $i; ?>]" value="hp" id="mb_certify_hp_<?php echo $i; ?>" <?php echo $row['mb_certify']=='hp'?'checked':''; ?>>
             <label for="mb_certify_hp_<?php echo $i; ?>">휴대폰</label><br>

@@ -4,7 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$member_skin_url.'/style.css">', 0);
 
-if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
+if($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin'] || $config['cf_cert_hp'])) { ?>
     <script src="<?php echo G5_JS_URL ?>/certify.js?v=<?php echo G5_JS_VER; ?>"></script>    
 <?php } ?>
 
@@ -32,7 +32,7 @@ if($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] |
     <div class="new_win_con find_btn">
         <h3>본인인증으로 찾기</h3>
         <div class="cert_btn">
-        <?php if(!empty($config['cf_cert_sa'])) { ?>
+        <?php if(!empty($config['cf_cert_simple'])) { ?>
             <button type="button" id="win_sa_kakao_cert" class="btn_submit win_sa_cert" data-type="">간편인증</button>
         <?php } if(!empty($config['cf_cert_hp']) || !empty($config['cf_cert_ipin'])) { ?>
             <?php if(!empty($config['cf_cert_hp'])) { ?>
@@ -50,8 +50,8 @@ $(function() {
     $("#reg_zip_find").css("display", "inline-block");
     var pageTypeParam = "pageType=find";
 
-	<?php if($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
-	// TOSS 통합인증
+	<?php if($config['cf_cert_use'] && $config['cf_cert_simple']) { ?>
+	// TOSS 간편인증
 	var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
 	var type = "";    
     var params = "";

@@ -11,7 +11,7 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_JS_URL.'/remodal/remodal-defau
 add_stylesheet('<link rel="stylesheet" href="'.get_social_skin_url().'/style.css?ver='.G5_CSS_VER.'">', 13);
 add_javascript('<script src="'.G5_JS_URL.'/remodal/remodal.js"></script>', 10);
 add_javascript('<script src="<?php echo G5_JS_URL ?>/jquery.register_form.js"></script>', 14);
-if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
+if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
     add_javascript('<script src="'.G5_JS_URL.'/certify.js?v='.G5_JS_VER.'"></script>', 15);
 
 $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.다른 이메일을 입력해 주세요.' : ''; 
@@ -91,9 +91,9 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
         <?php if ($config["cf_cert_use"]) { ?>
             <input type="hidden" id="reg_mb_name" name="mb_name" value="<?php echo $user_name ? $user_name : $user_nick ?>">
         <?php } ?>
-        <?php if ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_sa']))) {  ?>
+        <?php if ($config['cf_use_hp'] || ($config["cf_cert_use"] && ($config['cf_cert_hp'] || $config['cf_cert_simple']))) {  ?>
             <input type="hidden" name="mb_hp" value="<?php echo get_text($user_phone); ?>" id="reg_mb_hp">
-            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_sa'])) { ?>
+            <?php if ($config['cf_cert_use'] && ($config['cf_cert_hp'] || $config['cf_cert_simple'])) { ?>
                 <input type="hidden" name="old_mb_hp" value="<?php echo get_text($user_phone); ?>">
             <?php } ?>
         <?php }  ?>
@@ -104,7 +104,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
                 <li>
                     <?php 
                     if ($config['cf_cert_use']) {
-                        if ($config['cf_cert_sa']) {
+                        if ($config['cf_cert_simple']) {
                             echo '<button type="button" id="win_sa_kakao_cert" class="btn_frmline btn win_sa_cert" data-type="">간편인증</button>'.PHP_EOL;
                         }
                         if ($config['cf_cert_hp'])
@@ -210,7 +210,7 @@ $email_msg = $is_exists_email ? '등록할 이메일이 중복되었습니다.�
         $("#reg_zip_find").css("display", "inline-block");
         var pageTypeParam = "pageType=register";
 
-        <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
+        <?php if ($config['cf_cert_use'] && $config['cf_cert_simple']) { ?>
             // 이니시스 간편인증
             var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
             var type = "";

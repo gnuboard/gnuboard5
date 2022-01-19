@@ -96,9 +96,9 @@ else
 
 // 본인확인방법
 switch($mb['mb_certify']) {
-    case 'sa':
+    case 'simple':
         $mb_certify_case = '간편인증';
-        $mb_certify_val = 'sa';
+        $mb_certify_val = 'simple';
         break;
     case 'hp':
         $mb_certify_case = '휴대폰';
@@ -259,7 +259,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
     <tr>
         <th scope="row">본인확인방법</th>
         <td colspan="3">
-            <input type="radio" name="mb_certify_case" value="sa" id="mb_certify_sa" <?php if($mb['mb_certify'] == 'sa') echo 'checked="checked"'; ?>>
+            <input type="radio" name="mb_certify_case" value="simple" id="mb_certify_sa" <?php if($mb['mb_certify'] == 'simple') echo 'checked="checked"'; ?>>
             <label for="mb_certify_sa">간편인증</label>
             <input type="radio" name="mb_certify_case" value="hp" id="mb_certify_hp" <?php if($mb['mb_certify'] == 'hp') echo 'checked="checked"'; ?>>
             <label for="mb_certify_hp">휴대폰</label>
@@ -376,7 +376,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
             while ($row = sql_fetch_array($mb_cert_history)) {
                 $cnt++;
                 switch($row['ch_type']){
-                    case 'sa':
+                    case 'simple':
                         $cert_type = '간편인증';
                         break;
                     case 'hp':

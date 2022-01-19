@@ -3,7 +3,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="' . $member_skin_url . '/style.css">', 0);
-if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
+if ($config['cf_cert_use'] && ($config['cf_cert_simple'] || $config['cf_cert_ipin'] || $config['cf_cert_hp']))
     add_javascript('<script src="'.G5_JS_URL.'/certify.js?v='.G5_JS_VER.'"></script>', 0);
 ?>
 <!-- 기존 회원 본인인증 시작 { -->
@@ -53,7 +53,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             <?php
             if ($config['cf_cert_use']) {
                 echo '<div class="cert_btn">';
-                if ($config['cf_cert_sa']) {
+                if ($config['cf_cert_simple']) {
                     echo '<button type="button" id="win_sa_kakao_cert" class="btn_submit win_sa_cert" data-type="">간편인증</button>' . PHP_EOL;
                 }
                 if ($config['cf_cert_hp'])
@@ -73,7 +73,7 @@ if ($config['cf_cert_use'] && ($config['cf_cert_sa'] || $config['cf_cert_ipin'] 
             var pageTypeParam = "pageType=register";
             var f = document.fcertrefreshform;
 
-            <?php if ($config['cf_cert_use'] && $config['cf_cert_sa']) { ?>
+            <?php if ($config['cf_cert_use'] && $config['cf_cert_simple']) { ?>
                 // 이니시스 간편인증
                 var url = "<?php echo G5_INICERT_URL; ?>/ini_request.php";
                 var type = "";

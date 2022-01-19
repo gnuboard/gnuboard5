@@ -2823,7 +2823,7 @@ function certify_count_check($mb_id, $type)
     $row = sql_fetch($sql);
 
     switch($type) {
-        case 'sa' :
+        case 'simple' :
             $cert = '간편인증';
             break;
         case 'hp':

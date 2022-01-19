@@ -102,7 +102,7 @@ $check_keys = array(
 'cf_cert_find' => 'int',
 'cf_cert_ipin' => 'char',
 'cf_cert_hp' => 'char',
-'cf_cert_sa' => 'char',
+'cf_cert_simple' => 'char',
 'cf_admin_email' => 'char',
 'cf_admin_email_name' => 'char',
 'cf_add_script' => 'text',
@@ -173,13 +173,13 @@ foreach( $check_keys as $k => $v ){
 }
 
 // 본인확인을 사용할 경우 아이핀, 휴대폰인증 중 하나는 선택되어야 함
-if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'] && !$_POST['cf_cert_sa'])
+if($_POST['cf_cert_use'] && !$_POST['cf_cert_ipin'] && !$_POST['cf_cert_hp'] && !$_POST['cf_cert_simple'])
     alert('본인확인을 위해 아이핀, 휴대폰 본인확인, KG이니시스 간편인증 서비스 중 하나 이상 선택해 주십시오.');
 
 if(!$_POST['cf_cert_use']) {
     $posts[$key] = $_POST['cf_cert_ipin'] = '';
     $posts[$key] = $_POST['cf_cert_hp'] = '';
-    $posts[$key] = $_POST['cf_cert_sa'] = '';
+    $posts[$key] = $_POST['cf_cert_simple'] = '';
 }
 
 $sql = " update {$g5['config_table']}
@@ -280,7 +280,7 @@ $sql = " update {$g5['config_table']}
                 cf_cert_find = '{$_POST['cf_cert_find']}',
                 cf_cert_ipin = '{$_POST['cf_cert_ipin']}',
                 cf_cert_hp = '{$_POST['cf_cert_hp']}',
-                cf_cert_sa = '{$_POST['cf_cert_sa']}',
+                cf_cert_simple = '{$_POST['cf_cert_simple']}',
                 cf_cert_kg_cd = '{$_POST['cf_cert_kg_cd']}',
                 cf_cert_kg_mid = '".trim($_POST['cf_cert_kg_mid'])."',
                 cf_cert_kcb_cd = '{$_POST['cf_cert_kcb_cd']}',

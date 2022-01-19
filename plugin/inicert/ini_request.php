@@ -10,7 +10,7 @@ if($config['cf_cert_use'] == 2) { // 실서비스 일때
     $mid = 'SRA'.$config['cf_cert_kg_mid']; // 부여받은 MID(상점ID) 입력(영업담당자 문의)
     $apiKey = $config['cf_cert_kg_cd'];   // 부여받은 MID 에 대한 apiKey
     $mTxId ='SIR_'.$max_cr_id;
-    certify_count_check($member['mb_id'], 'sa'); // 금일 인증시도 횟수 체크
+    certify_count_check($member['mb_id'], 'simple'); // 금일 인증시도 횟수 체크
 } else { // 테스트 일때
     $mid = "INIiasTest";
     $apiKey = "TGdxb2l3enJDWFRTbTgvREU3MGYwUT09";
