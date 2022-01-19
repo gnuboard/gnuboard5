@@ -133,7 +133,9 @@ function pg_setting_check($is_print=false){
 			$pg_msg = 'LG유플러스';
 		} else if ( $default['de_pg_service'] === 'inicis' && $default['de_inicis_mid'] && $default['de_inicis_sign_key'] ){
 			$pg_msg = 'KG이니시스';
-		}
+		} else if ( $default['de_pg_service'] === 'nicepay' && $default['de_nicepay_mid'] && $default['de_nicepay_sign_key']) {
+            $pg_msg = '나이스페이';
+        }
 	}
 
     if( function_exists('is_use_easypay') && is_use_easypay('global_nhnkcp') ){

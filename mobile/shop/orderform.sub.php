@@ -1406,6 +1406,51 @@ function pay_approval()
         <?php } ?>
         f.P_RETURN_URL.value = "<?php echo $return_url.$od_id; ?>";
         f.action = "https://mobile.inicis.com/smart/" + paymethod + "/";
+        <?php } else if($default['de_pg_service'] == 'nicepay') { ?>
+        var paymethod = "";
+        var width = 330;
+        var height = 480;
+        var xpos = (screen.width - width) / 2;
+        var ypos = (screen.width - height) / 2;
+        var position = "top=" + ypos + ",left=" + xpos;
+        var features = position + ", width=320, height=440";
+
+        switch(settle_method) {
+            case "계좌이체":
+                f.PayMethod.value = "BANK";
+                break;
+            case "가상계좌":
+                f.PayMethod.value = "VBANK";
+                break;
+            case "휴대폰":
+                f.PayMethod.value = "CELLPHONE";
+                break;
+            case "신용카드":
+                f.PayMethod.value = "CARD";
+                break;
+        }
+
+        f.Amt.value         = f.good_mny.value;
+        <?php if($default['de_tax_flag_use']) { ?>
+            f.tax.value         = pf.comm_vat_mny.value;
+            f.taxfree.value     = pf.comm_free_mny.value;
+        <?php } ?>
+        f.BuyerName.value   = pf.od_name.value;
+        f.BuyerEmail.value  = pf.od_email.value;
+        f.BuyerPostNo.value = pf.od_zip.value;
+        f.BuyerAddr.value   = pf.od_addr1.value + " " +pf.od_addr2.value;
+        f.BuyerTel.value    = pf.od_hp.value ? pf.od_hp.value : pf.od_tel.value;
+        
+        f.RcvrName.value    = pf.od_b_name.value;
+        f.RcvrTel.value     = pf.od_b_hp.value ? pf.od_b_hp.value : pf.od_b_tel.value;
+        f.RcvrZipx.value    = pf.od_b_zip.value;
+        f.RcvrAddr.value    = pf.od_b_addr1.value + " " +pf.od_b_addr2.value;
+
+        f.action = "https://web.nicepay.co.kr/v3/smart/smartPayment.jsp";
+        
+        if(!make_signature(f))
+            return false;
+
         <?php } ?>
 
         // 주문 정보 임시저장

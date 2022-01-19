@@ -43,6 +43,9 @@ if($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') {
 
     if($default['de_pg_service'] == 'inicis' && ! $post_p_hash)
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
+
+    if($default['de_pg_service'] == 'nicepay' && ! $post_p_hash)
+        alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 }
 
 // 장바구니가 비어있는가?
@@ -355,6 +358,9 @@ else if ($od_settle_case == "계좌이체")
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             $bank_name  = iconv("cp949", "utf-8", $bank_name);
@@ -380,6 +386,9 @@ else if ($od_settle_case == "가상계좌")
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -407,6 +416,9 @@ else if ($od_settle_case == "휴대폰")
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             break;
@@ -430,6 +442,9 @@ else if ($od_settle_case == "신용카드")
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -456,6 +471,9 @@ else if ($od_settle_case == "간편결제")
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -524,6 +542,9 @@ if($tno) {
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'nicepay':
+                include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
                 break;
             case 'KAKAOPAY':
                 $_REQUEST['TID']               = $tno;
@@ -674,6 +695,9 @@ if(! $result || ! (isset($exists_order['od_id']) && $od_id && $exists_order['od_
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
                 break;
+            case 'nicepay':
+                include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
+                break;
             case 'KAKAOPAY':
                 $_REQUEST['TID']               = $tno;
                 $_REQUEST['Amt']               = $amount;
@@ -723,6 +747,9 @@ if(!$result) {
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'nicepay':
+                include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
                 break;
             case 'KAKAOPAY':
                 $_REQUEST['TID']               = $tno;

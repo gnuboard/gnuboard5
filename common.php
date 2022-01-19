@@ -297,6 +297,9 @@ if( !function_exists('shop_check_is_pay_page') ){
             $mobile_dir.'/'.$shop_dir.'/lg/xpay_approval.php',
             $mobile_dir.'/'.$shop_dir.'/kcp/order_approval_form.php',
             $shop_dir.'/kakaopay/inicis_kk_return.php',     // 이니시스 카카오페이 (SIRK 로 시작하는 아이디 전용)
+            $shop_dir.'/nicepay/nicepay_result.php',
+            $mobile_dir.'/'.$shop_dir.'/nicepay/nicepay_approval.php',
+            $mobile_dir.'/'.$shop_dir.'/nicepay/nicepay_result.php',
         );
 
         $server_script_name = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
