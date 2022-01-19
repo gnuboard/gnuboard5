@@ -7,6 +7,7 @@ $post_enc_data = isset($_POST['enc_data']) ? $_POST['enc_data'] : '';
 $post_enc_info = isset($_POST['enc_info']) ? $_POST['enc_info'] : '';
 $post_tran_cd = isset($_POST['tran_cd']) ? $_POST['tran_cd'] : '';
 $post_lgd_paykey = isset($_POST['LGD_PAYKEY']) ? $_POST['LGD_PAYKEY'] : '';
+$post_nice_hash = isset($_POST['NICE_HASH']) ? $_POST['NICE_HASH'] : '';
 
 //삼성페이 또는 lpay 또는 이니시스 카카오페이 요청으로 왔다면 현재 삼성페이 또는 lpay 또는 이니시스 카카오페이는 이니시스 밖에 없으므로 $default['de_pg_service'] 값을 이니시스로 변경한다.
 if( is_inicis_order_pay($od_settle_case) && !empty($_POST['P_HASH']) ){
@@ -44,7 +45,7 @@ if($od_settle_case != '무통장' && $od_settle_case != 'KAKAOPAY') {
     if($default['de_pg_service'] == 'inicis' && ! $post_p_hash)
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
-    if($default['de_pg_service'] == 'nicepay' && ! $post_p_hash)
+    if($default['de_pg_service'] == 'nicepay' && ($post_nice_hash == ''))
         alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 }
 

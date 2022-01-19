@@ -2,9 +2,9 @@
 include_once('./_common.php');
 include_once(G5_MSHOP_PATH.'/settle_nicepay.inc.php');
 
-set_session('P_TID', '');
-set_session('P_AMT', '');
-set_session('P_HASH', '');
+set_session('NICE_TID', '');
+set_session('NICE_AMT', '');
+set_session('NICE_HASH', '');
 
 $oid = isset($_REQUEST['Moid']) ? trim($_REQUEST['Moid']) : '';
 $auth_result_code = isset($_REQUEST['AuthResultCode']) ? $_REQUEST['AuthResultCode'] : '';
@@ -128,13 +128,11 @@ if(strcmp('0000', $auth_result_code) !== 0) {
         alert('오류 : '.$resultData['ResultMsg'].' 코드 : '.$resultData['ResultCode'], $page_return_url);
 
     $hash = md5($resultData['TID'].$resultData['MID'].$resultData['Amt']);
-    set_session('P_TID', $resultData['TID']);
-    set_session('P_AMT', $resultData['Amt']);
-    set_session('P_HASH', $hash);
-}
 
-print_r2(1234);
-exit;
+    set_session('NICE_TID', $resultData['TID']);
+    set_session('NICE_AMT', $resultData['Amt']);
+    set_session('NICE_HASH', $hash);
+}
 
 $params = array();
 
@@ -151,26 +149,17 @@ if(isset($data['pp_id']) && !empty($data['pp_id'])) {
 
         if(is_array($value)) {
             foreach($value as $k=>$v) {
-                $_REQUEST[$key][$k] = $params[$key][$k] = clean_xss_tags(strip_tags($v));
+                $_POST[$key][$k] = $params[$key][$k] = clean_xss_tags(strip_tags($v));
             }
         } else {
-            $_REQUEST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
+            $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($value));
         }
     }
 
-    $result_code = $_POST['Auth'] = isset($PAY['P_STATUS']) ? $PAY['P_STATUS'] : '';
-    $P_HASH = $_POST['P_HASH'] = $hash;
-    $P_TYPE = $_POST['P_TYPE'] = isset($PAY['P_TYPE']) ? $PAY['P_TYPE'] : '';
-    $P_AUTH_DT = $_POST['P_AUTH_DT'] = isset($PAY['P_AUTH_DT']) ? $PAY['P_AUTH_DT'] : '';
-    $P_AUTH_NO = $_POST['P_AUTH_NO'] = isset($PAY['P_AUTH_NO']) ? $PAY['P_AUTH_NO'] : '';
-    $P_HPP_CORP = $_POST['P_HPP_CORP'] = isset($PAY['P_HPP_CORP']) ? $PAY['P_HPP_CORP'] : '';
-    $P_APPL_NUM = $_POST['P_APPL_NUM'] = isset($PAY['P_APPL_NUM']) ? $PAY['P_APPL_NUM'] : '';
-    $P_VACT_NUM = $_POST['P_VACT_NUM'] = isset($PAY['P_VACT_NUM']) ? $PAY['P_VACT_NUM'] : '';
-    $P_VACT_NAME = $_POST['P_VACT_NAME'] = isset($PAY['P_VACT_NAME']) ? iconv_utf8($PAY['P_VACT_NAME']) : '';
-    $P_VACT_BANK = $_POST['P_VACT_BANK'] = (isset($PAY['P_VACT_BANK_CODE']) && isset($BANK_CODE[$PAY['P_VACT_BANK_CODE']])) ? $BANK_CODE[$PAY['P_VACT_BANK_CODE']] : '';
-    // $P_CARD_ISSUER = $_POST['P_CARD_ISSUER'] = isset($CARD_CODE[$PAY['P_CARD_ISSUER_CODE']]) ? $CARD_CODE[$PAY['P_CARD_ISSUER_CODE']] : '';
-    $P_CARD_ISSUER = $_POST['P_CARD_ISSUER'] = isset($CARD_CODE[$PAY['P_FN_CD1']]) ? $CARD_CODE[$PAY['P_FN_CD1']] : '';
-    $P_UNAME = $_POST['P_UNAME'] = isset($PAY['P_UNAME']) ? iconv_utf8($PAY['P_UNAME']) : '';
+    $_POST['NICE_HASH'] = $hash;
+    foreach($resultData as $key => $var) {
+        $_POST[$key] = $params[$key] = $var;
+    }
 
     $check_keys = array('od_name', 'od_tel', 'od_pwd', 'od_hp', 'od_zip', 'od_addr1', 'od_addr2', 'od_addr3', 'od_addr_jibeon', 'od_email', 'ad_default', 'ad_subject', 'od_hope_date', 'od_b_name', 'od_b_tel', 'od_b_hp', 'od_b_zip', 'od_b_addr1', 'od_b_addr2', 'od_b_addr3', 'od_b_addr_jibeon', 'od_memo', 'od_settle_case', 'max_temp_point', 'od_temp_point', 'od_send_cost', 'od_send_cost2', 'od_bank_account', 'od_deposit_name', 'od_test', 'od_ip');
 

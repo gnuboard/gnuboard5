@@ -84,7 +84,7 @@ try {
                 $pay_type   = $PAY_METHOD[$pay_method];
                 $depositor  = isset($resultData['VbankAccountName']) ? $resultData['VbankAccountName'] : '';                                   // 송금자명
                 $app_no     = isset($resultData['AuthCode']) ? $resultData['AuthCode'] : '';
-                $commid     = '';
+                $commid     = isset($resultData['Carrier']) ? $resultData['Carrier'] : '';
                 $card_name  = isset($resultData['CardName']) ? $resultData['CardName'] : '';
 
                 switch($pay_type) {
