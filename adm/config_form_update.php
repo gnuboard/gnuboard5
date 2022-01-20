@@ -31,6 +31,7 @@ foreach( $check_keys as $key ){
 }
 
 $posts['cf_icode_server_port'] = $_POST['cf_icode_server_port'] = isset($_POST['cf_icode_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_icode_server_port']) : '7295';
+$posts['cf_popbill_server_port'] = $_POST['cf_popbill_server_port'] = isset($_POST['cf_popbill_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_popbill_server_port']) : '443';
 
 if(isset($_POST['cf_intercept_ip']) && $_POST['cf_intercept_ip']){
 
@@ -148,6 +149,10 @@ $check_keys = array(
 'cf_icode_id' => 'char',
 'cf_icode_pw' => 'char',
 'cf_icode_server_ip' => 'char',
+'cf_popbill_co_no' => 'char',
+'cf_popbill_id' => 'char',
+'cf_popbill_pw' => 'char',
+'cf_popbill_server_ip' => 'char',
 'cf_captcha' => 'char',
 'cf_syndi_token' => '',
 'cf_syndi_except' => ''
@@ -289,6 +294,11 @@ $sql = " update {$g5['config_table']}
                 cf_icode_token_key = '{$_POST['cf_icode_token_key']}',
                 cf_icode_server_ip = '{$_POST['cf_icode_server_ip']}',
                 cf_icode_server_port = '{$_POST['cf_icode_server_port']}',
+                cf_popbill_co_no = '{$_POST['cf_popbill_co_no']}',
+                cf_popbill_id = '{$_POST['cf_popbill_id']}',
+                cf_popbill_pw = '{$_POST['cf_popbill_pw']}',
+                cf_popbill_server_ip = '{$_POST['cf_popbill_server_ip']}',
+                cf_popbill_server_port = '{$_POST['cf_popbill_server_port']}',
                 cf_googl_shorturl_apikey = '{$_POST['cf_googl_shorturl_apikey']}',
                 cf_kakao_js_apikey = '{$_POST['cf_kakao_js_apikey']}',
                 cf_facebook_appid = '{$_POST['cf_facebook_appid']}',
