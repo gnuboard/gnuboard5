@@ -1272,7 +1272,7 @@ include_once('_rewrite_config_form.php');
                     <option value="" <?php echo get_selected($config['cf_sms_use'], ''); ?>>사용안함</option>
                     <option value="icode" <?php echo get_selected($config['cf_sms_use'], 'icode'); ?>>아이코드</option>
                     <!---popbill 옵션 추가--->
-                    <option value="icode" <?php echo get_selected($config['cf_sms_use'], 'popbill'); ?>>팝빌(popbill)</option>
+                    <option value="popbill" <?php echo get_selected($config['cf_sms_use'], 'popbill'); ?>>팝빌(popbill)</option>
                 </select>
             </td>
         </tr>
