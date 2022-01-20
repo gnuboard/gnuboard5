@@ -1,0 +1,25 @@
+body { color: #000000; background-color: white; font-family: Verdana; margin: 0px; }
+p { color: #000000; margin-top: 0px; margin-bottom: 12px; font-family: Verdana; }
+fieldset { margin:0 auto; padding:0; border:1px solid #D5DFE5; }
+ul { margin:0 0 0 20px; padding:10px; }
+li { margin:0; padding:0 0 7px 0; font-size: 12px; color: #333333; }
+#content { font-size: 12px; padding: 0 15px 0 15px; }
+.heading1 { color: #ffffff; font-family: Tahoma; font-size: 24px; background-color: #009100; margin: 0 -15px 0 -15px; padding: 10px 15px 7px 15px; width: 100%; }
+.fieldset1 { padding:0 10px 0 10px; margin-bottom: 15px;}
+.fieldset2 { margin-top:10px; margin-bottom:10px; }
+.fieldset3 { margin:10px;}
+.fieldset1 legend{ font-weight:bold; }
+.fieldset2 legend{ margin-left:10px; font-weight:normal; }
+.fieldset3 legend{ margin-left:10px; font-weight:normal; }
+.left {float:left;}
+.hand { cursor: pointer; }
+.info {margin :0 0 2px 10px;}
+.txtCorpNum {margin: 10px 10px 10px 10px; width: 300px; padding: 5px 5px 5px 5px}
+.find_btn {	float: left; line-height: 26px; width: 78px; height: 31px; margin: 10px 0 10px 3px; padding: 0 0 0 0; text-align:center; font-size:12px; font-weight:bold; color:#fff; background: url("./image/example_btn_01.gif") no-repeat left top; }
+.old { color: #888888; font-size:12px; }
+.arr { color: #FF1100; font-size:12px; font-family:dotum; margin-left: 5px; margin-right: 3px; }
+.new { color: #FF1100; font-size:12px; }
+a:link { color: #336699; font-weight: bold; font-size:12px; text-decoration: underline; }
+a:visited { color: #6699cc; font-weight: bold; font-size:12px; text-decoration: underline; }
+a:active { color: #336699; font-weight: bold; font-size:12px; text-decoration: underline; }
+a:hover { color: #cc3300; font-weight: bold; font-size:12px; text-decoration: underline; }
