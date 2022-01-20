@@ -1,5 +1,4 @@
 <?php
-echo '<br>popbill.php<br>';
 /**
  * =====================================================================================
  * Class for base module for Popbill API SDK. It include base functionality for

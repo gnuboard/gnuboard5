@@ -5,8 +5,6 @@
         <title>팝빌 SDK PHP 5.X Example.</title>
     </head>
 <?php
-
-echo '<br>SendSMS.php<br>';
     /**
      * 최대 90byte의 단문(SMS) 메시지 1건 전송을 팝빌에 접수합니다.
      * - https://docs.popbill.com/message/php/api#SendSMS

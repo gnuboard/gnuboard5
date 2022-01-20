@@ -1,5 +1,4 @@
 <?php
-echo '<br>common.php<br>';
   /**
   * 팝빌 문자 API PHP SDK Example
   *
