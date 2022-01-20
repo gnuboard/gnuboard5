@@ -8,6 +8,10 @@ auth_check_menu($auth, $sub_menu, "r");
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
+//popbill ip, port 설정
+if (!$config['cf_popbill_server_ip'])   $config['cf_popbill_server_ip'] = '52.78.164.186';
+if (!$config['cf_popbill_server_port']) $config['cf_popbill_server_port'] = '443';
+
 $userinfo = array('payment'=>'');
 if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
@@ -1551,9 +1555,9 @@ function byte_check(el_cont, el_byte)
 }
 </script>
 
-<section id="anc_scf_sms" >
-    <h2 class="h2_frm">SMS 설정</h2>
-    <?php echo $pg_anchor; ?>
+<section id="anc_cf_sms">
+    <h2 class="h2_frm">SMS</h2>
+    <?php echo $pg_anchor ?>
 
     <div class="tbl_frm01 tbl_wrap">
         <table>
@@ -1566,28 +1570,22 @@ function byte_check(el_cont, el_byte)
         <tr>
             <th scope="row"><label for="cf_sms_use">SMS 사용</label></th>
             <td>
-                <?php echo help("SMS  서비스 회사를 선택하십시오. 서비스 회사를 선택하지 않으면, SMS 발송 기능이 동작하지 않습니다.<br>아이코드는 무료 문자메세지 발송 테스트 환경을 지원합니다.<br><a href=\"".G5_ADMIN_URL."/config_form.php#anc_cf_sms\">기본환경설정 &gt; SMS</a> 설정과 동일합니다."); ?>
                 <select id="cf_sms_use" name="cf_sms_use">
                     <option value="" <?php echo get_selected($config['cf_sms_use'], ''); ?>>사용안함</option>
                     <option value="icode" <?php echo get_selected($config['cf_sms_use'], 'icode'); ?>>아이코드</option>
+                    <!---popbill 옵션 추가--->
+                    <option value="popbill" <?php echo get_selected($config['cf_sms_use'], 'popbill'); ?>>팝빌(popbill)</option>
                 </select>
             </td>
         </tr>
         <tr>
             <th scope="row"><label for="cf_sms_type">SMS 전송유형</label></th>
             <td>
-                <?php echo help("전송유형을 SMS로 선택하시면 최대 80바이트까지 전송하실 수 있으며<br>LMS로 선택하시면 90바이트 이하는 SMS로, 그 이상은 1500바이트까지 LMS로 전송됩니다.<br>요금은 건당 SMS는 16원, LMS는 48원입니다."); ?>
+                <?php echo help("전송유형을 SMS로 선택하시면 최대 80바이트까지 전송하실 수 있으며<br>LMS로 선택하시면 90바이트 이하는 SMS로, 그 이상은 ".G5_ICODE_LMS_MAX_LENGTH."바이트까지 LMS로 전송됩니다.<br>요금은 건당 SMS는 16원, LMS는 48원입니다."); ?>
                 <select id="cf_sms_type" name="cf_sms_type">
                     <option value="" <?php echo get_selected($config['cf_sms_type'], ''); ?>>SMS</option>
                     <option value="LMS" <?php echo get_selected($config['cf_sms_type'], 'LMS'); ?>>LMS</option>
                 </select>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row"><label for="de_sms_hp">관리자 휴대폰번호</label></th>
-            <td>
-                <?php echo help("주문서작성시 쇼핑몰관리자가 문자메세지를 받아볼 번호를 숫자만으로 입력하세요. 예) 0101234567"); ?>
-                <input type="text" name="de_sms_hp" value="<?php echo get_sanitize_input($default['de_sms_hp']); ?>" id="de_sms_hp" class="frm_input" size="20">
             </td>
         </tr>
         <tr class="icode_old_version">
@@ -1601,7 +1599,7 @@ function byte_check(el_cont, el_byte)
             <th scope="row"><label for="cf_icode_pw">아이코드 비밀번호<br>(구버전)</label></th>
             <td>
                 <?php echo help("아이코드에서 사용하시는 비밀번호를 입력합니다."); ?>
-                <input type="password" name="cf_icode_pw" value="<?php echo get_sanitize_input($config['cf_icode_pw']); ?>" class="frm_input" id="cf_icode_pw">
+                <input type="password" name="cf_icode_pw" value="<?php echo get_sanitize_input($config['cf_icode_pw']); ?>" id="cf_icode_pw" class="frm_input">
             </td>
         </tr>
         <tr class="icode_old_version <?php if(!(isset($userinfo['payment']) && $userinfo['payment'])){ echo 'cf_tr_hide'; } ?>">
@@ -1624,10 +1622,10 @@ function byte_check(el_cont, el_byte)
         </tr>
         <?php if ($userinfo['payment'] == 'A') { ?>
         <tr class="icode_old_version">
-            <th scope="row">충전 잔액</th>
+            <th scope="row">충전 잔액<br>(구버전)</th>
             <td>
                 <?php echo number_format($userinfo['coin']); ?> 원.
-                <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo $config['cf_icode_id']; ?>&amp;icode_passwd=<?php echo $config['cf_icode_pw']; ?>" target="_blank" class="btn_frmline" onclick="window.open(this.href,'icode_payment', 'scrollbars=1,resizable=1'); return false;">충전하기</a>
+                <a href="http://www.icodekorea.com/smsbiz/credit_card_amt.php?icode_id=<?php echo get_text($config['cf_icode_id']); ?>&amp;icode_passwd=<?php echo get_text($config['cf_icode_pw']); ?>" target="_blank" class="btn_frmline">충전하기</a>
             </td>
         </tr>
         <?php } ?>
@@ -1635,22 +1633,46 @@ function byte_check(el_cont, el_byte)
             <th scope="row"><label for="cf_icode_token_key">아이코드 토큰키<br>(JSON버전)</label></th>
             <td>
                 <?php echo help("아이코드 JSON 버전의 경우 아이코드 토큰키를 입력시 실행됩니다.<br>SMS 전송유형을 LMS로 설정시 90바이트 이내는 SMS, 90 ~ 2000 바이트는 LMS 그 이상은 절삭 되어 LMS로 발송됩니다."); ?>
-                <input type="text" name="cf_icode_token_key" value="<?php echo get_sanitize_input($config['cf_icode_token_key']); ?>" id="cf_icode_token_key" class="frm_input" size="40">
+                <input type="text" name="cf_icode_token_key" value="<?php echo isset($config['cf_icode_token_key']) ? get_sanitize_input($config['cf_icode_token_key']) : ''; ?>" id="cf_icode_token_key" class="frm_input" size="40">
                 <?php echo help("아이코드 사이트 -> 토큰키관리 메뉴에서 생성한 토큰키를 입력합니다."); ?>
                 <br>
                 서버아이피 : <?php echo $_SERVER['SERVER_ADDR']; ?>
             </td>
         </tr>
-        <tr>
-            <th scope="row">아이코드 SMS 신청<br>회원가입</th>
+        <!----popbill 기입내용 추가---->
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_popbill_co_no">팝빌 사업자번호</label></th>
             <td>
-                <?php echo help("아래 링크에서 회원가입 하시면 문자 건당 16원에 제공 받을 수 있습니다."); ?>
-                <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
+                <?php echo help("아이코드에서 사용하시는 사업자번호를 입력합니다."); ?>
+                <input type="text" name="cf_popbill_co_no" value="<?php echo get_sanitize_input($config['cf_popbill_co_no']); ?>" id="cf_popbill_co_no" class="frm_input" size="20">
             </td>
         </tr>
-         </tbody>
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_popbill_id">팝빌 회원아이디</label></th>
+            <td>
+                <?php echo help("아이코드에서 사용하시는 회원아이디를 입력합니다."); ?>
+                <input type="text" name="cf_popbill_id" value="<?php echo get_sanitize_input($config['cf_popbill_id']); ?>" id="cf_popbill_id" class="frm_input" size="20">
+            </td>
+        </tr>
+        <tr class="icode_old_version">
+            <th scope="row"><label for="cf_popbill_pw">팝빌 비밀키</label></th>
+            <td>
+                <?php echo help("아이코드에서 사용하시는 비밀키를 입력합니다."); ?>
+                <input type="password" name="cf_popbill_pw" value="<?php echo get_sanitize_input($config['cf_popbill_pw']); ?>" id="cf_popbill_pw" class="frm_input" size="100">
+            </td>
+        </tr>
+        <tr>
+            <th scope="row">SMS 신청<br>회원가입</th>
+            <td>
+                <a href="http://icodekorea.com/res/join_company_fix_a.php?sellid=sir2" target="_blank" class="btn_frmline">아이코드 회원가입</a>
+                <a href="https://www.popbill.com/Member/Type" target="_blank" class="btn_frmline">팝빌 회원가입</a>
+            </td>
+        </tr>
+        
+        </tbody>
         </table>
     </div>
+
 
     <section id="scf_sms_pre">
         <h3>사전에 정의된 SMS프리셋</h3>
