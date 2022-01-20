@@ -18,7 +18,7 @@ include_once(G5_ADMIN_PATH.'/admin.head.php');
 </div>
 
 <?php
-if ($config['cf_sms_use'] == 'icode') { // 아이코드 사용
+if ($config['cf_sms_use'] == 'icode' || 'popbill') { // 아이코드 혹은 팝빌 사용
 ?>
 <div id="sms5_send">
 
