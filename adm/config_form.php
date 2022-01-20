@@ -1360,33 +1360,32 @@ include_once('_rewrite_config_form.php');
             </td>
         </tr>
         <?php 
-                // 잔여 포인트 확인하기
-                try {
-                    $remainPoint = $MessagingService->GetBalance($CorpNum);
-                }
-                catch (PopbillException $pe) {
-                    $code = $pe->getCode();
-                    $message = $pe->getMessage();
-                }
-                if ( isset($remainPoint) ) {
-                    ?>
-                    <tr class="icode_old_version">
-                        <th scope="row"><label for="cf_popbill_id">팝빌 포인트</label></th>
-                        <td>
-                            <li>
-                                잔여포인트 : <?php echo $remainPoint ?>
-                <?php
-                try {
-                    $url = $MessagingService->GetChargeURL($CorpNum, $LinkID);
-                } catch (PopbillException $pe) {
-                    $code = $pe->getCode();
-                    $message = $pe->getMessage();
-                }
-                ?>
-                                <a href="<?php echo $url ?>" target="_blank" class="btn_frmline">충전하기</a>
-                            </li>                  
-                        </td>
-                <?php } ?>
+            // 잔여 포인트 확인하기
+            try {
+                $remainPoint = $MessagingService->GetBalance($CorpNum);
+            }
+            catch (PopbillException $pe) {
+                $code = $pe->getCode();
+                $message = $pe->getMessage();
+            }
+            try {
+                $url = $MessagingService->GetChargeURL($CorpNum, $LinkID);
+            } catch (PopbillException $pe) {
+                $code = $pe->getCode();
+                $message = $pe->getMessage();
+            }
+           
+            if ( isset($remainPoint) ) {
+        ?>
+                <tr class="icode_old_version">
+                    <th scope="row"><label for="cf_popbill_id">팝빌 포인트</label></th>
+                    <td>
+                        <li>
+                            잔여포인트 : <?php echo $remainPoint ?>
+                            <a href="<?php echo $url ?>" target="_blank" class="btn_frmline">충전하기</a>
+                        </li>                  
+                    </td>
+            <?php } ?>
         <tr>
             <th scope="row">SMS 신청<br>회원가입</th>
             <td>

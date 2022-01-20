@@ -610,14 +610,14 @@ if ( isset($_REQUEST) && $_REQUEST ){
 
 require_once './popbill/PopbillMessaging.php';
 
-  // 링크아이디
-  $LinkID = $config['cf_popbill_id'];
+// 링크아이디
+$LinkID = $config['cf_popbill_id'];
  
-  // 비밀키
-  $SecretKey = $config['cf_popbill_pw'];
+// 비밀키
+$SecretKey = $config['cf_popbill_pw'];
 
-  // 사업자번호
-  $CorpNum = $config['cf_popbill_co_no'];
+// 사업자번호
+$CorpNum = $config['cf_popbill_co_no'];
 
   //통신방식 기본은 CURL , curl 사용에 문제가 있을경우 STREAM 사용가능.
   //STREAM 사용시에는 allow_url_fopen = on 으로 설정해야함.
