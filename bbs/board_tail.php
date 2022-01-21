@@ -8,9 +8,12 @@ if (G5_IS_MOBILE) {
     include_once(G5_BBS_PATH.'/_tail.php');
 } else {
     echo html_purifier(stripslashes($board['bo_content_tail']));
-    if($board['bo_include_tail'] && is_include_path_check($board['bo_include_tail'])) {  //파일경로 체크
-        @include ($board['bo_include_tail']);
-    } else {    //파일경로가 올바르지 않으면 기본파일을 가져옴
-        include_once(G5_BBS_PATH.'/_tail.php');
+    // 하단 파일 경로를 입력하지 않았다면 기본 하단 파일도 include 하지 않음
+    if (trim($board['bo_include_tail'])) {
+        if (is_include_path_check($board['bo_include_tail'])) {  //파일경로 체크
+            @include ($board['bo_include_tail']);
+        } else {    //파일경로가 올바르지 않으면 기본파일을 가져옴
+            include_once(G5_BBS_PATH.'/_tail.php');
+        }
     }
 }
