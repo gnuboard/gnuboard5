@@ -238,20 +238,21 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
             if($config['cf_sms_use']=='icode'){
                 include_once(G5_LIB_PATH.'/icode.lms.lib.php');
 
-                $port_setting = get_icode_port_type($config['cf_icode_id'], $config['cf_icode_pw']);
+            $port_setting = get_icode_port_type($config['cf_icode_id'], $config['cf_icode_pw']);
 
-                // SMS 모듈 클래스 생성
-                if($port_setting !== false) {
-                    $SMS = new LMS;
-                    $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
+            // SMS 모듈 클래스 생성
+            if($port_setting !== false) {
+                $SMS = new LMS;
+                $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
 
+                for($s=0; $s<$sms_count; $s++) {
                     $strDest     = array();
-                    $strDest[]   = $recv_number;
-                    $strCallBack = $send_number;
+                    $strDest[]   = $sms_messages[$s]['recv'];
+                    $strCallBack = $sms_messages[$s]['send'];
                     $strCaller   = iconv_euckr(trim($default['de_admin_company_name']));
                     $strSubject  = '';
                     $strURL      = '';
-                    $strData     = iconv_euckr($sms_content);
+                    $strData     = iconv_euckr($sms_messages[$s]['cont']);
                     $strDate     = '';
                     $nCount      = count($strDest);
 
