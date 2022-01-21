@@ -228,6 +228,9 @@ $check_sanitize_keys = array(
 'de_sms_hp',                    //관리자 휴대폰번호
 'cf_icode_id',                  //아이코드 회원아이디
 'cf_icode_pw',                  //아이코드 비밀번호
+'cf_popbill_id',                //팝빌 회원아이디
+'cf_popbill_pw',                //팝빌 비밀번호
+'cf_popbill_co_no',             //팝빌 비밀번호
 'de_sms_use1',                  //SMS 회원가입시 고객님께 발송
 'de_sms_use2',                  //SMS 주문시 고객님께 발송
 'de_sms_use3',                  //SMS 주문시 주문시 관리자에게 발송
@@ -235,6 +238,8 @@ $check_sanitize_keys = array(
 'de_sms_use5',                  //SMS 상품배송시 고객님께 발송
 'cf_icode_server_ip',           // 아이코드 ip
 'cf_icode_server_port',         // 아이코드 port
+'cf_popbill_server_ip',          // 팝빌 ip
+'cf_popbill_server_port',        // 팝빌 port
 'cf_icode_token_key',           // 아이코드 토큰키 (JSON버전)
 );
 
@@ -445,7 +450,7 @@ sql_query($sql);
 // 환경설정 > 포인트 사용
 sql_query(" update {$g5['config_table']} set cf_use_point = '{$cf_use_point}' ");
 
-// LG, 아이코드 설정
+// LG, 아이코드, 팝빌 설정
 $sql = " update {$g5['config_table']}
             set cf_sms_use              = '{$cf_sms_use}',
                 cf_sms_type             = '{$cf_sms_type}',
@@ -454,6 +459,11 @@ $sql = " update {$g5['config_table']}
                 cf_icode_server_ip      = '{$_POST['cf_icode_server_ip']}',
                 cf_icode_server_port    = '{$_POST['cf_icode_server_port']}',
                 cf_icode_token_key      = '{$cf_icode_token_key}',
+                cf_popbill_id           = '{$cf_popbill_id}',
+                cf_popbill_pw           = '{$cf_popbill_pw}',
+                cf_popbill_co_no        = '{$cf_popbill_co_no}',
+                cf_popbill_server_ip    = '{$_POST['cf_popbill_server_ip']}',
+                cf_popbill_server_port  = '{$_POST['cf_popbill_server_port']}',
                 cf_lg_mid               = '{$cf_lg_mid}',
                 cf_lg_mert_key          = '{$cf_lg_mert_key}' ";
 sql_query($sql);
