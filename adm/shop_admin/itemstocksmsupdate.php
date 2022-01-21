@@ -105,11 +105,19 @@ if ($_POST['act_button'] == "선택SMS전송") {
             }
             } else {
                 if($config['cf_sms_use']=='icode'){
-                    include_once(G5_LIB_PATH.'/icode.sms.lib.php');
                     $SMS = new SMS; // SMS 연결
                     $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
-                    $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], iconv_euckr(stripslashes($sms_content)), "");
-                    $SMS->Send();
+
+                    for($s=0; $s<$sms_count; $s++) {
+                        $recv_number = $sms_messages[$s]['recv'];
+                        $send_number = $sms_messages[$s]['send'];
+                        $sms_content = iconv_euckr($sms_messages[$s]['cont']);
+
+                        $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], $sms_content, "");
+                    }
+
+                        $SMS->Send();
+                        $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
                 }elseif($config['cf_sms_use']=='popbill'){
                    include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
                    for($s=0; $s<$sms_count; $s++){
