@@ -18,7 +18,7 @@
  * We welcome any suggestions, feedbacks, blames or anything.
  * ======================================================================================
  */
-require_once 'popbill.php';
+require_once G5_ADMIN_PATH.'/popbill/popbill.php';
 
 class MessagingService extends PopbillBase
 {

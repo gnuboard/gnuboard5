@@ -19,7 +19,7 @@
  * ======================================================================================
  */
 
-require_once 'Linkhub/linkhub.auth.php';
+require_once G5_ADMIN_PATH.'/popbill/Linkhub/linkhub.auth.php';
 
 class PopbillBase
 {
