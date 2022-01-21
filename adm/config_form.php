@@ -284,6 +284,7 @@ if( ! isset($config['cf_icode_token_key']) ){
     sql_query($sql, false);
 }
 
+// popbill 설정값
 require_once './popbill/PopbillMessaging.php';
 
 // 링크아이디
