@@ -40,7 +40,7 @@ $sql .= $g5['sms5_config_table']." set cf_phone='$cf_phone' ";
 
 sql_query($sql);
 
-// 아이코드 설정
+// 아이코드, 팝빌 설정
 $sql = " update {$g5['config_table']}
             set cf_sms_use              = '$cf_sms_use',
                 cf_sms_type             = '$cf_sms_type',
@@ -48,7 +48,12 @@ $sql = " update {$g5['config_table']}
                 cf_icode_pw             = '$cf_icode_pw',
                 cf_icode_server_ip      = '$cf_icode_server_ip',
                 cf_icode_server_port    = '$cf_icode_server_port',
-                cf_icode_token_key      = '$cf_icode_token_key'";
+                cf_icode_token_key      = '$cf_icode_token_key',
+                cf_popbill_id           = '{$cf_popbill_id}',
+                cf_popbill_pw           = '{$cf_popbill_pw}',
+                cf_popbill_co_no        = '{$cf_popbill_co_no}',
+                cf_popbill_server_ip    = '{$_POST['cf_popbill_server_ip']}',
+                cf_popbill_server_port  = '{$_POST['cf_popbill_server_port']}'";
 sql_query($sql);
 
 goto_url("./config.php");
