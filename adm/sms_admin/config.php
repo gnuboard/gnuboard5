@@ -13,6 +13,9 @@ if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 if (!$config['cf_popbill_server_ip'])   $config['cf_popbill_server_ip'] = '52.78.164.186';
 if (!$config['cf_popbill_server_port']) $config['cf_popbill_server_port'] = '443';
 
+// popbill 설정값
+include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+
 // 아이코드 토큰키 추가
 if( ! isset($config['cf_icode_token_key']) ){
     $sql = "ALTER TABLE `{$g5['config_table']}` 
@@ -140,11 +143,38 @@ if ($config['cf_sms_use'] == 'icode' || 'popbill') { // 아이코드 or popbill 
         </tr>
         <tr class="icode_old_version">
             <th scope="row"><label for="cf_popbill_pw">팝빌 비밀키</label></th>
-            <td>
+            <td> 
                 <?php echo help("아이코드에서 사용하시는 비밀키를 입력합니다."); ?>
                 <input type="password" name="cf_popbill_pw" value="<?php echo get_sanitize_input($config['cf_popbill_pw']); ?>" id="cf_popbill_pw" class="frm_input" size="100">
             </td>
         </tr>
+        <?php 
+            // 잔여 포인트 확인하기
+            try {
+                $remainPoint = $MessagingService->GetBalance($CorpNum);
+            }
+            catch (PopbillException $pe) {
+                $code = $pe->getCode();
+                $message = $pe->getMessage();
+            }
+            try {
+                $url = $MessagingService->GetChargeURL($CorpNum, $LinkID);
+            } catch (PopbillException $pe) {
+                $code = $pe->getCode();
+                $message = $pe->getMessage();
+            }
+            if ( isset($remainPoint) ) {
+        ?>
+                <tr class="icode_old_version">
+                    <th scope="row"><label for="cf_popbill_pt">팝빌 포인트</label></th>
+                    <td>
+                        <li>
+                            잔여포인트 : <?php echo $remainPoint ?>
+                            <a href="<?php echo $url ?>" target="_blank" class="btn_frmline">충전하기</a>
+                        </li>                  
+                    </td>
+                </tr>
+            <?php } ?>
     <tr>
         <th scope="row"><label for="cf_phone">회신번호<strong class="sound_only"> 필수</strong></label></th>
         <td>
