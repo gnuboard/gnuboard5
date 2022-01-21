@@ -170,9 +170,11 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
     for($i=0; $i<$count; $i++) {
         if(!$arr_send_list[$i]['mb_id'])
             continue;
+            
 
         // SMS
-        if($config['cf_sms_use'] == 'icode' && $_POST['cp_sms_send'] && $arr_send_list[$i]['mb_hp'] && $arr_send_list[$i]['mb_sms']) {
+        if($config['cf_sms_use'] && $_POST['cp_sms_send'] && $arr_send_list[$i]['mb_hp'] && $arr_send_list[$i]['mb_sms']) {
+         
             $sms_contents = $cp_subject.' 쿠폰이 '.get_text($arr_send_list[$i]['mb_name']).'님께 발행됐습니다. 쿠폰만료 : '.$cp_end.' '.str_replace('http://', '', G5_URL);
 
             if($sms_contents) {
@@ -181,8 +183,23 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
 
                 if($receive_number)
                     $sms_messages[] = array('recv' => $receive_number, 'send' => $send_number, 'cont' => $sms_contents);
+                
+                //popbill 관련내용 추가
+                
+                $pop_mb_name = get_text($arr_send_list[$i]['mb_name']);
+                $pop_mb_recv = get_text($arr_send_list[$i]['mb_hp']);
+                $pop_snd_name = $default['de_admin_company_name'];
+                $Messages[] = array(
+                    'snd'   => $send_number,    // 발신번호
+                    'sndnm' => $pop_snd_name,	// 발신자명
+                    'rcv'   => $receive_number,	// 수신번호
+                    'rcvnm' => $pop_mb_name,	// 수신자성명
+                    'msg'	=> $sms_contents	// 개별 메시지 내용
+                );    
+                
             }
         }
+
 
         // E-MAIL
         if($config['cf_email_use'] && $_POST['cp_email_send'] && $arr_send_list[$i]['mb_email'] && $arr_send_list[$i]['mb_mailling']) {
@@ -213,28 +230,28 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
             mailer($config['cf_admin_email_name'], $config['cf_admin_email'], $email, $title, $content, 1);
         }
     }
-
+   
     // SMS발송
     $sms_count = count($sms_messages);
     if($sms_count > 0) {
         if($config['cf_sms_type'] == 'LMS') {
-            include_once(G5_LIB_PATH.'/icode.lms.lib.php');
+            if($config['cf_sms_use']=='icode'){
+                include_once(G5_LIB_PATH.'/icode.lms.lib.php');
 
-            $port_setting = get_icode_port_type($config['cf_icode_id'], $config['cf_icode_pw']);
+                $port_setting = get_icode_port_type($config['cf_icode_id'], $config['cf_icode_pw']);
 
-            // SMS 모듈 클래스 생성
-            if($port_setting !== false) {
-                $SMS = new LMS;
-                $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
+                // SMS 모듈 클래스 생성
+                if($port_setting !== false) {
+                    $SMS = new LMS;
+                    $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
 
-                for($s=0; $s<$sms_count; $s++) {
                     $strDest     = array();
-                    $strDest[]   = $sms_messages[$s]['recv'];
-                    $strCallBack = $sms_messages[$s]['send'];
+                    $strDest[]   = $recv_number;
+                    $strCallBack = $send_number;
                     $strCaller   = iconv_euckr(trim($default['de_admin_company_name']));
                     $strSubject  = '';
                     $strURL      = '';
-                    $strData     = iconv_euckr($sms_messages[$s]['cont']);
+                    $strData     = iconv_euckr($sms_content);
                     $strDate     = '';
                     $nCount      = count($strDest);
 
@@ -243,24 +260,33 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
                     $SMS->Send();
                     $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
                 }
+            }elseif($config['cf_sms_use']=='popbill'){
+                include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+                try {
+                    $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $LinkID, $pop_snd_name, '', $requestNum);
+                }
+                catch (PopbillException $pe) {
+                    $code = $pe->getCode();
+                    $message = $pe->getMessage();
+                }
             }
-        } else {
-            include_once(G5_LIB_PATH.'/icode.sms.lib.php');
-
-            $SMS = new SMS; // SMS 연결
-            $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
-
-            for($s=0; $s<$sms_count; $s++) {
-                $recv_number = $sms_messages[$s]['recv'];
-                $send_number = $sms_messages[$s]['send'];
-                $sms_content = iconv_euckr($sms_messages[$s]['cont']);
-
-                $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], $sms_content, "");
+            } else {
+                if($config['cf_sms_use']=='icode'){
+                    include_once(G5_LIB_PATH.'/icode.sms.lib.php');
+                    $SMS = new SMS; // SMS 연결
+                    $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
+                    $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], iconv_euckr(stripslashes($sms_content)), "");
+                    $SMS->Send();
+                }elseif($config['cf_sms_use']=='popbill'){
+                   include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+                    try {
+                        $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $LinkID, $pop_snd_name, '', $requestNum);
+                    } catch(PopbillException $pe) {
+                        $code = $pe->getCode();
+                        $message = $pe->getMessage();
+                    }   
+                }
             }
-
-            $SMS->Send();
-            $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
-        }
     }
 }
 
