@@ -284,6 +284,7 @@ if( ! class_exists('XenoPostToForm') ){
 if( !function_exists('shop_check_is_pay_page') ){
     function shop_check_is_pay_page(){
         $shop_dir = 'shop';
+        $plugin_dir = 'plugin';
         $mobile_dir = G5_MOBILE_DIR;
 
         // PG 결제사의 리턴페이지 목록들
@@ -297,6 +298,9 @@ if( !function_exists('shop_check_is_pay_page') ){
             $mobile_dir.'/'.$shop_dir.'/lg/xpay_approval.php',
             $mobile_dir.'/'.$shop_dir.'/kcp/order_approval_form.php',
             $shop_dir.'/kakaopay/inicis_kk_return.php',     // 이니시스 카카오페이 (SIRK 로 시작하는 아이디 전용)
+            $plugin_dir."/okname/ipin2.php", // okname 아이핀 모듈 2022-01-21 http <-> https 간 세션 공유 문제로 인해 추가
+            $plugin_dir."/okname/hpcert2.php", // okname 휴대폰 인증 모듈 2022-01-21 http <-> https 간 세션 공유 문제로 인해 추가
+            $plugin_dir."/kcpcert/kcpcert_result.php", // kcp 휴대폰 인증 모듈 2022-01-21 http <-> https 간 세션 공유 문제로 인해 추가
         );
 
         $server_script_name = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
