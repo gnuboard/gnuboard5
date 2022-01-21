@@ -17,6 +17,10 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);
 }
 
+// popbill 설정값
+include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+
+
 check_log_folder(G5_SHOP_PATH.'/inicis/key', false);
 
 $g5['title'] = '쇼핑몰설정';
@@ -1555,7 +1559,7 @@ function byte_check(el_cont, el_byte)
 }
 </script>
 
-<section id="anc_cf_sms">
+<section id="anc_scf_sms">
     <h2 class="h2_frm">SMS</h2>
     <?php echo $pg_anchor ?>
 
@@ -1656,11 +1660,38 @@ function byte_check(el_cont, el_byte)
         </tr>
         <tr class="icode_old_version">
             <th scope="row"><label for="cf_popbill_pw">팝빌 비밀키</label></th>
-            <td>
+            <td> 
                 <?php echo help("아이코드에서 사용하시는 비밀키를 입력합니다."); ?>
                 <input type="password" name="cf_popbill_pw" value="<?php echo get_sanitize_input($config['cf_popbill_pw']); ?>" id="cf_popbill_pw" class="frm_input" size="100">
             </td>
         </tr>
+        <?php 
+            // 잔여 포인트 확인하기
+            try {
+                $remainPoint = $MessagingService->GetBalance($CorpNum);
+            }
+            catch (PopbillException $pe) {
+                $code = $pe->getCode();
+                $message = $pe->getMessage();
+            }
+            try {
+                $url = $MessagingService->GetChargeURL($CorpNum, $LinkID);
+            } catch (PopbillException $pe) {
+                $code = $pe->getCode();
+                $message = $pe->getMessage();
+            }
+            if ( isset($remainPoint) ) {
+        ?>
+                <tr class="icode_old_version">
+                    <th scope="row"><label for="cf_popbill_pt">팝빌 포인트</label></th>
+                    <td>
+                        <li>
+                            잔여포인트 : <?php echo $remainPoint ?>
+                            <a href="<?php echo $url ?>" target="_blank" class="btn_frmline">충전하기</a>
+                        </li>                  
+                    </td>
+                </tr>
+            <?php } ?>
         <tr>
             <th scope="row">SMS 신청<br>회원가입</th>
             <td>
