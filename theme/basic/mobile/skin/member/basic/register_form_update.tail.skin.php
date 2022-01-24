@@ -11,8 +11,7 @@ $sms_contents = str_replace("{회원아이디}", $mb_id, $sms_contents);
 $sms_contents = str_replace("{회사명}", $default['de_admin_company_name'], $sms_contents);
 
 // 핸드폰번호에서 숫자만 취한다
-//$receive_number = preg_replace("/[^0-9]/", "", $mb_hp);  // 수신자번호 (회원님의 핸드폰번호)
-$receive_number = '01075998385';
+$receive_number = preg_replace("/[^0-9]/", "", $mb_hp);  // 수신자번호 (회원님의 핸드폰번호)
 $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
 
 //popbill 데이터 추가
