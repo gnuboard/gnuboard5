@@ -795,8 +795,6 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
                     'rcvnm' => $receive_name,		// 수신자성명
                     'msg'	=> $sms_content	    // 개별 메시지 내용
                     );
-                echo '주문고객과 관리자<br>';
-                print_r2($Messages);
 
                 $sms_messages[] = array('recv' => $recv_number, 'send' => $send_number, 'cont' => $sms_content);
                 $sms_count++;
@@ -822,9 +820,6 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
                 'rcvnm' => $receive_name,		// 수신자성명
                 'msg'	=> $sms_content	    // 개별 메시지 내용
                 );
-                echo '무통장 입금고객<br>';
-                print_r2($Messages);
-
             $sms_messages[] = array('recv' => $recv_number, 'send' => $send_number, 'cont' => $sms_content);
             $sms_count++;
         }
