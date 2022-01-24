@@ -101,8 +101,8 @@ function conv_sms_contents($od_id, $contents)
     global $g5, $config, $default;
 
     $sms_contents = '';
-
-    if ($od_id && $config['cf_sms_use'] == 'icode')
+    //$config['cf_sms_use'] == 'icode' || 'popbill' -> popbill 일때도 가능하게 수정
+    if ($od_id && $config['cf_sms_use'] == 'icode' || 'popbill')
     {
         $sql = " select od_id, od_name, od_invoice, od_receipt_price, od_delivery_company
                     from {$g5['g5_shop_order_table']} where od_id = '$od_id' ";
