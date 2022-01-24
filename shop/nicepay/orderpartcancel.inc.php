@@ -32,28 +32,29 @@ $resultCode = $nicepay->m_ResultData['ResultCode'];
 
 if($resultCode == "2001" || $resultCode == "2211") {
     // 환불금액기록
-   $tno      = $nicepay->m_ResultData['TID'];
-   $re_price = $nicepay->m_ResultData['CancelAmt'];
+    $tno      = $nicepay->m_ResultData['TID'];
+    $re_price = $nicepay->m_ResultData['CancelAmt'];
 
-   $sql = " update {$g5['g5_shop_order_table']}
-               set od_refund_price = od_refund_price + '$re_price',
-                   od_shop_memo = concat(od_shop_memo, \"$mod_memo\")
-               where od_id = '{$od['od_id']}'
-                 and od_tno = '$tno' ";
-   sql_query($sql);
+    $sql = " update {$g5['g5_shop_order_table']}
+                set od_refund_price = od_refund_price + $re_price,
+                od_shop_memo = concat(od_shop_memo, \"$mod_memo\")
+                where od_id = '{$od['od_id']}'
+                and od_tno = '$oldtid' ";
 
-   // 미수금 등의 정보 업데이트
-   $info = get_order_info($od_id);
+    sql_query($sql);
 
-   $sql = " update {$g5['g5_shop_order_table']}
-               set od_misu     = '{$info['od_misu']}',
-                   od_tax_mny  = '{$info['od_tax_mny']}',
-                   od_vat_mny  = '{$info['od_vat_mny']}',
-                   od_free_mny = '{$info['od_free_mny']}'
-               where od_id = '$od_id' ";
-   sql_query($sql);
+    // 미수금 등의 정보 업데이트
+    $info = get_order_info($od_id);
+
+    $sql = " update {$g5['g5_shop_order_table']}
+                set od_misu     = {$info['od_misu']},
+                od_tax_mny  = '{$info['od_tax_mny']}',
+                od_vat_mny  = '{$info['od_vat_mny']}',
+                od_free_mny = '{$info['od_free_mny']}'
+                where od_id = '$od_id' ";
+
+    sql_query($sql);
 } else {
     alert(iconv_utf8($nicepay->m_ResultData["ResultMsg"]).' 코드 : '.$nicepay->m_ResultData["ResultCode"]);
 }
-
 ?>

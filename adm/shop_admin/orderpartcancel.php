@@ -41,7 +41,6 @@ if($od['od_pg'] == 'nicepay') {
             alert_close("나이스페이 결제수단 취소/환불기간이 지났습니다.");
         }
     }
-    
 } else {
     if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G5_TIME_YMD)
         alert_close('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
