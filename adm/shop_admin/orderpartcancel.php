@@ -15,8 +15,37 @@ if(! (isset($od['od_id']) && $od['od_id']))
 if($od['od_pg'] == 'inicis' && $od['od_settle_case'] == '계좌이체')
     alert_close('KG이니시스는 신용카드만 부분취소가 가능합니다.');
 
-if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G5_TIME_YMD)
+if($od['od_pg'] == 'nicepay') {
+    /**
+     * 나이스페이 취소기간
+     *  - 신용카드 : 결제일로부터 1년 이내
+     *  - 휴대폰결제 : 결제일의 해당월 이내
+     * 
+     * 나이스페이 환불가능기간
+     *  - 계좌이체 : 결제일로부터 180일 이내
+     *  - 가상계좌 : 결제일로부터 180일 이내
+     */
+    switch($od["od_settle_case"]) {
+        case '신용카드':
+            $refundDate = date('Y-m-d H:i:s', strtotime($od['od_receipt_time'] . " +1 year"));
+            break;
+        case '계좌이체':
+        case '가상계좌':
+            $refundDate = date('Y-m-d H:i:s', strtotime($od['od_receipt_time'] . " +180 days"));
+            break;
+        case '휴대폰':
+            $refundDate = date('Y-m-t', strtotime($od['od_receipt_time']));
+            break;
+
+        if(strtotime($refundDate) - strtotime($od['od_receipt_time']) < 0) {
+            alert_close("나이스페이 결제수단 취소/환불기간이 지났습니다.");
+        }
+    }
+    
+} else {
+    if($od['od_settle_case'] == '계좌이체' && substr($od['od_receipt_time'], 0, 10) >= G5_TIME_YMD)
         alert_close('실시간 계좌이체건의 부분취소 요청은 결제일 익일에 가능합니다.');
+}
 
 if($od['od_receipt_price'] - $od['od_refund_price'] <= 0)
     alert_close('부분취소 처리할 금액이 없습니다.');

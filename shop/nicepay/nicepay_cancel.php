@@ -19,7 +19,6 @@ if($cancelFlag == "true") {
     include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
 
     $nicepay->m_ActionType      = "CLO";
-    $nicepay->m_ssl             = 'true';
     $nicepay->m_CancelAmt       = $amount;
     $nicepay->m_TID             = $tno;
     $nicepay->m_Moid            = $od_id;

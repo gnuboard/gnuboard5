@@ -10,7 +10,6 @@ try {
     if(isset($_REQUEST['AuthResultCode']) && strcmp('0000', $_REQUEST['AuthResultCode']) == 0) {
         try {
             $nicepay->m_ActionType      = "PYO";
-            $nicepay->m_ssl             = 'true';
             $nicepay->m_price           = $_REQUEST['Amt'];
             $nicepay->m_NetCancelAmt    = $_REQUEST['Amt'];
 
