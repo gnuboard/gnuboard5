@@ -149,9 +149,6 @@ if($sms_count > 0) {
                 $send_number = $Messages[$s]['snd'];
                 $sms_contents = $Messages[$s]['msg'];
                 $send_name = $Messages[$s]['rcvnm'];
-                
-                echo $s.'<'.$sms_count.'lms <br>';
-                print_r2($Messages[$s]);
                 try {
                     $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $LinkID, $send_name, '', $requestNum);
                 }
