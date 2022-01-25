@@ -252,6 +252,25 @@ function forderform_check(f)
             f.gopaymethod.value = "무통장";
             break;
     }
+    <?php } else if($default['de_pg_service'] == 'nicepay') { ?>
+    switch(settle_method){
+        case "계좌이체":
+            f.PayMethod.value = "BANK";
+            break;
+        case "신용카드":
+            f.PayMethod.value = "CARD";
+            break;
+        case "가상계좌":
+            f.PayMethod.value = "VBANK";
+            break;
+        case "휴대폰":
+            f.TransType.value = 0;
+            f.PayMethod.value = "CELLPHONE";
+            break;
+        default:
+            f.PayMethod.value = "무통장";
+            break;
+    }
     <?php } ?>
 
     // 결제정보설정
@@ -317,6 +336,47 @@ function forderform_check(f)
     } else {
         f.submit();
     }
-    <?php } ?>
+    <?php } else if ($default['de_pg_service'] == "nicepay") { ?>
+        f.Amt.value         = f.good_mny.value;
+        <?php if($default['de_tax_flag_use']) { ?>
+        f.tax.value         = f.comm_vat_mny.value;
+        f.taxfree.value     = f.comm_free_mny.value;
+        <?php } ?>
+
+        f.BuyerName.value   = f.pp_name.value;
+        f.BuyerEmail.value  = f.pp_email.value;
+        f.BuyerTel.value    = f.pp_hp.value;
+        
+        f.RcvrName.value    = f.pp_name.value;
+        f.RcvrTel.value     = f.pp_hp.value;
+
+        if(f.PayMethod.value != "무통장") {
+            // 주문정보 임시저장
+            var order_data = $(f).serialize();
+            var save_result = "";
+            $.ajax({
+                type: "POST",
+                data: order_data,
+                url: g5_url+"/shop/ajax.orderdatasave.php",
+                cache: false,
+                async: false,
+                success: function(data) {
+                    save_result = data;
+                }
+            });
+
+            if(save_result) {
+                alert(save_result);
+                return false;
+            }
+
+            if(!make_signature(f))
+                return false;
+
+            paybtn(f);
+        } else {
+            f.submit();
+        }
+    <?php }?>
 }
 </script>
