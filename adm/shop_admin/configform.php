@@ -115,8 +115,8 @@ if(!isset($default['de_inicis_cartpoint_use'])) {
 if(!isset($default['de_nicepay_mid'])) {
     sql_query(" ALTER TABLE `{$g5['g5_shop_default_table']}`
                     ADD `de_nicepay_mid` varchar(255) NOT NULL DEFAULT '' AFTER `de_inicis_cartpoint_use`,
-                    ADD `de_nicepay_admin_key` varchar(255) NOT NULL default '' AFTER `de_nicepay_mid`,
-                    ADD `de_nicepay_sign_key` varchar(255) NOT NULL default '' AFTER `de_nicepay_admin_key` ", true);
+                    ADD `de_nicepay_admin_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_nicepay_mid`,
+                    ADD `de_nicepay_sign_key` varchar(255) NOT NULL DEFAULT '' AFTER `de_nicepay_admin_key` ", true);
 }
 
 // 이니시스 lpay 사용여부 필드 추가

@@ -32,8 +32,8 @@ $siteDomain = G5_SHOP_URL.'/nicepay';
 $nicepay = new NicepayLite();
 
 $nicepay->m_NicepayHome = G5_SHOP_PATH."/nicepay/log";
-$nicepay->m_ssl = "true";
 $nicepay->m_charSet = "UTF8";
+$nicepay->m_ssl = "true";
 $nicepay->m_log = "true";
 $nicepay->m_MID = $mid;
 $nicepay->m_MerchantKey = $signKey;
