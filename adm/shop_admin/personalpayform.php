@@ -207,6 +207,9 @@ if(!sql_query(" select pp_cash from {$g5['g5_shop_personalpay_table']} limit 1 "
                     } else if($pp['pp_pg'] == 'inicis') {
                         $cash = unserialize($pp['pp_cash_info']);
                         $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
+                    } else if($pp['pp_pg'] == 'nicepay') {
+                        $cash = unserialize($pp['pp_cash_info']);
+                        $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&innerWin=Y&TID='.$cash['TID'].'\',\'receipt\',\'width=430,height=700\')';
                     } else {
                         require G5_SHOP_PATH.'/settle_kcp.inc.php';
 
