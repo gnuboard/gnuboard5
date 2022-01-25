@@ -78,7 +78,7 @@ try {
             if ($paySuccess != false) { 
                 $tno        = $resultData['TID'];
                 $amount     = $resultData['Amt'];
-                $app_time   = $resultData['AuthDate'];
+                $app_time   = isset($resultData['AuthDate']) ? "20".$resultData['AuthDate'] : '';
                 $pay_method = $resultData['PayMethod'];
                 $pay_type   = $PAY_METHOD[$pay_method];
                 $depositor  = isset($resultData['VbankAccountName']) ? $resultData['VbankAccountName'] : '';                                   // 송금자명

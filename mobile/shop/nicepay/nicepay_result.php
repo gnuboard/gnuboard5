@@ -12,7 +12,7 @@ if($hash !== $post_nice_hash)
 //최종결제요청 결과 성공 DB처리
 $tno             = get_session('NICE_TID');
 $amount          = get_session('NICE_AMT');
-$app_time        = isset($_POST['AuthDate']) ? $_POST['AuthDate'] : '';
+$app_time        = isset($_POST['AuthDate']) ? "20".$_POST['AuthDate'] : '';
 $pay_method      = isset($_POST['PayMethod']) ? $_POST['PayMethod'] : '';
 $pay_type        = isset($PAY_METHOD[$pay_method]) ? $PAY_METHOD[$pay_method] : '';
 $depositor       = isset($_POST['VbankAccountName']) ? $_POST['VbankAccountName'] : '';
