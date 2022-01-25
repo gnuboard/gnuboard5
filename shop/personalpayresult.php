@@ -228,7 +228,7 @@ if($pp['pp_pg'] == 'lg') {
                         } else if($pp['pp_pg'] == 'inicis') {
                             $cash = unserialize($pp['pp_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://iniweb.inicis.com/DefaultWebApp/mall/cr/cm/Cash_mCmReceipt.jsp?noTid='.$cash['TID'].'&clpaymethod=22\',\'showreceipt\',\'width=380,height=540,scrollbars=no,resizable=no\');';
-                        } else if($od['pp_pg'] == 'nicepay') {
+                        } else if($pp['pp_pg'] == 'nicepay') {
                             $cash = unserialize($pp['pp_cash_info']);
                             $cash_receipt_script = 'window.open(\'https://npg.nicepay.co.kr/issue/IssueLoader.do?type=1&innerWin=Y&TID='.$cash['TID'].'\',\'receipt\',\'width=430,height=700\')';
                         } else {

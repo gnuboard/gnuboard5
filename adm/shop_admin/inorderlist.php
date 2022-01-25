@@ -101,6 +101,9 @@ $colspan = 10;
             case 'inicis':
                 $pg = 'KG이니시스';
                 break;
+            case 'nicepay':
+                $pg = "나이스페이";
+                break;
             case 'lg':
                 $pg = 'LGU+';
                 break;

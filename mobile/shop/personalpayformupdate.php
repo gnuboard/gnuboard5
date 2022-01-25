@@ -4,13 +4,12 @@ include_once(G5_LIB_PATH.'/mailer.lib.php');
 
 $page_return_url = G5_SHOP_URL.'/personalpayform.php?pp_id='.get_session('ss_personalpay_id');
 
-$post_tran_cd = isset($_POST['tran_cd']) ? $_POST['tran_cd'] : '';
-$post_enc_info = isset($_POST['enc_info']) ? $_POST['enc_info'] : '';
-$post_enc_data = isset($_POST['enc_data']) ? $_POST['enc_data'] : '';
-
-$post_lgd_paykey = isset($_POST['LGD_PAYKEY']) ? $_POST['LGD_PAYKEY'] : '';
-
 $post_p_hash = isset($_POST['P_HASH']) ? $_POST['P_HASH'] : '';
+$post_enc_data = isset($_POST['enc_data']) ? $_POST['enc_data'] : '';
+$post_enc_info = isset($_POST['enc_info']) ? $_POST['enc_info'] : '';
+$post_tran_cd = isset($_POST['tran_cd']) ? $_POST['tran_cd'] : '';
+$post_lgd_paykey = isset($_POST['LGD_PAYKEY']) ? $_POST['LGD_PAYKEY'] : '';
+$post_nice_hash = isset($_POST['NICE_HASH']) ? $_POST['NICE_HASH'] : '';
 
 $pp_id = isset($_POST['pp_id']) ? preg_replace('/[^0-9]/', '', $_POST['pp_id']) : 0;
 $good_mny = isset($_POST['good_mny']) ? preg_replace('/[^0-9]/', '', $_POST['good_mny']) : 0;
@@ -24,6 +23,10 @@ if($default['de_pg_service'] == 'lg' && ! $post_lgd_paykey)
 
 if($default['de_pg_service'] == 'inicis' && ! $post_p_hash)
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
+
+if($default['de_pg_service'] == 'nicepay' && ($post_nice_hash == '')) {
+    alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
+}
 
 // 개인결제 정보
 $pp_check = false;
@@ -57,6 +60,9 @@ if ($pp_settle_case == "계좌이체")
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             $bank_name  = iconv("cp949", "utf-8", $bank_name);
@@ -78,6 +84,9 @@ else if ($pp_settle_case == "가상계좌")
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -102,6 +111,9 @@ else if ($pp_settle_case == "휴대폰")
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
             break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
+            break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
             break;
@@ -121,6 +133,9 @@ else if ($pp_settle_case == "신용카드")
             break;
         case 'inicis':
             include G5_MSHOP_PATH.'/inicis/pay_result.php';
+            break;
+        case 'nicepay':
+            include G5_MSHOP_PATH.'/nicepay/nicepay_result.php';
             break;
         default:
             include G5_MSHOP_PATH.'/kcp/pp_ax_hub.php';
@@ -149,6 +164,9 @@ if((int)$pp['pp_price'] !== (int)$pg_price) {
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+            break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -183,6 +201,9 @@ if(!$result) {
             break;
         case 'inicis':
             include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+            break;
+        case 'nicepay':
+            include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
             break;
         default:
             include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';
@@ -221,6 +242,9 @@ if($pp_receipt_price > 0 && $pp['pp_id'] && $pp['od_id']) {
                 break;
             case 'inicis':
                 include G5_SHOP_PATH.'/inicis/inipay_cancel.php';
+                break;
+            case 'nicepay':
+                include G5_SHOP_PATH.'/nicepay/nicepay_cancel.php';
                 break;
             default:
                 include G5_SHOP_PATH.'/kcp/pp_ax_hub_cancel.php';

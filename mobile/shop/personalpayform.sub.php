@@ -206,6 +206,46 @@ function pay_approval()
     <?php } ?>
     f.P_RETURN_URL.value = "<?php echo $return_url.$pp_id; ?>";
     f.action = "https://mobile.inicis.com/smart/" + paymethod + "/";
+    <?php } else if($default['de_pg_service'] == 'nicepay') { ?>
+    var paymethod = "";
+    var width = 330;
+    var height = 480;
+    var xpos = (screen.width - width) / 2;
+    var ypos = (screen.width - height) / 2;
+    var position = "top=" + ypos + ",left=" + xpos;
+    var features = position + ", width=320, height=440";
+
+    switch(settle_method) {
+        case "계좌이체":
+            f.PayMethod.value = "BANK";
+            break;
+        case "가상계좌":
+            f.PayMethod.value = "VBANK";
+            break;
+        case "휴대폰":
+            f.PayMethod.value = "CELLPHONE";
+            break;
+        case "신용카드":
+            f.PayMethod.value = "CARD";
+            break;
+    }
+
+    f.Amt.value         = f.good_mny.value;
+    <?php if($default['de_tax_flag_use']) { ?>
+        f.tax.value         = pf.comm_vat_mny.value;
+        f.taxfree.value     = pf.comm_free_mny.value;
+    <?php } ?>
+
+    f.BuyerName.value   = pf.pp_name.value;
+    f.BuyerEmail.value  = pf.pp_email.value;
+    f.BuyerTel.value    = pf.pp_hp.value;
+    f.RcvrName.value    = pf.pp_name.value;
+    f.RcvrTel.value     = pf.pp_hp.value;
+
+    f.action = "https://web.nicepay.co.kr/v3/smart/smartPayment.jsp";
+
+    if(!make_signature(f))
+            return false;
     <?php } ?>
 
     //var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");

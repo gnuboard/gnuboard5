@@ -327,6 +327,7 @@ $pg_anchor = '<ul class="anchor">
             case 'kcp':
                 $s_receipt_way = 'PAYCO';
                 break;
+            // nicepay 간편결제는 미적용
             default:
                 $s_receipt_way = $data['od_settle_case'];
                 break;
