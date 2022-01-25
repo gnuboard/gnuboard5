@@ -156,8 +156,6 @@ if($sms_count > 0) {
                     $code = $pe->getCode();
                     $message = $pe->getMessage();
                 }
-                echo '주문번호 = '.$receiptNum.'<br>';
-           
         }
     } else {
         if($config['cf_sms_use']=='icode'){
