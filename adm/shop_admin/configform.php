@@ -18,7 +18,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
 }
 
 // popbill 설정값
-include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
 
 
 check_log_folder(G5_SHOP_PATH.'/inicis/key', false);
@@ -1675,7 +1675,7 @@ function byte_check(el_cont, el_byte)
                 $message = $pe->getMessage();
             }
             try {
-                $url = $MessagingService->GetChargeURL($CorpNum, $LinkID);
+                $url = $MessagingService->GetChargeURL($CorpNum, $linkid);
             } catch (PopbillException $pe) {
                 $code = $pe->getCode();
                 $message = $pe->getMessage();

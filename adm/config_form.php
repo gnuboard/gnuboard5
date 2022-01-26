@@ -285,7 +285,7 @@ if( ! isset($config['cf_icode_token_key']) ){
 }
 
 // popbill 설정값
-include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
 
 
 
@@ -1372,7 +1372,7 @@ include_once('_rewrite_config_form.php');
                 $message = $pe->getMessage();
             }
             try {
-                $url = $MessagingService->GetChargeURL($CorpNum, $LinkID);
+                $url = $MessagingService->GetChargeURL($CorpNum, $linkid);
             } catch (PopbillException $pe) {
                 $code = $pe->getCode();
                 $message = $pe->getMessage();

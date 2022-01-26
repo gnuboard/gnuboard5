@@ -412,7 +412,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                 //아이코드 LMS 2문단
             }
         }elseif($config['cf_sms_use'] == 'popbill'){
-            include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+            include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
             //답변글은 질문 등록자에게 전송
             //팝빌 LMS 1문단(작성자에게 보내는 부분)
             if($w == 'a' && $write['qa_sms_recv'] && trim($write['qa_hp'])) {
@@ -432,7 +432,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         );  
 
                     try {
-                        $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $LinkID, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -463,7 +463,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         );
 
                     try {
-                        $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $LinkID, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -509,7 +509,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
             }
             //아이코드 SMS 2문단
         }elseif($config['cf_sms_use'] == 'popbill'){
-            include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+            include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
             //답변글은 질문 등록자에게 전송
             //팝빌 SMS 1문단
             if($w == 'a' && $write['qa_sms_recv'] && trim($write['qa_hp'])) {
@@ -528,7 +528,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         );
  
                     try {
-                        $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $LinkID, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -558,7 +558,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         );
 
                     try {
-                        $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $LinkID, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();

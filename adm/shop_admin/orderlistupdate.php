@@ -214,7 +214,7 @@ if($sms_count > 0) {
                 }
             }
         }elseif($config['cf_sms_use']=='popbill'){
-            include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+            include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
                            
                 $recv_number = $Messages[$s]['rcv'];
                 $send_number = $Messages[$s]['snd'];
@@ -224,7 +224,7 @@ if($sms_count > 0) {
                 echo $s.'<'.$sms_count.'lms <br>';
                 print_r2($Messages[$s]);
                 try {
-                    $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $LinkID, $send_name, '', $requestNum);
+                    $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                 }
                 catch (PopbillException $pe) {
                     $code = $pe->getCode();
@@ -247,14 +247,14 @@ if($sms_count > 0) {
                 $SMS->Send();
                 $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
         }elseif($config['cf_sms_use']=='popbill'){
-            include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+            include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
             
                 $recv_number = $Messages[$s]['rcv'];
                 $send_number = $Messages[$s]['snd'];
                 $sms_contents = $Messages[$s]['msg'];
                 $send_name = $Messages[$s]['rcvnm']; 
                 try {
-                    $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $LinkID, $pop_snd_name, '', $requestNum);
+                    $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
                     }
                 catch (PopbillException $pe) {
                     $code = $pe->getCode();
