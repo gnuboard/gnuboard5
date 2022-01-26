@@ -33,14 +33,15 @@ if ($w == "u")
             $send_name = get_text($default['de_admin_company_name']);
             $recv_number = preg_replace('/[^0-9]/', '', $row['iq_hp']);
             $recv_name = get_text($row['iq_name']);
-            //popbill 문자메시지 전송에 필요함
-            $Messages[] = array(
-                'snd' => $send_number,		// 발신번호
-                'sndnm' => $send_name,		// 발신자명
-                'rcv' => $recv_number,		// 수신번호
-                'rcvnm' => $recv_name,		// 수신자성명
-                'msg'	=> $sms_content	    // 개별 메시지 내용
-            );
+            //icode, popbill 같이 사용하도록 수정
+            $sms_message[] = array('rcv'  => $recv_number,     //수신자번호
+                                    'snd'  => $send_number,        //발신자번호
+                                    'msg'  => $sms_content,        //개별메시지 내용
+                                    'sndnm' => $send_name,         //발신자이름
+                                    'rcvnm' => $recv_name,         //수신자이름
+                                    'sjt'	=> ''	               //LMS 제목
+                                );  
+
             if($recv_number) {
                 if($config['cf_sms_type'] == 'LMS') {
                     if($config['cf_sms_use']=='icode'){
@@ -71,7 +72,7 @@ if ($w == "u")
                     }elseif($config['cf_sms_use']=='popbill'){
                         include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
                         try {
-                            $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                            $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $sms_message, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
                         catch (PopbillException $pe) {
                             $code = $pe->getCode();
@@ -88,7 +89,7 @@ if ($w == "u")
                         }elseif($config['cf_sms_use']=='popbill'){
                            include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
                             try {
-                                $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                                $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $sms_message, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                             } catch(PopbillException $pe) {
                                 $code = $pe->getCode();
                                 $message = $pe->getMessage();

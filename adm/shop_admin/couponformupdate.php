@@ -179,19 +179,19 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
 
             if($sms_contents) {
                 //popbill 관련내용 추가
-                $receive_number = preg_replace("/[^0-9]/", "", $arr_send_list[$i]['mb_hp']);   // 수신자번호
+                $recv_number = preg_replace("/[^0-9]/", "", $arr_send_list[$i]['mb_hp']);   // 수신자번호
                 $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
                 $send_name = $default['de_admin_company_name'];
                 $recv_name = get_text($arr_send_list[$i]['mb_name']);
 
                 //icode, popbill 같이 사용하도록 수정
-                if($receive_number)
-                    $sms_messages[] = array('rcv'  => $receive_number,     //수신자번호
+                if($recv_number)
+                    $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
                                             'snd'  => $send_number,        //발신자번호
                                             'msg'  => $sms_contents,       //개별메시지 내용
                                             'sndnm' => $send_name,         //발신자이름
                                             'rcvnm' => $recv_name,         //수신자이름
-                                            'sjt'	=> '원하는 제목'	    // 개별 메시지 내용
+                                            'sjt'	=> ''	               //LMS 제목
                                         );   
             }
         }
@@ -278,7 +278,7 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
                         for($s=0; $s<$sms_count; $s++) {
                             $recv_number = $sms_messages[$s]['rcv'];
                             $send_number = $sms_messages[$s]['snd'];
-                            $sms_content = iconv_euckr($sms_messages[$s]['cont']);
+                            $sms_content = iconv_euckr($sms_messages[$s]['msg']);
 
                             $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], $sms_content, "");
                         }
