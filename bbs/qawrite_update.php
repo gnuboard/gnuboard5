@@ -423,16 +423,16 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                 $send_name = $default['de_admin_company_name'];
                 $recv_name = $qa_name;
                 if($recv_number) {
-                    $Messages[] = array(
-                        'snd'   => $send_number,	    // 발신번호
-                        'sndnm' => $send_name,		    // 발신자명
-                        'rcv'   => $recv_number,	    // 수신번호
-                        'rcvnm' => $recv_name,		// 수신자성명
-                        'msg'	=> $sms_content	    // 개별 메시지 내용
-                        );  
+                    $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
+                                            'snd'  => $send_number,        //발신자번호
+                                            'msg'  => $sms_contents,       //개별메시지 내용
+                                            'sndnm' => $send_name,         //발신자이름
+                                            'rcvnm' => $recv_name,         //수신자이름
+                                            'sjt'	=> ''	               //LMS 제목
+                                        );  
 
                     try {
-                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -454,16 +454,16 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                 $recv_name = $default['de_admin_company_name'];
 
                 if($recv_number) {
-                    $Messages[] = array(
-                        'snd'   => $send_number,	    // 발신번호
-                        'sndnm' => $send_name,		    // 발신자명
-                        'rcv'   => $recv_number,	    // 수신번호
-                        'rcvnm' => $recv_name,		// 수신자성명
-                        'msg'	=> $sms_content	    // 개별 메시지 내용
-                        );
+                    $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
+                                            'snd'  => $send_number,        //발신자번호
+                                            'msg'  => $sms_contents,       //개별메시지 내용
+                                            'sndnm' => $send_name,         //발신자이름
+                                            'rcvnm' => $recv_name,         //수신자이름
+                                            'sjt'	=> ''	               //LMS 제목
+                                        );  
 
                     try {
-                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -519,16 +519,16 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                 $send_name = $default['de_admin_company_name'];
                 $recv_name =$qa_name;
                 if($recv_number) {
-                    $Messages[] = array(
-                        'snd'   => $send_number,	    // 발신번호
-                        'sndnm' => $send_name,		    // 발신자명
-                        'rcv'   => $recv_number,	    // 수신번호
-                        'rcvnm' => $recv_name,		// 수신자성명
-                        'msg'	=> $sms_content	    // 개별 메시지 내용
-                        );
+                    $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
+                                            'snd'  => $send_number,        //발신자번호
+                                            'msg'  => $sms_contents,       //개별메시지 내용
+                                            'sndnm' => $send_name,         //발신자이름
+                                            'rcvnm' => $recv_name,         //수신자이름
+                                            'sjt'	=> ''	               //LMS 제목
+                                        );  
  
                     try {
-                        $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -549,16 +549,16 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                 $recv_name = $default['de_admin_company_name'];
 
                 if($recv_number) {
-                    $Messages[] = array(
-                        'snd'   => $send_number,	    // 발신번호
-                        'sndnm' => $send_name,		    // 발신자명
-                        'rcv'   => $recv_number,	    // 수신번호
-                        'rcvnm' => $recv_name,		// 수신자성명
-                        'msg'	=> $sms_content	    // 개별 메시지 내용
-                        );
+                    $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
+                                            'snd'  => $send_number,        //발신자번호
+                                            'msg'  => $sms_contents,       //개별메시지 내용
+                                            'sndnm' => $send_name,         //발신자이름
+                                            'rcvnm' => $recv_name,         //수신자이름
+                                            'sjt'	=> ''	               //LMS 제목
+                                        );  
 
                     try {
-                        $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
