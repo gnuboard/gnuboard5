@@ -512,6 +512,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
             include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
             //답변글은 질문 등록자에게 전송
             //팝빌 SMS 1문단
+
             if($w == 'a' && $write['qa_sms_recv'] && trim($write['qa_hp'])) {
                 $sms_content = $config['cf_title'].' '.$qaconfig['qa_title'].'에 답변이 등록되었습니다.';
                 $send_number = preg_replace('/[^0-9]/', '', $qaconfig['qa_send_number']);
@@ -521,12 +522,12 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                 if($recv_number) {
                     $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
                                             'snd'  => $send_number,        //발신자번호
-                                            'msg'  => $sms_contents,       //개별메시지 내용
+                                            'msg'  => $sms_content,       //개별메시지 내용
                                             'sndnm' => $send_name,         //발신자이름
                                             'rcvnm' => $recv_name,         //수신자이름
                                             'sjt'	=> ''	               //LMS 제목
                                         );  
- 
+                    print_r2($sms_messages);
                     try {
                         $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
@@ -534,7 +535,6 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         $code = $pe->getCode();
                         $message = $pe->getMessage();
                         }
-                    
                 }
             }
             //팝빌 SMS 1문단
