@@ -35,22 +35,19 @@ if ($_POST['act_button'] == "선택SMS전송") {
         // SMS
         if($config['cf_sms_use'] == 'popbill' || 'icode' && $row['iq_hp']) {
             $sms_contents = get_text($row['it_name']).' 상품이 재입고 되었습니다. '.$default['de_admin_company_name'];
-            $receive_number = preg_replace("/[^0-9]/", "", $row['ss_hp']);	// 수신자번호
+            $recv_number = preg_replace("/[^0-9]/", "", $row['ss_hp']);	// 수신자번호
             $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
-            $send_name = get_text($default['de_admin_company_name']);            
- 
-            //popbill 문자메시지 전송에 필요함
-            $Messages[] = array(
-                'snd'   => $send_number,	// 발신번호
-                'sndnm' => $send_name,		// 발신자명
-                'rcv'   => $receive_number,	// 수신번호
-                'rcvnm' => '',		        // 수신자성명
-                'msg'	=> $sms_contents	    // 개별 메시지 내용
-            );
-
-            if($receive_number)
-                $sms_messages[] = array('recv' => $receive_number, 'send' => $send_number, 'cont' => $sms_contents);
-        }
+            $send_name = get_text($default['de_admin_company_name']);
+             //icode, popbill 같이 사용하도록 수정
+             if($recv_number)
+                $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
+                                        'snd'  => $send_number,        //발신자번호
+                                        'msg'  => $sms_contents,       //개별메시지 내용
+                                        'sndnm' => $send_name,         //발신자이름
+                                        'rcvnm' => $recv_name,         //수신자이름
+                                        'sjt'	=> ''	               //LMS 제목
+                                    );  
+            } 
 
         // SMS 전송으로 변경함
         $sql = " update {$g5['g5_shop_item_stocksms_table']}
@@ -75,12 +72,12 @@ if ($_POST['act_button'] == "선택SMS전송") {
 
                     for($s=0; $s<$sms_count; $s++){
                         $strDest     = array();
-                        $strDest[]   = $sms_messages[$s]['recv'];
-                        $strCallBack = $sms_messages[$s]['send'];
+                        $strDest[]   = $sms_messages[$s]['rcv'];
+                        $strCallBack = $sms_messages[$s]['snd'];
                         $strCaller   = iconv_euckr(trim($default['de_admin_company_name']));
                         $strSubject  = '';
                         $strURL      = '';
-                        $strData     = iconv_euckr($sms_messages[$s]['cont']);
+                        $strData     = iconv_euckr($sms_messages[$s]['msg']);
                         $strDate     = '';
                         $nCount      = count($strDest);
 
@@ -93,13 +90,8 @@ if ($_POST['act_button'] == "선택SMS전송") {
                 }
             }elseif($config['cf_sms_use']=='popbill'){
                 include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
-                    $recv_number = $Messages[$s]['rcv'];
-                    $send_number = $Messages[$s]['snd'];
-                    $sms_contents = $Messages[$s]['msg'];
-                    $send_name = $Messages[$s]['rcvnm']; 
-                
                     try {
-                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -113,9 +105,9 @@ if ($_POST['act_button'] == "선택SMS전송") {
                     $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
 
                     for($s=0; $s<$sms_count; $s++) {
-                        $recv_number = $sms_messages[$s]['recv'];
-                        $send_number = $sms_messages[$s]['send'];
-                        $sms_content = iconv_euckr($sms_messages[$s]['cont']);
+                        $recv_number = $sms_messages[$s]['rcv'];
+                        $send_number = $sms_messages[$s]['snd'];
+                        $sms_content = iconv_euckr($sms_messages[$s]['msg']);
 
                         $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], $sms_content, "");
                     }
@@ -124,19 +116,14 @@ if ($_POST['act_button'] == "선택SMS전송") {
                         $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
                 }elseif($config['cf_sms_use']=='popbill'){
                    include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
-                        $recv_number = $Messages[$s]['rcv'];
-                        $send_number = $Messages[$s]['snd'];
-                        $sms_contents = $Messages[$s]['msg'];
-                        $send_name = $Messages[$s]['rcvnm']; 
-                   
                         try {
-                            $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
+                            $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
                             }
                         catch (PopbillException $pe) {
                             $code = $pe->getCode();
                             $message = $pe->getMessage();
                             }
-                                    
+     
                     }
                 }
             }
