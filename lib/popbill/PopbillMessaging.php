@@ -18,14 +18,14 @@
  * We welcome any suggestions, feedbacks, blames or anything.
  * ======================================================================================
  */
-require_once G5_ADMIN_PATH.'/popbill/popbill.php';
+require_once G5_LIB_PATH.'/popbill/popbill.php';
 
 class MessagingService extends PopbillBase
 {
 
-    public function __construct($LinkID, $SecretKey)
+    public function __construct($linkid, $secretkey)
     {
-        parent::__construct($LinkID, $SecretKey);
+        parent::__construct($linkid, $secretkey);
         $this->AddScope('150');
         $this->AddScope('151');
         $this->AddScope('152');

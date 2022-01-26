@@ -19,7 +19,7 @@
  * ======================================================================================
  */
 
-require_once G5_ADMIN_PATH.'/popbill/Linkhub/linkhub.auth.php';
+require_once G5_LIB_PATH.'/popbill/Linkhub/linkhub.auth.php';
 
 class PopbillBase
 {
@@ -46,9 +46,9 @@ class PopbillBase
     private $scopes = array();
     private $__requestMode = LINKHUB_COMM_MODE;
 
-    public function __construct($LinkID, $SecretKey)
+    public function __construct($linkid, $secretkey)
     {
-        $this->Linkhub = Linkhub::getInstance($LinkID, $SecretKey);
+        $this->Linkhub = Linkhub::getInstance($linkid, $secretkey);
         $this->scopes[] = 'member';
     }
 
@@ -212,9 +212,9 @@ class PopbillBase
     }
 
     //가입여부 확인
-    public function CheckIsMember($CorpNum, $LinkID)
+    public function CheckIsMember($CorpNum, $linkid)
     {
-        return $this->executeCURL('/Join?CorpNum=' . $CorpNum . '&LID=' . $LinkID);
+        return $this->executeCURL('/Join?CorpNum=' . $CorpNum . '&LID=' . $linkid);
     }
 
     //회원가입
@@ -522,7 +522,7 @@ class PopbillBase
 
 class JoinForm
 {
-    public $LinkID;
+    public $linkid;
     public $CorpNum;
     public $CEOName;
     public $CorpName;

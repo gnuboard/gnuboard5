@@ -27,24 +27,24 @@ class Linkhub
     const ServiceURL = 'https://auth.linkhub.co.kr';
     const ServiceURL_Static = 'https://static-auth.linkhub.co.kr';
     const ServiceURL_GA = 'https://ga-auth.linkhub.co.kr';
-    private $__LinkID;
-    private $__SecretKey;
+    private $__linkid;
+    private $__secretkey;
     private $__requestMode = LINKHUB_COMM_MODE;
 
-    public function getSecretKey(){
-        return $this->__SecretKey;
+    public function getsecretkey(){
+        return $this->__secretkey;
     }
-    public function getLinkID(){
-        return $this->__LinkID;
+    public function getlinkid(){
+        return $this->__linkid;
     }
     private static $singleton = null;
-    public static function getInstance($LinkID,$secretKey)
+    public static function getInstance($linkid,$secretKey)
     {
         if(is_null(Linkhub::$singleton)) {
             Linkhub::$singleton = new Linkhub();
         }
-        Linkhub::$singleton->__LinkID = $LinkID;
-        Linkhub::$singleton->__SecretKey = $secretKey;
+        Linkhub::$singleton->__linkid = $linkid;
+        Linkhub::$singleton->__secretkey = $secretKey;
 
         return Linkhub::$singleton;
     }
@@ -209,7 +209,7 @@ class Linkhub
         $digestTarget = $digestTarget.Linkhub::VERSION.chr(10);
         $digestTarget = $digestTarget.$uri;
 
-        $digest = base64_encode(hash_hmac('sha256',$digestTarget,base64_decode(strtr($this->__SecretKey, '-_', '+/')),true));
+        $digest = base64_encode(hash_hmac('sha256',$digestTarget,base64_decode(strtr($this->__secretkey, '-_', '+/')),true));
 
         $header[] = 'x-lh-date: '.$xDate;
         $header[] = 'x-lh-version: '.Linkhub::VERSION;
@@ -217,7 +217,7 @@ class Linkhub
             $header[] = 'x-lh-forwarded: '.$forwardIP;
         }
 
-        $header[] = 'Authorization: LINKHUB '.$this->__LinkID.' '.$digest;
+        $header[] = 'Authorization: LINKHUB '.$this->__linkid.' '.$digest;
         $header[] = 'Accept-Encoding: gzip,deflate';
         $header[] = 'Content-Type: Application/json';
         $header[] = 'Connection: close';
