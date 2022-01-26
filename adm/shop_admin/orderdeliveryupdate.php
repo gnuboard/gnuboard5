@@ -142,7 +142,6 @@ if($sms_count > 0) {
             }
         }elseif($config['cf_sms_use']=='popbill'){
             include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
-            print_r2($sms_messages);
                 try {
                     $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                 }
@@ -150,7 +149,6 @@ if($sms_count > 0) {
                     $code = $pe->getCode();
                     $message = $pe->getMessage();
                 }
-                exit;
         }
     } else {
         if($config['cf_sms_use']=='icode'){
