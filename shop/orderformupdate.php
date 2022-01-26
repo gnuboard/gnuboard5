@@ -753,6 +753,7 @@ include_once(G5_SHOP_PATH.'/ordermail2.inc.php');
 // SMS BEGIN --------------------------------------------------------
 // 주문고객과 쇼핑몰관리자에게 SMS 전송
 if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])) {
+    //팝빌을 사용할때의 조건 추가
     if($config['cf_sms_use']=='popbill'){
         $is_sms_send = true;
     }elseif($config['cf_sms_use'] = 'icode'){
@@ -854,9 +855,6 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
                     }
                 }elseif($config['cf_sms_use']=='popbill'){
                     include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
-                print_r2($sms_messages);
-                echo '<br>content = ';print_r2($sms_content);
-                echo '<br>contents = ';print_r2($sms_contents);
 
                     try {
                         $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
@@ -865,7 +863,6 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
                         $code = $pe->getCode();
                         $message = $pe->getMessage();
                     }           
-                exit;
                 }
             } else {
                 if($config['cf_sms_use']=='icode'){
