@@ -71,7 +71,7 @@ if ($w == "u")
                     }elseif($config['cf_sms_use']=='popbill'){
                         include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
                         try {
-                            $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                            $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
                         catch (PopbillException $pe) {
                             $code = $pe->getCode();
@@ -88,7 +88,7 @@ if ($w == "u")
                         }elseif($config['cf_sms_use']=='popbill'){
                            include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
                             try {
-                                $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                                $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                             } catch(PopbillException $pe) {
                                 $code = $pe->getCode();
                                 $message = $pe->getMessage();

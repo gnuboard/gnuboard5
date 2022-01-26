@@ -224,7 +224,7 @@ if($sms_count > 0) {
                 echo $s.'<'.$sms_count.'lms <br>';
                 print_r2($Messages[$s]);
                 try {
-                    $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                    $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                 }
                 catch (PopbillException $pe) {
                     $code = $pe->getCode();
@@ -254,7 +254,7 @@ if($sms_count > 0) {
                 $sms_contents = $Messages[$s]['msg'];
                 $send_name = $Messages[$s]['rcvnm']; 
                 try {
-                    $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
+                    $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
                     }
                 catch (PopbillException $pe) {
                     $code = $pe->getCode();

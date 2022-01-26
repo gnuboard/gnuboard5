@@ -861,7 +861,7 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
                     $sms_contents = $Messages[$s]['msg'];
                     $send_name = $Messages[$s]['rcvnm']; 
                     try {
-                        $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -889,7 +889,7 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
                     $sms_contents = $Messages[$s]['msg'];
                     $send_name = $Messages[$s]['rcvnm']; 
                     try {
-                        $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();

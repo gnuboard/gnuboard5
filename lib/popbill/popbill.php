@@ -82,12 +82,12 @@ class PopbillBase
         $this->scopes[] = $scope;
     }
 
-    private function getsession_Token($CorpNum)
+    private function getsession_Token($corpnum)
     {
         $targetToken = null;
 
-        if (array_key_exists($CorpNum, $this->Token_Table)) {
-            $targetToken = $this->Token_Table[$CorpNum];
+        if (array_key_exists($corpnum, $this->Token_Table)) {
+            $targetToken = $this->Token_Table[$corpnum];
         }
 
         $Refresh = false;
@@ -103,11 +103,11 @@ class PopbillBase
 
         if ($Refresh) {
             try {
-                $targetToken = $this->Linkhub->getToken($this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $CorpNum, $this->scopes, $this->IPRestrictOnOff ? null : "*", $this->UseStaticIP, $this->UseLocalTimeYN, $this->UseGAIP);
+                $targetToken = $this->Linkhub->getToken($this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $corpnum, $this->scopes, $this->IPRestrictOnOff ? null : "*", $this->UseStaticIP, $this->UseLocalTimeYN, $this->UseGAIP);
             } catch (LinkhubException $le) {
                 throw new PopbillException($le->getMessage(), $le->getCode());
             }
-            $this->Token_Table[$CorpNum] = $targetToken;
+            $this->Token_Table[$corpnum] = $targetToken;
         }
         return $targetToken->session_token;
     }
@@ -122,32 +122,32 @@ class PopbillBase
     }
 
     // 담당자 추가
-    public function RegistContact($CorpNum, $ContactInfo, $UserID = null)
+    public function RegistContact($corpnum, $ContactInfo, $UserID = null)
     {
         $postdata = json_encode($ContactInfo);
-        return $this->executeCURL('/IDs/New', $CorpNum, $UserID, true, null, $postdata);
+        return $this->executeCURL('/IDs/New', $corpnum, $UserID, true, null, $postdata);
     }
 
     // 담당자 정보 수정
-    public function UpdateContact($CorpNum, $ContactInfo, $UserID)
+    public function UpdateContact($corpnum, $ContactInfo, $UserID)
     {
         $postdata = json_encode($ContactInfo);
-        return $this->executeCURL('/IDs', $CorpNum, $UserID, true, null, $postdata);
+        return $this->executeCURL('/IDs', $corpnum, $UserID, true, null, $postdata);
     }
 
     // 담당자 정보 확인
-    public function GetContactInfo($CorpNum, $ContactID, $UserID = null)
+    public function GetContactInfo($corpnum, $ContactID, $UserID = null)
     {
         $postdata = '{"id":' . '"' . $ContactID . '"}';
-        return $this->executeCURL('/Contact', $CorpNum, $UserID, true, null, $postdata);
+        return $this->executeCURL('/Contact', $corpnum, $UserID, true, null, $postdata);
     }
 
     // 담당자 목록 조회
-    public function ListContact($CorpNum, $UserID = null)
+    public function ListContact($corpnum, $UserID = null)
     {
         $ContactInfoList = array();
 
-        $response = $this->executeCURL('/IDs', $CorpNum, $UserID);
+        $response = $this->executeCURL('/IDs', $corpnum, $UserID);
 
         for ($i = 0; $i < Count($response); $i++) {
             $ContactInfo = new ContactInfo();
@@ -159,9 +159,9 @@ class PopbillBase
     }
 
     // 회사정보 확인
-    public function GetCorpInfo($CorpNum, $UserID = null)
+    public function GetCorpInfo($corpnum, $UserID = null)
     {
-        $response = $this->executeCURL('/CorpInfo', $CorpNum, $UserID);
+        $response = $this->executeCURL('/CorpInfo', $corpnum, $UserID);
 
         $CorpInfo = new CorpInfo();
         $CorpInfo->fromJsonInfo($response);
@@ -170,51 +170,51 @@ class PopbillBase
     }
 
     // 회사정보 수정
-    public function UpdateCorpInfo($CorpNum, $CorpInfo, $UserID = null)
+    public function UpdateCorpInfo($corpnum, $CorpInfo, $UserID = null)
     {
         $postdata = json_encode($CorpInfo);
-        return $this->executeCURL('/CorpInfo', $CorpNum, $UserID, true, null, $postdata);
+        return $this->executeCURL('/CorpInfo', $corpnum, $UserID, true, null, $postdata);
     }
 
     //팝빌 연결 URL함수
-    public function GetPopbillURL($CorpNum, $UserID, $TOGO)
+    public function GetPopbillURL($corpnum, $UserID, $TOGO)
     {
-        $response = $this->executeCURL('/?TG=' . $TOGO, $CorpNum, $UserID);
+        $response = $this->executeCURL('/?TG=' . $TOGO, $corpnum, $UserID);
         return $response->url;
     }
 
     //팝빌 로그인 URL
-    public function GetAccessURL($CorpNum, $UserID)
+    public function GetAccessURL($corpnum, $UserID)
     {
-        $response = $this->executeCURL('/?TG=LOGIN', $CorpNum, $UserID);
+        $response = $this->executeCURL('/?TG=LOGIN', $corpnum, $UserID);
         return $response->url;
     }
 
     //팝빌 연동회원 포인트 충전 URL
-    public function GetChargeURL($CorpNum, $UserID)
+    public function GetChargeURL($corpnum, $UserID)
     {
-        $response = $this->executeCURL('/?TG=CHRG', $CorpNum, $UserID);
+        $response = $this->executeCURL('/?TG=CHRG', $corpnum, $UserID);
         return $response->url;
     }
 
     //팝빌 연동회원 포인트 결제내역 URL
-    public function GetPaymentURL($CorpNum, $UserID)
+    public function GetPaymentURL($corpnum, $UserID)
     {
-        $response = $this->executeCURL('/?TG=PAYMENT', $CorpNum, $UserID);
+        $response = $this->executeCURL('/?TG=PAYMENT', $corpnum, $UserID);
         return $response->url;
     }
 
     //팝빌 연동회원 포인트 사용내역 URL
-    public function GetUseHistoryURL($CorpNum, $UserID)
+    public function GetUseHistoryURL($corpnum, $UserID)
     {
-        $response = $this->executeCURL('/?TG=USEHISTORY', $CorpNum, $UserID);
+        $response = $this->executeCURL('/?TG=USEHISTORY', $corpnum, $UserID);
         return $response->url;
     }
 
     //가입여부 확인
-    public function CheckIsMember($CorpNum, $linkid)
+    public function CheckIsMember($corpnum, $linkid)
     {
-        return $this->executeCURL('/Join?CorpNum=' . $CorpNum . '&LID=' . $linkid);
+        return $this->executeCURL('/Join?CorpNum=' . $corpnum . '&LID=' . $linkid);
     }
 
     //회원가입
@@ -226,10 +226,10 @@ class PopbillBase
     }
 
     //회원 잔여포인트 확인
-    public function GetBalance($CorpNum)
+    public function GetBalance($corpnum)
     {
         try {
-            return $this->Linkhub->getBalance($this->getsession_Token($CorpNum), $this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $this->UseStaticIP, $this->UseGAIP);
+            return $this->Linkhub->getBalance($this->getsession_Token($corpnum), $this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $this->UseStaticIP, $this->UseGAIP);
         } catch (LinkhubException $le) {
             throw new PopbillException($le->message, $le->code);
         }
@@ -237,26 +237,26 @@ class PopbillBase
 
     // 파트너 포인트 충전 팝업 URL
     // - 2017/08/29 추가
-    public function GetPartnerURL($CorpNum, $TOGO)
+    public function GetPartnerURL($corpnum, $TOGO)
     {
         try {
-            return $this->Linkhub->getPartnerURL($this->getsession_Token($CorpNum), $this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $TOGO , $this->UseStaticIP, $this->UseGAIP);
+            return $this->Linkhub->getPartnerURL($this->getsession_Token($corpnum), $this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $TOGO , $this->UseStaticIP, $this->UseGAIP);
         } catch (LinkhubException $le) {
             throw new PopbillException($le->message, $le->code);
         }
     }
 
     //파트너 잔여포인트 확인
-    public function GetPartnerBalance($CorpNum)
+    public function GetPartnerBalance($corpnum)
     {
         try {
-            return $this->Linkhub->getPartnerBalance($this->getsession_Token($CorpNum), $this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $this->UseStaticIP, $this->UseGAIP);
+            return $this->Linkhub->getPartnerBalance($this->getsession_Token($corpnum), $this->IsTest ? PopbillBase::ServiceID_TEST : PopbillBase::ServiceID_REAL, $this->UseStaticIP, $this->UseGAIP);
         } catch (LinkhubException $le) {
             throw new PopbillException($le->message, $le->code);
         }
     }
 
-    protected function executeCURL($uri, $CorpNum = null, $userID = null, $isPost = false, $action = null, $postdata = null, $isMultiPart = false, $contentsType = null, $isBinary = false, $SubmitID = null)
+    protected function executeCURL($uri, $corpnum = null, $userID = null, $isPost = false, $action = null, $postdata = null, $isMultiPart = false, $contentsType = null, $isBinary = false, $SubmitID = null)
     {
         if ($this->__requestMode != "STREAM") {
 
@@ -265,8 +265,8 @@ class PopbillBase
             $http = curl_init( $targetURL . $uri);
             $header = array();
 
-            if (is_null($CorpNum) == false) {
-                $header[] = 'Authorization: Bearer ' . $this->getsession_Token($CorpNum);
+            if (is_null($corpnum) == false) {
+                $header[] = 'Authorization: Bearer ' . $this->getsession_Token($corpnum);
             }
             if (is_null($userID) == false) {
                 $header[] = 'x-pb-userid: ' . $userID;
@@ -353,8 +353,8 @@ class PopbillBase
 
             $header[] = 'Accept-Encoding: gzip,deflate';
             $header[] = 'Connection: close';
-            if (is_null($CorpNum) == false) {
-                $header[] = 'Authorization: Bearer ' . $this->getsession_Token($CorpNum);
+            if (is_null($corpnum) == false) {
+                $header[] = 'Authorization: Bearer ' . $this->getsession_Token($corpnum);
             }
             if (is_null($userID) == false) {
                 $header[] = 'x-pb-userid: ' . $userID;
@@ -523,7 +523,7 @@ class PopbillBase
 class JoinForm
 {
     public $linkid;
-    public $CorpNum;
+    public $corpnum;
     public $CEOName;
     public $CorpName;
     public $Addr;

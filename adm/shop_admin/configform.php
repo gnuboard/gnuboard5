@@ -1668,14 +1668,14 @@ function byte_check(el_cont, el_byte)
         <?php 
             // 잔여 포인트 확인하기
             try {
-                $remainPoint = $MessagingService->GetBalance($CorpNum);
+                $remainPoint = $MessagingService->GetBalance($corpnum);
             }
             catch (PopbillException $pe) {
                 $code = $pe->getCode();
                 $message = $pe->getMessage();
             }
             try {
-                $url = $MessagingService->GetChargeURL($CorpNum, $linkid);
+                $url = $MessagingService->GetChargeURL($corpnum, $linkid);
             } catch (PopbillException $pe) {
                 $code = $pe->getCode();
                 $message = $pe->getMessage();

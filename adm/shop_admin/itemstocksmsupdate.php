@@ -99,7 +99,7 @@ if ($_POST['act_button'] == "선택SMS전송") {
                     $send_name = $Messages[$s]['rcvnm']; 
                 
                     try {
-                        $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -130,7 +130,7 @@ if ($_POST['act_button'] == "선택SMS전송") {
                         $send_name = $Messages[$s]['rcvnm']; 
                    
                         try {
-                            $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
+                            $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $Messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
                             }
                         catch (PopbillException $pe) {
                             $code = $pe->getCode();

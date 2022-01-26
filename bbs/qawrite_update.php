@@ -432,7 +432,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         );  
 
                     try {
-                        $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -463,7 +463,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         );
 
                     try {
-                        $receiptNum = $MessagingService->SendLMS($CorpNum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -528,7 +528,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         );
  
                     try {
-                        $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();
@@ -558,7 +558,7 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                         );
 
                     try {
-                        $receiptNum = $MessagingService->SendSMS($CorpNum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                        $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $Messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }
                     catch (PopbillException $pe) {
                         $code = $pe->getCode();

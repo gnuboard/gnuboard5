@@ -32,14 +32,14 @@ class MessagingService extends PopbillBase
     }
 
     //발행단가 확인
-    public function GetUnitCost($CorpNum, $MessageType)
+    public function GetUnitCost($corpnum, $MessageType)
     {
-        return $this->executeCURL('/Message/UnitCost?Type=' . $MessageType, $CorpNum)->unitCost;
+        return $this->executeCURL('/Message/UnitCost?Type=' . $MessageType, $corpnum)->unitCost;
     }
 
 
     /* 단문메시지 전송
-    *	$CorpNum => 발송사업자번호
+    *	$corpnum => 발송사업자번호
     *	$Sender	=> 동보전송용 발신번호 미기재시 개별메시지 발신번호로 전송. 발신번호가 없는 개별메시지에만 동보처리함.
     *	$Content => 동보전송용 발신내용 미기재시 개별메시지 내용으로 전송, 발신내용이 없는 개별메시지에만 동보처리함.
     *	$Messages => 발신메시지 최대 1000건, 배열
@@ -51,13 +51,13 @@ class MessagingService extends PopbillBase
     *	$UserID		=> 발신자 팝빌 회원아이디
     *	$SenderName	=> 동보전송용 발신자명 미기재시 개별메시지 발신자명으로 전송
     */
-    public function SendSMS($CorpNum, $Sender, $Content, $Messages = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SenderName = null, $SystemYN = false, $RequestNum = null)
+    public function SendSMS($corpnum, $Sender, $Content, $Messages = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SenderName = null, $SystemYN = false, $RequestNum = null)
     {
-        return $this->SendMessage(ENumMessageType::SMS, $CorpNum, $Sender, $SenderName, null, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $SystemYN, $RequestNum);
+        return $this->SendMessage(ENumMessageType::SMS, $corpnum, $Sender, $SenderName, null, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $SystemYN, $RequestNum);
     }
 
     /* 장문메시지 전송
-    *	$CorpNum => 발송사업자번호
+    *	$corpnum => 발송사업자번호
     *	$Sender	=> 동보전송용 발신번호 미기재시 개별메시지 발신번호로 전송. 발신번호가 없는 개별메시지에만 동보처리함.
     *	$Subject => 동보전송용 제목 미기재시 개별메시지 제목으로 전송, 제목이 없는 개별메시지에만 동보처리함.
     *	$Content => 동보전송용 발신내용 미기재시 개별베시지 내용으로 전송, 발신내용이 없는 개별메시지에만 동보처리함.
@@ -71,13 +71,13 @@ class MessagingService extends PopbillBase
   	*	$UserID		=> 발신자 팝빌 회원아이디
     *	$SenderName	=> 동보전송용 발신자명 미기재시 개별메시지 발신자명으로 전송
     */
-    public function SendLMS($CorpNum, $Sender, $Subject, $Content, $Messages = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SenderName = null, $SystemYN = false, $RequestNum = null)
+    public function SendLMS($corpnum, $Sender, $Subject, $Content, $Messages = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SenderName = null, $SystemYN = false, $RequestNum = null)
     {
-        return $this->SendMessage(ENumMessageType::LMS, $CorpNum, $Sender, $SenderName, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $SystemYN, $RequestNum);
+        return $this->SendMessage(ENumMessageType::LMS, $corpnum, $Sender, $SenderName, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $SystemYN, $RequestNum);
     }
 
     /* 장/단문메시지 전송 - 메지시 길이에 따라 단문과 장문을 선택하여 전송합니다.
-    *	$CorpNum => 발송사업자번호
+    *	$corpnum => 발송사업자번호
     *	$Sender	=> 동보전송용 발신번호 미기재시 개별메시지 발신번호로 전송. 발신번호가 없는 개별메시지에만 동보처리함.
     *	$Subject => 동보전송용 제목 미기재시 개별메시지 제목으로 전송, 제목이 없는 개별메시지에만 동보처리함.
     *	$Content => 동보전송용 발신내용 미기재시 개별베시지 내용으로 전송, 발신내용이 없는 개별메시지에만 동보처리함.
@@ -91,13 +91,13 @@ class MessagingService extends PopbillBase
     *	$UserID		=> 발신자 팝빌 회원아이디
     *	$SenderName	=> 동보전송용 발신자명 미기재시 개별메시지 발신자명으로 전송
     */
-    public function SendXMS($CorpNum, $Sender, $Subject, $Content, $Messages = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SenderName = null, $SystemYN = false, $RequestNum = null)
+    public function SendXMS($corpnum, $Sender, $Subject, $Content, $Messages = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SenderName = null, $SystemYN = false, $RequestNum = null)
     {
-        return $this->SendMessage(ENumMessageType::XMS, $CorpNum, $Sender, $SenderName, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $SystemYN, $RequestNum);
+        return $this->SendMessage(ENumMessageType::XMS, $corpnum, $Sender, $SenderName, $Subject, $Content, $Messages, $ReserveDT, $adsYN, $UserID, $SystemYN, $RequestNum);
     }
 
     /* MMS 메시지 전송
-    *	$CorpNum => 발송사업자번호
+    *	$corpnum => 발송사업자번호
     *	$Sender	=> 동보전송용 발신번호 미기재시 개별메시지 발신번호로 전송. 발신번호가 없는 개별메시지에만 동보처리함.
     *	$Subject => 동보전송용 제목 미기재시 개별메시지 제목으로 전송, 제목이 없는 개별메시지에만 동보처리함.
     *	$Content => 동보전송용 발신내용 미기재시 개별베시지 내용으로 전송, 발신내용이 없는 개별메시지에만 동보처리함.
@@ -112,7 +112,7 @@ class MessagingService extends PopbillBase
       *	$UserID		=> 발신자 팝빌 회원아이디
     *	$SenderName	=> 동보전송용 발신자명 미기재시 개별메시지 발신자명으로 전송
     */
-    public function SendMMS($CorpNum, $Sender, $Subject, $Content, $Messages = array(), $FilePaths = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SenderName = null, $SystemYN = false, $RequestNum = null)
+    public function SendMMS($corpnum, $Sender, $Subject, $Content, $Messages = array(), $FilePaths = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SenderName = null, $SystemYN = false, $RequestNum = null)
     {
         if (empty($Messages)) {
             throw new PopbillException('전송할 메시지가 입력되지 않았습니다.');
@@ -145,21 +145,21 @@ class MessagingService extends PopbillBase
             $postdata['file'] = '@' . $FilePath;
         }
 
-        return $this->executeCURL('/MMS', $CorpNum, $UserID, true, null, $postdata, true)->receiptNum;
+        return $this->executeCURL('/MMS', $corpnum, $UserID, true, null, $postdata, true)->receiptNum;
     }
 
 
     /* 전송메시지 내역 및 전송상태 확인
-    *	$CorpNum => 발송사업자번호
+    *	$corpnum => 발송사업자번호
     *	$ReceiptNum	=> 접수번호
     *	$UserID	=> 팝빌 회원아이디
     */
-    public function GetMessages($CorpNum, $ReceiptNum, $UserID = null)
+    public function GetMessages($corpnum, $ReceiptNum, $UserID = null)
     {
         if (empty($ReceiptNum)) {
             throw new PopbillException('확인할 접수번호를 입력하지 않았습니다.');
         }
-        $result = $this->executeCURL('/Message/' . $ReceiptNum, $CorpNum, $UserID);
+        $result = $this->executeCURL('/Message/' . $ReceiptNum, $corpnum, $UserID);
 
         $MessageInfoList = array();
 
@@ -172,16 +172,16 @@ class MessagingService extends PopbillBase
     }
 
     /* 전송메시지 내역 및 전송상태 확인
-*	$CorpNum => 발송사업자번호
+*	$corpnum => 발송사업자번호
 *	$RequestNum	=> 전송요청번호
 *	$UserID	=> 팝빌 회원아이디
 */
-    public function GetMessagesRN($CorpNum, $RequestNum, $UserID = null)
+    public function GetMessagesRN($corpnum, $RequestNum, $UserID = null)
     {
         if (empty($RequestNum)) {
             throw new PopbillException('확인할 전송요청번호를 입력하지 않았습니다.');
         }
-        $result = $this->executeCURL('/Message/Get/' . $RequestNum, $CorpNum, $UserID);
+        $result = $this->executeCURL('/Message/Get/' . $RequestNum, $corpnum, $UserID);
 
         $MessageInfoList = array();
 
@@ -194,32 +194,32 @@ class MessagingService extends PopbillBase
     }
 
     /* 예약전송 취소
-    *	$CorpNum => 발송사업자번호
+    *	$corpnum => 발송사업자번호
     *	$ReceiptNum	=> 접수번호
     *	$UserID	=> 팝빌 회원아이디
     */
-    public function CancelReserve($CorpNum, $ReceiptNum, $UserID = null)
+    public function CancelReserve($corpnum, $ReceiptNum, $UserID = null)
     {
         if (empty($ReceiptNum)) {
             throw new PopbillException('예약전송 취소할 접수번호를 입력하지 않았습니다.');
         }
-        return $this->executeCURL('/Message/' . $ReceiptNum . '/Cancel', $CorpNum, $UserID);
+        return $this->executeCURL('/Message/' . $ReceiptNum . '/Cancel', $corpnum, $UserID);
     }
 
     /* 예약전송 취소
-*	$CorpNum => 발송사업자번호
+*	$corpnum => 발송사업자번호
 *	$RequestNum	=> 전송요청번호
 *	$UserID	=> 팝빌 회원아이디
 */
-    public function CancelReserveRN($CorpNum, $RequestNum, $UserID = null)
+    public function CancelReserveRN($corpnum, $RequestNum, $UserID = null)
     {
         if (empty($RequestNum)) {
             throw new PopbillException('예약전송 취소할 전송요청번호를 입력하지 않았습니다.');
         }
-        return $this->executeCURL('/Message/Cancel/' . $RequestNum, $CorpNum, $UserID);
+        return $this->executeCURL('/Message/Cancel/' . $RequestNum, $corpnum, $UserID);
     }
 
-    private function SendMessage($MessageType, $CorpNum, $Sender, $SenderName, $Subject, $Content, $Messages = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SystemYN = false, $RequestNum = null)
+    private function SendMessage($MessageType, $corpnum, $Sender, $SenderName, $Subject, $Content, $Messages = array(), $ReserveDT = null, $adsYN = false, $UserID = null, $SystemYN = false, $RequestNum = null)
     {
         if (empty($Messages)) {
             throw new PopbillException('전송할 메시지가 입력되지 않았습니다.');
@@ -240,32 +240,32 @@ class MessagingService extends PopbillBase
         $Request['msgs'] = $Messages;
 
         $postdata = json_encode($Request);
-        return $this->executeCURL('/' . $MessageType, $CorpNum, $UserID, true, null, $postdata)->receiptNum;
+        return $this->executeCURL('/' . $MessageType, $corpnum, $UserID, true, null, $postdata)->receiptNum;
     }
 
     //문자 관련 URL함수
-    public function GetURL($CorpNum, $UserID, $TOGO)
+    public function GetURL($corpnum, $UserID, $TOGO)
     {
-        $response = $this->executeCURL('/Message/?TG=' . $TOGO, $CorpNum, $UserID);
+        $response = $this->executeCURL('/Message/?TG=' . $TOGO, $corpnum, $UserID);
         return $response->url;
     }
 
     //문자 전송내역 팝업 URL
-    public function GetSentListURL($CorpNum, $UserID)
+    public function GetSentListURL($corpnum, $UserID)
     {
-        $response = $this->executeCURL('/Message/?TG=BOX', $CorpNum, $UserID);
+        $response = $this->executeCURL('/Message/?TG=BOX', $corpnum, $UserID);
         return $response->url;
     }
 
     //발신번호 관리 팝업 URL
-    public function GetSenderNumberMgtURL($CorpNum, $UserID)
+    public function GetSenderNumberMgtURL($corpnum, $UserID)
     {
-        $response = $this->executeCURL('/Message/?TG=SENDER', $CorpNum, $UserID);
+        $response = $this->executeCURL('/Message/?TG=SENDER', $corpnum, $UserID);
         return $response->url;
     }
 
     //문자 전송내역 조회
-    public function Search($CorpNum, $SDate, $EDate, $State = array(), $Item = array(), $ReserveYN = false, $SenderYN = false, $Page = null, $PerPage = null, $Order = null, $UserID = null, $QString = null)
+    public function Search($corpnum, $SDate, $EDate, $State = array(), $Item = array(), $ReserveYN = false, $SenderYN = false, $Page = null, $PerPage = null, $Order = null, $UserID = null, $QString = null)
     {
         if (is_null($SDate) || $SDate === "") {
             throw new PopbillException(-99999999, '시작일자가 입력되지 않았습니다.');
@@ -300,7 +300,7 @@ class MessagingService extends PopbillBase
             $uri .= '&QString=' . $QString;
         }
 
-        $response = $this->executeCURL($uri, $CorpNum, $UserID);
+        $response = $this->executeCURL($uri, $corpnum, $UserID);
 
         $SearchList = new MsgSearchResult();
         $SearchList->fromJsonInfo($response);
@@ -309,16 +309,16 @@ class MessagingService extends PopbillBase
     }
 
     // 080 수신거부목록 조회
-    public function GetAutoDenyList($CorpNum)
+    public function GetAutoDenyList($corpnum)
     {
-        return $this->executeCURL('/Message/Denied', $CorpNum);
+        return $this->executeCURL('/Message/Denied', $corpnum);
     }
 
-    public function GetChargeInfo($CorpNum, $MessageType, $UserID = null)
+    public function GetChargeInfo($corpnum, $MessageType, $UserID = null)
     {
         $uri = '/Message/ChargeInfo?Type=' . $MessageType;
 
-        $response = $this->executeCURL($uri, $CorpNum, $UserID);
+        $response = $this->executeCURL($uri, $corpnum, $UserID);
         $ChargeInfo = new ChargeInfo();
         $ChargeInfo->fromJsonInfo($response);
 
@@ -326,20 +326,20 @@ class MessagingService extends PopbillBase
     }
 
     // 발신번호 목록 조회
-    public function GetSenderNumberList($CorpNum, $UserID = null)
+    public function GetSenderNumberList($corpnum, $UserID = null)
     {
-        return $this->executeCURL('/Message/SenderNumber', $CorpNum, $UserID);
+        return $this->executeCURL('/Message/SenderNumber', $corpnum, $UserID);
     }
 
     // 문자전송결과
-    public function GetStates($CorpNum, $ReceiptNumList = array(), $UserID = null)
+    public function GetStates($corpnum, $ReceiptNumList = array(), $UserID = null)
     {
         if (is_null($ReceiptNumList) || empty($ReceiptNumList)) {
             throw new PopbillException('접수번호가 입력되지 않았습니다.');
         }
 
         $postdata = json_encode($ReceiptNumList);
-        $result = $this->executeCURL('/Message/States', $CorpNum, $UserID, true, null, $postdata);
+        $result = $this->executeCURL('/Message/States', $corpnum, $UserID, true, null, $postdata);
         $MsgInfoList = array();
 
         for ($i = 0; $i < Count($result); $i++) {
