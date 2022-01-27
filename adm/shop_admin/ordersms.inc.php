@@ -75,12 +75,12 @@ if ($config['cf_sms_use']) {
     
                     for($s=0; $s<$sms_count; $s++){
                         $strDest     = array();
-                            $strDest[]   = $sms_messages[$s]['recv'];
-                            $strCallBack = $sms_messages[$s]['send'];
+                            $strDest[]   = $sms_messages[$s]['rcv'];
+                            $strCallBack = $sms_messages[$s]['snd'];
                             $strCaller   = iconv_euckr(trim($default['de_admin_company_name']));
                             $strSubject  = '';
                             $strURL      = '';
-                            $strData     = iconv_euckr($sms_messages[$s]['cont']);
+                            $strData     = iconv_euckr($sms_messages[$s]['msg']);
                             $strDate     = '';
                             $nCount      = count($strDest);
     
@@ -109,9 +109,9 @@ if ($config['cf_sms_use']) {
                 $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
     
                 for($s=0; $s<$sms_count; $s++) {
-                    $recv_number = $sms_messages[$s]['recv'];
-                    $send_number = $sms_messages[$s]['send'];
-                    $sms_content = iconv_euckr($sms_messages[$s]['cont']);
+                    $recv_number = $sms_messages[$s]['rcv'];
+                    $send_number = $sms_messages[$s]['snd'];
+                    $sms_content = iconv_euckr($sms_messages[$s]['msg']);
                     $SMS->Add($recv_number, $send_number, $config['cf_icode_id'], $sms_content, "");
                 }
                     $SMS->Send();
