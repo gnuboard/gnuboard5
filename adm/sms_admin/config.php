@@ -14,7 +14,7 @@ if (!$config['cf_popbill_server_ip'])   $config['cf_popbill_server_ip'] = '52.78
 if (!$config['cf_popbill_server_port']) $config['cf_popbill_server_port'] = '443';
 
 // popbill 설정값
-include_once (G5_ADMIN_PATH.'/popbill/popbill_config.php');
+include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
 
 // 아이코드 토큰키 추가
 if( ! isset($config['cf_icode_token_key']) ){
@@ -65,6 +65,17 @@ if ($config['cf_sms_use'] == 'icode' || 'popbill') { // 아이코드 or popbill 
         <col>
     </colgroup>
     <tbody>
+    <tr>
+        <th scope="row"><label for="cf_sms_use">SMS 사용</label></th>
+        <td>
+            <select id="cf_sms_use" name="cf_sms_use">
+                <option value="" <?php echo get_selected($config['cf_sms_use'], ''); ?>>사용안함</option>
+                <option value="icode" <?php echo get_selected($config['cf_sms_use'], 'icode'); ?>>아이코드</option>
+                <!---popbill 옵션 추가--->
+                <option value="popbill" <?php echo get_selected($config['cf_sms_use'], 'popbill'); ?>>팝빌(popbill)</option>
+            </select>
+        </td>
+    </tr>
     <tr>
             <th scope="row"><label for="cf_sms_type">SMS 전송유형</label></th>
             <td>
@@ -151,14 +162,14 @@ if ($config['cf_sms_use'] == 'icode' || 'popbill') { // 아이코드 or popbill 
         <?php 
             // 잔여 포인트 확인하기
             try {
-                $remainPoint = $MessagingService->GetBalance($CorpNum);
+                $remainPoint = $MessagingService->GetBalance($corpnum);
             }
             catch (PopbillException $pe) {
                 $code = $pe->getCode();
                 $message = $pe->getMessage();
             }
             try {
-                $url = $MessagingService->GetChargeURL($CorpNum, $LinkID);
+                $url = $MessagingService->GetChargeURL($corpnum, $linkid);
             } catch (PopbillException $pe) {
                 $code = $pe->getCode();
                 $message = $pe->getMessage();
