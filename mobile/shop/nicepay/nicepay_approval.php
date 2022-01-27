@@ -143,6 +143,42 @@ $params = array();
 //개인결제
 if(isset($data['pp_id']) && !empty($data['pp_id'])) {
     // 개인결제 정보
+    $pp_check = false;
+    $sql = " select * from {$g5['g5_shop_personalpay_table']} where pp_id = '{$resultData['P_OID']}' and pp_tno = '{$resultData['P_TID']}' and pp_use = '1' ";
+    $pp = sql_fetch($sql);
+
+    if( !$pp['pp_tno'] && $data['pp_id'] == $oid ){
+        $res_cd = $resultData['ResultCode'];
+        $pp_id = $oid;
+
+        $exclude = array('PayMethod', 'MID', 'Amt', 'BuyerName', 'BuyerTel', 'BuyerEmail', 'GoodsName', 'Moid', 'MallReserved', 'EdiDate', 'MallIP', 'GoodsCnt', 'TransType', 'SupplyAmt', 'GoodsVat', 'ServiceAmt', 'TaxFreeAmt', 'AuthResultCode', 'AuthResultMsg', 'TrKey', 'TxTid', 'MallUserID', 'VbankExpDate', 'TID');
+
+        foreach($data as $key=>$v) {
+            if( !in_array($key, $exclude) ){
+                $_POST[$key] = $params[$key] = clean_xss_tags(strip_tags($v));
+            }
+        }
+
+        $good_mny = isset($resultData['Amt']) ? $resultData['Amt'] : 0;
+        $pp_name = clean_xss_tags($data['pp_name']);
+        $pp_email = clean_xss_tags($data['pp_email']);
+        $pp_hp = clean_xss_tags($data['pp_hp']);
+        $pp_settle_case = clean_xss_tags($data['pp_settle_case']);
+
+        $_POST['NICE_HASH'] = $hash;
+        $_POST['AuthResultCode'] = isset($resultData['AuthResultCode']) ? $resultData['AuthResultCode'] : '';
+        $_POST['pp_id'] = isset($resultData['Moid']) ? $resultData['Moid'] : '';
+        $_POST['good_mny'] = isset($resultData['Amt']) ? $resultData['Amt'] : 0;
+        $_POST['PayMethod'] = isset($resultData['PayMethod']) ? $resultData['PayMethod'] : '';
+        $_POST['AuthDate'] = isset($resultData['AuthDate']) ? $resultData['AuthDate'] : '';
+        $_POST['Carrier'] = isset($resultData['Carrier']) ? $resultData['Carrier'] : '';
+        $_POST['DstAddr'] = isset($resultData['DstAddr']) ? $resultData['DstAddr'] : '';
+        $_POST['VbankNum'] = isset($resultData['VbankNum']) ? $resultData['VbankNum'] : '';
+        $_POST['VbankAccountName'] = isset($resultData['VbankAccountName']) ? $resultData['VbankAccountName'] : '';
+        $_POST['VbankBankName'] = isset($resultData['VbankBankName']) ? $resultData['VbankBankName'] : '';
+
+        include_once( G5_MSHOP_PATH.'/personalpayformupdate.php' );
+    }
 } else {
     // 상점 결제
     $exclude = array('PayMethod', 'MID', 'Amt', 'BuyerName', 'BuyerTel', 'BuyerEmail', 'GoodsName', 'Moid', 'MallReserved', 'EdiDate', 'MallIP', 'GoodsCnt', 'TransType', 'SupplyAmt', 'GoodsVat', 'ServiceAmt', 'TaxFreeAmt', 'AuthResultCode', 'AuthResultMsg', 'TrKey', 'TxTid', 'MallUserID', 'VbankExpDate', 'TID');

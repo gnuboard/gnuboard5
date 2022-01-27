@@ -30,7 +30,7 @@ if ($default['de_escrow_use'] == 1) {
 $post_bank_name = isset($_POST['BankName']) ? $_POST['BankName'] : '';
 $post_vbank_name = isset($_POST['VbankBankName']) ? $_POST['VbankBankName'] : '';
 $post_vbank_num = isset($_POST['VbankNum']) ? $_POST['VbankNum'] : '';
-$post_account_name = isset($_POST['VbankAccountName']) ? $_POST['VbankAccountName'] : '';
+$post_vbank_account_name = isset($_POST['VbankAccountName']) ? $_POST['VbankAccountName'] : '';
 
 switch($pay_type) {
     case '계좌이체':
@@ -38,7 +38,7 @@ switch($pay_type) {
         break;
     case '가상계좌':
         $bankname  = $post_vbank_name;
-        $account   = $post_vbank_num.' '.$post_account_name;
+        $account   = $post_vbank_num.' '.$post_vbank_account_name;
         $app_no    = $post_vbank_num;
         break;
     default:
