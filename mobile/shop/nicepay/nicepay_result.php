@@ -21,10 +21,12 @@ $mobile_no       = isset($_POST['DstAddr']) ? $_POST['DstAddr'] : '';
 $app_no          = isset($_POST['AuthCode']) ? $_POST['AuthCode'] : '';
 $card_name       = isset($_POST['CardName']) ? $_POST['CardName'] : '';
 
+// 에스크로 사용여부 확인
 if ($default['de_escrow_use'] == 1) {
     $escw_yn         = 'Y';
 }
 
+// 가상계좌, 계좌이체 관련 데이터 검증
 $post_bank_name = isset($_POST['BankName']) ? $_POST['BankName'] : '';
 $post_vbank_name = isset($_POST['VbankBankName']) ? $_POST['VbankBankName'] : '';
 $post_vbank_num = isset($_POST['VbankNum']) ? $_POST['VbankNum'] : '';

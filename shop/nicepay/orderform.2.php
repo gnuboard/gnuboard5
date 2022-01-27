@@ -20,14 +20,13 @@ $ediDate = date('Ymdhis');
 <input type="hidden" name="EncryptData" value="">                                          <!-- 해쉬값	-->
 
 <!-- 선택 입력값 -->
-
 <input type="hidden" name="BuyerEmail"  value="">
 <input type="hidden" name="BuyerAddr"   value="">
 <input type="hidden" name="BuyerPostNo" value="">
 <input type="hidden" name="MallUserId"  value="<?php echo isset($member) ? $member['mb_id'] : ""?>">
 
 
-<input type="hidden" name="EdiDate"     value="<?php echo $ediDate; ?>"/>             <!-- 전문 생성일시 -->
+<input type="hidden" name="EdiDate"     value="<?php echo $ediDate; ?>"/>                   <!-- 전문 생성일시 -->
 <input type="hidden" name="Moid"        value="<?php echo $od_id; ?>">
 
 
@@ -38,14 +37,10 @@ $ediDate = date('Ymdhis');
 
 <input type="hidden" name="timestamp"   value="">
 
-<!-- 실물에 따라 0 or 1 -->
-<input type="hidden" name="GoodsCl"     value="<?php echo $goodsCl; ?>"/>                                                   <!--실물(1) 컨텐츠(0) -->
-
-<input type="hidden" name="good_mny"    value="<?php echo $tot_price; ?>">
-
-<input type="hidden" name="TransType"   value="<?php echo $useescrow; ?>">
-
-<input type="hidden" name="OptionList" value="<?php echo $optionList; ?>">
+<input type="hidden" name="GoodsCl"     value="<?php echo $goodsCl; ?>"/>                   <!--실물(1) 컨텐츠(0) -->
+<input type="hidden" name="good_mny"    value="<?php echo $tot_price; ?>">                  <!-- 가격 -->
+<input type="hidden" name="TransType"   value="<?php echo $useescrow; ?>">                  <!-- 에스크로사용여부 -->
+<input type="hidden" name="OptionList" value="<?php echo $optionList; ?>">                  <!-- 옵션으로 사용할 기능 -->
 
 <?php if($default['de_tax_flag_use']) { ?>
 <input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->

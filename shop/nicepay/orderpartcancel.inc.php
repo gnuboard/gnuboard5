@@ -14,22 +14,26 @@ $buyeremail    = $od['od_email'];
 $tax           = (int)$tax_mny - $vat_mny;
 $taxfree       = (int)$free_mny;
 
-$nicepay->m_ActionType          = "CLO";
-$nicepay->m_CancelAmt           = $price;
-$nicepay->m_TID                 = $oldtid;
-$nicepay->m_Moid                = $od['od_id'];
-$nicepay->m_CancelIP            = $_SERVER['REMOTE_ADDR'];
-$nicepay->m_CancelMsg           = "요청사유?";
-$nicepay->m_PartialCancelCode   = 1;
+$nicepay->m_ActionType          = "CLO";                                // 동작구분 : CLO (취소)
+$nicepay->m_CancelAmt           = $price;                               // 취소금액 설정
+$nicepay->m_TID                 = $oldtid;                              // 이전 TID값 적용
+$nicepay->m_Moid                = $od['od_id'];                         // 주문번호
+$nicepay->m_CancelIP            = $_SERVER['REMOTE_ADDR'];              // 취소자 IP
+$nicepay->m_CancelMsg           = "요청사유?";                           // 취소메시지
+$nicepay->m_PartialCancelCode   = 1;                                    // 부분취소 ( 0 : 전체취소, 1 : 부분취소 )
 
+// 관리자 취소 패스워드가 존재하는 경우
 if($default['de_nicepay_admin_key']) {
     $nicepay->m_CancelPwd           = $default['de_nicepay_admin_key'];
 }
 
+// 나이스페이 결제 프로세스 진행
 $nicepay->startAction();
 
+// 결과값 확인
 $resultCode = $nicepay->m_ResultData['ResultCode'];
 
+// 2001, 2211 성공 확인
 if($resultCode == "2001" || $resultCode == "2211") {
     // 환불금액기록
     $tno      = $nicepay->m_ResultData['TID'];
@@ -55,6 +59,7 @@ if($resultCode == "2001" || $resultCode == "2211") {
 
     sql_query($sql);
 } else {
+    // 실패시 오류코드 반환
     alert(iconv_utf8($nicepay->m_ResultData["ResultMsg"]).' 코드 : '.$nicepay->m_ResultData["ResultCode"]);
 }
 ?>

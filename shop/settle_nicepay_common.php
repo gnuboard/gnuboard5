@@ -53,10 +53,6 @@ if($pg_ip == "121.133.126.10" || $pg_ip == "121.133.126.11" || $pg_ip == "211.33
                     and pp_app_no = '$vbank_num' ";
         $result = sql_query($sql, false);
 
-        if($result == null || $result == false) {
-
-        }
-
         if($row['od_id']) {
             // 주문서 UPDATE
             $receipt_time    = preg_replace("/([0-9]{4})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})([0-9]{2})/", "\\1-\\2-\\3 \\4:\\5:\\6", $receipt_time);
@@ -72,7 +68,7 @@ if($pg_ip == "121.133.126.10" || $pg_ip == "121.133.126.11" || $pg_ip == "211.33
         $sql = " update {$g5['g5_shop_order_table']}
                     set od_receipt_price = '$amt',
                         od_receipt_time = '$receipt_time'
-                where od_id = '$moid'
+                    where od_id = '$moid'
                     and od_app_no = '$vbank_num' ";
         $result = sql_query($sql, FALSE);
     }

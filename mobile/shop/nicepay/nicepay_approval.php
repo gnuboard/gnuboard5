@@ -2,14 +2,16 @@
 include_once('./_common.php');
 include_once(G5_MSHOP_PATH.'/settle_nicepay.inc.php');
 
+/* 모바일 결제시, 반환되는 파라미터를 통한 결제 이어서 진행 */
 set_session('NICE_TID', '');
 set_session('NICE_AMT', '');
 set_session('NICE_HASH', '');
 
-$oid = isset($_REQUEST['Moid']) ? trim($_REQUEST['Moid']) : '';
-$auth_result_code = isset($_REQUEST['AuthResultCode']) ? $_REQUEST['AuthResultCode'] : '';
-$auth_result_msg = isset($_REQUEST['AuthResultMsg']) ? trim($_REQUEST['AuthResultMsg']) : '';
+$oid = isset($_REQUEST['Moid']) ? trim($_REQUEST['Moid']) : '';                                     // 주문번호 확인
+$auth_result_code = isset($_REQUEST['AuthResultCode']) ? $_REQUEST['AuthResultCode'] : '';          // 결제인증코드 확인
+$auth_result_msg = isset($_REQUEST['AuthResultMsg']) ? trim($_REQUEST['AuthResultMsg']) : '';       // 결제인증메시지 확인
 
+// 주문데이터 조회
 $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
 $row = sql_fetch($sql);
 
@@ -71,9 +73,9 @@ if(isset($data['pp_id']) && $data['pp_id']) {
 if(strcmp('0000', $auth_result_code) !== 0) {
     alert('오류 : '.iconv_utf8($auth_result_msg).' 코드 : '.$auth_result_code, $page_return_url);
 } else {
-    $nicepay->m_ActionType      = 'PYO';
-    $nicepay->m_Price           = $_REQUEST['Amt'];
-    $nicepay->m_NetCancelAmt    = $_REQUEST['Amt'];
+    $nicepay->m_ActionType      = 'PYO';                            // 결제타입
+    $nicepay->m_Price           = $_REQUEST['Amt'];                 // 가격
+    $nicepay->m_NetCancelAmt    = $_REQUEST['Amt'];                 // 취소가격
     
     /*
     *******************************************************
@@ -97,13 +99,15 @@ if(strcmp('0000', $auth_result_code) !== 0) {
     $nicepay->m_TransType     = $_REQUEST['TransType'];             // 일반 or 에스크로
     $nicepay->m_PayMethod     = $_REQUEST['PayMethod'];             // 거래수단
 
+    // 나이스페이 결제 프로세스 진행
     $nicepay->startAction();
 
-    $resultCode = $nicepay->m_ResultData["ResultCode"];
-    $payMethod  = $nicepay->m_ResultData["PayMethod"];
+    $resultCode = $nicepay->m_ResultData["ResultCode"];             // 결과코드
+    $payMethod  = $nicepay->m_ResultData["PayMethod"];              // 결제수단
 
     $paySuccess = false;
 
+    // 결제승인 성공 확인
     switch($payMethod) {
         case "CARD":
             if($resultCode == "3001") $paySuccess = true;
@@ -122,7 +126,7 @@ if(strcmp('0000', $auth_result_code) !== 0) {
             break;
     }
 
-    $resultData = $nicepay->m_ResultData;
+    $resultData = $nicepay->m_ResultData;                           // 결제성공확인
 
     if($paySuccess == false)
         alert('오류 : '.$resultData['ResultMsg'].' 코드 : '.$resultData['ResultCode'], $page_return_url);
@@ -143,6 +147,7 @@ if(isset($data['pp_id']) && !empty($data['pp_id'])) {
     // 상점 결제
     $exclude = array('PayMethod', 'MID', 'Amt', 'BuyerName', 'BuyerTel', 'BuyerEmail', 'GoodsName', 'Moid', 'MallReserved', 'EdiDate', 'MallIP', 'GoodsCnt', 'TransType', 'SupplyAmt', 'GoodsVat', 'ServiceAmt', 'TaxFreeAmt', 'AuthResultCode', 'AuthResultMsg', 'TrKey', 'TxTid', 'MallUserID', 'VbankExpDate', 'TID');
 
+    // DB에서 조회한 주문데이터를 기준으로 변수의 $_POST 형식으로 적용
     foreach($data as $key=>$value) {
         if(!empty($exclude) && in_array($key, $exclude))
             continue;

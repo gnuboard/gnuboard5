@@ -18,17 +18,18 @@ if($cancelFlag == "true") {
 
     include_once(G5_SHOP_PATH.'/settle_nicepay.inc.php');
 
-    $nicepay->m_ActionType      = "CLO";
-    $nicepay->m_CancelAmt       = $amount;
-    $nicepay->m_TID             = $tno;
-    $nicepay->m_Moid            = $od_id;
-    $nicepay->m_CancelMsg       = "DB FAIL";
+    $nicepay->m_ActionType      = "CLO";                    // 동작구분 : CLO (취소)
+    $nicepay->m_CancelAmt       = $amount;                  // 취소금액
+    $nicepay->m_TID             = $tno;                     // 취소 TID
+    $nicepay->m_Moid            = $od_id;                   // 취소 주문번호
+    $nicepay->m_CancelMsg       = "DB FAIL";                // 취소 메시지
 
+    // 관리자 취소 패스워드
     if($default['de_nicepay_admin_key']) {
         $nicepay->m_CancelPwd       = $default['de_nicepay_admin_key'];
     }
 
-    // 부분 취소관련 코드 (0:전체취소, 1: 부분 취소)
-    $nicepay->m_PartialCancelCode = 0;
-    $nicepay->startAction();
+    $nicepay->m_PartialCancelCode = 0;                      // 부분 취소관련 코드 (0:전체취소, 1: 부분 취소)
+
+    $nicepay->startAction();                                // 나이스페이 결제 프로세스 진행
 }

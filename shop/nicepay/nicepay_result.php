@@ -10,7 +10,7 @@ try {
     if(isset($_REQUEST['AuthResultCode']) && strcmp('0000', $_REQUEST['AuthResultCode']) == 0) {
         try {
             $nicepay->m_ActionType      = "PYO";
-            $nicepay->m_price           = $_REQUEST['Amt'];
+            $nicepay->m_Price           = $_REQUEST['Amt'];
             $nicepay->m_NetCancelAmt    = $_REQUEST['Amt'];
 
             /*
@@ -18,27 +18,28 @@ try {
             * <결제 결과 필드>
             *******************************************************
             */
-            $nicepay->m_BuyerName     = $_REQUEST['BuyerName'];             // 구매자명
-            $nicepay->m_BuyerEmail    = $_REQUEST['BuyerEmail'];            // 구매자이메일
-            $nicepay->m_BuyerTel      = $_REQUEST['BuyerTel'];              // 구매자연락처
-            $nicepay->m_GoodsName     = $_REQUEST['GoodsName'];             // 상품명
-            $nicepay->m_GoodsCnt      = $_REQUEST['GoodsCnt'];            // 상품개수
-            $nicepay->m_GoodsCl       = $_REQUEST['GoodsCl'];               // 실물 or 컨텐츠
-            $nicepay->m_PayMethod     = $_REQUEST['PayMethod'];             // 결제수단
-            $nicepay->m_Moid          = $_REQUEST['Moid'];                  // 주문번호
-            $nicepay->m_MallUserID    = $_REQUEST['MallUserID'];            // 회원사ID
-            $nicepay->m_MID           = $_REQUEST['MID'];                   // MID
-            $nicepay->m_MallIP        = $_REUQEST['MallIP'];                // Mall IP
-            $nicepay->m_LicenseKey    = $nicepay->m_MerchantKey;            // 상점키
-            $nicepay->m_TrKey         = $_REQIEST['TrKey'];                 // 거래키
-            $nicepay->m_TransType     = $_REQUEST['TransType'];             // 일반 or 에스크로
+            $nicepay->m_BuyerName       = $_REQUEST['BuyerName'];               // 구매자명
+            $nicepay->m_BuyerEmail      = $_REQUEST['BuyerEmail'];              // 구매자이메일
+            $nicepay->m_BuyerTel        = $_REQUEST['BuyerTel'];                // 구매자연락처
+            $nicepay->m_GoodsName       = $_REQUEST['GoodsName'];               // 상품명
+            $nicepay->m_GoodsCnt        = $_REQUEST['GoodsCnt'];                // 상품개수
+            $nicepay->m_GoodsCl         = $_REQUEST['GoodsCl'];                 // 실물 or 컨텐츠
+            $nicepay->m_PayMethod       = $_REQUEST['PayMethod'];               // 결제수단
+            $nicepay->m_Moid            = $_REQUEST['Moid'];                    // 주문번호
+            $nicepay->m_MallUserID      = $_REQUEST['MallUserID'];              // 회원사ID
+            $nicepay->m_MID             = $_REQUEST['MID'];                     // MID
+            $nicepay->m_MallIP          = $_REUQEST['MallIP'];                  // Mall IP
+            $nicepay->m_LicenseKey      = $nicepay->m_MerchantKey;              // 상점키
+            $nicepay->m_TrKey           = $_REQIEST['TrKey'];                   // 거래키
+            $nicepay->m_TransType       = $_REQUEST['TransType'];               // 일반 or 에스크로
             $nicepay->startAction();
 
-            $resultCode = $nicepay->m_ResultData["ResultCode"];
-            $payMethod  = $nicepay->m_ResultData["PayMethod"];
+            $resultCode = $nicepay->m_ResultData["ResultCode"];                 // 결과코드
+            $payMethod  = $nicepay->m_ResultData["PayMethod"];                  // 결제수단
 
             $paySuccess = false;
 
+            // 결제항목에 맞는 결과값 확인 후 결제성공 반환
             switch($payMethod) {
                 case "CARD":
                     if($resultCode == "3001") $paySuccess = true;
@@ -57,16 +58,18 @@ try {
                     break;
             }
 
-            $resultData = $nicepay->m_ResultData;
+            $resultData = $nicepay->m_ResultData;                               // 결과값
 
             $oid = $_POST['Moid'];
             if(empty($oid)) throw new Exception("주문번호가 존재하지 않습니다.");
 
+            // 주문데이터 존재여부 확인
             $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
             $row = sql_fetch($sql);
 
             $data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
 
+            // 개인결제 or 일반주문결제 확인
             if (isset($data['pp_id']) && $data['pp_id']) {
                 $page_return_url  = G5_SHOP_URL.'/personalpayform.php?pp_id='.$data['pp_id'];
             } else {
@@ -75,6 +78,7 @@ try {
                     $page_return_url .= '?sw_direct=1';
             }
 
+            // 결제승인시 추가 진행
             if ($paySuccess != false) { 
                 $tno        = $resultData['TID'];
                 $amount     = $resultData['Amt'];
@@ -89,12 +93,10 @@ try {
                 switch($pay_type) {
                     case '계좌이체':
                         $bank_name = isset($resultData['BankName']) ? $resultData['BankName'] : '';
-                        // $bank_name = isset($BANK_CODE[$resultData['BankCode']]) ? $BANK_CODE[$resultData['BankCode']] : '';
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
                         break;
                     case '가상계좌':
                         $bankname   = isset($resultData['VbankBankName']) ? $resultData['VbankBankName'] : '';
-                        // $bankname   = isset($BANK_CODE[$resultData['VbankBankCode']]) ? $BANK_CODE[$resultData['VbankBankCode']] : '';
                         $account    = $resultData['VbankNum'].' '.$resultData['VbankAccountName'];
                         $app_no     = $resultData['VbankNum'];
                         if($default['de_escrow_use'] == 1) $escw_yn = 'Y';
@@ -103,6 +105,7 @@ try {
                         break;
                 }
 
+                // 결제완료
                 $nicepay_result = true;
                 
             } else {

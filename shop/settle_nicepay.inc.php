@@ -31,13 +31,16 @@ $siteDomain = G5_SHOP_URL.'/nicepay';
 
 $nicepay = new NicepayLite();
 
-$nicepay->m_NicepayHome = G5_SHOP_PATH."/nicepay/log";
-$nicepay->m_charSet = "UTF8";
-$nicepay->m_ssl = "true";
-$nicepay->m_log = "true";
-$nicepay->m_MID = $mid;
-$nicepay->m_MerchantKey = $signKey;
-$nicepay->m_TransType = $useescrow;
+
+$nicepay->m_NicepayHome = G5_SHOP_PATH."/nicepay/log";      // 로그디렉토리 설정
+$nicepay->m_charSet = "UTF8";                               // 내부처리 언어셋 설정 (설정된 언어셋은 lib를 통하여, request data & result data의 언어셋을 변경시킴)
+$nicepay->m_ssl = "true";                                   // ssl 사용 여부
+$nicepay->m_log = "true";                                   // 로그기록 사용 여부
+$nicepay->m_MID = $mid;                                     // 상점아이디
+$nicepay->m_MerchantKey = $signKey;                         // 상점키
+$nicepay->m_TransType = $useescrow;                         // 에스크로 사용여부
+
+// 나이스페이 사용을 위한 초기화
 $nicepay->requestProcess();
 
 $PAY_METHOD = array(

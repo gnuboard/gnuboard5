@@ -10,6 +10,7 @@ if($default['de_iche_use'] || $default['de_vbank_use'] || $default['de_hp_use'] 
 function make_signature(frm)
 {
     // 데이터 암호화 처리
+    // form에 존재하는 EncryptData에 적용되어야할 signature 값을 생성
     var result = true;
     $.ajax({
         url: g5_url+"/shop/nicepay/makesignature.php",
