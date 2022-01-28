@@ -900,7 +900,7 @@ if(!$default['de_kakaopay_cancelpwd']){
         <tr class="pg_info_fld nicepay_info_fld">
             <th scope="row"><label for="de_nicepay_admin_key">나이스페이 키패스워드</label></th>
             <td>
-                <?php echo help("나이스페이에서 발급받은 4자리 상점 키패스워드를 입력합니다.\n나이스페이 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
+                <?php echo help("나이스페이에서 발급받은 6자리 상점 키패스워드를 입력합니다.\n나이스페이 상점관리자 패스워드와 관련이 없습니다.\n키패스워드 값을 확인하시려면 상점측에 발급된 키파일 안의 readme.txt 파일을 참조해 주십시오"); ?>
                 <input type="text" name="de_nicepay_admin_key" value="<?php echo get_sanitize_input($default['de_nicepay_admin_key']); ?>" id="de_nicepay_admin_key" class="frm_input" size="10" maxlength="10">
             </td>
         </tr>
@@ -908,7 +908,7 @@ if(!$default['de_kakaopay_cancelpwd']){
             <th scope="row"><label for="de_nicepay_sign_key">나이스페이 웹결제 사인키</label></th>
             <td>
                 <?php echo help("나이스페이에서 발급받은 웹결제 사인키를 입력합니다.\n나이스페이 상점관리자 > 상점정보 > 계약정보 > 부가정보의 웹결제 signkey생성 조회 버튼 클릭, 팝업창에서 생성 버튼 클릭 후 해당 값을 입력합니다."); ?>
-                <input type="text" name="de_nicepay_sign_key" value="<?php echo get_sanitize_input($default['de_nicepay_sign_key']); ?>" id="de_nicepay_sign_key" class="frm_input" size="100" maxlength=100">
+                <input type="text" name="de_nicepay_sign_key" value="<?php echo get_sanitize_input($default['de_nicepay_sign_key']); ?>" id="de_nicepay_sign_key" class="frm_input" size="100" maxlength="100">
             </td>
         </tr>
         <tr class="kakao_info_fld">
