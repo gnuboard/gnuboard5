@@ -85,7 +85,9 @@ try {
                 $app_time   = isset($resultData['AuthDate']) ? "20".$resultData['AuthDate'] : '';
                 $pay_method = $resultData['PayMethod'];
                 $pay_type   = $PAY_METHOD[$pay_method];
-                $depositor  = isset($resultData['VbankAccountName']) ? $resultData['VbankAccountName'] : '';                                   // 송금자명
+                // 나이스페이 입금자명은 데이터로 전송되지 않음
+                // 주문자의 이름으로 입금자 노출
+                $depositor  = isset($data['od_name']) ? $data['od_name'] : '';
                 $app_no     = isset($resultData['AuthCode']) ? $resultData['AuthCode'] : '';
                 $commid     = isset($resultData['Carrier']) ? $resultData['Carrier'] : '';
                 $card_name  = isset($resultData['CardName']) ? $resultData['CardName'] : '';
