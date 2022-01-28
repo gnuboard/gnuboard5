@@ -93,7 +93,7 @@ if(isset($_FILES['excelfile']['tmp_name']) && $_FILES['excelfile']['tmp_name']) 
                                             'rcvnm' => $recv_name,         //수신자이름
                                             'sjt'	=> ''	               //LMS 제목
                                         );  
-                } 
+            } 
         }
         // 메일
         if($config['cf_email_use'] && $od_send_mail)
@@ -166,7 +166,7 @@ if($sms_count > 0) {
         }elseif($config['cf_sms_use']=='popbill'){
             include_once (G5_LIB_PATH.'/popbill/popbill_config.php'); 
                 try {
-                    $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
+                    $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
                 catch (PopbillException $pe) {
                     $code = $pe->getCode();

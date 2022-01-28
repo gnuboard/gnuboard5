@@ -184,8 +184,9 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
                 $send_name = $default['de_admin_company_name'];
                 $recv_name = get_text($arr_send_list[$i]['mb_name']);
 
-                //icode, popbill 같이 사용하도록 수정
+                //icode, popbill 같이 사용하도록 배열의 이름들 수정
                 if($recv_number)
+                //팝빌에서 제공한 sms, lms 전송하는 메소드에서는 수신자의 번호와 이름을 아래의 배열에서 추출함.
                     $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
                                             'snd'  => $send_number,        //발신자번호
                                             'msg'  => $sms_contents,       //개별메시지 내용
@@ -262,11 +263,13 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
                 include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
                 try {
                     $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, $lms_subject, $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
+                    echo $receiptNum.'<br>';
                 }
                 catch (PopbillException $pe) {
                     $code = $pe->getCode();
                     $message = $pe->getMessage();
                 }
+                exit;
             }
             } else {
                 if($config['cf_sms_use']=='icode'){
