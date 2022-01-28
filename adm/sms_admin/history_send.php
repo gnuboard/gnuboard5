@@ -337,7 +337,6 @@ if($config['cf_sms_type'] == 'LMS') {
                 sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
             }
         }
-        exit;
         sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='".addslashes($write['wr_reply'])."', wr_message='".addslashes($write['wr_message'])."', wr_success='$wr_success', wr_failure='$wr_failure', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
         
         sql_query("update {$g5['sms5_write_table']} set wr_re_total=wr_re_total+1 where wr_no='$wr_no' and wr_renum=0");
