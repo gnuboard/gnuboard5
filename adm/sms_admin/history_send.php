@@ -53,176 +53,299 @@ while ($res = sql_fetch_array($sql))
 $wr_total = count($list);
 $reply = str_replace('-', '', trim($write['wr_reply']));
 
-if ($config['cf_sms_use'] != 'icode') {
-    alert('기본환경설정에서 icode sms 사용이 비활성화 되어 있습니다.');
+if (!$config['cf_sms_use']) {
+    alert('기본환경설정에서 icode or popbill sms 사용이 비활성화 되어 있습니다.');
 }
 include_once(G5_ADMIN_PATH.'/admin.head.php');
 
 $SMS = new SMS5;
 
 if($config['cf_sms_type'] == 'LMS') {
-    $port_setting = get_icode_port_type($config['cf_icode_id'], $config['cf_icode_pw']);
+    if($config['cf_sms_use'] == 'icode'){
+        $port_setting = get_icode_port_type($config['cf_icode_id'], $config['cf_icode_pw']);
 
-    if($port_setting !== false) {
-        $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
-
-        $wr_success = 0;
-        $wr_failure = 0;
-        $count      = 0;
-
-        for($i=0; $i<$wr_total; $i++) {
-            $strDest = array();
-            $strDest[]   = $list[$i]['bk_hp'];
-            $strCallBack = $reply;
-            $strCaller   = $config['cf_title'];
-            $strSubject  = '';
-            $strURL      = '';
-            $strData     = $write['wr_message'];
-            if( !empty($list[$i]['bk_name']) ){
-                $strData    = str_replace("{이름}", $list[$i]['bk_name'], $strData);
-            }
-            $strDate = $booking;
-            $nCount = 1;
-
-            $result = $SMS->Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate, $nCount);
-
-            if($result) {
-                $result = $SMS->Send();
-
-                if ($result) //SMS 서버에 접속했습니다.
-                {
-                    foreach ($SMS->Result as $result)
-                    {
-                        list($phone, $code) = explode(":", $result);
-
-                        if (substr($code,0,5) == "Error")
-                        {
-                            $hs_code = substr($code,6,2);
-
-                            switch ($hs_code) {
-                                case '02':	 // "02:형식오류"
-                                    $hs_memo = "형식이 잘못되어 전송이 실패하였습니다.";
-                                    break;
-                                case '23':	 // "23:인증실패,데이터오류,전송날짜오류"
-                                    $hs_memo = "데이터를 다시 확인해 주시기바랍니다.";
-                                    break;
-                                case '97':	 // "97:잔여코인부족"
-                                    $hs_memo = "잔여코인이 부족합니다.";
-                                    break;
-                                case '98':	 // "98:사용기간만료"
-                                    $hs_memo = "사용기간이 만료되었습니다.";
-                                    break;
-                                case '99':	 // "99:인증실패"
-                                    $hs_memo = "인증 받지 못하였습니다. 계정을 다시 확인해 주세요.";
-                                    break;
-                                default:	 // "미 확인 오류"
-                                    $hs_memo = "알 수 없는 오류로 전송이 실패하였습니다.";
-                                    break;
-                            }
-                            $wr_failure++;
-                            $hs_flag = 0;
-                        }
-                        else
-                        {
-                            $hs_code = $code;
-                            $hs_memo = get_hp($phone, 1)."로 전송했습니다.";
-                            $wr_success++;
-                            $hs_flag = 1;
-                        }
-
-                        $row = $list[$i];
-                        $row['bk_hp'] = get_hp($row['bk_hp'], 1);
-
-                        $log = array_shift($SMS->Log);
-                        $log = @iconv('euc-kr', 'utf-8', $log);
-
-                        sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
-                    }
-
-                    $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
-                }
-            }
-        }
-
-        sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='".addslashes($write['wr_reply'])."', wr_message='".addslashes($write['wr_message'])."', wr_success='$wr_success', wr_failure='$wr_failure', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
-
-        sql_query("update {$g5['sms5_write_table']} set wr_re_total=wr_re_total+1 where wr_no='$wr_no' and wr_renum=0");
-    }
-} else {
-    $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
-
-    $reply = str_replace('-', '', trim($write['wr_reply']));
-
-    $result = $SMS->Add($list, $reply, '', '', $write['wr_message'], '', $wr_total);
-
-    if ($result)
-    {
-        $result = $SMS->Send();
-
-        if ($result) //SMS 서버에 접속했습니다.
-        {
-            sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='".addslashes($write['wr_reply'])."', wr_message='".addslashes($write['wr_message'])."', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
+        if($port_setting !== false) {
+            $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $port_setting);
 
             $wr_success = 0;
             $wr_failure = 0;
             $count      = 0;
 
-            foreach ($SMS->Result as $result)
-            {
-                list($phone, $code) = explode(":", $result);
+            for($i=0; $i<$wr_total; $i++) {
+                $strDest = array();
+                $strDest[]   = $list[$i]['bk_hp'];
+                $strCallBack = $reply;
+                $strCaller   = $config['cf_title'];
+                $strSubject  = '';
+                $strURL      = '';
+                $strData     = $write['wr_message'];
+                if( !empty($list[$i]['bk_name']) ){
+                    $strData    = str_replace("{이름}", $list[$i]['bk_name'], $strData);
+                }
+                $strDate = $booking;
+                $nCount = 1;
 
-                if (substr($code,0,5) == "Error")
-                {
-                    $hs_code = substr($code,6,2);
+                $result = $SMS->Add($strDest, $strCallBack, $strCaller, $strSubject, $strURL, $strData, $strDate, $nCount);
 
-                    switch ($hs_code) {
-                        case '02':	 // "02:형식오류"
-                            $hs_memo = "형식이 잘못되어 전송이 실패하였습니다.";
-                            break;
-                        case '23':	 // "23:인증실패,데이터오류,전송날짜오류"
-                            $hs_memo = "데이터를 다시 확인해 주시기바랍니다.";
-                            break;
-                        case '97':	 // "97:잔여코인부족"
-                            $hs_memo = "잔여코인이 부족합니다.";
-                            break;
-                        case '98':	 // "98:사용기간만료"
-                            $hs_memo = "사용기간이 만료되었습니다.";
-                            break;
-                        case '99':	 // "99:인증실패"
-                            $hs_memo = "인증 받지 못하였습니다. 계정을 다시 확인해 주세요.";
-                            break;
-                        default:	 // "미 확인 오류"
-                            $hs_memo = "알 수 없는 오류로 전송이 실패하었습니다.";
-                            break;
+                if($result) {
+                    $result = $SMS->Send();
+
+                    if ($result) //SMS 서버에 접속했습니다.
+                    {
+                        foreach ($SMS->Result as $result)
+                        {
+                            list($phone, $code) = explode(":", $result);
+
+                            if (substr($code,0,5) == "Error")
+                            {
+                                $hs_code = substr($code,6,2);
+
+                                switch ($hs_code) {
+                                    case '02':	 // "02:형식오류"
+                                        $hs_memo = "형식이 잘못되어 전송이 실패하였습니다.";
+                                        break;
+                                    case '23':	 // "23:인증실패,데이터오류,전송날짜오류"
+                                        $hs_memo = "데이터를 다시 확인해 주시기바랍니다.";
+                                        break;
+                                    case '97':	 // "97:잔여코인부족"
+                                        $hs_memo = "잔여코인이 부족합니다.";
+                                        break;
+                                    case '98':	 // "98:사용기간만료"
+                                        $hs_memo = "사용기간이 만료되었습니다.";
+                                        break;
+                                    case '99':	 // "99:인증실패"
+                                        $hs_memo = "인증 받지 못하였습니다. 계정을 다시 확인해 주세요.";
+                                        break;
+                                    default:	 // "미 확인 오류"
+                                        $hs_memo = "알 수 없는 오류로 전송이 실패하였습니다.";
+                                        break;
+                                }
+                                $wr_failure++;
+                                $hs_flag = 0;
+                            }
+                            else
+                            {
+                                $hs_code = $code;
+                                $hs_memo = get_hp($phone, 1)."로 전송했습니다.";
+                                $wr_success++;
+                                $hs_flag = 1;
+                            }
+
+                            $row = $list[$i];
+                            $row['bk_hp'] = get_hp($row['bk_hp'], 1);
+
+                            $log = array_shift($SMS->Log);
+                            $log = @iconv('euc-kr', 'utf-8', $log);
+
+                            sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
+                        }
+
+                        $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
                     }
-                    $wr_failure++;
-                    $hs_flag = 0;
                 }
-                else
-                {
-                    $hs_code = $code;
-                    $hs_memo = get_hp($phone, 1)."로 전송했습니다.";
-                    $wr_success++;
-                    $hs_flag = 1;
-                }
-
-                $row = array_shift($list);
-                $row['bk_hp'] = get_hp($row['bk_hp'], 1);
-
-                $log = array_shift($SMS->Log);
-                $log = @iconv('euc-kr', 'utf-8', $log);
-
-                sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='{$row['hs_name']}', hs_hp='{$row['hs_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
             }
-            $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
 
-            sql_query("update {$g5['sms5_write_table']} set wr_success='$wr_success', wr_failure='$wr_failure' where wr_no='$wr_no' and wr_renum='$new_wr_renum'");
+            sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='".addslashes($write['wr_reply'])."', wr_message='".addslashes($write['wr_message'])."', wr_success='$wr_success', wr_failure='$wr_failure', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
+
             sql_query("update {$g5['sms5_write_table']} set wr_re_total=wr_re_total+1 where wr_no='$wr_no' and wr_renum=0");
         }
-        else alert("에러: SMS 서버와 통신이 불안정합니다.");
+    
+    }elseif($config['cf_sms_use'] == 'popbill'){
+        include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
+        $wr_success = 0;
+        $wr_failure = 0;
+        $count      = 0;
+
+        $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
+        $send_name = $default['de_admin_company_name'];
+        $sms_contents = $write['wr_message'];
+        for($i=0; $i<$wr_total; $i++) {
+            $recv_number = preg_replace("/[^0-9]/", "", $list[$i]['bk_hp']);	// 수신자번호
+            $recv_name = $list[$i]['bk_name'];
+            if($recv_number)
+            //popbill 문자메시지 전송에 필요함
+            //icode, popbill 같이 사용하도록 수정 
+            $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
+                                    'snd'  => $send_number,        //발신자번호
+                                    'msg'  => $sms_contents,       //개별메시지 내용
+                                    'sndnm' => $send_name,         //발신자이름
+                                    'rcvnm' => $recv_name,         //수신자이름
+                                    'sjt'	=> ''	               //LMS 제목
+                                );  
+        }
+
+        try {
+            $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum); 
+            $wr_success = $wr_total;
+        }
+        catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            $wr_failure = $wr_total;
+        }
+
+        for($i=0; $i<$wr_total; $i++) {
+            $row = $list[$i];
+            $row['bk_hp'] = get_hp($row['bk_hp'], 1);
+            if($pe){
+                //전송실패
+                $hs_code = $code;
+                $hs_memo = $message;
+                sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
+            }else{
+                //전송성공
+                $hs_code = $requestNum;
+                $hs_memo = get_hp($row['bk_hp'], 1)."로 전송했습니다."; 
+                $hs_flag = '1';
+                sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
+            }
+
+        }
+        sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='".addslashes($write['wr_reply'])."', wr_message='".addslashes($write['wr_message'])."', wr_success='$wr_success', wr_failure='$wr_failure', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
+        
+        sql_query("update {$g5['sms5_write_table']} set wr_re_total='$wr_success' where wr_no='$wr_no' and wr_renum=0");
     }
-    else alert("에러: SMS 데이터 입력도중 에러가 발생하였습니다.");
+    
+    
+    
+} else {
+    if($config['cf_sms_use'] == 'icode'){
+        $SMS->SMS_con($config['cf_icode_server_ip'], $config['cf_icode_id'], $config['cf_icode_pw'], $config['cf_icode_server_port']);
+
+        $reply = str_replace('-', '', trim($write['wr_reply']));
+
+        $result = $SMS->Add($list, $reply, '', '', $write['wr_message'], '', $wr_total);
+
+        if ($result)
+        {
+            $result = $SMS->Send();
+
+            if ($result) //SMS 서버에 접속했습니다.
+            {
+                sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='".addslashes($write['wr_reply'])."', wr_message='".addslashes($write['wr_message'])."', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
+
+                $wr_success = 0;
+                $wr_failure = 0;
+                $count      = 0;
+
+                foreach ($SMS->Result as $result)
+                {
+                    list($phone, $code) = explode(":", $result);
+
+                    if (substr($code,0,5) == "Error")
+                    {
+                        $hs_code = substr($code,6,2);
+
+                        switch ($hs_code) {
+                            case '02':	 // "02:형식오류"
+                                $hs_memo = "형식이 잘못되어 전송이 실패하였습니다.";
+                                break;
+                            case '23':	 // "23:인증실패,데이터오류,전송날짜오류"
+                                $hs_memo = "데이터를 다시 확인해 주시기바랍니다.";
+                                break;
+                            case '97':	 // "97:잔여코인부족"
+                                $hs_memo = "잔여코인이 부족합니다.";
+                                break;
+                            case '98':	 // "98:사용기간만료"
+                                $hs_memo = "사용기간이 만료되었습니다.";
+                                break;
+                            case '99':	 // "99:인증실패"
+                                $hs_memo = "인증 받지 못하였습니다. 계정을 다시 확인해 주세요.";
+                                break;
+                            default:	 // "미 확인 오류"
+                                $hs_memo = "알 수 없는 오류로 전송이 실패하었습니다.";
+                                break;
+                        }
+                        $wr_failure++;
+                        $hs_flag = 0;
+                    }
+                    else
+                    {
+                        $hs_code = $code;
+                        $hs_memo = get_hp($phone, 1)."로 전송했습니다.";
+                        $wr_success++;
+                        $hs_flag = 1;
+                    }
+
+                    $row = array_shift($list);
+                    $row['bk_hp'] = get_hp($row['bk_hp'], 1);
+
+                    $log = array_shift($SMS->Log);
+                    $log = @iconv('euc-kr', 'utf-8', $log);
+
+                    sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='{$row['hs_name']}', hs_hp='{$row['hs_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
+                }
+                $SMS->Init(); // 보관하고 있던 결과값을 지웁니다.
+
+                sql_query("update {$g5['sms5_write_table']} set wr_success='$wr_success', wr_failure='$wr_failure' where wr_no='$wr_no' and wr_renum='$new_wr_renum'");
+                sql_query("update {$g5['sms5_write_table']} set wr_re_total=wr_re_total+1 where wr_no='$wr_no' and wr_renum=0");
+            }
+            else alert("에러: SMS 서버와 통신이 불안정합니다.");
+        }
+        else alert("에러: SMS 데이터 입력도중 에러가 발생하였습니다.");
+            
+
+    }elseif($config['cf_sms_use'] == 'popbill'){
+        include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
+        $wr_success = 0;
+        $wr_failure = 0;
+        $count      = 0;
+
+        
+        $send_number = preg_replace("/[^0-9]/", "", $default['de_admin_company_tel']); // 발신자번호
+        $send_name = $default['de_admin_company_name'];
+        $sms_contents = $write['wr_message'];
+        for($i=0; $i<$wr_total; $i++) {
+            $recv_number = preg_replace("/[^0-9]/", "", $list[$i]['bk_hp']);	// 수신자번호
+            $recv_name = $list[$i]['bk_name'];
+            if($recv_number)
+            //popbill 문자메시지 전송에 필요함
+            //icode, popbill 같이 사용하도록 수정 
+            $sms_messages[] = array('rcv'  => $recv_number,        //수신자번호
+                                    'snd'  => $send_number,        //발신자번호
+                                    'msg'  => $sms_contents,       //개별메시지 내용
+                                    'sndnm' => $send_name,         //발신자이름
+                                    'rcvnm' => $recv_name,         //수신자이름
+                                    'sjt'	=> ''	               //LMS 제목
+                                );  
+        }
+
+        try {
+            $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum); 
+            $wr_success = $wr_total;
+        }
+        catch (PopbillException $pe) {
+            $code = $pe->getCode();
+            $message = $pe->getMessage();
+            $wr_failure = $wr_total;
+        }
+        
+        for($i=0; $i<$wr_total; $i++) {
+            
+            $row = $list[$i];
+            $row['bk_hp'] = get_hp($row['bk_hp'], 1);
+            if($pe){
+                //전송실패
+                $hs_code = $code;
+                $hs_memo = $message;
+                sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
+            }else{
+                //전송성공
+                $hs_code = $requestNum;
+                $hs_memo = get_hp($row['bk_hp'], 1)."로 전송했습니다."; 
+                $hs_flag = '1';
+                sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
+            }
+        }
+        exit;
+        sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', wr_reply='".addslashes($write['wr_reply'])."', wr_message='".addslashes($write['wr_message'])."', wr_success='$wr_success', wr_failure='$wr_failure', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
+        
+        sql_query("update {$g5['sms5_write_table']} set wr_re_total=wr_re_total+1 where wr_no='$wr_no' and wr_renum=0");
+    }
+
 }
+    
+
 
 ?>
 <script>
