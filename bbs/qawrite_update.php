@@ -527,7 +527,6 @@ if($config['cf_sms_use'] == 'icode' || 'popbill' && $qaconfig['qa_use_sms']) {
                                             'rcvnm' => $recv_name,         //수신자이름
                                             'sjt'	=> ''	               //LMS 제목
                                         );  
-                    print_r2($sms_messages);
                     try {
                         $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_content, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                         }

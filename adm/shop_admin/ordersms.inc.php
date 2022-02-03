@@ -93,7 +93,6 @@ if ($config['cf_sms_use']) {
                 }
             }elseif($config['cf_sms_use']=='popbill'){
                 include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
-                    print_r2($Messages[$s]);
                     try {
                         $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     }
