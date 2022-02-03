@@ -246,6 +246,19 @@ function pay_approval()
 
     if(!make_signature(f))
             return false;
+
+    /* 
+        ** 데이터검증을 위한 작업 추가
+        ** make_signature를 통한 암호화된 데이터를 결제폼에도 추가
+        ** 추후 결제관련 암호화된 데이터를 받아와 결제전에 검증시에 사용
+    */
+
+    var encryptdata = document.createElement('input');
+    encryptdata.type = 'hidden';
+    encryptdata.name = "EncryptData";
+    encryptdata.value = f.EncryptData.value;
+    pf.appendChild(encryptdata);
+    
     <?php } ?>
 
     //var new_win = window.open("about:blank", "tar_opener", "scrollbars=yes,resizable=yes");

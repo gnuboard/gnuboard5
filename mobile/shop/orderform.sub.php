@@ -1460,7 +1460,7 @@ function pay_approval()
         encryptdata.type = 'hidden';
         encryptdata.name = "EncryptData";
         encryptdata.value = f.EncryptData.value;
-        pf.appendChild(encryptdata)
+        pf.appendChild(encryptdata);
 
         <?php } ?>
 
