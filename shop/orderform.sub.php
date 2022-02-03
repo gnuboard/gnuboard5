@@ -1631,8 +1631,8 @@ function forderform_check(f)
         <?php } else if($default['de_pg_service'] == "nicepay") { ?>
             f.Amt.value         = f.good_mny.value;
             <?php if($default['de_tax_flag_use']) { ?>
-            f.tax.value         = f.comm_vat_mny.value;
-            f.taxfree.value     = f.comm_free_mny.value;
+            f.GoodsVat.value    = f.comm_vat_mny.value;
+            f.TaxFreeAmt.value  = f.comm_free_mny.value;
             <?php } ?>
 
             f.BuyerName.value   = f.od_name.value;
@@ -1646,10 +1646,14 @@ function forderform_check(f)
             f.RcvrZipx.value    = f.od_b_zip.value;
             f.RcvrAddr.value    = f.od_b_addr1.value + " " +f.od_b_addr2.value;
 
+            if(!make_signature(f))
+                return false;
+
             if(f.PayMethod.value != "무통장") {
                 // 주문정보 임시저장
                 var order_data = $(f).serialize();
                 var save_result = "";
+
                 $.ajax({
                     type: "POST",
                     data: order_data,
@@ -1665,9 +1669,6 @@ function forderform_check(f)
                     alert(save_result);
                     return false;
                 }
-
-                if(!make_signature(f))
-                    return false;
 
                 paybtn(f);
             } else {

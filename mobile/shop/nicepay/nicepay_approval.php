@@ -73,6 +73,10 @@ if(isset($data['pp_id']) && $data['pp_id']) {
 if(strcmp('0000', $auth_result_code) !== 0) {
     alert('오류 : '.iconv_utf8($auth_result_msg).' 코드 : '.$auth_result_code, $page_return_url);
 } else {
+    // 데이터 검증용 암호화된 값 비교 추가
+    $veri_encrypt = bin2hex(hash("sha256", $_POST['EdiDate'].$_POST['MID'].$_POST['Amt'].$nicepay->m_MerchantKey, true));
+    if($veri_encrypt !== $data['EncryptData']) alert("위변조 데이터가 일치하지 않습니다.", $page_return_url);
+
     $nicepay->m_ActionType      = 'PYO';                            // 결제타입
     $nicepay->m_Price           = $_REQUEST['Amt'];                 // 가격
     $nicepay->m_NetCancelAmt    = $_REQUEST['Amt'];                 // 취소가격

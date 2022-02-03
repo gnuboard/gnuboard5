@@ -40,10 +40,18 @@ $ediDate = date('Ymdhis');
 <input type="hidden" name="GoodsCl"     value="<?php echo $goodsCl; ?>"/>                   <!--실물(1) 컨텐츠(0) -->
 <input type="hidden" name="good_mny"    value="<?php echo $tot_price; ?>">                  <!-- 가격 -->
 <input type="hidden" name="TransType"   value="<?php echo $useescrow; ?>">                  <!-- 에스크로사용여부 -->
-<input type="hidden" name="OptionList" value="<?php echo $optionList; ?>">                  <!-- 옵션으로 사용할 기능 -->
+<input type="hidden" name="OptionList"  value="<?php echo $optionList; ?>">                 <!-- 옵션으로 사용할 기능 -->
 
 <?php if($default['de_tax_flag_use']) { ?>
-<input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
-<input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
-<input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
+
+    <!-- 나이스페이 과세 관련 field -->
+    <input type="hidden" name="comm_tax_mny"	  value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
+    <input type="hidden" name="comm_vat_mny"      value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
+    <input type="hidden" name="comm_free_mny"     value="<?php echo $comm_free_mny; ?>">        <!-- 비과세 금액 -->
+
+    <!-- 영카트 과세 관련 field -->
+    <input type="hidden" name="SupplyAmt"	    value="<?php echo $comm_tax_mny; ?>">         <!-- 과세금액    -->
+    <input type="hidden" name="GoodsVat"        value="<?php echo $comm_vat_mny; ?>">         <!-- 부가세	    -->
+    <input type="hidden" name="TaxFreeAmt"       value="<?php echo $comm_free_mny; ?>">       <!-- 비과세 금액 -->
 <?php } ?>
+

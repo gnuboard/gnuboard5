@@ -9,6 +9,27 @@ $nicepay_result = false;
 try {
     if(isset($_REQUEST['AuthResultCode']) && strcmp('0000', $_REQUEST['AuthResultCode']) == 0) {
         try {
+            $oid = $_POST['Moid'];
+            if(empty($oid)) throw new Exception("주문번호가 존재하지 않습니다.");
+
+            // 주문데이터 존재여부 확인
+            $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
+            $row = sql_fetch($sql);
+
+            $data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
+
+            // 개인결제 or 일반주문결제 확인
+            if (isset($data['pp_id']) && $data['pp_id']) {
+                $page_return_url  = G5_SHOP_URL.'/personalpayform.php?pp_id='.$data['pp_id'];
+            } else {
+                $page_return_url  = G5_SHOP_URL.'/orderform.php';
+                if(get_session('ss_direct'))
+                    $page_return_url .= '?sw_direct=1';
+            }
+
+            $veri_encrypt = bin2hex(hash("sha256", $_POST['EdiDate'].$_POST['MID'].$_POST['Amt'].$nicepay->m_MerchantKey, true));
+            if($veri_encrypt !== $data['EncryptData']) alert("위변조 데이터가 일치하지 않습니다.", $page_return_url);
+
             $nicepay->m_ActionType      = "PYO";
             $nicepay->m_Price           = $_REQUEST['Amt'];
             $nicepay->m_NetCancelAmt    = $_REQUEST['Amt'];
@@ -60,23 +81,7 @@ try {
 
             $resultData = $nicepay->m_ResultData;                               // 결과값
 
-            $oid = $_POST['Moid'];
-            if(empty($oid)) throw new Exception("주문번호가 존재하지 않습니다.");
-
-            // 주문데이터 존재여부 확인
-            $sql = " select * from {$g5['g5_shop_order_data_table']} where od_id = '$oid' ";
-            $row = sql_fetch($sql);
-
-            $data = isset($row['dt_data']) ? unserialize(base64_decode($row['dt_data'])) : array();
-
-            // 개인결제 or 일반주문결제 확인
-            if (isset($data['pp_id']) && $data['pp_id']) {
-                $page_return_url  = G5_SHOP_URL.'/personalpayform.php?pp_id='.$data['pp_id'];
-            } else {
-                $page_return_url  = G5_SHOP_URL.'/orderform.php';
-                if(get_session('ss_direct'))
-                    $page_return_url .= '?sw_direct=1';
-            }
+            
 
             // 결제승인시 추가 진행
             if ($paySuccess != false) { 

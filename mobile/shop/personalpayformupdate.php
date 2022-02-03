@@ -24,7 +24,7 @@ if($default['de_pg_service'] == 'lg' && ! $post_lgd_paykey)
 if($default['de_pg_service'] == 'inicis' && ! $post_p_hash)
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 
-if($default['de_pg_service'] == 'nicepay' && ($post_nice_hash == '')) {
+if($default['de_pg_service'] == 'nicepay' && ($post_nice_hash === '')) {
     alert('결제등록 요청 후 주문해 주십시오.', $page_return_url);
 }
 
