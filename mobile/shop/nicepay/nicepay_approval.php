@@ -133,7 +133,7 @@ if(strcmp('0000', $auth_result_code) !== 0) {
     $resultData = $nicepay->m_ResultData;                           // 결제성공확인
 
     if($paySuccess == false)
-        alert('오류 : '.$resultData['ResultMsg'].' 코드 : '.$resultData['ResultCode'], $page_return_url);
+        alert('오류 : '.auto_convert_charset($resultData['ResultMsg']).' 코드 : '.auto_convert_charset($resultData['ResultCode']), $page_return_url);
 
     $hash = md5($resultData['TID'].$resultData['MID'].$resultData['Amt']);
 

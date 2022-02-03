@@ -81,8 +81,6 @@ try {
 
             $resultData = $nicepay->m_ResultData;                               // 결과값
 
-            
-
             // 결제승인시 추가 진행
             if ($paySuccess != false) { 
                 $tno        = $resultData['TID'];
@@ -114,9 +112,8 @@ try {
 
                 // 결제완료
                 $nicepay_result = true;
-                
             } else {
-                $s = '(오류코드:'.$resultData['ResultCode'].') '.$resultData['ResultMsg'];
+                $s = '(오류코드:'.auto_convert_charset($resultData['ResultCode'], 'UTF-8').') '.auto_convert_charset($resultData['ResultMsg'], 'UTF-8');
                 alert($s, $page_return_url);
             }
         } catch (Exception $e) {
