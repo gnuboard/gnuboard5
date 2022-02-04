@@ -28,10 +28,10 @@ add_stylesheet('<link rel="stylesheet" href="'.G5_SHOP_CSS_URL.'/style.css">', 0
 <section id="sit_info">
 	<div id="sit_tab">
 	    <ul class="tab_tit">
-	        <li><button type="button" rel="#sit_inf" class="selected">상품정보</button></li>
-	        <li><button type="button" rel="#sit_use">사용후기 <span class="item_use_count"><?php echo $item_use_count; ?></span></button></li>
-	        <li><button type="button" rel="#sit_qa">상품문의  <span class="item_qa_count"><?php echo $item_qa_count; ?></span></button></li>
-	        <li><button type="button" rel="#sit_dex">배송/교환</button></li>
+	        <li><button type="button" id="btn_sit_inf" rel="#sit_inf" class="selected">상품정보</button></li>
+	        <li><button type="button" id="btn_sit_use" rel="#sit_use">사용후기 <span class="item_use_count"><?php echo $item_use_count; ?></span></button></li>
+	        <li><button type="button" id="btn_sit_qa" rel="#sit_qa">상품문의  <span class="item_qa_count"><?php echo $item_qa_count; ?></span></button></li>
+	        <li><button type="button" id="btn_sit_dvex" rel="#sit_dex">배송/교환</button></li>
 	    </ul>
 	    <ul class="tab_con">
 	
@@ -328,5 +328,10 @@ jQuery(function($){
             $("#sit_ov_btn .sit_btn_buy").trigger("click");
         }
     });
+
+	if (window.location.href.split("#").length > 1) {
+		let id = window.location.href.split("#")[1];
+		$("#btn_" + id).trigger("click");
+	};
 });
 </script>
