@@ -515,6 +515,10 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                                     $pg_url  = 'https://iniweb.inicis.com/';
                                     $pg_test = 'KG이니시스';
                                     break;
+                                case 'nicepay':
+                                    $pg_url  = 'https://npg.nicepay.co.kr/';
+                                    $pg_test = '나이스페이';
+                                    break;
                                 case 'KAKAOPAY':
                                     $pg_url  = 'https://mms.cnspay.co.kr';
                                     $pg_test = 'KAKAOPAY';
