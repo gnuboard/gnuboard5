@@ -71,7 +71,8 @@ if(isset($data['pp_id']) && $data['pp_id']) {
 }
 
 if(strcmp('0000', $auth_result_code) !== 0) {
-    alert('오류 : '.iconv_utf8($auth_result_msg).' 코드 : '.$auth_result_code, $page_return_url);
+    alert(auto_convert_charset($auth_result_msg, 'UTF-8').' 코드 : '.auto_convert_charset($auth_result_code), $page_return_url);
+    // alert('오류 : '.iconv_utf8($auth_result_msg).' 코드 : '.$auth_result_code, $page_return_url);
 } else {
     // 데이터 검증용 암호화된 값 비교 추가
     $veri_encrypt = bin2hex(hash("sha256", $_POST['EdiDate'].$_POST['MID'].$_POST['Amt'].$nicepay->m_MerchantKey, true));

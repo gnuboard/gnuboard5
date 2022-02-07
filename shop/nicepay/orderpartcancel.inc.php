@@ -50,9 +50,6 @@ if($resultCode == "2001" || $resultCode == "2211") {
     // 미수금 등의 정보 업데이트
     $info = get_order_info($od_id);
 
-    print_r2($info);
-    print_r2($nicepay->m_ResultData);
-
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_misu     = {$info['od_misu']},
                 od_tax_mny  = '{$info['od_tax_mny']}',
@@ -63,7 +60,7 @@ if($resultCode == "2001" || $resultCode == "2211") {
     sql_query($sql);
 } else {
     // 실패시 오류코드 반환
-    alert(auto_convert_charset($nicepay->m_ResultData["ResultMsg"]). ' 코드 : '.$nicepay->m_ResultData["ResultCode"]);
+    alert(auto_convert_charset($nicepay->m_ResultData["ResultMsg"], 'UTF-8'). ' 코드 : '.auto_convert_charset($nicepay->m_ResultData["ResultCode"], 'UTF-8'));
     // alert(iconv_utf8($nicepay->m_ResultData["ResultMsg"]).' 코드 : '.$nicepay->m_ResultData["ResultCode"]);
 }
 ?>
