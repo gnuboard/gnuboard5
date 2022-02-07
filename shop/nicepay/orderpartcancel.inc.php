@@ -14,13 +14,13 @@ $buyeremail    = $od['od_email'];
 $tax           = (int)$tax_mny - $vat_mny;
 $taxfree       = (int)$free_mny;
 
-$nicepay->m_ActionType          = "CLO";                                // 동작구분 : CLO (취소)
-$nicepay->m_CancelAmt           = $price;                               // 취소금액 설정
-$nicepay->m_TID                 = $oldtid;                              // 이전 TID값 적용
-$nicepay->m_Moid                = $od['od_id'];                         // 주문번호
-$nicepay->m_CancelIP            = $_SERVER['REMOTE_ADDR'];              // 취소자 IP
-$nicepay->m_CancelMsg           = "요청사유?";                           // 취소메시지
-$nicepay->m_PartialCancelCode   = 1;                                    // 부분취소 ( 0 : 전체취소, 1 : 부분취소 )
+$nicepay->m_ActionType          = "CLO";                                    // 동작구분 : CLO (취소)
+$nicepay->m_CancelAmt           = $price;                                   // 취소금액 설정
+$nicepay->m_TID                 = $oldtid;                                  // 이전 TID값 적용
+$nicepay->m_Moid                = $od['od_id'];                             // 주문번호
+$nicepay->m_CancelIP            = $_SERVER['REMOTE_ADDR'];                  // 취소자 IP
+$nicepay->m_CancelMsg           = "가맹점 부분취소";                    // 취소메시지
+$nicepay->m_PartialCancelCode   = 1;                                        // 부분취소 ( 0 : 전체취소, 1 : 부분취소 )
 
 // 관리자 취소 패스워드가 존재하는 경우
 if($default['de_nicepay_admin_key']) {
@@ -49,6 +49,9 @@ if($resultCode == "2001" || $resultCode == "2211") {
 
     // 미수금 등의 정보 업데이트
     $info = get_order_info($od_id);
+
+    print_r2($info);
+    print_r2($nicepay->m_ResultData);
 
     $sql = " update {$g5['g5_shop_order_table']}
                 set od_misu     = {$info['od_misu']},
