@@ -63,6 +63,7 @@ if($resultCode == "2001" || $resultCode == "2211") {
     sql_query($sql);
 } else {
     // 실패시 오류코드 반환
-    alert(iconv_utf8($nicepay->m_ResultData["ResultMsg"]).' 코드 : '.$nicepay->m_ResultData["ResultCode"]);
+    alert(auto_convert_charset($nicepay->m_ResultData["ResultMsg"]). ' 코드 : '.$nicepay->m_ResultData["ResultCode"]);
+    // alert(iconv_utf8($nicepay->m_ResultData["ResultMsg"]).' 코드 : '.$nicepay->m_ResultData["ResultCode"]);
 }
 ?>
