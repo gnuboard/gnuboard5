@@ -174,6 +174,7 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
 
         // SMS
         if($config['cf_sms_use'] && $_POST['cp_sms_send'] && $arr_send_list[$i]['mb_hp'] && $arr_send_list[$i]['mb_sms']) {
+
          
             $sms_contents = $cp_subject.' 쿠폰이 '.get_text($arr_send_list[$i]['mb_name']).'님께 발행됐습니다. 쿠폰만료 : '.$cp_end.' '.str_replace('http://', '', G5_URL);
 
@@ -269,7 +270,7 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
                     $code = $pe->getCode();
                     $message = $pe->getMessage();
                 }
-                exit;
+
             }
             } else {
                 if($config['cf_sms_use']=='icode'){
@@ -291,6 +292,7 @@ if($w == '' && ($_POST['cp_sms_send'] || $_POST['cp_email_send'])) {
                         
                 }elseif($config['cf_sms_use']=='popbill'){
                     include_once (G5_LIB_PATH.'/popbill/popbill_config.php');
+                  
                     try {
                         $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum);
                     } catch(PopbillException $pe) {
