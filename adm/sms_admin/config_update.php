@@ -40,6 +40,9 @@ $sql .= $g5['sms5_config_table']." set cf_phone='$cf_phone' ";
 
 sql_query($sql);
 
+//팝빌 사업자 번호 하이픈 제거
+$cf_popbill_co_no = str_replace("-", "", $cf_popbill_co_no);
+
 // 아이코드, 팝빌 설정
 $sql = " update {$g5['config_table']}
             set cf_sms_use              = '$cf_sms_use',

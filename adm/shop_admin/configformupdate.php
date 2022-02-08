@@ -451,6 +451,10 @@ sql_query($sql);
 sql_query(" update {$g5['config_table']} set cf_use_point = '{$cf_use_point}' ");
 
 // LG, 아이코드, 팝빌 설정
+
+//팝빌 사업자 번호 하이픈 제거
+$cf_popbill_co_no = str_replace("-", "", $cf_popbill_co_no);
+
 $sql = " update {$g5['config_table']}
             set cf_sms_use              = '{$cf_sms_use}',
                 cf_sms_type             = '{$cf_sms_type}',

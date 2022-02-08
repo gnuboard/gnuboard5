@@ -184,6 +184,9 @@ if(!$_POST['cf_cert_use']) {
     $posts[$key] = $_POST['cf_cert_hp'] = '';
 }
 
+//팝빌 사업자 번호 하이픈 제거
+$cf_popbill_co_no = str_replace("-", "", $_POST['cf_popbill_co_no']);
+
 $sql = " update {$g5['config_table']}
             set cf_title = '{$cf_title}',
                 cf_admin = '{$cf_admin}',
@@ -294,7 +297,7 @@ $sql = " update {$g5['config_table']}
                 cf_icode_token_key = '{$_POST['cf_icode_token_key']}',
                 cf_icode_server_ip = '{$_POST['cf_icode_server_ip']}',
                 cf_icode_server_port = '{$_POST['cf_icode_server_port']}',
-                cf_popbill_co_no = '{$_POST['cf_popbill_co_no']}',
+                cf_popbill_co_no = '{$cf_popbill_co_no}',
                 cf_popbill_id = '{$_POST['cf_popbill_id']}',
                 cf_popbill_pw = '{$_POST['cf_popbill_pw']}',
                 cf_popbill_server_ip = '{$_POST['cf_popbill_server_ip']}',
