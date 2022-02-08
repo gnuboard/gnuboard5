@@ -8,10 +8,6 @@ auth_check_menu($auth, $sub_menu, "r");
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
 
-//popbill ip, port 설정
-if (!$config['cf_popbill_server_ip'])   $config['cf_popbill_server_ip'] = '52.78.164.186';
-if (!$config['cf_popbill_server_port']) $config['cf_popbill_server_port'] = '443';
-
 $userinfo = array('payment'=>'');
 if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
     $userinfo = get_icode_userinfo($config['cf_icode_id'], $config['cf_icode_pw']);

@@ -238,8 +238,6 @@ $check_sanitize_keys = array(
 'de_sms_use5',                  //SMS 상품배송시 고객님께 발송
 'cf_icode_server_ip',           // 아이코드 ip
 'cf_icode_server_port',         // 아이코드 port
-'cf_popbill_server_ip',          // 팝빌 ip
-'cf_popbill_server_port',        // 팝빌 port
 'cf_icode_token_key',           // 아이코드 토큰키 (JSON버전)
 );
 
@@ -466,8 +464,6 @@ $sql = " update {$g5['config_table']}
                 cf_popbill_id           = '{$cf_popbill_id}',
                 cf_popbill_pw           = '{$cf_popbill_pw}',
                 cf_popbill_co_no        = '{$cf_popbill_co_no}',
-                cf_popbill_server_ip    = '{$_POST['cf_popbill_server_ip']}',
-                cf_popbill_server_port  = '{$_POST['cf_popbill_server_port']}',
                 cf_lg_mid               = '{$cf_lg_mid}',
                 cf_lg_mert_key          = '{$cf_lg_mert_key}' ";
 sql_query($sql);

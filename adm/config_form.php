@@ -149,9 +149,7 @@ if(!isset($config['cf_popbill_co_no'])) {
     sql_query(" ALTER TABLE `{$g5['config_table']}`
                     ADD `cf_popbill_co_no` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_icode_token_key`,
                     ADD `cf_popbill_id` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_popbill_co_no`,
-                    ADD `cf_popbill_pw` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_popbill_id`,
-                    ADD `cf_popbill_server_ip` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_pw`,
-                    ADD `cf_popbill_server_port` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_server_ip`", true);
+                    ADD `cf_popbill_pw` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_popbill_id`", true);
 }
 
 if(!isset($config['cf_mobile_page_rows'])) {
@@ -318,10 +316,6 @@ $pg_anchor = '<ul class="anchor">
 
 if (!$config['cf_icode_server_ip'])   $config['cf_icode_server_ip'] = '211.172.232.124';
 if (!$config['cf_icode_server_port']) $config['cf_icode_server_port'] = '7295';
-
-//popbill ip, port 설정
-if (!$config['cf_popbill_server_ip'])   $config['cf_popbill_server_ip'] = '52.78.164.186';
-if (!$config['cf_popbill_server_port']) $config['cf_popbill_server_port'] = '443';
 
 $userinfo = array('payment'=>'');
 if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
