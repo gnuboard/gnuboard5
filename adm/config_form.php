@@ -142,7 +142,7 @@ if(!isset($config['cf_sms_use'])) {
                     ADD `cf_icode_id` varchar(255) NOT NULL DEFAULT '' AFTER `cf_sms_use`,
                     ADD `cf_icode_pw` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_id`,
                     ADD `cf_icode_server_ip` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_pw`,
-                    ADD `cf_icode_server_port` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_server_ip`,", true);
+                    ADD `cf_icode_server_port` varchar(255) NOT NULL DEFAULT '' AFTER `cf_icode_server_ip`", true);
 }
 // popbill 관련 필드가 없을경우 추가
 if(!isset($config['cf_popbill_co_no'])) {
@@ -151,7 +151,7 @@ if(!isset($config['cf_popbill_co_no'])) {
                     ADD `cf_popbill_id` VARCHAR(100) NOT NULL DEFAULT '' AFTER `cf_popbill_co_no`,
                     ADD `cf_popbill_pw` VARCHAR(255) NOT NULL DEFAULT '' AFTER `cf_popbill_id`,
                     ADD `cf_popbill_server_ip` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_pw`,
-                    ADD `cf_popbill_server_port` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_server_ip`,", true);
+                    ADD `cf_popbill_server_port` VARCHAR(50) NOT NULL DEFAULT '' AFTER `cf_popbill_server_ip`", true);
 }
 
 if(!isset($config['cf_mobile_page_rows'])) {
