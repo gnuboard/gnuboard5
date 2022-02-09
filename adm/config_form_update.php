@@ -31,7 +31,7 @@ foreach( $check_keys as $key ){
 }
 
 $posts['cf_icode_server_port'] = $_POST['cf_icode_server_port'] = isset($_POST['cf_icode_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_icode_server_port']) : '7295';
-$posts['cf_popbill_server_port'] = $_POST['cf_popbill_server_port'] = isset($_POST['cf_popbill_server_port']) ? preg_replace('/[^0-9]/', '', $_POST['cf_popbill_server_port']) : '443';
+
 
 if(isset($_POST['cf_intercept_ip']) && $_POST['cf_intercept_ip']){
 
