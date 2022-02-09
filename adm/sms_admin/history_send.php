@@ -317,13 +317,13 @@ if($config['cf_sms_type'] == 'LMS') {
             $sms_mm[] = $sms_messages[$i];
             try {
                 $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_mm, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
-                $wr_success = $wr_total;
+                $wr_success++;
                 
             }
             catch (PopbillException $pe) {
                 $code = $pe->getCode();
                 $message = $pe->getMessage();
-                $wr_failure = $wr_total;
+                $wr_failure++;
             }
             $row = $list[$i];
             $row['bk_hp'] = get_hp($row['bk_hp'], 1);
