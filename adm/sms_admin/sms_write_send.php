@@ -296,18 +296,20 @@ if($config['cf_sms_type'] == 'LMS') {
                                     'sjt'	=> ''	               //LMS 제목
                                 );  
         }
-
-        try {
-            $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum); 
-            $wr_success = $wr_total;
-        }
-        catch (PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            $wr_failure = $wr_total;
-        }
-        
-        for($i=0; $i<$wr_total; $i++) {
+        for($i=0; $i<$wr_total; $i++){
+            unset($sms_mm);
+            //$sms_mm = 문자메세지를 건별로 나누기 위해 새로 만들어준 문자 배열
+            $sms_mm[] = $sms_messages[$i];
+            try {
+                $receiptNum = $MessagingService->SendLMS($corpnum, $send_number, '', $sms_contents, $sms_mm, $reserveDT, $adsYN, $linkid, $send_name, '', $requestNum); 
+                $wr_success = $wr_total;
+                
+            }
+            catch (PopbillException $pe) {
+                $code = $pe->getCode();
+                $message = $pe->getMessage();
+                $wr_failure = $wr_total;
+            }
             $row = $list[$i];
             $row['bk_hp'] = get_hp($row['bk_hp'], 1);
             if($pe){
@@ -325,7 +327,7 @@ if($config['cf_sms_type'] == 'LMS') {
 
         }
         sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum=0, wr_reply='$send_number', wr_message='$db_wr_message', wr_success='$wr_success', wr_failure='$wr_failure', wr_memo='$str_serialize', wr_booking='$wr_booking', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
-    }
+   }
     
 } else {
     if($config['cf_sms_use'] == 'icode'){
@@ -432,20 +434,22 @@ if($config['cf_sms_type'] == 'LMS') {
                                     'rcvnm' => $recv_name,         //수신자이름
                                     'sjt'	=> ''	               //LMS 제목
                                 );  
-        }
 
-        try {
-            $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_messages, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
-            $wr_success = $wr_total;
-            
         }
-        catch (PopbillException $pe) {
-            $code = $pe->getCode();
-            $message = $pe->getMessage();
-            $wr_failure = $wr_total;
-        }
-        
-        for($i=0; $i<$wr_total; $i++) {
+        for($i=0; $i<$wr_total; $i++){
+            unset($sms_mm);
+            //$sms_mm = 문자메세지를 건별로 나누기 위해 새로 만들어준 문자 배열
+            $sms_mm[] = $sms_messages[$i];
+            try {
+                $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_mm, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
+                $wr_success = $wr_total;
+                
+            }
+            catch (PopbillException $pe) {
+                $code = $pe->getCode();
+                $message = $pe->getMessage();
+                $wr_failure = $wr_total;
+            }
             $row = $list[$i];
             $row['bk_hp'] = get_hp($row['bk_hp'], 1);
             if($pe){
@@ -463,7 +467,6 @@ if($config['cf_sms_type'] == 'LMS') {
 
         }
         sql_query("insert into {$g5['sms5_write_table']} set wr_no='$wr_no', wr_renum=0, wr_reply='$send_number', wr_message='$db_wr_message', wr_success='$wr_success', wr_failure='$wr_failure', wr_memo='$str_serialize', wr_booking='$wr_booking', wr_total='$wr_total', wr_datetime='".G5_TIME_YMDHIS."'");
-
 
 
     }
