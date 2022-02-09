@@ -776,7 +776,6 @@ if($config['cf_sms_use'] && ($default['de_sms_use2'] || $default['de_sms_use3'])
             $recv_number = preg_replace("/[^0-9]/", "", $recv_numbers[$s]);
             $send_number = preg_replace("/[^0-9]/", "", $send_numbers[$s]);
              //popbill 데이터 추가
-            echo 'od_name = '. $od_name.'<br>';
             $sms_content = str_replace("{이름}", $od_name, $sms_content);
             $sms_content = str_replace("{보낸분}", $od_name, $sms_content);
             $sms_content = str_replace("{받는분}", $od_b_name, $sms_content);
