@@ -54,7 +54,7 @@ $sql = " update {$g5['config_table']}
                 cf_icode_token_key      = '$cf_icode_token_key',
                 cf_popbill_id           = '{$cf_popbill_id}',
                 cf_popbill_pw           = '{$cf_popbill_pw}',
-                cf_popbill_co_no        = '{$cf_popbill_co_no}',";
+                cf_popbill_co_no        = '{$cf_popbill_co_no}'";
 sql_query($sql);
 
 goto_url("./config.php");
