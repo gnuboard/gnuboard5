@@ -193,6 +193,7 @@ if($config['cf_sms_type'] == 'LMS') {
                 //전송실패
                 $hs_code = $code;
                 $hs_memo = $message;
+                $hs_flag = '0';
                 sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
             }else{
                 //전송성공
@@ -331,6 +332,7 @@ if($config['cf_sms_type'] == 'LMS') {
                 //전송실패
                 $hs_code = $code;
                 $hs_memo = $message;
+                $hs_flag = '0';
                 sql_query("insert into {$g5['sms5_history_table']} set wr_no='$wr_no', wr_renum='$new_wr_renum', bg_no='{$row['bg_no']}', mb_id='{$row['mb_id']}', bk_no='{$row['bk_no']}', hs_name='".addslashes($row['bk_name'])."', hs_hp='{$row['bk_hp']}', hs_datetime='".G5_TIME_YMDHIS."', hs_flag='$hs_flag', hs_code='$hs_code', hs_memo='".addslashes($hs_memo)."', hs_log='".addslashes($log)."'", false);
             }else{
                 //전송성공
