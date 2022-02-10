@@ -440,9 +440,6 @@ if($config['cf_sms_type'] == 'LMS') {
             unset($sms_mm);
             //$sms_mm = 문자메세지를 건별로 나누기 위해 새로 만들어준 문자 배열
             $sms_mm[] = $sms_messages[$i];
-            if($i==1){
-                $corpnum='0000000000';
-            }
             try {
                 $receiptNum = $MessagingService->SendSMS($corpnum, $send_number, $sms_contents, $sms_mm, $reserveDT, $adsYN, $linkid, $pop_snd_name, '', $requestNum);
                 $wr_success++;
