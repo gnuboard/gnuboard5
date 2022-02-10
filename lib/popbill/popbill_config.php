@@ -1,4 +1,6 @@
 <?php
+    if (!defined('_GNUBOARD_')) exit;
+    
     require_once G5_LIB_PATH.'/popbill/PopbillMessaging.php';
 
     // 링크아이디 (팝빌 회원가입시 사용한 아이디 - 필수값*)
