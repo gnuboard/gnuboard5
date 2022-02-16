@@ -1,6 +1,10 @@
 <?php
 include_once('./_common.php');
 
+$it_id = isset($it_id) ? clean_xss_tags(trim($it_id)) : '';
+$ca_id = isset($ca_id) ? clean_xss_tags(trim($ca_id)) : '';
+
+$code = '';
 $name = '';
 
 if ($it_id)
