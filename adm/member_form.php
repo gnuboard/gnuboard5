@@ -192,8 +192,11 @@ if(isset($g5['member_cert_history_table']) && !sql_query(" DESC {$g5['member_cer
                 ) ", true);
 }
 
-$sql = "select * from {$g5['member_cert_history_table']} where mb_id = '{$mb_id}' order by ch_id asc";
-$mb_cert_history = sql_query($sql);
+$mb_cert_history = '';
+if (isset($mb_id) && $mb_id) {
+    $sql = "select * from {$g5['member_cert_history_table']} where mb_id = '{$mb_id}' order by ch_id asc";
+    $mb_cert_history = sql_query($sql);
+}
 
 if ($mb['mb_intercept_date']) $g5['title'] = "차단된 ";
 else $g5['title'] .= "";
