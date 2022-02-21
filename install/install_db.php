@@ -22,6 +22,8 @@ include_once('../lib/cache.lib.php');
 $title = G5_VERSION." 설치 완료 3/3";
 include_once ('./install.inc.php');
 
+$tmp_bo_table   = array ("notice", "qa", "free", "gallery");
+
 //print_r($_POST); exit;
 
 $mysql_host  = isset($_POST['mysql_host']) ? safe_install_string_check($_POST['mysql_host']) : '';
@@ -259,7 +261,6 @@ if($g5_install || !$result) {
     sql_query(" insert into `{$table_prefix}group` set gr_id = '$tmp_gr_id', gr_subject = '$tmp_gr_subject' ", true, $dblink);
 
     // 게시판 생성
-    $tmp_bo_table   = array ("notice", "qa", "free", "gallery");
     $tmp_bo_subject = array ("공지사항", "질문답변", "자유게시판", "갤러리");
     for ($i=0; $i<count($tmp_bo_table); $i++)
     {
