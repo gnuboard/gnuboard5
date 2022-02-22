@@ -867,12 +867,12 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             </td>
         </tr>
         <tr>
-            <th scope="row" class="cf_cert_service"><label for="cf_cert_simple">간편인증</label></th>
+            <th scope="row" class="cf_cert_service"><label for="cf_cert_simple">통합인증(간편인증)</label></th>
             <td class="cf_cert_service">
                 <?php echo help('KG이니시스의 통합인증(간편인증+전자서명) 서비스에서 전자서명을 제외한 간편인증 서비스 입니다. <a href="https://www.inicis.com/all-auth-service" target="_blank"><u>KG이니시스 통합인증 안내</u></a>') ?>
                 <select name="cf_cert_simple" id="cf_cert_simple">
                     <?php echo option_selected("", $config['cf_cert_simple'], "사용안함"); ?>
-                    <?php echo option_selected("inicis", $config['cf_cert_simple'], "KG이니시스 간편인증"); ?>
+                    <?php echo option_selected("inicis", $config['cf_cert_simple'], "KG이니시스 통합인증(간편인증)"); ?>
                 </select>
             </td>
         </tr>
@@ -901,7 +901,7 @@ if ($config['cf_sms_use'] && $config['cf_icode_id'] && $config['cf_icode_pw']) {
             <td class="cf_cert_service">
                 <span class="sitecode">SRA</span>
                 <input type="text" name="cf_cert_kg_mid" value="<?php echo get_sanitize_input($config['cf_cert_kg_mid']); ?>" id="cf_cert_kg_mid" class="frm_input" size="10" minlength="7" maxlength="7">
-                <a href="http://sir.kr/main/service/inicis_cert_form.php" target="_blank" class="btn_frmline">KG이니시스 간편인증 신청페이지</a>
+                <a href="http://sir.kr/main/service/inicis_cert_form.php" target="_blank" class="btn_frmline">KG이니시스 통합인증(간편인증) 신청페이지</a>
             </td>
         </tr>
         <tr>
