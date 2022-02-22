@@ -1,36 +1,5 @@
 @charset "utf-8";
 
-/* ### 기본 스타일 커스터마이징 시작 ### */
-#poll a.btn_admin {} /* 관리자 전용 버튼 */
-#poll a.btn_admin:focus, #poll a.btn_admin:hover {}
-
-/* 폼 테이블 */
-#poll .tbl_frm table {}
-#poll .tbl_frm .frm_address {}
-#poll .tbl_frm .frm_file {}
-#poll .tbl_frm .frm_info {}
-
-#poll .tbl_frm01 {}
-#poll .tbl_frm01 caption {}
-#poll .tbl_frm01 th {}
-#poll .tbl_frm01 td {}
-#poll .tbl_frm01 textarea, #poll .frm_input {}
-#poll .tbl_frm01 textarea {}
-#poll .tbl_frm01 a {}
-
-#poll .required, #poll textarea.required {}
-
-#poll .btn_confirm {} /* 서식단계 진행 */
-#poll .btn_submit {}
-#poll .btn_cancel {}
-#poll .btn_frmline {} /* 우편번호검색버튼 등 */
-#poll .win_btn {} /* 새창용 */
-#poll .win_btn a {}
-#poll .win_btn button {}
-#poll .win_btn input {}
-
-/* ### 기본 스타일 커스터마이징 끝 ### */
-
 /* 설문조사 스킨 */
 #poll {background:#fff;border:1px solid #dde7e9;margin:15px 10px}
 #poll header {position:relative;padding:15px;border-bottom:1px solid #dde7e9}

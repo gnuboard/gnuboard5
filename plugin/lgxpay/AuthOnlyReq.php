@@ -4,6 +4,17 @@ include_once('./_common.php');
 // 금일 인증시도 회수 체크
 certify_count_check($member['mb_id'], 'hp');
 
+switch($_GET['pageType']){ // 페이지 타입 체크
+    case "register":
+        $resultPage = "/AuthOnlyRes.php";
+        break;
+    case "find":
+        $resultPage = "/find_AuthOnlyRes.php";
+        break;    
+    default:
+        alert_close('잘못된 접근입니다.');
+}
+
 /*
  * [본인확인 요청페이지]
  *
@@ -138,7 +149,7 @@ $_SESSION['lgd_certify'] = $payReqMap;
 			document.getElementById("LGD_PAYTYPE").value = fDoc.document.getElementById('LGD_PAYTYPE').value;
 			
 			document.getElementById(lgd_form).target = "_self";
-            document.getElementById("LGD_PAYINFO").action = "AuthOnlyRes.php";
+            document.getElementById("LGD_PAYINFO").action = "<?php echo $resultPage; ?>";
 			document.getElementById(lgd_form).submit();
 		} else {
 			alert("LGD_RESPCODE (결과코드2) : " + fDoc.document.getElementById('LGD_RESPCODE').value + "\n" + "LGD_RESPMSG (결과메시지): " + fDoc.document.getElementById('LGD_RESPMSG').value);
@@ -161,7 +172,7 @@ $_SESSION['lgd_certify'] = $payReqMap;
 </head>
 <body>
 
-<form method="post" name ="LGD_PAYINFO" id="LGD_PAYINFO" action="<?php echo G5_LGXPAY_URL; ?>/AuthOnlyRes.php">
+<form method="post" name ="LGD_PAYINFO" id="LGD_PAYINFO" action="<?php echo G5_LGXPAY_URL.$resultPage; ?>">
 <input type="hidden" name="LGD_ENCODING" value="UTF-8"/>
 <?php
 foreach ($payReqMap as $key => $value) {

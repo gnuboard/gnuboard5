@@ -284,7 +284,9 @@ if( ! class_exists('XenoPostToForm') ){
 if( !function_exists('shop_check_is_pay_page') ){
     function shop_check_is_pay_page(){
         $shop_dir = 'shop';
+        $plugin_dir = 'plugin';
         $mobile_dir = G5_MOBILE_DIR;
+
 
         // PG 결제사의 리턴페이지 목록들
         $pg_checks_pages = array(
@@ -299,6 +301,8 @@ if( !function_exists('shop_check_is_pay_page') ){
             $shop_dir.'/kakaopay/inicis_kk_return.php',     // 이니시스 카카오페이 (SIRK 로 시작하는 아이디 전용)
             $shop_dir.'/nicepay/nicepay_result.php',
             $mobile_dir.'/'.$shop_dir.'/nicepay/nicepay_approval.php',
+            $plugin_dir."/inicert/ini_result.php", // 이니시스 간편인증 모듈 2021-09-10 http <-> https 간 세션 공유 문제로 인해 추가
+            $plugin_dir."/inicert/ini_find_result.php", // 이니시스 간편인증 모듈 2021-09-10 http <-> https 간 세션 공유 문제로 인해 추가
         );
 
         $server_script_name = str_replace('\\', '/', $_SERVER['SCRIPT_NAME']);
@@ -792,6 +796,12 @@ if(!empty($extend_file) && is_array($extend_file)) {
     unset($file);
 }
 unset($extend_file);
+
+if($is_member && !$is_admin && (!defined("G5_CERT_IN_PROG") || !G5_CERT_IN_PROG) && $config['cf_cert_use'] <> 0 && $config['cf_cert_req']) { // 본인인증이 필수일때
+    if ((empty($member['mb_certify']) || (!empty($member['mb_certify']) && strlen($member['mb_dupinfo']) == 64))) { // di로 인증되어 있거나 본인인증이 안된 계정일때
+        goto_url(G5_BBS_URL."/member_cert_refresh.php");
+    }
+}
 
 ob_start();
 

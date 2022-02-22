@@ -82,7 +82,7 @@
 /*회원가입 */
 #sns_register {margin:0 0 10px;padding:0;text-align:center;border-radius:3px}
 #sns_register:after {display:block;visibility:hidden;clear:both;content:""}
-#sns_register h2 {float:left;display:inline-block;text-align:left;width:50%;height:56px;line-height:56px;padding:0 20px;font-size:1.2em}
+#sns_register h2 {float:left;display:inline-block;text-align:left;width:50%;height:56px;padding:0 20px;font-size:1.2em;line-height: 4em;}
 #sns_register .sns-wrap {display:inline-block;float:left;width:50%;height:56px;line-height:53px;margin:0;text-align:right;padding:0 20px}
 #sns_register .sns-wrap:after {display:block;visibility:hidden;clear:both;content:""}
 #sns_register .sns-icon {display:inline-block;height:30px;line-height:30px;width:30px;margin:0 3px;text-align:right;color:#fff;border-radius:2px}
@@ -94,6 +94,67 @@
 #sns_register .sns-twitter {background-color:#1ea1f2;background-position:0 0}
 #sns_register .sns-payco {background-color:#df0b00;background-position:0 0}
 #sns_register .txt {position:absolute;line-height:0;font-size:0;vertical-align:middle;overflow:hidden}
+
+
+/* 회원가입 약관 */
+.social_register {margin:0 auto}
+.social_register:after {display:block;visibility:hidden;clear:both;content:""}
+.social_register .btn_confirm .btn_submit,
+.social_register .btn_confirm .btn_close {float:left;height:50px !important;width:49.5%;font-weight:bold;font-size:1.083em}
+.social_register .btn_confirm {text-align:left}
+.social_register .btn_confirm .btn_submit {margin-left:1%}
+
+#fregisterform p {position:relative;text-align:center;color:#fff;height:50px;line-height:50px;font-size:1.1em;background:#f2838f;margin:0 0 10px;border-radius:5px;font-weight:bold}
+#fregisterform p:before {content:"";position:absolute;top:0;left:0;width:5px;height:50px;border-radius:5px 0 0 5px;background:#da4453}
+#fregisterform p i {font-size:1.2em;vertical-align:middle}
+#fregisterform section {margin:10px auto 15px;border:1px solid #dde7e9;position:relative;border-radius:3px}
+#fregister_chkall {position:relative;text-align:center;background:#f5f7fa;line-height:50px;border:1px solid #e5e9f0;border-radius:3px;margin-bottom:15px}
+#fregisterform h2 {text-align:left;padding:20px;border-bottom:1px solid #dde7e9;font-size:1.2em}
+#fregisterform textarea {display:block;padding:20px;width:100%;height:150px;background:#fff;border:0;line-height:1.6em}
+#fregister_private {position:relative}
+#fregister_private div {padding:20px;background:#fff}
+#fregister_private table {width:100%;border-collapse:collapse;font-size:1em;}
+#fregister_private table caption {position:absolute;font-size:0;line-height:0;overflow:hidden}
+#fregister_private table th {background:#f7f7f9;width:33.33%;color:#000;padding:10px;border:1px solid #d8dbdf}
+#fregister_private table td {border:1px solid #e7e9ec;padding:10px;border-top:0}
+
+.fregister_agree {position:absolute;top:0;right:0}
+.fregister_agree input[type="checkbox"] + label {color:#676e70}
+.fregister_agree input[type="checkbox"] + label:hover {color:#2172f8}
+.fregister_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #999;border-radius:3px}
+.fregister_agree input[type="checkbox"]:checked + label {color:#000}
+.fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+.fregister_agree.chk_all input[type="checkbox"] + label span {top:18px}
+
+.chk_li {padding-left:20px}
+
+#sns_register .login-sns,
+#sns_register h2 {border:0 !important}
+
+/* 회원가입 입력 */
+#register_form {background:#fff;margin-bottom:20px}
+#register_form h2 {padding:20px;border-bottom:1px solid #dde7e9}
+.register_form_inner {background:#f7f7f7;border:1px solid #dde7e9;border-radius:3px}
+.register_form_inner ul {padding:20px}
+.register_form_inner label {display:block;margin-bottom:10px;line-height:24px}
+.register_form_inner label.inline {display:inline}
+
+#fregisterform .cert_desc {color:#3a8afd;}
+#fregisterform .cert_req {margin-left:5px;line-height:35px;}
+#fregisterform #msg_certify {margin:5px 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
+#fregisterform .frm_address {margin:5px 0 0}
+#fregisterform #mb_addr3 {display:inline-block;margin:5px 0 0;vertical-align:middle}
+#fregisterform #mb_addr_jibeon {display:block;margin:5px 0 0}
+#fregisterform .btn_confirm {text-align:center}
+#fregisterform .form_01 div {margin:0 0 20px}
+#fregisterform .captcha {display:block;margin:5px 0 0}
+#fregisterform .reg_mb_img_file img {max-width:100%;height:auto}
+#reg_mb_icon, #reg_mb_img {float:right}
+
+.tooltip_icon {display:inline-block;vertical-align:baseline;color:#b3b5b8;border:0;font-size:1.4em;background:transparent;cursor:pointer}
+.tooltip_icon:hover {color:#448bf5}
+.tooltip {position:relative;width:auto;color:#fff;background:#000;padding:10px;font-size:small;line-height:18px;display:none;position:absolute;z-index:9;font-weight:normal;margin-left:15px;margin-top:10px}
+.tooltip:before {content:"";position:absolute;top:0;left:-10px;width:0;height:0;border-style:solid;border-top:0px solid transparent;border-bottom:10px solid transparent;border-left:0;border-right:10px solid #000}
 
 /*기존 계정에 연결하기*/
 
@@ -109,7 +170,7 @@
 .mbskin .toggle .toggle-title.active .right_i i {background:url("./img/plus_minus.png") 0 0 no-repeat}
 .mbskin .all_agree {position:relative;display:block;margin-bottom:6px;background:#fff;border:1px solid #c6cacc;border-top:0;padding:13px 15px;line-height:20px}
 
-#register_member .sns_tbl {background:#fff;margin:10px 0;border:1px solid #c6cacc}
+.sns_tbl {background:#fff;margin:10px 0;border:1px solid #c6cacc}
 .sns_tbl table {border:0}
 .sns_tbl caption {padding:0 20px;line-height:45px;font-size:1.083em;border-bottom:1px solid #e2e2e2;color:#253dbe;background:#fcfcfc}
 .sns_tbl th {width:100px;text-align:right;padding:10px}
@@ -135,11 +196,11 @@
 #sns-link-pnl .connect-fg .connect-desc {margin:0 0 10px;padding:15px;border:1px solid #d6e9c6;background:#dff0d8;color:#3c763d}
 #sns-link-pnl .connect-fg .connect-title {margin-top:25px;margin-bottom:10px;font-size:1.667em;font-weight:bold;text-align:center}
 
-.mbskin .member_connect:after {display:block;visibility:hidden;clear:both;content:""}
-.mbskin .member_connect {margin-top:80px;background:#d9d9d9;border-radius:3px;padding:10px;text-align:left}
-.mbskin .member_connect .strong {font-size:1em;font-weight:bold;margin:0 0 10px}
-.mbskin .member_connect button {color:#fff;border:0;padding:6px 20px 7px;border:1px solid #6446e7;font-weight:bold;background:#6f50e7;border-radius:3px;font-size:0.91em}
-.mbskin .member_connect button:hover {background:#6446e7}
+.member_connect:after {display:block;visibility:hidden;clear:both;content:""}
+.member_connect {margin-top:80px;background:#d9d9d9;border-radius:3px;padding:10px;text-align:left}
+.member_connect .strong {font-size:1em;font-weight:bold;margin:0 0 10px}
+.member_connect button {color:#fff;border:0;padding:6px 20px 7px;border:1px solid #6446e7;font-weight:bold;background:#6f50e7;border-radius:3px;font-size:0.91em}
+.member_connect button:hover {background:#6446e7}
 
 html.remodal-is-locked {overflow-y:scroll !important}
 

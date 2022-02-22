@@ -80,7 +80,7 @@
 #sns_register {margin:0 0 10px;padding:0;text-align:center;background:#fff;border:1px solid #dbdbdb}
 #sns_register h2 {font-size:1.167em;text-align:left;padding:15px 20px;border-bottom:1px solid #dbdbdb}
 #sns_register .sns-wrap:after {display:block;visibility:hidden;clear:both;content:""}
-#sns_register .sns-wrap {display:inline-block;padding:20px;vertical-align:top;margin:0}
+#sns_register .sns-wrap {display:inline-block;width:100%;padding:20px;vertical-align:top;margin:0}
 #sns_register .sns-icon {position:relative;display:inline-block;height:40px;line-height:40px;width:100%;margin:0 0 5px;padding-left:40px;text-align:left;color:#fff;border-radius:2px;float:left}
 #sns_register .sns-icon:nth-child(3n+1) {clear:both}
 #sns_register .sns-naver {background-color:#1fc800;background-position:5px 5px;border-bottom:1px solid #1ea505}
@@ -93,6 +93,74 @@
 #sns_register .sns-payco {background-color:#df0b00;background-position:5px 5px;border-bottom:1px solid #9d0800}
 #sns_register .txt {display:block;padding-left:10px;border-left:1px solid rgba(0,0,0,0.1);font-weight:bold}
 
+/* 회원가입 공통 */
+.social_register {padding:15px}
+.social_register #register_form {margin-top:30px}
+
+/* 회원가입 약관 */
+#fregisterform section {position:relative;background:#fff;border-bottom:1px solid #e5e9f0;padding:15px}
+#fregister_chkall {position:relative;font-size:bold;text-align:left;background:#fff;padding:15px;border-top:1px solid #e5e9f0;border-bottom:1px solid #e5e9f0;border-radius:3px}
+#fregisterform h2 {text-align:left;padding-bottom:15px;line-height:1.7em;font-size:1.4em}
+#fregisterform textarea {display:block;width:100%;height:180px;padding:10px;background:#fbfbfb;border:1px solid #d1d7d8;line-height:1.5em;color:#555}
+#fregisterform p {position:relative;text-align:left;color:#fff;line-height:18px;padding:15px;font-size:1.1em;background:#f2838f;margin:15px;border-radius:5px}
+#fregisterform p:before {content:"";position:absolute;top:0;left:0;width:5px;height:100%;border-radius:5px 0 0 5px;background:#da4453}
+#fregisterform p i {font-size:1.2em;vertical-align:middle}
+#fregisterform .btn_confirm {margin:15px 10px}
+#fregister_private .tbl_head01 {margin:0}
+#fregister_private .tbl_head01 caption {position:absolute;font-size:0;line-height:0;overflow:hidden;top:0;color:#fff}
+
+/* 회원가입 입력 */
+#fregisterform .btn_confirm {text-align:center;margin:20px 0}
+#fregisterform .btn_confirm .btn_submit {width:49%;height:45px;padding:0 30px;font-weight:bold;font-size:1.083em}
+#fregisterform .btn_confirm .btn_cancel {width:49%;line-height:45px;height:45px;padding:0 30px;font-weight:bold;border-radius:3px;border:1px solid #dcdcdc;font-size:1.083em;background:#fff}
+#fregisterform .cert_req {margin-left:5px;line-height:28px;}
+
+#fregisterform #reg_mb_email, #fregisterform .frm_address {width:100%}
+#fregisterform textarea {width:100%;height:84px}
+#fregisterform #msg_certify {margin:5px 0;padding:5px;border:1px solid #dbecff;background:#eaf4ff;text-align:center}
+#fregisterform .frm_address,
+#fregisterform .password {margin:-1px 0 0}
+#fregisterform .password .frm_input {border-bottom:0}
+#fregisterform #mb_addr3 {display:block;margin:5px 0 0}
+#fregisterform #mb_addr_jibeon {display:block;margin:5px 0 0}
+#fregisterform .form_01 {margin-bottom:30px}
+#fregisterform .form_01 h2 {font-size:1.167em;margin:0 0 5px}
+#fregisterform .frm_label {display:block;font-size:1.083em;margin:15px 0 5px;color:#555}
+#fregisterform .btn_frmline {margin-bottom:5px;width:auto;height:30px;line-height:30px;padding:0 10px;font-weight:bold}
+#fregisterform .rgs_name_li button {margin:5px 0 0;width:auto}
+#fregisterform .reg_mb_img_file {margin-bottom:30px}
+#fregisterform .reg_mb_img_file img {max-width:100%;height:auto}
+
+.filebox .fileName {display:inline-block;position:relative;width:100%;height:45px;padding-left:10px;margin-right:5px;line-height:30px;border: 1px solid #d0d3db;background-color:#fff;color:red;vertical-align:middle}
+.filebox .btn_file {display:inline-block;position:absolute;right:8px;top:8px;border:1px solid #3a8afd;border-radius:3px;width:70px;height:30px;color:#3a8afd;font-size:1em;line-height:30px;font-weight:bold;text-align:center;vertical-align:middle}
+.filebox input[type="file"] {position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+
+.adress {background:red;width:100%}
+.adress #reg_mb_zip {width:100%;position:relative}
+.adress .btn_frmline {position:absolute;top:8px;right:15px;height:40px;padding:0 10px;border-radius:3px}
+
+.chk_box {position:relative}
+.chk_box input[type="checkbox"] + label {padding-left:10px;color:#676e70}
+.chk_box input[type="checkbox"] + label:hover{color:#2172f8}
+.chk_box input[type="checkbox"] + label span {position:absolute;top:1px;left:0;width:17px;height:17px;display:block;background:#fff;border:1px solid #d0d4df;border-radius:3px}
+.chk_box input[type="checkbox"]:checked + label {color:#000}
+.chk_box input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+.chk_li {padding-left:10px;line-height:20px}
+
+.selec_chk {position:absolute;top:0;left:0;width:0;height:0;opacity:0;outline:0;z-index:-1;overflow:hidden}
+.fregister_agree input[type="checkbox"] + label {color:#676e70}
+.fregister_agree input[type="checkbox"] + label:hover {color:#2172f8}
+.fregister_agree input[type="checkbox"] + label span {position:absolute;top:20px;right:15px;width:17px;height:17px;display:block;background:#fff;border:1px solid #999;border-radius:3px}
+.fregister_agree input[type="checkbox"]:checked + label {color:#000}
+.fregister_agree input[type="checkbox"]:checked + label span {background:url('./img/chk.png') no-repeat 50% 50% #3a8afd;border-color:#1471f6;border-radius:3px}
+.fregister_agree.chk_all input[type="checkbox"] + label span {top:15px}
+
+.member_connect:after {display:block;visibility:hidden;clear:both;content:""}
+.member_connect {margin-top:1em;border:2px solid #cacaca;margin:10px;padding:10px;text-align:left}
+.member_connect .strong {font-weight:bold;margin:0 0 10px;font-size:0.97em}
+.member_connect button {color:#fff;border:0;padding:7px 13px;border:1px solid #6446e7;font-weight:bold;background:#6f50e7;border-radius:3px;font-size:0.92em}
+.member_connect button:hover {background:#6446e7}
+.member_connect {margin-top:30px}
 
 /* LOGIN LOADING */
 .social-login-loading {width:100%;height:auto;text-align:center}
