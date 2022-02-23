@@ -88,6 +88,45 @@ $ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].dirname(dirname(__FILE__).'/'
     </table>
 
     <table class="ins_frm">
+    <caption>S3 정보입력</caption>
+    <colgroup>
+        <col style="width:150px">
+        <col>
+    </colgroup>
+    <tbody>
+    <input name="s3_key_check" type="hidden" id="s3_key_check">
+    <tr class="s3_step1">
+        <th scope="row"><label for="s3_use_check">S3 사용여부</label></th>
+        <td>
+            <select name="s3_use_check" id="s3_use_check">
+                <option value="1">사용</option>
+                <option value="0" selected>사용안함</option>
+            </select>
+        </td>
+    </tr>
+    <tr class="s3_step2">
+        <th scope="row"><label for="s3_access_key">access key</label></th>
+        <td>
+            <input name="s3_access_key" type="text" id="s3_access_key">
+        </td>
+    </tr>
+    <tr class="s3_step2">
+        <th scope="row"><label for="s3_secret_key">secret key</label></th>
+        <td>
+            <input name="s3_secret_key" type="text" id="s3_secret_key">
+        </td>
+    </tr>
+    <tr class="s3_step2">
+        <th scope="row"><label for="s3_bucket_name">bucket 이름</label></th>
+        <td>
+            <input name="s3_bucket_name" type="text" id="s3_bucket_name">
+            <input type="button" id="btn_s3_key_check" value="검증하기">
+        </td>
+    </tr>
+    </tbody>
+    </table>
+
+    <table class="ins_frm">
     <caption>최고관리자 정보입력</caption>
     <input type="hidden" name="ajax_token" value="<?php echo $ajax_token; ?>" >
     <colgroup>
@@ -219,6 +258,60 @@ function frm_install_submit(f)
 
     return true;
 }
+
+$(function() {
+    $('.s3_step2').hide();
+
+    var inAjax = false;
+
+    $("#s3_use_check").change(function() {
+        var s3_use_check_data = $(this).val();
+
+        if(s3_use_check_data == 1) {
+            $(".s3_step2").show();
+        } else {
+            $('.s3_step2').hide();
+        }
+    });
+
+    $("#btn_s3_key_check").click(function() {
+        var s3_access_key = $("#s3_access_key").val();
+        var s3_secret_key = $("#s3_secret_key").val();
+        var s3_bucket_name = $("#s3_bucket_name").val();
+
+        if(inAjax == false) {
+            inAjax = true;
+        } else {
+            alert('현재 통신중입니다. 잠시후 다시 시도해주세요.');
+            return false;
+        }
+
+        $.ajax({
+            url: "./ajax.install_s3.check.php",
+            type: "POST",
+            data: {
+                'access_key' : s3_access_key,
+                'secret_key' : s3_secret_key,
+                'bucket_name' : s3_bucket_name,
+            },
+            dataType: 'json',
+            success:function(data) {
+                inAjax = false;
+                if(data.error != 0) {
+                    alert(data.message);
+                    return false;
+                }
+                alert(data.message);
+                $("#s3_key_check").val(1);
+            },
+            error:function(request, status, error) {
+                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+            }
+        })
+
+        return false;
+    })
+});
 </script>
 
 <?php
