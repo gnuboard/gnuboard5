@@ -94,7 +94,7 @@ $ajax_token = md5($tmp_str.$_SERVER['REMOTE_ADDR'].dirname(dirname(__FILE__).'/'
         <col>
     </colgroup>
     <tbody>
-    <input name="s3_key_check" type="hidden" id="s3_key_check">
+    <input name="s3_key_check" type="hidden" id="s3_key_check" value="0">
     <tr class="s3_step1">
         <th scope="row"><label for="s3_use_check">S3 사용여부</label></th>
         <td>
@@ -234,6 +234,11 @@ function frm_install_submit(f)
     }
     
     if (window.jQuery) {
+
+        if($("#s3_use_check").val() == 1) {
+            $("#btn_s3_key_check").click();
+            return false;
+        }
 
         var jqxhr = jQuery.post( "ajax.install.check.php", $(f).serialize(), function(data) {
             

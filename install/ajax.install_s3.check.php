@@ -20,34 +20,45 @@
 
         if(isset($access_key) == false || $access_key == '') throw new Exception("access key를 입력해주세요");
         if(isset($secret_key) == false || $secret_key == '') throw new Exception("secret key를 입력해주세요");
-        // if(isset($bucket_name) == false || $bucket_name == '') throw new Exception("bucket 이름을 입력해주세요");
+        if(isset($bucket_name) == false || $bucket_name == '') throw new Exception("bucket 이름을 입력해주세요");
 
         $data = array();
 
         $credentials = new Credentials($access_key, $secret_key);
-        try {
-            $options = [
-                'region'            => 'ap-northeast-2',
-                'version'           => 'latest',
-                'credentials'       => $credentials,
-            ];
+        $options = [
+            'region'            => 'ap-northeast-2',
+            'version'           => 'latest',
+            'credentials'       => $credentials,
+        ];
 
-            $s3Client = new S3Client($options);
-            $buckets = $s3Client->listBuckets();
+        try {
+            $s3_client = new S3Client($options);
+            $buckets = $s3_client->listBuckets();
+            $check = false;
+            foreach($buckets['Bucket'] as $key => $var) {
+                if($var['name'] == $bucket_name) {
+                    $check = true;
+                    break;
+                }
+            }
+
+            if($check == false) throw new Exception("해당 bucket이 존재하지 않습니다.");
 
             $error = 0;
             $message = "검증되었습니다.";
         } catch (S3Exception $ae) {
             $error = 1;
             $buckets = array();
-            $message = "검증에 실패했습니다. 올바른 key 값인지 확인해주세요.";
+            if(empty($ae->getMessage())) {
+                $message = $ae->getMessage();
+            } else {
+                $message = "검증에 실패했습니다. 올바른 key 값인지 확인해주세요.";
+            }
         }
 
         if($error == 1) throw new Exception($message);
         
         $data['error'] = 0;
-        $data['item'] = $buckets;
-        
     } catch (Exception $e) {
         $data = array();
         $data['error'] = 1;
