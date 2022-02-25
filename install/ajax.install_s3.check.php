@@ -13,9 +13,7 @@
 
     try {
         $access_key = $_REQUEST['access_key'];
-        // $access_key = "AKIAQOTJE4FTM4NVCK4C";
         $secret_key = $_REQUEST['secret_key'];
-        // $secret_key = "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";
         $bucket_name = $_REQUEST['bucket_name'];
 
         if(isset($access_key) == false || $access_key == '') throw new Exception("access key를 입력해주세요");
@@ -34,6 +32,7 @@
         try {
             $s3_client = new S3Client($options);
             $buckets = $s3_client->listBuckets();
+
             $check = false;
             foreach($buckets['Bucket'] as $key => $var) {
                 if($var['name'] == $bucket_name) {
@@ -54,6 +53,7 @@
             } else {
                 $message = "검증에 실패했습니다. 올바른 key 값인지 확인해주세요.";
             }
+            $message = $ae->getMessage();
         }
 
         if($error == 1) throw new Exception($message);

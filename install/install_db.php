@@ -63,6 +63,7 @@ if($s3_use_check != '') {
         die('<div class="ins_inner"><p>S3를 사용하시기 위해선 bucket name이 필요합니다.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
     }
 
+    $s3_client = false;
     if($s3_key_check != 1) {
         try {
             $credentials = new Credentials($access_key, $secret_key);
@@ -76,7 +77,7 @@ if($s3_use_check != '') {
             $buckets = $s3_client->listBuckets();
             $check = false;
             foreach($buckets['Bucket'] as $key => $var) {
-                if($var['name'] == $bucket_name) {
+                if($var['name'] == $s3_bucket_name) {
                     $check = true;
                     break;
                 }
@@ -89,6 +90,7 @@ if($s3_use_check != '') {
             } else {
                 $message = $ae->getMessage();
             }
+            $s3_client = false;
             die('<div class="ins_inner"><p>'.$message.'</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
         }
     }
@@ -561,51 +563,121 @@ if($g5_shop_install) {
 <?php
 //-------------------------------------------------------------------------------------------------
 
-// 디렉토리 생성
-$dir_arr = array (
-    $data_path.'/cache',
-    $data_path.'/editor',
-    $data_path.'/file',
-    $data_path.'/log',
-    $data_path.'/member',
-    $data_path.'/member_image',
-    $data_path.'/session',
-    $data_path.'/content',
-    $data_path.'/faq',
-    $data_path.'/tmp'
-);
-
-for ($i=0; $i<count($dir_arr); $i++) {
-    @mkdir($dir_arr[$i], G5_DIR_PERMISSION);
-    @chmod($dir_arr[$i], G5_DIR_PERMISSION);
-}
-
-// 게시판 디렉토리 생성 (작은별님,211206)
-for ($i=0; $i<count($tmp_bo_table); $i++) {
-    $board_dir = $data_path.'/file/'.$tmp_bo_table[$i];
-    @mkdir($board_dir, G5_DIR_PERMISSION);
-    @chmod($board_dir, G5_DIR_PERMISSION);
-}
-
-if($g5_shop_install) {
+// s3를 이용안하는 경우
+if($s3_client == false) {
+    // 디렉토리 생성
     $dir_arr = array (
-        $data_path.'/banner',
-        $data_path.'/common',
-        $data_path.'/event',
-        $data_path.'/item'
+        $data_path.'/cache',
+        $data_path.'/editor',
+        $data_path.'/file',
+        $data_path.'/log',
+        $data_path.'/member',
+        $data_path.'/member_image',
+        $data_path.'/session',
+        $data_path.'/content',
+        $data_path.'/faq',
+        $data_path.'/tmp'
     );
 
     for ($i=0; $i<count($dir_arr); $i++) {
         @mkdir($dir_arr[$i], G5_DIR_PERMISSION);
         @chmod($dir_arr[$i], G5_DIR_PERMISSION);
     }
+
+    // 게시판 디렉토리 생성 (작은별님,211206)
+    for ($i=0; $i<count($tmp_bo_table); $i++) {
+        $board_dir = $data_path.'/file/'.$tmp_bo_table[$i];
+        @mkdir($board_dir, G5_DIR_PERMISSION);
+        @chmod($board_dir, G5_DIR_PERMISSION);
+    }
+
+    if($g5_shop_install) {
+        $dir_arr = array (
+            $data_path.'/banner',
+            $data_path.'/common',
+            $data_path.'/event',
+            $data_path.'/item'
+        );
+
+        for ($i=0; $i<count($dir_arr); $i++) {
+            @mkdir($dir_arr[$i], G5_DIR_PERMISSION);
+            @chmod($dir_arr[$i], G5_DIR_PERMISSION);
+        }
+    }
+} else {
+    // S3를 쓰는 경우
+    $s3_client->registerStreamWrapper();
+
+    $dir_arr_base = array (
+        $data_path.'/cache',
+        $data_path.'/session'
+    );
+
+    for ($i=0; $i<count($dir_arr_base); $i++) {
+        @mkdir($dir_arr_base[$i], G5_DIR_PERMISSION);
+        @chmod($dir_arr_base[$i], G5_DIR_PERMISSION);
+    }
+
+
+    $dir_arr_s3 = array (
+        G5_DATA_DIR.'/editor',
+        G5_DATA_DIR.'/file',
+        G5_DATA_DIR.'/log',
+        G5_DATA_DIR.'/member',
+        G5_DATA_DIR.'/member_image',
+        G5_DATA_DIR.'/content',
+        G5_DATA_DIR.'/faq',
+        G5_DATA_DIR.'/tmp'
+    );
+
+    for ($i=0; $i<count($dir_arr_s3); $i++) {
+        @mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
+        @chmod('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
+    }
+
+    // 게시판 디렉토리 생성 (작은별님,211206)
+    for ($i=0; $i<count($tmp_bo_table); $i++) {
+        $board_dir = G5_DATA_DIR.'/file/'.$tmp_bo_table[$i];
+        @mkdir('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
+        @chmod('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
+    }
+
+    if($g5_shop_install) {
+        $dir_arr = array (
+            G5_DATA_DIR.'/banner',
+            G5_DATA_DIR.'/common',
+            G5_DATA_DIR.'/event',
+            G5_DATA_DIR.'/item'
+        );
+
+        for ($i=0; $i<count($dir_arr); $i++) {
+            @mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
+            @chmod('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
+        }
+    }
 }
+
 ?>
 
         <li>데이터 디렉토리 생성 완료</li>
 
 <?php
 //-------------------------------------------------------------------------------------------------
+
+// S3 설정 파일 생성
+$file = '../'.G5_DATA_DIR.'/'.G5_S3CONFIG_FILE;
+$f = @fopen($file, 'a');
+
+fwrite($f, "<?php\n");
+fwrite($f, "if (!defined('_GNUBOARD_')) exit;\n");
+fwrite($f, "define('G5_S3_ACCESS_KEY', '".addcslashes($s3_access_key, "\\'")."');\n");
+fwrite($f, "define('G5_S3_SECRET_KEY', '".addcslashes($s3_secret_key, "\\'")."');\n");
+fwrite($f, "define('G5_S3_BUCKET_NAME', '".addcslashes($s3_bucket_name, "\\'")."');\n");
+
+fwrite($f, "?>");
+
+fclose($f);
+@chmod($file, G5_FILE_PERMISSION);
 
 // DB 설정 파일 생성
 $file = '../'.G5_DATA_DIR.'/'.G5_DBCONFIG_FILE;
@@ -702,11 +774,20 @@ EOD;
 fwrite($f, $str);
 fclose($f);
 
-if($g5_shop_install) {
-    @copy('./logo_img', $data_path.'/common/logo_img');
-    @copy('./logo_img', $data_path.'/common/logo_img2');
-    @copy('./mobile_logo_img', $data_path.'/common/mobile_logo_img');
-    @copy('./mobile_logo_img', $data_path.'/common/mobile_logo_img2');
+if($s3_client == false) {
+    if($g5_shop_install) {
+        @copy('./logo_img', $data_path.'/common/logo_img');
+        @copy('./logo_img', $data_path.'/common/logo_img2');
+        @copy('./mobile_logo_img', $data_path.'/common/mobile_logo_img');
+        @copy('./mobile_logo_img', $data_path.'/common/mobile_logo_img2');
+    }
+} else {
+    if($g5_shop_install) {
+        @copy('./logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/logo_img');
+        @copy('./logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/logo_img2');
+        @copy('./mobile_logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/mobile_logo_img');
+        @copy('./mobile_logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/mobile_logo_img2');
+    }
 }
 //-------------------------------------------------------------------------------------------------
 ?>
