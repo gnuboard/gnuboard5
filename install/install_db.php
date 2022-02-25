@@ -23,6 +23,11 @@ include_once("../lib/aws/aws-autoloader.php"); // Aws S3 SDK autoloader
 $title = G5_VERSION." 설치 완료 3/3";
 include_once ('./install.inc.php');
 
+use Aws\S3\S3Client;
+use Aws\Exception\AwsException;
+use Aws\S3\Exception\S3Exception;
+use Aws\Credentials\Credentials;
+
 $tmp_bo_table   = array ("notice", "qa", "free", "gallery");
 
 //print_r($_POST); exit;
@@ -51,8 +56,8 @@ if (preg_match("/[^0-9a-z_]+/i", $admin_id)) {
     die('<div class="ins_inner"><p>관리자 아이디는 영문자, 숫자, _ 만 입력하세요.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
 }
 
-// S3 세팅관련 오류 확인
-if($s3_use_check != '') {
+
+if($s3_use_check != '' && $s3_use_check == 1) {
     if($s3_access_key == '') {
         die('<div class="ins_inner"><p>S3를 사용하시기 위해선 access key가 필요합니다.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
     }
@@ -63,38 +68,40 @@ if($s3_use_check != '') {
         die('<div class="ins_inner"><p>S3를 사용하시기 위해선 bucket name이 필요합니다.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
     }
 
-    $s3_client = false;
-    if($s3_key_check != 1) {
-        try {
-            $credentials = new Credentials($access_key, $secret_key);
-            $options = [
-                'region'            => 'ap-northeast-2',
-                'version'           => 'latest',
-                'credentials'       => $credentials,
-            ];
+    try {
+        $credentials = new Credentials($s3_access_key, $s3_secret_key);
+        $options = [
+            'region'            => 'ap-northeast-2',
+            'version'           => 'latest',
+            'credentials'       => $credentials,
+        ];
     
-            $s3_client = new S3Client($options);
+        $s3_client = new S3Client($options);        
+        if($s3_key_check != 1) {
             $buckets = $s3_client->listBuckets();
             $check = false;
-            foreach($buckets['Bucket'] as $key => $var) {
-                if($var['name'] == $s3_bucket_name) {
+            foreach($buckets['Buckets'] as $key => $var) {
+                if($var['Name'] == $s3_bucket_name) {
                     $check = true;
                     break;
                 }
             }
     
             if($check == false) throw new Exception("해당 bucket이 존재하지 않습니다.");
-        } catch(S3Exception $ae) {
-            if(empty($ae->getMessage())) {
-                $message = "검증에 실패했습니다. 올바른 key 값인지 확인해주세요.";
-            } else {
-                $message = $ae->getMessage();
-            }
-            $s3_client = false;
-            die('<div class="ins_inner"><p>'.$message.'</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
         }
+    } catch(Exception $ae) {
+        if(empty($ae->getMessage())) {
+            $message = "검증에 실패했습니다. 올바른 key 값인지 확인해주세요.";
+        } else {
+            $message = $ae->getMessage();
+        }
+        $s3_client = false;
+        die('<div class="ins_inner"><p>'.$message.'</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
     }
 }
+
+// S3 세팅관련 오류 확인
+
 
 $g5_install = isset($_POST['g5_install']) ? (int) $_POST['g5_install'] : 0;
 $g5_shop_prefix = isset($_POST['g5_shop_prefix']) ? safe_install_string_check($_POST['g5_shop_prefix']) : 'yc5_';
@@ -564,7 +571,62 @@ if($g5_shop_install) {
 //-------------------------------------------------------------------------------------------------
 
 // s3를 이용안하는 경우
-if($s3_client == false) {
+if($s3_use_check != '' && $s3_use_check == 1) {
+    if($s3_client != false) {
+        // S3를 쓰는 경우
+        $s3_client->registerStreamWrapper();
+
+        $dir_arr_base = array (
+            $data_path.'/cache',
+            $data_path.'/session'
+        );
+
+        for ($i=0; $i<count($dir_arr_base); $i++) {
+            @mkdir($dir_arr_base[$i], G5_DIR_PERMISSION);
+            @chmod($dir_arr_base[$i], G5_DIR_PERMISSION);
+        }
+
+
+        $dir_arr_s3 = array (
+            G5_DATA_DIR.'/editor',
+            G5_DATA_DIR.'/file',
+            G5_DATA_DIR.'/log',
+            G5_DATA_DIR.'/member',
+            G5_DATA_DIR.'/member_image',
+            G5_DATA_DIR.'/content',
+            G5_DATA_DIR.'/faq',
+            G5_DATA_DIR.'/tmp'
+        );
+
+        for ($i=0; $i<count($dir_arr_s3); $i++) {
+            @mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
+            @chmod('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
+        }
+
+        // 게시판 디렉토리 생성 (작은별님,211206)
+        for ($i=0; $i<count($tmp_bo_table); $i++) {
+            $board_dir = G5_DATA_DIR.'/file/'.$tmp_bo_table[$i];
+            @mkdir('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
+            @chmod('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
+        }
+
+        if($g5_shop_install) {
+            $dir_arr = array (
+                G5_DATA_DIR.'/banner',
+                G5_DATA_DIR.'/common',
+                G5_DATA_DIR.'/event',
+                G5_DATA_DIR.'/item'
+            );
+
+            for ($i=0; $i<count($dir_arr); $i++) {
+                @mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
+                @chmod('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
+            }
+        }
+    } else {
+        die('<div class="ins_inner"><p>S3 적용중에 오류가 발생했습니다.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
+    }
+} else {
     // 디렉토리 생성
     $dir_arr = array (
         $data_path.'/cache',
@@ -602,57 +664,6 @@ if($s3_client == false) {
         for ($i=0; $i<count($dir_arr); $i++) {
             @mkdir($dir_arr[$i], G5_DIR_PERMISSION);
             @chmod($dir_arr[$i], G5_DIR_PERMISSION);
-        }
-    }
-} else {
-    // S3를 쓰는 경우
-    $s3_client->registerStreamWrapper();
-
-    $dir_arr_base = array (
-        $data_path.'/cache',
-        $data_path.'/session'
-    );
-
-    for ($i=0; $i<count($dir_arr_base); $i++) {
-        @mkdir($dir_arr_base[$i], G5_DIR_PERMISSION);
-        @chmod($dir_arr_base[$i], G5_DIR_PERMISSION);
-    }
-
-
-    $dir_arr_s3 = array (
-        G5_DATA_DIR.'/editor',
-        G5_DATA_DIR.'/file',
-        G5_DATA_DIR.'/log',
-        G5_DATA_DIR.'/member',
-        G5_DATA_DIR.'/member_image',
-        G5_DATA_DIR.'/content',
-        G5_DATA_DIR.'/faq',
-        G5_DATA_DIR.'/tmp'
-    );
-
-    for ($i=0; $i<count($dir_arr_s3); $i++) {
-        @mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
-        @chmod('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
-    }
-
-    // 게시판 디렉토리 생성 (작은별님,211206)
-    for ($i=0; $i<count($tmp_bo_table); $i++) {
-        $board_dir = G5_DATA_DIR.'/file/'.$tmp_bo_table[$i];
-        @mkdir('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
-        @chmod('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
-    }
-
-    if($g5_shop_install) {
-        $dir_arr = array (
-            G5_DATA_DIR.'/banner',
-            G5_DATA_DIR.'/common',
-            G5_DATA_DIR.'/event',
-            G5_DATA_DIR.'/item'
-        );
-
-        for ($i=0; $i<count($dir_arr); $i++) {
-            @mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
-            @chmod('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
         }
     }
 }

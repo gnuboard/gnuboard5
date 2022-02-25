@@ -22,20 +22,20 @@
 
         $data = array();
 
-        $credentials = new Credentials($access_key, $secret_key);
-        $options = [
-            'region'            => 'ap-northeast-2',
-            'version'           => 'latest',
-            'credentials'       => $credentials,
-        ];
-
         try {
+            $credentials = new Credentials($access_key, $secret_key);
+            $options = [
+                'region'            => 'ap-northeast-2',
+                'version'           => 'latest',
+                'credentials'       => $credentials,
+            ];
+
             $s3_client = new S3Client($options);
             $buckets = $s3_client->listBuckets();
 
             $check = false;
-            foreach($buckets['Bucket'] as $key => $var) {
-                if($var['name'] == $bucket_name) {
+            foreach($buckets['Buckets'] as $key => $var) {
+                if($var['Name'] == $bucket_name) {
                     $check = true;
                     break;
                 }
@@ -45,7 +45,7 @@
 
             $error = 0;
             $message = "검증되었습니다.";
-        } catch (S3Exception $ae) {
+        } catch (Exception $ae) {
             $error = 1;
             $buckets = array();
             if(empty($ae->getMessage())) {
@@ -59,6 +59,7 @@
         if($error == 1) throw new Exception($message);
         
         $data['error'] = 0;
+        $data['message'] = $message;
     } catch (Exception $e) {
         $data = array();
         $data['error'] = 1;

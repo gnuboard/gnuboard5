@@ -236,8 +236,11 @@ function frm_install_submit(f)
     if (window.jQuery) {
 
         if($("#s3_use_check").val() == 1) {
-            $("#btn_s3_key_check").click();
-            return false;
+            var result = s3_check();
+            alert(result.message);
+            if(result.status == false) {
+                return false;
+            }
         }
 
         var jqxhr = jQuery.post( "ajax.install.check.php", $(f).serialize(), function(data) {
@@ -264,11 +267,47 @@ function frm_install_submit(f)
     return true;
 }
 
-$(function() {
-    $('.s3_step2').hide();
+function s3_check() {
+    var s3_access_key = $("#s3_access_key").val();
+    var s3_secret_key = $("#s3_secret_key").val();
+    var s3_bucket_name = $("#s3_bucket_name").val();
+    var result = {};
+    $.ajax({
+        url: "./ajax.install_s3.check.php",
+        type: "POST",
+        data: {
+            'access_key' : s3_access_key,
+            'secret_key' : s3_secret_key,
+            'bucket_name' : s3_bucket_name,
+        },
+        dataType: 'json',
+        async: false,
+        success:function(data) {
+            inAjax = false;
+            if(data.error != 0) {
+                result.status = false;
+                result.message = data.message;
+            } else {
+                $("#s3_key_check").val(1);
+                result.status = true;
+                result.message = data.message;
+            }
+            
+        },
+        error:function(request, status, error) {
+            inAjax = false;
+            result.status = false;
+            result.message = "code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error
+        }
+    });
 
+    return result;
+}
+
+$(function() {
     var inAjax = false;
 
+    $('.s3_step2').hide();
     $("#s3_use_check").change(function() {
         var s3_use_check_data = $(this).val();
 
@@ -280,39 +319,10 @@ $(function() {
     });
 
     $("#btn_s3_key_check").click(function() {
-        var s3_access_key = $("#s3_access_key").val();
-        var s3_secret_key = $("#s3_secret_key").val();
-        var s3_bucket_name = $("#s3_bucket_name").val();
+        var result = s3_check();
+        console.log(result);
 
-        if(inAjax == false) {
-            inAjax = true;
-        } else {
-            alert('현재 통신중입니다. 잠시후 다시 시도해주세요.');
-            return false;
-        }
-
-        $.ajax({
-            url: "./ajax.install_s3.check.php",
-            type: "POST",
-            data: {
-                'access_key' : s3_access_key,
-                'secret_key' : s3_secret_key,
-                'bucket_name' : s3_bucket_name,
-            },
-            dataType: 'json',
-            success:function(data) {
-                inAjax = false;
-                if(data.error != 0) {
-                    alert(data.message);
-                    return false;
-                }
-                alert(data.message);
-                $("#s3_key_check").val(1);
-            },
-            error:function(request, status, error) {
-                alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            }
-        })
+        alert(result.message);
 
         return false;
     })
