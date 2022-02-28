@@ -42,7 +42,7 @@ $admin_pass  = isset($_POST['admin_pass']) ? $_POST['admin_pass'] : '';
 $admin_name  = isset($_POST['admin_name']) ? $_POST['admin_name'] : '';
 $admin_email = isset($_POST['admin_email']) ? $_POST['admin_email'] : '';
 //S3 관련 데이터 추가
-$s3_use_check = isset($_POST['s3_use_check']) ? $_POST['s3_use_check'] : '';
+$s3_use_check = isset($_POST['s3_use_check']) ? $_POST['s3_use_check'] : 0;
 $s3_key_check = isset($_POST['s3_key_check']) ? $_POST['s3_key_check'] : '';
 $s3_access_key = isset($_POST['s3_access_key']) ? $_POST['s3_access_key'] : '';
 $s3_secret_key = isset($_POST['s3_secret_key']) ? $_POST['s3_secret_key'] : '';
@@ -57,7 +57,7 @@ if (preg_match("/[^0-9a-z_]+/i", $admin_id)) {
 }
 
 
-if($s3_use_check != '' && $s3_use_check == 1) {
+if($s3_use_check == 1) {
     if($s3_access_key == '') {
         die('<div class="ins_inner"><p>S3를 사용하시기 위해선 access key가 필요합니다.</p><div class="inner_btn"><a href="./install_config.php">뒤로가기</a></div></div>');
     }
@@ -570,10 +570,9 @@ if($g5_shop_install) {
 <?php
 //-------------------------------------------------------------------------------------------------
 
-// s3를 이용안하는 경우
-if($s3_use_check != '' && $s3_use_check == 1) {
+// s3를 이용하는 경우
+if($s3_use_check == 1) {
     if($s3_client != false) {
-        // S3를 쓰는 경우
         $s3_client->registerStreamWrapper();
 
         $dir_arr_base = array (
@@ -599,15 +598,15 @@ if($s3_use_check != '' && $s3_use_check == 1) {
         );
 
         for ($i=0; $i<count($dir_arr_s3); $i++) {
-            @mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
-            @chmod('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
+            mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
+            chmod('s3://'.$s3_bucket_name.'/'.$dir_arr_s3[$i], G5_DIR_PERMISSION);
         }
 
         // 게시판 디렉토리 생성 (작은별님,211206)
         for ($i=0; $i<count($tmp_bo_table); $i++) {
             $board_dir = G5_DATA_DIR.'/file/'.$tmp_bo_table[$i];
-            @mkdir('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
-            @chmod('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
+            mkdir('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
+            chmod('s3://'.$s3_bucket_name.'/'.$board_dir, G5_DIR_PERMISSION);
         }
 
         if($g5_shop_install) {
@@ -619,8 +618,8 @@ if($s3_use_check != '' && $s3_use_check == 1) {
             );
 
             for ($i=0; $i<count($dir_arr); $i++) {
-                @mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
-                @chmod('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
+                mkdir('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
+                chmod('s3://'.$s3_bucket_name.'/'.$dir_arr[$i], G5_DIR_PERMISSION);
             }
         }
     } else {
@@ -785,19 +784,17 @@ EOD;
 fwrite($f, $str);
 fclose($f);
 
-if($s3_client == false) {
-    if($g5_shop_install) {
+if($g5_shop_install) {
+    if($s3_use_check == 1 && $s3_client != false) {
+        @copy('./logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/logo_img');
+        @copy('./logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/logo_img2');
+        @copy('./mobile_logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/mobile_logo_img');
+        @copy('./mobile_logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/mobile_logo_img2');    
+    } else {
         @copy('./logo_img', $data_path.'/common/logo_img');
         @copy('./logo_img', $data_path.'/common/logo_img2');
         @copy('./mobile_logo_img', $data_path.'/common/mobile_logo_img');
         @copy('./mobile_logo_img', $data_path.'/common/mobile_logo_img2');
-    }
-} else {
-    if($g5_shop_install) {
-        @copy('./logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/logo_img');
-        @copy('./logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/logo_img2');
-        @copy('./mobile_logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/mobile_logo_img');
-        @copy('./mobile_logo_img', 's3://'.$s3_bucket_name.'/'.G5_DATA_DIR.'/common/mobile_logo_img2');
     }
 }
 //-------------------------------------------------------------------------------------------------
