@@ -570,8 +570,8 @@ if(isset($_FILES['bf_file']['name']) && is_array($_FILES['bf_file']['name'])) {
             $upload[$i]['file'] = abs(ip2long($_SERVER['REMOTE_ADDR'])).'_'.substr($shuffle,0,8).'_'.replace_filename($filename);
 
             
-            if(isset($s3)) {
-                $dest_file = $s3->getPath().'file/'.$bo_table.'/'.$upload[$i]['file'];
+            if(isset($g5['s3'])) {
+                $dest_file = $g5['s3']->getPath().'/'.G5_DATA_DIR.'/file/'.$bo_table.'/'.$upload[$i]['file'];
                 run_event("s3_move_uploaded_file", $tmp_file, $dest_file);
             } else {
                 $dest_file = G5_DATA_PATH.'/file/'.$bo_table.'/'.$upload[$i]['file'];

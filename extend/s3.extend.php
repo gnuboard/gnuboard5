@@ -8,16 +8,16 @@ if (file_exists($s3config_file)) {
     require_once(G5_LIB_PATH.'/s3.lib.php');
 
     // s3 $g5 배열에 저장
-    $s3 = new S3(G5_S3_ACCESS_KEY, G5_S3_SECRET_KEY, G5_S3_BUCKET_NAME);
+    $g5['s3'] = new S3(G5_S3_ACCESS_KEY, G5_S3_SECRET_KEY, G5_S3_BUCKET_NAME);
 
     add_event('s3_move_uploaded_file', 's3_uploaded_file', 10, 2);
 
     function s3_uploaded_file($tmp_file, $dest_file) {
-        global $s3;
+        global $g5;
 
-        if($s3 == false) return false;
+        if($g5['s3'] == false) return false;
 
-        $result = $s3->uploadFile($tmp_file, $dest_file);
+        $result = $g5['s3']->uploadFile($tmp_file, $dest_file);
 
         return $result;
     }

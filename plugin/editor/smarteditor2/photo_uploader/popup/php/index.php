@@ -23,8 +23,14 @@ if( !function_exists('json_encode') ) {
 
 $ym = date('ym', G5_SERVER_TIME);
 
-$data_dir = G5_DATA_PATH.'/editor/'.$ym.'/';
-$data_url = G5_DATA_URL.'/editor/'.$ym.'/';
+// s3 사용시 에디터 저장 url 설정
+if(isset($g5['s3'])) {
+    $data_dir = $g5['s3']->getPath().'/'.G5_DATA_DIR.'/editor/'.$ym.'/';
+    $data_url = $g5['s3']->getUrl().'/'.G5_DATA_DIR.'/editor/'.$ym.'/';
+} else {
+    $data_dir = G5_DATA_PATH.'/editor/'.$ym.'/';
+    $data_url = G5_DATA_URL.'/editor/'.$ym.'/';
+}
 
 @mkdir($data_dir, G5_DIR_PERMISSION);
 @chmod($data_dir, G5_DIR_PERMISSION);
