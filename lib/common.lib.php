@@ -1527,7 +1527,7 @@ function sql_connect($host, $user, $pass, $db=G5_MYSQL_DB)
     global $g5;
 
     if(function_exists('mysqli_connect') && G5_MYSQLI_USE) {
-        $link = mysqli_connect($host, $user, $pass, $db);
+        $link = @mysqli_connect($host, $user, $pass, $db) or die('MySQL Host, User, Password, DB 정보에 오류가 있습니다.');
 
         // 연결 오류 발생 시 스크립트 종료
         if (mysqli_connect_errno()) {
@@ -3358,10 +3358,10 @@ function check_url_host($url, $msg='', $return_url=G5_URL, $is_redirect=false)
         }
     }
 
-    if(stripos($url, 'http:') !== false) {
-        if(!isset($p['scheme']) || !$p['scheme'] || !isset($p['host']) || !$p['host'])
-            alert('url 정보가 올바르지 않습니다.', $return_url);
-    }
+    // if(stripos($url, 'http:') !== false) {
+    //     if(!isset($p['scheme']) || !$p['scheme'] || !isset($p['host']) || !$p['host'])
+    //         alert('url 정보가 올바르지 않습니다.', $return_url);
+    // }
 
     //php 5.6.29 이하 버전에서는 parse_url 버그가 존재함
     //php 7.0.1 ~ 7.0.5 버전에서는 parse_url 버그가 존재함
