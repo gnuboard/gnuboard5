@@ -329,7 +329,7 @@ a.btn_close {text-align:center;line-height:50px}
 a.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle}
 button.btn_cancel {display:inline-block;background:#969696;color:#fff;text-decoration:none;vertical-align:middle}
 .btn_cancel:hover {background:#aaa}
-a.btn_frmline, button.btn_frmline {display:inline-block;padding:0 25px;height:40px;border:0;background:#434a54;border-radius:3px;color:#fff;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
+a.btn_frmline, button.btn_frmline {display:inline-block;width:128px;padding:0 5px;height:40px;border:0;background:#434a54;border-radius:3px;color:#fff;text-decoration:none;vertical-align:top} /* 우편번호검색버튼 등 */
 a.btn_frmline {}
 button.btn_frmline {font-size:1em}
 a.btn_frmline {line-height:24px}
