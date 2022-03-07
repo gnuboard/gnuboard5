@@ -122,7 +122,7 @@ if($config['cf_cert_use']) {
             $sql_certify .= " , mb_certify  = '{$cert_type}' ";
             $sql_certify .= " , mb_adult = '".get_session('ss_cert_adult')."' ";
             $sql_certify .= " , mb_birth = '".get_session('ss_cert_birth')."' ";
-            $sql_certify .= " , mb_sex = '".get_session+('ss_cert_sex')."' ";
+            $sql_certify .= " , mb_sex = '".get_session('ss_cert_sex')."' ";
             $sql_certify .= " , mb_dupinfo = '".get_session('ss_cert_dupinfo')."' ";
             if($w == 'u')
                 $sql_certify .= " , mb_name = '{$mb_name}' ";
