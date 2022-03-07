@@ -2,33 +2,7 @@
 
 /* ### 기본 스타일 커스터마이징 시작 ### */
 
-#poll a.btn_admin {} /* 관리자 전용 버튼 */
-#poll a.btn_admin:focus, #poll a.btn_admin:hover {}
-
-#poll_result .tbl_frm table {}
-#poll_result .tbl_frm .frm_info {}
-#poll_result .tbl_frm .frm_address {}
-#poll_result .tbl_frm .frm_file {}
-#poll_result .tbl_frm caption {}
-
-#poll_result .tbl_frm01 {}
-#poll_result .tbl_frm01 th {}
-#poll_result .tbl_frm01 td {}
-#poll_result .tbl_frm01 textarea, #poll_result tbl_frm01 .frm_input {}
-#poll_result .tbl_frm01 textarea {}
-#poll_result .tbl_frm01 a {}
-
-/* 필수입력 */
-#poll_result .required, #poll_result textarea.required {}
-
-#poll_result .btn_confirm {} /* 서식단계 진행 */
-#poll_result .btn_submit {}
-#poll_result button.btn_submit {}
 #poll_result .win_btn {text-align:center} /* 새창용 */
-#poll_result .win_btn button {}
-#poll_result .win_btn input {}
-#poll_result .win_btn a {}
-#poll_result .win_btn a:focus, #poll_result .win_btn a:hover {}
 
 /* ### 기본 스타일 커스터마이징 끝 ### */
 

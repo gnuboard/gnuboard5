@@ -178,7 +178,7 @@ a.btn_submit{background:#ff4081;color:#fff}
 
 .btn_add01 {text-align:right}
 .btn_add01 a, .btn_add01 button {padding:10px;border:1px solid #ccc;background:#f0f0f0;text-decoration:none;cursor:pointer}
-.btn_add01 a {display:inline-block;vertical-align:middle}btn_confirm
+.btn_add01 a {display:inline-block;vertical-align:middle}
 .btn_add01 button {margin:0}
 
 
@@ -208,7 +208,7 @@ a.btn_ov02:hover,a.ov_listall:hover{background:#3f51b5}
 
 /*form*/
 .sound_only {display:inline-block !important;position:absolute;top:0;left:0;margin:0 !important;padding:0 !important;width:1px !important;height:1px !important;font-size:0;line-height:0;border:0 !important;overflow:hidden !important}
-.frm_input{height:35px;line-height:32px;border:1px solid #d5d5d5;}
+.frm_input{padding:0 5px;height:35px;line-height:32px;border:1px solid #d5d5d5;}
 .frm_input_full{width:100%}
 .required{background:url('../img/wrest.gif') top right no-repeat #fff !important}
 select{height:35px;line-height:32px;border:1px solid #d5d5d5;}
@@ -218,7 +218,7 @@ legend {position:absolute;width:0;height:0;font-size:0;line-height:0;text-indent
 
 /* 외부서비스 사이트코드 */
 .sitecode {display:inline-block;font:bold 15px 'Verdana';vertical-align:middle}
-
+.sitecode.title {width:80px}
 
 .readonly {}
 
@@ -905,9 +905,7 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .new_win_ul {margin:-20px 0 20px 0;padding:0 0 0 20px;border-bottom:1px solid #515151;background:#484848;list-style:none;zoom:1}
 .new_win_ul:after {display:block;visibility:hidden;clear:both;content:""}
 .new_win_ul li {float:left;margin-left:-1px}
-
 .new_win_ul a {display:block;padding:10px 10px 8px;border-right:1px solid #595959;border-left:1px solid #595959;color:#fff;font-family:dotum;font-weight:bold;text-decoration:none}
-
 
 .new_win_desc {margin:0 }
 .new_win .anchor {margin:0 0 5px}
@@ -918,11 +916,12 @@ strong.sodr_nonpay {display:block;padding:5px 0;text-align:right}
 .new_win .win_btn a {display:inline-block;padding:0 10px;height:30px;background:#4b545e;color:#fff;vertical-align:middle;line-height:2.4em}
 .new_win .win_btn a:focus, .new_win .win_btn a:hover {text-decoration:none}
 
-
 .new_win .local_sch, .new_win .local_cmd, .new_win .local_desc01, .new_win .local_desc02, .new_win .local_ov {margin:10px}
 
 .new_win_con{margin: 10px; background:#fff;padding:20px}
 .new_win_con .table_form table th{width:120px}
+
+.new_win .btn_confirm {text-align:center;}
 
 /* 자바스크립트 alert 대안 */
 #validation_check {margin:100px auto;width:500px}
@@ -1001,7 +1000,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .service_wrap{ width:965px;margin:0 0 10px;overflow:hidden}
 .sevice_1{border:1px solid #ebe8e8;width:310px;float:left;border-radius:5px;text-align:center;margin-right:6px;}
 .sevice_1 .svc_img{padding:30px 0 0;}
-.sevice_1 h3{font-size:16px;margin:185px 0 10px;color:#525252}
+.sevice_1 h3{font-size:16px;margin:190px 0 10px;min-height:45px;color:#525252}
 .sevice_1 p{padding:20px;background:#f8f8f8;font-size:12px;text-align:left;color:#898989;line-height:18px}
 .sevice_1 ul {width:100%;padding:0; margin:0;border-top:1px solid #ebe8e8;}
 .sevice_1 ul li{list-style:none;float:left;border-right:1px solid #ebe8e8;}
@@ -1014,7 +1013,7 @@ box-shadow: 2px 2px 3px 0px rgba(0,0,0,0.2);}
 .svc_card{background:url('../img/service_img1.jpg') no-repeat top center;margin-right:13px;}
 .svc_card ul li{width:33%;}
 .svc_phone {background:url('../img/service_img2.jpg') no-repeat top center;margin-right:13px;}
-.svc_phone ul li{width:33%;}
+.svc_phone ul li{width:50%;}
 .svc_ipin {background:url('../img/service_img3.jpg') no-repeat top center;}
 
 .service_2{padding-top:15px;clear:both}
