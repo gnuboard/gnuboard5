@@ -1593,6 +1593,14 @@ function sql_query($sql, $error=G5_DISPLAY_SQL_ERROR, $link=null)
     // `information_schema` DB로의 접근을 허락하지 않습니다.
     $sql = preg_replace("#^select.*from.*where.*`?information_schema`?.*#i", "select 1", $sql);
 
+    if (preg_match("#^desc(?:ribe)?\s+(.*)#i", $sql)) {
+        $sql = preg_replace_callback("#^desc(?:ribe)?\s+(.*)#i", 
+                function ($m) {
+                    return "show tables like '".str_replace("`", "", $m[1])."'";
+                }, trim($sql)
+            );
+    }
+
     $is_debug = get_permission_debug_show();
     
     $start_time = $is_debug ? get_microtime() : 0;
