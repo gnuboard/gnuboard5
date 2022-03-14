@@ -8319,7 +8319,10 @@ class HTMLPurifier_PropertyListIterator extends FilterIterator
 
     /**
      * @return bool
+     *
+     * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function accept()
     {
         $key = $this->getInnerIterator()->key();
@@ -8437,7 +8440,10 @@ class HTMLPurifier_StringHash extends ArrayObject
      * Retrieves a value, and logs the access.
      * @param mixed $index
      * @return mixed
+     *
+     * {@inheritdoc}
      */
+    #[\ReturnTypeWillChange]
     public function offsetGet($index)
     {
         $this->accessed[$index] = true;
