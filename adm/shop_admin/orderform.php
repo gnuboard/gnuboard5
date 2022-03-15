@@ -505,7 +505,7 @@ add_javascript(G5_POSTCODE_JS, 0);    //다음 주소 js
                             switch($od['od_pg']) {
                                 case 'lg':
                                     $pg_url  = 'http://pgweb.uplus.co.kr';
-                                    $pg_test = 'LG유플러스';
+                                    $pg_test = '토스페이먼츠';
                                     if ($default['de_card_test']) {
                                         $pg_url = 'http://pgweb.uplus.co.kr/tmert';
                                         $pg_test .= ' 테스트 ';

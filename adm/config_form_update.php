@@ -22,7 +22,7 @@ check_admin_token();
 
 $cf_social_servicelist = !empty($_POST['cf_social_servicelist']) ? implode(',', $_POST['cf_social_servicelist']) : '';
 
-$check_keys = array('cf_lg_mid', 'cf_lg_mert_key', 'cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret','cf_cert_kg_cd','cf_cert_kg_mid');
+$check_keys = array('cf_cert_kcb_cd', 'cf_cert_kcp_cd', 'cf_editor', 'cf_recaptcha_site_key', 'cf_recaptcha_secret_key', 'cf_naver_clientid', 'cf_naver_secret', 'cf_facebook_appid', 'cf_facebook_secret', 'cf_twitter_key', 'cf_twitter_secret', 'cf_google_clientid', 'cf_google_secret', 'cf_googl_shorturl_apikey', 'cf_kakao_rest_key', 'cf_kakao_client_secret', 'cf_kakao_js_apikey', 'cf_payco_clientid', 'cf_payco_secret','cf_cert_kg_cd','cf_cert_kg_mid');
 
 foreach( $check_keys as $key ){
     if ( isset($_POST[$key]) && $_POST[$key] ){
@@ -285,8 +285,6 @@ $sql = " update {$g5['config_table']}
                 cf_cert_kg_mid = '".trim($_POST['cf_cert_kg_mid'])."',
                 cf_cert_kcb_cd = '{$_POST['cf_cert_kcb_cd']}',
                 cf_cert_kcp_cd = '{$_POST['cf_cert_kcp_cd']}',
-                cf_lg_mid = '{$_POST['cf_lg_mid']}',
-                cf_lg_mert_key = '{$_POST['cf_lg_mert_key']}',
                 cf_cert_limit = '{$_POST['cf_cert_limit']}',
                 cf_cert_req = '{$_POST['cf_cert_req']}',
                 cf_sms_use = '{$_POST['cf_sms_use']}',
