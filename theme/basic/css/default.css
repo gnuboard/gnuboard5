@@ -169,7 +169,7 @@ box-shadow:0 2px 5px rgba(0,0,0,0.2)}
 #container_wr {margin:0 auto;zoom:1}
 #aside {float:right;width:235px;padding:0;height:100%;margin:20px 0 20px 20px}
 
-#container {position:relative;float:left;min-height:500px;height:auto !important;margin:20px 0;height:500px;font-size:1em;width:930px;zoom:1}
+#container {position:relative;float:left;min-height:500px;height:auto !important;margin:20px 0;font-size:1em;width:930px;zoom:1}
 #container:after {display:block;visibility:hidden;clear:both;content:""}
 #container_title {font-size:1.333em;margin:0 auto;font-weight:bold}
 #container_title span {margin:0 auto 10px;display:block;line-height:30px}
