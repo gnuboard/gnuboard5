@@ -7,7 +7,7 @@
 
 .lat ul {padding:10px 0}
 .lat li {position:relative;line-height:18px;border-bottom:1px solid #e5ecee;margin-bottom:10px}
-.lat li a {line-height:24px;font-weight:bold;font-size:1.2em;line-height:20px;vertical-align:middle}
+.lat li a {font-weight:bold;font-size:1.2em;line-height:20px;vertical-align:middle}
 .lat li a:hover {color:#3a8afd}
 .lat li .fa-heart {color:#ff0000}
 .lat li .fa-lock {display:inline-block;line-height:14px;width:16px;font-size:0.833em;color:#4f818c;background:#cbe3e8;text-align:center;border-radius:2px;font-size:12px;border:1px solid #cbe3e8;vertical-align:middle}

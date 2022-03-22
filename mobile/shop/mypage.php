@@ -2,7 +2,7 @@
 include_once('./_common.php');
 
 // 테마에 mypage.php 있으면 include
-if(defined('G5_THEME_SHOP_PATH')) {
+if(defined('G5_THEME_MSHOP_PATH')) {
     $theme_mypage_file = G5_THEME_MSHOP_PATH.'/mypage.php';
     if(is_file($theme_mypage_file)) {
         include_once($theme_mypage_file);
