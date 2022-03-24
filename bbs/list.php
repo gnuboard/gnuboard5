@@ -27,6 +27,10 @@ if ($board['bo_use_category']) {
     }
 }
 
+if(isset($s_tag)){
+    $s_tag = str_replace(' ', '+', $s_tag);
+}
+
 $sop = strtolower($sop);
 if ($sop != 'and' && $sop != 'or')
     $sop = 'and';

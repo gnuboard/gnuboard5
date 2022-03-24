@@ -25,7 +25,33 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     </nav>
     <?php } ?>
     <!-- } 게시판 카테고리 끝 -->
-    
+
+    <!----------태그 기능 추가------------->
+    <?php
+    $filter_url = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
+    if(isset($s_tag)){ 
+        ?>
+        <div id="qa_filter" class="co-tag panel" style="margin:0 0 10px;padding:10px 0;"> 
+        
+            <b class="subject" style="color: #4d0585;font-size: 1.2rem;">filter</b>
+
+
+            <?php
+            if( $s_tag ) {
+                $filter_s_tag = array_unique( preg_split("/[+]+/", $s_tag) );
+                foreach($filter_s_tag as $v){
+                    $del_arr = array_diff($filter_s_tag, array($v));
+                    $del_tags = implode("+",$del_arr);
+                    if(empty($del_arr)){
+                        echo '<a href=\''.$filter_url.'\' class=\'tag-list\'>'.'#'.$v.'</a>';
+                    }else{
+                        echo '<a href=\''.$filter_url.'&s_tag='.$del_tags.'\' class=\'tag-list\'>'.'#'.$v.'</a>';
+                    }
+                }
+            }
+            ?>
+            </div>
+        <?php } ?>
     <form name="fboardlist" id="fboardlist" action="<?php echo G5_BBS_URL; ?>/board_list_update.php" onsubmit="return fboardlist_submit(this);" method="post">
     
     <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
@@ -44,6 +70,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <span>Total <?php echo number_format($total_count) ?>건</span>
             <?php echo $page ?> 페이지
         </div>
+        
 
         <ul class="btn_bo_user">
         	<?php if ($admin_href) { ?><li><a href="<?php echo $admin_href ?>" class="btn_admin btn" title="관리자"><i class="fa fa-cog fa-spin fa-fw"></i><span class="sound_only">관리자</span></a></li><?php } ?>
@@ -124,7 +151,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 				?>
                 <a href="<?php echo $list[$i]['ca_name_href'] ?>" class="bo_cate_link"><?php echo $list[$i]['ca_name'] ?></a>
                 <?php } ?>
-                <div class="bo_tit">
+                <div class="bo_tit"  style="display:block">
                     <a href="<?php echo $list[$i]['href'] ?>">
                         <?php echo $list[$i]['icon_reply'] ?>
                         <?php
@@ -140,6 +167,37 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                     if (isset($list[$i]['icon_link'])) echo rtrim($list[$i]['icon_link']);
                     ?>
                     <?php if ($list[$i]['comment_cnt']) { ?><span class="sound_only">댓글</span><span class="cnt_cmt"><?php echo $list[$i]['wr_comment']; ?></span><span class="sound_only">개</span><?php } ?>
+                    <span class="co-tag" style="display:block;margin:5px 0 0">
+                    <?php
+                    if( !empty( $list[$i]['wr_tags'] ) ){
+                        $tags = array();
+                        $tags = explode(',', $list[$i]['wr_tags']);
+                        if(isset($s_tag)){
+                            foreach($tags as $tag){
+                                echo '<a href=\''.$filter_url.'&s_tag='.$s_tag.'+'.$tag.'\' class=\'tag-list\'>'.'#'.$tag.'</a>';
+                               }
+                        }else{
+                            foreach($tags as $tag){
+                                echo '<a href=\''.$filter_url.'&s_tag='.$tag.'\' class=\'tag-list\'>'.'#'.$tag.'</a>';
+                            }
+                        }
+                        
+                    }
+                    ?>
+                    <style>
+                        .tag-list {
+                            display: inline-block;
+                                margin:0 3px 3px 3px;
+                                padding: 3px 5px;
+                                border-radius: 3px;
+                                background: #dde6ef;
+                                color: #5b6692;
+                                font-size: 1.1rem;
+                                font-weight:300;
+                            }
+                    
+                    </style>
+                    </span>
                 </div>
             </td>
             <td class="td_name sv_use"><?php echo $list[$i]['name'] ?></td>
