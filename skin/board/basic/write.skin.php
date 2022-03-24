@@ -3,7 +3,15 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
+
+$field_query = "SHOW COLUMNS FROM {$write_table} WHERE `Field` = 'wr_tags';";
+$field_row = sql_fetch($field_query);
+if(!isset($field_row['Field'])) {
+    sql_query(" ALTER TABLE `{$write_table}` ADD `wr_tags` varchar(100) NOT NULL DEFAULT '' after `wr_content` ", true);
+}
+
 ?>
+
 
 <section id="bo_w">
     <h2 class="sound_only"><?php echo $g5['title'] ?></h2>
@@ -133,6 +141,12 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
         <input type="text" name="wr_link<?php echo $i ?>" value="<?php if($w=="u"){ echo $write['wr_link'.$i]; } ?>" id="wr_link<?php echo $i ?>" class="frm_input full_input" size="50">
     </div>
     <?php } ?>
+
+    <!-----태그 기능 추가----->
+    <div class="bo_w_link write_div">
+        <label for="wr_tags"><i class="fa fa-tag" aria-hidden="true"></i><span class="sound_only"></span></label>
+        <input type="text" name="wr_tags" value="<?php if($w=="u"){ echo $write['wr_tags']; } ?>" id="wr_tags" class="frm_input full_input" size="100">
+    </div>
 
     <?php for ($i=0; $is_file && $i<$file_count; $i++) { ?>
     <div class="bo_w_flie write_div">

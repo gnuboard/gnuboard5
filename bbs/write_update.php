@@ -45,6 +45,16 @@ if ($wr_content == '') {
     $msg[] = '<strong>내용</strong>을 입력하세요.';
 }
 
+$wr_tags = '';
+if (isset($_POST['wr_tags'])) {
+    $wr_tags = $_POST['wr_tags'];
+    $wr_tags = preg_replace("#[\\\]+$#", "", $wr_tags);
+}
+if($wr_tags == ''){
+    $msg[] = '<strong>태그</strong>를 입력하세요.';
+}
+
+
 $wr_link1 = '';
 if (isset($_POST['wr_link1'])) {
     $wr_link1 = substr($_POST['wr_link1'],0,1000);
@@ -264,6 +274,7 @@ if ($w == '' || $w == 'r') {
                      wr_option = '$wr_option',
                      wr_subject = '$wr_subject',
                      wr_content = '$wr_content',
+                     wr_tags = '$wr_tags',
                      wr_seo_title = '$wr_seo_title',
                      wr_link1 = '$wr_link1',
                      wr_link2 = '$wr_link2',
@@ -386,6 +397,7 @@ if ($w == '' || $w == 'r') {
                      wr_option = '{$wr_option}',
                      wr_subject = '{$wr_subject}',
                      wr_content = '{$wr_content}',
+                     wr_tags = '{$wr_tags}',
                      wr_seo_title = '$wr_seo_title',
                      wr_link1 = '{$wr_link1}',
                      wr_link2 = '{$wr_link2}',
