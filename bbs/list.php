@@ -27,6 +27,12 @@ if ($board['bo_use_category']) {
     }
 }
 
+$mb_tag_query = "SHOW COLUMNS FROM `{$g5['member_table']}` WHERE `Field` = 'wr_tags';";
+$mb_tag_row = sql_fetch($mb_tag_query);
+if(!isset($mb_tag_row['Field'])) {
+    sql_query(" ALTER TABLE `{$g5['member_table']}` ADD `wr_tags` varchar(255) NOT NULL DEFAULT '' after `mb_scrap_cnt` ", true);
+}
+
 if(isset($s_tag)){
     $s_tag = str_replace(' ', '+', $s_tag);
 }
@@ -43,7 +49,9 @@ $is_search_bbs = false;
 if ($sca || $stx || $stx === '0') {     //검색이면
     $is_search_bbs = true;      //검색구분변수 true 지정
     $sql_search = get_sql_search($sca, $sfl, $stx, $sop);
-
+    if(isset($s_tag)){
+        $sql_search .= 'and wr_tags like \'%'.$s_tag.'%\'';
+    }
     // 가장 작은 번호를 얻어서 변수에 저장 (하단의 페이징에서 사용)
     $sql = " select MIN(wr_num) as min_wr_num from {$write_table} ";
     $row = sql_fetch($sql);
@@ -57,6 +65,7 @@ if ($sca || $stx || $stx === '0') {     //검색이면
     // 라엘님 제안 코드로 대체 http://sir.kr/g5_bug/2922
     $sql = " SELECT COUNT(DISTINCT `wr_parent`) AS `cnt` FROM {$write_table} WHERE {$sql_search} ";
     $row = sql_fetch($sql);
+    echo $sql;
     $total_count = $row['cnt'];
     /*
     $sql = " select distinct wr_parent from {$write_table} where {$sql_search} ";
@@ -184,6 +193,37 @@ if ($is_search_bbs) {
     $sql .= " {$sql_order} limit {$from_record}, $page_rows ";
 }
 
+//태그 검색 조건 추가
+if(isset($s_tag)){
+    $tag_cut = explode('+',$s_tag);
+    print_r2($tag_cut);
+    $num = sizeof($tag_cut);
+    $abc = 'and ';
+    $def = '';
+    if($num==1){
+        foreach($tag_cut as $cut){
+            $abc .= 'wr_tags like %'.$cut.'%';
+        }
+    }elseif($num>1){
+        foreach($tag_cut as $cut){
+            $abc .= $def;
+            $abc .= 'wr_tags like %'.$cut.'%';
+            $def = ' or ';
+            
+        }  
+    }else{
+        $abc .= 'wr_tags like %'.$s_tag.'%';
+    }
+    echo $abc;
+
+    // if(isset($s_tag)){
+    //     $sql = "select * from {$write_table} where wr_is_comment = 0";
+
+    // }
+
+}
+
+echo '<br>sql = '.$sql.'<br>';
 // 페이지의 공지개수가 목록수 보다 작을 때만 실행
 if($page_rows > 0) {
     $result = sql_query($sql);
@@ -195,7 +235,7 @@ if($page_rows > 0) {
         // 검색일 경우 wr_id만 얻었으므로 다시 한행을 얻는다
         if ($is_search_bbs)
             $row = sql_fetch(" select * from {$write_table} where wr_id = '{$row['wr_parent']}' ");
-
+            
         $list[$i] = get_list($row, $board, $board_skin_url, G5_IS_MOBILE ? $board['bo_mobile_subject_len'] : $board['bo_subject_len']);
         if (strstr($sfl, 'subject')) {
             $list[$i]['subject'] = search_font($stx, $list[$i]['subject']);
