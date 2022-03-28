@@ -48,7 +48,7 @@ if ($wr_content == '') {
 $wr_tags = '';
 if (isset($_POST['wr_tags'])) {
     $wr_tags = $_POST['wr_tags'];
-    $wr_tags = preg_replace("#[\\\]+$#", "", $wr_tags);
+    $wr_tags = preg_replace('/[\@\.\;\" "]+/', "", $wr_tags);
 }
 if($wr_tags == ''){
     $msg[] = '<strong>태그</strong>를 입력하세요.';
