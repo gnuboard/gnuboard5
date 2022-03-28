@@ -1,6 +1,10 @@
 <?php
 if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
+?>
 
+
+
+<?php
 if (G5_IS_MOBILE) {
     include_once(G5_THEME_MOBILE_PATH.'/tail.php');
     return;
@@ -17,7 +21,39 @@ if(G5_COMMUNITY_USE === false) {
         <?php echo outlogin('theme/basic'); // 외부 로그인, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
         <?php echo poll('theme/basic'); // 설문조사, 테마의 스킨을 사용하려면 스킨을 theme/basic 과 같이 지정 ?>
     </div>
+
+    <!-- 태그 기능 추가 -->
+    <?php if($bo_table){
+        echo 'erer'.$bo_table;?>
+        <div id="aside" style="border-bottom:1px solid #d6dee4;padding-bottom:10px">
+            <div class="title">관심태그</div>
+                <i class='fa fa-heart-o'></i>
+                <i class='fa fa-heart'></i>
+        </div>  
+
+        <div id="aside" style="border-bottom:1px solid #d6dee4">
+            <?php
+            $tags_sql = "select wr_tags from {$write_table} where wr_tags != ''";
+            $tags_res = sql_query($tags_sql);
+            for($i=0; $tags_row=sql_fetch_array($tags_res); $i++) {
+                $aside_tags = array();
+                $aside_tags = explode(',',$tags_row['wr_tags']);
+                foreach($aside_tags as $at){
+                    echo '<a href=\''.$filter_url.'\' class=\'tag-list\'>'.'#'.$at.'</a>';
+                    echo '<button type=\'button\' class=\'co-tag\'><i class=\'fa fa-heart-o\'></i><i class=\'fa fa-heart\'></i> </button>';
+                }
+
+            }
+            ?> 
+        </div>
+    <?php } ?>
+        
+    <!-- 태그 기능 추가 -->
+
+
 </div>
+
+
 
 </div>
 <!-- } 콘텐츠 끝 -->

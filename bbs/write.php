@@ -11,6 +11,13 @@ if (!$bo_table) {
     alert("bo_table 값이 넘어오지 않았습니다.\\nwrite.php?bo_table=code 와 같은 방식으로 넘겨 주세요.", G5_URL);
 }
 
+//tag 필드 추가
+$field_query = "SHOW COLUMNS FROM {$write_table} WHERE `Field` = 'wr_tags';";
+$field_row = sql_fetch($field_query);
+if(!isset($field_row['Field'])) {
+    sql_query(" ALTER TABLE `{$write_table}` ADD `wr_tags` varchar(100) NOT NULL DEFAULT '' after `wr_content` ", true);
+}
+
 check_device($board['bo_device']);
 
 $notice_array = explode(',', trim($board['bo_notice']));

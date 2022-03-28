@@ -28,21 +28,26 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
 
     <!----------태그 기능 추가------------->
     <?php
+
     $filter_url = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
+    //$filter_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     if(isset($s_tag)){ 
         ?>
         <div id="qa_filter" class="co-tag panel" style="margin:0 0 10px;padding:10px 0;"> 
         
             <b class="subject" style="color: #4d0585;font-size: 1.2rem;">filter</b>
 
-
+            
             <?php
+            
             if( $s_tag ) {
                 $filter_s_tag = array_unique( preg_split("/[+]+/", $s_tag) );
+                
                 foreach($filter_s_tag as $v){
                     $del_arr = array_diff($filter_s_tag, array($v));
                     $del_tags = implode("+",$del_arr);
                     if(empty($del_arr)){
+                        
                         echo '<a href=\''.$filter_url.'\' class=\'tag-list\'>'.'#'.$v.'</a>';
                     }else{
                         echo '<a href=\''.$filter_url.'&s_tag='.$del_tags.'\' class=\'tag-list\'>'.'#'.$v.'</a>';

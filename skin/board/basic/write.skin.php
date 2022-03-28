@@ -4,11 +4,7 @@ if (!defined('_GNUBOARD_')) exit; // 개별 페이지 접근 불가
 // add_stylesheet('css 구문', 출력순서); 숫자가 작을 수록 먼저 출력됨
 add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0);
 
-$field_query = "SHOW COLUMNS FROM {$write_table} WHERE `Field` = 'wr_tags';";
-$field_row = sql_fetch($field_query);
-if(!isset($field_row['Field'])) {
-    sql_query(" ALTER TABLE `{$write_table}` ADD `wr_tags` varchar(100) NOT NULL DEFAULT '' after `wr_content` ", true);
-}
+
 
 ?>
 
