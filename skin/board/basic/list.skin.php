@@ -29,8 +29,8 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
     <!----------태그 기능 추가------------->
     <?php
 
-    $filter_url = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
-    //$filter_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    //$filter_url = G5_BBS_URL.'/board.php?bo_table='.$bo_table;
+    $filter_url = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
     if(isset($s_tag)){ 
         ?>
         <div id="qa_filter" class="co-tag panel" style="margin:0 0 10px;padding:10px 0;"> 
@@ -46,8 +46,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                 foreach($filter_s_tag as $v){
                     $del_arr = array_diff($filter_s_tag, array($v));
                     $del_tags = implode("+",$del_arr);
+
                     if(empty($del_arr)){
-                        
+                        $filter_url = str_replace("","",$filter_url);
                         echo '<a href=\''.$filter_url.'\' class=\'tag-list\'>'.'#'.$v.'</a>';
                     }else{
                         echo '<a href=\''.$filter_url.'&s_tag='.$del_tags.'\' class=\'tag-list\'>'.'#'.$v.'</a>';
@@ -179,6 +180,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                         $tags = explode(',', $list[$i]['wr_tags']);
                         if(isset($s_tag)){
                             foreach($tags as $tag){
+                                if(empty($s_tag)){
+                                    
+                                }
                                 echo '<a href=\''.$filter_url.'&s_tag='.$s_tag.'+'.$tag.'\' class=\'tag-list\'>'.'#'.$tag.'</a>';
                                }
                         }else{
@@ -242,6 +246,9 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
             <input type="hidden" name="bo_table" value="<?php echo $bo_table ?>">
             <input type="hidden" name="sca" value="<?php echo $sca ?>">
             <input type="hidden" name="sop" value="and">
+            <?php if(!empty($s_tag)){ ?>
+            <input type="hidden" name="s_tag" value="<?php echo $s_tag; ?>">
+            <?php } ?>
             <label for="sfl" class="sound_only">검색대상</label>
             <select name="sfl" id="sfl">
                 <?php echo get_board_sfl_select_options($sfl); ?>
