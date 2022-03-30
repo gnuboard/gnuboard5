@@ -92,7 +92,6 @@ class G5Update {
 
             foreach($result as $key => $var) {
                 if(!isset($var->tag_name)) continue;
-                if($var->tag_name)
         
                 $this->version_list[] = $var->tag_name;
             }
@@ -111,7 +110,12 @@ class G5Update {
         if($this->port == 'ftp') {
             // ftp_put()
         } else if($this->port == 'sftp') {
-            $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
+            if(!file_exists("ssh2.sftp://".intval($this->connPath).$originPath)) {
+                if(!is_dir(dirname($originPath))) mkdir("ssh2.sftp://".intval($this->connPath).dirname($originPath));
+                $result = ssh2_exec($this->conn, "scp -rp ".$changePath.' '.$originPath);
+            } else {
+                $result = file_put_contents("ssh2.sftp://".intval($this->connPath).$originPath, $content);
+            }
             if($result == false) return false;
         }
 

@@ -45,7 +45,7 @@ $g5_update->clearUpdatedir();
 $result = $g5_update->downloadVersion($version_list);
 if($result == false) alert("목표버전 다운로드에 실패했습니다.");
 
-echo $g5_update->targetVersion." 버전 파일 다운로드 완료";
+echo $g5_update->targetVersion." 버전 파일 다운로드 완료<br>";
 foreach($list as $key => $var) {
     $result = $g5_update->writeUpdateFile(G5_PATH.'/'.$var, G5_DATA_PATH.'/update/'.$version_list.'/'.$var);
     if($result == false) echo $var." 업데이트 실패<br>";
