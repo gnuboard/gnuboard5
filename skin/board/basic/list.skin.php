@@ -54,7 +54,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             if($lastchar == '&'){
                                 $filter_url = substr($filter_url , 0, -1);
                             }
-                        echo '<a href=\''.$filter_url.'\' class=\'tag-list\'>'.'#'.$v.' ×</a>';
+                        echo '<a href=\''.$filter_url.'\' class=\'tag-list\'>'.'#'.$v.' ×</a><i class=\'fa fa-heart-o\'></i>';
                     }else{
                         $ini['s_tag'] = $del_tags;
                         $filter_url = "$_SERVER[PHP_SELF]";
@@ -66,7 +66,7 @@ add_stylesheet('<link rel="stylesheet" href="'.$board_skin_url.'/style.css">', 0
                             if($lastchar == '&'){
                                 $filter_url = substr($filter_url , 0, -1);
                             }
-                        echo '<a href=\''.$filter_url.'\' class=\'tag-list\'>'.'#'.$v.' ×</a>';
+                        echo '<a href=\''.$filter_url.'\' class=\'tag-list\'>'.'#'.$v.' ×</a><i class=\'fa fa-heart-o\'></i>';
                     }
                 }
             }

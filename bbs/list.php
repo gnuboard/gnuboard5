@@ -27,10 +27,10 @@ if ($board['bo_use_category']) {
     }
 }
 
-$mb_tag_query = "SHOW COLUMNS FROM `{$g5['member_table']}` WHERE `Field` = 'wr_tags';";
+$mb_tag_query = "SHOW COLUMNS FROM `{$g5['member_table']}` WHERE `Field` = 'mb_favorite_tags';";
 $mb_tag_row = sql_fetch($mb_tag_query);
 if(!isset($mb_tag_row['Field'])) {
-    sql_query(" ALTER TABLE `{$g5['member_table']}` ADD `wr_tags` varchar(255) NOT NULL DEFAULT '' after `mb_scrap_cnt` ", true);
+    sql_query(" ALTER TABLE `{$g5['member_table']}` ADD `mb_favorite_tags` varchar(255) NOT NULL DEFAULT '' after `mb_scrap_cnt` ", true);
 }
 
 if(isset($s_tag)){
