@@ -78,6 +78,7 @@ for ($i = 0; $row = sql_fetch_array($result); $i++) {
 
     $adult = "no";
     foreach($cate_array as $key => $var) {
+        if(empty($var)) continue;
         if(in_array(1, $category_adult_array[$var])) {
             $adult = "yes";
         }
