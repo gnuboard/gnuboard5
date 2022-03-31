@@ -32,7 +32,6 @@ if($conn_result == false) alert("연결에 실패했습니다.");
 
 $g5['update']->setTargetVersion($version_list);
 $list = $g5['update']->getVersionCompareList();
-
 if($list == null) alert("비교파일리스트가 존재하지 않습니다.");
 
 $compare_list = $g5['update']->checkSameVersionComparison($list);
@@ -50,14 +49,20 @@ if($compare_list == false) alert("파일 비교에 실패했습니다.");
         <?php if($compare_list['type'] == 'Y') { ?>
             <button type="submit" class="btn btn_submit">업데이트 진행</button>
         <?php } else { ?>
-            <p style="color:red; font-weight:bold;">기존 버전간의 변경된 파일이 존재합니다.</p>
-            <?php foreach($compare_list['item'] as $key => $var) { ?>
-                <p>파일위치 : <?php echo $var; ?><p>
+            <?php if($compare_list['type'] == 'N') { ?>
+                <p style="color:red; font-weight:bold;">기존 버전간의 변경된 파일이 존재합니다.</p>
             <?php } ?>
             <div style="margin-top:30px;">
                 <button type="submit" class="btn btn_submit">강제 업데이트 진행</button>
                 <button type="" class="btn btn_03">업데이트 진행 취소</button>
             </div>
+        <?php } ?>
+        <?php foreach($list as $key => $var) {
+            $txt = '';
+            if(in_array($var, $compare_list['item'])) {
+                $txt = " (변경)";
+            } ?>
+            <p>파일위치 : <?php echo $var.$txt; ?><p>
         <?php } ?>
     </form>
 </div>

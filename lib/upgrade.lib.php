@@ -128,11 +128,8 @@ class G5Update {
 
         $this->clearUpdatedir();
 
-        // 테스트용 코드
-        // $version = $this->target_version;
-
         $save = G5_DATA_PATH."/update/gnuboard.zip";
-        
+
         $zip = fopen($save, 'w+');
         if($zip == false) return false;
 
@@ -195,8 +192,20 @@ class G5Update {
 
     public function getVersionCompareList() {
         if($this->now_version == null || $this->target_version == null) return false;
-        $result = $this->getApiCurlResult("compare", $this->now_version, $this->target_version);
 
+        $version_list = $this->getVersionList();
+        if($version_list == false) return false;
+
+        // 숫자가 작을수록 상위버전
+        $now_version_num = array_search($this->now_version, $version_list);
+        $target_version_num = array_search($this->target_version, $version_list);
+
+        if($now_version_num > $target_version_num) {
+            $result = $this->getApiCurlResult("compare", $this->now_version, $this->target_version);
+        } else {
+            $result = $this->getApiCurlResult("compare", $this->target_version, $this->now_version);
+        }
+        
         if($result == false) return false;
 
         foreach($result->files as $key => $var) {

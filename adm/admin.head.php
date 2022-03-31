@@ -1,6 +1,8 @@
 <?php
 if (!defined('_GNUBOARD_')) exit;
 
+echo 1234;
+
 $g5_debug['php']['begin_time'] = $begin_time = get_microtime();
 
 $files = glob(G5_ADMIN_PATH.'/css/admin_extend_*');
