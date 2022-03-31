@@ -5,8 +5,8 @@ include_once('./_common.php');
 $g5['title'] = '그누보드 업데이트';
 include_once ('./admin.head.php');
 
-$version_list = $g5_update->getVersionList();
-$latest_version = $g5_update->getLatestVersion();
+$version_list = $g5['update']->getVersionList();
+$latest_version = $g5['update']->getLatestVersion();
 if($latest_version == false) $message = "정보조회에 실패했습니다.";
 
 $this_version = G5_GNUBOARD_VER;

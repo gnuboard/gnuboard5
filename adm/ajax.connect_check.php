@@ -10,7 +10,7 @@
         if($userpassword == null) throw new Exception("ftp 비밀번호를 입력해주세요");
         if($port == null) throw new Exception("프로토콜을 선택해주세요");
 
-        $conn_result = $g5_update->connect($_SERVER['HTTP_HOST'], $port, $username, $userpassword);
+        $conn_result = $g5['update']->connect($_SERVER['HTTP_HOST'], $port, $username, $userpassword);
         if($conn_result == false) throw new Exception("연결에 실패했습니다.");
 
         $data = array();

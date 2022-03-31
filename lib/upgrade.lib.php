@@ -161,9 +161,7 @@ class G5Update {
         $check['type'] = 'Y';
         foreach($list as $key => $var) {
             $now_file_path = G5_PATH.'/'.$var;
-            $release_file_path = G5_DATA_PATH.'/update/'.$this->target_version.'/'.$var;
-            // 테스트용 코드
-            // $release_file_path = G5_DATA_PATH.'/update/'.$this->now_version.'/'.$var;
+            $release_file_path = G5_DATA_PATH.'/update/'.$this->now_version.'/'.$var;
 
             if(!file_exists($now_file_path)) continue;
             if(!file_exists($release_file_path)) continue;

@@ -8,9 +8,9 @@ if( isset($token) ){
     $token = @htmlspecialchars(strip_tags($token), ENT_QUOTES);
 }
 
-if( !isset($g5_update)) {
-    $g5_update = new G5Update();
-    $g5_update->setNowVersion("v".G5_GNUBOARD_VER);
+if( !isset($g5['update'])) {
+    $g5['update'] = new G5Update();
+    $g5['update']->setNowVersion("v".G5_GNUBOARD_VER);
 }
 
 run_event('admin_common');
