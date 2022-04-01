@@ -49,7 +49,7 @@ if ($w == "")
               where SUBSTRING(ca_id,1,$len) = '$ca_id' ";
     $row = sql_fetch($sql);
 
-    $subid = base_convert((string)$row['max_subid'], 36, 10);
+    $subid = base_convert($row['max_subid'], 36, 10);
     $subid += 36;
     if ($subid >= 36 * 36)
     {
