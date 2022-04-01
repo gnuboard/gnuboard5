@@ -28,7 +28,7 @@ $bo_include_head = isset($_POST['bo_include_head']) ? preg_replace(array("#[\\\]
 $bo_include_tail = isset($_POST['bo_include_tail']) ? preg_replace(array("#[\\\]+$#", "#(<\?php|<\?)#i"), "", substr($_POST['bo_include_tail'], 0, 255)) : '';
 
 // 관리자가 자동등록방지를 사용해야 할 경우
-if ($board && ($board['bo_include_head'] !== $bo_include_head || $board['bo_include_tail'] !== $bo_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
+if ($board && (isset($board['bo_include_head']) && $board['bo_include_head'] !== $bo_include_head || $board['bo_include_tail'] !== $bo_include_tail) && function_exists('get_admin_captcha_by') && get_admin_captcha_by()){
     include_once(G5_CAPTCHA_PATH.'/captcha.lib.php');
 
     if (!chk_captcha()) {
